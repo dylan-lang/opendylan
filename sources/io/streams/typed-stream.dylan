@@ -24,13 +24,13 @@ end function byte-to-byte;
 
 
 define open abstract class <typed-stream> (<basic-stream>)
-  // Assume that 
+  // Assume that
   slot sequence-type /* ---*** :: subclass(<sequence>) */ = <byte-string>;
   slot to-element-mapper    :: <function> = byte-to-byte-char;
   slot from-element-mapper  :: <function> = byte-char-to-byte;
-  constant slot to-sequence-mapper   :: <function> = 
+  constant slot to-sequence-mapper   :: <function> =
       method (s, ss, d, ds, n) => () copy-bytes(d, ds, s, ss, n) end;
-  constant slot from-sequence-mapper :: <function> = 
+  constant slot from-sequence-mapper :: <function> =
       method (s, ss, d, ds, n) => () copy-bytes(d, ds, s, ss, n) end;
 end class <typed-stream>;
 

@@ -11,7 +11,7 @@ define sealed primary class <buffer-vector> (<object>)
   slot buffer-shift-amount :: <integer>;
   slot buffer-vector-size-mask :: <integer>;
   slot buffer-preemption-index :: <integer> = 0;
-  slot buffers :: <simple-object-vector>; 
+  slot buffers :: <simple-object-vector>;
   // = limited(<vector>, of: <power-of-two-buffer>);
 end class;
 
@@ -19,14 +19,14 @@ end class;
 // important for the use count to be 3 so that uninitialized buffers are
 // correctly preempted.
 define constant $empty-buffer =
-  make-<power-of-two-buffer>(size: 2, known-power-of-two-size: #t, 
+  make-<power-of-two-buffer>(size: 2, known-power-of-two-size: #t,
                              use-count: 3);
 
 define constant $free-stream-ids :: <object-deque> = make(<deque>);
 define constant $stream-id-to-stream-map :: <stretchy-object-vector>
   = make(<stretchy-object-vector>);
 
-define function new-stream-id(the-stream :: <multi-buffered-stream>) 
+define function new-stream-id(the-stream :: <multi-buffered-stream>)
  => (new-id :: <integer>)
   let new-id =
     if ( ~ empty?($free-stream-ids))
@@ -38,8 +38,8 @@ define function new-stream-id(the-stream :: <multi-buffered-stream>)
     end if;
   $stream-id-to-stream-map[new-id] := the-stream;
   new-id
-end function; 
- 
+end function;
+
 define constant <buffer-map-entry> = <integer>;
 define constant <buffer-map> = limited(<stretchy-vector>, of: <buffer-map-entry>);
 
@@ -110,8 +110,8 @@ define sealed method initialize
      number-of-buffers: requested-number-of-buffers :: <integer> = 32,
      stream :: false-or(<external-stream>) = #f) => ()
   next-method();
-  let (buffer-size, shift-amount) = 
-    round-to-power-of-two( if (requested-buffer-size) 
+  let (buffer-size, shift-amount) =
+    round-to-power-of-two( if (requested-buffer-size)
                              round-to-power-of-two(requested-buffer-size)
                            elseif (stream)
                              accessor-preferred-buffer-size(stream.accessor)
@@ -127,7 +127,7 @@ define sealed method initialize
   the-vector.buffer-vector-size-mask := number-of-buffers - 1;
 end method initialize;
 
-define method multi-buffered-stream-direction 
+define method multi-buffered-stream-direction
     (direction :: false-or(<symbol>)) => (res :: <symbol>)
   if (direction == #"input")
     #"input"
@@ -149,24 +149,24 @@ define sealed method initialize
   // initialize method creates the shared buffer which we don't want.
   the-stream.stream-shared-buffer := #f; // Get rid of the bum
   // Have to calculate the size again to get the shift amount--yuck
-  the-stream.buffer-vector :=   
-    if (input-buffer-vector) 
+  the-stream.buffer-vector :=
+    if (input-buffer-vector)
       input-buffer-vector
-    else 
+    else
       make(<buffer-vector>,
-           stream: the-stream, 
-           buffer-size: requested-buffer-size, 
+           stream: the-stream,
+           buffer-size: requested-buffer-size,
            number-of-buffers: requested-number-of-buffers);
     end if;
   the-stream.stream-id := new-stream-id(the-stream);
 end method initialize;
 
-define sealed method make 
+define sealed method make
     (class == <multi-buffered-stream>, #rest initargs,
      #key locator, direction, element-type = <byte-character>, encoding)
  => (stream :: <multi-buffered-stream>)
   let type
-    = apply(type-for-multi-buffered-stream, locator, element-type, 
+    = apply(type-for-multi-buffered-stream, locator, element-type,
             encoding, initargs);
   let direction = multi-buffered-stream-direction(direction);
   if (type == class)
@@ -182,7 +182,7 @@ define sealed generic type-for-multi-buffered-stream
      #key, #all-keys)
  => (multi-buffered-stream-type /* ---*** :: subclass(<multi-buffered-stream>) */);
 
-define sealed method type-for-multi-buffered-stream 
+define sealed method type-for-multi-buffered-stream
     (locator :: <object>,
      element-type :: false-or(<type>), encoding :: <object>,
      #key)
@@ -190,7 +190,7 @@ define sealed method type-for-multi-buffered-stream
   <general-multi-buffered-stream>
 end method type-for-multi-buffered-stream;
 
-define sealed method type-for-multi-buffered-stream 
+define sealed method type-for-multi-buffered-stream
     (locator :: <object>,
      element-type == <byte-character>, encoding :: <object>,
      #key)
@@ -199,7 +199,7 @@ define sealed method type-for-multi-buffered-stream
 end method type-for-multi-buffered-stream;
 
 //---*** This equates <character> with <byte-character>.  Hmm...
-define sealed method type-for-multi-buffered-stream 
+define sealed method type-for-multi-buffered-stream
     (locator :: <object>,
      element-type == <character>, encoding :: <object>,
      #key)
@@ -207,7 +207,7 @@ define sealed method type-for-multi-buffered-stream
   <byte-char-multi-buffered-stream>
 end method type-for-multi-buffered-stream;
 
-define sealed method type-for-multi-buffered-stream 
+define sealed method type-for-multi-buffered-stream
     (locator :: <object>,
      element-type  == <byte>, encoding :: <object>,
      #key)
@@ -232,17 +232,17 @@ define sealed method stream-input-available?
   end
 end method stream-input-available?;
 
-define sealed method stream-size 
+define sealed method stream-size
     (the-stream :: <multi-buffered-stream>) => (the-size :: <integer>);
   if (the-stream.stream-open?)
   // If the last buffer for this stream is paged in and modified then
   // use the maximum of buffer-end for that last buffer and the
   // accessor file size, otherwise use the accessor file size.
-  let last-buffer :: false-or(<power-of-two-buffer>) = 
-    if ((the-stream.buffer-map.size > 0) 
-          & ~buffer-map-entry-empty?(the-stream.buffer-map.last)) 
+  let last-buffer :: false-or(<power-of-two-buffer>) =
+    if ((the-stream.buffer-map.size > 0)
+          & ~buffer-map-entry-empty?(the-stream.buffer-map.last))
       let index = buffer-map-entry-index(the-stream.buffer-map.last);
-      the-stream.buffer-vector.buffers[index] 
+      the-stream.buffer-vector.buffers[index]
     end if;
   if (last-buffer & last-buffer.buffer-dirty?)
     let last-buffer :: <buffer> = last-buffer; // HACK: TYPE ONLY
@@ -287,10 +287,10 @@ end method;
 // Only calls if stream-input-buffer is false, (stream-input-buffer is eq
 // to stream-shared-buffer)
 define sealed method do-get-input-buffer
-    (the-stream :: <multi-buffered-stream>, 
+    (the-stream :: <multi-buffered-stream>,
      #key wait? = #t, bytes = 1)
  => (buffer :: false-or(<buffer>))
-  let(the-buffer, eof?) = 
+  let(the-buffer, eof?) =
     do-get-buffer(the-stream, wait?: wait?, bytes: bytes);
   stream-shared-buffer(the-stream) := the-buffer;
   the-buffer.buffer-use-count := 0;
@@ -312,9 +312,9 @@ define sealed method do-get-buffer (the-stream :: <multi-buffered-stream>,
   end unless;
   // Get a valid buffer index
   let map-entry = buffer-map[buffer-map-index];
-  let buffer-index :: <buffer-index> 
+  let buffer-index :: <buffer-index>
     = if (buffer-map-entry-empty?(map-entry))
-        let buffer-index = 
+        let buffer-index =
           preempt-buffer(the-stream, the-position, wait?: wait?, bytes: bytes);
         unless (buffer-map-entry-dirty?(map-entry))
           *multi-buffer-working-set* := *multi-buffer-working-set* + 1;
@@ -322,13 +322,13 @@ define sealed method do-get-buffer (the-stream :: <multi-buffered-stream>,
         buffer-map[buffer-map-index]
           := buffer-map-entry-deposit-index(buffer-index, map-entry);
         buffer-index
-      else 
+      else
         buffer-map-entry-index(map-entry)
       end;
   let the-buffer :: <power-of-two-buffer>
     = buffer-vector.buffers[buffer-index];
   // set buffer-next
-  let new-buffer-next :: <integer> = 
+  let new-buffer-next :: <integer> =
     logand(the-buffer.buffer-on-page-bits, the-position);
   the-buffer.buffer-next := new-buffer-next;
   if (new-buffer-next > the-buffer.buffer-end)
@@ -343,14 +343,14 @@ define sealed method do-get-buffer (the-stream :: <multi-buffered-stream>,
   values(the-buffer, eof?)
 end method;
 
-define function grow-buffer-map 
+define function grow-buffer-map
     (the-stream :: <multi-buffered-stream>, new-index :: <integer>)
  => ()
   // This would be a whole lot simpler if I could just set the buffer-map size
   // and be sure that the fill would be #f.
   iterate loop (map-index :: <integer> = the-stream.buffer-map.size)
     unless (map-index > new-index)
-      add!(the-stream.buffer-map, 
+      add!(the-stream.buffer-map,
            buffer-map-entry-deposit-empty
              (#t, buffer-map-entry-deposit-dirty(#f, 0)));
       loop(map-index + 1)
@@ -396,23 +396,23 @@ end method;
 
 // Find an empty buffer slot or else preempt an existing buffer, load the
 // buffer from the underlying file and return the index of buffer in the
-// buffer-vector vector. 
+// buffer-vector vector.
 define function preempt-buffer
-    (the-stream :: <multi-buffered-stream>, the-position :: <integer>, 
+    (the-stream :: <multi-buffered-stream>, the-position :: <integer>,
      #key  wait?,  bytes)
  => (buffer-index :: <integer>);
   if (closed?(the-stream))
     error(make(<stream-closed-error>, stream: the-stream,
-               format-string: 
+               format-string:
                    "Stream closed: Can't read, write or set-position"));
   end if;
   let the-buffer-vector :: <buffer-vector> = the-stream.buffer-vector;
-  let buffer-index :: <integer> = 
-    logand(the-buffer-vector.buffer-preemption-index + 1, 
+  let buffer-index :: <integer> =
+    logand(the-buffer-vector.buffer-preemption-index + 1,
            the-buffer-vector.buffer-vector-size-mask);
-  let the-buffer :: <power-of-two-buffer> = 
+  let the-buffer :: <power-of-two-buffer> =
     the-buffer-vector.buffers[buffer-index];
-  if (the-buffer.buffer-use-count < 3) 
+  if (the-buffer.buffer-use-count < 3)
     the-buffer.buffer-use-count := the-buffer.buffer-use-count + 1;
   end if;
   let (buffer-index :: <integer>, the-buffer :: <power-of-two-buffer>)
@@ -422,7 +422,7 @@ define function preempt-buffer
           values(index, buffer)
         else
           let buffer-index :: <buffer-index> =
-            logand(index + 1, 
+            logand(index + 1,
                    the-stream.buffer-vector.buffer-vector-size-mask);
           let the-buffer :: <power-of-two-buffer> =
             the-buffer-vector.buffers[buffer-index];
@@ -438,10 +438,10 @@ define function preempt-buffer
     the-buffer :=
       make-<power-of-two-buffer>
         (stream-id: the-stream.stream-id,
-         size: the-stream.buffer-vector.size-for-buffers, 
+         size: the-stream.buffer-vector.size-for-buffers,
          known-power-of-two-size?: #t, fill: 0);
     the-buffer-vector.buffers[buffer-index] := the-buffer;
-    new-buffer-position := logand(the-buffer.buffer-off-page-bits, the-position); 
+    new-buffer-position := logand(the-buffer.buffer-off-page-bits, the-position);
     let start = 0; let the-size = the-buffer.buffer-size;
     load-buffer(the-stream, the-buffer, new-buffer-position, start, the-size);
   else
@@ -456,7 +456,7 @@ define function preempt-buffer
         = ash(the-buffer.buffer-position,
               the-stream.buffer-vector.buffer-shift-amount);
       let buffer-map = the-owning-stream.buffer-map;
-      buffer-map[map-index] 
+      buffer-map[map-index]
         := buffer-map-entry-deposit-empty(#t, buffer-map[map-index]);
       // Zero out the stream-shared-buffer in the stream which currently
       // owns the buffer we are preempting if the stream-shared-buffer is
@@ -464,14 +464,14 @@ define function preempt-buffer
       // buffer-vector is being shared by more than one stream.
       if (the-owning-stream.stream-shared-buffer == the-buffer)
         // First save the position
-        the-owning-stream.current-position 
+        the-owning-stream.current-position
           := stream-position(the-owning-stream);
         the-owning-stream.stream-shared-buffer := #f;
       end if;
       if (the-buffer.buffer-dirty? & read-only?(the-owning-stream))
         error(make(<stream-not-writable>, stream: the-owning-stream,
-                   format-string: 
-                     "Internal error: buffer for read-only" 
+                   format-string:
+                     "Internal error: buffer for read-only"
                      "<multi-buffered-stream> (dood stream) was"
                      "modified, can't write the modified buffer."
                      ));
@@ -480,7 +480,7 @@ define function preempt-buffer
     end if;
     // Claim the buffer for the current stream.
     the-buffer.buffer-owning-stream := the-stream.stream-id;
-    new-buffer-position := logand(the-buffer.buffer-off-page-bits, the-position); 
+    new-buffer-position := logand(the-buffer.buffer-off-page-bits, the-position);
     let start = 0; let the-size = the-buffer.buffer-size;
     load-buffer-and-fill(the-stream, the-buffer, new-buffer-position, start,
                          the-size);
@@ -495,15 +495,15 @@ end function;
 
 // This is only called when buffer-next is equal to buffer-end, that is
 // when buffer-next has been incremented 1 past the end of buffer by
-// read-element.  
+// read-element.
 define sealed method do-next-input-buffer
     (the-stream :: <multi-buffered-stream>, #key wait? = #t, bytes = 1)
  => (buffer :: false-or(<buffer>))
   ignore(wait?, bytes);
   let last-buffer :: <buffer> = stream-input-buffer(the-stream);
-  the-stream.stream-position := 
+  the-stream.stream-position :=
     last-buffer.buffer-position + last-buffer.buffer-end;
-  let(new-buffer, eof?) = 
+  let(new-buffer, eof?) =
     do-get-buffer(the-stream, wait?: wait?, bytes: bytes);
   stream-shared-buffer(the-stream) := new-buffer;
   new-buffer.buffer-use-count := 0;
@@ -524,15 +524,15 @@ define sealed method do-get-output-buffer
 end method do-get-output-buffer;
 
 // This can only be called when 'stream-output-buffer' has a buffer in
-// it.  
+// it.
 define sealed method do-next-output-buffer
     (the-stream :: <multi-buffered-stream>, #key bytes = 1)
  => (the-buffer :: <buffer>)
   ignore(bytes);
   let last-buffer :: <buffer> = stream-input-buffer(the-stream);
-  the-stream.stream-position := 
+  the-stream.stream-position :=
     last-buffer.buffer-position + last-buffer.buffer-end;
-  let(new-buffer, eof?) = 
+  let(new-buffer, eof?) =
     do-get-buffer(the-stream, bytes: bytes);
   ignore(eof?);
   stream-shared-buffer(the-stream) := new-buffer;
@@ -545,7 +545,7 @@ end method;
 // out any dirty buffer regardless of whether it is input or output.
 define sealed method force-output-buffers
     (stream :: <multi-buffered-stream>) => ()
-  unless (empty?(stream.buffer-map)) 
+  unless (empty?(stream.buffer-map))
     let map-entry       = stream.buffer-map.last;
     let map-entry-index = buffer-map-entry-index(map-entry);
     when (~buffer-map-entry-empty?(map-entry)
@@ -554,7 +554,7 @@ define sealed method force-output-buffers
       // special case set beginning position to last buffer but didn't write
       // anything into that buffer.  Make sure that the previous buffer is
       // marked dirty
-      stream-position(stream) := 
+      stream-position(stream) :=
         stream.buffer-vector.buffers[map-entry-index].buffer-position - 1;
       let previous-buffer = do-get-buffer(stream);
       previous-buffer.buffer-dirty? := #t;
@@ -570,14 +570,14 @@ define sealed method force-output-buffers
   end for;
   if (read-only?(stream) & ~empty? (sordid-buffers))
     error(make(<stream-not-writable>, stream: stream,
-               format-string: 
-                 "Internal error closing stream: buffer for read-only" 
+               format-string:
+                 "Internal error closing stream: buffer for read-only"
                  "<multi-buffered-stream> (dood stream) was"
                  "modified. Can't write the modified buffer."
                  ));
-  else 
-    sordid-buffers := 
-      sort!(sordid-buffers, 
+  else
+    sordid-buffers :=
+      sort!(sordid-buffers,
             test:
               method (buffer-1 :: <buffer>, buffer-2 :: <buffer>)
                 buffer-1.buffer-position < buffer-2.buffer-position
@@ -623,7 +623,7 @@ define method close
     // will call preempt-buffer because we just zeroed out all of the
     // buffer-map entries.  Preempt buffer will figure out what is
     // wrong if anybody tries to read or write to the stream.
-   stream.stream-shared-buffer := #f;   
+   stream.stream-shared-buffer := #f;
   end if;
 end method close;
 
@@ -639,7 +639,7 @@ define sealed method stream-position
   if(stream.stream-open?)
   if (stream-shared-buffer(stream))
     stream-shared-buffer(stream).buffer-position
-      + stream-shared-buffer(stream).buffer-next 
+      + stream-shared-buffer(stream).buffer-next
   else
     stream.current-position
   end
@@ -658,13 +658,13 @@ define sealed method stream-position-setter
     // Don't call next-method() it just figures out the error cases again
     stream.current-position := the-position;
     stream-shared-buffer(stream) := #f;
-  else 
+  else
     if (closed?(stream))
       error(make(<stream-closed-error>, stream: stream,
-                 format-string: 
+                 format-string:
                    "Can't set position of closed stream"));
-    else       
-       error(make(<stream-position-error>, stream: stream, 
+    else
+       error(make(<stream-position-error>, stream: stream,
                   size: stream.accessor.accessor-size, position: position));
     end if;
   end;
@@ -684,32 +684,32 @@ define function multi-buffered-stream-position-setter
     elseif (logand(the-buffer.buffer-off-page-bits, the-position)
               == the-buffer.buffer-position)
         /* set position to same page */
-        the-buffer.buffer-next 
+        the-buffer.buffer-next
           := logand(the-buffer.buffer-on-page-bits, the-position);
     elseif (the-position >= 0)
       stream.current-position := the-position;
       stream-shared-buffer(stream) := #f;
-    else 
+    else
       if (closed?(stream))
         error(make(<stream-closed-error>, stream: stream,
-                   format-string: 
+                   format-string:
                      "Can't set position of closed stream"));
-      else       
-        error(make(<stream-position-error>, stream: stream, 
+      else
+        error(make(<stream-position-error>, stream: stream,
                    size: stream.accessor.accessor-size, position: position));
       end if;
     end if;
   elseif (the-position >= 0)
     stream.current-position := the-position;
-  else 
+  else
     if (closed?(stream))
       error(make(<stream-closed-error>, stream: stream,
-                 format-string: 
+                 format-string:
                    "Can't set position of closed stream"));
-    else       
-      error(make(<stream-position-error>, stream: stream, 
+    else
+      error(make(<stream-position-error>, stream: stream,
                  size: stream.accessor.accessor-size, position: position));
-    end if; 
+    end if;
   end if;
   the-position
 end function;
@@ -728,12 +728,12 @@ define sealed method adjust-stream-position
   if (position-from-start < 0)
     if (closed?(stream))
       error(make(<stream-closed-error>, stream: stream,
-                 format-string: 
+                 format-string:
                    "Can't set position of closed stream"));
-    else       
-      error(make(<stream-position-error>, stream: stream, 
+    else
+      error(make(<stream-position-error>, stream: stream,
                  size: stream.accessor.accessor-size, position: position));
-    end if; 
+    end if;
   else
     // Don't call next-method() it just figures out everything above again
     stream.current-position := position-from-start;
@@ -790,7 +790,7 @@ define inline function read-4-aligned-bytes-as-word
 end function read-4-aligned-bytes-as-word;
 
 define function write-4-aligned-bytes
-    (stream :: <multi-buffered-stream>, byte-1 :: <integer>, 
+    (stream :: <multi-buffered-stream>, byte-1 :: <integer>,
      byte-2 :: <integer>, byte-3 :: <integer>, byte-4 :: <integer>) => ()
   with-output-buffer (sb = stream)
     let sb :: <buffer> = sb; // HACK: TYPE ONLY
@@ -806,7 +806,7 @@ define function write-4-aligned-bytes
 end function write-4-aligned-bytes;
 
 define function write-8-aligned-bytes
-    (stream :: <multi-buffered-stream>, byte-1 :: <integer>, 
+    (stream :: <multi-buffered-stream>, byte-1 :: <integer>,
      byte-2 :: <integer>, byte-3 :: <integer>, byte-4 :: <integer>,
      byte-5 :: <integer>, byte-6 :: <integer>, byte-7 :: <integer>,
      byte-8 :: <integer>) => ()
@@ -827,7 +827,7 @@ end function write-8-aligned-bytes;
 define function read-4-aligned-bytes
     (stream :: <multi-buffered-stream>,
      #key on-end-of-stream = unsupplied())
- => (byte-1 :: <integer>, byte-2 :: <integer>, byte-3 :: <integer>, 
+ => (byte-1 :: <integer>, byte-2 :: <integer>, byte-3 :: <integer>,
      byte-4 :: <integer>)
   with-input-buffer (sb = stream)
     if (sb)
@@ -847,7 +847,7 @@ end function read-4-aligned-bytes;
 define function read-8-aligned-bytes
     (stream :: <multi-buffered-stream>,
      #key on-end-of-stream = unsupplied())
- => (byte-1 :: <integer>, byte-2 :: <integer>, byte-3 :: <integer>, 
+ => (byte-1 :: <integer>, byte-2 :: <integer>, byte-3 :: <integer>,
      byte-4 :: <integer>, byte-5 :: <integer>, byte-6 :: <integer>,
      byte-7 :: <integer>, byte-8 :: <integer>)
   with-input-buffer (sb = stream)

@@ -35,28 +35,28 @@ define method initialize
   unless (slot-initialized?(stream, outer-stream))
     stream.outer-stream := stream
   end;
-  unless (instance?(stream, <wrapper-stream>))  
+  unless (instance?(stream, <wrapper-stream>))
     select (_direction)
       #"input" => #f;
       #"output", #"input-output" =>
-	if (_start | _end)
-	  error("START: and END: keywords are not allowed for output streams");
-	end;
+        if (_start | _end)
+          error("START: and END: keywords are not allowed for output streams");
+        end;
       otherwise =>
-	error("%= is not one of %=, %=, or %=",
-	      _direction, #"input", #"output", #"input-output");
+        error("%= is not one of %=, %=, or %=",
+              _direction, #"input", #"output", #"input-output");
     end select;
     stream-direction(stream) := _direction;
   end unless;
 end method initialize;
 
 
-define method stream-element-type 
+define method stream-element-type
     (the-stream :: <basic-stream>) => (result :: <type>)
   the-stream.private-stream-element-type-value
 end method stream-element-type;
 
-define sealed generic stream-element-type-setter 
+define sealed generic stream-element-type-setter
     (value :: <type>, the-stream :: <stream>) => (result :: <type>);
 
 define method stream-element-type-setter
@@ -70,59 +70,59 @@ ignore(stream-element-type-setter);
 define open generic stream-direction
     (stream :: <stream>) => (direction);
 
-define sealed generic stream-direction-setter 
+define sealed generic stream-direction-setter
     (direction, the-stream :: <stream>) => (direction);
 
-define inline method stream-direction 
-    (the-stream :: <basic-stream>) => (result)  
+define inline method stream-direction
+    (the-stream :: <basic-stream>) => (result)
   select (the-stream.private-stream-direction-value)
     $input-output => #"input-output";
     $input => #"input";
     $output => #"output";
     $closed => #"closed";
-  end select 
+  end select
 end method stream-direction;
 
-define inline method stream-direction-setter 
+define inline method stream-direction-setter
     (the-direction, the-stream :: <basic-stream>) => (result)
   the-stream.private-stream-direction-value
     := select (the-direction)
-	 #"input-output" => $input-output;
-	 #"input" => $input;
-	 #"output" => $output;
-	 #"closed" => $closed;
+         #"input-output" => $input-output;
+         #"input" => $input;
+         #"output" => $output;
+         #"closed" => $closed;
        end select;
   the-direction
 end method stream-direction-setter;
 
 // Change these to use bit fields when everything works again
 
-define inline function readable? 
+define inline function readable?
     (the-stream :: <basic-stream>) => (result :: <boolean>)
   logand(the-stream.private-stream-direction-value, $input) ~== 0
 end function;
 
-define inline function writable? 
+define inline function writable?
     (the-stream :: <basic-stream>) => (result :: <boolean>)
   logand(the-stream.private-stream-direction-value, $output) ~== 0
 end function;
 
-define inline function closed? 
+define inline function closed?
     (the-stream :: <basic-stream>) => (result :: <boolean>)
   (the-stream.private-stream-direction-value == $closed)
 end function;
 
-define inline function read-only? 
+define inline function read-only?
     (the-stream :: <basic-stream>) => (result :: <boolean>)
   (the-stream.private-stream-direction-value == $input)
 end function;
 
-define inline function write-only? 
+define inline function write-only?
     (the-stream :: <basic-stream>) => (result :: <boolean>)
   (the-stream.private-stream-direction-value == $output)
 end function;
 
-define inline function read-write? 
+define inline function read-write?
     (the-stream :: <basic-stream>) => (result :: <boolean>)
   (the-stream.private-stream-direction-value == $input-output)
 end function;
@@ -130,7 +130,7 @@ end function;
 define open generic stream-lock
     (stream :: <basic-stream>) => (lock :: false-or(<lock>));
 
-define sealed generic stream-lock-setter 
+define sealed generic stream-lock-setter
     (value, the-stream :: <basic-stream>) => (result :: false-or(<lock>));
 
 define method stream-lock
@@ -148,8 +148,8 @@ end;
 
 define method close
     (stream :: <basic-stream>,
-     #rest keys, 
-     #key abort? :: <boolean>, 
+     #rest keys,
+     #key abort? :: <boolean>,
      wait? :: <boolean>,
      synchronize? :: <boolean>) => ()
   ignore(keys, abort?, wait?, synchronize?);
@@ -171,7 +171,7 @@ end method stream-at-end?;
 /// Positionable stream protocol
 
 define open abstract class <basic-positionable-stream> (<basic-stream>,
-							<positionable-stream>)
+                                                        <positionable-stream>)
   slot initial-position :: <position-type> = 0;
   slot current-position :: <position-type> = 0;
   slot final-position :: <position-type> = 0;
@@ -182,21 +182,21 @@ define open generic initial-position
     (stream :: <basic-positionable-stream>) => (result :: <position-type>);
 
 define open generic initial-position-setter
-    (the-position :: <position-type>, stream :: <basic-positionable-stream>) 
+    (the-position :: <position-type>, stream :: <basic-positionable-stream>)
  => (result :: <position-type>);
 
 define open generic current-position
     (stream :: <basic-positionable-stream>) => (result :: <position-type>);
 
 define open generic current-position-setter
-    (the-position :: <position-type>, stream :: <basic-positionable-stream>) 
+    (the-position :: <position-type>, stream :: <basic-positionable-stream>)
  => (result :: <position-type>);
 
 define open generic final-position
     (stream :: <basic-positionable-stream>) => (result :: <position-type>);
 
 define open generic final-position-setter
-    (the-position :: <position-type>, stream :: <basic-positionable-stream>) 
+    (the-position :: <position-type>, stream :: <basic-positionable-stream>)
  => (result :: <position-type>);
 */
 
@@ -254,9 +254,9 @@ define method adjust-stream-position
  => (position :: <position-type>)
   stream-position(stream)
     := select (from)
-	 #"current" => stream-position(stream) + delta;
-	 #"start"   => delta;
-	 #"end"     => stream-limit-or-error(stream) + delta;
+         #"current" => stream-position(stream) + delta;
+         #"start"   => delta;
+         #"end"     => stream-limit-or-error(stream) + delta;
        end
 end method adjust-stream-position;
 
@@ -337,13 +337,13 @@ end method unlock-stream;
 define macro with-stream-locked
   { with-stream-locked (?stream:expression) ?:body end }
   => { begin
-	 let _stream = ?stream;
-	 block ()
-	   lock-stream(_stream);
-	   ?body
-	 cleanup
-	   unlock-stream(_stream)
-	 end 
+         let _stream = ?stream;
+         block ()
+           lock-stream(_stream);
+           ?body
+         cleanup
+           unlock-stream(_stream)
+         end
        end }
 end macro with-stream-locked;
 

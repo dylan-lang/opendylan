@@ -36,7 +36,7 @@ define method inner-stream
   wrapper-stream.%inner-stream;
 end method inner-stream;
 
-define open generic inner-stream-setter 
+define open generic inner-stream-setter
     (stream :: <stream>, wrapper-stream :: <wrapper-stream>)
  => (stream :: <stream>);
 
@@ -99,7 +99,7 @@ define method read-into!
   apply(read-into!, stream.inner-stream, n, seq, keys)
 end method read-into!;
 
-define method stream-input-available? 
+define method stream-input-available?
     (stream :: <wrapper-stream>) => (available? :: <boolean>)
   stream-input-available?(stream.inner-stream)
 end method stream-input-available?;
@@ -235,7 +235,7 @@ define method stream-position
   stream-position(stream.inner-stream)
 end method stream-position;
 
-define method stream-position-setter 
+define method stream-position-setter
     (position :: <position-type>, stream :: <wrapper-stream>)
  => (position :: <position-type>)
   stream-position-setter(position, stream.inner-stream)

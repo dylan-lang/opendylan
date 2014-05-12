@@ -43,18 +43,18 @@ end class;
 define constant <power-of-two-buffer> :: <class> = <buffer>;
 
 /*
-define method initialize 
-    (the-buffer :: <power-of-two-buffer>, 
-     #rest initialization-arguments, 
-     #key 
+define method initialize
+    (the-buffer :: <power-of-two-buffer>,
+     #rest initialization-arguments,
+     #key
        known-power-of-two-size? :: <boolean> = #f,
        size: requested-buffer-size) => ();
   if (known-power-of-two-size?)
     next-method();
   else
-    apply(next-method, the-buffer, 
-	  size: round-to-power-of-two(requested-buffer-size),
-	  initialization-arguments);
+    apply(next-method, the-buffer,
+          size: round-to-power-of-two(requested-buffer-size),
+          initialization-arguments);
   end if;
   the-buffer.buffer-on-page-bits := the-buffer.buffer-size - 1;
   the-buffer.buffer-off-page-bits := lognot(the-buffer.on-page-bits);
@@ -63,19 +63,19 @@ end method initialize;
 
 // Hack
 define method make-<power-of-two-buffer>
-    (#rest initialization-arguments, 
-     #key 
+    (#rest initialization-arguments,
+     #key
        known-power-of-two-size? :: <boolean> = #f,
        size: requested-buffer-size,
-       fill = '\0', 
+       fill = '\0',
      #all-keys) => (the-buffer :: <power-of-two-buffer>);
   let the-buffer =
     if (known-power-of-two-size?)
       apply(make, <power-of-two-buffer>, initialization-arguments);
     else
-      apply(make, <power-of-two-buffer>, 
-	    size: round-to-power-of-two(requested-buffer-size),
-	    initialization-arguments);
+      apply(make, <power-of-two-buffer>,
+            size: round-to-power-of-two(requested-buffer-size),
+            initialization-arguments);
     end if;
   the-buffer.buffer-on-page-bits := the-buffer.buffer-size - 1;
   the-buffer.buffer-off-page-bits := lognot(the-buffer.buffer-on-page-bits);
@@ -83,14 +83,14 @@ define method make-<power-of-two-buffer>
 end method;
 
 define function round-to-power-of-two
-    (requested-size :: <integer>) => 
+    (requested-size :: <integer>) =>
     (rounded-size :: <integer>, log-two-size :: <integer>)
   unless (requested-size > 0)
     error("requested-size, %d is <= 0", requested-size);
   end unless;
   let rounded-size = 2;
   let number-of-shifts = 1; // log 2 of the buffer size
-  if (requested-size > 2) // 
+  if (requested-size > 2) //
     requested-size := requested-size - 1;
     rounded-size := 1;
     number-of-shifts := 0;

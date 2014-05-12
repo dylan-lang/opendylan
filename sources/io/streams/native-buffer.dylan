@@ -44,7 +44,7 @@ define sealed domain make (singleton(<buffer>));
 define sealed domain initialize (<buffer>);
 
 define inline sealed method make
-    (class :: subclass(<buffer>), 
+    (class :: subclass(<buffer>),
      #rest all-keys, #key fill = $byte-representation-fill, #all-keys)
  => (buffer :: <buffer>)
   apply(next-method, class, fill: as(<byte-representation>, fill), all-keys)
@@ -74,7 +74,7 @@ define /* inline */ sealed method element
 end method;
 
 //
-// buffer-element returns a <character> 
+// buffer-element returns a <character>
 //
 
 //
@@ -91,8 +91,8 @@ end method;
 // ELEMENT-SETTER
 //
 
-define /* inline */ sealed method element-setter 
-    (new-value :: <byte-value>, 
+define /* inline */ sealed method element-setter
+    (new-value :: <byte-value>,
      vector :: <buffer>, index :: <integer>) => (value)
   if (element-range-check(index, size(vector)))
     buffer-element(vector, index) := as(<byte-representation>, new-value);
@@ -101,8 +101,8 @@ define /* inline */ sealed method element-setter
   end if
 end method;
 
-define /* inline */ sealed method element-setter 
-    (new-value :: <byte-character>, 
+define /* inline */ sealed method element-setter
+    (new-value :: <byte-character>,
      vector :: <buffer>, index :: <integer>) => (value)
   if (element-range-check(index, size(vector)))
     buffer-element(vector, index) := as(<byte-representation>, new-value)
@@ -113,17 +113,17 @@ end method;
 
 
 //
-// ELEMENT-NO-BOUNDS-CHECK-SETTER 
+// ELEMENT-NO-BOUNDS-CHECK-SETTER
 //
 
-define inline sealed method element-no-bounds-check-setter 
-    (new-value :: <byte-value>, 
+define inline sealed method element-no-bounds-check-setter
+    (new-value :: <byte-value>,
      buffer :: <buffer>, index :: <integer>) => (value)
   buffer-element(buffer, index) := as(<byte-representation>, new-value);
 end method;
 
-define inline sealed method element-no-bounds-check-setter 
-    (new-value :: <byte-character>, 
+define inline sealed method element-no-bounds-check-setter
+    (new-value :: <byte-character>,
      buffer :: <buffer>, index :: <integer>) => (value)
   buffer-element(buffer, index) := as(<byte-representation>, new-value);
 end method;
@@ -132,7 +132,7 @@ end method;
 // EMPTY?
 //
 
-define inline sealed method empty? (buffer :: <buffer>) 
+define inline sealed method empty? (buffer :: <buffer>)
  => (result :: <boolean>)
   size(buffer) = 0
 end method;
@@ -163,7 +163,7 @@ define sealed method as (buffer-class == <buffer>, bs :: <byte-string>)
 end method;
 
 // already is a vector.  Maybe want method for simple object vector?
-define sealed method as 
+define sealed method as
     (class == <vector>, x :: <buffer>) => (vector :: <vector>)
   x
 end method;
@@ -172,7 +172,7 @@ end method;
 //// ITERATION
 
 define inline function buffer-current-element
-    (buffer :: <buffer>, state :: <integer>) 
+    (buffer :: <buffer>, state :: <integer>)
  => (result :: <byte-value>)
   element-no-bounds-check(buffer, state);
 end function;
@@ -226,7 +226,7 @@ end;
 define sealed method buffer-fill
     (target :: <buffer>, value :: <byte-value>,
      #key start :: <integer> = 0, end: last = size(target)) => ();
-  let last :: <integer> = 
+  let last :: <integer> =
     check-start-compute-end(target, start, last);
   fill-bytes!(target, value, start, last)
 end;
@@ -243,104 +243,104 @@ define function copy-bytes-range-error
     (src, src-start :: <integer>, dst, dst-start :: <integer>, n :: <integer>)
  => ()
   error("SRC-START %d DST-START %d AND N %d OUTSIDE OF SRC %= AND DST %=",
-	src-start, dst-start, n, src, dst);
+        src-start, dst-start, n, src, dst);
 end function;
 
 define sealed method copy-bytes
-    (dst :: <byte-string>, dst-start :: <integer>, 
+    (dst :: <byte-string>, dst-start :: <integer>,
      src :: <buffer>, src-start :: <integer>, n :: <integer>) => ()
   let src-end :: <integer> = src-start + n;
   let dst-end :: <integer> = dst-start + n;
   if (n >= 0 & src-start >= 0 & dst-start >= 0 & src-end <= size(src) & dst-end <= size(dst))
     primitive-replace-bytes!
-      (dst, primitive-repeated-slot-offset(dst), integer-as-raw(dst-start), 
+      (dst, primitive-repeated-slot-offset(dst), integer-as-raw(dst-start),
        src, primitive-repeated-slot-offset(src), integer-as-raw(src-start),
        integer-as-raw(n));
   else
     copy-bytes-range-error(src, src-start, dst, dst-start, n);
-  end if; 
+  end if;
 end method;
 
 define sealed method copy-bytes
-    (dst :: <buffer>, dst-start :: <integer>, 
+    (dst :: <buffer>, dst-start :: <integer>,
      src :: <byte-string>, src-start :: <integer>, n :: <integer>) => ()
   let src-end :: <integer> = src-start + n;
   let dst-end :: <integer> = dst-start + n;
-  if (n >= 0 & src-start >= 0 & dst-start >= 0 & src-end <= size(src) 
-	& dst-end <= size(dst))
+  if (n >= 0 & src-start >= 0 & dst-start >= 0 & src-end <= size(src)
+        & dst-end <= size(dst))
     primitive-replace-bytes!
-      (dst, primitive-repeated-slot-offset(dst), integer-as-raw(dst-start), 
+      (dst, primitive-repeated-slot-offset(dst), integer-as-raw(dst-start),
        src, primitive-repeated-slot-offset(src), integer-as-raw(src-start),
        integer-as-raw(n));
   else
     copy-bytes-range-error(src, src-start, dst, dst-start, n);
-  end if; 
+  end if;
 end method;
 
 define sealed method copy-bytes
-    (dst :: <buffer>, dst-start :: <integer>, 
+    (dst :: <buffer>, dst-start :: <integer>,
      src :: <buffer>, src-start :: <integer>, n :: <integer>) => ()
   let src-end :: <integer> = src-start + n;
   let dst-end :: <integer> = dst-start + n;
   if (n >= 0 & src-start >= 0 & dst-start >= 0 & src-end <= size(src) & dst-end <= size(dst))
     primitive-replace-bytes!
-      (dst, primitive-repeated-slot-offset(dst), integer-as-raw(dst-start), 
+      (dst, primitive-repeated-slot-offset(dst), integer-as-raw(dst-start),
        src, primitive-repeated-slot-offset(src), integer-as-raw(src-start),
        integer-as-raw(n));
   else
     copy-bytes-range-error(src, src-start, dst, dst-start, n);
-  end if; 
+  end if;
 end method;
 
 define sealed method copy-bytes
-    (dst :: <byte-vector>, dst-start :: <integer>, 
+    (dst :: <byte-vector>, dst-start :: <integer>,
      src :: <buffer>, src-start :: <integer>, n :: <integer>) => ()
   let src-end :: <integer> = src-start + n;
   let dst-end :: <integer> = dst-start + n;
   if (n >= 0 & src-start >= 0 & dst-start >= 0 & src-end <= size(src) & dst-end <= size(dst))
     primitive-replace-bytes!
-      (dst, primitive-repeated-slot-offset(dst), integer-as-raw(dst-start), 
+      (dst, primitive-repeated-slot-offset(dst), integer-as-raw(dst-start),
        src, primitive-repeated-slot-offset(src), integer-as-raw(src-start),
        integer-as-raw(n));
   else
     copy-bytes-range-error(src, src-start, dst, dst-start, n);
-  end if; 
+  end if;
 end method;
 
 define sealed method copy-bytes
-    (dst :: <buffer>, dst-start :: <integer>, 
+    (dst :: <buffer>, dst-start :: <integer>,
      src :: <byte-vector>, src-start :: <integer>, n :: <integer>) => ()
   let src-end :: <integer> = src-start + n;
   let dst-end :: <integer> = dst-start + n;
-  if (n >= 0 & src-start >= 0 & dst-start >= 0 & src-end <= size(src) 
-	& dst-end <= size(dst))
+  if (n >= 0 & src-start >= 0 & dst-start >= 0 & src-end <= size(src)
+        & dst-end <= size(dst))
     primitive-replace-bytes!
-      (dst, primitive-repeated-slot-offset(dst), integer-as-raw(dst-start), 
+      (dst, primitive-repeated-slot-offset(dst), integer-as-raw(dst-start),
        src, primitive-repeated-slot-offset(src), integer-as-raw(src-start),
        integer-as-raw(n));
   else
     copy-bytes-range-error(src, src-start, dst, dst-start, n);
-  end if; 
+  end if;
 end method;
 
 define sealed method copy-bytes
-    (dst :: <buffer>, dst-start :: <integer>, 
+    (dst :: <buffer>, dst-start :: <integer>,
      src :: <simple-object-vector>, src-start :: <integer>, n :: <integer>) => ()
   let src-end :: <integer> = src-start + n;
   let dst-end :: <integer> = dst-start + n;
   if (n >= 0 & src-start >= 0 & dst-start >= 0 & src-end <= size(src) & dst-end <= size(dst))
     for (src-i :: <integer> from src-start below src-end,
-	 dst-i :: <integer> from dst-start)
+         dst-i :: <integer> from dst-start)
       buffer-element(dst, dst-i)
-	:= as(<byte-representation>, element-no-bounds-check(src, src-i));
+        := as(<byte-representation>, element-no-bounds-check(src, src-i));
     end for;
   else
     copy-bytes-range-error(src, src-start, dst, dst-start, n);
-  end if; 
+  end if;
 end method;
 
 define sealed method copy-bytes
-    (dst :: <simple-object-vector>, dst-start :: <integer>, 
+    (dst :: <simple-object-vector>, dst-start :: <integer>,
      src :: <buffer>, src-start :: <integer>, n :: <integer>)
  => ()
   let src-end :: <integer> = src-start + n;
@@ -348,11 +348,11 @@ define sealed method copy-bytes
   if (n >= 0 & src-start >= 0 & dst-start >= 0 & src-end <= size(src) & dst-end <= size(dst))
     without-bounds-checks
       for (src-i :: <integer> from src-start below src-end,
-	   dst-i :: <integer> from dst-start)
-	dst[dst-i] := src[src-i];
+           dst-i :: <integer> from dst-start)
+        dst[dst-i] := src[src-i];
       end for;
     end without-bounds-checks;
   else
     copy-bytes-range-error(src, src-start, dst, dst-start, n);
-  end if; 
+  end if;
 end method;

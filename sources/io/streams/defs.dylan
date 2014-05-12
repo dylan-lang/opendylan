@@ -18,9 +18,9 @@ define constant <position-type> = <object>;
 /// Conditions
 
 define sealed class <stream-position-error> (<stream-error>)
-  constant slot stream-error-requested-position, 
+  constant slot stream-error-requested-position,
     required-init-keyword: position:;
-  constant slot stream-error-size-of-stream, 
+  constant slot stream-error-size-of-stream,
     required-init-keyword: size:;
 end class <stream-position-error>;
 
@@ -57,12 +57,12 @@ define function ensure-readable (stream :: <stream>) => ()
     // Not readable, so the error is either that it's closed or write-only
     if (closed?(stream))
       error(make(<stream-closed-error>, stream: stream,
-		 format-string: 
-		   "Can't read from closed stream"));
+                 format-string:
+                   "Can't read from closed stream"));
     elseif (write-only?(stream))
       error(make(<stream-not-readable>, stream: stream,
-		 format-string: 
-		   "Can't read from write-only stream"));
+                 format-string:
+                   "Can't read from write-only stream"));
     else
       error("Stream %= not readable, don't know why", stream);
     end if;
@@ -74,14 +74,14 @@ define function ensure-writable (stream :: <stream>) => ()
     // Not writable, so the error is either that it's closed or write-only
     if (closed?(stream))
       error(make(<stream-closed-error>, stream: stream,
-		 format-string: 
-		   "Can't write to closed stream"));
+                 format-string:
+                   "Can't write to closed stream"));
     elseif (read-only?(stream))
       error(make(<stream-not-writable>, stream: stream,
-		 format-string: 
-		   "Can't write to read-only stream"));
+                 format-string:
+                   "Can't write to read-only stream"));
     else
       error("Stream %= not writable, don't know why", stream);
     end if;
-  end unless;  
+  end unless;
 end function ensure-writable;

@@ -178,7 +178,7 @@ define method peek
   end
 end method peek;
 
-define method read 
+define method read
     (stream :: <sequence-stream>, n :: <integer>,
      #key on-end-of-stream = unsupplied())
  => (elements)
@@ -189,9 +189,9 @@ define method read
   if (n > src-n)
     if (unsupplied?(on-end-of-stream))
       signal(make(<incomplete-read-error>,
-		  stream: stream,
-		  count: src-n,
-		  sequence: copy-sequence(seq, start: pos, end: pos + src-n)));
+                  stream: stream,
+                  count: src-n,
+                  sequence: copy-sequence(seq, start: pos, end: pos + src-n)));
     end;
     n := src-n
   end;
@@ -215,9 +215,9 @@ define method read-into!
   if (n > src-n & dst-n > src-n
       & unsupplied?(on-end-of-stream))
     signal(make(<incomplete-read-error>,
-		stream: stream, 
-		count: n-read,
-		sequence: copy-sequence(dst, start: start, end: start + n-read)))
+                stream: stream,
+                count: n-read,
+                sequence: copy-sequence(dst, start: start, end: start + n-read)))
   end;
   n-read
 end method read-into!;

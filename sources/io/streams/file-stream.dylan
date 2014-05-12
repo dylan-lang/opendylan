@@ -30,7 +30,7 @@ define open abstract primary class <file-stream>
     (<single-buffered-stream>,
      <external-stream>,
      <basic-positionable-stream>)
-  constant slot stream-locator, 
+  constant slot stream-locator,
     required-init-keyword: locator:;
   slot accessor :: false-or(<external-stream-accessor>) = #f,
     init-keyword: accessor:;  // inherited from <external-stream>
@@ -58,10 +58,10 @@ define open class <byte-file-stream>
 end class;
 
 /*---*** andrewa: how can we get these to work?
-define copy-down-stream <byte-char-file-stream> 
+define copy-down-stream <byte-char-file-stream>
    element <byte-character> sequence <byte-string>;
 
-define copy-down-stream <byte-file-stream> 
+define copy-down-stream <byte-file-stream>
    element <byte> sequence <byte-string>;
 */
 
@@ -75,16 +75,16 @@ define method initialize
     stream.accessor := apply(new-accessor, #"file", initargs);
   end;
   if (requested-buffer-size)
-    stream-shared-buffer(stream) := 
+    stream-shared-buffer(stream) :=
       make-<power-of-two-buffer>(known-power-of-two-size?: #f,
-				 size: requested-buffer-size);
+                                 size: requested-buffer-size);
     // At this point, stream.input-buffer and stream.output-buffer are both
     // false.
-  else 
-    stream-shared-buffer(stream) := 
+  else
+    stream-shared-buffer(stream) :=
       make-<power-of-two-buffer>
-        (known-power-of-two-size?: #t, 
-	 size: accessor-preferred-buffer-size(stream.accessor));
+        (known-power-of-two-size?: #t,
+         size: accessor-preferred-buffer-size(stream.accessor));
   end if;
   // This call synchronizes the accessor file position with the stream
   // position.  It is necessary since #"append" mode can set the accessor
@@ -97,7 +97,7 @@ define method initialize
 end method initialize;
 
 define method make (class == <file-stream>, #rest initargs,
-		    #key locator, element-type = <byte-character>, encoding)
+                    #key locator, element-type = <byte-character>, encoding)
  => (stream :: <file-stream>)
   let type
     = apply(type-for-file-stream, locator, element-type, encoding, initargs);
@@ -114,7 +114,7 @@ define open generic type-for-file-stream
      #key, #all-keys)
  => (file-stream-type :: subclass(<file-stream>));
 
-define method type-for-file-stream 
+define method type-for-file-stream
     (locator :: <object>,
      element-type :: false-or(<type>), encoding :: <object>,
      #key, #all-keys)
@@ -122,7 +122,7 @@ define method type-for-file-stream
   <general-file-stream>
 end method type-for-file-stream;
 
-define method type-for-file-stream 
+define method type-for-file-stream
     (locator :: <object>,
      element-type == <byte-character>, encoding :: <object>,
      #key, #all-keys)
@@ -131,7 +131,7 @@ define method type-for-file-stream
 end method type-for-file-stream;
 
 //---*** This equates <character> with <byte-character>.  Hmm...
-define method type-for-file-stream 
+define method type-for-file-stream
     (locator :: <object>,
      element-type == <character>, encoding :: <object>,
      #key, #all-keys)
@@ -139,7 +139,7 @@ define method type-for-file-stream
   <byte-char-file-stream>
 end method type-for-file-stream;
 
-define method type-for-file-stream 
+define method type-for-file-stream
     (locator :: <object>,
      element-type  == <byte>, encoding :: <object>,
      #key, #all-keys)
@@ -175,7 +175,7 @@ end method stream-input-available?;
 // dirty then it might be larger than the size known to the accessor.  This
 // is a way of telling the size without releasing the buffer.  Tally-ho.
 
-define method stream-size 
+define method stream-size
     (the-stream :: <file-stream>) => (the-size :: false-or(<integer>))
   let the-buffer  = stream-shared-buffer(the-stream);
   if (the-buffer & the-buffer.buffer-dirty?)
@@ -213,7 +213,7 @@ end method;
 // Helper function for filling buffers from the accessor.
 define function load-buffer
     (the-stream :: <file-stream>, the-buffer :: <power-of-two-buffer>,
-     desired-file-position :: <integer>, start :: <integer>, 
+     desired-file-position :: <integer>, start :: <integer>,
      count :: <integer>) => (nread :: <integer>)
   if (desired-file-position ~= the-stream.accessor.accessor-position)
     accessor-position(the-stream.accessor) := desired-file-position;
@@ -227,11 +227,11 @@ end function;
 
 define function load-buffer-and-fill
     (the-stream :: <file-stream>, the-buffer :: <power-of-two-buffer>,
-     desired-file-position :: <integer>, start :: <integer>, 
+     desired-file-position :: <integer>, start :: <integer>,
      count :: <integer>) => ()
   let nread =
     load-buffer(the-stream, the-buffer, desired-file-position, start, count);
-  buffer-fill(the-buffer, 0, start: the-buffer.buffer-end);  
+  buffer-fill(the-buffer, 0, start: the-buffer.buffer-end);
   nread
 end function;
 
@@ -248,7 +248,7 @@ end function;
 // buffer-start is 0 for all input or input-output streams.  Non-0 starts
 // only occur with output-only streams.
 define method do-get-input-buffer
-    (the-stream :: <file-stream>, 
+    (the-stream :: <file-stream>,
      #key wait? = #t, bytes = 1)
  => (buffer :: false-or(<buffer>))
   ensure-readable(the-stream);
@@ -262,18 +262,18 @@ define method do-get-input-buffer
     if (current-buffer.buffer-next >= current-buffer.buffer-end)
       // Try to load the rest of the buffer to sync the buffer with the
       // file.  Another possibility is to force the buffer and read from
-      // the beginning. 
+      // the beginning.
       assert (current-buffer.buffer-end < current-buffer.buffer-size);
-      let read-position = 
-	current-buffer.buffer-position + current-buffer.buffer-end;
+      let read-position =
+        current-buffer.buffer-position + current-buffer.buffer-end;
       let start = current-buffer.buffer-end;
       let count = current-buffer.buffer-end - start;
       load-buffer(the-stream, current-buffer, read-position, start, count);
       if (current-buffer.buffer-next >= current-buffer.buffer-end)
-	// update the stream before the calling code signals eof
-	force-buffer(current-buffer, the-stream, 
-		     return-fresh-buffer?: #f);
-	current-buffer := #f;   // eof
+        // update the stream before the calling code signals eof
+        force-buffer(current-buffer, the-stream,
+                     return-fresh-buffer?: #f);
+        current-buffer := #f;   // eof
       end if;
     end if;
   else
@@ -293,11 +293,11 @@ end method do-get-input-buffer;
 define method do-next-input-buffer
     (the-stream :: <file-stream>, #key wait? = #t, bytes = 1)
  => (buffer :: false-or(<buffer>))
-  ignore(wait?, bytes);  
+  ignore(wait?, bytes);
   let the-buffer :: <buffer> = stream-input-buffer(the-stream);
   let the-size :: <buffer-index> = the-buffer.buffer-size;
   let start  :: <buffer-index> = 0;
-  let next-buffer-position = 
+  let next-buffer-position =
     the-buffer.buffer-position + the-buffer.buffer-end;
   // The accessor-position can be out of sync with the stream-position for
   // several reasons at this point.  The direction of the stream, input vs.
@@ -309,10 +309,10 @@ define method do-next-input-buffer
   // the buffer can be dirty only if this is an input-output stream.
   the-buffer := force-buffer(the-buffer, the-stream, return-fresh-buffer?: #t);
   the-stream.stream-input-buffer := the-buffer;
-  the-stream.stream-shared-buffer := the-buffer;  
+  the-stream.stream-shared-buffer := the-buffer;
   let nread =
-    load-buffer(the-stream, the-buffer,  next-buffer-position, start, 
-		the-size);
+    load-buffer(the-stream, the-buffer,  next-buffer-position, start,
+                the-size);
   // Do all of this initialization even if nothing was read (eof)
   // because read line actually leaves the buffer as the last empty
   // buffer rather than signaling/taking eof actions if the last
@@ -325,7 +325,7 @@ define method do-next-input-buffer
   if (nread > 0)
     the-buffer
   else
-    #f		// end of file
+    #f                // end of file
   end
 end method do-next-input-buffer;
 
@@ -365,11 +365,11 @@ define method do-next-output-buffer
   ignore(bytes);
   let the-buffer :: <buffer> = stream-output-buffer(the-stream);
   assert(the-buffer.buffer-end = the-buffer.buffer-size);
-  let next-buffer-position = 
-    the-buffer.buffer-position + the-buffer.buffer-end; 
+  let next-buffer-position =
+    the-buffer.buffer-position + the-buffer.buffer-end;
   the-buffer := force-buffer(the-buffer, the-stream, return-fresh-buffer?: #t);
   the-stream.stream-output-buffer := the-buffer;
-  the-stream.stream-shared-buffer := the-buffer;  
+  the-stream.stream-shared-buffer := the-buffer;
   buffer-fill(the-buffer, 0); // ensures gaps fill with zero
   the-buffer.buffer-position := next-buffer-position;
   the-buffer.buffer-dirty? := #f;
@@ -404,7 +404,7 @@ end method do-force-output-buffers;
 // This is important because single-buffered input-output streams may have
 // dirty buffers which are currently input buffers.
 // make these function when through debugged
-define function force-buffer 
+define function force-buffer
     (the-buffer :: <buffer>, the-stream :: <file-stream>,
      #key return-fresh-buffer? = #f)
  => (the-buffer :: <buffer>)
@@ -415,14 +415,14 @@ define function force-buffer
     if (new-file-position ~= the-stream.accessor.accessor-position)
       accessor-position(the-stream.accessor) := new-file-position;
     end if;
-    if (count > 0)		// implies valid output buffer
+    if (count > 0)                // implies valid output buffer
       let (nwritten :: <integer>, new-buffer :: <buffer>)
-	= accessor-write-from(the-stream.accessor, the-stream, start, count,
-			      buffer: the-buffer, 
-			      return-fresh-buffer?: return-fresh-buffer?);
+        = accessor-write-from(the-stream.accessor, the-stream, start, count,
+                              buffer: the-buffer,
+                              return-fresh-buffer?: return-fresh-buffer?);
       the-buffer := new-buffer;
       if (nwritten ~= count)
-	error("Bad write count")
+        error("Bad write count")
       end;
       if (write-only?(the-stream))
         the-buffer.buffer-start := start + nwritten;
@@ -434,12 +434,12 @@ define function force-buffer
 end;
 
 /// Positioning methods on aligned power of two buffers.
- 
+
 define method stream-position
     (stream :: <file-stream>) => (position :: <integer>)
   if (stream-input-buffer(stream) | stream-output-buffer(stream))
     stream-shared-buffer(stream).buffer-position
-      + stream-shared-buffer(stream).buffer-next 
+      + stream-shared-buffer(stream).buffer-next
   elseif (closed?(stream))
     // It's pretty much arbitrary, but it's important that the position
     // not be the end of the stream.  Which it is likely to be in many
@@ -466,10 +466,10 @@ define method stream-position-setter
   else
     if (closed?(stream))
       error(make(<stream-closed-error>, stream: stream,
-                 format-string: 
+                 format-string:
                    "Can't set position of closed stream"));
-    else       
-      error(make(<stream-position-error>, stream: stream, 
+    else
+      error(make(<stream-position-error>, stream: stream,
                  size: stream.accessor.accessor-size, position: position));
     end if;
   end;
@@ -486,9 +486,9 @@ define method writable-file-stream-position-setter
   if ((position >= 0))
     stream.current-position := position;
     adjust-stream-position-from-start(position, stream, size-of-stream);
-  else 
-    signal(make(<stream-position-error>, stream: stream, 
-		size: stream.accessor.accessor-size, position: position));
+  else
+    signal(make(<stream-position-error>, stream: stream,
+                size: stream.accessor.accessor-size, position: position));
   end;
   position
 end method;
@@ -500,18 +500,18 @@ define method adjust-stream-position
   let size-of-stream :: <integer> = stream-size(stream);
   let position-from-start
     = select (from)
-	#"current" => stream-position(stream) + delta;
-	#"start"   => delta;
-	#"end"     => size-of-stream + delta;
+        #"current" => stream-position(stream) + delta;
+        #"start"   => delta;
+        #"end"     => size-of-stream + delta;
       end;
-  if ((position-from-start < 0) | 
-	((write-only?(stream)) & (position-from-start > size-of-stream)))
+  if ((position-from-start < 0) |
+        ((write-only?(stream)) & (position-from-start > size-of-stream)))
     if (closed?(stream))
       error(make(<stream-closed-error>, stream: stream,
-		 format-string: 
-		   "Can't set position of closed stream"));
-    else       
-       error(make(<stream-position-error>, stream: stream, 
+                 format-string:
+                   "Can't set position of closed stream"));
+    else
+       error(make(<stream-position-error>, stream: stream,
                   size: stream.accessor.accessor-size, position: position));
     end if;
   else
@@ -523,8 +523,8 @@ define method adjust-stream-position
   position-from-start
 end method adjust-stream-position;
 
-    
-define constant $null-buffer :: <buffer> = 
+
+define constant $null-buffer :: <buffer> =
   make(<buffer>, size: 1, fill: 0, buffer-start: 0, buffer-end: 1);
 
 define method adjust-stream-position-from-start
@@ -533,161 +533,161 @@ define method adjust-stream-position-from-start
 
   select (the-stream.stream-direction)
     // Input streams
-    #"input" => 
+    #"input" =>
       let the-buffer :: <buffer> = stream-shared-buffer(the-stream);
-      let new-buffer-position = 
-	logand(the-buffer.buffer-off-page-bits, position-from-start);
-      let new-buffer-next = 
-	logand(the-buffer.buffer-on-page-bits, position-from-start);
+      let new-buffer-position =
+        logand(the-buffer.buffer-off-page-bits, position-from-start);
+      let new-buffer-next =
+        logand(the-buffer.buffer-on-page-bits, position-from-start);
       // Input only streams can't have partial buffers or dirty buffers.
       if (size-of-stream & position-from-start > size-of-stream)
-	signal(make(<stream-position-error>, stream: the-stream, 
-		    size: size-of-stream, position: position-from-start));
+        signal(make(<stream-position-error>, stream: the-stream,
+                    size: size-of-stream, position: position-from-start));
       elseif (stream-input-buffer(the-stream)
                 & (new-buffer-position = the-buffer.buffer-position)
                 & (new-buffer-next >= the-buffer.buffer-start)
                 & (new-buffer-next <= the-buffer.buffer-end))
-	// just set the position
-	the-buffer.buffer-next := new-buffer-next;
+        // just set the position
+        the-buffer.buffer-next := new-buffer-next;
       else
-	// empty the buffer
+        // empty the buffer
         the-buffer.buffer-end := new-buffer-next;
-	the-buffer.buffer-position := new-buffer-position;
-	the-buffer.buffer-start := new-buffer-next;
-	the-buffer.buffer-next := new-buffer-next;
-	// Setting the input buffer turns out to be necessary. In the case
-	// that setting the stream position is the first thing done after
-	// the stream is opened then there is a shared buffer but no input
-	// or output buffer.  Get-input-buffer doesn't like that.
-	stream-input-buffer(the-stream) := the-buffer;
-	// buffer-dirty? should always be #f
+        the-buffer.buffer-position := new-buffer-position;
+        the-buffer.buffer-start := new-buffer-next;
+        the-buffer.buffer-next := new-buffer-next;
+        // Setting the input buffer turns out to be necessary. In the case
+        // that setting the stream position is the first thing done after
+        // the stream is opened then there is a shared buffer but no input
+        // or output buffer.  Get-input-buffer doesn't like that.
+        stream-input-buffer(the-stream) := the-buffer;
+        // buffer-dirty? should always be #f
       end if;
     // Input-output streams
     #"input-output" =>
       unless (size-of-stream)
-        error(make(<stream-position-error>, stream: the-stream, 
+        error(make(<stream-position-error>, stream: the-stream,
                    size: size-of-stream, position: position-from-start,
                    format-string: "input-output stream must be positionable"));
       end unless;
       let the-buffer :: <buffer> = stream-shared-buffer(the-stream);
-      let new-buffer-position = 
-	logand(the-buffer.buffer-off-page-bits, position-from-start);
-      let new-buffer-next = 
-	logand(the-buffer.buffer-on-page-bits, position-from-start);
+      let new-buffer-position =
+        logand(the-buffer.buffer-off-page-bits, position-from-start);
+      let new-buffer-next =
+        logand(the-buffer.buffer-on-page-bits, position-from-start);
       if (position-from-start > size-of-stream) // off the end of file
-	// Note position-from-start = size-of-stream is fine because there
-	// are no gaps and get-output-buffer will work.  Get-output-buffer
-	// knows perfectly well how to deal with buffer-next = buffer-end.
-	// That is the normal case for write-element.
-	if (new-buffer-position = the-buffer.buffer-position)
-	  // New position is in the last buffer of the stream and the last
-	  // buffer is current and the new position is off the end of file.
-	  // Now check for partial buffer.  Could be partial and not at end.
-	  let start-to-buffer-end = 
-	    the-buffer.buffer-position + the-buffer.buffer-end;
-	  if (start-to-buffer-end < size-of-stream)
-	    // There is stuff in the file that isn't in the buffer, fix that
-	    load-buffer-and-fill(the-stream, the-buffer, 
-				 start-to-buffer-end, // file position
-				 the-buffer.buffer-end, // start
-				 size-of-stream - start-to-buffer-end);
-	  end if;
-	else // new position is off end-of-file and not in the current buffer
-	  the-buffer := force-buffer(the-buffer, the-stream, 
-				     return-fresh-buffer?: #t);
-	  the-stream.stream-shared-buffer := the-buffer;
-	  // Don't set stream-input/output-buffer now it's done at the
-	  // end of this else clause.
-	  if (new-buffer-position < size-of-stream)
-	    // We weren't in the last buffer, so move to it and load it up.
-	    let start = 0;
-	    load-buffer-and-fill(the-stream, the-buffer, new-buffer-position,
-				 start, the-buffer.buffer-size);
-	  else 
-	    // new-buffer-position is off the eof, so this buffer is
-	    // completely off the end of file.  All nulls.
-	    buffer-fill(the-buffer, 0, start: 0);
-	  end if;
-	  the-buffer.buffer-start := 0;
-	  the-buffer.buffer-position := new-buffer-position;
-	  if (new-buffer-next = 0)
-	    // We have a problem.  Just setting buffer-dirty? to #t isn't
-	    // going to force growing the file because with buffer-end equal
-	    // to buffer-start the force-output-buffers call in close won't
-	    // actually write any nulls to the file.   My solution is to
-	    // write a null to (position-from-start - 1) this is safe to do
-	    // because the test on this branch was (position-from-start >
-	    // size-of-file) so there must be at least one null at eof.
-	    $null-buffer.buffer-position := position-from-start - 1;
-	    $null-buffer.buffer-dirty? := #t;
-	    force-buffer
-	      ($null-buffer, the-stream, return-fresh-buffer?: #f);
-	  end if;
-	end if;
-	the-buffer.buffer-next := new-buffer-next;
-	// Setting buffer-end to be the new position includes any nulls in
-	// this buffer and allows get-output-buffer to be called on the newly
-	// positioned stream.
-	the-buffer.buffer-end := new-buffer-next;
-	// Setting position off the end of file automatically makes the buffer
-	// dirty because we have appended nulls to the file. 
-	the-buffer.buffer-dirty? := #t;
-	// Assume we are going to do output 8).  We're off the eof so
-	// doing input would be an error.  We've already done all the
-	// work to turn around the buffer so why make get-output-buffer do it
-	// again? 
-	if (stream-input-buffer(the-stream))
-	  do-release-input-buffer(the-stream);
-	  stream-output-buffer(the-stream) := the-buffer;
-	end if;
+        // Note position-from-start = size-of-stream is fine because there
+        // are no gaps and get-output-buffer will work.  Get-output-buffer
+        // knows perfectly well how to deal with buffer-next = buffer-end.
+        // That is the normal case for write-element.
+        if (new-buffer-position = the-buffer.buffer-position)
+          // New position is in the last buffer of the stream and the last
+          // buffer is current and the new position is off the end of file.
+          // Now check for partial buffer.  Could be partial and not at end.
+          let start-to-buffer-end =
+            the-buffer.buffer-position + the-buffer.buffer-end;
+          if (start-to-buffer-end < size-of-stream)
+            // There is stuff in the file that isn't in the buffer, fix that
+            load-buffer-and-fill(the-stream, the-buffer,
+                                 start-to-buffer-end, // file position
+                                 the-buffer.buffer-end, // start
+                                 size-of-stream - start-to-buffer-end);
+          end if;
+        else // new position is off end-of-file and not in the current buffer
+          the-buffer := force-buffer(the-buffer, the-stream,
+                                     return-fresh-buffer?: #t);
+          the-stream.stream-shared-buffer := the-buffer;
+          // Don't set stream-input/output-buffer now it's done at the
+          // end of this else clause.
+          if (new-buffer-position < size-of-stream)
+            // We weren't in the last buffer, so move to it and load it up.
+            let start = 0;
+            load-buffer-and-fill(the-stream, the-buffer, new-buffer-position,
+                                 start, the-buffer.buffer-size);
+          else
+            // new-buffer-position is off the eof, so this buffer is
+            // completely off the end of file.  All nulls.
+            buffer-fill(the-buffer, 0, start: 0);
+          end if;
+          the-buffer.buffer-start := 0;
+          the-buffer.buffer-position := new-buffer-position;
+          if (new-buffer-next = 0)
+            // We have a problem.  Just setting buffer-dirty? to #t isn't
+            // going to force growing the file because with buffer-end equal
+            // to buffer-start the force-output-buffers call in close won't
+            // actually write any nulls to the file.   My solution is to
+            // write a null to (position-from-start - 1) this is safe to do
+            // because the test on this branch was (position-from-start >
+            // size-of-file) so there must be at least one null at eof.
+            $null-buffer.buffer-position := position-from-start - 1;
+            $null-buffer.buffer-dirty? := #t;
+            force-buffer
+              ($null-buffer, the-stream, return-fresh-buffer?: #f);
+          end if;
+        end if;
+        the-buffer.buffer-next := new-buffer-next;
+        // Setting buffer-end to be the new position includes any nulls in
+        // this buffer and allows get-output-buffer to be called on the newly
+        // positioned stream.
+        the-buffer.buffer-end := new-buffer-next;
+        // Setting position off the end of file automatically makes the buffer
+        // dirty because we have appended nulls to the file.
+        the-buffer.buffer-dirty? := #t;
+        // Assume we are going to do output 8).  We're off the eof so
+        // doing input would be an error.  We've already done all the
+        // work to turn around the buffer so why make get-output-buffer do it
+        // again?
+        if (stream-input-buffer(the-stream))
+          do-release-input-buffer(the-stream);
+          stream-output-buffer(the-stream) := the-buffer;
+        end if;
       elseif (new-buffer-position = the-buffer.buffer-position)
-	// change position within the current buffer, but not off the eof,
-	// possibly exactly at the eof but that is just fine (whew!).
-	// First fill in any partial buffer.
-	if (the-buffer.buffer-end < the-buffer.buffer-size)
-	  let start-to-buffer-end = 
-	    the-buffer.buffer-position + the-buffer.buffer-end;
-	    if (start-to-buffer-end < size-of-stream)
-	      // There is stuff in the file that isn't in the buffer, fix that
-	      let start = the-buffer.buffer-end;
-	      load-buffer(the-stream, the-buffer, start-to-buffer-end,
-			  start, 
-			  min(the-buffer.buffer-size,
-			      size-of-stream - start-to-buffer-end));
-	    end if;
-	  // load-buffer sets a new value for buffer-end
-	  buffer-fill(the-buffer, 0, start: the-buffer.buffer-end);
-	end if; // not a partial buffer
-	the-buffer.buffer-next := new-buffer-next;
+        // change position within the current buffer, but not off the eof,
+        // possibly exactly at the eof but that is just fine (whew!).
+        // First fill in any partial buffer.
+        if (the-buffer.buffer-end < the-buffer.buffer-size)
+          let start-to-buffer-end =
+            the-buffer.buffer-position + the-buffer.buffer-end;
+            if (start-to-buffer-end < size-of-stream)
+              // There is stuff in the file that isn't in the buffer, fix that
+              let start = the-buffer.buffer-end;
+              load-buffer(the-stream, the-buffer, start-to-buffer-end,
+                          start,
+                          min(the-buffer.buffer-size,
+                              size-of-stream - start-to-buffer-end));
+            end if;
+          // load-buffer sets a new value for buffer-end
+          buffer-fill(the-buffer, 0, start: the-buffer.buffer-end);
+        end if; // not a partial buffer
+        the-buffer.buffer-next := new-buffer-next;
       else // change position to an interior position in some other buffer
-	the-buffer := force-buffer(the-buffer, the-stream, 
-				   return-fresh-buffer?: #t);
-	the-stream.stream-shared-buffer := the-buffer;
-	// Don't set stream-input/output-buffer now it's done at the
-	// end of this else clause.
-	let start = 0;
-	load-buffer-and-fill(the-stream, the-buffer, new-buffer-position,
-			     start,  the-buffer.buffer-size);
-	the-buffer.buffer-position := new-buffer-position;
-	the-buffer.buffer-start := start;
-	the-buffer.buffer-next := new-buffer-next;
-	the-buffer.buffer-dirty? := #f;
-      end if; 
-      if (stream-input-buffer(the-stream)) 
-	stream-input-buffer(the-stream) := the-buffer;
+        the-buffer := force-buffer(the-buffer, the-stream,
+                                   return-fresh-buffer?: #t);
+        the-stream.stream-shared-buffer := the-buffer;
+        // Don't set stream-input/output-buffer now it's done at the
+        // end of this else clause.
+        let start = 0;
+        load-buffer-and-fill(the-stream, the-buffer, new-buffer-position,
+                             start,  the-buffer.buffer-size);
+        the-buffer.buffer-position := new-buffer-position;
+        the-buffer.buffer-start := start;
+        the-buffer.buffer-next := new-buffer-next;
+        the-buffer.buffer-dirty? := #f;
+      end if;
+      if (stream-input-buffer(the-stream))
+        stream-input-buffer(the-stream) := the-buffer;
       else
-	//  Either stream-output-buffer is set (still to the old
-	//  buffer) or neither the input nor output buffer is set.  In
-	//  either case this is a reasonable choice.
-	stream-output-buffer(the-stream) := the-buffer;
+        //  Either stream-output-buffer is set (still to the old
+        //  buffer) or neither the input nor output buffer is set.  In
+        //  either case this is a reasonable choice.
+        stream-output-buffer(the-stream) := the-buffer;
       end if;
     // Output streams
     #"output" =>
       let the-buffer :: <buffer> = stream-shared-buffer(the-stream);
-      let new-buffer-position = 
-	logand(the-buffer.buffer-off-page-bits, position-from-start);
-      let new-buffer-next = 
-	logand(the-buffer.buffer-on-page-bits, position-from-start);
+      let new-buffer-position =
+        logand(the-buffer.buffer-off-page-bits, position-from-start);
+      let new-buffer-next =
+        logand(the-buffer.buffer-on-page-bits, position-from-start);
       // Output only streams have special problems with fixed alignment
       // buffers.  Basically we allow buffer-start to be non-zero whenever
       // the position is set to the middle of the buffer.  We always flush
@@ -697,52 +697,52 @@ define method adjust-stream-position-from-start
       // flushed is calculated as buffer-end - buffer-start, not buffer-size
       // - buffer-end.
       if ((new-buffer-position = the-buffer.buffer-position)
-	    & (new-buffer-next >= the-buffer.buffer-start)
-	    & (new-buffer-next <= the-buffer.buffer-end))
-	// Just move the pointer.  It's in the dirty region already.  Note
-	// that the <= test says that if you move to the current position,
-	// that is new-buffer-next = the-buffer.buffer-next then you just
-	// continue writing.  This is also fine if you set the position to
-	// 0 before any writes have occurred.
-	the-buffer.buffer-next := new-buffer-next;
+            & (new-buffer-next >= the-buffer.buffer-start)
+            & (new-buffer-next <= the-buffer.buffer-end))
+        // Just move the pointer.  It's in the dirty region already.  Note
+        // that the <= test says that if you move to the current position,
+        // that is new-buffer-next = the-buffer.buffer-next then you just
+        // continue writing.  This is also fine if you set the position to
+        // 0 before any writes have occurred.
+        the-buffer.buffer-next := new-buffer-next;
       else
-	// Move to a new buffer, even if it is the same
-	// buffer-position.  Can't deal with holes except at the
-	// beginning or end of the buffer.	
-	the-buffer := force-buffer(the-buffer, the-stream, 
-				   return-fresh-buffer?: #t);
-	the-stream.stream-shared-buffer := the-buffer;
-	// Stream-output-buffer is set at the end of the #"output" case.
-	the-buffer.buffer-position := new-buffer-position;
-	the-buffer.buffer-next := new-buffer-next;
-	the-buffer.buffer-end := new-buffer-next;
-	if (size-of-stream
+        // Move to a new buffer, even if it is the same
+        // buffer-position.  Can't deal with holes except at the
+        // beginning or end of the buffer.
+        the-buffer := force-buffer(the-buffer, the-stream,
+                                   return-fresh-buffer?: #t);
+        the-stream.stream-shared-buffer := the-buffer;
+        // Stream-output-buffer is set at the end of the #"output" case.
+        the-buffer.buffer-position := new-buffer-position;
+        the-buffer.buffer-next := new-buffer-next;
+        the-buffer.buffer-end := new-buffer-next;
+        if (size-of-stream
               & position-from-start > size-of-stream) // off the end of file.
-	  // We force a null out to guarantee that the stream
-	  // size grows when position is set past the end of file.
-	  if (new-buffer-next = 0)
-	    // Shit, we have to force the null into the position one before
-	    // the beginning of this buffer.
-	    $null-buffer.buffer-position := position-from-start - 1;
-	    $null-buffer.buffer-dirty? := #t;
-	    force-buffer($null-buffer, the-stream,
-			 return-fresh-buffer?: #f);
-	    the-buffer.buffer-start := new-buffer-next;
-	  else
-	    the-buffer[new-buffer-next - 1] := 0;
-	    the-buffer.buffer-start := new-buffer-next  - 1;
-	    the-buffer.buffer-dirty? := #t;
-	  end if;
-	else
-	  the-buffer.buffer-start := new-buffer-next;
-	end if;
+          // We force a null out to guarantee that the stream
+          // size grows when position is set past the end of file.
+          if (new-buffer-next = 0)
+            // Shit, we have to force the null into the position one before
+            // the beginning of this buffer.
+            $null-buffer.buffer-position := position-from-start - 1;
+            $null-buffer.buffer-dirty? := #t;
+            force-buffer($null-buffer, the-stream,
+                         return-fresh-buffer?: #f);
+            the-buffer.buffer-start := new-buffer-next;
+          else
+            the-buffer[new-buffer-next - 1] := 0;
+            the-buffer.buffer-start := new-buffer-next  - 1;
+            the-buffer.buffer-dirty? := #t;
+          end if;
+        else
+          the-buffer.buffer-start := new-buffer-next;
+        end if;
       end if;
       // Make sure.  Could be first operation on stream.
       stream-output-buffer(the-stream) := the-buffer;
     #"closed" =>
        error(make(<stream-closed-error>, stream: the-stream,
-		 format-string: 
-		   "Can't set position of closed end stream"));     
+                 format-string:
+                   "Can't set position of closed end stream"));
   end select;
   values()
 end method;
@@ -769,9 +769,9 @@ define method read-to-end
     end if
   else
     error(make(<stream-closed-error>, stream: stream,
-               format-string: 
+               format-string:
                  "Can't read from closed stream"));
-    
+
   end if;
 end method read-to-end;
 
@@ -784,8 +784,8 @@ define method stream-contents
             stream.stream-locator);
     elseif (closed?(stream))
       error(make(<stream-closed-error>, stream: stream,
-                 format-string: 
-                   "Can't set call stream-contents on a closed stream")); 
+                 format-string:
+                   "Can't set call stream-contents on a closed stream"));
     else
       error("Cannot call stream-contents. Stream isn't readable: %=",
             stream.stream-locator);
