@@ -711,3 +711,69 @@ define inline function ins--switch*
  => (instruction :: <llvm-instruction>);
   ins--switch(builder, value, default, jump-table)
 end function;
+
+// Convenience macros
+
+define macro ins--if
+  { ins--if(?builder:expression, ?test:expression) ?:body ?elses end }
+    => { do-ins--if(?builder, ?test, method() ?body end, ?elses) }
+  elses:
+  { } => { #f }
+  { ins--else ?:body } => { method() ?body end }
+end macro;
+
+define function do-ins--if
+    (builder :: <llvm-builder>, test,
+     iftrue-thunk :: <function>, iffalse-thunk :: false-or(<function>))
+ => (value :: <llvm-value>)
+  let test-bb = builder.llvm-builder-basic-block;
+  let iftrue-bb = make(<llvm-basic-block>);
+  let iffalse-bb = if (iffalse-thunk) make(<llvm-basic-block>) end;
+  let common-bb = make(<llvm-basic-block>);
+
+  // Branch on test results
+  if (iffalse-bb)
+    ins--br(builder, test, iftrue-bb, iffalse-bb);
+  else
+    ins--br(builder, test, iftrue-bb, common-bb);
+  end if;
+
+  // Condition true block
+  ins--block(builder, iftrue-bb);
+  let iftrue-value = iftrue-thunk();
+  let iftrue-exit-bb = builder.llvm-builder-basic-block;
+  if (iftrue-exit-bb)
+    ins--br(builder, common-bb);
+  end if;
+
+  // Condition false block
+  let (iffalse-value, iffalse-exit-bb)
+    = if (iffalse-bb)
+        ins--block(builder, iffalse-bb);
+        let value = iffalse-thunk();
+        let exit-bb = builder.llvm-builder-basic-block;
+        if (exit-bb)
+          ins--br(builder, common-bb);
+        end if;
+        values(value, exit-bb)
+      else
+        values(make(<llvm-undef-constant>), test-bb)
+      end if;
+
+  // Merge point
+  ins--block(builder, common-bb);
+  if (iftrue-exit-bb & iffalse-exit-bb)
+    llvm-constrain-type(llvm-value-type(iftrue-value),
+                        llvm-value-type(iffalse-value));
+    if (llvm-void-type?(llvm-value-type(iftrue-value)))
+      make(<llvm-undef-constant>)
+    else
+      ins--phi*(builder, iftrue-value, iftrue-exit-bb,
+                iffalse-value, iffalse-exit-bb)
+    end if;
+  elseif (iftrue-exit-bb)
+    iftrue-value
+  else
+    iffalse-value
+  end if
+end function;

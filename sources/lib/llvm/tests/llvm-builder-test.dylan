@@ -1511,3 +1511,113 @@ define llvm-builder function-test ins--landingpad ()
                 "        cleanup"),
               builder-test-function-disassembly(builder));
 end function-test ins--landingpad;
+
+define llvm-builder macro-test ins--if-test ()
+  with-test-unit ("ins--if, no else, no value")
+    let builder = make-builder-with-test-function();
+
+    let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
+    let ptr = ins--alloca(builder, float-type, 1, alignment: 4);
+
+    let cmp = ins--icmp-uge(builder, 1, 2);
+    ins--if(builder, cmp)
+      ins--store(builder, 1.0s0, ptr, alignment: 4);
+    end ins--if;
+
+    check-equal("ins--if disassembly",
+                #("entry:",
+                  "%0 = alloca float, align 4",
+                  "%1 = icmp uge i32 1, 2",
+                  "br i1 %1, label %2, label %3",
+                  "store float 1.000000e+00, float* %0, align 4",
+                  "br label %3"),
+                builder-test-function-disassembly(builder));
+  end;
+
+  with-test-unit ("ins--if with else, no value")
+    let builder = make-builder-with-test-function();
+
+    let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
+    let ptr = ins--alloca(builder, float-type, 1, alignment: 4);
+
+    let cmp = ins--icmp-uge(builder, 1, 2);
+    ins--if(builder, cmp)
+      ins--store(builder, 1.0s0, ptr, alignment: 4);
+    ins--else
+      ins--store(builder, 2.0s0, ptr, alignment: 4);
+    end ins--if;
+
+    check-equal("ins--if disassembly",
+                #("entry:",
+                  "%0 = alloca float, align 4",
+                  "%1 = icmp uge i32 1, 2",
+                  "br i1 %1, label %2, label %3",
+                  "store float 1.000000e+00, float* %0, align 4",
+                  "br label %4",
+                  "store float 2.000000e+00, float* %0, align 4",
+                  "br label %4"),
+                builder-test-function-disassembly(builder));
+  end;
+
+  with-test-unit ("ins--if, no else, with value")
+    let builder = make-builder-with-test-function();
+
+    let cmp = ins--icmp-uge(builder, 1, 2);
+    ins--if(builder, cmp)
+      ins--add(builder, 1111, 2222);
+    end ins--if;
+
+    check-equal("ins--if disassembly",
+                #("entry:",
+                  "%0 = icmp uge i32 1, 2",
+                  "br i1 %0, label %1, label %3",
+                  "%2 = add i32 1111, 2222",
+                  "br label %3",
+                  "%4 = phi i32 [ %2, %1 ], [ undef, %entry ]"),
+                builder-test-function-disassembly(builder));
+  end;
+
+  with-test-unit ("ins--if with else, with value")
+    let builder = make-builder-with-test-function();
+
+    let cmp = ins--icmp-uge(builder, 1, 2);
+    ins--if(builder, cmp)
+      ins--add(builder, 1111, 2222);
+    ins--else
+      ins--add(builder, 3333, 4444);
+    end ins--if;
+
+    check-equal("ins--if disassembly",
+                #("entry:",
+                  "%0 = icmp uge i32 1, 2",
+                  "br i1 %0, label %1, label %3",
+                  "%2 = add i32 1111, 2222",
+                  "br label %5",
+                  "%4 = add i32 3333, 4444",
+                  "br label %5",
+                  "%6 = phi i32 [ %2, %1 ], [ %4, %3 ]"),
+                builder-test-function-disassembly(builder));
+  end;
+
+  with-test-unit ("ins--if with else, no fall-through")
+    let builder = make-builder-with-test-function();
+
+    let cmp = ins--icmp-uge(builder, 1, 2);
+    ins--if(builder, cmp)
+      ins--add(builder, 1111, 2222);
+    ins--else
+      ins--call-intrinsic(builder, "llvm.trap", vector());
+      ins--unreachable(builder);
+    end ins--if;
+
+    check-equal("ins--if disassembly",
+                #("entry:",
+                  "%0 = icmp uge i32 1, 2",
+                  "br i1 %0, label %1, label %3",
+                  "%2 = add i32 1111, 2222",
+                  "br label %4",
+                  "call void @llvm.trap() #1",
+                  "unreachable"),
+                builder-test-function-disassembly(builder));
+  end;
+end macro-test;
