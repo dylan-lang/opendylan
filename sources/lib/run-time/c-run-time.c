@@ -466,18 +466,22 @@ SOV* allocate_vector (int size) {
   }
 }
 
-SOV* make_vector (int size) {
-  if (size == 0) {
-    return(Pempty_vectorVKi);
+void *make_dylan_vector(size_t n) {
+  if (n == 0) {
+    return Pempty_vectorVKi;
   } else {
-    SOV* vector = allocate_vector(size);
-    instance_header_setter(&KLsimple_object_vectorGVKdW, (D*)vector);
-    vector_size_setter(size, vector);
-    return(vector);
+    size_t size;
+    void* vector;
+
+    size = (n + VECTOR_HEADER_SIZE) * sizeof(D);
+    vector = primitive_alloc_rf(size,
+                                &KLsimple_object_vectorGVKdW,
+                                n, 1, &KPunboundVKi);
+    return vector;
   }
 }
 
-D primitive_make_vector (int size) { return((D)make_vector(size)); }
+D primitive_make_vector (int size) { return((D)make_dylan_vector((size_t)size)); }
 
 SOV* initialize_vector_from_buffer_with_size
     (SOV* vector, int vector_size, D* buffer, int buffer_size)
