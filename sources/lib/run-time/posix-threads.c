@@ -7,6 +7,7 @@
  * found in D-doc-design-runtime!win32-thread-portability.text
  */
 
+#include "mm.h"
 #include "posix-threads.h"
 
 #include "trace.h"
@@ -25,11 +26,6 @@
 
 #if defined(GC_USE_BOEHM)
 #  include <gc/gc.h>
-#  include <gc/gc_pthread_redirects.h>
-#elif defined(GC_USE_MALLOC)
-#  define GC_FREE free
-#  define GC_MALLOC malloc
-#  define GC_MALLOC_UNCOLLECTABLE malloc
 #endif
 
 #include <sys/time.h>
@@ -114,9 +110,11 @@ static int our_pthread_mutex_timedlock(pthread_mutex_t *mutex,
 #ifndef _DEBUG      /* For Release builds */
 #define  MSG0(msg)                          ((void)0)
 #define  MSG1(msg, arg1)                    ((void)0)
+#define  MSG2(msg, arg1, arg2)              ((void)0)
 #else               /* For Debug builds */
 #define  MSG0(msg)                          printf(msg)
 #define  MSG1(msg, arg1)                    printf(msg, arg1)
+#define  MSG2(msg, arg1, arg2)              printf(msg, arg1, arg2)
 #endif
 
 /*****************************************************************************/
@@ -148,13 +146,13 @@ static long tlv_writer_counter = 0;
 
 static size_t  TLV_vector_offset = 2;
 
+extern void *make_dylan_vector(size_t size);
 
 /*****************************************************************************/
 /* LOCAL FUNCTION DECLARATIONS                                               */
 /*****************************************************************************/
 
 void  initialize_threads_primitives(void);
-static void *make_tlv_vector(size_t);
 static int   priority_map(int);
 
 static TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, size_t newsize);
@@ -199,7 +197,7 @@ static void initialize_teb_key(void)
 
 static TEB* make_teb(void)
 {
-  TEB* teb = (TEB*)GC_MALLOC_UNCOLLECTABLE(sizeof(TEB));
+  TEB* teb = (TEB*)MMAllocMisc(sizeof(TEB));
 
   memset(teb, 0, sizeof(TEB));
 
@@ -216,7 +214,7 @@ static void free_teb(void)
 
   set_teb(NULL);
 
-  GC_FREE(teb);
+  MMFreeMisc(teb, sizeof(TEB));
 }
 
 
@@ -255,30 +253,6 @@ static inline void set_current_thread_handle(void *handle)
 
 /* TLV management */
 
-static void *make_tlv_vector(size_t n)
-{
-  dylan_value *vector;
-  size_t size;
-
-  // compute actual (byte) size
-  size = (n + 2) * sizeof(dylan_value);
-
-  // fill int the vector
-  vector = GC_MALLOC_UNCOLLECTABLE(size);
-  memset(vector, 0, size);
-  vector[0] = NULL;
-  vector[1] = I(n);
-
-  // done
-  return vector;
-}
-
-static void free_tlv_vector(dylan_value *vector)
-{
-  GC_FREE(vector);
-}
-
-
 /* Grow a single TLV vector
  */
 static TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, size_t newsize)
@@ -288,11 +262,11 @@ static TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, size_t newsize)
   trace_tlv("Growing vector %p", vector);
 
   // allocate a new vector and copy the values in the old across
-  new_vector = make_tlv_vector(newsize);
+  new_vector = make_dylan_vector(newsize);
   copy_tlv_vector(new_vector, vector);
 
   // return the new vector
-  return(new_vector);
+  return new_vector;
 }
 
 
@@ -307,7 +281,7 @@ static void grow_all_tlv_vectors(size_t newsize)
   while (atomic_cas(&tlv_writer_counter, TLV_GROW, 0) != 0);
 
   // Grow the default vector
-  new_default = make_tlv_vector(newsize);
+  new_default = make_dylan_vector(newsize);
   copy_tlv_vector(new_default, default_tlv_vector);
   default_tlv_vector = new_default;
 
@@ -366,7 +340,7 @@ update_tlv_vectors(size_t offset, dylan_value value)
 static void
 add_tlv_vector(DTHREAD *thread, TEB *teb, TLV_VECTOR tlv_vector)
 {
-  TLV_VECTOR_LIST new_element = GC_MALLOC_UNCOLLECTABLE(sizeof(struct tlv_vector_list_element));
+  TLV_VECTOR_LIST new_element = MMAllocMisc(sizeof(struct tlv_vector_list_element));
 
   assert(new_element != NULL);
 
@@ -400,8 +374,7 @@ remove_tlv_vector(DTHREAD *thread)
   if (tlv_vector_list->thread == thread) {
     // matches first entry in list
     tlv_vector_list = tlv_vector_list->next;
-    free_tlv_vector(last->tlv_vector);
-    GC_FREE(last);
+    MMFreeMisc(last, sizeof(struct tlv_vector_list_element));
     return(0);
   }
 
@@ -410,8 +383,7 @@ remove_tlv_vector(DTHREAD *thread)
     if (current->thread == thread) {
       // found the right entry, so cut it out
       last->next = current->next;
-      free_tlv_vector(current->tlv_vector);
-      GC_FREE(current);
+      MMFreeMisc(current, sizeof(struct tlv_vector_list_element));
       return(0);
     }
     else {
@@ -448,7 +420,7 @@ static void setup_tlv_vector(DTHREAD *thread)
   if (!tlv_vector) {
     // Now set up a vector for the Dylan thread variables
     size = (size_t)(default_tlv_vector[1]) >> 2;
-    tlv_vector = make_tlv_vector(size);
+    tlv_vector = make_dylan_vector(size);
     set_tlv_vector(tlv_vector);
 
     // Initialise the vector with the values from the default vector
@@ -469,7 +441,7 @@ void initialize_threads_primitives(void)
   trace_threads("Initializing thread primitives");
 
   // Set up vector of default values for thread variables
-  default_tlv_vector = make_tlv_vector(TLV_VECTOR_INITIAL_SIZE);
+  default_tlv_vector = make_dylan_vector(TLV_VECTOR_INITIAL_SIZE);
 
   initialize_teb_key();
 
@@ -561,7 +533,7 @@ dylan_value primitive_make_thread(dylan_value t, dylan_value n, dylan_value p, d
   assert(IS_ZINT(zpriority));
   assert(f != NULL);
 
-  rthread = primitive_allocate(sizeof(THREAD));
+  rthread = MMAllocMisc(sizeof(THREAD));
   rthread->name = n;
   rthread->function = f;
 
@@ -1198,9 +1170,9 @@ dylan_value primitive_make_recursive_lock(dylan_value l, dylan_value n)
 
   assert(lock != NULL);
 
-  rlock = (RECURSIVELOCK *)malloc(sizeof(RECURSIVELOCK));
+  rlock = (RECURSIVELOCK *)MMAllocMisc(sizeof(RECURSIVELOCK));
   if (rlock == NULL) {
-    MSG0("make-recursive-lock: malloc failed\n");
+    MSG0("make-recursive-lock: MMAllocMisc failed\n");
     return GENERAL_ERROR;
   }
 
@@ -1229,7 +1201,7 @@ dylan_value primitive_make_recursive_lock(dylan_value l, dylan_value n)
 
  err:
   MSG0("make-recursive-lock: error creating mutex\n");
-  free(rlock);
+  MMFreeMisc(rlock, sizeof(RECURSIVELOCK));
   return GENERAL_ERROR;
 }
 
@@ -1249,7 +1221,7 @@ dylan_value primitive_destroy_recursive_lock(dylan_value l)
     MSG0("destroy-recursive-lock: error destroying mutex\n");
     return GENERAL_ERROR;
   }
-  free(rlock);
+  MMFreeMisc(rlock, sizeof(RECURSIVELOCK));
   return OK;
 }
 
@@ -1267,9 +1239,9 @@ dylan_value primitive_make_simple_lock(dylan_value l, dylan_value n)
 
   assert(lock != NULL);
 
-  slock = (SIMPLELOCK *)malloc(sizeof(SIMPLELOCK));
+  slock = (SIMPLELOCK *)MMAllocMisc(sizeof(SIMPLELOCK));
   if (slock == NULL) {
-    MSG0("make-simple-lock: malloc failed\n");
+    MSG0("make-simple-lock: MMAllocMisc failed\n");
     return GENERAL_ERROR;
   }
 
@@ -1297,7 +1269,7 @@ dylan_value primitive_make_simple_lock(dylan_value l, dylan_value n)
 
  err:
   MSG0("make-simple-lock: error creating mutex\n");
-  free(slock);
+  MMFreeMisc(slock, sizeof(SIMPLELOCK));
   return GENERAL_ERROR;
 }
 
@@ -1317,7 +1289,7 @@ dylan_value primitive_destroy_simple_lock(dylan_value l)
     return GENERAL_ERROR;
   }
   lock->handle = NULL;
-  free(slock);
+  MMFreeMisc(slock, sizeof(SIMPLELOCK));
   return OK;
 }
 
@@ -1385,9 +1357,9 @@ dylan_value primitive_make_semaphore(dylan_value l, dylan_value n, dylan_value i
   }
 #endif
 
-  semaphore = (SEMAPHORE *)malloc(sizeof(SEMAPHORE));
+  semaphore = (SEMAPHORE *)MMAllocMisc(sizeof(SEMAPHORE));
   if (semaphore == NULL) {
-    MSG0("make-semaphore: malloc failed\n");
+    MSG0("make-semaphore: MMAllocMisc failed\n");
     return GENERAL_ERROR;
   }
 
@@ -1439,7 +1411,7 @@ dylan_value primitive_destroy_semaphore(dylan_value l)
   }
 #endif
 
-  free(semaphore);
+  MMFreeMisc(semaphore, sizeof(SEMAPHORE));
   return OK;
 }
 
@@ -1453,14 +1425,14 @@ dylan_value primitive_make_notification(dylan_value n, dylan_value s)
   ignore(s);
   assert(notif != NULL);
 
-  notification = (NOTIFICATION *)malloc(sizeof(NOTIFICATION));
+  notification = (NOTIFICATION *)MMAllocMisc(sizeof(NOTIFICATION));
   if (notification == NULL) {
-    MSG0("make-notification: malloc returned error\n");
+    MSG0("make-notification: MMAllocMisc returned error\n");
     return GENERAL_ERROR;
   }
   if (pthread_cond_init(&notification->cond, NULL)) {
     MSG0("make-notification: error creating condition variable\n");
-    free(notification);
+    MMFreeMisc(notification, sizeof(NOTIFICATION));
     return GENERAL_ERROR;
   }
   notif->handle = notification;
@@ -1482,7 +1454,7 @@ dylan_value primitive_destroy_notification(dylan_value n)
     MSG0("destroy-notification: error destroying condition variable\n");
     return GENERAL_ERROR;
   }
-  free(notification);
+  MMFreeMisc(notification, sizeof(NOTIFICATION));
   return OK;
 }
 
