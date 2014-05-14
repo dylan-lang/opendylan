@@ -600,8 +600,20 @@ D primitive_make_thread(D t, D n, D p, D f, DBOOL s)
 D primitive_destroy_thread(D t)
 {
   DTHREAD    *thread = (DTHREAD *)t;
+  pthread_t pThread;
+  int status;
 
   assert(thread != NULL);
+
+  if (thread->handle1 != NULL) {
+    pThread = (pthread_t)(thread->handle1);
+
+    status = pthread_detach(pThread);
+    if (status != 0) {
+      MSG2("pthread_detach %p failed with error %d\n",
+           (void *) pThread, status);
+    }
+  }
 
   return OK;
 }
