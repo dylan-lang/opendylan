@@ -62,7 +62,7 @@ Dir.chdir srcdir
 FPM_CMD=<<EOF
 fpm -s dir -t deb -n opendylan --deb-changelog packages/unix/debian/changelog -v #{VERSION} -C #{STAGING_DIR} -p opendylan-VERSION_ARCH.deb \
     -d "gcc (>= 0)" -d "libc6-dev (>= 0)" #{additional_fpm_flags} -m "Wim Vander Schelden <wim@fixnum.org>" \
-    --license MIT --description "A Dylan compiler 
+    --license MIT --url "http://opendylan.org/" --vendor "Dylan Hackers" --description "A Dylan compiler 
     Dylan is a multi-paradigm programming language. It is a
     object-oriented language and is well suited for a
     functional style of programming.
