@@ -306,10 +306,10 @@ define method accessor-write-from
   if (accessor.connection-closed? | (~ the-descriptor))
     error("Stream closed") // ---*** FIX THIS
   else
-    let remaining = count;
+    let remaining :: <buffer-index> = count;
     while (remaining > 0)
       let nwritten =
-        win32-send(accessor.socket-descriptor, buffer,
+        win32-send(the-descriptor, buffer,
                    offset + count - remaining, remaining);
       if (nwritten == $SOCKET-ERROR)
         win32-socket-error("win32-send", host-address: stream.remote-host,
