@@ -52,7 +52,7 @@ The <bind-exit> node establishes the place the exit jumps to, an
 through the temporary t1.  The temporary returned by the <bind-exit>
 is set by the exit procedure.
 
-(The printing code shows up one inconsistency:  the temporary geneated
+(The printing code shows up one inconsistency:  the temporary generated
 by the <bind-exit> node is actually not live after that point.  It's
 live only if the exit procedure is taken.  On the other hand, the
 entry-state is live after that point.  Perhaps which temporary is the
