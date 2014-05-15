@@ -211,6 +211,7 @@ define module llvm
     llvm-module-aliases,
     llvm-module-named-metadata,
     llvm-module-dependent-libraries,
+    llvm-module-add-flag,
     llvm-type-table,
     llvm-global-table,
 
