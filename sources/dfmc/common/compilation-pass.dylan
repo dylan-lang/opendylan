@@ -10,16 +10,3 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define open generic run-compilation-passes (code) => code;
   // method definition in management module
-
-
-//// optimization levels
-
-define constant $optimization-mandatory = 0;
-define constant $optimization-low       = 1;
-define constant $optimization-medium    = 2;
-define constant $optimization-high      = 3;
-
-define constant $optimization-default   = $optimization-low;
-
-define thread variable *optimization-level* = $optimization-default;
-

@@ -158,15 +158,7 @@ define module dfmc-common
 
     run-compilation-passes,
 
-    word-size,
-
-    *optimization-level*,
-
-    $optimization-mandatory,
-    $optimization-low,
-    $optimization-medium,
-    $optimization-high,
-    $optimization-default;
+    word-size;
 
     // \compilation-pass-definer,
     // define-compilation-pass!,
