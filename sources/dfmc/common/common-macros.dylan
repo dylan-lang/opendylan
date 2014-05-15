@@ -11,63 +11,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define macro coagulate-name { coagulate-name(?:name) } => { ?#"name" } end;
 
-// Defines a dynamic-bindable property with a more CL-like shared base
-// value for all threads.
-
-/*
-define macro thread-property-definer
-  { define thread-property "*" ## ?:name ## "*" \:: ?type:expression
-      = ?init:expression }
-    => { define variable "*default-" ## ?name ## "*" = ?init;
-         define thread variable "*" ## ?name ## "*" = #f;
-         define method "default-" ## ?name ()
-           "*default-" ## ?name ## "*"
-         end method;
-         define method "default-" ## ?name ## "-setter" (value)
-           "*default-" ## ?name ## "*" := value
-         end method;
-         define method "current-" ## ?name ()
-           "*" ## ?name ## "*" | "*default-" ## ?name ## "*"
-         end method;
-         define method "do-with-" ## ?name (code :: <function>, value)
-           dynamic-bind ("*" ## ?name ## "*" = value)
-             code();
-           end;
-         end method;
-         define macro "with-" ## ?name
-           { "with-" ## ?name (\?:expression) \?:body end }
-             => { "do-with-" ## ?name(method () \?body end, \?expression) }
-         end; }
-  { define thread-property "*" ## ?:name ## "*" ?more:* }
-    => { define thread-property "*" ## ?name ## "*" :: <object> ?more }
-end macro;
-*/
-
-define macro thread-property-definer
-  { define thread-property ?:name :: ?type:expression
-      = ?init:expression }
-    => { define variable "*default-" ## ?name ## "*" = ?init;
-         define thread variable "*" ## ?name ## "*" = #f;
-         define method "default-" ## ?name ()
-           "*default-" ## ?name ## "*"
-         end method;
-         define method "default-" ## ?name ## "-setter" (value)
-           "*default-" ## ?name ## "*" := value
-         end method;
-         define method "current-" ## ?name ()
-           "*" ## ?name ## "*" | "*default-" ## ?name ## "*"
-         end method;
-         define inline method "do-with-" ## ?name (code :: <function>, value)
-           dynamic-bind ("*" ## ?name ## "*" = value)
-             code();
-           end;
-         end method;
-         define macro "with-" ## ?name
-           { "with-" ## ?name (\?:expression) \?:body end }
-             => { "do-with-" ## ?name(method () \?body end, \?expression) }
-         end; }
-end macro;
-
 // list of keys to trigger output on.
 define variable *debug-out* = #();
 

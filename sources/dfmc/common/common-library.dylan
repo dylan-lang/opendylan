@@ -118,9 +118,6 @@ define module dfmc-common
     model-library, maybe-model-library;
 
   export
-    thread-property-definer;
-
-  export
     eval, constant-eval,
     &eval, &constant-eval,
     compile-stage,
