@@ -5,6 +5,8 @@ Copyright:    Original Code is Copyright 2009-2011 Gwydion Dylan Maintainers
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+define constant $llvm-debug-metadata-version = 1;
+
 define constant $llvm-debug-version = ash(12, 16);
 //define constant $llvm-debug-version-mask = ash(#xFFFF, 16);
 
@@ -194,6 +196,9 @@ define function llvm-make-dbg-compile-unit
 					       split-debug-path | ""))));
   if (module)
     add-to-named-metadata(module, "llvm.dbg.cu", compile-unit);
+
+    llvm-module-add-flag(module, #"error", "Debug Info Version",
+                         i32($llvm-debug-metadata-version));
   end if;
   compile-unit
 end function;
