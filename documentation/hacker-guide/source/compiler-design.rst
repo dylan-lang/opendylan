@@ -625,21 +625,6 @@ Convenience functions:
 
 Global state:
 
-The thread-variable ``*optimization-level*`` is meant to be a gross control
-of how much optimization is done.  The constants
-
-.. code-block:: dylan
-
-  define constant $optimization-mandatory = 0;
-  define constant $optimization-low       = 1;
-  define constant $optimization-medium    = 2;
-  define constant $optimization-high      = 3;
-  
-  define constant $optimization-default   = $optimization-medium;
-
-are defined and correspond to the ``optimization:`` option in the define
-compilation-pass macro.
-
 The thread-variable ``*back-end*`` is used with the options back-end: and
 exclude-back-end:.
 
