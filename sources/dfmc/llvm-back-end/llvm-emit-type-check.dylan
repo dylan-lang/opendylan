@@ -145,23 +145,15 @@ define method do-emit-instance-cmp
       emit-tag-cmp(back-end, object, $dylan-tag-unichar);
 
     type == dylan-value(#"<boolean>") =>
-      let nonfalse-bb = make(<llvm-basic-block>);
-      let result-bb = make(<llvm-basic-block>);
-
       // Compare against #f
-      let false-cmp = ins--icmp-eq(back-end, object,
-                                   emit-reference(back-end, m, &false));
-      ins--br(back-end, false-cmp, result-bb, nonfalse-bb);
-
-      // Compare against #t
-      ins--block(back-end, nonfalse-bb);
-      let true-cmp = ins--icmp-eq(back-end, object,
-                                  emit-reference(back-end, m, &true));
-      ins--br(back-end, result-bb);
-
-      // Result
-      ins--block(back-end, result-bb);
-      ins--phi*(back-end, $llvm-false, entry-bb, true-cmp, nonfalse-bb);
+      let false-cmp
+        = ins--icmp-eq(back-end, object, emit-reference(back-end, m, &false));
+      ins--if (back-end, false-cmp)
+        $llvm-true
+      ins--else
+        // Compare against #t
+        ins--icmp-eq(back-end, object, emit-reference(back-end, m, &true))
+      end ins--if;
 
     ^sealed-with-no-subclasses?(type) =>
       let result-bb = make(<llvm-basic-block>);
