@@ -22,6 +22,7 @@ define module llvm-test-suite
   use common-dylan, exclude: { format-to-string };
   use testworks;
   use testworks-specs;
+  use %testworks, import: { <test>, make-suite };
   use streams;
   use file-system;
   use locators;

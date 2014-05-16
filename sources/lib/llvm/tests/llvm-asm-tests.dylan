@@ -9,9 +9,7 @@ define macro llvm-asm-suite-definer
   { define llvm-asm-suite ?suite-name:name (?keyword-args:*) ?options end }
     => { define variable ?suite-name
            = make-suite(?"suite-name", 
-		        method ()
-		          llvm-asm-suite-components(?"suite-name", ?options)
-		        end,
+                        llvm-asm-suite-components(?"suite-name", ?options),
                         ?keyword-args) }
 options:
     { } => { }
@@ -72,7 +70,7 @@ define function llvm-asm-suite-components
       unless (empty?(tests))
         let directory-name = suite-directory.locator-path.last;
         let suite = make-suite(concatenate("llvm-", directory-name, "-suite"),
-                               always(tests));
+                               tests);
         add!(components, suite);
       end unless;
     end while;

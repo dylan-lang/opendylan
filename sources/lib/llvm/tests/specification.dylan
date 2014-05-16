@@ -5,13 +5,6 @@ Copyright:    Original Code is Copyright 2009 Gwydion Dylan Maintainers
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define library-spec llvm ()
-  module llvm;
-  module llvm-builder;
-
-  suite llvm-asm-suite;
-end library-spec llvm;
-
 define module-spec llvm ()
   instantiable class <llvm-module> (<object>);
 
@@ -329,3 +322,10 @@ define module-spec llvm-builder ()
       (<llvm-builder>, <llvm-value>, #"key" #"metadata")
    => (<llvm-instruction>);
 end module-spec llvm-builder;
+
+define library-spec llvm ()
+  module llvm;
+  module llvm-builder;
+
+  suite llvm-asm-suite;
+end library-spec llvm;
