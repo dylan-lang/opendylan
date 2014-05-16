@@ -12,7 +12,7 @@ include FileUtils
  
 # Create staging area
 STAGING_DIR=`mktemp -d`.chomp
-VERSION="2013.2"
+INSTALL_DIR="/usr/lib/opendylan"
 
 additional_fpm_flags=""
 configure_flags="--prefix=/usr/lib/opendylan"
@@ -57,12 +57,14 @@ srcdir = Dir.pwd
 Dir.chdir "#{STAGING_DIR}/usr/bin"
 Dir["../lib/opendylan/bin/*"].each { |f| FileUtils.ln_s(f, File.basename(f)) }
 Dir.chdir srcdir
+
+VERSION=`./Bootstrap.3/bin/dylan-compiler -shortversion`.chomp
  
 # Generate the actual deb package
 FPM_CMD=<<EOF
 fpm -s dir -t deb -n opendylan --deb-changelog packages/unix/debian/changelog -v #{VERSION} -C #{STAGING_DIR} -p opendylan-VERSION_ARCH.deb \
     -d "gcc (>= 0)" -d "libc6-dev (>= 0)" #{additional_fpm_flags} -m "Wim Vander Schelden <wim@fixnum.org>" \
-    --license MIT --description "A Dylan compiler 
+    --license MIT --url "http://opendylan.org/" --vendor "Dylan Hackers" --description "A Dylan compiler 
     Dylan is a multi-paradigm programming language. It is a
     object-oriented language and is well suited for a
     functional style of programming.
