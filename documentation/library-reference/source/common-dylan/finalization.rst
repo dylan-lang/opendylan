@@ -11,7 +11,8 @@ The finalization Module
 Open Dylan provides a finalization interface in the *finalization*
 module of *common-dylan*. This section explains finalization, the
 finalization interface provided, and how to use the interface in
-applications.
+applications. Note that you *must* ``use finalization`` to be able
+to use the interface described in this documentation.
 
 What is finalization?
 =====================
@@ -67,6 +68,24 @@ and adds it to the *finalization queue*.
 The finalization queue contains all the objects awaiting finalization.
 The garbage collector will not reclaim the objects until they have been
 finalized.
+
+A simple example of registering a finalizer:
+
+.. code-block:: dylan
+
+    define method initialize (lock :: <recursive-lock>, #key) => ()
+      drain-finalization-queue();
+      next-method();
+      let res = primitive-make-recursive-lock(lock,
+                                              lock.synchronization-name);
+      check-synchronization-creation(lock, res);
+      finalize-when-unreachable(lock);
+    end method;
+
+The reasons for calling :func:`drain-finalization-queue` are discussed below.
+
+.. note:: The library containing this code must have ``use finalization;``
+   in its module definition.
 
 Draining the finalization queue
 -------------------------------
