@@ -7,6 +7,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define generic locate-variable (object)
   => (variable-encoding, module-encoding, library-encoding);
 
-define generic variable-value 
+define generic variable-value
     (variable-encoding, module-encoding, library-encoding, #key)
   => (object);
