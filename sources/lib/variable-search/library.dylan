@@ -8,7 +8,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library variable-search
   use dylan;
-  use common-dylan;
   use dfmc-mangling;
   export
     variable-search;
@@ -18,7 +17,6 @@ define module variable-search
   use dylan;
   use dylan-extensions;
   use dylan-direct-c-ffi;
-  use common-extensions;
   use dfmc-mangling;
   export
     locate-variable, variable-value;
