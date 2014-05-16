@@ -33,9 +33,8 @@ define method variable-value
                 variable-name, module-name, library-name);
         end method;
   let mangled-name
-    = format-to-string
-        ("%s%s",
-         constant-prefix-string,
+    = concatenate
+        (constant-prefix-string,
          mangle-binding-spread
            (*mangler*, variable-name, module-name, library-name));
   unless (*dl-handle*)
