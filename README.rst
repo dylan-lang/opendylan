@@ -108,6 +108,20 @@ Make sure that the target installation directory has been deleted. If you try
 to install into a directory that already has an older version of Open Dylan in
 it, the build will fail.
 
+Running Tests
+-------------
+
+We have an extensive set of tests which can be run once a ``3-stage-bootstrap``
+is complete::
+
+  make check
+
+This runs the tests for the core language implementation as well as for many
+bundled libraries.  However, there are currently many test failures which
+need to be fixed. Most of the test failures are minor issues or are due to
+unimplemented tests rather than major bugs. Help is welcome in improving
+our test suites.
+
 Compilation on Windows
 =======================
 
