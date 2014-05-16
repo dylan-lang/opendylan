@@ -23,7 +23,7 @@ define constant $library-template-simple :: <string>
      "end library %s;\n"
      "\n"
      "define module %s\n"
-     "  use common-dylan, exclude: { format-to-string };\n"
+     "  use common-dylan;\n"
      "  use format-out;\n"
      "end module %s;\n");
 
