@@ -26,22 +26,21 @@ define thread variable *mangler* = make(<mangler>);
 define variable *dl-handle* = #f;
 
 define method variable-value
-    (variable-name, module-name, library-name, #key default) 
+    (variable-name, module-name, library-name, #key default)
  => (object)
   local method failed-lookup ()
-	  error("Failed to locate variable %= in module %= of library %=",
-		variable-name, module-name, library-name);
-	end method;
-  let mangled-name 
-    = format-to-string
-        ("%s%s",
-	 constant-prefix-string,
-	 mangle-binding-spread
-	   (*mangler*, variable-name, module-name, library-name));
+          error("Failed to locate variable %= in module %= of library %=",
+                variable-name, module-name, library-name);
+        end method;
+  let mangled-name
+    = concatenate
+        (constant-prefix-string,
+         mangle-binding-spread
+           (*mangler*, variable-name, module-name, library-name));
   unless (*dl-handle*)
     *dl-handle*
        := primitive-wrap-machine-word
-            (%call-c-function ("dlopen") 
+            (%call-c-function ("dlopen")
                   (name :: <raw-byte-string>)
                => (object :: <raw-machine-word>)
                 (primitive-cast-raw-as-pointer(integer-as-raw(0)))
@@ -50,10 +49,10 @@ define method variable-value
   let val =
     primitive-cast-raw-as-pointer
     (%call-c-function ("dlsym")
-	 (handle :: <raw-machine-word>, name :: <raw-byte-string>)
+         (handle :: <raw-machine-word>, name :: <raw-byte-string>)
       => (object :: <raw-machine-word>)
-	 (primitive-unwrap-machine-word(*dl-handle*),
-	  primitive-string-as-raw(mangled-name))
+         (primitive-unwrap-machine-word(*dl-handle*),
+          primitive-string-as-raw(mangled-name))
      end);
   if (primitive-machine-word-equal?(val, integer-as-raw(0)))
     failed-lookup();
