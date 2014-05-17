@@ -21,6 +21,7 @@ define library common-dylan
     simple-random,
     simple-profiling,
     simple-timers,
+    simple-format,
     simple-io,
     byte-vector,
     transcendentals;
@@ -116,7 +117,6 @@ define module common-extensions
          fill-table!,
          find-element,
          find-value,
-         format-to-string,
          float-to-string,
          integer-to-string,
          number-to-string,
@@ -136,8 +136,13 @@ define module common-dylan
   use common-extensions, export: all;
 end module common-dylan;
 
+define module simple-format
+  create format-out,
+         format-to-string;
+end module simple-format;
+
 define module simple-io
-  create format-out;
+  use simple-format, export: all;
 end module simple-io;
 
 define module simple-random

@@ -99,6 +99,16 @@ C Run-time
 Common Dylan
 ============
 
+* The ``simple-io`` module has been renamed to ``simple-format``.
+  A convenience module that re-exports ``simple-format`` has been
+  left as ``simple-io`` for short term compatibility.
+
+* The ``format-to-string`` function has been moved to the newly
+  renamed ``simple-format`` module. This function is no longer
+  exported from ``common-extensions``. You no longer need to
+  exclude this function from ``common-dylan`` or ``common-extensions``
+  if you use the ``format`` module from the ``io`` library.
+
 * The ``<timer>`` class has been renamed to ``<profiling-timer>``.
 
 * The function ``integer-to-string`` is now faster.

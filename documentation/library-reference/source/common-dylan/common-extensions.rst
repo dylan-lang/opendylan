@@ -610,30 +610,6 @@ The extensions are:
 
    The Format library.
 
-.. function:: format-to-string
-
-   Returns a formatted string constructed from its arguments.
-
-   :signature: format-to-string *format-string* #rest *format-arguments* => *string*
-
-   :parameter format-string: An instance of :drm:`<byte-string>`.
-   :parameter #rest format-arguments: Instances of :drm:`<object>`.
-   :value result-string: An instance of :drm:`<byte-string>`.
-
-   :conditions:
-
-     This function signals an error if any of the format directives in
-     *format-string* are invalid.
-
-   :description:
-
-     Returns a formatted string constructed from its arguments, which
-     include a *format-string* of formatting directives and a series of
-     *format-arguments* to be formatted according to those directives.
-
-     The *format-string* must be a Dylan format string as described on
-     :drm:`pages 112–114 of the DRM <Condition_Messages>`.
-
 .. function:: found?
 
    Returns true if *object* is not equal to :const:`$unfound`, and false otherwise.

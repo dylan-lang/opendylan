@@ -25,7 +25,7 @@ The majority of the extensions are in the :doc:`common-extensions
 <../common-dylan/common-extensions>` module
 of the :doc:`common-dylan <../common-dylan/index>` library. That library
 also exports a number of smaller modules that contain other basic
-facilities such as :doc:`simplified formatting <../common-dylan/simple-io>`,
+facilities such as :doc:`simplified formatting <../common-dylan/simple-format>`,
 :doc:`pseudo-random integer generation <../common-dylan/simple-random>`,
 and :doc:`object finalization <../common-dylan/finalization>`.
 

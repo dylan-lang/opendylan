@@ -282,6 +282,23 @@ define module print
          do-printing-object;
 end module print;
 
+define module format
+  create format,
+         format-to-string,
+         print-message;
+end module format;
+
+define module format-internals
+  use common-dylan;
+  use dylan-extensions;
+  use transcendentals;
+  use threads;
+  use streams-internals;
+  use print;
+  use format,
+    export: all;
+end module format-internals;
+
 define module print-internals
   use common-dylan;
   use locators-protocol;
@@ -290,6 +307,7 @@ define module print-internals
   use dylan-extensions;
   use dylan-primitives;
   use byte-vector;
+  use format-internals;
   use streams-internals;
   use pprint,
     export: all;
@@ -303,24 +321,6 @@ define module print-internals
 	 *default-escape?*,
 	 *print-depth*;
 end module print-internals;
-
-define module format
-  create format,
-	 format-to-string,
-	 print-message;
-end module format;
-
-define module format-internals
-  use common-dylan,
-    exclude: { format-to-string };
-  use dylan-extensions;
-  use transcendentals;
-  use threads;
-  use streams-internals;
-  use print;
-  use format,
-    export: all;
-end module format-internals;
 
 define module standard-io
   create *standard-input*,
