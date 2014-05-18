@@ -352,7 +352,8 @@ define module llvm-builder
     ins--resume,
     ins--unreachable,
 
-    ins--if;
+    ins--if,
+    ins--iterate;
 end module;
 
 define module llvm-debug

@@ -1621,3 +1621,66 @@ define llvm-builder macro-test ins--if-test ()
                 builder-test-function-disassembly(builder));
   end;
 end macro-test;
+
+define llvm-builder macro-test ins--iterate-test ()
+  with-test-unit ("ins--iterate with no loop variables")
+    let builder = make-builder-with-test-function();
+
+    ins--iterate loop (builder)
+      ins--call-intrinsic(builder, "llvm.trap", vector());
+      loop();
+    end ins--iterate;
+
+    check-equal("ins--iterate disassembly",
+                #("entry:",
+                  "br label %0",
+                  "call void @llvm.trap() #1",
+                  "br label %0"),
+                builder-test-function-disassembly(builder));
+  end;
+
+  with-test-unit ("ins--iterate with one loop variable")
+    let builder = make-builder-with-test-function();
+
+    ins--iterate loop (builder, a = 0)
+      loop(ins--add(builder, a, 1));
+    end ins--iterate;
+
+    check-equal("ins--iterate disassembly",
+                #("entry:",
+                  "br label %0",
+                  "%1 = phi i32 [ 0, %entry ], [ %2, %0 ]",
+                  "%2 = add i32 %1, 1",
+                  "br label %0"),
+                builder-test-function-disassembly(builder));
+  end;
+
+  with-test-unit ("ins--iterate with two loop variable and complex control flow")
+    let builder = make-builder-with-test-function();
+
+    ins--iterate loop (builder, sum = 0, i = 0)
+      let cmp = ins--icmp-ult(builder, i, 14);
+      ins--if (builder, cmp)
+        let sum = ins--add(builder, sum, i);
+        let inc = ins--add(builder, i, 1);
+        loop(sum, inc)
+      ins--else
+        sum
+      end ins--if
+    end ins--iterate;
+
+    check-equal("ins--iterate disassembly",
+                #("entry:",
+                  "br label %0",
+                  "%1 = phi i32 [ 0, %entry ], [ %5, %4 ]",
+                  "%2 = phi i32 [ 0, %entry ], [ %6, %4 ]",
+                  "%3 = icmp ult i32 %2, 14",
+                  "br i1 %3, label %4, label %7",
+                  "%5 = add i32 %1, %2",
+                  "%6 = add i32 %2, 1",
+                  "br label %0",
+                  "br label %8"),
+                builder-test-function-disassembly(builder));
+  end;
+
+end macro-test;
