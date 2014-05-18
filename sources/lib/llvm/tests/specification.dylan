@@ -323,6 +323,7 @@ define module-spec llvm-builder ()
    => (<llvm-instruction>);
 
   macro-test ins--if-test;
+  macro-test ins--iterate-test;
 end module-spec llvm-builder;
 
 define library-spec llvm ()

@@ -777,3 +777,66 @@ define function do-ins--if
     iffalse-value
   end if
 end function;
+
+define macro ins--iterate
+  { ins--iterate ?:name (?builder:expression, ?bindings:*) ?:body end }
+    => { ins--iterate-aux ?name (?builder,
+                                 pre: [ let builder = ?builder ],
+                                 ?bindings)
+           ?body
+       end }
+bindings:
+  { } => { }
+  { ?:variable = ?:expression, ... }
+    => { var: ?variable,
+         pre: [ let ?variable ## "-phi-operands"
+                  = make(<stretchy-object-vector>) ],
+         add: [ do-add-iterate-phi-operand
+                  (builder, ?variable ## "-phi-operands", ?variable)],
+         phi: [ let ?variable
+                  = make(<llvm-phi-node>,
+                         operands: ?variable ## "-phi-operands",
+                         metadata: builder-metadata(builder, #()));
+                builder-insert(builder, ?variable) ],
+         init: ?expression, ... }
+end macro;
+
+define macro ins--iterate-aux
+  { ins--iterate-aux ?:name (?builder:expression,
+                             #key ??var:variable,
+                                  ??pre:*,
+                                  ??add:*,
+                                  ??phi:*,
+                                  ??init:expression)
+      ?:body
+    end }
+    => { let builder = ?builder;
+         let loop-head-bb :: <llvm-basic-block> = make(<llvm-basic-block>);
+         ??pre ; ...;
+         local method ?name (??var, ...)
+                 ??add ; ... ;
+                 ins--br(builder, loop-head-bb);
+               end;
+         ?name(??init, ...);
+         ins--block(builder, loop-head-bb);
+         ??phi ; ...;
+         ?body }
+
+  // Strip off grouping delimiters
+  pre:
+    { [ ?tokens:* ] } => { ?tokens }
+  add:
+    { [ ?tokens:* ] } => { ?tokens }
+  phi:
+    { [ ?tokens:* ] } => { ?tokens }
+end macro;
+
+define function do-add-iterate-phi-operand
+    (builder :: <llvm-builder>, operands :: <stretchy-object-vector>, operand)
+ => ()
+  let operand = llvm-builder-value(builder, operand);
+  add!(operands, operand);
+  add!(operands, builder.llvm-builder-basic-block);
+  llvm-constrain-type(llvm-value-type(operands[0]),
+                      llvm-value-type(operand));
+end function;
