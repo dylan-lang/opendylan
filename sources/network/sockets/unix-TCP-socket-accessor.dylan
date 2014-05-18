@@ -325,11 +325,11 @@ define method accessor-write-from
   if (accessor.connection-closed? | (~ the-descriptor))
     error("Stream closed") // ---*** FIX THIS
   else
-    let remaining = count;
+    let remaining :: <buffer-index> = count;
     while (remaining > 0)
       let nwritten =
         interruptible-system-call
-          (unix-send(accessor.socket-descriptor, buffer,
+          (unix-send(the-descriptor, buffer,
                      offset + count - remaining, remaining));
       if (nwritten == $SOCKET-ERROR)
         unix-socket-error("unix-send", host-address: stream.remote-host,
