@@ -1345,6 +1345,10 @@ Built-In
   * :drm:`empty?`
   * :drm:`reverse`
   * :drm:`reverse!`
+  * :drm:`as-lowercase`
+  * :drm:`as-lowercase!`
+  * :drm:`as-uppercase`
+  * :drm:`as-uppercase!`
   
 common-extensions Module
 ------------------------
