@@ -18,10 +18,10 @@ define macro with-simple-abort-retry-restart
            block () 
              ?body
            exception (r :: <simple-restart>, 
-                      init-arguments: #[format-string:, ?abort])
+                      init-arguments: vector(format-string:, ?abort))
              #f
            exception (r :: <simple-restart>, 
-                      init-arguments: #[format-string:, ?retry])
+                      init-arguments: vector(format-string:, ?retry))
              _loop_()
            end
          end;
