@@ -118,10 +118,14 @@ define swank-function compile-file-for-emacs (filename, #rest foo)
       end;
     end;
   end;
-  run-compiler(*server*, concatenate("build ", *project*.project-name));
-  let notes = compiler-notes-for-emacs();
-  //result is output-pathname, notes, success/failure of compilation
-  list("pathname", notes, "T");
+  if (*project*)
+    run-compiler(*server*, concatenate("build ", *project*.project-name));
+    let notes = compiler-notes-for-emacs();
+    //result is output-pathname, notes, success/failure of compilation
+    list("pathname", notes, "T");
+  else
+    error("A project has not been set");
+  end;
 end;
 
 define swank-function compiler-notes-for-emacs ()
