@@ -446,7 +446,7 @@ end function working-directory;
 define generic working-directory-setter (new-working-directory :: <pathname>)
  => (new-working-directory :: <pathname>);
 
-define method working-directory-setter (new-working-directory :: <file-system-locator>)
+define method working-directory-setter (new-working-directory :: <file-system-directory-locator>)
  => (new-working-directory :: <pathname>)
   %working-directory-setter(new-working-directory)
 end method working-directory-setter;
@@ -458,7 +458,7 @@ end method working-directory-setter;
 
 define method working-directory-setter (new-working-directory :: <string>)
  => (new-working-directory :: <pathname>)
-  working-directory-setter(as(<file-system-directory-locator>, new-working-directory))
+  working-directory-setter(as(<file-system-locator>, new-working-directory))
 end method working-directory-setter;
 
 
