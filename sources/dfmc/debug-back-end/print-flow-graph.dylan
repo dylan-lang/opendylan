@@ -197,7 +197,11 @@ define method operation-name (c :: <function-call>)
 end method operation-name;
 
 define method operation-name (c :: <simple-call>)
-  "CALL"
+  if (call-congruent?(c))
+    "CONGRUENT-CALL"
+  else
+    "CALL"
+  end if
 end method operation-name;
 
 define method operation-name (c :: <engine-node-call>)
