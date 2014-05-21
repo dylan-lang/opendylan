@@ -666,8 +666,15 @@ end;
 // chain of size one (or more some day), upgrade the call to a call to
 // that method.
 
-define variable *profile-all-calls?* = #f;
-define variable *partial-dispatch?*  = #f;
+define constant $profile-all-calls-environment-variable-name
+  = "OPEN_DYLAN_PROFILE_ALL_CALLS";
+define constant $partial-dispatch-environment-variable-name
+  = "OPEN_DYLAN_PARTIAL_DISPATCH";
+
+define variable *profile-all-calls?*
+  = environment-variable($profile-all-calls-environment-variable-name);
+define variable *partial-dispatch?*
+  = environment-variable($partial-dispatch-environment-variable-name);
 
 define inline function call-site-caches-ok?
     (c :: <simple-call>, f :: <&generic-function>) => (well? :: <boolean>)
