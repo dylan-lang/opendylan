@@ -20,7 +20,7 @@ end method;
 ///---*** NOTE: Is there a way to eliminate contagious-type???
 
 // The methods more specific than <float> are just here because the compiler
-// can't fols object-class({type estimate: <some-leaf-class>}) yet.
+// can't fold object-class({type estimate: <some-leaf-class>}) yet.
 
 define inline method contagious-type
     (x :: <abstract-integer>, y :: <float>) => (result :: <class>)
