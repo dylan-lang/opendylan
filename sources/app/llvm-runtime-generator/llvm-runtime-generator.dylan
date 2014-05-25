@@ -18,7 +18,8 @@ define constant $wrapper-classes
       #"<unbound>",
       #"<traceable-value-cell>",
       #"<untraceable-value-cell>",
-      #"<untraceable-double-value-cell>"];
+      #"<untraceable-double-value-cell>",
+      #"<symbol>"];
 
 // Well-known objects referenced by the generated runtime
 define constant $runtime-referenced-objects
