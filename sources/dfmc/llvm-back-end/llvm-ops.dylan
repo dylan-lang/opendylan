@@ -146,6 +146,41 @@ define method op--stack-allocate-vector
   new-vector
 end method;
 
+define method op--object-mm-wrapper
+    (back-end :: <llvm-back-end>, object)
+ => (wrapper :: <llvm-value>);
+  let word-size = back-end-word-size(back-end);
+  let module = back-end.llvm-builder-module;
+
+  // Check tag to determine if this is a heap object
+  let object-word
+    = ins--ptrtoint(back-end, object, back-end.%type-table["iWord"]);
+  let tag-bits
+    = ins--and(back-end, object-word, ash(1, $dylan-tag-bits) - 1);
+  let cmp = ins--icmp-eq(back-end, tag-bits, $dylan-tag-pointer);
+  ins--if (back-end, cmp)
+    // Retrieve the <mm-wrapper> object from the object header
+    let x = op--object-pointer-cast(back-end, object, #"<object>");
+    let wrapper-slot-ptr = ins--gep-inbounds(back-end, x, 0, i32(0));
+    ins--load(back-end, wrapper-slot-ptr, alignment: word-size)
+  ins--else
+    // Look up the wrapper for this tag value in $direct-object-mm-wrappers
+    let wrappers-binding = dylan-binding(#"$direct-object-mm-wrappers");
+    let wrappers-constant = emit-reference(back-end, module, wrappers-binding);
+    let wrappers-type = llvm-pointer-to(back-end, $llvm-i8*-type);
+    let wrappers-constant-cast
+      = ins--bitcast(back-end, wrappers-constant,
+                     llvm-pointer-to(back-end, wrappers-type));
+    let wrappers-vector
+      = ins--load(back-end, wrappers-constant-cast, alignment: word-size);
+    let wrappers-vector-slot-ptr
+      = ins--gep-inbounds(back-end, wrappers-vector, tag-bits);
+    let wrappers-element
+      = ins--load(back-end, wrappers-vector-slot-ptr, alignment: word-size);
+    op--object-pointer-cast(back-end, wrappers-element, #"<mm-wrapper>")
+  end ins--if
+end method;
+
 
 /// Overflow trap
 

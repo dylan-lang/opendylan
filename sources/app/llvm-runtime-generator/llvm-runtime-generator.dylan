@@ -40,6 +40,9 @@ define constant $runtime-referenced-functions
       #"%slotacc-repeated-instance-getter",
       #"%slotacc-repeated-instance-setter"];
 
+define constant $runtime-referenced-variables
+  = #[#"$direct-object-mm-wrappers"];
+
 define function generate-runtime-heap
     (be :: <llvm-back-end>, m :: <llvm-module>) => ();
   // Emit external declarations for class wrappers
@@ -55,6 +58,11 @@ define function generate-runtime-heap
   // Emit external declarations for referenced Dylan entry points
   for (name in $runtime-referenced-functions)
     emit-extern(be, m, dylan-value(name).^iep);
+  end;
+
+  // Emit external declarations for referenced variables
+  for (name in $runtime-referenced-variables)
+    emit-extern(be, m, dylan-binding(name));
   end;
 
   // Emit runtime variable definitions
