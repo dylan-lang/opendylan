@@ -218,27 +218,10 @@ define method do-emit-instance-cmp
         ins--br(back-end, result-bb);
       end unless;
 
-      // Retrieve the <mm-wrapper> object from the object header
+      // Check using the mask in the wrapper
       ins--block(back-end, tag-pointer-bb);
-      let object-cast = op--object-pointer-cast(back-end, object, #"<object>");
-      let wrapper-slot-ptr
-        = ins--gep-inbounds(back-end, object-cast, 0, i32(0));
-      let wrapper
-        = ins--load(back-end, wrapper-slot-ptr, alignment: word-size);
-
-      // Retrieve the mm-wrapper-subtype-mask value (which is a tagged integer)
-      let mask-slot-ptr
-        = op--getslotptr(back-end, wrapper,
-                         #"<mm-wrapper>", #"mm-wrapper-subtype-mask");
-      let mask = ins--load(back-end, mask-slot-ptr, alignment: word-size);
-      let mask-int
-        = ins--ptrtoint(back-end, mask, back-end.%type-table["iWord"]);
-
-      // Compare against the mask for this class type
-      let masked
-        = ins--and(back-end, mask-int,
-                   ash(^class-subtype-bit(type), $dylan-tag-bits));
-      let mask-cmp = ins--icmp-ne(back-end, masked, 0);
+      let mask-cmp
+        = op--heap-object-subtype-bit-instance-cmp(back-end, object, type);
       ins--br(back-end, result-bb);
 
       // Result
@@ -254,6 +237,32 @@ define method do-emit-instance-cmp
     otherwise =>
       next-method();
   end case
+end method;
+
+define method op--heap-object-subtype-bit-instance-cmp
+    (back-end :: <llvm-back-end>, object :: <llvm-value>,
+     type :: <&class>)
+  let word-size = back-end-word-size(back-end);
+
+  // Retrieve the <mm-wrapper> object from the object header
+  let object-cast = op--object-pointer-cast(back-end, object, #"<object>");
+  let wrapper-slot-ptr
+    = ins--gep-inbounds(back-end, object-cast, 0, i32(0));
+  let wrapper
+    = ins--load(back-end, wrapper-slot-ptr, alignment: word-size);
+
+  // Retrieve the mm-wrapper-subtype-mask value (which is a tagged integer)
+  let mask-slot-ptr
+    = op--getslotptr(back-end, wrapper,
+                     #"<mm-wrapper>", #"mm-wrapper-subtype-mask");
+  let mask = ins--load(back-end, mask-slot-ptr, alignment: word-size);
+  let mask-int
+    = ins--ptrtoint(back-end, mask, back-end.%type-table["iWord"]);
+
+  // Compare against the mask for this class type
+  let type-mask = ash(^class-subtype-bit(type), $dylan-tag-bits);
+  let masked = ins--and(back-end, mask-int, type-mask);
+  ins--icmp-ne(back-end, masked, 0)
 end method;
 
 // Compile-time instance check against a <union> instance
