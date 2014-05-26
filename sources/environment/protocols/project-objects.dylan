@@ -1201,7 +1201,7 @@ end method note-user-project-opened;
 
 /// Finding environment objects by name
 
-define method find-environment-object
+define method %find-environment-object
     (project :: <project-object>, id :: <id-or-integer>,
      #rest keys,
      #key, #all-keys)
@@ -1221,6 +1221,22 @@ define method find-environment-object
             end;
         server & apply(find-environment-object, server, id, keys)
       end
+end method %find-environment-object;
+
+define method find-environment-object
+    (project :: <project-object>, id :: <definition-id>,
+     #rest keys,
+     #key, #all-keys)
+ => (object :: false-or(<environment-object>))
+ apply(%find-environment-object, project, id, keys);
+end method find-environment-object;
+
+define method find-environment-object
+    (project :: <project-object>, id :: <integer>,
+     #rest keys,
+     #key, #all-keys)
+ => (object :: false-or(<environment-object>))
+ apply(%find-environment-object, project, id, keys);
 end method find-environment-object;
 
 
