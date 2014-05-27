@@ -247,6 +247,17 @@ define sealed method environment-object-name
   #f
 end method environment-object-name;
 
+// This method is needed to resolve the ambiguity between
+// environment-object-name(<dfmc-database>, <definition-object>, <library-object>)
+// and
+// environment-object-name(<dfmc-database>, <library-object>, <namespace-object>)
+define sealed method environment-object-name
+    (server :: <dfmc-database>, object :: <library-object>,
+     library :: <library-object>)
+ => (name :: false-or(<binding-name-object>))
+  #f
+end method environment-object-name;
+
 // This code finds the home name for a variable, and then tries to find
 // the same name within the current module. If it can and this name is
 // bound to the same object we return it, otherwise we fail.
