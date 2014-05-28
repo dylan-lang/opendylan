@@ -11,6 +11,10 @@ News & Articles
 
 .. include:: recent.rst.inc
 
+:doc:`New release: 2013.1 </news/2013/07/11/new-release>` *- 2013-07-11*
+  We just released Open Dylan 2013.1 in preparation for the
+  hack-a-thon.
+
 :doc:`Dylan Hack-a-thon: July 13-14, 2013 </news/2013/06/30/dylan-hack-a-thon>` *- 2013-06-30*
   No matter if you know Dylan or not, we can help you
   `learn Dylan <http://opendylan.org/books/dpg/>`_ or put your
