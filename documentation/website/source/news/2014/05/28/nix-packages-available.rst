@@ -8,7 +8,7 @@ Open Dylan builds have been added to the `Nix package manager`_
 This makes Open Dylan installable from systems using Nix, or the
 `NixOS Linux distribution`_, using a command like::
 
-    nix -i opendylan
+    nix-env -i opendylan
 
 This will download the Open Dylan binaries and use that to bootstrap a
 build from source.
@@ -32,7 +32,9 @@ available for internal usage but the ``PATH`` for the users profile does
 not.
 
 Chris Double's `pull request to add Open Dylan`_ was merged and
-should be available now in the ``unstable`` Nix channel.
+should be available now in the ``unstable`` Nix channel. You will
+need to be on the ``unstable`` channel and update with ``nix-channel --update``
+to be able to install Open Dylan.
 
 Many thanks to Chris Double for his work on this!
 
