@@ -129,10 +129,10 @@ define method make-entry-point-function
         values(parameter-types-spec, parameter-names, #f)
       end if;
   let function-type
-    = llvm-entry-point-function-type(back-end, descriptor,
-                                     required-parameter-type-specs,
-                                     true?(rest-parameter-name),
-                                     count);
+    = llvm-entry-point-descriptor-function-type(back-end, descriptor,
+                                                required-parameter-type-specs,
+                                                true?(rest-parameter-name),
+                                                count);
 
   let parameter-types = function-type.llvm-function-type-parameter-types;
   let arguments
@@ -185,7 +185,7 @@ define function entry-point-rest-test
 end function;
 
 // Function type for a runtime entry point function
-define method llvm-entry-point-function-type
+define method llvm-entry-point-descriptor-function-type
     (back-end :: <llvm-back-end>,
      descriptor :: <llvm-entry-point-descriptor>,
      required-parameter-type-specs :: <simple-object-vector>,
