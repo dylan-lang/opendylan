@@ -163,7 +163,7 @@ void *MMAllocateWrapper(size_t size, void *wrapper, gc_teb_t gc_teb)
 RUN_TIME_API
 void *MMAllocMisc(size_t size)
 {
-  return GC_MALLOC_ATOMIC(size);
+  return GC_MALLOC_UNCOLLECTABLE(size);
 }
 
 RUN_TIME_API
