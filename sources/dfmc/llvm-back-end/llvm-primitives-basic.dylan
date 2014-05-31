@@ -582,11 +582,12 @@ end;
 define side-effecting stateless indefinite-extent &primitive-descriptor primitive-vector-element-setter
     (new-value :: <object>,
      x :: <simple-object-vector>, index :: <raw-integer>)
- => (value :: <object>);
+ => (new-value :: <object>);
   let class :: <&class> = dylan-value(#"<simple-object-vector>");
   let x-sov = op--object-pointer-cast(be, x, class);
   let slot-ptr = op--getslotptr(be, x-sov, class, #"vector-element", index);
   ins--store(be, new-value, slot-ptr, alignment: back-end-word-size(be));
+  new-value
 end;
 
 define side-effect-free stateless dynamic-extent mapped &primitive-descriptor primitive-vector-size
@@ -697,7 +698,8 @@ define side-effecting stateless indefinite-extent &primitive-descriptor primitiv
   let x-body
     = ins--gep-inbounds(be, x-slots, dylan-value(#"$number-header-words"));
   let slot-ptr = ins--gep-inbounds(be, x-body, position);
-  ins--store(be, value, slot-ptr, alignment: word-size)
+  ins--store(be, value, slot-ptr, alignment: word-size);
+  value
 end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-repeated-slot-value
@@ -726,7 +728,8 @@ define side-effecting stateless indefinite-extent &primitive-descriptor primitiv
   let x-repeated
     = ins--gep-inbounds(be, x-body, base-position);
   let slot-ptr = ins--gep(be, x-repeated, position);
-  ins--store(be, value, slot-ptr, alignment: word-size)
+  ins--store(be, value, slot-ptr, alignment: word-size);
+  value
 end;
 
 
