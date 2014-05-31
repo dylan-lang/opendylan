@@ -858,20 +858,10 @@ define method emit-computation
 
     // Throw an error
     ins--block(back-end, error-bb);
-    let uis-iep = dylan-value(#"unbound-instance-slot").^iep;
-    let uis-global
-      = llvm-builder-global(back-end, emit-name(back-end, m, uis-iep));
-    llvm-constrain-type
-      (uis-global.llvm-value-type,
-       llvm-pointer-to(back-end, llvm-lambda-type(back-end, uis-iep)));
-    let offset-ref = emit-reference(back-end, m, c.computation-slot-offset);
-    let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
-    op--call(back-end, uis-global,
-             vector(instance, offset-ref, undef, undef),
-             calling-convention:
-               llvm-calling-convention(back-end, uis-iep),
-             tail-call?: #t);
-    ins--unreachable(back-end);
+    let raw-offset
+      = llvm-back-end-value-function(back-end, c.computation-slot-offset);
+    op--call-error-iep(back-end, #"unbound-instance-slot",
+                       instance, op--tag-integer(back-end, raw-offset));
 
     // Not uninitialized
     ins--block(back-end, result-bb);

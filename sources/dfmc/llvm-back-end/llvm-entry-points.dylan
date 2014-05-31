@@ -287,22 +287,6 @@ end method;
 
 /// Entry point utility operations
 
-define method op--call-error-iep
-    (back-end :: <llvm-back-end>, name :: <symbol>, #rest arguments) => ();
-  let module = back-end.llvm-builder-module;
-
-  let err-iep = dylan-value(name).^iep;
-  let err-name = emit-name(back-end, module, err-iep);
-  let err-global = llvm-builder-global(back-end, err-name);
-  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
-  ins--tail-call(back-end, err-global,
-                 concatenate(arguments, vector(undef, undef)),
-                 type: llvm-reference-type(back-end, back-end.%mv-struct-type),
-                 calling-convention:
-                   llvm-calling-convention(back-end, err-iep));
-  ins--unreachable(back-end);
-end method;
-
 define function op--argument-count-error
     (back-end :: <llvm-back-end>, function :: <llvm-value>, n :: <llvm-value>)
  => ();
