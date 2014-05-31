@@ -239,3 +239,26 @@ define method op--overflow-trap
     (be :: <llvm-x86-back-end>) => ();
   ins--call-intrinsic(be, "llvm.x86.int", vector(i8(4)));
 end method;
+
+
+/// Error calls
+
+define method op--call-error-iep
+    (back-end :: <llvm-back-end>, name :: <symbol>, #rest arguments) => ();
+  let module = back-end.llvm-builder-module;
+
+  let err-iep = dylan-value(name).^iep;
+  let err-name = emit-name(back-end, module, err-iep);
+  let err-global = llvm-builder-global(back-end, err-name);
+  llvm-constrain-type
+    (err-global.llvm-value-type,
+     llvm-pointer-to(back-end, llvm-lambda-type(back-end, err-iep)));
+  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
+  op--call(back-end, err-global,
+           concatenate(arguments, vector(undef, undef)),
+           type: llvm-reference-type(back-end, back-end.%mv-struct-type),
+           calling-convention: llvm-calling-convention(back-end, err-iep),
+           tail-call?: #t);
+  ins--unreachable(back-end);
+end method;
+

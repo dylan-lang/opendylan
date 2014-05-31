@@ -64,19 +64,7 @@ define method op--type-check-error
     (back-end :: <llvm-back-end>, object :: <llvm-value>,
      type-ref :: <llvm-value>)
  => ();
-  let module = back-end.llvm-builder-module;
-
-  let tce-iep = dylan-value(#"type-check-error").^iep;
-  let tce-name = emit-name(back-end, module, tce-iep);
-  let tce-global = llvm-builder-global(back-end, tce-name);
-  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
-  op--call(back-end, tce-global,
-           vector(object, type-ref, undef, undef),
-           tail-call?: #t,
-           type: llvm-reference-type(back-end, back-end.%mv-struct-type),
-           calling-convention:
-             llvm-calling-convention(back-end, tce-iep));
-  ins--unreachable(back-end);
+  op--call-error-iep(back-end, #"type-check-error", object, type-ref);
 end method;
 
 
