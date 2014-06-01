@@ -1,6 +1,6 @@
 Module:       llvm-runtime-generator
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              Additional code is Copyright 2010-2013 Gwydion Dylan Maintainers
+              Additional code is Copyright 2010-2014 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -150,10 +150,10 @@ end function;
 define function generate-runtime-entry-point
     (be :: <llvm-back-end>, m :: <llvm-module>,
      name :: <symbol>, descriptor :: <llvm-entry-point-descriptor>,
-     count :: false-or(<integer>))
+     count :: false-or(<integer>), pos :: false-or(<integer>))
  => ();
   // Generate the function definition and add it to the runtime module
-  let function = llvm-entry-point-function(be, descriptor, count);
+  let function = llvm-entry-point-function(be, descriptor, count, pos: pos);
   llvm-builder-declare-global(be, function.llvm-global-name, function);
 
   let function-type = function.llvm-value-type.llvm-pointer-type-pointee;
@@ -173,10 +173,12 @@ define function generate-runtime-entry-point
 
     // Generate the function body
     let (result)
-      = apply(descriptor.entry-point-generator, be, count, arguments);
+      = apply(descriptor.entry-point-generator, be, count, pos, arguments);
 
     // Generate the function return
-    ins--ret(be, result);
+    if (be.llvm-builder-basic-block)
+      ins--ret(be, result);
+    end if;
   exception (e :: <error>)
     format(*standard-error*, "Generation of %s failed: %s\n", name, e);
     force-output(*standard-error*);
@@ -201,10 +203,16 @@ define function generate-runtime-entry-points
          keyed-by name :: <symbol>
          in $llvm-entry-point-descriptors)
     if (member?(#"singular", descriptor.entry-point-attributes))
-      generate-runtime-entry-point(be, m, name, descriptor, #f);
+      generate-runtime-entry-point(be, m, name, descriptor, #f, #f);
+    elseif (member?(#"cross", descriptor.entry-point-attributes))
+      for (count from 1 to 9)
+        for (pos from 0 below count)
+          generate-runtime-entry-point(be, m, name, descriptor, count, pos);
+        end for;
+      end for;
     else
       for (count from 0 to 9)
-        generate-runtime-entry-point(be, m, name, descriptor, count);
+        generate-runtime-entry-point(be, m, name, descriptor, count, #f);
       end for;
     end if;
   end for;

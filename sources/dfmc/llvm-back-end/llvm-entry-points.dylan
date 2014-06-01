@@ -1,6 +1,6 @@
 Module: dfmc-llvm-back-end
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              Additional code is Copyright 2009-2013 Gwydion Dylan Maintainers
+              Additional code is Copyright 2009-2014 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -21,6 +21,8 @@ end class;
 // Define an entry point
 // Adjectives:
 //   - singular:       Generate only one instance
+//   - cross:          Generate position 1..n variants for n-argument
+//                     entry points
 //   - outer:          Called by callers that may not know the exact signature
 //                     (thus requiring the C calling convention)
 //   - variable-arity: Uses varargs
@@ -66,7 +68,9 @@ end macro;
 define macro entry-point-emitter-method
   { entry-point-emitter-method (?parameters) => (?values) ?:body end }
     => { method
-             (?=be :: <llvm-back-end>, ?=num :: false-or(<integer>),
+             (?=be :: <llvm-back-end>,
+              ?=num :: false-or(<integer>),
+              ?=pos :: false-or(<integer>),
               ?parameters)
           => (?values)
            ?body
@@ -92,11 +96,13 @@ end function;
 
 define method llvm-entry-point-function
     (back-end :: <llvm-back-end>, desc :: <llvm-entry-point-descriptor>,
-     count :: false-or(<integer>))
+     count :: false-or(<integer>), #key pos :: false-or(<integer>) = #f)
  => (function :: <llvm-function>);
   let mangled-base = raw-mangle(back-end, desc.entry-point-name);
   let mangled-name
-    = if (count)
+    = if (pos)
+        format-to-string("%s_%d_%d", mangled-base, pos, count);
+      elseif (count)
         format-to-string("%s_%d", mangled-base, count);
       else
         mangled-base
@@ -106,7 +112,7 @@ define method llvm-entry-point-function
   else
     let function
       = apply(make-entry-point-function, back-end, mangled-name,
-              desc, count, desc.entry-point-function-declarator);
+              desc, count, pos, desc.entry-point-function-declarator);
     llvm-builder-define-global(back-end, mangled-name, function)
   end;
 end method;
@@ -114,7 +120,7 @@ end method;
 define method make-entry-point-function
     (back-end :: <llvm-back-end>, mangled-name :: <string>,
      descriptor :: <llvm-entry-point-descriptor>,
-     count :: false-or(<integer>),
+     count :: false-or(<integer>), pos :: false-or(<integer>),
      #key parameter-names :: <simple-object-vector> = #[],
           parameter-types-spec :: <simple-object-vector>,
      #all-keys)
