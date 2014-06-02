@@ -2166,6 +2166,7 @@ define &module dispatch-engine
     <by-class-discriminator>,
     <by-singleton-class-discriminator>,
     <linear-by-class-discriminator>,
+      %gf-dispatch-linear-by-class,
     <hashed-by-class-discriminator>,
     <linear-by-singleton-class-discriminator>,
     <hashed-by-singleton-class-discriminator>,

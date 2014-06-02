@@ -96,6 +96,127 @@ define side-effecting stateless dynamic-extent mapped &primitive-descriptor prim
 end;
 
 
+/// Discriminator/engine-node Initialization
+
+define side-effecting stateless dynamic-extent mapped &unimplemented-primitive-descriptor primitive-initialize-engine-node
+    (engine-node :: <engine-node>) => (single-value :: <engine-node>);
+  //---*** Fill this in...
+end;
+
+define side-effecting stateless dynamic-extent mapped &runtime-primitive-descriptor primitive-initialize-discriminator
+    (discriminator :: <discriminator>) => (single-value :: <discriminator>);
+  let word-size = back-end-word-size(be);
+
+  let return-bb = make(<llvm-basic-block>);
+
+  // Retrieve the discriminator's properties slot value
+  let properties-slot-ptr
+    = op--getslotptr(be, discriminator, #"<discriminator>", #"properties");
+  let properties = ins--load(be, properties-slot-ptr, alignment: word-size);
+  let raw-properties = op--untag-integer(be, properties);
+
+  // Extract the discriminator type
+  let entry-type = ins--and(be, raw-properties, properties$m-entry-type);
+
+  // Extract the argument number to discriminate on
+  let argnum-masked = ins--and(be, raw-properties, discriminator$m-argnum);
+  let argnum = ins--ashr(be, argnum-masked, discriminator$v-argnum);
+
+  // Extract the number of required arguments
+  let nrequired-masked = ins--and(be, raw-properties, discriminator$m-nrequired);
+  let nrequired = ins--ashr(be, nrequired-masked, discriminator$v-nrequired);
+
+  // Determine the number of implementation arguments
+  let rest-mask = ins--and(be, raw-properties, discriminator$m-restp);
+  let rest-cmp = ins--icmp-ne(be, rest-mask, 0);
+  let nrequired-inc = ins--add(be, nrequired, 1);
+  let impargs = ins--select(be, rest-cmp, nrequired-inc, nrequired);
+
+  // Point to the entry-point slot
+  let entry-point-slot-ptr
+    = op--getslotptr(be, discriminator,
+                     #"<engine-node>", #"engine-node-entry-point");
+
+  // Jump table for each engine node type:
+  let default-bb = make(<llvm-basic-block>);
+  let switch-cases = make(<stretchy-object-vector>);
+
+  // Create a basic block for each distinct entry point name, and add
+  // each case to switch-cases
+  let entry-point-table = make(<object-table>);
+  for (index from 32 below 63)
+    let entry-point-name = $engine-node-entry-point-names[index];
+    unless (element(entry-point-table, entry-point-name, default: #f))
+      entry-point-table[entry-point-name] := make(<llvm-basic-block>);
+    end unless;
+
+    add!(switch-cases, index);
+    add!(switch-cases, entry-point-table[entry-point-name]);
+  end for;
+
+  // Branch on the discriminator node type
+  ins--switch(be, entry-type, default-bb, switch-cases);
+
+  // Emit code for each distinct entry point
+  for (bb keyed-by entry-point-name in entry-point-table)
+    ins--block(be, bb);
+
+    let desc
+      = element($llvm-entry-point-descriptors, entry-point-name, default: #f);
+    if (desc)
+      assert(member?(#"cross", desc.entry-point-attributes));
+      // Create a basic block for each argument count
+      let impargs-switch-cases = make(<stretchy-object-vector>);
+      for (count from 1 to 9)
+        add!(impargs-switch-cases, count);
+        add!(impargs-switch-cases, make(<llvm-basic-block>));
+      end for;
+      // Branch on the number of implementation arguments
+      ins--switch(be, impargs, default-bb, impargs-switch-cases);
+
+      // Emit code for each argument count for this entry point
+      for (count from 1 to 9)
+        ins--block(be, impargs-switch-cases[(count - 1) * 2 + 1]);
+
+        // Create a basic block for each argument position
+        let argnum-switch-cases = make(<stretchy-object-vector>);
+        for (pos from 0 below count)
+          add!(argnum-switch-cases, pos);
+          add!(argnum-switch-cases, make(<llvm-basic-block>));
+        end for;
+
+        // Branch on the argument position
+        ins--switch(be, argnum, default-bb, argnum-switch-cases);
+
+        // Generate initializer for each argument position
+        for (pos from 0 below count)
+          ins--block(be, argnum-switch-cases[pos * 2 + 1]);
+
+          let func = llvm-entry-point-function(be, desc, count, pos: pos);
+          let ref = make(<llvm-cast-constant>,
+                         operator: #"BITCAST",
+                         type: $llvm-object-pointer-type,
+                         operands: vector(func));
+          ins--store(be, ref, entry-point-slot-ptr);
+          ins--br(be, return-bb);
+        end for;
+      end for;
+    else
+      error("No descriptor for %s", entry-point-name);
+    end if;
+  end for;
+
+  // Default case (unknown entry type, count, or position)
+  ins--block(be, default-bb);
+  ins--call-intrinsic(be, "llvm.trap", vector());
+  ins--unreachable(be);
+
+  // Exit block
+  ins--block(be, return-bb);
+  discriminator
+end;
+
+
 /// Apply
 
 define side-effecting stateless indefinite-extent &unimplemented-primitive-descriptor primitive-xep-apply
@@ -206,19 +327,6 @@ define side-effecting stateless indefinite-extent can-unwind mapped-parameter &r
   // Return
   ins--block(be, return-bb);
   ins--phi(be, result-phi-arguments)
-end;
-
-
-/// Discriminator/engine-node Initialization
-
-define side-effecting stateless dynamic-extent &unimplemented-primitive-descriptor primitive-initialize-engine-node
-    (engine-node :: <engine-node>) => (single-value :: <engine-node>);
-  //---*** Fill this in...
-end;
-
-define side-effecting stateless dynamic-extent &unimplemented-primitive-descriptor primitive-initialize-discriminator
-    (discriminator :: <discriminator>) => (single-value :: <discriminator>);
-  //---*** Fill this in...
 end;
 
 

@@ -739,3 +739,131 @@ define singular outer entry-point-descriptor slotacc-repeated-instance-setter-xe
   op--slotacc-xep(be, #"%slotacc-repeated-instance-setter", function, n,
                   value, a, inst, idx)
 end entry-point-descriptor;
+
+
+/// Dispatch engine entry points
+
+// Discriminators
+
+define cross outer entry-point-descriptor discriminate-on-argument
+    (engine :: <engine-node>, function :: <generic-function>, #rest arguments)
+ => (#rest values);
+  let word-size = back-end-word-size(be);
+  let class :: <&class> = dylan-value(#"<engine-node>");
+  let discriminator = op--object-pointer-cast(be, engine, class);
+  let callback-iep-ptr
+    = op--getslotptr(be, discriminator, class, #"engine-node-callback");
+  let callback-iep = ins--load(be, callback-iep-ptr, alignment: word-size);
+
+  // Invoke the discriminator callback with on the argument to be
+  // discriminated on, the function (or cache header), and the engine node.
+  let typical-callback-iep = dylan-value(#"%gf-dispatch-linear-by-class").^iep;
+  let func-type
+    = llvm-pointer-to(be, llvm-lambda-type(be, typical-callback-iep));
+  let iep-func = ins--bitcast(be, callback-iep, func-type);
+
+  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
+  let callback-ret
+    = ins--call(be, iep-func,
+                vector(arguments[pos], function, engine, undef, undef),
+                calling-convention:
+                  llvm-calling-convention(be, typical-callback-iep));
+  let next-engine = ins--extractvalue(be, callback-ret, 0);
+
+  // Chain to the engine node's entry point
+  op--chain-to-engine-entry-point(be, next-engine, function, arguments)
+end entry-point-descriptor;
+
+define cross outer entry-point-descriptor if-type-discriminator
+    (engine :: <engine-node>, function :: <generic-function>, #rest arguments)
+ => (#rest values);
+  let word-size = back-end-word-size(be);
+  let class :: <&class> = dylan-value(#"<if-type-discriminator>");
+  let discriminator = op--object-pointer-cast(be, engine, class);
+
+  let discriminator-type-ptr
+    = op--getslotptr(be, discriminator,
+                     class, #"if-type-discriminator-type");
+  let discriminator-type
+    = ins--load(be, discriminator-type-ptr, alignment: word-size);
+
+  let cmp = do-emit-instance-cmp(be, arguments[pos], #f, discriminator-type);
+  let next-engine-ptr
+    = ins--if (be, cmp)
+        op--getslotptr(be, discriminator,
+                       class, #"if-type-discriminator-then");
+      ins--else
+        op--getslotptr(be, discriminator,
+                       class, #"if-type-discriminator-else");
+      end ins--if;
+  let next-engine = ins--load(be, next-engine-ptr, alignment: word-size);
+
+  // Chain to the engine node's entry point
+  op--chain-to-engine-entry-point(be, next-engine, function, arguments)
+end entry-point-descriptor;
+
+define cross outer entry-point-descriptor typecheck-discriminator
+    (engine :: <engine-node>, function :: <generic-function>, #rest arguments)
+ => (#rest values);
+  let module = be.llvm-builder-module;
+  let word-size = back-end-word-size(be);
+
+  let class :: <&class> = dylan-value(#"<typecheck-discriminator>");
+  let discriminator = op--object-pointer-cast(be, engine, class);
+
+  let discriminator-type-ptr
+    = op--getslotptr(be, discriminator,
+                     class, #"typecheck-discriminator-type");
+  let discriminator-type
+    = ins--load(be, discriminator-type-ptr, alignment: word-size);
+
+  let cmp = do-emit-instance-cmp(be, arguments[pos], #f, discriminator-type);
+  let next-engine
+    = ins--if (be, cmp)
+        let ptr = op--getslotptr(be, discriminator,
+                                 class, #"typecheck-discriminator-type");
+        ins--load(be, ptr, alignment: word-size);
+      ins--else
+        emit-reference(be, module, dylan-value(#"$inapplicable-engine-node"))
+      end ins--if;
+
+  // Chain to the engine node's entry point
+  op--chain-to-engine-entry-point(be, next-engine, function, arguments)
+end entry-point-descriptor;
+
+// Discriminate using a one-class discriminator
+define cross outer entry-point-descriptor monomorphic-by-class-discriminator
+    (engine :: <engine-node>, function :: <generic-function>, #rest arguments)
+ => (#rest values);
+  let module = be.llvm-builder-module;
+  let word-size = back-end-word-size(be);
+
+  // Retrieve the <mm-wrapper> for the argument
+  let key = op--object-mm-wrapper(be, arguments[pos]);
+
+  // Retrieve the key from the engine node
+  let class :: <&class> = dylan-value(#"<monomorphic-by-class-discriminator>");
+  let discriminator = op--object-pointer-cast(be, engine, class);
+  let discriminator-key-ptr
+    = op--getslotptr(be, discriminator,
+                     class, #"monomorphic-by-class-discriminator-key");
+  let discriminator-key
+    = ins--load(be, discriminator-key-ptr, alignment: word-size);
+  let discriminator-key-cast
+    = op--object-pointer-cast(be, discriminator-key, #"<mm-wrapper>");
+
+  // Check that the class matches
+  let cmp = ins--icmp-eq(be, key, discriminator-key-cast);
+  let next-engine
+    = ins--if (be, cmp)
+        let discriminator-next-ptr
+          = op--getslotptr(be, discriminator,
+                           class, #"monomorphic-by-class-discriminator-next");
+        ins--load(be, discriminator-next-ptr, alignment: word-size)
+      ins--else
+        emit-reference(be, module, dylan-value(#"$absent-engine-node"))
+      end ins--if;
+
+  // Chain to the engine node's entry point
+  op--chain-to-engine-entry-point(be, next-engine, function, arguments)
+end entry-point-descriptor;

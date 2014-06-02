@@ -54,6 +54,7 @@ define module make/initialize-aliases
     export: all;
 end module;
 
+
 define module-with-models dfmc-modeling
   use dylan;
   use dylan-extensions,
@@ -506,9 +507,9 @@ define module-with-models dfmc-modeling
 //    engine-node$k-reserved-discriminator-s,
 //    engine-node$k-reserved-discriminator-t,
 //    engine-node$k-reserved-discriminator-u,
-//    properties$m-entry-type,
+    properties$m-entry-type,
 //    properties$s-entry-type,
-//    properties$v-entry-type,
+    properties$v-entry-type,
 //    properties$v-data,
 //    engine-node$v-data-start,
 //    smen$v-nrequired,
@@ -525,21 +526,21 @@ define module-with-models dfmc-modeling
     $partial-dispatch-arguments-limit,
     pdisp$v-typemask,
     pdisp$s-typemask,
-    pdisp$m-typemask;
+    pdisp$m-typemask,
 
-//    discriminator$v-argnum,
-//    discriminator$s-argnum,
-//    discriminator$m-argnum,
-//    discriminator$v-nrequired,
-//    discriminator$s-nrequired,
-//    discriminator$m-nrequired,
+    discriminator$v-argnum,
+    discriminator$s-argnum,
+    discriminator$m-argnum,
+    discriminator$v-nrequired,
+    discriminator$s-nrequired,
+    discriminator$m-nrequired,
 //    discriminator$v-restp,
-//    discriminator$m-restp,
-//    discriminator$v-data-start;
+    discriminator$m-restp;
+//    discriminator$v-data-start,
 
-//  export
-//    $engine-node-entry-point-names,
-//    $engine-node-callback-names;
+  export
+    $engine-node-entry-point-names,
+    $engine-node-callback-names;
   export
     <&engine-node-ep>,
       ^engine-node,
