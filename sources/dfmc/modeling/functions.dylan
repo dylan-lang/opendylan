@@ -1209,7 +1209,7 @@ define constant discriminator$m-nrequired
   = ash(ash(1, discriminator$s-nrequired) - 1, discriminator$v-nrequired);
 
 define constant discriminator$v-restp = 22;
-// define constant discriminator$m-restp = ash(1, discriminator$v-restp);
+define constant discriminator$m-restp = ash(1, discriminator$v-restp);
 
 // define constant discriminator$v-data-start = 23;
 

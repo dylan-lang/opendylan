@@ -28,7 +28,9 @@ define constant $runtime-referenced-objects
       #"%false",                // #f
       #"%empty-list",           // #()
       #"%empty-vector",         // #[]
-      #"%empty-string"];        // ""
+      #"%empty-string",         // ""
+      #"$absent-engine-node",
+      #"$inapplicable-engine-node"];
 
 define constant $runtime-referenced-functions
   = #[#"type-check-error",
