@@ -582,10 +582,11 @@ define method op--chain-to-engine-entry-point
            varargs?: #f);
   let entry-point-cast
     = ins--bitcast(be, entry-point, llvm-pointer-to(be, entry-point-type));
-  ins--tail-call
+  op--call
     (be, entry-point-cast,
      concatenate(vector(engine, function), arguments),
-     calling-convention: $llvm-calling-convention-c)
+     calling-convention: $llvm-calling-convention-c,
+     tail-call?: #t)
 end method;
 
 define method op--engine-node-entry-point
