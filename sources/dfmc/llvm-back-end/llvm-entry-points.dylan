@@ -548,8 +548,7 @@ define variable-arity outer entry-point-descriptor rest-key-xep
 end entry-point-descriptor;
 
 define method op--engine-node-call
-    (be :: <llvm-back-end>, function :: <llvm-value>, n,
-     arguments :: <sequence>)
+    (be :: <llvm-back-end>, function :: <llvm-value>, arguments :: <sequence>)
  => (call :: <llvm-value>);
   let word-size = back-end-word-size(be);
 
@@ -561,20 +560,21 @@ define method op--engine-node-call
     = op--getslotptr(be, function-cast, gf-class, #"discriminator");
   let engine = ins--load(be, discriminator-slot-ptr, alignment: word-size);
 
+  op--chain-to-engine-entry-point(be, engine, function, arguments)
+end method;
+
+define method op--chain-to-engine-entry-point
+    (be :: <llvm-back-end>, engine :: <llvm-value>, function :: <llvm-value>,
+     arguments :: <sequence>)
+ => (call :: <llvm-value>);
   // Retrieve the engine entry point from the engine
-  let engine-node-class :: <&class> = dylan-value(#"<engine-node>");
-  let engine-cast = op--object-pointer-cast(be, engine, engine-node-class);
-  let entry-point-slot-ptr
-    = op--getslotptr(be, engine-cast,
-                     engine-node-class, #"engine-node-entry-point");
-  let entry-point = ins--load(be, entry-point-slot-ptr, alignment: word-size);
+  let entry-point = op--engine-node-entry-point(be, engine);
 
   // Chain to the engine entry point function
   let parameter-types
     = make(<simple-object-vector>,
-           size: 3 + arguments.size,
+           size: 2 + arguments.size,
            fill: $llvm-object-pointer-type);
-  parameter-types[2] := be.%type-table["iWord"];
   let entry-point-type
     = make(<llvm-function-type>,
            return-type: llvm-reference-type(be, be.%mv-struct-type),
@@ -584,8 +584,21 @@ define method op--engine-node-call
     = ins--bitcast(be, entry-point, llvm-pointer-to(be, entry-point-type));
   ins--tail-call
     (be, entry-point-cast,
-     concatenate(vector(engine, function, n), arguments),
+     concatenate(vector(engine, function), arguments),
      calling-convention: $llvm-calling-convention-c)
+end method;
+
+define method op--engine-node-entry-point
+    (be :: <llvm-back-end>, engine-node :: <llvm-value>)
+ => (entry-point :: <llvm-value>);
+  let word-size = back-end-word-size(be);
+  let en-class :: <&class> = dylan-value(#"<engine-node>");
+  let engine-node-cast
+    = op--object-pointer-cast(be, engine-node, en-class);
+  let entry-point-ptr
+    = op--getslotptr(be, engine-node-cast, en-class,
+                     #"engine-node-entry-point");
+  ins--load(be, entry-point-ptr, alignment: word-size)
 end method;
 
 // For GF calls with fixed arguments only
@@ -608,7 +621,7 @@ define outer entry-point-descriptor gf-xep
 
   // Call using the dispatch engine
   ins--block(be, call-bb);
-  op--engine-node-call(be, function, n, arguments)
+  op--engine-node-call(be, function, arguments)
 end entry-point-descriptor;
 
 // For GF calls with optional arguments
@@ -637,7 +650,7 @@ define variable-arity outer entry-point-descriptor gf-optional-xep
   op--va-end(be, va-list);
 
   // Call using the dispatch engine
-  op--engine-node-call(be, function, n,
+  op--engine-node-call(be, function,
                        concatenate(arguments, vector(rest-vector)))
 end entry-point-descriptor;
 

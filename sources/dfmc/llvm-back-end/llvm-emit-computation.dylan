@@ -682,40 +682,12 @@ define method emit-call
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
      c :: <engine-node-call>, f :: <&generic-function>)
  => (call :: <llvm-value>);
-  let word-size = back-end-word-size(back-end);
+  let engine = emit-reference(back-end, m, c.engine-node);
+  let function = emit-reference(back-end, m, f);
 
-  // Retrieve the entry point function from the engine node
-  let node = emit-reference(back-end, m, c.engine-node);
-  let node-cast = op--object-pointer-cast(back-end, node, #"<engine-node>");
-  let node-ep-ptr
-    = op--getslotptr(back-end, node-cast,
-                     #"<engine-node>", #"engine-node-entry-point");
-  let ep = ins--load(back-end, node-ep-ptr, alignment: word-size);
-
-  let fn = emit-reference(back-end, m, f);
-
-  // Cast to the appropriate engine-node entry point type
-  let parameter-types
-    = make(<simple-object-vector>, size: c.arguments.size + 3);
-  parameter-types[0] := $llvm-object-pointer-type; // node
-  parameter-types[1] := $llvm-object-pointer-type; // function
-  parameter-types[2] := back-end.%type-table["iWord"]; // argument count
-  fill!(parameter-types, $llvm-object-pointer-type, start: 3);
-  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
-  let ep-type
-    = make(<llvm-function-type>,
-           return-type: return-type,
-           parameter-types: parameter-types,
-           varargs?: #f);
-  let ep-cast
-    = ins--bitcast(back-end, ep, llvm-pointer-to(back-end, ep-type));
-
-  op--call(back-end, ep-cast,
-           concatenate(vector(node, fn, c.arguments.size),
-                       map(curry(emit-reference, back-end, m),
-                           c.arguments)),
-           type: return-type,
-           calling-convention: $llvm-calling-convention-c)
+  op--chain-to-engine-entry-point(back-end, engine, function,
+                                  map(curry(emit-reference, back-end, m),
+                                      c.arguments))
 end method;
 
 // Calls to general functions using the XEP
@@ -760,7 +732,7 @@ define method emit-call
  => (call :: <llvm-value>);
   if (call-congruent?(c))
     let gfn = emit-reference(back-end, m, f);
-    op--engine-node-call(back-end, gfn, c.arguments.size,
+    op--engine-node-call(back-end, gfn,
                          map(curry(emit-reference, back-end, m), c.arguments))
   else
     next-method()
