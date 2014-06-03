@@ -1,7 +1,7 @@
-module: unicode-data-generator
-synopsis: UCD character representation
-author: Ingo Albrecht <prom@berlin.ccc.de>
-Copyright:    Original Code is Copyright (c) 2014 Ingo Albrecht
+Module: unicode-data-generator
+Synopsis: UCD character representation
+Author: Ingo Albrecht <prom@berlin.ccc.de>
+Copyright:    Original Code is Copyright (c) 2014 Dylan Hackers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 

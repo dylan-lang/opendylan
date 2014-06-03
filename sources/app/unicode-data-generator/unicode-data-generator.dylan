@@ -1,7 +1,9 @@
 Module: unicode-data-generator
-Synopsis: 
-Author: 
-Copyright: 
+Synopsis: Main file
+Author: Ingo Albrecht <prom@berlin.ccc.de>
+Copyright:    Original Code is Copyright (c) 2014 Dylan Hackers
+              All rights reserved.
+License:      See License.txt in this distribution for details.
 
 define function message(#rest args)
  => ();
