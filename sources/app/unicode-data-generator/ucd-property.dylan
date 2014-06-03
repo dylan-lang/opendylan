@@ -5,8 +5,11 @@ Copyright:    Original Code is Copyright (c) 2014 Dylan Hackers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 
+
+/* All defined properties (indexed by their native name) */
 define constant $ucd-properties-by-native-name = make(<string-table>);
 
+/* Objects describing a single property */
 define class <ucd-property> (<object>)
   constant slot ucd-property-name :: <string>,
     required-init-keyword: name:;
@@ -18,9 +21,11 @@ define class <ucd-property> (<object>)
     init-keyword: known?:;
 end class;
 
+/* Objects describing derived properties (which need checking, not loading) */
 define class <ucd-derived-property> (<ucd-property>)
 end class;
 
+/* Gets a property by its native name */
 define function ucd-property-by-native-name (native-name :: <string>)
  => ();
   let property = element($ucd-properties-by-native-name, native-name, default: #f);
@@ -36,6 +41,7 @@ define function ucd-property-by-native-name (native-name :: <string>)
   property;
 end function;
 
+/* Definition macro for properties */
 define macro ucd-property-definer
   { define ucd-property ?name:name ( ?type:expression, ?native-name:expression )
   } => {

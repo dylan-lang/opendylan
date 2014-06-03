@@ -19,6 +19,7 @@ define class <ucd-database> (<object>)
   slot ucd-blocks :: <stretchy-object-vector>
     = make(<stretchy-object-vector>);
 
+  /* tokens from which char names are composed */
   slot ucd-name-tokens :: <vector>;
 
 end class;
