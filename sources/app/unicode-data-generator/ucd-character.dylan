@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 2014 Dylan Hackers
 License:      See License.txt in this distribution for details.
 
 define class <ucd-character> (<object>)
-  slot uc-codepoint :: <integer>,
+  constant slot uc-codepoint :: <integer>,
     required-init-keyword: codepoint:;
 
   slot uc-name :: <string>;
