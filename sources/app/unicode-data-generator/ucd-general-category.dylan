@@ -21,19 +21,33 @@ define class <ucd-general-category> (<object>)
     required-init-keyword: name:;
 end class;
 
+define method parse-general-category(abbreviation :: <string>)
+  => (gc :: <ucd-general-category>);
+  let gc = element($ucd-general-categories, abbreviation);
+  unless(gc)                                                                                                                                                                        
+    error("Unknown general category %s", abbreviation);
+  end;
+  gc;
+end method;
+
 /* Definition macro for general categories */
 define macro ucd-general-category-definer
   { define ucd-general-category
       ?propname:name ( ?abbreviation:expression, ?name:expression )
   } => {
-    begin
-      let %abbreviation = ?abbreviation;
-      let %name = ?name;
-      let gc = make(<ucd-general-category>,
-                    abbreviation: %abbreviation,
-                    name: %name);
-      element($ucd-general-categories, %name) := gc;
-    end
+    define constant "$ucd-category-" ## ?propname =
+      begin
+        let %abbreviation = ?abbreviation;
+        let %name = ?name;
+        let gc = make(<ucd-general-category>,
+                      abbreviation: %abbreviation,
+                      name: %name);
+        element($ucd-general-categories, %abbreviation) := gc;
+      end;
+    define method "uc-is-" ## ?propname ## "?" (character :: <ucd-character>)
+      => (is? :: <boolean>);
+      character.uc-general-category == "$ucd-category-" ## ?propname;
+    end method
   }
 end macro;
 
@@ -43,7 +57,6 @@ define ucd-general-category lowercase-letter ("Ll", "Lowercase_Letter");
 define ucd-general-category titlecase-letter ("Lt", "Titlecase_Letter");
 define ucd-general-category modifier-letter  ("Lm", "Modifier_Letter");
 define ucd-general-category other-letter     ("Lo", "Other_Letter");
-
 /* Marks */
 define ucd-general-category nonspacing-mark ("Mn", "Nonspacing_Mark");
 define ucd-general-category spacing-mark    ("Mc", "Spacing_Mark");
@@ -81,69 +94,66 @@ define ucd-general-category surrogate   ("Cs", "Surrogate");
 define ucd-general-category private-use ("Co", "Private_Use");
 define ucd-general-category unassigned  ("Cn", "Unassigned");
 
+define method uc-is-letter? (c :: <ucd-character>)
+  => (is? :: <boolean>);
+  c.uc-is-uppercase-letter?
+    | c.uc-is-lowercase-letter?
+    | c.uc-is-titlecase-letter?
+    | c.uc-is-modifier-letter?
+    | c.uc-is-other-letter?
+end;
 
-define method uc-set-general-category (uc :: <ucd-character>, gc :: <string>)
- => ();
-  select (gc by \=)
-    "Lm", "Lo", "Lu", "Ll", "Lt" =>
-      uc.uc-is-letter? := #t;
-      select (gc by \=)
-        "Lu", "Ll", "Lt" => uc.uc-is-cased-letter? := #t;
-        "Lm" =>  uc.uc-is-modifier-letter? := #t;
-        "Lo" => uc.uc-is-other-letter? := #t;
-      end;
-    "Mn", "Mc", "Me" =>
-      uc.uc-is-mark? := #t;
-      select (gc by \=)
-        "Mn" => uc.uc-is-nonspacing-mark? := #t;
-        "Mc" => uc.uc-is-spacing-mark? := #t;
-        "Me" => uc.uc-is-enclosing-mark? := #t;
-      end;
-    "Nd", "Nl", "No" =>
-      uc.uc-is-number? := #t;
-      select (gc by \=)
-        "Nd" => uc.uc-is-decimal-number? := #t;
-        "Nl" => uc.uc-is-letter-number? := #t;
-        "No" => uc.uc-is-other-number? := #t;
-      end;
-    "Pc", "Pd", "Ps", "Pe", "Pi", "Pf", "Po" =>
-      uc.uc-is-punctuation? := #t;
-      select (gc by \=)
-        "Pc" => uc.uc-is-connector-punctuation? := #t;
-        "Pd" => uc.uc-is-dash-punctuation? := #t;
-        "Ps" => uc.uc-is-open-punctuation? := #t;
-        "Pe" => uc.uc-is-close-punctuation? := #t;
-        "Pi" => uc.uc-is-initial-punctuation? := #t;
-        "Pf" => uc.uc-is-final-punctuation? := #t;
-        "Po" => uc.uc-is-other-punctuation? := #t;
-      end;
-    "Sm", "Sc", "Sk", "So" =>
-      uc.uc-is-symbol? := #t;
-      select (gc by \=)
-        "Sm" => uc.uc-is-math-symbol? := #t;
-        "Sc" => uc.uc-is-currency-symbol? := #t;
-        "Sk" => uc.uc-is-modifier-symbol? := #t;
-        "So" => uc.uc-is-other-symbol? := #t;
-      end;
-    "Zs", "Zl", "Zp" =>
-      uc.uc-is-separator? := #t;
-      select (gc by \=)
-        "Zs" => uc.uc-is-space-separator? := #t;
-        "Zl" => uc.uc-is-line-separator? := #t;
-        "Zp" => uc.uc-is-paragraph-separator? := #t;
-      end;
-    "Cc", "Cf", "Cs", "Co", "Cn" =>
-      uc.uc-is-other? := #t;
-      select (gc by \=)
-        "Cc" => uc.uc-is-control? := #t;
-        "Cf" => uc.uc-is-format? := #t;
-        "Cs" => uc.uc-is-surrogate? := #t;
-        "Co" => uc.uc-is-private-use? := #t;
-        "Cn" => uc.uc-is-unassigned? := #t;
-      end;
-    otherwise =>
-      error("Unknown general category %s for codepoint %d",
-            gc,
-            uc.uc-codepoint);
-  end;
+define method uc-is-cased-letter? (c :: <ucd-character>)
+  => (is? :: <boolean>);
+  c.uc-is-uppercase-letter?
+    | c.uc-is-lowercase-letter?
+    | c.uc-is-titlecase-letter?
+end;
+
+define method uc-is-mark? (c :: <ucd-character>)
+  => (is? :: <boolean>);
+  c.uc-is-nonspacing-mark?
+    | c.uc-is-spacing-mark?
+    | c.uc-is-enclosing-mark?
+end;
+
+define method uc-is-number? (c :: <ucd-character>)
+  => (is? :: <boolean>);
+  c.uc-is-decimal-number?
+    | c.uc-is-letter-number?
+    | c.uc-is-other-number?
+end;
+
+define method uc-is-punctuation? (c :: <ucd-character>)
+  => (is? :: <boolean>);
+  c.uc-is-dash-punctuation?
+    | c.uc-is-open-punctuation?
+    | c.uc-is-close-punctuation?
+    | c.uc-is-initial-punctuation?
+    | c.uc-is-final-punctuation?
+    | c.uc-is-other-punctuation?
+end;
+
+define method uc-is-symbol? (c :: <ucd-character>)
+  => (is? :: <boolean>);
+  c.uc-is-math-symbol?
+    | c.uc-is-currency-symbol?
+    | c.uc-is-modifier-symbol?
+    | c.uc-is-other-symbol?
+end;
+
+define method uc-is-separator? (c :: <ucd-character>)
+  => (is? :: <boolean>);
+  c.uc-is-space-separator?
+    | c.uc-is-line-separator?
+    | c.uc-is-paragraph-separator?
+end;
+
+define method uc-is-other? (c :: <ucd-character>)
+  => (is? :: <boolean>);
+  c.uc-is-control?
+    | c.uc-is-format?
+    | c.uc-is-surrogate?
+    | c.uc-is-private-use?
+    | c.uc-is-unassigned?
 end method;

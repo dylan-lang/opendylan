@@ -166,8 +166,7 @@ define method ucd-load-unicodedata (ucd :: <ucd-database>, filename :: <object>)
         count := count + 1;
         db[codepoint] := uc;
         uc.uc-name := fields[1];
-        uc.uc-general-category := fields[2];
-        uc-set-general-category(uc, fields[2]);
+        uc.uc-general-category := parse-general-category(fields[2]);
         uc.uc-simple-uppercase-mapping := string-to-integer(fields[12], base: 16, default: -1);
         uc.uc-simple-lowercase-mapping := string-to-integer(fields[13], base: 16, default: -1);
         uc.uc-simple-titlecase-mapping := string-to-integer(fields[14], base: 16, default: -1);
