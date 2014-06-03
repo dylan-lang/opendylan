@@ -1620,6 +1620,30 @@ define llvm-builder macro-test ins--if-test ()
                   "unreachable"),
                 builder-test-function-disassembly(builder));
   end;
+
+  with-test-unit ("ins--if with else, no successor block")
+    let builder = make-builder-with-test-function();
+
+    let cmp = ins--icmp-uge(builder, 1, 2);
+    ins--if(builder, cmp)
+      ins--call-intrinsic(builder, "llvm.trap", vector());
+      ins--unreachable(builder);
+    ins--else
+      ins--call-intrinsic(builder, "llvm.trap", vector());
+      ins--unreachable(builder);
+    end ins--if;
+    check-false("no active block", builder.llvm-builder-basic-block);
+
+    check-equal("ins--if disassembly",
+                #("entry:",
+                  "%0 = icmp uge i32 1, 2",
+                  "br i1 %0, label %1, label %2",
+                  "call void @llvm.trap() #1",
+                  "unreachable",
+                  "call void @llvm.trap() #1",
+                  "unreachable"),
+                builder-test-function-disassembly(builder));
+  end;
 end macro-test;
 
 define llvm-builder macro-test ins--iterate-test ()
