@@ -16,6 +16,8 @@ IMMEDIATE
 
 - Think about where "full blown" unicode functionality should live (dylan runtime or elsewhere)
 
+- Improve the name compressor and make it uses sparse tables
+
 FUTURE
 
 - Implement normalizations
