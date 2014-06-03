@@ -761,20 +761,24 @@ define function do-ins--if
       end if;
 
   // Merge point
-  ins--block(builder, common-bb);
-  if (iftrue-exit-bb & iffalse-exit-bb)
-    llvm-constrain-type(llvm-value-type(iftrue-value),
-                        llvm-value-type(iffalse-value));
-    if (llvm-void-type?(llvm-value-type(iftrue-value)))
-      make(<llvm-undef-constant>)
+  if (iftrue-exit-bb | iffalse-exit-bb)
+    ins--block(builder, common-bb);
+    if (iftrue-exit-bb & iffalse-exit-bb)
+      llvm-constrain-type(llvm-value-type(iftrue-value),
+                          llvm-value-type(iffalse-value));
+      if (llvm-void-type?(llvm-value-type(iftrue-value)))
+        make(<llvm-undef-constant>)
+      else
+        ins--phi*(builder, iftrue-value, iftrue-exit-bb,
+                  iffalse-value, iffalse-exit-bb)
+      end if;
+    elseif (iftrue-exit-bb)
+      iftrue-value
     else
-      ins--phi*(builder, iftrue-value, iftrue-exit-bb,
-                iffalse-value, iffalse-exit-bb)
-    end if;
-  elseif (iftrue-exit-bb)
-    iftrue-value
+      iffalse-value
+    end if
   else
-    iffalse-value
+    make(<llvm-undef-constant>)
   end if
 end function;
 
