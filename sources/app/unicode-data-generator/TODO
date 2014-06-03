@@ -1,0 +1,23 @@
+
+IMMEDIATE
+
+- Start a "unicode-data" library with lookup code and data structures.
+  Some of the respective code will have to go to the dylan runtime at some point.
+
+- Write a generic sparse table generator.
+  Should handle arbitrary value types as to be generic.
+  Might be best to join several flags into a per-character bitfield.
+
+- Figure out which properties the DRM and common-dylan require and generate appropriate tables
+   (uppercase?, lowercase?, upcase, downcase, character classes)
+
+- Work on a DEP to add more character properties to the respective standards
+   (titlecase, numeric values of characters...)
+
+- Think about where "full blown" unicode functionality should live (dylan runtime or elsewhere)
+
+FUTURE
+
+- Implement normalizations
+
+- Implement bidirectional algorithm
