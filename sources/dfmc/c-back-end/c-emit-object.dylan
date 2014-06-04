@@ -99,10 +99,10 @@ define method print-raw-object (o :: <float>, stream :: <stream>) => ()
     let i = size(s) - 1;
     while (i > -1)
       select (s[i])
-	's' => s[i] := 'e'; done();	//---*** Should be 'f' but GCC complains!
-	'd' => s[i] := 'e'; done();
-	'x' => s[i] := 'e'; done();	//---*** Should be 'l' but GCC complains!
-	otherwise => ;
+        's' => s[i] := 'e'; done();        //---*** Should be 'f' but GCC complains!
+        'd' => s[i] := 'e'; done();
+        'x' => s[i] := 'e'; done();        //---*** Should be 'l' but GCC complains!
+        otherwise => ;
       end;
       i := i - 1
     end
@@ -123,7 +123,7 @@ define method print-raw-object (o :: <double-integer>, stream :: <stream>) => ()
     format(stream, "0x%sL", machine-word-to-string(%double-integer-low(o), prefix: #f))
   else
     format(stream, "0x%s%sL", machine-word-to-string(%double-integer-high(o), prefix: #f),
-	                      machine-word-to-string(%double-integer-low(o), prefix: #f))
+                              machine-word-to-string(%double-integer-low(o), prefix: #f))
   end if
 end method;
 
@@ -143,7 +143,7 @@ end method graphic?;
 define method emit-raw-character-data // !@#$ should be <byte-character>
     (back-end :: <c-back-end>, stream :: <stream>, c :: <character>)
  => ()
-  select (c) 
+  select (c)
     '\\' => write(stream, "'\\\\'");
     '\"' => write(stream, "'\\\"'");
     '\'' => write(stream, "'\\''");
@@ -153,11 +153,11 @@ define method emit-raw-character-data // !@#$ should be <byte-character>
     '\r' => write(stream, "'\\r'");
     otherwise =>
       if (c.graphic?)
-	write-element(stream, '\'');
-	write-element(stream, c);
-	write-element(stream, '\'');
+        write-element(stream, '\'');
+        write-element(stream, c);
+        write-element(stream, '\'');
       else
-	format(stream, "0x%x", as(<integer>, c));
+        format(stream, "0x%x", as(<integer>, c));
       end if;
   end select
 end method;
@@ -183,9 +183,9 @@ define inline function do-emit-name-using-emitter
 end function;
 
 define macro emit-name-using-emitter
-  { emit-name-using-emitter 
-       (?back-end:expression, ?stream:expression, ?object:expression, 
-        ?emitted-name:expression, ?emitted-name-setter:expression, 
+  { emit-name-using-emitter
+       (?back-end:expression, ?stream:expression, ?object:expression,
+        ?emitted-name:expression, ?emitted-name-setter:expression,
         ?emit-value:expression) }
  => { do-emit-name-using-emitter
         (?back-end, ?stream, ?object, ?emitted-name, ?emitted-name-setter,
@@ -196,9 +196,9 @@ end method;
 /// USED FOR EMULATOR SPEED IMPROVEMENT
 
 define macro emit-name-using-emitter
-  { emit-name-using-emitter 
-       (?back-end:expression, ?stream:expression, ?object:expression, 
-        ?emitted-name:expression, ?emitted-name-setter:expression, 
+  { emit-name-using-emitter
+       (?back-end:expression, ?stream:expression, ?object:expression,
+        ?emitted-name:expression, ?emitted-name-setter:expression,
         ?emit-value:expression) }
  => { unless (instance?(?emitted-name(?object), <byte-string>))
         ?emitted-name-setter(?emit-value, ?object);
@@ -206,9 +206,9 @@ define macro emit-name-using-emitter
       write(?stream, ?emitted-name(?object)) }
 end macro;
 
-define method emit-reference 
+define method emit-reference
     (back-end :: <c-back-end>, stream :: <stream>, o :: <module-binding>)
- => () 
+ => ()
   emit-name-using-emitter
     (back-end, stream, o, emitted-name, emitted-name-setter,
      format-to-string("%s", global-mangle(back-end, o)))
@@ -216,17 +216,17 @@ end method;
 
 define method same-name? (x, y) x == y end;
 
-define method same-name? 
+define method same-name?
     (x :: <variable-name-fragment>, y :: <variable-name-fragment>) => (same?)
   x.fragment-identifier = y.fragment-identifier
 end method;
-  
-define method ambiguous-lexical-variable? 
-    (env :: <lambda-lexical-environment>, var :: <temporary>) 
+
+define method ambiguous-lexical-variable?
+    (env :: <lambda-lexical-environment>, var :: <temporary>)
  => (ambiguous? :: <boolean>)
   block (return)
     for-temporary (tmp in env)
-      if (tmp ~== var 
+      if (tmp ~== var
             & same-name?(var.name, tmp.name))
         return(#t);
       end if;
@@ -240,12 +240,12 @@ end method;
 // lexical variables can be the same.
 define thread variable *name-salt* = 1;
 
-define method ambiguous-parameter? 
-    (parameters :: <sequence>, var :: <temporary>) 
+define method ambiguous-parameter?
+    (parameters :: <sequence>, var :: <temporary>)
  => (ambiguous? :: <boolean>)
   block (return)
     for (tmp in parameters)
-      if (tmp ~== var 
+      if (tmp ~== var
             & same-name?(var.name, tmp.name))
           if (tmp.frame-offset == var.frame-offset)
             var.frame-offset := tmp.frame-offset + *name-salt*;
@@ -258,15 +258,15 @@ define method ambiguous-parameter?
   end block;
 end method;
 
-define function anonymous-temporary-at? 
-    (env :: <lambda-lexical-environment>, var :: <temporary>) 
+define function anonymous-temporary-at?
+    (env :: <lambda-lexical-environment>, var :: <temporary>)
  => (anonymous? :: <boolean>)
   if (named?(var))
     // let offset = var.frame-offset;
     // block (return)
     //   for-temporary (tmp in env)
     //     if (tmp ~== var & tmp.frame-offset = var.frame-offset)
-    //	     return(#t);
+    //             return(#t);
     //     end if;
     //   end for-temporary;
     //   #f
@@ -289,40 +289,40 @@ define function emit-named-temporary
        element($anonymous-temporary-cache, number, default: #f)
          | (element($anonymous-temporary-cache, number)
               := format-to-string("T%d", number));
-     elseif (ambiguous-lexical-variable?(o.environment, o)) 
+     elseif (ambiguous-lexical-variable?(o.environment, o))
        format-to-string
-	 ("%s", hygienic-mangle(back-end, o.name, o.frame-offset));
+         ("%s", hygienic-mangle(back-end, o.name, o.frame-offset));
      else
        format-to-string
-	 ("%s", local-mangle(back-end, o.name));
+         ("%s", local-mangle(back-end, o.name));
      end if);
 end function;
 
-define method emit-object 
+define method emit-object
     (back-end :: <c-back-end>, stream :: <stream>, o :: <temporary>)
  => ()
   emit-named-temporary(back-end, stream, o);
 end method;
 
-define method emit-object 
-    (back-end :: <c-back-end>, stream :: <stream>, 
+define method emit-object
+    (back-end :: <c-back-end>, stream :: <stream>,
      o :: <lexical-local-variable>)
  => ()
   emit-named-temporary(back-end, stream, o);
 end method;
 
-define method emit-object 
+define method emit-object
     (back-end :: <c-back-end>, stream :: <stream>, o :: <lexical-variable>)
  => ()
   let lambda = o.environment.lambda-environment.lambda;
   emit-name-using-emitter
     (back-end, stream, o, emitted-name, emitted-name-setter,
-     if (ambiguous-parameter?(parameters(lambda), o)) 
+     if (ambiguous-parameter?(parameters(lambda), o))
        format-to-string
-	 ("%s", hygienic-mangle(back-end, o.name, o.frame-offset));
+         ("%s", hygienic-mangle(back-end, o.name, o.frame-offset));
      else
        format-to-string
-	 ("%s", local-mangle(back-end, o.name));
+         ("%s", local-mangle(back-end, o.name));
      end if);
   // emit-named-temporary(back-end, stream, o);
   // emit-name-using-emitter
@@ -344,15 +344,15 @@ define method emit-struct-definer-name
 end method;
 
 define method emit-repeated-struct-definer-name
-    (back-end :: <c-back-end>, stream :: <stream>, 
-     class :: <&class>, size :: <integer>) 
+    (back-end :: <c-back-end>, stream :: <stream>,
+     class :: <&class>, size :: <integer>)
  => ()
     emit-struct-definer-name(back-end, stream, class);
     format(stream, "(%d)", size)
 end method;
 
-define method emit-struct-field-name 
-    (back-end :: <c-back-end>, stream :: <stream>, 
+define method emit-struct-field-name
+    (back-end :: <c-back-end>, stream :: <stream>,
      class :: <&class>, slotd :: <&slot-descriptor>, position) => ()
   emit-name-using-emitter
     (back-end, stream, slotd, emitted-type-name, emitted-type-name-setter,
@@ -366,8 +366,8 @@ end method;
 // NOTE: The mangling for objects with a repeated slot must match the
 //       mangling in the corresponding C preprocessor macro.
 
-define method emit-repeated-struct-name 
-    (back-end :: <c-back-end>, stream :: <stream>, 
+define method emit-repeated-struct-name
+    (back-end :: <c-back-end>, stream :: <stream>,
      c :: <&class>, size :: <integer>) => ()
   emit-struct-name(back-end, stream, c);
   format(stream, "_%d", size);
@@ -378,7 +378,7 @@ define method emit-type-name // !@#$ NEED UNIFYING MODEL TYPE
   let rslotd = o.&object-class.^repeated-slot-descriptor;
   if (rslotd)
     emit-repeated-struct-name
-      (back-end, stream, o.&object-class, 
+      (back-end, stream, o.&object-class,
        ^slot-value(o, ^size-slot-descriptor(rslotd)))
   else
     emit-struct-name(back-end, stream, o.&object-class)
@@ -389,10 +389,10 @@ end method;
 
 define constant $number-xeps = 10;
 
-define method emit-xep-reference 
+define method emit-xep-reference
     (back-end :: <c-back-end>, stream :: <stream>, ep :: <&lambda-xep>) => ()
   let req-size = ^entry-point-number-required(ep);
-  let size 
+  let size
     = if (^entry-point-key?(ep))
         req-size + ^entry-point-number-keys(ep) + 1
       else
@@ -400,11 +400,11 @@ define method emit-xep-reference
       end if;
   format(stream, if (size < $number-xeps) "&%s_%d" else "&%s" end,
          if (^entry-point-key?(ep))
-	   $rest-key-xep-string
+           $rest-key-xep-string
          elseif (^entry-point-rest?(ep))
-           $rest-xep-string 
-         else 
-           $xep-string 
+           $rest-xep-string
+         else
+           $xep-string
          end if,
          size);
 end method;
@@ -422,22 +422,22 @@ end method;
 
 define constant $special-gf-engine-max-args = 7;
 
-define method emit-xep-reference 
+define method emit-xep-reference
     (back-end :: <c-back-end>, stream :: <stream>, ep :: <&generic-function-xep>)
  => ()
   let req-size :: <integer> = ^entry-point-number-required(ep);
   let optionals? = ^entry-point-optionals?(ep);
   let impargs :: <integer> = if (optionals?) req-size + 1 else req-size end;
-  format(stream, 
+  format(stream,
          if (impargs <= $special-gf-engine-max-args)
            "&%s_%d"
          else
            "&%s"
-         end, 
-         if (optionals?) 
+         end,
+         if (optionals?)
            $gf-optional-xep-string
-         else 
-           $gf-xep-string 
+         else
+           $gf-xep-string
          end if,
          req-size);
 end method;
@@ -451,10 +451,10 @@ define constant $number-meps = $number-xeps;
 
 define method emit-reference
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&keyword-method-mep>) => ()
-  let size 
+  let size
     = ^entry-point-number-required(o) + ^entry-point-number-keys(o) + 1;
-  format(stream, if (size < $number-meps) "&%s_%d" else "&%s" end, 
-	 $key-mep-string, size);
+  format(stream, if (size < $number-meps) "&%s_%d" else "&%s" end,
+         $key-mep-string, size);
 end method;
 
 
@@ -470,7 +470,7 @@ define method emit-engine-node-ep-reference
 end method;
 
 define method emit-engine-node-ep-reference
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      e :: <&engine-node>, o :: <&function-linked-engine-node-ep>)
  => ()
   let epstr :: <byte-string> = raw-mangle(back-end, ^entry-point-name(o));
@@ -484,21 +484,21 @@ define method emit-engine-node-ep-reference
 end method;
 
 define method emit-engine-node-ep-reference
-    (back-end :: <c-back-end>, stream :: <stream>, 
-     e :: <&discriminator>, ep :: <&discriminator-ep>) 
+    (back-end :: <c-back-end>, stream :: <stream>,
+     e :: <&discriminator>, ep :: <&discriminator-ep>)
  => ()
   let epname :: <symbol> = ^entry-point-name(ep);
   let epstr :: false-or(<byte-string>)
     = select (epname)
-	#"discriminate-on-argument" => "discriminate";
-	#"if-type" => "if_type_discriminator";
-	#"typecheck" => "typecheck_discriminator";
+        #"discriminate-on-argument" => "discriminate";
+        #"if-type" => "if_type_discriminator";
+        #"typecheck" => "typecheck_discriminator";
       end select;
   let req-size :: <integer> = ^discriminator-nrequired(e);
   if (req-size > $special-gf-engine-max-args)
     format(stream, "&%s_engine_n_n", epstr)
   else
-    let nmepargs :: <integer> 
+    let nmepargs :: <integer>
       = if (^discriminator-optionals?(e)) req-size + 1 else req-size end;
     format(stream, "&%s_engine_%d_%d", epstr, ^discriminator-argnum(e) + 1, nmepargs)
   end if
@@ -509,14 +509,14 @@ define method emit-code (back-end :: <c-back-end>, o) => ()
 end method;
 
 define method emit-parameter-type
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      o :: <&raw-type>, #key index :: false-or(<integer>))
   format-emit*(back-end, stream, "^", o);
 end method;
 
 
 define method emit-parameter-type
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      o, #key index :: false-or(<integer>))
   write(stream, $dylan-type-string);
 end method;
@@ -530,14 +530,14 @@ define method emit-return-types
     emit-parameter-type(back-end, stream, dylan-value(#"<object>"));
   else
     emit-parameter-type
-      (back-end, stream, 
+      (back-end, stream,
        first(^signature-values(signature), default: dylan-value(#"<object>")));
   end if;
 end method;
 
 // CALLED WHEN DFM IS PRESENT
 
-define function emit-parameters 
+define function emit-parameters
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&iep>,
      parameters :: <sequence>, sig :: false-or(<&signature>)) => ()
   // !@#$ avoid problems with accessor declaring raw values
@@ -546,18 +546,18 @@ define function emit-parameters
   let parm-ix = 0;
   let first? = #t;
   local method emit-parameter (type)
-	  unless (first?)
-	    write(stream, ", ");
-	  end;
-	  emit-parameter-type(back-end, stream, type);
-	  write(stream, " ");
-	  if (instance?(type, <&raw-aggregate-type>))
-	    write(stream, "tmp_");
-	  end if;
-	  format-emit*(back-end, stream, "%", parameters[parm-ix]);    
-	  first? := #f;
-	  parm-ix := parm-ix + 1;
-	end;
+          unless (first?)
+            write(stream, ", ");
+          end;
+          emit-parameter-type(back-end, stream, type);
+          write(stream, " ");
+          if (instance?(type, <&raw-aggregate-type>))
+            write(stream, "tmp_");
+          end if;
+          format-emit*(back-end, stream, "%", parameters[parm-ix]);
+          first? := #f;
+          parm-ix := parm-ix + 1;
+        end;
   // need to get required parameter types out of signature
   if (sig)
     for (required in sig.^signature-required,
@@ -569,7 +569,7 @@ define function emit-parameters
       emit-parameter(parameters[i].specializer);
     end;
   end if;
-    
+
   // For other parameters we must not use signature
   for (i from parm-ix below size(parameters))
     emit-parameter(parameters[i].specializer);
@@ -580,7 +580,7 @@ end function;
 // CALLED WHEN THERE AREN'T PARAMETERS I.E., DFM'S BEEN PURGED
 
 define function emit-signature-types
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      o :: <&iep>, sig-spec :: <signature-spec>, sig :: <&signature>)
  => ()
   let accessor? = ^instance?(o.function, dylan-value(#"<accessor-method>"));
@@ -626,7 +626,7 @@ define function emit-dynamic-signature-types
   end for;
   when (spec-argument-optionals?(sig-spec))
     // HACK: FIX ME
-    emit-parameter(spec-argument-rest-variable-spec(sig-spec) | "rest"); 
+    emit-parameter(spec-argument-rest-variable-spec(sig-spec) | "rest");
   end when;
   for (spec in spec-argument-key-variable-specs(sig-spec))
     emit-parameter(spec)
@@ -638,7 +638,7 @@ define method external-lambda? (o :: <&method>) => (well?)
   o.model-definition
 end method;
 
-define method emit-lambda-interface 
+define method emit-lambda-interface
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&iep>) => ();
   // TODO: Turn on source locations.
   // emit-source-location(back-end, stream, o.body);
@@ -670,12 +670,12 @@ define method emit-lambda-body
   emit-lambda-body-using-function(back-end, stream, o, o.function);
 end;
 
-define method capture-environment-string 
+define method capture-environment-string
     (m :: <&method>) => (res :: <byte-string>)
   $capture-environment-string
 end method;
 
-define method capture-environment-string 
+define method capture-environment-string
     (m :: <&keyword-closure-method>) => (res :: <byte-string>)
   $capture-keyword-environment-string
 end method;
@@ -695,24 +695,24 @@ define method emit-lambda-body-using-function
               end if;
             end for-computations;
             #f
-          end block; 
+          end block;
       for-temporary (tmp in o.environment)
-	if (used?(tmp))
-	  emit-local-definition(back-end, stream, tmp, volatile?);
-	end if;
+        if (used?(tmp))
+          emit-local-definition(back-end, stream, tmp, volatile?);
+        end if;
       end for-temporary;
       unless (empty?(o.environment.closure))
-	if (closure-size(o.environment) > 0)
-	  format-emit*(back-end, stream, "\t~\n", 
-		       capture-environment-string(fun));
-	end if;
-	/*
-	if (closure-self-referencing?(o.environment))
-	  format-emit*(back-end, stream, "\t~ ~ = ~;\n", 
-		       $dylan-type-string, $closure-string, 
-		       $function-register-string);
-	end if;
-	*/
+        if (closure-size(o.environment) > 0)
+          format-emit*(back-end, stream, "\t~\n",
+                       capture-environment-string(fun));
+        end if;
+        /*
+        if (closure-self-referencing?(o.environment))
+          format-emit*(back-end, stream, "\t~ ~ = ~;\n",
+                       $dylan-type-string, $closure-string,
+                       $function-register-string);
+        end if;
+        */
       end unless;
       write-element(stream, '\n');
       emit-computations(back-end, stream, 1, o.body, #f);
@@ -759,14 +759,14 @@ define method emit-code (back-end :: <c-back-end>, o :: <&iep>)
   unless (code(o)) // DFM EXISTS?
     let stream = back-end.lambda-stream;
     clear-contents(stream);
-    allocate-registers(o.function); 
+    allocate-registers(o.function);
     emit-lambda(back-end, stream, o);
     o.code := stream-contents-as(<byte-string>, stream);
     // format-out("%s\n", o.code);
     if (*retract-dfm?*)
       if (lambda-top-level?(o))
-	retract-method-dfm(o);
-	retract-method-dfm(o.function);
+        retract-method-dfm(o);
+        retract-method-dfm(o.function);
       end if;
     end if;
   end unless;
@@ -784,7 +784,7 @@ define method emit-init-code (back-end :: <c-back-end>, o :: <&iep>)
   unless (code(o)) // DFM EXISTS?
     let stream = back-end.lambda-stream;
     clear-contents(stream);
-    allocate-registers(o.function); 
+    allocate-registers(o.function);
     dynamic-bind (*emitting-init-code?* = #t)
       emit-lambda-body(back-end, stream, o);
     end dynamic-bind;

@@ -8,9 +8,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //// OBJECT EMISSION PROTOCOL
 
 define generic emit-forward    // binding declaration
-  (back-end, stream, object) => (); 
+  (back-end, stream, object) => ();
 define generic emit-definition // binding
-  (back-end, stream, object) => (); 
+  (back-end, stream, object) => ();
 
 /// VARIABLES
 
@@ -19,7 +19,7 @@ define method emit-forward
   format-emit*(back-end, stream, "extern ~ @;\n", $dylan-type-string, o);
 end method;
 
-define method emit-definition 
+define method emit-definition
     (back-end :: <c-back-end>, stream :: <stream>, o :: <module-binding>) => ()
   format-emit*(back-end, stream, "~ %;\n", $dylan-type-string, o);
 end method;
@@ -49,7 +49,7 @@ end method;
 define method emit-forward  // !@#$ NEED UNIFYING TYPE
     (back-end :: <c-back-end>, stream :: <stream>, o) => ()
   unless (o.direct-object?)
-    if (o.model-definition 
+    if (o.model-definition
         | instance?(o, <&mm-wrapper>)
         | instance?(o, <&singular-terminal-engine-node>))
       write(stream, "extern ");
@@ -68,9 +68,9 @@ define method emit-definition // !@#$ need unifying type
   // Direct objects are always emitted in full at point of reference and
   // are never referred to by name, hence no need for a forward declaration.
   unless (o.direct-object?)
-    unless (o.model-definition 
+    unless (o.model-definition
             | instance?(o, <&mm-wrapper>)
-            | instance?(o, <&singular-terminal-engine-node>)) 
+            | instance?(o, <&singular-terminal-engine-node>))
       write(stream, "static ");
     end;
     emit-type-name(back-end, stream, o);
@@ -83,19 +83,19 @@ end method;
 define method emit-indirection-definition
     (back-end :: <c-back-end>, stream :: <stream>, o :: <object>) => ()
   format-emit*
-    (back-end, stream, "static ~ ~^ = @;\n", 
+    (back-end, stream, "static ~ ~^ = @;\n",
      $dylan-type-string, $indirection-prefix, o, o);
 end method;
 
 // STRUCTURE
 
-// Indirect objects are just dumped slot-by-slot directed my MOP 
+// Indirect objects are just dumped slot-by-slot directed my MOP
 // information. Packed representations like characters in strings
-// obviously cause wrinkles. 
+// obviously cause wrinkles.
 
-// Issue: Although this is sweet, it may also be slow if we use the 
+// Issue: Although this is sweet, it may also be slow if we use the
 // generic code for common objects like methods and slot descriptors.
-// We will have to profile, but there may be a case for the model 
+// We will have to profile, but there may be a case for the model
 // class macros generating custom emitters for common classes.
 
 define generic emit-object-slot
@@ -120,7 +120,7 @@ end method;
 
 
 define method emit-object-slot
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      class, slotd :: <&any-instance-slot-descriptor>, o) => ()
   write(stream, ",\n  ");
   emit-reference(back-end, stream, ^slot-value(o, slotd));
@@ -162,7 +162,7 @@ define method emit-raw-character-data
 end method;
 
 define method emit-object-slot
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      class, slotd :: <&repeated-slot-descriptor>, o) => ()
   let size = ^slot-value(o, ^size-slot-descriptor(slotd));
   /*  ---- This is no longer needed.  The size descriptor slot is represented
@@ -195,7 +195,7 @@ end method;
 --- on non-instance slots.
 
 define method emit-object-slot
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      class, slotd :: <&slot-descriptor>, o) => ()
 end method;
 */
@@ -203,13 +203,13 @@ end method;
 
 // CLASSES
 
-// If the class has a repeated slot, rather than dumping the struct 
-// itself we dump a struct constructor macro. 
+// If the class has a repeated slot, rather than dumping the struct
+// itself we dump a struct constructor macro.
 
-define method emit-slot-definition-using-type-name 
+define method emit-slot-definition-using-type-name
     (stream :: <stream>, prefix-string :: <string>, suffix-string :: <string>,
-     type-name :: <string>, 
-     o :: <&class>, slotd :: <&slot-descriptor>, offset :: <integer>) 
+     type-name :: <string>,
+     o :: <&class>, slotd :: <&slot-descriptor>, offset :: <integer>)
  => ()
   write(stream, prefix-string);
   print-message(type-name, stream);
@@ -220,26 +220,26 @@ end method;
 
 define method emit-slot-definition
     (stream :: <stream>, prefix-string :: <string>, suffix-string :: <string>,
-     o :: <&class>, slotd :: <&repeated-slot-descriptor>, offset :: <integer>) 
+     o :: <&class>, slotd :: <&repeated-slot-descriptor>, offset :: <integer>)
  => ()
   emit-slot-definition-using-type-name
-    (stream, prefix-string, suffix-string, 
+    (stream, prefix-string, suffix-string,
      slotd.^slot-type.c-repeated-type-name, o, slotd, offset);
 end method;
 
 define method emit-slot-definition
     (stream :: <stream>, prefix-string :: <string>, suffix-string :: <string>,
-     o :: <&class>, slotd :: <&slot-descriptor>, offset :: <integer>) 
+     o :: <&class>, slotd :: <&slot-descriptor>, offset :: <integer>)
  => ()
   emit-slot-definition-using-type-name
-    (stream, prefix-string, suffix-string, 
+    (stream, prefix-string, suffix-string,
      slotd.^slot-type.c-type-name, o, slotd, offset);
 end method;
 
 define method emit-typedef
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&class>) => ()
   ^ensure-slots-initialized(o);
-  let rslotd = o.^repeated-slot-descriptor; 
+  let rslotd = o.^repeated-slot-descriptor;
   let islots = o.^instance-slot-descriptors;
   if (~rslotd)
     write(stream, "typedef struct {\n");
@@ -251,7 +251,7 @@ define method emit-typedef
     emit-struct-name(back-end, stream, o);
     write(stream, ";\n");
   else
-    write(stream, "#define  "); 
+    write(stream, "#define  ");
     emit-struct-definer-name(back-end, stream, o);
     write(stream, "(nrepeated) \\\n");
     write(stream, "  typedef struct { \\\n");
@@ -269,7 +269,7 @@ end method;
 
 // VARIABLES
 
-define sideways method emit-object 
+define sideways method emit-object
     (back-end :: <c-back-end>, stream :: <stream>, o :: <module-binding>)
  => ()
   format-emit*(back-end, stream, "@", o);

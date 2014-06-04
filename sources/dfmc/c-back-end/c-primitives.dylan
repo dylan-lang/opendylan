@@ -4,28 +4,28 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define generic emit-primitive-call 
-  (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+define generic emit-primitive-call
+  (b :: <c-back-end>, s :: <stream>, d :: <integer>,
    c :: <primitive-call>, f :: <&primitive>);
 
 // define method emitter (primitive :: <&primitive>) => (emitter :: <function>)
 //   primitive.primitive-descriptor-getter(current-back-end()).primitive-emitter
 // end method;
-// 
+//
 // define constant $default-primitive-descriptor = make(<primitive-descriptor>, emitter: emit-primitive-call);
-// 
+//
 // define macro &primitive-descriptor-definer
-//   { define &primitive-descriptor ?:name, 
+//   { define &primitive-descriptor ?:name,
 //       #key ?emitter:expression = emit-primitive-call }
 //     => { define method ?name ## "-descriptor-getter" (back-end :: <c-back-end>) => (descriptor :: <primitive-descriptor>)
 //            $default-primitive-descriptor
 //          end method; }
 // end macro;
-// 
+//
 // // // full generality below but currently special emitters are not used
-// // 
+// //
 // // define macro &primitive-descriptor-definer
-// //   { define &primitive-descriptor ?:name, 
+// //   { define &primitive-descriptor ?:name,
 // //       #key ?emitter:expression = emit-primitive-call }
 // //     => { define constant ?name ## "-descriptor"
 // //            = make(<primitive-descriptor>, emitter: ?emitter);
@@ -33,16 +33,16 @@ define generic emit-primitive-call
 // //            ?name ## "-descriptor"
 // //          end method; }
 // // end macro;
-// 
+//
 // // Support
 // define &primitive-descriptor primitive-break;
 // define &primitive-descriptor primitive-invoke-debugger;
 // define &primitive-descriptor primitive-debug-message;
-// 
+//
 // // Machine
 // define &primitive-descriptor primitive-word-size;
 // define &primitive-descriptor primitive-header-size;
-//     
+//
 // // Allocation.
 // define &primitive-descriptor primitive-allocate;
 // define &primitive-descriptor primitive-allocate-wrapper;
@@ -56,7 +56,7 @@ define generic emit-primitive-call
 // define &primitive-descriptor primitive-allocate-in-awl-pool;
 // define &primitive-descriptor primitive-allocate-weak-in-awl-pool;
 // define &primitive-descriptor primitive-untraced-allocate;
-// 
+//
 // // Accessors
 // define &primitive-descriptor primitive-element;
 // define &primitive-descriptor primitive-element-setter;
@@ -66,31 +66,31 @@ define generic emit-primitive-call
 // define &primitive-descriptor primitive-fill-bytes!;
 // define &primitive-descriptor primitive-replace!;
 // define &primitive-descriptor primitive-replace-bytes!;
-// 
+//
 // // Byte Character.
 // define &primitive-descriptor primitive-byte-character-as-raw;
 // define &primitive-descriptor primitive-raw-as-byte-character;
-// 
+//
 // // Byte Character.
 // define &primitive-descriptor primitive-unicode-character-as-raw;
 // define &primitive-descriptor primitive-raw-as-unicode-character;
-// 
+//
 // // Integer.
-// 
+//
 // // Small integer.
-// 
+//
 // // Big Integer.
-// 
+//
 // // Machine Integer.
-// 
+//
 // // Unsigned-Machine Integer.
-// 
+//
 // // Address.
-// 
+//
 // // Pointer.
 // define &primitive-descriptor primitive-cast-pointer-as-raw;
 // define &primitive-descriptor primitive-cast-raw-as-pointer;
-// 
+//
 // // Machine-words
 // define &primitive-descriptor primitive-integer?;
 // define &primitive-descriptor primitive-machine-word-equal?;
@@ -195,7 +195,7 @@ define generic emit-primitive-call
 // define &primitive-descriptor primitive-machine-word-unsigned-double-shift-right-low;
 // define &primitive-descriptor primitive-machine-word-unsigned-double-shift-right-high;
 // define &primitive-descriptor primitive-machine-word-unsigned-double-shift-right;
-// 
+//
 // // single-float
 // define &primitive-descriptor primitive-single-float-as-raw;
 // define &primitive-descriptor primitive-raw-as-single-float;
@@ -222,7 +222,7 @@ define generic emit-primitive-call
 // define &primitive-descriptor primitive-single-float-asin;
 // define &primitive-descriptor primitive-single-float-acos;
 // define &primitive-descriptor primitive-single-float-atan;
-// 
+//
 // // double-float
 // define &primitive-descriptor primitive-double-float-as-raw;
 // define &primitive-descriptor primitive-raw-as-double-float;
@@ -249,16 +249,16 @@ define generic emit-primitive-call
 // define &primitive-descriptor primitive-double-float-asin;
 // define &primitive-descriptor primitive-double-float-acos;
 // define &primitive-descriptor primitive-double-float-atan;
-// 
+//
 // // Float conversions
 // define &primitive-descriptor primitive-single-float-as-double;
 // define &primitive-descriptor primitive-double-float-as-single;
-// 
+//
 // // Checks
 // define &primitive-descriptor primitive-instance?;
 // define &primitive-descriptor primitive-type-check;
 // define &primitive-descriptor primitive-range-check;
-// 
+//
 // // Comparisons.
 // define &primitive-descriptor primitive-raw-as-boolean;
 // define &primitive-descriptor primitive-boolean-as-raw;
@@ -266,11 +266,11 @@ define generic emit-primitive-call
 // define &primitive-descriptor primitive-not;
 // define &primitive-descriptor primitive-id?;
 // define &primitive-descriptor primitive-not-id?;
-// 
+//
 // // Repeated Slots.
 // define &primitive-descriptor primitive-repeated-slot-as-raw;
 // define &primitive-descriptor primitive-repeated-slot-offset;
-// 
+//
 // // Vector.
 // define &primitive-descriptor primitive-vector;
 // define &primitive-descriptor primitive-copy-vector;
@@ -279,24 +279,24 @@ define generic emit-primitive-call
 // define &primitive-descriptor primitive-vector-size;
 // define &primitive-descriptor primitive-vector-as-raw;
 // define &primitive-descriptor primitive-raw-as-vector;
-// 
+//
 // // String.
 // define &primitive-descriptor primitive-strlen;
 // define &primitive-descriptor primitive-string-as-raw;
 // define &primitive-descriptor primitive-raw-as-string;
-// 
+//
 // // Instance.
 // define &primitive-descriptor primitive-object-class;
 // define &primitive-descriptor primitive-slot-value;
 // define &primitive-descriptor primitive-initialized-slot-value;
 // define &primitive-descriptor primitive-slot-value-setter;
-// 
+//
 // // Calling Convention.
 // define &primitive-descriptor primitive-function-parameter;
 // define &primitive-descriptor primitive-next-methods-parameter;
 // define &primitive-descriptor primitive-set-generic-function-entrypoints;
 // define &primitive-descriptor primitive-set-accessor-method-xep;
-// 
+//
 // // Apply.
 // define &primitive-descriptor primitive-xep-apply;
 // define &primitive-descriptor primitive-mep-apply;
@@ -304,39 +304,39 @@ define generic emit-primitive-call
 // define &primitive-descriptor primitive-engine-node-apply-with-optionals;
 // define &primitive-descriptor primitive-iep-apply;
 // define &primitive-descriptor primitive-apply;
-// 
+//
 // // Discriminator/Engine-node Initialization
 // define &primitive-descriptor primitive-initialize-engine-node;
 // define &primitive-descriptor primitive-initialize-discriminator;
-// 
+//
 // // Multiple-Values.
 // define &primitive-descriptor primitive-values;
-// 
+//
 // // Symbol boot.
 // define &primitive-descriptor primitive-resolve-symbol;
 // define &primitive-descriptor primitive-string-as-symbol;
 // define &primitive-descriptor primitive-preboot-symbols;
-// 
+//
 // // Terminal
-// 
+//
 // // Operating System
 // define &primitive-descriptor primitive-exit-application;
-// 
+//
 // // Float
-// 
+//
 // define macro at-primitive-definer
 //   {define at-primitive ?:name }
 //     => { define &primitive-descriptor "primitive-" ## ?name ## "-at";
 //          define &primitive-descriptor "primitive-" ## ?name ## "-at-setter"
 //        }
 // end;
-// 
+//
 // define at-primitive single-float;
 // define at-primitive double-float;
 // define at-primitive extended-float;
-// 
+//
 // // C ffi types
-// 
+//
 // define at-primitive c-unsigned-char;
 // define at-primitive c-signed-char;
 // define at-primitive c-char;
@@ -350,7 +350,7 @@ define generic emit-primitive-call
 // define at-primitive c-double;
 // define at-primitive c-long-double;
 // define at-primitive c-pointer;
-// 
+//
 // define macro c-primitive-field-definer
 //   {define c-primitive-field ?:name }
 //     => { define &primitive-descriptor "primitive-" ## ?name ## "-field";
@@ -358,10 +358,10 @@ define generic emit-primitive-call
 //              "primitive-" ## ?name ## "-field-setter"
 //        }
 // end;
-// 
+//
 // define c-primitive-field c-unsigned;
 // define c-primitive-field c-signed;
 // define c-primitive-field c-int;
-// 
+//
 // define &primitive-descriptor primitive-unwrap-c-pointer;
 // define &primitive-descriptor primitive-wrap-c-pointer;
