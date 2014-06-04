@@ -181,13 +181,16 @@ static inline long atomic_cas(long *destination, long exchange, long compare) {
 
 #define ITAG 1
 #define CTAG 2
+#define UTAG 3
 
 #define I(n) ((D)((((unsigned long)(n))<<2)|ITAG))
 #define C(n) ((D)((((unsigned long)(n))<<2)|CTAG))
+#define U(n) ((D)((((unsigned long)(n))<<2)|UTAG))
 #define R(n) ((long)(n)>>2)
 
 #define FI(n) ((D)(((unsigned long)(n))|ITAG))
 #define FC(n) ((D)(((unsigned long)(n))|CTAG))
+#define FU(n) ((D)(((unsigned long)(n))|UTAG))
 
 #define TAGGEDQ(n) (TAG_BITS(n) != 0)
 
@@ -1301,7 +1304,7 @@ extern int primitive_mps_ld_isstale(void *hs);
 #define primitive_unicode_character_as_raw(x) \
    (R(x))
 #define primitive_raw_as_unicode_character(x) \
-   (C(x))
+   (U(x))
 
 /* INTEGER PRIMITIVES */
 
