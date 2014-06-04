@@ -80,6 +80,25 @@ define method op--tag-integer
   ins--inttoptr(be, tagged, $llvm-object-pointer-type)
 end method;
 
+define method op--tag-integer
+    (be :: <llvm-back-end>, integer-value :: <abstract-integer>)
+ => (result :: <llvm-value>);
+  element(be.%direct-object-table, integer-value, default: #f)
+    | begin
+        let raw-tagged
+          = generic/logior(generic/ash(integer-value, $dylan-tag-bits),
+                           $dylan-tag-integer);
+        let tagged = make(<llvm-integer-constant>,
+                          type: be.%type-table["iWord"],
+                          integer: raw-tagged);
+        element(be.%direct-object-table, integer-value)
+          := make(<llvm-cast-constant>,
+                  operator: #"INTTOPTR",
+                  type: $llvm-object-pointer-type,
+                  operands: vector(tagged))
+      end
+end method;
+
 // Extract an integer value from an integer-tagged object reference
 define method op--untag-integer
     (be :: <llvm-back-end>, x :: <llvm-value>)
@@ -87,6 +106,33 @@ define method op--untag-integer
   let type = llvm-reference-type(be, dylan-value(#"<raw-integer>"));
   let word = ins--ptrtoint(be, x, type);
   ins--ashr(be, word, $dylan-tag-bits)
+end method;
+
+define method op--tag-character
+    (be :: <llvm-back-end>, x :: <llvm-value>)
+ => (character-value :: <llvm-value>);
+  let shifted = ins--shl(be, x, $dylan-tag-bits);
+  let tagged = ins--or(be, shifted, $dylan-tag-character);
+  ins--inttoptr(be, tagged, $llvm-object-pointer-type)
+end method;
+
+define method op--tag-character
+    (be :: <llvm-back-end>, char :: <character>)
+ => (character-value :: <llvm-value>);
+  element(be.%direct-object-table, char, default: #f)
+    | begin
+        let raw-tagged
+          = logior(ash(as(<integer>, char), $dylan-tag-bits),
+                   $dylan-tag-character);
+        let tagged = make(<llvm-integer-constant>,
+                          type: be.%type-table["iWord"],
+                          integer: raw-tagged);
+        element(be.%direct-object-table, char)
+          := make(<llvm-cast-constant>,
+                  operator: #"INTTOPTR",
+                  type: $llvm-object-pointer-type,
+                  operands: vector(tagged))
+      end
 end method;
 
 define method op--untag-character

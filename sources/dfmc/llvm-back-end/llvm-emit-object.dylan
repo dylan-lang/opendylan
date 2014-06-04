@@ -127,20 +127,7 @@ end function;
 define method emit-object
     (back-end :: <llvm-back-end>, m :: <llvm-module>, o :: <abstract-integer>)
  => (reference :: <llvm-constant-value>);
-  element(back-end.%direct-object-table, o, default: #f)
-    | begin
-        let raw-tagged
-          = generic/logior(generic/ash(o, $dylan-tag-bits),
-                           $dylan-tag-integer);
-        let tagged = make(<llvm-integer-constant>,
-                          type: back-end.%type-table["iWord"],
-                          integer: raw-tagged);
-        element(back-end.%direct-object-table, o)
-          := make(<llvm-cast-constant>,
-                  operator: #"INTTOPTR",
-                  type: $llvm-object-pointer-type,
-                  operands: vector(tagged))
-      end
+  op--tag-integer(back-end, o)
 end method;
 
 // Characters
@@ -148,20 +135,7 @@ end method;
 define method emit-object
     (back-end :: <llvm-back-end>, m :: <llvm-module>, o :: <character>)
  => (reference :: <llvm-constant-value>)
-  element(back-end.%direct-object-table, o, default: #f)
-    | begin
-        let raw-tagged
-          = logior(ash(as(<integer>, o), $dylan-tag-bits),
-                   $dylan-tag-character);
-        let tagged = make(<llvm-integer-constant>,
-                          type: back-end.%type-table["iWord"],
-                          integer: raw-tagged);
-        element(back-end.%direct-object-table, o)
-          := make(<llvm-cast-constant>,
-                  operator: #"INTTOPTR",
-                  type: $llvm-object-pointer-type,
-                  operands: vector(tagged))
-      end
+  op--tag-character(back-end, o)
 end method;
 
 // Raw byte characters
