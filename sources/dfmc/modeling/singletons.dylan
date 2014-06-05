@@ -73,3 +73,15 @@ define method ^known-disjoint? (t1 :: <&type>, t2 :: <&singleton>)
  => (known-disjoint? :: <boolean>)
   ~^instance?(t2.^singleton-object, t1);
 end method ^known-disjoint?;
+
+// Tiebreaker methods
+
+define method ^known-disjoint? (t1 :: <&singleton>, t2 :: <&union>)
+ => (known-disjoint? :: <boolean>)
+  ^known-disjoint?(t1.^singleton-object, t2)
+end method ^known-disjoint?;
+
+define method ^known-disjoint? (t1 :: <&union>, t2 :: <&singleton>)
+ => (known-disjoint? :: <boolean>)
+  ^known-disjoint?(t1, t2.^singleton-object)
+end method ^known-disjoint?;
