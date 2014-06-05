@@ -23,6 +23,7 @@ define module system-test-suite
   use common-dylan;
   use simple-random;
   use threads;
+  use format;
   use streams;
   use streams-internals;
 

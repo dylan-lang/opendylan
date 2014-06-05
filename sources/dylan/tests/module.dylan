@@ -12,6 +12,7 @@ define module dylan-test-suite
               element-type,
               <hash-state> };
   use common-dylan;
+  use format;
   use table-extensions,
     import: { case-insensitive-equal };
   use testworks;

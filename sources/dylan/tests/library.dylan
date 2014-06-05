@@ -11,6 +11,7 @@ define library dylan-test-suite
   use common-dylan;
   use collections,
     import: { table-extensions };
+  use io;
   use testworks;
   use testworks-specs;
 
