@@ -2210,7 +2210,9 @@ define &module dispatch-engine
     <repeated-byte-slot-setter-engine-node>,
     <boxed-class-slot-engine-node>,
     <boxed-class-slot-getter-engine-node>,
+      %gf-dispatch-boxed-class-slot-getter,
     <boxed-class-slot-setter-engine-node>,
+      %gf-dispatch-boxed-class-slot-setter,
     callback-slot-engine-node-offset,
     slot-engine-node-size-offset, slot-engine-node-size-offset-setter;
   create

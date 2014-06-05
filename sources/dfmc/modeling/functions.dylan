@@ -1289,18 +1289,18 @@ define constant $engine-node-entry-point-names :: <simple-object-vector> =
     #"implicit-keyed-single-method",        // 3, implicit-keyed-single-method
     #"explicit-keyed-single-method",        // 4, explicit-keyed-single-method
     #"unrestricted-keyed-single-method",// 5, unrestricted-keyed-single-method
-    #"general-engine-node-n",                // 6, reserved-terminal-n-a
-    #"general-engine-node-n",                // 7, reserved-terminal-n-b
-    #"general-engine-node-n",                // 8, reserved-terminal-n-c
-    #"general-engine-node-n",                // 9, reserved-terminal-n-d
-    #"general-engine-node-n",                // 10, reserved-terminal-n-e
-    #"general-engine-node-n",                // 11, reserved-terminal-n-f
-    #"general-engine-node-n",                // 12, reserved-terminal-n-g
-    #"profiling-cache-header",                // 13, profiling-cache-header
-    #"cache-header",                        // 14, cache-header
-    #"ambiguous-methods",                // 15, ambiguous-methods
-    #"boxed-instance-slot-getter",        // 16, boxed-instance-slot-getter
-    #"boxed-instance-slot-setter",        // 17, boxed-instance-slot-setter
+    #"general-engine-node-n",		// 6, reserved-terminal-n-a
+    #"general-engine-node-n",		// 7, reserved-terminal-n-b
+    #"general-engine-node-n",		// 8, reserved-terminal-n-c
+    #"general-engine-node-n",		// 9, reserved-terminal-n-d
+    #"general-engine-node-n",		// 10, reserved-terminal-n-e
+    #"general-engine-node-n",		// 11, reserved-terminal-n-f
+    #"general-engine-node-n",		// 12, reserved-terminal-n-g
+    #"profiling-cache-header",		// 13, profiling-cache-header
+    #"cache-header",			// 14, cache-header
+    #"general-engine-node-spread",      // 15, ambiguous-methods
+    #"boxed-instance-slot-getter",	// 16, boxed-instance-slot-getter
+    #"boxed-instance-slot-setter",	// 17, boxed-instance-slot-setter
     #"boxed-repeated-instance-slot-getter",// 18, boxed-repeated-instance-slot-getter
     #"boxed-repeated-instance-slot-setter",// 19, boxed-repeated-instance-slot-setter
     #"general-engine-node-1",                // 20, boxed-class-slot-getter
@@ -2103,11 +2103,11 @@ define function ^slot-method-requiring-class-discrimination? (m :: <&method>)
     #f
   end if
 end function;
-
+*/
 
 define constant slotdiscrim$v-offset
   = engine-node$v-data-start;
-
+/*
 define function ^slot-engine-node-offset-setter
     (offset :: <integer>, e :: <&slot-access-engine-node>)
  => (offset :: <integer>);

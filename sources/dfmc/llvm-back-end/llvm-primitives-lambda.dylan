@@ -98,10 +98,197 @@ end;
 
 /// Discriminator/engine-node Initialization
 
-define side-effecting stateless dynamic-extent mapped &unimplemented-primitive-descriptor primitive-initialize-engine-node
+define side-effecting stateless dynamic-extent &runtime-primitive-descriptor primitive-initialize-engine-node
     (engine-node :: <engine-node>) => (single-value :: <engine-node>);
-  //---*** Fill this in...
+  let word-size = back-end-word-size(be);
+
+  let return-bb = make(<llvm-basic-block>);
+
+  // Retrieve the properties slot from the engine node
+  let engine-node-cast
+    = op--object-pointer-cast(be, engine-node, #"<engine-node>");
+  let properties-slot-ptr
+    = op--getslotptr(be, engine-node-cast, #"<engine-node>", #"properties");
+  let properties = ins--load(be, properties-slot-ptr, alignment: word-size);
+  let raw-properties = op--untag-integer(be, properties);
+
+  // Point to the entry-point slot
+  let entry-point-slot-ptr
+    = op--getslotptr(be, engine-node-cast,
+                     #"<engine-node>", #"engine-node-entry-point");
+
+  // Jump table for each engine node type:
+  let default-bb = make(<llvm-basic-block>);
+  let switch-cases = make(<stretchy-object-vector>);
+
+  // Create a basic block for each distinct entry point name, and add
+  // each case to switch-cases
+  let entry-point-table = make(<object-table>);
+  for (entry-point-name in $engine-node-entry-point-names, index from 0 below 32)
+    unless (element(entry-point-table, entry-point-name, default: #f))
+      entry-point-table[entry-point-name] := make(<llvm-basic-block>);
+    end unless;
+
+    add!(switch-cases, index);
+    add!(switch-cases, entry-point-table[entry-point-name]);
+  end for;
+
+  // Branch on the engine node type
+  let engine-node-type = ins--and(be, raw-properties, properties$m-entry-type);
+  ins--switch(be, engine-node-type, default-bb, switch-cases);
+
+  for (bb keyed-by entry-point-name in entry-point-table)
+    ins--block(be, bb);
+
+    let desc
+      = element($llvm-entry-point-descriptors, entry-point-name, default: #f);
+    if (desc)
+      let attributes = desc.entry-point-attributes;
+      if (member?(#"singular", attributes))
+        let func = llvm-entry-point-function(be, desc, #f);
+        let ref = make(<llvm-cast-constant>,
+                       operator: #"BITCAST",
+                       type: $llvm-object-pointer-type,
+                       operands: vector(func));
+        ins--store(be, ref, entry-point-slot-ptr);
+      elseif (member?(#"single-method", attributes))
+        op--initialize-single-method-engine-node(be, desc,
+                                                 raw-properties,
+                                                 entry-point-slot-ptr);
+      elseif (member?(#"cache-header", attributes))
+        op--initialize-cache-header-engine-node(be, desc,
+                                                engine-node,
+                                                entry-point-slot-ptr);
+      else
+        error("No strategy for initializing %s", entry-point-name);
+      end if;
+    else
+      error("No descriptor for %s", entry-point-name);
+    end if;
+
+    ins--br(be, return-bb);
+  end for;
+
+  // Default case (unknown entry type)
+  ins--block(be, default-bb);
+  ins--call-intrinsic(be, "llvm.trap", vector());
+  ins--unreachable(be);
+
+  // Exit block
+  ins--block(be, return-bb);
+  engine-node
 end;
+
+define method op--initialize-single-method-engine-node
+    (be :: <llvm-back-end>, desc :: <llvm-entry-point-descriptor>,
+     raw-properties :: <llvm-value>, entry-point-slot-ptr :: <llvm-value>)
+ => ();
+  let word-size = back-end-word-size(be);
+
+  let continue-bb = make(<llvm-basic-block>);
+
+  // Extract the number of function arguments
+  let masked = ins--and(be, raw-properties, smen$m-nrequired);
+  let nrequired = ins--lshr(be, masked, smen$v-nrequired);
+
+  let rest-mask = ins--and(be, raw-properties, smen$m-restp);
+  let rest-cmp = ins--icmp-ne(be, rest-mask, 0);
+  let nrequired-inc = ins--add(be, nrequired, 1);
+  let impargs = ins--select(be, rest-cmp, nrequired-inc, nrequired);
+
+  // Create a basic block for each switch case
+  let inner-switch-cases = make(<stretchy-object-vector>);
+  for (count from 0 to 9)
+    add!(inner-switch-cases, count);
+    add!(inner-switch-cases, make(<llvm-basic-block>));
+  end for;
+
+  // Branch on the count of implementation arguments
+  ins--switch(be, impargs, continue-bb, inner-switch-cases);
+
+  // Initialization cases
+  for (count from 0 to 9)
+    ins--block(be, inner-switch-cases[count * 2 + 1]);
+    let func = llvm-entry-point-function(be, desc, count);
+    let ref = make(<llvm-cast-constant>,
+                   operator: #"BITCAST",
+                   type: $llvm-object-pointer-type,
+                   operands: vector(func));
+    ins--store(be, ref, entry-point-slot-ptr);
+    ins--br(be, continue-bb);
+  end for;
+
+  ins--block(be, continue-bb);
+end method;
+
+// Fields in signature-properties: see ^signature-properties
+// packed-slots definition in dfmc-modeling
+define constant $signature-number-required-mask = #x0000ff;
+define constant $signature-key-p-mask           = #x010000;
+define constant $signature-rest-p-mask          = #x040000;
+define constant $signature-optionals-p-mask
+  = logior($signature-key-p-mask, $signature-rest-p-mask);
+
+define method op--initialize-cache-header-engine-node
+    (be :: <llvm-back-end>, desc :: <llvm-entry-point-descriptor>,
+     engine-node :: <llvm-value>, entry-point-slot-ptr :: <llvm-value>)
+ => ();
+  let word-size = back-end-word-size(be);
+
+  let continue-bb = make(<llvm-basic-block>);
+
+  // Identify the corresponding generic function
+  let parent = op--parent-gf(be, engine-node);
+
+  // Extract the gf's signature
+  let gf-class :: <&class> = dylan-value(#"<generic-function>");
+  let gf-cast = op--object-pointer-cast(be, parent, gf-class);
+  let signature-slot-ptr
+    = op--getslotptr(be, gf-cast, gf-class, #"function-signature");
+  let signature = ins--load(be, signature-slot-ptr, alignment: word-size);
+
+  // Extract the signature properties
+  let sig-class :: <&class> = dylan-value(#"<signature>");
+  let signature-cast = op--object-pointer-cast(be, signature, sig-class);
+  let properties-slot-ptr
+    = op--getslotptr(be, signature-cast, sig-class, #"signature-properties");
+  let properties = ins--load(be, properties-slot-ptr, alignment: word-size);
+  let raw-properties = op--untag-integer(be, properties);
+
+  // Extract the required arguments count
+  let nreq = ins--and(be, raw-properties, $signature-number-required-mask);
+
+  // Add one argument for the #rest vector if needed
+  let optionals-masked
+    = ins--and(be, raw-properties, $signature-optionals-p-mask);
+  let optionals-cmp = ins--icmp-ne(be, optionals-masked, 0);
+  let nreq-inc = ins--add(be, nreq, 1);
+  let impargs = ins--select(be, optionals-cmp, nreq-inc, nreq);
+
+  // Create a basic block for each switch case
+  let inner-switch-cases = make(<stretchy-object-vector>);
+  for (count from 0 to 9)
+    add!(inner-switch-cases, count);
+    add!(inner-switch-cases, make(<llvm-basic-block>));
+  end for;
+
+  // Branch on the count of implementation arguments
+  ins--switch(be, impargs, continue-bb, inner-switch-cases);
+
+  // Initialization cases
+  for (count from 0 to 9)
+    ins--block(be, inner-switch-cases[count * 2 + 1]);
+    let func = llvm-entry-point-function(be, desc, count);
+    let ref = make(<llvm-cast-constant>,
+                   operator: #"BITCAST",
+                   type: $llvm-object-pointer-type,
+                   operands: vector(func));
+    ins--store(be, ref, entry-point-slot-ptr);
+    ins--br(be, continue-bb);
+  end for;
+
+  ins--block(be, continue-bb);
+end method;
 
 define side-effecting stateless dynamic-extent mapped &runtime-primitive-descriptor primitive-initialize-discriminator
     (discriminator :: <discriminator>) => (single-value :: <discriminator>);
