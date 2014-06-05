@@ -512,11 +512,11 @@ define module-with-models dfmc-modeling
     properties$v-entry-type,
 //    properties$v-data,
 //    engine-node$v-data-start,
-//    smen$v-nrequired,
-//    smen$s-nrequired,
-//    smen$m-nrequired,
-//    smen$v-restp,
-//    smen$m-restp,
+    smen$v-nrequired,
+    smen$s-nrequired,
+    smen$m-nrequired,
+    smen$v-restp,
+    smen$m-restp,
 //    smen$v-data-start,
 
     $simple-typechecked-cache-arguments-limit,
@@ -535,8 +535,9 @@ define module-with-models dfmc-modeling
     discriminator$s-nrequired,
     discriminator$m-nrequired,
 //    discriminator$v-restp,
-    discriminator$m-restp;
+    discriminator$m-restp,
 //    discriminator$v-data-start,
+    slotdiscrim$v-offset;
 
   export
     $engine-node-entry-point-names,

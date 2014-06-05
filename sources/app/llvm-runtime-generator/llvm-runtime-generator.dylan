@@ -35,6 +35,12 @@ define constant $runtime-referenced-objects
 define constant $runtime-referenced-functions
   = #[#"type-check-error",
       #"argument-count-error",
+      #"odd-keyword-arguments-error",
+      #"invalid-keyword-trap",
+      #"unbound-instance-slot",
+      #"unbound-repeated-slot",
+      #"repeated-slot-getter-index-out-of-range-trap",
+      #"repeated-slot-setter-index-out-of-range-trap",
       #"%slotacc-single-Q-instance-getter",
       #"%slotacc-single-Q-class-getter",
       #"%slotacc-single-Q-instance-setter",
