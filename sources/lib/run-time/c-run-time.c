@@ -110,29 +110,26 @@ D primitive_allocate (DSINT size) {
 }
 
 D primitive_byte_allocate (DSINT number_words, DSINT number_bytes) {
-  return((D)allocate(number_words * sizeof(D) + number_bytes));
+  size_t size = (number_words * sizeof(D)) + number_bytes;
+#if defined(GC_USE_BOEHM)
+  return((D)GC_MALLOC_ATOMIC(size));
+#elif defined(GC_USE_MALLOC)
+  return((D)malloc(size));
+#endif
 }
 
 D primitive_untraced_allocate (DSINT size) {
-  return(allocate(size * sizeof(D)));
+  return dylan__malloc__misc(size * sizeof(D));
 }
 
 D primitive_manual_allocate (D sizeObject) {
   size_t size = (size_t)R(sizeObject);
-#if defined(GC_USE_BOEHM)
-  void* p = GC_MALLOC_UNCOLLECTABLE(size);
-#elif defined(GC_USE_MALLOC)
-  void* p = malloc(size);
-#endif
-  return(primitive_wrap_machine_word((DMINT)p));
+  void* p = mps__malloc(size);
+  return primitive_wrap_machine_word((DMINT)p);
 }
 
 void primitive_manual_free (D object) {
-#if defined(GC_USE_BOEHM)
-  GC_FREE((void*)primitive_unwrap_c_pointer(object));
-#elif defined(GC_USE_MALLOC)
-  free((void*)primitive_unwrap_c_pointer(object));
-#endif
+  mps__free((void*)primitive_unwrap_c_pointer(object));
 }
 
 void primitive_fillX(D dst, int base_offset, int offset, int size, D value) {
@@ -201,22 +198,31 @@ D primitive_compare_words(D base1, DSINT offset1,
                            size * sizeof(D))));
 }
 
+DSINT round_up_to_word(DSINT val) {
+  return (val + 3) & (-1 << 2);
+}
 
 D primitive_byte_allocate_filled_terminated
     (DSINT size, DSINT number_bytes, D class_wrapper, DSINT number_slots,
      D fill_value, DSINT repeated_size, DSINT repeated_size_offset)
 {
-  D* object = primitive_byte_allocate(size, number_bytes);
-  instance_header_setter(class_wrapper, object);
-  primitive_fillX(object, 1, 0, number_slots, fill_value);
-  primitive_fill_bytesX
-    (object, repeated_size_offset + 1, 0, repeated_size,
-     (unsigned char)R(fill_value));
-  ((char*)(&object[repeated_size_offset + 1]))[repeated_size] = (char)0;
-  if (repeated_size_offset > 0) {
-    object[repeated_size_offset] = I(repeated_size);
+  size = round_up_to_word(size * sizeof(D) + number_bytes);
+  int byte_fill = R(fill_value);
+  if (number_slots == 0) {
+    return primitive_alloc_leaf_rbfz(size,
+                                     class_wrapper,
+                                     repeated_size,
+                                     repeated_size_offset,
+                                     byte_fill);
+  } else {
+    return primitive_alloc_leaf_s_rbfz(size,
+                                       class_wrapper,
+                                       number_slots,
+                                       fill_value,
+                                       repeated_size,
+                                       repeated_size_offset,
+                                       byte_fill);
   }
-  return((D)object);
 }
 
 /* This one still zero-terminates. TODO: turn that off */
@@ -234,7 +240,7 @@ D primitive_byte_allocate_filled
   if (repeated_size_offset > 0) {
     object[repeated_size_offset] = I(repeated_size);
   }
-  return((D)object);
+  return (D)object;
 }
 
 D primitive_byte_allocate_leaf_filled_terminated
@@ -259,88 +265,120 @@ D primitive_byte_allocate_leaf_filled
                                         repeated_fill_value);
 }
 
-#define define_repeated_allocator(name, type) \
+#define define_repeated_allocator(name, type, alloc_rf, alloc_s_rf) \
   D primitive_ ## name ## _allocate_filled \
       (DSINT size, D class_wrapper, DSINT number_slots, D fill_value, \
        DSINT repeated_size, DSINT repeated_size_offset, \
        type repeated_fill_value) \
   { \
-    int i; \
-    D* object = primitive_byte_allocate(size, (DSINT)(repeated_size * sizeof(type))); \
-    instance_header_setter(class_wrapper, object); \
-    primitive_fillX(object, 1, 0, number_slots, fill_value); \
-    for (i = 0; i < repeated_size; i++) {\
-      ((type*)(&object[repeated_size_offset + 1]))[i] = (type)repeated_fill_value; \
+    size = (size * sizeof(D)) + (repeated_size * sizeof(type)); \
+    if (number_slots == 0) { \
+      return alloc_rf(size, class_wrapper, repeated_size, \
+                      repeated_size_offset, repeated_fill_value); \
+    } else { \
+      return alloc_s_rf(size, class_wrapper, number_slots, fill_value, \
+                        repeated_size, repeated_size_offset, \
+                        repeated_fill_value); \
     } \
-    if (repeated_size_offset > 0) { \
-      object[repeated_size_offset] = I(repeated_size); \
-    } \
-    return((D)object); \
   }
 
-define_repeated_allocator(object, D)
-define_repeated_allocator(double_byte, DDBYTE)
-define_repeated_allocator(word, DWORD)
-define_repeated_allocator(double_word, DDWORD)
-define_repeated_allocator(single_float, DSFLT)
-define_repeated_allocator(double_float, DDFLT)
+define_repeated_allocator(object, D, primitive_alloc_rf, primitive_alloc_s_rf)
+define_repeated_allocator(double_byte, DDBYTE, primitive_alloc_leaf_rhf, primitive_alloc_s_rhf)
+define_repeated_allocator(single_float, DSFLT, primitive_alloc_leaf_rsff, primitive_alloc_s_rsff)
+define_repeated_allocator(double_float, DDFLT, primitive_alloc_leaf_rdff, primitive_alloc_s_rdff)
+
+D primitive_word_allocate_filled
+    (DSINT size, D class_wrapper, DSINT number_slots, D fill_value,
+     DSINT repeated_size, DSINT repeated_size_offset, DWORD repeated_fill_value) {
+  size = (size * sizeof(D)) + (repeated_size * sizeof(DWORD));
+  if (number_slots == 0) {
+    return primitive_alloc_leaf_rf(size, class_wrapper, repeated_size,
+                                   repeated_size_offset, &repeated_fill_value);
+  } else {
+    return primitive_alloc_s_rf(size, class_wrapper, number_slots, fill_value,
+                        repeated_size, repeated_size_offset,
+                        &repeated_fill_value);
+  }
+}
 
 D primitive_allocate_filled
     (DSINT size, D class_wrapper, DSINT number_slots, D fill_value,
      DSINT repeated_size, DSINT repeated_size_offset)
 {
-  D* object = primitive_allocate(size);
-  instance_header_setter(class_wrapper, object);
-  primitive_fillX(object, 1, 0, number_slots, fill_value);
-  primitive_fillX(object, repeated_size_offset + 1, 0, repeated_size, fill_value);
-  if (repeated_size_offset > 0) {
-    object[repeated_size_offset] = I(repeated_size);
-  }
-  return((D)object);
+    size = size * sizeof(D);
+    if (repeated_size_offset == 0) {
+      if (number_slots == 0) {
+        return primitive_alloc(size, class_wrapper);
+      } else if (number_slots == 1) {
+        return primitive_alloc_s1(size, class_wrapper, fill_value);
+      } else if (number_slots == 2) {
+        return primitive_alloc_s2(size, class_wrapper, fill_value, fill_value);
+      } else {
+        return primitive_alloc_s(size, class_wrapper, repeated_size, fill_value);
+      }
+      abort();
+    } else {
+      abort();
+    }
 }
 
 D primitive_allocate_in_awl_pool
     (DSINT size, D class_wrapper, DSINT number_slots, D fill_value,
      DSINT repeated_size, DSINT repeated_size_offset, D assoc)
 {
-  D* object = primitive_allocate(size);
-  instance_header_setter(class_wrapper, object);
-  primitive_fillX(object, 1, 0, number_slots, fill_value);
-  primitive_fillX(object, repeated_size_offset + 1, 0, repeated_size, fill_value);
-  if (repeated_size_offset > 0) {
-    object[repeated_size_offset] = I(repeated_size);
+  size = size * sizeof(D);
+  if (number_slots == 1) {
+    return primitive_alloc_exact_awl_rf(size,
+                                        class_wrapper,
+                                        assoc,
+                                        repeated_size,
+                                        repeated_size_offset,
+                                        fill_value);
+  } else {
+    return primitive_alloc_exact_awl_s_r(size,
+                                         class_wrapper,
+                                         assoc,
+                                         number_slots,
+                                         fill_value,
+                                         repeated_size,
+                                         repeated_size_offset);
   }
-  object[1] = assoc;
-  return((D)object);
 }
 
 D primitive_allocate_weak_in_awl_pool
     (DSINT size, D class_wrapper, DSINT number_slots, D fill_value,
      DSINT repeated_size, DSINT repeated_size_offset, D assoc)
 {
-  D* object = primitive_allocate(size);
-  instance_header_setter(class_wrapper, object);
-  primitive_fillX(object, 1, 0, number_slots, fill_value);
-  primitive_fillX(object, repeated_size_offset + 1, 0, repeated_size, fill_value);
-  if (repeated_size_offset > 0) {
-    object[repeated_size_offset] = I(repeated_size);
+  size = size * sizeof(D);
+  if (number_slots == 0) {
+    return primitive_alloc_weak_awl_rf(size,
+                                       class_wrapper,
+                                       assoc,
+                                       repeated_size,
+                                       repeated_size_offset,
+                                       fill_value);
+  } else {
+    return primitive_alloc_weak_awl_s_r(size,
+                                        class_wrapper,
+                                        assoc,
+                                        number_slots,
+                                        fill_value,
+                                        repeated_size,
+                                        repeated_size_offset);
   }
-  object[1] = assoc;
-  return((D)object);
 }
 
 D primitive_allocate_wrapper
     (DSINT size, D class_wrapper, DSINT number_slots, D fill_value,
      DSINT repeated_size, DSINT repeated_size_offset)
 {
-  D* object = primitive_allocate(size);
-  instance_header_setter(class_wrapper, object);
-  primitive_fillX(object, 1, 0, number_slots, fill_value);
-  primitive_fillX(object, repeated_size_offset + 1, 0, repeated_size, fill_value);
-  if (repeated_size_offset > 0) {
-    object[repeated_size_offset] = I(repeated_size);
-  }
-  return((D)object);
+  size = size * sizeof(D);
+  return primitive_alloc_wrapper_s_r(size,
+                                     class_wrapper,
+                                     number_slots,
+                                     fill_value,
+                                     repeated_size,
+                                     repeated_size_offset);
 }
 
 /* STACK ALLOCATION */
@@ -428,18 +466,22 @@ SOV* allocate_vector (int size) {
   }
 }
 
-SOV* make_vector (int size) {
-  if (size == 0) {
-    return(Pempty_vectorVKi);
+void *make_dylan_vector(size_t n) {
+  if (n == 0) {
+    return Pempty_vectorVKi;
   } else {
-    SOV* vector = allocate_vector(size);
-    instance_header_setter(&KLsimple_object_vectorGVKdW, (D*)vector);
-    vector_size_setter(size, vector);
-    return(vector);
+    size_t size;
+    void* vector;
+
+    size = (n + VECTOR_HEADER_SIZE) * sizeof(D);
+    vector = primitive_alloc_rf(size,
+                                &KLsimple_object_vectorGVKdW,
+                                n, 1, &KPunboundVKi);
+    return vector;
   }
 }
 
-D primitive_make_vector (int size) { return((D)make_vector(size)); }
+D primitive_make_vector (int size) { return((D)make_dylan_vector((size_t)size)); }
 
 SOV* initialize_vector_from_buffer_with_size
     (SOV* vector, int vector_size, D* buffer, int buffer_size)
