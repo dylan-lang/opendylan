@@ -11,7 +11,7 @@ end method;
 
 
 define method emit-parameter-type
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      o :: <&raw-struct-type>, #key index :: false-or(<integer>))
   format-emit*(back-end, stream, "^", o);
 end method;
@@ -23,16 +23,16 @@ define method emit-lambda-body-using-function
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&iep>,
      function :: <&c-callable-function>)
   dynamic-bind (*current-environment* = o.environment)
-    allocate-registers(function); 
+    allocate-registers(function);
     write(stream, "{\n");
     for (parameter in o.parameters,
-	 type in function.c-signature.^signature-required)
+         type in function.c-signature.^signature-required)
       if (instance?(type, <&raw-aggregate-type>))
-	write(stream, "  void * ");
-	format-emit*(back-end, stream, "% = ", parameter);
-	write(stream, "&tmp_");
-	format-emit*(back-end, stream, "%", parameter);
-	write(stream, ";\n");
+        write(stream, "  void * ");
+        format-emit*(back-end, stream, "% = ", parameter);
+        write(stream, "&tmp_");
+        format-emit*(back-end, stream, "%", parameter);
+        write(stream, ";\n");
       end;
     end;
 
@@ -44,10 +44,10 @@ define method emit-lambda-body-using-function
             end if;
           end for-computations;
           #f
-        end block; 
+        end block;
     for (tmp in o.environment.temporaries)
       if (used?(tmp))
-	emit-local-definition(back-end, stream, tmp, volatile?);
+        emit-local-definition(back-end, stream, tmp, volatile?);
       end if;
     end for;
     unless (empty?(o.environment.closure))

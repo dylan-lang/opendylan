@@ -17,34 +17,34 @@ define constant $unspill-multiple-values-string  = "MV_UNSPILL";
 
 define constant $unused-arg-string = "P_unused_arg";
 
-define constant $global-all-rest 
+define constant $global-all-rest
   = make(<multiple-value-temporary>,
          environment: $top-level-environment);
 $global-all-rest.required-values := 0;
 $global-all-rest.rest-values? := #t;
 
 define method emit-parameter-type
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      o :: <type-estimate-raw>, #key index :: false-or(<integer>))
   emit-parameter-type(back-end, stream, as(<&type>, o))
 end method;
 
 define method emit-parameter-type
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      o :: <type-estimate-limited-instance>, #key index :: false-or(<integer>))
   emit-parameter-type
     (back-end, stream, ^object-class(type-estimate-singleton(o)));
 end method;
 
 define method emit-parameter-type
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      o :: <type-estimate-union>, #key index :: false-or(<integer>))
   emit-parameter-type
     (back-end, stream, first(type-estimate-unionees(o)), index: index);
 end method;
 
 define method emit-parameter-type
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      o :: <type-estimate-values>, #key index :: false-or(<integer>))
   let fixed-values = type-estimate-fixed-values(o);
   let itype
@@ -54,7 +54,7 @@ define method emit-parameter-type
         else
           fixed-values[0]
         end if
-      else 
+      else
         dylan-value(#"<object>")
       end if;
   emit-parameter-type(back-end, stream, itype)
@@ -72,7 +72,7 @@ end method;
 
 define constant $loop-shadow-tmp-suffix = "T";
 
-define method emit-local-tmp-definition 
+define method emit-local-tmp-definition
     (back-end :: <c-back-end>, stream :: <stream>,
      tmp :: <temporary>, volatile? :: <boolean>) => ()
   format-emit*(back-end, stream, "\t");
@@ -95,18 +95,18 @@ define method emit-local-tmp-definition
   // else
     let gen = generator(tmp);
     if (instance?(gen, <loop-merge>) & loop-merge-initial?(gen))
-      format-emit*(back-end, stream, " %~,", tmp, $loop-shadow-tmp-suffix); 
+      format-emit*(back-end, stream, " %~,", tmp, $loop-shadow-tmp-suffix);
     end if;
     format-emit*(back-end, stream, " %;\n", tmp);
   // end if
 end method;
 
-define method emit-local-tmp-definition 
-    (back-end :: <c-back-end>, stream :: <stream>, 
-     tmp :: <multiple-value-temporary>, volatile? :: <boolean>) 
+define method emit-local-tmp-definition
+    (back-end :: <c-back-end>, stream :: <stream>,
+     tmp :: <multiple-value-temporary>, volatile? :: <boolean>)
     => ()
   // define a var for each required element of local mv-temp.
-  // note that there is no need for a variable for the mv-temp 
+  // note that there is no need for a variable for the mv-temp
   // itself -- only for its elements.
   // let type = lookup-type(tmp, current-css(), tmp.generator); // ***** WRONG?
   let type = type-estimate(tmp);
@@ -122,17 +122,17 @@ define method emit-local-tmp-definition
     if (volatile?) format-emit*(back-end, stream, "volatile ") end;
     emit-parameter-type(back-end, stream, type);
     format-emit*(back-end, stream, " %;\n", tmp);
-  end if;    
+  end if;
 end method;
 
-define method emit-local-definition 
+define method emit-local-definition
     (back-end :: <c-back-end>, stream :: <stream>,
      tmp :: <temporary>, volatile? :: <boolean>) => ()
   emit-local-tmp-definition(back-end, stream, tmp, volatile?);
 end method;
 
-define method emit-local-definition 
-    (back-end :: <c-back-end>, stream :: <stream>, 
+define method emit-local-definition
+    (back-end :: <c-back-end>, stream :: <stream>,
      tmp :: <stack-vector-temporary>, volatile? :: <boolean>) => ()
   if (tmp.number-values = 0)
     format-emit* (back-end, stream, "\t");
@@ -146,13 +146,13 @@ define method emit-local-definition
     let class = &object-class(#[]);
     let wrapper = ^class-mm-wrapper(class);
     emit-repeated-struct-name(back-end, stream, class, tmp.number-values);
-    format-emit*(back-end, stream, " % = {@, %};\n", 
-		 tmp, wrapper, tmp.number-values);
+    format-emit*(back-end, stream, " % = {@, %};\n",
+                 tmp, wrapper, tmp.number-values);
   end if;
 end method;
 
-define method emit-local-definition 
-    (back-end :: <c-back-end>, stream :: <stream>, 
+define method emit-local-definition
+    (back-end :: <c-back-end>, stream :: <stream>,
      tmp :: <lexical-local-variable>, volatile? :: <boolean>) => ()
   emit-local-tmp-definition(back-end, stream, tmp, volatile?);
 end method;
@@ -162,7 +162,7 @@ define method emit-local-definition
      tmp :: <lexical-variable>, volatile? :: <boolean>) => ()
 //   if (tmp.cell?)
 //     format-emit*
-//       (back-end, stream, "\t~* % = ~(tmp_%);\n", 
+//       (back-end, stream, "\t~* % = ~(tmp_%);\n",
 //        $dylan-type-string, tmp, $cell-string, tmp);
 //   end if
 end method;
@@ -172,11 +172,11 @@ define inline function closure-reference? (o) => (res :: <boolean>)
 end function;
 
 define method emit-reference
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      o :: <stack-vector-temporary>) => ()
   if (closure-reference?(o))
     emit-closure-reference(back-end, stream, o);
-  else 
+  else
     if (o.number-values > 0)
       format(stream, "&");
     end if;
@@ -214,7 +214,7 @@ define method emit-reference
   emit-reference(back-end, stream, referenced-binding(o));
 end method;
 
-define function top-level-closure-reference? 
+define function top-level-closure-reference?
     (o, env :: <lambda-lexical-environment>) => (well? :: <boolean>)
   method-top-level?(env.lambda)
 end function;
@@ -226,7 +226,7 @@ define function emit-closure-reference
   else
     let offset = closure-offset(*current-environment*, o);
     unless (offset)
-      dump-closure(*current-environment*, o);      
+      dump-closure(*current-environment*, o);
       offset := -1;
     end unless;
     format-emit*
@@ -279,7 +279,7 @@ define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <loop-merge>)
   if (loop-merge-initial?(c))
     if (temporary(c))
-      format-emit(b, s, d, "\t#@~;\n", 
+      format-emit(b, s, d, "\t#@~;\n",
                   temporary(c), temporary(c), $loop-shadow-tmp-suffix);
     end if;
   else
@@ -301,56 +301,56 @@ define method emit-computation
     if (sigtmp)
       if (top-level?)
         format-emit
-          (b, s, d, "\t#~(@, @", 
-           c.temporary, 
-	   if (key?)
-	     $set-keyword-method-signature-string
-	   else
-	     $set-method-signature-string
-	   end if,
+          (b, s, d, "\t#~(@, @",
+           c.temporary,
+           if (key?)
+             $set-keyword-method-signature-string
+           else
+             $set-method-signature-string
+           end if,
            o, sigtmp);
       else
-	format-emit
-	  (b, s, d, "\t#~(@, @, ~", 
-	   c.temporary, 
-	   if (init?) 
-	     if (key?)
-	       $make-keyword-closure-initd-with-signature-string
-	     else
-	       $make-closure-initd-with-signature-string
-	     end if
-	   else
-	     if (key?)
-	       $make-keyword-closure-with-signature-string
-	     else
-	       $make-closure-with-signature-string
-	     end if
-	   end if,
-	   o, sigtmp, closure-size(env));
+        format-emit
+          (b, s, d, "\t#~(@, @, ~",
+           c.temporary,
+           if (init?)
+             if (key?)
+               $make-keyword-closure-initd-with-signature-string
+             else
+               $make-closure-initd-with-signature-string
+             end if
+           else
+             if (key?)
+               $make-keyword-closure-with-signature-string
+             else
+               $make-closure-with-signature-string
+             end if
+           end if,
+           o, sigtmp, closure-size(env));
       end if
     else
       format-emit
-        (b, s, d, "\t#~(@, ~", 
-         c.temporary, 
-         if (init?) 
-	   if (key?)
-	     $make-keyword-closure-initd-string 
-	   else
-	     $make-closure-initd-string 
-	   end if
-	 else 
-	   if (key?)
-	     $make-keyword-closure-string
-	   else
-	     $make-closure-string
-	   end if
-	 end,
+        (b, s, d, "\t#~(@, ~",
+         c.temporary,
+         if (init?)
+           if (key?)
+             $make-keyword-closure-initd-string
+           else
+             $make-closure-initd-string
+           end if
+         else
+           if (key?)
+             $make-keyword-closure-string
+           else
+             $make-closure-string
+           end if
+         end,
          o, closure-size(env));
     end if;
     if (init? & ~top-level?)
       for (tmp in env.closure)
         // unless (tmp == c.temporary) // RECURSIVE TMP
-  	  format-emit(b, s, d, ", @", tmp);
+            format-emit(b, s, d, ", @", tmp);
         // end unless
       end for;
     end if;
@@ -358,14 +358,14 @@ define method emit-computation
   else
     if (sigtmp)
       format-emit
-        (b, s, d, "\t#~(@, @);\n", 
-         c.temporary, 
-	 if (key?)
-	   $make-keyword-method-with-signature-string
-	 else
-	   $make-method-with-signature-string
-	 end if, 
-	 o, sigtmp);
+        (b, s, d, "\t#~(@, @);\n",
+         c.temporary,
+         if (key?)
+           $make-keyword-method-with-signature-string
+         else
+           $make-method-with-signature-string
+         end if,
+         o, sigtmp);
     else
       format-emit(b, s, d, "\t#@;\n", c.temporary, o);
     end if;
@@ -373,22 +373,22 @@ define method emit-computation
 end method;
 
 define method emit-computation
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <initialize-closure>)
   let o = function(c.computation-closure-method);
   if (closure?(o))
     let env = o.environment;
     format-emit
-      (b, s, d, "\t~(@, ~", 
+      (b, s, d, "\t~(@, ~",
        if (instance?(o, <&keyword-method>))
-	 $initialize-keyword-closure-string
-       else 
-	 $initialize-closure-string
+         $initialize-keyword-closure-string
+       else
+         $initialize-closure-string
        end if,
        computation-closure(c), closure-size(env));
     for (tmp in env.closure)
       // unless (tmp == computation-closure(c)) // RECURSIVE TMP
-	format-emit(b, s, d, ", @", tmp);
+        format-emit(b, s, d, ", @", tmp);
       // end unless
     end for;
     write(s, ");\n");
@@ -399,7 +399,7 @@ define constant $primitive-read-thread-variable-string
   = c-raw-mangle("primitive-read-thread-variable");
 
 define method emit-computation
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <variable-reference>) 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <variable-reference>)
   if (c.referenced-binding.binding-thread?)
     format-emit(b, s, d, "\t#~(@);\n",
                 c.temporary,
@@ -423,7 +423,7 @@ end method;
 // end method;
 
 define method emit-rest-arguments
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, arguments, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>, arguments,
      #key first? = #t, max)
   for (argument in arguments)
     unless (first?) format-emit(b, s, d, ", "); end unless;
@@ -431,24 +431,24 @@ define method emit-rest-arguments
     first? := #f;
   end;
   write-element(s, ')');
-  if (max & arguments.size > max) 
+  if (max & arguments.size > max)
     write-element(s, ')');
   end if;
   write-element(s, ';');
 end method;
 
-define method emit-call-prolog 
+define method emit-call-prolog
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <function-call>, f)
 end method;
 
-define function emit-closure-call-prolog 
+define function emit-closure-call-prolog
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <function-call>)
-  format-emit(b, s, d, "\t~ = @;\n", 
+  format-emit(b, s, d, "\t~ = @;\n",
               $function-register-string, c.function);
 end function;
 
-define method emit-call-prolog 
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+define method emit-call-prolog
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <function-call>, f :: <&iep>)
   let env = f.environment;
   unless (~env | empty?(f.environment.closure))
@@ -458,17 +458,17 @@ end method;
 
 define constant $mep-call-prolog-string = "MEP_CALL_PROLOG";
 
-define method emit-call-prolog 
+define method emit-call-prolog
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <method-call>, f)
   format-emit
-    (b, s, d, "\t~(@, @, ~);\n", 
+    (b, s, d, "\t~(@, @, ~);\n",
      $mep-call-prolog-string, c.function, c.next-methods, c.arguments.size);
 end method;
 
 define constant $miep-call-prolog-string = "MIEP_CALL_PROLOG";
 
-define method emit-call-prolog 
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <method-call>, 
+define method emit-call-prolog
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <method-call>,
      f :: <&iep>)
   if (^next?(function(f)))
     format-emit(b, s, d, "\t~(@);\n", $miep-call-prolog-string, c.next-methods);
@@ -480,10 +480,10 @@ define constant $engine-node-call-prolog-string = "ENGINE_NODE_CALL_PROLOG";
 
 
 define method emit-call-prolog
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <engine-node-call>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <engine-node-call>,
      f :: <&generic-function>)
   format-emit
-    (b, s, d, "\t~(@, @, ~);\n", 
+    (b, s, d, "\t~(@, @, ~);\n",
      $engine-node-call-prolog-string, c.function, c.engine-node, c.arguments.size);
 end method;
 
@@ -492,11 +492,11 @@ define constant $congruent-call-prolog-string = "CONGRUENT_CALL_PROLOG";
 
 
 define method emit-call-prolog
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <simple-call>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <simple-call>,
      f :: <&generic-function>)
   if (call-congruent?(c))
     format-emit
-      (b, s, d, "\t~(@, ~);\n", 
+      (b, s, d, "\t~(@, ~);\n",
        $congruent-call-prolog-string, c.function, c.arguments.size);
   else
     next-method()
@@ -509,22 +509,22 @@ define constant $max-call-templates = 10;
 define constant $mep-call-string = "MEP_CALL";
 
 define function emit-k-call-prefix
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      call-string :: <string>, number :: <integer>, function)
  => ()
   format-emit(b, s, d, "~~(@", call-string, number, function);
 end function;
 
 define function emit-n-call-prefix
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      call-string :: <string>, function)
  => ()
   format-emit(b, s, d, "~N(@", call-string, function);
 end function;
 
 define function emit-call-string
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
-     call-string :: <string>, max-templates :: <integer>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
+     call-string :: <string>, max-templates :: <integer>,
      number :: <integer>, function)
  => ()
   if (number <= max-templates)
@@ -536,8 +536,8 @@ define function emit-call-string
 end function;
 
 define function emit-iep-call
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
-     c :: <simple-call>, f :: <&iep>) 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
+     c :: <simple-call>, f :: <&iep>)
  => ()
   format-emit(b, s, d, "^(", f);
   emit-rest-arguments(b, s, d, c.arguments);
@@ -551,7 +551,7 @@ end method;
 define method emit-call
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <simple-call>, f)
   emit-call-string
-    (b, s, d, $call-string, 
+    (b, s, d, $call-string,
      $max-call-templates, c.arguments.size, c.function);
   emit-rest-arguments
     (b, s, d, c.arguments, first?: #f, max: $max-call-templates);
@@ -566,7 +566,7 @@ define method emit-call
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <method-call>, f)
   let number = c.arguments.size;
   let numbered? = number <= $max-call-templates;
-  if (numbered?) 
+  if (numbered?)
     emit-k-call-prefix(b, s, d, $mep-call-string, number, c.function);
   else
     emit-n-call-prefix(b, s, d, $mep-call-string, c.function);
@@ -587,7 +587,7 @@ define method emit-call
   let eng = c.engine-node;
   let numbered? = number <= $max-engine-node-call-templates;
   format-emit(b, s, d, if (numbered?) "~~(@" else "~N(~,@)" end,
-	      $engine-node-call-string, number, eng);
+              $engine-node-call-string, number, eng);
   emit-rest-arguments(b, s, d, c.arguments, first?: #f, max: $max-engine-node-call-templates);
 end method;
 
@@ -600,7 +600,7 @@ define method emit-call
     let number :: <integer> = c.arguments.size;
     let numbered? = number <= $max-congruent-call-templates;
     format-emit(b, s, d, if (numbered?) "~~(" else "~N(~)" end,
-		$congruent-call-string, number);
+                $congruent-call-string, number);
     emit-rest-arguments(b, s, d, c.arguments, first?: numbered?, max: $max-congruent-call-templates);
   else
     next-method()
@@ -618,7 +618,7 @@ define constant $max-engine-node-apply-templates = 0;
 define method emit-call
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <apply>, f)
   emit-call-string
-    (b, s, d, $apply-string, 
+    (b, s, d, $apply-string,
      $max-apply-templates, c.arguments.size, c.function);
   emit-rest-arguments
     (b, s, d, c.arguments, first?: #f, max: $max-apply-templates);
@@ -631,7 +631,7 @@ define method emit-call
   let eng :: <&engine-node> = c.engine-node;
   let numbered? = number <= $max-engine-node-apply-templates;
   format-emit(b, s, d, if (numbered?) "~~(@" else "~N(@,~" end,
-	      $engine-node-apply-string, number, eng);
+              $engine-node-apply-string, number, eng);
   emit-rest-arguments(b, s, d, c.arguments, first?: numbered?);
 end method;
 
@@ -639,7 +639,7 @@ end method;
 define method emit-call
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <method-apply>, f)
   let number = c.arguments.size;
-  if (number <= $max-mep-apply-templates) 
+  if (number <= $max-mep-apply-templates)
     emit-k-call-prefix(b, s, d, $mep-apply-string, number, c.function);
     format-emit(b, s, d, ", @", c.next-methods);
   else
@@ -650,7 +650,7 @@ define method emit-call
     (b, s, d, c.arguments, first?: #f, max: $max-mep-apply-templates);
 end method;
 
-define method emit-computation 
+define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <function-call>)
   let effective-function = call-effective-function(c);
   emit-call-prolog(b, s, d, c, effective-function);
@@ -660,10 +660,10 @@ define method emit-computation
   // transfer any required mv-temp values out of global MV area
   if (instance?(c.temporary, <multiple-value-temporary>))
     emit-transfer(b, s, d, c.temporary, $global-all-rest);
-  end if;  
+  end if;
 end method;
 
-define method emit-primitive-call 
+define method emit-primitive-call
     (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <primitive-call>, f :: <&primitive>)
   let number-sig-vals = ^signature-number-values(primitive-signature(f));
@@ -682,8 +682,8 @@ define method emit-primitive-call
 
   // add to arguments ptr.s to non-first return values
   for (i from 1 below number-sig-vals)
-    unless (size(c.arguments) = 0 & i = 1) 
-      write-element(s, ','); 
+    unless (size(c.arguments) = 0 & i = 1)
+      write-element(s, ',');
     end unless;
     let this-ret-val = sig-vals[i];
     write-element(s, '(');
@@ -693,7 +693,7 @@ define method emit-primitive-call
     let number-requested :: <integer>
       = if (c.temporary) required-values(c.temporary) else 0 end if;
     if (i < number-requested)  // is there a spot for it?
-      format-emit(b, s, d, "@", 
+      format-emit(b, s, d, "@",
                   make-address-of(mv-temp-ref(c.temporary, i)));
     else                       // if not, use canonical dummy address
       format-emit(b, s, d, "~", $unused-arg-string);
@@ -702,8 +702,8 @@ define method emit-primitive-call
   format-emit(b, s, d, ");");
 end method;
 
-define method emit-call 
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+define method emit-call
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <primitive-call>, f :: <&primitive>)
   // f.emitter(b, s, d, c, f);
   emit-primitive-call(b, s, d, c, f);
@@ -718,8 +718,8 @@ define constant $slot-value-setter-string
 
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <slot-value>)
-  format-emit(b, s, d, "\t#~(@, ~);\n", 
-              c.temporary, 
+  format-emit(b, s, d, "\t#~(@, ~);\n",
+              c.temporary,
               if (computation-guaranteed-initialized?(c))
                 $guaranteed-initialized-slot-value-string
               else
@@ -729,15 +729,15 @@ define method emit-computation
 end method;
 
 define method emit-computation
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <slot-value-setter>)
-  format-emit(b, s, d, "\t#~(@, @, ~);\n", 
+  format-emit(b, s, d, "\t#~(@, @, ~);\n",
               c.temporary, $slot-value-setter-string,
               computation-new-value(c),
               computation-instance(c), computation-slot-offset(c))
 end method;
 
-define method emit-repeated-slot-value-string 
+define method emit-repeated-slot-value-string
     (b :: <c-back-end>, s :: <stream>, c :: <any-repeated-slot-value>, setter?)
   write(s, "REPEATED_");
   let type = ^slot-type(computation-slot-descriptor(c));
@@ -752,21 +752,21 @@ define method emit-repeated-slot-value-string
 end method;
 
 define method emit-computation
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <repeated-slot-value>)
-  format-emit(b, s, d, "\t#", c.temporary); 
+  format-emit(b, s, d, "\t#", c.temporary);
   emit-repeated-slot-value-string(b, s, c, #f);
-  format-emit(b, s, d, "(@, ~, @);\n", 
+  format-emit(b, s, d, "(@, ~, @);\n",
               computation-instance(c), computation-slot-offset(c),
               computation-index(c))
 end method;
 
 define method emit-computation
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <repeated-slot-value-setter>)
-  format-emit(b, s, d, "\t#", c.temporary); 
+  format-emit(b, s, d, "\t#", c.temporary);
   emit-repeated-slot-value-string(b, s, c, #t);
-  format-emit(b, s, d, "(@, @, ~, @);\n", 
+  format-emit(b, s, d, "(@, @, ~, @);\n",
               computation-new-value(c),
               computation-instance(c), computation-slot-offset(c),
               computation-index(c))
@@ -785,7 +785,7 @@ define method emit-computation
   end if;
 end method;
 
-define method emit-computation 
+define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <primitive-call>)
   format-emit(b, s, d, "\t#", mv-temp-lhs(c.temporary, 0));
   emit-call(b, s, d, c, c.primitive);
@@ -794,11 +794,11 @@ define method emit-computation
   // NOTE: this goes away if/when we pass non-first returns by ref
   // if (instance?(c.temporary, <multiple-value-temporary>))
   //   emit-transfer(b, s, d, c.temporary, $global-all-rest);
-  // end if;  
+  // end if;
 end method;
 
 define function maybe-emit-merge-transfer
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      merge :: <computation>, refn :: <function>)
   if (instance?(merge, <merge>))
     let ref         = refn(merge);
@@ -809,24 +809,24 @@ define function maybe-emit-merge-transfer
     end if;
   end if;
 end function;
-  
+
 define method emit-transfer
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      lhs, rhs)
   format-emit(b, s, d, "\t#@;\n", lhs, rhs);
 end method;
 
 define method emit-transfer
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      lhs :: <multiple-value-temporary>, rhs :: <multiple-value-temporary>)
 //  if (generator(lhs))
-//    format-emit(b,s,d, "\t/* ~ */\n", format-to-string("%=", 
+//    format-emit(b,s,d, "\t/* ~ */\n", format-to-string("%=",
 //      computation-source-location(generator(lhs))));
 //  end if;
   let min-required = min(lhs.required-values, rhs.required-values);
   let max-required = max(lhs.required-values, rhs.required-values);
   for (i from 0 below min-required)
-    format-emit(b, s, d, "\t#@;\n", 
+    format-emit(b, s, d, "\t#@;\n",
     mv-temp-lhs(lhs, i), mv-temp-ref(rhs, i));
   end for;
   case
@@ -834,7 +834,7 @@ define method emit-transfer
     (~ rhs.rest-values?) & lhs.rest-values?
       => if (rhs.required-values < lhs.required-values)
            for (i from rhs.required-values below lhs.required-values)
-             format-emit(b, s, d, "\t#@;\n", 
+             format-emit(b, s, d, "\t#@;\n",
                mv-temp-lhs(lhs, i), #f);
            end for;
          elseif (lhs.required-values < rhs.required-values)
@@ -845,12 +845,12 @@ define method emit-transfer
                    mv-temp-ref(rhs, i));
                end if;
              else
-               format-emit(b, s, d, "\t~(~, @);\n", 
+               format-emit(b, s, d, "\t~(~, @);\n",
                  $mv-set-element-string, i, mv-temp-ref(rhs, i));
              end if;
            end for;
          end if;
-	format-emit(b, s, d, "\t~(~);\n",
+        format-emit(b, s, d, "\t~(~);\n",
                     $mv-set-count-string, max-required);
 
     // imprecise (rhs) to imprecise (lhs)
@@ -875,7 +875,7 @@ define method emit-transfer
                    mv-temp-ref(rhs, i));
                end if;
              else
-               format-emit(b, s, d, "\t~(~, @);\n", 
+               format-emit(b, s, d, "\t~(~, @);\n",
                  $mv-set-element-string, i, mv-temp-ref(rhs, i));
              end if;
            end for;
@@ -901,7 +901,7 @@ define method emit-transfer
     (~ rhs.rest-values?) & (~ lhs.rest-values?)
       => if (rhs.required-values < lhs.required-values)
            for (i from rhs.required-values below lhs.required-values)
-             format-emit(b, s, d, "\t#@;\n", 
+             format-emit(b, s, d, "\t#@;\n",
                mv-temp-lhs(lhs, i), #f);
            end for;
          end if;
@@ -917,10 +917,10 @@ end method;
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <if>)
   let merge = next-computation(c);
-  local method dead-branch? 
+  local method dead-branch?
             (branch :: <computation>, ref :: false-or(<value-reference>))
-	  branch == merge & ~ref
-	end method;
+          branch == merge & ~ref
+        end method;
   if (dead-branch?(c.consequent, merge-left-value(merge)))
     format-emit(b, s, d, "\tif (@ == @) {\n", c.test, #f);
     emit-computations(b, s, d + 1, c.alternative, merge);
@@ -950,8 +950,8 @@ define method emit-computation
     if (instance?(c.computation-value, <multiple-value-temporary>))
       // spill local required values into global MV area
       emit-transfer(b, s, d, $global-all-rest, c.computation-value);
-      format-emit(b, s, d, "\treturn(@);\n", 
-		  mv-temp-ref(c.computation-value, 0));
+      format-emit(b, s, d, "\treturn(@);\n",
+                  mv-temp-ref(c.computation-value, 0));
     else
       format-emit(b, s, d, "\treturn(@);\n", c.computation-value);
     end if;
@@ -961,7 +961,7 @@ end method;
 define constant $primitive-write-thread-variable-string
   = c-raw-mangle("primitive-write-thread-variable");
 
-define method emit-computation 
+define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <assignment>)
   // TODO: split out <definition>, tie that to the actual definiton
   if (c.assigned-binding.binding-thread?)
@@ -970,7 +970,7 @@ define method emit-computation
                 $primitive-write-thread-variable-string,
                 c.assigned-binding, c.computation-value);
   else
-    format-emit(b, s, d, "\t#@ = @;\n", 
+    format-emit(b, s, d, "\t#@ = @;\n",
                 c.temporary, c.assigned-binding, c.computation-value);
   end if;
 end method;
@@ -991,11 +991,11 @@ define method emit-computation
   end if;
 end method;
 
-define method emit-computation 
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+define method emit-computation
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
        c :: <conditional-update!>)
-  format-emit(b, s, d, "\t#CONDITIONAL_UPDATE(@, @, @);\n", 
-              c.temporary, c.assigned-binding, 
+  format-emit(b, s, d, "\t#CONDITIONAL_UPDATE(@, @, @);\n",
+              c.temporary, c.assigned-binding,
               c.computation-value, c.computation-test-value);
 end method;
 
@@ -1007,15 +1007,15 @@ end method;
 // just refer to the first value.
 
 define method emit-reference
-    (b :: <c-back-end>, s :: <stream>, 
+    (b :: <c-back-end>, s :: <stream>,
      o :: <multiple-value-temporary-reference>) => ()
   if ((required-values(o.ref-temp) = 0
        & o.ref-index > 0)
       | (required-values(o.ref-temp) > 0
          & o.ref-index >= required-values(o.ref-temp)))
-//    format-out("XXXXX uh oh, being asked for index %d of temp %=!\n", 
-//	       o.ref-index, o.ref-temp);
-    if (o.ref-index > 0) 
+//    format-out("XXXXX uh oh, being asked for index %d of temp %=!\n",
+//               o.ref-index, o.ref-temp);
+    if (o.ref-index > 0)
       // let type = lookup-type(o.ref-temp, current-css(), o.ref-temp.generator);
       let type = type-estimate(o.ref-temp);
       if (instance?(type, <type-estimate-raw>))
@@ -1040,13 +1040,13 @@ define method emit-reference
 end method;
 
 define method emit-reference
-    (b :: <c-back-end>, s :: <stream>, 
+    (b :: <c-back-end>, s :: <stream>,
      o :: <multiple-value-temporary>) => ()
  emit-reference(b, s, mv-temp-ref(o, 0));
 end method;
 
 define method emit-computation
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <extract-single-value>)
   format-emit(b, s, d, "\t#", c.temporary);
   // emit-reference will do mv-get if index too large
@@ -1054,17 +1054,17 @@ define method emit-computation
 end method;
 
 define method emit-computation
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <extract-rest-value>)
   format-emit(b, s, d, "\t#~(@, ~);\n",
-              c.temporary, $mv-get-rest-at-string, 
+              c.temporary, $mv-get-rest-at-string,
               mv-temp-ref(c.computation-value, 0), c.index);
 end method;
 
 // lhs is c.temporary + rest-values?(c.temporary)
 // rhs is c.fixed + c.rest-value
 //   - 0th element is handled specially - it never goes into MV area
-define method emit-computation 
+define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <values>)
   let lhs-temp = c.temporary;
   when (used?(lhs-temp)) // HACK: THIS SHOULDN'T BE NECESSARY
@@ -1075,83 +1075,83 @@ define method emit-computation
   let rhs-num-supplied = size(rhs-supplied-values);
   let rhs-has-rest? = c.rest-value ~= #f;
   let rhs-rest-temp = c.rest-value;
-  
+
   iterate loop (i = 0)  // i indexes into both lhs and rhs
     if (i < lhs-num-required)       // need another
       if (i < rhs-num-supplied)     // it's supplied
-        format-emit(b, s, d, "\t@ = @;\n", 
+        format-emit(b, s, d, "\t@ = @;\n",
                     mv-temp-lhs(lhs-temp, i), rhs-supplied-values[i]);
       elseif (rhs-has-rest?)  // not supplied -- try #rest part of <values>
-        format-emit(b, s, d, "\t@ = ~(@,~);\n", 
+        format-emit(b, s, d, "\t@ = ~(@,~);\n",
                     mv-temp-lhs(c.temporary, i),
-		    $safe-vector-ref, c.rest-value, 
+                    $safe-vector-ref, c.rest-value,
                     i - rhs-num-supplied);
       else   // no #rest from <values> - must be #f
-        format-emit(b, s, d, "\t@ = @;\n", 
+        format-emit(b, s, d, "\t@ = @;\n",
                     mv-temp-lhs(c.temporary, i), #f);
       end if;
       loop (i + 1);
     elseif (i < rhs-num-supplied)      // <values> has more to give
       if (i = 0) // special case for 0th element -- assign to temp anyway
         format-emit(b,s,d,"\t@ = @;\n",mv-temp-lhs(lhs-temp,i),
-		    rhs-supplied-values[i]) ;
+                    rhs-supplied-values[i]) ;
       end if;
       if (lhs-wants-rest?)   // is there somewhere to put them?
         // put i^th fixed value into MV area
-        format-emit(b, s, d, "\t~(~, @);\n", 
-                   $mv-set-element-string, 
+        format-emit(b, s, d, "\t~(~, @);\n",
+                   $mv-set-element-string,
                    i, rhs-supplied-values[i]);
-        loop(i + 1);  
+        loop(i + 1);
       end if;           // if lhs doesn't want any more, we're done.
       // don't loop if no #rest on lhs
-    // lhs has all it wants, rhs has given all it can, 
+    // lhs has all it wants, rhs has given all it can,
     elseif (lhs-wants-rest? & rhs-has-rest?)  // handle #rest to #rest case.
       if (i = 0)  // special case for 0 again
-	format-emit(b, s, d, "\t#", lhs-temp);   // temp = 
+        format-emit(b, s, d, "\t#", lhs-temp);   // temp =
       else
-	format-emit(b,s,d, "\t");
+        format-emit(b,s,d, "\t");
       end if;
-// want to index into rhs by how much has been extracted already, 
+// want to index into rhs by how much has been extracted already,
 // but can't (1st param must be a vector, with a size slot).
-// so populate MV area from actual start of rhs #rest vector temp. 
+// so populate MV area from actual start of rhs #rest vector temp.
       format-emit(b, s, d, "~(@, ~);\n",
-		  $mv-set-rest-at-string, 
-		  rhs-rest-temp, rhs-num-supplied);
+                  $mv-set-rest-at-string,
+                  rhs-rest-temp, rhs-num-supplied);
     elseif (i = 0)  // no #rest to #rest -- check for 0th case one more time
       format-emit(b, s, d, "\t#@;\n", c.temporary, #f);
     end if;
   end;  // iterate loop
 
-  // if we are in an imprecise context, 
+  // if we are in an imprecise context,
   // must set the count
   if (lhs-wants-rest?)
     if (~ rhs-has-rest?) // & if didn't set it with rest-to-rest
       format-emit(b, s, d, "\t~(~);\n",
-		  $mv-set-count-string, rhs-num-supplied);
+                  $mv-set-count-string, rhs-num-supplied);
     end if;
   end if;
   end when;
 end method;
 
 define method emit-computation
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <temporary-transfer-computation>)
   emit-transfer(b, s, d, c.temporary, c.computation-value);
 end method;
 
 define method emit-computation
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <multiple-value-spill>)
   let comp = c.computation-value;
   if (instance?(comp, <multiple-value-temporary>) & comp.rest-values?)
-    format-emit(b, s, d, "\t#~(@);\n", c.temporary, 
-		$spill-multiple-values-string, c.computation-value);
+    format-emit(b, s, d, "\t#~(@);\n", c.temporary,
+                $spill-multiple-values-string, c.computation-value);
   end if;
 end method;
 
 define method emit-computation
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
-     c :: <multiple-value-unspill>) 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
+     c :: <multiple-value-unspill>)
   let temp = c.temporary;
   let comp = c.computation-value;
   let previous-comp =
@@ -1162,20 +1162,20 @@ define method emit-computation
     end if;
   if (instance?(previous-comp, <multiple-value-temporary>) & previous-comp.rest-values?)
     format-emit(b, s, d, "\t#~(@);\n",
-		temp, $unspill-multiple-values-string, comp);
+                temp, $unspill-multiple-values-string, comp);
   end if;
   emit-transfer(b, s, d, temp, previous-comp);
 end method;
 
 define method emit-computation
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
-     c :: <adjust-multiple-values>) 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
+     c :: <adjust-multiple-values>)
   next-method();  // do transfer
 end method;
 
 define method emit-computation
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
-     c :: <adjust-multiple-values-rest>) 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
+     c :: <adjust-multiple-values-rest>)
   next-method();  // do transfer
 end method;
 
@@ -1186,12 +1186,12 @@ define method emit-computation
   for (merge in loop-merges(c))
     let tmp = temporary(merge);
     if (tmp & used?(tmp))
-      format-emit(b, s, d, "\t@~ = @;\n", 
-                  tmp, $loop-shadow-tmp-suffix, 
+      format-emit(b, s, d, "\t@~ = @;\n",
+                  tmp, $loop-shadow-tmp-suffix,
                   loop-merge-parameter(merge));
     end if;
   end for;
-  emit-label(b, s, d - 1, c);  
+  emit-label(b, s, d - 1, c);
   emit-computations(b, s, d + 1, loop-body(c), c.next-computation);
 end method;
 
@@ -1202,18 +1202,18 @@ define method emit-computation
        call-merge    in loop-call-merges(c))
     let tmp = temporary(initial-merge);
     if (tmp & used?(tmp))
-      format-emit(b, s, d, "\t@~ = @;\n", 
-                  tmp, $loop-shadow-tmp-suffix, 
+      format-emit(b, s, d, "\t@~ = @;\n",
+                  tmp, $loop-shadow-tmp-suffix,
                   loop-merge-argument(call-merge));
     end if;
   end for;
   emit-goto(b, s, d, c.loop-call-loop);
 end method;
- 
+
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <end-loop>)
 end method;
- 
+
 // non-local control flow
 
 define constant $enter-bind-exit-frame-string = "ENTER_EXIT_FRAME";
@@ -1240,11 +1240,11 @@ define method emit-computation
        $frame-destination-string, c.entry-state);
     if (used?(c.temporary))
       format-emit
-	(b, s, d, "\t\t@ = ~(@);\n", 
-	 merge-tmp, $frame-return-value-string, c.entry-state);
+        (b, s, d, "\t\t@ = ~(@);\n",
+         merge-tmp, $frame-return-value-string, c.entry-state);
       // note that blocks are converted in all-rest context
       if (required-values(merge-tmp) > 0)
-	emit-transfer(b, s, d + 1, merge-tmp, $global-all-rest);
+        emit-transfer(b, s, d + 1, merge-tmp, $global-all-rest);
       end if;
     end if;
     format-emit(b, s, d, "\t} else {\n");
@@ -1288,10 +1288,10 @@ define method emit-computation
   format-emit
     (b, s, d, "\tif (!nlx_setjmp(~(@))) {\n",
      $frame-destination-string, c.entry-state);
-  let end-protected 
+  let end-protected
     = emit-computations(b, s, d + 1, c.body, c.next-computation);
-  format-emit(b, s, d + 1, "\t~(@);\n", 
-	      $fall-through-unwind-string, c.protected-temporary);
+  format-emit(b, s, d + 1, "\t~(@);\n",
+              $fall-through-unwind-string, c.protected-temporary);
   format-emit(b, s, d, "\t}\n");
   emit-computations(b, s, d, c.cleanups, c.next-computation);
   format-emit(b, s, d, "\t~();\n", $continue-unwind-string);
@@ -1324,7 +1324,7 @@ end method;
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <check-type>)
   if (emit-check-type?(b, c))
-    format-emit(b, s, d, "\t~(@, @);\n", 
+    format-emit(b, s, d, "\t~(@, @);\n",
                 $primitive-type-check-string,
                 c.computation-value, c.type);
   end if;
@@ -1336,7 +1336,7 @@ define constant $multiple-value-check-type-prologue-string
 define constant $multiple-value-check-type-epilogue-string
   = "MV_CHECK_TYPE_EPILOGUE";
 
-define constant $multiple-value-check-type-rest-string 
+define constant $multiple-value-check-type-rest-string
   = "MV_CHECK_TYPE_REST";
 
 define function canonicalize-check-type (type)
@@ -1344,46 +1344,46 @@ define function canonicalize-check-type (type)
 end function;
 
 define method emit-computation
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <multiple-value-check-type>)
   if (compiling-dylan-library?())
     next-method();
   else
     if (used?(c.temporary))
       for (i from 0 below required-values(temporary(c)))
-	emit-transfer(b, s, d, 
-		      mv-temp-lhs(c.temporary, i),
-		      mv-temp-ref(c.computation-value, i));
+        emit-transfer(b, s, d,
+                      mv-temp-lhs(c.temporary, i),
+                      mv-temp-ref(c.computation-value, i));
       end;
       format-emit(b, s, d, "\t{\n");
       format-emit(b, s, d + 1, "\t~(@);\n",
-		  $multiple-value-check-type-prologue-string,
-		  mv-temp-ref(computation-value(c), 0));
+                  $multiple-value-check-type-prologue-string,
+                  mv-temp-ref(computation-value(c), 0));
       for (i from 0 below required-values(temporary(c)))
-	format-emit(b, s, d + 1, "\t~(@, @);\n", 
-		    $primitive-type-check-string,
-		    mv-temp-lhs(c.temporary, i),
-		    canonicalize-check-type(types(c)[i]));
+        format-emit(b, s, d + 1, "\t~(@, @);\n",
+                    $primitive-type-check-string,
+                    mv-temp-lhs(c.temporary, i),
+                    canonicalize-check-type(types(c)[i]));
       end;
-      format-emit(b, s, d + 1, "\t~();\n", 
-		  $multiple-value-check-type-epilogue-string);
+      format-emit(b, s, d + 1, "\t~();\n",
+                  $multiple-value-check-type-epilogue-string);
       format-emit(b, s, d, "\t}\n");
     end if;
   end if;
 end method;
 
-define method emit-computation 
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
+define method emit-computation
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <multiple-value-check-type-rest>)
   if (compiling-dylan-library?())
     next-method();
   else
-    format-emit(b, s, d, "\t#~(@, @, ~", 
-		temporary(c), 
-		$multiple-value-check-type-rest-string, 
+    format-emit(b, s, d, "\t#~(@, @, ~",
+                temporary(c),
+                $multiple-value-check-type-rest-string,
                 mv-temp-ref(computation-value(c), 0),
-		canonicalize-check-type(rest-type(c)),
-		size(types(c)));
+                canonicalize-check-type(rest-type(c)),
+                size(types(c)));
     for (type in types(c))
       format-emit(b, s, d, ", @", canonicalize-check-type(type));
     end for;
@@ -1393,21 +1393,21 @@ end method;
 
 // cell for assignment
 
-define method emit-make-cell-string 
+define method emit-make-cell-string
     (b :: <c-back-end>, s :: <stream>, type)
   write(s, "MAKE_");
   emit-parameter-type(b, s, type);
   write(s, "_CELL");
 end method;
 
-define method emit-set-cell-value-string 
+define method emit-set-cell-value-string
     (b :: <c-back-end>, s :: <stream>, type)
   write(s, "SET_");
   emit-parameter-type(b, s, type);
   write(s, "_CELL_VAL");
 end method;
 
-define method emit-get-cell-value-string 
+define method emit-get-cell-value-string
     (b :: <c-back-end>, s :: <stream>, type)
   write(s, "GET_");
   emit-parameter-type(b, s, type);
@@ -1422,7 +1422,7 @@ end method;
 
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <make-cell>)
-  if (closed-over?(c.temporary))  
+  if (closed-over?(c.temporary))
     format-emit(b, s, d, "\t#", c.temporary);
     emit-make-cell-string(b, s, cell-representation-type(c.temporary));
     format-emit(b, s, d, "(@);\n", c.computation-value);
@@ -1433,7 +1433,7 @@ end method;
 
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <get-cell-value>)
-  if (closed-over?(c.computation-cell))  
+  if (closed-over?(c.computation-cell))
     format-emit(b, s, d, "\t#", c.temporary);
     emit-get-cell-value-string(b, s, cell-representation-type(c.computation-cell));
     format-emit(b, s, d, "(@);\n", c.computation-cell);
@@ -1444,12 +1444,12 @@ end method;
 
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <set-cell-value!>)
-  if (closed-over?(c.computation-cell))  
-    format-emit(b, s, d, "\t#", c.temporary); 
+  if (closed-over?(c.computation-cell))
+    format-emit(b, s, d, "\t#", c.temporary);
     emit-set-cell-value-string(b, s, cell-representation-type(c.computation-cell));
     format-emit(b, s, d, "(@, @);\n", c.computation-cell, c.computation-value);
   else
-    format-emit(b, s, d, "\t#@ = @;\n", 
+    format-emit(b, s, d, "\t#@ = @;\n",
                 c.temporary, c.computation-cell, c.computation-value);
   end if;
 end method;
@@ -1484,6 +1484,6 @@ end method;
 
 // Computation can be #f sometimes for empty bodies.
 
-define method emit-source-location 
+define method emit-source-location
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c) => ()
 end method;

@@ -7,11 +7,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $initial-string-stream-contents-size = 10000;
 
-define class <c-back-end> (<back-end>) 
-  constant slot lambda-stream 
-    = make(<string-stream>, direction: #"output", 
-	   contents: make(<byte-string>, 
-			  size: $initial-string-stream-contents-size));
+define class <c-back-end> (<back-end>)
+  constant slot lambda-stream
+    = make(<string-stream>, direction: #"output",
+           contents: make(<byte-string>,
+                          size: $initial-string-stream-contents-size));
 end;
 
 register-back-end(<c-back-end>, #"c", #f);
@@ -21,7 +21,7 @@ define method initialize (back-end :: <c-back-end>, #key, #all-keys) => ()
   stream-contents(back-end.lambda-stream, clear-contents?: #t);
 end method;
 
-define method back-end-record-repeated-object-sizes? 
+define method back-end-record-repeated-object-sizes?
     (back-end :: <c-back-end>) => (well? :: <boolean>)
   #t
 end method;
@@ -35,30 +35,30 @@ define constant $gf-optional-xep-string = "gf_optional_xep";
 
 define constant $dylan-type-string = "D";
 
-define constant $initialize-closure-string                
+define constant $initialize-closure-string
   = "INIT_CLOSURE";
-define constant $make-closure-string                
+define constant $make-closure-string
   = "MAKE_CLOSURE";
 define constant $make-closure-with-signature-string
   = "MAKE_CLOSURE_SIG";
 define constant $make-closure-initd-string
   = "MAKE_CLOSURE_INITD";
-define constant $make-closure-initd-with-signature-string 
+define constant $make-closure-initd-with-signature-string
   = "MAKE_CLOSURE_INITD_SIG";
 define constant $make-method-with-signature-string
   = "MAKE_METHOD_SIG";
 define constant $set-method-signature-string
   = "SET_METHOD_SIG";
 
-define constant $initialize-keyword-closure-string                
+define constant $initialize-keyword-closure-string
   = "INIT_KEYWORD_CLOSURE";
-define constant $make-keyword-closure-string                
+define constant $make-keyword-closure-string
   = "MAKE_KEYWORD_CLOSURE";
 define constant $make-keyword-closure-with-signature-string
   = "MAKE_KEYWORD_CLOSURE_SIG";
 define constant $make-keyword-closure-initd-string
   = "MAKE_KEYWORD_CLOSURE_INITD";
-define constant $make-keyword-closure-initd-with-signature-string 
+define constant $make-keyword-closure-initd-with-signature-string
   = "MAKE_KEYWORD_CLOSURE_INITD_SIG";
 define constant $make-keyword-method-with-signature-string
   = "MAKE_KEYWORD_METHOD_SIG";
@@ -111,7 +111,7 @@ define method make-address-of(o)
 end method;
 
 define method emit-reference
-    (b :: <c-back-end>, s :: <stream>, 
+    (b :: <c-back-end>, s :: <stream>,
      o :: <address-of-temporary>) => ()
   format(s, "&");
   emit-reference(b, s, o.addr-temporary);
@@ -120,9 +120,9 @@ end method;
 define method back-end-word-size
     (object :: <c-back-end>) => (size :: <integer>)
   if (member?(target-architecture-name(), #(#"alpha", #"x86_64")))
-    8 
+    8
   else
-    4 
+    4
   end;
 end method;
 
@@ -135,11 +135,11 @@ define function format-emit
       '~' =>       print-message(arguments[i], s); i := i + 1;
       '%' =>       emit-object(b, s, arguments[i]); i := i + 1;
       '@' =>       emit-reference(b, s, arguments[i]); i := i + 1;
-      '?' =>       emit-indirect-reference(b, s, arguments[i]); 
+      '?' =>       emit-indirect-reference(b, s, arguments[i]);
                    i := i + 1;
       '^' =>       emit-name(b, s, arguments[i]); i := i + 1;
       '#' =>       if (arg-used?(arguments[i]))
-		     format-emit*(b, s, "@ = ", arguments[i]);
+                     format-emit*(b, s, "@ = ", arguments[i]);
                    end if;
                    i := i + 1;
       '\t' =>      for (i from 0 below d) write(s, "  "); end;
@@ -165,8 +165,8 @@ end function;
 //// TOP-LEVEL
 
 define method emit-all (back-end :: <c-back-end>, cr :: <compilation-record>,
-			#rest flags, #key dfm-output? = #f, #all-keys)
-  with-simple-abort-retry-restart 
+                        #rest flags, #key dfm-output? = #f, #all-keys)
+  with-simple-abort-retry-restart
       ("Abort the emission phase", "Restart the emission phase")
     /*
     // Hack!!! Displaced.
@@ -181,10 +181,10 @@ define method emit-all (back-end :: <c-back-end>, cr :: <compilation-record>,
     let literals = heap.heap-defined-object-sequence;
     when (dfm-output?)
       with-build-area-output (stream = current-library-description(),
-			      name: concatenate(cr.compilation-record-name, ".dfm"))
-	for (literal in literals)
-	  apply(emit-dfm, back-end, stream, literal, flags);
-	end for;
+                              name: concatenate(cr.compilation-record-name, ".dfm"))
+        for (literal in literals)
+          apply(emit-dfm, back-end, stream, literal, flags);
+        end for;
       end with-build-area-output;
     end when;
     for (literal in literals)
@@ -208,9 +208,9 @@ define method retract-local-methods-in-heap(heap) => ()
   if (*retract-dfm?*)
     for (literal in heap.heap-defined-object-sequence)
       if (instance?(literal, <&iep>) & ~lambda-top-level?(literal))
-	// format-out?("\nRETRACTING %=\n", literal);
-	retract-method-dfm(literal);
-	retract-method-dfm(literal.function);
+        // format-out?("\nRETRACTING %=\n", literal);
+        retract-method-dfm(literal);
+        retract-method-dfm(literal.function);
       end if;
     end for;
   end if;

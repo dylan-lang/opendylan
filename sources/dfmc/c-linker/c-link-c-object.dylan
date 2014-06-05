@@ -9,13 +9,13 @@ define method emit-parameter-types
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&c-function>) => ()
   format(stream, "(");
   for (type in if (o.binding-name)
-		 o.c-signature.^signature-required
-	       else
-		 // If there's no C name, it's an indirect function and the
-		 // first parameter is actually the function itself.
-		 //---*** Better: Add a slot to <&c-function> or a <&c-indirect-function>
-		 copy-sequence(o.c-signature.^signature-required, start: 1)
-	       end,
+                 o.c-signature.^signature-required
+               else
+                 // If there's no C name, it's an indirect function and the
+                 // first parameter is actually the function itself.
+                 //---*** Better: Add a slot to <&c-function> or a <&c-indirect-function>
+                 copy-sequence(o.c-signature.^signature-required, start: 1)
+               end,
        first? = #t then #f)
     unless (first?)
       format(stream, ", ");
@@ -28,7 +28,7 @@ end method;
 ///--- Emitting extern declarations for these functions will produce parameter
 ///--- lists that conflict with their declarations in the system header files.
 define constant $generic-names-not-to-emit = #["pseudo_primitive_command_name",
-					       "pseudo_primitive_command_arguments"];
+                                               "pseudo_primitive_command_arguments"];
 
 define method emit-forward
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&c-function>) => ();
@@ -37,15 +37,15 @@ define method emit-forward
     let return-type = first(sig-values, default: dylan-value(#"<object>"));
     if (target-os-name() == #"win32")
       format-emit*(back-end, stream, "~ ^ ~ ^ ",
-		   if (o.binding-name) "extern" else "typedef" end,
-		   return-type,
-		   o.c-modifiers,
-		   o);
+                   if (o.binding-name) "extern" else "typedef" end,
+                   return-type,
+                   o.c-modifiers,
+                   o);
     else
       format-emit*(back-end, stream, "~ ^ ^ ",
-		   if (o.binding-name) "extern" else "typedef" end,
-		   return-type,
-		   o);
+                   if (o.binding-name) "extern" else "typedef" end,
+                   return-type,
+                   o);
     end if;
     emit-parameter-types(back-end, stream, o);
     format-emit*(back-end, stream, ";\n");
@@ -54,35 +54,35 @@ end method;
 
 /* TODO: OBSOLETE?
 define method emit-forward-using-value
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      o :: <module-binding>, v :: <&c-function>) => ()
   emit-forward(back-end, stream, v);
 end method;
 
 define method emit-definition-using-value
-    (back-end :: <c-back-end>, stream :: <stream>, 
+    (back-end :: <c-back-end>, stream :: <stream>,
      o :: <module-binding>, v :: <&c-function>) => ()
   emit-forward(back-end, stream, v);
 end method;
 */
 
 define method emit-definition
-    (back-end :: <c-back-end>, stream :: <stream>, v :: <&c-callable-function>) 
+    (back-end :: <c-back-end>, stream :: <stream>, v :: <&c-callable-function>)
  => ()
 end method;
 
 define method emit-forward
-    (back-end :: <c-back-end>, stream :: <stream>, v :: <&c-callable-function>) 
+    (back-end :: <c-back-end>, stream :: <stream>, v :: <&c-callable-function>)
  => ()
 end method;
 
 define method emit-definition
-    (back-end :: <c-back-end>, stream :: <stream>, v :: <&c-variable>) 
+    (back-end :: <c-back-end>, stream :: <stream>, v :: <&c-variable>)
  => ()
 end method;
 
 define method emit-forward
-    (back-end :: <c-back-end>, stream :: <stream>, v :: <&c-variable>) 
+    (back-end :: <c-back-end>, stream :: <stream>, v :: <&c-variable>)
  => ()
   format(stream, "extern void *%s;\n", v.name);
 end method;
@@ -126,11 +126,11 @@ end;
 //     emit-c-parameter-typedef(back-end, stream, type);
 //   end;
 // end;
-// 
+//
 // define method emit-c-parameter-typedef (back-end :: <c-back-end>, stream,
 //                                         object)
 // end;
-// 
+//
 // define method emit-c-parameter-typedef (back-end :: <c-back-end>, stream,
 //                                         object :: <&raw-aggregate-type>)
 //   let options = raw-aggregate-options(object);
@@ -149,7 +149,7 @@ end;
 define method emit-pre-raw-struct-options
     (back-end :: <c-back-end>, stream, object, options)
   // deal with pragma pack on windows, other packing options
-end;  
+end;
 
 
 // Is this necessary?
