@@ -53,6 +53,13 @@ define method ^subtype? (t1 :: <&type>, t2 :: <&singleton>)
   #f
 end method ^subtype?;
 
+// Tiebreaker
+
+define method ^subtype? (t1 :: <&limited-collection-type>, t2 :: <&singleton>)
+ => (subtype? :: <boolean>)
+  #f
+end method ^subtype?;
+
 //// Disjointness relationships.
 
 define method ^known-disjoint? 

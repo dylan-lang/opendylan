@@ -102,6 +102,12 @@ define method subtype? (t :: <type>, s :: <singleton>)
   #f
 end method subtype?;
 
+// Tiebreaker
+
+define method subtype? (t :: <limited-collection-type>, s :: <singleton>)
+ => (subtype? :: <boolean>)
+  #f
+end method subtype?;
 
 define method subjunctive-subtype? (s1 :: <singleton>, s2 :: <singleton>,
                                     scu :: <subjunctive-class-universe>)
@@ -122,6 +128,12 @@ end method subjunctive-subtype?;
 
 
 define method subjunctive-subtype? (t :: <type>, s :: <singleton>,
+                                    scu :: <subjunctive-class-universe>)
+ => (subtype? :: <boolean>)
+  #f
+end method subjunctive-subtype?;
+
+define method subjunctive-subtype? (t :: <limited-collection-type>, s :: <singleton>,
                                     scu :: <subjunctive-class-universe>)
  => (subtype? :: <boolean>)
   #f
