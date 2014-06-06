@@ -319,7 +319,10 @@ static void grow_all_tlv_vectors(size_t newsize)
     list = list->next;
   }
 
-  // Let writes proceed again
+  // Let writes proceed again, but only at a moment
+  // where TLV_GROW is undisturbed. This ensures
+  // that we are not between an increment and a
+  // decrement on the TLV writer side.
   while (atomic_cas(&tlv_writer_counter, 0, TLV_GROW) != TLV_GROW);
 }
 
@@ -1566,10 +1569,19 @@ D primitive_read_thread_variable(D h)
 
 /* 35 */
 
-static void primitive_write_thread_variable_internal(void)
+static void primitive_write_thread_variable_blocked(void)
 {
+  // Spin until we see normal writer counts again
   do {
+    // This decrement will undo the increment done before
+    // entering this function or on the previous loop iteration.
+    // This will disturb the writer count even if we do not
+    // have a lock, but only if the count is negative.
+    // Since TLV_GROW is large we will never change the sign.
     if (atomic_decrement(&tlv_writer_counter) < 0) {
+      // Synchronize with TLV growing by waiting
+      // on the TLV list lock whenever we encounter
+      // a negative writer count.
       pthread_mutex_lock(&tlv_vector_list_lock);
       pthread_mutex_unlock(&tlv_vector_list_lock);
     }
@@ -1581,9 +1593,11 @@ D primitive_write_thread_variable(D h, D nv)
   TLV_VECTOR   tlv_vector;
   uintptr_t    offset;
 
-  // Wait until there are no other writers
+  // Acquire write lock by incrementing
   if (atomic_increment(&tlv_writer_counter) < 0) {
-    primitive_write_thread_variable_internal();
+    // If the count is negative then another
+    // thread is growing TLVs. Wait for it.
+    primitive_write_thread_variable_blocked();
   }
 
   // The variable handle is the byte offset where the variable's value is
