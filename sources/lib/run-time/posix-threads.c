@@ -715,7 +715,7 @@ D primitive_thread_join_multiple(D v)
 
   for (i = 0; i < size; i++) {
     state = (uintptr_t)threads[i]->handle1;
-    threads[i]->handle1 = (void *)(state ^ MARKED);
+    threads[i]->handle1 = (void *)(state & ~MARKED);
   }
 
   if (pthread_mutex_unlock(&thread_join_lock) != 0) {
