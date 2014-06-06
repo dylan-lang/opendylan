@@ -618,11 +618,13 @@ D primitive_thread_join_single(D t)
 
   assert(thread != NULL);
 
+  /* Acquire the join lock */
   if (pthread_mutex_lock(&thread_join_lock) != 0) {
     MSG0("thread-join-single: error obtaining thread join lock\n");
     return GENERAL_ERROR;
   }
 
+  /* Make sure the thread isn't already part of a join operation */
   state = (uintptr_t)thread->handle1;
   if (state & MARKED || state & JOINED) {
     pthread_mutex_unlock(&thread_join_lock);
@@ -630,8 +632,11 @@ D primitive_thread_join_single(D t)
     return GENERAL_ERROR;
   }
 
+  /* Mark the thread as joining */
   state = (uintptr_t)thread->handle1;
   thread->handle1 = (void *)(state | MARKED);
+
+  /* Spin until the thread is joined */
   completed = state & COMPLETED;
   while (!completed) {
     if (pthread_cond_wait(&thread_exit_event, &thread_join_lock)) {
@@ -641,9 +646,11 @@ D primitive_thread_join_single(D t)
     completed = (uintptr_t)thread->handle1 & COMPLETED;
   }
 
+  /* Mark the thread as joined and remove the join mark */
   state = (uintptr_t)thread->handle1;
   thread->handle1 = (void *)((state | JOINED) & ~MARKED);
 
+  /* Release the join lock */
   if (pthread_mutex_unlock(&thread_join_lock) != 0) {
     MSG0("thread-join-single: error releasing thread join lock\n");
     return GENERAL_ERROR;
@@ -668,14 +675,13 @@ D primitive_thread_join_multiple(D v)
   size  = ((uintptr_t)(thread_vector->size)) >> 2;
   threads = (volatile DTHREAD **)(thread_vector->data);
 
+  /* Acquire the join lock */
   if (pthread_mutex_lock(&thread_join_lock)) {
     MSG0("thread-join-multiple: error obtaining thread join lock\n");
     return GENERAL_ERROR;
   }
 
-  /* Make sure none of the threads is already
-   * part of a join operation
-   */
+  /* Ensure none of the threads are already joining or joined */
   for (i = 0; i < size; i++) {
     state = (uintptr_t)threads[i]->handle1;
     if (state & MARKED || state & JOINED) {
@@ -684,13 +690,13 @@ D primitive_thread_join_multiple(D v)
     }
   }
 
-  /* Now mark the threads as being part of a join
-   */
+  /* Now mark the threads as joining */
   for (i = 0; i < size; i++) {
     state = (uintptr_t)threads[i]->handle1;
     threads[i]->handle1 = (void *)(state | MARKED);
   }
 
+  /* Spin until a thread is joined */
   for (i = 0; i < size; i++) {
     state = (uintptr_t)threads[i]->handle1;
     if (state & COMPLETED) {
@@ -712,14 +718,17 @@ D primitive_thread_join_multiple(D v)
     }
   }
 
+  /* Mark the joined thread as such */
   state = (uintptr_t)joined_thread->handle1;
   joined_thread->handle1 = (void *)(state | JOINED);
 
+  /* Remove join mark on all the threads so we can retry */
   for (i = 0; i < size; i++) {
     state = (uintptr_t)threads[i]->handle1;
     threads[i]->handle1 = (void *)(state & ~MARKED);
   }
 
+  /* Release the join lock */
   if (pthread_mutex_unlock(&thread_join_lock) != 0) {
     MSG0("thread-join-multiple: error releasing thread join lock\n");
     return GENERAL_ERROR;
