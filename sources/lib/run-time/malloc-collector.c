@@ -5,9 +5,6 @@ typedef int mps_bool_t;
 typedef void* mps_root_t;
 typedef void *mps_addr_t;       /* managed address (void *) */
 
-#define MAX_BOEHM_HEAP_SIZE (1024 * 1024 * 1024)
-/* #define INITIAL_BOEHM_HEAP_SIZE (50 * 1024 * 1024) */
-
 typedef struct gc_teb_s {       /* GC Thread Environment block descriptor */
   mps_bool_t gc_teb_inside_tramp;  /* the HARP runtime assumes offset 0 for this */
   size_t     gc_teb_allocation_counter;   /* the profiler assumes this is at offset -1 from main TEB */

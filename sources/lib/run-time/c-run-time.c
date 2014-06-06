@@ -21,8 +21,6 @@
 #  define unlikely(x) x
 #endif
 
-#define MAX_HEAP_SIZE          (2047 * 1024 * 1024)
-
 /*
  stack allocation
    relies on inlining
@@ -3999,7 +3997,6 @@ void _Init_Run_Time ()
 
 #ifdef GC_USE_BOEHM
     GC_INIT();
-    GC_set_max_heap_size(MAX_HEAP_SIZE);
 #endif
 
     initialize_threads_primitives();
