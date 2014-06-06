@@ -726,12 +726,9 @@ D primitive_thread_join_multiple(D v)
 /* 4.5 */
 void primitive_detach_thread(D t)
 {
-  DTHREAD* thread = t;
-  THREAD* rthread;
-  assert(thread != NULL);
-  rthread = (THREAD*)(thread->handle2);
+  DTHREAD    *thread = (DTHREAD *)t;
 
-  pthread_detach(rthread->tid);
+  assert(thread != NULL);
 }
 
 /* 5 */
