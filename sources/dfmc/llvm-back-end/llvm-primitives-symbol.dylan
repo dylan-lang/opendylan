@@ -182,20 +182,20 @@ define method op--register-symbol
       end ins--if;
 
   // Store the symbol in the oblist
-  let symbol-object = ins--bitcast(be, symbol, $llvm-object-pointer-type);
   call-primitive(be, primitive-vector-element-setter-descriptor,
-                 symbol-object, oblist-cast, cursor);
+                 symbol, oblist-cast, cursor);
   let cursor-inc = ins--add(be, cursor, 1);
   ins--store(be, cursor-inc, cursor-ref);
 end method;
 
-define side-effecting stateless indefinite-extent mapped &runtime-primitive-descriptor primitive-resolve-symbol
+define side-effecting stateless indefinite-extent &runtime-primitive-descriptor primitive-resolve-symbol
     (symbol :: <symbol>) => (canonical-symbol :: <symbol>);
   let module = be.llvm-builder-module;
 
   // Get the name
+  let symbol-cast = op--object-pointer-cast(be, symbol, #"<symbol>");
   let symbol-name-slot-ptr
-    = op--getslotptr(be, symbol, #"<symbol>", #"symbol-name");
+    = op--getslotptr(be, symbol-cast, #"<symbol>", #"symbol-name");
   let name-obj
     = ins--load(be, symbol-name-slot-ptr, alignment: back-end-word-size(be));
   let name = op--object-pointer-cast(be, name-obj, #"<byte-string>");
@@ -205,7 +205,7 @@ define side-effecting stateless indefinite-extent mapped &runtime-primitive-desc
   let cmp = ins--icmp-ne(be, interned-obj, emit-reference(be, module, &false));
   ins--if (be, cmp)
     // A symbol with this name was already interned
-    op--object-pointer-cast(be, interned-obj, #"<symbol>");
+    interned-obj
   ins--else
     // If we don't, then we must intern the one we have
     op--register-symbol(be, symbol);
@@ -224,7 +224,7 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
   let cmp = ins--icmp-ne(be, interned-obj, emit-reference(be, m, &false));
   ins--if (be, cmp)
     // A symbol with this name was already interned
-    op--object-pointer-cast(be, interned-obj, symbol-class)
+    interned-obj
   ins--else
     // If we don't, then we must intern a new one
     let total-size = header-words + ^instance-storage-size(symbol-class);
@@ -234,9 +234,8 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
                        byte-size,
                        emit-reference(be, m, ^class-mm-wrapper(symbol-class)),
                        string);
-    let symbol-cast = op--object-pointer-cast(be, symbol, symbol-class);
-    op--register-symbol(be, symbol-cast);
-    symbol-cast
+    op--register-symbol(be, symbol);
+    symbol
   end ins--if
 end;
 
