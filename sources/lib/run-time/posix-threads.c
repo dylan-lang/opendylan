@@ -630,6 +630,7 @@ D primitive_thread_join_single(D t)
     return GENERAL_ERROR;
   }
 
+  state = (uintptr_t)thread->handle1;
   thread->handle1 = (void *)(state | MARKED);
   completed = state & COMPLETED;
   while (!completed) {
@@ -640,7 +641,8 @@ D primitive_thread_join_single(D t)
     completed = (uintptr_t)thread->handle1 & COMPLETED;
   }
 
-  thread->handle1 = (void *)((uintptr_t)thread->handle1 ^ (JOINED | MARKED));
+  state = (uintptr_t)thread->handle1;
+  thread->handle1 = (void *)((state | JOINED) & ~MARKED);
 
   if (pthread_mutex_unlock(&thread_join_lock) != 0) {
     MSG0("thread-join-single: error releasing thread join lock\n");
