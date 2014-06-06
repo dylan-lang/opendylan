@@ -377,7 +377,7 @@ define method op--set-bef-value
 end method;
 
 
-define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor primitive-bef-values
+define side-effect-free stateless dynamic-extent auxiliary &runtime-primitive-descriptor primitive-bef-values
     (bind-exit-frame :: <raw-pointer>) => (#rest values);
   let word-size = back-end-word-size(be);
 
