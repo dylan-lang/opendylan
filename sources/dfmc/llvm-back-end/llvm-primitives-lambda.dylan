@@ -516,6 +516,20 @@ define side-effecting stateless indefinite-extent can-unwind mapped-parameter &r
   ins--phi(be, result-phi-arguments)
 end;
 
+// Used for calls to Dylan from C
+define side-effecting stateless indefinite-extent can-unwind c-callable auxiliary &runtime-primitive-descriptor call-dylan-function
+    (fn :: <function>, n :: <raw-integer>, #rest args)
+ => (#rest values)
+  let va-list = op--va-decl-start(be);
+  let args = op--va-list-to-stack-vector(be, va-list, n);
+  op--va-end(be, va-list);
+
+  let fn-cast = op--object-pointer-cast(be, fn, #"<function>");
+  let args-cast = op--object-pointer-cast(be, fn, #"<simple-object-vector>");
+
+  call-primitive(be, primitive-apply-descriptor, fn-cast, args-cast)
+end;
+
 
 /// Dynamic method and closure creation
 
