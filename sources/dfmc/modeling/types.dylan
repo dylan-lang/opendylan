@@ -34,7 +34,7 @@ define generic ^instance? (object :: <model-value>, type :: <&type>)
 define generic ^subtype? (t1 :: <&type>, t2 :: <&type>)
  => (subtype? :: <boolean>);
 
-// *permissibly-ambiguous-generics* := add(*permissibly-ambiguous-generics*, ^subtype?);
+*permissibly-ambiguous-generics* := add(*permissibly-ambiguous-generics*, ^subtype?);
 
 
 define generic ^base-type (type :: <&type>)
@@ -46,7 +46,7 @@ define generic ^type-equivalent? (t1 :: <&type>, t2 :: <&type>)
 define generic ^known-disjoint? (t1 :: <&type>, t2 :: <&type>)
  => (disjoint? :: <boolean>);
 
-// *permissibly-ambiguous-generics* := add(*permissibly-ambiguous-generics*, ^known-disjoint?);
+*permissibly-ambiguous-generics* := add(*permissibly-ambiguous-generics*, ^known-disjoint?);
 
 //// Top rules
 
