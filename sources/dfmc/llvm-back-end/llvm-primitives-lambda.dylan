@@ -32,9 +32,84 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   llvm-builder-local(be, $next-methods-parameter-name)
 end;
 
-define side-effecting stateless dynamic-extent &unimplemented-primitive-descriptor primitive-set-generic-function-entrypoints // runtime
+define side-effecting stateless dynamic-extent mapped &runtime-primitive-descriptor primitive-set-generic-function-entrypoints
     (gf :: <generic-function>) => ();
-  //---*** Fill this in...
+  let word-size = back-end-word-size(be);
+
+  // Extract the gf's signature
+  let gf-class :: <&class> = dylan-value(#"<generic-function>");
+  let signature-slot-ptr = op--getslotptr(be, gf, gf-class, #"function-signature");
+  let signature = ins--load(be, signature-slot-ptr, alignment: word-size);
+
+  // Extract the signature properties
+  let sig-class :: <&class> = dylan-value(#"<signature>");
+  let signature-cast = op--object-pointer-cast(be, signature, sig-class);
+  let properties-slot-ptr
+    = op--getslotptr(be, signature-cast, sig-class, #"signature-properties");
+  let properties = ins--load(be, properties-slot-ptr, alignment: word-size);
+  let raw-properties = op--untag-integer(be, properties);
+
+  // Extract the required arguments count
+  let nreq = ins--and(be, raw-properties, $signature-number-required-mask);
+
+  // Location for storing entry point
+  let entry-point-slot-ptr = op--getslotptr(be, gf, gf-class, #"xep");
+
+  let default-bb = make(<llvm-basic-block>);
+  let return-bb = make(<llvm-basic-block>);
+  let optionals-switch-cases = make(<stretchy-object-vector>);
+  let no-optionals-switch-cases = make(<stretchy-object-vector>);
+
+  // Are optionals required?
+  let optionals-masked
+    = ins--and(be, raw-properties, $signature-optionals-p-mask);
+  let optionals-cmp = ins--icmp-ne(be, optionals-masked, 0);
+  ins--if (be, optionals-cmp)
+    for (count from 0 below $entry-point-argument-count)
+      add!(optionals-switch-cases, count);
+      add!(optionals-switch-cases, make(<llvm-basic-block>));
+    end for;
+    ins--switch(be, nreq, default-bb, optionals-switch-cases);
+  ins--else
+    for (count from 0 to $entry-point-argument-count)
+      add!(no-optionals-switch-cases, count);
+      add!(no-optionals-switch-cases, make(<llvm-basic-block>));
+    end for;
+    ins--switch(be, nreq, default-bb, no-optionals-switch-cases);
+  end ins--if;
+
+  // Optionals cases
+  for (count from 0 below $entry-point-argument-count)
+    ins--block(be, optionals-switch-cases[count * 2 + 1]);
+    let func
+      = llvm-entry-point-function(be, gf-optional-xep-descriptor, count + 1);
+    let ref = make(<llvm-cast-constant>,
+                   operator: #"BITCAST",
+                   type: $llvm-object-pointer-type,
+                   operands: vector(func));
+    ins--store(be, ref, entry-point-slot-ptr);
+    ins--br(be, return-bb);
+  end for;
+
+  // Non-optionals cases
+  for (count from 0 to $entry-point-argument-count)
+    ins--block(be, no-optionals-switch-cases[count * 2 + 1]);
+    let func = llvm-entry-point-function(be, gf-xep-descriptor, count);
+    let ref = make(<llvm-cast-constant>,
+                   operator: #"BITCAST",
+                   type: $llvm-object-pointer-type,
+                   operands: vector(func));
+    ins--store(be, ref, entry-point-slot-ptr);
+    ins--br(be, return-bb);
+  end for;
+
+  // Default case (unknown entry type)
+  ins--block(be, default-bb);
+  ins--call-intrinsic(be, "llvm.trap", vector());
+  ins--unreachable(be);
+
+  // Return block
+  ins--block(be, return-bb);
 end;
 
 define side-effecting stateless dynamic-extent mapped &primitive-descriptor primitive-set-accessor-method-xep
