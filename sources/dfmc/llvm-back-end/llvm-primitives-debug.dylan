@@ -40,3 +40,13 @@ define side-effecting stateless dynamic-extent &unimplemented-primitive-descript
  => ()
   //---*** Fill this in...
 end;
+
+// Called by the GC
+define c-callable auxiliary &runtime-primitive-descriptor class-allocation-break
+    (string :: <raw-byte-string>, class :: <class>,
+     count :: <raw-c-signed-int>, size :: <raw-c-signed-int>)
+ => (result :: <object>);
+  let module = be.llvm-builder-module;
+  ins--call-intrinsic(be, "llvm.debugtrap", #[]);
+  emit-reference(be, module, &false)
+end;
