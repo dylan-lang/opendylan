@@ -213,13 +213,13 @@ define function generate-runtime-entry-points
     if (member?(#"singular", descriptor.entry-point-attributes))
       generate-runtime-entry-point(be, m, name, descriptor, #f, #f);
     elseif (member?(#"cross", descriptor.entry-point-attributes))
-      for (count from 1 to 9)
+      for (count from 1 to $entry-point-argument-count)
         for (pos from 0 below count)
           generate-runtime-entry-point(be, m, name, descriptor, count, pos);
         end for;
       end for;
     else
-      for (count from 0 to 9)
+      for (count from 0 to $entry-point-argument-count)
         generate-runtime-entry-point(be, m, name, descriptor, count, #f);
       end for;
     end if;

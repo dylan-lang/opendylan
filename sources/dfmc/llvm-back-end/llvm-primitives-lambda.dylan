@@ -8,6 +8,15 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Calling Convention
 
 define constant $maximum-argument-count = 64;
+define constant $entry-point-argument-count = 16;
+
+// Fields in signature-properties: see ^signature-properties
+// packed-slots definition in dfmc-modeling
+define constant $signature-number-required-mask = #x0000ff;
+define constant $signature-key-p-mask           = #x010000;
+define constant $signature-rest-p-mask          = #x040000;
+define constant $signature-optionals-p-mask
+  = logior($signature-key-p-mask, $signature-rest-p-mask);
 
 define constant $function-parameter-name :: <string> = ".function";
 
@@ -198,7 +207,7 @@ define method op--initialize-single-method-engine-node
 
   // Create a basic block for each switch case
   let inner-switch-cases = make(<stretchy-object-vector>);
-  for (count from 0 to 9)
+  for (count from 0 to $entry-point-argument-count)
     add!(inner-switch-cases, count);
     add!(inner-switch-cases, make(<llvm-basic-block>));
   end for;
@@ -207,7 +216,7 @@ define method op--initialize-single-method-engine-node
   ins--switch(be, impargs, continue-bb, inner-switch-cases);
 
   // Initialization cases
-  for (count from 0 to 9)
+  for (count from 0 to $entry-point-argument-count)
     ins--block(be, inner-switch-cases[count * 2 + 1]);
     let func = llvm-entry-point-function(be, desc, count);
     let ref = make(<llvm-cast-constant>,
@@ -220,14 +229,6 @@ define method op--initialize-single-method-engine-node
 
   ins--block(be, continue-bb);
 end method;
-
-// Fields in signature-properties: see ^signature-properties
-// packed-slots definition in dfmc-modeling
-define constant $signature-number-required-mask = #x0000ff;
-define constant $signature-key-p-mask           = #x010000;
-define constant $signature-rest-p-mask          = #x040000;
-define constant $signature-optionals-p-mask
-  = logior($signature-key-p-mask, $signature-rest-p-mask);
 
 define method op--initialize-cache-header-engine-node
     (be :: <llvm-back-end>, desc :: <llvm-entry-point-descriptor>,
@@ -267,7 +268,7 @@ define method op--initialize-cache-header-engine-node
 
   // Create a basic block for each switch case
   let inner-switch-cases = make(<stretchy-object-vector>);
-  for (count from 0 to 9)
+  for (count from 0 to $entry-point-argument-count)
     add!(inner-switch-cases, count);
     add!(inner-switch-cases, make(<llvm-basic-block>));
   end for;
@@ -276,7 +277,7 @@ define method op--initialize-cache-header-engine-node
   ins--switch(be, impargs, continue-bb, inner-switch-cases);
 
   // Initialization cases
-  for (count from 0 to 9)
+  for (count from 0 to $entry-point-argument-count)
     ins--block(be, inner-switch-cases[count * 2 + 1]);
     let func = llvm-entry-point-function(be, desc, count);
     let ref = make(<llvm-cast-constant>,
@@ -354,7 +355,7 @@ define side-effecting stateless dynamic-extent mapped &runtime-primitive-descrip
       assert(member?(#"cross", desc.entry-point-attributes));
       // Create a basic block for each argument count
       let impargs-switch-cases = make(<stretchy-object-vector>);
-      for (count from 1 to 9)
+      for (count from 1 to $entry-point-argument-count)
         add!(impargs-switch-cases, count);
         add!(impargs-switch-cases, make(<llvm-basic-block>));
       end for;
@@ -362,7 +363,7 @@ define side-effecting stateless dynamic-extent mapped &runtime-primitive-descrip
       ins--switch(be, impargs, default-bb, impargs-switch-cases);
 
       // Emit code for each argument count for this entry point
-      for (count from 1 to 9)
+      for (count from 1 to $entry-point-argument-count)
         ins--block(be, impargs-switch-cases[(count - 1) * 2 + 1]);
 
         // Create a basic block for each argument position

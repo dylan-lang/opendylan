@@ -68,6 +68,7 @@ define module dfmc-llvm-back-end
     $llvm-runtime-variable-descriptors,
     llvm-runtime-variable,
 
+    $entry-point-argument-count,
     <llvm-entry-point-descriptor>,
     entry-point-attributes,
     entry-point-generator,
