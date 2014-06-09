@@ -501,17 +501,69 @@ define side-effecting stateless indefinite-extent can-unwind &unimplemented-prim
   //---*** Fill this in...
 end;
 
-define side-effecting stateless indefinite-extent can-unwind &unimplemented-primitive-descriptor primitive-engine-node-apply-with-optionals // runtime
-    (function :: <object>, next-methods :: <object>, args :: <object>)
+define side-effecting stateless indefinite-extent can-unwind &runtime-primitive-descriptor primitive-engine-node-apply-with-optionals
+    (engine :: <engine-node>, parent :: <function>,
+     args :: <simple-object-vector>)
  => (#rest values);
-  //---*** Fill this in...
+  let word-size = back-end-word-size(be);
+  let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
+  let args-cast = op--object-pointer-cast(be, args, sov-class);
+
+  // Read the size of the arguments vector
+  let vector-size
+    = call-primitive(be, primitive-vector-size-descriptor, args-cast);
+
+  // Create a basic block for each case
+  let default-bb = make(<llvm-basic-block>, name: "bb.default");
+  let return-bb = make(<llvm-basic-block>, name: "bb.return");
+  let switch-cases = make(<stretchy-object-vector>);
+  for (count from 0 to $entry-point-argument-count)
+    add!(switch-cases, count);
+    add!(switch-cases, make(<llvm-basic-block>, name: format-to-string("bb.arg%d", count)));
+  end;
+
+  // Branch to the appropriate case
+  ins--switch(be, vector-size, default-bb, switch-cases);
+
+  // Generate all of the cases
+  let result-phi-arguments = make(<stretchy-object-vector>);
+  for (count from 0 to $entry-point-argument-count)
+    ins--block(be, switch-cases[count * 2 + 1]);
+
+    let parameter-values = make(<stretchy-object-vector>);
+    // Retrieve argument values from vector
+    for (i from 0 below count)
+      add!(parameter-values,
+           call-primitive(be, primitive-vector-element-descriptor,
+                          args-cast, llvm-back-end-value-function(be, i)));
+    end for;
+
+    // Chain to engine node
+    let result
+      = op--chain-to-engine-entry-point(be, engine, parent, parameter-values);
+
+    add!(result-phi-arguments, result);
+    add!(result-phi-arguments, be.llvm-builder-basic-block);
+    ins--br(be, return-bb);
+  end for;
+
+  // Default case (too many arguments)
+  ins--block(be, default-bb);
+  ins--call-intrinsic(be, "llvm.trap", vector());
+  ins--unreachable(be);
+
+  // Return
+  ins--block(be, return-bb);
+  ins--phi(be, result-phi-arguments)
 end;
 
+/*
 define side-effecting stateless indefinite-extent &unimplemented-primitive-descriptor primitive-iep-apply
     (function :: <object>, buffer-size :: <raw-integer>, buffer :: <object>)
  => (#rest values);
   //---*** Fill this in...
 end;
+*/
 
 define side-effecting stateless indefinite-extent can-unwind mapped-parameter &runtime-primitive-descriptor primitive-apply
     (fn :: <function>, arguments :: <simple-object-vector>)
