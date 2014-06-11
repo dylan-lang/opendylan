@@ -185,6 +185,12 @@ define method emit-all (back-end :: <c-back-end>, cr :: <compilation-record>,
         for (literal in literals)
           apply(emit-dfm, back-end, stream, literal, flags);
         end for;
+        for (code in heap.heap-root-system-init-code)
+          apply(emit-dfm, back-end, stream, code.^iep, flags);
+        end for;
+        for (code in heap.heap-root-init-code)
+          apply(emit-dfm, back-end, stream, code.^iep, flags);
+        end for;
       end with-build-area-output;
     end when;
     for (literal in literals)
