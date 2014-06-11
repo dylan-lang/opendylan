@@ -191,10 +191,10 @@ define method emit-all (back-end :: <c-back-end>, cr :: <compilation-record>,
       emit-code(back-end, literal);
     end for;
     with-labeling-from-dynamic
-      for (code in heap.heap-root-system-init-code, count from 0)
+      for (code in heap.heap-root-system-init-code)
         emit-init-code(back-end, code.^iep);
       end for;
-      for (code in heap.heap-root-init-code, count from 0)
+      for (code in heap.heap-root-init-code)
         emit-init-code(back-end, code.^iep);
       end for;
     end;
