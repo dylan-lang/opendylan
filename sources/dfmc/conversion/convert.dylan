@@ -2041,7 +2041,7 @@ define method ^make-signature-argument-reference
  => (res :: <value-reference>)
   let arg = ^make-signature-argument(sig-t, argument-index);
   if (vector-index)
-    ^vector-element-reference(arg, vector-index)
+    ^vector-element-reference(arg, vector-index) | error("Invalid vector element reference: %=", arg)
   else
     arg
   end if
