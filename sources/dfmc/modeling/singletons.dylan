@@ -85,10 +85,10 @@ end method ^known-disjoint?;
 
 define method ^known-disjoint? (t1 :: <&singleton>, t2 :: <&union>)
  => (known-disjoint? :: <boolean>)
-  ^known-disjoint?(t1.^singleton-object, t2)
+  ^known-disjoint?(t1, t2.^union-type1) & ^known-disjoint?(t1, t2.^union-type2)
 end method ^known-disjoint?;
 
 define method ^known-disjoint? (t1 :: <&union>, t2 :: <&singleton>)
  => (known-disjoint? :: <boolean>)
-  ^known-disjoint?(t1, t2.^singleton-object)
+  ^known-disjoint?(t1.^union-type1, t2) & ^known-disjoint?(t1.^union-type2, t2)
 end method ^known-disjoint?;
