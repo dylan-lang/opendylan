@@ -644,9 +644,6 @@ define &module dylan-extensions
   create // not really an extension but support for fip set-by
     %curry-current-element-setter;
 
-  create 
-    *permissibly-ambiguous-generics*;
-
   create
     variable->class,
     class->variable;
