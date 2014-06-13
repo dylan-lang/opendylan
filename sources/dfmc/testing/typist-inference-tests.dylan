@@ -79,6 +79,10 @@ define function show-lambda-type-estimates
   end;
   cache
 end;
+
+// This isn't used by default, but is useful to have around when debugging.
+ignore(show-lambda-type-estimates);
+
 
 ///
 /// Substrate for defining type inference tests.

@@ -19,8 +19,6 @@ define library dfmc-testing
   use dfmc-environment-projects;
   use dfmc-back-end-implementations;
   use testworks;
-
-  export dfmc-testing;
 end library;
 
 define module dfmc-testing
@@ -39,9 +37,5 @@ define module dfmc-testing
     import: { find-project, open-project-compiler-database };
   use dfmc-environment-projects;
   use testworks;
-
-  export
-    clear-tests, print-test-report, run-dfmc-tests,
-    show-lambda-type-estimates;
 end module;
 
