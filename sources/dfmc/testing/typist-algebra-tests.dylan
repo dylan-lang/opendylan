@@ -6,37 +6,19 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-///
-/// Substrate for defining type algebra tests.
-///
-
-define variable *typist-algebra-tests* = #();
-
-define function run-typist-algebra-tests(#key tests     = *typist-algebra-tests*,
-                                              safely?   = #t,
-                                              progress? = *standard-output*,
-                                              report?   = *standard-output*)
-  => ()
-  // Run just the typist algebra tests and print a short report.
-  run-dfmc-tests(tests: tests, safely?: safely?, progress?: progress?,
-                 report?: report?)
-end;
-
 define macro typist-algebra-test-definer
-  // Define manual compiler test & remember the name in typist algebra registry
   { define typist-algebra-test ?testname:name
       ?test-body:body
     end }
-  => { *typist-algebra-tests* := add-new!(*typist-algebra-tests*, ?#"testname");
-       *tests*[?#"testname"] :=
-          method ()
-            // Some things want to pretend a compilation is in progress.
-            with-testing-context (#f)
-              ?test-body
-            end
-          end }
+  => {
+    define test ?testname ()
+      // Some things want to pretend a compilation is in progress.
+      with-testing-context (#f)
+        ?test-body
+      end
+    end }
 end;
-
+
 ///
 /// Tests of the algebra.
 ///
@@ -129,30 +111,29 @@ define typist-algebra-test typist-normalization
                                                  list(a-class-8, a-class-2))));
 
   // Normalization is a noop on bottoms.
-  type-estimate-normalize(a-bottom) == a-bottom
+  assert-equal(type-estimate-normalize(a-bottom), a-bottom);
 
   // Normalization is a noop on raws.
-  & type-estimate-normalize(a-raw) == a-raw
+  assert-equal(type-estimate-normalize(a-raw), a-raw);
 
   // Normalization is a noop on limited integers, usually.
   // Cases: min present, max present, min & max present.
-  & (type-estimate-normalize(a-lim-int)   == a-lim-int
-   & type-estimate-normalize(a-lim-int-2) == a-lim-int-2
-   & type-estimate-normalize(a-lim-int-3) == a-lim-int-3
-   & type-estimate-match?(type-estimate-normalize(a-lim-int-4), a-lim-inst))
+  assert-equal(type-estimate-normalize(a-lim-int), a-lim-int);
+  assert-equal(type-estimate-normalize(a-lim-int-2), a-lim-int-2);
+  assert-equal(type-estimate-normalize(a-lim-int-3), a-lim-int-3);
+  assert-true(type-estimate-match?(type-estimate-normalize(a-lim-int-4), a-lim-inst));
 
   // Normalization is a noop on subclass types.
-  & type-estimate-normalize(a-lim-class) == a-lim-class
+  assert-equal(type-estimate-normalize(a-lim-class), a-lim-class);
 
   // Normalization is a noop on singleton types.
-  & type-estimate-normalize(a-lim-inst) == a-lim-inst
+  assert-equal(type-estimate-normalize(a-lim-inst), a-lim-inst);
 
   // *** Normalization on limited collections isn't in until collections are!
-  & (type-estimate-match?(type-estimate-normalize(a-lim-coll), a-lim-inst-2)
-     )
+  assert-true(type-estimate-match?(type-estimate-normalize(a-lim-coll), a-lim-inst-2));
 
   // Normalization is a noop on class types.
-  & type-estimate-normalize(a-class) == a-class
+  assert-equal(type-estimate-normalize(a-class), a-class);
 
   // Normalization of unions often CPA-expands.
   // Cases: [1] A union of 0 things is bottom.
@@ -161,78 +142,89 @@ define typist-algebra-test typist-normalization
   //        [4] Union where subtyping introduces changes to unionees.
   //        [5] Like [4], but with subtypable classes in the opposite order.
   //        [6] Like [4], but with subtype guy at end.  Fixed a subtle bug!
-  & (instance?(type-estimate-normalize(a-union), <type-estimate-bottom>)
-   & type-estimate-normalize(a-union-2) == a-class
-   & type-estimate-normalize(a-union-3) == a-union-3
-   & type-estimate-match?(type-estimate-normalize(a-union-4), a-union-7)
-   & type-estimate-match?(type-estimate-normalize(a-union-5), a-union-7)
-   & type-estimate-match?(type-estimate-normalize(a-union-6), a-union-7))
+  assert-true(instance?(type-estimate-normalize(a-union), <type-estimate-bottom>));
+  assert-equal(type-estimate-normalize(a-union-2), a-class);
+  assert-equal(type-estimate-normalize(a-union-3), a-union-3);
+  assert-true(type-estimate-match?(type-estimate-normalize(a-union-4), a-union-7));
+  assert-true(type-estimate-match?(type-estimate-normalize(a-union-5), a-union-7));
+  assert-true(type-estimate-match?(type-estimate-normalize(a-union-6), a-union-7));
 
   // Normalization of multiple values may CPA expand if a value is a union.
   // Cases: [1] No unions in args & no changes in them, so no change.
   //        [2] Change in an arg, but not enough to CPA expand.
   //        [3] CP expansion in the presence of unions.
   //        [4] values(), just because I'm suspicious.
-  & (type-estimate-normalize(a-values) == a-values
-   & type-estimate-match?(type-estimate-normalize(a-values-2),
-                          make(<type-estimate-values>, fixed: list(a-class)))
-   & type-estimate-match?(type-estimate-normalize(a-values-3),
-                          make(<type-estimate-union>,
-                               // Glaah.  Order of answers hard to intuit here.
-                               unionees: list(make(<type-estimate-values>,
-                                                   fixed: list(a-class, a-class-2),
-                                                   rest:  a-class-7),
-                                              make(<type-estimate-values>,
-                                                   fixed: list(a-class, a-class-6),
-                                                   rest:  a-class-7),
-                                              make(<type-estimate-values>,
-                                                   fixed: list(a-class-5, a-class-2),
-                                                   rest:  a-class-7),
-                                              make(<type-estimate-values>,
-                                                   fixed: list(a-class-5, a-class-6),
-                                                   rest:  a-class-7),
-                                              make(<type-estimate-values>,
-                                                   fixed: list(a-class, a-class-2),
-                                                   rest:  a-class-3),
-                                              make(<type-estimate-values>,
-                                                   fixed: list(a-class, a-class-6),
-                                                   rest:  a-class-3),
-                                              make(<type-estimate-values>,
-                                                   fixed: list(a-class-5, a-class-2),
-                                                   rest:  a-class-3),
-                                              make(<type-estimate-values>,
-                                                   fixed: list(a-class-5, a-class-6),
-                                                   rest:  a-class-3))))
-   & type-estimate-normalize(a-values-4) == a-values-4)
+  assert-equal(type-estimate-normalize(a-values), a-values);
+  assert-true(type-estimate-match?(type-estimate-normalize(a-values-2),
+                                   make(<type-estimate-values>, fixed: vector(a-class))));
+  assert-true(type-estimate-match?(type-estimate-normalize(a-values-3),
+                                   make(<type-estimate-union>,
+                                        // Glaah.  Order of answers hard to intuit here.
+                                        unionees: list(make(<type-estimate-values>,
+                                                            fixed: vector(a-class, a-class-2),
+                                                            rest:  make(<type-variable>,
+                                                                        contents: a-class-7)),
+                                                       make(<type-estimate-values>,
+                                                            fixed: vector(a-class, a-class-6),
+                                                            rest:  make(<type-variable>,
+                                                                        contents: a-class-7)),
+                                                       make(<type-estimate-values>,
+                                                            fixed: vector(a-class-5, a-class-2),
+                                                            rest:  make(<type-variable>,
+                                                                        contents: a-class-7)),
+                                                       make(<type-estimate-values>,
+                                                            fixed: vector(a-class-5, a-class-6),
+                                                            rest:  make(<type-variable>,
+                                                                        contents: a-class-7)),
+                                                       make(<type-estimate-values>,
+                                                            fixed: vector(a-class, a-class-2),
+                                                            rest:  make(<type-variable>,
+                                                                        contents: a-class-3)),
+                                                       make(<type-estimate-values>,
+                                                            fixed: vector(a-class, a-class-6),
+                                                            rest:  make(<type-variable>,
+                                                                        contents: a-class-3)),
+                                                       make(<type-estimate-values>,
+                                                            fixed: vector(a-class-5, a-class-2),
+                                                            rest:  make(<type-variable>,
+                                                                        contents: a-class-3)),
+                                                       make(<type-estimate-values>,
+                                                            fixed: vector(a-class-5, a-class-6),
+                                                            rest:  make(<type-variable>,
+                                                                        contents: a-class-3))))));
+  assert-equal(type-estimate-normalize(a-values-4), a-values-4);
 
   // Normalization of contravariant function types.
   // Cases: [1] Args with no interesting normalization, so no change.
   //        [2] Args which normalization changes trivially (union canon.).
   //        [3] Args which are actually unions.
   //        [4] Trivial functions become class types.
-  & (type-estimate-normalize(a-function) == a-function
-   & type-estimate-match?(type-estimate-normalize(a-function-2),
+  assert-equal(type-estimate-normalize(a-function), a-function);
+  assert-true(type-estimate-match?(type-estimate-normalize(a-function-2),
+                                   make(<type-estimate-limited-function>,
+                                        class: dylan-value(#"<function>"),
+                                        requireds: vector(a-class))));
+  assert-true(
+    type-estimate-match?(
+      type-estimate-normalize(a-function-3),
+      // Glaah.
+      make(<type-estimate-union>,
+           unionees: list(make(<type-estimate-limited-function>,
+                               class: dylan-value(#"<function>"),
+                               requireds: vector(a-class, a-class-8)),
                           make(<type-estimate-limited-function>,
                                class: dylan-value(#"<function>"),
-                               requireds: list(a-class)))
-   & type-estimate-match?(
-       type-estimate-normalize(a-function-3),
-       // Glaah.
-       make(<type-estimate-union>,
-            unionees: list(make(<type-estimate-limited-function>,
-                                class: dylan-value(#"<function>"),
-                                requireds: list(a-class, a-class-8)),
-                           make(<type-estimate-limited-function>,
-                                class: dylan-value(#"<function>"),
-                                requireds: list(a-class, a-class-2)),
-                           make(<type-estimate-limited-function>,
-                                class: dylan-value(#"<function>"),
-                                requireds: list(a-class-5, a-class-8)),
-                           make(<type-estimate-limited-function>,
-                                class: dylan-value(#"<function>"),
-                                requireds: list(a-class-5, a-class-2)))))
-   & type-estimate-match?(make(<type-estimate-limited-function>),
-                          make(<type-estimate-class>, class: dylan-value(#"<function>"))))
+                               requireds: vector(a-class, a-class-2)),
+                          make(<type-estimate-limited-function>,
+                               class: dylan-value(#"<function>"),
+                               requireds: vector(a-class-5, a-class-8)),
+                          make(<type-estimate-limited-function>,
+                               class: dylan-value(#"<function>"),
+                               requireds: vector(a-class-5, a-class-2))))));
+  assert-true(type-estimate-match?(make(<type-estimate-limited-function>,
+                                        class: dylan-value(#"<function>")),
+                                   make(<type-estimate-class>,
+                                        class: dylan-value(#"<function>"))));
 end;
 
 define typist-algebra-test typist-base
@@ -270,41 +262,41 @@ define typist-algebra-test typist-base
   let a-raw = make(<type-estimate-raw>, raw: dylan-value(#"<raw-integer>"));
 
   // Base type of a class type is itself.
-  type-estimate-base(a-class) == a-class
+  assert-equal(type-estimate-base(a-class), a-class);
 
   // Base type of a limited type is the class being limited.
   // *** Do limited collections here, too, when that gets done.
-  & type-estimate-match?(type-estimate-base(a-lim-int), a-class)
+  assert-true(type-estimate-match?(type-estimate-base(a-lim-int), a-class));
 
   // Base type of a singleton type is itself.
-  & type-estimate-base(a-lim-inst) == a-lim-inst
+  assert-equal(type-estimate-base(a-lim-inst), a-lim-inst);
 
   // Base type of a subclass is <class>.
-  & type-estimate-match?(type-estimate-base(a-lim-cl), a-class-2)
+  assert-true(type-estimate-match?(type-estimate-base(a-lim-cl), a-class-2));
 
   // Base type of a union is the union of the base types of the unionees.
-  & (instance?(type-estimate-base(a-union), <type-estimate-bottom>)
-   & type-estimate-base(a-union-2) == a-union-2
-   & type-estimate-match?(type-estimate-base(a-union-3),
-                          make(<type-estimate-union>,
-                               unionees: list(a-class, a-class-2))))
+  assert-true(instance?(type-estimate-base(a-union), <type-estimate-bottom>));
+  assert-equal(type-estimate-base(a-union-2), a-union-2);
+  assert-true(type-estimate-match?(type-estimate-base(a-union-3),
+                                   make(<type-estimate-union>,
+                                        unionees: list(a-class, a-class-2))));
 
   // Base type of values is values of base-types.
-  & (type-estimate-base(a-values) == a-values
-   & type-estimate-base(a-values-2) == a-values-2
-   & type-estimate-match?(type-estimate-base(a-values-3), a-values-2)
-   & type-estimate-base(a-values-4) == a-values-4
-   & type-estimate-match?(type-estimate-base(a-values-5), a-values-4))
+  assert-equal(type-estimate-base(a-values), a-values);
+  assert-equal(type-estimate-base(a-values-2), a-values-2);
+  assert-true(type-estimate-match?(type-estimate-base(a-values-3), a-values-2));
+  assert-equal(type-estimate-base(a-values-4), a-values-4);
+  assert-true(type-estimate-match?(type-estimate-base(a-values-5), a-values-4));
 
   // Base type of function is function of base types.
-  & (type-estimate-match?(type-estimate-base(a-function), a-class-3)
-     & type-estimate-match?(type-estimate-base(a-function-2), a-class-3))
+  assert-true(type-estimate-match?(type-estimate-base(a-function), a-class-3));
+  assert-true(type-estimate-match?(type-estimate-base(a-function-2), a-class-3));
 
   // Base type of a bottom is itself.
-  & type-estimate-base(a-bottom) == a-bottom
+  assert-equal(type-estimate-base(a-bottom), a-bottom);
 
   // Base type of a raw is itself.
-  & type-estimate-base(a-raw) == a-raw
+  assert-equal(type-estimate-base(a-raw), a-raw);
 end;
 
 // *** Under construction.
@@ -368,56 +360,56 @@ define typist-algebra-test typist-subtype?
                          class:     dylan-value(#"<function>"));
 
   // Bottom
-  (type-estimate-subtype?(a-bottom, a-bottom)
-   & type-estimate-subtype?(a-bottom, a-class)
-   & ~type-estimate-subtype?(a-class, a-bottom))
+  assert-true(type-estimate-subtype?(a-bottom, a-bottom));
+  assert-true(type-estimate-subtype?(a-bottom, a-class));
+  assert-false(type-estimate-subtype?(a-class, a-bottom));
 
   // Raw types
-  & (type-estimate-subtype?(a-raw, a-raw)
-     & ~type-estimate-subtype?(a-raw, a-raw2)
-     & ~type-estimate-subtype?(a-raw, a-class))
+  assert-true(type-estimate-subtype?(a-raw, a-raw));
+  assert-false(type-estimate-subtype?(a-raw, a-raw2));
+  assert-false(type-estimate-subtype?(a-raw, a-class));
 
   // Unions
-  & (type-estimate-subtype?(a-union, a-class-4)    // Rule 1
-   & type-estimate-subtype?(a-class-3, a-union-2)  // Rule 2
-   & type-estimate-subtype?(a-union-3, a-union-2)) // Rule 3
+  assert-true(type-estimate-subtype?(a-union, a-class-4));    // Rule 1
+  assert-true(type-estimate-subtype?(a-class-3, a-union-2));  // Rule 2
+  assert-true(type-estimate-subtype?(a-union-3, a-union-2));  // Rule 3
 
   // Multiple values: (required vals, rest val)
-  & (type-estimate-subtype?(a-values, a-values)        // (0,0) vs (0,0)
-   & type-estimate-subtype?(a-values-1, a-values-2)  // (1,0) vs (1,0)
-   & ~type-estimate-subtype?(a-values-2, a-values-1)
-   & type-estimate-subtype?(a-values-3, a-values-4)  // (2,0) vs (2,0)
-   & ~type-estimate-subtype?(a-values-4, a-values-3)
-   & type-estimate-subtype?(a-values-5, a-values-6)  // (1,1) vs (1,1)
-   & ~type-estimate-subtype?(a-values-6, a-values-5)
-   & type-estimate-subtype?(a-values-5, a-values-2)  // (1,0) vs (1,1)
-   & ~type-estimate-subtype?(a-values-2, a-values-5)
-   & type-estimate-subtype?(a-values-2, a-values-6)  // (1,0) vs (1,1)
-   & type-estimate-subtype?(a-values-6, a-values-2)  // (1,1) vs (1,0)
-   & ~type-estimate-subtype?(a-values, a-values-1))  // (0,0) vs (1,0)
+  assert-true(type-estimate-subtype?(a-values, a-values));        // (0,0) vs (0,0)
+  assert-true(type-estimate-subtype?(a-values-1, a-values-2));  // (1,0) vs (1,0)
+  assert-false(type-estimate-subtype?(a-values-2, a-values-1));
+  assert-true(type-estimate-subtype?(a-values-3, a-values-4));  // (2,0) vs (2,0)
+  assert-false(type-estimate-subtype?(a-values-4, a-values-3));
+  assert-true(type-estimate-subtype?(a-values-5, a-values-6));  // (1,1) vs (1,1)
+  assert-false(type-estimate-subtype?(a-values-6, a-values-5));
+  assert-true(type-estimate-subtype?(a-values-5, a-values-2));  // (1,0) vs (1,1)
+  assert-false(type-estimate-subtype?(a-values-2, a-values-5));
+  assert-true(type-estimate-subtype?(a-values-2, a-values-6));  // (1,0) vs (1,1)
+  assert-true(type-estimate-subtype?(a-values-6, a-values-2));  // (1,1) vs (1,0)
+  assert-false(type-estimate-subtype?(a-values, a-values-1));  // (0,0) vs (1,0)
 
   // Classes
-  & (type-estimate-subtype?(a-class-3, a-class-4)
-   & ~type-estimate-subtype?(a-class-4, a-class-3)
-   & ~type-estimate-subtype?(a-class-4, a-class))
+  assert-true(type-estimate-subtype?(a-class-3, a-class-4));
+  assert-false(type-estimate-subtype?(a-class-4, a-class-3));
+  assert-false(type-estimate-subtype?(a-class-4, a-class));
 
   // Functions
-  & (type-estimate-subtype?(a-fun-1, a-fun-2)
-     ) // *** Need more here.
+  assert-true(type-estimate-subtype?(a-fun-1, a-fun-2));
+  // *** Need more here.
 
   // *** Limited
-  & (type-estimate-subtype?(a-lim-int, a-class)
-   & ~type-estimate-subtype?(a-class, a-lim-int))
+  assert-true(type-estimate-subtype?(a-lim-int, a-class));
+  assert-false(type-estimate-subtype?(a-class, a-lim-int));
 
   // Limited integers
-  & (type-estimate-subtype?(a-lim-int-2, a-lim-int)
-   & type-estimate-subtype?(a-lim-int-3, a-lim-int-4)
-   & type-estimate-subtype?(a-lim-int-5, a-lim-int-6)
-   & type-estimate-subtype?(a-lim-int-7, a-singleton))
+  assert-true(type-estimate-subtype?(a-lim-int-2, a-lim-int));
+  assert-true(type-estimate-subtype?(a-lim-int-3, a-lim-int-4));
+  assert-true(type-estimate-subtype?(a-lim-int-5, a-lim-int-6));
+  assert-true(type-estimate-subtype?(a-lim-int-7, a-singleton));
 
   // Singletons
-  & (type-estimate-subtype?(a-singleton, a-lim-int-7)
-     ) // *** Need more here.
+  assert-true(type-estimate-subtype?(a-singleton, a-lim-int-7));
+  // *** Need more here.
 
   // *** Subclass
 
@@ -447,36 +439,46 @@ define typist-algebra-test typist-instance?
   let limint  = make(<type-estimate-limited-integer>, min: 0, max: 2);
 
   // Bottom
-  ~type-estimate-instance?(one, bottom)
+  assert-false(type-estimate-instance?(one, bottom));
+
   // *** Raw
+
   // Unions
-  & type-estimate-instance?(one, struint)
-  & type-estimate-instance?(foo, struint)
-  & type-estimate-instance?(foo, string)
-  & type-estimate-instance?(one, integer)
+  assert-true(type-estimate-instance?(one, struint));
+  assert-true(type-estimate-instance?(foo, struint));
+  assert-true(type-estimate-instance?(foo, string));
+  assert-true(type-estimate-instance?(one, integer));
+
   // *** Values
+
   // Classes
-  & type-estimate-instance?(one, integer)
+  assert-true(type-estimate-instance?(one, integer));
+
   // *** Functions
+
   // *** Limited
+
   // *** Limited collections
+
   // Singletons
-  & type-estimate-instance?(one, sing1)
-  & type-estimate-instance?(foo, singfoo)
-  & ~type-estimate-instance?(one, singfoo)
-  & ~type-estimate-instance?(foo, sing1)
-  & type-estimate-instance?(a-char, object)
-  & type-estimate-instance?(a-char, charact)
-  & type-estimate-instance?(a-char, singch)
+  assert-true(type-estimate-instance?(one, sing1));
+  assert-true(type-estimate-instance?(foo, singfoo));
+  assert-false(type-estimate-instance?(one, singfoo));
+  assert-false(type-estimate-instance?(foo, sing1));
+  assert-true(type-estimate-instance?(a-char, object));
+  assert-true(type-estimate-instance?(a-char, charact));
+  assert-true(type-estimate-instance?(a-char, singch));
+
   // Subclass
-  & type-estimate-instance?(dylan-value(#"<string>"), substr)
-  & type-estimate-instance?(dylan-value(#"<byte-string>"), substr)
-  & type-estimate-instance?(dylan-value(#"<integer>"), subnum)
-  & ~type-estimate-instance?(dylan-value(#"<integer>"), substr)
-  & ~type-estimate-instance?(dylan-value(#"<byte-string>"), subnum)
+  assert-true(type-estimate-instance?(dylan-value(#"<string>"), substr));
+  assert-true(type-estimate-instance?(dylan-value(#"<byte-string>"), substr));
+  assert-true(type-estimate-instance?(dylan-value(#"<integer>"), subnum));
+  assert-false(type-estimate-instance?(dylan-value(#"<integer>"), substr));
+  assert-false(type-estimate-instance?(dylan-value(#"<byte-string>"), subnum));
+
   // Limited integer
-  & type-estimate-instance?(one, limint)
-  & ~type-estimate-instance?(three, limint)
+  assert-true(type-estimate-instance?(one, limint));
+  assert-false(type-estimate-instance?(three, limint));
 end;
 
 define typist-algebra-test typist-disjoint?
@@ -485,31 +487,30 @@ define typist-algebra-test typist-disjoint?
   dynamic-bind (*progress-stream*           = #f,
                 *demand-load-library-only?* = #f)  // with-compiler-muzzled
     let lib
-
-  = compile-template("define sealed abstract class <a> (<object>) end;\n"
-                      // Note <b> is trying hard to be uncooperative!
-                     "define open   concrete class <b> (<object>) end;\n"
-                     "define sealed concrete class <c> (<a>, <b>) end;\n",
-                     compiler: compile-library-until-optimized);
+      = compile-template("define sealed abstract class <a> (<object>) end;\n"
+                          // Note <b> is trying hard to be uncooperative!
+                         "define open   concrete class <b> (<object>) end;\n"
+                         "define sealed concrete class <c> (<a>, <b>) end;\n",
+                         compiler: compile-library-until-optimized);
     let mod = lookup-module-in(language-definition(lib), #"scratch-module");
     with-testing-context (lib)
       let a = make-variable-name-fragment-in-module(#"<a>", mod);
       let b = make-variable-name-fragment-in-module(#"<b>", mod);
-      type-estimate-subtype?(as(<type-estimate>, lookup-value(a)),
-                             as(<type-estimate>, lookup-value(b)))
-    & ~type-estimate-disjoint?(as(<type-estimate>, lookup-value(a)),
-                               as(<type-estimate>, lookup-value(b)))
-    end
-  end &
-  begin
+      assert-true(type-estimate-subtype?(as(<type-estimate>, lookup-value(a)),
+                                         as(<type-estimate>, lookup-value(b))));
+      assert-false(type-estimate-disjoint?(as(<type-estimate>, lookup-value(a)),
+                                           as(<type-estimate>, lookup-value(b))));
+    end;
+
     let sing  = make(<type-estimate-limited-instance>, singleton: 'a', class: dylan-value(#"<character>"));
     let obj   = make(<type-estimate-class>, class: dylan-value(#"<object>"));
     let char  = make(<type-estimate-class>, class: dylan-value(#"<character>"));
     let num   = make(<type-estimate-class>, class: dylan-value(#"<number>"));
-    ~type-estimate-disjoint?(sing, obj) &
-    ~type-estimate-disjoint?(sing, char) &
-     type-estimate-disjoint?(sing, num)
-  end
+
+    assert-false(type-estimate-disjoint?(sing, obj));
+    assert-false(type-estimate-disjoint?(sing, char));
+    assert-true(type-estimate-disjoint?(sing, num));
+  end;
 end;
 
 define typist-algebra-test typist-as-<type-estimate>
@@ -521,21 +522,21 @@ define typist-algebra-test typist-as-<type-estimate>
   let model-singleton = ^singleton(a:);
   let model-union     = ^type-union(model-integer, model-float);
 
-  type-estimate-match?(make(<type-estimate-class>, class: model-integer),
-                       as(<type-estimate>, model-integer))
-  & type-estimate-match?(make(<type-estimate-raw>, raw: model-raw),
-                         as(<type-estimate>, model-raw))
-  & type-estimate-match?(make(<type-estimate-limited-integer>, min: 0, max: 63),
-                         as(<type-estimate>, model-lim-int))
-  & type-estimate-match?(make(<type-estimate-limited-instance>,
-                              singleton: a:, class: dylan-value(#"<symbol>")),
-                         as(<type-estimate>, model-singleton))
-  & type-estimate-match?(make(<type-estimate-union>,
-                              unionees: list(make(<type-estimate-class>,
-                                                  class: model-integer),
-                                             make(<type-estimate-class>,
-                                                  class: model-float))),
-                         as(<type-estimate>, model-union))
+  assert-true(type-estimate-match?(make(<type-estimate-class>, class: model-integer),
+                                   as(<type-estimate>, model-integer)));
+  assert-true(type-estimate-match?(make(<type-estimate-raw>, raw: model-raw),
+                                   as(<type-estimate>, model-raw)));
+  assert-true(type-estimate-match?(make(<type-estimate-limited-integer>, min: 0, max: 63),
+                                   as(<type-estimate>, model-lim-int)));
+  assert-true(type-estimate-match?(make(<type-estimate-limited-instance>,
+                                        singleton: a:, class: dylan-value(#"<symbol>")),
+                                   as(<type-estimate>, model-singleton)));
+  assert-true(type-estimate-match?(make(<type-estimate-union>,
+                                        unionees: list(make(<type-estimate-class>,
+                                                            class: model-integer),
+                                                       make(<type-estimate-class>,
+                                                            class: model-float))),
+                                   as(<type-estimate>, model-union)));
 end;
 
 define typist-algebra-test typist-as-<&type>
@@ -547,23 +548,32 @@ define typist-algebra-test typist-as-<&type>
   let model-singleton = ^singleton(a:);
   let model-union     = ^type-union(model-integer, model-float);
 
-  model-integer == as(<&type>, make(<type-estimate-class>, class: model-integer))
-  & model-raw == as(<&type>, make(<type-estimate-raw>, raw: model-raw))
-  & begin
-      let new-model-lim-int = as(<&type>, make(<type-estimate-limited-integer>, min: 0, max: 63));
-      ^limited-integer-min(new-model-lim-int) == ^limited-integer-min(model-lim-int) &
-      ^limited-integer-max(new-model-lim-int) == ^limited-integer-max(model-lim-int)
-    end
-  & ^singleton-object(model-singleton) ==
-    ^singleton-object(as(<&type>, make(<type-estimate-limited-instance>,
-                                       singleton: a:, class: dylan-value(#"<symbol>"))))
-  & begin
-      let new-model-union = as(<&type>, make(<type-estimate-union>,
-                                             unionees: list(make(<type-estimate-class>,
-                                                                 class: model-integer),
-                                                            make(<type-estimate-class>,
-                                                                 class: model-float))));
-      ^union-type1(new-model-union) == ^union-type1(model-union) &
-      ^union-type2(new-model-union) == ^union-type2(model-union)
-    end
+  assert-equal(model-integer, as(<&type>, make(<type-estimate-class>, class: model-integer)));
+  assert-equal(model-raw, as(<&type>, make(<type-estimate-raw>, raw: model-raw)));
+
+  let new-model-lim-int = as(<&type>, make(<type-estimate-limited-integer>, min: 0, max: 63));
+  assert-equal(^limited-integer-min(new-model-lim-int), ^limited-integer-min(model-lim-int));
+  assert-equal(^limited-integer-max(new-model-lim-int), ^limited-integer-max(model-lim-int));
+
+  assert-equal(^singleton-object(model-singleton),
+               ^singleton-object(as(<&type>, make(<type-estimate-limited-instance>,
+                                                  singleton: a:, class: dylan-value(#"<symbol>")))));
+
+  let new-model-union = as(<&type>, make(<type-estimate-union>,
+                                         unionees: list(make(<type-estimate-class>,
+                                                             class: model-integer),
+                                                        make(<type-estimate-class>,
+                                                             class: model-float))));
+  assert-equal(^union-type1(new-model-union), ^union-type1(model-union));
+  assert-equal(^union-type2(new-model-union), ^union-type2(model-union));
+end;
+
+define suite dfmc-typist-algebra-suite ()
+  test typist-normalization;
+  test typist-base;
+  test typist-subtype?;
+  test typist-instance?;
+  test typist-disjoint?;
+  test typist-as-<type-estimate>;
+  test typist-as-<&type>;
 end;

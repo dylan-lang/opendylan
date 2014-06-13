@@ -1,6 +1,7 @@
 module: dfmc-testing
 
 define suite dfmc-test-suite ()
+  suite dfmc-typist-algebra-suite;
 end;
 
 define function callback-handler (#rest args)
@@ -13,7 +14,6 @@ define function main()
                                  warning-callback: callback-handler,
                                  error-handler: callback-handler);
 
-  run-typist-algebra-tests(safely?: #f);
   run-typist-inference-tests(safely?: #f);
 
   run-test-application(dfmc-test-suite);
