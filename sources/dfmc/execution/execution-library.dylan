@@ -5,7 +5,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-execution
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use variable-search;
   use system;
   use release-info;
@@ -23,7 +24,7 @@ define library dfmc-execution
 end library;
 
 define module dfmc-execution
-  use functional-dylan;
+  use common-dylan;
   use dfmc-core, export: { eval, &eval };
   use dfmc-imports;
   use dfmc-optimization;
@@ -31,7 +32,8 @@ define module dfmc-execution
 end module;
 
 define module dfmc-runtime-execution
-  use functional-dylan;
+  use dylan;
+  use common-dylan;
   use dylan-internal;
   use dylan-extensions,
     exclude: { <ordered-object-set>, <ordered-object-table>, home-library },
