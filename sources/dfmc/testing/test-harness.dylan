@@ -155,14 +155,6 @@ define macro compiler-test-definer
                (?#"test-name", method () ?template end) end }
 end;
 
-define macro manual-compiler-test-definer
-  // A pure code test: run something, get a boolean back.
-  { define manual-compiler-test ?test-name:name = ?code:* }
-    => { *tests*[?#"test-name"] := method () ?code end }
-end;
-
-// *** Will also need a native-compiler-test-definer.
-
 define function run-test (name, #key safely?   = #t,
                                      progress? = *standard-output*)
  => (result)
