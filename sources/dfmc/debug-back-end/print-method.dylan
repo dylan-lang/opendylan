@@ -50,11 +50,11 @@ define method output-lambda-computations
 end method;
 
 define compiler-sideways method print-method
-    (stream :: <stream>, o :: <&lambda>, #key css)
+    (stream :: <stream>, o :: <&lambda>)
   output-lambda-computations(stream, 0, o);
 end method;
 
-define compiler-sideways method print-method-out (o :: <&lambda>, #key css)
+define compiler-sideways method print-method-out (o :: <&lambda>)
   print-method(*standard-output*, o)
 end method;
 

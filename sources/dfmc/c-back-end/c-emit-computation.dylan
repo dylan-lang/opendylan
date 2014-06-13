@@ -77,7 +77,7 @@ define method emit-local-tmp-definition
      tmp :: <temporary>, volatile? :: <boolean>) => ()
   format-emit*(back-end, stream, "\t");
   if (volatile?) format-emit*(back-end, stream, "volatile ") end;
-  let type = type-estimate(tmp); // lookup-type(tmp, current-css(), tmp.generator);
+  let type = type-estimate(tmp);
   // A bit nasty, but the right thing to do (see the emit-computation
   // on <make-cell>, <get-cell-value>, <set-cell-value>)
   if (tmp.cell?)
@@ -108,7 +108,6 @@ define method emit-local-tmp-definition
   // define a var for each required element of local mv-temp.
   // note that there is no need for a variable for the mv-temp
   // itself -- only for its elements.
-  // let type = lookup-type(tmp, current-css(), tmp.generator); // ***** WRONG?
   let type = type-estimate(tmp);
   for (i from 0 below required-values(tmp))
     format-emit*(back-end, stream, "\t");
@@ -1016,7 +1015,6 @@ define method emit-reference
 //    format-out("XXXXX uh oh, being asked for index %d of temp %=!\n",
 //               o.ref-index, o.ref-temp);
     if (o.ref-index > 0)
-      // let type = lookup-type(o.ref-temp, current-css(), o.ref-temp.generator);
       let type = type-estimate(o.ref-temp);
       if (instance?(type, <type-estimate-raw>))
         write-element(s, '(');

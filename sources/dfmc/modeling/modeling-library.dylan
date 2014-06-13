@@ -807,11 +807,4 @@ define module-with-models dfmc-modeling
     model-class-definer,
     compiler-class-accessors-definer;
 
-  export
-    current-css,
-    *current-css*,
-    with-current-css,
-    get-default-call-site-summary,
-    <call-site-summary>;
-
 end module-with-models dfmc-modeling;

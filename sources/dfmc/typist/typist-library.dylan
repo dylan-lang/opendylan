@@ -73,8 +73,6 @@ define module dfmc-typist
 
    // Main GF's for calling the type inferencer
    type-estimate, // remove this at some point!!!
-   lookup-type,     // new typist api, gts
-   type-initializer-method, // new typist api, gts
    type-estimate-explain, type-estimate-retract,
    type-estimate-in-cache, // for typist inference tests only
    type-estimate-top-level-form, // Interface to rest of compiler
