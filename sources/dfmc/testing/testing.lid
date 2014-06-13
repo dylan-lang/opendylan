@@ -1,7 +1,7 @@
 library: dfmc-testing
 files:   testing-library
-	 test-harness
-	 tests
+         test-harness
+         tests
          typist-algebra-tests
          typist-inference-tests
          tests-main

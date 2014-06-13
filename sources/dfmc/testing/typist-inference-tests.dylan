@@ -7,27 +7,27 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 ///
-/// Test substrate for the static type inferencer.  
+/// Test substrate for the static type inferencer.
 ///
-/// The entry points are run-typist-tests, run-typist-test, and 
+/// The entry points are run-typist-tests, run-typist-test, and
 /// show-lambda-type-estimates.
 ///
 /// This duplicates some of the general test substrate, since the typist has
-/// its own testing needs.  However, each typist test gets put in the general 
+/// its own testing needs.  However, each typist test gets put in the general
 /// test suite as well, so running all the tests will get these, too.
 ///
 
-// *** Consider putting daemons on print() methods, so the printing of 
+// *** Consider putting daemons on print() methods, so the printing of
 //     DFM code comes annotated, computation-by-computation, with types.
 define function show-lambda-type-estimates
   (lambda :: <&method>,
   #key stream                :: <stream>     = *standard-output*,
        lib                   :: false-or(<library-description>),
        cache                 :: <type-cache> = if (lib)
-						 library-type-cache(lib)
-					       else
-						 make(<type-cache>)
-					       end,
+                                                 library-type-cache(lib)
+                                               else
+                                                 make(<type-cache>)
+                                               end,
        show-code?            :: <boolean>    = #t,
        show-temps?           :: <boolean>    = #t,
        show-targets?         :: <boolean>    = #t,
@@ -40,7 +40,7 @@ define function show-lambda-type-estimates
   with-testing-context (lib)
     when (show-code?)
       dynamic-bind (*print-method-bodies?* = #t)
-	format(stream, "\nThe code is:\n%=", lambda)
+        format(stream, "\nThe code is:\n%=", lambda)
       end
     end;
     type-estimate-in-cache(lambda, cache);       // Fill the cache
@@ -48,9 +48,9 @@ define function show-lambda-type-estimates
     for-computations (comp in lambda)
       format(stream, "\n***%= %= :: %=",
              object-class(comp), comp, type-estimate-in-cache(comp, cache));
-      when (show-comp-reasons?) 
-        type-estimate-explain(comp, cache, 
-                              stream: stream, recurse?: show-reasons-recurse?, 
+      when (show-comp-reasons?)
+        type-estimate-explain(comp, cache,
+                              stream: stream, recurse?: show-reasons-recurse?,
                               indent: 1)
       end;
       when (show-temps? & ~instance?(comp, <bind>))
@@ -58,10 +58,10 @@ define function show-lambda-type-estimates
         //     See the graph-class-definer macro in flow-graph.
         let temp = temporary(comp);
         when (temp)
-          format(stream, "\n  %= %= :: %=", 
+          format(stream, "\n  %= %= :: %=",
                  object-class(temp), temp, type-estimate-in-cache(temp, cache));
           when (show-temp-reasons?)
-            type-estimate-explain(temp, cache, 
+            type-estimate-explain(temp, cache,
                                   stream: stream, recurse?: show-reasons-recurse?,
                                   indent: 1)
           end
@@ -69,7 +69,7 @@ define function show-lambda-type-estimates
       end;
       when (show-targets?)
         select (comp by instance?)      // Look at targets of assignments.
-          <assignment> => format(stream, "\n   Assignment target: %= %= :: %=", 
+          <assignment> => format(stream, "\n   Assignment target: %= %= :: %=",
                                  object-class(assigned-binding(comp)), assigned-binding(comp),
                                  type-estimate-in-cache(assigned-binding(comp), cache));
           otherwise    => ;
@@ -96,13 +96,13 @@ define function run-typist-inference-tests
         report?   = *standard-output*) => ()
   // Run just the typist inferenece tests and print a short report.
   dynamic-bind (*static-type-check?-verbose?* = verbose?)
-    run-tests(tests: tests, safely?: safely?, progress?: progress?, 
+    run-tests(tests: tests, safely?: safely?, progress?: progress?,
               report?: report?)
   end
 end;
 
 // *** Well, really you should be inspecting the <table>.
-define function static-type-check?(lambda        :: <&method>, 
+define function static-type-check?(lambda        :: <&method>,
                                    expected-type :: <type-estimate-values>)
   => (stc :: <boolean>)
   // Useful thing to put in the body of a test: infer the return values
@@ -120,7 +120,7 @@ define function static-type-check?(lambda        :: <&method>,
     when (*static-type-check?-verbose?*)
       // Sometimes you want a diagnostic for the failure cases.
       dynamic-bind (*print-method-bodies?* = #t)
-        format-out("\nFor %=:\nExpected type: %=\n  Inferred type: %=", 
+        format-out("\nFor %=:\nExpected type: %=\n  Inferred type: %=",
                    lambda, expected-type, found-type)
       end
     end;
@@ -140,7 +140,7 @@ define function try-top-level-init-form (string :: <string>)
     debug-assert(size(cr*) == 2, "Expected exactly 2 <compilation-record>s: %=", cr*);
     let tlif = last(compilation-record-top-level-forms(cr*[1]));
     debug-assert(instance?(tlif, <top-level-init-form>),
-		 "Expected %= to be a <top-level-init-form>", tlif);
+                 "Expected %= to be a <top-level-init-form>", tlif);
     form-init-method(tlif)
   end
 end;
@@ -150,7 +150,7 @@ define macro typist-inference-test-definer
   { define typist-inference-test ?test-name:name
       ?subtests
     end }
-  => { *typist-inference-tests* := add-new!(*typist-inference-tests*, 
+  => { *typist-inference-tests* := add-new!(*typist-inference-tests*,
                                             ?#"test-name");
        *tests*[?#"test-name"] :=
           method ()
@@ -168,7 +168,7 @@ subtest:
   { } => { }
   { ?:expression TYPE: ?val:* }
     => { static-type-check?(try-top-level-init-form(?expression),
-			    make(<type-estimate-values>, ?val)) }
+                            make(<type-estimate-values>, ?val)) }
 end;
 
 define function class-te(cl :: <symbol>) => (cte :: <type-estimate-class>)
@@ -185,7 +185,7 @@ define function raw-te(rt :: <symbol>) => (rte :: <type-estimate-raw>)
 end;
 
 ///
-/// Here follow the actual tests 
+/// Here follow the actual tests
 ///
 
 define typist-inference-test typist-constants
@@ -209,10 +209,10 @@ define typist-inference-test typist-values
                                      rest: #f;
   " values(1); "               TYPE: fixed: vector(class-te(#"<integer>")),
                                      rest: #f;
-  " values(1, 'c'); "          TYPE: fixed: vector(class-te(#"<integer>"), 
-                                                   class-te(#"<character>")), 
+  " values(1, 'c'); "          TYPE: fixed: vector(class-te(#"<integer>"),
+                                                   class-te(#"<character>")),
                                      rest: #f;
-  " values(1, 'c', \"foo\"); " TYPE: fixed: vector(class-te(#"<integer>"), 
+  " values(1, 'c', \"foo\"); " TYPE: fixed: vector(class-te(#"<integer>"),
                                                    class-te(#"<character>"),
                                                    class-te(#"<byte-string>")),
                                      rest: #f
@@ -222,16 +222,16 @@ end;
 define typist-inference-test typist-merge
   // Is the merge node the union of its sources?
   " define variable x = 1; if (x) 1 else 2     end; "
-    TYPE: fixed: vector(class-te(#"<integer>")), 
+    TYPE: fixed: vector(class-te(#"<integer>")),
           rest: #f;
   " define variable x = 1; if (x) 1 else \"foo\" end; "
-    TYPE: fixed: vector(make(<type-estimate-union>, 
-                             unionees: list(class-te(#"<integer>"), 
+    TYPE: fixed: vector(make(<type-estimate-union>,
+                             unionees: list(class-te(#"<integer>"),
                                             class-te(#"<byte-string>")))),
           rest: #f;
   " define variable x = 1; if (x) 1 else \"foo\" end; "
-    TYPE: fixed: vector(make(<type-estimate-union>, 
-                             unionees: list(class-te(#"<byte-string>"), 
+    TYPE: fixed: vector(make(<type-estimate-union>,
+                             unionees: list(class-te(#"<byte-string>"),
                                             class-te(#"<integer>")))),
           rest: #f
 end;
@@ -245,13 +245,13 @@ end;
 define typist-inference-test typist-assign
   // Does the target of an assignment get a type?
   "define variable global1 = #f; global1 := 0; global1;"
-    // *** Should pick up #f initial value, too? 
-    TYPE: fixed: vector(class-te(#"<integer>")), 
+    // *** Should pick up #f initial value, too?
+    TYPE: fixed: vector(class-te(#"<integer>")),
           rest: #f;
   " define variable global2 = #f; global2 := 0; global2 := \"foo\"; global2; "
-    // *** Should pick up #f initial value, too? 
-    TYPE: fixed: vector(make(<type-estimate-union>, 
-                             unionees: list(class-te(#"<byte-string>"), 
+    // *** Should pick up #f initial value, too?
+    TYPE: fixed: vector(make(<type-estimate-union>,
+                             unionees: list(class-te(#"<byte-string>"),
                                             class-te(#"<integer>")))),
           rest: #f
   // *** More assignments to lexicals and so on.
@@ -260,12 +260,12 @@ end;
 define typist-inference-test typist-lambda
   // Do you know a function when you see one?  What can you know about it?
   " method (x :: <integer>) x end; "
-    TYPE: fixed: vector(make(<type-estimate-limited-function>, 
+    TYPE: fixed: vector(make(<type-estimate-limited-function>,
                              class:     dylan-value(#"<method>"),
                              requireds: vector(class-te(#"<integer>")),
-                             rest?:     #f, 
+                             rest?:     #f,
                              vals:      make(<type-variable>,
-                                             contents: make(<type-estimate-values>, 
+                                             contents: make(<type-estimate-values>,
                                                             fixed: vector(class-te(#"<integer>")),
                                                             rest:  #f)))),
           rest:  #f
@@ -285,13 +285,13 @@ define typist-inference-test typist-bind-exit
   // Can you figure out bind-exit?  Easy case is where exit is used only locally.
   // Non-local case is, well, non-local.
   " block (xit) xit(2); 'c' end; "
-     TYPE: fixed: vector(make(<type-estimate-union>, 
-                              unionees: list(class-te(#"<integer>"), 
+     TYPE: fixed: vector(make(<type-estimate-union>,
+                              unionees: list(class-te(#"<integer>"),
                                              class-te(#"<character>")))),
            rest: #f;
   " block (xit) xit(1); xit('c'); \"foo\" end; "
-     TYPE: fixed: vector(make(<type-estimate-union>, 
-                              unionees: list(class-te(#"<integer>"), 
+     TYPE: fixed: vector(make(<type-estimate-union>,
+                              unionees: list(class-te(#"<integer>"),
                                              class-te(#"<character>"),
                                              class-te(#"<byte-string>")))),
            rest:  #f

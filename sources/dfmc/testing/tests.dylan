@@ -33,11 +33,11 @@ define compiler-test primitive
        i<(1, 2)
        /* &
           %true?(primitive-machine-word-equals?(
-                   primitive-machine-word-add(integer-as-raw(1), integer-as-raw(2)), 
+                   primitive-machine-word-add(integer-as-raw(1), integer-as-raw(2)),
                    integer-as-raw(3))) &
-	  %false?(%raw-machine-word-greater-than?(integer-as-raw(1), integer-as-raw(2))) &
- 	  %true?(%raw-machine-word-less-than?(integer-as-raw(1), integer-as-raw(2))) &
- 	  i=(primitive-vector-element(#[1], integer-as-raw(0)), 1) */
+          %false?(%raw-machine-word-greater-than?(integer-as-raw(1), integer-as-raw(2))) &
+           %true?(%raw-machine-word-less-than?(integer-as-raw(1), integer-as-raw(2))) &
+           i=(primitive-vector-element(#[1], integer-as-raw(0)), 1) */
        };
 
 define compiler-test \if
@@ -89,18 +89,18 @@ define compiler-test apply
        i=(apply(method (x, y) x end, #[1, 2]), 1) &
        i=(apply(method (x, y) y end, #[1, 2]), 2) &
        begin
-	 i=(primitive-vector-element(apply(method (#rest x) x end, #[1]), 0), 1) &
-	 i=(primitive-vector-element(apply(method (#rest x) x end, 1, #[2]), 0), 1) &
-	 i=(primitive-vector-element(apply(method (#rest x) x end, 1, #[2]), 1), 2) &
-	 i=(primitive-vector-size(apply(method (#rest x) x end, 1, #[2])), 2) &
-	 i=(apply(method (x, #rest y) x end, #[1]), 1) &
-	 i=(primitive-vector-element(apply(method (x, #rest y) y end, 1, #[2]), 0), 2) &
-	 i=(apply(method (x, #rest y) x end, #[1, 2]), 1) &
-	 i=(primitive-vector-element(apply(method (x, #rest y) y end, #[1, 2]), 0), 2)
+         i=(primitive-vector-element(apply(method (#rest x) x end, #[1]), 0), 1) &
+         i=(primitive-vector-element(apply(method (#rest x) x end, 1, #[2]), 0), 1) &
+         i=(primitive-vector-element(apply(method (#rest x) x end, 1, #[2]), 1), 2) &
+         i=(primitive-vector-size(apply(method (#rest x) x end, 1, #[2])), 2) &
+         i=(apply(method (x, #rest y) x end, #[1]), 1) &
+         i=(primitive-vector-element(apply(method (x, #rest y) y end, 1, #[2]), 0), 2) &
+         i=(apply(method (x, #rest y) x end, #[1, 2]), 1) &
+         i=(primitive-vector-element(apply(method (x, #rest y) y end, #[1, 2]), 0), 2)
        end };
 
 define compiler-test recursion
-  = #{ define constant f = 
+  = #{ define constant f =
          method (n) if (i<(n, 1)) 1 else i*(n, f(i-(n, 1))) end end;
        i=(f(1), 1) &
        i=(f(2), 2) &
@@ -114,55 +114,55 @@ define compiler-test closure
        i=(((method (x) (method () x := i+(x, 1) end) end)(0))(), 1) };
 
 define compiler-test labels
-  = #{ i=(begin 
-            local 
-              method f () g() end method, 
-              method g () 1 end method; 
-            f() 
+  = #{ i=(begin
+            local
+              method f () g() end method,
+              method g () 1 end method;
+            f()
           end, 1) &
-       i=(begin 
-            local 
-              method f (x) g(x) end method, 
-              method g (y) y end method; 
+       i=(begin
+            local
+              method f (x) g(x) end method,
+              method g (y) y end method;
             f(1)
           end, 1) &
        i=(begin
-            local 
-              method f (n) if (i<(n, 1)) 1 else i*(n, f(i-(n, 1))) end end; 
-            f(4) 
-          end, 
-	  24) &
-       i=(begin 
+            local
+              method f (n) if (i<(n, 1)) 1 else i*(n, f(i-(n, 1))) end end;
+            f(4)
+          end,
+          24) &
+       i=(begin
             local method f (n, r)
               if (i<(n, 1)) r else f(i-(n, 1), i*(n, r)) end
             end method;
             f(4, 1)
-	  end, 
+          end,
           24) &
-       i=(begin 
-            local 
+       i=(begin
+            local
               method f (x) if (i<(x, 10)) g(i+(x, 2)) else x end end method,
               method g (y) f(i-(y, 1)) end method;
-	    f(1)
-	  end,
-	  10) &
-       begin 
+            f(1)
+          end,
+          10) &
+       begin
          local method f (n, x, y)
-           if (i>(n, 0)) f(i-(n, 1), y, x) else x end 
+           if (i>(n, 0)) f(i-(n, 1), y, x) else x end
          end method;
-	 i=(f(0, 1, 2), 1) & i=(f(1, 1, 2), 2) & i=(f(2, 1, 2), 1)
+         i=(f(0, 1, 2), 1) & i=(f(1, 1, 2), 2) & i=(f(2, 1, 2), 1)
        end &
        i=(begin
-	    let f = method (self, x, y)
-		      if (i=(x, 0))
-			y
-		      else
-			self(self, i-(x, 1), i+(y, 1))
-		      end if
-		    end method;
-	    f(f, 4, 0)
-	  end,
-	  4) };
+            let f = method (self, x, y)
+                      if (i=(x, 0))
+                        y
+                      else
+                        self(self, i-(x, 1), i+(y, 1))
+                      end if
+                    end method;
+            f(f, 4, 0)
+          end,
+          4) };
 
 define compiler-test bind-exit
   = #{ i=(block (return) return(1) end, 1) &
@@ -173,60 +173,60 @@ define compiler-test bind-exit
 define compiler-test unwind-protect
   = #{ i=(block () 1 cleanup 2 end, 1) &
        i=(block (return) return(1) cleanup 2 end, 1) &
-       i=(block (return) 
-	    return(1) 
-	  cleanup
-	    block ()
-	      return(1)
-	    cleanup
-	      return(3)
-	    end
-	  end,
-	  3) &
+       i=(block (return)
+            return(1)
+          cleanup
+            block ()
+              return(1)
+            cleanup
+              return(3)
+            end
+          end,
+          3) &
        i=(begin
-	    let a = 1;
-	    block (return)
-	      return(1)
-	    cleanup
-	      a := 2
-	    end;
-	    a
-	  end,
-	  2) &
+            let a = 1;
+            block (return)
+              return(1)
+            cleanup
+              a := 2
+            end;
+            a
+          end,
+          2) &
        i=(block (a)
-	    block (b)
-	      block (c)
-		c(0)
-	      cleanup
-		a(13)
-	      end
-	    cleanup
-	      b(42)
-	    end
-	  end, 
-	  42) };
+            block (b)
+              block (c)
+                c(0)
+              cleanup
+                a(13)
+              end
+            cleanup
+              b(42)
+            end
+          end,
+          42) };
 
 define compiler-test multiple-values
   = #{ p=(values(), #f) &
        i=(values(1), 1) &
        begin let (x, y) = values(3, 2); i=(x, 3) & i=(y, 2) end &
        begin
-	 let (x, y, z, none) = values(1, 2, 3);
-	 i=(x, 1) & i=(y, 2) & i=(z, 3) & p=(none, #f)
+         let (x, y, z, none) = values(1, 2, 3);
+         i=(x, 1) & i=(y, 2) & i=(z, 3) & p=(none, #f)
        end &
        begin let (x, y, z, none)
-	       = block () values(1, 2, 3) cleanup values(4, 5) end;
-	     i=(x, 1) & i=(y, 2) & i=(z, 3) & p=(none, #f)
+               = block () values(1, 2, 3) cleanup values(4, 5) end;
+             i=(x, 1) & i=(y, 2) & i=(z, 3) & p=(none, #f)
        end &
        begin let (x, y, z, none)
-	       = block () values(1, 2, 3) afterwards values(4, 5) end;
-	     i=(x, 1) & i=(y, 2) & i=(z, 3) & p=(none, #f)
+               = block () values(1, 2, 3) afterwards values(4, 5) end;
+             i=(x, 1) & i=(y, 2) & i=(z, 3) & p=(none, #f)
        end };
 
 define compiler-test slot-init-expression
  = #{ define variable s-i-e-v = 0;
       define class <s-i-e-c> (<object>)
-	slot s-i-e-s-1 = (s-i-e-v := s-i-e-v + 1);
+        slot s-i-e-s-1 = (s-i-e-v := s-i-e-v + 1);
       end;
       i=(s-i-e-s-1(make(<s-i-e-c>)), 1) &
       i=(s-i-e-s-1(make(<s-i-e-c>)), 2) &

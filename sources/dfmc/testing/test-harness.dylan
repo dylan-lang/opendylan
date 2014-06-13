@@ -26,14 +26,14 @@ define function compile-library-until-optimized (lib)
   end
 end function;
 
-define function print-test-report 
-       (#key stream         = *standard-output*, 
+define function print-test-report
+       (#key stream         = *standard-output*,
              title          = "DFMC Test Suite Report:",
-             test-successes = *test-successes*, 
+             test-successes = *test-successes*,
              test-failures  = *test-failures*,
              test-flamers   = *test-flamers*,
              lift-rocks?    = #f,
-             cursor-x-max   = 80, 
+             cursor-x-max   = 80,
              cursor-x-min   = size("SUCCEEDING: ")) => ()
   // Print test report in reasonably readable format.
   let cursor-x      = 0;
@@ -87,7 +87,7 @@ define function print-test-report
   // Title & summary
   print-callout(stream, title);
   format(stream, "\n%s %d successes + %d failures + %d flames = %d total.",
-         title, n-successes, n-failures, n-flames, 
+         title, n-successes, n-failures, n-flames,
          n-successes + n-failures + n-flames);
   print-callout(stream, title);
   // Details
@@ -126,7 +126,7 @@ end macro;
 
 define function compiler-test-internal (name, test) => (result :: <boolean>)
   // Compile the template
-  let lib-desc = 
+  let lib-desc =
     dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
                   *demand-load-library-only?* = #f)
       compile-template(test, compiler: compile-library-until-optimized)
@@ -136,10 +136,10 @@ define function compiler-test-internal (name, test) => (result :: <boolean>)
   with-testing-context (lib-desc)
     for (cr in library-description-compilation-records(lib-desc))
       for (form in compilation-record-top-level-forms(cr))
-	let init-method = form-init-method(form);
-	when (init-method) 
-	  init-method-value := eval(init-method);
-	end
+        let init-method = form-init-method(form);
+        when (init-method)
+          init-method-value := eval(init-method);
+        end
       end
     end
   end;
@@ -149,8 +149,8 @@ end;
 define macro compiler-test-definer
   // Compile forms, run initializations, last init method must return #t.
   { define compiler-test ?test-name:name = ?template:* }
-    => { *tests*[?#"test-name"] := 
-           method () 
+    => { *tests*[?#"test-name"] :=
+           method ()
              compiler-test-internal
                (?#"test-name", method () ?template end) end }
 end;
@@ -163,7 +163,7 @@ end;
 
 // *** Will also need a native-compiler-test-definer.
 
-define function run-test (name, #key safely?   = #t, 
+define function run-test (name, #key safely?   = #t,
                                      progress? = *standard-output*)
  => (result)
   // If safely?: is given, then catch all errors & mark that test as a flamer.
@@ -175,13 +175,13 @@ define function run-test (name, #key safely?   = #t,
   let result =
     if (~instance?(test, <function>))  // No such test, warn if permitted to talk.
       when (progress?)
-	format(progress?, "Ignoring test %= = %=, because it's not a <function>.",
-	       name, test)
+        format(progress?, "Ignoring test %= = %=, because it's not a <function>.",
+               name, test)
       end;
       #"ignored test"
     elseif (safely?)                   // Don kludge-proof goggles & rubber gloves
       block ()
-	test() ~== #f
+        test() ~== #f
       exception (e :: <error>)
         e
       end
@@ -206,7 +206,7 @@ end;
 define function run-tests (#key tests       = key-sequence(*tests*),
                                 safely?     = #t,
                                 progress?   = *standard-output*,
-                                report?     = *standard-output*, 
+                                report?     = *standard-output*,
                                 lift-rocks? = #f)
     => ()
   // Run some tests, maybe printing a report.

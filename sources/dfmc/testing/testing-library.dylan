@@ -39,7 +39,7 @@ define module dfmc-testing
     import: { find-project, open-project-compiler-database };
   use dfmc-environment-projects;
 
-  export 
+  export
     clear-tests, print-test-report, run-tests,
     show-lambda-type-estimates;
 end module;

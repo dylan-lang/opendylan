@@ -15,10 +15,10 @@ define variable *typist-algebra-tests* = #();
 define function run-typist-algebra-tests(#key tests     = *typist-algebra-tests*,
                                               safely?   = #t,
                                               progress? = *standard-output*,
-                                              report?   = *standard-output*) 
+                                              report?   = *standard-output*)
   => ()
   // Run just the typist algebra tests and print a short report.
-  run-tests(tests: tests, safely?: safely?, progress?: progress?, 
+  run-tests(tests: tests, safely?: safely?, progress?: progress?,
             report?: report?)
 end;
 
@@ -28,11 +28,11 @@ define macro typist-algebra-test-definer
       ?test-body:body
     end }
   => { *typist-algebra-tests* := add-new!(*typist-algebra-tests*, ?#"testname");
-       *tests*[?#"testname"] := 
+       *tests*[?#"testname"] :=
           method ()
             // Some things want to pretend a compilation is in progress.
             with-testing-context (#f)
-	      ?test-body
+              ?test-body
             end
           end }
 end;
@@ -55,74 +55,74 @@ define typist-algebra-test typist-normalization
   let a-lim-int-3 = make(<type-estimate-limited-integer>, min: 0, max: 2);
   let a-lim-int-4 = make(<type-estimate-limited-integer>, min: 1, max: 1);
 
-  let a-lim-class = make(<type-estimate-limited-class>, 
+  let a-lim-class = make(<type-estimate-limited-class>,
                          subclass: dylan-value(#"<integer>"));
 
-  let a-lim-inst  = make(<type-estimate-limited-instance>, 
+  let a-lim-inst  = make(<type-estimate-limited-instance>,
                          singleton: 1, class: dylan-value(#"<integer>"));
-  let a-lim-inst-2 = make(<type-estimate-limited-instance>, 
+  let a-lim-inst-2 = make(<type-estimate-limited-instance>,
                           singleton: #(), class: dylan-value(#"<list>"));
 
-  let a-lim-coll  = make(<type-estimate-limited-collection>, 
+  let a-lim-coll  = make(<type-estimate-limited-collection>,
                          class: dylan-value(#"<list>"),
                          concrete-class: dylan-value(#"<list>"),
                          size: 0);
 
-  let a-class     = make(<type-estimate-class>, 
+  let a-class     = make(<type-estimate-class>,
                          class: dylan-value(#"<integer>"));
-  let a-class-2   = make(<type-estimate-class>, 
+  let a-class-2   = make(<type-estimate-class>,
                          class: dylan-value(#"<string>"));
-  let a-class-3   = make(<type-estimate-class>, 
+  let a-class-3   = make(<type-estimate-class>,
                          class: dylan-value(#"<pair>"));
-  let a-class-4   = make(<type-estimate-class>, 
+  let a-class-4   = make(<type-estimate-class>,
                          class: dylan-value(#"<list>"));
-  let a-class-5   = make(<type-estimate-class>, 
+  let a-class-5   = make(<type-estimate-class>,
                          class: dylan-value(#"<character>"));
-  let a-class-6   = make(<type-estimate-class>, 
+  let a-class-6   = make(<type-estimate-class>,
                          class: dylan-value(#"<symbol>"));
-  let a-class-7   = make(<type-estimate-class>, 
+  let a-class-7   = make(<type-estimate-class>,
                          class: dylan-value(#"<empty-list>"));
-  let a-class-8   = make(<type-estimate-class>, 
+  let a-class-8   = make(<type-estimate-class>,
                          class: dylan-value(#"<vector>"));
 
   let a-union   = make(<type-estimate-union>, unionees: #());
   let a-union-2 = make(<type-estimate-union>, unionees: list(a-class));
-  let a-union-3 = make(<type-estimate-union>, unionees: list(a-class, 
+  let a-union-3 = make(<type-estimate-union>, unionees: list(a-class,
                                                              a-class-2));
-  let a-union-4 = make(<type-estimate-union>, 
+  let a-union-4 = make(<type-estimate-union>,
                        unionees: list(a-class-3, a-class-4, a-class-2));
-  let a-union-5 = make(<type-estimate-union>, 
+  let a-union-5 = make(<type-estimate-union>,
                        unionees: list(a-class-4, a-class-3, a-class-2));
   let a-union-6 = make(<type-estimate-union>,
                        unionees: list(a-class-4, a-class-2, a-class-3));
   let a-union-7 = make(<type-estimate-union>,
                        unionees: list(a-class-4, a-class-2));
 
-  let a-values = make(<type-estimate-values>, 
-                      fixed: vector(a-class, a-class-2), 
+  let a-values = make(<type-estimate-values>,
+                      fixed: vector(a-class, a-class-2),
                       rest: make(<type-variable>, contents: a-class-5));
   let a-values-2 = make(<type-estimate-values>, fixed: vector(a-union-2));
-  let a-values-3 = make(<type-estimate-values>, 
+  let a-values-3 = make(<type-estimate-values>,
                         fixed: vector(make(<type-estimate-union>,
                                            unionees: list(a-class, a-class-5)),
                                       make(<type-estimate-union>,
                                            unionees: list(a-class-2, a-class-6))),
                         rest: make(<type-variable>,
-                                   contents: make(<type-estimate-union>, 
+                                   contents: make(<type-estimate-union>,
                                                   unionees: list(a-class-7, a-class-3))));
   let a-values-4 = make(<type-estimate-values>);
 
-  let a-function = make(<type-estimate-limited-function>, 
+  let a-function = make(<type-estimate-limited-function>,
                         class:     dylan-value(#"<function>"),
                         requireds: vector(a-class, a-class-5));
-  let a-function-2 = make(<type-estimate-limited-function>, 
-                          class: dylan-value(#"<function>"),
-                          requireds: vector(make(<type-estimate-union>, 
-                                                 unionees: list(a-class))));
-  let a-function-3 = make(<type-estimate-limited-function>, 
+  let a-function-2 = make(<type-estimate-limited-function>,
                           class: dylan-value(#"<function>"),
                           requireds: vector(make(<type-estimate-union>,
-                                                 unionees: list(a-class, 
+                                                 unionees: list(a-class))));
+  let a-function-3 = make(<type-estimate-limited-function>,
+                          class: dylan-value(#"<function>"),
+                          requireds: vector(make(<type-estimate-union>,
+                                                 unionees: list(a-class,
                                                                 a-class-5)),
                                             make(<type-estimate-union>,
                                                  unionees:
@@ -174,34 +174,34 @@ define typist-algebra-test typist-normalization
   //        [3] CP expansion in the presence of unions.
   //        [4] values(), just because I'm suspicious.
   & (type-estimate-normalize(a-values) == a-values
-   & type-estimate-match?(type-estimate-normalize(a-values-2), 
+   & type-estimate-match?(type-estimate-normalize(a-values-2),
                           make(<type-estimate-values>, fixed: list(a-class)))
    & type-estimate-match?(type-estimate-normalize(a-values-3),
                           make(<type-estimate-union>,
                                // Glaah.  Order of answers hard to intuit here.
-                               unionees: list(make(<type-estimate-values>, 
-                                                   fixed: list(a-class, a-class-2), 
+                               unionees: list(make(<type-estimate-values>,
+                                                   fixed: list(a-class, a-class-2),
                                                    rest:  a-class-7),
-                                              make(<type-estimate-values>, 
-                                                   fixed: list(a-class, a-class-6), 
+                                              make(<type-estimate-values>,
+                                                   fixed: list(a-class, a-class-6),
                                                    rest:  a-class-7),
-                                              make(<type-estimate-values>, 
-                                                   fixed: list(a-class-5, a-class-2), 
+                                              make(<type-estimate-values>,
+                                                   fixed: list(a-class-5, a-class-2),
                                                    rest:  a-class-7),
-                                              make(<type-estimate-values>, 
-                                                   fixed: list(a-class-5, a-class-6), 
+                                              make(<type-estimate-values>,
+                                                   fixed: list(a-class-5, a-class-6),
                                                    rest:  a-class-7),
-                                              make(<type-estimate-values>, 
-                                                   fixed: list(a-class, a-class-2), 
+                                              make(<type-estimate-values>,
+                                                   fixed: list(a-class, a-class-2),
                                                    rest:  a-class-3),
-                                              make(<type-estimate-values>, 
-                                                   fixed: list(a-class, a-class-6), 
+                                              make(<type-estimate-values>,
+                                                   fixed: list(a-class, a-class-6),
                                                    rest:  a-class-3),
-                                              make(<type-estimate-values>, 
-                                                   fixed: list(a-class-5, a-class-2), 
+                                              make(<type-estimate-values>,
+                                                   fixed: list(a-class-5, a-class-2),
                                                    rest:  a-class-3),
-                                              make(<type-estimate-values>, 
-                                                   fixed: list(a-class-5, a-class-6), 
+                                              make(<type-estimate-values>,
+                                                   fixed: list(a-class-5, a-class-6),
                                                    rest:  a-class-3))))
    & type-estimate-normalize(a-values-4) == a-values-4)
 
@@ -212,46 +212,46 @@ define typist-algebra-test typist-normalization
   //        [4] Trivial functions become class types.
   & (type-estimate-normalize(a-function) == a-function
    & type-estimate-match?(type-estimate-normalize(a-function-2),
-                          make(<type-estimate-limited-function>, 
+                          make(<type-estimate-limited-function>,
                                class: dylan-value(#"<function>"),
                                requireds: list(a-class)))
    & type-estimate-match?(
-       type-estimate-normalize(a-function-3), 
+       type-estimate-normalize(a-function-3),
        // Glaah.
-       make(<type-estimate-union>, 
-            unionees: list(make(<type-estimate-limited-function>, 
+       make(<type-estimate-union>,
+            unionees: list(make(<type-estimate-limited-function>,
                                 class: dylan-value(#"<function>"),
                                 requireds: list(a-class, a-class-8)),
-                           make(<type-estimate-limited-function>, 
+                           make(<type-estimate-limited-function>,
                                 class: dylan-value(#"<function>"),
                                 requireds: list(a-class, a-class-2)),
-                           make(<type-estimate-limited-function>, 
+                           make(<type-estimate-limited-function>,
                                 class: dylan-value(#"<function>"),
                                 requireds: list(a-class-5, a-class-8)),
-                           make(<type-estimate-limited-function>, 
+                           make(<type-estimate-limited-function>,
                                 class: dylan-value(#"<function>"),
                                 requireds: list(a-class-5, a-class-2)))))
-   & type-estimate-match?(make(<type-estimate-limited-function>), 
+   & type-estimate-match?(make(<type-estimate-limited-function>),
                           make(<type-estimate-class>, class: dylan-value(#"<function>"))))
 end;
 
 define typist-algebra-test typist-base
   // Test typist-base-type on the various types.
-  let a-class    = make(<type-estimate-class>, 
+  let a-class    = make(<type-estimate-class>,
                         class: dylan-value(#"<integer>"));
   let a-class-2  = make(<type-estimate-class>,
                         class: dylan-value(#"<class>"));
   let a-class-3  = make(<type-estimate-class>,
                         class: dylan-value(#"<function>"));
   let a-lim-int  = make(<type-estimate-limited-integer>, min: 0);
-  let a-lim-inst = make(<type-estimate-limited-instance>, 
+  let a-lim-inst = make(<type-estimate-limited-instance>,
                          singleton: 1, class: dylan-value(#"<integer>"));
-  let a-lim-cl   = make(<type-estimate-limited-class>, 
+  let a-lim-cl   = make(<type-estimate-limited-class>,
                         subclass: dylan-value(#"<integer>"));
   let a-union    = make(<type-estimate-union>, unionees: #());
-  let a-union-2  = make(<type-estimate-union>, 
+  let a-union-2  = make(<type-estimate-union>,
                         unionees: list(a-class, a-lim-inst));
-  let a-union-3  = make(<type-estimate-union>, 
+  let a-union-3  = make(<type-estimate-union>,
                         unionees: list(a-lim-int, a-lim-cl));
   let a-values   = make(<type-estimate-values>);
   let a-values-2 = make(<type-estimate-values>, fixed: vector(a-class));
@@ -259,10 +259,10 @@ define typist-algebra-test typist-base
   let a-values-4 = make(<type-estimate-values>, rest: make(<type-variable>, contents: a-class));
   let a-values-5 = make(<type-estimate-values>, rest: make(<type-variable>, contents: a-lim-int));
 
-  let a-function   = make(<type-estimate-limited-function>, 
+  let a-function   = make(<type-estimate-limited-function>,
                           class:     dylan-value(#"<function>"),
                           requireds: vector(a-lim-int, a-lim-inst));
-  let a-function-2 = make(<type-estimate-limited-function>, 
+  let a-function-2 = make(<type-estimate-limited-function>,
                           class:     dylan-value(#"<function>"),
                           requireds: vector(a-class, a-lim-inst));
 
@@ -285,8 +285,8 @@ define typist-algebra-test typist-base
   // Base type of a union is the union of the base types of the unionees.
   & (instance?(type-estimate-base(a-union), <type-estimate-bottom>)
    & type-estimate-base(a-union-2) == a-union-2
-   & type-estimate-match?(type-estimate-base(a-union-3), 
-                          make(<type-estimate-union>, 
+   & type-estimate-match?(type-estimate-base(a-union-3),
+                          make(<type-estimate-union>,
                                unionees: list(a-class, a-class-2))))
 
   // Base type of values is values of base-types.
@@ -301,7 +301,7 @@ define typist-algebra-test typist-base
      & type-estimate-match?(type-estimate-base(a-function-2), a-class-3))
 
   // Base type of a bottom is itself.
-  & type-estimate-base(a-bottom) == a-bottom 
+  & type-estimate-base(a-bottom) == a-bottom
 
   // Base type of a raw is itself.
   & type-estimate-base(a-raw) == a-raw
@@ -313,24 +313,24 @@ define typist-algebra-test typist-subtype?
   let a-bottom    = make(<type-estimate-bottom>);
   let a-raw       = make(<type-estimate-raw>, raw: dylan-value(#"<raw-integer>"));
   let a-raw2      = make(<type-estimate-raw>, raw: dylan-value(#"<raw-pointer>"));
-  let a-class     = make(<type-estimate-class>, 
+  let a-class     = make(<type-estimate-class>,
                          class: dylan-value(#"<integer>"));
   let a-class-2   = make(<type-estimate-class>,
                          class: dylan-value(#"<string>"));
-  let a-class-3   = make(<type-estimate-class>, 
+  let a-class-3   = make(<type-estimate-class>,
                          class: dylan-value(#"<pair>"));
-  let a-class-4   = make(<type-estimate-class>, 
+  let a-class-4   = make(<type-estimate-class>,
                          class: dylan-value(#"<list>"));
-  let a-class-7   = make(<type-estimate-class>, 
+  let a-class-7   = make(<type-estimate-class>,
                          class: dylan-value(#"<empty-list>"));
-  let a-class-8   = make(<type-estimate-class>, 
+  let a-class-8   = make(<type-estimate-class>,
                          class: dylan-value(#"<byte-string>"));
 
-  let a-union     = make(<type-estimate-union>, 
+  let a-union     = make(<type-estimate-union>,
                          unionees: list(a-class-3, a-class-7)); // pair, empty
-  let a-union-2   = make(<type-estimate-union>, 
+  let a-union-2   = make(<type-estimate-union>,
                          unionees: list(a-class-4, a-class-2)); // list, string
-  let a-union-3   = make(<type-estimate-union>, 
+  let a-union-3   = make(<type-estimate-union>,
                          unionees: list(a-class-3, a-class-8)); // pair, byte-string
   let a-lim-int   = make(<type-estimate-limited-integer>, min: 0);
   let a-lim-int-2 = make(<type-estimate-limited-integer>, min: 2);
@@ -338,9 +338,9 @@ define typist-algebra-test typist-subtype?
   let a-lim-int-4 = make(<type-estimate-limited-integer>, max: 4);
   let a-lim-int-5 = make(<type-estimate-limited-integer>, min: 1, max: 2);
   let a-lim-int-6 = make(<type-estimate-limited-integer>, min: 0, max: 3);
-  let a-lim-int-7 = make(<type-estimate-limited-integer>, min: 1, max: 1, 
+  let a-lim-int-7 = make(<type-estimate-limited-integer>, min: 1, max: 1,
                          class: dylan-value(#"<integer>"));
-  let a-singleton = make(<type-estimate-limited-instance>, 
+  let a-singleton = make(<type-estimate-limited-instance>,
                          singleton: 1, class: dylan-value(#"<integer>"));
   let a-values    = make(<type-estimate-values>, rest: #f);
   let a-values-1  = make(<type-estimate-values>, fixed: vector(a-class-3), rest: #f);
@@ -350,19 +350,19 @@ define typist-algebra-test typist-subtype?
   let a-values-5  = make(<type-estimate-values>, fixed: vector(a-class-3), rest: make(<type-variable>, contents: a-class-3));
   let a-values-6  = make(<type-estimate-values>, fixed: vector(a-class-4), rest: make(<type-variable>, contents: a-class-4));
 
-  let a-fun-1     = make(<type-estimate-limited-function>, 
+  let a-fun-1     = make(<type-estimate-limited-function>,
                          // <string> -> <pair>
                          requireds: vector(a-class-2),
                          rest?:     #f,
-                         values:    make(<type-estimate-values>, 
+                         values:    make(<type-estimate-values>,
                                          fixed: vector(a-class-3),
                                          rest:  #f),
                          class:     dylan-value(#"<function>"));
-  let a-fun-2     = make(<type-estimate-limited-function>, 
+  let a-fun-2     = make(<type-estimate-limited-function>,
                          // <byte-string> -> <list>
                          requireds: vector(a-class-8),
                          rest?:     #f,
-                         values:    make(<type-estimate-values>, 
+                         values:    make(<type-estimate-values>,
                                          fixed: vector(a-class-4),
                                          rest:  #f),
                          class:     dylan-value(#"<function>"));
@@ -371,7 +371,7 @@ define typist-algebra-test typist-subtype?
   (type-estimate-subtype?(a-bottom, a-bottom)
    & type-estimate-subtype?(a-bottom, a-class)
    & ~type-estimate-subtype?(a-class, a-bottom))
-   
+
   // Raw types
   & (type-estimate-subtype?(a-raw, a-raw)
      & ~type-estimate-subtype?(a-raw, a-raw2)
@@ -440,7 +440,7 @@ define typist-algebra-test typist-instance?
   let sing1   = make(<type-estimate-limited-instance>, singleton: one, class: dylan-value(#"<integer>"));
   let singfoo = make(<type-estimate-limited-instance>, singleton: foo, class: dylan-value(#"<string>"));
   let singch  = make(<type-estimate-limited-instance>, singleton: a-char, class: dylan-value(#"<character>"));
-  let substr  = make(<type-estimate-limited-class>, 
+  let substr  = make(<type-estimate-limited-class>,
                      subclass: dylan-value(#"<string>"));
   let subnum  = make(<type-estimate-limited-class>,
                      subclass: dylan-value(#"<number>"));
@@ -487,18 +487,18 @@ define typist-algebra-test typist-disjoint?
     let lib
 
   = compile-template("define sealed abstract class <a> (<object>) end;\n"
-		      // Note <b> is trying hard to be uncooperative!
-		     "define open   concrete class <b> (<object>) end;\n"
-		     "define sealed concrete class <c> (<a>, <b>) end;\n",
-		     compiler: compile-library-until-optimized);
+                      // Note <b> is trying hard to be uncooperative!
+                     "define open   concrete class <b> (<object>) end;\n"
+                     "define sealed concrete class <c> (<a>, <b>) end;\n",
+                     compiler: compile-library-until-optimized);
     let mod = lookup-module-in(language-definition(lib), #"scratch-module");
     with-testing-context (lib)
       let a = make-variable-name-fragment-in-module(#"<a>", mod);
       let b = make-variable-name-fragment-in-module(#"<b>", mod);
       type-estimate-subtype?(as(<type-estimate>, lookup-value(a)),
-			     as(<type-estimate>, lookup-value(b)))
+                             as(<type-estimate>, lookup-value(b)))
     & ~type-estimate-disjoint?(as(<type-estimate>, lookup-value(a)),
-			       as(<type-estimate>, lookup-value(b)))
+                               as(<type-estimate>, lookup-value(b)))
     end
   end &
   begin
@@ -527,14 +527,14 @@ define typist-algebra-test typist-as-<type-estimate>
                          as(<type-estimate>, model-raw))
   & type-estimate-match?(make(<type-estimate-limited-integer>, min: 0, max: 63),
                          as(<type-estimate>, model-lim-int))
-  & type-estimate-match?(make(<type-estimate-limited-instance>, 
-                              singleton: a:, class: dylan-value(#"<symbol>")), 
+  & type-estimate-match?(make(<type-estimate-limited-instance>,
+                              singleton: a:, class: dylan-value(#"<symbol>")),
                          as(<type-estimate>, model-singleton))
-  & type-estimate-match?(make(<type-estimate-union>, 
-                              unionees: list(make(<type-estimate-class>, 
+  & type-estimate-match?(make(<type-estimate-union>,
+                              unionees: list(make(<type-estimate-class>,
                                                   class: model-integer),
                                              make(<type-estimate-class>,
-                                                  class: model-float))), 
+                                                  class: model-float))),
                          as(<type-estimate>, model-union))
 end;
 
@@ -549,16 +549,16 @@ define typist-algebra-test typist-as-<&type>
 
   model-integer == as(<&type>, make(<type-estimate-class>, class: model-integer))
   & model-raw == as(<&type>, make(<type-estimate-raw>, raw: model-raw))
-  & begin 
+  & begin
       let new-model-lim-int = as(<&type>, make(<type-estimate-limited-integer>, min: 0, max: 63));
       ^limited-integer-min(new-model-lim-int) == ^limited-integer-min(model-lim-int) &
       ^limited-integer-max(new-model-lim-int) == ^limited-integer-max(model-lim-int)
     end
   & ^singleton-object(model-singleton) ==
     ^singleton-object(as(<&type>, make(<type-estimate-limited-instance>,
-				       singleton: a:, class: dylan-value(#"<symbol>"))))
+                                       singleton: a:, class: dylan-value(#"<symbol>"))))
   & begin
-      let new-model-union = as(<&type>, make(<type-estimate-union>, 
+      let new-model-union = as(<&type>, make(<type-estimate-union>,
                                              unionees: list(make(<type-estimate-class>,
                                                                  class: model-integer),
                                                             make(<type-estimate-class>,

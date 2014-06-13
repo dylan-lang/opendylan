@@ -5,7 +5,7 @@ define function callback-handler (#rest args)
 end function callback-handler;
 define function main()
   let project = find-project("dylan");
-  open-project-compiler-database(project, 
+  open-project-compiler-database(project,
                                  warning-callback: callback-handler,
                                  error-handler: callback-handler);
 
