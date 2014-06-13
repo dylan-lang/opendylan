@@ -703,10 +703,6 @@ define method execute (state :: <machine-state>, c :: <primitive-call>)
 	   => copy-sequence(fetch(state, arguments(c)[0]));
 	 dylan-value(#"primitive-next-methods-parameter")
 	   => state-next-methods(state);
-	 dylan-value(#"primitive-start-timer")
-	   => primitive-start-timer();
-	 dylan-value(#"primitive-stop-timer")
-	   => primitive-stop-timer();
 	 otherwise // noop
 	   => runstage(state, #f);
        end select;
