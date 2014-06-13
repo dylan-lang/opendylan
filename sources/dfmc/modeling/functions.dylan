@@ -288,7 +288,6 @@ define primary &class <lambda> (<method>)
     init-value: #f,
     init-keyword: compiler-debug-name:;
   // Compile-time slots.
-  // slot call-site-summaries = make(<call-site-summary-table>);
   slot function-properties :: <integer> = 0;
   // definition slots
   lazy slot signature-spec :: <signature-spec>, 
@@ -377,14 +376,6 @@ define method ^make
 	end if,
 	all-keys);
 end method;
-
-
-// define variable *dummy-call-site-summaries* = #f;
-// 
-// define method call-site-summaries (x :: <&lambda>) => (res :: <call-site-summary-table>)
-//   *dummy-call-site-summaries*
-//     | (*dummy-call-site-summaries* := make(<call-site-summary-table>))
-// end method;
 
 define method ^function-next? (x :: <&lambda>) => (z)
   lambda-next?(x)

@@ -82,8 +82,8 @@ define inline sideways method word-size () => (number-bytes :: <integer>)
   back-end-word-size(current-back-end())
 end method;
 
-define compiler-open generic print-method (stream :: <stream>, o :: <&lambda>, #key css);
-define compiler-open generic print-method-out (o :: <&lambda>, #key css);
+define compiler-open generic print-method (stream :: <stream>, o :: <&lambda>);
+define compiler-open generic print-method-out (o :: <&lambda>);
 
 define compiler-open generic print-referenced-object (o :: <object>, stream :: <stream>) => ();
 

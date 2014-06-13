@@ -317,23 +317,6 @@ define generic type-estimate(ref :: <dfm-ref>)
 define generic type-estimate-infer(ref :: <dfm-ref>, cache :: <type-cache>)
   => (te :: <type-estimate>);
 
-// lookup-type is now the main interface to the typist (replacing type-estimate)  
-define generic lookup-type (object :: <dfm-ref>, 
-			    css :: <call-site-summary>, 
-			    computation :: <computation>)
-  => (result :: <type-estimate>);
-
-define method lookup-type 
-  (ref :: <dfm-ref>, css :: <call-site-summary>, computation :: <computation>)
-  => (result :: <type-estimate>)
-  type-estimate(ref)
-end;
-
-// for new typist api -- gts
-define method type-initializer-method(l :: <&lambda>)
-  type-estimate(l)
-end method;
-
 define thread variable *type-vars-propagating* :: <list> = #();  // See below!
 
 // *** For future reference: adding a type causes propagation, as done here.

@@ -71,7 +71,7 @@ define compiler-sideways method compute-and-install-form-model-objects
        generate-variable-names-debug-name(names));
   maybe-compute-and-install-method-dfm(init-model);
   // Type infer init-model
-  type-initializer-method(init-model);
+  type-estimate(init-model);
   run-compilation-passes(init-model);
   let complete? :: <boolean> = #t ;
   unless(empty-method?(init-model))

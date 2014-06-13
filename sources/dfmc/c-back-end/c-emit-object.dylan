@@ -687,38 +687,36 @@ define method emit-lambda-body-using-function
      fun)
   dynamic-bind (*current-environment* = o.environment)
     write(stream, "{\n");
-    // with-current-css (get-default-call-site-summary(o.function))
-      let volatile?
-        = block (result)
-            for-computations (c in o)
-              if (instance?(c, <block>) & ~c.entry-state.local-entry-state?)
-                result(#t);
-              end if;
-            end for-computations;
-            #f
-          end block;
-      for-temporary (tmp in o.environment)
-        if (used?(tmp))
-          emit-local-definition(back-end, stream, tmp, volatile?);
-        end if;
-      end for-temporary;
-      unless (empty?(o.environment.closure))
-        if (closure-size(o.environment) > 0)
-          format-emit*(back-end, stream, "\t~\n",
-                       capture-environment-string(fun));
-        end if;
-        /*
-        if (closure-self-referencing?(o.environment))
-          format-emit*(back-end, stream, "\t~ ~ = ~;\n",
-                       $dylan-type-string, $closure-string,
-                       $function-register-string);
-        end if;
-        */
-      end unless;
-      write-element(stream, '\n');
-      emit-computations(back-end, stream, 1, o.body, #f);
-      write(stream, "}\n");
-    // end with-current-css;
+    let volatile?
+      = block (result)
+          for-computations (c in o)
+            if (instance?(c, <block>) & ~c.entry-state.local-entry-state?)
+              result(#t);
+            end if;
+          end for-computations;
+          #f
+        end block;
+    for-temporary (tmp in o.environment)
+      if (used?(tmp))
+        emit-local-definition(back-end, stream, tmp, volatile?);
+      end if;
+    end for-temporary;
+    unless (empty?(o.environment.closure))
+      if (closure-size(o.environment) > 0)
+        format-emit*(back-end, stream, "\t~\n",
+                     capture-environment-string(fun));
+      end if;
+      /*
+      if (closure-self-referencing?(o.environment))
+        format-emit*(back-end, stream, "\t~ ~ = ~;\n",
+                     $dylan-type-string, $closure-string,
+                     $function-register-string);
+      end if;
+      */
+    end unless;
+    write-element(stream, '\n');
+    emit-computations(back-end, stream, 1, o.body, #f);
+    write(stream, "}\n");
   end dynamic-bind;
 end method emit-lambda-body-using-function;
 
