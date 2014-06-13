@@ -17,6 +17,7 @@ define library dfmc-testing
   use projects;
   use environment-protocols;
   use dfmc-environment-projects;
+  use dfmc-back-end-implementations;
 
   export dfmc-testing;
 end library;
