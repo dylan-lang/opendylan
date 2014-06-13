@@ -98,11 +98,11 @@ define function print-test-report
   when (lift-rocks? & size(*test-flamers*) ~= 0)
     for (rock in sort!(copy-sequence(*test-flamers*), test: key<))
       block ()                             // Lift suspicious rocks & see what
-        run-tests(tests:       list(rock), //    kinds of slimy bugs crawl out
-                  safely?:     #f,         // So errors not caught higher up
-                  progress?:   #f,         // Gag progress
-                  report?:     #f,         // Gag reporting
-                  lift-rocks?: #f)         // Don't recurse
+        run-dfmc-tests(tests:       list(rock), //    kinds of slimy bugs crawl out
+                       safely?:     #f,         // So errors not caught higher up
+                       progress?:   #f,         // Gag progress
+                       report?:     #f,         // Gag reporting
+                       lift-rocks?: #f)         // Don't recurse
       exception (e :: <error>)             // Talk about the error
         format(stream, "Error in test %=: %s\n\n", rock, e)
       end
@@ -155,8 +155,8 @@ define macro compiler-test-definer
                (?#"test-name", method () ?template end) end }
 end;
 
-define function run-test (name, #key safely?   = #t,
-                                     progress? = *standard-output*)
+define function run-dfmc-test (name, #key safely?   = #t,
+                                          progress? = *standard-output*)
  => (result)
   // If safely?: is given, then catch all errors & mark that test as a flamer.
   // Otherwise, let the signal happen so you can figure out why it's flaming.
@@ -195,16 +195,16 @@ define function run-test (name, #key safely?   = #t,
   end;
 end;
 
-define function run-tests (#key tests       = key-sequence(*tests*),
-                                safely?     = #t,
-                                progress?   = *standard-output*,
-                                report?     = *standard-output*,
-                                lift-rocks? = #f)
+define function run-dfmc-tests (#key tests       = key-sequence(*tests*),
+                                     safely?     = #t,
+                                     progress?   = *standard-output*,
+                                     report?     = *standard-output*,
+                                     lift-rocks? = #f)
     => ()
   // Run some tests, maybe printing a report.
   clear-tests();                         // Throw out old results.
   for (test in tests)                    // Get new results.
-    run-test(test, safely?: safely?, progress?: progress?)
+    run-dfmc-test(test, safely?: safely?, progress?: progress?)
   end;
   when (report?)                         // Report if requested to given stream.
     print-test-report(stream: report?, lift-rocks?: lift-rocks?)

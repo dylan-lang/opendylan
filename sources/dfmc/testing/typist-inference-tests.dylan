@@ -96,8 +96,8 @@ define function run-typist-inference-tests
         report?   = *standard-output*) => ()
   // Run just the typist inferenece tests and print a short report.
   dynamic-bind (*static-type-check?-verbose?* = verbose?)
-    run-tests(tests: tests, safely?: safely?, progress?: progress?,
-              report?: report?)
+    run-dfmc-tests(tests: tests, safely?: safely?, progress?: progress?,
+                   report?: report?)
   end
 end;
 

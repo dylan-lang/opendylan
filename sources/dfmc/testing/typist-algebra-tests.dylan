@@ -18,8 +18,8 @@ define function run-typist-algebra-tests(#key tests     = *typist-algebra-tests*
                                               report?   = *standard-output*)
   => ()
   // Run just the typist algebra tests and print a short report.
-  run-tests(tests: tests, safely?: safely?, progress?: progress?,
-            report?: report?)
+  run-dfmc-tests(tests: tests, safely?: safely?, progress?: progress?,
+                 report?: report?)
 end;
 
 define macro typist-algebra-test-definer
