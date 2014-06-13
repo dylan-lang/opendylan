@@ -120,6 +120,8 @@ define function compile-template
     := open-compilation-context(project, build-settings: #());
   project.project-current-compilation-context.library-description-compiler-back-end-name
     := #"c";
+  project.project-current-compilation-context.library-description-platform-name
+    := platform-name | target-platform-name();
   block ()
     if (compiler == compile-library)
       compile-library(project)
