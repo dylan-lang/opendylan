@@ -1,10 +1,10 @@
 library: dfmc-testing
-files:   testing-library
+files:   library
          test-harness
-         tests
+         compiler-tests
          typist-algebra-tests
          typist-inference-tests
-         tests-main
+         main
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
