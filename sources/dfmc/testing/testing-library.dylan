@@ -5,7 +5,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-testing
-  use functional-dylan;
+  use common-dylan;
   use dfmc-core;
   use dfmc-reader; // not part of core for some reason.
   use dfmc-macro-expander;
@@ -23,7 +23,7 @@ define library dfmc-testing
 end library;
 
 define module dfmc-testing
-  use functional-dylan;
+  use common-dylan;
   use dfmc-core;
   use dfmc-reader; // not part of core for some reason.
   use dfmc-macro-expander;
