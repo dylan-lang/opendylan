@@ -14,7 +14,6 @@ define library dfmc-testing
   use dfmc-management;
   use dfmc-back-end;
   use dfmc-debug-back-end;
-  use dfmc-execution;
   use projects;
   use environment-protocols;
   use dfmc-environment-projects;
@@ -33,7 +32,6 @@ define module dfmc-testing
   use dfmc-management;
   use dfmc-back-end;
   use dfmc-debug-back-end, import: {*print-method-bodies?*};
-  use dfmc-execution;
   use projects;
   use environment-protocols,
     import: { find-project, open-project-compiler-database };
