@@ -98,7 +98,7 @@ end method;
 
 define method ^binding-value
     (state :: <machine-state>, binding :: <module-binding>) => (value)
-  let value = element(*symbol-table*, binding, default: not-found());
+  let value = element(*symbol-table*, binding, default: unfound());
   if (found?(value))
     value
   else
@@ -129,7 +129,7 @@ define method lookup-external-object (state :: <machine-state>, x :: <&iep>) => 
 end method;
 
 define method runstage (state :: <machine-state>, x) => (value)
-  let y = element(state-runstage(state), x, default: not-found());
+  let y = element(state-runstage(state), x, default: unfound());
   if (found?(y))
     y
   else
