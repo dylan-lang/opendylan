@@ -41,9 +41,9 @@ define method make
     (class :: subclass(<machine-state>), #rest initargs, #key frame-size = 0)
  => (res :: <machine-state>)
   apply(next-method, class,
-	temporaries: make(<simple-object-vector>,
-			  size: frame-size, fill: $uninitialized-temporary),
-	initargs)
+        temporaries: make(<simple-object-vector>,
+                          size: frame-size, fill: $uninitialized-temporary),
+        initargs)
 end method make;
 
 define class <value-cell> (<object>)
@@ -176,7 +176,7 @@ end method;
 define method execute (state :: <machine-state>, c :: <make-closure>)
   let lambda = computation-closure-method(c);
   let sigtmp = computation-signature-value(c);
-  let sigval 
+  let sigval
     = if (sigtmp) fetch(state, sigtmp) else ^function-signature(lambda) end;
   create-closure(lambda, create-closure-data(state, lambda), sigval);
   execute(state, c.next-computation);
@@ -230,36 +230,36 @@ end method;
 
 define method execute (state :: <machine-state>, c :: <slot-value>)
   fetch(state, c.temporary)
-    := ^slot-value(fetch(state, computation-instance(c)), 
-		   computation-slot-descriptor(c));
+    := ^slot-value(fetch(state, computation-instance(c)),
+                   computation-slot-descriptor(c));
   execute(state, c.next-computation);
 end method;
 
 define method execute (state :: <machine-state>, c :: <slot-value-setter>)
   fetch(state, c.temporary)
     := ^slot-value-setter
-          (fetch(state, computation-new-value(c)), 
-	   fetch(state, computation-instance(c)), 
-	   computation-slot-descriptor(c));
+          (fetch(state, computation-new-value(c)),
+           fetch(state, computation-instance(c)),
+           computation-slot-descriptor(c));
   execute(state, c.next-computation);
 end method;
 
 define method execute (state :: <machine-state>, c :: <repeated-slot-value>)
   fetch(state, c.temporary)
     := ^repeated-slot-value
-          (fetch(state, computation-instance(c)), 
-	   computation-slot-descriptor(c),
-	   ^raw-object-value(fetch(state, computation-index(c))));
+          (fetch(state, computation-instance(c)),
+           computation-slot-descriptor(c),
+           ^raw-object-value(fetch(state, computation-index(c))));
   execute(state, c.next-computation);
 end method;
 
 define method execute (state :: <machine-state>, c :: <repeated-slot-value-setter>)
   fetch(state, c.temporary)
     := ^repeated-slot-value-setter
-          (fetch(state, computation-new-value(c)), 
-	   fetch(state, computation-instance(c)), 
-	   computation-slot-descriptor(c),
-	   ^raw-object-value(fetch(state, computation-index(c))));
+          (fetch(state, computation-new-value(c)),
+           fetch(state, computation-instance(c)),
+           computation-slot-descriptor(c),
+           ^raw-object-value(fetch(state, computation-index(c))));
   execute(state, c.next-computation);
 end method;
 
@@ -278,7 +278,7 @@ define method execute-call-using-function-and-arguments
   let function = code.function;
   let new-state
     = make(state.object-class,
-	   frame-size: function.frame-size, closure: function);
+           frame-size: function.frame-size, closure: function);
   for (argument in arguments,
        variable in function.parameters)
     fetch(new-state, variable) := argument;
@@ -287,13 +287,13 @@ define method execute-call-using-function-and-arguments
 end method;
 
 define function process-keyword-arguments-into
-    (new-arguments :: <stretchy-vector>, 
+    (new-arguments :: <stretchy-vector>,
      f :: <&lambda>, arguments :: <sequence>)
   let signature = ^function-signature(f);
   let all-keys? = ^signature-all-keys?(signature);
   let number-required = ^signature-number-required(signature);
   for (i from arguments.size - 1 to
-	 number-required by -2)
+         number-required by -2)
     let keyword = arguments[i - 1];
     block (break)
       for (j from 0 below f.keyword-specifiers.size by 2,
@@ -313,7 +313,7 @@ define method execute-call-using-function-and-arguments
   let function = code.function;
   let new-state
     = make(state.object-class,
-	   frame-size: function.frame-size, closure: function);
+           frame-size: function.frame-size, closure: function);
   let signature = ^function-signature(function);
   let number-required = signature.^signature-number-required;
   let number-arguments = arguments.size;
@@ -334,8 +334,8 @@ define method execute-call-using-function-and-arguments
       let key-specs = function.keyword-specifiers;
       // fill in defaults
       for (j from 1 by 2,
-	   i from number-required + 1 below function.parameters.size)
-	optional-arguments[i] := key-specs[j];
+           i from number-required + 1 below function.parameters.size)
+        optional-arguments[i] := key-specs[j];
       end for;
       process-keyword-arguments-into
         (optional-arguments, function, arguments);
@@ -449,13 +449,13 @@ end method;
 define method execute (state :: <machine-state>, c :: <values>)
   fetch(state, c.temporary)
     := begin
-	 let fixed = map-as(<simple-object-vector>,
-			    curry(fetch, state), c.fixed-values);
-	 if (c.rest-value)
-	   concatenate(fixed, fetch(state, c.rest-value))
-	 else
-	   fixed
-	 end if
+         let fixed = map-as(<simple-object-vector>,
+                            curry(fetch, state), c.fixed-values);
+         if (c.rest-value)
+           concatenate(fixed, fetch(state, c.rest-value))
+         else
+           fixed
+         end if
        end;
   execute(state, c.next-computation);
 end method;
@@ -470,15 +470,15 @@ define method execute (state :: <machine-state>, c :: <extract-rest-value>)
   let mv = fetch(state, c.computation-value);
   fetch(state, c.temporary)
     := run-stage(if (c.index > mv.size)
-		   #[]
-		 else
-		   copy-sequence(mv, start: c.index)
-		 end if);
+                   #[]
+                 else
+                   copy-sequence(mv, start: c.index)
+                 end if);
   execute(state, c.next-computation);
 end method;
 
 define method execute (state :: <machine-state>,
-		       c :: <adjust-multiple-values>)
+                       c :: <adjust-multiple-values>)
   let mv = fetch(state, c.computation-value);
   let count = size(mv);
   let n = number-of-required-values(c);
@@ -489,16 +489,16 @@ define method execute (state :: <machine-state>,
       copy-sequence(mv, end: n)
     else
       replace-subsequence!(make(<simple-object-vector>,
-				size: n,
-				fill: #f),
-			   mv,
-			   end: count)
+                                size: n,
+                                fill: #f),
+                           mv,
+                           end: count)
     end;
   execute(state, c.next-computation);
 end method;
 
 define method execute (state :: <machine-state>,
-		       c :: <adjust-multiple-values-rest>)
+                       c :: <adjust-multiple-values-rest>)
   let mv = fetch(state, c.computation-value);
   let count = size(mv);
   let n = number-of-required-values(c);
@@ -507,10 +507,10 @@ define method execute (state :: <machine-state>,
       mv
     else
       replace-subsequence!(make(<simple-object-vector>,
-				size: n,
-				fill: #f),
-			   mv,
-			   end: count)
+                                size: n,
+                                fill: #f),
+                           mv,
+                           end: count)
     end;
   execute(state, c.next-computation);
 end method;
@@ -519,17 +519,17 @@ end method;
 
 define method execute (state :: <machine-state>, c :: <check-type>)
   // TODO: check the type!!!
-  next-method();		// do the temporary transfer
+  next-method();                // do the temporary transfer
 end method;
 
 define method execute (state :: <machine-state>, c :: <multiple-value-check-type>)
   // TODO: check the types!!!
-  next-method();		// do the temporary transfer
+  next-method();                // do the temporary transfer
 end method;
 
 define method execute (state :: <machine-state>, c :: <multiple-value-check-type-rest>)
   // TODO: check the types!!!
-  next-method();		// do the temporary transfer
+  next-method();                // do the temporary transfer
 end method;
 
 /// cell for assignment
@@ -551,8 +551,8 @@ end method execute;
 
 define method execute (state :: <machine-state>, c :: <set-cell-value!>)
   fetch(state, c.temporary)
-    := (fetch(state, c.computation-cell).cell-value 
-	  := fetch(state, c.computation-value));
+    := (fetch(state, c.computation-cell).cell-value
+          := fetch(state, c.computation-value));
   execute(state, c.next-computation)
 end method execute;
 
@@ -562,7 +562,7 @@ define method eval-using-class
     (class :: subclass(<machine-state>), lambda :: <&lambda>)
   let state
     = make(class,
-	   frame-size: lambda.environment.frame-size, closure: lambda);
+           frame-size: lambda.environment.frame-size, closure: lambda);
   apply(values, execute(state, lambda.body))
 end method eval-using-class;
 
@@ -581,7 +581,7 @@ end method;
 // This variation on the evaluation engine is used for evaluation
 // when we only want a result if the expression is guaranteed to
 // always return that result.
-// 
+//
 // This routine needs to be able to run on code in nested environments
 // without having fully converted the surrounding environments.  That
 // probably requires more fixes in fetch.

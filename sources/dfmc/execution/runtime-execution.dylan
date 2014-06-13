@@ -13,14 +13,14 @@ define variable *runstage* :: <object-table> = make(<table>);
 
 define constant <closure> = <lambda>;
 
-define macro closure-slot-definer 
+define macro closure-slot-definer
   { define closure-slot ?:name at ?offset:expression }
     => { define method ?name (function :: <closure>) => (res)
-	   environment-element(function, ?offset) 
-	 end method;
+           environment-element(function, ?offset)
+         end method;
          define method ?name ## "-setter" (value, function :: <closure>)
-	   environment-element(function, ?offset) := value
-	 end method }
+           environment-element(function, ?offset) := value
+         end method }
 end macro;
 
 define closure-slot function-model at 0;
@@ -37,7 +37,7 @@ define class <machine-state> (<object>)
   constant slot state-next-methods,
     required-init-keyword: next-methods:;
   constant slot state-loop-continues :: <object-table> = make(<table>);
-  constant slot state-runstage :: <object-table>, 
+  constant slot state-runstage :: <object-table>,
     required-init-keyword: runstage:;
 end class <machine-state>;
 
@@ -70,11 +70,11 @@ define method load-dll (name) => ()
   load-library(dll-name);
 end method;
 
-define method ensure-loaded-dll (name) 
+define method ensure-loaded-dll (name)
   element(*loaded-libraries*, name, default: #f)
     | begin
-	load-dll(name);
-	element(*loaded-libraries*, name) := #t;
+        load-dll(name);
+        element(*loaded-libraries*, name) := #t;
       end;
 end method;
 
@@ -89,7 +89,7 @@ define method ^slow-binding-value
     ensure-loaded-dll(library-name);
     let value         = variable-value(identifier, module-name, library-name);
     value
-  else 
+  else
     let &value        = binding-model-or-hollow-object(binding);
     let  value        = runstage(state, &value);
     value
@@ -101,7 +101,7 @@ define method ^binding-value
   let value = element(*symbol-table*, binding, default: not-found());
   if (found?(value))
     value
-  else 
+  else
     element(*symbol-table*, binding) := ^slow-binding-value(state, binding);
   end if;
 end method;
@@ -135,10 +135,10 @@ define method runstage (state :: <machine-state>, x) => (value)
   else
     element(state-runstage(state), x)
       := if (external-object?(state, x))
-	   lookup-external-object(state, x)
-	 else 
-	   make-runstage(state, x);
-	 end if;
+           lookup-external-object(state, x)
+         else
+           make-runstage(state, x);
+         end if;
   end if
 end method;
 
@@ -193,33 +193,33 @@ define method default-make-runstage
     (state :: <machine-state>, &object, #key class, extra-size = 0)
  => (value)
   let &class     = &object-class(&object);
-  let  class     = class | runstage(state, &class); 
+  let  class     = class | runstage(state, &class);
   let &rpt-slotd = ^repeated-slot-descriptor(&class);
-  let &size      = if (&rpt-slotd) 
-		     let &size-slotd = ^size-slot-descriptor(&rpt-slotd); 
-		     ^slot-value(&object, &size-slotd)
-		   else
-		     0
-		   end if;
+  let &size      = if (&rpt-slotd)
+                     let &size-slotd = ^size-slot-descriptor(&rpt-slotd);
+                     ^slot-value(&object, &size-slotd)
+                   else
+                     0
+                   end if;
   let  size      = &size + extra-size;
   let object     = allocate-object(class, size);
   element(state-runstage(state), &object) := object;
-  for (&slotd in ^instance-slot-descriptors(&class), 
+  for (&slotd in ^instance-slot-descriptors(&class),
         slotd in  instance-slot-descriptors( class))
     block ()
-      slot-value(object, slotd) 
-	:= runstage(state, ^slot-value(&object, &slotd));
+      slot-value(object, slotd)
+        := runstage(state, ^slot-value(&object, &slotd));
     exception (<error>)
       // slot type error for hollow objects
     end block;
   end for;
   when (&rpt-slotd)
     let rpt-slotd  = repeated-slot-descriptor(class);
-    let size-slotd = size-slot-descriptor(rpt-slotd); 
+    let size-slotd = size-slot-descriptor(rpt-slotd);
     slot-value(object, size-slotd) := size;
     for (i :: <integer> from 0 below &size)
       repeated-slot-value(object, rpt-slotd, i)
-	:= runstage(state, ^repeated-slot-value(&object, &rpt-slotd, i));
+        := runstage(state, ^repeated-slot-value(&object, &rpt-slotd, i));
     end for;
   end when;
   object
@@ -233,9 +233,9 @@ define method make-runstage (state :: <machine-state>, x :: <&used-library>) => 
   default-make-runstage(state, x);
 end method;
 
-define inline method install-unwrapped-value (x, offset :: <integer>) 
+define inline method install-unwrapped-value (x, offset :: <integer>)
   let wrapped = initialized-slot-element(x, offset);
-  primitive-slot-value(x, integer-as-raw(offset)) 
+  primitive-slot-value(x, integer-as-raw(offset))
     := primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(wrapped));
 end method;
 
@@ -285,9 +285,9 @@ define method install-dfm-execution-entry-points (lambda :: <lambda>)
   install-dfm-execution-iep(lambda);
 end method;
 
-define method make-runstage-method 
+define method make-runstage-method
     (state :: <machine-state>, x :: <&lambda>, class :: <class>) => (value)
-  let lambda 
+  let lambda
     = default-make-runstage(state, x, class: class, extra-size: $number-reserved-closure-slots);
   block ()
     if (instance?(function-signature(lambda), <signature>))
@@ -302,9 +302,9 @@ end method;
 define method make-runstage (state :: <machine-state>, x :: <&lambda>) => (value)
   let class
     = if (best-function-key?(x))
-	<keyword-closure-method>
+        <keyword-closure-method>
       else
-	<simple-closure-method>
+        <simple-closure-method>
       end if;
   make-runstage-method(state, x, class);
 end method;
@@ -337,9 +337,9 @@ define method make
     (class :: subclass(<machine-state>), #rest initargs, #key frame-size = 0)
  => (res :: <machine-state>)
   apply(next-method, class,
-	temporaries: make(<simple-object-vector>,
-			  size: frame-size, fill: $uninitialized-temporary),
-	initargs)
+        temporaries: make(<simple-object-vector>,
+                          size: frame-size, fill: $uninitialized-temporary),
+        initargs)
 end method make;
 
 define method closure-offset
@@ -365,7 +365,7 @@ define method closure-offset (lambda :: <&lambda>, tmp :: <temporary>)
   end if
 end method;
 
-define function top-level-closure-reference? 
+define function top-level-closure-reference?
     (o, lambda :: <&lambda>) => (well? :: <boolean>)
   method-top-level?(lambda)
 end function;
@@ -376,7 +376,7 @@ define method unchecked-fetch
   if (offset)
     if (top-level-closure-reference?(object, state-&closure(the-state)))
       state-closure(the-state)
-    else 
+    else
       environment-element(the-state.state-closure, offset);
     end if
   else
@@ -464,7 +464,7 @@ end method;
 
 //// EXECUTION
 
-define method execute-computations 
+define method execute-computations
     (state :: <machine-state>, start :: <computation>, stop :: false-or(<computation>))
   iterate loop (c = start)
     if (c & c ~== stop)
@@ -480,16 +480,16 @@ end method;
 define function shallow-copy-instance-with-size (object, size) => (copy);
   let class     = object-class(object);
   let rpt-slotd = repeated-slot-descriptor(class);
-  let sz        = if (rpt-slotd) 
-		    if (size)
-		      size
-		    else 
-		      let size-slotd = size-slot-descriptor(rpt-slotd); 
-		      slot-value(object, size-slotd)
-		    end if
-		  else
-		    0
-		  end if;
+  let sz        = if (rpt-slotd)
+                    if (size)
+                      size
+                    else
+                      let size-slotd = size-slot-descriptor(rpt-slotd);
+                      slot-value(object, size-slotd)
+                    end if
+                  else
+                    0
+                  end if;
   let copy   = allocate-object(class, sz);
   let slotds = slot-descriptors(class);
   for (slotd in slotds)
@@ -497,11 +497,11 @@ define function shallow-copy-instance-with-size (object, size) => (copy);
     walker-slot-value(copy, sd) := walker-slot-value(object, sd);
   end;
   if (sz)
-    let size-slotd = size-slot-descriptor(rpt-slotd); 
+    let size-slotd = size-slot-descriptor(rpt-slotd);
     slot-value(copy, size-slotd) := sz;
-    for (i :: <integer> from 0 below sz) 
+    for (i :: <integer> from 0 below sz)
       repeated-slot-value(copy, rpt-slotd, i)
-	:= repeated-slot-value(object, rpt-slotd, i);
+        := repeated-slot-value(object, rpt-slotd, i);
     end for;
   end if;
   copy
@@ -528,7 +528,7 @@ define method create-closure-data
     (state :: <machine-state>, lambda :: <&lambda>, initialized? :: <boolean>)
   if (initialized?)
     map-as(<vector>, curry(create-closure-value, state),
-	   lambda.environment.closure)
+           lambda.environment.closure)
   else
     make(<vector>, size: size(lambda.environment.closure))
   end if
@@ -536,7 +536,7 @@ end method;
 
 define method initialize-closure-data
     (state :: <machine-state>, &lambda :: <&lambda>, lambda :: <closure>)
-  for (i :: <integer> from $number-reserved-closure-slots, 
+  for (i :: <integer> from $number-reserved-closure-slots,
        e in &lambda.environment.closure)
     environment-element(lambda, i) := create-closure-value(state, e);
   end for;
@@ -546,11 +546,11 @@ define method execute (state :: <machine-state>, c :: <make-closure>)
   let model :: <&lambda> = computation-closure-method(c);
   let lambda :: <lambda> = runstage(state, model);
   let sigtmp = computation-signature-value(c);
-  let sigval :: <signature> 
+  let sigval :: <signature>
     = if (sigtmp) fetch(state, sigtmp) else function-signature(lambda) end;
   let closure-data
     = create-closure-data(state, model, computation-init-closure?(c));
-  let closure 
+  let closure
     = create-closure(lambda, closure-data, sigval);
   fetch(state, c.temporary) := closure;
   // ** execute(state, c.next-computation);
@@ -606,14 +606,14 @@ define macro maybe-multiple-value-bind
      ?:body
     end }
     => { if (instance?(?tmp, <multiple-value-temporary>))
-	   let (#rest results) = ?body;
-	   results
-	 else 
-	   ?body
-	 end if }
+           let (#rest results) = ?body;
+           results
+         else
+           ?body
+         end if }
 end macro;
 
-define method bind-call-arguments 
+define method bind-call-arguments
     (state :: <machine-state>, c :: <call>) => (args :: <simple-object-vector>)
   let args     = make(<vector>, size: size(c.arguments) + 1);
   args[size(args) - 1] := #[];
@@ -621,12 +621,12 @@ define method bind-call-arguments
   args
 end method;
 
-define method bind-apply-arguments 
+define method bind-apply-arguments
     (state :: <machine-state>, c :: <call>) => (args :: <simple-object-vector>)
   map-as(<simple-object-vector>, curry(fetch, state), c.arguments);
 end method;
 
-define method real-call-arguments 
+define method real-call-arguments
     (args :: <simple-object-vector>) => (args :: <simple-object-vector>)
   concatenate(copy-sequence(args, end: size(args) - 1), args[size(args) - 1])
 end method;
@@ -636,13 +636,13 @@ define macro trace-call
      ?:body
     end }
     => { begin
-	   trace-format("%s %= TO %=\n", ?kind, ?function, real-call-arguments(?args));
-	   let result =
-	     dynamic-bind (*call-depth* = *call-depth* + 1)
-	       ?body
-	     end dynamic-bind;
-	   trace-format("=> %=\n", result);
-	   result
+           trace-format("%s %= TO %=\n", ?kind, ?function, real-call-arguments(?args));
+           let result =
+             dynamic-bind (*call-depth* = *call-depth* + 1)
+               ?body
+             end dynamic-bind;
+           trace-format("=> %=\n", result);
+           result
          end }
 end macro;
 
@@ -697,14 +697,14 @@ define method execute (state :: <machine-state>, c :: <method-apply>)
 end method;
 
 define method execute (state :: <machine-state>, c :: <primitive-call>)
-  fetch(state, c.temporary) 
+  fetch(state, c.temporary)
     := select (primitive(c))
-	 dylan-value(#"primitive-copy-vector")
-	   => copy-sequence(fetch(state, arguments(c)[0]));
-	 dylan-value(#"primitive-next-methods-parameter")
-	   => state-next-methods(state);
-	 otherwise // noop
-	   => runstage(state, #f);
+         dylan-value(#"primitive-copy-vector")
+           => copy-sequence(fetch(state, arguments(c)[0]));
+         dylan-value(#"primitive-next-methods-parameter")
+           => state-next-methods(state);
+         otherwise // noop
+           => runstage(state, #f);
        end select;
 end method;
 
@@ -714,8 +714,8 @@ define method runtime-allocate-registers (f :: <&lambda>) => ();
   let number-parameters = size(parameters(f));
   for (tmp in e.temporaries, i :: <integer> from 0)
     if (i <= number-parameters | used?(tmp))
-      let increment 
-	= if (instance?(generator(tmp), <loop-merge>)) 2 else 1 end;
+      let increment
+        = if (instance?(generator(tmp), <loop-merge>)) 2 else 1 end;
       tmp.frame-offset := offset;
       offset           := offset + increment;
     else
@@ -725,16 +725,16 @@ define method runtime-allocate-registers (f :: <&lambda>) => ();
   e.frame-size := offset + 1;
 end method;
 
-define function execute-lambda-dfm 
+define function execute-lambda-dfm
     (&lambda :: <&lambda>, lambda :: <lambda>, next-methods, #rest arguments)
   runtime-allocate-registers(&lambda);
   let new-state
     = make(<machine-state>,
-	   frame-size:   &lambda.frame-size, 
-	   closure:      lambda, 
-	   &closure:     &lambda, 
-	   runstage:     *runstage*,
-	   next-methods: next-methods);
+           frame-size:   &lambda.frame-size,
+           closure:      lambda,
+           &closure:     &lambda,
+           runstage:     *runstage*,
+           next-methods: next-methods);
   for (parameter in parameters(&lambda),
        argument  in arguments)
     // format-out("BINDING %= TO %=\n", parameter, argument);
@@ -743,7 +743,7 @@ define function execute-lambda-dfm
   let bind   = &lambda.body;
   let return = bind-return(bind);
   execute-computations(new-state, bind, return);
-  apply(values, fetch(new-state, return.computation-value))  
+  apply(values, fetch(new-state, return.computation-value))
 end function;
 
 define inline function execute-dfm (next, #rest arguments)
@@ -757,38 +757,38 @@ end function;
 define macro req-dfm-execution-definer
   { define req-dfm-execution ?:name () }
     => { define function ?name ## "-req-dfm-execution" (#next next)
-	   execute-dfm(next)
-	 end function }
+           execute-dfm(next)
+         end function }
   { define req-dfm-execution ?:name (?arguments:*) }
     => { define function ?name ## "-req-dfm-execution" (?arguments, #next next)
-	   execute-dfm(next, ?arguments)
-	 end function }
+           execute-dfm(next, ?arguments)
+         end function }
 end macro;
 
 define macro rst-dfm-execution-definer
   { define rst-dfm-execution ?:name () }
     => { define function ?name ## "-rst-dfm-execution" (#next next, #rest rest)
-	   %dynamic-extent(rest);
-	   execute-dfm(next, rest)
-	 end function }
+           %dynamic-extent(rest);
+           execute-dfm(next, rest)
+         end function }
   { define rst-dfm-execution ?:name (?arguments:*) }
     => { define function ?name ## "-rst-dfm-execution" (?arguments, #next next, #rest rest)
-	   %dynamic-extent(rest);
-	   execute-dfm(next, ?arguments, rest)
-	 end function }
+           %dynamic-extent(rest);
+           execute-dfm(next, ?arguments, rest)
+         end function }
 end macro;
 
 define macro key-dfm-execution-definer
   { define key-dfm-execution ?:name () }
     => { define function ?name ## "-key-dfm-execution" (#next next, #rest rest, #key, #all-keys)
-	   %dynamic-extent(rest);
-	   execute-dfm(next, rest)
-	 end function }
+           %dynamic-extent(rest);
+           execute-dfm(next, rest)
+         end function }
   { define key-dfm-execution ?:name (?arguments:*) }
     => { define function ?name ## "-key-dfm-execution" (?arguments, #next next, #rest rest, #key, #all-keys)
-	   %dynamic-extent(rest);
-	   execute-dfm(next, ?arguments, rest)
-	 end function }
+           %dynamic-extent(rest);
+           execute-dfm(next, ?arguments, rest)
+         end function }
 end macro;
 
 define constant $max-number-required = 9;
@@ -830,61 +830,61 @@ define function number-mep-parameters (lambda :: <lambda>) => (res :: <integer>)
   let signature = function-signature(lambda);
   signature-number-required(signature)
     // + if (signature-rest?(signature)) 1 else 0 end
-    + if (signature-key?(signature)) 
-	truncate/(size(keyword-specifiers(lambda)), 2) 
+    + if (signature-key?(signature))
+        truncate/(size(keyword-specifiers(lambda)), 2)
       else
-	0
+        0
       end;
 end function;
 
-define function appropriate-dfm-execution-function 
+define function appropriate-dfm-execution-function
     (lambda :: <lambda>, #key number-required) => (function :: <lambda>)
   let signature = function-signature(lambda);
   let number-required = number-required | signature-number-required(signature);
   if (number-required > $max-number-required)
-    error("Interpreter only supports %= parameters %= requested\n", 
-	  $max-number-required, number-required);
+    error("Interpreter only supports %= parameters %= requested\n",
+          $max-number-required, number-required);
   end if;
   let function
     = if (signature-key?(signature))
-	select (number-required)
-	  0 => the-0-key-dfm-execution;
-	  1 => the-1-key-dfm-execution;
-	  2 => the-2-key-dfm-execution;
-	  3 => the-3-key-dfm-execution;
-	  4 => the-4-key-dfm-execution;
-	  5 => the-5-key-dfm-execution;
-	  6 => the-6-key-dfm-execution;
-	  7 => the-7-key-dfm-execution;
-	  8 => the-8-key-dfm-execution;
-	  9 => the-9-key-dfm-execution;
-	end select;
+        select (number-required)
+          0 => the-0-key-dfm-execution;
+          1 => the-1-key-dfm-execution;
+          2 => the-2-key-dfm-execution;
+          3 => the-3-key-dfm-execution;
+          4 => the-4-key-dfm-execution;
+          5 => the-5-key-dfm-execution;
+          6 => the-6-key-dfm-execution;
+          7 => the-7-key-dfm-execution;
+          8 => the-8-key-dfm-execution;
+          9 => the-9-key-dfm-execution;
+        end select;
       elseif (signature-rest?(signature))
-	select (number-required)
-	  0 => the-0-rst-dfm-execution;
-	  1 => the-1-rst-dfm-execution;
-	  2 => the-2-rst-dfm-execution;
-	  3 => the-3-rst-dfm-execution;
-	  4 => the-4-rst-dfm-execution;
-	  5 => the-5-rst-dfm-execution;
-	  6 => the-6-rst-dfm-execution;
-	  7 => the-7-rst-dfm-execution;
-	  8 => the-8-rst-dfm-execution;
-	  9 => the-9-rst-dfm-execution;
-	end select;
-      else 
-	select (number-required)
-	  0 => the-0-req-dfm-execution;
-	  1 => the-1-req-dfm-execution;
-	  2 => the-2-req-dfm-execution;
-	  3 => the-3-req-dfm-execution;
-	  4 => the-4-req-dfm-execution;
-	  5 => the-5-req-dfm-execution;
-	  6 => the-6-req-dfm-execution;
-	  7 => the-7-req-dfm-execution;
-	  8 => the-8-req-dfm-execution;
-	  9 => the-9-req-dfm-execution;
-	end select;
+        select (number-required)
+          0 => the-0-rst-dfm-execution;
+          1 => the-1-rst-dfm-execution;
+          2 => the-2-rst-dfm-execution;
+          3 => the-3-rst-dfm-execution;
+          4 => the-4-rst-dfm-execution;
+          5 => the-5-rst-dfm-execution;
+          6 => the-6-rst-dfm-execution;
+          7 => the-7-rst-dfm-execution;
+          8 => the-8-rst-dfm-execution;
+          9 => the-9-rst-dfm-execution;
+        end select;
+      else
+        select (number-required)
+          0 => the-0-req-dfm-execution;
+          1 => the-1-req-dfm-execution;
+          2 => the-2-req-dfm-execution;
+          3 => the-3-req-dfm-execution;
+          4 => the-4-req-dfm-execution;
+          5 => the-5-req-dfm-execution;
+          6 => the-6-req-dfm-execution;
+          7 => the-7-req-dfm-execution;
+          8 => the-8-req-dfm-execution;
+          9 => the-9-req-dfm-execution;
+        end select;
       end if;
   function
 end function;
@@ -893,7 +893,7 @@ define function install-dfm-execution-xep (lambda :: <lambda>)
   let function = appropriate-dfm-execution-function(lambda);
   // HACK: DO THIS RIGHT
   let xep-offset = 0; // slot-offset();
-  slot-element(lambda, xep-offset) 
+  slot-element(lambda, xep-offset)
     := initialized-slot-element(function, xep-offset);
 end function;
 
@@ -903,7 +903,7 @@ define method install-dfm-execution-mep (lambda :: <lambda>)
         (lambda, number-required: number-mep-parameters(lambda));
   // HACK: DO THIS RIGHT
   let mep-offset = 2; // slot-offset();
-  slot-element(lambda, mep-offset) 
+  slot-element(lambda, mep-offset)
     := initialized-slot-element(function, mep-offset);
 end method;
 
@@ -912,7 +912,7 @@ define method install-dfm-execution-mep (lambda :: <keyword-method>)
     = appropriate-dfm-execution-function(lambda);
   // HACK: DO THIS RIGHT
   let mep-offset = 2; // slot-offset();
-  slot-element(lambda, mep-offset) 
+  slot-element(lambda, mep-offset)
     := initialized-slot-element(function, mep-offset);
 end method;
 
@@ -925,7 +925,7 @@ define method install-dfm-execution-iep (lambda :: <keyword-method>)
         (lambda, number-required: number-mep-parameters(lambda));
   // HACK: DO THIS RIGHT
   let iep-offset = 3; // slot-offset();
-  slot-element(lambda, iep-offset) 
+  slot-element(lambda, iep-offset)
     := initialized-slot-element(function, iep-offset);
 end method;
 
@@ -934,12 +934,12 @@ define method execute (state :: <machine-state>, c :: <stack-vector>)
     := map-as(<vector>, curry(fetch, state), c.arguments);
 end method;
 
-define method register-loop-continue 
+define method register-loop-continue
     (state :: <machine-state>, c :: <loop>, continue :: <function>)
   state-loop-continues(state)[c] := continue;
 end method;
 
-define method loop-continue 
+define method loop-continue
     (state :: <machine-state>, c :: <loop>)
   state-loop-continues(state)[c]()
 end method;
@@ -948,16 +948,16 @@ define method execute (state :: <machine-state>, c :: <loop>)
   for (merge in loop-merges(c))
     let tmp = temporary(merge);
     if (tmp & used?(tmp))
-      shadow-fetch(state, tmp) 
-	:= fetch(state, loop-merge-parameter(merge));
+      shadow-fetch(state, tmp)
+        := fetch(state, loop-merge-parameter(merge));
     end if;
   end for;
   block (return)
     while (#t)
       block (continue)
-	register-loop-continue(state, c, continue);
-	execute-computations(state, c.loop-body, c.next-computation);
-	return();
+        register-loop-continue(state, c, continue);
+        execute-computations(state, c.loop-body, c.next-computation);
+        return();
       end block;
     end while;
   end block;
@@ -969,8 +969,8 @@ define method execute (state :: <machine-state>, c :: <loop-call>)
        call-merge    in loop-call-merges(c))
     let tmp = temporary(initial-merge);
     if (tmp & used?(tmp))
-      shadow-fetch(state, tmp) 
-	:= fetch(state, loop-merge-argument(call-merge));
+      shadow-fetch(state, tmp)
+        := fetch(state, loop-merge-argument(call-merge));
     end if;
   end for;
   loop-continue(state, loop);
@@ -987,7 +987,7 @@ define method execute (state :: <machine-state>, c :: <loop-merge>)
   end if;
 end method;
 
-define method maybe-transfer-merge 
+define method maybe-transfer-merge
     (state :: <machine-state>, merge :: <computation>, refn :: <function>)
   if (instance?(merge, <merge>))
     let ref         = refn(merge);
@@ -1032,9 +1032,9 @@ end method;
 define method execute (state :: <machine-state>, c :: <unwind-protect>)
   let (#rest body-values)
     = block ()
-	execute-computations(state, c.body, c.next-computation);
+        execute-computations(state, c.body, c.next-computation);
       cleanup
-	execute-computations(state, c.cleanups, c.next-computation);
+        execute-computations(state, c.cleanups, c.next-computation);
       end block;
   fetch(state, c.temporary) := body-values;
 end method;
@@ -1064,13 +1064,13 @@ end method;
 define method execute (state :: <machine-state>, c :: <values>)
   fetch(state, c.temporary)
     := begin
-	 let fixed = map-as(<simple-object-vector>,
-			    curry(fetch, state), c.fixed-values);
-	 if (c.rest-value)
-	   concatenate(fixed, fetch(state, c.rest-value))
-	 else
-	   fixed
-	 end if
+         let fixed = map-as(<simple-object-vector>,
+                            curry(fetch, state), c.fixed-values);
+         if (c.rest-value)
+           concatenate(fixed, fetch(state, c.rest-value))
+         else
+           fixed
+         end if
        end;
 end method;
 
@@ -1091,13 +1091,13 @@ define method execute (state :: <machine-state>, c :: <extract-rest-value>)
   let mv = fetch(state, c.computation-value);
   fetch(state, c.temporary)
     := run-stage(if (c.index > mv.size)
-		   #[]
-		 else
-		   copy-sequence(mv, start: c.index)
-		 end if);
+                   #[]
+                 else
+                   copy-sequence(mv, start: c.index)
+                 end if);
 end method;
 
-define method execute 
+define method execute
     (state :: <machine-state>, c :: <adjust-multiple-values>)
   let mv = fetch(state, c.computation-value);
   let count = size(mv);
@@ -1109,12 +1109,12 @@ define method execute
       copy-sequence(mv, end: n)
     else
       replace-subsequence!
-	(make(<simple-object-vector>, size: n, fill: #f),
-	 mv, end: count)
+        (make(<simple-object-vector>, size: n, fill: #f),
+         mv, end: count)
     end;
 end method;
 
-define method execute 
+define method execute
     (state :: <machine-state>, c :: <adjust-multiple-values-rest>)
   let mv = fetch(state, c.computation-value);
   let count = size(mv);
@@ -1124,8 +1124,8 @@ define method execute
       mv
     else
       replace-subsequence!
-	(make(<simple-object-vector>, size: n, fill: #f),
-	 mv, end: count)
+        (make(<simple-object-vector>, size: n, fill: #f),
+         mv, end: count)
     end;
 end method;
 
@@ -1187,8 +1187,8 @@ end method execute;
 
 define method execute (state :: <machine-state>, c :: <set-cell-value!>)
   fetch(state, c.temporary)
-    := (fetch(state, c.computation-cell).cell-value 
-	  := fetch(state, c.computation-value));
+    := (fetch(state, c.computation-cell).cell-value
+          := fetch(state, c.computation-value));
 end method execute;
 
 /// TOP LEVEL FORMS
@@ -1226,7 +1226,7 @@ define method interpreter-transaction-value (transaction-id) => (val)
   element($transactions, transaction-id, default: #[])
 end method;
 
-define sideways method interpret-top-level-form 
+define sideways method interpret-top-level-form
     (form :: <top-level-form>, #key trace? = #f) => (transaction-id)
   let init-method = form-init-method(form);
   let vals =

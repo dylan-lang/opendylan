@@ -46,11 +46,11 @@ define module dfmc-runtime-execution
   use variable-search;
   use dfmc-core,
     exclude: { keyword-specifiers, xep, xep-setter, iep, closure-offset,
-	       <namespace>, <library>, <module> };
+               <namespace>, <library>, <module> };
   use dfmc-imports;
   use dfmc-optimization;
   use dfmc-back-end;
-  use dfmc-management, 
+  use dfmc-management,
     export: { interpret-top-level-form, unregister-interpreter-transaction };
   use projects,
     exclude: { load-library };
