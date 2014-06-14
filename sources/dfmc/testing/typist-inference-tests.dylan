@@ -83,27 +83,11 @@ end;
 // This isn't used by default, but is useful to have around when debugging.
 ignore(show-lambda-type-estimates);
 
-
 ///
 /// Substrate for defining type inference tests.
 ///
 
-define variable *typist-inference-tests* = #();
-
 define variable *static-type-check?-verbose?* :: <boolean> = #f;
-
-define function run-typist-inference-tests
-  (#key tests     = *typist-inference-tests*,
-        safely?   = #t,
-        verbose?  = #t,
-        progress? = *standard-output*,
-        report?   = *standard-output*) => ()
-  // Run just the typist inferenece tests and print a short report.
-  dynamic-bind (*static-type-check?-verbose?* = verbose?)
-    run-dfmc-tests(tests: tests, safely?: safely?, progress?: progress?,
-                   report?: report?)
-  end
-end;
 
 // *** Well, really you should be inspecting the <table>.
 define function static-type-check?(lambda        :: <&method>,
@@ -154,25 +138,23 @@ define macro typist-inference-test-definer
   { define typist-inference-test ?test-name:name
       ?subtests
     end }
-  => { *typist-inference-tests* := add-new!(*typist-inference-tests*,
-                                            ?#"test-name");
-       *tests*[?#"test-name"] :=
-          method ()
-            with-testing-context (#f)
-              ?subtests
-            end
-          end }
+  => {
+       define test ?test-name ()
+         with-testing-context (#f)
+           ?subtests
+         end
+       end }
 subtests:
   // ;-separated test specs expand into a conjunction of test results
   { }               => { }
-  { ?subtest; ... } => { ?subtest & ... }
+  { ?subtest; ... } => { ?subtest ... }
 subtest:
   // Wrap with try ... end and hand off to static-type-check? to match
   // against the values specification.
   { } => { }
   { ?:expression TYPE: ?val:* }
-    => { static-type-check?(try-top-level-init-form(?expression),
-                            make(<type-estimate-values>, ?val)) }
+    => { assert-true(static-type-check?(try-top-level-init-form(?expression),
+                                        make(<type-estimate-values>, ?val))); }
 end;
 
 define function class-te(cl :: <symbol>) => (cte :: <type-estimate-class>)
@@ -336,3 +318,15 @@ define typist-inference-test typist-raw-constants
              rest: #f
 end;
 
+define suite dfmc-typist-inference-suite ()
+  test typist-constants;
+  test typist-values;
+  test typist-merge;
+  test typist-check;
+  test typist-assign;
+  test typist-lambda;
+  test typist-unwind-protect;
+  test typist-bind-exit;
+  test typist-primops;
+  test typist-raw-constants;
+end;
