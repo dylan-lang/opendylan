@@ -13,7 +13,6 @@ define method analyze-environments
     (f :: <&lambda>) => (changed? :: <boolean>);
   compute-closure(f.environment);
   // convert-closure(f.environment);
-  // access(dfmc-back-end, print-method-out)(f);
   for (entry in f.environment.entries)
     analyze-block(f.environment, entry);
   end for;

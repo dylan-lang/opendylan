@@ -599,7 +599,7 @@ end function;
 
 
 define method shadow-model-properties (p :: <model-properties>)
-//  DEBUG-ASSERT(object-class(p) == access(dfmc-common,<mapped-model-properties>));
+  // p should actually be <mapped-model-properties> (or was at one point in history)
   shadow-properties(p)
 end method;
 

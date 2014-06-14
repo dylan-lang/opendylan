@@ -513,7 +513,6 @@ define variable *limited-instances* = #();
 // *** Performance analysis code.
 define function show-singleton-stats(#key data = *limited-instances*) => ()
   // Investigate the singletons.
-  let do-with-testing-context = access(dfmc-testing, do-with-testing-context);
   with-testing-context (#f)
     let n-classes = 0;
     let n-strings = 0;

@@ -1,12 +1,6 @@
 User-project library
 --------------------
 
-Developers: to continue using the old setup:
-
-access(projects-implementation, *default-project-class*) := <registry-project>;
-
-Otherwise the setup is as follows:
-
 All registry projects are system projects and will not be recompiled
 (usually ;-).
 
