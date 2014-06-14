@@ -204,10 +204,6 @@ define compiler-open generic body-setter (value, function);
 define compiler-open generic environment (function);
 define compiler-open generic environment-setter (value, function);
 
-define method environment (f :: <&method>) => (res)
-  #[]
-end method;
-
 define compiler-open generic function (function);
 define compiler-open generic function-setter (value, function);
 
