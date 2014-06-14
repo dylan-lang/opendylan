@@ -96,6 +96,7 @@ C_RUNTIME_OBJS    = $(OBJDIR)/c-run-time.o \
                     $(OBJDIR)/c-support.o \
                     $(OBJDIR)/c-primitives-debug.o \
                     $(OBJDIR)/c-primitives-math.o \
+                    $(OBJDIR)/c-run-time-nlx.o \
                     $(OBJDIR)/posix-threads.o
 
 ifeq ($(GC_CHOICE),mps)
