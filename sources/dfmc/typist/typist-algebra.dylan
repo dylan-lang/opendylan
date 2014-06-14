@@ -503,7 +503,6 @@ define function show-union-stats (#key data = *type-estimate-union-args*) => ()
     add!(arg-types, object-class(arg1));
     add!(arg-types, object-class(arg2));
     // *** Arrgh.  So we can call with-testing-context, so we can do algebra.
-    let do-with-testing-context = access(dfmc-testing, do-with-testing-context);
     with-testing-context (#f)
       case
         type-estimate-subtype?(arg1, arg2) => left-subtype  := left-subtype  + 1;

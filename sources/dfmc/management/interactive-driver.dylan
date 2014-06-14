@@ -28,32 +28,6 @@ define method note-definitions-updated (layer :: <interactive-layer>) => ()
   // Interactive compilation doesn't invalidate databases.
 end method;
 
-/*
-in: dfmc-debug;
-
-define function itest-sr (text, #key module = "internal")
- make(access(projects-implementation,<string-template-source-record>),
-      contents: as(<byte-vector>,text),
-      module: as(<symbol>, module),
-      name: "Test");
-end function;
-
-define function itest (text, #key module = "internal",
-		                  library = "dylan",
-		                  target = list("New target"))
-  execute-source
-    (lookup-interactive-context(target, lookup-library-description(library)),
-     #"no-context",
-     list(itest-sr(text, module: module)));
-end function;
-
-define function htest (text, #key module = "functional-extensions-internals",
-		                  library = "functional-extensions",
-		                  target = list("New target"))
-  itest(text, module: module, library: library, target: target)
-end function;
-*/
-
 define function ensure-layer-compiled (layer :: <interactive-layer>, flags, #key heap? = #t)
   ensure-library-models-computed(layer);
   // ensure-library-models-finished(layer);
