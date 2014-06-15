@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //// find the final <computation> by following control flow
 
-// Uses of this function should be considered with strict scutiny.
+// Uses of this function should be considered with strict scrutiny.
 // The converters should be made to return the first and last computations
 // they build in a sequence, which would obviate most uses.  Use of
 // this function could lead to O(n^2) behavior where O(n) is expected.
