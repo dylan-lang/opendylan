@@ -401,7 +401,7 @@ end method;
 // multiple values
 
 define method print-computation (stream :: <stream>, c :: <values>)
-  format(stream, "[VALUES", c.fixed-values);
+  format(stream, "[VALUES");
   for (v in c.fixed-values)
     format(stream, " %=", v);
   end for;
