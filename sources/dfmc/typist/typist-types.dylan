@@ -389,7 +389,7 @@ define method print-type-estimate-internals(vte :: <type-estimate-values>,
   write(stream, "values(");
   print-separated-collection(fixed-vals, stream: stream);
   when (rest-vals)
-    when (fixed-vals ~== #())
+    when (~empty?(fixed-vals))
       write(stream, ", ");
     end;
     format(stream, "#rest %s", rest-vals)
