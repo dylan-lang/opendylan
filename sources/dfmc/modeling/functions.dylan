@@ -201,8 +201,10 @@ define compiler-open generic parameters-setter (value, function);
 define compiler-open generic body (function);
 define compiler-open generic body-setter (value, function);
 
-define compiler-open generic environment (function);
-define compiler-open generic environment-setter (value, function);
+define compiler-open generic environment (function)
+ => (environment :: false-or(<environment>));
+define compiler-open generic environment-setter
+    (value :: false-or(<environment>), function);
 
 define compiler-open generic function (function);
 define compiler-open generic function-setter (value, function);
@@ -258,7 +260,7 @@ define dood-class <lambda-body> (<object>)
   weak slot lambda-body-spec = #f,
     reinit-expression: #f,
     init-keyword: body-spec:;
-  slot lambda-dfm-environment = #f,
+  slot lambda-dfm-environment :: false-or(<environment>) = #f,
     init-keyword: environment:;
   // TODO: TIE TO REAL PARAMETERS
   slot lambda-dfm-parameters :: false-or(<simple-object-vector>) = #f,
@@ -317,7 +319,7 @@ end macro;
 define lambda-body-transfer body-spec,
   lambda-body-spec (<object>);
 define lambda-body-transfer environment,
-  lambda-dfm-environment (<object>);
+  lambda-dfm-environment (false-or(<environment>));
 define lambda-body-transfer parameters,         
   lambda-dfm-parameters (false-or(<simple-object-vector>));
 define lambda-body-transfer body,               
@@ -941,8 +943,8 @@ define method lookup-compile-stage-function (accessor :: <&code>)
 end method;
 
 define property-delegation (<&iep>, function)
-  parameters, environment, body, data, xep, keyword-specifiers,
-  maximum-label, name, binding
+  parameters, environment :: false-or(<environment>), body, data,
+  xep, keyword-specifiers, maximum-label, name, binding
 end property-delegation;
 
 define property-delegation-getters (<&iep>, function)
