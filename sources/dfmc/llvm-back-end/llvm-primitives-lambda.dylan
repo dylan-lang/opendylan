@@ -495,10 +495,80 @@ define side-effecting stateless indefinite-extent &unimplemented-primitive-descr
   //---*** Fill this in...
 end;
 
-define side-effecting stateless indefinite-extent can-unwind &unimplemented-primitive-descriptor primitive-mep-apply-with-optionals // runtime
-    (function :: <object>, next-methods :: <object>, args :: <object>)
+define side-effecting stateless indefinite-extent can-unwind &runtime-primitive-descriptor primitive-mep-apply-with-optionals
+    (meth :: <object>, next-methods :: <object>, mepargs :: <object>)
  => (#rest values);
-  //---*** Fill this in...
+  let word-size = back-end-word-size(be);
+  let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
+  let lambda-class :: <&class> = dylan-value(#"<keyword-method>");
+
+  // Read the method's MEP
+  let meth-cast = op--object-pointer-cast(be, meth, lambda-class);
+  let mep-slot-ptr = op--getslotptr(be, meth-cast, lambda-class, #"mep");
+  let mep = ins--load(be, mep-slot-ptr, alignment: word-size);
+
+  // Read the size of the arguments vector
+  let mepargs-cast = op--object-pointer-cast(be, mepargs, sov-class);
+  let vector-size
+    = call-primitive(be, primitive-vector-size-descriptor, mepargs-cast);
+
+  // Create a basic block for each case
+  let default-bb = make(<llvm-basic-block>, name: "bb.default");
+  let return-bb = make(<llvm-basic-block>, name: "bb.return");
+  let switch-cases = make(<stretchy-object-vector>);
+  for (count from 0 to $entry-point-argument-count)
+    add!(switch-cases, count);
+    add!(switch-cases, make(<llvm-basic-block>));
+  end;
+
+  // Branch to the appropriate case
+  ins--switch(be, vector-size, default-bb, switch-cases);
+
+  // Generate all of the cases
+  let result-phi-arguments = make(<stretchy-object-vector>);
+  for (count from 0 to $entry-point-argument-count)
+    ins--block(be, switch-cases[count * 2 + 1]);
+
+    let parameter-values = make(<stretchy-object-vector>);
+    // Retrieve argument values from vector
+    for (i from 0 below count)
+      add!(parameter-values,
+           call-primitive(be, primitive-vector-element-descriptor,
+                          mepargs-cast, llvm-back-end-value-function(be, i)));
+    end for;
+
+    // Chain to the MEP
+    let parameter-types
+      = make(<simple-object-vector>, size: count + 3);
+    parameter-types[0] := $llvm-object-pointer-type; // next
+    parameter-types[1] := $llvm-object-pointer-type; // function
+    parameter-types[2] := be.%type-table["iWord"]; // argument count
+    fill!(parameter-types, $llvm-object-pointer-type, start: 3);
+    let mep-type
+      = make(<llvm-function-type>,
+             return-type: llvm-reference-type(be, be.%mv-struct-type),
+             parameter-types: parameter-types,
+             varargs?: #f);
+    let mep-cast = ins--bitcast(be, mep, llvm-pointer-to(be, mep-type));
+    let result
+      = ins--tail-call
+          (be, mep-cast,
+           concatenate(vector(next-methods, meth, count), parameter-values),
+           calling-convention: $llvm-calling-convention-c);
+
+    add!(result-phi-arguments, result);
+    add!(result-phi-arguments, be.llvm-builder-basic-block);
+    ins--br(be, return-bb);
+  end for;
+
+  // Default case (too many arguments)
+  ins--block(be, default-bb);
+  ins--call-intrinsic(be, "llvm.trap", vector());
+  ins--unreachable(be);
+
+  // Return
+  ins--block(be, return-bb);
+  ins--phi(be, result-phi-arguments)
 end;
 
 define side-effecting stateless indefinite-extent can-unwind &runtime-primitive-descriptor primitive-engine-node-apply-with-optionals
