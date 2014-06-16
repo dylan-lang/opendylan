@@ -430,6 +430,7 @@ CHECK_APPS = \
 	deuce-test-suite-app \
 	jam-test-suite-app \
 	channels-tests \
+	variable-search-tests \
 	command-line-parser-test-suite-app \
 	logging-test-suite-app \
 	regular-expressions-test-suite \
