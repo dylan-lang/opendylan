@@ -2,7 +2,8 @@ Library: variable-search
 Target-Type: dll
 Files:   library
          protocol
-         unix-variable-search
+         locate-variable
+         unix-variable-value
 C-Libraries: -ldl
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
