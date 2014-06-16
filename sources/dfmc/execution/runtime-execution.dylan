@@ -58,10 +58,10 @@ define method external-binding? (state :: <machine-state>, x :: <module-binding>
   namespace-library-description(x.binding-home) ~== state-library(state)
 end method;
 
-define method load-dll (name) => ()
-  format-out("DLL LOADING %s\n", name);
-  let merged-name = merged-project-name(as(<string>, name));
-  let project = lookup-named-project(as(<symbol>, merged-name));
+define method load-dll (name :: <symbol>) => ()
+  format-out("DLL LOADING %=\n", name);
+  let merged-name = merged-project-name(name);
+  let project = lookup-named-project(merged-name);
   let dll-name = project & project.project-executable-name;
   format-out("  DLL-NAME %s\n", dll-name);
   unless (dll-name)
