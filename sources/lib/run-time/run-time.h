@@ -82,7 +82,8 @@ typedef long double             DEFLT;
 typedef unsigned long           DADDR;
 typedef char*                   DBSTR;
 typedef const char*             DCBSTR;
-typedef void*                   D;
+typedef void*                   dylan_value;
+typedef dylan_value             D;
 
 /* COMPILER-SPECIFIC INTRINSICS */
 
@@ -904,9 +905,9 @@ extern D primitive_slot_value(D object, DSINT position);
 
 extern D SLOT_VALUE(D object, DSINT position);
 
-#define REPEATED_D_SLOT_VALUE(object, base_position, position) \
+#define REPEATED_DYLAN_VALUE_SLOT_VALUE(object, base_position, position) \
   ((((dylan_object*)object)->slots)[base_position + position])
-#define REPEATED_D_SLOT_VALUE_SETTER(new_value, object, base_position, position) \
+#define REPEATED_DYLAN_VALUE_SLOT_VALUE_SETTER(new_value, object, base_position, position) \
   ((((dylan_object*)object)->slots)[base_position + position] = (new_value))
 
 #define REPEATED_DBCHR_SLOT_VALUE(object, position, index) \
@@ -944,9 +945,9 @@ extern D SLOT_VALUE(D object, DSINT position);
   (((DDWORD*)(((dylan_object*)object)->slots))[base_position + R(position)] = (new_value))
 
 
-#define REPEATED_D_SLOT_VALUE_TAGGED(object, base_position, position) \
+#define REPEATED_DYLAN_VALUE_SLOT_VALUE_TAGGED(object, base_position, position) \
   ((((dylan_object*)object)->slots)[base_position + R(position)])
-#define REPEATED_D_SLOT_VALUE_TAGGED_SETTER(new_value, object, base_position, position) \
+#define REPEATED_DYLAN_VALUE_SLOT_VALUE_TAGGED_SETTER(new_value, object, base_position, position) \
   ((((dylan_object*)object)->slots)[base_position + R(position)] = (new_value))
 
 #define REPEATED_DWORD_SLOT_VALUE_TAGGED(object, base_position, position) \
@@ -1693,9 +1694,9 @@ extern void  primitive_exit_application (DSINT code) NORETURN_FUNCTION;
 
 /* TEMPORARY PRIMITIVES FOR ASSIGNMENT */
 
-extern D MAKE_D_CELL(D);
-#define GET_D_CELL_VAL(c)       (*(D*)c)
-#define SET_D_CELL_VAL(c, v)    (*(D*)c = v)
+extern D MAKE_DYLAN_VALUE_CELL(D);
+#define GET_DYLAN_VALUE_CELL_VAL(c)       (*(D*)c)
+#define SET_DYLAN_VALUE_CELL_VAL(c, v)    (*(D*)c = v)
 
 extern D MAKE_DBCHR_CELL(DBCHR);
 #define GET_DBCHR_CELL_VAL(c)           (*(DBCHR*)c)

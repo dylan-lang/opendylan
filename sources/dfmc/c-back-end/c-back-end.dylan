@@ -33,7 +33,7 @@ define constant $gf-xep-string          = "gf_xep";
 define constant $key-mep-string         = "key_mep";
 define constant $gf-optional-xep-string = "gf_optional_xep";
 
-define constant $dylan-type-string = "D";
+define constant $dylan-type-string = "dylan_value";
 
 define constant $initialize-closure-string
   = "INIT_CLOSURE";

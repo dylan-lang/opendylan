@@ -3550,7 +3550,7 @@ D primitive_engine_node_apply_spread (ENGINE* e, D parent, int n, ...) {
 
 /* temporary primitives for assignment */
 
-D MAKE_D_CELL(D value) {
+D MAKE_DYLAN_VALUE_CELL(D value) {
   D cell = primitive_allocate(1);
   *(D*)cell = value;
   return cell;
