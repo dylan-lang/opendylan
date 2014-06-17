@@ -202,53 +202,53 @@ static inline long atomic_cas(long *destination, long exchange, long compare) {
 typedef D (*DFN)(D,int,...);
 typedef D (*DLFN)();
 
-struct _IClass;
-struct _dylantype;
-struct _DylanClass;
+struct _dylan_implementation_class;
+struct _dylan_type;
+struct _dylan_class;
 
 /* This corresponds to <mm-wrapper> defined in
  * dfmc/modeling/objects.dylan.
  */
 typedef struct _Wrapper {
-  struct _Wrapper * wrapper_wrapper;
-  struct _IClass  * iclass;
-  D                 subtype_mask;
-  DMINT             fixed_part;
-  DMINT             variable_part;
-  D                 number_patterns;
-  DMINT             patterns[1]; /* REPEATED */
+  struct _Wrapper *                     wrapper_wrapper;
+  struct _dylan_implementation_class  * iclass;
+  D                                     subtype_mask;
+  DMINT                                 fixed_part;
+  DMINT                                 variable_part;
+  D                                     number_patterns;
+  DMINT                                 patterns[1]; /* REPEATED */
 } Wrapper;
 
-typedef struct _obj {
+typedef struct _dylan_object {
   Wrapper * mm_wrapper;
   D         slots[1];
-} OBJECT;
+} dylan_object;
 
-typedef struct _dsf_ {
+typedef struct _dylan_single_float {
   Wrapper * mm_wrapper;
   DSFLT     data;
-} DSF_;
+} dylan_single_float;
 
-typedef struct _ddf_ {
+typedef struct _dylan_double_float {
   Wrapper * mm_wrapper;
   DDFLT     data;
-} DDF_;
+} dylan_double_float;
 
-typedef struct _dmi_ {
+typedef struct _dylan_machine_word {
   Wrapper * mm_wrapper;
   DMINT     data;
-} DMI_;
+} dylan_machine_word;
 
-typedef struct _dumi_ {
+typedef struct _dylan_unsigned_machine_word {
   Wrapper * mm_wrapper;
   DUMINT    data;
-} DUMI_;
+} dylan_unsigned_machine_word;
 
-typedef struct _dbi_ {
+typedef struct _dylan_double_integer {
   Wrapper * mm_wrapper;
   DUMINT    low;
   DMINT     high;
-} DBI_;
+} dylan_double_integer;
 
 /* This is the implementation class and corresponds
  * to the <implementation-class> defined in
@@ -260,52 +260,52 @@ typedef struct _dbi_ {
  * in dfmc/modeling/objects.dylan or the copy of it
  * in dylan/class.dylan.
  */
-typedef struct _IClass {
+typedef struct _dylan_implementation_class {
   Wrapper *             my_wrapper;
   D                     the_class_properties;
-  struct _DylanClass  * the_class;
+  struct _dylan_class * the_class;
   D                     the_wrapper;
-} ICLASS;
+} dylan_implementation_class;
 
 /* This corresponds to <type> defined in
  * dfmc/modeling/objects.dylan.
  */
-typedef struct _dylantype {
+typedef struct _dylan_type {
   Wrapper * mm_wrapper;
   DLFN      instancep_function;
-} DYLANTYPE;
+} dylan_type;
 
 /* This corresponds to <class> defined in
  * dfmc/modeling/objects.dylan.
  */
-typedef struct _DylanClass {
-  Wrapper * my_wrapper;
-  DLFN      instancep_function;
-  D         debug_name;
-  ICLASS  * the_iclass;
-  D         subtype_bit;
-} DYLANCLASS;
+typedef struct _dylan_class {
+  Wrapper *                     my_wrapper;
+  DLFN                          instancep_function;
+  D                             debug_name;
+  dylan_implementation_class  * the_iclass;
+  D                             subtype_bit;
+} dylan_class;
 
 #define OBJECT_WRAPPER(x) \
-    (((OBJECT*)(x))->mm_wrapper)
+    (((dylan_object*)(x))->mm_wrapper)
 
 #define OBJECT_ICLASS(x) \
     (((Wrapper*)(OBJECT_WRAPPER(x)))->iclass)
 
 #define OBJECT_CLASS(x) \
-    (((ICLASS*)(OBJECT_ICLASS(x)))->the_class)
+    (((dylan_implementation_class*)(OBJECT_ICLASS(x)))->the_class)
 
 #define CLASS_WRAPPER(x) \
-    (((DYLANCLASS*)(x))->the_wrapper)
+    (((dylan_class*)(x))->the_wrapper)
 
 #define CLASS_ICLASS(x) \
-    (((DYLANCLASS*)(x))->the_iclass)
+    (((dylan_class*)(x))->the_iclass)
 
 #define ICLASS_WRAPPER(x) \
-    (((ICLASS*)(x))->the_wrapper)
+    (((dylan_implementation_class*)(x))->the_wrapper)
 
 #define ICLASS_CLASS(x) \
-    (((ICLASS*)(x))->the_class)
+    (((dylan_implementation_class*)(x))->the_class)
 
 #define WRAPPER_ICLASS(x) \
     (((Wrapper*)(x))->iclass)
@@ -313,80 +313,72 @@ typedef struct _DylanClass {
 #define WRAPPER_CLASS(x) \
     (ICLASS_CLASS(WRAPPER_ICLASS(x)))
 
-
-
-typedef DSF_*  DSF;
-typedef DDF_*  DDF;
-typedef DMI_*  DMI;
-typedef DUMI_* DUMI;
-typedef DBI_*  DBI;
-
 #define define_SOV(_name, _size) \
-  typedef struct _sov##_name { \
+  typedef struct _dylan_simple_object_vector_##_name { \
     D class; \
     D size; \
     D data[_size]; \
   } _name
 
-define_SOV(SOV, 1);
+define_SOV(dylan_simple_object_vector, 1);
 
-static inline int vector_size (SOV* vector) {
+static inline int vector_size (dylan_simple_object_vector* vector) {
   return(R(vector->size));
 }
 
-static inline int vector_size_setter (int new_size, SOV* vector) {
+static inline int vector_size_setter (int new_size, dylan_simple_object_vector* vector) {
   vector->size = I(new_size);
   return(new_size);
 }
 
-static inline D* vector_data(SOV* vector) {
+static inline D* vector_data(dylan_simple_object_vector* vector) {
   return(vector->data);
 }
 
-static inline D vector_ref(SOV* vector, int offset) {
-  return(vector_data((SOV*)vector)[offset]);
+static inline D vector_ref(dylan_simple_object_vector* vector, int offset) {
+  return(vector_data((dylan_simple_object_vector*)vector)[offset]);
 }
 
 #define define_byte_string(_name, _size) \
-  typedef struct _bs##_name { \
+  typedef struct _dylan_byte_string_##_name { \
     D class; \
     D size; \
     char data[_size + 1]; \
   } _name
 
-define_byte_string(BS, 0);
+define_byte_string(dylan_byte_string, 0);
 
-typedef struct _symbol {
+typedef struct _dylan_symbol {
   D class;
   D name;
-} SYMBOL;
+} dylan_symbol;
 
-typedef struct _fn {
+typedef struct _dylan_simple_method {
   D    class;
   DFN  xep;
   D    signature;
   DLFN mep;
-} FN;
+} dylan_simple_method;
 
-typedef struct _cfn {
+typedef struct _dylan_simple_closure_method {
   D    class;
   DFN  xep;
   D    signature;
   DLFN mep;
   D    size;
   D    environment[0];
-} CFN;
+} dylan_simple_closure_method;
 
-typedef struct _kfn {
+typedef struct _dylan_keyword_method {
   D    class;
   DFN  xep;
   D    signature;
   DLFN mep;
   DLFN iep;
   D    keyword_specifiers;
-} KFN;
+} dylan_keyword_method;
 
-typedef struct _kcfn {
+typedef struct _dylan_keyword_closure_method {
   D    class;
   DFN  xep;
   D    signature;
@@ -395,21 +387,21 @@ typedef struct _kcfn {
   D    keyword_specifiers;
   D    size;
   D    environment[0];
-} KCFN;
+} dylan_keyword_closure_method;
 
-typedef struct _accessor_method {
+typedef struct _dylan_accessor_method {
   D    header;
   DFN  xep;
   D    slotd;
-} ACCESSOR;
+} dylan_accessor_method;
 
-typedef struct _sig {
-  D    class;
-  D    properties;
-  SOV* required;
-  SOV* values;
-  D    rest_value;
-} SIG;
+typedef struct _dylan_signature {
+  D                           class;
+  D                           properties;
+  dylan_simple_object_vector* required;
+  dylan_simple_object_vector* values;
+  D                           rest_value;
+} dylan_signature;
 
 typedef struct _engine {
   D    class;
@@ -478,7 +470,7 @@ typedef struct _profiling_cache_header_engine_node {
 } PROFILINGCACHEHEADERENGINE;
 
 
-typedef struct _gfn {
+typedef struct _dylan_generic_function {
   D       class;
   DFN     xep;
   D       signature;
@@ -486,7 +478,7 @@ typedef struct _gfn {
   D       debug_name;
   D       methods;
   ENGINE* engine;
-} GFN;
+} dylan_generic_function;
 
 #define DEFUN(name, xep, iep)   D name[] = {I(0),I(0),I(0),(D)xep,(D)iep,I(0),I(0),I(0),I(0)}
 
@@ -572,7 +564,7 @@ extern D NLX (Bind_exit_frame*, D);
 
 typedef struct _teb {
         /* dispatch context (used together, keep close) */
-        FN *function;
+        dylan_simple_method* function;
         int argument_count;
         D   next_methods;
 
@@ -609,44 +601,44 @@ PURE_FUNCTION static inline TEB* get_teb()
 
 /* CALLING CONVENTION ENTRY POINTS */
 
-extern D XEP(FN*, int, ...);
+extern D XEP(dylan_simple_method*, int, ...);
 
 extern D topI();
 
-extern D xep_0 (FN*,int);
-extern D xep_1 (FN*,int,D);
-extern D xep_2 (FN*,int,D,D);
-extern D xep_3 (FN*,int,D,D,D);
-extern D xep_4 (FN*,int,D,D,D,D);
-extern D xep_5 (FN*,int,D,D,D,D,D);
-extern D xep_6 (FN*,int,D,D,D,D,D,D);
-extern D xep_7 (FN*,int,D,D,D,D,D,D,D);
-extern D xep_8 (FN*,int,D,D,D,D,D,D,D,D);
-extern D xep_9 (FN*,int,D,D,D,D,D,D,D,D,D);
-extern D xep   (FN*,int,...);
+extern D xep_0 (dylan_simple_method*,int);
+extern D xep_1 (dylan_simple_method*,int,D);
+extern D xep_2 (dylan_simple_method*,int,D,D);
+extern D xep_3 (dylan_simple_method*,int,D,D,D);
+extern D xep_4 (dylan_simple_method*,int,D,D,D,D);
+extern D xep_5 (dylan_simple_method*,int,D,D,D,D,D);
+extern D xep_6 (dylan_simple_method*,int,D,D,D,D,D,D);
+extern D xep_7 (dylan_simple_method*,int,D,D,D,D,D,D,D);
+extern D xep_8 (dylan_simple_method*,int,D,D,D,D,D,D,D,D);
+extern D xep_9 (dylan_simple_method*,int,D,D,D,D,D,D,D,D,D);
+extern D xep   (dylan_simple_method*,int,...);
 
-extern D rest_xep_0 (FN*,int,...);
-extern D rest_xep_1 (FN*,int,D,...);
-extern D rest_xep_2 (FN*,int,D,D,...);
-extern D rest_xep_3 (FN*,int,D,D,D,...);
-extern D rest_xep_4 (FN*,int,D,D,D,D,...);
-extern D rest_xep_5 (FN*,int,D,D,D,D,D,...);
-extern D rest_xep_6 (FN*,int,D,D,D,D,D,D,...);
-extern D rest_xep_7 (FN*,int,D,D,D,D,D,D,D,...);
-extern D rest_xep_8 (FN*,int,D,D,D,D,D,D,D,D,...);
-extern D rest_xep_9 (FN*,int,D,D,D,D,D,D,D,D,D,...);
-extern D rest_xep   (FN*,int,...);
+extern D rest_xep_0 (dylan_simple_method*,int,...);
+extern D rest_xep_1 (dylan_simple_method*,int,D,...);
+extern D rest_xep_2 (dylan_simple_method*,int,D,D,...);
+extern D rest_xep_3 (dylan_simple_method*,int,D,D,D,...);
+extern D rest_xep_4 (dylan_simple_method*,int,D,D,D,D,...);
+extern D rest_xep_5 (dylan_simple_method*,int,D,D,D,D,D,...);
+extern D rest_xep_6 (dylan_simple_method*,int,D,D,D,D,D,D,...);
+extern D rest_xep_7 (dylan_simple_method*,int,D,D,D,D,D,D,D,...);
+extern D rest_xep_8 (dylan_simple_method*,int,D,D,D,D,D,D,D,D,...);
+extern D rest_xep_9 (dylan_simple_method*,int,D,D,D,D,D,D,D,D,D,...);
+extern D rest_xep   (dylan_simple_method*,int,...);
 
-extern D rest_key_xep_1 (FN*,int,...);
-extern D rest_key_xep_2 (FN*,int,...);
-extern D rest_key_xep_3 (FN*,int,...);
-extern D rest_key_xep_4 (FN*,int,...);
-extern D rest_key_xep_5 (FN*,int,...);
-extern D rest_key_xep_6 (FN*,int,...);
-extern D rest_key_xep_7 (FN*,int,...);
-extern D rest_key_xep_8 (FN*,int,...);
-extern D rest_key_xep_9 (FN*,int,...);
-extern D rest_key_xep   (FN*,int,...);
+extern D rest_key_xep_1 (dylan_simple_method*,int,...);
+extern D rest_key_xep_2 (dylan_simple_method*,int,...);
+extern D rest_key_xep_3 (dylan_simple_method*,int,...);
+extern D rest_key_xep_4 (dylan_simple_method*,int,...);
+extern D rest_key_xep_5 (dylan_simple_method*,int,...);
+extern D rest_key_xep_6 (dylan_simple_method*,int,...);
+extern D rest_key_xep_7 (dylan_simple_method*,int,...);
+extern D rest_key_xep_8 (dylan_simple_method*,int,...);
+extern D rest_key_xep_9 (dylan_simple_method*,int,...);
+extern D rest_key_xep   (dylan_simple_method*,int,...);
 
 extern D key_mep_1 (D a1, ...);
 extern D key_mep_2 (D a1, ...);
@@ -659,24 +651,24 @@ extern D key_mep_8 (D a1, ...);
 extern D key_mep_9 (D a1, ...);
 extern D key_mep (D a1, ...);
 
-extern D gf_xep_0 (FN* fn, int n);
-extern D gf_xep_1 (FN* fn, int n, D a1);
-extern D gf_xep_2 (FN* fn, int n, D a1, D a2);
-extern D gf_xep_3 (FN* fn, int n, D a1, D a2, D a3);
-extern D gf_xep_4 (FN* fn, int n, D a1, D a2, D a3, D a4);
-extern D gf_xep_5 (FN* fn, int n, D a1, D a2, D a3, D a4, D a5);
-extern D gf_xep_6 (FN* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6);
-extern D gf_xep_7 (FN* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6, D a7);
-extern D gf_xep   (FN* fn, int n, ...);
+extern D gf_xep_0 (dylan_simple_method* fn, int n);
+extern D gf_xep_1 (dylan_simple_method* fn, int n, D a1);
+extern D gf_xep_2 (dylan_simple_method* fn, int n, D a1, D a2);
+extern D gf_xep_3 (dylan_simple_method* fn, int n, D a1, D a2, D a3);
+extern D gf_xep_4 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4);
+extern D gf_xep_5 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5);
+extern D gf_xep_6 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6);
+extern D gf_xep_7 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6, D a7);
+extern D gf_xep   (dylan_simple_method* fn, int n, ...);
 
-extern D gf_optional_xep_0 (FN* fn, int n, ...);
-extern D gf_optional_xep_1 (FN* fn, int n, ...);
-extern D gf_optional_xep_2 (FN* fn, int n, ...);
-extern D gf_optional_xep_3 (FN* fn, int n, ...);
-extern D gf_optional_xep_4 (FN* fn, int n, ...);
-extern D gf_optional_xep_5 (FN* fn, int n, ...);
-extern D gf_optional_xep_6 (FN* fn, int n, ...);
-extern D gf_optional_xep   (FN* fn, int n, ...);
+extern D gf_optional_xep_0 (dylan_simple_method* fn, int n, ...);
+extern D gf_optional_xep_1 (dylan_simple_method* fn, int n, ...);
+extern D gf_optional_xep_2 (dylan_simple_method* fn, int n, ...);
+extern D gf_optional_xep_3 (dylan_simple_method* fn, int n, ...);
+extern D gf_optional_xep_4 (dylan_simple_method* fn, int n, ...);
+extern D gf_optional_xep_5 (dylan_simple_method* fn, int n, ...);
+extern D gf_optional_xep_6 (dylan_simple_method* fn, int n, ...);
+extern D gf_optional_xep   (dylan_simple_method* fn, int n, ...);
 
 extern D gf_iep_0 ();
 extern D gf_iep_1 (D a1);
@@ -688,15 +680,15 @@ extern D gf_iep_6 (D a1, D a2, D a3, D a4, D a5, D a6);
 extern D gf_iep_7 (D a1, D a2, D a3, D a4, D a5, D a6, D a7);
 extern D gf_iep   (D argvec);
 
-extern D slotacc_single_q_instance_getter_xep (ACCESSOR* am, int n, D a1);
-extern D slotacc_single_q_instance_setter_xep (ACCESSOR* am, int n, D a1, D a2);
-extern D slotacc_single_q_class_getter_xep (ACCESSOR* am, int n, D a1);
-extern D slotacc_single_q_class_setter_xep (ACCESSOR* am, int n, D a1, D a2);
-extern D slotacc_repeated_instance_getter_xep (ACCESSOR* am, int n, D a1, D a2);
-extern D slotacc_repeated_instance_setter_xep (ACCESSOR* am, int n, D a1, D a2, D a3);
+extern D slotacc_single_q_instance_getter_xep (dylan_accessor_method* am, int n, D a1);
+extern D slotacc_single_q_instance_setter_xep (dylan_accessor_method* am, int n, D a1, D a2);
+extern D slotacc_single_q_class_getter_xep (dylan_accessor_method* am, int n, D a1);
+extern D slotacc_single_q_class_setter_xep (dylan_accessor_method* am, int n, D a1, D a2);
+extern D slotacc_repeated_instance_getter_xep (dylan_accessor_method* am, int n, D a1, D a2);
+extern D slotacc_repeated_instance_setter_xep (dylan_accessor_method* am, int n, D a1, D a2, D a3);
 extern D primitive_set_accessor_method_xep (D am, D what);
 
-#define CALLN(fn,n) (D)((((FN*)fn)->xep)(((FN*)(fn)),n
+#define CALLN(fn,n) (D)((((dylan_simple_method*)fn)->xep)(((dylan_simple_method*)(fn)),n
 #define CALL0(fn) CALLN(fn,0)))
 #define CALL1(fn,a1) CALLN(fn,1),(a1)))
 #define CALL2(fn,a1,a2) CALLN(fn,2),(a1),(a2)))
@@ -712,11 +704,11 @@ extern D primitive_set_accessor_method_xep (D am, D what);
 #define MEP_CALL_PROLOG(fn,nm,ac) \
   {\
     TEB* mcp_teb = get_teb(); \
-    mcp_teb->function = (FN*)(fn); \
+    mcp_teb->function = (dylan_simple_method*)(fn); \
     mcp_teb->next_methods = (nm); \
     mcp_teb->argument_count = (ac); \
   }
-#define MEP_CALLN(fn) (D)((((FN*)fn)->mep)(
+#define MEP_CALLN(fn) (D)((((dylan_simple_method*)fn)->mep)(
 #define MEP_CALL0(fn) MEP_CALLN(fn)))
 #define MEP_CALL1(fn,a1) MEP_CALLN(fn)(a1)))
 #define MEP_CALL2(fn,a1,a2) MEP_CALLN(fn)(a1),(a2)))
@@ -735,14 +727,14 @@ extern D primitive_set_accessor_method_xep (D am, D what);
   { \
     TEB* encp_teb = get_teb(); \
     encp_teb->next_methods = (fn); \
-    encp_teb->function = (FN*)(eng); \
+    encp_teb->function = (dylan_simple_method*)(eng); \
     encp_teb->argument_count =(ac); \
   }
 #define ENGINE_NODE_CALL(fn,eng,ac) \
   { \
     TEB* enc_teb = get_teb(); \
     enc_teb->next_methods = (fn); \
-    enc_teb->function = (FN*)(eng); \
+    enc_teb->function = (dylan_simple_method*)(eng); \
   }
 
 #define ENGINE_NODE_CALL0(eng) \
@@ -771,14 +763,14 @@ extern D inline_invoke_engine_node(ENGINE*, int, ...);
   { \
     TEB *ccp_teb = get_teb(); \
     ccp_teb->next_methods = (fn); \
-    ccp_teb->function = (FN*)(((GFN*)fn)->engine); \
+    ccp_teb->function = (dylan_simple_method*)(((dylan_generic_function*)fn)->engine); \
     ccp_teb->argument_count =(ac); \
   }
 #define CONGRUENT_CALL(fn,ac) \
   { \
     TEB *cc_teb = get_teb(); \
     cc_teb->next_methods = (fn); \
-    cc_teb->function = (FN*)(((GFN*)fn)->engine); \
+    cc_teb->function = (dylan_simple_method*)(((dylan_generic_function*)fn)->engine); \
   }
 
 #define CONGRUENT_CALL0() \
@@ -802,7 +794,7 @@ extern D inline_invoke_engine_node(ENGINE*, int, ...);
     (inline_invoke_engine_node((ENGINE*)(get_teb()->function),(ac)
 
 
-#define IEP_CALLN(fn) (D)((((FN*)fn)->iep)(
+#define IEP_CALLN(fn) (D)((((dylan_simple_method*)fn)->iep)(
 #define IEP_CALL0(fn) IEP_CALLN(fn)))
 #define IEP_CALL1(fn,a1) IEP_CALLN(fn)(a1)))
 #define IEP_CALL2(fn,a1,a2) IEP_CALLN(fn)(a1),(a2)))
@@ -824,7 +816,7 @@ extern D MAKE_CLOSURE(D, int);
 extern D MAKE_CLOSURE_SIG(D, D, int);
 extern D MAKE_METHOD_SIG(D, D);
 extern D SET_METHOD_SIG(D, D);
-#define CAPTURE_ENVIRONMENT CFN* _fn = ((CFN*)get_teb()->function);
+#define CAPTURE_ENVIRONMENT dylan_simple_closure_method* _fn = ((dylan_simple_closure_method*)get_teb()->function);
 extern void INIT_KEYWORD_CLOSURE(D, int, ...);
 extern D MAKE_KEYWORD_CLOSURE_INITD(D, int, ...);
 extern D MAKE_KEYWORD_CLOSURE_INITD_SIG(D, D, int, ...);
@@ -832,7 +824,7 @@ extern D MAKE_KEYWORD_CLOSURE(D, int);
 extern D MAKE_KEYWORD_CLOSURE_SIG(D, D, int);
 extern D MAKE_KEYWORD_METHOD_SIG(D, D);
 extern D SET_KEYWORD_METHOD_SIG(D, D);
-#define CAPTURE_KEYWORD_ENVIRONMENT KCFN* _fn = ((KCFN*)get_teb()->function);
+#define CAPTURE_KEYWORD_ENVIRONMENT dylan_keyword_closure_method* _fn = ((dylan_keyword_closure_method*)get_teb()->function);
 #define CREF(n) (_fn->environment[(n)])
 #define MREF    (_fn)
 
@@ -859,7 +851,7 @@ extern D primitive_compare_words(D base1, DSINT offset1,
 
 /* COMPARISON PRIMITIVES */
 
-#define primitive_instanceQ(x, y)       ((((DYLANTYPE*)(y))->instancep_function)((x),(y)))
+#define primitive_instanceQ(x, y)       ((((dylan_type*)(y))->instancep_function)((x),(y)))
 #define primitive_range_check(x, l, h)  (RAWASBOOL(((x) >= (l)) & ((x) < (h))))
 extern D primitive_type_check(D x, D t);
 
@@ -882,121 +874,121 @@ extern void primitive_debug_message (D format_string, D arguments);
 
 
 /* Well this wasn't right
-#define primitive_object_class(object) (((OBJECT*)object)->class)
+#define primitive_object_class(object) (((dylan_object*)object)->class)
 */
 
 #define primitive_initialized_slot_value(object, position) \
-  ((((OBJECT*)object)->slots)[position])
+  ((((dylan_object*)object)->slots)[position])
 #define primitive_slot_value_setter(new_value, object, position) \
-  ((((OBJECT*)object)->slots)[position] = (new_value))
+  ((((dylan_object*)object)->slots)[position] = (new_value))
 
 extern D primitive_slot_value(D object, DSINT position);
 
 #define primitive_repeated_slot_value(object, base_position, position) \
-  ((((OBJECT*)object)->slots)[base_position + position])
+  ((((dylan_object*)object)->slots)[base_position + position])
 #define primitive_repeated_slot_value_setter(new_value, object, base_position, position) \
-  ((((OBJECT*)object)->slots)[base_position + position] = (new_value))
+  ((((dylan_object*)object)->slots)[base_position + position] = (new_value))
 #define primitive_repeated_instance_size(object, base_position) \
-  (R((((OBJECT*)object)->slots)[base_position - 1]))
+  (R((((dylan_object*)object)->slots)[base_position - 1]))
 
 #define primitive_byte_element(object, position, index) \
-        (((DBCHR*)&((((OBJECT*)object)->slots)[position]))[index])
+        (((DBCHR*)&((((dylan_object*)object)->slots)[position]))[index])
 #define primitive_byte_element_setter(new_value, object, position, index) \
-        (((DBCHR*)&((((OBJECT*)object)->slots)[position]))[index] = \
+        (((DBCHR*)&((((dylan_object*)object)->slots)[position]))[index] = \
            (new_value))
 
 #define SLOT_VALUE_INITD(object, position) \
-  ((((OBJECT*)object)->slots)[position])
+  ((((dylan_object*)object)->slots)[position])
 #define SLOT_VALUE_SETTER(new_value, object, position) \
-  ((((OBJECT*)object)->slots)[position] = (new_value))
+  ((((dylan_object*)object)->slots)[position] = (new_value))
 
 extern D SLOT_VALUE(D object, DSINT position);
 
 #define REPEATED_D_SLOT_VALUE(object, base_position, position) \
-  ((((OBJECT*)object)->slots)[base_position + position])
+  ((((dylan_object*)object)->slots)[base_position + position])
 #define REPEATED_D_SLOT_VALUE_SETTER(new_value, object, base_position, position) \
-  ((((OBJECT*)object)->slots)[base_position + position] = (new_value))
+  ((((dylan_object*)object)->slots)[base_position + position] = (new_value))
 
 #define REPEATED_DBCHR_SLOT_VALUE(object, position, index) \
-        (((DBCHR*)&((((OBJECT*)object)->slots)[position]))[index])
+        (((DBCHR*)&((((dylan_object*)object)->slots)[position]))[index])
 #define REPEATED_DBCHR_SLOT_VALUE_SETTER(new_value, object, position, index) \
-        (((DBCHR*)&((((OBJECT*)object)->slots)[position]))[index] = \
+        (((DBCHR*)&((((dylan_object*)object)->slots)[position]))[index] = \
            (new_value))
 
 #define REPEATED_DUCHR_SLOT_VALUE(object, position, index) \
-        (((DUCHR*)&((((OBJECT*)object)->slots)[position]))[index])
+        (((DUCHR*)&((((dylan_object*)object)->slots)[position]))[index])
 #define REPEATED_DUCHR_SLOT_VALUE_SETTER(new_value, object, position, index) \
-        (((DUCHR*)&((((OBJECT*)object)->slots)[position]))[index] = \
+        (((DUCHR*)&((((dylan_object*)object)->slots)[position]))[index] = \
            (new_value))
 
 #define REPEATED_DBYTE_SLOT_VALUE(object, position, index) \
-        (((DBYTE*)&((((OBJECT*)object)->slots)[position]))[index])
+        (((DBYTE*)&((((dylan_object*)object)->slots)[position]))[index])
 #define REPEATED_DBYTE_SLOT_VALUE_SETTER(new_value, object, position, index) \
-        (((DBYTE*)&((((OBJECT*)object)->slots)[position]))[index] = \
+        (((DBYTE*)&((((dylan_object*)object)->slots)[position]))[index] = \
            (new_value))
 
 #define REPEATED_DDBYTE_SLOT_VALUE(object, position, index) \
-        (((DDBYTE*)&((((OBJECT*)object)->slots)[position]))[index])
+        (((DDBYTE*)&((((dylan_object*)object)->slots)[position]))[index])
 #define REPEATED_DDBYTE_SLOT_VALUE_SETTER(new_value, object, position, index) \
-        (((DDBYTE*)&((((OBJECT*)object)->slots)[position]))[index] = \
+        (((DDBYTE*)&((((dylan_object*)object)->slots)[position]))[index] = \
            (new_value))
 
 #define REPEATED_DDFLT_SLOT_VALUE(object, base_position, position) \
-  (((DDFLT*)(((OBJECT*)object)->slots))[base_position + R(position)])
+  (((DDFLT*)(((dylan_object*)object)->slots))[base_position + R(position)])
 #define REPEATED_DDFLT_SLOT_VALUE_SETTER(new_value, object, base_position, position) \
-  (((DDFLT*)(((OBJECT*)object)->slots))[base_position + R(position)] = (new_value))
+  (((DDFLT*)(((dylan_object*)object)->slots))[base_position + R(position)] = (new_value))
 
 #define REPEATED_DDWORD_SLOT_VALUE(object, base_position, position) \
-  (((DDWORD*)(((OBJECT*)object)->slots))[base_position + R(position)])
+  (((DDWORD*)(((dylan_object*)object)->slots))[base_position + R(position)])
 #define REPEATED_DDWORD_SLOT_VALUE_SETTER(new_value, object, base_position, position) \
-  (((DDWORD*)(((OBJECT*)object)->slots))[base_position + R(position)] = (new_value))
+  (((DDWORD*)(((dylan_object*)object)->slots))[base_position + R(position)] = (new_value))
 
 
 #define REPEATED_D_SLOT_VALUE_TAGGED(object, base_position, position) \
-  ((((OBJECT*)object)->slots)[base_position + R(position)])
+  ((((dylan_object*)object)->slots)[base_position + R(position)])
 #define REPEATED_D_SLOT_VALUE_TAGGED_SETTER(new_value, object, base_position, position) \
-  ((((OBJECT*)object)->slots)[base_position + R(position)] = (new_value))
+  ((((dylan_object*)object)->slots)[base_position + R(position)] = (new_value))
 
 #define REPEATED_DWORD_SLOT_VALUE_TAGGED(object, base_position, position) \
-  (((DWORD*)(((OBJECT*)object)->slots))[base_position + R(position)])
+  (((DWORD*)(((dylan_object*)object)->slots))[base_position + R(position)])
 #define REPEATED_DWORD_SLOT_VALUE_TAGGED_SETTER(new_value, object, base_position, position) \
-  (((DWORD*)(((OBJECT*)object)->slots))[base_position + R(position)] = (new_value))
+  (((DWORD*)(((dylan_object*)object)->slots))[base_position + R(position)] = (new_value))
 
 #define REPEATED_DSFLT_SLOT_VALUE_TAGGED(object, base_position, position) \
-  (((DSFLT*)(((OBJECT*)object)->slots))[base_position + R(position)])
+  (((DSFLT*)(((dylan_object*)object)->slots))[base_position + R(position)])
 #define REPEATED_DSFLT_SLOT_VALUE_TAGGED_SETTER(new_value, object, base_position, position) \
-  (((DSFLT*)(((OBJECT*)object)->slots))[base_position + R(position)] = (new_value))
+  (((DSFLT*)(((dylan_object*)object)->slots))[base_position + R(position)] = (new_value))
 
 /* SHOULD REMOVE BELOW */
 
 #define REPEATED_DBCHR_SLOT_VALUE_TAGGED(object, position, index) \
-        (((DBCHR*)&((((OBJECT*)object)->slots)[position]))[R(index)])
+        (((DBCHR*)&((((dylan_object*)object)->slots)[position]))[R(index)])
 #define REPEATED_DBCHR_SLOT_VALUE_TAGGED_SETTER(new_value, object, position, index) \
-        (((DBCHR*)&((((OBJECT*)object)->slots)[position]))[R(index)] = \
+        (((DBCHR*)&((((dylan_object*)object)->slots)[position]))[R(index)] = \
            (new_value))
 
 #define REPEATED_DUCHR_SLOT_VALUE_TAGGED(object, position, index) \
-        (((DUCHR*)&((((OBJECT*)object)->slots)[position]))[R(index)])
+        (((DUCHR*)&((((dylan_object*)object)->slots)[position]))[R(index)])
 #define REPEATED_DUCHR_SLOT_VALUE_TAGGED_SETTER(new_value, object, position, index) \
-        (((DUCHR*)&((((OBJECT*)object)->slots)[position]))[R(index)] = \
+        (((DUCHR*)&((((dylan_object*)object)->slots)[position]))[R(index)] = \
            (new_value))
 
 #define REPEATED_DBYTE_SLOT_VALUE_TAGGED(object, position, index) \
-        (((DBYTE*)&((((OBJECT*)object)->slots)[position]))[R(index)])
+        (((DBYTE*)&((((dylan_object*)object)->slots)[position]))[R(index)])
 #define REPEATED_DBYTE_SLOT_VALUE_TAGGED_SETTER(new_value, object, position, index) \
-        (((DBYTE*)&((((OBJECT*)object)->slots)[position]))[R(index)] = \
+        (((DBYTE*)&((((dylan_object*)object)->slots)[position]))[R(index)] = \
            (new_value))
 
 #define REPEATED_DDBYTE_SLOT_VALUE_TAGGED(object, position, index) \
-        (((DDBYTE*)&((((OBJECT*)object)->slots)[position]))[R(index)])
+        (((DDBYTE*)&((((dylan_object*)object)->slots)[position]))[R(index)])
 #define REPEATED_DDBYTE_SLOT_VALUE_TAGGED_SETTER(new_value, object, position, index) \
-        (((DDBYTE*)&((((OBJECT*)object)->slots)[position]))[R(index)] = \
+        (((DDBYTE*)&((((dylan_object*)object)->slots)[position]))[R(index)] = \
            (new_value))
 
 #define REPEATED_DDFLT_SLOT_VALUE_TAGGED(object, base_position, position) \
-  (((DDFLT*)(((OBJECT*)object)->slots))[base_position + R(position)])
+  (((DDFLT*)(((dylan_object*)object)->slots))[base_position + R(position)])
 #define REPEATED_DDFLT_SLOT_VALUE_TAGGED_SETTER(new_value, object, base_position, position) \
-  (((DDFLT*)(((OBJECT*)object)->slots))[base_position + R(position)] = (new_value))
+  (((DDFLT*)(((dylan_object*)object)->slots))[base_position + R(position)] = (new_value))
 
 extern DSINT primitive_repeated_slot_offset(D x);
 extern D     primitive_repeated_slot_as_raw(D x, DSINT offset);
@@ -1340,7 +1332,7 @@ extern int primitive_mps_ld_isstale(void *hs);
 extern D primitive_wrap_machine_word(DMINT);
 
 #define primitive_unwrap_machine_word(x) \
-  (((DMI)(x))->data)
+  (((dylan_machine_word*)(x))->data)
 
 extern D primitive_wrap_c_pointer(D, DMINT);
 /*   primitive_unwrap_c_pointer
@@ -1526,7 +1518,7 @@ extern DMINT primitive_machine_word_unsigned_double_shift_right(DMINT, DMINT, DM
 /* SINGLE-FLOAT PRIMITIVES */
 
 #define primitive_single_float_as_raw(x) \
-    (((DSF)x)->data)
+    (((dylan_single_float*)x)->data)
 extern D primitive_raw_as_single_float(DSFLT x);
 #define primitive_single_float_as_integer(x) \
     ((DSINT)(x))
@@ -1574,7 +1566,7 @@ extern DSFLT primitive_cast_machine_word_as_single_float(DUMINT);
 /* DOUBLE-FLOAT PRIMITIVES */
 
 #define primitive_double_float_as_raw(x) \
-    (((DDF)x)->data)
+    (((dylan_double_float*)x)->data)
 extern D primitive_raw_as_double_float(DDFLT x);
 #define primitive_double_float_as_integer(x) \
     ((DSINT)(x))
@@ -1621,10 +1613,10 @@ extern DDFLT primitive_cast_machine_words_as_double_float(DUMINT, DUMINT);
 
 /* VECTOR PRIMITIVES */
 
-#define primitive_vector_element(v, i)           ((((SOV*)v)->data)[R(i)])
-#define primitive_vector_element_setter(e, v, i) ((((SOV*)v)->data)[R(i)] = (e))
-#define primitive_vector_size(v)                 (((SOV*)v)->size)
-#define primitive_vector_as_raw(v)               (((SOV*)v)->data)
+#define primitive_vector_element(v, i)           ((((dylan_simple_object_vector*)v)->data)[R(i)])
+#define primitive_vector_element_setter(e, v, i) ((((dylan_simple_object_vector*)v)->data)[R(i)] = (e))
+#define primitive_vector_size(v)                 (((dylan_simple_object_vector*)v)->size)
+#define primitive_vector_as_raw(v)               (((dylan_simple_object_vector*)v)->data)
 
 extern D primitive_vector(D dn, ...);
 extern D primitive_raw_as_vector(D a, D n);
@@ -1635,7 +1627,7 @@ extern D VECTOR_REF_OR_F(D v, int offset);
 /* STRING PRIMITIVES */
 
 #define primitive_strlen(s)                     (strlen((DBSTR)s))
-#define primitive_string_as_raw(v)              (((BS*)v)->data)
+#define primitive_string_as_raw(v)              (((dylan_byte_string*)v)->data)
 extern D primitive_raw_as_string(DBSTR buffer);
 
 /* CALLING CONVENTION PRIMITIVES */
@@ -1648,11 +1640,11 @@ extern D primitive_raw_as_string(DBSTR buffer);
 extern D primitive_apply (D fn, D sov);
 extern D primitive_apply_spread (D fn, int n, ...);
 extern D primitive_mep_apply_spread (D fn, D nm, int n, ...);
-extern D primitive_xep_apply (FN* fn, int n, D a[]);
+extern D primitive_xep_apply (dylan_simple_method* fn, int n, D a[]);
 extern D primitive_mep_apply_with_optionals
-  (FN* fn, D new_next_methods, D a);
-extern D primitive_mep_apply (FN* fn, D next_methods, D a[]);
-extern D primitive_iep_apply (FN* fn, int n, D a[]);
+  (dylan_simple_method* fn, D new_next_methods, D a);
+extern D primitive_mep_apply (dylan_simple_method* fn, D next_methods, D a[]);
+extern D primitive_iep_apply (dylan_simple_method* fn, int n, D a[]);
 extern D primitive_engine_node_apply_with_optionals (D engD, D gfD, D args);
 
 #define APPLYN(fn,n) (D)(primitive_apply_spread((fn),n

@@ -5,7 +5,7 @@
 
 /* DYLAN CONSTANTS */
 
-extern OBJECT KPfalseVKi;
+extern dylan_object KPfalseVKi;
 
 /* NON-LOCAL EXITS */
 

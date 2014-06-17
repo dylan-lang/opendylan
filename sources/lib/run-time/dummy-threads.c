@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-extern OBJECT KPfalseVKi;
-extern OBJECT KPtrueVKi;
+extern dylan_object KPfalseVKi;
+extern dylan_object KPtrueVKi;
 
 #define ignore(x) x
 

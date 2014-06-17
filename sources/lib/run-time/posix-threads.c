@@ -134,7 +134,7 @@ static int our_pthread_mutex_timedlock(pthread_mutex_t *mutex,
    of growing the TLV vector */
 static const long TLV_GROW = -2000000;
 
-extern OBJECT KPfalseVKi;
+extern dylan_object KPfalseVKi;
 
 static pthread_mutex_t thread_join_lock = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t thread_exit_event = PTHREAD_COND_INITIALIZER;
@@ -654,7 +654,7 @@ D primitive_thread_join_single(D t)
 /* 4 */
 D primitive_thread_join_multiple(D v)
 {
-  SOV               *thread_vector = v;
+  dylan_simple_object_vector *thread_vector = v;
   volatile DTHREAD **threads;
   volatile DTHREAD  *joined_thread = NULL;
   unsigned int       i;

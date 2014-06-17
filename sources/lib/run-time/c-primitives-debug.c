@@ -1,8 +1,8 @@
 #include "run-time.h"
 #include <stdio.h>
 
-extern OBJECT KPfalseVKi;
-extern OBJECT KPtrueVKi;
+extern dylan_object KPfalseVKi;
+extern dylan_object KPtrueVKi;
 
 extern void dylan_format (char*, D, D);
 

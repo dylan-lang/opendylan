@@ -16,8 +16,8 @@
 #endif
 
 /* DYLAN CONSTANTS */
-extern OBJECT KPfalseVKi;
-extern OBJECT KPtrueVKi;
+extern dylan_object KPfalseVKi;
+extern dylan_object KPtrueVKi;
 
 /* NUMBERS */
 
@@ -81,7 +81,7 @@ typedef union {
 
 D primitive_raw_as_double_float(DDFLT x) {
   D f = primitive_allocate_filled(3, &KLdouble_floatGVKdW, 0, (D)0, 0, 0);
-  ((DDF)f)->data = x;
+  ((dylan_double_float*)f)->data = x;
   return(f);
 }
 

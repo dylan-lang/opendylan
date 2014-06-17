@@ -35,8 +35,8 @@ D dylan_object_class (D* instance) {
 /* BOOLEAN */
 
 extern D LbooleanGVKd;
-extern OBJECT KPfalseVKi;
-extern OBJECT KPtrueVKi;
+extern dylan_object KPfalseVKi;
+extern dylan_object KPtrueVKi;
 
 bool dylan_boolean_p (D instance) {
   return dylan_object_class(instance) == LbooleanGVKd;
@@ -62,7 +62,7 @@ bool dylan_single_float_p (D instance) {
 
 float
 dylan_single_float_data (D instance) {
-  return ((DSF)instance)->data;
+  return ((dylan_single_float*)instance)->data;
 }
 
 bool dylan_double_float_p (D instance) {
@@ -71,7 +71,7 @@ bool dylan_double_float_p (D instance) {
 
 double
 dylan_double_float_data (D instance) {
-  return ((DDF)instance)->data;
+  return ((dylan_double_float*)instance)->data;
 }
 
 /* SYMBOL */
@@ -110,9 +110,9 @@ D dylan_tail (D instance) {
 /* VECTOR */
 
 extern D  Lsimple_object_vectorGVKd;
-extern D  vector_ref (SOV* vector, int offset);
-extern D* vector_data (SOV* vector);
-extern int vector_size (SOV* vector);
+extern D  vector_ref (dylan_simple_object_vector* vector, int offset);
+extern D* vector_data (dylan_simple_object_vector* vector);
+extern int vector_size (dylan_simple_object_vector* vector);
 
 bool dylan_vector_p (D instance) {
   return dylan_object_class(instance) == Lsimple_object_vectorGVKd;
@@ -129,15 +129,15 @@ bool dylan_string_p (D instance) {
 }
 
 char* dylan_string_data (D instance) {
-  return ((BS*)instance)->data;
+  return ((dylan_byte_string*)instance)->data;
 }
 
 /* SIMPLE-CONDITION */
 
 extern D Lsimple_conditionGVKe;
-extern FN KinstanceQVKd;
-extern FN Kcondition_format_stringVKd;
-extern FN Kcondition_format_arguments_vectorVKi;
+extern dylan_simple_method KinstanceQVKd;
+extern dylan_simple_method Kcondition_format_stringVKd;
+extern dylan_simple_method Kcondition_format_arguments_vectorVKi;
 
 bool dylan_simple_condition_p (D instance) {
   return DTRUE == CALL2(&KinstanceQVKd, instance, Lsimple_conditionGVKe);
@@ -208,7 +208,7 @@ static void print_object (STREAM, D, BOOL, int);
 void dylan_format (STREAM, D, D);
 
 static enum dylan_type_enum
-dylan_type (D instance) {
+dylan_get_type (D instance) {
   if ((DUMINT)instance & 3) {
     if ((DUMINT)instance & 1) {
       return integer_type;
@@ -338,7 +338,7 @@ static void print_pair (STREAM stream, D instance, BOOL escape_p, int print_dept
         put_string(", ", stream);
       }
       print_object(stream, head, escape_p, print_depth + 1);
-      type = dylan_type(tail);
+      type = dylan_get_type(tail);
       switch (type) {
         case pair_type:
           head = dylan_head(tail);
@@ -430,7 +430,7 @@ static void print_user_defined (STREAM stream, D instance, BOOL escape_p, int pr
 
 typedef void (*DEBUG_PRINT_FUNCPTR)(STREAM, D, BOOL, int);
 static void print_object (STREAM stream, D instance, BOOL escape_p, int print_depth) {
-  enum dylan_type_enum type = dylan_type(instance);
+  enum dylan_type_enum type = dylan_get_type(instance);
   static DEBUG_PRINT_FUNCPTR printers[] = {
     [integer_type]          = print_integer,
     [character_type]        = print_character,
