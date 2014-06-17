@@ -65,7 +65,7 @@ extern dylan_object KPunboundVKi;
 #endif
 
 /* stubbed primitives */
-D primitive_runtime_module_handle()
+dylan_value primitive_runtime_module_handle()
 {
   return(I(0));
 }
@@ -92,32 +92,32 @@ void primitive_break() {
 
 /* MEMORY */
 
-INLINE D instance_header_setter (D header, D* instance) {
+INLINE dylan_value instance_header_setter (dylan_value header, dylan_value* instance) {
   instance[0] = header;
   return(header);
 }
 
-D allocate (unsigned long size) {
+dylan_value allocate (unsigned long size) {
 #if defined(GC_USE_BOEHM)
-  return((D)GC_MALLOC((size_t)size));
+  return((dylan_value)GC_MALLOC((size_t)size));
 #elif defined(GC_USE_MALLOC)
-  return((D)malloc((size_t)size));
+  return((dylan_value)malloc((size_t)size));
 #endif
 }
 
-D primitive_allocate (DSINT size) {
-  return((D)allocate(size * sizeof(D)));
+dylan_value primitive_allocate (DSINT size) {
+  return((dylan_value)allocate(size * sizeof(dylan_value)));
 }
 
-D primitive_byte_allocate (DSINT number_words, DSINT number_bytes) {
-  return((D)allocate(number_words * sizeof(D) + number_bytes));
+dylan_value primitive_byte_allocate (DSINT number_words, DSINT number_bytes) {
+  return((dylan_value)allocate(number_words * sizeof(dylan_value) + number_bytes));
 }
 
-D primitive_untraced_allocate (DSINT size) {
-  return(allocate(size * sizeof(D)));
+dylan_value primitive_untraced_allocate (DSINT size) {
+  return(allocate(size * sizeof(dylan_value)));
 }
 
-D primitive_manual_allocate (D sizeObject) {
+dylan_value primitive_manual_allocate (dylan_value sizeObject) {
   size_t size = (size_t)R(sizeObject);
 #if defined(GC_USE_BOEHM)
   void* p = GC_MALLOC_UNCOLLECTABLE(size);
@@ -127,7 +127,7 @@ D primitive_manual_allocate (D sizeObject) {
   return(primitive_wrap_machine_word((DMINT)p));
 }
 
-void primitive_manual_free (D object) {
+void primitive_manual_free (dylan_value object) {
 #if defined(GC_USE_BOEHM)
   GC_FREE((void*)primitive_unwrap_c_pointer(object));
 #elif defined(GC_USE_MALLOC)
@@ -135,23 +135,23 @@ void primitive_manual_free (D object) {
 #endif
 }
 
-void primitive_fillX(D dst, int base_offset, int offset, int size, D value) {
+void primitive_fillX(dylan_value dst, int base_offset, int offset, int size, dylan_value value) {
   register int i;
-  D* target = ((D*)dst) + base_offset + offset;
+  dylan_value* target = ((dylan_value*)dst) + base_offset + offset;
   for (i = 0; i < size; i++) {
     target[i] = value;
   }
 }
 
 void primitive_fill_bytesX
-    (D dst, int base_offset, int offset, int size, DSINT value) {
+    (dylan_value dst, int base_offset, int offset, int size, DSINT value) {
   if (size > 0) {
-    memset(((unsigned char*)((D*)dst + base_offset)) + offset, value, (size_t)size);
+    memset(((unsigned char*)((dylan_value*)dst + base_offset)) + offset, value, (size_t)size);
   }
 }
 
-DSINT primitive_repeated_slot_offset(D x) {
-  D*       instance   = (D*)x;
+DSINT primitive_repeated_slot_offset(dylan_value x) {
+  dylan_value*       instance   = (dylan_value*)x;
   Wrapper* wrapper    = (Wrapper*)instance[0];
   DSINT    fixed_part = wrapper->fixed_part;
   DSINT    n_slots    = fixed_part >> 2;
@@ -159,54 +159,54 @@ DSINT primitive_repeated_slot_offset(D x) {
   return(offset);
 }
 
-D primitive_repeated_slot_as_raw(D x, DSINT offset) {
-  return((D)((D*)x + offset));
+dylan_value primitive_repeated_slot_as_raw(dylan_value x, DSINT offset) {
+  return((dylan_value)((dylan_value*)x + offset));
 }
 
 void primitive_replace_bytesX
-    (D dst, DSINT dst_base_offset, DSINT dst_offset,
-     D src, DSINT src_base_offset, DSINT src_offset, DSINT size) {
+    (dylan_value dst, DSINT dst_base_offset, DSINT dst_offset,
+     dylan_value src, DSINT src_base_offset, DSINT src_offset, DSINT size) {
   if (size > 0) {
-    memcpy(&(((char*)(&(((D*)dst)[dst_base_offset])))[dst_offset]),
-           &(((char*)(&(((D*)src)[src_base_offset])))[src_offset]),
+    memcpy(&(((char*)(&(((dylan_value*)dst)[dst_base_offset])))[dst_offset]),
+           &(((char*)(&(((dylan_value*)src)[src_base_offset])))[src_offset]),
            (size_t)size);
   }
 }
 
-#define COPY_WORDS(dst, src, size) memcpy((dst), (src), (size) * sizeof(D))
+#define COPY_WORDS(dst, src, size) memcpy((dst), (src), (size) * sizeof(dylan_value))
 
 void primitive_replaceX
-    (D dst, DSINT dst_base_offset, DSINT dst_offset,
-     D src, DSINT src_base_offset, DSINT src_offset, DSINT size) {
+    (dylan_value dst, DSINT dst_base_offset, DSINT dst_offset,
+     dylan_value src, DSINT src_base_offset, DSINT src_offset, DSINT size) {
   ignore(src_base_offset);
   if (size > 0) {
-    COPY_WORDS(&(((D*)dst)[dst_base_offset + dst_offset]),
-               &(((D*)src)[dst_base_offset + src_offset]),
+    COPY_WORDS(&(((dylan_value*)dst)[dst_base_offset + dst_offset]),
+               &(((dylan_value*)src)[dst_base_offset + src_offset]),
                size);
   }
 }
 
 
-D primitive_compare_bytes(D base1, DSINT offset1,
-                          D base2, DSINT offset2, DSINT size) {
+dylan_value primitive_compare_bytes(dylan_value base1, DSINT offset1,
+                          dylan_value base2, DSINT offset2, DSINT size) {
   return (RAWASBOOL(memcmp(&((((dylan_byte_string*)base1)->data)[offset1]),
                            &((((dylan_byte_string*)base2)->data)[offset2]),
                            (size_t)size)));
 }
 
-D primitive_compare_words(D base1, DSINT offset1,
-                          D base2, DSINT offset2, DSINT size) {
+dylan_value primitive_compare_words(dylan_value base1, DSINT offset1,
+                          dylan_value base2, DSINT offset2, DSINT size) {
   return (RAWASBOOL(memcmp(&((((dylan_byte_string*)base1)->data)[offset1]),
                            &((((dylan_byte_string*)base2)->data)[offset2]),
-                           size * sizeof(D))));
+                           size * sizeof(dylan_value))));
 }
 
 
-D primitive_byte_allocate_filled_terminated
-    (DSINT size, DSINT number_bytes, D class_wrapper, DSINT number_slots,
-     D fill_value, DSINT repeated_size, DSINT repeated_size_offset)
+dylan_value primitive_byte_allocate_filled_terminated
+    (DSINT size, DSINT number_bytes, dylan_value class_wrapper, DSINT number_slots,
+     dylan_value fill_value, DSINT repeated_size, DSINT repeated_size_offset)
 {
-  D* object = primitive_byte_allocate(size, number_bytes);
+  dylan_value* object = primitive_byte_allocate(size, number_bytes);
   instance_header_setter(class_wrapper, object);
   primitive_fillX(object, 1, 0, number_slots, fill_value);
   primitive_fill_bytesX
@@ -216,16 +216,16 @@ D primitive_byte_allocate_filled_terminated
   if (repeated_size_offset > 0) {
     object[repeated_size_offset] = I(repeated_size);
   }
-  return((D)object);
+  return((dylan_value)object);
 }
 
 /* This one still zero-terminates. TODO: turn that off */
-D primitive_byte_allocate_filled
-    (DSINT size, D class_wrapper, DSINT number_slots,
-     D fill_value, DSINT repeated_size, DSINT repeated_size_offset,
+dylan_value primitive_byte_allocate_filled
+    (DSINT size, dylan_value class_wrapper, DSINT number_slots,
+     dylan_value fill_value, DSINT repeated_size, DSINT repeated_size_offset,
      DBYTE repeated_fill_value)
 {
-  D* object = primitive_byte_allocate(size, repeated_size + 1);
+  dylan_value* object = primitive_byte_allocate(size, repeated_size + 1);
   instance_header_setter(class_wrapper, object);
   primitive_fillX(object, 1, 0, number_slots, fill_value);
   primitive_fill_bytesX(object, repeated_size_offset + 1, 0, repeated_size,
@@ -234,12 +234,12 @@ D primitive_byte_allocate_filled
   if (repeated_size_offset > 0) {
     object[repeated_size_offset] = I(repeated_size);
   }
-  return((D)object);
+  return((dylan_value)object);
 }
 
-D primitive_byte_allocate_leaf_filled_terminated
-    (DSINT size, DSINT number_bytes, D class_wrapper, DSINT number_slots,
-     D fill_value, DSINT repeated_size, DSINT repeated_size_offset)
+dylan_value primitive_byte_allocate_leaf_filled_terminated
+    (DSINT size, DSINT number_bytes, dylan_value class_wrapper, DSINT number_slots,
+     dylan_value fill_value, DSINT repeated_size, DSINT repeated_size_offset)
 {
   return primitive_byte_allocate_filled_terminated(size, number_bytes,
                                                    class_wrapper, number_slots,
@@ -247,9 +247,9 @@ D primitive_byte_allocate_leaf_filled_terminated
                                                    repeated_size_offset);
 }
 
-D primitive_byte_allocate_leaf_filled
-    (DSINT size, D class_wrapper, DSINT number_slots,
-     D fill_value, DSINT repeated_size, DSINT repeated_size_offset,
+dylan_value primitive_byte_allocate_leaf_filled
+    (DSINT size, dylan_value class_wrapper, DSINT number_slots,
+     dylan_value fill_value, DSINT repeated_size, DSINT repeated_size_offset,
      DBYTE repeated_fill_value)
 {
   return primitive_byte_allocate_filled(size, class_wrapper,
@@ -260,13 +260,13 @@ D primitive_byte_allocate_leaf_filled
 }
 
 #define define_repeated_allocator(name, type) \
-  D primitive_ ## name ## _allocate_filled \
-      (DSINT size, D class_wrapper, DSINT number_slots, D fill_value, \
+  dylan_value primitive_ ## name ## _allocate_filled \
+      (DSINT size, dylan_value class_wrapper, DSINT number_slots, dylan_value fill_value, \
        DSINT repeated_size, DSINT repeated_size_offset, \
        type repeated_fill_value) \
   { \
     int i; \
-    D* object = primitive_byte_allocate(size, (DSINT)(repeated_size * sizeof(type))); \
+    dylan_value* object = primitive_byte_allocate(size, (DSINT)(repeated_size * sizeof(type))); \
     instance_header_setter(class_wrapper, object); \
     primitive_fillX(object, 1, 0, number_slots, fill_value); \
     for (i = 0; i < repeated_size; i++) {\
@@ -275,35 +275,35 @@ D primitive_byte_allocate_leaf_filled
     if (repeated_size_offset > 0) { \
       object[repeated_size_offset] = I(repeated_size); \
     } \
-    return((D)object); \
+    return((dylan_value)object); \
   }
 
-define_repeated_allocator(object, D)
+define_repeated_allocator(object, dylan_value)
 define_repeated_allocator(double_byte, DDBYTE)
 define_repeated_allocator(word, DWORD)
 define_repeated_allocator(double_word, DDWORD)
 define_repeated_allocator(single_float, DSFLT)
 define_repeated_allocator(double_float, DDFLT)
 
-D primitive_allocate_filled
-    (DSINT size, D class_wrapper, DSINT number_slots, D fill_value,
+dylan_value primitive_allocate_filled
+    (DSINT size, dylan_value class_wrapper, DSINT number_slots, dylan_value fill_value,
      DSINT repeated_size, DSINT repeated_size_offset)
 {
-  D* object = primitive_allocate(size);
+  dylan_value* object = primitive_allocate(size);
   instance_header_setter(class_wrapper, object);
   primitive_fillX(object, 1, 0, number_slots, fill_value);
   primitive_fillX(object, repeated_size_offset + 1, 0, repeated_size, fill_value);
   if (repeated_size_offset > 0) {
     object[repeated_size_offset] = I(repeated_size);
   }
-  return((D)object);
+  return((dylan_value)object);
 }
 
-D primitive_allocate_in_awl_pool
-    (DSINT size, D class_wrapper, DSINT number_slots, D fill_value,
-     DSINT repeated_size, DSINT repeated_size_offset, D assoc)
+dylan_value primitive_allocate_in_awl_pool
+    (DSINT size, dylan_value class_wrapper, DSINT number_slots, dylan_value fill_value,
+     DSINT repeated_size, DSINT repeated_size_offset, dylan_value assoc)
 {
-  D* object = primitive_allocate(size);
+  dylan_value* object = primitive_allocate(size);
   instance_header_setter(class_wrapper, object);
   primitive_fillX(object, 1, 0, number_slots, fill_value);
   primitive_fillX(object, repeated_size_offset + 1, 0, repeated_size, fill_value);
@@ -311,14 +311,14 @@ D primitive_allocate_in_awl_pool
     object[repeated_size_offset] = I(repeated_size);
   }
   object[1] = assoc;
-  return((D)object);
+  return((dylan_value)object);
 }
 
-D primitive_allocate_weak_in_awl_pool
-    (DSINT size, D class_wrapper, DSINT number_slots, D fill_value,
-     DSINT repeated_size, DSINT repeated_size_offset, D assoc)
+dylan_value primitive_allocate_weak_in_awl_pool
+    (DSINT size, dylan_value class_wrapper, DSINT number_slots, dylan_value fill_value,
+     DSINT repeated_size, DSINT repeated_size_offset, dylan_value assoc)
 {
-  D* object = primitive_allocate(size);
+  dylan_value* object = primitive_allocate(size);
   instance_header_setter(class_wrapper, object);
   primitive_fillX(object, 1, 0, number_slots, fill_value);
   primitive_fillX(object, repeated_size_offset + 1, 0, repeated_size, fill_value);
@@ -326,33 +326,33 @@ D primitive_allocate_weak_in_awl_pool
     object[repeated_size_offset] = I(repeated_size);
   }
   object[1] = assoc;
-  return((D)object);
+  return((dylan_value)object);
 }
 
-D primitive_allocate_wrapper
-    (DSINT size, D class_wrapper, DSINT number_slots, D fill_value,
+dylan_value primitive_allocate_wrapper
+    (DSINT size, dylan_value class_wrapper, DSINT number_slots, dylan_value fill_value,
      DSINT repeated_size, DSINT repeated_size_offset)
 {
-  D* object = primitive_allocate(size);
+  dylan_value* object = primitive_allocate(size);
   instance_header_setter(class_wrapper, object);
   primitive_fillX(object, 1, 0, number_slots, fill_value);
   primitive_fillX(object, repeated_size_offset + 1, 0, repeated_size, fill_value);
   if (repeated_size_offset > 0) {
     object[repeated_size_offset] = I(repeated_size);
   }
-  return((D)object);
+  return((dylan_value)object);
 }
 
 /* STACK ALLOCATION */
 
 
 /* This one still zero-terminates. TODO: turn that off */
-D initialize_byte_stack_allocate_filled
-    (D ptr, D class_wrapper, DSINT number_slots,
-     D fill_value, DSINT repeated_size, DSINT repeated_size_offset,
+dylan_value initialize_byte_stack_allocate_filled
+    (dylan_value ptr, dylan_value class_wrapper, DSINT number_slots,
+     dylan_value fill_value, DSINT repeated_size, DSINT repeated_size_offset,
      DBYTE repeated_fill_value)
 {
-  D* object = ptr;
+  dylan_value* object = ptr;
   instance_header_setter(class_wrapper, object);
   primitive_fillX(object, 1, 0, number_slots, fill_value);
   primitive_fill_bytesX
@@ -362,40 +362,40 @@ D initialize_byte_stack_allocate_filled
   if (repeated_size_offset > 0) {
     object[repeated_size_offset] = I(repeated_size);
   }
-  return((D)object);
+  return((dylan_value)object);
 }
 
-D initialize_object_stack_allocate_filled
-      (D ptr, D class_wrapper, DSINT number_slots, D fill_value,
+dylan_value initialize_object_stack_allocate_filled
+      (dylan_value ptr, dylan_value class_wrapper, DSINT number_slots, dylan_value fill_value,
        DSINT repeated_size, DSINT repeated_size_offset,
-       D repeated_fill_value)
+       dylan_value repeated_fill_value)
 {
   int i;
-  D* object = ptr;
+  dylan_value* object = ptr;
   instance_header_setter(class_wrapper, object);
   primitive_fillX(object, 1, 0, number_slots, fill_value);
   for (i = 0; i < repeated_size; i++) {
-    ((D*)(&object[repeated_size_offset + 1]))[i] = (D)repeated_fill_value;
+    ((dylan_value*)(&object[repeated_size_offset + 1]))[i] = (dylan_value)repeated_fill_value;
   }
   if (repeated_size_offset > 0) {
     object[repeated_size_offset] = I(repeated_size);
   }
-  return((D)object);
+  return((dylan_value)object);
 }
 
 
 /* PINNING PRIMITIVES */
 
-void primitive_unpin_object(D object)
+void primitive_unpin_object(dylan_value object)
 {
   ignore(object);
 }
 
 /* C-FFI PRIMITIVES */
 
-D primitive_wrap_c_pointer(D wrapper, DMINT x) {
+dylan_value primitive_wrap_c_pointer(dylan_value wrapper, DMINT x) {
   return(primitive_allocate_filled
-           (2, wrapper, 1, (D)x, 0, 0));
+           (2, wrapper, 1, (dylan_value)x, 0, 0));
 }
 
 /* VECTOR */
@@ -405,7 +405,7 @@ extern Wrapper KLsimple_object_vectorGVKdW;
 #define VECTOR_HEADER_SIZE (2)
 
 /* gts,98apr08 */
-D  VECTOR_REF_OR_F(D vector, int offset) {
+dylan_value  VECTOR_REF_OR_F(dylan_value vector, int offset) {
   if (offset >= vector_size(vector)) {
     return(DFALSE);
   } else {
@@ -413,7 +413,7 @@ D  VECTOR_REF_OR_F(D vector, int offset) {
   }
 }
 
-INLINE D  vector_ref_setter (D new_value, dylan_simple_object_vector* vector, int offset) {
+INLINE dylan_value  vector_ref_setter (dylan_value new_value, dylan_simple_object_vector* vector, int offset) {
   return(vector_data(vector)[offset] = new_value);
 }
 
@@ -433,51 +433,51 @@ dylan_simple_object_vector* make_vector (int size) {
     return(Pempty_vectorVKi);
   } else {
     dylan_simple_object_vector* vector = allocate_vector(size);
-    instance_header_setter(&KLsimple_object_vectorGVKdW, (D*)vector);
+    instance_header_setter(&KLsimple_object_vectorGVKdW, (dylan_value*)vector);
     vector_size_setter(size, vector);
     return(vector);
   }
 }
 
-D primitive_make_vector (int size) { return((D)make_vector(size)); }
+dylan_value primitive_make_vector (int size) { return((dylan_value)make_vector(size)); }
 
 dylan_simple_object_vector* initialize_vector_from_buffer_with_size
-    (dylan_simple_object_vector* vector, int vector_size, D* buffer, int buffer_size)
+    (dylan_simple_object_vector* vector, int vector_size, dylan_value* buffer, int buffer_size)
 {
-  instance_header_setter(&KLsimple_object_vectorGVKdW, (D*)vector);
+  instance_header_setter(&KLsimple_object_vectorGVKdW, (dylan_value*)vector);
   vector_size_setter(vector_size, vector);
   COPY_WORDS(vector_data(vector), buffer, buffer_size);
   return(vector);
 }
 
-dylan_simple_object_vector* initialize_vector_from_buffer (dylan_simple_object_vector* vector, int size, D* buffer) {
+dylan_simple_object_vector* initialize_vector_from_buffer (dylan_simple_object_vector* vector, int size, dylan_value* buffer) {
   return(initialize_vector_from_buffer_with_size(vector, size, buffer, size));
 }
 
-dylan_simple_object_vector* make_vector_from_buffer (int size, D* buffer) {
+dylan_simple_object_vector* make_vector_from_buffer (int size, dylan_value* buffer) {
   dylan_simple_object_vector* copy = allocate_vector(size);
   initialize_vector_from_buffer(copy, size, buffer);
   return(copy);
 }
 
-D primitive_copy_vector (D vector) {
-  return((D)make_vector_from_buffer(vector_size((dylan_simple_object_vector*)vector), vector_data((dylan_simple_object_vector*)vector)));
+dylan_value primitive_copy_vector (dylan_value vector) {
+  return((dylan_value)make_vector_from_buffer(vector_size((dylan_simple_object_vector*)vector), vector_data((dylan_simple_object_vector*)vector)));
 }
 
-D primitive_raw_as_vector (D size, D buffer) {
-  return(make_vector_from_buffer((long)size, (D*)buffer));
+dylan_value primitive_raw_as_vector (dylan_value size, dylan_value buffer) {
+  return(make_vector_from_buffer((long)size, (dylan_value*)buffer));
 }
 
 #define DEF_STACK_VECTOR(_name, _size) \
-  D _stk_##_name[_size + VECTOR_HEADER_SIZE]; \
+  dylan_value _stk_##_name[_size + VECTOR_HEADER_SIZE]; \
   dylan_simple_object_vector* _name = (dylan_simple_object_vector*)(&_stk_##_name)
 
 #define DEF_STACK_VECTOR_INITTED(_name, _size) \
-  D _stk_##_name[_size + VECTOR_HEADER_SIZE]; \
+  dylan_value _stk_##_name[_size + VECTOR_HEADER_SIZE]; \
   dylan_simple_object_vector* _name = (init_stack_vector((dylan_simple_object_vector*)(&_stk_##_name), (_size)))
 
 INLINE dylan_simple_object_vector* init_stack_vector(dylan_simple_object_vector* vector, int size) {
-  instance_header_setter(&KLsimple_object_vectorGVKdW, (D*)vector);
+  instance_header_setter(&KLsimple_object_vectorGVKdW, (dylan_value*)vector);
   vector_size_setter(size, vector);
   return(vector);
   }
@@ -496,13 +496,13 @@ INLINE dylan_simple_object_vector* init_stack_vector(dylan_simple_object_vector*
 
 extern Wrapper KLbyte_stringGVKdW;
 
-D primitive_raw_as_string (DBSTR buffer) {
+dylan_value primitive_raw_as_string (DBSTR buffer) {
   size_t size = strlen(buffer);
   dylan_byte_string* string = (dylan_byte_string*)allocate(sizeof(dylan_byte_string) + size + 1);
-  instance_header_setter(&KLbyte_stringGVKdW, (D*)string);
+  instance_header_setter(&KLbyte_stringGVKdW, (dylan_value*)string);
   string->size = I(size);
   memcpy(string->data, buffer, size);
-  return((D)string);
+  return((dylan_value)string);
 }
 
 /* SIGNATURES */
@@ -515,7 +515,7 @@ INLINE dylan_simple_object_vector* signature_values(dylan_signature* sig) {
   return(sig->values);
 }
 
-INLINE D signature_rest_value(dylan_signature* sig) {
+INLINE dylan_value signature_rest_value(dylan_signature* sig) {
   return(sig->rest_value);
 }
 
@@ -563,7 +563,7 @@ INLINE int signature_next_p(dylan_signature* sig) {
   return((R(sig->properties) & NEXT_P_MASK) > 0);
 }
 
-INLINE D signature_make_properties
+INLINE dylan_value signature_make_properties
     (int number_required, int number_values,
      int key_p, int all_keys_p, int rest_p, int rest_value_p) {
   return(I(number_required
@@ -580,7 +580,7 @@ INLINE DFN function_xep(dylan_simple_method* function) {
   return(function->xep);
 }
 
-DFN primitive_function_xep(D function) {
+DFN primitive_function_xep(dylan_value function) {
   return(function_xep((dylan_simple_method*)function));
 }
 
@@ -596,7 +596,7 @@ INLINE DLFN keyword_function_iep(dylan_simple_method* function) {
   return(((dylan_keyword_method*)function)->iep);
 }
 
-INLINE D method_keyword_specifiers(dylan_simple_method* method) {
+INLINE dylan_value method_keyword_specifiers(dylan_simple_method* method) {
   return(((dylan_keyword_method*)method)->keyword_specifiers);
 }
 
@@ -639,11 +639,11 @@ INLINE int function_next_p(dylan_simple_method* function) {
 
 /* VARARGS SUPPORT */
 
-INLINE void transfer_varargs(va_list ap, int n, D* arguments) {
+INLINE void transfer_varargs(va_list ap, int n, dylan_value* arguments) {
   int i;
 
   for (i=0; i<n; i++) {
-    arguments[i] = va_arg(ap, D);
+    arguments[i] = va_arg(ap, dylan_value);
   }
 }
 
@@ -662,26 +662,26 @@ INLINE void transfer_varargs(va_list ap, int n, D* arguments) {
 
 /* CALL CHECKS */
 
-extern D LobjectGVKd;
-extern D Ktype_check_errorVKiI(D argument, D specializer);
+extern dylan_value LobjectGVKd;
+extern dylan_value Ktype_check_errorVKiI(dylan_value argument, dylan_value specializer);
 
 #define INSTANCEP(x, y) (primitive_instanceQ((x), (y)) != DFALSE)
 
 #define FUNCTIONP(x) \
     (R((((Wrapper*)OBJECT_WRAPPER(x)))->subtype_mask) & 64)
 
-FORCE_INLINE D PERFORM_INLINE_TYPE_CHECK(D value, D type) {
+FORCE_INLINE dylan_value PERFORM_INLINE_TYPE_CHECK(dylan_value value, dylan_value type) {
   if (unlikely(type != LobjectGVKd && !INSTANCEP(value, type))) {
     Ktype_check_errorVKiI(value, type);
   }
   return(value);
 }
 
-D primitive_type_check (D value, D type) {
+dylan_value primitive_type_check (dylan_value value, dylan_value type) {
   return PERFORM_INLINE_TYPE_CHECK(value, type);
 }
 
-extern D Kstack_overflow_errorVKiI();
+extern dylan_value Kstack_overflow_errorVKiI();
 
 INLINE void SIMPLE_CALL_CHECK(dylan_simple_method* function) {
   /* int stack_marker; */
@@ -693,7 +693,7 @@ INLINE void SIMPLE_CALL_CHECK(dylan_simple_method* function) {
   }*/
 }
 
-extern D Kargument_count_overflow_errorVKiI(D function, D argc);
+extern dylan_value Kargument_count_overflow_errorVKiI(dylan_value function, dylan_value argc);
 
 INLINE void CALL_CHECK(dylan_simple_method* function, int argument_count) {
   SIMPLE_CALL_CHECK(function);
@@ -702,14 +702,14 @@ INLINE void CALL_CHECK(dylan_simple_method* function, int argument_count) {
   }
 }
 
-FORCE_INLINE void TYPE_CHECK_ARG (D specializer, D argument) {
+FORCE_INLINE void TYPE_CHECK_ARG (dylan_value specializer, dylan_value argument) {
   PERFORM_INLINE_TYPE_CHECK(argument, specializer);
 }
 
-INLINE void TYPE_CHECK_ARGS(D function, int argument_count, D* arguments) {
+INLINE void TYPE_CHECK_ARGS(dylan_value function, int argument_count, dylan_value* arguments) {
   dylan_simple_object_vector* specs = function_specializers((dylan_simple_method*)function);
   if (specs) {
-    D* specializers = vector_data(specs);
+    dylan_value* specializers = vector_data(specs);
     int i;
     for (i = 0; i < argument_count; i++) {
       TYPE_CHECK_ARG(specializers[i], arguments[i]);
@@ -717,37 +717,37 @@ INLINE void TYPE_CHECK_ARGS(D function, int argument_count, D* arguments) {
   }
 }
 
-INLINE void TYPE_CHECK_ARGS_1(D fn, D a1) {
+INLINE void TYPE_CHECK_ARGS_1(dylan_value fn, dylan_value a1) {
   dylan_simple_object_vector* specs = function_specializers((dylan_simple_method*)fn);
   if (specs) {
-    D* specializers = vector_data(specs);
+    dylan_value* specializers = vector_data(specs);
     TYPE_CHECK_ARG(specializers[0], a1);
   }
 }
 
-INLINE void TYPE_CHECK_ARGS_2(D fn, D a1, D a2) {
+INLINE void TYPE_CHECK_ARGS_2(dylan_value fn, dylan_value a1, dylan_value a2) {
   dylan_simple_object_vector* specs = function_specializers((dylan_simple_method*)fn);
   if (specs) {
-    D* specializers = vector_data(specs);
+    dylan_value* specializers = vector_data(specs);
     TYPE_CHECK_ARG(specializers[0], a1);
     TYPE_CHECK_ARG(specializers[1], a2);
   }
 }
 
-INLINE void TYPE_CHECK_ARGS_3(D fn, D a1, D a2, D a3) {
+INLINE void TYPE_CHECK_ARGS_3(dylan_value fn, dylan_value a1, dylan_value a2, dylan_value a3) {
   dylan_simple_object_vector* specs = function_specializers((dylan_simple_method*)fn);
   if (specs) {
-    D* specializers = vector_data(specs);
+    dylan_value* specializers = vector_data(specs);
     TYPE_CHECK_ARG(specializers[0], a1);
     TYPE_CHECK_ARG(specializers[1], a2);
     TYPE_CHECK_ARG(specializers[2], a3);
   }
 }
 
-INLINE void TYPE_CHECK_ARGS_4(D fn, D a1, D a2, D a3, D a4) {
+INLINE void TYPE_CHECK_ARGS_4(dylan_value fn, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4) {
   dylan_simple_object_vector* specs = function_specializers((dylan_simple_method*)fn);
   if (specs) {
-    D* specializers = vector_data(specs);
+    dylan_value* specializers = vector_data(specs);
     TYPE_CHECK_ARG(specializers[0], a1);
     TYPE_CHECK_ARG(specializers[1], a2);
     TYPE_CHECK_ARG(specializers[2], a3);
@@ -755,10 +755,10 @@ INLINE void TYPE_CHECK_ARGS_4(D fn, D a1, D a2, D a3, D a4) {
   }
 }
 
-INLINE void TYPE_CHECK_ARGS_5(D fn, D a1, D a2, D a3, D a4, D a5) {
+INLINE void TYPE_CHECK_ARGS_5(dylan_value fn, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5) {
   dylan_simple_object_vector* specs = function_specializers((dylan_simple_method*)fn);
   if (specs) {
-    D* specializers = vector_data(specs);
+    dylan_value* specializers = vector_data(specs);
     TYPE_CHECK_ARG(specializers[0], a1);
     TYPE_CHECK_ARG(specializers[1], a2);
     TYPE_CHECK_ARG(specializers[2], a3);
@@ -767,10 +767,10 @@ INLINE void TYPE_CHECK_ARGS_5(D fn, D a1, D a2, D a3, D a4, D a5) {
   }
 }
 
-INLINE void TYPE_CHECK_ARGS_6 (D fn, D a1, D a2, D a3, D a4, D a5, D a6) {
+INLINE void TYPE_CHECK_ARGS_6 (dylan_value fn, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6) {
   dylan_simple_object_vector* specs = function_specializers((dylan_simple_method*)fn);
   if (specs) {
-    D* specializers = vector_data(specs);
+    dylan_value* specializers = vector_data(specs);
     TYPE_CHECK_ARG(specializers[0], a1);
     TYPE_CHECK_ARG(specializers[1], a2);
     TYPE_CHECK_ARG(specializers[2], a3);
@@ -781,10 +781,10 @@ INLINE void TYPE_CHECK_ARGS_6 (D fn, D a1, D a2, D a3, D a4, D a5, D a6) {
 }
 
 INLINE void TYPE_CHECK_ARGS_7
-    (D fn, D a1, D a2, D a3, D a4, D a5, D a6, D a7) {
+    (dylan_value fn, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7) {
   dylan_simple_object_vector* specs = function_specializers((dylan_simple_method*)fn);
   if (specs) {
-    D* specializers = vector_data(specs);
+    dylan_value* specializers = vector_data(specs);
     TYPE_CHECK_ARG(specializers[0], a1);
     TYPE_CHECK_ARG(specializers[1], a2);
     TYPE_CHECK_ARG(specializers[2], a3);
@@ -796,10 +796,10 @@ INLINE void TYPE_CHECK_ARGS_7
 }
 
 INLINE void TYPE_CHECK_ARGS_8
-    (D fn, D a1, D a2, D a3, D a4, D a5, D a6, D a7, D a8) {
+    (dylan_value fn, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7, dylan_value a8) {
   dylan_simple_object_vector* specs = function_specializers((dylan_simple_method*)fn);
   if (specs) {
-    D* specializers = vector_data(specs);
+    dylan_value* specializers = vector_data(specs);
     TYPE_CHECK_ARG(specializers[0], a1);
     TYPE_CHECK_ARG(specializers[1], a2);
     TYPE_CHECK_ARG(specializers[2], a3);
@@ -812,10 +812,10 @@ INLINE void TYPE_CHECK_ARGS_8
 }
 
 INLINE void TYPE_CHECK_ARGS_9
-    (D fn, D a1, D a2, D a3, D a4, D a5, D a6, D a7, D a8, D a9) {
+    (dylan_value fn, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7, dylan_value a8, dylan_value a9) {
   dylan_simple_object_vector* specs = function_specializers((dylan_simple_method*)fn);
   if (specs) {
-    D* specializers = vector_data(specs);
+    dylan_value* specializers = vector_data(specs);
     TYPE_CHECK_ARG(specializers[0], a1);
     TYPE_CHECK_ARG(specializers[1], a2);
     TYPE_CHECK_ARG(specializers[2], a3);
@@ -828,7 +828,7 @@ INLINE void TYPE_CHECK_ARGS_9
   }
 }
 
-extern D Kargument_count_errorVKiI(D function, D argc);
+extern dylan_value Kargument_count_errorVKiI(dylan_value function, dylan_value argc);
 
 INLINE void BASIC_REQUIRED_CALL_CHECK
     (dylan_simple_method* function, int number_required, int argument_count) {
@@ -839,7 +839,7 @@ INLINE void BASIC_REQUIRED_CALL_CHECK
 }
 
 INLINE void REQUIRED_CALL_CHECK
-    (dylan_simple_method* function, int number_required, int argument_count, D* arguments) {
+    (dylan_simple_method* function, int number_required, int argument_count, dylan_value* arguments) {
   BASIC_REQUIRED_CALL_CHECK(function, number_required, argument_count);
   TYPE_CHECK_ARGS(function, argument_count, arguments);
 }
@@ -853,15 +853,15 @@ INLINE void BASIC_OPTIONAL_CALL_CHECK
 }
 
 INLINE void OPTIONAL_CALL_CHECK
-    (dylan_simple_method* function, int number_required, int argument_count, D* arguments) {
+    (dylan_simple_method* function, int number_required, int argument_count, dylan_value* arguments) {
   BASIC_OPTIONAL_CALL_CHECK(function, number_required, argument_count);
   TYPE_CHECK_ARGS(function, number_required, arguments);
 }
 
-extern D Kodd_keyword_arguments_errorVKiI(D function, D argc);
+extern dylan_value Kodd_keyword_arguments_errorVKiI(dylan_value function, dylan_value argc);
 
 INLINE void KEYWORD_CALL_CHECK
-    (dylan_simple_method* function, int number_required, int argument_count, D* arguments) {
+    (dylan_simple_method* function, int number_required, int argument_count, dylan_value* arguments) {
   OPTIONAL_CALL_CHECK (function, number_required, argument_count, arguments);
   if (unlikely((argument_count - number_required) & 1)) {
     Kodd_keyword_arguments_errorVKiI(function, I(argument_count));
@@ -870,7 +870,7 @@ INLINE void KEYWORD_CALL_CHECK
 
 /* CALLING CONVENTION */
 
-D primitive_xep_apply (dylan_simple_method* fn, int n, D a[]) {
+dylan_value primitive_xep_apply (dylan_simple_method* fn, int n, dylan_value a[]) {
   TEB* teb = get_teb();
   DFN xep = fn->xep;
 
@@ -910,12 +910,12 @@ INLINE int FUNCTION_OK(dylan_simple_method* function) {
 }
 */
 
-D primitive_xep_call (dylan_simple_method* fn, int n, ...) {
+dylan_value primitive_xep_call (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int i;
   va_list ap; va_start(ap,n);
   for (i=0; i<n; i++) {
-    D argument = va_arg(ap, D);
+    dylan_value argument = va_arg(ap, dylan_value);
     teb->arguments[i] = argument;
   }
   REQUIRED_CALL_CHECK(fn, function_number_required(fn), n, teb->arguments);
@@ -929,23 +929,23 @@ D primitive_xep_call (dylan_simple_method* fn, int n, ...) {
   and vector all return values.
 */
 
-D call_dylan_function_returning_all_values (dylan_simple_method* fn, int n, ...) {
+dylan_value call_dylan_function_returning_all_values (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int i;
-  D first_value;
+  dylan_value first_value;
   va_list ap; va_start(ap,n);
   for (i=0; i<n; i++) {
-    D argument = va_arg(ap, D);
+    dylan_value argument = va_arg(ap, dylan_value);
     teb->arguments[i] = argument;
   }
   first_value = primitive_xep_apply(fn, n, teb->arguments);
   return(MV_GET_REST_AT(first_value, 0));
 }
 
-D primitive_mep_apply_with_optionals (dylan_simple_method* fn, D new_next_methods, D args) {
+dylan_value primitive_mep_apply_with_optionals (dylan_simple_method* fn, dylan_value new_next_methods, dylan_value args) {
   TEB* teb = get_teb();
   DLFN mep = fn->mep;
-  D*   v   = vector_data((dylan_simple_object_vector*)args);
+  dylan_value*   v   = vector_data((dylan_simple_object_vector*)args);
 
   teb->next_methods = new_next_methods;
   teb->function = fn;
@@ -977,7 +977,7 @@ D primitive_mep_apply_with_optionals (dylan_simple_method* fn, D new_next_method
   }
 }
 
-INLINE dylan_generic_function* parent_gf (D cache_header_or_gf) {
+INLINE dylan_generic_function* parent_gf (dylan_value cache_header_or_gf) {
   while (!FUNCTIONP(cache_header_or_gf)) {
     cache_header_or_gf = ((CACHEHEADERENGINE*)cache_header_or_gf)->parent;
   }
@@ -985,16 +985,16 @@ INLINE dylan_generic_function* parent_gf (D cache_header_or_gf) {
 }
 
 
-extern D primitive_engine_node_apply_with_optionals (D engD, D parent, D args);
+extern dylan_value primitive_engine_node_apply_with_optionals (dylan_value engD, dylan_value parent, dylan_value args);
 
-D primitive_engine_node_apply_with_optionals (D engD, D parent, D args) {
+dylan_value primitive_engine_node_apply_with_optionals (dylan_value engD, dylan_value parent, dylan_value args) {
   TEB* teb = get_teb();
   ENGINE* eng = (ENGINE*)engD;
   DLFN ep = eng->entry_point;
-  D*   a   = vector_data((dylan_simple_object_vector*)args);
+  dylan_value*   a   = vector_data((dylan_simple_object_vector*)args);
 
   teb->next_methods = parent;
-  teb->function = (D)eng;
+  teb->function = (dylan_value)eng;
   teb->argument_count = vector_size((dylan_simple_object_vector*)args);
 
   switch (teb->argument_count) {
@@ -1018,51 +1018,51 @@ D primitive_engine_node_apply_with_optionals (D engD, D parent, D args) {
   }
 }
 
-D inline_invoke_engine_node (ENGINE* eng, int argcount, ...) {
+dylan_value inline_invoke_engine_node (ENGINE* eng, int argcount, ...) {
   TEB* teb = get_teb();
   int i;
   DEF_STACK_VECTOR_INITTED(argvec, teb->argument_count);
   va_list ap; va_start(ap,argcount);
   for (i=0; i<argcount; i++) {
-    D argument = va_arg(ap, D);
+    dylan_value argument = va_arg(ap, dylan_value);
     vector_ref_setter(argument, argvec, i);
   }
   if (FUNCTIONP(eng)) {
     return(primitive_mep_apply_with_optionals((dylan_simple_method*)eng, teb->next_methods, argvec));
   } else {
-    return((eng->entry_point)((D)argvec));
+    return((eng->entry_point)((dylan_value)argvec));
   }
 }
 
 
-D primitive_engine_node_apply(ENGINE* eng, D parent, D a[]) {
+dylan_value primitive_engine_node_apply(ENGINE* eng, dylan_value parent, dylan_value a[]) {
   dylan_generic_function* gf = parent_gf(parent);
   dylan_signature* sig = gf->signature;
   int  number_required = signature_number_required(sig);
   int  argument_count = vector_size((dylan_simple_object_vector*)a);
   if (signature_optionals_p(sig)) {
     /* OPTIONAL_CALL_CHECK(gfn,number_required,argument_count); */
-    D*   arguments = vector_data((dylan_simple_object_vector*)a);
+    dylan_value*   arguments = vector_data((dylan_simple_object_vector*)a);
     DEF_STACK_VECTOR_FROM_BUFFER_WITH_SIZE
       (new_arguments, number_required + 1, arguments, number_required);
     int  optionals_count = argument_count - number_required;
     DEF_STACK_VECTOR_FROM_BUFFER
       (rest_arguments, optionals_count, &arguments[number_required]);
     vector_ref_setter(rest_arguments, new_arguments, number_required);
-    return(primitive_engine_node_apply_with_optionals((D)eng, parent, (D*)new_arguments));
+    return(primitive_engine_node_apply_with_optionals((dylan_value)eng, parent, (dylan_value*)new_arguments));
   } else {
     /* REQUIRED_CALL_CHECK(gfn,number_required,argument_count); */
-    return(primitive_engine_node_apply_with_optionals((D)eng, parent, a));
+    return(primitive_engine_node_apply_with_optionals((dylan_value)eng, parent, a));
   }
 }
 
 
-D primitive_mep_apply (dylan_simple_method* fn, D next_methods, D a[]) {
+dylan_value primitive_mep_apply (dylan_simple_method* fn, dylan_value next_methods, dylan_value a[]) {
   int  number_required = function_number_required(fn);
   int  argument_count = vector_size((dylan_simple_object_vector*)a);
   if (function_optionals_p(fn)) {
     /* OPTIONAL_CALL_CHECK(fn,number_required,argument_count); */
-    D*   arguments = vector_data((dylan_simple_object_vector*)a);
+    dylan_value*   arguments = vector_data((dylan_simple_object_vector*)a);
     DEF_STACK_VECTOR_FROM_BUFFER_WITH_SIZE
       (new_arguments, number_required + 1, arguments, number_required);
     int  optionals_count = argument_count - number_required;
@@ -1070,14 +1070,14 @@ D primitive_mep_apply (dylan_simple_method* fn, D next_methods, D a[]) {
       (rest_arguments, optionals_count, &arguments[number_required]);
     vector_ref_setter(rest_arguments, new_arguments, number_required);
     return(primitive_mep_apply_with_optionals
-             (fn, next_methods, (D*)new_arguments));
+             (fn, next_methods, (dylan_value*)new_arguments));
   } else {
     /* REQUIRED_CALL_CHECK(fn,number_required,argument_count); */
     return(primitive_mep_apply_with_optionals(fn, next_methods, a));
   }
 }
 
-D iep_apply (DLFN iep, int n, D a[]) {
+dylan_value iep_apply (DLFN iep, int n, dylan_value a[]) {
   switch (n) {
   case 0: return(iep());
   case 1: return(iep(a[0]));
@@ -1103,7 +1103,7 @@ D iep_apply (DLFN iep, int n, D a[]) {
   }
 }
 
-D primitive_iep_apply (dylan_simple_method* fn, int n, D a[]) {
+dylan_value primitive_iep_apply (dylan_simple_method* fn, int n, dylan_value a[]) {
   TEB* teb = get_teb();
   teb->function = fn; teb->next_methods = DFALSE;
   return(iep_apply(function_iep(fn), n, a));
@@ -1111,76 +1111,76 @@ D primitive_iep_apply (dylan_simple_method* fn, int n, D a[]) {
 
 /* required xep's */
 
-D xep_0 (dylan_simple_method* fn, int n) {
+dylan_value xep_0 (dylan_simple_method* fn, int n) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 0, n);
   teb->function = fn; teb->next_methods = DFALSE;
   return((function_iep(fn))());
 }
-D xep_1 (dylan_simple_method* fn, int n, D a1) {
+dylan_value xep_1 (dylan_simple_method* fn, int n, dylan_value a1) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 1, n);
   TYPE_CHECK_ARGS_1(fn, a1);
   teb->function = fn; teb->next_methods = DFALSE;
   return((function_iep(fn))(a1));
 }
-D xep_2 (dylan_simple_method* fn, int n, D a1, D a2) {
+dylan_value xep_2 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 2, n);
   TYPE_CHECK_ARGS_2(fn, a1, a2);
   teb->function = fn; teb->next_methods = DFALSE;
   return(function_iep(fn)(a1,a2));
 }
-D xep_3 (dylan_simple_method* fn, int n, D a1, D a2, D a3) {
+dylan_value xep_3 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 3, n);
   TYPE_CHECK_ARGS_3(fn, a1, a2, a3);
   teb->function = fn; teb->next_methods = DFALSE;
   return(function_iep(fn)(a1,a2,a3));
 }
-D xep_4 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4) {
+dylan_value xep_4 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 4, n);
   TYPE_CHECK_ARGS_4(fn, a1, a2, a3, a4);
   teb->function = fn; teb->next_methods = DFALSE;
   return(function_iep(fn)(a1,a2,a3,a4));
 }
-D xep_5 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5) {
+dylan_value xep_5 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 5, n);
   TYPE_CHECK_ARGS_5(fn, a1, a2, a3, a4, a5);
   teb->function = fn; teb->next_methods = DFALSE;
   return(function_iep(fn)(a1,a2,a3,a4,a5));
 }
-D xep_6 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6) {
+dylan_value xep_6 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 6, n);
   TYPE_CHECK_ARGS_6(fn, a1, a2, a3, a4, a5, a6);
   teb->function = fn; teb->next_methods = DFALSE;
   return(function_iep(fn)(a1,a2,a3,a4,a5,a6));
 }
-D xep_7 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6, D a7) {
+dylan_value xep_7 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 7, n);
   TYPE_CHECK_ARGS_7(fn, a1, a2, a3, a4, a5, a6, a7);
   teb->function = fn; teb->next_methods = DFALSE;
   return(function_iep(fn)(a1,a2,a3,a4,a5,a6,a7));
 }
-D xep_8 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6, D a7, D a8) {
+dylan_value xep_8 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7, dylan_value a8) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 8, n);
   TYPE_CHECK_ARGS_8(fn, a1, a2, a3, a4, a5, a6, a7, a8);
   teb->function = fn; teb->next_methods = DFALSE;
   return(function_iep(fn)(a1,a2,a3,a4,a5,a6,a7,a8));
 }
-D xep_9 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6, D a7, D a8, D a9) {
+dylan_value xep_9 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7, dylan_value a8, dylan_value a9) {
   TEB* teb = get_teb();
   BASIC_REQUIRED_CALL_CHECK(fn, 9, n);
   TYPE_CHECK_ARGS_9(fn, a1, a2, a3, a4, a5, a6, a7, a8, a9);
   teb->function = fn; teb->next_methods = DFALSE;
   return(function_iep(fn)(a1,a2,a3,a4,a5,a6,a7,a8,a9));
 }
-D xep (dylan_simple_method* fn, int n, ...) {
+dylan_value xep (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(n, n, teb->arguments);
   REQUIRED_CALL_CHECK(fn, function_number_required(fn), n, teb->arguments);
@@ -1190,14 +1190,14 @@ D xep (dylan_simple_method* fn, int n, ...) {
 /* REST XEP'S */
 /*   numbered by the number of required arguments == # parameters in IEP - 1 */
 
-D rest_xep_0 (dylan_simple_method* fn, int n, ...) {
+dylan_value rest_xep_0 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(n, n, teb->arguments);
   BASIC_OPTIONAL_CALL_CHECK(fn, 0, n);
   teb->function = fn; teb->next_methods = DFALSE;
   return((function_iep(fn))(make_vector_from_buffer(n, teb->arguments)));
 }
-D rest_xep_1 (dylan_simple_method* fn, int n, D a1, ...) {
+dylan_value rest_xep_1 (dylan_simple_method* fn, int n, dylan_value a1, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(n - 1, a1, teb->arguments);
   BASIC_OPTIONAL_CALL_CHECK(fn, 1, n);
@@ -1205,7 +1205,7 @@ D rest_xep_1 (dylan_simple_method* fn, int n, D a1, ...) {
   teb->function = fn; teb->next_methods = DFALSE;
   return((function_iep(fn))(a1, make_vector_from_buffer(n - 1, teb->arguments)));
 }
-D rest_xep_2 (dylan_simple_method* fn, int n, D a1, D a2, ...) {
+dylan_value rest_xep_2 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(n - 2, a2, teb->arguments);
   BASIC_OPTIONAL_CALL_CHECK(fn, 2, n);
@@ -1213,7 +1213,7 @@ D rest_xep_2 (dylan_simple_method* fn, int n, D a1, D a2, ...) {
   teb->function = fn; teb->next_methods = DFALSE;
   return(function_iep(fn)(a1,a2,make_vector_from_buffer(n - 2, teb->arguments)));
 }
-D rest_xep_3 (dylan_simple_method* fn, int n, D a1, D a2, D a3, ...) {
+dylan_value rest_xep_3 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(n - 3, a3, teb->arguments);
   BASIC_OPTIONAL_CALL_CHECK(fn, 3, n);
@@ -1221,7 +1221,7 @@ D rest_xep_3 (dylan_simple_method* fn, int n, D a1, D a2, D a3, ...) {
   teb->function = fn; teb->next_methods = DFALSE;
   return(function_iep(fn)(a1,a2,a3,make_vector_from_buffer(n - 3, teb->arguments)));
 }
-D rest_xep_4 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, ...) {
+dylan_value rest_xep_4 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(n - 4, a4, teb->arguments);
   BASIC_OPTIONAL_CALL_CHECK(fn, 4, n);
@@ -1229,7 +1229,7 @@ D rest_xep_4 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, ...) {
   teb->function = fn; teb->next_methods = DFALSE;
   return(function_iep(fn)(a1,a2,a3,a4,make_vector_from_buffer(n - 4, teb->arguments)));
 }
-D rest_xep_5 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, ...) {
+dylan_value rest_xep_5 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(n - 5, a5, teb->arguments);
   BASIC_OPTIONAL_CALL_CHECK(fn, 5, n);
@@ -1237,7 +1237,7 @@ D rest_xep_5 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, ...)
   teb->function = fn; teb->next_methods = DFALSE;
   return(function_iep(fn)(a1,a2,a3,a4,a5,make_vector_from_buffer(n - 5, teb->arguments)));
 }
-D rest_xep_6 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6, ...) {
+dylan_value rest_xep_6 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(n - 6, a6, teb->arguments);
   BASIC_OPTIONAL_CALL_CHECK(fn, 6, n);
@@ -1245,7 +1245,7 @@ D rest_xep_6 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6
   teb->function = fn; teb->next_methods = DFALSE;
   return(function_iep(fn)(a1,a2,a3,a4,a5,a6,make_vector_from_buffer(n - 6, teb->arguments)));
 }
-D rest_xep_7 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6, D a7, ...) {
+dylan_value rest_xep_7 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(n - 7, a7, teb->arguments);
   BASIC_OPTIONAL_CALL_CHECK(fn, 7, n);
@@ -1253,7 +1253,7 @@ D rest_xep_7 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6
   teb->function = fn; teb->next_methods = DFALSE;
   return(function_iep(fn)(a1,a2,a3,a4,a5,a6,a7,make_vector_from_buffer(n - 7, teb->arguments)));
 }
-D rest_xep_8 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6, D a7, D a8, ...) {
+dylan_value rest_xep_8 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7, dylan_value a8, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(n - 8, a8, teb->arguments);
   BASIC_OPTIONAL_CALL_CHECK(fn, 8, n);
@@ -1261,7 +1261,7 @@ D rest_xep_8 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6
   teb->function = fn; teb->next_methods = DFALSE;
   return(function_iep(fn)(a1,a2,a3,a4,a5,a6,a7,a8,make_vector_from_buffer(n - 8, teb->arguments)));
 }
-D rest_xep_9 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6, D a7, D a8, D a9, ...) {
+dylan_value rest_xep_9 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7, dylan_value a8, dylan_value a9, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(n - 9, a9, teb->arguments);
   BASIC_OPTIONAL_CALL_CHECK(fn, 9, n);
@@ -1270,11 +1270,11 @@ D rest_xep_9 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6
   return(function_iep(fn)(a1,a2,a3,a4,a5,a6,a7,a8,a9,make_vector_from_buffer(n - 9, teb->arguments)));
 }
 
-D rest_xep (dylan_simple_method* fn, int n, ...) {
+dylan_value rest_xep (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
-  D*  optional_arguments = &teb->arguments[number_required];
+  dylan_value*  optional_arguments = &teb->arguments[number_required];
 
   BUFFER_VARARGS(n, n, teb->arguments);
   OPTIONAL_CALL_CHECK(fn, number_required, n, teb->arguments);
@@ -1289,45 +1289,45 @@ D rest_xep (dylan_simple_method* fn, int n, ...) {
 /* ACCESSOR-METHOD XEP'S */
 
 
-extern D KPslotacc_single_q_instance_getterVKiI(D accmeth, D inst);
-extern D KPslotacc_single_q_instance_setterVKiI(D value, D accmeth, D inst);
-extern D KPslotacc_single_q_class_getterVKiI(D accmeth, D inst);
-extern D KPslotacc_single_q_class_setterVKiI(D value, D accmeth, D inst);
-extern D KPslotacc_repeated_instance_getterVKiI(D accmeth, D inst, D idx);
-extern D KPslotacc_repeated_instance_setterVKiI(D value, D accmeth, D inst, D idx);
+extern dylan_value KPslotacc_single_q_instance_getterVKiI(dylan_value accmeth, dylan_value inst);
+extern dylan_value KPslotacc_single_q_instance_setterVKiI(dylan_value value, dylan_value accmeth, dylan_value inst);
+extern dylan_value KPslotacc_single_q_class_getterVKiI(dylan_value accmeth, dylan_value inst);
+extern dylan_value KPslotacc_single_q_class_setterVKiI(dylan_value value, dylan_value accmeth, dylan_value inst);
+extern dylan_value KPslotacc_repeated_instance_getterVKiI(dylan_value accmeth, dylan_value inst, dylan_value idx);
+extern dylan_value KPslotacc_repeated_instance_setterVKiI(dylan_value value, dylan_value accmeth, dylan_value inst, dylan_value idx);
 
 
-D slotacc_single_q_instance_getter_xep (dylan_accessor_method* am, int n, D a1) {
+dylan_value slotacc_single_q_instance_getter_xep (dylan_accessor_method* am, int n, dylan_value a1) {
   BASIC_REQUIRED_CALL_CHECK(((dylan_simple_method*)am), 1, n);
   return(KPslotacc_single_q_instance_getterVKiI(am, a1));
 }
 
-D slotacc_single_q_instance_setter_xep (dylan_accessor_method* am, int n, D a1, D a2) {
+dylan_value slotacc_single_q_instance_setter_xep (dylan_accessor_method* am, int n, dylan_value a1, dylan_value a2) {
   BASIC_REQUIRED_CALL_CHECK(((dylan_simple_method*)am), 2, n);
   return(KPslotacc_single_q_instance_setterVKiI(am, a1, a2));
 }
 
-D slotacc_single_q_class_getter_xep (dylan_accessor_method* am, int n, D a1) {
+dylan_value slotacc_single_q_class_getter_xep (dylan_accessor_method* am, int n, dylan_value a1) {
   BASIC_REQUIRED_CALL_CHECK(((dylan_simple_method*)am), 1, n);
   return(KPslotacc_single_q_class_getterVKiI(am, a1));
 }
 
-D slotacc_single_q_class_setter_xep (dylan_accessor_method* am, int n, D a1, D a2) {
+dylan_value slotacc_single_q_class_setter_xep (dylan_accessor_method* am, int n, dylan_value a1, dylan_value a2) {
   BASIC_REQUIRED_CALL_CHECK(((dylan_simple_method*)am), 2, n);
   return(KPslotacc_single_q_class_setterVKiI(am, a1, a2));
 }
 
-D slotacc_repeated_instance_getter_xep (dylan_accessor_method* am, int n, D a1, D a2) {
+dylan_value slotacc_repeated_instance_getter_xep (dylan_accessor_method* am, int n, dylan_value a1, dylan_value a2) {
   BASIC_REQUIRED_CALL_CHECK(((dylan_simple_method*)am), 2, n);
   return(KPslotacc_repeated_instance_getterVKiI(am, a1, a2));
 }
 
-D slotacc_repeated_instance_setter_xep (dylan_accessor_method* am, int n, D a1, D a2, D a3) {
+dylan_value slotacc_repeated_instance_setter_xep (dylan_accessor_method* am, int n, dylan_value a1, dylan_value a2, dylan_value a3) {
   BASIC_REQUIRED_CALL_CHECK(((dylan_simple_method*)am), 3, n);
   return(KPslotacc_repeated_instance_setterVKiI(am, a1, a2, a3));
 }
 
-D primitive_set_accessor_method_xep (D accmeth, D what) {
+dylan_value primitive_set_accessor_method_xep (dylan_value accmeth, dylan_value what) {
   dylan_accessor_method* am = (dylan_accessor_method*)accmeth;
   switch (R(what)) {
   case 0: am->xep = (DFN)&slotacc_single_q_instance_getter_xep; break;
@@ -1337,16 +1337,16 @@ D primitive_set_accessor_method_xep (D accmeth, D what) {
   case 4: am->xep = (DFN)&slotacc_repeated_instance_getter_xep; break;
   case 5: am->xep = (DFN)&slotacc_repeated_instance_setter_xep; break;
   };
-  return((D)am);
+  return((dylan_value)am);
 }
 
 
 /* KEYWORD PROCESSING SUPPORT */
 
 INLINE void default_arguments
-    (int number_required, D* arguments,
-     int number_keywords, D* keyword_specifiers,
-     int keyword_arguments_offset, D* new_arguments) {
+    (int number_required, dylan_value* arguments,
+     int number_keywords, dylan_value* keyword_specifiers,
+     int keyword_arguments_offset, dylan_value* new_arguments) {
   int i, j;
 
   /* copy arguments into staging ground */
@@ -1364,16 +1364,16 @@ INLINE void default_arguments
 
 INLINE void process_keyword_parameters
     (dylan_simple_method* function, int number_required,
-     int number_keywords, D keyword_specifiers[],
-     int number_optionals, D optional_arguments[], D new_arguments[]) {
+     int number_keywords, dylan_value keyword_specifiers[],
+     int number_optionals, dylan_value optional_arguments[], dylan_value new_arguments[]) {
   int i,j,k;
   int size_keyword_specifiers = number_keywords * 2;
   ignore(function);
   for (i = number_optionals - 1; i >= 0;) {
-    D value   = optional_arguments[i--];
-    D keyword = optional_arguments[i--];
+    dylan_value value   = optional_arguments[i--];
+    dylan_value keyword = optional_arguments[i--];
     for (j = 0, k = number_required + 1; j < size_keyword_specifiers; k++, j += 2) {
-      D lambda_keyword = keyword_specifiers[j];
+      dylan_value lambda_keyword = keyword_specifiers[j];
       if (keyword == lambda_keyword) {
          new_arguments[k] = value;
          break;
@@ -1382,19 +1382,19 @@ INLINE void process_keyword_parameters
   }
 }
 
-extern D unknown_keyword_argument_errorVKi(D function, D keyword);
+extern dylan_value unknown_keyword_argument_errorVKi(dylan_value function, dylan_value keyword);
 
 INLINE void process_keyword_parameters_into_with_checking
     (dylan_simple_method* function, int number_required,
-     int number_keywords, D keyword_specifiers[],
-     int argument_count, D arguments[], D new_arguments[]) {
+     int number_keywords, dylan_value keyword_specifiers[],
+     int argument_count, dylan_value arguments[], dylan_value new_arguments[]) {
   int i,j,k;
 
   int allow_other_keys_p = function_all_keys_p(function);
   int size_keyword_specifiers = number_keywords * 2;
   for (i=argument_count-1; i>=number_required;) {
-    D value   = arguments[i--];
-    D keyword = arguments[i--];
+    dylan_value value   = arguments[i--];
+    dylan_value keyword = arguments[i--];
     for (j=0,k=number_required;;k++,j+=2) {
       if (j == size_keyword_specifiers) {
         if (!allow_other_keys_p) {
@@ -1403,7 +1403,7 @@ INLINE void process_keyword_parameters_into_with_checking
           break;
         }
       } else {
-        D lambda_keyword = keyword_specifiers[j];
+        dylan_value lambda_keyword = keyword_specifiers[j];
         if (keyword == lambda_keyword) {
           new_arguments[k] = value;
           break;
@@ -1414,12 +1414,12 @@ INLINE void process_keyword_parameters_into_with_checking
 }
 
 INLINE int process_keyword_call_into
-    (D* new_arguments, dylan_simple_method* function, int argument_count,
-     int number_required, D* required_arguments,
-     int optionals_count, D* optional_arguments, dylan_simple_object_vector* rest_arguments) {
+    (dylan_value* new_arguments, dylan_simple_method* function, int argument_count,
+     int number_required, dylan_value* required_arguments,
+     int optionals_count, dylan_value* optional_arguments, dylan_simple_object_vector* rest_arguments) {
   dylan_simple_object_vector* keyword_specifier_vector = method_keyword_specifiers(function);
   int  number_keywords = vector_size(keyword_specifier_vector) / 2;
-  D*   keyword_specifiers = vector_data(keyword_specifier_vector);
+  dylan_value*   keyword_specifiers = vector_data(keyword_specifier_vector);
   int  new_argument_count = number_required + number_keywords + 1;
 
   ignore(argument_count);
@@ -1437,8 +1437,8 @@ INLINE int process_keyword_call_into
          returning stack allocated data! */
 
 INLINE int process_keyword_call_and_restify_into
-    (D* new_arguments, dylan_simple_method* function,
-     int argument_count, D* arguments, dylan_simple_object_vector* rest_arguments) {
+    (dylan_value* new_arguments, dylan_simple_method* function,
+     int argument_count, dylan_value* arguments, dylan_simple_object_vector* rest_arguments) {
   int number_required = function_number_required(function);
   int optionals_count = argument_count - number_required;
   KEYWORD_CALL_CHECK(function,number_required,argument_count,arguments);
@@ -1451,17 +1451,17 @@ INLINE int process_keyword_call_and_restify_into
            &arguments[number_required], rest_arguments));
 }
 
-INLINE D* process_keyword_call
-    (dylan_simple_method* function, int argument_count, D* arguments, D rest_arguments) {
+INLINE dylan_value* process_keyword_call
+    (dylan_simple_method* function, int argument_count, dylan_value* arguments, dylan_value rest_arguments) {
   TEB* teb = get_teb();
   process_keyword_call_and_restify_into
     (teb->new_arguments, function, argument_count, arguments, (dylan_simple_object_vector*)rest_arguments);
   return(teb->new_arguments);
 }
 
-INLINE D* process_keyword_call_and_n
+INLINE dylan_value* process_keyword_call_and_n
     (dylan_simple_method* function, int argument_count,
-     D* arguments, D rest_arguments, int *new_argument_count) {
+     dylan_value* arguments, dylan_value rest_arguments, int *new_argument_count) {
   TEB* teb = get_teb();
   *new_argument_count =
     process_keyword_call_and_restify_into
@@ -1473,7 +1473,7 @@ INLINE D* process_keyword_call_and_n
 /* REST and KEY XEP's */
 /*   numbered by the total number of parameters in the IEP */
 
-D rest_key_xep_1 (dylan_simple_method* fn, int n, ...) {
+dylan_value rest_key_xep_1 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
@@ -1481,12 +1481,12 @@ D rest_key_xep_1 (dylan_simple_method* fn, int n, ...) {
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
   DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0]));
 }
 
-D rest_key_xep_2 (dylan_simple_method* fn, int n, ...) {
+dylan_value rest_key_xep_2 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
@@ -1494,12 +1494,12 @@ D rest_key_xep_2 (dylan_simple_method* fn, int n, ...) {
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
   DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0],a[1]));
 }
 
-D rest_key_xep_3 (dylan_simple_method* fn, int n, ...) {
+dylan_value rest_key_xep_3 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
@@ -1507,12 +1507,12 @@ D rest_key_xep_3 (dylan_simple_method* fn, int n, ...) {
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
   DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0],a[1],a[2]));
 }
 
-D rest_key_xep_4 (dylan_simple_method* fn, int n, ...) {
+dylan_value rest_key_xep_4 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
@@ -1520,12 +1520,12 @@ D rest_key_xep_4 (dylan_simple_method* fn, int n, ...) {
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
   DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3]));
 }
 
-D rest_key_xep_5 (dylan_simple_method* fn, int n, ...) {
+dylan_value rest_key_xep_5 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
@@ -1533,12 +1533,12 @@ D rest_key_xep_5 (dylan_simple_method* fn, int n, ...) {
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
   DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3],a[4]));
 }
 
-D rest_key_xep_6 (dylan_simple_method* fn, int n, ...) {
+dylan_value rest_key_xep_6 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
@@ -1546,12 +1546,12 @@ D rest_key_xep_6 (dylan_simple_method* fn, int n, ...) {
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
   DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3],a[4],a[5]));
 }
 
-D rest_key_xep_7 (dylan_simple_method* fn, int n, ...) {
+dylan_value rest_key_xep_7 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
@@ -1559,12 +1559,12 @@ D rest_key_xep_7 (dylan_simple_method* fn, int n, ...) {
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
   DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3],a[4],a[5],a[6]));
 }
 
-D rest_key_xep_8 (dylan_simple_method* fn, int n, ...) {
+dylan_value rest_key_xep_8 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
@@ -1572,12 +1572,12 @@ D rest_key_xep_8 (dylan_simple_method* fn, int n, ...) {
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
   DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7]));
 }
 
-D rest_key_xep_9 (dylan_simple_method* fn, int n, ...) {
+dylan_value rest_key_xep_9 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
@@ -1585,12 +1585,12 @@ D rest_key_xep_9 (dylan_simple_method* fn, int n, ...) {
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
   DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  dylan_value* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8]));
 }
 
-D rest_key_xep (dylan_simple_method* fn, int n, ...) {
+dylan_value rest_key_xep (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
@@ -1599,7 +1599,7 @@ D rest_key_xep (dylan_simple_method* fn, int n, ...) {
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
   DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  D* a = process_keyword_call_and_n(fn, n, teb->arguments, rest_arguments, &new_n);
+  dylan_value* a = process_keyword_call_and_n(fn, n, teb->arguments, rest_arguments, &new_n);
   teb->function = fn; teb->next_methods = DFALSE;
   return(iep_apply(keyword_function_iep(fn), new_n, a));
 }
@@ -1608,7 +1608,7 @@ D rest_key_xep (dylan_simple_method* fn, int n, ...) {
 /* METHOD ENTRY POINTS -- MEPs */
 /*   numbered by the total number of parameters in the IEP */
 
-D key_mep_1 (D a1, ...) {
+dylan_value key_mep_1 (dylan_value a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
@@ -1619,7 +1619,7 @@ D key_mep_1 (D a1, ...) {
   return(keyword_function_iep(teb->function)(teb->iep_a[0]));
 }
 
-D key_mep_2 (D a1, ...) {
+dylan_value key_mep_2 (dylan_value a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
@@ -1630,7 +1630,7 @@ D key_mep_2 (D a1, ...) {
   return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1]));
 }
 
-D key_mep_3 (D a1, ...) {
+dylan_value key_mep_3 (dylan_value a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
@@ -1641,7 +1641,7 @@ D key_mep_3 (D a1, ...) {
   return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2]));
 }
 
-D key_mep_4 (D a1, ...) {
+dylan_value key_mep_4 (dylan_value a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
@@ -1652,7 +1652,7 @@ D key_mep_4 (D a1, ...) {
   return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3]));
 }
 
-D key_mep_5 (D a1, ...) {
+dylan_value key_mep_5 (dylan_value a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
@@ -1663,7 +1663,7 @@ D key_mep_5 (D a1, ...) {
   return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4]));
 }
 
-D key_mep_6 (D a1, ...) {
+dylan_value key_mep_6 (dylan_value a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
@@ -1674,7 +1674,7 @@ D key_mep_6 (D a1, ...) {
   return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4],teb->iep_a[5]));
 }
 
-D key_mep_7 (D a1, ...) {
+dylan_value key_mep_7 (dylan_value a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
@@ -1685,7 +1685,7 @@ D key_mep_7 (D a1, ...) {
   return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4],teb->iep_a[5],teb->iep_a[6]));
 }
 
-D key_mep_8 (D a1, ...) {
+dylan_value key_mep_8 (dylan_value a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
@@ -1696,7 +1696,7 @@ D key_mep_8 (D a1, ...) {
   return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4],teb->iep_a[5],teb->iep_a[6],teb->iep_a[7]));
 }
 
-D key_mep_9 (D a1, ...) {
+dylan_value key_mep_9 (dylan_value a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
@@ -1707,7 +1707,7 @@ D key_mep_9 (D a1, ...) {
   return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4],teb->iep_a[5],teb->iep_a[6],teb->iep_a[7],teb->iep_a[8]));
 }
 
-D key_mep (D a1, ...) {
+dylan_value key_mep (dylan_value a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
@@ -1721,79 +1721,79 @@ D key_mep (D a1, ...) {
 
 /* NEW GF SUPPORT */
 
-D gf_iep_0 () {
+dylan_value gf_iep_0 () {
   TEB* teb = get_teb();
   dylan_generic_function* gf = (dylan_generic_function*)teb->function;
   ENGINE* e = gf->engine;
-  teb->next_methods = (D)gf;
-  teb->function = (D)e;
+  teb->next_methods = (dylan_value)gf;
+  teb->function = (dylan_value)e;
   return((e->entry_point)());
 }
 
-D gf_iep_1 (D a1) {
+dylan_value gf_iep_1 (dylan_value a1) {
   TEB* teb = get_teb();
   dylan_generic_function* gf = (dylan_generic_function*)teb->function;
   ENGINE* e = gf->engine;
-  teb->next_methods = (D)gf;
-  teb->function = (D)e;
+  teb->next_methods = (dylan_value)gf;
+  teb->function = (dylan_value)e;
   return((e->entry_point)(a1));
 }
 
-D gf_iep_2 (D a1, D a2) {
+dylan_value gf_iep_2 (dylan_value a1, dylan_value a2) {
   TEB* teb = get_teb();
   dylan_generic_function* gf = (dylan_generic_function*)teb->function;
   ENGINE* e = gf->engine;
-  teb->next_methods = (D)gf;
-  teb->function = (D)e;
+  teb->next_methods = (dylan_value)gf;
+  teb->function = (dylan_value)e;
   return((e->entry_point)(a1, a2));
 }
 
-D gf_iep_3 (D a1, D a2, D a3) {
+dylan_value gf_iep_3 (dylan_value a1, dylan_value a2, dylan_value a3) {
   TEB* teb = get_teb();
   dylan_generic_function* gf = (dylan_generic_function*)teb->function;
   ENGINE* e = gf->engine;
-  teb->next_methods = (D)gf;
-  teb->function = (D)e;
+  teb->next_methods = (dylan_value)gf;
+  teb->function = (dylan_value)e;
   return((e->entry_point)(a1, a2, a3));
 }
 
-D gf_iep_4 (D a1, D a2, D a3, D a4) {
+dylan_value gf_iep_4 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4) {
   TEB* teb = get_teb();
   dylan_generic_function* gf = (dylan_generic_function*)teb->function;
   ENGINE* e = gf->engine;
-  teb->next_methods = (D)gf;
-  teb->function = (D)e;
+  teb->next_methods = (dylan_value)gf;
+  teb->function = (dylan_value)e;
   return((e->entry_point)(a1, a2, a3, a4));
 }
 
-D gf_iep_5 (D a1, D a2, D a3, D a4, D a5) {
+dylan_value gf_iep_5 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5) {
   TEB* teb = get_teb();
   dylan_generic_function* gf = (dylan_generic_function*)teb->function;
   ENGINE* e = gf->engine;
-  teb->next_methods = (D)gf;
-  teb->function = (D)e;
+  teb->next_methods = (dylan_value)gf;
+  teb->function = (dylan_value)e;
   return((e->entry_point)(a1, a2, a3, a4, a5));
 }
 
-D gf_iep_6 (D a1, D a2, D a3, D a4, D a5, D a6) {
+dylan_value gf_iep_6 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6) {
   TEB* teb = get_teb();
   dylan_generic_function* gf = (dylan_generic_function*)teb->function;
   ENGINE* e = gf->engine;
-  teb->next_methods = (D)gf;
-  teb->function = (D)e;
+  teb->next_methods = (dylan_value)gf;
+  teb->function = (dylan_value)e;
   return((e->entry_point)(a1, a2, a3, a4, a5, a6));
 }
 
-D gf_iep_7 (D a1, D a2, D a3, D a4, D a5, D a6, D a7) {
+dylan_value gf_iep_7 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7) {
   TEB* teb = get_teb();
   dylan_generic_function* gf = (dylan_generic_function*)teb->function;
   ENGINE* e = gf->engine;
-  teb->next_methods = (D)gf;
-  teb->function = (D)e;
+  teb->next_methods = (dylan_value)gf;
+  teb->function = (dylan_value)e;
   return((e->entry_point)(a1, a2, a3, a4, a5, a6, a7));
 }
 
-D gf_iep (D new_arguments) {
+dylan_value gf_iep (dylan_value new_arguments) {
   TEB* teb = get_teb();
   dylan_generic_function* gf = (dylan_generic_function*)teb->function;
   ENGINE* e = gf->engine;
@@ -1802,10 +1802,10 @@ D gf_iep (D new_arguments) {
      args spread.  I'm passing the gf as the extra-arg to simulate the "normal" case where
      the method is blindly invoked. */
   if (FUNCTIONP(e)) {
-    return(primitive_mep_apply_with_optionals((dylan_simple_method*)e, (D)gf, new_arguments));
+    return(primitive_mep_apply_with_optionals((dylan_simple_method*)e, (dylan_value)gf, new_arguments));
   } else {
-    teb->next_methods = (D)gf;
-    teb->function = (D)e;
+    teb->next_methods = (dylan_value)gf;
+    teb->function = (dylan_value)e;
     return((e->entry_point)(new_arguments));
   }
 }
@@ -1815,47 +1815,47 @@ D gf_iep (D new_arguments) {
 /* REQ ONLY GF XEP's */
 /*   numbered by the number of required arguments */
 
-D gf_xep_0 (dylan_simple_method* fn, int n) {
+dylan_value gf_xep_0 (dylan_simple_method* fn, int n) {
   TEB* teb = get_teb();
   teb->function = fn; BASIC_REQUIRED_CALL_CHECK(fn, 0, n);
   return(gf_iep_0());
 }
-D gf_xep_1 (dylan_simple_method* fn, int n, D a1) {
+dylan_value gf_xep_1 (dylan_simple_method* fn, int n, dylan_value a1) {
   TEB* teb = get_teb();
   teb->function = fn; BASIC_REQUIRED_CALL_CHECK(fn, 1, n);
   return(gf_iep_1(a1));
 }
-D gf_xep_2 (dylan_simple_method* fn, int n, D a1, D a2) {
+dylan_value gf_xep_2 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2) {
   TEB* teb = get_teb();
   teb->function = fn; BASIC_REQUIRED_CALL_CHECK(fn, 2, n);
   return(gf_iep_2(a1,a2));
 }
-D gf_xep_3 (dylan_simple_method* fn, int n, D a1, D a2, D a3) {
+dylan_value gf_xep_3 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3) {
   TEB* teb = get_teb();
   teb->function = fn; BASIC_REQUIRED_CALL_CHECK(fn, 3, n);
   return(gf_iep_3(a1,a2,a3));
 }
-D gf_xep_4 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4) {
+dylan_value gf_xep_4 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4) {
   TEB* teb = get_teb();
   teb->function = fn; BASIC_REQUIRED_CALL_CHECK(fn, 4, n);
   return(gf_iep_4(a1,a2,a3,a4));
 }
-D gf_xep_5 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5) {
+dylan_value gf_xep_5 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5) {
   TEB* teb = get_teb();
   teb->function = fn; BASIC_REQUIRED_CALL_CHECK(fn, 5, n);
   return(gf_iep_5(a1,a2,a3,a4,a5));
 }
-D gf_xep_6 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6) {
+dylan_value gf_xep_6 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6) {
   TEB* teb = get_teb();
   teb->function = fn; BASIC_REQUIRED_CALL_CHECK(fn, 6, n);
   return(gf_iep_6(a1,a2,a3,a4,a5,a6));
 }
-D gf_xep_7 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6, D a7) {
+dylan_value gf_xep_7 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7) {
   TEB* teb = get_teb();
   teb->function = fn; BASIC_REQUIRED_CALL_CHECK(fn, 7, n);
   return(gf_iep_7(a1,a2,a3,a4,a5,a6,a7));
 }
-D gf_xep (dylan_simple_method* fn, int n, ...) {
+dylan_value gf_xep (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   BUFFER_VARARGS(n, n, teb->arguments);
@@ -1867,7 +1867,7 @@ D gf_xep (dylan_simple_method* fn, int n, ...) {
 /* OPTIONAL GF XEP's */
 /*   numbered by the number of required arguments */
 
-D gf_optional_xep_0 (dylan_simple_method* fn, int n, ...) {
+dylan_value gf_optional_xep_0 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int optionals_count = n - 0; BASIC_OPTIONAL_CALL_CHECK(fn, 0, n);
   teb->function = fn; BUFFER_VARARGS(n, n, teb->a);
@@ -1876,7 +1876,7 @@ D gf_optional_xep_0 (dylan_simple_method* fn, int n, ...) {
   return(gf_iep_1(teb->a[0]));
 }
 
-D gf_optional_xep_1 (dylan_simple_method* fn, int n, ...) {
+dylan_value gf_optional_xep_1 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int optionals_count = n - 1; BASIC_OPTIONAL_CALL_CHECK(fn, 1, n);
   teb->function = fn; BUFFER_VARARGS(n, n, teb->a);
@@ -1885,7 +1885,7 @@ D gf_optional_xep_1 (dylan_simple_method* fn, int n, ...) {
   return(gf_iep_2(teb->a[0], teb->a[1]));
 }
 
-D gf_optional_xep_2 (dylan_simple_method* fn, int n, ...) {
+dylan_value gf_optional_xep_2 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int optionals_count = n - 2; BASIC_OPTIONAL_CALL_CHECK(fn, 2, n);
   teb->function = fn; BUFFER_VARARGS(n, n, teb->a);
@@ -1894,7 +1894,7 @@ D gf_optional_xep_2 (dylan_simple_method* fn, int n, ...) {
   return(gf_iep_3(teb->a[0],teb->a[1],teb->a[2]));
 }
 
-D gf_optional_xep_3 (dylan_simple_method* fn, int n, ...) {
+dylan_value gf_optional_xep_3 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int optionals_count = n - 3; BASIC_OPTIONAL_CALL_CHECK(fn, 3, n);
   teb->function = fn; BUFFER_VARARGS(n, n, teb->a);
@@ -1903,7 +1903,7 @@ D gf_optional_xep_3 (dylan_simple_method* fn, int n, ...) {
   return(gf_iep_4(teb->a[0],teb->a[1],teb->a[2],teb->a[3]));
 }
 
-D gf_optional_xep_4 (dylan_simple_method* fn, int n, ...) {
+dylan_value gf_optional_xep_4 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int optionals_count = n - 4; BASIC_OPTIONAL_CALL_CHECK(fn, 4, n);
   teb->function = fn; BUFFER_VARARGS(n, n, teb->a);
@@ -1912,7 +1912,7 @@ D gf_optional_xep_4 (dylan_simple_method* fn, int n, ...) {
   return(gf_iep_5(teb->a[0],teb->a[1],teb->a[2],teb->a[3],teb->a[4]));
 }
 
-D gf_optional_xep_5 (dylan_simple_method* fn, int n, ...) {
+dylan_value gf_optional_xep_5 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int optionals_count = n - 5; BASIC_OPTIONAL_CALL_CHECK(fn, 5, n);
   teb->function = fn; BUFFER_VARARGS(n, n, teb->a);
@@ -1921,7 +1921,7 @@ D gf_optional_xep_5 (dylan_simple_method* fn, int n, ...) {
   return(gf_iep_6(teb->a[0],teb->a[1],teb->a[2],teb->a[3],teb->a[4],teb->a[5]));
 }
 
-D gf_optional_xep_6 (dylan_simple_method* fn, int n, ...) {
+dylan_value gf_optional_xep_6 (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int optionals_count = n - 6; BASIC_OPTIONAL_CALL_CHECK(fn, 6, n);
   teb->function = fn; BUFFER_VARARGS(n, n, teb->a);
@@ -1930,7 +1930,7 @@ D gf_optional_xep_6 (dylan_simple_method* fn, int n, ...) {
   return(gf_iep_7(teb->a[0],teb->a[1],teb->a[2],teb->a[3],teb->a[4],teb->a[5],teb->a[6]));
 }
 
-D gf_optional_xep (dylan_simple_method* fn, int n, ...) {
+dylan_value gf_optional_xep (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
     int number_required = function_number_required(fn);
     int optionals_count = n - number_required;
@@ -1947,8 +1947,8 @@ D gf_optional_xep (dylan_simple_method* fn, int n, ...) {
 
 /* dynamic setting of gf's entrypoints */
 
-D primitive_set_generic_function_entrypoints(D fn) {
-  D the_xep;
+dylan_value primitive_set_generic_function_entrypoints(dylan_value fn) {
+  dylan_value the_xep;
   dylan_simple_method* function = (dylan_simple_method*)fn;
   if (function_optionals_p(function)) {
     switch (function_number_required(function)) {
@@ -1979,33 +1979,33 @@ D primitive_set_generic_function_entrypoints(D fn) {
 }
 
 
-D general_engine_node_1_engine (D a1) {
+dylan_value general_engine_node_1_engine (dylan_value a1) {
   TEB* teb = get_teb();
   ENGINE* e = (ENGINE*)teb->function;
-  D parent = teb->next_methods;
+  dylan_value parent = teb->next_methods;
   return((e->callback)(a1, e, parent));
 }
 
-D general_engine_node_2_engine (D a1, D a2) {
+dylan_value general_engine_node_2_engine (dylan_value a1, dylan_value a2) {
   TEB* teb = get_teb();
   ENGINE* e = (ENGINE*)teb->function;
-  D parent = teb->next_methods;
+  dylan_value parent = teb->next_methods;
   return((e->callback)(a1, a2, e, parent));
 }
 
 
-D general_engine_node_3_engine (D a1, D a2, D a3) {
+dylan_value general_engine_node_3_engine (dylan_value a1, dylan_value a2, dylan_value a3) {
   TEB* teb = get_teb();
   ENGINE* e = (ENGINE*)teb->function;
-  D parent = teb->next_methods;
+  dylan_value parent = teb->next_methods;
   DLFN cb = e->callback;
   return(cb(a1, a2, a3, e, parent));
 }
 
-D general_engine_node_n_engine (D a1, ...) {
+dylan_value general_engine_node_n_engine (dylan_value a1, ...) {
   TEB* teb = get_teb();
   ENGINE* e = (ENGINE*)teb->function;
-  D parent = teb->next_methods;
+  dylan_value parent = teb->next_methods;
   dylan_generic_function* gf = parent_gf(parent);
   DLFN cb = e->callback;
   dylan_signature* sig = (dylan_signature*)gf->signature;
@@ -2018,23 +2018,23 @@ D general_engine_node_n_engine (D a1, ...) {
     /* The args are spread, last one may be a rest vector. */
     va_list ap;
     DEF_STACK_VECTOR_INITTED(svec, impargs);
-    D* svdata = vector_data(svec);
+    dylan_value* svdata = vector_data(svec);
     if (impargs > 0) {
       int i;
       svdata[0] = a1;
       va_start(ap, a1);
       for (i=1; i<impargs; i++) {
-        D argument = va_arg(ap, D);
+        dylan_value argument = va_arg(ap, dylan_value);
         svdata[i] = argument;
       }
     }
     return(cb(svec, e, parent));
   }
 }
-D general_engine_node_spread_engine (D a1, ...) {
+dylan_value general_engine_node_spread_engine (dylan_value a1, ...) {
   TEB* teb = get_teb();
   ENGINE* e = (ENGINE*)teb->function;
-  D parent = teb->next_methods;
+  dylan_value parent = teb->next_methods;
   dylan_generic_function* gf = parent_gf(parent);
   DLFN cb = e->callback;
   dylan_signature* sig = (dylan_signature*)gf->signature;
@@ -2045,12 +2045,12 @@ D general_engine_node_spread_engine (D a1, ...) {
     if (impargs > 7) {
       /* All the args are in a stack vector, the last of which is the optionals... */
       dylan_simple_object_vector* mepargvec = (dylan_simple_object_vector*)a1;
-      D* mepargdata = vector_data(mepargvec);
+      dylan_value* mepargdata = vector_data(mepargvec);
       dylan_simple_object_vector* optargvec = (dylan_simple_object_vector*)mepargdata[nreq];
-      D* optargdata = vector_data(optargvec);
+      dylan_value* optargdata = vector_data(optargvec);
       int nopts = vector_size(optargvec);
       DEF_STACK_VECTOR_INITTED(svec, nreq + nopts);
-      D* svdata = vector_data(svec);
+      dylan_value* svdata = vector_data(svec);
       int i;
       for (i=0; i<nreq; i++) svdata[i] = mepargdata[i];
       for (i=0; i<nopts; i++) svdata[i+nreq] = optargdata[i];
@@ -2060,10 +2060,10 @@ D general_engine_node_spread_engine (D a1, ...) {
       teb->arguments[0] = a1;
       BUFFER_VARARGS(nreq, a1, &teb->arguments[1]);
       dylan_simple_object_vector* optargvec = (dylan_simple_object_vector*)teb->arguments[nreq];
-      D* optargdata = vector_data(optargvec);
+      dylan_value* optargdata = vector_data(optargvec);
       int nopts = vector_size(optargvec);
       DEF_STACK_VECTOR_INITTED(svec, nreq + nopts);
-      D* svdata = vector_data(svec);
+      dylan_value* svdata = vector_data(svec);
       int i;
       for (i=0; i<nreq; i++) svdata[i] = teb->arguments[i];
       for (i=0; i<nopts; i++) svdata[i+nreq] = optargdata[i];
@@ -2076,13 +2076,13 @@ D general_engine_node_spread_engine (D a1, ...) {
     /* No optionals, args are spread, copy them into a vector.  */
     va_list ap;
     DEF_STACK_VECTOR_INITTED(svec, nreq);
-    D* svdata = vector_data(svec);
+    dylan_value* svdata = vector_data(svec);
     if (nreq > 0) {
       int i;
       svdata[0] = a1;
       va_start(ap, a1);
       for (i=1; i<nreq; i++) {
-        D argument = va_arg(ap, D);
+        dylan_value argument = va_arg(ap, dylan_value);
         svdata[i] = argument;
       }
     }
@@ -2090,22 +2090,22 @@ D general_engine_node_spread_engine (D a1, ...) {
   }
 }
 
-extern D Krepeated_slot_getter_index_out_of_range_trapVKeI(D obj, D idx);
-extern D Krepeated_slot_setter_index_out_of_range_trapVKeI(D val, D obj, D idx);
+extern dylan_value Krepeated_slot_getter_index_out_of_range_trapVKeI(dylan_value obj, dylan_value idx);
+extern dylan_value Krepeated_slot_setter_index_out_of_range_trapVKeI(dylan_value val, dylan_value obj, dylan_value idx);
 #define REPEATED_GETTER_OOR Krepeated_slot_getter_index_out_of_range_trapVKeI
 #define REPEATED_SETTER_OOR Krepeated_slot_setter_index_out_of_range_trapVKeI
 
-extern D Kunbound_instance_slotVKeI(D obj, D offset);
+extern dylan_value Kunbound_instance_slotVKeI(dylan_value obj, dylan_value offset);
 #define UNBOUND_INSTANCE_SLOT Kunbound_instance_slotVKeI
-extern D Kunbound_repeated_slotVKeI(D obj, D offset);
+extern dylan_value Kunbound_repeated_slotVKeI(dylan_value obj, dylan_value offset);
 #define UNBOUND_REPEATED_SLOT Kunbound_repeated_slotVKeI
 
 
-D boxed_instance_slot_getter_engine (D object) {
+dylan_value boxed_instance_slot_getter_engine (dylan_value object) {
   TEB* teb = get_teb();
   ENGINE* e = (ENGINE*)teb->function;
   int idx =  (int)(((DADDR)(e->properties)) >> SLOTENGINE_V_INDEX);
-  D slot_value = primitive_initialized_slot_value(object, idx);
+  dylan_value slot_value = primitive_initialized_slot_value(object, idx);
   if (UNBOUND_P(slot_value)) {
     return(UNBOUND_INSTANCE_SLOT(object, I(idx)));
   } else {
@@ -2113,7 +2113,7 @@ D boxed_instance_slot_getter_engine (D object) {
   }
 }
 
-D boxed_instance_slot_setter_engine (D newval, D object) {
+dylan_value boxed_instance_slot_setter_engine (dylan_value newval, dylan_value object) {
   TEB* teb = get_teb();
   ENGINE* e = (ENGINE*)teb->function;
   int baseidx = (int)(((DADDR)(e->properties)) >> SLOTENGINE_V_INDEX);
@@ -2122,14 +2122,14 @@ D boxed_instance_slot_setter_engine (D newval, D object) {
 }
 
 
-D boxed_repeated_instance_slot_getter_engine (D object, D idx) {
+dylan_value boxed_repeated_instance_slot_getter_engine (dylan_value object, dylan_value idx) {
   TEB* teb = get_teb();
   ENGINE* e = (ENGINE*)teb->function;
   int baseidx = (int)(((DADDR)(e->properties)) >> SLOTENGINE_V_INDEX);
   int size = primitive_repeated_instance_size(object, baseidx);
   int ridx = R(idx);
   if (ridx >= 0 && ridx < size) {
-    D slot_value = primitive_repeated_slot_value(object, baseidx, ridx);
+    dylan_value slot_value = primitive_repeated_slot_value(object, baseidx, ridx);
     if (UNBOUND_P(slot_value)) {
       return(UNBOUND_REPEATED_SLOT(object, idx));
     } else {
@@ -2140,7 +2140,7 @@ D boxed_repeated_instance_slot_getter_engine (D object, D idx) {
   }
 }
 
-D boxed_repeated_instance_slot_setter_engine (D newval, D object, D idx) {
+dylan_value boxed_repeated_instance_slot_setter_engine (dylan_value newval, dylan_value object, dylan_value idx) {
   TEB* teb = get_teb();
   ENGINE* e = (ENGINE*)teb->function;
   int baseidx = (int)(((DADDR)(e->properties)) >> SLOTENGINE_V_INDEX);
@@ -2154,7 +2154,7 @@ D boxed_repeated_instance_slot_setter_engine (D newval, D object, D idx) {
   }
 }
 
-D raw_byte_repeated_instance_slot_getter_engine (D object, D idx) {
+dylan_value raw_byte_repeated_instance_slot_getter_engine (dylan_value object, dylan_value idx) {
   TEB* teb = get_teb();
   ENGINE* e = (ENGINE*)teb->function;
   int baseidx = (int)(((DADDR)(e->properties)) >> SLOTENGINE_V_INDEX);
@@ -2166,7 +2166,7 @@ D raw_byte_repeated_instance_slot_getter_engine (D object, D idx) {
     return(REPEATED_GETTER_OOR(object, idx));
   }
 }
-D raw_byte_repeated_instance_slot_setter_engine (D newval, D object, D idx) {
+dylan_value raw_byte_repeated_instance_slot_setter_engine (dylan_value newval, dylan_value object, dylan_value idx) {
   TEB* teb = get_teb();
   ENGINE* e = (ENGINE*)teb->function;
   int baseidx = (int)(((DADDR)(e->properties)) >> SLOTENGINE_V_INDEX);
@@ -2186,13 +2186,13 @@ D raw_byte_repeated_instance_slot_setter_engine (D newval, D object, D idx) {
 /* **************************************************************** */
 
 #define PARAMTEMPLATE0
-#define PARAMTEMPLATE1 D a1
-#define PARAMTEMPLATE2 D a1, D a2
-#define PARAMTEMPLATE3 D a1, D a2, D a3
-#define PARAMTEMPLATE4 D a1, D a2, D a3, D a4
-#define PARAMTEMPLATE5 D a1, D a2, D a3, D a4, D a5
-#define PARAMTEMPLATE6 D a1, D a2, D a3, D a4, D a5, D a6
-#define PARAMTEMPLATE7 D a1, D a2, D a3, D a4, D a5, D a6, D a7
+#define PARAMTEMPLATE1 dylan_value a1
+#define PARAMTEMPLATE2 dylan_value a1, dylan_value a2
+#define PARAMTEMPLATE3 dylan_value a1, dylan_value a2, dylan_value a3
+#define PARAMTEMPLATE4 dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4
+#define PARAMTEMPLATE5 dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5
+#define PARAMTEMPLATE6 dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6
+#define PARAMTEMPLATE7 dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7
 #define ARGTEMPLATE0
 #define ARGTEMPLATE1 a1
 #define ARGTEMPLATE2 a1, a2
@@ -2202,21 +2202,21 @@ D raw_byte_repeated_instance_slot_setter_engine (D newval, D object, D idx) {
 #define ARGTEMPLATE6 a1, a2, a3, a4, a5, a6
 #define ARGTEMPLATE7 a1, a2, a3, a4, a5, a6, a7
 #define TYPETEMPLATE0
-#define TYPETEMPLATE1 D
-#define TYPETEMPLATE2 D, D
-#define TYPETEMPLATE3 D, D, D
-#define TYPETEMPLATE4 D, D, D, D
-#define TYPETEMPLATE5 D, D, D, D, D
-#define TYPETEMPLATE6 D, D, D, D, D, D
-#define TYPETEMPLATE7 D, D, D, D, D, D, D
+#define TYPETEMPLATE1 dylan_value
+#define TYPETEMPLATE2 dylan_value, dylan_value
+#define TYPETEMPLATE3 dylan_value, dylan_value, dylan_value
+#define TYPETEMPLATE4 dylan_value, dylan_value, dylan_value, dylan_value
+#define TYPETEMPLATE5 dylan_value, dylan_value, dylan_value, dylan_value, dylan_value
+#define TYPETEMPLATE6 dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value
+#define TYPETEMPLATE7 dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value, dylan_value
 #define PARAMTEMPLATEPREFIX0
-#define PARAMTEMPLATEPREFIX1 D a1,
-#define PARAMTEMPLATEPREFIX2 D a1, D a2,
-#define PARAMTEMPLATEPREFIX3 D a1, D a2, D a3,
-#define PARAMTEMPLATEPREFIX4 D a1, D a2, D a3, D a4,
-#define PARAMTEMPLATEPREFIX5 D a1, D a2, D a3, D a4, D a5,
-#define PARAMTEMPLATEPREFIX6 D a1, D a2, D a3, D a4, D a5, D a6,
-#define PARAMTEMPLATEPREFIX7 D a1, D a2, D a3, D a4, D a5, D a6, D a7,
+#define PARAMTEMPLATEPREFIX1 dylan_value a1,
+#define PARAMTEMPLATEPREFIX2 dylan_value a1, dylan_value a2,
+#define PARAMTEMPLATEPREFIX3 dylan_value a1, dylan_value a2, dylan_value a3,
+#define PARAMTEMPLATEPREFIX4 dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4,
+#define PARAMTEMPLATEPREFIX5 dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5,
+#define PARAMTEMPLATEPREFIX6 dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6,
+#define PARAMTEMPLATEPREFIX7 dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7,
 #define ARGTEMPLATEPREFIX0
 #define ARGTEMPLATEPREFIX1 a1,
 #define ARGTEMPLATEPREFIX2 a1, a2,
@@ -2226,13 +2226,13 @@ D raw_byte_repeated_instance_slot_setter_engine (D newval, D object, D idx) {
 #define ARGTEMPLATEPREFIX6 a1, a2, a3, a4, a5, a6,
 #define ARGTEMPLATEPREFIX7 a1, a2, a3, a4, a5, a6, a7,
 #define PARAMTEMPLATESUFFIX0
-#define PARAMTEMPLATESUFFIX1 D a1
-#define PARAMTEMPLATESUFFIX2 D a1, D a2
-#define PARAMTEMPLATESUFFIX3 D a1, D a2, D a3
-#define PARAMTEMPLATESUFFIX4 D a1, D a2, D a3, D a4
-#define PARAMTEMPLATESUFFIX5 D a1, D a2, D a3, D a4, D a5
-#define PARAMTEMPLATESUFFIX6 D a1, D a2, D a3, D a4, D a5, D a6
-#define PARAMTEMPLATESUFFIX7 D a1, D a2, D a3, D a4, D a5, D a6, D a7
+#define PARAMTEMPLATESUFFIX1 dylan_value a1
+#define PARAMTEMPLATESUFFIX2 dylan_value a1, dylan_value a2
+#define PARAMTEMPLATESUFFIX3 dylan_value a1, dylan_value a2, dylan_value a3
+#define PARAMTEMPLATESUFFIX4 dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4
+#define PARAMTEMPLATESUFFIX5 dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5
+#define PARAMTEMPLATESUFFIX6 dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6
+#define PARAMTEMPLATESUFFIX7 dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7
 #define ARGTEMPLATESUFFIX0
 #define ARGTEMPLATESUFFIX1 , a1
 #define ARGTEMPLATESUFFIX2 , a1, a2
@@ -2301,7 +2301,7 @@ is used by a function of 3 required args, or of 2 required + optionals.
 
 
 #define DEFINE_SINGLE_METHOD_ENGINE(_nparams) \
-D single_method_engine_##_nparams (PARAMTEMPLATE##_nparams) { \
+dylan_value single_method_engine_##_nparams (PARAMTEMPLATE##_nparams) { \
     TEB* teb = get_teb(); \
     SINGLEMETHODENGINE* e = (SINGLEMETHODENGINE*)teb->function; \
     dylan_simple_method* meth = (dylan_simple_method*)e->meth; \
@@ -2322,7 +2322,7 @@ DEFINE_SINGLE_METHOD_ENGINE(6)
 DEFINE_SINGLE_METHOD_ENGINE(7)
 
 
-D single_method_engine_n (D impargvec) {
+dylan_value single_method_engine_n (dylan_value impargvec) {
   TEB* teb = get_teb();
   SINGLEMETHODENGINE* e = (SINGLEMETHODENGINE*)teb->function;
   return(primitive_mep_apply_with_optionals(e->meth, e->data, impargvec));
@@ -2330,10 +2330,10 @@ D single_method_engine_n (D impargvec) {
 
 
 
-D check_explicit_kwds (dylan_simple_object_vector* optionals, dylan_simple_object_vector* kwds, int kwdskip) {
-  D* optdata = vector_data(optionals);
+dylan_value check_explicit_kwds (dylan_simple_object_vector* optionals, dylan_simple_object_vector* kwds, int kwdskip) {
+  dylan_value* optdata = vector_data(optionals);
   int optsize = vector_size(optionals);
-  D* kwddata = vector_data(kwds);
+  dylan_value* kwddata = vector_data(kwds);
   int kwdsize = vector_size(kwds);
   if ((optsize & 1) != 0) { // Check if odd?
     return(DFALSE);
@@ -2341,9 +2341,9 @@ D check_explicit_kwds (dylan_simple_object_vector* optionals, dylan_simple_objec
     int i;
     int j;
     for (i=0; i<optsize; i+=2) {
-      D kwdarg = optdata[i];
+      dylan_value kwdarg = optdata[i];
       for (j=0; j<kwdsize; j+=kwdskip) {
-        D kwd = kwddata[j];
+        dylan_value kwd = kwddata[j];
         if (kwd == kwdarg) goto check_next;
       }
       return(kwdarg);
@@ -2353,7 +2353,7 @@ D check_explicit_kwds (dylan_simple_object_vector* optionals, dylan_simple_objec
   }
 }
 
-D check_unrestricted_kwds (dylan_simple_object_vector* optionals) {
+dylan_value check_unrestricted_kwds (dylan_simple_object_vector* optionals) {
   int optsize = vector_size(optionals);
   if ((optsize & 1) != 0) { // Check if odd?
     return(DFALSE);
@@ -2378,9 +2378,9 @@ D check_unrestricted_kwds (dylan_simple_object_vector* optionals) {
 
 #define INITMYARGVEC(argnum_, arg_) _argvec_data[argnum_] = arg_
 
-extern D Kodd_number_of_keyword_args_trapVKeI(D gfargs, D gf, D engine);
+extern dylan_value Kodd_number_of_keyword_args_trapVKeI(dylan_value gfargs, dylan_value gf, dylan_value engine);
 
-extern D Kinvalid_keyword_trapVKeI(D gfargs, D gf, D engine, D badkwd, D keys, D implicitp);
+extern dylan_value Kinvalid_keyword_trapVKeI(dylan_value gfargs, dylan_value gf, dylan_value engine, dylan_value badkwd, dylan_value keys, dylan_value implicitp);
 
 #define INVALID_KEYWORD_explicit(invgf_, invargvec_, invbadkwd_, invmeth_, invengine_) \
   ( ( (invbadkwd_) == DFALSE) ? \
@@ -2407,12 +2407,12 @@ extern D Kinvalid_keyword_trapVKeI(D gfargs, D gf, D engine, D badkwd, D keys, D
 
 
 #define DEFINE_KEYED_SINGLE_METHOD_ENGINE(_how, _nparams) \
-  D  _how##_keyed_single_method_engine_##_nparams (PARAMTEMPLATEPREFIX##_nparams dylan_simple_object_vector* optionals) \
+  dylan_value  _how##_keyed_single_method_engine_##_nparams (PARAMTEMPLATEPREFIX##_nparams dylan_simple_object_vector* optionals) \
   {  TEB* teb = get_teb(); \
     SINGLEMETHODENGINE* e = (SINGLEMETHODENGINE*)teb->function; \
-    D parent = teb->next_methods; \
+    dylan_value parent = teb->next_methods; \
     dylan_simple_method* meth = (dylan_simple_method*)e->meth; \
-    D badkwd; \
+    dylan_value badkwd; \
     badkwd = CHECK_KEYWORDS_##_how(optionals, meth, e); \
     if (badkwd == NULL) { \
       teb->function = meth; \
@@ -2421,7 +2421,7 @@ extern D Kinvalid_keyword_trapVKeI(D gfargs, D gf, D engine, D badkwd, D keys, D
     } else { \
       int _argvecsize = _nparams + 1; \
       DEF_STACK_VECTOR_INITTED(_argvec, _argvecsize); \
-      D* _argvec_data = vector_data(_argvec); \
+      dylan_value* _argvec_data = vector_data(_argvec); \
       KLUDGEARGS##_nparams(INITMYARGVEC ); \
       _argvec_data[_nparams] = optionals; \
       return(INVALID_KEYWORD_##_how(parent_gf(parent), _argvec, badkwd, meth, e)); \
@@ -2430,16 +2430,16 @@ extern D Kinvalid_keyword_trapVKeI(D gfargs, D gf, D engine, D badkwd, D keys, D
 
 
 #define DEFINE_KEYED_SINGLE_METHOD_ENGINE_UNSPREAD(_how) \
-  D  _how##_keyed_single_method_engine_n (dylan_simple_object_vector* mepargvec) \
+  dylan_value  _how##_keyed_single_method_engine_n (dylan_simple_object_vector* mepargvec) \
   { TEB* teb = get_teb(); \
     SINGLEMETHODENGINE* e = (SINGLEMETHODENGINE*)teb->function; \
-    D parent = teb->next_methods; \
+    dylan_value parent = teb->next_methods; \
     dylan_simple_method* meth = (dylan_simple_method*)e->meth; \
-    D badkwd; \
+    dylan_value badkwd; \
     int nimpargs = vector_size(mepargvec); \
     badkwd = CHECK_KEYWORDS_##_how(vector_ref(mepargvec, nimpargs-1), meth, e); \
     if (badkwd == NULL) { \
-      return(primitive_mep_apply_with_optionals(meth, e->data, (D)mepargvec)); \
+      return(primitive_mep_apply_with_optionals(meth, e->data, (dylan_value)mepargvec)); \
     } else { \
       return(INVALID_KEYWORD_##_how(parent_gf(parent), mepargvec, badkwd, meth, e)); \
     } \
@@ -2486,25 +2486,25 @@ DEFINE_KEYED_SINGLE_METHOD_ENGINE(unrestricted, 6)
    */
 
 #define DEFINE_CACHE_HEADER_ENGINE(_nparams) \
-D cache_header_engine_##_nparams (PARAMTEMPLATE##_nparams) { \
+dylan_value cache_header_engine_##_nparams (PARAMTEMPLATE##_nparams) { \
     TEB* teb = get_teb(); \
     CACHEHEADERENGINE* e = (CACHEHEADERENGINE*)teb->function; \
     ENGINE* nxt = (ENGINE*)e->nextnode; \
     DLFN entrypt = nxt->entry_point; \
     teb->function = (dylan_simple_method*)nxt; \
-    teb->next_methods = (D)e; \
+    teb->next_methods = (dylan_value)e; \
     return(entrypt(ARGTEMPLATE##_nparams)); \
    }
 
-extern D cache_header_engine_0 ();
-extern D cache_header_engine_1 (D a1);
-extern D cache_header_engine_2 (D a1, D a2);
-extern D cache_header_engine_3 (D a1, D a2, D a3);
-extern D cache_header_engine_4 (D a1, D a2, D a3, D a4);
-extern D cache_header_engine_5 (D a1, D a2, D a3, D a4, D a5);
-extern D cache_header_engine_6 (D a1, D a2, D a3, D a4, D a5, D a6);
-extern D cache_header_engine_7 (D a1, D a2, D a3, D a4, D a5, D a6, D a7);
-extern D cache_header_engine_n (D argvec);
+extern dylan_value cache_header_engine_0 ();
+extern dylan_value cache_header_engine_1 (dylan_value a1);
+extern dylan_value cache_header_engine_2 (dylan_value a1, dylan_value a2);
+extern dylan_value cache_header_engine_3 (dylan_value a1, dylan_value a2, dylan_value a3);
+extern dylan_value cache_header_engine_4 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4);
+extern dylan_value cache_header_engine_5 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5);
+extern dylan_value cache_header_engine_6 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6);
+extern dylan_value cache_header_engine_7 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7);
+extern dylan_value cache_header_engine_n (dylan_value argvec);
 
 
 DEFINE_CACHE_HEADER_ENGINE(0)
@@ -2516,42 +2516,42 @@ DEFINE_CACHE_HEADER_ENGINE(5)
 DEFINE_CACHE_HEADER_ENGINE(6)
 DEFINE_CACHE_HEADER_ENGINE(7)
 
-D cache_header_engine_n (D theargvec) {
+dylan_value cache_header_engine_n (dylan_value theargvec) {
   TEB* teb = get_teb();
   dylan_simple_object_vector* argvec = (dylan_simple_object_vector*)theargvec;
   CACHEHEADERENGINE* e = (CACHEHEADERENGINE*)teb->function;
   ENGINE* newengine = (ENGINE*)(e->nextnode);
   if (FUNCTIONP(newengine)) {
-    return(primitive_mep_apply_with_optionals((dylan_simple_method*)newengine, (D)e, argvec));
+    return(primitive_mep_apply_with_optionals((dylan_simple_method*)newengine, (dylan_value)e, argvec));
   } else {
     teb->function = (dylan_simple_method*)newengine;
-    teb->next_methods = (D)e;
+    teb->next_methods = (dylan_value)e;
     return((newengine->entry_point)(argvec));
   }
 }
 
 #define DEFINE_PROFILING_CACHE_HEADER_ENGINE(_nparams) \
-D profiling_cache_header_engine_##_nparams (PARAMTEMPLATE##_nparams) { \
+dylan_value profiling_cache_header_engine_##_nparams (PARAMTEMPLATE##_nparams) { \
     TEB* teb = get_teb(); \
     PROFILINGCACHEHEADERENGINE* e = (PROFILINGCACHEHEADERENGINE*)teb->function; \
     ENGINE* nxt = (ENGINE*)e->nextnode; \
     DLFN entrypt = nxt->entry_point; \
     teb->function = (dylan_simple_method*)nxt; \
-    teb->next_methods = (D)e; \
+    teb->next_methods = (dylan_value)e; \
     e->count1 += 4; \
-    if (unlikely((D)(e->count1) == I(0))) e->count2 += 4; \
+    if (unlikely((dylan_value)(e->count1) == I(0))) e->count2 += 4; \
     return(entrypt(ARGTEMPLATE##_nparams)); \
    }
 
-extern D profiling_cache_header_engine_0 ();
-extern D profiling_cache_header_engine_1 (D a1);
-extern D profiling_cache_header_engine_2 (D a1, D a2);
-extern D profiling_cache_header_engine_3 (D a1, D a2, D a3);
-extern D profiling_cache_header_engine_4 (D a1, D a2, D a3, D a4);
-extern D profiling_cache_header_engine_5 (D a1, D a2, D a3, D a4, D a5);
-extern D profiling_cache_header_engine_6 (D a1, D a2, D a3, D a4, D a5, D a6);
-extern D profiling_cache_header_engine_7 (D a1, D a2, D a3, D a4, D a5, D a6, D a7);
-extern D profiling_cache_header_engine_n (D argvec);
+extern dylan_value profiling_cache_header_engine_0 ();
+extern dylan_value profiling_cache_header_engine_1 (dylan_value a1);
+extern dylan_value profiling_cache_header_engine_2 (dylan_value a1, dylan_value a2);
+extern dylan_value profiling_cache_header_engine_3 (dylan_value a1, dylan_value a2, dylan_value a3);
+extern dylan_value profiling_cache_header_engine_4 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4);
+extern dylan_value profiling_cache_header_engine_5 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5);
+extern dylan_value profiling_cache_header_engine_6 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6);
+extern dylan_value profiling_cache_header_engine_7 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7);
+extern dylan_value profiling_cache_header_engine_n (dylan_value argvec);
 
 
 DEFINE_PROFILING_CACHE_HEADER_ENGINE(0)
@@ -2564,21 +2564,21 @@ DEFINE_PROFILING_CACHE_HEADER_ENGINE(6)
 DEFINE_PROFILING_CACHE_HEADER_ENGINE(7)
 
 
-D profiling_cache_header_engine_n (D theargvec) {
+dylan_value profiling_cache_header_engine_n (dylan_value theargvec) {
   TEB* teb = get_teb();
   dylan_simple_object_vector* argvec = (dylan_simple_object_vector*)theargvec;
   CACHEHEADERENGINE* e = (CACHEHEADERENGINE*)teb->function;
   ENGINE* newengine = (ENGINE*)(e->nextnode);
   if (FUNCTIONP(newengine)) {
-    return(primitive_mep_apply_with_optionals((dylan_simple_method*)newengine, (D)e, argvec));
+    return(primitive_mep_apply_with_optionals((dylan_simple_method*)newengine, (dylan_value)e, argvec));
   } else {
     teb->function = (dylan_simple_method*)newengine;
-    teb->next_methods = (D)e;
+    teb->next_methods = (dylan_value)e;
     return((newengine->entry_point)(argvec));
   }
 }
 
-D primitive_enable_cache_header_engine_node (D engine, D genfun) {
+dylan_value primitive_enable_cache_header_engine_node (dylan_value engine, dylan_value genfun) {
   ENGINE* e = (ENGINE*)engine;
   dylan_generic_function* gf = (dylan_generic_function*)genfun;
   dylan_signature* sig = (dylan_signature*)gf->signature;
@@ -2616,7 +2616,7 @@ D primitive_enable_cache_header_engine_node (D engine, D genfun) {
 }
 
 
-D primitive_invalidate_cache_engine_node (D engine, D genfun) {
+dylan_value primitive_invalidate_cache_engine_node (dylan_value engine, dylan_value genfun) {
   ignore(genfun);
   ((ENGINE*)engine)->entry_point = (DLFN)&general_engine_node_n_engine;
   return(engine);
@@ -2625,7 +2625,7 @@ D primitive_invalidate_cache_engine_node (D engine, D genfun) {
 
 /* **************************************************************** */
 
-D primitive_initialize_engine_node (D engine) {
+dylan_value primitive_initialize_engine_node (dylan_value engine) {
   ENGINE* eng = (ENGINE*)engine;
   DUMINT props = (DUMINT)eng->properties;
   DUMINT etype = (props & EPROPS_M_ENTRY_TYPE) >> EPROPS_V_ENTRY_TYPE;
@@ -2762,10 +2762,10 @@ D primitive_initialize_engine_node (D engine) {
 
 
 #define DEFINE_DISCRIMINATOR_ENGINE(_argnum, _nargs) \
-  D discriminate_engine_##_argnum##_##_nargs (PARAMTEMPLATE##_nargs) { \
+  dylan_value discriminate_engine_##_argnum##_##_nargs (PARAMTEMPLATE##_nargs) { \
     TEB* teb = get_teb(); \
     ENGINE* d_ = (ENGINE*)teb->function; \
-    D parent_ = teb->next_methods; \
+    dylan_value parent_ = teb->next_methods; \
     DLFN cb_ = d_->callback; \
     ENGINE* newengine_ = (ENGINE*)(cb_((ARGUMENTNAME##_argnum), parent_, d_)); \
     DLFN ncb_ = newengine_->entry_point; \
@@ -2804,15 +2804,15 @@ DEFINE_DISCRIMINATOR_ENGINE(6, 7)
 DEFINE_DISCRIMINATOR_ENGINE(7, 7)
 
 
-D discriminate_engine_n_n (dylan_simple_object_vector* args) {
+dylan_value discriminate_engine_n_n (dylan_simple_object_vector* args) {
   TEB* teb = get_teb();
   ENGINE* e = (ENGINE*)teb->function;
-  D parent = teb->next_methods;
+  dylan_value parent = teb->next_methods;
   DLFN cb = e->callback;
   long props = (long)e->properties;
   long argnum = (props >> 8) & 0xFF;
-  D* a = vector_data(args);
-  D arg = a[argnum];
+  dylan_value* a = vector_data(args);
+  dylan_value arg = a[argnum];
   ENGINE* newengine = (ENGINE*)(cb(arg, parent, e));
   if (FUNCTIONP(newengine)) {
     return(primitive_mep_apply_with_optionals((dylan_simple_method*)newengine, parent, args));
@@ -2825,17 +2825,17 @@ D discriminate_engine_n_n (dylan_simple_object_vector* args) {
 
 /* ---------------------------------------------- */
 
-extern D Dabsent_engine_nodeVKg;
-extern D Ddirect_object_mm_wrappersVKi;
+extern dylan_value Dabsent_engine_nodeVKg;
+extern dylan_value Ddirect_object_mm_wrappersVKi;
 
 #define MONO_WRAPPER_KEY(x) \
-  (TAGGEDQ(x) ? ((D*)Ddirect_object_mm_wrappersVKi)[TAG_BITS(x)] : ((dylan_object*)x)->mm_wrapper)
+  (TAGGEDQ(x) ? ((dylan_value*)Ddirect_object_mm_wrappersVKi)[TAG_BITS(x)] : ((dylan_object*)x)->mm_wrapper)
 
 #define DEFINE_MONOMORPHIC_DISCRIMINATOR(_argnum, _nargs) \
-  D monomorphic_discriminator_engine_##_argnum##_##_nargs (PARAMTEMPLATE##_nargs) { \
+  dylan_value monomorphic_discriminator_engine_##_argnum##_##_nargs (PARAMTEMPLATE##_nargs) { \
     TEB* teb = get_teb(); \
     MONOMORPHICDISCRIMINATOR* d_ = (MONOMORPHICDISCRIMINATOR*)teb->function; \
-    D parent_ = teb->next_methods; \
+    dylan_value parent_ = teb->next_methods; \
     DWORD key = (DWORD)(FI(MONO_WRAPPER_KEY(ARGUMENTNAME##_argnum))); \
     ENGINE* newengine_ = (ENGINE*)((key == d_->key) \
                                     ? d_->nextnode \
@@ -2876,13 +2876,13 @@ DEFINE_MONOMORPHIC_DISCRIMINATOR(6, 7)
 DEFINE_MONOMORPHIC_DISCRIMINATOR(7, 7)
 
 
-D monomorphic_discriminator_engine_n_n (dylan_simple_object_vector* args) {
+dylan_value monomorphic_discriminator_engine_n_n (dylan_simple_object_vector* args) {
   TEB* teb = get_teb();
   MONOMORPHICDISCRIMINATOR* e = (MONOMORPHICDISCRIMINATOR*)teb->function;
-  D parent = teb->next_methods;
+  dylan_value parent = teb->next_methods;
   long props = (long)e->properties;
   long argnum = (props >> 8) & 0xFF;
-  D* a = vector_data(args);
+  dylan_value* a = vector_data(args);
   dylan_object* arg = (dylan_object*)a[argnum];
   DWORD key = (DWORD)(FI(MONO_WRAPPER_KEY(arg)));
   ENGINE* newengine = (ENGINE*)((key == e->key)
@@ -2899,13 +2899,13 @@ D monomorphic_discriminator_engine_n_n (dylan_simple_object_vector* args) {
 
 /* ---------------------------------------------- */
 
-extern D Dinapplicable_engine_nodeVKg;
+extern dylan_value Dinapplicable_engine_nodeVKg;
 
 #define DEFINE_IF_TYPE_DISCRIMINATOR(_argnum, _nargs) \
-  D if_type_discriminator_engine_##_argnum##_##_nargs (PARAMTEMPLATE##_nargs) { \
+  dylan_value if_type_discriminator_engine_##_argnum##_##_nargs (PARAMTEMPLATE##_nargs) { \
     TEB* teb = get_teb(); \
     IFTYPEDISCRIMINATOR* d_ = (IFTYPEDISCRIMINATOR*)teb->function; \
-    D parent_ = teb->next_methods; \
+    dylan_value parent_ = teb->next_methods; \
     ENGINE* newengine_ = (ENGINE*)((INSTANCEP((ARGUMENTNAME##_argnum),d_->type)) \
                                    ? d_->thennode \
                                    : d_->elsenode); \
@@ -2945,14 +2945,14 @@ DEFINE_IF_TYPE_DISCRIMINATOR(6, 7)
 DEFINE_IF_TYPE_DISCRIMINATOR(7, 7)
 
 
-D if_type_discriminator_engine_n_n (dylan_simple_object_vector* args) {
+dylan_value if_type_discriminator_engine_n_n (dylan_simple_object_vector* args) {
   TEB* teb = get_teb();
   IFTYPEDISCRIMINATOR* e = (IFTYPEDISCRIMINATOR*)teb->function;
-  D parent = teb->next_methods;
+  dylan_value parent = teb->next_methods;
   long props = (long)e->properties;
   long argnum = (props >> 8) & 0xFF;
-  D* a = vector_data(args);
-  D arg = a[argnum];
+  dylan_value* a = vector_data(args);
+  dylan_value arg = a[argnum];
   ENGINE* newengine = (ENGINE*)(INSTANCEP(arg, e->type)
                                 ? e->thennode
                                 : e->elsenode);
@@ -2967,13 +2967,13 @@ D if_type_discriminator_engine_n_n (dylan_simple_object_vector* args) {
 
 /* ---------------------------------------------- */
 
-extern D Dinapplicable_engine_nodeVKg;
+extern dylan_value Dinapplicable_engine_nodeVKg;
 
 #define DEFINE_TYPECHECK_DISCRIMINATOR(_argnum, _nargs) \
-  D typecheck_discriminator_engine_##_argnum##_##_nargs (PARAMTEMPLATE##_nargs) { \
+  dylan_value typecheck_discriminator_engine_##_argnum##_##_nargs (PARAMTEMPLATE##_nargs) { \
     TEB* teb = get_teb(); \
     TYPECHECKDISCRIMINATOR* d_ = (TYPECHECKDISCRIMINATOR*)teb->function; \
-    D parent_ = teb->next_methods; \
+    dylan_value parent_ = teb->next_methods; \
     ENGINE* newengine_ = (ENGINE*)((INSTANCEP((ARGUMENTNAME##_argnum),d_->type)) \
                                    ? d_->nextnode \
                                    : Dinapplicable_engine_nodeVKg); \
@@ -3013,14 +3013,14 @@ DEFINE_TYPECHECK_DISCRIMINATOR(6, 7)
 DEFINE_TYPECHECK_DISCRIMINATOR(7, 7)
 
 
-D typecheck_discriminator_engine_n_n (dylan_simple_object_vector* args) {
+dylan_value typecheck_discriminator_engine_n_n (dylan_simple_object_vector* args) {
   TEB* teb = get_teb();
   TYPECHECKDISCRIMINATOR* e = (TYPECHECKDISCRIMINATOR*)teb->function;
-  D parent = teb->next_methods;
+  dylan_value parent = teb->next_methods;
   long props = (long)e->properties;
   long argnum = (props >> 8) & 0xFF;
-  D* a = vector_data(args);
-  D arg = a[argnum];
+  dylan_value* a = vector_data(args);
+  dylan_value arg = a[argnum];
   ENGINE* newengine = (ENGINE*)(INSTANCEP(arg, e->type)
                                 ? e->nextnode
                                 : Dinapplicable_engine_nodeVKg);
@@ -3035,7 +3035,7 @@ D typecheck_discriminator_engine_n_n (dylan_simple_object_vector* args) {
 
 /* ---------------------------------------------- */
 
-D primitive_initialize_discriminator(D discriminator) {
+dylan_value primitive_initialize_discriminator(dylan_value discriminator) {
   ENGINE* d = (ENGINE*)discriminator;
   long props = (long)d->properties;
   long argnum = ((props & DPROPS_M_ARGNUM) >> DPROPS_V_ARGNUM);
@@ -3287,7 +3287,7 @@ D primitive_initialize_discriminator(D discriminator) {
 DMINT _unused_arg = 0;
 DMINT* P_unused_arg = &_unused_arg;
 
-INLINE D MV_SPILL_into (D first_value, MV *dest) {
+INLINE dylan_value MV_SPILL_into (dylan_value first_value, MV *dest) {
   TEB* teb = get_teb();
   int i, n = teb->return_values.count;
   teb->return_values.value[0] = first_value;
@@ -3295,18 +3295,18 @@ INLINE D MV_SPILL_into (D first_value, MV *dest) {
     dest->value[i] = teb->return_values.value[i];
   }
   dest->count = n;
-  return (D) dest;
+  return (dylan_value) dest;
 }
 
-D MV_SPILL (D first_value) {
+dylan_value MV_SPILL (dylan_value first_value) {
   TEB* teb = get_teb();
   int n = teb->return_values.count;
   MV *dest = (MV *) primitive_allocate(1 + n);
   MV_SPILL_into(first_value, dest);
-  return (D) dest;
+  return (dylan_value) dest;
 }
 
-D MV_UNSPILL (D spill_t) {
+dylan_value MV_UNSPILL (dylan_value spill_t) {
   TEB* teb = get_teb();
   MV *src = (MV *) spill_t;
   int i;
@@ -3318,25 +3318,25 @@ D MV_UNSPILL (D spill_t) {
   return teb->return_values.count == 0 ? DFALSE : teb->return_values.value[0];
 }
 
-D MV_CHECK_TYPE_REST (D first_value, D rest_type, int n, ...) {
+dylan_value MV_CHECK_TYPE_REST (dylan_value first_value, dylan_value rest_type, int n, ...) {
   TEB* teb = get_teb();
   int i, mv_n = teb->return_values.count;
   MV spill;
   va_list ap; va_start(ap, n);
   MV_SPILL_into(first_value, &spill);
   for (i = 0; i < n; i++) {
-    D type = va_arg(ap, D);
+    dylan_value type = va_arg(ap, dylan_value);
     PERFORM_INLINE_TYPE_CHECK(spill.value[i], type);
   }
   for (; i < mv_n; i++) {
     PERFORM_INLINE_TYPE_CHECK(spill.value[i], rest_type);
   }
-  MV_UNSPILL((D)&spill);
+  MV_UNSPILL((dylan_value)&spill);
   return first_value;
 }
 
 
-D MV_GET_REST_AT (D first_value, DSINT first) {
+dylan_value MV_GET_REST_AT (dylan_value first_value, DSINT first) {
   TEB* teb = get_teb();
   int  offset = first;
   int  n = teb->return_values.count - offset;
@@ -3344,7 +3344,7 @@ D MV_GET_REST_AT (D first_value, DSINT first) {
   return(make_vector_from_buffer(n < 0 ? 0 : n, &teb->return_values.value[offset]));
 }
 
-D MV_SET_REST_AT (D v, DSINT first) {
+dylan_value MV_SET_REST_AT (dylan_value v, DSINT first) {
   TEB* teb = get_teb();
   int i, size = vector_size(v), offset = first;
   for (i=0; i<size; ++i) {
@@ -3354,7 +3354,7 @@ D MV_SET_REST_AT (D v, DSINT first) {
   return teb->return_values.count == 0 ? DFALSE : teb->return_values.value[0];
 }
 
-D MV2_ (D x, D y) {
+dylan_value MV2_ (dylan_value x, dylan_value y) {
   TEB* teb = get_teb();
   teb->return_values.value[0] = x;
   teb->return_values.value[1] = y;
@@ -3362,7 +3362,7 @@ D MV2_ (D x, D y) {
   return x;
 }
 
-D MV3_ (D x, D y, D z) {
+dylan_value MV3_ (dylan_value x, dylan_value y, dylan_value z) {
   TEB* teb = get_teb();
   teb->return_values.value[0] = x;
   teb->return_values.value[1] = y;
@@ -3376,127 +3376,127 @@ D MV3_ (D x, D y, D z) {
 
 extern Wrapper KLmethodGVKdW;
 
-D MAKE_CLOSURE (D schema, int closure_size) {
-  dylan_simple_closure_method* fn = (dylan_simple_closure_method*)allocate(sizeof(dylan_simple_closure_method) + closure_size * sizeof(D));
+dylan_value MAKE_CLOSURE (dylan_value schema, int closure_size) {
+  dylan_simple_closure_method* fn = (dylan_simple_closure_method*)allocate(sizeof(dylan_simple_closure_method) + closure_size * sizeof(dylan_value));
   memcpy(fn, schema, sizeof(dylan_simple_closure_method));
-  return((D)fn);
+  return((dylan_value)fn);
 }
 
-D MAKE_CLOSURE_SIG (D schema, D sig, int closure_size) {
-  dylan_simple_closure_method* fn = (dylan_simple_closure_method*)allocate(sizeof(dylan_simple_closure_method) + closure_size * sizeof(D));
+dylan_value MAKE_CLOSURE_SIG (dylan_value schema, dylan_value sig, int closure_size) {
+  dylan_simple_closure_method* fn = (dylan_simple_closure_method*)allocate(sizeof(dylan_simple_closure_method) + closure_size * sizeof(dylan_value));
   memcpy(fn, schema, sizeof(dylan_simple_closure_method));
   fn->signature = sig;
-  return((D)fn);
+  return((dylan_value)fn);
 }
 
-INLINE void init_environment (dylan_simple_closure_method* fn, int size, D* buf) {
+INLINE void init_environment (dylan_simple_closure_method* fn, int size, dylan_value* buf) {
   if (size > 0) {
     COPY_WORDS(&(fn->environment), buf, size);
   }
   fn->size = I(size);
 }
 
-void INIT_CLOSURE (D function, int closure_size, ...) {
+void INIT_CLOSURE (dylan_value function, int closure_size, ...) {
   TEB* teb = get_teb();
   dylan_simple_closure_method* fn = function;
   BUFFER_VARARGS(closure_size, closure_size, teb->buffer);
   init_environment(fn, closure_size, teb->buffer);
 }
 
-D MAKE_CLOSURE_INITD (D schema, int closure_size, ...) {
+dylan_value MAKE_CLOSURE_INITD (dylan_value schema, int closure_size, ...) {
   TEB* teb = get_teb();
-  dylan_simple_closure_method* fn = (dylan_simple_closure_method*)allocate(sizeof(dylan_simple_closure_method) + closure_size * sizeof(D));
+  dylan_simple_closure_method* fn = (dylan_simple_closure_method*)allocate(sizeof(dylan_simple_closure_method) + closure_size * sizeof(dylan_value));
   memcpy(fn, schema, sizeof(dylan_simple_closure_method));
   BUFFER_VARARGS(closure_size, closure_size, teb->buffer);
   init_environment(fn, closure_size, teb->buffer);
-  return((D)fn);
+  return((dylan_value)fn);
 }
 
-D MAKE_CLOSURE_INITD_SIG (D schema, D sig, int closure_size, ...) {
+dylan_value MAKE_CLOSURE_INITD_SIG (dylan_value schema, dylan_value sig, int closure_size, ...) {
   TEB* teb = get_teb();
-  dylan_simple_closure_method* fn = (dylan_simple_closure_method*)allocate(sizeof(dylan_simple_closure_method) + closure_size * sizeof(D));
+  dylan_simple_closure_method* fn = (dylan_simple_closure_method*)allocate(sizeof(dylan_simple_closure_method) + closure_size * sizeof(dylan_value));
   memcpy(fn, schema, sizeof(dylan_simple_closure_method));
   fn->signature = sig;
   BUFFER_VARARGS(closure_size, closure_size, teb->buffer);
   init_environment(fn, closure_size, teb->buffer);
-  return((D)fn);
+  return((dylan_value)fn);
 }
 
-D MAKE_METHOD_SIG (D schema, D sig) {
+dylan_value MAKE_METHOD_SIG (dylan_value schema, dylan_value sig) {
   dylan_simple_closure_method* fn = (dylan_simple_closure_method*)allocate(sizeof(dylan_simple_closure_method));
   memcpy(fn, schema, sizeof(dylan_simple_closure_method));
   fn->signature = sig;
   return(fn);
 }
 
-D SET_METHOD_SIG (D method, D sig) {
+dylan_value SET_METHOD_SIG (dylan_value method, dylan_value sig) {
   dylan_simple_closure_method* fn = (dylan_simple_closure_method*)method;
   fn->signature = sig;
-  return((D)fn);
+  return((dylan_value)fn);
 }
 
-D MAKE_KEYWORD_CLOSURE (D schema, int closure_size) {
-  dylan_keyword_closure_method* fn = (dylan_keyword_closure_method*)allocate(sizeof(dylan_keyword_closure_method) + closure_size * sizeof(D));
+dylan_value MAKE_KEYWORD_CLOSURE (dylan_value schema, int closure_size) {
+  dylan_keyword_closure_method* fn = (dylan_keyword_closure_method*)allocate(sizeof(dylan_keyword_closure_method) + closure_size * sizeof(dylan_value));
   memcpy(fn, schema, sizeof(dylan_keyword_closure_method));
-  return((D)fn);
+  return((dylan_value)fn);
 }
 
-D MAKE_KEYWORD_CLOSURE_SIG (D schema, D sig, int closure_size) {
-  dylan_keyword_closure_method* fn = (dylan_keyword_closure_method*)allocate(sizeof(dylan_keyword_closure_method) + closure_size * sizeof(D));
+dylan_value MAKE_KEYWORD_CLOSURE_SIG (dylan_value schema, dylan_value sig, int closure_size) {
+  dylan_keyword_closure_method* fn = (dylan_keyword_closure_method*)allocate(sizeof(dylan_keyword_closure_method) + closure_size * sizeof(dylan_value));
   memcpy(fn, schema, sizeof(dylan_keyword_closure_method));
   fn->signature = sig;
-  return((D)fn);
+  return((dylan_value)fn);
 }
 
-INLINE void init_keyword_environment (dylan_keyword_closure_method* fn, int size, D* buf) {
+INLINE void init_keyword_environment (dylan_keyword_closure_method* fn, int size, dylan_value* buf) {
   if (size > 0) {
     COPY_WORDS(&(fn->environment), buf, size);
   }
   fn->size = I(size);
 }
 
-void INIT_KEYWORD_CLOSURE (D function, int closure_size, ...) {
+void INIT_KEYWORD_CLOSURE (dylan_value function, int closure_size, ...) {
   TEB* teb = get_teb();
   dylan_keyword_closure_method* fn = function;
   BUFFER_VARARGS(closure_size, closure_size, teb->buffer);
   init_keyword_environment(fn, closure_size, teb->buffer);
 }
 
-D MAKE_KEYWORD_CLOSURE_INITD (D schema, int closure_size, ...) {
+dylan_value MAKE_KEYWORD_CLOSURE_INITD (dylan_value schema, int closure_size, ...) {
   TEB* teb = get_teb();
-  dylan_keyword_closure_method* fn = (dylan_keyword_closure_method*)allocate(sizeof(dylan_keyword_closure_method) + closure_size * sizeof(D));
+  dylan_keyword_closure_method* fn = (dylan_keyword_closure_method*)allocate(sizeof(dylan_keyword_closure_method) + closure_size * sizeof(dylan_value));
   memcpy(fn, schema, sizeof(dylan_keyword_closure_method));
   BUFFER_VARARGS(closure_size, closure_size, teb->buffer);
   init_keyword_environment(fn, closure_size, teb->buffer);
-  return((D)fn);
+  return((dylan_value)fn);
 }
 
-D MAKE_KEYWORD_CLOSURE_INITD_SIG (D schema, D sig, int closure_size, ...) {
+dylan_value MAKE_KEYWORD_CLOSURE_INITD_SIG (dylan_value schema, dylan_value sig, int closure_size, ...) {
   TEB* teb = get_teb();
-  dylan_keyword_closure_method* fn = (dylan_keyword_closure_method*)allocate(sizeof(dylan_keyword_closure_method) + closure_size * sizeof(D));
+  dylan_keyword_closure_method* fn = (dylan_keyword_closure_method*)allocate(sizeof(dylan_keyword_closure_method) + closure_size * sizeof(dylan_value));
   memcpy(fn, schema, sizeof(dylan_keyword_closure_method));
   fn->signature = sig;
   BUFFER_VARARGS(closure_size, closure_size, teb->buffer);
   init_keyword_environment(fn, closure_size, teb->buffer);
-  return((D)fn);
+  return((dylan_value)fn);
 }
 
-D MAKE_KEYWORD_METHOD_SIG (D schema, D sig) {
+dylan_value MAKE_KEYWORD_METHOD_SIG (dylan_value schema, dylan_value sig) {
   dylan_keyword_method* fn = (dylan_keyword_method*)allocate(sizeof(dylan_keyword_method));
   memcpy(fn, schema, sizeof(dylan_keyword_method));
   fn->signature = sig;
   return(fn);
 }
 
-D SET_KEYWORD_METHOD_SIG (D method, D sig) {
+dylan_value SET_KEYWORD_METHOD_SIG (dylan_value method, dylan_value sig) {
   dylan_keyword_closure_method* fn = (dylan_keyword_closure_method*)method;
   fn->signature = sig;
-  return((D)fn);
+  return((dylan_value)fn);
 }
 
 /* PRIMITIVES */
 
-INLINE D primitive_apply_using_buffer (dylan_simple_method* fn, int n, D a[]) {
+INLINE dylan_value primitive_apply_using_buffer (dylan_simple_method* fn, int n, dylan_value a[]) {
   TEB* teb = get_teb();
   int i, j;
   dylan_simple_object_vector* optionals = (dylan_simple_object_vector*)a[n - 1];
@@ -3511,18 +3511,18 @@ INLINE D primitive_apply_using_buffer (dylan_simple_method* fn, int n, D a[]) {
   return(primitive_xep_apply(fn, new_size, teb->apply_buffer));
 }
 
-D primitive_apply (D fn, D args) {
+dylan_value primitive_apply (dylan_value fn, dylan_value args) {
   return(primitive_apply_using_buffer
            ((dylan_simple_method*)fn, vector_size((dylan_simple_object_vector*)args), vector_data((dylan_simple_object_vector*)args)));
 }
 
-D primitive_apply_spread (D fn, int n, ...) {
+dylan_value primitive_apply_spread (dylan_value fn, int n, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(n, n, teb->buffer);
   return(primitive_apply_using_buffer((dylan_simple_method*)fn, n, teb->buffer));
 }
 
-D primitive_mep_apply_spread (D fn, D nm, int n, ...) {
+dylan_value primitive_mep_apply_spread (dylan_value fn, dylan_value nm, int n, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(n, n, teb->buffer);
   dylan_simple_object_vector* v = (dylan_simple_object_vector*)teb->buffer[n - 1];
@@ -3532,10 +3532,10 @@ D primitive_mep_apply_spread (D fn, D nm, int n, ...) {
     (new_arguments, new_size, teb->buffer, n - 1);
   COPY_WORDS
     (&(vector_data(new_arguments)[n - 1]), vector_data(v), v_size);
-  return(primitive_mep_apply((dylan_simple_method*)fn, nm, (D *)new_arguments));
+  return(primitive_mep_apply((dylan_simple_method*)fn, nm, (dylan_value *)new_arguments));
 }
 
-D primitive_engine_node_apply_spread (ENGINE* e, D parent, int n, ...) {
+dylan_value primitive_engine_node_apply_spread (ENGINE* e, dylan_value parent, int n, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(n, n, teb->buffer);
   dylan_simple_object_vector* v = (dylan_simple_object_vector*)teb->buffer[n - 1];
@@ -3545,19 +3545,19 @@ D primitive_engine_node_apply_spread (ENGINE* e, D parent, int n, ...) {
     (new_arguments, new_size, teb->buffer, n - 1);
   COPY_WORDS
     (&(vector_data(new_arguments)[n - 1]), vector_data(v), v_size);
-  return(primitive_engine_node_apply(e, parent, (D *)new_arguments));
+  return(primitive_engine_node_apply(e, parent, (dylan_value *)new_arguments));
 }
 
 /* temporary primitives for assignment */
 
-D MAKE_DYLAN_VALUE_CELL(D value) {
-  D cell = primitive_allocate(1);
-  *(D*)cell = value;
+dylan_value MAKE_DYLAN_VALUE_CELL(dylan_value value) {
+  dylan_value cell = primitive_allocate(1);
+  *(dylan_value*)cell = value;
   return cell;
 }
 
 #define define_make_cell(type) \
-  D MAKE_ ## type ## _CELL(type value) { \
+  dylan_value MAKE_ ## type ## _CELL(type value) { \
     type* cell = (type*)allocate(sizeof(type)); \
     *cell = value; \
     return cell; \
@@ -3570,13 +3570,13 @@ define_make_cell(DDFLT)
 define_make_cell(DWORD)
 define_make_cell(DDWORD)
 
-D primitive_vector (D n, ...) {
+dylan_value primitive_vector (dylan_value n, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(R(n), n, teb->arguments);
   return(make_vector_from_buffer(R(n), teb->arguments));
 }
 
-D primitive_values (D v) {
+dylan_value primitive_values (dylan_value v) {
   return(MV_SET_REST_AT(v, 0));
 }
 
@@ -3584,12 +3584,12 @@ D primitive_values (D v) {
 
 #define INITIAL_OBLIST_SIZE (64)
 
-extern D LsymbolGVKd;
-extern D Ksystem_allocate_simple_instanceVKeI (D class_, D Urest_, D fill_);
+extern dylan_value LsymbolGVKd;
+extern dylan_value Ksystem_allocate_simple_instanceVKeI (dylan_value class_, dylan_value Urest_, dylan_value fill_);
 
-D primitive_make_symbol (D string)
+dylan_value primitive_make_symbol (dylan_value string)
 {
-  D symbol
+  dylan_value symbol
     = Ksystem_allocate_simple_instanceVKeI
         (LsymbolGVKd, Pempty_vectorVKi, &KPunboundVKi);
   ((dylan_symbol*)symbol)->name = string;
@@ -3599,13 +3599,13 @@ D primitive_make_symbol (D string)
 // XXX locking?
 static int oblist_size = 0;
 static int oblist_cursor = 0;
-static D *oblist = NULL;
+static dylan_value *oblist = NULL;
 
-D primitive_preboot_symbols () {
-  return(primitive_raw_as_vector((D)(long)oblist_cursor, oblist));
+dylan_value primitive_preboot_symbols () {
+  return(primitive_raw_as_vector((dylan_value)(long)oblist_cursor, oblist));
 }
 
-D primitive_string_as_symbol_using_symbol (D string, D symbol)
+dylan_value primitive_string_as_symbol_using_symbol (dylan_value string, dylan_value symbol)
 {
   int input_string_size = R(((dylan_byte_string*)string)->size);
   char *input_string_data = ((dylan_byte_string*)string)->data;
@@ -3620,15 +3620,15 @@ D primitive_string_as_symbol_using_symbol (D string, D symbol)
           && strncasecmp
                (oblist_string_data, input_string_data, (size_t)input_string_size)
                   == 0) {
-      return((D)oblist_symbol);
+      return((dylan_value)oblist_symbol);
     }
   }
   if (oblist_cursor >= oblist_size) {
     oblist_size += INITIAL_OBLIST_SIZE;
 #if defined(GC_USE_BOEHM)
-    oblist = (D*)GC_REALLOC(oblist, oblist_size * sizeof(D));
+    oblist = (dylan_value*)GC_REALLOC(oblist, oblist_size * sizeof(dylan_value));
 #elif defined(GC_USE_MALLOC)
-    oblist = (D*)realloc(oblist, oblist_size * sizeof(D));
+    oblist = (dylan_value*)realloc(oblist, oblist_size * sizeof(dylan_value));
 #endif
   }
   if (symbol == NULL) {
@@ -3638,20 +3638,20 @@ D primitive_string_as_symbol_using_symbol (D string, D symbol)
   return symbol;
 }
 
-D primitive_string_as_symbol (D string)
+dylan_value primitive_string_as_symbol (dylan_value string)
 {
   return(primitive_string_as_symbol_using_symbol(string, NULL));
 }
 
-D primitive_resolve_symbol (D symbol)
+dylan_value primitive_resolve_symbol (dylan_value symbol)
 {
   return(primitive_string_as_symbol_using_symbol
            (((dylan_symbol*)symbol)->name, symbol));
 }
 
-D primitive_slot_value(D object, DSINT position)
+dylan_value primitive_slot_value(dylan_value object, DSINT position)
 {
-  D slot_value = primitive_initialized_slot_value(object, position);
+  dylan_value slot_value = primitive_initialized_slot_value(object, position);
   if (UNBOUND_P(slot_value)) {
     return(UNBOUND_INSTANCE_SLOT(object, I(position)));
   } else {
@@ -3660,9 +3660,9 @@ D primitive_slot_value(D object, DSINT position)
   return(slot_value);
 }
 
-D SLOT_VALUE(D object, DSINT position)
+dylan_value SLOT_VALUE(dylan_value object, DSINT position)
 {
-  D slot_value = primitive_initialized_slot_value(object, position);
+  dylan_value slot_value = primitive_initialized_slot_value(object, position);
   if (UNBOUND_P(slot_value)) {
     return(UNBOUND_INSTANCE_SLOT(object, I(position)));
   } else {
@@ -3674,15 +3674,15 @@ D SLOT_VALUE(D object, DSINT position)
 
 /* OPERATING SYSTEM */
 
-D Tcommand_nameT;
+dylan_value Tcommand_nameT;
 
-D pseudo_primitive_command_name () {
+dylan_value pseudo_primitive_command_name () {
   return(Tcommand_nameT);
 }
 
-D Tcommand_argumentsT;
+dylan_value Tcommand_argumentsT;
 
-D pseudo_primitive_command_arguments () {
+dylan_value pseudo_primitive_command_arguments () {
   return(Tcommand_argumentsT);
 }
 
@@ -3696,11 +3696,11 @@ void primitive_exit_application (DSINT code) {
 void GC_set_max_heap_size(unsigned long);
 
 static void call_application_exit_functions(void) {
-  extern D Kcall_application_exit_functionsVKeI();
+  extern dylan_value Kcall_application_exit_functionsVKeI();
   (void) Kcall_application_exit_functionsVKeI();
 }
 
-extern D IKJboole_ior_, IKJboole_xor_;
+extern dylan_value IKJboole_ior_, IKJboole_xor_;
 
 /**
  * Initialize the dylan run-time

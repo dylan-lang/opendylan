@@ -83,7 +83,7 @@ typedef unsigned long           DADDR;
 typedef char*                   DBSTR;
 typedef const char*             DCBSTR;
 typedef void*                   dylan_value;
-typedef dylan_value             D;
+typedef void*                   D;
 
 /* COMPILER-SPECIFIC INTRINSICS */
 
@@ -184,14 +184,14 @@ static inline long atomic_cas(long *destination, long exchange, long compare) {
 #define CTAG 2
 #define UTAG 3
 
-#define I(n) ((D)((((unsigned long)(n))<<2)|ITAG))
-#define C(n) ((D)((((unsigned long)(n))<<2)|CTAG))
-#define U(n) ((D)((((unsigned long)(n))<<2)|UTAG))
+#define I(n) ((dylan_value)((((unsigned long)(n))<<2)|ITAG))
+#define C(n) ((dylan_value)((((unsigned long)(n))<<2)|CTAG))
+#define U(n) ((dylan_value)((((unsigned long)(n))<<2)|UTAG))
 #define R(n) ((long)(n)>>2)
 
-#define FI(n) ((D)(((unsigned long)(n))|ITAG))
-#define FC(n) ((D)(((unsigned long)(n))|CTAG))
-#define FU(n) ((D)(((unsigned long)(n))|UTAG))
+#define FI(n) ((dylan_value)(((unsigned long)(n))|ITAG))
+#define FC(n) ((dylan_value)(((unsigned long)(n))|CTAG))
+#define FU(n) ((dylan_value)(((unsigned long)(n))|UTAG))
 
 #define TAGGEDQ(n) (TAG_BITS(n) != 0)
 
@@ -200,8 +200,8 @@ static inline long atomic_cas(long *destination, long exchange, long compare) {
 
 /* BASIC DYLAN TYPES */
 
-typedef D (*DFN)(D,int,...);
-typedef D (*DLFN)();
+typedef dylan_value (*DFN)(dylan_value,int,...);
+typedef dylan_value (*DLFN)();
 
 struct _dylan_implementation_class;
 struct _dylan_type;
@@ -213,16 +213,16 @@ struct _dylan_class;
 typedef struct _Wrapper {
   struct _Wrapper *                     wrapper_wrapper;
   struct _dylan_implementation_class  * iclass;
-  D                                     subtype_mask;
+  dylan_value                           subtype_mask;
   DMINT                                 fixed_part;
   DMINT                                 variable_part;
-  D                                     number_patterns;
+  dylan_value                           number_patterns;
   DMINT                                 patterns[1]; /* REPEATED */
 } Wrapper;
 
 typedef struct _dylan_object {
-  Wrapper * mm_wrapper;
-  D         slots[1];
+  Wrapper*      mm_wrapper;
+  dylan_value   slots[1];
 } dylan_object;
 
 typedef struct _dylan_single_float {
@@ -263,9 +263,9 @@ typedef struct _dylan_double_integer {
  */
 typedef struct _dylan_implementation_class {
   Wrapper *             my_wrapper;
-  D                     the_class_properties;
+  dylan_value           the_class_properties;
   struct _dylan_class * the_class;
-  D                     the_wrapper;
+  dylan_value           the_wrapper;
 } dylan_implementation_class;
 
 /* This corresponds to <type> defined in
@@ -282,9 +282,9 @@ typedef struct _dylan_type {
 typedef struct _dylan_class {
   Wrapper *                     my_wrapper;
   DLFN                          instancep_function;
-  D                             debug_name;
+  dylan_value                   debug_name;
   dylan_implementation_class  * the_iclass;
-  D                             subtype_bit;
+  dylan_value                   subtype_bit;
 } dylan_class;
 
 #define OBJECT_WRAPPER(x) \
@@ -316,9 +316,9 @@ typedef struct _dylan_class {
 
 #define define_SOV(_name, _size) \
   typedef struct _dylan_simple_object_vector_##_name { \
-    D class; \
-    D size; \
-    D data[_size]; \
+    dylan_value class; \
+    dylan_value size; \
+    dylan_value data[_size]; \
   } _name
 
 define_SOV(dylan_simple_object_vector, 1);
@@ -332,168 +332,168 @@ static inline int vector_size_setter (int new_size, dylan_simple_object_vector* 
   return(new_size);
 }
 
-static inline D* vector_data(dylan_simple_object_vector* vector) {
+static inline dylan_value* vector_data(dylan_simple_object_vector* vector) {
   return(vector->data);
 }
 
-static inline D vector_ref(dylan_simple_object_vector* vector, int offset) {
+static inline dylan_value vector_ref(dylan_simple_object_vector* vector, int offset) {
   return(vector_data((dylan_simple_object_vector*)vector)[offset]);
 }
 
 #define define_byte_string(_name, _size) \
   typedef struct _dylan_byte_string_##_name { \
-    D class; \
-    D size; \
+    dylan_value class; \
+    dylan_value size; \
     char data[_size + 1]; \
   } _name
 
 define_byte_string(dylan_byte_string, 0);
 
 typedef struct _dylan_symbol {
-  D class;
-  D name;
+  dylan_value   class;
+  dylan_value   name;
 } dylan_symbol;
 
 typedef struct _dylan_simple_method {
-  D    class;
-  DFN  xep;
-  D    signature;
-  DLFN mep;
+  dylan_value   class;
+  DFN           xep;
+  dylan_value   signature;
+  DLFN          mep;
 } dylan_simple_method;
 
 typedef struct _dylan_simple_closure_method {
-  D    class;
-  DFN  xep;
-  D    signature;
-  DLFN mep;
-  D    size;
-  D    environment[0];
+  dylan_value   class;
+  DFN           xep;
+  dylan_value   signature;
+  DLFN          mep;
+  dylan_value   size;
+  dylan_value   environment[0];
 } dylan_simple_closure_method;
 
 typedef struct _dylan_keyword_method {
-  D    class;
-  DFN  xep;
-  D    signature;
-  DLFN mep;
-  DLFN iep;
-  D    keyword_specifiers;
+  dylan_value   class;
+  DFN           xep;
+  dylan_value   signature;
+  DLFN          mep;
+  DLFN          iep;
+  dylan_value   keyword_specifiers;
 } dylan_keyword_method;
 
 typedef struct _dylan_keyword_closure_method {
-  D    class;
-  DFN  xep;
-  D    signature;
-  DLFN mep;
-  DLFN iep;
-  D    keyword_specifiers;
-  D    size;
-  D    environment[0];
+  dylan_value   class;
+  DFN           xep;
+  dylan_value   signature;
+  DLFN          mep;
+  DLFN          iep;
+  dylan_value   keyword_specifiers;
+  dylan_value   size;
+  dylan_value   environment[0];
 } dylan_keyword_closure_method;
 
 typedef struct _dylan_accessor_method {
-  D    header;
-  DFN  xep;
-  D    slotd;
+  dylan_value   header;
+  DFN           xep;
+  dylan_value   slotd;
 } dylan_accessor_method;
 
 typedef struct _dylan_signature {
-  D                           class;
-  D                           properties;
+  dylan_value   class;
+  dylan_value   properties;
   dylan_simple_object_vector* required;
   dylan_simple_object_vector* values;
-  D                           rest_value;
+  dylan_value   rest_value;
 } dylan_signature;
 
 typedef struct _engine {
-  D    class;
-  D    properties;
-  DLFN callback;
-  DLFN entry_point;
+  dylan_value   class;
+  dylan_value   properties;
+  DLFN          callback;
+  DLFN          entry_point;
 } ENGINE;
 
 typedef struct _monomorphic_discriminator {
-  D     class;
-  D     properties;
-  DLFN  callback;
-  DLFN  entry_point;
-  DWORD key;
-  D     nextnode;
+  dylan_value   class;
+  dylan_value   properties;
+  DLFN          callback;
+  DLFN          entry_point;
+  DWORD         key;
+  dylan_value   nextnode;
 } MONOMORPHICDISCRIMINATOR;
 
 typedef struct _if_type_discriminator {
-  D    class;
-  D    properties;
-  DLFN callback;
-  DLFN entry_point;
-  D    type;
-  D    thennode;
-  D    elsenode;
+  dylan_value   class;
+  dylan_value   properties;
+  DLFN          callback;
+  DLFN          entry_point;
+  dylan_value   type;
+  dylan_value   thennode;
+  dylan_value   elsenode;
 } IFTYPEDISCRIMINATOR;
 
 typedef struct _typecheck_discriminator {
-  D    class;
-  D    properties;
-  DLFN callback;
-  DLFN entry_point;
-  D    type;
-  D    nextnode;
+  dylan_value   class;
+  dylan_value   properties;
+  DLFN          callback;
+  DLFN          entry_point;
+  dylan_value   type;
+  dylan_value   nextnode;
 } TYPECHECKDISCRIMINATOR;
 
 
 typedef struct _single_method_engine_node {
-  D    class;
-  D    properties;
-  DLFN callback;
-  DLFN entry_point;
-  D    meth;
-  D    data;
-  D    keywords;                /* Not in all. */
+  dylan_value   class;
+  dylan_value   properties;
+  DLFN          callback;
+  DLFN          entry_point;
+  dylan_value   meth;
+  dylan_value   data;
+  dylan_value   keywords;                /* Not in all. */
 } SINGLEMETHODENGINE;
 
 typedef struct _cache_header_engine_node {
-  D    class;
-  D    properties;
-  DLFN callback;
-  DLFN entry_point;
-  D    nextnode;
-  D    parent;
+  dylan_value   class;
+  dylan_value   properties;
+  DLFN          callback;
+  DLFN          entry_point;
+  dylan_value   nextnode;
+  dylan_value   parent;
 } CACHEHEADERENGINE;
 
 typedef struct _profiling_cache_header_engine_node {
-  D    class;
-  D    properties;
-  DLFN callback;
-  DLFN entry_point;
-  D    nextnode;
-  D    parent;
-  DSINT count1;
-  DSINT count2;
+  dylan_value   class;
+  dylan_value   properties;
+  DLFN          callback;
+  DLFN          entry_point;
+  dylan_value   nextnode;
+  dylan_value   parent;
+  DSINT         count1;
+  DSINT         count2;
 } PROFILINGCACHEHEADERENGINE;
 
 
 typedef struct _dylan_generic_function {
-  D       class;
-  DFN     xep;
-  D       signature;
-  D       cache;
-  D       debug_name;
-  D       methods;
-  ENGINE* engine;
+  dylan_value   class;
+  DFN           xep;
+  dylan_value   signature;
+  dylan_value   cache;
+  dylan_value   debug_name;
+  dylan_value   methods;
+  ENGINE*       engine;
 } dylan_generic_function;
 
-#define DEFUN(name, xep, iep)   D name[] = {I(0),I(0),I(0),(D)xep,(D)iep,I(0),I(0),I(0),I(0)}
+#define DEFUN(name, xep, iep)   dylan_value name[] = {I(0),I(0),I(0),(dylan_value)xep,(dylan_value)iep,I(0),I(0),I(0),I(0)}
 
-extern D primitive_set_generic_function_entrypoints(D fn); /* !@#$ FIX UP NAME */
+extern dylan_value primitive_set_generic_function_entrypoints(dylan_value fn); /* !@#$ FIX UP NAME */
 
-extern D primitive_runtime_module_handle();
+extern dylan_value primitive_runtime_module_handle();
 
 /* MULTIPLE VALUES */
 
 #define VALUES_MAX 64           /* maximum number of multiple values */
 
 typedef struct _mv {
-  int count;
-  D   value[VALUES_MAX];
+  int           count;
+  dylan_value   value[VALUES_MAX];
 } MV;
 
 #define MV_GET_ELT(n) \
@@ -501,18 +501,18 @@ typedef struct _mv {
 #define MV_SET_ELT(n, t)        (get_teb()->return_values.value[n] = (t))
 #define MV_SET_COUNT(n)         (get_teb()->return_values.count = (n))
 
-extern D MV_SPILL (D first_value);
-extern D MV_UNSPILL (D spill_t);
-extern D MV_GET_REST_AT (D first_value, DSINT first);
-extern D MV_SET_REST_AT (D v, DSINT first);
-extern D MV_CHECK_TYPE_REST (D first_value, D rest_type, int n, ...);
+extern dylan_value MV_SPILL (dylan_value first_value);
+extern dylan_value MV_UNSPILL (dylan_value spill_t);
+extern dylan_value MV_GET_REST_AT (dylan_value first_value, DSINT first);
+extern dylan_value MV_SET_REST_AT (dylan_value v, DSINT first);
+extern dylan_value MV_CHECK_TYPE_REST (dylan_value first_value, dylan_value rest_type, int n, ...);
 
 #define MV_CHECK_TYPE_PROLOGUE(fv) \
   MV *spill;                       \
   spill = (MV*)MV_SPILL(fv)
 
 #define MV_CHECK_TYPE_EPILOGUE()   \
-  MV_UNSPILL((D)spill)
+  MV_UNSPILL((dylan_value)spill)
 
 extern DMINT _unused_arg;
 extern DMINT* P_unused_arg;
@@ -540,13 +540,13 @@ typedef struct _unwind_protect_frame {
 #endif
 } Unwind_protect_frame;
 
-extern D SETUP_EXIT_FRAME (D);
-extern D SETUP_UNWIND_FRAME (D);
-extern D FRAME_DEST (D);
-extern D FRAME_RETVAL (D);
-extern D FALL_THROUGH_UNWIND (D);
-extern D CONTINUE_UNWIND ();
-extern D NLX (Bind_exit_frame*, D);
+extern dylan_value SETUP_EXIT_FRAME (dylan_value);
+extern dylan_value SETUP_UNWIND_FRAME (dylan_value);
+extern dylan_value FRAME_DEST (dylan_value);
+extern dylan_value FRAME_RETVAL (dylan_value);
+extern dylan_value FALL_THROUGH_UNWIND (dylan_value);
+extern dylan_value CONTINUE_UNWIND ();
+extern dylan_value NLX (Bind_exit_frame*, dylan_value);
 
 #define ENTER_EXIT_FRAME(destvar) \
   Bind_exit_frame bef_ ## destvar; \
@@ -567,7 +567,7 @@ typedef struct _teb {
         /* dispatch context (used together, keep close) */
         dylan_simple_method* function;
         int argument_count;
-        D   next_methods;
+        dylan_value   next_methods;
 
         /* return values (for multiple values) */
         MV  return_values;
@@ -582,12 +582,12 @@ typedef struct _teb {
         void *tlv_vector;
 
         /* argument buffers (used in dispatch, primitives...) */
-        D arguments[MAX_ARGUMENTS];
-        D new_arguments[MAX_ARGUMENTS];
-        D a[MAX_ARGUMENTS];
-        D iep_a[MAX_ARGUMENTS];
-        D apply_buffer[MAX_ARGUMENTS];
-        D buffer[MAX_ARGUMENTS];
+        dylan_value arguments[MAX_ARGUMENTS];
+        dylan_value new_arguments[MAX_ARGUMENTS];
+        dylan_value a[MAX_ARGUMENTS];
+        dylan_value iep_a[MAX_ARGUMENTS];
+        dylan_value apply_buffer[MAX_ARGUMENTS];
+        dylan_value buffer[MAX_ARGUMENTS];
 } TEB;
 
 #ifdef USE_PTHREAD_TLS
@@ -602,94 +602,94 @@ PURE_FUNCTION static inline TEB* get_teb()
 
 /* CALLING CONVENTION ENTRY POINTS */
 
-extern D XEP(dylan_simple_method*, int, ...);
+extern dylan_value XEP(dylan_simple_method*, int, ...);
 
-extern D topI();
+extern dylan_value topI();
 
-extern D xep_0 (dylan_simple_method*,int);
-extern D xep_1 (dylan_simple_method*,int,D);
-extern D xep_2 (dylan_simple_method*,int,D,D);
-extern D xep_3 (dylan_simple_method*,int,D,D,D);
-extern D xep_4 (dylan_simple_method*,int,D,D,D,D);
-extern D xep_5 (dylan_simple_method*,int,D,D,D,D,D);
-extern D xep_6 (dylan_simple_method*,int,D,D,D,D,D,D);
-extern D xep_7 (dylan_simple_method*,int,D,D,D,D,D,D,D);
-extern D xep_8 (dylan_simple_method*,int,D,D,D,D,D,D,D,D);
-extern D xep_9 (dylan_simple_method*,int,D,D,D,D,D,D,D,D,D);
-extern D xep   (dylan_simple_method*,int,...);
+extern dylan_value xep_0 (dylan_simple_method*,int);
+extern dylan_value xep_1 (dylan_simple_method*,int,dylan_value);
+extern dylan_value xep_2 (dylan_simple_method*,int,dylan_value,dylan_value);
+extern dylan_value xep_3 (dylan_simple_method*,int,dylan_value,dylan_value,dylan_value);
+extern dylan_value xep_4 (dylan_simple_method*,int,dylan_value,dylan_value,dylan_value,dylan_value);
+extern dylan_value xep_5 (dylan_simple_method*,int,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value);
+extern dylan_value xep_6 (dylan_simple_method*,int,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value);
+extern dylan_value xep_7 (dylan_simple_method*,int,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value);
+extern dylan_value xep_8 (dylan_simple_method*,int,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value);
+extern dylan_value xep_9 (dylan_simple_method*,int,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value);
+extern dylan_value xep   (dylan_simple_method*,int,...);
 
-extern D rest_xep_0 (dylan_simple_method*,int,...);
-extern D rest_xep_1 (dylan_simple_method*,int,D,...);
-extern D rest_xep_2 (dylan_simple_method*,int,D,D,...);
-extern D rest_xep_3 (dylan_simple_method*,int,D,D,D,...);
-extern D rest_xep_4 (dylan_simple_method*,int,D,D,D,D,...);
-extern D rest_xep_5 (dylan_simple_method*,int,D,D,D,D,D,...);
-extern D rest_xep_6 (dylan_simple_method*,int,D,D,D,D,D,D,...);
-extern D rest_xep_7 (dylan_simple_method*,int,D,D,D,D,D,D,D,...);
-extern D rest_xep_8 (dylan_simple_method*,int,D,D,D,D,D,D,D,D,...);
-extern D rest_xep_9 (dylan_simple_method*,int,D,D,D,D,D,D,D,D,D,...);
-extern D rest_xep   (dylan_simple_method*,int,...);
+extern dylan_value rest_xep_0 (dylan_simple_method*,int,...);
+extern dylan_value rest_xep_1 (dylan_simple_method*,int,dylan_value,...);
+extern dylan_value rest_xep_2 (dylan_simple_method*,int,dylan_value,dylan_value,...);
+extern dylan_value rest_xep_3 (dylan_simple_method*,int,dylan_value,dylan_value,dylan_value,...);
+extern dylan_value rest_xep_4 (dylan_simple_method*,int,dylan_value,dylan_value,dylan_value,dylan_value,...);
+extern dylan_value rest_xep_5 (dylan_simple_method*,int,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,...);
+extern dylan_value rest_xep_6 (dylan_simple_method*,int,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,...);
+extern dylan_value rest_xep_7 (dylan_simple_method*,int,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,...);
+extern dylan_value rest_xep_8 (dylan_simple_method*,int,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,...);
+extern dylan_value rest_xep_9 (dylan_simple_method*,int,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,dylan_value,...);
+extern dylan_value rest_xep   (dylan_simple_method*,int,...);
 
-extern D rest_key_xep_1 (dylan_simple_method*,int,...);
-extern D rest_key_xep_2 (dylan_simple_method*,int,...);
-extern D rest_key_xep_3 (dylan_simple_method*,int,...);
-extern D rest_key_xep_4 (dylan_simple_method*,int,...);
-extern D rest_key_xep_5 (dylan_simple_method*,int,...);
-extern D rest_key_xep_6 (dylan_simple_method*,int,...);
-extern D rest_key_xep_7 (dylan_simple_method*,int,...);
-extern D rest_key_xep_8 (dylan_simple_method*,int,...);
-extern D rest_key_xep_9 (dylan_simple_method*,int,...);
-extern D rest_key_xep   (dylan_simple_method*,int,...);
+extern dylan_value rest_key_xep_1 (dylan_simple_method*,int,...);
+extern dylan_value rest_key_xep_2 (dylan_simple_method*,int,...);
+extern dylan_value rest_key_xep_3 (dylan_simple_method*,int,...);
+extern dylan_value rest_key_xep_4 (dylan_simple_method*,int,...);
+extern dylan_value rest_key_xep_5 (dylan_simple_method*,int,...);
+extern dylan_value rest_key_xep_6 (dylan_simple_method*,int,...);
+extern dylan_value rest_key_xep_7 (dylan_simple_method*,int,...);
+extern dylan_value rest_key_xep_8 (dylan_simple_method*,int,...);
+extern dylan_value rest_key_xep_9 (dylan_simple_method*,int,...);
+extern dylan_value rest_key_xep   (dylan_simple_method*,int,...);
 
-extern D key_mep_1 (D a1, ...);
-extern D key_mep_2 (D a1, ...);
-extern D key_mep_3 (D a1, ...);
-extern D key_mep_4 (D a1, ...);
-extern D key_mep_5 (D a1, ...);
-extern D key_mep_6 (D a1, ...);
-extern D key_mep_7 (D a1, ...);
-extern D key_mep_8 (D a1, ...);
-extern D key_mep_9 (D a1, ...);
-extern D key_mep (D a1, ...);
+extern dylan_value key_mep_1 (dylan_value a1, ...);
+extern dylan_value key_mep_2 (dylan_value a1, ...);
+extern dylan_value key_mep_3 (dylan_value a1, ...);
+extern dylan_value key_mep_4 (dylan_value a1, ...);
+extern dylan_value key_mep_5 (dylan_value a1, ...);
+extern dylan_value key_mep_6 (dylan_value a1, ...);
+extern dylan_value key_mep_7 (dylan_value a1, ...);
+extern dylan_value key_mep_8 (dylan_value a1, ...);
+extern dylan_value key_mep_9 (dylan_value a1, ...);
+extern dylan_value key_mep (dylan_value a1, ...);
 
-extern D gf_xep_0 (dylan_simple_method* fn, int n);
-extern D gf_xep_1 (dylan_simple_method* fn, int n, D a1);
-extern D gf_xep_2 (dylan_simple_method* fn, int n, D a1, D a2);
-extern D gf_xep_3 (dylan_simple_method* fn, int n, D a1, D a2, D a3);
-extern D gf_xep_4 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4);
-extern D gf_xep_5 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5);
-extern D gf_xep_6 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6);
-extern D gf_xep_7 (dylan_simple_method* fn, int n, D a1, D a2, D a3, D a4, D a5, D a6, D a7);
-extern D gf_xep   (dylan_simple_method* fn, int n, ...);
+extern dylan_value gf_xep_0 (dylan_simple_method* fn, int n);
+extern dylan_value gf_xep_1 (dylan_simple_method* fn, int n, dylan_value a1);
+extern dylan_value gf_xep_2 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2);
+extern dylan_value gf_xep_3 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3);
+extern dylan_value gf_xep_4 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4);
+extern dylan_value gf_xep_5 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5);
+extern dylan_value gf_xep_6 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6);
+extern dylan_value gf_xep_7 (dylan_simple_method* fn, int n, dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7);
+extern dylan_value gf_xep   (dylan_simple_method* fn, int n, ...);
 
-extern D gf_optional_xep_0 (dylan_simple_method* fn, int n, ...);
-extern D gf_optional_xep_1 (dylan_simple_method* fn, int n, ...);
-extern D gf_optional_xep_2 (dylan_simple_method* fn, int n, ...);
-extern D gf_optional_xep_3 (dylan_simple_method* fn, int n, ...);
-extern D gf_optional_xep_4 (dylan_simple_method* fn, int n, ...);
-extern D gf_optional_xep_5 (dylan_simple_method* fn, int n, ...);
-extern D gf_optional_xep_6 (dylan_simple_method* fn, int n, ...);
-extern D gf_optional_xep   (dylan_simple_method* fn, int n, ...);
+extern dylan_value gf_optional_xep_0 (dylan_simple_method* fn, int n, ...);
+extern dylan_value gf_optional_xep_1 (dylan_simple_method* fn, int n, ...);
+extern dylan_value gf_optional_xep_2 (dylan_simple_method* fn, int n, ...);
+extern dylan_value gf_optional_xep_3 (dylan_simple_method* fn, int n, ...);
+extern dylan_value gf_optional_xep_4 (dylan_simple_method* fn, int n, ...);
+extern dylan_value gf_optional_xep_5 (dylan_simple_method* fn, int n, ...);
+extern dylan_value gf_optional_xep_6 (dylan_simple_method* fn, int n, ...);
+extern dylan_value gf_optional_xep   (dylan_simple_method* fn, int n, ...);
 
-extern D gf_iep_0 ();
-extern D gf_iep_1 (D a1);
-extern D gf_iep_2 (D a1, D a2);
-extern D gf_iep_3 (D a1, D a2, D a3);
-extern D gf_iep_4 (D a1, D a2, D a3, D a4);
-extern D gf_iep_5 (D a1, D a2, D a3, D a4, D a5);
-extern D gf_iep_6 (D a1, D a2, D a3, D a4, D a5, D a6);
-extern D gf_iep_7 (D a1, D a2, D a3, D a4, D a5, D a6, D a7);
-extern D gf_iep   (D argvec);
+extern dylan_value gf_iep_0 ();
+extern dylan_value gf_iep_1 (dylan_value a1);
+extern dylan_value gf_iep_2 (dylan_value a1, dylan_value a2);
+extern dylan_value gf_iep_3 (dylan_value a1, dylan_value a2, dylan_value a3);
+extern dylan_value gf_iep_4 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4);
+extern dylan_value gf_iep_5 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5);
+extern dylan_value gf_iep_6 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6);
+extern dylan_value gf_iep_7 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7);
+extern dylan_value gf_iep   (dylan_value argvec);
 
-extern D slotacc_single_q_instance_getter_xep (dylan_accessor_method* am, int n, D a1);
-extern D slotacc_single_q_instance_setter_xep (dylan_accessor_method* am, int n, D a1, D a2);
-extern D slotacc_single_q_class_getter_xep (dylan_accessor_method* am, int n, D a1);
-extern D slotacc_single_q_class_setter_xep (dylan_accessor_method* am, int n, D a1, D a2);
-extern D slotacc_repeated_instance_getter_xep (dylan_accessor_method* am, int n, D a1, D a2);
-extern D slotacc_repeated_instance_setter_xep (dylan_accessor_method* am, int n, D a1, D a2, D a3);
-extern D primitive_set_accessor_method_xep (D am, D what);
+extern dylan_value slotacc_single_q_instance_getter_xep (dylan_accessor_method* am, int n, dylan_value a1);
+extern dylan_value slotacc_single_q_instance_setter_xep (dylan_accessor_method* am, int n, dylan_value a1, dylan_value a2);
+extern dylan_value slotacc_single_q_class_getter_xep (dylan_accessor_method* am, int n, dylan_value a1);
+extern dylan_value slotacc_single_q_class_setter_xep (dylan_accessor_method* am, int n, dylan_value a1, dylan_value a2);
+extern dylan_value slotacc_repeated_instance_getter_xep (dylan_accessor_method* am, int n, dylan_value a1, dylan_value a2);
+extern dylan_value slotacc_repeated_instance_setter_xep (dylan_accessor_method* am, int n, dylan_value a1, dylan_value a2, dylan_value a3);
+extern dylan_value primitive_set_accessor_method_xep (dylan_value am, dylan_value what);
 
-#define CALLN(fn,n) (D)((((dylan_simple_method*)fn)->xep)(((dylan_simple_method*)(fn)),n
+#define CALLN(fn,n) (dylan_value)((((dylan_simple_method*)fn)->xep)(((dylan_simple_method*)(fn)),n
 #define CALL0(fn) CALLN(fn,0)))
 #define CALL1(fn,a1) CALLN(fn,1),(a1)))
 #define CALL2(fn,a1,a2) CALLN(fn,2),(a1),(a2)))
@@ -709,7 +709,7 @@ extern D primitive_set_accessor_method_xep (D am, D what);
     mcp_teb->next_methods = (nm); \
     mcp_teb->argument_count = (ac); \
   }
-#define MEP_CALLN(fn) (D)((((dylan_simple_method*)fn)->mep)(
+#define MEP_CALLN(fn) (dylan_value)((((dylan_simple_method*)fn)->mep)(
 #define MEP_CALL0(fn) MEP_CALLN(fn)))
 #define MEP_CALL1(fn,a1) MEP_CALLN(fn)(a1)))
 #define MEP_CALL2(fn,a1,a2) MEP_CALLN(fn)(a1),(a2)))
@@ -755,7 +755,7 @@ extern D primitive_set_accessor_method_xep (D am, D what);
 #define ENGINE_NODE_CALL7(eng,a1,a2,a3,a4,a5,a6,a7) \
     ((((ENGINE*)eng)->entry_point)((a1),(a2),(a3),(a4),(a5),(a6),(a7)))
 
-extern D inline_invoke_engine_node(ENGINE*, int, ...);
+extern dylan_value inline_invoke_engine_node(ENGINE*, int, ...);
 
 #define ENGINE_NODE_CALLN(ac,eng) \
     (inline_invoke_engine_node((ENGINE*)(eng),(ac)
@@ -795,7 +795,7 @@ extern D inline_invoke_engine_node(ENGINE*, int, ...);
     (inline_invoke_engine_node((ENGINE*)(get_teb()->function),(ac)
 
 
-#define IEP_CALLN(fn) (D)((((dylan_simple_method*)fn)->iep)(
+#define IEP_CALLN(fn) (dylan_value)((((dylan_simple_method*)fn)->iep)(
 #define IEP_CALL0(fn) IEP_CALLN(fn)))
 #define IEP_CALL1(fn,a1) IEP_CALLN(fn)(a1)))
 #define IEP_CALL2(fn,a1,a2) IEP_CALLN(fn)(a1),(a2)))
@@ -810,21 +810,21 @@ extern D inline_invoke_engine_node(ENGINE*, int, ...);
 
 /* CLOSURE SUPPORT */
 
-extern void INIT_CLOSURE(D, int, ...);
-extern D MAKE_CLOSURE_INITD(D, int, ...);
-extern D MAKE_CLOSURE_INITD_SIG(D, D, int, ...);
-extern D MAKE_CLOSURE(D, int);
-extern D MAKE_CLOSURE_SIG(D, D, int);
-extern D MAKE_METHOD_SIG(D, D);
-extern D SET_METHOD_SIG(D, D);
+extern void INIT_CLOSURE(dylan_value, int, ...);
+extern dylan_value MAKE_CLOSURE_INITD(dylan_value, int, ...);
+extern dylan_value MAKE_CLOSURE_INITD_SIG(dylan_value, dylan_value, int, ...);
+extern dylan_value MAKE_CLOSURE(dylan_value, int);
+extern dylan_value MAKE_CLOSURE_SIG(dylan_value, dylan_value, int);
+extern dylan_value MAKE_METHOD_SIG(dylan_value, dylan_value);
+extern dylan_value SET_METHOD_SIG(dylan_value, dylan_value);
 #define CAPTURE_ENVIRONMENT dylan_simple_closure_method* _fn = ((dylan_simple_closure_method*)get_teb()->function);
-extern void INIT_KEYWORD_CLOSURE(D, int, ...);
-extern D MAKE_KEYWORD_CLOSURE_INITD(D, int, ...);
-extern D MAKE_KEYWORD_CLOSURE_INITD_SIG(D, D, int, ...);
-extern D MAKE_KEYWORD_CLOSURE(D, int);
-extern D MAKE_KEYWORD_CLOSURE_SIG(D, D, int);
-extern D MAKE_KEYWORD_METHOD_SIG(D, D);
-extern D SET_KEYWORD_METHOD_SIG(D, D);
+extern void INIT_KEYWORD_CLOSURE(dylan_value, int, ...);
+extern dylan_value MAKE_KEYWORD_CLOSURE_INITD(dylan_value, int, ...);
+extern dylan_value MAKE_KEYWORD_CLOSURE_INITD_SIG(dylan_value, dylan_value, int, ...);
+extern dylan_value MAKE_KEYWORD_CLOSURE(dylan_value, int);
+extern dylan_value MAKE_KEYWORD_CLOSURE_SIG(dylan_value, dylan_value, int);
+extern dylan_value MAKE_KEYWORD_METHOD_SIG(dylan_value, dylan_value);
+extern dylan_value SET_KEYWORD_METHOD_SIG(dylan_value, dylan_value);
 #define CAPTURE_KEYWORD_ENVIRONMENT dylan_keyword_closure_method* _fn = ((dylan_keyword_closure_method*)get_teb()->function);
 #define CREF(n) (_fn->environment[(n)])
 #define MREF    (_fn)
@@ -835,34 +835,34 @@ extern D SET_KEYWORD_METHOD_SIG(D, D);
 
 /* COMPARISON PRIMITIVES */
 
-#define RAWASBOOL(x)                    ((D)((x) ? DTRUE : DFALSE))
+#define RAWASBOOL(x)                    ((dylan_value)((x) ? DTRUE : DFALSE))
 #define primitive_raw_as_boolean(x)     RAWASBOOL(x)
-#define primitive_as_boolean(x)         (((D)(x)) == DFALSE ? DFALSE : DTRUE)
-#define BOOLASRAW(x)                    (((D)(x)) != DFALSE)
+#define primitive_as_boolean(x)         (((dylan_value)(x)) == DFALSE ? DFALSE : DTRUE)
+#define BOOLASRAW(x)                    (((dylan_value)(x)) != DFALSE)
 #define primitive_boolean_as_raw(x)     BOOLASRAW(x)
-#define primitive_not(x)                (((D)(x)) == DFALSE ? DTRUE : DFALSE)
+#define primitive_not(x)                (((dylan_value)(x)) == DFALSE ? DTRUE : DFALSE)
 #define primitive_idQ(x, y)             (RAWASBOOL((x) == (y)))
 #define primitive_not_idQ(x, y)         (RAWASBOOL((x) != (y)))
 
-extern D primitive_compare_bytes(D base1, DSINT offset1,
-                                 D base2, DSINT offset2, DSINT size);
-extern D primitive_compare_words(D base1, DSINT offset1,
-                                 D base2, DSINT offset2, DSINT size);
+extern dylan_value primitive_compare_bytes(dylan_value base1, DSINT offset1,
+                                           dylan_value base2, DSINT offset2, DSINT size);
+extern dylan_value primitive_compare_words(dylan_value base1, DSINT offset1,
+                                           dylan_value base2, DSINT offset2, DSINT size);
 
 
 /* COMPARISON PRIMITIVES */
 
 #define primitive_instanceQ(x, y)       ((((dylan_type*)(y))->instancep_function)((x),(y)))
 #define primitive_range_check(x, l, h)  (RAWASBOOL(((x) >= (l)) & ((x) < (h))))
-extern D primitive_type_check(D x, D t);
+extern dylan_value primitive_type_check(dylan_value x, dylan_value t);
 
 
 /* OBJECT REPRESENTATION PRIMITIVES AND SUPPORT */
 
 extern void primitive_break (void);
-extern void primitive_invoke_debugger (D format_string, D arguments);
-extern D primitive_inside_debuggerQ (void);
-extern void primitive_debug_message (D format_string, D arguments);
+extern void primitive_invoke_debugger (dylan_value format_string, dylan_value arguments);
+extern dylan_value primitive_inside_debuggerQ (void);
+extern void primitive_debug_message (dylan_value format_string, dylan_value arguments);
 
 #if defined(__alpha) || defined(__x86_64__)
 #define primitive_word_size() 8
@@ -883,7 +883,7 @@ extern void primitive_debug_message (D format_string, D arguments);
 #define primitive_slot_value_setter(new_value, object, position) \
   ((((dylan_object*)object)->slots)[position] = (new_value))
 
-extern D primitive_slot_value(D object, DSINT position);
+extern dylan_value primitive_slot_value(dylan_value object, DSINT position);
 
 #define primitive_repeated_slot_value(object, base_position, position) \
   ((((dylan_object*)object)->slots)[base_position + position])
@@ -903,7 +903,7 @@ extern D primitive_slot_value(D object, DSINT position);
 #define SLOT_VALUE_SETTER(new_value, object, position) \
   ((((dylan_object*)object)->slots)[position] = (new_value))
 
-extern D SLOT_VALUE(D object, DSINT position);
+extern dylan_value SLOT_VALUE(dylan_value object, DSINT position);
 
 #define REPEATED_DYLAN_VALUE_SLOT_VALUE(object, base_position, position) \
   ((((dylan_object*)object)->slots)[base_position + position])
@@ -991,22 +991,22 @@ extern D SLOT_VALUE(D object, DSINT position);
 #define REPEATED_DDFLT_SLOT_VALUE_TAGGED_SETTER(new_value, object, base_position, position) \
   (((DDFLT*)(((dylan_object*)object)->slots))[base_position + R(position)] = (new_value))
 
-extern DSINT primitive_repeated_slot_offset(D x);
-extern D     primitive_repeated_slot_as_raw(D x, DSINT offset);
+extern DSINT primitive_repeated_slot_offset(dylan_value x);
+extern dylan_value     primitive_repeated_slot_as_raw(dylan_value x, DSINT offset);
 
 extern void primitive_fillX
-  (D dst, int base_offset, int offset, int size, D value);
+  (dylan_value dst, int base_offset, int offset, int size, dylan_value value);
 
 extern void primitive_fill_bytesX
-  (D dst, int base_offset, int offset, int size, DSINT value);
+  (dylan_value dst, int base_offset, int offset, int size, DSINT value);
 
 extern void primitive_replace_bytesX
-  (D dst, DSINT dst_base_offset, DSINT dst_offset,
-   D src, DSINT src_base_offset, DSINT src_offset, DSINT size);
+  (dylan_value dst, DSINT dst_base_offset, DSINT dst_offset,
+   dylan_value src, DSINT src_base_offset, DSINT src_offset, DSINT size);
 
 extern void primitive_replaceX
-  (D dst, DSINT dst_base_offset, DSINT dst_offset,
-   D src, DSINT src_base_offset, DSINT src_offset, DSINT size);
+  (dylan_value dst, DSINT dst_base_offset, DSINT dst_offset,
+   dylan_value src, DSINT src_base_offset, DSINT src_offset, DSINT size);
 
 /* LOW-LEVEL ACCESSOR PRIMITIVES */
 
@@ -1116,9 +1116,9 @@ extern void primitive_replaceX
                   bit_size)
 
 #define primitive_element(x, o, b) \
-        AT(D,x,o,b)
+        AT(dylan_value,x,o,b)
 #define primitive_element_setter(e, x, o, b) \
-        AT_SETTER(D,e,x,o,b)
+        AT_SETTER(dylan_value,e,x,o,b)
 
 /*
 #define primitive_boolean_at(x, o, b) \
@@ -1162,9 +1162,9 @@ extern void primitive_replaceX
 #define primitive_extended_float_at_setter(e, x, o, b) \
         AT_SETTER(long_double,e,x,o,b)
 #define primitive_pointer_at(x, o, b) \
-        AT(D,x,o,b)
+        AT(dylan_value,x,o,b)
 #define primitive_pointer_at_setter(e, x, o, b) \
-        AT_SETTER(D,e,x,o,b)
+        AT_SETTER(dylan_value,e,x,o,b)
 #define primitive_address_at(x, o, b) \
         AT(DADDR,x,o,b)
 #define primitive_address_at_setter(e, x, o, b) \
@@ -1184,25 +1184,25 @@ extern void MMFreeMisc(void *p, size_t size);
 
 /* ALLOCATION PRIMITIVES */
 
-extern D primitive_allocate(DSINT);
-extern D primitive_byte_allocate(DSINT, DSINT);
-extern D primitive_untraced_allocate(DSINT);
-extern D primitive_manual_allocate(D);
-extern void primitive_manual_free(D);
-extern D primitive_allocate_wrapper(DSINT, D, DSINT, D, DSINT, DSINT);
-extern D primitive_byte_allocate_filled_terminated(DSINT, DSINT, D, DSINT, D, DSINT, DSINT);
-extern D primitive_byte_allocate_leaf_filled_terminated(DSINT, DSINT, D, DSINT, D, DSINT, DSINT);
-extern D primitive_allocate_filled(DSINT, D, DSINT, D, DSINT, DSINT);
-extern D primitive_object_allocate_filled(DSINT, D, DSINT, D, DSINT, DSINT, D);
-extern D primitive_byte_allocate_filled(DSINT, D, DSINT, D, DSINT, DSINT, DBYTE);
-extern D primitive_double_byte_allocate_filled(DSINT, D, DSINT, D, DSINT, DSINT, DDBYTE);
-extern D primitive_word_allocate_filled(DSINT, D, DSINT, D, DSINT, DSINT, DWORD);
-extern D primitive_double_word_allocate_filled(DSINT, D, DSINT, D, DSINT, DSINT, DDWORD);
-extern D primitive_single_float_allocate_filled(DSINT, D, DSINT, D, DSINT, DSINT, DSFLT);
-extern D primitive_double_float_allocate_filled(DSINT, D, DSINT, D, DSINT, DSINT, DDFLT);
-extern D primitive_byte_allocate_leaf_filled(DSINT, D, DSINT, D, DSINT, DSINT, DBYTE);
-extern D primitive_allocate_in_awl_pool(DSINT, D, DSINT, D, DSINT, DSINT, D);
-extern D primitive_allocate_weak_in_awl_pool(DSINT, D, DSINT, D, DSINT, DSINT, D);
+extern dylan_value primitive_allocate(DSINT);
+extern dylan_value primitive_byte_allocate(DSINT, DSINT);
+extern dylan_value primitive_untraced_allocate(DSINT);
+extern dylan_value primitive_manual_allocate(dylan_value);
+extern void primitive_manual_free(dylan_value);
+extern dylan_value primitive_allocate_wrapper(DSINT, dylan_value, DSINT, dylan_value, DSINT, DSINT);
+extern dylan_value primitive_byte_allocate_filled_terminated(DSINT, DSINT, dylan_value, DSINT, dylan_value, DSINT, DSINT);
+extern dylan_value primitive_byte_allocate_leaf_filled_terminated(DSINT, DSINT, dylan_value, DSINT, dylan_value, DSINT, DSINT);
+extern dylan_value primitive_allocate_filled(DSINT, dylan_value, DSINT, dylan_value, DSINT, DSINT);
+extern dylan_value primitive_object_allocate_filled(DSINT, dylan_value, DSINT, dylan_value, DSINT, DSINT, dylan_value);
+extern dylan_value primitive_byte_allocate_filled(DSINT, dylan_value, DSINT, dylan_value, DSINT, DSINT, DBYTE);
+extern dylan_value primitive_double_byte_allocate_filled(DSINT, dylan_value, DSINT, dylan_value, DSINT, DSINT, DDBYTE);
+extern dylan_value primitive_word_allocate_filled(DSINT, dylan_value, DSINT, dylan_value, DSINT, DSINT, DWORD);
+extern dylan_value primitive_double_word_allocate_filled(DSINT, dylan_value, DSINT, dylan_value, DSINT, DSINT, DDWORD);
+extern dylan_value primitive_single_float_allocate_filled(DSINT, dylan_value, DSINT, dylan_value, DSINT, DSINT, DSFLT);
+extern dylan_value primitive_double_float_allocate_filled(DSINT, dylan_value, DSINT, dylan_value, DSINT, DSINT, DDFLT);
+extern dylan_value primitive_byte_allocate_leaf_filled(DSINT, dylan_value, DSINT, dylan_value, DSINT, DSINT, DBYTE);
+extern dylan_value primitive_allocate_in_awl_pool(DSINT, dylan_value, DSINT, dylan_value, DSINT, DSINT, dylan_value);
+extern dylan_value primitive_allocate_weak_in_awl_pool(DSINT, dylan_value, DSINT, dylan_value, DSINT, DSINT, dylan_value);
 
 /* stack allocation */
 
@@ -1217,27 +1217,27 @@ extern D primitive_allocate_weak_in_awl_pool(DSINT, D, DSINT, D, DSINT, DSINT, D
 #  endif
 #endif
 
-#define primitive_stack_allocate(sz) ((D)(alloca((int)(sz) * sizeof(D))))
+#define primitive_stack_allocate(sz) ((dylan_value)(alloca((int)(sz) * sizeof(dylan_value))))
 
 #define primitive_byte_stack_allocate(numwords, numbytes) \
-  ((D)alloca(numwords * sizeof(D)) + (numbytes))
+  ((dylan_value)alloca(numwords * sizeof(dylan_value)) + (numbytes))
 
 #define primitive_byte_stack_allocate_filled(size, class_wrapper, number_slots, fill_value, repeated_size, repeated_size_offset, repeated_fill_value) \
-  initialize_byte_stack_allocate_filled((D*)primitive_byte_stack_allocate(size, repeated_size + 1), class_wrapper, number_slots, fill_value, repeated_size, repeated_size_offset, repeated_fill_value)
+  initialize_byte_stack_allocate_filled((dylan_value*)primitive_byte_stack_allocate(size, repeated_size + 1), class_wrapper, number_slots, fill_value, repeated_size, repeated_size_offset, repeated_fill_value)
 
-extern D initialize_byte_stack_allocate_filled
-    (D ptr, D class_wrapper, DSINT number_slots,
-     D fill_value, DSINT repeated_size, DSINT repeated_size_offset,
+extern dylan_value initialize_byte_stack_allocate_filled
+    (dylan_value ptr, dylan_value class_wrapper, DSINT number_slots,
+     dylan_value fill_value, DSINT repeated_size, DSINT repeated_size_offset,
      DBYTE repeated_fill_value);
 
 
 #define primitive_object_stack_allocate_filled(size, class_wrapper, number_slots, fill_value, repeated_size, repeated_size_offset, repeated_fill_value) \
-  initialize_object_stack_allocate_filled(primitive_byte_stack_allocate(size, repeated_size * sizeof(D)), class_wrapper, number_slots, fill_value, repeated_size, repeated_size_offset, repeated_fill_value)
+  initialize_object_stack_allocate_filled(primitive_byte_stack_allocate(size, repeated_size * sizeof(dylan_value)), class_wrapper, number_slots, fill_value, repeated_size, repeated_size_offset, repeated_fill_value)
 
-extern D initialize_object_stack_allocate_filled
-      (D ptr, D class_wrapper, DSINT number_slots, D fill_value,
+extern dylan_value initialize_object_stack_allocate_filled
+      (dylan_value ptr, dylan_value class_wrapper, DSINT number_slots, dylan_value fill_value,
        DSINT repeated_size, DSINT repeated_size_offset,
-       D repeated_fill_value);
+       dylan_value repeated_fill_value);
 
 
 /* allocation counting stubs     (gts,98sep10) */
@@ -1257,14 +1257,14 @@ extern D initialize_object_stack_allocate_filled
 /* GC PRIMITIVES */
 
 #define primitive_pin_object(x) (x)
-extern void primitive_unpin_object(D);
-extern void primitive_mps_finalize(D);
-extern D primitive_mps_finalization_queue_first(void);
+extern void primitive_unpin_object(dylan_value);
+extern void primitive_mps_finalize(dylan_value);
+extern dylan_value primitive_mps_finalization_queue_first(void);
 extern void primitive_mps_park(void);
 extern void primitive_mps_clamp(void);
 extern void primitive_mps_release(void);
 extern void primitive_mps_collect(DBOOL);
-extern DBOOL primitive_mps_collection_stats(D);
+extern DBOOL primitive_mps_collection_stats(dylan_value);
 extern void primitive_mps_enable_gc_messages(void);
 extern DSINT primitive_mps_committed(void);
 extern void primitive_mps_begin_ramp_alloc(void);
@@ -1317,7 +1317,7 @@ extern int primitive_mps_ld_isstale(void *hs);
 /* POINTER PRIMITIVES */
 
 #define primitive_cast_pointer_as_raw(x)  ((DADDR)x)
-#define primitive_cast_raw_as_pointer(x)  ((D)x)
+#define primitive_cast_raw_as_pointer(x)  ((dylan_value)x)
 
 /* MACHINE-WORD PRIMITIVES */
 
@@ -1330,26 +1330,26 @@ extern int primitive_mps_ld_isstale(void *hs);
 #define primitive_machine_word_greater_thanQ(x, y)        RAWASBOOL((DMINT)(x) > (DMINT)(y))
 #define primitive_machine_word_not_greater_thanQ(x, y)    RAWASBOOL((DMINT)(x) <= (DMINT)(y))
 
-extern D primitive_wrap_machine_word(DMINT);
+extern dylan_value primitive_wrap_machine_word(DMINT);
 
 #define primitive_unwrap_machine_word(x) \
   (((dylan_machine_word*)(x))->data)
 
-extern D primitive_wrap_c_pointer(D, DMINT);
+extern dylan_value primitive_wrap_c_pointer(dylan_value, DMINT);
 /*   primitive_unwrap_c_pointer
  * assumes that instances of <c-pointer> are implemented as
- * struct {D class; D pointer_address; ...}
+ * struct {dylan_value class; dylan_value pointer_address; ...}
  * ..and that the address is stored as a raw pointer.
  */
 #define primitive_unwrap_c_pointer(c_ptr) \
-  ((void*)(*(((D*)(c_ptr))+1)))
+  ((void*)(*(((dylan_value*)(c_ptr))+1)))
 
 #define primitive_cast_integer_as_raw(x)                  ((DMINT)(x))
-#define primitive_cast_raw_as_integer(x)                  ((D)(x))
+#define primitive_cast_raw_as_integer(x)                  ((dylan_value)(x))
 
-extern D primitive_wrap_abstract_integer(DMINT);
-extern D primitive_wrap_unsigned_abstract_integer(DMINT);
-extern DMINT primitive_unwrap_abstract_integer(D);
+extern dylan_value primitive_wrap_abstract_integer(DMINT);
+extern dylan_value primitive_wrap_unsigned_abstract_integer(DMINT);
+extern DMINT primitive_unwrap_abstract_integer(dylan_value);
 #define primitive_box_integer(x)                          (I(x))
 #define primitive_unbox_integer(x)                        (R(x))
 
@@ -1520,7 +1520,7 @@ extern DMINT primitive_machine_word_unsigned_double_shift_right(DMINT, DMINT, DM
 
 #define primitive_single_float_as_raw(x) \
     (((dylan_single_float*)x)->data)
-extern D primitive_raw_as_single_float(DSFLT x);
+extern dylan_value primitive_raw_as_single_float(DSFLT x);
 #define primitive_single_float_as_integer(x) \
     ((DSINT)(x))
 #define primitive_integer_as_single_float(x) \
@@ -1568,7 +1568,7 @@ extern DSFLT primitive_cast_machine_word_as_single_float(DUMINT);
 
 #define primitive_double_float_as_raw(x) \
     (((dylan_double_float*)x)->data)
-extern D primitive_raw_as_double_float(DDFLT x);
+extern dylan_value primitive_raw_as_double_float(DDFLT x);
 #define primitive_double_float_as_integer(x) \
     ((DSINT)(x))
 #define primitive_integer_as_double_float(x) \
@@ -1619,36 +1619,36 @@ extern DDFLT primitive_cast_machine_words_as_double_float(DUMINT, DUMINT);
 #define primitive_vector_size(v)                 (((dylan_simple_object_vector*)v)->size)
 #define primitive_vector_as_raw(v)               (((dylan_simple_object_vector*)v)->data)
 
-extern D primitive_vector(D dn, ...);
-extern D primitive_raw_as_vector(D a, D n);
-extern D primitive_make_vector(int size);
-extern D primitive_copy_vector(D vector);
-extern D VECTOR_REF_OR_F(D v, int offset);
+extern dylan_value primitive_vector(dylan_value dn, ...);
+extern dylan_value primitive_raw_as_vector(dylan_value a, dylan_value n);
+extern dylan_value primitive_make_vector(int size);
+extern dylan_value primitive_copy_vector(dylan_value vector);
+extern dylan_value VECTOR_REF_OR_F(dylan_value v, int offset);
 
 /* STRING PRIMITIVES */
 
 #define primitive_strlen(s)                     (strlen((DBSTR)s))
 #define primitive_string_as_raw(v)              (((dylan_byte_string*)v)->data)
-extern D primitive_raw_as_string(DBSTR buffer);
+extern dylan_value primitive_raw_as_string(DBSTR buffer);
 
 /* CALLING CONVENTION PRIMITIVES */
 
-#define primitive_function_parameter()                  ((D)(get_teb()->function))
-#define primitive_next_methods_parameter()              ((D)(get_teb()->next_methods))
+#define primitive_function_parameter()                  ((dylan_value)(get_teb()->function))
+#define primitive_next_methods_parameter()              ((dylan_value)(get_teb()->next_methods))
 
 /* APPLY PRIMITIVES */
 
-extern D primitive_apply (D fn, D sov);
-extern D primitive_apply_spread (D fn, int n, ...);
-extern D primitive_mep_apply_spread (D fn, D nm, int n, ...);
-extern D primitive_xep_apply (dylan_simple_method* fn, int n, D a[]);
-extern D primitive_mep_apply_with_optionals
-  (dylan_simple_method* fn, D new_next_methods, D a);
-extern D primitive_mep_apply (dylan_simple_method* fn, D next_methods, D a[]);
-extern D primitive_iep_apply (dylan_simple_method* fn, int n, D a[]);
-extern D primitive_engine_node_apply_with_optionals (D engD, D gfD, D args);
+extern dylan_value primitive_apply (dylan_value fn, dylan_value sov);
+extern dylan_value primitive_apply_spread (dylan_value fn, int n, ...);
+extern dylan_value primitive_mep_apply_spread (dylan_value fn, dylan_value nm, int n, ...);
+extern dylan_value primitive_xep_apply (dylan_simple_method* fn, int n, dylan_value a[]);
+extern dylan_value primitive_mep_apply_with_optionals
+  (dylan_simple_method* fn, dylan_value new_next_methods, dylan_value a);
+extern dylan_value primitive_mep_apply (dylan_simple_method* fn, dylan_value next_methods, dylan_value a[]);
+extern dylan_value primitive_iep_apply (dylan_simple_method* fn, int n, dylan_value a[]);
+extern dylan_value primitive_engine_node_apply_with_optionals (dylan_value engD, dylan_value gfD, dylan_value args);
 
-#define APPLYN(fn,n) (D)(primitive_apply_spread((fn),n
+#define APPLYN(fn,n) (dylan_value)(primitive_apply_spread((fn),n
 #define APPLY0(fn) APPLYN(fn,0)))
 #define APPLY1(fn,a1) APPLYN(fn,1),(a1)))
 #define APPLY2(fn,a1,a2) APPLYN(fn,2),(a1),(a2)))
@@ -1661,7 +1661,7 @@ extern D primitive_engine_node_apply_with_optionals (D engD, D gfD, D args);
 #define APPLY9(fn,a1,a2,a3,a4,a5,a6,a7,a8,a9) APPLYN(fn,9),(a1),(a2),(a3),(a4),(a5),(a6),(a7),(a8),(a9)))
 #define APPLY10(fn,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10) APPLYN(fn,10),(a1),(a2),(a3),(a4),(a5),(a6),(a7),(a8),(a9),(a10)))
 
-#define MEP_APPLYN(fn,nm,n) (D)(primitive_mep_apply_spread((fn),(nm),n
+#define MEP_APPLYN(fn,nm,n) (dylan_value)(primitive_mep_apply_spread((fn),(nm),n
 #define MEP_APPLY0(fn,nm) MEP_APPLYN(fn,nm,0)))
 #define MEP_APPLY1(fn,nm,a1) MEP_APPLYN(fn,nm,1),(a1)))
 #define MEP_APPLY2(fn,nm,a1,a2) MEP_APPLYN(fn,nm,2),(a1),(a2)))
@@ -1675,50 +1675,50 @@ extern D primitive_engine_node_apply_with_optionals (D engD, D gfD, D args);
 #define MEP_APPLY10(fn,nm,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10) MEP_APPLYN(fn,nm,10),(a1),(a2),(a3),(a4),(a5),(a6),(a7),(a8),(a9),(a10)))
 
 
-#define ENGINE_NODE_APPLYN(e,gf,n) (D)(primitive_engine_node_apply_spread((e),(gf),n
+#define ENGINE_NODE_APPLYN(e,gf,n) (dylan_value)(primitive_engine_node_apply_spread((e),(gf),n
 
 
 /* VALUES PRIMITIVES */
 
-extern D primitive_values (D v);
+extern dylan_value primitive_values (dylan_value v);
 
 /* OPERATING SYSTEM PRIMITIVES */
 
-extern D Tcommand_nameT;
-extern D pseudo_primitive_command_name (void);
+extern dylan_value Tcommand_nameT;
+extern dylan_value pseudo_primitive_command_name (void);
 
-extern D Tcommand_argumentsT;
-extern D pseudo_primitive_command_arguments (void);
+extern dylan_value Tcommand_argumentsT;
+extern dylan_value pseudo_primitive_command_arguments (void);
 
 extern void  primitive_exit_application (DSINT code) NORETURN_FUNCTION;
 
 /* TEMPORARY PRIMITIVES FOR ASSIGNMENT */
 
-extern D MAKE_DYLAN_VALUE_CELL(D);
-#define GET_DYLAN_VALUE_CELL_VAL(c)       (*(D*)c)
-#define SET_DYLAN_VALUE_CELL_VAL(c, v)    (*(D*)c = v)
+extern dylan_value MAKE_DYLAN_VALUE_CELL(dylan_value);
+#define GET_DYLAN_VALUE_CELL_VAL(c)       (*(dylan_value*)c)
+#define SET_DYLAN_VALUE_CELL_VAL(c, v)    (*(dylan_value*)c = v)
 
-extern D MAKE_DBCHR_CELL(DBCHR);
+extern dylan_value MAKE_DBCHR_CELL(DBCHR);
 #define GET_DBCHR_CELL_VAL(c)           (*(DBCHR*)c)
 #define SET_DBCHR_CELL_VAL(c, v)        (*(DBCHR*)c = v)
 
-extern D MAKE_DDBYTE_CELL(DDBYTE);
+extern dylan_value MAKE_DDBYTE_CELL(DDBYTE);
 #define GET_DDBYTE_CELL_VAL(c)          (*(DDBYTE*)c)
 #define SET_DDBYTE_CELL_VAL(c, v)       (*(DDBYTE*)c = v)
 
-extern D MAKE_DWORD_CELL(DWORD);
+extern dylan_value MAKE_DWORD_CELL(DWORD);
 #define GET_DWORD_CELL_VAL(c)           (*(DWORD*)c)
 #define SET_DWORD_CELL_VAL(c, v)        (*(DWORD*)c = v)
 
-extern D MAKE_DDWORD_CELL(DDWORD);
+extern dylan_value MAKE_DDWORD_CELL(DDWORD);
 #define GET_DDWORD_CELL_VAL(c)          (*(DDWORD*)c)
 #define SET_DDWORD_CELL_VAL(c, v)       (*(DDWORD*)c = v)
 
-extern D MAKE_DSFLT_CELL(DSFLT);
+extern dylan_value MAKE_DSFLT_CELL(DSFLT);
 #define GET_DSFLT_CELL_VAL(c)           (*(DSFLT*)c)
 #define SET_DSFLT_CELL_VAL(c, v)        (*(DSFLT*)c = v)
 
-extern D MAKE_DDFLT_CELL(DDFLT);
+extern dylan_value MAKE_DDFLT_CELL(DDFLT);
 #define GET_DDFLT_CELL_VAL(c)           (*(DDFLT*)c)
 #define SET_DDFLT_CELL_VAL(c, v)        (*(DDFLT*)c = v)
 
@@ -1726,44 +1726,44 @@ extern D MAKE_DDFLT_CELL(DDFLT);
 
 extern void initialize_threads_primitives(void);
 
-extern D primitive_release_simple_lock(D l);
-extern D primitive_release_semaphore(D s);
-extern D primitive_owned_recursive_lock(D l);
-extern D primitive_destroy_simple_lock(D l);
-extern D primitive_wait_for_semaphore_timed(D s, D ms);
-extern D primitive_wait_for_semaphore(D s);
-extern D primitive_wait_for_simple_lock_timed(D l, D ms);
-extern D primitive_wait_for_simple_lock(D l);
-extern D primitive_make_recursive_lock(D l, D n);
-extern D primitive_release_recursive_lock(D l);
-extern D primitive_make_semaphore(D l, D n, D i, D m);
-extern D primitive_destroy_recursive_lock(D l);
-extern D primitive_owned_simple_lock(D l);
-extern D primitive_destroy_semaphore(D l);
-extern D primitive_wait_for_recursive_lock_timed(D l, D ms);
-extern D primitive_wait_for_recursive_lock(D l);
-extern D primitive_thread_join_multiple(D v);
-extern D primitive_thread_join_single(D t);
-extern D primitive_initialize_current_thread(D t, DBOOL s);
-extern D primitive_initialize_special_thread(D t);
-extern D primitive_current_thread(void);
-extern D primitive_make_thread(D t, D n, D p, D f, DBOOL s);
-extern D primitive_destroy_thread(D t);
-extern D primitive_destroy_notification(D n);
-extern D primitive_release_all_notification(D n, D l);
-extern D primitive_make_notification(D l, D n);
-extern D primitive_wait_for_notification_timed(D n, D l, D ms);
-extern D primitive_wait_for_notification(D n, D l);
-extern D primitive_release_notification(D n, D l);
-extern void primitive_detach_thread(D t);
+extern dylan_value primitive_release_simple_lock(dylan_value l);
+extern dylan_value primitive_release_semaphore(dylan_value s);
+extern dylan_value primitive_owned_recursive_lock(dylan_value l);
+extern dylan_value primitive_destroy_simple_lock(dylan_value l);
+extern dylan_value primitive_wait_for_semaphore_timed(dylan_value s, dylan_value ms);
+extern dylan_value primitive_wait_for_semaphore(dylan_value s);
+extern dylan_value primitive_wait_for_simple_lock_timed(dylan_value l, dylan_value ms);
+extern dylan_value primitive_wait_for_simple_lock(dylan_value l);
+extern dylan_value primitive_make_recursive_lock(dylan_value l, dylan_value n);
+extern dylan_value primitive_release_recursive_lock(dylan_value l);
+extern dylan_value primitive_make_semaphore(dylan_value l, dylan_value n, dylan_value i, dylan_value m);
+extern dylan_value primitive_destroy_recursive_lock(dylan_value l);
+extern dylan_value primitive_owned_simple_lock(dylan_value l);
+extern dylan_value primitive_destroy_semaphore(dylan_value l);
+extern dylan_value primitive_wait_for_recursive_lock_timed(dylan_value l, dylan_value ms);
+extern dylan_value primitive_wait_for_recursive_lock(dylan_value l);
+extern dylan_value primitive_thread_join_multiple(dylan_value v);
+extern dylan_value primitive_thread_join_single(dylan_value t);
+extern dylan_value primitive_initialize_current_thread(dylan_value t, DBOOL s);
+extern dylan_value primitive_initialize_special_thread(dylan_value t);
+extern dylan_value primitive_current_thread(void);
+extern dylan_value primitive_make_thread(dylan_value t, dylan_value n, dylan_value p, dylan_value f, DBOOL s);
+extern dylan_value primitive_destroy_thread(dylan_value t);
+extern dylan_value primitive_destroy_notification(dylan_value n);
+extern dylan_value primitive_release_all_notification(dylan_value n, dylan_value l);
+extern dylan_value primitive_make_notification(dylan_value l, dylan_value n);
+extern dylan_value primitive_wait_for_notification_timed(dylan_value n, dylan_value l, dylan_value ms);
+extern dylan_value primitive_wait_for_notification(dylan_value n, dylan_value l);
+extern dylan_value primitive_release_notification(dylan_value n, dylan_value l);
+extern void primitive_detach_thread(dylan_value t);
 extern void primitive_thread_yield(void);
-extern void primitive_sleep(D ms);
-extern D primitive_make_simple_lock(D l, D n);
-extern D primitive_allocate_thread_variable(D i);
-extern D primitive_read_thread_variable(D h);
-extern D primitive_write_thread_variable(D h, D nv);
-extern D primitive_unlock_simple_lock(D l);
-extern D primitive_unlock_recursive_lock(D l);
+extern void primitive_sleep(dylan_value ms);
+extern dylan_value primitive_make_simple_lock(dylan_value l, dylan_value n);
+extern dylan_value primitive_allocate_thread_variable(dylan_value i);
+extern dylan_value primitive_read_thread_variable(dylan_value h);
+extern dylan_value primitive_write_thread_variable(dylan_value h, dylan_value nv);
+extern dylan_value primitive_unlock_simple_lock(dylan_value l);
+extern dylan_value primitive_unlock_recursive_lock(dylan_value l);
 
 /* ATOMIC PRIMITIVES */
 
@@ -1772,9 +1772,9 @@ extern D primitive_unlock_recursive_lock(D l);
 
 /* RUN-TIME CALLBACKS */
 
-extern D primitive_resolve_symbol (D symbol);
-extern D primitive_string_as_symbol (D string);
-extern D primitive_preboot_symbols ();
+extern dylan_value primitive_resolve_symbol (dylan_value symbol);
+extern dylan_value primitive_string_as_symbol (dylan_value string);
+extern dylan_value primitive_preboot_symbols ();
 
 /* ENGINE NODE HANDLER ASSIGNMENTS */
 
@@ -1902,22 +1902,22 @@ _31_____25____24_____23___________16_15____________________8_7____________2_1___
 
 #define SLOTENGINE_V_INDEX ENODE_V_DATA_START
 
-extern D general_engine_node_1_engine (D a1);
-extern D general_engine_node_2_engine (D a1, D a2);
+extern dylan_value general_engine_node_1_engine (dylan_value a1);
+extern dylan_value general_engine_node_2_engine (dylan_value a1, dylan_value a2);
 
-extern D general_engine_node_3_engine (D a1, D a2, D a3);
-extern D general_engine_node_n_engine (D a1, ...);
-extern D general_engine_node_spread_engine (D a1, ...);
+extern dylan_value general_engine_node_3_engine (dylan_value a1, dylan_value a2, dylan_value a3);
+extern dylan_value general_engine_node_n_engine (dylan_value a1, ...);
+extern dylan_value general_engine_node_spread_engine (dylan_value a1, ...);
 
-extern D cache_header_engine_0 ();
-extern D cache_header_engine_1 (D a1);
-extern D cache_header_engine_2 (D a1, D a2);
-extern D cache_header_engine_3 (D a1, D a2, D a3);
-extern D cache_header_engine_4 (D a1, D a2, D a3, D a4);
-extern D cache_header_engine_5 (D a1, D a2, D a3, D a4, D a5);
-extern D cache_header_engine_6 (D a1, D a2, D a3, D a4, D a5, D a6);
-extern D cache_header_engine_7 (D a1, D a2, D a3, D a4, D a5, D a6, D a7);
-extern D cache_header_engine_n (D argvec);
+extern dylan_value cache_header_engine_0 ();
+extern dylan_value cache_header_engine_1 (dylan_value a1);
+extern dylan_value cache_header_engine_2 (dylan_value a1, dylan_value a2);
+extern dylan_value cache_header_engine_3 (dylan_value a1, dylan_value a2, dylan_value a3);
+extern dylan_value cache_header_engine_4 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4);
+extern dylan_value cache_header_engine_5 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5);
+extern dylan_value cache_header_engine_6 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6);
+extern dylan_value cache_header_engine_7 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7);
+extern dylan_value cache_header_engine_n (dylan_value argvec);
 
 
 /* additions to run-time.c specific to handling pass-by-reference of non-first
@@ -1936,14 +1936,14 @@ extern DMINT primitive_machine_word_double_ceilingS_byref(DMINT xl, DMINT xh, DM
 extern DMINT primitive_machine_word_double_roundS_byref(DMINT xl, DMINT xh, DMINT y, DMINT* v2);
 extern DMINT primitive_machine_word_double_truncateS_byref(DMINT xl, DMINT xh, DMINT y, DMINT* v2);
 extern DMINT primitive_machine_word_double_divide_byref(DMINT xl, DMINT xh, DMINT y, DMINT* v2);
-extern DMINT primitive_machine_word_add_with_overflow_byref(DMINT x, DMINT y, D* v2);
-extern DMINT primitive_machine_word_subtract_with_overflow_byref(DMINT x, DMINT y, D* v2);
-extern DMINT primitive_machine_word_multiply_with_overflow_byref(DMINT x, DMINT y, DMINT* v2, D* v3);
-extern DMINT primitive_machine_word_negative_with_overflow_byref(DMINT x, D* v2);
-extern DMINT primitive_machine_word_abs_with_overflow_byref(DMINT x, D* v2);
-extern DMINT primitive_machine_word_shift_left_with_overflow_byref(DMINT x, DMINT y, DMINT* v2, D* v3);
+extern DMINT primitive_machine_word_add_with_overflow_byref(DMINT x, DMINT y, dylan_value* v2);
+extern DMINT primitive_machine_word_subtract_with_overflow_byref(DMINT x, DMINT y, dylan_value* v2);
+extern DMINT primitive_machine_word_multiply_with_overflow_byref(DMINT x, DMINT y, DMINT* v2, dylan_value* v3);
+extern DMINT primitive_machine_word_negative_with_overflow_byref(DMINT x, dylan_value* v2);
+extern DMINT primitive_machine_word_abs_with_overflow_byref(DMINT x, dylan_value* v2);
+extern DMINT primitive_machine_word_shift_left_with_overflow_byref(DMINT x, DMINT y, DMINT* v2, dylan_value* v3);
 extern DMINT primitive_machine_word_multiply_lowShigh_byref(DMINT x, DMINT y, DMINT* v2);
-extern DMINT primitive_machine_word_multiply_low_with_overflow_byref(DMINT x, DMINT y, D* v2);
+extern DMINT primitive_machine_word_multiply_low_with_overflow_byref(DMINT x, DMINT y, dylan_value* v2);
 extern DMINT primitive_machine_word_unsigned_add_with_carry_byref(DMINT x, DMINT y, DMINT* v2);
 extern DMINT primitive_machine_word_unsigned_subtract_with_borrow_byref(DMINT x, DMINT y, DMINT* v2);
 extern DMINT primitive_machine_word_unsigned_multiply_byref(DMINT x, DMINT y, DMINT* v2);

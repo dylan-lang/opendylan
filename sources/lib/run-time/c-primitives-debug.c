@@ -4,9 +4,9 @@
 extern dylan_object KPfalseVKi;
 extern dylan_object KPtrueVKi;
 
-extern void dylan_format (char*, D, D);
+extern void dylan_format (char*, dylan_value, dylan_value);
 
-static void do_debug_message (D string, D arguments) {
+static void do_debug_message (dylan_value string, dylan_value arguments) {
   char error_output[8192];
   error_output[0] = 0;
 
@@ -33,16 +33,16 @@ static void do_debug_message (D string, D arguments) {
 #endif
 }
 
-void primitive_invoke_debugger (D string, D arguments) {
+void primitive_invoke_debugger (dylan_value string, dylan_value arguments) {
   do_debug_message(string, arguments);
   primitive_break();
 }
 
-D primitive_inside_debuggerQ (void) {
+dylan_value primitive_inside_debuggerQ (void) {
   return DFALSE;
 }
 
-void primitive_debug_message (D string, D arguments) {
+void primitive_debug_message (dylan_value string, dylan_value arguments) {
   do_debug_message(string, arguments);
 }
 
