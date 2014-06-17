@@ -6,21 +6,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant constant-prefix-string = "K";
 
-define method locate-variable (o)
- => (variable-encoding, module-encoding, library-encoding);
-  error("Failed to locate a variable binding for %=", o);
-end method;
-
-define method locate-variable (o :: <class>)
- => (variable-encoding, module-encoding, library-encoding);
-  let variable-name = copy-sequence(debug-name(o));
-  let module        = class-module(o);
-  let module-name   = namespace-name(module);
-  let library       = home-library(module);
-  let library-name  = namespace-name(library);
-  values(variable-name, module-name, library-name)
-end method;
-
 define thread variable *mangler* = make(<mangler>);
 
 define variable *dl-handle* = #f;
