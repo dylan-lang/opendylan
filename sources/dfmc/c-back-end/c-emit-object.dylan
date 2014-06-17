@@ -114,7 +114,7 @@ end method;
 
 define method emit-object
     (back-end :: <c-back-end>, stream :: <stream>, c :: <integer>) => ()
-  write(stream, "(D) ");
+  format(stream, "(%s) ", $dylan-type-string);
   print-raw-object(generic-logior(generic-ash(c, 2), 1), stream);
   format(stream, "/* I(%d)? */", c);
 end method;
