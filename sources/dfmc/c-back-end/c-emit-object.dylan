@@ -518,8 +518,12 @@ end method;
 
 define method emit-parameter-type
     (back-end :: <c-back-end>, stream :: <stream>,
-     o, #key index :: false-or(<integer>))
-  write(stream, $dylan-type-string);
+     o, #key index :: false-or(<integer>), capitalize? = #f)
+  if (capitalize?)
+    write(stream, as-uppercase($dylan-type-string));
+  else
+    write(stream, $dylan-type-string);
+  end if;
 end method;
 
 define method emit-return-types

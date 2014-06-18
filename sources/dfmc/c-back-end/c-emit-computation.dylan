@@ -740,7 +740,7 @@ define method emit-repeated-slot-value-string
     (b :: <c-back-end>, s :: <stream>, c :: <any-repeated-slot-value>, setter?)
   write(s, "REPEATED_");
   let type = ^slot-type(computation-slot-descriptor(c));
-  emit-parameter-type(b, s, repeated-representation(type));
+  emit-parameter-type(b, s, repeated-representation(type), capitalize?: #t);
   write(s, "_SLOT_VALUE");
   when (computation-index-tagged?(c))
     write(s, "_TAGGED");
@@ -1394,21 +1394,21 @@ end method;
 define method emit-make-cell-string
     (b :: <c-back-end>, s :: <stream>, type)
   write(s, "MAKE_");
-  emit-parameter-type(b, s, type);
+  emit-parameter-type(b, s, type, capitalize?: #t);
   write(s, "_CELL");
 end method;
 
 define method emit-set-cell-value-string
     (b :: <c-back-end>, s :: <stream>, type)
   write(s, "SET_");
-  emit-parameter-type(b, s, type);
+  emit-parameter-type(b, s, type, capitalize?: #t);
   write(s, "_CELL_VAL");
 end method;
 
 define method emit-get-cell-value-string
     (b :: <c-back-end>, s :: <stream>, type)
   write(s, "GET_");
-  emit-parameter-type(b, s, type);
+  emit-parameter-type(b, s, type, capitalize?: #t);
   write(s, "_CELL_VAL");
 end method;
 
