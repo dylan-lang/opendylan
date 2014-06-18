@@ -39,9 +39,6 @@ case $host in
       ADDITIONAL_RUNTIME_TARGET_PLATFORMS="x86_64-darwin";
       GC_USE_STATIC_BOEHM=true
     ;;
-  powerpc-*-darwin*)
-      OPEN_DYLAN_TARGET_PLATFORM=ppc-darwin;
-    ;;
   amd64-*-freebsd* | x86_64-*-freebsd*)
       OPEN_DYLAN_TARGET_PLATFORM=x86_64-freebsd;
       GC_LIB=-lgc-threaded
