@@ -324,23 +324,25 @@ xtestl:
 
 ###
 # Install stage installs stage 3 into prefix
-$(prefix)/sources:
-	install -d $(prefix)
+install-stage:
+	@echo Preparing to install Open Dylan...
+	@install -d $(prefix)
 	@echo Copying sources...
-	cp -R $(abs_srcdir)/sources $(prefix)
-	@echo Removing unnecessary directories...
-	find $(prefix)/sources -depth -name '.*' -exec rm -rf {} \;
-	-rm -r $(prefix)/sources/bootstrap1-registry
-
-install-stage: $(prefix)/sources
-	install -d $(prefix)/bin $(prefix)/databases $(prefix)/lib $(prefix)/lib/runtime
-	@echo Installing Open Dylan...
-	cp -R $(abs_builddir)/Bootstrap.3/bin $(prefix)
-	cp -R $(abs_builddir)/Bootstrap.3/databases $(prefix)
-	-cp -R $(abs_builddir)/Bootstrap.3/include $(prefix)
-	cp -R $(abs_builddir)/Bootstrap.3/lib $(prefix)
-	cp $(abs_srcdir)/License.txt $(prefix)
-	cp $(abs_srcdir)/packages/unix/README $(prefix)
+	@rm -rf $(prefix)/sources
+	@cp -R $(abs_srcdir)/sources $(prefix)
+	@find $(prefix)/sources -depth -name '.*' -exec rm -rf {} \;
+	@-rm -rf $(prefix)/sources/bootstrap1-registry
+	@echo Installing Open Dylan in $(prefix)
+	@install -d $(prefix)/bin $(prefix)/databases $(prefix)/lib $(prefix)/lib/runtime
+	@cp -R $(abs_builddir)/Bootstrap.3/bin $(prefix)
+	@cp -R $(abs_builddir)/Bootstrap.3/databases $(prefix)
+	@-cp -R $(abs_builddir)/Bootstrap.3/include $(prefix)
+	@# We use force here because on Mac OS X, the lib directory likely contains read-only
+	@# static libraries for the Boehm GC.
+	@cp -Rf $(abs_builddir)/Bootstrap.3/lib $(prefix)
+	@cp $(abs_srcdir)/License.txt $(prefix)
+	@cp $(abs_srcdir)/packages/unix/README $(prefix)
+	@echo Done!
 
 install: @bootstrap_target@ 3-stage-bootstrap install-stage
 
