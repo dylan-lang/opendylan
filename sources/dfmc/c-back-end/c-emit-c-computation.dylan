@@ -114,7 +114,7 @@ define method emit-computation
   gts-debug("wss", "\ttype of %= = %=(%=); specializer=%=.\n",
             c.wss-var, type, object-class(type), specializer(c.wss-var));
 
-  format-emit(b, s, d, "\t#(D)malloc((size_t) @);\n", wss-var(c), wss-size-temp(c));
+  format-emit(b, s, d, "\t#(~)malloc((size_t) @);\n", $dylan-type-string, wss-var(c), wss-size-temp(c));
 end method;
 
 define method emit-computation

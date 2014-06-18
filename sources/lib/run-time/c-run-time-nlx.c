@@ -5,11 +5,11 @@
 
 /* DYLAN CONSTANTS */
 
-extern OBJECT KPfalseVKi;
+extern dylan_object KPfalseVKi;
 
 /* NON-LOCAL EXITS */
 
-#define COPY_WORDS(dst, src, size) memcpy((dst), (src), (size) * sizeof(D))
+#define COPY_WORDS(dst, src, size) memcpy((dst), (src), (size) * sizeof(dylan_value))
 
 #ifdef VERIFY_NLX
 /**
@@ -156,7 +156,7 @@ static void nlx_step (Bind_exit_frame* ultimate_destination) {
   }
 }
 
-D FALL_THROUGH_UNWIND (D argument) {
+dylan_value FALL_THROUGH_UNWIND (dylan_value argument) {
   TEB* teb = get_teb();
 
 #ifdef VERIFY_NLX
@@ -177,10 +177,10 @@ D FALL_THROUGH_UNWIND (D argument) {
   /* invalidate current frame */
   teb->uwp_frame->ultimate_destination = NULL;
 
-  return((D)0);
+  return((dylan_value)0);
 }
 
-D CONTINUE_UNWIND () {
+dylan_value CONTINUE_UNWIND () {
   TEB* teb = get_teb();
 
 #ifdef VERIFY_NLX
@@ -216,7 +216,7 @@ D CONTINUE_UNWIND () {
   }
 }
 
-D NLX (Bind_exit_frame* target, D argument) {
+dylan_value NLX (Bind_exit_frame* target, dylan_value argument) {
   TEB* teb = get_teb();
   trace_nlx("nlx to bef<%p> from uwp<%p>", target, teb->uwp_frame);
 #ifdef VERIFY_NLX
@@ -231,10 +231,10 @@ D NLX (Bind_exit_frame* target, D argument) {
        &teb->return_values.value[1], teb->return_values.count - 1);
   }
   nlx_step(target);
-  return((D)0);                 /* Keeps some compilers happy -- Won't actually get here */
+  return((dylan_value)0);                 /* Keeps some compilers happy -- Won't actually get here */
 }
 
-D SETUP_EXIT_FRAME (D frame) {
+dylan_value SETUP_EXIT_FRAME (dylan_value frame) {
   TEB* teb = get_teb();
   Bind_exit_frame* be_frame = (Bind_exit_frame*)frame;
   trace_nlx("setup bef<%p> in uwp<%p>", be_frame, teb->uwp_frame);
@@ -246,7 +246,7 @@ D SETUP_EXIT_FRAME (D frame) {
   return frame;
 }
 
-D SETUP_UNWIND_FRAME (D frame) {
+dylan_value SETUP_UNWIND_FRAME (dylan_value frame) {
   TEB* teb = get_teb();
   Unwind_protect_frame* uwp_frame = (Unwind_protect_frame*)frame;
   trace_nlx("setup uwp<%p> in uwp<%p>", uwp_frame, teb->uwp_frame);
@@ -260,11 +260,11 @@ D SETUP_UNWIND_FRAME (D frame) {
   return frame;
 }
 
-D FRAME_DEST (D frame) {
-  return((D)(((Bind_exit_frame*)frame)->destination));
+dylan_value FRAME_DEST (dylan_value frame) {
+  return((dylan_value)(((Bind_exit_frame*)frame)->destination));
 }
 
-D FRAME_RETVAL (D frame) {
+dylan_value FRAME_RETVAL (dylan_value frame) {
   /* TODO: real multiple values */
   TEB* teb = get_teb();
   Bind_exit_frame *bef = ((Bind_exit_frame*) frame);
@@ -274,5 +274,5 @@ D FRAME_RETVAL (D frame) {
        &(bef->return_values.value[0]),
        bef->return_values.count);
   teb->return_values.count = bef->return_values.count;
-  return((D)(bef->return_values.value[0]));
+  return((dylan_value)(bef->return_values.value[0]));
 }

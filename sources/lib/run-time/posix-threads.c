@@ -134,7 +134,7 @@ static int our_pthread_mutex_timedlock(pthread_mutex_t *mutex,
    of growing the TLV vector */
 static const long TLV_GROW = -2000000;
 
-extern OBJECT KPfalseVKi;
+extern dylan_object KPfalseVKi;
 
 static pthread_mutex_t thread_join_lock = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t thread_exit_event = PTHREAD_COND_INITIALIZER;
@@ -160,7 +160,7 @@ static int   priority_map(int);
 static TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, size_t newsize);
 static void grow_all_tlv_vectors(size_t newsize);
 static void  copy_tlv_vector(TLV_VECTOR destination, TLV_VECTOR source);
-static void update_tlv_vectors(size_t offset, D value);
+static void update_tlv_vectors(size_t offset, dylan_value value);
 static void add_tlv_vector(DTHREAD *thread, TEB *teb, TLV_VECTOR tlv_vector);
 static int remove_tlv_vector(DTHREAD *thread);
 
@@ -257,11 +257,11 @@ static inline void set_current_thread_handle(void *handle)
 
 static void *make_tlv_vector(size_t n)
 {
-  D *vector;
+  dylan_value *vector;
   size_t size;
 
   // compute actual (byte) size
-  size = (n + 2) * sizeof(D);
+  size = (n + 2) * sizeof(dylan_value);
 
   // fill int the vector
   vector = GC_MALLOC_UNCOLLECTABLE(size);
@@ -273,7 +273,7 @@ static void *make_tlv_vector(size_t n)
   return vector;
 }
 
-static void free_tlv_vector(D *vector)
+static void free_tlv_vector(dylan_value *vector)
 {
   GC_FREE(vector);
 }
@@ -345,15 +345,15 @@ void copy_tlv_vector(TLV_VECTOR destination, TLV_VECTOR source)
  * must be in the tlv_vector_list_lock Critical Section.
  */
 static void
-update_tlv_vectors(size_t offset, D value)
+update_tlv_vectors(size_t offset, dylan_value value)
 {
   TLV_VECTOR_LIST list = tlv_vector_list;
-  D *destination;
+  dylan_value *destination;
 
   trace_tlv("Propagating default of offset %zd with value %p", offset, value);
 
   while (list != NULL) {
-    destination = (D *)(list->tlv_vector + offset);
+    destination = (dylan_value *)(list->tlv_vector + offset);
     *destination = value;
     list = list->next;
   }
@@ -504,9 +504,9 @@ static void set_current_thread_name(const char *name) {
 
 static void *trampoline (void *arg)
 {
-  D        result, f;
-  DTHREAD *thread = (DTHREAD *)arg;
-  THREAD  *rthread;
+  dylan_value result, f;
+  DTHREAD    *thread = (DTHREAD *)arg;
+  THREAD     *rthread;
 
   assert(thread != NULL);
 
@@ -545,7 +545,7 @@ static void *trampoline (void *arg)
 
 
 /* 1 */
-D primitive_make_thread(D t, D n, D p, D f, DBOOL s)
+dylan_value primitive_make_thread(dylan_value t, dylan_value n, dylan_value p, dylan_value f, DBOOL s)
 {
   DTHREAD *thread = (DTHREAD *)t;
   ZINT     zpriority = (ZINT)p;
@@ -600,7 +600,7 @@ D primitive_make_thread(D t, D n, D p, D f, DBOOL s)
 
 
 /* 2 */
-D primitive_destroy_thread(D t)
+dylan_value primitive_destroy_thread(dylan_value t)
 {
   DTHREAD    *thread = (DTHREAD *)t;
 
@@ -611,7 +611,7 @@ D primitive_destroy_thread(D t)
 
 
 /* 3 */
-D primitive_thread_join_single(D t)
+dylan_value primitive_thread_join_single(dylan_value t)
 {
   volatile DTHREAD *thread = t;
   uintptr_t         state, completed;
@@ -652,9 +652,9 @@ D primitive_thread_join_single(D t)
 
 
 /* 4 */
-D primitive_thread_join_multiple(D v)
+dylan_value primitive_thread_join_multiple(dylan_value v)
 {
-  SOV               *thread_vector = v;
+  dylan_simple_object_vector *thread_vector = v;
   volatile DTHREAD **threads;
   volatile DTHREAD  *joined_thread = NULL;
   unsigned int       i;
@@ -727,7 +727,7 @@ D primitive_thread_join_multiple(D v)
 }
 
 /* 4.5 */
-void primitive_detach_thread(D t)
+void primitive_detach_thread(dylan_value t)
 {
   DTHREAD* thread = t;
   THREAD* rthread;
@@ -746,14 +746,14 @@ void primitive_thread_yield(void)
 
 
 /* 6. */
-D primitive_current_thread(void)
+dylan_value primitive_current_thread(void)
 {
   return get_current_thread();
 }
 
 
 /* 7 */
-D primitive_wait_for_simple_lock(D l)
+dylan_value primitive_wait_for_simple_lock(dylan_value l)
 {
   CONTAINER   *lock = (CONTAINER *)l;
   SIMPLELOCK  *slock;
@@ -781,7 +781,7 @@ D primitive_wait_for_simple_lock(D l)
 
 
 /* 8 */
-D primitive_wait_for_recursive_lock(D l)
+dylan_value primitive_wait_for_recursive_lock(dylan_value l)
 {
   CONTAINER     *lock = (CONTAINER *)l;
   RECURSIVELOCK *rlock;
@@ -811,7 +811,7 @@ D primitive_wait_for_recursive_lock(D l)
 
 
 /* 9 */
-D primitive_wait_for_semaphore(D l)
+dylan_value primitive_wait_for_semaphore(dylan_value l)
 {
   CONTAINER  *lock = (CONTAINER *)l;
   SEMAPHORE  *semaphore;
@@ -850,7 +850,7 @@ D primitive_wait_for_semaphore(D l)
 
 
 /* 10 */
-D primitive_wait_for_notification(D n, D l)
+dylan_value primitive_wait_for_notification(dylan_value n, dylan_value l)
 {
   CONTAINER     *notif = (CONTAINER *)n;
   CONTAINER     *lock = (CONTAINER *)l;
@@ -877,7 +877,7 @@ D primitive_wait_for_notification(D n, D l)
 
 
 /* 11 */
-D primitive_wait_for_simple_lock_timed(D l, D ms)
+dylan_value primitive_wait_for_simple_lock_timed(dylan_value l, dylan_value ms)
 {
   CONTAINER   *lock = (CONTAINER *)l;
   ZINT         zmilsecs = (ZINT)ms;
@@ -916,7 +916,7 @@ D primitive_wait_for_simple_lock_timed(D l, D ms)
 
 
 /* 12 */
-D primitive_wait_for_recursive_lock_timed(D l, D ms)
+dylan_value primitive_wait_for_recursive_lock_timed(dylan_value l, dylan_value ms)
 {
   CONTAINER       *lock = (CONTAINER *)l;
   ZINT             zmilsecs = (ZINT)ms;
@@ -957,7 +957,7 @@ D primitive_wait_for_recursive_lock_timed(D l, D ms)
 
 
 /* 13 */
-D primitive_wait_for_semaphore_timed(D l, D m)
+dylan_value primitive_wait_for_semaphore_timed(dylan_value l, dylan_value m)
 {
   CONTAINER  *lock = (CONTAINER *)l;
   ZINT        zmilsecs = (ZINT)m;
@@ -1010,7 +1010,7 @@ D primitive_wait_for_semaphore_timed(D l, D m)
 
 
 /* 14 */
-D primitive_wait_for_notification_timed(D n, D l, D m)
+dylan_value primitive_wait_for_notification_timed(dylan_value n, dylan_value l, dylan_value m)
 {
   CONTAINER     *notif = (CONTAINER *)n;
   CONTAINER     *lock = (CONTAINER *)l;
@@ -1047,7 +1047,7 @@ D primitive_wait_for_notification_timed(D n, D l, D m)
 
 
 /* 15 */
-D primitive_release_simple_lock(D l)
+dylan_value primitive_release_simple_lock(dylan_value l)
 {
   CONTAINER   *lock = (CONTAINER *)l;
   SIMPLELOCK  *slock;
@@ -1073,7 +1073,7 @@ D primitive_release_simple_lock(D l)
 
 
 /* 16 */
-D primitive_release_recursive_lock(D l)
+dylan_value primitive_release_recursive_lock(dylan_value l)
 {
   CONTAINER      *lock = (CONTAINER *)l;
   RECURSIVELOCK  *rlock;
@@ -1099,7 +1099,7 @@ D primitive_release_recursive_lock(D l)
 
 
 /* 17 */
-D primitive_release_semaphore(D l)
+dylan_value primitive_release_semaphore(dylan_value l)
 {
   CONTAINER  *lock = (CONTAINER *)l;
   SEMAPHORE  *semaphore;
@@ -1140,7 +1140,7 @@ D primitive_release_semaphore(D l)
 
 
 /* 18 */
-D primitive_release_notification(D n, D l)
+dylan_value primitive_release_notification(dylan_value n, dylan_value l)
 {
   CONTAINER     *notif = (CONTAINER *)n;
   CONTAINER     *lock = (CONTAINER *)l;
@@ -1163,7 +1163,7 @@ D primitive_release_notification(D n, D l)
 
 
 /* 19 */
-D primitive_release_all_notification(D n, D l)
+dylan_value primitive_release_all_notification(dylan_value n, dylan_value l)
 {
   CONTAINER     *notif = (CONTAINER *)n;
   CONTAINER     *lock = (CONTAINER *)l;
@@ -1186,7 +1186,7 @@ D primitive_release_all_notification(D n, D l)
 
 
 /* 20 */
-D primitive_make_recursive_lock(D l, D n)
+dylan_value primitive_make_recursive_lock(dylan_value l, dylan_value n)
 {
   CONTAINER      *lock = (CONTAINER *)l;
   RECURSIVELOCK  *rlock;
@@ -1235,7 +1235,7 @@ D primitive_make_recursive_lock(D l, D n)
 
 
 /* 21 */
-D primitive_destroy_recursive_lock(D l)
+dylan_value primitive_destroy_recursive_lock(dylan_value l)
 {
   CONTAINER     *lock = (CONTAINER *)l;
   RECURSIVELOCK *rlock;
@@ -1255,7 +1255,7 @@ D primitive_destroy_recursive_lock(D l)
 
 
 /* 22 */
-D primitive_make_simple_lock(D l, D n)
+dylan_value primitive_make_simple_lock(dylan_value l, dylan_value n)
 {
   CONTAINER  *lock = (CONTAINER *)l;
   SIMPLELOCK *slock;
@@ -1303,7 +1303,7 @@ D primitive_make_simple_lock(D l, D n)
 
 
 /* 23 */
-D primitive_destroy_simple_lock(D l)
+dylan_value primitive_destroy_simple_lock(dylan_value l)
 {
   CONTAINER  *lock = (CONTAINER *)l;
   SIMPLELOCK *slock;
@@ -1323,7 +1323,7 @@ D primitive_destroy_simple_lock(D l)
 
 
 /* 24 */
-D primitive_owned_simple_lock(D l)
+dylan_value primitive_owned_simple_lock(dylan_value l)
 {
   CONTAINER   *lock = (CONTAINER *)l;
   SIMPLELOCK  *slock;
@@ -1343,7 +1343,7 @@ D primitive_owned_simple_lock(D l)
 
 
 /* 25 */
-D primitive_owned_recursive_lock(D l)
+dylan_value primitive_owned_recursive_lock(dylan_value l)
 {
   CONTAINER      *lock = (CONTAINER *)l;
   RECURSIVELOCK  *rlock;
@@ -1363,7 +1363,7 @@ D primitive_owned_recursive_lock(D l)
 
 
 /* 26 */
-D primitive_make_semaphore(D l, D n, D i, D m)
+dylan_value primitive_make_semaphore(dylan_value l, dylan_value n, dylan_value i, dylan_value m)
 {
   CONTAINER  *lock = (CONTAINER *)l;
   ZINT        zinitial = (ZINT)i;
@@ -1416,7 +1416,7 @@ D primitive_make_semaphore(D l, D n, D i, D m)
 
 
 /* 27 */
-D primitive_destroy_semaphore(D l)
+dylan_value primitive_destroy_semaphore(dylan_value l)
 {
   CONTAINER  *lock = (CONTAINER *)l;
   SEMAPHORE  *semaphore;
@@ -1445,7 +1445,7 @@ D primitive_destroy_semaphore(D l)
 
 
 /* 28 */
-D primitive_make_notification(D n, D s)
+dylan_value primitive_make_notification(dylan_value n, dylan_value s)
 {
   CONTAINER     *notif = (CONTAINER *)n;
   NOTIFICATION  *notification;
@@ -1469,7 +1469,7 @@ D primitive_make_notification(D n, D s)
 
 
 /* 29 */
-D primitive_destroy_notification(D n)
+dylan_value primitive_destroy_notification(dylan_value n)
 {
   CONTAINER     *notif = (CONTAINER *)n;
   NOTIFICATION  *notification;
@@ -1488,7 +1488,7 @@ D primitive_destroy_notification(D n)
 
 
 /* 30 */
-void primitive_sleep(D m)
+void primitive_sleep(dylan_value m)
 {
   ZINT  zmilsecs = (ZINT)m;
   DWORD milsecs = zmilsecs >> 2;
@@ -1516,7 +1516,7 @@ primitive_conditional_update_memory(void * * location, Z newval, Z oldval)
 
 
 /* 33 */
-D primitive_allocate_thread_variable(D v)
+dylan_value primitive_allocate_thread_variable(dylan_value v)
 {
   size_t variable_offset, size, limit;
 
@@ -1551,10 +1551,10 @@ D primitive_allocate_thread_variable(D v)
 
 
 /* 34 */
-D primitive_read_thread_variable(D h)
+dylan_value primitive_read_thread_variable(dylan_value h)
 {
   TLV_VECTOR   tlv_vector;
-  D            value;
+  dylan_value  value;
   uintptr_t    offset;
 
   // The variable handle is the byte offset where the variable's value is
@@ -1591,7 +1591,7 @@ static void primitive_write_thread_variable_blocked(void)
   } while (atomic_increment(&tlv_writer_counter) < 0);
 }
 
-D primitive_write_thread_variable(D h, D nv)
+dylan_value primitive_write_thread_variable(dylan_value h, dylan_value nv)
 {
   TLV_VECTOR   tlv_vector;
   uintptr_t    offset;
@@ -1621,7 +1621,7 @@ D primitive_write_thread_variable(D h, D nv)
 
 
 /* 36 */
-D primitive_initialize_current_thread(D t, DBOOL synchronize)
+dylan_value primitive_initialize_current_thread(dylan_value t, DBOOL synchronize)
 {
   DTHREAD     *thread = (DTHREAD *)t;
   THREAD      *rthread;
@@ -1645,7 +1645,7 @@ D primitive_initialize_current_thread(D t, DBOOL synchronize)
 
 
 /* 36a */
-D primitive_initialize_special_thread(D t)
+dylan_value primitive_initialize_special_thread(dylan_value t)
 {
   trace_threads("Initializing special thread %p", t);
   return primitive_initialize_current_thread(t, 0);
@@ -1653,7 +1653,7 @@ D primitive_initialize_special_thread(D t)
 
 
 /* 37 */
-D primitive_unlock_simple_lock(D l)
+dylan_value primitive_unlock_simple_lock(dylan_value l)
 {
   CONTAINER  *lock = (CONTAINER *)l;
   SIMPLELOCK *slock;
@@ -1680,7 +1680,7 @@ D primitive_unlock_simple_lock(D l)
 
 
 /* 38 */
-D primitive_unlock_recursive_lock(D l)
+dylan_value primitive_unlock_recursive_lock(dylan_value l)
 {
   CONTAINER *lock = (CONTAINER *)l;
   RECURSIVELOCK *rlock;

@@ -114,7 +114,7 @@ end method;
 
 define method emit-object
     (back-end :: <c-back-end>, stream :: <stream>, c :: <integer>) => ()
-  write(stream, "(D) ");
+  format(stream, "(%s) ", $dylan-type-string);
   print-raw-object(generic-logior(generic-ash(c, 2), 1), stream);
   format(stream, "/* I(%d)? */", c);
 end method;
@@ -518,8 +518,12 @@ end method;
 
 define method emit-parameter-type
     (back-end :: <c-back-end>, stream :: <stream>,
-     o, #key index :: false-or(<integer>))
-  write(stream, $dylan-type-string);
+     o, #key index :: false-or(<integer>), capitalize? = #f)
+  if (capitalize?)
+    write(stream, as-uppercase($dylan-type-string));
+  else
+    write(stream, $dylan-type-string);
+  end if;
 end method;
 
 define method emit-return-types

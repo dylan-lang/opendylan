@@ -16,17 +16,17 @@
 #endif
 
 /* DYLAN CONSTANTS */
-extern OBJECT KPfalseVKi;
-extern OBJECT KPtrueVKi;
+extern dylan_object KPfalseVKi;
+extern dylan_object KPtrueVKi;
 
 /* NUMBERS */
 
-extern D MV2_(D, D);
-extern D MV3_(D, D, D);
+extern dylan_value MV2_(dylan_value, dylan_value);
+extern dylan_value MV3_(dylan_value, dylan_value, dylan_value);
 
-#define MV2(x,y) return((DMINT)MV2_((D)(x), (D)(y)))
-#define MV2U(x,y) return((DUMINT)MV2_((D)(x), (D)(y)))
-#define MV3(x,y,z) return((DMINT)MV3_((D)(x), (D)(y), (D)(z)))
+#define MV2(x,y) return((DMINT)MV2_((dylan_value)(x), (dylan_value)(y)))
+#define MV2U(x,y) return((DUMINT)MV2_((dylan_value)(x), (dylan_value)(y)))
+#define MV3(x,y,z) return((DMINT)MV3_((dylan_value)(x), (dylan_value)(y), (dylan_value)(z)))
 
 extern Wrapper KLmachine_wordGVKeW;
 extern Wrapper KLdouble_integerGVKeW;
@@ -38,10 +38,10 @@ typedef union {
   FLT f;
 } INTFLT;
 
-D primitive_raw_as_single_float(DSFLT x) {
+dylan_value primitive_raw_as_single_float(DSFLT x) {
   return(primitive_allocate_filled
            (2, &KLsingle_floatGVKdW, 1,
-            (D)primitive_cast_single_float_as_machine_word(x), 0, 0));
+            (dylan_value)primitive_cast_single_float_as_machine_word(x), 0, 0));
 }
 
 DMINT primitive_single_float_as_double_integer(DSFLT f) {
@@ -79,9 +79,9 @@ typedef union {
   DFLT f;
 } INTDFLT;
 
-D primitive_raw_as_double_float(DDFLT x) {
-  D f = primitive_allocate_filled(3, &KLdouble_floatGVKdW, 0, (D)0, 0, 0);
-  ((DDF)f)->data = x;
+dylan_value primitive_raw_as_double_float(DDFLT x) {
+  dylan_value f = primitive_allocate_filled(3, &KLdouble_floatGVKdW, 0, (dylan_value)0, 0, 0);
+  ((dylan_double_float*)f)->data = x;
   return(f);
 }
 
@@ -130,13 +130,13 @@ DDFLT primitive_cast_machine_words_as_double_float(DUMINT low, DUMINT high) {
 
 /* MACHINE-WORD primitives */
 
-D primitive_wrap_machine_word(DMINT x) {
+dylan_value primitive_wrap_machine_word(DMINT x) {
   return(primitive_allocate_filled
-           (2, &KLmachine_wordGVKeW, 1, (D)x, 0, 0));
+           (2, &KLmachine_wordGVKeW, 1, (dylan_value)x, 0, 0));
 }
 
 /*---*** NOTE: This is wrong!  It should make a <double-integer> */
-D primitive_wrap_abstract_integer(DMINT x) {
+dylan_value primitive_wrap_abstract_integer(DMINT x) {
   if (R(I(x)) != x) {
     return(primitive_wrap_machine_word(x));
   } else {
@@ -145,7 +145,7 @@ D primitive_wrap_abstract_integer(DMINT x) {
 }
 
 /*---*** NOTE: This is wrong!  It should make a <double-integer> */
-D primitive_wrap_unsigned_abstract_integer(DMINT x) {
+dylan_value primitive_wrap_unsigned_abstract_integer(DMINT x) {
   if (R(I(x)) != x) {
     return(primitive_wrap_machine_word(x));
   } else {
@@ -154,7 +154,7 @@ D primitive_wrap_unsigned_abstract_integer(DMINT x) {
 }
 
 /*---*** NOTE: This is wrong!  It should unwrap a <double-integer> */
-DMINT primitive_unwrap_abstract_integer(D x) {
+DMINT primitive_unwrap_abstract_integer(dylan_value x) {
   if (BOOLASRAW(primitive_integerQ(x))) {
     return(primitive_unbox_integer(x));
   } else {
@@ -167,11 +167,11 @@ DMINT primitive_unwrap_abstract_integer(D x) {
 #define HIGH_BITS 0xC0000000L
 #define HIGH_BITS_AND_SIGN 0xE0000000L
 
-D primitive_wrap_abstract_integer(DMINT x) {
+dylan_value primitive_wrap_abstract_integer(DMINT x) {
   DUMINT hs = (DUMINT)x & HIGH_BITS_AND_SIGN;
   if (hs != 0 && hs != HIGH_BITS_AND_SIGN) {
     xd = primitive_allocate_filled
-           (3, &KLdouble_integerGVKeW, 2, (D)0, 0, 0);
+           (3, &KLdouble_integerGVKeW, 2, (dylan_value)0, 0, 0);
     (DBI)xd->low = (DUMINT)x;
     /* Propagate the sign of x through the high word of the <double-integer> */
     (DBI)xd->high = (x < 0) ? -1 : 0;
@@ -181,10 +181,10 @@ D primitive_wrap_abstract_integer(DMINT x) {
   }
 }
 
-D primitive_wrap_unsigned_abstract_integer(DMINT x) {
+dylan_value primitive_wrap_unsigned_abstract_integer(DMINT x) {
   if ((DUMINT)x & HIGH_BITS != 0) {
-    D xd = primitive_allocate_filled
-             (3, &KLdouble_integerGVKeW, 2, (D)0, 0, 0);
+    dylan_value xd = primitive_allocate_filled
+             (3, &KLdouble_integerGVKeW, 2, (dylan_value)0, 0, 0);
     /* When x is treated as an unsigned value, the high word of the
        resulting <double-integer> will always be 0 */
     (DBI)xd->low = (DUMINT)x;
@@ -194,7 +194,7 @@ D primitive_wrap_unsigned_abstract_integer(DMINT x) {
   }
 }
 
-DMINT primitive_unwrap_abstract_integer(D x) {
+DMINT primitive_unwrap_abstract_integer(dylan_value x) {
   if (BOOLASRAW(primitive_integerQ(x))) {
     return(R(x));
   } else {
@@ -659,12 +659,12 @@ DMINT primitive_machine_word_unsigned_double_shift_right(DMINT xl, DMINT xh, DMI
 /* additions to run-time.c specific to handling pass-by-reference of non-first
    return values of primitives   (gts,9/97) */
 
-extern D MV2_byref_(D, DMINT*, DMINT);
-extern D MV3_byref_(D, DMINT*, DMINT, DMINT*, DMINT);
+extern dylan_value MV2_byref_(dylan_value, DMINT*, DMINT);
+extern dylan_value MV3_byref_(dylan_value, DMINT*, DMINT, DMINT*, DMINT);
 
-#define MV2_byref(x,v,y) return((DMINT)MV2_byref_((D)(x), (DMINT*)(v), (DMINT)(y)))
-#define MV2_byrefU(x,v,y) return((DUMINT)MV2_byref_((D)(x), (DMINT*)(v), (DMINT)(y)))
-#define MV3_byref(x,v1,y,v2,z) return((DMINT)MV3_byref_((D)(x), (DMINT*)(v1), (DMINT)(y), (DMINT*)(v2), (DMINT)(z)))
+#define MV2_byref(x,v,y) return((DMINT)MV2_byref_((dylan_value)(x), (DMINT*)(v), (DMINT)(y)))
+#define MV2_byrefU(x,v,y) return((DUMINT)MV2_byref_((dylan_value)(x), (DMINT*)(v), (DMINT)(y)))
+#define MV3_byref(x,v1,y,v2,z) return((DMINT)MV3_byref_((dylan_value)(x), (DMINT*)(v1), (DMINT)(y), (DMINT*)(v2), (DMINT)(z)))
 
 DMINT primitive_single_float_as_double_integer_byref(DSFLT f, DMINT* v2) {
 #ifdef NO_LONGLONG
@@ -784,38 +784,38 @@ DMINT primitive_machine_word_double_divide_byref(DMINT xl, DMINT xh, DMINT y, DM
   MV2_byref(q, v2, r);
 }
 
-DMINT primitive_machine_word_add_with_overflow_byref(DMINT x, DMINT y, D* v2) {
+DMINT primitive_machine_word_add_with_overflow_byref(DMINT x, DMINT y, dylan_value* v2) {
   DMINT r = (DMINT)((DUMINT)x + (DUMINT)y);
   /* Overflow if signs of inputs are the same but different from sign of result ... */
   MV2_byref(r, v2, RAWASBOOL(((x ^ y) >= 0) && ((r ^ x) < 0)));
 }
 
-DMINT primitive_machine_word_subtract_with_overflow_byref(DMINT x, DMINT y, D* v2) {
+DMINT primitive_machine_word_subtract_with_overflow_byref(DMINT x, DMINT y, dylan_value* v2) {
   DMINT r = (DMINT)((DUMINT)x - (DUMINT)y);
   /* Overflow if signs of inputs differ and sign of result isn't sign of X ... */
   MV2_byref(r, v2, RAWASBOOL(((x ^ y) < 0) && ((r ^ x) < 0)));
 }
 
-DMINT primitive_machine_word_multiply_with_overflow_byref(DMINT x, DMINT y, DMINT* v2, D* v3) {
+DMINT primitive_machine_word_multiply_with_overflow_byref(DMINT x, DMINT y, DMINT* v2, dylan_value* v3) {
   DUMINT rl, rh;
   multiply_double(x, y, &rl, &rh);
   /* Overflow if sign of result is wrong or ? ... */
   MV3_byref(rl, v2, rh, v3, RAWASBOOL(((x ^ y) < 0) ? ((DMINT)rh >= 0) : ((DMINT)rh < 0)));
 }
 
-DMINT primitive_machine_word_negative_with_overflow_byref(DMINT x, D* v2) {
+DMINT primitive_machine_word_negative_with_overflow_byref(DMINT x, dylan_value* v2) {
   DMINT r = - x;
   /* Overflow if input was negative and result is negative or zero ... */
   MV2_byref(r, v2, RAWASBOOL(x < 0 && r <= 0));
 }
 
-DMINT primitive_machine_word_abs_with_overflow_byref(DMINT x, D* v2) {
+DMINT primitive_machine_word_abs_with_overflow_byref(DMINT x, dylan_value* v2) {
   DMINT r = labs(x);
   /* Overflow if input was negative and result is negative or zero ... */
   MV2_byref(r, v2, RAWASBOOL(x < 0 && r <= 0));
 }
 
-DMINT primitive_machine_word_shift_left_with_overflow_byref(DMINT x, DMINT y, DMINT* v2, D* v3) {
+DMINT primitive_machine_word_shift_left_with_overflow_byref(DMINT x, DMINT y, DMINT* v2, dylan_value* v3) {
   /* was: MV2_byref(primitive_machine_word_shift_left_low(x, y), v2, 0); */
   MV3_byref(primitive_machine_word_shift_left_low(x, y), v2, 0, v3, RAWASBOOL(0));
 }
@@ -826,7 +826,7 @@ DMINT primitive_machine_word_multiply_lowShigh_byref(DMINT x, DMINT y, DMINT* v2
   MV2_byref((DMINT)zl, v2, (DMINT)zh);
 }
 
-DMINT primitive_machine_word_multiply_low_with_overflow_byref(DMINT x, DMINT y, D* v2) {
+DMINT primitive_machine_word_multiply_low_with_overflow_byref(DMINT x, DMINT y, dylan_value* v2) {
   DMINT r = x * y;
   /* Overflow if result has wrong sign or is smaller than inputs ... */
   MV2_byref(r, v2, RAWASBOOL((((x ^ y) < 0) ? r >= 0 : r < 0) || (labs(r) < labs(x)) || (labs(r) < labs(y))));
@@ -879,12 +879,12 @@ DMINT primitive_machine_word_unsigned_double_shift_right_byref(DMINT xl, DMINT x
 
 
 
-D MV2_byref_ (D x, DMINT* v, DMINT y) {
+dylan_value MV2_byref_ (dylan_value x, DMINT* v, DMINT y) {
   *v = y;
   return x;
 }
 
-D MV3_byref_ (D x, DMINT* v1, DMINT y, DMINT* v2, DMINT z) {
+dylan_value MV3_byref_ (dylan_value x, DMINT* v1, DMINT y, DMINT* v2, DMINT z) {
   *v1 = y;
   *v2 = z;
   return x;

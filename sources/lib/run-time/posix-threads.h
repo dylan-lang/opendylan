@@ -110,7 +110,7 @@ typedef signed long ZINT;
  */
 typedef struct _ctr1
 {
-  D class;
+  dylan_value class;
   void *handle;
 } CONTAINER;
 
@@ -122,13 +122,13 @@ typedef struct _ctr1
  */
 typedef struct _ctr2
 {
-  D class;
+  dylan_value class;
   void *handle1;
   void *handle2;
 } DTHREAD;
 
 typedef void * D_NAME;
-typedef D *TLV_VECTOR;
+typedef dylan_value *TLV_VECTOR;
 
 
 /*
@@ -142,8 +142,8 @@ typedef D *TLV_VECTOR;
 typedef struct thread {
   pthread_t tid;
   TEB* teb;
-  D name;
-  D function;
+  dylan_value name;
+  dylan_value function;
 } THREAD;
 
 /* Synchronization structures
