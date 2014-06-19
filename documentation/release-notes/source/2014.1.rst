@@ -69,6 +69,11 @@ Compiler
 * The output of ``dylan-compiler`` is less verbose by default.  Use
   the ``-verbose`` flag to get the old behavior.
 
+* Some extensions to the Dylan language that have been present in the
+  Open Dylan compiler for a long time have been documented, including
+  extensions to the macro system and an alternative syntax for currying
+  functions.
+
 C-FFI
 =====
 
