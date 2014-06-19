@@ -178,7 +178,6 @@ end function dfmc-project-library-name;
 
 define sealed sideways method project-stage-text
     (project :: <project>, #rest args) => ()
-  let name = dfmc-project-library-name(project);
   let stage = apply(format-to-string, args);
   *progress-section* := stage;
   *progress-message* := $default-progress-message;
@@ -1112,7 +1111,6 @@ define sealed method open-project-compiler-database
      #key warning-callback :: false-or(<function>),
           error-handler :: false-or(<function>))
  => (database :: false-or(<compiler-database>))
-  let opened? = project-object.project-proxy ~== #f;
   let old-warning-callback = *warning-callback*;
   block ()
     *warning-callback* := warning-callback;

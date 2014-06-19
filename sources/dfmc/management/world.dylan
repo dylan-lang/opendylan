@@ -565,7 +565,6 @@ define sideways method ensure-export-only (ld :: <library-description>)
 
   without-dependency-tracking
     let library-bindings = namespace-local-bindings(library);
-    let visible-bindings = make(<object-table>);
     let queue            = make(<deque>);
     // establish visibility sets
     let visible-bindings = make(<object-set>);

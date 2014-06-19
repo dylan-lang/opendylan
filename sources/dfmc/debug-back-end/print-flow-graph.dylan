@@ -111,11 +111,9 @@ end method;
 
 define method print-computations
     (stream :: <stream>, first :: <computation>, #key before: last) => ();
-  let next = #f;
   for-computations (c from first before last)
     indent(stream, *offset*);
     format(stream, "%=\n", c);
-    next := c.next-computation;
   end for-computations;
 end method print-computations;
 

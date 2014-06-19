@@ -21,7 +21,5 @@ define method analyze-non-local-exits (lambda :: <&lambda>) => ()
 end method;
 
 define method analyze-entry (entry :: <entry-state>) => ()
-  for (exit in entry.exits)
-  end for;
   #f
 end method;

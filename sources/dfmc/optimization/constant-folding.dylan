@@ -19,7 +19,6 @@ define method fold-if-merge!
     (c :: <if>, sav-first :: <computation>, sav-last  :: <computation>,
      sav-value :: false-or(<value-reference>), del-first :: <computation>)
  => ()
-  let f = lambda(environment(c));
   let merge-c = next-computation(c);
   // SPLICE SAVED BRANCH BEGINNING IN PLACE OF IF
   let pc = previous-computation(c);
@@ -128,8 +127,6 @@ define method constant-fold (c :: <binary-merge>)
   let left-value = merge-left-value(c);
   let right-value = merge-right-value(c);
   if (left-value & right-value)
-    let left-g  = generator(left-value);
-    let right-g = generator(right-value);
     if (left-value == right-value |
           guaranteed-joint?(type-estimate(left-value),
                             dylan-value(#"<bottom>")))
@@ -960,7 +957,6 @@ define method constant-fold (c :: <check-type-computation>)
 
     // Insert at the end of the branch, and redirect the merge to
     // refer to its value.
-    let left-c = merge-left-previous-computation(merge-c);
     insert-computation-before-reference!(merge-c, left-check, left-ref);
     merge-replace-left-value!(merge-c, left-ref, left-check.temporary);
 
@@ -971,7 +967,6 @@ define method constant-fold (c :: <check-type-computation>)
 
     // Insert at the end of the branch, and redirect the merge to
     // refer to its value.
-    let right-c = merge-right-previous-computation(merge-c);
     insert-computation-before-reference!(merge-c, right-check, right-ref);
     merge-replace-right-value!(merge-c, right-ref, right-check.temporary);
 

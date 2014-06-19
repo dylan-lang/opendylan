@@ -35,7 +35,6 @@ define method compute-and-install-form-model-objects-statically
     compute-and-install-form-dynamic-init-method(form)
   else
     form-model(form) := model;
-    let lib = library-description-model(form-library(form));
     let domain-locally-defined? = form-library(gf-def) == form-library(form);
     let gf-runtime-sealed? = (form-sealable?(gf-def) | form-compiler-open?(gf-def));
 

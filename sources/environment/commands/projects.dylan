@@ -167,17 +167,15 @@ define sealed method do-execute-command
          error-handler:        curry(compiler-condition-handler, context));
       project.project-opened-by-user? := #t;
       context.context-project := project;
-      let project-context
-        = context.context-project-context
-            | begin
-                let library = project.project-library;
-                let module = library & library-default-module(project, library);
-                let project-context
-                  = make(<project-context>,
-                         project: project,
-                         module: module);
-                context.context-project-context := project-context
-              end;
+      unless (context.context-project-context)
+        let library = project.project-library;
+        let module = library & library-default-module(project, library);
+        let project-context
+          = make(<project-context>,
+                 project: project,
+                 module: module);
+        context.context-project-context := project-context
+      end unless;
       message(context, "Opened project %s (%s)", project.project-name,
               project.project-filename);
       project;

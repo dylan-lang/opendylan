@@ -149,7 +149,6 @@ end;
 
 define method project-add-file-of-type
     (type, p :: <user-project>, file-locator :: <file-locator>)
-  let project-directory = p.user-disk-project-file.locator-directory;
   project-add-list-property(p, #"other-files",
                             project-relative-file(p, file-locator))
 end;

@@ -73,10 +73,8 @@ define compiler-sideways method compute-and-install-form-model-objects
   // Type infer init-model
   type-estimate(init-model);
   run-compilation-passes(init-model);
-  let complete? :: <boolean> = #t ;
   unless(empty-method?(init-model))
     form-init-method(form) := init-model;
-    complete? := #f ;
   end;
   // now set definitions where appropriate
   for (variable-name in names)

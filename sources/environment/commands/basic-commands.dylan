@@ -250,7 +250,6 @@ define function print-table
 	       max(max-size, size(item.label-key))
 	     end,
 	     0, items);
-  let padding = make(<byte-string>, size: tab-column, fill: ' ');
   local method item-label<
 	    (item1, item2) => (true? :: <boolean>)
 	  item1.label-key < item2.label-key

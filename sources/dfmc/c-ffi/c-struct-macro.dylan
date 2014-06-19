@@ -1369,7 +1369,6 @@ define method expand-slot-accessor
          length-expression: slot-rep.array-length);
     len := 1;
   end unless;
-  let max-index = len - 1;
   // TODO: bogus use of model-class-name
   let struct-name = struct-descriptor.model-class-name;
   let slot-pointer-type-name = slot-rep.maybe-slot-pointer-type-name;
@@ -1409,7 +1408,6 @@ define method expand-slot-accessor
          length-expression: slot-rep.array-length);
     len := 1;
   end unless;
-  let max-index = len - 1;
   // TODO: bogus use of model-class-name
   let struct-name = struct-descriptor.model-class-name;
   let names = method-argument-names(m);
@@ -1527,8 +1525,6 @@ define method expand-slot-accessor
   let dereferencer
     = ^bitfield-dereferencer-name(model-slot-type);
   let import = ^import-function(model-slot-type) | #{ identity };
-  // TODO: bogus use of model-class-name
-  let struct-name = struct-descriptor.model-class-name;
   let names = method-argument-names(m);
   let (byte-offset, bit-offset, bit-size) =
     compute-aggregate-field-offset
@@ -1560,8 +1556,6 @@ define method expand-slot-accessor
   let unboxer = ^unboxer-function-name(model-slot-type);
   let dereferencer
    = ^bitfield-dereferencer-name(model-slot-type);
-  // TODO: bogus use of model-class-name
-  let struct-name = struct-descriptor.model-class-name;
   let names = method-argument-names(m);
   let (byte-offset, bit-offset, bit-size) =
     compute-aggregate-field-offset
@@ -1603,7 +1597,6 @@ define method expand-slot-accessor
          length-expression: slot-rep.array-length);
     len := 1;
   end unless;
-  let max-index = len - 1;
   let names = method-argument-names(m);
   let (struct, offset) = values(names[0], names[1]);
   // TODO: check bounds by using limited specializer
@@ -1636,7 +1629,6 @@ define method expand-slot-accessor
   let dereferencer = ^raw-dereferencer-name(model-slot-type);
   // TODO: bogus use of model-class-name
   let struct-name = struct-descriptor.model-class-name;
-  let len = array-length(slot-rep);
   let len = ^top-level-eval(array-length(slot-rep));
   unless (instance?(len, <integer>) & len > 0)
     note(<invalid-array-slot-bounds>,
@@ -1645,7 +1637,6 @@ define method expand-slot-accessor
          length-expression: slot-rep.array-length);
     len := 1;
   end unless;
-  let max-index = len - 1;
   let names = method-argument-names(m);
   let (new-value, struct, offset) = values(names[0], names[1], names[2]);
   // TODO: check bounds by using limited specializer

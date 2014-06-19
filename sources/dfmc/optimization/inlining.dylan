@@ -405,7 +405,6 @@ define compiler-sideways method copy-down-body (m :: <&copy-down-method>) => ()
     end if;
 
     let  bind-comp = m.body ;
-    let  return-t  = return-c.computation-value ;
 
     return-c.previous-computation := #f ;
 
