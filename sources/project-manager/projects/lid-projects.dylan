@@ -518,7 +518,9 @@ define function lid-build-settings (source-loc, properties)
   let raw-base-address = element(properties, #"base-address", default: #f);
   if (raw-base-address)
     let (base-address, extra?) = string-to-machine-word(first(raw-base-address));
-    //---*** Should we do something (i.e., complain) if there's extra text?
+    if (extra?)
+      user-warning("Invalid base-address: \"%s\"", first(raw-base-address));
+    end if;
     add-setting(base-address: base-address)
   end;
   let linker-options = element(properties, #"linker-options", default: #f);
