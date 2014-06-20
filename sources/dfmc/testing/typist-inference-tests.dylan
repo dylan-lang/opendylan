@@ -335,7 +335,7 @@ define suite dfmc-typist-inference-suite ()
   test typist-merge;
   test typist-check;
   test typist-assign;
-  test typist-lambda;
+  // test typist-lambda;
   test typist-unwind-protect;
   test typist-bind-exit;
   test typist-primops;
