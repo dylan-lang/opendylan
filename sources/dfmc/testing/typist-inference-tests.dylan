@@ -116,8 +116,7 @@ define function static-type-check?(lambda        :: <&method>,
   end
 end;
 
-define function try-top-level-init-form (string :: <string>)
-  debug-assert(instance?(string, <string>));
+define function compile-to-method (string :: <string>) => (m :: <&method>)
   // Compile a template & cut through the underbrush to the init form
   dynamic-bind (*progress-stream*           = #f,  // with-compiler-muzzled
                 *demand-load-library-only?* = #f)
@@ -126,10 +125,8 @@ define function try-top-level-init-form (string :: <string>)
     let cr* = library-description-compilation-records(lib);
     // One for lib+mod defn & one for the source template.
     debug-assert(size(cr*) == 2, "Expected exactly 2 <compilation-record>s: %=", cr*);
-    let tlif = last(compilation-record-top-level-forms(cr*[1]));
-    debug-assert(instance?(tlif, <top-level-init-form>),
-                 "Expected %= to be a <top-level-init-form>", tlif);
-    form-init-method(tlif)
+    let method-definition :: <method-definition> = last(compilation-record-top-level-forms(cr*[1]));
+    form-model(method-definition)
   end
 end;
 
@@ -153,7 +150,7 @@ subtest:
   // against the values specification.
   { } => { }
   { ?:expression TYPE: ?val:* }
-    => { assert-true(static-type-check?(try-top-level-init-form(?expression),
+    => { assert-true(static-type-check?(compile-to-method(?expression),
                                         make(<type-estimate-values>, ?val))); }
 end;
 
@@ -176,46 +173,60 @@ end;
 
 define typist-inference-test typist-constants
   // Do you recognize a constant when you see one?
-  "0;"       TYPE: fixed: vector(class-te(#"<integer>")),              rest: #f;
-  "3.14;"    TYPE: fixed: vector(class-te(#"<extended-float>")),       rest: #f;
-  "#f;"      TYPE: fixed: vector(false-te()),                          rest: #f;
-  "\"foo\";" TYPE: fixed: vector(class-te(#"<byte-string>")),          rest: #f;
-  "'c';"     TYPE: fixed: vector(class-te(#"<character>")),            rest: #f;
-  "foo:;"    TYPE: fixed: vector(class-te(#"<symbol>")),               rest: #f;
-  "#[];"     TYPE: fixed: vector(class-te(#"<simple-object-vector>")), rest: #f;
-  "#[1];"    TYPE: fixed: vector(class-te(#"<simple-object-vector>")), rest: #f;
-  "#();"     TYPE: fixed: vector(class-te(#"<empty-list>")),           rest: #f;
-  "#(1);"    TYPE: fixed: vector(class-te(#"<pair>")),                 rest: #f
+  "define method typist-test () 0 end;"
+    TYPE: fixed: vector(class-te(#"<integer>")),              rest: #f;
+  "define method typist-test () 3.14 end;"
+    TYPE: fixed: vector(class-te(#"<extended-float>")),       rest: #f;
+  "define method typist-test () #f end;"
+    TYPE: fixed: vector(false-te()),                          rest: #f;
+  "define method typist-test () \"foo\" end;"
+    TYPE: fixed: vector(class-te(#"<byte-string>")),          rest: #f;
+  "define method typist-test () 'c' end;"
+    TYPE: fixed: vector(class-te(#"<character>")),            rest: #f;
+  "define method typist-test () foo: end;"
+    TYPE: fixed: vector(class-te(#"<symbol>")),               rest: #f;
+  "define method typist-test () #[] end;"
+    TYPE: fixed: vector(class-te(#"<simple-object-vector>")), rest: #f;
+  "define method typist-test () #[1] end;"
+    TYPE: fixed: vector(class-te(#"<simple-object-vector>")), rest: #f;
+  "define method typist-test () #() end;"
+    TYPE: fixed: vector(class-te(#"<empty-list>")),           rest: #f;
+  "define method typist-test () #(1) end;"
+    TYPE: fixed: vector(class-te(#"<pair>")),                 rest: #f
 end;
 
 // *** ??: Warning: Reference to undefined binding values // undefined.
 define typist-inference-test typist-values
   // Can we figure out multiple values properly?
-  " values(); "                TYPE: fixed: #[],
-                                     rest: #f;
-  " values(1); "               TYPE: fixed: vector(class-te(#"<integer>")),
-                                     rest: #f;
-  " values(1, 'c'); "          TYPE: fixed: vector(class-te(#"<integer>"),
-                                                   class-te(#"<character>")),
-                                     rest: #f;
-  " values(1, 'c', \"foo\"); " TYPE: fixed: vector(class-te(#"<integer>"),
-                                                   class-te(#"<character>"),
-                                                   class-te(#"<byte-string>")),
-                                     rest: #f
+  "define method typist-test () values() end;"
+    TYPE: fixed: #[],
+          rest: #f;
+  "define method typist-test () values(1) end;"
+    TYPE: fixed: vector(class-te(#"<integer>")),
+          rest: #f;
+  "define method typist-test ()  values(1, 'c') end;"
+    TYPE: fixed: vector(class-te(#"<integer>"),
+                        class-te(#"<character>")),
+          rest: #f;
+  "define method typist-test () values(1, 'c', \"foo\") end;"
+    TYPE: fixed: vector(class-te(#"<integer>"),
+                        class-te(#"<character>"),
+                        class-te(#"<byte-string>")),
+          rest: #f
   // *** Example with rest-values?
 end;
 
 define typist-inference-test typist-merge
   // Is the merge node the union of its sources?
-  " define variable x = 1; if (x) 1 else 2     end; "
+  "define variable x = 1; define method typist-test () if (x) 1 else 2     end end;"
     TYPE: fixed: vector(class-te(#"<integer>")),
           rest: #f;
-  " define variable x = 1; if (x) 1 else \"foo\" end; "
+  "define variable x = 1; define method typist-test () if (x) 1 else \"foo\" end end;"
     TYPE: fixed: vector(make(<type-estimate-union>,
                              unionees: list(class-te(#"<integer>"),
                                             class-te(#"<byte-string>")))),
           rest: #f;
-  " define variable x = 1; if (x) 1 else \"foo\" end; "
+  "define variable x = 1; define method typist-test () if (x) 1 else \"foo\" end end;"
     TYPE: fixed: vector(make(<type-estimate-union>,
                              unionees: list(class-te(#"<byte-string>"),
                                             class-te(#"<integer>")))),
@@ -224,17 +235,17 @@ end;
 
 define typist-inference-test typist-check
   // Do you know about <check-type> instructions?
-  " define variable f = #f; begin let x :: <integer> = f(); x end; "
+  "define variable f = #f; define method typist-test () let x :: <integer> = f(); x end end;"
     TYPE: fixed: vector(class-te(#"<integer>")), rest: #f
 end;
 
 define typist-inference-test typist-assign
   // Does the target of an assignment get a type?
-  "define variable global1 = #f; global1 := 0; global1;"
+  "define variable global1 = #f; define method typist-test () global1 := 0; global1 end;"
     // *** Should pick up #f initial value, too?
     TYPE: fixed: vector(class-te(#"<integer>")),
           rest: #f;
-  " define variable global2 = #f; global2 := 0; global2 := \"foo\"; global2; "
+  " define variable global2 = #f; define method typist-type () global2 := 0; global2 := \"foo\"; global2 end;"
     // *** Should pick up #f initial value, too?
     TYPE: fixed: vector(make(<type-estimate-union>,
                              unionees: list(class-te(#"<byte-string>"),
@@ -245,7 +256,7 @@ end;
 
 define typist-inference-test typist-lambda
   // Do you know a function when you see one?  What can you know about it?
-  " method (x :: <integer>) x end; "
+  "define method typist-type () method (x :: <integer>) x end end;"
     TYPE: fixed: vector(make(<type-estimate-limited-function>,
                              class:     dylan-value(#"<method>"),
                              requireds: vector(class-te(#"<integer>")),
@@ -259,23 +270,23 @@ end;
 
 define typist-inference-test typist-unwind-protect
   // Can we type an unwind-protect?  Even with degenerate body & cleanups.
-  " define variable foo = #f; block () 1 cleanup foo() end; "
+  "define variable foo = #f; define method typist-test () block () 1 cleanup foo() end end;"
      TYPE: fixed: vector(class-te(#"<integer>")), rest: #f;
-  " define variable foo = #f; block () 1 cleanup end; "
+  "define variable foo = #f; define method typist-test () block () 1 cleanup end end;"
      TYPE: fixed: vector(class-te(#"<integer>")), rest: #f;
-  " define variable foo = #f; block () cleanup foo() end; "
+  "define variable foo = #f; define method typist-test () block () cleanup foo() end end;"
      TYPE: fixed: vector(false-te()), rest: #f
 end;
 
 define typist-inference-test typist-bind-exit
   // Can you figure out bind-exit?  Easy case is where exit is used only locally.
   // Non-local case is, well, non-local.
-  " block (xit) xit(2); 'c' end; "
+  "define method typist-test () block (xit) xit(2); 'c' end end;"
      TYPE: fixed: vector(make(<type-estimate-union>,
                               unionees: list(class-te(#"<integer>"),
                                              class-te(#"<character>")))),
            rest: #f;
-  " block (xit) xit(1); xit('c'); \"foo\" end; "
+  "define method typist-test () block (xit) xit(1); xit('c'); \"foo\" end end;"
      TYPE: fixed: vector(make(<type-estimate-union>,
                               unionees: list(class-te(#"<integer>"),
                                              class-te(#"<character>"),
@@ -285,35 +296,35 @@ end;
 
 define typist-inference-test typist-primops
   // Can you figure out what the primops in <primitive-call>s do?
-  " primitive-word-size(); "
+  "define method typist-test () primitive-word-size(); "
     TYPE: fixed: vector(raw-te(#"<raw-integer>")),
           rest:  #f;
-  " primitive-allocate(integer-as-raw(1)); "
+  "define method typist-test () primitive-allocate(integer-as-raw(1)); "
     TYPE: fixed: vector(raw-te(#"<raw-pointer>")),
           rest:  #f;
-  " primitive-machine-word-add(integer-as-raw(1), integer-as-raw(2)); "
+  "define method typist-test () primitive-machine-word-add(integer-as-raw(1), integer-as-raw(2)); "
     TYPE: fixed: vector(raw-te(#"<raw-machine-word>")),
           rest:  #f;
-  " primitive-machine-word-equals?(integer-as-raw(1), integer-as-raw(1)); "
+  "define method typist-test () primitive-machine-word-equals?(integer-as-raw(1), integer-as-raw(1)); "
     TYPE: fixed: vector(raw-te(#"<raw-boolean>")),
           rest:  #f;
-  " primitive-object-class(integer-as-raw(1)); "
+  "define method typist-test () primitive-object-class(integer-as-raw(1)); "
     TYPE: fixed: vector(class-te(#"<class>")),
           rest:  #f;
 end;
 
 define typist-inference-test typist-raw-constants
   // Do you recognize a raw constant when you see one?
-  " integer-as-raw(0); "
+  "define method typist-test () integer-as-raw(0) end;"
        TYPE: fixed: vector(raw-te(#"<raw-integer>")),
              rest: #f;
-  " primitive-byte-character-as-raw('c'); "
+  "define method typist-test () primitive-byte-character-as-raw('c') end;"
        TYPE: fixed: vector(raw-te(#"<raw-byte-character>")),
              rest: #f;
-  " primitive-not(foo:); "
+  "define method typist-test () primitive-not(foo:) end;"
        TYPE: fixed: vector(raw-te(#"<raw-boolean>")),
              rest: #f;
-  " primitive-single-float-as-raw(1.0); "
+  "define method typist-test () primitive-single-float-as-raw(1.0) end;"
        TYPE: fixed: vector(raw-te(#"<raw-single-float>")),
              rest: #f
 end;
