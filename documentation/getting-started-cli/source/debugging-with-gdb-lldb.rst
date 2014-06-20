@@ -224,6 +224,11 @@ Debugging with the HARP backend
 As mentioned previously, this is largely limited to getting stack
 traces.  If you try to run a Dylan application built with the
 HARP backend under the debugger, you may need to adjust your
-debugger's signal handling.
+debugger's signal handling as the Memory Pool System GC that is
+used employs the ``SIGSEGV`` signal.
+
+To do this on Linux and FreeBSD in gdb, use this command::
+
+    handle SIGSEGV pass nostop noprint
 
 *Add more notes about this later.*
