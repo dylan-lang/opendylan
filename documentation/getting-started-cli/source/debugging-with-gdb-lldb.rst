@@ -109,8 +109,22 @@ entire Dylan application runs and exits prior to ``main`` being invoked.
 A reasonable alternative is to determine the C name of your entry point
 function and set a breakpoint on that instead.
 
-Inspecting Dylan objects
-------------------------
+Inspecting Dylan objects in LLDB
+--------------------------------
+
+In LLDB, you may import our Dylan support library::
+
+    command script import /path/to/opendylan/tools/lldb/dylan
+
+Do not import the scripts under that directory directly as that will not
+work. Once this has been done, variables that are representing Dylan
+values will automatically be shown with additional data about their
+actual values.
+
+Inspecting Dylan objects in GDB
+-------------------------------
+
+We do not yet have support for Dylan in GDB as we do for LLDB.
 
 The C runtime contains a number of helper functions specifically for
 improving the debugging process. These can be invoked from gdb or lldb

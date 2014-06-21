@@ -124,6 +124,29 @@ Common Dylan
   already did on Linux and FreeBSD.
 
 
+Debugging
+=========
+
+* When using `LLDB <http://lldb.llvm.org/>`_ for debugging, Dylan
+  support is now available. To use this, you need to import the
+  Python scripts::
+
+    command script import /path/to/opendylan/tools/lldb/dylan
+
+  Do not import the scripts under that directory directly. Once this
+  has been loaded, then commands like ``frame variable`` will automatically
+  start showing Dylan values::
+
+    (lldb) frame variable
+    (dylan_value) mepargs_ = 0xbfffd4c0 {<simple-object-vector>: size: 2} {
+      [0] = 0x00000009 {<integer>: 2}
+      [1] = 0x02861eb0 {<byte-char-file-stream>}
+    }
+    (dylan_value) e_ = 0x0018a288 {<absent-engine-node>}
+    (dylan_value) parent_ = 0x005cc384 {<incremental-generic-function>: do-execute-command}
+    (dylan_value) T3 = 0x00000000 {}
+
+
 Dylan
 =====
 
