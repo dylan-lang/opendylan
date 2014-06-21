@@ -500,8 +500,6 @@ define method ^make-mm-wrapper (class :: <&class>)
     = if (repeated-slot)
         let repeated-type
           = repeated-slot.^slot-type;
-        let byte?     
-          = repeated-representation-byte?(repeated-type);
         let repeated-size
           = repeated-representation-size(repeated-type);
         let non-word? 

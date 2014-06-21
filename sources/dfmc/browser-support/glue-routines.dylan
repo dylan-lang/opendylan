@@ -719,7 +719,6 @@ end function;
 
 define function class-binding-in-context
     (context :: dfmc-<library-description>, form :: <class-definition>)
-  let var = dfmc-form-variable-name(form);
   unless (dfmc-form-ignored?(form))
     dfmc-form-variable-binding(form)
   end;

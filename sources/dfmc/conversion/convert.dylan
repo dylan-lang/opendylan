@@ -491,14 +491,14 @@ end function;
 
 define inline function make-object-reference
     (object) => (ref :: <value-reference>)
-  let (ignore-first, ignore-last, ref)
+  let (_, _, ref)
     = convert-object-reference-1($top-level-environment, object);
   ref
 end function;
 
 define inline function make-value-reference
     (object, ref-class :: <class>) => (ref :: <value-reference>)
-  let (ignore-first, ignore-last, ref)
+  let (_, _, ref)
     = convert-value-reference($top-level-environment, $single, object, ref-class);
   ref
 end function;
@@ -672,7 +672,7 @@ end function;
 
 define inline function make-global-reference
     (name :: <variable-name-fragment>) => (ref :: <value-reference>);
-  let (ignore-first, ignore-last, ref)
+  let (_, _, ref)
     = convert-global-reference($top-level-environment, name);
   ref
 end function;
@@ -685,7 +685,7 @@ end function;
 
 define inline function make-dylan-reference
     (name :: <name>) => (ref :: <value-reference>);
-  let (ignore-first, ignore-last, ref)
+  let (_, _, ref)
     = convert-dylan-reference(name);
   ref
 end function;

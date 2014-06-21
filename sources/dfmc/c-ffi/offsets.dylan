@@ -118,7 +118,6 @@ define method compute-aggregate-alignment
   let pack-option
     = get-property(raw-type.raw-options, #"pack",
                    default: get-default-pack-option());
-  let fields = raw-type.raw-fields;
   for (field :: <abstract-aggregate-field-indicator> in raw-type.raw-fields)
     let field-type = field.field-raw-type;
     let field-align = raw-type-info-alignment(field-type);

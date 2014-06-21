@@ -72,7 +72,6 @@ end command-property examples;
 define method show-property
     (context :: <environment-context>, property :: <examples-property>)
  => ()
-  let stream = context.context-server.server-output-stream;
   for (info :: <library-pack-info> in installed-library-packs())
     if (instance?(info, <basic-library-pack-info>))
       describe-libraries(context, format-to-string("%s Examples", info.info-title),
@@ -94,7 +93,6 @@ end command-property test-suites;
 define method show-property
     (context :: <environment-context>, property :: <test-suites-property>)
  => ()
-  let stream = context.context-server.server-output-stream;
   for (info :: <library-pack-info> in installed-library-packs())
     if (instance?(info, <basic-library-pack-info>))
       describe-libraries(context, format-to-string("%s test suites", info.info-title),

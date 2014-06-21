@@ -211,7 +211,6 @@ define method convert-lambda-into*
     (env :: <environment>, f :: <&c-callable-function>, the-body, 
      #key multiple-values? = #f)
   let sig-spec = f.signature-spec;
-  let required = spec-argument-required-variable-specs(sig-spec); 
   let (ffi-signature, signature) = make-ffi-signature(sig-spec);
   f.c-signature := ffi-signature;
   next-method(env, f, the-body, multiple-values?: #f);

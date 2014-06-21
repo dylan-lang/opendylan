@@ -155,7 +155,6 @@ define function color-extent(f :: <&method>, extent :: <dynamic-extent>)
     end;
 
     let reqs = sig-spec.spec-argument-required-variable-specs;
-    let keys = sig-spec.spec-argument-key-variable-specs;
 
     let reqs-size = reqs.size;
 

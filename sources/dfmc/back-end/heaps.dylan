@@ -1498,7 +1498,6 @@ end method;
 define method export-references
     (heap :: <model-heap>, e :: <&macro>, ct?) => ()
   let object = expander-macro-object(e);
-  let def = model-has-definition?(e);
   // The following isn't true for procedural macros...
   if (instance?(object, <macro-descriptor>))
     let referenced-names = macro-referenced-names(object);

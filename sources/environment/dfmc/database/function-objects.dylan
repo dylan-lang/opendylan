@@ -24,7 +24,6 @@ define sealed method function-parameters
   let function-definition :: false-or(<definition>)
     = compiler-object-proxy(function);
   if (function-definition)
-    let project = server-project(server);
     let (req-vars, rest-var, next-var, key-vars, value-vars, rest-value-var)
       = functional-parameters(function-definition);
     let (req-types, rest-type, next-type, key-types, value-types, rest-value-type)
@@ -147,7 +146,6 @@ define sealed method method-specializers
  => (specializers :: <sequence>)
   let specializers = make(<stretchy-vector>);
   let definition = object.compiler-object-proxy;
-  let context = browsing-context(server, definition);
 
   let req-types //...rest-type, next-type, key-types, value-types, rest-value-type)
     = functional-parameter-types(definition);
@@ -220,7 +218,6 @@ end method method-generic-function;
 define sealed method do-method-definition-specializers
     (function :: <function>, server :: <dfmc-database>, definition :: <definition>)
  => ()
-  let context = browsing-context(server, definition);
   let req-types //...rest-type, next-type, key-types, value-types, rest-value-type)
     = functional-parameter-types(definition);
   if (req-types)

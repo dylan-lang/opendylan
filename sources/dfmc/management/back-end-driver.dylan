@@ -71,7 +71,6 @@ define method tightly-link-library-heaps
     (description :: <project-library-description>,
      #rest flags, #key skip-link?, skip-emit?, #all-keys)
  => (data-size :: <integer>, code-size :: <integer>)
- let model-heap-size = 0;
  if (*combine-object-files?*)
    let name = concatenate("_",
 			  as(<string>,

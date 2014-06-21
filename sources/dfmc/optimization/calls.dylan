@@ -200,8 +200,6 @@ define method do-primitive-move-log-coercion
     (env :: <environment>,
      c :: <primitive-call>, call-args :: <argument-sequence>)
   let arg-0 = call-args[0];
-  let arg-1 = call-args[1];
-  let constant? = fast-constant-value?(arg-1);
   do-primitive-move-coercion(env, c, arg-0, generator(arg-0))
 end method;
 
@@ -231,7 +229,6 @@ define method do-primitive-coercion-inverses
     (env :: <environment>, call, arg, arg-gen :: <binary-merge>,
      inverse-coercion, kind)
   // only do this optimization if we push unboxing into the loop
-  let tmp = temporary(arg-gen);
   if (kind == #"forward")
 
     let merge-node = arg-gen;
@@ -533,7 +530,7 @@ define method do-optimize-machine-word-partial-fold-binary-op
         if (constant?)
           let combined-value = combine(value-1, value-2);
           if (combined-value)
-            let (ignore-first, ignore-last, new-arg-1)
+            let (_, _, new-arg-1)
               = convert-object-reference-1(env, combined-value);
             // format-out("PARTIAL-FOLD %= %= -> %=\n", value-1, value-2, combined-value);
             replace-call-argument!(call, first(arguments(gen)), 0);
@@ -569,7 +566,6 @@ define method machine-word-primitives-call-to-and-arguments?
    (env :: <environment>, call :: <primitive-call>, test :: <function>,
     #rest primitive-names)
  => (ref :: false-or(<value-reference>))
-  let primitive-call = call;
   let number-primitives = size(primitive-names);
   let test-arguments :: <simple-object-vector>
     = make(<vector>, size: number-primitives);
@@ -881,7 +877,7 @@ define method do-optimize-primitive-machine-word-bit-field-extract
       if (constant?)
         let size = as(<integer>, ^raw-object-value(raw-size));
         let mask = ash(1, size) - 1;
-        let (ignore-first, ignore-last, mask-ref)
+        let (_, _, mask-ref)
           = convert-object-reference-1(env, make-raw-literal(mask));
         let (call-c, call-t)
           = make-with-temporary
@@ -1012,7 +1008,6 @@ define &optimizer-function apply (env, call, arguments)
 end &optimizer-function;
 
 define method do-optimize-size (env :: <environment>, call, call-args)
-  let env  = call.environment;
   let arg  = call-args[0];
   if (instance?(arg, <stack-vector-temporary>))
     replace-call-with-values(list(number-values(arg)), call, temporary(call));
@@ -1029,7 +1024,6 @@ define &optimizer-function size (env, call, arguments)
 end &optimizer-function;
 
 define method do-optimize-dimensions (env :: <environment>, call, call-args)
-  let env  = call.environment;
   let arg  = call-args[0];
   let type = type-estimate(arg);
   if (instance?(type, <type-estimate-limited-collection>)
@@ -1045,7 +1039,6 @@ define &optimizer-function dimensions (env, call, arguments)
 end &optimizer-function;
 
 define method do-optimize-element-type (env :: <environment>, call, call-args)
-  let env  = call.environment;
   let arg  = call-args[0];
   let type = type-estimate(arg);
   if (instance?(type, <type-estimate-limited-collection>))
@@ -1249,7 +1242,7 @@ define &optimizer-function allocate-instance
     end if;
     if (^repeated-slot-descriptor(class)) return(#f) end;
     // We have a simplish class.
-    let (no-op1, no-op2, allocator-ref)
+    let (_, _, allocator-ref)
       = convert-object-reference-1
           (call.environment, dylan-value(#"system-allocate-simple-instance"));
     let (allocate-call, allocate-tmp)

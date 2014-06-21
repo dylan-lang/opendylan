@@ -33,9 +33,7 @@ define sealed method do-direct-superclasses
     (function :: <function>, server :: <dfmc-database>, class :: <class-object>,
      #key client)
  => ()
-  let project-object = server.server-project;
   let class-definition :: <class-definition> = class.compiler-object-proxy;
-  let context = browsing-context(server, class-definition);
   let direct-superclasses = class-definition.class-definition-superclass-types;
   do(method (superclass-type) => ()
       let type-object = make-environment-object-for-type-expression(server, superclass-type);

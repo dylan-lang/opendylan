@@ -32,7 +32,6 @@ end method module-project-proxy;
 define sealed method search-for-module-definition
     (server :: <dfmc-database>, module-name :: <symbol>)
  => (definition :: false-or(<module-definition>))
-  let project-object = server.server-project;
   block (return)
     local method maybe-return-module (project :: <project>)
 	    let context = browsing-context(server, project);
@@ -76,7 +75,6 @@ define sealed method source-form-uses-definitions?
  => (uses-definitions? :: <boolean>)
   ignore(modules, libraries, client);
   let project = server-project(server);
-  let library = project-library(project);
   let module-definition = compiler-object-proxy(module);
   ~empty?(remove(module-definition-used-modules(module-definition),
 		 #"dylan-user"))
@@ -111,7 +109,6 @@ define sealed method do-module-client-modules
      module :: <module-object>)
  => ()
   let project = server-project(server);
-  let library = project-library(project);
   let module-definition :: <module-definition> = compiler-object-proxy(module);
   let module-name = module-definition.module-definition-name;
   do-all-client-contexts
