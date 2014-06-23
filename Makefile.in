@@ -333,13 +333,14 @@ install-stage:
 	@find $(prefix)/sources -depth -name '.*' -exec rm -rf {} \;
 	@-rm -rf $(prefix)/sources/bootstrap1-registry
 	@echo Installing Open Dylan in $(prefix)
-	@install -d $(prefix)/bin $(prefix)/databases $(prefix)/lib $(prefix)/lib/runtime
+	@install -d $(prefix)/bin $(prefix)/databases $(prefix)/lib $(prefix)/lib/runtime $(prefix)/tools
 	@cp -R $(abs_builddir)/Bootstrap.3/bin $(prefix)
 	@cp -R $(abs_builddir)/Bootstrap.3/databases $(prefix)
 	@-cp -R $(abs_builddir)/Bootstrap.3/include $(prefix)
 	@# We use force here because on Mac OS X, the lib directory likely contains read-only
 	@# static libraries for the Boehm GC.
 	@cp -Rf $(abs_builddir)/Bootstrap.3/lib $(prefix)
+	@cp -R $(abs_srcdir)/tools $(prefix)
 	@cp $(abs_srcdir)/License.txt $(prefix)
 	@cp $(abs_srcdir)/packages/unix/README $(prefix)
 	@echo Done!
@@ -358,6 +359,7 @@ release-stage:
 	-mkdir $(abs_builddir)/release/opendylan-$(version)/include
 	-mkdir $(abs_builddir)/release/opendylan-$(version)/lib
 	-mkdir $(abs_builddir)/release/opendylan-$(version)/sources
+	-mkdir $(abs_builddir)/release/opendylan-$(version)/tools
 	@echo Copying sources...
 	cp -R $(abs_srcdir)/sources $(abs_builddir)/release/opendylan-$(version)
 	@echo Removing unnecessary directories...
@@ -367,6 +369,7 @@ release-stage:
 	cp -R $(abs_builddir)/Bootstrap.3/databases $(abs_builddir)/release/opendylan-$(version)
 	-cp -R $(abs_builddir)/Bootstrap.3/include $(abs_builddir)/release/opendylan-$(version)
 	cp -R $(abs_builddir)/Bootstrap.3/lib $(abs_builddir)/release/opendylan-$(version)
+	cp -R $(abs_srcdir)/tools $(abs_builddir)/release/opendylan-$(version)
 	cp $(abs_srcdir)/License.txt $(abs_builddir)/release/opendylan-$(version)
 	cp $(abs_srcdir)/packages/unix/README $(abs_builddir)/release/opendylan-$(version)
 	cd $(abs_builddir)/release; \
