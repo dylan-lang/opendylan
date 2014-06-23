@@ -530,12 +530,12 @@ INLINE dylan_simple_object_vector* init_stack_vector(dylan_simple_object_vector*
 extern Wrapper KLbyte_stringGVKdW;
 
 dylan_value primitive_raw_as_string (DBSTR buffer) {
-  size_t size = strlen(buffer);
-  dylan_byte_string* string = (dylan_byte_string*)allocate(sizeof(dylan_byte_string) + size + 1);
-  string->class = (dylan_value)&KLbyte_stringGVKdW;
-  string->size = I(size);
-  memcpy(string->data, buffer, size);
-  return((dylan_value)string);
+  size_t base_size = 2 * sizeof(dylan_value); // 1 for wrapper, 1 for size slot
+  size_t len = strlen(buffer);
+  size_t size = round_up_to_word(base_size + len + 1);
+  dylan_value string = primitive_alloc_leaf_r(size, &KLbyte_stringGVKdW, len, 1);
+  memcpy(((dylan_byte_string*)string)->data, buffer, len);
+  return string;
 }
 
 /* SIGNATURES */
