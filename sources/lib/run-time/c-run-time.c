@@ -109,15 +109,6 @@ dylan_value primitive_allocate (DSINT size) {
   return((dylan_value)allocate(size * sizeof(dylan_value)));
 }
 
-dylan_value primitive_byte_allocate (DSINT number_words, DSINT number_bytes) {
-  size_t size = (number_words * sizeof(dylan_value)) + number_bytes;
-#if defined(GC_USE_BOEHM)
-  return (dylan_value)GC_MALLOC_ATOMIC(size);
-#elif defined(GC_USE_MALLOC)
-  return (dylan_value)malloc(size);
-#endif
-}
-
 dylan_value primitive_untraced_allocate (DSINT size) {
   return dylan__malloc__misc(size * sizeof(dylan_value));
 }

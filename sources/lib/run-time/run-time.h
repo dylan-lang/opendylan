@@ -1189,7 +1189,6 @@ extern void mps__free(size_t *old);
 /* ALLOCATION PRIMITIVES */
 
 extern dylan_value primitive_allocate(DSINT);
-extern dylan_value primitive_byte_allocate(DSINT, DSINT);
 extern dylan_value primitive_untraced_allocate(DSINT);
 extern dylan_value primitive_manual_allocate(dylan_value);
 extern void primitive_manual_free(dylan_value);
