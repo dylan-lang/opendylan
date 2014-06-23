@@ -479,7 +479,11 @@ extern BOOL Prunning_dylan_spy_functionQ;
 static __inline
 void update_allocation_counter(gc_teb_t gc_teb, size_t count, void* wrapper)
 {
+#ifdef GC_USE_MPS
   gc_teb->gc_teb_allocation_counter += count;
+#else
+  unused(gc_teb);
+#endif
 
   // Periodic polling of keyboard-interrupt flag
   if (dylan_keyboard_interruptQ) HandleDylanKeyboardInterrupt();
@@ -500,7 +504,11 @@ void update_allocation_counter(gc_teb_t gc_teb, size_t count, void* wrapper)
 
 static void zero_allocation_counter(gc_teb_t gc_teb)
 {
+#ifdef GC_USE_MPS
   gc_teb->gc_teb_allocation_counter = 0;
+#else
+  unused(gc_teb);
+#endif
 }
 
 
