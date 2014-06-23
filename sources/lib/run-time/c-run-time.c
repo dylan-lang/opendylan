@@ -92,11 +92,6 @@ void primitive_break() {
 
 /* MEMORY */
 
-INLINE dylan_value instance_header_setter (dylan_value header, dylan_value* instance) {
-  instance[0] = header;
-  return(header);
-}
-
 dylan_value allocate (unsigned long size) {
 #if defined(GC_USE_BOEHM)
   return((dylan_value)GC_MALLOC((size_t)size));
@@ -385,7 +380,7 @@ dylan_value initialize_byte_stack_allocate_filled
      DBYTE repeated_fill_value)
 {
   dylan_value* object = ptr;
-  instance_header_setter(class_wrapper, object);
+  object[0] = class_wrapper;
   primitive_fillX(object, 1, 0, number_slots, fill_value);
   primitive_fill_bytesX
     (object, repeated_size_offset + 1, 0, repeated_size,
@@ -404,7 +399,7 @@ dylan_value initialize_object_stack_allocate_filled
 {
   int i;
   dylan_value* object = ptr;
-  instance_header_setter(class_wrapper, object);
+  object[0] = class_wrapper;
   primitive_fillX(object, 1, 0, number_slots, fill_value);
   for (i = 0; i < repeated_size; i++) {
     ((dylan_value*)(&object[repeated_size_offset + 1]))[i] = (dylan_value)repeated_fill_value;
@@ -482,7 +477,7 @@ dylan_value primitive_make_vector (int size) {
 dylan_simple_object_vector* initialize_vector_from_buffer_with_size
     (dylan_simple_object_vector* vector, int vector_size, dylan_value* buffer, int buffer_size)
 {
-  instance_header_setter(&KLsimple_object_vectorGVKdW, (dylan_value*)vector);
+  vector->class = &KLsimple_object_vectorGVKdW;
   vector_size_setter(vector_size, vector);
   COPY_WORDS(vector_data(vector), buffer, buffer_size);
   return(vector);
@@ -515,7 +510,7 @@ dylan_value primitive_raw_as_vector (dylan_value size, dylan_value buffer) {
   dylan_simple_object_vector* _name = (init_stack_vector((dylan_simple_object_vector*)(&_stk_##_name), (_size)))
 
 INLINE dylan_simple_object_vector* init_stack_vector(dylan_simple_object_vector* vector, int size) {
-  instance_header_setter(&KLsimple_object_vectorGVKdW, (dylan_value*)vector);
+  vector->class = (dylan_value)&KLsimple_object_vectorGVKdW;
   vector_size_setter(size, vector);
   return(vector);
   }
@@ -537,7 +532,7 @@ extern Wrapper KLbyte_stringGVKdW;
 dylan_value primitive_raw_as_string (DBSTR buffer) {
   size_t size = strlen(buffer);
   dylan_byte_string* string = (dylan_byte_string*)allocate(sizeof(dylan_byte_string) + size + 1);
-  instance_header_setter(&KLbyte_stringGVKdW, (dylan_value*)string);
+  string->class = (dylan_value)&KLbyte_stringGVKdW;
   string->size = I(size);
   memcpy(string->data, buffer, size);
   return((dylan_value)string);
