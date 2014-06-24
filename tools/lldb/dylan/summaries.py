@@ -3,15 +3,14 @@ from accessors import *
 import synthetics
 
 def dylan_value_summary(value, internal_dict):
-  address = value.GetValueAsUnsigned()
-  tag = address & 3
-  if tag == 0:
+  tag = dylan_tag_bits(value)
+  if tag == OBJECT_TAG:
     return dylan_object_summary(value, internal_dict)
-  elif tag == 1:
+  elif tag == INTEGER_TAG:
     return dylan_integer_summary(value, internal_dict)
-  elif tag == 2:
+  elif tag == BYTE_CHARACTER_TAG:
     return dylan_byte_character_summary(value, internal_dict)
-  elif tag == 3:
+  elif tag == UNICODE_CHARACTER_TAG:
     return dylan_unicode_character_summary(value, internal_dict)
   else:
     return 'Invalid tag'

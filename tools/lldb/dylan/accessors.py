@@ -1,5 +1,13 @@
 import lldb
 
+OBJECT_TAG = 0
+INTEGER_TAG = 1
+BYTE_CHARACTER_TAG = 2
+UNICODE_CHARACTER_TAG = 3
+
+def dylan_tag_bits(value):
+  return value.GetValueAsUnsigned() & 3
+
 def dylan_boolean_value(value):
   target = lldb.debugger.GetSelectedTarget()
   true_value = target.FindFirstGlobalVariable('KPtrueVKi').AddressOf().GetValueAsUnsigned()

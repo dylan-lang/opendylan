@@ -3,20 +3,15 @@ from accessors import *
 
 class SyntheticDylanValue(object):
   def __init__(self, value, internal_dict):
-    address = value.GetValueAsUnsigned()
-    tag = address & 3
+    tag = dylan_tag_bits(value)
     new_class = None
-    if tag == 0:
+    if tag == OBJECT_TAG:
       class_name = dylan_object_class_name(value)
       new_class = SYNTHETIC_CLASS_TABLE.get(class_name, None)
-    elif tag == 1:
+      if new_class is not None:
+        self.__class__ = new_class
+    else:
       pass
-    elif tag == 2:
-      pass
-    elif tag == 3:
-      pass
-    if new_class is not None:
-      self.__class__ = new_class
     self.value = self.cast_value(value)
     self.update()
 
