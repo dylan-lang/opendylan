@@ -696,7 +696,6 @@ define function augment-rcpl-position-data-multiple (cls :: <class>, positions :
  => ()
   let lk :: <simple-lock> = $class-bashing-lock;
   with-lock (lk)
-    let ninc :: <integer> = 0;
   let npos :: <integer> = size(positions);
   let ninc :: <integer> = begin
                             local method loop (i :: <integer>, n :: <integer>)

@@ -931,7 +931,6 @@ end;
 
 define method \= (c1 :: <sequence>, c2 :: <collection>) => (eq :: <boolean>)
   unless (c2.key-test ~== \==)
-    let eq = #t;
     for (e1 in c1, key from 0,
          eq = #t then begin
                         let e2 = element(c2, key, default: not-found());

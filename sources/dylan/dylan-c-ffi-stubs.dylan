@@ -84,7 +84,7 @@ define function allocate-c-pointer-instance
   for (i from 0 below size(class-slot-descriptors(iclass)))
     find-or-create-class-slot-storage(iclass, i, #t)
   end for;
-  let (instance-size :: <integer>,
+  let (_instance-size :: <integer>,
        repeated-slot? :: <boolean>, repeated-slot-type :: <type>,
        repeated-size :: <integer>, fill)
     = allocation-attributes(iclass, init-args);

@@ -155,7 +155,7 @@ define method forward-iteration-protocol(coll :: <multiple-sequence>)
 
   let collections = coll.collections;
 
-  let (inits, limits, nexts, finished?s, keys, elems, elem-setters, copies)
+  let (inits, limits, nexts, finished?s, keys, elems, _elem-setters, copies)
     = extend-function(forward-iteration-protocol, collections);
 
   let sz = collections.size;
@@ -349,7 +349,7 @@ define method forward-iteration-protocol
           maximum-sequence-key(
             ecolls[minimum-collection(ecolls)]));
 
-  let (inits, limits, nexts, finished?s, keys, elems, elem-setters, copies)
+  let (inits, limits, nexts, finished?s, _keys, elems, _elem-setters, copies)
     = extend-function(forward-iteration-protocol, scolls);
 
   let ssz = scolls.size;

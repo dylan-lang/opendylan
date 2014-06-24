@@ -262,7 +262,7 @@ define inline-only function primitive-merge-sort!
       length < $small-sort-size =>
         insertion-sort!(vector, test: test, start: _start, end: _end);
       length > 1 =>
-        let (div, mod) = floor/(length, 2);
+        let (div, _mod) = floor/(length, 2);
         let middle :: <integer> = _start + div;
         merge-sort!(vector, test: test, start: _start, end: middle);
         merge-sort!(vector, test: test, start: middle, end: _end);

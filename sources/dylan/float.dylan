@@ -193,7 +193,7 @@ define sealed inline method negative? (x :: <single-float>) => (result :: <boole
 end method negative?;
 
 define sealed inline method integral? (x :: <single-float>) => (result :: <boolean>)
-  let (integer, remainder :: <single-float>) = truncate/(x, 1.0);
+  let (_integer, remainder :: <single-float>) = truncate/(x, 1.0);
   remainder = 0.0
 end method integral?;
 
@@ -320,7 +320,7 @@ define sealed inline method negative? (x :: <double-float>) => (result :: <boole
 end method negative?;
 
 define sealed inline method integral? (x :: <double-float>) => (result :: <boolean>)
-  let (integer, remainder :: <double-float>) = truncate/(x, 1.0d0);
+  let (_integer, remainder :: <double-float>) = truncate/(x, 1.0d0);
   remainder = 0.0d0
 end method integral?;
 

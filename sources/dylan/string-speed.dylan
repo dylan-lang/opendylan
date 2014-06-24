@@ -167,7 +167,6 @@ define sealed method concatenate-as
            end;
       otherwise =>
         let result = make(<byte-string>, size: total-sz);
-        let index = 0;
         let sz :: <raw-integer> = integer-as-raw(vector.size);
         primitive-replace-bytes!
           (result, primitive-repeated-slot-offset(result), integer-as-raw(0),
