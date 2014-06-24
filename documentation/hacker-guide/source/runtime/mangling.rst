@@ -23,36 +23,68 @@ to the following rules:
 +======+==========+===============+
 | *-*  | *\_*     | dash          |
 +------+----------+---------------+
-| *!*  | *\_E\_*  | exclamation   |
+| *!*  | *X*      | exclamation   |
 +------+----------+---------------+
-| *$*  | *\_D\_*  | dollar        |
+| *$*  | *D*      | dollar        |
 +------+----------+---------------+
-| *\** | *\_T\_*  | times         |
+| *%*  | *P*      | percent       |
 +------+----------+---------------+
-| */*  | *\_S\_*  | slash         |
+| *\** | *T*      | times         |
 +------+----------+---------------+
-| *<*  | *\_L\_*  | less          |
+| */*  | *S*      | slash         |
 +------+----------+---------------+
-| *>*  | *\_G\_*  | greater       |
+| *<*  | *L*      | less          |
 +------+----------+---------------+
-| *?*  | *\_Q\_*  | question mark |
+| *>*  | *G*      | greater       |
 +------+----------+---------------+
-| *+*  | *\_PL\_* | plus          |
+| *?*  | *Q*      | question mark |
 +------+----------+---------------+
-| *&*  | *\_AP\_* | ampersand     |
+| *+*  | *A*      | plus          |
 +------+----------+---------------+
-| *^*  | *\_CR\_* | caret         |
+| *&*  | *B*      |               |
 +------+----------+---------------+
-| *\_* | *\_UB\_* | underbar      |
+| *^*  | *C*      | caret         |
 +------+----------+---------------+
-| *~*  | *\_SG\_* | squiggle      |
+| *\_* | *U*      | underscore    |
 +------+----------+---------------+
-|      | *\_SP\_* | space         |
+| *@*  | *O*      |               |
++------+----------+---------------+
+| *=*  | *E*      |               |
++------+----------+---------------+
+| *~*  | *N*      |               |
 +------+----------+---------------+
 
 Finally, the fully mangled name is created by concatenating the
-processed library, module, and identifier names respectively, separated
-by ``X``.
+mangled names together, along with other special markers.
 
-For example, the Dylan identifier ``add-new!`` in module ``internal`` of
-library ``dylan`` would be mangled as ``dylanXinternalXadd_new_E_``.
+Example 1::
+
+  Kexecute_componentQYPtestworksVtestworks
+
+  K                  = constant (methods are constants)
+  execute_componentQ = method name (Q = ?)
+  Y                  = module separator
+  Ptestworks         = module name (P = %)
+  V                  = library separator
+  testworks          = library name
+
+Example 2::
+
+  Krun_test_applicationVtestworksMM0I
+
+  K                    = constant
+  run_test_application = method name
+  V                    = library separator
+  testworks            = library name
+  M                    = method separator
+  (module name omitted when same as library name)
+  M                    = method separator
+  0                    = 0th method in run_test_application generic
+  I                    = Internal Entry Point (IEP)
+
+Some internal modules are given special single letter names.  For
+example the dylan module's name is just "d".
+
+See `the source
+<https://github.com/dylan-lang/opendylan/blob/master/sources/dfmc/mangling/mangling.dylan>`_
+for more detail.
