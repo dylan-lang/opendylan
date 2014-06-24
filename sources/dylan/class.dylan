@@ -696,59 +696,59 @@ define function augment-rcpl-position-data-multiple (cls :: <class>, positions :
  => ()
   let lk :: <simple-lock> = $class-bashing-lock;
   with-lock (lk)
-  let npos :: <integer> = size(positions);
-  let ninc :: <integer> = begin
-                            local method loop (i :: <integer>, n :: <integer>)
-                                    if (i == 0)
-                                      n
-                                    else
-                                      let i :: <integer> = i - 1;
-                                      let p :: <integer> = vector-element(positions, i);
-                                      loop(i, if (rcpl-position-known?(p, cls)) n else n + 1 end)
-                                    end if
-                                  end method;
-                            loop(size(positions), 0)
-                          end;
-  // for (p :: <integer> in positions) if (~rcpl-position-known?(p, cls)) ninc := ninc + 1 end if end for;
-  if (ninc > 0)
-    let old :: <simple-object-vector> = cls.class-rcpl-other-positions;
-    let nold :: <integer> = size(old);
-    let nnew :: <integer> = nold + ninc;
-    let new :: <simple-object-vector> = make(<simple-object-vector>, size: nnew);
-    let base-pos :: <integer> = class-rcpl-position(cls);
-    local method loop (pidx :: <integer>, nidx :: <integer>, oidx :: <integer>)
-            if (oidx == nold)
-              if (pidx ~== npos)
-                new[nidx] := positions[pidx];
-                loop(pidx + 1, nidx + 1, oidx)
-              else
-                synchronize-side-effects();
-                cls.class-rcpl-other-positions := new;
-                synchronize-side-effects();
-                initialize-class-instance?-iep(cls)
-              end if
-            elseif (pidx == npos)
-              new[nidx] := old[oidx];
-              loop(pidx, nidx + 1, oidx + 1)
-            else
-              let olde :: <integer> = old[oidx];
-              let newe :: <integer> = positions[pidx];
-              if (newe < olde)
-                if (newe == base-pos)
-                  loop(pidx + 1, nidx, oidx)
-                else
-                  new[nidx] := newe;
+    let npos :: <integer> = size(positions);
+    let ninc :: <integer> = begin
+                              local method loop (i :: <integer>, n :: <integer>)
+                                      if (i == 0)
+                                        n
+                                      else
+                                        let i :: <integer> = i - 1;
+                                        let p :: <integer> = vector-element(positions, i);
+                                        loop(i, if (rcpl-position-known?(p, cls)) n else n + 1 end)
+                                      end if
+                                    end method;
+                              loop(size(positions), 0)
+                            end;
+    // for (p :: <integer> in positions) if (~rcpl-position-known?(p, cls)) ninc := ninc + 1 end if end for;
+    if (ninc > 0)
+      let old :: <simple-object-vector> = cls.class-rcpl-other-positions;
+      let nold :: <integer> = size(old);
+      let nnew :: <integer> = nold + ninc;
+      let new :: <simple-object-vector> = make(<simple-object-vector>, size: nnew);
+      let base-pos :: <integer> = class-rcpl-position(cls);
+      local method loop (pidx :: <integer>, nidx :: <integer>, oidx :: <integer>)
+              if (oidx == nold)
+                if (pidx ~== npos)
+                  new[nidx] := positions[pidx];
                   loop(pidx + 1, nidx + 1, oidx)
+                else
+                  synchronize-side-effects();
+                  cls.class-rcpl-other-positions := new;
+                  synchronize-side-effects();
+                  initialize-class-instance?-iep(cls)
                 end if
+              elseif (pidx == npos)
+                new[nidx] := old[oidx];
+                loop(pidx, nidx + 1, oidx + 1)
               else
-                new[nidx] := olde;
-                loop(if (olde == newe) pidx + 1 else pidx end, nidx + 1, oidx + 1)
+                let olde :: <integer> = old[oidx];
+                let newe :: <integer> = positions[pidx];
+                if (newe < olde)
+                  if (newe == base-pos)
+                    loop(pidx + 1, nidx, oidx)
+                  else
+                    new[nidx] := newe;
+                    loop(pidx + 1, nidx + 1, oidx)
+                  end if
+                else
+                  new[nidx] := olde;
+                  loop(if (olde == newe) pidx + 1 else pidx end, nidx + 1, oidx + 1)
+                end if
               end if
-            end if
-          end method;
-    loop(0, 0, 0)
-  end if
-end with-lock
+            end method;
+      loop(0, 0, 0)
+    end if
+  end with-lock
 end function;
 
 
