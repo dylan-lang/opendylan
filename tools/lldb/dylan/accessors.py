@@ -32,7 +32,7 @@ def dylan_byte_string_data(value):
   if error.Fail():
     return '<error: %s>' % error.GetCString()
   else:
-    return '%s' % string
+    return string
 
 def dylan_integer_value(value):
   return value.GetValueAsUnsigned() >> 2
