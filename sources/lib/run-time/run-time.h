@@ -314,14 +314,11 @@ typedef struct _dylan_class {
 #define WRAPPER_CLASS(x) \
     (ICLASS_CLASS(WRAPPER_ICLASS(x)))
 
-#define define_SOV(_name, _size) \
-  typedef struct _dylan_simple_object_vector_##_name { \
-    dylan_value class; \
-    dylan_value size; \
-    dylan_value data[_size]; \
-  } _name
-
-define_SOV(dylan_simple_object_vector, 1);
+typedef struct _dylan_simple_object_vector {
+  dylan_value class;
+  dylan_value size;
+  dylan_value data[1];
+} dylan_simple_object_vector;
 
 static inline int vector_size (dylan_simple_object_vector* vector) {
   return(R(vector->size));
@@ -340,14 +337,11 @@ static inline dylan_value vector_ref(dylan_simple_object_vector* vector, int off
   return(vector_data((dylan_simple_object_vector*)vector)[offset]);
 }
 
-#define define_byte_string(_name, _size) \
-  typedef struct _dylan_byte_string_##_name { \
-    dylan_value class; \
-    dylan_value size; \
-    char data[_size + 1]; \
-  } _name
-
-define_byte_string(dylan_byte_string, 0);
+typedef struct _dylan_byte_string {
+  dylan_value class;
+  dylan_value size;
+  char data[1];
+} dylan_byte_string;
 
 typedef struct _dylan_symbol {
   dylan_value   class;
@@ -1189,7 +1183,6 @@ extern void mps__free(size_t *old);
 /* ALLOCATION PRIMITIVES */
 
 extern dylan_value primitive_allocate(DSINT);
-extern dylan_value primitive_byte_allocate(DSINT, DSINT);
 extern dylan_value primitive_untraced_allocate(DSINT);
 extern dylan_value primitive_manual_allocate(dylan_value);
 extern void primitive_manual_free(dylan_value);

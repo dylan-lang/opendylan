@@ -24,12 +24,12 @@ static int dylan_print_depth  = 3;
 
 /* INSTANCE */
 
-dylan_value dylan_slot_element (dylan_value* instance, int offset) {
-  return instance[offset + 1];
+dylan_value dylan_slot_element (dylan_value instance, int offset) {
+  return ((dylan_object*)instance)->slots[offset];
 }
 
-dylan_value dylan_object_class (dylan_value* instance) {
-  return OBJECT_CLASS(instance);
+dylan_value dylan_object_class (dylan_value instance) {
+  return (dylan_value)OBJECT_CLASS(instance);
 }
 
 /* BOOLEAN */
@@ -128,8 +128,8 @@ bool dylan_string_p (dylan_value instance) {
   return dylan_object_class(instance) == Lbyte_stringGVKd;
 }
 
-char* dylan_string_data (dylan_value instance) {
-  return ((dylan_byte_string*)instance)->data;
+char* dylan_string_data (dylan_byte_string* instance) {
+  return instance->data;
 }
 
 /* SIMPLE-CONDITION */
@@ -143,12 +143,12 @@ bool dylan_simple_condition_p (dylan_value instance) {
   return DTRUE == CALL2(&KinstanceQVKd, instance, Lsimple_conditionGVKe);
 }
 
-dylan_value dylan_simple_condition_format_string (dylan_value instance) {
-  return CALL1(&Kcondition_format_stringVKd, instance);
+dylan_byte_string* dylan_simple_condition_format_string (dylan_value instance) {
+  return (dylan_byte_string*)CALL1(&Kcondition_format_stringVKd, instance);
 }
 
-dylan_value dylan_simple_condition_format_args (dylan_value instance) {
-  return CALL1(&Kcondition_format_arguments_vectorVKi, instance);
+dylan_simple_object_vector* dylan_simple_condition_format_args (dylan_value instance) {
+  return (dylan_simple_object_vector*)CALL1(&Kcondition_format_arguments_vectorVKi, instance);
 }
 
 /* CLASS */
@@ -205,7 +205,7 @@ enum dylan_type_enum {
 };
 
 static void print_object (STREAM, dylan_value, BOOL, int);
-void dylan_format (STREAM, dylan_value, dylan_value);
+void dylan_format (STREAM, dylan_byte_string*, dylan_simple_object_vector*);
 
 static enum dylan_type_enum
 dylan_get_type (dylan_value instance) {
@@ -278,7 +278,7 @@ static void print_float (STREAM stream, dylan_value instance, BOOL escape_p, int
   }
 }
 
-static void print_string (STREAM stream, dylan_value instance, BOOL escape_p, int print_depth) {
+static void print_string (STREAM stream, dylan_byte_string* instance, BOOL escape_p, int print_depth) {
   ignore(print_depth);
   if (escape_p) {
     format(stream, "\"%s\"", dylan_string_data(instance))
@@ -287,7 +287,7 @@ static void print_string (STREAM stream, dylan_value instance, BOOL escape_p, in
   }
 }
 
-static void print_string_data (STREAM stream, dylan_value instance, BOOL escape_p, int print_depth) {
+static void print_string_data (STREAM stream, dylan_byte_string* instance, BOOL escape_p, int print_depth) {
   ignore(escape_p); ignore(print_depth);
   format(stream, "%s", dylan_string_data(instance));
 }
@@ -295,7 +295,7 @@ static void print_string_data (STREAM stream, dylan_value instance, BOOL escape_
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 
-static void print_vector (STREAM stream, dylan_value instance, BOOL escape_p, int print_depth) {
+static void print_vector (STREAM stream, dylan_simple_object_vector* instance, BOOL escape_p, int print_depth) {
   int size = vector_size(instance), i = 0;
   bool first = true;
   dylan_value element;
@@ -387,8 +387,8 @@ static void print_boolean (STREAM stream, dylan_value instance, BOOL escape_p, i
 }
 
 static void print_simple_condition (STREAM stream, dylan_value instance, BOOL escape_p, int print_depth) {
-  dylan_value format_string = dylan_simple_condition_format_string(instance);
-  dylan_value format_args = dylan_simple_condition_format_args(instance);
+  dylan_byte_string* format_string = dylan_simple_condition_format_string(instance);
+  dylan_simple_object_vector* format_args = dylan_simple_condition_format_args(instance);
   ignore(print_depth);
   if (escape_p) put_char('"', stream);
   dylan_format(stream, format_string, format_args);
@@ -398,7 +398,7 @@ static void print_simple_condition (STREAM stream, dylan_value instance, BOOL es
 static void print_class_debug_name (STREAM stream, dylan_value instance, BOOL escape_p, int print_depth) {
   dylan_value name = dylan_class_debug_name(instance);
   ignore(escape_p);
-  print_string_data(stream, name, TRUE, print_depth);
+  print_string_data(stream, (dylan_byte_string*)name, TRUE, print_depth);
 }
 
 static void print_class (STREAM stream, dylan_value instance, BOOL escape_p, int print_depth) {
@@ -432,19 +432,19 @@ typedef void (*DEBUG_PRINT_FUNCPTR)(STREAM, dylan_value, BOOL, int);
 static void print_object (STREAM stream, dylan_value instance, BOOL escape_p, int print_depth) {
   enum dylan_type_enum type = dylan_get_type(instance);
   static DEBUG_PRINT_FUNCPTR printers[] = {
-    [integer_type]          = print_integer,
-    [character_type]        = print_character,
-    [float_type]            = print_float,
-    [dylan_boolean_type]    = print_boolean,
-    [string_type]           = print_string,
-    [vector_type]           = print_vector,
-    [pair_type]             = print_pair,
-    [empty_list_type]       = print_empty_list,
-    [symbol_type]           = print_symbol,
-    [simple_condition_type] = print_simple_condition,
-    [class_type]            = print_class,
-    [function_type]         = print_function,
-    [user_defined_type]     = print_user_defined
+    [integer_type]          = (DEBUG_PRINT_FUNCPTR)print_integer,
+    [character_type]        = (DEBUG_PRINT_FUNCPTR)print_character,
+    [float_type]            = (DEBUG_PRINT_FUNCPTR)print_float,
+    [dylan_boolean_type]    = (DEBUG_PRINT_FUNCPTR)print_boolean,
+    [string_type]           = (DEBUG_PRINT_FUNCPTR)print_string,
+    [vector_type]           = (DEBUG_PRINT_FUNCPTR)print_vector,
+    [pair_type]             = (DEBUG_PRINT_FUNCPTR)print_pair,
+    [empty_list_type]       = (DEBUG_PRINT_FUNCPTR)print_empty_list,
+    [symbol_type]           = (DEBUG_PRINT_FUNCPTR)print_symbol,
+    [simple_condition_type] = (DEBUG_PRINT_FUNCPTR)print_simple_condition,
+    [class_type]            = (DEBUG_PRINT_FUNCPTR)print_class,
+    [function_type]         = (DEBUG_PRINT_FUNCPTR)print_function,
+    [user_defined_type]     = (DEBUG_PRINT_FUNCPTR)print_user_defined
   };
   if (type == unknown_type) {
     format(stream, "?%lx", instance);
@@ -453,7 +453,7 @@ static void print_object (STREAM stream, dylan_value instance, BOOL escape_p, in
   }
 }
 
-void dylan_format (STREAM stream, dylan_value dylan_string, dylan_value dylan_arguments) {
+void dylan_format (STREAM stream, dylan_byte_string* dylan_string, dylan_simple_object_vector* dylan_arguments) {
   BOOL  percent_p = false;
   char* string = dylan_string_data(dylan_string);
   dylan_value*    arguments = vector_data(dylan_arguments);
