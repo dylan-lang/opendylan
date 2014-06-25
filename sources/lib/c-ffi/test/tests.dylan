@@ -43,6 +43,18 @@ define c-function ffi-no-parameters
   c-name: "ffi_no_parameters";
 end;
 
+define c-function increment-size-t
+  parameter x :: <c-size-t>;
+  result r :: <c-size-t>;
+  c-name: "incr_size_t";
+end;
+
+define c-function increment-ssize-t
+  parameter x :: <c-ssize-t>;
+  result r :: <c-ssize-t>;
+  c-name: "incr_ssize_t";
+end;
+
 define c-function increment-unsigned-long
   parameter x :: <c-unsigned-long>;
   result r :: <c-unsigned-long>;
@@ -280,6 +292,16 @@ define test c-function-test (description: "C Function Tests")
     check-equal("c-function signed short negative increment",
                 increment-signed-short(- i), (- i) + 1);
   end;
+  for (i from 0 below (ash(1, 8 * size-of(<C-unsigned-char>)) - 2) by 17)
+    check-equal("c-function size_t increment",
+                increment-size-t(i), i + 1);
+  end;
+  for (i from 0 below (ash(1, (8 * size-of(<C-signed-char>)) - 1) - 2) by 17)
+    check-equal("c-function ssize_t increment",
+                increment-ssize-t(i), i + 1);
+    check-equal("c-function ssize_t negative increment",
+                increment-ssize-t(- i), (- i) + 1);
+  end;
   // !@#$ do more here
 end;
 
@@ -486,6 +508,8 @@ define test c-types-test (description: "C Types Tests")
     struct,
     union,
     function-pointer,
+    ssize-t,
+    size-t,
     dylan-object
   end;
   /// check that all of these things are functions
@@ -521,7 +545,11 @@ define test c-types-test (description: "C Types Tests")
     C-int-at,
     C-unsigned-int-at-setter,
     C-signed-int-at-setter,
-    C-int-at-setter
+    C-int-at-setter,
+    C-size-t-at,
+    C-size-t-at-setter,
+    C-ssize-t-at,
+    C-ssize-t-at-setter
   end;
 end;
 
