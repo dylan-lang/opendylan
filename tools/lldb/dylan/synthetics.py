@@ -110,6 +110,7 @@ class SyntheticSimpleObjectVector(object):
     self.element_count = dylan_vector_size(self.value)
 
 SYNTHETIC_CLASS_TABLE = {
+  '<byte-string>': SyntheticHideChildren,
   '<empty-list>': SyntheticHideChildren,
   '<simple-object-vector>': SyntheticSimpleObjectVector
 }

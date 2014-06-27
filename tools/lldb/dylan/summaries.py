@@ -21,7 +21,10 @@ def dylan_object_summary(value, internal_dict):
   return summary_func(value, internal_dict)
 
 def dylan_boolean_summary(value, internal_dict):
-  return '{<boolean>: %s}' % dylan_boolean_value(value)
+  b = '#f'
+  if dylan_boolean_value(value):
+    b = '#t'
+  return '{<boolean>: %s}' % b
 
 def dylan_byte_character_summary(value, internal_dict):
   byte_character = dylan_byte_character_value(value)
@@ -32,7 +35,7 @@ def dylan_byte_string_summary(value, internal_dict):
   if string_data == '':
     return '{<byte-string>: size: 0}'
   else:
-    return '{<byte-string>: size: %d, data: %s}' % (len(string_data), string_data)
+    return '{<byte-string>: size: %d, data: "%s"}' % (len(string_data), string_data)
 
 def dylan_empty_list_summary(value, internal_dict):
   return '{<empty-list>: #()}'
