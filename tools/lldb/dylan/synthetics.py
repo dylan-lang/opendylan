@@ -1,20 +1,9 @@
 import lldb
 from accessors import *
 
-class SyntheticDylanValue(object):
-  """A shape-shifting synthetic that doesn't do anything by itself, but changes
-     class to an appropriate synthetic when there is one.
-  """
+class SyntheticHideChildren(object):
+  """A synthetic that shows no children."""
   def __init__(self, value, internal_dict):
-    tag = dylan_tag_bits(value)
-    new_class = None
-    if tag == OBJECT_TAG:
-      class_name = dylan_object_class_name(value)
-      new_class = SYNTHETIC_CLASS_TABLE.get(class_name, SyntheticObject)
-      if new_class:
-         self.__class__ = new_class
-    else:
-      pass
     self.value = self.cast_value(value)
     self.update()
 
@@ -35,6 +24,23 @@ class SyntheticDylanValue(object):
 
   def update(self):
     pass
+
+class SyntheticDylanValue(SyntheticHideChildren):
+  """A shape-shifting synthetic that doesn't do anything by itself, but changes
+     class to an appropriate synthetic when there is one.
+  """
+  def __init__(self, value, internal_dict):
+    tag = dylan_tag_bits(value)
+    new_class = None
+    if tag == OBJECT_TAG:
+      class_name = dylan_object_class_name(value)
+      new_class = SYNTHETIC_CLASS_TABLE.get(class_name, SyntheticObject)
+      if new_class:
+         self.__class__ = new_class
+    else:
+      pass
+    self.value = self.cast_value(value)
+    self.update()
 
 class SyntheticObject(object):
   """A synthetic that knows how to walk the slots of an arbitrary Dylan
@@ -104,5 +110,6 @@ class SyntheticSimpleObjectVector(object):
     self.element_count = dylan_vector_size(self.value)
 
 SYNTHETIC_CLASS_TABLE = {
+  '<empty-list>': SyntheticHideChildren,
   '<simple-object-vector>': SyntheticSimpleObjectVector
 }

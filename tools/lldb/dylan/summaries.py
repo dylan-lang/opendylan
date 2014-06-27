@@ -34,6 +34,9 @@ def dylan_byte_string_summary(value, internal_dict):
   else:
     return '{<byte-string>: size: %d, data: %s}' % (len(string_data), string_data)
 
+def dylan_empty_list_summary(value, internal_dict):
+  return '{<empty-list>: #()}'
+
 def dylan_generic_function_summary(value, internal_dict):
   target = lldb.debugger.GetSelectedTarget()
   gf_type = target.FindFirstType('dylan_generic_function').GetPointerType()
@@ -62,6 +65,7 @@ def dylan_user_defined_object_summary(value, internal_dict):
 SUMMARY_DISPATCH_TABLE = {
   '<boolean>': dylan_boolean_summary,
   '<byte-string>': dylan_byte_string_summary,
+  '<empty-list>': dylan_empty_list_summary,
   '<generic-function>': dylan_generic_function_summary,
   '<incremental-generic-function>': dylan_generic_function_summary,
   '<sealed-generic-function>': dylan_generic_function_summary,
