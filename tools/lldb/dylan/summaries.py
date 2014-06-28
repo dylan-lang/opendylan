@@ -56,7 +56,7 @@ def dylan_simple_object_vector_summary(value, internal_dict):
   return '{<simple-object-vector>: size: %s}' % size
 
 def dylan_symbol_summary(value, internal_dict):
-  return'{<symbol>: %s}' % dylan_symbol_name(value)
+  return'{<symbol>: #"%s"}' % dylan_symbol_name(value)
 
 def dylan_unicode_character_summary(value, internal_dict):
   unicode_character = dylan_unicode_character_value(value)

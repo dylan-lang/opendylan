@@ -112,5 +112,6 @@ class SyntheticSimpleObjectVector(object):
 SYNTHETIC_CLASS_TABLE = {
   '<byte-string>': SyntheticHideChildren,
   '<empty-list>': SyntheticHideChildren,
-  '<simple-object-vector>': SyntheticSimpleObjectVector
+  '<simple-object-vector>': SyntheticSimpleObjectVector,
+  '<symbol>': SyntheticHideChildren
 }
