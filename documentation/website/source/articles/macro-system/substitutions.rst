@@ -153,7 +153,7 @@ List substitutions
                 alpha
 
         Any of the separators `Separators`_ may be used in place of a comma in
-        the tempate.
+        the template.
 
 
 Auxiliary rule set substitution

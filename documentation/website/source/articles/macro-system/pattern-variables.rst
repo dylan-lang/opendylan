@@ -68,7 +68,7 @@ Simple pattern variables
         fragment just has the name part, the substitution for
         `?{specialization}` will be `<object>`. Note that `?{specialization}`
         will not match every expression; it will only match an expression that
-        happens to also be a valied type specialization.
+        happens to also be a valid type specialization.
 
 
 .. _proplist-variables:
@@ -303,4 +303,4 @@ Auxiliary rule set pattern variables
 `...`
         This syntax can only be used within an auxiliary rule set. If the rule
         set is named `my-aux-rules`, `...` is equivalent to `?my-aux-rules:*`.
-        
+

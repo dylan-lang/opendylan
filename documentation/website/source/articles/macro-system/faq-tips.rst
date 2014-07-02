@@ -20,7 +20,7 @@ General advice and troubleshooting
 - The best way to design a macro is:
    1. Come up with the best non-macro interface you can.
    2. Design the syntax of the macro call up front.
-   3. Implement thah design.
+   3. Implement that design.
 - Gwydion Dylan sometimes has issues with trailing semi-colons or commas. In
   general, don't include a separator at the end of a template.
 - In both Gwydion Dylan and Open Dylan, the variable declaration for a variable
