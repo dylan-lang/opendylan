@@ -62,6 +62,10 @@ def dylan_unicode_character_summary(value, internal_dict):
   unicode_character = dylan_unicode_character_value(value)
   return '{<unicode-character>: %s}' % unicode_character
 
+def dylan_unicode_string_summary(value, internal_dict):
+  unicode_string = dylan_unicode_string_data(value)
+  return '{<unicode-string>: %s}' % unicode_string
+
 def dylan_user_defined_object_summary(value, internal_dict):
   return '{%s}' % dylan_object_class_name(value)
 
@@ -73,5 +77,6 @@ SUMMARY_DISPATCH_TABLE = {
   '<incremental-generic-function>': dylan_generic_function_summary,
   '<sealed-generic-function>': dylan_generic_function_summary,
   '<simple-object-vector>': dylan_simple_object_vector_summary,
-  '<symbol>': dylan_symbol_summary
+  '<symbol>': dylan_symbol_summary,
+  '<unicode-string>': dylan_unicode_string_summary
 }

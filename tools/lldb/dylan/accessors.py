@@ -91,6 +91,24 @@ def dylan_symbol_name(value):
 def dylan_unicode_character_value(value):
   return unichr(value.GetValueAsUnsigned() >> 2).encode('utf8')
 
+def dylan_unicode_string_data(value):
+  target = lldb.debugger.GetSelectedTarget()
+  byte_string_type = target.FindFirstType('dylan_byte_string').GetPointerType()
+  value = value.Cast(byte_string_type)
+  size = dylan_integer_value(value.GetChildMemberWithName('size'))
+  if size == 0:
+    return ''
+  # We don't need to read the null termination because we don't want that in
+  # our UTF-8 encoded result.
+  size = size * 4
+  data_pointer = value.GetChildMemberWithName('data').AddressOf().GetValueAsUnsigned(0)
+  error = lldb.SBError()
+  data = value.process.ReadMemory(data_pointer, size, error)
+  if error.Fail():
+    return '<error: %s>' % (error.GetCString(),)
+  else:
+    return data.decode('utf-32').encode('utf-8')
+
 def dylan_value_as_object(value):
   target = lldb.debugger.GetSelectedTarget()
   # We use 'struct _dylan_object' here rather than 'dylan_object' as the latter
