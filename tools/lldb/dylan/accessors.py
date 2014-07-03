@@ -89,7 +89,7 @@ def dylan_symbol_name(value):
   return dylan_byte_string_data(value.GetChildMemberWithName('name'))
 
 def dylan_unicode_character_value(value):
-  return unichr(value.GetValueAsUnsigned() >> 2)
+  return unichr(value.GetValueAsUnsigned() >> 2).encode('utf8')
 
 def dylan_value_as_object(value):
   target = lldb.debugger.GetSelectedTarget()
