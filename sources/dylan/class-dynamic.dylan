@@ -795,7 +795,6 @@ end function;
 define function check-for-illegally-inherited-slots (slotvec :: <simple-object-vector>,
                                                      all-super-iclasses :: <list>)
  => ()
-  let losers :: <list> = #();
   let othersups :: <list> = tail(all-super-iclasses);
   for (sd :: <slot-descriptor> in slotvec)
     for (iclass :: <implementation-class> in othersups)

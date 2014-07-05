@@ -398,7 +398,7 @@ define function run-application
       run-outputter(outputter, outputter-read-fd);
     end if;
 
-    let (return-pid, status-code) = %waitpid(pid, 0);
+    let (_return-pid, status-code) = %waitpid(pid, 0);
     let signal-code = logand(status-code, #o177);
     let exit-code = ash(status-code, -8);
     apply(values, exit-code, (signal-code ~= 0) & signal-code, #f,
@@ -428,7 +428,7 @@ define function wait-for-application-process
     (process :: <application-process>)
  => (exit-code :: <integer>, signal :: false-or(<integer>));
   if (process.%application-process-state == #"running")
-    let (return-pid, return-status)
+    let (_return-pid, return-status)
       = %waitpid(process.application-process-id, 0);
     process.%application-process-status-code := return-status;
     process.%application-process-state := #"exited";

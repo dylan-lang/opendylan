@@ -57,7 +57,7 @@ define sealed method member? (object, set :: <object-set>, #key test)
   sequence-point();
   // Don't need hash state here.
   let id = hash-for-lookup(tv, object);
-  let (index, table-key) = search(tv, object, id);
+  let (_index, table-key) = search(tv, object, id);
   if (table-key ~== $table-entry-empty)
     sequence-point();
     if (rehash-token-valid?(tv, token))
@@ -189,8 +189,8 @@ define sealed inline method forward-iteration-protocol (set :: <object-set>)
       current-element :: <function>,
       current-element-setter :: <function>,
       copy-state :: <function>)
-  let (initial, limit, next, finished, current-key, current-element,
-       current-element-setter, copy-state) =
+  let (initial, _limit, next, _finished, current-key, _current-element,
+       _current-element-setter, copy-state) =
     set.set-elements.forward-iteration-protocol;
 
   values(initial, #f, next, set-finished-state?, current-key, current-key,

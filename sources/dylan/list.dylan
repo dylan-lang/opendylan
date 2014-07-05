@@ -849,7 +849,6 @@ define sealed method concatenate-as-two
     if (empty?(first-seq))
       l
     else
-      let revcpy = #();
       for (e in first-seq, revcpy = #() then pair(e, revcpy))
       finally
         let result = l;

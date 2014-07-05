@@ -861,7 +861,6 @@ end function;
 define function compute-sorted-applicable-methods
     (gf :: <generic-function>, args :: <simple-object-vector>)
  => (ordered :: <list>, ambig :: <list>);
-  let headed-methods :: <pair> = pair(#f, #());
   compute-sorted-applicable-methods-1(for (ans = #() then if (%method-applicable?(m, args)) pair(m, ans) else ans end,
                                            m in generic-function-methods(gf))
                                       finally ans

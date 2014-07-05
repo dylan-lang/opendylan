@@ -218,7 +218,7 @@ define function load-buffer
   if (desired-file-position ~= the-stream.accessor.accessor-position)
     accessor-position(the-stream.accessor) := desired-file-position;
   end if;
-  let (nread, eof?)
+  let (nread, _eof?)
     = accessor-read-into!
     (the-stream.accessor, the-stream, start, count, buffer: the-buffer);
   the-buffer.buffer-end := start + nread;
@@ -229,10 +229,9 @@ define function load-buffer-and-fill
     (the-stream :: <file-stream>, the-buffer :: <power-of-two-buffer>,
      desired-file-position :: <integer>, start :: <integer>,
      count :: <integer>) => ()
-  let nread =
+  let _nread =
     load-buffer(the-stream, the-buffer, desired-file-position, start, count);
   buffer-fill(the-buffer, 0, start: the-buffer.buffer-end);
-  nread
 end function;
 
 // We get here only when 'stream-input-buffer' is #f.  Since changing

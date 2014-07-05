@@ -215,7 +215,6 @@ define method size-setter
     (new-size :: <integer>, vector :: <limited-stretchy-vector>)
          => (new-size :: <integer>)
   check-nat(new-size);
-  let size = size(vector);
   trusted-size(vector) := new-size;
 end method size-setter;
 

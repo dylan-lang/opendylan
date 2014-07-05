@@ -693,7 +693,6 @@ define method congruent? (g :: <generic-function>, m :: <accessor-method>)
     end case;
 
     // --- value declarations ---
-    let grestv? = gsig.signature-rest-value?;
     let gvals :: <simple-object-vector> = gsig.signature-values;
     let mval :: <type> = sd.slot-type;
     let gvsiz :: <integer> = gsig.signature-number-values;

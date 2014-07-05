@@ -301,7 +301,7 @@ define method do-next-input-buffer
   let sb :: <buffer> = stream-input-buffer(stream);
   let bufsiz :: <buffer-index> = sb.buffer-size;
   let start  :: <buffer-index> = 0;  // Not really necessary, but safe
-  let (nread, eof?)
+  let (nread, _eof?)
     = accessor-read-into!(stream.accessor, stream, start, bufsiz);
   if (nread > 0)
     sb.buffer-next := start;

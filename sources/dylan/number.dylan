@@ -257,13 +257,13 @@ end method truncate/;
 
 define inline method modulo (real :: <machine-number>, divisor :: <machine-number>)
  => (result :: <machine-number>)
-  let (integer :: <integer>, remainder :: <machine-number>) = floor/(real, divisor);
+  let (_integer :: <integer>, remainder :: <machine-number>) = floor/(real, divisor);
   remainder
 end method modulo;
 
 define inline method remainder (real :: <machine-number>, divisor :: <machine-number>)
  => (result :: <machine-number>)
-  let (integer :: <integer>, remainder :: <machine-number>) = truncate/(real, divisor);
+  let (_integer :: <integer>, remainder :: <machine-number>) = truncate/(real, divisor);
   remainder
 end method remainder;
 

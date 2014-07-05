@@ -53,7 +53,6 @@ define function remove-incomplete-method-handler
     block (return)
       for (e :: <list> in old)
         let m :: <method> = first(e);
-        let l :: <library> = second(e);
         if (test(m, frob))
           *incomplete-generic-function-methods*[g] := remove!(old, e);
           return(m)
@@ -317,7 +316,7 @@ define inline function %%define-generic
         for (m :: <method> in methods, i :: <integer> from 0)
           let (well?, reason) = congruent?(gf, m);
           if (well?)
-            let (ans, barfo) = add-method-internal(gf, m, if (i < nlibs) mlibs[i] else glib end, #f, #f);
+            let (_ans, barfo) = add-method-internal(gf, m, if (i < nlibs) mlibs[i] else glib end, #f, #f);
             if (barfo) bletch(barfo) end;
           elseif (complain-about-congruency?)
             lossage := pair(list(m, reason), lossage)

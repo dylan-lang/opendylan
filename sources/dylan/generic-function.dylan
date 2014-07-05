@@ -456,7 +456,7 @@ define function %add-a-method (g :: <generic-function>, m :: <method>, lib :: <l
                                add-method-domain? :: <boolean>)
  => ()
   let lossage = (with-object-lock (g)
-                   let (ans, condition)
+                   let (_ans, condition)
                    = add-method-internal(g, m, lib, check-congruency?, check-sealing?);
                  let more-lossage =
                    if (add-method-domain?
@@ -555,7 +555,6 @@ define function %add-nonsiblinged-method (g :: <generic-function>,
           if (instance?(meths, <list>))
             generic-function-methods(g) := pair(m, meths)
           else
-            let methds :: <simple-object-vector> = meths;
             generic-function-methods(g) := concatenate(vector(m), meths)
           end if;
           finalize-generic-function(g);
