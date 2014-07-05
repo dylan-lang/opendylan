@@ -21,8 +21,6 @@
 #  define unlikely(x) x
 #endif
 
-#define MAX_HEAP_SIZE          (2047 * 1024 * 1024)
-
 /*
  stack allocation
    relies on inlining
@@ -3726,8 +3724,6 @@ void primitive_exit_application (DSINT code) {
 
 /* TOP LEVEL INITIALIZATION */
 
-void GC_set_max_heap_size(unsigned long);
-
 static void call_application_exit_functions(void) {
   extern dylan_value Kcall_application_exit_functionsVKeI();
   (void) Kcall_application_exit_functionsVKeI();
@@ -3764,7 +3760,14 @@ void _Init_Run_Time ()
 
 #ifdef GC_USE_BOEHM
     GC_INIT();
-    GC_set_max_heap_size(MAX_HEAP_SIZE);
+
+    const char *heap_size = getenv("OPEN_DYLAN_MAX_BOEHM_HEAP_SIZE");
+    if (NULL != heap_size) {
+      size_t max_heap_size = strtoul(heap_size, (char **)NULL, 10);
+      if (max_heap_size > 0) {
+        GC_set_max_heap_size(max_heap_size);
+      }
+    }
 #endif
 
     initialize_threads_primitives();
