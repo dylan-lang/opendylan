@@ -28,9 +28,6 @@ typedef int mps_bool_t;
 typedef void* mps_root_t;
 typedef void *mps_addr_t;       /* managed address (void *) */
 
-#define MAX_BOEHM_HEAP_SIZE (1024 * 1024 * 1024)
-/* #define INITIAL_BOEHM_HEAP_SIZE (50 * 1024 * 1024) */
-
 typedef struct gc_teb_s {       /* GC Thread Environment block descriptor */
   mps_bool_t gc_teb_inside_tramp;  /* the HARP runtime assumes offset 0 for this */
   size_t     gc_teb_allocation_counter;   /* the profiler assumes this is at offset -1 from main TEB */
@@ -1135,15 +1132,13 @@ MMError dylan_init_memory_manager(void)
   /* Not required for the dll version of Boehm. */
   /* GC_init(); */
 
-#ifdef MAX_BOEHM_HEAP_SIZE
-  /* Only makes sense for a 128Mb machine. */
-  GC_set_max_heap_size(MAX_BOEHM_HEAP_SIZE);
-#endif
-
-#ifdef INITIAL_BOEHM_HEAP_SIZE
-  /* Call this to give an initial heap size hint. */
-  GC_expand_hp(INITIAL_BOEHM_HEAP_SIZE);
-#endif
+  const char *heap_size = getenv("OPEN_DYLAN_MAX_BOEHM_HEAP_SIZE");
+  if (NULL != heap_size) {
+    size_t max_heap_size = strtoul(heap_size, (char **)NULL, 10);
+    if (max_heap_size > 0) {
+      GC_set_max_heap_size(max_heap_size);
+    }
+  }
 
   /* Call this to enable incrementality. This doesn't work with the MM GC. */
   /* GC_enable_incremental(); */
