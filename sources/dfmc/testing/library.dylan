@@ -18,6 +18,7 @@ define library dfmc-testing
   use environment-protocols;
   use dfmc-environment-projects;
   use dfmc-back-end-implementations;
+  use dfmc-execution;
   use testworks;
 end library;
 
@@ -36,6 +37,7 @@ define module dfmc-testing
   use environment-protocols,
     import: { find-project, open-project-compiler-database };
   use dfmc-environment-projects;
+  use dfmc-runtime-execution;
   use testworks;
 end module;
 
