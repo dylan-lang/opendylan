@@ -689,7 +689,7 @@ end;
 // during compilation. Convenient functions are defined for defining modules
 // and looking up their definitions in the current module.
 
-// Note: Working hygiene may make thisobsolete since program
+// Note: Working hygiene may make this obsolete since program
 // fragments will carry with them the module context from which they
 // originate, and through that the library may be determined. Some code,
 // though, perhaps sealing?, may find it convenient to work in terms of
