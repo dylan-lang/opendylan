@@ -10,13 +10,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $module-separator               = "Y";
 define constant $library-separator              = "V";
 define constant $local-suffix                   = "_";
-define constant $hygiene-marker                        = "F";
+define constant $hygiene-marker                 = "F";
 define constant $escape-separator               = "Z";
 define constant $constant-prefix                = "K";
-define constant $symbol-prefix                        = "J";
+define constant $symbol-prefix                  = "J";
 define constant $indirection-prefix             = "I";
-define constant $wrapper-suffix                        = "W";
-define constant $iep-suffix                         = "I";
+define constant $wrapper-suffix                 = "W";
+define constant $iep-suffix                     = "I";
 define constant $method-mangled-marker-string   = "M";
 define constant $slot-mangled-marker-string     = "H";
 define constant $dylan-module-separator         = "K";
@@ -25,8 +25,8 @@ define constant $domain-mangled-marker-string   = "RD_";
 // Note that the following must be characters rather than strings, since
 // the initialization of mangles tables assumes that.
 
-define constant $method-marker                   = '#';
-define constant $method-mangled-marker           = $method-mangled-marker-string[0];
+define constant $method-marker             = '#';
+define constant $method-mangled-marker     = $method-mangled-marker-string[0];
 define constant $slot-marker               = ',';
 define constant $slot-mangled-marker       = $slot-mangled-marker-string[0];
 define constant $constant-marker           = $constant-prefix[0];
