@@ -10,13 +10,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $module-separator               = "Y";
 define constant $library-separator              = "V";
 define constant $local-suffix                   = "_";
-define constant $hygiene-marker	                = "F";
+define constant $hygiene-marker                        = "F";
 define constant $escape-separator               = "Z";
 define constant $constant-prefix                = "K";
-define constant $symbol-prefix	                = "J";
+define constant $symbol-prefix                        = "J";
 define constant $indirection-prefix             = "I";
-define constant $wrapper-suffix	                = "W";
-define constant $iep-suffix 	                = "I";
+define constant $wrapper-suffix                        = "W";
+define constant $iep-suffix                         = "I";
 define constant $method-mangled-marker-string   = "M";
 define constant $slot-mangled-marker-string     = "H";
 define constant $dylan-module-separator         = "K";
@@ -25,9 +25,9 @@ define constant $domain-mangled-marker-string   = "RD_";
 // Note that the following must be characters rather than strings, since
 // the initialization of mangles tables assumes that.
 
-define constant $method-marker		   = '#';
-define constant $method-mangled-marker	   = $method-mangled-marker-string[0];
-define constant $slot-marker               = ','; 
+define constant $method-marker                   = '#';
+define constant $method-mangled-marker           = $method-mangled-marker-string[0];
+define constant $slot-marker               = ',';
 define constant $slot-mangled-marker       = $slot-mangled-marker-string[0];
 define constant $constant-marker           = $constant-prefix[0];
 define constant $iep-marker                = $iep-suffix[0];
@@ -77,10 +77,10 @@ define constant $max-character-code = 255; // We allow 8 bit ascii.
 /// MANGLING
 
 define constant $mangles-data
-  = vector(#('-', '_'), #('!', 'X'), #('$', 'D'), #('%', 'P'), #('*', 'T'), 
+  = vector(#('-', '_'), #('!', 'X'), #('$', 'D'), #('%', 'P'), #('*', 'T'),
            #('/', 'S'), #('<', 'L'), #('>', 'G'), #('?', 'Q'), #('+', 'A'),
            #('&', 'B'), #('^', 'C'), #('_', 'U'), #('@', 'O'), #('=', 'E'),
-           #('~', 'N'), 
+           #('~', 'N'),
            list($method-marker, $method-mangled-marker),
            list($slot-marker,   $slot-mangled-marker));
 
@@ -151,8 +151,8 @@ end method;
 define method initialize-mangler-table (mangler :: <mangler>) => ()
   let table = mangler-table(mangler);
   // fill with default manglings
-  for (i from $min-character-code to $max-character-code) 
-    table[i] 
+  for (i from $min-character-code to $max-character-code)
+    table[i]
       := concatenate
            ($escape-separator, mangle-integer(i), $escape-separator);
   end for;
@@ -169,8 +169,8 @@ define method initialize-mangler-table (mangler :: <mangler>) => ()
   end for;
 end method;
 
-define method mangler-as-string 
-    (mangler :: <abstract-mangler>, #key start :: <integer> = 0) 
+define method mangler-as-string
+    (mangler :: <abstract-mangler>, #key start :: <integer> = 0)
  => (res :: <byte-string>)
   // if (start = 0)
   //   as(<byte-string>, mangler-buffer(mangler))
@@ -212,30 +212,30 @@ define method mangler-reset
   mangler
 end method;
 
-define inline method mangle-raw-into 
+define inline method mangle-raw-into
     (mangler :: <abstract-mangler>, name :: <byte-character>)
   add!(mangler-buffer(mangler), name);
 end method;
 
-define inline method mangle-raw-into 
+define inline method mangle-raw-into
     (mangler :: <abstract-mangler>, name :: <byte-string>)
   concatenate!(mangler-buffer(mangler), name);
 end method;
 
-define inline method mangle-raw-into 
+define inline method mangle-raw-into
     (mangler :: <abstract-mangler>, name :: <symbol>)
   concatenate!
     (mangler-buffer(mangler), as-lowercase(as(<byte-string>, name)));
 end method;
 
-define method mangle-name-into 
+define method mangle-name-into
     (mangler :: <mangler>, name :: <byte-string>)
   for (c in name)
     mangle-raw-into(mangler, mangler-table(mangler)[as(<integer>, c)]);
   end for;
 end method;
 
-define method mangle-name-into 
+define method mangle-name-into
     (mangler :: <mangler>, name)
   mangle-name-into(mangler, as-lowercase(as(<byte-string>, name)))
 end method;
@@ -276,15 +276,15 @@ end method;
 define method mangle-namespace-spread-into
     (mangler :: <mangler>, module-name, library-name)
   local method non-dylan-mangle ()
-	  unless (module-name = library-name)
-	    mangle-raw-into(mangler, $module-separator);
-	    mangle-name-into(mangler, module-name);
-	  end unless;
-	  mangle-raw-into(mangler, $library-separator);
-	  mangle-name-into(mangler, library-name);
-	end method;
+          unless (module-name = library-name)
+            mangle-raw-into(mangler, $module-separator);
+            mangle-name-into(mangler, module-name);
+          end unless;
+          mangle-raw-into(mangler, $library-separator);
+          mangle-name-into(mangler, library-name);
+        end method;
   if (as(<symbol>, library-name) = #"dylan")
-    let abbreviation 
+    let abbreviation
       = element($mangle-dylan-module, as(<symbol>, module-name), default: #f);
     if (abbreviation)
       mangle-raw-into(mangler, $library-separator);
@@ -307,7 +307,7 @@ define method mangle-integer (number :: <integer>) => (mangled-number :: <byte-s
   iterate process-integer (number :: <integer> = number, index :: <integer> = 1)
     let (quotient :: <integer>, remainder :: <integer>) = truncate/(number, 10);
     let digit :: <byte-character> = $number-characters[remainder];
-    
+
     if (quotient = 0)
       let result :: <byte-string> = make(<byte-string>, size: index);
       result[0] := digit;
@@ -342,29 +342,29 @@ define inline method mangle-generic-method
         mangle-name-raw(mangler, method-library-name)
       end if;
   concatenate($constant-prefix,
-	      name,
-	      $method-mangled-marker-string,
-	      library-name,
-	      $method-mangled-marker-string,
-	      mangle-integer(number))
+              name,
+              $method-mangled-marker-string,
+              library-name,
+              $method-mangled-marker-string,
+              mangle-integer(number))
 end method;
 
 define inline method mangle-local-method
     (name :: <string>, number :: <integer>) => (name :: <string>)
   concatenate($constant-prefix,
-	      name,
-	      $hygiene-marker,
-	      mangle-integer(number))
+              name,
+              $hygiene-marker,
+              mangle-integer(number))
 end method;
 
 define inline method mangle-domain
     (name :: <string>, number :: <integer>, library-name :: <string>) => (name :: <string>)
   concatenate($constant-prefix,
-	      name,
-	      $domain-mangled-marker-string,
-	      library-name,
-	      $domain-mangled-marker-string,
-	      mangle-integer(number))
+              name,
+              $domain-mangled-marker-string,
+              library-name,
+              $domain-mangled-marker-string,
+              mangle-integer(number))
 end method;
 
 define inline method mangle-slot-descriptor
@@ -372,21 +372,21 @@ define inline method mangle-slot-descriptor
      owner-name :: <string>, owner-module, owner-library) => (name :: <string>)
   if (slot-library == owner-library)
     concatenate($constant-prefix,
-		slot-name,
-		$slot-mangled-marker-string,
-		owner-name)
+                slot-name,
+                $slot-mangled-marker-string,
+                owner-name)
   else
     let namespace-part :: <string> =
       begin
-	mangler-reset(mangler);
-	mangle-namespace-spread-into(mangler, owner-module, owner-library);
-	mangler-as-string(mangler)
+        mangler-reset(mangler);
+        mangle-namespace-spread-into(mangler, owner-module, owner-library);
+        mangler-as-string(mangler)
       end;
     concatenate($constant-prefix,
-		slot-name,
-		$slot-mangled-marker-string,
-		owner-name,
-		namespace-part)
+                slot-name,
+                $slot-mangled-marker-string,
+                owner-name,
+                namespace-part)
   end if
 end method;
 

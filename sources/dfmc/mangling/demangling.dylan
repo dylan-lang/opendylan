@@ -27,7 +27,7 @@ end method;
 define method initialize-demangler-table (mangler :: <demangler>) => ()
   let table = mangler-table(mangler);
   // many characters are unexpected
-  for (i from $min-character-code to $max-character-code) 
+  for (i from $min-character-code to $max-character-code)
     table[i] := #f; // means call a user-supplied handler function
   end for;
   // Fill in the escape
@@ -74,14 +74,14 @@ define function demangle-escape
           end if;
         end method;
   let next = read-next(pos + 1);
-  values(as(<character>, code), 
-         if ((next < limit) & name[next] = $escape-marker) 
-           next + 1 
-         else next 
+  values(as(<character>, code),
+         if ((next < limit) & name[next] = $escape-marker)
+           next + 1
+         else next
          end)
 end function;
 
-define function default-demangler-handler-function 
+define function default-demangler-handler-function
     (name :: <byte-string>, pos :: <integer>, ch :: <character>)
     => (data, pos)
   if (member?(ch, $all-decoration-markers))
@@ -92,7 +92,7 @@ define function default-demangler-handler-function
   end if;
 end function;
 
-define method demangle-name-into 
+define method demangle-name-into
     (mangler :: <demangler>, name :: <byte-string>, handler-function :: <function>)
   let pos = 0;
   let limit = name.size;
@@ -116,7 +116,7 @@ end method;
 
 
 define method demangle-name-raw
-   (mangler :: <demangler>, name :: <byte-string>, 
+   (mangler :: <demangler>, name :: <byte-string>,
      #key handler-function = default-demangler-handler-function)
     => (res :: <byte-string>)
   mangler-reset(mangler);
@@ -126,7 +126,7 @@ end method;
 
 
 define method demangle-name-locally
-   (mangler :: <demangler>, name :: <byte-string>, 
+   (mangler :: <demangler>, name :: <byte-string>,
      #key handler-function = default-demangler-handler-function)
     => (res :: <byte-string>, hygienic-marker :: false-or(<integer>))
   let boundary = name.size - $local-suffix.size;
@@ -142,17 +142,17 @@ define method demangle-name-locally
       else name
       end if;
     end if;
-  values(demangle-name-raw(mangler, stripped-name, 
+  values(demangle-name-raw(mangler, stripped-name,
                            handler-function: handler-function),
          marker);
 end method;
 
 
 define method demangle-binding-spread
-   (mangler :: <demangler>, name :: <byte-string>, 
+   (mangler :: <demangler>, name :: <byte-string>,
      #key handler-function = default-demangler-handler-function)
-    => (var-name :: <byte-string>, 
-        module-name :: false-or(<byte-string>), 
+    => (var-name :: <byte-string>,
+        module-name :: false-or(<byte-string>),
         library-name :: false-or(<byte-string>))
   let lsep        = find-key(name, $library-separator-id?);
   let binding-end = find-key(name, $method-mangled-marker-id?) | name.size;
@@ -163,28 +163,28 @@ define method demangle-binding-spread
       let mname = copy-sequence(name, start: msep + 1, end: lsep);
       let lname = copy-sequence(name, start: lsep + 1, end: binding-end);
       values(demangle-name-raw(mangler, vname, handler-function: handler-function),
-	     demangle-name-raw(mangler, mname, handler-function: handler-function),
-	     demangle-name-raw(mangler, lname, handler-function: handler-function))
+             demangle-name-raw(mangler, mname, handler-function: handler-function),
+             demangle-name-raw(mangler, lname, handler-function: handler-function))
     else
       let vname  = copy-sequence(name, end: lsep);
       let dylan? = (name[lsep + 1] == $dylan-module-marker);
       let lname  =
-	if (dylan?) "dylan"
-	else copy-sequence(name, start: lsep + 1, end: binding-end)
-	end if;
+        if (dylan?) "dylan"
+        else copy-sequence(name, start: lsep + 1, end: binding-end)
+        end if;
       let dlname = demangle-name-raw(mangler, lname, handler-function: handler-function);
-      let dmname = 
-	if (dylan?) as-lowercase(as(<string>, $demangle-dylan-module[name[lsep + 2]]))
-	else dlname 
-	end if;
+      let dmname =
+        if (dylan?) as-lowercase(as(<string>, $demangle-dylan-module[name[lsep + 2]]))
+        else dlname
+        end if;
       values(demangle-name-raw(mangler, vname, handler-function: handler-function),
-	     dmname,
-	     dlname)
+             dmname,
+             dlname)
     end if
   else
     values(demangle-name-raw(mangler, name, handler-function: handler-function),
-	   #f, 
-	   #f);
+           #f,
+           #f);
   end if;
 end method;
 
@@ -216,7 +216,7 @@ end method;
 
 ///// DEMANGLER-EXTRACT-LIBRARY-NAME
 //    Given any mangled name, extract the library that was
-//    responsible for emitting it. 
+//    responsible for emitting it.
 
 define method demangler-extract-library-name
     (demangler :: <demangler>, name :: <byte-string>)
@@ -228,7 +228,7 @@ define method demangler-extract-library-name
       = demangler-extract-method-details(demangler, name);
     method-library
   else
-   let (var-name, module-name, library-name) 
+   let (var-name, module-name, library-name)
      = demangle-binding-spread(demangler, name);
    library-name
   end if

@@ -16,7 +16,7 @@ define module dfmc-mangling
     import: { \table-definer, false-or,
               concatenate!, string-to-integer };
   use dylan-extensions, import: { <byte-character>, iterate };
-  export 
+  export
     <mangler>,
     <mangler-with-options>,
     <demangler>,
