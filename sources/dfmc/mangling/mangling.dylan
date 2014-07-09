@@ -23,7 +23,7 @@ define constant $dylan-module-separator         = "K";
 define constant $domain-mangled-marker-string   = "RD_";
 
 // Note that the following must be characters rather than strings, since
-// the initialization of mangles tables assumes that.
+// the initialization of mangler tables assumes that.
 
 define constant $method-marker             = '#';
 define constant $method-mangled-marker     = $method-mangled-marker-string[0];
@@ -103,7 +103,7 @@ define sealed method make (c == <mangler>, #rest keys, #key, #all-keys)
 end method;
 
 define class <mangler-with-options> (<mangler>)
-  // Options a assumed to be in the form of prefixes and/or
+  // Options are assumed to be in the form of prefixes and/or
   // suffixes to the basic mangle. This are stored as
   // strings, which is convenient because they can be zero
   // or more characters in each case.
@@ -333,7 +333,7 @@ define inline method mangle-symbol(name :: <string>) => (name :: <string>)
 end method;
 
 define inline method mangle-generic-method
-    (mangler :: <mangler>, name :: <string>, number :: <integer>,
+    (mangler :: <mangler>, name :: <string>, method-number :: <integer>,
      method-library-name, generic-library-name) => (name :: <string>)
   let library-name
     = if (generic-library-name == method-library-name)
@@ -346,7 +346,7 @@ define inline method mangle-generic-method
               $method-mangled-marker-string,
               library-name,
               $method-mangled-marker-string,
-              mangle-integer(number))
+              mangle-integer(method-number))
 end method;
 
 define inline method mangle-local-method
