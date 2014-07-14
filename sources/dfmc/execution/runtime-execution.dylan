@@ -59,11 +59,11 @@ define method external-binding? (state :: <machine-state>, x :: <module-binding>
 end method;
 
 define method load-dll (name :: <symbol>) => ()
-  format-out("DLL LOADING %=\n", name);
+  // format-out("DLL LOADING %=\n", name);
   let merged-name = merged-project-name(name);
   let project = lookup-named-project(merged-name);
   let dll-name = project & project.project-executable-name;
-  format-out("  DLL-NAME %s\n", dll-name);
+  // format-out("  DLL-NAME %s\n", dll-name);
   unless (dll-name)
     error("Can't find library %s", name)
   end;
