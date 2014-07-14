@@ -16,8 +16,6 @@ define library dfmc-execution
   // Use the dfmc project-group
   use dfmc-management;
 
-  // HACK: TEMPORARY
-  // use dylan-script;
   use projects;
 
   export dfmc-execution, dfmc-runtime-execution;
