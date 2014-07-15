@@ -147,6 +147,23 @@ Debugging
     (dylan_value) T3 = 0x00000000 {}
 
 
+dfmc-execution
+==============
+
+* ``dfmc-execution`` provides a framework for interpreting the compiler's
+  IR (DFM). It has been experimentally restored from the source control
+  history and some basic tests have been created in ``sources/dfmc/testing/``.
+  It currently has many limitations and bugs which we are still working
+  out.
+
+* We are evaluating using ``dfmc-execution`` to replace or augment
+  the capabilities of ``^top-level-eval-using-optimization`` in
+  ``dfmc-conversion``.
+
+* We are interested in hearing what sort of things people may be interested
+  in using this for.
+
+
 Dylan
 =====
 
