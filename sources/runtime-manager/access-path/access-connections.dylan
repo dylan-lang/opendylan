@@ -145,7 +145,7 @@ end method;
 
 
 ///// *DEFAULT-LOCAL-DEBUGGER-CONNECTION*
-//    While our connection philosphy is currently very simple - there is
+//    While our connection philosophy is currently very simple - there is
 //    no real nub server or debugger connection, this object serves as
 //    a place-holder for it.
 
