@@ -2435,10 +2435,15 @@ Describing C functions to Dylan
      A result-spec has the following syntax::
 
        result [name :: c-type]
+       error-result [name :: c-type]
 
      If no *result* is specified, the Dylan function does not return a
      value for the C result, and the C function is expected to have a
      return type of *void*.
+
+     *error-result* is used when it is necessary to call the *import-map*
+     function on the result and then discard it. This is often used when
+     mapping a return value to a Dylan error.
 
      Each *function-option* is a keyword–value pair. The
      *generic-function-method:* option may be either ``#t`` or ``#f``,

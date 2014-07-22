@@ -95,6 +95,11 @@ C-FFI
   This must be used in conjunction with the Objective C / Dylan
   bridge library.
 
+* A result of a ``C-function`` may now be flagged as an ``error-result`` which
+  means that the import function will be called, but the actual value will not
+  be returned. This is useful for wrapping C APIs which return error codes that
+  should signal conditions when an error occurs.
+
 C Run-time
 ==========
 

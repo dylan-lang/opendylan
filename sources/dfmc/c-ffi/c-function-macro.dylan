@@ -23,6 +23,7 @@ define class <C-ffi-result-descriptor> (<object>)
   slot designator-name, init-keyword: designator-name:;
   slot model-type;
   constant slot void? :: <boolean>, init-keyword: void?:, init-value: #f;
+  constant slot error-result? :: <boolean>, init-keyword: error-result?:, init-value: #f;
 end;
 
 
@@ -160,8 +161,12 @@ define method parse-early-options
     let vname = result-spec.name;
     let type = ~void?(result-spec) & result-spec.designator-name;
     if (~void?(result-spec))
-      collect-into(return-values, #{ ?vname :: import-type-for(?type) });
-      result-fragment := #{ (result ?vname :: ?type) };
+      if (~error-result?(result-spec))
+        collect-into(return-values, #{ ?vname :: import-type-for(?type) });
+        result-fragment := #{ (result ?vname :: ?type) };
+      else
+        result-fragment := #{ (error-result ?vname :: ?type) };
+      end if;
     else
       result-fragment := #{ (result void) }
     end if;
@@ -592,6 +597,11 @@ result-spec:
            name: result-name,
            designator-name: type,
            key-options);
+  { (error-result ?result-name:name :: ?type:expression) }
+  => make(<c-ffi-result-descriptor>,
+          name: result-name,
+          designator-name: type,
+          error-result?: #t);
 key-options:
    { } => #()
    { ?key:expression, ?value:expression, ... }
@@ -729,6 +739,17 @@ define method parse-c-function-spec (form-name, specs :: <sequence>, #key name-s
          else
            result-spec := make(<C-ffi-result-descriptor>,
                                designator-name: designator, name: name)
+         end if;
+      { error-result ?name:name :: ?designator:expression }
+      => if (result-spec)
+           note(<multiple-return-clauses>,
+                source-location: fragment-source-location(spec),
+                definition-name: form-name);
+         else
+           result-spec := make(<C-ffi-result-descriptor>,
+                               designator-name: designator,
+                               name: name,
+                               error-result?: #t)
          end if;
       { ?function-options:* }
       => parse-options!(options, function-options)
@@ -1093,6 +1114,11 @@ result-spec:
            name: result-name,
            designator-name: type,
            key-options);
+  { (error-result ?result-name:name :: ?type:expression) }
+  => make(<c-ffi-result-descriptor>,
+          name: result-name,
+          designator-name: type,
+          error-result?: #t);
 key-options:
    { } => #()
    { ?key:expression, ?value:expression, ... }
@@ -1199,7 +1225,7 @@ define method expand-c-function-body
       & (result-designator.^import-function
            | #{ identity });
   let return-values =
-    if (result-designator)
+    if (result-designator & ~error-result?(result-desc))
       pair( #{ ?result-name }, as(<list>, extra-return-values));
     else
       extra-return-values
