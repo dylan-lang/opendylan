@@ -131,15 +131,15 @@ The end of a comma-separated list of pattern fragments can include `#rest`,
 
         { …, #rest ?keys:token, #key ?alpha:token, ?beta:token, #all-keys }
 
-This syntax is not used to match a code fragment that contains corresponding
-literal `#rest`, `#key`, and `#all-keys` fragments. Instead, this syntax
-matches a code fragment consisting of keyword/value pairs, called a `property
-list`:dfn:. An example of a property list is::
+This syntax is *not* used to match a code fragment that contains literal
+`#rest`, `#key`, and `#all-keys` fragments. Instead, this syntax matches a code
+fragment consisting of keyword/value pairs, called a `property list`:dfn:. An
+example of a property list is::
 
         alpha: "a", beta: "b"
 
-In this code fragment, `alpha:` and `beta:` are the symbol parts of the
-property list and `"a"` and `"b"` are the value parts.
+In this code fragment, `alpha:` and `beta:` are the keyword or `symbol
+parts`:dfn: of the property list and `"a"` and `"b"` are the `value parts`:dfn:.
 
 If you want to match literal `#rest`, `#key`, or `#all-keys` fragments, escape
 them in the pattern like `\#rest`, `\#key`, or `\#all-keys`.
