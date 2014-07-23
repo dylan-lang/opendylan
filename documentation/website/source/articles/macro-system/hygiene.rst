@@ -56,6 +56,12 @@ describes the scopes in more detail.
    ╘═════════════════════════════════════╛
    </pre>
    
+In this table, each lexical scope is identified by its number as "Box 1"
+through "Box 5". The table describe which bindings defined in each column's
+lexical scope are visible in the lexical scope of each row. For example, the
+table shows that the only bindings from Box 1 visible in Box 2 are those that
+are captured by one of Macro A's pattern variables and included in the
+expansion.
 
 +------------+---------------------+---------------------+---------------------+-------+--------+
 | Definition | Definition Location                                                              |
@@ -97,8 +103,8 @@ A template can prefix a binding with `?=`. This makes the binding come from
 and be visible in the macro's caller. This can be illustrated by an example from
 :title:`Dylan Programming`.
 
-Say macro A defined in box 4 is `Definition 1`_, and the macro call in box 1 is
-the following:
+Say `Definition 1`_ is the Macro A defined in Box 4, and it is called in Box 1
+like so:
 
 .. code-block:: dylan
 
@@ -109,14 +115,13 @@ the following:
    end
 
 The `?=stop!` substitution in line 3 of the macro becomes a reference to a
-binding visible in boxes 1 and 2. In box 1, the binding is visible as `stop!`.
-In box 2 (the expansion itself), the binding is visible as `?=stop!` and can be
-used like any other binding (e.g. `format-out`) as shown by the highlighted
-line.
+binding visible in Boxes 1 and 2. In Box 1, the binding is visible as `stop!`.
+In Box 2 (the expansion itself), the binding is visible as `?=stop!` and can be
+used like any binding (e.g., `format-out("%=", ?=stop!)`).
 
 Note that that a macro expansion cannot create a new name visible outside of the
-macro call itself. In other words, box 2 cannot create a binding for use
-elsewhere in box 1 unless box 1 supplies the name to be defined.
+macro call itself. In other words, Box 2 cannot create a binding for use
+elsewhere in Box 1 unless Box 1 supplies the name to be defined.
 
 For example, given the macro in `Definition 2`_, one might expect the macro call
 in `Call 2`_ would print "Hello" twice, but the code does not compile. Because

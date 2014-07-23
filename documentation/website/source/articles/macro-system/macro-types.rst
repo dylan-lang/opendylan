@@ -75,11 +75,12 @@ The pattern of each main rule of a macro (and thus the way the macro is called)
 must follow a specific syntactic style depending on the type of macro.
 
 When the Dylan compiler sees a macro call, it first finds the end of the call,
-then expands the macro, then recursively expands any macro calls in the
-expansion. The compiler is able to recognize inner macro calls along the way,
-but if a code fragment *looks* like the end of a macro and is not part of an
-inner macro call, the parser will assume that that code fragment *is* the end of
-the macro.
+and only afterwards attempts to expand the macro. While looking for the end of
+the call, the compiler recognizes inner macro calls along the way and
+recursively looks for the end of them first. If a code fragment *looks* like
+the end of a macro call, the parser will assume that that code fragment *is*
+the end of the macro call. Below, I describe what the end of each type of macro
+call *looks* like.
 
 
 Body-style definition macro

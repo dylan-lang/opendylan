@@ -80,7 +80,7 @@ Property list pattern variables
         This matches a property list where every value part meets the
         constraint. If the constraint is `*`, any value part will match. The
         substitution for `?{name}` is the entire property list code fragment,
-        including both the name and value parts of each property.
+        including both the symbol and value parts of each property.
 
 `#key ?{prop-1}:{constraint}, ?{prop-2}:{constraint}`
         This matches a property list that only includes the `{prop-1}:` and
@@ -204,19 +204,20 @@ Body and macro pattern variables
         statements or expressions. For example, the following pattern is
         designed to be used with the above `if` macro::
 
-                { if-into (?:expression) ?:body => ?:name } => { let ?name = if (?expression) ?body }
+                { if-into (?:expression) ?rest:body => ?:name } => { let ?name = if (?expression) ?rest }
 
         You might expect that you can use this macro on the following code::
 
                 if-into (x = #f) format-out("false") else x + 1 endif => x
 
-        However, the `?:body` variable will not match the words `else` or
+        However, the `?rest:body` variable will not match the words `else` or
         `endif` because they are not part of the core Dylan language. They are
         not statements or expressions. Those words are actually an extension to
         the language allowed by the `if` macro, but the `if` macro will never
-        see them because the `?:body` variable does not match or pass them on
-        to the `if` macro. To match arbitrary fragments for the `if` macro, the
-        `if-into` macro must use the wildcard `*` constraint instead.
+        see them because the `?rest:body` variable does not match or pass them
+        on to the `if` macro. To match arbitrary fragments for the `if` macro,
+        the `if-into` macro must use the wildcard constraint on the variable
+        instead, like `?rest:*`.
 
 `?{name}:case-body`
         This matches a list of cases separated by semicolons, where each case
@@ -272,7 +273,7 @@ Wildcard pattern variables
         As a special case, main rules of definition macros can have wildcards in
         both the `{MODIFIERS}` part and the `{LIST-PATTERN}` or `{BODY-PATTERN}`
         part without an intervening comma or semicolon. This allows patterns
-        like the following that would normally not match::
+        like the following that would normally not be allowed::
 
                 { define ?modifiers:* collection ?:name ?contents:* end }
 
