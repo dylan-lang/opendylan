@@ -597,6 +597,8 @@ end macro;
 define raw-field-primitive c-unsigned <raw-c-unsigned-long>;
 define raw-field-primitive c-signed <raw-c-signed-long>;
 define raw-field-primitive c-int <raw-c-unsigned-int>;
+//define raw-field-primitive c-unsigned <raw-c-size-t>;
+//define raw-field-primitive c-signed <raw-c-ssize-t>;
 
 /// OPERATING SYSTEM
 

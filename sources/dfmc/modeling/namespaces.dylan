@@ -539,6 +539,8 @@ define &module dylan-primitives
     primitive-c-signed-char-at-setter,
     primitive-c-signed-int-at-setter,
     primitive-c-unsigned-int-at-setter,
+    primitive-c-size-t-at-setter,
+    primitive-c-ssize-t-at-setter,
     primitive-c-unsigned-long-at,    
     primitive-c-signed-long-at,    
     primitive-c-unsigned-short-at,    
@@ -547,6 +549,8 @@ define &module dylan-primitives
     primitive-c-signed-char-at,
     primitive-c-signed-int-at,
     primitive-c-unsigned-int-at,
+    primitive-c-size-t-at,
+    primitive-c-ssize-t-at,
 
     primitive-c-float-at,
     primitive-c-float-at-setter,
@@ -580,7 +584,9 @@ define &module dylan-primitives
     <raw-c-double>,
     // <raw-c-long-double>,
     <raw-c-void>,
-    <raw-c-pointer>;
+    <raw-c-pointer>,
+    <raw-c-size-t>,
+    <raw-c-ssize-t>;
 
 end &module;
 
@@ -1217,6 +1223,10 @@ define &module dylan-c-ffi-hygiene-glitches
       <instantiation-of-c-raw-int**>,
     <instantiation-of-c-raw-unsigned-long*>,
       <instantiation-of-c-raw-unsigned-long**>,
+    <instantiation-of-c-raw-size-t*>,
+      <instantiation-of-c-raw-size-t**>,
+    <instantiation-of-c-raw-ssize-t*>,
+      <instantiation-of-c-raw-ssize-t**>,
     <instantiation-of-c-raw-signed-long*>,
       <instantiation-of-c-raw-signed-long**>,
     <instantiation-of-c-float*>,
@@ -1272,6 +1282,8 @@ define &module dylan-c-ffi
     <C-raw-char>,
     <C-raw-signed-char>,
     <C-raw-unsigned-char>,
+    <C-raw-size-t>,
+    <C-raw-ssize-t>,
     <C-raw-int*>,
     <C-raw-signed-int*>,
     <C-raw-unsigned-int*>,
@@ -1282,6 +1294,8 @@ define &module dylan-c-ffi
     <C-raw-char*>,
     <C-raw-signed-char*>,
     <C-raw-unsigned-char*>,
+    <C-raw-size-t*>,
+    <C-raw-ssize-t*>,
     <C-raw-int**>,
     <C-raw-signed-int**>,
     <C-raw-unsigned-int**>,
@@ -1291,6 +1305,8 @@ define &module dylan-c-ffi
     <C-raw-unsigned-short**>,
     <C-raw-signed-char**>,
     <C-raw-unsigned-char**>,
+    <C-raw-size-t**>,
+    <C-raw-ssize-t**>,
 
     <C-number>,
     <C-struct>,

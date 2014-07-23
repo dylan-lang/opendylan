@@ -90,10 +90,12 @@ define raw-accessor-primitive(be, c-signed-char, <raw-c-signed-char>, #t);
 define raw-accessor-primitive(be, c-signed-int, <raw-c-signed-int>, #t);
 define raw-accessor-primitive(be, c-signed-long, <raw-c-signed-long>, #t);
 define raw-accessor-primitive(be, c-signed-short, <raw-c-signed-short>, #t);
+define raw-accessor-primitive(be, c-ssize-t, <raw-c-ssize-t>, #t);
 define raw-accessor-primitive(be, c-unsigned-char, <raw-c-unsigned-char>, #f);
 define raw-accessor-primitive(be, c-unsigned-int, <raw-c-unsigned-int>, #f);
 define raw-accessor-primitive(be, c-unsigned-long, <raw-c-unsigned-long>, #f);
 define raw-accessor-primitive(be, c-unsigned-short, <raw-c-unsigned-short>, #f);
+define raw-accessor-primitive(be, c-size-t, <raw-c-size-t>, #f);
 
 define macro raw-field-primitive-definer
   { define raw-field-primitive (?be:name, ?:name, ?raw-value-type:name) }

@@ -688,6 +688,7 @@ define module-with-models dfmc-modeling
       raw-c-long-double, // <&raw-c-long-double>,
       raw-c-void, // <&raw-c-void>,
       raw-c-pointer, // <&raw-c-pointer>,
+      raw-c-size-t, raw-c-ssize-t,
       raw-boolean, <&raw-boolean>,
       raw-byte-character, <&raw-byte-character>, // TODO: OBSOLETE
       raw-unicode-character, // <&raw-unicode-character>, // TODO: OBSOLETE ???

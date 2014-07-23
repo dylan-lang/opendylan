@@ -39,6 +39,10 @@ define module c-ffi-interface
     C-signed-int-at-setter,
     C-unsigned-int-at,
     C-unsigned-int-at-setter,
+    C-size-t-at,
+    C-size-t-at-setter,
+    C-ssize-t-at,
+    C-ssize-t-at-setter,
 
     C-float-at,
     C-float-at-setter,
@@ -65,6 +69,15 @@ define module c-ffi-interface
     <C-char*>,
     <C-unsafe-char*>,
     <C-both-char*>,
+
+    <C-size-t>,
+    <C-unsafe-size-t>,
+    <C-both-size-t>,
+    <C-size-t*>,
+    <C-ssize-t>,
+    <C-unsafe-ssize-t>,
+    <C-both-ssize-t>,
+    <C-ssize-t*>,
 
     <C-unsigned-long>,
     <C-unsafe-unsigned-long>,

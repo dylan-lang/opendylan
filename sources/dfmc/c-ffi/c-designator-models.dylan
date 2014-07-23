@@ -215,7 +215,9 @@ define integer-designator-class <C-raw-signed-char> <C-integer> signed box-c-sig
 define integer-designator-class <C-raw-unsigned-short> <C-integer> unsigned box-c-unsigned-short end;
 define integer-designator-class <C-raw-signed-short> <C-integer> signed box-c-signed-short end;
 define integer-designator-class <C-raw-unsigned-long> <C-integer> unsigned primitive-wrap-machine-word end;
+define integer-designator-class <C-raw-size-t> <C-integer> unsigned primitive-wrap-machine-word end;
 define integer-designator-class <C-raw-signed-long> <C-integer> signed primitive-wrap-machine-word end;
+define integer-designator-class <C-raw-ssize-t> <C-integer> signed primitive-wrap-machine-word end;
 define integer-designator-class <C-raw-unsigned-int> <C-integer> unsigned primitive-wrap-machine-word end;
 define integer-designator-class <C-raw-signed-int> <C-integer> signed primitive-wrap-machine-word end;
 define integer-designator-class <C-raw-int> <C-integer> int primitive-wrap-machine-word <raw-c-unsigned-int> end;

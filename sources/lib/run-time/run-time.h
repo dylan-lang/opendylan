@@ -4,6 +4,11 @@
 #include <stddef.h>
 #include <setjmp.h>
 
+/* For ssize_t definition (POSIX extension) */
+#ifndef OPEN_DYLAN_PLATFORM_WINDOWS
+#include <sys/types.h>
+#endif
+
 #ifdef __GNUC__
 #  define OPEN_DYLAN_COMPILER_GCC_LIKE
 #  if defined(__clang__)

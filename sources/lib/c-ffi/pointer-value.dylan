@@ -66,6 +66,8 @@ define pointer-value-method <C-raw-unsigned-short*> C-unsigned-short-at <machine
 define pointer-value-method <C-raw-signed-short*> C-signed-short-at <machine-word>;
 define pointer-value-method <C-raw-unsigned-long*> C-unsigned-long-at <machine-word>;
 define pointer-value-method <C-raw-signed-long*> C-signed-long-at <machine-word>;
+define pointer-value-method <C-raw-size-t*> C-size-t-at <machine-word>;
+define pointer-value-method <C-raw-ssize-t*> C-ssize-t-at <machine-word>;
 
 define pointer-value-method <C-float*> C-float-at <single-float>;
 define pointer-value-method <C-double*> C-double-at <double-float>;
