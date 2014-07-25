@@ -141,7 +141,9 @@ define sealed inline method c-type-cast
     (type :: type-union(singleton(<C-raw-signed-int>),
                         singleton(<C-raw-unsigned-int>),
                         singleton(<C-raw-signed-long>),
-                        singleton(<C-raw-unsigned-long>)),
+                        singleton(<C-raw-unsigned-long>),
+                        singleton(<C-raw-size-t>),
+                        singleton(<C-raw-ssize-t>)),
      value :: <object>)
  => (value :: <machine-word>)
   c-type-cast(<machine-word>, value)
@@ -151,7 +153,9 @@ define sealed inline method c-type-cast
     (type :: type-union(singleton(<C-signed-int>),
                         singleton(<C-unsigned-int>),
                         singleton(<C-signed-long>),
-                        singleton(<C-unsigned-long>)),
+                        singleton(<C-unsigned-long>),
+                        singleton(<C-raw-size-t>),
+                        singleton(<C-raw-ssize-t>)),
      value :: <object>)
  => (value :: <integer>)
   c-type-cast(<integer>, value)

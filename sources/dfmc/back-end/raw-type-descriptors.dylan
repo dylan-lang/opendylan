@@ -162,6 +162,8 @@ define raw-type-descriptors (back-end :: <back-end>)
   raw-c-long-double,        "long_double",       16,16;
   raw-c-void,               "void",               0, 0;
   raw-c-pointer,            "void*",              w, w;
+  raw-c-size-t,             "size_t",             w, w;
+  raw-c-ssize-t,            "ssize_t",            w, w;
 
   // dylan raw types
 

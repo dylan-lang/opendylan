@@ -107,6 +107,10 @@ define method initialize-type-table
                     #"pointer");
   register-raw-type(#"<raw-address>",              t["iWord"],
                     #"address");
+  register-raw-type(#"<raw-c-size-t>",             t["iWord"],
+                    #"unsigned");
+  register-raw-type(#"<raw-c-ssize-t>",            t["iWord"],
+                    #"signed");
 
   // MM Wrapper
   let mm-name = emit-name-internal(back-end, #f, dylan-value(#"<mm-wrapper>"));

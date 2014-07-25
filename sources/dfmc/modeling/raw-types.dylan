@@ -168,6 +168,8 @@ define &raw-machine-word-subtypes-and-accessors
     c-unsigned-int,
     c-signed-long,
     c-unsigned-long,
+    c-size-t,
+    c-ssize-t,
     c-signed-long-long,
     c-unsigned-long-long,
     c-pointer;

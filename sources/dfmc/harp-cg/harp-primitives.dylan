@@ -2186,6 +2186,8 @@ define at-primitive c-float,           load: op--load-float-index,     store: op
 define at-primitive c-double,          load: op--load-dfloat-index,     store: op--store-dfloat-index;
 define at-primitive c-long-double,     load: op--load-dfloat-index,     store: op--store-dfloat-index;
 define at-primitive c-pointer,         load: op--load-index,   store: op--store-index;
+define at-primitive c-size-t,          load: op--load-index,   store: op--store-index;
+define at-primitive c-ssize-t,         load: op--load-index,   store: op--store-index;
 
 define macro c-primitive-field-definer
   {define c-primitive-field ?:name }
