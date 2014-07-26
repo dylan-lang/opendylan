@@ -1,3 +1,9 @@
+#include <stddef.h>
+/* For ssize_t definition (POSIX extension) */
+#ifndef OPEN_DYLAN_PLATFORM_WINDOWS
+#include <sys/types.h>
+#endif
+
 #include "main.h"
 
 unsigned long foo = 0xffff;
@@ -121,6 +127,15 @@ void run_c_tests()
            "signed constant one callback", 0, 0);
 }
 
+size_t incr_size_t(size_t s)
+{
+  return (s + 1);
+}
+
+ssize_t incr_ssize_t(ssize_t s)
+{
+  return (s + 1);
+}
 
 unsigned long incr_unsigned_long(unsigned long i)
 {
