@@ -14,7 +14,7 @@ define method program-note-to-ppml(o :: <program-note>)  => (ppml :: <ppml>)
         let start-line = source-offset-line(start-offset);
         let sr = source-location-source-record(loc);
         let (name, line-number) = source-line-location(sr, start-line);
-	let name = name | "interaction";
+        let name = name | "interaction";
         ppml-block(vector(
           ppml-string(" at "),
           ppml-string(name), ppml-string(":"), as(<ppml>, line-number)))
@@ -183,8 +183,8 @@ define compiler-sideways method as(class == <ppml>, vte :: <type-estimate-values
   //                        right-bracket: ppml-string(")"))
   // end if
   ppml-separator-block(ppml-vals,
-		       left-bracket:  ppml-string("values("),
-		       right-bracket: ppml-string(")"))
+                       left-bracket:  ppml-string("values("),
+                       right-bracket: ppml-string(")"))
 end;
 
 define compiler-sideways method as
@@ -262,9 +262,9 @@ define compiler-sideways method as
   let vvl
     = if (spec-value-rest-variable-spec(sig-spec))
         let rest = as(<ppml>, spec-value-rest-variable-spec(sig-spec));
-	list(ppml-block(vector(ppml-string("#rest "), rest)))
+        list(ppml-block(vector(ppml-string("#rest "), rest)))
       else
-	#()
+        #()
       end if;
 
   let required = spec-argument-required-variable-specs(sig-spec);

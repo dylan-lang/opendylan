@@ -32,10 +32,10 @@ define compiler-sideways method print-object
   if (ld)
     with-library-context (ld)
       if (o.name-if-named)
-	format(stream, "{model-object %s :: %s}",
-	       o.name-if-named, o.&object-class.debug-string);
+        format(stream, "{model-object %s :: %s}",
+               o.name-if-named, o.&object-class.debug-string);
       else
-	format(stream, "{model-object :: %s}", o.&object-class.debug-string);
+        format(stream, "{model-object :: %s}", o.&object-class.debug-string);
       end;
     end;
   else // not enough info to do &object-class...
@@ -122,13 +122,13 @@ define compiler-sideways method print-object
     print-contents(sig, stream);
   end;
   if (*print-method-bodies?* & o.body &
-	if (lambda-top-level?(o))
-	  // don't print bodies of top-level lambdas referenced
-	  // from inside other lambdas
-	  empty?(*lambdas-in-progress*)
-	else
-	  ~member?(o, *lambdas-in-progress*)
-	end)
+        if (lambda-top-level?(o))
+          // don't print bodies of top-level lambdas referenced
+          // from inside other lambdas
+          empty?(*lambdas-in-progress*)
+        else
+          ~member?(o, *lambdas-in-progress*)
+        end)
     dynamic-bind (*lambdas-in-progress* = pair(o, *lambdas-in-progress*))
       label!(o);
       format(stream, "\n");
@@ -200,11 +200,11 @@ end method;
 define compiler-sideways method print-object
     (o :: <&boolean>, stream :: <stream>) => ()
   format(stream, "&#%s",
-	 case
-	   o == &false => "f";
-	   o == &true  => "t";
-	   otherwise   => cerror("Ignore it.", "unknown <&boolean>"); "?";
-	 end case);
+         case
+           o == &false => "f";
+           o == &true  => "t";
+           otherwise   => cerror("Ignore it.", "unknown <&boolean>"); "?";
+         end case);
 end method;
 
 define compiler-sideways method print-object
@@ -280,11 +280,11 @@ define compiler-sideways method print-object
     (o :: <library-description>, stream :: <stream>) => ()
   let vers = o.library-description-change-count;
   format(stream, "{%s%slibrary-description of %s.%s}",
-	 if (vers) "" else "CLOSED " end,
-	 if (instance?(o, <interactive-library-description>)) "interactive "
-	 else "" end,
-	 library-description-emit-name(o),
-	 if (instance?(vers, <integer>)) vers else "???" end);
+         if (vers) "" else "CLOSED " end,
+         if (instance?(o, <interactive-library-description>)) "interactive "
+         else "" end,
+         library-description-emit-name(o),
+         if (instance?(vers, <integer>)) vers else "???" end);
 end method;
 
 

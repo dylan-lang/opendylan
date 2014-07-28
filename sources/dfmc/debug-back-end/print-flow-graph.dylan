@@ -26,15 +26,15 @@ end method;
 define compiler-sideways method print-object
     (o :: <module>, stream :: <stream>) => ()
   format(stream, "[%sMODULE %s]",
-	 if (instance?(o, <interactive-module>)) "Interactive " else "" end,
-	 o.debug-name);
+         if (instance?(o, <interactive-module>)) "Interactive " else "" end,
+         o.debug-name);
 end method;
 
 define compiler-sideways method print-object
     (o :: <library>, stream :: <stream>) => ()
   format(stream, "[%sLIBRARY %s]",
-	 if (instance?(o, <interactive-library>)) "Interactive " else "" end,
-	 o.debug-name);
+         if (instance?(o, <interactive-library>)) "Interactive " else "" end,
+         o.debug-name);
 end method;
 
 define compiler-sideways method print-object
@@ -52,7 +52,7 @@ define compiler-sideways method print-object
       format(stream, "t");
       if (o.frame-offset)
         format(stream, "%d",
-	       o.frame-offset - o.environment.lambda.parameters.size);
+               o.frame-offset - o.environment.lambda.parameters.size);
       else
         format(stream, "?")
       end if;
@@ -143,7 +143,7 @@ end method print-computation;
 define method print-computation
     (stream :: <stream>, c :: <keyword-default>) => ()
   format(stream, "[KEYWORD-DEFAULT %=, %d]",
-	 c.computation-value, c.keyword-default-value-index);
+         c.computation-value, c.keyword-default-value-index);
 end method print-computation;
 
 define method print-computation (s :: <stream>, c :: <make-closure>)
@@ -248,7 +248,7 @@ end method;
 
 define method print-computation (stream :: <stream>, c :: <function-call>)
   format(stream, "[%s%s %=(",
-	 c.operation-name,
+         c.operation-name,
          entry-point-character(c, call-effective-function(c)),
          c.function);
   print-args(stream, c.arguments);
@@ -259,27 +259,27 @@ end method;
 define method print-computation (stream :: <stream>, c :: <slot-value>)
   format(stream, "SLOT-VALUE%s(%=, %s)",
          if (computation-guaranteed-initialized?(c)) "-INITD" else "" end,
-	 computation-instance(c), ^debug-name(computation-slot-descriptor(c)));
+         computation-instance(c), ^debug-name(computation-slot-descriptor(c)));
 end method;
 
 define method print-computation (stream :: <stream>, c :: <slot-value-setter>)
   format(stream, "SLOT-VALUE(%=, %s) := %=",
-	 computation-instance(c), ^debug-name(computation-slot-descriptor(c)),
-	 computation-new-value(c));
+         computation-instance(c), ^debug-name(computation-slot-descriptor(c)),
+         computation-new-value(c));
 end method;
 
 define method print-computation (stream :: <stream>, c :: <repeated-slot-value>)
   format(stream, "REPEATED-SLOT-VALUE(%=, %s, %=)",
-	 computation-instance(c), ^debug-name(computation-slot-descriptor(c)),
-	 computation-index(c));
+         computation-instance(c), ^debug-name(computation-slot-descriptor(c)),
+         computation-index(c));
 end method;
 
 define method print-computation
     (stream :: <stream>, c :: <repeated-slot-value-setter>)
   format(stream, "REPEATED-SLOT-VALUE(%=, %s, %=) := %=",
-	 computation-instance(c), ^debug-name(computation-slot-descriptor(c)),
-	 computation-index(c),
-	 computation-new-value(c));
+         computation-instance(c), ^debug-name(computation-slot-descriptor(c)),
+         computation-index(c),
+         computation-new-value(c));
 end method;
 
 define method print-computation (stream :: <stream>, c :: <stack-vector>)
@@ -322,18 +322,18 @@ end method;
 
 define method print-computation (stream :: <stream>, c :: <if-merge>)
   format(stream, "[IF-MERGE %= %=]",
-	 merge-left-value(c), merge-right-value(c));
+         merge-left-value(c), merge-right-value(c));
 end method;
 
 define method print-computation (stream :: <stream>, c :: <loop-merge>)
   format(stream, "[LOOP-MERGE%s %= %=]",
-	 if (loop-merge-initial?(c)) "i" else "" end,
+         if (loop-merge-initial?(c)) "i" else "" end,
          merge-left-value(c), merge-right-value(c));
 end method;
 
 define method print-computation (stream :: <stream>, c :: <bind-exit-merge>)
   format(stream, "[BIND-EXIT-MERGE %= %=]",
-	 merge-left-value(c), merge-right-value(c));
+         merge-left-value(c), merge-right-value(c));
 end method;
 
 define method print-computation (stream :: <stream>, c :: <return>)
@@ -432,13 +432,13 @@ end method;
 define method print-computation
     (stream :: <stream>, c :: <adjust-multiple-values>)
   format(stream, "[ADJUST-MV %= %d]",
-	 c.computation-value, c.number-of-required-values);
+         c.computation-value, c.number-of-required-values);
 end method;
 
 define method print-computation
     (stream :: <stream>, c :: <adjust-multiple-values-rest>)
   format(stream, "[ADJUST-MV-REST %= %d]",
-	 c.computation-value, c.number-of-required-values);
+         c.computation-value, c.number-of-required-values);
 end method;
 
 // types
@@ -476,7 +476,7 @@ end method print-computation;
 
 define method print-computation
     (stream :: <stream>, c :: <multiple-value-check-type-rest>)
-  next-method();		// print fixed part
+  next-method();                // print fixed part
   unless (empty?(c.types))
     format(stream, ", ");
   end;
@@ -486,7 +486,7 @@ end method print-computation;
 define method print-computation
     (stream :: <stream>, c :: <guarantee-type>)
   format(stream, "guarantee-type %s :: %s",
-	 c.computation-value, c.static-guaranteed-type | c.guaranteed-type)
+         c.computation-value, c.static-guaranteed-type | c.guaranteed-type)
 end method print-computation;
 
 // cells

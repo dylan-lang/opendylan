@@ -291,7 +291,7 @@ define method get-structured-output (o :: <&object>) => (res :: <string>)
   if (ld)
     with-library-context (ld)
       if (o.name-if-named)
-	format-to-string("%s :: %s",
+        format-to-string("%s :: %s",
                          o.name-if-named,
                          o.&object-class.debug-string)
       else

@@ -1,8 +1,8 @@
 library: dfmc-debug-back-end
-Target-Type:	dll
+Target-Type: dll
 files:   debug-back-end-library
          debug
-	 c-debug
+         c-debug
          print-flow-graph
          print-object
          print-definition
