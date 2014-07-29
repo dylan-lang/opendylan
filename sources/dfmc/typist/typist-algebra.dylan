@@ -1687,7 +1687,7 @@ define method type-estimate-subtype?-limited(f1 :: <type-estimate-limited-functi
                     // Check keys2 are subset of keys1
                     table-key-subset?(keys2, keys1)
                   else
-                    // Just have to be in lower triange or diagonal.
+                    // Just have to be in lower triangle or diagonal.
                     f1-code >= f2-code
                   end;
              otherwise
