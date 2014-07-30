@@ -1055,6 +1055,14 @@ extern void primitive_replaceX
         AT(unsigned_long_long,x,o,b)
 #define primitive_c_unsigned_long_long_at_setter(e, x, o, b) \
         AT_SETTER(unsigned_long_long,e,x,o,b)
+#define primitive_c_size_t_at(x, o, b) \
+        AT(size_t,x,o,b)
+#define primitive_c_size_t_at_setter(e, x, o, b) \
+        AT_SETTER(size_t,e,x,o,b)
+#define primitive_c_ssize_t_at(x, o, b) \
+        AT(ssize_t,x,o,b)
+#define primitive_c_ssize_t_at_setter(e, x, o, b) \
+        AT_SETTER(ssize_t,e,x,o,b)
 #define primitive_c_float_at(x, o, b) \
         AT(float,x,o,b)
 #define primitive_c_float_at_setter(e, x, o, b) \
