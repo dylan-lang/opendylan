@@ -14,6 +14,7 @@ Files:   modeling-library
          classes
          singletons
          unions
+         limited-functions
          limited-integers
          limited-collections
          subclasses

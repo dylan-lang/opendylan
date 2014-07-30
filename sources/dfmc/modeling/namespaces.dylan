@@ -847,6 +847,9 @@ define &module dylan-extensions
     <union>, union-type1, union-type2,
     <limited-integer>, limited-integer-min, limited-integer-max;
 
+  create
+    <limited-function>, limited-function-signature;
+
   /// TEMPORARILY FOR METHOD DISPATCH
 
   create
