@@ -10,16 +10,16 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Direct subclasses queries.
 
-define method ^all-direct-subclasses-known? 
+define method ^all-direct-subclasses-known?
     (class :: <&class>) => (well? :: <boolean>)
-  ^class-sealed?(class) 
+  ^class-sealed?(class)
     // HACK: JB ADDED THIS FOR LOOSE MODE
-    & ~form-dynamic?(model-definition(class)) 
+    & ~form-dynamic?(model-definition(class))
     & ~library-contains-wildcard-subclasses?
          (language-definition(model-library(class)))
 end method;
 
-define inline function map-collecting-unless-false 
+define inline function map-collecting-unless-false
     (f :: <function>, s :: <sequence>) => (s :: <list>)
   collecting ()
     for (item in s)
@@ -51,8 +51,8 @@ define method ^direct-subclasses
     let form = model-definition(class);
     if (form)
       with-dependent-context ($compilation of form)
-	%direct-subclasses(class)
-	  := mapped-model(^direct-subclasses-known(class))
+        %direct-subclasses(class)
+          := mapped-model(^direct-subclasses-known(class))
       end;
     end;
     %direct-subclasses-initialized?(class) := #t;
@@ -69,22 +69,22 @@ define function ^all-subclasses-if-sealed (class :: <&class>)
  => (subclasses :: false-or(<list>));
   let subclasses = #();
   local method add-if (class)
-	  if (^all-direct-subclasses-known?(class))
-	    member?(class, subclasses) |
+          if (^all-direct-subclasses-known?(class))
+            member?(class, subclasses) |
               (~member?(class, ^direct-subclasses(class)) &    // gts,98feb09
-	      if (every?(add-if, ^direct-subclasses(class)))
-		subclasses := pair(class, subclasses)
-	      end )
-	  end
-	end method;
+              if (every?(add-if, ^direct-subclasses(class)))
+                subclasses := pair(class, subclasses)
+              end )
+          end
+        end method;
   add-if(class) & subclasses
 end function;
 
 // ^sealed-with-no-subclasses? is implemented in the class definition code.
 
-define function ^least-primary-superclass (cl :: <&class>) 
+define function ^least-primary-superclass (cl :: <&class>)
     => (result :: false-or(<&class>))
-  // Shared subroutine used by inheritance consistency checking and in the 
+  // Shared subroutine used by inheritance consistency checking and in the
   // typist.
   // Cl if it's primary, otherwise least primary superclass of leftmost
   // CPL element that has one.  Least primary superclass of <object> is #f.
@@ -102,7 +102,7 @@ end method ^base-type;
 
 //// Subtype? relationships.
 
-define method ^subtype? (c1 :: <&class>, c2 :: <&class>) 
+define method ^subtype? (c1 :: <&class>, c2 :: <&class>)
     => (value :: <boolean>)
   member?(c2, ^all-superclasses(c1))
 end method;
@@ -111,13 +111,13 @@ end method;
 
 // Disjointness is library-relative for compile-time sealing analysis.
 // A method that was allowed to be defined after testing disjoint from
-// some sealed domain becomes a potential blocking method (in a 
-// particular argument position) of any class that might be defined 
-// later to contravene the disjointness test (at that argument 
+// some sealed domain becomes a potential blocking method (in a
+// particular argument position) of any class that might be defined
+// later to contravene the disjointness test (at that argument
 // position).
 
 // TODO: On the grounds that rule 3 requires more information to be
-// computed to do checking, should we define all classes "first" in a 
+// computed to do checking, should we define all classes "first" in a
 // compiler pass and mop-up as many problems as possible on the method
 // tests? I guess you'd really like error messages in both places to
 // indicate the problem.
@@ -132,17 +132,17 @@ end method;
 define method ^known-disjoint?
     (class1 :: <&class>, class2 :: <&class>) => (value :: <boolean>)
   local method guaranteed-joint-2? (class)
-	  member?(class2, ^all-superclasses(class))
-	    | any?(guaranteed-joint-2?,
-		   if (^class-sealed?(class) |
-			 current-library-description?(model-library(class)))
-		     ^direct-subclasses(class)
-		   else // else depends on current library, need to compute
-		     ^direct-subclasses-known(class)
-		   end)
-	end;
+          member?(class2, ^all-superclasses(class))
+            | any?(guaranteed-joint-2?,
+                   if (^class-sealed?(class) |
+                         current-library-description?(model-library(class)))
+                     ^direct-subclasses(class)
+                   else // else depends on current library, need to compute
+                     ^direct-subclasses-known(class)
+                   end)
+        end;
   // This all-superclasses membership test should be an optimization because
-  // the all-superclasses vector is precomputed and readily available in  
+  // the all-superclasses vector is precomputed and readily available in
   // all contexts, whereas the direct subclasses may have to be computed.
   // This is potentially very expensive, particularly for classes towards
   // the top of the heterarchy (e.g. <object>).

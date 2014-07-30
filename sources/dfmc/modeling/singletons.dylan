@@ -62,10 +62,10 @@ end method ^subtype?;
 
 //// Disjointness relationships.
 
-define method ^known-disjoint? 
+define method ^known-disjoint?
     (t1 :: <&singleton>, t2 :: <&singleton>)
  => (known-disjoint? :: <boolean>)
-  t1.^singleton-object ~== t2.^singleton-object 
+  t1.^singleton-object ~== t2.^singleton-object
 end method ^known-disjoint?;
 
 // "A singleton type is disjoint from another type if the singleton's object

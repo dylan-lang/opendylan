@@ -1,13 +1,13 @@
 Library: dfmc-modeling
 Target-Type: dll
 Files:   modeling-library
-	 model-object-macros
+         model-object-macros
          namespace-macros
          boot
-	 model-object
+         model-object
          namespaces
          values
-	 objects
+         objects
          signatures
          functions
          types
@@ -16,18 +16,18 @@ Files:   modeling-library
          unions
          limited-integers
          limited-collections
-	 subclasses
-	 primitive-macros
-	 raw-type-macros
-	 raw-types
-	 primitives
+         subclasses
+         primitive-macros
+         raw-type-macros
+         raw-types
+         primitives
          machine-word-primitives-support
-	 machine-word-primitives
+         machine-word-primitives
          float-primitives
          thread-primitives
-	 c-function-models
-	 inlineable
-	 operations
+         c-function-models
+         inlineable
+         operations
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.

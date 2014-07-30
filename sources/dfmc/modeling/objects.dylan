@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //// Booted simple objects.
 
-define variable $dylan-system-subtype-bit-type-names :: <simple-object-vector> 
+define variable $dylan-system-subtype-bit-type-names :: <simple-object-vector>
   = #[#"<value-object>",                // 1
       #"<mm-wrapper>",                  // 2
       #"<class>",                       // 4
@@ -40,10 +40,10 @@ define sealed domain ^make (subclass(<&object>));
 define sealed domain ^initialize (<&object>);
 define sealed domain initialize-packed-slots (<&object>);
 
-// TODO: Remove this union type when one is defined in the appropriate 
+// TODO: Remove this union type when one is defined in the appropriate
 // place.
 
-define constant <model-value> 
+define constant <model-value>
   = type-union(<&top>, <heap-deferred-model>,
                <number>, <character>, <boolean>, <mapped-unbound>,
                <list>, <vector>, <string>, <symbol>); // etc.
@@ -78,14 +78,14 @@ end;
 
 define sealed abstract &class <float> (<machine-number>) end;
 
-define sealed concrete &class <single-float> (<float>, <value-object>) 
-  runtime-constant raw &slot %single-float-data :: <raw-single-float>, 
+define sealed concrete &class <single-float> (<float>, <value-object>)
+  runtime-constant raw &slot %single-float-data :: <raw-single-float>,
     required-init-keyword: data:;
   metaclass <value-class>;
 end &class;
 
-define sealed concrete &class <double-float> (<float>, <value-object>) 
-  runtime-constant raw &slot %double-float-data :: <raw-double-float>, 
+define sealed concrete &class <double-float> (<float>, <value-object>)
+  runtime-constant raw &slot %double-float-data :: <raw-double-float>,
     required-init-keyword: data:;
   metaclass <value-class>;
 end &class;
@@ -96,7 +96,7 @@ end &class;
 ///   metaclass <value-class>;
 /// end &class;
 
-define sealed concrete &class <machine-word> (<value-object>) 
+define sealed concrete &class <machine-word> (<value-object>)
   runtime-constant raw &slot %machine-word-data :: <raw-machine-word>,
      required-init-keyword: data:;
   metaclass <value-class>;
@@ -111,23 +111,23 @@ define sealed concrete primary &class <namespace> (<object>)
 end &class;
 
 define sealed abstract &class <library-version> (<object>)
-  runtime-constant &slot library-major-version :: <integer>, 
+  runtime-constant &slot library-major-version :: <integer>,
     init-value: 0, init-keyword: major-version:;
-  runtime-constant &slot library-minor-version :: <integer>, 
+  runtime-constant &slot library-minor-version :: <integer>,
     init-value: 0, init-keyword: minor-version:;
   runtime-constant &slot library-build-count :: <integer>,
     init-value: 0, init-keyword: build-count:;
 end &class;
 
 define sealed concrete primary &class <library> (<namespace>, <library-version>)
-  sealed &slot used-libraries :: <simple-object-vector>, 
+  sealed &slot used-libraries :: <simple-object-vector>,
     init-value: #[],
     init-keyword: used-libraries:;
   sealed &slot all-used-libraries :: <simple-object-vector>,
     init-value: #[],
     init-keyword: all-used-libraries:;
   sealed &slot runtime-module, init-value: #f;
-  // Following slot only used in the runtime, constructed 
+  // Following slot only used in the runtime, constructed
   weak &slot library-defined-generics :: <simple-object-vector>,
     reinit-expression: #[],
     init-value: #[];
@@ -135,7 +135,7 @@ define sealed concrete primary &class <library> (<namespace>, <library-version>)
     init-value: 0;
   &slot library-number-dynamic-dispatches :: <integer>,
     init-value: 0;
-  slot ^library-description, 
+  slot ^library-description,
     init-keyword: library-description:;
   weak slot library-accumulating-defined-generics :: <stretchy-object-vector>,
     reinit-expression: make(<stretchy-object-vector>),
@@ -143,9 +143,9 @@ define sealed concrete primary &class <library> (<namespace>, <library-version>)
 end &class;
 
 define sealed concrete primary &class <used-library> (<library-version>)
-  sealed &slot used-library :: <library>, 
+  sealed &slot used-library :: <library>,
     required-init-keyword: used-library:;
-  sealed &slot used-library-binding :: <symbol>, 
+  sealed &slot used-library-binding :: <symbol>,
     required-init-keyword: binding:;
 end &class;
 
@@ -185,7 +185,7 @@ define method form-module-model
     (form :: <variable-defining-form>) => (module :: <&module>)
   let binding = form-variable-binding(form);
   namespace-model(binding-home(binding));
-end;  
+end;
 
 define method form-module-model
     (form :: <modifying-form>) => (module :: <&module>)
@@ -210,12 +210,12 @@ define generic ^mm-wrapper-pattern-element-setter (value, object, index);
 
 
 define sealed primary &class <mm-wrapper> (<object>)
-  &slot mm-wrapper-implementation-class :: <implementation-class>, 
+  &slot mm-wrapper-implementation-class :: <implementation-class>,
      required-init-keyword: implementation-class:;
   // Mask of all inherited subtype bits.
   &slot mm-wrapper-subtype-mask :: <integer>, init-value: 0,
-     init-keyword: subtype-mask:; 
-  /* raw */ &slot mm-wrapper-fixed-part :: <raw-machine-word>, 
+     init-keyword: subtype-mask:;
+  /* raw */ &slot mm-wrapper-fixed-part :: <raw-machine-word>,
      init-keyword: fixed-part:;
   /* raw */ &slot mm-wrapper-variable-part :: <raw-machine-word>,
      init-keyword: variable-part:;
@@ -244,7 +244,7 @@ define method ^mm-wrapper-pattern-element (object :: <&mm-wrapper>, index)
   element(%mm-wrapper-patterns(object), index)
 end method;
 
-define method ^mm-wrapper-pattern-element-setter 
+define method ^mm-wrapper-pattern-element-setter
     (value, object :: <&mm-wrapper>, index)
   element(%mm-wrapper-patterns(object), index) := value
 end method;
@@ -261,12 +261,12 @@ end method;
 // can have element/element-setter defined for them.
 
 define open abstract &class <object-with-elements> (<object>) end;
-define open compiler-open abstract &class <mutable-object-with-elements> 
-    (<object-with-elements>) 
+define open compiler-open abstract &class <mutable-object-with-elements>
+    (<object-with-elements>)
 end &class;
 define open   abstract &class <collection> (<object-with-elements>) end;
-define open   abstract &class <mutable-collection> 
-    (<collection>, <mutable-object-with-elements>) 
+define open   abstract &class <mutable-collection>
+    (<collection>, <mutable-object-with-elements>)
 end &class;
 define open abstract &class <explicit-key-collection> (<collection>)
 end &class;
@@ -274,11 +274,11 @@ define open abstract &class <mutable-explicit-key-collection>
     (<explicit-key-collection>, <mutable-collection>)
 end &class;
 define open   abstract &class <sequence> (<collection>) end;
-define open   abstract &class <mutable-sequence> 
-    (<mutable-collection>, <sequence>) 
+define open   abstract &class <mutable-sequence>
+    (<mutable-collection>, <sequence>)
 end &class;
 
-define sealed abstract primary &class <list> (<mutable-sequence>) 
+define sealed abstract primary &class <list> (<mutable-sequence>)
   inline &slot head, init-value: #f,  init-keyword: head:;
   inline &slot tail, init-value: #(), init-keyword: tail:;
 end &class <list>;
@@ -362,18 +362,18 @@ end method;
 
 define macro compile-time-collection-functions-for-definer
   { define compile-time-collection-functions-for ?:name }
-    => { define method ^empty? (collection :: ?name) 
+    => { define method ^empty? (collection :: ?name)
              => (result :: <boolean>);
            collection.empty?
          end method;
 
 
-         define method ^element (collection :: ?name, 
-                        key :: <integer>, #key default = unsupplied()) 
+         define method ^element (collection :: ?name,
+                        key :: <integer>, #key default = unsupplied())
              => (object)
-           if (supplied?(default)) 
-             element(collection, key, default: default) 
-           else 
+           if (supplied?(default))
+             element(collection, key, default: default)
+           else
              collection[key]
            end
          end method
@@ -384,7 +384,7 @@ define compile-time-collection-functions-for <simple-object-vector>;
 define compile-time-collection-functions-for <list>;
 define compile-time-collection-functions-for <byte-string>;
 
-define method ^size (collection :: <list>) 
+define method ^size (collection :: <list>)
  => (result :: <integer>);
   collection.size
 end method;
@@ -395,7 +395,7 @@ end method;
 define generic ^instance?-iep (type);
 define generic ^instance?-iep-setter (value, type);
 
-define sealed abstract primary &class <type> (<object>) 
+define sealed abstract primary &class <type> (<object>)
   &computed-slot instance?-iep /* :: <raw-pointer> */, init-value: #f;
 //   &slot instance?-iep;
   constant slot ^instance?-function, init-value: #"uninitialized-instance?-function";
@@ -420,7 +420,7 @@ define concrete primary &class <implementation-class> (<object>)
   //// Run-time & compile-time slots.
 
   // Assorted class properties, packed. See below.
-  &slot class-properties :: <integer>, 
+  &slot class-properties :: <integer>,
     init-value: 0;
 
   // Pointer back to the class object.
@@ -428,15 +428,15 @@ define concrete primary &class <implementation-class> (<object>)
     required-init-keyword: class:;
 
   // Traceable pointer back to mm-wrapper.
-  lazy &slot class-mm-wrapper, // FIX MOMACS: :: false-or(<mm-wrapper>), 
-    init-value: #f;  
+  lazy &slot class-mm-wrapper, // FIX MOMACS: :: false-or(<mm-wrapper>),
+    init-value: #f;
 
-  lazy &slot repeated-slot-descriptor, // FIX MOMACS: :: false-or(<repeated-slot-descriptor>), 
+  lazy &slot repeated-slot-descriptor, // FIX MOMACS: :: false-or(<repeated-slot-descriptor>),
     init-value: #f;
   lazy &slot instance-slot-descriptors :: <simple-object-vector>,
     init-value: #[];
 
-  &slot iclass-dispatch-key :: <integer>, 
+  &slot iclass-dispatch-key :: <integer>,
     init-value: -1;
 
   //// **** Slots before this point may be known about in a non-modular ****
@@ -444,7 +444,7 @@ define concrete primary &class <implementation-class> (<object>)
 
   //// More slots that are always required in full.
 
-  &computed-slot-no-default class-constructor :: <method>, 
+  &computed-slot-no-default class-constructor :: <method>,
     init-keyword: constructor:,
     init-value: default-class-constructor;
 
@@ -454,12 +454,12 @@ define concrete primary &class <implementation-class> (<object>)
   // RCPL fast subclass slots, markt, 2-Apr-97
 
   // The reversed CPL as s-o-v
-  lazy &slot class-rcpl-vector :: <simple-object-vector>, 
-    init-value: #[]; 
+  lazy &slot class-rcpl-vector :: <simple-object-vector>,
+    init-value: #[];
   // The first (hopefully only) RCPL position.
-  &slot class-rcpl-position :: <integer>, 
-    init-value: 0; 
-  lazy &slot class-rcpl-other-positions :: <simple-object-vector>, 
+  &slot class-rcpl-position :: <integer>,
+    init-value: 0;
+  lazy &slot class-rcpl-other-positions :: <simple-object-vector>,
     init-value: #[];
 
   // Slots for tracking run-time changes to the class hierarchy and general
@@ -476,16 +476,16 @@ define concrete primary &class <implementation-class> (<object>)
     init-value:   #(),
     init-keyword: subclass-dependent-generics:;
 
-  lazy &slot direct-subclasses :: <list>, 
+  lazy &slot direct-subclasses :: <list>,
     init-value: #();
-  lazy &slot direct-methods :: <simple-object-vector>, 
+  lazy &slot direct-methods :: <simple-object-vector>,
     init-value: #[];
 
   //// Slots that may often be defaulted.
 
-  lazy &slot direct-slot-descriptors :: <simple-object-vector>, 
+  lazy &slot direct-slot-descriptors :: <simple-object-vector>,
     init-value: #[];
-  lazy &slot slot-descriptors :: <simple-object-vector>, 
+  lazy &slot slot-descriptors :: <simple-object-vector>,
     init-value: #[];
   lazy &slot direct-inherited-slot-descriptors :: <simple-object-vector>,
     init-value: #[];
@@ -493,22 +493,22 @@ define concrete primary &class <implementation-class> (<object>)
                :: <simple-object-vector>,
     init-value: #[];
 
-  lazy &slot class-slot-descriptors :: <simple-object-vector>, 
+  lazy &slot class-slot-descriptors :: <simple-object-vector>,
     init-value: #[];
 
-  lazy &slot defaulted-initialization-arguments-slot, 
+  lazy &slot defaulted-initialization-arguments-slot,
     init-value: 0;
 
-  &slot class-slot-storage :: <simple-object-vector>, 
+  &slot class-slot-storage :: <simple-object-vector>,
     init-value: #[];
 
   // Place holders for Caseau gene stuff. In time may implement this for
   // comparison with RCPL.
 
   // A bit vector?
-  // &slot class-Caseau-gene-set;           
+  // &slot class-Caseau-gene-set;
   // The gene used here (if primary class)
-  // &slot class-Caseau-gene :: <integer>;  
+  // &slot class-Caseau-gene :: <integer>;
 
   //// Optional, for the collection of statistics only.
 
@@ -526,7 +526,7 @@ define concrete primary &class <implementation-class> (<object>)
   // Slot for incremental building of RCPL position lists.
   lazy slot ^class-incremental-rcpl-positions :: <list> = #();
 
-  lazy slot ^all-superclasses :: <list>, 
+  lazy slot ^all-superclasses :: <list>,
     init-value: #();
 
 end &class <implementation-class>;
@@ -534,20 +534,20 @@ end &class <implementation-class>;
 define constant $max-class-log-size = 16;
 
 define leaf packed-slots ^class-properties (<&implementation-class>, <object>)
-  field   slot ^instance-storage-size               = 0,  
+  field   slot ^instance-storage-size               = 0,
     field-size:   $max-class-log-size;
-  boolean slot ^class-abstract?                     = #f, 
+  boolean slot ^class-abstract?                     = #f,
     init-keyword: abstract?:;
-  boolean slot ^class-primary?                      = #f, 
+  boolean slot ^class-primary?                      = #f,
     init-keyword: primary?:;
-  boolean slot ^class-sealed?                       = #f, 
+  boolean slot ^class-sealed?                       = #f,
     init-keyword: sealed?:;
   boolean slot ^iclass-type-complete?               = #t, // set to #f if only hollow
-    init-keyword: type-complete?:;  
+    init-keyword: type-complete?:;
   boolean slot ^class-complete?                     = #f,
     init-keyword: complete?:;
   boolean slot ^class-incremental?                  = #f, // set to #t for loose mode
-    init-keyword: incremental?:;  
+    init-keyword: incremental?:;
   boolean slot ^slots-have-fixed-offsets?-bit       = #f,
     init-keyword: slots-have-fixed-offsets?:;
   boolean slot ^slots-have-fixed-offsets?-computed? = #f,
@@ -590,7 +590,7 @@ define macro iclass-transfer-definer
       }
 
   { define iclass-transfer &slot ?slotname:name (?type:*) ; }
-    => 
+    =>
     { define iclass-transfer-compiletime-slot "^" ## ?slotname, "^" ## ?slotname (?type) ;
       define iclass-transfer-runtime-slot ?slotname (?type ) ;
      }
@@ -639,7 +639,7 @@ define macro iclass-transfer-runtime-slot-definer
       do-define-evaluator-override(?#"slotname" ## "-setter", "^" ## ?slotname ## "-setter");
       define function "source-constructor-for-iclass-transfer-" ## ?slotname ()
           #{ define inline method ?slotname (c :: <class>) => (v :: ?type)
-               ?slotname(class-implementation-class(c)) 
+               ?slotname(class-implementation-class(c))
              end method;
              define inline method ?slotname ## "-setter" (v :: ?type, c :: <class>)
                ?slotname ## "-setter" (v, class-implementation-class(c))
@@ -677,7 +677,7 @@ define method ^class-module-setter (v, c :: <&class>) => (value)
   %class-module(c) := v
 end method;
 
-define compiler-open generic ^initialize-class 
+define compiler-open generic ^initialize-class
   (x :: <&class>, #rest args, #key, #all-keys);
 
 define method ^initialize
@@ -756,7 +756,7 @@ end;
 define &virtual-class <raw-type> (<type>)
   slot ^debug-name,
     init-keyword: debug-name:;
-  constant slot ^raw-type-supertype, 
+  constant slot ^raw-type-supertype,
     required-init-keyword: supertype:;
   constant slot raw-type-descriptor-function :: <function>,
     required-init-keyword: descriptor-function:;
@@ -767,7 +767,7 @@ define &virtual-class <raw-aggregate-type> (<type>)
     init-keyword: debug-name:;
   lazy constant slot raw-aggregate-members, required-init-keyword: members:;
   lazy constant slot raw-aggregate-options, required-init-keyword: options:;
-end;  
+end;
 
 define &virtual-subclass <raw-struct-type> (<raw-aggregate-type>)
 end;
@@ -789,7 +789,7 @@ define method ^initialize
   apply(initialize-packed-slots, x, all-keys)
 end method;
 
-define packed-slots ^slot-descriptor-properties 
+define packed-slots ^slot-descriptor-properties
     (<&slot-initial-value-descriptor>, <object>)
   boolean  slot ^init-supplied?  = #f, init-keyword: init-supplied?:;
   boolean  slot ^init-value?     = #f, init-keyword: init-value?:;
@@ -807,7 +807,7 @@ define abstract primary &class <slot-keyword-initialization-descriptor>
   &slot init-keyword, init-keyword: init-keyword:, init-value: #f;
 end &class <slot-keyword-initialization-descriptor>;
 
-define packed-slots ^slot-descriptor-properties 
+define packed-slots ^slot-descriptor-properties
     (<&slot-keyword-initialization-descriptor>, <&slot-initial-value-descriptor>)
   boolean  slot ^init-keyword-required? = #f, init-keyword: init-keyword-required?:;
 end packed-slots;
@@ -818,23 +818,23 @@ define primary &class <slot-descriptor> (<slot-keyword-initialization-descriptor
   runtime-constant &slot slot-type :: <type>, init-value: <object>, init-keyword: type:;
 
   // Compile-time only. These slots hold the functions in the compiler for
-  // accessing the slot value from a directly modeled object. These 
-  // functions are recorded at boot time and installed when the source for 
-  // the modeled class is compiled.  
+  // accessing the slot value from a directly modeled object. These
+  // functions are recorded at boot time and installed when the source for
+  // the modeled class is compiled.
 
   slot emitted-type-name = #f;
 
-  // TODO: Should these actually be compile-stage overrides on the 
+  // TODO: Should these actually be compile-stage overrides on the
   // accessor functions themselves? That would be a more general
   // purpose mechanism.
 
   weak slot model-object-getter = #f,
-    reinit-expression: 
+    reinit-expression:
       with-dependent-context ($compilation of model-definition(self))
         compute-compile-stage-getter(self)
       end;
   weak slot model-object-setter = #f,
-    reinit-expression: 
+    reinit-expression:
       with-dependent-context ($compilation of model-definition(self))
         compute-compile-stage-setter(self)
       end;
@@ -866,18 +866,18 @@ define function compute-compile-stage-setter (slot :: <&slot-descriptor>)
 end function;
 
 /*
-define inline method model-object-getter 
+define inline method model-object-getter
     (x :: <&slot-descriptor>) => (res :: false-or(<function>))
   lookup-compile-stage-function(^slot-getter(x))
 end method;
 
-define inline method model-object-setter 
+define inline method model-object-setter
     (x :: <&slot-descriptor>) => (res :: false-or(<function>))
   lookup-compile-stage-function(^slot-setter(x))
 end method;
 */
 
-define compiler-open generic ^initialize-slot-descriptor 
+define compiler-open generic ^initialize-slot-descriptor
   (x :: <&slot-descriptor>, #rest args, #key, #all-keys);
 
 define method ^initialize
@@ -886,7 +886,7 @@ define method ^initialize
   apply(^initialize-slot-descriptor, x, all-keys)
 end method;
 
-define leaf packed-slots ^slot-descriptor-properties 
+define leaf packed-slots ^slot-descriptor-properties
     (<&slot-descriptor>, <&slot-keyword-initialization-descriptor>)
   field slot ^slot-storage-size = 1, field-size: 8,
     init-keyword: storage-size:;
@@ -929,7 +929,7 @@ define primary &class <inherited-slot-descriptor> (<slot-initial-value-descripto
   constant &slot inherited-slot-getter, required-init-keyword: getter:;
 end &class <inherited-slot-descriptor>;
 
-define method ^slot-value 
+define method ^slot-value
     (object, slot-descriptor :: <&slot-descriptor>) => (value)
   let getter = model-object-getter(slot-descriptor);
   if (getter)
@@ -965,7 +965,7 @@ end method;
 */
 
 define method ^repeated-slot-value
-    (object, descriptor :: <&repeated-slot-descriptor>, 
+    (object, descriptor :: <&repeated-slot-descriptor>,
        offset :: <integer>)
   let element-getter = model-object-getter(descriptor);
   // let size-getter = model-object-getter(descriptor.^size-slot-descriptor);
@@ -1017,7 +1017,7 @@ define method dood-make-unbound-proxy
   make(<dood-unbound-proxy>)
 end method;
 
-define sideways method dood-disk-object 
+define sideways method dood-disk-object
     (dood :: <dood>, object :: <mapped-unbound>)
  => (proxy :: <dood-unbound-proxy>)
   dood-as-proxy(dood, object, dood-make-unbound-proxy)
@@ -1152,9 +1152,9 @@ end ^mapping;
 define method ^symbol? (object) #f end;
 define method ^symbol? (object :: <symbol>) #t end;
 
-// Uninterned symbols are a hack to allow us to generate distinct 
-// instances of symbol models so that independent model versions can 
-// be emitted. Dylan doesn't support uninterned symbols, hence the 
+// Uninterned symbols are a hack to allow us to generate distinct
+// instances of symbol models so that independent model versions can
+// be emitted. Dylan doesn't support uninterned symbols, hence the
 // following.
 
 
@@ -1164,7 +1164,7 @@ define class <uninterned-symbol> (<model-properties>)
 end class;
 
 define method deep-copy-symbol (object :: <symbol>)
-  make(<uninterned-symbol>, 
+  make(<uninterned-symbol>,
        name: mapped-model(as-lowercase!(shallow-copy(as(<string>, object)))));
 end method;
 
@@ -1184,7 +1184,7 @@ define ^mapping <pair> => <pair>
 end ^mapping;
 
 define method make-compile-time-literal (object :: <pair>)
-  pair(make-compile-time-literal(object.head), 
+  pair(make-compile-time-literal(object.head),
        make-compile-time-literal(object.tail))
 end method;
 
@@ -1214,7 +1214,7 @@ end method;
 
 // Map to the canonical empty strings and vectors in the run-time.
 
-define compiler-sideways method standard-model-object 
+define compiler-sideways method standard-model-object
     (object :: <simple-object-vector>) => (standard :: <simple-object-vector>)
   if (empty?(object))
     &empty-simple-object-vector
@@ -1223,7 +1223,7 @@ define compiler-sideways method standard-model-object
   end
 end method;
 
-define compiler-sideways method standard-model-object 
+define compiler-sideways method standard-model-object
     (object :: <byte-string>) => (standard :: <byte-string>)
   if (empty?(object))
     &empty-byte-string
@@ -1262,7 +1262,7 @@ end &class;
 define class <dood-cross-model-proxy> (<dood-binding-value-proxy>)
 end class;
 
-define compiler-sideways method dood-disk-object 
+define compiler-sideways method dood-disk-object
     (dood :: <dood>, object :: <model-properties>) => (proxy)
   // format-out("object %= %=\n", object, model-library(object));
   let ld = dood-root(dood);
@@ -1297,14 +1297,14 @@ end class;
 
 define method dood-make-binding-value-proxy
     (dood :: <dood>, object :: <&slot-descriptor>) => (proxy)
-  make(<dood-cross-model-slot-descriptor-proxy>, 
+  make(<dood-cross-model-slot-descriptor-proxy>,
        binding: model-variable-binding(^slot-owner(object)),
        slot-getter: ^slot-getter(object))
 end method;
 
 define compiler-open generic ^slot-descriptor (class, accessor :: <&function>);
 
-define compiler-open generic ^slot-offset 
+define compiler-open generic ^slot-offset
     (slot-descriptor :: <&slot-descriptor>, class :: <&class>);
 
 define method dood-restore-proxy
@@ -1317,9 +1317,9 @@ define class <dood-cross-model-inherited-slot-descriptor-proxy>
     (<dood-cross-model-slot-descriptor-proxy>)
 end class;
 
-define method dood-make-binding-value-proxy 
+define method dood-make-binding-value-proxy
     (dood :: <dood>, object :: <&inherited-slot-descriptor>) => (proxy)
-  make(<dood-cross-model-inherited-slot-descriptor-proxy>, 
+  make(<dood-cross-model-inherited-slot-descriptor-proxy>,
        binding: model-variable-binding(^slot-owner(object)),
        slot-getter: ^inherited-slot-getter(object))
 end method;
@@ -1330,7 +1330,7 @@ end class;
 
 define method dood-make-binding-value-proxy
     (dood :: <dood>, object :: <&init-arg-descriptor>) => (proxy)
-  make(<dood-cross-model-init-arg-descriptor-proxy>, 
+  make(<dood-cross-model-init-arg-descriptor-proxy>,
        binding: model-variable-binding(^slot-owner(object)),
        keyword: ^init-keyword(object))
 end method;
@@ -1361,7 +1361,7 @@ end class;
 
 define method dood-make-binding-value-proxy
     (dood :: <dood>, object :: <&mm-wrapper>) => (proxy)
-  make(<dood-cross-model-mm-wrapper-proxy>, 
+  make(<dood-cross-model-mm-wrapper-proxy>,
        binding: model-variable-binding(^iclass-class(^mm-wrapper-implementation-class(object))))
 end method;
 
@@ -1373,7 +1373,7 @@ end method;
 /// MAPPED MODELS
 
 define dood-class <dood-mapped-object-proxy> (<dood-wrapper-proxy>)
-  lazy constant slot dood-proxy-mapped-object-properties, 
+  lazy constant slot dood-proxy-mapped-object-properties,
     required-init-keyword: properties:;
 end dood-class;
 
@@ -1401,7 +1401,7 @@ define compiler-sideways method dood-disk-object-default
     let ld = dood-library-description(dood);
     // HACK: SPECIAL CASE FOR SIGNATURE TYPE VECTORS
     if (instance?(object, <simple-object-vector>))
-      let properties = find-model-properties-in(ld, object, #f, create?: #f); 
+      let properties = find-model-properties-in(ld, object, #f, create?: #f);
       if (properties)
         if (ld == model-library(object))
           dood-as-proxy(dood, object, dood-make-mapped-object-proxy, properties)
@@ -1412,7 +1412,7 @@ define compiler-sideways method dood-disk-object-default
         object
       end if
     else
-      let properties = lookup-owned-model-properties-in(ld, object); 
+      let properties = lookup-owned-model-properties-in(ld, object);
       if (properties)
         dood-as-proxy(dood, object, dood-make-mapped-object-proxy, properties)
       else
@@ -1423,7 +1423,7 @@ define compiler-sideways method dood-disk-object-default
 end method;
 
 define method restore-mapped-object-proxy
-    (dood :: <dood>, ld :: <project-library-description>, 
+    (dood :: <dood>, ld :: <project-library-description>,
      proxy :: <dood-mapped-object-proxy>)
  => (object)
   let model      = dood-wrapper-proxy-object(proxy);

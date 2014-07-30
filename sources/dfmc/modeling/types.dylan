@@ -96,7 +96,7 @@ end method;
 
 define abstract &class <limited-type> (<type>) end &class;
 
-define &class <limited-collection-type> (<limited-type>) 
+define &class <limited-collection-type> (<limited-type>)
   constant &slot limited-collection-class :: <class>,
     required-init-keyword: class:;
   constant &slot limited-collection-element-type :: <type>,
@@ -112,24 +112,24 @@ define &class <limited-collection-type> (<limited-type>)
     init-keyword: dimensions:;
 end &class;
 
-define &class <limited-explicit-key-collection-type> (<limited-collection-type>) 
+define &class <limited-explicit-key-collection-type> (<limited-collection-type>)
 end &class;
 
-define &class <limited-mutable-collection-type> (<limited-collection-type>) 
+define &class <limited-mutable-collection-type> (<limited-collection-type>)
 end &class;
 
-define &class <limited-stretchy-collection-type> (<limited-collection-type>) 
+define &class <limited-stretchy-collection-type> (<limited-collection-type>)
 end &class;
 
-define &class <limited-mutable-explicit-key-collection-type> 
-  (<limited-mutable-collection-type>, <limited-explicit-key-collection-type>) 
+define &class <limited-mutable-explicit-key-collection-type>
+  (<limited-mutable-collection-type>, <limited-explicit-key-collection-type>)
 end &class;
 
-define &class <limited-sequence-type> (<limited-collection-type>) 
+define &class <limited-sequence-type> (<limited-collection-type>)
 end &class;
 
-define &class <limited-mutable-sequence-type> 
-  (<limited-mutable-collection-type>, <limited-sequence-type>) 
+define &class <limited-mutable-sequence-type>
+  (<limited-mutable-collection-type>, <limited-sequence-type>)
 end &class;
 
 define &class <limited-array-type> (<limited-mutable-sequence-type>)
@@ -141,25 +141,25 @@ end &class;
 define &class <limited-string-type> (<limited-mutable-sequence-type>)
 end &class;
 
-define &class <limited-stretchy-vector-type> 
+define &class <limited-stretchy-vector-type>
   (<limited-stretchy-collection-type>, <limited-vector-type>)
 end &class;
 
-define &class <limited-deque-type> 
+define &class <limited-deque-type>
   (<limited-stretchy-collection-type>, <limited-mutable-sequence-type>)
 end &class;
 
-define &class <limited-table-type> (<limited-mutable-explicit-key-collection-type>) 
+define &class <limited-table-type> (<limited-mutable-explicit-key-collection-type>)
 end &class;
 
-define &class <limited-set-type> (<limited-mutable-explicit-key-collection-type>) 
+define &class <limited-set-type> (<limited-mutable-explicit-key-collection-type>)
 end &class;
 
 define method ^instance?-function (t :: <&limited-collection-type>) => (res :: <symbol>)
   #"limited-collection-instance?"
 end method;
 
-define method ^subtype? 
+define method ^subtype?
     (t1 :: <&limited-collection-type>, t2 :: <&limited-collection-type>) => (result :: <boolean>)
   let s1 = ^limited-collection-size(t1);
   let s2 = ^limited-collection-size(t2);
@@ -168,18 +168,18 @@ define method ^subtype?
   ^subtype?(^limited-collection-class(t1), ^limited-collection-class(t2))
     & ^type-equivalent?(^limited-collection-element-type(t1), ^limited-collection-element-type(t2))
     & (if (~d1 & ~d2)
-	 (~s2 | s1 = s2)
-       else 
-	 (d1 & (~d2 | every?(\=, d1, d2)) & (~s2 | reduce1(\*, d1) = s2))
+         (~s2 | s1 = s2)
+       else
+         (d1 & (~d2 | every?(\=, d1, d2)) & (~s2 | reduce1(\*, d1) = s2))
        end if)
 end method;
 
-define method ^subtype? 
+define method ^subtype?
     (c :: <&type>, t :: <&limited-collection-type>) => (result :: <boolean>)
   #f
 end method;
 
-define method ^subtype? 
+define method ^subtype?
     (s :: <&singleton>, t :: <&limited-collection-type>) => (result :: <boolean>)
   ^instance?(^singleton-object(s), t)
 end method;
@@ -189,12 +189,12 @@ define method ^subtype?
   ^subtype?(u.^union-type1, t) & ^subtype?(u.^union-type2, t)
 end method;
 
-define method ^subtype? 
+define method ^subtype?
     (t :: <&limited-collection-type>, c :: <&type>) => (result :: <boolean>)
   #f
 end method;
 
-define method ^subtype? 
+define method ^subtype?
     (t :: <&limited-collection-type>, c :: <&class>) => (result :: <boolean>)
   ^subtype?(^limited-collection-concrete-class(t) | ^limited-collection-class(t), c)
 end method;
@@ -229,7 +229,7 @@ end method;
 
 //// Disjointness relationships.
 
-define method ^known-disjoint? 
+define method ^known-disjoint?
     (t1 :: <&limited-collection-type>, t2 :: <&limited-collection-type>)
  => (known-disjoint? :: <boolean>)
   ^known-disjoint?(^limited-collection-class(t1), ^limited-collection-class(t2))
@@ -250,7 +250,7 @@ define method ^known-disjoint? (t1 :: <&limited-collection-type>, t2 :: <&class>
   ^known-disjoint?(t2, t1)
 end method ^known-disjoint?;
 
-define &override-function ^limited 
+define &override-function ^limited
     (type :: <&type>, #rest keys) => (type :: <&type>)
   select (type)
     dylan-value(#"<integer>"), <&integer> // Convenient hack.
@@ -266,6 +266,6 @@ end &override-function;
 
 //// Compiler type properties.
 
-define method type-checked-at-run-time? (type) 
+define method type-checked-at-run-time? (type)
   ~(raw-type?(type) | type == dylan-value(#"<object>"))
 end method;

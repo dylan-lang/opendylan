@@ -38,7 +38,7 @@ define macro virtual-compiler-model-class-definer
          define ?mods model-class ?name (?model-supers)
            ?slots
          metaclass <virtual-class>;
-         end; 
+         end;
          }
 end macro;
 
@@ -56,7 +56,7 @@ define macro virtual-compiler-model-subclass-definer
          define ?mods model-class ?name (?model-supers)
            ?slots
          metaclass <virtual-class>;
-         end; 
+         end;
          }
 end macro;
 
@@ -75,7 +75,7 @@ define macro virtual-compiler-model-class-definer
          // define ?mods model-class ?name (?model-supers)
          //   ?slots
          //   metaclass <virtual-class>;
-         // end; 
+         // end;
          }
 end macro;
 
@@ -103,30 +103,30 @@ define method &object-class (object) => (res)
   let name  = element($&class-names, class, default: #f);
   if (name)
     dylan-value(name)
-  else 
+  else
     let best = <object>;
     let name = #f;
     // find most specific existing supertype
     for (n keyed-by c in $&class-names)
       when (subtype?(class, c) & subtype?(c, best))
-	best := c;
-	name := n;
+        best := c;
+        name := n;
       end when;
     finally
       if (name)
-      	install-&class-mapping(class, name);
-	&object-class(object)
-      else 
-	error("Unable to find class mapping for %=", object);
+              install-&class-mapping(class, name);
+        &object-class(object)
+      else
+        error("Unable to find class mapping for %=", object);
       end if
     end for;
   end if;
 end method;
 
 define macro compiler-class-only-definer
-  { define ?mods:* compiler-class-only "<" ## ?:name ## ">" 
-        (?supers:*) 
-      ?slots:* 
+  { define ?mods:* compiler-class-only "<" ## ?:name ## ">"
+        (?supers:*)
+      ?slots:*
     end }
     => { define ?mods dood-class "<&" ## ?name ## ">" (?supers) ?slots end;
          install-&class-mapping("<&" ## ?name ## ">", "<" ## ?#"name" ## ">") }
@@ -146,7 +146,7 @@ slots:
   { metaclass ?other:*; ... }
     => { ... }
   { ?slot:*; ... }
-    => { ?slot ; ... } 
+    => { ?slot ; ... }
 slot:
   // TODO: Handle repeated slots properly.
   { ?mods:* repeated &slot ?:name ?stuff:* }
@@ -196,26 +196,26 @@ type:
   { "<" ## ?:name ## ">" }
     => { "<&" ## ?name ## ">" }
 props:
-  { } 
+  { }
     => { }
-  { ?prop:*, ... } 
+  { ?prop:*, ... }
     => { ?prop, ... }
 prop:
-  { getter-name: ?val:expression } 
+  { getter-name: ?val:expression }
     => { getter-name: ?val }
-  { setter-name: ?val:expression } 
+  { setter-name: ?val:expression }
     => { setter-name: ?val }
-  { init-keyword: ?val:expression } 
+  { init-keyword: ?val:expression }
     => { init-keyword: ?val }
-  { required-init-keyword: ?val:expression } 
+  { required-init-keyword: ?val:expression }
     => { required-init-keyword: ?val }
   { init-value: ?:name }
     => { init-function: method () dylan-value(?#"name") end }
-  { init-value: ?val:expression } 
+  { init-value: ?val:expression }
     => { init-function: method () /* run-stage */ (?val) end }
-  { size-getter: ?val:expression } 
+  { size-getter: ?val:expression }
     => { size-getter: ?val }
-  { ?key:token ?val:expression } 
+  { ?key:token ?val:expression }
     => { ?key /* run-stage */ (?val) }
 mods:
   { } => { }
@@ -231,16 +231,16 @@ end macro compiler-class-only-definer;
 
 
 define macro compiler-class-accessors-definer
-  { define ?mods:* compiler-class-accessors "<" ## ?:name ## ">" 
-        (?supers:*) 
-      ?slots:* 
+  { define ?mods:* compiler-class-accessors "<" ## ?:name ## ">"
+        (?supers:*)
+      ?slots:*
     end }
     => { ?slots }
 slots:
   { }
     => { }
   { ?slot:*; ... }
-    => { ?slot ; ... } 
+    => { ?slot ; ... }
 slot:
   { inherited &slot ?:name ?etc:* }
     => { #f };
@@ -315,7 +315,7 @@ mods:
   { runtime-constant ... } => { constant ... }
   { ?mod:name ... } => { ?mod ... }
 standard-props:
-  { } 
+  { }
     => { }
   { reinit-expression: ?:expression, ... }
     => { ... }
@@ -336,7 +336,7 @@ end macro;
 
 /*
 define macro compile-stage-accessors-definer
-  { define compile-stage-accessors ?:name (?supers:*) ?slots:* end } 
+  { define compile-stage-accessors ?:name (?supers:*) ?slots:* end }
     => { ?slots }
 slots:
   { ?slot:*; ... }
@@ -371,7 +371,7 @@ end macro;
 define macro ^mapping-definer
   { define ^mapping ?run-stage:name => ?compile-stage:name end }
     => { install-&class-mapping(?compile-stage, ?#"run-stage"); }
-  { define ^mapping ?run-stage:name => ?compile-stage:name 
+  { define ^mapping ?run-stage:name => ?compile-stage:name
       &slot ?run-slot:name => ?compile-slot:name;
       ?more:*
     end }
@@ -379,11 +379,11 @@ define macro ^mapping-definer
          define method "^" ## ?run-slot (object :: ?compile-stage) => (res)
            ?compile-slot(object)
          end method;
-         define method "^" ## ?run-slot ## "-setter" 
+         define method "^" ## ?run-slot ## "-setter"
              (new-value, object :: ?compile-stage)
            ?compile-slot(object) := new-value
          end method; }
-  { define ^mapping ?run-stage:name => ?compile-stage:name 
+  { define ^mapping ?run-stage:name => ?compile-stage:name
       constant &slot ?run-slot:name => ?compile-slot:name;
       ?more:*
     end }
@@ -391,7 +391,7 @@ define macro ^mapping-definer
          define method "^" ## ?run-slot (object :: ?compile-stage) => (res)
            ?compile-slot(object)
          end method; }
-  { define ^mapping ?run-stage:name => ?compile-stage:name 
+  { define ^mapping ?run-stage:name => ?compile-stage:name
       repeated &slot ?run-slot:name => ?compile-slot:name;
       ?more:*
     end }
@@ -399,11 +399,11 @@ define macro ^mapping-definer
          define method "^" ## ?run-slot (object :: ?compile-stage, index) => (res)
            ?compile-slot(object, index)
          end method;
-         define method "^" ## ?run-slot ## "-setter" 
+         define method "^" ## ?run-slot ## "-setter"
              (new-value, object :: ?compile-stage, index)
            ?compile-slot(object, index) := new-value
          end method; }
-  { define ^mapping ?run-stage:name => ?compile-stage:name 
+  { define ^mapping ?run-stage:name => ?compile-stage:name
       &instance ?run-val:name => ?compile-val:expression;
       ?more:*
     end }
@@ -437,7 +437,7 @@ define macro &override-operator-definer
 end macro;
 
 
-// Lazy determinants of runtime slot offsets of runtime models 
+// Lazy determinants of runtime slot offsets of runtime models
 
 define macro runtime-slot-offset-definer
   { define runtime-slot-offset ?slot:name (?class:name) }
@@ -449,12 +449,12 @@ define macro runtime-slot-offset-definer
     => (slot-offset :: <integer>)
      "*" ## ?slot ## "-runtime-slot-offset*"
      | (begin
-	  let class :: <&class> = dylan-value(?#"class");
-	  let slot-descriptor :: <&slot-descriptor> =
-	    ^slot-descriptor(class, dylan-value(?#"slot"));
-	  "*" ## ?slot ## "-runtime-slot-offset*" :=
-	    ^slot-offset(slot-descriptor, class);
-	end);
+          let class :: <&class> = dylan-value(?#"class");
+          let slot-descriptor :: <&slot-descriptor> =
+            ^slot-descriptor(class, dylan-value(?#"slot"));
+          "*" ## ?slot ## "-runtime-slot-offset*" :=
+            ^slot-offset(slot-descriptor, class);
+        end);
    end;
 
   }

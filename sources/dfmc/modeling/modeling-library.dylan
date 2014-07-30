@@ -35,12 +35,12 @@ define macro module-with-models-definer
  binding:
   { slot ?:name }  => { ?name, ?name ## "-setter" }
   { &slot ?:name } => { // "&" ## ?name, "&" ## ?name ## "-setter",
-			"^" ## ?name, "^" ## ?name ## "-setter" }
+                        "^" ## ?name, "^" ## ?name ## "-setter" }
   { &getter ?:name } => { // "&" ## ?name
-			"^" ## ?name }
+                        "^" ## ?name }
   { &setter ?:name } => { // "&" ## ?name ## "-setter",
-			 "^" ## ?name ## "-setter" }
-  { &name ?:name } => { // "&" ## ?name, 
+                         "^" ## ?name ## "-setter" }
+  { &name ?:name } => { // "&" ## ?name,
                         "^" ## ?name }
   { slot-offset ?:name }  => { ?name ## "-runtime-slot-offset" }
   { ?:name }       => { ?name }
@@ -50,7 +50,7 @@ end macro module-with-models-definer;
 define module make/initialize-aliases
   use dylan,
     rename: { make => ^make,
-	      initialize => ^initialize },
+              initialize => ^initialize },
     export: all;
 end module;
 
@@ -60,8 +60,8 @@ define module-with-models dfmc-modeling
     import: { $machine-word-size, immutable-vector };
   use machine-word-lowlevel,
     import: { coerce-integer-to-machine-word,
-	      machine-word-logior,
-	      machine-word-unsigned-shift-left };
+              machine-word-logior,
+              machine-word-unsigned-shift-left };
   use generic-arithmetic,
     prefix: "generic/";
   use dfmc-common;
@@ -71,7 +71,7 @@ define module-with-models dfmc-modeling
   use dfmc-macro-expander;
   use dfmc-definitions;
   use make/initialize-aliases,
-    export: { ^make, 
+    export: { ^make,
               ^initialize };
 
   export
@@ -176,7 +176,7 @@ define module-with-models dfmc-modeling
       ^signature-number-values,
       ^pack-signature-properties,
       ^signature-number-keys,
-      
+
     <&domain>,
       ^domain-library,
       &slot domain-next,
@@ -223,9 +223,9 @@ define module-with-models dfmc-modeling
       iep,
       slot xep,
       slot keyword-specifiers,
-      slot parameters-dynamic-extent, 
+      slot parameters-dynamic-extent,
       slot lambda-top-level?,
-      slot lambda-heap, private-lambda-heap,	   // HACK: FOR DFM-COPIER
+      slot lambda-heap, private-lambda-heap,           // HACK: FOR DFM-COPIER
       slot environment,
       slot parameters,
       slot body,
@@ -278,7 +278,7 @@ define module-with-models dfmc-modeling
       slot  %generic-function-methods-initialized?,
       slot  %generic-function-domains,
       slot  %generic-function-domains-initialized?,
-      slot  parameters-dynamic-extent, 
+      slot  parameters-dynamic-extent,
       ^generic-function-sealed?,
 //      slot ^generic-function-compiler-open?,
       slot ^generic-function-cache-info,
@@ -420,7 +420,7 @@ define module-with-models dfmc-modeling
       ^limited-integer,
       &getter limited-integer-min,
       &getter limited-integer-max,
-    <&singleton>, 
+    <&singleton>,
       &getter singleton-object,
       ^singleton,
     <&union>,
@@ -713,7 +713,7 @@ define module-with-models dfmc-modeling
 
   // raw struct/union types
 
-  export 
+  export
     <&raw-aggregate-type>,
     <&raw-struct-type>,
     <&raw-union-type>,
@@ -785,7 +785,7 @@ define module-with-models dfmc-modeling
 //      &slot string-element,
       frame-size,
 //      &empty-byte-string,
-//    <&symbol>, 
+//    <&symbol>,
 //      &slot symbol-name,
       ^symbol?,
     <uninterned-symbol>,
@@ -797,7 +797,7 @@ define module-with-models dfmc-modeling
       expander-macro-object,
     <unknown>;
 
-  export 
+  export
     <&expander>;
 
   export

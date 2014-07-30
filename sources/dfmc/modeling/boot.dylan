@@ -13,25 +13,25 @@ define abstract class <&expander> (<object>)
     required-init-keyword: macro-object:;
 end class;
 
-define class <&macro> (<&expander>) 
+define class <&macro> (<&expander>)
 end class;
 
 define compiler-sideways method compute-form-model-object
     (definition :: <&macro-definition>, variable :: <variable-name-fragment>)
        => (model :: <&macro>)
-  make(<&macro>, 
+  make(<&macro>,
        definition:   definition,
        macro-object: form-macro-object(definition))
 end method;
 
-define class <&converter> (<&expander>) 
+define class <&converter> (<&expander>)
 end class;
 
 define compiler-sideways method compute-form-model-object
-    (definition :: <&converter-definition>, 
-       variable :: <variable-name-fragment>) 
+    (definition :: <&converter-definition>,
+       variable :: <variable-name-fragment>)
        => (model :: <&converter>)
-  make(<&converter>, 
+  make(<&converter>,
        definition:   definition,
        macro-object: form-macro-object(definition));
 end method;
@@ -40,9 +40,9 @@ define class <&definer> (<&expander>) end;
 
 define compiler-sideways method compute-form-model-object
     (definition :: <&definition-definition>,
-       variable :: <variable-name-fragment>) 
+       variable :: <variable-name-fragment>)
        => (model :: <&definer>)
-  make(<&definer>, 
+  make(<&definer>,
        definition:   definition,
        macro-object: form-macro-object(definition))
 end method;
@@ -50,7 +50,7 @@ end method;
 /// PROXIES FOR MODELS
 
 define class <dood-binding-proxy> (<dood-proxy>)
-  constant slot dood-proxy-binding :: <module-binding>, 
+  constant slot dood-proxy-binding :: <module-binding>,
     required-init-keyword: binding:;
 end class;
 
@@ -76,7 +76,7 @@ define method dood-restore-proxy
   end with-dood-context;
 end method;
 
-// define method dood-disk-object 
+// define method dood-disk-object
 //     (dood :: <dood>, object :: <&expander>)
 //  => (proxy :: type-union(<dood-binding-value-proxy>, <&expander>))
 //   dood-as-proxy(dood, object, dood-make-binding-value-proxy)
@@ -102,7 +102,7 @@ define method dood-restore-proxy
   end with-dood-context;
 end method;
 
-define method dood-disk-object 
+define method dood-disk-object
     (dood :: <dood>, object :: <&expander>)
  => (proxy :: type-union(<dood-expander-proxy>, <&expander>))
   dood-as-proxy(dood, object, dood-make-expander-proxy)
@@ -125,16 +125,16 @@ define method dood-restore-proxy
   untracked-binding-definition(dood-proxy-binding(proxy))
 end method;
 
-define method dood-disk-object 
+define method dood-disk-object
     (dood :: <dood>, object :: <primitive-definition>)
- => (proxy :: type-union(<dood-binding-definition-proxy>, 
+ => (proxy :: type-union(<dood-binding-definition-proxy>,
                          <primitive-definition>))
   dood-as-proxy(dood, object, dood-make-binding-definition-proxy)
 end method;
 
-define method dood-disk-object 
+define method dood-disk-object
     (dood :: <dood>, object :: <raw-type-definition>)
- => (proxy :: type-union(<dood-binding-definition-proxy>, 
+ => (proxy :: type-union(<dood-binding-definition-proxy>,
                          <raw-type-definition>))
   dood-as-proxy(dood, object, dood-make-binding-definition-proxy)
 end method;

@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// SINGLE-FLOAT
 
-define function raw-sf-op 
+define function raw-sf-op
     (op :: <function>, rx :: <&raw-single-float>, ry :: <&raw-single-float>)
  => (res)
   let x :: <single-float> = ^raw-object-value(rx);
@@ -17,11 +17,11 @@ end function raw-sf-op;
 
 define side-effect-free stateless dynamic-extent &primitive-and-override primitive-single-float-as-raw
     (x :: <single-float>) => (r :: <raw-single-float>)
-  ^%single-float-data(x) 
+  ^%single-float-data(x)
 end;
 define side-effect-free stateless dynamic-extent &primitive-and-override primitive-raw-as-single-float
     (r :: <raw-single-float>) => (x :: <single-float>)
-  make-compile-time-literal(^raw-object-value(r)) 
+  make-compile-time-literal(^raw-object-value(r))
 end;
 /// NOTE: The Dylan library expects this primitive to round towards zero (i.e., truncate)
 define side-effect-free stateless dynamic-extent &primitive-and-override primitive-single-float-as-integer
@@ -96,7 +96,7 @@ define side-effect-free stateless dynamic-extent &primitive primitive-single-flo
 
 /// DOUBLE-FLOAT
 
-define function raw-df-op 
+define function raw-df-op
     (op :: <function>, rx :: <&raw-double-float>, ry :: <&raw-double-float>)
  => (z :: <&raw-double-float>)
   let x :: <double-float> = ^raw-object-value(rx);
@@ -106,7 +106,7 @@ end function raw-df-op;
 
 define side-effect-free stateless dynamic-extent &primitive-and-override primitive-double-float-as-raw
     (x :: <double-float>) => (r :: <raw-double-float>)
-  ^%double-float-data(x) 
+  ^%double-float-data(x)
 end;
 define side-effect-free stateless dynamic-extent &primitive-and-override primitive-raw-as-double-float
     (r :: <raw-double-float>) => (x :: <double-float>)

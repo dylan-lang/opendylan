@@ -17,7 +17,7 @@ end &class;
 
 define method ^limited-integer
     (#rest all-keys,
-     #key min :: false-or(<integer>) = #f, 
+     #key min :: false-or(<integer>) = #f,
           max :: false-or(<integer>) = #f)
   if (min | max)
     // Could check for min > max and return a dignified empty type but
@@ -54,7 +54,7 @@ end method;
 
 // With other limited integer types
 
-define method ^subtype? 
+define method ^subtype?
     (limint1 :: <&limited-integer>, limint2 :: <&limited-integer>)
  => (well? :: <boolean>)
   local method satisifies-bound (value, bound, satisfied?)
@@ -68,8 +68,8 @@ define method ^subtype?
     & satisifies-bound(limint1.^limited-integer-max, limint2.^limited-integer-max, \<=)
 end method;
 
-// With other integer types - should consider different integer class 
-// precisions.  
+// With other integer types - should consider different integer class
+// precisions.
 
 define method ^subtype? (class :: <&class>, limint :: <&limited-integer>)
  => (well? :: <boolean>)
@@ -86,7 +86,7 @@ end method;
 // "Two limited integer types are disjoint if the minimum value of one
 // is greater than the maximum value of the other".
 
-define method ^known-disjoint? 
+define method ^known-disjoint?
     (limint1 :: <&limited-integer>, limint2 :: <&limited-integer>)
  => (well? :: <boolean>)
   local method exceeds-bound (value, bound)
@@ -106,12 +106,12 @@ end method;
 
 // TODO: Consider more than one class of integer.
 
-define method ^known-disjoint? 
+define method ^known-disjoint?
     (limint :: <&limited-integer>, t :: <&type>) => (well? :: <boolean>)
   ^known-disjoint?(^base-type(limint), t)
 end method;
 
-define method ^known-disjoint? 
+define method ^known-disjoint?
     (t :: <&type>, limint :: <&limited-integer>) => (well? :: <boolean>)
   ^known-disjoint?(limint, t)
 end method;

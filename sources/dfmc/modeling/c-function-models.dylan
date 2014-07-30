@@ -8,11 +8,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define class <&c-function> (<&primitive>)
   // !@#$ should be c-name
-  constant slot binding-name, 
+  constant slot binding-name,
     required-init-keyword: binding-name:;
   constant slot c-modifiers :: <string> = "",
     init-keyword: c-modifiers:;
-  slot c-signature :: <&signature>, 
+  slot c-signature :: <&signature>,
     init-keyword: c-signature:;
 end class;
 
@@ -28,14 +28,14 @@ end method;
 define &class <c-callable-function> (<lambda>)
   // !@#$ should be c-name
   // !@#$ should be somewhat virtual
-  constant slot binding-name, 
+  constant slot binding-name,
     required-init-keyword: binding-name:;
   constant slot c-modifiers :: <string> = "",
     init-keyword: c-modifiers:;
   slot c-signature :: <&signature>;
-  constant slot alternate-name, 
+  constant slot alternate-name,
     required-init-keyword: alternate-name:;
-  constant slot dll-export? = #f, 
+  constant slot dll-export? = #f,
     init-keyword: export:;
 end &class;
 

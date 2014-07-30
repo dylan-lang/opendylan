@@ -7,18 +7,18 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define class <limited-element-type-mapping> (<object>)
-  constant slot limited-element-type-mapping-default :: false-or(<symbol>), 
+  constant slot limited-element-type-mapping-default :: false-or(<symbol>),
     required-init-keyword: default:;
-  constant slot limited-class-element-type-mappings :: <simple-object-vector>, 
+  constant slot limited-class-element-type-mappings :: <simple-object-vector>,
     required-init-keyword: class-mappings:;
-  constant slot limited-limited-integer-element-type-mappings :: <simple-object-vector>, 
+  constant slot limited-limited-integer-element-type-mappings :: <simple-object-vector>,
     required-init-keyword: limited-integer-mappings:;
 end class;
 
 define constant $limited-element-type-mappings
   = make(<stretchy-vector>);
 
-define method install-limited-element-type-mappings 
+define method install-limited-element-type-mappings
     (collection :: <symbol>, mappings :: <limited-element-type-mapping>)
   add!($limited-element-type-mappings, pair(collection, mappings));
 end method;
@@ -36,7 +36,7 @@ define macro limited-element-type-mappings-aux-definer
   { define limited-element-type-mappings-aux (?collection:name)
       (?class-mappings) (?limited-integer-mappings) (?default-mapping)
     end }
-    => { define constant "$" ## ?collection ## "-mappings" 
+    => { define constant "$" ## ?collection ## "-mappings"
            = make(<limited-element-type-mapping>,
                   default:                  ?default-mapping,
                   class-mappings:           vector(?class-mappings),
@@ -44,7 +44,7 @@ define macro limited-element-type-mappings-aux-definer
          install-limited-element-type-mappings
            (?#"collection", "$" ## ?collection ## "-mappings") }
   class-mappings:
-    { } 
+    { }
       => { }
     { otherwise
         => ?concrete-class:name; ... }
@@ -56,7 +56,7 @@ define macro limited-element-type-mappings-aux-definer
         => ?concrete-class:name; ... }
       => { ... }
   limited-integer-mappings:
-    { } 
+    { }
       => { }
     { limited(<integer>, min: ?min:expression, max: ?max:expression)
         => ?concrete-class:name; ... }
@@ -65,7 +65,7 @@ define macro limited-element-type-mappings-aux-definer
         => ?concrete-class:name; ... }
       => { ... }
   default-mapping:
-    { } 
+    { }
       => { #f }
     { otherwise
         => ?concrete-class:name; ... }
@@ -90,7 +90,7 @@ define method lookup-limited-collection-concrete-class
           return(dylan-value(tail(limited-integer-mapping)), default);
         end if
       end for;
-    else 
+    else
       for (class-mapping in limited-class-element-type-mappings(mappings))
         if (element-type == dylan-value(head(class-mapping)))
           return(dylan-value(tail(class-mapping)), default);
@@ -118,7 +118,7 @@ define method lookup-limited-collection-element-type
     end for;
     if (concrete-class == dylan-value(limited-element-type-mapping-default(mappings)))
       dylan-value(#"<object>")
-    else 
+    else
       #f
     end if
   end block;
@@ -143,9 +143,9 @@ define limited-element-type-mappings (<string>)
   <unicode-character> => <unicode-string>;
   otherwise           => <byte-string>;
 end limited-element-type-mappings;
-    
+
 define method select-limited-string (of, size)
-  let concrete-class 
+  let concrete-class
     = lookup-limited-collection-concrete-class(of, $<string>-mappings);
   if (size)
     ^make(<&limited-vector-type>,
@@ -153,7 +153,7 @@ define method select-limited-string (of, size)
           concrete-class: concrete-class,
           element-type:   of,
           size:           size);
-  else 
+  else
     concrete-class
   end if;
 end method;
@@ -176,7 +176,7 @@ define limited-element-type-mappings (<vector>)
   otherwise
     => <simple-element-type-vector>;
 end limited-element-type-mappings;
-    
+
 define method select-limited-vector (of, size)
   let (concrete-class, default-concrete-class)
     = lookup-limited-collection-concrete-class(of, $<vector>-mappings);
@@ -186,7 +186,7 @@ define method select-limited-vector (of, size)
           concrete-class: concrete-class,
           element-type:   of,
           size:           size);
-  else 
+  else
     concrete-class
   end if;
 end method;
@@ -209,9 +209,9 @@ define limited-element-type-mappings (<array>)
   otherwise
     => <simple-element-type-array>;
 end limited-element-type-mappings;
-    
+
 define method select-limited-array (of, sz, dimensions)
-  if (sz)       
+  if (sz)
     select-limited-vector(of, sz)
   elseif (dimensions & size(dimensions) = 1)
     select-limited-vector(of, first(dimensions))
@@ -224,7 +224,7 @@ define method select-limited-array (of, sz, dimensions)
             concrete-class: concrete-class,
             element-type:   of,
             dimensions:     dimensions);
-    else 
+    else
       concrete-class
     end if;
   end if;
@@ -240,7 +240,7 @@ define limited-element-type-mappings (<stretchy-vector>)
   otherwise
     => <stretchy-element-type-vector>;
 end limited-element-type-mappings;
-    
+
 define method select-limited-stretchy-vector (of)
   let (concrete-class, default-concrete-class)
     = lookup-limited-collection-concrete-class(of, $<stretchy-vector>-mappings);
@@ -249,7 +249,7 @@ define method select-limited-stretchy-vector (of)
           class:          dylan-value(#"<stretchy-vector>"),
           concrete-class: concrete-class,
           element-type:   of);
-  else 
+  else
     concrete-class
   end if
 end method;
@@ -260,7 +260,7 @@ define limited-element-type-mappings (<table>)
   otherwise
     => <standard-object-table>;
 end limited-element-type-mappings;
-    
+
 define method select-limited-table (of, size)
   let (concrete-class, default-concrete-class)
     = lookup-limited-collection-concrete-class(of, $<table>-mappings);
@@ -270,7 +270,7 @@ define method select-limited-table (of, size)
           concrete-class: dylan-value(#"<object-table>"),
           element-type:   of,
           size:           size);
-  else 
+  else
     concrete-class
   end if;
 end method;
@@ -281,7 +281,7 @@ define limited-element-type-mappings (<set>)
   otherwise
     => <object-set>;
 end limited-element-type-mappings;
-    
+
 define method select-limited-set (of, size)
   let (concrete-class, default-concrete-class)
     = lookup-limited-collection-concrete-class(of, $<set>-mappings);
@@ -302,7 +302,7 @@ define limited-element-type-mappings (<deque>)
   otherwise
     => <object-deque>;
 end limited-element-type-mappings;
-    
+
 define method select-limited-deque (of)
   let (concrete-class, default-concrete-class)
     = lookup-limited-collection-concrete-class(of, $<deque>-mappings);
@@ -311,14 +311,14 @@ define method select-limited-deque (of)
           class:          dylan-value(#"<deque>"),
           concrete-class: concrete-class,
           element-type:   of);
-  else 
+  else
     concrete-class
   end if
 end method;
 
-define method ^limited-collection 
+define method ^limited-collection
     (class :: <&class>, #rest all-keys, #key of, size, dimensions, #all-keys)
-  if (of) 
+  if (of)
     // PARALLELS RUNTIME METHODS ON LIMITED
     select (class)
       dylan-value(#"<range>")  // TODO: NOT YET IMPLEMENTED
@@ -327,11 +327,11 @@ define method ^limited-collection
         => select-limited-string(of, size);
       dylan-value(#"<deque>")
         => select-limited-deque(of);
-      dylan-value(#"<stretchy-vector>") 
+      dylan-value(#"<stretchy-vector>")
         => select-limited-stretchy-vector(of);
       dylan-value(#"<vector>"), dylan-value(#"<simple-vector>")
         => select-limited-vector(of, size);
-      dylan-value(#"<array>") 
+      dylan-value(#"<array>")
         => select-limited-array(of, size, dimensions);
       dylan-value(#"<set>")
         => select-limited-set(of, size);
@@ -372,9 +372,9 @@ define method ^limited-collection
                  class:          class,
                  element-type:   of,
                  size:           size);
-      otherwise 
+      otherwise
         => #f;
-    end select  
+    end select
   else
     class
   end if;

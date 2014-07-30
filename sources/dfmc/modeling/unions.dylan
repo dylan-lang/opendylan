@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //// The union type
 
-// Pairwise union for simplicity - we'll need to generalize to deal 
+// Pairwise union for simplicity - we'll need to generalize to deal
 // reasonably with, say, the union of a large number of singletons
 // for example.
 
@@ -20,9 +20,9 @@ define primary &class <union> (<type>)
   inherited slot ^instance?-function, init-value: #"union-instance?";
 end &class;
 
-define &override-function ^type-union 
+define &override-function ^type-union
     (type :: <&type>, #rest more-types) => (type :: <&type>)
-  local method binary-type-union 
+  local method binary-type-union
       (t1 :: <&type>, t2 :: <&type>) => (union :: <&type>)
     case
       t1 == t2
@@ -44,7 +44,7 @@ end &override-function;
 // This protocol allows types with specific knowledge about how to merge
 // to bring it into play.
 
-define generic ^merge-types (type1 :: <&type>, type2 :: <&type>) 
+define generic ^merge-types (type1 :: <&type>, type2 :: <&type>)
   => (type :: <&type>);
 
 define method ^merge-types (t1 :: <&type>, t2 :: <&type>) => (type :: <&type>)
@@ -60,7 +60,7 @@ end &override-function;
 
 //// Instance? relationships
 
-define method ^instance? 
+define method ^instance?
     (o :: <model-value>, u :: <&union>) => (well? :: <boolean>)
   ^instance?(o, u.^union-type1) | ^instance?(o, u.^union-type2)
 end method;
@@ -88,7 +88,7 @@ end method;
 
 // With other union types (disambiguating method)
 
-define method ^subtype? 
+define method ^subtype?
     (u :: <&union>, t :: <&union>) => (well? :: <boolean>)
   ^subtype?(u.^union-type1, t) & ^subtype?(u.^union-type2, t)
 end method;
@@ -101,7 +101,7 @@ end method;
 
 define method ^known-disjoint? (u :: <&union>, t :: <&type>)
  => (disjoint? :: <boolean>)
-  ^known-disjoint?(u.^union-type1, t) 
+  ^known-disjoint?(u.^union-type1, t)
     & ^known-disjoint?(u.^union-type2, t)
 end method ^known-disjoint?;
 
@@ -114,13 +114,13 @@ end method ^known-disjoint?;
 
 define method ^known-disjoint? (u :: <&union>, t :: <&union>)
  => (disjoint? :: <boolean>)
-  ^known-disjoint?(u.^union-type1, t) 
+  ^known-disjoint?(u.^union-type1, t)
     & ^known-disjoint?(u.^union-type2, t)
 end method ^known-disjoint?;
 
 //// False-or.
 
-define &override-function ^false-or 
+define &override-function ^false-or
     (type :: <&type>, #rest types) => (type :: <&type>)
   apply(^type-union, ^singleton(#f), type, types)
 end &override-function;

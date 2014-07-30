@@ -12,8 +12,8 @@ define macro &library-definer
 end macro;
 
 // TODO: The clause parsing code is duplicated to work around a macro
-// bug to do with escapes being lost if passed through multiple 
-// macros. 
+// bug to do with escapes being lost if passed through multiple
+// macros.
 
 define method merge-clauses (clauses)
   collecting (uses, creates, exports)
@@ -32,7 +32,7 @@ end method;
 
 define macro &module-definer
   { define &module ?:name ?clauses:* end }
-    => { let clauses = list(?clauses); 
+    => { let clauses = list(?clauses);
                        // parsed-namespace-clauses ?clauses end;
          do-define-core-module
            (?#"name" ## "-module", ?#"name", merge-clauses(clauses)); }
@@ -88,7 +88,7 @@ renames:
   { ?:name, ... }
     => { ?#"name", ... }
   { ?before:name => ?after:name, ... }
-    => { pair(?#"before", ?#"after"), ... } 
+    => { pair(?#"before", ?#"after"), ... }
 end macro;
 
 // Note: Currently supports just one kind of each clause.
@@ -148,5 +148,5 @@ renames:
   { ?:name, ... }
     => { ?#"name", ... }
   { ?before:name => ?after:name, ... }
-    => { pair(?#"before", ?#"after"), ... } 
+    => { pair(?#"before", ?#"after"), ... }
 end macro;

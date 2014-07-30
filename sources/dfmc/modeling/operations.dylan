@@ -45,7 +45,7 @@ define method make-run-time-literal (object :: <&machine-word>)
 end method;
 
 define method make-run-time-literal (object :: <&double-integer>)
-  make(<double-integer>, 
+  make(<double-integer>,
        low:  ^raw-object-value(^%%double-integer-low(object)),
        high: ^raw-object-value(^%%double-integer-high(object)))
 end method;
@@ -55,9 +55,9 @@ define &override-function ^concatenate end;
 define method ^concatenate (x :: <simple-object-vector>, #rest others)
   if (every?(rcurry(instance?, <simple-object-vector>), others))
     apply(concatenate, x, others);
-  else 
+  else
     error("NO APPLICABLE concatenate METHOD");
-  end if;    
+  end if;
 end method;
 
 ///---*** NOTE: What's the right make-run-time-literal for <&machine-word>?
@@ -116,7 +116,7 @@ define method ^as (type, object :: <double-integer>) => (object)
   if (^instance?(object, type))
     object
   elseif (type == dylan-value(#"<machine-word>"))
-    make(<&machine-word>, 
+    make(<&machine-word>,
          data: make(<&raw-machine-word>, value: %double-integer-low(object)))
   else
     error("NO APPLICABLE AS METHOD");
@@ -157,15 +157,15 @@ define &override-function ^make-<signature>
      signature-properties :: <integer>)
  => (signature :: <&signature>)
   ^make(<&signature>,
-	required:   as-sig-types(required),
-	values:     as-sig-types(values),
-	rest-value: rest-value,
-	next?:      next?,
-	properties: signature-properties)
+        required:   as-sig-types(required),
+        values:     as-sig-types(values),
+        rest-value: rest-value,
+        next?:      next?,
+        properties: signature-properties)
 end;
 
 define &override-function ^make-<keyword-signature>
-    (next?, 
+    (next?,
      required :: <simple-object-vector>,
      values :: <simple-object-vector>,
      rest-value /* ^false-or(<&type>) */,
@@ -175,13 +175,13 @@ define &override-function ^make-<keyword-signature>
  => (signature :: <&keyword-signature>)
   ^make(<&signature>,
         key?:       #t, // the make method works out which class
-	required:   as-sig-types(required),
-	keys:       mapped-model(keys),
-	key-types:  as-sig-types(key-types),
-	values:     as-sig-types(values),
-	rest-value: rest-value,
-	next?:      next?,
-	properties: signature-properties)
+        required:   as-sig-types(required),
+        keys:       mapped-model(keys),
+        key-types:  as-sig-types(key-types),
+        values:     as-sig-types(values),
+        rest-value: rest-value,
+        next?:      next?,
+        properties: signature-properties)
 end;
 
 define &override-function ^%copy-method-using-signature

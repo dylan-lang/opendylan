@@ -26,12 +26,12 @@ end method;
 
 //// Instance? relationships
 
-define method ^instance? 
+define method ^instance?
     (o :: <model-value>, subc :: <&subclass>) => (result :: <boolean>)
   #f
 end method;
 
-define method ^instance? 
+define method ^instance?
     (c :: <&class>, subc :: <&subclass>) => (result :: <boolean>)
   ^subtype?(c, subc.^subclass-class)
 end method;
@@ -40,19 +40,19 @@ end method;
 
 // From "Subclass specializers", Version 2
 
-//  SUBTYPE-1. subtype?(subclass(X), subclass(Y)) 
+//  SUBTYPE-1. subtype?(subclass(X), subclass(Y))
 //  This will be true if and only if X is a subclass of Y.
 
-define method ^subtype? 
+define method ^subtype?
     (subc1 :: <&subclass>, subc2 :: <&subclass>) => (result :: <boolean>)
   ^subtype?(subc1.^subclass-class, subc2.^subclass-class)
 end method;
 
-//  SUBTYPE-2. subtype?(singleton(X), subclass(Y)) 
+//  SUBTYPE-2. subtype?(singleton(X), subclass(Y))
 //  This will be true if and only if X is a class and X is a subclass of
-//  Y. 
+//  Y.
 
-define method ^subtype? 
+define method ^subtype?
     (s :: <&singleton>, subc :: <&subclass>) => (result :: <boolean>)
   ^instance?(s.^singleton-object, dylan-value(#"<class>"))
     & ^subtype?(s.^singleton-object, subc.^subclass-class)
@@ -61,7 +61,7 @@ end method;
 //  SUBTYPE-3. subtype?(subclass(X), singleton(Y))
 //  This is always false.
 
-define method ^subtype? 
+define method ^subtype?
     (subc1 :: <&subclass>, s :: <&singleton>) => (result :: <boolean>)
   #f
 end method;
@@ -70,10 +70,10 @@ end method;
 //  This will be true if Y is <class> or any proper superclass of
 //  <class> (including <object>, any implementation-defined supertypes,
 //  and unions involving any of these). There may be other
-//  implementation-defined combinations of types X and Y for which this 
-//  is also true.  
+//  implementation-defined combinations of types X and Y for which this
+//  is also true.
 
-define method ^subtype? 
+define method ^subtype?
     (subc :: <&subclass>, t :: <&class>) => (result :: <boolean>)
   ^subtype?(dylan-value(#"<class>"), t)
 end method;
@@ -82,7 +82,7 @@ end method;
 //  This will be true if Y is <object> or any proper supertype of
 //  <object> and X is a subclass of <class>.
 
-define method ^subtype? 
+define method ^subtype?
     (t :: <&class>, subc :: <&subclass>) => (result :: <boolean>)
   ^subtype?(dylan-value(#"<object>"), subc.^subclass-class)
     & ^subtype?(t, dylan-value(#"<class>"))
@@ -91,7 +91,7 @@ end method;
 //// Disjointness relationships.
 
 //  DISJOINTNESS+1. A subclass type subclass(X) and a type Y are
-//  disjoint if Y is disjoint from <class>. 
+//  disjoint if Y is disjoint from <class>.
 
 define method ^known-disjoint?
     (subc :: <&subclass>, type :: <&type>) => (value :: <boolean>)
@@ -103,17 +103,17 @@ define method ^known-disjoint?
   ^known-disjoint?(subc, type);
 end method;
 
-//  DISJOINTNESS+2. Two subclass types subclass(X) and subclass(Y) are 
-//  disjoint if the classes X and Y are disjoint. 
+//  DISJOINTNESS+2. Two subclass types subclass(X) and subclass(Y) are
+//  disjoint if the classes X and Y are disjoint.
 
 define method ^known-disjoint?
     (subc1 :: <&subclass>, subc2 :: <&subclass>) => (value :: <boolean>)
   ^known-disjoint?(subc1.^subclass-class, subc2.^subclass-class);
 end method;
 
-//  DISJOINTNESS+3. A subclass type subclass(X) and a singleton type 
-//  singleton(O) are disjoint unless O is a class and O is a subclass of 
-//  X. 
+//  DISJOINTNESS+3. A subclass type subclass(X) and a singleton type
+//  singleton(O) are disjoint unless O is a class and O is a subclass of
+//  X.
 
 define method ^known-disjoint?
     (subc :: <&subclass>, singleton :: <&singleton>) => (value :: <boolean>)

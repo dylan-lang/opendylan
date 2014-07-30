@@ -6,13 +6,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define abstract class <&values> (<object>) end;
 
-define class <&static-values> (<&values>) 
+define class <&static-values> (<&values>)
   constant slot &values-model-objects,
     required-init-keyword: model-objects:;
 end class;
 
 /*
-define class <&dynamic-values> (<&values>) 
+define class <&dynamic-values> (<&values>)
   constant slot &values-model-objects,
     required-init-keyword: model-objects:;
 end class;
@@ -21,7 +21,7 @@ define method &values (#rest vals) => (vals :: <&values>)
   make(<&static-values>, model-objects: vals);
 end method;
 
-define method &values-element 
+define method &values-element
     (vals :: <&values>, n :: <integer>) => (model)
   &values-model-objects(vals)[n]
 end method;

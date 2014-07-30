@@ -21,7 +21,7 @@ define side-effecting stateful dynamic-extent &primitive primitive-thread-join-s
 define side-effecting stateful dynamic-extent &primitive primitive-thread-join-multiple
     (thread-vector :: <simple-object-vector>) => (res :: <object>);
 
-define side-effecting stateful dynamic-extent &primitive primitive-thread-yield 
+define side-effecting stateful dynamic-extent &primitive primitive-thread-yield
     () => ();
 
 define side-effect-free stateless dynamic-extent &primitive primitive-current-thread
@@ -31,14 +31,14 @@ define side-effecting stateful dynamic-extent &primitive primitive-wait-for-simp
     (lock :: <object>) => (res :: <integer>);
 
 define side-effecting stateful dynamic-extent &primitive primitive-wait-for-recursive-lock
-    (lock :: <object>) => (res :: <integer>); 
+    (lock :: <object>) => (res :: <integer>);
 
 define side-effecting stateful dynamic-extent &primitive primitive-wait-for-semaphore
-    (lock :: <object>) => (res :: <integer>); 
+    (lock :: <object>) => (res :: <integer>);
 
 define side-effecting stateful dynamic-extent &primitive primitive-wait-for-notification
-    (notif :: <object>, lock :: <object>) 
-    => (res :: <integer>); 
+    (notif :: <object>, lock :: <object>)
+    => (res :: <integer>);
 
 define side-effecting stateful dynamic-extent &primitive primitive-wait-for-simple-lock-timed
     (lock :: <object>, ms :: <integer>) => (res :: <integer>);
@@ -50,8 +50,8 @@ define side-effecting stateful dynamic-extent &primitive primitive-wait-for-sema
     (lock :: <object>, ms :: <integer>) => (res :: <integer>);
 
 define side-effecting stateful dynamic-extent &primitive primitive-wait-for-notification-timed
-    (notif :: <object>, lock :: <object>, ms :: <integer>) 
-     => (res :: <integer>); 
+    (notif :: <object>, lock :: <object>, ms :: <integer>)
+     => (res :: <integer>);
 
 define side-effecting stateful dynamic-extent &primitive primitive-release-simple-lock
     (lock :: <object>) => (res :: <integer>);
@@ -63,48 +63,48 @@ define side-effecting stateful dynamic-extent &primitive primitive-release-semap
     (lock :: <object>) => (res :: <integer>);
 
 define side-effecting stateful dynamic-extent &primitive primitive-release-notification
-    (notif :: <object>, lock :: <object>) 
+    (notif :: <object>, lock :: <object>)
     => (res :: <integer>);
 
 define side-effecting stateful dynamic-extent &primitive primitive-release-all-notification
-    (notif :: <object>, lock :: <object>) 
+    (notif :: <object>, lock :: <object>)
     => (res :: <integer>);
 
 define side-effecting stateful dynamic-extent &primitive primitive-make-recursive-lock
-    (lock :: <object>, name :: <object>) 
+    (lock :: <object>, name :: <object>)
     => (res :: <integer>);
 
-define side-effecting stateful dynamic-extent &primitive primitive-destroy-recursive-lock 
+define side-effecting stateful dynamic-extent &primitive primitive-destroy-recursive-lock
     (obj) => (res :: <integer>);
 
 define side-effecting stateful dynamic-extent &primitive primitive-make-simple-lock
-    (lock :: <object>, name :: <object>) 
+    (lock :: <object>, name :: <object>)
     => (res :: <integer>);
 
 define side-effecting stateful dynamic-extent &primitive primitive-destroy-simple-lock
     (lock :: <object>) => (res :: <integer>);
 
-define side-effect-free stateful dynamic-extent &primitive primitive-owned-simple-lock 
+define side-effect-free stateful dynamic-extent &primitive primitive-owned-simple-lock
     (lock :: <object>)  => (res :: <integer>);
 
-define side-effect-free stateful dynamic-extent &primitive primitive-owned-recursive-lock 
+define side-effect-free stateful dynamic-extent &primitive primitive-owned-recursive-lock
     (lock :: <object>)  => (res :: <integer>);
 
 define side-effecting stateful dynamic-extent &primitive primitive-make-semaphore
-    (lock :: <object>, name :: <object>, 
+    (lock :: <object>, name :: <object>,
     init :: <integer>, max :: <integer>) => (res :: <integer>);
 
-define side-effecting stateful dynamic-extent &primitive primitive-destroy-semaphore 
+define side-effecting stateful dynamic-extent &primitive primitive-destroy-semaphore
     (obj :: <object>) => (res :: <integer>);
 
 define side-effecting stateful dynamic-extent &primitive primitive-make-notification
-    (lock :: <object>, name :: <object>) 
+    (lock :: <object>, name :: <object>)
     => (res :: <integer>);
 
-define side-effecting stateful dynamic-extent &primitive primitive-destroy-notification 
+define side-effecting stateful dynamic-extent &primitive primitive-destroy-notification
     (obj :: <object>) => (res :: <integer>);
 
-define side-effecting stateful dynamic-extent &primitive primitive-sleep 
+define side-effecting stateful dynamic-extent &primitive primitive-sleep
     (ms :: <integer>) => ();
 
 
@@ -113,7 +113,7 @@ define side-effecting stateful dynamic-extent &primitive primitive-assign-atomic
     (location :: <raw-pointer>, newval :: <object>) => (newval);
 
 define side-effecting stateful dynamic-extent &primitive primitive-conditional-update-memory
-    (location :: <raw-pointer>, newval, oldval) 
+    (location :: <raw-pointer>, newval, oldval)
     => (res :: <integer>);
 */
 
