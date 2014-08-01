@@ -221,6 +221,13 @@ define method print-unique-name
   print-string(buffer, "}")
 end method print-unique-name;
 
+define method print-unique-name
+    (buffer :: <string-buffer>, ft :: <limited-function>) => ()
+  print-string(buffer, "{limited-function: ");
+  print-unique-name(buffer, ft.limited-function-signature);
+  print-string(buffer, "}");
+end method print-unique-name;
+
 
 /// Number/string conversion
 
@@ -769,6 +776,13 @@ define method print-specializer
   print-string(buffer, "subclass(");
   print-pretty-name(buffer, subclass-class(type));
   print-string(buffer, ")")
+end method print-specializer;
+
+define method print-specializer
+    (buffer :: <string-buffer>, type :: <limited-function>) => ()
+  print-string(buffer, "fn(");
+  print-string(buffer, "...");
+  print-string(buffer, ")");
 end method print-specializer;
 
 define function print-keyword

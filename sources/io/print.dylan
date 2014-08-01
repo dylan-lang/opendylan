@@ -685,26 +685,39 @@ define sealed method print-object (object :: <method>, stream :: <stream>) => ()
       pprint-newline(#"fill", stream);
       write(stream, as(<byte-string>, name));
     end;
-    let specializers = function-specializers(object);
     write-element(stream, ' ');
     pprint-newline(#"fill", stream);
-    printing-logical-block (stream, prefix: "(", suffix: ")")
-      print-function-specializers(object, stream)
-    end
+    print-signature(function-signature(object), stream);
   end
 end method;
 
-define method print-function-specializers
+define method print-signature
     (object :: <function>, stream :: <stream>) => ();
-  let specializers = function-specializers(object);
-  if (~ (specializers = #()))
-    write-element(stream, ' ');
-    pprint-newline(#"fill", stream);
-    printing-logical-block (stream, prefix: "(", suffix: ")")
-      print-items(specializers, print-specializer, stream)
-    end
-  end if;
-end method print-function-specializers;
+  printing-logical-block (stream, prefix: "(", suffix: ")")
+    let specializers = function-specializers(object);
+    print-items(specializers, print-specializer, stream);
+    let (_, rest?, keywords) = function-arguments(object);
+    if (rest?)
+      if (~ empty?(specializers))
+        write(stream, ", ");
+      end if;
+      write(stream, "#rest");
+    end if;
+    if (keywords)
+      if (rest? | ~empty?(specializers))
+        write(stream, ", ");
+      end if;
+      print-items(keywords, print, stream);
+    end if;
+  end;
+  write(stream, " => ");
+  write(stream, "...");
+end method print-signature;
+
+define method print-signature
+    (object :: <signature>, stream :: <stream>) => ()
+  write(stream, "... signature ...");
+end method print-signature;
 
 /// print-items -- Internal Interface.
 ///
@@ -797,6 +810,13 @@ define method print-specializer (type :: <union>, stream :: <stream>)
   end
 end method print-specializer;
 
+define method print-specializer (type :: <limited-function>, stream :: <stream>)
+    => ();
+  printing-logical-block (stream, prefix: "fn(", suffix: ")")
+    print-signature(type.limited-function-signature, stream);
+  end;
+end method print-specializer;
+
 
 /// Print-object methods for <type> and its subclasses.
 ///
@@ -817,6 +837,13 @@ define sealed method print-object
              print-specializer(object, stream);
            end method,
      suffix: "}");
+end method print-object;
+
+define sealed method print-object
+    (object :: <limited-function>, stream :: <stream>) => ()
+  write(stream, "{limited-function ");
+  print-signature(object.limited-function-signature, stream);
+  write(stream, "}");
 end method print-object;
 
 /// For classes, we just print the class name if there is one.
