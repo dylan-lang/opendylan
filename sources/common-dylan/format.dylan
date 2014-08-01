@@ -715,10 +715,35 @@ define function print-method
   print-string(buffer, ": ");
   print-string(buffer, primitive-name(object));
   let specializers = function-specializers(object);
+  let (_, rest, keywords) = function-arguments(object);
   print-string(buffer, " (");
-  unless (empty?(specializers))
-    print-elements(buffer, specializers, print-function: print-specializer)
-  end;
+  unless (empty?(specializers) & ~rest & empty?(keywords))
+    print-elements(buffer, specializers, print-function: print-specializer);
+    if (rest)
+      if (~empty?(specializers))
+        print-string(buffer, ", ");
+      end if;
+      print-string(buffer, "#rest");
+    end if;
+    if (keywords)
+      if (rest | ~empty?(specializers))
+        print-string(buffer, ", ");
+      end if;
+      print-elements(buffer, keywords, print-function: print-keyword);
+    end if;
+  end unless;
+  print-string(buffer, ") => (");
+  let (value-types, values-rest) = function-return-values(object);
+  unless (empty?(value-types))
+    print-elements(buffer, value-types, print-function: print-specializer);
+    if (values-rest)
+      print-string(buffer, ", ");
+    end if;
+  end unless;
+  if (values-rest)
+    print-string(buffer, "#rest ");
+    print-specializer(buffer, values-rest);
+  end if;
   print-string(buffer, ")}");
 end function print-method;
 
@@ -745,3 +770,8 @@ define method print-specializer
   print-pretty-name(buffer, subclass-class(type));
   print-string(buffer, ")")
 end method print-specializer;
+
+define function print-keyword
+    (buffer :: <string-buffer>, object :: <symbol>) => ()
+  print-format(buffer, "%s:", as-lowercase(as(<string>, object)));
+end function print-keyword;
