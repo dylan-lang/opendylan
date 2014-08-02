@@ -128,6 +128,10 @@ Common Dylan
   a symlink to a Dylan executable will function correctly as it
   already did on Linux and FreeBSD.
 
+* The routine used for printing function signatures when displaying
+  an error / condition now shows a more accurate signature rather
+  than only the function specializers.
+
 
 Debugging
 =========
