@@ -13,7 +13,7 @@ define library dfmc-reader
   use dfmc-conditions;
   use source-records;
   export dfmc-reader;
-end library;
+end library dfmc-reader;
 
 define module dfmc-reader
   use dylan;
@@ -242,10 +242,8 @@ define module dfmc-reader
   export
     present-fragments;
 
-  // For test suite
+  //// For test suite only.
   export
-    <lexer>,
-    <lexer-source-location>,
-    get-token,
-    parse-integer-literal;
-end module;
+    skip-multi-line-comment;
+
+end module dfmc-reader;

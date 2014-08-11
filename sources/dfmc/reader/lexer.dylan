@@ -238,14 +238,20 @@ define inline function make-lexer-source-location
 end function make-lexer-source-location;
 
 // Skip a multi-line comment, taking into account nested comments.
+// Note that when this is called '/' and '*' have already been
+// consumed.
 //
-// Basically, we just implement a state machine via tail recursive local
-// methods.
+// Basically, we just implement a state machine via tail recursive
+// local methods.
+//
+// TODO(cgay): This fails for "/* \"/*\" */" so it needs to be made
+// string aware.
 //
 define method skip-multi-line-comment
-    (lexer :: <lexer>, start :: <integer>) => (result :: false-or(<integer>))
-  let contents = lexer.source.contents;
-  let length = contents.size;
+    (contents :: <byte-vector>, length :: <integer>, start :: <integer>)
+ => (epos :: false-or(<integer>), lines-skipped :: <integer>, line-start :: false-or(<integer>))
+  let lines-skipped :: <integer> = 0;
+  let line-start :: false-or(<integer>) = #f;
   local
     //
     // Utility function that checks to make sure we haven't run off the
@@ -268,8 +274,8 @@ define method skip-multi-line-comment
       elseif (char == '*')
         next(seen-star, posn, depth)
       elseif (char == '\n')
-        lexer.line := lexer.line + 1;
-        lexer.line-start := posn;
+        lines-skipped := lines-skipped + 1;
+        line-start := posn;
         next(seen-nothing, posn, depth)
       else
         next(seen-nothing, posn, depth)
@@ -286,8 +292,8 @@ define method skip-multi-line-comment
       elseif (char == '*')
         next(seen-nothing, posn, depth + 1)
       elseif (char == '\n')
-        lexer.line := lexer.line + 1;
-        lexer.line-start := posn;
+        lines-skipped := lines-skipped + 1;
+        line-start := posn;
         next(seen-nothing, posn, depth)
       else
         next(seen-nothing, posn, depth)
@@ -309,8 +315,8 @@ define method skip-multi-line-comment
       elseif (char == '*')
         next(seen-star, posn, depth)
       elseif (char == '\n')
-        lexer.line := lexer.line + 1;
-        lexer.line-start := posn;
+        lines-skipped := lines-skipped + 1;
+        line-start := posn;
         next(seen-nothing, posn, depth)
       else
         next(seen-nothing, posn, depth)
@@ -322,8 +328,8 @@ define method skip-multi-line-comment
     method seen-slash-slash (char :: <character>, posn :: <integer>,
                              depth :: <integer>)
       if (char == '\n')
-        lexer.line := lexer.line + 1;
-        lexer.line-start := posn;
+        lines-skipped := lines-skipped + 1;
+        line-start := posn;
         next(seen-nothing, posn, depth)
       else
         next(seen-slash-slash, posn, depth)
@@ -332,7 +338,7 @@ define method skip-multi-line-comment
   //
   // Start out not having seen anything.
   //
-  next(seen-nothing, start, 1);
+  values(next(seen-nothing, start, 1), lines-skipped, line-start)
 end method skip-multi-line-comment;
 
 
@@ -419,9 +425,9 @@ define method get-token
                 #"whitespace" =>
                   #f;
                 #"newline" =>
-                  let result-end :: <integer> = result-end;
+                  let lstart :: <integer> = result-end;
                   lexer.line := lexer.line + 1;
-                  lexer.line-start := result-end;
+                  lexer.line-start := lstart;
                 #"end-of-line-comment" =>
                   for (i :: <integer> from result-end below length,
                        until: (contents[i] == as(<integer>, '\n')))
@@ -431,7 +437,10 @@ define method get-token
                 #"multi-line-comment" =>
                   saved-line := lexer.line;
                   saved-line-start := lexer.line-start;
-                  result-end := skip-multi-line-comment(lexer, result-end);
+                  let (epos, nskipped, lstart) = skip-multi-line-comment(contents, length, result-end);
+                  result-end := epos;
+                  lexer.line := lexer.line + nskipped;
+                  lexer.line-start := lstart | lexer.line-start;
                   if (result-end)
                     saved-line := #f;
                     saved-line-start := #f;
@@ -486,7 +495,10 @@ define method get-token
                   result-end := i;
                 end for;
               #"multi-line-comment" =>
-                result-end := skip-multi-line-comment(lexer, result-end);
+                let (epos, nskipped, lstart) = skip-multi-line-comment(contents, length, result-end);
+                result-end := epos;
+                lexer.line := lexer.line + nskipped;
+                lexer.line-start := lstart | lexer.line-start;
                 if (~result-end)
                   unexpected-eof := #t
                 end;
