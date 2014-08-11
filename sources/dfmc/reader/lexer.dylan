@@ -253,28 +253,28 @@ define method skip-multi-line-comment
     //
     method next (func :: <function>, posn :: <integer>, depth :: <integer>)
       if (posn < length)
-        func(as(<character>, contents[posn]), posn + 1, depth);
+        func(as(<character>, contents[posn]), posn + 1, depth)
       else
-        #f;
-      end if;
-    end next,
+        #f
+      end
+    end method next,
     //
     // Seen nothing of interest.  Look for the start of any of /*, //, or */
     //
     method seen-nothing (char :: <character>, posn :: <integer>,
                          depth :: <integer>)
       if (char == '/')
-        next(seen-slash, posn, depth);
+        next(seen-slash, posn, depth)
       elseif (char == '*')
-        next(seen-star, posn, depth);
+        next(seen-star, posn, depth)
       elseif (char == '\n')
         lexer.line := lexer.line + 1;
         lexer.line-start := posn;
         next(seen-nothing, posn, depth)
       else
-        next(seen-nothing, posn, depth);
-      end if;
-    end seen-nothing,
+        next(seen-nothing, posn, depth)
+      end
+    end method seen-nothing,
     //
     // Okay, we've seen a slash.  Look to see if it was /*, //, or just a
     // random slash in the source code.
@@ -282,17 +282,17 @@ define method skip-multi-line-comment
     method seen-slash (char :: <character>, posn :: <integer>,
                        depth :: <integer>)
       if (char == '/')
-        next(seen-slash-slash, posn, depth);
+        next(seen-slash-slash, posn, depth)
       elseif (char == '*')
-        next(seen-nothing, posn, depth + 1);
+        next(seen-nothing, posn, depth + 1)
       elseif (char == '\n')
         lexer.line := lexer.line + 1;
         lexer.line-start := posn;
         next(seen-nothing, posn, depth)
       else
-        next(seen-nothing, posn, depth);
-      end if;
-    end seen-slash,
+        next(seen-nothing, posn, depth)
+      end
+    end method seen-slash,
     //
     // Okay, we've seen a star.  Look to see if it was */ or a random star.
     // We also have to check to see if this next character is another star,
@@ -302,20 +302,20 @@ define method skip-multi-line-comment
                       depth :: <integer>)
       if (char == '/')
         if (depth == 1)
-          posn;
+          posn
         else
-          next(seen-nothing, posn, depth - 1);
-        end if;
+          next(seen-nothing, posn, depth - 1)
+        end
       elseif (char == '*')
-        next(seen-star, posn, depth);
+        next(seen-star, posn, depth)
       elseif (char == '\n')
         lexer.line := lexer.line + 1;
         lexer.line-start := posn;
         next(seen-nothing, posn, depth)
       else
-        next(seen-nothing, posn, depth);
-      end if;
-    end seen-star,
+        next(seen-nothing, posn, depth)
+      end
+    end method seen-star,
     //
     // We've seen a //, so skip until the end of the line.
     //
@@ -324,11 +324,11 @@ define method skip-multi-line-comment
       if (char == '\n')
         lexer.line := lexer.line + 1;
         lexer.line-start := posn;
-        next(seen-nothing, posn, depth);
+        next(seen-nothing, posn, depth)
       else
-        next(seen-slash-slash, posn, depth);
-      end if;
-    end seen-slash-slash;
+        next(seen-slash-slash, posn, depth)
+      end
+    end method seen-slash-slash;
   //
   // Start out not having seen anything.
   //
@@ -373,9 +373,7 @@ define method get-token
   without-bounds-checks
 
     local
-      method repeat
-          (state :: <state>, posn :: <integer>
-             /* , result-kind, result-start, result-end */)
+      method repeat (state :: <state>, posn :: <integer>)
         if (state.result)
           //
           // It is an accepting state, so record the result and where
@@ -389,17 +387,15 @@ define method get-token
         //
         if (posn < length)
           let table = state.transitions;
-          let char :: <integer> = contents[posn];
           let new-state
             = if (table /* & char < $max-lexer-code + 1 */)
                 let table :: <simple-object-vector> = table;
-                vector-element(table, char);
+                let char-code :: <integer> = contents[posn];
+                vector-element(table, char-code);
               end;
           if (new-state)
             let new-state :: <state> = new-state;
-            repeat
-              (new-state, posn + 1
-                 /* , result-kind, result-start, result-end */);
+            repeat(new-state, posn + 1)
           else
             /*
             maybe-done
@@ -412,7 +408,6 @@ define method get-token
             // are done or not.
             //
             if (instance?(result-kind, <symbol>))
-            // if (object-class(result-kind) == <symbol>)
               //
               // The result-kind is a symbol if this is one of the magic
               // accepting states.  Instead of returning some token, we do
@@ -451,16 +446,14 @@ define method get-token
                 result-start := result-end;
                 result-end := #f;
                 let result-start :: <integer> = result-start;
-                repeat
-                  ($initial-state, result-start
-                     /* , result-kind, result-start, result-end */);
+                repeat($initial-state, result-start)
               else
                 values(posn, result-kind, result-start, result-end)
-              end if;
+              end if
             else
               values(posn, result-kind, result-start, result-end)
-            end if;
-          end if;
+            end if
+          end if
         else
           /*
           maybe-done
@@ -472,7 +465,6 @@ define method get-token
           // are done or not.
           //
           if (instance?(result-kind, <symbol>))
-          // if (object-class(result-kind) == <symbol>)
             //
             // The result-kind is a symbol if this is one of the magic
             // accepting states.  Instead of returning some token, we do
@@ -495,7 +487,9 @@ define method get-token
                 end for;
               #"multi-line-comment" =>
                 result-end := skip-multi-line-comment(lexer, result-end);
-                if (~result-end) unexpected-eof := #t end;
+                if (~result-end)
+                  unexpected-eof := #t
+                end;
             end select;
             result-kind := #f;
             if (result-end)
@@ -504,21 +498,17 @@ define method get-token
               result-start := result-end;
               result-end := #f;
               let result-start :: <integer> = result-start;
-              repeat
-                ($initial-state, result-start
-                   /* , result-kind, result-start, result-end */);
+              repeat($initial-state, result-start)
             else
               values(posn, result-kind, result-start, result-end)
-            end if;
+            end if
           else
             values(posn, result-kind, result-start, result-end)
-          end if;
-        end if;
+          end if
+        end if
       end method repeat;
     let (posn, result-kind, result-start, result-end)
-      = repeat
-          ($initial-state, lexer.posn
-             /* , #f, lexer.posn, #f */);
+      = repeat($initial-state, lexer.posn);
     if (~result-kind)
       //
       // If result-kind is #f, that means we didn't find an accepting
@@ -558,15 +548,15 @@ define method get-token
     // And finally, make and return the actual token.
     //
     if (result-kind)
-      do-process-token(result-kind, lexer, source-location);
+      do-process-token(result-kind, lexer, source-location)
     else
       if (unexpected-eof)
         invalid-end-of-input(source-location);
       else
         invalid-token(source-location);
       end;
-    end if;
-  end without-bounds-checks;
+    end if
+  end without-bounds-checks
 end method get-token;
 
 // This indirection is only here for profiling purposes.
