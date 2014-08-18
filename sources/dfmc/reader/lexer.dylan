@@ -371,12 +371,49 @@ define method get-token
   //
   let contents :: <byte-vector> = lexer.source.contents;
   let length :: <integer> = contents.size;
+  let (kind, bpos, bline, bcol, epos, eline, ecol, unexpected-eof?, current-line, current-line-start)
+    = get-token-1($initial-state, contents, lexer.posn, length, lexer.line, lexer.line-start);
+
+  //
+  // Save the current token's end position so that the next token
+  // starts here.
+  //
+  lexer.posn := epos;
+  lexer.line := current-line;
+  lexer.line-start := current-line-start;
+
+  let source-location = make-lexer-source-location
+    (lexer, lexer.source, bpos, bline, bcol, epos, eline, ecol);
+  //
+  // And finally, make and return the actual token.
+  //
+  if (kind)
+    do-process-token(kind, lexer, source-location)
+  elseif (unexpected-eof?)
+    invalid-end-of-input(source-location);
+  else
+    invalid-token(source-location);
+  end if
+end method get-token;
+
+// This is separated out from get-token so as to be testable without
+// having to make a <lexer>, which inturn requires having to pull in
+// compilation records et al.  It would be nice to have the lexer only
+// require a simple "source reader" interface of some kind that is
+// less tied to the compiler internals.
+define function get-token-1
+    (state :: <state>, contents :: <byte-vector>, start :: <integer>,
+     length :: <integer>, line :: <integer>, lstart :: <integer>)
+ => (kind, bpos, bline, bcol, epos, eline, ecol, unexpected-eof? :: <boolean>, current-line, line-start)
   let unexpected-eof :: <boolean> = #f;
   let saved-line :: false-or(<integer>) = #f;
   let saved-line-start :: false-or(<integer>) = #f;
 
+  let current-line :: <integer> = line;
+  let line-start :: <integer> = lstart;
+
   let result-kind = #f;
-  let result-start = lexer.posn;
+  let result-start = start;
   let result-end = #f;
 
   without-bounds-checks
@@ -428,22 +465,21 @@ define method get-token
                 #"whitespace" =>
                   #f;
                 #"newline" =>
-                  let lstart :: <integer> = result-end;
-                  lexer.line := lexer.line + 1;
-                  lexer.line-start := lstart;
+                  current-line := current-line + 1;
+                  line-start := result-end;
                 #"end-of-line-comment" =>
                   for (i :: <integer> from result-end below length,
-                       until: (contents[i] == as(<integer>, '\n')))
+                       until: (contents[i] == $newline-code))
                   finally
                     result-end := i;
                   end for;
                 #"multi-line-comment" =>
-                  saved-line := lexer.line;
-                  saved-line-start := lexer.line-start;
+                  saved-line := current-line;
+                  saved-line-start := line-start;
                   let (epos, nskipped, lstart) = skip-multi-line-comment(contents, length, result-end);
                   result-end := epos;
-                  lexer.line := lexer.line + nskipped;
-                  lexer.line-start := lstart | lexer.line-start;
+                  current-line := current-line + nskipped;
+                  line-start := lstart | line-start;
                   if (result-end)
                     saved-line := #f;
                     saved-line-start := #f;
@@ -488,20 +524,19 @@ define method get-token
               #"whitespace" =>
                 #f;
               #"newline" =>
-                let result-end :: <integer> = result-end;
-                lexer.line := lexer.line + 1;
-                lexer.line-start := result-end;
+                current-line := current-line + 1;
+                line-start := result-end;
               #"end-of-line-comment" =>
                 for (i :: <integer> from result-end below length,
-                     until: (contents[i] == as(<integer>, '\n')))
+                     until: (contents[i] == $newline-code))
                 finally
                   result-end := i;
                 end for;
               #"multi-line-comment" =>
                 let (epos, nskipped, lstart) = skip-multi-line-comment(contents, length, result-end);
                 result-end := epos;
-                lexer.line := lexer.line + nskipped;
-                lexer.line-start := lstart | lexer.line-start;
+                current-line := current-line + nskipped;
+                line-start := lstart | line-start;
                 if (~result-end)
                   unexpected-eof := #t
                 end;
@@ -523,7 +558,7 @@ define method get-token
         end if
       end method repeat;
     let (posn, result-kind, result-start, result-end)
-      = repeat($initial-state, lexer.posn);
+      = repeat($initial-state, start);
     if (~result-kind)
       //
       // If result-kind is #f, that means we didn't find an accepting
@@ -542,37 +577,34 @@ define method get-token
         result-end := result-start + 1;
       end if;
     end if;
+    if (result-kind == make-multi-line-string-literal)
+      // multi-line string literals are the only tokens with embedded newlines
+      // so they require special treatment.  Increment current-line by the
+      // number of newlines in the string to keep source locations correct.
+      current-line := current-line + iterate loop (i :: <integer> = result-start, n :: <integer> = 0)
+                                       case
+                                         i == result-end => n;
+                                         contents[i] == $newline-code => loop(i + 1, n + 1);
+                                         otherwise => loop(i + 1, n);
+                                       end
+                                     end iterate;
+    end if;
+                                         
     //
-    // Save the current token's end position so that the next token
-    // starts here.
+    // Return enough information to make a source location for the current token.
     //
-    let result-end :: <integer> = result-end;
-    lexer.posn := result-end;
-    //
-    // Make a source location for the current token.
-    //
-    let effective-line :: <integer> = saved-line | lexer.line;
-    let effective-line-start :: <integer> = saved-line-start | lexer.line-start;
-    let source-location
-      = make-lexer-source-location
-          (lexer, lexer.source,
-           result-start, effective-line,
-           result-start - effective-line-start,
-           result-end, lexer.line, result-end - lexer.line-start);
-    //
-    // And finally, make and return the actual token.
-    //
-    if (result-kind)
-      do-process-token(result-kind, lexer, source-location)
-    else
-      if (unexpected-eof)
-        invalid-end-of-input(source-location);
-      else
-        invalid-token(source-location);
-      end;
-    end if
+    let effective-line :: <integer> = saved-line | current-line;
+    let effective-line-start :: <integer> = saved-line-start | line-start;
+    let bpos = result-start;
+    let bline = effective-line;
+    let bcol = result-start - effective-line-start;
+    let eline = current-line;
+    let epos :: <integer> = result-end;
+    let ecol = epos - line-start;
+    values(result-kind, bpos, bline, bcol, epos, eline, ecol, unexpected-eof, current-line, line-start)
   end without-bounds-checks
-end method get-token;
+end function get-token-1;
+
 
 // This indirection is only here for profiling purposes.
 
@@ -1131,6 +1163,19 @@ define method make-string-literal
        // kind: $string-token,
        value: as-fragment-value(decode-string(source-location)));
 end method make-string-literal;
+
+// TODO(cgay): <multi-line-string-fragment>
+define method make-multi-line-string-literal
+    (lexer :: <lexer>, source-location :: <lexer-source-location>)
+ => (res :: <string-fragment>)
+  let bpos = source-location.start-posn + 3;  // 3 double quotes
+  let epos = source-location.end-posn - 3;    // 3 double quotes
+  make(<string-fragment>,
+       record: source-location.source-location-record,
+       source-position: source-location.source-location-source-position,
+       // kind: $string-token,
+       value: as-fragment-value(decode-string(source-location, start: bpos, end: epos)))
+end method make-multi-line-string-literal;
 
 define method parse-ratio-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
