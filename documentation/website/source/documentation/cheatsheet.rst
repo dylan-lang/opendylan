@@ -122,6 +122,17 @@ Operators
 |                    |  sort(c)      // copy of c, sorted    | * :drm:`sort`            |
 |                    |  reverse(c)   // copy of c, reversed  | * :drm:`reverse`         |
 +--------------------+---------------------------------------+--------------------------+
+| Bitwise &          | .. code-block:: dylan                 |                          |
+| Logical            |                                       |                          |
+|                    |  a | b        // Boolean OR           |                          |
+|                    |  a & b        // Boolean AND          |                          |
+|                    |  logior(a, b) // Bitwise inclusive OR |                          |
+|                    |  logxor(a, b) // Bitwise exclusive OR |                          |
+|                    |  logand(a, b) // Bitwise AND          |                          |
+|                    |  lognot(a, b) // Bitwise NOT          |                          |
+|                    |  ash(a, b)    // Shift left: a << b   |                          |
+|                    |  ash(a, -b)   // Shift right: a >> b  |                          |
++--------------------+---------------------------------------+--------------------------+
 
 
 String Formatting
