@@ -125,8 +125,10 @@ define constant $DW-LANG-C-plus-plus-11 :: <integer> = 26;
 define constant $DW-LANG-OCaml :: <integer> = 27;
 define constant $DW-LANG-Rust :: <integer> = 28;
 define constant $DW-LANG-C11 :: <integer> = 29;
+define constant $DW-LANG-Swift :: <integer> = 30;
+define constant $DW-LANG-Julia :: <integer> = 31;
+define constant $DW-LANG-Dylan :: <integer> = 32;
 define constant $DW-LANG-lo-user :: <integer> = 32768;
-define constant $DW-LANG-Dylan :: <integer> = #xD1D1;
 define constant $DW-LANG-hi-user :: <integer> = 65535;
 
 
