@@ -12,7 +12,7 @@ MPS  - A memory management system. http://www.ravenbrook.com/project/mps/
        When using a HARP back-end, either MPS or Boehm GC can be
        used for garbage collection. When using a C back-end, the Boehm GC does
        garbage collection.
-DFM  - Dylan Flow Machine. The indermediate high-level language of the compiler
+DFM  - Dylan Flow Machine. The intermediate high-level language of the compiler
 DFMC - Dylan Flow Machine Compiler. Takes care about DFM
 HARP - Harlequin Abstract RISC Processor. An artificial assembly language.
        HARP code is transformed into the target processor's actual assembly
