@@ -468,8 +468,10 @@ define module llvm-debug
     $DW-LANG-OCaml,
     $DW-LANG-Rust,
     $DW-LANG-C11,
-    $DW-LANG-lo-user,
+    $DW-LANG-Swift,
+    $DW-LANG-Julia,
     $DW-LANG-Dylan,
+    $DW-LANG-lo-user,
     $DW-LANG-hi-user,
 
     llvm-make-dbg-compile-unit,
