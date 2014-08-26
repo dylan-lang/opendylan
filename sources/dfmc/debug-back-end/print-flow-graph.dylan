@@ -218,6 +218,10 @@ define method operation-name (c :: <engine-node-apply>)
   "ENGINE-NODE-APPLY"
 end method operation-name;
 
+define method operation-name (c :: <method-apply>)
+  "METHOD-APPLY"
+end method operation-name;
+
 define method print-args (stream :: <stream>, arguments)
   for (first? = #t then #f, argument in arguments)
     unless (first?)
