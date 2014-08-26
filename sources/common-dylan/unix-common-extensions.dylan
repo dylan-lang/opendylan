@@ -40,7 +40,7 @@ define thread variable *time-buffer* :: <byte-string>
 define function default-random-seed () => (seed :: <integer>)
   %call-c-function ("time")
       (time :: <raw-c-pointer>) => (time :: <raw-c-signed-long>)
-    (primitive-cast-raw-as-pointer(primitive-string-as-raw(*time-buffer*)))
+    (primitive-string-as-raw(*time-buffer*))
   end;
   logior(as(<integer>, *time-buffer*[0]),
          ash(as(<integer>, *time-buffer*[1]), 8),

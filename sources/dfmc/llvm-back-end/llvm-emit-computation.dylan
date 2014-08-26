@@ -592,12 +592,7 @@ define method emit-computation
   end if;
 end method;
 
-define method emit-call
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <function-call>, f)
- => (call :: <llvm-value>);
-  error("%= calling %=", c, f)
-end method;
-
+// Call a known top-level method with no further next methods
 define method emit-call
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
      c :: <simple-call>, f :: <&iep>)
@@ -606,39 +601,178 @@ define method emit-call
   let global = llvm-builder-global(back-end, name);
   let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
   let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
-  ins--call(back-end, global,
-            concatenate(map(curry(emit-reference, back-end, m), c.arguments),
-                        vector(undef, undef)),
-            type: return-type,
-            calling-convention:
-              llvm-calling-convention(back-end, f))
+  let env = f.environment;
+  let fn
+    = if (~env | empty?(env.closure))
+        // Not a closure... we don't need to pass the <function> object
+        undef
+      else
+        emit-reference(back-end, m, f);
+      end if;
+  op--call(back-end, global,
+           concatenate(map(curry(emit-reference, back-end, m), c.arguments),
+                       vector(undef, fn)),
+           type: return-type,
+           calling-convention: llvm-calling-convention(back-end, f))
 end method;
 
-/*
-define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <simple-call>) => ()
+// Call a known top-level method with the possibility of next methods
+define method emit-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <method-call>, f :: <&iep>)
+ => (call :: <llvm-value>);
+  let name = emit-name(back-end, m, f);
+  let global = llvm-builder-global(back-end, name);
+  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
+  let next
+    = if (^next?(function(f)))
+        emit-reference(back-end, m, c.next-methods)
+      else
+        undef
+      end if;
+  op--call(back-end, global,
+           concatenate(map(curry(emit-reference, back-end, m), c.arguments),
+                       vector(next, undef)),
+           type: return-type,
+           calling-convention: llvm-calling-convention(back-end, f))
 end method;
 
-define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <method-call>) => ()
+// Method calls
+define method emit-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <method-call>, f)
+ => (call :: <llvm-value>);
+  let word-size = back-end-word-size(back-end);
+
+  let fn = emit-reference(back-end, m, f);
+  let fn-cast = op--object-pointer-cast(back-end, fn, #"<lambda>");
+  let mep-slot-ptr = op--getslotptr(back-end, fn-cast, #"<lambda>", #"mep");
+  let mep = ins--load(back-end, mep-slot-ptr, alignment: word-size);
+
+  // Cast to the appropriate MEP type
+  let parameter-types
+    = make(<simple-object-vector>, size: c.arguments.size + 3);
+  parameter-types[0] := $llvm-object-pointer-type; // next
+  parameter-types[1] := $llvm-object-pointer-type; // function
+  parameter-types[2] := back-end.%type-table["iWord"]; // argument count
+  fill!(parameter-types, $llvm-object-pointer-type, start: 3);
+  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+  let mep-type
+    = make(<llvm-function-type>,
+           return-type: return-type,
+           parameter-types: parameter-types,
+           varargs?: #f);
+  let mep-cast
+    = ins--bitcast(back-end, mep, llvm-pointer-to(back-end, mep-type));
+
+  let next
+    = emit-reference(back-end, m, c.next-methods);
+
+  op--call(back-end, mep-cast,
+           concatenate(vector(next, fn, c.arguments.size),
+                       map(curry(emit-reference, back-end, m),
+                           c.arguments)),
+           type: return-type,
+           calling-convention: $llvm-calling-convention-c)
 end method;
 
-define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <engine-node-call>) => ()
+// Generic function call through a known <engine-node>
+define method emit-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <engine-node-call>, f :: <&generic-function>)
+ => (call :: <llvm-value>);
+  let engine = emit-reference(back-end, m, c.engine-node);
+  let function = emit-reference(back-end, m, f);
+
+  op--chain-to-engine-entry-point(back-end, engine, function,
+                                  map(curry(emit-reference, back-end, m),
+                                      c.arguments))
 end method;
 
-define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <apply>) => ()
+// Calls to general functions using the XEP
+define method emit-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <simple-call>, f)
+ => (call :: <llvm-value>);
+  let word-size = back-end-word-size(back-end);
+
+  let fn = emit-reference(back-end, m, f);
+  let fn-cast = op--object-pointer-cast(back-end, fn, #"<function>");
+  let xep-slot-ptr = op--getslotptr(back-end, fn-cast, #"<function>", #"xep");
+  let xep = ins--load(back-end, xep-slot-ptr, alignment: word-size);
+
+  // Cast to the appropriate XEP type
+  let parameter-types
+    = make(<simple-object-vector>, size: c.arguments.size + 2);
+  parameter-types[0] := $llvm-object-pointer-type; // function
+  parameter-types[1] := back-end.%type-table["iWord"]; // argument count
+  fill!(parameter-types, $llvm-object-pointer-type, start: 2);
+  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+  let xep-type
+    = make(<llvm-function-type>,
+           return-type: return-type,
+           parameter-types: parameter-types,
+           varargs?: #f);
+  let xep-cast
+    = ins--bitcast(back-end, xep, llvm-pointer-to(back-end, xep-type));
+
+  op--call(back-end, xep-cast,
+           concatenate(vector(fn, c.arguments.size),
+                       map(curry(emit-reference, back-end, m),
+                           c.arguments)),
+           type: return-type,
+           calling-convention: $llvm-calling-convention-c)
 end method;
 
-define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <method-apply>) => ()
+// Possibly congruent calls to a generic function
+define method emit-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <simple-call>, f :: <&generic-function>)
+ => (call :: <llvm-value>);
+  if (call-congruent?(c))
+    let gfn = emit-reference(back-end, m, f);
+    op--engine-node-call(back-end, gfn,
+                         map(curry(emit-reference, back-end, m), c.arguments))
+  else
+    next-method()
+  end if
 end method;
 
-define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <engine-node-apply>) => ()
+// Calls through a function's XEP using apply()
+define method emit-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <apply>, f)
+ => (call :: <llvm-value>);
+  let apply-xep-entry-point
+    = llvm-entry-point-function(back-end, apply-xep-descriptor,
+                                c.arguments.size);
+  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+  op--call(back-end, apply-xep-entry-point,
+           concatenate(vector(emit-reference(back-end, m, f)),
+                       map(curry(emit-reference, back-end, m),
+                           c.arguments)),
+           type: return-type,
+           calling-convention: $llvm-calling-convention-fast)
 end method;
-*/
+
+// Calls through a function's MEP using apply() where next-methods are known
+define method emit-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <method-apply>, f)
+ => (call :: <llvm-value>);
+  let apply-mep-entry-point
+    = llvm-entry-point-function(back-end, apply-mep-descriptor,
+                                c.arguments.size);
+  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+  op--call(back-end, apply-mep-entry-point,
+           concatenate(vector(emit-reference(back-end, m, c.next-methods),
+                              emit-reference(back-end, m, f)),
+                       map(curry(emit-reference, back-end, m),
+                           c.arguments)),
+           type: return-type,
+           calling-convention: $llvm-calling-convention-fast)
+end method;
 
 define method emit-slot-ptr
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <any-slot-value>)
@@ -696,19 +830,10 @@ define method emit-computation
 
     // Throw an error
     ins--block(back-end, error-bb);
-    let uis-iep = dylan-value(#"unbound-instance-slot").^iep;
-    let uis-global
-      = llvm-builder-global(back-end, emit-name(back-end, m, uis-iep));
-    llvm-constrain-type
-      (uis-global.llvm-value-type,
-       llvm-pointer-to(back-end, llvm-lambda-type(back-end, uis-iep)));
-    let offset-ref = emit-reference(back-end, m, c.computation-slot-offset);
-    let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
-    ins--tail-call(back-end, uis-global,
-                   vector(instance, offset-ref, undef, undef),
-                   calling-convention:
-                     llvm-calling-convention(back-end, uis-iep));
-    ins--unreachable(back-end);
+    let raw-offset
+      = llvm-back-end-value-function(back-end, c.computation-slot-offset);
+    op--call-error-iep(back-end, #"unbound-instance-slot",
+                       instance, op--tag-integer(back-end, raw-offset));
 
     // Not uninitialized
     ins--block(back-end, result-bb);
@@ -850,11 +975,11 @@ define method emit-primitive-call
 
   // Call the C function
   let result
-    = ins--call(back-end,
-                llvm-builder-global(back-end, name),
-                map(curry(emit-reference, back-end, m), c.arguments),
-                type: function-type.llvm-function-type-return-type,
-                calling-convention: calling-convention);
+    = op--call(back-end,
+               llvm-builder-global(back-end, name),
+               map(curry(emit-reference, back-end, m), c.arguments),
+               type: function-type.llvm-function-type-return-type,
+               calling-convention: calling-convention);
   computation-result(back-end, c, result);
 end method;
 
@@ -872,11 +997,11 @@ define method emit-primitive-call
 
   // Call the C function
   let result
-    = ins--call(back-end, function,
-                map(curry(emit-reference, back-end, m),
-                    copy-sequence(c.arguments, start: 1)),
-                type: function-type.llvm-function-type-return-type,
-                calling-convention: calling-convention);
+    = op--call(back-end, function,
+               map(curry(emit-reference, back-end, m),
+                   copy-sequence(c.arguments, start: 1)),
+               type: function-type.llvm-function-type-return-type,
+               calling-convention: calling-convention);
   computation-result(back-end, c, result);
 end method;
 
@@ -1119,74 +1244,129 @@ define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <end-loop>) => ()
 end method;
 
+// bind-exit
+
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <bind-exit>) => ()
-/*
+  let next-c = c.next-computation;
+  let merge-c = if (instance?(next-c, <bind-exit-merge>)) next-c end;
+  let temp = if (merge-c) merge-c.temporary end;
+
+  let merge-bb = make(<llvm-basic-block>);
+  c.%label := merge-bb;
+
+  // Construct the initial phi operands
+  let phi-operands = make(<stretchy-object-vector>);
+  merge-operands(temp) := phi-operands;
+
   if (c.entry-state.local-entry-state?)
-    let exit-bb = make(<llvm-basic-block>);
+    // Body
+    emit-computations(back-end, m, c.body, next-c);
 
-    emit-computations(back-end, c.body, merge);
-
-    maybe-emit-merge-transfer(back-end, merge, merge-body-value);
-    emit-label(back-end, c);
+    // Fall-through at end of block
+    if (back-end.llvm-builder-basic-block)
+      add-merge-operands(temp,
+                         merge-c & merge-c.merge-right-value,
+                         back-end.llvm-builder-basic-block);
+      ins--br(back-end, merge-bb);
+    end if;
   else
-    let merge-tmp = merge.temporary;
-    let result = c.temporary.used? & emit-object(back-end, #f, merge-tmp);
-    let end-tag = make-tag(back-end);
+    // Basic blocks
+    let landingpad-bb = make(<llvm-basic-block>);
+    let values-bb = make(<llvm-basic-block>);
+    let resume-bb = make(<llvm-basic-block>);
 
-    let bind-exit-frame = op--start-bind-exit(back-end, c, end-tag);
+    // Operands for resume
+    let phi-operands = make(<stretchy-object-vector>);
 
-    dynamic-bind (*live-nlx-tags* = pair(end-tag, *live-nlx-tags*))
-      emit-computations(back-end, c.body, merge);
-      maybe-emit-merge-transfer(back-end, merge, merge-body-value);
+    // Stack-allocated bind exit frame
+    let typeid = op--typeid(back-end, c.entry-state);
+    let bef = op--allocate-bef(back-end, typeid);
+    temporary-value(c.entry-state) := bef;
+
+    // Body
+    let nlx = make(<nlx-info>,
+                   landingpad: landingpad-bb,
+                   resume: resume-bb,
+                   resume-phi-operands: phi-operands);
+    dynamic-bind (*live-nlx* = nlx)
+      emit-computations(back-end, m, c.body, next-c);
     end dynamic-bind;
 
-    // obliged to set up reg-result for Harp
-    if (result)
-      ins--move(back-end, back-end.registers.reg-result, result);
+    // Fall-through at end of block
+    if (back-end.llvm-builder-basic-block)
+      add-merge-operands(temp,
+                         merge-c & merge-c.merge-right-value,
+                         back-end.llvm-builder-basic-block);
+      ins--br(back-end, merge-bb);
     end if;
 
-    ins--tag(back-end, end-tag);
-    // Deallocate bind-exit frame by restoring frame pointer
-    ins--add(back-end, back-end.registers.reg-stack, bind-exit-frame, $bind-exit-frame-size);
-    // in the event of a NLX, must retrieve result from reg-result
-    ins--move(back-end, result, back-end.registers.reg-result);
-    // note that blocks are converted in all-rest context
-    if (result & (required-values(merge-tmp) > 0))
-      unspill-multiple-values(back-end, merge-tmp, #f);
+    // Exception landing pad
+    ins--block(back-end, landingpad-bb);
+    let clauses = vector(typeid);
+    let landingpad = op--landingpad(back-end, clauses, cleanup?: #t);
+    add!(phi-operands, landingpad);
+    add!(phi-operands, landingpad-bb);
+
+    // Check the typeid
+    let landingpad-index = ins--extractvalue(back-end, landingpad, 1);
+    let typeid-cast
+      = make(<llvm-cast-constant>, operator: #"BITCAST",
+             type: $llvm-object-pointer-type,
+             operands: vector(typeid));
+    let typeid-index
+      = ins--call-intrinsic(back-end, "llvm.eh.typeid.for",
+                            vector(typeid-cast));
+    let match?-cmp = ins--icmp-eq(back-end, landingpad-index, typeid-index);
+    ins--br(back-end, match?-cmp, values-bb, resume-bb);
+
+    // Matched, retrieve values from the frame
+    ins--block(back-end, values-bb);
+    if (merge-c)
+      let mv = call-primitive(back-end, primitive-bef-values-descriptor, bef);
+      temporary-value(merge-c.merge-left-value)
+        := make(<llvm-global-mv>, struct: mv);
+      add-merge-operands(temp, merge-c.merge-left-value,
+                         back-end.llvm-builder-basic-block);
     end if;
+    ins--br(back-end, merge-bb);
+
+    // No match, resume unwind
+    ins--block(back-end, resume-bb);
+    let resume-value
+      = if (phi-operands.size = 2)
+          phi-operands[0]
+        else
+          ins--phi(back-end, phi-operands)
+        end;
+    op--resume(back-end, resume-value);
   end if;
-*/
+
+  // Merge point
+  ins--block(back-end, merge-bb);
+  if (merge-c)
+    merge-results(back-end, merge-c, phi-operands);
+  end if;
 end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <exit>) => ()
-/*
   if (c.entry-state.local-entry-state?)
-    let me-block :: <bind-exit> = c.entry-state.me-block;
-    let nc = me-block.next-computation;
-    let temp = if (instance?(nc, <bind-exit-merge>)) temporary(nc) end;
-
+    let bind-exit :: <bind-exit> = c.entry-state.me-block;
+    let next-c = bind-exit.next-computation;
+    let merge-c = if (instance?(next-c, <bind-exit-merge>)) next-c end;
+    let temp = if (merge-c) merge-c.temporary end;
     if (temp & used?(temp))
-      emit-transfer(back-end, temp, c.computation-value);
+      add-merge-operands(temp, c.computation-value,
+                         back-end.llvm-builder-basic-block);
     end if;
-    emit-goto(back-end, me-block);
+    ins--br(back-end, bind-exit.%label);
   else
-    // spill to MV area before doing non-local exit (which saves
-    // the MV area values)
-    if (instance?(c.computation-value, <multiple-value-temporary>)
-        & required-values(c.computation-value) > 1)
-      spill-multiple-values(back-end, c.computation-value);
-    end if;
-    ins--call(back-end, $primitive-nlx.runtime-reference,
-	      push-arguments(back-end, list(emit-reference(back-end, #f, c.entry-state),
-					    emit-reference(back-end, #f, c.computation-value))));
-
-    // redundant move to get around Harp Live Registers
-    let result = emit-destination-reference(back-end, #f, c.temporary);
-    emit-result-assignment(back-end, result);
+    let bef = emit-reference(back-end, m, c.entry-state);
+    op--set-bef-value(back-end, bef, temporary-value(c.computation-value));
+    call-primitive(back-end, primitive-nlx-descriptor, bef);
+    ins--unreachable(back-end);
   end if;
-*/
 end method;
 
 define method emit-computation
@@ -1197,43 +1377,56 @@ end method;
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <unwind-protect>)
  => ()
-  error("<unwind-protect>");
-/*
-  let protect-temp =  c.protected-temporary;
-  let protected-result = emit-reference(back-end, #f, protect-temp);
+  // Basic blocks
+  let landingpad-bb = make(<llvm-basic-block>);
+  let cleanup-bb = make(<llvm-basic-block>);
+  let continue-bb = make(<llvm-basic-block>);
 
-  let cleanup-tag = make-tag(back-end);
-  let continue-tag = make-tag(back-end);
+  // Operands for resume
+  let phi-operands = make(<stretchy-object-vector>);
 
-  op--start-unwind-protect(back-end, c, cleanup-tag);
-
-  dynamic-bind (*live-nlx-tags* = pair(cleanup-tag, *live-nlx-tags*))
-    emit-computations(back-end, c.body, c.next-computation);
+  // unwind-protect body
+  let nlx = make(<nlx-info>,
+                 landingpad: landingpad-bb,
+                 resume: cleanup-bb,
+                 resume-phi-operands: phi-operands);
+  dynamic-bind (*live-nlx* = nlx)
+    emit-computations(back-end, m, c.body, c.next-computation);
   end dynamic-bind;
+  if (back-end.llvm-builder-basic-block)
+    ins--br(back-end, continue-bb);
+  end if;
 
-  let multiple-values =
-    case
-      false-reference?(protected-result) => #();
-      local-multiple-value-temporary?(protect-temp) =>
-        mv-temporary(back-end, protect-temp).mv-elements;
-      otherwise => list(protected-result);
-    end case;
+  // Exception landing pad
+  ins--block(back-end, landingpad-bb);
+  let landingpad = op--landingpad(back-end, #[], cleanup?: #t);
+  add!(phi-operands, landingpad);
+  add!(phi-operands, landingpad-bb);
+  ins--br(back-end, cleanup-bb);
 
-  op--unwind-protect-cleanup(back-end, c, cleanup-tag, continue-tag);
-
-  ins--tag(back-end, cleanup-tag);
-  for (value in multiple-values)
-    ins--force-d(back-end, value);
-  end for;
-
-  preserving-cleanup-state(back-end)
-    emit-computations(back-end, c.cleanups, c.next-computation);
+  // Cleanup and resume unwinding
+  ins--block(back-end, cleanup-bb);
+  let resume-value
+    = if (phi-operands.size = 2)
+        phi-operands[0]
+      else
+        ins--phi(back-end, phi-operands)
+      end;
+  without-persistent-temporaries ()
+    emit-computations(back-end, m, c.cleanups, c.next-computation);
   end;
+  op--resume(back-end, resume-value);
 
-  ins--end-cleanup(back-end, continue-tag);
+  // Save global MV if needed
+  ins--block(back-end, continue-bb);
+  let protect-temp = c.protected-temporary;
+  let protect-value = protect-temp & temporary-value(protect-temp);
+  let protected
+    = op--protect-temporary(back-end, protect-temp, protect-value);
 
-  ins--tag(back-end, continue-tag);
-*/
+  // Cleanup and restore global MV if needed
+  emit-computations(back-end, m, c.cleanups, c.next-computation);
+  op--restore-temporary(back-end, protect-temp, protect-value, protected);
 end method;
 
 define method emit-computation
@@ -1301,8 +1494,12 @@ end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <values>) => ();
+  let (values-rest-constant?, values-rest) = fast-constant-value?(c.rest-value);
   let (fixed, rest)
-    = if (c.rest-value & instance?(generator(c.rest-value), <stack-vector>))
+    = if (values-rest-constant?)
+        let values-rest-refs = map(make-object-reference, values-rest);
+        values(concatenate(c.fixed-values, values-rest-refs), #f)
+      elseif (c.rest-value & instance?(generator(c.rest-value), <stack-vector>))
         let sv-c :: <stack-vector> = generator(c.rest-value);
         values(concatenate(c.fixed-values, sv-c.arguments), #f)
       else

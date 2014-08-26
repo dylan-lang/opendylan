@@ -80,6 +80,25 @@ define method op--tag-integer
   ins--inttoptr(be, tagged, $llvm-object-pointer-type)
 end method;
 
+define method op--tag-integer
+    (be :: <llvm-back-end>, integer-value :: <abstract-integer>)
+ => (result :: <llvm-value>);
+  element(be.%direct-object-table, integer-value, default: #f)
+    | begin
+        let raw-tagged
+          = generic/logior(generic/ash(integer-value, $dylan-tag-bits),
+                           $dylan-tag-integer);
+        let tagged = make(<llvm-integer-constant>,
+                          type: be.%type-table["iWord"],
+                          integer: raw-tagged);
+        element(be.%direct-object-table, integer-value)
+          := make(<llvm-cast-constant>,
+                  operator: #"INTTOPTR",
+                  type: $llvm-object-pointer-type,
+                  operands: vector(tagged))
+      end
+end method;
+
 // Extract an integer value from an integer-tagged object reference
 define method op--untag-integer
     (be :: <llvm-back-end>, x :: <llvm-value>)
@@ -87,6 +106,33 @@ define method op--untag-integer
   let type = llvm-reference-type(be, dylan-value(#"<raw-integer>"));
   let word = ins--ptrtoint(be, x, type);
   ins--ashr(be, word, $dylan-tag-bits)
+end method;
+
+define method op--tag-character
+    (be :: <llvm-back-end>, x :: <llvm-value>)
+ => (character-value :: <llvm-value>);
+  let shifted = ins--shl(be, x, $dylan-tag-bits);
+  let tagged = ins--or(be, shifted, $dylan-tag-character);
+  ins--inttoptr(be, tagged, $llvm-object-pointer-type)
+end method;
+
+define method op--tag-character
+    (be :: <llvm-back-end>, char :: <character>)
+ => (character-value :: <llvm-value>);
+  element(be.%direct-object-table, char, default: #f)
+    | begin
+        let raw-tagged
+          = logior(ash(as(<integer>, char), $dylan-tag-bits),
+                   $dylan-tag-character);
+        let tagged = make(<llvm-integer-constant>,
+                          type: be.%type-table["iWord"],
+                          integer: raw-tagged);
+        element(be.%direct-object-table, char)
+          := make(<llvm-cast-constant>,
+                  operator: #"INTTOPTR",
+                  type: $llvm-object-pointer-type,
+                  operands: vector(tagged))
+      end
 end method;
 
 define method op--untag-character
@@ -146,6 +192,41 @@ define method op--stack-allocate-vector
   new-vector
 end method;
 
+define method op--object-mm-wrapper
+    (back-end :: <llvm-back-end>, object)
+ => (wrapper :: <llvm-value>);
+  let word-size = back-end-word-size(back-end);
+  let module = back-end.llvm-builder-module;
+
+  // Check tag to determine if this is a heap object
+  let object-word
+    = ins--ptrtoint(back-end, object, back-end.%type-table["iWord"]);
+  let tag-bits
+    = ins--and(back-end, object-word, ash(1, $dylan-tag-bits) - 1);
+  let cmp = ins--icmp-eq(back-end, tag-bits, $dylan-tag-pointer);
+  ins--if (back-end, cmp)
+    // Retrieve the <mm-wrapper> object from the object header
+    let x = op--object-pointer-cast(back-end, object, #"<object>");
+    let wrapper-slot-ptr = ins--gep-inbounds(back-end, x, 0, i32(0));
+    ins--load(back-end, wrapper-slot-ptr, alignment: word-size)
+  ins--else
+    // Look up the wrapper for this tag value in $direct-object-mm-wrappers
+    let wrappers-binding = dylan-binding(#"$direct-object-mm-wrappers");
+    let wrappers-constant = emit-reference(back-end, module, wrappers-binding);
+    let wrappers-type = llvm-pointer-to(back-end, $llvm-i8*-type);
+    let wrappers-constant-cast
+      = ins--bitcast(back-end, wrappers-constant,
+                     llvm-pointer-to(back-end, wrappers-type));
+    let wrappers-vector
+      = ins--load(back-end, wrappers-constant-cast, alignment: word-size);
+    let wrappers-vector-slot-ptr
+      = ins--gep-inbounds(back-end, wrappers-vector, tag-bits);
+    let wrappers-element
+      = ins--load(back-end, wrappers-vector-slot-ptr, alignment: word-size);
+    op--object-pointer-cast(back-end, wrappers-element, #"<mm-wrapper>")
+  end ins--if
+end method;
+
 
 /// Overflow trap
 
@@ -158,3 +239,26 @@ define method op--overflow-trap
     (be :: <llvm-x86-back-end>) => ();
   ins--call-intrinsic(be, "llvm.x86.int", vector(i8(4)));
 end method;
+
+
+/// Error calls
+
+define method op--call-error-iep
+    (back-end :: <llvm-back-end>, name :: <symbol>, #rest arguments) => ();
+  let module = back-end.llvm-builder-module;
+
+  let err-iep = dylan-value(name).^iep;
+  let err-name = emit-name(back-end, module, err-iep);
+  let err-global = llvm-builder-global(back-end, err-name);
+  llvm-constrain-type
+    (err-global.llvm-value-type,
+     llvm-pointer-to(back-end, llvm-lambda-type(back-end, err-iep)));
+  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
+  op--call(back-end, err-global,
+           concatenate(arguments, vector(undef, undef)),
+           type: llvm-reference-type(back-end, back-end.%mv-struct-type),
+           calling-convention: llvm-calling-convention(back-end, err-iep),
+           tail-call?: #t);
+  ins--unreachable(back-end);
+end method;
+

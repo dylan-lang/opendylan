@@ -211,6 +211,7 @@ define module llvm
     llvm-module-aliases,
     llvm-module-named-metadata,
     llvm-module-dependent-libraries,
+    llvm-module-add-flag,
     llvm-type-table,
     llvm-global-table,
 
@@ -350,7 +351,10 @@ define module llvm-builder
     ins--switch*,
     ins--invoke,
     ins--resume,
-    ins--unreachable;
+    ins--unreachable,
+
+    ins--if,
+    ins--iterate;
 end module;
 
 define module llvm-debug

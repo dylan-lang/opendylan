@@ -321,6 +321,9 @@ define module-spec llvm-builder ()
   function ins--resume
       (<llvm-builder>, <llvm-value>, #"key" #"metadata")
    => (<llvm-instruction>);
+
+  macro-test ins--if-test;
+  macro-test ins--iterate-test;
 end module-spec llvm-builder;
 
 define library-spec llvm ()

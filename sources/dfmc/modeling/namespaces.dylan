@@ -2166,6 +2166,7 @@ define &module dispatch-engine
     <by-class-discriminator>,
     <by-singleton-class-discriminator>,
     <linear-by-class-discriminator>,
+      %gf-dispatch-linear-by-class,
     <hashed-by-class-discriminator>,
     <linear-by-singleton-class-discriminator>,
     <hashed-by-singleton-class-discriminator>,
@@ -2217,7 +2218,9 @@ define &module dispatch-engine
     <repeated-byte-slot-setter-engine-node>,
     <boxed-class-slot-engine-node>,
     <boxed-class-slot-getter-engine-node>,
+      %gf-dispatch-boxed-class-slot-getter,
     <boxed-class-slot-setter-engine-node>,
+      %gf-dispatch-boxed-class-slot-setter,
     callback-slot-engine-node-offset,
     slot-engine-node-size-offset, slot-engine-node-size-offset-setter;
   create

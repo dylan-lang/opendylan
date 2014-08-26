@@ -301,21 +301,19 @@ testc: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)
 	@printf "set compiler-back-end c\nopen common-dylan\nbuild -nolink -output dfm" \
 	| $(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER)
 
-testl: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)
-	@printf "set compiler-back-end llvm\nopen dylan\nbuild -nolink -output dfm" \
-	| $(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER)
-	@(cd Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build/dylan && \
-          for i in *.bc; do \
-            echo $$i; \
-            llvm-dis $$i && clang -O3 -S $$i; \
-          done)
-	@printf "set compiler-back-end llvm\nopen common-dylan\nbuild -nolink -output dfm" \
-	| $(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER)
-	@(cd Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build/common-dylan && \
-          for i in *.bc; do \
-            echo $$i; \
-            llvm-dis $$i && clang -O3 -S $$i; \
-          done)
+testl:  $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)
+	@rm llvm-build.log
+	@for library in dylan common-dylan io system generic-arithmetic big-integers c-ffi c-ffi-test; do \
+	     printf "set compiler-back-end llvm\nopen $$library\nbuild -nolink -output dfm" \
+	       | $(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) \
+	       | tee -a llvm-build.log; \
+	     (cd Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build/$$library && \
+              for i in *.bc; do \
+	          echo $$i; \
+	          llvm-dis $$i && clang -O3 -S $$i; \
+	      done); \
+	 done
+	$(abs_srcdir)/llvm-stats.py llvm-build.log Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build
 
 xtestl:
 	for target in $(BACKENDS); do \

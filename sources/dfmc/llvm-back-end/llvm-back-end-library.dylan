@@ -42,6 +42,8 @@ define module dfmc-llvm-back-end
     llvm-thread-local-support?,
     llvm-teb-struct-type,
 
+    llvm-bef-struct-type,
+
     *loose-mode?*,
     *interactive-mode?*,
     llvm-retract-cached,
@@ -54,7 +56,7 @@ define module dfmc-llvm-back-end
     llvm-reference-type,
     llvm-lambda-type,
     llvm-c-function-type,
-    llvm-entry-point-type,
+    llvm-entry-point-info,
 
     <llvm-primitive-descriptor>,
     primitive-attributes,
@@ -66,6 +68,7 @@ define module dfmc-llvm-back-end
     $llvm-runtime-variable-descriptors,
     llvm-runtime-variable,
 
+    $entry-point-argument-count,
     <llvm-entry-point-descriptor>,
     entry-point-attributes,
     entry-point-generator,

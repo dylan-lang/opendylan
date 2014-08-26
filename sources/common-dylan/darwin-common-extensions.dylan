@@ -34,8 +34,8 @@ define function darwin-sysctl
     (primitive-string-as-raw(rmib), integer-as-raw(size(rmib)),
      primitive-unwrap-machine-word($machine-word-zero),
      primitive-string-as-raw(rosize),
-     primitive-unwrap-machine-word($machine-word-zero),
-     primitive-unwrap-machine-word($machine-word-zero)) end) >= 0)
+     primitive-cast-raw-as-pointer(integer-as-raw(0)),
+     integer-as-raw(0)) end) >= 0)
 
     let osize = raw-as-integer(primitive-c-unsigned-long-at
       (primitive-cast-raw-as-pointer(primitive-string-as-raw(rosize)),
@@ -54,8 +54,8 @@ define function darwin-sysctl
       => (ret :: <raw-c-signed-int>)
       (primitive-string-as-raw(rmib), integer-as-raw(size(mib)),
        primitive-string-as-raw(out), primitive-string-as-raw(rosize),
-       primitive-unwrap-machine-word($machine-word-zero),
-       primitive-unwrap-machine-word($machine-word-zero)) end) >= 0)
+       primitive-cast-raw-as-pointer(integer-as-raw(0)),
+       integer-as-raw(0)) end) >= 0)
       out
     end when;
   end when;

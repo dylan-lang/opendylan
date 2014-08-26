@@ -1,6 +1,6 @@
 Module:       llvm-runtime-generator
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              Additional code is Copyright 2010-2013 Gwydion Dylan Maintainers
+              Additional code is Copyright 2010-2014 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -18,7 +18,8 @@ define constant $wrapper-classes
       #"<unbound>",
       #"<traceable-value-cell>",
       #"<untraceable-value-cell>",
-      #"<untraceable-double-value-cell>"];
+      #"<untraceable-double-value-cell>",
+      #"<symbol>"];
 
 // Well-known objects referenced by the generated runtime
 define constant $runtime-referenced-objects
@@ -27,11 +28,28 @@ define constant $runtime-referenced-objects
       #"%false",                // #f
       #"%empty-list",           // #()
       #"%empty-vector",         // #[]
-      #"%empty-string"];        // ""
+      #"%empty-string",         // ""
+      #"$absent-engine-node",
+      #"$inapplicable-engine-node"];
 
 define constant $runtime-referenced-functions
   = #[#"type-check-error",
-      #"argument-count-error"];
+      #"argument-count-error",
+      #"odd-keyword-arguments-error",
+      #"invalid-keyword-trap",
+      #"unbound-instance-slot",
+      #"unbound-repeated-slot",
+      #"repeated-slot-getter-index-out-of-range-trap",
+      #"repeated-slot-setter-index-out-of-range-trap",
+      #"%slotacc-single-Q-instance-getter",
+      #"%slotacc-single-Q-class-getter",
+      #"%slotacc-single-Q-instance-setter",
+      #"%slotacc-single-Q-class-setter",
+      #"%slotacc-repeated-instance-getter",
+      #"%slotacc-repeated-instance-setter"];
+
+define constant $runtime-referenced-variables
+  = #[#"$direct-object-mm-wrappers"];
 
 define function generate-runtime-heap
     (be :: <llvm-back-end>, m :: <llvm-module>) => ();
@@ -48,6 +66,11 @@ define function generate-runtime-heap
   // Emit external declarations for referenced Dylan entry points
   for (name in $runtime-referenced-functions)
     emit-extern(be, m, dylan-value(name).^iep);
+  end;
+
+  // Emit external declarations for referenced variables
+  for (name in $runtime-referenced-variables)
+    emit-extern(be, m, dylan-binding(name));
   end;
 
   // Emit runtime variable definitions
@@ -135,10 +158,10 @@ end function;
 define function generate-runtime-entry-point
     (be :: <llvm-back-end>, m :: <llvm-module>,
      name :: <symbol>, descriptor :: <llvm-entry-point-descriptor>,
-     count :: <integer>)
+     count :: false-or(<integer>), pos :: false-or(<integer>))
  => ();
   // Generate the function definition and add it to the runtime module
-  let function = llvm-entry-point-function(be, descriptor, count);
+  let function = llvm-entry-point-function(be, descriptor, count, pos: pos);
   llvm-builder-declare-global(be, function.llvm-global-name, function);
 
   let function-type = function.llvm-value-type.llvm-pointer-type-pointee;
@@ -158,10 +181,12 @@ define function generate-runtime-entry-point
 
     // Generate the function body
     let (result)
-      = apply(descriptor.entry-point-generator, be, count, arguments);
+      = apply(descriptor.entry-point-generator, be, count, pos, arguments);
 
     // Generate the function return
-    ins--ret(be, result);
+    if (be.llvm-builder-basic-block)
+      ins--ret(be, result);
+    end if;
   exception (e :: <error>)
     format(*standard-error*, "Generation of %s failed: %s\n", name, e);
     force-output(*standard-error*);
@@ -185,9 +210,19 @@ define function generate-runtime-entry-points
   for (descriptor :: <llvm-entry-point-descriptor>
          keyed-by name :: <symbol>
          in $llvm-entry-point-descriptors)
-    for (count from 0 to 9)
-      generate-runtime-entry-point(be, m, name, descriptor, count);
-    end for;
+    if (member?(#"singular", descriptor.entry-point-attributes))
+      generate-runtime-entry-point(be, m, name, descriptor, #f, #f);
+    elseif (member?(#"cross", descriptor.entry-point-attributes))
+      for (count from 1 to $entry-point-argument-count)
+        for (pos from 0 below count)
+          generate-runtime-entry-point(be, m, name, descriptor, count, pos);
+        end for;
+      end for;
+    else
+      for (count from 0 to $entry-point-argument-count)
+        generate-runtime-entry-point(be, m, name, descriptor, count, #f);
+      end for;
+    end if;
   end for;
 end function;
 
@@ -200,20 +235,24 @@ define function generate-runtime-header
     format(stream, "#define LLVM_RUNTIME_H_\n\n");
 
     begin
-      let teb-type = llvm-teb-struct-type(be);
-      format(stream, "struct %s {\n", teb-type.^debug-name);
-      for (member in teb-type.raw-aggregate-members)
-	let member-type = member.member-raw-type;
-	format(stream, "  %s %s",
-	       member-type.raw-type-c-name,
-	       raw-mangle(be, as(<string>, member.member-name)));
-	if (instance?(member, <raw-aggregate-array-member>))
-	  format(stream, "[%d]", member.member-array-length);
-	end if;
-	format(stream, ";\n");
-      end for;
+      let types
+        = vector(llvm-teb-struct-type(be),
+                 llvm-bef-struct-type(be));
+      for (type in types)
+        format(stream, "struct %s {\n", type.^debug-name);
+        for (member in type.raw-aggregate-members)
+          let member-type = member.member-raw-type;
+          format(stream, "  %s %s",
+                 member-type.raw-type-c-name,
+                 raw-mangle(be, as(<string>, member.member-name)));
+          if (instance?(member, <raw-aggregate-array-member>))
+            format(stream, "[%d]", member.member-array-length);
+          end if;
+          format(stream, ";\n");
+        end for;
 
-      format(stream, "};\n\n");
+        format(stream, "};\n\n");
+      end for;
     end;
 
     format(stream, "#endif // LLVM_RUNTIME_H_\n");

@@ -582,11 +582,12 @@ end;
 define side-effecting stateless indefinite-extent &primitive-descriptor primitive-vector-element-setter
     (new-value :: <object>,
      x :: <simple-object-vector>, index :: <raw-integer>)
- => (value :: <object>);
+ => (new-value :: <object>);
   let class :: <&class> = dylan-value(#"<simple-object-vector>");
   let x-sov = op--object-pointer-cast(be, x, class);
   let slot-ptr = op--getslotptr(be, x-sov, class, #"vector-element", index);
   ins--store(be, new-value, slot-ptr, alignment: back-end-word-size(be));
+  new-value
 end;
 
 define side-effect-free stateless dynamic-extent mapped &primitive-descriptor primitive-vector-size
@@ -661,17 +662,8 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
 
   // Throw an error
   ins--block(be, error-bb);
-  let uis-iep = dylan-value(#"unbound-instance-slot").^iep;
-  let uis-global = llvm-builder-global(be, emit-name(be, module, uis-iep));
-  let tagged-position = op--tag-integer(be, position);
-  llvm-constrain-type
-    (uis-global.llvm-value-type,
-     llvm-pointer-to(be, llvm-lambda-type(be, uis-iep)));
-  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
-  ins--tail-call(be, uis-global, vector(x, tagged-position, undef, undef),
-                 calling-convention:
-                   llvm-calling-convention(be, uis-iep));
-  ins--unreachable(be);
+  op--call-error-iep(be, #"unbound-instance-slot",
+                     x, op--tag-integer(be, position));
 
   // Not uninitialized
   ins--block(be, result-bb);
@@ -697,7 +689,8 @@ define side-effecting stateless indefinite-extent &primitive-descriptor primitiv
   let x-body
     = ins--gep-inbounds(be, x-slots, dylan-value(#"$number-header-words"));
   let slot-ptr = ins--gep-inbounds(be, x-body, position);
-  ins--store(be, value, slot-ptr, alignment: word-size)
+  ins--store(be, value, slot-ptr, alignment: word-size);
+  value
 end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-repeated-slot-value
@@ -726,7 +719,8 @@ define side-effecting stateless indefinite-extent &primitive-descriptor primitiv
   let x-repeated
     = ins--gep-inbounds(be, x-body, base-position);
   let slot-ptr = ins--gep(be, x-repeated, position);
-  ins--store(be, value, slot-ptr, alignment: word-size)
+  ins--store(be, value, slot-ptr, alignment: word-size);
+  value
 end;
 
 
@@ -750,12 +744,4 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   let below = ins--icmp-slt(be, i, high);
   let result = ins--and(be, above, below);
   op--boolean(be, result)
-end;
-
-
-/// Multiple Values
-
-define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-values
-    (size :: <integer>, #rest arguments) => (#rest values)
-  //---*** Fill this in...
 end;

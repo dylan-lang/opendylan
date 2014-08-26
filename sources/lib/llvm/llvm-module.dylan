@@ -35,3 +35,19 @@ define class <llvm-module> (<object>)
   constant slot llvm-global-table :: <mutable-explicit-key-collection>
     = make(<string-table>);
 end class;
+
+define method llvm-module-add-flag
+    (module :: <llvm-module>, behavior :: <symbol>, name :: <string>,
+     value :: <llvm-value>)
+  => ();
+  let name-metadata = make(<llvm-metadata-string>, string: name);
+  select (behavior)
+    #"error" =>
+      let node = make(<llvm-metadata-node>,
+                      function-local?: #f,
+                      node-values: vector(i32(1),
+                                          name-metadata,
+                                          value));
+      add-to-named-metadata(module, "llvm.module.flags", node);
+  end select;
+end method;

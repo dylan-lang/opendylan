@@ -1221,7 +1221,7 @@ define constant discriminator$m-nrequired
   = ash(ash(1, discriminator$s-nrequired) - 1, discriminator$v-nrequired);
 
 define constant discriminator$v-restp = 22;
-// define constant discriminator$m-restp = ash(1, discriminator$v-restp);
+define constant discriminator$m-restp = ash(1, discriminator$v-restp);
 
 // define constant discriminator$v-data-start = 23;
 
@@ -1310,7 +1310,7 @@ define constant $engine-node-entry-point-names :: <simple-object-vector> =
     #"general-engine-node-n",                // 12, reserved-terminal-n-g
     #"profiling-cache-header",                // 13, profiling-cache-header
     #"cache-header",                        // 14, cache-header
-    #"ambiguous-methods",                // 15, ambiguous-methods
+    #"general-engine-node-spread",        // 15, ambiguous-methods
     #"boxed-instance-slot-getter",        // 16, boxed-instance-slot-getter
     #"boxed-instance-slot-setter",        // 17, boxed-instance-slot-setter
     #"boxed-repeated-instance-slot-getter",// 18, boxed-repeated-instance-slot-getter
@@ -2172,12 +2172,13 @@ define function ^slot-method-requiring-class-discrimination? (m :: <&method>)
     #f
   end if
 end function;
-
+*/
 
 define constant slotdiscrim$v-offset
   = engine-node$v-data-start;
 
-define function ^slot-engine-node-offset-setter
+/*
+define function ^slot-engine-node-offset-setter 
     (offset :: <integer>, e :: <&slot-access-engine-node>)
  => (offset :: <integer>);
   let mask :: <integer> = ash(1, slotdiscrim$v-offset) - 1;

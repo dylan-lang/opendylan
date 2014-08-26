@@ -711,3 +711,136 @@ define inline function ins--switch*
  => (instruction :: <llvm-instruction>);
   ins--switch(builder, value, default, jump-table)
 end function;
+
+// Convenience macros
+
+define macro ins--if
+  { ins--if(?builder:expression, ?test:expression) ?:body ?elses end }
+    => { do-ins--if(?builder, ?test, method() ?body end, ?elses) }
+  elses:
+  { } => { #f }
+  { ins--else ?:body } => { method() ?body end }
+end macro;
+
+define function do-ins--if
+    (builder :: <llvm-builder>, test,
+     iftrue-thunk :: <function>, iffalse-thunk :: false-or(<function>))
+ => (value :: <llvm-value>)
+  let test-bb = builder.llvm-builder-basic-block;
+  let iftrue-bb = make(<llvm-basic-block>);
+  let iffalse-bb = if (iffalse-thunk) make(<llvm-basic-block>) end;
+  let common-bb = make(<llvm-basic-block>);
+
+  // Branch on test results
+  if (iffalse-bb)
+    ins--br(builder, test, iftrue-bb, iffalse-bb);
+  else
+    ins--br(builder, test, iftrue-bb, common-bb);
+  end if;
+
+  // Condition true block
+  ins--block(builder, iftrue-bb);
+  let iftrue-value = iftrue-thunk();
+  let iftrue-exit-bb = builder.llvm-builder-basic-block;
+  if (iftrue-exit-bb)
+    ins--br(builder, common-bb);
+  end if;
+
+  // Condition false block
+  let (iffalse-value, iffalse-exit-bb)
+    = if (iffalse-bb)
+        ins--block(builder, iffalse-bb);
+        let value = iffalse-thunk();
+        let exit-bb = builder.llvm-builder-basic-block;
+        if (exit-bb)
+          ins--br(builder, common-bb);
+        end if;
+        values(value, exit-bb)
+      else
+        values(make(<llvm-undef-constant>), test-bb)
+      end if;
+
+  // Merge point
+  if (iftrue-exit-bb | iffalse-exit-bb)
+    ins--block(builder, common-bb);
+    if (iftrue-exit-bb & iffalse-exit-bb)
+      llvm-constrain-type(llvm-value-type(iftrue-value),
+                          llvm-value-type(iffalse-value));
+      if (llvm-void-type?(llvm-value-type(iftrue-value)))
+        make(<llvm-undef-constant>)
+      else
+        ins--phi*(builder, iftrue-value, iftrue-exit-bb,
+                  iffalse-value, iffalse-exit-bb)
+      end if;
+    elseif (iftrue-exit-bb)
+      iftrue-value
+    else
+      iffalse-value
+    end if
+  else
+    make(<llvm-undef-constant>)
+  end if
+end function;
+
+define macro ins--iterate
+  { ins--iterate ?:name (?builder:expression, ?bindings:*) ?:body end }
+    => { ins--iterate-aux ?name (?builder,
+                                 pre: [ let builder = ?builder ],
+                                 ?bindings)
+           ?body
+       end }
+bindings:
+  { } => { }
+  { ?:variable = ?:expression, ... }
+    => { var: ?variable,
+         pre: [ let ?variable ## "-phi-operands"
+                  = make(<stretchy-object-vector>) ],
+         add: [ do-add-iterate-phi-operand
+                  (builder, ?variable ## "-phi-operands", ?variable)],
+         phi: [ let ?variable
+                  = make(<llvm-phi-node>,
+                         operands: ?variable ## "-phi-operands",
+                         metadata: builder-metadata(builder, #()));
+                builder-insert(builder, ?variable) ],
+         init: ?expression, ... }
+end macro;
+
+define macro ins--iterate-aux
+  { ins--iterate-aux ?:name (?builder:expression,
+                             #key ??var:variable,
+                                  ??pre:*,
+                                  ??add:*,
+                                  ??phi:*,
+                                  ??init:expression)
+      ?:body
+    end }
+    => { let builder = ?builder;
+         let loop-head-bb :: <llvm-basic-block> = make(<llvm-basic-block>);
+         ??pre ; ...;
+         local method ?name (??var, ...)
+                 ??add ; ... ;
+                 ins--br(builder, loop-head-bb);
+               end;
+         ?name(??init, ...);
+         ins--block(builder, loop-head-bb);
+         ??phi ; ...;
+         ?body }
+
+  // Strip off grouping delimiters
+  pre:
+    { [ ?tokens:* ] } => { ?tokens }
+  add:
+    { [ ?tokens:* ] } => { ?tokens }
+  phi:
+    { [ ?tokens:* ] } => { ?tokens }
+end macro;
+
+define function do-add-iterate-phi-operand
+    (builder :: <llvm-builder>, operands :: <stretchy-object-vector>, operand)
+ => ()
+  let operand = llvm-builder-value(builder, operand);
+  add!(operands, operand);
+  add!(operands, builder.llvm-builder-basic-block);
+  llvm-constrain-type(llvm-value-type(operands[0]),
+                      llvm-value-type(operand));
+end function;

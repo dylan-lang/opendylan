@@ -14,6 +14,12 @@ define side-effecting stateless dynamic-extent &c-primitive-descriptor primitive
 
 /// Support for keyboard-break handling
 
+define runtime-variable dylan-keyboard-interrupt? :: <raw-machine-word>
+  = make-raw-literal(as(<machine-word>, 0));
+
+define runtime-variable dylan-keyboard-break-handler :: <function> = &unbound,
+  section: #"variables";
+
 define side-effect-free &c-primitive-descriptor primitive-keyboard-interrupt-signaled
   () => (interrupt? :: <raw-boolean>);
 
