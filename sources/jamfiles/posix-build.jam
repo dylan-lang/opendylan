@@ -59,13 +59,9 @@ LINKFLAGS ?= $(CCFLAGS) ;
 
 RUNTIMEDIR ?= $(COMPILER_BACK_END)-$(TARGET_PLATFORM) ;
 
-SUPOBJS_harp ?= dylan-support.o ;
-
 SUPOBJS_llvm ?= ;
 
 SUPPORT = $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/$(SUPOBJS_$(COMPILER_BACK_END)) ;
-
-RTOBJS_harp ?= $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/libdylan-harp-runtime.a ;
 
 RTOBJS_llvm ?= ;
 

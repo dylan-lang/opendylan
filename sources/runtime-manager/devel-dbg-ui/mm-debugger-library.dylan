@@ -28,7 +28,6 @@ define library mm-debugger
   use user-projects;
   use release-info;
   use dfmc-browser-support;
-  use dfmc-harp-browser-support;
   export devel-dbg-ui;
 end library;
 

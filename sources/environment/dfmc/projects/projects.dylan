@@ -319,7 +319,6 @@ define sealed method build-project
     let project = project-object.ensure-project-proxy;
     let assembler-output? = member?(#"assembler", output) | unsupplied();
     let dfm-output?       = member?(#"dfm", output);
-    let harp-output?      = member?(#"harp", output);
     note-project-compilation-started(project-object);
     *progress-internal?*      := (messages == #"internal");
     let aborted?
@@ -335,8 +334,7 @@ define sealed method build-project
                                  abort-on-all-warnings?: abort-on-all-warnings?,
                                  abort-on-serious-warnings?: abort-on-serious-warnings?,
                                  assembler-output?: assembler-output?,
-                                 dfm-output?:       dfm-output?,
-                                 harp-output?:      harp-output?)
+                                 dfm-output?:       dfm-output?)
               else
                 compile-library(project,
                                 force-parse?:   clean?,
@@ -345,8 +343,7 @@ define sealed method build-project
                                 abort-on-all-warnings?: abort-on-all-warnings?,
                                 abort-on-serious-warnings?: abort-on-serious-warnings?,
                                 assembler-output?: assembler-output?,
-                                dfm-output?:       dfm-output?,
-                                harp-output?:      harp-output?)
+                                dfm-output?:       dfm-output?)
               end
             end
           end

@@ -30,7 +30,6 @@ define library batch-debug
   use source-records;
   use user-projects;
   use dfmc-browser-support;
-  use dfmc-harp-browser-support;
   export devel-dbg-ui;
 end library;
 

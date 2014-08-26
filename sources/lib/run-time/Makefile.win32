@@ -38,10 +38,8 @@ CC	 = $(cc)
 LINKLIB	 = $(implib) /nologo /out:
 CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I. /I.. /I$(SDK4MEMORY_POOL_SYSTEM)\code $(OPEN_DYLAN_C_FLAGS) /DOPEN_DYLAN_PLATFORM_WINDOWS /DGC_USE_MPS /DOPEN_DYLAN_ARCH_X86
 HEAPOBJS = heap-display.obj heap-utils.obj heap-trail.obj heap-order1.obj heap-order2.obj heap-table.obj
-OBJS	 = collector.obj break.obj $(HEAPOBJS) harp-support\x86-windows\runtime.obj windows-threads-primitives.obj windows-spy-interfaces.obj
+OBJS	 = collector.obj break.obj $(HEAPOBJS) windows-threads-primitives.obj windows-spy-interfaces.obj
 LIBFILE	 = pentium-run-time.lib
-USEROBJ	 = harp-support\x86-windows\dylan-support.obj
-USERLIB	 = dylan-support.lib
 MINCRT   = minvcrt.lib
 
 RUNTIMELIBDEST	 = $(LIBDEST)\pentium-run-time.lib
@@ -78,9 +76,6 @@ $(DYLANPLINTH): $(PLINTHOBJS)
 $(LIBFILE): $(OBJS)
 	$(LINKLIB)$(LIBFILE) $(OBJS)
 
-$(USERLIB): $(USEROBJ)
-	$(LINKLIB)$(USERLIB) $(USEROBJ)
-
 ensure-dirs:
 	if not exist $(LIBDEST) mkdir $(LIBDEST)
 	if not exist $(BINDEST) mkdir $(BINDEST)
@@ -90,13 +85,6 @@ install-build:
 	echo Building pentium run time: install-build
 	xcopy /i/q/y ..\..\jamfiles\*.jam $(BUILDSCRIPTSDEST)
 	copy/y $(BUILDSCRIPTSDEST)\x86-win32-vc6-build.jam $(BUILDSCRIPTSDEST)\x86-win32-build.jam
-	copy/y $(USEROBJ) $(LIBDEST)
-
-install-userlib: $(USERLIB)
-  echo Building pentium run time: install-userlib
-	pushd $(LIBDEST) & (del /q /f $(USERLIB)) & popd
-	copy $(USERLIB) $(LIBDEST)
-
 
 install-runtime: $(LIBFILE)
   echo Building pentium run time: install-runtime
@@ -151,7 +139,7 @@ install-debug-mmdw: $(DEBUGMMDW)
 	copy $(DEBUGMMDW) $(MMDWDEST)
 
 
-install-common-libs: ensure-dirs install-plinth install-userlib install-mincrt
+install-common-libs: ensure-dirs install-plinth install-mincrt
 
 
 install-stripped: ensure-dirs install-mmdw install-runtime install-common-libs
@@ -167,7 +155,7 @@ install: ensure-dirs install-stripped install-build
 # (The files runtime.obj & dylan-support.obj are checked out from HOPE)
 clean:
 	pushd . & (del /f /q *collector.obj break.obj $(HEAPOBJS) windows-threads-primitives.obj windows-spy-interfaces.obj) & popd
-        pushd . & (del /f /q *pentium-run-time.lib $(USERLIB)) & popd
+        pushd . & (del /f /q *pentium-run-time.lib) & popd
         pushd . & (del /f /q $(MINCRT) mincrt.def) & popd
         pushd . & (del /f /q $(DYLANPLINTH) $(PLINTHOBJS)) & popd
 

@@ -981,7 +981,7 @@ define method compile-project-definitions
      #key compile-all?, compile-if-built?, build-settings = #(), strip? = #f,
      #all-keys)
  => (did-it? :: <boolean>)
-  // other keys: skip-link?, start-at, skip-emit?, harp-output? = unsupplied(),
+  // other keys: skip-link?, start-at, skip-emit?,
   // force-link?, form?, force-emit?, assembler-output?, save?, flush?,
   apply(dfmc-compile-library-from-definitions, context, keys)
 end method;

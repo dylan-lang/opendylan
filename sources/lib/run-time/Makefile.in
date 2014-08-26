@@ -12,19 +12,12 @@ INCDEST         = $(OPEN_DYLAN_USER_INSTALL)/include/opendylan
 OPEN_DYLAN_TARGET_PLATFORM = @OPEN_DYLAN_TARGET_PLATFORM@
 OBJDIR          = obj-$(OPEN_DYLAN_TARGET_PLATFORM)
 
-HARP_RUNTIME_LIBRARY  = $(OBJDIR)/libdylan-harp-runtime.a
 LLVM_RUNTIME_LIBRARY  = $(OBJDIR)/libdylan-llvm-runtime.a
 C_RUNTIME_LIBRARY     = $(OBJDIR)/libdylan-c-runtime.a
 
-.PHONY: install install-c-runtime install-llvm-runtime \
-	install-harp-runtime clean
+.PHONY: install install-c-runtime install-llvm-runtime clean
 
 # For all platforms, we want to build an LLVM and a C runtime.
-# but for now, we'll modify this below to only build HARP on
-# some platforms where we need HARP because we don't actually
-# support a working C or LLVM runtime yet and when we use
-# this directory on x86-linux and x86-freebsd, we only want to
-# build HARP for now.
 PLATFORM_RUNTIME_LIBRARIES=$(LLVM_RUNTIME_LIBRARY) $(C_RUNTIME_LIBRARY)
 PLATFORM_INSTALL_RUNTIMES=install-llvm-runtime install-c-runtime
 
@@ -32,9 +25,6 @@ ifeq ($(OPEN_DYLAN_TARGET_PLATFORM),x86-linux)
   PLATFORM_CFLAGS=-m32 -D_REENTRANT=1 -D_GNU_SOURCE \
     -DOPEN_DYLAN_PLATFORM_LINUX -DOPEN_DYLAN_PLATFORM_UNIX \
     -DOPEN_DYLAN_ARCH_X86
-  # Later, this = will become +=
-  PLATFORM_RUNTIME_LIBRARIES = $(HARP_RUNTIME_LIBRARY)
-  PLATFORM_INSTALL_RUNTIMES = install-harp-runtime
 endif
 ifeq ($(OPEN_DYLAN_TARGET_PLATFORM),x86_64-linux)
   PLATFORM_CFLAGS=-m64 -fPIC -D_REENTRANT=1 -D_GNU_SOURCE \
@@ -49,9 +39,6 @@ endif
 ifeq ($(OPEN_DYLAN_TARGET_PLATFORM),x86-freebsd)
   PLATFORM_CFLAGS=-m32 -D_REENTRANT=1 -DOPEN_DYLAN_PLATFORM_FREEBSD -DOPEN_DYLAN_PLATFORM_UNIX \
     -DOPEN_DYLAN_ARCH_X86
-  # Later, this = will become +=
-  PLATFORM_RUNTIME_LIBRARIES = $(HARP_RUNTIME_LIBRARY)
-  PLATFORM_INSTALL_RUNTIMES = install-harp-runtime
 endif
 ifeq ($(OPEN_DYLAN_TARGET_PLATFORM),x86_64-freebsd)
   PLATFORM_CFLAGS=-m64 -fPIC -D_REENTRANT=1 -DOPEN_DYLAN_PLATFORM_FREEBSD -DOPEN_DYLAN_PLATFORM_UNIX \
@@ -84,12 +71,6 @@ OBJS		= $(OBJDIR)/break.o \
 		  $(OBJDIR)/unix-spy-interfaces.o \
 		  $(OBJDIR)/unix-support.o
 
-HARP_SUPPORT_DIR = $(srcdir)/harp-support/$(OPEN_DYLAN_TARGET_PLATFORM)
-HARP_OBJS        = $(HARP_SUPPORT_DIR)/runtime.o \
-                   $(HARP_SUPPORT_DIR)/dylan-support.o
-
-HARP_RUNTIME_OBJS = $(OBJDIR)/unix-threads-primitives.o
-
 LLVM_RUNTIME_OBJS =
 
 C_RUNTIME_OBJS    = $(OBJDIR)/c-run-time.o \
@@ -109,14 +90,10 @@ ifeq ($(GC_CHOICE),mps)
 	  $(OBJDIR)/heap-table.o
 endif
 
-HARP_RUNTIME_LIBDEST  = $(LIBDEST)/runtime/harp-$(OPEN_DYLAN_TARGET_PLATFORM)
 LLVM_RUNTIME_LIBDEST  = $(LIBDEST)/runtime/llvm-$(OPEN_DYLAN_TARGET_PLATFORM)
 C_RUNTIME_LIBDEST     = $(LIBDEST)/runtime/c-$(OPEN_DYLAN_TARGET_PLATFORM)
 
 all: $(OBJS) $(PLATFORM_RUNTIME_LIBRARIES)
-
-$(HARP_RUNTIME_LIBDEST):
-	mkdir -p $(HARP_RUNTIME_LIBDEST)
 
 $(LLVM_RUNTIME_LIBDEST):
 	mkdir -p $(LLVM_RUNTIME_LIBDEST)
@@ -127,15 +104,6 @@ $(C_RUNTIME_LIBDEST):
 $(OBJDIR)/%.o: $(srcdir)/%.c
 	mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -MMD -c -o $@ $<
-
-$(HARP_RUNTIME_LIBRARY): $(OBJS) $(HARP_RUNTIME_OBJS) $(HARP_OBJS)
-	$(AR) $(HARP_RUNTIME_LIBRARY) $(OBJS) $(HARP_RUNTIME_OBJS) $(HARP_SUPPORT_DIR)/runtime.o
-
-install-harp-runtime: $(HARP_RUNTIME_LIBRARY) $(HARP_RUNTIME_LIBDEST) $(HARP_OBJS)
-	cp -fp $(HARP_RUNTIME_LIBRARY) $(HARP_RUNTIME_LIBDEST)
-	cp -fp $(HARP_OBJS) $(HARP_RUNTIME_LIBDEST)
-	cp -fp $(HARP_SUPPORT_DIR)/dylan-elf-dll.script $(LIBDEST)
-	cp -fp $(HARP_SUPPORT_DIR)/dylan-elf-exe.script $(LIBDEST)
 
 $(LLVM_RUNTIME_LIBRARY): $(OBJS) $(LLVM_RUNTIME_OBJS)
 	$(AR) $(LLVM_RUNTIME_LIBRARY) $(OBJS) $(LLVM_RUNTIME_OBJS)
@@ -167,6 +135,5 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) && ./config.status $(subdir)/Makefile
 
 -include $(OBJS:%.o=%.d)
--include $(HARP_RUNTIME_OBJS:%.o=%.d)
 -include $(LLVM_RUNTIME_OBJS:%.o=%.d)
 -include $(C_RUNTIME_OBJS:%.o=%.d)

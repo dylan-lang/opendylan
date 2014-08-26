@@ -55,8 +55,6 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: unify?:;
   constant slot %save? :: <boolean> = #t,
     init-keyword: save?:;
-  constant slot %harp?          :: <boolean> = #f,
-    init-keyword: harp?:;
   constant slot %assemble?                   = #f,
     init-keyword: assemble?:;
   constant slot %dfm?           :: <boolean> = #f,
@@ -103,7 +101,6 @@ define method execute-main-command
                        let output = make(<stretchy-object-vector>);
                        if (command.%assemble?) add!(output, #"assembler") end;
                        if (command.%dfm?) add!(output, #"dfm") end;
-                       if (command.%harp?) add!(output, #"harp") end;
                        output
                      end)
   end;

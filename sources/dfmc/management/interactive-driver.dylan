@@ -66,7 +66,7 @@ define function execute-source
   (ild :: <interactive-library-description>,
    runtime-context,
    sr* :: <sequence>,
-   #rest flags, #key skip-link?, harp-output?, interpret?, trace?, #all-keys)
+   #rest flags, #key skip-link?, interpret?, trace?, #all-keys)
  => transaction-id;
   with-program-conditions
     with-interactive-layer (layer = ild in runtime-context)
@@ -128,7 +128,7 @@ define method execute-definition-removal
   (ild :: <interactive-library-description>,
    runtime-context,
    definition* :: <sequence>,
-   #rest flags, #key skip-link?, harp-output?, #all-keys)
+   #rest flags, #key skip-link?, #all-keys)
  => transaction-id;
   with-program-conditions
     with-interactive-layer (layer = ild in runtime-context)
