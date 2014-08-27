@@ -90,18 +90,12 @@ define function compute-dispatch-engine (ds :: <dispatch-state>)
     select (parent by instance?)
       <generic-function> =>
         handle-standard-dispatch-miss(ds, cache, parent);
-      <partial-dispatch-cache-header-engine-node> =>
-        handle-partial-dispatch-cache-head(ds, cache, parent);
       <simple-typechecked-cache-header-engine-node> =>
         handle-simple-typechecked-cache-head(ds, cache, parent);
       <common-root-cache-header-engine-node> =>
         handle-simple-call-site-cache-head(ds, cache, parent);
       <simple-call-site-cache-header-engine-node> =>
-        if (*partial-dispatch?*)
-          cache-header-punt(ds, cache, parent);
-        else
-          handle-simple-call-site-cache-head(ds, cache, parent);
-        end if;
+        handle-simple-call-site-cache-head(ds, cache, parent);
       <profiling-call-site-cache-header-engine-node> =>
         handle-profiling-call-site-cache-head(ds, cache, parent);
       <cache-header-engine-node> =>
@@ -180,21 +174,12 @@ define function subst-engine-node-1 (new-e, old-e, ds :: <dispatch-state>) => ()
         end if
       end for;
     <gf-cache-info> =>
-      if (partial-dispatch-megamorphic-punt?()
-            & ~instance?(cache, <common-root-cache-header-engine-node>)
-            // & instance?(cache, <partial-dispatch-gf-cache-info>)
-            & instance?(old-e, <linear-by-class-discriminator>)
-            & instance?(new-e, <hashed-by-class-discriminator>))
-        cache-header-punt(ds, cache, %ds-parent(ds));
-        #f
-      else
-        // By default, walk/replace in all the cache header users of the g.f.
-        let cache :: <gf-cache-info> = cache;
-        let vec :: <simple-object-vector> = gf-cache-info-users(cache);
-        for (i :: <integer> from 0 below size(vec))
-          engine-node-subster(new-e, old-e, vector-element(vec, i));
-        end for;
-      end if;
+      // By default, walk/replace in all the cache header users of the g.f.
+      let cache :: <gf-cache-info> = cache;
+      let vec :: <simple-object-vector> = gf-cache-info-users(cache);
+      for (i :: <integer> from 0 below size(vec))
+        engine-node-subster(new-e, old-e, vector-element(vec, i));
+      end for;
     otherwise => #f;
   end select;
 end function;
