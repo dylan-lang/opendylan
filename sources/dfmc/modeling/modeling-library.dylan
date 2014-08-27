@@ -365,7 +365,6 @@ define module-with-models dfmc-modeling
       ^least-primary-superclass,
       ^iclass-number-to-key,
     <&value-class>,
-      &slot value-class-comparitor,
     <&function-class>,
     <&virtual-class>,
     <&slot-initial-value-descriptor>,

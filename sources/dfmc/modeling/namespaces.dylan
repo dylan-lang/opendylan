@@ -2390,7 +2390,7 @@ define &module internal
 
   export
     <function-class>,
-      <value-class>, value-class-comparitor, value-class-comparitor-setter,
+      <value-class>,
       default-class-constructor,
       <getter-method>, <setter-method>,
       <copy-down-method>,

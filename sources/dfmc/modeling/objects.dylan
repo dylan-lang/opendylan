@@ -734,7 +734,6 @@ define compiler-open generic ^debug-name (function);
 define compiler-open generic ^debug-name-setter (value, function);
 
 define primary &class <value-class> (<class>)
-  &slot value-class-comparitor, init-value: #f;
 end &class;
 
 define &class <function-class> (<class>) end;
