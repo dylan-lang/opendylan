@@ -117,7 +117,7 @@ Other sites:
 ============
 
 - `Twitter <https://twitter.com/DylanLanguage>`_
-- `Google Plus <https://plus.google.com/109036375650377247852>`_
+- `Google+ Community <https://plus.google.com/communities/115853148502055906760>`_
 - `Stack Overflow <http://stackoverflow.com/questions/tagged/dylan>`_
 
 .. raw:: html
