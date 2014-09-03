@@ -86,6 +86,10 @@ Common Operations
 |                     |                              | corresponding collection element satisfies a         |
 |                     |                              | predicate.                                           |
 |                     +------------------------------+------------------------------------------------------+
+|                     | :drm:`key-sequence`          | Returns a sequence containing the keys of its        |
+|                     |                              | collection argument. This is commonly used with      |
+|                     |                              | :drm:`<table>` instances.                            |
+|                     +------------------------------+------------------------------------------------------+
 |                     | :drm:`map`                   | Iterates over one or more collections and collects   |
 |                     |                              | the results in a freshly allocated collection.       |
 |                     |                              | See also :drm:`map-as` and :drm:`map-into`.          |

@@ -75,6 +75,27 @@ Iterating over a range
       // iteration of the loop.
     end;
 
+Iterating over a table
+----------------------
+
+The easiest way to iterate over a table is to use an extension to
+the standard :drm:`for` loop that Open Dylan supports:
+
+.. code-block:: dylan
+
+    for (value keyed-by key in table)
+      // do work
+    end;
+
+If you want to directly access the keys of the table, you can use
+:drm:`key-sequence`:
+
+.. code-block:: dylan
+
+    for (key in table.key-sequence)
+      // do work
+    end;
+
 Read more in the DRM: :drm:`for`.
 
 Breaking out of a loop
