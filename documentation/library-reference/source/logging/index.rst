@@ -24,7 +24,7 @@ Log to stdout:
 .. code-block:: dylan
 
   define constant $log
-    = make(<logger>,
+    = make(<log>,
            name: "my-app",
            formatter: "%{millis} %{level} [%{thread}] - %{message}");
   add-target($log, $stdout-log-target);
@@ -34,33 +34,33 @@ The above results in log lines like this::
 
   12345 INFO [Main Thread] - My-app starting with args blah
 
-Make another logger for debugging server requests:
+Make another log for debugging server requests:
 
 .. code-block:: dylan
 
   define constant $request-log
-    = make(<logger>, name: "my-app.debug.request");
+    = make(<log>, name: "my-app.debug.request");
 
 There are several things to notice about the above setup:
 
-* Loggers have no log targets by default.  The simplest way to add a
+* Logs have no log targets by default.  The simplest way to add a
   target is to add a pre-existing target such as ``$stdout-log-target`` or 
   ``$stderr-log-target`` using :gf:`add-target`.
 
-* Different loggers are associated by name.  In this example the logger
+* Different logs are associated by name.  In this example the log
   named ``"my-app"`` is an ancestor of the one named ``"my-app.debug.request"``
   because the first dotted name component matches.
 
-* No targets were added to the ``my-app.debug.request`` logger.  Since
+* No targets were added to the ``my-app.debug.request`` log.  Since
   all log messages sent to a child are also sent to its ancestors (but
-  see :gf:`logger-additive?-setter`), anything logged to the
-  ``my-app.debug.request`` logger will be passed along to the ``my-app``
-  logger.
+  see :gf:`log-additive?-setter`), anything logged to the
+  ``my-app.debug.request`` log will be passed along to the ``my-app``
+  log.
 
-  So what's the benefit of having both loggers?  You can enable/disable
+  So what's the benefit of having both logs?  You can enable/disable
   them separately at runtime.  Also, if for example you wanted to log
   debug messages to a separate file you could add a target to the
-  ``my-app.debug`` logger.
+  ``my-app.debug`` log.
 
 Log to a file:
 
@@ -73,10 +73,10 @@ The log file will be rolled immediately if it exists and is not zero length.
 If you don't want it to be rolled on startup, pass ``roll: #f`` to ``make``
 in the above call.
 
-Loggers may be disabled with ``logger-enabled?(logger) := #f``.  When
-disabled, no messages will be logged to the logger's local targets,
-but the value of :gf:`logger-additive?` will still be respected.  In other
-words, logging to a disabled logger will still log to ancestor loggers
+Logs may be disabled with ``log-enabled?(log) := #f``.  When
+disabled, no messages will be logged to the log's local targets,
+but the value of :gf:`log-additive?` will still be respected.  In other
+words, logging to a disabled log will still log to ancestor logs
 if they are themselves enabled.
 
 
@@ -84,7 +84,7 @@ Errors
 ------
 
 If there is an error when parsing a :class:`<log-formatter>` format
-control string or in finding a :class:`<logger>` object by name, a
+control string or in finding a :class:`<log>` object by name, a
 :class:`<logging-error>` will be signaled.
 
 .. class:: <logging-error>
@@ -163,14 +163,14 @@ Logging Functions
 
 .. generic-function:: log-message
 
-   :signature: log-message (level logger object #rest args) => ()
+   :signature: log-message (level log object #rest args) => ()
 
    This is the most basic logging function.  All of the logging
    functions below simply call this with a specific
    :class:`<log-level>` object.
 
    :parameter level: An instance of :class:`<log-level>`.
-   :parameter logger: An instance of :class:`<logger>`.
+   :parameter log: An instance of :class:`<log>`.
    :parameter object: An instance of :drm:`<object>`.  Normally this is
      a format control string, but it is also possible (for example) to log 
      objects to a database back-end.
@@ -203,7 +203,7 @@ Logging Functions
 
 .. function:: log-debug-if
 
-   :signature: log-debug-if (test logger object #rest args) => ()
+   :signature: log-debug-if (test log object #rest args) => ()
 
    Equivalent to::
 
@@ -221,40 +221,40 @@ Logging Functions
 
 .. generic-function:: log-level-applicable?
 
-   :signature: log-level-applicable? (given-level logger-level) => (applicable?)
+   :signature: log-level-applicable? (given-level log-level) => (applicable?)
 
    :parameter given-level: An instance of :class:`<log-level>`.
-   :parameter logger-level: An instance of :class:`<log-level>`.
+   :parameter log-level: An instance of :class:`<log-level>`.
    :value applicable?: An instance of :drm:`<boolean>`.
 
 
-Loggers
+Logs
 -------
 
-.. class:: <abstract-logger>
+.. class:: <abstract-log>
    :abstract:
 
    :superclasses: :drm:`<object>`
 
    :keyword name:
-      *(required)*  The dotted name of this logger.  A :drm:`<string>`.
+      *(required)*  The dotted name of this log.  A :drm:`<string>`.
    :keyword additive?:
       A :drm:`<boolean>` specifying whether log messages sent to this
-      logger should be passed along to its parent logger.  The default
+      log should be passed along to its parent log.  The default
       is ``#t``.
    :keyword children:
-      A :drm:`<sequence>` of :class:`<logger>` objects.
+      A :drm:`<sequence>` of :class:`<log>` objects.
    :keyword enabled?:
-      :drm:`<boolean>` specifying whether this logger is enabled.
+      :drm:`<boolean>` specifying whether this log is enabled.
       Note that the value of *additive?* will be respected even if the
-      logger is disabled.  The default is ``#t``.
+      log is disabled.  The default is ``#t``.
    :keyword parent:
-      The parent of this logger.
+      The parent of this log.
 
-.. class:: <logger>
+.. class:: <log>
    :open:
 
-   :superclasses: :class:`<abstract-logger>`
+   :superclasses: :class:`<abstract-log>`
 
    :keyword formatter:
       An instance of :class:`<log-formatter>`.
@@ -262,117 +262,117 @@ Loggers
       An instance of :class:`<log-level>`.
    :keyword targets:
       A collection of :class:`<log-target>` objects, each of which
-      receives log messages sent to this logger.
+      receives log messages sent to this log.
 
-.. generic-function:: get-logger
+.. generic-function:: get-log
 
-   :signature: get-logger (name) => (abstract-logger or #f)
+   :signature: get-log (name) => (abstract-log or #f)
 
    :parameter name:
       An instance of :drm:`<string>`.  This is normally a
       dotted path name like "http.server.queries".
-   :value logger:
-      An instance of :class:`<abstract-logger>` or ``#f``.
+   :value log:
+      An instance of :class:`<abstract-log>` or ``#f``.
 
-.. generic-function:: get-root-logger
+.. generic-function:: get-root-log
 
-   :signature: get-root-logger () => (logger)
+   :signature: get-root-log () => (log)
 
-   :value logger:
-      An instance of :class:`<logger>`.
+   :value log:
+      An instance of :class:`<log>`.
 
 .. generic-function:: log-level
 
-   :signature: log-level (logger) => (level)
+   :signature: log-level (log) => (level)
 
-   :parameter logger:
-      An instance of :class:`<logger>`.
+   :parameter log:
+      An instance of :class:`<log>`.
    :value level:
       An instance of :class:`<log-level>`.
 
 .. generic-function:: log-level-setter
 
-   :signature: log-level-setter (new-level logger) => (new-level)
+   :signature: log-level-setter (new-level log) => (new-level)
 
    :parameter new-value: An instance of :class:`<log-level>`.
-   :parameter logger: An instance of :class:`<logger>`.
+   :parameter log: An instance of :class:`<log>`.
    :value new-value: An instance of :class:`<log-level>`.
 
 .. generic-function:: log-targets
 
-   :signature: log-targets (logger) => (targets)
+   :signature: log-targets (log) => (targets)
 
-   :parameter logger: An instance of :class:`<logger>`.
+   :parameter log: An instance of :class:`<log>`.
    :value targets: An instance of :drm:`<stretchy-vector>`.
 
-.. generic-function:: logger-additive?
+.. generic-function:: log-additive?
 
-   :signature: logger-additive? (logger) => (additive?)
+   :signature: log-additive? (log) => (additive?)
 
-   :parameter logger: An instance of :class:`<logger>`.
+   :parameter log: An instance of :class:`<log>`.
    :value additive?: An instance of :drm:`<boolean>`.
 
-.. generic-function:: logger-additive?-setter
+.. generic-function:: log-additive?-setter
 
-   :signature: logger-additive?-setter (new-value logger) => (new-value)
+   :signature: log-additive?-setter (new-value log) => (new-value)
 
    :parameter new-value: An instance of :drm:`<boolean>`.
-   :parameter logger: An instance of :class:`<logger>`.
+   :parameter log: An instance of :class:`<log>`.
    :value new-value: An instance of :drm:`<boolean>`.
 
-.. generic-function:: logger-enabled?
+.. generic-function:: log-enabled?
 
-   :signature: logger-enabled? (logger) => (enabled?)
+   :signature: log-enabled? (log) => (enabled?)
 
-   :parameter logger: An instance of :class:`<logger>`.
+   :parameter log: An instance of :class:`<log>`.
    :value enabled?: An instance of :drm:`<boolean>`.
 
-.. generic-function:: logger-enabled?-setter
+.. generic-function:: log-enabled?-setter
 
-   :signature: logger-enabled?-setter (new-value logger) => (new-value)
+   :signature: log-enabled?-setter (new-value log) => (new-value)
 
    :parameter new-value: An instance of :drm:`<boolean>`.
-   :parameter logger: An instance of :class:`<logger>`.
+   :parameter log: An instance of :class:`<log>`.
    :value new-value: An instance of :drm:`<boolean>`.
 
-.. generic-function:: logger-name
+.. generic-function:: log-name
 
-   :signature: logger-name (logger) => (name)
+   :signature: log-name (log) => (name)
 
-   :parameter logger: An instance of :class:`<logger>`.
+   :parameter log: An instance of :class:`<log>`.
    :value name: An instance of :drm:`<string>`.
 
 .. generic-function:: add-target
 
-   :signature: add-target (logger target) => ()
+   :signature: add-target (log target) => ()
 
-   :parameter logger: An instance of :class:`<logger>`.
+   :parameter log: An instance of :class:`<log>`.
    :parameter target: An instance of :class:`<log-target>`.
 
 .. generic-function:: remove-all-targets
 
-   :signature: remove-all-targets (logger) => ()
-   :parameter logger: An instance of :class:`<logger>`.
+   :signature: remove-all-targets (log) => ()
+   :parameter log: An instance of :class:`<log>`.
 
 .. generic-function:: remove-target
 
-   :signature: remove-target (logger target) => ()
-   :parameter logger: An instance of :class:`<logger>`.
+   :signature: remove-target (log target) => ()
+   :parameter log: An instance of :class:`<log>`.
    :parameter target: An instance of :class:`<log-target>`.
 
 .. generic-function:: log-formatter
 
-   :signature: log-formatter (logger) => (formatter)
+   :signature: log-formatter (log) => (formatter)
 
-   :parameter logger: An instance of :class:`<logger>`.
+   :parameter log: An instance of :class:`<log>`.
    :value formatter: An instance of :class:`<log-formatter>`.
 
 .. generic-function:: log-formatter-setter
 
-   :signature: log-formatter-setter (formatter logger) => (formatter)
+   :signature: log-formatter-setter (formatter log) => (formatter)
 
    :parameter formatter: An instance of :class:`<log-formatter>`.
-   :parameter logger: An instance of :class:`<logger>`.
+   :parameter log: An instance of :class:`<log>`.
    :value formatter: An instance of :class:`<log-formatter>`.
 
 
@@ -498,7 +498,7 @@ Log Targets
 Log Formatting
 --------------
 
-Each ``<logger>`` has a ``<log-formatter>`` that determines how to format
+Each ``<log>`` has a ``<log-formatter>`` that determines how to format
 each log message.  Make one like this::
 
   make(<log-formatter>, pattern: "...");
@@ -532,7 +532,7 @@ will be right justified and padded with spaces on the left if needed.
 
 .. constant:: $default-log-formatter
 
-   Formatter used if none is specified when a :class:`<logger>` is
+   Formatter used if none is specified when a :class:`<log>` is
    created.  Has this pattern::
 
      "%{date:%Y-%m-%dT%H:%M:%S.%F%z} %-5L [%t] %m"
