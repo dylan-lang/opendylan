@@ -91,7 +91,7 @@ Character Class Predicates
 .. generic-function:: alphanumeric?
    :sealed:
 
-   Returns ``#t`` if the argument is alphabnumeric, otherwise ``#f``.
+   Returns ``#t`` if the argument is alphanumeric, otherwise ``#f``.
 
    :signature: alphanumeric? (string-or-character, #key) => (alphanumeric?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
