@@ -3,7 +3,7 @@ Module: dfmc-reader
 // Notes: No right arrow for a single component production means just
 // return that.
 
-define parser dylan-parser
+define parser infix-dylan-parser
 
 start:
     top-level-form

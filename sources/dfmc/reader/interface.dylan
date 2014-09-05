@@ -31,14 +31,14 @@ define method read-top-level-fragment
     dynamic-bind (*fragment-context* = compilation-record-module(record))
       block ()
         let fragment
-          = run-parser(#f, dylan-parser, lex,
+          = run-parser(#f, infix-dylan-parser, lex,
                        // make(<parser-lexer>, function: lex),
                        on-error: parser-error-handler);
         values(fragment, lexer);
         // This only parses, discarding most forms:
         /*
-        for (f = run-parser(#f, dylan-parser, lex, on-error: parser-error-handler)
-             then run-parser(#f, dylan-parser, lex, on-error: parser-error-handler),
+        for (f = run-parser(#f, infix-dylan-parser, lex, on-error: parser-error-handler)
+             then run-parser(#f, infix-dylan-parser, lex, on-error: parser-error-handler),
              until: (~f
                        | instance?(f, <macro-body-definition-fragment>)
                        | instance?(f, <function-call-fragment>)))
@@ -68,7 +68,7 @@ define function re-read-fragments
     let frag = lexer();
     values(fragment-kind(frag), frag, frag);
   end method;
-  run-parser(#f, dylan-parser, inner-lexer, on-error: on-error);
+  run-parser(#f, infix-dylan-parser, inner-lexer, on-error: on-error);
 end function;
 
 define open abstract serious-program-warning <reader-error>
