@@ -16,31 +16,53 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // #"init-code"        - separate initialization part of the code section
 
 define method llvm-section-name
-    (back-end :: <llvm-back-end>, section :: <symbol>)
+    (back-end :: <llvm-back-end>, section :: <symbol>,
+     #key thread-local? = #f)
  => (name :: false-or(<string>));
   select (section)
     #"code"                    => #f;         // Code (usually ".text")
     #"init-code"               => ".text$i";  // Initialization code
     #"data", #"ambiguous-data" => ".dydat$m"; // Ambiguously traced data
     #"objects"                 => ".dyobj$m"; // Dylan objects (a static heap)
-    #"variables"               => ".dyvar$m"; // Dylan roots (variables)
+    #"variables"               =>             // Dylan roots (variables)
+      if (thread-local?)
+        #f
+      else
+        ".dyvar$m"
+      end;
     #"untraced-objects"        => ".dyutr$m"; // Untraced Dylan objects
-    #"untraced-data"           => ".dyutr$r"; // Untraced random data
+    #"untraced-data"           =>             // Untraced random data
+      if (thread-local?)
+        #f
+      else
+        ".dyutr$r"
+      end;
   end select
 end method;
 
 // Darwin is different (cf. Mac OS X ABI Mach-O File Format Reference)
 // LLVM section names for Mach-O are "segment, section" (comma-separated)
 define method llvm-section-name
-    (back-end :: <llvm-darwin-back-end>, section :: <symbol>)
+    (back-end :: <llvm-darwin-back-end>, section :: <symbol>,
+     #key thread-local? = #f)
  => (name :: false-or(<string>));
   select (section)
     #"code"                    => #f; // Code (usually "__TEXT,__text")
     #"init-code"               => "__TEXT,__init";  // Initialization code
     #"data", #"ambiguous-data" => "__DATA,__dydat"; // Ambiguously traced data
     #"objects"                 => "__DATA,__dyobj"; // Dylan objects
-    #"variables"               => "__DATA,__dyvar"; // Dylan roots (variables)
+    #"variables"               =>                   // Dylan roots (variables)
+      if (thread-local?)
+        #f
+      else
+        "__DATA,__dyvar";
+      end;
     #"untraced-objects",                            // Untraced Dylan objects
-    #"untraced-data"           => "__DATA,__dyutr"; // Untraced random data
+    #"untraced-data"           =>                   // Untraced random data
+      if (thread-local?)
+        #f
+      else
+        "__DATA,__dyutr"
+      end;
   end select
 end method;

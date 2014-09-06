@@ -578,15 +578,19 @@ define method llvm-runtime-variable
     let type-name = descriptor.runtime-variable-type-name;
     let type
       = select (type-name)
-	    #"<teb>" =>
+          #"<teb>" =>
 	    llvm-reference-type(back-end, back-end.llvm-teb-struct-type);
 	  otherwise =>
 	    llvm-reference-type(back-end, dylan-value(type-name));
 	end select;
     let linkage = #"external";
     let attributes = descriptor.runtime-variable-attributes;
+    let thread-local?
+      = member?(#"thread-local", attributes)
+      & llvm-thread-local-support?(back-end);
     let section
-      = llvm-section-name(back-end, descriptor.runtime-variable-section);
+      = llvm-section-name(back-end, descriptor.runtime-variable-section,
+                          thread-local?: thread-local?);
     let global
       = make(<llvm-global-variable>,
 	     name: mangled-name,
@@ -602,11 +606,7 @@ define method llvm-runtime-variable
 	       end,
 	     constant?: #f,
 	     linkage: linkage,
-	     thread-local:
-	       if (member?(#"thread-local", attributes)
-		     & llvm-thread-local-support?(back-end))
-		     #t
-		  end if,
+	     thread-local: thread-local?,
 	     section: section);
     llvm-builder-define-global(back-end, mangled-name, global)
   end

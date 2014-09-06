@@ -36,7 +36,8 @@ define method emit-definition
            linkage: linkage,
 	   thread-local: thread-local,
            alignment: back-end-word-size(back-end),
-           section: llvm-section-name(back-end, #"variables"));
+           section: llvm-section-name(back-end, #"variables",
+                                      thread-local?: thread-local));
   llvm-builder-define-global(back-end, name, global);
 end method;
 
