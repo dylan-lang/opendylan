@@ -63,6 +63,7 @@ define module dfmc-llvm-back-end
     primitive-generator,
     $llvm-primitive-descriptors,
     llvm-primitive-function,
+    llvm-primitive-signature,
 
     <llvm-runtime-variable-descriptor>,
     $llvm-runtime-variable-descriptors,

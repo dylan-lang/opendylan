@@ -522,6 +522,49 @@ define function primitive-rest-values-test
   ~empty?(value-types-spec) & value-types-spec.last == #"rest"
 end function;
 
+// Signatures
+define method llvm-primitive-signature
+    (back-end :: <llvm-back-end>, desc :: <llvm-primitive-descriptor>)
+ => (signature-model :: <&signature>);
+  apply(make-primitive-signature, back-end, desc,
+        desc.primitive-function-declarator)
+end method;
+
+define method make-primitive-signature
+    (back-end :: <llvm-back-end>, descriptor :: <llvm-primitive-descriptor>,
+     #key name :: <string>,
+          parameter-names :: <simple-object-vector> = #[],
+          parameter-types-spec :: <simple-object-vector>,
+          value-types-spec :: <simple-object-vector>,
+     #all-keys)
+ => (signature-model :: <&signature>);
+  let (required-parameter-type-specs, required-parameter-names, rest-parameter-name)
+    = if (~empty?(parameter-types-spec) & parameter-types-spec.last == #"rest")
+        let required-count = parameter-types-spec.size - 1;
+        values(copy-sequence(parameter-types-spec, end: required-count),
+               copy-sequence(parameter-names, end: required-count),
+               parameter-names.last)
+      else
+        values(parameter-types-spec, parameter-names, #f)
+      end if;
+  let (required-value-type-specs, values-rest?)
+    = if (~empty?(value-types-spec) & value-types-spec.last == #"rest")
+        let required-count = value-types-spec.size - 1;
+        values(copy-sequence(value-types-spec, end: required-count), #t)
+      else
+        values(value-types-spec, #f)
+      end if;
+  ^make(<&signature>,
+        rest-value?:     values-rest?,
+        rest?:           true?(rest-parameter-name),
+        number-values:   size(required-value-type-specs),
+        number-required: size(required-parameter-type-specs),
+        required:        as-sig-types(map(dylan-value,
+                                          required-parameter-type-specs)),
+        values:          as-sig-types(map(dylan-value,
+                                          required-value-type-specs)))
+end method;
+
 
 /// Runtime support variables
 
