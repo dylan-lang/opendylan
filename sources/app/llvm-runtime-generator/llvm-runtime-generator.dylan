@@ -51,6 +51,14 @@ define constant $runtime-referenced-functions
 define constant $runtime-referenced-variables
   = #[#"$direct-object-mm-wrappers"];
 
+define constant $runtime-referenced-classes
+  = #[#"<thread>",
+      #"<semaphore>",
+      #"<recursive-lock>",
+      #"<simple-lock>",
+      #"<read-write-lock>",
+      #"<notification>"];
+
 define function generate-runtime-heap
     (be :: <llvm-back-end>, m :: <llvm-module>) => ();
   // Emit external declarations for class wrappers
@@ -234,6 +242,7 @@ define function generate-runtime-header
     format(stream, "#ifndef LLVM_PLATFORM_RUNTIME_H_\n");
     format(stream, "#define LLVM_PLATFORM_RUNTIME_H_\n\n");
 
+    // Generate struct declarations for raw types needed by the C code
     begin
       let types
         = vector(llvm-teb-struct-type(be),
@@ -242,6 +251,11 @@ define function generate-runtime-header
         print-raw-struct-c-declaration(be, type, stream);
       end for;
     end;
+
+    // Generate struct declarations for classes needed by the C code
+    for (class-name in $runtime-referenced-classes)
+      print-class-c-struct-declaration(be, dylan-value(class-name), stream);
+    end for;
 
     // Generate declarations for C-callable primitives
     for (descriptor :: <llvm-primitive-descriptor>

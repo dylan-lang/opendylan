@@ -23,30 +23,29 @@ define method print-raw-struct-c-declaration
   format(stream, "};\n\n");
 end method;
 
-/*
 define method print-class-c-struct-declaration
     (be :: <llvm-back-end>, type :: <&class>, stream :: <stream>)
  => ();
-  ^ensure-slots-initialized(o);
-  let rslotd = o.^repeated-slot-descriptor; 
-  let islots = o.^instance-slot-descriptors;
-  format(stream, "typedef struct {\n");
-  format(stream, "  %s wrapper;\n", model-<mm-wrapper>().c-type-name);
+  let islots = type.^instance-slot-descriptors;
+  format(stream, "struct %s {\n", emit-name-internal(be, #f, type));
+
+  format(stream, "  ");
+  print-primitive-c-type(be, model-<mm-wrapper>(), stream);
+  format(stream, " wrapper;\n");
+
   for (slotd in islots, i from 0)
     format(stream, "  ");
-    print-primitive-c-type(
-    format(stream, "  %s %s",
-           slotd.^slot-type.raw-type-c-name,
-           raw-mangle(be, as(<string>, member.member-name)));
-    format(
-    emit-slot-definition(stream, "  ", ";\n", o, slotd, i);
+    print-primitive-c-type(be, slotd.^slot-type, stream);
+    if (slotd.^debug-name)
+      format(stream, " %s;\n",
+             raw-mangle(be, as(<string>, slotd.^debug-name)));
+    else
+      format(stream, "  anon_slot_%d;\n", i);
     end;
-    write(stream, "} ");
-    emit-struct-name(back-end, stream, o);
-    write(stream, ";\n");
   end;
+
+  write(stream, "};\n\n");
 end method;
-*/
 
 define method print-primitive-c-function-declaration
     (be :: <llvm-back-end>, name :: <symbol>, signature :: <&signature>,
