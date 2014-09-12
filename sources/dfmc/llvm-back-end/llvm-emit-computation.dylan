@@ -51,7 +51,24 @@ define sideways method emit-reference
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
      o :: <defined-constant-reference>)
  => (reference :: <object>)
-  emit-reference(back-end, m, referenced-binding(o))
+  let word-size = back-end-word-size(back-end);
+
+  // Locate this constant's definition
+  let name = emit-name(back-end, m, referenced-binding(o));
+  let defined-constant = llvm-builder-global(back-end, name);
+  llvm-constrain-type(defined-constant.llvm-value-type,
+                      llvm-pointer-to(back-end, $llvm-object-pointer-type));
+
+  // Declare as invariant to allow CSE
+  let memory
+    = make(<llvm-cast-constant>, operator: #"BITCAST",
+           type: $llvm-object-pointer-type,
+           operands: vector(defined-constant));
+  ins--call-intrinsic(back-end, "llvm.invariant.start",
+                      vector(i64(word-size), memory));
+
+  // Retrieve the initialized value
+  ins--load(back-end, defined-constant, alignment: word-size)
 end method;
 
 
