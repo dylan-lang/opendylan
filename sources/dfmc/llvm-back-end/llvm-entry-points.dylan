@@ -292,6 +292,51 @@ define method emit-name-internal
   end if;
 end method;
 
+define method llvm-engine-node-ep-info
+    (back-end :: <llvm-back-end>, ep :: <&engine-node-ep>)
+ => (descriptor :: <llvm-entry-point-descriptor>,
+     count :: false-or(<integer>),
+     pos :: false-or(<integer>));
+  values($llvm-entry-point-descriptors[ep.^entry-point-name], #f, #f)
+end method;
+
+define method llvm-engine-node-ep-info
+    (back-end :: <llvm-back-end>, ep :: <&function-linked-engine-node-ep>)
+ => (descriptor :: <llvm-entry-point-descriptor>,
+     count :: false-or(<integer>),
+     pos :: false-or(<integer>));
+  let mepargs-count
+    = if (^engine-node-ep-optionals?(ep))
+        ^engine-node-ep-number-required(ep) + 1
+      else
+        ^engine-node-ep-number-required(ep)
+      end;
+  values($llvm-entry-point-descriptors[ep.^entry-point-name], mepargs-count, #f)
+end method;
+
+define method llvm-engine-node-ep-info
+    (back-end :: <llvm-back-end>, ep :: <&discriminator-ep>)
+ => (descriptor :: <llvm-entry-point-descriptor>,
+     count :: false-or(<integer>),
+     pos :: false-or(<integer>));
+  let e = ^engine-node(ep);
+  let count = ^discriminator-nrequired(e);
+  let pos = ^discriminator-argnum(e) + 1;
+  values($llvm-entry-point-descriptors[ep.^entry-point-name], count, pos)
+end method;
+
+define method emit-reference
+    (back-end :: <llvm-back-end>, m :: <llvm-module>, ep :: <&engine-node-ep>)
+ => (reference :: <llvm-constant-value>)
+  let (desc :: <llvm-entry-point-descriptor>,
+       count :: false-or(<integer>),
+       pos :: false-or(<integer>)) = llvm-engine-node-ep-info(back-end, ep);
+  let func = llvm-entry-point-function(back-end, desc, count, pos: pos);
+  make(<llvm-cast-constant>, operator: #"BITCAST",
+       type: $llvm-object-pointer-type,
+       operands: vector(func))
+end method;
+
 
 /// Entry point utility operations
 
