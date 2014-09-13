@@ -11,6 +11,7 @@ LIBDEST         = $(OPEN_DYLAN_USER_INSTALL)/lib
 SCRIPTS         = \
                   $(srcdir)/mini-jambase.jam \
                   $(srcdir)/posix-build.jam \
+                  $(srcdir)/shared-darwin-build.jam \
                   $(srcdir)/x86-darwin-build.jam \
                   $(srcdir)/x86_64-darwin-build.jam \
                   $(srcdir)/x86-freebsd-build.jam \
