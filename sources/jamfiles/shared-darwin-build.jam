@@ -5,6 +5,10 @@ SUFDLL  ?= .dylib ;             # shared library suffix
 
 CCFLAGS  += -fno-strict-aliasing -D_POSIX_C_SOURCE
             -DOPEN_DYLAN_PLATFORM_UNIX -DOPEN_DYLAN_PLATFORM_DARWIN ;
+
+DSYMUTIL ?= /usr/bin/dsymutil ;
+STRIP    ?= /usr/bin/strip ;
+
 #
 # Library search path
 #
@@ -20,5 +24,13 @@ include $(SYSTEM_ROOT)/lib/posix-build.jam ;
 #
 
 actions together LinkDLL bind NEEDLIBS {
-  $(LINK) -dynamiclib -o $(<:Q) -install_name @rpath/$(<:BS=$(SUFDLL)) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS)
+  $(LINK) -dynamiclib -o $(<:Q) -install_name @rpath/$(<:BS=$(SUFDLL)) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS) ;
+  $(DSYMUTIL) $(<:Q) ;
+  $(STRIP) -S $(<:Q) ;
+}
+
+actions LinkEXE bind NEEDLIBS {
+  $(LINK) -o $(<:Q) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS) ;
+  $(DSYMUTIL) $(<:Q) ;
+  $(STRIP) -S $(<:Q) ;
 }
