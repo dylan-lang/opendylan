@@ -15,50 +15,6 @@ define function call-site-caches-enabled?-setter (well?)
   *call-site-caches-enabled?* := well?
 end function;
 
-define inline function call-site-caches-possible?
-    (ds :: <dispatch-state>) => (well? :: <boolean>)
-  *call-site-caches-enabled?*
-    // & (~*missed-dispatch-in-progress?*
-    //          | *missed-dispatch-in-progress?* == %ds-gf(ds))
-    // & (*missed-dispatch-depth* < 2)
-end function;
-
-define variable *partial-dispatch?* = #t;
-
-define open generic partial-dispatch?-setter (value, x);
-
-define method partial-dispatch? (x :: <integer>) => (well?)
-  *partial-dispatch?*
-end method;
-
-define method partial-dispatch?-setter (value, x :: <integer>)
-  *partial-dispatch?* := value;
-end method;
-
-define inline function partial-dispatch-possible? (ds :: <dispatch-state>) => (well? :: <boolean>)
-  call-site-caches-possible?(ds) & *partial-dispatch?*
-end function;
-
-define variable *sharing-partial-dispatch-cache-headers?* = #f;
-
-define inline function sharing-partial-dispatch-cache-headers? () => (well?)
-  *sharing-partial-dispatch-cache-headers?*
-end function;
-
-define inline function sharing-partial-dispatch-cache-headers?-setter (well?)
-  *sharing-partial-dispatch-cache-headers?* := well?;
-end function;
-
-define variable *partial-dispatch-megamorphic-punt?* = #f;
-
-define inline function partial-dispatch-megamorphic-punt? () => (well?)
-  *partial-dispatch-megamorphic-punt?*
-end function;
-
-define inline function partial-dispatch-megamorphic-punt?-setter (well?)
-  *partial-dispatch-megamorphic-punt?* := well?;
-end function;
-
 
 //define sealed generic profiling-call-site-cache-header-engine-node-count-1
 //    (x :: <profiling-cache-header-engine-node>) => (v :: <raw-machine-word>);
@@ -126,29 +82,6 @@ define function track-cache-header-engine-node (e :: <cache-header-engine-node>,
         end method;
   loop(0)
 end function;
-
-
-define function compute-headed-methods-under-domain
-    (ds :: <dispatch-state>, dom :: <partial-dispatch-cache-header-engine-node>)
- => ()
-  let headed-methods :: <pair> = pair(#f, #());
-  let ptr :: <pair> = headed-methods;
-  let gf :: <generic-function> = %ds-gf(ds);
-  let scu :: <subjunctive-class-universe> = $empty-subjunctive-class-universe;
-  for (m :: <method> in generic-function-methods(gf))
-    if (~domain-disjoint?(dom, m, scu, gf))
-      let nxt :: <pair> = pair(m, #());
-      tail(ptr) := nxt;
-      ptr := nxt;
-    end if;
-  end for;
-  %ds-headed-methods(ds) := headed-methods;
-  let nreq :: <integer> = signature-number-required(function-signature(gf));
-  let v :: <simple-object-vector> = %make-simple-vector(nreq, <object>);
-  for (i from 0 below nreq) v[i] := domain-type(dom, i) end;
-  %ds-argtypes(ds) := v;
-end function;
-
 
 
 define function compute-typecheckable-argument-mask
@@ -255,38 +188,6 @@ define function upgrade-to-simple-typechecked-gf-cache-info (old, ds :: <dispatc
 end function;
 
 
-// define function upgrade-partial-dispatch-gf-cache-info!
-//     (new :: <partial-dispatch-gf-cache-info>, ds :: <dispatch-state>,
-//      caches :: false-or(<list>),
-//      argmask :: false-or(<integer>),
-//      entries :: false-or(<simple-object-vector>),
-//      users :: false-or(<simple-object-vector>))
-//  => ();
-//   upgrade-simple-typechecked-gf-cache-info!(new, ds, argmask, entries, users);
-//   partial-dispatch-gf-cache-info-caches(new) := caches | #();
-// end function;
-
-
-// define function upgrade-to-partial-dispatch-gf-cache-info (old-cache-info, ds :: <dispatch-state>)
-//  => (cache-info :: <partial-dispatch-gf-cache-info>)
-//   if (instance?(old-cache-info, <partial-dispatch-gf-cache-info>))
-//     old-cache-info
-//   else
-//     let new :: <partial-dispatch-gf-cache-info>
-//       = system-allocate-simple-instance(<partial-dispatch-gf-cache-info>);
-//     select (old-cache-info by instance?)
-//       <simple-typechecked-gf-cache-info> =>
-//         let old :: <simple-typechecked-gf-cache-info> = old-cache-info;
-//         upgrade-partial-dispatch-gf-cache-info!(new, ds, #f,
-//                                                 simple-typechecked-gf-cache-info-argmask(old),
-//                                                 simple-typechecked-gf-cache-info-entries(old),
-//                                                 gf-cache-info-users(old));
-//       <integer>, singleton(#f) =>
-//         upgrade-partial-dispatch-gf-cache-info!(new, ds, #f, old-cache-info, #f, #f);
-//     end select;
-//     %gf-cache(%ds-gf(ds)) := new
-//   end if
-// end function;
 define function compute-argument-precheck-mask (ds :: <dispatch-state>, cache)
  => ();
   let m :: <integer>
@@ -339,73 +240,6 @@ define function handle-profiling-call-site-cache-head
   compute-headed-methods(ds);
   handle-simple-call-site-cache-head-methods-computed(ds, cache, old)
 end function;
-
-//// Partial Dispatch
-
-define function find-shareable-partial-dispatch-cache-header
-    (old :: <partial-dispatch-cache-header-engine-node>, cache :: <partial-dispatch-gf-cache-info>)
- => (res :: false-or(<partial-dispatch-cache-header-engine-node>))
-  if (sharing-partial-dispatch-cache-headers?())
-    block (return)
-      for (user in gf-cache-info-users(cache))
-        if (instance?(user, <partial-dispatch-cache-header-engine-node>))
-          let user :: <partial-dispatch-cache-header-engine-node> = user;
-          if (user == old)
-            return(old)
-          else
-            block (punt)
-              for (i :: <integer> from 0 below domain-number-required(user))
-                unless (same-specializer?(domain-type(user, i), domain-type(old, i)))
-                  punt(#f);
-                end unless;
-              end for;
-              return(user);
-            end block;
-          end if;
-        end if;
-      end for;
-    end block;
-  else
-    #f
-  end if
-end function;
-
-
-define function handle-partial-dispatch-cache-head
-    (ds :: <dispatch-state>, cache, old :: <partial-dispatch-cache-header-engine-node>)
- => (root-engine);
-  let enabled? = partial-dispatch-possible?(ds);
-  if (enabled?)
-    compute-headed-methods-under-domain(ds, old);
-  else
-    compute-headed-methods(ds);
-  end if;
-  let cache :: <gf-cache-info> = upgrade-to-basic-gf-cache-info(cache, ds);
-  // let cache :: <partial-dispatch-gf-cache-info> = upgrade-to-partial-dispatch-gf-cache-info(cache, ds);
-  track-cache-header-engine-node(old, cache);
-  let oengine = cache-header-engine-node-next(old) | $absent-engine-node;
-  let other = oengine == $absent-engine-node & enabled? & find-shareable-partial-dispatch-cache-header(old, cache);
-  if (other & other ~== old)
-    install-cache-header-engine-node-next(old, other, %ds-gf(ds));
-    other
-  else
-    let nengine = walk-existing-dispatch-engine(ds, oengine, walk-existing-dispatch-engine);
-    if (oengine ~== nengine)
-      let current-next = cache-header-engine-node-next(old) | $absent-engine-node;
-      if (current-next ~== oengine) // has a punt happened that replugged next?
-        current-next
-      else
-        install-cache-header-engine-node-next(old, nengine, %ds-gf(ds));
-        subst-engine-node(nengine, oengine, ds);
-        nengine
-      end if
-    else
-      nengine
-    end if;
-  end if
-end function;
-
-
 
 
 //// Unknown handler

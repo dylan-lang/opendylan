@@ -34,7 +34,6 @@ define module dispatch-profiler
     collect-dispatch-statistics,
     print-dispatch-statistics,
     enable-generic-caches-only,
-    enable-partial-dispatch-only,
     enable-call-site-caches-only
     ;
 end module;

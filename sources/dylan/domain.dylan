@@ -66,51 +66,6 @@ define inline method domain-number-required (d :: <method>) => (n :: <integer>)
 end method;
 
 
-//define method domain-type (d :: <partial-dispatch-cache-header-engine-node>, i :: <integer>) => (t :: <type>)
-//  let m :: <integer> = %load-byte(pdisp$v-typemask, pdisp$s-typemask, properties(d));
-//  // I keep being impressed that Dylan doesn't have this.
-//  // n.b.  This definition doesn't work on negative numbers and should be done by table lookup.
-//  local method logcount (m :: <integer>) => (c :: <integer>)
-//          (iterate loop (m :: <integer> = m, c :: <integer> = 0) => (c :: <integer>)
-//            if (m == 0) c else loop(ash(m, -1), if (logbit?(0, m)) c + 1 else c end) end
-//          end iterate);
-//        end method;
-//  if (logbit?(i, m))
-//    partial-dispatch-type(d, logcount(logand(m, ash(1, i) - 1)))
-//  else
-//    <object>
-//  end if
-//end method;
-
-define method domain-type (d :: <partial-dispatch-cache-header-engine-node>, i :: <integer>) => (t :: <type>)
-  let m :: <integer> = %load-byte(pdisp$v-typemask, pdisp$s-typemask, properties(d));
-  // I keep being impressed that Dylan doesn't have this.
-  // n.b.  This definition doesn't work on negative numbers and should be done by table lookup.
-  local method logcount (m :: <integer>) => (c :: <integer>)
-          local method loop (m :: <integer>, c :: <integer>) => (c :: <integer>)
-                  if (m == 0)
-                    c
-                  else
-                    loop(ash(m, -1), if (logbit?(0, m)) c + 1 else c end)
-                  end
-                end method;
-          loop(m, 0)
-        end method;
-  if (logbit?(i, m))
-    partial-dispatch-type(d, logcount(logand(m, ash(1, i) - 1)))
-  else
-    <object>
-  end if
-end method;
-
-
-define method domain-number-required (d :: <partial-dispatch-cache-header-engine-node>)
- => (n :: <integer>)
-  signature-number-required(function-signature(parent-gf(d)))
-end method;
-
-
-
 define sealed generic domain-types (d) => (types :: <simple-object-vector>);
 
 
@@ -430,13 +385,6 @@ define copy-down-method domain-match? (d1 :: <standalone-domain>, d2 :: <simple-
 define copy-down-method domain-match? (d1 :: <method-domain>, d2 :: <simple-object-vector>)
   => (match? :: <boolean>);
 
-// engine-node/engine-node domain equivalence:
-define copy-down-method domain-match? (d1 :: <partial-dispatch-cache-header-engine-node>,
-                                       d2 :: <partial-dispatch-cache-header-engine-node>)
-  => (match? :: <boolean>);
-
-
-
 
 define function lookup-domain (d :: <domain>, g :: <incremental-generic-function>)
  => (domain :: false-or(<domain>), predecessor :: false-or(<domain>))
@@ -580,19 +528,6 @@ define copy-down-method domain-disjoint? (d1 :: <method-domain>, d2 :: <method>,
   => (well? :: <boolean>);
 
 define method domain-disjoint? (d1 :: <method>, d2 :: <method-domain>,
-                                scu :: <subjunctive-class-universe>,
-                                dep :: <false-or-dependent-generic-function>)
- => (well? :: <boolean>)
-  domain-disjoint?(d2, d1, scu, dep)
-end method;
-
-
-define copy-down-method domain-disjoint? (d1 :: <partial-dispatch-cache-header-engine-node>, d2 :: <method>,
-                                          scu :: <subjunctive-class-universe>,
-                                          dep :: <false-or-dependent-generic-function>)
-  => (well? :: <boolean>);
-
-define method domain-disjoint? (d1 :: <method>, d2 :: <partial-dispatch-cache-header-engine-node>,
                                 scu :: <subjunctive-class-universe>,
                                 dep :: <false-or-dependent-generic-function>)
  => (well? :: <boolean>)

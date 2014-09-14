@@ -365,7 +365,6 @@ define module-with-models dfmc-modeling
       ^least-primary-superclass,
       ^iclass-number-to-key,
     <&value-class>,
-      &slot value-class-comparitor,
     <&function-class>,
     <&virtual-class>,
     <&slot-initial-value-descriptor>,
@@ -521,11 +520,7 @@ define module-with-models dfmc-modeling
     $simple-typechecked-cache-arguments-limit,
     stchen$v-checkedmask,
 //    stchen$s-checkedmask,
-    stchen$m-checkedmask,
-    $partial-dispatch-arguments-limit,
-    pdisp$v-typemask,
-    pdisp$s-typemask,
-    pdisp$m-typemask;
+    stchen$m-checkedmask;
 
 //    discriminator$v-argnum,
 //    discriminator$s-argnum,
@@ -568,9 +563,6 @@ define module-with-models dfmc-modeling
       &slot cache-header-engine-node-parent,
     <&simple-typechecked-cache-header-engine-node>,
       ^stchen-checkedmask,
-    <&partial-dispatch-cache-header-engine-node>,
-      &slot partial-dispatch-type,
-      ^pdisp-type-mask,
     <&simple-call-site-cache-header-engine-node>,
     <&profiling-call-site-cache-header-engine-node>,
       &slot profiling-call-site-cache-header-engine-node-count-1,
@@ -636,9 +628,7 @@ define module-with-models dfmc-modeling
 //      &slot gf-cache-info-users,
 //    <&simple-typechecked-gf-cache-info>,
 //      &slot simple-typechecked-gf-cache-info-entries,
-//      &slot simple-typechecked-gf-cache-info-argmask,
-//    <&partial-dispatch-gf-cache-info>,
-//      &slot partial-dispatch-gf-cache-info-caches;
+//      &slot simple-typechecked-gf-cache-info-argmask;
 
   export
     method-number, domain-number;

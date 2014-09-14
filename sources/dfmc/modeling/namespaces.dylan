@@ -1957,10 +1957,7 @@ define &module dispatch-engine
   // HACK: TEMPORARY
   create
     profile-all-terminal-engine-nodes?, profile-all-terminal-engine-nodes?-setter,
-    call-site-caches-enabled?, call-site-caches-enabled?-setter,
-    sharing-partial-dispatch-cache-headers?, sharing-partial-dispatch-cache-headers?-setter,
-    partial-dispatch-megamorphic-punt?, partial-dispatch-megamorphic-punt?-setter,
-    partial-dispatch?, partial-dispatch?-setter;
+    call-site-caches-enabled?, call-site-caches-enabled?-setter;
 
   create
     engine-node$k-absent,
@@ -2048,10 +2045,6 @@ define &module dispatch-engine
     stchen$v-checkedmask,
     stchen$s-checkedmask,
     stchen$m-checkedmask,
-    $partial-dispatch-arguments-limit,
-    pdisp$v-typemask,
-    pdisp$s-typemask,
-    pdisp$m-typemask,
     discriminator$v-argnum,
     discriminator$s-argnum,
     discriminator$m-argnum,
@@ -2136,7 +2129,6 @@ define &module dispatch-engine
     <common-root-cache-header-engine-node>,
     <simple-typechecked-cache-header-engine-node>,
       stchen-checkedmask,
-    <partial-dispatch-cache-header-engine-node>,
     <simple-call-site-cache-header-engine-node>,
     <profiling-call-site-cache-header-engine-node>,
       profiling-call-site-cache-header-engine-node-count-1, profiling-call-site-cache-header-engine-node-count-1-setter,
@@ -2225,9 +2217,7 @@ define &module dispatch-engine
       gf-cache-info-users, gf-cache-info-users-setter,
     <simple-typechecked-gf-cache-info>,
       simple-typechecked-gf-cache-info-entries, simple-typechecked-gf-cache-info-entries-setter,
-      simple-typechecked-gf-cache-info-argmask, simple-typechecked-gf-cache-info-argmask-setter,
-    <partial-dispatch-gf-cache-info>,
-      partial-dispatch-gf-cache-info-caches, partial-dispatch-gf-cache-info-caches-setter;
+      simple-typechecked-gf-cache-info-argmask, simple-typechecked-gf-cache-info-argmask-setter;
   create
     slot-location,
     make-slot-accessing-next-method-chain;
@@ -2390,7 +2380,7 @@ define &module internal
 
   export
     <function-class>,
-      <value-class>, value-class-comparitor, value-class-comparitor-setter,
+      <value-class>,
       default-class-constructor,
       <getter-method>, <setter-method>,
       <copy-down-method>,

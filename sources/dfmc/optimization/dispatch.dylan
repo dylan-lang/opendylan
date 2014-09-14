@@ -668,13 +668,9 @@ end;
 
 define constant $profile-all-calls-environment-variable-name
   = "OPEN_DYLAN_PROFILE_ALL_CALLS";
-define constant $partial-dispatch-environment-variable-name
-  = "OPEN_DYLAN_PARTIAL_DISPATCH";
 
 define variable *profile-all-calls?*
   = environment-variable($profile-all-calls-environment-variable-name);
-define variable *partial-dispatch?*
-  = environment-variable($partial-dispatch-environment-variable-name);
 
 define inline function call-site-caches-ok?
     (c :: <simple-call>, f :: <&generic-function>) => (well? :: <boolean>)
@@ -708,8 +704,6 @@ define method maybe-upgrade-call
       |
       (call-site-caches-ok?(c, f)
          & case
-             *partial-dispatch?*
-               => maybe-upgrade-gf-to-partial-dispatch(c, f, arg-te*);
              *profile-all-calls?*
                => upgrade-gf-to-profiling-call-site-cache(c, f, arg-te*);
              otherwise
@@ -769,118 +763,6 @@ define function maybe-upgrade-gf-to-method-call
   end
 end function;
 
-///
-/// GF PARTIAL DISPATCH CALLS
-///
-
-define function compute-partial-dispatch-cache-mask
-    (g :: <&generic-function>, arg-te* :: <argument-sequence>,
-     call :: <simple-call>, effectives :: <method-sequence>)
- => (mask :: <integer>, arg-te* :: false-or(<argument-sequence>))
-  let gsig = ^function-signature(g);
-  let nargs :: <integer> = ^signature-number-required(gsig);
-  if ((~empty?(effectives) & empty?(tail(effectives))) | nargs = 0)
-    values(0, #f)
-  else
-    let nargs :: <integer> = min(nargs, $partial-dispatch-arguments-limit);
-    let obj :: <&class> = dylan-value(#"<object>");
-    let mask :: <integer> = 0;
-    let ans :: <argument-sequence>
-      = (collecting (as <argument-sequence>)
-           for (m :: <integer> = 1 then ash(m, 1),
-                arg-te in arg-te*,
-                lim :: <integer> from 0 below nargs)
-             let t = as(<&type>, arg-te);
-             unless (t == obj)
-               mask := logior(mask, m);
-               if (instance?(t, <&singleton>))
-                 debug-out(#"partial-dispatch", ">>> Got singleton %= \n", ^singleton-object(t));
-                 let object
-                   = ^singleton-object(t);
-                 let type
-                   = if (instance?(object, <&class>) | object == #f)
-                       t
-                     else
-                       ^object-class(object)
-                     end if;
-                 collect(type)
-               else
-                 debug-out(#"partial-dispatch", ">>> Got type %= \n", t);
-                 collect(t)
-               end if
-             end unless;
-           end for
-        end collecting);
-    values(mask, mask ~== 0 & ans)
-  end if
-end function;
-
-define method maybe-upgrade-gf-to-partial-dispatch
-    (c :: <simple-call>, f :: <&generic-function>,
-     arg-te* :: <argument-sequence>)
- => (res :: <boolean>)
-  maybe-upgrade-gf-to-partial-dispatch-1(c, f, arg-te*, 0)
-end method;
-
-define method maybe-upgrade-gf-to-partial-dispatch
-    (c :: <engine-node-call>, f :: <&generic-function>,
-     arg-te* :: <argument-sequence>)
- => (res :: <boolean>)
-  maybe-upgrade-gf-to-partial-dispatch-1
-    (c, f, arg-te*, ^pdisp-type-mask(reference-value(engine-node(c))))
-end method;
-
-define function maybe-upgrade-gf-to-partial-dispatch-1
-    (c :: <simple-call>, f :: <&generic-function>,
-     arg-te* :: <argument-sequence>, premask :: <integer>)
- => (res :: <boolean>)
-  let candidates :: <method-sequence> =
-    if (all-applicable-methods-guaranteed-known?(f, arg-te*))
-      let methods-known
-        = ^generic-function-methods-known(f);
-      let (leading-sorted, others)
-        = guaranteed-sorted-applicable-methods(methods-known, arg-te*);
-      concatenate(leading-sorted, others)
-    else
-      #()
-    end if;
-
-  let (mask, success-types)
-    = compute-partial-dispatch-cache-mask(f, arg-te*, c, candidates);
-
-  local method collect-failure-types ()
-          collecting ()
-            for (i :: <integer> from 0, spec in arg-te*)
-              unless (logbit?(i, mask))
-                collect(list(i, spec))
-              end
-            end;
-          end
-        end method;
-  if (mask == premask) // Already dealing with all possible arg positions.
-    note-when(*trace-call-cache-failure*,
-              <failed-to-eliminate-partial-type-checking>,
-              source-location:       dfm-source-location(c),
-              context-id:            dfm-context-id(c),
-              failed-parameters:     collect-failure-types(),
-              failed-generic:        f.model-variable-name,
-              failed-type-estimates: arg-te*);
-    #f
-  else
-    // let trymask :: <integer> = logand(mask, lognot(premask));
-    format-when(*trace-call-cache-success*,
-                "Call site cache upgrade from %d to %d on %=\n",
-                premask, mask, c);
-    let engine-call
-      = upgrade-to-partial-dispatch-call!
-          (c, f, mask, success-types, <engine-node-call>);
-    re-optimize(engine-call);
-    maybe-upgrade-call(engine-call, f);
-    #t
-  end if
-end function;
-
-
 define method maybe-wrap-profiling-engine-node
     (g :: <&generic-function>, call-site-cache :: <&cache-header-engine-node>)
  => (res :: <&cache-header-engine-node>)
@@ -905,35 +787,6 @@ end method;
 define method maybe-set-profiling-engine-node-call
     (call-site-cache :: <&profiling-call-site-cache-header-engine-node>, call-c)
   profiling-call-site-cache-header-engine-node-call(call-site-cache) := call-c;
-end method;
-
-
-define method upgrade-to-partial-dispatch-call!
-    (call :: <function-call>, g :: <&generic-function>,
-     type-mask :: <integer>, types :: <argument-sequence>,
-     new-call-class :: <class>)
-  let env = environment(call);
-  let function-ref = make-object-reference(g);
-  let call-site-cache
-    = ^make(<&partial-dispatch-cache-header-engine-node>,
-            function:  g,
-            types:     types,
-            type-mask: type-mask);
-  let engine-node-ref
-    = make-object-reference(maybe-wrap-profiling-engine-node(g, call-site-cache));
-  let (first-c, last-c, new-arguments) = method-call-arguments(call, g);
-  let (call-c, call-t)
-    = make-with-temporary
-        (env, new-call-class,
-         temporary-class: call-temporary-class(call),
-         function:        function-ref,
-         engine-node:     engine-node-ref,
-         arguments:       new-arguments);
-  maybe-set-profiling-engine-node-call(reference-value(engine-node-ref), call-c);
-  let (first-c, last-c) = join-2x1!(first-c, last-c, call-c);
-  compatibility-state(call-c) := compatibility-state(call);
-  replace-call-computation!(env, call, first-c, last-c, call-t);
-  call-c
 end method;
 
 

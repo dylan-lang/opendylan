@@ -59,36 +59,9 @@ define function \== (x, y) => (id? :: <boolean>)
                              let y-w = indirect-object-mm-wrapper(y);
                              pointer-id?(x-w, y-w)
                                & value-wrapper?(x-w)
-                               & (begin
-                                    let c = iclass-class(mm-wrapper-implementation-class(x-w));
-                                    let e = value-class-comparitor(c) | init-value-class-comparitor(c);
-                                    (method (#rest v) %dynamic-extent(v); %invoke-engine-node(e, \=, v) end)(x, y)
-                                  end)
+                               & x = y
                            end)
 end function;
-
-
-define function init-value-class-comparitor (c :: <class>)
-  let e :: <partial-dispatch-cache-header-engine-node>
-    = system-allocate-repeated-instance(<partial-dispatch-cache-header-engine-node>,
-                                        <object>, #f, 2, <object>);
-  properties(e) := logior(ash(engine-node$k-cache-header, properties$v-entry-type),
-                          ash(3, pdisp$v-typemask));
-  partial-dispatch-type(e, 0) := c;
-  partial-dispatch-type(e, 1) := c;
-  cache-header-engine-node-parent(e) := \=;
-  cache-header-engine-node-next(e) := $absent-engine-node;
-  primitive-initialize-engine-node(e);
-  value-class-comparitor(c) | (value-class-comparitor(c) := e)
-end function;
-
-
-// define function \== (x, y) => (id? :: <boolean>)
-//   pointer-id?(x, y) | (value-object?(x)
-//                          & indirect-object?(y)
-//                          & pointer-id?(indirect-object-class(x), indirect-object-class(y))
-//                          & x = y)
-// end function;
 
 
 define macro with-factored-equality

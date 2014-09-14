@@ -651,22 +651,13 @@ define method print-dispatch-statistics
   end block;
 end method;
 
-define method enable-partial-dispatch-only (library)
-  partial-dispatch?(0)                 := #t;
-  call-site-caches-enabled?()          := #t;
-  profile-all-terminal-engine-nodes?() := #t;
-  decache-all-generics(library);
-end method;
-
 define method enable-call-site-caches-only (library)
-  partial-dispatch?(0)                 := #f;
   call-site-caches-enabled?()          := #t;
   profile-all-terminal-engine-nodes?() := #t;
   decache-all-generics(library);
 end method;
 
 define method enable-generic-caches-only (library)
-  partial-dispatch?(0)                 := #f;
   call-site-caches-enabled?()          := #f;
   profile-all-terminal-engine-nodes?() := #t;
   decache-all-generics(library);

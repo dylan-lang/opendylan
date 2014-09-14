@@ -64,11 +64,6 @@ define primary &class <simple-typechecked-gf-cache-info> (<gf-cache-info>)
     init-value: 0, init-keyword: argmask:;
 end &class;
 
-define primary &class <partial-dispatch-gf-cache-info> (<simple-typechecked-gf-cache-info>)
-  &slot partial-dispatch-gf-cache-info-caches :: <list>,
-    init-value: #(), init-keyword: caches:;
-end &class;
-
 
 define compiler-open generic ^generic-function-methods (gf :: <&generic-function>);
 define compiler-open generic ^generic-function-methods-setter (value, gf :: <&generic-function>);
@@ -1201,13 +1196,6 @@ define constant stchen$s-checkedmask = $simple-typechecked-cache-arguments-limit
 define constant stchen$m-checkedmask = ash(ash(1, stchen$s-checkedmask) - 1, stchen$v-checkedmask);
 
 
-define constant $partial-dispatch-arguments-limit = 8;
-define constant pdisp$v-typemask = engine-node$v-data-start;
-define constant pdisp$s-typemask = $partial-dispatch-arguments-limit;
-define constant pdisp$m-typemask = ash(ash(1, pdisp$s-typemask) - 1, pdisp$v-typemask);
-
-
-
 define constant discriminator$v-argnum = 6;
 
 define constant discriminator$s-argnum = 8;
@@ -1623,63 +1611,6 @@ define inline-only function ^stchen-checkedmask (e :: <&simple-typechecked-cache
  => (checkedmask :: <integer>)
   ash(logand(^properties(e), stchen$m-checkedmask), - stchen$v-checkedmask)
 end function;
-
-
-define generic ^partial-dispatch-type (object, index :: <integer>) => (t :: <&type>);
-define generic ^partial-dispatch-type-setter (value :: <&type>, object, index :: <integer>);
-define generic ^number-types (object) => (n :: <integer>);
-
-define primary &class <partial-dispatch-cache-header-engine-node> (<cache-header-engine-node>)
-  repeated &slot partial-dispatch-type :: <type>,
-    init-value: <object>,
-    size-getter: number-types,
-    size-init-keyword: size:,
-    size-init-value: 0;
-end &class;
-
-
-define inline function ^pdisp-type-mask (e :: <&partial-dispatch-cache-header-engine-node>)
- => (checkedmask :: <integer>)
-  ash(logand(^properties(e), pdisp$m-typemask), - pdisp$v-typemask)
-end function;
-
-
-define concrete-engine-node-initialization <partial-dispatch-cache-header-engine-node>
-    (e, #key types :: false-or(<simple-object-vector>), type-mask :: <integer> = 0)
-  // HACK: CALLED WHEN FINALIZING COPYING,
-  //       ENTRY-POINT INITIALIZATION SHOULD BE SPLIT OUT
-  when (types)
-    let siz :: <integer> = size(types);
-    let vals = make(<simple-object-vector>, size: siz);
-    ^partial-dispatch-type-values(e) := vals;
-    ^properties(e) := logior(ash(type-mask, pdisp$v-typemask), ^properties(e));
-    for (i :: <integer> from 0, t :: <&type> in types)
-      vals[i] := mapped-model(t)
-    end for;
-  end when;
-end concrete-engine-node-initialization;
-
-
-define method ^number-types
-    (object :: <&partial-dispatch-cache-header-engine-node>) => (res :: <integer>)
-  size(^partial-dispatch-type-values(object))
-end method;
-
-// TODO: The size-getter: option isn't spotted as an accessor name by the
-// define &class macro, so have to hook up the compile-stage function
-// by hand. Fix!
-
-define &override-function ^number-types end;
-
-define method ^partial-dispatch-type
-    (object :: <&partial-dispatch-cache-header-engine-node>, index :: <integer>) => (t :: <&type>)
-  element(^partial-dispatch-type-values(object), index)
-end method;
-
-define method ^partial-dispatch-type-setter
-    (value :: <&type>, object :: <&partial-dispatch-cache-header-engine-node>, index :: <integer>)
-  element(^partial-dispatch-type-values(object), index) := value
-end method;
 
 
 define primary &class <simple-call-site-cache-header-engine-node> (<cache-header-engine-node>)

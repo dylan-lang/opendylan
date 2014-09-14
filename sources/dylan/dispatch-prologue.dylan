@@ -736,12 +736,6 @@ define constant stchen$v-checkedmask = engine-node$v-data-start;
 define constant stchen$s-checkedmask = $simple-typechecked-cache-arguments-limit;
 define constant stchen$m-checkedmask = ash(ash(1, stchen$s-checkedmask) - 1, stchen$v-checkedmask);
 
-define constant $partial-dispatch-arguments-limit = 8;
-define constant pdisp$v-typemask = engine-node$v-data-start;
-define constant pdisp$s-typemask = $partial-dispatch-arguments-limit;
-define constant pdisp$m-typemask = ash(ash(1, pdisp$s-typemask) - 1, pdisp$v-typemask);
-
-
 define function compress-mask (argmask :: <integer>, checkedmask :: <integer>)
  => (idx :: <integer>)
   local method loop (amask :: <integer>, cmask :: <integer>,

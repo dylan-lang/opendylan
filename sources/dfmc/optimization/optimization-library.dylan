@@ -64,8 +64,7 @@ define module dfmc-optimization
     *warn-about-bogus-upgrades*,
     *colorize-bogus-upgrades*,
 
-    *profile-all-calls?*,
-    *partial-dispatch?*;
+    *profile-all-calls?*;
 
   export
     best-function-key?,

@@ -535,27 +535,3 @@ define method dispatch-walker
   end unless;
   dispatch-walker(dws, cache-header-engine-node-next(e), f, cost, hits)
 end method;
-
-
-define method dispatch-walker
-    (dws :: <dispatch-walker-state>, e :: <partial-dispatch-cache-header-engine-node>,
-     f :: <function>, cost :: <integer>, hits :: <hit-count>)
- => (hits :: <abstract-integer>)
-  f(e);
-  dws-size(dws) := dws-size(dws) + instance-size(e); // one more for next
-  with-preserved-dispatch-walking-types (dws)
-    for (i from 0 below domain-number-required(e))
-      dws-arg-types(dws)[i] := domain-type(e, i);
-      dws-partial-types(dws)[i] := domain-type(e, i)
-    end for;
-    let next    = cache-header-engine-node-next(e);
-    let my-hits = dispatch-walker(dws, next, f, cost, hits);
-    when (instance?(next, <profiling-call-site-cache-header-engine-node>))
-      // no discrimination, count it as hits
-      incf(dws-cache-attempts(dws), my-hits);
-      incf(dws-cache-hits(dws),     my-hits);
-    end when;
-    my-hits
-  end;
-end method;
-
