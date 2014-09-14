@@ -4,7 +4,7 @@
 # When building for x86_64, make sure you increase the stack size (eg, ulimit -s 20000)
 
 # Required dependencies:
-# sudo apt-get install automake gcc libgc-dev rubygems ruby-dev
+# sudo apt-get install automake gcc libgc-dev rubygems ruby-dev debugedit
 # sudo gem install fpm
 
 require 'fileutils'
@@ -12,6 +12,7 @@ include FileUtils
 
 # Create staging area
 STAGING_DIR=`mktemp -d`.chomp
+STAGING_DIR_DEBUG=`mktemp -d`.chomp
 INSTALL_DIR="/usr/lib/opendylan"
 
 additional_fpm_flags=""
@@ -61,13 +62,18 @@ system("make 3-stage-bootstrap") || exit(1)
 # Install into staging area
 system("make install DESTDIR=#{STAGING_DIR}") || exit(1)
 
-# Strip all the libraries and binaries
-needs_stripping = Dir["#{STAGING_DIR}/usr/lib/opendylan/lib/*.so"] + Dir["#{STAGING_DIR}/usr/lib/opendylan/bin/*"]
-needs_stripping.each do |f|
-  unless(system("strip \"#{f}\""))
-    puts "Failed to strip #{f}, quiting."
+# Move all the debug files to /usr/lib/debug/lib/opendylan in the STAGING_DIR_DEBUG.
+Dir["#{STAGING_DIR}/**/*.dbg"].each do |file|
+  target_file = file.sub(/^#{STAGING_DIR}/, "#{STAGING_DIR_DEBUG}/usr/lib/debug") #.sub(/\.dbg$/. '')
+  if target_file !~ /^#{STAGING_DIR_DEBUG}/
+    puts "Debug file new path is outside the debug staging dir, exiting."
     exit(1)
   end
+  FileUtils.mkdir_p File.dirname(target_file)
+  File.rename(file, target_file)
+  # Edit debug information of the debug files.
+  # I haven't gotten this to work yet...
+  #system("debugedit -b \"#{Dir.pwd}/Bootstrap.3/build}\" -d \"/usr/lib/debug/lib/opendylan\" \"#{target_file}\"") || exit(1)
 end
 
 srcdir = Dir.pwd
@@ -94,7 +100,18 @@ EOF
 puts FPM_CMD
 system(FPM_CMD) || exit(1)
 
+FPM_CMD_DBG=<<EOF
+fpm -s dir -t deb -n opendylan-dbg --deb-changelog packages/unix/debian/changelog -v #{VERSION} -C #{STAGING_DIR_DEBUG} -p opendylan-dbg-VERSION_ARCH.deb \
+    -d "opendylan (= #{VERSION})" -m "Wim Vander Schelden <wim@fixnum.org>" \
+    --license MIT --url "http://opendylan.org/" --vendor "Dylan Hackers" --description "OpenDylan debug symbols" \
+    usr/lib/debug
+EOF
+
+puts FPM_CMD_DBG
+system(FPM_CMD_DBG) || exit(1)
+
 rm_rf STAGING_DIR
+rm_rf STAGING_DIR_DEBUG
 
 # Check the generated package for problems
 #system("lintian *.deb")

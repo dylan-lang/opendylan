@@ -45,6 +45,9 @@ if $(COMPILER_BACK_END) = llvm {
   LINKFLAGSEXE += -T $(SYSTEM_LIBDIR)/dylan-elf-exe.script ;
 }
 
+OBJCOPY   ?= objcopy ;
+STRIP     ?= strip ;
+
 CCFLAGS   += -fPIC $(GC_CFLAGS) ;
 
 LINK      ?= $(CC) ;
@@ -412,6 +415,9 @@ rule LinkDLL {
 
 actions together LinkDLL bind NEEDLIBS {
   $(LINK) -shared -o $(<:Q) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS)
+  $(OBJCOPY) $(<:Q) $(<:Q).dbg
+  $(OBJCOPY) --add-gnu-debuglink=$(<:Q).dbg $(<:Q)
+  $(STRIP) -s $(<:Q)
 }
 
 rule LinkEXE {
@@ -421,6 +427,9 @@ rule LinkEXE {
 
 actions LinkEXE bind NEEDLIBS {
   $(LINK) -o $(<:Q) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS)
+  $(OBJCOPY) $(<:Q) $(<:Q).dbg
+  $(OBJCOPY) --add-gnu-debuglink=$(<:Q).dbg $(<:Q)
+  $(STRIP) -s $(<:Q)
 }
 
 #
