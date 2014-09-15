@@ -20,6 +20,7 @@ define library environment-commands
   use release-info;
   use source-control-manager;
 
+  use projects;
   use dfmc-environment-projects;
 
   export command-lines,
