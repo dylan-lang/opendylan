@@ -885,7 +885,7 @@ define function target-platform-name-setter (new-platform-name)
     for (project in *all-open-projects*)
       note-platform-change(project, new-platform-name);
     end;
-    environment-variable("OPEN_DYLAN_TARGET_PLATFORM") := new-platform-name;
+    environment-variable("OPEN_DYLAN_TARGET_PLATFORM") := as(<byte-string>, new-platform-name);
   end;
 end function;
 
