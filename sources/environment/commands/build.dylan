@@ -141,6 +141,10 @@ define method set-property
  => ()
   ignore(save?);
   target-platform-name() := target-platform;
+  let project-context = context.context-project-context;
+  if (project-context)
+    project-context.context-build-script := calculate-default-build-script();
+  end;
 end method set-property;
 
 
