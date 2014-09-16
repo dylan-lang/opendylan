@@ -19,11 +19,7 @@ end function target-platform-name;
 define settings <build-system-settings> (<open-dylan-user-settings>)
   key-name "Build-System";
   slot build-script :: <string>
-    = as(<string>,
-         merge-locators(as(<file-locator>,
-                           concatenate(as(<string>, target-platform-name()),
-                                       "-build.jam")),
-                        $system-lib));
+    = as(<string>, calculate-default-build-script());
 end settings <build-system-settings>;
 
 define constant $build-system-settings = make(<build-system-settings>);
@@ -38,6 +34,14 @@ define function default-build-script-setter
   $build-system-settings.build-script := as(<string>, script);
   script
 end function default-build-script-setter;
+
+define function calculate-default-build-script ()
+ => (script :: <file-locator>)
+  merge-locators(as(<file-locator>,
+                    concatenate(as(<string>, target-platform-name()),
+                                "-build.jam")),
+                 $system-lib)
+end;
 
 
 

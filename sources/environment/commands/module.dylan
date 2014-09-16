@@ -125,6 +125,7 @@ define module environment-commands
 	       parameter-keyword };
   use environment-manager;
   use environment-reports;
+  use projects, import: { target-platform-name-setter };
 
   use commands;
   use command-lines;

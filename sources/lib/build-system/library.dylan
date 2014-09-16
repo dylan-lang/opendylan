@@ -45,6 +45,7 @@ define module build-system
 
     default-build-script,
     default-build-script-setter,
+    calculate-default-build-script,
 
     //$personal-lib,
     $personal-bin,

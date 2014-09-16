@@ -115,6 +115,38 @@ define method set-property
   end
 end method set-property;
 
+// Target platform
+
+define class <target-platform-property> (<environment-property>)
+end class <target-platform-property>;
+
+define command-property target-platform => <target-platform-property>
+  (summary:       "Current target platform",
+   documentation: "The current target platform.",
+   type:          <symbol>,
+   persistent?:   #t)
+end command-property target-platform;
+
+define method show-property
+  (context :: <environment-context>, property :: <target-platform-property>)
+ => ()
+  let target-platform = target-platform-name();
+  message(context, "Target platform: %s", target-platform);
+end method show-property;
+
+define method set-property
+  (context :: <environment-context>, property :: <target-platform-property>,
+   target-platform :: <symbol>,
+   #key save?)
+ => ()
+  ignore(save?);
+  target-platform-name() := target-platform;
+  let project-context = context.context-project-context;
+  if (project-context)
+    project-context.context-build-script := calculate-default-build-script();
+  end;
+end method set-property;
+
 
 /// Build command
 
@@ -397,6 +429,7 @@ define command-group build
   property compiler-back-end;
   property compilation-mode;
   property build-script;
+  property target-platform;
   command  build;
   command  link;
   command  clean;
