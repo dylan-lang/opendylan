@@ -462,7 +462,7 @@ define method generate-code (m :: <property-list-match>)
   end;
 end method;
 
-// TODO: CORRECTNESS: Make sure this can handle the constuction of all
+// TODO: CORRECTNESS: Make sure this can handle the construction of all
 // expressions.
 
 define method generate-key-default-thunk (expression == #f)
