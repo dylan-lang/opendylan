@@ -1,6 +1,6 @@
-==========================
+##########################
 The Dylan Project Notebook
-==========================
+##########################
 
 Welcome to the Dylan Project Notebook. This is meant to supplement, not
 replace, other means of communication about the Dylan project.
@@ -25,9 +25,28 @@ This is not:
   internals.
 * A replacement for writing and publishing a `Dylan Enhancement Proposal`_.
 
+Current Topics
+==============
+
 .. toctree::
    :maxdepth: 2
 
+   compiler-implementation/index
+   ecosystem/index
+   language/index
+   libraries/index
+   runtime/index
+   tooling/index
+   janitorial/index
+
+There are some other things that we need to sort out and include into
+this document as well:
+
+* Cross-compilation considerations.
+* Improving the numeric tower.
+* Bring back ``<ratio>``?
+* Have a wider variety of fixed size numeric types for integrating
+  with C-FFI?
 
 .. _Dylan Enhancement Proposal: http://opendylan.org/proposals/
 .. _GitHub issue tracker: https://github.com/dylan-lang/opendylan/issues
