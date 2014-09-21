@@ -18,8 +18,8 @@ Ravenbrook at http://www.ravenbrook.com/project/mps/ and must be
 downloaded and built separately. If you are using Windows, you
 must download the `older 1.108 release
 <http://www.ravenbrook.com/project/mps/release/1.108.0/>`_. On
-other platforms, the `1.111 release
-<http://www.ravenbrook.com/project/mps/release/1.111.0/>`_ is
+other platforms, the `1.114 release
+<http://www.ravenbrook.com/project/mps/release/1.114.0/>`_ is
 required.
 
 The C back-end uses Boehm-Demers-Weiser conservative C/C++ garbage
@@ -62,7 +62,7 @@ Dependencies
 
 Get MPS or boehm-gc, depending on your platform:
 
-* Linux x86 or FreeBSD x86 (HARP) -> `MPS <http://www.ravenbrook.com/project/mps/release/1.111.0/>`_
+* Linux x86 or FreeBSD x86 (HARP) -> `MPS <http://www.ravenbrook.com/project/mps/release/1.114.0/>`_
 * Mac OS X and all 64 bit (C) -> boehm-gc
 
 On Mac OS X, you may find it easiest to install Homebrew and install
@@ -126,7 +126,7 @@ Compilation on Windows
 =======================
 
 * Get `MPS <http://www.ravenbrook.com/project/mps/release/1.108.0/>`_. Be
-  sure that you have the older 1.108 release and NOT the newer 1.111
+  sure that you have the older 1.108 release and NOT the newer 1.114
   release.
 
 * Make sure to have required tools installed: namely Debugging tools for
