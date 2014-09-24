@@ -39,14 +39,14 @@ Files:     dfmc-boot
            mutable-key-collection
            mutable-sequence
            stretchy-collection
-           array
-           multidimensional-array
-           limited-array
            vector
            vector-speed
            limited-vector
            stretchy-vector
            limited-stretchy-vector
+           array
+           multidimensional-array
+           limited-array
            symbol
            string
            string-speed
