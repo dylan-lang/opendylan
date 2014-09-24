@@ -22,7 +22,8 @@ define variable $dylan-system-subtype-bit-type-names :: <simple-object-vector>
       #"<error>",                       // 512
       #"<collection>",                  // 1024
       #"<cache-header-engine-node>",    // 2048
-      #"<list>"                         // 4096
+      #"<list>",                        // 4096
+      #"<keyword-method>"               // 8192
         ];
 
 define abstract &top-type <top>
