@@ -690,31 +690,53 @@ define method emit-call
   let mep-slot-ptr = op--getslotptr(back-end, fn-cast, #"<lambda>", #"mep");
   let mep = ins--load(back-end, mep-slot-ptr, alignment: word-size);
 
-  // Cast to the appropriate MEP type
-  let parameter-types
-    = make(<simple-object-vector>, size: c.arguments.size + 3);
-  parameter-types[0] := $llvm-object-pointer-type; // next
-  parameter-types[1] := $llvm-object-pointer-type; // function
-  parameter-types[2] := back-end.%type-table["iWord"]; // argument count
-  fill!(parameter-types, $llvm-object-pointer-type, start: 3);
-  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
-  let mep-type
-    = make(<llvm-function-type>,
-           return-type: return-type,
-           parameter-types: parameter-types,
-           varargs?: #f);
-  let mep-cast
-    = ins--bitcast(back-end, mep, llvm-pointer-to(back-end, mep-type));
+  let next = emit-reference(back-end, m, c.next-methods);
 
-  let next
-    = emit-reference(back-end, m, c.next-methods);
+  let km-class :: <&class> = dylan-value(#"<keyword-method>");
+  let cmp = op--heap-object-subtype-bit-instance-cmp(back-end, fn, km-class);
+  ins--if (back-end, cmp)
+    // Cast to the appropriate MEP type
+    let parameter-types
+      = make(<simple-object-vector>,
+             size: c.arguments.size + 2,
+             fill: $llvm-object-pointer-type);
+    let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+    let mep-type
+      = make(<llvm-function-type>,
+             return-type: return-type,
+             parameter-types: parameter-types,
+             varargs?: #f);
+    let mep-cast
+      = ins--bitcast(back-end, mep, llvm-pointer-to(back-end, mep-type));
 
-  op--call(back-end, mep-cast,
-           concatenate(vector(next, fn, c.arguments.size),
-                       map(curry(emit-reference, back-end, m),
-                           c.arguments)),
-           type: return-type,
-           calling-convention: $llvm-calling-convention-c)
+    op--call(back-end, mep-cast,
+             concatenate(vector(fn, next),
+                         map(curry(emit-reference, back-end, m),
+                             c.arguments)),
+             type: return-type,
+             calling-convention: $llvm-calling-convention-c)
+  ins--else
+    // IEP-only case
+    let parameter-types
+      = make(<simple-object-vector>,
+             size: c.arguments.size + 2,
+             fill: $llvm-object-pointer-type);
+    let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+    let iep-type
+      = make(<llvm-function-type>,
+             return-type: return-type,
+             parameter-types: parameter-types,
+             varargs?: #f);
+    let iep-cast
+      = ins--bitcast(back-end, mep, llvm-pointer-to(back-end, iep-type));
+
+    op--call(back-end, iep-cast,
+             concatenate(map(curry(emit-reference, back-end, m),
+                             c.arguments),
+                         vector(next, fn)),
+             type: return-type,
+             calling-convention: $llvm-calling-convention-fast)
+  end ins--if
 end method;
 
 // Generic function call through a known <engine-node>

@@ -636,9 +636,100 @@ end entry-point-descriptor;
 define variable-arity outer entry-point-descriptor rest-key-xep
     (function :: <function>, n :: <raw-integer>)
  => (#rest values);
-  //---*** Fill this in...
-  make(<llvm-undef-constant>,
-       type: llvm-reference-type(be, be.%mv-struct-type))
+  if (num < 1)
+    ins--call-intrinsic(be, "llvm.trap", #[]);
+    ins--unreachable(be);
+  else
+    let module = be.llvm-builder-module;
+    let word-size = back-end-word-size(be);
+
+    let lambda-class :: <&class> = dylan-value(#"<keyword-method>");
+    let meth-cast = op--object-pointer-cast(be, function, lambda-class);
+
+    let (signature, raw-properties)
+      = op--function-signature-properties(be, meth-cast, lambda-class);
+
+    // Extract the required arguments count
+    let nreq = ins--and(be, raw-properties, $signature-number-required-mask);
+
+    // Check argument count
+    let cmp = ins--icmp-slt(be, n, nreq);
+    ins--if (be, cmp)
+      op--argument-count-error(be, function, n);
+    ins--else
+      // Allocate a buffer for the required, optionals, and keyword arguments
+      let buf = ins--alloca(be, $llvm-object-pointer-type, num,
+                            alignment: word-size);
+
+      // Retrieve the types of the required arguments
+      let signature-required-slot-ptr
+        = op--getslotptr(be, signature,
+                         #"<signature>", #"signature-required");
+      let required = ins--load(be, signature-required-slot-ptr,
+                               alignment: word-size);
+      let required-cast
+        = op--object-pointer-cast(be, required,
+                                  #"<simple-object-vector>");
+
+      // Type-check and buffer the required arguments
+      let va-list = op--va-decl-start(be);
+      ins--iterate required-args-loop (be, i = 0)
+        let loop-cmp = ins--icmp-slt(be, i, nreq);
+        ins--if (be, loop-cmp)
+          let arg = op--va-arg(be, va-list, $llvm-object-pointer-type);
+
+          let specializer
+            = call-primitive(be, primitive-vector-element-descriptor,
+                             required-cast, i);
+          do-emit-type-check(be, arg, #f, specializer);
+
+          let element-ptr = ins--gep(be, buf, i);
+          ins--store(be, arg, element-ptr, alignment: word-size);
+          required-args-loop(ins--add(be, i, 1));
+        end ins--if;
+      end ins--iterate;
+
+      // Retrieve the #rest arguments as a vector
+      let count = ins--sub(be, n, nreq);
+      let optionals = op--va-list-to-stack-vector(be, va-list, count);
+      op--va-end(be, va-list);
+
+      // Retrieve the keyword specifiers
+      let keyword-specifiers-slot-ptr
+        = op--getslotptr(be, meth-cast, lambda-class, #"keyword-specifiers");
+      let keyword-specifiers
+        = ins--load(be, keyword-specifiers-slot-ptr, alignment: word-size);
+
+      // Place keyword values into their proper slots
+      op--process-keyword-optionals(be, num, buf, nreq,
+                                    optionals, keyword-specifiers);
+
+      let arguments
+        = map(method (i)
+                let element-ptr = ins--gep(be, buf, i);
+                ins--load(be, element-ptr, alignment: word-size);
+              end, range(below: num));
+
+      // Retrieve the IEP from the method
+      let iep-slot-ptr = op--getslotptr(be, meth-cast, lambda-class, #"iep");
+      let iep = ins--load(be, iep-slot-ptr, alignment: word-size);
+
+      // Chain to the method's IEP
+      let iep-type
+        = make(<llvm-function-type>,
+               return-type: llvm-reference-type(be, be.%mv-struct-type),
+               parameter-types: make(<simple-object-vector>,
+                                     size: num + 2,
+                                     fill: $llvm-object-pointer-type),
+               varargs?: #f);
+      let iep-cast = ins--bitcast(be, iep, llvm-pointer-to(be, iep-type));
+      ins--tail-call
+        (be, iep-cast,
+         concatenate(arguments,
+                     vector(emit-reference(be, module, &false), function)),
+         calling-convention: $llvm-calling-convention-fast);
+    end ins--if;
+  end if
 end entry-point-descriptor;
 
 define method op--engine-node-call
@@ -749,13 +840,182 @@ define variable-arity outer entry-point-descriptor gf-optional-xep
                        concatenate(arguments, vector(rest-vector)))
 end entry-point-descriptor;
 
+define method op--function-signature-properties
+    (be :: <llvm-back-end>, function :: <llvm-value>, class :: <&class>)
+ => (signature :: <llvm-value>, raw-properties :: <llvm-value>)
+  let word-size = back-end-word-size(be);
+
+  let signature-slot-ptr
+    = op--getslotptr(be, function, class, #"function-signature");
+  let signature = ins--load(be, signature-slot-ptr, alignment: word-size);
+
+  // Extract the signature properties
+  let sig-class :: <&class> = dylan-value(#"<signature>");
+  let signature-cast = op--object-pointer-cast(be, signature, sig-class);
+  let properties-slot-ptr
+    = op--getslotptr(be, signature-cast, sig-class, #"signature-properties");
+  let properties = ins--load(be, properties-slot-ptr, alignment: word-size);
+  let raw-properties = op--untag-integer(be, properties);
+
+  values(signature-cast, raw-properties)
+end method;
+
+define method op--process-keyword-optionals
+    (be :: <llvm-back-end>, num :: <integer>,
+     buf :: <llvm-value>, nreq :: <llvm-value>,
+     optionals :: <llvm-value>, keyword-specifiers :: <llvm-value>)
+ => ();
+  let word-size = back-end-word-size(be);
+
+  // The optionals are passed as the first argument following the
+  // required arguments
+  let optionals-element-ptr = ins--gep(be, buf, nreq);
+  ins--store(be, optionals, optionals-element-ptr, alignment: word-size);
+
+  let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
+  let optionals-cast = op--object-pointer-cast(be, optionals, sov-class);
+  let optionals-size
+    = call-primitive(be, primitive-vector-size-descriptor, optionals-cast);
+
+  let keyword-specifiers-cast
+    = op--object-pointer-cast(be, keyword-specifiers, sov-class);
+  let keyword-specifiers-size
+    = call-primitive(be, primitive-vector-size-descriptor,
+                     keyword-specifiers-cast);
+
+  // Initialize default values for each keyword argument
+  let key0 = ins--add(be, nreq, 1);
+  ins--iterate default-keywords-loop (be, i = key0, ki = 1)
+    let cmp = ins--icmp-slt(be, i, num);
+    ins--if (be, cmp)
+      let default = call-primitive(be, primitive-vector-element-descriptor,
+                                   keyword-specifiers-cast, ki);
+      let element-ptr = ins--gep(be, buf, i);
+      ins--store(be, default, element-ptr, alignment: word-size);
+      default-keywords-loop(ins--add(be, i, 1), ins--add(be, ki, 2));
+    end ins--if;
+  end ins--iterate;
+
+  // Put keyword values in the proper slots
+  ins--iterate process-keywords-loop (be, i = 0)
+    let keywords-cmp = ins--icmp-slt(be, i, optionals-size);
+    ins--if (be, keywords-cmp)
+      let keyword = call-primitive(be, primitive-vector-element-descriptor,
+                                   optionals-cast, i);
+
+      // Check against each keyword specifier
+      ins--iterate search-specifiers-loop (be, j = 0)
+        let specifiers-cmp = ins--icmp-slt(be, j, keyword-specifiers-size);
+        ins--if (be, specifiers-cmp)
+          let spec-keyword
+            = call-primitive(be, primitive-vector-element-descriptor,
+                             keyword-specifiers-cast, j);
+          let cmp = ins--icmp-eq(be, keyword, spec-keyword);
+          ins--if (be, cmp)
+            // Matched, read the value
+            let value-index = ins--add(be, i, 1);
+            let value = call-primitive(be, primitive-vector-element-descriptor,
+                                       optionals-cast, value-index);
+
+            // Store the value in its corresponding slot
+            let offset = ins--ashr(be, j, 1);
+            let slot = ins--add(be, key0, offset);
+            let element-ptr = ins--gep(be, buf, slot);
+            ins--store(be, value, element-ptr, alignment: word-size);
+
+            // Go to the next keyword in optionals
+            process-keywords-loop(ins--add(be, i, 2));
+          ins--else
+            // Didn't match, try the next specifier
+            search-specifiers-loop(ins--add(be, j, 2));
+          end ins--if;
+        ins--else
+          // Reached the end of the specifiers without finding a match:
+          // go to the next keyword in optionals
+          process-keywords-loop(ins--add(be, i, 2));
+        end ins--if;
+      end ins--iterate;
+    end ins--if;
+  end ins--iterate;
+end method;
+
 // For MEP calls with #key (and possibly #rest)
+// (numbered by the total number of parameters in the IEP)
+// Note that this is called as if it were an engine-node entry point
+// if the method has no keyword restrictions and the next-methods
+// argument is unused
 define variable-arity outer entry-point-descriptor rest-key-mep
-    (next-methods :: <object>, function :: <function>, n :: <raw-integer>)
+    (meth :: <keyword-method>, next-methods :: <object>)
  => (#rest values);
-  //---*** Fill this in...
-  make(<llvm-undef-constant>,
-       type: llvm-reference-type(be, be.%mv-struct-type))
+  if (num < 1)
+    ins--call-intrinsic(be, "llvm.trap", #[]);
+    ins--unreachable(be);
+  else
+    let word-size = back-end-word-size(be);
+
+    let lambda-class :: <&class> = dylan-value(#"<keyword-method>");
+    let meth-cast = op--object-pointer-cast(be, meth, lambda-class);
+
+    let (signature, raw-properties)
+      = op--function-signature-properties(be, meth-cast, lambda-class);
+
+    // Extract the required arguments count
+    let nreq = ins--and(be, raw-properties, $signature-number-required-mask);
+
+    // Allocate a buffer for the required and keyword arguments
+    let buf = ins--alloca(be, $llvm-object-pointer-type, num,
+                          alignment: word-size);
+
+    // Buffer the required arguments
+    let va-list = op--va-decl-start(be);
+    ins--iterate required-args-loop (be, i = 0)
+      let cmp = ins--icmp-slt(be, i, nreq);
+      ins--if (be, cmp)
+        let arg = op--va-arg(be, va-list, $llvm-object-pointer-type);
+        let element-ptr = ins--gep(be, buf, i);
+        ins--store(be, arg, element-ptr, alignment: word-size);
+        required-args-loop(ins--add(be, i, 1));
+      end ins--if;
+    end ins--iterate;
+
+    // Retrieve the optionals vector
+    let optionals = op--va-arg(be, va-list, $llvm-object-pointer-type);
+    op--va-end(be, va-list);
+
+    // Retrieve the keyword specifiers
+    let keyword-specifiers-slot-ptr
+      = op--getslotptr(be, meth-cast, lambda-class, #"keyword-specifiers");
+    let keyword-specifiers
+      = ins--load(be, keyword-specifiers-slot-ptr, alignment: word-size);
+
+    // Place keyword values into their proper slots
+    op--process-keyword-optionals(be, num, buf, nreq,
+                                  optionals, keyword-specifiers);
+
+    let arguments
+      = map(method (i)
+              let element-ptr = ins--gep(be, buf, i);
+              ins--load(be, element-ptr, alignment: word-size);
+            end, range(below: num));
+
+    // Retrieve the IEP from the method
+    let iep-slot-ptr = op--getslotptr(be, meth-cast, lambda-class, #"iep");
+    let iep = ins--load(be, iep-slot-ptr, alignment: word-size);
+
+    // Chain to the method's IEP
+    let iep-type
+      = make(<llvm-function-type>,
+             return-type: llvm-reference-type(be, be.%mv-struct-type),
+             parameter-types: make(<simple-object-vector>,
+                                   size: num + 2,
+                                   fill: $llvm-object-pointer-type),
+             varargs?: #f);
+    let iep-cast = ins--bitcast(be, iep, llvm-pointer-to(be, iep-type));
+    ins--tail-call
+      (be, iep-cast,
+       concatenate(arguments, vector(next-methods, meth)),
+       calling-convention: $llvm-calling-convention-fast);
+  end if
 end entry-point-descriptor;
 
 
@@ -1178,11 +1438,9 @@ define single-method outer entry-point-descriptor implicit-keyed-single-method
 
         // Chain to the method's MEP
         let parameter-types
-          = make(<simple-object-vector>, size: num + 3);
-        parameter-types[0] := $llvm-object-pointer-type; // next
-        parameter-types[1] := $llvm-object-pointer-type; // function
-        parameter-types[2] := be.%type-table["iWord"]; // argument count
-        fill!(parameter-types, $llvm-object-pointer-type, start: 3);
+          = make(<simple-object-vector>,
+                 size: num + 2,
+                 fill: $llvm-object-pointer-type);
         let mep-type
           = make(<llvm-function-type>,
                  return-type: llvm-reference-type(be, be.%mv-struct-type),
@@ -1191,7 +1449,7 @@ define single-method outer entry-point-descriptor implicit-keyed-single-method
         let mep-cast = ins--bitcast(be, mep, llvm-pointer-to(be, mep-type));
         ins--tail-call
           (be, mep-cast,
-           concatenate(vector(data, meth, num), arguments),
+           concatenate(vector(meth, data), arguments),
            calling-convention: $llvm-calling-convention-c)
       end ins--if
     end ins--if
@@ -1269,11 +1527,9 @@ define single-method outer entry-point-descriptor explicit-keyed-single-method
 
         // Chain to the method's MEP
         let parameter-types
-          = make(<simple-object-vector>, size: num + 3);
-        parameter-types[0] := $llvm-object-pointer-type; // next
-        parameter-types[1] := $llvm-object-pointer-type; // function
-        parameter-types[2] := be.%type-table["iWord"]; // argument count
-        fill!(parameter-types, $llvm-object-pointer-type, start: 3);
+          = make(<simple-object-vector>,
+                 size: num + 2,
+                 fill: $llvm-object-pointer-type);
         let mep-type
           = make(<llvm-function-type>,
                  return-type: llvm-reference-type(be, be.%mv-struct-type),
@@ -1282,7 +1538,7 @@ define single-method outer entry-point-descriptor explicit-keyed-single-method
         let mep-cast = ins--bitcast(be, mep, llvm-pointer-to(be, mep-type));
         ins--tail-call
           (be, mep-cast,
-           concatenate(vector(data, meth, num), arguments),
+           concatenate(vector(meth, data), arguments),
            calling-convention: $llvm-calling-convention-c)
       end ins--if
     end ins--if
@@ -1374,11 +1630,9 @@ define single-method outer entry-point-descriptor unrestricted-keyed-single-meth
 
       // Chain to the method's MEP
       let parameter-types
-        = make(<simple-object-vector>, size: num + 3);
-      parameter-types[0] := $llvm-object-pointer-type; // next
-      parameter-types[1] := $llvm-object-pointer-type; // function
-      parameter-types[2] := be.%type-table["iWord"]; // argument count
-      fill!(parameter-types, $llvm-object-pointer-type, start: 3);
+        = make(<simple-object-vector>,
+               size: num + 2,
+               fill: $llvm-object-pointer-type);
       let mep-type
         = make(<llvm-function-type>,
                return-type: llvm-reference-type(be, be.%mv-struct-type),
@@ -1387,7 +1641,7 @@ define single-method outer entry-point-descriptor unrestricted-keyed-single-meth
       let mep-cast = ins--bitcast(be, mep, llvm-pointer-to(be, mep-type));
       ins--tail-call
         (be, mep-cast,
-         concatenate(vector(data, meth, num), arguments),
+         concatenate(vector(meth, data), arguments),
          calling-convention: $llvm-calling-convention-c)
     end ins--if
   end if
