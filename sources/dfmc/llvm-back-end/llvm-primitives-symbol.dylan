@@ -274,3 +274,53 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
                              i32(word-size), $llvm-false));
   res
 end;
+
+
+/// Fixups
+
+define side-effecting stateless dynamic-extent auxiliary &runtime-primitive-descriptor primitive-symbol-fixup
+    (fixup-table :: <raw-pointer>, count :: <raw-integer>) => ();
+  let word-size = back-end-word-size(be);
+  let m = be.llvm-builder-module;
+
+  let fixup-table-cast
+    = ins--bitcast(be, fixup-table,
+                   llvm-pointer-to(be, be.llvm-heap-fixup-entry-llvm-type));
+
+  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
+  let null = make(<llvm-null-constant>, type: $llvm-object-pointer-type);
+  ins--iterate loop (be, i = 0, current-symbol = null, current-resolved = null)
+     let cmp = ins--icmp-slt(be, i, count);
+     ins--if (be, cmp)
+       let inc = ins--add(be, i, 1);
+
+       // Retrieve the symbol for this table entry
+       let symbol-ptr = ins--gep-inbounds(be, fixup-table-cast, i, i32(0));
+       let symbol = ins--load(be, symbol-ptr, alignment: word-size);
+       let symbol-cmp = ins--icmp-eq(be, symbol, current-symbol);
+       let resolved-symbol
+         = ins--if (be, symbol-cmp)
+             // Same symbol as last iteration
+             current-resolved
+           ins--else
+             // Different symbol; resolve it by calling %resolve-symbol
+             let resolve-iep = dylan-value(#"%resolve-symbol").^iep;
+             let resolve-iep-global
+               = llvm-builder-global(be, emit-name(be, m, resolve-iep));
+             let resolved-mv
+               = op--call(be, resolve-iep-global, vector(symbol, undef, undef),
+                          type: llvm-reference-type(be, be.%mv-struct-type),
+                          calling-convention:
+                            llvm-calling-convention(be, resolve-iep));
+             ins--extractvalue(be, resolved-mv, 0);
+           end ins--if;
+
+         // Retrieve the address to fix up
+         let heapref-ptr = ins--gep-inbounds(be, fixup-table-cast, i, i32(1));
+         let heapref = ins--load(be, heapref-ptr, alignment: word-size);
+
+         ins--store(be, resolved-symbol, heapref);
+         loop(inc, symbol, resolved-symbol);
+     end ins--if;
+  end ins--iterate;
+end;

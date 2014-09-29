@@ -58,6 +58,8 @@ define module dfmc-llvm-back-end
     llvm-c-function-type,
     llvm-entry-point-info,
 
+    llvm-heap-fixup-entry-llvm-type,
+
     <llvm-primitive-descriptor>,
     primitive-attributes,
     primitive-generator,

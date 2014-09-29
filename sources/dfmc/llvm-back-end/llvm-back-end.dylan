@@ -13,6 +13,9 @@ define abstract class <llvm-back-end> (<back-end>, <llvm-builder>)
   constant slot %type-table :: <mutable-explicit-key-collection>
     = make(<string-table>);
 
+  // Heap fixup table entry type
+  slot llvm-heap-fixup-entry-llvm-type :: <llvm-type>;
+
   // LLVM type for each defined <&raw-type> instance
   constant slot %raw-type-table :: <object-table>
     = make(<object-table>);

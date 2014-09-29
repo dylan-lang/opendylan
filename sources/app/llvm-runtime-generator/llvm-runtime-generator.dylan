@@ -46,7 +46,8 @@ define constant $runtime-referenced-functions
       #"%slotacc-single-Q-instance-setter",
       #"%slotacc-single-Q-class-setter",
       #"%slotacc-repeated-instance-getter",
-      #"%slotacc-repeated-instance-setter"];
+      #"%slotacc-repeated-instance-setter",
+      #"%resolve-symbol"];
 
 define constant $runtime-referenced-variables
   = #[#"$direct-object-mm-wrappers"];

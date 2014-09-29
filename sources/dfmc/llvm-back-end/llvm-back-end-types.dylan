@@ -136,6 +136,17 @@ define method initialize-type-table
                                   element-type: t["iWord"])));
   placeholder.llvm-placeholder-type-forward
     := llvm-pointer-to(back-end, t[mm-name]);
+
+  // Heap fixup table struct
+  let heap-fixup-struct-name = "struct.heapfixup";
+  back-end.llvm-heap-fixup-entry-llvm-type
+    := make(<llvm-struct-type>,
+            name: heap-fixup-struct-name,
+            elements: vector(// Heap object
+                             $llvm-object-pointer-type,
+                             // Heap reference
+                             llvm-pointer-to(back-end,
+                                             $llvm-object-pointer-type)));
 end method;
 
 // Register each of the built-in types in a new module's type symbol table

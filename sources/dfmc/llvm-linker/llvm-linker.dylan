@@ -145,6 +145,104 @@ define method emit-indirection-definitions
 end method;
 
 
+/// Fixups
+
+define constant $system-init-fixups-tag = "fixups";
+
+define method emit-fixups-elements
+    (back-end :: <llvm-back-end>, m :: <llvm-module>, heap, name :: <string>)
+ => (elements :: <sequence>);
+  let fixup-struct-type = back-end.llvm-heap-fixup-entry-llvm-type;
+  let fixup-ref-type = fixup-struct-type.llvm-struct-type-elements[1];
+
+  let fixups-elements = make(<stretchy-object-vector>);
+  for (refs in heap.heap-load-bound-references)
+    let indirect? = #f;
+    for (ref in refs)
+      let symbol = ref.load-bound-referenced-object;
+      let symbol-ref = emit-reference(back-end, m, symbol);
+      let fixup = emit-fixup(back-end, m, ref);
+      if (fixup)
+        llvm-constrain-type(fixup.llvm-value-type, fixup-ref-type);
+        add!(fixups-elements,
+             make(<llvm-aggregate-constant>,
+                  type: fixup-struct-type,
+                  aggregate-values: vector(symbol-ref, fixup)));
+      elseif (~indirect?)
+        let indirection-name
+          = concatenate($indirection-prefix, emit-name(back-end, m, symbol));
+        let indirection = llvm-builder-global(back-end, indirection-name);
+        add!(fixups-elements,
+             make(<llvm-aggregate-constant>,
+                  type: fixup-struct-type,
+                  aggregate-values: vector(symbol-ref, indirection)));
+        indirect? := #t;
+      end if;
+    end for;
+  end for;
+  fixups-elements
+end method;
+
+define method emit-fixup
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     ref :: <load-bound-binding-reference>)
+ => (fixup :: <llvm-constant-value>);
+  let name = emit-name(back-end, m, ref.load-bound-referencing-binding);
+  llvm-builder-global(back-end, name)
+end method;
+
+define method emit-fixup
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     ref :: <load-bound-instance-slot-reference>)
+ => (fixup :: <llvm-constant-value>);
+  let object = ref.load-bound-referencing-object;
+  let name = emit-name(back-end, m, object);
+  let object-ref = llvm-builder-global(back-end, name);
+
+  let header-words = dylan-value(#"$number-header-words");
+  let slot-descriptor = ref.load-bound-referencing-slot;
+  let slot-offset
+    = header-words + ^slot-offset(slot-descriptor, object.^object-class);
+  make(<llvm-gep-constant>,
+       in-bounds?: #t,
+       operands: vector(object-ref,
+                        back-end.llvm-builder-value-function(back-end, 0),
+                        make(<llvm-integer-constant>,
+                             type: $llvm-i32-type,
+                             integer: slot-offset)))
+end method;
+
+define method emit-fixup
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     ref :: <load-bound-repeated-slot-reference>)
+ => (fixup :: <llvm-constant-value>);
+  let object = ref.load-bound-referencing-object;
+  let name = emit-name(back-end, m, object);
+  let object-ref = llvm-builder-global(back-end, name);
+
+  let header-words = dylan-value(#"$number-header-words");
+  let slot-descriptor = ref.load-bound-referencing-slot;
+  let index = ref.load-bound-referencing-slot-index;
+  let slot-offset
+    = header-words + ^slot-offset(slot-descriptor, object.^object-class);
+  make(<llvm-gep-constant>,
+       in-bounds?: #t,
+       operands: vector(object-ref,
+                        back-end.llvm-builder-value-function(back-end, 0),
+                        make(<llvm-integer-constant>,
+                             type: $llvm-i32-type,
+                             integer: slot-offset),
+                        back-end.llvm-builder-value-function(back-end, index)))
+end method;
+
+define method emit-fixup
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     ref :: <load-bound-code-reference>)
+ => (fixup :: singleton(#f));
+  #f
+end method;
+
+
 /// Per-compilation-unit initialization functions
 
 define constant $system-init-code-tag = "for_system";
@@ -217,6 +315,39 @@ define method emit-init-code-definition
               calling-convention: $llvm-calling-convention-c);
     ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
 
+    // Generate the fixups table and a call to the fixups primitive
+    let fixups-elements
+      = emit-fixups-elements(back-end, m, heap, name);
+    unless (empty?(fixups-elements))
+      let fixups-type
+        = make(<llvm-array-type>,
+               size: fixups-elements.size,
+               element-type: fixups-elements.first.llvm-value-type);
+      let fixups-global
+        = make(<llvm-global-variable>,
+               name: concatenate(name, $system-init-fixups-tag),
+               type: llvm-pointer-to(back-end, fixups-type),
+               initializer: make(<llvm-aggregate-constant>,
+                                 type: fixups-type,
+                                 aggregate-values: fixups-elements),
+               constant?: #t,
+               linkage: #"internal");
+      llvm-builder-define-global(back-end,
+                                 fixups-global.llvm-global-name,
+                                 fixups-global);
+
+      let fixups-table-cast
+        = make(<llvm-cast-constant>,
+               operator: #"bitcast",
+               type: $llvm-object-pointer-type,
+               operands: vector(fixups-global));
+      let fixups-primitive
+        = $llvm-primitive-descriptors[#"primitive-symbol-fixup"];
+      fixups-primitive.primitive-emitter(back-end,
+                                         fixups-table-cast,
+                                         fixups-elements.size);
+    end unless;
+
     for (code in heap.heap-root-system-init-code)
       // Emit the generated init function
       emit-definition(back-end, m, code.^iep);
@@ -230,7 +361,7 @@ define method emit-init-code-definition
     
     ins--ret(back-end);
 
-    unless (empty?(heap.heap-root-system-init-code))
+    unless (empty?(fixups-elements) & empty?(heap.heap-root-system-init-code))
       let global = llvm-builder-define-global(back-end, system-init-name,
                                               back-end.llvm-builder-function);
 
