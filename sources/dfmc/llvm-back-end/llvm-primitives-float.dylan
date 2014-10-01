@@ -7,6 +7,38 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Single Float
 
+define constant $libm-attribute-list
+  = make(<llvm-attribute-list>,
+	 function-attributes:
+	   llvm-attribute-merge($llvm-attribute-nounwind,
+				$llvm-attribute-readnone));
+
+define method op--call-libm
+    (be :: <llvm-back-end>, name :: <string>, args :: <sequence>,
+     #rest options)
+  => (result :: <llvm-value>)
+  unless (llvm-builder-global-defined?(be, name))
+    let float-type
+      = if (name.last == 'f') $llvm-float-type else $llvm-double-type end if;
+    let function-type
+      = make(<llvm-function-type>,
+	     parameter-types:
+	       make(<vector>, size: args.size, fill: float-type),
+	     return-type: float-type,
+	     varargs?: #f);
+    let global
+      = make(<llvm-function>,
+	     name: name,
+	     linkage: #"external",
+	     type: llvm-pointer-to(be, function-type),
+	     attribute-list: $libm-attribute-list);
+    llvm-builder-define-global(be, name, global);
+  end unless;
+  apply(ins--call, be, llvm-builder-global(be, name), args,
+	attribute-list: $libm-attribute-list,
+	options)
+end method;
+
 define side-effect-free stateless dynamic-extent mapped &primitive-descriptor primitive-single-float-as-raw
     (x :: <single-float>) => (r :: <raw-single-float>);
   let ptr
@@ -139,24 +171,24 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   ins--call-intrinsic(be, "llvm.cos", vector(x))
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-single-float-tan
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-single-float-tan
     (x :: <raw-single-float>) => (z :: <raw-single-float>);
-  //---*** Fill this in...
+  op--call-libm(be, "tanf", vector(x))
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-single-float-asin
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-single-float-asin
     (x :: <raw-single-float>) => (z :: <raw-single-float>);
-  //---*** Fill this in...
+  op--call-libm(be, "asinf", vector(x))
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-single-float-acos
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-single-float-acos
     (x :: <raw-single-float>) => (z :: <raw-single-float>);
-  //---*** Fill this in...
+  op--call-libm(be, "acosf", vector(x))
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-single-float-atan
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-single-float-atan
     (x :: <raw-single-float>) => (z :: <raw-single-float>);
-  //---*** Fill this in...
+  op--call-libm(be, "atanf", vector(x))
 end;
 
 
@@ -318,24 +350,24 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   ins--call-intrinsic(be, "llvm.cos", vector(x))
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-double-float-tan
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-double-float-tan
     (x :: <raw-double-float>) => (z :: <raw-double-float>);
-  //---*** Fill this in...
+  op--call-libm(be, "tan", vector(x))
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-double-float-asin
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-double-float-asin
     (x :: <raw-double-float>) => (z :: <raw-double-float>);
-  //---*** Fill this in...
+  op--call-libm(be, "asin", vector(x))
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-double-float-acos
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-double-float-acos
     (x :: <raw-double-float>) => (z :: <raw-double-float>);
-  //---*** Fill this in...
+  op--call-libm(be, "acos", vector(x))
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-double-float-atan
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-double-float-atan
     (x :: <raw-double-float>) => (z :: <raw-double-float>);
-  //---*** Fill this in...
+  op--call-libm(be, "atan", vector(x))
 end;
 
 
