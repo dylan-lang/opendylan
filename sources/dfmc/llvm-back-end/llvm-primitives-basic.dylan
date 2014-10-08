@@ -558,7 +558,7 @@ define side-effect-free stateless dynamic-extent mapped &runtime-primitive-descr
   let raw-x = op--raw-pointer-cast(be, x);
   let ptr
     = call-primitive(be, primitive-copy-descriptor, number-bytes, raw-x);
-  let copied-vector = op--object-pointer-cast(be, x, class);
+  let copied-vector = op--object-pointer-cast(be, ptr, class);
   ins--br(be, return-common);
 
   // Return the canonical empty vector it the input vector was empty,
