@@ -10,7 +10,7 @@ define module smtp-client
   use common-dylan;
   use format-out;
   use format,
-    import: { format };
+    import: { format, format-to-string };
   use regular-expressions;
   use sockets;
   use streams;
