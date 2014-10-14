@@ -46,23 +46,24 @@ define method llvm-section-name
     (back-end :: <llvm-darwin-back-end>, section :: <symbol>,
      #key thread-local? = #f)
  => (name :: false-or(<string>));
-  select (section)
-    #"code"                    => #f; // Code (usually "__TEXT,__text")
-    #"init-code"               => "__TEXT,__init";  // Initialization code
-    #"data", #"ambiguous-data" => "__DATA,__dydat"; // Ambiguously traced data
-    #"objects"                 => "__DATA,__dyobj"; // Dylan objects
-    #"variables"               =>                   // Dylan roots (variables)
-      if (thread-local?)
-        #f
-      else
-        "__DATA,__dyvar";
-      end;
-    #"untraced-objects",                            // Untraced Dylan objects
-    #"untraced-data"           =>                   // Untraced random data
-      if (thread-local?)
-        #f
-      else
-        "__DATA,__dyutr"
-      end;
-  end select
+  // select (section)
+  //   #"code"                    => #f; // Code (usually "__TEXT,__text")
+  //   #"init-code"               => "__TEXT,__init";  // Initialization code
+  //   #"data", #"ambiguous-data" => "__DATA,__dydat"; // Ambiguously traced data
+  //   #"objects"                 => "__DATA,__dyobj"; // Dylan objects
+  //   #"variables"               =>                   // Dylan roots (variables)
+  //     if (thread-local?)
+  //       #f
+  //     else
+  //       "__DATA,__dyvar";
+  //     end;
+  //   #"untraced-objects",                            // Untraced Dylan objects
+  //   #"untraced-data"           =>                   // Untraced random data
+  //     if (thread-local?)
+  //       #f
+  //     else
+  //       "__DATA,__dyutr"
+  //     end;
+  // end select
+  #f
 end method;
