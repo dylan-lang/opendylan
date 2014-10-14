@@ -640,16 +640,51 @@ define side-effecting stateless indefinite-extent can-unwind mapped-parameter &r
  => (#rest values)
   let word-size = back-end-word-size(be);
   let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
+  let function-class :: <&class> = dylan-value(#"<function>");
 
   let fn-unmapped = ins--bitcast(be, fn, $llvm-object-pointer-type);
 
   // Retrieve the XEP function pointer
-  let xep-slot-ptr = op--getslotptr(be, fn, #"<function>", #"xep");
+  let xep-slot-ptr = op--getslotptr(be, fn, function-class, #"xep");
   let xep = ins--load(be, xep-slot-ptr, alignment: word-size);
 
   // Read the size of the arguments vector
-  let vector-size
+  let arguments-size
     = call-primitive(be, primitive-vector-size-descriptor, arguments);
+
+  // Retrieve the last argument (a vector of arguments to pass)
+  let last-index = ins--sub(be, arguments-size, 1);
+  let last-argument
+    = call-primitive(be, primitive-vector-element-descriptor,
+                     arguments, last-index);
+  let last-argument-mapped
+    = op--object-pointer-cast(be, last-argument, sov-class);
+  let last-argument-size
+    = call-primitive(be, primitive-vector-size-descriptor,
+                     last-argument-mapped);
+
+  // Allocate a buffer for all of the arguments
+  let argument-count = ins--add(be, last-index, last-argument-size);
+  let buf = ins--alloca(be, $llvm-object-pointer-type, argument-count,
+                        alignment: word-size);
+  let buf-cast = ins--bitcast(be, buf, $llvm-object-pointer-type);
+
+  // Copy values from arguments into the buffer
+  let zero = llvm-back-end-value-function(be, 0);
+  let src1 = op--getslotptr(be, arguments, sov-class,
+                            #"vector-element", 0);
+  call-primitive(be, primitive-replace!-descriptor,
+                 buf-cast, zero, zero,
+                 src1, zero, zero,
+                 last-index);
+
+  // Copy values from last-argument into the buffer
+  let src2 = op--getslotptr(be, last-argument-mapped, sov-class,
+                            #"vector-element", 0);
+  call-primitive(be, primitive-replace!-descriptor,
+                 buf-cast, last-index, zero,
+                 src2, zero, zero,
+                 last-argument-size);
 
   // Create a basic block for each case
   let jump-table
@@ -663,7 +698,7 @@ define side-effecting stateless indefinite-extent can-unwind mapped-parameter &r
   let return-bb = make(<llvm-basic-block>, name: "bb.return");
 
   // Branch to the appropriate case
-  ins--switch(be, vector-size, default-bb, jump-table);
+  ins--switch(be, argument-count, default-bb, jump-table);
 
   // Generate all of the cases
   let result-phi-arguments = make(<stretchy-object-vector>);
@@ -673,13 +708,15 @@ define side-effecting stateless indefinite-extent can-unwind mapped-parameter &r
     // Common XEP parameters
     let parameter-values = make(<simple-object-vector>, size: count + 2);
     parameter-values[0] := fn-unmapped;
-    parameter-values[1] := vector-size;
+    parameter-values[1] := argument-count;
 
     // Retrieve argument values
     for (i from 0 below count)
       parameter-values[2 + i]
-        := call-primitive(be, primitive-vector-element-descriptor,
-                          arguments, llvm-back-end-value-function(be, i));
+        := begin
+             let element-ptr = ins--gep(be, buf, i);
+             ins--load(be, element-ptr, alignment: word-size);
+           end;
     end for;
 
     // Cast to the appropriate XEP type
