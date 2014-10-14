@@ -256,13 +256,13 @@ define method emit-definition-section
      o :: type-union(<uninterned-symbol>, <string>,
                      <&machine-word>, <&single-float>, <&double-float>,
                      <&mm-wrapper>, <&signature>))
- => (section-name :: <string>);
+ => (section-name :: false-or(<string>));
   llvm-section-name(back-end, #"untraced-objects");
 end method;
 
 // Other objects contain mutable references and need to be traced.
 define method emit-definition-section
-    (back-end :: <llvm-back-end>, o) => (section-name :: <string>)
+    (back-end :: <llvm-back-end>, o) => (section-name :: false-or(<string>))
   llvm-section-name(back-end, #"objects");
 end method;
 
