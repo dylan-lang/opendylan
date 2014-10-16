@@ -88,6 +88,18 @@ define method emit-object
        float: o.^raw-object-value);
 end method;
 
+define method emit-object
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     o :: type-union(<&raw-pointer>, <&raw-c-pointer>, <&raw-byte-string>))
+ => (reference :: <llvm-constant-value>)
+  if (zero?(o.^raw-object-value))
+    make(<llvm-null-constant>,
+         type: llvm-reference-type(back-end, dylan-value(#"<raw-pointer>")))
+  else
+    error("raw pointer value %= not supported", o.^raw-object-value)
+  end
+end method;
+
 // Integral raw objects
 define method emit-object
     (back-end :: <llvm-back-end>, m :: <llvm-module>, o :: <&raw-object>)
