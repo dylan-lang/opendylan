@@ -667,7 +667,7 @@ define module-with-models dfmc-modeling
       raw-c-unsigned-char, // <&raw-c-unsigned-char>,
       raw-c-signed-short, // <&raw-c-signed-short>,
       raw-c-unsigned-short, // <&raw-c-unsigned-short>,
-      raw-c-signed-int, // <&raw-c-signed-int>,
+      raw-c-signed-int, <&raw-c-signed-int>,
       raw-c-unsigned-int, // <&raw-c-unsigned-int>,
       raw-c-signed-long, // <&raw-c-signed-long>,
       raw-c-unsigned-long, // <&raw-c-unsigned-long>,
@@ -677,7 +677,7 @@ define module-with-models dfmc-modeling
       raw-c-double, // <&raw-c-double>,
       raw-c-long-double, // <&raw-c-long-double>,
       raw-c-void, // <&raw-c-void>,
-      raw-c-pointer, // <&raw-c-pointer>,
+      raw-c-pointer, <&raw-c-pointer>,
       raw-c-size-t, raw-c-ssize-t,
       raw-boolean, <&raw-boolean>,
       raw-byte-character, <&raw-byte-character>, // TODO: OBSOLETE
