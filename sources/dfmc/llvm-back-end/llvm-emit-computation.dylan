@@ -836,6 +836,47 @@ define method emit-call
            calling-convention: $llvm-calling-convention-fast)
 end method;
 
+define method emit-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <method-apply>, f :: <&keyword-method>)
+ => (call :: <llvm-value>);
+  let word-size = back-end-word-size(back-end);
+
+  let nreq = spec-argument-number-required(f.signature-spec);
+  if (size(c.arguments) = nreq + 1)
+    let fn = emit-reference(back-end, m, c.function);
+    let fn-cast = op--object-pointer-cast(back-end, fn, #"<keyword-method>");
+    let mep-slot-ptr
+      = op--getslotptr(back-end, fn-cast, #"<keyword-method>", #"mep");
+    let mep = ins--load(back-end, mep-slot-ptr, alignment: word-size);
+
+    let next = emit-reference(back-end, m, c.next-methods);
+
+    // Cast to the appropriate MEP type
+    let parameter-types
+      = make(<simple-object-vector>,
+             size: c.arguments.size + 2,
+             fill: $llvm-object-pointer-type);
+    let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+    let mep-type
+      = make(<llvm-function-type>,
+             return-type: return-type,
+             parameter-types: parameter-types,
+             varargs?: #f);
+    let mep-cast
+      = ins--bitcast(back-end, mep, llvm-pointer-to(back-end, mep-type));
+
+    op--call(back-end, mep-cast,
+             concatenate(vector(fn, next),
+                         map(curry(emit-reference, back-end, m),
+                             c.arguments)),
+             type: return-type,
+             calling-convention: $llvm-calling-convention-c)
+  else
+    next-method()
+  end if
+end method;
+
 define method emit-slot-ptr
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <any-slot-value>)
  => (slot-ptr :: <llvm-value>, slot-type :: <llvm-type>,
