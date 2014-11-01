@@ -101,8 +101,8 @@ define function op--byte-element-ptr
 
   let x-ptr = ins--bitcast(be, x, $llvm-i8*-type);
   let offset-scaled = ins--mul(be, offset, word-size);
-  let offset = ins--add(be, offset-scaled, offset);
-  ins--gep(be, x-ptr, offset)
+  let final-offset = ins--add(be, offset-scaled, byte-offset);
+  ins--gep(be, x-ptr, final-offset)
 end function;
 
 define side-effect-free dynamic-extent &primitive-descriptor primitive-element
