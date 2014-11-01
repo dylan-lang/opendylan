@@ -24,13 +24,13 @@ include $(SYSTEM_BUILD_SCRIPTS)/posix-build.jam ;
 #
 
 actions together LinkDLL bind NEEDLIBS {
-  $(LINK) -dynamiclib -o $(<:Q) -install_name @rpath/$(<:BS=$(SUFDLL)) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS) ;
-  $(DSYMUTIL) $(<:Q) ;
-  $(STRIP) -S $(<:Q) ;
+  $(LINK) -dynamiclib -o $(<:Q) -install_name @rpath/$(<:BS=$(SUFDLL)) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS) &&
+  $(DSYMUTIL) $(<:Q) &&
+  $(STRIP) -S $(<:Q)
 }
 
 actions LinkEXE bind NEEDLIBS {
-  $(LINK) -o $(<:Q) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS) ;
-  $(DSYMUTIL) $(<:Q) ;
-  $(STRIP) -S $(<:Q) ;
+  $(LINK) -o $(<:Q) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS) &&
+  $(DSYMUTIL) $(<:Q) &&
+  $(STRIP) -S $(<:Q)
 }
