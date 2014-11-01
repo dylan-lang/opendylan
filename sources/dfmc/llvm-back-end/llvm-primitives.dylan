@@ -654,3 +654,13 @@ define method llvm-runtime-variable
     llvm-builder-define-global(back-end, mangled-name, global)
   end
 end method;
+
+define method llvm-runtime-variable
+    (back-end :: <llvm-back-end>, module :: <llvm-module>,
+     name :: <symbol>,
+     #key initialized? = #f)
+ => (reference :: <llvm-constant-value>)
+  llvm-runtime-variable(back-end, module,
+                        $llvm-runtime-variable-descriptors[name],
+                        initialized?: initialized?)
+end method;
