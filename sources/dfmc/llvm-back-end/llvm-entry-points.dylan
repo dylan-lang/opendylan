@@ -528,10 +528,175 @@ define entry-point-descriptor apply-xep
 end entry-point-descriptor;
 
 define entry-point-descriptor apply-mep
-    (next :: <list>, function :: <lambda>, #rest arguments) => (#rest values)
-  // FIXME placeholder
-  ins--call-intrinsic(be, "llvm.trap", #[]);
-  ins--unreachable(be);
+    (next :: <list>, meth :: <lambda>, #rest arguments) => (#rest values);
+  if (empty?(arguments))
+    // The 0-argument apply-mep will never be called
+    make(<llvm-undef-constant>,
+         type: llvm-reference-type(be, be.%mv-struct-type))
+  else
+    let word-size = back-end-word-size(be);
+    let return-type = llvm-reference-type(be, be.%mv-struct-type);
+    let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
+
+    let lambda-class :: <&class> = dylan-value(#"<lambda>");
+    let meth-cast = op--object-pointer-cast(be, meth, lambda-class);
+
+    // Retrieve the MEP from the method
+    let mep-slot-ptr = op--getslotptr(be, meth-cast, lambda-class, #"mep");
+    let mep = ins--load(be, mep-slot-ptr, alignment: word-size);
+
+    // Extract the required arguments count
+    let (signature, raw-properties)
+      = op--function-signature-properties(be, meth-cast, lambda-class);
+    let nreq = ins--and(be, raw-properties, $signature-number-required-mask);
+
+    // Determine which calling convention applies
+    let km-class :: <&class> = dylan-value(#"<keyword-method>");
+    let cmp = op--heap-object-subtype-bit-instance-cmp(be, meth, km-class);
+    ins--if (be, cmp)
+      // Determine if there are extra arguments
+      let excess = ins--sub(be, num - 1, nreq);
+
+      // Create a basic block for each case
+      let min-count
+        = if (num = 1) -$entry-point-argument-count else 0 end if;
+      let jump-table = make(<stretchy-object-vector>);
+      for (count from min-count below num)
+        let name
+          = if (count < 0)
+              format-to-string("bb.deficit%d", -count)
+            else
+              format-to-string("bb.surplus%d", count)
+            end if;
+        add!(jump-table, count);
+        add!(jump-table, make(<llvm-basic-block>, name: name));
+      end;
+      let default-bb = make(<llvm-basic-block>, name: "bb.default");
+      let return-bb = make(<llvm-basic-block>, name: "bb.return");
+
+      // Branch to the appropriate case
+      ins--switch(be, excess, default-bb, jump-table);
+
+      // Generate all of the cases
+      let result-phi-arguments = make(<stretchy-object-vector>);
+      for (i from 0 below jump-table.size by 2)
+        let count = jump-table[i];
+        ins--block(be, jump-table[i + 1]);
+
+        let new-arguments
+          = if (count < 0)
+              // Allocate a new (reduced) optionals vector
+              let optionals-cast
+                = op--object-pointer-cast(be, arguments.last, sov-class);
+              let optionals-size
+                = call-primitive(be, primitive-vector-size-descriptor,
+                                 optionals-cast);
+              let cmp = ins--icmp-slt(be, optionals-size, -count);
+              ins--if (be, cmp)
+                op--argument-count-error(be, meth, optionals-size);
+              end ins--if;
+
+              let new-optionals-size = ins--add(be, count, optionals-size);
+              let new-optionals
+                = op--stack-allocate-vector(be, new-optionals-size);
+
+              // Copy the contents of the original vector into the new one
+              let zero = llvm-back-end-value-function(be, 0);
+              let src = op--getslotptr(be, optionals-cast, sov-class,
+                                       #"vector-element", -count);
+              let new-optionals-cast
+                = op--object-pointer-cast(be, new-optionals, sov-class);
+              let dst = op--getslotptr(be, new-optionals-cast, sov-class,
+                                       #"vector-element", 0);
+              call-primitive(be, primitive-replace!-descriptor,
+                             dst, zero, zero,
+                             src, zero, zero,
+                             new-optionals-size);
+
+              // Extract needed arguments from the optionals vector
+              let extracted-arguments
+                = map(method (i)
+                        call-primitive(be, primitive-vector-element-descriptor,
+                                       optionals-cast,
+                                       llvm-back-end-value-function(be, i))
+                      end, range(below: -count));
+              concatenate(extracted-arguments, vector(new-optionals))
+            elseif (zero?(count))
+              arguments
+            else
+              // Allocate a new (expanded) optionals vector
+              let optionals-cast
+                = op--object-pointer-cast(be, arguments.last, sov-class);
+              let optionals-size
+                = call-primitive(be, primitive-vector-size-descriptor,
+                                 optionals-cast);
+
+              let new-optionals-size = ins--add(be, count, optionals-size);
+              let new-optionals
+                = op--stack-allocate-vector(be, new-optionals-size);
+
+              // Store the excess arguments at the beginning of the new vector
+              for (i from 0 below count)
+                call-primitive(be, primitive-vector-element-setter-descriptor,
+                               arguments[num - 1 - count + i], new-optionals,
+                               llvm-back-end-value-function(be, i));
+              end for;
+
+              // Copy the contents of the original vector into the new one
+              let zero = llvm-back-end-value-function(be, 0);
+              let src = op--getslotptr(be, optionals-cast, sov-class,
+                                       #"vector-element", 0);
+              let new-optionals-cast
+                = op--object-pointer-cast(be, new-optionals, sov-class);
+              let dst = op--getslotptr(be, new-optionals-cast, sov-class,
+                                       #"vector-element", count);
+              call-primitive(be, primitive-replace!-descriptor,
+                             dst, zero, zero,
+                             src, zero, zero,
+                             optionals-size);
+
+              concatenate(copy-sequence(arguments, end: num - 1 - count),
+                          vector(new-optionals))
+            end if;
+
+        // Cast to the appropriate MEP type
+        let parameter-types
+          = make(<simple-object-vector>,
+                 size: 2 + num - count,
+                 fill: $llvm-object-pointer-type);
+        let mep-type
+          = make(<llvm-function-type>,
+                 return-type: return-type,
+                 parameter-types: parameter-types,
+                 varargs?: #f);
+        let mep-cast
+          = ins--bitcast(be, mep, llvm-pointer-to(be, mep-type));
+
+        // Call the method
+        let result
+          = op--call(be, mep-cast,
+                     concatenate(vector(meth, next), new-arguments),
+                     type: return-type,
+                     calling-convention: $llvm-calling-convention-c);
+        add!(result-phi-arguments, result);
+        add!(result-phi-arguments, be.llvm-builder-basic-block);
+        ins--br(be, return-bb);
+      end for;
+
+      // Unhandled case
+      ins--block(be, default-bb);
+      ins--call-intrinsic(be, "llvm.trap", vector());
+      ins--unreachable(be);
+
+      // Return
+      ins--block(be, return-bb);
+      ins--phi(be, result-phi-arguments)
+    ins--else
+      // FIXME
+      ins--call-intrinsic(be, "llvm.trap", #[]);
+      ins--unreachable(be);
+    end ins--if
+  end if
 end entry-point-descriptor;
 
 
