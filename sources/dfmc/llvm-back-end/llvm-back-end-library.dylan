@@ -66,6 +66,8 @@ define module dfmc-llvm-back-end
     llvm-primitive-signature,
 
     <llvm-runtime-variable-descriptor>,
+    runtime-variable-type-name,
+    runtime-variable-attributes,
     $llvm-runtime-variable-descriptors,
     llvm-runtime-variable,
 

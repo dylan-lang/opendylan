@@ -72,6 +72,31 @@ define method print-primitive-c-function-declaration
   format(stream, ");\n");
 end method;
 
+define method print-runtime-variable-declaration
+    (be :: <llvm-back-end>, name :: <symbol>,
+     descriptor :: <llvm-runtime-variable-descriptor>,
+     stream :: <stream>)
+ => ()
+  format(stream, "extern ");
+
+  let thread-local?
+    = member?(#"thread-local", descriptor.runtime-variable-attributes)
+    & llvm-thread-local-support?(be);
+  if (thread-local?)
+    format(stream, "__thread ");
+  end if;
+
+  let type-name = descriptor.runtime-variable-type-name;
+  select (type-name)
+    #"<teb>" =>
+      format(stream, "struct TEB");
+    otherwise =>
+      print-primitive-c-type(be, dylan-value(type-name), stream);
+  end select;
+
+  format(stream, " %s;\n", raw-mangle(be, name));
+end method;
+
 define method print-primitive-c-type
     (be :: <llvm-back-end>, type :: <&raw-type>, stream :: <stream>)
  => ();

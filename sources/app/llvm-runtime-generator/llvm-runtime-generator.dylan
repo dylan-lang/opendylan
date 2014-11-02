@@ -277,6 +277,14 @@ define function generate-runtime-header
       end;
     end for;
 
+    // Generate declarations for runtime variables
+    for (descriptor :: <llvm-runtime-variable-descriptor>
+           keyed-by name :: <symbol> in $llvm-runtime-variable-descriptors)
+      format(stream, "// %s\n", name);
+      print-runtime-variable-declaration(be, name, descriptor, stream);
+      format(stream, "\n");
+    end for;
+
     format(stream, "#endif // LLVM_PLATFORM_RUNTIME_H_\n");
   end;
 end function;
