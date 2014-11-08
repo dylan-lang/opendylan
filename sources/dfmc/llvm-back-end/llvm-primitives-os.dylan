@@ -11,6 +11,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define side-effecting stateless dynamic-extent &c-primitive-descriptor primitive-exit-application
     (code :: <raw-integer>) => ();
 
+define runtime-variable *argc* :: <raw-c-signed-int>
+  = ^make(<&raw-c-signed-int>, value: 0);
+
+define runtime-variable *argv* :: <raw-c-pointer>
+  = ^make(<&raw-c-pointer>, value: 0);
+
 
 /// Support for keyboard-break handling
 
