@@ -110,7 +110,7 @@ AC_ARG_WITH(gc,
             AS_HELP_STRING([--with-gc=mps|boehm],
                            [Which GC (MPS or Boehm) to use.]))
 
-AS_IF([test x${with_gc} == x],
+AS_IF([test x${with_gc} = x],
       [
         with_gc=boehm
       ])
@@ -131,12 +131,12 @@ AC_MSG_CHECKING([which GC path to use])
 AC_MSG_RESULT(${with_gc_path})
 
 if test "$cross_compiling" != "yes"; then
-    AS_IF([test x${GC_USE_STATIC_BOEHM} == xtrue],
+    AS_IF([test x${GC_USE_STATIC_BOEHM} = xtrue],
           [
             GC_LIB_NAME=libgc.a
           ],
           [
-            AS_IF([test x${OPEN_DYLAN_TARGET_PLATFORM} == xx86-darwin -o x${OPEN_DYLAN_TARGET_PLATFORM} == xx86_64-darwin],
+            AS_IF([test x${OPEN_DYLAN_TARGET_PLATFORM} = xx86-darwin -o x${OPEN_DYLAN_TARGET_PLATFORM} = xx86_64-darwin],
                   [
                     GC_LIB_NAME=libgc.dylib
                   ],
@@ -146,7 +146,7 @@ if test "$cross_compiling" != "yes"; then
           ]
     )
 
-    AS_IF([test x${with_gc} == xmalloc],
+    AS_IF([test x${with_gc} = xmalloc],
           [
             GC_CFLAGS="-DGC_USE_MALLOC"
             GC_LFLAGS=""
@@ -155,9 +155,9 @@ if test "$cross_compiling" != "yes"; then
             GC_CHOICE="malloc"
           ]
     )
-    AS_IF([test x${with_gc} == xmps],
+    AS_IF([test x${with_gc} = xmps],
           [
-            AS_IF([test x${SUPPORT_GC_MPS} == xno],
+            AS_IF([test x${SUPPORT_GC_MPS} = xno],
               [
                 AC_MSG_ERROR([The platform that you are building for requires the Boehm GC.])
               ]
@@ -172,9 +172,9 @@ if test "$cross_compiling" != "yes"; then
             AC_CHECK_FILE([${with_gc_path}/code/lii4gc.gmk],[AC_MSG_ERROR([You have an old version of MPS and need to update.])],[])
           ]
     )
-    AS_IF([test x$with_gc == xboehm],
+    AS_IF([test x$with_gc = xboehm],
           [
-            AS_IF([test x${SUPPORT_GC_BOEHM} == xno],
+            AS_IF([test x${SUPPORT_GC_BOEHM} = xno],
                   [
                     AC_MSG_ERROR([The platform that you are building for requires the MPS GC.])
                   ])
@@ -188,7 +188,7 @@ if test "$cross_compiling" != "yes"; then
                                    ],
                                    [])
                   ])
-            AS_IF([test x${GC_LIBRARY} == x],
+            AS_IF([test x${GC_LIBRARY} = x],
                   [
                     AC_CHECK_FILE([/usr/lib/${GC_LIB_NAME}],
                                   [
@@ -212,11 +212,11 @@ if test "$cross_compiling" != "yes"; then
           ])
 fi
 
-AS_IF([test x${GC_CHOICE}x${GC_LIBRARY} == xboehmx],
+AS_IF([test x${GC_CHOICE}x${GC_LIBRARY} = xboehmx],
       [
         AC_MSG_ERROR([Could not find ${GC_LIB_NAME}. Please specify the path to the Boehm GC installation via --with-gc-path])
       ])
-AS_IF([test x${GC_CHOICE} == x],
+AS_IF([test x${GC_CHOICE} = x],
       [
         AC_MSG_ERROR([Invalid GC choice. Please select either 'boehm' or 'mps'.])
       ])
