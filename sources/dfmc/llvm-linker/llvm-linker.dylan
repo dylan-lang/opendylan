@@ -153,23 +153,56 @@ define constant $user-init-code-tag = "for_user";
 define constant $system-init-ctor-priority = 0;
 define constant $user-init-ctor-priority = 65535;
 
+define constant $init-code-function-type
+  = make(<llvm-function-type>,
+         return-type: $llvm-void-type,
+         parameter-types: #(),
+         varargs?: #f);
+define constant $init-code-function-ptr-type
+  = make(<llvm-pointer-type>, pointee: $init-code-function-type);
+
+define constant $ctor-struct-type
+    = make(<llvm-struct-type>,
+	   elements: vector($llvm-i32-type, $init-code-function-ptr-type));
+
+define method emit-ctor-entry
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     priority :: <integer>, init-function :: <llvm-value>)
+ => ();
+  let priority-constant
+    = make(<llvm-integer-constant>,
+           type: $llvm-i32-type, integer: priority);
+
+  let ctor-element
+    = make(<llvm-aggregate-constant>,
+           type: $ctor-struct-type,
+           aggregate-values: vector(priority-constant, init-function));
+
+  // Declare the constructors list
+  let ctor-type
+    = make(<llvm-array-type>,
+	   size: 1,
+	   element-type: $ctor-struct-type);
+  let ctor-global
+    = make(<llvm-global-variable>,
+	   name: "llvm.global_ctors",
+	   type: llvm-pointer-to(back-end, ctor-type),
+	   initializer: make(<llvm-aggregate-constant>,
+			     type: ctor-type,
+			     aggregate-values: vector(ctor-element)),
+           constant?: #f,
+	   linkage: #"appending");
+  llvm-builder-define-global(back-end,
+			     ctor-global.llvm-global-name,
+			     ctor-global);
+end method;
+
 define method emit-init-code-definition
     (back-end :: <llvm-back-end>, m :: <llvm-module>, heap, name :: <string>)
  => ();
-  let init-code-function-type
-    = make(<llvm-function-type>,
-           return-type: $llvm-void-type,
-           parameter-types: #(),
-           varargs?: #f);
-  let init-code-function-ptr-type
-    = llvm-pointer-to(back-end, init-code-function-type);
-
-  let ctor-struct-type
-    = make(<llvm-struct-type>,
-	   elements: vector($llvm-i32-type, init-code-function-ptr-type));
-  let ctor-elements = make(<stretchy-object-vector>);
-
   let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
+
+  let init-functions = make(<stretchy-object-vector>);
 
   // System init code
   block ()
@@ -177,11 +210,11 @@ define method emit-init-code-definition
     back-end.llvm-builder-function
       := make(<llvm-function>,
               name: system-init-name,
-              type: init-code-function-ptr-type,
+              type: $init-code-function-ptr-type,
               arguments: #(),
               linkage: #"internal",
               section: llvm-section-name(back-end, #"init-code"),
-              calling-convention: $llvm-calling-convention-fast);
+              calling-convention: $llvm-calling-convention-c);
     ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
 
     for (code in heap.heap-root-system-init-code)
@@ -196,17 +229,14 @@ define method emit-init-code-definition
     end for;
     
     ins--ret(back-end);
-    
-    let global = llvm-builder-define-global(back-end, system-init-name,
-					    back-end.llvm-builder-function);
 
-    // Add the init function to the constructor
-    let priority
-      = make(<llvm-integer-constant>,
-	     type: $llvm-i32-type, integer: $system-init-ctor-priority);
-    add!(ctor-elements, make(<llvm-aggregate-constant>,
-			     type: ctor-struct-type,
-			     aggregate-values: vector(priority, global)));
+    unless (empty?(heap.heap-root-system-init-code))
+      let global = llvm-builder-define-global(back-end, system-init-name,
+                                              back-end.llvm-builder-function);
+
+      // Add the init function to the constructor
+      emit-ctor-entry(back-end, m, $system-init-ctor-priority, global);
+    end unless;
   cleanup
     back-end.llvm-builder-function := #f;
   end block;
@@ -217,11 +247,11 @@ define method emit-init-code-definition
     back-end.llvm-builder-function
       := make(<llvm-function>,
               name: user-init-name,
-              type: init-code-function-ptr-type,
+              type: $init-code-function-ptr-type,
               arguments: #(),
-              linkage: #"internal",
+              linkage: #"external", // #"internal",
               section: llvm-section-name(back-end, #"init-code"),
-              calling-convention: $llvm-calling-convention-fast);
+              calling-convention: $llvm-calling-convention-c);
     ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
     
     for (code in heap.heap-root-init-code)
@@ -234,40 +264,14 @@ define method emit-init-code-definition
                 vector(undef, undef),
                 calling-convention: $llvm-calling-convention-fast);
     end for;
-    
+
     ins--ret(back-end);
 
-    let global = llvm-builder-define-global(back-end, user-init-name,
-					    back-end.llvm-builder-function);
-
-    // Add the init function to the constructor
-    let priority
-      = make(<llvm-integer-constant>,
-	     type: $llvm-i32-type, integer: $user-init-ctor-priority);
-    add!(ctor-elements, make(<llvm-aggregate-constant>,
-			     type: ctor-struct-type,
-			     aggregate-values: vector(priority, global)));
+    llvm-builder-define-global(back-end, user-init-name,
+                               back-end.llvm-builder-function);
   cleanup
     back-end.llvm-builder-function := #f;
   end block;
-
-  // Declare the constructors list
-  let ctor-type
-    = make(<llvm-array-type>,
-	   size: ctor-elements.size,
-	   element-type: ctor-struct-type);
-  let ctor-global
-    = make(<llvm-global-variable>,
-	   name: "llvm.global_ctors",
-	   type: llvm-pointer-to(back-end, ctor-type),
-	   initializer: make(<llvm-aggregate-constant>,
-			     type: ctor-type,
-			     aggregate-values: ctor-elements),
-           constant?: #f,
-	   linkage: #"appending");
-  llvm-builder-define-global(back-end,
-			     ctor-global.llvm-global-name,
-			     ctor-global);
 end method;
 
 
