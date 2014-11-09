@@ -1,0 +1,20 @@
+# bash programmable completion for dylan-compiler
+
+have dylan-compiler &&
+_dylan_compiler()
+{
+    local cur prev opts
+
+    COMPREPLY=()
+    _get_comp_words_by_ref cur prev
+    opts='-help -version -build -clean -verbose -dfm '
+
+    if [[ "$cur" == -* ]]; then
+        COMPREPLY=( $( compgen -W "$opts" -- "$cur" ) )
+    else
+        _filedir lid
+    fi
+
+    return 0
+} &&
+complete -F _dylan_compiler dylan-compiler

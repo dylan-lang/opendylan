@@ -12,6 +12,13 @@ XXX XX, 2014.
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
 * `Source code <https://github.com/dylan-lang/opendylan/tree/v2014.1>`_
 
+Bash Completion
+===============
+
+A bash completion script is now included for ``dylan-compiler``.
+This can be symlinked into the relevant ``bash-completion.d``
+directory on your system.
+
 Build System
 ============
 
