@@ -47,16 +47,7 @@ define module build-system
     default-build-script-setter,
     calculate-default-build-script,
 
-    //$personal-lib,
     $personal-bin,
-    //$system-lib,
-    //$system-bin,
-    //$system-build,
-    //$release-root,
-    //$override-default-linker,
-    //$override-default-dll-policy,
-    //$dylan-executable-name,
-    //$dylan-support,
 
     system-install-path,
     system-registry-path,
