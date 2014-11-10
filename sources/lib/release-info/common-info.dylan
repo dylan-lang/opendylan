@@ -52,17 +52,17 @@ end method release-copyright;
 define function release-full-name
     () => (full-name :: <string>)
   format-to-string("%s %s",
-		   release-product-name(),
-		   release-version())
+                   release-product-name(),
+                   release-version())
 end function release-full-name;
 
 define function release-full-copyright
     () => (full-copyright :: <string>)
   format-to-string("%s\n%s\n%s\n\n%s",
-		   release-product-name(),
-		   release-copyright(),
-		   release-version(),
-		   $release-full-copyright)
+                   release-product-name(),
+                   release-copyright(),
+                   release-version(),
+                   $release-full-copyright)
 end function release-full-copyright;
 
 define function release-web-address
@@ -178,7 +178,7 @@ end function release-sources-directory;
 define function release-library-packs-directory
     () => (directory :: <directory-locator>)
   merge-locators(as(<directory-locator>, "Library-Packs/"),
-		 release-sources-directory())
+                 release-sources-directory())
 end function release-library-packs-directory;
 
 define function release-templates-directory
@@ -193,14 +193,14 @@ end function release-runtime-directory;
 
 define function release-source-templates-directory
     () => (directory :: <directory-locator>)
-  release-subdirectory("Source/", 
-		   directory: release-templates-directory())
+  release-subdirectory("Source/",
+                   directory: release-templates-directory())
 end function release-source-templates-directory;
 
 define function release-bug-report-template-location
     () => (location :: <file-locator>)
   release-file($bug-report-template-filename,
-	       directory: release-templates-directory())
+               directory: release-templates-directory())
 end function release-bug-report-template-location;
 
 define function release-license-agreement-location

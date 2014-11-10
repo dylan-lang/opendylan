@@ -1,12 +1,12 @@
 Library:   release-info
 Synopsis:  Functional Developer release information
 Author:    Andy Armstrong
-Target-Type:	dll
+Target-Type: dll
 Files:  library
-	module
+        module
         libraries
         common-info
-	functional-settings
+        functional-settings
 Major-version: 2
 Minor-version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
