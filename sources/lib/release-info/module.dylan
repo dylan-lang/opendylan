@@ -23,6 +23,7 @@ define module release-info
          <named-release-info>,
          <described-release-info>,
          release-product-name,
+         release-product-identifier,
          release-version,
          release-short-version,
          release-copyright,
