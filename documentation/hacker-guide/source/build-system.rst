@@ -50,9 +50,8 @@ Though these script files were poorly documented and insufficiently
 flexible, they did inspire the introduction of a real scripting language
 to direct the final stages of compilation in Open Dylan.
 
-`Jam <http://www.perforce.com/jam/jam.html>`_ is a build tool designed
-by Christopher Seiwald, founder of `Perforce
-Software <http://www.perforce.com/>`_. It is similar in some ways to
+`Jam`_ is a build tool designed by Christopher Seiwald, founder of
+`Perforce Software`_. It is similar in some ways to
 ``make``, the traditional Unix build tool. However, instead of using
 only simple declarative rules to define build targets and the
 dependencies between them, Jam contains a full scripting language,
@@ -88,15 +87,12 @@ dialog in the IDE, or using the ``-build-script`` option on the console
 compiler or console environment command-line.
 
 Build scripts are written using the Jam script language, as described in
-the `Jam manual
-page <http://public.perforce.com/public/jam/src/Jam.html>`_. Most
-Open Dylan build scripts ``include`` the ``mini-jambase.jam``
-file, which contains excerpts from the
-`Jambase <http://public.perforce.com/public/jam/src/Jambase>`_ file
-included with Perforce Jam and described in the `Jambase
-Reference <http://public.perforce.com/public/jam/src/Jambase.html>`_.
+the `Jam manual page`_. Most Open Dylan build scripts ``include`` the
+``mini-jambase.jam`` file, which contains excerpts from the `Jambase`_
+file included with Perforce Jam and described in the `Jambase Reference`_.
 They can also make use of additional built-in rules defined by the
-Open Dylan build system, as described in `Additional Built-In Jam Rules`_.
+Open Dylan build system, as described in `Additional Built-In Jam Rules`_
+and `Built-In Jam Variables`_.
 
 How the Compiler Uses the Build System
 ======================================
@@ -265,8 +261,71 @@ The build system defines the following additional built-in rules.
     a raw name; if there are three components they correspond to the
     variable-name, module-name, and library-name respectively.
 
+Built-In Jam Variables
+======================
+
+By default, the Jam build system is provided with some values. Some of these
+are derived from the base Jam implementation and are documented in the
+`Jam manual page`_ while others are Open Dylan extensions.
+
+``.``
+   The build directory.
+
+   *Open Dylan extension.*
+
+``COMPILER_BACKEND``
+   The name of the compiler back-end currently in use. Typically one ``c``,
+   ``harp`` or ``llvm``.
+
+   *Open Dylan extension.*
+
+``JAMDATE``
+   The current date, in ISO-8601 format.
+
+``NT``
+   True on Windows.
+
+``OS``
+   The OS of the build host, not the target. This will typically be something
+   like ``linux``, ``freebsd``, ``darwin`` or ``win32``.
+
+``OSPLAT``
+   The CPU architecture of the build host, not the target. This will
+   typically be something like ``x86`` or ``x86_64``.
+
+``PERSONAL_ROOT``
+   The root of the destination build path, when the ``-personal-root`` compiler
+   option or the ``OPEN_DYLAN_USER_ROOT`` environment variable is set.
+
+   *Open Dylan extension.*
+
+``SYSTEM_BUILD_SCRIPTS``
+   The path where the installed build scripts can be found.
+
+   *Open Dylan extension.*
+
+``SYSTEM_ROOT``
+   The path where the installation of Open Dylan can be found.
+
+   *Open Dylan extension.*
+
+``TARGET_PLATFORM``
+   The Open Dylan identifier for the target platform. This is something
+   like ``x86-linux`` or ``x86_64-darwin``.
+
+   *Open Dylan extension.*
+
+``UNIX``
+   True on non-Windows platforms, like Linux, FreeBSD and Mac OS X.
+
 Editing Jam Files
 =================
 
-An Emacs major mode for Jam files can be found
-`here <https://github.com/emacsmirror/jam-mode>`_.
+There is an `Emacs major mode`_ for editing Jam files.
+
+.. _Jam: http://www.perforce.com/resources/documentation/jam
+.. _Perforce Software: http://www.perforce.com/
+.. _Jam manual page: https://swarm.workshop.perforce.com/view/guest/perforce_software/jam/src/Jam.html
+.. _Jambase: https://swarm.workshop.perforce.com/files/guest/perforce_software/jam/src/Jambase
+.. _Jambase reference: https://swarm.workshop.perforce.com/view/guest/perforce_software/jam/src/Jambase.html
+.. _Emacs major mode: https://github.com/emacsmirror/jam-mode
