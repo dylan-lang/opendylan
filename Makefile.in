@@ -341,6 +341,7 @@ install-stage:
 	@# We use force here because on Mac OS X, the lib directory likely contains read-only
 	@# static libraries for the Boehm GC.
 	@cp -Rf $(abs_builddir)/Bootstrap.3/lib $(prefix)
+	@cp -Rf $(abs_builddir)/Bootstrap.3/share/opendylan $(prefix)/share
 	@cp -R $(abs_srcdir)/tools/lldb $(prefix)/tools
 	@cp -R $(abs_srcdir)/tools/bash_completion $(prefix)/share/opendylan
 	@cp $(abs_srcdir)/License.txt $(prefix)
@@ -361,6 +362,7 @@ release-stage:
 	-mkdir $(abs_builddir)/release/opendylan-$(version)/include
 	-mkdir $(abs_builddir)/release/opendylan-$(version)/lib
 	-mkdir $(abs_builddir)/release/opendylan-$(version)/sources
+	-mkdir -p $(abs_builddir)/release/opendylan-$(version)/share/opendylan
 	-mkdir $(abs_builddir)/release/opendylan-$(version)/tools
 	@echo Copying sources...
 	cp -R $(abs_srcdir)/sources $(abs_builddir)/release/opendylan-$(version)
@@ -371,6 +373,7 @@ release-stage:
 	cp -R $(abs_builddir)/Bootstrap.3/databases $(abs_builddir)/release/opendylan-$(version)
 	-cp -R $(abs_builddir)/Bootstrap.3/include $(abs_builddir)/release/opendylan-$(version)
 	cp -R $(abs_builddir)/Bootstrap.3/lib $(abs_builddir)/release/opendylan-$(version)
+	cp -R $(abs_builddir)/Bootstrap.3/share/opendylan $(abs_builddir)/release/opendylan-$(version)/share
 	cp -R $(abs_srcdir)/tools $(abs_builddir)/release/opendylan-$(version)
 	cp $(abs_srcdir)/License.txt $(abs_builddir)/release/opendylan-$(version)
 	cp $(abs_srcdir)/packages/unix/README $(abs_builddir)/release/opendylan-$(version)

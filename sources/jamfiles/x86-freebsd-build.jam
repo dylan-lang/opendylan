@@ -1,7 +1,7 @@
 #
 # Generated config
 #
-include $(SYSTEM_ROOT)/lib/config.jam ;
+include $(SYSTEM_BUILD_SCRIPTS)/config.jam ;
 
 #
 # Configuration variables
@@ -19,4 +19,4 @@ LINKFLAGSDLL ?= -Wl,-z,noexecstack ;
 #
 # Common build script
 #
-include $(SYSTEM_ROOT)/lib/posix-build.jam ;
+include $(SYSTEM_BUILD_SCRIPTS)/posix-build.jam ;

@@ -53,6 +53,7 @@ define module build-system
     system-registry-path,
     system-release-path,
     system-build-path,
+    system-build-scripts-path,
     user-registry-path,
     user-projects-path,
     user-projects-path-setter,

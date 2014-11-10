@@ -39,6 +39,16 @@ define function system-build-path()
   path & as(<directory-locator>, path)
 end;
 
+define function system-build-scripts-path()
+  if ($os-name == #"win32")
+    subdirectory-locator($system-install, "build-scripts")
+  else
+    subdirectory-locator($system-install, "share",
+                         release-product-identifier(),
+                         "build-scripts")
+  end if
+end;
+
 define function application-filename-path
     ()
  => (path :: <directory-locator>)

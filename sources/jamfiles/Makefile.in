@@ -6,7 +6,7 @@ top_builddir	= @top_builddir@
 
 subdir          = sources/jamfiles
 
-LIBDEST         = $(OPEN_DYLAN_USER_INSTALL)/lib
+BUILD_SCRIPTS_DEST = $(OPEN_DYLAN_USER_INSTALL)/share/opendylan/build-scripts
 
 SCRIPTS         = \
                   $(srcdir)/mini-jambase.jam \
@@ -23,7 +23,8 @@ SCRIPTS         = \
 .PHONY: install
 
 install:
-	cp config.jam $(SCRIPTS) $(LIBDEST)
+	mkdir -p $(BUILD_SCRIPTS_DEST)
+	cp config.jam $(SCRIPTS) $(BUILD_SCRIPTS_DEST)
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) && ./config.status $(subdir)/Makefile

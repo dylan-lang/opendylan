@@ -40,6 +40,10 @@ Build System
 * A bug introduced in 2013.2 that broke the handling of ``jam-includes``
   has been fixed.
 
+* Build scripts have moved. Previously, they were installed in the ``lib``
+  directory. They are now installed in a ``share/opendylan/build-scripts/``
+  directory.
+
 Compiler
 ========
 

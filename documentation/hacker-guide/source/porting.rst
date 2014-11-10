@@ -209,7 +209,7 @@ An example custom script might look like::
     GC_CFLAGS = -I/opt/arm-linux/gc/include -DGC_USE_BOEHM -DGC_THREADS ;
     GC_LFLAGS = -L/opt/arm-linux/gc/lib -lgc ;
 
-    include $(SYSTEM_ROOT)/lib/arm-linux-build.jam ;
+    include $(SYSTEM_BUILD_SCRIPTS)/arm-linux-build.jam ;
 
 This just overrides the default values for some variables and then
 includes the system-provided build script for ``arm-linux``.

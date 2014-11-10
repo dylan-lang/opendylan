@@ -21,5 +21,5 @@
 
 LINKFLAGS ?= /NODEFAULTLIB /INCREMENTAL:NO /DEBUG ;
 
-include $(SYSTEM_LIBDIR)/x86-win32-vc6-build.jam ;
+include $(SYSTEM_BUILD_SCRIPTS)/x86-win32-vc6-build.jam ;
 

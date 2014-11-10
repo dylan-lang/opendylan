@@ -90,7 +90,7 @@ guilflags ?= ;
 #
 # Jambase
 #
-include $(SYSTEM_LIBDIR)/mini-jambase.jam ;
+include $(SYSTEM_BUILD_SCRIPTS)/mini-jambase.jam ;
 
 #
 # Pseudo-targets
