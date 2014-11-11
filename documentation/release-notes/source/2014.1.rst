@@ -15,9 +15,10 @@ XXX XX, 2014.
 Bash Completion
 ===============
 
-A bash completion script is now included for ``dylan-compiler``.
-This can be symlinked into the relevant ``bash-completion.d``
-directory on your system.
+A bash completion script is now included for ``dylan-compiler`` and
+can be found in ``share/opendylan/bash_completion/``.  This can be
+symlinked into the relevant ``bash_completion.d`` directory on your
+system.
 
 Build System
 ============
@@ -151,7 +152,7 @@ Debugging
   support is now available. To use this, you need to import the
   Python scripts::
 
-    command script import /path/to/opendylan/tools/lldb/dylan
+    command script import /path/to/opendylan/share/opendylan/lldb/dylan
 
   Do not import the scripts under that directory directly. Once this
   has been loaded, then commands like ``frame variable`` will automatically
