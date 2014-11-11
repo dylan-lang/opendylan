@@ -114,7 +114,7 @@ Inspecting Dylan objects in LLDB
 
 In LLDB, you may import our Dylan support library::
 
-    command script import /path/to/opendylan/tools/lldb/dylan
+    command script import /path/to/opendylan/share/opendylan/lldb/dylan
 
 Do not import the scripts under that directory directly as that will not
 work. Once this has been done, variables that are representing Dylan

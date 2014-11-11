@@ -334,7 +334,7 @@ install-stage:
 	@-rm -rf $(prefix)/sources/bootstrap1-registry
 	@echo Installing Open Dylan in $(prefix)
 	@install -d $(prefix)/bin $(prefix)/databases $(prefix)/lib $(prefix)/lib/runtime
-	@install -d $(prefix)/tools/lldb $(prefix)/share/opendylan/bash_competion/
+	@install -d $(prefix)/share/opendylan
 	@cp -R $(abs_builddir)/Bootstrap.3/bin $(prefix)
 	@cp -R $(abs_builddir)/Bootstrap.3/databases $(prefix)
 	@-cp -R $(abs_builddir)/Bootstrap.3/include $(prefix)
@@ -342,7 +342,7 @@ install-stage:
 	@# static libraries for the Boehm GC.
 	@cp -Rf $(abs_builddir)/Bootstrap.3/lib $(prefix)
 	@cp -Rf $(abs_builddir)/Bootstrap.3/share/opendylan $(prefix)/share
-	@cp -R $(abs_srcdir)/tools/lldb $(prefix)/tools
+	@cp -R $(abs_srcdir)/tools/lldb $(prefix)/share/opendylan
 	@cp -R $(abs_srcdir)/tools/bash_completion $(prefix)/share/opendylan
 	@cp $(abs_srcdir)/License.txt $(prefix)
 	@cp $(abs_srcdir)/packages/unix/README $(prefix)
@@ -363,7 +363,6 @@ release-stage:
 	-mkdir $(abs_builddir)/release/opendylan-$(version)/lib
 	-mkdir $(abs_builddir)/release/opendylan-$(version)/sources
 	-mkdir -p $(abs_builddir)/release/opendylan-$(version)/share/opendylan
-	-mkdir $(abs_builddir)/release/opendylan-$(version)/tools
 	@echo Copying sources...
 	cp -R $(abs_srcdir)/sources $(abs_builddir)/release/opendylan-$(version)
 	@echo Removing unnecessary directories...
@@ -374,7 +373,8 @@ release-stage:
 	-cp -R $(abs_builddir)/Bootstrap.3/include $(abs_builddir)/release/opendylan-$(version)
 	cp -R $(abs_builddir)/Bootstrap.3/lib $(abs_builddir)/release/opendylan-$(version)
 	cp -R $(abs_builddir)/Bootstrap.3/share/opendylan $(abs_builddir)/release/opendylan-$(version)/share
-	cp -R $(abs_srcdir)/tools $(abs_builddir)/release/opendylan-$(version)
+	cp -R $(abs_srcdir)/tools/lldb $(abs_builddir)/release/opendylan-$(version)/share/opendylan
+	cp -R $(abs_srcdir)/tools/bash_completion $(abs_builddir)/release/opendylan-$(version)/share/opendylan
 	cp $(abs_srcdir)/License.txt $(abs_builddir)/release/opendylan-$(version)
 	cp $(abs_srcdir)/packages/unix/README $(abs_builddir)/release/opendylan-$(version)
 	cd $(abs_builddir)/release; \
