@@ -9,10 +9,12 @@ OPTIMIZEDDEBUG = 1
 INCLUDEDEST      = $(BuildArea)\include
 LIBDEST          = $(BuildArea)\lib
 BINDEST          = $(BuildArea)\bin
+BUILDSCRIPTSDEST = $(BuildArea)\build-scripts
 !else
 INCLUDEDEST      = $(OPEN_DYLAN_USER_INSTALL)\include
 LIBDEST          = $(OPEN_DYLAN_USER_INSTALL)\lib
 BINDEST          = $(OPEN_DYLAN_USER_INSTALL)\bin
+BUILDSCRIPTSDEST = $(OPEN_DYLAN_USER_INSTALL)\build-scripts
 !endif
 
 BUILD_LOGS = $(OPEN_DYLAN_BUILD_LOGS)
@@ -82,11 +84,12 @@ $(USERLIB): $(USEROBJ)
 ensure-dirs:
 	if not exist $(LIBDEST) mkdir $(LIBDEST)
 	if not exist $(BINDEST) mkdir $(BINDEST)
+	if not exist $(BUILDSCRIPTSDEST) mkdir $(BUILDSCRIPTSDEST)
 
 install-build:
 	echo Building pentium run time: install-build
-	xcopy /i/q/y ..\..\jamfiles\*.jam $(LIBDEST)
-	copy/y $(LIBDEST)\x86-win32-vc6-build.jam $(LIBDEST)\x86-win32-build.jam
+	xcopy /i/q/y ..\..\jamfiles\*.jam $(BUILDSCRIPTSDEST)
+	copy/y $(BUILDSCRIPTSDEST)\x86-win32-vc6-build.jam $(BUILDSCRIPTSDEST)\x86-win32-build.jam
 	copy/y $(USEROBJ) $(LIBDEST)
 
 install-userlib: $(USERLIB)

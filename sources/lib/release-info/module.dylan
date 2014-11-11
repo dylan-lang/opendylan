@@ -23,6 +23,7 @@ define module release-info
          <named-release-info>,
          <described-release-info>,
          release-product-name,
+         release-product-identifier,
          release-version,
          release-short-version,
          release-copyright,
@@ -32,8 +33,8 @@ define module release-info
 
   // Disk layout information
   export release-directory,
-	 release-subdirectory,
-	 release-file,
+         release-subdirectory,
+         release-file,
          release-runtime-directory,
          release-examples-directory,
          release-sources-directory,
@@ -84,7 +85,7 @@ define module release-info
          installed-library-packs,
          release-contains-library-pack?,
          library-pack-name,
-	 library-pack-full-name,
+         library-pack-full-name,
          library-pack-number;
 
   // Merged library DLL information
@@ -132,5 +133,5 @@ define module release-info
 
   // Settings
   export <open-dylan-local-settings>,
-	 <open-dylan-user-settings>;
+         <open-dylan-user-settings>;
 end module release-info;

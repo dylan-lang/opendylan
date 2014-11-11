@@ -17,7 +17,7 @@ LINKFLAGSEXE ?= -Wl,-rpath,@executable_path/../lib/ ;
 #
 # Common build script
 #
-include $(SYSTEM_ROOT)/lib/posix-build.jam ;
+include $(SYSTEM_BUILD_SCRIPTS)/posix-build.jam ;
 
 #
 # Overrides/redefinitions

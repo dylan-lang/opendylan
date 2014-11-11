@@ -40,7 +40,7 @@ define function calculate-default-build-script ()
   merge-locators(as(<file-locator>,
                     concatenate(as(<string>, target-platform-name()),
                                 "-build.jam")),
-                 $system-lib)
+                 system-build-scripts-path())
 end;
 
 

@@ -119,6 +119,8 @@ Section "${APPNAME} Core" SecOpendylanCore
   File /r $%OPEN_DYLAN_RELEASE_ROOT%\bin\*.*
   SetOutPath "$INSTDIR\lib\"
   File /r $%OPEN_DYLAN_RELEASE_ROOT%\lib\*.*
+  SetOutPath "$INSTDIR\build-scripts\"
+  File /r $%OPEN_DYLAN_RELEASE_ROOT%\build-scripts\*.*
   SetOutPath "$INSTDIR\databases\"
   File /r $%OPEN_DYLAN_RELEASE_ROOT%\databases\*.*
   SetOutPath "$INSTDIR\Templates\"
@@ -158,7 +160,7 @@ Section "${APPNAME} Core" SecOpendylanCore
     StrCpy $R0 "x86-win32-vc8-build.jam"
 
   WriteRegStr HKCU "${REGISTRY_KEY}\1.0\Build-System" "build-script" \
-              "$INSTDIR\lib\$R0"
+              "$INSTDIR\build-scripts\$R0"
 
   ;; Write the uninstall keys for Windows
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Open Dylan" "DisplayName" "${APPNAMEANDVERSION} (remove only)"

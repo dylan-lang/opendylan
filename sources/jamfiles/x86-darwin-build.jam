@@ -1,7 +1,7 @@
 #
 # Generated config
 #
-include $(SYSTEM_ROOT)/lib/config.jam ;
+include $(SYSTEM_BUILD_SCRIPTS)/config.jam ;
 
 #
 # Configuration variables
@@ -11,4 +11,4 @@ CCFLAGS  += -arch i386 -DOPEN_DYLAN_ARCH_X86 ;
 #
 # Common build script
 #
-include $(SYSTEM_ROOT)/lib/shared-darwin-build.jam ;
+include $(SYSTEM_BUILD_SCRIPTS)/shared-darwin-build.jam ;

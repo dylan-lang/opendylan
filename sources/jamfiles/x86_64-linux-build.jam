@@ -1,7 +1,7 @@
 #
 # Generated config
 #
-include $(SYSTEM_ROOT)/lib/config.jam ;
+include $(SYSTEM_BUILD_SCRIPTS)/config.jam ;
 
 #
 # Configuration variables
@@ -18,7 +18,7 @@ LINKFLAGSEXE ?= -Wl,-z,origin -Wl,-rpath,\\$ORIGIN/../lib/ ;
 #
 # Common build script
 #
-include $(SYSTEM_ROOT)/lib/posix-build.jam ;
+include $(SYSTEM_BUILD_SCRIPTS)/posix-build.jam ;
 
 #
 # Overrides/redefinitions
