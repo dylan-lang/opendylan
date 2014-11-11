@@ -184,13 +184,22 @@ define method llvm-reference-dbg-type
   let obj-type = dylan-value(#"<object>");
   let word-size = back-end-word-size(back-end);
   element(back-end.%dbg-type-table, obj-type, default: #f)
-    | (back-end.%dbg-type-table[obj-type]
-         := llvm-make-dbg-derived-type(#"pointer",
+    | begin
+        let pointer-type
+          = llvm-make-dbg-derived-type(#"pointer",
                                        #f,
-                                       "<object>",
+                                       "",
                                        #f, #f,
                                        8 * word-size, 8 * word-size, 0,
-                                       #f))
+                                       #f);
+        back-end.%dbg-type-table[obj-type]
+         := llvm-make-dbg-derived-type(#"typedef",
+                                       #f,
+                                       "dylan_value",
+                                       #f, #f,
+                                       0, 0, 0,
+                                       pointer-type)
+      end
 end method;
 
 
