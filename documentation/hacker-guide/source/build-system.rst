@@ -76,8 +76,6 @@ supplied build scripts include the following:
     Build script for Microsoft Visual C++ 6.0.
 ``x86-win32-vc7-build.jam``
     Build script for Microsoft Visual C++ .NET.
-``x86-win32-mingw-build.jam``
-    Build script for `MinGW <http://www.mingw.org/>`_ gcc.
 ``x86-linux-build.jam``
     Build script for x86 Linux systems using gcc.
 
