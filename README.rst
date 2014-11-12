@@ -86,17 +86,30 @@ To go on and do the build::
 
   export PATH=/path/to/opendylan/bin:$PATH
   ./autogen.sh
-  ./configure \
-     --with-gc=boehm # or mps if using the HARP back-end
-     --with-gc-path=/path/to/mps-kit \  # if using the HARP back-end
-     --with-gc-path=/path/to/boehm-gc-installation \ # if using the C back-end
-     --prefix=/opt/opendylan-current
+  ./configure --prefix=/opt/opendylan-current
   make 3-stage-bootstrap
   sudo make install
 
-If you have installed the Boehm GC via your operating system package
-manager, you may not need to specify the location of the Boehm GC. It will
-be found automatically if it is in ``/usr`` or ``/usr/local``.
+The build process will attempt to select the correct garbage collector
+implementation based on your platform.
+
+If you are on a platform using MPS (``x86-linux`` or ``x86-freebsd``),
+you will need to add a flag to ``configure`` to point it at the MPS
+sources, using ``--with-gc-path``::
+
+  ./configure --prefix=/opt/opendylan-current --with-gc-path=/path/to/mps
+
+See the `Dependencies`_ section above for details on obtaining a copy
+of the MPS library.
+
+On other platforms, the Boehm GC will be used. If you have installed the
+Boehm GC via your operating system package manager, you may not need to
+specify the location of the Boehm GC. It will be found automatically if
+it is in ``/usr`` or ``/usr/local``. If you have installed the Boehm GC
+into a non-standard location or the configure script can not find it,
+you can point it in the right direction by using ``--with-gc-path``::
+
+  ./configure --prefix=/opt/opendylan-current --with-gc-path=/path/to/boehm
 
 This will build a fully bootstrapped compiler with the first generation
 in ``Bootstrap.1/bin/dylan-compiler``, the second generation in
