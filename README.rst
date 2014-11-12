@@ -87,7 +87,7 @@ To go on and do the build::
   export PATH=/path/to/opendylan/bin:$PATH
   ./autogen.sh
   ./configure --prefix=/opt/opendylan-current
-  make 3-stage-bootstrap
+  make
   sudo make install
 
 The build process will attempt to select the correct garbage collector
@@ -111,9 +111,9 @@ you can point it in the right direction by using ``--with-gc-path``::
 
   ./configure --prefix=/opt/opendylan-current --with-gc-path=/path/to/boehm
 
-This will build a fully bootstrapped compiler with the first generation
-in ``Bootstrap.1/bin/dylan-compiler``, the second generation in
-``Bootstrap.2/bin/dylan-compiler``, and the third in
+By default, this will build a fully bootstrapped compiler with the
+first generation in ``Bootstrap.1/bin/dylan-compiler``, the second
+generation in ``Bootstrap.2/bin/dylan-compiler``, and the third in
 ``Bootstrap.3/bin/dylan-compiler``. The third generation will then be
 installed as ``/opt/opendylan-current/bin/dylan-compiler``.
 
@@ -124,8 +124,8 @@ it, the build will fail.
 Running Tests
 -------------
 
-We have an extensive set of tests which can be run once a ``3-stage-bootstrap``
-is complete::
+We have an extensive set of tests which can be run once a full bootstrap
+(the default build, ``3-stage-bootstrap``) is complete::
 
   make check
 
