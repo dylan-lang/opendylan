@@ -3,7 +3,7 @@
 have dylan-compiler &&
 _dylan_compiler()
 {
-    local cur prev opts
+    local cur prev opts repo file files
 
     COMPREPLY=()
     _get_comp_words_by_ref cur prev
@@ -13,6 +13,29 @@ _dylan_compiler()
         COMPREPLY=( $( compgen -W "$opts" -- "$cur" ) )
     else
         _filedir lid
+
+        files=''
+        # Collect all .lid files in the current directory into $files, separated by slashes (only illegal char)
+        #files="$(find . -maxdepth 1 -iname "*.lid" -printf "%f/")$files"
+        
+        if ! [ -z $OPEN_DYLAN_USER_REGISTRIES ]; then
+            # Collect all the files from a repository into $files, separated by slashes
+            for repo in $(echo $OPEN_DYLAN_USER_REGISTRIES | tr ":" "\n"); do
+                # Skip obviously stupid/dangerous choices
+                if ! [[ $repo == '.' || $repo == '..' || $repo == '/' ]]; then
+                    files="$(find $repo -maxdepth 3 -type f -printf "%f/")$files"
+                fi
+            done
+        fi
+        
+        IFS=$'/'
+        for file in $files; do
+            # If this filename matches $cur, offer it as a completion
+            if [[ $file =~ ^$cur ]]; then
+                COMPREPLY+=($file)
+            fi
+        done
+        unset IFS
     fi
 
     return 0
