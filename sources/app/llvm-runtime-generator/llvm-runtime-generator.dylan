@@ -119,7 +119,9 @@ define function generate-runtime-primitive
     // Generate the function return
     let return-type = function-type.llvm-function-type-return-type;
     if (llvm-void-type?(return-type))
-      ins--ret(be);
+      if (be.llvm-builder-basic-block)
+        ins--ret(be);
+      end if;
     else
       if (results.size = 1)
         ins--ret(be, results[0]);
