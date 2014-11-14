@@ -38,6 +38,11 @@ Build System
   necessary for MPS and is needed for Boehm if Boehm is installed
   into a non-standard location.
 
+* When running ``make``, performing a full bootstrap is now the default
+  action. This was pretty much required before and was a common source
+  of confusion, especially when preparing to install a development
+  build.
+
 * A bug introduced in 2013.2 that broke the handling of ``jam-includes``
   has been fixed.
 
