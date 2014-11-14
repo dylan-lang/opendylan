@@ -57,7 +57,7 @@ if(`uname -m` =~ /x86_64/)
 end
 
 # Build the last stage with the modified rpath jamfile
-system("make 3-stage-bootstrap") || exit(1)
+system("make") || exit(1)
 
 # Install into staging area
 system("make install DESTDIR=#{STAGING_DIR}") || exit(1)

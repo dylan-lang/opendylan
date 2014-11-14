@@ -92,7 +92,9 @@ fi
 AC_SUBST(DYLANCOMPILER)
 
 # TODO: figure out the bootstrap type given the fdcompile version
-bootstrap_target=1-stage-bootstrap
+#       as we may be able to just do a 1-stage-bootstrap. But for now,
+#       default to a 3-stage-bootstrap to be safe.
+bootstrap_target=3-stage-bootstrap
 AC_SUBST(bootstrap_target)
 
 AC_PROG_CC([clang gcc cc])

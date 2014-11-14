@@ -348,7 +348,7 @@ install-stage:
 	@cp $(abs_srcdir)/packages/unix/README $(prefix)
 	@echo Done!
 
-install: @bootstrap_target@ 3-stage-bootstrap install-stage
+install: 3-stage-bootstrap install-stage
 
 version ?= $(shell $(abs_builddir)/Bootstrap.3/bin/dylan-compiler -shortversion)
 
@@ -384,7 +384,7 @@ release-stage:
 	cd $(abs_builddir)/release/; \
 	  tar cjf $(abs_builddir)/opendylan-$(version)-$(OPEN_DYLAN_TARGET_PLATFORM)-debug-info.tar.bz2 opendylan-$(version)/build
 
-release: @bootstrap_target@ 3-stage-bootstrap release-stage
+release: 3-stage-bootstrap release-stage
 
 ###
 # Maintenance and test targets
