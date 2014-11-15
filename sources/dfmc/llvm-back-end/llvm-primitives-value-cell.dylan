@@ -83,21 +83,17 @@ define method op--make-closed-over-cell
     (back-end :: <llvm-back-end>,
      rep :: <&raw-type>, value :: <llvm-value>)
  => (cell :: <llvm-value>);
-  call-primitive(back-end, primitive-make-raw-box-descriptor, value)
-end method;
-
-define method op--make-closed-over-cell
-    (back-end :: <llvm-back-end>,
-     rep :: <&raw-single-float>, value :: <llvm-value>)
- => (cell :: <llvm-value>);
-  call-primitive(back-end, primitive-make-single-float-box-descriptor, value)
-end method;
-
-define method op--make-closed-over-cell
-    (back-end :: <llvm-back-end>,
-     rep :: <&raw-double-float>, value :: <llvm-value>)
- => (cell :: <llvm-value>);
-  call-primitive(back-end, primitive-make-double-float-box-descriptor, value)
+  select (rep)
+    dylan-value(#"<raw-single-float>") =>
+      call-primitive(back-end, primitive-make-single-float-box-descriptor,
+                     value);
+    dylan-value(#"<raw-double-float>") =>
+      call-primitive(back-end, primitive-make-double-float-box-descriptor,
+                     value);
+    otherwise =>
+      call-primitive(back-end, primitive-make-raw-box-descriptor,
+                     value)
+  end
 end method;
 
 define method op--get-closed-over-cell
@@ -115,44 +111,23 @@ define method op--get-closed-over-cell
     (back-end :: <llvm-back-end>,
      rep :: <&raw-type>, cell :: <llvm-value>)
  => (value :: <llvm-value>);
-  let class :: <&class> = dylan-value(#"<untraceable-value-cell>");
+  let (class :: <&class>, slot-name :: <symbol>)
+    = select (rep)
+        dylan-value(#"<raw-single-float>") =>
+          values(dylan-value(#"<untraceable-value-cell>"),
+                 #"value-cell-raw-object");
+        dylan-value(#"<raw-double-float>") =>
+          double-float-box-class(back-end);
+        otherwise =>
+          values(dylan-value(#"<untraceable-value-cell>"),
+                 #"value-cell-raw-object");
+      end;
   let cell-cast = op--object-pointer-cast(back-end, cell, class);
   let value-ptr
-    = op--getslotptr(back-end, cell-cast, class, #"value-cell-raw-object");
+    = op--getslotptr(back-end, cell-cast, class, slot-name);
   let ptr-type = llvm-pointer-to(back-end, llvm-reference-type(back-end, rep));
   let cast-ptr = ins--bitcast(back-end, value-ptr, ptr-type);
   ins--load(back-end, cast-ptr, alignment: back-end-word-size(back-end));
-end method;
-
-define method op--get-closed-over-cell
-    (back-end :: <llvm-back-end>,
-     rep :: <&raw-single-float>, cell :: <llvm-value>)
- => (value :: <llvm-value>);
-  let class :: <&class> = dylan-value(#"<untraceable-value-cell>");
-  let cell-cast = op--object-pointer-cast(back-end, cell, class);
-  let raw-ptr
-    = op--getslotptr(back-end, cell-cast, class, #"value-cell-raw-object");
-  let sf-type
-    = llvm-reference-type(back-end, dylan-value(#"<raw-single-float>"));
-  let sf-ptr
-    = ins--bitcast(back-end, raw-ptr, llvm-pointer-to(back-end, sf-type));
-  ins--load(back-end, sf-ptr, alignment: back-end-word-size(back-end));
-end method;
-
-define method op--get-closed-over-cell
-    (back-end :: <llvm-back-end>,
-     rep :: <&raw-double-float>, cell :: <llvm-value>)
- => (value :: <llvm-value>);
-  let (class :: <&class>, slot-name :: <symbol>)
-    = double-float-box-class(back-end);
-  let cell-cast = op--object-pointer-cast(back-end, cell, class);
-  let raw-ptr
-    = op--getslotptr(back-end, cell-cast, class, slot-name);
-  let df-type
-    = llvm-reference-type(back-end, dylan-value(#"<raw-double-float>"));
-  let df-ptr
-    = ins--bitcast(back-end, raw-ptr, llvm-pointer-to(back-end, df-type));
-  ins--load(back-end, df-ptr, alignment: back-end-word-size(back-end));
 end method;
 
 define method op--set-closed-over-cell
@@ -171,43 +146,22 @@ define method op--set-closed-over-cell
     (back-end :: <llvm-back-end>,
      rep :: <&raw-type>, cell :: <llvm-value>, value :: <llvm-value>)
  => ();
-  let class :: <&class> = dylan-value(#"<untraceable-value-cell>");
+  let (class :: <&class>, slot-name :: <symbol>)
+    = select (rep)
+        dylan-value(#"<raw-single-float>") =>
+          values(dylan-value(#"<untraceable-value-cell>"),
+                 #"value-cell-raw-object");
+        dylan-value(#"<raw-double-float>") =>
+          double-float-box-class(back-end);
+        otherwise =>
+          values(dylan-value(#"<untraceable-value-cell>"),
+                 #"value-cell-raw-object");
+      end;
   let cell-cast = op--object-pointer-cast(back-end, cell, class);
   let value-ptr
-    = op--getslotptr(back-end, cell-cast, class, #"value-cell-raw-object");
+    = op--getslotptr(back-end, cell-cast, class, slot-name);
   let ptr-type = llvm-pointer-to(back-end, llvm-reference-type(back-end, rep));
   let cast-ptr = ins--bitcast(back-end, value-ptr, ptr-type);
   ins--store(back-end, value, cast-ptr,
              alignment: back-end-word-size(back-end));
-end method;
-
-define method op--set-closed-over-cell
-    (back-end :: <llvm-back-end>,
-     rep :: <&raw-single-float>, cell :: <llvm-value>, value :: <llvm-value>)
- => ();
-  let class :: <&class> = dylan-value(#"<untraceable-value-cell>");
-  let cell-cast = op--object-pointer-cast(back-end, cell, class);
-  let raw-ptr
-    = op--getslotptr(back-end, cell-cast, class, #"value-cell-raw-object");
-  let sf-type
-    = llvm-reference-type(back-end, dylan-value(#"<raw-single-float>"));
-  let sf-ptr
-    = ins--bitcast(back-end, raw-ptr, llvm-pointer-to(back-end, sf-type));
-  ins--store(back-end, raw-single-float, sf-ptr,
-	     alignment: back-end-word-size(back-end));
-end method;
-
-define method op--set-closed-over-cell
-    (back-end :: <llvm-back-end>,
-     rep :: <&raw-double-float>, cell :: <llvm-value>, value :: <llvm-value>)
- => ();
-  let (class :: <&class>, slot-name :: <symbol>)
-    = double-float-box-class(back-end);
-  let cell-cast = op--object-pointer-cast(back-end, cell, class);
-  let raw-ptr = op--getslotptr(back-end, cell-cast, class, slot-name);
-  let df-type
-    = llvm-reference-type(back-end, dylan-value(#"<raw-double-float>"));
-  let df-ptr
-    = ins--bitcast(back-end, raw-ptr, llvm-pointer-to(back-end, df-type));
-  ins--store(back-end, value, df-ptr, alignment: back-end-word-size(back-end));
 end method;
