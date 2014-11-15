@@ -180,7 +180,12 @@ define method emit-transfer
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
      dst :: <temporary>, src :: <temporary>)
  => ();
-  temporary-value(dst) := temporary-value(src);
+  temporary-value(dst)
+    := if (src.environment == *current-environment*)
+         temporary-value(src)
+       else
+         emit-closure-reference(back-end, m, src)
+       end if;
 end method;
 
 define method emit-transfer
