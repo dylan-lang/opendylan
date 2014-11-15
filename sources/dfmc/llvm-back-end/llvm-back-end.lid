@@ -20,6 +20,7 @@ files:   llvm-back-end-library
 	 llvm-primitives-thread
 	 llvm-primitives-os
          llvm-primitives-value-cell
+         llvm-exceptions
          llvm-entry-points
          llvm-mv
 	 llvm-emit

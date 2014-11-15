@@ -48,6 +48,11 @@ define constant $runtime-referenced-functions
       #"%slotacc-repeated-instance-getter",
       #"%slotacc-repeated-instance-setter",
       #"%resolve-symbol",
+      #"machine-word-overflow",
+      #"integer-divide-by-0",
+      #"float-divide-by-0",
+      #"float-overflow",
+      #"float-underflow",
       #"call-application-exit-functions"];
 
 define constant $runtime-referenced-variables
