@@ -70,13 +70,18 @@ end class;
 define method op--mv-extract
     (back-end :: <llvm-back-end>, mv :: <llvm-global-mv>, index :: <integer>)
  => (value :: <llvm-value>);
+  let module = back-end.llvm-builder-module;
   if (index = 0)
     ins--extractvalue(back-end, mv.llvm-mv-struct, 0)
   elseif (index < mv.llvm-mv-maximum)
     let ptr = op--teb-getelementptr(back-end, #"teb-mv-area", index);
-    ins--load(back-end, ptr)
+    let mv-area-value = ins--load(back-end, ptr);
+    let count = ins--extractvalue(back-end, mv.llvm-mv-struct, 1);
+    let cmp = ins--icmp-ult(back-end, i8(index), count);
+    ins--select(back-end, cmp,
+                mv-area-value,
+                emit-reference(back-end, module, &false))
   else
-    let module = back-end.llvm-builder-module;
     emit-reference(back-end, module, &false)
   end if
 end method;
