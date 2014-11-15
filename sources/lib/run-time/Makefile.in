@@ -83,7 +83,8 @@ CFLAGS		= $(PLATFORM_CFLAGS) -Wall -O -g -I$(srcdir)
 
 LLVM_CFLAGS     = -DOPEN_DYLAN_BACKEND_LLVM \
 	          -DOPEN_DYLAN_RUNTIME_HEADER=\"llvm-$(OPEN_DYLAN_TARGET_PLATFORM)-runtime.h\" \
-		  -I.
+		  -I. \
+		  -fexceptions
 
 HARP_SUPPORT_DIR = $(srcdir)/harp-support/$(OPEN_DYLAN_TARGET_PLATFORM)
 HARP_RUNTIME_OBJS = \
