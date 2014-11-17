@@ -414,9 +414,9 @@ rule LinkDLL {
 }
 
 actions together LinkDLL bind NEEDLIBS {
-  $(LINK) -shared -o $(<:Q) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS) &&
-  $(OBJCOPY) $(<:Q) $(<:Q).dbg &&
-  $(OBJCOPY) --add-gnu-debuglink=$(<:Q).dbg $(<:Q) &&
+  $(LINK) -shared -o $(<:Q) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS)
+  $(OBJCOPY) $(<:Q) $(<:Q).dbg
+  $(OBJCOPY) --add-gnu-debuglink=$(<:Q).dbg $(<:Q)
   $(STRIP) -s $(<:Q)
 }
 
@@ -426,9 +426,9 @@ rule LinkEXE {
 }
 
 actions LinkEXE bind NEEDLIBS {
-  $(LINK) -o $(<:Q) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS) &&
-  $(OBJCOPY) $(<:Q) $(<:Q).dbg &&
-  $(OBJCOPY) --add-gnu-debuglink=$(<:Q).dbg $(<:Q) &&
+  $(LINK) -o $(<:Q) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS)
+  $(OBJCOPY) $(<:Q) $(<:Q).dbg
+  $(OBJCOPY) --add-gnu-debuglink=$(<:Q).dbg $(<:Q)
   $(STRIP) -s $(<:Q)
 }
 
