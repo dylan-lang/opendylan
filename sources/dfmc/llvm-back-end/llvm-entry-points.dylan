@@ -787,7 +787,7 @@ define variable-arity outer entry-point-descriptor rest-xep
                                  fill: $llvm-object-pointer-type),
            varargs?: #f);
   let iep-cast = ins--bitcast(be, iep, llvm-pointer-to(be, iep-type));
-  ins--tail-call
+  ins--call
     (be, iep-cast,
      concatenate(arguments,
                  vector(rest-vector,
@@ -888,7 +888,7 @@ define variable-arity outer entry-point-descriptor rest-key-xep
                                      fill: $llvm-object-pointer-type),
                varargs?: #f);
       let iep-cast = ins--bitcast(be, iep, llvm-pointer-to(be, iep-type));
-      ins--tail-call
+      ins--call
         (be, iep-cast,
          concatenate(arguments,
                      vector(emit-reference(be, module, &false), function)),
@@ -898,7 +898,8 @@ define variable-arity outer entry-point-descriptor rest-key-xep
 end entry-point-descriptor;
 
 define method op--engine-node-call
-    (be :: <llvm-back-end>, function :: <llvm-value>, arguments :: <sequence>)
+    (be :: <llvm-back-end>, function :: <llvm-value>, arguments :: <sequence>,
+     #key tail-call? = #f)
  => (call :: <llvm-value>);
   let word-size = back-end-word-size(be);
 
@@ -910,12 +911,14 @@ define method op--engine-node-call
     = op--getslotptr(be, function-cast, gf-class, #"discriminator");
   let engine = ins--load(be, discriminator-slot-ptr, alignment: word-size);
 
-  op--chain-to-engine-entry-point(be, engine, function, arguments)
+  op--chain-to-engine-entry-point(be, engine, function, arguments,
+				  tail-call?: tail-call?)
 end method;
 
 define method op--chain-to-engine-entry-point
     (be :: <llvm-back-end>, engine :: <llvm-value>, function :: <llvm-value>,
-     arguments :: <sequence>)
+     arguments :: <sequence>,
+     #key tail-call? = #f)
  => (call :: <llvm-value>);
   // Retrieve the engine entry point from the engine
   let entry-point = op--engine-node-entry-point(be, engine);
@@ -936,7 +939,7 @@ define method op--chain-to-engine-entry-point
     (be, entry-point-cast,
      concatenate(vector(engine, function), arguments),
      calling-convention: $llvm-calling-convention-c,
-     tail-call?: #t)
+     tail-call?: tail-call?)
 end method;
 
 define method op--engine-node-entry-point
@@ -972,7 +975,7 @@ define outer entry-point-descriptor gf-xep
 
   // Call using the dispatch engine
   ins--block(be, call-bb);
-  op--engine-node-call(be, function, arguments)
+  op--engine-node-call(be, function, arguments, tail-call?: #t)
 end entry-point-descriptor;
 
 // For GF calls with optional arguments
@@ -1312,10 +1315,10 @@ define singular variable-arity outer entry-point-descriptor general-engine-node-
   let iep-func = ins--bitcast(be, callback-iep, func-type);
 
   let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
-  ins--tail-call(be, iep-func,
-                 vector(mepargs-vector, parent, engine, undef, undef),
-                 calling-convention:
-                   llvm-calling-convention(be, typical-callback-iep));
+  ins--call(be, iep-func,
+	    vector(mepargs-vector, parent, engine, undef, undef),
+	    calling-convention:
+	      llvm-calling-convention(be, typical-callback-iep));
 end entry-point-descriptor;
 
 define singular outer entry-point-descriptor general-engine-node-1
@@ -1425,10 +1428,10 @@ define singular variable-arity outer entry-point-descriptor general-engine-node-
   let iep-func = ins--bitcast(be, callback-iep, func-type);
 
   let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
-  ins--tail-call(be, iep-func,
-                 vector(spreadargs-vector, parent, engine, undef, undef),
-                 calling-convention:
-                   llvm-calling-convention(be, typical-callback-iep));
+  ins--call(be, iep-func,
+	    vector(spreadargs-vector, parent, engine, undef, undef),
+	    calling-convention:
+	      llvm-calling-convention(be, typical-callback-iep));
 end entry-point-descriptor;
 
 define method op--reconstruct-args-from-mepargs
@@ -1612,7 +1615,7 @@ define single-method outer entry-point-descriptor implicit-keyed-single-method
                  parameter-types: parameter-types,
                  varargs?: #f);
         let mep-cast = ins--bitcast(be, mep, llvm-pointer-to(be, mep-type));
-        ins--tail-call
+        ins--call
           (be, mep-cast,
            concatenate(vector(meth, data), arguments),
            calling-convention: $llvm-calling-convention-c)
@@ -1701,7 +1704,7 @@ define single-method outer entry-point-descriptor explicit-keyed-single-method
                  parameter-types: parameter-types,
                  varargs?: #f);
         let mep-cast = ins--bitcast(be, mep, llvm-pointer-to(be, mep-type));
-        ins--tail-call
+        ins--call
           (be, mep-cast,
            concatenate(vector(meth, data), arguments),
            calling-convention: $llvm-calling-convention-c)
@@ -1826,7 +1829,8 @@ define outer cache-header entry-point-descriptor cache-header
 
   // Chain to the next engine node's entry point; this cache-header engine node
   // becomes the new <dispatch-starter>
-  op--chain-to-engine-entry-point(be, next-engine, engine, arguments)
+  op--chain-to-engine-entry-point(be, next-engine, engine, arguments,
+				  tail-call?: #t)
 end entry-point-descriptor;
 
 define outer cache-header entry-point-descriptor profiling-cache-header
@@ -1871,7 +1875,8 @@ define outer cache-header entry-point-descriptor profiling-cache-header
 
   // Chain to the next engine node's entry point; this cache-header engine node
   // becomes the new <dispatch-starter>
-  op--chain-to-engine-entry-point(be, next-engine, engine, arguments)
+  op--chain-to-engine-entry-point(be, next-engine, engine, arguments,
+				  tail-call?: #t)
 end entry-point-descriptor;
 
 define method op--slot-access-engine-node-offset
@@ -2058,7 +2063,8 @@ define cross outer entry-point-descriptor discriminate-on-argument
   let next-engine = ins--extractvalue(be, callback-ret, 0);
 
   // Chain to the engine node's entry point
-  op--chain-to-engine-entry-point(be, next-engine, function, arguments)
+  op--chain-to-engine-entry-point(be, next-engine, function, arguments,
+				  tail-call?: #t)
 end entry-point-descriptor;
 
 define cross outer entry-point-descriptor if-type-discriminator
@@ -2086,7 +2092,8 @@ define cross outer entry-point-descriptor if-type-discriminator
   let next-engine = ins--load(be, next-engine-ptr, alignment: word-size);
 
   // Chain to the engine node's entry point
-  op--chain-to-engine-entry-point(be, next-engine, function, arguments)
+  op--chain-to-engine-entry-point(be, next-engine, function, arguments,
+				  tail-call?: #t)
 end entry-point-descriptor;
 
 define cross outer entry-point-descriptor typecheck-discriminator
@@ -2115,7 +2122,8 @@ define cross outer entry-point-descriptor typecheck-discriminator
       end ins--if;
 
   // Chain to the engine node's entry point
-  op--chain-to-engine-entry-point(be, next-engine, function, arguments)
+  op--chain-to-engine-entry-point(be, next-engine, function, arguments,
+				  tail-call?: #t)
 end entry-point-descriptor;
 
 // Discriminate using a one-class discriminator
@@ -2154,5 +2162,6 @@ define cross outer entry-point-descriptor monomorphic-by-class-discriminator
       end ins--if;
 
   // Chain to the engine node's entry point
-  op--chain-to-engine-entry-point(be, next-engine, function, arguments)
+  op--chain-to-engine-entry-point(be, next-engine, function, arguments,
+				  tail-call?: #t)
 end entry-point-descriptor;

@@ -610,7 +610,8 @@ define side-effecting stateless indefinite-extent can-unwind &runtime-primitive-
 
     // Chain to engine node
     let result
-      = op--chain-to-engine-entry-point(be, engine, parent, parameter-values);
+      = op--chain-to-engine-entry-point(be, engine, parent, parameter-values,
+					tail-call?: #t);
 
     add!(result-phi-arguments, result);
     add!(result-phi-arguments, be.llvm-builder-basic-block);
