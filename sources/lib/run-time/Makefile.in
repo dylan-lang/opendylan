@@ -7,7 +7,7 @@ subdir		= sources/lib/run-time
 VPATH		= $(srcdir)
 
 LIBDEST         = $(OPEN_DYLAN_USER_INSTALL)/lib
-INCDEST         = $(OPEN_DYLAN_USER_INSTALL)/include
+INCDEST         = $(OPEN_DYLAN_USER_INSTALL)/include/opendylan
 
 OPEN_DYLAN_TARGET_PLATFORM = @OPEN_DYLAN_TARGET_PLATFORM@
 OBJDIR          = obj-$(OPEN_DYLAN_TARGET_PLATFORM)

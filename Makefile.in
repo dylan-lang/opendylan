@@ -334,10 +334,10 @@ install-stage:
 	@-rm -rf $(prefix)/sources/bootstrap1-registry
 	@echo Installing Open Dylan in $(prefix)
 	@install -d $(prefix)/bin $(prefix)/databases $(prefix)/lib $(prefix)/lib/runtime
-	@install -d $(prefix)/share/opendylan
+	@install -d $(prefix)/share/opendylan $(prefix)/include/opendylan
 	@cp -R $(abs_builddir)/Bootstrap.3/bin $(prefix)
 	@cp -R $(abs_builddir)/Bootstrap.3/databases $(prefix)
-	@-cp -R $(abs_builddir)/Bootstrap.3/include $(prefix)
+	@-cp -R $(abs_builddir)/Bootstrap.3/include/opendylan $(prefix)/include
 	@# We use force here because on Mac OS X, the lib directory likely contains read-only
 	@# static libraries for the Boehm GC.
 	@cp -Rf $(abs_builddir)/Bootstrap.3/lib $(prefix)
@@ -359,7 +359,7 @@ release-stage:
 	-mkdir $(abs_builddir)/release/opendylan-$(version)
 	-mkdir $(abs_builddir)/release/opendylan-$(version)/bin
 	-mkdir $(abs_builddir)/release/opendylan-$(version)/databases
-	-mkdir $(abs_builddir)/release/opendylan-$(version)/include
+	-mkdir -p $(abs_builddir)/release/opendylan-$(version)/include/opendylan
 	-mkdir $(abs_builddir)/release/opendylan-$(version)/lib
 	-mkdir $(abs_builddir)/release/opendylan-$(version)/sources
 	-mkdir -p $(abs_builddir)/release/opendylan-$(version)/share/opendylan
@@ -370,7 +370,7 @@ release-stage:
 	-rm -r $(abs_builddir)/release/opendylan-$(version)/sources/bootstrap1-registry
 	cp -R $(abs_builddir)/Bootstrap.3/bin $(abs_builddir)/release/opendylan-$(version)
 	cp -R $(abs_builddir)/Bootstrap.3/databases $(abs_builddir)/release/opendylan-$(version)
-	-cp -R $(abs_builddir)/Bootstrap.3/include $(abs_builddir)/release/opendylan-$(version)
+	-cp -R $(abs_builddir)/Bootstrap.3/include/opendylan $(abs_builddir)/release/opendylan-$(version)/include
 	cp -R $(abs_builddir)/Bootstrap.3/lib $(abs_builddir)/release/opendylan-$(version)
 	cp -R $(abs_builddir)/Bootstrap.3/share/opendylan $(abs_builddir)/release/opendylan-$(version)/share
 	cp -R $(abs_srcdir)/tools/lldb $(abs_builddir)/release/opendylan-$(version)/share/opendylan

@@ -10,7 +10,7 @@ define sideways method emit-mainfile
   let c-file = #f;
   with-build-area-output (stream = ld, base: "_main", type: "c")
     write(stream, "#include <stdlib.h>\n");
-    write(stream, "#include \"run-time.h\"\n\n");
+    write(stream, "#include \"opendylan/run-time.h\"\n\n");
 
     format(stream, "int main (int argc, char *argv[]) {\n");
     format(stream, "  extern void %s ();\n", glue-name(lib-name));
@@ -44,7 +44,7 @@ define sideways method emit-gluefile
     let cr-init-names = cr-init-names(ld, cr-names);
     let rt-init-names = list(glue-name-raw("Run_Time"));
     let init-names = concatenate(rt-init-names, used-glue-names, cr-init-names);
-    write (stream, "#include \"run-time.h\"\n\n");
+    write (stream, "#include \"opendylan/run-time.h\"\n\n");
     format(stream, "void %s () __attribute__((constructor));\n", glue-name(lib-name));
     format(stream, "void %s () {\n", glue-name(lib-name));
     for (name in init-names)
