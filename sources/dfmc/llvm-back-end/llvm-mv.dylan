@@ -49,7 +49,7 @@ define method op--mv-extract-rest
       for (i from index below mv.llvm-mv-fixed.size)
         call-primitive(back-end, primitive-vector-element-setter-descriptor,
                        mv.llvm-mv-fixed[i], rest-vector,
-                       llvm-back-end-value-function(back-end, i));
+                       llvm-back-end-value-function(back-end, i - index));
       end for;
       rest-vector
     end if
