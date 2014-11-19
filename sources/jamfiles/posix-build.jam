@@ -210,18 +210,18 @@ rule DylanLibraryFiles image : files {
     if $(SEPARATE) {
       local _i ;
       for _i in $(_out) {
-	local _mobj = [ FGristFiles $(_i:S=$(SUFOBJ)) ] ;
-	MakeLocate $(_mobj) : $(LOCATE_TARGET) ;
-	if $(SUFOUT) != $(SUFOBJ) {
-	  Cc $(_mobj) : $(_i) ;
-	}
-	LinkDLL $(_dll) : $(_mobj) ;
+        local _mobj = [ FGristFiles $(_i:S=$(SUFOBJ)) ] ;
+        MakeLocate $(_mobj) : $(LOCATE_TARGET) ;
+        if $(SUFOUT) != $(SUFOBJ) {
+          Cc $(_mobj) : $(_i) ;
+        }
+        LinkDLL $(_dll) : $(_mobj) ;
       }
     } else {
       LinkDLL $(_dll) : $(_out) ;
 
       if $(COMPILER_BACK_END) = c {
-	LINKFLAGS on $(_dll) += [ on $(_dll) FIncludes $(HDRS) ] ;
+        LINKFLAGS on $(_dll) += [ on $(_dll) FIncludes $(HDRS) ] ;
       }
     }
   }
@@ -264,17 +264,17 @@ rule DylanLibraryCLibraries image : libraries {
   for lib in $(libraries) {
     switch $(lib) {
       case -L* : _clib_$(image[1]:L) += $(lib) ;
-		 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
+                 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
       case -l* : _clib_$(image[1]:L) += $(lib) ;
-		 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
+                 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
       case -F* : _clib_$(image[1]:L) += $(lib) ;
-		 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
+                 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
       case -framework* : _clib_$(image[1]:L) += $(lib) ;
-		 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
+                 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
       case *.a : lib = [ FGristFiles $(lib) ] ;
-		 SEARCH on $(lib) = $(SEARCH_SOURCE) ;
-		 Depends $(_dll) : $(lib) ;
-		 NEEDLIBS on $(_dll) += $(lib) ;
+                 SEARCH on $(lib) = $(SEARCH_SOURCE) ;
+                 Depends $(_dll) : $(lib) ;
+                 NEEDLIBS on $(_dll) += $(lib) ;
       case * :   Exit Unknown C library $(lib) ;
     }
   }
@@ -367,16 +367,16 @@ rule DylanLibraryUses image : library : dir {
       # Another personal library; read its mkf from its build directory.
 
       local SEARCH_SOURCE LOCATE_SOURCE LOCATE_TARGET
-	= $(dir:R=$(LOCATE_TARGET:E=$(.))) ;
+        = $(dir:R=$(LOCATE_TARGET:E=$(.))) ;
       local SOURCE_GRIST ;
 
       local LIBDIR BINDIR ;
       {
-	local _lib = lib ;
-	local _bin = bin ;
+        local _lib = lib ;
+        local _bin = bin ;
 
-	LIBDIR = $(_lib:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
-	BINDIR = $(_bin:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
+        LIBDIR = $(_lib:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
+        BINDIR = $(_bin:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
       }
 
       local _mkf = $(MKF:G=$(library:L)) ;
