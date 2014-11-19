@@ -31,10 +31,7 @@ void _Init_Run_Time(void)
     initp = 1;
 
     // register our dylan-level atexit mechanism
-#if 0
-    // FIXME
     atexit(call_application_exit_functions_internal);
-#endif
 
     // set up signal handlers
 #ifdef OPEN_DYLAN_PLATFORM_UNIX

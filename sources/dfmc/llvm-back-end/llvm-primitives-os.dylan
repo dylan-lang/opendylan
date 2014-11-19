@@ -17,6 +17,23 @@ define runtime-variable *argc* :: <raw-c-signed-int>
 define runtime-variable *argv* :: <raw-c-pointer>
   = ^make(<&raw-c-pointer>, value: 0);
 
+define c-callable auxiliary &runtime-primitive-descriptor call-application-exit-functions-internal () => ();
+  let m = be.llvm-builder-module;
+  let iep = dylan-value(#"call-application-exit-functions").^iep;
+  let name = emit-name(be, m, iep);
+  let global = llvm-builder-global(be, name);
+  llvm-constrain-type
+    (global.llvm-value-type,
+     llvm-pointer-to(be, llvm-lambda-type(be, iep)));
+  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
+  op--call(be, global,
+           vector(undef, undef),
+           type: llvm-reference-type(be, be.%mv-struct-type),
+           calling-convention: llvm-calling-convention(be, iep),
+           tail-call?: #t);
+end;
+
+
 
 /// Support for keyboard-break handling
 
