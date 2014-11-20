@@ -117,6 +117,9 @@ C-FFI
   be returned. This is useful for wrapping C APIs which return error codes that
   should signal conditions when an error occurs.
 
+* New C-FFI types, ``<C-size-t>`` and ``<C-ssize-t>`` are available. These map
+  to the underlying C types ``size_t`` and ``ssize_t``.
+
 C Run-time
 ==========
 

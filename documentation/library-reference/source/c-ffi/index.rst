@@ -827,6 +827,18 @@ and unsafe integer designator types exported from the C-FFI module.
    +-------------------------------+--------------------+--------------------+
    | ``<C-raw-char>``              | ``char``           | ``<machine-word>`` |
    +-------------------------------+--------------------+--------------------+
+   | ``<C-size-t>``                | ``size_t``         | :drm:`<integer>`   |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-unsafe-size-t>``         | ``size_t``         | :drm:`<integer>`   |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-raw-size-t>``            | ``size_t``         | ``<machine-word>`` |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-ssize-t>``               | ``ssize_t``        | :drm:`<integer>`   |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-unsafe-ssize-t>``        | ``ssize_t``        | :drm:`<integer>`   |
+   +-------------------------------+--------------------+--------------------+
+   | ``<C-raw-ssize-t>``           | ``ssize_t``        | ``<machine-word>`` |
+   +-------------------------------+--------------------+--------------------+
 
 For each of the fundamental integer designator types, *<C-* *xxx* *>*,
 there is also a type designating pointers to that type called *<C-*
@@ -1609,6 +1621,55 @@ Signature
 
     C-pointer-at-setter *new* *C-pointer* #key *byte-index* *scaled-index*
       => *C-pointer*
+
+C-size-t-at
+^^^^^^^^^^
+
+Function
+
+Signature
+
+.. code-block:: dylan
+
+    C-size-t-at *C-pointer* #key *byte-index* *scaled-index* =>
+      *machine-word*
+
+C-size-t-at-setter
+^^^^^^^^^^^^^^^^^
+
+Function
+
+Signature
+
+.. code-block:: dylan
+
+    C-size-t-at-setter *new* *C-pointer* #key *byte-index* *scaled-index* =>
+      *machine-word*
+
+C-ssize-t-at
+^^^^^^^^^^
+
+Function
+
+Signature
+
+.. code-block:: dylan
+
+    C-ssize-t-at *C-pointer* #key *byte-index* *scaled-index* =>
+      *machine-word*
+
+C-ssize-t-at-setter
+^^^^^^^^^^^^^^^^^
+
+Function
+
+Signature
+
+.. code-block:: dylan
+
+    C-ssize-t-at-setter *new* *C-pointer* #key *byte-index* *scaled-index* =>
+      *machine-word*
+
 
 Structure types
 ---------------
