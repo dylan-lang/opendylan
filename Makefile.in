@@ -7,9 +7,6 @@ OPEN_DYLAN_TARGET_PLATFORM = @OPEN_DYLAN_TARGET_PLATFORM@
 RUNTIME_SOURCES = sources/lib/run-time
 RUNTIME_TARGET_PLATFORMS = @OPEN_DYLAN_TARGET_PLATFORM@ @ADDITIONAL_RUNTIME_TARGET_PLATFORMS@
 
-FDMAKE_OPTIONS  =
-fdmake          = @PERL@ $(srcdir)/admin/builds/fdmake.pl $(FDMAKE_OPTIONS)
-
 DYLANCOMPILER   = @DYLANCOMPILER@
 
 .PHONY: 1-stage-bootstrap 1-stage-bootstrap-reentry \
@@ -50,7 +47,7 @@ endif
 
 3-stage-bootstrap: check-submodules
 	$(MAKE) 3-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose"
+	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build"
 3-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3
 
 ###
@@ -59,7 +56,7 @@ endif
 
 2-stage-bootstrap: check-submodules
 	$(MAKE) 2-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose"
+	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build"
 2-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2
 
 ###
@@ -137,7 +134,7 @@ $(abs_builddir)/Bootstrap.1/bin/dylan-compiler:
 	    install; \
 	done
 	@$(BOOTSTRAP_1_ENV) \
-	  $(fdmake) --compiler="$(DYLANCOMPILER)" dylan-compiler
+	  $(DYLANCOMPILER) dylan-compiler
 
 bootstrap-stage-1: \
 		$(abs_builddir)/Bootstrap.1 \
@@ -185,7 +182,7 @@ $(abs_builddir)/Bootstrap.2/bin/dylan-compiler:
 	done
 	@unset $(BOOTSTRAP_2_UNSET_ENV) ; \
 	  $(BOOTSTRAP_2_ENV) \
-	  $(fdmake) --compiler="$(BOOTSTRAP_2_COMPILER)" dylan-compiler
+	  $(BOOTSTRAP_2_COMPILER) dylan-compiler
 
 bootstrap-stage-2: \
 		$(abs_builddir)/Bootstrap.2 \
@@ -213,7 +210,7 @@ BOOTSTRAP_3_ENV = \
 BOOTSTRAP_3_LIBRARIES = dylan-compiler parser-compiler dswank make-dylan-app
 
 BOOTSTRAP_3_COMPILER = \
-	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler -build -verbose
+	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler -build
 
 $(abs_builddir)/Bootstrap.3:
 	mkdir $(abs_builddir)/Bootstrap.3
@@ -233,8 +230,9 @@ bootstrap-stage-3: $(abs_builddir)/Bootstrap.3
 	    OPEN_DYLAN_TARGET_PLATFORM=$$target_platform \
 	    install; \
 	done
-	@$(BOOTSTRAP_3_ENV) \
-	  $(fdmake) --compiler="$(BOOTSTRAP_3_COMPILER)" $(BOOTSTRAP_3_LIBRARIES)
+	@for target in $(BOOTSTRAP_3_LIBRARIES); do \
+	  $(BOOTSTRAP_3_ENV) $(BOOTSTRAP_3_COMPILER) $$target; \
+	done
 
 cli3:
 	@$(BOOTSTRAP_3_ENV) $(BOOTSTRAP_3_COMPILER)
@@ -269,8 +267,6 @@ BOOTSTRAP_4_ENV = \
 	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
-BOOTSTRAP_4_LIBRARIES = dylan-compiler
-
 BOOTSTRAP_4_COMPILER = \
 	$(abs_builddir)/Bootstrap.3/bin/dylan-compiler -build -dfm
 
@@ -289,8 +285,7 @@ bootstrap-stage-4: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM) \
 	  $(MAKE) -C $(rt_build) install
 	@$(BOOTSTRAP_4_ENV) \
-	  $(fdmake) --compiler="$(BOOTSTRAP_4_COMPILER)" \
-	  $(BOOTSTRAP_4_LIBRARIES)
+	  $(BOOTSTRAP_4_COMPILER) dylan-compiler
 
 cli4:
 	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER)
@@ -462,8 +457,7 @@ CHECK_ENV = \
 
 check:	bootstrap-stage-$(CHECK_COMPILER_STAGE)
 	@$(CHECK_ENV) \
-	  $(fdmake) \
-	  --compiler="$(abs_builddir)/Bootstrap.$(CHECK_COMPILER_STAGE)/bin/dylan-compiler -build -save" \
+	  $(abs_builddir)/Bootstrap.$(CHECK_COMPILER_STAGE)/bin/dylan-compiler -build -save \
 	  $(CHECK_APPS) && \
 	  for app in $(CHECK_APPS); do \
 	    echo "Executing test app $$app ..."; \
