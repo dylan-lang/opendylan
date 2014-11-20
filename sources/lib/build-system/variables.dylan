@@ -8,31 +8,18 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define variable $personal-install :: false-or(<directory-locator>) = #f;
-define variable $personal-lib     :: false-or(<directory-locator>) = #f;
 define variable $personal-bin     :: false-or(<directory-locator>) = #f;
-define variable $personal-build   :: false-or(<directory-locator>) = #f;
 
 // We don't ensure system directories because nothing is installed there.
 // By definition they had to have been already created
-define variable $system-release      :: false-or(<directory-locator>) = #f;
 define variable $system-install      :: false-or(<directory-locator>) = #f;
-define variable $system-lib          :: false-or(<directory-locator>) = #f;
-define variable $system-bin          :: false-or(<directory-locator>) = #f;
 
 define method configure-build-system () => ()
   $personal-install := user-install-path();
-  $personal-lib :=
-    $personal-install & subdirectory-locator($personal-install, "lib");
   $personal-bin :=
     $personal-install & subdirectory-locator($personal-install, "bin");
-  $personal-build :=
-    user-build-path()
-    | ($personal-install & subdirectory-locator($personal-install, "build"));
 
-  $system-release := system-release-path();
-  $system-install := system-install-path() | $system-release;
-  $system-lib := subdirectory-locator($system-install, "lib");
-  $system-bin := subdirectory-locator($system-install, "bin");
+  $system-install := system-install-path() | system-release-path();
 end method;
 
 configure-build-system();
