@@ -165,6 +165,9 @@ if test "$cross_compiling" != "yes"; then
               ]
             )
             GC_CFLAGS="-DGC_USE_MPS -I${with_gc_path}/code"
+            GC_LFLAGS=""
+            GC_LIBRARY=""
+            GC_USE_STATIC_BOEHM=false
             GC_CHOICE="mps"
             old_CPPFLAGS=$CPPFLAGS
             CPPFLAGS="-I${with_gc_path}/code"
