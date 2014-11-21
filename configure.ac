@@ -209,8 +209,7 @@ if test "$cross_compiling" != "yes"; then
                                              GC_LIBRARY="${with_gc_path}/lib/${GC_LIB_NAME}"
                                            ],
                                            [])
-                          ])
-                    AS_IF([test x${GC_LIBRARY} = x],
+                          ],
                           [
                             LIB_DIRECTORIES="/usr/lib /usr/lib64 /usr/local/lib /usr/local/lib64 /usr/lib/${MULTIARCH}"
                             for lib_directory in ${LIB_DIRECTORIES};
@@ -235,7 +234,7 @@ fi
 
 AS_IF([test x${GC_CHOICE}x${GC_USE_STATIC_BOEHM}x${GC_LIBRARY} = xboehmxtruex],
       [
-        AC_MSG_ERROR([Could not find ${GC_LIB_NAME}. Please specify the path to the Boehm GC installation via --with-gc-path])
+        AC_MSG_ERROR([Could not find ${GC_LIB_NAME}. Please specify the path to the Boehm GC installation via --with-gc-path, or omit --with-gc-path to search the default directories.])
       ])
 AS_IF([test x${GC_CHOICE} = x],
       [
