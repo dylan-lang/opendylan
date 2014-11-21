@@ -13,7 +13,7 @@ srcdir=`(cd $srcdir; pwd)`
 SUPPORT_GC_MPS=no
 SUPPORT_GC_BOEHM=yes
 GC_USE_STATIC_BOEHM=false
-GC_LIB=-lgc
+GC_LIB=gc
 ADDITIONAL_RUNTIME_TARGET_PLATFORMS=
 
 AC_CANONICAL_TARGET
@@ -41,7 +41,7 @@ case $host in
     ;;
   amd64-*-freebsd* | x86_64-*-freebsd*)
       OPEN_DYLAN_TARGET_PLATFORM=x86_64-freebsd;
-      GC_LIB=-lgc-threaded
+      GC_LIB=gc-threaded
     ;;
   x86_64-*-linux*)
       OPEN_DYLAN_TARGET_PLATFORM=x86_64-linux;
@@ -130,7 +130,13 @@ AS_IF([test x${with_mps} != x],
 AC_MSG_CHECKING([which GC to use])
 AC_MSG_RESULT(${with_gc})
 AC_MSG_CHECKING([which GC path to use])
-AC_MSG_RESULT(${with_gc_path})
+AS_IF([test x${with_gc_path} = x],
+      [
+        AC_MSG_RESULT([none specified])
+      ],
+      [
+        AC_MSG_RESULT(${with_gc_path})
+      ])
 
 if test "$cross_compiling" != "yes"; then
     AS_IF([test x${GC_USE_STATIC_BOEHM} = xtrue],
@@ -183,8 +189,17 @@ if test "$cross_compiling" != "yes"; then
                   [
                     AC_MSG_ERROR([The platform that you are building for requires the MPS GC.])
                   ])
-            GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS -I${with_gc_path}/include"
-            GC_LFLAGS="-L${with_gc_path}/lib ${GC_LIB}"
+            GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS"
+            GC_LFLAGS="-l${GC_LIB}"
+            AS_IF([test x${with_gc_path} != x],
+                  [
+                    GC_CFLAGS="${GC_CFLAGS} -I${with_gc_path}/include"
+                    GC_LFLAGS="${with_gc_path}/lib ${GC_LFLAGS}"
+                  ])
+            old_LFLAGS=$LFLAGS
+            LFLAGS="${LFLAGS} ${GC_LFLAGS}"
+            AC_CHECK_LIB([${GC_LIB}], [GC_malloc])
+            LFLAGS=$old_LFLAGS
             AS_IF([test x${GC_USE_STATIC_BOEHM} = xtrue],
                   [
                     AS_IF([test x${with_gc_path} != x],
