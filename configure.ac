@@ -182,33 +182,40 @@ if test "$cross_compiling" != "yes"; then
                   ])
             GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS -I${with_gc_path}/include"
             GC_LFLAGS="-L${with_gc_path}/lib ${GC_LIB}"
-            AS_IF([test x${with_gc_path} != x],
+            AS_IF([test x${GC_USE_STATIC_BOEHM} = xtrue],
                   [
-                     AC_CHECK_FILE([${with_gc_path}/lib/${GC_LIB_NAME}],
-                                   [
-                                     GC_LIBRARY="${with_gc_path}/lib/${GC_LIB_NAME}"
-                                   ],
-                                   [])
-                  ])
-            AS_IF([test x${GC_LIBRARY} = x],
+                    AS_IF([test x${with_gc_path} != x],
+                          [
+                             AC_CHECK_FILE([${with_gc_path}/lib/${GC_LIB_NAME}],
+                                           [
+                                             GC_LIBRARY="${with_gc_path}/lib/${GC_LIB_NAME}"
+                                           ],
+                                           [])
+                          ])
+                    AS_IF([test x${GC_LIBRARY} = x],
+                          [
+                            LIB_DIRECTORIES="/usr/lib /usr/lib64 /usr/local/lib /usr/local/lib64 /usr/lib/${MULTIARCH}"
+                            for lib_directory in ${LIB_DIRECTORIES};
+                            do
+                              AS_IF([test x${GC_LIBRARY} = x],
+                                    [
+                                      AC_CHECK_FILE([${lib_directory}/${GC_LIB_NAME}],
+                                                    [
+                                                      GC_LIBRARY="${lib_directory}/${GC_LIB_NAME}"
+                                                    ])
+                                    ])
+                            done
+                          ])
+                  ],
                   [
-                    LIB_DIRECTORIES="/usr/lib /usr/lib64 /usr/local/lib /usr/local/lib64 /usr/lib/${MULTIARCH}"
-                    for lib_directory in ${LIB_DIRECTORIES};
-                    do
-                      AS_IF([test x${GC_LIBRARY} = x],
-                            [
-                              AC_CHECK_FILE([${lib_directory}/${GC_LIB_NAME}],
-                                            [
-                                              GC_LIBRARY="${lib_directory}/${GC_LIB_NAME}"
-                                            ])
-                            ])
-                    done
+                    # We aren't using static boehm, so we don't need a GC_LIBRARY set.
+                    GC_LIBRARY=""
                   ])
             GC_CHOICE="boehm"
           ])
 fi
 
-AS_IF([test x${GC_CHOICE}x${GC_LIBRARY} = xboehmx],
+AS_IF([test x${GC_CHOICE}x${GC_USE_STATIC_BOEHM}x${GC_LIBRARY} = xboehmxtruex],
       [
         AC_MSG_ERROR([Could not find ${GC_LIB_NAME}. Please specify the path to the Boehm GC installation via --with-gc-path])
       ])
