@@ -192,23 +192,17 @@ if test "$cross_compiling" != "yes"; then
                   ])
             AS_IF([test x${GC_LIBRARY} = x],
                   [
-                    AC_CHECK_FILE([/usr/lib/${GC_LIB_NAME}],
-                                  [
-                                    GC_LIBRARY="/usr/lib/${GC_LIB_NAME}"
-                                  ],
-                                  [
-                                    AC_CHECK_FILE([/usr/local/lib/${GC_LIB_NAME}],
-                                                  [
-                                                    GC_LIBRARY="/usr/local/lib/${GC_LIB_NAME}"
-                                                  ],
-                                                  [
-                                                    AC_CHECK_FILE([/usr/lib/${MULTIARCH}/${GC_LIB_NAME}],
-                                                                  [
-                                                                    GC_LIBRARY="/usr/lib/${MULTIARCH}/${GC_LIB_NAME}"
-                                                                  ],
-                                                                  [])
-                                                  ])
-                                  ])
+                    LIB_DIRECTORIES="/usr/lib /usr/lib64 /usr/local/lib /usr/local/lib64 /usr/lib/${MULTIARCH}"
+                    for lib_directory in ${LIB_DIRECTORIES};
+                    do
+                      AS_IF([test x${GC_LIBRARY} = x],
+                            [
+                              AC_CHECK_FILE([${lib_directory}/${GC_LIB_NAME}],
+                                            [
+                                              GC_LIBRARY="${lib_directory}/${GC_LIB_NAME}"
+                                            ])
+                            ])
+                    done
                   ])
             GC_CHOICE="boehm"
           ])
