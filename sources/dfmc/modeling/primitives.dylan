@@ -508,7 +508,8 @@ define side-effecting stateless dynamic-extent &primitive primitive-set-generic-
     (gf :: <generic-function>) => ();
 
 define side-effecting stateless dynamic-extent &primitive primitive-set-accessor-method-xep
-  (accessor-method :: <accessor-method>) => (accessor-method :: <accessor-method>);
+    (accessor-method :: <accessor-method>, what :: <integer>)
+ => (accessor-method :: <accessor-method>);
 
 
 /// APPLY
@@ -534,8 +535,8 @@ define side-effecting stateless indefinite-extent &primitive primitive-iep-apply
  => (#rest values);
 
 // !@#$ needs to be built-in
-define side-effecting stateless indefinite-extent &primitive primitive-apply // !@#$ broken
-    (fn :: <function>, size :: <integer>, #rest arguments)
+define side-effecting stateless indefinite-extent &primitive primitive-apply
+    (fn :: <function>, arguments :: <simple-object-vector>)
  => (#rest values);
 
 
@@ -552,7 +553,7 @@ define side-effecting stateless dynamic-extent &primitive primitive-initialize-d
 /// MULTIPLE-VALUES
 
 define side-effect-free stateless dynamic-extent &primitive-and-override primitive-values
-    (size :: <integer>, #rest arguments) => (#rest values)
+    (arguments :: <simple-object-vector>) => (#rest values)
   apply(values, arguments)
 end;
 
