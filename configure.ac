@@ -13,7 +13,7 @@ srcdir=`(cd $srcdir; pwd)`
 SUPPORT_GC_MPS=no
 SUPPORT_GC_BOEHM=yes
 GC_USE_STATIC_BOEHM=false
-GC_LIB=-lgc
+GC_LIB=gc
 ADDITIONAL_RUNTIME_TARGET_PLATFORMS=
 
 AC_CANONICAL_TARGET
@@ -41,7 +41,7 @@ case $host in
     ;;
   amd64-*-freebsd* | x86_64-*-freebsd*)
       OPEN_DYLAN_TARGET_PLATFORM=x86_64-freebsd;
-      GC_LIB=-lgc-threaded
+      GC_LIB=gc-threaded
     ;;
   x86_64-*-linux*)
       OPEN_DYLAN_TARGET_PLATFORM=x86_64-linux;
@@ -130,7 +130,13 @@ AS_IF([test x${with_mps} != x],
 AC_MSG_CHECKING([which GC to use])
 AC_MSG_RESULT(${with_gc})
 AC_MSG_CHECKING([which GC path to use])
-AC_MSG_RESULT(${with_gc_path})
+AS_IF([test x${with_gc_path} = x],
+      [
+        AC_MSG_RESULT([none specified])
+      ],
+      [
+        AC_MSG_RESULT(${with_gc_path})
+      ])
 
 if test "$cross_compiling" != "yes"; then
     AS_IF([test x${GC_USE_STATIC_BOEHM} = xtrue],
@@ -165,6 +171,9 @@ if test "$cross_compiling" != "yes"; then
               ]
             )
             GC_CFLAGS="-DGC_USE_MPS -I${with_gc_path}/code"
+            GC_LFLAGS=""
+            GC_LIBRARY=""
+            GC_USE_STATIC_BOEHM=false
             GC_CHOICE="mps"
             old_CPPFLAGS=$CPPFLAGS
             CPPFLAGS="-I${with_gc_path}/code"
@@ -180,43 +189,52 @@ if test "$cross_compiling" != "yes"; then
                   [
                     AC_MSG_ERROR([The platform that you are building for requires the MPS GC.])
                   ])
-            GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS -I${with_gc_path}/include"
-            GC_LFLAGS="-L${with_gc_path}/lib ${GC_LIB}"
+            GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS"
+            GC_LFLAGS="-l${GC_LIB}"
             AS_IF([test x${with_gc_path} != x],
                   [
-                     AC_CHECK_FILE([${with_gc_path}/lib/${GC_LIB_NAME}],
-                                   [
-                                     GC_LIBRARY="${with_gc_path}/lib/${GC_LIB_NAME}"
-                                   ],
-                                   [])
+                    GC_CFLAGS="${GC_CFLAGS} -I${with_gc_path}/include"
+                    GC_LFLAGS="${with_gc_path}/lib ${GC_LFLAGS}"
                   ])
-            AS_IF([test x${GC_LIBRARY} = x],
+            old_LFLAGS=$LFLAGS
+            LFLAGS="${LFLAGS} ${GC_LFLAGS}"
+            AC_CHECK_LIB([${GC_LIB}], [GC_malloc])
+            LFLAGS=$old_LFLAGS
+            AS_IF([test x${GC_USE_STATIC_BOEHM} = xtrue],
                   [
-                    AC_CHECK_FILE([/usr/lib/${GC_LIB_NAME}],
-                                  [
-                                    GC_LIBRARY="/usr/lib/${GC_LIB_NAME}"
-                                  ],
-                                  [
-                                    AC_CHECK_FILE([/usr/local/lib/${GC_LIB_NAME}],
-                                                  [
-                                                    GC_LIBRARY="/usr/local/lib/${GC_LIB_NAME}"
-                                                  ],
-                                                  [
-                                                    AC_CHECK_FILE([/usr/lib/${MULTIARCH}/${GC_LIB_NAME}],
-                                                                  [
-                                                                    GC_LIBRARY="/usr/lib/${MULTIARCH}/${GC_LIB_NAME}"
-                                                                  ],
-                                                                  [])
-                                                  ])
-                                  ])
+                    AS_IF([test x${with_gc_path} != x],
+                          [
+                             AC_CHECK_FILE([${with_gc_path}/lib/${GC_LIB_NAME}],
+                                           [
+                                             GC_LIBRARY="${with_gc_path}/lib/${GC_LIB_NAME}"
+                                           ],
+                                           [])
+                          ],
+                          [
+                            LIB_DIRECTORIES="/usr/lib /usr/lib64 /usr/local/lib /usr/local/lib64 /usr/lib/${MULTIARCH}"
+                            for lib_directory in ${LIB_DIRECTORIES};
+                            do
+                              AS_IF([test x${GC_LIBRARY} = x],
+                                    [
+                                      AC_CHECK_FILE([${lib_directory}/${GC_LIB_NAME}],
+                                                    [
+                                                      GC_LIBRARY="${lib_directory}/${GC_LIB_NAME}"
+                                                    ])
+                                    ])
+                            done
+                          ])
+                  ],
+                  [
+                    # We aren't using static boehm, so we don't need a GC_LIBRARY set.
+                    GC_LIBRARY=""
                   ])
             GC_CHOICE="boehm"
           ])
 fi
 
-AS_IF([test x${GC_CHOICE}x${GC_LIBRARY} = xboehmx],
+AS_IF([test x${GC_CHOICE}x${GC_USE_STATIC_BOEHM}x${GC_LIBRARY} = xboehmxtruex],
       [
-        AC_MSG_ERROR([Could not find ${GC_LIB_NAME}. Please specify the path to the Boehm GC installation via --with-gc-path])
+        AC_MSG_ERROR([Could not find ${GC_LIB_NAME}. Please specify the path to the Boehm GC installation via --with-gc-path, or omit --with-gc-path to search the default directories.])
       ])
 AS_IF([test x${GC_CHOICE} = x],
       [
