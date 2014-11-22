@@ -972,8 +972,8 @@ define method parse-next-argument
   if (boolean)
     let true?
       = select (as-lowercase(boolean) by \=)
-          "yes", "on" => #t;
-          "no", "off" => #f;
+          "yes", "on", "true" => #t;
+          "no", "off", "false" => #f;
           otherwise =>
             parse-error("Unrecognized option '%s' for boolean argument",
                         boolean);
