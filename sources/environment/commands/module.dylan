@@ -11,9 +11,9 @@ define module command-lines
   use common-extensions, exclude: { format-to-string };
   use dylan-extensions,
     import: { <keyboard-interrupt>,
-	      keyboard-interrupt?, keyboard-interrupt?-setter,
-	      keyboard-interrupt-polling?-setter,
-	      keyboard-interrupt-polling-thread?-setter };
+              keyboard-interrupt?, keyboard-interrupt?-setter,
+              keyboard-interrupt-polling?-setter,
+              keyboard-interrupt-polling-thread?-setter };
   use commands;
   use file-system;
   use operating-system;
@@ -120,9 +120,9 @@ define module environment-commands
   use environment-imports;
   use environment-protocols,
     exclude: { <optional-parameter>,
-	       parameter-name,
-	       parameter-type,
-	       parameter-keyword };
+               parameter-name,
+               parameter-type,
+               parameter-keyword };
   use environment-manager;
   use environment-reports;
   use projects, import: { target-platform-name-setter };

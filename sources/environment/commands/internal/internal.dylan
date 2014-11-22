@@ -1,6 +1,6 @@
 Module:    environment-internal-commands
 Synopsis:  The internal-only commands provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -23,7 +23,7 @@ define method show-property
     (context :: <environment-context>, property :: <debugger-property>)
  => ()
   message(context, "Debugger: %s",
-	  if (context.context-server.server-debugger?) "on" else "off" end)
+          if (context.context-server.server-debugger?) "on" else "off" end)
 end method show-property;
 
 define method set-property
@@ -49,7 +49,7 @@ define method show-property
     (context :: <environment-context>, property :: <profile-commands-property>)
  => ()
   message(context, "Profile commands: %s",
-	  if (context.context-server.server-profile-commands?) "on" else "off" end)
+          if (context.context-server.server-profile-commands?) "on" else "off" end)
 end method show-property;
 
 define method set-property

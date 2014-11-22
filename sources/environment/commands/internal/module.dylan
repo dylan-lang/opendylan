@@ -14,10 +14,10 @@ define module environment-internal-commands
     // via project-manager-interface.  (Many of these are renamed but
     // not used.  Not sure why they weren't just excluded.  --cgay)
     rename: { close-project => env/close-project,
-	      project-name => env/project-name,
-	      project-source-location => env/project-source-location,
+              project-name => env/project-name,
+              project-source-location => env/project-source-location,
               project-other-sources => env/project-other-sources,
-	      open-project => env/open-project,
+              open-project => env/open-project,
               save-project =>  env/save-project,
               save-project-database =>  env/save-project-database,
               project-compiler-back-end => env/project-compiler-back-end,
@@ -35,9 +35,9 @@ define module environment-internal-commands
               project-major-version-setter => env/project-major-version-setter,
               project-minor-version => env/project-minor-version,
               project-minor-version-setter => env/project-minor-version-setter,
-	      project-read-only? => env/project-read-only?,
- 	      do-library-modules => env/do-library-modules,
- 	      source-record-top-level-forms => env/source-record-top-level-forms,
+              project-read-only? => env/project-read-only?,
+              do-library-modules => env/do-library-modules,
+              source-record-top-level-forms => env/source-record-top-level-forms,
               session-property => env/session-property,
               session-property-setter => env/session-property-setter };
   use environment-commands;

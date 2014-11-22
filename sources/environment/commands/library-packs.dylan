@@ -1,6 +1,6 @@
 Module:    environment-commands
 Synopsis:  The commands provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -24,9 +24,9 @@ define method parse-next-argument
     block (return)
       let info = find-library-pack-info(as(<symbol>, name));
       if (info)
-	values(info, next-index)
+        values(info, next-index)
       else
-	parse-error("%s is not an installed library pack", name)
+        parse-error("%s is not an installed library pack", name)
       end
     end
   else
@@ -52,11 +52,11 @@ define method show-property
  => ()
   let stream = context.context-server.server-output-stream;
   print-table(stream, installed-library-packs(),
-	      label-key: method (info :: <library-pack-info>)
-			   as-uppercase(as(<string>, info.info-name))
-			 end,
-	      value-key: info-title,
-	      separator: " - ")
+              label-key: method (info :: <library-pack-info>)
+                           as-uppercase(as(<string>, info.info-name))
+                         end,
+              value-key: info-title,
+              separator: " - ")
 end method show-property;
 
 // Examples
@@ -75,7 +75,7 @@ define method show-property
   for (info :: <library-pack-info> in installed-library-packs())
     if (instance?(info, <basic-library-pack-info>))
       describe-libraries(context, format-to-string("%s Examples", info.info-title),
-			 info.info-examples)
+                         info.info-examples)
     end
   end
 end method show-property;
@@ -96,7 +96,7 @@ define method show-property
   for (info :: <library-pack-info> in installed-library-packs())
     if (instance?(info, <basic-library-pack-info>))
       describe-libraries(context, format-to-string("%s test suites", info.info-title),
-			 info.info-test-suites)
+                         info.info-test-suites)
     end
   end
 end method show-property;
@@ -115,7 +115,7 @@ end method find-state-value;
 
 define method describe-state
     (context :: <server-context>, info :: <library-pack-info>,
-     #key prefix :: <string> = "", 
+     #key prefix :: <string> = "",
           full? :: <boolean> = #f)
  => ()
   message(context, "%s:", info.info-title);
@@ -129,19 +129,19 @@ define method describe-state
 end method describe-state;
 
 define method describe-libraries
-    (context :: <server-context>, title :: <string>, libraries :: <sequence>, 
+    (context :: <server-context>, title :: <string>, libraries :: <sequence>,
      #key prefix :: <string> = "",
           full? :: <boolean> = #f)
  => ()
   let stream = context.context-server.server-output-stream;
   message(context, "%s%s:", prefix, title);
   print-table(stream, libraries,
-	      label-key: method (info :: <library-info>)
-			   as-uppercase(as(<string>, info.info-name))
-			 end,
-	      value-key: info-description,
-	      separator: " - ",
-	      prefix: concatenate(prefix, "  "))
+              label-key: method (info :: <library-info>)
+                           as-uppercase(as(<string>, info.info-name))
+                         end,
+              value-key: info-description,
+              separator: " - ",
+              prefix: concatenate(prefix, "  "))
 end method describe-libraries;
 
 register-state-type(#"library");
@@ -155,32 +155,32 @@ end method find-state-value;
 
 define method describe-state
     (context :: <server-context>, info :: <library-info>,
-     #key prefix :: <string> = "", 
+     #key prefix :: <string> = "",
           full? :: <boolean> = #t)
  => ()
   let parent-info = info.info-merge-parent | info;
   let location = info.info-location;
-  message(context, "%s%s: %s:", 
-	  prefix, 
-	  select (info by instance?)
-	    <example-info>    => "Example";
-	    <test-suite-info> => "Test Suite";
-	    otherwise         => "Library";
-	  end,
-	  info.info-title);
+  message(context, "%s%s: %s:",
+          prefix,
+          select (info by instance?)
+            <example-info>    => "Example";
+            <test-suite-info> => "Test Suite";
+            otherwise         => "Library";
+          end,
+          info.info-title);
   if (info.info-description)
     message(context, "%s%s", prefix, info.info-description)
   end;
   if (full?)
     message(context, "%s  Location: %s%s", prefix, location,
-	    if (~file-exists?(location)) " (not installed)" else "" end);
+            if (~file-exists?(location)) " (not installed)" else "" end);
     message(context, "%s  Merge parent: %s", prefix, parent-info.info-name);
     let binary-info = info.info-binary;
     if (binary-info)
       message(context, "%s  Binary name: %s", prefix, info.info-binary-name | "#f");
       if (~empty?(binary-info.info-merged-libraries))
-	message(context, "%s  Merged libraries: %=",
-		prefix, map(info-name, binary-info.info-merged-libraries))
+        message(context, "%s  Merged libraries: %=",
+                prefix, map(info-name, binary-info.info-merged-libraries))
       end
     end
   end

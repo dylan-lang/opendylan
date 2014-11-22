@@ -1,6 +1,6 @@
 Module:    environment-commands
 Synopsis:  The commands provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -56,7 +56,7 @@ define method command-title
     (context :: <environment-context>, command :: <environment-command>)
  => (title :: <string>)
   let command-line = command-line-for-command(context, command);
-  command-line.command-info-title  
+  command-line.command-info-title
 end method command-title;
 
 define variable *default-command-library* :: false-or(<command-library>) = #f;
@@ -91,11 +91,11 @@ define method class-for-command-line
     otherwise =>
       let library = *default-command-library*;
       let default-command
-	= library & command-library-default-command-class(context, library);
+        = library & command-library-default-command-class(context, library);
       if (default-command)
-	values(default-command, 0)
+        values(default-command, 0)
       else
-	next-method()
+        next-method()
       end;
   end
 end method class-for-command-line;
@@ -113,8 +113,8 @@ define method ensure-command-available
     (context :: <environment-context>, command :: <project-command>)
  => ()
   unless (context.context-project-context)
-    command-error("Project command '%s' requires an open project", 
-		  command-title(context, command))
+    command-error("Project command '%s' requires an open project",
+                  command-title(context, command))
   end
 end method ensure-command-available;
 
@@ -122,8 +122,8 @@ define method ensure-property-available
     (context :: <server-context>, property :: <project-property>)
  => ()
   unless (context.context-project-context)
-    command-error("Project property '%s' requires an open project", 
-		  property.command-info-title)
+    command-error("Project property '%s' requires an open project",
+                  property.command-info-title)
   end
 end method ensure-property-available;
 
@@ -143,7 +143,7 @@ define class <project-context> (<server-context>)
 end class <project-context>;
 
 define method context-project-context
-    (context :: <environment-context>, 
+    (context :: <environment-context>,
      #key project :: false-or(<project-object>) = context.context-project)
  => (project-context :: false-or(<project-context>))
   project & element(context.context-project-contexts, project, default: #f)
@@ -151,7 +151,7 @@ end method context-project-context;
 
 define method context-project-context-setter
     (project-context :: false-or(<project-context>),
-     context :: <environment-context>, 
+     context :: <environment-context>,
      #key project :: <project-object> = context.context-project)
  => (project-context :: false-or(<project-context>))
   let contexts = context.context-project-contexts;

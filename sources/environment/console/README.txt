@@ -48,7 +48,7 @@ The command-line options are DEFINED in compiler-command-line.dylan or
 environment-command-line.dylan:
 
 Libraries_________Options_______________________In file_______________________
-                                                
+
 DC, DCT           <main-command>                compiler-command-line.dylan
 DE, DET           <main-command>                environment-command-line.dylan
 ______________________________________________________________________________

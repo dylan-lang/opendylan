@@ -1,6 +1,6 @@
 Module:    environment-commands
 Synopsis:  The commands provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -33,16 +33,16 @@ define method parse-next-argument
     let object = find-environment-object(project, name, module: module);
     case
       ~object =>
-	parse-error("No object named '%s'", name);
+        parse-error("No object named '%s'", name);
       ~instance?(object, type) =>
-	parse-error("Incorrect argument type: '%s'",
-		    environment-object-display-name(project, object, module));
+        parse-error("Incorrect argument type: '%s'",
+                    environment-object-display-name(project, object, module));
       otherwise =>
-	values(object, stop);
+        values(object, stop);
     end
   else
     parse-error("Missing %s argument",
-		parameter-type-name(type))
+                parameter-type-name(type))
   end
 end method parse-next-argument;
 
@@ -119,7 +119,7 @@ define method show-property
   let library = project-context & project-context.context-library;
   if (library)
     message(context, "  Library: %s",
-	    environment-object-display-name(project, library, library))
+            environment-object-display-name(project, library, library))
   else
     command-error("No selected library")
   end
@@ -127,7 +127,7 @@ end method show-property;
 
 define method set-property
     (context :: <environment-context>, property :: <library-property>,
-     library :: <library-object>, 
+     library :: <library-object>,
      #key save?)
  => ()
   let project-context = context.context-project-context;
@@ -152,7 +152,7 @@ define method show-property
     = project-used-libraries(library-project, library-project);
   for (library :: <library-object> in used-libraries)
     message(context, "  %s",
-	    environment-object-display-name(project, library, library))
+            environment-object-display-name(project, library, library))
   end
 end method show-property;
 
@@ -175,7 +175,7 @@ define method show-property
   let module = project-context & project-context.context-module;
   if (module)
     message(context, "  Module: %s",
-	    environment-object-display-name(project, module, module))
+            environment-object-display-name(project, module, module))
   else
     command-error("No selected module")
   end
@@ -183,7 +183,7 @@ end method show-property;
 
 define method set-property
     (context :: <environment-context>, property :: <module-property>,
-     module :: <module-object>, 
+     module :: <module-object>,
      #key save?)
  => ()
   let project-context = context.context-project-context;
@@ -205,7 +205,7 @@ define method show-property
   let library = project-context.context-library;
   let module-names
     = map(curry(environment-object-primitive-name, project),
-	  namespace-names(project, library, imported?: #f));
+          namespace-names(project, library, imported?: #f));
   for (name :: <string> in module-names)
     message(context, "  %s", name)
   end

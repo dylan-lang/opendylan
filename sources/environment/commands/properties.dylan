@@ -1,6 +1,6 @@
 Module:    command-lines
 Synopsis:  The commands provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -29,7 +29,7 @@ define open generic show-property
  => ();
 
 define open generic set-property
-    (context :: <server-context>, property :: <command-property>, 
+    (context :: <server-context>, property :: <command-property>,
      value :: <object>,
      #key save?)
  => ();
@@ -39,9 +39,9 @@ define macro command-property-definer
     end }
     => { define constant "$" ## ?name ## "-command-property"
            = make(?class,
-		  ?options,
-		  name:          ?#"name",
-		  title:         as-uppercase(?"name")) }
+                  ?options,
+                  name:          ?#"name",
+                  title:         as-uppercase(?"name")) }
 end macro command-property-definer;
 
 define method ensure-property-available
@@ -142,9 +142,9 @@ end class <set-property-error>;
 
 define method set-error
     (format-string :: <string>, #rest format-arguments)
-  error(make(<set-property-error>, 
-	     format-string: format-string,
-	     format-arguments: format-arguments))
+  error(make(<set-property-error>,
+             format-string: format-string,
+             format-arguments: format-arguments))
 end method set-error;
 
 
@@ -187,7 +187,7 @@ define sealed method do-execute-command
 end method do-execute-command;
 
 define method context-property-setter
-    (value :: <object>, context :: <server-context>, 
+    (value :: <object>, context :: <server-context>,
      property :: <command-property>,
      #key save?)
  => (value :: <object>)
@@ -216,19 +216,19 @@ define sealed method do-execute-command
     let save? = command.%save?;
     block (return)
       let value
-	= block ()
-	    parse-next-argument(context, type, value-string);
-	  exception (error :: <command-line-server-error>)
-	    display-command-line-server-error(context, error);
-	    return();
-	  end;
+        = block ()
+            parse-next-argument(context, type, value-string);
+          exception (error :: <command-line-server-error>)
+            display-command-line-server-error(context, error);
+            return();
+          end;
       block ()
-	if (save? & ~property.command-info-persistent?)
-	  message(context, "Setting value, but property cannot be saved")
-	end;
-	context-property(context, property, save?: save?) := value
+        if (save? & ~property.command-info-persistent?)
+          message(context, "Setting value, but property cannot be saved")
+        end;
+        context-property(context, property, save?: save?) := value
       exception (error :: <set-property-error>)
-	message(context, "%s", error)
+        message(context, "%s", error)
       end
     end
   else
@@ -239,7 +239,7 @@ end method do-execute-command;
 
 /// Property commands
 
-define command-group property 
+define command-group property
     (summary: "property handling commands",
      documentation: "Commands to manipulate properties.")
   property properties;
