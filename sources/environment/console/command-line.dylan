@@ -21,7 +21,7 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: project:;
   constant slot %help?          :: <boolean> = #f,
     init-keyword: help?:;
-  constant slot %logo?          :: <boolean> = #t,
+  constant slot %logo?          :: <boolean> = #f,
     init-keyword: logo?:;
   constant slot %version?       :: <boolean> = #f,
     init-keyword: version?:;
@@ -123,6 +123,7 @@ end method execute-main-command;
 define method execute-main-loop
     (context :: <server-context>, command :: <basic-main-command>)
  => (status-code :: <integer>)
+  message(context, dylan-banner());
   let echo-input? = command.%echo-input?;
   let profile-commands? = command.%profile-commands?;
   command-line-loop
