@@ -1,6 +1,6 @@
 Module:    environment-commands
 Synopsis:  The commands provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -12,10 +12,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $documentation-report
   = make(<report-info>,
-	 name:    #"documentation",
-	 title:   "Command line documentation",
-	 class:   <report>,
-	 edition: #"basic");
+         name:    #"documentation",
+         title:   "Command line documentation",
+         class:   <report>,
+         edition: #"basic");
 
 define function command-reports
     () => (reports :: <sequence>)
@@ -37,7 +37,7 @@ define function write-command-documentation
 end function write-command-documentation;
 
 define function write-command-group-documentation
-    (stream :: <stream>, context :: <environment-context>, 
+    (stream :: <stream>, context :: <environment-context>,
      group :: <command-group>,
      #key show-contents? :: <boolean> = #t)
  => ()
@@ -77,11 +77,11 @@ define method show-property
  => ()
   let stream = context.context-server.server-output-stream;
   print-table(stream, as(<vector>, command-reports()),
-	      label-key: method (info :: <report-info>)
-			   as-uppercase(as(<string>, info.report-info-name))
-			 end,
-	      value-key: report-info-title,
-	      sort?:     #t)
+              label-key: method (info :: <report-info>)
+                           as-uppercase(as(<string>, info.report-info-name))
+                         end,
+              value-key: report-info-title,
+              sort?:     #t)
 end method show-property;
 
 
@@ -115,13 +115,13 @@ define sealed method do-execute-command
   case
     (report == #"documentation") =>
       if (filename)
-	with-open-file (stream = filename, direction: #"output")
-	  write-command-documentation(stream, context)
-	end;
-	message(context, "Wrote documentation to %s", filename)
+        with-open-file (stream = filename, direction: #"output")
+          write-command-documentation(stream, context)
+        end;
+        message(context, "Wrote documentation to %s", filename)
       else
-	let stream = context.context-server.server-output-stream;
-	write-command-documentation(stream, context)
+        let stream = context.context-server.server-output-stream;
+        write-command-documentation(stream, context)
       end;
     info =>
       if (~member?(format, info.report-info-formats))
@@ -129,18 +129,18 @@ define sealed method do-execute-command
                       report, format);
       end;
       let report
-	= make(info.report-info-class,
-	       project: project,
-	       format: format);
+        = make(info.report-info-class,
+               project: project,
+               format: format);
       if (filename)
-	with-open-file (stream = filename, direction: #"output")
-	  write-report(stream, report)
-	end;
-	message(context, "Wrote %s to %s",
-		info.report-info-title, filename)
+        with-open-file (stream = filename, direction: #"output")
+          write-report(stream, report)
+        end;
+        message(context, "Wrote %s to %s",
+                info.report-info-title, filename)
       else
-	let stream = context.context-server.server-output-stream;
-	write-report(stream, report)
+        let stream = context.context-server.server-output-stream;
+        write-report(stream, report)
       end;
     otherwise =>
       command-error("No such report '%s'", report);

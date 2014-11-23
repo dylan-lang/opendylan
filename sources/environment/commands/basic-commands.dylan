@@ -1,6 +1,6 @@
 Module:    command-lines
 Synopsis:  The commands provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -77,7 +77,7 @@ define sealed method do-execute-command
   let group = command.%group | context.context-command-group;
   if (property & command-line)
     message(context,
-	    "A property and a command cannot be specified together.")
+            "A property and a command cannot be specified together.")
   else
     let stream = context.context-server.server-output-stream;
     let object = command-line | property | group;
@@ -96,9 +96,9 @@ define method display-help
     print-command-info(stream, remove(groups, root-group));
     new-line(stream);
   else
-    format(stream, "\n%s:\n\n%s\n\n", 
-	   title | group.command-info-title,
-	   group.command-info-documentation);
+    format(stream, "\n%s:\n\n%s\n\n",
+           title | group.command-info-title,
+           group.command-info-documentation);
     let command-lines = collect-command-info(group, <basic-command-line>);
     unless (empty?(command-lines))
       format(stream, "Commands:\n");
@@ -112,16 +112,16 @@ define method display-help
       new-line(stream)
     end;
   end;
-  format(stream, 
-	 "For documentation on a group, use:    HELP %sGROUP group.\n"
-	 "For documentation on a command, use:  HELP command\n"
-	 "For a complete list of commands, use: SHOW COMMANDS\n"
-	 "\n"
-	 "For full documentation, see %sdocumentation/\n"
-	 "For a guide to the command line tools, see %sdocumentation/getting-started-cli/\n",
-	 $option-prefix,
-	 release-web-address(),
-	 release-web-address())
+  format(stream,
+         "For documentation on a group, use:    HELP %sGROUP group.\n"
+         "For documentation on a command, use:  HELP command\n"
+         "For a complete list of commands, use: SHOW COMMANDS\n"
+         "\n"
+         "For full documentation, see %sdocumentation/\n"
+         "For a guide to the command line tools, see %sdocumentation/getting-started-cli/\n",
+         $option-prefix,
+         release-web-address(),
+         release-web-address())
 end method display-help;
 
 define method display-help
@@ -132,12 +132,12 @@ define method display-help
  => ()
   ignore(group);
   format(stream, "\nProperty: %s\n\n%s\n",
-	 title | info.command-info-title,
-	 info.command-info-documentation)
+         title | info.command-info-title,
+         info.command-info-documentation)
 end method display-help;
 
 define method display-help
-    (stream :: <stream>, context :: <server-context>, 
+    (stream :: <stream>, context :: <server-context>,
      command-line :: <command-line>,
      #key group :: <command-group> = context.context-command-group,
           title :: false-or(<string>) = #f,
@@ -151,9 +151,9 @@ define method display-help
   unless (empty?(aliases))
     write(stream, "Aliases: ");
     for (command-alias :: <command-line-alias> in aliases,
-	 separator = "" then ", ")
+         separator = "" then ", ")
       if (alias & separator == "")
-	write(stream, command-line.command-info-title);
+        write(stream, command-line.command-info-title);
         separator := ", ";
       end;
       when (command-alias ~= alias)
@@ -166,34 +166,34 @@ define method display-help
   unless (empty?(arguments) & empty?(optionals))
     format(stream, "\nArguments:\n\n");
     print-table(stream, concatenate(arguments, optionals),
-		label-key: parameter-name,
-		value-key: parameter-summary,
-		separator: " - ")
+                label-key: parameter-name,
+                value-key: parameter-summary,
+                separator: " - ")
   end;
   unless (empty?(keywords))
     format(stream, "\nOptions:\n\n");
     print-table(stream, keywords,
-		label-key: parameter-name-and-type,
-		value-key: parameter-summary,
-		separator: " - ")
+                label-key: parameter-name-and-type,
+                value-key: parameter-summary,
+                separator: " - ")
   end
 end method display-help;
 
 define method display-help
-    (stream :: <stream>, context :: <server-context>, 
+    (stream :: <stream>, context :: <server-context>,
      alias :: <command-line-alias>,
      #key group :: <command-group> = context.context-command-group,
           title :: false-or(<string>) = #f)
  => ()
   let command-line = alias.command-info-alias;
-  display-help(stream, context, command-line, 
-	       group: group, 
-	       title: alias.command-info-title, 
-	       alias: alias)
+  display-help(stream, context, command-line,
+               group: group,
+               title: alias.command-info-title,
+               alias: alias)
 end method display-help;
 
 define method display-usage
-    (stream :: <stream>, context :: <server-context>, 
+    (stream :: <stream>, context :: <server-context>,
      command-line :: <command-line>,
      #key group :: <command-group> = context.context-command-group,
           title :: false-or(<string>) = #f)
@@ -205,21 +205,21 @@ define method display-usage
     format(stream, "%s", title)
   else
     format(stream, "%s",
-	   command-line.command-info-title)
+           command-line.command-info-title)
   end;
   unless (empty?(keywords))
     format(stream, " [options*]")
   end;
   for (argument :: <required-parameter> in arguments)
-    format(stream, " %s", 
-	   as-lowercase(argument.parameter-name))
+    format(stream, " %s",
+           as-lowercase(argument.parameter-name))
   end;
   unless (empty?(optionals))
     format(stream, " [");
     for (argument :: <optional-parameter> in optionals,
-	 separator = "" then " ")
+         separator = "" then " ")
       format(stream, "%s%s", separator,
-	     as-lowercase(argument.parameter-name))
+             as-lowercase(argument.parameter-name))
     end;
     format(stream, "]")
   end;
@@ -231,10 +231,10 @@ define function print-command-info
      #key prefix :: <string> = "  ")
  => ()
   print-table(stream, info-group,
-	      label-key: command-info-title,
-	      value-key: command-info-summary,
-	      prefix:    prefix,
-	      sort?:     #t)
+              label-key: command-info-title,
+              value-key: command-info-summary,
+              prefix:    prefix,
+              sort?:     #t)
 end function print-command-info;
 
 define function print-table
@@ -247,18 +247,18 @@ define function print-table
  => ()
   let tab-column :: <integer>
     = reduce(method (max-size :: <integer>, item)
-	       max(max-size, size(item.label-key))
-	     end,
-	     0, items);
+               max(max-size, size(item.label-key))
+             end,
+             0, items);
   local method item-label<
-	    (item1, item2) => (true? :: <boolean>)
-	  item1.label-key < item2.label-key
-	end method item-label<;
+            (item1, item2) => (true? :: <boolean>)
+          item1.label-key < item2.label-key
+        end method item-label<;
   let spaces = make(<byte-string>, size: tab-column, fill: ' ');
-  let items 
+  let items
     = case
-	sort      => sort(items, test: item-label<);
-	otherwise => items;
+        sort      => sort(items, test: item-label<);
+        otherwise => items;
       end;
   for (item in items)
     let label = item.label-key;
@@ -319,7 +319,7 @@ end method do-execute-command;
 
 /// Basic commands
 
-define command-group basic 
+define command-group basic
     (summary: "basic commands",
      documentation: "The basic commands.")
   command help;

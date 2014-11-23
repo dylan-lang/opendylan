@@ -59,18 +59,18 @@ define method execute-main-command
     (context :: <server-context>, command :: <environment-main-command>)
  => (status-code :: <integer>)
   local method run
-	    (class :: subclass(<command>), #rest arguments) => ()
-	  let command = apply(make, class, server: context, arguments);
-	  execute-command(command)
-	end method run;
+            (class :: subclass(<command>), #rest arguments) => ()
+          let command = apply(make, class, server: context, arguments);
+          execute-command(command)
+        end method run;
   let code = next-method();
   if (code == $success-exit-code)
     if (command.%start? | command.%debug? | command.%profile?)
       run(<start-application-command>,
-	  arguments:      command.%arguments,
-	  debug?:         command.%debug?,
-	  profile?:       command.%profile?,
-	  share-console?: command.%share-console?);
+          arguments:      command.%arguments,
+          debug?:         command.%debug?,
+          profile?:       command.%profile?,
+          share-console?: command.%share-console?);
       execute-main-loop(context, command)
     else
       $success-exit-code

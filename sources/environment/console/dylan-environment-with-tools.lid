@@ -1,7 +1,7 @@
 Library:   dylan-environment-with-tools
 Synopsis:  The command line version of the environment
-Author:	   Andy Armstrong
-Target-Type:	executable
+Author:    Andy Armstrong
+Target-Type: executable
 Files: tools-environment-library
        environment-module
        command-line

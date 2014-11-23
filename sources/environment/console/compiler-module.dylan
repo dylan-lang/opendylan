@@ -7,14 +7,14 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module console-environment
-  use environment-imports;	// this gets common-dylan
+  use environment-imports;        // this gets common-dylan
   use simple-debugging;
   use dfmc-common,
     import: { *debug-out* => *dfmc-debug-out* };
   use operating-system,
     import: { application-filename,
-	      application-arguments,
-	      exit-application };
+              application-arguments,
+              exit-application };
   use file-system,
     import: { file-exists?,
               working-directory };
