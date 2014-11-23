@@ -463,10 +463,14 @@ define instruction-set
   fcmp false;
 
   op gep (value, #rest indices)
-    => make(<llvm-gep-instruction>,
-            operands: map(curry(llvm-builder-value, builder),
-                          concatenate(vector(value), indices)),
-            metadata: builder-metadata(builder, #()));
+    => begin
+         let gep = make(<llvm-gep-instruction>,
+                        operands: map(curry(llvm-builder-value, builder),
+                                      concatenate(vector(value), indices)),
+                        metadata: builder-metadata(builder, #()));
+         gep.llvm-value-type;
+         gep
+       end;
 
   op gep-inbounds (value, #rest indices)
     => make(<llvm-gep-instruction>,
