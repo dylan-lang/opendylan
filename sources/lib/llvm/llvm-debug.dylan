@@ -131,6 +131,7 @@ define constant $DW-LANG-Swift :: <integer> = 30;
 define constant $DW-LANG-Julia :: <integer> = 31;
 define constant $DW-LANG-Dylan :: <integer> = 32;
 define constant $DW-LANG-lo-user :: <integer> = 32768;
+define constant $DW-LANG-Mips-Assembler = 32769;
 define constant $DW-LANG-hi-user :: <integer> = 65535;
 
 

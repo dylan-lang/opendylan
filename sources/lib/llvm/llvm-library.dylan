@@ -476,6 +476,7 @@ define module llvm-debug
     $DW-LANG-Julia,
     $DW-LANG-Dylan,
     $DW-LANG-lo-user,
+    $DW-LANG-Mips-Assembler,
     $DW-LANG-hi-user,
 
     llvm-make-dbg-compile-unit,
