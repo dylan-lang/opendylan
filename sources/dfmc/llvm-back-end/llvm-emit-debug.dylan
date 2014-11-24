@@ -129,6 +129,7 @@ define method llvm-reference-dbg-type
   element(back-end.%dbg-type-table, o, default: #f)
     | (back-end.%dbg-type-table[o]
          := begin
+              let dummy-file = llvm-make-dbg-file("dummy-raw-struct.dylan", "");
               let placeholder = make(<llvm-symbolic-metadata>, name: 0);
               let (type-size, type-alignment, member-bit-offsets)
                 = compute-raw-aggregate-layout(o);
@@ -143,7 +144,7 @@ define method llvm-reference-dbg-type
                         llvm-make-dbg-derived-type
                           (#"member", placeholder,
                            format-to-string("F%d", index),
-                           #f, #f, 8 * member-size, 8 * member-alignment,
+                           dummy-file, #f, 8 * member-size, 8 * member-alignment,
                            member-offset, member-dbg-type)
                       end,
                       o.raw-aggregate-members, range(from: 0));
@@ -151,7 +152,7 @@ define method llvm-reference-dbg-type
                 = llvm-make-dbg-composite-type
                     (#"struct", #f,
                      o.^debug-name | "",
-                     #f, #f, type-size, type-alignment, elements, #f);
+                     dummy-file, #f, type-size, type-alignment, elements, #f);
               placeholder.llvm-placeholder-value-forward := aggregate
             end)
 end method;
@@ -185,6 +186,7 @@ define method llvm-reference-dbg-type
   let word-size = back-end-word-size(back-end);
   element(back-end.%dbg-type-table, obj-type, default: #f)
     | begin
+        let dummy-file = llvm-make-dbg-file("dummy-objects.dylan", "");
         let pointer-type
           = llvm-make-dbg-derived-type(#"pointer",
                                        #f,
@@ -196,7 +198,7 @@ define method llvm-reference-dbg-type
          := llvm-make-dbg-derived-type(#"typedef",
                                        #f,
                                        "dylan_value",
-                                       #f, #f,
+                                       dummy-file, #f,
                                        0, 0, 0,
                                        pointer-type)
       end
