@@ -12,6 +12,8 @@ define virtual-compiler-model-class <primitive> (<callable-object>, <object>) (<
     init-keyword: getter-name:;
   constant slot primitive-signature :: <&signature>,
     init-keyword: signature:;
+  lazy constant slot primitive-signature-spec :: <signature-spec>,
+    init-value: #f, init-keyword: signature-spec:;
   constant slot primitive-value = #f,
     init-keyword: value:;
   slot primitive-properties :: <integer> = 0;

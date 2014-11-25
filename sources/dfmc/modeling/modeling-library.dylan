@@ -721,6 +721,7 @@ define module-with-models dfmc-modeling
     <&primitive>,
       primitive-value,
       primitive-signature,
+      primitive-signature-spec,
       primitive-descriptor-getter-name,
       primitive-side-effecting?,
       primitive-dynamic-extent?,
