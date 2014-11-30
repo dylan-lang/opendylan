@@ -48,9 +48,14 @@ endif
 # without installing it; if you want to install it, do a 3-stage bootstrap and
 # run make install
 
+ifneq (@SUPPORT_LLVM@,)
+RTG_OPT = BOOTSTRAP_2_RTG="$(abs_builddir)/Bootstrap.1/bin/llvm-runtime-generator"
+endif
+
 3-stage-bootstrap: check-submodules
 	$(MAKE) 3-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose"
+	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose" \
+	  $(RTG_OPT)
 3-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3
 
 ###
@@ -59,7 +64,8 @@ endif
 
 2-stage-bootstrap: check-submodules
 	$(MAKE) 2-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose"
+	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose" \
+	  $(RTG_OPT)
 2-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2
 
 ###
@@ -109,6 +115,11 @@ BOOTSTRAP_1_ENV = \
 	OPEN_DYLAN_USER_REGISTRIES=$(BOOTSTRAP_1_REGISTRY) \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
+BOOTSTRAP_1_LIBRARIES = dylan-compiler
+ifneq (@SUPPORT_LLVM@,)
+BOOTSTRAP_1_LIBRARIES += llvm-runtime-generator
+endif
+
 $(abs_builddir)/Bootstrap.1:
 	mkdir $(abs_builddir)/Bootstrap.1
 	mkdir $(abs_builddir)/Bootstrap.1/bin
@@ -137,7 +148,8 @@ $(abs_builddir)/Bootstrap.1/bin/dylan-compiler:
 	    install; \
 	done
 	@$(BOOTSTRAP_1_ENV) \
-	  $(fdmake) --compiler="$(DYLANCOMPILER)" dylan-compiler
+	  $(fdmake) --compiler="$(DYLANCOMPILER)" \
+	    $(BOOTSTRAP_1_LIBRARIES)
 
 bootstrap-stage-1: \
 		$(abs_builddir)/Bootstrap.1 \
@@ -164,6 +176,11 @@ BOOTSTRAP_2_UNSET_ENV = \
 	OPEN_DYLAN_RELEASE_REGISTRIES \
 	OPEN_DYLAN_RELEASE_SOURCES
 
+BOOTSTRAP_2_LIBRARIES = dylan-compiler
+ifneq (@SUPPORT_LLVM@,)
+BOOTSTRAP_2_LIBRARIES += llvm-runtime-generator
+endif
+
 $(abs_builddir)/Bootstrap.2:
 	mkdir $(abs_builddir)/Bootstrap.2
 	mkdir $(abs_builddir)/Bootstrap.2/bin
@@ -181,11 +198,13 @@ $(abs_builddir)/Bootstrap.2/bin/dylan-compiler:
 	    $(MAKE) -C $(RUNTIME_SOURCES) \
 	    OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
 	    OPEN_DYLAN_TARGET_PLATFORM=$$target_platform \
+	    OPEN_DYLAN_LLVM_RUNTIME_GENERATOR=$(BOOTSTRAP_2_RTG) \
 	    install; \
 	done
 	@unset $(BOOTSTRAP_2_UNSET_ENV) ; \
 	  $(BOOTSTRAP_2_ENV) \
-	  $(fdmake) --compiler="$(BOOTSTRAP_2_COMPILER)" dylan-compiler
+	  $(fdmake) --compiler="$(BOOTSTRAP_2_COMPILER)" \
+            $(BOOTSTRAP_2_LIBRARIES)
 
 bootstrap-stage-2: \
 		$(abs_builddir)/Bootstrap.2 \
@@ -214,6 +233,9 @@ BOOTSTRAP_3_LIBRARIES = dylan-compiler parser-compiler dswank make-dylan-app
 
 BOOTSTRAP_3_COMPILER = \
 	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler -build -verbose
+ifneq (@SUPPORT_LLVM@,)
+BOOTSTRAP_3_RTG = $(abs_builddir)/Bootstrap.2/bin/llvm-runtime-generator
+endif
 
 $(abs_builddir)/Bootstrap.3:
 	mkdir $(abs_builddir)/Bootstrap.3
@@ -231,10 +253,12 @@ bootstrap-stage-3: $(abs_builddir)/Bootstrap.3
 	  $(MAKE) -C $(RUNTIME_SOURCES) \
 	    OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
 	    OPEN_DYLAN_TARGET_PLATFORM=$$target_platform \
+	    OPEN_DYLAN_LLVM_RUNTIME_GENERATOR=$(BOOTSTRAP_3_RTG) \
 	    install; \
 	done
 	@$(BOOTSTRAP_3_ENV) \
-	  $(fdmake) --compiler="$(BOOTSTRAP_3_COMPILER)" $(BOOTSTRAP_3_LIBRARIES)
+	  $(fdmake) --compiler="$(BOOTSTRAP_3_COMPILER)" \
+          $(BOOTSTRAP_3_LIBRARIES)
 
 cli3:
 	@$(BOOTSTRAP_3_ENV) $(BOOTSTRAP_3_COMPILER)
