@@ -27,6 +27,7 @@ case $host in
     ;;
   i*86-*-freebsd*)
       OPEN_DYLAN_TARGET_PLATFORM=x86-freebsd;
+      GC_LIB=gc-threaded
       SUPPORT_GC_MPS=yes;
     ;;
   i*86-*-darwin*)
