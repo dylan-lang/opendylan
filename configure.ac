@@ -194,12 +194,12 @@ if test "$cross_compiling" != "yes"; then
             AS_IF([test x${with_gc_path} != x],
                   [
                     GC_CFLAGS="${GC_CFLAGS} -I${with_gc_path}/include"
-                    GC_LFLAGS="${with_gc_path}/lib ${GC_LFLAGS}"
+                    GC_LFLAGS="-L${with_gc_path}/lib ${GC_LFLAGS}"
                   ])
-            old_LFLAGS=$LFLAGS
-            LFLAGS="${LFLAGS} ${GC_LFLAGS}"
+            old_LDFLAGS=$LDFLAGS
+            LDFLAGS="${LDFLAGS} ${GC_LFLAGS}"
             AC_CHECK_LIB([${GC_LIB}], [GC_malloc])
-            LFLAGS=$old_LFLAGS
+            LDFLAGS=$old_LDFLAGS
             AS_IF([test x${GC_USE_STATIC_BOEHM} = xtrue],
                   [
                     AS_IF([test x${with_gc_path} != x],
