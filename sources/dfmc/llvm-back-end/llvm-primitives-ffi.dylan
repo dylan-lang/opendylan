@@ -42,9 +42,11 @@ define macro raw-accessor-primitive-definer
                   pointer
                 end;
             let type = llvm-reference-type(?be, dylan-value(?#"raw-value-type"));
-            let pointer-off = ins--gep(?be, pointer, byte-offset);
-            let pointer-cast = ins--bitcast(?be, pointer-off, llvm-pointer-to(?be, type));
-            let value = ins--load(?be, pointer-cast);
+            let pointer-byte-off = ins--gep(?be, pointer, byte-offset);
+            let pointer-cast
+              = ins--bitcast(?be, pointer-byte-off, llvm-pointer-to(?be, type));
+            let pointer-off = ins--gep(?be, pointer-cast, offset);
+            let value = ins--load(?be, pointer-off);
             if (instance?(type, <llvm-integer-type>)
                   & type.llvm-integer-type-width < back-end-word-size(?be) * 8)
               if (?sext)
@@ -70,14 +72,16 @@ define macro raw-accessor-primitive-definer
                   pointer
                 end;
             let type = llvm-reference-type(?be, dylan-value(?#"raw-value-type"));
-            let pointer-off = ins--gep(?be, pointer, offset);
-            let pointer-cast = ins--bitcast(?be, pointer-off, llvm-pointer-to(?be, type));
+            let pointer-byte-off = ins--gep(?be, pointer, byte-offset);
+            let pointer-cast
+              = ins--bitcast(?be, pointer-byte-off, llvm-pointer-to(?be, type));
+            let pointer-off = ins--gep(?be, pointer-cast, offset);
             if (instance?(type, <llvm-integer-type>)
                   & type.llvm-integer-type-width < back-end-word-size(?be) * 8)
               let new-trunc = ins--trunc(?be, new, type);
-              ins--store(?be, new-trunc, pointer-cast);
+              ins--store(?be, new-trunc, pointer-off);
             else
-              ins--store(?be, new, pointer-cast);
+              ins--store(?be, new, pointer-off);
             end if;
             new
          end }
