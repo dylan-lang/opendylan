@@ -92,6 +92,7 @@ define command-line main => <main-command>
   optional project :: <file-locator> = "the project to be built";
   keyword  arguments :: <string> = "arguments for the project's application";
 
+  keyword back-end :: <symbol> = "the compiler back-end to use";
   keyword build-script :: <file-locator> = "the (Jam) build script";
   keyword target :: <symbol> = "the type of executable";
 

@@ -43,6 +43,8 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: clean?:;
   constant slot %release?       :: <boolean> = #f,
     init-keyword: release?:;
+  constant slot %back-end :: false-or(<symbol>) = #f,
+    init-keyword: back-end:;
   constant slot %build-script :: false-or(<file-locator>) = #f,
     init-keyword: build-script:;
   constant slot %target :: false-or(<symbol>) = #f,
@@ -171,10 +173,13 @@ define method do-execute-command
       command.%logo? & message(context, dylan-banner());
       let personal-root = command.%personal-root;
       let system-root   = command.%system-root;
+      let back-end      = command.%back-end;
       personal-root
         & set-named-property(context, #"personal-root", personal-root);
       system-root
         & set-named-property(context, #"system-root",   system-root);
+      back-end
+	& set-named-property(context, #"compiler-back-end", back-end);
       case
         command.%project => execute-main-command(context, command);
         otherwise        => execute-main-loop(context, command);
