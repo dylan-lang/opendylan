@@ -668,13 +668,13 @@ end method reverse!;
 
 define function range-next-state
     (range :: <range>, state :: <number>)
- => (result :: <integer>)
+ => (result :: <number>)
   state + range.range-by
 end function;
 
 define function range-previous-state
     (range :: <range>, state :: <number>)
- => (result :: <integer>)
+ => (result :: <number>)
   state - range.range-by
 end function;
 
