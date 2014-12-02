@@ -25,6 +25,7 @@ define module llvm-runtime-generator
   use standard-io;
   use llvm;
   use llvm-builder;
+  use llvm-debug;
   use dfmc-core;
   use dfmc-imports;
   use dfmc-management;

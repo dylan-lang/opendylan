@@ -225,6 +225,106 @@ define method llvm-entry-point-descriptor-function-type
                                descriptor.entry-point-attributes)))
 end method;
 
+define function llvm-emit-entry-point-dbg-function
+    (back-end :: <llvm-back-end>, function :: <llvm-function>,
+     dbg-file :: <llvm-metadata-value>,
+     desc :: <llvm-entry-point-descriptor>, count :: false-or(<integer>))
+ => ();
+  let (dbg-function :: <llvm-metadata-value>, dbg-parameters :: <sequence>)
+    = apply(make-entry-point-dbg-function, back-end, function, dbg-file,
+            desc, count, desc.entry-point-function-declarator);
+  add!(back-end.llvm-back-end-dbg-functions, dbg-function);
+
+  // Emit a llvm.dbg.value call for each parameter
+  ins--dbg(back-end, 0, 0, dbg-function, #f);
+  for (dbg-parameter in dbg-parameters,
+       argument in function.llvm-function-arguments)
+    let v
+      = make(<llvm-metadata-node>,
+             function-local?: #t,
+             node-values: list(argument));
+    ins--call-intrinsic(back-end, "llvm.dbg.value",
+                        vector(v, i64(0), dbg-parameter));
+  end for;
+end function;
+
+define function make-entry-point-dbg-function
+    (back-end :: <llvm-back-end>, function :: <llvm-function>,
+     dbg-file :: <llvm-metadata-value>,
+     descriptor :: <llvm-entry-point-descriptor>,
+     count :: false-or(<integer>),
+     #key parameter-names :: <simple-object-vector> = #[],
+          parameter-types-spec :: <simple-object-vector>,
+     #all-keys)
+ => (dbg-function :: <llvm-metadata-value>, dbg-parameters :: <sequence>);
+  let dbg-parameter-types = make(<stretchy-object-vector>);
+  let (required-parameter-type-specs, required-parameter-names,
+       rest-parameter-name)
+    = if (~empty?(parameter-types-spec) & parameter-types-spec.last == #"rest")
+        let required-count = parameter-types-spec.size - 1;
+        values(copy-sequence(parameter-types-spec, end: required-count),
+               copy-sequence(parameter-names, end: required-count),
+               parameter-names.last)
+      else
+        values(parameter-types-spec, parameter-names, #f)
+      end if;
+  // Required parameters
+  for (type-spec in required-parameter-type-specs)
+    add!(dbg-parameter-types,
+         llvm-reference-dbg-type(back-end, dylan-value(type-spec)));
+  end for;
+  // Remaining parameters
+  if (rest-parameter-name)
+    let obj-dbg-type
+      = llvm-reference-dbg-type(back-end, dylan-value(#"<object>"));
+    for (i from 0 below count)
+      add!(dbg-parameter-types, obj-dbg-type);
+    end for;
+  end if;
+
+  if (member?(#"variable-arity", descriptor.entry-point-attributes))
+    add!(dbg-parameter-types, llvm-make-dbg-unspecified-parameters());
+  end if;
+
+  let dbg-return-type
+    = llvm-reference-dbg-type(back-end, back-end.%mv-struct-type);
+  let dbg-function-type
+    = llvm-make-dbg-function-type(dbg-file, dbg-return-type,
+                                  dbg-parameter-types);
+
+  let dbg-name = descriptor.entry-point-name;
+  let dbg-function
+    = llvm-make-dbg-function(dbg-file,
+                             dbg-name,
+                             function.llvm-global-name,
+                             dbg-file,
+                             0,
+                             dbg-function-type,
+                             definition?: #t,
+                             function: function);
+
+  let all-parameter-names
+    = if (rest-parameter-name)
+        concatenate(required-parameter-names,
+                    map(curry(format-to-string, "%s-%d", rest-parameter-name),
+                        range(below: count)))
+      else
+        required-parameter-names
+      end;
+  let dbg-parameters
+    = map(method (parameter-name, dbg-parameter-type, index)
+            llvm-make-dbg-local-variable(#"argument",
+                                         dbg-function,
+                                         as(<string>, parameter-name),
+                                         dbg-file, 0,
+                                         dbg-parameter-type,
+                                         arg: index)
+          end,
+          all-parameter-names, dbg-parameter-types, range(from: 1));
+
+  values(dbg-function, dbg-parameters)
+end function;
+
 
 /// References
 

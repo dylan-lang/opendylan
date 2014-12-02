@@ -39,6 +39,8 @@ define module dfmc-llvm-back-end
     llvm-back-end-data-layout,
     llvm-section-name,
 
+    llvm-back-end-dbg-functions,
+
     llvm-thread-local-support?,
     llvm-teb-struct-type,
 
@@ -81,6 +83,7 @@ define module dfmc-llvm-back-end
     $llvm-entry-point-descriptors,
     llvm-entry-point-function,
     llvm-entry-point-rest?,
+    llvm-emit-entry-point-dbg-function,
 
     llvm-calling-convention,
     llvm-c-function-calling-convention,

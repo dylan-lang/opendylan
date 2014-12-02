@@ -60,6 +60,8 @@ define constant $runtime-referenced-classes
       #"<read-write-lock>",
       #"<notification>"];
 
+define constant $debug-producer = "Open Dylan LLVM Runtime Generator";
+
 define function generate-runtime-heap
     (be :: <llvm-back-end>, m :: <llvm-module>) => ();
   // Emit external declarations for class wrappers
@@ -168,6 +170,7 @@ end function;
 
 define function generate-runtime-entry-point
     (be :: <llvm-back-end>, m :: <llvm-module>,
+     dbg-file :: <llvm-metadata-value>,
      name :: <symbol>, descriptor :: <llvm-entry-point-descriptor>,
      count :: false-or(<integer>), pos :: false-or(<integer>))
  => ();
@@ -189,6 +192,10 @@ define function generate-runtime-entry-point
 
     // Generate the entry basic block
     ins--block(be, make(<llvm-basic-block>, name: "bb.entry"));
+
+    // Generate debug info
+    llvm-emit-entry-point-dbg-function(be, function, dbg-file,
+                                       descriptor, count);
 
     // Generate the function body
     let (result)
@@ -216,22 +223,27 @@ define function generate-runtime-entry-point
 end function;
 
 define function generate-runtime-entry-points
-    (be :: <llvm-back-end>, m :: <llvm-module>) => ();
+    (be :: <llvm-back-end>, m :: <llvm-module>,
+     dbg-file :: <llvm-metadata-value>)
+ => ();
   // Generate functions for each defined runtime entry point
   for (descriptor :: <llvm-entry-point-descriptor>
          keyed-by name :: <symbol>
          in $llvm-entry-point-descriptors)
     if (member?(#"singular", descriptor.entry-point-attributes))
-      generate-runtime-entry-point(be, m, name, descriptor, #f, #f);
+      generate-runtime-entry-point(be, m, dbg-file, name, descriptor,
+                                   #f, #f);
     elseif (member?(#"cross", descriptor.entry-point-attributes))
       for (count from 1 to $entry-point-argument-count)
         for (pos from 0 below count)
-          generate-runtime-entry-point(be, m, name, descriptor, count, pos);
+          generate-runtime-entry-point(be, m, dbg-file, name, descriptor,
+                                       count, pos);
         end for;
       end for;
     else
       for (count from 0 to $entry-point-argument-count)
-        generate-runtime-entry-point(be, m, name, descriptor, count, #f);
+        generate-runtime-entry-point(be, m, dbg-file, name, descriptor,
+                                     count, #f);
       end for;
     end if;
   end for;
@@ -296,6 +308,15 @@ define function generate-runtime
     (lid-locator :: <file-locator>,
      platform-name :: <symbol>)
  => ();
+  let output-basename
+    = format-to-string("%s-runtime", platform-name);
+  let dummy-source-locator
+    = make(<file-locator>, base: output-basename, extension: "ll",
+           directory: working-directory());
+  let dbg-file
+    = llvm-make-dbg-file(dummy-source-locator.locator-name,
+                         dummy-source-locator.locator-directory);
+
   with-booted-dylan-context (lid-locator: lid-locator,
                              back-end: #"llvm",
                              platform-name: platform-name)
@@ -316,11 +337,18 @@ define function generate-runtime
         generate-runtime-primitives(back-end, m);
 
         // Write entry point definitions to the module
-        generate-runtime-entry-points(back-end, m);
+        generate-runtime-entry-points(back-end, m, dbg-file);
+
+        // Create the debugging compile unit
+        let functions = copy-sequence(back-end.llvm-back-end-dbg-functions);
+        llvm-make-dbg-compile-unit($DW-LANG-Mips-Assembler,
+                                   dummy-source-locator.locator-name,
+                                   dummy-source-locator.locator-directory,
+                                   $debug-producer,
+                                   functions: functions,
+                                   module: m);
 
 	// Write out the generated module
-        let output-basename
-          = format-to-string("%s-runtime", platform-name);
         let output-locator
           = make(<file-locator>, base: output-basename, extension: "bc");
         llvm-save-bitcode-file(m, output-locator);
