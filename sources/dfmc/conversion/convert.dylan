@@ -2042,6 +2042,7 @@ define method ^make-signature-argument-reference
   let arg = ^make-signature-argument(sig-t, argument-index);
   if (vector-index)
     ^vector-element-reference(arg, vector-index)
+      | error("argument reference %d beyond limit", vector-index)
   else
     arg
   end if
