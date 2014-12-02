@@ -397,6 +397,11 @@ define generic read-object-using-class-at
 define function read-address
     (dood :: <dood>, address :: <address>) => (object)
   with-saved-position (dood)
+    // ---*** This emits a warning here because read-object-at and
+    // friends get inlined. The warning is because maybe-read-pointer
+    // can return the default value (here: #f), or an <integer> or
+    // <byte-character>. I don't see a good way to make this not
+    // warn currently.
     let class :: <class> = read-object-at(dood, address);
     audit(dood, "%dT%d%s\n", address, debug-name(class));
     read-object-using-class-at (dood, class, address);
