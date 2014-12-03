@@ -566,6 +566,117 @@ define method make-primitive-signature
 end method;
 
 
+/// Primitive function debug info
+
+define method llvm-emit-primitive-dbg-function
+    (back-end :: <llvm-back-end>, function :: <llvm-function>,
+     dbg-file :: <llvm-metadata-value>,desc :: <llvm-primitive-descriptor>)
+ => ();
+  let (dbg-function :: <llvm-metadata-value>, dbg-parameters :: <sequence>)
+    = apply(make-primitive-dbg-function, back-end, function, dbg-file,
+            desc, desc.primitive-function-declarator);
+  add!(back-end.llvm-back-end-dbg-functions, dbg-function);
+
+  // Emit a llvm.dbg.value call for each parameter
+  ins--dbg(back-end, 0, 0, dbg-function, #f);
+  for (dbg-parameter in dbg-parameters,
+       argument in function.llvm-function-arguments)
+    let v
+      = make(<llvm-metadata-node>,
+             function-local?: #t,
+             node-values: list(argument));
+    ins--call-intrinsic(back-end, "llvm.dbg.value",
+                        vector(v, i64(0), dbg-parameter));
+  end for;
+end method;
+
+define method make-primitive-dbg-function
+    (back-end :: <llvm-back-end>, function :: <llvm-function>,
+     dbg-file :: <llvm-metadata-value>,
+     descriptor :: <llvm-primitive-descriptor>,
+     #key name :: <string>,
+          parameter-names :: <simple-object-vector> = #[],
+          parameter-types-spec :: <simple-object-vector>,
+          value-types-spec :: <simple-object-vector>,
+     #all-keys)
+ => (dbg-function :: <llvm-metadata-value>, dbg-parameters :: <sequence>);
+  let dbg-parameter-types = make(<stretchy-object-vector>);
+
+  let (required-parameter-type-specs, required-parameter-names,
+       rest-parameter-name)
+    = if (~empty?(parameter-types-spec) & parameter-types-spec.last == #"rest")
+        let required-count = parameter-types-spec.size - 1;
+        values(copy-sequence(parameter-types-spec, end: required-count),
+               copy-sequence(parameter-names, end: required-count),
+               parameter-names.last)
+      else
+        values(parameter-types-spec, parameter-names, #f)
+      end if;
+  let (required-value-type-specs, values-rest?)
+    = if (~empty?(value-types-spec) & value-types-spec.last == #"rest")
+        let required-count = value-types-spec.size - 1;
+        values(copy-sequence(value-types-spec, end: required-count), #t)
+      else
+        values(value-types-spec, #f)
+      end if;
+
+  // Required parameters
+  for (type-spec in required-parameter-type-specs)
+    add!(dbg-parameter-types,
+         llvm-reference-dbg-type(back-end, dylan-value(type-spec)));
+  end for;
+
+  // Remaining parameters
+  if (rest-parameter-name)
+    add!(dbg-parameter-types, llvm-make-dbg-unspecified-parameters());
+  end if;
+
+  // Return value
+  let dbg-return-type
+    = if (values-rest?)
+        llvm-reference-dbg-type(back-end, back-end.%mv-struct-type)
+      elseif (required-value-type-specs.empty?)
+        #f
+      else
+        let return-types
+          = map(method (type-name :: <symbol>)
+                  llvm-reference-dbg-type(back-end, dylan-value(type-name))
+                end method,
+                required-value-type-specs);
+        if (return-types.size = 1)
+          return-types.first
+        else
+          error("struct return for runtime primitives is not yet implemented");
+        end if
+      end if;
+  let dbg-function-type
+    = llvm-make-dbg-function-type(dbg-file, dbg-return-type,
+                                  dbg-parameter-types);
+
+  let dbg-function
+    = llvm-make-dbg-function(dbg-file,
+                             name,
+                             function.llvm-global-name,
+                             dbg-file,
+                             0,
+                             dbg-function-type,
+                             definition?: #t,
+                             function: function);
+
+  let dbg-parameters
+    = map(method (parameter-name, dbg-parameter-type, index)
+            llvm-make-dbg-local-variable(#"argument",
+                                         dbg-function,
+                                         as(<string>, parameter-name),
+                                         dbg-file, 0,
+                                         dbg-parameter-type,
+                                         arg: index)
+          end,
+          required-parameter-names, dbg-parameter-types, range(from: 1));
+  values(dbg-function, dbg-parameters)
+end method;
+
+
 /// Runtime support variables
 
 define class <llvm-runtime-variable-descriptor> (<object>)

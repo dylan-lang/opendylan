@@ -93,6 +93,7 @@ end function;
 
 define function generate-runtime-primitive
     (be :: <llvm-back-end>, m :: <llvm-module>,
+     dbg-file :: <llvm-metadata-value>,
      name :: <symbol>, descriptor :: <llvm-primitive-descriptor>)
  => ();
   // Generate the function definition and add it to the runtime module
@@ -113,6 +114,9 @@ define function generate-runtime-primitive
 
     // Generate the entry basic block
     ins--block(be, make(<llvm-basic-block>, name: "bb.entry"));
+
+    // Generate debug info
+    llvm-emit-primitive-dbg-function(be, function, dbg-file, descriptor);
 
     // Generate the function body
     let (#rest results)
@@ -157,13 +161,15 @@ define function generate-runtime-primitive
 end function;
 
 define function generate-runtime-primitives
-    (be :: <llvm-back-end>, m :: <llvm-module>) => ();
+    (be :: <llvm-back-end>, m :: <llvm-module>,
+     dbg-file :: <llvm-metadata-value>)
+ => ();
   // Generate a function for each defined runtime primitive
   for (descriptor :: <llvm-primitive-descriptor>
          keyed-by name :: <symbol>
          in $llvm-primitive-descriptors)
     if (descriptor.primitive-generator)
-      generate-runtime-primitive(be, m, name, descriptor);
+      generate-runtime-primitive(be, m, dbg-file, name, descriptor);
     end if;
   end for;
 end function;
@@ -334,7 +340,7 @@ define function generate-runtime
         generate-runtime-heap(back-end, m);
 
         // Write primitives definitions to the module
-        generate-runtime-primitives(back-end, m);
+        generate-runtime-primitives(back-end, m, dbg-file);
 
         // Write entry point definitions to the module
         generate-runtime-entry-points(back-end, m, dbg-file);

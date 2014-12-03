@@ -68,6 +68,7 @@ define module dfmc-llvm-back-end
     $llvm-primitive-descriptors,
     llvm-primitive-function,
     llvm-primitive-signature,
+    llvm-emit-primitive-dbg-function,
 
     <llvm-runtime-variable-descriptor>,
     runtime-variable-type-name,
