@@ -972,6 +972,9 @@ define c-function ack-ack-slot-setter
 end;
 
 define test bug-394 ()
+  // ***--- Disable due to the functions they call being disabled
+  // They are disabled because they don't work with the C back-end yet.
+  /*
   let dde :: <LPDDEACK> = make(<LPDDEACK>);
   // use c-struct setters and getters
   bAppReturnCode-value(dde) := 127;
@@ -1007,9 +1010,7 @@ define test bug-394 ()
               (fAck-value(dde) ~= 0));
   check-equal("by-value ack ack setter leaves value alone",
               fAck-value(dde), 1);
-
-
-
+  */
 end;
 
 //
