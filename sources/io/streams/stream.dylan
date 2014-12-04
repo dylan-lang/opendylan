@@ -128,10 +128,10 @@ define inline function read-write?
 end function;
 
 define open generic stream-lock
-    (stream :: <basic-stream>) => (lock :: false-or(<lock>));
+    (stream :: <stream>) => (lock :: false-or(<lock>));
 
-define sealed generic stream-lock-setter
-    (value, the-stream :: <basic-stream>) => (result :: false-or(<lock>));
+define generic stream-lock-setter
+    (value, the-stream :: <stream>) => (result :: false-or(<lock>));
 
 define method stream-lock
     (the-stream :: <basic-stream>) => (result :: false-or(<lock>))
