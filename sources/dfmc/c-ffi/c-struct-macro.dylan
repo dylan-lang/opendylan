@@ -1793,7 +1793,7 @@ end;
 
 
 
-/// TODO: belongs with some procdural macro support tools.
+/// TODO: belongs with some procedural macro support tools.
 
 define variable *gensym-counter* :: <integer> = 0;
 
