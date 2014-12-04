@@ -13,13 +13,17 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define runtime-variable %running-under-dylan-debugger? :: <raw-integer>
   = make-raw-literal(0);
 
-define side-effecting stateless dynamic-extent &runtime-primitive-descriptor primitive-inside-debugger? () => (debugging? :: <boolean>);
+define function op--inside-debugger? (be :: <llvm-back-end>) => (debugging-cmp :: <llvm-value>)
   let m = be.llvm-builder-module;
   let global
     = llvm-runtime-variable(be, m, %running-under-dylan-debugger?-descriptor);
   let inside?-raw = ins--load(be, global, volatile?: #t);
-  let inside? = ins--icmp-ne(be, inside?-raw, 0);
-  op--boolean(be, inside?)
+  ins--icmp-ne(be, inside?-raw, 0)
+end function;
+
+define side-effecting stateless dynamic-extent &runtime-primitive-descriptor primitive-inside-debugger? () => (debugging? :: <boolean>);
+  let inside-cmp = op--inside-debugger?(be);
+  op--boolean(be, inside-cmp)
 end;
 
 /*
@@ -31,14 +35,16 @@ end;
 define side-effecting stateful dynamic-extent &runtime-primitive-descriptor primitive-invoke-debugger
     (format-string :: <byte-string>, arguments :: <simple-object-vector>)
  => ();
-  //---*** Fill this in to do something with the format-string and arguments.
   ins--call-intrinsic(be, "llvm.debugtrap", vector())
 end;
 
-define side-effecting stateless dynamic-extent &unimplemented-primitive-descriptor primitive-debug-message // runtime
+define side-effecting stateless dynamic-extent &runtime-primitive-descriptor primitive-debug-message
     (format-string :: <byte-string>, arguments :: <simple-object-vector>)
  => ()
-  //---*** Fill this in...
+  let inside-cmp = op--inside-debugger?(be);
+  ins--if (be, inside-cmp)
+    ins--call-intrinsic(be, "llvm.debugtrap", #[]);
+  end ins--if
 end;
 
 // Called by the GC
