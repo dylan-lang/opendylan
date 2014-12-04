@@ -52,11 +52,23 @@ define method emit-lambda-dbg-function
       end if;
 
   // Compute the function type
-  let (return-type :: false-or(<llvm-metadata-value>),
-       parameter-types :: <sequence>)
-    = llvm-signature-dbg-types(back-end, o, sig-spec, signature);
+  let (dbg-return-type :: false-or(<llvm-metadata-value>),
+       dbg-parameter-types :: <sequence>)
+    = if (signature)
+        llvm-signature-dbg-types(back-end, o, sig-spec, signature)
+      else
+        llvm-dynamic-signature-dbg-types(back-end, o, sig-spec)
+      end if;
   let dbg-function-type
-    = llvm-make-dbg-function-type(dbg-file, return-type, parameter-types);
+    = llvm-make-dbg-function-type(dbg-file, dbg-return-type,
+                                  dbg-parameter-types);
+
+  let parameter-types
+    = if (signature)
+        llvm-signature-types(back-end, o, sig-spec, signature)
+      else
+        llvm-dynamic-signature-types(back-end, o, sig-spec)
+      end if;
 
   // Construct the function metadata
   let module = back-end.llvm-builder-module;
@@ -117,6 +129,36 @@ define method llvm-signature-dbg-types
   // Calling convention parameters (next-methods, function)
   add!(parameter-types, llvm-reference-dbg-type(back-end, obj-type));
   add!(parameter-types, llvm-reference-dbg-type(back-end, obj-type));
+
+  let return-type
+    = llvm-reference-dbg-type(back-end, back-end.%mv-struct-type);
+  values(return-type, parameter-types)
+end method;
+
+define method llvm-dynamic-signature-dbg-types
+    (back-end :: <llvm-back-end>, o :: <&iep>,
+     sig-spec :: <signature-spec>)
+ => (return-type :: false-or(<llvm-metadata-value>),
+     parameter-types :: <sequence>);
+  let parameter-types = make(<stretchy-object-vector>);
+  let obj-dbg-type
+    = llvm-reference-dbg-type(back-end, dylan-value(#"<object>"));
+
+  // Required parameters
+  for (spec in spec-argument-required-variable-specs(sig-spec))
+    add!(parameter-types, obj-dbg-type);
+  end for;
+  // Optional parameters
+  if (spec-argument-optionals?(sig-spec))
+    add!(parameter-types, obj-dbg-type);
+  end if;
+  // Keyword parameters
+  for (spec in spec-argument-key-variable-specs(sig-spec))
+    add!(parameter-types, obj-dbg-type);
+  end for;
+  // Calling convention parameters
+  add!(parameter-types, obj-dbg-type); // next-methods
+  add!(parameter-types, obj-dbg-type); // function
 
   let return-type
     = llvm-reference-dbg-type(back-end, back-end.%mv-struct-type);
