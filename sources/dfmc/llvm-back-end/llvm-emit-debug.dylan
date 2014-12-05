@@ -165,6 +165,38 @@ define method llvm-dynamic-signature-dbg-types
   values(return-type, parameter-types)
 end method;
 
+
+/// Local variable declarations
+
+define method emit-dbg-local-variable
+    (back-end :: <llvm-back-end>, c :: <computation>, tmp :: <temporary>,
+     kind :: one-of(#"auto", #"argument", #"return"),
+     value :: <llvm-value>, #key address? = #f)
+ => ();
+  let source-location = c.dfm-source-location;
+  if (source-location)
+    let (dbg-file, dbg-line)
+      = source-location-dbg-file-line(back-end, source-location);
+    let var-type
+      = llvm-reference-dbg-type(back-end, type-estimate(tmp));
+    let v
+      = make(<llvm-metadata-node>,
+             function-local?: #t,
+             node-values: list(value));
+    let lv
+      = llvm-make-dbg-local-variable(kind,
+                                     back-end.llvm-back-end-dbg-functions.last,
+                                     as(<string>, tmp.name),
+                                     dbg-file, dbg-line,
+                                     var-type);
+    if (address?)
+      ins--call-intrinsic(back-end, "llvm.dbg.declare", vector(v, lv));
+    else
+      ins--call-intrinsic(back-end, "llvm.dbg.value", vector(v, i64(0), lv));
+    end if;
+  end if;
+end method;
+
 define method llvm-reference-dbg-type
     (back-end :: <llvm-back-end>, o :: <&raw-struct-type>)
  => (dbg-type :: <llvm-metadata-value>);
@@ -244,6 +276,41 @@ define method llvm-reference-dbg-type
                                        0, 0, 0,
                                        pointer-type)
       end
+end method;
+
+define method llvm-reference-dbg-type
+    (back-end :: <llvm-back-end>, o :: <type-estimate>)
+ => (dbg-type :: <llvm-metadata-value>);
+  llvm-reference-dbg-type(back-end, dylan-value(#"<object>"))
+end method;
+
+define method llvm-reference-dbg-type
+    (back-end :: <llvm-back-end>, o :: <type-estimate-raw>)
+ => (dbg-type :: <llvm-metadata-value>);
+  llvm-reference-dbg-type(back-end, o.type-estimate-raw)
+end method;
+
+define method llvm-reference-dbg-type
+    (back-end :: <llvm-back-end>, o :: <type-estimate-limited-instance>)
+ => (dbg-type :: <llvm-metadata-value>);
+  llvm-reference-dbg-type(back-end, ^object-class(type-estimate-singleton(o)))
+end method;
+
+define method llvm-reference-dbg-type
+    (back-end :: <llvm-back-end>, o :: <type-estimate-union>)
+ => (dbg-type :: <llvm-metadata-value>);
+  llvm-reference-dbg-type(back-end, first(type-estimate-unionees(o)))
+end method;
+
+define method llvm-reference-dbg-type
+    (back-end :: <llvm-back-end>, o :: <type-estimate-values>)
+ => (dbg-type :: <llvm-metadata-value>);
+  let fixed-values = type-estimate-fixed-values(o);
+  if (size(fixed-values) > 0)
+    llvm-reference-dbg-type(back-end, fixed-values[0])
+  else
+    llvm-reference-dbg-type(back-end, dylan-value(#"<object>"))
+  end if
 end method;
 
 

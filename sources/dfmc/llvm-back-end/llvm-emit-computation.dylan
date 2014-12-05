@@ -212,12 +212,15 @@ define method emit-result-assignment
  => ()
   temporary-value(temp) := result;
 
-  if (named?(temp) & *temporary-locals?*)
+  if (named?(temp))
     let name = hygienic-mangle(back-end, temp.name, temp.frame-offset);
     if (instance?(result, <llvm-instruction>)
-          & ~llvm-builder-local-defined?(back-end, name))
+          & ~llvm-builder-local-defined?(back-end, name)
+          & *temporary-locals?*)
       ins--local(back-end, name, result);
     end;
+
+    emit-dbg-local-variable(back-end, c, temp, #"auto", result);
   end if;
 end method;
 
@@ -1309,6 +1312,11 @@ define method emit-computation
              operands: phi-operands,
              metadata: list(back-end.llvm-builder-dbg));
     add!(merge-bb.llvm-basic-block-instructions, phi);
+  end for;
+
+  // Assign results (following phi instructions)
+  for (merge-c :: <loop-merge> in c.loop-merges,
+       phi in merge-bb.llvm-basic-block-instructions)
     computation-result(back-end, merge-c, phi);
   end for;
 
@@ -1771,28 +1779,7 @@ define method emit-computation
         ins--local(back-end, local-name, alloca);
       end if;
 
-      if (c.dfm-source-location)
-        let dbg-function = back-end.llvm-back-end-dbg-functions.last;
-        let (dbg-file, dbg-line)
-          = source-location-dbg-file-line(back-end, c.dfm-source-location);
-        let var-type
-          = llvm-reference-dbg-type(back-end, cell-type(tmp));
-        let function-name
-          = back-end.llvm-builder-function.llvm-global-name;
-        let v
-          = make(<llvm-metadata-node>,
-                 function-local?: #t,
-                 node-values: list(alloca));
-        let lv
-          = llvm-make-dbg-local-variable(#"auto",
-                                         dbg-function,
-                                         as(<string>, tmp.name),
-                                         dbg-file, dbg-line,
-                                         var-type,
-                                         module: m,
-                                         function-name: function-name);
-        ins--call-intrinsic(back-end, "llvm.dbg.declare", vector(v, lv));
-      end if;
+      emit-dbg-local-variable(back-end, c, tmp, #"auto", alloca, address?: #t);
     end if;
     temporary-value(tmp) := alloca;
     ins--store(back-end, value, alloca);
