@@ -141,9 +141,9 @@ define module-spec pprint ()
   sealed instantiable class <pretty-stream> (<stream>);
 
   function pprint-logical-block (<stream>) => ();
-  function pprint-newline (<symbol>, <stream>) => ();
-  function pprint-indent (<symbol>, <integer>, <stream>) => ();
-  function pprint-tab (<symbol>, <integer>, <integer>, <stream>) => ();
+  function pprint-newline (one-of(#"linear", #"fill", #"miser", #"mandatory"), <stream>) => ();
+  function pprint-indent (one-of(#"block", #"current"), <integer>, <stream>) => ();
+  function pprint-tab (one-of(#"line", #"line-relative", #"section", #"section-relative"), <integer>, <integer>, <stream>) => ();
 
   macro-test printing-logical-block-test;
 end module-spec pprint;
