@@ -87,7 +87,8 @@ define method emit-lambda-dbg-function
 
   // Emit a llvm.dbg.value call for each parameter
   ins--dbg(back-end, dbg-line, 0, dbg-function, #f);
-  for (index from 1, param in parameters(o), param-type in parameter-types)
+  for (index from 1, param in parameters(o),
+       dbg-param-type in dbg-parameter-types)
     let v
       = make(<llvm-metadata-node>,
              function-local?: #t,
@@ -97,12 +98,13 @@ define method emit-lambda-dbg-function
                                      dbg-function,
                                      as(<string>, param.name),
                                      dbg-file, dbg-line,
-                                     param-type,
-                                     arg: index,
-                                     module: module,
-                                     function-name: function-name);
+                                     dbg-param-type,
+                                     arg: index);
     ins--call-intrinsic(back-end, "llvm.dbg.value", vector(v, i64(0), lv));
   end for;
+
+  // Assign debug scopes to each computation
+  assign-computations-dbg-scope(back-end, dbg-function, o.body, #f);
 end method;
 
 define method llvm-signature-dbg-types
@@ -185,7 +187,7 @@ define method emit-dbg-local-variable
              node-values: list(value));
     let lv
       = llvm-make-dbg-local-variable(kind,
-                                     back-end.llvm-back-end-dbg-functions.last,
+                                     *computation-dbg-scope-table*[c],
                                      as(<string>, tmp.name),
                                      dbg-file, dbg-line,
                                      var-type);
@@ -314,6 +316,80 @@ define method llvm-reference-dbg-type
 end method;
 
 
+/// Computation variable scope handling
+
+define thread variable *computation-dbg-scope-table* :: false-or(<object-table>)
+  = #f;
+
+define method assign-computations-dbg-scope
+    (back-end :: <llvm-back-end>, scope :: <llvm-metadata-value>,
+     c :: <computation>, last)
+ => ()
+  iterate loop (c :: false-or(<computation>) = c,
+                scope :: <llvm-metadata-value> = scope)
+    if (c & c ~== last)
+      let loc = dfm-source-location(c);
+      let temp = c.temporary;
+      if (loc & temp & temp.named?)
+        let (dbg-file :: <llvm-metadata-value>, dbg-line :: <integer>)
+          = source-location-dbg-file-line(back-end, loc);
+        let inner-scope
+          = llvm-make-dbg-lexical-block(scope, dbg-file, dbg-line, 0);
+        assign-computation-dbg-scope(back-end, inner-scope, c);
+        loop(c.next-computation, inner-scope);
+      else
+        assign-computation-dbg-scope(back-end, scope, c);
+        loop(c.next-computation, scope);
+      end if;
+    end if;
+  end iterate;
+end method;
+
+define method assign-computation-dbg-scope
+    (back-end :: <llvm-back-end>, scope :: <llvm-metadata-value>,
+     c :: <computation>)
+ => ()
+  *computation-dbg-scope-table*[c] := scope;
+end method;
+
+define method assign-computation-dbg-scope
+    (back-end :: <llvm-back-end>, scope :: <llvm-metadata-value>,
+     c :: <if>)
+ => ()
+  next-method();
+  let merge :: <if-merge> = next-computation(c);
+  assign-computations-dbg-scope(back-end, scope, c.consequent, merge);
+  assign-computations-dbg-scope(back-end, scope, c.alternative, merge);
+end method;
+
+define method assign-computation-dbg-scope
+    (back-end :: <llvm-back-end>, scope :: <llvm-metadata-value>,
+     c :: <loop>)
+ => ()
+  next-method();
+  assign-computations-dbg-scope(back-end, scope,
+                                c.loop-body, c.next-computation);
+end method;
+
+define method assign-computation-dbg-scope
+    (back-end :: <llvm-back-end>, scope :: <llvm-metadata-value>,
+     c :: <block>)
+ => ()
+  next-method();
+  assign-computations-dbg-scope(back-end, scope,
+                                c.body, c.next-computation);
+end method;
+
+define method assign-computation-dbg-scope
+    (back-end :: <llvm-back-end>, scope :: <llvm-metadata-value>,
+     c :: <unwind-protect>)
+ => ()
+  next-method();
+  assign-computations-dbg-scope(back-end, scope,
+                                c.cleanups, c.next-computation);
+end method;
+
+
 /// Computation source line tracking
 
 define function op--scl(back-end :: <llvm-back-end>, c :: <computation>) => ()
@@ -323,7 +399,7 @@ define function op--scl(back-end :: <llvm-back-end>, c :: <computation>) => ()
     let start-offset = source-location-start-offset(loc);
     let start-line = source-offset-line(start-offset);
     ins--dbg(back-end, start-line + source-record-start-line(sr), 0,
-             back-end.llvm-back-end-dbg-functions.last, #f);
+             *computation-dbg-scope-table*[c], #f);
   end if;
 end function;
 

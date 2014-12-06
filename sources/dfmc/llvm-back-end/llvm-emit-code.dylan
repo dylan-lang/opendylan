@@ -124,7 +124,8 @@ define method emit-code
 
       dynamic-bind (*current-environment* = o.environment,
                     *temporary-value-table* = make(<object-table>),
-                    *merge-operands-table* = make(<object-table>))
+                    *merge-operands-table* = make(<object-table>),
+                    *computation-dbg-scope-table* = make(<object-table>))
         // Add function arguments to the function's value table,
         // and to the temporary value mapping
         for (argument in arguments, param in parameters(o))
