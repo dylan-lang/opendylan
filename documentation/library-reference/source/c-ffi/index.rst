@@ -1623,7 +1623,7 @@ Signature
       => *C-pointer*
 
 C-size-t-at
-^^^^^^^^^^
+^^^^^^^^^^^
 
 Function
 
@@ -1635,7 +1635,7 @@ Signature
       *machine-word*
 
 C-size-t-at-setter
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 Function
 
@@ -1647,7 +1647,7 @@ Signature
       *machine-word*
 
 C-ssize-t-at
-^^^^^^^^^^
+^^^^^^^^^^^^
 
 Function
 
@@ -1659,7 +1659,7 @@ Signature
       *machine-word*
 
 C-ssize-t-at-setter
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 Function
 
