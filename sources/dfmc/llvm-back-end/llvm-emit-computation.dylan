@@ -252,6 +252,19 @@ define method emit-result-assignment
   temporary-value(temp) := result;
 end method;
 
+define method emit-dead-assignment
+    (back-end :: <llvm-back-end>, temp :: <temporary>)
+ => ()
+  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
+  temporary-value(temp) := undef;
+end method;
+
+define method emit-dead-assignment
+    (back-end :: <llvm-back-end>, temp :: <multiple-value-temporary>)
+ => ()
+  temporary-value(temp) := make(<llvm-local-mv>);
+end method;
+
 define method merge-results
     (back-end :: <llvm-back-end>, c :: <merge>, results :: <vector>)
  => ();
@@ -404,6 +417,11 @@ define method emit-computations
       // Emit the current computation
       if (back-end.llvm-builder-basic-block)
         emit-computation(back-end, m, c);
+      else
+        let temp = c.temporary;
+        if (temp & temp.used?)
+          emit-dead-assignment(back-end, temp)
+        end if;
       end if;
     EXCEPTION (e :: <error>)
       format(*standard-output*, "computation %s: %s\n", c, e);
