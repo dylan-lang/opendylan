@@ -608,7 +608,7 @@ The extensions are:
 
    See also
 
-   The Format library.
+   - The :doc:`Format module <../io/format>` in the :doc:`IO library <../io/index>`.
 
 .. function:: found?
 
