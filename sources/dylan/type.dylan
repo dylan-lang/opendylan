@@ -536,7 +536,7 @@ define method subjunctive-subtype? (t :: <limited-collection-type>, u :: <union>
 end method;
 
 define method subtype?
-    (t1 :: <limited-collection-type>, t2 :: <class>) => (result == #f)
+    (t1 :: <limited-collection-type>, t2 :: <class>) => (well? :: <boolean>)
   subtype?(limited-collection-class(t1), t2)
 end method;
 
