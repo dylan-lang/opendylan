@@ -4,7 +4,7 @@
 # When building for x86_64, make sure you increase the stack size (eg, ulimit -s 20000)
 
 # Required dependencies:
-# sudo apt-get install automake gcc libgc-dev rubygems ruby-dev debugedit
+# sudo apt-get install automake gcc libgc-dev rubygems ruby-dev debugedit python-sphinx
 # sudo gem install fpm
 
 require 'fileutils'
@@ -49,6 +49,12 @@ end
 # Install into staging area
 system("make install DESTDIR=#{STAGING_DIR}") || exit(1)
 
+# Build manpages and move them into the staging directory
+system  "make -C documentation/man-pages man"
+mkdir_p "#{STAGING_DIR}/usr/share/man/man1/"
+Dir["documentation/man-pages/build/man/*.1"].each { |f| cp(f, "#{STAGING_DIR}/usr/share/man/man1/") }
+Dir["#{STAGING_DIR}/usr/share/man/man1/*"].each { |f| system("gzip #{f}") }
+
 # Move all the debug files to /usr/lib/debug/lib/opendylan in the STAGING_DIR_DEBUG.
 Dir["#{STAGING_DIR}/**/*.dbg"].each do |file|
   target_file = file.sub(/^#{STAGING_DIR}/, "#{STAGING_DIR_DEBUG}/usr/lib/debug") #.sub(/\.dbg$/. '')
@@ -81,7 +87,7 @@ fpm -s dir -t deb -n opendylan --deb-changelog packages/unix/debian/changelog -v
     functional style of programming.
     Though Dylan is a dynamic language, it was carefully
     designed to allow compilation to efficient machine code." \
-    usr/lib/opendylan usr/bin
+    usr/lib/opendylan usr/bin usr/share/man
 EOF
 
 puts FPM_CMD
