@@ -4,7 +4,7 @@
 # When building for x86_64, make sure you increase the stack size (eg, ulimit -s 20000)
 
 # Required dependencies:
-# sudo apt-get install automake gcc libgc-dev rubygems ruby-dev debugedit
+# sudo apt-get install automake gcc libgc-dev rubygems ruby-dev debugedit python-sphinx
 # sudo gem install fpm
 
 require 'fileutils'
@@ -36,30 +36,24 @@ if(`uname -m` =~ /x86_64/)
   additional_fpm_flags << ' -d "libgc-dev (>= 0)"'
 end
 
-# Configure and build first 2 stages
+# Configure and build 
 puts "Configuring with #{configure_flags}"
 system("./configure #{configure_flags}") || exit(1)
-system("make 2-stage-bootstrap") || exit(1)
-
-# Overwrite the rpath, so the packaged binaries use the absolute
-# install dir instead (fixes problems when /proc is missing, eg. in a chroot).
-original_jamfile_contents = File.read(jamfile)
-File.open(jamfile, 'w') { |f| f.write(original_jamfile_contents.gsub('\\\\$ORIGIN/..', INSTALL_DIR)) }
-at_exit do
-  # Restore the original jamfile when we quit
-  File.open(jamfile, 'w') { |f| f.write(original_jamfile_contents) }
-end
+system("make") || exit(1)
 
 # Add libgc dependency for 64 bit x86
 if(`uname -m` =~ /x86_64/)
   additional_fpm_flags << ' -d "libgc-dev (>= 0)"'
 end
 
-# Build the last stage with the modified rpath jamfile
-system("make") || exit(1)
-
 # Install into staging area
 system("make install DESTDIR=#{STAGING_DIR}") || exit(1)
+
+# Build manpages and move them into the staging directory
+system  "make -C documentation/man-pages man"
+mkdir_p "#{STAGING_DIR}/usr/share/man/man1/"
+Dir["documentation/man-pages/build/man/*.1"].each { |f| cp(f, "#{STAGING_DIR}/usr/share/man/man1/") }
+Dir["#{STAGING_DIR}/usr/share/man/man1/*"].each { |f| system("gzip #{f}") }
 
 # Move all the debug files to /usr/lib/debug/lib/opendylan in the STAGING_DIR_DEBUG.
 Dir["#{STAGING_DIR}/**/*.dbg"].each do |file|
@@ -93,7 +87,7 @@ fpm -s dir -t deb -n opendylan --deb-changelog packages/unix/debian/changelog -v
     functional style of programming.
     Though Dylan is a dynamic language, it was carefully
     designed to allow compilation to efficient machine code." \
-    usr/lib/opendylan usr/bin
+    usr/lib/opendylan usr/bin usr/share/man
 EOF
 
 puts FPM_CMD
