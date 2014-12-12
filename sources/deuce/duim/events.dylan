@@ -419,7 +419,7 @@ define function make-deuce-modifiers
   when (logand(modifier-state, $shift-key) ~= 0)
     modifiers := logior(modifiers, deuce/$shift-key)
   end;
-  // we gratitiously ignore Hyper, AltGr, CapsLock
+  // we gratuitously ignore Hyper, AltGr, CapsLock
   modifiers := logand(modifiers, #xf);
   modifiers
 end function make-deuce-modifiers;
