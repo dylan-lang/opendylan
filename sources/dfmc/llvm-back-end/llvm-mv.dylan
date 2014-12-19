@@ -20,13 +20,27 @@ end class;
 define method op--mv-extract
     (back-end :: <llvm-back-end>, mv :: <llvm-local-mv>, index :: <integer>)
  => (value :: <llvm-value>);
+  let module = back-end.llvm-builder-module;
   let fixed = mv.llvm-mv-fixed;
   if (index < fixed.size)
     fixed[index]
   elseif (mv.llvm-mv-rest)
-    error("mv-extract beyond fixed with rest")
+    let rest-class :: <&class> = dylan-value(#"<simple-object-vector>");
+    let rest-index = index - fixed.size;
+    let rest-cast
+      = op--object-pointer-cast(back-end, mv.llvm-mv-rest, rest-class);
+    let rest-count
+      = call-primitive(back-end, primitive-vector-size-descriptor,
+                       rest-cast);
+    let cmp = ins--icmp-slt(back-end, rest-index, rest-count);
+    ins--if (back-end, cmp)
+      call-primitive(back-end, primitive-vector-element-descriptor,
+                     rest-cast,
+                     llvm-back-end-value-function(back-end, rest-index));
+    ins--else
+      emit-reference(back-end, module, &false)
+    end ins--if;
   else
-    let module = back-end.llvm-builder-module;
     emit-reference(back-end, module, &false)
   end if
 end method;
@@ -280,7 +294,6 @@ define method op--restore-temporary
      mv :: <llvm-global-mv>, spill :: <llvm-value>)
  => ();
   if (temp.required-values > 1 | temp.rest-values?)
-
     // Determine how many values need to be restored to the TEB MV area
     let count = ins--extractvalue(back-end, mv.llvm-mv-struct, 1);
     let count-ext = ins--zext(back-end, count, back-end.%type-table["iWord"]);
