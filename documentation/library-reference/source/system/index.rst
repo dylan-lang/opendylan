@@ -10,6 +10,7 @@ The System library exports the following modules:
    :maxdepth: 2
 
    date
+   locators
    file-system
    operating-system
 

@@ -349,7 +349,7 @@ subclass to be instantiated, this method calls the generic function
 
 The *locator:* init-keyword should be a string naming a file. If the
 Locators library is in use, *filename* should be an instance of
-``<locator>`` or a string that can be coerced to one.
+:class:`<locator>` or a string that can be coerced to one.
 
 The *direction:* init-keyword specifies the direction of the stream.
 This can be one of *#"input"*, *#"output"*, or *#"input-output"*. The
@@ -1248,7 +1248,7 @@ are exported from the *streams* module.
 
    :superclasses: :drm:`<error>`
 
-   :keyword locator: An instance of ``<locator>``.
+   :keyword locator: An instance of :class:`<locator>`.
 
    :description:
 
@@ -1298,7 +1298,7 @@ are exported from the *streams* module.
 
    :superclasses: :class:`<buffered-stream>`, :class:`<positionable-stream>`
 
-   :keyword locator: An instance of :drm:`<string>` or ``<locator>``. This
+   :keyword locator: An instance of :drm:`<string>` or :class:`<locator>`. This
      specifies the file over which to stream.
    :keyword direction: Specifies the direction of the stream. It must be one of
      ``#"input"``, ``#"output"``, or ``#"input-output"``. Default value:
@@ -1552,7 +1552,7 @@ are exported from the *streams* module.
 
      The *filename* init-keyword should be a string naming a file. If
      the Locators library is in use, *filename* should be an instance of
-     ``<locator>`` or a string that can be coerced to one.
+     :class:`<locator>` or a string that can be coerced to one.
 
      The *direction* init-keyword specifies the direction of the stream.
 
