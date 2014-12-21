@@ -227,9 +227,9 @@ define method do-emit-instance-cmp
   end case
 end method;
 
-define method op--heap-object-subtype-bit-instance-cmp
-    (back-end :: <llvm-back-end>, object :: <llvm-value>,
-     type :: <&class>)
+define method op--heap-object-subtype-mask
+    (back-end :: <llvm-back-end>, object :: <llvm-value>)
+ => (mask :: <llvm-value>)
   let word-size = back-end-word-size(back-end);
 
   // Retrieve the <mm-wrapper> object from the object header
@@ -244,11 +244,32 @@ define method op--heap-object-subtype-bit-instance-cmp
     = op--getslotptr(back-end, wrapper,
                      #"<mm-wrapper>", #"mm-wrapper-subtype-mask");
   let mask = ins--load(back-end, mask-slot-ptr, alignment: word-size);
+  ins--ptrtoint(back-end, mask, back-end.%type-table["iWord"])
+end method;
+
+define method op--heap-object-subtype-bit-instance-cmp
+    (back-end :: <llvm-back-end>, object :: <llvm-value>,
+     type :: <&class>)
+ => (cmp :: <llvm-value>)
   let mask-int
-    = ins--ptrtoint(back-end, mask, back-end.%type-table["iWord"]);
+  = op--heap-object-subtype-mask(back-end, object);
 
   // Compare against the mask for this class type
   let type-mask = ash(^class-subtype-bit(type), $dylan-tag-bits);
+  let masked = ins--and(back-end, mask-int, type-mask);
+  ins--icmp-ne(back-end, masked, 0)
+end method;
+
+define method op--heap-object-subtype-bit-instance-cmp
+    (back-end :: <llvm-back-end>, object :: <llvm-value>,
+     types :: <sequence>)
+ => (cmp :: <llvm-value>)
+  let mask-int
+  = op--heap-object-subtype-mask(back-end, object);
+
+  // Compare against the mask for these class types
+  let type-mask = ash(reduce1(logior, map(^class-subtype-bit, types)),
+                      $dylan-tag-bits);
   let masked = ins--and(back-end, mask-int, type-mask);
   ins--icmp-ne(back-end, masked, 0)
 end method;

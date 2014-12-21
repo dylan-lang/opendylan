@@ -695,10 +695,11 @@ define method emit-call
 
   let next = emit-reference(back-end, m, c.next-methods);
 
-  let km-class :: <&class> = dylan-value(#"<keyword-method>");
-  let cmp = op--heap-object-subtype-bit-instance-cmp(back-end, fn, km-class);
+  let classes = list(dylan-value(#"<keyword-method>"),
+                     dylan-value(#"<engine-node>"));
+  let cmp = op--heap-object-subtype-bit-instance-cmp(back-end, fn, classes);
   ins--if (back-end, cmp)
-    // Cast to the appropriate MEP type
+    // Cast to the appropriate MEP (or engine-node entry point) type
     let parameter-types
       = make(<simple-object-vector>,
              size: c.arguments.size + 2,
