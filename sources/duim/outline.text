@@ -191,7 +191,7 @@ composition_ pass (which builds up a set of _space requirement_ objects
 describing the desired, minimum, and maximum size for each pane), and the second
 pass is the _space allocation_ pass (which allocates real estate to each pane
 after solving the constraints that represent the desired size for each pane).
-(The layout protocol, in effect, serves as glue between the genealigy and
+(The layout protocol, in effect, serves as glue between the genealogy and
 geometry protocols.)
 
 Some sheets act as "controls", in which case we refer to them as _gadgets_.
