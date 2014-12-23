@@ -8,51 +8,95 @@ The locators Module
 Introduction
 ------------
 
+The Locators module provides Dylan programs with a portable, flexible,
+and uniform facility for locating files.
+
 The LOCATORS module
 -------------------
+
+.. class:: <locator>
+   :open:
+   :abstract:
+
+   :superclasses: :drm:`<object>`
+
+   This is the base class for all locators. This is the usual locator
+   class for coercion (using ``as``) or instantiation (using ``make``)
+   of new locators. Situations where this class is not appropriate
+   are ones where there is not enough information provided to select
+   the appropriate concrete class. For example, it is not appropriate
+   to coerce a string representing a portion of a URL without a scheme,
+   such as ``as(<locator>, "toothpaste.html")``, because this would
+   likely result in the instantiation of a native locator instead of
+   the desired URL locator class.
+
+.. class:: <physical-locator>
+   :open:
+   :abstract:
+
+   :superclasses: :class:`<locator>`
+
+   A physical locator is a locator which refers to an object (such as
+   a file or directory) in a physical file system. This locator class
+   is useful for coercing an abstract locator into its corresponding
+   physical counterpart.
+
+.. class:: <file-system-locator>
+   :open:
+   :abstract:
+
+   :superclasses: :class:`<physical-locator>`
+
+   A file system locator is a locator that refers to either a directory
+   or a file within the file system.
 
 .. class:: <directory-locator>
    :open:
    :abstract:
 
-   :superclasses: <physical-locator>
+   :superclasses: :class:`<physical-locator>`
 
+   A directory locator is a locator that refers to a directory as
+   distinct from a file. This is important in file systems which can
+   view a directory as either a file or a directory. This locator
+   class is useful for coercing a file locator into a form where it
+   can be manipulated as a directory (e.g. for constructing a locator
+   to a file in a directory).
+
+.. constant:: <native-directory-locator>
+
+   This is bound to the native directory locator type for the host
+   platform. On Windows, this is typically ``<microsoft-directory-locator>``
+   while on POSIX platforms, it is ``<posix-directory-locator>``.
 
 .. class:: <file-locator>
    :open:
    :abstract:
 
-   :superclasses: <physical-locator>
+   :superclasses: :class:`<physical-locator>`
 
+   A file locator is a locator which refers to a file as distinct from
+   a directory. This is important in file systems which can view a
+   directory as either a file or a directory. This locator class is
+   useful for coercing a directory locator into a form where it can be
+   manipulated as a file.
+
+.. constant:: <native-file-locator>
+
+   This is bound to the native file locator type for the host
+   platform. On Windows, this is typically ``<microsoft-file-locator>``
+   while on POSIX platforms, it is ``<posix-file-locator>``.
 
 .. class:: <locator-error>
 
    :superclasses: :class:`<format-string-condition>`, :drm:`<error>`
 
 
-.. class:: <locator>
-   :open:
-   :abstract:
-
-   :superclasses: <object>
-
-
-.. constant:: <native-directory-locator>
-
-.. constant:: <native-file-locator>
-
-.. class:: <physical-locator>
-   :open:
-   :abstract:
-
-   :superclasses: <locator>
-
-
 .. class:: <server-locator>
    :open:
    :abstract:
 
-   :superclasses: <locator>
+   :superclasses: :class:`<locator>`
 
 
 .. generic-function:: list-locator
@@ -211,14 +255,25 @@ The LOCATORS module
 .. generic-function:: subdirectory-locator
    :open:
 
+   Returns a directory locator for a subdirectory of a given directory.
+
    :signature: subdirectory-locator (locator #rest sub-path) => (subdirectory)
 
    :parameter locator: An instance of :class:`<directory-locator>`.
    :parameter #rest sub-path: An instance of ``<object>``.
    :value subdirectory: An instance of :class:`<directory-locator>`.
 
+   :example:
+
+     .. code-block:: dylan
+
+       let build-dir = subdirectory-locator(working-directory(), "_build");
+
 .. generic-function:: supports-list-locator?
    :open:
+
+   Returns whether or not a given locator supports the :gf:`list-locator`
+   operation.
 
    :signature: supports-list-locator? (locator) => (listable?)
 
@@ -228,8 +283,10 @@ The LOCATORS module
 .. generic-function:: supports-open-locator?
    :open:
 
+   Returns whether or not a given locator supports the :gf:`open-locator`
+   operation.
+
    :signature: supports-open-locator? (locator) => (openable?)
 
    :parameter locator: An instance of :class:`<locator>`.
    :value openable?: An instance of :drm:`<boolean>`.
-
