@@ -60,13 +60,20 @@ define method print-primitive-c-function-declaration
   format(stream, " %s(", raw-mangle(be, name));
 
   if (zero?(^signature-number-required(signature)))
-    format(stream, "void");
+    if (^signature-rest?(signature))
+      format(stream, "...");
+    else
+      format(stream, "void");
+    end if;
   else
     for (required in ^signature-required(signature),
          index from 0 below ^signature-number-required(signature))
       unless (zero?(index)) format(stream, ", "); end;
       print-primitive-c-type(be, required, stream);
     end for;
+    if (^signature-rest?(signature))
+      format(stream, ", ...");
+    end if;
   end if;
 
   format(stream, ");\n");
