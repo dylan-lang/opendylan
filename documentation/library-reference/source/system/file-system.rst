@@ -492,11 +492,12 @@ File-System module.
 
    The type representing a file system entity.
 
-   :superclasses: <string>
+   :superclasses: :drm:`<string>` or :class:`<file-system-locator>`
 
    :description:
 
-     A type that identifies a file system entity.
+     A type that identifies a file system entity. This can be either a
+     :drm:`<string>` or a :class:`<file-system-locator>`.
 
    :operations:
 
