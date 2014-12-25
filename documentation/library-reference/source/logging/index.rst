@@ -73,7 +73,7 @@ The log file will be rolled immediately if it exists and is not zero length.
 If you don't want it to be rolled on startup, pass ``roll: #f`` to ``make``
 in the above call.
 
-Logs may be disabled with ``log-enabled?(log) := #f``.  When
+Logs may be disabled with :gf:`log-enabled?(log) := #f <log-enabled?>`.  When
 disabled, no messages will be logged to the log's local targets,
 but the value of :gf:`log-additive?` will still be respected.  In other
 words, logging to a disabled log will still log to ancestor logs
@@ -388,14 +388,14 @@ Log Targets
 
 .. class:: <null-log-target>
 
-   :superclasses: <log-target>
+   :superclasses: :class:`<log-target>`
 
    A log target that discards all messages.
 
 
 .. class:: <file-log-target>
 
-   :superclasses: <log-target>
+   :superclasses: :class:`<log-target>`
 
    :keyword pathname:
       *(required)* An instance of :type:`<pathname>`.
@@ -423,7 +423,7 @@ Log Targets
 
 .. class:: <rolling-file-log-target>
 
-   :superclasses: <file-log-target>
+   :superclasses: :class:`<file-log-target>`
 
    :keyword max-size:
       An :drm:`<integer>`.  The size in bytes at which to roll the file.
@@ -440,7 +440,7 @@ Log Targets
 
    A log target that sends all messages to a stream.
 
-   :superclasses: <log-target>
+   :superclasses: :class:`<log-target>`
 
    :keyword stream:
       *(required)* An instance of :class:`<stream>`.
@@ -461,9 +461,9 @@ Log Targets
 
    :signature: log-to-target (target level formatter object args) => ()
 
-   :parameter target: An instance of ``<log-target>``.
-   :parameter level: An instance of ``<log-level>``.
-   :parameter formatter: An instance of ``<log-formatter>``.
+   :parameter target: An instance of :class:`<log-target>`.
+   :parameter level: An instance of :class:`<log-level>`.
+   :parameter formatter: An instance of :class:`<log-formatter>`.
    :parameter object: An instance of :drm:`<object>`.
    :parameter args: An instance of :drm:`<sequence>`.
 
@@ -475,7 +475,7 @@ Log Targets
 
    :signature: write-message (target object args) => ()
 
-   :parameter target: An instance of ``<log-target>``.
+   :parameter target: An instance of :class:`<log-target>`.
    :parameter object: An instance of :drm:`<object>`.
    :parameter args: An instance of :drm:`<sequence>`.
 
@@ -498,7 +498,7 @@ Log Targets
 Log Formatting
 --------------
 
-Each ``<log>`` has a ``<log-formatter>`` that determines how to format
+Each :class:`<log>` has a :class:`<log-formatter>` that determines how to format
 each log message.  Make one like this::
 
   make(<log-formatter>, pattern: "...");
