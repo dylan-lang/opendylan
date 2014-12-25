@@ -398,7 +398,7 @@ Log Targets
    :superclasses: <log-target>
 
    :keyword pathname:
-      *(required)* An instance of :class:`<pathname>`.
+      *(required)* An instance of :type:`<pathname>`.
 
    A log target that logs to a single, monolithic file.  You probably
    want :class:`<rolling-file-log-target>` instead.
@@ -408,7 +408,7 @@ Log Targets
    :signature: target-pathname (file-log-target) => (pathname)
 
    :parameter target: An instance of :class:`<file-log-target>`.
-   :value pathname: An instance of :class:`<pathname>`.
+   :value pathname: An instance of :type:`<pathname>`.
 
 .. generic-function:: open-target-stream
    :open:

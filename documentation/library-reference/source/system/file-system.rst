@@ -21,9 +21,9 @@ Types specific to file system operations
 The File-System module contains a number of types specifically designed
 for use by interfaces in the module.
 
-- :class:`<file-type>`
-- :class:`<pathname>`
-- :class:`<copy/rename-disposition>`
+- :type:`<file-type>`
+- :type:`<pathname>`
+- :type:`<copy/rename-disposition>`
 
 Manipulating files
 ------------------
@@ -91,10 +91,10 @@ File-System module.
 
    :signature: copy-file *old-file* *new-file* #key *if-exists* => ()
 
-   :parameter old-file: An instance of :class:`<pathname>`.
-   :parameter new-file: An instance of :class:`<pathname>`.
+   :parameter old-file: An instance of :type:`<pathname>`.
+   :parameter new-file: An instance of :type:`<pathname>`.
    :parameter #key if-exists: An instance of
-     :class:`<copy/rename-disposition>`. Default value: ``#"signal"``.
+     :type:`<copy/rename-disposition>`. Default value: ``#"signal"``.
 
    :description:
 
@@ -104,15 +104,15 @@ File-System module.
 
    See also
 
-   - :class:`<copy/rename-disposition>`
+   - :type:`<copy/rename-disposition>`
    - :class:`rename-file`
 
-.. class:: <copy/rename-disposition>
+.. type:: <copy/rename-disposition>
 
    The type that represents possible actions when overwriting existing
    files.
 
-   :superclasses: one-of(#"signal", #"replace")
+   :equivalent: ``one-of(#"signal", #"replace")``
 
    :description:
 
@@ -141,9 +141,9 @@ File-System module.
 
    :signature: create-directory *parent* *name* => *directory*
 
-   :parameter parent: An instance of :class:`<pathname>`.
+   :parameter parent: An instance of :type:`<pathname>`.
    :parameter name: An instance of :drm:`<string>`.
-   :value directory: An instance of :class:`<pathname>`.
+   :value directory: An instance of :type:`<pathname>`.
 
    :description:
 
@@ -161,7 +161,7 @@ File-System module.
 
    :signature: delete-directory *directory* => ()
 
-   :parameter directory: An instance of :class:`<pathname>`.
+   :parameter directory: An instance of :type:`<pathname>`.
 
    :description:
 
@@ -179,7 +179,7 @@ File-System module.
 
    :signature: delete-file *file* => ()
 
-   :parameter file: An instance of :class:`<pathname>`.
+   :parameter file: An instance of :type:`<pathname>`.
 
    :description:
 
@@ -195,7 +195,7 @@ File-System module.
    :signature: do-directory *function* *directory* => ()
 
    :parameter function: An instance of :drm:`<function>`.
-   :parameter directory: An instance of :class:`<pathname>`.
+   :parameter directory: An instance of :type:`<pathname>`.
 
    :description:
 
@@ -205,12 +205,12 @@ File-System module.
 
        *function* *directory* *name* *type* => ()
 
-     where *directory* is an instance of :class:`<pathname>`, *name* is
+     where *directory* is an instance of :type:`<pathname>`, *name* is
      an instance of :drm:`<byte-string>`, and *type* is an instance of
-     :class:`<file-type>`.
+     :type:`<file-type>`.
 
      Within *function*, the values of *directory* and *name* can be
-     concatenated to generate a :class:`<pathname>` suitable for use by
+     concatenated to generate a :type:`<pathname>` suitable for use by
      the other functions in the module.
 
      The following calls are equivalent:
@@ -236,7 +236,7 @@ File-System module.
 
    :signature: ensure-directories-exist *file* => *created?*
 
-   :parameter file: An instance of :class:`<pathname>`.
+   :parameter file: An instance of :type:`<pathname>`.
    :value created?: An instance of :drm:`<boolean>`.
 
    :description:
@@ -277,7 +277,7 @@ File-System module.
 
    :signature: file-exists? *file* => *exists?*
 
-   :parameter file: An instance of :class:`<pathname>`.
+   :parameter file: An instance of :type:`<pathname>`.
    :value exists?: An instance of :drm:`<boolean>`.
 
    :description:
@@ -291,7 +291,7 @@ File-System module.
 
    :signature: file-properties *file* => *properties*
 
-   :parameter file: An instance of :class:`<pathname>`.
+   :parameter file: An instance of :type:`<pathname>`.
    :value properties: An instance of a concrete subclass of
      :drm:`<explicit-key-collection>`.
 
@@ -318,7 +318,7 @@ File-System module.
 
    :signature: file-property *file* #key *key* => *property*
 
-   :parameter file: An instance of :class:`<pathname>`.
+   :parameter file: An instance of :type:`<pathname>`.
    :parameter #key key: One of ``#"author"``, ``#"size"``,
      ``#"creation-date"``, ``#"access-date"``, ``#"modification-date"``,
      ``#"readable?"``, ``#"writeable?"``, ``#"executable?"``.
@@ -377,7 +377,7 @@ File-System module.
 
    :parameter new-value: The type of this depends on the value of *key*.
      See the description for details.
-   :parameter file: An instance of :class:`<pathname>`.
+   :parameter file: An instance of :type:`<pathname>`.
    :parameter key: One of ``#"author"``, ``#"size"``,
      ``#"creation-date"``, ``#"access-date"``, ``#"modification-date"``,
      ``#"readable?"``, ``#"writeable?"``, ``#"executable?"``.
@@ -447,8 +447,8 @@ File-System module.
 
    :signature: file-type *file* => *file-type*
 
-   :parameter file: An instance of :class:`<pathname>`.
-   :value file-type: An instance of :class:`<file-type>`.
+   :parameter file: An instance of :type:`<pathname>`.
+   :value file-type: An instance of :type:`<file-type>`.
 
    :description:
 
@@ -456,11 +456,11 @@ File-System module.
      file system entity can either be a file, a directory, or a link to
      another file or directory.
 
-.. class:: <file-type>
+.. type:: <file-type>
 
    The type representing all possible types of a file system entity.
 
-   :superclasses: one-of(#"file", #"directory", #"link")
+   :equivalent: ``one-of(#"file", #"directory", #"link")``
 
    :description:
 
@@ -480,7 +480,7 @@ File-System module.
 
    :signature: home-directory () => *home-directory*
 
-   :value home-directory: An instance of :class:`<pathname>`.
+   :value home-directory: An instance of :type:`<pathname>`.
 
    :description:
 
@@ -488,11 +488,11 @@ File-System module.
      of this function can be used with concatenate to create pathnames
      of entities in the home directory.
 
-.. class:: <pathname>
+.. type:: <pathname>
 
    The type representing a file system entity.
 
-   :superclasses: :drm:`<string>` or :class:`<file-system-locator>`
+   :equivalent: ``type-union(<string>, <file-system-locator>)``
 
    :description:
 
@@ -521,10 +521,10 @@ File-System module.
 
    :signature: rename-file *old-file* *new-file* #key *if-exists* => ()
 
-   :parameter old-file: An instance of :class:`<pathname>`.
-   :parameter new-file: An instance of :class:`<pathname>`.
+   :parameter old-file: An instance of :type:`<pathname>`.
+   :parameter new-file: An instance of :type:`<pathname>`.
    :parameter if-exists: An instance of
-     :class:`<copy/rename-disposition>`. Default value: ``#"signal"``.
+     :type:`<copy/rename-disposition>`. Default value: ``#"signal"``.
 
    :description:
 
@@ -538,7 +538,7 @@ File-System module.
    See also
 
    - :func:`copy-file`
-   - :class:`<copy/rename-disposition>`
+   - :type:`<copy/rename-disposition>`
 
 .. function:: root-directories
 
@@ -560,7 +560,7 @@ File-System module.
 
    :signature: temp-directory () => *temp-directory*
 
-   :value temp-directory: An instance of :class:`<pathname>`, or false.
+   :value temp-directory: An instance of :type:`<pathname>`, or false.
 
    :description:
 
@@ -577,11 +577,11 @@ File-System module.
 
    :signature: working-directory () => *working-directory*
 
-   :value working-directory: An instance of :class:`<pathname>`.
+   :value working-directory: An instance of :type:`<pathname>`.
 
    :description:
 
-     Returns the :class:`<pathname>` of the current working directory in
+     Returns the :type:`<pathname>` of the current working directory in
      the current process on the local machine. You can use the return
      value of ``working-directory`` in conjunction with
      :drm:`concatenate` to specify pathnames of entities in the working
@@ -597,8 +597,8 @@ File-System module.
 
    :signature: working-directory-setter *directory* => *directory*
 
-   :parameter directory: An instance of :class:`<pathname>`.
-   :value directory: An instance of :class:`<pathname>`.
+   :parameter directory: An instance of :type:`<pathname>`.
+   :value directory: An instance of :type:`<pathname>`.
 
    :description:
 
