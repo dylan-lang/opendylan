@@ -179,25 +179,25 @@ Logging Functions
 
 .. function:: log-error
 
-   Equivalent to ``log-message($log-error, ...)``.
+   :equivalent: ``log-message($log-error, ...)``
 
    See :func:`log-message`.
 
 .. function:: log-warning
 
-   Equivalent to ``log-message($log-warn, ...)``.
+   :equivalent: ``log-message($log-warn, ...)``
 
    See :func:`log-message`.
 
 .. function:: log-info
 
-   Equivalent to ``log-message($log-info, ...)``.
+   :equivalent: ``log-message($log-info, ...)``
 
    See :func:`log-message`.
 
 .. function:: log-debug
 
-   Equivalent to ``log-message($log-debug, ...)``.
+   :equivalent: ``log-message($log-debug, ...)``
 
    See :func:`log-message`.
 
@@ -205,17 +205,19 @@ Logging Functions
 
    :signature: log-debug-if (test log object #rest args) => ()
 
-   Equivalent to::
+   :equivalent:
 
-     if (test)
-       log-message($log-debug, ...)
-     end
+     .. code-block:: dylan
+
+        if (test)
+          log-message($log-debug, ...)
+        end
 
    See :func:`log-message`.
 
 .. function:: log-trace
 
-   Equivalent to ``log-message($log-trace, ...)``.
+   :equivalent: ``log-message($log-trace, ...)``
 
    See :func:`log-message`.
 
