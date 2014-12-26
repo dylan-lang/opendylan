@@ -583,8 +583,6 @@ are exported from the *duim-sheets* module.
      then an instance of this class is generated when a subsequent button
      press is detected.
 
-   :operations:
-
    See also
 
    - :class:`<button-release-event>`
@@ -603,8 +601,6 @@ are exported from the *duim-sheets* module.
      The class of events representing button releases. An instance of this
      class is generated if the mouse button is released after a period of
      being pressed, for example, at the end of a drag and drop maneuver.
-
-   :operations:
 
    See also
 
@@ -638,8 +634,6 @@ are exported from the *duim-sheets* module.
      sheet. All units are measured in pixels.
 
    :operations:
-
-     The following operations are exported from the *DUIM-Sheets* module.
 
      - :gf:`caret-position`
      - :gf:`caret-sheet`
@@ -1538,8 +1532,6 @@ are exported from the *duim-sheets* module.
 
    :operations:
 
-     The following operation is exported from the *DUIM-Sheets* module.
-
      - :gf:`event-modifier-state`
 
 .. class:: <display>
@@ -1569,8 +1561,6 @@ are exported from the *duim-sheets* module.
      is whatever units are standard for the display device (usually pixels).
 
    :operations:
-
-     The following operations are exported from the *DUIM-Sheets* module.
 
      - :gf:`display`
      - :gf:`display?`
@@ -1998,8 +1988,6 @@ are exported from the *duim-sheets* module.
      event is generated, the clock is reset, so that the next press generated
      is an instance of :class:`<button-press-event>`.
 
-   :operations:
-
    See also
 
    - :class:`<button-press-event>`
@@ -2145,8 +2133,6 @@ are exported from the *duim-sheets* module.
      the event.
 
    :operations:
-
-     The following operations are exported from the *DUIM-Sheets* module.
 
      - :gf:`event?`
      - :gf:`event-matches-gesture?`
@@ -2617,8 +2603,6 @@ are exported from the *duim-sheets* module.
 
      The class of events that occur in frames. The *frame:* init-keyword
      specified the frame in which the event occurs.
-
-   :operations:
 
    See also
 
@@ -3102,8 +3086,6 @@ are exported from the *duim-sheets* module.
      pressed for characters in the standard character set.
 
    :operations:
-
-     The following operations are exported from the *DUIM-Sheets* module.
 
      - :gf:`event-character`
      - :gf:`event-key-name`

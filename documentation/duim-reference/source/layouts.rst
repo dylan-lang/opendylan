@@ -197,7 +197,7 @@ are exported from the *duim-layouts* module.
 
    :keyword region: An instance of type :class:`<region>`. Default value: :const`$nowhere`.
    :keyword transform: An instance of type :class:`<transform>`. Default value: :const:`$identity-transform`.
-   :keyword port: An instance of type *false-or(* :class:`<port>` *)*. Default value: ``#f``.
+   :keyword port: An instance of type ``false-or(<port>)``. Default value: ``#f``.
    :keyword style-descriptor: An instance of type ``false-or(<object>)``. Default value: ``#f``.
    :keyword help-context: An instance of type ``<object-table>``. Default value: ``make(<object-table>)``.
    :keyword help-source: An instance of type ``<object-table>``. Default value: ``make(<object-table>)``.
@@ -263,34 +263,34 @@ are exported from the *duim-layouts* module.
 
      Three buttons arranged in a column layout
 
-     The *border:* init-keyword provides a border of whitespace around the
+     The ``border:`` init-keyword provides a border of whitespace around the
      children in the layout, and the value of this init-keyword represents
      the size of the border in pixels. This basically has the same effect as
-     using the macro ` <gadgets.htm#78138>`_ around the layout, except it
+     using the macro :macro:`with-border` around the layout, except it
      uses a simpler syntax.
 
-     The *spacing:* or *y-spacing:* init-keywords let you specify how much
+     The ``spacing:`` or ``y-spacing:`` init-keywords let you specify how much
      vertical space should be inserted, in pixels, between the children of
      the layout. These two init-keywords can be used interchangeably.
 
-     If true, *equalize-heights?:* ensures that all the children of the
+     If true, ``equalize-heights?:`` ensures that all the children of the
      layout have the same height.
 
-     If true, *equalize-widths?:* ensures that all the children of the layout
+     If true, ``equalize-widths?:`` ensures that all the children of the layout
      have the same width.
 
      By default, all the children of a column layout are left-aligned. You
      can specify that they should be right or center-aligned using the
-     *x-alignment:* keyword.
+     ``x-alignment:`` keyword.
 
-     The *ratios:* or *y-ratios:* init-keywords let you specify the
+     The ``ratios:`` or ``y-ratios:`` init-keywords let you specify the
      proportion of the total layout that should be taken up by each
      individual child. These two init-keywords can be used interchangeably.
 
-     The value passed to *ratios:* needs to be a sequence of as many integers
+     The value passed to ``ratios:`` needs to be a sequence of as many integers
      as there are children in the layout. Each child is then allocated the
      appropriate portion of vertical space in the layout. For example, if the
-     value *#(1, 2, 3)* is specified for the *ratios:* init-keyword of a
+     value ``#(1, 2, 3)`` is specified for the ``ratios:`` init-keyword of a
      column layout containing three children, then the first child would
      claim a sixth of the available vertical space, the second child would
      claim a third of the vertical space, and the third child would claim
@@ -333,7 +333,6 @@ are exported from the *duim-layouts* module.
    :parameter pane: An instance of type :class:`<sheet>`.
    :parameter width: An instance of type ``<integer>``.
    :parameter height: An instance of type ``<integer>``.
-
    :value space-req: An instance of type :class:`<space-requirement>`.
 
    :description:
@@ -382,9 +381,9 @@ are exported from the *duim-layouts* module.
 
    :macrocall: define pane *name* ({*supers* },\*) {*slots-and-panes* } end
 
-   :parameter name: A Dylan name*bnf*.
-   :parameter supers: A Dylan name*bnf*.
-   :parameter slots-and-panes: A Dylan body*bnf*.
+   :parameter name: A Dylan name *bnf*.
+   :parameter supers: A Dylan name *bnf*.
+   :parameter slots-and-panes: A Dylan body *bnf*.
 
    :description:
 
@@ -399,14 +398,13 @@ are exported from the *duim-layouts* module.
      slots should take.
 
      Panes are sheets which represent a "useful unit" in a GUI. There is no
-     protocol class called *<pane>*.
+     protocol class called ``<pane>``.
 
      A.  In most cases (such as when defining a frame using ``define frame``),
          a pane class groups existing gadgets (or panes) to form effectively a
          new gadget, without actually creating a new class of :class:`<gadget>`.
      B.  Sometimes, a pane class implements some complex output-only sheet.
-     C.  Sometimes, a pane class implements the `See
-         <sheet> <silica.htm#13118>`_ part of a ` <gadgets.htm#34543>`_.
+     C.  Sometimes, a pane class implements the :class:`<sheet>` part of a `<gadgets.htm#34543>`.
 
      In general, a pane is best described as a *concrete* sheet.
 
@@ -461,7 +459,6 @@ are exported from the *duim-layouts* module.
    :parameter pane: An instance of type :class:`<sheet>`.
    :parameter width: An instance of type ``<integer>``.
    :parameter height: An instance of type ``<integer>``.
-
    :value space-req: An instance of type :class:`<space-requirement>`.
 
    :description:
@@ -519,7 +516,7 @@ are exported from the *duim-layouts* module.
 
    :superclasses: :class:`<layout>`
 
-   :keyword display-function: An instance of type *false-or(<function>)*. Default value: ``#f``.
+   :keyword display-function: An instance of type ``false-or(<function>)``. Default value: ``#f``.
 
    :description:
 
@@ -527,7 +524,7 @@ are exported from the *duim-layouts* module.
      and a drawing surface. Note that a drawing pane can be wrapped around a
      layout pane to provide a medium for all the children of the layout pane.
 
-     The *display-function:* init-keyword defines the display function for the
+     The ``display-function:`` init-keyword defines the display function for the
      pane. This gets called by the :gf:`handle-repaint` method for
      :class:`<simple-pane>`.
 
@@ -547,14 +544,14 @@ are exported from the *duim-layouts* module.
 
    :description:
 
-     This constant is used as the default value for any *width:* and
-     *height:* init-keywords in layout panes.
+     This constant is used as the default value for any ``width:`` and
+     ``height:`` init-keywords in layout panes.
 
      These defaults gives the intuitive behavior that specifying only the
      width or height of a pane causes it to be allocated at least that much
      space, and it may be given extra space if there is extra space in the
-     layout. This default behavior can be changed if either the *min-width:*
-     or *min-height:* init-keywords are specified explicitly.
+     layout. This default behavior can be changed if either the ``min-width:``
+     or ``min-height:`` init-keywords are specified explicitly.
 
    See also
 
@@ -608,7 +605,7 @@ are exported from the *duim-layouts* module.
      grid, automatically calculating the size and placement of each child
      within the specified parameters.
 
-     The *cell-space-requirement:* init-keyword lets you specify the
+     The ``cell-space-requirement:`` init-keyword lets you specify the
      preferred space requirement for any individual cell in the grid layout.
 
    See also
@@ -625,8 +622,8 @@ are exported from the *duim-layouts* module.
 
    :macrocall: horizontally ([*options* ]) {*panes* }+ end
 
-   :parameter options: Dylan arguments*bnf*.
-   :parameter panes: One or more occurrences of Dylan body*bnf*.
+   :parameter options: Dylan arguments *bnf*.
+   :parameter panes: One or more occurrences of Dylan body *bnf*.
 
    :description:
 
@@ -668,8 +665,8 @@ are exported from the *duim-layouts* module.
    :keyword space-requirement: An instance of type :class:`<space-requirement>`. Required.
    :keyword width: An instance of type ``<integer>``. Required.
    :keyword height: An instance of type ``<integer>``. Required.
-   :keyword min-width: An instance of type ``<integer>``. Default value: 0.
-   :keyword min-height: An instance of type ``<integer>``. Default value: 0.
+   :keyword min-width: An instance of type ``<integer>``. Default value: ``0``.
+   :keyword min-height: An instance of type ``<integer>``. Default value: ``0``.
    :keyword max-width: An instance of type ``<integer>``. Default value: :const:`$fill`.
    :keyword max-height: An instance of type ``<integer>``. Default value: :const:`$fill`.
    :keyword resizable?: An instance of type ``<boolean>``. Default value: ``#t``.
@@ -681,13 +678,13 @@ are exported from the *duim-layouts* module.
      The class of layouts. This is the basic class from which all other forms
      of layout inherit. You cannot create direct instances of this class.
 
-     The *space-requirement:* init-keyword describes the space required for
+     The ``space-requirement:`` init-keyword describes the space required for
      the layout. It is generally calculated automatically based on the values
      of the various width and height init-keywords, and the class of layout
      that is being created.
 
-     The *width:*, *height:*, *min-width:*, *min-height:*, *max-width:*,
-     and *max-height:* init-keywords between them describe the configuration
+     The ``width:``, ``height:``, ``min-width:``, ``min-height:``, ``max-width:``,
+     and ``max-height:`` init-keywords between them describe the configuration
      of the layout. The default values for these init-keywords (where
      applicable) are set such that the layout always fills the available
      space in any given direction.
@@ -695,8 +692,8 @@ are exported from the *duim-layouts* module.
      Finally, three init-keywords are available that control how the layout
      is affected when the frame containing it is resized. All three
      init-keywords take boolean values. You can specify whether a layout is
-     resizeable using the *resizable?:* init-keyword. If *fixed-width?:* or
-     *fixed-height?:* are true, then the layout cannot be resized in the
+     resizeable using the ``resizable?:`` init-keyword. If ``fixed-width?:`` or
+     ``fixed-height?:`` are true, then the layout cannot be resized in the
      appropriate direction. Setting both to ``#t`` is equivalent to setting
      resizeable?: to ``#f``. Different subclasses of layout restrict the
      values of these init-keywords in different ways, such that, for
@@ -717,8 +714,7 @@ are exported from the *duim-layouts* module.
 
    :signature: layout-border *layout* => *border*
 
-   :parameter layout: An instance of type *type-union(* :class:`<row-layout>`, :class:`<column-layout>`, :class:`<table-layout>`, :class:`<grid-layout>`, :class:`<stack-layout>` *)*.
-
+   :parameter layout: An instance of type ``type-union(<row-layout>, <column-layout>, <table-layout>, <grid-layout>, <stack-layout>)``.
    :value border: An instance of type ``<integer>``.
 
    :description:
@@ -741,8 +737,7 @@ are exported from the *duim-layouts* module.
    :signature: layout-border *border* *layout* => *border*
 
    :parameter border: An instance of type ``<integer>``.
-   :parameter layout: An instance of type *type-union(* :class:`<row-layout>`, :class:`<column-layout>`, :class:`<table-layout>`, :class:`<grid-layout>`, :class:`<stack-layout>` *)*.
-
+   :parameter layout: An instance of type ``type-union(<row-layout>, <column-layout>, <table-layout>, <grid-layout>, <stack-layout>)``.
    :value border: An instance of type ``<integer>``.
 
    :description:
@@ -750,7 +745,7 @@ are exported from the *duim-layouts* module.
      Sets the amount of whitespace, in pixels, around the children in
      *layout*.
 
-     You can also set this value a layout is created using the *border:*
+     You can also set this value a layout is created using the ``border:``
      init-keyword.
 
      Note that this function does not apply to pinboard layouts, because the
@@ -768,8 +763,7 @@ are exported from the *duim-layouts* module.
 
    :signature: layout-equalize-heights? *layout* => *equal?*
 
-   :parameter layout: An instance of type *type-union(* :class:`<row-layout>`, :class:`<column-layout>` *)*.
-
+   :parameter layout: An instance of type ``type-union(<row-layout>, <column-layout>)``.
    :value equal?: An instance of type ``<boolean>``.
 
    :description:
@@ -778,7 +772,7 @@ are exported from the *duim-layouts* module.
      layout must be either a row or a column layout.
 
      You can only set this value when a layout is created, using the
-     *equalize-heights?:* init-keyword. There is no equivalent setter
+     ``equalize-heights?:`` init-keyword. There is no equivalent setter
      function.
 
    See also
@@ -792,8 +786,7 @@ are exported from the *duim-layouts* module.
 
    :signature: layout-equalize-widths? *layout* => *equal?*
 
-   :parameter layout: An instance of type *type-union(* :class:`<row-layout>`, :class:`<column-layout>` *)*.
-
+   :parameter layout: An instance of type type-union(<row-layout>, <column-layout>)``.
    :value equal?: An instance of type ``<boolean>``.
 
    :description:
@@ -802,7 +795,7 @@ are exported from the *duim-layouts* module.
      layout must be either a row or a column layout.
 
      You can only set this value when a layout is created, using the
-     *equalize-widths?:* init-keyword. There is no equivalent setter
+     ``equalize-widths?:`` init-keyword. There is no equivalent setter
      function.
 
    See also
@@ -825,12 +818,11 @@ are exported from the *duim-layouts* module.
      Subclass this class if you want to create a basic leaf pane.
 
      -  If you want to do output to it, mix in one of the
-        :class:<sheet-with-medium-mixin>` classes.
+        :class:`<sheet-with-medium-mixin>` classes.
      -  If you want to do input from it, min in one of the
         :class:`<sheet-with-event-queue>` classes.
      -  If you want to repaint it, mix in one of the
         :class:`<sheet-with-repainting-mixin>` classes.
-
 
 .. method:: make
    :specializer: <space-requirement>
@@ -846,7 +838,6 @@ are exported from the *duim-layouts* module.
    :parameter height: An instance of type ``<integer>``. Default value: :const:`$fill`.
    :parameter min-height: An instance of type ``<integer>``. Default value: *height*.
    :parameter max-height: An instance of type ``<integer>``. Default value: *height*.
-
    :value space-req: An instance of type :class:`<space-requirement>`.
 
    :description:
@@ -912,9 +903,9 @@ are exported from the *duim-layouts* module.
    :description:
 
      Returns the function used to display *pane*, where *pane* is any pane that
-     can have a *display-function:* init-keyword specified. The *value*
+     can have a ``display-function:`` init-keyword specified. The *value*
      returned by *pane-display-function* is the value of the
-     *display-function:* init-keyword.
+     ``display-function:`` init-keyword.
 
      The display function gets called by the :gf:`handle-repaint` method for
      :class:`<simple-pane>` and :class:`<drawing-pane>`.
@@ -925,12 +916,11 @@ are exported from the *duim-layouts* module.
 
 .. generic-function:: pane-layout
 
-   Returns the layout that contains the specified pane in *define pane*.
+   Returns the layout that contains the specified pane in :macro:`define pane`.
 
    :signature: pane-layout *pane* => *layout-pane*
 
    :parameter pane: An instance of type :class:`<sheet>`.
-
    :value layout-pane: An instance of type :class:`<sheet>`.
 
    :description:
@@ -977,7 +967,7 @@ are exported from the *duim-layouts* module.
      layout, since DUIM ensures that the sheets remain a sensible size for
      their contents.
 
-     If *stretchable?:* is true, then the pinboard layout can be resized
+     If ``stretchable?:`` is true, then the pinboard layout can be resized
      dynamically as its parent is resized (for instance, by the user resizing
      a window on screen).
 
@@ -1053,34 +1043,34 @@ are exported from the *duim-layouts* module.
 
         Three buttons arranged in a row layout
 
-     The *border:* init-keyword provides a border of whitespace around the
+     The ``border:`` init-keyword provides a border of whitespace around the
      children in the layout, and the value of this init-keyword represents
      the size of the border in pixels. This basically has the same effect as
-     using the macro ` <gadgets.htm#78138>`_ around the layout, except it
+     using the macro :macro:`with-border` around the layout, except it
      uses a simpler syntax.
 
-     The *spacing:* or *x-spacing:* init-keywords let you specify how much
+     The ``spacing:`` or ``x-spacing:`` init-keywords let you specify how much
      horizontal space, in pixels, should be inserted between the children of
      the layout. These two init-keywords can be used interchangeably.
 
-     If true, *equalize-heights?:* ensures that all the children of the
+     If true, ``equalize-heights?:`` ensures that all the children of the
      layout have the same height.
 
-     If true, *equalize-widths?:* ensures that all the children of the layout
+     If true, ``equalize-widths?:`` ensures that all the children of the layout
      have the same width.
 
      By default, all the children of a row layout are aligned at the top. You
      can specify that they should be aligned at the bottom, or in the center,
-     using the *y-alignment:* keyword.
+     using the ``y-alignment:`` keyword.
 
-     The *ratios:* or *x-ratios:* init-keywords let you specify the
+     The ``ratios:`` or ``x-ratios:`` init-keywords let you specify the
      proportion of the total layout that should be taken up by each
      individual child. These two init-keywords can be used interchangeably.
 
-     The value passed to *ratios:* needs to be a sequence of as many integers
+     The value passed to ``ratios:`` needs to be a sequence of as many integers
      as there are children in the layout. Each child is then allocated the
      appropriate portion of horizontal space in the layout. For example, if
-     the value ``#(1, 2, 3)`` is specified for the *ratios:* init-keyword of a
+     the value ``#(1, 2, 3)`` is specified for the ``ratios:`` init-keyword of a
      row layout containing three children, then the first child would claim a
      sixth of the available horizontal space, the second child would claim a
      third of the horizontal space, and the third child would claim half the
@@ -1124,14 +1114,14 @@ are exported from the *duim-layouts* module.
 
      The class of simple panes.
 
-     The *display-function:* init-keyword defines the display function for
+     The ``display-function:`` init-keyword defines the display function for
      the pane. This gets called by the :gf:`handle-repaint` method for
      :class:`<simple-pane>`.
 
    See also
 
    - :class:`<drawing-pane>`
-   - :gf:`handle-repaint <silica.htm#28833>`
+   - :gf:`handle-repaint`
    - :gf:`pane-display-function`
 
 .. class:: <single-child-composite-pane>
@@ -1164,7 +1154,7 @@ are exported from the *duim-layouts* module.
    :keyword height: An instance of type ``<integer>``. Default value: :const:`$fill`.
    :keyword min-height: An instance of type ``<integer>``. Default value: *height*.
    :keyword max-height: An instance of type ``<integer>``. Default value: *height*.
-   :keyword label: An instance of type ``type-union(<string>,`` :class:`<image>` ``)``.
+   :keyword label: An instance of type ``type-union(<string>, <image>)``.
 
    :description:
 
@@ -1178,10 +1168,10 @@ are exported from the *duim-layouts* module.
      If no init-keywords are specified, the object returned tries to fill all
      the available space.
 
-     Specifying *width:* or *height:* specifies the preferred width or height
+     Specifying ``width:`` or ``height:`` specifies the preferred width or height
      of the object.
 
-     Specifying any of the *min-* or *max-* init-keywords lets you minimum
+     Specifying any of the ``min-`` or ``max-`` init-keywords lets you minimum
      and maximum width or height for the object.
 
      The following inequalities hold for all widths and heights:
@@ -1189,28 +1179,28 @@ are exported from the *duim-layouts* module.
      ``min-height: <= height: <= max-height:``
      ``min-width: <= width: <= max-width:``
 
-     If either *min-width:* or *min-height:* is 0, the object is "infinitely
-     shrinkable" in that direction. If either *max-width:* or *max-height:*
+     If either ``min-width:`` or ``min-height:`` is 0, the object is "infinitely
+     shrinkable" in that direction. If either ``max-width:`` or ``max-height:``
      is :const:`$fill`, the object is "infinitely
      stretchable" in that direction. The latter is a particularly useful way
      of ensuring that objects fill the available width, and can be used, say,
      to ensure that a series of buttons fill the entire width of the layout
      that they occupy.
 
-     An example of the use of *max-width:* to force the size of a button to
+     An example of the use of ``max-width:`` to force the size of a button to
      fit the available space can be found in the entry for :class:`<button>`.
 
-     The *label:* init-keyword specifies a label which is measured to give
+     The ``label:`` init-keyword specifies a label which is measured to give
      the preferred width and height.
 
    :operations:
 
-   - :gf:`space-requirement-height`
-   - :gf:`space-requirement-max-height`
-   - :gf:`space-requirement-max-width`
-   - :gf:`space-requirement-min-height`
-   - :gf:`space-requirement-min-width`
-   - :gf:`space-requirement-width`
+     - :gf:`space-requirement-height`
+     - :gf:`space-requirement-max-height`
+     - :gf:`space-requirement-max-width`
+     - :gf:`space-requirement-min-height`
+     - :gf:`space-requirement-min-width`
+     - :gf:`space-requirement-width`
 
    :example:
 
@@ -1247,7 +1237,6 @@ are exported from the *duim-layouts* module.
    :signature: space-requirement? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-
    :value boolean: An instance of type ``<boolean>``.
 
    :description:
@@ -1266,13 +1255,12 @@ are exported from the *duim-layouts* module.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
-
    :value height: An instance of type ``<number>``.
 
    :description:
 
      Returns preferred the height of *space-req*. This is the value of the
-     *height:* init-keyword that was passed when the object was created.
+     ``height:`` init-keyword that was passed when the object was created.
 
    See also
 
@@ -1287,13 +1275,12 @@ are exported from the *duim-layouts* module.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
-
    :value max-height: An instance of type ``<number>``.
 
    :description:
 
      Returns the maximum allowed height of *space-req*. This is the value of
-     the *max-height:* init-keyword that was passed when the object was
+     the ``max-height:`` init-keyword that was passed when the object was
      created.
 
    See also
@@ -1309,13 +1296,12 @@ are exported from the *duim-layouts* module.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
-
    :value max-width: An instance of type ``<number>``.
 
    :description:
 
      Returns the maximum allowed width of *space-req*. This is the value of
-     the *max-width:* init-keyword that was passed when the object was
+     the ``max-width:`` init-keyword that was passed when the object was
      created.
 
    See also
@@ -1331,13 +1317,12 @@ are exported from the *duim-layouts* module.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
-
    :value min-height: An instance of type ``<number>``.
 
    :description:
 
      Returns the minimum allowed height of *space-req*. This is the value of
-     the *min-height:* init-keyword that was passed when the object was
+     the ``min-height:`` init-keyword that was passed when the object was
      created.
 
    See also
@@ -1353,13 +1338,12 @@ are exported from the *duim-layouts* module.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
-
    :value min-width: An instance of type ``<number>``.
 
    :description:
 
      Returns the minimum allowed width of *space-req*. This is the value of
-     the *min-width:* init-keyword that was passed when the object was
+     the ``min-width:`` init-keyword that was passed when the object was
      created.
 
    See also
@@ -1375,13 +1359,12 @@ are exported from the *duim-layouts* module.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
-
    :value width: An instance of type ``<number>``.
 
    :description:
 
      Returns the preferred width of *space-req*. This is the value of the
-     *width:* init-keyword that was passed when the object was created.
+     ``width:`` init-keyword that was passed when the object was created.
 
    See also
 
@@ -1398,7 +1381,7 @@ are exported from the *duim-layouts* module.
    :superclasses: :class:`<layout>`
 
    :keyword border: An instance of type ``<integer>``. Default value: 0.
-   :keyword mapped-page: An instance of *<sheet>*.
+   :keyword mapped-page: An instance of :class:`<sheet>`.
 
    :description:
 
@@ -1412,13 +1395,13 @@ are exported from the *duim-layouts* module.
      then map the new page. The new page is automatically the correct size
      and in the correct position.
 
-     The *border:* init-keyword provides a border of whitespace around the
+     The ``border:`` init-keyword provides a border of whitespace around the
      children in the layout, and the value of this init-keyword represents
      the size of the border in pixels. This basically has the same effect as
-     using the macro ` <gadgets.htm#78138>`_ around the layout, except it
+     using the macro :macro:`with-border` around the layout, except it
      uses a simpler syntax.
 
-     The *mapped-page:* init-keyword allows you to assign a page to be mapped
+     The ``mapped-page:`` init-keyword allows you to assign a page to be mapped
      onto the screen when a stack layout is first created. If it is not
      specified, then the first page in the stack layout is mapped.
 
@@ -1437,7 +1420,6 @@ are exported from the *duim-layouts* module.
    :signature: stack-layout-mapped-page *stack-layout* => *page*
 
    :parameter stack-layout: An instance of :class:`<stack-layout>`.
-
    :value page: An instance of :class:`<sheet>`.
 
    :description:
@@ -1452,7 +1434,6 @@ are exported from the *duim-layouts* module.
 
    :parameter page: An instance of :class:`<sheet>`.
    :parameter stack-layout: An instance of :class:`<stack-layout>`.
-
    :value page: An instance of :class:`<sheet>`.
 
    :description:
@@ -1466,7 +1447,6 @@ are exported from the *duim-layouts* module.
    :signature: table-contents *table* => *contents*
 
    :parameter table: An instance of type :class:`<table-layout>`.
-
    :value contents: An instance of type :class:`<sheet>`.
 
    :description:
@@ -1485,7 +1465,6 @@ are exported from the *duim-layouts* module.
 
    :parameter contents: An instance of type :class:`<sheet>`.
    :parameter table: An instance of type :class:`<table-layout>`.
-
    :value contents: An instance of type :class:`<sheet>`.
 
    :description:
@@ -1520,32 +1499,32 @@ are exported from the *duim-layouts* module.
 
      The class of table layouts.
 
-     The *border:* init-keyword provides a border of whitespace around the
+     The ``border:`` init-keyword provides a border of whitespace around the
      children in the layout, and the value of this init-keyword represents
      the size of the border in pixels. This basically has the same effect as
-     using the macro ` <gadgets.htm#78138>`_ around the layout, except it
+     using the macro :macro:`with-border` around the layout, except it
      uses a simpler syntax.
 
-     The *rows:* and *columns:* init-keywords are used to specify the number
+     The ``rows:`` and ``columns:`` init-keywords are used to specify the number
      of rows and columns for the table layout.
 
-     The *contents:* init-keyword is used to specify the contents of each
+     The ``contents:`` init-keyword is used to specify the contents of each
      cell of the table. It should consist of a sequence of sequences of
-     sheets. If *contents:* is not specified, you should supply the children
+     sheets. If ``contents:`` is not specified, you should supply the children
      of the table with a number of rows and columns. You should not supply
      both children and rows and columns, however.
 
-     The *x-spacing:* and *y-spacing:* init-keywords let you specify how much
+     The ``x-spacing:`` and ``y-spacing:`` init-keywords let you specify how much
      vertical and horizontal space should be inserted, in pixels, between the
      children of the layout.
 
-     The *x-ratios:* and *y-ratios:* init-keywords let you specify the
+     The ``x-ratios:`` and ``y-ratios:`` init-keywords let you specify the
      proportion of the total horizontal and vertical space that should be
      taken up by each individual child.
 
-     The value passed to *x-ratios:* needs to be a sequence of as many
+     The value passed to ``x-ratios:`` needs to be a sequence of as many
      integers as there are columns of children in the layout. The value
-     passed to *y-ratios:* needs to be a sequence of as many integers as
+     passed to ``y-ratios:`` needs to be a sequence of as many integers as
      there are rows of children in the layout. Each child is then allocated
      the appropriate portion of horizontal and vertical space in the layout,
      according to the combination of the values for these two keywords.
@@ -1553,7 +1532,7 @@ are exported from the *duim-layouts* module.
      The two init-keywords can be used on their own, or together, as
      described in the examples below.
 
-     For example, if the value ``#(1, 2, 3)`` is specified for the *x-ratios:*
+     For example, if the value ``#(1, 2, 3)`` is specified for the ``x-ratios:``
      init-keyword of a table layout containing three columns of children,
      then the first column would claim a sixth of the available horizontal
      space, the second column would claim a third of the horizontal space,
@@ -1564,7 +1543,7 @@ are exported from the *duim-layouts* module.
         :align: center
 
      Alternatively, if the value ``#(1, 2, 3)`` is specified for the
-     *y-ratios:* init-keyword of a table layout containing three rows of
+     ``y-ratios:`` init-keyword of a table layout containing three rows of
      children, then the first row would claim a sixth of the available
      vertical space, the second row would claim a third of the vertical
      space, and the third row would claim half the vertical space, as shown
@@ -1573,7 +1552,7 @@ are exported from the *duim-layouts* module.
      .. figure:: images/layouts-10.png
         :align: center
 
-     Finally, if both the *x-ratios:* and *y-ratios:* init-keywords are
+     Finally, if both the ``x-ratios:`` and ``y-ratios:`` init-keywords are
      specified, then each child in the layout is affected individually, as
      shown in the diagram below.
 
@@ -1582,11 +1561,11 @@ are exported from the *duim-layouts* module.
 
      By default, all the children of a table layout are left-aligned. You can
      specify that they should be right or center-aligned using the
-     *x-alignment:* keyword.
+     ``x-alignment:`` keyword.
 
      By default, all the children of a table layout are aligned at the top.
      You can specify that they should be aligned at the bottom, or in the
-     center, using the *y-alignment:* keyword.
+     center, using the ``y-alignment:`` keyword.
 
    :operations:
 
@@ -1622,8 +1601,8 @@ are exported from the *duim-layouts* module.
 
    :macrocall: tabling ([*options* ]) {*panes* }+ end
 
-   :parameter options: Dylan arguments*bnf*.
-   :parameter panes: One or more occurrences of Dylan body*bnf*.
+   :parameter options: Dylan arguments *bnf*.
+   :parameter panes: One or more occurrences of Dylan body *bnf*.
 
    :description:
 
@@ -1654,20 +1633,20 @@ are exported from the *duim-layouts* module.
 
    :superclasses: :class:`<layout>`
 
-   :keyword display: An instance of type *false-or(* :class:`<display>` *)*. Default value: ``#f``.
-   :keyword frame: An instance of type *false-or(* :class:`<frame>` *)*. Default value: ``#f``.
-   :keyword frame-manager: An instance of type *false-or(* :class:`<frame-manager>` *)*. Default value: ``#f``.
+   :keyword display: An instance of type ``false-or(<display>)``. Default value: ``#f``.
+   :keyword frame: An instance of type ``false-or(<frame>)``. Default value: ``#f``.
+   :keyword frame-manager: An instance of type ``false-or(<frame-manager>)``. Default value: ``#f``.
    :keyword container: An instance of type ``false-or(<object>)``. Default value: ``#f``.
-   :keyword container-region: An instance of type ``false-or(`` :class:`<region>` ``)``. Default value: ``#f``.
+   :keyword container-region: An instance of type ``false-or(<region>)``. Default value: ``#f``.
 
    :description:
 
      The class of top level sheets.
 
-     The *container:* and *container-region:* init-keywords are for use in
+     The ``container:`` and ``container-region:`` init-keywords are for use in
      embedded frames, such as OLE objects in HTML browser windows. The
-     *container:* init-keyword denotes the container itself, and
-     *container-region:* is used to specify the region of the screen in which
+     ``container:`` init-keyword denotes the container itself, and
+     ``container-region:`` is used to specify the region of the screen in which
      the container appears. Note that the container referred to is a native
      window system object.
 
@@ -1678,8 +1657,8 @@ are exported from the *duim-layouts* module.
 
    :macrocall: vertically ([*options* ]) {*panes* }+ end
 
-   :parameter options: Dylan arguments*bnf*.
-   :parameter panes: One or more occurrences of Dylan body*bnf*.
+   :parameter options: Dylan arguments *bnf*.
+   :parameter panes: One or more occurrences of Dylan body *bnf*.
 
    :description:
 

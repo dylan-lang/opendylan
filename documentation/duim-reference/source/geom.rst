@@ -160,8 +160,6 @@ are exported from the *duim-geometry* module.
 
    :operations:
 
-     The following operation is exported from the *DUIM-Geometry* module.
-
      - :gf:`area?`
 
    See also
@@ -215,8 +213,6 @@ are exported from the *duim-geometry* module.
      associated with a mutable object remaining constant.
 
    :operations:
-
-     The following operations are exported from the *DUIM-Geometry* module.
 
      - :gf:`bounding-box?`
      - :gf:`box-edges`
@@ -1314,8 +1310,6 @@ are exported from the *duim-geometry* module.
 
    :operations:
 
-     The following operation is exported from the *DUIM-Geometry* module.
-
      - :gf:`path?`
 
    See also
@@ -1358,8 +1352,6 @@ are exported from the *duim-geometry* module.
      init-keywords correspond to the x and y coordinates, respectively.
 
    :operations:
-
-     The following operations are exported from the *DUIM-Geometry* module.
 
      - :gf:`=`
      - :gf:`box-edges`
@@ -1525,8 +1517,6 @@ are exported from the *duim-geometry* module.
      function.
 
    :operations:
-
-     The following operations are exported from the *DUIM-Geometry* module.
 
      - :gf:`=`
      - :gf:`do-regions`
@@ -1726,8 +1716,6 @@ are exported from the *duim-geometry* module.
      :class:`<region>`.
 
    :operations:
-
-     The following operations are exported from the *DUIM-Geometry* module.
 
      - :gf:`box-edges`
      - :gf:`do-regions`
@@ -1991,8 +1979,6 @@ are exported from the *duim-geometry* module.
      are immutable.
 
    :operations:
-
-     The following operations are exported from the *DUIM-Geometry* module.
 
      - :gf:`=`
      - :gf:`compose-rotation-with-transform`
