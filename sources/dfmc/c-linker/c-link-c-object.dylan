@@ -179,5 +179,5 @@ define method emit-heap-typedefs
   end;
   format(stream, "} ");
   format-emit*(back-end, stream, "^", object);
-  format(stream, ";\n");
+  format(stream, ";\n\n");
 end;
