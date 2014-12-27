@@ -488,7 +488,7 @@ define method do-define-core-unadorned-definition (name, constructor :: <functio
 end method;
 
 //// for raw structs
-// it's not really booted, but it's closer to anything her than anything else
+// it's not really booted, but it's closer to anything here than anything else
 
 define /* abstract */ class <raw-aggregate-definition> (<virtual-type-definition>)
   constant slot form-members, required-init-keyword: members:;
