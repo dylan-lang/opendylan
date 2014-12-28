@@ -991,7 +991,7 @@ define sealed method update-display-lines
               // then the line we just computed will only be partially displayed.
               // In that case, we don't display it at all unless it would be
               // the only line on the screen.
-              if (line-y > max-y)
+              if (line-y >= max-y)
                 when ($display-partial-lines? | zero?(n-lines))
                   inc!(n-lines)
                 end;
