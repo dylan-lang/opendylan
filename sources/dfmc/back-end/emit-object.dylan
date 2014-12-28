@@ -356,3 +356,9 @@ define method emit-name-internal
  => (name)
   o.raw-type-c-name;
 end method;
+
+define method emit-name-internal
+    (back-end :: <back-end>, stream, o :: <&raw-aggregate-type>)
+ => (name)
+  local-mangle(back-end, o.^debug-name)
+end method;
