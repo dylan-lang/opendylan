@@ -55,13 +55,11 @@ will use the files suggested by the New Project wizard. When you use the
 New Project wizard, Open Dylan will create a number of files for a
 project named ``task-list``.
 
-``module.dylan``, ``library.dylan``
-
+``module.dylan`` and ``library.dylan``
    These files define the library and modules for the project. For the
    purposes of this application, you can ignore these files.
 
 ``task-list.dylan``
-
    Add non-GUI-specific code to this file.
 
 Finally, you need to create the following new file using *File > New*,
@@ -69,7 +67,6 @@ and add it to the project using the *Project > Insert File* command.
 Make sure that this file is the last one listed in the project window.
 
 ``frame.dylan``
-
    Add the GUI-specific code to this file.
 
 Starting the application
@@ -395,8 +392,8 @@ incorporate it using the ``tool-bar`` clause, as shown below:
 
     pane task-tool-bar (frame)
       make(<tool-bar>, child: ...);
-      // ...more definitions here...
-      tool-bar (frame) frame.task-tool-bar;
+    // ...more definitions here...
+    tool-bar (frame) frame.task-tool-bar;
 
 A tool bar has a layout as its child, and each button in the tool bar is
 defined as a child of that layout. You can either define each button
@@ -420,8 +417,8 @@ simple tool bar containing two buttons is as follows:
                     frame.add-button;
                     frame.remove-button
                   end);
-      // ...more definitions here...
-      tool-bar (frame) frame.task-tool-bar;
+    // ...more definitions here...
+    tool-bar (frame) frame.task-tool-bar;
 
 A tool bar that only contains two buttons is on the lean side, however,
 so let’s add two more buttons to open a file and save a file to disk.
@@ -483,8 +480,8 @@ clause.
 
     pane task-status-bar (frame)
       make(<status-bar>, label: "Task Manager");
-      // ...more definitions here...
-      status-bar (frame) frame.task-status-bar;
+    // ...more definitions here...
+    status-bar (frame) frame.task-status-bar;
 
 Now you have added a status bar to the application. The next step is to
 glue all the pieces together once again to create your modified frame
