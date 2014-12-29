@@ -6,7 +6,7 @@ Introduction
 ============
 
 This document describes the 2014.1 release of Open Dylan, released
-XXX XX, 2014.
+December 29, 2014.
 
 * `Download the release <http://opendylan.org/download/index.html>`_
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_

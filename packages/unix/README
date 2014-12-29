@@ -4,7 +4,7 @@ Welcome to Open Dylan!
 Open Dylan is an open source implementation of the Dylan programming
 language, plus a large number of assorted libraries.
 
-This release is Open Dylan 2013.2. We expect this release to have bugs.
+This release is Open Dylan 2014.1. We expect this release to have bugs.
 We're interested in getting your feedback, in order to improve this product.
 Write to hackers@opendylan.org or report a bug via GitHub
 (https://github.com/dylan-lang/opendylan/issues). We can also help via IRC,
@@ -35,14 +35,14 @@ Installation
 ============
 
 This tarball is set up to be extracted in /opt, resulting in the
-creation of a directory /opt/opendylan-2013.2.  You just have to add
-/opt/opendylan-2013.2/bin to your PATH:
+creation of a directory /opt/opendylan-2014.1.  You just have to add
+/opt/opendylan-2014.1/bin to your PATH:
 
-  $ export PATH=/opt/opendylan-2013.2/bin:$PATH    # for bash
+  $ export PATH=/opt/opendylan-2014.1/bin:$PATH    # for bash
 
 or
 
-  $ setenv PATH /opt/opendylan-2013.2/bin:$PATH    # for tcsh
+  $ setenv PATH /opt/opendylan-2014.1/bin:$PATH    # for tcsh
 
 
 Usage

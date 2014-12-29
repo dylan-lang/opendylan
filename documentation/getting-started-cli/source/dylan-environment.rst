@@ -46,9 +46,9 @@ arithmetic, defines a method, and then traces it::
 
     # dylan-environment
     Hacker Edition
-    Version 2013.2
+    Version 2014.1
     Copyright (c) 1997-2004, Functional Objects, Inc.
-    Portions Copyright (c) 2004-2013, Dylan Hackers
+    Portions Copyright (c) 2004-2014, Dylan Hackers
     Portions Copyright (c) 2001-2012, Ravenbrook Ltd.
 
     > play

@@ -1,3 +1,7 @@
+opendylan (2014.1) stable; urgency=low
+
+  * A detailed list can be found at http://opendylan.org/documentation/release-notes/2014.1.html
+
 opendylan (2013.2) stable; urgency=low
  
   * Testworks has seen substantial improvements.
