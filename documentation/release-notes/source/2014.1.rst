@@ -120,6 +120,9 @@ C-FFI
 * New C-FFI types, ``<C-size-t>`` and ``<C-ssize-t>`` are available. These map
   to the underlying C types ``size_t`` and ``ssize_t``.
 
+* Passing structs by value to C functions when using the C back-end has been fixed.
+  This was not broken when using the HARP back-end.
+
 C Run-time
 ==========
 
