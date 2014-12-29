@@ -2426,10 +2426,10 @@ are exported from the *duim-gadgets* module.
 
      .. code-block:: dylan
 
-     *buttons* := contain(make(<button-box>,
-                               selection-mode: #"multiple",
-                               orientation: #"vertical",
-                               items: range(from: 0, to: 5)));
+        *buttons* := contain(make(<button-box>,
+                                  selection-mode: #"multiple",
+                                  orientation: #"vertical",
+                                  items: range(from: 0, to: 5)));
 
      The orientation can be returned as follows:
 
