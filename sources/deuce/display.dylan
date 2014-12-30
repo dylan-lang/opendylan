@@ -987,7 +987,7 @@ define sealed method update-display-lines
               end;
               line-y := line-y + line-height;
               max!(max-width, line-width);
-              // If the new line y is _greater_ than the height of the screen,
+              // If the new line y is _greater_ than the height of the viewport,
               // then the line we just computed will only be partially displayed.
               // In that case, we don't display it at all unless it would be
               // the only line on the screen.
