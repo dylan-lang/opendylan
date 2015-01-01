@@ -27,7 +27,7 @@ Another big effort was made to decrease the size of the code base in
 order to improve its maintainability. In this release, compared to
 (the unannounced) beta5, we removed about 1/3 of the code base, from
 1,200,000 lines of code down to 850,000 (according to
-https://www.ohloh.net/p/open-dylan).
+https://www.openhub.net/p/open-dylan).
 
 This is the first joint release on all major platforms:
 

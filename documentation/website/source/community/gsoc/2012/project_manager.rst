@@ -106,18 +106,18 @@ what many other programming language communities provide:
 
 * Clojure: `Leiningen <https://github.com/technomancy/leiningen>`_
 * Common Lisp: `QuickLisp <http://www.quicklisp.org/beta/>`_
-* Emacs Lisp: `Marmalade <http://marmalade-repo.org/>`_ / `ELPA  <http://tromey.com/elpa/>`_
+* Emacs Lisp: `Marmalade <https://marmalade-repo.org/>`_ / `ELPA  <http://tromey.com/elpa/>`_
 * Erlang: `EPM <http://www.jkvor.com/erlang-package-manager>`_
-* haXe: `haxelib <http://haxe.org/haxelib>`_
+* haXe: `haxelib <http://haxe.org/manual/haxelib.html>`_
 * Lua: `LuaRocks <http://luarocks.org/>`_
-* NodeJS: `NPM <http://npmjs.org/>`_
-* Haskell: `Hackage <http://hackage.haskell.org/packages/hackage.html>`_
-* Ocaml: `GODI <http://godi.camlcity.org/>`_
+* NodeJS: `NPM <https://www.npmjs.com/>`_
+* Haskell: `Hackage <http://hackage.haskell.org/>`_
+* Ocaml: `GODI <http://godi.camlcity.org/godi/index.html>`_
 * PHP: `PEAR <http://pear.php.net/>`_
 * Perl: CPAN
 * Python: PIP / CheeseShop / easy_install
 * Racket: `Raco <http://docs.racket-lang.org/raco/index.html>`_
-* Ruby: `RubyGems <http://docs.rubygems.org/>`_
+* Ruby: `RubyGems <http://rubygems.org/>`_
 
 Our package manager would feature a global catalog of packages, the
 ability to download, build and install those packages, and integration

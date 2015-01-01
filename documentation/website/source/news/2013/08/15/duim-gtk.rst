@@ -37,6 +37,6 @@ in touch with us on `IRC or the mailing list`_!
 .. _IDE: http://opendylan.org/documentation/getting-started-ide/
 .. _sources/gtk: https://github.com/dylan-lang/opendylan/tree/master/sources/gtk
 .. _DUIM GTK+: https://github.com/dylan-lang/opendylan/tree/master/sources/duim/gtk
-.. _list of bugs: https://github.com/dylan-lang/opendylan/issues?labels=DUIM+%2F+Gtk&page=1&state=open
+.. _list of bugs: https://github.com/dylan-lang/opendylan/labels/lib-DUIM%20%2F%20Gtk
 .. _hacker's guide: http://opendylan.org/documentation/hacker-guide/duim.html
 .. _IRC or the mailing list: http://opendylan.org/community/

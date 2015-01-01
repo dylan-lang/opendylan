@@ -9,5 +9,5 @@ internal compiler datastructures.
 This can draw inspiration from:
 
 - `PMD <http://pmd.sourceforge.net/>`_
-- `PyLint <http://pypi.python.org/pypi/pylint>`_
+- `PyLint <https://pypi.python.org/pypi/pylint>`_
 - Clang plugins

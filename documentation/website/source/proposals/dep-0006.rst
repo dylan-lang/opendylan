@@ -62,7 +62,7 @@ to use.  There is also the issue of new users figuring out that
 
 There are plenty of libraries that are small enough to comfortably fit
 in a single file.  Of the existing libraries in `the dylan-lang github
-repository <http://github.com/dylan-lang>`_, at least ten could
+repository <https://github.com/dylan-lang>`_, at least ten could
 comfortably fit in a single file.
 
 Having a library in a single file simplifies sharing of examples and

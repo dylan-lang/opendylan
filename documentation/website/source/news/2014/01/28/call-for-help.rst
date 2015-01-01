@@ -159,6 +159,6 @@ for Windows users.
 .. _binary-data: https://github.com/dylan-lang/binary-data
 .. _partial list of open projects: https://github.com/dylan-lang/opendylan/wiki
 .. _get in touch: http://opendylan.org/community/
-.. _Twitter: http://twitter.com/DylanLanguage
+.. _Twitter: https://twitter.com/DylanLanguage
 .. _Code Mirror: http://codemirror.net/
-.. _Light Table IDE: http://www.lighttable.com/
+.. _Light Table IDE: http://lighttable.com/

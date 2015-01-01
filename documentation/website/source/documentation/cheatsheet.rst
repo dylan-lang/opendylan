@@ -16,7 +16,7 @@ Literals
 |                |  #t // true                            |                           |
 |                |  #f // false                           |                           |
 +----------------+----------------------------------------+---------------------------+
-| Numbers        | .. code-block:: dylan                  | * :drm:`Numbers`          |
+| Numbers        | .. code-block:: dylan                  | * :drm:`Numbers` (syntax) |
 |                |                                        | * :drm:`<number>`         |
 |                |  42       // A decimal integer         |                           |
 |                |  #b101010 // A binary integer          |                           |
