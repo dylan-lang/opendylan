@@ -21,17 +21,17 @@ Open Dylan Downloads
    :class: table-striped
 
    +---------------------------+--------------------+--------------------+---------------+------------------+
-   | Platform                  | Version            | Date Released      | Revision ID   | Install Notes    +
+   | Platform                  | Version            | Date Released      | Revision ID   | Install Notes    |
    +===========================+====================+====================+===============+==================+
-   | `Windows (32 bit)`_       | 2013.2             | Dec. 23, 2013      | `ce9b14dab6`_ | `Windows Notes`_ +
+   | `Windows (32 bit)`_       | 2014.1             | Dec. 31, 2014      | `03379938e4`_ | `Windows Notes`_ |
    +---------------------------+--------------------+--------------------+---------------+------------------+
-   | `Mac OS X Lion+ (Intel)`_ | 2013.2             | Dec. 23, 2013      | `ce9b14dab6`_ | `Unix Notes`_    +
+   | `Mac OS X Lion+ (Intel)`_ | 2014.1             | Dec. 31, 2014      | `03379938e4`_ | `Unix Notes`_    |
    +---------------------------+--------------------+--------------------+---------------+------------------+
-   | `Linux (x86)`_            | 2013.2             | Dec. 23, 2013      | `ce9b14dab6`_ | `Unix Notes`_    +
+   | `Linux (x86)`_            | 2014.1             | Dec. 31, 2014      | `03379938e4`_ | `Unix Notes`_    |
    +---------------------------+--------------------+--------------------+---------------+------------------+
-   | `Linux (x86-64)`_         | 2013.2             | Dec. 23, 2013      | `ce9b14dab6`_ | `Unix Notes`_    +
+   | `Linux (x86-64)`_         | 2014.1             | Dec. 31, 2014      | `03379938e4`_ | `Unix Notes`_    |
    +---------------------------+--------------------+--------------------+---------------+------------------+
-   | `FreeBSD (x86)`_          | 2013.2             | Dec. 23, 2013      | `ce9b14dab6`_ | `Unix Notes`_    +
+   | `FreeBSD (x86)`_          | 2014.1             | Dec. 31, 2014      | `03379938e4`_ | `Unix Notes`_    |
    +---------------------------+--------------------+--------------------+---------------+------------------+
 
 Old builds (including PowerPC Mac OS X and 64 bit FreeBSD) can be found by
@@ -111,13 +111,13 @@ in the `README <https://github.com/dylan-lang/opendylan/blob/master/README.rst>`
 This file contains the instructions on how to obtain the source code, the required
 dependencies and how to build it.
 
-.. _Windows (32 bit): http://opendylan.org/downloads/opendylan/2013.2/opendylan-2013.2-win32.exe
-.. _Mac OS X Lion+ (Intel): http://opendylan.org/downloads/opendylan/2013.2/opendylan-2013.2-x86-darwin.tar.bz2
-.. _Linux (x86): http://opendylan.org/downloads/opendylan/2013.2/opendylan-2013.2-x86-linux.tar.bz2
-.. _Linux (x86-64): http://opendylan.org/downloads/opendylan/2013.2/opendylan-2013.2-x86_64-linux.tar.bz2
-.. _FreeBSD (x86): http://opendylan.org/downloads/opendylan/2013.2/opendylan-2013.2-x86-freebsd.tar.bz2
+.. _Windows (32 bit): http://opendylan.org/downloads/opendylan/2014.1/opendylan-2014.1-win32.exe
+.. _Mac OS X Lion+ (Intel): http://opendylan.org/downloads/opendylan/2014.1/opendylan-2014.1-x86-darwin.tar.bz2
+.. _Linux (x86): http://opendylan.org/downloads/opendylan/2014.1/opendylan-2014.1-x86-linux.tar.bz2
+.. _Linux (x86-64): http://opendylan.org/downloads/opendylan/2014.1/opendylan-2014.1-x86_64-linux.tar.bz2
+.. _FreeBSD (x86): http://opendylan.org/downloads/opendylan/2014.1/opendylan-2014.1-x86-freebsd.tar.bz2
 .. _Windows Notes: #installation-on-windows
 .. _Unix Notes: #installation-on-mac-os-x-freebsd-linux
 .. _download directories: http://opendylan.org/downloads/opendylan/
 .. _"dylan-lang" organization on GitHub: https://github.com/dylan-lang/
-.. _ce9b14dab6: https://github.com/dylan-lang/opendylan/tree/v2013.2
+.. _03379938e4: https://github.com/dylan-lang/opendylan/tree/v2014.1
