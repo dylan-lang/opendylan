@@ -44,7 +44,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Dylan Project Notebook'
-copyright = u'2014, Dylan Hackers'
+copyright = u'2014-2015, Dylan Hackers'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -255,7 +255,7 @@ texinfo_documents = [
 epub_title = u'Dylan Project Notebook'
 epub_author = u'Dylan Hackers'
 epub_publisher = u'Dylan Hackers'
-epub_copyright = u'2014, Dylan Hackers'
+epub_copyright = u'2014-2015, Dylan Hackers'
 
 # The basename for the epub file. It defaults to the project name.
 #epub_basename = u'Dylan Project Notebook'
