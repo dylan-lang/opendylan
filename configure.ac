@@ -24,21 +24,25 @@ case $host in
       OPEN_DYLAN_TARGET_PLATFORM=x86-linux;
       SUPPORT_GC_MPS=yes;
       MULTIARCH=i386-linux-gnu
+      SUPPORT_LLVM=yes
     ;;
   i*86-*-freebsd*)
       OPEN_DYLAN_TARGET_PLATFORM=x86-freebsd;
       GC_LIB=gc-threaded
       SUPPORT_GC_MPS=yes;
+      SUPPORT_LLVM=yes
     ;;
   i*86-*-darwin*)
       OPEN_DYLAN_TARGET_PLATFORM=x86-darwin;
       ADDITIONAL_RUNTIME_TARGET_PLATFORMS="x86_64-darwin";
       GC_USE_STATIC_BOEHM=true
+      SUPPORT_LLVM=yes
     ;;
   x86_64-*-darwin*)
       OPEN_DYLAN_TARGET_PLATFORM=x86-darwin;
       ADDITIONAL_RUNTIME_TARGET_PLATFORMS="x86_64-darwin";
       GC_USE_STATIC_BOEHM=true
+      SUPPORT_LLVM=yes
     ;;
   amd64-*-freebsd* | x86_64-*-freebsd*)
       OPEN_DYLAN_TARGET_PLATFORM=x86_64-freebsd;
@@ -98,7 +102,21 @@ AC_SUBST(DYLANCOMPILER)
 bootstrap_target=3-stage-bootstrap
 AC_SUBST(bootstrap_target)
 
-AC_PROG_CC([clang gcc cc])
+AC_PROG_CC([clang-3.5 clang gcc cc])
+
+if test ! -z "$SUPPORT_LLVM"; then
+    AC_MSG_CHECKING([whether Clang is new enough])
+    AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
+#if __clang_major__ < 3 || (__clang_major__ == 3 && __clang_minor__ < 5)
+#error This version of Clang is too old to be used with the dylan-compiler LLVM back-end
+#endif
+]])],
+        [AC_MSG_RESULT([yes])],
+        [AC_MSG_RESULT([no])
+         SUPPORT_LLVM=])
+fi
+AC_SUBST(SUPPORT_LLVM)
+
 
 AC_CHECK_PROGS([MAKE],[gnumake gmake make],[AC_MSG_ERROR([Unable to find a make program.])])
 if ! $MAKE --version | grep -q "GNU" 2> /dev/null; then
