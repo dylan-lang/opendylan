@@ -12,4 +12,10 @@ XXX XX, 2015.
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
 * `Source code <https://github.com/dylan-lang/opendylan/tree/v2015.1>`_
 
+system
+======
 
+* New specializations on :drm:`as` have been added for creating locators
+  from strings for the ``<file-system-directory-locator>`` and
+  ``<file-system-file-locator>`` classes. These aren't typically used but
+  their omission led to possible confusion for users.

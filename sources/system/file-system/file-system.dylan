@@ -50,6 +50,18 @@ define method as
   as(<native-file-system-locator>, string)
 end method as;
 
+define method as
+    (class == <file-system-directory-locator>, string :: <string>)
+ => (locator :: <file-system-directory-locator>)
+  as(<native-directory-locator>, string)
+end method as;
+
+define method as
+    (class == <file-system-file-locator>, string :: <string>)
+ => (locator :: <file-system-file-locator>)
+  as(<native-file-locator>, string)
+end method as;
+
 
 /// Condition reporting
 
