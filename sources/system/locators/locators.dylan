@@ -81,13 +81,6 @@ end method make;
 
 /// Locator coercion
 
-//---*** andrewa: This caching scheme doesn't work yet, so disable it.
-define constant $cache-locators?        = #f;
-define constant $cache-locator-strings? = #f;
-
-define constant $locator-to-string-cache = make(<object-table>, weak: #"key");
-define constant $string-to-locator-cache = make(<string-table>, weak: #"value");
-
 define open generic locator-as-string
     (class :: subclass(<string>), locator :: <locator>)
  => (string :: <string>);
@@ -99,33 +92,13 @@ define open generic string-as-locator
 define sealed sideways method as
     (class :: subclass(<string>), locator :: <locator>)
  => (string :: <string>)
-  let string = element($locator-to-string-cache, locator, default: #f);
-  if (string)
-    as(class, string)
-  else
-    let string = locator-as-string(class, locator);
-    if ($cache-locator-strings?)
-      element($locator-to-string-cache, locator) := string;
-    else
-      string
-    end
-  end
+  locator-as-string(class, locator)
 end method as;
 
 define sealed sideways method as
     (class :: subclass(<locator>), string :: <string>)
  => (locator :: <locator>)
-  let locator = element($string-to-locator-cache, string, default: #f);
-  if (instance?(locator, class))
-    locator
-  else
-    let locator = string-as-locator(class, string);
-    if ($cache-locators?)
-      element($string-to-locator-cache, string) := locator;
-    else
-      locator
-    end
-  end
+  string-as-locator(class, string)
 end method as;
 
 
