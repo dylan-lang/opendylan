@@ -234,7 +234,7 @@ IO library’s *print* module.
 
 .. function:: print-to-string
 
-   Calls *print* on *object.* and returns the result as a string*.*
+   Calls *print* on *object* and returns the result as a string.
 
    :signature: print-to-string *object* #key *level length circle? pretty?* => *result*
 

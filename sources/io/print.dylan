@@ -59,7 +59,7 @@ define thread variable *print-pretty?* :: <boolean> = *default-pretty?*;
 define variable *default-escape?* :: <boolean> = #t;
 define thread variable *print-escape?* :: <boolean> = *default-escape?*;
 
-// Print-depth holds the current level of printing.  When incremeting this
+// Print-depth holds the current level of printing.  When incrementing this
 // slot causes the depth to exceed print-level, then the print function
 // only outputs $print-level-exceeded-string.
 define thread variable *print-depth* :: <integer> = -1; 
@@ -1100,7 +1100,7 @@ end method;
 ///
 /// Since the <print-stream> passed into this method is wrapped around the
 /// outside of the pretty printing stream, should some print-object method
-/// call ppring-logical-block, this method executes again.  However, during
+/// call pprint-logical-block, this method executes again.  However, during
 /// this recursive execution, this method invokes pprint-logical-block on
 /// the print-target of <print-stream>, which the pretty printing stream.
 /// That means the value of pretty-stream in our body: method below is == to
