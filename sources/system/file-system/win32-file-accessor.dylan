@@ -38,35 +38,35 @@ define sideways method accessor-open
        overlapped? :: <boolean> = #f,
        share? :: <boolean> = #t, // only shared access allowed in the past
        share-mode :: one-of(#"default", #"exclusive", #"share-read",
-			    #"share-write", #"share-read-write") = #"default",
+                            #"share-write", #"share-read-write") = #"default",
      #all-keys) => ();
   block (return)
     if (initial-file-position | initial-file-size)
       error("Cannot create a file accessor which specifies either"
-	      "file-position: or file-size: keywords but does not specify"
-	      "file-handle:");
+              "file-position: or file-size: keywords but does not specify"
+              "file-handle:");
     end if;
     select (direction)
       #"input" =>
-	if-exists := #"overwrite";
-	if-does-not-exist := if-does-not-exist | #"signal";
+        if-exists := #"overwrite";
+        if-does-not-exist := if-does-not-exist | #"signal";
       #"output" =>
-	if-exists := if-exists | #"new-version";
-	if-does-not-exist := if-does-not-exist | #"create";
+        if-exists := if-exists | #"new-version";
+        if-does-not-exist := if-does-not-exist | #"create";
       #"input-output" =>
-	if-exists := if-exists | #"overwrite";
-	if-does-not-exist := if-does-not-exist | #"create";
+        if-exists := if-exists | #"overwrite";
+        if-does-not-exist := if-does-not-exist | #"create";
     end;
     let fdwAccess
       = select (direction)
-	  #"input"        => $GENERIC_READ;
-	  #"output"       => $GENERIC_WRITE;
-	  #"input-output" => logior($GENERIC_READ, $GENERIC_WRITE);
-	end;
+          #"input"        => $GENERIC_READ;
+          #"output"       => $GENERIC_WRITE;
+          #"input-output" => logior($GENERIC_READ, $GENERIC_WRITE);
+        end;
     // Actually the #"default" share-mode doesn't really make a sense
     // at all it's here for backward compatibility only.  The default
-    // translates as: 
-    // 
+    // translates as:
+    //
     // If it's input, allow others to read and nobody else to write.
     // That isn't senseless but but isn't consistent with the behavior
     // of input-output.
@@ -83,44 +83,44 @@ define sideways method accessor-open
     end if;
     let fdwShareMode
       =  select (share-mode by \==)
-	   #"default" =>
-	     select (direction)
-	       #"input"        => $FILE_SHARE_READ;
-	       #"output"       => $FILE_SHARE_WRITE;
-	       #"input-output" => 
-		 logior($FILE_SHARE_READ, $FILE_SHARE_WRITE);
-	     end select;
-	   #"exclusive" => 0;
-	   #"share-read" => $FILE_SHARE_READ;
-	   #"share-write" => $FILE_SHARE_WRITE;
-	   #"share-read-write" => 
-	     logior($FILE_SHARE_READ, $FILE_SHARE_WRITE);
-	 end select;
+           #"default" =>
+             select (direction)
+               #"input"        => $FILE_SHARE_READ;
+               #"output"       => $FILE_SHARE_WRITE;
+               #"input-output" =>
+                 logior($FILE_SHARE_READ, $FILE_SHARE_WRITE);
+             end select;
+           #"exclusive" => 0;
+           #"share-read" => $FILE_SHARE_READ;
+           #"share-write" => $FILE_SHARE_WRITE;
+           #"share-read-write" =>
+             logior($FILE_SHARE_READ, $FILE_SHARE_WRITE);
+         end select;
     let path = as(<string>, locator);
     let exists :: <boolean> = win32-file-exists?(path);
     let fdwCreate = 0;
     if (exists)
       select (if-exists)
-	#"signal" =>
-	  return(signal(make(<file-exists-error>, locator: locator)));
-	#"new-version", #"replace" =>
-	  fdwCreate := $CREATE_ALWAYS;
-	#"overwrite", #"append" =>
-	  fdwCreate := $OPEN_EXISTING;
-	#"truncate" =>
-	  fdwCreate := $TRUNCATE_EXISTING;
+        #"signal" =>
+          return(signal(make(<file-exists-error>, locator: locator)));
+        #"new-version", #"replace" =>
+          fdwCreate := $CREATE_ALWAYS;
+        #"overwrite", #"append" =>
+          fdwCreate := $OPEN_EXISTING;
+        #"truncate" =>
+          fdwCreate := $TRUNCATE_EXISTING;
       end
     else
       select (if-does-not-exist)
-	#"signal" =>
-	  return(signal(make(<file-does-not-exist-error>, locator: locator)));
-	#"create" =>
-	  fdwCreate := $CREATE_NEW;
+        #"signal" =>
+          return(signal(make(<file-does-not-exist-error>, locator: locator)));
+        #"create" =>
+          fdwCreate := $CREATE_NEW;
       end
     end;
-    let handle = 
+    let handle =
       win32-open/create(path, fdwAccess, fdwShareMode, fdwCreate,
-			overlapped?: overlapped?);
+                        overlapped?: overlapped?);
     if (handle)
       apply(accessor-open, accessor, handle, file-descriptor: handle, keywords);
       if (if-exists == #"append")
@@ -128,9 +128,9 @@ define sideways method accessor-open
       end;
     else
       if (win32-access-error?())
-	return(signal(make(<invalid-file-permissions-error>, locator: locator)))
+        return(signal(make(<invalid-file-permissions-error>, locator: locator)))
       else
-	return(win32-file-error(accessor, "open/create", #f))
+        return(win32-file-error(accessor, "open/create", #f))
       end if
     end if;
   end block;

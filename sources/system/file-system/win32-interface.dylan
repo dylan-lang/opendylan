@@ -25,8 +25,8 @@ define constant $CREATE_ALWAYS     = 2;
 define constant $OPEN_EXISTING     = 3;
 define constant $OPEN_ALWAYS       = 4;
 define constant $TRUNCATE_EXISTING = 5;
-ignorable($CREATE_NEW, $CREATE_ALWAYS, 
-	  $OPEN_EXISTING, $OPEN_ALWAYS, $TRUNCATE_EXISTING);
+ignorable($CREATE_NEW, $CREATE_ALWAYS,
+          $OPEN_EXISTING, $OPEN_ALWAYS, $TRUNCATE_EXISTING);
 
 // fdwAttrsAndFlags
 define constant $FILE_ATTRIBUTE_NORMAL = #x80;
@@ -44,7 +44,7 @@ define function call-succeeded? (result :: <machine-word>) => (success :: <boole
     (primitive-unwrap-machine-word(result),
      integer-as-raw(-1))
 end function call-succeeded?;
- 
+
 
 // Now the actual interfaces ...
 
@@ -81,7 +81,7 @@ end function win32-set-file-position;
 
 define function win32-file-exists? (path :: <byte-string>) => (exists? :: <boolean>)
   let attributes = primitive-wrap-machine-word
-		     (%call-c-function ("GetFileAttributesA", c-modifiers: "__stdcall")
+                     (%call-c-function ("GetFileAttributesA", c-modifiers: "__stdcall")
                           (path :: <raw-byte-string>)
                        => (exists? :: <raw-c-unsigned-long>)
                         (primitive-string-as-raw(path))
@@ -102,22 +102,22 @@ define method win32-open/create
                           access :: <raw-c-unsigned-long>,
                           share-mode :: <raw-c-unsigned-long>,
                           security-attrs :: <raw-c-pointer>,
-                          create-mode :: <raw-c-unsigned-long>, 
+                          create-mode :: <raw-c-unsigned-long>,
                           file-attrs :: <raw-c-unsigned-long>,
                           template :: <raw-c-pointer>)
                       => (handle :: <raw-c-pointer>)
-                       (primitive-string-as-raw(path), 
+                       (primitive-string-as-raw(path),
                         primitive-machine-word-shift-left-low
                           (integer-as-raw(access),
                            integer-as-raw(16)),
                         integer-as-raw(share-mode),
                         primitive-cast-raw-as-pointer(integer-as-raw(0)),
                         integer-as-raw(create-mode),
-			primitive-machine-word-logior(
+                        primitive-machine-word-logior(
                           primitive-machine-word-shift-left-low
                             (integer-as-raw(attributes-high-bits),
                              integer-as-raw(16)),
-			  integer-as-raw($FILE_ATTRIBUTE_NORMAL)),
+                          integer-as-raw($FILE_ATTRIBUTE_NORMAL)),
                         primitive-cast-raw-as-pointer(integer-as-raw(0)))
                      end));
   call-succeeded?(handle) & handle

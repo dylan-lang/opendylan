@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define class <wrapper-file-accessor> (<external-file-accessor>)
-  slot wrapper-file-accessor-stream, 
+  slot wrapper-file-accessor-stream,
     init-keyword: stream:;
 end class;
 
@@ -58,7 +58,7 @@ end method;
 
 define method accessor-write-from
     (x :: <wrapper-file-accessor>, stream :: <external-stream>,
-     offset :: <buffer-index>, count :: <buffer-index>, 
+     offset :: <buffer-index>, count :: <buffer-index>,
      #key buffer, return-fresh-buffer?)
  => (nwritten :: <integer>, new-buffer :: <buffer>)
   let buffer :: <buffer> = buffer | stream-output-buffer(stream);

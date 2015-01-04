@@ -1,6 +1,6 @@
 Module:       system-test-suite
 Synopsis:     System library test suite
-Author:	      Andy Armstrong
+Author:              Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -39,7 +39,7 @@ end class-test <native-file-locator>;
 define locators class-test <locator-error> ()
   //---*** Fill this in...
 end class-test <locator-error>;
-  
+
 
 /// Web locator classes
 
@@ -70,8 +70,8 @@ define constant $valid-urls
 define locators class-test <url> ()
   for (url :: <string> in $valid-urls)
     check-equal(format-to-string("as(<string>, as(<url>, x)) = x [with x = %=]", url),
-		as(<string>, as(<url>, url)),
-		url)
+                as(<string>, as(<url>, url)),
+                url)
   end
 end class-test <url>;
 
@@ -85,33 +85,33 @@ define constant $valid-server-urls
 define locators class-test <server-url> ()
   for (url :: <string> in $valid-server-urls)
     check-equal(format-to-string("as(<string>, as(<server-url>, x)) = x [with x = %=]", url),
-		as(<string>, as(<server-url>, url)),
-		url)
+                as(<string>, as(<server-url>, url)),
+                url)
   end
 end class-test <server-url>;
 
 define locators class-test <http-server> ()
   let server = #f;
   check-equal("make <http-server>",
-	      server
-		:= make(<http-server>,
-			host: "www.functionalobjects.com",
-			port: 80,
-			username: "andrewa",
-			password: "test"),
-	      as(<http-server>, "http://www.functionalobjects.com:80?andrewa:test"));
+              server
+                := make(<http-server>,
+                        host: "www.functionalobjects.com",
+                        port: 80,
+                        username: "andrewa",
+                        password: "test"),
+              as(<http-server>, "http://www.functionalobjects.com:80?andrewa:test"));
 end class-test <http-server>;
 
 define locators class-test <https-server> ()
   let server = #f;
   check-equal("make <http-server>",
-	      server
-		:= make(<https-server>,
-			host: "www.functionalobjects.com",
-			port: 80,
-			username: "andrewa",
-			password: "test"),
-	      as(<https-server>, "https://www.functionalobjects.com:80?andrewa:test"));
+              server
+                := make(<https-server>,
+                        host: "www.functionalobjects.com",
+                        port: 80,
+                        username: "andrewa",
+                        password: "test"),
+              as(<https-server>, "https://www.functionalobjects.com:80?andrewa:test"));
 end class-test <https-server>;
 
 define locators class-test <ftp-server> ()
@@ -216,7 +216,7 @@ end function-test string-as-locator;
 define constant $simplify-tests
   = #[#["a",         "a"],
       #["a.t",       "a.t"],
-      #["./",        "./"],	// This one is confusing, but correct
+      #["./",        "./"],        // This one is confusing, but correct
       #["./a.t",     "a.t"],
       #["a/./b.t",   "a/b.t"],
       #["../a/b",    "../a/b"],
@@ -228,14 +228,14 @@ define constant $microsoft-simplify-tests
 
 define locators function-test simplify-locator ()
   local method test-simplify-locator
-	    (class :: subclass(<locator>), info :: <vector>) => ()
-	  let file1 = info[0];
-	  let file2 = info[1];
-	  check-equal(format-to-string("%s: simplify(%=) = %=",
-				       class, file1, file2),
-		      simplify-locator(as(class, file1)),
-		      as(class, file2))
-	end method test-simplify-locator;
+            (class :: subclass(<locator>), info :: <vector>) => ()
+          let file1 = info[0];
+          let file2 = info[1];
+          check-equal(format-to-string("%s: simplify(%=) = %=",
+                                       class, file1, file2),
+                      simplify-locator(as(class, file1)),
+                      as(class, file2))
+        end method test-simplify-locator;
   for (class in vector(<microsoft-file-system-locator>, <posix-file-system-locator>))
     do(curry(test-simplify-locator, class), $simplify-tests)
   end;
@@ -254,18 +254,18 @@ define constant $microsoft-subdirectory-tests
 
 define locators function-test subdirectory-locator ()
   local method test-subdirectory-locator
-	    (class :: subclass(<locator>), info :: <vector>) => ()
-	  let directory      = info[0];
-	  let subdirectories = info[1];
-	  let result         = info[2];
-	  check-equal(format-to-string("%s: subdirectory(%=, %=) = %=",
-				       class, directory, subdirectories,
-				       result),
-		      apply(subdirectory-locator,
-			    as(class, directory),
-			    subdirectories),
-		      as(class, result))
-	end method test-subdirectory-locator;
+            (class :: subclass(<locator>), info :: <vector>) => ()
+          let directory      = info[0];
+          let subdirectories = info[1];
+          let result         = info[2];
+          check-equal(format-to-string("%s: subdirectory(%=, %=) = %=",
+                                       class, directory, subdirectories,
+                                       result),
+                      apply(subdirectory-locator,
+                            as(class, directory),
+                            subdirectories),
+                      as(class, result))
+        end method test-subdirectory-locator;
   for (class in vector(<microsoft-file-system-locator>, <posix-file-system-locator>))
     do(curry(test-subdirectory-locator, class), $subdirectory-tests)
   end;
@@ -296,16 +296,16 @@ define constant $microsoft-relative-tests
 
 define locators function-test relative-locator ()
   local method test-relative-locator
-	    (class :: subclass(<locator>), info :: <vector>) => ()
-	  let file1 = info[0];
-	  let file2 = info[1];
-	  let file3 = info[2];
-	  check-equal(format-to-string("%s: relative(%=, %=) = %=",
-				       class, file1, file2, file3),
-		      relative-locator(as(class, file1),
-				       as(class, file2)),
-		      as(class, file3))
-	end method test-relative-locator;
+            (class :: subclass(<locator>), info :: <vector>) => ()
+          let file1 = info[0];
+          let file2 = info[1];
+          let file3 = info[2];
+          check-equal(format-to-string("%s: relative(%=, %=) = %=",
+                                       class, file1, file2, file3),
+                      relative-locator(as(class, file1),
+                                       as(class, file2)),
+                      as(class, file3))
+        end method test-relative-locator;
   for (class in vector(<microsoft-file-system-locator>, <posix-file-system-locator>))
     do(curry(test-relative-locator, class),
        $relative-tests)
@@ -316,16 +316,16 @@ end function-test relative-locator;
 
 define locators function-test merge-locators ()
   local method test-relative-locator
-	    (class :: subclass(<locator>), info :: <vector>) => ()
-	  let file1 = info[2];
-	  let file2 = info[1];
-	  let file3 = info[0];
-	  check-equal(format-to-string("%s: merge(%=, %=) = %=",
-				       class, file1, file2, file3),
-		      merge-locators(as(class, file1),
-				     as(class, file2)),
-		      as(class, file3))
-	end method test-relative-locator;
+            (class :: subclass(<locator>), info :: <vector>) => ()
+          let file1 = info[2];
+          let file2 = info[1];
+          let file3 = info[0];
+          check-equal(format-to-string("%s: merge(%=, %=) = %=",
+                                       class, file1, file2, file3),
+                      merge-locators(as(class, file1),
+                                     as(class, file2)),
+                      as(class, file3))
+        end method test-relative-locator;
   for (class in vector(<microsoft-file-system-locator>, <posix-file-system-locator>))
     do(curry(test-relative-locator, class),
        $relative-tests)

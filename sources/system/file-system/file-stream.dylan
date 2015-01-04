@@ -20,17 +20,17 @@ end method open-file-stream;
 
 define macro with-open-file
   { with-open-file (?stream:variable = ?locator:expression,
-		    #rest ?keys:expression)
+                    #rest ?keys:expression)
       ?body:body
     end }
   => { begin
-	 let _stream = #f;
-	 block ()
-	   _stream := open-file-stream(?locator, ?keys);
-	   let ?stream :: <file-stream> = _stream;
-	   ?body
-	 cleanup
-	   if (_stream & stream-open?(_stream)) close(_stream) end;
-	 end
+         let _stream = #f;
+         block ()
+           _stream := open-file-stream(?locator, ?keys);
+           let ?stream :: <file-stream> = _stream;
+           ?body
+         cleanup
+           if (_stream & stream-open?(_stream)) close(_stream) end;
+         end
        end }
 end macro with-open-file;

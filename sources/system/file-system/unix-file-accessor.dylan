@@ -29,57 +29,57 @@ define sideways method accessor-open
     let exists = unix-file-exists?(pathstring);
     let (mode-code, if-exists, if-does-not-exist)
       = select (direction)
-	  #"input" =>
-	    values($O_RDONLY, 
-		   #"overwrite",
-		   (if-does-not-exist | #"signal"));
-	  #"output" =>
-	    values(logior($O_WRONLY, $O_SYNC),
-		   (if-exists | #"new-version"),
-		   (if-does-not-exist | #"create"));
-	  #"input-output" =>
-	    values(logior($O_RDWR, $O_SYNC),
-		   (if-exists | #"overwrite"),
-		   (if-does-not-exist | #"create"));
-	end;
-    let mode-code 
+          #"input" =>
+            values($O_RDONLY,
+                   #"overwrite",
+                   (if-does-not-exist | #"signal"));
+          #"output" =>
+            values(logior($O_WRONLY, $O_SYNC),
+                   (if-exists | #"new-version"),
+                   (if-does-not-exist | #"create"));
+          #"input-output" =>
+            values(logior($O_RDWR, $O_SYNC),
+                   (if-exists | #"overwrite"),
+                   (if-does-not-exist | #"create"));
+        end;
+    let mode-code
       = if (exists)
-	  select (if-exists)
-	    #"signal" =>
-	      return(signal(make(<file-exists-error>,
-				 locator: as(<posix-file-locator>, locator))));
-	    #"new-version", #"replace" =>
-	      if (unix-delete-file(pathstring))
-		logior(mode-code, $O_CREAT);
-	      else
-		let errno = unix-errno();
-		if (errno = $e_access)
-		  return(signal(make(<invalid-file-permissions-error>,
-				     locator: locator)));
-		else
-		  unix-file-error("unlink", "%s", locator);
-		end;
-	      end;
-	    #"overwrite", #"append" => 
-	      mode-code;
-	    #"truncate" =>
-	      logior(mode-code, $O_TRUNC);
-	  end
-	else
-	  select (if-does-not-exist)
-	    #"signal" =>
-	      return(signal(make(<file-does-not-exist-error>,
+          select (if-exists)
+            #"signal" =>
+              return(signal(make(<file-exists-error>,
                                  locator: as(<posix-file-locator>, locator))));
-	    #"create" =>
-	      logior(mode-code, $O_CREAT);
-	  end
-	end;
+            #"new-version", #"replace" =>
+              if (unix-delete-file(pathstring))
+                logior(mode-code, $O_CREAT);
+              else
+                let errno = unix-errno();
+                if (errno = $e_access)
+                  return(signal(make(<invalid-file-permissions-error>,
+                                     locator: locator)));
+                else
+                  unix-file-error("unlink", "%s", locator);
+                end;
+              end;
+            #"overwrite", #"append" =>
+              mode-code;
+            #"truncate" =>
+              logior(mode-code, $O_TRUNC);
+          end
+        else
+          select (if-does-not-exist)
+            #"signal" =>
+              return(signal(make(<file-does-not-exist-error>,
+                                 locator: as(<posix-file-locator>, locator))));
+            #"create" =>
+              logior(mode-code, $O_CREAT);
+          end
+        end;
     let fd = unix-open(pathstring, mode-code, $file_create_permissions);
     if (fd < 0)
       let errno = unix-errno();
       if (errno = $e_access)
-	return(signal(make(<invalid-file-permissions-error>,
-			   locator: as(<posix-file-locator>, locator))));
+        return(signal(make(<invalid-file-permissions-error>,
+                           locator: as(<posix-file-locator>, locator))));
       else
         unix-file-error("open", "%s", locator);
       end

@@ -18,7 +18,7 @@ define inline-only constant $ERROR-SUCCESS              = as(<LONG>, 0);
 
 define inline-only constant $REG-SZ                     = as(<LONG>, 1);
 define inline-only constant $REG-EXPAND-SZ              = as(<LONG>, 2);
-define inline-only constant $REG-MULTI-SZ               = as(<LONG>, 7);  
+define inline-only constant $REG-MULTI-SZ               = as(<LONG>, 7);
 
 define inline-only constant $KEY-QUERY-VALUE            = #x0001;
 define inline-only constant $KEY-SET-VALUE              = #x0002;
@@ -43,7 +43,7 @@ define inline-only function RegQueryValueEx
   let status
     = primitive-wrap-machine-word
         (%call-c-function ("RegQueryValueExA", c-modifiers: "__stdcall")
-             (hKey :: <raw-c-pointer>, lpValueName :: <raw-byte-string>, 
+             (hKey :: <raw-c-pointer>, lpValueName :: <raw-byte-string>,
               lpReserved :: <raw-c-pointer>, lpType :: <raw-c-pointer>,
               lpData :: <raw-c-pointer>, lpcbData :: <raw-c-pointer>)
           => (success? :: <raw-c-signed-long>)
@@ -65,7 +65,7 @@ define inline-only function RegQueryValueEx
     let status
       = primitive-wrap-machine-word
           (%call-c-function ("RegQueryValueExA", c-modifiers: "__stdcall")
-               (hKey :: <raw-c-pointer>, lpValueName :: <raw-byte-string>, 
+               (hKey :: <raw-c-pointer>, lpValueName :: <raw-byte-string>,
                 lpReserved :: <raw-c-pointer>, lpType :: <raw-c-pointer>,
                 lpData :: <raw-c-pointer>, lpcbData :: <raw-c-pointer>)
             => (success? :: <raw-c-signed-long>)
@@ -81,7 +81,7 @@ define inline-only function RegQueryValueEx
           (primitive-c-unsigned-long-at
              (primitive-cast-raw-as-pointer(primitive-string-as-raw(type-buffer)),
               integer-as-raw(0), integer-as-raw(0)));
-    // NOTE: For registry entries, the returned buffer-size may include a 
+    // NOTE: For registry entries, the returned buffer-size may include a
     //       trailing NUL character...
     values(if (status = $ERROR-SUCCESS)
              let amount-to-copy
@@ -118,7 +118,7 @@ define inline-only function RegSetValueEx
         primitive-unwrap-machine-word(type),
         primitive-string-as-raw(data),
         integer-as-raw(size(data) + 1))
-     end)  
+     end)
 end function RegSetValueEx;
 
 define inline-only function RegDeleteValue (hKey :: <HKEY>, value-name :: <byte-string>)
@@ -474,27 +474,27 @@ define variable *settings-default-class* = "Open Dylan";
 define sealed method initialize-settings
     (settings :: <settings>, for-writing? :: <boolean>) => ()
   local method open ()
-	  let parent  = element($settings-table, settings-parent(settings));
-	  initialize-settings(parent, for-writing?);
-	  let hKey    = settings-key-handle(parent);
-	  if (hKey)
-	    let key   = settings-key-name(settings);
-	    let class = *settings-default-class*;
-	    let (phkResult, result)
-	      = if (for-writing?)
-		  RegCreateKeyEx(hKey, key, class, $REG-OPTION-NON-VOLATILE, $WRITING-SAM)
-		else
-		  RegOpenKeyEx(hKey, key, $READING-SAM)
-		end;
-	    if (result ~= $ERROR-SUCCESS)
-	      //---*** What should we do with errors?
-	      #f
-	    else
-	      settings-writable?(settings) := for-writing?;
-	      settings-handle(settings)    := phkResult;
-	    end
-	  end
-	end method;
+          let parent  = element($settings-table, settings-parent(settings));
+          initialize-settings(parent, for-writing?);
+          let hKey    = settings-key-handle(parent);
+          if (hKey)
+            let key   = settings-key-name(settings);
+            let class = *settings-default-class*;
+            let (phkResult, result)
+              = if (for-writing?)
+                  RegCreateKeyEx(hKey, key, class, $REG-OPTION-NON-VOLATILE, $WRITING-SAM)
+                else
+                  RegOpenKeyEx(hKey, key, $READING-SAM)
+                end;
+            if (result ~= $ERROR-SUCCESS)
+              //---*** What should we do with errors?
+              #f
+            else
+              settings-writable?(settings) := for-writing?;
+              settings-handle(settings)    := phkResult;
+            end
+          end
+        end method;
   let handle = settings-key-handle(settings);
   if (handle)
     when (for-writing? & ~settings-writable?(settings))

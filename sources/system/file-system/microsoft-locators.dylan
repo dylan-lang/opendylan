@@ -92,8 +92,8 @@ define sealed method locator-as-string
     (class :: subclass(<string>), locator :: <microsoft-volume-locator>)
  => (string :: <string>)
   concatenate-as(class,
-		 make(<byte-string>, size: 1, fill: locator.locator-drive),
-		 delimiter-to-string($volume-separator))
+                 make(<byte-string>, size: 1, fill: locator.locator-drive),
+                 delimiter-to-string($volume-separator))
 end method locator-as-string;
 
 
@@ -112,7 +112,7 @@ define sealed method string-as-locator
 end method string-as-locator;
 
 
-define sealed class <microsoft-directory-locator> 
+define sealed class <microsoft-directory-locator>
     (<file-system-directory-locator>, <microsoft-file-system-locator>)
   sealed constant slot locator-server :: false-or(<microsoft-server-locator>) = #f,
     init-keyword: server:;
@@ -132,15 +132,15 @@ define sealed method make
  => (locator :: <microsoft-directory-locator>)
   let path
     = if (name | directory)
-	concatenate(if (directory) directory.locator-path else #[] end,
-		    if (name) vector(name) else #[] end)
+        concatenate(if (directory) directory.locator-path else #[] end,
+                    if (name) vector(name) else #[] end)
       else
-	path
+        path
       end;
   next-method(class,
-	      server:    server,
-	      path:      canonicalize-path(path),
-	      relative?: relative?)
+              server:    server,
+              path:      canonicalize-path(path),
+              relative?: relative?)
 end method make;
 
 define sealed method locator-name
@@ -172,25 +172,25 @@ define sealed method string-as-locator
     = ~unc? & string.size > 1 & string[1] == $volume-separator;
   let (server, next-pos)
     = case
-	unc? =>
-	  let start = $unc-prefix.size;
-	  let pos
-	    = find-delimiters(string, $microsoft-separators, start: start);
-	  if (pos)
-	    let host = copy-sequence(string, start: start, end: pos);
-	    values(make(<microsoft-unc-locator>, host: host), pos)
-	  else
-	    locator-error("Invalid directory %=", string)
-	  end;
-	volume? =>
-	  values(make(<microsoft-volume-locator>, drive: string[0]), 2);
-	otherwise =>
-	  values(#f, 0);
+        unc? =>
+          let start = $unc-prefix.size;
+          let pos
+            = find-delimiters(string, $microsoft-separators, start: start);
+          if (pos)
+            let host = copy-sequence(string, start: start, end: pos);
+            values(make(<microsoft-unc-locator>, host: host), pos)
+          else
+            locator-error("Invalid directory %=", string)
+          end;
+        volume? =>
+          values(make(<microsoft-volume-locator>, drive: string[0]), 2);
+        otherwise =>
+          values(#f, 0);
       end;
   let (path, relative?)
-    = parse-path(string, 
-		 start: next-pos,
-		 test: rcurry(member?, $microsoft-separators));
+    = parse-path(string,
+                 start: next-pos,
+                 test: rcurry(member?, $microsoft-separators));
   make(<microsoft-directory-locator>,
        server:    server,
        path:      path,
@@ -203,13 +203,13 @@ define sealed method locator-as-string
   let server = locator.locator-server;
   let directory-string
     = path-to-string(locator.locator-path,
-		     class:     class,
-		     separator: $microsoft-separators[0],
-		     relative?: locator.locator-relative?);
+                     class:     class,
+                     separator: $microsoft-separators[0],
+                     relative?: locator.locator-relative?);
   if (server)
     concatenate-as(class,
-		   as(class, server),
-		   directory-string)
+                   as(class, server),
+                   directory-string)
   else
     directory-string
   end
@@ -221,7 +221,7 @@ define sealed method locator-test
 end method locator-test;
 
 
-define sealed class <microsoft-file-locator> 
+define sealed class <microsoft-file-locator>
     (<file-system-file-locator>, <microsoft-file-system-locator>)
   sealed constant slot locator-directory :: false-or(<microsoft-directory-locator>) = #f,
     init-keyword: directory:;
@@ -240,7 +240,7 @@ define sealed method make
  => (locator :: <microsoft-file-locator>)
   let directory
     = unless (directory & current-directory-locator?(directory))
-	directory
+        directory
       end;
   let pos = name & find-delimiter-from-end(name, $extension-separator);
   let base = base | if (pos) copy-sequence(name, end: pos) else name end;
@@ -249,9 +249,9 @@ define sealed method make
     locator-error("Attempted to create a file locator without a base")
   end;
   next-method(class,
-	      directory: directory,
-	      base: base,
-	      extension: extension)
+              directory: directory,
+              base: base,
+              extension: extension)
 end method make;
 
 define sealed method locator-name
@@ -261,8 +261,8 @@ define sealed method locator-name
   let extension = locator.locator-extension;
   if (extension)
     concatenate(base | "",
-		delimiter-to-string($extension-separator),
-		extension)
+                delimiter-to-string($extension-separator),
+                extension)
   else
     base
   end
@@ -295,11 +295,11 @@ define sealed method string-as-locator
   let pos = find-delimiters-from-end(string, $microsoft-separators);
   let (directory, name)
     = if (pos)
-	values(as(<microsoft-directory-locator>, 
-		  copy-sequence(string, end: pos + 1)),
-	       copy-sequence(string, start: pos + 1))
+        values(as(<microsoft-directory-locator>,
+                  copy-sequence(string, end: pos + 1)),
+               copy-sequence(string, start: pos + 1))
       else
-	values(#f, string)
+        values(#f, string)
       end;
   make(<microsoft-file-locator>,
        directory: directory,

@@ -144,7 +144,7 @@ end method settings-key-name;
 
 define sealed method settings-handle
     (settings :: <site-settings>) => (handle :: <byte-string>)
-  "~/.settings/Site" 
+  "~/.settings/Site"
 end method settings-handle;
 
 define sealed method settings-key-name
@@ -160,7 +160,7 @@ end method settings-key-name;
 
 define sealed method settings-handle
     (settings :: <local-settings>) => (handle :: <byte-string>)
-  "~/.settings/Local" 
+  "~/.settings/Local"
 end method settings-handle;
 
 define sealed method settings-key-name
@@ -181,7 +181,7 @@ end method settings-key-name;
 
 define sealed method settings-handle
     (settings :: <default-user-settings>) => (handle :: <byte-string>)
-  "~/.settings/Users" 
+  "~/.settings/Users"
 end method settings-handle;
 
 define sealed method settings-key-name
@@ -197,7 +197,7 @@ end method settings-key-name;
 
 define sealed method settings-handle
     (settings :: <current-user-settings>) => (handle :: <byte-string>)
-  "~/.settings/Users" 
+  "~/.settings/Users"
 end method settings-handle;
 
 define sealed method settings-key-name
@@ -212,12 +212,12 @@ define sealed method initialize-settings
     (settings :: <settings>, for-writing? :: <boolean>) => ()
   unless (settings-handle(settings))
     let parent = element($settings-table, settings-parent(settings));
-	initialize-settings(parent, for-writing?);
+        initialize-settings(parent, for-writing?);
     let handle  = settings-handle(parent);
     let key     = settings-key-name(settings);
     let path    = concatenate-as(<byte-string>, handle, "/", key);
     //---*** Create the directory given by 'path'
-	settings-writable?(settings) := for-writing?;
+        settings-writable?(settings) := for-writing?;
     settings-handle(settings) := path
   end
 end method initialize-settings;

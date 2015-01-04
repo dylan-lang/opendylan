@@ -10,58 +10,58 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// From WINBASE.H ...
 
-define constant $SYSTEMTIME_SIZE = 16;	// 8 unsigned shorts
+define constant $SYSTEMTIME_SIZE = 16;        // 8 unsigned shorts
 
 define inline-only function st-year (st :: <machine-word>) => (year :: <integer>)
   raw-as-integer
     (primitive-c-signed-short-at(primitive-unwrap-machine-word(st),
-			         integer-as-raw(0),
-			         integer-as-raw(0)))
+                                 integer-as-raw(0),
+                                 integer-as-raw(0)))
 end function st-year;
 
 define inline-only function st-month (st :: <machine-word>) => (month :: <integer>)
   raw-as-integer
     (primitive-c-signed-short-at(primitive-unwrap-machine-word(st),
-			         integer-as-raw(1),
-			         integer-as-raw(0)))
+                                 integer-as-raw(1),
+                                 integer-as-raw(0)))
 end function st-month;
 
-/// Slot 2 is wDayOfWeek 
+/// Slot 2 is wDayOfWeek
 
 define inline-only function st-day (st :: <machine-word>) => (day :: <integer>)
   raw-as-integer
     (primitive-c-signed-short-at(primitive-unwrap-machine-word(st),
-			         integer-as-raw(3),
-			         integer-as-raw(0)))
+                                 integer-as-raw(3),
+                                 integer-as-raw(0)))
 end function st-day;
 
 define inline-only function st-hour (st :: <machine-word>) => (hour :: <integer>)
   raw-as-integer
     (primitive-c-signed-short-at(primitive-unwrap-machine-word(st),
-			         integer-as-raw(4),
-			         integer-as-raw(0)))
+                                 integer-as-raw(4),
+                                 integer-as-raw(0)))
 end function st-hour;
 
 define inline-only function st-minute (st :: <machine-word>) => (minute :: <integer>)
   raw-as-integer
     (primitive-c-signed-short-at(primitive-unwrap-machine-word(st),
-			         integer-as-raw(5),
-			         integer-as-raw(0)))
+                                 integer-as-raw(5),
+                                 integer-as-raw(0)))
 end function st-minute;
 
 define inline-only function st-second (st :: <machine-word>) => (second :: <integer>)
   raw-as-integer
     (primitive-c-signed-short-at(primitive-unwrap-machine-word(st),
-			         integer-as-raw(6),
-			         integer-as-raw(0)))
+                                 integer-as-raw(6),
+                                 integer-as-raw(0)))
 end function st-second;
 
 define inline-only function st-milliseconds (st :: <machine-word>)
  => (milliseconds :: <integer>)
   raw-as-integer
     (primitive-c-signed-short-at(primitive-unwrap-machine-word(st),
-			         integer-as-raw(7),
-			         integer-as-raw(0)))
+                                 integer-as-raw(7),
+                                 integer-as-raw(0)))
 end function st-milliseconds;
 
 
@@ -84,35 +84,35 @@ define constant $TIME_ZONE_INFORMATION_SIZE =
   end;
 
 define inline-only function tz-bias (tz :: <machine-word>) => (bias :: <integer>)
-  0				// Sign of Win32 bias is opposite ours ...
+  0                                // Sign of Win32 bias is opposite ours ...
   - raw-as-integer
       (primitive-c-signed-long-at(primitive-unwrap-machine-word(tz),
                                   integer-as-raw(0),
                                   integer-as-raw(0)))
 end function tz-bias;
 
-define inline-only function tz-standard-bias 
-	(tz :: <machine-word>) => (bias :: <integer>)
-  0				// Sign of Win32 bias is opposite ours ...
+define inline-only function tz-standard-bias
+        (tz :: <machine-word>) => (bias :: <integer>)
+  0                                // Sign of Win32 bias is opposite ours ...
   - raw-as-integer(
       primitive-c-signed-long-at(
-	primitive-unwrap-machine-word(tz),
+        primitive-unwrap-machine-word(tz),
         integer-as-raw(0),
-	integer-as-raw(raw-as-integer(primitive-word-size()) 
-		       + (2 * 32) + $SYSTEMTIME_SIZE)))
+        integer-as-raw(raw-as-integer(primitive-word-size())
+                       + (2 * 32) + $SYSTEMTIME_SIZE)))
   //---*** Perhaps should use the index rather than offset argument here ...
   //---*** (Verify that the index computation is properly optimized first)
 end function tz-standard-bias;
 
-define inline-only function tz-daylight-bias 
-	(tz :: <machine-word>) => (bias :: <integer>)
-  0				// Sign of Win32 bias is opposite ours ...
+define inline-only function tz-daylight-bias
+        (tz :: <machine-word>) => (bias :: <integer>)
+  0                                // Sign of Win32 bias is opposite ours ...
   - raw-as-integer(
       primitive-c-signed-long-at(
-	primitive-unwrap-machine-word(tz),
+        primitive-unwrap-machine-word(tz),
         integer-as-raw(0),
-	integer-as-raw(2 * (raw-as-integer(primitive-word-size()) 
-			    + (2 * 32) + $SYSTEMTIME_SIZE))))
+        integer-as-raw(2 * (raw-as-integer(primitive-word-size())
+                            + (2 * 32) + $SYSTEMTIME_SIZE))))
   //---*** Perhaps should use the index rather than offset argument here ...
   //---*** (Verify that the index computation is properly optimized first)
 end function tz-daylight-bias;
@@ -123,13 +123,13 @@ define inline-only function extract-string (tz :: <machine-word>, offset :: <int
   block (return)
     for (i :: <integer> from 0 below 32)
       let w = raw-as-integer
-	        (primitive-c-unsigned-short-at(primitive-unwrap-machine-word(tz),
-					       integer-as-raw(i),
-					       integer-as-raw(offset)));
+                (primitive-c-unsigned-short-at(primitive-unwrap-machine-word(tz),
+                                               integer-as-raw(i),
+                                               integer-as-raw(offset)));
       if (w = 0)
-	return (as(<string>, name))
+        return (as(<string>, name))
       else
-	add!(name, as(<character>, w))
+        add!(name, as(<character>, w))
       end
     end;
     as(<string>, name)
@@ -157,31 +157,31 @@ define function timezone-info () => (bias :: <integer>, name :: <string>, dst? :
   block ()
     tz := primitive-wrap-machine-word
             (primitive-cast-pointer-as-raw
-	       (%call-c-function ("LocalAlloc", c-modifiers: "__stdcall")
+               (%call-c-function ("LocalAlloc", c-modifiers: "__stdcall")
                     (flags :: <raw-c-unsigned-int>, bytes :: <raw-c-unsigned-int>)
                  => (pointer :: <raw-c-pointer>)
-                  (integer-as-raw(0), 
+                  (integer-as-raw(0),
                    integer-as-raw($TIME_ZONE_INFORMATION_SIZE))
                 end));
     if (primitive-machine-word-equal?(primitive-unwrap-machine-word(tz),
-				      integer-as-raw(0)))
+                                      integer-as-raw(0)))
       error("Can't get space for local time zone information")
     end;
     let raw-zone = primitive-wrap-machine-word
-		     (%call-c-function ("GetTimeZoneInformation", c-modifiers: "__stdcall")
-			  (tz :: <raw-c-pointer>) => (zone :: <raw-c-unsigned-long>)
-			(primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(tz)))
-		      end);
+                     (%call-c-function ("GetTimeZoneInformation", c-modifiers: "__stdcall")
+                          (tz :: <raw-c-pointer>) => (zone :: <raw-c-unsigned-long>)
+                        (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(tz)))
+                      end);
     if (primitive-machine-word-equal?(primitive-unwrap-machine-word(tz),
-				      integer-as-raw
-					($TIME_ZONE_ID_INVALID)))
+                                      integer-as-raw
+                                        ($TIME_ZONE_ID_INVALID)))
       error("Can't get local time zone information")
     end;
     let zone = raw-as-integer(primitive-unwrap-machine-word(raw-zone));
     values(tz-bias(tz) +
-	   if (zone = $TIME_ZONE_ID_STANDARD) tz-standard-bias(tz)
-	   elseif (zone = $TIME_ZONE_ID_DAYLIGHT) tz-daylight-bias(tz)
-	   else 0 end if,
+           if (zone = $TIME_ZONE_ID_STANDARD) tz-standard-bias(tz)
+           elseif (zone = $TIME_ZONE_ID_DAYLIGHT) tz-daylight-bias(tz)
+           else 0 end if,
            if (zone = $TIME_ZONE_ID_STANDARD)
              tz-standard-name(tz)
            elseif (zone = $TIME_ZONE_ID_DAYLIGHT)
@@ -205,17 +205,17 @@ define function timezone-info () => (bias :: <integer>, name :: <string>, dst? :
            zone = $TIME_ZONE_ID_DAYLIGHT)
   cleanup
     if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(tz),
-					  integer-as-raw(0)))
+                                          integer-as-raw(0)))
       %call-c-function ("LocalFree", c-modifiers: "__stdcall")
           (pointer :: <raw-c-pointer>) => (null-pointer :: <raw-c-pointer>)
-	(primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(tz)))
+        (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(tz)))
       end
     end
   end
 end function timezone-info;
 
 
-/// 
+///
 
 /// Native clock is a <machine-word> containing the address of a FILETIME structure
 define function encode-native-clock-as-date (native-clock) => (date :: <date>)
@@ -223,14 +223,14 @@ define function encode-native-clock-as-date (native-clock) => (date :: <date>)
   block ()
     st := primitive-wrap-machine-word
             (primitive-cast-pointer-as-raw
-	       (%call-c-function ("LocalAlloc", c-modifiers: "__stdcall")
+               (%call-c-function ("LocalAlloc", c-modifiers: "__stdcall")
                     (flags :: <raw-c-unsigned-int>, bytes :: <raw-c-unsigned-int>)
                  => (pointer :: <raw-c-pointer>)
-                  (integer-as-raw(0), 
+                  (integer-as-raw(0),
                    integer-as-raw($SYSTEMTIME_SIZE))
                 end));
     if (primitive-machine-word-equal?(primitive-unwrap-machine-word(st),
-				      integer-as-raw(0)))
+                                      integer-as-raw(0)))
       error("Can't get space for decoded filesystem time")
     end;
     unless (primitive-raw-as-boolean
@@ -252,10 +252,10 @@ define function encode-native-clock-as-date (native-clock) => (date :: <date>)
                  time-zone-offset: 0)
   cleanup
     if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(st),
-					  integer-as-raw(0)))
+                                          integer-as-raw(0)))
       %call-c-function ("LocalFree", c-modifiers: "__stdcall")
           (pointer :: <raw-c-pointer>) => (null-pointer :: <raw-c-pointer>)
-	(primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
+        (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
       end
     end
   end
@@ -264,33 +264,33 @@ end function encode-native-clock-as-date;
 define macro with-localtime-as-systemtime
   { with-localtime-as-systemtime (?st:name) ?:body end }
     => { let ?st = primitive-wrap-machine-word(integer-as-raw(0));
-	 block ()
-	   ?st := primitive-wrap-machine-word
-		    (primitive-cast-pointer-as-raw
-		       (%call-c-function ("LocalAlloc", c-modifiers: "__stdcall")
-			    (flags :: <raw-c-unsigned-int>, bytes :: <raw-c-unsigned-int>)
-			 => (pointer :: <raw-c-pointer>)
-			  (integer-as-raw(0), 
-			   integer-as-raw($SYSTEMTIME_SIZE))
-			end));
-	   if (primitive-machine-word-equal?(primitive-unwrap-machine-word(?st),
-					     integer-as-raw(0)))
-	     error("Can't get space for local time")
-	   end;
-	   %call-c-function ("GetLocalTime", c-modifiers: "__stdcall")
-	       (st :: <raw-c-pointer>) => (void :: <raw-c-void>)
-	     (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?st)))
-	   end;
-	   ?body
-	 cleanup
-	   if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(?st),
-						 integer-as-raw(0)))
-	     %call-c-function ("LocalFree", c-modifiers: "__stdcall")
-		 (pointer :: <raw-c-pointer>) => (null-pointer :: <raw-c-pointer>)
-	       (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?st)))
-	     end
-	   end
-	 end }
+         block ()
+           ?st := primitive-wrap-machine-word
+                    (primitive-cast-pointer-as-raw
+                       (%call-c-function ("LocalAlloc", c-modifiers: "__stdcall")
+                            (flags :: <raw-c-unsigned-int>, bytes :: <raw-c-unsigned-int>)
+                         => (pointer :: <raw-c-pointer>)
+                          (integer-as-raw(0),
+                           integer-as-raw($SYSTEMTIME_SIZE))
+                        end));
+           if (primitive-machine-word-equal?(primitive-unwrap-machine-word(?st),
+                                             integer-as-raw(0)))
+             error("Can't get space for local time")
+           end;
+           %call-c-function ("GetLocalTime", c-modifiers: "__stdcall")
+               (st :: <raw-c-pointer>) => (void :: <raw-c-void>)
+             (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?st)))
+           end;
+           ?body
+         cleanup
+           if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(?st),
+                                                 integer-as-raw(0)))
+             %call-c-function ("LocalFree", c-modifiers: "__stdcall")
+                 (pointer :: <raw-c-pointer>) => (null-pointer :: <raw-c-pointer>)
+               (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?st)))
+             end
+           end
+         end }
 end macro with-localtime-as-systemtime;
 
 define function current-date () => (now :: <date>)
@@ -309,8 +309,8 @@ end function current-date;
 define function current-timestamp () => (milliseconds :: <integer>, days :: <integer>)
   with-localtime-as-systemtime (st)
     let (ud, ut) = compute-universal-time(st-year(st), st-month(st), st-day(st),
-					  st-hour(st), st-minute(st), st-second(st),
-					  local-time-zone-offset());
+                                          st-hour(st), st-minute(st), st-second(st),
+                                          local-time-zone-offset());
     values(1000 * ut + st-milliseconds(st), ud)
   end
 end function current-timestamp;

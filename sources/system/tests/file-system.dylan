@@ -1,6 +1,6 @@
 Module:       system-test-suite
 Synopsis:     System library test suite
-Author:	      Andy Armstrong
+Author:              Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -9,9 +9,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// File stream tests
 
 register-stream-class-info("<file-stream>", <file-stream>,
-			   input-stream?: #t,
-			   output-stream?: #t,
-			   element-type: <object>);
+                           input-stream?: #t,
+                           output-stream?: #t,
+                           element-type: <object>);
 
 define sideways method make-stream-tests-of-size
     (class :: subclass(<file-stream>), stream-size :: <integer>)
@@ -46,9 +46,9 @@ end;
 
 define file-system class-test <pathname> ()
   check-instance?("A string is a pathname?",
-		  <pathname>, "foo");
+                  <pathname>, "foo");
   check-instance?("A file locator is a pathname?",
-		  <pathname>, as(<file-locator>, "test.dylan"));
+                  <pathname>, as(<file-locator>, "test.dylan"));
 end class-test <pathname>;
 
 define file-system class-test <file-type> ()
@@ -137,7 +137,7 @@ end macro-test with-open-file-test;
 
 /// File stream test utilities
 
-define variable *tbs* = 4;	// buffer-size for testing purposes
+define variable *tbs* = 4;        // buffer-size for testing purposes
 
 define variable *hello-file*
   = temp-file-pathname(initial-substring: "dylan-streams-test-hello");
@@ -153,9 +153,9 @@ define method stream-contents-and-close
   the-contents :=
     block ()
       read-stream := make(<file-stream>,
-			  direction: #"input",
-			  locator: the-locator,
-			  element-type: original-element-type);
+                          direction: #"input",
+                          locator: the-locator,
+                          element-type: original-element-type);
       stream-contents(read-stream)
     cleanup
       if (read-stream) close(read-stream) end;
@@ -163,116 +163,116 @@ define method stream-contents-and-close
   the-contents
 end method stream-contents-and-close;
 
-define method create-file-stream 
-    (stream-class :: <class>, // subclass(<file-stream>)  
+define method create-file-stream
+    (stream-class :: <class>, // subclass(<file-stream>)
      #key direction: direction :: one-of(#"input", #"output",
-					 #"input-output") = #"input",
-     contents: contents :: <sequence> = "") 
+                                         #"input-output") = #"input",
+     contents: contents :: <sequence> = "")
  => (result-stream :: <file-stream>)
   let temp-file-locator =  temp-file-pathname(initial-substring: "d-s-t");
   if (contents = "")
-    make(stream-class, direction: direction, locator: temp-file-locator, 
-	 if-exists: #"replace", if-does-not-exist: #"create");
+    make(stream-class, direction: direction, locator: temp-file-locator,
+         if-exists: #"replace", if-does-not-exist: #"create");
   else
     let temporary-output-stream =
-      make(stream-class, direction: #"output", locator: temp-file-locator, 
-	   if-exists: #"replace", if-does-not-exist: #"create");
+      make(stream-class, direction: #"output", locator: temp-file-locator,
+           if-exists: #"replace", if-does-not-exist: #"create");
     write(temporary-output-stream, contents);
     close(temporary-output-stream);
     make(stream-class, direction: direction, locator: temp-file-locator);
   end if;
 end method;
 
-define method create-file-stream-exclusive 
-    (stream-class :: <class>, // subclass(<file-stream>)  
+define method create-file-stream-exclusive
+    (stream-class :: <class>, // subclass(<file-stream>)
      #key direction: direction :: one-of(#"input", #"output",
-					 #"input-output") = #"input",
-     contents: contents :: <sequence> = "") 
+                                         #"input-output") = #"input",
+     contents: contents :: <sequence> = "")
  => (result-stream :: <file-stream>)
   let temp-file-locator =  temp-file-pathname(initial-substring: "d-s-t");
   if (contents = "")
-    make(stream-class, direction: direction, locator: temp-file-locator, 
-	 if-exists: #"replace", if-does-not-exist: #"create", share?: #f);
+    make(stream-class, direction: direction, locator: temp-file-locator,
+         if-exists: #"replace", if-does-not-exist: #"create", share?: #f);
   else
     let temporary-output-stream =
-      make(stream-class, direction: #"output", locator: temp-file-locator, 
-	   if-exists: #"replace", if-does-not-exist: #"create");
+      make(stream-class, direction: #"output", locator: temp-file-locator,
+           if-exists: #"replace", if-does-not-exist: #"create");
     write(temporary-output-stream, contents);
     close(temporary-output-stream);
     make(stream-class, direction: direction, locator: temp-file-locator,
-	 share?: #f);
+         share?: #f);
   end if;
 end method;
 
 // This is the equivalent of the old create file stream which always used
 // input-output streams and reset the location.  Kept to diagnose bugs not
 // found with other tests.
-define method create-input-output-file-stream 
-    (stream-class :: <class>, // subclass(<file-stream>)  
+define method create-input-output-file-stream
+    (stream-class :: <class>, // subclass(<file-stream>)
      #key direction :: one-of(#"input", #"output",
-			      #"input-output") = #"input",
-     contents :: <sequence> = "") 
+                              #"input-output") = #"input",
+     contents :: <sequence> = "")
  => (result-stream :: <file-stream>)
   ignore(direction);
   let temp-file-locator = temp-file-pathname(initial-substring: "ciofs");
   if (contents = "")
-    make(stream-class, direction: #"input-output", locator: temp-file-locator, 
-	 if-exists: #"replace", if-does-not-exist: #"create");
+    make(stream-class, direction: #"input-output", locator: temp-file-locator,
+         if-exists: #"replace", if-does-not-exist: #"create");
   else
     let result-stream =
-      make(stream-class, direction: #"input-output", 
-	   locator: temp-file-locator, 
-	   if-exists: #"replace", if-does-not-exist: #"create");
+      make(stream-class, direction: #"input-output",
+           locator: temp-file-locator,
+           if-exists: #"replace", if-does-not-exist: #"create");
     write(result-stream, contents);
-    stream-position(result-stream) := #"start"; 
+    stream-position(result-stream) := #"start";
     result-stream
   end if
 end method;
 
-define method create-multi-buffered-file-stream 
-    (stream-class :: <class>, // subclass(<file-stream>)  
+define method create-multi-buffered-file-stream
+    (stream-class :: <class>, // subclass(<file-stream>)
      #key direction: direction = #"input-output",
-	  buffer-size = 4, number-of-buffers = 4,
-	  contents: contents :: <sequence> = "")
+          buffer-size = 4, number-of-buffers = 4,
+          contents: contents :: <sequence> = "")
  => (result-stream :: <file-stream>)
   ignore(direction);
   let temp-file-locator =  temp-file-pathname(initial-substring: "cmbfs");
   if (contents = "")
-    make(stream-class, locator: temp-file-locator, 
-	 buffer-size: buffer-size, number-of-buffers: number-of-buffers,
-	 if-exists: #"replace", if-does-not-exist: #"create");
+    make(stream-class, locator: temp-file-locator,
+         buffer-size: buffer-size, number-of-buffers: number-of-buffers,
+         if-exists: #"replace", if-does-not-exist: #"create");
   else
     let temporary-output-stream =
-      make(<file-stream>, direction: #"output", locator: temp-file-locator, 
-	   if-exists: #"replace", if-does-not-exist: #"create");
+      make(<file-stream>, direction: #"output", locator: temp-file-locator,
+           if-exists: #"replace", if-does-not-exist: #"create");
     write(temporary-output-stream, contents);
     close(temporary-output-stream);
     make(stream-class, locator: temp-file-locator,
-	 buffer-size: buffer-size, number-of-buffers: number-of-buffers);
+         buffer-size: buffer-size, number-of-buffers: number-of-buffers);
   end if;
 end method;
 
-define method create-multi-buffered-file-stream-exclusive 
-    (stream-class :: <class>, // subclass(<file-stream>)  
+define method create-multi-buffered-file-stream-exclusive
+    (stream-class :: <class>, // subclass(<file-stream>)
      #key direction: direction = #"input-output",
-	  buffer-size = 4, number-of-buffers = 4,
-	  contents: contents :: <sequence> = "")
+          buffer-size = 4, number-of-buffers = 4,
+          contents: contents :: <sequence> = "")
  => (result-stream :: <file-stream>)
   ignore(direction);
   let temp-file-locator =  temp-file-pathname(initial-substring: "cmbfs");
   if (contents = "")
-    make(stream-class, locator: temp-file-locator, 
-	 buffer-size: buffer-size, number-of-buffers: number-of-buffers,
-	 if-exists: #"replace", if-does-not-exist: #"create", share?: #f);
+    make(stream-class, locator: temp-file-locator,
+         buffer-size: buffer-size, number-of-buffers: number-of-buffers,
+         if-exists: #"replace", if-does-not-exist: #"create", share?: #f);
   else
     let temporary-output-stream =
-      make(<file-stream>, direction: #"output", locator: temp-file-locator, 
-	   if-exists: #"replace", if-does-not-exist: #"create");
+      make(<file-stream>, direction: #"output", locator: temp-file-locator,
+           if-exists: #"replace", if-does-not-exist: #"create");
     write(temporary-output-stream, contents);
     close(temporary-output-stream);
     make(stream-class, locator: temp-file-locator,
-	 buffer-size: buffer-size, number-of-buffers: number-of-buffers,
-	 share?: #f);
+         buffer-size: buffer-size, number-of-buffers: number-of-buffers,
+         share?: #f);
   end if;
 end method;
 
@@ -302,7 +302,7 @@ end method stream-contents-and-close;
 define function default-stream-setup-function
     (stream, #key direction = #"input", contents = "")
  => (stream :: <object>)
-  if (contents ~= "") 
+  if (contents ~= "")
     make(stream, direction: direction, contents: contents);
   else
     make(stream, direction: direction);
@@ -313,8 +313,8 @@ define function default-stream-cleanup-function (stream :: <stream>) => ()
   ignore(stream);
 end function;
 
-define method universal-stream-test 
-    (class :: subclass(<stream>), tester, 
+define method universal-stream-test
+    (class :: subclass(<stream>), tester,
      #key setup-function = default-stream-setup-function,
      cleanup-function = default-stream-cleanup-function)
   let s = setup-function(class, direction: #"input", contents: tester);
@@ -335,7 +335,7 @@ define method universal-stream-test
     check-condition("end of stream should be reached", <end-of-stream-error>, read-element(s));
   end if;
   cleanup-function(s);
-  
+
   s := setup-function(class, direction: #"input", contents: tester);
   if (size(tester) > 2)
     let result = read(s, 3);
@@ -344,7 +344,7 @@ define method universal-stream-test
     check("third element matched?", \=, third(result), third(tester));
   elseif (size(tester) > 0)
     check-condition("expect <incomplete-read-error>", <incomplete-read-error>,
-		   read(tester, 3));
+                   read(tester, 3));
   else
     check-condition("empty error", <end-of-stream-error>, read(s, 3));
   end if;
@@ -354,40 +354,40 @@ define method universal-stream-test
   let my-list = list(1, 2, 3);
   if (size(tester)> 2)
     read-into!(s, 3, my-list);
-    check("first element matched?", \=, as(<integer>, first(my-list)), 
-	  as(<integer>, first(tester)));
-    check("second element matched?", \=, as(<integer>, second(my-list)), 
-	  as(<integer>, second(tester)));
-    check("third element matched?", \=, as(<integer>, third(my-list)), 
-	  as(<integer>,third(tester)));
+    check("first element matched?", \=, as(<integer>, first(my-list)),
+          as(<integer>, first(tester)));
+    check("second element matched?", \=, as(<integer>, second(my-list)),
+          as(<integer>, second(tester)));
+    check("third element matched?", \=, as(<integer>, third(my-list)),
+          as(<integer>,third(tester)));
    elseif (size(tester) > 0)
     check-condition("expect <incomplete-read-error>", <incomplete-read-error>,
-		   read-into!(tester, 3, my-list));
+                   read-into!(tester, 3, my-list));
   else
     check-condition("empty error", <end-of-stream-error>, read-into!(s, 3, my-list));
   end if;
   cleanup-function(s);
-  
-  s := setup-function(class, direction: #"input", contents: tester);  
+
+  s := setup-function(class, direction: #"input", contents: tester);
   if (size(tester) > 3)
     // read-to second of the tester should return a one element sequence
     check("read-to returns correct result", \=,
-	  copy-sequence(tester, end: 1), read-to(s, second(tester)));
+          copy-sequence(tester, end: 1), read-to(s, second(tester)));
     check("read should be on third after read-to second",
-	  \=, read-element(s), third(tester));
+          \=, read-element(s), third(tester));
   end if;
   cleanup-function(s);
-  
+
   s := setup-function(class, direction: #"input", contents: tester);
   if (size(tester) > 3)
     // read-through second of the tester should return a two element sequence
     check("read-through returns correct result", \=,
-	  copy-sequence(tester, end:  2), read-through(s, second(tester)));
+          copy-sequence(tester, end:  2), read-through(s, second(tester)));
     check("read should be on third after read-through second",
-	  \=, read-element(s), third(tester));
+          \=, read-element(s), third(tester));
   end if;
   cleanup-function(s);
-  
+
   s := setup-function(class, direction: #"input", contents: tester);
   // querying streams !!
   check("is stream open?", stream-open?, s);
@@ -408,16 +408,16 @@ define method universal-stream-test
   // write tests
   // First test if the setup function works:
 //   check("setup function with direction #\"output\" works",
-// 	stream-open?, s := setup-function(stream, direction: #"output"));
+//         stream-open?, s := setup-function(stream, direction: #"output"));
 //   cleanup-function(s);
 
   if (size(tester) > 0)
     s := setup-function(class, direction: #"output");
     write-element(s, first(tester));
-    check("write first element?", \=, first(tester), 
-	  first(stream-contents-and-close(s)));
+    check("write first element?", \=, first(tester),
+          first(stream-contents-and-close(s)));
     cleanup-function(s);
-    
+
     s := setup-function(class, direction: #"output");
     write(s, tester);
     check("write work?", \=, tester, stream-contents-and-close(s));
@@ -425,177 +425,177 @@ define method universal-stream-test
   end if;
 end method;
 
-define method positionable-stream-test 
-    (class :: subclass(<positionable-stream>), tester, 
+define method positionable-stream-test
+    (class :: subclass(<positionable-stream>), tester,
      #key setup-function = default-stream-setup-function,
      cleanup-function = default-stream-cleanup-function)
  => ()
   let s = setup-function(class, direction: #"input", contents: tester);
   check("stream position is zero?", zero?, as(<integer>, stream-position(s)));
-  check("stream position is end?", \=, size(tester), 
-	as(<integer>, adjust-stream-position(s, size(tester), from: #"start")));
+  check("stream position is end?", \=, size(tester),
+        as(<integer>, adjust-stream-position(s, size(tester), from: #"start")));
   if (size(tester) > 2)
     stream-position-setter(2, s);
-    check("stream position works?", \=, 
-	  read-element(s),
-	  third(tester));
+    check("stream position works?", \=,
+          read-element(s),
+          third(tester));
   end if;
   check("stream-size works?", \=, size(tester), stream-size(s));
   unless (instance?(s, <file-stream>))
     stream-contents(s, clear-contents?: #t);
-    check("clear contents", zero?, 
-	  stream-size(s));
+    check("clear contents", zero?,
+          stream-size(s));
   end;
   cleanup-function(s);
 end method positionable-stream-test;
 
 define test test-file-stream ()
    universal-stream-test(<file-stream>, "check it out",
-			setup-function: create-file-stream,
-			cleanup-function: destroy-file-stream);
+                        setup-function: create-file-stream,
+                        cleanup-function: destroy-file-stream);
 end test;
 
 define test test-empty-file-stream ()
   universal-stream-test(<file-stream>, "",
-			setup-function: create-file-stream,
-			cleanup-function: destroy-file-stream);
+                        setup-function: create-file-stream,
+                        cleanup-function: destroy-file-stream);
 end test;
 
 
 define test test-file-stream-exclusive ()
    universal-stream-test(<file-stream>, "check it out",
-			setup-function: create-file-stream-exclusive,
-			cleanup-function: destroy-file-stream);
+                        setup-function: create-file-stream-exclusive,
+                        cleanup-function: destroy-file-stream);
 end test;
 
 define test test-empty-file-stream-exclusive ()
   universal-stream-test(<file-stream>, "",
-			setup-function: create-file-stream-exclusive,
-			cleanup-function: destroy-file-stream);
+                        setup-function: create-file-stream-exclusive,
+                        cleanup-function: destroy-file-stream);
 end test;
 
 define test bogus-test-file-stream-using-input-output-streams ()
    universal-stream-test(<file-stream>, "check it out",
-			setup-function: create-input-output-file-stream,
-			cleanup-function: destroy-file-stream);
+                        setup-function: create-input-output-file-stream,
+                        cleanup-function: destroy-file-stream);
 end test;
 
 define test bogus-test-empty-file-stream-using-input-output-streams ()
   universal-stream-test(<file-stream>, "",
-			setup-function: create-input-output-file-stream,
-			cleanup-function: destroy-file-stream);
+                        setup-function: create-input-output-file-stream,
+                        cleanup-function: destroy-file-stream);
 end test;
 
 
 define test test-multi-buffered-file-stream ()
    universal-stream-test(<multi-buffered-stream>, "check it out",
-			setup-function: create-multi-buffered-file-stream,
-			cleanup-function: destroy-file-stream);
+                        setup-function: create-multi-buffered-file-stream,
+                        cleanup-function: destroy-file-stream);
 end test;
 
 define test test-empty-multi-buffered-file-stream ()
   universal-stream-test(<multi-buffered-stream>, "",
-			setup-function: create-multi-buffered-file-stream,
-			cleanup-function: destroy-file-stream);
+                        setup-function: create-multi-buffered-file-stream,
+                        cleanup-function: destroy-file-stream);
 end test;
 
 
 define test test-multi-buffered-file-stream-with-long-input ()
-   universal-stream-test(<multi-buffered-stream>, 
-			 "check out multi buffered streams with a long string",
-			setup-function: create-multi-buffered-file-stream,
-			cleanup-function: destroy-file-stream);
+   universal-stream-test(<multi-buffered-stream>,
+                         "check out multi buffered streams with a long string",
+                        setup-function: create-multi-buffered-file-stream,
+                        cleanup-function: destroy-file-stream);
 end test;
 
 define test test-multi-buffered-file-stream-exclusive ()
    universal-stream-test(<multi-buffered-stream>, "check it out",
-			setup-function: 
-			   create-multi-buffered-file-stream-exclusive,
-			cleanup-function: destroy-file-stream);
+                        setup-function:
+                           create-multi-buffered-file-stream-exclusive,
+                        cleanup-function: destroy-file-stream);
 end test;
 
 define test test-empty-multi-buffered-file-stream-exclusive ()
   universal-stream-test(<multi-buffered-stream>, "",
-			setup-function: 
-			  create-multi-buffered-file-stream-exclusive,
-			cleanup-function: destroy-file-stream);
+                        setup-function:
+                          create-multi-buffered-file-stream-exclusive,
+                        cleanup-function: destroy-file-stream);
 end test;
 
 
 define test test-multi-buffered-file-stream-with-long-input-exclusive ()
-   universal-stream-test(<multi-buffered-stream>, 
-			 "check out multi buffered streams with a long string",
-			setup-function: 
-			   create-multi-buffered-file-stream-exclusive,
-			cleanup-function: destroy-file-stream);
+   universal-stream-test(<multi-buffered-stream>,
+                         "check out multi buffered streams with a long string",
+                        setup-function:
+                           create-multi-buffered-file-stream-exclusive,
+                        cleanup-function: destroy-file-stream);
 end test;
 
 define test test-position-file-streams ()
   positionable-stream-test(<file-stream>, "check it out",
-			   setup-function: create-file-stream,
-			   cleanup-function: destroy-file-stream);
+                           setup-function: create-file-stream,
+                           cleanup-function: destroy-file-stream);
   positionable-stream-test(<file-stream>, "",
-			   setup-function: create-file-stream,
-			   cleanup-function: destroy-file-stream);
+                           setup-function: create-file-stream,
+                           cleanup-function: destroy-file-stream);
 end test;
 
 
 define test bogus-test-position-file-streams-using-input-output-streams ()
   positionable-stream-test(<file-stream>, "check it out",
-			   setup-function: create-input-output-file-stream,
-			   cleanup-function: destroy-file-stream);
+                           setup-function: create-input-output-file-stream,
+                           cleanup-function: destroy-file-stream);
   positionable-stream-test(<file-stream>, "",
-			   setup-function: create-input-output-file-stream,
-			   cleanup-function: destroy-file-stream);
+                           setup-function: create-input-output-file-stream,
+                           cleanup-function: destroy-file-stream);
 end test;
 
 define test test-position-multi-buffered-file-streams ()
   positionable-stream-test(<multi-buffered-stream>, "check it out",
-			   setup-function: create-multi-buffered-file-stream,
-			   cleanup-function: destroy-file-stream);
+                           setup-function: create-multi-buffered-file-stream,
+                           cleanup-function: destroy-file-stream);
   positionable-stream-test(<multi-buffered-stream>, "",
-			   setup-function: create-multi-buffered-file-stream,
-			   cleanup-function: destroy-file-stream);
+                           setup-function: create-multi-buffered-file-stream,
+                           cleanup-function: destroy-file-stream);
 end test;
 
 define test test-file-stream-creation (title: "<file-stream> make tests")
   let path = *hello-file*;
   check-true("make <file-stream> - create or overwrite", begin
-	  let s = make(<file-stream>, locator: path, if-exists: #"overwrite", 
-		       if-does-not-exist: #"create", 
-		       element-type: <byte-character>, 
-		       buffer-size: 1);
-	  close(s);
-	  #t;
-	end);
+          let s = make(<file-stream>, locator: path, if-exists: #"overwrite",
+                       if-does-not-exist: #"create",
+                       element-type: <byte-character>,
+                       buffer-size: 1);
+          close(s);
+          #t;
+        end);
   check-true("make <file-stream> - replace or signal",begin
-	  let s = make(<file-stream>, locator: path, if-exists: #"replace", 
-		       if-does-not-exist: #"signal", element-type: <character>, 
-		       buffer-size: 12);
-	  close(s);
-	  #t;
-	end);
+          let s = make(<file-stream>, locator: path, if-exists: #"replace",
+                       if-does-not-exist: #"signal", element-type: <character>,
+                       buffer-size: 12);
+          close(s);
+          #t;
+        end);
   check-true("make <file-stream> - append or signal",begin
-	  let s = make(<file-stream>, locator: path, if-exists: #"append", 
-		       if-does-not-exist: #"signal", element-type: <byte>, 
-		       buffer-size: 50);
-	  close(s);
-	  #t;
-	end);
+          let s = make(<file-stream>, locator: path, if-exists: #"append",
+                       if-does-not-exist: #"signal", element-type: <byte>,
+                       buffer-size: 50);
+          close(s);
+          #t;
+        end);
   check-true("make <file-stream> - truncate or signal",begin
-	  let s = make(<file-stream>, locator: path, if-exists: #"truncate", 
-		       if-does-not-exist: #"signal", buffer-size: 5);
-	  close(s);
-	  #t;
-	end);
-  check-condition("file does not exist error", <file-exists-error>, 
-		  make(<file-stream>, locator: path, direction: #"output",
-		       if-exists: #"signal", if-does-not-exist: #"signal", 
-		       buffer-size: 5));
+          let s = make(<file-stream>, locator: path, if-exists: #"truncate",
+                       if-does-not-exist: #"signal", buffer-size: 5);
+          close(s);
+          #t;
+        end);
+  check-condition("file does not exist error", <file-exists-error>,
+                  make(<file-stream>, locator: path, direction: #"output",
+                       if-exists: #"signal", if-does-not-exist: #"signal",
+                       buffer-size: 5));
 end test;
 
-				 
-define constant $line-end :: <string> 
+
+define constant $line-end :: <string>
   = select ($os-name)
       #"win32" => "\r\n";
       #"carbon" => "\r";
@@ -603,19 +603,19 @@ define constant $line-end :: <string>
     end;
 
 define constant $line-end-size :: <integer> = $line-end.size;
-  
+
 define test test-file-read-stream (title: "<file-stream> read tests")
   let path = *hello-file*;
  //check-false("make hello-file",condition(make-hello-file()));
   begin
-    let s = make(<file-stream>, direction: #"input-output", 
-		 locator: path, buffer-size: *tbs*);
+    let s = make(<file-stream>, direction: #"input-output",
+                 locator: path, buffer-size: *tbs*);
     write-line(s, "hello world");
-    check-true("Is stream size correct?", 
-	       (11 + $line-end-size) = stream-size(s));
+    check-true("Is stream size correct?",
+               (11 + $line-end-size) = stream-size(s));
     check-true("Is stream hello world?",
-	       concatenate("hello world", $line-end) = 
-		 stream-contents-and-close(s));
+               concatenate("hello world", $line-end) =
+                 stream-contents-and-close(s));
   end;
   begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*);
@@ -631,21 +631,21 @@ define test test-file-read-stream (title: "<file-stream> read tests")
     check-false("<string> should not be at end",stream-at-end?(s));
     check-true("read chars into string str", n = read-into!(s, n, str));
     check-true("Str should be old hello world",
-	       concatenate("hello world", $line-end) = str);
+               concatenate("hello world", $line-end) = str);
     check-true("Now stream should be-at-end",stream-at-end?(s));
     close(s);
   end;
-/* 
+/*
   begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*);
     let str = make(<string>, size: 13);
     let ire = condition(read-into!(s, 14, str));
     check-instance?("signals an <incomplete-read-error>",
-		    <incomplete-read-error>, ire);
+                    <incomplete-read-error>, ire);
     check-instance?("The stream-error-stream should be a <file-stream>",
-		    <file-stream>, ire.stream-error-stream);
+                    <file-stream>, ire.stream-error-stream);
     check-true("hello world should be the error sequence",
-	       "hello world\n  " = ire.stream-error-sequence);
+               "hello world\n  " = ire.stream-error-sequence);
     check-true("the error-count should be 12",12 = ire.stream-error-count);
     close(s);
   end;
@@ -662,7 +662,7 @@ define test test-file-read-stream (title: "<file-stream> read tests")
   begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*);
     check-true("is hello world read-to-end(s)",
-	       concatenate("hello world", $line-end) = read-to-end(s));
+               concatenate("hello world", $line-end) = read-to-end(s));
     close(s);
   end;
   begin
@@ -675,12 +675,12 @@ define test test-file-read-stream (title: "<file-stream> read tests")
 // This check is wrong.  The specification says that unreading an element
 // which wasn't read is an error.  It doesn't say that the error has to be
 // detected and a condition raised.
-//     check-condition("Unread element which wasn't read", 
-// 		    <error>, unread-element(s, 'z'));
+//     check-condition("Unread element which wasn't read",
+//                     <error>, unread-element(s, 'z'));
     //discard-input(s);
     //check-true("The stream should now be at the end",stream-at-end?(s));
     close(s);
-  end; 
+  end;
   begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*);
     check-true("skip the 'o'",skip-through(s, 'o'));
@@ -689,84 +689,84 @@ define test test-file-read-stream (title: "<file-stream> read tests")
  end;
 end test test-file-read-stream;
 
- 
+
 
 define test test-file-write-stream (title: "<file-stream> write tests")
   let path = temp-file-pathname(initial-substring: "tfws");
   //unix-unlink(asstring(path));
   begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"output", if-exists: #"replace",
-		 element-type: <byte-character>);
+                 direction: #"output", if-exists: #"replace",
+                 element-type: <byte-character>);
     write(s, "hello there");
     write-line(s, " world");
     close(s);
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input", element-type: <byte-character>);
+                 direction: #"input", element-type: <byte-character>);
     check-true("Stream contents = hello there world",
-	       concatenate("hello there world", $line-end) =
-		 stream-contents-and-close(s));
+               concatenate("hello there world", $line-end) =
+                 stream-contents-and-close(s));
     destroy-file-stream(s);
   end;
   begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"output", if-exists: #"replace",
-		 element-type: <byte-character>);
+                 direction: #"output", if-exists: #"replace",
+                 element-type: <byte-character>);
     write(s, "hello there");
     close(s);
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"output", if-exists: #"append",
-		 element-type: <byte-character>);
+                 direction: #"output", if-exists: #"append",
+                 element-type: <byte-character>);
     write-line(s, " sailor");
     close(s);
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input", element-type: <byte-character>);
+                 direction: #"input", element-type: <byte-character>);
     check-true("Open output file with if-exists = append and write",
-	       concatenate("hello there sailor", $line-end) =
-		 stream-contents-and-close(s));
+               concatenate("hello there sailor", $line-end) =
+                 stream-contents-and-close(s));
     destroy-file-stream(s);
   end;
   begin
     // This is a read-write test but the read-write tests are such a mess
     // that I don't even want to touch them!!
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"output", if-exists: #"replace",
-		 element-type: <byte-character>);
+                 direction: #"output", if-exists: #"replace",
+                 element-type: <byte-character>);
     write(s, "hello there");
     close(s);
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input-output", if-exists: #"append",
-		 element-type: <byte-character>);
+                 direction: #"input-output", if-exists: #"append",
+                 element-type: <byte-character>);
     write-line(s, " sailor");
     close(s);
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input", element-type: <byte-character>);
+                 direction: #"input", element-type: <byte-character>);
     check-true("Open output file with if-exists = append and write",
-	       concatenate("hello there sailor", $line-end) =
-		 stream-contents-and-close(s));
+               concatenate("hello there sailor", $line-end) =
+                 stream-contents-and-close(s));
     destroy-file-stream(s);
   end;
   begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"output", if-exists: #"replace",
-		 element-type: <character>);
+                 direction: #"output", if-exists: #"replace",
+                 element-type: <character>);
     write(s, "hello there");
     write-line(s, " world");
     close(s);
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input", element-type: <character>);
+                 direction: #"input", element-type: <character>);
     check-true("Contents hello there world",
-	       concatenate("hello there world", $line-end) = stream-contents-and-close(s));
+               concatenate("hello there world", $line-end) = stream-contents-and-close(s));
   end;
   begin
     let c = concatenate("hello there world", $line-end);
     let n = size(c);
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"output", if-exists: #"replace");
+                 direction: #"output", if-exists: #"replace");
     write(s, c);
     check-true("Stream position should be n", n = stream-position(s));
     check-true("Contents still hello there world", c =
-		 stream-contents-and-close(s));
+                 stream-contents-and-close(s));
     destroy-file-stream(s);
   end;
 end test test-file-write-stream;
@@ -775,57 +775,57 @@ define test test-write-to-multi-buffered-file-stream (title: "<multi-buffered--s
   let path = temp-file-pathname(initial-substring: "tfws");
   begin
     let s = make(<multi-buffered-stream>, locator: path, buffer-size: 4,
-		 number-of-buffers: 2, if-exists: #"replace",
-		 element-type: <byte-character>);
+                 number-of-buffers: 2, if-exists: #"replace",
+                 element-type: <byte-character>);
     write(s, "hello there");
     write-line(s, " world");
     close(s);
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input", element-type: <byte-character>);
+                 direction: #"input", element-type: <byte-character>);
     check-true("Stream contents = hello there world",
-	       concatenate("hello there world", $line-end) =
-		 stream-contents-and-close(s));
+               concatenate("hello there world", $line-end) =
+                 stream-contents-and-close(s));
     destroy-file-stream(s);
   end;
   begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"output", if-exists: #"replace",
-		 element-type: <byte-character>);
+                 direction: #"output", if-exists: #"replace",
+                 element-type: <byte-character>);
     write(s, "hello there");
     close(s);
     let s = make(<multi-buffered-stream>, locator: path, buffer-size: 4,
-		 number-of-buffers: 2, if-exists: #"append",
-		 element-type: <byte-character>);
+                 number-of-buffers: 2, if-exists: #"append",
+                 element-type: <byte-character>);
     write-line(s, " sailor");
     close(s);
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input", element-type: <byte-character>);
+                 direction: #"input", element-type: <byte-character>);
     check-true("Open output file with if-exists = append and write",
-	       concatenate("hello there sailor", $line-end) =
-		 stream-contents-and-close(s));
+               concatenate("hello there sailor", $line-end) =
+                 stream-contents-and-close(s));
     destroy-file-stream(s);
   end;
   begin
     let s = make(<multi-buffered-stream>, locator: path, buffer-size: 4,
-		 number-of-buffers: 2, if-exists: #"replace",
-		 element-type: <character>);
+                 number-of-buffers: 2, if-exists: #"replace",
+                 element-type: <character>);
     write(s, "hello there");
     write-line(s, " world");
     close(s);
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input", element-type: <character>);
+                 direction: #"input", element-type: <character>);
     check-true("Contents hello there world",
-	       concatenate("hello there world", $line-end) = stream-contents-and-close(s));
+               concatenate("hello there world", $line-end) = stream-contents-and-close(s));
   end;
   begin
     let c = concatenate("hello there world", $line-end);
     let n = size(c);
     let s = make(<multi-buffered-stream>, locator: path, buffer-size: 4,
-		 number-of-buffers: 2, if-exists: #"replace");
+                 number-of-buffers: 2, if-exists: #"replace");
     write(s, c);
     check-true("Stream position should be n", n = stream-position(s));
     check-true("Contents still hello there world", c =
-		 stream-contents-and-close(s));
+                 stream-contents-and-close(s));
     destroy-file-stream(s);
   end;
 end test test-write-to-multi-buffered-file-stream;
@@ -837,16 +837,16 @@ define test test-file-read-write-stream (title: "<file-stream> read-write tests"
   let n = size(c);
   begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input-output",
-		 if-exists: #"overwrite", if-does-not-exist: #"signal");
+                 direction: #"input-output",
+                 if-exists: #"overwrite", if-does-not-exist: #"signal");
     check-true("Stream size should now be n",n = stream-size(s));
-    check-true("Contents are still hello world", 
-	       c = stream-contents-and-close(s));
+    check-true("Contents are still hello world",
+               c = stream-contents-and-close(s));
   end;
   begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input-output",
-		 if-exists: #"overwrite", if-does-not-exist: #"signal");
+                 direction: #"input-output",
+                 if-exists: #"overwrite", if-does-not-exist: #"signal");
     check-false("Stream cant be at the end",stream-at-end?(s));
     check-true("Read 11 chars of hello world","hello world" = read(s, 11));
     check-false("Stream still cant be at the end",stream-at-end?(s));
@@ -854,8 +854,8 @@ define test test-file-read-write-stream (title: "<file-stream> read-write tests"
   end;
   begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input-output",
-		 if-exists: #"overwrite", if-does-not-exist: #"signal");
+                 direction: #"input-output",
+                 if-exists: #"overwrite", if-does-not-exist: #"signal");
     let str = make(<string>, size: n);
     check-false("String stream isnt at the end",stream-at-end?(s));
     check-true("Reading 12 chars into it", n = read-into!(s, n, str));
@@ -866,14 +866,14 @@ define test test-file-read-write-stream (title: "<file-stream> read-write tests"
   /*
   begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input-output",
-		 if-exists: #"overwrite", if-does-not-exist: #"signal");
+                 direction: #"input-output",
+                 if-exists: #"overwrite", if-does-not-exist: #"signal");
     let str = make(<string>,size: 14);
     let ire = condition(read-into!(s, 14, str));
     check-instance?("should signal an incomplete-read-error",
-		    <incomplete-read-error>, ire);
+                    <incomplete-read-error>, ire);
     check-instance?("The stream error stream is <file-stream>",
-		    <file-stream>, ire.stream-error-stream);
+                    <file-stream>, ire.stream-error-stream);
     check-true("hello world is the error sequence","hello world\n  " = ire.stream-error-sequence);
     check-true("The error count is 12",12 = ire.stream-error-count);
     close(s);
@@ -881,21 +881,21 @@ define test test-file-read-write-stream (title: "<file-stream> read-write tests"
   */
   begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input-output",
-		 if-exists: #"overwrite", if-does-not-exist: #"signal");
+                 direction: #"input-output",
+                 if-exists: #"overwrite", if-does-not-exist: #"signal");
     let str = shallow-copy("=>.....|.....<=");
     check-false("Stream should not be at the end",stream-at-end?(s));
     check-true("Reading 11 chars into str",11 = read-into!(s, 11, str, start: 2));
-    check-true("Hello world should be the str","=>hello world<=" = str);  
+    check-true("Hello world should be the str","=>hello world<=" = str);
     check-false("Still not at the end",stream-at-end?(s));
     close(s);
   end;
   begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input-output",
-		 if-exists: #"overwrite", if-does-not-exist: #"signal");
+                 direction: #"input-output",
+                 if-exists: #"overwrite", if-does-not-exist: #"signal");
     check-true("read-to-end hello world",
-	       concatenate("hello world", $line-end) = read-to-end(s));
+               concatenate("hello world", $line-end) = read-to-end(s));
     close(s);
     destroy-file-stream(s);
   end;
@@ -906,30 +906,30 @@ define test test-file-read-write-stream (title: "<file-stream> read-write tests"
 
   begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input-output", if-exists: #"replace");
+                 direction: #"input-output", if-exists: #"replace");
     write(s, "hello there");
     write-line(s, " world");
     check-true("The position is now new-n", new-n = stream-position(s));
     check-true("The contents are hello there world",
-	       new-c = stream-contents-and-close(s));
+               new-c = stream-contents-and-close(s));
   end;
   begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input-output", if-exists: #"replace");
+                 direction: #"input-output", if-exists: #"replace");
     write(s, new-c);
     check-true("The position is still new-n", new-n = stream-position(s));
     check-true("The contents are still hello there world",
-	       new-c = stream-contents-and-close(s));
+               new-c = stream-contents-and-close(s));
   end;
   with-open-file (s = path)
   end;
   with-open-file (s = path, buffer-size: *tbs*,
-		  direction: #"input-output", if-exists: #"replace")
+                  direction: #"input-output", if-exists: #"replace")
     write(s, "01234567890123456789");
     stream-position(s) := 5;
     write(s, "ABCDEFG");
     check-true("contents: 01234ABCDEFG23456789",
-	       "01234ABCDEFG23456789" = stream-contents-and-close(s));
+               "01234ABCDEFG23456789" = stream-contents-and-close(s));
     destroy-file-stream(s);
   end;
 end test test-file-read-write-stream;
@@ -939,196 +939,196 @@ define test test-file-stream-functions (title: "<file-stream> function tests")
 
   begin
     let s = make(<file-stream>, locator: path, buffer-size: (*tbs* + 1),
-		 direction: #"output", if-exists: #"replace", 
-		 element-type: <byte>);
+                 direction: #"output", if-exists: #"replace",
+                 element-type: <byte>);
     write-line(s, "hello there");
     close(s);
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"output", if-exists: #"overwrite",
-		 element-type: <byte>);
+                 direction: #"output", if-exists: #"overwrite",
+                 element-type: <byte>);
     write(s, "yummy");
     close(s);
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input", element-type: <byte>);
+                 direction: #"input", element-type: <byte>);
     check-true("coercing contents to string yummy there",
-	       concatenate("yummy there", $line-end) = 
-		 as(<string>, stream-contents-and-close(s)));
+               concatenate("yummy there", $line-end) =
+                 as(<string>, stream-contents-and-close(s)));
   end;
   begin
     let s = make(<file-stream>, locator: path, buffer-size: (*tbs* + 1),
-		 direction: #"output", if-exists: #"replace", 
-		 element-type: <byte>);
+                 direction: #"output", if-exists: #"replace",
+                 element-type: <byte>);
     write-line(s, "hello there");
     close(s);
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"output", if-exists: #"overwrite",
-		 element-type: <byte>);
+                 direction: #"output", if-exists: #"overwrite",
+                 element-type: <byte>);
     write(s, "yummy");
     close(s);
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input", element-type: <byte>);
+                 direction: #"input", element-type: <byte>);
     check-true("yummy there is the contents as a <string>",
-	       concatenate("yummy there", $line-end) = 
-		 (as(<string>, stream-contents-and-close(s))));
+               concatenate("yummy there", $line-end) =
+                 (as(<string>, stream-contents-and-close(s))));
   end;
 /*
  begin
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"output", if-exists: #"replace", 
-		 element-type: <byte>);
+                 direction: #"output", if-exists: #"replace",
+                 element-type: <byte>);
     write-line(s, "hello there");
     close(s);
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"output", if-exists: #"append", 
+                 direction: #"output", if-exists: #"append",
                                         // #"append" is not implemented?
-		 element-type: <character>); // <character> and
-                                        // <byte-character>  not 
- 	                                // implemented yet?
+                 element-type: <character>); // <character> and
+                                        // <byte-character>  not
+                                         // implemented yet?
     write-line(s, "yummy");
     close(s);
     let s = make(<file-stream>, locator: path, buffer-size: *tbs*,
-		 direction: #"input");
+                 direction: #"input");
     check-true("hello there yummy contents on 2 lines",
-	       "hello there\nyummy\n" = stream-contents-and-close(s));
+               "hello there\nyummy\n" = stream-contents-and-close(s));
   end;
 */
   begin
     let s = make(<file-stream>, locator: path, buffer-size: (*tbs* + 1),
-		 direction: #"output", if-exists: #"replace");
+                 direction: #"output", if-exists: #"replace");
     write-line(s, "hello there");
     close(s);
     check-condition("Signals file exists error", <file-exists-error>,
-		    make(<file-stream>, locator: path, buffer-size: *tbs*,
-			 direction: #"output", if-exists: #"signal"));
+                    make(<file-stream>, locator: path, buffer-size: *tbs*,
+                         direction: #"output", if-exists: #"signal"));
     check-condition("Signals file does not exist error", <file-does-not-exist-error>,
-		    make(<file-stream>, 
+                    make(<file-stream>,
                          locator: temp-file-pathname(initial-substring: "dst-helloeeee"),
-			 buffer-size: *tbs* + 1,
-			 direction: #"output", 
-			 if-does-not-exist: #"signal")); 
+                         buffer-size: *tbs* + 1,
+                         direction: #"output",
+                         if-does-not-exist: #"signal"));
     destroy-file-stream(s);
   end;
 end test;
 
 define method closed-external-stream-test-2
     (stream-class, the-direction, the-element-type, file-to-open)
-  let title-suffix = 
+  let title-suffix =
     concatenate(select (stream-class)
-		  <file-stream> => ", file-stream";
-		  <multi-buffered-stream> => ", multi-buffered-stream";
-		  otherwise => ", unknown stream type";
-		end select,
-		", ",
-		as(<string>, the-direction),
-		select (the-element-type)
-		  <byte-character> => ", byte-character";
-		  <byte> => ", byte";
-		  otherwise => ", unknown element type";
-		end select);
-  let s = make(stream-class, direction: the-direction, 
-	       element-type: the-element-type, locator: file-to-open);
+                  <file-stream> => ", file-stream";
+                  <multi-buffered-stream> => ", multi-buffered-stream";
+                  otherwise => ", unknown stream type";
+                end select,
+                ", ",
+                as(<string>, the-direction),
+                select (the-element-type)
+                  <byte-character> => ", byte-character";
+                  <byte> => ", byte";
+                  otherwise => ", unknown element type";
+                end select);
+  let s = make(stream-class, direction: the-direction,
+               element-type: the-element-type, locator: file-to-open);
   let the-stream-size = s.stream-size;
   close(s);
-  check-condition(concatenate("read-element from closed stream", 
-			      title-suffix), 
-		  <stream-closed-error>,
-		  read-element(s));
+  check-condition(concatenate("read-element from closed stream",
+                              title-suffix),
+                  <stream-closed-error>,
+                  read-element(s));
   check-condition(concatenate("unread-element from closed stream",
-			      title-suffix), 
-		  <stream-closed-error>,
-		  unread-element(s, as(the-element-type, 'a')));
-  check-condition(concatenate("read-line from closed stream", 
-			      title-suffix), 
-		  <stream-closed-error>,
-		  read-line(s));
-  check-condition(concatenate("read from closed stream", title-suffix), 
-		  <stream-closed-error>,
-		  read(s, 37));
-  check-condition(concatenate("read-to-end from closed stream", 
-			      title-suffix), 
-		  <stream-closed-error>,
-		  read-to-end(s));
-  check-condition(concatenate("peek from closed stream", title-suffix), 
-		  <stream-closed-error>,
-		  peek(s));
+                              title-suffix),
+                  <stream-closed-error>,
+                  unread-element(s, as(the-element-type, 'a')));
+  check-condition(concatenate("read-line from closed stream",
+                              title-suffix),
+                  <stream-closed-error>,
+                  read-line(s));
+  check-condition(concatenate("read from closed stream", title-suffix),
+                  <stream-closed-error>,
+                  read(s, 37));
+  check-condition(concatenate("read-to-end from closed stream",
+                              title-suffix),
+                  <stream-closed-error>,
+                  read-to-end(s));
+  check-condition(concatenate("peek from closed stream", title-suffix),
+                  <stream-closed-error>,
+                  peek(s));
   check-condition(concatenate("write-element to closed stream",
-			      title-suffix), 
-		  <stream-closed-error>,
-		  write-element(s, as(the-element-type, 'b')));
-  check-condition(concatenate("write-line to closed stream", title-suffix), 
-		  <stream-closed-error>,
-		  write-line(s, "something"));
-  check-condition(concatenate("write to closed stream", title-suffix), 
-		  <stream-closed-error>,
-		  write(s, "something-else"));
-  check-condition(concatenate("set position in closed stream", 
-			      title-suffix), 
-		  <stream-closed-error>,
-		  stream-position-setter(the-stream-size + 23, s));
+                              title-suffix),
+                  <stream-closed-error>,
+                  write-element(s, as(the-element-type, 'b')));
+  check-condition(concatenate("write-line to closed stream", title-suffix),
+                  <stream-closed-error>,
+                  write-line(s, "something"));
+  check-condition(concatenate("write to closed stream", title-suffix),
+                  <stream-closed-error>,
+                  write(s, "something-else"));
+  check-condition(concatenate("set position in closed stream",
+                              title-suffix),
+                  <stream-closed-error>,
+                  stream-position-setter(the-stream-size + 23, s));
   check-condition(concatenate("new-line position in closed stream",
-			      title-suffix), 
-		  <stream-closed-error>,
-		  new-line(s));
+                              title-suffix),
+                  <stream-closed-error>,
+                  new-line(s));
  // should be benign
-  check-true(concatenate("close closed file", title-suffix), 
-	     block() close(s); #t end block);
+  check-true(concatenate("close closed file", title-suffix),
+             block() close(s); #t end block);
   check-true(concatenate("force-output on closed file", title-suffix),
-	block() force-output(s); #t end block);
+        block() force-output(s); #t end block);
   check-false(concatenate("stream-open? on closed file",
-			  title-suffix),
-	      stream-open?(s)); 
-  check-false(concatenate("stream-input-available? on closed file", 
-			  title-suffix), 
-	      stream-input-available?(s)); 
+                          title-suffix),
+              stream-open?(s));
+  check-false(concatenate("stream-input-available? on closed file",
+                          title-suffix),
+              stream-input-available?(s));
 end method;
 
 define method closed-external-stream-test-1(the-element-type, file-to-open)
   closed-external-stream-test-2(<file-stream>, #"input", the-element-type,
-				file-to-open); 
+                                file-to-open);
   closed-external-stream-test-2(<file-stream>, #"output", the-element-type,
-				file-to-open); 
+                                file-to-open);
   closed-external-stream-test-2(<file-stream>, #"input-output",
-				the-element-type, file-to-open); 
+                                the-element-type, file-to-open);
   closed-external-stream-test-2(<multi-buffered-stream>,
-				#"input-output", the-element-type, file-to-open);
+                                #"input-output", the-element-type, file-to-open);
   closed-external-stream-test-2(<multi-buffered-stream>, #"input",
-				the-element-type, file-to-open); 
+                                the-element-type, file-to-open);
 end method;
 
 define method closed-external-stream-test()
   let temp-file-locator =  temp-file-pathname(initial-substring:
-						"d-s-t");
+                                                "d-s-t");
   let temporary-output-stream =
-    make(<file-stream>, direction: #"output", locator: temp-file-locator, 
-	   if-exists: #"replace", if-does-not-exist: #"create");
+    make(<file-stream>, direction: #"output", locator: temp-file-locator,
+           if-exists: #"replace", if-does-not-exist: #"create");
   write(temporary-output-stream, "closed streams tests" );
   close(temporary-output-stream);
-  closed-external-stream-test-1(<byte-character>, temp-file-locator); 
-  closed-external-stream-test-1(<byte>, temp-file-locator); 
+  closed-external-stream-test-1(<byte-character>, temp-file-locator);
+  closed-external-stream-test-1(<byte>, temp-file-locator);
   delete-file(temp-file-locator);
 end method;
 
 define test test-closed-external-streams
-  (title: "Test operations on closed external streams")  
+  (title: "Test operations on closed external streams")
      closed-external-stream-test();
-end test;  
+end test;
 
 define test test-multi-buffered-read-only (title: "<multi-buffered-stream> readonly tests")
   let path = *hello-file*;
  //check-false("make hello-file",condition(make-hello-file()));
   begin
-    let s = make(<multi-buffered-stream>, direction: #"input-output", 
-		 locator: path, buffer-size: 4, number-of-buffers: 2);
+    let s = make(<multi-buffered-stream>, direction: #"input-output",
+                 locator: path, buffer-size: 4, number-of-buffers: 2);
     write-line(s, "hello world");
-    check-true("Is stream size correct?", 
-	       (11 + $line-end-size) = stream-size(s));
+    check-true("Is stream size correct?",
+               (11 + $line-end-size) = stream-size(s));
     check-true("Is stream hello world?",
-	       concatenate("hello world", $line-end) = 
-		 stream-contents-and-close(s));
+               concatenate("hello world", $line-end) =
+                 stream-contents-and-close(s));
   end;
   begin
     let s = make(<multi-buffered-stream>, locator: path, buffer-size:
-		   4, number-of-buffers: 2, direction: #"input"); 
+                   4, number-of-buffers: 2, direction: #"input");
     check-false("<multi-buffered-stream> should not be at end",stream-at-end?(s));
     check-true("read hello world a stream of 11","hello world" = read(s, 11));
     check-false("Stream should STILL not be at end",stream-at-end?(s));
@@ -1137,33 +1137,33 @@ define test test-multi-buffered-read-only (title: "<multi-buffered-stream> reado
   begin
     let n = (11 + $line-end-size);
     let s = make(<multi-buffered-stream>, locator: path, buffer-size:
-		   4, number-of-buffers: 2, direction: #"input"); 
+                   4, number-of-buffers: 2, direction: #"input");
     let str = make(<string>, size: n);
     check-false("<string> should not be at end",stream-at-end?(s));
     check-true("read chars into string str", n = read-into!(s, n, str));
     check-true("Str should be old hello world",
-	       concatenate("hello world", $line-end) = str);
+               concatenate("hello world", $line-end) = str);
     check-true("Now stream should be-at-end",stream-at-end?(s));
     close(s);
   end;
-/* 
+/*
   begin
     let s = make(<multi-buffered-stream>, locator: path, buffer-size: 4, number-of-buffers: 2, direction: #"input");
     let str = make(<string>, size: 13);
     let ire = condition(read-into!(s, 14, str));
     check-instance?("signals an <incomplete-read-error>",
-		    <incomplete-read-error>, ire);
+                    <incomplete-read-error>, ire);
     check-instance?("The stream-error-stream should be a <multi-buffered-stream>",
-		    <multi-buffered-stream>, ire.stream-error-stream);
+                    <multi-buffered-stream>, ire.stream-error-stream);
     check-true("hello world should be the error sequence",
-	       "hello world\n  " = ire.stream-error-sequence);
+               "hello world\n  " = ire.stream-error-sequence);
     check-true("the error-count should be 12",12 = ire.stream-error-count);
     close(s);
   end;
 */
  begin
     let s = make(<multi-buffered-stream>, locator: path, buffer-size:
-		   4, number-of-buffers: 2, direction: #"input"); 
+                   4, number-of-buffers: 2, direction: #"input");
     let str = shallow-copy("=>.....|.....<=");
     check-false("This file-stream should not be at end",stream-at-end?(s));
     check-true("Read hello world into the string",11 = read-into!(s, 11, str, start: 2));
@@ -1173,14 +1173,14 @@ define test test-multi-buffered-read-only (title: "<multi-buffered-stream> reado
   end;
   begin
     let s = make(<multi-buffered-stream>, locator: path, buffer-size:
-		   4, number-of-buffers: 2, direction: #"input"); 
+                   4, number-of-buffers: 2, direction: #"input");
     check-true("is hello world read-to-end(s)",
-	       concatenate("hello world", $line-end) = read-to-end(s));
+               concatenate("hello world", $line-end) = read-to-end(s));
     close(s);
   end;
   begin
     let s = make(<multi-buffered-stream>, locator: path, buffer-size:
-		   4, number-of-buffers: 2, direction: #"input"); 
+                   4, number-of-buffers: 2, direction: #"input");
     check-true("The first element is h",'h' = read-element(s));
     check-true("The peek is e",'e' = peek(s));
     check-true("The next element is e",'e' = read-element(s));
@@ -1189,15 +1189,15 @@ define test test-multi-buffered-read-only (title: "<multi-buffered-stream> reado
 // This check is wrong.  The specification says that unreading an element
 // which wasn't read is an error.  It doesn't say that the error has to be
 // detected and a condition raised.
-//     check-condition("Unread element which wasn't read", 
-// 		    <error>, unread-element(s, 'z'));
+//     check-condition("Unread element which wasn't read",
+//                     <error>, unread-element(s, 'z'));
     //discard-input(s);
     //check-true("The stream should now be at the end",stream-at-end?(s));
     close(s);
-  end; 
+  end;
   begin
     let s = make(<multi-buffered-stream>, locator: path, buffer-size:
-		   4, number-of-buffers: 2, direction: #"input"); 
+                   4, number-of-buffers: 2, direction: #"input");
     check-true("skip the 'o'",skip-through(s, 'o'));
     check-true("The next element should be a space",' ' = read-element(s));
     close(s);
@@ -1205,26 +1205,26 @@ define test test-multi-buffered-read-only (title: "<multi-buffered-stream> reado
 end test test-multi-buffered-read-only;
 
 // This test tests the type of things that might fail with an async stream,
-// but is still valid applied to a syncronous stream.  
+// but is still valid applied to a syncronous stream.
 // stream should be input-output.
 define function async-stream-test (stream :: <file-stream>) => ()
   let rand :: <random> = make(<random>, seed: 0);
   let num-buffers :: <integer> = 8;
   let buffer-size :: <integer> = 16 * 1024;  // == $preferred-buffer-size;
-  let data :: <byte-vector> = make(<byte-vector>, 
-				   size: num-buffers * buffer-size);
+  let data :: <byte-vector> = make(<byte-vector>,
+                                   size: num-buffers * buffer-size);
 
   for (index from 0 below num-buffers * buffer-size)
     data[index] := random(256, random: rand);
   end for;
 
   write(stream, data);
-   
+
   begin
     stream.stream-position := 6 * buffer-size;
     let buffer-6 :: <byte-vector> = read(stream, buffer-size);
-    check("buffer read after writes", \=, buffer-6, 
-	  copy-sequence(data, start: 6 * buffer-size, end: 7 * buffer-size));
+    check("buffer read after writes", \=, buffer-6,
+          copy-sequence(data, start: 6 * buffer-size, end: 7 * buffer-size));
   end;
 
   let half-buffer-size = floor/(buffer-size, 2);
@@ -1232,14 +1232,14 @@ define function async-stream-test (stream :: <file-stream>) => ()
     data[index] := random(256, random: rand);
   end for;
   stream.stream-position := 2 * buffer-size + half-buffer-size;
-  write(stream, data, start: 2 * buffer-size + half-buffer-size, 
-  	end: 3 * buffer-size);
-  
+  write(stream, data, start: 2 * buffer-size + half-buffer-size,
+          end: 3 * buffer-size);
+
   begin
     stream.stream-position := 2 * buffer-size;
     let buffer-2 :: <byte-vector> = read(stream, buffer-size);
-    check("changed buffer read", \=, buffer-2, 
-	  copy-sequence(data, start: 2 * buffer-size, end: 3 * buffer-size));
+    check("changed buffer read", \=, buffer-2,
+          copy-sequence(data, start: 2 * buffer-size, end: 3 * buffer-size));
   end;
 
   begin
@@ -1249,12 +1249,12 @@ define function async-stream-test (stream :: <file-stream>) => ()
   end;
 end function async-stream-test;
 
-define function open-stream-for-async-test (#rest keywords) 
-					=> (r :: <file-stream>)
+define function open-stream-for-async-test (#rest keywords)
+                                        => (r :: <file-stream>)
   let temp-file-locator =  temp-file-pathname(initial-substring: "a-s-t");
-  apply(make, <file-stream>, direction: #"input-output", 
-	locator: temp-file-locator, if-exists: #"replace", 
-	if-does-not-exist: #"create", element-type: <byte>, keywords);
+  apply(make, <file-stream>, direction: #"input-output",
+        locator: temp-file-locator, if-exists: #"replace",
+        if-does-not-exist: #"create", element-type: <byte>, keywords);
 end function open-stream-for-async-test;
 
 define test test-sync-stream-async-tests ()
@@ -1354,68 +1354,68 @@ define file-system class-test <file-system-file-locator> ()
 end class-test <file-system-file-locator>;
 
 define method test-file-system-locator-class
-    (class-name :: <string>, class :: subclass(<file-system-locator>), 
+    (class-name :: <string>, class :: subclass(<file-system-locator>),
      pathnames :: <sequence>,
      #key case-sensitive? :: <boolean> = #t,
           separator :: false-or(<character>) = '/',
           alternate-separator :: false-or(<character>) = separator)
  => ()
   local method switch-separators
-	    (string :: <string>, old :: <character>, new :: <character>)
-	 => (new-string :: <string>)
-	  if (old == new)
-	    string
-	  else
-	    map(method (char :: <character>)
-		  if (char == old) new else char end
-		end,
-		string)
-	  end
-	end method switch-separators,
+            (string :: <string>, old :: <character>, new :: <character>)
+         => (new-string :: <string>)
+          if (old == new)
+            string
+          else
+            map(method (char :: <character>)
+                  if (char == old) new else char end
+                end,
+                string)
+          end
+        end method switch-separators,
 
         method canonicalize-pathname
-	    (pathname :: <string>) => (canonical-pathname :: <string>)
-	  let pathname = switch-separators(pathname, alternate-separator, separator);
-	  let pathname-size = pathname.size;
-	  if (subtype?(class, <directory-locator>)
-		& (pathname-size == 0
-		     | pathname[pathname-size - 1] ~== separator))
-	    concatenate(pathname, vector(separator))
-	  else
-	    pathname
-	  end
-	end method canonicalize-pathname;
+            (pathname :: <string>) => (canonical-pathname :: <string>)
+          let pathname = switch-separators(pathname, alternate-separator, separator);
+          let pathname-size = pathname.size;
+          if (subtype?(class, <directory-locator>)
+                & (pathname-size == 0
+                     | pathname[pathname-size - 1] ~== separator))
+            concatenate(pathname, vector(separator))
+          else
+            pathname
+          end
+        end method canonicalize-pathname;
 
   for (pathname :: <string> in pathnames)
     let locator = as(class, pathname);
     check-instance?(format-to-string
-		      ("as(%s, %=) returns valid locator",
-		       class-name, pathname),
-		    class, locator);
+                      ("as(%s, %=) returns valid locator",
+                       class-name, pathname),
+                    class, locator);
     check-equal(format-to-string("as(<string>, as(%s, %=)) = %=",
-				 class-name, pathname, pathname),
-		as(<string>, locator),
-		canonicalize-pathname(pathname));
+                                 class-name, pathname, pathname),
+                as(<string>, locator),
+                canonicalize-pathname(pathname));
     if (case-sensitive?)
       check-false(format-to-string("Locator %s sensitive to case", pathname),
-		  as(class, as-lowercase(pathname))
-		    = as(class, as-uppercase(pathname)))
+                  as(class, as-lowercase(pathname))
+                    = as(class, as-uppercase(pathname)))
     else
       check-equal(format-to-string("Locator %s insensitive to case", pathname),
-		  as(class, as-lowercase(pathname)),
-		  as(class, as-uppercase(pathname)))
-    
+                  as(class, as-lowercase(pathname)),
+                  as(class, as-uppercase(pathname)))
+
     end;
     if (alternate-separator ~== separator)
       let pathname = switch-separators(pathname, alternate-separator, separator);
       check-equal(format-to-string("locator %= = locator %=",
-				   pathname, pathname),
-		  locator,
-		  as(class, pathname));
+                                   pathname, pathname),
+                  locator,
+                  as(class, pathname));
       check-equal(format-to-string("as(<string>, as(%s, %=)) = %=",
-				   class-name, pathname, pathname),
-		  as(<string>, locator),
-		  canonicalize-pathname(pathname))
+                                   class-name, pathname, pathname),
+                  as(<string>, locator),
+                  canonicalize-pathname(pathname))
     end
   end
 end method test-file-system-locator-class;
@@ -1445,27 +1445,27 @@ end class-test <microsoft-server-locator>;
 
 define file-system class-test <microsoft-unc-locator> ()
   check-equal("as(<string>, microsoft-unc-locator)",
-	      as(<string>, make(<microsoft-unc-locator>, host: "host")),
-	      "\\\\host");
+              as(<string>, make(<microsoft-unc-locator>, host: "host")),
+              "\\\\host");
   check-equal("microsoft-unc-locator case insensitive",
-	      make(<microsoft-unc-locator>, host: "host"),
-	      make(<microsoft-unc-locator>, host: "HOST"))
+              make(<microsoft-unc-locator>, host: "host"),
+              make(<microsoft-unc-locator>, host: "HOST"))
 end class-test <microsoft-unc-locator>;
 
 define file-system class-test <microsoft-volume-locator> ()
   check-equal("as(<string>, microsoft-volume-locator)",
-	      as(<string>, make(<microsoft-volume-locator>, volume: "a")),
-	      "a:");
+              as(<string>, make(<microsoft-volume-locator>, volume: "a")),
+              "a:");
   check-equal("microsoft-volume-locator case insensitive",
-	      make(<microsoft-volume-locator>, volume: "a"),
-	      make(<microsoft-volume-locator>, volume: "A"))
+              make(<microsoft-volume-locator>, volume: "a"),
+              make(<microsoft-volume-locator>, volume: "A"))
 end class-test <microsoft-volume-locator>;
 
 define file-system class-test <microsoft-file-system-locator> ()
   test-file-system-locator-class
     ("<microsoft-file-system-locator>", <microsoft-file-system-locator>,
      concatenate(map(rcurry(concatenate, "/"), $microsoft-directories),
-		 $microsoft-filenames),
+                 $microsoft-filenames),
      case-sensitive?: #f,
      separator:           '\\',
      alternate-separator: '/')
@@ -1508,7 +1508,7 @@ define file-system class-test <posix-file-system-locator> ()
   test-file-system-locator-class
     ("<posix-file-system-locator>", <posix-file-system-locator>,
      concatenate(map(rcurry(concatenate, "/"), $posix-directories),
-		 $posix-filenames))
+                 $posix-filenames))
 end class-test <posix-file-system-locator>;
 
 define file-system class-test <posix-directory-locator> ()

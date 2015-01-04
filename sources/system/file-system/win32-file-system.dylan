@@ -1,4 +1,4 @@
-Module:	      system-internals
+Module:       system-internals
 Author:       Gary Palter
 Synopsis:     Win32 implementation of the File System library API
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -13,22 +13,22 @@ define function %expand-pathname
   with-stack-path (path-buffer)
     with-stack-dword (unused-address)
       let path-length = raw-as-integer
-			  (%call-c-function ("GetFullPathNameA", c-modifiers: "__stdcall")
-			       (fileName :: <raw-c-pointer>, 
-				bufferSize :: <raw-c-unsigned-long>,
-				bufferPtr :: <raw-c-pointer>,
-				filePartPtrPtr :: <raw-c-pointer>)
-			    => (bufferUsed :: <raw-c-unsigned-long>)
-			     (primitive-string-as-raw(as(<byte-string>, path)),
-			      integer-as-raw($MAX_PATH),
-			      primitive-string-as-raw(path-buffer),
-			      primitive-cast-raw-as-pointer
-				(primitive-unwrap-machine-word(unused-address)))
-			   end);
+                          (%call-c-function ("GetFullPathNameA", c-modifiers: "__stdcall")
+                               (fileName :: <raw-c-pointer>,
+                                bufferSize :: <raw-c-unsigned-long>,
+                                bufferPtr :: <raw-c-pointer>,
+                                filePartPtrPtr :: <raw-c-pointer>)
+                            => (bufferUsed :: <raw-c-unsigned-long>)
+                             (primitive-string-as-raw(as(<byte-string>, path)),
+                              integer-as-raw($MAX_PATH),
+                              primitive-string-as-raw(path-buffer),
+                              primitive-cast-raw-as-pointer
+                                (primitive-unwrap-machine-word(unused-address)))
+                           end);
       if (path-length > $MAX_PATH | path-length = 0)
-	win32-file-system-error("expand", "%s", path)
+        win32-file-system-error("expand", "%s", path)
       else
-	as(object-class(path), copy-sequence(path-buffer, end: path-length))
+        as(object-class(path), copy-sequence(path-buffer, end: path-length))
       end
     end
   end
@@ -36,25 +36,25 @@ end function %expand-pathname;
 
 
 ///
-define function %shorten-pathname 
+define function %shorten-pathname
     (path :: <microsoft-file-system-locator>)
  => (shortened-path :: <microsoft-file-system-locator>)
   with-stack-path (path-buffer)
     let path-length = raw-as-integer
-			(%call-c-function ("GetShortPathNameA", c-modifiers: "__stdcall")
-			   (fileName :: <raw-c-pointer>, 
-			    bufferPtr :: <raw-c-pointer>,
-			    bufferSize :: <raw-c-unsigned-long>)
-			   => (bufferUsed :: <raw-c-unsigned-long>)
-			   (primitive-string-as-raw(as(<byte-string>, path)),
-			    primitive-string-as-raw(path-buffer),
-			    integer-as-raw($MAX_PATH))
-			end);
+                        (%call-c-function ("GetShortPathNameA", c-modifiers: "__stdcall")
+                           (fileName :: <raw-c-pointer>,
+                            bufferPtr :: <raw-c-pointer>,
+                            bufferSize :: <raw-c-unsigned-long>)
+                           => (bufferUsed :: <raw-c-unsigned-long>)
+                           (primitive-string-as-raw(as(<byte-string>, path)),
+                            primitive-string-as-raw(path-buffer),
+                            integer-as-raw($MAX_PATH))
+                        end);
     if (path-length = 0)
       if (win32-raw-last-error() = $ERROR_NOT_SUPPORTED)
-	path
+        path
       else
-	win32-file-system-error("shorten", "%s", path)
+        win32-file-system-error("shorten", "%s", path)
       end
     elseif (path-length > $MAX_PATH)
       win32-file-system-error("shorten", "%s", path)
@@ -66,23 +66,23 @@ end function %shorten-pathname;
 
 
 ///
-define function %file-exists? 
+define function %file-exists?
     (file :: <microsoft-file-system-locator>) => (exists? :: <boolean>)
   let file = %expand-pathname(file);
   if (primitive-machine-word-not-equal?
-	(%call-c-function ("GetFileAttributesA", c-modifiers: "__stdcall")
-	     (path :: <raw-byte-string>)
-	  => (exists? :: <raw-c-unsigned-long>)
-	   (primitive-string-as-raw(as(<byte-string>, file)))
-	 end,
-	 integer-as-raw($INVALID_HANDLE_VALUE)))
+        (%call-c-function ("GetFileAttributesA", c-modifiers: "__stdcall")
+             (path :: <raw-byte-string>)
+          => (exists? :: <raw-c-unsigned-long>)
+           (primitive-string-as-raw(as(<byte-string>, file)))
+         end,
+         integer-as-raw($INVALID_HANDLE_VALUE)))
     #t
   elseif (begin
-	    let status = win32-raw-last-error();
-	    status = $ERROR_FILE_NOT_FOUND 
-	      | status = $ERROR_PATH_NOT_FOUND
-	      | status = $ERROR_NOT_READY
-	  end)
+            let status = win32-raw-last-error();
+            status = $ERROR_FILE_NOT_FOUND
+              | status = $ERROR_PATH_NOT_FOUND
+              | status = $ERROR_NOT_READY
+          end)
     #f
   else
     #t
@@ -96,15 +96,15 @@ define inline-only function attributes-to-file-type
  => (file-type :: <file-type>)
   //---*** How do we determine if a file is a shortcut?
   if (primitive-machine-word-logbit?
-	(integer-as-raw($FILE_ATTRIBUTE_DIRECTORY_BIT),
-	 primitive-unwrap-machine-word(attributes)))
+        (integer-as-raw($FILE_ATTRIBUTE_DIRECTORY_BIT),
+         primitive-unwrap-machine-word(attributes)))
     #"directory"
   else
     #"file"
   end
 end function attributes-to-file-type;
 
-define function %file-type 
+define function %file-type
     (file :: <microsoft-file-system-locator>) => (file-type :: <file-type>)
   with-file-attributes (file, fa)
     attributes-to-file-type(fa-attributes(fa))
@@ -116,8 +116,8 @@ end function %file-type;
 define function %link-target
     (link :: <microsoft-file-system-locator>) => (target :: <microsoft-file-system-locator>)
   error(make(<file-system-error>,
-	     format-string: "link-target is not available on this platform",
-	     format-arguments: #()))
+             format-string: "link-target is not available on this platform",
+             format-arguments: #()))
 end function %link-target;
 
 
@@ -155,14 +155,14 @@ define function %copy-file
                  (sourcePath :: <raw-byte-string>, destPath :: <raw-byte-string>,
                   failIfExists :: <raw-c-signed-int>)
               => (copied? :: <raw-c-signed-int>)
-	       (primitive-string-as-raw(as(<byte-string>, source)),
-		primitive-string-as-raw(as(<byte-string>, destination)),
+               (primitive-string-as-raw(as(<byte-string>, source)),
+                primitive-string-as-raw(as(<byte-string>, destination)),
                 integer-as-raw
-		  (select (if-exists)
-		     #"signal" => -1;
-		     #"replace" => 0;
-		   end))
-	     end))
+                  (select (if-exists)
+                     #"signal" => -1;
+                     #"replace" => 0;
+                   end))
+             end))
     win32-file-system-error("copy", "%s to %s", source, destination)
   end
 end function %copy-file;
@@ -177,25 +177,25 @@ define function %rename-file
   let destination = %expand-pathname(destination);
   // NOTE: We can't use MoveFileEx which provides options to control
   // the move if the target exists because MoveFileEx isn't implemented
-  // in Windows 95.  (When this code was originally written, the 
+  // in Windows 95.  (When this code was originally written, the
   // documentation for MoveFileEx failed to mention that fact.  Sigh)
   if (if-exists == #"replace" & %file-exists?(destination))
     %delete-file(destination)
   end;
   unless (primitive-raw-as-boolean
-	    (%call-c-function ("MoveFileA", c-modifiers: "__stdcall")
-		 (sourcePath :: <raw-byte-string>, destPath :: <raw-byte-string>)
-	      => (moved? :: <raw-c-signed-int>)
-	       (primitive-string-as-raw(as(<byte-string>, source)),
-		primitive-string-as-raw(as(<byte-string>, destination)))
-	     end))
+            (%call-c-function ("MoveFileA", c-modifiers: "__stdcall")
+                 (sourcePath :: <raw-byte-string>, destPath :: <raw-byte-string>)
+              => (moved? :: <raw-c-signed-int>)
+               (primitive-string-as-raw(as(<byte-string>, source)),
+                primitive-string-as-raw(as(<byte-string>, destination)))
+             end))
     win32-file-system-error("rename", "%s to %s", source, destination)
   end
 end function %rename-file;
 
 
 ///
-define function %file-properties 
+define function %file-properties
     (file :: <microsoft-file-system-locator>)
  => (properties :: <explicit-key-collection>)
   let properties = make(<table>);
@@ -224,7 +224,7 @@ define method %file-property
   #f
 end method %file-property;
 
-define method %file-property 
+define method %file-property
     (file :: <microsoft-file-system-locator>, key == #"size")
  => (file-size :: <integer>)
   with-file-attributes (file, fa)
@@ -232,8 +232,8 @@ define method %file-property
   end
 end method %file-property;
 
-define inline-only function date-if-valid 
-    (native-clock :: <machine-word>) 
+define inline-only function date-if-valid
+    (native-clock :: <machine-word>)
  => (date :: false-or(<date>))
   filetime-valid?(native-clock) & make(<date>, native-clock: native-clock)
 end function date-if-valid;
@@ -266,7 +266,7 @@ define method %file-property
   #t
 end method %file-property;
 
-define inline-only function writeable? 
+define inline-only function writeable?
     (attrs :: <machine-word>) => (writeable? :: <boolean>)
   ~ primitive-machine-word-logbit?
       (integer-as-raw($FILE_ATTRIBUTE_READONLY_BIT),
@@ -283,8 +283,8 @@ define method %file-property
                         (primitive-string-as-raw(as(<byte-string>, file)))
                       end);
   if (primitive-machine-word-not-equal?
-	(primitive-unwrap-machine-word(attributes),
-	 integer-as-raw($INVALID_HANDLE_VALUE)))
+        (primitive-unwrap-machine-word(attributes),
+         integer-as-raw($INVALID_HANDLE_VALUE)))
     writeable?(attributes)
   else
     win32-file-system-error("get attributes of", "%s", file)
@@ -302,19 +302,19 @@ define method %file-property-setter
                         (primitive-string-as-raw(as(<byte-string>, file)))
                       end);
   if (primitive-machine-word-not-equal?
-	(primitive-unwrap-machine-word(attributes),
-	 integer-as-raw($INVALID_HANDLE_VALUE)))
+        (primitive-unwrap-machine-word(attributes),
+         integer-as-raw($INVALID_HANDLE_VALUE)))
     let old-writeable? = writeable?(attributes);
     if (new-writeable? ~= old-writeable?)
       unless (primitive-raw-as-boolean
                 (%call-c-function ("SetFileAttributesA", c-modifiers: "__stdcall")
-		     (path :: <raw-byte-string>, attributes :: <raw-c-unsigned-long>)
-		  => (success? :: <raw-c-signed-int>)
-		   (primitive-string-as-raw(as(<byte-string>, file)),
+                     (path :: <raw-byte-string>, attributes :: <raw-c-unsigned-long>)
+                  => (success? :: <raw-c-signed-int>)
+                   (primitive-string-as-raw(as(<byte-string>, file)),
                     primitive-machine-word-logxor
                       (primitive-unwrap-machine-word(attributes),
                        integer-as-raw($FILE_ATTRIBUTE_READONLY)))
-		 end))
+                 end))
         win32-file-system-error("set attributes of", "%s", file)
       end
     end
@@ -330,32 +330,32 @@ define method %file-property
   let file = %expand-pathname(file);
   let executable? = primitive-raw-as-boolean
                       (%call-c-function ("SHGetFileInfoA", c-modifiers: "__stdcall")
-			   (pszPath :: <raw-byte-string>,
-			    dwFileAttributes :: <raw-c-unsigned-long>,
-			    psfi :: <raw-c-pointer>,
-			    cbFileInfo :: <raw-c-unsigned-int>,
-			    uFlags :: <raw-c-unsigned-int>)
-			=> (result :: <raw-c-unsigned-long>)
-			 (primitive-string-as-raw(as(<byte-string>, file)),
-			  integer-as-raw(0),
-			  primitive-cast-raw-as-pointer(integer-as-raw(0)),
-			  integer-as-raw(0),
-			  integer-as-raw($SHGFI_EXETYPE))
-		      end);
+                           (pszPath :: <raw-byte-string>,
+                            dwFileAttributes :: <raw-c-unsigned-long>,
+                            psfi :: <raw-c-pointer>,
+                            cbFileInfo :: <raw-c-unsigned-int>,
+                            uFlags :: <raw-c-unsigned-int>)
+                        => (result :: <raw-c-unsigned-long>)
+                         (primitive-string-as-raw(as(<byte-string>, file)),
+                          integer-as-raw(0),
+                          primitive-cast-raw-as-pointer(integer-as-raw(0)),
+                          integer-as-raw(0),
+                          integer-as-raw($SHGFI_EXETYPE))
+                      end);
   if (executable?)
     #t
   elseif (begin
-	    //---*** NOTE: SHGetFileInfoA doesn't reset GetLastError to $NO_ERROR
-	    //---*** if the file exists but isn't an executable.  Consequently, we
-	    //---*** can't check to see if an error actually occurred and signal it
-	    //---*** appropriately; instead, we'll just always claim the file isn't
-	    //---*** executable.  (Sigh)
-	    // let status = win32-raw-last-error();
-	    // status = $ERROR_BAD_EXE_FORMAT
-	    //   | status = $ERROR_ACCESS_DENIED
-	    //   | status = $NO_ERROR
-	    #t
-	  end)
+            //---*** NOTE: SHGetFileInfoA doesn't reset GetLastError to $NO_ERROR
+            //---*** if the file exists but isn't an executable.  Consequently, we
+            //---*** can't check to see if an error actually occurred and signal it
+            //---*** appropriately; instead, we'll just always claim the file isn't
+            //---*** executable.  (Sigh)
+            // let status = win32-raw-last-error();
+            // status = $ERROR_BAD_EXE_FORMAT
+            //   | status = $ERROR_ACCESS_DENIED
+            //   | status = $NO_ERROR
+            #t
+          end)
     #f
   else
     win32-file-system-error("get attributes of", "%s", file)
@@ -372,52 +372,52 @@ define function %do-directory
   with-stack-win32-find-data (wfd, directory)
     block ()
       find-handle := primitive-wrap-machine-word
-		       (primitive-cast-pointer-as-raw
-			  (%call-c-function ("FindFirstFileA", c-modifiers: "__stdcall")
-			       (lpFileName :: <raw-byte-string>,
-				lpFindFileData :: <raw-c-pointer>)
-			    => (hFindFile :: <raw-c-pointer>)
-			     (primitive-string-as-raw(as(<byte-string>, wild-file)),
-			      primitive-cast-raw-as-pointer
-				(primitive-unwrap-machine-word(wfd)))
-			   end));
+                       (primitive-cast-pointer-as-raw
+                          (%call-c-function ("FindFirstFileA", c-modifiers: "__stdcall")
+                               (lpFileName :: <raw-byte-string>,
+                                lpFindFileData :: <raw-c-pointer>)
+                            => (hFindFile :: <raw-c-pointer>)
+                             (primitive-string-as-raw(as(<byte-string>, wild-file)),
+                              primitive-cast-raw-as-pointer
+                                (primitive-unwrap-machine-word(wfd)))
+                           end));
       if (primitive-machine-word-equal?
-	    (primitive-unwrap-machine-word(find-handle),
-	     integer-as-raw($INVALID_HANDLE_VALUE)))
-	win32-file-system-error("start listing of", "%s", directory)
+            (primitive-unwrap-machine-word(find-handle),
+             integer-as-raw($INVALID_HANDLE_VALUE)))
+        win32-file-system-error("start listing of", "%s", directory)
       end;
       let have-file? :: <boolean> = #t;
       while (have-file?)
-	let attributes :: <machine-word> = win32-find-data-attributes(wfd);
-	let filename :: <byte-string> = win32-find-data-filename(wfd);
-	let type :: <file-type> = attributes-to-file-type(attributes);
-	unless (type == #"directory" & (filename = "." | filename = ".."))
-	  f(directory,
-	    filename,
-	    type)
-	end;
-	unless (primitive-raw-as-boolean
-		  (%call-c-function ("FindNextFileA", c-modifiers: "__stdcall")
-		       (hFindFile :: <raw-c-pointer>, lpFindFileData :: <raw-c-pointer>)
-		    => (closed? :: <raw-c-signed-int>)
-		     (primitive-cast-raw-as-pointer
-			(primitive-unwrap-machine-word(find-handle)),
-		      primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(wfd)))
-		   end))
-	  if (win32-raw-last-error() = $ERROR_NO_MORE_FILES)
-	    have-file? := #f
-	  else
-	    win32-file-system-error("continue listing of", "%s", directory)
-	  end
-	end
+        let attributes :: <machine-word> = win32-find-data-attributes(wfd);
+        let filename :: <byte-string> = win32-find-data-filename(wfd);
+        let type :: <file-type> = attributes-to-file-type(attributes);
+        unless (type == #"directory" & (filename = "." | filename = ".."))
+          f(directory,
+            filename,
+            type)
+        end;
+        unless (primitive-raw-as-boolean
+                  (%call-c-function ("FindNextFileA", c-modifiers: "__stdcall")
+                       (hFindFile :: <raw-c-pointer>, lpFindFileData :: <raw-c-pointer>)
+                    => (closed? :: <raw-c-signed-int>)
+                     (primitive-cast-raw-as-pointer
+                        (primitive-unwrap-machine-word(find-handle)),
+                      primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(wfd)))
+                   end))
+          if (win32-raw-last-error() = $ERROR_NO_MORE_FILES)
+            have-file? := #f
+          else
+            win32-file-system-error("continue listing of", "%s", directory)
+          end
+        end
       end;
     cleanup
       if (primitive-machine-word-not-equal?
-	    (primitive-unwrap-machine-word(find-handle),
-	     integer-as-raw($INVALID_HANDLE_VALUE)))
-	%call-c-function ("FindClose", c-modifiers: "__stdcall")
-	    (hFindFile :: <raw-c-pointer>) => (closed? :: <raw-c-signed-int>)
-	  (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(find-handle)))
+            (primitive-unwrap-machine-word(find-handle),
+             integer-as-raw($INVALID_HANDLE_VALUE)))
+        %call-c-function ("FindClose", c-modifiers: "__stdcall")
+            (hFindFile :: <raw-c-pointer>) => (closed? :: <raw-c-signed-int>)
+          (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(find-handle)))
         end
       end
     end
@@ -426,13 +426,13 @@ end function %do-directory;
 
 
 ///
-define function %create-directory 
+define function %create-directory
     (directory :: <microsoft-directory-locator>)
  => (directory :: <microsoft-directory-locator>)
   let directory = %expand-pathname(directory);
   if (primitive-raw-as-boolean
         (%call-c-function ("CreateDirectoryA", c-modifiers: "__stdcall")
-	     (dirPathname :: <raw-byte-string>, securityAttributes :: <raw-c-pointer>)
+             (dirPathname :: <raw-byte-string>, securityAttributes :: <raw-c-pointer>)
           => (created? :: <raw-c-signed-int>)
            (primitive-string-as-raw(as(<byte-string>, directory)),
             primitive-cast-raw-as-pointer(integer-as-raw(0)))
@@ -449,11 +449,11 @@ define function %delete-directory
     (directory :: <microsoft-directory-locator>) => ()
   let directory = %expand-pathname(directory);
   unless (primitive-raw-as-boolean
-	    (%call-c-function ("RemoveDirectoryA", c-modifiers: "__stdcall")
-		 (dirPathname :: <raw-byte-string>)
-	      => (deleted? :: <raw-c-signed-int>)
-	       (primitive-string-as-raw(as(<byte-string>, directory)))
-	     end))
+            (%call-c-function ("RemoveDirectoryA", c-modifiers: "__stdcall")
+                 (dirPathname :: <raw-byte-string>)
+              => (deleted? :: <raw-c-signed-int>)
+               (primitive-string-as-raw(as(<byte-string>, directory)))
+             end))
     win32-file-system-error("delete", "%s", directory)
   end
 end function %delete-directory;
@@ -464,13 +464,13 @@ define function %directory-empty?
     (directory :: <microsoft-directory-locator>) => (empty? :: <boolean>)
   ~%file-exists?(directory)
     | block (return)
-	%do-directory
-	  (method (directory :: <microsoft-directory-locator>, name :: <string>, type :: <file-type>)
-	     ignore(directory); ignore(name); ignore(type);
-	     return(#f)
-	   end,
-	   directory);
-	#t
+        %do-directory
+          (method (directory :: <microsoft-directory-locator>, name :: <string>, type :: <file-type>)
+             ignore(directory); ignore(name); ignore(type);
+             return(#f)
+           end,
+           directory);
+        #t
       end
 end function %directory-empty?;
 
@@ -492,12 +492,12 @@ define function %working-directory
   let curdir-buffer :: <byte-string> = make(<byte-string>, size: cdb-size, fill: '\0');
   let curdir-size :: <integer>
     = raw-as-integer(%call-c-function ("GetCurrentDirectoryA", c-modifiers: "__stdcall")
-		         (nBufferLength :: <raw-c-unsigned-long>,
-			  lpBuffer :: <raw-byte-string>)
-		      => (nCurDirsize :: <raw-c-unsigned-long>)
-		       (integer-as-raw(cdb-size),
-			primitive-string-as-raw(curdir-buffer))
-		     end);
+                         (nBufferLength :: <raw-c-unsigned-long>,
+                          lpBuffer :: <raw-byte-string>)
+                      => (nCurDirsize :: <raw-c-unsigned-long>)
+                       (integer-as-raw(cdb-size),
+                        primitive-string-as-raw(curdir-buffer))
+                     end);
   if (curdir-size > cdb-size)
     // Value was too large to fit in our initial buffer but GetCurrentDirectoryA
     // tells us how long it actually is so we can just make a buffer large enough
@@ -505,12 +505,12 @@ define function %working-directory
     curdir-buffer := make(<byte-string>, size: cdb-size, fill: '\0');
     curdir-size :=
       raw-as-integer(%call-c-function ("GetCurrentDirectoryA", c-modifiers: "__stdcall")
-		         (nBufferLength :: <raw-c-unsigned-long>,
-			  lpBuffer :: <raw-byte-string>)
-		      => (nCurDirsize :: <raw-c-unsigned-long>)
-		       (integer-as-raw(cdb-size),
-			primitive-string-as-raw(curdir-buffer))
-		     end)
+                         (nBufferLength :: <raw-c-unsigned-long>,
+                          lpBuffer :: <raw-byte-string>)
+                      => (nCurDirsize :: <raw-c-unsigned-long>)
+                       (integer-as-raw(cdb-size),
+                        primitive-string-as-raw(curdir-buffer))
+                     end)
   end;
   if (curdir-size > 0)
     as(<microsoft-directory-locator>, copy-sequence(curdir-buffer, end: curdir-size))
@@ -526,11 +526,11 @@ define function %working-directory-setter
  => (new-working-directory :: <microsoft-directory-locator>)
   let directory = %expand-pathname(new-working-directory);
   unless (primitive-raw-as-boolean
-	    (%call-c-function ("SetCurrentDirectoryA", c-modifiers: "__stdcall")
-		 (lpPathName :: <raw-byte-string>)
-	      => (currentDirectorySet? :: <raw-c-signed-int>)
-	       (primitive-string-as-raw(as(<byte-string>, directory)))
-	     end))
+            (%call-c-function ("SetCurrentDirectoryA", c-modifiers: "__stdcall")
+                 (lpPathName :: <raw-byte-string>)
+              => (currentDirectorySet? :: <raw-c-signed-int>)
+               (primitive-string-as-raw(as(<byte-string>, directory)))
+             end))
     win32-file-system-error("set the current directory", "to %s", directory)
   end;
   directory
@@ -543,12 +543,12 @@ define function %temp-directory
   with-stack-path (path-buffer)
     let path-size = raw-as-integer
                       (%call-c-function ("GetTempPathA", c-modifiers: "__stdcall")
-			   (bufferSize :: <raw-c-unsigned-long>,
-			    bufferPtr :: <raw-c-pointer>)
-			=> (bufferUsed :: <raw-c-unsigned-long>)
-			 (integer-as-raw($MAX_PATH),
-			  primitive-string-as-raw(path-buffer))
-		       end);
+                           (bufferSize :: <raw-c-unsigned-long>,
+                            bufferPtr :: <raw-c-pointer>)
+                        => (bufferUsed :: <raw-c-unsigned-long>)
+                         (integer-as-raw($MAX_PATH),
+                          primitive-string-as-raw(path-buffer))
+                       end);
     if (path-size ~= 0)
       as(<microsoft-directory-locator>, copy-sequence(path-buffer, end: path-size))
     else
@@ -563,29 +563,29 @@ define function %root-directories
     () => (roots :: <sequence>)
   with-stack-path (path-buffer)
     let path-size = raw-as-integer
-		      (%call-c-function ("GetLogicalDriveStringsA", c-modifiers: "__stdcall")
-			   (bufferSize :: <raw-c-unsigned-long>,
-			    bufferPtr :: <raw-c-pointer>)
-			=> (bufferUsed :: <raw-c-unsigned-long>)
-			 (integer-as-raw($MAX_PATH),
-			  primitive-string-as-raw(path-buffer))
-		       end);
+                      (%call-c-function ("GetLogicalDriveStringsA", c-modifiers: "__stdcall")
+                           (bufferSize :: <raw-c-unsigned-long>,
+                            bufferPtr :: <raw-c-pointer>)
+                        => (bufferUsed :: <raw-c-unsigned-long>)
+                         (integer-as-raw($MAX_PATH),
+                          primitive-string-as-raw(path-buffer))
+                       end);
     if (path-size ~= 0)
       let roots = list();
       let start = 0;
       block (return)
-	while (start < path-size)
-	  let fini = start;
-	  until (path-buffer[fini] = '\0')
-	    fini := fini + 1
-	  end;
-	  if (start = fini)
-	    return()
-	  else
-	    roots := add!(roots, copy-sequence(path-buffer, start: start, end: fini));
-	    start := fini + 1
-	  end
-	end
+        while (start < path-size)
+          let fini = start;
+          until (path-buffer[fini] = '\0')
+            fini := fini + 1
+          end;
+          if (start = fini)
+            return()
+          else
+            roots := add!(roots, copy-sequence(path-buffer, start: start, end: fini));
+            start := fini + 1
+          end
+        end
       end;
       map(curry(as, <microsoft-directory-locator>), reverse(roots))
     else

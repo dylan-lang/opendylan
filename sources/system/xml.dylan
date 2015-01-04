@@ -28,15 +28,15 @@ define class <xml-element> (<xml-node>)
     init-keyword: text:;
 end class <xml-element>;
 
-define method read-xml-document 
+define method read-xml-document
     (locator :: <file-locator>) => (page :: <xml-document>)
   let parser = make(<xml-parser>);
-  make(<xml-document>, 
+  make(<xml-document>,
        location: locator,
        element: tokenize-xml(parser, locator));
 end method read-xml-document;
 
-define method node-attribute 
+define method node-attribute
     (xml-element :: <xml-element>, attribute :: <string>)
  => (value :: false-or(<string>))
   element(xml-element.node-attributes, attribute, default: #f)
@@ -99,8 +99,8 @@ end class <xml-error>;
 define function xml-error
     (message :: <string>, #rest args) => ()
   error(make(<xml-error>,
-	     format-string: message,
-	     format-arguments: args))
+             format-string: message,
+             format-arguments: args))
 end function xml-error;
 
 
@@ -123,7 +123,7 @@ define class <xml-parser> (<object>)
 end class <xml-parser>;
 
 define method parse-attributes
-    (string :: <string>, 
+    (string :: <string>,
      #key start :: <integer> = 0, end: _end :: <integer> = size(string))
  => (table :: <string-table>)
   let attributes = make(<string-table>);
@@ -174,8 +174,8 @@ define method parse-attributes
   end;
   attributes
 end method parse-attributes;
-    
-define method parse-tag 
+
+define method parse-tag
     (string :: <string>, #key start, end: _end)
  => (name :: <string>, attributes :: <string-table>)
   let string
@@ -260,7 +260,7 @@ define method parse-line
   if (pos > 0) copy-sequence(line, start: start) end
 end method parse-line;
 
-define method tokenize-xml 
+define method tokenize-xml
     (parser :: <xml-parser>, stream :: <stream>)
  => (element :: <xml-element>)
   let remainder = #f;

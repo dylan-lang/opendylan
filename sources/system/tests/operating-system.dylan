@@ -1,6 +1,6 @@
 Module:       system-test-suite
 Synopsis:     System library test suite
-Author:	      Andy Armstrong
+Author:       Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -87,7 +87,7 @@ define operating-system function-test run-application ()
     check-equal("asynchronous no signal", #f, signal);
     check-instance?("child returned for asynchronous run-application",
                     <application-process>, child);
-    
+
     let (exit-code, signal) = wait-for-application-process(child);
     check-equal("wait true exit 0", 0, exit-code);
     check-equal("wait true no signal", #f, signal);
@@ -101,7 +101,7 @@ define operating-system function-test run-application ()
     check-equal("asynchronous no signal", #f, signal);
     check-instance?("child returned for asynchronous run-application",
                     <application-process>, child);
-    
+
     let (exit-code, signal) = wait-for-application-process(child);
     check-equal("wait false exit 8", 8, exit-code);
     check-equal("wait false no signal", #f, signal);
@@ -119,15 +119,15 @@ define operating-system function-test run-application ()
                     <application-process>, child);
     check-instance?("stream returned for run-application w/output stream",
                     <stream>, stream);
-    
+
     let contents = read-to-end(stream);
     check-equal("echo results read from stream",
                 concatenate("hello, world", $line-end), contents);
-    
+
     let (exit-code, signal) = wait-for-application-process(child);
     check-equal("wait echo exit 0", 0, exit-code);
     check-equal("wait echo no signal", #f, signal);
-    
+
     close(stream);
   end;
 
@@ -143,15 +143,15 @@ define operating-system function-test run-application ()
                     <application-process>, child);
     check-instance?("stream returned for run-application w/error stream",
                     <stream>, stream);
-    
+
     let contents = read-to-end(stream);
     check-equal("echo results read from stream",
                 concatenate("hello, world", $line-end), contents);
-    
+
     let (exit-code, signal) = wait-for-application-process(child);
     check-equal("wait echo exit 0", 0, exit-code);
     check-equal("wait echo no signal", #f, signal);
-    
+
     close(stream);
   end;
 
@@ -174,18 +174,18 @@ define operating-system function-test run-application ()
                     <application-process>, child);
     check-instance?("stream returned for run-application w/error stream",
                     <stream>, stream);
-    
+
     let contents = read-to-end(stream);
     check-equal("echo results read from stream",
                 concatenate("hello, world", $line-end,
                             "DANGER WILL ROBINSON!", $line-end,
-                            "ok", $line-end), 
+                            "ok", $line-end),
                 contents);
-    
+
     let (exit-code, signal) = wait-for-application-process(child);
     check-equal("wait echo exit 0", 0, exit-code);
     check-equal("wait echo no signal", #f, signal);
-    
+
     close(stream);
   end;
 
@@ -211,11 +211,11 @@ define operating-system function-test run-application ()
     check-equal("echo no signal", #f, signal);
     check-false("no child for synchronous run-application", child);
     check("no streams returned", empty?, streams);
-    
+
     check-equal("echo results read from stream",
                 concatenate("hello, world", $line-end,
                             "DANGER WILL ROBINSON!", $line-end,
-                            "ok", $line-end), 
+                            "ok", $line-end),
                 contents);
   end;
 
@@ -230,14 +230,14 @@ define operating-system function-test run-application ()
         end;
     let (exit-code, signal, child, stream)
       = run-application(shell, asynchronous?: #t, input: #"stream");
-        
+
     check-equal("asynchronous exit 0", 0, exit-code);
     check-equal("asynchronous no signal", #f, signal);
     check-instance?("child returned for asynchronous run-application",
                     <application-process>, child);
     check-instance?("stream returned for run-application w/input stream",
                     <stream>, stream);
-    
+
     write(stream, "exit 8");
     new-line(stream);
     close(stream);
@@ -252,7 +252,7 @@ define operating-system function-test run-application ()
      let (exit-code, signal, child, input-stream, output-stream)
        = run-application("sort", asynchronous?: #t,
                          input: #"stream", output: #"stream");
-     
+
      check-equal("asynchronous exit 0", 0, exit-code);
      check-equal("asynchronous no signal", #f, signal);
      check-instance?("child returned for asynchronous run-application",
@@ -261,7 +261,7 @@ define operating-system function-test run-application ()
                      <stream>, input-stream);
      check-instance?("output stream returned for run-application",
                      <stream>, output-stream);
-     
+
      write(input-stream, "Dylan");
      new-line(input-stream);
      write(input-stream, "programming");
@@ -269,7 +269,7 @@ define operating-system function-test run-application ()
      write(input-stream, "language");
      new-line(input-stream);
      close(input-stream);
-     
+
      let contents = read-to-end(output-stream);
      check-equal("sort results read from stream",
                  concatenate("Dylan", $line-end,
@@ -280,7 +280,7 @@ define operating-system function-test run-application ()
      let (exit-code, signal) = wait-for-application-process(child);
      check-equal("wait sort exit 0", 0, exit-code);
      check-equal("wait sort no signal", #f, signal);
-     
+
      close(output-stream);
    end;
 
@@ -309,17 +309,17 @@ define operating-system function-test run-application ()
                      <application-process>, child);
      check-instance?("stream returned for run-application w/output stream",
                      <stream>, stream);
-     
+
      let contents = read-to-end(stream);
      check-equal("echo w/environment variable results read from stream",
                  concatenate("Dylan programming language", $line-end,
                              environment-variable("PATH"), $line-end),
                  contents);
-     
+
      let (exit-code, signal) = wait-for-application-process(child);
      check-equal("wait echo exit 0", 0, exit-code);
      check-equal("wait echo no signal", #f, signal);
-     
+
      close(stream);
    end;
 end function-test run-application;

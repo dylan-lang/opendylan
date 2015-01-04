@@ -15,11 +15,11 @@ define function tokenize-environment-variable(var :: <string>)
   let old-pos = 0;
   let pos = 0;
   local method collect-string () => ()
-	  unless (pos = old-pos)
-	    add!(strings, copy-sequence(var, start: old-pos, end: pos));
-	  end;
-	  old-pos := pos + 1
-	end method collect-string;
+          unless (pos = old-pos)
+            add!(strings, copy-sequence(var, start: old-pos, end: pos));
+          end;
+          old-pos := pos + 1
+        end method collect-string;
   while (pos < max-pos)
     let delimiter? = var[pos] = $environment-variable-delimiter;
     delimiter? & collect-string();

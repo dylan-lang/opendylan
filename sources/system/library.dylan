@@ -193,7 +193,7 @@ define module locators-internals
          locator-might-have-links?,
          locator-test,
          prefix-equal?;
-  
+
   // Paths
   create canonicalize-path,
          parse-path,
@@ -218,7 +218,7 @@ define module file-system
               type-for-file-stream,
               stream-locator,
               writable-file-stream-position-setter,
-             
+
               <buffer-vector>,
               <multi-buffered-stream>,
               multi-buffered-stream-position-setter,
@@ -333,10 +333,10 @@ define module settings-internals
          get-value, set-value,
          do-remove-value!;
 
-  //---*** BOOTSTRAPPING: Remove these exports and declare 
+  //---*** BOOTSTRAPPING: Remove these exports and declare
   //---*** the generics dynamic after 2.1a1 is released...
   export invalidate-settings-caches,
-         %settings-key-name-setter; 
+         %settings-key-name-setter;
 end module settings-internals;
 
 define module system-internals

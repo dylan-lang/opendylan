@@ -37,10 +37,10 @@ define function temp-file-pathname
     counter := *temp-file-counter*;
   end;
   let filename = concatenate(initial-substring | "",
-			     format-date("%d%H%M%S.", now),
-			     integer-to-string(counter, size: 6),
-			     (extension & ".") | "",
-			     extension | "");
+                             format-date("%d%H%M%S.", now),
+                             integer-to-string(counter, size: 6),
+                             (extension & ".") | "",
+                             extension | "");
   if (size(filename) > 31)
     // If it's too long for the Mac OS, just use the last bits...
     filename := copy-sequence(filename, start: size(filename) - 31)

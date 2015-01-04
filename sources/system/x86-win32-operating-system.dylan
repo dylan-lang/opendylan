@@ -76,7 +76,7 @@ define inline-only function os-platform () => (platform :: <integer>)
                     integer-as-raw(4), integer-as-raw(0)))
 end function os-platform;
 
-define constant $os-variant 
+define constant $os-variant
   = method ()
       select (os-platform())
         $VER_PLATFORM_WIN32s => #"win3.1";
@@ -247,7 +247,7 @@ define function login-group () => (group :: false-or(<string>))
                 primitive-cast-raw-as-pointer(primitive-string-as-raw(domain-name-length)),
                 primitive-cast-raw-as-pointer(primitive-string-as-raw(sid-use)))
             end))
-        let domain-name-length 
+        let domain-name-length
           = raw-as-integer
               (primitive-c-unsigned-long-at
                  (primitive-cast-raw-as-pointer(primitive-string-as-raw(domain-name-length)),
@@ -346,7 +346,7 @@ define inline-only function current-version-key (name :: <byte-string>)
                                       (%call-c-function ("RegQueryValueExA",
                                                          c-modifiers: "__stdcall")
                                            (hKey :: <raw-c-pointer>,
-                                            lpValueName :: <raw-byte-string>, 
+                                            lpValueName :: <raw-byte-string>,
                                             lpReserved :: <raw-c-pointer>,
                                             lpType :: <raw-c-pointer>,
                                             lpData :: <raw-c-pointer>,
@@ -369,7 +369,7 @@ define inline-only function current-version-key (name :: <byte-string>)
                                            (primitive-cast-raw-as-pointer
                                               (primitive-string-as-raw(buffer-size-buffer)),
                                             integer-as-raw(0), integer-as-raw(0)));
-                                  // NOTE: For registry entries, the returned buffer-size 
+                                  // NOTE: For registry entries, the returned buffer-size
                                   //       includes the trailing NUL character ...
                                   let buffer :: <byte-string>
                                     = make(<byte-string>, size: buffer-size, fill: '\0');
@@ -378,7 +378,7 @@ define inline-only function current-version-key (name :: <byte-string>)
                                         (%call-c-function ("RegQueryValueExA",
                                                            c-modifiers: "__stdcall")
                                              (hKey :: <raw-c-pointer>,
-                                              lpValueName :: <raw-byte-string>, 
+                                              lpValueName :: <raw-byte-string>,
                                               lpReserved :: <raw-c-pointer>,
                                               lpType :: <raw-c-pointer>,
                                               lpData :: <raw-c-pointer>,
@@ -703,7 +703,7 @@ define function run-application
            close-handles := add(close-handles, handle);
            handle;
        end select;
-  
+
   let input-pipe :: <machine-word> = as(<machine-word>, 0);
   let output-pipe :: <machine-word> = as(<machine-word>, 0);
   if (outputter)
@@ -990,7 +990,7 @@ define function make-envp
        integer-as-raw(offset), integer-as-raw(0))
       := integer-as-raw(0);
   end for;
-  
+
   buffer
 end function;
 
@@ -1054,7 +1054,7 @@ define inline-only function Win32CreatePipe()
        integer-as-raw(2), integer-as-raw(0))
     := integer-as-raw(1);
 
-  let input-pipe = 
+  let input-pipe =
     primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(Win32LocalAlloc()));
   let output-pipe =
     primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(Win32LocalAlloc()));
@@ -1130,7 +1130,7 @@ define function wait-for-application-process
           (wait-result, integer-as-raw($WAIT_FAILED)))
       win32-last-error();
     end;
-    
+
     let (success?, return-status)
       = win32-get-exit-code-process(process.application-process-handle);
 
@@ -1238,7 +1238,7 @@ define function signal-application-event
         integer-as-raw(0),
         primitive-cast-raw-as-pointer(primitive-string-as-raw(event)))
     end);
-  
+
   let success? :: <boolean> =
     primitive-raw-as-boolean
     (%call-c-function ("SetEvent", c-modifiers: "__stdcall")
@@ -1264,7 +1264,7 @@ define function load-library
        => (handle :: <raw-c-pointer>)
        (primitive-cast-raw-as-pointer(primitive-string-as-raw(name)))
     end);
-  
+
   module
 
 end function;

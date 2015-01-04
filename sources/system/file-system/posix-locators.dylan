@@ -26,7 +26,7 @@ define sealed method string-as-locator
 end method string-as-locator;
 
 
-define sealed class <posix-directory-locator> 
+define sealed class <posix-directory-locator>
     (<file-system-directory-locator>, <posix-file-system-locator>)
   sealed constant slot locator-relative? :: <boolean> = #f,
     init-keyword: relative?:;
@@ -44,18 +44,18 @@ define sealed method make
  => (locator :: <posix-directory-locator>)
   if (server)
     locator-error("Cannot specify server for posix directory locator: %=",
-		  server)
+                  server)
   end;
   let path
     = if (name | directory)
-	concatenate(if (directory) directory.locator-path else #[] end,
-		    if (name) vector(name) else #[] end)
+        concatenate(if (directory) directory.locator-path else #[] end,
+                    if (name) vector(name) else #[] end)
       else
-	path
+        path
       end;
   next-method(class,
-	      path:      canonicalize-path(path),
-	      relative?: relative?)
+              path:      canonicalize-path(path),
+              relative?: relative?)
 end method make;
 
 define sealed method initialize
@@ -101,9 +101,9 @@ define sealed method locator-as-string
  => (string :: <string>)
   let separator = $posix-separator;
   path-to-string(locator.locator-path,
-		 class: class,
-		 separator: separator,
-		 relative?: locator.locator-relative?)
+                 class: class,
+                 separator: separator,
+                 relative?: locator.locator-relative?)
 end method locator-as-string;
 
 define sealed method locator-test
@@ -117,7 +117,7 @@ define method locator-might-have-links?
 end method locator-might-have-links?;
 
 
-define sealed class <posix-file-locator> 
+define sealed class <posix-file-locator>
     (<file-system-file-locator>, <posix-file-system-locator>)
   sealed constant slot locator-directory :: false-or(<posix-directory-locator>) = #f,
     init-keyword: directory:;
@@ -136,7 +136,7 @@ define sealed method make
  => (locator :: <posix-file-locator>)
   let directory
     = unless (directory & current-directory-locator?(directory))
-	directory
+        directory
       end;
   let pos = name & find-delimiter-from-end(name, $posix-extension-separator);
   let base = base | if (pos) copy-sequence(name, end: pos) else name end;
@@ -145,9 +145,9 @@ define sealed method make
     locator-error("Attempted to create a file locator without a base")
   end;
   next-method(class,
-	      directory: directory,
-	      base: base,
-	      extension: extension)
+              directory: directory,
+              base: base,
+              extension: extension)
 end method make;
 
 define sealed method locator-name
@@ -157,8 +157,8 @@ define sealed method locator-name
   let extension = locator.locator-extension;
   if (extension)
     concatenate(base | "",
-		delimiter-to-string($posix-extension-separator),
-		extension)
+                delimiter-to-string($posix-extension-separator),
+                extension)
   else
     base
   end
@@ -191,11 +191,11 @@ define sealed method string-as-locator
   let pos = find-delimiter-from-end(string, $posix-separator);
   let (directory, name)
     = if (pos)
-	values(as(<posix-directory-locator>, 
-		  copy-sequence(string, end: pos + 1)),
-	       copy-sequence(string, start: pos + 1))
+        values(as(<posix-directory-locator>,
+                  copy-sequence(string, end: pos + 1)),
+               copy-sequence(string, start: pos + 1))
       else
-	values(#f, string)
+        values(#f, string)
       end;
   make(<posix-file-locator>,
        directory: directory,

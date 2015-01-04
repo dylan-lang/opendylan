@@ -37,7 +37,7 @@ define method find-delimiter
   block (return)
     for (index :: <integer> from start below stop)
       when (string[index] == delimiter)
-	return(index)
+        return(index)
       end
     end
   end
@@ -51,7 +51,7 @@ define method find-delimiters
   block (return)
     for (index :: <integer> from start below stop)
       when (member?(string[index], delimiters))
-	return(index)
+        return(index)
       end
     end
   end
@@ -65,7 +65,7 @@ define method find-delimiter-from-end
   block (return)
     for (index :: <integer> from stop - 1 to start by -1)
       when (string[index] == delimiter)
-	return(index)
+        return(index)
       end
     end
   end
@@ -79,7 +79,7 @@ define method find-delimiters-from-end
   block (return)
     for (index :: <integer> from stop - 1 to start by -1)
       when (member?(string[index], delimiters))
-	return(index)
+        return(index)
       end
     end
   end
@@ -97,10 +97,10 @@ define method canonicalize-path
        index from 0)
     new-path[index]
       := select (item by \=)
-	   "."       => #"self";
-	   ".."      => #"parent";
-	   otherwise => item;
-	 end
+           "."       => #"self";
+           ".."      => #"parent";
+           otherwise => item;
+         end
   end;
   new-path
 end method canonicalize-path;
@@ -121,7 +121,7 @@ define method parse-path
     if (test(character))
       if (position == start) relative? := #f end;
       if (old-position < position)
-	add!(path, copy-sequence(string, start: old-position, end: position))
+        add!(path, copy-sequence(string, start: old-position, end: position))
       end;
       old-position := position + 1;
     end;
@@ -149,13 +149,13 @@ define method path-to-string
           class :: subclass(<string>) = <byte-string>)
  => (string :: <string>)
   local method item-name
-	    (item :: type-union(<string>, <symbol>)) => (name :: <string>)
-	  select (item)
-	    #"self"   => ".";
-	    #"parent" => "..";
-	    otherwise => item;
-	  end
-	end method item-name;
+            (item :: type-union(<string>, <symbol>)) => (name :: <string>)
+          select (item)
+            #"self"   => ".";
+            #"parent" => "..";
+            otherwise => item;
+          end
+        end method item-name;
   let string-size :: <integer> = size(path) + if (relative?) 0 else 1 end;
   for (item in path)
     string-size := string-size + item.item-name.size
@@ -186,24 +186,24 @@ define method relative-path
   iterate loop (i = 0)
     case
       i == path-size =>
-	make(<simple-object-vector>, 
-	     size: from-path-size - i,
-	     fill: #"parent");
+        make(<simple-object-vector>,
+             size: from-path-size - i,
+             fill: #"parent");
       i == from-path-size =>
-	copy-sequence(path, start: i);
+        copy-sequence(path, start: i);
       test(path[i], from-path[i]) =>
-	loop(i + 1);
+        loop(i + 1);
       otherwise =>
-	concatenate(make(<simple-object-vector>,
-			 size: from-path-size - i,
-			 fill: #"parent"),
-		    copy-sequence(path, start: i));
+        concatenate(make(<simple-object-vector>,
+                         size: from-path-size - i,
+                         fill: #"parent"),
+                    copy-sequence(path, start: i));
     end
   end
 end method relative-path;
 
 define method simplify-path
-    (path :: <simple-object-vector>, 
+    (path :: <simple-object-vector>,
      #key resolve-parent? :: <boolean> = #t,
           relative? :: <boolean>)
  => (simplified-path :: <simple-object-vector>)
@@ -211,17 +211,17 @@ define method simplify-path
   for (item in path)
     select (item)
       #"self"   =>
-	#f;
+        #f;
       #"parent" =>
-	if (resolve-parent?
-	      & ~new-path.empty?
-	      & new-path.head ~== #"parent")
-	  new-path := new-path.tail
-	else
-	  new-path := pair(item, new-path)
-	end;
+        if (resolve-parent?
+              & ~new-path.empty?
+              & new-path.head ~== #"parent")
+          new-path := new-path.tail
+        else
+          new-path := pair(item, new-path)
+        end;
       otherwise =>
-	new-path := pair(item, new-path);
+        new-path := pair(item, new-path);
     end
   end;
   if (empty?(new-path) & relative?)
@@ -254,10 +254,10 @@ define method case-insensitive=
   if (string1.size == string2.size)
     block (return)
       for (char1 :: <character> in string1,
-	   char2 :: <character> in string2)
-	unless (as-lowercase(char1) == as-lowercase(char2))
-	  return(#f)
-	end
+           char2 :: <character> in string2)
+        unless (as-lowercase(char1) == as-lowercase(char2))
+          return(#f)
+        end
       end;
       #t
     end

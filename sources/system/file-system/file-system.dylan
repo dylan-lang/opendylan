@@ -1,4 +1,4 @@
-Module:	      system-internals
+Module:       system-internals
 Author:       Gary Palter
 Synopsis:     A platform independent file system API
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -65,8 +65,8 @@ end method condition-to-string;
 
 define method condition-to-string
     (error :: <invalid-file-permissions-error>) => (string :: <string>)
-  format-to-string("Invalid file permissions for file %s", 
-		   file-error-locator(error))
+  format-to-string("Invalid file permissions for file %s",
+                   file-error-locator(error))
 end method condition-to-string;
 
 
@@ -150,7 +150,7 @@ define generic copy-file
      #key if-exists :: <copy/rename-disposition> = #"signal")
  => ();
 
-define method copy-file 
+define method copy-file
     (source :: <file-system-locator>, destination :: <file-system-locator>,
      #key if-exists :: <copy/rename-disposition> = #"signal")
  => ()
@@ -175,8 +175,8 @@ define method copy-file
     (source :: <string>, destination :: <string>,
      #key if-exists :: <copy/rename-disposition> = #"signal")
  => ()
-  copy-file(as(<file-system-locator>, source), as(<file-system-locator>, destination), 
-	    if-exists: if-exists)
+  copy-file(as(<file-system-locator>, source), as(<file-system-locator>, destination),
+            if-exists: if-exists)
 end method copy-file;
 
 
@@ -186,7 +186,7 @@ define generic rename-file
      #key if-exists :: <copy/rename-disposition> = #"signal")
  => ();
 
-define method rename-file 
+define method rename-file
     (source :: <file-system-locator>, destination :: <file-system-locator>,
      #key if-exists :: <copy/rename-disposition> = #"signal")
  => ()
@@ -198,7 +198,7 @@ define method rename-file
      #key if-exists :: <copy/rename-disposition> = #"signal")
  => ()
   rename-file(source, as(<file-system-locator>, destination),
-	      if-exists: if-exists)
+              if-exists: if-exists)
 end method rename-file;
 
 define method rename-file
@@ -206,7 +206,7 @@ define method rename-file
      #key if-exists :: <copy/rename-disposition> = #"signal")
  => ()
   rename-file(as(<file-system-locator>, source), destination,
-	      if-exists: if-exists)
+              if-exists: if-exists)
 end method rename-file;
 
 define method rename-file
@@ -214,7 +214,7 @@ define method rename-file
      #key if-exists :: <copy/rename-disposition> = #"signal")
  => ()
   rename-file(as(<file-system-locator>, source), as(<file-system-locator>, destination),
-	      if-exists: if-exists)
+              if-exists: if-exists)
 end method rename-file;
 
 
@@ -251,8 +251,8 @@ define generic %file-property (file :: <file-system-locator>, key :: <symbol>) =
 
 define method %file-property (file :: <file-system-locator>, key :: <symbol>) => (value)
   error(make(<file-system-error>,
-	     format-string: "Native file system does not implement the %s property",
-	     format-arguments: list(key)))
+             format-string: "Native file system does not implement the %s property",
+             format-arguments: list(key)))
 end method %file-property;
 
 
@@ -277,8 +277,8 @@ define generic %file-property-setter
 define method %file-property-setter
     (new-value, file :: <file-system-locator>, key :: <symbol>) => (new-value)
   error(make(<file-system-error>,
-	     format-string: "Native file system cannot set the %s property",
-	     format-arguments: list(key)))
+             format-string: "Native file system cannot set the %s property",
+             format-arguments: list(key)))
 end method %file-property-setter;
 
 
@@ -389,12 +389,12 @@ define generic ensure-directories-exist (file :: <pathname>) => (created? :: <bo
 define method ensure-directories-exist (file :: <file-system-directory-locator>)
  => (created? :: <boolean>)
   local method doit (directory :: false-or(<file-system-directory-locator>)) => (created? :: <boolean>)
-	  if (false?(directory))
-	    #f                          // Presume that the root exists...
+          if (false?(directory))
+            #f                          // Presume that the root exists...
           elseif (file-exists?(directory))
             #f
-	  else
-	    let parent = locator-directory(directory);
+          else
+            let parent = locator-directory(directory);
             doit(parent);
             %create-directory(directory);
             #t
@@ -490,14 +490,14 @@ define sideways method list-locator
     (method (directory :: <pathname>, name :: <string>, type :: <file-type>)
        ignore(directory);
        let sublocator
-	 = select (type)
-	     #"file", #"link" =>
-	       make(<file-system-file-locator>,
-		    directory: locator,
-		    name:      name);
-	     #"directory" =>
-	       subdirectory-locator(locator, name);
-	   end;
+         = select (type)
+             #"file", #"link" =>
+               make(<file-system-file-locator>,
+                    directory: locator,
+                    name:      name);
+             #"directory" =>
+               subdirectory-locator(locator, name);
+           end;
        add!(locators, sublocator)
      end,
      locator);

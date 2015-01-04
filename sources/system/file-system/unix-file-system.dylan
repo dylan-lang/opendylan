@@ -1,4 +1,4 @@
-Module:	      system-internals
+Module:       system-internals
 Author:       Gary Palter
 Synopsis:     UNIX implementation of the File System library API
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -7,43 +7,43 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Handles expansion of "~" and "~USER" in a pathname
-define method %expand-pathname 
+define method %expand-pathname
     (path :: <posix-directory-locator>)
  => (expanded-path :: <locator>)
   block (return)
     if (locator-relative?(path))
       let elements = locator-path(path);
       if (size(elements) > 0)
-	let first = elements[0];
-	if (instance?(first, <string>)
-	      & size(first) > 0
-	      & first[0] = '~')
-	  let name = if (first = "~")
-		       login-name()
-		     else
-		       copy-sequence(first, start: 1)
-		     end;
-	  let passwd = primitive-wrap-machine-word
-	                 (primitive-cast-pointer-as-raw
-			    (%call-c-function ("getpwnam")
-				 (name :: <raw-byte-string>) => (passwd :: <raw-c-pointer>)
-				 (primitive-string-as-raw(name))
-			     end));
-	  if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(passwd),
-						integer-as-raw(0)))
-	    let homedir = as(<native-directory-locator>, passwd-dir(passwd));
-	    return(merge-locators(make(<native-directory-locator>,
-				       path: copy-sequence(elements, start: 1),
-				       relative?: #t),
-				  homedir))
-	  else
-	    return(path)
-	  end
-	else
-	  return(path)
-	end
+        let first = elements[0];
+        if (instance?(first, <string>)
+              & size(first) > 0
+              & first[0] = '~')
+          let name = if (first = "~")
+                       login-name()
+                     else
+                       copy-sequence(first, start: 1)
+                     end;
+          let passwd = primitive-wrap-machine-word
+                         (primitive-cast-pointer-as-raw
+                            (%call-c-function ("getpwnam")
+                                 (name :: <raw-byte-string>) => (passwd :: <raw-c-pointer>)
+                                 (primitive-string-as-raw(name))
+                             end));
+          if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(passwd),
+                                                integer-as-raw(0)))
+            let homedir = as(<native-directory-locator>, passwd-dir(passwd));
+            return(merge-locators(make(<native-directory-locator>,
+                                       path: copy-sequence(elements, start: 1),
+                                       relative?: #t),
+                                  homedir))
+          else
+            return(path)
+          end
+        else
+          return(path)
+        end
       else
-	return(path)
+        return(path)
       end
     else
       return(path)
@@ -51,16 +51,16 @@ define method %expand-pathname
   end
 end method %expand-pathname;
 
-define method %expand-pathname 
+define method %expand-pathname
     (path :: <posix-file-locator>)
  => (expanded-path :: <locator>)
   let directory = locator-directory(path);
   let expanded-directory = directory & %expand-pathname(directory);
   if (directory ~= expanded-directory)
     make(<native-file-locator>,
-	 directory: expanded-directory,
-	 base: locator-base(path),
-	 extension: locator-extension(path))
+         directory: expanded-directory,
+         base: locator-base(path),
+         extension: locator-extension(path))
   else
     path
   end
@@ -73,7 +73,7 @@ end method %expand-pathname;
 
 
 ///
-define function %shorten-pathname 
+define function %shorten-pathname
     (path :: <posix-file-system-locator>)
  => (shortened-path :: <posix-file-system-locator>)
   path
@@ -81,7 +81,7 @@ end function %shorten-pathname;
 
 
 ///
-define function %file-exists? 
+define function %file-exists?
     (file :: <posix-file-system-locator>) => (exists? :: <boolean>)
   let file = %expand-pathname(file);
   with-stack-stat (st, file)
@@ -96,21 +96,21 @@ end function %file-exists?;
 
 
 ///
-define function %file-type 
+define function %file-type
     (file :: <posix-file-system-locator>, #key if-not-exists = #f)
  => (file-type :: <file-type>)
   let file = %expand-pathname(file);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
-	  (%call-c-function ("lstat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
-	    => (failed? :: <raw-c-signed-int>)
-	     (primitive-string-as-raw(as(<byte-string>, file)),
-	      primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
-	   end))
+          (%call-c-function ("lstat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
+            => (failed? :: <raw-c-signed-int>)
+             (primitive-string-as-raw(as(<byte-string>, file)),
+              primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
+           end))
       if (unix-errno() = $ENOENT & if-not-exists)
-	if-not-exists
+        if-not-exists
       else
-	unix-file-error("determine the type of", "%s", file)
+        unix-file-error("determine the type of", "%s", file)
       end
     elseif (logand(st-mode(st), $S_IFMT) = $S_IFDIR)
       #"directory"
@@ -131,16 +131,16 @@ define function %link-target
     let buffer = make(<byte-string>, size: 8192, fill: '\0');
     let count
       = raw-as-integer(%call-c-function ("readlink")
-			   (path :: <raw-byte-string>, buffer :: <raw-byte-string>,
-			    bufsize :: <raw-c-unsigned-long>)
-			=> (count :: <raw-c-signed-int>)
-			   (primitive-string-as-raw(as(<byte-string>, link)),
-			    primitive-string-as-raw(buffer),
-			    integer-as-raw(8192))
-		       end);
+                           (path :: <raw-byte-string>, buffer :: <raw-byte-string>,
+                            bufsize :: <raw-c-unsigned-long>)
+                        => (count :: <raw-c-signed-int>)
+                           (primitive-string-as-raw(as(<byte-string>, link)),
+                            primitive-string-as-raw(buffer),
+                            integer-as-raw(8192))
+                       end);
     if (count = -1)
       unless (unix-errno() = $ENOENT | unix-errno() = $EINVAL)
-	unix-file-error("readlink", "%s", link)
+        unix-file-error("readlink", "%s", link)
       end
     else
       let target = as(<file-system-locator>, copy-sequence(buffer, end: count));
@@ -152,14 +152,14 @@ end function %link-target;
 
 
 ///
-define function %delete-file 
+define function %delete-file
     (file :: <posix-file-system-locator>) => ()
   let file = %expand-pathname(file);
   if (primitive-raw-as-boolean
-	(%call-c-function ("unlink")
-	     (path :: <raw-byte-string>) => (failed? :: <raw-c-signed-int>)
-	   (primitive-string-as-raw(as(<byte-string>, file)))
-	 end))
+        (%call-c-function ("unlink")
+             (path :: <raw-byte-string>) => (failed? :: <raw-c-signed-int>)
+           (primitive-string-as-raw(as(<byte-string>, file)))
+         end))
     unix-file-error("delete", "%s", file)
   end
 end function %delete-file;
@@ -180,9 +180,9 @@ define function %copy-file
   // check beforehand.  (Just another reason I'm a member of Unix-Haters)
   if (if-exists = #"signal" & file-exists?(destination))
     error(make(<file-system-error>,
-	       format-string: "File exists: Can't copy %s to %s",
-	       format-arguments: list(as(<string>, source), 
-				      as(<string>, destination))))
+               format-string: "File exists: Can't copy %s to %s",
+               format-arguments: list(as(<string>, source),
+                                      as(<string>, destination))))
   end;
   run-application
     (concatenate
@@ -203,20 +203,20 @@ define function %rename-file
   let source = %expand-pathname(source);
   let destination = %expand-pathname(destination);
   // UNIX strikes again!  It's rename function always replaces the target.
-  // So, if the caller doesn't want to overwrite an existing file, we have 
+  // So, if the caller doesn't want to overwrite an existing file, we have
   // to manually check beforehand.  (Sigh)
   if (if-exists = #"signal" & file-exists?(destination))
     error(make(<file-system-error>,
-	       format-string: "File exists: Can't rename %s to %s",
-	       format-arguments: list(as(<string>, source),
-				      as(<string>, destination))))
+               format-string: "File exists: Can't rename %s to %s",
+               format-arguments: list(as(<string>, source),
+                                      as(<string>, destination))))
   end;
   if (primitive-raw-as-boolean
-	(%call-c-function ("rename") (from :: <raw-byte-string>, to :: <raw-byte-string>)
-	  => (failed? :: <raw-c-signed-int>)
-	   (primitive-string-as-raw(as(<byte-string>, source)),
-	    primitive-string-as-raw(as(<byte-string>, destination)))
-	 end))
+        (%call-c-function ("rename") (from :: <raw-byte-string>, to :: <raw-byte-string>)
+          => (failed? :: <raw-c-signed-int>)
+           (primitive-string-as-raw(as(<byte-string>, source)),
+            primitive-string-as-raw(as(<byte-string>, destination)))
+         end))
     unix-file-error("rename", "%s to %s", source, destination)
   end
 end function %rename-file;
@@ -230,11 +230,11 @@ define function %file-properties
   let properties = make(<table>);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
-	  (%call-c-function ("stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
-	    => (failed? :: <raw-c-signed-int>)
-	     (primitive-string-as-raw(as(<byte-string>, file)),
-	      primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
-	   end))
+          (%call-c-function ("stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
+            => (failed? :: <raw-c-signed-int>)
+             (primitive-string-as-raw(as(<byte-string>, file)),
+              primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
+           end))
       unix-file-error("get attributes of", "%s", file)
     else
       properties[#"size"] := st-size(st);
@@ -263,21 +263,21 @@ define method %file-property
   let file = %expand-pathname(file);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
-	  (%call-c-function ("stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
-	    => (failed? :: <raw-c-signed-int>)
-	     (primitive-string-as-raw(as(<byte-string>, file)),
-	      primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
-	   end))
+          (%call-c-function ("stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
+            => (failed? :: <raw-c-signed-int>)
+             (primitive-string-as-raw(as(<byte-string>, file)),
+              primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
+           end))
       unix-file-error("get the author of", "%s", file)
     end;
     let passwd = primitive-wrap-machine-word
-		   (primitive-cast-pointer-as-raw
-		      (%call-c-function ("getpwuid")
-			   (uid :: <raw-c-unsigned-int>) => (passwd :: <raw-c-pointer>)
-			 (abstract-integer-as-raw(st-uid(st)))
-		       end));
+                   (primitive-cast-pointer-as-raw
+                      (%call-c-function ("getpwuid")
+                           (uid :: <raw-c-unsigned-int>) => (passwd :: <raw-c-pointer>)
+                         (abstract-integer-as-raw(st-uid(st)))
+                       end));
     if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(passwd),
-					  integer-as-raw(0)))
+                                          integer-as-raw(0)))
       passwd-name(passwd)
     else
       unix-file-error("get the author of", "%s", file)
@@ -285,17 +285,17 @@ define method %file-property
   end
 end method %file-property;
 
-define method %file-property 
+define method %file-property
     (file :: <posix-file-system-locator>, key == #"size")
  => (file-size :: <integer>)
   let file = %expand-pathname(file);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
-	  (%call-c-function ("stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
-	    => (failed? :: <raw-c-signed-int>)
-	     (primitive-string-as-raw(as(<byte-string>, file)),
-	      primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
-	   end))
+          (%call-c-function ("stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
+            => (failed? :: <raw-c-signed-int>)
+             (primitive-string-as-raw(as(<byte-string>, file)),
+              primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
+           end))
       unix-file-error("get the size of", "%s", file)
     else
       st-size(st)
@@ -309,11 +309,11 @@ define method %file-property
   let file = %expand-pathname(file);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
-	  (%call-c-function ("stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
-	    => (failed? :: <raw-c-signed-int>)
-	     (primitive-string-as-raw(as(<string>, file)),
-	      primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
-	   end))
+          (%call-c-function ("stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
+            => (failed? :: <raw-c-signed-int>)
+             (primitive-string-as-raw(as(<string>, file)),
+              primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
+           end))
       unix-file-error("get the creation date of", "%s", file)
     else
       make(<date>, native-clock: st-ctime(st))
@@ -327,11 +327,11 @@ define method %file-property
   let file = %expand-pathname(file);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
-	  (%call-c-function ("stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
-	    => (failed? :: <raw-c-signed-int>)
-	     (primitive-string-as-raw(as(<byte-string>, file)),
-	      primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
-	   end))
+          (%call-c-function ("stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
+            => (failed? :: <raw-c-signed-int>)
+             (primitive-string-as-raw(as(<byte-string>, file)),
+              primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
+           end))
       unix-file-error("get the access date of", "%s", file)
     else
       make(<date>, native-clock: st-atime(st))
@@ -345,11 +345,11 @@ define method %file-property
   let file = %expand-pathname(file);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
-	  (%call-c-function ("stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
-	    => (failed? :: <raw-c-signed-int>)
-	     (primitive-string-as-raw(as(<byte-string>, file)),
-	      primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
-	   end))
+          (%call-c-function ("stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
+            => (failed? :: <raw-c-signed-int>)
+             (primitive-string-as-raw(as(<byte-string>, file)),
+              primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
+           end))
       unix-file-error("get the modification date of", "%s", file)
     else
       make(<date>, native-clock: st-mtime(st))
@@ -357,15 +357,15 @@ define method %file-property
   end
 end method %file-property;
 
-define function accessible? 
+define function accessible?
     (file :: <posix-file-system-locator>, mode :: <integer>)
  => (accessible? :: <boolean>)
   let file = %expand-pathname(file);
   if (primitive-raw-as-boolean
-	(%call-c-function ("access") (path :: <raw-byte-string>, mode :: <raw-c-signed-int>)
-	  => (failed? :: <raw-c-signed-int>)
-	   (primitive-string-as-raw(as(<byte-string>, file)), abstract-integer-as-raw(mode))
-	 end))
+        (%call-c-function ("access") (path :: <raw-byte-string>, mode :: <raw-c-signed-int>)
+          => (failed? :: <raw-c-signed-int>)
+           (primitive-string-as-raw(as(<byte-string>, file)), abstract-integer-as-raw(mode))
+         end))
     let errno = unix-errno();
     unless (errno = $EACCES | errno = $EROFS | errno = $ETXTBSY)
       unix-file-error("determine access to", "%s (errno = %=)", file, errno)
@@ -373,7 +373,7 @@ define function accessible?
     #f
   else
     #t
-  end  
+  end
 end function accessible?;
 
 define function accessible?-setter
@@ -382,27 +382,27 @@ define function accessible?-setter
   let file = %expand-pathname(file);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
-	  (%call-c-function ("stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
-	    => (failed? :: <raw-c-signed-int>)
-	     (primitive-string-as-raw(as(<byte-string>, file)),
-	      primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
-	   end))
+          (%call-c-function ("stat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
+            => (failed? :: <raw-c-signed-int>)
+             (primitive-string-as-raw(as(<byte-string>, file)),
+              primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
+           end))
       unix-file-error("get permissions for", "%s", file)
     else
       let old-mode = st-mode(st);
       let mode = if (on?)
-		   logior(old-mode, new-mode)
-		 else
-		   logand(old-mode, lognot(new-mode))
-		 end;
+                   logior(old-mode, new-mode)
+                 else
+                   logand(old-mode, lognot(new-mode))
+                 end;
       if (primitive-raw-as-boolean
-	    (%call-c-function ("chmod")
-		  (path :: <raw-byte-string>, mode :: <raw-c-unsigned-int>)
-	       => (failed? :: <raw-c-signed-int>)
-	       (primitive-string-as-raw(as(<byte-string>, file)),
-		abstract-integer-as-raw(mode))
-	     end))
-	unix-file-error("set permissions for", "%s", file)
+            (%call-c-function ("chmod")
+                  (path :: <raw-byte-string>, mode :: <raw-c-unsigned-int>)
+               => (failed? :: <raw-c-signed-int>)
+               (primitive-string-as-raw(as(<byte-string>, file)),
+                abstract-integer-as-raw(mode))
+             end))
+        unix-file-error("set permissions for", "%s", file)
       end
     end
   end;
@@ -415,7 +415,7 @@ define method %file-property
   accessible?(file, $R_OK)
 end method %file-property;
 
-define method %file-property-setter 
+define method %file-property-setter
     (new-readable? :: <boolean>, file :: <posix-file-system-locator>,
      key == #"readable?")
  => (new-readable? :: <boolean>)
@@ -431,8 +431,8 @@ define method %file-property
   accessible?(file, $W_OK)
 end method %file-property;
 
-define method %file-property-setter 
-    (new-writeable? :: <boolean>, file :: <posix-file-system-locator>, 
+define method %file-property-setter
+    (new-writeable? :: <boolean>, file :: <posix-file-system-locator>,
      key == #"writeable?")
  => (new-writeable? :: <boolean>)
   if (new-writeable? ~= %file-property(file, #"writeable?"))
@@ -447,8 +447,8 @@ define method %file-property
   accessible?(file, $X_OK)
 end method %file-property;
 
-define method %file-property-setter 
-    (new-executable? :: <boolean>, file :: <posix-file-system-locator>, 
+define method %file-property-setter
+    (new-executable? :: <boolean>, file :: <posix-file-system-locator>,
      key == #"executable?")
  => (new-executable? :: <boolean>)
   if (new-executable? ~= %file-property(file, #"executable?"))
@@ -462,62 +462,62 @@ end method %file-property-setter;
 define constant $INVALID_DIRECTORY_FD = 0;
 define constant $NO_MORE_DIRENTRIES = 0;
 
-define function %do-directory 
+define function %do-directory
     (f :: <function>, directory :: <posix-directory-locator>) => ()
   let directory = %expand-pathname(directory);
   let directory-fd :: <machine-word> = as(<machine-word>, $INVALID_DIRECTORY_FD);
   block ()
     directory-fd := primitive-wrap-machine-word
                       (primitive-cast-pointer-as-raw
-			 (%call-c-function ("system_opendir")
-			      (path :: <raw-byte-string>) => (dir-fd :: <raw-c-pointer>)
-			    (primitive-string-as-raw(as(<byte-string>, directory)))
-			  end));
+                         (%call-c-function ("system_opendir")
+                              (path :: <raw-byte-string>) => (dir-fd :: <raw-c-pointer>)
+                            (primitive-string-as-raw(as(<byte-string>, directory)))
+                          end));
     if (primitive-machine-word-equal?
-	  (primitive-unwrap-machine-word(directory-fd),
-	   integer-as-raw($INVALID_DIRECTORY_FD)))
+          (primitive-unwrap-machine-word(directory-fd),
+           integer-as-raw($INVALID_DIRECTORY_FD)))
       unix-file-error("start listing of", "%s", directory)
     end;
     let dirent = primitive-wrap-machine-word
                    (primitive-cast-pointer-as-raw
-		      (%call-c-function ("system_readdir")
-			   (dir-fd :: <raw-c-pointer>) => (dirent :: <raw-c-pointer>)
-			 (primitive-cast-raw-as-pointer
-			    (primitive-unwrap-machine-word(directory-fd)))
-		       end));
+                      (%call-c-function ("system_readdir")
+                           (dir-fd :: <raw-c-pointer>) => (dirent :: <raw-c-pointer>)
+                         (primitive-cast-raw-as-pointer
+                            (primitive-unwrap-machine-word(directory-fd)))
+                       end));
     while (primitive-machine-word-not-equal?
-	     (primitive-unwrap-machine-word(dirent),
-	      integer-as-raw($NO_MORE_DIRENTRIES)))
+             (primitive-unwrap-machine-word(dirent),
+              integer-as-raw($NO_MORE_DIRENTRIES)))
       let filename :: <byte-string> = dirent-name(dirent);
       let type :: <file-type>
-	= %file-type(make(<posix-file-locator>,
-			  directory: directory,
-			  name: filename));
+        = %file-type(make(<posix-file-locator>,
+                          directory: directory,
+                          name: filename));
       unless (type == #"directory" & (filename = "." | filename = ".."))
-	f(directory,
-	  filename,
-	  type)
+        f(directory,
+          filename,
+          type)
       end;
       dirent := primitive-wrap-machine-word
-	          (primitive-cast-pointer-as-raw
-		     (%call-c-function ("system_readdir")
-			  (dir-fd :: <raw-c-pointer>) => (dirent :: <raw-c-pointer>)
-			(primitive-cast-raw-as-pointer
-			   (primitive-unwrap-machine-word(directory-fd)))
-		      end));
+                  (primitive-cast-pointer-as-raw
+                     (%call-c-function ("system_readdir")
+                          (dir-fd :: <raw-c-pointer>) => (dirent :: <raw-c-pointer>)
+                        (primitive-cast-raw-as-pointer
+                           (primitive-unwrap-machine-word(directory-fd)))
+                      end));
     end;
 /*
     if (primitive-machine-word-equal?
-	     (primitive-unwrap-machine-word(dirent),
-	      integer-as-raw($NO_MORE_DIRENTRIES)) & (unix-errno() ~= 0))
+             (primitive-unwrap-machine-word(dirent),
+              integer-as-raw($NO_MORE_DIRENTRIES)) & (unix-errno() ~= 0))
       unix-file-error("continue listing of", "%s", directory)
     end;
 */
   cleanup
     if (primitive-machine-word-not-equal?
-	  (primitive-unwrap-machine-word(directory-fd),
-	   integer-as-raw($INVALID_DIRECTORY_FD)))
-      %call-c-function ("system_closedir") 
+          (primitive-unwrap-machine-word(directory-fd),
+           integer-as-raw($INVALID_DIRECTORY_FD)))
+      %call-c-function ("system_closedir")
           (dir :: <raw-c-pointer>) => (failed? :: <raw-c-signed-int>)
         (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(directory-fd)))
       end
@@ -527,7 +527,7 @@ end function %do-directory;
 
 
 ///
-define function %create-directory 
+define function %create-directory
     (directory :: <posix-directory-locator>)
  => (directory :: <posix-directory-locator>)
   let directory = %expand-pathname(directory);
@@ -565,13 +565,13 @@ define function %directory-empty?
     (directory :: <posix-directory-locator>) => (empty? :: <boolean>)
   ~%file-exists?(directory)
     | block (return)
-	%do-directory
-	  (method (directory :: <posix-directory-locator>, name :: <string>, type :: <file-type>)
-	     ignore(directory); ignore(name); ignore(type);
-	     return(#f)
-	   end,
-	   directory);
-	#t
+        %do-directory
+          (method (directory :: <posix-directory-locator>, name :: <string>, type :: <file-type>)
+             ignore(directory); ignore(name); ignore(type);
+             return(#f)
+           end,
+           directory);
+        #t
       end
 end function %directory-empty?;
 
@@ -596,18 +596,18 @@ define function %working-directory
     while (errno = $ERANGE)
       let buffer = make(<byte-string>, size: bufsiz, fill: '\0');
       if (primitive-machine-word-equal?
-	    (primitive-cast-pointer-as-raw(primitive-string-as-raw(buffer)),
-	     primitive-cast-pointer-as-raw
-	       (%call-c-function ("getcwd")
-		    (buf :: <raw-byte-string>, size :: <raw-c-unsigned-long>)
-		 => (result :: <raw-pointer>)
-		  (primitive-string-as-raw(buffer), integer-as-raw(bufsiz))
-		end)))
-	let _end = position(buffer, '\0', test: \=);
-	return(as(<directory-locator>, copy-sequence(buffer, end: _end)))
+            (primitive-cast-pointer-as-raw(primitive-string-as-raw(buffer)),
+             primitive-cast-pointer-as-raw
+               (%call-c-function ("getcwd")
+                    (buf :: <raw-byte-string>, size :: <raw-c-unsigned-long>)
+                 => (result :: <raw-pointer>)
+                  (primitive-string-as-raw(buffer), integer-as-raw(bufsiz))
+                end)))
+        let _end = position(buffer, '\0', test: \=);
+        return(as(<directory-locator>, copy-sequence(buffer, end: _end)))
       else
-	errno := unix-errno();
-	bufsiz := bufsiz * 2;
+        errno := unix-errno();
+        bufsiz := bufsiz * 2;
       end
     end;
     // Arrive here iff we couldn't get the working directory
@@ -622,10 +622,10 @@ define function %working-directory-setter
  => (new-working-directory :: <posix-directory-locator>)
   let directory = %expand-pathname(new-working-directory);
   if (primitive-raw-as-boolean
-	(%call-c-function ("chdir")
-	     (path :: <raw-byte-string>) => (failed? :: <raw-c-signed-int>)
-	   (primitive-string-as-raw(as(<byte-string>, directory)))
-	 end))
+        (%call-c-function ("chdir")
+             (path :: <raw-byte-string>) => (failed? :: <raw-c-signed-int>)
+           (primitive-string-as-raw(as(<byte-string>, directory)))
+         end))
     unix-file-error("chdir", "%s", directory)
   end;
   directory
@@ -639,27 +639,27 @@ define function %temp-directory
     () => (temp-directory :: <posix-directory-locator>)
   *temp-directory*
     | (*temp-directory* :=
-	 begin
-	   let tmpdir = primitive-wrap-machine-word
+         begin
+           let tmpdir = primitive-wrap-machine-word
                          (primitive-cast-pointer-as-raw
-			    (%call-c-function ("tmpnam")
-			         (buffer :: <raw-byte-string>)
-			      => (tmpdir :: <raw-byte-string>)
-			       (primitive-cast-raw-as-pointer(integer-as-raw(0)))
-			     end));
-	   if (primitive-machine-word-not-equal?
-		 (primitive-unwrap-machine-word(tmpdir),
-		  integer-as-raw(0)))
-	     let file
-	       = as(<posix-file-locator>,
-		    primitive-raw-as-string
-		      (primitive-cast-raw-as-pointer
-			 (primitive-unwrap-machine-word(tmpdir))));
-	     locator-directory(file)
+                            (%call-c-function ("tmpnam")
+                                 (buffer :: <raw-byte-string>)
+                              => (tmpdir :: <raw-byte-string>)
+                               (primitive-cast-raw-as-pointer(integer-as-raw(0)))
+                             end));
+           if (primitive-machine-word-not-equal?
+                 (primitive-unwrap-machine-word(tmpdir),
+                  integer-as-raw(0)))
+             let file
+               = as(<posix-file-locator>,
+                    primitive-raw-as-string
+                      (primitive-cast-raw-as-pointer
+                         (primitive-unwrap-machine-word(tmpdir))));
+             locator-directory(file)
            else
              error("error in call to tmpnam - no temporary directory found")
-	   end
-	 end)
+           end
+         end)
 end function %temp-directory;
 
 

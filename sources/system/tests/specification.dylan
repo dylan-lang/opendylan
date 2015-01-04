@@ -17,11 +17,11 @@ define module-spec date ()
 
   //---*** Note that these leave out the keyword arguments!
   function encode-date (<integer>, <integer>, <integer>, <integer>,
-			<integer>, <integer>)
+                        <integer>, <integer>)
            => (<date>);
   function decode-date (<date>)
             => (<integer>, <integer>, <integer>, <integer>,
-		<integer>, <integer>, <day-of-week>, <integer>);
+                <integer>, <integer>, <day-of-week>, <integer>);
   function parse-iso8601-string (<string>) => (<date>);
   open generic-function \= (<date>, <date>) => (<boolean>);
   open generic-function \< (<date>, <date>) => (<boolean>);
@@ -80,9 +80,9 @@ define module-spec locators ()
   function locator-error (<string>, #"rest") => (#"rest");
 
   // Utilities
-  function relative-locator 
+  function relative-locator
     (<physical-locator>, <physical-locator>) => (<physical-locator>);
-  function subdirectory-locator 
+  function subdirectory-locator
     (<directory-locator>, #"rest") => (<directory-locator>);
   function simplify-locator
     (<physical-locator>) => (<physical-locator>);
@@ -193,7 +193,7 @@ define module-spec operating-system ()
   function owner-name () => (false-or(<string>));
   function owner-organization () => (false-or(<string>));
   class <application-process> (<object>);
-  function run-application 
+  function run-application
     (type-union(<string>, limited(<sequence>, of: <string>)),
      #"key", #"under-shell?", #"inherit-console?", #"activate?",
      #"minimize?", #"hide?", #"outputter", #"asynchronous?",

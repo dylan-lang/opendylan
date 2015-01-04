@@ -27,11 +27,11 @@ define function unix-open
   with-interrupt-repeat
     raw-as-integer
       (%call-c-function ("open")
-           (path :: <raw-byte-string>, oflag :: <raw-c-unsigned-int>, 
+           (path :: <raw-byte-string>, oflag :: <raw-c-unsigned-int>,
             mode :: <raw-c-unsigned-int>)
         => (fd :: <raw-c-unsigned-int>)
-         (primitive-string-as-raw(path), 
-          integer-as-raw(mode), 
+         (primitive-string-as-raw(path),
+          integer-as-raw(mode),
           integer-as-raw(create-flags))
        end)
   end
@@ -50,8 +50,8 @@ define function unix-lseek
     (fd :: <integer>, position :: <integer>, mode :: <integer>) => (position :: <integer>)
   raw-as-integer
     (%call-c-function ("io_lseek")
-       (fd :: <raw-c-signed-int>, position :: <raw-c-signed-long>, 
-        mode :: <raw-c-signed-int>) 
+       (fd :: <raw-c-signed-int>, position :: <raw-c-signed-long>,
+        mode :: <raw-c-signed-int>)
        => (result :: <raw-c-signed-long>)
        (integer-as-raw(fd), integer-as-raw(position), integer-as-raw(mode))
      end)
@@ -63,12 +63,12 @@ define function unix-raw-read
   with-interrupt-repeat
     raw-as-integer
       (%call-c-function ("read")
-           (fd :: <raw-c-unsigned-int>, address :: <raw-pointer>, 
+           (fd :: <raw-c-unsigned-int>, address :: <raw-pointer>,
             size :: <raw-c-unsigned-long>)
         => (result :: <raw-c-signed-int>)
-         (integer-as-raw(fd), 
-	  primitive-cast-raw-as-pointer
-	    (primitive-unwrap-machine-word(address)), 
+         (integer-as-raw(fd),
+          primitive-cast-raw-as-pointer
+            (primitive-unwrap-machine-word(address)),
           integer-as-raw(count))
        end)
   end
@@ -84,16 +84,16 @@ define function unix-file-exists? (path :: <byte-string>) => (exists? :: <boolea
        (path :: <raw-byte-string>, statbuf :: <raw-pointer>)
       => (result :: <raw-c-signed-int>)
        (primitive-string-as-raw(path),
-	primitive-cast-raw-as-pointer(primitive-string-as-raw(*stat-buffer*)))
+        primitive-cast-raw-as-pointer(primitive-string-as-raw(*stat-buffer*)))
      end)
 end function unix-file-exists?;
 
 define function unix-delete-file (path :: <byte-string>) => (ok :: <boolean>)
   with-interrupt-repeat
     raw-as-integer(%call-c-function ("unlink")
-		       (path :: <raw-byte-string>) => (result :: <raw-c-signed-int>)
-		     (primitive-string-as-raw(path))
-		   end)
+                       (path :: <raw-byte-string>) => (result :: <raw-c-signed-int>)
+                     (primitive-string-as-raw(path))
+                   end)
   end = 0;
 end function unix-delete-file;
 

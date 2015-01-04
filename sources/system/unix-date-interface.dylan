@@ -12,67 +12,67 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define inline-only function tm-seconds (tm :: <machine-word>) => (seconds :: <integer>)
   raw-as-integer
     (primitive-c-signed-int-at(primitive-unwrap-machine-word(tm),
-			       integer-as-raw(0),
-			       integer-as-raw($tm-sec-offset)))
+                               integer-as-raw(0),
+                               integer-as-raw($tm-sec-offset)))
 end function tm-seconds;
 
 define inline-only function tm-minutes (tm :: <machine-word>) => (minutes :: <integer>)
   raw-as-integer
     (primitive-c-signed-int-at(primitive-unwrap-machine-word(tm),
-			       integer-as-raw(0),
-			       integer-as-raw($tm-min-offset)))
+                               integer-as-raw(0),
+                               integer-as-raw($tm-min-offset)))
 end function tm-minutes;
 
 define inline-only function tm-hours (tm :: <machine-word>) => (hours :: <integer>)
   raw-as-integer
     (primitive-c-signed-int-at(primitive-unwrap-machine-word(tm),
-			       integer-as-raw(0),
-			       integer-as-raw($tm-hour-offset)))
+                               integer-as-raw(0),
+                               integer-as-raw($tm-hour-offset)))
 end function tm-hours;
 
 define inline-only function tm-day (tm :: <machine-word>) => (day :: <integer>)
   raw-as-integer
     (primitive-c-signed-int-at(primitive-unwrap-machine-word(tm),
-			       integer-as-raw(0),
-			       integer-as-raw($tm-mday-offset)))
+                               integer-as-raw(0),
+                               integer-as-raw($tm-mday-offset)))
 end function tm-day;
 
 define inline-only function tm-month (tm :: <machine-word>) => (month :: <integer>)
-  1				// UNIX returns a zero-based month (ugh)
+  1                                // UNIX returns a zero-based month (ugh)
   + raw-as-integer
       (primitive-c-signed-int-at(primitive-unwrap-machine-word(tm),
-				 integer-as-raw(0),
-				 integer-as-raw($tm-mon-offset)))
+                                 integer-as-raw(0),
+                                 integer-as-raw($tm-mon-offset)))
 end function tm-month;
 
 define inline-only function tm-year (tm :: <machine-word>) => (year :: <integer>)
-  1900				// UNIX returns years since 1900
+  1900                                // UNIX returns years since 1900
   + raw-as-integer
       (primitive-c-signed-int-at(primitive-unwrap-machine-word(tm),
-				 integer-as-raw(0),
-				 integer-as-raw($tm-year-offset)))
+                                 integer-as-raw(0),
+                                 integer-as-raw($tm-year-offset)))
 end function tm-year;
 
 define inline-only function tm-dst? (tm :: <machine-word>) => (dst? :: <boolean>)
   primitive-raw-as-boolean
     (primitive-c-signed-int-at(primitive-unwrap-machine-word(tm),
-			       integer-as-raw(0),
-			       integer-as-raw($tm-isdst-offset)))
+                               integer-as-raw(0),
+                               integer-as-raw($tm-isdst-offset)))
 end function tm-dst?;
 
 define inline-only function tm-tz-offset (tm :: <machine-word>) => (tz-offset :: <integer>)
   truncate/(raw-as-integer
-	      (primitive-c-signed-long-at(primitive-unwrap-machine-word(tm),
-					  integer-as-raw(0),
-					  integer-as-raw($tm-gmtoff-offset))),
-	    60)			// UNIX returns time zone offset in seconds
+              (primitive-c-signed-long-at(primitive-unwrap-machine-word(tm),
+                                          integer-as-raw(0),
+                                          integer-as-raw($tm-gmtoff-offset))),
+            60)                        // UNIX returns time zone offset in seconds
 end function tm-tz-offset;
 
 define inline-only function tm-tz-name (tm :: <machine-word>) => (tz-name :: <byte-string>)
   primitive-raw-as-string
   (primitive-c-pointer-at(primitive-unwrap-machine-word(tm),
-			  integer-as-raw(0),
-			  integer-as-raw($tm-zone-offset)))
+                          integer-as-raw(0),
+                          integer-as-raw($tm-zone-offset)))
 end function tm-tz-name;
 
 
@@ -80,12 +80,12 @@ end function tm-tz-name;
 
 define function read-clock () => (time :: <machine-word>)
   let time = primitive-wrap-machine-word
-               (%call-c-function ("time") 
-		    (timeloc :: <raw-c-pointer>) => (time :: <raw-c-signed-int>)
-		  (primitive-cast-raw-as-pointer(integer-as-raw(0)))
-	        end);
+               (%call-c-function ("time")
+                    (timeloc :: <raw-c-pointer>) => (time :: <raw-c-signed-int>)
+                  (primitive-cast-raw-as-pointer(integer-as-raw(0)))
+                end);
   if (primitive-machine-word-equal?(primitive-unwrap-machine-word(time),
-				    integer-as-raw(-1)))
+                                    integer-as-raw(-1)))
     error("Can't get time of day")
   end;
   time
@@ -104,17 +104,17 @@ end method native-clock-to-tm;
 define method native-clock-to-tm (time :: <machine-word>) => (tm :: <machine-word>)
   with-storage (timeloc, raw-as-integer(primitive-word-size()))
     primitive-c-signed-long-at(primitive-unwrap-machine-word(timeloc),
-			       integer-as-raw(0),
-			       integer-as-raw(0))
+                               integer-as-raw(0),
+                               integer-as-raw(0))
       := primitive-unwrap-machine-word(time);
     let tm = primitive-wrap-machine-word
                (primitive-cast-pointer-as-raw
-		  (%call-c-function ("localtime")
-		       (time :: <raw-c-pointer>) => (tm :: <raw-c-pointer>)
-		     (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(timeloc)))
-		   end));
+                  (%call-c-function ("localtime")
+                       (time :: <raw-c-pointer>) => (tm :: <raw-c-pointer>)
+                     (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(timeloc)))
+                   end));
     if (primitive-machine-word-equal?(primitive-unwrap-machine-word(tm),
-				      integer-as-raw(0)))
+                                      integer-as-raw(0)))
       error("Can't decode native clock value")
     end;
     tm
@@ -144,15 +144,15 @@ define variable *ts-counter* :: <integer> = 0;
 define function current-timestamp () => (milliseconds :: <integer>, days :: <integer>)
   let tm = native-clock-to-tm(read-clock());
   let (ud, ut) = compute-universal-time(tm-year(tm), tm-month(tm), tm-day(tm),
-					tm-hours(tm), tm-minutes(tm), tm-seconds(tm),
-					tm-tz-offset(tm));
+                                        tm-hours(tm), tm-minutes(tm), tm-seconds(tm),
+                                        tm-tz-offset(tm));
   values(1000 * ut
-	   + begin
-	       let tsc = *ts-counter*;
-	       *ts-counter* := modulo(*ts-counter* + 1, 1000);
-	       tsc
-	     end,
-	 ud)
+           + begin
+               let tsc = *ts-counter*;
+               *ts-counter* := modulo(*ts-counter* + 1, 1000);
+               tsc
+             end,
+         ud)
 end function current-timestamp;
 
 define function local-time-zone-offset () => (zone-offset :: <integer>)

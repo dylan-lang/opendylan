@@ -73,47 +73,47 @@ define sealed method string-as-url
     = parse-url(string, protocol: protocol);
   let server
     = if (host)
-	make(class,
-	     host:     host,
-	     port:     port,
-	     username: username,
-	     password: password)
+        make(class,
+             host:     host,
+             port:     port,
+             username: username,
+             password: password)
       end;
   let directory
     = if (path)
-	make(<directory-url>,
-	     server:    server,
-	     path:      path,
-	     relative?: relative?)
+        make(<directory-url>,
+             server:    server,
+             path:      path,
+             relative?: relative?)
       end;
   if (base | extension)
     let file
       = make(<file-url>,
-	     directory: directory,
-	     base:      base,
-	     extension: extension);
+             directory: directory,
+             base:      base,
+             extension: extension);
     case
       cgi-string =>
-	make(<cgi-url>,
-	     file: file,
-	     cgi-string: cgi-string);
+        make(<cgi-url>,
+             file: file,
+             cgi-string: cgi-string);
       index =>
-	make(<file-index-url>,
-	     file: file,
-	     index: index);
+        make(<file-index-url>,
+             file: file,
+             index: index);
       otherwise =>
-	file;
+        file;
     end
   else
     directory
       | locator-error("Invalid URL '%s': no file or directory component",
-		      if (protocol)
-			concatenate
-			  (protocol, 
-			   delimiter-to-string($web-protocol-separator))
-		      else
-			string
-		      end)
+                      if (protocol)
+                        concatenate
+                          (protocol,
+                           delimiter-to-string($web-protocol-separator))
+                      else
+                        string
+                      end)
   end
 end method string-as-url;
 
@@ -154,7 +154,7 @@ end method locator-default-port;
 define sealed method string-as-locator
     (class :: subclass(<server-url>), string :: <string>)
  => (locator :: <server-url>)
-  let (class, host, port, username, password, path, relative?, 
+  let (class, host, port, username, password, path, relative?,
        base, extension, cgi-string, index)
     = parse-url(string);
   if (path | relative? | base | extension | cgi-string | index)
@@ -178,34 +178,34 @@ define sealed method locator-as-string
   let password = locator.locator-password;
   let name-without-port
     = concatenate-as(class,
-		     locator.locator-protocol,
-		     delimiter-to-string($web-protocol-separator),
-		     $web-host-prefix,
-		     locator.locator-host);
+                     locator.locator-protocol,
+                     delimiter-to-string($web-protocol-separator),
+                     $web-host-prefix,
+                     locator.locator-host);
   if (port | username | password)
     concatenate-as
       (class,
        name-without-port,
        if (port)
-	 concatenate-as(class,
-			delimiter-to-string($web-port-separator),
-			integer-to-string(port))
+         concatenate-as(class,
+                        delimiter-to-string($web-port-separator),
+                        integer-to-string(port))
        else
-	 #[]
+         #[]
        end,
        if (username)
-	 concatenate-as(class,
-			delimiter-to-string($web-username-separator),
-			username)
+         concatenate-as(class,
+                        delimiter-to-string($web-username-separator),
+                        username)
        else
-	 #[]
+         #[]
        end,
        if (password)
-	 concatenate-as(class,
-			delimiter-to-string($web-password-separator),
-			password)
+         concatenate-as(class,
+                        delimiter-to-string($web-password-separator),
+                        password)
        else
-	 #[]
+         #[]
        end)
   else
     name-without-port
@@ -284,7 +284,7 @@ end method file-parser;
 
 /// URL directories
 
-define sealed class <directory-url> 
+define sealed class <directory-url>
     (<directory-locator>, <url>)
   sealed constant slot locator-server :: false-or(<server-url>) = #f,
     init-keyword: server:;
@@ -304,15 +304,15 @@ define sealed method make
  => (locator :: <directory-url>)
   let path
     = if (name | directory)
-	concatenate(if (directory) directory.locator-path else #[] end,
-		    if (name) vector(name) else #[] end)
+        concatenate(if (directory) directory.locator-path else #[] end,
+                    if (name) vector(name) else #[] end)
       else
-	path
+        path
       end;
   next-method(class,
-	      server:    server,
-	      path:      canonicalize-path(path),
-	      relative?: relative?)
+              server:    server,
+              path:      canonicalize-path(path),
+              relative?: relative?)
 end method make;
 
 define sealed method locator-name
@@ -340,13 +340,13 @@ define sealed method locator-as-string
   let server = locator.locator-server;
   let directory-string
     = path-to-string(locator.locator-path,
-		     class:     class,
-		     separator: $web-separator,
-		     relative?: locator.locator-relative?);
+                     class:     class,
+                     separator: $web-separator,
+                     relative?: locator.locator-relative?);
   if (server)
     concatenate-as(class,
-		   as(class, server),
-		   directory-string)
+                   as(class, server),
+                   directory-string)
   else
     directory-string
   end
@@ -376,7 +376,7 @@ define sealed method make
  => (locator :: <file-url>)
   let directory
     = unless (directory & current-directory-locator?(directory))
-	directory
+        directory
       end;
   let pos = name & find-delimiter-from-end(name, $web-extension-separator);
   let base = base | if (pos) copy-sequence(name, end: pos) else name end;
@@ -385,9 +385,9 @@ define sealed method make
     locator-error("Attempted to create a file locator without a base")
   end;
   next-method(class,
-	      directory: directory,
-	      base: base,
-	      extension: extension)
+              directory: directory,
+              base: base,
+              extension: extension)
 end method make;
 
 define sealed method locator-server
@@ -404,8 +404,8 @@ define sealed method locator-name
   let extension = locator.locator-extension;
   if (extension)
     concatenate(base | "",
-		delimiter-to-string($web-extension-separator),
-		extension)
+                delimiter-to-string($web-extension-separator),
+                extension)
   else
     base
   end
@@ -449,9 +449,9 @@ define sealed method locator-as-string
     (class :: subclass(<string>), locator :: <file-index-url>)
  => (string :: <string>)
   concatenate-as(class,
-		 as(class, locator.locator-file),
-		 delimiter-to-string($web-index-separator),
-		 locator.locator-index)
+                 as(class, locator.locator-file),
+                 delimiter-to-string($web-index-separator),
+                 locator.locator-index)
 end method locator-as-string;
 
 define sealed method locator-server
@@ -479,9 +479,9 @@ define sealed method locator-as-string
     (class :: subclass(<string>), locator :: <cgi-url>)
  => (string :: <string>)
   concatenate-as(class,
-		 as(class, locator.locator-file),
-		 delimiter-to-string($web-cgi-separator),
-		 locator.locator-cgi-string)
+                 as(class, locator.locator-file),
+                 delimiter-to-string($web-cgi-separator),
+                 locator.locator-cgi-string)
 end method locator-as-string;
 
 
@@ -506,7 +506,7 @@ define sealed method string-as-locator
   let protocol = pos & copy-sequence(string, end: pos);
   unless (protocol = $mailto-protocol)
     locator-error("Cannot convert %= into <mail-to-locator>",
-		  string)
+                  string)
   end;
   let address-pos = pos + 1;
   unless (string.size > address-pos + 1)
@@ -520,9 +520,9 @@ define sealed method locator-as-string
     (class :: subclass(<string>), locator :: <mail-to-locator>)
  => (string :: <string>)
   concatenate-as(class,
-		 $mailto-protocol,
-		 delimiter-to-string($web-separator),
-		 locator.locator-address)
+                 $mailto-protocol,
+                 delimiter-to-string($web-separator),
+                 locator.locator-address)
 end method locator-as-string;
 
 define method mailto-parser
@@ -547,169 +547,169 @@ define sealed method parse-url
      cgi-string :: false-or(<string>),
      index :: false-or(<string>))
   let stop :: <integer> = string.size;
-  local 
+  local
     method parse-protocol
-	() => (class :: subclass(<server-url>), next-index :: <integer>)
+        () => (class :: subclass(<server-url>), next-index :: <integer>)
       let (protocol, pos)
         = if (protocol)
-	    values(protocol, 0)
-	  else
-	    let pos = find-delimiter(string, $web-protocol-separator);
-	    unless (pos)
-	      locator-error("Missing protocol in URL '%s'", string)
-	    end;
-	    values(copy-sequence(string, end: pos), pos + 1)
-	  end;
+            values(protocol, 0)
+          else
+            let pos = find-delimiter(string, $web-protocol-separator);
+            unless (pos)
+              locator-error("Missing protocol in URL '%s'", string)
+            end;
+            values(copy-sequence(string, end: pos), pos + 1)
+          end;
       let class = web-protocol-class(protocol);
       unless (class)
-	locator-error("Unrecognised URL protocol '%s' in '%s'", 
-		      protocol, string)
+        locator-error("Unrecognised URL protocol '%s' in '%s'",
+                      protocol, string)
       end;
       values(class, pos)
     end method parse-protocol,
 
     method parse-host
-	(start :: <integer>)
+        (start :: <integer>)
      => (host :: false-or(<string>), next-index :: <integer>)
       let prefix-end = start + $web-host-prefix.size;
       let prefix
-	= prefix-end < stop
-	    & copy-sequence(string, start: start, end: prefix-end);
+        = prefix-end < stop
+            & copy-sequence(string, start: start, end: prefix-end);
       if (prefix = $web-host-prefix)
-	let next-index
-	  = find-delimiters(string,
-			    vector($web-port-separator,
-				   $web-username-separator,
-				   $web-separator),
-			    start: prefix-end)
-	      | stop;
-	let host
-	  = copy-sequence(string,
-			  start: prefix-end,
-			  end: next-index);
-	values(host, next-index)
+        let next-index
+          = find-delimiters(string,
+                            vector($web-port-separator,
+                                   $web-username-separator,
+                                   $web-separator),
+                            start: prefix-end)
+              | stop;
+        let host
+          = copy-sequence(string,
+                          start: prefix-end,
+                          end: next-index);
+        values(host, next-index)
       else
-	values(#f, start)
+        values(#f, start)
       end
     end method parse-host,
 
     method parse-port
-	(start :: <integer>)
+        (start :: <integer>)
      => (port :: false-or(<integer>), next-index :: <integer>)
       if (start < stop & string[start] == $web-port-separator)
-	let next-index
-	  = find-delimiters(string,
-			    vector($web-username-separator,
-				   $web-separator),
-			    start: start + 1)
-	      | stop;
-	let port
-	  = string-to-integer
-	      (string, start: start + 1, end: next-index, default: -1);
-	if (port == -1)
-	  locator-error("Invalid port supplied for locator '%s'", string)
-	else
-	  values(port, next-index)
-	end
+        let next-index
+          = find-delimiters(string,
+                            vector($web-username-separator,
+                                   $web-separator),
+                            start: start + 1)
+              | stop;
+        let port
+          = string-to-integer
+              (string, start: start + 1, end: next-index, default: -1);
+        if (port == -1)
+          locator-error("Invalid port supplied for locator '%s'", string)
+        else
+          values(port, next-index)
+        end
       else
         values(#f, start)
       end
     end method parse-port,
 
     method parse-username
-	(start :: <integer>)
+        (start :: <integer>)
      => (username :: false-or(<string>), password :: false-or(<string>),
-	 next-index :: <integer>)
+         next-index :: <integer>)
       if (start < stop & string[start] == $web-username-separator)
-	let start = start + 1;
-	let password-start
-	  = find-delimiter(string, $web-password-separator, start: start);
-	let password-stop
-	  = find-delimiter(string, $web-separator,
-			   start: password-start | start)
-	      | stop;
-	values(copy-sequence(string,
-			     start: start, 
-			     end: password-start | password-stop),
-	       if (password-start)
-		 copy-sequence(string,
-			       start: password-start + 1,
-			       end:   password-stop)
-	       end,
-	       password-stop)
+        let start = start + 1;
+        let password-start
+          = find-delimiter(string, $web-password-separator, start: start);
+        let password-stop
+          = find-delimiter(string, $web-separator,
+                           start: password-start | start)
+              | stop;
+        values(copy-sequence(string,
+                             start: start,
+                             end: password-start | password-stop),
+               if (password-start)
+                 copy-sequence(string,
+                               start: password-start + 1,
+                               end:   password-stop)
+               end,
+               password-stop)
       else
-	values(#f, #f, start)
+        values(#f, #f, start)
       end
     end method parse-username,
 
     method parse-directory
-	(start :: <integer>, stop :: <integer>)
+        (start :: <integer>, stop :: <integer>)
      => (path :: false-or(<sequence>), relative? :: <boolean>,
-	 next-index :: <integer>)
+         next-index :: <integer>)
       if (start < stop)
-	let directory-end
-	  = find-delimiter-from-end(string, $web-separator,
-				    start: start,
-				    end:   stop);
-	let next-index
-	  = if (directory-end)
-	      directory-end + 1
-	    else
-	      stop
-	    end;
-	let (path, relative?)
-	  = parse-path(string, 
-		       start: start,
-		       end:   next-index,
-		       test:  rcurry(\==, $web-separator));
-	values(path, relative?, next-index)
+        let directory-end
+          = find-delimiter-from-end(string, $web-separator,
+                                    start: start,
+                                    end:   stop);
+        let next-index
+          = if (directory-end)
+              directory-end + 1
+            else
+              stop
+            end;
+        let (path, relative?)
+          = parse-path(string,
+                       start: start,
+                       end:   next-index,
+                       test:  rcurry(\==, $web-separator));
+        values(path, relative?, next-index)
       else
-	values(#f, #f, start)
+        values(#f, #f, start)
       end
     end method parse-directory,
 
     method parse-base-and-extension
-	(start :: <integer>, stop :: <integer>)
+        (start :: <integer>, stop :: <integer>)
      => (base :: false-or(<string>), extension :: false-or(<string>),
-	 next-index :: <integer>)
+         next-index :: <integer>)
       if (start < stop)
-	let pos
-	  = find-delimiter(string, $web-extension-separator,
-			   start: start,
-			   end:   stop);
-	values(copy-sequence(string,
-			     start: start,
-			     end: pos | stop),
-	       if (pos)
-		 copy-sequence(string,
-			       start: pos + 1,
-			       end: stop)
-	       end,
-	       stop)
+        let pos
+          = find-delimiter(string, $web-extension-separator,
+                           start: start,
+                           end:   stop);
+        values(copy-sequence(string,
+                             start: start,
+                             end: pos | stop),
+               if (pos)
+                 copy-sequence(string,
+                               start: pos + 1,
+                               end: stop)
+               end,
+               stop)
       else
-	values(#f, #f, stop)
+        values(#f, #f, stop)
       end
     end method parse-base-and-extension,
 
     method parse-cgi-string
-	(start :: <integer>)
+        (start :: <integer>)
      => (cgi-string :: false-or(<string>), next-index :: <integer>)
       if (start < stop & string[start] == $web-cgi-separator)
-	values(copy-sequence(string, start: start + 1),
-	       stop)
+        values(copy-sequence(string, start: start + 1),
+               stop)
       else
-	values(#f, start)
+        values(#f, start)
       end
     end method parse-cgi-string,
 
     method parse-index
-	(start :: <integer>)
+        (start :: <integer>)
      => (index :: false-or(<string>), next-index :: <integer>)
       if (start < stop & string[start] == $web-index-separator)
-	values(copy-sequence(string, start: start + 1),
-	       stop)
+        values(copy-sequence(string, start: start + 1),
+               stop)
       else
-	values(#f, start)
+        values(#f, start)
       end
     end method parse-index;
 
@@ -720,7 +720,7 @@ define sealed method parse-url
   let file-end
     = find-delimiter(string, $web-cgi-separator, start: username-end)
         | find-delimiter-from-end(string, $web-index-separator,
-				  start: username-end)
+                                  start: username-end)
         | stop;
   let (path, relative?, path-end) = parse-directory(username-end, file-end);
   let (base, extension, name-end)
@@ -729,10 +729,10 @@ define sealed method parse-url
   let (index, index-end) = parse-index(cgi-string-end);
   unless (index-end == stop)
     locator-error("Unexpected suffix for URL '%s': '%s'",
-		  string, copy-sequence(string, start: index-end))
+                  string, copy-sequence(string, start: index-end))
   end;
-  values(class, host, port, username, password, path, relative?, base, 
-	 extension, cgi-string, index)
+  values(class, host, port, username, password, path, relative?, base,
+         extension, cgi-string, index)
 end method parse-url;
 
 //---*** It is a pity we need this method for efficiency...

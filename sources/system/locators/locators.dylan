@@ -136,9 +136,9 @@ end class <locator-error>;
 
 define function locator-error
     (format-string :: <string>, #rest format-arguments)
-  error(make(<locator-error>, 
-	     format-string:    format-string,
-	     format-arguments: format-arguments))
+  error(make(<locator-error>,
+             format-string:    format-string,
+             format-arguments: format-arguments))
 end function locator-error;
 
 
@@ -177,9 +177,9 @@ define method locator-directory
   let path = locator.locator-path;
   unless (empty?(path))
     make(object-class(locator),
-	 server:    locator.locator-server,
-	 path:      copy-sequence(path, end: path.size - 1),
-	 relative?: locator.locator-relative?)
+         server:    locator.locator-server,
+         path:      copy-sequence(path, end: path.size - 1),
+         relative?: locator.locator-relative?)
   end
 end method locator-directory;
 
@@ -197,14 +197,14 @@ define method simplify-locator
   let relative? = locator.locator-relative?;
   let resolve-parent? = ~locator.locator-might-have-links?;
   let simplified-path
-    = simplify-path(path, 
-		    resolve-parent?: resolve-parent?,
-		    relative?: relative?);
+    = simplify-path(path,
+                    resolve-parent?: resolve-parent?,
+                    relative?: relative?);
   if (path ~= simplified-path)
     make(object-class(locator),
-	 server:    locator.locator-server,
-	 path:      simplified-path,
-	 relative?: locator.locator-relative?)
+         server:    locator.locator-server,
+         path:      simplified-path,
+         relative?: locator.locator-relative?)
   else
     locator
   end
@@ -216,9 +216,9 @@ define method simplify-locator
   let simplified-directory = directory & simplify-locator(directory);
   if (directory ~= simplified-directory)
     make(object-class(locator),
-	 directory: simplified-directory,
-	 base:      locator.locator-base,
-	 extension: locator.locator-extension)
+         directory: simplified-directory,
+         base:      locator.locator-base,
+         extension: locator.locator-extension)
   else
     locator
   end
@@ -257,18 +257,18 @@ define method relative-locator
   case
     ~locator.locator-relative? & from-locator.locator-relative? =>
       locator-error
-	("Cannot find relative path of absolute locator %= from relative locator %=",
-	 locator, from-locator);
+        ("Cannot find relative path of absolute locator %= from relative locator %=",
+         locator, from-locator);
     locator.locator-server ~= from-locator.locator-server =>
       locator;
     path = from-path =>
       make(object-class(locator),
-	   path: vector(#"self"),
-	   relative?: #t);
+           path: vector(#"self"),
+           relative?: #t);
     otherwise =>
       make(object-class(locator),
-	   path: relative-path(path, from-path, test: locator.locator-test),
-	   relative?: #t);
+           path: relative-path(path, from-path, test: locator.locator-test),
+           relative?: #t);
   end
 end method relative-locator;
 
@@ -280,9 +280,9 @@ define method relative-locator
   if (relative-directory ~= directory)
     simplify-locator
       (make(object-class(locator),
-	    directory: relative-directory,
-	    base:      locator.locator-base,
-	    extension: locator.locator-extension))
+            directory: relative-directory,
+            base:      locator.locator-base,
+            extension: locator.locator-extension))
   else
     locator
   end
@@ -297,8 +297,8 @@ define method relative-locator
       relative-locator(locator, from-directory);
     ~locator.locator-relative? =>
       locator-error
-	("Cannot find relative path of absolute locator %= from relative locator %=",
-	 locator, from-locator);
+        ("Cannot find relative path of absolute locator %= from relative locator %=",
+         locator, from-locator);
     otherwise =>
       locator;
   end
@@ -321,9 +321,9 @@ define method merge-locators
     let path = concatenate(from-locator.locator-path, locator.locator-path);
     simplify-locator
       (make(object-class(locator),
-	    server:    from-locator.locator-server,
-	    path:      path,
-	    relative?: from-locator.locator-relative?))
+            server:    from-locator.locator-server,
+            path:      path,
+            relative?: from-locator.locator-relative?))
   else
     locator
   end
@@ -333,17 +333,17 @@ define method merge-locators
     (locator :: <file-locator>, from-locator :: <directory-locator>)
  => (merged-locator :: <file-locator>)
   let directory = locator.locator-directory;
-  let merged-directory 
+  let merged-directory
     = if (directory)
-	merge-locators(directory, from-locator)
+        merge-locators(directory, from-locator)
       else
-	simplify-locator(from-locator)
+        simplify-locator(from-locator)
       end;
   if (merged-directory ~= directory)
     make(object-class(locator),
-	 directory: merged-directory,
-	 base:      locator.locator-base,
-	 extension: locator.locator-extension)
+         directory: merged-directory,
+         base:      locator.locator-base,
+         extension: locator.locator-extension)
   else
     locator
   end
