@@ -3,6 +3,7 @@ Target-Type:  dll
 Author:       Peter S. Housel
 Files:        library
               jam-test
+              specification
 Target:       dll
 Copyright:    Original Code is Copyright 2004 Gwydion Dylan Maintainers
               All rights reserved.
