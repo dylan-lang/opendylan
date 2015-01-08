@@ -53,8 +53,6 @@ define module-spec locators ()
   open abstract class <physical-locator> (<locator>);
   open abstract instantiable class <directory-locator> (<physical-locator>);
   open abstract instantiable class <file-locator> (<physical-locator>);
-  sealed instantiable class <native-directory-locator> (<directory-locator>);
-  sealed instantiable class <native-file-locator> (<file-locator>);
   open generic-function supports-open-locator? (<locator>) => (<boolean>);
   open generic-function open-locator (<locator>) => (<stream>);
   open generic-function supports-list-locator? (<locator>) => (<boolean>);
