@@ -366,10 +366,6 @@ define operating-system function-test application-arguments ()
                   <sequence>, application-arguments());
 end function-test application-arguments;
 
-define operating-system function-test tokenize-command-string ()
-  //---*** Fill this in...
-end function-test tokenize-command-string;
-
 define operating-system function-test command-line-option-prefix ()
   check-instance?("command-line-option-prefix returns a character",
                   <character>, command-line-option-prefix());
