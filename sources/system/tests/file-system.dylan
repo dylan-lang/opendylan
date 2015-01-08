@@ -44,18 +44,18 @@ define file-system function-test type-for-file-stream ()
   // ---*** Fill this in.
 end;
 
-define file-system class-test <pathname> ()
+define file-system constant-test <pathname> ()
   check-instance?("A string is a pathname?",
                   <pathname>, "foo");
   check-instance?("A file locator is a pathname?",
                   <pathname>, as(<file-locator>, "test.dylan"));
-end class-test <pathname>;
+end constant-test <pathname>;
 
-define file-system class-test <file-type> ()
+define file-system constant-test <file-type> ()
   //---*** Fill this in.
 end;
 
-define file-system class-test <copy/rename-disposition> ()
+define file-system constant-test <copy/rename-disposition> ()
   //---*** Fill this in.
 end;
 
