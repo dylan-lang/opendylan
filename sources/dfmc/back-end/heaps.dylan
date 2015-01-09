@@ -2139,13 +2139,13 @@ end method;
 
 define method maybe-claim-heap-element-references-internal
     (heap :: <model-heap>, element :: <&raw-aggregate-type>, ct?) => ()
-  do-record-external-heap-element-reference(heap, element, ct?);
   // only trace any raw aggregate types embedded in this one.
   for (member in element.raw-aggregate-members)
     if (instance?(member.member-raw-type, <&raw-aggregate-type>))
       maybe-claim-heap-element-references(heap, member.member-raw-type, ct?);
     end;
   end;
+  do-record-external-heap-element-reference(heap, element, ct?);
 end;
 
 define method maybe-claim-heap-element
