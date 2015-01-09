@@ -358,3 +358,14 @@ long OMGW_width(OLEMENUGROUPWIDTHS strct, int index)
 {
   return(strct.width[index]);
 }
+
+struct NVGcolor {
+  struct {
+    float r,g,b,a;
+  };
+};
+typedef struct NVGcolor NVGcolor;
+
+void process_nvg_color(NVGcolor color)
+{
+}

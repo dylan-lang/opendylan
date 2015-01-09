@@ -1208,6 +1208,37 @@ define test struct-by-value ()
   end;
 end;
 
+// test for nested structs by value. This is extracted from
+// a bug found while writing bindings for nanovg.
+define C-struct <color-components>
+  slot color-components$r :: <C-float>;
+  slot color-components$g :: <C-float>;
+  slot color-components$b :: <C-float>;
+  slot color-components$a :: <C-float>;
+end;
+
+define C-struct <NVGcolor>
+  slot NVGcolor$_anon-field :: <color-components>;
+  pointer-type-name: <NVGcolor*>;
+end;
+
+ignore(NVGcolor$_anon-field, NVGcolor$_anon-field-setter);
+ignore(color-components$r, color-components$r-setter);
+ignore(color-components$g, color-components$g-setter);
+ignore(color-components$b, color-components$b-setter);
+ignore(color-components$a, color-components$a-setter);
+
+define c-function process-nvg-color
+  parameter color :: <NVGColor>;
+  c-name: "process_nvg_color";
+end;
+
+define test nested-structs-by-value ()
+  // All we care about is being able to actually compile this
+  let c = make(<NVGColor*>);
+  process-nvg-color(c);
+end;
+
 
 // --------------
 // top level test suite.
@@ -1232,7 +1263,8 @@ define suite c-ffi-suite ()
   test c-dylan-object-test;
   test bug-393;
   test bug-414;
-  test struct-by-value
+  test struct-by-value;
+  test nested-structs-by-value;
 end suite c-ffi-suite;
 
 /// The dylan top level for the tests
