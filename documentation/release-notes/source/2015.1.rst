@@ -12,6 +12,13 @@ XXX XX, 2015.
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
 * `Source code <https://github.com/dylan-lang/opendylan/tree/v2015.1>`_
 
+C-FFI
+=====
+
+* Nested C structs by value are now supported by the C backend. Previously,
+  using this construct would result in a compilation error in the generated
+  C code.
+
 system
 ======
 
