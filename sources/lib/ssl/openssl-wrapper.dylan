@@ -330,7 +330,7 @@ define method accessor-read-into!
   let the-buffer = buffer | stream-input-buffer(stream);
   let r = interruptible-system-call
     (SSL-read(accessor.socket-descriptor,
-	      buffer-offset(the-buffer, offset),
+	      byte-storage-offset-address(the-buffer, offset),
 	      count));
   if (r < 0)
     SSL-error(accessor.socket-descriptor, r);
@@ -345,7 +345,7 @@ define method accessor-write-from
      return-fresh-buffer?) => (nwritten :: <integer>, new-buffer :: <buffer>)
   let buffer = buffer | stream-output-buffer(stream);
   let nwritten = interruptible-system-call
-    (SSL-write(accessor.socket-descriptor, buffer-offset(buffer, offset), count));
+    (SSL-write(accessor.socket-descriptor, byte-storage-offset-address(buffer, offset), count));
   if (nwritten < 0)
     SSL-error(accessor.socket-descriptor, nwritten);
   else
