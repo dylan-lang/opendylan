@@ -46,7 +46,7 @@ define function get-form-generic-definition (form) => (gf-def, gf-static?)
   let gf-static?
     = gf-def & if (current-library-description?(form-library(gf-def)))
 		 // Have to be slightly careful about evaluation order, hence
-		 // the implictly defined check shortcut which is a precondition
+		 // the implicitly defined check shortcut which is a precondition
 		 // for model computation of the generic looking back at its
 		 // methods.
 		 form-implicitly-defined?(gf-def)

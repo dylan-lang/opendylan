@@ -501,7 +501,7 @@ define function %redefine-generic-using-method
 end function;
 
 define function implicit-generic-signature
-    (sig :: <signature>) => (implict-sig :: <signature>)
+    (sig :: <signature>) => (implicit-sig :: <signature>)
   let nrequired = signature-number-required(sig);
   case
     signature-key?(sig)
