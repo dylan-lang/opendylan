@@ -109,7 +109,7 @@ end method;
 
 // @@@@ This error message probably shouldn't say <object>, it should just say
 // that the compiler might not have optimal information.  <object> "being used"
-// instead makes it sound like the domain will be defined incorrectl.  --gsb
+// instead makes it sound like the domain will be defined incorrectly.  --gsb
 define program-warning <dynamic-domain-type-expressions>
   slot condition-form,
     init-keyword: form:;
