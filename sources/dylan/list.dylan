@@ -895,9 +895,9 @@ end method reduce;
 
 // Seal everything else.
 
-define domain fill! (<list>, <object>);
-define domain sort! (<list>);
-define domain sort  (<list>);
+define sealed domain fill! (<list>, <object>);
+define sealed domain sort! (<list>);
+define sealed domain sort  (<list>);
 
 
 // HACK: some copy-downs (if only copy downs worked for keyword methods
