@@ -41,9 +41,21 @@ define &definition domain-definer
     => do-define-domain(form, mods, name, domain-types);
 end &definition;
 
+define serious-program-warning <domain-missing-sealed-adjective>
+  slot condition-variable,
+    required-init-keyword: variable:;
+  format-string "This domain on %s is missing the 'sealed' adjective.";
+  format-arguments variable;
+end serious-program-warning;
+
 define function do-define-domain
     (form, mods, name, domain-types) => (forms)
   let (options, adjectives) = parse-domain-adjectives(name, mods);
+  if (~member?(#"sealed", adjectives))
+    note(<domain-missing-sealed-adjective>,
+         source-location: fragment-source-location(form),
+         variable: name);
+  end if;
   let domain-types = parse-domain-types(domain-types);
   let tlf 
     = apply(make, <domain-definition>, 
@@ -88,7 +100,8 @@ end property;
 define constant domain-adjectives
   = list(<domain-sealed-property>, <domain-sideways-property>);
 
-define function parse-domain-adjectives (name, adjectives-form) => (initargs)
+define function parse-domain-adjectives (name, adjectives-form)
+ => (initargs, adjectives)
   parse-property-adjectives
     (domain-adjectives, adjectives-form, name)
 end function;

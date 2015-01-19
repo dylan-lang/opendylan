@@ -38,6 +38,9 @@ Compiler
        define sealed domain make (<my-class>); // Wrong
        define sealed domain make (singleton(<my-class>)); // Correct
 
+  * Previously, ``define domain`` was accepted without warning. This is
+    not valid Dylan syntax as it should be ``define sealed domain``.
+
 system
 ======
 
