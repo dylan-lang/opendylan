@@ -19,6 +19,28 @@ C-FFI
   using this construct would result in a compilation error in the generated
   C code.
 
+Compiler
+========
+
+* The compiler emits warnings for issues with ``define sealed domain``:
+
+  * Incorrect number of type specializers provided. The number of type
+    specializers must match the number of required parameters for the
+    generic function.
+  * Type specializers are not subtypes of the corresponding required
+    argument of the generic function.
+
+    For example, this is useful for catching an incorrect sealing of
+    ``make``:
+
+    .. code-block:: dylan
+
+       define sealed domain make (<my-class>); // Wrong
+       define sealed domain make (singleton(<my-class>)); // Correct
+
+  * Previously, ``define domain`` was accepted without warning. This is
+    not valid Dylan syntax as it should be ``define sealed domain``.
+
 system
 ======
 
