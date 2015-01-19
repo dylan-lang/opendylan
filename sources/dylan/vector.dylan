@@ -658,7 +658,7 @@ define macro limited-vector-shared-definer
          define sealed domain add-new ("<simple-" ## ?name ## "-vector>", <object>);
          define sealed domain add-new! ("<simple-" ## ?name ## "-vector>", <object>);
          define sealed domain member? (<object>, "<simple-" ## ?name ## "-vector>");
-         define sealed domain fill! ("<simple-" ## ?name ## "-vector>");
+         define sealed domain fill! ("<simple-" ## ?name ## "-vector>", <object>);
          define sealed domain remove ("<simple-" ## ?name ## "-vector>", <object>);
          define sealed domain remove! ("<simple-" ## ?name ## "-vector>", <object>);
          define sealed domain sort ("<simple-" ## ?name ## "-vector>");

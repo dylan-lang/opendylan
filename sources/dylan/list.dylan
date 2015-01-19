@@ -895,7 +895,7 @@ end method reduce;
 
 // Seal everything else.
 
-define domain fill! (<list>);
+define domain fill! (<list>, <object>);
 define domain sort! (<list>);
 define domain sort  (<list>);
 
