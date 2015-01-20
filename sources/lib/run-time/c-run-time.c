@@ -934,13 +934,6 @@ dylan_value primitive_xep_apply (dylan_simple_method* fn, int n, dylan_value a[]
   }
 }
 
-/*
-INLINE int FUNCTION_OK(dylan_simple_method* function) {
-  return(class_meta_class(function_class(function)) ==
-         dylanXinternalX_L_function_class_G_);
-}
-*/
-
 dylan_value primitive_xep_call (dylan_simple_method* fn, int n, ...) {
   TEB* teb = get_teb();
   int i;
