@@ -588,7 +588,7 @@ define method write-definition-name
                           " module");
   format(stream, "\n%s\n%s\n\n.. current-module:: %s\n\n",
          title,
-         make(<byte-string>, fill: '-', size: title.size),
+         make(<byte-string>, fill: '*', size: title.size),
          module-name)
 end method write-definition-name;
 
