@@ -641,7 +641,7 @@ define method write-superclass
  => ()
   format(stream, "%s%s",
          if (~first?) ", " else "" end,
-         definition-name(report, superclass))
+         rst-xref-definition-name(report, superclass))
 end method write-superclass;
 
 define method write-superclasses-footer
@@ -745,15 +745,90 @@ define method write-function-parameter
             #"output-rest" => "value #rest";
           end
         end method kind-to-rst-field;
-  format(stream, "   :%s %s: An instance of ``%s``.",
+  format(stream, "   :%s %s: An instance of %s.",
              kind-to-rst-field(kind),
              if (instance?(parameter, <optional-parameter>))
                parameter.parameter-keyword
              end
                | parameter.parameter-name,
-         definition-name(report, type));
+         rst-xref-definition-name(report, type));
   new-line(stream);
 end method write-function-parameter;
+
+define function rst-xref-definition-name
+    (report :: <module-report>, definition :: <environment-object>)
+ => (xref :: <string>)
+  let project = report.report-project;
+  let namespace = report.report-namespace;
+  let name = environment-object-name(project, definition, namespace);
+  if (name)
+    // This is defined in the same module in the same library and is
+    // a named Dylan type.
+    let role = definition-rst-role(definition);
+    let display-name = environment-object-primitive-name(project, name);
+    format-to-string(":%s:`%s`", role, display-name)
+  else
+    let lib = environment-object-library(project, definition);
+    let display-name
+      = environment-object-display-name(project, definition,
+                                        namespace, qualify-names?: #f);
+    if (lib & environment-object-primitive-name(project, lib) = "dylan")
+      // This is something from the dylan library, so let's assume it
+      // can be a DRM link. This should probably change for checking
+      // that the module is also "dylan".
+      format-to-string(":drm:`%s`", display-name)
+    elseif (lib & lib == report.report-parent.report-namespace)
+      // This is something from the same library, so it should be in
+      // the same documentation set, so let's link it.
+      let role = definition-rst-role(definition);
+      format-to-string(":%s:`%s`", role, display-name)
+    else
+      // This is from a different library or is something like a
+      // one-of() or false-or() value.
+      format-to-string("``%s``", display-name)
+    end if
+  end if
+end function rst-xref-definition-name;
+
+define method definition-rst-role (object :: <constant-object>)
+ => (rst-role :: <string>)
+  "const"
+end method definition-rst-role;
+
+define method definition-rst-role (object :: <variable-object>)
+ => (rst-role :: <string>)
+  "var"
+end method definition-rst-role;
+
+define method definition-rst-role (object :: <macro-object>)
+ => (rst-role :: <string>)
+  "macro"
+end method definition-rst-role;
+
+define method definition-rst-role (object :: <function-object>)
+ => (rst-role :: <string>)
+  "func"
+end method definition-rst-role;
+
+define method definition-rst-role (object :: <generic-function-object>)
+ => (rst-role :: <string>)
+  "gf"
+end method definition-rst-role;
+
+define method definition-rst-role (object :: <class-object>)
+ => (rst-role :: <string>)
+  "class"
+end method definition-rst-role;
+
+define method definition-rst-role (object :: <library-object>)
+ => (rst-role :: <string>)
+  "lib"
+end method definition-rst-role;
+
+define method definition-rst-role (object :: <module-object>)
+ => (rst-role :: <string>)
+  "mod"
+end method definition-rst-role;
 
 
 /// <XML-REPORT-STREAM> methods
