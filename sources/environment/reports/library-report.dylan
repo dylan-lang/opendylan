@@ -566,26 +566,30 @@ define method write-definition-name
     (stream :: <rst-report-stream>, report :: <namespace-report>,
      library :: <library-object>)
  => ()
+  let library-name = definition-name(report, library);
   let title = concatenate("The ",
-                          as-uppercase(definition-name(report, library)),
+                          as-uppercase(library-name),
                           " library");
   let decorator = make(<byte-string>, fill: '*', size: title.size);
-  format(stream, "%s\n%s\n%s\n",
+  format(stream, "%s\n%s\n%s\n\n.. current-library:: %s\n\n",
          decorator,
          title,
-         decorator)
+         decorator,
+         library-name);
 end method write-definition-name;
 
 define method write-definition-name
     (stream :: <rst-report-stream>, report :: <module-report>,
      module :: <module-object>)
  => ()
+  let module-name = definition-name(report, module);
   let title = concatenate("The ",
-                          as-uppercase(definition-name(report, module)),
+                          as-uppercase(module-name),
                           " module");
-  format(stream, "\n%s\n%s\n",
+  format(stream, "\n%s\n%s\n\n.. current-module:: %s\n\n",
          title,
-         make(<byte-string>, fill: '-', size: title.size))
+         make(<byte-string>, fill: '-', size: title.size),
+         module-name)
 end method write-definition-name;
 
 define method write-definition-name
