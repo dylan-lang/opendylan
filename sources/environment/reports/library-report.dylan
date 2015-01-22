@@ -444,7 +444,7 @@ define method write-function-signature
             printed-something := #t;
           end;
         end method print-separator;
-  if (next)
+  if (next & next.parameter-name ~= "next-method")
     print-separator();
     format(stream, "#next ");
     do-parameter(next);
