@@ -46,10 +46,3 @@ Examples:
     examples/limited_types
     examples/macros
     examples/multiple_return_values
-
-Historical Materials:
-
-.. toctree::
-   :maxdepth: 1
-
-   apple-dylan/index
