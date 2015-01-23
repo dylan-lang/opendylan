@@ -17,6 +17,8 @@
 History
 *******
 
+Dylan is alive and well today, but it has a long history.
+
 Dylan was created in the early 1990s. It was originally a project within
 Apple Computer, but was expanded to a partnership between Apple, Harlequin
 and Carnegie Mellon University (CMU).
@@ -45,8 +47,8 @@ on classic Mac OS.
 
 Some years ago, Paul R Potts wrote about his experiences with
 `Apple Dylan <apple-dylan/index>`_, including some screenshots. Apple
-distributed a `PDF at WWDC in 1994 <../_static/dylanwwdc94brochure.pdf>`_
-that described Dylan and the features that it was going to bring to
+distributed a `brochure at WWDC in 1994 <../_static/dylanwwdc94brochure.pdf>`_
+(PDF) that described Dylan and the features that it was going to bring to
 the developer experience.
 
 Change in Syntax
