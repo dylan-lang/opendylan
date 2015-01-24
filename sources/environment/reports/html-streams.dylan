@@ -151,19 +151,6 @@ define method invoke-with-html-output
 
 end method;
 
-define macro with-html-rubric
-  { with-html-rubric (?streamn:name = ?streamv:expression, ?title:expression)
-      ?body:body
-    end }
- => { invoke-with-html-rubric (?streamv, ?title, method (?streamn) ?body end method)
-       }
-  { with-html-rubric (?stream:name, ?title:expression)
-      ?body:body
-    end }
- => { invoke-with-html-rubic (?stream, ?title, method (?stream) ?body end method)
-       }
-end macro with-html-rubric;
-
 define method invoke-with-html-rubric 
     (stream :: <stream>, title :: <string>, body :: <function>)
  => ()
