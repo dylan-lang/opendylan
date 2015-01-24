@@ -419,7 +419,7 @@ define method write-function-signature
   let module = report.report-namespace;
   let (required, rest, key, all-keys?, next, required-values, rest-value)
     = function-parameters(project, function);
-  write-function-name(stream, report, function);
+  write-function-signature-name(stream, report, function);
   format(stream, " (");
   local method do-parameter (parameter :: <parameter>) => ()
           format(stream, "%s",
@@ -665,13 +665,13 @@ define method write-init-keyword
   format(stream, "   :keyword %s:\n", as(<string>, keyword))
 end method write-init-keyword;
 
-define method write-function-name
+define method write-function-signature-name
     (stream :: <rst-report-stream>, report :: <module-report>,
      function :: <function-object>)
  => ()
   format(stream, "\n   :signature: %s",
          definition-name(report, function));
-end method write-function-name;
+end method write-function-signature-name;
 
 define method write-function-arguments
     (stream :: <rst-report-stream>, report :: <module-report>,
