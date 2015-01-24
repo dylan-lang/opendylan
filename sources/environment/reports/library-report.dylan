@@ -305,6 +305,32 @@ end method write-definition-body;
 
 define method write-definition-body
     (stream :: <report-stream>, report :: <module-report>,
+     function :: <generic-function-object>)
+ => ()
+  let project = report.report-project;
+  let (single?, m) = single-method-generic-function?(project, function);
+  if (single?)
+    write-definition-body(stream, report, m);
+  else
+    next-method();
+  end if;
+end method write-definition-body;
+
+define method write-generic-function-methods
+    (stream :: <report-stream>, report :: <module-report>,
+     function :: <generic-function-object>)
+ => ()
+  let project = report.report-project;
+  if (~single-method-generic-function?(project, function))
+    let methods = generic-function-object-methods(project, function);
+    for (m in methods)
+      write-generic-function-method(stream, report, function, m);
+    end for;
+  end if;
+end method write-generic-function-methods;
+
+define method write-definition-body
+    (stream :: <report-stream>, report :: <module-report>,
      _macro :: <macro-object>)
  => ()
   // ---*** what to do?
@@ -755,6 +781,29 @@ define method write-function-parameter
   new-line(stream);
 end method write-function-parameter;
 
+define method write-definition-footer
+    (stream :: <rst-report-stream>, report :: <namespace-report>,
+     definition :: <generic-function-object>)
+ => ()
+  next-method();
+  write-generic-function-methods(stream, report, definition);
+end method write-definition-footer;
+
+define method write-generic-function-method
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     gf :: <generic-function-object>, m :: <method-object>)
+ => ()
+  let project = report.report-project;
+  format(stream, "\n.. method:: %s\n", definition-name(report, gf));
+  let (required, _) = function-parameters(project, m);
+  for (parameter :: <parameter> in required,
+       separator = "   :specializer: " then ", ")
+    write(stream, separator);
+    write(stream, definition-name(report, parameter.parameter-type));
+  end for;
+  new-line(stream);
+end method write-generic-function-method;
+
 define function rst-xref-definition-name
     (report :: <module-report>, definition :: <environment-object>)
  => (xref :: <string>)
@@ -1129,6 +1178,12 @@ define method write-function-parameter
          tag);
 end method write-function-parameter;
 
+define method write-generic-function-method
+    (stream :: <xml-report-stream>, report :: <module-report>,
+     gf :: <generic-function-object>, m :: <method-object>)
+ => ()
+end method write-generic-function-method;
+
 define method write-description
     (stream :: <xml-report-stream>, report :: <module-report>,
      definition :: <definition-object>)
@@ -1223,8 +1278,25 @@ define method definition-name
   if (name)
     environment-object-primitive-name(project, name)
   else
-    environment-object-display-name(project, definition, namespace)
+    // Let's not put module & library names into the name.
+    environment-object-display-name(project, definition, namespace,
+                                    qualify-names?: #f)
   end
+end method definition-name;
+
+define method definition-name
+    (report :: <namespace-report>, meth :: <method-object>)
+ => (name :: <string>)
+  // The name of a method object has the specializers applied
+  // if it is a method on a generic function. So, try to avoid
+  // that.
+  let project = report.report-project;
+  let gf = method-generic-function(project, meth);
+  if (gf)
+    definition-name(report, gf)
+  else
+    next-method()
+  end if
 end method definition-name;
 
 define method definition-kind (object :: <constant-object>)
@@ -1294,3 +1366,20 @@ define method generic-function-modifiers
     dynamic?      & write(stream, "Dynamic ");
   end
 end method generic-function-modifiers;
+
+define function single-method-generic-function?
+    (project :: <project-object>, gf :: <generic-function-object>)
+ => (single-method? :: <boolean>, m :: false-or(<method-object>))
+  if (~member?(#"open", definition-modifiers(project, gf)))
+    // The generic is sealed, see if we just have one method.
+    let methods = generic-function-object-methods(project, gf);
+    if (methods & size(methods) == 1)
+      values(#t, methods[0])
+    else
+      values(#f, #f)
+    end if
+  else
+    // The generic is open, so can't tell how many methods it has.
+    values(#f, #f)
+  end if
+end function single-method-generic-function?;
