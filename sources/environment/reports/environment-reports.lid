@@ -10,6 +10,8 @@ Files: library
        bug-report
        dependency-report
        library-report
+       library-report-rst
+       library-report-xml
        profile-report
        warnings-report
        test-suite-report
