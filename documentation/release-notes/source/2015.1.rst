@@ -41,6 +41,16 @@ Compiler
   * Previously, ``define domain`` was accepted without warning. This is
     not valid Dylan syntax as it should be ``define sealed domain``.
 
+Documentation
+=============
+
+* The documentation generator included within the compiler has been
+  updated to produce better and more accurate documentation that will
+  require less manual editing. To use it, after compiling your library,
+  use this command::
+
+    export -format rst -file my-lib.rst interface-reference
+
 system
 ======
 
