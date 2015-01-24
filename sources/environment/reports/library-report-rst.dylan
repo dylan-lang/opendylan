@@ -80,10 +80,11 @@ define method write-definition-name
   let project = report.report-project;
   let title = definition-name(report, definition);
   let type = definition-kind(definition);
-  let rst-directive = select(type)
-    "Generic" => "generic-function";
-    otherwise => as-lowercase(type);
-  end;
+  let rst-directive
+    = select (type by \=)
+        "Generic" => "generic-function";
+        otherwise => as-lowercase(type);
+      end;
   format(stream, "\n.. %s:: %s\n",
          rst-directive, title)
 end method write-definition-name;
