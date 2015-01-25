@@ -129,7 +129,7 @@ that will need to be updated.
 Build Scripts
 =============
 
-Build scripts are partially documented within :doc:`build-system`.
+Build scripts are partially documented within :doc:`../build-system`.
 The existing build scripts can be found within ``sources/jamfiles``.
 
 You will want to copy an existing one and make whatever changes are

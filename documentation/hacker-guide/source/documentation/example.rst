@@ -1,63 +1,9 @@
 *********************
-Library Documentation
-*********************
-
-We are working on a tool to automatically generate skeletal documentation from
-source code, but until then, we are documenting the Open Dylan libraries
-manually using `Sphinx <http://sphinx-doc.org/>`_ to build the HTML pages.
-Sphinx uses reStructuredText markup with some extensions of its own, and we have
-created additional extensions to document Dylan language entities.
-
-The documentation — a number of RST files — is in the ``documentation`` directory
-in the ``opendylan`` repository. Consult the Sphinx web-site for details about
-reStructuredText markup and Sphinx extensions to it, and see the
-``dylandomain/reference.rst`` file in the ``sphinx-extensions`` repository for
-details about the Dylan language extensions. (You may use the ``rst2html`` tool
-to generate an HTML page from an ``.rst`` file.)
-
-Guidelines
-==========
-
-Gender
-------
-
-Try to avoid all gender-specific pronouns. In preference, use third person
-plural pronouns such as "they", "their", "them".
-
-Generating Documentation
-========================
-
-dylan-compiler
---------------
-
-``dylan-compiler`` can output skeletal documentation for a library once
-it has been compiled. Prior to compiling the project, it will not output
-anything.
-
-To generate documentation, once you've loaded and compiled your project,
-simply::
-
-   export -format rst interface-reference
-
-The generated documention will need cleaning up and will not include
-anything from comments in the source.
-
-We hope to improve this tool in the future.
-
-Doctower
---------
-
-Doctower is a tool written by Dustin Voss and is `available on GitHub`_.
-
-This tool doesn't yet generate RST output, so the documentation from
-it will not integrate cleanly with Sphinx and our other documentation.
-
 Example documentation
-=====================
+*********************
 
 Here is an example of documentation to get a feel for how it works. Use the
 "Show Source" link at the bottom of the page to see it in RST markup form.
-
 
 Skip Lists
 ----------
@@ -139,5 +85,3 @@ A skip-list is a data type equivalent to a balanced (binary) tree.
    :param #key default:  A value to return if the element is not found. If
                          omitted and element not found, signals an error.
    :value object:        The element associated with the key.
-
-.. _available on GitHub: http://github.com/dylan-lang/doctower

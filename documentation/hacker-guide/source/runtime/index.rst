@@ -1,6 +1,6 @@
-#########################
-Open Dylan Runtime Design
-#########################
+###########
+The Runtime
+###########
 
 Originally written by:
 

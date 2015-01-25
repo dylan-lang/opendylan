@@ -5,19 +5,17 @@ Open Dylan Hacker's Guide
 Contents:
 
 .. toctree::
+   :titlesonly:
    :maxdepth: 2
 
    copyright
    contribute
+   documentation/index
    build-system
-   compiler-internals
-   compiler-design
-   method-dispatch
+   compiler/index
    runtime/index
-   documentation
-   porting
-   debugging
-   duim
+   duim/index
+   topics/index
    glossary
 
 

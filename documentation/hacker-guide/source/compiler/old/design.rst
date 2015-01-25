@@ -1,6 +1,6 @@
-**************************
-Open Dylan Compiler Design
-**************************
+*********************
+Compiler Design (Old)
+*********************
 
 Adding a DFM computation
 ========================
