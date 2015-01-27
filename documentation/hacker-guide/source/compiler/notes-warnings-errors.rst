@@ -402,7 +402,7 @@ Program Conditions
 
    :description:
 
-     When a *context-id* has been supplied, this is sued to give an
+     When a *context-id* has been supplied, this is used to give an
      indication of the logical context of the source that the note
      is about, typically to give a concise textual hint, allowing
      for example (where ``"process-foo"`` is the *context-id*::
