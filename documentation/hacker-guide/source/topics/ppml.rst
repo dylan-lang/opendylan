@@ -16,6 +16,49 @@ structure of the message is lost.  An alternative is to store the text in
 a more structured form.  This is the purpose of the :class:`<ppml>` class
 and its derivatives.   The interface is based on Oppen's 1980 TOPLAS paper.
 
+A PPML document, represented as :class:`<ppml>` is a tree of PPML tokens.
+The tokens available and their associated constructor functions are:
+
+* :class:`<ppml-block>` (:func:`ppml-block`)
+* :class:`<ppml-break>` (:func:`ppml-break`)
+* :class:`<ppml-browser-aware-object>` (:func:`ppml-browser-aware-object`)
+* :class:`<ppml-separator-block>` (:func:`ppml-separator-block`)
+* :class:`<ppml-string>` (:func:`ppml-string`)
+* :class:`<ppml-suspension>` (:func:`ppml-suspension`)
+
+Structure is provided through instances of :class:`<ppml-block>` and
+:class:`<ppml-separator-block>` as they can contain subnodes of PPML.
+
+Constructing a PPML Document
+****************************
+
+Constructing a PPML document is typically done by using the various
+constructor functions:
+
+.. code-block:: dylan
+
+   define compiler-sideways method as
+       (class == <ppml>, o :: <&generic-function>)
+    => (ppml :: <ppml>)
+     let sig = model-signature(o);
+     if (sig)
+       ppml-block(vector(ppml-string(o.^function-name),
+                         ppml-break(),
+                         as(<ppml>, sig)))
+     else
+       ppml-string(o.^function-name)
+     end;
+   end method;
+
+Printing a PPML Document
+************************
+
+Given a PPML document, the best way to print it is via :gf:`ppml-print`:
+
+.. code-block:: dylan
+
+   ppml-print(ppml, make(<ppml-printer>, margin: 100));
+
 The PPML module
 ***************
 
@@ -71,6 +114,10 @@ PPML Tokens and Constructors
    :parameter #key type: An instance of :type:`<ppml-break-type>`.
    :value ppml: An instance of :class:`<ppml-block>`.
 
+   :description:
+
+     Construct a :class:`<ppml-block>`.
+
 .. class:: <ppml-break>
 
    :superclasses: :class:`<ppml>`
@@ -94,6 +141,10 @@ PPML Tokens and Constructors
    :parameter #key offset: An instance of :type:`<nat>`.
    :value ppml: An instance of :class:`<ppml-break>`.
 
+   :description:
+
+     Construct a :class:`<ppml-break>`.
+
 .. class:: <ppml-browser-aware-object>
 
    :superclasses: :class:`<ppml>`
@@ -114,6 +165,10 @@ PPML Tokens and Constructors
 
    :parameter o: An instance of :drm:`<object>`.
    :value ppml: An instance of :class:`<ppml-browser-aware-object>`.
+
+   :description:
+
+     Construct a :class:`<ppml-browser-aware-object>`.
 
 .. class:: <ppml-separator-block>
 
@@ -143,6 +198,10 @@ PPML Tokens and Constructors
    :parameter #key right-bracket: An instance of ``false-or(<ppml>)``.
    :value ppml: An instance of :class:`<ppml>`.
 
+   :description:
+
+     Construct a :class:`<ppml-separator-block>`.
+
 .. class:: <ppml-string>
 
    :superclasses: :class:`<ppml>`
@@ -159,6 +218,10 @@ PPML Tokens and Constructors
 
    :parameter str: An instance of :drm:`<byte-string>`.
    :value ppml: An instance of :class:`<ppml-string>`.
+
+   :description:
+
+     Construct a :class:`<ppml-string>`.
 
 .. class:: <ppml-suspension>
 
@@ -187,6 +250,10 @@ PPML Tokens and Constructors
    :parameter fun: An instance of :drm:`<function>`.
    :parameter #rest args: An instance of :drm:`<object>`.
    :value ppml: An instance of :class:`<ppml-suspension>`.
+
+   :description:
+
+     Construct a :class:`<ppml-suspension>`.
 
 Conversion to PPML
 ==================
