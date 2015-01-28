@@ -272,7 +272,7 @@ end macro;
 
 /// Metadata attachments
 
-define method ins--dbg
+define function ins--dbg
     (builder :: <llvm-builder>,
      line-number :: <integer>, column-number :: <integer>,
      scope :: <llvm-metadata-value>,
