@@ -294,7 +294,7 @@ define function ins--dbg
     builder.llvm-builder-dbg
       := make(<llvm-named-metadata>, name: "dbg", operands: list(node));
   end if;
-end method;
+end function;
 
 define inline function builder-metadata
     (builder :: <llvm-builder>, metadata :: <list>)
