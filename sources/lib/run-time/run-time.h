@@ -1186,8 +1186,8 @@ extern void primitive_replaceX
  * be freed explicitly.
  */
 
-extern void *MMAllocMisc(unsigned long size);
-extern void MMFreeMisc(void *p, unsigned long size);
+extern void *MMAllocMisc(size_t size);
+extern void MMFreeMisc(void *p, size_t size);
 extern void *dylan__malloc__misc(size_t size);
 extern void *dylan__malloc__ambig(size_t size);
 extern void *mps__malloc(size_t size);
