@@ -50,7 +50,7 @@ define macro with-storage
            ?name := primitive-wrap-machine-word
                       (primitive-cast-pointer-as-raw
                          (%call-c-function ("MMAllocMisc")
-                            (nbytes :: <raw-c-unsigned-long>) => (p :: <raw-c-pointer>)
+                            (nbytes :: <raw-c-size-t>) => (p :: <raw-c-pointer>)
                             (integer-as-raw(?size))
                           end));
            if (primitive-machine-word-equal?
@@ -62,7 +62,7 @@ define macro with-storage
            if (primitive-machine-word-not-equal?
                  (primitive-unwrap-machine-word(?name), integer-as-raw(0)))
              %call-c-function ("MMFreeMisc")
-               (p :: <raw-c-pointer>, nbytes :: <raw-c-unsigned-long>) => (void :: <raw-c-void>)
+               (p :: <raw-c-pointer>, nbytes :: <raw-c-size-t>) => (void :: <raw-c-void>)
                  (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?name)),
                   integer-as-raw(?size))
              end;
