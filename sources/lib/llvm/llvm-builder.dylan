@@ -53,6 +53,11 @@ end function;
 
 /// Global variables
 
+define generic llvm-builder-define-global
+    (builder :: <llvm-builder>, name :: <string>,
+     value :: <llvm-constant-value>)
+ => (value :: <llvm-constant-value>);
+
 define method llvm-builder-define-global
     (builder :: <llvm-builder>, name :: <string>,
      value :: <llvm-constant-value>)
@@ -267,7 +272,7 @@ end macro;
 
 /// Metadata attachments
 
-define method ins--dbg
+define function ins--dbg
     (builder :: <llvm-builder>,
      line-number :: <integer>, column-number :: <integer>,
      scope :: <llvm-metadata-value>,

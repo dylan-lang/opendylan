@@ -209,6 +209,9 @@ define abstract class <llvm-placeholder-type> (<llvm-type>)
   slot llvm-placeholder-type-forward :: <llvm-type>;
 end class;
 
+define generic llvm-constrain-type
+    (constrained-type :: <llvm-type>, type :: <llvm-type>) => ();
+
 define method llvm-constrain-type
     (constrained-type :: <llvm-type>, type :: <llvm-type>) => ()
   let real-type = type-forward(type);
