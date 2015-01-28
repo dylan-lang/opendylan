@@ -36,10 +36,13 @@ SUFMKF  ?= .mkf ;               # build-system files
 
 if $(COMPILER_BACK_END) = llvm {
   CC      = clang ;
+  CCFLAGS += $(LLVM_GC_CFLAGS) ;
   SUFOUT  ?= .bc ;             # DFMC output suffix
 } else if $(COMPILER_BACK_END) = c {
+  CCFLAGS += $(C_GC_CFLAGS) ;
   SUFOUT  ?= .c ;
 } else {
+  CCFLAGS += $(HARP_GC_CFLAGS) ;
   SUFOUT  ?= $(SUFOBJ) ;
   LINKFLAGSDLL += -T $(SYSTEM_LIBDIR)/dylan-elf-dll.script ;
   LINKFLAGSEXE += -T $(SYSTEM_LIBDIR)/dylan-elf-exe.script ;
@@ -48,7 +51,7 @@ if $(COMPILER_BACK_END) = llvm {
 OBJCOPY   ?= objcopy ;
 STRIP     ?= strip ;
 
-CCFLAGS   += -fPIC $(GC_CFLAGS) ;
+CCFLAGS   += -fPIC ;
 
 LINK      ?= $(CC) ;
 LINKFLAGS ?= $(CCFLAGS) ;
@@ -71,19 +74,25 @@ RTOBJS_llvm ?= ;
 
 RTOBJS_c    ?= $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/libdylan-c-runtime.a ;
 
-if $(GC_USE_STATIC_BOEHM) = true {
+RTCLIBS_harp ?= $(HARP_GC_LIBS) ;
+
+if $(C_GC_STATIC) {
   RTOBJS_c += $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/libgc.a ;
+} else {
+  RTCLIBS_c ?= $(C_GC_LIBS) ;
+}
+
+if $(LLVM_GC_STATIC) {
+  RTOBJS_llvm += $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/libgc.a ;
+} else {
+  RTCLIBS_llvm ?= $(LLVM_GC_LIBS) ;
 }
 
 LINKFLAGS += -L$(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/ ;
 
 # These are passed to the link rules by way of the dylan.lid file
 rtlibs  ?= $(RTOBJS_$(COMPILER_BACK_END)) ;
-rtclibs ?= -lm ;
-
-if $(GC_USE_STATIC_BOEHM) = false {
-  rtclibs += $(GC_LFLAGS) ;
-}
+rtclibs ?= $(RTCLIBS_$(COMPILER_BACK_END)) -lm ;
 
 guilflags ?= ;
 
