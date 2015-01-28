@@ -12,6 +12,31 @@ XXX XX, 2015.
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
 * `Source code <https://github.com/dylan-lang/opendylan/tree/v2015.1>`_
 
+Build System
+============
+
+* The arguments to configure for specifying which garbage collector to
+  use have changed (again). The arguments are now::
+
+    --with-mps=DIR
+    --with-gc=DIR
+    --with-harp-collector=mps|boehm|malloc
+    --with-c-collector=boehm|malloc
+    --with-llvm-collector=boehm|malloc
+
+  The ``with-mps`` option (for pointing to the Memory Pool System
+  source directory) is only needed when using the MPS collector with
+  the HARP back-end on either 32-bit x86 FreeBSD or 32-bit x86 Linux.
+  The system should be able to find the Boehm-Demers-Weiser collector
+  automatically if it is in the standard system install directory; the
+  ``with-gc`` option should only be needed if it is installed in a
+  non-standard location.
+
+  The default collectors are MPS for the HARP back-end's run-time
+  library, and the Boehm-Demers-Weiser collector for the C and LLVM
+  back-ends. These shouldn't be changed unless you're sure you know
+  what you're doing.
+
 C-FFI
 =====
 
