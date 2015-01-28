@@ -53,6 +53,11 @@ end function;
 
 /// Global variables
 
+define generic llvm-builder-define-global
+    (builder :: <llvm-builder>, name :: <string>,
+     value :: <llvm-constant-value>)
+ => (value :: <llvm-constant-value>);
+
 define method llvm-builder-define-global
     (builder :: <llvm-builder>, name :: <string>,
      value :: <llvm-constant-value>)
