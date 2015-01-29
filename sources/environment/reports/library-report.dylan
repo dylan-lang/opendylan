@@ -131,7 +131,7 @@ define generic write-superclass (stream :: <report-stream>, report :: <namespace
 define generic write-superclasses-footer (stream :: <report-stream>, report :: <namespace-report>, class :: <class-object>) => ();
 define generic write-class-init-keywords (stream :: <report-stream>, report :: <namespace-report>, class :: <class-object>) => ();
 define generic write-init-keywords-header (stream :: <report-stream>, report :: <namespace-report>, class :: <class-object>) => ();
-define generic write-init-keyword (stream :: <report-stream>, report :: <namespace-report>, keyword :: <symbol>, type :: false-or(<environment-object>)) => ();
+define generic write-init-keyword (stream :: <report-stream>, report :: <namespace-report>, keyword :: <symbol>, type :: false-or(<environment-object>), required? :: <boolean>) => ();
 define generic write-init-keywords-footer (stream :: <report-stream>, report :: <namespace-report>, class :: <class-object>) => ();
 define generic write-operations (stream :: <report-stream>, report :: <namespace-report>, class :: <class-object>) => ();
 define generic write-function-signature (stream :: <report-stream>, report :: <namespace-report>, function :: <function-object>) => ();
@@ -393,6 +393,7 @@ define method write-class-init-keywords
   let module = report.report-namespace;
   write-init-keywords-header(stream, report, class);
   let types = make(<table>);
+  let required = make(<table>);
   do-init-keywords
     (method
          (definition :: <definition-object>,
@@ -401,14 +402,15 @@ define method write-class-init-keywords
           required? :: <boolean>,
           inherited? :: <boolean>)
        unless (element(types, keyword, default: #f))
-         types[keyword] := type
+         types[keyword] := type;
+         required[keyword] := required?;
        end unless;
      end,
      project,
      class,
      inherited?: #f);
   for (keyword in sort!(key-sequence(types)))
-    write-init-keyword(stream, report, keyword, types[keyword])
+    write-init-keyword(stream, report, keyword, types[keyword], required[keyword])
   end;
   write-init-keywords-footer(stream, report, class);
 end method write-class-init-keywords;
@@ -421,7 +423,8 @@ end method write-init-keywords-header;
 
 define method write-init-keyword
     (stream :: <report-stream>, report :: <module-report>,
-     keyword :: <symbol>, type :: false-or(<environment-object>))
+     keyword :: <symbol>, type :: false-or(<environment-object>),
+     required :: <boolean>)
  => ()
 end method write-init-keyword;
 

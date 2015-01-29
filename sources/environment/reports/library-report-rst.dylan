@@ -122,9 +122,17 @@ end method write-init-keywords-header;
 
 define method write-init-keyword
     (stream :: <rst-report-stream>, report :: <module-report>,
-     keyword :: <symbol>, type :: false-or(<environment-object>))
+     keyword :: <symbol>, type :: false-or(<environment-object>),
+     required? :: <boolean>)
  => ()
-  format(stream, "   :keyword %s:\n", as(<string>, keyword))
+  format(stream, "   :keyword %s%s: An instance of %s.\n",
+         if (required?) "required " else "" end if,
+         as(<string>, keyword),
+         if (type)
+           rst-xref-definition-name(report, type)
+         else
+           ":drm:`<object>`"
+         end if)
 end method write-init-keyword;
 
 define method write-function-signature-name

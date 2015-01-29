@@ -175,7 +175,8 @@ end method write-init-keywords-header;
 
 define method write-init-keyword
     (stream :: <xml-report-stream>, report :: <module-report>,
-     keyword :: <symbol>, type :: false-or(<environment-object>))
+     keyword :: <symbol>, type :: false-or(<environment-object>),
+     required? :: <boolean>)
  => ()
   format(stream,
          "      <keyword>\n"
