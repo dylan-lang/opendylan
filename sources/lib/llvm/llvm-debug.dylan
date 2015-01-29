@@ -286,7 +286,7 @@ define function llvm-make-dbg-function
      name :: <string>,
      linkage-name :: <string>,
      dbg-file :: <llvm-metadata-value>,
-     line-number,
+     line-number :: false-or(<integer>),
      dbg-function-type :: <llvm-metadata-value>,
      #key local? :: <boolean> = #f,
           definition? :: <boolean> = #f,
@@ -294,7 +294,7 @@ define function llvm-make-dbg-function
           function :: false-or(<llvm-function>) = #f,
           decl :: false-or(<llvm-metadata-value>) = #f,
           module :: false-or(<llvm-module>) = #f,
-          scope-line-number = line-number)
+          scope-line-number :: false-or(<integer>) = line-number)
  => (dbg-function :: <llvm-metadata-value>);
   let i32-zero = i32(0);
   let dbg-name = make(<llvm-metadata-string>, string: name);
@@ -308,7 +308,7 @@ define function llvm-make-dbg-function
                                dbg-name,
                                make(<llvm-metadata-string>,
 				    string: linkage-name),
-                               i32(line-number),
+                               i32(line-number | 0),
                                dbg-function-type,
                                if (local?) $llvm-true else $llvm-false end,
                                if (definition?) $llvm-true else $llvm-false end,
@@ -322,7 +322,7 @@ define function llvm-make-dbg-function
                                decl,
 			       make(<llvm-metadata-node>, function-local: #f,
 				    node-values: #[]),
-			       i32(scope-line-number)));
+			       i32(scope-line-number | 0)));
   if (module)
     add-to-named-metadata(module, "llvm.dbg.sp", node);
   end if;
@@ -351,7 +351,7 @@ define variable *lexical-block-unique-id* = 0;
 define function llvm-make-dbg-lexical-block
     (scope :: false-or(<llvm-metadata-value>),
      dbg-file :: <llvm-metadata-value>,
-     line-number :: <integer>,
+     line-number :: false-or(<integer>),
      column-number :: <integer>,
      #key discriminator :: <integer> = 0)
  => (dbg-lexical-block :: <llvm-metadata-value>);
@@ -361,7 +361,7 @@ define function llvm-make-dbg-lexical-block
        node-values: vector(i32($llvm-debug-version + $DW-TAG-lexical-block),
 			   as-file-directory(dbg-file),
                            scope,
-                           i32(line-number),
+                           i32(line-number | 0),
                            i32(column-number),
                            i32(discriminator),
                            i32(*lexical-block-unique-id*)))
@@ -370,7 +370,7 @@ end function;
 define function llvm-make-dbg-local-variable
     (kind :: one-of(#"auto", #"argument", #"return"),
      scope :: false-or(<llvm-metadata-value>), name :: <string>,
-     dbg-file :: <llvm-metadata-value>, line-number,
+     dbg-file :: <llvm-metadata-value>, line-number :: false-or(<integer>),
      type :: <llvm-metadata-value>,
      #key arg :: <integer> = 0,
           module :: false-or(<llvm-module>) = #f,
@@ -389,7 +389,7 @@ define function llvm-make-dbg-local-variable
                                scope,
                                make(<llvm-metadata-string>, string: name),
                                dbg-file,
-                               i32(logior(line-number, ash(arg, 24))),
+                               i32(logior(line-number | 0, ash(arg, 24))),
                                type,
                                i32(0), // flags
                                i32(0)));
@@ -436,7 +436,8 @@ define function llvm-make-dbg-derived-type
     (kind :: one-of(#"parameter", #"member", #"pointer", #"reference",
                     #"typedef", #"const", #"volatile", #"restrict"),
      scope :: false-or(<llvm-metadata-value>), name :: <string>,
-     dbg-file :: false-or(<llvm-metadata-value>), line-number,
+     dbg-file :: false-or(<llvm-metadata-value>),
+     line-number :: false-or(<integer>),
      type-size :: <integer>, type-alignment :: <integer>,
      type-offset :: <integer>,
      derived-from :: false-or(<llvm-metadata-value>))
@@ -470,7 +471,8 @@ define function llvm-make-dbg-composite-type
     (kind :: one-of(#"array", #"enum", #"struct", #"union", #"vector",
                     #"function", #"inheritance"),
      scope :: false-or(<llvm-metadata-value>), name :: <string>,
-     dbg-file :: false-or(<llvm-metadata-value>), line-number,
+     dbg-file :: false-or(<llvm-metadata-value>),
+     line-number :: false-or(<integer>),
      type-size :: <integer>, type-alignment :: <integer>,
      elements :: <sequence>,
      derived-from :: false-or(<llvm-metadata-value>))
