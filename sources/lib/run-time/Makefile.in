@@ -108,7 +108,10 @@ endif
 LLVM_RUNTIME_GEN = $(OPEN_DYLAN_TARGET_PLATFORM)-runtime.bc
 LLVM_RUNTIME_HEADER = llvm-$(OPEN_DYLAN_TARGET_PLATFORM)-runtime.h
 LLVM_RUNTIME_OBJS = \
-		  $(OBJDIR_LLVM)/$(OPEN_DYLAN_TARGET_PLATFORM)-runtime.o
+		  $(OBJDIR_LLVM)/$(OPEN_DYLAN_TARGET_PLATFORM)-runtime.o \
+		  $(OBJDIR_LLVM)/break.o \
+		  $(OBJDIR_LLVM)/collector.o \
+		  $(OBJDIR_LLVM)/unix-spy-interfaces.o
 
 C_RUNTIME_OBJS	= $(OBJDIR_C)/break.o \
 		  $(OBJDIR_C)/collector.o \
@@ -147,7 +150,7 @@ $(LLVM_RUNTIME_GEN) $(LLVM_RUNTIME_HEADER):
 	  $(top_srcdir)/sources/dylan/dylan.lid $(OPEN_DYLAN_TARGET_PLATFORM)
 
 $(OBJDIR_LLVM)/%.o: $(srcdir)/%.c $(LLVM_RUNTIME_HEADER)
-	mkdir -p $(OBJDIR_HARP)
+	mkdir -p $(OBJDIR_LLVM)
 	$(CC) $(CFLAGS) $(LLVM_CFLAGS) $(LLVM_GC_CFLAGS) -MMD -c -o $@ $<
 
 $(OBJDIR_LLVM)/%.o: %.bc
