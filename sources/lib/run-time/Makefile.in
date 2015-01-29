@@ -19,20 +19,27 @@ HARP_RUNTIME_LIBRARY  = $(OBJDIR_HARP)/libdylan-harp-runtime.a
 LLVM_RUNTIME_LIBRARY  = $(OBJDIR_LLVM)/libdylan-llvm-runtime.a
 C_RUNTIME_LIBRARY     = $(OBJDIR_C)/libdylan-c-runtime.a
 
-GC_CFLAGS       = @GC_CFLAGS@
-GC_CHOICE       = @GC_CHOICE@
-GC_LIBRARY      = @GC_LIBRARY@
-GC_USE_STATIC_BOEHM = @GC_USE_STATIC_BOEHM@
+MPS_CFLAGS        = @MPS_CFLAGS@ -DGC_USE_MPS
+BDW_GC_CFLAGS     = @BDW_GC_CFLAGS@ -DGC_USE_BOEHM
+BDW_GC_STATIC     = @BDW_GC_STATIC@
+BDW_GC_STATIC_LIB = @BDW_GC_STATIC_LIB@
+MALLOC_CFLAGS     = -DGC_USE_MALLOC
+
+HARP_COLLECTOR    = @HARP_COLLECTOR@
+LLVM_COLLECTOR    = @LLVM_COLLECTOR@
+C_COLLECTOR       = @C_COLLECTOR@
+
+HARP_GC_CFLAGS    = $(@HARP_COLLECTOR@_CFLAGS)
+LLVM_GC_CFLAGS    = $(@LLVM_COLLECTOR@_CFLAGS)
+C_GC_CFLAGS       = $(@C_COLLECTOR@_CFLAGS)
 
 .PHONY: install install-c-runtime install-llvm-runtime \
 	install-harp-runtime clean
 
 PLATFORM_RUNTIME_LIBRARIES=$(C_RUNTIME_LIBRARY)
-ifneq ($(GC_CHOICE),mps)
 PLATFORM_INSTALL_RUNTIMES+=install-c-runtime
 ifdef OPEN_DYLAN_LLVM_RUNTIME_GENERATOR
   PLATFORM_INSTALL_RUNTIMES+=install-llvm-runtime
-endif
 endif
 
 ifeq ($(OPEN_DYLAN_TARGET_PLATFORM),x86-linux)
@@ -72,7 +79,7 @@ endif
 CC = @CC@
 AR = ar -rcs
 
-CFLAGS		= $(PLATFORM_CFLAGS) -Wall -O -g $(GC_CFLAGS) -I$(srcdir)
+CFLAGS		= $(PLATFORM_CFLAGS) -Wall -O -g -I$(srcdir)
 
 LLVM_CFLAGS     = -DOPEN_DYLAN_BACKEND_LLVM
 
@@ -87,7 +94,7 @@ HARP_RUNTIME_OBJS = \
 		  $(OBJDIR_HARP)/unix-threads-primitives.o \
 		  $(HARP_SUPPORT_DIR)/runtime.o
 
-ifeq ($(GC_CHOICE),mps)
+ifeq ($(HARP_COLLECTOR),MPS)
   HARP_RUNTIME_OBJS += \
 		  $(OBJDIR_HARP)/mps-dylan.o \
 		  $(OBJDIR_HARP)/heap-display.o \
@@ -133,7 +140,7 @@ $(C_RUNTIME_LIBDEST):
 
 $(OBJDIR_HARP)/%.o: $(srcdir)/%.c
 	mkdir -p $(OBJDIR_HARP)
-	$(CC) $(CFLAGS) -MMD -c -o $@ $<
+	$(CC) $(CFLAGS) $(HARP_GC_CFLAGS) -MMD -c -o $@ $<
 
 $(LLVM_RUNTIME_GEN) $(LLVM_RUNTIME_HEADER):
 	$(OPEN_DYLAN_LLVM_RUNTIME_GENERATOR) \
@@ -141,7 +148,7 @@ $(LLVM_RUNTIME_GEN) $(LLVM_RUNTIME_HEADER):
 
 $(OBJDIR_LLVM)/%.o: $(srcdir)/%.c $(LLVM_RUNTIME_HEADER)
 	mkdir -p $(OBJDIR_HARP)
-	$(CC) $(CFLAGS) $(LLVM_CFLAGS) -MMD -c -o $@ $<
+	$(CC) $(CFLAGS) $(LLVM_CFLAGS) $(LLVM_GC_CFLAGS) -MMD -c -o $@ $<
 
 $(OBJDIR_LLVM)/%.o: %.bc
 	mkdir -p $(OBJDIR_LLVM)
@@ -149,7 +156,7 @@ $(OBJDIR_LLVM)/%.o: %.bc
 
 $(OBJDIR_C)/%.o: $(srcdir)/%.c
 	mkdir -p $(OBJDIR_C)
-	$(CC) $(CFLAGS) -MMD -c -o $@ $<
+	$(CC) $(CFLAGS) $(C_GC_CFLAGS) -MMD -c -o $@ $<
 
 $(HARP_RUNTIME_LIBRARY): $(HARP_RUNTIME_OBJS)
 	$(AR) $(HARP_RUNTIME_LIBRARY) $(HARP_RUNTIME_OBJS)
@@ -165,8 +172,8 @@ $(LLVM_RUNTIME_LIBRARY): $(LLVM_RUNTIME_OBJS)
 
 install-llvm-runtime: $(LLVM_RUNTIME_LIBRARY) $(LLVM_RUNTIME_LIBDEST)
 	cp -fp $(LLVM_RUNTIME_LIBRARY) $(LLVM_RUNTIME_LIBDEST)
-	@ if [ "$(GC_USE_STATIC_BOEHM)" = "true" ]; then \
-	    cp -fp $(GC_LIBRARY) $(LLVM_RUNTIME_LIBDEST); \
+	@if [ x$(LLVM_COLLECTOR) = xBDW_GC ] && [ -n "$(BDW_GC_STATIC)" ]; then \
+	    cp -fp $(BDW_GC_STATIC_LIB) $(LLVM_RUNTIME_LIBDEST); \
 	fi
 
 $(C_RUNTIME_LIBRARY): $(C_RUNTIME_OBJS)
@@ -179,8 +186,8 @@ install-c-runtime: $(C_RUNTIME_LIBRARY) $(C_RUNTIME_LIBDEST) $(INCDEST)
 	cp -fp $(C_RUNTIME_LIBRARY) $(C_RUNTIME_LIBDEST)
 	cp -fp $(srcdir)/trace.h $(INCDEST)
 	cp -fp $(srcdir)/run-time.h $(INCDEST)
-	@ if [ "$(GC_USE_STATIC_BOEHM)" = "true" ]; then \
-	    cp -fp $(GC_LIBRARY) $(C_RUNTIME_LIBDEST); \
+	@if [ x$(C_COLLECTOR) = xBDW_GC ] && [ -n "$(BDW_GC_STATIC)" ]; then \
+	    cp -fp $(BDW_GC_STATIC_LIB) $(C_RUNTIME_LIBDEST); \
 	fi
 
 
