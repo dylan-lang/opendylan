@@ -529,7 +529,7 @@ define instruction-set
             metadata: builder-metadata(builder, #()));
 
   op landingpad (type :: <llvm-type>, personality, clauses :: <sequence>,
-                 #key metadata :: <list> = #(), cleanup?)
+                 #key metadata :: <list> = #(), cleanup? :: <boolean> = #f)
     => make(<llvm-landingpad-instruction>,
             type: type,
             operands: concatenate(vector(llvm-builder-value(builder, personality)),
@@ -555,7 +555,7 @@ define instruction-set
        end if;
 
   op alloca (type :: <llvm-type>, num-elements,
-             #key alignment = 0, metadata :: <list> = #())
+             #key alignment :: <integer> = 0, metadata :: <list> = #())
     => let pointer-type
          = make(<llvm-pointer-type>, pointee: type);
        make(<llvm-alloca-instruction>,
