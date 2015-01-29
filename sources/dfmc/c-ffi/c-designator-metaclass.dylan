@@ -49,12 +49,6 @@ define method ^initialize-class
                            for (c in superclass-models)
                              if (instance?(c, <&designator-class>))
                                return(c);
-                             elseif
-                               // !@#$ should be a model.  This is a hack
-                               (instance?(c, <&static-values>)
-                                  & instance?(head (&values-model-objects(c)),
-                                                <&designator-class>))
-                               return(head(&values-model-objects(c)))
                              end if;
                            end for;
                          end block;

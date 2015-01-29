@@ -6,7 +6,6 @@ Files:   modeling-library
          boot
          model-object
          namespaces
-         values
          objects
          signatures
          functions
