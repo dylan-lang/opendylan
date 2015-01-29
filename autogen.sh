@@ -6,15 +6,6 @@ test -z "$srcdir" && srcdir=.
 
 DIE=false
 
-(pkg-config --version) < /dev/null > /dev/null 2>&1 || {
-    echo
-    echo "You must have pkg-config installed to compile Open Dylan."
-    echo "Download the appropriate package for your distribution,"
-    echo "or get the source tarball at"
-    echo "http://www.freedesktop.org/wiki/Software/pkg-config/"
-    DIE=true
-}
-
 (autoconf --version && autoheader --version) < /dev/null > /dev/null 2>&1 || {
     echo
     echo "You must have autoconf installed to compile Open Dylan."
@@ -39,6 +30,6 @@ echo "*** Thanks! ***"
 
 ( cd $srcdir
   mkdir -p build-aux
-  aclocal
+  aclocal -I m4
   automake --foreign --add-missing
   autoconf )
