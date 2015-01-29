@@ -146,7 +146,7 @@ AC_ARG_WITH(c-collector,
             [C_COLLECTOR=$withval],
             [C_COLLECTOR=boehm])
 AC_MSG_CHECKING([which GC to use with the C back-end ])
-AC_MSG_RESULT($LLVM_COLLECTOR)
+AC_MSG_RESULT($C_COLLECTOR)
 CANONICALIZE_COLLECTOR_NAME(C_COLLECTOR)
 AC_SUBST(C_COLLECTOR)
 
@@ -165,7 +165,7 @@ AC_ARG_WITH(mps,
            AS_HELP_STRING([--with-mps=DIR],
                           [Memory Pool System (MPS) source directory]))
 
-AS_IF([test -n "$SUPPORT_HARP"] && [test X$HARP_COLLECTOR = Xmps],
+AS_IF([test -n "$SUPPORT_HARP" && test x$HARP_COLLECTOR = xMPS],
       [MPS_CFLAGS="-I${with_mps}/code"
        MPS_LIBS=
        save_CPPFLAGS="$CPPFLAGS"
