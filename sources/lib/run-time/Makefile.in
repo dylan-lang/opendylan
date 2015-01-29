@@ -81,7 +81,9 @@ AR = ar -rcs
 
 CFLAGS		= $(PLATFORM_CFLAGS) -Wall -O -g -I$(srcdir)
 
-LLVM_CFLAGS     = -DOPEN_DYLAN_BACKEND_LLVM
+LLVM_CFLAGS     = -DOPEN_DYLAN_BACKEND_LLVM \
+	          -DOPEN_DYLAN_RUNTIME_HEADER=\"llvm-$(OPEN_DYLAN_TARGET_PLATFORM)-runtime.h\" \
+		  -I.
 
 HARP_SUPPORT_DIR = $(srcdir)/harp-support/$(OPEN_DYLAN_TARGET_PLATFORM)
 HARP_RUNTIME_OBJS = \
@@ -111,7 +113,8 @@ LLVM_RUNTIME_OBJS = \
 		  $(OBJDIR_LLVM)/$(OPEN_DYLAN_TARGET_PLATFORM)-runtime.o \
 		  $(OBJDIR_LLVM)/break.o \
 		  $(OBJDIR_LLVM)/collector.o \
-		  $(OBJDIR_LLVM)/unix-spy-interfaces.o
+		  $(OBJDIR_LLVM)/unix-spy-interfaces.o \
+		  $(OBJDIR_LLVM)/llvm-runtime-init.o
 
 C_RUNTIME_OBJS	= $(OBJDIR_C)/break.o \
 		  $(OBJDIR_C)/collector.o \
