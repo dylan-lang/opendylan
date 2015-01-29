@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define serious-program-warning 
+define serious-program-warning
     <substitution-of-unbound-pattern-variable> (<manual-parser-error>)
   slot condition-variable-name,
     required-init-keyword: variable-name:;
@@ -32,32 +32,32 @@ define macro substitution-method
          end }
 end macro;
 
-define method generate-substitution-function 
-    (subst :: <simple-element-substitution>) 
+define method generate-substitution-function
+    (subst :: <simple-element-substitution>)
  => (code :: <substitution-method>)
   substitution-method (subst)
     import-to-template(lookup-match(env, index))
   end;
 end method;
 
-define method generate-substitution-function 
+define method generate-substitution-function
     (subst :: <as-string-substitution>)
  => (code :: <substitution-method>)
   substitution-method (subst)
-    substitute-as-string(lookup-match(env, index)) 
+    substitute-as-string(lookup-match(env, index))
   end;
 end method;
 
-define method generate-substitution-function 
-    (subst :: <as-symbol-substitution>) 
+define method generate-substitution-function
+    (subst :: <as-symbol-substitution>)
  => (code :: <substitution-method>)
-  substitution-method (subst) 
+  substitution-method (subst)
     substitute-as-symbol(lookup-match(env, index))
   end;
 end method;
 
-define method generate-substitution-function 
-    (subst :: <splicing-substitution>) 
+define method generate-substitution-function
+    (subst :: <splicing-substitution>)
  => (code :: <substitution-method>)
   let inner = element-name-substitution(subst);
   let prefix = element-prefix(subst);
@@ -83,8 +83,8 @@ define method splicing-function
   substitute-spliced-as-name
 end method;
 
-define method generate-substitution-function 
-    (subst :: <simple-sequence-substitution>) 
+define method generate-substitution-function
+    (subst :: <simple-sequence-substitution>)
  => (code :: <substitution-method>)
   let separator = element-separator(subst);
   if (separator)
@@ -100,7 +100,7 @@ define method generate-substitution-function
   end;
 end method;
 
-define method generate-substitution-function 
+define method generate-substitution-function
     (subst :: <aux-rule-call-substitution>)
  => (code :: <substitution-method>)
   let aux-rule-env = element-aux-rule-env(subst);
@@ -113,7 +113,7 @@ define method generate-substitution-function
   end;
 end method;
 
-define serious-program-warning 
+define serious-program-warning
     <non-macro-in-template-macro-call> (<manual-parser-error>)
   slot condition-fragment,
     required-init-keyword: fragment:;
@@ -123,7 +123,7 @@ define serious-program-warning
     fragment;
 end serious-program-warning;
 
-define method generate-substitution-function 
+define method generate-substitution-function
     (subst :: <macro-call-substitution>)
  => (code :: <substitution-method>)
   let argument-function = element-compiled-template(subst);

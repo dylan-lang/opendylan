@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $compiler-method-class-map = make(<table>);
 
-define method define-compiler-method-class 
+define method define-compiler-method-class
     (tag :: <symbol>, method-class) => ()
   element($compiler-method-class-map, tag) := method-class
 end method;
@@ -45,15 +45,15 @@ define function get-form-generic-definition (form) => (gf-def, gf-static?)
   let gf-def  = binding-definition(binding, default: #f);
   let gf-static?
     = gf-def & if (current-library-description?(form-library(gf-def)))
-		 // Have to be slightly careful about evaluation order, hence
-		 // the implicitly defined check shortcut which is a precondition
-		 // for model computation of the generic looking back at its
-		 // methods.
-		 form-implicitly-defined?(gf-def)
-		   | binding-model-object(binding)
-	       else
-		 binding-model-object(binding)
-	       end;
+                 // Have to be slightly careful about evaluation order, hence
+                 // the implicitly defined check shortcut which is a precondition
+                 // for model computation of the generic looking back at its
+                 // methods.
+                 form-implicitly-defined?(gf-def)
+                   | binding-model-object(binding)
+               else
+                 binding-model-object(binding)
+               end;
   values(gf-def, gf-static?)
 end function;
 
@@ -70,76 +70,76 @@ define method compute-and-install-form-model-objects-statically
     // We're at least partly static;  the g.f. is known.  But if the method isn't, we have
     // to add it at load time, and check congruency too.
     let model = compute-form-model-object(form, name);
-    let model 
+    let model
       = if (model
              & (form-equivalent-method-definition(gf-def) == form
                   | check-model-at-definition(model)))
           // The equivalent method definition check gets around potential
           // circularity problems.
-          model 
+          model
         else
           #f
         end;
     let lib = library-description-model(form-library(form));
-    if (model) 
-      lambda-top-level?(model) := #t; 
+    if (model)
+      lambda-top-level?(model) := #t;
       form-model(form) := model;
     else
       form-evaluation-tried-and-failed?(form) := #t;
     end;
     let method-locally-defined? = form-library(gf-def) == form-library(form);
     unless (form-compile-stage-only?(gf-def)
-	      | (method-locally-defined? & model)
-	      | (~model & form-handled-by-make-when-dynamic?(form))
-	      // | (model & ~method-locally-defined?
-	      //      & single-method-generic-function?(lookup-model-object(name, reference?: #f)))
-	      )
-      let code 
-	= (with-expansion-source-form(form)
-	     let mcode = if (~model)
-			   let signature-and-body = form-signature-and-body-fragment(form);
-			   #{  generic-method (?form) ?signature-and-body end }
-			 else
-			   #{ ?model }
-			 end if;
+              | (method-locally-defined? & model)
+              | (~model & form-handled-by-make-when-dynamic?(form))
+              // | (model & ~method-locally-defined?
+              //      & single-method-generic-function?(lookup-model-object(name, reference?: #f)))
+              )
+      let code
+        = (with-expansion-source-form(form)
+             let mcode = if (~model)
+                           let signature-and-body = form-signature-and-body-fragment(form);
+                           #{  generic-method (?form) ?signature-and-body end }
+                         else
+                           #{ ?model }
+                         end if;
 
-	     let gf-runtime-sealed? = (form-sealable?(gf-def) | form-compiler-open?(gf-def));
+             let gf-runtime-sealed? = (form-sealable?(gf-def) | form-compiler-open?(gf-def));
 
-	     // Do we, at runtime, need to add <method-domain> domain for this method?  We
-	     // do if it's a sealed method, and one is not going to be added statically in
-	     // the gf model.
-	     let mdomain? = ~gf-runtime-sealed? & form-sealed?(form);
+             // Do we, at runtime, need to add <method-domain> domain for this method?  We
+             // do if it's a sealed method, and one is not going to be added statically in
+             // the gf model.
+             let mdomain? = ~gf-runtime-sealed? & form-sealed?(form);
 
-	     // We only need to check congruency for dynamically computed methods.
-	     let check-congruency? = if (model) #f else #t end;
+             // We only need to check congruency for dynamically computed methods.
+             let check-congruency? = if (model) #f else #t end;
 
-	     // Do we check sealing?
-	     // - We skip it (thus skipping the other hairier computations) if the gf is runtime-sealed.
-	     // - We can also skip it if we are in the defining library of the generic, as there's no
-	     //   way anyone could have put on a domain to exclude us.  (Being not in incremental
-	     //   definition mode we don't have to worry about out-of-order definitions.
-	     // - Finally, we can also skip it if some specialized type is defined in our own
-	     //   library, which has the same consequence.  This last check could be smarter for
-	     //   dynamically computed methods by looking at those specializers it can rather than
-	     //   just punting entirely in that case.
-	     let check-sealing? = (~gf-runtime-sealed?
-				     & ~method-locally-defined?
-				     & (~model
-					  | all-types-known-imported?
-					      (model-library(model),
-					       ^function-signature(model))));
+             // Do we check sealing?
+             // - We skip it (thus skipping the other hairier computations) if the gf is runtime-sealed.
+             // - We can also skip it if we are in the defining library of the generic, as there's no
+             //   way anyone could have put on a domain to exclude us.  (Being not in incremental
+             //   definition mode we don't have to worry about out-of-order definitions.
+             // - Finally, we can also skip it if some specialized type is defined in our own
+             //   library, which has the same consequence.  This last check could be smarter for
+             //   dynamically computed methods by looking at those specializers it can rather than
+             //   just punting entirely in that case.
+             let check-sealing? = (~gf-runtime-sealed?
+                                     & ~method-locally-defined?
+                                     & (~model
+                                          | all-types-known-imported?
+                                              (model-library(model),
+                                               ^function-signature(model))));
 
-	     if (~check-congruency? & check-sealing? & ~mdomain?)
-	       let definer = dylan-value(#"%add-method");
-	       #{ ?definer(?name, ?mcode, ?lib) }
-	     elseif (gf-runtime-sealed? & check-congruency? & ~check-sealing? & ~mdomain?)
-	       let definer = dylan-value(#"%add-dynamic-method");
-	       #{ ?definer(?name, ?mcode) }
-	     else
-	       let definer = dylan-value(#"%add-a-method");
-	       #{ ?definer(?name, ?mcode, ?lib, ?check-congruency?, ?check-sealing?, ?mdomain?) }
-	     end if
- 	   end with-expansion-source-form);
+             if (~check-congruency? & check-sealing? & ~mdomain?)
+               let definer = dylan-value(#"%add-method");
+               #{ ?definer(?name, ?mcode, ?lib) }
+             elseif (gf-runtime-sealed? & check-congruency? & ~check-sealing? & ~mdomain?)
+               let definer = dylan-value(#"%add-dynamic-method");
+               #{ ?definer(?name, ?mcode) }
+             else
+               let definer = dylan-value(#"%add-a-method");
+               #{ ?definer(?name, ?mcode, ?lib, ?check-congruency?, ?check-sealing?, ?mdomain?) }
+             end if
+            end with-expansion-source-form);
       let init-model = convert-top-level-initializer(code);
       form-init-method(form) := init-model;
     end unless;
@@ -157,7 +157,7 @@ end function;
 // sometimes (by the C-callable constructor).
 
 define method compute-method-explicitly
-    (method-class :: <class>, 
+    (method-class :: <class>,
      form, name, signature-spec, body-spec,
      #rest options, #key, #all-keys)
       => (model :: <&method>)
@@ -165,21 +165,21 @@ define method compute-method-explicitly
         method-class,
         definition: form,
         body-spec: body-spec,
-	// debug-name: 
+        // debug-name:
         //   ~form & name & mapped-model(as-lowercase(as(<string>, name))),
         compiler-debug-name: name,
         signature-spec: signature-spec,
         options)
 end method;
 
-define method install-method-signature 
+define method install-method-signature
     (m :: <&lambda>, form :: <method-defining-form>, sig :: <&signature>)
  => ()
   ^function-signature(m) := sig
 end method;
 
-define method install-method-signature 
-    (m :: <&accessor-method>, 
+define method install-method-signature
+    (m :: <&accessor-method>,
        form :: <method-defining-form>, sig :: <&signature>)
  => ()
   ^function-signature(m) := sig;
@@ -187,15 +187,15 @@ define method install-method-signature
 end method;
 
 /*
-define method install-method-signature 
-    (m :: <&getter-method>, 
-     form :: <method-defining-form>, 
+define method install-method-signature
+    (m :: <&getter-method>,
+     form :: <method-defining-form>,
      signature-spec :: <signature-spec>)
   let req-spec = spec-argument-required-variable-specs(spec);
   let class-spec = req-spec[0];
   ^top-level-eval(class-spec
   if (instance?(method-object, <&lambda>))
-    ^function-signature(method-object) 
+    ^function-signature(method-object)
       := compute-signature(form, signature-spec);
   end if;
 end method;
@@ -217,7 +217,7 @@ define compiler-sideways method compute-form-model-object
     // method and the class as a whole is dynamic, we still can't
     // have the method.
     if (instance?(method-object, <&accessor-method>))
-      let class 
+      let class
         = ^signature-required(sig-object)
              [accessor-method-dispatch-arg(method-object)];
       if (^ensure-slots-initialized(class))
@@ -235,7 +235,7 @@ define compiler-sideways method compute-form-model-object
   end;
 end method;
 
-define compiler-sideways method form-top-level-methods 
+define compiler-sideways method form-top-level-methods
     (form :: <method-definition>) => (methods :: <sequence>)
   let inits = next-method();
   let model = form-model(form);
@@ -253,7 +253,7 @@ end method;
 
 
 // Note that maybe-compute-and-install-method-dfm is the client entry
-// point, while compute-and-install-method-dfm is for implementors of 
+// point, while compute-and-install-method-dfm is for implementors of
 // the protocol. This allows us to relieve specific implementing methods
 // of setting up the appropriate context, since we can guarantee that
 // this has been done before compute-and-install-method-dfm has been
@@ -263,12 +263,12 @@ define method maybe-compute-and-install-method-dfm (m :: <&method>) => ()
 end method;
 
 define method maybe-compute-and-install-method-dfm (m :: <&lambda>) => ()
-  unless (m.body | m.lambda-optimized?) // OR RETRACTED BUT 1ST GROKKED 
+  unless (m.body | m.lambda-optimized?) // OR RETRACTED BUT 1ST GROKKED
     with-simple-abort-retry-restart
-      ("Skip generating DFM for this method", 
+      ("Skip generating DFM for this method",
        "Retry generating DFM for this method")
       with-dependent-context($compilation of model-creator(m))
-	compute-and-install-method-dfm(m);
+        compute-and-install-method-dfm(m);
       end;
     end;
   end unless;
@@ -279,10 +279,10 @@ end method;
 
 define method slot-initial-value-method? (f :: <&method>) => (res :: <boolean>)
   let creator = model-creator(f);
-  instance?(creator, <class-definition>) 
+  instance?(creator, <class-definition>)
     | (~lambda-top-level?(f)
-	 & instance?(creator, <method-definition>) 
-	 & form-class(creator) == #"initializer")
+         & instance?(creator, <method-definition>)
+         & form-class(creator) == #"initializer")
 end method;
 
 define method dodgy-method? (f :: <&lambda>) => (well? :: <boolean>)
@@ -292,35 +292,35 @@ end method;
 define method method-indirectly-inlineable? (f :: <&lambda>) => (well? :: <boolean>)
   unless (lambda-top-level?(f))
     local method outer-lambda (f :: <&lambda>) => (res :: false-or(<&lambda>))
-	    let env       = environment(f);
-	    let outer-env = env & lambda-environment(outer(env));
-	    outer-env & lambda(outer-env)
-	  end method;
+            let env       = environment(f);
+            let outer-env = env & lambda-environment(outer(env));
+            outer-env & lambda(outer-env)
+          end method;
     iterate loop (outer :: false-or(<&lambda>) = outer-lambda(f))
       if (~outer)
-	#f
+        #f
       elseif (lambda-top-level?(outer))
-	method-inlineable?(outer)
-      else 
-	loop(outer-lambda(outer))
+        method-inlineable?(outer)
+      else
+        loop(outer-lambda(outer))
       end if;
     end iterate;
   end unless;
 end method;
 
-define method method-fragments-strippable? 
+define method method-fragments-strippable?
     (x :: <&lambda>) => (well? :: <boolean>)
   #t
 end method;
 
 define variable *strip-enabled?* = #t;
 
-define method method-dfm-strippable? 
+define method method-dfm-strippable?
     (x :: <&lambda>) => (well? :: <boolean>)
   when (*strip-enabled?*)
     lambda-initializer?(x)
       | ~(method-inlineable?(x) | method-indirectly-inlineable?(x)
-	    | slot-initial-value-method?(x) | dodgy-method?(x) | lambda-copied-down?(x))
+            | slot-initial-value-method?(x) | dodgy-method?(x) | lambda-copied-down?(x))
   end when;
 end method;
 
@@ -388,30 +388,30 @@ end method;
 
 define constant $maximum-inlining-cost = 0;
 
-define generic computation-inlining-cost 
+define generic computation-inlining-cost
     (c :: <computation>) => (res :: <integer>);
 
-define method computation-inlining-cost 
+define method computation-inlining-cost
     (c :: <computation>) => (res :: <integer>)
   1
 end method;
 
-define method computation-inlining-cost 
+define method computation-inlining-cost
     (c :: <bind>) => (res :: <integer>)
   0
 end method;
 
-define method computation-inlining-cost 
+define method computation-inlining-cost
     (c :: <return>) => (res :: <integer>)
   0
 end method;
 
-define method computation-inlining-cost 
+define method computation-inlining-cost
     (c :: <nop-computation>) => (res :: <integer>)
   0
 end method;
 
-define method computation-inlining-cost 
+define method computation-inlining-cost
     (c :: <temporary-transfer-computation>) => (res :: <integer>)
   0
 end method;
@@ -420,38 +420,38 @@ define method update-lambda-inlineable? (f :: <&lambda>)
   when (lambda-inlineable?(f) == #"unknown")
     let definition = model-definition(f);
     let inlineable?
-      = if (lambda-top-level?(f) & definition 
-	      & form-inline-policy(definition) == #"default-inline"
-	      & empty?(f.environment.inners)
-	      & ~instance?(f, <&copy-down-method>))
-	  let cost :: <integer> = 0;
-	  let inlineable?
-	    = block (return)
-		walk-lambda-computations // ESTIMATE INLINING COST
-		  (method (c)
-		     walk-computation-references
-		       (method (c, ref, object)
-			  ignore(c); ignore(ref);
-			  unless (inlineable?(object))
-			    return(#f)
-			  end unless
-			end method,
-			c);
-		     cost := cost + computation-inlining-cost(c); 
-		     when (cost > $maximum-inlining-cost) 
-		       return(#f)
-		     end when;
-		   end method,
-		   f.body); 
-		#t
-	      end block;
-	  // when (inlineable?)
-	  //   format-out("LAMBDA %= INLINEABLE %=\n", f, cost);
-	  // end when;
-	  inlineable?
-	else
-	  #f
-	end if;
+      = if (lambda-top-level?(f) & definition
+              & form-inline-policy(definition) == #"default-inline"
+              & empty?(f.environment.inners)
+              & ~instance?(f, <&copy-down-method>))
+          let cost :: <integer> = 0;
+          let inlineable?
+            = block (return)
+                walk-lambda-computations // ESTIMATE INLINING COST
+                  (method (c)
+                     walk-computation-references
+                       (method (c, ref, object)
+                          ignore(c); ignore(ref);
+                          unless (inlineable?(object))
+                            return(#f)
+                          end unless
+                        end method,
+                        c);
+                     cost := cost + computation-inlining-cost(c);
+                     when (cost > $maximum-inlining-cost)
+                       return(#f)
+                     end when;
+                   end method,
+                   f.body);
+                #t
+              end block;
+          // when (inlineable?)
+          //   format-out("LAMBDA %= INLINEABLE %=\n", f, cost);
+          // end when;
+          inlineable?
+        else
+          #f
+        end if;
     lambda-inlineable?(f) := inlineable?;
   end when;
 end method;
@@ -480,13 +480,13 @@ end method;
 define method ensure-method-model (f :: <&lambda>)
   if (f.lambda-optimized?)  // quick check
     ensure-lambda-body(f);
-  else 
+  else
     block ()
       ensure-method-optimized(f)
     cleanup
       let ld = current-top-level-library-description();
       when (ld ~== model-library(f) & method-fragments-strippable?(f))
-	retract-method-dfm(f);
+        retract-method-dfm(f);
       end when;
     end block;
   end if;
@@ -554,9 +554,9 @@ define method compute-form-dynamic-init-code
   let signature-and-body = form-signature-and-body-fragment(form);
   let definer
     = if (form-sealed?(form))
-	dylan-value(#"%define-sealed-method");
-      else 
-	dylan-value(#"%define-method");
+        dylan-value(#"%define-sealed-method");
+      else
+        dylan-value(#"%define-method");
       end if;
   (with-expansion-source-form (form)
      #{ ?definer(?name, generic-method (?form) ?signature-and-body end, ?lib) }

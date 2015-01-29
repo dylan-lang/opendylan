@@ -1,15 +1,15 @@
 Library: dfmc-common
 Target-Type: dll
-Files:	 common-library
-	 common-macros
-	 property-delegation-macros
-	 symbolic-class
-	 names
-	 named-object
-	 referenced-object
-	 emitted-object
+Files:   common-library
+         common-macros
+         property-delegation-macros
+         symbolic-class
+         names
+         named-object
+         referenced-object
+         emitted-object
          model-properties
-	 common
+         common
          compilation-records
          top-level-forms
          compilation-pass

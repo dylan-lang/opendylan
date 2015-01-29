@@ -8,25 +8,25 @@ define sideways method dood-dfmc-initial-segments
     (class :: subclass(<dfmc-dood>)) => (segments, default-segment);
   let segments
     = vector(make(<dood-typed-segment>,
-		  name: "namespace",
-		  type: type-union(<library-description>,
-				   <namespace>,
-				   <module-binding>)),
-	     make(<dood-typed-segment>,
-		  name: "definitions",
-		  type: type-union(<top-level-form>)),
-	     make(<dood-typed-segment>,
-		  name: "models",
-		  type: type-union(<model-properties>)),
-	     make(<dood-typed-segment>,
-		  name: "code",
-		  type: type-union(<lexical-environment>,
-				   <computation>,
-				   <value-reference>,
-				   <body-fragment>)),
-	     make(<dood-typed-segment>,
-		  name: "debug-info",
-		  type: type-union(<lambda-compiled-data>)));
+                  name: "namespace",
+                  type: type-union(<library-description>,
+                                   <namespace>,
+                                   <module-binding>)),
+             make(<dood-typed-segment>,
+                  name: "definitions",
+                  type: type-union(<top-level-form>)),
+             make(<dood-typed-segment>,
+                  name: "models",
+                  type: type-union(<model-properties>)),
+             make(<dood-typed-segment>,
+                  name: "code",
+                  type: type-union(<lexical-environment>,
+                                   <computation>,
+                                   <value-reference>,
+                                   <body-fragment>)),
+             make(<dood-typed-segment>,
+                  name: "debug-info",
+                  type: type-union(<lambda-compiled-data>)));
   values(segments, segments[0])
 end method dood-dfmc-initial-segments;
 
@@ -35,18 +35,18 @@ end method dood-dfmc-initial-segments;
 define function dump-conditions-for(description :: <library-description>)
  => (warning-count, serious-warning-count, error-count);
   with-build-area-output (stream = description,
-			  base: as-lowercase(as(<string>,
-				library-description-emit-name(description))),
-			  type: "log")
+                          base: as-lowercase(as(<string>,
+                                library-description-emit-name(description))),
+                          type: "log")
     conditions-for(description, stream)
   end
 end;
 
 define function conditions-for (description :: <library-description>,
-				stream :: <stream>,
-				#key test :: <function> = method (c) #t end,
-				      summary? = #t,
-				      print-conditions? = #t)
+                                stream :: <stream>,
+                                #key test :: <function> = method (c) #t end,
+                                      summary? = #t,
+                                      print-conditions? = #t)
  => (warning-count, serious-warning-count, error-count, ignored-count);
   let cond-tab = description.library-conditions-table;
   let (ignored-count, error-count, serious-warning-count, warning-count)
@@ -54,26 +54,26 @@ define function conditions-for (description :: <library-description>,
   let print-context = #f;
 
   local method dump (key)
-	  for (condition in element(cond-tab, key, default: #[]))
-	    if (test(condition))
-	      when (print-conditions?)
-		if (print-context)
-		  format(stream, "//\n// Conditions for %s:\n//\n\n", print-context);
+          for (condition in element(cond-tab, key, default: #[]))
+            if (test(condition))
+              when (print-conditions?)
+                if (print-context)
+                  format(stream, "//\n// Conditions for %s:\n//\n\n", print-context);
                   print-context := #f;
-	        end;
-	        format(stream, "%=\n", condition);
+                end;
+                format(stream, "%=\n", condition);
               end when;
-	      case
-		instance?(condition, <serious-program-warning>) =>
-		  serious-warning-count := serious-warning-count + 1;
-		instance?(condition, <warning>) =>
-		  warning-count := warning-count + 1;
-		instance?(condition, <error>) =>
-		  error-count := error-count + 1;
-	      end;
-	    else
-	      ignored-count := ignored-count + 1
-	    end;
+              case
+                instance?(condition, <serious-program-warning>) =>
+                  serious-warning-count := serious-warning-count + 1;
+                instance?(condition, <warning>) =>
+                  warning-count := warning-count + 1;
+                instance?(condition, <error>) =>
+                  error-count := error-count + 1;
+              end;
+            else
+              ignored-count := ignored-count + 1
+            end;
           end for;
      end method;
 
@@ -97,17 +97,17 @@ define function conditions-for (description :: <library-description>,
 
   when (summary?)
     let ignor-msg = if (ignored-count == 0)
-		      ""
-		    else
-		      format-to-string("%d ignored warnings, ", ignored-count)
-		    end;
+                      ""
+                    else
+                      format-to-string("%d ignored warnings, ", ignored-count)
+                    end;
     let error-msg = if (error-count == 0)
-		      ""
-		    else
-		      format-to-string(" and %d errors", error-count)
-		    end;
+                      ""
+                    else
+                      format-to-string(" and %d errors", error-count)
+                    end;
     progress-line("There were %s%d warnings, %d serious warnings%s.",
-		  ignor-msg, warning-count, serious-warning-count, error-msg);
+                  ignor-msg, warning-count, serious-warning-count, error-msg);
   end;
 
   values(warning-count, serious-warning-count, error-count, ignored-count)
@@ -131,11 +131,11 @@ ignore(abort-compilation-warnings-count);
 //// Main driver.
 
 define method ensure-library-compiled (description :: <project-library-description>,
-				       #rest flags,
-				       #key skip-heaping?,
-				       abort-on-all-warnings?,
-				       abort-on-serious-warnings?,
-				       #all-keys)
+                                       #rest flags,
+                                       #key skip-heaping?,
+                                       abort-on-all-warnings?,
+                                       abort-on-serious-warnings?,
+                                       #all-keys)
  => (warning-count, serious-warning-count, error-count, data-size, code-size);
   let (warning-count, serious-warning-count, error-count) = values(0,0,0);
   verify-library-before-compile(description);
@@ -161,8 +161,8 @@ define method ensure-library-compiled (description :: <project-library-descripti
   // to clear obsolete files
   unless (#f & empty?(description.library-conditions-table))
     progress-line("Dumping conditions to %s.log",
-		  as-lowercase(as(<string>,
-				  library-description-emit-name(description))));
+                  as-lowercase(as(<string>,
+                                  library-description-emit-name(description))));
     let (warnings, serious-warnings, errors) =
       dump-conditions-for(description);
     warning-count := warnings;
@@ -170,32 +170,32 @@ define method ensure-library-compiled (description :: <project-library-descripti
     error-count := errors;
     if(abort-on-all-warnings?) abort-on-serious-warnings? := #t end;
     if(skip-heaping? |
-	 (abort-on-all-warnings? & (warning-count > 0))
-	 |
-	 (abort-on-serious-warnings? & (serious-warning-count > 0)))
+         (abort-on-all-warnings? & (warning-count > 0))
+         |
+         (abort-on-serious-warnings? & (serious-warning-count > 0)))
       progress-line("Aborting compilation");
       library-progress-text(description,
-			    "There were %d warnings, %d serious warnings and %d errors.",
-			    warning-count, serious-warning-count, error-count);
+                            "There were %d warnings, %d serious warnings and %d errors.",
+                            warning-count, serious-warning-count, error-count);
 
       signal(make(<abort-compilation>,
-	     warnings: warning-count,
-	     serious-warnings: serious-warning-count,
-	     errors: error-count))
+             warnings: warning-count,
+             serious-warnings: serious-warning-count,
+             errors: error-count))
     end;
 
   end;
 
   if(skip-heaping?)
     signal(make(<abort-compilation>,
-	   warnings: 0,
-	   serious-warnings: 0,
-	   errors: 0))
+           warnings: 0,
+           serious-warnings: 0,
+           errors: 0))
   end;
 
   let (data-size, code-size)
     = with-stage-progress("Generating code for", $heaping-stage-time)
-	ensure-library-heaps-computed(description, flags)
+        ensure-library-heaps-computed(description, flags)
       end;
   values(warning-count, serious-warning-count, error-count, data-size, code-size);
 end method;
@@ -235,23 +235,23 @@ define method compile-library-from-definitions
     with-program-conditions
       with-ramp-allocation(all?: gc-stats?)
         with-top-level-library-description (description)
-	  with-library-context (description)
+          with-library-context (description)
              debug-assert(begin
-			    verify-used-libraries(description);
-			    compiled-to-definitions?(description)
-			  end,
-			  "Dev env didn't ensure used libs for compilation");
-	    if (description.models-in-interactive-use?)
-	      detach-interactive-namespaces(description);
-	    end;
+                            verify-used-libraries(description);
+                            compiled-to-definitions?(description)
+                          end,
+                          "Dev env didn't ensure used libs for compilation");
+            if (description.models-in-interactive-use?)
+              detach-interactive-namespaces(description);
+            end;
             // TODO: need to verify used libraries
             if (description.library-description-stripped?)
-	      // Can't just compile stripped library, since info needed from
-	      // definitions may have been stripped.
-	      timing-compilation-phase("Recomputing full definitions" of description)
-	        retract-library-parsing(description);
-	        compute-library-definitions(description);
-	      end;
+              // Can't just compile stripped library, since info needed from
+              // definitions may have been stripped.
+              timing-compilation-phase("Recomputing full definitions" of description)
+                retract-library-parsing(description);
+                compute-library-definitions(description);
+              end;
             elseif (description.models-in-interactive-use?)
               // Compiling an unstripped tightly-compiled library.
               // Can't compile incrementally, since that might modify existing
@@ -261,89 +261,89 @@ define method compile-library-from-definitions
               // make all new ones.
               retract-library-compilation(description);
             end;
-	    if (description.library-description-compilation-aborted?)
-	      // TODO: reload from disk database...
-	      retract-library-compilation(description);
-	    end;
+            if (description.library-description-compilation-aborted?)
+              // TODO: reload from disk database...
+              retract-library-compilation(description);
+            end;
             if (compile-all?)
-	      retract-library-compilation(description)
-	    end;
+              retract-library-compilation(description)
+            end;
             if (description.library-references-retracted-models?)
-	      retract-library-compilation(description);
-	    end;
+              retract-library-compilation(description);
+            end;
             debug-assert(~any?(library-references-retracted-models?,
-			       description.all-used-library-descriptions),
-		         "Out of date used libraries");
-	    block ()
-	      description.library-description-compilation-aborted? := #t;
-	      if (strip?)
-	        description.library-description-stripped? := #"pending";
-	      end;
-	      let (warning-count, serious-warning-count, error-count,
-		   data-size, code-size) =
-	        apply(ensure-library-compiled, description, flags);
+                               description.all-used-library-descriptions),
+                         "Out of date used libraries");
+            block ()
+              description.library-description-compilation-aborted? := #t;
+              if (strip?)
+                description.library-description-stripped? := #"pending";
+              end;
+              let (warning-count, serious-warning-count, error-count,
+                   data-size, code-size) =
+                apply(ensure-library-compiled, description, flags);
 
-	      unless (skip-link?)
-	        with-stage-progress("Linking object files for", $linking-stage-time)
-		  ensure-library-glue-linked(description, flags);
-	          record-library-build(description);
-	        end;
-	      end;
+              unless (skip-link?)
+                with-stage-progress("Linking object files for", $linking-stage-time)
+                  ensure-library-glue-linked(description, flags);
+                  record-library-build(description);
+                end;
+              end;
               description.library-description-compilation-aborted? := #f;
 
-	      if (strip?)
-	        ensure-library-stripped(description);
-	      end;
+              if (strip?)
+                ensure-library-stripped(description);
+              end;
               if (save?)
-	        with-stage-progress("Saving database for", $save-db-stage-time)
-		  timing-compilation-phase("Saving database" of description)
-		    with-walk-progress   (progress-line("  Committed %=.", count))
-		      ensure-database-saved
-		        (description, flush?: flush?, stats?: stats?)
-		    end with-walk-progress;
-		  end;
-	        end;
+                with-stage-progress("Saving database for", $save-db-stage-time)
+                  timing-compilation-phase("Saving database" of description)
+                    with-walk-progress   (progress-line("  Committed %=.", count))
+                      ensure-database-saved
+                        (description, flush?: flush?, stats?: stats?)
+                    end with-walk-progress;
+                  end;
+                end;
               end if;
               dump-timings-for(description);
-	      // memory stats
-	      // mark-garbage();
-	      progress-line("  Data %d bytes.", data-size);
-	      progress-line("  Code %d bytes.", code-size);
-	      let (total-size, free-size) = room();
-	      // progress-line(" ====");
-	      progress-line(" Heap Allocated %= Total %= Free %=",
-			    total-size - free-size, total-size, free-size);
-	      // Useful for performance tuning; must be done before retraction.
-	      debug-out(#"internal",
-		        " Size of type cache = %d\n"
-		        " Size of cons cache = %d\n"
-		        " Size of disjoint cache = %d\n"
-		        " Size of dispatch cache = %d gfs/%d entries\n",
-		        size(library-type-cache(description)),
-		        size(library-type-estimate-cons-cache(description)),
-		        size(library-type-estimate-disjoint?-cache(description)),
-		        size(library-type-estimate-dispatch-cache(description)),
-		        reduce(method (n, t) (t & (n + t.size)) | n end, 0,
-			       library-type-estimate-dispatch-cache(description))
-			  );
+              // memory stats
+              // mark-garbage();
+              progress-line("  Data %d bytes.", data-size);
+              progress-line("  Code %d bytes.", code-size);
+              let (total-size, free-size) = room();
+              // progress-line(" ====");
+              progress-line(" Heap Allocated %= Total %= Free %=",
+                            total-size - free-size, total-size, free-size);
+              // Useful for performance tuning; must be done before retraction.
+              debug-out(#"internal",
+                        " Size of type cache = %d\n"
+                        " Size of cons cache = %d\n"
+                        " Size of disjoint cache = %d\n"
+                        " Size of dispatch cache = %d gfs/%d entries\n",
+                        size(library-type-cache(description)),
+                        size(library-type-estimate-cons-cache(description)),
+                        size(library-type-estimate-disjoint?-cache(description)),
+                        size(library-type-estimate-dispatch-cache(description)),
+                        reduce(method (n, t) (t & (n + t.size)) | n end, 0,
+                               library-type-estimate-dispatch-cache(description))
+                          );
               progress-line("There were %d warnings, %d serious warnings and %d errors.",
-			    warning-count, serious-warning-count, error-count);
+                            warning-count, serious-warning-count, error-count);
               progress-report-text("There were %d warnings, %d serious warnings and %d errors.",
-				   warning-count, serious-warning-count, error-count);
+                                   warning-count, serious-warning-count, error-count);
 
-	    cleanup
- 	      // Clear out cache slots in imported bindings
- 	      retract-library-imported-bindings(description);
- 	      // TODO: need a way to retract type info when retract models,
- 	      // but for now do this to avoid memory leaks.
+            cleanup
+               // Clear out cache slots in imported bindings
+               retract-library-imported-bindings(description);
+               // TODO: need a way to retract type info when retract models,
+               // but for now do this to avoid memory leaks.
               if (*retract-types-after-compilation?*)
-   	        map(initialize-typist-library-caches,
-		    all-library-descriptions(description))
+                   map(initialize-typist-library-caches,
+                    all-library-descriptions(description))
               end if;
-	      if (*retract-models-after-compilation?*)
-	        retract-models-after-compilation(description);
-	      end;
-	    end block;
+              if (*retract-models-after-compilation?*)
+                retract-models-after-compilation(description);
+              end;
+            end block;
           end with-library-context;
         end with-top-level-library-description;
       end with-ramp-allocation;
@@ -353,9 +353,9 @@ define method compile-library-from-definitions
     end;
     if (gc? & collect-garbage?(gc?))
       signal
-	(make(<garbage-collection>,
-	      info: as-lowercase(as(<string>,
-				    library-description-emit-name(description)))))
+        (make(<garbage-collection>,
+              info: as-lowercase(as(<string>,
+                                    library-description-emit-name(description)))))
     end if;
     #t
   end if;
@@ -367,15 +367,15 @@ define function ensure-library-stripped (ld :: <project-library-description>)
   unless (ld.library-description-stripped? == #t)
     timing-compilation-phase("Stripping" of ld)
       with-program-conditions
-	with-library-context (ld)
-	  if (ld.compilation-from-definitions-started?)
-	    // Have to recompute heaps so can find all owned models.
-	    // Have to do it up front so can retract any dependencies it
-	    // generates, or models it recomputes, or any other side-effects.
-	    maybe-recompute-library-heaps(ld);
-	  end;
-	  strip-incremental-slots(ld);
-	end;
+        with-library-context (ld)
+          if (ld.compilation-from-definitions-started?)
+            // Have to recompute heaps so can find all owned models.
+            // Have to do it up front so can retract any dependencies it
+            // generates, or models it recomputes, or any other side-effects.
+            maybe-recompute-library-heaps(ld);
+          end;
+          strip-incremental-slots(ld);
+        end;
       end;
     end;
   end;
@@ -386,7 +386,7 @@ define method maybe-recompute-library-heaps
   unless (ld.library-description-combined-record)
     for (cr in compilation-context-records(ld))
       unless (cr.compilation-record-model-heap)
-	compute-and-install-compilation-record-heap(cr, skip-emit?: #t);
+        compute-and-install-compilation-record-heap(cr, skip-emit?: #t);
       end;
     end;
   end;
@@ -414,7 +414,7 @@ define sideways method strip-incremental-slots
     for (module in defined-modules-in(library))
       let module-def = module.namespace-definition | library-def;
       with-dependent ($compilation of module-def)
-	strip-incremental-slots(module)
+        strip-incremental-slots(module)
       end;
     end for;
   end;
@@ -448,25 +448,25 @@ define method emitted-name-size (ld :: <compilation-context>)
       let library = language-definition(ld);
       let library-def = namespace-definition(library);
       for (module in defined-modules-in(library))
-	let module-def
-	  = if (instance?(module, <dylan-user-module>))
-	      // no explicit definition, so use the library...
-	      library-def
-	    else
-	      module.namespace-definition
-	    end;
-	with-dependent ($compilation of module-def)
-	  for (binding in module.namespace-local-bindings)
+        let module-def
+          = if (instance?(module, <dylan-user-module>))
+              // no explicit definition, so use the library...
+              library-def
+            else
+              module.namespace-definition
+            end;
+        with-dependent ($compilation of module-def)
+          for (binding in module.namespace-local-bindings)
             total := total + string-size(emitted-name(binding));
-	  end for;
-	end;
+          end for;
+        end;
       end for;
       with-dependent ($compilation of library-def)
         do-imported-bindings(library,
-			     method (binding)
-			       total
-				 := total + string-size(emitted-name(binding))
-			     end);
+                             method (binding)
+                               total
+                                 := total + string-size(emitted-name(binding))
+                             end);
       end;
       for (cr in library-description-compilation-records(ld))
         let heap = compilation-record-model-heap(cr);
@@ -491,14 +491,14 @@ define compiler-sideways method dood-disk-object-default
     (dood :: <dfmc-namespace-dood>, object) => (object)
   // format-out("DDOD %s\n", debug-name(object-class(object)));
   if (slow-instance?(object, "<name-dependency>")
-	| slow-instance?(object, "<binding-dependency>")
-	| slow-instance?(object, "<form-binding-dependency>")
-	| slow-instance?(object, "<&iep>")
-	| slow-instance?(object, "<&mep>")
-	| slow-instance?(object, "<&lambda-xep>")
-	| slow-instance?(object, "<&generic-function-xep>")
-	| slow-instance?(object, "<stripped-compiled-lambda>")
-	| slow-instance?(object, "<fully-compiled-lambda>"))
+        | slow-instance?(object, "<binding-dependency>")
+        | slow-instance?(object, "<form-binding-dependency>")
+        | slow-instance?(object, "<&iep>")
+        | slow-instance?(object, "<&mep>")
+        | slow-instance?(object, "<&lambda-xep>")
+        | slow-instance?(object, "<&generic-function-xep>")
+        | slow-instance?(object, "<stripped-compiled-lambda>")
+        | slow-instance?(object, "<fully-compiled-lambda>"))
     #f
   else
     if (slow-instance?(object, "<compilation-record>"))
@@ -530,7 +530,7 @@ define compiler-sideways method dood-disk-object
   else
     binding-model-not-computed-proxy(dood)
       | (binding-model-not-computed-proxy(dood)
-	   := dood-disk-object(dood, $binding-model-not-computed))
+           := dood-disk-object(dood, $binding-model-not-computed))
   end if
 end method;
 
@@ -539,16 +539,16 @@ define compiler-sideways method dood-disk-object
   // format-out("DDOF %s\n", debug-name(object-class(object)));
   let res =
   if (slow-instance?(object, "<module-definition>")
-	| slow-instance?(object, "<library-definition>")
-	| slow-instance?(object, "<macro-definition>")
-	| (slow-instance?(object, "<literal-value-constant-definition>")
-	     & without-dependency-tracking
-		 let var = form-variable-name(object);
-	         let bnd = lookup-binding(var);
-		 let mod = binding-model-object(bnd, default: #f);
-		 slow-instance?(mod, "<&module>")
-		   | slow-instance?(mod, "<&library>")
- 	       end without-dependency-tracking))
+        | slow-instance?(object, "<library-definition>")
+        | slow-instance?(object, "<macro-definition>")
+        | (slow-instance?(object, "<literal-value-constant-definition>")
+             & without-dependency-tracking
+                 let var = form-variable-name(object);
+                 let bnd = lookup-binding(var);
+                 let mod = binding-model-object(bnd, default: #f);
+                 slow-instance?(mod, "<&module>")
+                   | slow-instance?(mod, "<&library>")
+                end without-dependency-tracking))
     next-method();
   else
     #f
@@ -569,56 +569,56 @@ define sideways method ensure-export-only (ld :: <library-description>)
     // establish visibility sets
     let visible-bindings = make(<object-set>);
     local method visible-binding? (binding :: <module-binding>) => (well?)
-	    member?(binding, visible-bindings)
-	  end method,
-	  method make-visible-binding (binding :: <module-binding>) => (well?)
-	    add!(visible-bindings, binding);
-	  end method,
-	  method macro-binding?
-	      (binding :: <module-binding>) => (well? :: false-or(<top-level-form>))
-	    let def = untracked-binding-definition(binding, default: #f);
-	    instance?(def, <macro-definition>) & def
-	  end method,
-	  method scan-macro-references
-	      (queue :: <object-deque>, binding :: <module-binding>, def)
-	    format-out(" SCANNING MACRO %=\n", def);
-	    let object           = form-macro-object(def);
-	    let referenced-names = macro-referenced-names(object);
-	    for (name in referenced-names)
-	      let binding = untracked-lookup-binding(name); // TODO: want binding here
-	      unless (visible-binding?(binding))
-		format-out("   QUEUEING MREF %=\n", binding);
-		push-last(queue, binding);
-	      end unless;
-	    end for;
-	  end method,
-	  method export-binding
-	      (queue :: <object-deque>, binding :: <module-binding>)
-	    let macro-def = macro-binding?(binding);
-	    if (macro-def)
-	      scan-macro-references(queue, binding, macro-def)
-	    end if;
-	    make-visible-binding(binding);
-	  end method,
-	  method maybe-export-binding
-	      (queue :: <object-deque>, binding :: <module-binding>)
-	    format-out("  CONSIDERING %= DEF? %= IMP? %=\n",
-		       binding, defined?(binding), binding-imported-into-library?(binding));
-	    if (defined?(binding) & ~binding-imported-into-library?(binding))
-	      format-out("  VISIBLE %=\n", binding);
-	      export-binding(queue, binding)
-	    end if;
-	  end method;
+            member?(binding, visible-bindings)
+          end method,
+          method make-visible-binding (binding :: <module-binding>) => (well?)
+            add!(visible-bindings, binding);
+          end method,
+          method macro-binding?
+              (binding :: <module-binding>) => (well? :: false-or(<top-level-form>))
+            let def = untracked-binding-definition(binding, default: #f);
+            instance?(def, <macro-definition>) & def
+          end method,
+          method scan-macro-references
+              (queue :: <object-deque>, binding :: <module-binding>, def)
+            format-out(" SCANNING MACRO %=\n", def);
+            let object           = form-macro-object(def);
+            let referenced-names = macro-referenced-names(object);
+            for (name in referenced-names)
+              let binding = untracked-lookup-binding(name); // TODO: want binding here
+              unless (visible-binding?(binding))
+                format-out("   QUEUEING MREF %=\n", binding);
+                push-last(queue, binding);
+              end unless;
+            end for;
+          end method,
+          method export-binding
+              (queue :: <object-deque>, binding :: <module-binding>)
+            let macro-def = macro-binding?(binding);
+            if (macro-def)
+              scan-macro-references(queue, binding, macro-def)
+            end if;
+            make-visible-binding(binding);
+          end method,
+          method maybe-export-binding
+              (queue :: <object-deque>, binding :: <module-binding>)
+            format-out("  CONSIDERING %= DEF? %= IMP? %=\n",
+                       binding, defined?(binding), binding-imported-into-library?(binding));
+            if (defined?(binding) & ~binding-imported-into-library?(binding))
+              format-out("  VISIBLE %=\n", binding);
+              export-binding(queue, binding)
+            end if;
+          end method;
     // trace reachable bindings
     for (library-binding keyed-by module-name in library-bindings)
       let object = library-binding-value(library-binding);
       format-out("CLEANING %=\n", object);
       let local-bindings = namespace-local-bindings(object);
       for (binding in local-bindings)
-	maybe-export-binding(queue, binding);
+        maybe-export-binding(queue, binding);
       end for;
       while (~empty?(queue))
-	maybe-export-binding(queue, pop(queue));
+        maybe-export-binding(queue, pop(queue));
       end while;
     end for;
     // kill unreachable bindings
@@ -627,10 +627,10 @@ define sideways method ensure-export-only (ld :: <library-description>)
       let local-bindings = namespace-local-bindings(object);
       format-out("KILLING IN %=\n", object);
       for (name in key-sequence(local-bindings))
-	unless (visible-binding?(local-bindings[name]))
-	  format-out("  KILLING %=\n", name);
-	  remove-key!(local-bindings, name);
-	end unless;
+        unless (visible-binding?(local-bindings[name]))
+          format-out("  KILLING %=\n", name);
+          remove-key!(local-bindings, name);
+        end unless;
       end for;
       remove-all-keys!(imported-name-cache(object));
     end for;
@@ -672,7 +672,7 @@ define sideways method retract-library-compilation
       ld.library-description-models-change-count := count + 1;
       ld.compilation-from-definitions-started? := #f;
       if (compiling-dylan-library?())
-	install-dylan-boot-constants(ld);
+        install-dylan-boot-constants(ld);
       end;
      end;
     end;

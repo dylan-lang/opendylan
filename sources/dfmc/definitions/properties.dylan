@@ -10,10 +10,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // A number of Dylan language components have properties whose values are
 // indicated by adjectives. The following code provides a convenient way
-// of defining these adjectives and a generic adjective parser that 
+// of defining these adjectives and a generic adjective parser that
 // attempts to generate informative error conditions.
 
-// Perhaps this is overkill now, but when we come to support a wider 
+// Perhaps this is overkill now, but when we come to support a wider
 // range of adjectives, such as for inlining control, I think we'll be
 // glad of this.
 
@@ -30,7 +30,7 @@ define dood-class <property> (<object>)
     required-init-keyword: keyword:;
 end dood-class;
 
-// Each property value specification is an association between an 
+// Each property value specification is an association between an
 // adjective in the syntax and a value.
 
 define dood-class <property-value> (<object>)
@@ -42,9 +42,9 @@ end dood-class;
 
 // The define property macro provides a convenient interface for defining
 // a property with a set of adjectives and their associated values, and
-// a default value. 
+// a default value.
 
-/* 
+/*
 
   define property <sealed-property> => sealed?: = #t
     value sealed = #t;
@@ -53,13 +53,13 @@ end dood-class;
 
 */
 
-define macro property-definer 
+define macro property-definer
   { define property ?property:name => ?keyword:token = ?default:expression
-      ?values:* 
+      ?values:*
     end }
-    => { define constant ?property 
-           = make(<property>, 
-                  values:  list(?values), 
+    => { define constant ?property
+           = make(<property>,
+                  values:  list(?values),
                   default: ?default,
                   keyword: ?keyword); }
 values:
@@ -72,7 +72,7 @@ end macro;
 //// Properties parser.
 
 // This code parses a set of adjectives looking for the given properties.
-// It returns a corresponding keyword/value property list suitable, 
+// It returns a corresponding keyword/value property list suitable,
 // typically, for use in a call to make.
 
 // TODO: Turn these into program errors.
@@ -82,10 +82,10 @@ define program-warning <unrecognized-properties>
     required-init-keyword: variable-name:;
   slot condition-properties,
     required-init-keyword: properties:;
-  format-string 
+  format-string
     "Unrecognized properties %= specified in the definition of %= "
     "- ignoring.";
-  format-arguments 
+  format-arguments
     properties, variable-name;
 end program-warning;
 
@@ -94,10 +94,10 @@ define program-warning <contradictory-properties>
     required-init-keyword: variable-name:;
   slot condition-properties,
     required-init-keyword: properties:;
-  format-string 
+  format-string
     "Contradictory properties %= specified in the definition of %= "
     "- using default setting.";
-  format-arguments 
+  format-arguments
     properties, variable-name;
 end program-warning;
 
@@ -106,19 +106,19 @@ define program-warning <duplicated-property>
     required-init-keyword: variable-name:;
   slot condition-property,
     required-init-keyword: property:;
-  format-string 
+  format-string
     "The property %= is specified more than once in the definition of %=.";
-  format-arguments 
+  format-arguments
     property, variable-name;
 end program-warning;
 
-define function find-property 
-    (properties :: <list>, name :: <symbol>) 
+define function find-property
+    (properties :: <list>, name :: <symbol>)
  => (prop :: false-or(<property>), prop-val :: false-or(<property-value>))
   block (return)
     for (prop :: <property> in properties)
       for (prop-val :: <property-value> in property-values(prop))
-        if (property-value-syntax(prop-val) == name) 
+        if (property-value-syntax(prop-val) == name)
           return(prop, prop-val)
         end;
       end;
@@ -128,8 +128,8 @@ define function find-property
   end;
 end function;
 
-define method parse-property-adjectives 
-    (properties :: <list>, adjectives-form, name) 
+define method parse-property-adjectives
+    (properties :: <list>, adjectives-form, name)
       => (initargs :: <list>, adjective-symbols :: <simple-object-vector>)
   // Zero, one, and two modifiers are the most common, so we special
   // case them.
@@ -145,7 +145,7 @@ define method parse-property-adjectives
                (list(property-keyword(prop), property-value-value(prop-val)),
                 vector(fragment-identifier(name1)))
            else
-             note(<unrecognized-properties>, 
+             note(<unrecognized-properties>,
                   source-location: fragment-source-location(adjectives-form),
                   variable-name:   name,
                   properties:      list(name1));
@@ -160,8 +160,8 @@ define method parse-property-adjectives
            let (prop1, prop-val1)
              = find-property(properties, fragment-identifier(name1));
            if (prop1)
-             initargs 
-               := pair(property-keyword(prop1), 
+             initargs
+               := pair(property-keyword(prop1),
                        pair(property-value-value(prop-val1), initargs));
              symbols
                := pair(fragment-identifier(name1), symbols);
@@ -171,8 +171,8 @@ define method parse-property-adjectives
            let (prop2, prop-val2)
              = find-property(properties, fragment-identifier(name2));
            if (prop2)
-             initargs 
-               := pair(property-keyword(prop2), 
+             initargs
+               := pair(property-keyword(prop2),
                        pair(property-value-value(prop-val2), initargs));
              symbols
                := pair(fragment-identifier(name2), symbols);
@@ -181,26 +181,26 @@ define method parse-property-adjectives
            end;
            if (prop1 & prop2 & prop1 == prop2)
              if (prop-val1 ~== prop-val2)
-               note(<contradictory-properties>, 
-                    source-location: 
+               note(<contradictory-properties>,
+                    source-location:
                       fragment-source-location(adjectives-form),
                     variable-name:   name,
-                    properties: 
+                    properties:
                       list(property-value-syntax(prop-val1),
                            property-value-syntax(prop-val2)));
                initargs := #();
                symbols := #();
              else
-               note(<duplicated-property>, 
-                    source-location: 
+               note(<duplicated-property>,
+                    source-location:
                       fragment-source-location(adjectives-form),
                     variable-name:   name,
-                    property: 
+                    property:
                       list(property-value-syntax(prop-val1),
                            property-value-syntax(prop-val2)));
              end;
            elseif (~empty?(unknown))
-             note(<unrecognized-properties>, 
+             note(<unrecognized-properties>,
                   source-location: fragment-source-location(adjectives-form),
                   variable-name:   name,
                   properties: unknown);
@@ -213,27 +213,27 @@ define method parse-property-adjectives
 end method;
 
 define method parse-many-property-adjectives
-    (properties :: <list>, adjectives-form, name) 
+    (properties :: <list>, adjectives-form, name)
       => (initargs :: <list>, adjective-symbols :: <simple-object-vector>)
-  // Set up a table indexed by syntax for recognising declared properties 
+  // Set up a table indexed by syntax for recognising declared properties
   // and a property table for recording all declared values.
   let syntax-table = make(<table>);
   let prop-table = make(<table>);
-  for (prop in properties) 
+  for (prop in properties)
     let val-collector = make(<deque>);
     prop-table[prop] := val-collector;
     for (prop-val in prop.property-values)
-      syntax-table[prop-val.property-value-syntax] 
+      syntax-table[prop-val.property-value-syntax]
         := pair(val-collector, prop-val.property-value-value);
     end;
   end;
   // We collect any unrecognised adjectives as we go along.
   collecting (unrecognised, symbols :: <simple-object-vector>, initargs)
     macro-case (adjectives-form)
-      { ?adjectives:* } 
+      { ?adjectives:* }
         => #f;
     adjectives:
-      { }                    
+      { }
         => #f;
       { ?adjective:name ... }
         => begin
@@ -250,7 +250,7 @@ define method parse-many-property-adjectives
     end macro-case;
     // Was there anything we weren't expecting?
     if (~empty?(collected(unrecognised)))
-      note(<unrecognized-properties>, 
+      note(<unrecognized-properties>,
            source-location: fragment-source-location(adjectives-form),
            variable-name:   name,
            properties: collected(unrecognised));
@@ -260,13 +260,13 @@ define method parse-many-property-adjectives
       if (~empty?(prop-vals))
         collect-into(initargs, prop.property-keyword);
         if (properties-contradictory?(prop-vals))
-          note(<contradictory-properties>, 
+          note(<contradictory-properties>,
                source-location: fragment-source-location(adjectives-form),
                variable-name:   name,
                properties: properties-syntax(prop, prop-vals));
           collect-into(initargs, prop.property-default);
         elseif (properties-duplicated?(prop-vals))
-          note(<duplicated-property>, 
+          note(<duplicated-property>,
                source-location: fragment-source-location(adjectives-form),
                variable-name:   name,
                property: properties-syntax(prop, prop-vals));
@@ -281,7 +281,7 @@ define method parse-many-property-adjectives
 end method;
 
 define method properties-syntax (prop :: <property>, vals)
-  map-as(<list>, curry(find-property-syntax-from-value, prop), 
+  map-as(<list>, curry(find-property-syntax-from-value, prop),
          remove-duplicates(vals))
 end method;
 
@@ -297,16 +297,16 @@ end method;
 
 //// Utilities.
 
-define method properties-contradictory? 
+define method properties-contradictory?
     (properties :: <sequence>) => (well? :: <boolean>)
-  if (properties.size < 2) 
-    #f 
-  else 
+  if (properties.size < 2)
+    #f
+  else
     ~all-identical?(properties)
   end
 end method;
 
-define method properties-duplicated? 
+define method properties-duplicated?
     (properties :: <sequence>) => (well? :: <boolean>)
   properties.size > 1
 end method;

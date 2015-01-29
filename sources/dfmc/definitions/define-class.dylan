@@ -38,7 +38,7 @@ define leaf packed-slots form-properties
     init-keyword: primary?:;
   field slot form-sealing = $form-sealing/sealed, field-size: 2,
     init-keyword: sealing:;
-  boolean slot form-made-inline? = #f, 
+  boolean slot form-made-inline? = #f,
     init-keyword: made-inline?:;
 end packed-slots;
 
@@ -84,7 +84,7 @@ define inline function form-compiler-open? (form)
 end;
 
 
-define function form-virtual? 
+define function form-virtual?
     (form :: <class-definition>) => (well? :: <boolean>)
   let meta-spec = form-metaclass-spec(form);
   meta-spec & spec-metaclass-name(meta-spec) == #"<virtual-class>"
@@ -137,7 +137,7 @@ define method do-define-class (fragment, mods, name, supers, slots)
   let method-definitions
     = generate-slot-method-definition-forms(slot-specs);
   let method-definitions
-    = if (~(form-abstract?(class-definition) 
+    = if (~(form-abstract?(class-definition)
               | form-virtual?(class-definition)
               | metaclass-spec))
         let initializer-definitions
@@ -157,15 +157,15 @@ define program-warning <non-name-superclass-expression>
   format-string
     "The superclass %= of %= is not a variable name - the compiler must "
     "allow for this class being a potential subclass of even sealed "
-    "classes in this library."; 
+    "classes in this library.";
   format-arguments
     superclass-expression, class-name;
 end program-warning;
 
-// TODO: If the superclasses of a class cannot be identified at 
+// TODO: If the superclasses of a class cannot be identified at
 // compile-time, doesn't that imply that you have to assume that
 // it might be a subclass of any class at all? Something similarly
-// bogus probably holds for define method on a variable/constant 
+// bogus probably holds for define method on a variable/constant
 // rather than modifying a generic definition.
 
 define method install-top-level-form-bindings
@@ -179,7 +179,7 @@ define method install-top-level-form-bindings
     for (super-name in form-superclass-expressions(form))
       if (instance?(super-name, <variable-name-fragment>))
         let binding = lookup-binding(super-name);
-        if (defined?(binding) 
+        if (defined?(binding)
               & instance?(binding-definition(binding), <class-definition>))
           add-modifying-definition(super-name, form);
         else
@@ -205,7 +205,7 @@ define method uninstall-top-level-form-bindings
   unless (form-compile-stage-only?(form))
     for (super-name in form-superclass-expressions(form))
       if (instance?(super-name, <variable-name-fragment>))
-	remove-modifying-definition(super-name, form);
+        remove-modifying-definition(super-name, form);
       end;
     end;
   end;
@@ -220,17 +220,17 @@ define method install-top-level-form-bindings
     if (getter-name & ~variable-defined?(getter-name))
       // TODO: Lose this hygiene hack.
       with-fragment-info (getter-name)
-	add-implicit-generic-definition-from-pattern
-	  (form, getter-name, #"fixed",
-	   list(as-name(#{ object })), #f);
+        add-implicit-generic-definition-from-pattern
+          (form, getter-name, #"fixed",
+           list(as-name(#{ object })), #f);
       end;
     end;
     if (setter-name & ~variable-defined?(setter-name))
       // TODO: Lose this hygiene hack.
       with-fragment-info (setter-name)
-	add-implicit-generic-definition-from-pattern
-	  (form, setter-name, #"fixed", 
-	   list(as-name(#{ new-value }), as-name(#{ object })), #f);
+        add-implicit-generic-definition-from-pattern
+          (form, setter-name, #"fixed",
+           list(as-name(#{ new-value }), as-name(#{ object })), #f);
       end;
     end;
   end;
@@ -240,8 +240,8 @@ define method uninstall-top-level-form-bindings
     (form :: <slot-definition>) => ()
   if (spec-virtual?(form) | spec-raw?(form))
     local method retract-implicit (name)
-	    name & retract-implicit-definition(name, form);
-	  end method;
+            name & retract-implicit-definition(name, form);
+          end method;
     retract-implicit(spec-getter(form));
     retract-implicit(spec-setter(form));
   end;
@@ -275,8 +275,8 @@ end property;
 
 define constant class-adjectives-default-sealed
     = list(<class-sealed-property>,
-	   <class-abstract-property>,
-	   <class-primary-property>,
+           <class-abstract-property>,
+           <class-primary-property>,
            <class-made-inline-property>);
 
 define function class-adjectives ()
@@ -295,7 +295,7 @@ define method parse-class-superclasses (form) => (expressions)
     { ?supers:* }
       => supers;
   supers:
-    { } 
+    { }
       => #();
     { ?super:expression, ... }
       => pair(super, ...);
@@ -334,7 +334,7 @@ define method generate-initializer-definition-forms
   let modifiers = if (form-made-inline?(form)) #{ inline } else #{ } end;
   let code
     = #{ define ?modifiers method ?constructor-name
-             (class :: <class>, #rest init-args, #key, #all-keys) 
+             (class :: <class>, #rest init-args, #key, #all-keys)
           => (object :: ?class-binding)
          end };
   let forms = top-level-convert(form, code);

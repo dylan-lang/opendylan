@@ -10,10 +10,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Variable definition objects.
 
-define class <variable-definition> (<binding-defining-form>) 
+define class <variable-definition> (<binding-defining-form>)
 end class;
 
-define leaf packed-slots form-properties 
+define leaf packed-slots form-properties
     (<variable-definition>, <variable-defining-form>)
   boolean slot form-thread? = #f, init-keyword:  thread?:;
   boolean slot form-locked? = #f, init-keyword:  locked?:;
@@ -21,7 +21,7 @@ define leaf packed-slots form-properties
 end packed-slots;
 
 define program-warning <variable-declared-both-thread-and-locked>
-  format-string 
+  format-string
     "Variable definition specifies the mutually exclusive properties "
     "\"thread\" and \"locked\"."
 end program-warning;
@@ -43,7 +43,7 @@ define method form-define-word
   #"variable"
 end method;
 
-define method constant? 
+define method constant?
     (binding :: <variable-definition>) => (value :: <boolean>)
   #f
 end method;
@@ -75,20 +75,20 @@ define method do-define-variable (fragment, mods, bindings, init)
   list
     (apply(make,
              if (size(required-specs) = 1 &
-		  ~spec-value-rest?(bindings-spec) &
-		  instance?(init, <literal-constant-fragment>) &
-		  instance?(spec-type-expression(first(required-specs)),
-			    <variable-name-fragment>))
+                  ~spec-value-rest?(bindings-spec) &
+                  instance?(init, <literal-constant-fragment>) &
+                  instance?(spec-type-expression(first(required-specs)),
+                            <variable-name-fragment>))
                 <literal-value-variable-definition>
               else
                 <variable-definition>
               end,
             source-location:  fragment-source-location(fragment),
-	   variable-name:    if (size(variable-names) == 1)
-			       variable-names.first
-			     else
-			       variable-names
-			     end,
+            variable-name:    if (size(variable-names) == 1)
+                                variable-names.first
+                              else
+                                variable-names
+                              end,
             type-expressions: bound-type-expressions(bindings-spec),
             adjectives:       adjectives,
             bindings-spec:    bindings-spec,
@@ -115,7 +115,7 @@ define constant variable-adjectives
          <variable-locked-property>,
          <variable-atomic-property>);
 
-define function parse-variable-adjectives 
+define function parse-variable-adjectives
     (bindings, mods) => (initargs, adjectives)
   parse-property-adjectives(variable-adjectives, mods, bindings);
 end function;

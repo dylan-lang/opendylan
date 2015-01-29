@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //// Utility.
 
 define function method-fragment? (fragment) => (well? :: <boolean>)
-  instance?(fragment, <macro-call-fragment>) 
+  instance?(fragment, <macro-call-fragment>)
     & (lookup-binding(fragment-macro(fragment)) == dylan-binding(#"method"))
 end function;
 
@@ -17,7 +17,7 @@ end function;
 
 // Constant definition objects.
 
-define class <constant-definition> (<binding-defining-form>) 
+define class <constant-definition> (<binding-defining-form>)
 end class;
 
 define method form-implicitly-defined? (form :: <constant-definition>) => (well?)
@@ -31,13 +31,13 @@ define class <literal-value-constant-definition>
     (<constant-definition>, <literal-value-binding-defining-form>)
 end class;
 
-define method form-define-word 
+define method form-define-word
     (form :: <constant-definition>) => (word :: <symbol>)
   #"constant"
 end method;
 
 define class <constant-method-definition> (<constant-definition>,
-					   <method-defining-form>)
+                                           <method-defining-form>)
 end;
 
 define method strip-incremental-slots (x :: <constant-method-definition>)
@@ -47,23 +47,23 @@ define method strip-incremental-slots (x :: <constant-method-definition>)
   // end unless;
 end method;
 
-define method form-compile-stage-only? 
+define method form-compile-stage-only?
     (form :: <constant-definition>) => (well? :: <boolean>)
-  form-inline-policy(form) == #"inline-only" 
+  form-inline-policy(form) == #"inline-only"
     // & ~form-dynamic?(form)
     & form-models-evaluated?(form)
 end method;
 
-define method form-models-evaluated? 
+define method form-models-evaluated?
     (form :: <constant-definition>) => (well? :: <boolean>)
   let vars = form-defined-bindings(form);
   // Should just use untracked-binding-model-object, but that has
   // a weird return value convention, so until that's fixed, use a hammer..
   without-dependency-tracking
   every?(method (var)
-	   found?(binding-model-object(var, default: $unfound))
-	 end,
-	 vars)
+           found?(binding-model-object(var, default: $unfound))
+         end,
+         vars)
   end;
 end method;
 
@@ -81,7 +81,7 @@ end &definition;
 
 // Modifier parsing.
 
-define property <constant-inline-property> 
+define property <constant-inline-property>
     => inline-policy: = #"default-inline"
   value inline-only    = #"inline-only";
   value inline         = #"inline";
@@ -112,57 +112,57 @@ define function do-define-constant
         instance?(type-expression, <variable-name-fragment>) &
         lookup-binding(type-expression) == dylan-binding(#"<object>");
   let (initargs, adjectives) =
-    if (constant-method?)     
+    if (constant-method?)
       parse-property-adjectives
-	(constant-method-adjectives, mods, "a constant method")
-    else 
+        (constant-method-adjectives, mods, "a constant method")
+    else
       parse-property-adjectives
-	(constant-adjectives, mods, "a constant");
+        (constant-adjectives, mods, "a constant");
     end if;
   list(if (constant-method?)
-	 let variable-name = spec-variable-name(first-variable-spec);
-	 let (signature, body) =
-	   parse-method-signature(variable-name, fragment-argument(init));
-	 apply(make, <constant-method-definition>,
-	       source-location:  fragment-source-location(fragment),
-	       variable-name:    variable-name,
-	       type-expressions: list(type-expression),
-	       adjectives:       adjectives,
-	       bindings-spec:    bindings-spec,
-	       init-expression:  init,
-	       signature:        signature,
-	       body:             body,
-	       initargs)
+         let variable-name = spec-variable-name(first-variable-spec);
+         let (signature, body) =
+           parse-method-signature(variable-name, fragment-argument(init));
+         apply(make, <constant-method-definition>,
+               source-location:  fragment-source-location(fragment),
+               variable-name:    variable-name,
+               type-expressions: list(type-expression),
+               adjectives:       adjectives,
+               bindings-spec:    bindings-spec,
+               init-expression:  init,
+               signature:        signature,
+               body:             body,
+               initargs)
        else
-	 let literal-value? =
-	   single-required? &
-	   instance?(init, <literal-constant-fragment>) &
-	   instance?(type-expression, <variable-name-fragment>);
-	 let variable-names = bound-variable-names(bindings-spec);
-	 apply(make, if (booted?)
-		       if (literal-value?)
-			 <literal-value-booted-constant-definition>
-		       else
-			 <booted-constant-definition>
-		       end
-		     else
-		       if (literal-value?)
-			 <literal-value-constant-definition>
-		       else
-			 <constant-definition>
-		       end
-		     end,
-	       source-location:  fragment-source-location(fragment),
-	       variable-name:    if (size(variable-names) == 1)
-				   variable-names.first
-				 else
-				   variable-names
-				 end,
-	       type-expressions: bound-type-expressions(bindings-spec),
-	       adjectives:       adjectives,
-	       bindings-spec:    bindings-spec,
-	       init-expression:  init,
-	       initargs)
+         let literal-value? =
+           single-required? &
+           instance?(init, <literal-constant-fragment>) &
+           instance?(type-expression, <variable-name-fragment>);
+         let variable-names = bound-variable-names(bindings-spec);
+         apply(make, if (booted?)
+                       if (literal-value?)
+                         <literal-value-booted-constant-definition>
+                       else
+                         <booted-constant-definition>
+                       end
+                     else
+                       if (literal-value?)
+                         <literal-value-constant-definition>
+                       else
+                         <constant-definition>
+                       end
+                     end,
+               source-location:  fragment-source-location(fragment),
+               variable-name:    if (size(variable-names) == 1)
+                                   variable-names.first
+                                 else
+                                   variable-names
+                                 end,
+               type-expressions: bound-type-expressions(bindings-spec),
+               adjectives:       adjectives,
+               bindings-spec:    bindings-spec,
+               init-expression:  init,
+               initargs)
        end)
 end;
 
@@ -177,6 +177,6 @@ end class;
 define method define-booted-constant (variable-name, type, value)
  => (definition)
   do-define-constant
-    (variable-name, 
+    (variable-name,
      #{ }, #{ ?variable-name :: ?type }, value, #t).first;
 end method;

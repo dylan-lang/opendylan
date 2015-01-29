@@ -55,15 +55,15 @@ define method format-condition
      condition :: <program-condition>,
      detail-level :: <detail-level>) => ()
   apply(format /* lisp-format-to-dylan-stream */, stream,
-	condition.condition-format-string,
-	condition.condition-format-arguments);
+        condition.condition-format-string,
+        condition.condition-format-arguments);
   values()
 end method format-condition;
 
 define method print-object
     (condition :: <program-condition>, stream :: <stream>) => ()
   format-condition
-    (stream, condition, 
+    (stream, condition,
      #"terse" /* if (verbose?) *detail-level* else #"terse" end */)
   // The verbose? keyword parameter maps to the default, because that's
   // what %= produces;  %s leads to a false verbose? value, which the

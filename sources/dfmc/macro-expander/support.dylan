@@ -15,7 +15,7 @@ define function pattern-variable-name (var)
   */
   // TODO: PERFORMANCE: Avoid copying if it's already a variable name
   make-variable-name-like
-    (var, 
+    (var,
      record:          fragment-record(var),
      source-position: fragment-source-position(var),
      name:            symbol);

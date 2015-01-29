@@ -11,7 +11,7 @@ define compiler-sideways method compute-form-model-object
     (form :: <top-type-definition>, name :: <variable-name-fragment>)
       => (model)
   ^make(<&top-type>,
-	definition: form);
+        definition: form);
 end method;
 
 //// The bottom type
@@ -20,7 +20,7 @@ define compiler-sideways method compute-form-model-object
     (form :: <bottom-type-definition>, name :: <variable-name-fragment>)
       => (model)
   ^make(<&bottom-type>,
-	definition: form);
+        definition: form);
 end method;
 
 
@@ -34,18 +34,18 @@ define compiler-sideways method compute-form-model-object
     if (supertype-name)
       let model = ^top-level-eval(supertype-name);
       if (model)
-	model
+        model
       else
-	error("Undefined raw type supertype %s of %s",
-	      supertype-name, name);
-	dylan-value(#"<raw-object>")
+        error("Undefined raw type supertype %s of %s",
+              supertype-name, name);
+        dylan-value(#"<raw-object>")
       end;
     else
       #f;
     end;
   ^make(<&raw-type>,
-	definition: form,
-	debug-name: as-lowercase(as(<string>, name)),
-	supertype: supertype-model,
-	descriptor-function: form-raw-type-descriptor-function(form));
+        definition: form,
+        debug-name: as-lowercase(as(<string>, name)),
+        supertype: supertype-model,
+        descriptor-function: form-raw-type-descriptor-function(form));
 end method;

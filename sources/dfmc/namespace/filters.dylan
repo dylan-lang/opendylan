@@ -22,10 +22,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //                      #(#"sue" . #"jim")),
 //           prefix:  "person/")
 //
-// Two main filter functions are constructed, one for mapping names in 
-// each direction through the filter. "Pushing" a client-side name through 
-// the filter results in the name it must have on the other side in 
-// order to be visible (or no name if it couldn't be visible through 
+// Two main filter functions are constructed, one for mapping names in
+// each direction through the filter. "Pushing" a client-side name through
+// the filter results in the name it must have on the other side in
+// order to be visible (or no name if it couldn't be visible through
 // the filter). "Pulling" a used-side name though the filter results
 // in the (potentially empty) set of names under which it is visible on
 // the client side.
@@ -38,9 +38,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Filters are implemented using function composition to construct
 // the two mapping functions from names to names. The complexity of
-// these functions is related to the complexity of the directives 
-// specified. If no directive is specified, both these functions 
-// become the identity and no computation is performed when mapping 
+// these functions is related to the complexity of the directives
+// specified. If no directive is specified, both these functions
+// become the identity and no computation is performed when mapping
 // keys.
 //
 // These functions need to be "recompiled" should the directives ever
@@ -48,7 +48,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // clauses at any time, the closures need not be stored in a database.
 
 // Issues: Can you rename an imported name to multiple names?
-//         For example: 
+//         For example:
 //
 //           use foo, rename: { a => alias-1, a => alias-2 }
 //
@@ -73,20 +73,20 @@ define class <filter> (<object>)
     required-init-keyword: namespace:;
   constant slot clause,
     required-init-keyword: clause:;
-  slot import-spec, 
-    init-value: #"all", 
+  slot import-spec,
+    init-value: #"all",
     init-keyword: import:;
-  slot exclude-spec, 
-    init-value: #(), 
+  slot exclude-spec,
+    init-value: #(),
     init-keyword: exclude:;
-  constant slot prefix-spec, 
-    init-value: "", 
+  constant slot prefix-spec,
+    init-value: "",
     init-keyword: prefix:;
-  slot rename-spec, 
-    init-value: #(), 
+  slot rename-spec,
+    init-value: #(),
     init-keyword: rename:;
-  constant slot export-spec, 
-    init-value: #(), 
+  constant slot export-spec,
+    init-value: #(),
     init-keyword: export:;
   slot filtered-key->key :: <function>;
   slot key->filtered-key :: <function>;
@@ -107,7 +107,7 @@ end method initialize;
 define generic filter-name (f :: <filter>, name) => (collection);
 
 // Take a client-side name and pass it though the filter to produce the
-// name by which it should be looked up in the exports of the used 
+// name by which it should be looked up in the exports of the used
 // namespace.
 
 define generic unfilter-name (f :: <filter>, name) => (name-or-false);
@@ -117,8 +117,8 @@ define generic unfilter-name (f :: <filter>, name) => (name-or-false);
 
 define generic filter-exported-name (f :: <filter>, name) => (collection);
 
-// Take a re-exported client-side name and pass it though the filter to 
-// produce the name by which it should be looked up in the exports of the 
+// Take a re-exported client-side name and pass it though the filter to
+// produce the name by which it should be looked up in the exports of the
 // used namespace.
 
 // define generic unfilter-exported-name (f :: <filter>, name) => (name-or-false);
@@ -130,9 +130,9 @@ define program-warning <import-and-exclude-specified>
     required-init-keyword: namespace:;
   slot condition-clause,
     required-init-keyword: clause:;
-  format-string 
+  format-string
     "An import and an exclude option appear together in %= of %=. Ignoring the exclude.";
-  format-arguments 
+  format-arguments
     clause, namespace;
 end;
 
@@ -143,9 +143,9 @@ define program-warning <rename-exclude-conflict>
     required-init-keyword: clause:;
   slot condition-names,
     required-init-keyword: names:;
-  format-string 
+  format-string
     "The names %= renamed in %= of %= are excluded.";
-  format-arguments 
+  format-arguments
     names, namespace, clause;
 end program-warning <rename-exclude-conflict>;
 
@@ -153,8 +153,8 @@ define method ensure-valid-filter (f :: <filter>) => ()
   // Are both an import and an exclude option specified?
   if (~empty?(f.exclude-spec) & ~(f.import-spec == #"all"))
     note(<import-and-exclude-specified>,
-	 namespace: f.namespace,
-	 clause: f.clause);
+         namespace: f.namespace,
+         clause: f.clause);
     f.exclude-spec := #();
   end if;
   begin

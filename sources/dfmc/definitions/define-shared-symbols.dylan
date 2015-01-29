@@ -31,13 +31,13 @@ define function do-define-shared-symbols
     (form, mods, name, shared-symbols-form) => (forms)
   let (options, adjectives) = parse-shared-symbols-adjectives(mods);
   let shared-symbols = parse-shared-symbols(shared-symbols-form);
-  let tlf 
-    = apply(make, <shared-symbols-definition>, 
+  let tlf
+    = apply(make, <shared-symbols-definition>,
             adjectives:       adjectives,
             variable-name:    name,
-	    source-location:  fragment-source-location(form),
-	    shared-symbols:   as(<vector>, shared-symbols),
-	    options);
+            source-location:  fragment-source-location(form),
+            shared-symbols:   as(<vector>, shared-symbols),
+            options);
   register-constant-variable-name(fragment-identifier(name));
   let initializer-definitions
     = generate-initializer-definition-forms(tlf);
@@ -46,7 +46,7 @@ end function;
 
 define function parse-shared-symbols (shared-symbols-form)
   macro-case (shared-symbols-form)
-    { ?shared-symbols:* } 
+    { ?shared-symbols:* }
       => shared-symbols;
   shared-symbols:
     { }

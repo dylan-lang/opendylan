@@ -189,15 +189,15 @@ define function finish-models (ld :: <library-description>) => ()
       if (~library-description-system-class-init-code(ld))
         let cr = first(library-description-compilation-records(ld));
         with-dependent ($compilation of cr)
-          library-description-system-class-init-code(ld) 
+          library-description-system-class-init-code(ld)
             := convert-top-level-initializer
                   (finish-class-models
-                     (ld, method (ld :: <library-description>, 
+                     (ld, method (ld :: <library-description>,
                             model-handler :: <function>)
                             form-mapper
                               (ld, finish-class-model-forms, model-handler)
                           end method));
-          library-description-system-gf-init-code(ld) 
+          library-description-system-gf-init-code(ld)
             := convert-top-level-initializer
                   (finish-generic-function-models
                      (ld, method (ld :: <library-description>, model-handler :: <function>)
@@ -223,19 +223,19 @@ define function finish-models (ld :: <library-description>) => ()
 end function;
 
 
-define method finish-method-model-forms 
+define method finish-method-model-forms
      (form :: <top-level-form>, model-handler :: <function>)
   => ()
 end method;
 
 
-define method finish-method-model-forms (form :: <generic-definition>, 
+define method finish-method-model-forms (form :: <generic-definition>,
                                          model-handler :: <function>)
   => ()
   map-definition-variable-models
-    (form, method (gf) 
+    (form, method (gf)
              if (instance?(gf, <&generic-function>))
-               do(model-handler, ^generic-function-methods(gf)) 
+               do(model-handler, ^generic-function-methods(gf))
              else
                model-handler(gf)
              end
@@ -270,7 +270,7 @@ define method finish-library-models (ld :: <library-description>) => ()
       let used-libraries
         = map-as(<simple-object-vector>,
                  method (uld)
-                   ^make(<&used-library>, 
+                   ^make(<&used-library>,
                          used-library: library-description-model(uld),
                          binding: if (library-dynamically-bound-in?(ld, uld))
                                     #"loose"
@@ -299,7 +299,7 @@ define function finish-method-models
   local method walk-it (m :: <&method>) => ()
           let gf = ^method-generic-function(m);
           // HACK: SEEMS TOO LOW LEVEL -- DETAILS ABOUT SINGLE SEALED GF-METHODS
-          let name 
+          let name
             = if (gf == m)
                 mapped-model(as-lowercase(as(<string>, debug-name(m))))
               else
@@ -323,7 +323,7 @@ define function finish-method-models
                                 ^iclass-subclass-dependent-generics(iclass)
                                   := mapped-model
                                        (add-new(^iclass-subclass-dependent-generics(iclass), gf));
-                              else 
+                              else
                                 collect(class);
                               end if;
                             end unless;
@@ -351,7 +351,7 @@ define function finish-method-models
         end method;
   form-mapper(ld, walk-it);
 end function;
-  
+
 
 define method finish-class-model-forms (form :: <top-level-form>, model-handler :: <function>)
  => ()
@@ -386,7 +386,7 @@ end method;
 
 define method finish-gf-model-forms (form :: <domain-definition>, model-handler :: <function>) => ()
   let gf-model = binding-model-object(form-variable-binding(form));
-  if (instance?(gf-model, <&generic-function>)) 
+  if (instance?(gf-model, <&generic-function>))
     // Filter out conversions to non-generics.
     model-handler(gf-model, form)
   end;
@@ -419,7 +419,7 @@ end method;
 
 
 
-define function map-definition-variable-models (form :: <variable-defining-form>, 
+define function map-definition-variable-models (form :: <variable-defining-form>,
                                                 model-handler :: <function>)
  => ()
   for (binding in form-defined-bindings(form))
@@ -503,7 +503,7 @@ end function;
 
 // TODO: Shouldn't this just be done in model object generation for
 // define method? Well, maybe, except that you really want to look at
-// the complete set of methods for duplicates for example, whereas not 
+// the complete set of methods for duplicates for example, whereas not
 // all methods are going to be available method-by-method.
 define function check-models (ld :: <compilation-context>)
   for (cr in compilation-context-records(ld))
@@ -619,9 +619,9 @@ end program-warning;
 define serious-program-warning <binding-referenced-but-not-defined>
   slot condition-variable-name,
     required-init-keyword: variable-name:;
-  format-string    
+  format-string
     "The binding %s is referenced but not defined or imported.";
-  format-arguments 
+  format-arguments
     variable-name;
 end serious-program-warning;
 */
@@ -629,9 +629,9 @@ end serious-program-warning;
 define program-warning <binding-defined-but-not-used>
   slot condition-variable-name,
     required-init-keyword: variable-name:;
-  format-string    
+  format-string
     "The binding %s is defined but not referenced or exported.";
-  format-arguments 
+  format-arguments
     variable-name;
 end program-warning;
 
@@ -662,7 +662,7 @@ define method generated-definition? (form :: <generic-definition>)
   else
     next-method()
   end
-end method;  
+end method;
 
 // Implicitly defined accessor methods still represent a user-defined variable
 define method generated-definition? (form :: <method-definition>)
@@ -688,7 +688,7 @@ define method check-bindings
     remove-dependent-program-conditions(library-def, $compilation-mask);
     with-dependent ($compilation of library-def)
       for (binding in undefined-module-bindings-in(library))
-        note(<module-exported-but-not-defined>, 
+        note(<module-exported-but-not-defined>,
              library: library,
              module:  binding.name);
       end;
@@ -774,7 +774,7 @@ define function ensure-library-type-estimated (ld :: <compilation-context>)
       compiling-forms ($compilation of form in cr)
         // progress-line("  Top Level Form: %=", form);
         with-simple-abort-retry-restart
-            ("Skip type inferring this form", 
+            ("Skip type inferring this form",
              "Retry type inferring this form")
           type-estimate-top-level-form(form);
         end
@@ -817,7 +817,7 @@ end method;
 
 define method optimize-method (m :: <&method>)
   with-simple-abort-retry-restart
-      ("Skip optimizing this method", 
+      ("Skip optimizing this method",
        "Retry optimizing for this method")
     // progress-line("<<<<");
     // progress-line("  Method before: %=.", m);
@@ -840,11 +840,11 @@ define method compact-coloring-info (cr :: <compilation-record>)
     local method less? (dd1 :: <simple-object-vector>,
                         dd2 :: <simple-object-vector>)
             let ordered-types = #[#"not-all-methods-known",
-                                  #"failed-to-select-where-all-known", 
-                                  #"lambda-call", 
-                                  #"inlining", 
-                                  #"slot-accessor-fixed-offset", 
-                                  #"eliminated", 
+                                  #"failed-to-select-where-all-known",
+                                  #"lambda-call",
+                                  #"inlining",
+                                  #"slot-accessor-fixed-offset",
+                                  #"eliminated",
                                   #"dynamic-extent",
                                   #"bogus-upgrade"];
             let start-offset-1 = dd1[0];
@@ -909,11 +909,11 @@ define method dispatch-decisions-progress-line (ld :: <compilation-context>)
       let type = dds[i];
       if (member?(type, #[#"not-all-methods-known",
                           #"failed-to-select-where-all-known"]))
-        calls-unoptimized := calls-unoptimized + 1;     
-      elseif (member?(type, #[#"lambda-call", 
-                              #"inlining", 
-                              #"slot-accessor-fixed-offset", 
-                              #"eliminated", 
+        calls-unoptimized := calls-unoptimized + 1;
+      elseif (member?(type, #[#"lambda-call",
+                              #"inlining",
+                              #"slot-accessor-fixed-offset",
+                              #"eliminated",
                               #"dynamic-extent"]))
         calls-optimized := calls-optimized + 1;
       end;
@@ -922,7 +922,7 @@ define method dispatch-decisions-progress-line (ld :: <compilation-context>)
   let calls-processed = calls-optimized + calls-unoptimized;
   if (calls-processed > 0)
     progress-line("A total of %= calls were processed, and %= of these (%=%%) were optimized.",
-      calls-processed, calls-optimized, 
+      calls-processed, calls-optimized,
       round/(calls-optimized * 100, calls-processed))
   end if;
 end dispatch-decisions-progress-line;

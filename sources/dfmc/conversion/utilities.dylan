@@ -50,19 +50,19 @@ define method extractable-constant-value? (ref :: <value-reference>)
   let (constant-value?, constant-value) = constant-value?(ref);
   if (constant-value?)
     values(if (instance?(constant-value, <&lambda-or-code>))
-	     let lambda = if (instance?(constant-value, <&code>))
-			    function(constant-value)
-			  else
-			    constant-value
-			  end;
-	     lambda-top-level?(lambda) |
-	       // this is the only user
-	       size(users(iep(lambda))) +
-	       size(users(lambda)) = 1
-	   else
-	     #t
-	   end,
-	   constant-value)
+             let lambda = if (instance?(constant-value, <&code>))
+                            function(constant-value)
+                          else
+                            constant-value
+                          end;
+             lambda-top-level?(lambda) |
+               // this is the only user
+               size(users(iep(lambda))) +
+               size(users(lambda)) = 1
+           else
+             #t
+           end,
+           constant-value)
   end
 end;
 

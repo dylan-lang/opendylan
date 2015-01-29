@@ -62,8 +62,8 @@ define macro interface-module-aux-definer
     end }
     => { define module ?name
             create ?create-specs;
-	    use ?used, import: { ?use-specs }, export: all;
-	 end module; }
+            use ?used, import: { ?use-specs }, export: all;
+         end module; }
 
   create-specs:
     { }                       => { }
@@ -159,7 +159,7 @@ define interface-module dfmc-derived-information (browser-used-modules)
     compilation-context-notes,
     source-record-notes,
     source-form-notes;
-    
+
   export
     /* global derived info */
     variable-all-definitions,
@@ -218,34 +218,34 @@ define module dfmc-progress-reports
   use dylan;
   use dfmc-management,
     export: {
-	     // Progress reporting API
-	     progress-line,
-	     progress-report,
-	     \with-progress-reports,
-	     \with-library-progress,
-	     internal-reporting-setter,
-	     library-progress-text,
-	     library-stage-text,
-	     internal-progress-text,
-	     library-progress-report,
-	     library-condition-report,
-	     conditions-for,
+             // Progress reporting API
+             progress-line,
+             progress-report,
+             \with-progress-reports,
+             \with-library-progress,
+             internal-reporting-setter,
+             library-progress-text,
+             library-stage-text,
+             internal-progress-text,
+             library-progress-report,
+             library-condition-report,
+             conditions-for,
 
-	     // Needed for macro hygiene in the emulator
-	     *current-progress*,
-	     *previous-progress*,
-	     *progress-library*,
-	     *library-increment*,
-	     current-progress,
-	     do-with-library-progress
-	     };
+             // Needed for macro hygiene in the emulator
+             *current-progress*,
+             *previous-progress*,
+             *progress-library*,
+             *library-increment*,
+             current-progress,
+             do-with-library-progress
+             };
   use dfmc-namespace, // same as compilation-context-project
     export: {library-description-project};
   // for debugging only
   use dfmc-core,
     export: {\debug-out,
-	     // emulator non-hygiene!!
-	     *debug-out*, \without-dependency-tracking, *current-stage*, *current-dependent*, $no-dependent
+             // emulator non-hygiene!!
+             *debug-out*, \without-dependency-tracking, *current-stage*, *current-dependent*, $no-dependent
              };
 end module;
 

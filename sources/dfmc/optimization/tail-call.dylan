@@ -57,7 +57,7 @@ end method returns-temporary?;
 define method returns-temporary?(c :: <end-loop>, t :: <temporary>)
  => (res :: <boolean>)
   // HACK: NEXT-COMPUTATION OF END-LOOP SHOULD BE THIS
-  let loop-c = ending-loop(c); 
+  let loop-c = ending-loop(c);
   returns-temporary?(loop-c.next-computation, t)
 end method returns-temporary?;
 

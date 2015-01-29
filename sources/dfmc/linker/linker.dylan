@@ -11,7 +11,7 @@ define open generic emit-library-records
   (back-end :: <back-end>, ld :: <library-description>, #rest flags, #key);
 
 define open generic emit-library-record
-  (back-end :: <back-end>, cr :: <compilation-record>, ld :: <library-description>, 
+  (back-end :: <back-end>, cr :: <compilation-record>, ld :: <library-description>,
    #rest flags, #key);
 
 define open generic emit-gluefile
@@ -19,29 +19,29 @@ define open generic emit-gluefile
 define open generic emit-mainfile
   (back-end :: <back-end>, ld, #rest flags, #key);
 
-define open generic emit-glue 
+define open generic emit-glue
    (back-end :: <back-end>, ld :: <library-description>,
     #rest keys, #key, #all-keys);
 
 define method emit-glue (back-end :: <back-end>, ld :: <library-description>,
-			 #rest keys, #key build-settings = #(), #all-keys)
+                         #rest keys, #key build-settings = #(), #all-keys)
   let cr-names = compilation-context-object-names(ld);
   apply(emit-gluefile, back-end, ld, cr-names, keys);
   apply(emit-mainfile, back-end, ld, keys);
 end method;
 
-define open generic link-and-download 
+define open generic link-and-download
     (back-end :: <back-end>, il :: <interactive-layer>, runtime-context, #key)
  => transaction-id;
 
 define variable *fake-transaction-id-counter* = 0;
-define method link-and-download 
+define method link-and-download
     (back-end :: <back-end>, il :: <interactive-layer>, runtime-context,
      #key, #all-keys)
  => transaction-id;
   // let cr-names = compilation-context-object-names(il);
   break("Interactive execution not implemented for %s, "
-	  "continue from break to pretend that download completed", back-end);
+        "continue from break to pretend that download completed", back-end);
   // Make sure to return distinct transaction ids, so can test condition
   // lookup, which is based on the transaction id's.
   *fake-transaction-id-counter* := *fake-transaction-id-counter* + 1

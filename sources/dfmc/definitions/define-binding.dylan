@@ -33,9 +33,9 @@ end method;
 define method form-defined-bindings
     (form :: <binding-defining-form>) => (bindings :: <sequence>)
   choose(method (binding)
-	   form == untracked-binding-definition(binding, default: #f)
-	 end,
-	 map(untracked-lookup-binding, form.form-variable-names))
+           form == untracked-binding-definition(binding, default: #f)
+         end,
+         map(untracked-lookup-binding, form.form-variable-names))
 end;
 
 define method form-variable-name
@@ -52,15 +52,15 @@ end method;
 define sideways method form-ignored? (form :: <top-level-form>)
   (form.form-top-level-installed? & form.form-ignored-internal?)
     | begin
-	let parent :: false-or(<top-level-form>) = form-parent-form(form);
-	parent & form-ignored?(parent)
+        let parent :: false-or(<top-level-form>) = form-parent-form(form);
+        parent & form-ignored?(parent)
       end
 end method;
 
 
 define method form-ignored-internal? (form :: <binding-defining-form>)
   ~any?(method (v) form-defines-variable?(form, v) end,
-	form.form-variable-names)
+        form.form-variable-names)
 end method;
 
 define class <literal-value-binding-defining-form> (<binding-defining-form>)
@@ -73,12 +73,12 @@ define method model-variable-using-definition
     name-or-names
   else
     any?(method (name)
-	   let binding = untracked-lookup-binding(name);
-	   let (binding-model, computed?)
-	     = untracked-binding-model-object-if-computed(binding);
-	   computed? & binding-model == model-object & name
-	 end,
-	 name-or-names)
+           let binding = untracked-lookup-binding(name);
+           let (binding-model, computed?)
+             = untracked-binding-model-object-if-computed(binding);
+           computed? & binding-model == model-object & name
+         end,
+         name-or-names)
       | error("Can find variable for model %s", model-object);
   end;
 end;

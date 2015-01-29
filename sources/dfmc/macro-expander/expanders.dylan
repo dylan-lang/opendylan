@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define abstract class <fragment-expander> (<object>) end;
 
-define class <rewrite-rule-expander> (<fragment-expander>) 
+define class <rewrite-rule-expander> (<fragment-expander>)
   constant slot expander-name = #f,
     init-keyword: name:;
   constant slot expander-module = #f,
@@ -32,7 +32,7 @@ define method initialize (exp :: <rewrite-rule-expander>, #key)
     rule-set-rewriter-env-index(set) := env-index;
     table[rule-set-name(set)] := set;
   finally
-    expander-aux-rule-set-env(exp) 
+    expander-aux-rule-set-env(exp)
       := make(<simple-object-vector>, size: env-index);
   end;
   check-pattern-variables(exp);
@@ -54,7 +54,7 @@ define method check-pattern-variables (exp :: <rewrite-rule-expander>)
     let constraint = match-constraint(m);
     if (~constraint)
       let name = match-symbol-name(m);
-      let aux 
+      let aux
         = element(expander-aux-rule-set-table(exp), name, default: #f);
       match-constraint(m) := #"*";
       if (~aux)
@@ -67,7 +67,7 @@ define method check-pattern-variables (exp :: <rewrite-rule-expander>)
   do-binding-matches(check-match, exp);
 end method;
 
-define method compute-and-install-intermediate-words 
+define method compute-and-install-intermediate-words
     (exp :: <rewrite-rule-expander>) => ()
   let seen = make(<table>);
   local method process-body-match-words (f, f-tail)
@@ -79,22 +79,22 @@ define method compute-and-install-intermediate-words
   // format-out("Intermediate words: %=\n", expander-intermediate-words(exp));
 end method;
 
-define method process-body-match-terminator 
+define method process-body-match-terminator
     (exp :: <rewrite-rule-expander>, f, seen) => ()
 end method;
 
-define method process-body-match-terminator 
+define method process-body-match-terminator
     (exp :: <rewrite-rule-expander>, f :: <name-fragment>, seen) => ()
   expander-intermediate-words(exp)
     := pair(fragment-name(f), expander-intermediate-words(exp));
 end method;
 
-define method process-body-match-terminator 
+define method process-body-match-terminator
     (exp :: <rewrite-rule-expander>, f :: <simple-match>, seen) => ()
   let key = match-symbol-name(f);
   if (~element(seen, key, default: #f))
     element(seen, key) := #t;
-    let aux-rewrite 
+    let aux-rewrite
       = element(expander-aux-rule-set-table(exp), key, default: #f);
     if (aux-rewrite)
       for (rule in rule-set-rewrite-rules(aux-rewrite))
@@ -115,7 +115,7 @@ define method do-binding-matches
   end;
 end method;
 
-define method do-body-match-tails 
+define method do-body-match-tails
     (f :: <function>, exp :: <rewrite-rule-expander>) => ()
   do-body-match-tails(f, expander-main-rule-set(exp));
   for (set in expander-aux-rule-sets(exp))
@@ -123,7 +123,7 @@ define method do-body-match-tails
   end;
 end method;
 
-define method compile-rewrite-rule-templates! 
+define method compile-rewrite-rule-templates!
     (exp :: <rewrite-rule-expander>)
   compile-rule-set-templates!(exp, expander-main-rule-set(exp));
   for (aux-set in expander-aux-rule-sets(exp))
@@ -151,20 +151,20 @@ define serious-program-warning <mismatched-template-pattern-variable>
     pattern-variable-name;
 end serious-program-warning;
 
-define method compile-rule-set-templates! 
+define method compile-rule-set-templates!
     (exp :: <rewrite-rule-expander>, set :: <rewrite-rule-set>)
   for (rule in rule-set-rewrite-rules(set))
     compile-rule-template!(exp, rule, rule-template(rule));
-    rule-compiled-template(rule) 
+    rule-compiled-template(rule)
       := compile-macro-template(rule-template(rule));
   end;
 end method;
 
-define method compile-rule-template! 
+define method compile-rule-template!
     (exp :: <rewrite-rule-expander>, rule :: <rewrite-rule>, template)
  => ()
   local method record-referenced-name (name)
-    expander-referenced-names(exp) 
+    expander-referenced-names(exp)
       := pair(name, expander-referenced-names(exp));
   end method;
   compute-template-references
@@ -192,19 +192,19 @@ define method compile-rule-template!
                 pattern-variable-name: name);
          end;
        elseif (instance?(subst, <aux-rule-call-substitution>))
-         let aux-set 
-           = element(expander-aux-rule-set-table(exp), 
+         let aux-set
+           = element(expander-aux-rule-set-table(exp),
                      fragment-name(element-rule-name(subst)),
                      default: #f);
          let aux-rule-index = rule-set-rewriter-env-index(aux-set);
          element-aux-rule-env(subst) := expander-aux-rule-set-env(exp);
          element-aux-rule-index(subst) := aux-rule-index;
          compile-rule-template!(exp, rule, element-template(subst));
-         element-compiled-template(subst) 
+         element-compiled-template(subst)
            := compile-macro-template(element-template(subst));
        else
          compile-rule-template!(exp, rule, element-template(subst));
-         element-compiled-template(subst) 
+         element-compiled-template(subst)
            := compile-macro-template(element-template(subst));
        end;
      end,
@@ -218,12 +218,12 @@ end function;
 
 define thread variable *expansion-stream* = #f;
 
-define function traced-expander? 
+define function traced-expander?
     (exp :: <rewrite-rule-expander>) => (well? :: <boolean>)
   member?(#"traced", expander-adjectives(exp))
 end function;
 
-define function generate-expander-function 
+define function generate-expander-function
     (exp :: <rewrite-rule-expander>) => (expander-function :: <function>)
   compile-rewrite-rule-templates!(exp);
   let traced? = traced-expander?(exp);

@@ -16,7 +16,7 @@ define serious-program-warning <method-not-congruent>
   format-arguments meth, problem;
 end serious-program-warning;
 
-define method check-congruence 
+define method check-congruence
     (gf :: <&generic-function>, m :: <&method>) => (ok? :: <boolean>)
   let (congruent?, problem)
     = ^signatures-congruent?
@@ -55,17 +55,17 @@ end method;
 // the 29 Sep 95 DRM.  The congruent rules in the comments are lifted
 // from that text and Copyright (C) 1995 by Apple Computer.
 
-define constant $required-argument-count 
+define constant $required-argument-count
   = "they don't have the same number of required arguments";
 
-define constant $required-argument-type 
+define constant $required-argument-type
   = "some of the method's required parameter specializers aren't subtypes "
     "of their counterparts in the generic";
 
-define constant $not-both-keyword 
+define constant $not-both-keyword
   = "one parameter list includes #key, but the other does not";
 
-define constant $not-both-variable 
+define constant $not-both-variable
   = "one parameter list includes #rest, but the other does not";
 
 define constant $mandatory-keyword

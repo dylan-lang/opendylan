@@ -22,7 +22,7 @@ define module dfmc-imports
   use dylan-extensions,
     import: {<hash-state>, string-hash,
              <abstract-integer>,
-             <double-integer>, 
+             <double-integer>,
                %double-integer-low,
                %double-integer-high,
              <machine-word>,
@@ -67,12 +67,12 @@ define module dfmc-common
   use dylan;
   use dfmc-imports;
 
-  export 
+  export
     \rare-slots-definer,
       \rare-slot-definer, // TODO: Remove when macro references are tracked
-    \property-delegation-definer, 
-    \property-delegation-getters-definer, 
-    \property-delegation-setters-definer, 
+    \property-delegation-definer,
+    \property-delegation-getters-definer,
+    \property-delegation-setters-definer,
     \symbolic-class-definer,
     \symbolic-class-aux-definer,
     \symbolic-accessors-definer,
@@ -85,17 +85,17 @@ define module dfmc-common
     \sealed-constructor-definer;
 
   export
-    <named-object>, 
+    <named-object>,
     <name>,
     name, name-setter,
     named?,
     coerce-name;
-      
+
   export
     <referenced-object>,
     users, users-setter,
-    used?, used-once?, 
-    add-user!, remove-user!, 
+    used?, used-once?,
+    add-user!, remove-user!,
     references;
 
   export
@@ -111,7 +111,7 @@ define module dfmc-common
     model-has-definition?, model-source-location,
     model-compile-stage-only?,
     model-variable-name, model-variable-using-definition,
-    private-model-creator, model-creator, 
+    private-model-creator, model-creator,
     model-compilation-record,
     model-downloaded?, model-interactive?,
     model-original-library,
@@ -144,9 +144,9 @@ define module dfmc-common
     make-variable-name-fragment,
     resolve-qualified-variable-name-module,
 
-    current-library-description, 
+    current-library-description,
       current-library-description?,
-    current-top-level-library-description, 
+    current-top-level-library-description,
       current-top-level-library-description?,
     current-library-in-context?,
     current-back-end,
@@ -194,16 +194,16 @@ define module dfmc-common
   export
     <compilation-record>,
       compilation-record-heap-referenced-objects,
-        compilation-record-heap-referenced-objects-setter,                           
+        compilation-record-heap-referenced-objects-setter,
       compilation-record-approximate-model-heap-size,
-        compilation-record-approximate-model-heap-size-setter,                       
+        compilation-record-approximate-model-heap-size-setter,
       compilation-record-data-size,
-        compilation-record-data-size-setter,                         
+        compilation-record-data-size-setter,
       compilation-record-code-size,
-        compilation-record-code-size-setter,                         
+        compilation-record-code-size-setter,
     <interactive-compilation-record>,
     <library-compilation-record>,
-      <compilation-record-sequence>, 
+      <compilation-record-sequence>,
       <compilation-record-vector>,
       compilation-record-original-library,
         compilation-record-original-library-setter,
@@ -211,7 +211,7 @@ define module dfmc-common
       compilation-record-library,
       compilation-record-module, compilation-record-module-setter,
       compilation-record-source-record,
-      compilation-record-source-line-count, 
+      compilation-record-source-line-count,
         compilation-record-source-line-count-setter,
       compilation-record-preceding-line-count,
         compilation-record-preceding-line-count-setter,
@@ -221,7 +221,7 @@ define module dfmc-common
         compilation-record-sequence-number-setter,
       compilation-record-dependency-table,
         compilation-record-dependency-table-setter,
-      compilation-record-top-level-forms, 
+      compilation-record-top-level-forms,
         compilation-record-top-level-forms-setter,
       compilation-record-definitions-installed?,
         compilation-record-definitions-installed?-setter,
@@ -238,9 +238,9 @@ define module dfmc-common
       add-derived-top-level-forms,
       clear-compilation-record-caches,
       retract-compilation-record-heap,
-      compilation-record-model-heap, 
+      compilation-record-model-heap,
         compilation-record-model-heap-setter,
-      compilation-record-needs-linking?, 
+      compilation-record-needs-linking?,
         compilation-record-needs-linking?-setter;
 
   export source-record-compilation-record;
@@ -296,8 +296,8 @@ define module dfmc-common
     stage$all,
 
     <form-properties>,
-      form-properties, form-properties-setter, 
-      form-stripped?, form-stripped?-setter, 
+      form-properties, form-properties-setter,
+      form-stripped?, form-stripped?-setter,
       form-properties-in-context,
       make-default-form-properties,
       merge-form-properties!,
@@ -307,7 +307,7 @@ define module dfmc-common
     <top-level-form>, <top-level-form-sequence>,
       form-source-location,
       form-compilation-record,
-      form-library, 
+      form-library,
       form-original-library,
       form-downloaded?, form-interactive?,
       form-define-word,
@@ -373,7 +373,7 @@ define module dfmc-common
   // Incremental/loose-mode / binding.
 
   export
-    form-evaluation-tried-and-failed?, 
+    form-evaluation-tried-and-failed?,
       form-evaluation-tried-and-failed?-setter,
     form-dynamic?,
     form-binding-guaranteed-initialized?,

@@ -75,7 +75,7 @@ define open primary abstract program-condition <program-note>
   // This slot can be initialized with some indication of the logical
   // context of the source the note is about, typically to give a concise
   // textual hint. Allowing for example:
-  // 
+  //
   //   foo.dylan:180:Warning in process-foo: Bogus call to bar.
   //
   // where "process-foo" is the context.
@@ -96,17 +96,17 @@ define program-condition-definer program-note;
 
 define function program-note-in(form :: <string>) => (pred :: <function>)
   method (condition :: <condition>) => (b :: <boolean>)
-    instance?(condition, <program-note>) 
+    instance?(condition, <program-note>)
   & form = condition.condition-context-id
   end
 end;
 
 define function program-note-location-between
     (from :: <integer>, to :: <integer>) => (pred :: <function>)
-  method (condition :: <condition>) => (b :: <boolean>) 
+  method (condition :: <condition>) => (b :: <boolean>)
     if (instance?(condition, <program-note>))
-      let loc = condition.condition-source-location; 
-      if (loc) 
+      let loc = condition.condition-source-location;
+      if (loc)
         let sr = loc.source-location-source-record;
         let (file-name, header-offset) = source-line-location(sr, 0);
         ignore(file-name);
@@ -115,7 +115,7 @@ define function program-note-location-between
         let start-line = start-minus-header + header-offset;
 
         start-line >= from & start-line <= to
-      else 
+      else
         #f
       end
     else
@@ -154,13 +154,13 @@ define method make-program-note-filter
         from :: <integer> = 0, to :: <integer> = $maximum-integer,
         in :: <string> = "",
         class :: subclass(<condition>) = <condition>,
-        action :: <function> = add-program-condition) 
+        action :: <function> = add-program-condition)
     => (filter :: <program-note-filter>);
   let predicates = make(<deque>);
-  if (file-name ~= "") 
+  if (file-name ~= "")
     add!(predicates, program-note-file-name-=(file-name))
   end if;
-  if (in ~= "") 
+  if (in ~= "")
     add!(predicates, program-note-in(in))
   end if;
   if (from ~= 0 | to ~= $maximum-integer)
@@ -169,12 +169,12 @@ define method make-program-note-filter
   if (class ~== <condition>)
     add!(predicates, program-note-class-=(class))
   end if;
-  
+
   if (empty?(predicates)) action
   else
-    method (c :: <condition>) => () 
-      if (apply(conjoin, predicates)(c)) action(c) end; 
-      values () 
+    method (c :: <condition>) => ()
+      if (apply(conjoin, predicates)(c)) action(c) end;
+      values ()
     end
   end
 end;
@@ -183,23 +183,23 @@ define constant $record-program-note = add-program-condition;
 
 define function $signal-program-error(c :: <condition>) => ()
   add-program-condition(c);
-  terminate-and-restart(c) 
+  terminate-and-restart(c)
 end;
 
 define function $signal-program-note(c :: <condition>) => ()
   add-program-condition(c);
-  report-condition(c) 
+  report-condition(c)
 end;
 
 
 // Each program note class has a filter associated with it.
 
 define open generic program-note-filter
-  (class :: subclass(<condition>)) 
+  (class :: subclass(<condition>))
     => (filter :: <program-note-filter>);
 
 define open generic program-note-filter-setter
-  (filter :: <program-note-filter>, 
+  (filter :: <program-note-filter>,
    class :: subclass(<program-condition>))
     => (filter :: <program-note-filter>);
 
@@ -210,11 +210,11 @@ define method program-note-filter (class :: subclass(<condition>))
 end;
 
 define method program-note-filter-setter
-    (filter :: <program-note-filter>, 
+    (filter :: <program-note-filter>,
      c :: subclass(<program-condition>))
         => (filter :: <program-note-filter>);
-  for (sc in c.direct-subclasses) 
-    program-note-filter(sc) := filter 
+  for (sc in c.direct-subclasses)
+    program-note-filter(sc) := filter
   end;
   filter
 end;
@@ -251,8 +251,8 @@ define program-condition-definer serious-program-warning;
 // A <program-error> is a language error.  Examples would be (most)
 // syntax errors, inconsistent direct superclasses, or a reference to
 // an undefined name.
-// gts,98apr06 -- short term hack -- instead of having <program-error> be 
-//   interesting in its own right, just stick it under serious-program-warning 
+// gts,98apr06 -- short term hack -- instead of having <program-error> be
+//   interesting in its own right, just stick it under serious-program-warning
 //   for now.
 
 // define open abstract program-note <program-error>
@@ -303,7 +303,7 @@ define program-condition-definer performance-note;
 // Portability notes are given when the compiler detects something
 // that is valid in the DylanWorks compiler, but is not part of
 // portable Dylan or could have undefined effects in Dylan.
-// 
+//
 // It should be possible to turn these warnings into errors, to
 // support a standards-conforming version of the compiler.
 

@@ -10,13 +10,13 @@ define constant <match-environment> = <simple-object-vector>;
 define constant <substitution-method> = <method>;
 
 define macro match-method
-  { match-method ?:body end } 
-    => { method (?=env :: <match-environment>) => (value) 
+  { match-method ?:body end }
+    => { method (?=env :: <match-environment>) => (value)
            ?body
          end }
 end macro;
 
-define method generate-template-function 
+define method generate-template-function
     (elements :: <list>) => (constructor :: <function>)
   let functions = generate-template-elements-functions(elements);
   match-method
@@ -31,7 +31,7 @@ define method generate-template-function
 end method;
 
 /*
-define method generate-template-elements-function 
+define method generate-template-elements-function
     (elements :: <list>) => (constructor :: <function>)
   let functions = generate-template-elements-functions(elements);
   match-method
@@ -63,7 +63,7 @@ define method generate-template-element-function
     let sep = generate-one-template-element-function(element);
     let subst = generate-one-template-element-function(rest.head);
     let rest = generate-template-elements-functions(rest.tail);
-    pair(match-method 
+    pair(match-method
            maybe-substitute-separator(sep(env), subst(env))
          end, rest);
   end;
@@ -74,28 +74,28 @@ define method generate-one-template-element-function (element :: <fragment>)
 end method;
 
 define method generate-one-template-element-function (element :: <parens-fragment>)
-  let nested 
+  let nested
     = generate-template-elements-functions
         (fragment-nested-fragments(element));
-  match-method 
-    make-parens-fragment(call-list-with-collecting(nested, env)) 
+  match-method
+    make-parens-fragment(call-list-with-collecting(nested, env))
   end
 end method;
 
 define method generate-one-template-element-function (element :: <brackets-fragment>)
-  let nested 
+  let nested
     = generate-template-elements-functions
         (fragment-nested-fragments(element));
-  match-method 
+  match-method
     make-brackets-fragment(call-list-with-collecting(nested,env))
   end
 end method;
 
 define method generate-one-template-element-function (element :: <braces-fragment>)
-  let nested 
+  let nested
     = generate-template-elements-functions
         (fragment-nested-fragments(element));
-  match-method 
+  match-method
     make-braces-fragment(call-list-with-collecting(nested, env))
   end
 end method;

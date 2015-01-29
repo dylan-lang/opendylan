@@ -6,7 +6,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define compiler-sideways method compute-and-install-form-model-objects
     (form :: <top-level-init-form>) => ()
-  let init-model 
+  let init-model
     = if (*interactive-compilation-layer*)
         convert-top-level-initializer-for-values(form-body(form));
       else
@@ -17,7 +17,7 @@ end method;
 
 define method convert-top-level-initializer-for-values
     (form, #key debug-name = "top-level-initializer")
-  let form 
+  let form
     = #{ () => (values-vector) let (#rest results) = (?form); results };
   let model = convert-method-to-model(debug-name, form);
   model

@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //// Library definitions.
 
-define dood-class <library-definition> (<namespace-defining-form>) 
+define dood-class <library-definition> (<namespace-defining-form>)
 end;
 
 define method form-model (form :: <library-definition>)
@@ -28,55 +28,55 @@ define &definition library-definer
     => do-define-library(form, mods, name, clauses);
 end &definition;
 
-define method do-define-library (form, mods, name, clauses) 
+define method do-define-library (form, mods, name, clauses)
   let (uses, creates, exports)
     = parse-namespace-clauses(name, clauses);
   let (definition, library)
     = define-parsed-library(name.fragment-identifier,
-			    source-location: fragment-source-location(form),
-			    use-clauses:     uses,
-			    create-clauses:  creates,
-			    export-clauses:  exports);
+                            source-location: fragment-source-location(form),
+                            use-clauses:     uses,
+                            create-clauses:  creates,
+                            export-clauses:  exports);
   let initializer-definitions
     = if (library)
         let initializer-source
-	  = generate-initializer-source-with-namespace(definition, library);
-	top-level-convert(definition, initializer-source);
+          = generate-initializer-source-with-namespace(definition, library);
+        top-level-convert(definition, initializer-source);
       else
-	#()
+        #()
       end;
   pair(definition, initializer-definitions)
 end method;
 
 define method generate-initializer-source-with-namespace
-    (form :: <library-definition>, library :: <library>) 
+    (form :: <library-definition>, library :: <library>)
  => (source)
   with-expansion-source-form (form)
     let model      = namespace-model(library);
     let var-name   = namespace-model-variable(library);
     let code       = #{ define constant ?var-name = ?model;
                         %library-version-check(?var-name,
-  					     primitive-runtime-module-handle()) };
+                                               primitive-runtime-module-handle()) };
     code
   end;
 end method;
 
 // also used by boot code
 define sideways method define-parsed-library (name, #key source-location = #f,
-				                use-clauses,
-				                create-clauses,
-				                export-clauses)
+                                                use-clauses,
+                                                create-clauses,
+                                                export-clauses)
  => (defn :: <library-definition>, library :: false-or(<library>))
   let definition = make(<library-definition>,
-			source-location: source-location,
-			adjectives:      #(),
-			name:            name,
-			use-clauses:     use-clauses,
-			create-clauses:  create-clauses,
-			export-clauses:  export-clauses);
-  let library 
+                        source-location: source-location,
+                        adjectives:      #(),
+                        name:            name,
+                        use-clauses:     use-clauses,
+                        create-clauses:  create-clauses,
+                        export-clauses:  export-clauses);
+  let library
     = with-expansion-source-location (#f, #f)
-        // This macro wrapper prevents the source location of the define 
+        // This macro wrapper prevents the source location of the define
         // library being inherited by locationless forms in libraries it
         // uses if caused to be compiled here.
         install-top-level-form(definition);
@@ -98,23 +98,23 @@ define method install-top-level-form (form :: <library-definition>)
     let ld = current-library-description();
     let library =
       if (ld.language-definition.namespace-definition)
-	note(<duplicate-library-definition>,
-	     project: ld.library-description-project,
-	     definition: form);
-	#f
+        note(<duplicate-library-definition>,
+             project: ld.library-description-project,
+             definition: form);
+        #f
       else
-	let name = form-namespace-name(form);
-	let model = ^make-<&library>(name);
-	let library 
-	  = make-namespace(<library>, 
-			   definition:     form,
-			   debug-name:     name,
-			   use-clauses:    form-use-clauses(form),
-			   create-clauses: form-create-clauses(form),
-			   export-clauses: form-export-clauses(form),
-			   model:          model);
-	define-library!(library);
-	^library-description(model) := ld;
+        let name = form-namespace-name(form);
+        let model = ^make-<&library>(name);
+        let library
+          = make-namespace(<library>,
+                           definition:     form,
+                           debug-name:     name,
+                           use-clauses:    form-use-clauses(form),
+                           create-clauses: form-create-clauses(form),
+                           export-clauses: form-export-clauses(form),
+                           model:          model);
+        define-library!(library);
+        ^library-description(model) := ld;
         library
       end;
     form.form-top-level-installed? := #t;

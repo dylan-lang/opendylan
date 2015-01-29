@@ -19,8 +19,8 @@ define module dfmc-back-end-protocol
   use dfmc-common;
   use dfmc-mangling, export: all;
   use build-system, import: { target-platform-name };
-  
-  export 
+
+  export
     <back-end>,
     <local-variable>,
     <lambda-compiled-data>,

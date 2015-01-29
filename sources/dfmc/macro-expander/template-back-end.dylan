@@ -39,23 +39,23 @@ end function;
 
 //// Of substitutions.
 
-define inline method import-to-template 
+define inline method import-to-template
     (value) => (f :: <fragment>)
   make-literal-fragment(value);
 end method;
 
-define inline method import-to-template 
+define inline method import-to-template
     (f :: <fragment>) => (f :: <fragment>)
   f
 end method;
 
-define inline method import-to-template 
+define inline method import-to-template
     (f :: <template>) => (f :: <template>)
   f
 end method;
 
 /*
-define inline method fragment-name-symbol 
+define inline method fragment-name-symbol
     (name :: <variable-name-fragment>) => (name-symbol :: <symbol>)
   fragment-name(name);
 end method;
@@ -65,17 +65,17 @@ end method;
 
 define constant <fragment-or-template> = type-union(<fragment>, <template>);
 
-define method stringify 
+define method stringify
     (f :: <fragment-or-template>) => (string :: <byte-string>)
   format-to-string("%s", f);
 end method;
 
-define method stringify 
+define method stringify
     (f :: <variable-name-fragment>) => (string :: <byte-string>)
   fragment-name-string(f)
 end method;
 
-define inline method as-name 
+define inline method as-name
     (f :: <fragment-or-template>) => (name :: <variable-name-fragment>)
   macro-case (f)
     { ?:name } => name
@@ -99,19 +99,19 @@ define serious-program-warning
     <macro-splicing-substitution-constraint-error> (<macro-match-error>)
   slot condition-fragment,
     required-init-keyword: fragment:;
-  format-string 
+  format-string
     "Attempt to perform a splicing substitution on the non-identifier %s.";
   format-arguments fragment;
 end serious-program-warning;
 
 // As an identifier.
 
-define inline method substitute-spliced-as-name 
+define inline method substitute-spliced-as-name
     (prefix :: <string>, name :: <variable-name-fragment>, suffix :: <string>)
   splice-name-hygienically(name, prefix, suffix);
 end method;
 
-define method substitute-spliced-as-name 
+define method substitute-spliced-as-name
     (prefix :: <string>, f :: <fragment>, suffix :: <string>)
   note(<macro-splicing-substitution-constraint-error>,
        source-location: fragment-source-location(f),
@@ -119,14 +119,14 @@ define method substitute-spliced-as-name
        fragment: f);
 end method;
 
-define method substitute-spliced-as-name 
+define method substitute-spliced-as-name
     (prefix :: <string>, f :: <template>, suffix :: <string>)
   substitute-spliced-as-name(prefix, as-name(f), suffix);
 end method;
 
 // As a string.
 
-define method substitute-spliced-as-string 
+define method substitute-spliced-as-string
     (prefix :: <string>, name :: <variable-name-fragment>, suffix :: <string>)
   make-in-expansion
     (<string-fragment>,
@@ -134,7 +134,7 @@ define method substitute-spliced-as-string
                 (concatenate(prefix, fragment-name-string(name), suffix)))
 end method;
 
-define method substitute-spliced-as-string 
+define method substitute-spliced-as-string
     (prefix :: <string>, f :: <fragment>, suffix :: <string>)
   note(<macro-splicing-substitution-constraint-error>,
        source-location: fragment-source-location(f),
@@ -142,14 +142,14 @@ define method substitute-spliced-as-string
        fragment: f);
 end method;
 
-define method substitute-spliced-as-string 
+define method substitute-spliced-as-string
     (prefix :: <string>, f :: <template>, suffix :: <string>)
   substitute-spliced-as-string(prefix, as-name(f), suffix);
 end method;
 
 // As a symbol.
 
-define method substitute-spliced-as-symbol 
+define method substitute-spliced-as-symbol
     (prefix :: <string>, name :: <variable-name-fragment>, suffix :: <string>)
   make-in-expansion
     (<symbol-fragment>,
@@ -158,7 +158,7 @@ define method substitute-spliced-as-symbol
                     concatenate(prefix, fragment-name-string(name), suffix))))
 end method;
 
-define method substitute-spliced-as-symbol 
+define method substitute-spliced-as-symbol
     (prefix :: <string>, f :: <fragment>, suffix :: <string>)
   note(<macro-splicing-substitution-constraint-error>,
        source-location: fragment-source-location(f),
@@ -166,7 +166,7 @@ define method substitute-spliced-as-symbol
        fragment: f);
 end method;
 
-define method substitute-spliced-as-symbol 
+define method substitute-spliced-as-symbol
     (prefix :: <string>, f :: <template>, suffix :: <string>)
   substitute-spliced-as-symbol(prefix, as-name(f), suffix);
 end method;
@@ -181,7 +181,7 @@ define method substitute-sequence (seq :: <sequence-fragment>)
   substitute-sequence(fragment-fragments(seq));
 end method;
 
-define method substitute-sequence-separated 
+define method substitute-sequence-separated
     (seq :: <sequence>, sep :: <separator-fragment>)
   collecting ()
     for (frag in seq, first = #t then #f)
@@ -191,7 +191,7 @@ define method substitute-sequence-separated
   end;
 end method;
 
-define method substitute-sequence-separated 
+define method substitute-sequence-separated
     (seq :: <sequence-fragment>, sep :: <separator-fragment>)
   substitute-sequence-separated(fragment-fragments(seq), sep);
 end method;
@@ -199,46 +199,46 @@ end method;
 // TODO: CORRECTNESS: Be careful about templates of templates that are
 // really empty but may appear not to be.
 
-define method maybe-substitute-separator 
+define method maybe-substitute-separator
     (sep :: <separator-fragment>, subst :: <list>)
   if (empty?(subst)) subst else pair(sep, subst) end;
 end method;
 
-define method maybe-substitute-separator 
+define method maybe-substitute-separator
     (sep :: <separator-fragment>, subst :: <sequence-fragment>)
   maybe-substitute-separator(sep, fragment-fragments(subst));
 end method;
 
-define method maybe-substitute-separator 
+define method maybe-substitute-separator
     (sep :: <separator-fragment>, subst :: <template>)
   maybe-substitute-separator(sep, template-fragments(subst));
 end method;
 
-define method maybe-substitute-separator 
+define method maybe-substitute-separator
     (sep :: <separator-fragment>, subst)
   list(sep, subst);
 end method;
 
-define function empty-template-elements? 
+define function empty-template-elements?
     (elements :: <sequence>) => (empty? :: <boolean>)
   every?(empty-template-element?, elements);
 end function;
 
 define method empty-template-element? (e) => (empty? :: <boolean>)
-  #f 
+  #f
 end method;
 
-define method empty-template-element? 
+define method empty-template-element?
     (e :: <sequence>) => (empty? :: <boolean>)
   empty?(e);
 end method;
 
-define method empty-template-element? 
+define method empty-template-element?
     (e :: <sequence-fragment>) => (empty? :: <boolean>)
   empty?(fragment-fragments(e));
 end method;
 
-define method empty-template-element? 
+define method empty-template-element?
     (e :: <template>) => (empty? :: <boolean>)
   empty?(template-fragments(e));
 end method;
@@ -264,7 +264,7 @@ define inline function make-in-expansion-caching (key, class, #rest initargs)
   end;
 end function;
 
-define inline method cached-expansion-fragment 
+define inline method cached-expansion-fragment
     (key :: <object>) => (f :: false-or(<fragment>))
   let cached = element(*expansion-fragment-cache*, key, default: #f);
   /*
@@ -280,12 +280,12 @@ define inline method cached-expansion-fragment-setter
   element(*expansion-fragment-cache*, key) := f
 end method;
 
-define inline function do-with-expansion-source-location 
+define inline function do-with-expansion-source-location
     (rec, pos, f :: <function>)
   dynamic-bind (*expansion-source-location* = pair(rec, pos))
     let use-shared? = ~(*expansion-fragment-cache*);
     if (use-shared?)
-      dynamic-bind (*expansion-fragment-cache* 
+      dynamic-bind (*expansion-fragment-cache*
                       = $shared-expansion-fragment-cache)
         block ()
           f();
@@ -308,10 +308,10 @@ define macro with-expansion-source-location
     => { do-with-expansion-source-location(?rec, ?pos, method () ?body end) }
 end macro;
 
-define inline function do-with-expansion-source-form 
+define inline function do-with-expansion-source-form
     (form, f :: <function>)
   let loc = form-source-location(form);
-  with-expansion-source-location 
+  with-expansion-source-location
       (loc & form-compilation-record(form),
          loc & source-location-source-position(loc))
     f();
@@ -330,12 +330,12 @@ end macro;
 define inline function make-in-expansion (class, #rest initargs)
   let exp = *expansion-source-location*;
   apply(make, class, record: exp & exp.head, source-position: exp & exp.tail,
-	initargs)
+        initargs)
 end function;
 
 // For #key pattern defaults from the LHS.
 
-define function default-in-expansion 
+define function default-in-expansion
     (default-expression :: <fragment>) => (copy :: <fragment>)
   deep-copy(make(<default-fragment-copier>), default-expression)
 end function;
@@ -343,12 +343,12 @@ end function;
 define class <default-fragment-copier> (<fragment-copier>) end;
 
 define dont-copy-slots <fragment> using <default-fragment-copier> =
-  { fragment-record          
+  { fragment-record
       => begin
            let exp = *expansion-source-location*;
            exp & exp.head
          end,
-    fragment-source-position 
+    fragment-source-position
       => begin
            let exp = *expansion-source-location*;
            exp & exp.tail
@@ -411,8 +411,8 @@ end method;
 
 define function make-name-fragment (value :: <symbol>)
   make-in-expansion-caching
-    (value, <variable-name-fragment>, 
-     name: value, 
+    (value, <variable-name-fragment>,
+     name: value,
      // TODO: CORRECTNESS: This is not the right context.
      context: *expansion-module*,
      kind: classify-expansion-word-in(*expansion-module*, value));
@@ -421,15 +421,15 @@ end function;
 define function make-escaped-name-fragment (value :: <symbol>)
   // The default kind is unreserved.
   make-in-expansion
-    (<escaped-name-fragment>, 
-     name: value, 
+    (<escaped-name-fragment>,
+     name: value,
      context: *expansion-module*);
 end function;
 
 define function make-unhygienic-name-fragment (value :: <symbol>)
   make-in-expansion
-    (<variable-name-fragment>, 
-     name: value, 
+    (<variable-name-fragment>,
+     name: value,
      context: calling-module(),
      origin:  #f, // indicates top level
      kind: classify-expansion-word-in(*expansion-module*, value));
@@ -464,12 +464,12 @@ define function make-unary-and-binary-operator-fragment (value :: <symbol>)
     (<unary-and-binary-operator-fragment>, name: value);
 end function;
 
-define function make-constrained-name-fragment 
+define function make-constrained-name-fragment
     (symbol :: <symbol>, constraint :: <symbol>)
   make-in-expansion
     (<constrained-name-fragment>,
      context: *expansion-module*,
-     name: symbol, 
+     name: symbol,
      constraint: constraint);
 end function;
 
@@ -538,21 +538,21 @@ end function;
 
 // To a macro-case.
 
-define generic as-fragment-tokens 
+define generic as-fragment-tokens
     (object :: <object>) => (tokens :: <fragment-list>);
 
-define inline method as-fragment-tokens 
+define inline method as-fragment-tokens
     (f) => (tokens :: <fragment-list>)
   // Try to import it.
   list(import-to-template(f));
 end method;
 
-define inline method as-fragment-tokens 
+define inline method as-fragment-tokens
     (f :: <fragment>) => (tokens :: <fragment-list>)
   list(f);
 end method;
 
-define method as-fragment-tokens 
+define method as-fragment-tokens
     (f :: <template>) => (tokens :: <fragment-list>)
   let (failure, parsed-f)
     = parse-template-fragments-as
@@ -563,81 +563,81 @@ define method as-fragment-tokens
   parsed-f
 end method;
 
-define inline method as-fragment-tokens 
+define inline method as-fragment-tokens
     (f :: <sequence-fragment>) => (tokens :: <fragment-list>)
   fragment-fragments(f);
 end method;
 
-define inline method as-fragment-tokens 
+define inline method as-fragment-tokens
     (f :: <sequence>) => (tokens :: <fragment-list>)
   f
 end method;
 
-define inline method as-fragment-tokens 
+define inline method as-fragment-tokens
     (f :: <elementary-fragment>) => (tokens :: <fragment-list>)
   list(f);
 end method;
 
-define inline method as-fragment-tokens 
+define inline method as-fragment-tokens
     (f :: <literal-constant-fragment>) => (tokens :: <fragment-list>)
   list(f);
 end method;
 
-define inline method as-fragment-tokens 
+define inline method as-fragment-tokens
     (f :: <nested-fragment>) => (tokens :: <fragment-list>)
   list(f);
 end method;
 
-define inline method as-fragment-tokens 
+define inline method as-fragment-tokens
     (f :: <macro-call-fragment>) => (tokens :: <fragment-list>)
   list(f);
 end method;
 
-define inline method as-fragment-tokens 
+define inline method as-fragment-tokens
     (f :: <body-fragment>) => (tokens :: <fragment-list>)
   list(f);
 end method;
 
 // To a definition matcher.
 
-define generic call-as-fragment-tokens 
+define generic call-as-fragment-tokens
     (object) => (tokens :: <fragment-list>);
 
-define inline method fragment-end-of-modifiers-marker 
+define inline method fragment-end-of-modifiers-marker
     (f :: <fragment>) => (marker :: <end-of-modifiers-marker>)
   make(<end-of-modifiers-marker>)
 end method;
 
-define method call-as-fragment-tokens 
+define method call-as-fragment-tokens
     (f :: <body-definition-fragment>) => (tokens :: <fragment-list>)
   concatenate
-    (f.fragment-modifiers, 
-     list(f.fragment-end-of-modifiers-marker), 
+    (f.fragment-modifiers,
+     list(f.fragment-end-of-modifiers-marker),
      f.fragment-body-fragment)
 end method;
 
-define method call-as-fragment-tokens 
+define method call-as-fragment-tokens
     (f :: <macro-body-definition-fragment>) => (tokens :: <fragment-list>)
   concatenate
-    (f.fragment-modifiers, 
-     list(f.fragment-end-of-modifiers-marker), 
+    (f.fragment-modifiers,
+     list(f.fragment-end-of-modifiers-marker),
      f.fragment-macro-body-fragment)
 end method;
 
-define method call-as-fragment-tokens 
+define method call-as-fragment-tokens
     (f :: <list-definition-fragment>) => (tokens :: <fragment-list>)
   concatenate
-    (f.fragment-modifiers, 
-     list(f.fragment-end-of-modifiers-marker), 
+    (f.fragment-modifiers,
+     list(f.fragment-end-of-modifiers-marker),
      f.fragment-list-fragment)
 end method;
 
-define method call-as-fragment-tokens 
+define method call-as-fragment-tokens
     (f :: <statement-fragment>) => (tokens :: <fragment-list>)
   fragment-body-fragment(f);
 end method;
 
-define method call-as-fragment-tokens 
+define method call-as-fragment-tokens
     (f :: <local-declaration-call-fragment>) => (tokens :: <fragment-list>)
   concatenate
     (fragment-list-fragment(fragment-declaration-fragment(f)),
@@ -645,13 +645,13 @@ define method call-as-fragment-tokens
      list(fragment-body-fragment(f)));
 end method;
 
-define inline method call-as-fragment-tokens 
+define inline method call-as-fragment-tokens
     (f :: <function-macro-fragment>) => (tokens :: <fragment-list>)
   fragment-body-fragment(f);
 end method;
 
 // For reference macros.
-define inline method call-as-fragment-tokens 
+define inline method call-as-fragment-tokens
     (f :: <variable-name-fragment>) => (tokens :: <fragment-list>)
   #()
 end method;
@@ -662,12 +662,12 @@ define generic export-fragment-tokens (f*);
 
 define method export-fragment-tokens (f* :: <list>)
   if (empty?(f*))
-    make(<sequence-fragment>, 
+    make(<sequence-fragment>,
          fragments: f*, record: #f, source-position: #f);
   elseif (empty?(f*.tail))
     f*.head
   else
-    make(<sequence-fragment>, 
+    make(<sequence-fragment>,
          fragments: f*, record: #f, source-position: #f);
   end;
 end method;

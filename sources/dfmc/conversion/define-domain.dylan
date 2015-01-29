@@ -46,20 +46,20 @@ define method compute-and-install-form-model-objects-statically
     //     by the method adder
     // (5) the gf isn't implemented as a gf after all.
     unless (form-compile-stage-only?(gf-def)
-	      | domain-locally-defined?
-	      | gf-runtime-sealed?
-	      | instance?(form-parent-form(form), <method-definition>)
-	      | single-method-generic-function?(lookup-model-object(name, reference?: #f)))
-      let code 
-	= (with-expansion-source-form(form)
+              | domain-locally-defined?
+              | gf-runtime-sealed?
+              | instance?(form-parent-form(form), <method-definition>)
+              | single-method-generic-function?(lookup-model-object(name, reference?: #f)))
+      let code
+        = (with-expansion-source-form(form)
 
-	     let definer = dylan-value(if (~all-types-known-imported?(model-library(model), model))
-					 #"%add-nonsiblinged-domain"
-				       else
-					 #"%add-domain"
-				       end if);
-	   #{ ?definer(?name, ?model) }
-	  end with-expansion-source-form);
+             let definer = dylan-value(if (~all-types-known-imported?(model-library(model), model))
+                                         #"%add-nonsiblinged-domain"
+                                       else
+                                         #"%add-domain"
+                                       end if);
+           #{ ?definer(?name, ?model) }
+          end with-expansion-source-form);
       let init-model = convert-top-level-initializer(code);
       form-init-method(form) := init-model;
     end unless;
@@ -85,20 +85,20 @@ define compiler-sideways method compute-form-model-object
       maybe-compute-and-install-form-model-objects(parent);
       let meth = form-model(parent);
       if (meth)
-	^make(<&method-domain>, 
-	      definition: form,
-	      debug-name: dbg-name,
-	      domain-types: domain-types,
-	      method: meth)
+        ^make(<&method-domain>,
+              definition: form,
+              debug-name: dbg-name,
+              domain-types: domain-types,
+              method: meth)
       else // else method dynamic
-	#f
+        #f
       end
     else
       let domain-object :: <&standalone-domain>
-	= ^make(<&standalone-domain>,
-		definition:   form,
-		debug-name:   dbg-name,
-		domain-types: domain-types);
+        = ^make(<&standalone-domain>,
+                definition:   form,
+                debug-name:   dbg-name,
+                domain-types: domain-types);
       domain-object
     end if
   else
@@ -123,32 +123,32 @@ define program-warning <dynamic-domain-type-expressions>
 end program-warning;
 
 define function compute-type-specs-types
-    (form, type-specs :: <sequence>) 
+    (form, type-specs :: <sequence>)
  => (types :: <simple-object-vector>, types-static? :: <boolean>)
   let static-types = make(<vector>, size: size(type-specs));
   collecting (dynamic-types)
     for (type-spec in type-specs,
-	 i from 0)
+         i from 0)
       let type = ^top-level-eval-type(type-spec, on-failure: #f);
       static-types[i] :=
-	if (type)
-	  type
-	else
-	  collect-into(dynamic-types, type-spec);
-	  dylan-value(#"<object>")
-	end;
+        if (type)
+          type
+        else
+          collect-into(dynamic-types, type-spec);
+          dylan-value(#"<object>")
+        end;
     end;
     if (~empty?(collected(dynamic-types)))
       let collected-dynamic-types = collected(dynamic-types);
       note(<dynamic-domain-type-expressions>,
            source-location: if (form)
-			      form-source-location(form)
-			    else
-			      // kludge for anonymous methods
-			      fragment-source-location
+                              form-source-location(form)
+                            else
+                              // kludge for anonymous methods
+                              fragment-source-location
                                 (collected-dynamic-types[0])
-			    end,
-           form: form, 
+                            end,
+           form: form,
            type-expressions: collected-dynamic-types);
       values(#[], #f);
     else

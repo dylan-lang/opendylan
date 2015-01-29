@@ -14,9 +14,9 @@ define compiler-sideways method ^initialize-class
   // debug-assert(~slot-initialized?(class, ^class-implementation-class), "wtf?")
   ^class-module(class) := model-module-model(class);
   ^class-implementation-class(class) := apply(^make, <&implementation-class>,
-					      class: class,
-					      definition: #f,
-					      args);
+                                              class: class,
+                                              definition: #f,
+                                              args);
   let sups :: <simple-object-vector> = as(<simple-object-vector>, superclasses);
   class.^direct-superclasses := mapped-model(sups);
   if (dylan-library-library-description?(model-library(class)))
@@ -46,9 +46,9 @@ define sideways method ^instance?-function (c :: <&class>)
     if (poslist == #())
       let pos :: <integer> = ^class-rcpl-position(c);
       if (pos < $min-rcpl-size)
-	#"class-instance?-rcpl-single-small"
+        #"class-instance?-rcpl-single-small"
       else
-	#"class-instance?-rcpl-single-large"
+        #"class-instance?-rcpl-single-large"
       end if
     else
       #"general-rcpl-class-instance?"
@@ -59,7 +59,7 @@ end method;
 define function ^ensure-slots-initialized-dynamically
     (class :: <&class>) => ()
   debug-out(#"dynamic",
-	    ">>> Retreating to dynamic case slots for  %=\n", class);
+            ">>> Retreating to dynamic case slots for  %=\n", class);
   let form = model-definition(class);
   with-dependent-context ($compilation of form)
     class.^slots-initialized-state := #"tried-and-failed";
@@ -69,7 +69,7 @@ define function ^ensure-slots-initialized-dynamically
   end;
 end function;
 
-define function ^ensure-slots-initialized 
+define function ^ensure-slots-initialized
     (class :: <&class>) => (well? :: <boolean>)
   select (class.^slots-initialized-state)
     #"tried-and-failed"
@@ -111,11 +111,11 @@ define function ^ensure-each-slot-initialized
                    curry
                      (make-initialization-argument-descriptor, fail, class),
                    form-keyword-specs(class-definition));
-        ^direct-slot-descriptors(class) 
+        ^direct-slot-descriptors(class)
            := mapped-model(direct-slotds);
-        ^direct-inherited-slot-descriptors(class) 
+        ^direct-inherited-slot-descriptors(class)
            := mapped-model(inherited-slotds);
-        ^direct-initialization-argument-descriptors(class) 
+        ^direct-initialization-argument-descriptors(class)
            := mapped-model(initargds);
       end unless;
       class.^slots-initialized-state := #"done";
@@ -141,10 +141,10 @@ end function;
 // the expression actually serves.
 
 define function make-slot-init-model (init-expression,
-				      init-expression? :: <boolean>,
-				      init-value? :: <boolean>,
+                                      init-expression? :: <boolean>,
+                                      init-value? :: <boolean>,
                                       type-expression,
-				      type)
+                                      type)
  => (init-data, init-value? :: <boolean>, init-evaluated? :: <boolean>)
   let init-function? = ~(init-value? | init-expression?);
   let (init-constant?, init-constant) =
@@ -162,7 +162,7 @@ define function make-slot-init-model (init-expression,
             // way to query function result type compatibility with a required
             // type, then we could use it here. But we'll leave the generic
             // optimizer to sort it out since the only penalty is at
-            // compile-time, and people don't tend to use explicit 
+            // compile-time, and people don't tend to use explicit
             // init-function's much these days.
             values(#t, init-constant);
           elseif (~init-function? & instance?(type, <&type>))
@@ -171,44 +171,44 @@ define function make-slot-init-model (init-expression,
         end;
       end;
     end;
-  if (init-constant?)		// optimize common case
+  if (init-constant?)                // optimize common case
     values(init-constant, ~init-function?, #t)
   else
-    with-expansion-source-location 
+    with-expansion-source-location
         (fragment-record(init-expression),
            fragment-source-position(init-expression))
       let init-form =
-	if (init-expression?)
-	  // implement init-expression as init-function
-	  #{ () => (init-function)
-	     method () => (init-value)
-	       let (init-value :: ?type-expression) = ?init-expression;
-	       init-value
-	     end }
-	elseif (init-value?)
+        if (init-expression?)
+          // implement init-expression as init-function
+          #{ () => (init-function)
+             method () => (init-value)
+               let (init-value :: ?type-expression) = ?init-expression;
+               init-value
+             end }
+        elseif (init-value?)
           #{ () => (init-value)
-	     let (init-value :: ?type-expression) = ?init-expression;
-	     init-value }
-	else
-	  // init-function
-	  if (type == dylan-value(#"<object>"))
-	    #{ () => (init-function)
-	       let init-function :: <function> = ?init-expression;
-	       init-function }
-	  else
-	    // TODO: make sure this optimizes nicely
+             let (init-value :: ?type-expression) = ?init-expression;
+             init-value }
+        else
+          // init-function
+          if (type == dylan-value(#"<object>"))
             #{ () => (init-function)
-	       let init-function :: <function> = ?init-expression;
-	       method () => (init-value)
-		 let (init-value :: ?type-expression) = init-function();
-		 init-value
-	       end }
-	  end
-	end;
+               let init-function :: <function> = ?init-expression;
+               init-function }
+          else
+            // TODO: make sure this optimizes nicely
+            #{ () => (init-function)
+               let init-function :: <function> = ?init-expression;
+               method () => (init-value)
+                 let (init-value :: ?type-expression) = init-function();
+                 init-value
+               end }
+          end
+        end;
       values(convert-method-to-model-as
                (<&slot-initializer-method>, "slot-initializer", init-form),
-	     init-value?,
-	     #f)
+             init-value?,
+             #f)
     end
   end
 end;
@@ -249,24 +249,24 @@ define method optimize-slot-initializer (slot-descriptor :: <&slot-initial-value
     // optimize it
     let init-model =
       if (^init-evaluated?(slot-descriptor))
-	init-model
+        init-model
       else
-	let (constant?, constant) = lambda-returns-constant?(init-model);
-	if (constant?)
-	  ^init-evaluated?(slot-descriptor) := #t;
-	  ^init-data-slot(slot-descriptor) := constant;
-	  constant
-	else
-	  init-model
-	end
+        let (constant?, constant) = lambda-returns-constant?(init-model);
+        if (constant?)
+          ^init-evaluated?(slot-descriptor) := #t;
+          ^init-data-slot(slot-descriptor) := constant;
+          constant
+        else
+          init-model
+        end
       end;
     if (instance?(init-model, <&lambda>) &
-	  ^init-evaluated?(slot-descriptor) &
-	  ~^init-value?(slot-descriptor))
+          ^init-evaluated?(slot-descriptor) &
+          ~^init-value?(slot-descriptor))
       let (constant?, constant) = lambda-returns-constant?(init-model);
       if (constant?)
-	^init-value?(slot-descriptor) := #t;
-	^init-data-slot(slot-descriptor) := constant;
+        ^init-value?(slot-descriptor) := #t;
+        ^init-data-slot(slot-descriptor) := constant;
       end;
     end;
   end;
@@ -297,7 +297,7 @@ end program-warning;
 define variable *fake-count* = 0;
 define variable *fake-interval* = 4;
 
-define function fake-failure? () 
+define function fake-failure? ()
   *fake-count* := *fake-count* + 1;
   modulo(*fake-count*, *fake-interval*) == 0;
   #f
@@ -322,7 +322,7 @@ end;
 define function get-slot-accessor-or-fail
     (slot-spec :: type-union(<slot-definition>, <inherited-slot-spec>),
        spec-accessor :: <function>,
-       fail :: <function>) 
+       fail :: <function>)
  => (f :: false-or(<&function>))
   let name = spec-accessor(slot-spec);
   if (name)
@@ -338,19 +338,19 @@ define function get-slot-accessor-or-fail
   end;
 end;
 
-define method valid-accessor-function? 
+define method valid-accessor-function?
     (slot-spec :: <inherited-slot-spec>, f :: <object>) => (well? :: <boolean>)
   instance?(f, <&generic-function>);
 end method;
 
-define method valid-accessor-function? 
+define method valid-accessor-function?
     (slot-spec :: <slot-definition>, f :: <object>) => (well? :: <boolean>)
   instance?(f, <&generic-function>)
     | (spec-virtual?(slot-spec) & instance?(f, <&function>))
 end method;
 
 define function get-slot-init-keyword
-    (slot-spec :: <slot-keyword-initialization-spec>) 
+    (slot-spec :: <slot-keyword-initialization-spec>)
  => (keyword :: false-or(<symbol>))
   // Parsing ensures that this fragment must be a literal keyword or #f.
   mapped-model(^top-level-eval(spec-init-keyword(slot-spec)))
@@ -375,10 +375,10 @@ define function get-initialization-argument-type (slot-spec :: <init-arg-spec>)
     type
   else
     note(<dynamic-initialization-argument-type-expression>,
-	 // TODO: give a sharper source location
-	 source-location: form-source-location(slot-spec),
-	 form: slot-spec,
-	 type-expression: type-expression);
+         // TODO: give a sharper source location
+         source-location: form-source-location(slot-spec),
+         form: slot-spec,
+         type-expression: type-expression);
     dylan-value(#"<object>")
   end
 end;
@@ -391,10 +391,10 @@ define function make-slot-descriptor
   let (init-data, init-value?, init-evaluated?) =
     if (init-supplied?)
       make-slot-init-model(spec-init-expression(slot-spec),
-			   spec-init-expression?(slot-spec),
-			   spec-init-value?(slot-spec),
+                           spec-init-expression?(slot-spec),
+                           spec-init-value?(slot-spec),
                            spec-type-expression(slot-spec),
-			   type);
+                           type);
     else
       values(#f, #f, #f)
     end if;
@@ -402,17 +402,17 @@ define function make-slot-descriptor
   let getter-model = get-slot-accessor-or-fail(slot-spec, spec-getter, fail);
   let setter-model = get-slot-accessor-or-fail(slot-spec, spec-setter, fail);
   ^make(^as-slot-descriptor-class(allocation),
-	definition: slot-spec,
-	owner: class, 
-	type: type,
-	getter: getter-model,
-	setter: setter-model,
-	init-keyword: get-slot-init-keyword(slot-spec),
-	init-keyword-required?: spec-init-keyword-required?(slot-spec),
-	init-supplied?: init-supplied?,
-	init-value?: init-value?,
-	init-evaluated?: init-evaluated?,
-	init-data: mapped-model(init-data))
+        definition: slot-spec,
+        owner: class,
+        type: type,
+        getter: getter-model,
+        setter: setter-model,
+        init-keyword: get-slot-init-keyword(slot-spec),
+        init-keyword-required?: spec-init-keyword-required?(slot-spec),
+        init-supplied?: init-supplied?,
+        init-value?: init-value?,
+        init-evaluated?: init-evaluated?,
+        init-data: mapped-model(init-data))
 end function make-slot-descriptor;
 
 define function make-inherited-slot-descriptor
@@ -422,20 +422,20 @@ define function make-inherited-slot-descriptor
   let (init-data, init-value?, init-evaluated?) =
     if (init-supplied?)
       make-slot-init-model(spec-init-expression(slot-spec),
-			   spec-init-expression?(slot-spec),
-			   spec-init-value?(slot-spec),
+                           spec-init-expression?(slot-spec),
+                           spec-init-value?(slot-spec),
                            #{ <object> },
-			   dylan-value(#"<object>"));
+                           dylan-value(#"<object>"));
     else
       values(#f, #f, #f)
     end if;
   ^make(<&inherited-slot-descriptor>,
         owner: class,
-	getter: get-slot-accessor-or-fail(slot-spec, spec-getter, fail),
-	init-supplied?: init-supplied?,
-	init-value?: init-value?,
-	init-evaluated?: init-evaluated?,
-	init-data: mapped-model(init-data))
+        getter: get-slot-accessor-or-fail(slot-spec, spec-getter, fail),
+        init-supplied?: init-supplied?,
+        init-value?: init-value?,
+        init-evaluated?: init-evaluated?,
+        init-data: mapped-model(init-data))
 end function make-inherited-slot-descriptor;
 
 define function make-initialization-argument-descriptor
@@ -447,22 +447,22 @@ define function make-initialization-argument-descriptor
   let (init-data, init-value?, init-evaluated?) =
     if (init-supplied?)
       make-slot-init-model(spec-init-expression(slot-spec),
-			   spec-init-expression?(slot-spec),
-			   spec-init-value?(slot-spec),
+                           spec-init-expression?(slot-spec),
+                           spec-init-value?(slot-spec),
                            spec-type-expression(slot-spec),
-			   type);
+                           type);
     else
       values(#f, #f, #f)
     end if;
   ^make(<&init-arg-descriptor>,
         owner: class,
-	type: type,
-	init-keyword: get-slot-init-keyword(slot-spec),
-	init-keyword-required?: spec-init-keyword-required?(slot-spec),
-	init-supplied?: init-supplied?,
-	init-value?: init-value?,
-	init-evaluated?: init-evaluated?,
-	init-data: mapped-model(init-data))
+        type: type,
+        init-keyword: get-slot-init-keyword(slot-spec),
+        init-keyword-required?: spec-init-keyword-required?(slot-spec),
+        init-supplied?: init-supplied?,
+        init-value?: init-value?,
+        init-evaluated?: init-evaluated?,
+        init-data: mapped-model(init-data))
 end function make-initialization-argument-descriptor;
 
 //// Wrapper initialization
@@ -470,15 +470,15 @@ end function make-initialization-argument-descriptor;
 define method ^make-mm-wrapper (class :: <&class>)
   local method as-int (x :: <boolean>) if (x) 1 else 0 end end;
   local method as-raw (x :: <abstract-integer>)
-	  if (instance?(x, <integer>))
-	    ^make(<&raw-machine-word>, value: x)
-	  else
-	    let x :: <double-integer> = x;
-	    ^make(<&raw-machine-word>, value: %double-integer-low(x))
-	  end
-	end;
+          if (instance?(x, <integer>))
+            ^make(<&raw-machine-word>, value: x)
+          else
+            let x :: <double-integer> = x;
+            ^make(<&raw-machine-word>, value: %double-integer-low(x))
+          end
+        end;
   let repeated-slot = ^repeated-slot-descriptor(class);
-  let slots      
+  let slots
     = remove(^instance-slot-descriptors(class),
              repeated-slot & ^size-slot-descriptor(repeated-slot));
   let raw-bits   = map(compose(raw-type?, ^slot-type), slots);
@@ -486,56 +486,56 @@ define method ^make-mm-wrapper (class :: <&class>)
   let mixed?     = ~all-dylan?;
   let patterned? = mixed?;
   local method number-words (slots)
-	  // HACK: SHOULD REDUCE + TYPE-SIZES OF SLOTS
-	  if (class == dylan-value(#"<double-float>"))
-	    2
-	  else
-	    size(slots)
-	  end if
-	end method;
-  let fixed-part = logior(logior(ash(number-words(slots), 2), 
-				 ash(as-int(mixed?), 1)),
-			  as-int(all-dylan?));
+          // HACK: SHOULD REDUCE + TYPE-SIZES OF SLOTS
+          if (class == dylan-value(#"<double-float>"))
+            2
+          else
+            size(slots)
+          end if
+        end method;
+  let fixed-part = logior(logior(ash(number-words(slots), 2),
+                                 ash(as-int(mixed?), 1)),
+                          as-int(all-dylan?));
   let variable-part
     = if (repeated-slot)
         let repeated-type
           = repeated-slot.^slot-type;
         let repeated-size
           = repeated-representation-size(repeated-type);
-        let non-word? 
+        let non-word?
           = repeated-size ~= word-size();
-        let untraceable? 
-          = raw-type?(repeated-type) 
+        let untraceable?
+          = raw-type?(repeated-type)
               | raw-repeated-representation?(repeated-type);
-        let stretchy? 
+        let stretchy?
           = ^subtype?(class, dylan-value(#"<stretchy-vector>"));
         if (untraceable? & ~non-word?)
           if (stretchy?)
             1                                 // stretchy non-traceable
           else
             0                                 // non-traceable
-          end if 
+          end if
         else                                  // traceable
           if (non-word?)
-            let bias 
-	      = if (class == dylan-value(#"<byte-string>"))
-		  #x00010000;     // null-terminated
-		else
-		  0
-		end if;
-            let element-size 
-	      = truncate(logn(repeated-size * 8, 2)); // log2(number-of-bits) 
+            let bias
+              = if (class == dylan-value(#"<byte-string>"))
+                  #x00010000;     // null-terminated
+                else
+                  0
+                end if;
+            let element-size
+              = truncate(logn(repeated-size * 8, 2)); // log2(number-of-bits)
             if (stretchy?)
               logior(ash(element-size, 3), 5, bias) // stretchy non-word
             else
               logior(ash(element-size, 3), 4, bias) // non-word
-            end if 
+            end if
           else
             if (stretchy?)
               3                               // stretchy traceable
             else
               2                               // traceable
-            end if 
+            end if
           end if
         end if;
       else
@@ -546,22 +546,22 @@ define method ^make-mm-wrapper (class :: <&class>)
   local method word-pattern (start :: <integer>, stop :: <integer>)
           iterate loop (i :: <integer> = stop - 1, pattern = 0)
             if (i < start)
-	      pattern
-	    else
-	      loop(i - 1, generic/logior(generic/ash(pattern, 1), as-int(~raw-bits[i])));
+              pattern
+            else
+              loop(i - 1, generic/logior(generic/ash(pattern, 1), as-int(~raw-bits[i])));
             end if;
-  	  end iterate;
+            end iterate;
         end method;
   let patterns
     = if (patterned?)
-	collecting ()
-	  iterate loop (i = word-size)
-	    if (i > raw-bits.size)
-	      collect(word-pattern(i - word-size, raw-bits.size))
-	    else
-	      collect(word-pattern(i - word-size, i));
-	      loop(i + word-size);
-	    end if;
+        collecting ()
+          iterate loop (i = word-size)
+            if (i > raw-bits.size)
+              collect(word-pattern(i - word-size, raw-bits.size))
+            else
+              collect(word-pattern(i - word-size, i));
+              loop(i + word-size);
+            end if;
           end iterate;
         end collecting
       else
@@ -573,12 +573,12 @@ define method ^make-mm-wrapper (class :: <&class>)
     mask := logior(mask, ^class-subtype-bit(sup))
   end for;
   let mm-wrapper
-    = ^make(<&mm-wrapper>, 
-	    implementation-class: iclass,
+    = ^make(<&mm-wrapper>,
+            implementation-class: iclass,
             subtype-mask:         mask,
-	    fixed-part:           as-raw(fixed-part),
-	    variable-part:        as-raw(variable-part),
-	    number-patterns:      patterns.size,
+            fixed-part:           as-raw(fixed-part),
+            variable-part:        as-raw(variable-part),
+            number-patterns:      patterns.size,
             patterns:             map-as(<vector>, as-raw, patterns));
   // format-out("WRAPPER         %=\n", class);
   // format-out("FIXED-PART      %x\n", fixed-part);
@@ -601,7 +601,7 @@ define function ^finalize-slots (class :: <&class>)
   // TODO: Support the memory management wrapper stuff.
   let mm-wrapper :: <&mm-wrapper> = ^make-mm-wrapper (class);
   class.^class-mm-wrapper := mm-wrapper;
-  
+
   // ^make-mm-wrapper (class);
   class
 end function ^finalize-slots;
@@ -622,7 +622,7 @@ define serious-program-warning <clashing-inherited-slot-definitions>
     required-init-keyword: slots:;
   slot condition-owners,
     required-init-keyword: owners:;
-  format-string 
+  format-string
     "The distinct inherited slots of %=, %= with respective owners %=, "
     "share an accessor and may not be mixed in the same class.";
   format-arguments inheriting-class, slots, owners;
@@ -637,21 +637,21 @@ define serious-program-warning <clashing-direct-and-inherited-slot-definitions>
     required-init-keyword: inherited-slot:;
   slot condition-inherited-owner,
     required-init-keyword: inherited-owner:;
-  format-string 
+  format-string
     "The directly-defined slot %= of %= shares an accessor with %= "
     "inherited from %=.";
-  format-arguments 
+  format-arguments
     direct-slot, inheriting-class, inherited-slot, inherited-owner;
 end;
 
-define function ^check-slot-inheritance 
+define function ^check-slot-inheritance
     (class :: <&class>) => (ok? :: <boolean>)
   // TODO: Do the fix and continue for this stuff properly within the
   // framework when the framework exists.
   let ok? = #t;
   // Are there any problems among just the directly-defined slots?
   let direct = ^direct-slot-descriptors(class);
-  gts-debug("bug1318", "class(direct)=%=, class(dsds)=%=.\n", 
+  gts-debug("bug1318", "class(direct)=%=, class(dsds)=%=.\n",
     object-class(direct), object-class(^direct-slot-descriptors(class)));
   let duplicates = collect-duplicates(direct, test: ^accessor=);
   for (duplicate-set in duplicates)
@@ -664,13 +664,13 @@ define function ^check-slot-inheritance
   end;
   // Attempt to "fix" and continue if necessary...
   gts-debug("bug1318", "class=%=, direct=%=, dupes=%=.\n", class, direct, duplicates);
-  let direct 
+  let direct
     = if (empty?(duplicates))
         direct;
-      else 
+      else
         // (gts,98jan12) remove non-first dupes instead of 1st.
         //  ** because 1st accessor method will be chosen by default.
-        let new-direct = 
+        let new-direct =
           iterate loop (todo = as(<list>, direct), done = list(), new-direct = list())
             if (empty?(todo))
               new-direct;
@@ -691,17 +691,17 @@ define function ^check-slot-inheritance
                 //    this-sd.^slot-{g,s}etter := #f;
                 //    this-sd.model-definition.form-model := #f;
 
-                let this-getter-def 
+                let this-getter-def
                   = this-sd.model-definition.form-getter-definition;
 
                 if (this-getter-def)
                   this-getter-def.form-model := #f;
                   let this-slot-getter-method
                     = find-element
-                        (%generic-function-methods(^slot-getter(this-sd)), 
+                        (%generic-function-methods(^slot-getter(this-sd)),
                          method(m) ^method-slot-descriptor(m) == this-sd; end);
                   this-sd.^slot-getter.%generic-function-methods
-                    := remove(this-sd.^slot-getter.%generic-function-methods, 
+                    := remove(this-sd.^slot-getter.%generic-function-methods,
                               this-slot-getter-method);
                   gts-debug("bug1318", "getter methods now = %=.\n",
                             this-sd.^slot-getter.^generic-function-methods);
@@ -711,13 +711,13 @@ define function ^check-slot-inheritance
                   = this-sd.model-definition.form-setter-definition;
 
                 if (this-setter-def)
-                  this-setter-def.form-model := #f; 
+                  this-setter-def.form-model := #f;
                   let this-slot-setter-method
                     = find-element
-                        (%generic-function-methods(^slot-setter(this-sd)), 
+                        (%generic-function-methods(^slot-setter(this-sd)),
                          method(m) ^method-slot-descriptor(m) == this-sd; end);
                   this-sd.^slot-setter.%generic-function-methods
-                    := remove(this-sd.^slot-setter.%generic-function-methods, 
+                    := remove(this-sd.^slot-setter.%generic-function-methods,
                               this-slot-setter-method);
                   gts-debug("bug1318", "setter methods now = %=.\n",
                             this-sd.^slot-setter.^generic-function-methods);
@@ -725,13 +725,13 @@ define function ^check-slot-inheritance
 
                 loop (tail(todo), done, new-direct);
               else
-                loop (tail(todo), pair(this-sd, done), 
+                loop (tail(todo), pair(this-sd, done),
                       pair(this-sd, new-direct));
               end if;
             end if;
           end iterate;
-        ^direct-slot-descriptors(class) 
-           := as(<vector>, reverse(new-direct)); 
+        ^direct-slot-descriptors(class)
+           := as(<vector>, reverse(new-direct));
                  // remove-duplicates(direct, test: ^accessor=)
       end if;
   gts-debug("bug1318", "\tdirect now = %=.\n", direct);
@@ -748,7 +748,7 @@ define function ^check-slot-inheritance
     ok? := #f;
   end;
   // Between the inherited slots and the directly-defined slots?
-  let duplicates 
+  let duplicates
     = collect-duplicates(concatenate(direct, inherited), test: ^accessor=);
   for (duplicate-set in duplicates)
     let direct = duplicate-set.head;
@@ -768,7 +768,7 @@ define function ^check-slot-inheritance
   ok?
 end function ^check-slot-inheritance;
 
-define function ^inherited-direct-slot-descriptors 
+define function ^inherited-direct-slot-descriptors
     (class :: <&class>) => (descriptors :: <sequence>)
   reduce(method (descriptors, class)
            concatenate(^direct-slot-descriptors(class), descriptors)
@@ -780,11 +780,11 @@ end function ^inherited-direct-slot-descriptors;
 // Within each duplicate sequence in the returned sequence of sequences,
 // the original order within the given sequence is maintained.
 
-define function collect-duplicates 
+define function collect-duplicates
     (seq :: <sequence>, #key test = \==) => (seq-of-seqs :: <sequence>)
   let seq-of-seqs = #();
-  local method seen? (elt) 
-    member?(elt, seq-of-seqs, 
+  local method seen? (elt)
+    member?(elt, seq-of-seqs,
             test: method (elt, seq) test(elt, seq.first) end);
   end;
   let n-elts = size(seq);
@@ -869,43 +869,43 @@ define method ^check-inheritance (class :: <&class>) => ()
       end
     end
   end;
-  // Primary/free violations: all primary superclasses must be in 
+  // Primary/free violations: all primary superclasses must be in
   // a mutual subtype/supertype relation, i.e., 2 incomparable primary
   // classes can never be mixed.  (I.e., primaries are singly inherited.)
-  // 
+  //
   // Assume all the superclasses of class satisfy the primary/free constraint.
   // The _primary_ superclasses are an intercomparable subsequence of the CPL.
   // Thus their subtype DAG is in fact a chain.  Let p1 and p2 be elements
   // of that chain.  We must enforce that either p1 < p2 or p2 < p1.  WLOG,
   // assume that p1 < p2 comes up.  Then the entire chain above p2 is already
-  // in p1's CPL, so we're guaranteed that p1 < (entire chain above p2).  Since 
+  // in p1's CPL, so we're guaranteed that p1 < (entire chain above p2).  Since
   // p1 was chosen arbitrarily, the chain above p1 is well-ordered, too, by
   // a symmetrical argument.
   //
-  // Consequence: we only have to check the least primary classes (bottoms of 
+  // Consequence: we only have to check the least primary classes (bottoms of
   // the chains) for intercomparability.  So look @ least primary of each super.
   //       -- sgr 16-Jul-96
   for (rest-prims // List of least primary superclasses, where present
          = collecting ()
-	     for(super in ^direct-superclasses(class))
-	       let lps = ^least-primary-superclass(super);
-	       if (lps)
-		 collect(lps)
-	       end
-	     end
+             for(super in ^direct-superclasses(class))
+               let lps = ^least-primary-superclass(super);
+               if (lps)
+                 collect(lps)
+               end
+             end
            end
-	 then tail(rest-prims),
+         then tail(rest-prims),
        until: empty?(rest-prims))
     let test-class = head(rest-prims);
     for (problem-class in tail(rest-prims)) // Exploit symmetry of test
       unless (^subtype?(problem-class, test-class   ) |
-	      ^subtype?(test-class,    problem-class))
-	note(<subclass-combines-exclusive-primary-superclasses>,
+              ^subtype?(test-class,    problem-class))
+        note(<subclass-combines-exclusive-primary-superclasses>,
              source-location: model-source-location(class),
-	     subclass-name:   model-variable-name(class),
-	     superclass-name: model-variable-name(test-class),
-	     other-superclass-name: model-variable-name(problem-class),
-             library-name:    
+             subclass-name:   model-variable-name(class),
+             superclass-name: model-variable-name(test-class),
+             other-superclass-name: model-variable-name(problem-class),
+             library-name:
                library-description-emit-name(model-library(problem-class)));
       end
     end
@@ -918,29 +918,29 @@ define function ^compute-class-precedence-list (c :: <&class>)
     => cpl :: <list>;
   let c-direct-superclasses = as(<list>, ^direct-superclasses(c));
 
-  local method merge-lists 
+  local method merge-lists
       (partial-cpl :: <list>, remaining-lists :: <list>)
     // The partial-cpl is in reverse order at this point.
     if (every?(empty?, remaining-lists))
       reverse!(partial-cpl)
     else
-      local 
-        method candidate (s :: <&class>) 
-          local 
+      local
+        method candidate (s :: <&class>)
+          local
             method tail? (l :: <list>)
               member?(s, tail(l))
             end method;
 
-          ~any?(tail?, remaining-lists) 
+          ~any?(tail?, remaining-lists)
             & s
         end method,
 
         method candidate-at-head (l :: <list>)
           ~empty?(l) & candidate(head(l))
         end method;
-          
+
       let next = any?(candidate-at-head, remaining-lists);
-          
+
       if (next)
         local method remove-next (l :: <list>)
           if (head(l) == next) tail(l) else l end
@@ -959,7 +959,7 @@ define function ^compute-class-precedence-list (c :: <&class>)
                 let constraints = remaining-lists[i].tail;
                 for (j from i + 1 below remaining-lists.size)
                   unless (empty?(remaining-lists[j]))
-                    if ( member?(remaining-lists[j].head, constraints) 
+                    if ( member?(remaining-lists[j].head, constraints)
                        & member?(candidate, remaining-lists[j].tail) )
                       return (candidate, remaining-lists[j].head, i, j)
                     end if
@@ -970,21 +970,21 @@ define function ^compute-class-precedence-list (c :: <&class>)
           end block;
 
         // Signal an error explaining what has gone wrong.
-        let class1 = if (index-of-class1 = 0) 
-                       c 
-                     else 
-                       c-direct-superclasses[index-of-class1 - 1] 
+        let class1 = if (index-of-class1 = 0)
+                       c
+                     else
+                       c-direct-superclasses[index-of-class1 - 1]
                      end;
         let class2 = c-direct-superclasses[index-of-class2 - 1];
         note-CPL-inconsistency(
           c,
           class1,
-          class2, 
+          class2,
           witness1, witness2);
       end
     end
   end;
-  
+
   let c3 = merge-lists(list(c),
                        concatenate(map(^all-superclasses, c-direct-superclasses),
                                    list(c-direct-superclasses)));
@@ -1012,16 +1012,16 @@ define function ^compute-class-precedence-list-old (c :: <&class>)
     => cpl :: <list>;
   let c-direct-superclasses = as(<list>, ^direct-superclasses(c));
 
-  local method merge-lists 
+  local method merge-lists
       (partial-cpl :: <list>, remaining-lists :: <list>)
     // The partial-cpl is in reverse order at this point.
     if (every?(empty?, remaining-lists))
       reverse!(partial-cpl)
     else
-      local 
-        method unconstrained-class (s :: <&class>) 
-          local 
-            method s-in-and-unconstrained-in? (l :: <list>) 
+      local
+        method unconstrained-class (s :: <&class>)
+          local
+            method s-in-and-unconstrained-in? (l :: <list>)
               head(l) == s
             end method,
 
@@ -1029,17 +1029,17 @@ define function ^compute-class-precedence-list-old (c :: <&class>)
               head(l) == s | ~member?(s, tail(l))
             end method;
 
-          any?(s-in-and-unconstrained-in?, remaining-lists) 
-            & every?(s-unconstrained-in?, remaining-lists) 
+          any?(s-in-and-unconstrained-in?, remaining-lists)
+            & every?(s-unconstrained-in?, remaining-lists)
             & s
         end method,
 
         method unconstrained-class-in-superclasses (c :: <&class>)
           any?(unconstrained-class, ^direct-superclasses(c))
         end method;
-          
+
       let next = any?(unconstrained-class-in-superclasses, partial-cpl);
-          
+
       if (next)
         local method remove-next (l :: <list>)
           if (head(l) == next) tail(l) else l end
@@ -1058,7 +1058,7 @@ define function ^compute-class-precedence-list-old (c :: <&class>)
                 let constraints = remaining-lists[i].tail;
                 for (j from i + 1 below remaining-lists.size)
                   unless (empty?(remaining-lists[j]))
-                    if ( member?(remaining-lists[j].head, constraints) 
+                    if ( member?(remaining-lists[j].head, constraints)
                        & member?(candidate, remaining-lists[j].tail) )
                       return (candidate, remaining-lists[j].head, i, j)
                     end if
@@ -1069,28 +1069,28 @@ define function ^compute-class-precedence-list-old (c :: <&class>)
           end block;
 
         // Signal an error explaining what has gone wrong.
-        let class1 = if (index-of-class1 = 0) 
-                       c 
-                     else 
-                       c-direct-superclasses[index-of-class1 - 1] 
+        let class1 = if (index-of-class1 = 0)
+                       c
+                     else
+                       c-direct-superclasses[index-of-class1 - 1]
                      end;
         let class2 = c-direct-superclasses[index-of-class2 - 1];
         note-CPL-inconsistency(
           c,
           class1,
-          class2, 
+          class2,
           witness1, witness2);
         // gts,98apr03:  a naive attempt to keep going
         // remove a superclass,
         c-direct-superclasses := remove(c-direct-superclasses, class2);
         // and try again
-        merge-lists(list(c), 
+        merge-lists(list(c),
             pair(c-direct-superclasses,
                    map(^all-superclasses, c-direct-superclasses)));
       end
     end
   end;
-  
+
   merge-lists(list(c),
               pair(c-direct-superclasses,
                    map(^all-superclasses, c-direct-superclasses)));
@@ -1151,7 +1151,7 @@ end;
 define program-note <subclass-explanation-1>(<precedes-explanation>)
   format-string "%s precedes %s because %s is a direct subclass of %s "
                 "and %s precedes %s";
-  format-arguments 
+  format-arguments
     class-1, class-2, class-1 again, class-3, class-3 again, class-2 again;
 end;
 
@@ -1160,7 +1160,7 @@ define program-note <subclass-explanation-2>(<precedes-explanation>)
   format-string "%s precedes %s in the CPL of %s "
                 "because %s is a direct subclass of %s "
                 "and %s precedes %s in %s";
-  format-arguments class-1, class-2, class-3, 
+  format-arguments class-1, class-2, class-3,
                    class-3 again, class-4, class-1 again, class-2 again,
                    class-4 again;
 end;
@@ -1176,7 +1176,7 @@ define program-note <transitivity-explanation>(<precedes-explanation>)
   format-arguments class-1, class-2, class-3;
 end;
 
-define method explain-precedes(c1, c2, in)        
+define method explain-precedes(c1, c2, in)
   let name = compose(fragment-identifier, model-variable-name);
 
   let direct-supers = ^direct-superclasses(in);
@@ -1205,7 +1205,7 @@ define method explain-precedes(c1, c2, in)
     for (s in direct-supers)
       if (precedes?(c1, c2, s))
         return(make(<subclass-explanation-2>,
-                    class-1: c1.name, class-2: c2.name, 
+                    class-1: c1.name, class-2: c2.name,
                     class-2: in.name, class-4: s.name,
                     subnotes: list(explain-precedes(c1, c2, s))))
       end
@@ -1227,16 +1227,16 @@ define method cpl-search(c1, c2, in)
 
     // The edges are stored as triples of the form (from, to, in)
 
-    let edge-list = map-as(<list>, 
+    let edge-list = map-as(<list>,
                            method (sc) vector(c, sc, c) end,
                            c.^direct-superclasses);
 
-    // Here I should just look at all subclasses of c that are reachable from 
+    // Here I should just look at all subclasses of c that are reachable from
     // in, but ^direct-subclasses sometimes complains of cycles in the CPL for
     // some reason.  So we do it less efficiently for now.
     for (sc in in.^all-superclasses)
       if (member?(c1, sc.^direct-superclasses))
-        for (cc in sc.^direct-superclasses, 
+        for (cc in sc.^direct-superclasses,
              c-found = #f then c-found | cc == c)
           if (c-found) edge-list := pair(
                 vector(c, cc, sc), edge-list) end;
@@ -1244,7 +1244,7 @@ define method cpl-search(c1, c2, in)
       end
     end;
 
-    edge-list 
+    edge-list
   end;
 
   local method search(el)
@@ -1265,7 +1265,7 @@ end;
 
 define method ^update-class-slots! (class :: <&class>) => ()
   let storage = make(<simple-object-vector>, size: size(^class-slot-descriptors(class)));
-  class.^class-slot-storage 
+  class.^class-slot-storage
     := mapped-model(storage)
 end method ^update-class-slots!;
 
@@ -1280,26 +1280,26 @@ define function ^compute-defaulted-initialization-arguments (class :: <&class>)
     for (descriptor in ^direct-initialization-argument-descriptors(c))
       let keyword = descriptor.^init-keyword;
       if (member?(keyword, required-keywords))
-	// don't look at it
+        // don't look at it
       elseif (descriptor.^init-keyword-required?)
-	required-keywords := pair(keyword, required-keywords);
+        required-keywords := pair(keyword, required-keywords);
       elseif (descriptor.^init-supplied? & ~member?(keyword, keywords))
-	keywords := pair(keyword, keywords);
-	if (descriptor.^init-value?)
-	  if (descriptor.^init-evaluated?)
+        keywords := pair(keyword, keywords);
+        if (descriptor.^init-value?)
+          if (descriptor.^init-evaluated?)
             let (inlineable?, init-value)
               = inlineable?(^init-data-slot(descriptor));
             if (inlineable?)
-  	      init-values := pair(init-value, init-values);
+                init-values := pair(init-value, init-values);
             else
-  	      all-evaluated? := #f;
-	    end
-	  else
-	    all-evaluated? := #f;
-	  end
-	else
-	  all-init-value? := #f;
-	end;
+                all-evaluated? := #f;
+            end
+          else
+            all-evaluated? := #f;
+          end
+        else
+          all-init-value? := #f;
+        end;
       end;
     end;
   end;
@@ -1307,17 +1307,17 @@ define function ^compute-defaulted-initialization-arguments (class :: <&class>)
   class.^defaulted-initialization-arguments-slot :=
     if (all-init-value?)
       if (all-evaluated?)
-	let result = make(<simple-object-vector>, size: vector-size);
-	for (i from 0 by 2,
-	     keyword in keywords,
-	     init-value in init-values)
-	  result[i] := keyword;
-	  result[i + 1] := init-value;
-	end;
-	result
+        let result = make(<simple-object-vector>, size: vector-size);
+        for (i from 0 by 2,
+             keyword in keywords,
+             init-value in init-values)
+          result[i] := keyword;
+          result[i + 1] := init-value;
+        end;
+        result
       else
-	// flag to initialize the vector first time
-	- vector-size
+        // flag to initialize the vector first time
+        - vector-size
       end
     else
       // tell the runtime how big to make the vector, to save consing
@@ -1332,34 +1332,34 @@ define method ^compute-slot-descriptors (class :: <&class>)
   let repeater = #f;
   let repeater-size = #f;
   local method collect-superclass-slots (superclasses :: <list>) => ()
-	  unless (empty?(superclasses))
-	    // first get superclass slots
-	    collect-superclass-slots(tail(superclasses));
-	    let c :: <&class> = head(superclasses);
-	    for (sd :: <&slot-descriptor> in ^direct-slot-descriptors(c))
-	      block (duplicate-slot)
-		let g = ^slot-getter(sd);
-		for (osd :: <&slot-descriptor> in all-slots)
-		  if (g == ^slot-getter(osd)) duplicate-slot() end if
-		end for;
-		all-slots := add!(all-slots, sd);
-		select (^slot-allocation(sd) by \==)
-		  #"instance" => icount := icount + 1;
-		  #"each-subclass", #"class" => ccount := ccount + 1;
-		  #"virtual" => ;
-		  #"repeated" =>
-		    if (repeater)
-		      error("Multiple repeated slots %= and %= in %=", repeater, sd, class)
-		    else
-		      repeater := sd;
-		      repeater-size := ^size-slot-descriptor(sd);
-		      icount := icount + 1     // one for the size slot
-		    end if;
-		end select
-	      end block
-	    end for
-	  end unless
-	end method;
+          unless (empty?(superclasses))
+            // first get superclass slots
+            collect-superclass-slots(tail(superclasses));
+            let c :: <&class> = head(superclasses);
+            for (sd :: <&slot-descriptor> in ^direct-slot-descriptors(c))
+              block (duplicate-slot)
+                let g = ^slot-getter(sd);
+                for (osd :: <&slot-descriptor> in all-slots)
+                  if (g == ^slot-getter(osd)) duplicate-slot() end if
+                end for;
+                all-slots := add!(all-slots, sd);
+                select (^slot-allocation(sd) by \==)
+                  #"instance" => icount := icount + 1;
+                  #"each-subclass", #"class" => ccount := ccount + 1;
+                  #"virtual" => ;
+                  #"repeated" =>
+                    if (repeater)
+                      error("Multiple repeated slots %= and %= in %=", repeater, sd, class)
+                    else
+                      repeater := sd;
+                      repeater-size := ^size-slot-descriptor(sd);
+                      icount := icount + 1     // one for the size slot
+                    end if;
+                end select
+              end block
+            end for
+          end unless
+        end method;
   collect-superclass-slots(^all-superclasses(class));
   let ivector :: <simple-object-vector> =
     make(<simple-object-vector>, size: icount, fill: #f);
@@ -1401,58 +1401,58 @@ define method ^compute-slot-descriptors (class :: <&class>)
     merge-vectors(cvector, ^class-slot-descriptors(first-primary))
   end when;
   local method allocate-superclass-slots (superclasses :: <list>) => ()
-	  unless (empty?(superclasses))
-	    // first allocate slots for superclasses
-	    allocate-superclass-slots(tail(superclasses));
-	    let c :: <&class> = head(superclasses);
-	    unless (first-primary & ^subtype?(first-primary, c))
-	      let position-slot
-		= method (sd, vec :: <simple-object-vector>)
-		    let n :: <integer> = size(vec);
-		    local method loop (i :: <integer>)
-			    if (i == n)
-			      error("Bug - ran out of space for %= in %=", sd, class)
-			    else
-			      if (^vector-element(vec, i))
-				loop(i + 1)
-			      else
-				^vector-element(vec, i) := sd
-			      end if
-			    end if
-			  end method;
-		    loop(0)
-		  end method;
-	      for (sd in ^direct-slot-descriptors(c))
-		select (^slot-allocation(sd) by \==)
-		  #"instance"  =>
-		    position-slot(sd, ivector);
-		  #"each-subclass", #"class" => 
-		    position-slot(sd, cvector);
-		  #"virtual" => ;
-		  #"repeated" => 
-		    let i :: <integer> = icount - 1;
-		    if (~(^vector-element(ivector, i)))
-		      ^vector-element(ivector, i) := repeater-size
-		    else
-		      error("Bug - canonical slot for repeating size in use already")
-		    end if;
-		end select
-	      end for
-	    end unless
-	  end unless
-	end method;
+          unless (empty?(superclasses))
+            // first allocate slots for superclasses
+            allocate-superclass-slots(tail(superclasses));
+            let c :: <&class> = head(superclasses);
+            unless (first-primary & ^subtype?(first-primary, c))
+              let position-slot
+                = method (sd, vec :: <simple-object-vector>)
+                    let n :: <integer> = size(vec);
+                    local method loop (i :: <integer>)
+                            if (i == n)
+                              error("Bug - ran out of space for %= in %=", sd, class)
+                            else
+                              if (^vector-element(vec, i))
+                                loop(i + 1)
+                              else
+                                ^vector-element(vec, i) := sd
+                              end if
+                            end if
+                          end method;
+                    loop(0)
+                  end method;
+              for (sd in ^direct-slot-descriptors(c))
+                select (^slot-allocation(sd) by \==)
+                  #"instance"  =>
+                    position-slot(sd, ivector);
+                  #"each-subclass", #"class" =>
+                    position-slot(sd, cvector);
+                  #"virtual" => ;
+                  #"repeated" =>
+                    let i :: <integer> = icount - 1;
+                    if (~(^vector-element(ivector, i)))
+                      ^vector-element(ivector, i) := repeater-size
+                    else
+                      error("Bug - canonical slot for repeating size in use already")
+                    end if;
+                end select
+              end for
+            end unless
+          end unless
+        end method;
   allocate-superclass-slots(^all-superclasses(class));
   class.^slot-descriptors :=
     mapped-model(if (all-slots = ivector)
-		   // often, all slots are instance slots
-		   ivector
-		 elseif (all-slots = cvector)
-		   // or maybe they're all class slots
-		   cvector
-		 else
-		   // oh, well -- make a new vector
-		   as(<simple-object-vector>, all-slots)
-		 end);
+                   // often, all slots are instance slots
+                   ivector
+                 elseif (all-slots = cvector)
+                   // or maybe they're all class slots
+                   cvector
+                 else
+                   // oh, well -- make a new vector
+                   as(<simple-object-vector>, all-slots)
+                 end);
   class.^instance-slot-descriptors := mapped-model(ivector);
   class.^class-slot-descriptors := mapped-model(cvector);
   class.^repeated-slot-descriptor := repeater;
@@ -1467,7 +1467,7 @@ end method ^getter=;
 
 define method ^setter=
     (descriptor-1 :: <&slot-descriptor>, descriptor-2 :: <&slot-descriptor>)
-  descriptor-1.^slot-setter 
+  descriptor-1.^slot-setter
     & descriptor-2.^slot-setter
     & descriptor-1.^slot-setter == descriptor-2.^slot-setter
 end method ^setter=;
@@ -1481,11 +1481,11 @@ end method ^accessor=;
 //// Slot initialization.
 
 define compiler-sideways method ^initialize-slot-descriptor
-    (slot :: <&slot-descriptor>, 
+    (slot :: <&slot-descriptor>,
        #key owner, #all-keys)
   // Install slot descriptors into accessor methods.
   install-slot-descriptor-in-accessor-methods(slot, owner);
-  // Install compile stage versions of the slot's accessors if 
+  // Install compile stage versions of the slot's accessors if
   // they exist.
   slot.model-object-getter := compute-compile-stage-getter(slot);
   slot.model-object-setter := compute-compile-stage-setter(slot);
@@ -1511,12 +1511,12 @@ define method do-instance-slot-values (f, o)
   end if;
 end method;
 
-define method do-instance-slot-value 
+define method do-instance-slot-value
     (f, slotd :: <&slot-descriptor>, o) => ()
   f(slotd, ^slot-value(o, slotd));
 end method;
 
-define method do-instance-slot-value 
+define method do-instance-slot-value
     (f, slotd :: <&repeated-slot-descriptor>, o) => ()
   let size = ^slot-value(o, ^size-slot-descriptor(slotd));
   for (i from 0 below size)
@@ -1528,7 +1528,7 @@ define macro for-instance-slot-value
   { for-instance-slot-value (?:variable in ?:expression) ?:body end }
     => { do-instance-slot-values
            (method (_dummy, ?variable) ?body end, ?expression) }
-  { for-instance-slot-value 
+  { for-instance-slot-value
         (?:variable described-by ?desc:variable in ?:expression)
       ?:body
     end }

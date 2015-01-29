@@ -13,7 +13,7 @@ define compiler-sideways method compute-and-install-form-model-objects
   // Do nothing.
 end method;
 
-define method form-implicitly-defined? 
+define method form-implicitly-defined?
     (form :: <missing-definition>) => (well? :: <boolean>)
   #t
 end method;
@@ -32,12 +32,12 @@ define method binding-definition-missing?
   end;
 end method;
 
-define method install-missing-definition 
+define method install-missing-definition
    (binding :: <module-binding>) => ()
   let name = binding-variable-name(binding);
-  let missing-def 
-    = make(<missing-definition>, 
-           source-location: 
+  let missing-def
+    = make(<missing-definition>,
+           source-location:
              *current-dependent* & form-source-location(*current-dependent*),
            variable-name:   name,
            adjectives:      #[]);

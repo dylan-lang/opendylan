@@ -20,22 +20,22 @@ define sealed sideways method run-compilation-passes (code) => code;
   //  else
   //  unless (lambda-optimized?(code))
   //    with-simple-abort-retry-restart
-  //	("Abort all analysis passes and continue.", 
-  //	 "Restart all analysis passes.")
+  //        ("Abort all analysis passes and continue.",
+  //         "Restart all analysis passes.")
   //      let queue = make(<compilation-queue>);
   //      for (pass in reverse(*passes*.pass-ordering))
-  //	push-pass!(queue, pass);
+  //        push-pass!(queue, pass);
   //      end for;
   //      with-dependent-context ($compilation of model-creator(code))
-  //	  local method loop () => ();
-  //		  let pass = pop-pass!(queue);
-  //		  if (pass)
-  //		    run-pass(code, pass, queue);
-  //		    loop();
-  //		  end if;
-  //	  end method loop;
-  //	  loop();
-  //	  lambda-optimized?(code) := #t;
+  //          local method loop () => ();
+  //                  let pass = pop-pass!(queue);
+  //                  if (pass)
+  //                    run-pass(code, pass, queue);
+  //                    loop();
+  //                  end if;
+  //          end method loop;
+  //          loop();
+  //          lambda-optimized?(code) := #t;
   //      end with-dependent-context;
   //    end with-simple-abort-retry-restart;
   //  end;
@@ -105,14 +105,14 @@ end method traverse;
 define method traverse (code :: <&lambda>, function, visit == #"computations")
  => (changed? :: <boolean>);
   local method visit-computations (f :: <&lambda>)
-	  let changed? = #f;
-	  for-computations (c in f)
-	    if (function(c))
-	      changed? := #t;
-	    end if;
-	  end for-computations;
+          let changed? = #f;
+          for-computations (c in f)
+            if (function(c))
+              changed? := #t;
+            end if;
+          end for-computations;
           changed?
-	end method visit-computations;
+        end method visit-computations;
   traverse(code, visit-computations, #"functions")
 end method traverse;
 

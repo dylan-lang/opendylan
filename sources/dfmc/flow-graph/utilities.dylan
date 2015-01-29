@@ -267,24 +267,24 @@ define method insert-computations-before-reference!
   case
     merge-left-value(old-c) == ref
       => let prev-c = merge-left-previous-computation(old-c);
-	 merge-left-previous-computation(old-c) := new-last-c;
-	 next-computation(new-last-c) := old-c;
-	 if (prev-c == if-c) // EMPTY BRANCH
-	   consequent(if-c) := new-first-c;
-	 else
-	   next-computation(prev-c) := new-first-c;
-	 end if;
-	 previous-computation(new-first-c) := prev-c;
+         merge-left-previous-computation(old-c) := new-last-c;
+         next-computation(new-last-c) := old-c;
+         if (prev-c == if-c) // EMPTY BRANCH
+           consequent(if-c) := new-first-c;
+         else
+           next-computation(prev-c) := new-first-c;
+         end if;
+         previous-computation(new-first-c) := prev-c;
     merge-right-value(old-c) == ref
       => let prev-c = merge-right-previous-computation(old-c);
-	 merge-right-previous-computation(old-c) := new-last-c;
-	 next-computation(new-last-c) := old-c;
-	 if (prev-c == if-c) // EMPTY BRANCH
-	   alternative(if-c) := new-first-c;
-	 else
-	   next-computation(prev-c) := new-first-c;
-	 end if;
-	 previous-computation(new-first-c) := prev-c;
+         merge-right-previous-computation(old-c) := new-last-c;
+         next-computation(new-last-c) := old-c;
+         if (prev-c == if-c) // EMPTY BRANCH
+           alternative(if-c) := new-first-c;
+         else
+           next-computation(prev-c) := new-first-c;
+         end if;
+         previous-computation(new-first-c) := prev-c;
     otherwise
       => insert-computations-before!(old-c, new-first-c, new-last-c);
   end case;
@@ -381,7 +381,7 @@ define method delete-computation! (c :: <bind-exit>) => ();
     redirect-previous-computations!(c, body-first-c);  // fixup next-computation values
     redirect-next-computations!(merge-c, body-last-c); // fixup previous-computation's
     replace-temporary-in-users!(temporary(merge-c),
-				bind-exit-merge-body-temporary(merge-c));
+                                bind-exit-merge-body-temporary(merge-c));
     next-computation(body-last-c) := next-c;
     previous-computation(body-first-c) := prev-c;
     remove-computation-references!(merge-c);
@@ -482,9 +482,9 @@ define function delete-computation-block!
     (start :: <computation>, before, #key on-deletion = identity) => ()
   let queue :: <list> = #();
   walk-computations(method (c)
-		      queue := pair(c, queue);
-		    end,
-		    start, before);
+                      queue := pair(c, queue);
+                    end,
+                    start, before);
   // everything is now in reverse order, so data dependencies should
   // go away automatically
   for (c in queue)
@@ -507,9 +507,9 @@ define function remove-computation-block-references!
     (start :: <computation>, before, #key on-deletion = identity) => ()
   let queue :: <list> = #();
   walk-computations(method (c)
-		      queue := pair(c, queue);
-		    end,
-		    start, before);
+                      queue := pair(c, queue);
+                    end,
+                    start, before);
   // everything is now in reverse order, so data dependencies should
   // go away automatically
   for (c in queue)
@@ -556,31 +556,31 @@ define function maybe-delete-function-body (function :: <&lambda>)
     let outside = lambda-environment(outer(environment(function)));
     let visited = make(<set>);
     local method outside-user-c? (user :: <computation>)
-	    let lambda-env = lambda-environment(environment(user));
-	    lambda-env == outside |
-	      used-from-outside?(lambda(lambda-env))
-	  end,
+            let lambda-env = lambda-environment(environment(user));
+            lambda-env == outside |
+              used-from-outside?(lambda(lambda-env))
+          end,
           method outside-user? (ref)
             if (instance?(ref, <make-closure>))
               outside-user-c?(ref)
             else
               any?(outside-user-c?, users(ref))
             end if
-	  end,
+          end,
           method used-from-outside? (f :: <&lambda>)
-	    if (member?(f, visited))
-	      #f
-	    else
-	      add!(visited, f);
-	      any?(outside-user?, users(f)) |
-		any?(outside-user?, users(iep(f)))
-	    end
-	  end;
+            if (member?(f, visited))
+              #f
+            else
+              add!(visited, f);
+              any?(outside-user?, users(f)) |
+                any?(outside-user?, users(iep(f)))
+            end
+          end;
       unless (used-from-outside?(function))
-	// clear the body for recursive references
-	body(function) := #f;
-	delete-computation-block!(function-body, #f);
-	#t
+        // clear the body for recursive references
+        body(function) := #f;
+        delete-computation-block!(function-body, #f);
+        #t
       end;
   end;
 end;
@@ -682,7 +682,7 @@ define method replace-temporary-references!
           if (new-t) add-user!(new-t, c) end;
           remove-user!(t, c);
           renamed? := #t;
-	end if;
+        end if;
       end for;
     else
       if (ref == t)

@@ -13,8 +13,8 @@ end macro;
 define macro with-form-context
   { with-form-context (?form:expression) ?:body end }
     => { dfmc-do-with-library-context
-	  (method () ?body end, ?form.source-form-context) }
-end macro;				      
+          (method () ?body end, ?form.source-form-context) }
+end macro;
 
 define macro with-no-context
   { with-no-context ?:body end }
@@ -39,8 +39,8 @@ define sealed method size (seq :: <compiler-source-record-sequence>)
 end method;
 
 define sealed method element (seq :: <compiler-source-record-sequence>,
-			      index :: <integer>, 
-			      #key default = unsupplied())
+                              index :: <integer>,
+                              #key default = unsupplied())
  => (res :: dfmc-<source-record>)
   if (supplied?(default))
     let cr = element(seq.source-sequence-records, index, default: $unfound);
@@ -52,39 +52,39 @@ end method;
 
 define sealed method forward-iteration-protocol
     (seq :: <compiler-source-record-sequence>)
- => (i, s, n :: <function>, f? :: <function>,k :: <function>, 
+ => (i, s, n :: <function>, f? :: <function>,k :: <function>,
      e :: <function>, es :: <function>, c :: <function>);
   local method next (seq, i) => res; i + 1 end;
   local method finished? (seq, i, limit) => res; i == limit end;
   local method key (seq, i) => res; i end;
   local method elt (seq, i) => res;
-	  let cr = seq.source-sequence-records[i];
-	  cr.dfmc-compilation-record-source-record
-	end;
+          let cr = seq.source-sequence-records[i];
+          cr.dfmc-compilation-record-source-record
+        end;
   local method elt-setter (val, seq, i) => res; seq[i] := val end;
   local method copy (seq, i) => res; i end;
   values(0, seq.source-sequence-records.size,
-	 next, finished?, key, elt, elt-setter, copy)
+         next, finished?, key, elt, elt-setter, copy)
 end method;
 
 define function compilation-context-sources (cc :: dfmc-<library-description>)
  => (sr* :: <compiler-source-record-sequence>);
   make(<compiler-source-record-sequence>,
-       records: as(dfmc-<compilation-record-vector>, 
-		   dfmc-library-description-compilation-records(cc)))
+       records: as(dfmc-<compilation-record-vector>,
+                   dfmc-library-description-compilation-records(cc)))
 end function;
 
 define function compilation-context-version (cc :: dfmc-<library-description>)
  => (major-version, minor-version, time-stamp)
   values(cc.dfmc-library-description-major-version,
-	 cc.dfmc-library-description-minor-version,
-	 as(<machine-word>, cc.dfmc-library-description-change-count))
+         cc.dfmc-library-description-minor-version,
+         as(<machine-word>, cc.dfmc-library-description-change-count))
 end function;
 
 define function compilation-context-compiler-settings
     (ld :: dfmc-<library-description>)
   list(platform-name: ld.dfmc-library-description-platform-name,
-	   back-end: ld.dfmc-library-description-compiler-back-end-name,
+           back-end: ld.dfmc-library-description-compiler-back-end-name,
        mode: ld.dfmc-library-description-compilation-mode,
        build-location: ld.dfmc-library-description-build-location,
        library-pack: ld.dfmc-library-description-library-pack)
@@ -94,25 +94,25 @@ define function compilation-context-compiler-settings-setter
     (settings, ld :: dfmc-<library-description>)
   local method setter (ld, #key platform-name = unsupplied(),
                         back-end = unsupplied(),
-		                mode = unsupplied(),
-		                build-location = unsupplied(),
-		                library-pack = unsupplied())
-	  if (supplied?(platform-name))
-	    ld.dfmc-library-description-platform-name := platform-name
-	  end;
+                                mode = unsupplied(),
+                                build-location = unsupplied(),
+                                library-pack = unsupplied())
+          if (supplied?(platform-name))
+            ld.dfmc-library-description-platform-name := platform-name
+          end;
       if (supplied?(back-end))
         ld.dfmc-library-description-compiler-back-end-name := back-end
-	  end;
+          end;
       if (supplied?(mode))
-	    ld.dfmc-library-description-compilation-mode := mode
-	  end;
-	  if (supplied?(build-location))
-	    ld.dfmc-library-description-build-location := build-location
-	  end;
-	  if (supplied?(library-pack))
-	    ld.dfmc-library-description-library-pack := library-pack
-	  end;
-	end;
+            ld.dfmc-library-description-compilation-mode := mode
+          end;
+          if (supplied?(build-location))
+            ld.dfmc-library-description-build-location := build-location
+          end;
+          if (supplied?(library-pack))
+            ld.dfmc-library-description-library-pack := library-pack
+          end;
+        end;
   apply(setter, ld, settings)
 end function;
 
@@ -164,13 +164,13 @@ end function;
 // binding as the home variable.  Do that consistently, so can have
 // a more efficient same-variable?.
 define method variable-home (context :: dfmc-<library-description>,
-			     var :: dfmc-<module-binding>)
+                             var :: dfmc-<module-binding>)
  => home :: dfmc-<module-binding>;
   dfmc-local-binding-in(context.dfmc-language-definition, var);
 end method;
 
 define method variable-home (context :: dfmc-<library-description>,
-			     var :: dfmc-<variable-name-fragment>)
+                             var :: dfmc-<variable-name-fragment>)
  => home :: dfmc-<module-binding>;
   with-context (context)
     dfmc-untracked-lookup-binding(var)
@@ -178,7 +178,7 @@ define method variable-home (context :: dfmc-<library-description>,
 end method;
 
 define method variable-home (context :: dfmc-<library-description>,
-			     var :: dfmc-<referenced-variable>)
+                             var :: dfmc-<referenced-variable>)
  => home :: dfmc-<module-binding>;
   with-context (context)
     let name = var.dfmc-referenced-variable-name;
@@ -188,7 +188,7 @@ define method variable-home (context :: dfmc-<library-description>,
 end method;
 
 define method variable-home (context :: dfmc-<library-description>,
-			     var :: <unresolved-variable>)
+                             var :: <unresolved-variable>)
  => home :: dfmc-<module-binding>;
   with-context (context)
     let (name, module-name) = variable-name(var);
@@ -196,10 +196,10 @@ define method variable-home (context :: dfmc-<library-description>,
     let module = dfmc-lookup-module-in(library, module-name);
     dfmc-untracked-lookup-binding-in(module, name)
   end
-end method;  
+end method;
 
 define function same-variable? (context :: dfmc-<library-description>,
-				v1 :: <variable>, v2 :: <variable>)
+                                v1 :: <variable>, v2 :: <variable>)
   variable-home(context, v1) == variable-home(context, v2)
 end function;
 
@@ -215,25 +215,25 @@ define function project-library-definition (context :: dfmc-<library-description
 end function;
 
 define function do-namespace-names (space :: dfmc-<namespace>,
-				    function :: <function>,
-				    inherited?, internal?, local-bindings?)
+                                    function :: <function>,
+                                    inherited?, internal?, local-bindings?)
   let local-bindings = space.dfmc-namespace-local-bindings;
   if (internal?)
     for (local-binding keyed-by name in local-bindings)
       let kind = if (dfmc-exported-name?(space, name)) #"exported"
-		 else #"internal" end;
+                 else #"internal" end;
       if (local-bindings?)
-	function(name, kind, local-binding: local-binding)
+        function(name, kind, local-binding: local-binding)
       else
-	function(name, kind)
+        function(name, kind)
       end;
     end
   else
     for (name in space.dfmc-exported-names)
       if (local-bindings?)
-	function(name, #"exported", local-binding: local-bindings[name])
+        function(name, #"exported", local-binding: local-bindings[name])
       else
-	function(name, #"exported")
+        function(name, #"exported")
       end;
     end;
   end;
@@ -243,18 +243,18 @@ define function do-namespace-names (space :: dfmc-<namespace>,
 end function;
 
 define function do-library-modules (context :: dfmc-<library-description>,
-				    function :: <function>,
-				    #key inherited?, internal?)
+                                    function :: <function>,
+                                    #key inherited?, internal?)
   let library = context.dfmc-language-definition;
   debug-assert(library);
   let action = method (name, kind)
-		 with-no-context function(name, kind) end
+                 with-no-context function(name, kind) end
                end;
   do-namespace-names(library, action, inherited?, internal?, #f);
 end function;
 
 define function find-module-definition (context :: dfmc-<library-description>,
-					name) => (definition, kind)
+                                        name) => (definition, kind)
   let library = context.dfmc-language-definition;
   debug-assert(library);
   let name = as(<symbol>, name);
@@ -262,68 +262,68 @@ define function find-module-definition (context :: dfmc-<library-description>,
   let defined? = dfmc-defined-name?(library, name);
   if (module)
     values(module.dfmc-namespace-definition,
-	   if (defined?) #"defined" else #"inherited" end)
+           if (defined?) #"defined" else #"inherited" end)
   end;
 end function;
 
 define inline function name-exported-from? (space :: dfmc-<namespace>,
-					    name :: <symbol>)
+                                            name :: <symbol>)
   dfmc-lookup-name(space, name, default: #f, exported?: #t) & #t
 end function;
 
 define function module-exported? (context :: dfmc-<library-description>,
-				  name)
+                                  name)
   name-exported-from?(context.dfmc-language-definition, as(<symbol>, name))
 end function;
 
 define function do-module-variables (context :: dfmc-<library-description>,
-				     definition :: <module-definition>,
-				     function :: <function>,
-				     #key inherited?, internal?)
+                                     definition :: <module-definition>,
+                                     function :: <function>,
+                                     #key inherited?, internal?)
   with-context (context) // needed for fragment-module
     let module-name = definition.dfmc-form-namespace-name;
     let module = dfmc-lookup-module-in(context.dfmc-language-definition,
-				       module-name);
+                                       module-name);
     let active-definition = module & module.dfmc-namespace-definition;
     if (definition == active-definition)
       local method variable-function (name, kind, #key local-binding)
-	      if (local-binding)
-		// ignore local bindings without any properties...
-		if (kind == #"exported" |
-		      dfmc-canonical-binding-properties(local-binding))
-		  with-no-context function(local-binding, kind) end;
-		end;
-	      else
-		let variable = make-variable(name, module-name);
-	        with-no-context function(variable, kind) end;
-	      end;
-	    end method;
+              if (local-binding)
+                // ignore local bindings without any properties...
+                if (kind == #"exported" |
+                      dfmc-canonical-binding-properties(local-binding))
+                  with-no-context function(local-binding, kind) end;
+                end;
+              else
+                let variable = make-variable(name, module-name);
+                with-no-context function(variable, kind) end;
+              end;
+            end method;
       do-namespace-names(module, variable-function, inherited?, internal?, #t);
     end if;
   end with-context;
 end function;
 
 define method variable-exported? (context :: dfmc-<library-description>,
-				  var :: dfmc-<module-binding>)
+                                  var :: dfmc-<module-binding>)
   dfmc-exported-name?(var.dfmc-binding-home, var.dfmc-binding-identifier)
 end method;
 
 define method variable-exported? (context :: dfmc-<library-description>,
-				  var :: dfmc-<variable-name-fragment>)
+                                  var :: dfmc-<variable-name-fragment>)
   with-context (context) // needed for fragment-module.
     name-exported-from?(var.dfmc-fragment-module, var.dfmc-fragment-identifier)
   end
 end method;
 
 define method variable-exported? (context :: dfmc-<library-description>,
-				  var :: dfmc-<name-dependency>)
+                                  var :: dfmc-<name-dependency>)
   with-context (context)
     name-exported-from?(var.dfmc-dependency-module, var.dfmc-dependency-name)
   end
 end method;
 
 define method variable-exported? (context :: dfmc-<library-description>,
-				  var :: <unresolved-variable>)
+                                  var :: <unresolved-variable>)
   with-context (context)
     let library = context.dfmc-language-definition;
     let module-name = var.unresolved-variable-module-name;
@@ -333,7 +333,7 @@ define method variable-exported? (context :: dfmc-<library-description>,
 end method;
 
 // #t means something not representable in the API.
-define constant <type-expression> 
+define constant <type-expression>
   = type-union(<variable>, singleton(#t), dfmc-<fragment>);
 
 define generic externalize-type (type) => (res :: false-or(<type-expression>));
@@ -350,12 +350,12 @@ define method externalize-type (type :: <variable>) => (res :: <variable>)
   type
 end method;
 
-define method externalize-type 
+define method externalize-type
     (type :: dfmc-<fragment>) => (res :: <type-expression>)
   type
 /*
   if (instance?(type, <variable>))
-    // Hack to work around the fact that <fragment> actually precedes 
+    // Hack to work around the fact that <fragment> actually precedes
     // <variable> in the CPL of a name fragment.
     type
   else
@@ -397,7 +397,7 @@ define method source-form-defined-variables (macro-form :: <macro-form>)
     let variables = #();
     for (form in macro-form.macro-form-expanded-forms)
       for (var in form.source-form-defined-variables)
-	variables := add-new!(variables, var);
+        variables := add-new!(variables, var);
       end;
     end;
     reverse!(variables)
@@ -414,7 +414,7 @@ define function explicit-variable-type
  => (type :: false-or(<type-expression>), found? :: <boolean>)
   with-form-context (form)
     let index = find-key(form.dfmc-form-variable-names,
-			 method (v) same-variable-name?(variable, v) end);
+                         method (v) same-variable-name?(variable, v) end);
     if (index)
       let type = form.dfmc-form-type-expressions[index];
       values(externalize-type(type), #t)
@@ -444,15 +444,15 @@ define method source-form-variable-type (form :: dfmc-<explicitly-typed-variable
 end method;
 
 define method source-form-variable-type (macro-form :: <macro-form>,
-					 variable :: <variable>)
+                                         variable :: <variable>)
  => (type :: false-or(<type-expression>))
   with-form-context (macro-form)
     block (return)
       for (form in macro-form.macro-form-expanded-forms)
-	if (instance?(form, dfmc-<explicitly-typed-variable-defining-form>))
-	  let (type, found?) = explicit-variable-type(form, variable);
-	  if (found?) return(type) end;
-	end if;
+        if (instance?(form, dfmc-<explicitly-typed-variable-defining-form>))
+          let (type, found?) = explicit-variable-type(form, variable);
+          if (found?) return(type) end;
+        end if;
       end for;
     end block;
   end;
@@ -467,22 +467,22 @@ define function canonical-compilation-record (context :: dfmc-<library-descripti
   let cr = dfmc-source-record-compilation-record(context, sr, default: #f);
   unless(cr)
     signal(make(<invalid-canonical-source-record-error>,
-		format-string: "Invalid canonical source record %s passed to the compiler",
-		format-arguments: list(sr.source-record-name)))
+                format-string: "Invalid canonical source record %s passed to the compiler",
+                format-arguments: list(sr.source-record-name)))
   end;
   cr
 end;
-  
+
 
 define function source-record-top-level-forms (context :: dfmc-<library-description>, sr)
   with-context (context)
     let cr = canonical-compilation-record(context, sr);
     let all-forms = cr & cr.dfmc-compilation-record-top-level-forms;
     choose(method (form)
-	     ~instance?(form, dfmc-<missing-variable-defining-form>) &
-	       form.dfmc-form-parent-form == #f
-	   end,
-	   all-forms | #())
+             ~instance?(form, dfmc-<missing-variable-defining-form>) &
+               form.dfmc-form-parent-form == #f
+           end,
+           all-forms | #())
   end;
 end function;
 
@@ -499,7 +499,7 @@ end;
 define function macro-form-expanded-forms (macro-form :: <macro-form>)
   with-form-context (macro-form)
     choose(method(form) form.dfmc-form-parent-form == macro-form end,
-	   macro-form.dfmc-form-derived-forms)
+           macro-form.dfmc-form-derived-forms)
   end;
 end function;
 
@@ -532,7 +532,7 @@ define function class-definition-init-keywords (form :: <class-definition>)
 end function;
 
 define function keyword-spec (form :: <class-definition>,
-			      keyword :: <symbol>)
+                              keyword :: <symbol>)
   block (return)
     for (spec in form.dfmc-form-keyword-specs)
       if (keyword == spec.dfmc-spec-keyword-expression) return(spec) end;
@@ -576,13 +576,13 @@ define function functional-parameters (form :: <functional-definition>)
     let req-vals = sig.dfmc-spec-value-required-variable-specs;
     let rest-val = sig.dfmc-spec-value-rest-variable-spec;
     local method var (spec)
-	    if (spec) spec.dfmc-spec-variable-name end
-	  end;
+            if (spec) spec.dfmc-spec-variable-name end
+          end;
     local method vars (specs)
-	    if (specs) map(var, specs) end
-	  end;
+            if (specs) map(var, specs) end
+          end;
     values(vars(reqs), var(rest), var(next), vars(keys),
-	   vars(req-vals),var(rest-val))
+           vars(req-vals),var(rest-val))
   end;
 end function;
 
@@ -593,16 +593,16 @@ define function functional-keys (form :: <functional-definition>)
     let all-keys? = sig.dfmc-spec-argument-all-keys?;
     let keys = key? & sig.dfmc-spec-argument-key-variable-specs;
     local method key (spec)
-	    if (spec)
-	      let key = spec.dfmc-spec-keyword-expression;
-	      if (instance?(key, <symbol>))
-		key
-	      else
-		// What the key name is defaulted, it gets stored as a literal
-		key.dfmc-fragment-value
-	      end
-	    end;
-	  end;
+            if (spec)
+              let key = spec.dfmc-spec-keyword-expression;
+              if (instance?(key, <symbol>))
+                key
+              else
+                // What the key name is defaulted, it gets stored as a literal
+                key.dfmc-fragment-value
+              end
+            end;
+          end;
     values(if (keys) map(key, keys) end, all-keys?)
   end;
 end function;
@@ -619,13 +619,13 @@ define function functional-parameter-types (form :: <functional-definition>)
     let req-vals = sig.dfmc-spec-value-required-variable-specs;
     let rest-val = sig.dfmc-spec-value-rest-variable-spec;
     local method var (spec)
-	    spec & externalize-type(spec.dfmc-spec-type-expression)
-	  end;
+            spec & externalize-type(spec.dfmc-spec-type-expression)
+          end;
     local method vars (specs)
-	    specs & map(var, specs)
-	  end;
+            specs & map(var, specs)
+          end;
     values (vars(reqs), var(rest), var(next), vars(keys),
-	    vars(req-vals), var(rest-val))
+            vars(req-vals), var(rest-val))
   end;
 end function;
 
@@ -645,11 +645,11 @@ define function slot-definition-init-kind (form :: <slot-definition>)
   with-form-context (form)
     if (form.dfmc-spec-init-supplied?)
       if (form.dfmc-spec-init-expression?)
-	#"init-expression"		// #"="?
+        #"init-expression"                // #"="?
       elseif (form.dfmc-spec-init-value?)
-	#"init-value"
+        #"init-value"
       else
-	#"init-function"
+        #"init-function"
       end
     elseif (form.dfmc-spec-init-keyword-required?)
       #"init-keyword"
@@ -693,7 +693,7 @@ define function variable-active-method-definitions
   with-context (context)
    let binding = variable-home(context, var);
    dfmc-choose-instances(<method-definition>,
-			 dfmc-untracked-binding-modifying-definitions(binding))
+                         dfmc-untracked-binding-modifying-definitions(binding))
   end
 end function;
 
@@ -702,11 +702,11 @@ define function variable-all-definitions
   with-context (context)
     let binding = variable-home(context, var);
     concatenate(dfmc-untracked-binding-all-definitions(binding),
-		choose(method (form)
-			 instance?(form, <method-definition>) |
-			   instance?(form, <domain-definition>)
-		       end,
-		       dfmc-untracked-binding-all-modifying-definitions(binding)))
+                choose(method (form)
+                         instance?(form, <method-definition>) |
+                           instance?(form, <domain-definition>)
+                       end,
+                       dfmc-untracked-binding-all-modifying-definitions(binding)))
   end
 end function;
 
@@ -736,7 +736,7 @@ define method class-direct-subclass-definitions
     let binding = class-binding-in-context(context, form);
     if (binding)
       dfmc-choose-instances(<class-definition>,
-			    dfmc-untracked-binding-modifying-definitions(binding))
+                            dfmc-untracked-binding-modifying-definitions(binding))
     end
   end
 end method;
@@ -753,10 +753,10 @@ define method class-all-superclass-definitions
     if (binding)
       let (c, c?) = dfmc-untracked-binding-model-object-if-computed(binding);
       if (c?)
-	let defs = map(dfmc-model-definition, dfmc-^all-superclasses(c));
-	if (~member?(#f, defs))
-	  defs
-	end if;
+        let defs = map(dfmc-model-definition, dfmc-^all-superclasses(c));
+        if (~member?(#f, defs))
+          defs
+        end if;
       end if;
     end if;
   end with-context;
@@ -774,13 +774,13 @@ define method class-all-slot-definitions
     if (binding)
       let (c, c?) = dfmc-untracked-binding-model-object-if-computed(binding);
       if (c?)
-	let sds = dfmc-^slot-descriptors(c);
-	if (sds)
-	  let defs = map(dfmc-model-definition,  sds);
-	  if (~member?(#f, defs))
-	    defs
-	  end;
-	end;
+        let sds = dfmc-^slot-descriptors(c);
+        if (sds)
+          let defs = map(dfmc-model-definition,  sds);
+          if (~member?(#f, defs))
+            defs
+          end;
+        end;
       end;
     end;
   end with-context
@@ -798,9 +798,9 @@ end method;
 define method direct-method-on? (form :: <method-definition>, binding)
   let sig = dfmc-form-signature(form);
   any?(method (vspec)
-	 let type = dfmc-spec-type-expression(vspec);
-	 instance?(type, dfmc-<variable-name-fragment>) &
-	   dfmc-untracked-lookup-binding(type) == binding
+         let type = dfmc-spec-type-expression(vspec);
+         instance?(type, dfmc-<variable-name-fragment>) &
+           dfmc-untracked-lookup-binding(type) == binding
        end method,
        sig.dfmc-spec-argument-required-variable-specs)
 end method;
@@ -812,14 +812,14 @@ define method class-direct-method-definitions
     let binding = class-binding-in-context(context, form);
     if (binding)
       reduce(method (methods, def)
-	       if (direct-method-on?(def, binding))
-		 pair(def, methods)
-	       else
-		 methods
-	       end
-	     end method,
-	     #(),
-	     dfmc-binding-local-referers(binding))
+               if (direct-method-on?(def, binding))
+                 pair(def, methods)
+               else
+                 methods
+               end
+             end method,
+             #(),
+             dfmc-binding-local-referers(binding))
     end;
   end with-context;
 end method;
@@ -856,8 +856,8 @@ end method;
 /// Warnings
 define function program-note-message (note :: <program-note>)
   apply(format-to-string,
-	condition-format-string(note),
-	condition-format-arguments(note))
+        condition-format-string(note),
+        condition-format-arguments(note))
 end;
 
 define function program-note-creator (note :: <program-note>)
@@ -898,12 +898,12 @@ define method execution-transaction-notes
     (cc :: dfmc-<interactive-library-description>, transaction-id)
   with-context (cc)
     choose-notes(cc, method (dep)
-		       dep == transaction-id
-			 | ((instance?(dep, dfmc-<compilation-record>)
-			       | instance?(dep, dfmc-<top-level-form>))
-			      & dfmc-compilation-record-transaction-id
-			          (dfmc-compilation-record-of(dep)) == transaction-id)
-		     end);
+                       dep == transaction-id
+                         | ((instance?(dep, dfmc-<compilation-record>)
+                               | instance?(dep, dfmc-<top-level-form>))
+                              & dfmc-compilation-record-transaction-id
+                                  (dfmc-compilation-record-of(dep)) == transaction-id)
+                     end);
   end;
 end method;
 
@@ -912,10 +912,10 @@ define function source-record-notes
   let cr = dfmc-source-record-compilation-record(cc, sr);
   with-context (cc)
     choose-notes(cc, method (dep)
-		       dep == cr
-			 | (instance?(dep, dfmc-<top-level-form>)
-			      & dep.dfmc-form-compilation-record == cr)
-		     end)
+                       dep == cr
+                         | (instance?(dep, dfmc-<top-level-form>)
+                              & dep.dfmc-form-compilation-record == cr)
+                     end)
   end;
 end function;
 
@@ -926,7 +926,7 @@ define function source-form-notes
   end
 end function;
 
-///// 
+/////
 ////   Project compilation
 /////
 define dfmc-program-error <library-pack-not-installed>
@@ -937,15 +937,15 @@ define dfmc-program-error <library-pack-not-installed>
 end dfmc-program-error <library-pack-not-installed>;
 
 define function open-compilation-context
-    (project, #key database-location, profile-location, build-settings, read-only?, 
+    (project, #key database-location, profile-location, build-settings, read-only?,
      load-namespace? = #t)
   let (ld, database-already-exists?)
     = dfmc-make-library-description(project,
-				    database-location: database-location,
-				    profile-location: profile-location,
-				    build-settings: build-settings,
-				    read-only?: read-only?,
-				    load-namespace?: load-namespace?);
+                                    database-location: database-location,
+                                    profile-location: profile-location,
+                                    build-settings: build-settings,
+                                    read-only?: read-only?,
+                                    load-namespace?: load-namespace?);
   ld
 end function;
 
@@ -1024,7 +1024,7 @@ define function establish-execution-context
      #key allow-interaction? = #t)
  => (ild :: dfmc-<interactive-library-description>)
   dfmc-lookup-interactive-context(debug-target, ld,
-				  force-shadow?: allow-interaction?)
+                                  force-shadow?: allow-interaction?)
 end function;
 
 define function find-execution-context

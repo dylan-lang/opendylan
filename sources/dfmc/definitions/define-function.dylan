@@ -30,7 +30,7 @@ end;
 define &macro function-definer
   { define ?mods:* function ?:name ?signature-and-body:* end }
     => with-expansion-source-location (fragment-record(form),
-				       fragment-source-position(form))
+                                       fragment-source-position(form))
          #{ define ?mods constant ?name = method ?signature-and-body end }
        end;
 end &macro;

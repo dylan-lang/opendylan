@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // define program-condition
-// 
+//
 // This macro is used to define new condition classes.  It handles the
 // condition-format as declarations within the class, which report
 // information based on the hierarchy.
@@ -38,13 +38,13 @@ define macro program-condition-definer
          convert-slots-to-ppml ?specs end;
          ?=next-method()
        end;
-       define condition-make-filter (?name) 
+       define condition-make-filter (?name)
          ?specs
        end;
        /* Unused: Condition filtering.
        define sealed inline method program-note-filter
            (c == ?name) => (filter :: <program-note-filter>)
-         ignore(c); 
+         ignore(c);
          "*" ## ?name ## "-filter*"
        end;
        define sealed method program-note-filter-setter
@@ -79,7 +79,7 @@ define macro program-condition-aux-definer
   { ?spec; ... } => { ?spec; ... }
 
  spec:
-  { format-arguments ?args:* } 
+  { format-arguments ?args:* }
     => { }
   { format-string ?:expression }
     => { keyword format-string: = ?expression }
@@ -93,11 +93,11 @@ define macro program-condition-aux-definer
     => { ?mods slot subnotes ?more }
   { ?adjectives:* slot ?:name :: ?type:expression ?more:* }
     => { ?adjectives slot ?name :: type-union(?type, <ppml>) ?more }
-  { ?other:* }                   
+  { ?other:* }
     => { ?other }
 
  adjectives:
-  // Even if the user declares "constant", it can't be because of the 
+  // Even if the user declares "constant", it can't be because of the
   // ppml hackery, so we strip it out.
   { ?before:* constant ?after:* }
     => { ?before ?after }
@@ -121,10 +121,10 @@ define macro convert-slots-to-ppml
   { filter ?args:*             } => { }
   { keyword ?args:*            } => { }
   { ?mods:* slot condition-context-id ?rest:* } => { }
-  { ?mods:* slot subnotes ?rest:* } 
+  { ?mods:* slot subnotes ?rest:* }
     => { do(convert-condition-slots-to-ppml, ?=%c.subnotes); }
   { slot ?name:variable ?rest:* } => { ?=%c.?name := as(<ppml>, ?=%c.?name); }
-  { constant slot ?name:variable ?rest:* } 
+  { constant slot ?name:variable ?rest:* }
     => { ?=%c.?name := as(<ppml>, ?=%c.?name); }
 end macro convert-slots-to-ppml;
 
@@ -145,13 +145,13 @@ define macro condition-make-method-maybe-definer
       format-arguments-aux (?call-args) (?decl-args)
     end }
   => { define method make
-	   (class :: subclass(?class), #rest initargs, #key ?decl-args) 
+           (class :: subclass(?class), #rest initargs, #key ?decl-args)
         => (object :: ?class)
          // TODO: make this really check
          if (member?(format-arguments:, initargs))
            apply(?=next-method, class, initargs)
          else
-           apply(?=next-method, class, 
+           apply(?=next-method, class,
                  format-arguments: list(?call-args), initargs)
          end if
        end method make }
@@ -178,22 +178,22 @@ end macro condition-make-method-maybe-definer;
 define macro condition-make-filter-definer
   { define condition-make-filter (?class:name) end }
   => { // Inherit setting from parent note.
-       /* Unused: Condition filtering. 
-       define variable "*" ## ?class ## "-filter*" = 
+       /* Unused: Condition filtering.
+       define variable "*" ## ?class ## "-filter*" =
          block (return)
            for (c in direct-superclasses(?class))
              if (subtype?(c, <program-note>))
                return(c.program-note-filter)
              end
            end;
-         end;           
+         end;
        */
      }
 
   { define condition-make-filter (?class:name)
       filter ?arg:expression; ?ignored:*
     end }
-  /* Unused: Condition filtering. 
+  /* Unused: Condition filtering.
   => { define variable "*" ## ?class ## "-filter*" = ?arg; }
   */
   => { define sealed inline method program-note-filter
@@ -201,8 +201,8 @@ define macro condition-make-filter-definer
          ?arg
        end; }
 
-  { define condition-make-filter (?class:name) 
-      ?spec:*; ?rest:* 
+  { define condition-make-filter (?class:name)
+      ?spec:*; ?rest:*
     end }
   => { define condition-make-filter (?class) ?rest end }
 end macro condition-make-filter-definer;
@@ -231,10 +231,10 @@ define macro program-condition-definer-definer
                 \?specs
               end program-condition \?cond-class;
               if (~subtype?(\?cond-class, ?default))
-		error(\?"cond-class" " is not a subclass of " ?"default");
-	      else
-		values()
-	      end if }
+                error(\?"cond-class" " is not a subclass of " ?"default");
+              else
+                values()
+              end if }
 
          { define \?modifiers:* ?name \?cond-class:name \?specs:* end }
          => { define \?modifiers ?name \?cond-class (?default)
@@ -315,8 +315,8 @@ end macro condition-block-aux;
 define macro maybe-note
   { maybe-note(?class:expression, ?rest:*) }
   => { if (?class.program-note-filter)
-         note(?class, ?rest)         
-       end if 
+         note(?class, ?rest)
+       end if
      }
 end macro;
 

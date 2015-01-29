@@ -94,10 +94,10 @@ define method pop-dead! (queue :: <queue>)
     unless (i < 0)
       let item = queue[i];
       if (item.item-status == $queueable-item-dead)
-	size(queue) := i;
-	loop(i - 1);
+        size(queue) := i;
+        loop(i - 1);
       else
-	item // return first non-dead item
+        item // return first non-dead item
       end if;
     end unless;
   end iterate;

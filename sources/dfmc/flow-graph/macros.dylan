@@ -47,7 +47,7 @@ methods:
   { ?modifiers:* temporary slot ?:name :: ?:expression ?init:*, ?stuff:*;
     ... }
     => { make(<temporary-accessors>,
-	      getter: ?name, setter: ?name ## "-setter"), ... }
+              getter: ?name, setter: ?name ## "-setter"), ... }
   { ?other:*; ... }
     => { ... }
 end macro;
@@ -60,13 +60,13 @@ define macro graph-class-accessors-aux-definer
            = vector(?methods);
          define method class-used-temporary-accessors
              (c :: subclass(?name), #next next-method)
-	  => (res :: <simple-object-vector>)
+          => (res :: <simple-object-vector>)
            concatenate("$" ## ?name ## "-accessors", next-method())
          end method;
          define constant "$" ## ?name ## "-total-temporary-accessors"
            = class-used-temporary-accessors(?name);
          define method used-temporary-accessors
-	     (c :: ?name) => (res :: <simple-object-vector>)
+             (c :: ?name) => (res :: <simple-object-vector>)
            "$" ## ?name ## "-total-temporary-accessors"
          end method }
 end macro;
@@ -148,17 +148,17 @@ define macro for-computations
     end }
   => { walk-lambda-computations
          (method (previous, ?variable) ignore(previous); ?body end,
-	  ?first, before: ?last, previous?: #t) }
+          ?first, before: ?last, previous?: #t) }
   { for-computations (?:variable previous ?previous:variable from ?first:expression)
       ?:body
     end }
   => { walk-lambda-computations
-	(method (?previous, ?variable) ?body end, ?first, previous?: #t) }
+        (method (?previous, ?variable) ?body end, ?first, previous?: #t) }
   { for-computations (?:variable from ?first:expression)
       ?:body
     end }
   => { walk-lambda-computations
-	(method (previous, ?variable) ignore(previous); ?body end, ?first, previous?: #t) }
+        (method (previous, ?variable) ignore(previous); ?body end, ?first, previous?: #t) }
   { for-computations (?:variable previous ?previous:variable in ?:expression)
       ?:body
     end }

@@ -19,10 +19,10 @@ define sealed domain initialize (<variable-spec>);
 define function dylan-object-expression ()
   %library-description-object-expression(dylan-library-description())
     | (%library-description-object-expression(dylan-library-description())
-	 := dylan-variable-name(#"<object>"));
+         := dylan-variable-name(#"<object>"));
 end function;
 
-define method spec-type-expression 
+define method spec-type-expression
     (spec :: <variable-spec>) => (res)
   dylan-object-expression()
 end method;
@@ -33,7 +33,7 @@ define abstract dood-class <type-expression-spec> (<dood-dfmc-object>)
 end dood-class;
 
 define method spec-variable-typed? (var :: <type-expression-spec>) => (well? :: <boolean>)
-  spec-type-expression(var) ~== #f 
+  spec-type-expression(var) ~== #f
     & spec-type-expression ~== dylan-object-expression()
 end method;
 
@@ -43,11 +43,11 @@ end method;
 
 define class <required-variable-spec> (<variable-spec>) end;
 define class <typed-required-variable-spec>
-    (<type-expression-spec>, <required-variable-spec>) 
+    (<type-expression-spec>, <required-variable-spec>)
 end class;
 
 define method make
-    (class == <required-variable-spec>, #rest all-keys, 
+    (class == <required-variable-spec>, #rest all-keys,
      #key variable-name, type-expression)
  => (res :: <required-variable-spec>)
   if (type-expression)
@@ -60,29 +60,29 @@ end method;
 
 define class <next-variable-spec>     (<variable-spec>) end;
 define class <typed-next-variable-spec>
-    (<type-expression-spec>, <next-variable-spec>) 
+    (<type-expression-spec>, <next-variable-spec>)
 end class;
 
 define class <rest-variable-spec>     (<variable-spec>) end;
-define class <typed-rest-variable-spec>     
+define class <typed-rest-variable-spec>
     (<type-expression-spec>, <rest-variable-spec>)
 end class;
 
-define class <key-variable-spec> (<variable-spec>) 
+define class <key-variable-spec> (<variable-spec>)
 end class;
 
-define method spec-keyword-expression 
+define method spec-keyword-expression
     (spec :: <key-variable-spec>) => (res)
   // TODO: less consing
   let name = spec-variable-name(spec);
   make-literal-fragment(fragment-name(name))
 end method;
 
-define method spec-default-expression 
+define method spec-default-expression
     (spec :: <key-variable-spec>) => (res)
   %library-description-false-expression(dylan-library-description())
     | (%library-description-false-expression(dylan-library-description())
-	 := make(<false-fragment>, record: #f, source-position: #f));
+         := make(<false-fragment>, record: #f, source-position: #f));
 end method;
 
 define dood-class <defaulted-key-variable-spec> (<key-variable-spec>)
@@ -90,36 +90,36 @@ define dood-class <defaulted-key-variable-spec> (<key-variable-spec>)
     required-init-keyword: default-expression:;
 end dood-class;
 
-define dood-class <complex-key-variable-spec> 
+define dood-class <complex-key-variable-spec>
     (<type-expression-spec>, <defaulted-key-variable-spec>)
   lazy constant slot spec-keyword-expression,
     required-init-keyword: keyword-expression:;
 end dood-class;
 
 define method make
-    (class == <key-variable-spec>, #rest all-keys, 
-     #key variable-name, 
+    (class == <key-variable-spec>, #rest all-keys,
+     #key variable-name,
           keyword-expression, type-expression, default-expression)
  => (res :: <key-variable-spec>)
   local method non-object-type-expression? (type-expression)
-	  type-expression 
-	    & macro-case (type-expression)
-  	        { <object> } => #f;
-  	        { ?other:* } => #t;
-	      end macro-case;
+          type-expression
+            & macro-case (type-expression)
+                  { <object> } => #f;
+                  { ?other:* } => #t;
+              end macro-case;
         end method,
         method non-false-default-expression? (default-expression)
-	  default-expression
-	    & macro-case (default-expression)
-  	        { #f }       => #f;
-  	        { ?other:* } => #t;
-	      end macro-case;
-	end method;
+          default-expression
+            & macro-case (default-expression)
+                  { #f }       => #f;
+                  { ?other:* } => #t;
+              end macro-case;
+        end method;
   if (non-object-type-expression?(type-expression) | keyword-expression)
     if (keyword-expression)
       apply(make, <complex-key-variable-spec>, all-keys)
     else
-      apply(make, <complex-key-variable-spec>, 
+      apply(make, <complex-key-variable-spec>,
             keyword-expression:
               make-literal-fragment(fragment-name(variable-name)),
             all-keys)
@@ -143,8 +143,8 @@ define abstract dood-class <signature-spec> (<dood-dfmc-object>)
 end dood-class;
 
 define method make
-    (class == <signature-spec>, #rest all-keys, 
-     #key argument-rest-variable-spec, argument-key?, 
+    (class == <signature-spec>, #rest all-keys,
+     #key argument-rest-variable-spec, argument-key?,
           value-required-variable-specs, value-rest-variable-spec)
  => (res :: <signature-spec>)
   // format-out("ALL-KEYS %=\n", all-keys);
@@ -153,7 +153,7 @@ define method make
       apply(make, <complex-signature+complex-values-spec>, all-keys)
     elseif (value-required-variable-specs)
       apply(make, <complex-signature+values-spec>, all-keys)
-    else 
+    else
       apply(make, <complex-signature-spec>, all-keys)
     end if
   elseif (argument-rest-variable-spec) // rested args?
@@ -161,7 +161,7 @@ define method make
       apply(make, <rested-signature+complex-values-spec>, all-keys)
     elseif (value-required-variable-specs)
       apply(make, <rested-signature+values-spec>, all-keys)
-    else 
+    else
       apply(make, <rested-signature-spec>, all-keys)
     end if
   else // simple args
@@ -169,7 +169,7 @@ define method make
       apply(make, <required-signature+complex-values-spec>, all-keys)
     elseif (value-required-variable-specs)
       apply(make, <required-signature+values-spec>, all-keys)
-    else 
+    else
       apply(make, <required-signature-spec>, all-keys)
     end if
   end if;
@@ -215,8 +215,8 @@ end;
 define function spec-default-value-rest-variable-spec () => (spec :: <rest-variable-spec>)
   %library-description-default-value-rest-spec(dylan-library-description())
     | (%library-description-default-value-rest-spec(dylan-library-description())
-	 := make(<rest-variable-spec>,
-		 variable-name: dylan-variable-name(#"results")));
+         := make(<rest-variable-spec>,
+                 variable-name: dylan-variable-name(#"results")));
 end function;
 
 define method spec-value-rest-variable-spec (spec :: <signature-spec>)
@@ -234,15 +234,15 @@ define class <values-spec> (<signature-spec>)
 end class;
 
 define method make
-    (class == <values-spec>, #rest all-keys, 
+    (class == <values-spec>, #rest all-keys,
      #key value-required-variable-specs, value-rest-variable-spec)
  => (res :: <values-spec>)
   // format-out("ALL-KEYS %=\n", all-keys);
-  if (value-rest-variable-spec) 
+  if (value-rest-variable-spec)
     apply(make, <complex-values-spec>, all-keys)
   elseif (value-required-variable-specs)
     apply(make, <required-values-spec>, all-keys)
-  else 
+  else
     next-method()
   end if
 end method;
@@ -272,7 +272,7 @@ define class <required-signature+values-spec>
     (<required-values-spec>, <required-signature-spec>)
 end class;
 
-define class <required-signature+complex-values-spec> 
+define class <required-signature+complex-values-spec>
     (<complex-values-spec>, <required-signature+values-spec>)
 end class;
 
@@ -284,7 +284,7 @@ define primary dood-class <rested-signature-spec> (<required-signature-spec>)
     required-init-keyword: argument-rest-variable-spec:;
 end dood-class;
 
-define class <rested-signature+values-spec> 
+define class <rested-signature+values-spec>
     (<required-values-spec>, <rested-signature-spec>)
 end class;
 
@@ -318,7 +318,7 @@ define inline function spec-argument-optionals? (spec :: <signature-spec>)
   as-boolean(spec-argument-key?(spec) | spec-argument-rest?(spec))
 end;
 
-define class <complex-signature+values-spec> 
+define class <complex-signature+values-spec>
     (<required-values-spec>, <complex-signature-spec>)
 end class;
 
@@ -329,14 +329,14 @@ end class;
 
 /// METHOD SIGNATURES
 
-define abstract dood-class <method-signature-spec> (<signature-spec>) 
+define abstract dood-class <method-signature-spec> (<signature-spec>)
   lazy slot spec-argument-next-variable-spec :: false-or(<next-variable-spec>),
     required-init-keyword: argument-next-variable-spec:;
 end dood-class;
 
 define method make
-    (class == <method-signature-spec>, #rest all-keys, 
-     #key argument-rest-variable-spec, argument-key?, 
+    (class == <method-signature-spec>, #rest all-keys,
+     #key argument-rest-variable-spec, argument-key?,
           value-required-variable-specs, value-rest-variable-spec)
  => (res :: <method-signature-spec>)
   // format-out("ALL-KEYS %=\n", all-keys);
@@ -345,7 +345,7 @@ define method make
       apply(make, <method-complex-signature+complex-values-spec>, all-keys)
     elseif (value-required-variable-specs)
       apply(make, <method-complex-signature+values-spec>, all-keys)
-    else 
+    else
       apply(make, <method-complex-signature-spec>, all-keys)
     end if
   elseif (argument-rest-variable-spec) // rested args
@@ -353,7 +353,7 @@ define method make
       apply(make, <method-rested-signature+complex-values-spec>, all-keys)
     elseif (value-required-variable-specs)
       apply(make, <method-rested-signature+values-spec>, all-keys)
-    else 
+    else
       apply(make, <method-rested-signature-spec>, all-keys)
     end if
   else // simple args
@@ -361,7 +361,7 @@ define method make
       apply(make, <method-required-signature+complex-values-spec>, all-keys)
     elseif (value-required-variable-specs)
       apply(make, <method-required-signature+values-spec>, all-keys)
-    else 
+    else
       apply(make, <method-required-signature-spec>, all-keys)
     end if
   end if;
@@ -375,16 +375,16 @@ define class <method-required-signature+values-spec>
     (<required-values-spec>, <method-required-signature-spec>)
 end class;
 
-define class <method-required-signature+complex-values-spec> 
+define class <method-required-signature+complex-values-spec>
     (<complex-values-spec>, <method-required-signature+values-spec>)
 end class;
 
 
-define class <method-rested-signature-spec> 
+define class <method-rested-signature-spec>
     (<rested-signature-spec>, <method-signature-spec>)
 end class;
 
-define class <method-rested-signature+values-spec> 
+define class <method-rested-signature+values-spec>
     (<required-values-spec>, <method-rested-signature-spec>)
 end class;
 
@@ -393,11 +393,11 @@ define class <method-rested-signature+complex-values-spec>
 end class;
 
 
-define class <method-complex-signature-spec> 
+define class <method-complex-signature-spec>
     (<complex-signature-spec>, <method-rested-signature-spec>)
 end class;
 
-define class <method-complex-signature+values-spec> 
+define class <method-complex-signature+values-spec>
     (<required-values-spec>, <method-complex-signature-spec>)
 end class;
 
@@ -422,13 +422,13 @@ define serious-program-warning <unexpected-key-in-values-declaration>
 end serious-program-warning;
 
 define serious-program-warning <unexpected-all-keys-in-values-declaration>
-  format-string 
+  format-string
     "Unexpected #all-keys in result values declaration - ignoring.";
 end serious-program-warning;
 
 //// General purpose parameter/values list parser.
 
-define method parse-variables-list (fragment) 
+define method parse-variables-list (fragment)
  => (requireds :: <variable-specs>,
      next :: false-or(<next-variable-spec>),
      rest :: false-or(<rest-variable-spec>),
@@ -463,7 +463,7 @@ define method parse-variables-list (fragment)
         => collect-first-into
              (required, make(<typed-required-variable-spec>,
                              variable-name:   name,
-                             type-expression: 
+                             type-expression:
                                as-expression(#{ singleton(?object) })));
       { ?next-etc }
         => #f;
@@ -537,48 +537,48 @@ end method;
 
 //// General purpose signature parser.
 
-define method parse-values-list (vals) 
+define method parse-values-list (vals)
  => (requireds :: false-or(<variable-specs>), rest :: false-or(<rest-variable-spec>))
-  let (value-requireds, value-next, value-rest, 
+  let (value-requireds, value-next, value-rest,
        value-key?, value-all-keys?, value-keys)
     = if (vals)
-	parse-variables-list(vals);
+        parse-variables-list(vals);
       else
-	values(#f, #f, #f, #f, #f, #f)
+        values(#f, #f, #f, #f, #f, #f)
       end if;
   when (value-next)
     note(<unexpected-next-in-values-declaration>,
-	 source-location: fragment-source-location(vals));
+         source-location: fragment-source-location(vals));
   end when;
   when (value-key?)
     note(<unexpected-key-in-values-declaration>,
-	 source-location: fragment-source-location(vals));
+         source-location: fragment-source-location(vals));
   end when;
   when (value-all-keys?)
     note(<unexpected-all-keys-in-values-declaration>,
-	 source-location: fragment-source-location(vals));
+         source-location: fragment-source-location(vals));
   end when;
   values(value-requireds, value-rest)
 end method;
 
-define method parse-signature-as 
+define method parse-signature-as
     (sig-class :: <class>, fragment) => (signature :: <signature-spec>, remains)
   local method parse-using-fragments (sig-class, args, vals)
-	  let (requireds, next, rest, key?, all-keys?, keys)
-	    = parse-variables-list(args);
-	  let (value-requireds, value-rest)
-	    = parse-values-list(vals);
-	  let sig-spec =
-	  make(sig-class, 
-	       argument-required-variable-specs: requireds,
-	       argument-next-variable-spec:      next,
-	       argument-rest-variable-spec:      rest,
-	       argument-key?:                    if (all-keys?) #"all" else key? end,
-	       argument-key-variable-specs:      keys,
-	       value-required-variable-specs:    value-requireds,
-	       value-rest-variable-spec:         value-rest);
+          let (requireds, next, rest, key?, all-keys?, keys)
+            = parse-variables-list(args);
+          let (value-requireds, value-rest)
+            = parse-values-list(vals);
+          let sig-spec =
+          make(sig-class,
+               argument-required-variable-specs: requireds,
+               argument-next-variable-spec:      next,
+               argument-rest-variable-spec:      rest,
+               argument-key?:                    if (all-keys?) #"all" else key? end,
+               argument-key-variable-specs:      keys,
+               value-required-variable-specs:    value-requireds,
+               value-rest-variable-spec:         value-rest);
           sig-spec
-	end method;
+        end method;
   macro-case (fragment)
     { (?args:*) => (?vals:*); ?more:* }
       => values(parse-using-fragments(sig-class, args, vals), more);

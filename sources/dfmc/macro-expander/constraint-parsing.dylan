@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define method parse-constraint 
+define method parse-constraint
     (constraint-start :: <fragment>, tokens :: <fragment-list>)
  => (failure, remains, parsed)
   let all-tokens = pair(constraint-start, tokens);
@@ -36,7 +36,7 @@ define method parse-constraint
       token-stack := token-stack.tail;
       count := count + 1;
       if (instance?(next-token, <nested-fragment>))
-        nesting-stack 
+        nesting-stack
           := pair(pair(fragment-right-delimiter(next-token), token-stack),
                   nesting-stack);
         token-stack := fragment-nested-fragments(next-token);
@@ -70,8 +70,8 @@ end method;
 
 // TODO: CORRECTNESS: The way boundedness is checked is buggy.
 
-define method parse-bounded-constraint 
-    (constraint-start :: <fragment>, 
+define method parse-bounded-constraint
+    (constraint-start :: <fragment>,
        tokens :: <fragment-list>, stop? :: <function>, stop-arg)
  => (failure, remains :: false-or(<fragment-list>), parsed)
   let all-tokens = pair(constraint-start, tokens);
@@ -101,7 +101,7 @@ define method parse-bounded-constraint
       if (instance?(next-token, <nested-fragment>))
         token-stack := token-stack.tail;
         count := count + 1;
-        nesting-stack 
+        nesting-stack
           := pair(pair(fragment-right-delimiter(next-token), token-stack),
                   nesting-stack);
         token-stack := fragment-nested-fragments(next-token);
@@ -138,7 +138,7 @@ define method parse-bounded-constraint
 end method;
 
 define method parse-bounded-constraint-no-backtracking
-    (constraint-start :: <fragment>, 
+    (constraint-start :: <fragment>,
        tokens :: <fragment-list>, stop? :: <function>, stop-arg)
  => (failure, remains :: false-or(<fragment-list>), parsed)
   let all-tokens = pair(constraint-start, tokens);
@@ -162,7 +162,7 @@ define method parse-bounded-constraint-no-backtracking
       let next-token = token-stack.head;
       if (instance?(next-token, <nested-fragment>))
         token-stack := token-stack.tail;
-        nesting-stack 
+        nesting-stack
           := pair(pair(fragment-right-delimiter(next-token), token-stack),
                   nesting-stack);
         token-stack := fragment-nested-fragments(next-token);
@@ -189,24 +189,24 @@ define serious-program-warning <template-parser-error> (<reader-error>)
     required-init-keyword: token:;
   slot condition-template,
     required-init-keyword: template:;
-  format-string 
+  format-string
     "Unexpected token %= encountered in macro expansion: %=.";
-  format-arguments 
+  format-arguments
     token, template;
 end serious-program-warning;
 
-define serious-program-warning <unexpected-end-of-template-error> 
+define serious-program-warning <unexpected-end-of-template-error>
     (<reader-error>)
   slot condition-template,
     required-init-keyword: template:;
-  format-string 
+  format-string
     "Unexpected end of macro expansion: %=.";
-  format-arguments 
+  format-arguments
     template;
 end serious-program-warning;
 
 define method parse-template-fragments-as
-    (constraint-start, f* :: <fragment-list>) 
+    (constraint-start, f* :: <fragment-list>)
  => (failure, f)
   let input-cursor = pair(constraint-start, f*);
   let nesting-stack = #();
@@ -222,7 +222,7 @@ define method parse-template-fragments-as
         if (close) close else lexer() end;
       end;
     else
-      let next-input = input-cursor.head; 
+      let next-input = input-cursor.head;
       input-cursor := input-cursor.tail;
       if (instance?(next-input, <template>))
         nesting-stack := pair(pair(#f, input-cursor), nesting-stack);
@@ -237,8 +237,8 @@ define method parse-template-fragments-as
         input-cursor := fragment-fragments(next-input);
         lexer();
       elseif (instance?(next-input, <nested-fragment>))
-        nesting-stack 
-          := pair(pair(fragment-right-delimiter(next-input), input-cursor), 
+        nesting-stack
+          := pair(pair(fragment-right-delimiter(next-input), input-cursor),
                   nesting-stack);
         input-cursor := fragment-nested-fragments(next-input);
         fragment-left-delimiter(next-input);
@@ -273,7 +273,7 @@ define method as-expression (t :: <template>)
     = parse-template-fragments-as
         ($start-expression-constraint, template-fragments(t));
   if (failure)
-    error("Template %= wouldn't parse as an expression: %s.", 
+    error("Template %= wouldn't parse as an expression: %s.",
           parsed-f, failure);
   end;
   parsed-f

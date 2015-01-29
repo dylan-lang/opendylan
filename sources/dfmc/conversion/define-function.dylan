@@ -7,28 +7,28 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define function compute-signature-using-types
-    (sig-spec :: <signature-spec>, 
+    (sig-spec :: <signature-spec>,
      required-types, values-types, rest-value-type, keys, key-types)
  => (model)
   ^make(<&signature>,
         rest-value?:     spec-value-rest?(sig-spec),
-	rest?:           spec-argument-rest?(sig-spec),
-	all-keys?:       spec-argument-all-keys?(sig-spec),
-	key?:            if (spec-argument-key?(sig-spec)) #t else #f end,
-	number-values:   spec-value-number-required(sig-spec),
-	number-required: spec-argument-number-required(sig-spec),
-	required:        as-sig-types(required-types),
-	values:          as-sig-types(values-types),
-	rest-value:      rest-value-type,
-	keys:            immutable-model(as(<simple-object-vector>, keys)),
-	key-types:       as-sig-types(key-types))
+        rest?:           spec-argument-rest?(sig-spec),
+        all-keys?:       spec-argument-all-keys?(sig-spec),
+        key?:            if (spec-argument-key?(sig-spec)) #t else #f end,
+        number-values:   spec-value-number-required(sig-spec),
+        number-required: spec-argument-number-required(sig-spec),
+        required:        as-sig-types(required-types),
+        values:          as-sig-types(values-types),
+        rest-value:      rest-value-type,
+        keys:            immutable-model(as(<simple-object-vector>, keys)),
+        key-types:       as-sig-types(key-types))
 end function;
 
 define function compute-signature
-    (form, sig-spec :: <signature-spec>) 
+    (form, sig-spec :: <signature-spec>)
  => (model, static? :: <boolean>)
   // Try to evaluate each specializer in turn.
-  let (required-types, required-types-static?) 
+  let (required-types, required-types-static?)
     = compute-variable-specs-types
         (form, spec-argument-required-variable-specs(sig-spec));
   // Keys are always static because they're syntactically constrained to
@@ -48,8 +48,8 @@ define function compute-signature
        (sig-spec, required-types, values-types, rest-value-type,
           keys, key-types);
   let static?
-    = required-types-static? 
-        & key-types-static? 
+    = required-types-static?
+        & key-types-static?
         & values-types-static?
         & rest-value-type-static?;
   values(sig, static?)
@@ -73,22 +73,22 @@ end program-warning;
 */
 
 define function compute-variable-specs-types
-    (form, variable-specs :: <variable-specs>) 
+    (form, variable-specs :: <variable-specs>)
  => (types :: <simple-object-vector>, static? :: <boolean>)
   let static-types = make(<vector>, size: size(variable-specs));
   collecting (dynamic-types)
     for (var-spec in variable-specs,
-	 i :: <integer> from 0)
-      let type 
+         i :: <integer> from 0)
+      let type
         = ^top-level-eval-type
              (spec-type-expression(var-spec), on-failure: #f);
       static-types[i] :=
-	if (type)
-	  type
-	else
-	  collect-into(dynamic-types, spec-type-expression(var-spec));
-	  dylan-value(#"<object>")
-	end;
+        if (type)
+          type
+        else
+          collect-into(dynamic-types, spec-type-expression(var-spec));
+          dylan-value(#"<object>")
+        end;
       check-signature-variable(form, var-spec, type);
     end;
     if (~empty?(collected(dynamic-types)))
@@ -96,16 +96,16 @@ define function compute-variable-specs-types
       let collected-dynamic-types = collected(dynamic-types);
       note(<dynamic-specializer-expressions>,
            source-location: if (form)
-			      form-source-location(form)
-			    else
-			      // kludge for anonymous methods
-			      fragment-source-location(collected-dynamic-types[0])
-			    end,
-           form: form | "an unnamed method", 
+                              form-source-location(form)
+                            else
+                              // kludge for anonymous methods
+                              fragment-source-location(collected-dynamic-types[0])
+                            end,
+           form: form | "an unnamed method",
            specializer-expressions: collected-dynamic-types,
-	   format-arguments: list(collected-dynamic-types,
-				  // kludge for anonymous methods
-				  form | "an unnamed method"));
+           format-arguments: list(collected-dynamic-types,
+                                  // kludge for anonymous methods
+                                  form | "an unnamed method"));
       */
       values(static-types, #f);
     else
@@ -132,7 +132,7 @@ define method compute-variables-spec-rest-value-type
     let type-expression = spec-type-expression(rest-spec);
     let (type, static?)
       = if (type-expression)
-          let type 
+          let type
             = ^top-level-eval-type(type-expression, on-failure: #f);
           if (type)
             values(type, #t)
@@ -161,7 +161,7 @@ define program-warning <variable-name-looks-like-a-type>
     type-name, function;
 end program-warning;
 
-define method check-signature-variable 
+define method check-signature-variable
     (form, spec :: <variable-spec>, type)
   if (~type | ^id?(type, dylan-value(#"<object>")))
     let name = spec-variable-name(spec);

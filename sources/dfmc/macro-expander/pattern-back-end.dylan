@@ -18,7 +18,7 @@ end serious-program-warning;
 
 define serious-program-warning
     <macro-main-rule-match-error> (<macro-match-error>)
-  format-string 
+  format-string
     "Invalid syntax in %s macro call.";
   format-arguments macro-name;
 end serious-program-warning;
@@ -27,27 +27,27 @@ define serious-program-warning
     <macro-aux-rule-match-error> (<macro-match-error>)
   slot condition-rule-set,
     required-init-keyword: rule-set:;
-  format-string 
+  format-string
     "Invalid syntax for %s in %s macro call.";
   format-arguments rule-set, macro-name;
 end serious-program-warning;
 
 define serious-program-warning
     <infinite-aux-rule-recursion-match-error> (<macro-match-error>)
-  format-string 
+  format-string
     "Infinite auxiliary rule recursion in %s macro call - "
     "treating as invalid syntax.";
   format-arguments macro-name;
 end serious-program-warning;
 
 define function macro-main-rule-match-error (f*, name)
-  note(<macro-main-rule-match-error>, 
+  note(<macro-main-rule-match-error>,
        source-location: spanning(f*),
        macro-name: name);
 end function;
 
 define function macro-aux-rule-match-error (f*, name, set)
-  note(<macro-aux-rule-match-error>, 
+  note(<macro-aux-rule-match-error>,
        source-location: spanning(f*),
        macro-name: name,
        rule-set: set);
@@ -90,14 +90,14 @@ define function match-list-part-strict (f* :: <fragment-list>)
 end function;
 
 // TODO: Change these #t failure indications into objects representing
-// the failure. A problem is that we don't really want to have to 
+// the failure. A problem is that we don't really want to have to
 // generate these objects as failure occurs since match failure is
 // a normal part of matching, and is an unnecessary expense if the
 // match fails. I guess the matcher could be re-run to collect this
 // information without danger, since the matching process runs no
 // user code.
 
-define function match-name (f* :: <fragment-list>, name :: <symbol>) 
+define function match-name (f* :: <fragment-list>, name :: <symbol>)
  => (failure, after-f* :: <fragment-list>)
   if (empty?(f*))
     values(#t, #());
@@ -128,7 +128,7 @@ define function match-otherwise (f* :: <fragment-list>)
   end;
 end function;
 
-define function match-operator (f* :: <fragment-list>, name :: <symbol>) 
+define function match-operator (f* :: <fragment-list>, name :: <symbol>)
  => (failure, after-f* :: <fragment-list>)
   if (empty?(f*))
     values(#t, #());
@@ -265,7 +265,7 @@ define function match-colon-colon (f* :: <fragment-list>)
   end;
 end function;
 
-define function match-literal (f* :: <fragment-list>, value :: <object>) 
+define function match-literal (f* :: <fragment-list>, value :: <object>)
  => (failure, after-f* :: <fragment-list>)
   if (empty?(f*))
     values(#t, #());
@@ -284,7 +284,7 @@ end function;
 
 //// Constraint matching.
 
-define function match-token-constraint (f* :: <fragment-list>) 
+define function match-token-constraint (f* :: <fragment-list>)
  => (failure, after-f* :: <fragment-list>, parsed :: false-or(<fragment>))
   if (empty?(f*))
     values(#t, #(), #f);
@@ -299,7 +299,7 @@ define function match-token-constraint (f* :: <fragment-list>)
   end;
 end function;
 
-define function match-name-constraint (f* :: <fragment-list>) 
+define function match-name-constraint (f* :: <fragment-list>)
  => (failure, after-f* :: <fragment-list>, parsed :: false-or(<fragment>))
   if (empty?(f*))
     values(#t, #(), #f);
@@ -314,7 +314,7 @@ define function match-name-constraint (f* :: <fragment-list>)
   end;
 end function;
 
-define function match-expression-constraint (f* :: <fragment-list>) 
+define function match-expression-constraint (f* :: <fragment-list>)
  => (failure, after-f*, parsed :: false-or(<fragment>))
   if (empty?(f*))
     values(#t, #(), #f);
@@ -343,7 +343,7 @@ define method stop-variable? (f :: <comma-fragment>, x)
   #t
 end method;
 
-define function match-variable-constraint (f* :: <fragment-list>) 
+define function match-variable-constraint (f* :: <fragment-list>)
  => (failure, after-f* :: false-or(<fragment-list>), parsed :: false-or(<fragment-list>))
   if (empty?(f*) | ~instance?(f*.head, <name-fragment>))
     // TODO: A hackattack to allow let-bound ellipses for the sake of
@@ -351,9 +351,9 @@ define function match-variable-constraint (f* :: <fragment-list>)
     // references in the grammar.
     if (instance?(f*.head, <ellipsis-fragment>))
       let ellipsis = f*.head;
-      let name 
+      let name
         = make-variable-name-like
-            (ellipsis, 
+            (ellipsis,
              record:          fragment-record(ellipsis),
              source-position: fragment-source-position(ellipsis),
              name: #"...");
@@ -374,7 +374,7 @@ define function match-variable-constraint (f* :: <fragment-list>)
   end;
 end function;
 
-define function match-body-constraint (f* :: <fragment-list>) 
+define function match-body-constraint (f* :: <fragment-list>)
  => (failure, after-f* :: <fragment-list>, parsed :: false-or(<fragment>))
   if (empty?(f*))
     values(#f, #(), body-fragment(#()));
@@ -391,18 +391,18 @@ define function match-body-constraint (f* :: <fragment-list>)
           => parse-constraint($start-body-constraint, f*);
       end;
     else
-      parse-constraint($start-body-constraint, f*);  
+      parse-constraint($start-body-constraint, f*);
     end;
   end;
 end function;
 
 define method stop-body? (f, words) #f end;
-define method stop-body? (f :: <name-fragment>, words :: <list>) 
+define method stop-body? (f :: <name-fragment>, words :: <list>)
   member?(fragment-name(f), words)
 end method;
 
-define function match-bounded-body-constraint 
-    (f* :: <fragment-list>, bounding-words :: <list>) 
+define function match-bounded-body-constraint
+    (f* :: <fragment-list>, bounding-words :: <list>)
  => (failure, after-f* :: <fragment-list>, parsed :: false-or(<fragment>))
   if (empty?(f*))
     values(#f, #(), body-fragment(#()));
@@ -427,7 +427,7 @@ define function match-bounded-body-constraint
 end function;
 
 define function match-bounded-body-constraint-no-backtracking
-    (f* :: <fragment-list>, bounding-words :: <list>) 
+    (f* :: <fragment-list>, bounding-words :: <list>)
  => (failure, after-f* :: <fragment-list>, parsed :: false-or(<fragment>))
   if (empty?(f*))
     values(#f, #(), body-fragment(#()));
@@ -451,19 +451,19 @@ define function match-bounded-body-constraint-no-backtracking
   end;
 end function;
 
-define function match-case-body-constraint (f* :: <fragment-list>) 
+define function match-case-body-constraint (f* :: <fragment-list>)
  => (failure, after-f* :: <fragment-list>, parsed :: false-or(<fragment>))
-  parse-constraint($start-case-body-constraint, f*);  
+  parse-constraint($start-case-body-constraint, f*);
 end function;
 
-define function match-bounded-case-body-constraint 
-    (f* :: <fragment-list>, words :: <list>) 
+define function match-bounded-case-body-constraint
+    (f* :: <fragment-list>, words :: <list>)
  => (failure, after-f* :: <fragment-list>, parsed)
   parse-bounded-constraint
-    ($start-case-body-constraint, f*, stop-body?, words);  
+    ($start-case-body-constraint, f*, stop-body?, words);
 end function;
 
-define function match-symbol-constraint (f* :: <fragment-list>) 
+define function match-symbol-constraint (f* :: <fragment-list>)
  => (failure, after-f* :: <fragment-list>, parsed :: false-or(<fragment>))
   if (empty?(f*))
     values(#t, #());
@@ -530,15 +530,15 @@ end function;
 // TODO: Eliminate this unnecessary list consing.
 
 define function match-variable (f* :: <fragment-list>)
- => (failure, after-f* :: <fragment-list>, 
+ => (failure, after-f* :: <fragment-list>,
        name :: <fragment-list>, type :: <fragment-list>)
   let (failure, after-f*, parsed) = match-variable-constraint(f*);
   if (failure)
     values(failure, #(), #(), #());
   else
     values
-      (#f, after-f*, 
-       list(parsed.head), 
+      (#f, after-f*,
+       list(parsed.head),
        if (empty?(parsed.tail))
          list(dylan-variable-name(#"<object>"))
        else
@@ -547,8 +547,8 @@ define function match-variable (f* :: <fragment-list>)
   end;
 end function;
 
-define function match-spliced-name 
-    (f* :: <fragment-list>, 
+define function match-spliced-name
+    (f* :: <fragment-list>,
        prefix :: false-or(<string>), suffix :: false-or(<string>))
  => (failure, after-f* :: <fragment-list>, name :: type-union(<variable-name-fragment>, <list>))
   block (return)
@@ -558,7 +558,7 @@ define function match-spliced-name
     else
       // Check that the name matches the prefix and suffix, if any.
       let name = as(<string>, fragment-name(parsed));
-      let start-pos 
+      let start-pos
         = if (prefix)
             if (matching-prefix?(name, prefix))
               prefix.size
@@ -586,7 +586,7 @@ define function match-spliced-name
       let parsed-name
         = make-variable-name-like
             (parsed,
-	     record:          fragment-record(parsed),
+             record:          fragment-record(parsed),
              source-position: fragment-source-position(parsed),
              name:            as(<symbol>, core-name));
       values(#f, after-f*, parsed-name);
@@ -594,7 +594,7 @@ define function match-spliced-name
   end;
 end function;
 
-define function matching-prefix? 
+define function matching-prefix?
     (name :: <string>, prefix :: <string>) => (well? :: <boolean>)
   if (size(name) < size(prefix))
     #f
@@ -611,7 +611,7 @@ define function matching-prefix?
   end;
 end function;
 
-define function matching-suffix? 
+define function matching-suffix?
     (name :: <string>, suffix :: <string>) => (well? :: <boolean>)
   if (size(name) < size(suffix))
     #f
@@ -632,8 +632,8 @@ end function;
 // If the rest constraint is #f, no rest value need be bound.
 // A key-spec is a symbol, constraint, default thunk triple.
 
-define function match-property-list 
-    (f* :: <fragment-list>, rest-constraint, #rest key-specs) 
+define function match-property-list
+    (f* :: <fragment-list>, rest-constraint, #rest key-specs)
  => (failure, f*, rest, #rest keys)
   let (failure, remains, parsed)
     = parse-constraint($start-property-list-constraint, f*);
@@ -681,13 +681,13 @@ define function match-property-list
   end;
 end function;
 
-define function property-list-element 
+define function property-list-element
     (plist :: <list>, symbol :: <symbol>)
   iterate walk (cursor = plist)
     if (cursor == #())
       #f
     elseif (fragment-value(cursor.head) == symbol)
-      split-at-comma(cursor.tail);      
+      split-at-comma(cursor.tail);
     else
       walk(skip-to-comma(cursor.tail));
     end;
@@ -711,8 +711,8 @@ define function property-list-elements
   end;
 end function;
 
-define function match-macro-constraint 
-    (f* :: <fragment-list>) 
+define function match-macro-constraint
+    (f* :: <fragment-list>)
  => (failure, after-f* :: <fragment-list>, expansion)
   if (empty?(f*) | ~instance?(f*.head, <macro-call-fragment>))
     values("Macro expected, but not provided", #(), #f);
@@ -729,14 +729,14 @@ define compiler-open generic expand-for-macro-constraint
 // TODO: PERFORMANCE: Use come kind of case insensitive string compare
 // primitive perhaps.
 
-define function any-case-equal? 
+define function any-case-equal?
     (c1 :: <character>, c2 :: <character>) => (boolean)
   as-lowercase(c1) == as-lowercase(c2)
 end function;
 
 //// Utils.
 
-define function split-at-semicolon 
+define function split-at-semicolon
     (l :: <list>) => (left :: <list>, right :: false-or(<list>))
   local method split (l)
     case
@@ -773,7 +773,7 @@ define function split-at-semicolons (l :: <list>)
     local method walk (l, count)
       let (left, right) = split-at-semicolon(l);
       collect-into(parts, left);
-      if (right) 
+      if (right)
         walk(right, count + 1)
       else
         values(collected(parts), count);
@@ -783,7 +783,7 @@ define function split-at-semicolons (l :: <list>)
   end;
 end function;
 
-define function skip-to-comma 
+define function skip-to-comma
     (l :: <list>) => (after :: <list>)
   local method split (l)
     case
@@ -798,7 +798,7 @@ define function skip-to-comma
   split(l);
 end function;
 
-define function split-at-comma 
+define function split-at-comma
     (l :: <list>) => (left :: <list>, right :: false-or(<list>))
   local method split (l)
     case
@@ -819,7 +819,7 @@ define function split-at-commas (l :: <list>)
     local method walk (l, count)
       let (left, right) = split-at-comma(l);
       collect-into(parts, left);
-      if (right) 
+      if (right)
         walk(right, count + 1)
       else
         values(collected(parts), count);

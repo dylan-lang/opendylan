@@ -1,5 +1,5 @@
 Module:   dfmc-definitions
-Synopsis: define copy down 
+Synopsis: define copy down
 Author:   Mark Tillotson
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
@@ -26,7 +26,7 @@ format-out ("copy-down-method signature is %s\n", signature) ;
   // maybe should check body is empty
   // ensure-next-method-binding (signature);  // not sure this useful
 //  let  args-list = macro-case (signature) { (?args:*) ?other:* } => args end;
-  let  method-form 
+  let  method-form
     = #{ define ?mods \method ?name ?signature end };
   let  new-fragment = method-form.as-body ;
   let  expanded-forms = top-level-convert (fragment, new-fragment) ;
@@ -39,12 +39,12 @@ end;
 define function do-define-copy-down-method (fragment, mods, name, signature)
 // format-out ("in do-define-copy-down-method\n");
   let (options, adjectives) = parse-method-adjectives (name, mods);
-//  let signature-and-body = make (<sequence-fragment>, 
-//				 record: signature.fragment-record,
-//				 source-position: signature.fragment-source-position,
-//				 fragments:
-//				   concatenate (signature . fragment-fragments, 
-//						#{ #f }.template-fragments)) ;
+//  let signature-and-body = make (<sequence-fragment>,
+//                                 record: signature.fragment-record,
+//                                 source-position: signature.fragment-source-position,
+//                                 fragments:
+//                                   concatenate (signature . fragment-fragments,
+//                                                #{ #f }.template-fragments)) ;
   let signature-and-body = signature ;
   let (signature, body) = parse-method-signature(name, signature-and-body);
 // format-out ("copy-down-method signature is %s\n", signature) ;

@@ -50,18 +50,18 @@ end method restart;
 
 // We define simplified versions of the above functions for those cases where
 // we just want to set the format string and arguments.  Hopefully most notes
-// will eventually want to provide more information than this, and these 
+// will eventually want to provide more information than this, and these
 // functions will become redundant.
 
 define method simple-note
-    (class :: subclass(<program-note>), 
+    (class :: subclass(<program-note>),
      format-string :: <string>,  #rest args) => ()
   signal(make(class, format-string: format-string, format-arguments: args));
   values()
 end method simple-note;
 
 define method simple-raise
-    (class :: subclass(<program-error>), 
+    (class :: subclass(<program-error>),
      format-string :: <string>,  #rest args) => ()
   error(make(class, format-string: format-string, format-arguments: args));
 end method simple-raise;
@@ -143,9 +143,9 @@ end method obsolete-condition?;
 
 
 /// preserving conditions
- 
+
 // All signaled program errors and notes are stored in a condition
-// table held in the associated compilation record.  It is the 
+// table held in the associated compilation record.  It is the
 // responsibility of the condition presentation functions to add them.
 //
 // Restarts are not entered into the table.  It is assumed that all
@@ -193,9 +193,9 @@ end method add-program-condition;
 
 define method remove-program-conditions-from!(table, key, stages) => ()
   local method matching-condition?(cond, stages)
-	  ~instance?(cond, <program-condition>) |
-	    dependency-stage-match?(condition-compilation-stage(cond), stages)
-	end;
+          ~instance?(cond, <program-condition>) |
+            dependency-stage-match?(condition-compilation-stage(cond), stages)
+        end;
 
   let q = element(table, key, default: $unfound);
 

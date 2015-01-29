@@ -18,7 +18,7 @@ define thread variable *current-clause* = #f;
 define thread variable *current-option* = #f;
 
 define method namespace-context ()
-  list(namespace: *current-definition*, 
+  list(namespace: *current-definition*,
        clause:    *current-clause*,
        option:    *current-option*)
 end method;
@@ -26,7 +26,7 @@ end method;
 define dood-class <parsed-use-clause> (<object>)
   lazy slot clause-namespace;
   lazy slot clause-name;
-  lazy slot clause-import-spec, 
+  lazy slot clause-import-spec,
     init-keyword: import:;
   lazy slot clause-exclude-spec;
   lazy slot clause-rename-spec;
@@ -43,8 +43,8 @@ end serious-program-warning;
 
 define method parse-namespace-clauses (name, clauses)
   collecting (use-clauses :: <vector>,
-	      create-clauses :: <vector>,
-	      export-clauses :: <vector>)
+              create-clauses :: <vector>,
+              export-clauses :: <vector>)
     macro-case (clauses)
       { ?clauses:* }
         => #f;
@@ -63,14 +63,14 @@ define method parse-namespace-clauses (name, clauses)
              end macro-case;
            on-error (condition)
              // Pass it on for collection.
-             signal(condition); 
+             signal(condition);
              // Warn about what we're skipping.
              note(<skipping-namespace-clause>,
                   source-location: fragment-source-location(clause),
                   namespace-name:  name);
            end;
     end macro-case;
-    values(collected(use-clauses), 
+    values(collected(use-clauses),
            collected(create-clauses),
            collected(export-clauses))
   end collecting;
@@ -83,14 +83,14 @@ define option <use-exclude-option> => exclude: :: name-set end;
 define option <use-export-option> => export:   :: name-set end;
 
 define method parse-option-value (constraint == #"name-set", fragment)
-  macro-case (fragment) 
+  macro-case (fragment)
     { all }          => #"all";
     { { ?names:* } } => parse-names-to-symbols(names);
   end;
 end method;
 
 define method parse-option-value (constraint == #"rename-set", fragment)
-  macro-case (fragment) 
+  macro-case (fragment)
     { all }          => #"all";
     { { ?renames:* } } => parse-renames-to-symbols(renames);
   end;
@@ -160,8 +160,8 @@ define method parse-use-clause (form)
     { use ?:name, ?options:* }
       => begin
            let initargs = parse-options(use-options(), options, form);
-           make(<use-clause>, 
-                use: fragment-identifier(name), 
+           make(<use-clause>,
+                use: fragment-identifier(name),
                 options: initargs);
          end;
   end macro-case;
@@ -171,7 +171,7 @@ define method parse-export-clause (form)
   macro-case (form)
     { export ?names:* }
       => begin
-           make(<export-clause>, 
+           make(<export-clause>,
                 names: parse-names-to-symbols(names));
          end;
   end macro-case;
@@ -181,7 +181,7 @@ define method parse-create-clause (form)
   macro-case (form)
     { create ?names:* }
       => begin
-           make(<create-clause>, 
+           make(<create-clause>,
                 names: parse-names-to-symbols(names));
          end;
   end macro-case;
@@ -201,7 +201,7 @@ define abstract program-warning <namespace-clause-warning>
     required-init-keyword: option:;
 end program-warning;
 
-define program-warning 
+define program-warning
     <all-specified-multiple-times> (<namespace-clause-warning>)
   format-string
     "\"All\" specified more than once as an %s option of %s in the "
@@ -210,7 +210,7 @@ define program-warning
     option, clause, namespace;
 end program-warning;
 
-define program-warning 
+define program-warning
     <all-specified-with-explicit-names> (<namespace-clause-warning>)
   format-string
     "\"All\" specified as well an explicit name set as an %s option of %= "
@@ -241,7 +241,7 @@ define method merge-name-sets (s1 == #"all", s2 :: <sequence>)
   s1
 end method;
 
-define method merge-name-sets (s1 :: <sequence>, s2 :: <sequence>) 
+define method merge-name-sets (s1 :: <sequence>, s2 :: <sequence>)
     => (merged-s1-s2)
   union(s1, s2);
 end method;
@@ -249,7 +249,7 @@ end method;
 // If none of the above match, reverse the order of the sets and
 // try again.
 
-define method merge-name-sets (s1 :: <object>, s2 :: <object>) 
+define method merge-name-sets (s1 :: <object>, s2 :: <object>)
     => (merged-s1-s2)
   merge-name-sets(s2, s1)
 end method;
@@ -263,7 +263,7 @@ define method parse-names (names :: <fragment>) => (name-sequence :: <vector>)
   macro-case (names)
     { ?names:* } => as(<vector>, names);
   names:
-    { } 
+    { }
       => #();
     { ?:name, ... }
       => pair(name, ...);
@@ -276,7 +276,7 @@ define method parse-names-to-symbols
   macro-case (names)
     { ?names:* } => as(<vector>, names);
   names:
-    { } 
+    { }
       => #();
     { ?:name, ... }
       => pair(as(<symbol>, name), ...);
@@ -288,7 +288,7 @@ define method parse-renames-to-symbols
   macro-case (names)
     { ?names:* } => as(<vector>, names);
   names:
-    { } 
+    { }
       => #();
     { ?:name, ... }
       => pair(as(<symbol>, name), ...);

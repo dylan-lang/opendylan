@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Class definitions can specify a metaclass option. The value of that
 // option is currently a non-module scoped name that can is resolved
-// to a compile-stage metaclass in the compiler. 
+// to a compile-stage metaclass in the compiler.
 
 // This stuff is only used by the FFI at the moment.
 
@@ -85,11 +85,11 @@ define compiler-sideways method compute-and-install-form-model-objects
     (form :: <class-definition>) => ()
   form-evaluation-tried-and-failed?(form) := #f;
   unless (form-sealed-if-private?(form) |
-	  member?(#"dynamic", form-adjectives(form)) |
-	  binding-accessible-to-other-libraries?(form-variable-binding(form)))
+          member?(#"dynamic", form-adjectives(form)) |
+          binding-accessible-to-other-libraries?(form-variable-binding(form)))
     note(<inaccessible-open-definition>,
-	 binding: form-variable-binding(form),
-	 source-location: form-source-location(form));
+         binding: form-variable-binding(form),
+         source-location: form-source-location(form));
   end;
   if (form-dynamic?(form))
     compute-and-install-form-dynamic-init-method(form);
@@ -105,38 +105,38 @@ define method compute-and-install-form-model-objects-statically
   let superclass-models
     = ^top-level-eval-sequence
         (form-superclass-expressions(form), on-failure: #f);
-  if (~superclass-models 
-	| ~every?(method (x) 
-		    instance?(x, <&class>)
-		      & ~ ^class-incremental?(x)
-		      & (mylib == model-library(x) | ~^class-sealed?(x))
-		  end,
-		  superclass-models))
+  if (~superclass-models
+        | ~every?(method (x)
+                    instance?(x, <&class>)
+                      & ~ ^class-incremental?(x)
+                      & (mylib == model-library(x) | ~^class-sealed?(x))
+                  end,
+                  superclass-models))
     if (superclass-models)
       // debug-out(#"gsb", ">>> -- Computed superclass-models for %= as %=\n",
       //          form, superclass-models);
       let mylib = form-library(form);
-      for (model in superclass-models, 
-	   expr in form-superclass-expressions(form))
-	if (~instance?(model, <&class>))
-	  note(<non-class-superclass-expression>,
-	       source-location: fragment-source-location(expr),
-	       form: form-variable-name(form),
-	       superclass-expression: expr,
-	       superclass-value: model);
-	elseif (mylib ~== model-library(model) & ^class-sealed?(model))
-	  note(<nonlocal-sealed-superclass>,
-	       source-location: fragment-source-location(expr),
-	       form: form-variable-name(form),
-	       superclass-expression: expr,
-	       superclass-value: model)
-	end if
+      for (model in superclass-models,
+           expr in form-superclass-expressions(form))
+        if (~instance?(model, <&class>))
+          note(<non-class-superclass-expression>,
+               source-location: fragment-source-location(expr),
+               form: form-variable-name(form),
+               superclass-expression: expr,
+               superclass-value: model);
+        elseif (mylib ~== model-library(model) & ^class-sealed?(model))
+          note(<nonlocal-sealed-superclass>,
+               source-location: fragment-source-location(expr),
+               form: form-variable-name(form),
+               superclass-expression: expr,
+               superclass-value: model)
+        end if
       end for
     else
       debug-out(#"gsb", ">>> -- Couldn't get superclass-models for %=\n", form);
     end if;
     debug-out(#"dynamic",
-	      ">>> Retreating to the dynamic case for %=\n", form);
+              ">>> Retreating to the dynamic case for %=\n", form);
     form-evaluation-tried-and-failed?(form) := #t;
     compute-and-install-form-dynamic-init-method(form);
   else
@@ -147,21 +147,21 @@ define method compute-and-install-form-model-objects-statically
       = eval-metaclass-spec(form-metaclass-spec(form));
     // Slot specs are allowed to forward reference the class, so we
     // make and install the class model now and fill in the slots later.
-    let model 
+    let model
       = apply(^make, compiler-metaclass,
               definition:                          form,
-              debug-name:                          
+              debug-name:
                 mapped-model(as-lowercase(as(<string>, variable-name))),
-              superclasses:                          
+              superclasses:
                 mapped-model(superclass-models),
               slots:                               #(),
               abstract?:                           form-abstract?(form),
               sealed?:                             sealed?,
               primary?:                            primary?,
-	      incremental?:                        #f,
+              incremental?:                        #f,
               complete?:                           #f,
-	      type-complete?:                      #t,
-              value-class?:                        
+              type-complete?:                      #t,
+              value-class?:
                 compiler-metaclass == <&value-class>,
               slots-have-fixed-offsets?:           primary?,
               slots-have-fixed-offsets?-computed?: primary?,
@@ -173,19 +173,19 @@ define method compute-and-install-form-model-objects-statically
     // We may yet bail if the slots aren't evaluable "enough".
     if (~all-clauses-evaluable?(form))
       debug-out(#"dynamic",
-		">>> Retreating to the dynamic case on slots for %=\n", form);
+                ">>> Retreating to the dynamic case on slots for %=\n", form);
       form-evaluation-tried-and-failed?(form) := #t;
       retract-model-object(variable-name);
       compute-and-install-form-dynamic-init-method(form);
-    end;    
+    end;
     */
     let mylib = form-library(form);
     if (any?(method (x) mylib ~== model-library(x) end, superclass-models))
-      let code 
-	= (with-expansion-source-form(form)
-	     let definer = dylan-value(#"%add-class");
-	     #{ ?definer(?model) }
-	   end with-expansion-source-form);
+      let code
+        = (with-expansion-source-form(form)
+             let definer = dylan-value(#"%add-class");
+             #{ ?definer(?model) }
+           end with-expansion-source-form);
       let init-model = convert-top-level-initializer(code);
       form-system-init-method(form) := init-model;
     end if;
@@ -198,16 +198,16 @@ define constant $min-rcpl-size = 6;
 define function ^setup-cpl-rcpl (new-cls :: <&class>, cpl) => ();
   new-cls.^all-superclasses := mapped-model (cpl) ;
   let  self-pos = cpl.size - 1;
-  let  rcpl = make(<simple-object-vector>, 
-		   size: max(self-pos + 1, $min-rcpl-size),
-		   fill: #f);
+  let  rcpl = make(<simple-object-vector>,
+                   size: max(self-pos + 1, $min-rcpl-size),
+                   fill: #f);
   let  mylib  = new-cls.model-library;
   new-cls.^class-rcpl-position := self-pos; // This is always the smallest position.
   for (pos from self-pos to 0 by -1, super in cpl)
     rcpl [pos] := super ;
     if (pos > 0 & pos < self-pos)  // uninterested if self or <object>
       if (super.model-library == mylib)
-	^augment-rcpl-position-data(super, pos)
+        ^augment-rcpl-position-data(super, pos)
       end
     end
   end;
@@ -216,32 +216,32 @@ end;
 
 define function add-position-sorted (pos :: <integer>, oposns :: <list>) => (posns :: <list>)
   local method phu (prev :: false-or(<pair>))
-	  if (prev == #f)
-	    pair(pos, oposns)
-	  else
-	    let prev :: <pair> = prev;
-	    tail(prev) := pair(pos, tail(prev));
-	    oposns
-	  end if
-	end method;
+          if (prev == #f)
+            pair(pos, oposns)
+          else
+            let prev :: <pair> = prev;
+            tail(prev) := pair(pos, tail(prev));
+            oposns
+          end if
+        end method;
   local method loop (posns :: <list>, prev :: false-or(<pair>))
-	  if (posns.empty?)
-	    phu(prev)
-	  else
-	    let elem :: <integer> = posns.head;
-	    if (pos == elem)
-	      oposns
-	    elseif (pos > elem)
-	      loop(tail(posns), posns)
-	    else
-	      phu(prev)
-	    end if
-	  end if
-	end method;
+          if (posns.empty?)
+            phu(prev)
+          else
+            let elem :: <integer> = posns.head;
+            if (pos == elem)
+              oposns
+            elseif (pos > elem)
+              loop(tail(posns), posns)
+            else
+              phu(prev)
+            end if
+          end if
+        end method;
   loop(oposns, #f);
 end function;
 
-  
+
 define function ^augment-rcpl-position-data (cls :: <&class>, pos :: <integer>) => ()
   if (pos ~== cls.^class-rcpl-position)
     let posns = cls.^class-incremental-rcpl-positions;
@@ -263,7 +263,7 @@ define function ^ensure-class-complete (class :: <&class>) => ()
     let iclass = ^class-implementation-class(class);
     let inst? = (~^class-abstract?(class) & member?(dylan-value(#"<object>"), ^all-superclasses(class)));
     ^iclass-instantiable?(iclass) := inst?;
-    debug-out(#"gsb", ">>> %= %s, props=%x.\n", class, 
+    debug-out(#"gsb", ">>> %= %s, props=%x.\n", class,
               if (inst?) "IS instantiable" else "is NOT instantiable" end,
               ^class-properties(iclass));
   end;
@@ -284,29 +284,29 @@ end;
 //  if (form-system-init-method(form))
 //    // format-out("    ==> Oops, it's been done already!\n")
 //  else
-//    class.^class-rcpl-other-positions 
+//    class.^class-rcpl-other-positions
 //      := mapped-model(as(<simple-object-vector>, class.^class-incremental-rcpl-positions));
 //    let sups :: <list> = ^all-superclasses(class);
 //    local method find-fixups (supers :: <list>, pos :: <integer>, fixups :: <list>)
-//	    if (pos <= 0)
-//	      if (fixups ~== #())
-//		// format-out("  ==> %= needs rcpl position fixups %=\n", class, fixups);
-//		let vec = mapped-model(as(<simple-object-vector>, fixups));
-//                form-system-init-method(form) 
+//            if (pos <= 0)
+//              if (fixups ~== #())
+//                // format-out("  ==> %= needs rcpl position fixups %=\n", class, fixups);
+//                let vec = mapped-model(as(<simple-object-vector>, fixups));
+//                form-system-init-method(form)
 //                  := convert-top-level-initializer
 //                       (#{ ?=augment-rcpl-position-data-kludgey(?vec) });
-//	      end if
-//	    else
-//	      let sup :: <&class> = head(supers);
-//	      find-fixups(tail(supers), pos - 1,
-//			  if (sup.model-library ~== mylib
-//				& ~member?(pos, ^class-incremental-rcpl-positions(sup)))
-//			    pair(mapped-model(sup), pair(pos, fixups))
-//			  else
-//			    fixups
-//			  end if)
-//	    end if
-//	  end method;
+//              end if
+//            else
+//              let sup :: <&class> = head(supers);
+//              find-fixups(tail(supers), pos - 1,
+//                          if (sup.model-library ~== mylib
+//                                & ~member?(pos, ^class-incremental-rcpl-positions(sup)))
+//                            pair(mapped-model(sup), pair(pos, fixups))
+//                          else
+//                            fixups
+//                          end if)
+//            end if
+//          end method;
 //    find-fixups(tail(sups), size(sups) - 2, #());
 //    ^instance?-iep(class); // Force computation reference of this.
 //  end if
@@ -325,88 +325,88 @@ define function finish-class-models (ld :: <library-description>, form-mapper ::
   let joint-table :: <table> = make(<table>);
   let root-lib? = dylan-library-library-description?(ld);
   local method fubar (c :: <&class>)
-	  if (~instance?(c, <&virtual-class>))
-	    // Force direct subclasses to be computed. This is important,
+          if (~instance?(c, <&virtual-class>))
+            // Force direct subclasses to be computed. This is important,
             // the heaper/linker has problems without it.
             ^direct-subclasses(c);
-	    if (^all-subclasses-if-sealed(c))
-	      let ic :: <&implementation-class> = ^class-implementation-class(c);
-	      ^iclass-subclasses-fixed?(ic) := #t;
-	    end if;
-	    let sups :: <list> = ^all-superclasses(c);
-	    let others = c.^class-incremental-rcpl-positions;
-	    if (others ~== #())
-	      // format-out("  ---- Class %= has other-positions %=\n", c, others);
-	      c.^class-rcpl-other-positions := mapped-model(as(<simple-object-vector>, others));
-	    end if;
-	    unless (root-lib?)
-	      // Look over the superclasses and make note of those that are going to need
-	      // to have their rcpl positions vector augmented at load time.
-	      for (sup :: <&class> in tail(sups),
-		   pos :: <integer> = size(sups) - 2 then pos - 1,
-		   while: pos > 0)
-		if (sup.model-library ~== ld
-		      & pos ~== ^class-rcpl-position(sup)
-		      & ~member?(pos, ^class-incremental-rcpl-positions(sup)))
-		  let known :: <list> = element(rcpl-table, sup, default: #());
-		  let new-known :: <list> = add-position-sorted(pos, known);
-		  if (known ~== new-known)
-		    element(rcpl-table, sup) := new-known
-		  end if
-		end if;
-	      end for;
-	    end;
-	    // Compute modifications to the class-known-joint sets of this class's superclasses.
-	    for (subl :: <list> = tail(sups) then tail(subl), 
-		 until: empty?(subl))
-	      let c1 :: <&class> = head(subl);
-	      let c1local? = c1.model-library == ld;
-	      let c1othersups = tail(c1.^all-superclasses);
-	      for (c2 :: <&class> in tail(subl))
-		if (~member?(c2, c1othersups))
-		  // Only memoize if c2 isn't a superclass of c1.
-		  let j1 :: <list> = element(joint-table, c1, default: #());
-		  if (~member?(c2, j1))
-		    let j2 :: <list> = element(joint-table, c2, default: #());
-		    if (~member?(c1, j2))
-		      // c1 and c2 are not already known to occur together in anyone's CPL.
-		      // Add one to the class-known-joint set of the other, biasing the choice
-		      // towards the one defined in this library so the modification can be made
-		      // to the model rather than at load time.
-		      if (c1local? | c2.model-library ~== ld)
-			element(joint-table, c1) := pair(c2, j1)
-		      else
-			element(joint-table, c2) := pair(c1, j2)
-		      end if
-		    end if
-		  end if
-		end if
-	      end for
-	    end for
-	  end if
-	end method;
+            if (^all-subclasses-if-sealed(c))
+              let ic :: <&implementation-class> = ^class-implementation-class(c);
+              ^iclass-subclasses-fixed?(ic) := #t;
+            end if;
+            let sups :: <list> = ^all-superclasses(c);
+            let others = c.^class-incremental-rcpl-positions;
+            if (others ~== #())
+              // format-out("  ---- Class %= has other-positions %=\n", c, others);
+              c.^class-rcpl-other-positions := mapped-model(as(<simple-object-vector>, others));
+            end if;
+            unless (root-lib?)
+              // Look over the superclasses and make note of those that are going to need
+              // to have their rcpl positions vector augmented at load time.
+              for (sup :: <&class> in tail(sups),
+                   pos :: <integer> = size(sups) - 2 then pos - 1,
+                   while: pos > 0)
+                if (sup.model-library ~== ld
+                      & pos ~== ^class-rcpl-position(sup)
+                      & ~member?(pos, ^class-incremental-rcpl-positions(sup)))
+                  let known :: <list> = element(rcpl-table, sup, default: #());
+                  let new-known :: <list> = add-position-sorted(pos, known);
+                  if (known ~== new-known)
+                    element(rcpl-table, sup) := new-known
+                  end if
+                end if;
+              end for;
+            end;
+            // Compute modifications to the class-known-joint sets of this class's superclasses.
+            for (subl :: <list> = tail(sups) then tail(subl),
+                 until: empty?(subl))
+              let c1 :: <&class> = head(subl);
+              let c1local? = c1.model-library == ld;
+              let c1othersups = tail(c1.^all-superclasses);
+              for (c2 :: <&class> in tail(subl))
+                if (~member?(c2, c1othersups))
+                  // Only memoize if c2 isn't a superclass of c1.
+                  let j1 :: <list> = element(joint-table, c1, default: #());
+                  if (~member?(c2, j1))
+                    let j2 :: <list> = element(joint-table, c2, default: #());
+                    if (~member?(c1, j2))
+                      // c1 and c2 are not already known to occur together in anyone's CPL.
+                      // Add one to the class-known-joint set of the other, biasing the choice
+                      // towards the one defined in this library so the modification can be made
+                      // to the model rather than at load time.
+                      if (c1local? | c2.model-library ~== ld)
+                        element(joint-table, c1) := pair(c2, j1)
+                      else
+                        element(joint-table, c2) := pair(c1, j2)
+                      end if
+                    end if
+                  end if
+                end if
+              end for
+            end for
+          end if
+        end method;
   form-mapper(ld, fubar);
 //  form-mapper(ld, ^instance?-iep);// Force computation reference of this.
   let classvec = make(<heap-deferred-all-classes-model>);
   let code = if (root-lib?)
-	       #{ *implementation-classes-by-key* := ?classvec ; 
-		  *next-unique-dispatch-key* := size(*implementation-classes-by-key*) ; }
-	     else
-	       #{ initialize-class-dispatch-keys-vectored ( ?classvec ) ; }
-	     end if;
+               #{ *implementation-classes-by-key* := ?classvec ;
+                  *next-unique-dispatch-key* := size(*implementation-classes-by-key*) ; }
+             else
+               #{ initialize-class-dispatch-keys-vectored ( ?classvec ) ; }
+             end if;
   local method add-code (fn, class-vec :: <stretchy-vector>, data-vec :: <stretchy-vector>)
-	  unless (empty?(class-vec))
-	    if (class-vec.size == 1)
-	      let cl = class-vec[0];
-	      let data = mapped-model(data-vec[0]);
-	      code := #{ ?code ?fn(?cl, ?data) ; };
-	    else
-	      let classv = mapped-model(as(<simple-object-vector>, class-vec));
-	      let datav = mapped-model(as(<simple-object-vector>, data-vec));
-	      code := #{ ?code do(?fn, ?classv, ?datav) ; };
-	    end if;
-	  end unless;
-	end method;
+          unless (empty?(class-vec))
+            if (class-vec.size == 1)
+              let cl = class-vec[0];
+              let data = mapped-model(data-vec[0]);
+              code := #{ ?code ?fn(?cl, ?data) ; };
+            else
+              let classv = mapped-model(as(<simple-object-vector>, class-vec));
+              let datav = mapped-model(as(<simple-object-vector>, data-vec));
+              code := #{ ?code do(?fn, ?classv, ?datav) ; };
+            end if;
+          end unless;
+        end method;
   unless (empty?(rcpl-table))
     let p-vec = make(<stretchy-vector>);
     let p-class-vec = make(<stretchy-vector>);
@@ -437,14 +437,14 @@ define compiler-sideways method retract-form-model-objects (form :: <class-defin
 end method;
 
 
-define method eval-metaclass-spec 
+define method eval-metaclass-spec
     (spec == #f) => (compiler-metaclass, metaclass-initargs)
   values(<&class>, #())
 end method;
 
-define method eval-metaclass-spec 
+define method eval-metaclass-spec
     (spec) => (compiler-metaclass, metaclass-initargs)
- let metaclass 
+ let metaclass
    = lookup-compiler-metaclass(spec-metaclass-name(spec));
  values(metaclass, spec-metaclass-initargs(spec))
 end method;
@@ -452,7 +452,7 @@ end method;
 /* TODO: OBSOLETE?
 define method eval-property-list (property-list)
   collecting ()
-    for (cursor = property-list then cursor.tail.tail, 
+    for (cursor = property-list then cursor.tail.tail,
          until: empty?(cursor))
       let key = cursor.first;
       let val-expression = cursor.second;
@@ -465,13 +465,13 @@ end method;
 
 //// Initializer methods
 
-define method install-method-signature 
-    (m :: <&initializer-method>, 
+define method install-method-signature
+    (m :: <&initializer-method>,
        form :: <method-defining-form>, sig :: <&signature>)
  => ()
   next-method();
   // We have to do this now, before anyone gets to look at the signature,
-  // because the signature is fake until the set of init keywords is 
+  // because the signature is fake until the set of init keywords is
   // computed during body generation.
   maybe-compute-and-install-method-dfm(m);
   // The first specializer is the class in question.
@@ -479,18 +479,18 @@ define method install-method-signature
   // ^class-constructor(class) := m;
 end method;
 
-define method compute-method-body 
+define method compute-method-body
     (m :: <&initializer-method>) => (body-fragment)
   // The second specializer is the class in question.
   let class = m.^function-signature.^signature-values.first;
   // Only attempt this for simple classes with only instance slots right now.
   ^ensure-class-complete(class);
-  if (^ensure-slots-initialized(class) 
+  if (^ensure-slots-initialized(class)
         & empty?(^class-slot-descriptors(class)))
     // break("Compute the initializer body for: %=", class);
     collecting (key-specs, set-specs)
       for (slotd in ^instance-slot-descriptors(class))
-        let (key-spec, set-spec) 
+        let (key-spec, set-spec)
           = compute-slot-initialization-code(class, slotd);
         if (key-spec) collect-into(key-specs, key-spec); end;
         collect-into(set-specs, set-spec);
@@ -500,7 +500,7 @@ define method compute-method-body
       // format-out("Keys: %=\n", key-specs);
       // format-out("Sets: %=\n", set-specs);
       let default-init-args = ^defaulted-initialization-arguments-slot(class);
-      let no-defaults? 
+      let no-defaults?
         = instance?(default-init-args, <simple-object-vector>)
             & empty?(default-init-args);
       let new-signature-fragment
@@ -509,7 +509,7 @@ define method compute-method-body
                   #key ??key-specs, ..., #all-keys)
                => (object :: ?class) };
           else
-            #{ (class :: <class>, #rest init-args, #key, #all-keys) 
+            #{ (class :: <class>, #rest init-args, #key, #all-keys)
                  => (object :: ?class) };
           end;
       let (new-signature, empty-body)
@@ -545,15 +545,15 @@ define method compute-method-body
              object
            end }
       else
-        #{ begin 
-             local method defaulted-initialize 
-                 (object :: ?class, 
+        #{ begin
+             local method defaulted-initialize
+                 (object :: ?class,
                     #rest init-args, #key ??key-specs, ..., #all-keys)
                begin ??set-specs; ... end;
                apply(initialize, object, init-args);
              end method;
              let class = ?class;
-             let init-args 
+             let init-args
                = concatenate-2
                    (init-args, class.defaulted-initialization-arguments);
              let object :: ?class = ?allocation;
@@ -570,17 +570,17 @@ end method;
 
 // TODO: CORRECTNESS: Type check assertions.
 
-define method compute-slot-initialization-code 
+define method compute-slot-initialization-code
     (class :: <&class>, slotd :: <&slot-descriptor>) => (key-spec, set-spec)
-  let name 
+  let name
     = make-unique-local-variable-name-fragment
         (model-variable-name(^slot-getter(slotd)));
   let keyword = ^init-keyword(slotd);
   let initd = ^effective-initial-value-descriptor(slotd, class);
-  let key-spec 
-    = keyword 
+  let key-spec
+    = keyword
         & if (^init-supplied?(initd))
-            let init 
+            let init
               = compute-slot-initialization-code-for-default-value
                   (class, slotd);
             #{ ?keyword ?name = ?init }
@@ -604,7 +604,7 @@ define method compute-slot-initialization-code
               // as their definition, so the type expression is the contents
               // type not the size type (always integer).
               let (inlineable?, type) = inlineable?(type);
-              let type-expression 
+              let type-expression
                 = if (inlineable?)
                     type
                   else
@@ -613,13 +613,13 @@ define method compute-slot-initialization-code
               // It gets ugly if we might get unbound since we have to not
               // do the type check in that case. In practice people don't
               // seem to leave their slots with the potential of being
-              // unbound yet keyword initializable that often, but we'll 
+              // unbound yet keyword initializable that often, but we'll
               // have to see...
               if (^init-keyword-required?(slotd) | ^init-supplied?(initd))
                 #{ let ?name :: ?type-expression = ?name; }
               else
-                #{ let ?name 
-                     = if (?name == ?$unbound) 
+                #{ let ?name
+                     = if (?name == ?$unbound)
                          ?name
                        else
                          let ?name :: ?type-expression = ?name;
@@ -650,7 +650,7 @@ define function copy-default-value-method (data) => (data)
   // constructed in the first place. If it's not a function,
   // it wouldn't have got folded down to evaluated status.
   debug-assert
-    (instance?(data, <&lambda>), 
+    (instance?(data, <&lambda>),
        "Anonymous slot init function must be a lambda.");
   ensure-method-dfm(data);
   let copier = current-dfm-copier(estimated-copier-table-size(data));
@@ -664,26 +664,26 @@ define method compute-slot-initialization-code-for-default-value
     (class :: <&class>, slotd :: <&slot-descriptor>) => (default-code)
   let initd = ^effective-initial-value-descriptor(slotd, class);
   let data = ^init-data-slot(initd);
-  let init 
+  let init
     = if (^init-evaluated?(initd))
         if (^init-value?(initd))
           data
-	else
+        else
           let (ok?, local-data) = inlineable?(data);
-	  if (ok?)
-	    #{ (?local-data()) }
-	  else
-	    let data = copy-default-value-method(data);
-	    #{ (?data()) }
-	  end
+          if (ok?)
+            #{ (?local-data()) }
+          else
+            let data = copy-default-value-method(data);
+            #{ (?data()) }
+          end
         end
       else
         if (^init-value?(initd))
           // Eval once.
           #{ make-method-init-value(?initd) }
         else
-	  let data = copy-default-value-method(data);
-	  #{ ((?data())()) }
+          let data = copy-default-value-method(data);
+          #{ ((?data())()) }
         end
       end;
   init
@@ -711,7 +711,7 @@ define method compute-and-install-form-dynamic-init-method
       end;
     end;
   end;
-  let code 
+  let code
     = // with-expansion-module (fragment-module(form-variable-name(form)))
         compute-form-dynamic-init-code(form);
       // end;
@@ -725,65 +725,65 @@ define method compute-form-dynamic-init-code
     = form-variable-name(form);
   let supers
     = form-superclass-expressions(form);
-  let slots 
+  let slots
     = compute-specs-dynamic-init-args-vector(form-slot-specs(form));
-  let inherited-slots 
+  let inherited-slots
     = compute-specs-dynamic-init-args-vector(form-inherited-slot-specs(form));
-  let keywords 
+  let keywords
     = compute-specs-dynamic-init-args-vector(form-keyword-specs(form));
   let complex?
     = ~empty?(inherited-slots) | ~empty?(keywords);
-  let constructor 
+  let constructor
     = if (form-in-place-redefinition?(form))
-	let abstract
-	  = form-abstract?(form);
-	let primary
-	  = form-primary?(form);
-	let sealed
-	  = form-sealable?(form);
-	let module 
-	  = form-module-model(form);
-	if (complex?)
-	  let definer = dylan-value(#"%redefine-complex-class");
-	  #{ ?definer
-	       (?name,
-		?"name",
-		?module,
-		?abstract,
-		?primary,
-		?sealed,
-		immutable-vector(??supers, ...),
-		immutable-vector(??slots, ...),
-		immutable-vector(??inherited-slots, ...),
-		immutable-vector(??keywords, ...)) };
-	else 
-	  let definer = dylan-value(#"%redefine-class");
-	  #{ ?definer
-	       (?name,
-		?"name",
-		?module,
-		?abstract,
-		?primary,
-		?sealed,
-		immutable-vector(??supers, ...),
-		immutable-vector(??slots, ...)) };
-	end if
-      else 
-	if (complex?)
-	  let definer = dylan-value(#"%define-complex-class");
-	  #{ ?definer
-	       (?name,
-		immutable-vector(??supers, ...),
-		immutable-vector(??slots, ...),
-		immutable-vector(??inherited-slots, ...),
-		immutable-vector(??keywords, ...)) };
-	else 
-	  let definer = dylan-value(#"%define-class");
-	  #{ ?definer
-	       (?name,
-		immutable-vector(??supers, ...),
-		immutable-vector(??slots, ...)) };
-	end if
+        let abstract
+          = form-abstract?(form);
+        let primary
+          = form-primary?(form);
+        let sealed
+          = form-sealable?(form);
+        let module
+          = form-module-model(form);
+        if (complex?)
+          let definer = dylan-value(#"%redefine-complex-class");
+          #{ ?definer
+               (?name,
+                ?"name",
+                ?module,
+                ?abstract,
+                ?primary,
+                ?sealed,
+                immutable-vector(??supers, ...),
+                immutable-vector(??slots, ...),
+                immutable-vector(??inherited-slots, ...),
+                immutable-vector(??keywords, ...)) };
+        else
+          let definer = dylan-value(#"%redefine-class");
+          #{ ?definer
+               (?name,
+                ?"name",
+                ?module,
+                ?abstract,
+                ?primary,
+                ?sealed,
+                immutable-vector(??supers, ...),
+                immutable-vector(??slots, ...)) };
+        end if
+      else
+        if (complex?)
+          let definer = dylan-value(#"%define-complex-class");
+          #{ ?definer
+               (?name,
+                immutable-vector(??supers, ...),
+                immutable-vector(??slots, ...),
+                immutable-vector(??inherited-slots, ...),
+                immutable-vector(??keywords, ...)) };
+        else
+          let definer = dylan-value(#"%define-class");
+          #{ ?definer
+               (?name,
+                immutable-vector(??supers, ...),
+                immutable-vector(??slots, ...)) };
+        end if
       end if;
   // #{ %initialize-binding(?name, ?constructor); }
   constructor
@@ -867,7 +867,7 @@ define method compute-spec-dynamic-init-args
   let keyword = spec-size-init-keyword(spec);
   let keyword-stuff
     = if (keyword) #{ size-init-keyword: ?keyword } else #{ } end;
-  let size-init-stuff 
+  let size-init-stuff
     = if (spec-size-init-supplied?(spec))
         #{ size-init-function: method () ?spec end, ?keyword-stuff }
       else
@@ -908,22 +908,22 @@ define compiler-sideways method compute-form-hollow-object
   let primary? = form-primary?(form);
   let (compiler-metaclass, metaclass-initargs)
     = eval-metaclass-spec(form-metaclass-spec(form));
-  let model 
+  let model
     = apply(^make, compiler-metaclass,
             definition:                          form,
-            debug-name:                          
+            debug-name:
               mapped-model(as-lowercase(as(<string>, variable-name))),
-	    module:                              form-module-model(form),
+            module:                              form-module-model(form),
             superclasses:                        #[],
             slots:                               #(),
             abstract?:                           form-abstract?(form),
             sealed?:                             form-sealable?(form),
             primary?:                            primary?,
-	    complete?:                           #f,
-	    type-complete?:                      #f,
+            complete?:                           #f,
+            type-complete?:                      #f,
             incremental?:                        #t,
-	    slots-have-fixed-offsets?:           primary?,
-	    slots-have-fixed-offsets?-computed?: primary?,
+            slots-have-fixed-offsets?:           primary?,
+            slots-have-fixed-offsets?-computed?: primary?,
             metaclass-initargs);
   ^class-constructor(model) := dylan-value(#"default-class-constructor");
   model

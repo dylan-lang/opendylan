@@ -40,7 +40,7 @@ define method re-optimize-into (c :: <computation>, lambda :: <&lambda>) => ()
   if (q)
     add-to-queue!(q , c);
     // print-queue-out(q);
-  elseif (lambda.body)		// make sure it's not dead
+  elseif (lambda.body)                // make sure it's not dead
     init-optimization-queue(lambda)
   end if;
 end method;

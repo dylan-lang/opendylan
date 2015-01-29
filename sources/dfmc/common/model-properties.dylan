@@ -26,9 +26,9 @@ define function model-source-location (object) => (loc)
   when (def)
     def.form-source-location
       | begin
-	  let parent = def.form-parent-form;
-	  parent & parent.form-source-location
-	end;
+          let parent = def.form-parent-form;
+          parent & parent.form-source-location
+        end;
   end;
 end;
 
@@ -38,7 +38,7 @@ define function model-compile-stage-only? (object) => (compile-stage-only?)
   def & form-compile-stage-only?(def);
 end;
 
-define abstract compiler-open dood-class <model-properties> 
+define abstract compiler-open dood-class <model-properties>
     (<dood-mapped-object>, <emitted-object>)
   lazy slot model-definition = #f,
     init-keyword: definition:;
@@ -91,7 +91,7 @@ define function model-interactive? (m) => (well? :: <boolean>)
   compilation-record-interactive?(model-compilation-record(m))
 end function;
 
-// The following protocol handles mapped objects that are "interned" in the 
+// The following protocol handles mapped objects that are "interned" in the
 // run time, but not necessarily where the compiler is currently running.
 
 define compiler-open generic standard-model-object (object) => (standard);

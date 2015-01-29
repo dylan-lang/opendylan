@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// Used by potential multiple-value binding forms: define constant, 
+// Used by potential multiple-value binding forms: define constant,
 // define variable, and let.
 
 define method bound-variable-names (spec :: <values-spec>) => (res :: <variable-specs>)
@@ -32,7 +32,7 @@ define method parse-value-bindings (bindings)
     = parse-values-list(bindings);
   let spec
     = make(<values-spec>,
-	   value-required-variable-specs: value-requireds,
-	   value-rest-variable-spec:      value-rest);
+           value-required-variable-specs: value-requireds,
+           value-rest-variable-spec:      value-rest);
   spec
 end method;

@@ -7,14 +7,14 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define abstract open class <back-end> (<object>) 
+define abstract open class <back-end> (<object>)
   constant slot mangler = make(<mangler>);
 end class;
 
-define abstract open class <lambda-compiled-data> (<object>) 
+define abstract open class <lambda-compiled-data> (<object>)
 end class;
 
-define abstract open class <local-variable> (<object>) 
+define abstract open class <local-variable> (<object>)
 end class;
 
 define constant $back-end-registry = make(<stretchy-vector>);
@@ -44,7 +44,7 @@ define function find-back-end
     (type :: <symbol>, platform-name :: <symbol>)
  => (entry)
   choose(method (x)
-           x.back-end-type == type 
+           x.back-end-type == type
              & (~ x.back-end-platform-name | x.back-end-platform-name == platform-name)
          end, $back-end-registry)
 end;

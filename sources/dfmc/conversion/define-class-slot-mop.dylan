@@ -81,23 +81,23 @@ define function ^effective-initialization-argument-descriptor
     (descriptor :: <&slot-keyword-initialization-descriptor>)
   let owner = ^slot-owner(descriptor);
   if (owner == class)
-    descriptor				// optimize common case
+    descriptor                                // optimize common case
   else
     ^ensure-slots-initialized(class);
     let keyword = ^init-keyword(descriptor);
     if (keyword)
       block (return)
-	for (c :: <&class> in ^all-superclasses(class),
-	     until: c == owner)
-	  for (d :: <&init-arg-descriptor> in
-		 ^direct-initialization-argument-descriptors(c))
-	    if (^init-keyword(d) == keyword &
-		  (^init-keyword-required?(d) | ^init-supplied?(d)))
-	      return(d)
-	    end;
-	  end;
-	end;
-	descriptor
+        for (c :: <&class> in ^all-superclasses(class),
+             until: c == owner)
+          for (d :: <&init-arg-descriptor> in
+                 ^direct-initialization-argument-descriptors(c))
+            if (^init-keyword(d) == keyword &
+                  (^init-keyword-required?(d) | ^init-supplied?(d)))
+              return(d)
+            end;
+          end;
+        end;
+        descriptor
       end
     else
       descriptor
@@ -110,19 +110,19 @@ define function ^effective-initial-value-descriptor
     (descriptor :: <&slot-initial-value-descriptor>)
   let owner = ^slot-owner(descriptor);
   if (owner == class)
-    descriptor				// optimize common case
+    descriptor                                // optimize common case
   else
     ^ensure-slots-initialized(class);
     block (return)
       let getter = ^slot-getter(descriptor);
       for (c :: <&class> in ^all-superclasses(class),
-	   until: c == owner)
-	for (d :: <&inherited-slot-descriptor> in
-	       ^direct-inherited-slot-descriptors(c))
-	  if (^inherited-slot-getter(d) == getter & ^init-supplied?(d))
-	    return(d)
-	  end;
-	end;
+           until: c == owner)
+        for (d :: <&inherited-slot-descriptor> in
+               ^direct-inherited-slot-descriptors(c))
+          if (^inherited-slot-getter(d) == getter & ^init-supplied?(d))
+            return(d)
+          end;
+        end;
       end;
       descriptor
     end
@@ -177,7 +177,7 @@ end method;
 // end class <repeated-slot-descriptor>;
 
 define compiler-sideways method ^initialize-slot-descriptor
-   (descriptor :: <&repeated-slot-descriptor>, 
+   (descriptor :: <&repeated-slot-descriptor>,
       #key definition, owner, #all-keys)
   next-method();
   let type = dylan-value(#"<integer>");
@@ -189,18 +189,18 @@ define compiler-sideways method ^initialize-slot-descriptor
     else
       values(#f, #f, #f)
     end if;
-  let size-descriptor 
+  let size-descriptor
     = ^make(<&instance-slot-descriptor>,
             definition:            definition,
             owner:                 owner,
-	    type:                  type,
+            type:                  type,
             getter:                ^top-level-eval(spec-size-getter(definition)),
             setter:                #f,
             init-keyword:          mapped-model(^top-level-eval(spec-size-init-keyword(definition))),
             init-supplied?:        init-supplied?,
-	    init-value?:           #t,
-	    init-evaluated?:       init-evaluated?,
-	    init-data:             mapped-model(init-data));
+            init-value?:           #t,
+            init-evaluated?:       init-evaluated?,
+            init-data:             mapped-model(init-data));
   descriptor.^size-slot-descriptor := size-descriptor;
   descriptor
 end method;
@@ -255,7 +255,7 @@ end;
 define program-warning <slot-descriptor-missing>
   slot condition-accessor-method,
     required-init-keyword: accessor-method:;
-  format-string 
+  format-string
     "Couldn't compute accessor method body at compile-time for %= - "
     "generating stub body.";
   format-arguments accessor-method;
@@ -283,13 +283,13 @@ define function ^instance-slots-have-fixed-offsets? (class :: <&class>)
     let class-instance-slots = ^instance-slot-descriptors(class);
     let first-concrete-instance-slots = #f;
     local method ^subclass-slots-at-same-offsets?(subclass :: <&class>)
-	   => (same? :: <boolean>)
-	    if (~ ^ensure-slots-initialized(subclass))
+           => (same? :: <boolean>)
+            if (~ ^ensure-slots-initialized(subclass))
               // We don't know for sure.
               #f
             elseif (^class-abstract?(subclass))
               // Not interesting.
-              #t 
+              #t
             elseif (~first-concrete-instance-slots)
               // Everything else must conform with the layout of this
               // first concrete subclass.
@@ -306,7 +306,7 @@ define function ^instance-slots-have-fixed-offsets? (class :: <&class>)
                                | member?(test, class-instance-slots))
                      end,
                      first-concrete-instance-slots,
-		     ^instance-slot-descriptors(subclass))
+                     ^instance-slot-descriptors(subclass))
             end;
           end;
     let fixed-offsets? =
@@ -315,8 +315,8 @@ define function ^instance-slots-have-fixed-offsets? (class :: <&class>)
       // class's slots in the same places.
       // Remember that all-subclasses includes the class itself.
       begin
-	let subclasses = ^all-subclasses-if-sealed(class);
-	subclasses & every?(^subclass-slots-at-same-offsets?, subclasses)
+        let subclasses = ^all-subclasses-if-sealed(class);
+        subclasses & every?(^subclass-slots-at-same-offsets?, subclasses)
       end;
     ^slots-have-fixed-offsets?-computed?(class) := #t;
     ^slots-have-fixed-offsets?-bit(class) := fixed-offsets?
@@ -331,21 +331,21 @@ define function slot-offset-fixed-in-class?
     ^subtype?(class, slot-owner) &
     (^instance-slots-have-fixed-offsets?(class) |
        begin
-	 // is the slot inherited from the nearest fixed-offset class?
-	 let fixed-offset-superclass =
-	   any?(method (class :: <&class>)
-		  ^instance-slots-have-fixed-offsets?(class) & class
-		end,
-		^all-superclasses(class));
-	 fixed-offset-superclass &
-	   ^subtype?(fixed-offset-superclass, slot-owner)
+         // is the slot inherited from the nearest fixed-offset class?
+         let fixed-offset-superclass =
+           any?(method (class :: <&class>)
+                  ^instance-slots-have-fixed-offsets?(class) & class
+                end,
+                ^all-superclasses(class));
+         fixed-offset-superclass &
+           ^subtype?(fixed-offset-superclass, slot-owner)
        end)
 end;
 
 // The accessor used having previously determined that a slot has a fixed
 // offset using the above predicates.
 
-define function ^slot-fixed-offset 
+define function ^slot-fixed-offset
     (sd :: <&slot-descriptor>, class :: <&class>)
  => (offset :: <integer>)
   if (^class-abstract?(class))
@@ -378,9 +378,9 @@ define function slot-guaranteed-initialized-in-class?
   ^init-supplied?(^effective-initial-value-descriptor(sd, class)) |
     begin
       let key-descriptor =
-	^effective-initialization-argument-descriptor(sd, class);
+        ^effective-initialization-argument-descriptor(sd, class);
       ^init-keyword-required?(key-descriptor) |
-	^init-supplied?(key-descriptor)
+        ^init-supplied?(key-descriptor)
     end
 end;
 
@@ -406,43 +406,43 @@ end method;
 define method repeated-slot-primitive-fixup-info
     (class :: <&class>, sd :: <&repeated-slot-descriptor>)
  => (primitive, base-offset)
-  values(dylan-value(#"primitive-repeated-slot-value-setter"), 
+  values(dylan-value(#"primitive-repeated-slot-value-setter"),
          ^slot-offset(sd, class));
 end method;
 
 /*
 // Note that these work for locating repeated getters and setters too.
 
-define method find-getter-method 
+define method find-getter-method
     (getter :: <&method>, class :: <&class>) => (method-or-false)
   #f
 end method;
 
-define method find-setter-method 
+define method find-setter-method
     (zetter :: <&method>, class :: <&class>) => (method-or-false)
   #f
 end method;
 
-define method find-getter-method 
+define method find-getter-method
     (getter :: <&generic-function>, class :: <&class>) => (method-or-false)
   find-accessor-method-with-class-at-position(getter, class,
-					      <&getter-accessor-method>, 0);
+                                              <&getter-accessor-method>, 0);
 end method;
 
-define method find-setter-method 
+define method find-setter-method
     (zetter :: <&generic-function>, class :: <&class>) => (method-or-false)
   find-accessor-method-with-class-at-position(zetter, class,
-					      <&setter-accessor-method>, 1);
+                                              <&setter-accessor-method>, 1);
 end method;
 */
 
 /*
-define method ^function-required 
+define method ^function-required
     (m :: <&lambda>, position :: <integer>) => (res)
   element(m.^function-signature.^signature-required, position, default: #f)
 end method;
 
-define method ^function-required 
+define method ^function-required
     (m :: <&getter-method>, position :: <integer>) => (res)
   let slotd = ^method-slot-descriptor(m);
   select (position)
@@ -451,7 +451,7 @@ define method ^function-required
   end select
 end method;
 
-define method ^function-required 
+define method ^function-required
     (m :: <&setter-method>, position :: <integer>) => (res)
   let slotd = ^method-slot-descriptor(m);
   select (position)
@@ -463,7 +463,7 @@ end method;
 */
 
 /*
-define method ^accessor-class 
+define method ^accessor-class
     (m :: <&accessor-method>, position :: <integer>) => (res)
   element(m.^function-signature.^signature-required, position, default: #f)
 end method;
@@ -473,9 +473,9 @@ define function find-accessor-method-with-class-at-position
      accessor-class, position :: <integer>)
  => (method-or-false)
   any?(method(m)
-	 instance?(m, accessor-class) &
+         instance?(m, accessor-class) &
            ^accessor-class(m, position) == class &
-	   m
+           m
        end,
        ^generic-function-methods-known(accessor))
 end;

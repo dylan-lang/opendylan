@@ -16,7 +16,7 @@ define module dfmc-linker
   use dfmc-core;
   use dfmc-back-end;
   use dfmc-imports;
-  export 
+  export
     <linker>,
     emit-library-record,
     emit-library-records,

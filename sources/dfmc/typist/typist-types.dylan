@@ -9,19 +9,19 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///
 /// Kinds of Dylan types ("kind" used as in FX-91):
 ///
-/// * Top 
+/// * Top
 ///
 ///   - Common supertype of "normal" stuff (under <object>) and raw types.
 ///
 /// * Classes
 ///
 ///   - Almost everything "normal" is one of these.
-/// 
+///
 /// * Raw types
 ///
 ///   - Low-level stuff, under <&raw-type>.
 ///
-/// * Limiteds -- built on classes, i.e., the class being limited.  
+/// * Limiteds -- built on classes, i.e., the class being limited.
 ///
 ///   - Limited Integer: min (default -infinity) & max (default +infinity).
 ///
@@ -29,8 +29,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///
 ///   - Limited Instance: singleton(x) denotes anything == to x.
 ///
-///   - Limited Collection: some collections support of: to limit the type of 
-///     their elements, size: to limit their overall size, and dimensions: if 
+///   - Limited Collection: some collections support of: to limit the type of
+///     their elements, size: to limit their overall size, and dimensions: if
 ///     they happen to be arrays.
 ///
 ///     More details:
@@ -45,19 +45,19 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///          type that supports dimensions: and fill: initializations.  Note
 ///          constraint between fill: (default #f) and of:.
 ///
-///       <vector>, <simple-vector> support of:, size: and return an 
-///          instantiable type which takes size: and fill: keys.  Note 
+///       <vector>, <simple-vector> support of:, size: and return an
+///          instantiable type which takes size: and fill: keys.  Note
 ///          constraint between fill: (default #f) and of:.
 ///
-///       <stretchy-vector>, <deque> support of: and return an 
-///          instantiable type which takes size: and fill: keys.  Note 
+///       <stretchy-vector>, <deque> support of: and return an
+///          instantiable type which takes size: and fill: keys.  Note
 ///          constraint between fill: (default #f) and of:.
 ///
-///       <string> supports of:, size: and returns an instantiable type 
+///       <string> supports of:, size: and returns an instantiable type
 ///          supporting size: and fill:.  of: must be subtype of character.
-///          Default for fill: is ' '. 
+///          Default for fill: is ' '.
 ///
-///       <range> supports of: (subtype of <real>).  Result takes from:, to:, 
+///       <range> supports of: (subtype of <real>).  Result takes from:, to:,
 ///          below:, above:, by:, size:.
 ///
 ///   - Limited Function: limits <function> to certain arg & value types.
@@ -66,10 +66,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///   imprecision in type inference.
 ///
 /// * Multiple Values: We're really typing DFM code, not Dylan code.  DFM code
-///   creates boxes to return multiple values (even 0 or 1 value).  While 
+///   creates boxes to return multiple values (even 0 or 1 value).  While
 ///   optimizations should remove most of that, we still have to deal with it.
 ///
-/// * Bottom: bottom of the type lattice.  Never has instances.  (Like NIL as 
+/// * Bottom: bottom of the type lattice.  Never has instances.  (Like NIL as
 ///   a type in Common Lisp.)  Inferred only in case of an error, or unreachable
 ///   code.  Can result from promiscuous intersection or difference operations.
 ///
@@ -104,10 +104,10 @@ end;
 ///
 /// Macro for defining <type-estimate> classes.
 ///
-/// OK, so why this macro?  
+/// OK, so why this macro?
 ///
 /// Some type estimates contain other type estimates (e.g., multiple-values,
-/// limited-functions, etc.).  Make them contain a <type-variable> instead, 
+/// limited-functions, etc.).  Make them contain a <type-variable> instead,
 /// so constraints can be propagated properly.  What this macro does
 /// is arrange for the "usual" accessors to get you the _contents_ of the
 /// <type-variable>, transparently.
@@ -122,18 +122,18 @@ end;
 /// * Defines the class <foo>.
 /// * Ordinary slots are ordinary slots of <foo>.
 /// * For each type-slot, e.g., slot2-variable, define 2 real + 2 virtual slots:
-///   - SLOT2-VARIABLE-INTERNAL is a real slot to hold the type variable, or 
+///   - SLOT2-VARIABLE-INTERNAL is a real slot to hold the type variable, or
 ///     structure containing type variables.  This gets all the slot options;
-///     an initialize method makes sure the init values are coerced to 
+///     an initialize method makes sure the init values are coerced to
 ///     type variables or structures thereof.
-///   - SLOT2-CACHE is a real slot to hold the value of the type variable, or 
-///     structure copy containing the type variable values.  When not valid, 
+///   - SLOT2-CACHE is a real slot to hold the value of the type variable, or
+///     structure copy containing the type variable values.  When not valid,
 ///     it contains a distinguished "$unfound" value (common-extensions).
 ///   - SLOT2 is a constant virtual slot.  On reads, it reads slot2-cache and
-///     refreshes it if necessary by copying & dereferencing from 
+///     refreshes it if necessary by copying & dereferencing from
 ///     slot2-variable-internal.  It is not writeable.
-///   - SLOT2-VARIABLE is a virtual slot.  On reads, it just reads 
-///     slot2-variable-internal.  On writes, it writes slot2-variable-internal 
+///   - SLOT2-VARIABLE is a virtual slot.  On reads, it just reads
+///     slot2-variable-internal.  On writes, it writes slot2-variable-internal
 ///     and invalidates slot2-cache.
 ///
 /// (Hairy because of lack of daemon combination methods.  Both virtual slots
@@ -198,8 +198,8 @@ define macro type-class-accessors-definer
          define type-class-accessors ?cname (?rest) }
 end;
 
-// Look at what's stored in name-VARIABLE-INTERNAL, and return what to 
-// write into name-CACHE.  Methods are based on a case analysis of what 
+// Look at what's stored in name-VARIABLE-INTERNAL, and return what to
+// write into name-CACHE.  Methods are based on a case analysis of what
 // can occur in the type-slot of types below.
 define generic make-cache-copy (x :: <object>) => (deref-copy :: <object>);
 
@@ -236,7 +236,7 @@ define inline function as-false-or-type-variable-coll(x :: false-or(<collection>
 end;
 
 // *** Would be as(false-or(<type-variable>), <object>), but...
-define function as-false-or-type-variable(x) 
+define function as-false-or-type-variable(x)
     => (result :: false-or(<type-variable>))
   // Coerce to #f or a type variable.
   if (x == #f | instance?(x, <type-variable>))
@@ -255,13 +255,13 @@ end;
 
 define constant $top-cons-cache-key$ :: <pair> = list(#"top");
 
-define method make (cl == <type-estimate-top>, #rest keys, #key, #all-keys) 
+define method make (cl == <type-estimate-top>, #rest keys, #key, #all-keys)
  => (te :: <type-estimate-top>)
   // Use the canonical one in the cons cache, if it's there.
-  // Note that since there's no model-object to take model-library of, 
+  // Note that since there's no model-object to take model-library of,
   // we pretty much have to do current-library-description().
   let te-cons-cache = library-type-estimate-cons-cache(current-library-description());
-  let cache-val     = element(te-cons-cache, $top-cons-cache-key$, 
+  let cache-val     = element(te-cons-cache, $top-cons-cache-key$,
                               default: #f);
   if (cache-val)
     cache-val
@@ -272,14 +272,14 @@ define method make (cl == <type-estimate-top>, #rest keys, #key, #all-keys)
   end
 end;
 
-define method print-type-estimate-internals (tte :: <type-estimate-top>, 
+define method print-type-estimate-internals (tte :: <type-estimate-top>,
                                              #key stream) => ()
   format(stream, "<top>")
 end;
 
 ///
 /// Class <type-estimate>s.
-/// 
+///
 
 // TODO: Tighten this constraint back to class. Currently, limited instances
 // of raw types get made which inherit this slot but fill it with a raw
@@ -307,7 +307,7 @@ define method make (cl == <type-estimate-class>, #key class, #all-keys)
   end
 end;
 
-define method print-type-estimate-internals (cte :: <type-estimate-class>, 
+define method print-type-estimate-internals (cte :: <type-estimate-class>,
                                              #key stream) => ()
   format(stream, "%s", type-estimate-debug-name(type-estimate-class(cte)))
 end;
@@ -317,8 +317,8 @@ end;
 ///
 
 define type-class <type-estimate-raw> (<type-estimate>)
-  constant slot type-estimate-raw 
-      :: type-union(<&raw-type>, <&raw-aggregate-type>), 
+  constant slot type-estimate-raw
+      :: type-union(<&raw-type>, <&raw-aggregate-type>),
     required-init-keyword: raw:;
 end;
 
@@ -339,7 +339,7 @@ define method make (cl == <type-estimate-raw>, #key raw, #all-keys)
   end
 end;
 
-define method print-type-estimate-internals (raw :: <type-estimate-raw>, 
+define method print-type-estimate-internals (raw :: <type-estimate-raw>,
                                              #key stream) => ()
   format(stream, "%s", type-estimate-debug-name(type-estimate-raw(raw)))
 end;
@@ -349,23 +349,23 @@ end;
 ///
 
 define type-class <type-estimate-values> (<type-estimate>)
-  type-slot type-estimate-fixed-values-variable :: <type-variable-vector> = #[], 
+  type-slot type-estimate-fixed-values-variable :: <type-variable-vector> = #[],
     init-keyword: fixed:;
   type-slot type-estimate-rest-values-variable :: false-or(<type-variable>)
-    = make(<type-variable>, 
-           contents: make(<type-estimate-class>, 
+    = make(<type-variable>,
+           contents: make(<type-estimate-class>,
                           class: dylan-value(#"<object>"))),
     init-keyword: rest:;
 end;
 
 define method make
-    (tev :: subclass(<type-estimate-values>), #rest keys, 
+    (tev :: subclass(<type-estimate-values>), #rest keys,
      #key fixed, rest = #"unsupplied", #all-keys)
  => (te :: <type-estimate>)
   // Coerce keywords to type variables and collections thereof.
   let fixed :: false-or(<fixed-sequence>)
     = fixed & as(<fixed-sequence>, fixed);
-  apply(next-method, tev, 
+  apply(next-method, tev,
         fixed: case
                  fixed     => as-false-or-type-variable-coll(fixed);
                  otherwise => #[];
@@ -375,14 +375,14 @@ define method make
                    // Unsupplied means values(#rest <object>).
                    // #f means no rest return type.
                    // A type means that return type.
-                   rest == #"unsupplied" => as(<type-estimate>, 
+                   rest == #"unsupplied" => as(<type-estimate>,
                                                dylan-value(#"<object>"));
                    otherwise             => rest;
-                 end), 
+                 end),
         keys)
 end;
 
-define method print-type-estimate-internals(vte :: <type-estimate-values>, 
+define method print-type-estimate-internals(vte :: <type-estimate-values>,
                                             #key stream) => ()
   let fixed-vals = type-estimate-fixed-values(vte);
   let rest-vals  = type-estimate-rest-values(vte);
@@ -397,10 +397,10 @@ define method print-type-estimate-internals(vte :: <type-estimate-values>,
   write-element(stream, ')')
 end;
 
-define function type-estimate-values-ref 
+define function type-estimate-values-ref
   (vte :: <type-estimate-values>, i ::<integer>)
   => (tei :: <type-estimate>, source :: one-of(#"fixed", #"rest", #"default"))
-  // Return the ith type in a values type-estimate, and where it 
+  // Return the ith type in a values type-estimate, and where it
   // came from: #"fixed", #"rest", or #"default".
   if (i < 0)
     error("Can't take negative (%dth) value from %s!", i, vte)
@@ -415,7 +415,7 @@ end;
 
 ///
 /// Limited <type-estimate>s.
-/// 
+///
 /// *** Deal with limited ranges (from: to: below: above: by: and size:) someday.
 /// *** Limited strings, and all the specific classes which have limited methods.
 ///
@@ -431,7 +431,7 @@ define method initialize(lim :: <type-estimate-limited>, #key class, root)
     // Enforce that the class being limited is a subclass of root.
     // This ensures, e.g., that limited integers are built out of <integer>s,
     // or something like them.  (Obligatory Firesign Theater reference.)
-    assert(^subtype?(class, root), 
+    assert(^subtype?(class, root),
            "In %=, class: %= being limited is not a subclass of %=.",
            lim, class, root)
   end
@@ -442,10 +442,10 @@ end;
 ///
 
 define type-class <type-estimate-limited-integer> (<type-estimate-limited>)
-  keyword class: = dylan-value(#"<integer>"); 
+  keyword class: = dylan-value(#"<integer>");
   keyword root:  = dylan-value(#"<integer>");
   // #f means -infty for min, +infty for max.
-  constant slot type-estimate-min :: false-or(<integer>) = #f, 
+  constant slot type-estimate-min :: false-or(<integer>) = #f,
     init-keyword: min:;
   constant slot type-estimate-max :: false-or(<integer>) = #f,
     init-keyword: max:;
@@ -463,9 +463,9 @@ end;
 define method print-type-estimate-internals
     (teli :: <type-estimate-limited-integer>, #key stream) => ()
   // E.g., <integer>[0, 10], <integer>[-inf, 10], <integer>[0, +inf].
-  format(stream, "limited(%s, min: %s, max: %s)", 
+  format(stream, "limited(%s, min: %s, max: %s)",
          type-estimate-debug-name(type-estimate-class(teli)),
-         type-estimate-min(teli) | "-inf", 
+         type-estimate-min(teli) | "-inf",
          type-estimate-max(teli) | "+inf")
 end;
 
@@ -476,11 +476,11 @@ end;
 define type-class <type-estimate-limited-class> (<type-estimate-limited>)
   keyword class: = dylan-value(#"<class>");
   keyword root:  = dylan-value(#"<class>");
-  constant slot type-estimate-subclass :: <&class>, 
+  constant slot type-estimate-subclass :: <&class>,
     required-init-keyword: subclass:;
 end;
 
-// Bad idea to attempt to use the cons cache.  If you key on subclass, you'll 
+// Bad idea to attempt to use the cons cache.  If you key on subclass, you'll
 // conflict with the <type-estimate-class>.  If you make a model subclass,
 // you'll have to cons even if the cache hits.
 
@@ -550,7 +550,7 @@ define function show-singleton-stats(#key data = *limited-instances*) => ()
 end;
 */
 
-define method make (cl == <type-estimate-limited-instance>, 
+define method make (cl == <type-estimate-limited-instance>,
                     #next real-maker, #rest keys, #key singleton, #all-keys)
  => (object :: <type-estimate-limited-instance>)
   local method just-cons-it ()  => (te :: <type-estimate-limited-instance>)
@@ -561,7 +561,7 @@ define method make (cl == <type-estimate-limited-instance>,
         end;
   select (singleton by instance?)
     <boolean>, <number> // , <&callable-object>
-      // Look up singletons of booleans in the cons cache: there can only be 
+      // Look up singletons of booleans in the cons cache: there can only be
       //   2 of them, and we were consing 2328 of them!
       // Only 36 numbers in Dylan library, but some duplication.  A numerics library,
       //   of course, would have many more numeric constants in it.
@@ -604,21 +604,21 @@ define type-class <type-estimate-limited-collection> (<type-estimate-limited>)
     required-init-keyword: concrete-class:;
   constant slot type-estimate-size :: false-or(limited(<integer>, min: 0)) = #f,
     init-keyword: size:;
-  constant slot type-estimate-dimensions :: false-or(limited(<sequence>, 
+  constant slot type-estimate-dimensions :: false-or(limited(<sequence>,
                                                              of: <integer>
                                                                // limited(<integer>, min: 0)
                                                                )),
     init-value: #f, init-keyword: dimensions:;
 end;
 
-define method make (lc :: subclass(<type-estimate-limited-collection>), 
-                    #rest the-keys, 
+define method make (lc :: subclass(<type-estimate-limited-collection>),
+                    #rest the-keys,
                     #key class, concrete-class, of, size, dimensions, #all-keys)
  => (te :: <type-estimate>)
-  assert(of | size | dimensions, 
+  assert(of | size | dimensions,
          "Must supply at least 1 of of:, size:, or dimensions:.");
   // *** Awaits <&stretchy-collection>.
-  //assert(~size | ~^subtype?(class, dylan-value(#"<stretchy-collection>")), 
+  //assert(~size | ~^subtype?(class, dylan-value(#"<stretchy-collection>")),
   //       "size: %= given, but class: %= is stretchy.", size, class)
   assert(~size | ~dimensions,
          "Cannot give both size: %= and dimensions: %=.", size, dimensions);
@@ -626,25 +626,25 @@ define method make (lc :: subclass(<type-estimate-limited-collection>),
          "dimensions: %= given, but class: %= is not a subclass of <array>.",
           dimensions, class);
   // Add root: and coerce of:.
-  apply(next-method, lc, 
+  apply(next-method, lc,
         root:           dylan-value(#"<collection>"),
         class:          class,
         concrete-class: concrete-class,
         of:             as-false-or-type-variable(of),
         size:           size,
-        dimensions:     dimensions, 
+        dimensions:     dimensions,
         the-keys)
 end;
 
 define method print-type-estimate-internals
     (lc :: <type-estimate-limited-collection>, #key stream) => ()
-  format(stream, "limited(%s", 
+  format(stream, "limited(%s",
          type-estimate-debug-name(type-estimate-class(lc)));
-  ~type-estimate-of(lc)         | format(stream, ", of: %s", 
+  ~type-estimate-of(lc)         | format(stream, ", of: %s",
                                          type-estimate-of(lc));
-  ~type-estimate-size(lc)       | format(stream, ", size: %s", 
+  ~type-estimate-size(lc)       | format(stream, ", size: %s",
                                          type-estimate-size(lc));
-  ~type-estimate-dimensions(lc) | format(stream, ", dimensions: %s", 
+  ~type-estimate-dimensions(lc) | format(stream, ", dimensions: %s",
                                          type-estimate-dimensions(lc));
   write-element(stream, ')')
 end;
@@ -683,13 +683,13 @@ end;
 
 define method make
     (lf :: subclass(<type-estimate-limited-function>),
-     #rest the-keys, 
-     #key requireds :: false-or(<simple-object-vector>), 
-          keys :: false-or(<table>), vals, 
+     #rest the-keys,
+     #key requireds :: false-or(<simple-object-vector>),
+          keys :: false-or(<table>), vals,
      #all-keys)
  => (te :: <type-estimate>)
   // Coerce keywords to type variables and collections thereof.
-  apply(next-method, lf, 
+  apply(next-method, lf,
         // TODO: callable-object is no longer valid superclass model
         // root:      dylan-value(#"<callable-object>"),
         requireds: case
@@ -715,7 +715,7 @@ define method print-type-estimate-internals
           when (predecessors?) write(stream, ", ") end;
           predecessors? := #t
         end;
-  format(stream, "limited(%s, arguments: (", 
+  format(stream, "limited(%s, arguments: (",
          type-estimate-debug-name(type-estimate-class(tef)));
   unless (empty?(type-estimate-requireds(tef)))
     maybe-comma();                                           // Required args
@@ -723,7 +723,7 @@ define method print-type-estimate-internals
   end;
   when (type-estimate-rest?(tef))
     maybe-comma();
-    format(stream, "#rest %s", 
+    format(stream, "#rest %s",
            type-estimate-debug-name(dylan-value(#"<object>"))) // #rest present
   end;
   when (type-estimate-keys(tef))
@@ -746,7 +746,7 @@ define method print-type-estimate-internals
   format(stream, "), values: %s)", type-estimate-values(tef))
 end;
 
-/// 
+///
 /// Union <type-estimate>s.
 ///
 
@@ -756,7 +756,7 @@ define type-class <type-estimate-union> (<type-estimate>)
 end;
 
 define method make
-    (teu :: subclass(<type-estimate-union>), 
+    (teu :: subclass(<type-estimate-union>),
      #rest the-keys, #key unionees, #all-keys)
  => (te :: <type-estimate>)
   // Enwrap the unionees in type variables.
@@ -765,7 +765,7 @@ define method make
         the-keys)
 end;
 
-define method print-type-estimate-internals(un :: <type-estimate-union>, 
+define method print-type-estimate-internals(un :: <type-estimate-union>,
                                             #key stream) => ()
   write(stream, "type-union(");
   print-separated-collection(type-estimate-unionees(un), stream: stream);
@@ -785,10 +785,10 @@ define constant $bottom-cons-cache-key$ :: <pair> = list(#"bottom");
 define method make (cl == <type-estimate-bottom>, #rest keys, #key, #all-keys)
  => (te :: <type-estimate-bottom>)
   // Use the canonical one in the cons cache, if it's there.
-  // Note that since there's no model-object to take model-library of, 
+  // Note that since there's no model-object to take model-library of,
   // we pretty much have to do current-library-description().
   let te-cons-cache = library-type-estimate-cons-cache(current-library-description());
-  let cache-val     = element(te-cons-cache, $bottom-cons-cache-key$, 
+  let cache-val     = element(te-cons-cache, $bottom-cons-cache-key$,
                               default: #f);
   if (cache-val)
     cache-val
@@ -799,7 +799,7 @@ define method make (cl == <type-estimate-bottom>, #rest keys, #key, #all-keys)
   end
 end;
 
-define method print-type-estimate-internals(b :: <type-estimate-bottom>, 
+define method print-type-estimate-internals(b :: <type-estimate-bottom>,
                                             #key stream) => ()
   format(stream, "<bottom>")
 end;
@@ -818,7 +818,7 @@ rules:
 rule:
   // Each rule generates an as(<type-estimate>, ...) method.
   { ?t:name :: ?t-type:* -> ?expr:expression }
-    => { define method as (te == <type-estimate>, ?t :: ?t-type) 
+    => { define method as (te == <type-estimate>, ?t :: ?t-type)
            => (result :: <type-estimate>)
            ?expr
          end }
@@ -831,7 +831,7 @@ define as-type-estimate-rules
   t :: <&raw-type>                -> make(<type-estimate-raw>, raw: t);
   t :: <&raw-aggregate-type>      -> make(<type-estimate-raw>, raw: t);
   // *** Is <&values> a rep'n of multiple values?
-  t :: <&limited-integer>         -> make(<type-estimate-limited-integer>, 
+  t :: <&limited-integer>         -> make(<type-estimate-limited-integer>,
                                           min: ^limited-integer-min(t),
                                           max: ^limited-integer-max(t));
   // *** Limited collections, ranges
@@ -881,7 +881,7 @@ define as-model-type-rules
   t :: <type-estimate-top>              -> dylan-value(#"<top>");
   t :: <type-estimate-class>            -> type-estimate-class(t);
   t :: <type-estimate-raw>              -> type-estimate-raw(t);
-  t :: <type-estimate-values>           -> as-model-type-error( 
+  t :: <type-estimate-values>           -> as-model-type-error(
                                               t, "not a Dylan type");
   t :: <type-estimate-limited-integer>  -> ^limited-integer(
                                               min: type-estimate-min(t),
@@ -893,7 +893,7 @@ define as-model-type-rules
   t :: <type-estimate-limited-function> -> type-estimate-class(t); // <= <callable-object>
   t :: <type-estimate-union>            -> apply(^type-union,
                                                  // Use reduce & compose?
-                                                 map(curry(as, <&type>), 
+                                                 map(curry(as, <&type>),
                                                     type-estimate-unionees(t)));
   t :: <type-estimate-bottom>           -> dylan-value(#"<bottom>");
 end;

@@ -20,7 +20,7 @@ define module dfmc-conditions
 
   // debugging macros
   create \with-simple-abort-retry-restart;
-  
+
   // basic macros
   create \program-condition-definer,
          \program-condition-aux-definer,

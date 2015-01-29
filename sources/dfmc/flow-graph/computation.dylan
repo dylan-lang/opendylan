@@ -119,14 +119,14 @@ define inline method make-with-temporary
  => (computation :: <computation>, temporary :: false-or(<temporary>))
   let lambda-environment = lambda-environment(env);
   let computation = apply(make, class,
-			  environment: lambda-environment,
+                          environment: lambda-environment,
                           // lexical-environment: env,
-			  initargs);
+                          initargs);
   let the-temporary =
     temporary-class &
       make(temporary-class,
-	   generator:   computation,
-	   environment: lambda-environment);
+           generator:   computation,
+           environment: lambda-environment);
   computation.temporary := the-temporary;
   values(computation, the-temporary)
 end method;
@@ -172,7 +172,7 @@ define inline function do-used-temporaries
     let t = getter(c);
     if (instance?(t, <sequence>))
       for (t in t)
-	fn(t);
+        fn(t);
       end;
     else
       fn(t);

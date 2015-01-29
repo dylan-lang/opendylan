@@ -21,16 +21,16 @@ define constant make-type-estimate = make;
 ///
 /// A type inference algorithm must supply 3 things:
 ///
-/// [1] its theory of types, 
-/// [2] operations on those types (algebra and predicates), and 
+/// [1] its theory of types,
+/// [2] operations on those types (algebra and predicates), and
 /// [3] how to infer those types from dfm objects.
 ///
 
 // You can display a LispWorks graph of these with:
 /*
-(progn 
-(defun browz (&rest names) 
-  (tools:make-class-browser 
+(progn
+(defun browz (&rest names)
+  (tools:make-class-browser
      :root (mapcar #'(lambda (x) (find-class (intern x 'dylan))) names)))
 
 ;(browz "<ENVIRONMENT>")
@@ -38,20 +38,20 @@ define constant make-type-estimate = make;
 (browz "<COMPUTATION>")
 (browz "<&OBJECT>") ;really <MODEL-VALUE>, nowadays.
 (browz "<BINDING>" "<TEMPORARY>"))
-*/   
+*/
 // Input to the typist.
-define constant <dfm-ref> = type-union(<computation>, <model-value>, 
+define constant <dfm-ref> = type-union(<computation>, <model-value>,
                                        <binding>, <value-reference>);
 
 ///
 /// [1] A theory of types.
 ///
-/// The types are, by and large, the model classes.  However, we have to 
+/// The types are, by and large, the model classes.  However, we have to
 /// annotate them a bit, with justifications and "extra" information that
 /// allows us to have a more finely-grained type system than raw Dylan.
 ///
 /// Since we don't want to have multiple copies of the model classes, we
-/// use a wrapper which can contain this additional information.  So the 
+/// use a wrapper which can contain this additional information.  So the
 /// typist operates on <type-estimate>s, which (usually) contain model types.
 ///
 
@@ -68,7 +68,7 @@ define method make
     (cl :: subclass(<type-estimate>), #key normalize? = #t)
  => (te :: <type-estimate>)
   // :AFTER method: ensure types people make are normalized.  To avoid infinite
-  // loops and near-infinite consing, the normalize?: keyword is provided.  
+  // loops and near-infinite consing, the normalize?: keyword is provided.
   // Only methods on type-estimate-normalize should ever supply it with #f.
   let estimate = next-method();
   if (normalize?)
@@ -111,11 +111,11 @@ end;
 define generic type-estimate-normalize(te1 :: <type-estimate>)
   => (te :: <type-estimate>);
 
-define generic type-estimate-union(te1 :: <type-estimate>, 
+define generic type-estimate-union(te1 :: <type-estimate>,
                                    te2 :: <type-estimate>)
   => (te :: <type-estimate>);
 
-define generic type-estimate-intersection(te1 :: <type-estimate>, 
+define generic type-estimate-intersection(te1 :: <type-estimate>,
                                           te2 :: <type-estimate>)
   => (te :: <type-estimate>);
 
@@ -125,25 +125,25 @@ define generic type-estimate-difference(te1 :: <type-estimate>,
 
 // *** type-estimate-not(te)?
 
-define generic type-estimate-base(te :: <type-estimate>) 
+define generic type-estimate-base(te :: <type-estimate>)
   => (te-base :: <type-estimate>);
 
-define generic type-estimate-match?(te1 /* :: <type-estimate> */, 
-                                    te2 /* :: <type-estimate> */) 
+define generic type-estimate-match?(te1 /* :: <type-estimate> */,
+                                    te2 /* :: <type-estimate> */)
   => (match? :: <boolean>);
 
 ///
-/// Predicates on types: 
+/// Predicates on types:
 ///
 
 define generic type-estimate-instance?(ref :: <dfm-ref>, te :: <type-estimate>)
   => (instance? :: <boolean>, known? :: <boolean>);
 
-define generic type-estimate-disjoint?(te1 :: <type-estimate>, 
+define generic type-estimate-disjoint?(te1 :: <type-estimate>,
                                        te2 :: <type-estimate>)
   => (disjoint? :: <boolean>, known? :: <boolean>);
 
-define generic type-estimate-subtype?(te1 :: <type-estimate>, 
+define generic type-estimate-subtype?(te1 :: <type-estimate>,
                                       te2 :: <type-estimate>)
   => (subtype? :: <boolean>, known? :: <boolean>);
 
@@ -153,7 +153,7 @@ define function type-estimate=?(te1 :: <type-estimate>, te2 :: <type-estimate>)
   let (sub?-1, known?-1) = type-estimate-subtype?(te1, te2);
   let (sub?-2, known?-2) = type-estimate-subtype?(te2, te1);
   if (known?-1 & known?-2)                               // Both answers known
-    values(sub?-1 & sub?-2, #t) 
+    values(sub?-1 & sub?-2, #t)
   elseif ((known?-1 & ~ sub?-1) | (known?-2 & ~ sub?-2)) // At least 1 known=#f
     values(#f, #t)
   else                                                   // Little known; punt
@@ -161,7 +161,7 @@ define function type-estimate=?(te1 :: <type-estimate>, te2 :: <type-estimate>)
   end
 end;
 
-define function type-estimate-pseudosubtype?(te1 :: <type-estimate>, 
+define function type-estimate-pseudosubtype?(te1 :: <type-estimate>,
                                              te2 :: <type-estimate>)
   => (pseudosubtype? :: <boolean>, known? :: <boolean>)
   // Dylan Torah, p. 48: te1 pseudo<= te2 iff t1 <= base(t2) & ~(t1 disjoint t2)
@@ -180,17 +180,17 @@ end;
 /// [3] How to infer the types.
 ///
 /// * initialize-typist-library-caches (ld :: <library-description>) => ()
-///  
+///
 ///   Write an empty <type-cache> and disjoint? cache in the library
 ///   description.  Used when a library description is made, and when you
 ///   want to clear out the type info for taking another pass after
 ///   optimizations.
 ///
-/// * type-estimate-in-cache(ref :: <dfm-ref>, cache :: <type-cache>) 
+/// * type-estimate-in-cache(ref :: <dfm-ref>, cache :: <type-cache>)
 ///      => (te :: <type-estimate>)
 ///
-///   Gets the compile-time type estimate of ref, possibly looking in cache, 
-///   updating cache as necessary.  Inference, when done, is done by calling 
+///   Gets the compile-time type estimate of ref, possibly looking in cache,
+///   updating cache as necessary.  Inference, when done, is done by calling
 ///   type-estimate-infer, below, with the dfm-ref being typed, the whole cache,
 ///   and what's in the cache under the dfm-ref (to be updated).
 ///
@@ -211,7 +211,7 @@ end;
 ///
 /// * type-estimate-explain(ref   :: <dfm-ref>,
 ///                         cache :: <type-cache>,
-///                         #key stream   :: <stream> = *standard-output*, 
+///                         #key stream   :: <stream> = *standard-output*,
 ///                              recurse? :: <boolean> = #f,
 ///                              indent   :: <integer> = 0)
 ///      => ()
@@ -224,7 +224,7 @@ define constant <justifications> = <list>;
 
 define class <type-variable> (<object>)
   // These are the things that go in the cache and in types that have other
-  // types as components (functions, multiple values, etc.).  They contain the 
+  // types as components (functions, multiple values, etc.).  They contain the
   // type and the justification links.  Boxes for type estimates+add'l info.
   slot type-variable-contents :: <type-estimate> = make(<type-estimate-bottom>),
     init-keyword: contents:;
@@ -244,9 +244,9 @@ define method print-object(v :: <type-variable>, stream :: <stream>) => ()
   format(stream, "{Type-Variable: %=}", type-variable-contents(v))
 end;
 
-define constant <type-cache>     
+define constant <type-cache>
   = limited(<table>, of: false-or(<type-variable>));
-define constant <type-variables> 
+define constant <type-variables>
   = // limited(<sequence>, of: <type-variable>);
     <list>;
 define constant <rule-rhs>
@@ -263,19 +263,19 @@ define constant <rule-rhs>
 // define constant $disjoint-cache-size-init$ :: <integer> =  2000;
 // define constant $cons-cache-size-init$     :: <integer> =   200;
 
-define compiler-sideways method initialize-typist-library-caches 
+define compiler-sideways method initialize-typist-library-caches
     (ld :: <compilation-context>) => ()
   // When you make a <library-description> or an interactive layer, install
   // typist caches.   Done this way because of module lossage, i.e. typist
   // classes aren't visible
   // in dfmc-namespace, so couldn't do it with slot initializers. Sigh.
-  library-type-cache(ld) := 
+  library-type-cache(ld) :=
     make(<type-cache> /* , size: $type-cache-size-init$ */);
-  library-type-estimate-disjoint?-cache(ld) := 
+  library-type-estimate-disjoint?-cache(ld) :=
     make(<type-estimate-pair-match-table> /* , size: $disjoint-cache-size-init$ */);
-  library-type-estimate-cons-cache(ld) := 
+  library-type-estimate-cons-cache(ld) :=
     make(<table> /* , size: $cons-cache-size-init$ */);
-  library-type-estimate-dispatch-cache(ld) := 
+  library-type-estimate-dispatch-cache(ld) :=
     make(<table> /* , size: $cons-cache-size-init$ */);
 end;
 
@@ -297,7 +297,7 @@ end;
 
 define method print-object(j :: <justification>, stream :: <stream>) => ()
   // How to print a justification.
-  format(stream, "{Rule: %=, LHS: %=", 
+  format(stream, "{Rule: %=, LHS: %=",
          justification-rule(j), justification-lhs(j));
   when (justification-rhs(j))
     format(stream, ", RHS: ");
@@ -322,29 +322,29 @@ define thread variable *type-vars-propagating* :: <list> = #();  // See below!
 // *** For future reference: adding a type causes propagation, as done here.
 //     But propagation can find more methods, which adds more types, too.
 //     Cf. Agesen, p. 39.
-define method type-estimate-update-cache(ref      :: <dfm-ref>, 
-					 cache    :: <type-cache>, 
-					 new-type :: <type-estimate>) => ()
+define method type-estimate-update-cache(ref      :: <dfm-ref>,
+                                         cache    :: <type-cache>,
+                                         new-type :: <type-estimate>) => ()
   let ref = canonical-ref(ref);
   // Subroutine to update the cached type-estimate &c w/newly inferred result.
   // Usefully called by methods on type-estimate-infer, generated by rules.
   let ref-variable = cached-type-variable(ref, cache);
   debug-assert(ref-variable ~== #f, "Can't find type variable for ref %s.", ref);
   unless (member?(ref-variable, *type-vars-propagating*))
-    dynamic-bind (*type-vars-propagating* 
-		    = pair(ref-variable, *type-vars-propagating*))
+    dynamic-bind (*type-vars-propagating*
+                    = pair(ref-variable, *type-vars-propagating*))
       // Don't recurse infinitely in the face of dependency graph cycles.
       type-variable-contents(ref-variable) :=
         type-estimate-union(type-variable-contents(ref-variable), new-type);
       // Justifications are bidirectional links.
       let just = make(<justification>);           // Defaults from per thread binding
-      type-variable-supporters(ref-variable) := 
+      type-variable-supporters(ref-variable) :=
         add!(type-variable-supporters(ref-variable), just);
       for (next-rhs in *current-rhs*)             // Each RHS supports us
         unless (instance?(next-rhs, <type-variable>))
           next-rhs := cached-type-variable(canonical-ref(next-rhs), cache);
         end unless;
-        type-variable-supportees(next-rhs) := 
+        type-variable-supportees(next-rhs) :=
           add!(type-variable-supportees(next-rhs), just)
       end;
       // Now make it propagate, to the supportees.  Depth-first, if you care.
@@ -392,11 +392,11 @@ define inline method type-estimate (ref :: <dfm-ref>) => (te :: <type-estimate>)
   type-estimate-in-cache(ref, library-type-cache(current-library-description()))
 end method;
 
-define method type-estimate-in-cache (ref :: <dfm-ref>, cache :: <type-cache>) 
+define method type-estimate-in-cache (ref :: <dfm-ref>, cache :: <type-cache>)
     => (te :: <type-estimate>)
   let ref = canonical-ref(ref);
   // Look in cache or infer a type.  Prefer cache if nonempty.
-  // Cache may "contain" #f (this ref hasn't been seen yet), bottom (this ref 
+  // Cache may "contain" #f (this ref hasn't been seen yet), bottom (this ref
   // either has no type, or a type computation is pending), or some other type
   // (type inference has already given a preliminary answer).
   let type-var = cached-type-variable(ref, cache);
@@ -406,7 +406,7 @@ define method type-estimate-in-cache (ref :: <dfm-ref>, cache :: <type-cache>)
   else
     // Fill (empty) cache with bottom and go infer.
     // Break infinite recursion w/bottom
-    cached-type-variable(ref, cache) := make(<type-variable>); 
+    cached-type-variable(ref, cache) := make(<type-variable>);
     type-estimate-infer(ref, cache)      // Infer the type
   end
 end;
@@ -449,16 +449,16 @@ end method;
 /// Figuring out how you got here.
 ///
 
-define generic type-estimate-explain(ref :: <dfm-ref>, cache :: <type-cache>, 
-				     #key stream   :: <stream>  = *standard-output*, 
-				          recurse? :: <boolean> = #f, 
-				          indent   :: <integer> = 0)
+define generic type-estimate-explain(ref :: <dfm-ref>, cache :: <type-cache>,
+                                     #key stream   :: <stream>  = *standard-output*,
+                                          recurse? :: <boolean> = #f,
+                                          indent   :: <integer> = 0)
     => ();
 
 define method type-estimate-explain
-   (ref :: <temporary>, cache :: <type-cache>, 
+   (ref :: <temporary>, cache :: <type-cache>,
     #rest keys,
-    #key stream   :: <stream> = *standard-output*, 
+    #key stream   :: <stream> = *standard-output*,
          recurse? :: <boolean> = #f,
          indent   :: <integer> = 0) => ()
   // Special case for temporaries is to punt to their generators.
@@ -472,8 +472,8 @@ define method type-estimate-explain
 end;
 
 define method type-estimate-explain
-   (ref :: <dfm-ref>, cache :: <type-cache>, 
-    #key stream   :: <stream> = *standard-output*, 
+   (ref :: <dfm-ref>, cache :: <type-cache>,
+    #key stream   :: <stream> = *standard-output*,
          recurse? :: <boolean> = #f,
          indent   :: <integer> = 0)
    => ()
@@ -494,19 +494,19 @@ define method type-estimate-explain
      type-variable-supporters(cached-type-variable(ref, cache)),
      stream:  stream,
      printer: method(just :: <justification>, stream)
-                indentify(levels: 1); 
+                indentify(levels: 1);
                 format(stream, "Rule %=", justification-rule(just));
                 unless (empty?(justification-rhs(just)))
                   format(stream, " on ");
-                  print-separated-collection(justification-rhs(just), 
+                  print-separated-collection(justification-rhs(just),
                                              stream: stream, conjunction: "and")
                 end;
                 when (recurse? & ~empty?(justification-rhs(just)))
                   // Wants to recurse & not at bottom.  Explain each
                   // of the elements of the RHS.
                   do(rcurry(type-estimate-explain,
-                            cache, stream: stream, recurse?: #t, 
-                            indent: indent + 1), 
+                            cache, stream: stream, recurse?: #t,
+                            indent: indent + 1),
                      justification-rhs(just))
                 end
               end);
@@ -524,7 +524,7 @@ define method type-estimate-dispatch-cache-lookup
     (gf :: <&generic-function>, te* :: <object>) => (methods)
   let dispatch-cache
     = library-type-estimate-dispatch-cache(current-library-description());
-  let gf-cache 
+  let gf-cache
     = element(dispatch-cache, gf, default: #f);
   if (gf-cache)
     let methods = element(gf-cache, te*, default: #f);
@@ -542,8 +542,8 @@ define method add-type-estimate-dispatch-cache-entry
   // format-out(">>> Caching %s\n", ^debug-name(gf));
   let dispatch-cache
     = library-type-estimate-dispatch-cache(current-library-description());
-  let gf-cache 
-    = element(dispatch-cache, gf, default: #f) 
+  let gf-cache
+    = element(dispatch-cache, gf, default: #f)
         | (element(dispatch-cache, gf)
              := make(<type-estimate-sequence-match-table>));
   element(gf-cache, te*) := methods;

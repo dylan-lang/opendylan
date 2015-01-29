@@ -1,27 +1,27 @@
 Library: dfmc-definitions
 Target-Type: dll
 Files:   definitions-library
-	 dependencies
-	 boot-definitions
-	 top-level-convert
+         dependencies
+         boot-definitions
+         top-level-convert
          properties
          options
          missing
          parse-namespace-clauses
          parse-class-clauses
-	 parse-signatures
+         parse-signatures
          parse-bindings
          define-namespace
          define-library
          define-module
          define-macro
          define-class
-	 define-function
+         define-function
          define-generic
          define-method
          define-copy-down
          define-domain
-	 define-primitive
+         define-primitive
          define-binding
          define-constant
          define-variable

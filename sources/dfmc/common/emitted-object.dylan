@@ -1,5 +1,5 @@
 Module:   dfmc-common
-Synopsis: Compiler objects that are emitted entities with identity. 
+Synopsis: Compiler objects that are emitted entities with identity.
           This includes modeled indirect objects but not direct objects
           since multiple copies of these are emitted.
 Author:   Keith Playford

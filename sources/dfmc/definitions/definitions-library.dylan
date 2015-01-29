@@ -58,7 +58,7 @@ define module dfmc-definitions
     <raw-aggregate-definition>,
      <raw-struct-definition>,
      <raw-union-definition>,
-      form-members,    
+      form-members,
       form-options,
     booted-module?,
     do-define-evaluator-override,
@@ -76,10 +76,10 @@ define module dfmc-definitions
     do-define-core-macro,
     do-define-core-definition;
 
-  export 
+  export
     top-level-convert-forms,
     install-top-level-form;
-  
+
   export <library-definition>,
          <module-definition>,
          <namespace-defining-form>,

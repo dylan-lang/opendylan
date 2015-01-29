@@ -15,7 +15,7 @@ define leaf packed-slots form-properties (<generic-definition>, <function-defini
   field slot form-sealing = $form-sealing/sealed, field-size: 2,
     init-keyword: sealing:;
   boolean slot form-sideways? = #f, // vs. upwards (maybe!)
-    init-keyword: sideways?:;  
+    init-keyword: sideways?:;
   boolean slot form-parameters-have-dynamic-extent? = #f,
     init-keyword: dynamic-extent:;
 end packed-slots;
@@ -34,24 +34,24 @@ define method form-implicitly-defined? (form :: <generic-definition>) => (val)
   // most commonly parent == #f, so check that first for speed even though
   // it's redundant with the other checks.
   parent & (instance?(parent, <method-definition>)
-	      | instance?(parent, <slot-definition>))
+              | instance?(parent, <slot-definition>))
 end method;
 
-define method form-compile-stage-only? 
+define method form-compile-stage-only?
     (form :: <generic-definition>) => (well? :: <boolean>)
   (form-inline-policy(form) == #"inline-only" & ~form-dynamic?(form))
-    // The following case implements inheritance of the inline-only 
+    // The following case implements inheritance of the inline-only
     // property by an implicitly defined generic if all its methods
     // are inline-only (and there is at least one method).
-    | (form-implicitly-defined?(form) 
+    | (form-implicitly-defined?(form)
          & ~form-dynamic?(form)
          & begin
-	     let binding = form-variable-binding(form);
+             let binding = form-variable-binding(form);
              let modifying = untracked-binding-modifying-definitions(binding);
              // You can get empty modifiers for an implicitly-defined generic
              // only if a virtual slot declaration was the generator.
              ~empty?(modifying)
-                & every?(method (mod-form) 
+                & every?(method (mod-form)
                            if (instance?(mod-form, <method-definition>))
                              form-inline-policy(mod-form) == #"inline-only"
                            else
@@ -96,7 +96,7 @@ define property <generic-dynamic-extent-property> => dynamic-extent: = #f
   value dynamic-extent = #t;
 end property;
 
-define property <generic-inline-property> 
+define property <generic-inline-property>
     => inline-policy: = #"default-inline"
   value inline-only    = #"inline-only";
 end property;
@@ -111,7 +111,7 @@ define function generic-adjectives ()
   generic-adjectives-default-sealed
 end function;
 
-define method parse-generic-adjectives 
+define method parse-generic-adjectives
     (name, adjectives-form) => (initargs, adjectives)
   parse-property-adjectives(generic-adjectives(), adjectives-form, name)
 end method;
@@ -145,13 +145,13 @@ define method parse-generic-signature (name, sig-fragment) => (sig-spec)
   // Check that there's nothing after the signature, and warn if there
   // is.
   macro-case (remains)
-    { } 
+    { }
       => #t;
-    { ?other:* } 
+    { ?other:* }
       => note(<non-empty-options-in-define-generic>,
               source-location: fragment-source-location(name),
               generic-name:    name);
-  end;              
+  end;
   verify-generic-signature-spec(name, sig-spec, sig-fragment);
   sig-spec
 end method;

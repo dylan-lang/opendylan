@@ -5,8 +5,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define macro handling-parse-errors
-  { handling-parse-errors 
-      ?:body 
+  { handling-parse-errors
+      ?:body
     on-error (?:variable, #rest ?options:*)
       ?fixup:body
     end }

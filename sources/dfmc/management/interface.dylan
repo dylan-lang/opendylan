@@ -18,7 +18,7 @@ define method interface-identifier (f == #f)
 end;
 
 define method identifier-less-than? (b1 :: <module-binding>,
-				     b2 :: <module-binding>)
+                                     b2 :: <module-binding>)
   interface-identifier(b1) < interface-identifier(b2)
 end;
 
@@ -28,7 +28,7 @@ define inline method interface-identifier (module :: <module>)
 end;
 
 define method identifier-less-than? (b1 :: <module>,
-				     b2 :: <module>)
+                                     b2 :: <module>)
   interface-identifier(b1) < interface-identifier(b2)
 end;
 
@@ -42,7 +42,7 @@ end;
 
 define sealed-constructor <name-mapping>;
 
-define sealed method \= 
+define sealed method \=
     (x :: <name-mapping>, y :: <name-mapping>) => (well? :: <boolean>)
   x.name-mapping-keys = y.name-mapping-keys
     & x.name-mapping-values = y.name-mapping-values
@@ -52,8 +52,8 @@ define function as-name-mapping (table :: <object-table>)
   let keys = as(<symbol-vector>, key-sequence-vector(table));
   let keys = sort!(keys, test: symbol-less-than?);
   let vals = map-as(<identifier-vector>,
-		    method (key) interface-identifier(table[key]) end,
-		    keys);
+                    method (key) interface-identifier(table[key]) end,
+                    keys);
   make(<name-mapping>, keys: keys, values: vals)
 end;
 
@@ -67,7 +67,7 @@ define class <identifier-mapping> (<object>)
 end;
 define sealed-constructor <identifier-mapping>;
 
-define sealed method \= 
+define sealed method \=
     (x :: <identifier-mapping>, y :: <identifier-mapping>) => (well? :: <boolean>)
   x.identifier-mapping-keys = y.identifier-mapping-keys
     & x.identifier-mapping-values = y.identifier-mapping-values
@@ -95,7 +95,7 @@ end class;
 
 define sealed-constructor <library-interface>;
 
-define sealed method \= 
+define sealed method \=
     (x :: <library-interface>, y :: <library-interface>) => (well? :: <boolean>)
   x.interface-exports = y.interface-exports
     & x.interface-modules = y.interface-modules
@@ -116,25 +116,25 @@ end;
 define sealed-constructor <module-interface-walk>;
 
 define method library-interface-spec (library :: <library>,
-				      #key policy = #"loose")
+                                      #key policy = #"loose")
   debug-assert(policy == #"loose", "Interface policy not implemented");
   let exported-name->module = make(<object-table>);
   let module->walk = make(<object-table>);
   let binding->data = make(<object-table>);
   local method init-walk (name, module)
-	  when (module)
-	    debug-assert(~element(exported-name->module, name, default: #f));
-	    exported-name->module[name] := module;
-	    // Could be re-exporting the same module twice under different
-	    // names so check if already init'ed.
-	    unless (element(module->walk, module, default: #f))
-	      module->walk[module] := make(<module-interface-walk>,
-					   module: module,
-					   values: binding->data,
-					   walks: module->walk);
-	    end unless;
-	  end when;
-	end method;
+          when (module)
+            debug-assert(~element(exported-name->module, name, default: #f));
+            exported-name->module[name] := module;
+            // Could be re-exporting the same module twice under different
+            // names so check if already init'ed.
+            unless (element(module->walk, module, default: #f))
+              module->walk[module] := make(<module-interface-walk>,
+                                           module: module,
+                                           values: binding->data,
+                                           walks: module->walk);
+            end unless;
+          end when;
+        end method;
   for (name in library.exported-names)
     init-walk(name, lookup-module-in(library, name, default: #f))
   end;
@@ -152,9 +152,9 @@ define method library-interface-spec (library :: <library>,
   end;
   let module->name-mapping
     = map(method (walk :: <module-interface-walk>)
-	    as-name-mapping(walk.interface-walk-names)
-	  end,
-	  module->walk);
+            as-name-mapping(walk.interface-walk-names)
+          end,
+          module->walk);
   make(<library-interface>,
        exports: as-name-mapping(exported-name->module),
        modules: as-identifier-mapping(module->name-mapping),
@@ -168,35 +168,35 @@ define function interface-walk-name
   unless (element(table, word, default: #f))
     table[word] :=
       if (~binding | (binding.name == word &
-			binding.binding-home == walk.interface-walk-module))
-	#f
+                        binding.binding-home == walk.interface-walk-module))
+        #f
       else
-	binding
+        binding
       end;
     let form = binding & untracked-binding-definition(binding, default: #f);
     when (form & form.form-macro-word-class)
       let vals = walk.interface-walk-values;
       let walks = walk.interface-walk-walks;
       unless (element(vals, binding, default: #f))
-	let loc = form.form-source-location;
-	// TODO: check this out.  Possibly it can come up when re-export
-	// system macros.  If there is no source loc, maybe that means can't
-	// change?  What about the case where macro is from another library
-	// whose source is currently unavailable (has changed).
-	debug-assert(loc, "Not implemented -- interface spec for %s", form);
-	vals[binding] := source-location-string(loc);
+        let loc = form.form-source-location;
+        // TODO: check this out.  Possibly it can come up when re-export
+        // system macros.  If there is no source loc, maybe that means can't
+        // change?  What about the case where macro is from another library
+        // whose source is currently unavailable (has changed).
+        debug-assert(loc, "Not implemented -- interface spec for %s", form);
+        vals[binding] := source-location-string(loc);
       end;
       let mac = form.form-macro-object;
       debug-assert(instance?(mac, <macro-descriptor>), "Unknown macro type %s", mac);
       for (var :: <variable-name-fragment> in macro-referenced-names(mac))
-	let module = var.fragment-module;
-	let word = var.fragment-identifier;
-	let w = element(walks, module, default: #f)
-	          | (walks[module] := make(<module-interface-walk>,
-					   module: module,
-					   values: vals,
-					   walks: walks));
-	interface-walk-name(w, word, lookup-name(module, word, default: #f));
+        let module = var.fragment-module;
+        let word = var.fragment-identifier;
+        let w = element(walks, module, default: #f)
+                  | (walks[module] := make(<module-interface-walk>,
+                                           module: module,
+                                           values: vals,
+                                           walks: walks));
+        interface-walk-name(w, word, lookup-name(module, word, default: #f));
       end for;
     end when;
   end unless;

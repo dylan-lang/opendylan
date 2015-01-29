@@ -106,11 +106,11 @@ define function do-over-lambda-users
     (f :: <function>, env :: <lambda-lexical-environment>) => ()
   local method do-over (code)
           for (ref in references(code))
-	    for (c in ref-users(ref))
-	      f(c.environment)
-	    end for
-	  end for
-	end method;
+            for (c in ref-users(ref))
+              f(c.environment)
+            end for
+          end for
+        end method;
   let lambda = lambda(env);
   do-over(lambda); do-over(lambda.iep);
 end function;
@@ -119,13 +119,13 @@ define function do-over-lambda-using-computations
     (f :: <function>, env :: <lambda-lexical-environment>) => ()
   local method do-over (code)
           for (ref in references(code))
-	    for (c in ref-users(ref))
-	      if (~closure-setup?(c))
-  	        f(c)
+            for (c in ref-users(ref))
+              if (~closure-setup?(c))
+                  f(c)
               end;
-	    end for
-	  end for
-	end method;
+            end for
+          end for
+        end method;
   let lambda = lambda(env);
   do-over(lambda); do-over(lambda.iep);
 end function;

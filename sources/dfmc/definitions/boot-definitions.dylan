@@ -9,10 +9,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // The boot-record records the set of things that must be inserted into
 // a Dylan world at the very start. Some things are core definitions
 // such as converters and macros, and these are booted at the definition
-// level. The rest are expressed as source to be fed to the compiler. 
+// level. The rest are expressed as source to be fed to the compiler.
 
 define class <booted-set> (<object>)
-  constant slot booted-set-keys :: <table> 
+  constant slot booted-set-keys :: <table>
     = make(<table>);
   constant slot booted-set-order :: <stretchy-vector>
     = make(<stretchy-vector>);
@@ -91,8 +91,8 @@ end method;
 
 define method booted-source-sequence () => (sources)
   let record = *boot-record*;
-  map-as(<vector>, 
-         method (thunk) thunk-source-constructor(thunk)() end, 
+  map-as(<vector>,
+         method (thunk) thunk-source-constructor(thunk)() end,
          record.booted-source-thunks.booted-set-order)
 end method;
 
@@ -102,13 +102,13 @@ define method booted-definition-sequence () => (definitions)
           map-as(<list>, thunk-definition, thunks.booted-set-order)
         end;
   local method installed-definitions-of (thunks)
-	  map-as(<list>, method (thunk)
-			   let form = thunk-definition(thunk);
-			   install-top-level-form(form);
-			   form
-			 end,
-		 thunks.booted-set-order)
-	end;
+          map-as(<list>, method (thunk)
+                           let form = thunk-definition(thunk);
+                           install-top-level-form(form);
+                           form
+                         end,
+                 thunks.booted-set-order)
+        end;
   concatenate!(definitions-of(record.booted-namespace-thunks),
                installed-definitions-of(record.booted-expander-thunks),
                definitions-of(record.booted-definition-thunks))
@@ -161,7 +161,7 @@ end method;
 define function dood-restore-compiler-booted-proxy
     (dood :: <dood>, proxy :: <dood-booted-form-proxy>, booted-thunks)
   let thunk = find-definition-thunk(booted-thunks,
-				    proxy.dood-proxy-booted-form-boot-id);
+                                    proxy.dood-proxy-booted-form-boot-id);
   assert(thunk, "Dylan database/compiler version mismatch");
   let sequence-number = proxy.dood-proxy-booted-form-sequence-number;
   let parent = proxy.dood-proxy-booted-form-parent;
@@ -202,7 +202,7 @@ define method do-define-core-library (boot-name, name, clauses)
   end;
   register-definition-thunk
     (booted-namespace-thunks,
-     make(<definition-thunk>, 
+     make(<definition-thunk>,
           name: boot-name,
           definition-constructor: boot-library));
   local method boot-library-model ()
@@ -211,7 +211,7 @@ define method do-define-core-library (boot-name, name, clauses)
     generate-initializer-source-with-namespace(definition, library)
   end;
   register-source-thunk
-    (make(<source-thunk>, 
+    (make(<source-thunk>,
           name: boot-name,
           source-constructor: boot-library-model));
 end method;
@@ -222,7 +222,7 @@ define method do-define-core-module (boot-name, name, clauses)
   end;
   register-definition-thunk
     (booted-namespace-thunks,
-     make(<definition-thunk>, 
+     make(<definition-thunk>,
           name: boot-name,
           definition-constructor: boot-module));
   local method boot-module-model ()
@@ -231,7 +231,7 @@ define method do-define-core-module (boot-name, name, clauses)
     generate-initializer-source-with-namespace(definition, module)
   end;
   register-source-thunk
-    (make(<source-thunk>, 
+    (make(<source-thunk>,
           name: boot-name,
           source-constructor: boot-module-model));
 end method;
@@ -255,7 +255,7 @@ end method;
 define method initialize (definition :: <expander-defining-form>, #key)
   next-method();
   let compiled-macro = form-macro-object(definition);
-  let (word, word-class) 
+  let (word, word-class)
     = macro-word-in-variable-name
         (compiled-macro, form-variable-name(definition).fragment-identifier);
   definition.form-macro-word := word;
@@ -269,7 +269,7 @@ end;
 define class <dood-booted-expander-form-proxy> (<dood-booted-form-proxy>) end;
 
 define method dood-make-booted-form-proxy
-    (dood :: <dood>, form :: <&definition>) => (proxy)    
+    (dood :: <dood>, form :: <&definition>) => (proxy)
   make(<dood-booted-expander-form-proxy>,
        boot-id: form.booted-form-boot-id,
        parent: form.form-parent-form,
@@ -281,21 +281,21 @@ define method dood-restore-proxy
   dood-restore-compiler-booted-proxy(dood, proxy, booted-expander-thunks)
 end method;
 
-define method do-define-core-entity 
+define method do-define-core-entity
     (name, klass, word, word-class, macro-object, expander) => ()
   local method definition-constructor ()
-	  make(klass,
-	       boot-id:          name,
-	       source-location:  #f,
-	       adjectives:       #(),
-	       variable-name:    make-variable-name-fragment(name),
-	       macro-object:     macro-object,
-	       expander:         expander)
+          make(klass,
+               boot-id:          name,
+               source-location:  #f,
+               adjectives:       #(),
+               variable-name:    make-variable-name-fragment(name),
+               macro-object:     macro-object,
+               expander:         expander)
         end;
   register-definition-thunk
     (booted-expander-thunks,
-     make(<definition-thunk>, 
-          name: name, 
+     make(<definition-thunk>,
+          name: name,
           definition-constructor: definition-constructor));
 end method;
 
@@ -309,7 +309,7 @@ define method initialize (definition :: <&macro-definition>, #key)
   form-expander(definition) := compose(as-body, form-expander(definition));
 end method;
 
-define method do-define-core-macro 
+define method do-define-core-macro
     (name, word, word-class, macro-object, expander) => ()
   do-define-core-entity
     (name, <&macro-definition>, word, word-class,
@@ -318,7 +318,7 @@ end method;
 
 define class <&converter-definition> (<&definition>) end;
 
-define method do-define-core-converter 
+define method do-define-core-converter
     (name, word, word-class, macro-object, expander) => ()
   do-define-core-entity
     (name, <&converter-definition>, word, word-class, macro-object, expander);
@@ -326,10 +326,10 @@ end method;
 
 define class <&definition-definition> (<&definition>) end;
 
-define method do-define-core-definition 
+define method do-define-core-definition
     (name, word, word-class, macro-object, expander) => ()
   do-define-core-entity
-    (name, <&definition-definition>, 
+    (name, <&definition-definition>,
        word, word-class, macro-object, expander);
 end method;
 
@@ -388,22 +388,22 @@ define method do-define-core-primitive (name, adjectives, value, signature)
   let variable = make-variable-name-fragment(name);
   local method primitive-constructor ()
           let definition =
-	    apply(make, <primitive-definition>,
-		  boot-id: name,
-		  source-location: #f,
-		  variable-name:   variable,
-		  adjectives:      adjectives,
-		  signature:       signature,
-		  value:           value,
-		  initargs);
+            apply(make, <primitive-definition>,
+                  boot-id: name,
+                  source-location: #f,
+                  variable-name:   variable,
+                  adjectives:      adjectives,
+                  signature:       signature,
+                  value:           value,
+                  initargs);
           maybe-blat-model-value(definition);
           definition
-	end;
+        end;
   register-definition-thunk
     (booted-definition-thunks,
      make(<definition-thunk>,
-	  name: name,
-	  definition-constructor: primitive-constructor));
+          name: name,
+          definition-constructor: primitive-constructor));
 end method;
 
 //// The top type
@@ -428,7 +428,7 @@ define function do-define-top-type (name)
   end;
   register-definition-thunk
     (booted-definition-thunks,
-     make(<definition-thunk>, name: name, 
+     make(<definition-thunk>, name: name,
           definition-constructor: definition-constructor));
 end;
 
@@ -446,7 +446,7 @@ define function do-define-bottom-type (name)
   end;
   register-definition-thunk
     (booted-definition-thunks,
-     make(<definition-thunk>, name: name, 
+     make(<definition-thunk>, name: name,
           definition-constructor: definition-constructor));
 end;
 
@@ -464,19 +464,19 @@ define function do-define-raw-type (name, supertype-name, descriptor-function)
   local method definition-constructor ()
     let definition =
       make(<raw-type-definition>,
-	   boot-id:             name,
-	   source-location:     #f,
-	   variable-name:       make-variable-name-fragment(name),
-	   supertype-name:      supertype-name &
-				  make-variable-name-fragment(supertype-name),
-	   descriptor-function: descriptor-function,
-	   adjectives:          #());
+           boot-id:             name,
+           source-location:     #f,
+           variable-name:       make-variable-name-fragment(name),
+           supertype-name:      supertype-name &
+                                  make-variable-name-fragment(supertype-name),
+           descriptor-function: descriptor-function,
+           adjectives:          #());
     maybe-blat-model-value(definition);
     definition
   end;
   register-definition-thunk
     (booted-definition-thunks,
-     make(<definition-thunk>, name: name, 
+     make(<definition-thunk>, name: name,
           definition-constructor: definition-constructor));
 end;
 
@@ -493,7 +493,7 @@ end method;
 define /* abstract */ class <raw-aggregate-definition> (<virtual-type-definition>)
   constant slot form-members, required-init-keyword: members:;
   constant slot form-options, required-init-keyword: options:;
-end;  
+end;
 
 
 
@@ -512,7 +512,7 @@ members:
   { ?member:*; ...} => pair(member, ...);
 member:
   { member ?:name } => list(#"member", name);
-  { bitfield-member ?:name ?width:expression } 
+  { bitfield-member ?:name ?width:expression }
     => list(#"bitfield-member", name, width);
   { array-member ?:name ?length:expression }
     => list(#"array-member", name, length);
@@ -525,11 +525,11 @@ end;
 define function do-define-raw-aggregate
     (class, name, root-name, member-fragments, options)
   list(make(class,
-	    source-location: fragment-source-location(root-name),
-	    variable-name: name,
-	    adjectives: #(),
-	    members: member-fragments,
-	    options: options));
+            source-location: fragment-source-location(root-name),
+            variable-name: name,
+            adjectives: #(),
+            members: member-fragments,
+            options: options));
 end;
 
 

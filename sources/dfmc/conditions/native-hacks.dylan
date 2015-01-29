@@ -11,16 +11,16 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // Note: see emulator-specific version.
 
 define macro with-simple-abort-retry-restart
-  { with-simple-abort-retry-restart (?abort:expression, ?retry:expression) 
+  { with-simple-abort-retry-restart (?abort:expression, ?retry:expression)
       ?:body
     end }
     => { local method _loop_ ()
-           block () 
+           block ()
              ?body
-           exception (r :: <simple-restart>, 
+           exception (r :: <simple-restart>,
                       init-arguments: vector(format-string:, ?abort))
              #f
-           exception (r :: <simple-restart>, 
+           exception (r :: <simple-restart>,
                       init-arguments: vector(format-string:, ?retry))
              _loop_()
            end

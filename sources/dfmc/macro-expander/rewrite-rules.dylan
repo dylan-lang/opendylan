@@ -35,7 +35,7 @@ define serious-program-warning <invalid-constraint>
     "The pattern variable name %s has an invalid constraint %s - "
     "using %s:*.";
   format-arguments
-    pattern-variable-name, pattern-variable-constraint, 
+    pattern-variable-name, pattern-variable-constraint,
     pattern-variable-name again;
 end serious-program-warning;
 
@@ -48,7 +48,7 @@ define method initialize (rule :: <rewrite-rule>, #key)
   // let table = make(<variable-name-table>);
   let table = make(<object-table>);
   do-binding-matches
-    (method (match) 
+    (method (match)
        // TODO: Put back name table
        // let name = match-variable-name(match);
        let name = match-symbol-name(match);
@@ -71,14 +71,14 @@ define method initialize (rule :: <rewrite-rule>, #key)
          // Hack it to be a wildcard.
          match-constraint(match) := #"*";
        end;
-       match-env-index(match) := count := count + 1 
+       match-env-index(match) := count := count + 1
      end,
      rule-pattern(rule));
 end method;
 
 /*
-define method lookup-variable-name-env-index 
-    (rule :: <rewrite-rule>, name) 
+define method lookup-variable-name-env-index
+    (rule :: <rewrite-rule>, name)
  => (index :: false-or(<integer>))
   block (return)
     do-binding-matches
@@ -95,7 +95,7 @@ define method lookup-variable-name-env-index
 end method;
 */
 
-define method lookup-substitution-variable-index 
+define method lookup-substitution-variable-index
     (rule :: <rewrite-rule>, subst :: <substitution>)
  => (index :: false-or(<integer>), match? :: <boolean>)
   block (return)
@@ -103,7 +103,7 @@ define method lookup-substitution-variable-index
       (method (match :: <binding-match>)
          if (fragment-name(element-variable-name(subst))
                == fragment-name(match-variable-name(match)))
-           return(match-env-index(match), 
+           return(match-env-index(match),
                   matching-binding-and-substitution?(subst, match));
          end
        end,
@@ -114,7 +114,7 @@ define method lookup-substitution-variable-index
 end method;
 
 // This attempts to ensure that ? and ?? substitutions don't hook up with
-// one another. The absence of duplicate binding names in a pattern 
+// one another. The absence of duplicate binding names in a pattern
 // should have been verified earlier.
 
 define method matching-binding-and-substitution?
@@ -148,7 +148,7 @@ define method initialize (set :: <aux-rewrite-rule-set>, #key)
   // Deal with ellipsis.
   for (rule in rule-set-rewrite-rules(set))
     do-binding-matches
-      (method (match :: <binding-match>) 
+      (method (match :: <binding-match>)
          if (match-symbol-name(match) == #"...")
            match-symbol-name(match) := rule-set-name(set);
            match-variable-name(match) := rule-set-variable-name(set);
@@ -156,7 +156,7 @@ define method initialize (set :: <aux-rewrite-rule-set>, #key)
        end,
        rule-pattern(rule));
     do-template-substitutions
-      (method (subst :: <substitution>) 
+      (method (subst :: <substitution>)
          if (instance?(subst, <variable-substitution>)
                & fragment-name(element-variable-name(subst)) == #"...")
            element-variable-name(subst) := rule-set-variable-name(set);
@@ -166,14 +166,14 @@ define method initialize (set :: <aux-rewrite-rule-set>, #key)
   end;
 end method;
 
-define method do-binding-matches 
+define method do-binding-matches
     (f :: <function>, set :: <rewrite-rule-set>) => ()
   for (rule in rule-set-rewrite-rules(set))
     do-binding-matches(f, rule);
   end;
 end method;
 
-define method do-body-match-tails 
+define method do-body-match-tails
     (f :: <function>, set :: <rewrite-rule-set>) => ()
   for (rule in rule-set-rewrite-rules(set))
     do-body-match-tails(f, rule);
@@ -185,7 +185,7 @@ define method do-binding-matches
   do-binding-matches(f, rule-pattern(rule));
 end method;
 
-define method do-body-match-tails 
+define method do-body-match-tails
     (f :: <function>, rule :: <rewrite-rule>) => ()
   do-body-match-tails(f, rule-pattern(rule));
 end method;

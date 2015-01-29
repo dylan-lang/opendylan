@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define method compute-template-references 
+define method compute-template-references
     (f* :: <list>, collect-reference :: <function>) => ()
   // Maintain a two token history.
   let cursor-2 = #f; // Read as "cursor minus two".
@@ -23,13 +23,13 @@ end method;
 
 define method compute-template-element-references
     (cursor-2, cursor-1, cursor :: <object>,
-       after :: <list>, collect-reference) 
+       after :: <list>, collect-reference)
  => ()
 end method;
 
 define method compute-template-element-references
     (cursor-2, cursor-1, cursor :: <nested-fragment>,
-       after :: <list>, collect-reference) 
+       after :: <list>, collect-reference)
  => ()
   compute-template-references
     (fragment-nested-fragments(cursor), collect-reference);
@@ -41,8 +41,8 @@ end method;
 // o DEFINE definition-head-OPT definer-name
 
 define method compute-template-element-references
-    (cursor-2, cursor-1, cursor :: <name-fragment>, 
-       after :: <list>, collect-reference) 
+    (cursor-2, cursor-1, cursor :: <name-fragment>,
+       after :: <list>, collect-reference)
  => ()
   let f = #f;
   case
@@ -70,20 +70,20 @@ end method;
 
 define method compute-template-element-references
     (cursor-2 :: <dot-fragment>, cursor-1 :: <name-fragment>,
-       cursor :: <binary-operator-fragment>, 
-       after :: <list>, collect-reference) 
+       cursor :: <binary-operator-fragment>,
+       after :: <list>, collect-reference)
  => ()
   next-method(); // Collect the individual name.
   if (fragment-name(cursor) == #":=")
     collect-reference
-      (splice-name-hygienically(cursor-1, "", "-setter"));    
+      (splice-name-hygienically(cursor-1, "", "-setter"));
   end;
 end method;
 
 define method compute-template-element-references
     (cursor-2 :: <object>, cursor-1 :: <name-fragment>,
-       cursor :: <parens-fragment>, 
-       after :: <list>, collect-reference) 
+       cursor :: <parens-fragment>,
+       after :: <list>, collect-reference)
  => ()
   next-method(); // Collect the component names.
   if (fragment-name(cursor-1) == #":=")
@@ -92,7 +92,7 @@ define method compute-template-element-references
     let dot-name = last(arg1, default: #f);
     if (instance?(dot-name, <name-fragment>))
       collect-reference
-        (splice-name-hygienically(dot-name, "", "-setter"));    
+        (splice-name-hygienically(dot-name, "", "-setter"));
     end;
   end;
 end method;

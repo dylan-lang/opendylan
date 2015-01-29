@@ -36,7 +36,7 @@ define method generate-constructor-function (f :: <unary-operator-fragment>)
   match-method make-unary-operator-fragment(name) end
 end method;
 
-define method generate-constructor-function 
+define method generate-constructor-function
     (f :: <unary-and-binary-operator-fragment>)
   let name = fragment-name(f);
   match-method make-unary-and-binary-operator-fragment(name) end
@@ -48,7 +48,7 @@ define method generate-constructor-function (f :: <constrained-name-fragment>)
   match-method make-constrained-name-fragment(symbol, constraint) end
 end method;
 
-define method generate-constructor-function 
+define method generate-constructor-function
     (f :: <escaped-substitution-fragment>)
   generate-constructor-function(fragment-escaped-fragment(f));
 end method;
@@ -57,7 +57,7 @@ end method;
 
 define macro punctuation-generator-function-definer
   { define punctuation-generator-function "<" ## ?:name ## ">" }
-    => { define method generate-constructor-function 
+    => { define method generate-constructor-function
              (f :: "<" ## ?name ## ">")
            match-method "make-" ## ?name() end
          end method; }

@@ -20,19 +20,19 @@ define method compile-define-macro-rules (input, exp)
 end method;
 
 define method compile-rewrite-rule-expander (exp)
-  let aux-methods-code 
-    = map(curry(compile-aux-rule-set-definition, exp), 
+  let aux-methods-code
+    = map(curry(compile-aux-rule-set-definition, exp),
           expander-aux-rule-sets(exp));
   let main-code
     = compile-main-rule-set(exp, expander-main-rule-set(exp));
   let intermediate-words
     = expander-intermediate-words(exp);
   if (empty?(aux-methods-code))
-    #{ let _intermediate-words_ = ?intermediate-words; 
+    #{ let _intermediate-words_ = ?intermediate-words;
        ?main-code }
   else
-    #{ let _intermediate-words_ = ?intermediate-words; 
-       local ??aux-methods-code, ...; 
+    #{ let _intermediate-words_ = ?intermediate-words;
+       local ??aux-methods-code, ...;
        ?main-code }
   end;
 end method;
@@ -55,7 +55,7 @@ define method compile-rules (exp, set, rules)
   end;
 end method;
 
-define method generate-match-failure 
+define method generate-match-failure
     (exp, set :: <aux-rewrite-rule-set>, rules)
   let exp-name = expander-name(exp);
   let name = if (exp-name) as(<symbol>, exp-name) else #"macro-case" end;
@@ -64,7 +64,7 @@ define method generate-match-failure
        (_f*_, dylan-variable-name(?name), ?set-name); }
 end method;
 
-define method generate-match-failure 
+define method generate-match-failure
     (exp, set , rules)
   let exp-name = expander-name(exp);
   let name = if (exp-name) as(<symbol>, exp-name) else #"macro-case" end;
@@ -79,27 +79,27 @@ define method compile-rule (exp, set, rule, more-rules)
   let bound-names = compute-bound-variable-names(pattern);
   let match-code = compile-body-pattern(bound-names, pattern);
   let more-match-code = compile-rules(exp, set, more-rules);
-  let rewrite-code 
+  let rewrite-code
     = generate-bound-name-aux-rule-rewrites(exp, set, binding-matches);
-  let matched-code 
+  let matched-code
     = if (empty?(rewrite-code))
         template-code
       else
         #{ ??rewrite-code; ...; ?template-code }
       end;
   #{ let (failure, ??bound-names, ...) = begin ?match-code end;
-     if (~failure) 
+     if (~failure)
        ?matched-code
-     else 
+     else
        ?more-match-code
      end; };
 end method;
 
-define method generate-bound-name-aux-rule-rewrites 
+define method generate-bound-name-aux-rule-rewrites
     (exp, set, binding-matches)
   collecting ()
     for (match in binding-matches)
-      let aux-set 
+      let aux-set
         = element(expander-aux-rule-set-table(exp), match-symbol-name(match),
                   default: #f);
       if (aux-set)
@@ -114,7 +114,7 @@ define method generate-bound-name-aux-rule-rewrites
                        = map(compose(?aux-name, as-fragment-tokens),
                              ?bound-name) });
         else
-          collect(#{ let ?bound-name 
+          collect(#{ let ?bound-name
                        = ?aux-name(as-fragment-tokens(?bound-name)) });
         end;
         // If it's a self call, bind ellipsis for the RHS.
@@ -143,8 +143,8 @@ define method compile-body-parts (e, parts, n-parts)
   if (n-parts = 1)
     compile-list-pattern(e, parts.first);
   else
-    let matcher 
-      = if (n-parts = 2) 
+    let matcher
+      = if (n-parts = 2)
           #{ match-body-part }
         else
           #{ match-body-part-strict }
@@ -157,7 +157,7 @@ define method compile-body-parts (e, parts, n-parts)
              let _f*_ = _f*-before_;
              ?before-code;
              failure
-               | begin 
+               | begin
                    let _f*_ = _f*-after_;
                    ?after-code
                  end
@@ -181,8 +181,8 @@ define method compile-list-parts (e, parts, n-parts)
   if (n-parts = 1)
     compile-pattern-elements(e, parts.first);
   else
-    let matcher 
-      = if (n-parts = 2) 
+    let matcher
+      = if (n-parts = 2)
           #{ match-list-part }
         else
           #{ match-list-part-strict }
@@ -195,7 +195,7 @@ define method compile-list-parts (e, parts, n-parts)
              let _f*_ = _f*-before_;
              ?before-code;
              failure
-               | begin 
+               | begin
                    let _f*_ = _f*-after_;
                    ?after-code
                  end
@@ -211,31 +211,31 @@ define method compile-pattern-elements (e, m* :: <list>)
   end;
 end method;
 
-define method compile-pattern-element 
+define method compile-pattern-element
     (e, m :: type-union(<fragment>, <pattern-match>), m*)
   let m-code = generate-code(m);
   let m*-code = compile-pattern-elements(e, m*);
   #{ ?m-code; failure | begin ?m*-code end }
 end method;
 
-define method compile-pattern-element 
+define method compile-pattern-element
     (e, m :: <name-fragment>, m*)
   if (fragment-name(m) ~== #"otherwise")
     next-method();
   else
-    let m* 
+    let m*
       = if (instance?(m*.head, <equal-greater-fragment>))
           m*.tail
         else
           m*
         end;
     let m*-code = compile-pattern-elements(e, m*);
-    #{ let (failure, _f*_) = match-otherwise(_f*_); 
+    #{ let (failure, _f*_) = match-otherwise(_f*_);
        failure | begin ?m*-code end }
   end;
 end method;
 
-define method compile-pattern-element 
+define method compile-pattern-element
     (e, m :: <simple-match>, m*)
   let constraint = match-constraint(m);
   if (~wildcard-constraint?(constraint))
@@ -248,7 +248,7 @@ define method compile-pattern-element
     let m*-code = compile-pattern-elements(e, m*);
     let name = match-variable-name(m);
     let bound-names = env-bound-names(e);
-    #{ local method _wildcard-loop_ 
+    #{ local method _wildcard-loop_
            (_collector_ :: <list>, _f*_ :: <fragment-list>)
          let ?name = _collector_;
          // format-out("Try: %=\n", ?name);
@@ -274,15 +274,15 @@ define method compile-pattern-element (e, m :: <variable-match>, m*)
   let type-code = generate-code(match-type-expression-pattern(m));
   let m*-code = compile-pattern-elements(e, m*);
   #{ let (failure, _after-f*_, _name-f*_, _type-f*_) = match-variable(_f*_);
-     failure 
+     failure
        | begin
            let _f*_ = _name-f*_;
            ?name-code;
-           failure 
+           failure
              | begin
                  let _f*_ = _type-f*_;
                  ?type-code;
-                  failure 
+                  failure
                     | begin
                         let _f*_ = _after-f*_;
                         ?m*-code
@@ -293,7 +293,7 @@ end method;
 
 define method compile-pattern-element (e, m :: <nested-match>, m*)
   let nested-matcher = generate-nested-matcher-code(m);
-  let nested-code 
+  let nested-code
     = compile-nested-pattern-elements(match-nested-pattern(m));
   let m*-code = compile-pattern-elements(e, m*);
   #{ let (failure, _after-f*_, _nested-f*_) = ?nested-matcher(_f*_);
@@ -429,7 +429,7 @@ define method generate-code (m :: <splicing-match>)
   let name = match-variable-name(match-nested-pattern(m));
   let prefix = match-prefix(m);
   let suffix = match-suffix(m);
-  #{ let (failure, _f*_, ?name) 
+  #{ let (failure, _f*_, ?name)
        = match-spliced-name(_f*_, ?prefix, ?suffix) }
 end method;
 
@@ -448,7 +448,7 @@ define method generate-code (m :: <property-list-match>)
       collect-into(key-names, key-name);
       let key-symbol = match-symbol-name(key);
       let key-constraint = match-constraint-spec(key);
-      let key-default 
+      let key-default
         = generate-key-default-thunk(match-default-expression(key));
       collect-into
         (key-specs, #{ ?key-symbol, ?key-constraint, ?key-default });
@@ -491,7 +491,7 @@ end method;
 define method generate-empty-code (e)
   let success = generate-success-code(e);
   let bound-names = env-bound-names(e);
-  #{ if (empty?(_f*_)) 
+  #{ if (empty?(_f*_))
        ?success
      else
        #t

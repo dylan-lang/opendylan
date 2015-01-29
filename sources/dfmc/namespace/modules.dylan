@@ -8,10 +8,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //// Modules.
 
-// In addition to pure namespace issues, modules have to manage syntax 
+// In addition to pure namespace issues, modules have to manage syntax
 // tables. The direct contents of a module entry is a binding object.
 // Properties of these binding objects are collected at various stages
-// during compilation. 
+// during compilation.
 
 // As with binding consistency, syntax consistency is checked at creation
 // time and the information discarded to be recomputed on demand. If this
@@ -19,11 +19,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // approach.
 
 define abstract dood-class <module> (<namespace>)
-  lazy constant slot module-definer-bindings :: <dood-lazy-symbol-table> 
+  lazy constant slot module-definer-bindings :: <dood-lazy-symbol-table>
     = make(<dood-lazy-symbol-table>), init-keyword: definer-bindings:;
 end;
 
-define dood-class <full-module> (<full-namespace>, <module>) 
+define dood-class <full-module> (<full-namespace>, <module>)
 end;
 
 
@@ -50,12 +50,12 @@ define sealed domain initialize (<dood-cross-module-proxy>);
 
 define method dood-make-cross-module-proxy
     (dood :: <dood>, object :: <module>) => (proxy)
-  make(<dood-cross-module-proxy>, 
+  make(<dood-cross-module-proxy>,
        module-name: namespace-name(object),
        library:     home-library(object))
 end method;
 
-define method dood-disk-object 
+define method dood-disk-object
     (dood :: <dood>, object :: <module>)
  => (proxy :: type-union(<dood-cross-module-proxy>, <module>))
   if (language-definition(dood-root(dood)) == home-library(object))
@@ -72,17 +72,17 @@ define method dood-restore-proxy
   let lib = dood-proxy-library(proxy);
   lookup-module-in(lib, dood-proxy-module-name(proxy), default: #f)
     | begin
-	// if library is all parsed, then it's a bug that we can't find
-	// the module (or at least it's a different sort of error).  If
-	// the library is not all parsed, then we might just be doing a
-	// premature access during source updating.
-	debug-assert(~lib.namespace-original-library.compiled-to-definitions?,
-		     "Cross-database reference to missing module %s in %s",
-		     dood-proxy-module-name(proxy), lib);
-	debug-assert(*cross-module-access-abort*,
-		     "used library %s of %s unexpectedly not parsed!",
-		     lib, dood-root(dood));
-	*cross-module-access-abort*();
+        // if library is all parsed, then it's a bug that we can't find
+        // the module (or at least it's a different sort of error).  If
+        // the library is not all parsed, then we might just be doing a
+        // premature access during source updating.
+        debug-assert(~lib.namespace-original-library.compiled-to-definitions?,
+                     "Cross-database reference to missing module %s in %s",
+                     dood-proxy-module-name(proxy), lib);
+        debug-assert(*cross-module-access-abort*,
+                     "used library %s of %s unexpectedly not parsed!",
+                     lib, dood-root(dood));
+        *cross-module-access-abort*();
       end;
 end method;
 
@@ -92,23 +92,23 @@ end method;
 
 // Lookup a binding.
 
-define generic lookup-binding-in 
+define generic lookup-binding-in
     (m :: <module>, name, #key reference?) => (binding);
 
 //// Implementation.
 
-define method created-name-value 
+define method created-name-value
     (space :: <module>, name :: <name>) => (value)
   make(<canonical-module-binding>, name: name, home: space);
 end method;
 
-define method exported-name-value 
+define method exported-name-value
     (space :: <module>, name :: <name>) => (value)
   make(<canonical-module-binding>, name: name, home: space);
 end method;
 
-define method resolve-used-namespace 
-    (space :: <module>, space-designator, #key default = unsupplied()) 
+define method resolve-used-namespace
+    (space :: <module>, space-designator, #key default = unsupplied())
       => (space)
   let library = space.home-library;
   let module = lookup-module-in(library, space-designator, default: default);
@@ -126,10 +126,10 @@ define function name-definer-word (name :: <name>) => word :: false-or(<name>);
   let prefix-len = len - $definer-suffix-size;
   unless (prefix-len <= 0)
     for (i from 0 below $definer-suffix-size, j from prefix-len by 1,
-	 while: $definer-suffix[i] == as-lowercase(string[j]))
+         while: $definer-suffix[i] == as-lowercase(string[j]))
     finally
       if (i == $definer-suffix-size)
-	coerce-name(copy-sequence(string, end: prefix-len))
+        coerce-name(copy-sequence(string, end: prefix-len))
       end
     end for
   end unless
@@ -191,38 +191,38 @@ define method lookup-binding-in
   binding
 end method;
 
-define method lookup-imported-binding 
+define method lookup-imported-binding
     (space :: <module>, binding :: <canonical-module-binding>)
   lookup-imported-binding(home-library(space), binding)
 end method;
 
-define method install-imported-binding 
+define method install-imported-binding
     (space :: <module>, binding :: <canonical-module-binding>)
   install-imported-binding(home-library(space), binding)
 end method;
 
 define function local-binding-in (library :: <library>,
-				  binding :: <module-binding>,
-				  #key default = unsupplied())
+                                  binding :: <module-binding>,
+                                  #key default = unsupplied())
   let canonical-binding = binding-canonical-binding(binding);
   if (home-library(binding-home(canonical-binding)) == library)
     canonical-binding
   else
     lookup-imported-binding(library, canonical-binding)
       | if (supplied?(default)) default
-	else install-imported-binding(library, canonical-binding) end
+        else install-imported-binding(library, canonical-binding) end
   end;
 end function;
 
-define function local-binding-in-requesting-library 
+define function local-binding-in-requesting-library
     (binding :: <module-binding>)
   let requesting-library-description = current-library-description();
   if (~requesting-library-description)
     signal("No library context selected to act as the requesting library "
-	    "in binding lookup for %s.", binding);
+            "in binding lookup for %s.", binding);
     binding-canonical-binding(binding);
   else
-    let requesting-library 
+    let requesting-library
       = requesting-library-description.language-definition;
     local-binding-in(requesting-library, binding);
   end;
@@ -242,7 +242,7 @@ define function untracked-lookup-binding-in
     default
   else
     // format-out("CREATING CANONICAL BINDING %=\n", name);
-    let new-binding 
+    let new-binding
       = new-binding-in(m, name);
     local-binding-in-requesting-library(new-binding)
   end if;
@@ -259,20 +259,20 @@ end method;
 // can be slower).
 define method classify-word-in (m :: <module>, word)
   local method binding-class (binding)
-	  if (binding-macro-class?(binding))
-	    let definition  = untracked-binding-definition(binding, default: #f);
-	    let macro-class = definition & form-macro-word-class(definition);
-	    if (macro-class & (*current-dependent* == $no-dependent |
-			       ~defined-after?(*current-dependent*, definition)))
-	      binding-macro-class?(binding) := #t;
-	      macro-class
-	    elseif (definition & ~macro-class) 
-	      binding-macro-class?(binding) := #f;
-	    end if;
-	  else 
-	    #f
-	  end if
-	end method;
+          if (binding-macro-class?(binding))
+            let definition  = untracked-binding-definition(binding, default: #f);
+            let macro-class = definition & form-macro-word-class(definition);
+            if (macro-class & (*current-dependent* == $no-dependent |
+                               ~defined-after?(*current-dependent*, definition)))
+              binding-macro-class?(binding) := #t;
+              macro-class
+            elseif (definition & ~macro-class)
+              binding-macro-class?(binding) := #f;
+            end if;
+          else
+            #f
+          end if
+        end method;
   // We need a binding so we can store the dependency, but this does mean that
   // module bindings get created for all words, even local variables.  If this
   // becomes a problem we can look into either making bindings more lightweight
@@ -280,14 +280,14 @@ define method classify-word-in (m :: <module>, word)
   let non-definer-binding = untracked-lookup-binding-in(m, word);
   note-name-dependency(non-definer-binding, dep$name-syntax, word, m);
   let non-definer-class = begin
-			    let class = binding-class(non-definer-binding);
-			    class & ~definer-token-class?(class) & class
-			  end;
+                            let class = binding-class(non-definer-binding);
+                            class & ~definer-token-class?(class) & class
+                          end;
   let definer-binding = untracked-definer-binding-in(m, word);
   let definer-class = if (definer-binding)
-			let class = binding-class(definer-binding);
-			class & definer-token-class?(class) & class
-		      end;
+                        let class = binding-class(definer-binding);
+                        class & definer-token-class?(class) & class
+                      end;
   if (definer-class & non-definer-class)
     merge-token-classes(definer-class, non-definer-class, word)
   else
@@ -312,7 +312,7 @@ define method macro-definition-in (m, name)
   let definition = untracked-binding-definition(binding, default: #f);
   let macro-class = definition & form-macro-word-class(definition);
   if (macro-class & (*current-dependent* == $no-dependent |
-		       ~defined-after?(*current-dependent*, definition)))
+                       ~defined-after?(*current-dependent*, definition)))
     definition
   end
 end method;
@@ -337,7 +337,7 @@ define serious-program-warning <external-source-module> (<invalid-source-module>
     module, record;
 end;
 
-define method lookup-compilation-record-module 
+define method lookup-compilation-record-module
     (cr :: <compilation-record>, #key warn? = #t)
  => (maybe-module)
   debug-assert(current-library-description?(compilation-record-library(cr)));
@@ -373,11 +373,11 @@ define function binding-for-module (library, name);
   // TODO: should only look at bindings defined in this library
   let binding = lookup-name(library, name, default: #f) |
                  begin
-		   let new = make(<library-binding>,
-				  name: name, home: library);
-		   define-name(library, name, new);
-		   new
-		 end;
+                   let new = make(<library-binding>,
+                                  name: name, home: library);
+                   define-name(library, name, new);
+                   new
+                 end;
   binding
 end function;
 
@@ -397,12 +397,12 @@ define method copy-table-into
 end method;
 
 define function redefine-module! (module :: <full-module>,
-				  #key definition,
-				       name,
-				       use-clauses,
-				       create-clauses,
-				       export-clauses,
-				       model)
+                                  #key definition,
+                                       name,
+                                       use-clauses,
+                                       create-clauses,
+                                       export-clauses,
+                                       model)
   let library = home-library(module);
   debug-assert(library = current-library-model());
   module.namespace-definition := definition;
@@ -442,11 +442,11 @@ define function redefine-module! (module :: <full-module>,
     unless (old-binding == $name-not-imported)
       let new-binding = element(imports, name, default: #f);
       if (new-binding ~== old-binding)
-	// was imported, now is local or is imported from somewhere else
-	let old-binding = local-binding-in(library, old-binding);
-	let new-binding = new-binding & local-binding-in(library, new-binding);
-	note-changing-binding(old-binding, name, module, new-binding);
-	imported-keys-to-remove := pair(name, imported-keys-to-remove);
+        // was imported, now is local or is imported from somewhere else
+        let old-binding = local-binding-in(library, old-binding);
+        let new-binding = new-binding & local-binding-in(library, new-binding);
+        note-changing-binding(old-binding, name, module, new-binding);
+        imported-keys-to-remove := pair(name, imported-keys-to-remove);
       end;
     end;
   end;
@@ -497,42 +497,42 @@ end function redefine-module!;
 define open generic ^make-<&module> (name, library-model) => (model);
 
 define function define-and-install-module (#key definition,
-					        name,
-					        use-clauses = #(),
-					        create-clauses = #(),
-					        export-clauses = #())
+                                                name,
+                                                use-clauses = #(),
+                                                create-clauses = #(),
+                                                export-clauses = #())
  => (module-if-valid :: false-or(<module>));
   let library = current-library-model();
   let old-modules = library.library-deleted-modules;
   let old-module = any?(method (m) (m.namespace-name == name) & m end,
-			old-modules);
+                        old-modules);
   let prior-binding = lookup-name(library, name, default: #f);
   let already-defined? = prior-binding & defined?(prior-binding);
   let library-model = namespace-model(library);
   let model = ^make-<&module>(name, library-model);
   let module
     = if (already-defined?)
-	debug-assert(~old-module);
-	note(<duplicate-module-definition>, definition: definition);
-	#f
+        debug-assert(~old-module);
+        note(<duplicate-module-definition>, definition: definition);
+        #f
       elseif (old-module)
-	library.library-deleted-modules := remove!(old-modules, old-module);
-	redefine-module!(old-module,
-			 definition: definition,
-			 name: name,
-			 use-clauses: use-clauses,
-			 create-clauses: create-clauses,
-			 export-clauses: export-clauses,
-			 model: model);
-	old-module
+        library.library-deleted-modules := remove!(old-modules, old-module);
+        redefine-module!(old-module,
+                         definition: definition,
+                         name: name,
+                         use-clauses: use-clauses,
+                         create-clauses: create-clauses,
+                         export-clauses: export-clauses,
+                         model: model);
+        old-module
       else
-	make-namespace(<full-module>,
-		       definition: definition,
-		       debug-name: name,
-		       use-clauses: use-clauses,
-		       create-clauses: create-clauses,
-		       export-clauses: export-clauses,
-		       model: model)
+        make-namespace(<full-module>,
+                       definition: definition,
+                       debug-name: name,
+                       use-clauses: use-clauses,
+                       create-clauses: create-clauses,
+                       export-clauses: export-clauses,
+                       model: model)
       end;
   if (module) define-module!(module) end;
   module
@@ -551,8 +551,8 @@ define method undefine-module! (module :: <full-module>) => ()
   let library :: <full-library> = home-library(module);
   let name = namespace-name(module);
   let binding = lookup-name(library, name, default: $unfound);
-  if (found?(binding) & defined?(binding) 
-	& (binding.library-binding-value == module))
+  if (found?(binding) & defined?(binding)
+        & (binding.library-binding-value == module))
     binding.library-binding-value := #f;
     library.library-deleted-modules := pair(module, library.library-deleted-modules);
     unless (binding.exported?)
@@ -563,7 +563,7 @@ end method;
 
 define method module-defined? (module :: <module>) => (res :: <boolean>)
   module == lookup-module-in(home-library(module), namespace-name(module),
-			     default: #f)
+                             default: #f)
 end method;
 
 // Hygienic lookup functions
@@ -571,13 +571,13 @@ end method;
 define inline method lookup-binding
     (name :: <variable-name-fragment>, #rest options) => (value)
   apply(lookup-binding-in,
-	fragment-module(name), fragment-identifier(name), options)
+        fragment-module(name), fragment-identifier(name), options)
 end method;
 
 define inline method untracked-lookup-binding
     (name :: <variable-name-fragment>, #rest options) => (value)
   apply(untracked-lookup-binding-in,
-	fragment-module(name), fragment-identifier(name), options)
+        fragment-module(name), fragment-identifier(name), options)
 end method;
 
 define method untracked-lookup-canonical-binding
@@ -668,7 +668,7 @@ define method dylan-definition (name) => (model)
 end method;
 
 define function dylan-value (name) => (model)
-  let cache 
+  let cache
     = library-description-dylan-value-cache(dylan-library-description());
   let value = element(cache, name, default: $unfound);
   if (found?(value))
@@ -691,7 +691,7 @@ define class <full-dylan-user-module> (<full-module>, <dylan-user-module>)
 end class;
 
 // Default method uses namespace definition, which we may not have.
-define method namespace-library-description 
+define method namespace-library-description
     (m :: <full-dylan-user-module>) => (desc :: <library-description>)
   namespace-library-description(original-home-library(m));
 end method;
@@ -707,7 +707,7 @@ end method;
 
 // Default method uses home-library, which might have renamed #"dylan"...
 define method resolve-used-namespace (m :: <dylan-user-module>, name,
-				      #key default = unsupplied()) => (module)
+                                      #key default = unsupplied()) => (module)
   // debug-assert(name == #"dylan");
   lookup-module-in(dylan-library(), name, default: default)
 end method;
@@ -736,10 +736,10 @@ end;
 
 
 define compiler-open generic make-module-definition
-  (#key name, source-location, parent-form, 
+  (#key name, source-location, parent-form,
         use-clauses, create-clauses, export-clauses);
 
-define serious-program-warning 
+define serious-program-warning
     <failed-to-find-library-for-qualified-name> (<manual-parser-error>)
   slot condition-name,
     required-init-keyword: name:;
@@ -753,7 +753,7 @@ define serious-program-warning
     library-name, name, module-name, library-name again;
 end serious-program-warning;
 
-define serious-program-warning 
+define serious-program-warning
     <failed-to-find-module-for-qualified-name> (<manual-parser-error>)
   slot condition-name,
     required-init-keyword: name:;
@@ -788,7 +788,7 @@ define sideways method resolve-qualified-variable-name-module
   local method resolve-library (name)
     block (return)
       for (used-ld in used-lds)
-        let used-library = language-definition(used-ld);       
+        let used-library = language-definition(used-ld);
         if (namespace-name(used-library) == name)
           return(used-library);
         end;
@@ -797,7 +797,7 @@ define sideways method resolve-qualified-variable-name-module
       end;
     end;
   end method;
-  let library 
+  let library
     = if (library-name)
         resolve-library(library-name)
           | note(<failed-to-find-library-for-qualified-name>,
@@ -808,7 +808,7 @@ define sideways method resolve-qualified-variable-name-module
       else
         this-library
       end;
-  let module 
+  let module
     = lookup-module-in(library, module-name, default: #f)
         | note(<failed-to-find-module-for-qualified-name>,
                source-location: source-location,

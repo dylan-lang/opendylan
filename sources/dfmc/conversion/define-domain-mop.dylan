@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define program-warning <domain-visible-to-sibling-libraries>
   slot condition-variable-name,
     init-keyword: variable-name:;
-  format-string 
+  format-string
     "This domain on %= is visible to sibling libraries because the "
     "domain types are all based on imported classes.";
   format-arguments
@@ -48,7 +48,7 @@ define method check-model (d :: <&domain>) => ()
   end if;
 end method;
 
-define function ^domain-sideways? 
+define function ^domain-sideways?
     (d :: <&domain>) => (well? :: <boolean>)
   form-sideways?(model-definition(d))
 end function;

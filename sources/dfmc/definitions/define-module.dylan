@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define class <module-definition> (<namespace-defining-form>) end;
 
-define method form-define-word 
+define method form-define-word
     (form :: <module-definition>) => (word :: <symbol>)
   #"module"
 end method;
@@ -25,11 +25,11 @@ end &definition;
 
 
 define sideways method make-module-definition (#key name,
-					       source-location = #f,
-					       parent-form = #f,
-					       use-clauses,
-					       create-clauses = #(),
-					       export-clauses = #())
+                                               source-location = #f,
+                                               parent-form = #f,
+                                               use-clauses,
+                                               create-clauses = #(),
+                                               export-clauses = #())
   make(<module-definition>,
        source-location: source-location,
        adjectives: #(),
@@ -53,7 +53,7 @@ define method do-define-module (form, mods, name, clauses)
 end method;
 
 define method generate-initializer-source-with-namespace
-    (form :: <module-definition>, module :: <module>) 
+    (form :: <module-definition>, module :: <module>)
  => (source)
   with-expansion-source-form (form)
     let model      = namespace-model(module);
@@ -65,22 +65,22 @@ end method;
 
 // also used by boot code.
 define sideways method define-parsed-module (name, #key source-location = #f,
-					                use-clauses,
-					                create-clauses,
-					                export-clauses)
+                                                        use-clauses,
+                                                        create-clauses,
+                                                        export-clauses)
  => (module :: <module-definition>, module :: false-or(<module>))
   let definition = make(<module-definition>,
-			source-location: source-location,
-			adjectives:      #(),
-			name:            name,
-			use-clauses:     use-clauses,
-			create-clauses:  create-clauses,
-			export-clauses:  export-clauses);
+                        source-location: source-location,
+                        adjectives:      #(),
+                        name:            name,
+                        use-clauses:     use-clauses,
+                        create-clauses:  create-clauses,
+                        export-clauses:  export-clauses);
   /*
   let module     = compiling-dylan-library?()
                      & install-top-level-form(definition);
   */
-  let module 
+  let module
     = if (compiling-dylan-library?() | single-file-project-hack?())
         pre-install-top-level-form(definition);
       else
@@ -112,9 +112,9 @@ define method pre-install-top-level-form (form :: <module-definition>)
       let module =
         define-and-install-module(definition:     form,
                                   name:           form-namespace-name(form),
-				  use-clauses:    form-use-clauses(form),
-				  create-clauses: form-create-clauses(form),
-				  export-clauses: form-export-clauses(form));
+                                  use-clauses:    form-use-clauses(form),
+                                  create-clauses: form-create-clauses(form),
+                                  export-clauses: form-export-clauses(form));
       module
     end if;
   end with-dependent;
@@ -128,29 +128,29 @@ define method install-top-level-form (form :: <module-definition>)
            module-name:     form-namespace-name(form));
       #f
     else
-      let module 
+      let module
         = lookup-module(form-namespace-name(form), default: #f)
             | pre-install-top-level-form(form);
       if (module)
-	let ld = current-library-description();
+        let ld = current-library-description();
         let module-cr = form-compilation-record(form);
-	// Force reparsing of any cr's with undefined modules (except
-        // ourselves, since we must be attempting the single-file 
+        // Force reparsing of any cr's with undefined modules (except
+        // ourselves, since we must be attempting the single-file
         // project hack if we're doing anything at all).
-	for (cr in ld.library-description-compilation-records)
-	  if (cr ~== module-cr & ~cr.compilation-record-module)
-	    ld.compiled-to-definitions? := #f;
-	    cr.compilation-record-definitions-installed? := #f;
-	  end;
-	end;
-	// For some reason no longer remembered by anybody, we don't create
-	// the constant variable definitions for bootstrapped modules in
-	// the dylan library...
-	unless (booted-module?(module))
-	  let initializer-source
-	    = generate-initializer-source-with-namespace(form, module);
-	  add-derived-top-level-fragment(form, initializer-source);
-	end;
+        for (cr in ld.library-description-compilation-records)
+          if (cr ~== module-cr & ~cr.compilation-record-module)
+            ld.compiled-to-definitions? := #f;
+            cr.compilation-record-definitions-installed? := #f;
+          end;
+        end;
+        // For some reason no longer remembered by anybody, we don't create
+        // the constant variable definitions for bootstrapped modules in
+        // the dylan library...
+        unless (booted-module?(module))
+          let initializer-source
+            = generate-initializer-source-with-namespace(form, module);
+          add-derived-top-level-fragment(form, initializer-source);
+        end;
       end;
       form.form-top-level-installed? := #t;
       module
@@ -192,7 +192,7 @@ define method uninstall-top-level-form (form :: <module-definition>)
     ld.compiled-to-definitions? := #f;
     for (cr in ld.library-description-compilation-records)
       if (cr.compilation-record-module == module)
-	cr.compilation-record-definitions-installed? := #f;
+        cr.compilation-record-definitions-installed? := #f;
       end;
     end;
     undefine-module!(module);

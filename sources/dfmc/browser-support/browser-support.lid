@@ -1,5 +1,5 @@
 Library: dfmc-browser-support
-Target-Type:	dll
+Target-Type:  dll
 Files: browser-support-library
        glue-routines
        debug-info-api

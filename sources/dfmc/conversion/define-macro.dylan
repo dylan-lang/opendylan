@@ -14,14 +14,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // The <&macro> class is defined earlier for use in the boot.
 
-define compiler-sideways method compute-form-model-object 
+define compiler-sideways method compute-form-model-object
     (form :: <macro-definition>, var :: <variable-name-fragment>) => (object)
   let macro-object = form-macro-object(form);
   // Fake some references.
   for (name in macro-referenced-names(macro-object))
     lookup-binding(name);
   end;
-  make(<&macro>, 
+  make(<&macro>,
        definition:   form,
        macro-object: macro-object);
 end method;

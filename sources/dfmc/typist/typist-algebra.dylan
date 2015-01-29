@@ -15,15 +15,15 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///
 /// Any <type-estimate> which contains other <type-estimate>s (i.e., "type
 /// constructors") is subject to normalization.  The theory of normal form here
-/// is disjunctive normal form, i.e., pull all the unions as far outside as 
-/// they'll come.  Sort of like prenex/prolix form in logic.  
+/// is disjunctive normal form, i.e., pull all the unions as far outside as
+/// they'll come.  Sort of like prenex/prolix form in logic.
 ///
 /// See Agesen's CPA paper: Agesen, O., "The Cartesian Product Algorithm: Simple
-/// and Precise Type Inference of Parametric Polymorphism," ECOOP-95, 
+/// and Precise Type Inference of Parametric Polymorphism," ECOOP-95,
 /// http://self.smli.com/papers/cpa.html.
 ///
 
-/* 
+/*
 // *** This is debugging code, normally dead.
 define constant $normalize-freqs$ = make(<table>);
 
@@ -58,22 +58,22 @@ end;
 */
 
 // A "megamorphic" type is one that is (unreasonably) extremely polymorphic,
-// e.g., a union of inconveniently large size.  These actually occur in 
-// practice: the Win32 library has a create-font function of 14 arguments, 
+// e.g., a union of inconveniently large size.  These actually occur in
+// practice: the Win32 library has a create-font function of 14 arguments,
 // each of which is a union (<integer>, <machine-word>); that would lead
 // to a CPA expansion of 2^14 elements!
 
 // Somewhat arbitrary, but bigger arbitrary numbers screw us compiling the
 // FFI.
-define constant $megamorphic-punt-threshold$ = 32; 
+define constant $megamorphic-punt-threshold$ = 32;
 
 // *** This probably conses too much!
 define function type-estimate-CP-expand(megamorphic-punt-constr :: <function>,
-                                        constr                  :: <function>, 
+                                        constr                  :: <function>,
                                         #rest products)
   => (CP-expansion :: <type-estimate>)
-  // Cartesian Product expansion.  Products is a list of args to be 
-  // CP-expanded.  Constr gets called on the final unionees to build the 
+  // Cartesian Product expansion.  Products is a list of args to be
+  // CP-expanded.  Constr gets called on the final unionees to build the
   // type you want to be the element of the final union.
   local method do-CP (fn :: <function>, sets :: <list>) => ()
           // Do fn over the Cartesian product of sets.  Sets is a <list> of
@@ -105,11 +105,11 @@ define function type-estimate-CP-expand(megamorphic-punt-constr :: <function>,
                               1
                             end
                  end,
-                 1, 
+                 1,
                  products)
         end;
   if (final-union-size() > $megamorphic-punt-threshold$)
-    // Unreasonably large union would be made from this extremely polymorphic 
+    // Unreasonably large union would be made from this extremely polymorphic
     // type; punt to something else instead.  Caller defines "something else."
     megamorphic-punt-constr()
   else
@@ -210,19 +210,19 @@ define method type-estimate-normalize(lc :: <type-estimate-limited-collection>)
                                  //     megamorphic.  So punting should never happen here?
                                  curry(type-estimate-base, lc),
                                  curry(make, <type-estimate-limited-collection>,
-				       normalize?:, #f,
-				       class:, type-estimate-class(lc),
-				       concrete-class:, type-estimate-concrete-class(lc),
-				       size:, type-estimate-size(lc),
-				       dimensions:, type-estimate-dimensions(lc),
-				       of:),
+                                       normalize?:, #f,
+                                       class:, type-estimate-class(lc),
+                                       concrete-class:, type-estimate-concrete-class(lc),
+                                       size:, type-estimate-size(lc),
+                                       dimensions:, type-estimate-dimensions(lc),
+                                       of:),
                                  n-of);
       singleton(of)         => type-estimate-to-be-normalized?(lc) := #f;
                                lc;
       otherwise             => make(<type-estimate-limited-collection>,
                                     normalize?:     #f,
                                     class:          type-estimate-class(lc),
-				    concrete-class: type-estimate-concrete-class(lc),
+                                    concrete-class: type-estimate-concrete-class(lc),
                                     of:             n-of,
                                     size:           type-estimate-size(lc),
                                     dimensions:     type-estimate-dimensions(lc));
@@ -239,7 +239,7 @@ define method type-estimate-normalize(fn :: <type-estimate-limited-function>)
   // CP-expand unions in the args & results.
   // bump-normalization-freq(object-class(fn));
   if (~type-estimate-to-be-normalized?(fn))
-    // Already been normalized 
+    // Already been normalized
     fn
   else
     // Have to do some work to normalize it.
@@ -254,12 +254,12 @@ define method type-estimate-normalize(fn :: <type-estimate-limited-function>)
     let n-vals      = type-estimate-normalize(vals);
     // Check for presence of unions in normalized pieces.
     let unions?     = any?(rcurry(instance?, <type-estimate-union>), n-requireds)
-                      | (n-keys & any?(rcurry(instance?, <type-estimate-union>), 
+                      | (n-keys & any?(rcurry(instance?, <type-estimate-union>),
                                        n-keys))
                       | instance?(n-vals, <type-estimate-union>);
     // Check if we want to promote to class <function>, with no extra info.
-    if (empty?(n-requireds) & type-estimate-rest?(fn) == #t 
-        & n-keys == #f & type-estimate-all-keys?(fn) == #f 
+    if (empty?(n-requireds) & type-estimate-rest?(fn) == #t
+        & n-keys == #f & type-estimate-all-keys?(fn) == #f
         & type-estimate-match?(n-vals, make(<type-estimate-values>)))
       // Just promote to class <function>, since we really know nothing else.
       make(<type-estimate-class>, class: dylan-value(#"<function>"))
@@ -268,7 +268,7 @@ define method type-estimate-normalize(fn :: <type-estimate-limited-function>)
       type-estimate-to-be-normalized?(fn) := #f;
       fn
     elseif (~unions?)                         // Change, but no unions
-      make(<type-estimate-limited-function>, 
+      make(<type-estimate-limited-function>,
            normalize?: #f,
            class:      type-estimate-class(fn),
            requireds:  n-requireds,
@@ -282,52 +282,52 @@ define method type-estimate-normalize(fn :: <type-estimate-limited-function>)
       let the-keys :: <simple-object-vector> = make(<vector>, size: num-keys);
       let the-vals :: <simple-object-vector> = make(<vector>, size: num-keys);
       when (keys)
-	for (a-val keyed-by a-key in n-keys, i :: <integer> from 0)
-	  the-keys[i] := a-key;
-	  the-vals[i] := a-val;
-	end for;
+        for (a-val keyed-by a-key in n-keys, i :: <integer> from 0)
+          the-keys[i] := a-key;
+          the-vals[i] := a-val;
+        end for;
       end when;
-      let arg-seq :: <type-variable-vector> = 
+      let arg-seq :: <type-variable-vector> =
         concatenate(n-requireds,            // [0, num-req - 1]
                     case                    // [num-req, num-req + num-keys - 1]
-		      n-keys    => as(<type-variable-vector>, the-vals);
-		      otherwise => as(<type-variable-vector>, #[]);
+                      n-keys    => as(<type-variable-vector>, the-vals);
+                      otherwise => as(<type-variable-vector>, #[]);
                     end,
                     as(<type-variable-vector>, vector(n-vals))); // [num-req + num-keys]
       // format-out("\n*** Normalizing: %s", fn);
       // format-out("\n    Num-req = %d, num-keys = %d", num-req, num-keys);
       // format-out("\n    Arg-seq of size %d = %s", size(arg-seq), arg-seq);
-      let result = 
+      let result =
         apply(type-estimate-CP-expand,
               // *** Should really construct limited function which promotes
               //     unions to something like <object>, or maybe <top>.
               curry(type-estimate-base, fn),
               method (#rest args)
                 let cpa-reqds
-		  = copy-sequence(args, end: num-req);
+                  = copy-sequence(args, end: num-req);
                 let cpa-kvals
-		  = copy-sequence(args, start: num-req, end: num-req + num-keys);
+                  = copy-sequence(args, start: num-req, end: num-req + num-keys);
                 let cpa-vals
-		  = args[num-req + num-keys];
+                  = args[num-req + num-keys];
                 // format-out("\n*** Args:      %s", args);
                 // format-out("\n    requireds: %s", cpa-reqds);
                 // format-out("\n    keys:      %s", cpa-kvals);
                 // format-out("\n    vals:      %s", cpa-vals);
-                make(<type-estimate-limited-function>, 
+                make(<type-estimate-limited-function>,
                      normalize?: #f,
                      class:      type-estimate-class(fn),
                      requireds:  cpa-reqds,
                      rest?:      type-estimate-rest?(fn),
                      keys:       when (n-keys)
                                    let new-tbl :: <table> = make(<table>, size: num-keys);
-				   for (key in the-keys, new-val in cpa-kvals)
-				     new-tbl[key] := new-val
-				   end for;
+                                   for (key in the-keys, new-val in cpa-kvals)
+                                     new-tbl[key] := new-val
+                                   end for;
                                    new-tbl
                                  end,
                      all-keys?:  type-estimate-all-keys?(fn),
                      vals:       cpa-vals)
-              end, 
+              end,
               arg-seq);
       // format-out("\n*** Result: %s", result);
       result
@@ -423,10 +423,10 @@ define method type-estimate-normalize(val :: <type-estimate-values>)
   elseif (any?(rcurry(instance?, <type-estimate-bottom>), fix)
           | instance?(rest, <type-estimate-bottom>))
     // contains a bottom, so it's all bottoms
-    make(<type-estimate-values>, 
-         rest: make(<type-estimate-bottom>), 
+    make(<type-estimate-values>,
+         rest: make(<type-estimate-bottom>),
          normalize?: #f)
-  else 
+  else
     // Gotta work to normalize it
     // Normalize embedded <type-estimate>s.
     // *** Should already be normalized?
@@ -441,17 +441,17 @@ define method type-estimate-normalize(val :: <type-estimate-values>)
     elseif (~unions?)                       // Change, but no unions
       make(<type-estimate-values>, normalize?: #f, fixed: n-fix, rest: n-rest)
     else                                    // CPA expand the unions here
-      apply(type-estimate-CP-expand, 
+      apply(type-estimate-CP-expand,
             method ()
               // Punt position: new multiple values, but less uniony since we
               // coerce value types to be something nicer.
               make(<type-estimate-values>,
                    fixed: map(method (x)
                                 select (x by instance?)
-                                  <type-estimate-union> 
+                                  <type-estimate-union>
                                     // *** Should do better than this.  Include
                                     // <top> types, anyway.
-                                    => make(<type-estimate-class>, 
+                                    => make(<type-estimate-class>,
                                             class: dylan-value(#"<object>"));
                                   otherwise
                                     => x;
@@ -470,8 +470,8 @@ define method type-estimate-normalize(val :: <type-estimate-values>)
             end,
             method (#rest rgs)
               // Construct the values types in the CP-union
-              make(<type-estimate-values>, 
-                   normalize?: #f, 
+              make(<type-estimate-values>,
+                   normalize?: #f,
                    fixed: copy-sequence(rgs, start: 1),
                    rest: first(rgs))
             end,
@@ -569,7 +569,7 @@ define method type-estimate-union (te1 :: <type-estimate>, te2 :: <type-estimate
   // Record some metering data & trampoline to right place.
   // *type-estimate-union-args* := pair(pair(te1, te2), *type-estimate-union-args*);
   case
-    // Metering shows an _awful_ lot of cases have te1 <= te2.  Short-circuit 
+    // Metering shows an _awful_ lot of cases have te1 <= te2.  Short-circuit
     // that early on, rather than consing the type-union and then normalizing it
     // back down!
     // *** 15-Jan-97 metering of Dylan library compilation:
@@ -603,19 +603,19 @@ end;
 // *** Doesn't exploit fact that te1 & te2 now known to be incomparable.
 define type-estimate-union-rules
   // Just make unions and rely on normalization to do the rest.
-  te1 :: <type-estimate>, te2 :: <type-estimate> <- 
+  te1 :: <type-estimate>, te2 :: <type-estimate> <-
     // Default method for non-unions: make a union & normalize.
     make(<type-estimate-union>, unionees: list(te1, te2));
-  te :: <type-estimate>, u :: <type-estimate-union> <- 
+  te :: <type-estimate>, u :: <type-estimate-union> <-
     // If one arg is a union, add the other to it & normalize.
     make(<type-estimate-union>, unionees: add(type-estimate-unionees(u), te));
-  u :: <type-estimate-union>, te :: <type-estimate> <- 
+  u :: <type-estimate-union>, te :: <type-estimate> <-
     // If othe arg is a union, add the one to it & normalize.
     make(<type-estimate-union>, unionees: add(type-estimate-unionees(u), te));
   u1 :: <type-estimate-union>, u2 :: <type-estimate-union> <-
     // If both args are unions, concatenate and normalize.
     make(<type-estimate-union>,
-         unionees: concatenate(type-estimate-unionees(u1), 
+         unionees: concatenate(type-estimate-unionees(u1),
                                type-estimate-unionees(u2)));
 end;
 
@@ -640,7 +640,7 @@ rule:
 end;
 
 define type-estimate-intersection-rules
-  te1 :: <type-estimate>, te2 :: <type-estimate> <- 
+  te1 :: <type-estimate>, te2 :: <type-estimate> <-
     error("*** type-estimate-intersection not implemented yet.")
 end;
 
@@ -665,7 +665,7 @@ rule:
 end;
 
 define type-estimate-difference-rules
-  te1 :: <type-estimate>, te2 :: <type-estimate> <- 
+  te1 :: <type-estimate>, te2 :: <type-estimate> <-
     error("*** type-estimate-difference not implemented yet.")
 end;
 
@@ -678,7 +678,7 @@ define method type-estimate-base
   top
 end;
 
-define method type-estimate-base 
+define method type-estimate-base
     (cl :: <type-estimate-class>) => (te :: <type-estimate-class>)
   // DRM, p. 48: class types are their own base.
   cl
@@ -690,22 +690,22 @@ define method type-estimate-base
   raw
 end;
 
-define method type-estimate-base 
+define method type-estimate-base
     (lim :: <type-estimate-limited>) => (te :: <type-estimate-class>)
-  // DRM, p. 48: generally, the base of a limited type is the class being 
+  // DRM, p. 48: generally, the base of a limited type is the class being
   // limited.  However, this is overridden below for singletons.
   make(<type-estimate-class>, class: type-estimate-class(lim))
 end;
 
-define method type-estimate-base 
+define method type-estimate-base
     (lim :: <type-estimate-limited-collection>) => (te :: <type-estimate-class>)
-  make(<type-estimate-class>, 
+  make(<type-estimate-class>,
        class: type-estimate-concrete-class(lim) | type-estimate-class(lim))
 end;
 
 define method type-estimate-base (li :: <type-estimate-limited-instance>)
  => (te :: <type-estimate-limited-instance>)
-  // DRM, p. 48: Singleton: override the method on general limited types.  The 
+  // DRM, p. 48: Singleton: override the method on general limited types.  The
   // base of a singleton is the singleton itself.
   li
 end;
@@ -724,10 +724,10 @@ define method type-estimate-base
   end
 end;
 
-define method type-estimate-base 
+define method type-estimate-base
     (mv :: <type-estimate-values>) => (te :: <type-estimate-values>)
   // The base type of a multiple-values type is defined to be a multiple-values
-  // of the base types of its components.  This is kind of a guess, since 
+  // of the base types of its components.  This is kind of a guess, since
   // multiple-values are obviously not a Dylan user type!
   let fixed      = type-estimate-fixed-values(mv);
   let rest       = type-estimate-rest-values(mv);
@@ -741,9 +741,9 @@ define method type-estimate-base
   end
 end;
 
-define method type-estimate-base 
+define method type-estimate-base
     (bot :: <type-estimate-bottom>) => (te :: <type-estimate-bottom>)
-  // Base type of bottom is bottom.  
+  // Base type of bottom is bottom.
   // This is kind of a guess, but the only reasonable one.
   bot
 end;
@@ -762,9 +762,9 @@ rules:
 rule:
   // Each rule generates a type-estimate-match? method.
   { ?te1:name, ?te2:name, ?typ:* <- ?expr:expression }
-  => { define method type-estimate-match? (?te1 :: ?typ, ?te2 :: ?typ) 
+  => { define method type-estimate-match? (?te1 :: ?typ, ?te2 :: ?typ)
         => (match? :: <boolean>)
-         // Insist that the classes be exactly the same, to prevent 
+         // Insist that the classes be exactly the same, to prevent
          // spurious matches by inheritance.
          object-class(?te1) == object-class(?te2)
          & ?expr
@@ -788,26 +788,26 @@ define type-estimate-match?-rules
   t1, t2, <table>     <- table=?(t1, t2, type-estimate-match?); // Convenience
 
   te1, te2, <type-estimate-top> <- #t;
-  te1, te2, <type-estimate-class> <- 
+  te1, te2, <type-estimate-class> <-
     type-estimate-class(te1) == type-estimate-class(te2);
 
   te1, te2, <type-estimate-raw> <-
     type-estimate-raw(te1) == type-estimate-raw(te2);
 
-  te1, te2, <type-estimate-values> <- 
-    type-estimate-match?(type-estimate-fixed-values(te1), 
+  te1, te2, <type-estimate-values> <-
+    type-estimate-match?(type-estimate-fixed-values(te1),
                          type-estimate-fixed-values(te2))
-    & type-estimate-match?(type-estimate-rest-values(te1), 
+    & type-estimate-match?(type-estimate-rest-values(te1),
                            type-estimate-rest-values(te2));
 
-  te1, te2, <type-estimate-limited-function> <- 
+  te1, te2, <type-estimate-limited-function> <-
     type-estimate-class(te1) == type-estimate-class(te2)
-    & type-estimate-match?(type-estimate-requireds(te1), 
+    & type-estimate-match?(type-estimate-requireds(te1),
                            type-estimate-requireds(te2))
     & type-estimate-rest?(te1) == type-estimate-rest?(te2)
     & type-estimate-match?(type-estimate-keys(te1), type-estimate-keys(te2))
     & type-estimate-all-keys?(te1) == type-estimate-all-keys?(te2)
-    & type-estimate-match?(type-estimate-values(te1), 
+    & type-estimate-match?(type-estimate-values(te1),
                            type-estimate-values(te2));
 
   te1, te2, <type-estimate-limited-integer> <-
@@ -815,21 +815,21 @@ define type-estimate-match?-rules
     & type-estimate-min(te1) = type-estimate-min(te2)
     & type-estimate-max(te1) = type-estimate-max(te2);
 
-  te1, te2, <type-estimate-limited-class> <- 
+  te1, te2, <type-estimate-limited-class> <-
     type-estimate-subclass(te1) == type-estimate-subclass(te2);
 
-  te1, te2, <type-estimate-limited-instance> <- 
-    type-estimate-match?(type-estimate-singleton(te1), 
+  te1, te2, <type-estimate-limited-instance> <-
+    type-estimate-match?(type-estimate-singleton(te1),
                          type-estimate-singleton(te2));
 
-  te1, te2, <type-estimate-limited-collection> <- 
+  te1, te2, <type-estimate-limited-collection> <-
     type-estimate-class(te1) == type-estimate-class(te2)
     & type-estimate-match?(type-estimate-of(te1), type-estimate-of(te2))
     & type-estimate-size(te1) = type-estimate-size(te2)
     & type-estimate-dimensions(te1) = type-estimate-dimensions(te2);
 
-  te1, te2, <type-estimate-union> <- 
-    type-estimate-match?(type-estimate-unionees(te1), 
+  te1, te2, <type-estimate-union> <-
+    type-estimate-match?(type-estimate-unionees(te1),
                          type-estimate-unionees(te2));
 
   te1, te2, <type-estimate-bottom> <- #t;
@@ -862,17 +862,17 @@ define type-estimate-instance?-rules
   x :: <model-value>, te :: <type-estimate-bottom>             <- values(#f, #t);
   x :: <model-value>, te :: <type-estimate-union>              <- // DRM, p. 72.
     any?(curry(type-estimate-instance?, x), type-estimate-unionees(te));
-  x :: <model-value>, te :: <type-estimate-values>             <- 
+  x :: <model-value>, te :: <type-estimate-values>             <-
     // Have to recognize the mv-vectors.
     error("*** type-estimate-instance?(_, values) doesn't make sense.");
-  x :: <model-value>, te :: <type-estimate-class>              <- 
+  x :: <model-value>, te :: <type-estimate-class>              <-
     values(^instance?(x, type-estimate-class(te)), #t);
   x :: <model-value>, te :: <type-estimate-raw>                <-
     values(^instance?(x, type-estimate-raw(te)), #t);
-  x :: <model-value>, te :: <type-estimate-limited-function>   <- 
+  x :: <model-value>, te :: <type-estimate-limited-function>   <-
     values(^instance?(x, type-estimate-class(te)) &
-           // Potential bug with singleton(fn) not a subtype of 
-           // limited(<function>, ...)?  See comment above 
+           // Potential bug with singleton(fn) not a subtype of
+           // limited(<function>, ...)?  See comment above
            // type-estimate-subtype? of limited function.
            type-estimate-subtype?(type-estimate(x), // Relatively crude hammer
                                   te),
@@ -892,7 +892,7 @@ define type-estimate-instance?-rules
     //          // *** x not a <stretchy-collection>.
     //          ;
     //     otherwise => #t;             // Neither: no restriction here.
-    //   end 
+    //   end
     //& type-estimate-subtype?(***element-type, type-estimate-base(te));
     // error("*** type-estimate-instance?(_, limited-colln) not yet implemented.");
   x :: <model-value>, te :: <type-estimate-limited-instance>   <-
@@ -901,7 +901,7 @@ define type-estimate-instance?-rules
     values(^instance?(x, type-estimate-class(te))        // Some kind of class
            & ^subtype?(x, type-estimate-subclass(te)),   // which is a subclass
            #t);
-  x :: <model-value>, te :: <type-estimate-limited-integer>    <- 
+  x :: <model-value>, te :: <type-estimate-limited-integer>    <-
     values(^instance?(x, type-estimate-class(te))         // Appropriate integer
            & (~type-estimate-min(te) | type-estimate-min(te) <= x)
            & (~type-estimate-max(te) | x <= type-estimate-max(te)),
@@ -912,15 +912,15 @@ end;
 /// Disjointness of <type-estimate>s.
 ///
 
-define generic type-estimate-disjoint?-1 (t1 :: <type-estimate>, 
-					  t2 :: <type-estimate>)
+define generic type-estimate-disjoint?-1 (t1 :: <type-estimate>,
+                                          t2 :: <type-estimate>)
  => (disjoint? :: <boolean>);
 
-define method type-estimate-disjoint?(t1 :: <type-estimate>, 
+define method type-estimate-disjoint?(t1 :: <type-estimate>,
                                       t2 :: <type-estimate>)
  => (disjoint? :: <boolean>, unused? :: <boolean>)
   // Only method: 2 types are disjoint if their intersection as sets is empty.
-  if (instance?(t1, <type-estimate-bottom>) | 
+  if (instance?(t1, <type-estimate-bottom>) |
       instance?(t2, <type-estimate-bottom>))
     // one type is bottom, i.e., empty set, so intersection is always empty.
     values(#t, #t)
@@ -966,18 +966,18 @@ define macro type-estimate-disjoint?-internal-rule-definer
      end } =>
     { define method type-estimate-disjoint?-special-case? (type :: ?typ1)
        => (res :: singleton(#t))
-	#t
+        #t
       end method;
       define method type-estimate-disjoint?-1
-	  (type1 :: ?typ1, type2 :: <type-estimate>) => (disjoint? :: <boolean>)
-	"type-estimate-disjoint?-" ## ?typ1 (type1, type2)
+          (type1 :: ?typ1, type2 :: <type-estimate>) => (disjoint? :: <boolean>)
+        "type-estimate-disjoint?-" ## ?typ1 (type1, type2)
       end method }
   { define type-estimate-disjoint?-internal-rule (?tname1:name :: ?typ1:name)
      ?tname2:name :: ?typ2:name <- ?expr:expression ; ?more:*
      end } =>
     { define method "type-estimate-disjoint?-" ## ?typ1
-	   (?tname1 :: ?typ1, ?tname2 :: ?typ2)
-	 ?expr
+           (?tname1 :: ?typ1, ?tname2 :: ?typ2)
+         ?expr
       end;
       define type-estimate-disjoint?-internal-rule (?tname1 :: ?typ1)
         ?more
@@ -1050,7 +1050,7 @@ define type-estimate-disjoint?-internal-rule (t1 :: <type-estimate-limited-class
     // Disjoint if no common subclasses (other cases on generic limited, above)
     <- ^classes-guaranteed-disjoint?(type-estimate-subclass(t1),
                                      type-estimate-subclass(t2));
-end;  
+end;
 
 define type-estimate-disjoint?-internal-rule (t1 :: <type-estimate-limited-collection>)
   // Limited classes (subclasses)
@@ -1061,8 +1061,8 @@ define type-estimate-disjoint?-internal-rule (t1 :: <type-estimate-limited-colle
     <- ^classes-guaranteed-disjoint?(type-estimate-class(t1),
                                      type-estimate-class(t2))
        | type-estimate-disjoint?(type-estimate-of(t1),
-				 type-estimate-of(t2));
-end;  
+                                 type-estimate-of(t2));
+end;
 
 define type-estimate-disjoint?-internal-rule (t1 :: <type-estimate-limited-instance>)
   // Limited instances (singletons): look at the object.  (But since we know
@@ -1072,7 +1072,7 @@ define type-estimate-disjoint?-internal-rule (t1 :: <type-estimate-limited-insta
 end;
 
 // *** Think about whether this is the right disjointness relation!
-define function values-guaranteed-disjoint? (t1 :: <type-estimate-values>, 
+define function values-guaranteed-disjoint? (t1 :: <type-estimate-values>,
                                              t2 :: <type-estimate-values>)
     => (disjoint? :: <boolean>)
   // Whether these multiple value types are guaranteed disjoint:
@@ -1089,7 +1089,7 @@ define function values-guaranteed-disjoint? (t1 :: <type-estimate-values>,
             => (value :: <type-estimate>, rest? :: <boolean>)
           // Get the ith value type, using #rest value if necessary
           case
-            i < size(type-estimate-fixed-values(val)) 
+            i < size(type-estimate-fixed-values(val))
               // Wants a positional value
               => values(type-estimate-fixed-values(val)[i], #f);
             type-estimate-rest-values(val)
@@ -1137,7 +1137,7 @@ define function values-guaranteed-disjoint? (t1 :: <type-estimate-values>,
 end;
 
 define function limited-integers-guaranteed-disjoint?
-    (t1 :: <type-estimate-limited-integer>, 
+    (t1 :: <type-estimate-limited-integer>,
      t2 :: <type-estimate-limited-integer>) => (disjoint? :: <boolean>)
   local method above? (min, max)
           case
@@ -1155,13 +1155,13 @@ define function ^classes-guaranteed-disjoint?(c1 :: <&class>, c2 :: <&class>)
   // are disjoint if they have no common subclasses.  All this squirming around
   // is because that's difficult to determine statically.  See example
   // in guaranteed-joint?.
-  local method ^classes-disjoint-by-primary?(c1 :: <&class>, c2 :: <&class>) 
+  local method ^classes-disjoint-by-primary?(c1 :: <&class>, c2 :: <&class>)
             => (disjoint? :: <boolean>)
           // We can prove c1 & c2 are disjoint if their primary superclasses
           // won't allow diplomatic relations.  This happens when both have
           // primary superclasses, and those primaries aren't themselves
           // in a supertype/subtype relationship.
-          // 
+          //
           // In fact, you just have to check the leftmost primaries on each:
           // The primaries of each class form a chain, a subset of the CPL.
           // If leftmost-prim-1 is a subclass of leftmost-prim-2, then
@@ -1183,18 +1183,18 @@ define function ^classes-guaranteed-disjoint?(c1 :: <&class>, c2 :: <&class>)
                     => (match? :: <boolean>)
                   // Owners different and either getters or setters match.
                   // (I.e., don't be confused by commonly inherited slots!)
-                  ^slot-owner(s1) ~== ^slot-owner(s2) & 
+                  ^slot-owner(s1) ~== ^slot-owner(s2) &
                   (^slot-getter(s1) == ^slot-getter(s2) |
                    (^slot-setter(s1) == ^slot-setter(s2) &
-		      ^slot-setter(s1) & ^slot-setter(s2) & #t))
+                      ^slot-setter(s1) & ^slot-setter(s2) & #t))
                 end;
           let c2-slots = ^slot-descriptors(c2);
-          any?(rcurry(member?, c2-slots, test: slot-match?), 
+          any?(rcurry(member?, c2-slots, test: slot-match?),
               ^slot-descriptors(c1))
         end,
         method ^classes-disjoint-by-domain?(c1 :: <&class>, c2 :: <&class>)
             => (disjoint? :: <boolean>)
-          // *** There is another disjointness test, hence this stub: 
+          // *** There is another disjointness test, hence this stub:
           // disjoint-by-sealed-domains.  This is true if the classes
           // are not known to be joint (i.e., there is no explicitly
           // known common subclass) and there is a sealed domain that
@@ -1245,7 +1245,7 @@ define function ^classes-guaranteed-disjoint?(c1 :: <&class>, c2 :: <&class>)
         end;
   // First look in the cache to see if we already know the answer.
   // *** Investigate <equal-table> now that keys are 2 model-classes?
-  let disjoint-cache :: <type-estimate-pair-match-table> 
+  let disjoint-cache :: <type-estimate-pair-match-table>
                     = library-type-estimate-disjoint?-cache(current-library-description());
   let cache-key1    = pair(c1, c2);
   let cache-element = element(disjoint-cache, cache-key1, default: $unfound);
@@ -1273,7 +1273,7 @@ end;
 /// *** NB: do these cope with or generate "dont-know" responses correctly?
 ///
 
-define method type-estimate-subtype?(te1 :: <type-estimate>, 
+define method type-estimate-subtype?(te1 :: <type-estimate>,
                                      te2 :: <type-estimate>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   type-estimate-subtype?-1(te1, te2)
@@ -1283,18 +1283,18 @@ end;
 /// Top is a supertype of everything
 ///
 
-define method type-estimate-subtype?(te1 :: <type-estimate>, 
+define method type-estimate-subtype?(te1 :: <type-estimate>,
                                      te2 :: <type-estimate-top>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   values(#t, #t)
 end;
 
 ///
-/// Bottom is a subtype of everything, including itself.  Nothing other than 
+/// Bottom is a subtype of everything, including itself.  Nothing other than
 /// bottom is ever a subtype of bottom.
 ///
 
-define method type-estimate-subtype?(te1 :: <type-estimate-bottom>, 
+define method type-estimate-subtype?(te1 :: <type-estimate-bottom>,
                                      te2 :: <type-estimate>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   // Bottom is a subtype of everything.
@@ -1302,7 +1302,7 @@ define method type-estimate-subtype?(te1 :: <type-estimate-bottom>,
 end;
 
 // Disambiguating method
-define method type-estimate-subtype?(te1 :: <type-estimate-bottom>, 
+define method type-estimate-subtype?(te1 :: <type-estimate-bottom>,
                                      te2 :: <type-estimate-top>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   values(#t, #t)
@@ -1311,13 +1311,13 @@ end;
 ///
 /// Unions subtype component-wise -- see the 3 rules on DRM p. 72.
 ///
-/// Note that there are other things you can infer if you know the union is an 
-/// exhaustive partition, e.g., 
+/// Note that there are other things you can infer if you know the union is an
+/// exhaustive partition, e.g.,
 /// type-union(limited(<integer>, min: 0), limited(<integer>, max:0) = <integer>
 /// Currently we can't prove this (well, forwards we can, but not backwards).
 ///
 
-define method type-estimate-subtype?(u :: <type-estimate-union>, 
+define method type-estimate-subtype?(u :: <type-estimate-union>,
                                      t :: <type-estimate>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   // DRM p. 72, union subtyping rule 1: u <= t iff every(ui): ui <= t.
@@ -1337,18 +1337,18 @@ end;
 // <type-estimate-singleton> and te2 is not <top>.
 // Its job is to handle te2 = <union>
 define generic type-estimate-subtype?-1 (te1 :: <type-estimate>,
-					 te2 :: <type-estimate>)
+                                         te2 :: <type-estimate>)
  => (subtype? :: <boolean>, known? :: <boolean>);
 
-define method type-estimate-subtype?-1(te1 :: <type-estimate>, 
-				       te2 :: <type-estimate>)
+define method type-estimate-subtype?-1(te1 :: <type-estimate>,
+                                       te2 :: <type-estimate>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   type-estimate-subtype?-2(te1, te2);
 end;
 
 
-define method type-estimate-subtype?-1(t :: <type-estimate>, 
-				       u :: <type-estimate-union>)
+define method type-estimate-subtype?-1(t :: <type-estimate>,
+                                       u :: <type-estimate-union>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   // DRM p. 72, union subtyping rule 2: t <= u iff exists(ui): t <= ui.
   // If we ever want to do something about smart subtyping between limited
@@ -1359,11 +1359,11 @@ end;
 // This can assume that te1 is not <bottom> or <union> or
 // <type-estimate-singleton> and te2 is not <top> or <union>
 define generic type-estimate-subtype?-2 (te1 :: <type-estimate>,
-					 te2 :: <type-estimate>)
+                                         te2 :: <type-estimate>)
  => (subtype? :: <boolean>, known? :: <boolean>);
 
-define method type-estimate-subtype?-2(te1 :: <type-estimate>, 
-				       te2 :: <type-estimate>)
+define method type-estimate-subtype?-2(te1 :: <type-estimate>,
+                                       te2 :: <type-estimate>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   // Last-ditch desperation rule: just say no.
   values(#f, #t)
@@ -1374,17 +1374,17 @@ end;
 /// Multiple values subtype only amongst themselves.
 ///
 
-define method type-estimate-subtype?-2(v1 :: <type-estimate-values>, 
-				       v2 :: <type-estimate-values>)
+define method type-estimate-subtype?-2(v1 :: <type-estimate-values>,
+                                       v2 :: <type-estimate-values>)
  => (subtype? :: <boolean>, known? :: <boolean>)
   // Is values type estimate v1 a subtype of v2?
   // * Substitutionality is the key to thinking about this: suppose a
   //   function returned v1 when you expected v2; would that be ok, or not?
-  // * Properly speaking, v1 <= v2 iff for every variable x1i taken 
+  // * Properly speaking, v1 <= v2 iff for every variable x1i taken
   //   from the ith position of v1 and x2i taken from v2, x1i <= x2i.
   // * Howver, we don't know how many values the receiver will take, so in order
-  //   to be correct for ALL POSSIBLE receivers, we have to assume the 
-  //   receiver will take INFINITE values.  
+  //   to be correct for ALL POSSIBLE receivers, we have to assume the
+  //   receiver will take INFINITE values.
   // * Thus everybody gets right-padded with #f's for default values.
   // * Since we don't know how many values are in a #rest value, the type of
   //   anything taken from a rest value is rest U #f (you might be off the end).
@@ -1396,9 +1396,9 @@ define method type-estimate-subtype?-2(v1 :: <type-estimate-values>,
   let defaultf       = make(<type-estimate-limited-instance>, singleton: #f);
   local method type+defaultf (type :: false-or(<type-estimate>))
           => (te :: <type-estimate>)
-          // This is the type of anything extracted from a #rest value.  Have 
+          // This is the type of anything extracted from a #rest value.  Have
           // to consider that you might be "off the end," i.e., get #f.
-          if (type) 
+          if (type)
             type-estimate-union(type, defaultf)
           else
             defaultf
@@ -1412,7 +1412,7 @@ define method type-estimate-subtype?-2(v1 :: <type-estimate-values>,
     block (return)
       if (empty?(fixed1) & instance?(rest1, <type-estimate-bottom>))
         // Special case for values(#rest <bottom>), which is guaranteed to be
-        // a subtype of any values spec.  Don't do #f defaulting to #rest value, 
+        // a subtype of any values spec.  Don't do #f defaulting to #rest value,
         // since you'll never return from a <bottom>-producer anyway.
         #t
       elseif (~every?(type-estimate-subtype?, fixed1, fixed2))
@@ -1435,7 +1435,7 @@ define method type-estimate-subtype?-2(v1 :: <type-estimate-values>,
         end
       else
         // Identical # of fixed values, which are subtypes.
-        // Think about the #rest's. 
+        // Think about the #rest's.
         type-estimate-subtype?(rest1+defaultf, rest2+defaultf)
       end
     end,
@@ -1446,8 +1446,8 @@ end;
 /// Raw subtyping.
 ///
 
-define method type-estimate-subtype?-2(r1 :: <type-estimate-raw>, 
-				       r2 :: <type-estimate-raw>)
+define method type-estimate-subtype?-2(r1 :: <type-estimate-raw>,
+                                       r2 :: <type-estimate-raw>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   ^subtype?(type-estimate-raw(r1), type-estimate-raw(r2))
 end;
@@ -1456,15 +1456,15 @@ end;
 /// Class subtyping.
 ///
 
-define method type-estimate-subtype?-2(t1 :: <type-estimate-class>, 
-				       t2 :: <type-estimate-class>)
+define method type-estimate-subtype?-2(t1 :: <type-estimate-class>,
+                                       t2 :: <type-estimate-class>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   // This generalizes the Dylan subtype? relationship.  If 2 classes are
   // subtype?s of each other, then this is true.  However, this can also
   // be true for other cases with  abstraction, sealing & primariness.
   // For example, c1 can be a subSET of class c2 if c1 is abstract & sealed,
   // and all its subclasses are subtypes of c2.  Then all instances of
-  // c1 are indirect instances of some subclass, hence are indirect 
+  // c1 are indirect instances of some subclass, hence are indirect
   // instances of c2.
   let c1s-checked = #f;                      // consed lazily below
   let c2          = type-estimate-class(t2);
@@ -1479,7 +1479,7 @@ define method type-estimate-subtype?-2(t1 :: <type-estimate-class>,
                // If c1 is open, then we can't GUARANTEE jointness:
                // could make new subs of c1 disjoint from c2.
              & ^class-sealed?(c1)
-               // If c1 is concrete, then might have a direct instance, 
+               // If c1 is concrete, then might have a direct instance,
                // but c1 isn't a subtype of c2, so direct instance isn't
                // an instance of c2, so not joint.
              & ^class-abstract?(c1)
@@ -1489,9 +1489,9 @@ define method type-estimate-subtype?-2(t1 :: <type-estimate-class>,
                // direct subclasses of c1: is each subclass joint with c2?
              & guaranteed-joint-class?-recurse(c1))
         end,
-        method guaranteed-joint-class?-recurse(c1 :: <&class>) 
+        method guaranteed-joint-class?-recurse(c1 :: <&class>)
             => (joint? :: <boolean>)
-          // Recursive case -- memoized for efficiency.  Due to multiple 
+          // Recursive case -- memoized for efficiency.  Due to multiple
           // inheritance, there might be multiple paths to a given subclass.
           // Memoization makes sure we consider each such subclass only 1ce.
           // Split out so table is consed lazly, only when needed.
@@ -1505,7 +1505,7 @@ define method type-estimate-subtype?-2(t1 :: <type-estimate-class>,
           else
             // Haven't been here before; compute & remember the result.
             // (Other tests above have given #t in order to get here.)
-            c1s-checked[c1] := 
+            c1s-checked[c1] :=
               // *** maybe use ^worldwide-direct-subclasses ?
               every?(guaranteed-joint-class?, ^direct-subclasses(c1))
           end
@@ -1515,12 +1515,12 @@ end;
 
 
 ///
-/// Limited types: limited integers, limited classes, limited functions, 
+/// Limited types: limited integers, limited classes, limited functions,
 /// limited collections, and limited instances.
 ///
 
-define method type-estimate-subtype?-2(lim :: <type-estimate-limited>, 
-				       t   :: <type-estimate-class>)
+define method type-estimate-subtype?-2(lim :: <type-estimate-limited>,
+                                       t   :: <type-estimate-class>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   // limited(C, ...) <= T if C <= T.  See p. 249.
   // This is a "default" method for limited types in the left argument.
@@ -1529,25 +1529,25 @@ define method type-estimate-subtype?-2(lim :: <type-estimate-limited>,
   values(type-estimate-subtype?(type-estimate-base(lim), t), #t)
 end;
 
-define method type-estimate-subtype?-2(te1 :: <type-estimate-class>, 
-				       te2 :: <type-estimate-limited>)
+define method type-estimate-subtype?-2(te1 :: <type-estimate-class>,
+                                       te2 :: <type-estimate-limited>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   // Blocking method: if one of the more specific methods on a limited
   // type doesn't grab you, this will say #f.  It blocks the (<class>, <class>)
-  // method above, which was giving spurious #t answers on questions like 
+  // method above, which was giving spurious #t answers on questions like
   // subtype?(<integer>, <limited-integer>), which is, of course, #f.
   values(#f, #t)
 end;
 
-define method type-estimate-subtype?-2(te1 :: <type-estimate-limited>, 
-				       te2 :: <type-estimate-limited>)
+define method type-estimate-subtype?-2(te1 :: <type-estimate-limited>,
+                                       te2 :: <type-estimate-limited>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   type-estimate-subtype?-limited(te1, te2)
 end;
 
 
 define method type-estimate-subtype?-limited(te1 :: <type-estimate-limited>,
-					     te2 :: <type-estimate-limited>)
+                                             te2 :: <type-estimate-limited>)
   values(#f, #t)
 end;
 
@@ -1559,8 +1559,8 @@ end;
 ///
 
 
-define method type-estimate-subtype?-limited(li1 :: <type-estimate-limited-integer>, 
-					     li2 :: <type-estimate-limited-integer>)
+define method type-estimate-subtype?-limited(li1 :: <type-estimate-limited-integer>,
+                                             li2 :: <type-estimate-limited-integer>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   // DRM, p. 48: interval analysis.
   let cl1  = type-estimate-class(li1);
@@ -1577,8 +1577,8 @@ end;
 
 // Due to normalization, min ~== max, so this can't happen
 /*
-define method type-estimate-subtype?-limited(l :: <type-estimate-limited-integer>, 
-					     s :: <type-estimate-limited-instance>)
+define method type-estimate-subtype?-limited(l :: <type-estimate-limited-integer>,
+                                             s :: <type-estimate-limited-instance>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   // limited integers can be singletons, if interval is exactly 1.
   let l-cl = type-estimate-class(l);
@@ -1598,15 +1598,15 @@ end;
 ///
 
 define method type-estimate-subtype?-limited(lc1 :: <type-estimate-limited-class>,
-					     lc2 :: <type-estimate-limited-class>)
+                                             lc2 :: <type-estimate-limited-class>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   // subclass(c1) <= subclass(c2) iff c1 <= c2
   values(^subtype?(type-estimate-subclass(lc1), type-estimate-subclass(lc2)),
          #t)
 end;
 
-define method type-estimate-subtype?-limited(sub  :: <type-estimate-limited-class>, 
-					     sing :: <type-estimate-limited-instance>)
+define method type-estimate-subtype?-limited(sub  :: <type-estimate-limited-class>,
+                                             sing :: <type-estimate-limited-instance>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   // subclass(<foo>) = singleton(<foo>) if <foo> is sealed & no subclasses.
   // (Normalization shouldn't let this happen, but...)
@@ -1619,14 +1619,14 @@ end;
 
 ///
 /// Limited functions subtype among each other by the usual contravariant rule.
-/// They DON'T subtype with singletons of functions, since they constrain only 
+/// They DON'T subtype with singletons of functions, since they constrain only
 ///   the signature of the function, not its body.  (*** Do we believe this???)
-/// Limited functions subtype with <function> et al. by the default limited 
+/// Limited functions subtype with <function> et al. by the default limited
 ///   method above.
 ///
 
 define method type-estimate-subtype?-limited(f1 :: <type-estimate-limited-function>,
-					     f2 :: <type-estimate-limited-function>)
+                                             f2 :: <type-estimate-limited-function>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   // Subtyping of limited functions.
   local method fn-code
@@ -1693,7 +1693,7 @@ define method type-estimate-subtype?-limited(f1 :: <type-estimate-limited-functi
              otherwise
                // 1 has fewer required args than 2, so needs #rest or something.
                //
-               // Now we have to decide what to do for 2's "extra" args.  
+               // Now we have to decide what to do for 2's "extra" args.
                // 1 must have #rest or some explicit #key words, or #all-keys.
                // * If 1 has #rest only, there can never be too many args.
                //   Since #rest's <object>, there's no type problem.
@@ -1710,9 +1710,9 @@ define method type-estimate-subtype?-limited(f1 :: <type-estimate-limited-functi
   //     returned by f1.
   //
   // [2] args(f1) >= args(f2), i.e., the args of f1 must be AT LEAST AS GENERAL
-  //     as those for f2, so it can be called where f2 was expected.  
+  //     as those for f2, so it can be called where f2 was expected.
   //
-  // This means args type THE OTHER WAY from values; hence the phrase 
+  // This means args type THE OTHER WAY from values; hence the phrase
   // "contravariant function typing."
   values(arg-types>=?(f1, f2)
          & type-estimate-subtype?(type-estimate-values(f1), type-estimate-values(f2)),
@@ -1721,14 +1721,14 @@ end;
 
 ///
 /// Limited collections subtype among themselves.
-/// Limited collections can (rarely) subtype with singletons, e.g., 
+/// Limited collections can (rarely) subtype with singletons, e.g.,
 ///  singleton(#()).
-/// Limited collections subtype <collection> et al. by the default limited 
+/// Limited collections subtype <collection> et al. by the default limited
 ///  method above.
 ///
 
-define method type-estimate-subtype?-limited(lc1 :: <type-estimate-limited-collection>, 
-					     lc2 :: <type-estimate-limited-collection>)
+define method type-estimate-subtype?-limited(lc1 :: <type-estimate-limited-collection>,
+                                             lc2 :: <type-estimate-limited-collection>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   // Limited collections: DRM, pp. 124-125.  (The case where lc1 is a singleton
   // is taken care of in the singleton method above.)
@@ -1756,17 +1756,17 @@ define method type-estimate-subtype?-limited(lc1 :: <type-estimate-limited-colle
            & ((of1 == #f & of2 == #f) |            // Both #f
               (of1 ~== #f & of2 ~== #f &           // Or both not #f & equivalent.
                type-estimate=?(of1, of2)))         // *** why not type-estimate-subtype?(of1, of2)?
-         end, 
+         end,
          #t)
 end;
 
-define method type-estimate-subtype?-limited(lc :: <type-estimate-limited-collection>, 
-					     s  :: <type-estimate-limited-instance>)
+define method type-estimate-subtype?-limited(lc :: <type-estimate-limited-collection>,
+                                             s  :: <type-estimate-limited-instance>)
  => (subtype? :: <boolean>, known? :: <boolean>);
  // Users can't say limited(<list>, size: 0), but we might be able to infer it.
  values(type-estimate-class(lc) == dylan-value(#"<list>")
         & type-estimate-size(lc) == #()
-	& type-estimate-singleton(s) == #(),
+        & type-estimate-singleton(s) == #(),
         #t)
 end;
 
@@ -1774,16 +1774,16 @@ end;
 /// Singletons subtype with anything else if they're an instance of it.
 ///
 
-define method type-estimate-subtype?(s :: <type-estimate-limited-instance>, 
-				     t :: <type-estimate>)
+define method type-estimate-subtype?(s :: <type-estimate-limited-instance>,
+                                     t :: <type-estimate>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   // DRM, p. 48: "by object type and identity"
   type-estimate-instance?(type-estimate-singleton(s), t)
 end;
 
 // Disambiguating method
-define method type-estimate-subtype?(s :: <type-estimate-limited-instance>, 
-				     t :: <type-estimate-top>)
+define method type-estimate-subtype?(s :: <type-estimate-limited-instance>,
+                                     t :: <type-estimate-top>)
  => (subtype? :: <boolean>, known? :: <boolean>);
   // DRM, p. 48: "by object type and identity"
   values(#t, #t)
@@ -1808,8 +1808,8 @@ define method type-estimate-retract (ref :: <dfm-ref>)
           // Simple-minded recursive key removal from the cache.  Return #t
           // if we did anything, else #f.
           let type-var = cached-type-variable(ref, cache);
-          type-var & 
-          begin 
+          type-var &
+          begin
             // It was in the cache, so we have work to do.
             retract-cached-type-variable(ref, cache);
             do(method (just) type-estimate-retract-1(justification-lhs(just)) end,

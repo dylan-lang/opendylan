@@ -4,8 +4,8 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define abstract dood-class <library> (<namespace>) 
-  lazy slot imported-bindings-tables :: <dood-lazy-table> 
+define abstract dood-class <library> (<namespace>)
+  lazy slot imported-bindings-tables :: <dood-lazy-table>
     = make(<dood-lazy-table>),
     init-keyword: imported-bindings:;
 end;
@@ -75,7 +75,7 @@ define function remove-local-duplicate-definition (binding, definition)
   else
     table[binding] := remain
   end;
-end;  
+end;
 
 define function binding-local-ignored-definitions (binding)
   debug-assert(valid-binding-home-library?(binding));
@@ -106,7 +106,7 @@ define function remove-local-ignored-definition (binding, definition)
     end;
     #t
   end;
-end;  
+end;
 
 define method used-library-table (ld :: <project-library-description>)
  => (tab :: <ordered-object-table>)
@@ -140,7 +140,7 @@ define function reinitialize-used-library-table (ld :: <project-library-descript
     for (ul keyed-by name in ld.used-library-table)
       let uld = find-used-library-description(ld, name, canonicalize?: #f);
       with-library-description (uld)
-	ensure-language-definition(uld);
+        ensure-language-definition(uld);
       end;
       ul.used-library-description := uld;
       ul.used-library-model-change-count
@@ -162,7 +162,7 @@ define method strip-incremental-slots (lib :: <full-library>)
 end method;
 
 // Just like variables, modules can be marked as exported before their
-// definition is seen. The library binding object captures this 
+// definition is seen. The library binding object captures this
 // information about a module name's binding within a library.
 
 define class <library-binding> (<dood-dfmc-object>, <named-object>)
@@ -178,7 +178,7 @@ define method defined? (mb :: <library-binding>)
   library-binding-value(mb) ~== #f
 end method;
 
-define method lookup-imported-binding 
+define method lookup-imported-binding
     (space :: <library>, binding :: <canonical-module-binding>)
   let tables = space.imported-bindings-tables;
   let table = element(tables, binding.binding-home, default: #f);
@@ -192,7 +192,7 @@ define inline function do-imported-bindings
   end
 end function;
 
-define method install-imported-binding 
+define method install-imported-binding
     (space :: <library>, binding :: <canonical-module-binding>)
   let imported-binding
     = make(<imported-module-binding>, canonical-binding: binding);
@@ -226,14 +226,14 @@ define method valid-binding-home-library-in?
 end method;
 
 
-define method created-name-value 
+define method created-name-value
     (space :: <library>, name :: <name>) => (value)
-  error("Attempted to \"create\" a module %= in %= - the create clause is " 
+  error("Attempted to \"create\" a module %= in %= - the create clause is "
         "not supported in libraries.",
         space);
 end method;
 
-define method exported-name-value 
+define method exported-name-value
     (space :: <library>, name :: <name>) => (value)
   make(<library-binding>, name: name, home: space, exported?: #t)
 end method;
@@ -263,19 +263,19 @@ define method used-library-library (ul :: <used-library>, parent :: <library>)
   // These are bugs because it means the env. somehow didn't interlock
   // compilations.
   // debug-assert(~ld.library-description-closed?,
-  // 	          "Used library %s closed unexpectedly during compilation", ld);
+  //                   "Used library %s closed unexpectedly during compilation", ld);
   unless (ld.language-definition-change-count
-	    == ul.used-library-model-change-count)
+            == ul.used-library-model-change-count)
     let parent-ld = parent.namespace-library-description;
     debug-assert(#f,
-		 if (~parent-ld.library-description-personal?)
-		   "System library %s uses a library %s whose database "
-		     "has been modified since the system library was originally compiled."
-		 else
-		   "Library %s uses a library %s whose namespace was reset "
-		     "unexpectedly during compilation"
-		 end,
-		 parent-ld, ld);
+                 if (~parent-ld.library-description-personal?)
+                   "System library %s uses a library %s whose database "
+                     "has been modified since the system library was originally compiled."
+                 else
+                   "Library %s uses a library %s whose namespace was reset "
+                     "unexpectedly during compilation"
+                 end,
+                 parent-ld, ld);
   end;
   ld.language-definition
 end;
@@ -286,7 +286,7 @@ define open generic used-library-context
  => (used-context /* :: <library-description> */);
 
 define function find-used-library-description (ld, used-name,
-					       #key canonicalize? = #t)
+                                               #key canonicalize? = #t)
   used-library-context(ld, used-name, canonicalize?: canonicalize?)
 end function;
 
@@ -298,22 +298,22 @@ define function make-used-library-table (use-clauses, description)
     for (clause in use-clauses)
       let used-name = clause.used-name;
       unless (element(table, used-name, default: #f))
-	let ld = find-used-library-description(description, used-name,
-					       canonicalize?: #t);
-	debug-assert(ld.library-description-defined?
-		       | ld.compiled-to-definitions?,
-		     "Dev env didn't ensure %s library definition parsed!", used-name);
-	debug-assert(ld.library-description-dylan-library
-		       == description.library-description-dylan-library,
-		     "%s uses a different dylan library than %s",
-		     project, ld.library-description-project);
-	let binding = project-inter-library-binding
-	                (project, ld.library-description-project);
-	table[used-name]
+        let ld = find-used-library-description(description, used-name,
+                                               canonicalize?: #t);
+        debug-assert(ld.library-description-defined?
+                       | ld.compiled-to-definitions?,
+                     "Dev env didn't ensure %s library definition parsed!", used-name);
+        debug-assert(ld.library-description-dylan-library
+                       == description.library-description-dylan-library,
+                     "%s uses a different dylan library than %s",
+                     project, ld.library-description-project);
+        let binding = project-inter-library-binding
+                        (project, ld.library-description-project);
+        table[used-name]
           := make(<used-library>,
                   description: ld,
-		  model-change-count: ld.language-definition-change-count,
-		  binding: binding);
+                  model-change-count: ld.language-definition-change-count,
+                  binding: binding);
       end;
     end for;
   end unless;
@@ -329,28 +329,28 @@ define compiler-open generic ^library-description-setter (library-description, m
 define compiler-open generic ^library-description (model) => (library-description);
 
 define method make-namespace (class :: subclass(<full-library>), #rest initargs,
-			      #key use-clauses = #[],
-			           definition,
-			           description = form-library(definition),
-			      #all-keys)
+                              #key use-clauses = #[],
+                                   definition,
+                                   description = form-library(definition),
+                              #all-keys)
   apply(next-method, class,
-	used-libraries: make-used-library-table(use-clauses, description),
-	initargs)
+        used-libraries: make-used-library-table(use-clauses, description),
+        initargs)
 end method;
 
-define method resolve-used-namespace 
-    (library :: <library>, used-name, #key default = unsupplied()) 
+define method resolve-used-namespace
+    (library :: <library>, used-name, #key default = unsupplied())
       => (library);
   let ul = element(library.used-libraries, used-name, default: #f);
   if (ul)
     used-library-library(ul, library)
   else
     debug-assert(supplied?(default),
-		 "Failed to resolve used library %= in the library %s.",
-		 used-name, library);
+                 "Failed to resolve used library %= in the library %s.",
+                 used-name, library);
     default
   end;
-end;    
+end;
 
 // Returns true if any directly-used library definition changed, or a directly
 // used project got closed/reopened.  Calls back to the project manager to
@@ -362,28 +362,28 @@ define function invalidated-library-definition?
     debug-out(#"driver", "Verify definition of %s\n", ld);
     for (ul keyed-by used-name in ld.used-library-table)
       let uld = find-used-library-description(ld, used-name,
-					      canonicalize?: #t);
+                                              canonicalize?: #t);
       // Since we have pointers into the used <library>, we need to retract
       // if the used library got retracted (or if used project was closed
       // and re-opened).
       unless (uld == ul.used-library-description)
-	debug-out(#"driver", "%s invalidated because %s reopened\n", ld, uld);
-	return(#t);
+        debug-out(#"driver", "%s invalidated because %s reopened\n", ld, uld);
+        return(#t);
       end;
       unless (uld.language-definition-change-count
-		== ul.used-library-model-change-count)
-	debug-out(#"driver",
-		  "%s invalidated because %s library model changed\n",
-		  ld, uld);
-	return(#t);
+                == ul.used-library-model-change-count)
+        debug-out(#"driver",
+                  "%s invalidated because %s library model changed\n",
+                  ld, uld);
+        return(#t);
       end;
       debug-assert(uld.library-description-defined? |
-		     uld.compiled-to-definitions?,
-		   "Dev env didn't ensure %s library definition parsed!",
-		   uld.library-description-project);
+                     uld.compiled-to-definitions?,
+                   "Dev env didn't ensure %s library definition parsed!",
+                   uld.library-description-project);
       debug-assert(uld.library-description-dylan-library
-		     == ld.library-description-dylan-library,
-		   "%s uses a different dylan library than %s", ld, uld);
+                     == ld.library-description-dylan-library,
+                   "%s uses a different dylan library than %s", ld, uld);
     end for;
     debug-out(#"driver", "DONE Verify definition of %s - no change\n", ld);
     #f
@@ -404,39 +404,39 @@ define function any-changed-used-library?
     (ld :: <project-library-description>) => (changed? :: <boolean>)
   ld.library-description-personal? &
   any?(method (ul :: <used-library>)
-	 let uld :: <project-library-description>
-	   =  ul.used-library-description;
-	 uld.library-description-closed?
-	   | ~uld.compiled-to-definitions?
-	   | uld.compilation-definitions-inconsistent?
-	   | when (ul.used-library-change-count)
-	       let major = uld.library-description-major-version;
-	       let minor = uld.library-description-minor-version;
-	       let count = uld.library-description-change-count;
-	       debug-assert(count ~== ul.used-library-change-count |
-			      (major == ul.used-library-major-version &
-				 minor == ul.used-library-minor-version),
-			    "Change count didn't change but version did?");
-	       when (if (~*verify-used-libraries-strictly?*
-			   | library-dynamically-bound-in?(ld, uld))
-		       major ~== ul.used-library-major-version |
-			 // Recompile if reverted to earlier version
-			 minor < ul.used-library-minor-version;
-		     else
-		       count ~== ul.used-library-change-count;
-		     end)
-		 debug-out(#"driver", "retracting %s because %s changed:"
-			     "dynamic binding?: %s,"
-			     "count: %s-%s, major: %s-%s, minor: %s-%s\n",
-			   ld.library-description-project,
-			   uld.library-description-project,
-			   library-dynamically-bound-in?(ld, uld),
-			   ul.used-library-change-count, count,
-			   ul.used-library-major-version, major,
-			   ul.used-library-minor-version, minor);
-		 #t
-	       end when;
-	     end when;
+         let uld :: <project-library-description>
+           =  ul.used-library-description;
+         uld.library-description-closed?
+           | ~uld.compiled-to-definitions?
+           | uld.compilation-definitions-inconsistent?
+           | when (ul.used-library-change-count)
+               let major = uld.library-description-major-version;
+               let minor = uld.library-description-minor-version;
+               let count = uld.library-description-change-count;
+               debug-assert(count ~== ul.used-library-change-count |
+                              (major == ul.used-library-major-version &
+                                 minor == ul.used-library-minor-version),
+                            "Change count didn't change but version did?");
+               when (if (~*verify-used-libraries-strictly?*
+                           | library-dynamically-bound-in?(ld, uld))
+                       major ~== ul.used-library-major-version |
+                         // Recompile if reverted to earlier version
+                         minor < ul.used-library-minor-version;
+                     else
+                       count ~== ul.used-library-change-count;
+                     end)
+                 debug-out(#"driver", "retracting %s because %s changed:"
+                             "dynamic binding?: %s,"
+                             "count: %s-%s, major: %s-%s, minor: %s-%s\n",
+                           ld.library-description-project,
+                           uld.library-description-project,
+                           library-dynamically-bound-in?(ld, uld),
+                           ul.used-library-change-count, count,
+                           ul.used-library-major-version, major,
+                           ul.used-library-minor-version, minor);
+                 #t
+               end when;
+             end when;
        end method,
        ld.used-library-table);
 end function any-changed-used-library?;
@@ -445,35 +445,35 @@ end function any-changed-used-library?;
 // but also records used library versions if this is the first use.
 define function verify-used-libraries (ld :: <project-library-description>)
   local method record-first-use (ul :: <used-library>)
-	  when (ul.used-library-change-count == #f) // first time?
-	    let uld :: <project-library-description>
-	      = ul.used-library-description;
-	    ul.used-library-major-version
-	      := uld.library-description-major-version;
-	    ul.used-library-minor-version
-	      := uld.library-description-minor-version;
-	    ul.used-library-change-count
-	      := uld.library-description-change-count;
-	  end when;
-	end method;
+          when (ul.used-library-change-count == #f) // first time?
+            let uld :: <project-library-description>
+              = ul.used-library-description;
+            ul.used-library-major-version
+              := uld.library-description-major-version;
+            ul.used-library-minor-version
+              := uld.library-description-minor-version;
+            ul.used-library-change-count
+              := uld.library-description-change-count;
+          end when;
+        end method;
   local method any-invalidated-used-version? (ld)
-	  compilation-definitions-inconsistent?(ld) |
-	    invalidated-library-definition?(ld) |
-	    any-changed-used-library?(ld)
-	end;
+          compilation-definitions-inconsistent?(ld) |
+            invalidated-library-definition?(ld) |
+            any-changed-used-library?(ld)
+        end;
   debug-assert(~any?(any-invalidated-used-version?,
-		     ld.all-used-library-descriptions),
-	       "Dev env didn't make used libraries %s consistent!",
-	       choose(any-invalidated-used-version?,
-		      ld.all-used-library-descriptions));
+                     ld.all-used-library-descriptions),
+               "Dev env didn't make used libraries %s consistent!",
+               choose(any-invalidated-used-version?,
+                      ld.all-used-library-descriptions));
   if (any-invalidated-used-version?(ld))
     debug-assert(ld.library-description-personal?,
-		 "System library %s definition invalidated", ld);
+                 "System library %s definition invalidated", ld);
     retract-library-parsing(ld);
   else
     do(record-first-use, ld.used-library-table);
   end;
-end function verify-used-libraries;  
+end function verify-used-libraries;
 
 define inline function note-compilation-from-definitions-started
     (ld :: <compilation-context>)
@@ -494,11 +494,11 @@ define function library-references-retracted-models?
   ld.compilation-from-definitions-started?
    & block (return)
        for (vers keyed-by uld in ld.all-inter-library-bindings)
-	 unless (vers == #"loose" |
-		   vers == uld.library-description-models-change-count)
-	   debug-assert(instance?(vers, <integer>), "uninited model use info");
-	   return(#t);
-	 end unless;
+         unless (vers == #"loose" |
+                   vers == uld.library-description-models-change-count)
+           debug-assert(instance?(vers, <integer>), "uninited model use info");
+           return(#t);
+         end unless;
        end for;
        #f
      end block;
@@ -519,40 +519,40 @@ define method all-inter-library-bindings (ld :: <library-description>)
   let lib :: <full-library> = ld.language-definition;
   lib.cached-all-inter-library-bindings
     | (lib.cached-all-inter-library-bindings
-	 := compute-inter-library-bindings(ld))
+         := compute-inter-library-bindings(ld))
 end method;
 
 define function compute-inter-library-bindings (ld :: <library-description>)
-  let table = make(<table>);	      
+  let table = make(<table>);
   // A (possibly indirectly) used library is tightly bound
   // iff there is at least one use-path to it in which all the
   // inter-library bindings are tight.
   for (ul in ld.used-library-table)
     let uld = ul.used-library-description;
-    let link = if (element(table, uld, default: #f) == #"tight" |  
-		     (ul.used-library-binding == #"tight"
-			// It doesn't make sense to tightly bind
-			// to a loosely-compiled library.
-			& ~uld.library-forms-dynamic?))
-		 #"tight"
-	       else
-		 #"loose"
-	       end;
+    let link = if (element(table, uld, default: #f) == #"tight" |
+                     (ul.used-library-binding == #"tight"
+                        // It doesn't make sense to tightly bind
+                        // to a loosely-compiled library.
+                        & ~uld.library-forms-dynamic?))
+                 #"tight"
+               else
+                 #"loose"
+               end;
     table[uld] := link;
     for (sub-uld in uld.all-used-library-descriptions)
       unless (element(table, sub-uld, default: #f) == #"tight")
-	table[sub-uld] := if (link == #"loose" |
-				library-dynamically-bound-in?(uld, sub-uld))
-			    #"loose"
-			  else
-			    #"tight"
-			  end;
+        table[sub-uld] := if (link == #"loose" |
+                                library-dynamically-bound-in?(uld, sub-uld))
+                            #"loose"
+                          else
+                            #"tight"
+                          end;
       end;
     end;
   end;
   table
 end function;
-  
+
 
 // Returns all library descriptions used by ld, plus ld itself, sorted
 // so that a library precedes all the libraries it uses.  ld itself is
@@ -563,7 +563,7 @@ define method all-library-descriptions (ld :: <project-library-description>)
   let lib = ld.language-definition;
   lib.cached-all-library-descriptions
     | (lib.cached-all-library-descriptions
-	 := compute-all-library-descriptions(ld))
+         := compute-all-library-descriptions(ld))
 end method;
 
 define method compute-all-library-descriptions (ld :: <project-library-description>)
@@ -573,14 +573,14 @@ define method compute-all-library-descriptions (ld :: <project-library-descripti
       used
     else
       pair(ld,
-	   reduce(method (used, ul :: <used-library>)
-		    collect-ld (ul.used-library-description, used)
-		  end,
-		  used,
-		  ld.used-library-table));
+           reduce(method (used, ul :: <used-library>)
+                    collect-ld (ul.used-library-description, used)
+                  end,
+                  used,
+                  ld.used-library-table));
     end
   end iterate
-end method;  
+end method;
 
 define inline function all-used-library-descriptions (ld :: <library-description>)
  => (l :: <list>)
@@ -597,7 +597,7 @@ define function directly-used-library-descriptions (ld :: <library-description>)
   v
 end function;
 
-define method lookup-module-in 
+define method lookup-module-in
     (library :: <library>, name, #key default = unsupplied()) => (module)
   let binding = lookup-name(library, name, default: $unfound);
   if (found?(binding) & defined?(binding))
@@ -611,7 +611,7 @@ define method lookup-module-in
 end method;
 
 
-define method undefined-module-bindings-in 
+define method undefined-module-bindings-in
     (library :: <library>) => (bindings :: <sequence>)
   collecting ()
     for (binding in library.namespace-local-bindings)
@@ -645,23 +645,23 @@ end;
 //   let library = current-library-model();
 //   let definer-binding = binding-canonical-binding(definer-binding);
 //   reduce(method (refs, lib)
-// 	   let db = local-binding-in(lib, definer-binding, default: #f);
-// 	   let new-refs = if (db) element(lib.library-definer-references, db,
-// 					  default: #())
-// 			  else #() end;
-// 	   if (new-refs == #())
-// 	     refs
-// 	   else
-// 	     reduce(method (refs, binding)
-// 		      let b = local-binding-in(library, binding, default: #f);
-// 		      if (b) add-new!(refs, b) else refs end
-// 		    end,
-// 		    refs,
-// 		    new-refs)
-// 	   end;
-// 	 end,
-// 	 #(),
-// 	 all-used-namespaces(library))
+//            let db = local-binding-in(lib, definer-binding, default: #f);
+//            let new-refs = if (db) element(lib.library-definer-references, db,
+//                                           default: #())
+//                           else #() end;
+//            if (new-refs == #())
+//              refs
+//            else
+//              reduce(method (refs, binding)
+//                       let b = local-binding-in(library, binding, default: #f);
+//                       if (b) add-new!(refs, b) else refs end
+//                     end,
+//                     refs,
+//                     new-refs)
+//            end;
+//          end,
+//          #(),
+//          all-used-namespaces(library))
 // end;
 
 // TODO: What do I have to do with dependency tracking here?
@@ -678,14 +678,14 @@ define function remove-library-wildcard-subclass-definition
     := remove!(library-wildcard-subclass-definitions(library), def);
 end function;
 
-define method library-contains-wildcard-subclasses? 
+define method library-contains-wildcard-subclasses?
     (library :: <full-library>) => (well? :: <boolean>)
   ~empty?(library-wildcard-subclass-definitions(library))
 end;
 
 //// Library space.
 
-// The following definitions allow a "current library" to be specified 
+// The following definitions allow a "current library" to be specified
 // during compilation. Convenient functions are defined for defining modules
 // and looking up their definitions in the current module.
 
@@ -698,7 +698,7 @@ end;
 define thread variable *library-description* :: false-or(<library-description>) = #f;
 
 define inline sideways method current-library-description () => (false-or-ld)
-  *library-description* 
+  *library-description*
 end method;
 
 define inline sideways method current-library-description?
@@ -712,7 +712,7 @@ define method current-library-in-context?
    | begin
        let cx = *library-description*;
        instance?(cx, <interactive-library-description>)
-	 & ld == cx.interactive-library-project-library
+         & ld == cx.interactive-library-project-library
      end
 end method;
 
@@ -749,7 +749,7 @@ end method;
 define sideways method form-dynamic? (form :: <top-level-form>)
  => (well? :: <boolean>)
   form-interactive?(form) |
-  form-evaluation-tried-and-failed?(form) | 
+  form-evaluation-tried-and-failed?(form) |
   begin
     let ld = form-library(form);
     if (current-library-description?(ld))
@@ -781,12 +781,12 @@ define method record-inter-library-model-use
   end for;
 end method;
 
-define thread variable 
+define thread variable
   *top-level-library-description* :: false-or(<library-description>) = #f;
 
 define sealed sideways inline method current-top-level-library-description
     () => (false-or-library)
-  *top-level-library-description* 
+  *top-level-library-description*
 end method;
 
 define sealed sideways inline method current-top-level-library-description?
@@ -860,39 +860,39 @@ define function ensure-language-definition (ld :: <library-description>)
   unless (ld.language-definition)
     unless (ld.library-description-dylan-library)
       ld.library-description-dylan-library
-	:= if (dylan-library-library-description?(ld))
-	     ld
-	   else
-	     // If this isn't the Dylan library, and the Dylan library isn't
-	     // loaded into the compiler yet, load it up so that we can
-	     // generate dylan-user for the library being compiled and can
-	     // convert "define library" in order to determine its other
-	     // dependencies.
-	     let dld = find-used-library-description(ld, #"dylan",
-						     canonicalize?: #f);
-	     ensure-language-definition(dld);
-	     dld
-	   end;
+        := if (dylan-library-library-description?(ld))
+             ld
+           else
+             // If this isn't the Dylan library, and the Dylan library isn't
+             // loaded into the compiler yet, load it up so that we can
+             // generate dylan-user for the library being compiled and can
+             // convert "define library" in order to determine its other
+             // dependencies.
+             let dld = find-used-library-description(ld, #"dylan",
+                                                     canonicalize?: #f);
+             ensure-language-definition(dld);
+             dld
+           end;
     end;
     with-inconsistent-definitions (ld)
       let use-dylan = if (dylan-library-library-description?(ld))
-			#[]
-		      else
-			vector(make(<use-clause>, use: #"dylan"))
-		      end;
+                        #[]
+                      else
+                        vector(make(<use-clause>, use: #"dylan"))
+                      end;
       let library = make-namespace(<full-boot-library>,
-				   description: ld,
-				   definition: #f,
-				   use-clauses: use-dylan);
+                                   description: ld,
+                                   definition: #f,
+                                   use-clauses: use-dylan);
       ld.language-definition := library;
       let module
-	= make-namespace(<full-dylan-user-module>,
-			 library: library,
-			 debug-name: #"dylan-user",
-			 definition: #f,
-			 use-clauses: use-dylan,
-			 create-clauses: #[],
-			 export-clauses: #[]);
+        = make-namespace(<full-dylan-user-module>,
+                         library: library,
+                         debug-name: #"dylan-user",
+                         definition: #f,
+                         use-clauses: use-dylan,
+                         create-clauses: #[],
+                         export-clauses: #[]);
       define-module!(module);
     end with-inconsistent-definitions;
   end unless;
@@ -907,28 +907,28 @@ define method do-with-library-context (f, desc)
   if (desc == curr-desc)
     f()
   else
-    debug-assert(~curr-desc | 
-		   if (instance?(curr-desc, <interactive-library-description>))
-		     // It's legit so switch to a project library for the
-		     // purposes of looking up a dood lazy slot.
-		     // instance?(desc, <interactive-library-description>)
-		     #t
-		   else
-		     instance?(desc, <project-library-description>)
-		   end,
-		 "Invalid context switch from %s to %s", curr-desc, desc);
+    debug-assert(~curr-desc |
+                   if (instance?(curr-desc, <interactive-library-description>))
+                     // It's legit so switch to a project library for the
+                     // purposes of looking up a dood lazy slot.
+                     // instance?(desc, <interactive-library-description>)
+                     #t
+                   else
+                     instance?(desc, <project-library-description>)
+                   end,
+                 "Invalid context switch from %s to %s", curr-desc, desc);
     debug-assert(~*interactive-compilation-layer*,
-		 "Changing libraries during interactive compilation?");
+                 "Changing libraries during interactive compilation?");
     with-library-description (desc)
       ensure-language-definition(desc);
       // Previous dependent can't be valid anymore so revert to
       // uninitialized state, unless without dependency tracking, then
       // stay that way.
       if (*current-dependent* == #"no-dependent")
-	f()
+        f()
       else
-	dynamic-bind(*current-stage* = #f, *current-dependent* = #f)
-	  f();
+        dynamic-bind(*current-stage* = #f, *current-dependent* = #f)
+          f();
         end;
       end if;
     end;
@@ -950,22 +950,22 @@ define function do-with-dependent-context (stage, dependent, body)
       // format-out("Changing to downloaded dependent %s"
       //            " during interactive compilation\n", dependent);
       dynamic-bind (*interactive-compilation-layer* = #f)
-	do-with-dependent-context(stage, dependent, body);
+        do-with-dependent-context(stage, dependent, body);
       end;
     else
       let ld = compilation-record-library(cr);
       // Trust only switch to an unshadowed library for safe recomputations,
       // i.e. nothing that creates new/invalid properties.
       let ld = if (instance?(ld, <interactive-library-description>)
-		     & ~ld.interactive-library-shadowed?)
-		 compilation-record-original-library(cr);
-	       else
-		 ld
-	       end;
+                     & ~ld.interactive-library-shadowed?)
+                 compilation-record-original-library(cr);
+               else
+                 ld
+               end;
       with-library-context (ld)
-	with-dependent (stage of dependent)
-	  body()
-	end with-dependent
+        with-dependent (stage of dependent)
+          body()
+        end with-dependent
       end with-library-context
     end
   end
@@ -988,8 +988,8 @@ define method replace-library (boot :: <full-boot-library>, new :: <full-library
   with-form-creation
     dylan-user.namespace-definition
       := make-module-definition(name: #"dylan-user",
-				parent-form: library-definition,
-				use-clauses: dylan-user.use-clauses);
+                                parent-form: library-definition,
+                                use-clauses: dylan-user.use-clauses);
   end;
   dylan-user.original-home-library := new;
   dylan-user.namespace-model
@@ -1002,10 +1002,10 @@ define method replace-library (boot :: <full-boot-library>, new :: <full-library
   // // are bound to lose... So we force the using library to be loosely compiled.
   // // debug-assert(ld == current-library-description()) - follows from assert above
   // if (~ld.library-forms-dynamic? &
-  // 	any?(method (ul)
-  // 	       let uld = ul.used-library-description;
-  // 	       uld.library-dynamically-bound? | uld.library-forms-dynamic?
-  // 	     end, new.used-libraries))
+  //         any?(method (ul)
+  //                let uld = ul.used-library-description;
+  //                uld.library-dynamically-bound? | uld.library-forms-dynamic?
+  //              end, new.used-libraries))
   //   // TODO: Remove this when loose binding between tight mode libraries
   //   // is up and running, when we don't want loose mode to cascade.
   //   ld.library-forms-dynamic? := #t;
@@ -1014,12 +1014,12 @@ end method;
 
 //// LIBRARY SPECIFIC LOOKUPS
 
-define method untracked-lookup-local-modifying-definitions 
+define method untracked-lookup-local-modifying-definitions
     (binding :: <module-binding>) => (definitions :: <definitions>)
   binding-local-modifying-definitions(binding)
 end method;
 
-define method untracked-lookup-local-modifying-definitions 
+define method untracked-lookup-local-modifying-definitions
     (name) => (definitions :: <definitions>)
   untracked-lookup-local-modifying-definitions(untracked-lookup-binding(name))
 end method;
@@ -1061,7 +1061,7 @@ define method dood-make-cross-library-proxy
        library-name:  namespace-name(object));
 end method;
 
-define method dood-disk-object 
+define method dood-disk-object
     (dood :: <dood>, object :: <library>)
  => (proxy :: type-union(<dood-cross-library-proxy>, <library>))
   let ld = dood-root(dood);
@@ -1076,9 +1076,9 @@ define method dood-lookup-used-library-by-name (dood :: <dood>, name)
   let ld = dood-root(dood);
   let lib = ld.language-definition;
   debug-out(#"gz", "Restore xlib proxy %s -> %s, direct=%s",
-	    ld, name, resolve-used-namespace(lib, name, default: #f));
+            ld, name, resolve-used-namespace(lib, name, default: #f));
   let ulib = any?(method (ulib) ulib.namespace-name == name & ulib end,
-		  lib.all-used-namespaces);
+                  lib.all-used-namespaces);
   debug-assert(ulib, "Can't find library model for %s", name);
   ulib
 end method;
@@ -1100,14 +1100,14 @@ define sealed domain initialize (<dood-cross-library-binding-proxy>);
 
 define method dood-make-cross-library-binding-proxy
     (dood :: <dood>, object :: <library-binding>) => (proxy)
-  make(<dood-cross-library-binding-proxy>, 
+  make(<dood-cross-library-binding-proxy>,
        library:     library-binding-home(object),
        module-name: name(object))
 end method;
 
-define method dood-disk-object 
+define method dood-disk-object
     (dood :: <dood>, object :: <library-binding>)
- => (proxy :: type-union(<dood-cross-library-binding-proxy>, 
+ => (proxy :: type-union(<dood-cross-library-binding-proxy>,
                          <library-binding>))
   if (language-definition(dood-root(dood)) == library-binding-home(object))
     next-method();
@@ -1147,10 +1147,10 @@ define sideways method dood-disk-object
       let cr-ld = compilation-record-original-library(cr);
       // EXTERNALLY REFERENCED FRAGMENT?
       if (cr-ld & cr-ld ~== dood-root(dood))
-	without-dependency-tracking 
-	   with-expansion-module (compilation-record-module(cr))
-	     special-return(default-in-expansion(object));
-	   end;
+        without-dependency-tracking
+           with-expansion-module (compilation-record-module(cr))
+             special-return(default-in-expansion(object));
+           end;
         end without-dependency-tracking;
       end if;
     end if;

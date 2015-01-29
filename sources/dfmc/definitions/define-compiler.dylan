@@ -13,14 +13,14 @@ define &macro &converter-definer
     => do-define-&converter(form, mods, name, rules);
 end &macro;
 
-define method do-define-&converter 
+define method do-define-&converter
     (fragment :: <fragment>, mods, name, rules)
   let module = definitions-module();
   with-expansion-module (module)
     do-define-some-kind-of-an-expander
-      (fragment, mods, name, 
-       #{ env, context, form }, rules, 
-       #{ ?name ## "-converter" }, 
+      (fragment, mods, name,
+       #{ env, context, form }, rules,
+       #{ ?name ## "-converter" },
        #{ do-define-core-converter });
   end;
 end method;
@@ -30,14 +30,14 @@ define &macro &definition-definer
     => do-define-&definition(form, mods, name, rules);
 end &macro;
 
-define method do-define-&definition 
+define method do-define-&definition
     (fragment :: <fragment>, mods, name, rules)
   let module = definitions-module();
   with-expansion-module (module)
     do-define-some-kind-of-an-expander
-      (fragment, mods, name, 
-       #{ env, form }, rules, 
-       #{ ?name ## "-definition" }, 
+      (fragment, mods, name,
+       #{ env, form }, rules,
+       #{ ?name ## "-definition" },
        #{ do-define-core-definition });
   end;
 end method;
@@ -47,21 +47,21 @@ define &macro &macro-definer
     => do-define-&macro(form, mods, name, rules);
 end &macro;
 
-define method do-define-&macro 
+define method do-define-&macro
     (fragment :: <fragment>, mods, name, rules)
   let module = definitions-module();
   with-expansion-module (module)
     do-define-some-kind-of-an-expander
-      (fragment, mods, name, 
+      (fragment, mods, name,
        #{ env, form }, rules,
-       #{ ?name ## "-expander" }, 
+       #{ ?name ## "-expander" },
        #{ do-define-core-macro });
   end;
 end method;
 
 define method do-define-some-kind-of-an-expander
-    (fragment :: <fragment>, mods, name, parameters, 
-       rules, expander-name, installer-name) 
+    (fragment :: <fragment>, mods, name, parameters,
+       rules, expander-name, installer-name)
  => (expansion)
   let module = definitions-module();
   with-expansion-module (module)
@@ -70,12 +70,12 @@ define method do-define-some-kind-of-an-expander
     // determine the word involved.
     let compiled-main = compile-rule-set-spec(main-rule-set);
     let compiled-aux = map(compile-rule-set-spec, aux-rule-sets);
-    let compiled-exp 
+    let compiled-exp
       = make(<rewrite-rule-expander>,
-	     name: name,
-	     module: fragment-module(name),
-	     main-rule-set: compiled-main,
-	     aux-rule-sets: compiled-aux);
+             name: name,
+             module: fragment-module(name),
+             main-rule-set: compiled-main,
+             aux-rule-sets: compiled-aux);
     let input = #{ form };
     let expander-code
       = compile-define-macro-rules(input, compiled-exp);
@@ -84,7 +84,7 @@ define method do-define-some-kind-of-an-expander
           (main-rule-set.spec-rule-specs.first.spec-pattern-spec,
            name, expander-name);
     #{ define method ?expander-name (?parameters)
-	 ?expander-code
+         ?expander-code
        end;
        ?installer-name
          (?#"name", #f, #f, ?descriptor-generator, ?expander-name); }
@@ -95,7 +95,7 @@ end method;
 // declared in the definition somewhere instead of using these name
 // spotting hacks.
 
-define method make-macro-descriptor-generator-matching 
+define method make-macro-descriptor-generator-matching
     (spec :: <define-body-pattern-spec>, name, expander-name)
   let word-class
     = macro-case (name)
@@ -111,15 +111,15 @@ define method make-macro-descriptor-generator-matching
           expander-function: ?expander-name) }
 end method;
 
-define method make-macro-descriptor-generator-matching 
+define method make-macro-descriptor-generator-matching
     (spec :: <define-list-pattern-spec>, name, expander-name)
-  #{ make(<suffixed-macro-descriptor>, 
+  #{ make(<suffixed-macro-descriptor>,
           word-class: $define-list-word-only-token,
           suffix:     "-definer",
           expander-function: ?expander-name) }
 end method;
 
-define method make-macro-descriptor-generator-matching 
+define method make-macro-descriptor-generator-matching
     (spec :: <statement-pattern-spec>, name, expander-name)
   let word-class
     = macro-case (name)
@@ -127,26 +127,26 @@ define method make-macro-descriptor-generator-matching
         { \macro }      => #{ $macro-case-begin-word-only-token }
         { ?other:* }    => #{ $begin-word-only-token }
      end;
-  #{ make(<simple-macro-descriptor>, 
+  #{ make(<simple-macro-descriptor>,
           word-class: ?word-class,
           expander-function: ?expander-name) }
 end method;
 
-define method make-macro-descriptor-generator-matching 
+define method make-macro-descriptor-generator-matching
     (spec :: <function-pattern-spec>, name, expander-name)
-  #{ make(<simple-macro-descriptor>, 
+  #{ make(<simple-macro-descriptor>,
           word-class: $function-word-only-token,
           expander-function: ?expander-name) }
 end method;
 
-define method make-macro-descriptor-generator-matching 
+define method make-macro-descriptor-generator-matching
     (spec :: <local-declaration-pattern-spec>, name, expander-name)
   let word-class
     = macro-case (name)
         { \local }   => #{ $local-methods-word-only-token }
         { ?other:* } => #{ $local-declaration-word-only-token }
      end;
-  #{ make(<simple-macro-descriptor>, 
+  #{ make(<simple-macro-descriptor>,
           word-class:        ?word-class,
           expander-function: ?expander-name) }
 end method;
@@ -167,11 +167,11 @@ define method do-expand-macro-case (fragment :: <fragment>, input, rules)
   with-expansion-module (module)
     let compiled-main = compile-rule-set-spec(aux-rule-sets.head);
     let compiled-aux = map(compile-rule-set-spec, aux-rule-sets.tail);
-    let compiled-exp 
+    let compiled-exp
       = make(<rewrite-rule-expander>,
-	     module: module,
-	     main-rule-set: compiled-main,
-	     aux-rule-sets: compiled-aux);
+             module: module,
+             main-rule-set: compiled-main,
+             aux-rule-sets: compiled-aux);
     let expander-code
       = compile-macro-case-rules(input, compiled-exp);
     // break("Done macro case");
@@ -179,7 +179,7 @@ define method do-expand-macro-case (fragment :: <fragment>, input, rules)
   end;
 end method;
 
-define method parse-macro-case-rules 
+define method parse-macro-case-rules
     (f) => (main-rule-set, aux-rule-sets)
   let aux-rules-f = #{ macro-case-main-aux-rule-set: ?f };
   collecting (aux-rule-sets)
@@ -188,7 +188,7 @@ define method parse-macro-case-rules
         { } => #t;
         { ?stuff:* }
           => begin
-               let (next-set, remaining-f) 
+               let (next-set, remaining-f)
                  = parse-macro-aux-rule-set(#f, stuff);
                collect-into(aux-rule-sets, next-set);
                walk(remaining-f);
@@ -200,7 +200,7 @@ define method parse-macro-case-rules
   end;
 end method;
 
-define serious-program-warning 
+define serious-program-warning
     <unexpected-procedural-template> (<manual-parser-error>)
   format-string
     "Invalid use of the internal compiler macro syntax #{ } outside "
@@ -217,7 +217,7 @@ define method do-expand-macro-template (fragment :: <fragment>, stuff)
   if (module)
     let template-code
       = with-expansion-module (module)
-	  let analysed-template 
+          let analysed-template
             = compile-template-spec-elements(fragment-fragments(stuff));
           compile-macro-template-to-code(analysed-template);
         end;

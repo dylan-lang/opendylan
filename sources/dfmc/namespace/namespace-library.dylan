@@ -24,21 +24,21 @@ define module dfmc-namespace
   use dfmc-conditions;
   use dfmc-reader,
     import: { <fragment>,
-	        fragment-record,          fragment-record-setter,
-	        fragment-source-position, fragment-source-position-setter,
-	      <variable-name-fragment>,
-	      fragment-identifier,
-	      fragment-module,
-	      make-variable-name-fragment-in-module,
-	      dylan-variable-name,
-	      definer-token-class?,
-	      merge-token-classes,
-	      classify-word-in,
-	      <fragment-copier>,
-	      <variable-name-table>
-	    };
+                fragment-record,          fragment-record-setter,
+                fragment-source-position, fragment-source-position-setter,
+              <variable-name-fragment>,
+              fragment-identifier,
+              fragment-module,
+              make-variable-name-fragment-in-module,
+              dylan-variable-name,
+              definer-token-class?,
+              merge-token-classes,
+              classify-word-in,
+              <fragment-copier>,
+              <variable-name-table>
+            };
 
-  use dfmc-macro-expander; 
+  use dfmc-macro-expander;
   // Debugging
   export
     read-databases?, read-databases?-setter,
@@ -47,8 +47,8 @@ define module dfmc-namespace
 
   // Abstract environments.
   export <environment>,
-    define-name, 
-    undefine-name, 
+    define-name,
+    undefine-name,
     lookup-name;
 
   // Namespace clauses.
@@ -81,8 +81,8 @@ define module dfmc-namespace
       \with-dood-context, *library-description*,
       dood-dfmc-initial-segments,
     <library-description>,
-      library-description-current-call-site-id, 
-	library-description-current-call-site-id-setter,
+      library-description-current-call-site-id,
+        library-description-current-call-site-id-setter,
       library-generate-call-site-id,
     <dylan-library-description>,
     <project-library-description>,
@@ -148,25 +148,25 @@ define module dfmc-namespace
     project-used-library-version;
   export
     install-dylan-boot-constants;
-  export 
+  export
     strip-library-model-properties,
     install-owned-model-properties-in,
     lookup-owned-model-properties-in,
     clear-dependent-model-properties,
     clear-library-model-properties,
     new-mapped-model;
-  export dylan-library, dylan-module, dylan-implementation-module, 
-    dylan-library-description, 
+  export dylan-library, dylan-module, dylan-implementation-module,
+    dylan-library-description,
     dylan-value, dylan-definition, dylan-binding, dylan-canonical-binding,
     library-description-dylan-value-cache;
-  export \with-top-level-library-description, 
+  export \with-top-level-library-description,
             do-with-top-level-library-description,
          \with-library-context, do-with-library-context,
          \with-dependent-context, do-with-dependent-context,
          \with-interactive-layer, do-with-interactive-layer;
   export
     library-description-model,
-    library-description-compilation-records, 
+    library-description-compilation-records,
     library-description-record-table,
     library-description-interface-version,
       library-description-interface-version-setter,
@@ -186,9 +186,9 @@ define module dfmc-namespace
       library-description-compilation-aborted?-setter,
     library-description-built?,
       library-description-built?-setter,
-    library-description-dfm-copier, 
+    library-description-dfm-copier,
       library-description-dfm-copier-setter,
-    library-description-value-model-copier, 
+    library-description-value-model-copier,
       library-description-value-model-copier-setter,
     %library-description-object-expression,
       %library-description-object-expression-setter,
@@ -218,13 +218,13 @@ define module dfmc-namespace
     directly-used-library-descriptions,
     library-references-retracted-models?,
     library-deleted-modules,
-    library-type-cache, library-type-cache-setter, 
-    library-type-estimate-disjoint?-cache, 
-      library-type-estimate-disjoint?-cache-setter, 
-    library-type-estimate-cons-cache, 
-      library-type-estimate-cons-cache-setter, 
-    library-type-estimate-dispatch-cache, 
-      library-type-estimate-dispatch-cache-setter, 
+    library-type-cache, library-type-cache-setter,
+    library-type-estimate-disjoint?-cache,
+      library-type-estimate-disjoint?-cache-setter,
+    library-type-estimate-cons-cache,
+      library-type-estimate-cons-cache-setter,
+    library-type-estimate-dispatch-cache,
+      library-type-estimate-dispatch-cache-setter,
     library-external-model-cache,
       library-external-model-cache-setter,
     initialize-typist-library-caches,
@@ -236,7 +236,7 @@ define module dfmc-namespace
     <dfmc-namespace-dood>,
       binding-model-not-computed-proxy,
         binding-model-not-computed-proxy-setter,
-    ensure-export-only,	      
+    ensure-export-only,
 
     // EXPORTED MERELY TO SUPPORT EXPORT-ONLY DOODS
 
@@ -356,7 +356,7 @@ define module dfmc-namespace
     binding-variable-name,
     binding-canonical-binding,
     canonical-binding-properties,
-    binding-definition, untracked-binding-definition, 
+    binding-definition, untracked-binding-definition,
     binding-local-modifying-definitions,
     binding-modifying-definitions, untracked-binding-modifying-definitions,
     binding-certain-modifying-models, untracked-binding-certain-modifying-models,

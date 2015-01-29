@@ -113,13 +113,13 @@ define method compute-temporaries
   frame-size(env) := size(tmps);
   local method maybe-add-temporary!
             (c :: <computation>, tmp :: false-or(<temporary>))
-	  when (tmp)
-	    generator(tmp)    := c;
-	    environment(tmp)  := env;
-	    frame-offset(tmp) := next-frame-offset(env);
-	    add!(tmps, tmp)
-	  end when;
-	end method;
+          when (tmp)
+            generator(tmp)    := c;
+            environment(tmp)  := env;
+            frame-offset(tmp) := next-frame-offset(env);
+            add!(tmps, tmp)
+          end when;
+        end method;
   for-computations (c :: <computation> previous pc :: false-or(<computation>) in fun)
     environment(c)          := env;
     previous-computation(c) := pc;
@@ -199,9 +199,9 @@ define method strip-environment (env :: <lambda-lexical-environment>)
   let number-temporaries = size(temporaries(env));
   lambda-log-number-temporaries(lambda(env))
     := if (number-temporaries = 0)
-	 0
+         0
        else
-	 round/(log(as(<float>, number-temporaries)), log(2.0))
+         round/(log(as(<float>, number-temporaries)), log(2.0))
        end if;
   /*
   let tmps* = compute-temporaries(env);
@@ -209,9 +209,9 @@ define method strip-environment (env :: <lambda-lexical-environment>)
   unless (size(tmps*) = size(tmps))
     for (tmp in tmps)
       when (used?(tmp) & ~member?(tmp, tmps*))
-	format-out("IN %= RECONSTRUCTED TEMPORARIES %= INVALID %= MISSING %=\n",
-		   lambda(env), tmps*, tmps, tmp);
-	broken("BAD RECONSTRUCTION %= %=", lambda(env), tmp);
+        format-out("IN %= RECONSTRUCTED TEMPORARIES %= INVALID %= MISSING %=\n",
+                   lambda(env), tmps*, tmps, tmp);
+        broken("BAD RECONSTRUCTION %= %=", lambda(env), tmp);
       end when;
     end for;
   end unless;
@@ -373,7 +373,7 @@ define function lookup-in-top-level-environment
  => (binding, type, environment)
   let env = outer-lexical-environment();
   let val = if (env) element(env, name, default: $unfound)
-	    else $unfound end;
+            else $unfound end;
   if (found?(val))
     values(make(<interactor-binding>, name: name, interactor-id: val), #f, #f)
   else
@@ -403,7 +403,7 @@ define method inner-environment?
   block (return)
     for (e = maybe-inner then e.outer, while: e)
       if (e == maybe-outer)
-	return(#t);
+        return(#t);
       end if;
     finally
       #f
@@ -475,15 +475,15 @@ define method lambda-has-free-lexical-references? (lambda :: <&lambda>)
   let lambda-env = environment(lambda);
   block (found)
     for (outer-env = outer(lambda-env) then outer(outer-env),
-	 while: outer-env)
+         while: outer-env)
       if (instance?(outer-env, <lambda-lexical-environment>))
-	for-temporary (t in outer-env)
-	  for (use in users(t))
-	    if (inner-environment?(environment(use), lambda-env))
-	      // some use of an outer temporary is inside this lambda
-	      found(#t)
-	    end;
-	  end;
+        for-temporary (t in outer-env)
+          for (use in users(t))
+            if (inner-environment?(environment(use), lambda-env))
+              // some use of an outer temporary is inside this lambda
+              found(#t)
+            end;
+          end;
         end;
       end;
     end;

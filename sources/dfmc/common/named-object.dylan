@@ -8,19 +8,19 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // TODO: Name is used willy-nilly in the compiler for all kinds of junk,
 // including variable name fragments and probably strings, so I've had to
-// open it up completely. 
+// open it up completely.
 
 define constant <some-kind-of-a-name> = <object>;
 
-define compiler-open generic name 
-    (object :: <object>) 
+define compiler-open generic name
+    (object :: <object>)
  => (name :: <some-kind-of-a-name>);
 
-define compiler-open generic name-setter 
-    (name :: <some-kind-of-a-name>, object :: <object>) 
+define compiler-open generic name-setter
+    (name :: <some-kind-of-a-name>, object :: <object>)
  => (name :: <some-kind-of-a-name>);
 
-define compiler-open generic named? 
+define compiler-open generic named?
     (object :: <object>) => (well? :: <boolean>);
 
 define compiler-open abstract class <named-object> (<object>)

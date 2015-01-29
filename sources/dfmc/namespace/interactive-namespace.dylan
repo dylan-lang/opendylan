@@ -27,9 +27,9 @@ define macro interactive-class-mapping-definer
       ?rest:*
     end }
     => { define method interactive-class-for
-	     (original :: ?original) => (c :: singleton(?interactive))
-	   ?interactive
-	 end;
+             (original :: ?original) => (c :: singleton(?interactive))
+           ?interactive
+         end;
          define interactive-class-mapping ?rest end; }
 end macro;
 
@@ -219,14 +219,14 @@ define function project-library-interactive-context-setter
      target)
   ld.project-library-interactive-contexts
     := if (ild)
-	 debug-assert(~project-library-interactive-context(ld, target),
-		      "Context already set.  Re-entrant call to establish-execution-context?");
-	 add!(ld.project-library-interactive-contexts, pair(target, ild))
+         debug-assert(~project-library-interactive-context(ld, target),
+                      "Context already set.  Re-entrant call to establish-execution-context?");
+         add!(ld.project-library-interactive-contexts, pair(target, ild))
        else
-	 // TODO: Maybe should leave something behind if any interactive
-	 // execution has taken place, if the runtime doesn't record that.
-	 remove!(ld.project-library-interactive-contexts, target,
-		 test: method(p, target) p.head == target end)
+         // TODO: Maybe should leave something behind if any interactive
+         // execution has taken place, if the runtime doesn't record that.
+         remove!(ld.project-library-interactive-contexts, target,
+                 test: method(p, target) p.head == target end)
        end;
   ild
 end function;
@@ -236,10 +236,10 @@ define function lookup-interactive-context
      #key default = unsupplied(), force-shadow?)
   project-library-interactive-context(ld, target)
     | if (supplied?(default))
-	default
+        default
       else
-	verify-target-library(target, ld);
-	make-interactive-context(ld, target, force-shadow?: force-shadow?)
+        verify-target-library(target, ld);
+        make-interactive-context(ld, target, force-shadow?: force-shadow?)
       end;
 end function;
 
@@ -254,9 +254,9 @@ end function;
 define function interactive-namespaces-detached?
     (ld :: <project-library-description>)
  every?(method(target+ild) interactive-library-detached?(target+ild.tail) end,
-	ld.project-library-interactive-contexts)
+        ld.project-library-interactive-contexts)
 end;
-  
+
 define function models-in-interactive-use?
     (ld :: <project-library-description>)
   ~ld.library-forms-dynamic? & ~empty?(ld.project-library-interactive-contexts)
@@ -309,21 +309,21 @@ define method form-properties-in-context
  => (p :: false-or(<form-properties>))
   debug-assert(current-library-description?(ild));
   local method lookup (form, create?)
-	  if (form-interactive?(form))
-	    form
-	  else
-	    let home-ld = form.form-library;
-	    let table = home-ld.interactive-form-properties;
-	    element(table, form, default: #f)
-	      | if (~home-ld.interactive-library-detached?)
-		  let props = initial-form-properties(form, ~ild.library-forms-dynamic?);
-		  props & (table[form] := props)
-		end
-	      | if (create?)
-		  table[form] := make-default-form-properties(form);
-		end
-	  end;
-	end method;
+          if (form-interactive?(form))
+            form
+          else
+            let home-ld = form.form-library;
+            let table = home-ld.interactive-form-properties;
+            element(table, form, default: #f)
+              | if (~home-ld.interactive-library-detached?)
+                  let props = initial-form-properties(form, ~ild.library-forms-dynamic?);
+                  props & (table[form] := props)
+                end
+              | if (create?)
+                  table[form] := make-default-form-properties(form);
+                end
+          end;
+        end method;
   let il = *interactive-compilation-layer*;
   if (~il)
     lookup(form, create?)
@@ -333,17 +333,17 @@ define method form-properties-in-context
       form
     else
       element(il.form-properties-layer, form, default: #f) |
-	begin
-	  let p = lookup(form, #f);
-	  if (create?) // iff settable
-	    // BREAK("setting properties for %s from %s\n", form, form-ld);
-	    il.form-properties-layer[form]
-	      := if (p) shadow-form-properties(p)
-		 else make-default-form-properties(form) end;
-	  else
-	    p
-	  end
-	end
+        begin
+          let p = lookup(form, #f);
+          if (create?) // iff settable
+            // BREAK("setting properties for %s from %s\n", form, form-ld);
+            il.form-properties-layer[form]
+              := if (p) shadow-form-properties(p)
+                 else make-default-form-properties(form) end;
+          else
+            p
+          end
+        end
     end
   end
 end method;
@@ -379,46 +379,46 @@ define method binding-properties-in-context
   // delegated-property and untracked-binding-modifying-definitions.
   debug-assert(valid-binding-home-library-in?(ild, b), "Bogus binding: %s", b);
   local method bare-binding-properties (b :: <module-binding>)
-	  make(interactive-class-for(b), dependents: #[])
-	end;
+          make(interactive-class-for(b), dependents: #[])
+        end;
   local method lookup (b :: <module-binding>, create?)
-	  let lib = ild.language-definition;
-	  if (instance?(lib, <interactive-library>))
-	    let table = lib.interactive-binding-properties;
-	    element(table, b, default: #f)
-	      | if (~lib.interactive-library-detached?)
-		  let props = initial-binding-properties(b, ~ild.library-forms-dynamic?, #f);
-		  props & (table[b] := props)
-		end
-	      | if (create?)
-		  table[b] := bare-binding-properties(b);
-		end;
-	  else
-	    // TODO: Unfortunately, there are cache slots in imported bindings
-	    // which it's ok to set, but we can't tell which slot is going to
-	    // be set at this point so we can't test for this.
-	    // debug-assert(~create?,
-	    //              "Changing interactive binding properties in unshadowed library!");
-	    binding-properties-in-context
-	      (ild.interactive-library-project-library, b, create?);
-	  end;
-	end method;
+          let lib = ild.language-definition;
+          if (instance?(lib, <interactive-library>))
+            let table = lib.interactive-binding-properties;
+            element(table, b, default: #f)
+              | if (~lib.interactive-library-detached?)
+                  let props = initial-binding-properties(b, ~ild.library-forms-dynamic?, #f);
+                  props & (table[b] := props)
+                end
+              | if (create?)
+                  table[b] := bare-binding-properties(b);
+                end;
+          else
+            // TODO: Unfortunately, there are cache slots in imported bindings
+            // which it's ok to set, but we can't tell which slot is going to
+            // be set at this point so we can't test for this.
+            // debug-assert(~create?,
+            //              "Changing interactive binding properties in unshadowed library!");
+            binding-properties-in-context
+              (ild.interactive-library-project-library, b, create?);
+          end;
+        end method;
   let il = *interactive-compilation-layer*;
   if (~il)
     lookup(b, create?);
   else
     element(il.binding-properties-layer, b, default: #f) |
       begin
-	let p = lookup(b, #f);
-	if (create?) // iff settable
-	  debug-assert(il.interactive-layer-base == ild,
-		       "Modifying inherited properties!");
-	  il.binding-properties-layer[b]
-	    := if (p) shadow-binding-properties(p)
-	       else bare-binding-properties(b) end
-	else
-	  p
-	end
+        let p = lookup(b, #f);
+        if (create?) // iff settable
+          debug-assert(il.interactive-layer-base == ild,
+                       "Modifying inherited properties!");
+          il.binding-properties-layer[b]
+            := if (p) shadow-binding-properties(p)
+               else bare-binding-properties(b) end
+        else
+          p
+        end
       end
   end
 end method;
@@ -432,7 +432,7 @@ define method compute-cached-binding-model-object-in
     let home-ld = namespace-library-description(binding-home(canonical));
     compute-cached-binding-model-object-in(home-ld, canonical, definition)
   end;
-end method;					 
+end method;
 
 define method compute-cached-binding-model-object-in
     (ild :: <interactive-library-description>,
@@ -446,9 +446,9 @@ define method compute-cached-binding-model-object-in
   else
     let project-model
       = with-dood-context (ild.interactive-library-project-library)
-	  debug-assert(definition == binding.binding-active-definition,
-		       "Unexpected definition difference");
-	  untracked-binding-model-object(binding, #f);
+          debug-assert(definition == binding.binding-active-definition,
+                       "Unexpected definition difference");
+          untracked-binding-model-object(binding, #f);
         end;
     binding.binding-cached-model-object := project-model
   end;
@@ -459,10 +459,10 @@ define method library-dynamically-bound-in?
      uld :: <interactive-library-description>)
   let bindings = ld.all-inter-library-bindings;
   #"loose" == if (interactive-library-shadowed?(ld))
-		bindings[uld]
-	      else
-		bindings[uld.interactive-library-project-library]
-	      end;
+                bindings[uld]
+              else
+                bindings[uld.interactive-library-project-library]
+              end;
 end method;
 
 
@@ -524,12 +524,12 @@ end method;
 
 define macro with-interactive-layer
  { with-interactive-layer (?layer:variable = ?library-context:expression
-			     in ?runtime-context:expression)
+                             in ?runtime-context:expression)
     ?:body
    end }
-    => 
+    =>
     { do-with-interactive-layer(?library-context, ?runtime-context,
-				method(?layer) ?body end) }
+                                method(?layer) ?body end) }
 end macro;
 
 define function do-with-interactive-layer
@@ -537,16 +537,16 @@ define function do-with-interactive-layer
      runtime-context,
      fn :: <method>)
   debug-assert(~*interactive-compilation-layer*,
-	       "Can't nest interactive compiles");
+               "Can't nest interactive compiles");
   debug-assert(ild.language-definition);
   // TODO: Should shadow if isn't!
   debug-assert(ild.interactive-library-shadowed?,
-	       "Can't interact in unshadowed library!");
+               "Can't interact in unshadowed library!");
   with-library-context (ild)
     let layer = make(<interactive-layer>,
-		     base: ild,
-		     lexical-environment:
-		       make-outer-lexical-environment(runtime-context));
+                     base: ild,
+                     lexical-environment:
+                       make-outer-lexical-environment(runtime-context));
     initialize-typist-library-caches(layer);
     dynamic-bind (*interactive-compilation-layer* = layer)
       fn(layer)
@@ -555,37 +555,37 @@ define function do-with-interactive-layer
 end function;
 
 define method find-model-properties-in
-    (ld :: <interactive-library-description>, model, settable?, 
+    (ld :: <interactive-library-description>, model, settable?,
      #key create? = #t)
  => (p :: false-or(<mapped-model-properties>))
   let il = *interactive-compilation-layer*;
   if (il)
     let shadow-properties = element(il.mapped-model-properties-layer,
-				    model,
-				    default: #f);
+                                    model,
+                                    default: #f);
     if (shadow-properties)
       shadow-properties
     else
       debug-assert(il.interactive-layer-base == ld);
-      let base-properties 
+      let base-properties
         = any?(method (ld)
                  lookup-owned-model-properties-in(ld, model)
-               end, 
+               end,
                all-library-descriptions(ld));
       if (base-properties & settable?)
-	il.mapped-model-properties-layer[model]
-	  := shadow-model-properties(base-properties);
+        il.mapped-model-properties-layer[model]
+          := shadow-model-properties(base-properties);
       elseif (base-properties)
-	// just looking up some value.
-	base-properties
+        // just looking up some value.
+        base-properties
       elseif (create?)
-	// If current dependent hasn't been downloaded yet, it's ok to create
-	// model, but don't put it in the library cache yet.
-	// But if current dependent has been downloaded ???? Well, we're
-	// disallowing that so far.
-	let m = new-mapped-model(model);
-	debug-assert(~compilation-record-downloaded?(model-compilation-record(m)));
-	m
+        // If current dependent hasn't been downloaded yet, it's ok to create
+        // model, but don't put it in the library cache yet.
+        // But if current dependent has been downloaded ???? Well, we're
+        // disallowing that so far.
+        let m = new-mapped-model(model);
+        debug-assert(~compilation-record-downloaded?(model-compilation-record(m)));
+        m
       end;
     end;
   else
@@ -606,11 +606,11 @@ end method;
 // TODO: this whole thing needs to be atomic.
 define function merge-interactive-layer (layer :: <interactive-layer>, tid)
   debug-assert(layer.compiled-to-definitions? &
-		 layer.compilation-from-definitions-started?,
-	       "Layer not compiled?");
+                 layer.compilation-from-definitions-started?,
+               "Layer not compiled?");
   let ld = layer.interactive-layer-base;
   debug-assert(layer == *interactive-compilation-layer* &
-		 current-library-description?(ld), "Wrong context");
+                 current-library-description?(ld), "Wrong context");
   // Make lookups use the basic library, not the layer
   dynamic-bind (*interactive-compilation-layer* = #f)
 
@@ -619,13 +619,13 @@ define function merge-interactive-layer (layer :: <interactive-layer>, tid)
     let properties = ld.library-owned-model-properties;
     for (prop keyed-by model in layer.mapped-model-properties-layer)
       let table = if (model-downloaded?(prop))
-		    debug-assert(element(prop.model-library.library-owned-model-properties,
-					 model, default: #f),
-				 "downloaded model doesn't have properties in owner");
-		    prop.model-library.library-owned-model-properties
-		  else
-		    properties
-		  end;
+                    debug-assert(element(prop.model-library.library-owned-model-properties,
+                                         model, default: #f),
+                                 "downloaded model doesn't have properties in owner");
+                    prop.model-library.library-owned-model-properties
+                  else
+                    properties
+                  end;
       table[model] := prop;
     end;
 
@@ -657,15 +657,15 @@ define function merge-interactive-layer (layer :: <interactive-layer>, tid)
     for (prop keyed-by form in layer.form-properties-layer)
       // form has been previously downloaded, but changed model or something...
       if (form-interactive?(form))
-	merge-form-properties!(form, prop)
+        merge-form-properties!(form, prop)
       else
-	let table = form.form-library.interactive-form-properties;
-	let old-prop = element(table, form, default: #f);
-	if (old-prop)
-	  merge-form-properties!(old-prop, prop)
-	else
-	  table[form] := prop
-	end;
+        let table = form.form-library.interactive-form-properties;
+        let old-prop = element(table, form, default: #f);
+        if (old-prop)
+          merge-form-properties!(old-prop, prop)
+        else
+          table[form] := prop
+        end;
       end;
     end for;
 
@@ -687,31 +687,31 @@ end function;
 // in them, or try to modify the underlying project library description.
 
 define method make-interactive-context (ld :: <project-library-description>,
-					target,
-					#key force-shadow? = #f)
+                                        target,
+                                        #key force-shadow? = #f)
   debug-assert(compiled-to-definitions?(ld));
   let ild = make(interactive-class-for(ld),
-		 project-library: ld,
-		 used-libraries: used-libraries-for-target(ld, target),
-		 target: target,
-		 // TODO: these should come from the target, or at least match it
-		 back-end: ld.library-description-compiler-back-end-name, 
-		 platform-name: ld.library-description-platform-name,
-		 major-version: ld.library-description-major-version,
-		 minor-version: ld.library-description-minor-version,
-		 back-end-data: ld.library-combined-back-end-data);
+                 project-library: ld,
+                 used-libraries: used-libraries-for-target(ld, target),
+                 target: target,
+                 // TODO: these should come from the target, or at least match it
+                 back-end: ld.library-description-compiler-back-end-name,
+                 platform-name: ld.library-description-platform-name,
+                 major-version: ld.library-description-major-version,
+                 minor-version: ld.library-description-minor-version,
+                 back-end-data: ld.library-combined-back-end-data);
   // TODO: Should we copy language-definition-change-count?
   ild.compilation-context-records := ld.compilation-context-records;
   ild.library-forms-dynamic? := ld.library-forms-dynamic?;
   // TODO: Is this only necessary because all objects aren't being
   // recomputed?
-  ild.library-owned-model-properties 
+  ild.library-owned-model-properties
     := shallow-copy(ld.library-owned-model-properties);
   project-library-interactive-context(ld, target) := ild;
   make-interactive-language-definition(ild, force-shadow?: force-shadow?);
   ild.all-library-descriptions
     := map(method (ld) project-library-interactive-context(ld, target) end,
-	   ld.all-library-descriptions);
+           ld.all-library-descriptions);
   ild.library-description-dylan-library
     := project-library-interactive-context
          (ld.library-description-dylan-library, target);
@@ -720,7 +720,7 @@ end;
 
 
 define method make-interactive-context (ld :: <dylan-project-library-description>,
-					target, #key force-shadow?)
+                                        target, #key force-shadow?)
   let ild = next-method();
   if (ild.interactive-library-shadowed?)
     install-dylan-boot-constants(ild);
@@ -803,9 +803,9 @@ define method binding-local-dependents-in-context
              & binding-properties-in-context(ld, b, #f);
   let ideps = if (p) p.interactive-binding-local-dependents else #() end;
   let pdeps = if (p)
-		dood-maybe-force-address-proxy
-		  (p.interactive-binding-project-dependents)
-	      end | b.shadowable-binding-local-dependents;
+                dood-maybe-force-address-proxy
+                  (p.interactive-binding-project-dependents)
+              end | b.shadowable-binding-local-dependents;
   if (empty?(pdeps))
     ideps
   elseif (empty?(ideps))
@@ -814,15 +814,15 @@ define method binding-local-dependents-in-context
     p.interactive-binding-project-dependents := #[];
     p.interactive-binding-local-dependents
       := concatenate!(ideps,
-		      if (instance?(pdeps, <list>)) copy-sequence(pdeps)
-		      else as(<list>, pdeps) end);
+                      if (instance?(pdeps, <list>)) copy-sequence(pdeps)
+                      else as(<list>, pdeps) end);
   end
 end method;
 
 define method register-binding-dependent-in-context
     (ld :: <interactive-library-description>, b :: <module-binding>, dep)
   debug-assert(ld.interactive-library-shadowed?,
-	       "Registering dependencies in an unshadowed library?");
+               "Registering dependencies in an unshadowed library?");
   let p = binding-properties-in-context(ld, b, #t);
   p.interactive-binding-local-dependents
     := pair(dep, as(<list>, p.interactive-binding-local-dependents));
@@ -835,7 +835,7 @@ define method unregister-binding-dependent-in-context
   debug-assert(#f, "Unregistering dependencies in an interactive compile??");
 /*
   debug-assert(ld.interactive-library-shadowed?,
-	       "Unregistering dependencies in an unshadowed library?");
+               "Unregistering dependencies in an unshadowed library?");
   let p = binding-properties-in-context(ld, b, #t);
   p.interactive-binding-local-dependents
     := remove!(as(<list>, p.interactive-binding-local-dependents), dep);
@@ -900,16 +900,16 @@ define method initial-binding-properties
     let deps = dependents? & as(<vector>, b.shadowable-binding-local-dependents);
     if (def | ~empty?(mdefs) | (deps & ~empty?(deps)))
       if (models? & def & ~def.form-interactive?)
-	make(<interactive-canonical-module-binding-properties>,
-	     definition: def,
-	     modifying-definitions: copy-sequence(mdefs),
-	     dependents: deps,
-	     cached-model: p.shadowable-binding-cached-model-object)
+        make(<interactive-canonical-module-binding-properties>,
+             definition: def,
+             modifying-definitions: copy-sequence(mdefs),
+             dependents: deps,
+             cached-model: p.shadowable-binding-cached-model-object)
       else
-	make(<interactive-canonical-module-binding-properties>,
-	     definition: def,
-	     dependents: deps,
-	     modifying-definitions: copy-sequence(mdefs))
+        make(<interactive-canonical-module-binding-properties>,
+             definition: def,
+             dependents: deps,
+             modifying-definitions: copy-sequence(mdefs))
       end
     end
   end
@@ -923,8 +923,8 @@ define method initial-binding-properties
   let deps = dependents? & as(<vector>, b.shadowable-binding-local-dependents);
   if (~empty?(mdefs) | (deps & ~empty?(deps)))
     make(<interactive-imported-module-binding-properties>,
-	 dependents: deps,
-	 modifying-definitions: copy-sequence(mdefs))
+         dependents: deps,
+         modifying-definitions: copy-sequence(mdefs))
   end
 end;
 
@@ -935,44 +935,44 @@ define function detach-interactive-library (ild, models?)
     let proj-ld = ild.interactive-library-project-library;
     let form-props-table = ild.interactive-form-properties;
     local method detach-forms-of (b :: <module-binding-properties>)
-	    do(method (form :: <top-level-form>)
-		 debug-assert(form.form-original-library == proj-ld);
-		 unless (element(form-props-table, form, default: #f))
-		   let props = initial-form-properties(form, models?);
-		   if (props) form-props-table[form] := props end;
-		 end;
-	       end method,
-	       b.shadowable-binding-local-modifying-definitions);
-	  end;
+            do(method (form :: <top-level-form>)
+                 debug-assert(form.form-original-library == proj-ld);
+                 unless (element(form-props-table, form, default: #f))
+                   let props = initial-form-properties(form, models?);
+                   if (props) form-props-table[form] := props end;
+                 end;
+               end method,
+               b.shadowable-binding-local-modifying-definitions);
+          end;
     let binding-props-table = ilib.interactive-binding-properties;
     local method detach-binding (b :: <module-binding>)
-	    let props = element(binding-props-table, b, default: #f);
-	    if (props)
-	      unless (props.interactive-binding-project-dependents)
-		let deps = b.private-shadowable-binding-local-dependents;
-		props.interactive-binding-project-dependents
-		  := if (dood-lazy-value?(deps)) deps else as(<vector>, deps) end
-	      end;
-	    else
-	      let props = initial-binding-properties(b, models?, #t);
-	      if (props) binding-props-table[b] := props end;
-	    end;
-	  end;
+            let props = element(binding-props-table, b, default: #f);
+            if (props)
+              unless (props.interactive-binding-project-dependents)
+                let deps = b.private-shadowable-binding-local-dependents;
+                props.interactive-binding-project-dependents
+                  := if (dood-lazy-value?(deps)) deps else as(<vector>, deps) end
+              end;
+            else
+              let props = initial-binding-properties(b, models?, #t);
+              if (props) binding-props-table[b] := props end;
+            end;
+          end;
     do-imported-bindings
       (ilib, method (b)
-	       if (models?) detach-forms-of(b) end;
-	       detach-binding(b);
-	     end);
+               if (models?) detach-forms-of(b) end;
+               detach-binding(b);
+             end);
     for (lb in ilib.namespace-local-bindings)
       if (defined?(lb))
-	let module = lb.library-binding-value;
-	for (b in module.namespace-local-bindings)
-	  if (models?)
-	    let bp = b.canonical-binding-properties;
-	    if (bp) detach-forms-of(bp) end;
-	  end;
-	  detach-binding(b);
-	end;
+        let module = lb.library-binding-value;
+        for (b in module.namespace-local-bindings)
+          if (models?)
+            let bp = b.canonical-binding-properties;
+            if (bp) detach-forms-of(bp) end;
+          end;
+          detach-binding(b);
+        end;
       end;
     end;
     ilib.interactive-library-detached? := #t;
@@ -989,17 +989,17 @@ define method make-interactive-language-definition
       // Force shadow if any used library shadowed (perhaps by being
       // explicitly force-shadowed previously).
       any?(method (uld :: <project-library-description>)
-	     let ui = project-library-interactive-context
-	                (uld, ild.interactive-library-target);
-	     ui & interactive-library-shadowed?(ui)
-	   end,
-	   ld.all-used-library-descriptions))
+             let ui = project-library-interactive-context
+                        (uld, ild.interactive-library-target);
+             ui & interactive-library-shadowed?(ui)
+           end,
+           ld.all-used-library-descriptions))
     debug-assert(empty?(library-deleted-modules(original)));
     let ilib = make(interactive-class-for(original),
-		    original: original,
-		    used-libraries: ild.used-library-table,
-		    // This is needed in case it's a boot-library...
-		    description: ld);
+                    original: original,
+                    used-libraries: ild.used-library-table,
+                    // This is needed in case it's a boot-library...
+                    description: ld);
     ild.language-definition := ilib;
     copy-namespace-slots(ilib);
     let new-dups = ilib.library-duplicate-definitions;
@@ -1027,23 +1027,23 @@ define method make-interactive-language-definition
     /*
       let new-definers = ilib.library-definer-references;
       for (refs keyed-by b in original.library-definer-references)
-	new-definers[b] := copy-sequence(refs);
+        new-definers[b] := copy-sequence(refs);
       end;
     */
     let new-definitions = ilib.namespace-local-bindings;
     for (lb keyed-by key in original.namespace-local-bindings)
       let imodule = defined?(lb) &
-	             make-interactive-module(ild, lb.library-binding-value);
+                     make-interactive-module(ild, lb.library-binding-value);
       debug-assert(lb.library-binding-home == original);
       new-definitions[key] := make(<library-binding>,
-				    name: lb.name,
-				    home: ilib,
-				    exported?: lb.exported?,
-				    value: imodule);
+                                    name: lb.name,
+                                    home: ilib,
+                                    exported?: lb.exported?,
+                                    value: imodule);
     end;
     // repopulate imported-name-cache
     do(method(imported-name)
-	   lookup-name(ilib, imported-name, default: $name-not-imported)
+           lookup-name(ilib, imported-name, default: $name-not-imported)
        end,
        original.imported-name-cache.key-sequence);
     ilib
@@ -1058,34 +1058,34 @@ define function used-libraries-for-target
   let table = make(<ordered-object-table>);
   for (ul keyed-by name in ld.used-library-table)
     let ild = lookup-interactive-context(target,
-					 ul.used-library-description,
-					 force-shadow?: #f);
+                                         ul.used-library-description,
+                                         force-shadow?: #f);
     table[name] := make(<used-library>,
-			description: ild,
-			model-change-count: ild.language-definition-change-count,
-			major-version: ul.used-library-major-version,
-			minor-version: ul.used-library-minor-version,
-			binding: ul.used-library-binding,
-			count: 0);
+                        description: ild,
+                        model-change-count: ild.language-definition-change-count,
+                        major-version: ul.used-library-major-version,
+                        minor-version: ul.used-library-minor-version,
+                        binding: ul.used-library-binding,
+                        count: 0);
   end;
   table
 end;
 
-define method make-interactive-module 
+define method make-interactive-module
     (ild :: <interactive-library-description>, original :: <full-module>)
   let ilib = ild.language-definition;
   debug-assert(original.namespace-original-library
-		 == ild.interactive-library-project-library);
+                 == ild.interactive-library-project-library);
   let space = make(interactive-class-for(original),
-		   original: original,
-		   library: ilib);
+                   original: original,
+                   library: ilib);
   copy-namespace-slots(space);
   copy-table-into(space.namespace-local-bindings,
-		  original.namespace-local-bindings);
+                  original.namespace-local-bindings);
   copy-table-into(space.imported-name-cache,
-		  original.imported-name-cache);
+                  original.imported-name-cache);
   copy-table-into(space.module-definer-bindings,
-		  original.module-definer-bindings);
+                  original.module-definer-bindings);
   space
 end method;
 

@@ -19,9 +19,9 @@ define variable *debug-out* = #();
 define macro debug-out
   { debug-out (?key:expression, ?args:*) }
     => { if (member?(?key, *debug-out*))
-	   without-dependency-tracking
-	     format-out(?args);
-	   end
+           without-dependency-tracking
+             format-out(?args);
+           end
          end }
 end macro debug-out;
 

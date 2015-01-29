@@ -11,11 +11,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define compiler-sideways method compute-form-model-object
     (form :: <primitive-definition>, variable-name :: <variable-name-fragment>)
       => (model)
-  let signature 
+  let signature
     = compute-signature(form, form-signature(form));
   let primitive
-    =  make(<&primitive>, 
-            signature:       signature, 
+    =  make(<&primitive>,
+            signature:       signature,
             getter-name:     as(<symbol>, variable-name),
             side-effecting?: form.form-primitive-side-effecting?,
             stateless?:      form.form-primitive-stateless?,

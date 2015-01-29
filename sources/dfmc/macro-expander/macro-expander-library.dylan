@@ -127,13 +127,13 @@ define module dfmc-macro-expander
     make-braces-fragment;
 
   // Pattern matching back-end.
- 
+
   export
     <fragment-list>,
 
     macro-main-rule-match-error,
     macro-aux-rule-match-error,
-   
+
     match-body-part, match-body-part-strict,
     match-list-part, match-list-part-strict,
 

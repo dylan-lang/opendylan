@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 ///
-/// These are general utilities used in the typist, but which aren't 
+/// These are general utilities used in the typist, but which aren't
 /// themselves about type definition, checking, or inference.  Possibly
 /// they should go somewhere else.  Feel free to do the right thing.
 ///
@@ -26,13 +26,13 @@ end;
 
 define function print-separated-collection(coll :: <collection>,
                                            #key stream      = *standard-output*,
-                                                printer     = print-object, 
-                                                separator   = ", ", 
+                                                printer     = print-object,
+                                                separator   = ", ",
                                                 conjunction = #f)
                                           => (coll :: <collection>)
   // [How many times have you re-written this?  (CLIM users need not apply.)]
   //
-  // Print a collection of values on stream.  Put separater between adjacent 
+  // Print a collection of values on stream.  Put separater between adjacent
   // elements.  If conjunction is supplied, it goes between the last 2 elements
   // instead of the separator; spaces get put around it.  E.g.: 1, 2, 3, and 4
   //
@@ -85,7 +85,7 @@ define function table=?
   // *** Is there an \= method on table I should use instead of this?
   block(bail)
     when (t1 == t2) bail(#t) end;                             // Cheap EQ check
-    map-table(t1, 
+    map-table(t1,
               method (key1, val1)
                 let val2 = element(t2, key1, default: $unfound);
                 when (unfound?(val2) | ~val=?(val1, val2))  // or different

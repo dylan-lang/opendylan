@@ -8,19 +8,19 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define macro matcher-method
-  { matcher-method ?:body end } 
-    => { method 
+  { matcher-method ?:body end }
+    => { method
              (?=env :: <match-environment>, ?=_f*_) => (failure, _f*_)
            ?body
          end }
 end macro;
 
-define method generate-rewrite-rule-expander-function 
+define method generate-rewrite-rule-expander-function
     (exp :: <rewrite-rule-expander>) => (code :: <method>)
-  let rule-env 
+  let rule-env
     = expander-aux-rule-set-env(exp);
-  let aux-methods-code 
-    = map(curry(generate-aux-rule-set-definition-function, exp, rule-env), 
+  let aux-methods-code
+    = map(curry(generate-aux-rule-set-definition-function, exp, rule-env),
           expander-aux-rule-sets(exp));
   let main-code
     = generate-main-rule-set-function
@@ -29,11 +29,11 @@ define method generate-rewrite-rule-expander-function
     = expander-intermediate-words(exp);
   /*
   if (empty?(aux-methods-code))
-    #{ let _intermediate-words_ = ?intermediate-words; 
+    #{ let _intermediate-words_ = ?intermediate-words;
        ?main-code }
   else
-    #{ let _intermediate-words_ = ?intermediate-words; 
-       local ??aux-methods-code, ...; 
+    #{ let _intermediate-words_ = ?intermediate-words;
+       local ??aux-methods-code, ...;
        ?main-code }
   end;
   */
@@ -43,7 +43,7 @@ end method;
 define thread variable *intermediate-words* = #();
 
 define method generate-main-rule-set-function (exp, rule-env, set)
-  let main 
+  let main
     = generate-rules-function(exp, rule-env, #f, rule-set-rewrite-rules(set));
   method (_f*_)
     dynamic-bind (*intermediate-words* = expander-intermediate-words(exp))
@@ -53,7 +53,7 @@ define method generate-main-rule-set-function (exp, rule-env, set)
 end method;
 
 define method generate-aux-rule-set-definition-function (exp, rule-env, set)
-  let rules-code 
+  let rules-code
     = generate-rules-function
         (exp, rule-env, set, rule-set-rewrite-rules(set));
   lookup-aux-rule-function
@@ -69,7 +69,7 @@ define method generate-rules-function (exp, rule-env, set, rules)
   end;
 end method;
 
-define method generate-match-failure-function 
+define method generate-match-failure-function
     (exp, set :: <aux-rewrite-rule-set>, rules)
   let name = expander-name(exp);
   let set-name = rule-set-name(set);
@@ -93,9 +93,9 @@ define method generate-rule-function (exp, rule-env, set, rule, more-rules)
   let bound-names = compute-bound-variable-names(pattern);
   let bound-names-size = size(bound-names);
   let match-code = generate-body-pattern-function(pattern);
-  let more-match-code 
+  let more-match-code
     = generate-rules-function(exp, rule-env, set, more-rules);
-  let rewrite-code 
+  let rewrite-code
     = generate-bound-name-aux-rule-rewrites-function
         (exp, rule-env, set, binding-matches);
   method (_f*_)
@@ -118,7 +118,7 @@ define method generate-bound-name-aux-rule-rewrites-function
     (exp, rule-env, set, binding-matches)
   collecting ()
     for (match in binding-matches)
-      let aux-set 
+      let aux-set
         = element(expander-aux-rule-set-table(exp), match-symbol-name(match),
                   default: #f);
       if (aux-set)
@@ -170,8 +170,8 @@ end method;
 define method generate-body-pattern-function (m* :: <list>)
   let (parts, n-parts) = split-at-semicolons(m*);
   generate-structure-parts-function
-    (parts, n-parts, 
-     match-body-part, match-body-part-strict, 
+    (parts, n-parts,
+     match-body-part, match-body-part-strict,
      generate-list-pattern-function);
 end method;
 
@@ -184,20 +184,20 @@ end method;
 define method generate-list-pattern-function (m* :: <list>)
   let (parts, n-parts) = split-at-commas(m*);
   generate-structure-parts-function
-    (parts, n-parts, 
-     match-list-part, match-list-part-strict, 
+    (parts, n-parts,
+     match-list-part, match-list-part-strict,
      generate-pattern-elements-function);
 end method;
 
-define method generate-structure-parts-function 
+define method generate-structure-parts-function
     (parts, n-parts, matcher, strict-matcher, submatcher)
   if (n-parts = 1)
     submatcher(parts.first);
   else
-    let actual-matcher 
+    let actual-matcher
       = if (n-parts = 2) matcher else strict-matcher end;
     let before-code = submatcher(parts.first);
-    let after-code 
+    let after-code
       = generate-structure-parts-function
           (parts.tail, n-parts - 1, matcher, strict-matcher, submatcher);
     matcher-method
@@ -235,7 +235,7 @@ define method generate-pattern-element-function
   if (fragment-name(m) ~== #"otherwise")
     next-method();
   else
-    let m* 
+    let m*
       = if (instance?(m*.head, <equal-greater-fragment>))
           m*.tail
         else
@@ -243,9 +243,9 @@ define method generate-pattern-element-function
         end;
     let m*-code = generate-pattern-elements-function(m*);
     matcher-method
-      let (failure, _f*_) = match-otherwise(_f*_); 
+      let (failure, _f*_) = match-otherwise(_f*_);
       failure | m*-code(env, _f*_);
-    end 
+    end
   end;
 end method;
 
@@ -292,13 +292,13 @@ define method generate-pattern-element-function (m :: <variable-match>, m*)
   let m*-code = generate-pattern-elements-function(m*);
   matcher-method
     let (failure, _after-f*_, _name-f*_, _type-f*_) = match-variable(_f*_);
-    failure 
+    failure
       | begin
           let (failure, _f*_) = name-code(env, _name-f*_);
-          failure 
+          failure
             | begin
                 let (failure, _f*_) = type-code(env, _type-f*_);
-                failure 
+                failure
                   | m*-code(env, _after-f*_);
               end
         end
@@ -307,16 +307,16 @@ end method;
 
 define method generate-pattern-element-function (m :: <nested-match>, m*)
   let nested-matcher = generate-nested-matcher-function(m);
-  let nested-code 
+  let nested-code
     = generate-nested-pattern-elements-function(match-nested-pattern(m));
   let m*-code = generate-pattern-elements-function(m*);
   matcher-method
     let (failure, _after-f*_, _nested-f*_) = nested-matcher(_f*_);
-    if (failure) 
+    if (failure)
       values(failure, #())
     else
       let failure = nested-code(env, _nested-f*_);
-      if (failure) 
+      if (failure)
         values(failure, #())
       else
         m*-code(env, _after-f*_)
@@ -330,11 +330,11 @@ define method generate-nested-pattern-elements-function (m*)
 end method;
 
 define method generate-nested-matcher-function (m :: <paren-match>)
-  match-parens 
+  match-parens
 end method;
 
 define method generate-nested-matcher-function (m :: <bracket-match>)
-  match-brackets 
+  match-brackets
 end method;
 
 define method generate-nested-matcher-function (m :: <brace-match>)
@@ -404,7 +404,7 @@ define method generate-function (m :: <simple-match>)
   elseif (bounded-constraint?(constraint))
     let matcher = generate-constraint-function(match-constraint(m));
     matcher-method
-      let (failure, _f*_, value) 
+      let (failure, _f*_, value)
         = matcher(_f*_, lookup-intermediate-words(env));
       lookup-match(env, index) := value;
       values(failure, _f*_);
@@ -452,7 +452,7 @@ define method generate-function (m :: <splicing-match>)
   let prefix = match-prefix(m);
   let suffix = match-suffix(m);
   matcher-method
-    let (failure, _f*_, name) 
+    let (failure, _f*_, name)
        = match-spliced-name(_f*_, prefix, suffix);
     lookup-match(env, index) := name;
     values(failure, _f*_);
@@ -474,7 +474,7 @@ define method generate-function (m :: <property-list-match>)
       collect-into(key-indexes, key-index);
       let key-symbol = match-symbol-name(key);
       let key-constraint = match-constraint-spec(key);
-      let key-default 
+      let key-default
         = generate-key-default-function(match-default-expression(key));
       collect-into(key-specs, key-symbol);
       collect-into(key-specs, key-constraint);
@@ -488,7 +488,7 @@ define method generate-function (m :: <property-list-match>)
          = apply(match-property-list,
                  _f*_, rest-constraint, key-specs);
       // break("Property list match");
-      failure 
+      failure
         | begin
             if (rest-index)
               lookup-match(env, rest-index) := _rest_;
@@ -545,19 +545,19 @@ define function lookup-intermediate-words (env)
   *intermediate-words*
 end function;
 
-define function lookup-match (env, index) 
+define function lookup-match (env, index)
   element(env, index);
 end function;
 
-define function lookup-match-setter (value, env, index) 
+define function lookup-match-setter (value, env, index)
   element(env, index) := value;
 end function;
 
-define function lookup-aux-rule-function (env, index) 
+define function lookup-aux-rule-function (env, index)
   element(env, index);
 end function;
 
-define function lookup-aux-rule-function-setter (value, env, index) 
+define function lookup-aux-rule-function-setter (value, env, index)
   element(env, index) := value;
 end function;
 

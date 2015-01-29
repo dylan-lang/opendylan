@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Support
 
-define function context-back-end 
+define function context-back-end
     (context :: dfmc-<library-description>)
     => (back-end)
   let name = dfmc-library-description-compiler-back-end-name(context);
@@ -29,9 +29,9 @@ end function;
 
 
 define macro apply-to-arg-spec
-  { apply-to-arg-spec 
-      ?fn:expression, 
-      ?arg-spec:* 
+  { apply-to-arg-spec
+      ?fn:expression,
+      ?arg-spec:*
     end }
     => { ?fn(?arg-spec) }
 
@@ -52,7 +52,7 @@ define macro back-ended-function-definer
         (?context:name :: ?type:expression, ?args:*) => (?vals:*)
       ?default-body:body
     end }
-  => 
+  =>
     { define open generic "back-end-" ## ?name
           (back-end :: dfmc-<back-end>, ?context :: ?type, ?args) => (?vals);
 
@@ -70,7 +70,7 @@ end macro;
 
 
 define macro defaulted-generic-definer
-  { define defaulted-generic ?:name 
+  { define defaulted-generic ?:name
         (?args:*) => (?vals:*)
       ?:body
     end }
@@ -85,59 +85,59 @@ end macro;
 
 
 
-define defaulted-generic source-form-symbolic-name 
-    (context :: dfmc-<library-description>, source-form :: <source-form>) 
+define defaulted-generic source-form-symbolic-name
+    (context :: dfmc-<library-description>, source-form :: <source-form>)
     => (name :: false-or(<byte-string>))
    not-yet-implemented("source-form-symbolic-name");
 end defaulted-generic;
 
 
 define function symbolic-name-source-form
-    (context :: dfmc-<library-description>, name :: <byte-string>) 
+    (context :: dfmc-<library-description>, name :: <byte-string>)
     => (sf :: false-or(<source-form>))
    not-yet-implemented("symbolic-name-source-form");
 end function;
 
 
 
-define function variable-symbolic-name 
-    (context :: dfmc-<library-description>, variable :: <variable>) 
+define function variable-symbolic-name
+    (context :: dfmc-<library-description>, variable :: <variable>)
     => (name :: false-or(<byte-string>))
    not-yet-implemented("variable-symbolic-name");
 end function;
 
 
 define function symbolic-name-variable
-    (context :: dfmc-<library-description>, name :: <byte-string>) 
+    (context :: dfmc-<library-description>, name :: <byte-string>)
     => (variable :: false-or(<variable>))
    not-yet-implemented("symbolic-name-variable");
 end function;
 
 
 
-define defaulted-generic compiled-lambda-symbolic-name 
-    (context :: dfmc-<library-description>, compiled-lambda :: <compiled-lambda>) 
+define defaulted-generic compiled-lambda-symbolic-name
+    (context :: dfmc-<library-description>, compiled-lambda :: <compiled-lambda>)
     => (name :: false-or(<byte-string>))
   #f;
 end defaulted-generic;
 
 
 define back-ended-function symbolic-name-compiled-lambda
-    (context :: dfmc-<library-description>, name :: <byte-string>, #key file-name) 
+    (context :: dfmc-<library-description>, name :: <byte-string>, #key file-name)
     => (compiled-lambda :: false-or(<compiled-lambda>))
   #f;
 end back-ended-function;
 
 
 define function symbolic-name-component-name
-    (context :: dfmc-<library-description>, name :: <byte-string>) 
+    (context :: dfmc-<library-description>, name :: <byte-string>)
     => (component-name :: false-or(<byte-string>))
   not-yet-implemented("symbolic-name-component-name");
 end function;
 
 
 define function component-name-context
-    (context :: dfmc-<library-description>, debug-target, name :: <byte-string>) 
+    (context :: dfmc-<library-description>, debug-target, name :: <byte-string>)
     => (context :: false-or(dfmc-<library-description>))
    let name = as-lowercase(name);
    block (found)
@@ -153,7 +153,7 @@ define function component-name-context
 end function;
 
 define function library-name-context
-    (context :: dfmc-<library-description>, debug-target, name :: <byte-string>) 
+    (context :: dfmc-<library-description>, debug-target, name :: <byte-string>)
     => (context :: false-or(dfmc-<library-description>))
    let name = as-lowercase(name);
    block (found)
@@ -182,10 +182,10 @@ end method;
 
 
 define back-ended-function source-position-compiled-lambda
-    (context :: dfmc-<library-description>, 
+    (context :: dfmc-<library-description>,
      sr :: dfmc-<source-record>,
      line-no :: <integer>,
-     #key interactive-only? = #t) 
+     #key interactive-only? = #t)
     => (compiled-lambda :: false-or(<compiled-lambda>),
         code-offset :: false-or(<integer>))
   values(#f, #f);
@@ -193,28 +193,28 @@ end back-ended-function;
 
 
 define back-ended-function source-form-compiled-lambda
-    (context :: dfmc-<library-description>, source-form :: <source-form>) 
+    (context :: dfmc-<library-description>, source-form :: <source-form>)
     => (compiled-lambda :: false-or(<compiled-lambda>))
   not-yet-implemented("source-form-compiled-lambda");
 end back-ended-function;
 
 
-define defaulted-generic compiled-lambda-source-form 
-    (context :: dfmc-<library-description>, compiled-lambda :: <compiled-lambda>) 
+define defaulted-generic compiled-lambda-source-form
+    (context :: dfmc-<library-description>, compiled-lambda :: <compiled-lambda>)
     => (source-form :: false-or(<source-form>))
   not-yet-implemented("compiled-lambda-source-form");
 end defaulted-generic;
 
 
-define back-ended-function source-form-compiled-lambda-symbolic-name 
-    (context :: dfmc-<library-description>, source-form :: <source-form>) 
+define back-ended-function source-form-compiled-lambda-symbolic-name
+    (context :: dfmc-<library-description>, source-form :: <source-form>)
     => (name :: false-or(<byte-string>))
   not-yet-implemented("source-form-compiled-lambda-symbolic-name");
 end back-ended-function;
 
 
 define back-ended-function compiled-lambda-symbolic-name-source-form
-    (context :: dfmc-<library-description>, name :: <byte-string>) 
+    (context :: dfmc-<library-description>, name :: <byte-string>)
     => (source-form :: false-or(<source-form>))
   not-yet-implemented("compiled-lambda-symbolic-name-source-form");
 end back-ended-function;
@@ -229,7 +229,7 @@ define defaulted-generic compiled-lambda-source-location
     (compiled-lambda :: <compiled-lambda>, code-offset :: <integer>,
      #key exact? = #t,
           line-only? = #t,
-          interactive-only? = #t) 
+          interactive-only? = #t)
     => (source-location :: false-or(<source-location>),
         exact? :: <boolean>)
   values(#f, #f);
@@ -241,7 +241,7 @@ define defaulted-generic compiled-lambda-code-offset
     (compiled-lambda :: <compiled-lambda>, source-location :: <source-location>,
      #key exact? = #t,
           line-only? = #t,
-          interactive-only? = #t) 
+          interactive-only? = #t)
     => (code-offset :: false-or(<integer>))
   #f;
 end defaulted-generic;
@@ -249,18 +249,18 @@ end defaulted-generic;
 
 
 define defaulted-generic compiled-lambda-mapped-source-locations
-    (compiled-lambda :: <compiled-lambda>, 
+    (compiled-lambda :: <compiled-lambda>,
      #key line-only? = #t,
-          interactive-only? = #t) 
+          interactive-only? = #t)
     => (locations :: <sequence>)
   #[]
 end defaulted-generic;
 
 
 define defaulted-generic compiled-lambda-mapped-code-offsets
-    (compiled-lambda :: <compiled-lambda>, 
+    (compiled-lambda :: <compiled-lambda>,
      #key line-only? = #t,
-          interactive-only? = #t) 
+          interactive-only? = #t)
     => (code-offsets :: <sequence>)
   #[]
 end defaulted-generic;
@@ -282,7 +282,7 @@ end defaulted-generic;
 
 
 
-define open generic local-variable-debug-name 
+define open generic local-variable-debug-name
     (context :: dfmc-<library-description>, var :: <local-variable>)
     => (name :: <byte-string>);
 
@@ -334,7 +334,7 @@ define back-ended-function compilation-context-initializer-symbolic-name
     (context :: dfmc-<library-description>)
     => (symbolic-name :: <byte-string>, component-name :: <byte-string>)
   no-default-error("compilation-context-initializer-symbolic-name");
-end back-ended-function; 
+end back-ended-function;
 
 
 define function compilation-context-library-name
@@ -345,7 +345,7 @@ define function compilation-context-library-name
 end function;
 
 
-define function settings-executable 
+define function settings-executable
     (#key executable = #f, #all-keys)
     => (executable :: false-or(<byte-string>))
   executable

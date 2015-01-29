@@ -17,7 +17,7 @@ define compiler-sideways method ^next? (function :: <&method>) => (value :: <boo
   ^function-next?(function)
 end method ^next?;
 
-define compiler-sideways method ^next?-setter 
+define compiler-sideways method ^next?-setter
     (new-value :: <boolean>, function :: <&method>) => (value :: <boolean>)
   ^function-next?(function) := new-value;
 end method ^next?-setter;

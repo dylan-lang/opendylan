@@ -33,11 +33,11 @@ slot:
   { constant slot ?:name :: ?:expression, ?stuff:* }
     => { constant slot ?name :: ?expression, ?stuff }
   { symbolic slot ?:name, required-init-keyword: ?keyword:token }
-    => { // slot "%" ## ?name, init-value: $unfound ; 
-         constant slot ?name ## "-name" :: <symbol>, 
+    => { // slot "%" ## ?name, init-value: $unfound ;
+         constant slot ?name ## "-name" :: <symbol>,
            required-init-keyword: ?keyword
            // required-init-keyword: coagulate(?name ## "-name")
-           // required-init-keyword: ?#"name" ## "-name" 
+           // required-init-keyword: ?#"name" ## "-name"
        }
   { ?other:* }
     => { ?other }
@@ -47,7 +47,7 @@ define macro symbolic-accessors-definer
   { define symbolic-accessors ?class:name (?supers:*)
         using ?resolver:expression
       symbolic slot ?:name, ?stuff:*; ?rest:*
-    end } 
+    end }
     => { define sideways method ?name (object) => (res)
            /*
            let value = "%" ## ?name (object);
@@ -66,18 +66,18 @@ define macro symbolic-accessors-definer
   { define symbolic-accessors ?class:name (?supers:*)
         using ?resolver:expression
       slot ?:name :: ?:expression, ?stuff:*; ?rest:*
-    end } 
-    => { define symbolic-accessors ?class (?supers) using ?resolver 
-           ?rest 
+    end }
+    => { define symbolic-accessors ?class (?supers) using ?resolver
+           ?rest
          end }
   { define symbolic-accessors ?class:name (?supers:*)
         using ?resolver:expression
       constant slot ?:name :: ?:expression, ?stuff:*; ?rest:*
-    end } 
-    => { define symbolic-accessors ?class (?supers) using ?resolver 
-           ?rest 
+    end }
+    => { define symbolic-accessors ?class (?supers) using ?resolver
+           ?rest
          end }
   { define symbolic-accessors ?:name (?supers:*) using ?resolver:expression
-    end } 
+    end }
     => { }
 end macro;

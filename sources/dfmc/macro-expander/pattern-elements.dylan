@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define abstract class <pattern-match> (<object>) 
+define abstract class <pattern-match> (<object>)
   constant slot match-source-location = #f,
     init-keyword: source-location:;
 end class;
@@ -54,12 +54,12 @@ end class;
 
 define class <rest-match> (<binding-match>) end;
 
-define class <key-match> (<binding-match>) 
+define class <key-match> (<binding-match>)
   constant slot match-default-expression = #f,
     init-keyword: default-expression:;
 end class;
 
-define class <key-sequence-match> (<sequence-match>) 
+define class <key-sequence-match> (<sequence-match>)
   constant slot match-default-expression = #f,
     init-keyword: default-expression:;
 end class;
@@ -86,7 +86,7 @@ end method;
 
 //// Main rule patterns.
 
-define abstract class <main-rule-pattern> (<structure-match>) 
+define abstract class <main-rule-pattern> (<structure-match>)
   constant slot match-main-pattern,
     required-init-keyword: main-pattern:;
 end class;
@@ -121,7 +121,7 @@ define method do-binding-matches (f, m*)
   for (m in m*) do-match-binding-matches(f, m) end;
 end method;
 
-define method do-match-binding-matches 
+define method do-match-binding-matches
     (f, m :: type-union(<fragment>, <pattern-match>))
 end method;
 
@@ -157,19 +157,19 @@ define method do-body-match-tails (f :: <function>, m*) => ()
   end;
 end method;
 
-define method do-match-body-match-tails 
+define method do-match-body-match-tails
     (f :: <function>, m :: type-union(<fragment>, <pattern-match>), m-tail)
  => ()
 end method;
 
-define method do-match-body-match-tails 
+define method do-match-body-match-tails
     (f :: <function>, m :: <simple-match>, m-tail) => ()
   if (bounded-constraint?(match-constraint(m)))
     f(m, m-tail);
   end;
 end method;
 
-define method do-match-body-match-tails 
+define method do-match-body-match-tails
     (f :: <function>, m :: <nested-match>, m-tail) => ()
   do-body-match-tails(f, match-nested-pattern(m));
 end method;

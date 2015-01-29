@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define generic type-estimate-hash (thing, hash-state) 
+define generic type-estimate-hash (thing, hash-state)
   // A hash function on <type-estimate>s with equality type-estimate-match?.
   // Hashes anything else with object-hash.
   => (hash-id :: <integer>, hash-state :: <object>);
@@ -43,8 +43,8 @@ define type-estimate-hash-rules
                                    otherwise => apply(type-estimate-hash-reduce,
                                                       #t, hash-state, s);
                                  end;
-  t :: <type-estimate-top>, hash-state    
-    <- begin 
+  t :: <type-estimate-top>, hash-state
+    <- begin
          unless (*top-hash*)
            // Not yet computed, so exploit opportunity.
            *top-hash* := object-hash(t, hash-state)
@@ -52,7 +52,7 @@ define type-estimate-hash-rules
          values(*top-hash*, hash-state)
        end;
   b :: <type-estimate-bottom>, hash-state
-    <- begin 
+    <- begin
          unless (*bottom-hash*)
            // Not yet computed, so exploit opportunity.
            *bottom-hash* := object-hash(b, hash-state)
@@ -70,21 +70,21 @@ define type-estimate-hash-rules
              type-estimate-rest-values(mv),
              type-estimate-fixed-values(mv));
   li :: <type-estimate-limited-integer>, hash-state
-    <- type-estimate-hash-reduce(#t, hash-state, 
+    <- type-estimate-hash-reduce(#t, hash-state,
                                  type-estimate-class(li),
                                  type-estimate-min(li),
                                  type-estimate-max(li));
-  subcl :: <type-estimate-limited-class>, hash-state 
-    <- type-estimate-hash-reduce(#t, hash-state, 
+  subcl :: <type-estimate-limited-class>, hash-state
+    <- type-estimate-hash-reduce(#t, hash-state,
                                  type-estimate-class(subcl),
                                  type-estimate-subclass(subcl));
-  sing :: <type-estimate-limited-instance>, hash-state 
+  sing :: <type-estimate-limited-instance>, hash-state
     <- type-estimate-hash-reduce(#t, hash-state,
                                  type-estimate-class(sing),
                                  type-estimate-singleton(sing));
   coll :: <type-estimate-limited-collection>, hash-state
-    <- type-estimate-hash-reduce(#t, hash-state, 
-                                 type-estimate-class(coll), 
+    <- type-estimate-hash-reduce(#t, hash-state,
+                                 type-estimate-class(coll),
                                  type-estimate-of(coll),
                                  type-estimate-size(coll),
                                  type-estimate-dimensions(coll));
@@ -97,7 +97,7 @@ end;
 // Actually the te here is sometimes a bare <&class> and god knows what
 // else.
 
-define inline function type-estimate-hash-reduce 
+define inline function type-estimate-hash-reduce
   (ordered?, hash-state, te :: <object>, #rest te*)
     => (hash-id :: <integer>, hash-state :: <object>)
   // Like reduce w/type-estimate-hash & merge-hash-codes, but cope w/mult values
@@ -135,7 +135,7 @@ end;
 define sealed domain make (subclass(<type-estimate-match-table>));
 define sealed domain initialize (<type-estimate-match-table>);
 
-define method table-protocol (temt :: <type-estimate-match-table>) 
+define method table-protocol (temt :: <type-estimate-match-table>)
  => (test :: <function>, hash :: <function>)
   values(type-estimate-match?, type-estimate-hash)
 end;
@@ -152,7 +152,7 @@ define method table-protocol (tepmt :: <type-estimate-pair-match-table>)
  => (test :: <function>, hash :: <function>)
   values(method (x :: <pair>, y :: <pair>) => (pair-match? :: <boolean>)
            // Match head & tail
-           type-estimate-match?(head(x), head(y)) & 
+           type-estimate-match?(head(x), head(y)) &
            type-estimate-match?(tail(x), tail(y))
          end,
          method (x :: <pair>, hash-state :: <object>) => (hash-id :: <integer>, hash-state :: <object>)

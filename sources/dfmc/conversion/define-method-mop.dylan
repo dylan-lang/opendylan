@@ -51,20 +51,20 @@ end serious-program-warning;
 define program-warning <method-visible-to-sibling-libraries>
   slot condition-variable-name,
     init-keyword: variable-name:;
-  format-string 
+  format-string
     "This method on %= is visible to sibling libraries because its "
     "argument types are all based on imported classes.";
   format-arguments
     variable-name;
 end program-warning;
 
-// TODO: If a method falls outside any sealed domain (regardless of 
+// TODO: If a method falls outside any sealed domain (regardless of
 // whether it is within others) according to this test, it becomes
 // a potentially blocking method. Hopefully, we can use this kind of
-// information to refine the checks required when a class is defined. 
+// information to refine the checks required when a class is defined.
 
 /*
-define method number-locally-defined-domains 
+define method number-locally-defined-domains
     (gf :: <&generic-function>) => (res :: <integer>)
   let var = model-variable-binding(gf);
   let local-defs = untracked-lookup-local-modifying-definitions(var);
@@ -78,13 +78,13 @@ define method number-locally-defined-domains
 end method;
 */
 
-define method check-model-at-definition 
+define method check-model-at-definition
     (m :: <&method>) => (ok? :: <boolean>)
   // Needs to be called in proper context so that various modifying
   // definition lookups look at the right set of libraries.
   debug-assert(current-library-description?(model-library(m)));
   let gf = ^method-generic-function(m);
-  // Don't need to check methods upgraded to functions or 
+  // Don't need to check methods upgraded to functions or
   // compiler-generated methods.
   let ok? = #t;
   if (single-method-generic-function?(gf) & gf ~== m)
@@ -101,7 +101,7 @@ define method check-model-at-definition
       if (~check-congruence(gf, m))
         ok? := #f;
       end;
-      // If the method and the generic are defined in the same library, 
+      // If the method and the generic are defined in the same library,
       // we can again elide a bunch of checks.
       if (~current-library-description?(model-library(gf)))
         // Simple sealing violation check.
@@ -113,21 +113,20 @@ define method check-model-at-definition
           ok? := #f;
         end;
         // Domain sealing check.
-	// TODO: THE FOLLOWING SHOULD BE HIDDEN INSIDE A
-	//       for-generic-function-explicitly-defined-external-domains 
-	// let number-local-domains = number-locally-defined-domains(gf);
-	for (domain in ^generic-function-imported-defined-domains(gf),
-	     i :: <integer> from 0)
-	  if (/* i >= number-local-domains & */
-	      ~argument-types-known-disjoint?
-		(^signature-required(^function-signature(m)),
-		 ^domain-types(domain)))
+        // TODO: THE FOLLOWING SHOULD BE HIDDEN INSIDE A
+        //       for-generic-function-explicitly-defined-external-domains
+        // let number-local-domains = number-locally-defined-domains(gf);
+        for (domain in ^generic-function-imported-defined-domains(gf),
+             i :: <integer> from 0)
+          if (/* i >= number-local-domains & */
+              ~argument-types-known-disjoint?
+                (^signature-required(^function-signature(m)),
+                 ^domain-types(domain)))
             note(<method-in-external-sealed-domain>,
                  source-location: model-source-location(m),
                  variable-name:   model-variable-name(m),
                  library-name:    model-library(domain).library-description-emit-name);
             ok? := #f;
-          
           end;
         end;
         // Leakage check.
@@ -149,12 +148,12 @@ define method check-model (m :: <&method>) => ()
   // definition lookups look at the right set of libraries.
   debug-assert(current-library-description?(model-library(m)));
   let gf = ^method-generic-function(m);
-  // Don't need to check methods upgraded to functions or 
+  // Don't need to check methods upgraded to functions or
   // compiler-generated methods.
   if (single-method-generic-function?(gf) & gf ~== m)
   elseif (gf ~== m & ~instance?(m, <&initializer-method>))
     // Duplication check.
-    let known-methods 
+    let known-methods
       = if (^method-local-only?(m))
           // We only need compare against other methods defined in this
           // library if the method has library-specific specializers.
@@ -192,12 +191,12 @@ define method check-model (m :: <&method>) => ()
   end;
 end method;
 
-define method ^generic-function-sideways? 
+define method ^generic-function-sideways?
     (gf :: <&generic-function>) => (well? :: <boolean>)
   form-sideways?(model-definition(gf))
 end method;
 
-define method ^method-sideways? 
+define method ^method-sideways?
     (m :: <&method>) => (well? :: <boolean>)
   form-sideways?(model-definition(m))
 end method;
@@ -219,11 +218,11 @@ end method;
 // description of add-method. It isn't exactly type equivalence -
 // perhaps type equivalence plus the being the same kind of type?
 
-define method methods-have-same-specializers? 
+define method methods-have-same-specializers?
     (m1 :: <&method>, m2 :: <&method>) => (well? :: <boolean>)
   let types1 = ^signature-required(^function-signature(m1));
   let types2 = ^signature-required(^function-signature(m2));
-  types1.size = types2.size 
+  types1.size = types2.size
     & every?(^type-equivalent?, types1, types2)
 end method;
 
@@ -231,13 +230,13 @@ define method ^method-local-only? (m :: <&method>) => (well? :: <boolean>)
   some-types-known-local?(model-library(m), ^function-signature(m));
 end method;
 
-define method some-types-known-local? 
+define method some-types-known-local?
     (library, sig :: <&signature>) => (well? :: <boolean>)
   let n :: <integer> = ^signature-number-required(sig);
   let req :: <simple-object-vector> = ^signature-required(sig);
   (iterate loop (i :: <integer> = 0)
-    if (i == n) 
-      #f 
+    if (i == n)
+      #f
     elseif (type-known-local?(library, req[i]))
       #t
     else
@@ -250,24 +249,24 @@ define method type-known-local? (library, type) => (well? :: <boolean>)
   #f
 end method;
 
-define method type-known-local? 
+define method type-known-local?
     (library, type :: <&class>) => (well? :: <boolean>)
   library == model-library(type)
 end method;
 
-define method type-known-local? 
+define method type-known-local?
     (library, type :: <&singleton>) => (well? :: <boolean>)
   let object = ^singleton-object(type);
   instance?(object, <&class>) & type-known-local?(library, object)
 end method;
 
-define method type-known-local? 
+define method type-known-local?
     (library, type :: <&union>) => (well? :: <boolean>)
   type-known-local?(library, ^union-type1(type))
     | type-known-local?(library, ^union-type2(type))
 end method;
 
-define method type-known-local? 
+define method type-known-local?
     (library, type :: <&subclass>) => (well? :: <boolean>)
   type-known-local?(library, ^subclass-class(type));
 end method;
@@ -296,22 +295,22 @@ end method;
 
 
 
-define method type-known-imported? 
+define method type-known-imported?
     (library, type) => (imported? :: <boolean>)
   #f
 end method;
 
-define method type-known-imported? 
+define method type-known-imported?
     (library, type :: <&class>) => (imported? :: <boolean>)
   library ~== model-library(type);
 end method;
 
-// It's often quite legitimate to define a method on a singleton of 
-// an imported class if you create the instance, so we don't really want 
+// It's often quite legitimate to define a method on a singleton of
+// an imported class if you create the instance, so we don't really want
 // to warn in that case, unless perhaps it's some kind of known
 // "interned" thing like a number or symbol.
 
-define method type-known-imported? 
+define method type-known-imported?
     (library, type :: <&singleton>) => (imported? :: <boolean>)
   let object = type.^singleton-object;
   let class = ^object-class(object);
@@ -319,24 +318,24 @@ define method type-known-imported?
     | class == dylan-value(#"<boolean>")
     | class == dylan-value(#"<symbol>")
     | if (instance?(object, <&class>) | instance?(object, <&function>))
-	library ~== model-library(object)
+        library ~== model-library(object)
       else
-	^subtype?(class, dylan-value(#"<complex>"))
+        ^subtype?(class, dylan-value(#"<complex>"))
       end if
 end method;
 
-define method type-known-imported? 
+define method type-known-imported?
     (library, type :: <&union>) => (imported? :: <boolean>)
   type-known-imported?(library, type.^union-type1)
     | type-known-imported?(library, type.^union-type2)
 end method;
 
-define method type-known-imported? 
+define method type-known-imported?
     (library, type :: <&limited-integer>) => (imported? :: <boolean>)
   type-known-imported?(library, dylan-value(#"<integer>"));
 end method;
 
-define method type-known-imported? 
+define method type-known-imported?
     (library, type :: <&subclass>) => (imported? :: <boolean>)
   type-known-imported?(library, type.^subclass-class);
 end method;

@@ -42,7 +42,6 @@ define method read-top-level-fragment
              until: (~f
                        | instance?(f, <macro-body-definition-fragment>)
                        | instance?(f, <function-call-fragment>)))
-                       
         finally
           values(f, lexer);
         end;

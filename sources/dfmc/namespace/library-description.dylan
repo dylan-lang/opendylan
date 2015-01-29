@@ -18,8 +18,8 @@ define abstract dood-class <library-description> (<compilation-context>)
   // Table mapping source records to compilation records.
   weak slot cached-library-description-record-table :: false-or(<table>) = #f,
     reinit-expression: #f;
-  // Type inference results 
-  weak slot library-type-cache = #f, 
+  // Type inference results
+  weak slot library-type-cache = #f,
     reinit-expression: #f;
   weak slot library-type-estimate-disjoint?-cache = #f,
     reinit-expression: #f;
@@ -33,7 +33,7 @@ define abstract dood-class <library-description> (<compilation-context>)
 
   weak slot library-description-system-class-init-code = #f,
     reinit-expression: #f;
-  weak slot library-description-system-gf-init-code = #f, 
+  weak slot library-description-system-gf-init-code = #f,
     reinit-expression: #f;
 
   weak slot library-owned-model-properties :: <table> = make(<table>),
@@ -52,7 +52,7 @@ define abstract dood-class <library-description> (<compilation-context>)
     reinit-expression: #f;
 end;
 
-define function library-generate-call-site-id 
+define function library-generate-call-site-id
     (ld :: <library-description>) => (res :: <integer>)
   let uid = library-description-current-call-site-id(ld);
   library-description-current-call-site-id(ld) := uid + 1;
@@ -76,7 +76,7 @@ define method library-description-record-table
     begin
       let table = make(<table>);
       for (cr in ld.library-description-compilation-records)
-	table[cr.compilation-record-source-record] := cr
+        table[cr.compilation-record-source-record] := cr
       end;
       ld.cached-library-description-record-table := table
     end
@@ -84,7 +84,7 @@ end method;
 
 define generic library-combined-back-end-data (ld :: <library-description>);
 
-define dood-class <project-library-description> 
+define dood-class <project-library-description>
     (<dood-mapped-and-owned-object>, <library-description>)
   lazy slot library-description-interface-spec = #f;
   slot library-description-interface-version = #f;
@@ -155,14 +155,14 @@ end;
 
 define thread variable *dood-current-project* = #f;
 
-define compiler-open generic dood-boot-mapped-objects 
-    (dood :: <dood>, proxies, ld :: <project-library-description>) 
+define compiler-open generic dood-boot-mapped-objects
+    (dood :: <dood>, proxies, ld :: <project-library-description>)
  => ();
 
-define method dood-boot-mapped-objects 
+define method dood-boot-mapped-objects
     (dood :: <dood>,
      proxies :: type-union(<list>, <project-library-description>),
-     ld :: <project-library-description>) 
+     ld :: <project-library-description>)
  => ()
 end method;
 
@@ -171,7 +171,7 @@ define sealed class <dfmc-dood> (<dood>) end;
 define open generic dood-dfmc-initial-segments // method in management/world
     (class :: <class>) => (segments, default-segment);
 
-define method dood-reinitialize 
+define method dood-reinitialize
     (dood :: <dfmc-dood>, object :: <project-library-description>) => ()
   next-method();
   // mapped object proxies needing booting are stashed in dood-root
@@ -179,13 +179,13 @@ define method dood-reinitialize
   // first install ld
   dood-root(dood) := object;
   library-description-project(object) := *dood-current-project*;
-  library-description-saved-change-count(object) 
+  library-description-saved-change-count(object)
     := library-description-change-count(object);
   library-description-dylan-library(object)
     := if (dylan-library-library-description?(object))
-	 object
+         object
        else
-	 find-used-library-description(object, #"dylan", canonicalize?: #f);
+         find-used-library-description(object, #"dylan", canonicalize?: #f);
        end;
   initialize-typist-library-caches(object);
   // then boot mapped-object-proxies
@@ -195,7 +195,7 @@ end method;
 
 // A description of the dylan library
 define abstract dood-class <dylan-library-description> (<library-description>)
-  weak constant slot library-description-dylan-value-cache :: <object-table> 
+  weak constant slot library-description-dylan-value-cache :: <object-table>
       = make(<object-table>),
     reinit-expression: make(<object-table>);
   weak slot library-description-dfm-copier :: false-or(<copier>) = #f,
@@ -249,18 +249,18 @@ define function write-databases?-setter (setting :: <boolean>) => ()
 end function;
 
 define function use-databases?-setter (setting :: <boolean>) => ()
-  write-databases?() := setting;  
-  read-databases?()  := setting;  
+  write-databases?() := setting;
+  read-databases?()  := setting;
 end function;
 
-define compiler-open generic install-dylan-boot-constants 
+define compiler-open generic install-dylan-boot-constants
   (ld :: <dylan-library-description>, #key force?);
 
 /// FOUR STATES:
 ///        OFF WRITE READ ON
 /// READ   NO  NO    YES  YES
 /// WRITE  NO  YES   NO   YES
-/// 
+///
 
 define method copy-in-booted-model-properties (ld :: <dylan-library-description>)
   for (properties keyed-by model in library-booted-model-properties(ld))
@@ -276,87 +276,87 @@ define function make-library-description
        | (~write-databases?() & ~dood-exists?))
     debug-out(#"driver", "Creating new LD for %s, dood-loc=%s\n", project, dood-location);
     values(make(if (dood-location & dylan-library-database?(dood-location))
-		  <dylan-project-library-description>
-		else
-		  <project-library-description>
-		end,
-		project: project,
-		location: dood-location,
-		profile-location: profile-location,
-		build-settings: build-settings),
-	   #f)
+                  <dylan-project-library-description>
+                else
+                  <project-library-description>
+                end,
+                project: project,
+                location: dood-location,
+                profile-location: profile-location,
+                build-settings: build-settings),
+           #f)
   else
     debug-out(#"driver", "Loading LD (%s) for %s from %s\n",
-	      if (dood-exists? & read-only?) "input" else "input-output" end,
-	      project, dood-location);
+              if (dood-exists? & read-only?) "input" else "input-output" end,
+              project, dood-location);
     dynamic-bind (*dood-current-project* = project)
       let (segments, default-segment)
         = dood-dfmc-initial-segments(<dfmc-dood>);
-      let dood 
-        = make(<dfmc-dood>, 
-	       name:      as(<symbol>, locator-base(as(<file-locator>, dood-location))),
-	       locator:   dood-location,
-	       version:   $dfmc-dood-version,
-	       if-exists: if (dood-exists?) #f else #"replace" end,
-	       direction: if (dood-exists? & read-only?)
-			    #"input"
-			  else
-			    #"input-output"
-			  end,
-	       segments:        segments,
-	       default-segment: default-segment);
+      let dood
+        = make(<dfmc-dood>,
+               name:      as(<symbol>, locator-base(as(<file-locator>, dood-location))),
+               locator:   dood-location,
+               version:   $dfmc-dood-version,
+               if-exists: if (dood-exists?) #f else #"replace" end,
+               direction: if (dood-exists? & read-only?)
+                            #"input"
+                          else
+                            #"input-output"
+                          end,
+               segments:        segments,
+               default-segment: default-segment);
       let ld = dood-root(dood);
       if (ld)
-	debug-out(#"driver", " [Got vers %s of %s]\n",
-		  ld.library-description-change-count, ld);
-	debug-assert((dylan-library-database?(dood-location) & #t)
-		       == (dylan-library-library-description?(ld) & #t));
-	ld.library-description-database-location := dood-location;
-	ld.library-description-profile-location  := profile-location;
-	when (read-only?)
-	  ld.library-description-build-location := #f;
-	end;
-	ld.library-description-project := project;
-	ld.library-description-dood := dood;
-	when (load-namespace? &
-		ld.language-definition &
-		~ld.compilation-definitions-inconsistent?)
-	  // Force loading of used-library tables all the way down, to
-	  // establish all name -> ld mappings now so never have to ask the
-	  // project manager later.
-	  all-library-descriptions(ld);
-	  // Invalidate if anything changed with used libraries.
-	  // TODO: We don't actually retract since we don't really have
-	  // permission to do compilation-like stuff at this point.  But
-	  // maybe it doesn't matter, and we should retract?
-	  when (any-changed-used-library?(ld))
-	    ld.compilation-definitions-inconsistent? := #t;
-	  end;
-	end;
-	if (dylan-library-library-description?(ld))
-	  install-dylan-boot-constants(ld, force?: #f);
-	  copy-in-booted-model-properties(ld);
-	end;
-	values(ld, dood-exists?)
+        debug-out(#"driver", " [Got vers %s of %s]\n",
+                  ld.library-description-change-count, ld);
+        debug-assert((dylan-library-database?(dood-location) & #t)
+                       == (dylan-library-library-description?(ld) & #t));
+        ld.library-description-database-location := dood-location;
+        ld.library-description-profile-location  := profile-location;
+        when (read-only?)
+          ld.library-description-build-location := #f;
+        end;
+        ld.library-description-project := project;
+        ld.library-description-dood := dood;
+        when (load-namespace? &
+                ld.language-definition &
+                ~ld.compilation-definitions-inconsistent?)
+          // Force loading of used-library tables all the way down, to
+          // establish all name -> ld mappings now so never have to ask the
+          // project manager later.
+          all-library-descriptions(ld);
+          // Invalidate if anything changed with used libraries.
+          // TODO: We don't actually retract since we don't really have
+          // permission to do compilation-like stuff at this point.  But
+          // maybe it doesn't matter, and we should retract?
+          when (any-changed-used-library?(ld))
+            ld.compilation-definitions-inconsistent? := #t;
+          end;
+        end;
+        if (dylan-library-library-description?(ld))
+          install-dylan-boot-constants(ld, force?: #f);
+          copy-in-booted-model-properties(ld);
+        end;
+        values(ld, dood-exists?)
       else
-	debug-out(#"driver", " [No ld in DB, making new one]\n");
-	// TODO: this needs to be a user warning, and needs to fix 
-	// itself up.
-	// if (dood-exists?) error("Bogus database in %s", dood-location) end;
-	values(dood-root(dood)
-		 := make(// TODO: this check should not happen for users, just for
-			 // developers!  Users shouldn't compile the dylan library...
-			 if (dylan-library-database?(dood-location))
-			   <dylan-project-library-description>
-			 else
-			   <project-library-description>
-			 end,
-			 project: project,
-			 location: dood-location,
-			 profile-location: profile-location,
-			 build-settings: build-settings,
-			 dood: dood),
-	       dood-exists?)
+        debug-out(#"driver", " [No ld in DB, making new one]\n");
+        // TODO: this needs to be a user warning, and needs to fix
+        // itself up.
+        // if (dood-exists?) error("Bogus database in %s", dood-location) end;
+        values(dood-root(dood)
+                 := make(// TODO: this check should not happen for users, just for
+                         // developers!  Users shouldn't compile the dylan library...
+                         if (dylan-library-database?(dood-location))
+                           <dylan-project-library-description>
+                         else
+                           <project-library-description>
+                         end,
+                         project: project,
+                         location: dood-location,
+                         profile-location: profile-location,
+                         build-settings: build-settings,
+                         dood: dood),
+               dood-exists?)
       end if
     end dynamic-bind
   end
@@ -366,7 +366,7 @@ end function;
 define method close-library-description (ld :: <project-library-description>)
   if (~empty?(ld.project-library-interactive-contexts))
     error("Bug: cannot close a compilation context "
-	    "with interactive contexts open")
+            "with interactive contexts open")
   end;
   ld.library-description-built? := #f;
   ld.library-description-build-location := #f;
@@ -390,7 +390,7 @@ define function dylan-library-database? (location :: <locator>)
   locator-base(location) = "dylan"
 end function;
 
-// Method is over in the typist.  Done this way because of module lossage, 
+// Method is over in the typist.  Done this way because of module lossage,
 // i.e. typist classes are not available here so can't do as slot initializers.
 define compiler-open generic initialize-typist-library-caches (ld :: <compilation-context>)
   => ();
@@ -414,7 +414,7 @@ define function retract-library-warnings (ld :: <project-library-description>, s
   end;
 end function;
 
-define function retract-compilation-timings 
+define function retract-compilation-timings
     (ld :: <compilation-context>) => ()
   ld.compilation-timings := #();
 end function;
@@ -425,7 +425,7 @@ define function record-compilation-timing-property
     := pair(timing-info, ld.compilation-timings);
 end function;
 
-define function compilation-timing-properties 
+define function compilation-timing-properties
     (ld :: <compilation-context>) => (properties :: <sequence>)
   reverse(ld.compilation-timings)
 end function;
@@ -436,13 +436,13 @@ define function compilation-timing-property?
   block(return)
     for (prop in ld.compilation-timings)
       if (matching-property?(prop))
-	return(prop);
+        return(prop);
       end if;
     end for;
   end block;
 end function;
 
-define function retract-library-imported-bindings 
+define function retract-library-imported-bindings
     (ld :: <library-description>)
   retract-imported-bindings(language-definition(ld));
 end function;
@@ -457,7 +457,7 @@ define function retract-library-copiers
 end function;
 
 define function reset-language-definition (ld :: <library-description>,
-					   false-or-library)
+                                           false-or-library)
   let change-count = ld.language-definition-change-count;
   ld.language-definition-change-count
     := if (change-count == $maximum-integer) 1 else 1 + change-count end;
@@ -576,8 +576,8 @@ define function library-description-build-location-setter
 end function;
 
 define method source-record-compilation-record (ld :: <library-description>,
-						sr :: <source-record>,
-						#key default = unsupplied())
+                                                sr :: <source-record>,
+                                                #key default = unsupplied())
  => (cr-or-default)
   if (supplied?(default))
     element(ld.library-description-record-table, sr, default: default)
@@ -615,24 +615,24 @@ define method find-model-properties-in
     element(ld.library-external-model-cache, model, default: #f) |
     begin
       local method do-find (ld)
-	      lookup-owned-model-properties-in(ld, model)
-	    end method;
+              lookup-owned-model-properties-in(ld, model)
+            end method;
       let p = any?(do-find, all-used-library-descriptions(ld));
       if (p)
-	ld.library-external-model-cache[model] := p
+        ld.library-external-model-cache[model] := p
       elseif (create?)
-	new-mapped-model(model)
+        new-mapped-model(model)
       end;
     end;
 end method;
 
-define function install-owned-model-properties-in 
-    (ld :: <library-description>, model, 
+define function install-owned-model-properties-in
+    (ld :: <library-description>, model,
      properties :: type-union(<model-properties>, <dood-address-proxy>))
   let model-table = ld.library-owned-model-properties;
   // DONT OVERRIDE FRESHY WITH STALE DATABASE PROPERTIES
-  unless (instance?(properties, <dood-address-proxy>) 
-	    & element(model-table, model, default: #f))
+  unless (instance?(properties, <dood-address-proxy>)
+            & element(model-table, model, default: #f))
     model-table[model] := properties;
   end unless;
 end function;
@@ -640,9 +640,9 @@ end function;
 define function new-mapped-model (model)
  => (p :: <mapped-model-properties>)
   debug-assert(~instance?(model, <module-binding>) &
-		 ~instance?(model, <byte-character>) &
-		 ~instance?(model, <integer>),
-	       "Bug: making mapped model properties for %s", model);
+                 ~instance?(model, <byte-character>) &
+                 ~instance?(model, <integer>),
+               "Bug: making mapped model properties for %s", model);
   let m = make(<mapped-model-properties>);
   let cr = model-compilation-record(m);
   cr.compilation-record-model-properties
@@ -659,7 +659,7 @@ define function new-mapped-model (model)
   m
 end;
 
-define method clear-library-model-properties 
+define method clear-library-model-properties
     (ld :: <project-library-description>)
   do (method(cr) cr.compilation-record-model-properties := #() end,
       ld.library-description-compilation-records);
@@ -676,22 +676,22 @@ define function clear-dependent-model-properties (dep)
   unless (empty?(cr-properties))
     let il = *interactive-compilation-layer*;
     let model-table = if (il)
-			debug-assert(~cr.compilation-record-downloaded?);
-			il.mapped-model-properties-layer
-		      else
-			let ld = compilation-record-library(cr);
-			ld.library-owned-model-properties;
-		      end;
+                        debug-assert(~cr.compilation-record-downloaded?);
+                        il.mapped-model-properties-layer
+                      else
+                        let ld = compilation-record-library(cr);
+                        ld.library-owned-model-properties;
+                      end;
     cr.compilation-record-model-properties
       := remove!(cr-properties, dep,
-		 test: method (object, dep)
-			 let props 
-			   = lookup-owned-model-properties-in-table(model-table, object);
-			 if (~props | props.model-creator == dep)
-			   remove-key!(model-table, object);
-			   #t
-			 end if
-		       end method);
+                 test: method (object, dep)
+                         let props
+                           = lookup-owned-model-properties-in-table(model-table, object);
+                         if (~props | props.model-creator == dep)
+                           remove-key!(model-table, object);
+                           #t
+                         end if
+                       end method);
   end;
 end function;
 
@@ -703,9 +703,9 @@ define method clear-stale-model-properties (ld :: <library-description>)
   let stale-keys =
     collecting ()
       for (properties keyed-by object in model-table)
-	when (instance?(properties, <dood-address-proxy>))
-	  collect(object);
-	end when;
+        when (instance?(properties, <dood-address-proxy>))
+          collect(object);
+        end when;
       end for;
     end collecting;
   for (key in stale-keys)
@@ -747,8 +747,8 @@ define method binding-properties-in-context
      create?) => (p :: false-or(<canonical-module-binding-properties>))
   b.canonical-binding-properties
     | if (create?)
-	b.canonical-binding-properties
-	  := make(<canonical-module-binding-properties>)
+        b.canonical-binding-properties
+          := make(<canonical-module-binding-properties>)
       end
 end method;
 
@@ -770,7 +770,7 @@ end method;
 define sideways method compilation-record-library
     (cr :: <compilation-record>) => (ld :: <library-description>)
   library-description-in-context(current-library-description(),
-				 cr.compilation-record-original-library)
+                                 cr.compilation-record-original-library)
 end method;
 
 define method library-description-in-context
@@ -780,7 +780,7 @@ define method library-description-in-context
   ld
 end method;
 
-// HACK: NEEDED FOR DOOD BECAUSE current-library-description() 
+// HACK: NEEDED FOR DOOD BECAUSE current-library-description()
 //       WON'T YET BE ESTABLISHED
 
 define method library-description-in-context
@@ -797,12 +797,12 @@ define compiler-open generic project-source-record-name(project, sr)
  => (name :: false-or(<string>));
 
 define function library-record-id-source-record (ld :: <library-description>,
-						 id :: <string>) => sr;
+                                                 id :: <string>) => sr;
   project-record-id-source-record(ld.library-description-project, id)
 end function;
 
 define function library-source-record-id (ld :: <library-description>,
-					  sr :: <source-record>) => id;
+                                          sr :: <source-record>) => id;
   project-source-record-id(ld.library-description-project, sr)
 end function;
 
@@ -813,17 +813,17 @@ define sideways method compilation-record-name
   let ld :: <project-library-description>
     = cr.compilation-record-original-library;
   project-source-record-name(ld.library-description-project,
-			     cr.compilation-record-source-record)
+                             cr.compilation-record-source-record)
     | concatenate("SR",
-		  integer-to-string(cr.compilation-record-sequence-number))
+                  integer-to-string(cr.compilation-record-sequence-number))
 end method;
 
 //// Library external visibility predicates.
 
-// Whether a binding or object may be directly referenced from code 
+// Whether a binding or object may be directly referenced from code
 // outside its defining library, a superset of the declared exports
 // because of inlining/macros. It is assumed that the objects in
-// question have already been determined to have definitions and 
+// question have already been determined to have definitions and
 // hence a name to export.
 
 // On Windows, these predicates determine the set of dll exports for
@@ -834,7 +834,7 @@ define function enable-library-externally-visible-elements
   library-externally-visible-models(ld) := make(<object-set>);
 end function;
 
-define function model-externally-visible? 
+define function model-externally-visible?
     (model :: <object>) => (well? :: <boolean>)
   let model = standard-model-object(model);
   let ld = current-library-description();
@@ -865,11 +865,11 @@ end class;
 
 define method dood-make-source-record-proxy
     (dood :: <dood>, object :: <source-record>) => (proxy)
-  make(<dood-source-record-proxy>, 
+  make(<dood-source-record-proxy>,
        source-record-id: library-source-record-id(dood.dood-root, object))
 end method;
 
-define sideways method dood-disk-object 
+define sideways method dood-disk-object
     (dood :: <dood>, object :: <source-record>)
  => (disk-object)
   dood-as-proxy(dood, object, dood-make-source-record-proxy)
@@ -887,7 +887,7 @@ define method dood-restore-proxy
 end method;
 
 define class <dood-compilation-record-proxy> (<dood-source-record-proxy>)
-  constant slot dood-proxy-library-name,  
+  constant slot dood-proxy-library-name,
     required-init-keyword: library-name:;
 end class;
 
@@ -895,12 +895,12 @@ define method dood-make-compilation-record-proxy
     (dood :: <dood>, object :: <compilation-record>) => (proxy)
   let ld = compilation-record-original-library(object);
   let sr = compilation-record-source-record(object);
-  make(<dood-compilation-record-proxy>, 
+  make(<dood-compilation-record-proxy>,
        source-record-id: library-source-record-id(ld, sr),
        library-name:     namespace-name(language-definition(ld)));
 end method;
 
-define sideways method dood-disk-object 
+define sideways method dood-disk-object
     (dood :: <dood>, object :: <compilation-record>)
  => (disk-object)
   if (dood-root(dood) == compilation-record-original-library(object))
@@ -923,15 +923,15 @@ end method;
 
 define macro with-build-area-output
   { with-build-area-output (?stream:variable = ?ld:expression,
-			    #rest ?keys:expression)
+                            #rest ?keys:expression)
       ?body:body
     end }
     => { call-with-build-area-output(method (?stream) ?body end, ?ld, ?keys); }
 end macro with-build-area-output;
 
 define method build-area-output-locator (ld :: <library-description>,
-					 #key base, name, type,
-					 #all-keys)
+                                         #key base, name, type,
+                                         #all-keys)
   let directory = ld.library-description-build-location;
   when (directory)
     ensure-directories-exist(directory);
@@ -945,9 +945,9 @@ define method build-area-output-locator (ld :: <library-description>,
 end method build-area-output-locator;
 
 define function call-with-build-area-output (fn :: <function>,
-					     ld :: <library-description>,
-					     #rest keys,
-					     #key base, name, type)
+                                             ld :: <library-description>,
+                                             #rest keys,
+                                             #key base, name, type)
   let locator = apply(build-area-output-locator, ld, keys);
   if (locator)
     with-open-file (stream = locator, direction: #"output")
@@ -960,11 +960,11 @@ define function call-with-build-area-output (fn :: <function>,
 //     let key = name | pair(base, type);
 //     let db-alist = ld.library-description-build-output;
 //     let db-slot = any?(method(s) s.head = key & s end, db-alist) |
-//		     begin
-//		       let s = pair(key, #f);
-//		       ld.library-description-build-output := pair(s, db-alist);
-//		       s
-//		     end;
+//                     begin
+//                       let s = pair(key, #f);
+//                       ld.library-description-build-output := pair(s, db-alist);
+//                       s
+//                     end;
 //     block ()
 //       let stream = make(<string-output-stream>, direction: #"output");
 //       fn(stream);
@@ -978,15 +978,15 @@ end function call-with-build-area-output;
 
 define macro with-profile-area-output
   { with-profile-area-output (?stream:variable = ?ld:expression,
-			    #rest ?keys:expression)
+                            #rest ?keys:expression)
       ?body:body
     end }
     => { call-with-profile-area-output(method (?stream) ?body end, ?ld, ?keys); }
 end macro with-profile-area-output;
 
 define method profile-area-output-locator (ld :: <library-description>,
-					   #key base, name, type,
-					   #all-keys)
+                                           #key base, name, type,
+                                           #all-keys)
   let directory = ld.library-description-profile-location;
   when (directory)
     ensure-directories-exist(directory);
@@ -996,17 +996,17 @@ define method profile-area-output-locator (ld :: <library-description>,
     make(<file-locator>, directory: directory, name: name)
   elseif (base)
     make(<file-locator>, directory: directory, base: base, extension: type)
-  else 
-    make(<file-locator>, directory: directory, 
-	                 base: as(<string>, namespace-name(language-definition(ld))),
-	                 extension: type)
-  end 
+  else
+    make(<file-locator>, directory: directory,
+                         base: as(<string>, namespace-name(language-definition(ld))),
+                         extension: type)
+  end
 end method profile-area-output-locator;
 
 define function call-with-profile-area-output (fn :: <function>,
-					       ld :: <library-description>,
-					       #rest keys,
-					       #key base, name, type)
+                                               ld :: <library-description>,
+                                               #rest keys,
+                                               #key base, name, type)
   let locator = apply(profile-area-output-locator, ld, keys);
   if (locator)
     with-open-file (stream = locator, direction: #"output")
@@ -1030,14 +1030,14 @@ define compiler-open generic project-inter-library-binding
 // This is provided by the compiler
 // Return version of used context for which context was compiled
 define function project-used-library-version (ld, uld)
- =>  (major-ver :: <integer>, minor-ver :: <integer>, 
+ =>  (major-ver :: <integer>, minor-ver :: <integer>,
       time-stamp :: <machine-word>);
   let ul = any?(method (ul) ul.used-library-description == uld & ul end,
-		 ld.language-definition.used-libraries);
+                 ld.language-definition.used-libraries);
   debug-assert(ul, "%s not used, in project-used-library-version", uld);
   values(ul.used-library-major-version,
-	 ul.used-library-minor-version,
-	 as(<machine-word>, ul.used-library-change-count))
+         ul.used-library-minor-version,
+         as(<machine-word>, ul.used-library-change-count))
 end;
 
 define sealed class <build-info> (<object>)
@@ -1055,9 +1055,9 @@ define method record-library-build (ld :: <library-description>)
   let cr* = ld.library-description-compilation-records;
   let sr* = map-as(<vector>, compilation-record-source-record, cr*);
   ld.library-description-last-build-info := make(<build-info>,
-						 platform-name: platform-name,
-						 version: version,
-						 source-records: sr*);
+                                                 platform-name: platform-name,
+                                                 version: version,
+                                                 source-records: sr*);
   with-build-area-output(stream = ld, name: "_SRV")
     format(stream, "%s\n", platform-name);
     format(stream, "%d\n", version);
@@ -1073,28 +1073,28 @@ define function read-build-srv-file (ld :: <library-description>)
   if (location)
     local method read-int-line (stream)
             let line = read-line(stream);
-	    for (char in line,
-		 result = 0 then (result * 10) + as(<integer>, char)
-					       - as(<integer>, '0'))
-	    finally result
-	    end;
-	  end method;
+            for (char in line,
+                 result = 0 then (result * 10) + as(<integer>, char)
+                                               - as(<integer>, '0'))
+            finally result
+            end;
+          end method;
     let srv-location = merge-locators(as(<file-locator>, "_SRV"),
-				      as(<directory-locator>, location));
+                                      as(<directory-locator>, location));
     if (file-exists?(srv-location))
       with-open-file (stream = srv-location)
-	let platform-name = as(<symbol>, read-line(stream));
-	let version = read-int-line(stream);
-	let id-count = read-int-line(stream);
-	let sr* = make(<vector>, size: id-count);
-	for (index from 0 below id-count)
-	  let id = read-line(stream);
-	  sr*[index] := library-record-id-source-record(ld, id);
-	end;
+        let platform-name = as(<symbol>, read-line(stream));
+        let version = read-int-line(stream);
+        let id-count = read-int-line(stream);
+        let sr* = make(<vector>, size: id-count);
+        for (index from 0 below id-count)
+          let id = read-line(stream);
+          sr*[index] := library-record-id-source-record(ld, id);
+        end;
         make(<build-info>,
-	     platform-name: platform-name,
-	     version: version,
-	     source-records: sr*);
+             platform-name: platform-name,
+             version: version,
+             source-records: sr*);
       end with-open-file;
     end;
   end if;
@@ -1108,7 +1108,7 @@ define function current-build-info (ld :: <library-description>)
     let cr* = ld.library-description-compilation-records;
     size(sr*) == size(cr*) &
       every?(method (cr, sr) cr.compilation-record-source-record == sr end,
-	     cr*, sr*) &
+             cr*, sr*) &
       build
   end
 end function;
@@ -1118,19 +1118,19 @@ define function library-needs-linking? (ld :: <project-library-description>)
     compilation-record-needs-linking?(ld.library-description-combined-record)
   else
     any?(compilation-record-needs-linking?,
-	 ld.library-description-compilation-records)
+         ld.library-description-compilation-records)
   end;
 end;
 
-  
+
 define function library-description-built? (ld :: <project-library-description>)
   if (~library-description-personal?(ld))
     // KLUDGE: work around problem with premature reading of _SRV file..
     #t
   elseif (~ld.compiled-to-definitions? |
-	    ld.library-description-compilation-aborted? |
-	    ld.library-references-retracted-models? |
-	    ld.library-needs-linking?)
+            ld.library-description-compilation-aborted? |
+            ld.library-references-retracted-models? |
+            ld.library-needs-linking?)
 
     #f
   else
@@ -1138,23 +1138,23 @@ define function library-description-built? (ld :: <project-library-description>)
     build &
       build.build-definitions-version == ld.library-description-change-count &
       begin
-	// Force recompilation if user deletes the _SRV file, just to give
-	// them some way to control this...
-	let location = ld.library-description-build-location;
-	~location | file-exists?(merge-locators(as(<file-locator>, "_SRV"),
-						as(<directory-locator>, location)))
+        // Force recompilation if user deletes the _SRV file, just to give
+        // them some way to control this...
+        let location = ld.library-description-build-location;
+        ~location | file-exists?(merge-locators(as(<file-locator>, "_SRV"),
+                                                as(<directory-locator>, location)))
       end;
   end
 end function;
 
 define function library-description-built?-setter (val == #f,
-						   ld :: <library-description>)
+                                                   ld :: <library-description>)
   ld.library-description-last-build-info := #f;
 end function;
 
 define compiler-open generic install-library-description-sources (ld, sr*);
 
-define function save-definition-database 
+define function save-definition-database
     (ld :: <compilation-context>, #rest keys)
   with-program-conditions
     apply(ensure-database-saved, ld, keys);
@@ -1180,7 +1180,7 @@ end method;
 define compiler-open generic record-all-booted-model-properties
     (ld :: <dylan-library-description>);
 
-define method record-booted-model-properties 
+define method record-booted-model-properties
      (ld :: <dylan-library-description>, model, properties)
   when (properties)
     let booted-properties = library-booted-model-properties(ld);
@@ -1193,11 +1193,11 @@ define variable $heap-to-database-size-factor = 6;
 define method library-approximate-model-heap-size
     (ld :: <library-description>) => (res :: <integer>)
   reduce(\+, 0, map-as(<vector>, compilation-record-approximate-model-heap-size,
-		       library-description-compilation-records(ld)))
+                       library-description-compilation-records(ld)))
 end method;
 
 define method ensure-database-saved
-    (ld :: <project-library-description>, 
+    (ld :: <project-library-description>,
      #key export-only?, flush?, stats?)
   for (ld in reverse(all-library-descriptions(ld)))
     with-library-context (ld)
@@ -1206,68 +1206,68 @@ define method ensure-database-saved
       let saved-count = ld.library-description-saved-change-count;
       let flush? = ~dylan-library-library-description?(ld) & flush?;
       debug-assert(every?(compilation-record-definitions-installed?,
-      			  ld.library-description-compilation-records));
+                                ld.library-description-compilation-records));
       let dood = library-description-dood(ld);
-      if (write-databases?() 
-	    & count ~== saved-count & dood & ~dood-read-only?(dood))
-	if (export-only?)
-	  unless (ld.library-description-stripped? == #t)
-	    strip-incremental-slots(ld);
-	  end unless;
-	end if;
-	if (write-databases?())
-	  when (dylan-library-library-description?(ld))
-	    record-all-booted-model-properties(ld);
-	  end when;
-	  let number-objects = library-approximate-model-heap-size(ld);
-	  let size-estimate  = number-objects * $heap-to-database-size-factor;
-	  // format-out("number heap objects = %=\n", number-objects);
-	  dood-commit(dood, stats?: stats?, size: size-estimate);
-	  clear-stale-model-properties(ld);
-	end if;
-	if (flush?)
+      if (write-databases?()
+            & count ~== saved-count & dood & ~dood-read-only?(dood))
+        if (export-only?)
+          unless (ld.library-description-stripped? == #t)
+            strip-incremental-slots(ld);
+          end unless;
+        end if;
+        if (write-databases?())
+          when (dylan-library-library-description?(ld))
+            record-all-booted-model-properties(ld);
+          end when;
+          let number-objects = library-approximate-model-heap-size(ld);
+          let size-estimate  = number-objects * $heap-to-database-size-factor;
+          // format-out("number heap objects = %=\n", number-objects);
+          dood-commit(dood, stats?: stats?, size: size-estimate);
+          clear-stale-model-properties(ld);
+        end if;
+        if (flush?)
           flush-database(ld);
-	end if;
-	ld.library-description-saved-change-count := count;
+        end if;
+        ld.library-description-saved-change-count := count;
       elseif (flush? & saved-count > 0)
-	flush-database(ld);
+        flush-database(ld);
       end if;
     end with-library-context;
   end for;
 end method;
 
-define open generic dood-statistics-filter-set 
+define open generic dood-statistics-filter-set
     (dood :: <dood>) => (res :: <simple-object-vector>);
 
-define open generic dood-statistics-aggregate-set 
+define open generic dood-statistics-aggregate-set
     (dood :: <dood>) => (res :: <simple-object-vector>);
 
 define variable *filter-set* = vector(<collection>);
 
-define sideways method dood-statistics-filter-set 
+define sideways method dood-statistics-filter-set
     (dood :: <dood>) => (res :: <simple-object-vector>)
   *filter-set*
 end method;
 
 define variable *aggregate-set* = vector();
 
-define sideways method dood-statistics-aggregate-set 
+define sideways method dood-statistics-aggregate-set
     (dood :: <dood>) => (res :: <simple-object-vector>);
   *aggregate-set*
 end method;
 
 define method report-definition-database-statistics
-    (ld :: <project-library-description>, 
+    (ld :: <project-library-description>,
      #rest all-keys, #key force?)
   with-library-context (ld)
     let dood = library-description-dood(ld);
     format-out("\nSTATISTICS FOR %=\n", ld);
     dood-walk (dood, identity, force?: force?, parents?: #t);
     block ()
-      dood-statistics 
-	(dood, 
-	 filter-set:    dood-statistics-filter-set(dood),
-	 aggregate-set: dood-statistics-aggregate-set(dood));
+      dood-statistics
+        (dood,
+         filter-set:    dood-statistics-filter-set(dood),
+         aggregate-set: dood-statistics-aggregate-set(dood));
     afterwards
       dood-reset-walker! (dood);
     end block;
@@ -1275,7 +1275,7 @@ define method report-definition-database-statistics
 end method;
 
 define method report-recursive-definition-database-statistics
-    (ld :: <project-library-description>, 
+    (ld :: <project-library-description>,
      #rest all-keys, #key force?)
 
   let total-count = 0;
@@ -1313,7 +1313,7 @@ define method register-binding-dependent-in-context
     (ld :: <project-library-description>, b :: <module-binding>, dep)
   /*
    debug-assert(~member?(dep, b.shadowable-binding-local-dependents),
-		"Dup registered dependent", dep, b);
+                "Dup registered dependent", dep, b);
    */
   b.shadowable-binding-local-dependents
     := pair(dep, as(<list>, b.shadowable-binding-local-dependents));
@@ -1328,53 +1328,53 @@ end method;
 
 //// NAMESPACE DOOD POLICY
 
-define sealed class <dfmc-namespace-dood> (<dfmc-dood>) 
+define sealed class <dfmc-namespace-dood> (<dfmc-dood>)
   slot binding-model-not-computed-proxy = #f;
 end class;
 
 define open generic ensure-export-only (ld :: <library-description>);
 
 define method ensure-namespace-database-saved
-    (ld :: <project-library-description>, 
+    (ld :: <project-library-description>,
      #key export-only?, flush?, stats?)
   for (ld in reverse(all-library-descriptions(ld)))
     with-library-context (ld)
       let dfmc-dood
-	= library-description-dood(ld);
+        = library-description-dood(ld);
       let dfmc-dood-location
-	= dood-locator(dfmc-dood);
+        = dood-locator(dfmc-dood);
       let dood-location
-	= make(<file-locator>, 
-	       directory: locator-directory(dfmc-dood-location),
-	       base: locator-base(dfmc-dood-location),
-	       extension: "ndb");
+        = make(<file-locator>,
+               directory: locator-directory(dfmc-dood-location),
+               base: locator-base(dfmc-dood-location),
+               extension: "ndb");
       unless (dylan-library-library-description?(ld))
-	if (~file-exists?(dood-location) | 
-	      file-property(dood-location, #"creation-date")
-		> file-property(dfmc-dood-location, #"creation-date"))
-	  let (segments, default-segment)
-	    = dood-dfmc-initial-segments(<dfmc-namespace-dood>);
-	  let dood 
-	    = make(<dfmc-namespace-dood>, 
-		   name:            as(<symbol>, locator-base(as(<file-locator>, dood-location))),
-		   locator:         dood-location,
-		   version:         $dfmc-dood-version,
-		   if-exists:       #"replace",
-		   direction:       #"input-output",
-		   segments:        segments,
-		   default-segment: default-segment);
-	  dood-root(dood) := ld;
+        if (~file-exists?(dood-location) |
+              file-property(dood-location, #"creation-date")
+                > file-property(dfmc-dood-location, #"creation-date"))
+          let (segments, default-segment)
+            = dood-dfmc-initial-segments(<dfmc-namespace-dood>);
+          let dood
+            = make(<dfmc-namespace-dood>,
+                   name:            as(<symbol>, locator-base(as(<file-locator>, dood-location))),
+                   locator:         dood-location,
+                   version:         $dfmc-dood-version,
+                   if-exists:       #"replace",
+                   direction:       #"input-output",
+                   segments:        segments,
+                   default-segment: default-segment);
+          dood-root(dood) := ld;
 
-	  ensure-export-only(ld);
+          ensure-export-only(ld);
 
-	  dood-commit(dood);
-	end if;
+          dood-commit(dood);
+        end if;
       end unless;
     end with-library-context;
   end for;
 end method;
 
-define function save-namespace-database 
+define function save-namespace-database
     (ld :: <compilation-context>, #rest keys)
   with-program-conditions
     apply(ensure-namespace-database-saved, ld, keys);

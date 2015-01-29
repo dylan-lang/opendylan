@@ -6,11 +6,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //// Heaping and Linking
 
-define function mark-library-exported-bindings 
+define function mark-library-exported-bindings
     (ld :: <project-library-description>) => ()
   enable-library-externally-visible-elements(ld);
   let library = language-definition(ld);
-  without-dependency-tracking 
+  without-dependency-tracking
     when (library-description-defined?(ld))
       let variable = namespace-model-variable(library);
       let binding = untracked-lookup-binding(variable);
@@ -19,20 +19,20 @@ define function mark-library-exported-bindings
     for (library-binding in library.namespace-local-bindings)
       let module = library-binding-value(library-binding);
       if (module & exported?(library-binding))
-	let variable = namespace-model-variable(module);
-	let binding = untracked-lookup-binding(variable);
-	model-externally-visible?(binding) := #t;
+        let variable = namespace-model-variable(module);
+        let binding = untracked-lookup-binding(variable);
+        model-externally-visible?(binding) := #t;
         // Directly exported bindings
-	for (name in exported-names(module))
+        for (name in exported-names(module))
           let binding = lookup-name(module, name);
-	  if (untracked-binding-definition(binding, default: #f))
-	    model-externally-visible?(binding) := #t;
+          if (untracked-binding-definition(binding, default: #f))
+            model-externally-visible?(binding) := #t;
           end;
         end;
         // Re-exported bindings.
         for (binding in exported-imports-table(module))
           if (untracked-binding-definition(binding, default: #f))
-	    model-externally-visible?(binding) := #t;
+            model-externally-visible?(binding) := #t;
           end;
         end;
       end;
@@ -42,7 +42,7 @@ end function;
 
 
 define function ensure-library-heaps-computed (ld :: <project-library-description>,
-					       flags :: <sequence>)
+                                               flags :: <sequence>)
  => (data-size :: <integer>, code-size :: <integer>)
   block ()
     debug-out(#"internal", "Heaping and Linking:\n");
@@ -56,7 +56,7 @@ define method compute-install-link-library-heaps
     (description :: <project-library-description>,
      #rest flags, #key skip-elimination?, #all-keys)
  => (data-size :: <integer>, code-size :: <integer>)
-  let zap-dead-data? 
+  let zap-dead-data?
     = ~library-forms-dynamic?(description) & ~skip-elimination?;
   if (zap-dead-data?)
     apply(tightly-link-library-heaps, description, flags)
@@ -73,10 +73,10 @@ define method tightly-link-library-heaps
  => (data-size :: <integer>, code-size :: <integer>)
  if (*combine-object-files?*)
    let name = concatenate("_",
-			  as(<string>,
-			     description.library-description-emit-name));
+                          as(<string>,
+                             description.library-description-emit-name));
    let cr = make(<library-compilation-record>,
-		 library: description, source-record: #f, name: name);
+                 library: description, source-record: #f, name: name);
    cr.compilation-record-sequence-number := $maximum-integer;
    description.library-description-combined-record := cr;
    timing-compilation-phase ("Heaping" of description)
@@ -123,17 +123,17 @@ define method tightly-link-library-heaps
     source-record-progress-text("Generating code for %s", name);
     unless (skip-emit?)
       timing-compilation-phase ("Emitting" of description, progress?: #f, accumulate?: #t)
-	progress-line("  Emitting heap for %s.dylan", name);
-	apply(emit-compilation-record-heap, cr, flags);
-	data-size := data-size + compilation-record-data-size(cr);
-	code-size := code-size + compilation-record-code-size(cr);
+        progress-line("  Emitting heap for %s.dylan", name);
+        apply(emit-compilation-record-heap, cr, flags);
+        data-size := data-size + compilation-record-data-size(cr);
+        code-size := code-size + compilation-record-code-size(cr);
       end;
     end;
     unless (skip-link?)
       // As soon as we start linking, last build becomes invalid, so clear it.
       description.library-description-built? := #f;
       timing-compilation-phase ("Linking" of description, progress?: #f, accumulate?: #t)
-	apply(emit-library-record, current-back-end(), cr, description, flags);
+        apply(emit-library-record, current-back-end(), cr, description, flags);
       end;
     end unless;
     source-record-progress-report();
@@ -151,11 +151,11 @@ define method loosely-link-library-heaps
  => (data-size :: <integer>, code-size :: <integer>)
 
   let cr* = if (~start-at)
-	      compilation-context-records(description)
-	    else
-	      choose(method (cr) cr.compilation-record-name = start-at end,
-		     compilation-context-records(description))
-	    end;
+              compilation-context-records(description)
+            else
+              choose(method (cr) cr.compilation-record-name = start-at end,
+                     compilation-context-records(description))
+            end;
   let call-sites :: <object-table> = make(<table>);
   let data-size :: <integer> = 0;
   let code-size :: <integer> = 0;
@@ -167,18 +167,18 @@ define method loosely-link-library-heaps
       let name = cr.compilation-record-source-record.source-record-name;
       source-record-progress-text("Generating code for %s", name);
       timing-compilation-phase ("Heaping" of description, progress?: #f, accumulate?: #t)
-	progress-line("Computing heap for %s", cr);
+        progress-line("Computing heap for %s", cr);
         apply(compute-and-install-compilation-record-heap, cr, flags);
-	data-size := data-size + compilation-record-data-size(cr);
-	code-size := code-size + compilation-record-code-size(cr);
+        data-size := data-size + compilation-record-data-size(cr);
+        code-size := code-size + compilation-record-code-size(cr);
       end;
       maybe-collect-call-sites-using(cr, call-sites);
       unless (skip-link?)
-	// As soon as we start linking, last build becomes invalid, so clear it.
-	description.library-description-built? := #f;
-	timing-compilation-phase ("Linking" of description, progress?: #f, accumulate?: #t)
-	  apply(emit-library-record, current-back-end(), cr, description, flags);
-	end;
+        // As soon as we start linking, last build becomes invalid, so clear it.
+        description.library-description-built? := #f;
+        timing-compilation-phase ("Linking" of description, progress?: #f, accumulate?: #t)
+          apply(emit-library-record, current-back-end(), cr, description, flags);
+        end;
       end unless;
       source-record-progress-report();
     end when;
@@ -193,7 +193,7 @@ end method;
 //// Linking.
 
 define function ensure-library-glue-linked (ld :: <library-description>,
-					    build-settings :: <sequence>)
+                                            build-settings :: <sequence>)
   debug-out(#"internal", "Emitting Glue: %s.\n", ld);
   timing-compilation-phase ("Glue gen" of ld)
     apply(emit-glue, current-back-end(), ld, build-settings)
@@ -202,23 +202,23 @@ end function;
 
 //// profile information
 
-define method print-terse-source-location 
+define method print-terse-source-location
     (s :: <stream>, src-location, src-location-context)
   format(s, "[]");
 end method;
 
-define method print-terse-source-location 
+define method print-terse-source-location
     (s :: <stream>, f :: <compiler-range-source-location>, sf :: false-or(<compiler-range-source-location>))
   format(s, "[");
   unless (sf & as(<symbol>, source-record-name(f.source-location-source-record))
-	         == as(<symbol>, source-record-name(sf.source-location-source-record)))
+                 == as(<symbol>, source-record-name(sf.source-location-source-record)))
     format(s, "%s ", source-record-name(f.source-location-source-record));
   end unless;
-  format(s, "(%d, %d) - (%d, %d)]", 
-	 f.source-location-start-offset.source-offset-line, 
-	 f.source-location-start-offset.source-offset-column, 
-	 f.source-location-end-offset.source-offset-line, 
-	 f.source-location-end-offset.source-offset-column);
+  format(s, "(%d, %d) - (%d, %d)]",
+         f.source-location-start-offset.source-offset-line,
+         f.source-location-start-offset.source-offset-column,
+         f.source-location-end-offset.source-offset-line,
+         f.source-location-end-offset.source-offset-column);
 end method;
 
 define method maybe-collect-and-dump-call-sites
@@ -230,7 +230,7 @@ define method maybe-collect-and-dump-call-sites
   maybe-dump-call-sites(ld, call-sites);
 end method;
 
-define method maybe-collect-and-dump-call-sites-from 
+define method maybe-collect-and-dump-call-sites-from
     (ld :: <library-description>, cr :: <compilation-record>) => ()
   let call-sites = make(<object-table>);
   maybe-collect-call-sites-using(cr, call-sites);
@@ -248,28 +248,28 @@ define function lambda-source-location (object :: <&lambda>) => (loc)
     #f
   end if;
 end function;
-    
+
 define function find-a-source-location(o :: <&lambda>) => (res)
   if (model-has-definition?(o))
     o.model-source-location
-  else 
+  else
     lambda-source-location(o)
   end if;
 end function;
 
-define method maybe-collect-call-sites-using 
+define method maybe-collect-call-sites-using
     (cr :: <compilation-record>, call-sites :: <object-table>) => ()
   when (*profile-all-calls?*)
     let heap = cr.compilation-record-model-heap;
     let literals = heap.heap-defined-object-sequence;
     for (literal in literals)
       when (instance?(literal, <&profiling-call-site-cache-header-engine-node>))
-	let call = profiling-call-site-cache-header-engine-node-call(literal);
-	let lambda = lambda(environment(call));
-	let method-call-sites 
-	  = element(call-sites, lambda, default: #f)
-	      | (element(call-sites, lambda) := make(<stretchy-object-vector>));
-	add!(method-call-sites, literal);
+        let call = profiling-call-site-cache-header-engine-node-call(literal);
+        let lambda = lambda(environment(call));
+        let method-call-sites
+          = element(call-sites, lambda, default: #f)
+              | (element(call-sites, lambda) := make(<stretchy-object-vector>));
+        add!(method-call-sites, literal);
       end when;
     end for;
   end when;
@@ -280,35 +280,35 @@ define method maybe-dump-call-sites
   when (*profile-all-calls?*)
     with-profile-area-output (stream = ld, type: "calls")
       for (lambda-call-sites keyed-by lambda in call-sites)
-	print-referenced-object(lambda, stream);
-	format(stream, " ");
-	let lambda-location = find-a-source-location(lambda);
-	print-terse-source-location(stream, lambda-location, #f);
-	format(stream, "\n");
-	local method call-site-number 
-		  (call-site :: <&profiling-call-site-cache-header-engine-node>) => (res :: <integer>)
-		let call = profiling-call-site-cache-header-engine-node-call(call-site);
-		let tmp  = temporary(call);
-		if (tmp)
-		  frame-offset(tmp)
-		else 
-		  0
-		end if
-	      end method,
-              method compare-calls (cs1 :: <&profiling-call-site-cache-header-engine-node>, 
-				    cs2 :: <&profiling-call-site-cache-header-engine-node>)
-	       => (well? :: <boolean>)
-		call-site-number(cs1) < call-site-number(cs2)
-	      end method;
-	sort!(lambda-call-sites, test: compare-calls);
-	for (call-site in lambda-call-sites)
-	  let call = profiling-call-site-cache-header-engine-node-call(call-site);
-	  format(stream, "  %= ", ^profiling-call-site-cache-header-engine-node-id(call-site));
-	  let parent = ^cache-header-engine-node-parent(call-site);
-	  format(stream, "(%s) ", ^debug-name(parent) | "");
-	  print-terse-source-location(stream, computation-source-location(call), lambda-location);
-	  format(stream, "\n");
-	end for;
+        print-referenced-object(lambda, stream);
+        format(stream, " ");
+        let lambda-location = find-a-source-location(lambda);
+        print-terse-source-location(stream, lambda-location, #f);
+        format(stream, "\n");
+        local method call-site-number
+                  (call-site :: <&profiling-call-site-cache-header-engine-node>) => (res :: <integer>)
+                let call = profiling-call-site-cache-header-engine-node-call(call-site);
+                let tmp  = temporary(call);
+                if (tmp)
+                  frame-offset(tmp)
+                else
+                  0
+                end if
+              end method,
+              method compare-calls (cs1 :: <&profiling-call-site-cache-header-engine-node>,
+                                    cs2 :: <&profiling-call-site-cache-header-engine-node>)
+               => (well? :: <boolean>)
+                call-site-number(cs1) < call-site-number(cs2)
+              end method;
+        sort!(lambda-call-sites, test: compare-calls);
+        for (call-site in lambda-call-sites)
+          let call = profiling-call-site-cache-header-engine-node-call(call-site);
+          format(stream, "  %= ", ^profiling-call-site-cache-header-engine-node-id(call-site));
+          let parent = ^cache-header-engine-node-parent(call-site);
+          format(stream, "(%s) ", ^debug-name(parent) | "");
+          print-terse-source-location(stream, computation-source-location(call), lambda-location);
+          format(stream, "\n");
+        end for;
       end for;
     end with-profile-area-output;
   end when;

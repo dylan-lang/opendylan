@@ -31,7 +31,7 @@ end;
 // time of the function to which they're attached so that the lookup
 // doesn't have to be done repeatedly.
 
-define method lookup-optimizer-function 
+define method lookup-optimizer-function
     (model-or-name) => (function :: false-or(<function>))
   lookup-override-function(*optimizer-overrides*, model-or-name)
 end;

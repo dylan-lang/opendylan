@@ -47,7 +47,7 @@ define dood-class <compilation-record> (<dood-mapped-object>)
     reinit-expression: 0;
 end;
 
-define function clear-compilation-record-caches 
+define function clear-compilation-record-caches
     (cr :: <compilation-record>) => ()
   remove-all-keys!(compilation-record-inline-only-table(cr));
   cr.compilation-record-back-end-data := #f;
@@ -87,11 +87,11 @@ define constant <compilation-record-sequence>
 define constant <compilation-record-vector>
   = limited(<vector>, of: <compilation-record>);
 
-// Return the sequence of top-level-form objects evident in the 
+// Return the sequence of top-level-form objects evident in the
 // source, or #f if not yet computed.
 
 define generic compilation-record-top-level-forms
-    (cr :: <compilation-record>) 
+    (cr :: <compilation-record>)
  => (forms :: false-or(<sequence>));
 
 // Return the core set of top-level-form objects after macro-expansion.
@@ -106,7 +106,7 @@ define generic add-derived-top-level-forms
 
 define method add-derived-top-level-forms
     (cr :: <compilation-record>, forms :: <sequence>) => ()
-  compilation-record-top-level-forms(cr) 
+  compilation-record-top-level-forms(cr)
     := concatenate(forms, compilation-record-top-level-forms(cr));
 end method;
 
@@ -114,11 +114,11 @@ end method;
 define compiler-open generic retract-compilation-record-heap
     (cr :: <compilation-record>) => ();
 
-define compiler-open generic compilation-record-name 
+define compiler-open generic compilation-record-name
     (cr :: <compilation-record>) => (name :: <string>);
 
 /*
-define method compilation-record-name 
+define method compilation-record-name
     (cr :: <compilation-record>) => (name :: <string>)
   source-record-name(cr.compilation-record-source-record)
     | format-to-string("SR%d", cr.compilation-record-sequence-number);

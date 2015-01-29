@@ -9,16 +9,16 @@ Files:   macro-expander-library
          rewrite-rules
          expanders
          macro-descriptors
-	 support
-             template-compilation 
-             pattern-to-code
-             fragment-to-code
-             template-to-code
-  	   template-function
-           pattern-to-function     
-           fragment-to-function     
-           template-to-function  
-           template-references   
+         support
+         template-compilation
+         pattern-to-code
+         fragment-to-code
+         template-to-code
+         template-function
+         pattern-to-function
+         fragment-to-function
+         template-to-function
+         template-references
          constraint-parsing
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.

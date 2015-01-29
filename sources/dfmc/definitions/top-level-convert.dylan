@@ -11,7 +11,7 @@ define method as-body (t :: <template>)
     = parse-template-fragments-as
         ($start-body-constraint, template-fragments(t));
   if (failure)
-    error("Template %= wouldn't parse as a body: %s.", 
+    error("Template %= wouldn't parse as a body: %s.",
           t, failure);
   end;
   parsed-f
@@ -35,7 +35,7 @@ end method;
 
 define method boot-definitions-form? (form)
   instance?(form, <function-call-fragment>)
-    & begin 
+    & begin
         let func = fragment-function(form);
         instance?(func, <variable-name-fragment>)
           & func.fragment-identifier = #"boot-dylan-definitions"
@@ -53,7 +53,7 @@ define method top-level-convert* (parent, fragments :: <sequence>)
 end method;
 
 define method top-level-convert (parent, fragment :: <fragment>)
-  list(make(<top-level-init-form>, 
+  list(make(<top-level-init-form>,
             parent-form: parent,
             source-location: fragment-source-location(fragment),
             body:            fragment))
@@ -96,7 +96,7 @@ define method top-level-convert (parent, fragment :: <macro-call-fragment>)
       top-level-convert-using-definition(parent, definition, fragment);
     on-error (condition)
       // Pass it on for collection.
-      signal(condition); 
+      signal(condition);
       // Warn about what we're skipping.
       note(<skipping-form>,
            source-location: fragment-source-location(fragment),
@@ -107,18 +107,18 @@ define method top-level-convert (parent, fragment :: <macro-call-fragment>)
   end
 end method;
 
-define function let-fragment? 
+define function let-fragment?
     (fragment :: <local-declaration-fragment>) => (well? :: <boolean>)
   lookup-binding(fragment-macro(fragment)) == dylan-binding(#"let")
 end function;
 
-define method top-level-convert 
+define method top-level-convert
     (parent, fragment :: <local-declaration-fragment>)
  => (forms :: <sequence>)
   if (let-fragment?(fragment))
-    let bindings-inits 
+    let bindings-inits
       = make(<sequence-fragment>, fragments: fragment-list-fragment(fragment));
-    with-expansion-source-location 
+    with-expansion-source-location
         (fragment-record(fragment), fragment-source-position(fragment))
       top-level-convert(parent, #{ define variable ?bindings-inits });
     end;
@@ -128,22 +128,22 @@ define method top-level-convert
 end method;
 
 define serious-program-warning <interactive-tight-mode-definition>
-  constant slot condition-macro-name, 
+  constant slot condition-macro-name,
     required-init-keyword: macro-name:;
-  constant slot condition-library-name, 
+  constant slot condition-library-name,
     required-init-keyword: library-name:;
-  format-string 
+  format-string
     "Skipping interactive definition %s in tight mode library %s.";
-  format-arguments 
+  format-arguments
     macro-name, library-name;
 end serious-program-warning;
 
 define method top-level-convert-using-definition
-    (parent, 
-       definition :: <&definition-definition>, 
+    (parent,
+       definition :: <&definition-definition>,
        fragment :: <macro-call-fragment>)
   // Are definitions allowed?
-  if (*interactive-compilation-layer* 
+  if (*interactive-compilation-layer*
         & ~library-forms-dynamic?(current-library-description()))
     note(<interactive-tight-mode-definition>,
          source-location: fragment-source-location(fragment),
@@ -153,8 +153,8 @@ define method top-level-convert-using-definition
     // Skip by faking no definitions.
     #();
   else
-    let forms 
-      = with-expansion-source-location 
+    let forms
+      = with-expansion-source-location
             (fragment-record(fragment), fragment-source-position(fragment))
           form-expander(definition)(#f, fragment);
         end;
@@ -175,12 +175,12 @@ define method top-level-convert-using-definition
   if (lookup-binding(fragment-macro(fragment)) == dylan-binding(#"begin"))
     // strip off the begin
     macro-case (fragment-argument(fragment))
-      { ?:body } => begin 
+      { ?:body } => begin
                       top-level-convert(parent, body);
                     end;
     end;
   else
-    list(make(<top-level-init-form>, 
+    list(make(<top-level-init-form>,
              parent-form: parent,
              source-location: fragment-source-location(fragment),
              body: fragment));
@@ -189,18 +189,18 @@ end method;
 
 
 define method top-level-convert-using-definition
-    (parent, 
+    (parent,
      definition :: <expander-defining-form>,
      fragment :: <macro-call-fragment>)
   let expander = form-expander(definition);
-  let expansion 
-    = with-expansion-source-location 
+  let expansion
+    = with-expansion-source-location
           (fragment-record(fragment), fragment-source-position(fragment))
-        expander(#f, fragment); 
+        expander(#f, fragment);
       end;
   if (compiling-for-macroexpansion?())
     // Descend no further.
-    list(make(<top-level-init-form>, 
+    list(make(<top-level-init-form>,
               parent-form: parent,
               source-location: fragment-source-location(fragment),
               body: fragment));
@@ -220,10 +220,10 @@ end method;
 
 //// Conversion entry points.
 
-define method top-level-convert-forms 
+define method top-level-convert-forms
     (cr :: <compilation-record>, fragment) => (forms)
   // Is this the magic boot marker? Definitions and sources are booted
-  // separately because the definitions have to be installed in order 
+  // separately because the definitions have to be installed in order
   // to parse the sources.
   if (boot-definitions-form?(fragment))
     let parent = make(<macro-call-form>,
@@ -234,8 +234,8 @@ define method top-level-convert-forms
     for (form in forms)
       unless (form.form-parent-form) form.form-parent-form := parent end;
     end for;
-    // Don't be tempted to give these source locations bogus source 
-    // locations - it break hygienic resolution after database 
+    // Don't be tempted to give these source locations bogus source
+    // locations - it break hygienic resolution after database
     // dumping because the current dylan-user is fake.
     let sources = booted-source-sequence();
     dynamic-bind (*fragment-context* = dylan-implementation-module())

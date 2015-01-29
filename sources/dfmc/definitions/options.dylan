@@ -44,9 +44,9 @@ end macro;
 define program-warning <malformed-option>
   slot condition-variable-name,
     required-init-keyword: variable-name:;
-  format-string 
+  format-string
     "Malformed key/value option in %= - ignoring.";
-  format-arguments 
+  format-arguments
     variable-name;
 end program-warning;
 
@@ -55,10 +55,10 @@ define program-warning <unrecognized-options>
     required-init-keyword: variable-name:;
   slot condition-options,
     required-init-keyword: options:;
-  format-string 
+  format-string
     "Unrecognized options %= specified in the definition of %= "
     "- ignoring.";
-  format-arguments 
+  format-arguments
     options, variable-name;
 end program-warning;
 
@@ -69,10 +69,10 @@ define program-warning <contradictory-option>
     required-init-keyword: excluded:;
   slot condition-variable-name,
     required-init-keyword: variable-name:;
-  format-string 
+  format-string
     "Use of the option \"%=\" excludes the use of \"%=\" in the definition of %=."
     "Ignoring \"%=\".";
-  format-arguments 
+  format-arguments
     option, excluded, variable-name, excluded;
 end program-warning;
 
@@ -81,10 +81,10 @@ define program-warning <duplicated-options>
     required-init-keyword: variable-name:;
   slot condition-options,
     required-init-keyword: options:;
-  format-string 
+  format-string
     "The options %= are specified more than once in the definition of %= "
     "- using the first value of each.";
-  format-arguments 
+  format-arguments
     options, variable-name;
 end program-warning;
 

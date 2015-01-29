@@ -23,7 +23,7 @@ end method;
 /// REFERENCED-OBJECT
 
 define abstract compiler-open dood-class <referenced-object> (<object>)
-  /* JB weak */ slot users :: <list> = #(), 
+  /* JB weak */ slot users :: <list> = #(),
     // reinit-expression: #(),
     init-keyword: users:;
 end;

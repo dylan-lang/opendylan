@@ -27,7 +27,7 @@ define module dfmc-typist
   use dfmc-reader;
   use dfmc-imports;
 
-  export 
+  export
    // Classes                               Generics
    // =======                               ========
    <justification>,                    justification-rule, justification-lhs,
@@ -44,7 +44,7 @@ define module dfmc-typist
    <type-estimate-values>,             type-estimate-fixed-values,
                                        type-estimate-rest-values,
                                        type-estimate-values-ref,
-   <type-estimate-limited>, 
+   <type-estimate-limited>,
    <type-estimate-limited-integer>,    type-estimate-min, type-estimate-max,
    <type-estimate-limited-class>,
    <type-estimate-limited-instance>,   type-estimate-singleton,
@@ -57,11 +57,11 @@ define module dfmc-typist
                                        type-estimate-values,
    <type-estimate-union>,              type-estimate-unionees,
    <type-estimate-bottom>,
-   
+
    // Algebra of <type-estimate>s.
    type-estimate-normalize, type-estimate-union, type-estimate-intersection,
    type-estimate-difference, type-estimate-base, type-estimate-match?,
-   type-estimate-hash, 
+   type-estimate-hash,
 
    // Tables of <type-estimate>s hashing with type-estimate-match? invariant.
    <type-estimate-match-table>, <type-estimate-pair-match-table>,
@@ -89,6 +89,6 @@ define module dfmc-typist
 
    // Random tuulz
    print-separated-collection, map-table, table=?,
-   ^classes-guaranteed-disjoint?, \with-infer-stepping, 
+   ^classes-guaranteed-disjoint?, \with-infer-stepping,
      *stepping-infer?*, *tracing-infer?*;
 end;

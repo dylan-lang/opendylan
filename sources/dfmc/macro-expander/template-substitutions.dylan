@@ -32,16 +32,16 @@ end class;
 define abstract class <non-empty-substitution> (<substitution>) end;
 define abstract class <maybe-empty-substitution> (<substitution>) end;
 
-define abstract class <element-substitution> 
+define abstract class <element-substitution>
     (<maybe-empty-substitution>, <variable-substitution>)
 end class;
-define abstract class <sequence-substitution> 
+define abstract class <sequence-substitution>
     (<maybe-empty-substitution>, <variable-substitution>)
 end class;
 
 define class <simple-element-substitution> (<element-substitution>) end;
 
-define abstract class <name-substitution> 
+define abstract class <name-substitution>
     (<non-empty-substitution>, <variable-substitution>)
 end class;
 
@@ -72,7 +72,7 @@ end class;
 
 define class <macro-call-substitution> (<call-substitution>) end;
 
-define class <aux-rule-call-substitution> (<call-substitution>) 
+define class <aux-rule-call-substitution> (<call-substitution>)
   constant slot element-rule-name,
     required-init-keyword: rule-name:;
   slot element-aux-rule-env :: <simple-object-vector>;
@@ -81,27 +81,27 @@ end class;
 
 //// Iteration.
 
-define method do-template-substitutions 
+define method do-template-substitutions
     (f :: <function>, seq :: <sequence>) => ()
   for (elt in seq) do-template-substitutions(f, elt) end;
 end method;
 
-define method do-template-substitutions 
+define method do-template-substitutions
     (f :: <function>, elt :: <object>) => ()
   // do nothing
 end method;
 
-define method do-template-substitutions 
+define method do-template-substitutions
     (f :: <function>, elt :: <substitution>) => ()
   f(elt);
 end method;
 
-define method do-template-substitutions 
+define method do-template-substitutions
     (f :: <function>, elt :: <splicing-substitution>) => ()
   do-template-substitutions(f, element-name-substitution(elt));
 end method;
 
-define method do-template-substitutions 
+define method do-template-substitutions
     (f :: <function>, elt :: <nested-fragment>) => ()
   do-template-substitutions(f, fragment-nested-fragments(elt));
 end method;

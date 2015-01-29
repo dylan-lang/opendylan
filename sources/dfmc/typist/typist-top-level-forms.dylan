@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/// This is the main interface called by the compile driver.  Called for 
+/// This is the main interface called by the compile driver.  Called for
 /// effect on the cache, which is stored in the library description.
 define generic type-estimate-top-level-form(form  :: <top-level-form>)
   => ();
@@ -53,7 +53,7 @@ end;
 
 define type-estimate-top-level-form-rules
   // Rules for type-estimate-top-level-form.
-  form :: <top-level-form> 
+  form :: <top-level-form>
     // Temporary punt method so things will work in the interim.
     <- typist-chatter("NOP'd on %=\n", form);
   form :: <macro-call-form>

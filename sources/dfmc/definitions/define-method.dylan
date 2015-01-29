@@ -15,7 +15,7 @@ end;
 
 define packed-slots form-properties (<method-defining-form>, <function-defining-form>)
   boolean slot form-upgrade? = #t,    // vs. not-upgrade
-    init-keyword: upgrade?:;  
+    init-keyword: upgrade?:;
 end packed-slots;
 
 define method form-class (form :: <method-defining-form>)
@@ -42,9 +42,9 @@ end method;
 
 define leaf packed-slots form-properties (<method-definition>, <method-defining-form>)
   boolean slot form-sealed? = #f,    // vs. open
-    init-keyword: sealed?:;  
+    init-keyword: sealed?:;
   boolean slot form-sideways? = #f, // vs. upwards (maybe!)
-    init-keyword: sideways?:;  
+    init-keyword: sideways?:;
 end packed-slots;
 
 /*
@@ -79,7 +79,7 @@ define method form-define-word
   #"method"
 end method;
 
-define method form-compile-stage-only? 
+define method form-compile-stage-only?
     (form :: <method-definition>) => (well? :: <boolean>)
   let binding = form-variable-binding(form);
   let gf-def = untracked-binding-definition(binding);
@@ -126,7 +126,7 @@ define function do-define-method (fragment, mods, name, signature-and-body)
     let domain-fragment
       = generate-implicit-domain-definition-fragment(method-definition);
     pair(method-definition,
-	 top-level-convert(method-definition, domain-fragment))
+         top-level-convert(method-definition, domain-fragment))
   else
     list(method-definition)
   end
@@ -135,7 +135,7 @@ end function;
 define function generate-implicit-domain-definition-fragment
     (form :: <method-definition>) => (fragment)
   let name = form-variable-name(form);
-  let required-specs 
+  let required-specs
     = spec-argument-required-variable-specs(form-signature(form));
   let type-expressions
     = map(spec-type-expression, required-specs);
@@ -145,7 +145,7 @@ define function generate-implicit-domain-definition-fragment
       else
         #{ }
       end;
-  // TODO: The need for this as-body is to work around dubious template 
+  // TODO: The need for this as-body is to work around dubious template
   // hygiene.
   as-body
     (#{ define ?modifiers sealed domain ?name (??type-expressions, ...) });
@@ -167,10 +167,10 @@ define property <method-sideways-property> => sideways?: = #f
   value sideways = #t;
   // The following becomes #f when the compiler is being compiled as a
   // single component.
-  value compiler-sideways = #t; 
+  value compiler-sideways = #t;
 end property;
 
-define property <method-inline-property> 
+define property <method-inline-property>
     => inline-policy: = #"default-inline"
   value inline         = #"inline";
   value inline-only    = #"inline-only";
@@ -192,7 +192,7 @@ end function;
 
 // Signature parsing.
 
-define function parse-method-signature 
+define function parse-method-signature
     (name, sig-fragment) => (signature, body)
   let (sig-spec, body)
     = parse-signature-as
@@ -207,7 +207,7 @@ end method;
 
 // Default a #next next-method if necessary.
 
-define function ensure-next-method-binding 
+define function ensure-next-method-binding
     (sig :: <method-signature-spec>) => ()
   unless (spec-argument-next-variable-spec(sig))
     spec-argument-next-variable-spec(sig)
@@ -221,7 +221,7 @@ end function;
 define serious-program-warning <method-not-on-generic-function>
   slot condition-definition,
     required-init-keyword: definition:;
-  format-string 
+  format-string
     "This method extends the definition %= which does not define a "
     "generic function - ignoring.";
   format-arguments definition;
@@ -244,13 +244,13 @@ define method install-top-level-form-bindings
   let def = ~instance?(def, <missing-definition>) & def;
   if (~def & binding-imported-into-library?(binding))
     note(<method-on-undefined-variable>,
-	 source-location: form-source-location(form),
-	 variable: binding);
+         source-location: form-source-location(form),
+         variable: binding);
     ignore-modifying-definition(name, form);
   elseif (def & ~instance?(def, <generic-definition>))
     note(<method-not-on-generic-function>,
-	 source-location: form-source-location(form),
-	 definition:      def);
+         source-location: form-source-location(form),
+         definition:      def);
     ignore-modifying-definition(name, form);
   else
     if (~def)
@@ -258,10 +258,10 @@ define method install-top-level-form-bindings
       // definition, since otherwise would have generated an implicit def
       // last time around and name would be defined.
       // TODO: While hygiene is suspect, ensure the result of constructing
-      // an implicit definition is in the same place as the generating 
+      // an implicit definition is in the same place as the generating
       // form.
       with-fragment-info (name)
-	add-implicit-generic-definition(form);
+        add-implicit-generic-definition(form);
       end;
     end;
     add-modifying-definition(name, form);
@@ -293,12 +293,12 @@ define method uninstall-form-models (form :: <modifying-form>)
     // At this point we should have no references to modifying models of
     // the binding.
     debug-assert((untracked-binding-model-object-if-computed(binding) ~==
-		   form.form-model) |
-		  // Could be in the middle of retracting...
-		  // (really want to test stage-being-retracted? but that's
-		  // not available here)
-		  ~untracked-binding-definition(binding).form-models-installed?,
-		 "Dangling single-method GF model!");
+                   form.form-model) |
+                  // Could be in the middle of retracting...
+                  // (really want to test stage-being-retracted? but that's
+                  // not available here)
+                  ~untracked-binding-definition(binding).form-models-installed?,
+                 "Dangling single-method GF model!");
     form.form-model := #f;
   end;
 end method;
@@ -318,7 +318,7 @@ define function add-implicit-generic-definition (form :: <method-definition>)
   let required-fragments
     = map(spec-variable-name, spec-argument-required-variable-specs(sig-spec));
   let rest-fragment
-    = pattern == #"variable" 
+    = pattern == #"variable"
         & spec-variable-name(spec-argument-rest-variable-spec(sig-spec));
   add-implicit-generic-definition-from-pattern
     (form, form-variable-name(form), pattern, required-fragments, rest-fragment);
@@ -334,11 +334,11 @@ define function add-implicit-generic-definition-from-pattern
   */
   let optional-fragments
     = select (pattern)
-        #"fixed"    
+        #"fixed"
           => #{ };
-        #"variable" 
+        #"variable"
           => #{ #rest ?rest-fragment };
-        #"keyword"  
+        #"keyword"
           => #{ #key };
       end;
   let template
@@ -376,8 +376,8 @@ end function;
 
 // Pattern is one of #"fixed", #"variable", and #"keyword".
 
-define function method-definition-argument-pattern 
-    (form :: <method-definition>) 
+define function method-definition-argument-pattern
+    (form :: <method-definition>)
       => (pattern :: <symbol>, required :: <integer>)
   let sig-spec = form-signature(form);
   let pattern = case
@@ -398,7 +398,7 @@ define method add-local-definition
 end method;
 
 define inline method add-in-order(c :: <collection>, x,
-				  #key test = \==)
+                                  #key test = \==)
   let found? = #f;
   collecting ()
     for (e in c)
@@ -419,7 +419,7 @@ define method form-handled-by-make-when-dynamic?
   form-class(form) == #"initializer"
     | begin
         let parent = form.form-parent-form;
-        // most commonly parent == #f, so check that first for speed even 
+        // most commonly parent == #f, so check that first for speed even
         // though it's redundant with the other checks.
         parent & instance?(parent, <slot-definition>)
       end
@@ -427,7 +427,7 @@ end method;
 
 //// Utilities.
 
-define inline function choose-instances 
+define inline function choose-instances
     (type :: <type>, sequence :: <sequence>) => (subsequence :: <sequence>)
   choose(rcurry(instance?, type), sequence)
 end function;

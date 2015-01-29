@@ -8,14 +8,14 @@ define function install-interactive-layer-sources
     (layer :: <interactive-layer>, sr*)
   // see install-library-description-sources
   let cr* = map-as(<compilation-record-vector>,
-		   method (sr :: <source-record>)
-		     make(<interactive-compilation-record>,
-			  library: #f,
-			  source-record: sr)
-		   end method,
-		   sr*);
+                   method (sr :: <source-record>)
+                     make(<interactive-compilation-record>,
+                          library: #f,
+                          source-record: sr)
+                   end method,
+                   sr*);
   let known = layer.interactive-layer-base.library-description-compilation-records.size;
-  // Number the compilation records to be contiguous with the known set, so that 
+  // Number the compilation records to be contiguous with the known set, so that
   // the "name" of the compilation record doesn't change when there's a merge.
   for (cr in cr*, index from known by 1)
     cr.compilation-record-sequence-number := index;
@@ -38,9 +38,9 @@ define function ensure-layer-compiled (layer :: <interactive-layer>, flags, #key
   ensure-library-optimized(layer);
   heap? & ensure-layer-heaps-computed(layer, flags);
 end function;
-  
+
 define function ensure-layer-heaps-computed (layer :: <interactive-layer>,
-					     flags :: <sequence>)
+                                             flags :: <sequence>)
   debug-out(#"internal", "Heaping:");
   timing-compilation-phase ("Heaping" of layer)
 
@@ -48,9 +48,9 @@ define function ensure-layer-heaps-computed (layer :: <interactive-layer>,
 
     for (cr in compilation-context-records(layer))
       unless (cr.compilation-record-model-heap)
-	progress-line("Computing heap for %s", cr);
-	with-dependent ($compilation of cr)
-	  apply(compute-and-install-compilation-record-heap, cr, flags);
+        progress-line("Computing heap for %s", cr);
+        with-dependent ($compilation of cr)
+          apply(compute-and-install-compilation-record-heap, cr, flags);
         end;
       end;
     end;
@@ -75,16 +75,16 @@ define function execute-source
         debug-assert(~layer.compiled-to-definitions?);
         compute-library-definitions(layer);
         debug-assert(~any?(compilation-record-model-heap,
-			   layer.compilation-context-records));
+                           layer.compilation-context-records));
         ensure-layer-compiled(layer, flags, heap?: ~interpret?);
         // ALL SET, NOW DOWNLOAD!
         let tid
-	  = if (interpret?)
-	      ensure-library-interpreted(layer, trace?: trace?, results?: #t); 
-	    else 
-	      skip-link? | apply(link-and-download, current-back-end(),
-				 layer, runtime-context, flags);
-	    end if;
+          = if (interpret?)
+              ensure-library-interpreted(layer, trace?: trace?, results?: #t);
+            else
+              skip-link? | apply(link-and-download, current-back-end(),
+                                 layer, runtime-context, flags);
+            end if;
         merge-interactive-layer(layer, tid);
         tid
       end dynamic-bind;
@@ -139,20 +139,20 @@ define method execute-definition-removal
   end with-program-conditions;
 end /* function */;
 
-define method macroexpand-source 
+define method macroexpand-source
     (ld :: <library-description>, sr :: <source-record>,
        #key expansion-stream :: false-or(<stream>) = #f)
  => (warnings :: <sequence>)
   let ild = lookup-interactive-context(#"dummy-macroexpansion-target", ld);
   block ()
-    macroexpand-source(ild, sr, 
+    macroexpand-source(ild, sr,
                        expansion-stream: expansion-stream);
   cleanup
     close-library-description(ild);
   end;
 end method;
 
-define method macroexpand-source 
+define method macroexpand-source
     (ild :: <interactive-library-description>, sr :: <source-record>,
        #key expansion-stream :: false-or(<stream>) = #f)
  => (warnings :: <sequence>)

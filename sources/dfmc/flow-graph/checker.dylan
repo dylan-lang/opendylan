@@ -15,13 +15,13 @@ define thread variable *checker-message* = #f;
 
 define method invariant-error (message, #rest arguments)
   error(make(<invariant-violation>,
-	     format-string:
-	       if (*checker-message*)
-		 concatenate(*checker-message*, message)
-	       else
-		 message
-	       end if,
-	     format-arguments: arguments))
+             format-string:
+               if (*checker-message*)
+                 concatenate(*checker-message*, message)
+               else
+                 message
+               end if,
+             format-arguments: arguments))
 end method invariant-error;
 
 define method ensure (condition, message, #rest arguments) => ();
@@ -36,11 +36,11 @@ end method ensure;
 
 define method ensure-invariants (f :: <&lambda>, #key before, after) => ();
   dynamic-bind (*checker-message* =
-		  case
-		    before => format-to-string("before %s: ", before.as-lowercase);
-		    after  => format-to-string("after %s: ",  after.as-lowercase);
-		      otherwise #f
-		  end case)
+                  case
+                    before => format-to-string("before %s: ", before.as-lowercase);
+                    after  => format-to-string("after %s: ",  after.as-lowercase);
+                      otherwise #f
+                  end case)
     ensure-invariants*(f);
   end dynamic-bind;
   values()
@@ -70,13 +70,13 @@ define function check-lambda (f) => ();
   let outer-lambda = lambda-environment(e.outer);
   if (instance?(outer-lambda, <lambda-lexical-environment>))
     ensure(member?(e, outer-lambda.inners),
-	   "%= has outer lambda environment %=, but is not among %=",
-	   e, outer-lambda, outer-lambda.inners);
+           "%= has outer lambda environment %=, but is not among %=",
+           e, outer-lambda, outer-lambda.inners);
   end if;
   for (sub-e in e.inners)
     ensure(lambda-environment(sub-e.outer) == e,
-	   "%= is an inner environment of %=, but its outer lambda environment is %=",
-	   sub-e, e, lambda-environment(sub-e.outer));
+           "%= is an inner environment of %=, but its outer lambda environment is %=",
+           sub-e, e, lambda-environment(sub-e.outer));
   end for;
 end function check-lambda;
 
@@ -96,7 +96,7 @@ define method check-computation-counts (c :: <computation>, forwards, backs)
     let fro = count(forward-c.backs, c);
     ensure(to == fro,
            "%= has %= %= links to %= with %= %= links back",
-	   c, to, forwards, forward-c, fro, backs);
+           c, to, forwards, forward-c, fro, backs);
   end for;
 end method check-computation-counts;
 */
@@ -110,15 +110,15 @@ define method ensure-environment-invariants
   if (c.temporary)
     ensure(c.temporary.generator == c,
            "%= defines %=, but is not the registered definer",
-	   c, c.temporary);
+           c, c.temporary);
     check-environment(c.temporary, c, f);
   end if;
   do-used-temporaries
     (method (t)
        if (t)
-	 ensure(member?(c, t.users),
-		"%= uses %=, but is not a registered user", c, t);
-	 check-environment(t, c, f);
+         ensure(member?(c, t.users),
+                "%= uses %=, but is not a registered user", c, t);
+         check-environment(t, c, f);
        end if;
      end,
      c);
@@ -129,11 +129,11 @@ define method check-environment (temporary, computation, function)
   block (exit)
     for (env = function.environment then env.outer, while: env)
       if (env == t-env)
-	exit();
+        exit();
       end if;
     end for;
     invariant-error("%= uses %= in %=, but environment %= not in scope",
-	            computation, temporary, function, temporary.environment);
+                    computation, temporary, function, temporary.environment);
   end block
 end method check-environment;
 
@@ -170,12 +170,12 @@ end method check-computation;
 define method check-computation (c :: <binary-merge>) => ();
   next-method();
   ensure(if (c.temporary.multiple-values?)
-	   multiple-values?(merge-left-value(c)) &
-	     multiple-values?(merge-right-value(c))
-	 else
-	   ~multiple-values?(merge-left-value(c)) &
-	     ~multiple-values?(merge-right-value(c))
-	 end if,
+           multiple-values?(merge-left-value(c)) &
+             multiple-values?(merge-right-value(c))
+         else
+           ~multiple-values?(merge-left-value(c)) &
+             ~multiple-values?(merge-right-value(c))
+         end if,
          "disagreement on multiple values in %=", c)
 end method check-computation;
 
@@ -183,10 +183,10 @@ define method check-computation (c :: <temporary-transfer-computation>)
  => ();
   next-method();
   ensure(if (c.temporary.multiple-values?)
-	   multiple-values?(computation-value(c))
-	 else
-	   ~multiple-values?(computation-value(c))
-	 end if,
+           multiple-values?(computation-value(c))
+         else
+           ~multiple-values?(computation-value(c))
+         end if,
          "disagreement on multiple values in %=", c)
 end method check-computation;
 
@@ -217,7 +217,7 @@ end method check-computation;
 
 define method check-computation (c :: <exit>) => ();
   ensure(member?(c, c.entry-state.exits),
-	 "%= is not a member of its entry-state.exits %=",
-	 c, c.entry-state.exits);
+         "%= is not a member of its entry-state.exits %=",
+         c, c.entry-state.exits);
 end method check-computation;
 

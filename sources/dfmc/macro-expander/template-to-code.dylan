@@ -6,25 +6,25 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define method generate-substitution 
+define method generate-substitution
     (subst :: <simple-element-substitution>) => (code)
   let name = element-variable-name(subst);
   #{ import-to-template(?name) }
 end method;
 
-define method generate-substitution 
+define method generate-substitution
     (subst :: <as-string-substitution>) => (code)
   let name = element-variable-name(subst);
   #{ substitute-as-string(?name) }
 end method;
 
-define method generate-substitution 
+define method generate-substitution
     (subst :: <as-symbol-substitution>) => (code)
   let name = element-variable-name(subst);
   #{ substitute-as-symbol(?name) }
 end method;
 
-define method generate-substitution 
+define method generate-substitution
     (subst :: <splicing-substitution>) => (code)
   let inner = element-name-substitution(subst);
   let name = element-variable-name(inner);
@@ -46,7 +46,7 @@ define method splicing-function-name (subst :: <simple-element-substitution>)
   #{ substitute-spliced-as-name }
 end method;
 
-define method generate-substitution 
+define method generate-substitution
     (subst :: <simple-sequence-substitution>) => (code)
   let name = element-variable-name(subst);
   let separator = element-separator(subst);
@@ -58,7 +58,7 @@ define method generate-substitution
   end;
 end method;
 
-define method dude-expander? 
+define method dude-expander?
     (exp :: <rewrite-rule-expander>) => (well? :: <boolean>)
   member?(#"dude", expander-adjectives(exp))
 end method;

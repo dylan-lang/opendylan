@@ -51,8 +51,8 @@ define macro with-program-conditions
   { with-program-conditions ?:body end }
   /*
   => { dynamic-bind (*error-presentation-hook* = present-program-error,
-		     *warning-presentation-hook* = present-program-note)
-	 ?body
+                     *warning-presentation-hook* = present-program-note)
+         ?body
        end }
   */
   => { do-with-program-conditions(method () ?body end) }
@@ -65,7 +65,7 @@ define function do-with-program-conditions (body)
       end;
   // We want to collect program errors, but have no set up to handle
   // them within the compiler at the moment. 8(
-  let handler (<error>, 
+  let handler (<error>,
                  test: method (condition)
                          present-program-note(condition);
                          #f
@@ -183,7 +183,7 @@ define method terminate-and-choose-restart
   do-handlers
     (method (type, applicable?, handler-fn, init-arguments)
        if (subtype?(type, <program-restart>)
-	   & key-value(init-arguments, default?:))
+           & key-value(init-arguments, default?:))
          let restart = apply(make, type, init-arguments);
          if (applicable?(restart))
            report-condition(condition);
@@ -221,7 +221,7 @@ define method terminate-and-choose-restart
           handlers[n](restarts[n], no-next-handler)
         end method select-restart;
   dynamic-bind (dfmc-restart = select-restart,
-		dfmc-continue = curry(select-restart, default-index))
+                dfmc-continue = curry(select-restart, default-index))
     /* $default-error-presenter(condition); */
     invoke-debugger(condition);
     // if the user just tries to continue here, do the obvious thing.
@@ -244,11 +244,11 @@ define method gather-restarts-and-handlers (condition :: <condition>)
            end if;
            add!(restarts, restart);
            // I'm not sure that I can legally store away this handler
-	   // function as I'm doing here, since the description of
-	   // do-handlers (DRM, p349) says that it has dynamic extent.
-	   // In practice, that probably means it's only live in the
-	   // dynamic extent of the handler, but the letter of the law
-	   // probably means that its dynamic extent is only during
+           // function as I'm doing here, since the description of
+           // do-handlers (DRM, p349) says that it has dynamic extent.
+           // In practice, that probably means it's only live in the
+           // dynamic extent of the handler, but the letter of the law
+           // probably means that its dynamic extent is only during
            // the call to the argument of do-handlers.  Workarounds
            // are possibly but awkward.
            add!(handlers, handler-fn);
@@ -273,7 +273,7 @@ define method print-restart-options
     ("\n\n"
      "Use dfmc-restart(n) to choose restart n.\n"
      "Use dfmc-continue() to choose restart %d, the default.\n",
-     default-index);  
+     default-index);
 end method print-restart-options;
 
 // For now, there seems to be limited utility in allow restart handlers

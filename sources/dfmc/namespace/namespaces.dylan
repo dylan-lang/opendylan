@@ -379,23 +379,23 @@ define function make-exported-imports-table
   space.cached-exported-imports-table := table;
   let cache = space.imported-name-cache;
   local method do-exported-names (exported-names, value)
-	  for (local-name in exported-names)
-	    table[local-name] := value;
-	    remove-key!(cache, local-name);
-	  end;
-	end method;
+          for (local-name in exported-names)
+            table[local-name] := value;
+            remove-key!(cache, local-name);
+          end;
+        end method;
   for (use in space.uses)
     let used-space = resolve-used-namespace(space, use.namespace);
     for (original-name in used-space.exported-names)
       let exported-names = filter-exported-name(use, original-name);
       unless (empty?(exported-names))
-	do-exported-names(exported-names, name-definition(used-space, original-name));
+        do-exported-names(exported-names, name-definition(used-space, original-name));
       end unless;
     end;
     for (value keyed-by original-name in used-space.exported-imports-table)
       let exported-names = filter-exported-name(use, original-name);
       unless (empty?(exported-names))
-	do-exported-names(exported-names, value);
+        do-exported-names(exported-names, value);
       end unless;
     end;
   end;
@@ -404,17 +404,17 @@ end function;
 
 // For use by browser support
 define method do-imported-names (action :: <function>,
-				 space :: <full-namespace>,
-				 #key internal?)
+                                 space :: <full-namespace>,
+                                 #key internal?)
   let seen :: <object-set> = make(<object-set>);
   local method do-names (local-names, kind)
-	  for (local-name in local-names)
-	    unless (member?(local-name, seen))
-	      add!(seen, local-name);
-	      action(local-name, kind);
-	    end;
-	  end;
-	end method;
+          for (local-name in local-names)
+            unless (member?(local-name, seen))
+              add!(seen, local-name);
+              action(local-name, kind);
+            end;
+          end;
+        end method;
   // Get all the exported names first, so they don't get shadowed by
   // hitting any internal uses first.
   for (use in space.uses)
@@ -431,10 +431,10 @@ define method do-imported-names (action :: <function>,
     for (use in space.uses)
       let used-space = resolve-used-namespace(space, use.namespace);
       for (original-name in used-space.exported-names)
-	do-names(filter-name(use, original-name), #"internal");
+        do-names(filter-name(use, original-name), #"internal");
       end;
       for (value keyed-by original-name in used-space.exported-imports-table)
-	do-names(filter-name(use, original-name), #"internal");
+        do-names(filter-name(use, original-name), #"internal");
       end;
     end;
   end;
@@ -523,30 +523,30 @@ define method update-imports
  => (resolved? :: <boolean>)
   let clause = filter.clause;
   let used-space = resolve-used-namespace(space, clause.used-name,
-					  default: #f);
+                                          default: #f);
   if (used-space == #f)
     note(<used-namespace-not-found>,
          source-location: form-source-location(namespace-definition(space)),
-	 namespace: space,
-	 clause: clause,
-	 used-namespace: clause.used-name);
+         namespace: space,
+         clause: clause,
+         used-namespace: clause.used-name);
     #f
   else
     local method update-name (original-name, new)
-	    let local-names = filter-name(filter, original-name);
-	    for (local-name in local-names)
-	      let old = element(imports, local-name, default: $unfound);
-	      if (unfound?(old))
-		imports[local-name] := new;
-	      elseif (old ~== new)
-		note(<imported-name-clash>,
+            let local-names = filter-name(filter, original-name);
+            for (local-name in local-names)
+              let old = element(imports, local-name, default: $unfound);
+              if (unfound?(old))
+                imports[local-name] := new;
+              elseif (old ~== new)
+                note(<imported-name-clash>,
                      source-location:
                        form-source-location(namespace-definition(space)),
-		     namespace: space, clause: clause,
-		     name: local-name, first: old, other: new);
-	      end;
-	    end for;
-	  end;
+                     namespace: space, clause: clause,
+                     name: local-name, first: old, other: new);
+              end;
+            end for;
+          end;
     for (original-name in used-space.exported-names)
       update-name(original-name, name-definition(used-space, original-name));
     end;
@@ -579,13 +579,13 @@ define function compute-all-used-namespaces (outer-space :: <full-namespace>) =>
     end;
     local method walk (space)
       if (space & ~visited?(space))
-	for (clause in space.use-clauses)
-	  // The default is to allow for referenced but not found
-	  // spaces.
-	  walk(resolve-used-namespace
-		 (space, clause.used-name, default: #f));
-	end;
-	visit(space);
+        for (clause in space.use-clauses)
+          // The default is to allow for referenced but not found
+          // spaces.
+          walk(resolve-used-namespace
+                 (space, clause.used-name, default: #f));
+        end;
+        visit(space);
       end;
     end;
     walk(outer-space);
@@ -599,6 +599,6 @@ end method;
 
 define method directly-used-namespaces (space :: <full-namespace>) => (spaces)
   remove-duplicates!(map(compose(curry(resolve-used-namespace, space),
-				 used-name),
-			 space.use-clauses))
+                                 used-name),
+                         space.use-clauses))
 end method;

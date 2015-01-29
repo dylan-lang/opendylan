@@ -28,7 +28,7 @@ define module dfmc-conversion
   use dfmc-macro-expander;
   use dfmc-typist;
   use dfmc-flow-graph;
-  export 
+  export
     $ignore, $single, $all-rest,
     convert,
     convert-type-expression,
@@ -58,8 +58,8 @@ define module dfmc-conversion
     extract-constant,
     pad-multiple-values,
     temporary-value-context,
-    <value-context>, 
-    <ignore-value-context>, 
+    <value-context>,
+    <ignore-value-context>,
     <single-value-context>,
     <multiple-value-context>,
     match-values-with-temporary,

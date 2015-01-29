@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // Macro descriptors encapsulate everything the compiler needs to know
 // about a macro in order to be able to call it, a pretty lightweight
 // protocol. It needs to know its word given the name of the binding
-// under which its visible, and that word's grammar classification 
+// under which its visible, and that word's grammar classification
 // (the latter being invariant w.r.t the binding). This is enough
 // to construct a call. Finally, an expander function is provided.
 
@@ -24,7 +24,7 @@ define abstract class <macro-descriptor> (<object>)
     init-keyword: referenced-names:;
 end class;
 
-define generic macro-word-in-variable-name 
+define generic macro-word-in-variable-name
     (desc :: <macro-descriptor>, name :: <symbol>)
  => (word :: <symbol>, word-class :: <integer>);
 
@@ -33,18 +33,18 @@ define generic macro-expander-function
 
 define class <simple-macro-descriptor> (<macro-descriptor>) end;
 
-define method macro-word-in-variable-name 
+define method macro-word-in-variable-name
     (desc :: <macro-descriptor>, name :: <symbol>)
  => (word :: <symbol>, word-class :: <integer>)
   values(name, macro-word-class(desc));
 end method;
 
-define class <suffixed-macro-descriptor> (<macro-descriptor>) 
+define class <suffixed-macro-descriptor> (<macro-descriptor>)
   constant slot macro-suffix :: <string>,
     required-init-keyword: suffix:;
 end class;
 
-define method macro-word-in-variable-name 
+define method macro-word-in-variable-name
     (desc :: <suffixed-macro-descriptor>, name :: <symbol>)
  => (word :: <symbol>, word-class :: <integer>)
   let suffix = macro-suffix(desc);
@@ -56,8 +56,8 @@ define method macro-word-in-variable-name
   end;
 end method;
 
-define method suffixed-name? 
-    (name :: <symbol>, suffix :: <string>) 
+define method suffixed-name?
+    (name :: <symbol>, suffix :: <string>)
  => (main-name-or-false :: false-or(<symbol>))
   let name = as(<string>, name);
   let name-size = size(name);
@@ -75,9 +75,9 @@ define method suffixed-name?
   end
 end method;
 
-define function compare-suffix-insensitively 
+define function compare-suffix-insensitively
     (string :: <string>, container :: <string>, suffix-start :: <integer>)
-  for (i from suffix-start, c in string, 
+  for (i from suffix-start, c in string,
        until: as-lowercase(c) ~== as-lowercase(container[i]))
   finally
     if (i = size(container))
@@ -88,7 +88,7 @@ define function compare-suffix-insensitively
   end;
 end function;
 
-define function expand-macro-call 
+define function expand-macro-call
     (desc :: <macro-descriptor>, f :: <fragment>) => (#rest results)
   block ()
     macro-expander-function(desc)(#f, f);

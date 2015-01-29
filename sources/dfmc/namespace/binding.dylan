@@ -39,15 +39,15 @@ end class;
 define compiler-open generic rest-variable? (binding);
 define compiler-open generic keyword-variable? (binding);
 
-define method rest-variable? (binding :: <binding>) 
+define method rest-variable? (binding :: <binding>)
   #f
 end method;
 
-define method keyword-variable? (binding :: <binding>) 
+define method keyword-variable? (binding :: <binding>)
   #f
 end method;
 
-define abstract dood-class <module-binding> 
+define abstract dood-class <module-binding>
     (<dood-dfmc-object>, <binding>, <variable-name>)
   lazy slot shadowable-binding-local-dependents :: <sequence> = #[];
 end;
@@ -140,12 +140,12 @@ end;
 
 ignore(%binding-local-modifying-models);
 
-define method shadowable-binding-previous-definition 
+define method shadowable-binding-previous-definition
     (x :: <module-binding-properties>) => (res)
   #f
 end method;
 
-define method shadowable-binding-previous-definition-setter 
+define method shadowable-binding-previous-definition-setter
     (value, x :: <module-binding-properties>)
 end method;
 
@@ -166,11 +166,11 @@ end function;
 define sealed domain make (subclass(<module-binding-properties>));
 define sealed domain initialize (<module-binding-properties>);
 
-define method dood-disk-object 
+define method dood-disk-object
     (dood :: <dood>, b :: <module-binding>) => (disk-object)
   let pdeps = b.private-shadowable-binding-local-dependents;
   // check if lazy cause then already vector cause in db
-  unless (dood-lazy-value?(pdeps)) 
+  unless (dood-lazy-value?(pdeps))
     let deps = b.shadowable-binding-local-dependents;
     let vdeps = as(<vector>, deps);
     unless (vdeps == deps)
@@ -187,7 +187,7 @@ end;
 define generic binding-canonical-binding
     (binding :: <module-binding>) => (canonical-binding);
 
-define generic binding-variable-name 
+define generic binding-variable-name
     (binding :: <module-binding>) => (variable-name);
 
 define generic remove-binding-definition
@@ -221,12 +221,12 @@ define serious-program-warning <imported-binding-definition>
   format-arguments binding;
 end;
 
-define sideways method form-incremental? 
+define sideways method form-incremental?
     (form :: <top-level-form>) => (well? :: <boolean>)
   *interactive-compilation-layer* ~== #f
 end method;
 
-define sideways method form-redefinition? 
+define sideways method form-redefinition?
     (form :: <variable-defining-form>) => (well? :: <boolean>)
   binding-previously-defined?(form-variable-binding(form))
 end method;
@@ -236,7 +236,7 @@ define method add-definition (name, definition) => ()
   let old = untracked-binding-definition(binding, default: $unfound);
   binding-defined?(binding) := #t;
   if (binding-imported-into-library?(binding))
-    note(<imported-binding-definition>, 
+    note(<imported-binding-definition>,
          source-location: form-source-location(definition),
          binding: binding);
     add-local-duplicate-definition(binding, definition);
@@ -267,7 +267,7 @@ end method;
 
 // Does no checks, triggers no dependencies. Only called when the binding
 // has been determined to be undefined.
-define method add-missing-definition 
+define method add-missing-definition
     (name :: <variable-name-fragment>, def :: <variable-defining-form>) => ()
   let binding = lookup-binding(name, reference?: #f);
   binding.binding-active-definition := def;
@@ -288,7 +288,7 @@ define method add-modifying-definition (name, definition) => ()
   retract-imported-binding(binding); // clear cache
   retract-modifying-models(binding); // clear cache
   note-adding-modifying-definition(binding, definition);
-  binding-local-modifying-definitions(binding) 
+  binding-local-modifying-definitions(binding)
     := add-local-definition(binding-local-modifying-definitions(binding), definition);
 end method;
 
@@ -312,16 +312,16 @@ define method remove-modifying-definition (name, definition) => ()
     retract-imported-binding(binding); // clear cache
     retract-modifying-models(binding); // clear cache
     note-removing-modifying-definition(binding, definition);
-    binding-local-modifying-definitions(binding) 
+    binding-local-modifying-definitions(binding)
       := remove!(binding-local-modifying-definitions(binding), definition);
   end;
 end method;
 
-define method lookup-certain-modifying-models 
+define method lookup-certain-modifying-models
     (name, form-predicate :: <function>, #key imported-only? = #f)
  => (models :: <models>)
   binding-certain-modifying-models
-    (lookup-binding(name, reference?: #f), form-predicate, 
+    (lookup-binding(name, reference?: #f), form-predicate,
        imported-only?: imported-only?)
 end method;
 
@@ -361,7 +361,7 @@ define method eval-certain-modifying-definitions!
   models-or-forms
 end method;
 
-define inline method shadowable-binding-certain-local-modifying-models 
+define inline method shadowable-binding-certain-local-modifying-models
     (properties :: <module-binding-properties>, form-predicate :: <function>)
  => (models :: <models>)
   let models-or-forms
@@ -374,16 +374,16 @@ define inline method shadowable-binding-certain-local-modifying-models
   models-or-forms
 end method;
 
-define method binding-certain-local-modifying-models 
+define method binding-certain-local-modifying-models
     (binding :: <module-binding>, form-predicate :: <function>)
  => (models :: <models>)
   let p
     = binding-properties-in-context
        (current-library-description(), binding, #f);
-  if (p) 
+  if (p)
     shadowable-binding-certain-local-modifying-models(p, form-predicate)
   else
-    #() 
+    #()
   end
 end method;
 
@@ -395,40 +395,40 @@ end method;
 
 define method binding-modifying-definitions (binding :: <module-binding>)
  => (definitions :: <definitions>)
-  note-binding-dependency(binding, dep$modifying-definitions);  
+  note-binding-dependency(binding, dep$modifying-definitions);
   untracked-binding-modifying-definitions(binding);
 end method;
 
-define method binding-certain-modifying-models 
+define method binding-certain-modifying-models
     (binding :: <module-binding>, form-predicate :: <function>,
        #key imported-only? = #f)
  => (models :: <models>)
-  note-binding-dependency(binding, dep$modifying-definitions);  
+  note-binding-dependency(binding, dep$modifying-definitions);
   untracked-binding-certain-modifying-models
     (binding, form-predicate, imported-only?: imported-only?);
 end method;
 
-define method binding-defined-methods 
+define method binding-defined-methods
     (binding :: <module-binding>) => (methods)
-  note-binding-dependency(binding, dep$modifying-definitions);  
+  note-binding-dependency(binding, dep$modifying-definitions);
   untracked-binding-defined-methods(binding);
 end method;
 
 define method binding-defined-methods-setter
     (new-methods, binding :: <module-binding>) => (methods)
-  note-binding-dependency(binding, dep$modifying-definitions);  
+  note-binding-dependency(binding, dep$modifying-definitions);
   untracked-binding-defined-methods(binding) := new-methods
 end method;
 
-define method binding-defined-domains 
+define method binding-defined-domains
     (binding :: <module-binding>) => (domains)
-  note-binding-dependency(binding, dep$modifying-definitions);  
+  note-binding-dependency(binding, dep$modifying-definitions);
   untracked-binding-defined-domains(binding);
 end method;
 
 define method binding-defined-domains-setter
     (new-domains, binding :: <module-binding>) => (domains)
-  note-binding-dependency(binding, dep$modifying-definitions);  
+  note-binding-dependency(binding, dep$modifying-definitions);
   untracked-binding-defined-domains(binding) := new-domains
 end method;
 
@@ -463,7 +463,7 @@ define method form-ignored-internal? (form :: <top-level-form>)
   #f
 end method;
 
-define function binding-previously-defined? 
+define function binding-previously-defined?
     (binding :: <module-binding>) => (well? :: <boolean>)
   binding-previous-definition(binding) ~== #f
 end function;
@@ -472,7 +472,7 @@ define compiler-open generic binding-constant-model-object
     (binding :: <binding>, #key error-if-circular? = #t)
  => (model-object, found? :: <boolean>);
 
-// This mirrors the interface of the above function, but works only 
+// This mirrors the interface of the above function, but works only
 // on module bindings, constant or not.
 
 define function binding-constant-type-model-object
@@ -489,8 +489,8 @@ define function binding-constant-type-model-object
     end
 end function;
 
-// TODO: Make the access chain leading to this circular reference 
-// accessible so that we can store it in the condition to help 
+// TODO: Make the access chain leading to this circular reference
+// accessible so that we can store it in the condition to help
 // explain the problem.
 
 define program-warning <circular-reference>
@@ -508,7 +508,7 @@ define function note-circular-reference
        circularity-chain: *forms-in-processing*);
 end function;
 
-define function binding-model-access-denied? 
+define function binding-model-access-denied?
     (binding :: <module-binding>) => (well? :: <boolean>)
   let ld = current-library-description();
   instance?(ld, <interactive-library-description>)
@@ -538,7 +538,7 @@ define method binding-model-object-hidden?
     (binding :: <module-binding>) => (well? :: <boolean>)
   let definition = binding.binding-active-definition;
   form-dynamic?(definition)
-    & ~form-compile-stage-only?(definition) 
+    & ~form-compile-stage-only?(definition)
 end method;
 */
 
@@ -637,7 +637,7 @@ define method untracked-ensure-form-model (form :: <modifying-form>)
   if (form-dynamic?(form))
     #f
   else
-    form-model(form) 
+    form-model(form)
       | compute-cached-form-model-in(form-library(form), form)
   end
 end method;
@@ -674,8 +674,8 @@ define method define-model-object-and-type (name, model, type) => ()
 end method;
 
 define method lookup-model-object
-    (name, #key reference? = #t, 
-                default = unsupplied(), 
+    (name, #key reference? = #t,
+                default = unsupplied(),
                 error-if-circular? = #t)
  => (model-object)
   let binding = lookup-binding (name, reference?: reference?);
@@ -705,18 +705,18 @@ define constant $binding-model-not-computed = make(<binding-model-not-computed>)
 define class <dood-binding-model-not-computed-proxy> (<dood-proxy>)
 end class;
 
-define method dood-disk-object 
+define method dood-disk-object
     (dood :: <dood>, object :: <binding-model-not-computed>) => (object)
   dood-as-proxy(dood, object, dood-make-binding-model-not-computed-proxy)
 end method;
 
 define method dood-make-binding-model-not-computed-proxy
     (dood :: <dood>, object :: <binding-model-not-computed>) => (object)
-  make(<dood-binding-model-not-computed-proxy>)  
+  make(<dood-binding-model-not-computed-proxy>)
 end method;
 
-define method dood-restore-proxy 
-    (dood :: <dood>, proxy :: <dood-binding-model-not-computed-proxy>) 
+define method dood-restore-proxy
+    (dood :: <dood>, proxy :: <dood-binding-model-not-computed-proxy>)
  => (object)
   $binding-model-not-computed
 end method;
@@ -764,7 +764,7 @@ define method initialize
   apply(initialize-packed-slots, x, all-keys)
 end method;
 
-define inline method shadowable-binding-cached-hollow-model-object 
+define inline method shadowable-binding-cached-hollow-model-object
     (p :: <canonical-module-binding-properties>) => (model)
   if (shadowable-binding-hollow-model-object?(p))
     shadowable-%binding-cached-model-object(p)
@@ -779,7 +779,7 @@ define inline method shadowable-binding-cached-hollow-model-object-setter
   shadowable-%binding-cached-model-object(p) := model;
 end method;
 
-define inline method shadowable-binding-cached-model-object 
+define inline method shadowable-binding-cached-model-object
     (p :: <canonical-module-binding-properties>) => (model)
   if (shadowable-binding-hollow-model-object?(p))
     $binding-model-not-computed
@@ -819,14 +819,14 @@ define sealed domain initialize (<dood-cross-module-binding-proxy>);
 
 define method dood-make-cross-module-binding-proxy
     (dood :: <dood>, object :: <canonical-module-binding>) => (proxy)
-  make(<dood-cross-module-binding-proxy>, 
+  make(<dood-cross-module-binding-proxy>,
        module:        binding-home(object),
        variable-name: name(object))
 end method;
 
-define method dood-disk-object 
+define method dood-disk-object
     (dood :: <dood>, object :: <canonical-module-binding>)
- => (proxy :: type-union(<dood-cross-module-binding-proxy>, 
+ => (proxy :: type-union(<dood-cross-module-binding-proxy>,
                          <canonical-module-binding>))
   if (dood.dood-root.language-definition == object.binding-home.home-library)
     next-method();
@@ -856,7 +856,7 @@ define method untracked-binding-definition
       end
 end method;
 
-define method binding-canonical-binding 
+define method binding-canonical-binding
     (binding :: <canonical-module-binding>) => (binding)
   binding
 end method;
@@ -927,7 +927,7 @@ define method binding-accessible-to-other-libraries?
   end
 end method;
 
-define method remove-binding-definition 
+define method remove-binding-definition
     (binding :: <canonical-module-binding>, definition) => ()
   binding-macro-class?(binding) := #"unknown";
   binding-defined?(binding)     := #f;
@@ -952,11 +952,11 @@ end method;
 
 //// Imported bindings.
 
-// Imported bindings represent a local view on an imported binding. 
-// They refer back (perhaps indirectly) to their canonical binding of 
+// Imported bindings represent a local view on an imported binding.
+// They refer back (perhaps indirectly) to their canonical binding of
 // creation. They have their own set of definitions which are any
 // modifying definitions defined in the importing library.
-// Full definitions are also collected for error checking reasons. 
+// Full definitions are also collected for error checking reasons.
 
 define binding-properties of <imported-module-binding-properties>
       <imported-module-binding-properties> (<module-binding-properties>)
@@ -970,7 +970,7 @@ end;
 
 define dood-class <imported-module-binding>
     (<module-binding>, <imported-module-binding-properties>)
-  constant slot binding-canonical-binding, 
+  constant slot binding-canonical-binding,
     required-init-keyword: canonical-binding:;
 end;
 
@@ -981,7 +981,7 @@ define method retract-imported-binding
   %binding-defined-domains(binding)       := #f;
 end method;
 
-define property-delegation 
+define property-delegation
     (<imported-module-binding>, binding-canonical-binding)
   name,
   binding-home,
@@ -1002,7 +1002,7 @@ define macro imported-binding-delegated-getter-definer
            else ?default end;
          end method }
 end macro;
-           
+
 define macro imported-binding-delegated-accessors-definer
   { define imported-binding-delegated-accessors ?:name = ?default:expression }
     => { define imported-binding-delegated-getter ?name = ?default;
@@ -1012,7 +1012,7 @@ define macro imported-binding-delegated-accessors-definer
            else v end;
          end method }
 end macro;
-           
+
 define imported-binding-delegated-accessors binding-macro-class? = #f;
 
 define imported-binding-delegated-accessors binding-defined? = #f;
@@ -1068,7 +1068,7 @@ define method untracked-binding-modifying-definitions
   %binding-modifying-definitions(binding)
     | (%binding-modifying-definitions(binding)
          := collect-modifying-objects
-              (binding, binding-local-modifying-definitions, 
+              (binding, binding-local-modifying-definitions,
                shadowable-binding-local-modifying-definitions))
 end method;
 
@@ -1076,12 +1076,12 @@ define method untracked-binding-certain-modifying-models
     (binding :: <imported-module-binding>, form-predicate :: <function>,
        #key imported-only? = #f)
  => (models :: <models>)
-  // let all-local-models-computed? 
+  // let all-local-models-computed?
   //   = untracked-binding-ensure-certain-modifying-models(binding, form-predicate);
   let all-modifying-models
     = collect-modifying-objects // BUG: shadowable???
-        (binding, 
-         rcurry(binding-certain-local-modifying-models, form-predicate), 
+        (binding,
+         rcurry(binding-certain-local-modifying-models, form-predicate),
          rcurry(shadowable-binding-certain-local-modifying-models, form-predicate),
          imported-only?: imported-only?);
   all-modifying-models
@@ -1091,12 +1091,12 @@ end method;
 // definitions at the head of the list
 
 define inline function collect-modifying-objects
-    (binding :: <imported-module-binding>, 
-     binding-current-local-objects :: <function>, 
+    (binding :: <imported-module-binding>,
+     binding-current-local-objects :: <function>,
      binding-local-objects :: <function>, #key imported-only? = #f)
  => (objects :: <definitions-or-models>)
   debug-assert(valid-binding-home-library?(binding));
-  let current-defs 
+  let current-defs
     = if (imported-only?)
         #()
       else
@@ -1150,7 +1150,7 @@ define method binding-accessible-to-other-libraries?
   #t // an imported binding object wouldn't have been created otherwise
 end method;
 
-define method remove-binding-definition 
+define method remove-binding-definition
     (binding :: <imported-module-binding>, definition) => ()
   remove-local-duplicate-definition(binding, definition);
 end method;
@@ -1185,7 +1185,7 @@ define method defined? (binding :: <module-binding>) => (value :: <boolean>)
     | begin
         let def = untracked-binding-definition(binding, default: $unfound);
         found?(def) & ~instance?(def, <missing-variable-defining-form>)
-      end 
+      end
 end method;
 
 define method constant? (binding :: <module-binding>) => (value :: <boolean>)
@@ -1198,7 +1198,7 @@ define method compile-stage-only? (binding :: <module-binding>) => (value :: <bo
   found?(definition) & form-compile-stage-only?(definition)
 end method;
 
-define method constant? 
+define method constant?
     (binding :: <variable-defining-form>) => (value :: <boolean>)
   #t
 end method;
@@ -1233,19 +1233,19 @@ end method;
 
 //// THREAD PREDICATES
 
-define method binding-thread? 
+define method binding-thread?
     (binding :: <module-binding>) => (value :: <boolean>)
   let definition = binding-definition(binding, default: $unfound);
   found?(definition) & form-thread?(definition)
 end method;
 
-define method binding-locked? 
+define method binding-locked?
     (binding :: <module-binding>) => (value :: <boolean>)
   let definition = binding-definition(binding, default: $unfound);
   found?(definition) & form-locked?(definition)
 end method;
 
-define method binding-atomic? 
+define method binding-atomic?
     (binding :: <module-binding>) => (value :: <boolean>)
   let definition = binding-definition(binding, default: $unfound);
   found?(definition) & form-atomic?(definition)
