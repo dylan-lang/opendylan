@@ -98,14 +98,6 @@ define module-with-models dfmc-modeling
     direct-object?; // direct-object-value;
 
   export
-//    <&values>,
-    <&static-values>,
-//      &values,
-//      &values-element,
-      &values-model-objects;
-//    <&dynamic-values>;
-
-  export
     $dylan-system-subtype-bit-type-names;
 
   export

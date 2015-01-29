@@ -830,7 +830,6 @@ define as-type-estimate-rules
   t :: <&class>                   -> make(<type-estimate-class>, class: t);
   t :: <&raw-type>                -> make(<type-estimate-raw>, raw: t);
   t :: <&raw-aggregate-type>      -> make(<type-estimate-raw>, raw: t);
-  // *** Is <&values> a rep'n of multiple values?
   t :: <&limited-integer>         -> make(<type-estimate-limited-integer>,
                                           min: ^limited-integer-min(t),
                                           max: ^limited-integer-max(t));
