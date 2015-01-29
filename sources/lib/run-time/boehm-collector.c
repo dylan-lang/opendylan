@@ -424,6 +424,7 @@ void *primitive_alloc_s_ ## suffix(size_t size, \
 }
 
 define_primitive_alloc_s_rf(dylan_object, rf)
+define_primitive_alloc_s_rf(word, rwf)
 define_primitive_alloc_s_rf(half_word, rhf)
 define_primitive_alloc_s_rf(single_float, rsff)
 define_primitive_alloc_s_rf(double_float, rdff)

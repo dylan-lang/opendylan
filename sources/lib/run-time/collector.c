@@ -74,7 +74,7 @@ static void simple_error (char* message)
   report_runtime_error("\nDylan runtime error: ", message);
 }
 
-// typedef mps_word_t              word;
+typedef size_t                  word;
 typedef unsigned char           byte_char;
 typedef unsigned short          half_word;
 typedef _int64                  double_word;
@@ -136,6 +136,7 @@ void fill_ ## type ## _mem(type *mem, type fill, int count) \
     } \
 }
 
+define_fill_mem(word)
 define_fill_mem(half_word)
 define_fill_mem(double_word)
 define_fill_mem(single_float)
@@ -169,6 +170,7 @@ void untraced_fill_ ## type ## _mem(void **object, type fill, size_t count, size
 }
 
 define_untraced_fill_mem(dylan_object)
+define_untraced_fill_mem(word)
 define_untraced_fill_mem(half_word)
 define_untraced_fill_mem(double_word)
 define_untraced_fill_mem(single_float)
