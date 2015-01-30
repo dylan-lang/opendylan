@@ -85,11 +85,11 @@ operating-system library's operating-system module.
      Returns the arguments passed to the running application as a vector
      of instances of :drm:`<byte-string>`.
 
-   See also
+   :seealso:
 
-   - :func:`application-filename`
-   - :func:`application-name`
-   - :func:`tokenize-command-string`
+     - :func:`application-filename`
+     - :func:`application-name`
+     - :func:`tokenize-command-string`
 
 .. function:: application-filename
 
@@ -112,11 +112,11 @@ operating-system library's operating-system module.
 
        "C:\\Program Files\\foo\\bar.exe"
 
-   See also
+   :seealso:
 
-   - :func:`application-arguments`
-   - :func:`application-name`
-   - :func:`tokenize-command-string`
+     - :func:`application-arguments`
+     - :func:`application-name`
+     - :func:`tokenize-command-string`
 
 .. function:: application-name
 
@@ -139,11 +139,11 @@ operating-system library's operating-system module.
 
        "foo\\bar.exe"
 
-   See also
+   :seealso:
 
-   - :func:`application-arguments`
-   - :func:`application-filename`
-   - :func:`tokenize-command-string`
+     - :func:`application-arguments`
+     - :func:`application-filename`
+     - :func:`tokenize-command-string`
 
 .. constant:: $architecture-little-endian
 
@@ -159,13 +159,13 @@ operating-system library's operating-system module.
      least-significant bit.) For processors implementing the Intel x86
      architecture this value is ``#t``.
 
-   See also
+   :seealso:
 
-   - :const:`$machine-name`
-   - :const:`$os-name`
-   - :const:`$os-variant`
-   - :const:`$os-version`
-   - :const:`$platform-name`
+     - :const:`$machine-name`
+     - :const:`$os-name`
+     - :const:`$os-variant`
+     - :const:`$os-version`
+     - :const:`$platform-name`
 
 .. function:: environment-variable
 
@@ -181,9 +181,9 @@ operating-system library's operating-system module.
      Returns the value of the environment variable specified by *name*,
      or ``#f`` if there is no such environment variable.
 
-   See also
+   :seealso:
 
-   - :func:`environment-variable-setter`
+     - :func:`environment-variable-setter`
 
 .. function:: environment-variable-setter
 
@@ -209,9 +209,9 @@ operating-system library's operating-system module.
        environment variable if it is possible within these restrictions.
        See the relevant Windows 95 documentation for more details.
 
-   See also
+   :seealso:
 
-   - :func:`environment-variable`
+     - :func:`environment-variable`
 
 .. function:: exit-application
 
@@ -227,9 +227,9 @@ operating-system library's operating-system module.
      value of *status* to whatever launched the application, for example
      an MS-DOS window or Windows 95/NT shell.
 
-   See also
+   :seealso:
 
-   - :func:`run-application`
+     - :func:`run-application`
 
 .. function:: login-name
 
@@ -245,9 +245,9 @@ operating-system library's operating-system module.
      Returns as an instance of :drm:`<string>` the name of the user logged
      on to the current machine, or ``#f`` if unavailable.
 
-   See also
+   :seealso:
 
-   - :func:`login-group`
+     - :func:`login-group`
 
 .. function:: login-group
 
@@ -261,9 +261,9 @@ operating-system library's operating-system module.
      domain, or Windows Workgroup) of which the user logged on to the
      current machine is a member, or ``#f`` if the group is unavailable.
 
-   See also
+   :seealso:
 
-   - :func:`login-name`
+     - :func:`login-name`
 
 .. constant:: $machine-name
 
@@ -277,13 +277,13 @@ operating-system library's operating-system module.
      This constant is a symbol that represents the type of hardware
      installed in the host machine.
 
-   See also
+   :seealso:
 
-   - :const:`$architecture-little-endian`
-   - :const:`$os-name`
-   - :const:`$os-variant`
-   - :const:`$os-version`
-   - :const:`$platform-name`
+     - :const:`$architecture-little-endian`
+     - :const:`$os-name`
+     - :const:`$os-variant`
+     - :const:`$os-version`
+     - :const:`$platform-name`
 
 .. constant:: $os-name
 
@@ -297,13 +297,13 @@ operating-system library's operating-system module.
      This constant is a symbol that represents the operating system
      running on the host machine.
 
-   See also
+   :seealso:
 
-   - :const:`$architecture-little-endian`
-   - :const:`$machine-name`
-   - :const:`$os-variant`
-   - :const:`$os-version`
-   - :const:`$platform-name`
+     - :const:`$architecture-little-endian`
+     - :const:`$machine-name`
+     - :const:`$os-variant`
+     - :const:`$os-version`
+     - :const:`$platform-name`
 
 .. constant:: $os-variant
 
@@ -320,13 +320,13 @@ operating-system library's operating-system module.
      possible values are ``#"win3.1"``, ``#"win95"``, ``#"win98"``, and
      ``#"winnt"``.
 
-   See also
+   :seealso:
 
-   - :const:`$architecture-little-endian`
-   - :const:`$machine-name`
-   - :const:`$os-name`
-   - :const:`$os-version`
-   - :const:`$platform-name`
+     - :const:`$architecture-little-endian`
+     - :const:`$machine-name`
+     - :const:`$os-name`
+     - :const:`$os-version`
+     - :const:`$platform-name`
 
 .. constant:: $os-version
 
@@ -342,13 +342,13 @@ operating-system library's operating-system module.
      would be *"4.0.1381 Service Pack 3"*. For Windows 95, a typical
      value would be *"4.0.1212 B"*.
 
-   See also
+   :seealso:
 
-   - :const:`$architecture-little-endian`
-   - :const:`$machine-name`
-   - :const:`$os-name`
-   - :const:`$os-variant`
-   - :const:`$platform-name`
+     - :const:`$architecture-little-endian`
+     - :const:`$machine-name`
+     - :const:`$os-name`
+     - :const:`$os-variant`
+     - :const:`$platform-name`
 
 .. function:: owner-name
 
@@ -398,9 +398,10 @@ operating-system library's operating-system module.
 
      ``#"x86-win32"``, ``#"alpha-osf3"``
 
-   See also
-   - `$machine-name`
-   - `$os-name`
+   :seealso:
+
+     - `$machine-name`
+     - `$os-name`
 
 .. function:: run-application
 
@@ -437,8 +438,9 @@ operating-system library's operating-system module.
      the new application is created with a separate console window. It
      is ``#t`` by default.
 
-   See also
-   - :func:`exit-application`
+   :seealso:
+
+     - :func:`exit-application`
 
 .. function:: tokenize-command-string
 
@@ -457,6 +459,7 @@ operating-system library's operating-system module.
      Microsoft’s C/C++ reference in the section `"Parsing C Command-Line
      Arguments" <http://msdn.microsoft.com/en-us/library/a1y7w461.aspx>`_.
 
-   See also
-   - :func:`application-arguments`
-   - :func:`application-name`
+   :seealso:
+
+     - :func:`application-arguments`
+     - :func:`application-name`

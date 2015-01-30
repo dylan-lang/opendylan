@@ -917,9 +917,9 @@ are exported from the *streams* module.
        write(stream, "whoa!");
        stream-contents(stream);
 
-   See also
+   :seealso:
 
-   - :gf:`stream-position-setter`
+     - :gf:`stream-position-setter`
 
 .. method:: as
    :specializer: <integer>, <stream-position>
@@ -937,9 +937,9 @@ are exported from the *streams* module.
      Coerces a :class:`<stream-position>` to an integer. The *integer-class*
      argument is the class :drm:`<integer>`.
 
-   See also
+   :seealso:
 
-   - :drm:`as`
+     - :drm:`as`
 
 .. class:: <buffer>
    :sealed:
@@ -1037,9 +1037,9 @@ are exported from the *streams* module.
 
    Returns the address of the raw byte storage of a :class:`<buffer>`.
 
-   See also:
+   :seealso:
 
-   - :gf:`byte-storage-address`
+     - :gf:`byte-storage-address`
 
 .. method:: byte-storage-offset-address
    :specializer: <buffer>
@@ -1047,9 +1047,9 @@ are exported from the *streams* module.
 
    Returns the address of the raw byte storage of a :class:`<buffer>`, with an offset.
 
-   See also:
+   :seealso:
 
-   - :gf:`byte-storage-offset-address`
+     - :gf:`byte-storage-offset-address`
 
 .. class:: <byte-string-stream>
    :open:
@@ -1091,10 +1091,10 @@ are exported from the *streams* module.
 
      - :meth:`make(<byte-string-stream>)`
 
-   See also
+   :seealso:
 
-   - :meth:`make(<byte-string-stream>)`
-   - :class:`<sequence-stream>`
+     - :meth:`make(<byte-string-stream>)`
+     - :class:`<sequence-stream>`
 
 .. class:: <byte-vector>
    :sealed:
@@ -1109,9 +1109,9 @@ are exported from the *streams* module.
 
      A subclass of :drm:`<vector>` whose element-type is :type:`<byte>`.
 
-   See also
+   :seealso:
 
-   - :type:`<byte>`
+     - :type:`<byte>`
 
 .. generic-function:: close
    :open:
@@ -1146,9 +1146,9 @@ are exported from the *streams* module.
      synchronized with the file’s destination. If *abort* is true, then
      any errors caused by closing the file are ignored.
 
-   See also
+   :seealso:
 
-   - :gf:`close`
+     - :gf:`close`
 
 .. generic-function:: discard-input
    :open:
@@ -1170,9 +1170,9 @@ are exported from the *streams* module.
      that applications can call this function on any kind of stream. The
      default method does nothing.
 
-   See also
+   :seealso:
 
-   - :gf:`discard-output`
+     - :gf:`discard-output`
 
 .. generic-function:: discard-output
    :open:
@@ -1191,9 +1191,9 @@ are exported from the *streams* module.
      applications can call this function on any sort of stream. The
      default method does nothing.
 
-   See also
+   :seealso:
 
-   - :gf:`discard-input`
+     - :gf:`discard-input`
 
 .. class:: <end-of-stream-error>
 
@@ -1212,13 +1212,13 @@ are exported from the *streams* module.
      the error to be signaled. Its accessor is
      ``end-of-stream-error-stream``.
 
-   See also
+   :seealso:
 
-   - :class:`<file-does-not-exist-error>`
-   - :class:`<file-error>`
-   - :class:`<file-exists-error>`
-   - :class:`<incomplete-read-error>`
-   - :class:`<invalid-file-permissions-error>`
+     - :class:`<file-does-not-exist-error>`
+     - :class:`<file-error>`
+     - :class:`<file-exists-error>`
+     - :class:`<incomplete-read-error>`
+     - :class:`<invalid-file-permissions-error>`
 
 .. class:: <file-does-not-exist-error>
 
@@ -1234,13 +1234,13 @@ are exported from the *streams* module.
      a file that does not exist. It is a subclass of
      :class:`<file-error>`.
 
-   See also
+   :seealso:
 
-   - :class:`<end-of-stream-error>`
-   - :class:`<file-error>`
-   - :class:`<file-exists-error>`
-   - :class:`<incomplete-read-error>`
-   - :class:`<invalid-file-permissions-error>`
+     - :class:`<end-of-stream-error>`
+     - :class:`<file-error>`
+     - :class:`<file-exists-error>`
+     - :class:`<incomplete-read-error>`
+     - :class:`<invalid-file-permissions-error>`
 
 .. class:: <file-error>
 
@@ -1259,13 +1259,13 @@ are exported from the *streams* module.
      caused the error to be signalled. Its accessor is
      ``file-error-locator``.
 
-   See also
+   :seealso:
 
-   - :class:`<end-of-stream-error>`
-   - :class:`<file-does-not-exist-error>`
-   - :class:`<file-exists-error>`
-   - :class:`<incomplete-read-error>`
-   - :class:`<invalid-file-permissions-error>`
+     - :class:`<end-of-stream-error>`
+     - :class:`<file-does-not-exist-error>`
+     - :class:`<file-exists-error>`
+     - :class:`<incomplete-read-error>`
+     - :class:`<invalid-file-permissions-error>`
 
 .. class:: <file-exists-error>
 
@@ -1281,13 +1281,13 @@ are exported from the *streams* module.
      create a file that already exists. It is a subclass of
      :class:`<file-error>`.
 
-   See also
+   :seealso:
 
-   - :class:`<end-of-stream-error>`
-   - :class:`<file-does-not-exist-error>`
-   - :class:`<file-error>`
-   - :class:`<incomplete-read-error>`
-   - :class:`<invalid-file-permissions-error>`
+     - :class:`<end-of-stream-error>`
+     - :class:`<file-does-not-exist-error>`
+     - :class:`<file-error>`
+     - :class:`<incomplete-read-error>`
+     - :class:`<invalid-file-permissions-error>`
 
 .. class:: <file-stream>
    :open:
@@ -1329,9 +1329,9 @@ are exported from the *streams* module.
      - :meth:`close(<file-stream>)`
      - :meth:`make(<file-stream>)`
 
-   See also
+   :seealso:
 
-   - :meth:`make(<file-stream>)`
+     - :meth:`make(<file-stream>)`
 
 .. generic-function:: force-output
    :open:
@@ -1352,9 +1352,9 @@ are exported from the *streams* module.
      physically written to disk. This should only be needed if you’re
      concerned about system failure causing loss of data.
 
-   See also
+   :seealso:
 
-   - :gf:`synchronize-output`
+     - :gf:`synchronize-output`
 
 .. class:: <incomplete-read-error>
 
@@ -1380,13 +1380,13 @@ are exported from the *streams* module.
      requested to be read. Its accessor is
      ``incomplete-read-error-count``.
 
-   See also
+   :seealso:
 
-   - :class:`<end-of-stream-error>`
-   - :class:`<file-does-not-exist-error>`
-   - :class:`<file-error>`
-   - :class:`<file-exists-error>`
-   - :class:`<invalid-file-permissions-error>`
+     - :class:`<end-of-stream-error>`
+     - :class:`<file-does-not-exist-error>`
+     - :class:`<file-error>`
+     - :class:`<file-exists-error>`
+     - :class:`<invalid-file-permissions-error>`
 
 .. generic-function:: inner-stream
    :open:
@@ -1402,11 +1402,11 @@ are exported from the *streams* module.
 
      Returns the stream wrapped by *wrapper-stream*.
 
-   See also
+   :seealso:
 
-   - :gf:`inner-stream-setter`
-   - :gf:`outer-stream`
-   - :class:`<wrapper-stream>`
+     - :gf:`inner-stream-setter`
+     - :gf:`outer-stream`
+     - :class:`<wrapper-stream>`
 
 .. generic-function:: inner-stream-setter
    :open:
@@ -1429,10 +1429,10 @@ are exported from the *streams* module.
         ``outer-stream`` slots directly. The ``inner-stream-setter``
         function is for use only when implementing stream classes.
 
-   See also
+   :seealso:
 
-   - :gf:`inner-stream`
-   - :gf:`outer-stream-setter`
+     - :gf:`inner-stream`
+     - :gf:`outer-stream-setter`
 
 .. class:: <invalid-file-permissions-error>
 
@@ -1449,13 +1449,13 @@ are exported from the *streams* module.
      a file in a manner for which the user does not have permission. It is a
      subclass of :class:`<file-error>`.
 
-   See also
+   :seealso:
 
-   - :class:`<end-of-stream-error>`
-   - :class:`<file-does-not-exist-error>`
-   - :class:`<file-error>`
-   - :class:`<file-exists-error>`
-   - :class:`<incomplete-read-error>`
+     - :class:`<end-of-stream-error>`
+     - :class:`<file-does-not-exist-error>`
+     - :class:`<file-error>`
+     - :class:`<file-exists-error>`
+     - :class:`<incomplete-read-error>`
 
 .. generic-function:: lock-stream
    :open:
@@ -1475,12 +1475,12 @@ are exported from the *streams* module.
      See `Locking streams`_ for more detail and discussion on using
      streams from multiple threads.
 
-   See also:
+   :seealso:
 
-   - :gf:`stream-lock`
-   - :gf:`stream-lock-setter`
-   - :gf:`unlock-stream`
-   - :macro:`with-stream-locked`
+     - :gf:`stream-lock`
+     - :gf:`stream-lock-setter`
+     - :gf:`unlock-stream`
+     - :macro:`with-stream-locked`
 
 .. method:: make
    :specializer: <byte-string-stream>
@@ -1514,10 +1514,10 @@ are exported from the *streams* module.
        let stream = make(<byte-string-stream>,
                          direction: #"output");
 
-   See also
+   :seealso:
 
-   - :class:`<byte-string-stream>`
-   - :meth:`make(<sequence-stream>)`
+     - :class:`<byte-string-stream>`
+     - :meth:`make(<sequence-stream>)`
 
 .. method:: make
    :specializer: <file-stream>
@@ -1571,11 +1571,11 @@ are exported from the *streams* module.
      `<byte-character>`_ and `<unicode-character>`_ are likely choices.
      See `Options when creating file streams`_.
 
-   See also
+   :seealso:
 
-   - :class:`<buffered-stream>`
-   - :class:`<file-stream>`
-   - :gf:`type-for-file-stream`
+     - :class:`<buffered-stream>`
+     - :class:`<file-stream>`
+     - :gf:`type-for-file-stream`
 
 .. method:: make
    :specializer: <sequence-stream>
@@ -1625,10 +1625,10 @@ are exported from the *streams* module.
        write(stream,"ABCDEF");
        values(sv, stream-contents(stream));
 
-   See also
+   :seealso:
 
-   - :class:`<sequence-stream>`
-   - :gf:`type-for-sequence-stream`
+     - :class:`<sequence-stream>`
+     - :gf:`type-for-sequence-stream`
 
 .. method:: make
    :specializer: <string-stream>
@@ -1662,10 +1662,10 @@ are exported from the *streams* module.
        let stream = make(<string-stream>,
                          contents: "here is a sequence");
 
-   See also
+   :seealso:
 
-   - :meth:`make(<sequence-stream>)`
-   - :class:`<string-stream>`
+     - :meth:`make(<sequence-stream>)`
+     - :class:`<string-stream>`
 
 .. method:: make
    :specializer: <unicode-string-stream>
@@ -1693,10 +1693,10 @@ are exported from the *streams* module.
      init-keywords are as for :meth:`make <make(<sequence-stream>)>` on
      :class:`<sequence-stream>`.
 
-   See also
+   :seealso:
 
-   - :meth:`make(<sequence-stream>)`
-   - :class:`<unicode-string-stream>`
+     - :meth:`make(<sequence-stream>)`
+     - :class:`<unicode-string-stream>`
 
 .. generic-function:: new-line
    :open:
@@ -1728,11 +1728,11 @@ are exported from the *streams* module.
 
      Returns the stream that is wrapping *stream*.
 
-   See also
+   :seealso:
 
-   - :gf:`inner-stream`
-   - :gf:`outer-stream-setter`
-   - :class:`<wrapper-stream>`
+     - :gf:`inner-stream`
+     - :gf:`outer-stream-setter`
+     - :class:`<wrapper-stream>`
 
 .. generic-function:: outer-stream-setter
    :open:
@@ -1753,10 +1753,10 @@ are exported from the *streams* module.
         ``outer-stream`` slots directly. The ``outer-stream-setter``
         function is for use only when implementing stream classes.
 
-   See also
+   :seealso:
 
-   - :gf:`inner-stream-setter`
-   - :gf:`outer-stream`
+     - :gf:`inner-stream-setter`
+     - :gf:`outer-stream`
 
 .. generic-function:: peek
    :open:
@@ -1775,9 +1775,9 @@ are exported from the *streams* module.
      This function behaves as :gf:`read-element` does, but the stream
      position is not advanced.
 
-   See also
+   :seealso:
 
-   - :gf:`read-element`
+     - :gf:`read-element`
 
 .. class:: <positionable-stream>
    :open:
@@ -1817,9 +1817,9 @@ are exported from the *streams* module.
       together with the :class:`<stream-position>` class, allows for cases where
       this might not be possible.
 
-   See also
+   :seealso:
 
-   - :class:`<stream-position>`
+     - :class:`<stream-position>`
 
 .. generic-function:: read
    :open:
@@ -1866,11 +1866,11 @@ are exported from the *streams* module.
        elements were read from the stream, an
        :class:`<end-of-stream-error>` condition is signalled.
 
-   See also
+   :seealso:
 
-   - :class:`<end-of-stream-error>`
-   - :class:`<incomplete-read-error>`
-   - :gf:`stream-element-type`
+     - :class:`<end-of-stream-error>`
+     - :class:`<incomplete-read-error>`
+     - :gf:`stream-element-type`
 
 .. generic-function:: read-element
    :open:
@@ -1909,11 +1909,11 @@ are exported from the *streams* module.
          function(read-element(stream));
        end;
 
-   See also
+   :seealso:
 
-   - :class:`<end-of-stream-error>`
-   - :gf:`peek`
-   - :gf:`unread-element`
+     - :class:`<end-of-stream-error>`
+     - :gf:`peek`
+     - :gf:`unread-element`
 
 .. generic-function:: read-into!
    :open:
@@ -1946,9 +1946,9 @@ are exported from the *streams* module.
      If the stream is not at its end, ``read-into!`` waits until input
      becomes available.
 
-   See also
+   :seealso:
 
-   - :gf:`read`
+     - :gf:`read`
 
 .. generic-function:: read-line
    :open:
@@ -1983,9 +1983,9 @@ are exported from the *streams* module.
      of an empty line), then the end-of-stream behavior and the
      interpretation of *on-end-of-stream* is as for :gf:`read-element`.
 
-   See also
+   :seealso:
 
-   - :gf:`read-element`
+     - :gf:`read-element`
 
 .. generic-function:: read-line-into!
    :open:
@@ -2033,9 +2033,9 @@ are exported from the *streams* module.
      The end-of-stream behavior and the interpretation of
      *on-end-of-stream* is the same as that of :gf:`read-line`.
 
-   See also
+   :seealso:
 
-   - :gf:`read-line`
+     - :gf:`read-line`
 
 .. generic-function:: read-through
 
@@ -2060,9 +2060,9 @@ are exported from the *streams* module.
      If the *element* is not found, the result does not contain it. The
      stream is left positioned after *element*.
 
-   See also
+   :seealso:
 
-   - :gf:`read-to`
+     - :gf:`read-to`
 
 .. generic-function:: read-to
 
@@ -2099,9 +2099,9 @@ are exported from the *streams* module.
      :gf:`read`. The end-of-stream behavior is the same as that of
      :gf:`read-element`.
 
-   See also
+   :seealso:
 
-   - :gf:`read-element`
+     - :gf:`read-element`
 
 .. generic-function:: read-to-end
 
@@ -2132,9 +2132,9 @@ are exported from the *streams* module.
                    start: 6,
                    end: 11));
 
-   See also
+   :seealso:
 
-   - :gf:`read`
+     - :gf:`read`
 
 .. class:: <sequence-stream>
    :open:
@@ -2180,12 +2180,12 @@ are exported from the *streams* module.
 
      - :meth:`make(<sequence-stream>)`
 
-   See also
+   :seealso:
 
-   - :class:`<byte-string-stream>`
-   - :meth:`make(<sequence-stream>)`
-   - :class:`<string-stream>`
-   - :class:`<unicode-string-stream>`
+     - :class:`<byte-string-stream>`
+     - :meth:`make(<sequence-stream>)`
+     - :class:`<string-stream>`
+     - :class:`<unicode-string-stream>`
 
 .. generic-function:: skip-through
 
@@ -2302,11 +2302,11 @@ are exported from the *streams* module.
          function(read-element(stream));
        end;
 
-   See also
+   :seealso:
 
-   - :class:`<end-of-stream-error>`
-   - :gf:`read-element`
-   - :gf:`stream-input-available?`
+     - :class:`<end-of-stream-error>`
+     - :gf:`read-element`
+     - :gf:`stream-input-available?`
 
 .. generic-function:: stream-contents
    :open:
@@ -2356,9 +2356,9 @@ are exported from the *streams* module.
        write-element(stream, ’!’);
        stream-contents(stream);
 
-   See also
+   :seealso:
 
-   - :gf:`read-to-end`
+     - :gf:`read-to-end`
 
 .. generic-function:: stream-element-type
    :open:
@@ -2395,10 +2395,10 @@ are exported from the *streams* module.
      stream’s source, and consequently inspect the *on-end-of-stream*
      argument to determine how to handle the end of stream.
 
-   See also
+   :seealso:
 
-   - :gf:`read-element`
-   - :gf:`stream-at-end?`
+     - :gf:`read-element`
+     - :gf:`stream-at-end?`
 
 .. generic-function:: stream-console?
    :open:
@@ -2443,9 +2443,9 @@ are exported from the *streams* module.
      in conjunction with :gf:`stream-lock-setter` to
      implement a basic stream locking facility.
 
-   See also
+   :seealso:
 
-   - :gf:`stream-lock-setter`
+     - :gf:`stream-lock-setter`
 
 .. generic-function:: stream-lock-setter
    :open:
@@ -2465,9 +2465,9 @@ are exported from the *streams* module.
      conjunction with :gf:`stream-lock` to implement a basic stream
      locking facility.
 
-   See also
+   :seealso:
 
-   - :gf:`stream-lock`
+     - :gf:`stream-lock`
 
 .. generic-function:: stream-open?
    :open:
@@ -2483,9 +2483,9 @@ are exported from the *streams* module.
 
      Returns ``#t`` if *stream* is open and ``#f`` if it is not.
 
-   See also
+   :seealso:
 
-   - :gf:`close`
+     - :gf:`close`
 
 .. generic-function:: stream-position
    :open:
@@ -2520,7 +2520,7 @@ are exported from the *streams* module.
        stream-position(stream) := 6;
        read-element(stream);
 
-   See also
+   :seealso:
 
    :class:`<position-type>`
 
@@ -2548,9 +2548,9 @@ are exported from the *streams* module.
      - :gf:`stream-position-setter`
      - :gf:`stream-size`
 
-   See also
+   :seealso:
 
-   - :class:`<position-type>`
+     - :class:`<position-type>`
 
 .. generic-function:: stream-position-setter
    :open:
@@ -2587,10 +2587,10 @@ are exported from the *streams* module.
        position past the current last element of the stream: use
        ``adjust-stream-position`` instead.
 
-   See also
+   :seealso:
 
-   - :gf:`adjust-stream-position`
-   - :class:`<stream-position>`
+     - :gf:`adjust-stream-position`
+     - :class:`<stream-position>`
 
 .. generic-function:: stream-size
    :open:
@@ -2664,10 +2664,10 @@ are exported from the *streams* module.
 
      - :meth:`make(<string-stream>)`
 
-   See also
+   :seealso:
 
-   - :meth:`make(<string-stream>)`
-   - :class:`<sequence-stream>`
+     - :meth:`make(<string-stream>)`
+     - :class:`<sequence-stream>`
 
 .. generic-function:: synchronize-output
    :open:
@@ -2690,9 +2690,9 @@ are exported from the *streams* module.
      method to the ``synchronize-output`` function, even though it is
      not part of the Stream Extension Protocol.
 
-   See also
+   :seealso:
 
-   - :gf:`force-output`
+     - :gf:`force-output`
 
 .. generic-function:: type-for-file-stream
    :open:
@@ -2713,10 +2713,10 @@ are exported from the *streams* module.
      file. The method for :meth:`make(<file-stream>)` calls this function
      to determine the class of which it should create an instance.
 
-   See also
+   :seealso:
 
-   - :class:`<file-stream>`
-   - :meth:`make(<file-stream>)`
+     - :class:`<file-stream>`
+     - :meth:`make(<file-stream>)`
 
 .. generic-function:: type-for-sequence-stream
    :open:
@@ -2740,10 +2740,10 @@ are exported from the *streams* module.
      string object classes. These methods return a stream class object
      that the Streams module considers appropriate.
 
-   See also
+   :seealso:
 
-   - :meth:`make(<sequence-stream>)`
-   - :class:`<sequence-stream>`
+     - :meth:`make(<sequence-stream>)`
+     - :class:`<sequence-stream>`
 
 .. type:: <unicode-character>
 
@@ -2801,10 +2801,10 @@ are exported from the *streams* module.
 
      - :meth:`make(<unicode-string-stream>)`
 
-   See also
+   :seealso:
 
-   - :meth:`make(<unicode-string-stream>)`
-   - :class:`<sequence-stream>`
+     - :meth:`make(<unicode-string-stream>)`
+     - :class:`<sequence-stream>`
 
 .. generic-function:: unlock-stream
    :open:
@@ -2824,12 +2824,12 @@ are exported from the *streams* module.
      See `Locking streams`_ for more detail and discussion on using
      streams from multiple threads.
 
-   See also:
+   :seealso:
 
-   - :gf:`lock-stream`
-   - :gf:`stream-lock`
-   - :gf:`stream-lock-setter`
-   - :macro:`with-stream-locked`
+     - :gf:`lock-stream`
+     - :gf:`stream-lock`
+     - :gf:`stream-lock-setter`
+     - :macro:`with-stream-locked`
 
 .. generic-function:: unread-element
    :open:
@@ -2857,9 +2857,9 @@ are exported from the *streams* module.
      - To unread an element if the stream is at its initial position.
      - To unread an element after explicitly setting the stream’s position.
 
-   See also
+   :seealso:
 
-   - :gf:`read-element`
+     - :gf:`read-element`
 
 .. generic-function:: wait-for-io-completion
 
@@ -2931,11 +2931,11 @@ are exported from the *streams* module.
          end block;
        end;
 
-   See also
+   :seealso:
 
-   - :meth:`close(<file-stream>)`
-   - :class:`<file-stream>`
-   - :meth:`make(<file-stream>)`
+     - :meth:`close(<file-stream>)`
+     - :class:`<file-stream>`
+     - :meth:`make(<file-stream>)`
 
 .. macro:: with-stream-locked
    :statement:
@@ -2962,12 +2962,12 @@ are exported from the *streams* module.
 
      The values of the last expression in *body* are returned.
 
-   See also:
+   :seealso:
 
-   - :gf:`lock-stream`
-   - :gf:`stream-lock`
-   - :gf:`stream-lock-setter`
-   - :gf:`unlock-stream`
+     - :gf:`lock-stream`
+     - :gf:`stream-lock`
+     - :gf:`stream-lock-setter`
+     - :gf:`unlock-stream`
 
 .. class:: <wrapper-stream>
    :open:
@@ -3116,11 +3116,11 @@ are exported from the *streams* module.
        write-element(stream, ’!’);
        stream-contents(stream);
 
-   See also
+   :seealso:
 
-   - :gf:`read`
-   - :gf:`write-element`
-   - :gf:`write-line`
+     - :gf:`read`
+     - :gf:`write-element`
+     - :gf:`write-line`
 
 .. generic-function:: write-element
    :open:
@@ -3159,11 +3159,11 @@ are exported from the *streams* module.
        write-element(stream, ’o’);
        stream-contents(stream);
 
-   See also
+   :seealso:
 
-   - :gf:`read-element`
-   - :gf:`write`
-   - :gf:`write-line`
+     - :gf:`read-element`
+     - :gf:`write`
+     - :gf:`write-line`
 
 .. generic-function:: write-line
    :open:
@@ -3187,9 +3187,9 @@ are exported from the *streams* module.
      If supplied, *start* and *end* delimit the portion of *string* to
      write to the stream.
 
-   See also
+   :seealso:
 
-   - :gf:`new-line`
-   - :gf:`read-line`
-   - :gf:`write`
-   - :gf:`write-element`
+     - :gf:`new-line`
+     - :gf:`read-line`
+     - :gf:`write`
+     - :gf:`write-element`

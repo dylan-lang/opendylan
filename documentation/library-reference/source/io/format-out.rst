@@ -41,10 +41,10 @@ This section contains a reference entry for each item exported from the
 
      This function is thread-safe.
 
-   See also
+   :seealso:
 
-   - :gf:`format`
-   - :var:`*standard-output*`
+     - :gf:`format`
+     - :var:`*standard-output*`
 
 .. method:: format-out
    :sealed:
@@ -95,10 +95,10 @@ This section contains a reference entry for each item exported from the
 
      This function is thread-safe.
 
-   See also
+   :seealso:
 
-   - :gf:`format`
-   - :var:`*standard-error*`
+     - :gf:`format`
+     - :var:`*standard-error*`
 
 .. method:: format-err
    :sealed:

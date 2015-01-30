@@ -409,9 +409,9 @@ are exported from the *duim-sheets* module.
 
      Returns true if *gesture1* and *gesture2* are the same.
 
-   See also
+   :seealso:
 
-   - :gf:`gesture-spec-equal`
+     - :gf:`gesture-spec-equal`
 
 .. generic-function:: add-child
 
@@ -429,10 +429,10 @@ are exported from the *duim-sheets* module.
 
      Adds a child to *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`remove-child`
-   - :gf:`replace-child`
+     - :gf:`remove-child`
+     - :gf:`replace-child`
 
 .. generic-function:: add-clipboard-data
 
@@ -483,17 +483,17 @@ are exported from the *duim-sheets* module.
      the same value as the META key, to deal with the case where the META key
      is not present on the keyboard.
 
-   See also
+   :seealso:
 
-   - :const:`$control-key`
-   - :const:`$hyper-key`
-   - :const:`$meta-key`
-   - :gf:`modifier-key-index`
-   - :gf:`modifier-key-index-name`
-   - :const:`$modifier-keys`
-   - :const:`$option-key`
-   - :const:`$shift-key`
-   - :const:`$super-key`
+     - :const:`$control-key`
+     - :const:`$hyper-key`
+     - :const:`$meta-key`
+     - :gf:`modifier-key-index`
+     - :gf:`modifier-key-index-name`
+     - :const:`$modifier-keys`
+     - :const:`$option-key`
+     - :const:`$shift-key`
+     - :const:`$super-key`
 
 .. generic-function:: beep
 
@@ -518,9 +518,9 @@ are exported from the *duim-sheets* module.
      Returns the kind of boundary event for *event*. These correspond to the
      detail members for X11 enter and exit events.
 
-   See also
+   :seealso:
 
-   - :class:`<pointer-boundary-event>`
+     - :class:`<pointer-boundary-event>`
 
 .. function:: button-index
 
@@ -538,10 +538,10 @@ are exported from the *duim-sheets* module.
      connected to the computer (typically a mouse). The *index* returned is
      either 0, 1, or 2, for the left, middle, or right buttons, respectively.
 
-   See also
+   :seealso:
 
-   - :gf:`button-index-name`
-   - :const:`$pointer-buttons`
+     - :gf:`button-index-name`
+     - :const:`$pointer-buttons`
 
 .. function:: button-index-name
 
@@ -561,10 +561,10 @@ are exported from the *duim-sheets* module.
      or 2, these values corresponding to the left, middle, or right buttons,
      respectively.
 
-   See also
+   :seealso:
 
-   - :gf:`button-index`
-   - :const:`$pointer-buttons`
+     - :gf:`button-index`
+     - :const:`$pointer-buttons`
 
 .. class:: <button-press-event>
    :sealed:
@@ -583,10 +583,10 @@ are exported from the *duim-sheets* module.
      then an instance of this class is generated when a subsequent button
      press is detected.
 
-   See also
+   :seealso:
 
-   - :class:`<button-release-event>`
-   - :class:`<double-click-event>`
+     - :class:`<button-release-event>`
+     - :class:`<double-click-event>`
 
 .. class:: <button-release-event>
    :sealed:
@@ -602,9 +602,9 @@ are exported from the *duim-sheets* module.
      class is generated if the mouse button is released after a period of
      being pressed, for example, at the end of a drag and drop maneuver.
 
-   See also
+   :seealso:
 
-   - :class:`<button-press-event>`
+     - :class:`<button-press-event>`
 
 .. class:: <caret>
    :abstract:
@@ -644,13 +644,13 @@ are exported from the *duim-sheets* module.
      - :gf:`port`
      - :gf:`set-caret-position`
 
-   See also
+   :seealso:
 
-   - :gf:`caret-position`
-   - :gf:`caret-sheet`
-   - :gf:`caret-size`
-   - :gf:`caret-visible?`
-   - :class:`<cursor>`
+     - :gf:`caret-position`
+     - :gf:`caret-sheet`
+     - :gf:`caret-size`
+     - :gf:`caret-visible?`
+     - :class:`<cursor>`
 
 .. generic-function:: caret-position
 
@@ -667,10 +667,10 @@ are exported from the *duim-sheets* module.
 
      Returns the position of *caret*.
 
-   See also
+   :seealso:
 
-   - :gf:`caret-sheet`
-   - :gf:`caret-size`
+     - :gf:`caret-sheet`
+     - :gf:`caret-size`
 
 .. generic-function:: caret-sheet
 
@@ -686,10 +686,10 @@ are exported from the *duim-sheets* module.
 
      Returns the sheet that owns *caret*.
 
-   See also
+   :seealso:
 
-   - :gf:`caret-position`
-   - :gf:`caret-size`
+     - :gf:`caret-position`
+     - :gf:`caret-size`
 
 .. generic-function:: caret-size
 
@@ -706,10 +706,10 @@ are exported from the *duim-sheets* module.
 
      Returns the size of *caret*.
 
-   See also
+   :seealso:
 
-   - :gf:`caret-position`
-   - :gf:`caret-sheet`
+     - :gf:`caret-position`
+     - :gf:`caret-sheet`
 
 .. generic-function:: caret-visible?
 
@@ -725,10 +725,10 @@ are exported from the *duim-sheets* module.
 
      Returns true if *caret* is visible.
 
-   See also
+   :seealso:
 
-   - :class:`<cursor>`
-   - :gf:`caret-visible?-setter`
+     - :class:`<cursor>`
+     - :gf:`caret-visible?-setter`
 
 .. generic-function:: caret-visible?-setter
 
@@ -745,10 +745,10 @@ are exported from the *duim-sheets* module.
 
      Specifies whether or not *caret* is visible.
 
-   See also
+   :seealso:
 
-   - :class:`<cursor>`
-   - :gf:`caret-visible?`
+     - :class:`<cursor>`
+     - :gf:`caret-visible?`
 
 .. generic-function:: child-containing-position
 
@@ -769,10 +769,10 @@ are exported from the *duim-sheets* module.
      contains the position *(* *x* *,* *y* *)*. The position is expressed in
      the coordinate system used by *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`children-overlapping-region`
-   - :gf:`do-children-containing-position`
+     - :gf:`children-overlapping-region`
+     - :gf:`do-children-containing-position`
 
 .. generic-function:: children-overlapping-region
 
@@ -791,10 +791,10 @@ are exported from the *duim-sheets* module.
      Returns the list of enabled direct children of *sheet* whose region
      overlaps *region*.
 
-   See also
+   :seealso:
 
-   - :gf:`child-containing-position`
-   - :gf:`do-children-overlapping-region`
+     - :gf:`child-containing-position`
+     - :gf:`do-children-overlapping-region`
 
 .. generic-function:: choose-color
 
@@ -860,11 +860,11 @@ are exported from the *duim-sheets* module.
                  end);
           end frame <color-dialog-frame>;
 
-   See also
+   :seealso:
 
-   - :gf:`choose-directory`
-   - :gf:`choose-file`
-   - :gf:`notify-user`
+     - :gf:`choose-directory`
+     - :gf:`choose-file`
+     - :gf:`notify-user`
 
 .. generic-function:: choose-directory
 
@@ -930,11 +930,11 @@ are exported from the *duim-sheets* module.
            keyword title: = "Choose directory example";
          end frame <directory-dialog-frame>;
 
-   See also
+   :seealso:
 
-   - :gf:`choose-color`
-   - :gf:`choose-file`
-   - :gf:`notify-user`
+     - :gf:`choose-color`
+     - :gf:`choose-file`
+     - :gf:`notify-user`
 
 .. generic-function:: choose-file
 
@@ -1054,11 +1054,11 @@ are exported from the *duim-sheets* module.
                    end);
           end frame <open-save-dialog-frame>;
 
-   See also
+   :seealso:
 
-   - :gf:`choose-color`
-   - :gf:`choose-directory`
-   - :gf:`notify-user`
+     - :gf:`choose-color`
+     - :gf:`choose-directory`
+     - :gf:`notify-user`
 
 .. generic-function:: choose-from-dialog
 
@@ -1131,9 +1131,9 @@ are exported from the *duim-sheets* module.
      respectively. The *text-style* keyword lets you specify a font to
      display the menu items.
 
-   See also
+   :seealso:
 
-   - :gf:`choose-from-menu`
+     - :gf:`choose-from-menu`
 
 .. generic-function:: choose-from-menu
 
@@ -1192,9 +1192,9 @@ are exported from the *duim-sheets* module.
      the menu color respectively. The *text-style* keyword lets you specify a
      font to display the menu items.
 
-   See also
+   :seealso:
 
-   - :gf:`choose-from-dialog`
+     - :gf:`choose-from-dialog`
 
 .. generic-function:: choose-text-style
 
@@ -1281,18 +1281,18 @@ are exported from the *duim-sheets* module.
      about creating instances of :class:`<clipboard>` yourself, since this is
      handled automatically by the macro :macro:`with-clipboard`.
 
-   See also
+   :seealso:
 
-   - :gf:`add-clipboard-data`
-   - :gf:`add-clipboard-data-as`
-   - :gf:`clear-clipboard`
-   - :gf:`clipboard-data-available?`
-   - :gf:`clipboard-sheet`
-   - :gf:`clipboard-owner`
-   - :gf:`close-clipboard`
-   - :gf:`get-clipboard-data-as`
-   - :gf:`open-clipboard`
-   - :gf:`with-clipboard`
+     - :gf:`add-clipboard-data`
+     - :gf:`add-clipboard-data-as`
+     - :gf:`clear-clipboard`
+     - :gf:`clipboard-data-available?`
+     - :gf:`clipboard-sheet`
+     - :gf:`clipboard-owner`
+     - :gf:`close-clipboard`
+     - :gf:`get-clipboard-data-as`
+     - :gf:`open-clipboard`
+     - :gf:`with-clipboard`
 
 .. generic-function:: clipboard-data-available?
 
@@ -1311,12 +1311,12 @@ are exported from the *duim-sheets* module.
      clipboard. The argument *type* is an instance of *type-union(<symbol>,*
      *<type>)*.
 
-   See also
+   :seealso:
 
-   - :gf:`add-clipboard-data`
-   - :gf:`add-clipboard-data-as`
-   - :class:`<clipboard>`
-   - :gf:`get-clipboard-data-as`
+     - :gf:`add-clipboard-data`
+     - :gf:`add-clipboard-data-as`
+     - :class:`<clipboard>`
+     - :gf:`get-clipboard-data-as`
 
 .. generic-function:: clipboard-sheet
 
@@ -1332,9 +1332,9 @@ are exported from the *duim-sheets* module.
 
      Returns the sheet with the clipboard lock.
 
-   See also
+   :seealso:
 
-   - :class:`<clipboard>`
+     - :class:`<clipboard>`
 
 .. generic-function:: clipboard-owner
 
@@ -1350,9 +1350,9 @@ are exported from the *duim-sheets* module.
 
      Returns the sheet that owns the current clipboard data.
 
-   See also
+   :seealso:
 
-   - :class:`<clipboard>`
+     - :class:`<clipboard>`
 
 .. function:: close-clipboard
 
@@ -1373,10 +1373,10 @@ are exported from the *duim-sheets* module.
      clipboard lock. Use the macro :macro:`with-clipboard` to create and free the
      lock for you.
 
-   See also
+   :seealso:
 
-   - :class:`<clipboard>`
-   - :gf:`with-clipboard`
+     - :class:`<clipboard>`
+     - :gf:`with-clipboard`
 
 .. constant:: $control-key
 
@@ -1390,17 +1390,17 @@ are exported from the *duim-sheets* module.
 
      A constant that represents the CONTROL key on the keyboard.
 
-   See also
+   :seealso:
 
-   - :const:`$alt-key`
-   - :const:`$hyper-key`
-   - :const:`$meta-key`
-   - :gf:`modifier-key-index`
-   - :gf:`modifier-key-index-name`
-   - :const:`$modifier-keys`
-   - :const:`$option-key`
-   - :const:`$shift-key`
-   - :const:`$super-key`
+     - :const:`$alt-key`
+     - :const:`$hyper-key`
+     - :const:`$meta-key`
+     - :gf:`modifier-key-index`
+     - :gf:`modifier-key-index-name`
+     - :const:`$modifier-keys`
+     - :const:`$option-key`
+     - :const:`$shift-key`
+     - :const:`$super-key`
 
 .. class:: <cursor>
 
@@ -1421,10 +1421,10 @@ are exported from the *duim-sheets* module.
      - :gf:`set-caret-position`
      - :gf:`sheet-pointer-cursor-setter`
 
-   See also
+   :seealso:
 
-   - :class:`<caret>`
-   - :gf:`cursor?`
+     - :class:`<caret>`
+     - :gf:`cursor?`
 
 .. generic-function:: cursor?
 
@@ -1441,9 +1441,9 @@ are exported from the *duim-sheets* module.
      Returns true if *object* is a cursor. In practice, you can create a cursor
      from any instance of :class:`<symbol>` or :class:`<image>`.
 
-   See also
+   :seealso:
 
-   - :class:`<cursor>`
+     - :class:`<cursor>`
 
 .. function:: default-port
 
@@ -1459,10 +1459,10 @@ are exported from the *duim-sheets* module.
 
      Returns the default port for server specified by *server-path*.
 
-   See also
+   :seealso:
 
-   - :gf:`default-port-setter`
-   - :gf:`destroy-port`
+     - :gf:`default-port-setter`
+     - :gf:`destroy-port`
 
 .. function:: default-port-setter
 
@@ -1478,10 +1478,10 @@ are exported from the *duim-sheets* module.
 
      Sets the default port.
 
-   See also
+   :seealso:
 
-   - :gf:`default-port`
-   - :gf:`destroy-port`
+     - :gf:`default-port`
+     - :gf:`destroy-port`
 
 .. generic-function:: destroy-port
 
@@ -1495,10 +1495,10 @@ are exported from the *duim-sheets* module.
 
      Destroys *port*.
 
-   See also
+   :seealso:
 
-   - :gf:`default-port`
-   - :gf:`default-port-setter`
+     - :gf:`default-port`
+     - :gf:`default-port-setter`
 
 .. generic-function:: destroy-sheet
 
@@ -1575,17 +1575,17 @@ are exported from the *duim-sheets* module.
      - :gf:`display-units`
      - :gf:`display-width`
 
-   See also
+   :seealso:
 
-   - :gf:`display`
-   - :gf:`display?`
-   - :gf:`display-depth`
-   - :gf:`display-height`
-   - :gf:`display-orientation`
-   - :gf:`display-units`
-   - :gf:`display-width`
-   - :class:`<port>`
-   - :class:`<sheet>`
+     - :gf:`display`
+     - :gf:`display?`
+     - :gf:`display-depth`
+     - :gf:`display-height`
+     - :gf:`display-orientation`
+     - :gf:`display-units`
+     - :gf:`display-width`
+     - :class:`<port>`
+     - :class:`<sheet>`
 
 .. generic-function:: display
 
@@ -1601,11 +1601,11 @@ are exported from the *duim-sheets* module.
 
      Returns the display used to display *object*.
 
-   See also
+   :seealso:
 
-   - :class:`<display>`
-   - :gf:`frame-manager`
-   - :gf:`port`
+     - :class:`<display>`
+     - :gf:`frame-manager`
+     - :gf:`port`
 
 .. generic-function:: display?
 
@@ -1621,9 +1621,9 @@ are exported from the *duim-sheets* module.
 
      Returns true if *object* is a display.
 
-   See also
+   :seealso:
 
-   - :class:`<display>`
+     - :class:`<display>`
 
 .. generic-function:: display-depth
 
@@ -1640,11 +1640,11 @@ are exported from the *duim-sheets* module.
      Returns the color depth of *display*. By default, the color depth of
      any display is assumed to be 8.
 
-   See also
+   :seealso:
 
-   - :gf:`display-height`
-   - :gf:`display-orientation`
-   - :gf:`display-width`
+     - :gf:`display-height`
+     - :gf:`display-orientation`
+     - :gf:`display-width`
 
 .. generic-function:: display-height
 
@@ -1663,14 +1663,14 @@ are exported from the *duim-sheets* module.
      *units* is specified, then the value returned is converted into the
      appropriate type of units.
 
-   See also
+   :seealso:
 
-   - :gf:`display-depth`
-   - :gf:`display-mm-height`
-   - :gf:`display-orientation`
-   - :gf:`display-pixel-height`
-   - :gf:`display-units`
-   - :gf:`display-width`
+     - :gf:`display-depth`
+     - :gf:`display-mm-height`
+     - :gf:`display-orientation`
+     - :gf:`display-pixel-height`
+     - :gf:`display-units`
+     - :gf:`display-width`
 
 .. generic-function:: display-mm-height
 
@@ -1687,12 +1687,12 @@ are exported from the *duim-sheets* module.
      Returns the height of *display* in millimeters. This is equivalent to
      calling :gf:`display-height` with the *units* argument set to *#"mm"*.
 
-   See also
+   :seealso:
 
-   - :gf:`display-height`
-   - :gf:`display-mm-width`
-   - :gf:`display-pixel-height`
-   - :gf:`display-units`
+     - :gf:`display-height`
+     - :gf:`display-mm-width`
+     - :gf:`display-pixel-height`
+     - :gf:`display-units`
 
 .. generic-function:: display-mm-width
 
@@ -1709,12 +1709,12 @@ are exported from the *duim-sheets* module.
      Returns the width of *display* in millimeters. This is equivalent to
      calling :gf:`display-width` with the *units* argument set to *#"mm"*.
 
-   See also
+   :seealso:
 
-   - :gf:`display-mm-height`
-   - :gf:`display-pixel-width`
-   - :gf:`display-units`
-   - :gf:`display-width`
+     - :gf:`display-mm-height`
+     - :gf:`display-pixel-width`
+     - :gf:`display-units`
+     - :gf:`display-width`
 
 .. generic-function:: display-orientation
 
@@ -1731,11 +1731,11 @@ are exported from the *duim-sheets* module.
      Returns the orientation of *display*. Unless specified otherwise, the
      orientation of any display is *#"default"*.
 
-   See also
+   :seealso:
 
-   - :gf:`display-depth`
-   - :gf:`display-height`
-   - :gf:`display-width`
+     - :gf:`display-depth`
+     - :gf:`display-height`
+     - :gf:`display-width`
 
 .. generic-function:: display-pixel-height
 
@@ -1752,12 +1752,12 @@ are exported from the *duim-sheets* module.
      Returns the height of *display* in pixels. This is equivalent to calling
      :gf:`display-height` with the *units* argument set to *#"pixels"*.
 
-   See also
+   :seealso:
 
-   - :gf:`display-height`
-   - :gf:`display-mm-height`
-   - :gf:`display-pixel-width`
-   - :gf:`display-units`
+     - :gf:`display-height`
+     - :gf:`display-mm-height`
+     - :gf:`display-pixel-width`
+     - :gf:`display-units`
 
 .. generic-function:: display-pixels-per-point
 
@@ -1773,11 +1773,11 @@ are exported from the *duim-sheets* module.
 
      Returns the number of pixels per point for *display*.
 
-   See also
+   :seealso:
 
-   - :gf:`display-pixel-height`
-   - :gf:`display-pixel-width`
-   - :gf:`display-units`
+     - :gf:`display-pixel-height`
+     - :gf:`display-pixel-width`
+     - :gf:`display-units`
 
 .. generic-function:: display-pixel-width
 
@@ -1794,12 +1794,12 @@ are exported from the *duim-sheets* module.
      Returns the height of *display* in pixels. This is equivalent to calling
      :gf:`display-width` with the *units* argument set to *#"pixels"*.
 
-   See also
+   :seealso:
 
-   - :gf:`display-mm-width`
-   - :gf:`display-pixel-height`
-   - :gf:`display-units`
-   - :gf:`display-width`
+     - :gf:`display-mm-width`
+     - :gf:`display-pixel-height`
+     - :gf:`display-units`
+     - :gf:`display-width`
 
 .. generic-function:: display-units
 
@@ -1819,10 +1819,10 @@ are exported from the *duim-sheets* module.
      returned is *#"default"*, so as to maintain a device-independent
      measurement as far as possible.
 
-   See also
+   :seealso:
 
-   - :gf:`display-height`
-   - :gf:`display-width`
+     - :gf:`display-height`
+     - :gf:`display-width`
 
 .. generic-function:: display-width
 
@@ -1841,14 +1841,14 @@ are exported from the *duim-sheets* module.
      is specified, then the value returned is converted into the appropriate
      type of units.
 
-   See also
+   :seealso:
 
-   - :gf:`display-depth`
-   - :gf:`display-height`
-   - :gf:`display-mm-width`
-   - :gf:`display-orientation`
-   - :gf:`display-pixel-width`
-   - :gf:`display-units`
+     - :gf:`display-depth`
+     - :gf:`display-height`
+     - :gf:`display-mm-width`
+     - :gf:`display-orientation`
+     - :gf:`display-pixel-width`
+     - :gf:`display-units`
 
 .. generic-function:: do-children-containing-position
 
@@ -1870,9 +1870,9 @@ are exported from the *duim-sheets* module.
      :gf:`child-containing-position` then decides which of the children
      returned is the topmost direct enabled child.
 
-   See also
+   :seealso:
 
-   - :gf:`child-containing-position`
+     - :gf:`child-containing-position`
 
 .. generic-function:: do-children-overlapping-region
 
@@ -1891,10 +1891,10 @@ are exported from the *duim-sheets* module.
      *region*. This is used by :gf:`children-overlapping-region` to ascertain
      which children overlap *region*.
 
-   See also
+   :seealso:
 
-   - :gf:`children-overlapping-region`
-   - :gf:`do-children-containing-position`
+     - :gf:`children-overlapping-region`
+     - :gf:`do-children-containing-position`
 
 .. function:: do-displays
 
@@ -1952,9 +1952,9 @@ are exported from the *duim-sheets* module.
      Runs *function* on all the immediate children of *sheet*. This function
      calls :gf:`sheet-children` to find the children of *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-children`
+     - :gf:`sheet-children`
 
 .. generic-function:: do-sheet-tree
 
@@ -1988,9 +1988,9 @@ are exported from the *duim-sheets* module.
      event is generated, the clock is reset, so that the next press generated
      is an instance of :class:`<button-press-event>`.
 
-   See also
+   :seealso:
 
-   - :class:`<button-press-event>`
+     - :class:`<button-press-event>`
 
 .. generic-function:: do-with-drawing-options
 
@@ -2023,9 +2023,9 @@ are exported from the *duim-sheets* module.
 
      The various keywords specify a drawing context in which function is run.
 
-   See also
+   :seealso:
 
-   - :macro:`with-drawing-options`
+     - :macro:`with-drawing-options`
 
 .. generic-function:: do-with-pointer-grabbed
 
@@ -2049,9 +2049,9 @@ are exported from the *duim-sheets* module.
      *continuation* is actually the result of creating a stand-alone method
      from the body of code passed to :macro:`with-pointer-grabbed`.
 
-   See also
+   :seealso:
 
-   - :macro:`with-pointer-grabbed`
+     - :macro:`with-pointer-grabbed`
 
 .. generic-function:: do-with-sheet-medium
 
@@ -2068,9 +2068,9 @@ are exported from the *duim-sheets* module.
 
      Runs a continuation function on a sheet.
 
-   See also
+   :seealso:
 
-   - :macro:`with-sheet-medium`
+     - :macro:`with-sheet-medium`
 
 .. generic-function:: do-with-text-style
 
@@ -2086,9 +2086,9 @@ are exported from the *duim-sheets* module.
 
      Runs some code on a drawable in the context of a given text style.
 
-   See also
+   :seealso:
 
-   - :macro:`with-text-style`
+     - :macro:`with-text-style`
 
 .. generic-function:: do-with-transform
 
@@ -2111,9 +2111,9 @@ are exported from the *duim-sheets* module.
    :macro:`with-rotation`, :macro:`with-scaling`, and
    :macro:`with-translation`.
 
-   See also
+   :seealso:
 
-   - :gf:`with-transform`
+     - :gf:`with-transform`
 
 .. class:: <event>
    :open:
@@ -2139,10 +2139,10 @@ are exported from the *duim-sheets* module.
      - :gf:`handle-event`
      - :gf:`queue-event`
 
-   See also
+   :seealso:
 
-   - :class:`<frame-event>`
-   - :class:`<sheet-event>`
+     - :class:`<frame-event>`
+     - :class:`<sheet-event>`
 
 .. generic-function:: event?
 
@@ -2159,9 +2159,9 @@ are exported from the *duim-sheets* module.
      Returns true if *object* is an instance of :class:`<event>` or one of its
      subclasses.
 
-   See also
+   :seealso:
 
-   - :class:`<event>`
+     - :class:`<event>`
 
 .. generic-function:: event-button
 
@@ -2184,13 +2184,13 @@ are exported from the *duim-sheets* module.
      that the event occurred, and hence can be different from
      :gf:`pointer-button-state`.
 
-   See also
+   :seealso:
 
-   - :const:`$left-button`
-   - :const:`$middle-button`
-   - :class:`<pointer-button-event>`
-   - :gf:`pointer-button-state`
-   - :const:`$right-button`
+     - :const:`$left-button`
+     - :const:`$middle-button`
+     - :class:`<pointer-button-event>`
+     - :gf:`pointer-button-state`
+     - :const:`$right-button`
 
 .. generic-function:: event-character
 
@@ -2207,10 +2207,10 @@ are exported from the *duim-sheets* module.
      Returns the character associated with the keyboard event, if there is
      any.
 
-   See also
+   :seealso:
 
-   - :gf:`event-key-name`
-   - :class:`<keyboard-event>`
+     - :gf:`event-key-name`
+     - :class:`<keyboard-event>`
 
 .. generic-function:: event-key-name
 
@@ -2229,10 +2229,10 @@ are exported from the *duim-sheets* module.
      event. This will be a symbol whose value is specific to the current
      port.
 
-   See also
+   :seealso:
 
-   - :gf:`event-character`
-   - :class:`<keyboard-event>`
+     - :gf:`event-character`
+     - :class:`<keyboard-event>`
 
 .. generic-function:: event-matches-gesture?
 
@@ -2267,12 +2267,12 @@ are exported from the *duim-sheets* module.
      :const:`$shift-key`, :const:`$control-key`, :const:`$meta-key`,
      :const:`$super-key`, and :const:`$hyper-key`.
 
-   See also
+   :seealso:
 
-   - :gf:`event-sheet`
-   - :gf:`gesture-modifier-state`
-   - :gf:`make-modifier-state`
-   - :gf:`port-modifier-state`
+     - :gf:`event-sheet`
+     - :gf:`gesture-modifier-state`
+     - :gf:`make-modifier-state`
+     - :gf:`port-modifier-state`
 
 .. generic-function:: event-pointer
 
@@ -2288,11 +2288,11 @@ are exported from the *duim-sheets* module.
 
      Returns the pointer object to which *event* refers.
 
-   See also
+   :seealso:
 
-   - :class:`<pointer>`
-   - :gf:`event-x`
-   - :gf:`event-y`
+     - :class:`<pointer>`
+     - :gf:`event-x`
+     - :gf:`event-y`
 
 .. generic-function:: event-region
 
@@ -2308,11 +2308,11 @@ are exported from the *duim-sheets* module.
 
      Returns the region of the sheet that is affected by *event*.
 
-   See also
+   :seealso:
 
-   - :gf:`event-x`
-   - :gf:`event-y`
-   - :class:`<window-event>`
+     - :gf:`event-x`
+     - :gf:`event-y`
+     - :class:`<window-event>`
 
 .. generic-function:: event-sheet
 
@@ -2328,9 +2328,9 @@ are exported from the *duim-sheets* module.
 
      Returns the sheet associated with *event*.
 
-   See also
+   :seealso:
 
-   - :gf:`event-modifier-state`
+     - :gf:`event-modifier-state`
 
 .. generic-function:: event-x
 
@@ -2347,11 +2347,11 @@ are exported from the *duim-sheets* module.
      Returns the x position of the pointer at the time the event occurred, in
      the coordinate system of the sheet that received the event.
 
-   See also
+   :seealso:
 
-   - :gf:`event-pointer`
-   - :gf:`event-region`
-   - :gf:`event-y`
+     - :gf:`event-pointer`
+     - :gf:`event-region`
+     - :gf:`event-y`
 
 .. generic-function:: event-y
 
@@ -2368,11 +2368,11 @@ are exported from the *duim-sheets* module.
      Returns the y position of the pointer at the time the event occurred, in
      the coordinate system of the sheet that received the event.
 
-   See also
+   :seealso:
 
-   - :gf:`event-pointer`
-   - :gf:`event-region`
-   - :gf:`event-x`
+     - :gf:`event-pointer`
+     - :gf:`event-region`
+     - :gf:`event-x`
 
 .. function:: find-display
 
@@ -2396,9 +2396,9 @@ are exported from the *duim-sheets* module.
      The *orientation* and *units* arguments can be used to specify the
      orientation and display units that the returned *display* needs to use.
 
-   See also
+   :seealso:
 
-   - :gf:`find-port`
+     - :gf:`find-port`
 
 .. function:: find-frame-manager
 
@@ -2438,9 +2438,9 @@ are exported from the *duim-sheets* module.
 
      Returns a suitable port for the specified server-path.
 
-   See also
+   :seealso:
 
-   - :gf:`find-display`
+     - :gf:`find-display`
 
 .. generic-function:: fixed-width-font?
 
@@ -2474,12 +2474,12 @@ are exported from the *duim-sheets* module.
 
      Returns the ascent of the font in the *text-style* on *port*.
 
-   See also
+   :seealso:
 
-   - :gf:`font-descent`
-   - :gf:`font-height`
-   - :gf:`font-metrics`
-   - :gf:`font-width`
+     - :gf:`font-descent`
+     - :gf:`font-height`
+     - :gf:`font-metrics`
+     - :gf:`font-width`
 
 .. generic-function:: font-descent
 
@@ -2497,12 +2497,12 @@ are exported from the *duim-sheets* module.
 
      Returns the descent of the font in the *text-style* on *port*.
 
-   See also
+   :seealso:
 
-   - :gf:`font-ascent`
-   - :gf:`font-height`
-   - :gf:`font-metrics`
-   - :gf:`font-width`
+     - :gf:`font-ascent`
+     - :gf:`font-height`
+     - :gf:`font-metrics`
+     - :gf:`font-width`
 
 .. generic-function:: font-height
 
@@ -2520,12 +2520,12 @@ are exported from the *duim-sheets* module.
 
      Returns the height of the font in the *text-style* on *port*.
 
-   See also
+   :seealso:
 
-   - :gf:`font-ascent`
-   - :gf:`font-descent`
-   - :gf:`font-metrics`
-   - :gf:`font-width`
+     - :gf:`font-ascent`
+     - :gf:`font-descent`
+     - :gf:`font-metrics`
+     - :gf:`font-width`
 
 .. generic-function:: font-metrics
 
@@ -2547,12 +2547,12 @@ are exported from the *duim-sheets* module.
 
      Returns the metrics of the font in the *text-style* on *port*.
 
-   See also
+   :seealso:
 
-   - :gf:`font-ascent`
-   - :gf:`font-descent`
-   - :gf:`font-height`
-   - :gf:`font-width`
+     - :gf:`font-ascent`
+     - :gf:`font-descent`
+     - :gf:`font-height`
+     - :gf:`font-width`
 
 .. generic-function:: font-width
 
@@ -2570,12 +2570,12 @@ are exported from the *duim-sheets* module.
 
      Returns the with of the font in the *text-style* on *port*.
 
-   See also
+   :seealso:
 
-   - :gf:`font-ascent`
-   - :gf:`font-descent`
-   - :gf:`font-height`
-   - :gf:`font-metrics`
+     - :gf:`font-ascent`
+     - :gf:`font-descent`
+     - :gf:`font-height`
+     - :gf:`font-metrics`
 
 .. generic-function:: force-display
 
@@ -2604,14 +2604,14 @@ are exported from the *duim-sheets* module.
      The class of events that occur in frames. The *frame:* init-keyword
      specified the frame in which the event occurs.
 
-   See also
+   :seealso:
 
-   - :class:`<frame-created-event>`
-   - :class:`<frame-destroyed-event>`
-   - :class:`<frame-exited-event>`
-   - :class:`<frame-exit-event>`
-   - :class:`<frame-mapped-event>`
-   - :class:`<frame-unmapped-event>`
+     - :class:`<frame-created-event>`
+     - :class:`<frame-destroyed-event>`
+     - :class:`<frame-exited-event>`
+     - :class:`<frame-exit-event>`
+     - :class:`<frame-mapped-event>`
+     - :class:`<frame-unmapped-event>`
 
 .. class:: <frame-manager>
    :open:
@@ -2666,10 +2666,10 @@ are exported from the *duim-sheets* module.
 
      - :gf:`find-color`
 
-   See also
+   :seealso:
 
-   - :gf:`frame-manager`
-   - :gf:`frame-manager?`
+     - :gf:`frame-manager`
+     - :gf:`frame-manager?`
 
 .. generic-function:: frame-manager
 
@@ -2686,12 +2686,12 @@ are exported from the *duim-sheets* module.
      Returns the frame manager used to control the look and feel of the
      display of *object*.
 
-   See also
+   :seealso:
 
-   - :gf:`display`
-   - :class:`<frame-manager>`
-   - :gf:`frame-manager?`
-   - :gf:`port`
+     - :gf:`display`
+     - :class:`<frame-manager>`
+     - :gf:`frame-manager?`
+     - :gf:`port`
 
 .. generic-function:: frame-manager?
 
@@ -2707,10 +2707,10 @@ are exported from the *duim-sheets* module.
 
      Returns true if *object* is a frame manager.
 
-   See also
+   :seealso:
 
-   - :class:`<frame-manager>`
-   - :gf:`frame-manager`
+     - :class:`<frame-manager>`
+     - :gf:`frame-manager`
 
 .. generic-function:: frame-manager-frames
 
@@ -2740,9 +2740,9 @@ are exported from the *duim-sheets* module.
 
      Returns the palette used by *framem*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-manager-palette-setter`
+     - :gf:`frame-manager-palette-setter`
 
 .. generic-function:: frame-manager-palette-setter
 
@@ -2759,9 +2759,9 @@ are exported from the *duim-sheets* module.
 
      Sets the palette used by *framem*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-manager-palette`
+     - :gf:`frame-manager-palette`
 
 .. class:: <gesture>
    :abstract:
@@ -2789,10 +2789,10 @@ are exported from the *duim-sheets* module.
      - :gf:`gesture-modifier-state`
      - :gf:`gesture-spec-equal`
 
-   See also
+   :seealso:
 
-   - :class:`<keyboard-gesture>`
-   - :class:`<pointer-gesture>`
+     - :class:`<keyboard-gesture>`
+     - :class:`<pointer-gesture>`
 
 .. generic-function:: gesture-button
 
@@ -2808,9 +2808,9 @@ are exported from the *duim-sheets* module.
 
      Returns the button associated with *pointer-gesture*.
 
-   See also
+   :seealso:
 
-   - :class:`<pointer-gesture>`
+     - :class:`<pointer-gesture>`
 
 .. generic-function:: gesture-keysym
 
@@ -2826,9 +2826,9 @@ are exported from the *duim-sheets* module.
 
      Returns the keysym associated with *keyboard-gesture*.
 
-   See also
+   :seealso:
 
-   - :class:`<keyboard-gesture>`
+     - :class:`<keyboard-gesture>`
 
 .. generic-function:: gesture-modifier-state
 
@@ -2844,12 +2844,12 @@ are exported from the *duim-sheets* module.
 
      Returns the modifier-state associated with *gesture*.
 
-   See also
+   :seealso:
 
-   - :gf:`event-modifier-state`
-   - :class:`<keyboard-gesture>`
-   - :gf:`make-modifier-state`
-   - :gf:`port-modifier-state`
+     - :gf:`event-modifier-state`
+     - :class:`<keyboard-gesture>`
+     - :gf:`make-modifier-state`
+     - :gf:`port-modifier-state`
 
 .. function:: gesture-spec-equal
 
@@ -2866,9 +2866,9 @@ are exported from the *duim-sheets* module.
 
      Returns true if *gesture1* and *gesture2* are equivalent.
 
-   See also
+   :seealso:
 
-   - :gf:`=`
+     - :gf:`=`
 
 .. generic-function:: get-clipboard-data-as
 
@@ -2886,12 +2886,12 @@ are exported from the *duim-sheets* module.
      This generic function returns *data* of *type* from the clipboard. The
      argument *type* is an instance of *type-union(<symbol>, <type>)*.
 
-   See also
+   :seealso:
 
-   - :gf:`add-clipboard-data`
-   - :gf:`add-clipboard-data-as`
-   - :class:`<clipboard>`
-   - :gf:`clipboard-data-available?`
+     - :gf:`add-clipboard-data`
+     - :gf:`add-clipboard-data-as`
+     - :class:`<clipboard>`
+     - :gf:`clipboard-data-available?`
 
 .. generic-function:: get-default-background
 
@@ -2911,10 +2911,10 @@ are exported from the *duim-sheets* module.
 
      If *background* is specified, then this is used instead of the default.
 
-   See also
+   :seealso:
 
-   - :gf:`get-default-foreground`
-   - :gf:`get-default-text-style`
+     - :gf:`get-default-foreground`
+     - :gf:`get-default-text-style`
 
 .. generic-function:: get-default-foreground
 
@@ -2934,10 +2934,10 @@ are exported from the *duim-sheets* module.
 
      If *foreground* is specified, then this is used instead of the default.
 
-   See also
+   :seealso:
 
-   - :gf:`get-default-background`
-   - :gf:`get-default-text-style`
+     - :gf:`get-default-background`
+     - :gf:`get-default-text-style`
 
 .. generic-function:: get-default-text-style
 
@@ -2957,10 +2957,10 @@ are exported from the *duim-sheets* module.
 
      If *text-style* is specified, then this is used instead of the default.
 
-   See also
+   :seealso:
 
-   - :gf:`get-default-background`
-   - :gf:`get-default-foreground`
+     - :gf:`get-default-background`
+     - :gf:`get-default-foreground`
 
 .. generic-function:: handle-event
 
@@ -2994,10 +2994,10 @@ are exported from the *duim-sheets* module.
      For each event class you are handling, you should decide whether a call
      to *next-method* is actually required.
 
-   See also
+   :seealso:
 
-   - :gf:`handle-repaint`
-   - :gf:`queue-event`
+     - :gf:`handle-repaint`
+     - :gf:`queue-event`
 
 .. generic-function:: handle-repaint
 
@@ -3031,14 +3031,14 @@ are exported from the *duim-sheets* module.
      The *sheet* on *medium* is repainted and *region* is the region to
      repaint.
 
-   See also
+   :seealso:
 
-   - :class:`<drawing-pane>`
-   - :gf:`pane-display-function`
-   - :gf:`queue-repaint`
-   - :gf:`repaint-sheet`
-   - :class:`<simple-pane>`
-   - :class:`<window-repaint-event>`
+     - :class:`<drawing-pane>`
+     - :gf:`pane-display-function`
+     - :gf:`queue-repaint`
+     - :gf:`repaint-sheet`
+     - :class:`<simple-pane>`
+     - :class:`<window-repaint-event>`
 
 .. constant:: $hyper-key
 
@@ -3052,17 +3052,17 @@ are exported from the *duim-sheets* module.
 
      A constant that represents the HYPER key on the keyboard.
 
-   See also
+   :seealso:
 
-   - :const:`$alt-key`
-   - :const:`$control-key`
-   - :const:`$meta-key`
-   - :gf:`modifier-key-index`
-   - :gf:`modifier-key-index-name`
-   - :const:`$modifier-keys`
-   - :const:`$option-key`
-   - :const:`$shift-key`
-   - :const:`$super-key`
+     - :const:`$alt-key`
+     - :const:`$control-key`
+     - :const:`$meta-key`
+     - :gf:`modifier-key-index`
+     - :gf:`modifier-key-index-name`
+     - :const:`$modifier-keys`
+     - :const:`$option-key`
+     - :const:`$shift-key`
+     - :const:`$super-key`
 
 .. class:: <keyboard-event>
    :open:
@@ -3091,12 +3091,12 @@ are exported from the *duim-sheets* module.
      - :gf:`event-key-name`
      - :gf:`event-matches-gesture?`
 
-   See also
+   :seealso:
 
-   - :gf:`event-character`
-   - :gf:`event-key-name`
-   - :class:`<key-press-event>`
-   - :class:`<key-release-event>`
+     - :gf:`event-character`
+     - :gf:`event-key-name`
+     - :class:`<key-press-event>`
+     - :class:`<key-release-event>`
 
 .. class:: <keyboard-gesture>
    :sealed:
@@ -3120,10 +3120,10 @@ are exported from the *duim-sheets* module.
 
      - :gf:`gesture-keysym`
 
-   See also
+   :seealso:
 
-   - :gf:`gesture-keysym`
-   - :gf:`gesture-modifier-state`
+     - :gf:`gesture-keysym`
+     - :gf:`gesture-modifier-state`
 
 .. class:: <key-press-event>
    :sealed:
@@ -3139,10 +3139,10 @@ are exported from the *duim-sheets* module.
 
    :operations:
 
-   See also
+   :seealso:
 
-   - :class:`<keyboard-event>`
-   - :class:`<key-release-event>`
+     - :class:`<keyboard-event>`
+     - :class:`<key-release-event>`
 
 .. class:: <key-release-event>
    :sealed:
@@ -3158,10 +3158,10 @@ are exported from the *duim-sheets* module.
 
    :operations:
 
-   See also
+   :seealso:
 
-   - :class:`<keyboard-event>`
-   - :class:`<key-press-event>`
+     - :class:`<keyboard-event>`
+     - :class:`<key-press-event>`
 
 .. constant:: $left-button
 
@@ -3177,11 +3177,11 @@ are exported from the *duim-sheets* module.
      A constant that represents the left button on the attached pointing
      device.
 
-   See also
+   :seealso:
 
-   - :const:`$middle-button`
-   - :const:`$pointer-buttons`
-   - :const:`$right-button`
+     - :const:`$middle-button`
+     - :const:`$pointer-buttons`
+     - :const:`$right-button`
 
 .. generic-function:: lower-sheet
 
@@ -3196,11 +3196,11 @@ are exported from the *duim-sheets* module.
 
      Lowers *sheet* to the bottom of the current hierarchy of sheets.
 
-   See also
+   :seealso:
 
-   - :gf:`lower-frame`
-   - :gf:`raise-frame`
-   - :gf:`raise-sheet`
+     - :gf:`lower-frame`
+     - :gf:`raise-frame`
+     - :gf:`raise-sheet`
 
 .. generic-function:: make-frame-manager
 
@@ -3218,9 +3218,9 @@ are exported from the *duim-sheets* module.
      Returns an instance of :class:`<frame-manager>` on *port*. If specified,
      the palette described by *palette* is used.
 
-   See also
+   :seealso:
 
-   - :class:`<frame-manager>`
+     - :class:`<frame-manager>`
 
 .. function:: make-modifier-state
 
@@ -3236,11 +3236,11 @@ are exported from the *duim-sheets* module.
 
      Returns a modifier state for *modifiers*.
 
-   See also
+   :seealso:
 
-   - :gf:`event-modifier-state`
-   - :gf:`gesture-modifier-state`
-   - :gf:`port-modifier-state`
+     - :gf:`event-modifier-state`
+     - :gf:`gesture-modifier-state`
+     - :gf:`port-modifier-state`
 
 .. generic-function:: make-pane
 
@@ -3343,10 +3343,10 @@ are exported from the *duim-sheets* module.
 
      - :gf:`draw-design`
 
-   See also
+   :seealso:
 
-   - :gf:`medium?`
-   - :class:`<pixmap-medium>`
+     - :gf:`medium?`
+     - :class:`<pixmap-medium>`
 
 .. generic-function:: medium?
 
@@ -3362,10 +3362,10 @@ are exported from the *duim-sheets* module.
 
      Returns true if *object* is a medium.
 
-   See also
+   :seealso:
 
-   - :class:`<medium>`
-   - :gf:`sheet?`
+     - :class:`<medium>`
+     - :gf:`sheet?`
 
 .. generic-function:: medium-background
 
@@ -3381,10 +3381,10 @@ are exported from the *duim-sheets* module.
 
      Returns the background for *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-background-setter`
-   - :gf:`medium-foreground`
+     - :gf:`medium-background-setter`
+     - :gf:`medium-foreground`
 
 .. generic-function:: medium-background-setter
 
@@ -3401,10 +3401,10 @@ are exported from the *duim-sheets* module.
 
      Sets the background for *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-background`
-   - :gf:`medium-foreground-setter`
+     - :gf:`medium-background`
+     - :gf:`medium-foreground-setter`
 
 .. generic-function:: medium-brush
 
@@ -3421,10 +3421,10 @@ are exported from the *duim-sheets* module.
      Returns the brush for *medium*. This brush is used by all subsequent
      painting operations on *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-brush-setter`
-   - :gf:`medium-pen`
+     - :gf:`medium-brush-setter`
+     - :gf:`medium-pen`
 
 .. generic-function:: medium-brush-setter
 
@@ -3442,10 +3442,10 @@ are exported from the *duim-sheets* module.
      Sets the brush for *medium*. This brush is used by all subsequent
      painting operations on *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-brush`
-   - :gf:`medium-pen-setter`
+     - :gf:`medium-brush`
+     - :gf:`medium-pen-setter`
 
 .. generic-function:: medium-clipping-region
 
@@ -3461,9 +3461,9 @@ are exported from the *duim-sheets* module.
 
      Returns the clipping region for *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-clipping-region-setter`
+     - :gf:`medium-clipping-region-setter`
 
 .. generic-function:: medium-clipping-region-setter
 
@@ -3480,9 +3480,9 @@ are exported from the *duim-sheets* module.
 
      Sets the clipping region for *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-clipping-region`
+     - :gf:`medium-clipping-region`
 
 .. generic-function:: medium-default-text-style
 
@@ -3499,11 +3499,11 @@ are exported from the *duim-sheets* module.
      Returns the default text style for *medium*. This style is used for any
      subsequent text that is written to *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-default-text-style-setter`
-   - :gf:`medium-merged-text-style`
-   - :gf:`medium-text-style`
+     - :gf:`medium-default-text-style-setter`
+     - :gf:`medium-merged-text-style`
+     - :gf:`medium-text-style`
 
 .. generic-function:: medium-default-text-style-setter
 
@@ -3521,10 +3521,10 @@ are exported from the *duim-sheets* module.
      Sets the default text style for *medium*. This style is used for any
      subsequent text that is written to *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-default-text-style`
-   - :gf:`medium-text-style-setter`
+     - :gf:`medium-default-text-style`
+     - :gf:`medium-text-style-setter`
 
 .. generic-function:: medium-drawable
 
@@ -3540,9 +3540,9 @@ are exported from the *duim-sheets* module.
 
      Returns the drawable for *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-drawable-setter`
+     - :gf:`medium-drawable-setter`
 
 .. generic-function:: medium-drawable-setter
 
@@ -3559,9 +3559,9 @@ are exported from the *duim-sheets* module.
 
      Sets the drawable for *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-drawable`
+     - :gf:`medium-drawable`
 
 .. generic-function:: medium-foreground
 
@@ -3577,10 +3577,10 @@ are exported from the *duim-sheets* module.
 
      Returns the foreground of *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-background`
-   - :gf:`medium-foreground-setter`
+     - :gf:`medium-background`
+     - :gf:`medium-foreground-setter`
 
 .. generic-function:: medium-foreground-setter
 
@@ -3597,10 +3597,10 @@ are exported from the *duim-sheets* module.
 
      Sets the foreground of *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-background-setter`
-   - :gf:`medium-foreground`
+     - :gf:`medium-background-setter`
+     - :gf:`medium-foreground`
 
 .. generic-function:: medium-merged-text-style
 
@@ -3616,10 +3616,10 @@ are exported from the *duim-sheets* module.
 
      Returns the merged text style of *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-default-text-style`
-   - :gf:`medium-text-style`
+     - :gf:`medium-default-text-style`
+     - :gf:`medium-text-style`
 
 .. generic-function:: medium-pen
 
@@ -3636,10 +3636,10 @@ are exported from the *duim-sheets* module.
      Returns the pen for *medium*. This brush is used by all subsequent
      drawing operations on *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-brush`
-   - :gf:`medium-pen-setter`
+     - :gf:`medium-brush`
+     - :gf:`medium-pen-setter`
 
 .. generic-function:: medium-pen-setter
 
@@ -3657,10 +3657,10 @@ are exported from the *duim-sheets* module.
      Sets the pen for *medium*. This brush is used by all subsequent drawing
      operations on *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-brush-setter`
-   - :gf:`medium-pen`
+     - :gf:`medium-brush-setter`
+     - :gf:`medium-pen`
 
 .. generic-function:: medium-pixmap
 
@@ -3677,9 +3677,9 @@ are exported from the *duim-sheets* module.
      Returns the pixmap for *medium*.This pixmap is used by all subsequent
      pixmap operations on *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-pixmap-setter`
+     - :gf:`medium-pixmap-setter`
 
 .. generic-function:: medium-pixmap-setter
 
@@ -3697,9 +3697,9 @@ are exported from the *duim-sheets* module.
      Returns the pixmap for *medium*.This pixmap is used by all subsequent
      pixmap operations on *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-pixmap`
+     - :gf:`medium-pixmap`
 
 .. generic-function:: medium-sheet
 
@@ -3729,11 +3729,11 @@ are exported from the *duim-sheets* module.
 
      Returns the text style for *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-default-text-style`
-   - :gf:`medium-merged-text-style`
-   - :gf:`medium-text-style-setter`
+     - :gf:`medium-default-text-style`
+     - :gf:`medium-merged-text-style`
+     - :gf:`medium-text-style-setter`
 
 .. generic-function:: medium-text-style-setter
 
@@ -3750,10 +3750,10 @@ are exported from the *duim-sheets* module.
 
      Sets the text style for *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-default-text-style-setter`
-   - :gf:`medium-text-style`
+     - :gf:`medium-default-text-style-setter`
+     - :gf:`medium-text-style`
 
 .. generic-function:: medium-transform
 
@@ -3769,10 +3769,10 @@ are exported from the *duim-sheets* module.
 
      Returns the transform for *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-transform-setter`
-   - :gf:`sheet-transform`
+     - :gf:`medium-transform-setter`
+     - :gf:`sheet-transform`
 
 .. generic-function:: medium-transform-setter
 
@@ -3789,10 +3789,10 @@ are exported from the *duim-sheets* module.
 
      Sets the transform for *medium*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-transform`
-   - :gf:`sheet-transform-setter`
+     - :gf:`medium-transform`
+     - :gf:`sheet-transform-setter`
 
 .. constant:: $meta-key
 
@@ -3808,17 +3808,17 @@ are exported from the *duim-sheets* module.
      To deal with the case where there is no META key, the value of the
      constant :const:`$alt-key` is bound to this constant.
 
-   See also
+   :seealso:
 
-   - :const:`$alt-key`
-   - :const:`$control-key`
-   - :const:`$hyper-key`
-   - :gf:`modifier-key-index`
-   - :gf:`modifier-key-index-name`
-   - :const:`$modifier-keys`
-   - :const:`$option-key`
-   - :const:`$shift-key`
-   - :const:`$super-key`
+     - :const:`$alt-key`
+     - :const:`$control-key`
+     - :const:`$hyper-key`
+     - :gf:`modifier-key-index`
+     - :gf:`modifier-key-index-name`
+     - :const:`$modifier-keys`
+     - :const:`$option-key`
+     - :const:`$shift-key`
+     - :const:`$super-key`
 
 .. constant:: $middle-button
 
@@ -3834,11 +3834,11 @@ are exported from the *duim-sheets* module.
      A constant that represents the middle button on the attached pointing
      device.
 
-   See also
+   :seealso:
 
-   - :const:`$left-button`
-   - :const:`$pointer-buttons`
-   - :const:`$right-button`
+     - :const:`$left-button`
+     - :const:`$pointer-buttons`
+     - :const:`$right-button`
 
 .. function:: modifier-key-index
 
@@ -3857,17 +3857,17 @@ are exported from the *duim-sheets* module.
 
      The returned index value is either 0, 1, 2, 3, or 4.
 
-   See also
+   :seealso:
 
-   - :const:`$alt-key`
-   - :const:`$control-key`
-   - :const:`$hyper-key`
-   - :const:`$meta-key`
-   - :gf:`modifier-key-index-name`
-   - :const:`$modifier-keys`
-   - :const:`$option-key`
-   - :const:`$shift-key`
-   - :const:`$super-key`
+     - :const:`$alt-key`
+     - :const:`$control-key`
+     - :const:`$hyper-key`
+     - :const:`$meta-key`
+     - :gf:`modifier-key-index-name`
+     - :const:`$modifier-keys`
+     - :const:`$option-key`
+     - :const:`$shift-key`
+     - :const:`$super-key`
 
 .. function:: modifier-key-index-name
 
@@ -3887,17 +3887,17 @@ are exported from the *duim-sheets* module.
      The *key-name* returned may be any of the elements of
      :const:`$modifier-keys`
 
-   See also
+   :seealso:
 
-   - :const:`$alt-key`
-   - :const:`$control-key`
-   - :const:`$hyper-key`
-   - :const:`$meta-key`
-   - :gf:`modifier-key-index`
-   - :const:`$modifier-keys`
-   - :const:`$option-key`
-   - :const:`$shift-key`
-   - :const:`$super-key`
+     - :const:`$alt-key`
+     - :const:`$control-key`
+     - :const:`$hyper-key`
+     - :const:`$meta-key`
+     - :gf:`modifier-key-index`
+     - :const:`$modifier-keys`
+     - :const:`$option-key`
+     - :const:`$shift-key`
+     - :const:`$super-key`
 
 .. constant:: $modifier-keys
 
@@ -3912,17 +3912,17 @@ are exported from the *duim-sheets* module.
      The default list of keys on the keyboard that are used as modifiers for
      keyboard accelerators and mnemonics.
 
-   See also
+   :seealso:
 
-   - :const:`$alt-key`
-   - :const:`$control-key`
-   - :const:`$hyper-key`
-   - :const:`$meta-key`
-   - :gf:`modifier-key-index`
-   - :gf:`modifier-key-index-name`
-   - :const:`$option-key`
-   - :const:`$shift-key`
-   - :const:`$super-key`
+     - :const:`$alt-key`
+     - :const:`$control-key`
+     - :const:`$hyper-key`
+     - :const:`$meta-key`
+     - :gf:`modifier-key-index`
+     - :gf:`modifier-key-index-name`
+     - :const:`$option-key`
+     - :const:`$shift-key`
+     - :const:`$super-key`
 
 .. generic-function:: notify-user
 
@@ -3977,11 +3977,11 @@ are exported from the *duim-sheets* module.
      specify foreground and background colors, and the font to use in the
      message text.
 
-   See also
+   :seealso:
 
-   - :gf:`choose-color`
-   - :gf:`choose-directory`
-   - :gf:`choose-file`
+     - :gf:`choose-color`
+     - :gf:`choose-directory`
+     - :gf:`choose-file`
 
 .. function:: open-clipboard
 
@@ -4005,10 +4005,10 @@ are exported from the *duim-sheets* module.
      a clipboard lock. Use the macro :macro:`with-clipboard` to create and free
      the lock for you.
 
-   See also
+   :seealso:
 
-   - :class:`<clipboard>`
-   - :gf:`with-clipboard`
+     - :class:`<clipboard>`
+     - :gf:`with-clipboard`
 
 .. constant:: $option-key
 
@@ -4024,17 +4024,17 @@ are exported from the *duim-sheets* module.
      to the same value as the SUPER key, to deal with the case where the
      OPTION key is not present on the keyboard.
 
-   See also
+   :seealso:
 
-   - :const:`$alt-key`
-   - :const:`$control-key`
-   - :const:`$hyper-key`
-   - :const:`$meta-key`
-   - :gf:`modifier-key-index`
-   - :gf:`modifier-key-index-name`
-   - :const:`$modifier-keys`
-   - :const:`$shift-key`
-   - :const:`$super-key`
+     - :const:`$alt-key`
+     - :const:`$control-key`
+     - :const:`$hyper-key`
+     - :const:`$meta-key`
+     - :gf:`modifier-key-index`
+     - :gf:`modifier-key-index-name`
+     - :const:`$modifier-keys`
+     - :const:`$shift-key`
+     - :const:`$super-key`
 
 .. class:: <pointer>
    :open:
@@ -4065,9 +4065,9 @@ are exported from the *duim-sheets* module.
      - :gf:`port`
      - :gf:`set-pointer-position`
 
-   See also
+   :seealso:
 
-   - :gf:`pointer?`
+     - :gf:`pointer?`
 
 .. generic-function:: pointer?
 
@@ -4083,9 +4083,9 @@ are exported from the *duim-sheets* module.
 
      Returns true if *object* is a pointer.
 
-   See also
+   :seealso:
 
-   - :class:`<pointer>`
+     - :class:`<pointer>`
 
 .. class:: <pointer-boundary-event>
    :sealed:
@@ -4112,11 +4112,11 @@ are exported from the *duim-sheets* module.
 
      - :gf:`boundary-event-kind`
 
-   See also
+   :seealso:
 
-   - :gf:`boundary-event-kind`
-   - :class:`<pointer-enter-event>`
-   - :class:`<pointer-exit-event>`
+     - :gf:`boundary-event-kind`
+     - :class:`<pointer-enter-event>`
+     - :class:`<pointer-exit-event>`
 
 .. class:: <pointer-button-event>
    :open:
@@ -4140,14 +4140,14 @@ are exported from the *duim-sheets* module.
      - :gf:`event-matches-gesture?`
      - :gf:`handle-event`
 
-   See also
+   :seealso:
 
-   - :gf:`event-button`
-   - :const:`$left-button`
-   - :const:`$middle-button`
-   - :gf:`pointer-button-state`
-   - :class:`<pointer-drag-event>`
-   - :const:`$right-button`
+     - :gf:`event-button`
+     - :const:`$left-button`
+     - :const:`$middle-button`
+     - :gf:`pointer-button-state`
+     - :class:`<pointer-drag-event>`
+     - :const:`$right-button`
 
 .. constant:: $pointer-buttons
 
@@ -4167,13 +4167,13 @@ are exported from the *duim-sheets* module.
      values of :const:`$left-button`, :const:`$middle-button`, and
      :const:`$right-button`.
 
-   See also
+   :seealso:
 
-   - :gf:`button-index`
-   - :gf:`button-index-name`
-   - :const:`$left-button`
-   - :const:`$middle-button`
-   - :const:`$right-button`
+     - :gf:`button-index`
+     - :gf:`button-index-name`
+     - :const:`$left-button`
+     - :const:`$middle-button`
+     - :const:`$right-button`
 
 .. generic-function:: pointer-button-state
 
@@ -4203,9 +4203,9 @@ are exported from the *duim-sheets* module.
 
      Returns the cursor used for *pointer*.
 
-   See also
+   :seealso:
 
-   - :gf:`pointer-cursor-setter`
+     - :gf:`pointer-cursor-setter`
 
 .. generic-function:: pointer-cursor-setter
 
@@ -4222,9 +4222,9 @@ are exported from the *duim-sheets* module.
 
      Sets the cursor used for *pointer*.
 
-   See also
+   :seealso:
 
-   - :gf:`pointer-cursor`
+     - :gf:`pointer-cursor`
 
 .. class:: <pointer-drag-event>
    :sealed:
@@ -4247,9 +4247,9 @@ are exported from the *duim-sheets* module.
 
    :operations:
 
-   See also
+   :seealso:
 
-   - :class:`<pointer-motion-event>`
+     - :class:`<pointer-motion-event>`
 
 .. class:: <pointer-enter-event>
    :sealed:
@@ -4267,9 +4267,9 @@ are exported from the *duim-sheets* module.
 
    :operations:
 
-   See also
+   :seealso:
 
-   - :class:`<pointer-exit-event>`
+     - :class:`<pointer-exit-event>`
 
 .. class:: <pointer-event>
    :open:
@@ -4293,11 +4293,11 @@ are exported from the *duim-sheets* module.
 
    :operations:
 
-   See also
+   :seealso:
 
-   - :class:`<pointer-button-event>`
-   - :class:`<pointer-exit-event>`
-   - :class:`<pointer-motion-event>`
+     - :class:`<pointer-button-event>`
+     - :class:`<pointer-exit-event>`
+     - :class:`<pointer-motion-event>`
 
 .. class:: <pointer-exit-event>
    :sealed:
@@ -4315,11 +4315,11 @@ are exported from the *duim-sheets* module.
 
    :operations:
 
-   See also
+   :seealso:
 
-   - :class:`<pointer-button-event>`
-   - :class:`<pointer-enter-event>`
-   - :class:`<pointer-motion-event>`
+     - :class:`<pointer-button-event>`
+     - :class:`<pointer-enter-event>`
+     - :class:`<pointer-motion-event>`
 
 .. class:: <pointer-gesture>
    :sealed:
@@ -4342,7 +4342,7 @@ are exported from the *duim-sheets* module.
 
    :operations:
 
-   - :gf:`gesture-button`
+     - :gf:`gesture-button`
 
 .. class:: <pointer-motion-event>
    :sealed:
@@ -4358,13 +4358,13 @@ are exported from the *duim-sheets* module.
 
    :operations:
 
-   See also
+   :seealso:
 
-   - :class:`<pointer-button-event>`
-   - :class:`<pointer-drag-event>`
-   - :class:`<pointer-enter-event>`
-   - :class:`<pointer-event>`
-   - :class:`<pointer-exit-event>`
+     - :class:`<pointer-button-event>`
+     - :class:`<pointer-drag-event>`
+     - :class:`<pointer-enter-event>`
+     - :class:`<pointer-event>`
+     - :class:`<pointer-exit-event>`
 
 .. generic-function:: pointer-position
 
@@ -4383,10 +4383,10 @@ are exported from the *duim-sheets* module.
      Returns the current position of *pointer*. If *sheet* is specified,
      then the pointer must be over it.
 
-   See also
+   :seealso:
 
-   - :gf:`pointer-sheet`
-   - :gf:`set-pointer-position`
+     - :gf:`pointer-sheet`
+     - :gf:`set-pointer-position`
 
 .. generic-function:: pointer-sheet
 
@@ -4403,9 +4403,9 @@ are exported from the *duim-sheets* module.
      Returns the sheet under *pointer*, or #f if there is no sheet under the
      pointer.
 
-   See also
+   :seealso:
 
-   - :gf:`pointer-position`
+     - :gf:`pointer-position`
 
 .. class:: <port>
    :open:
@@ -4450,10 +4450,10 @@ are exported from the *duim-sheets* module.
 
      - :gf:`find-color`
 
-   See also
+   :seealso:
 
-   - :class:`<display>`
-   - :class:`<sheet>`
+     - :class:`<display>`
+     - :class:`<sheet>`
 
 .. generic-function:: port
 
@@ -4469,12 +4469,12 @@ are exported from the *duim-sheets* module.
 
      Returns the port used to display *object*.
 
-   See also
+   :seealso:
 
-   - :gf:`display`
-   - :gf:`frame-manager`
-   - :class:`<port>`
-   - :gf:`port?`
+     - :gf:`display`
+     - :gf:`frame-manager`
+     - :class:`<port>`
+     - :gf:`port?`
 
 .. generic-function:: port?
 
@@ -4490,10 +4490,10 @@ are exported from the *duim-sheets* module.
 
      Returns true if *object* is a port.
 
-   See also
+   :seealso:
 
-   - :class:`<port>`
-   - :class:`<port>`
+     - :class:`<port>`
+     - :class:`<port>`
 
 .. generic-function:: port-modifier-state
 
@@ -4509,15 +4509,15 @@ are exported from the *duim-sheets* module.
 
      Returns the modifier state of *port*.
 
-   See also
+   :seealso:
 
-   - :gf:`event-modifier-state`
-   - :gf:`gesture-modifier-state`
-   - :gf:`make-modifier-state`
-   - :gf:`port-name`
-   - :gf:`port-pointer`
-   - :gf:`port-server-path`
-   - :gf:`port-type`
+     - :gf:`event-modifier-state`
+     - :gf:`gesture-modifier-state`
+     - :gf:`make-modifier-state`
+     - :gf:`port-name`
+     - :gf:`port-pointer`
+     - :gf:`port-server-path`
+     - :gf:`port-type`
 
 .. generic-function:: port-name
 
@@ -4533,12 +4533,12 @@ are exported from the *duim-sheets* module.
 
      Returns the name of *port*.
 
-   See also
+   :seealso:
 
-   - :gf:`port-modifier-state`
-   - :gf:`port-pointer`
-   - :gf:`port-server-path`
-   - :gf:`port-type`
+     - :gf:`port-modifier-state`
+     - :gf:`port-pointer`
+     - :gf:`port-server-path`
+     - :gf:`port-type`
 
 .. generic-function:: port-pointer
 
@@ -4554,12 +4554,12 @@ are exported from the *duim-sheets* module.
 
      Returns the pointer used on *port*.
 
-   See also
+   :seealso:
 
-   - :gf:`port-modifier-state`
-   - :gf:`port-name`
-   - :gf:`port-server-path`
-   - :gf:`port-type`
+     - :gf:`port-modifier-state`
+     - :gf:`port-name`
+     - :gf:`port-server-path`
+     - :gf:`port-type`
 
 .. generic-function:: port-server-path
 
@@ -4575,12 +4575,12 @@ are exported from the *duim-sheets* module.
 
      Returns the server path of *port*.
 
-   See also
+   :seealso:
 
-   - :gf:`port-modifier-state`
-   - :gf:`port-name`
-   - :gf:`port-pointer`
-   - :gf:`port-type`
+     - :gf:`port-modifier-state`
+     - :gf:`port-name`
+     - :gf:`port-pointer`
+     - :gf:`port-type`
 
 .. class:: <port-terminated-event>
    :sealed:
@@ -4615,12 +4615,12 @@ are exported from the *duim-sheets* module.
 
      Returns the type of *port*.
 
-   See also
+   :seealso:
 
-   - :gf:`port-modifier-state`
-   - :gf:`port-name`
-   - :gf:`port-pointer`
-   - :gf:`port-server-path`
+     - :gf:`port-modifier-state`
+     - :gf:`port-name`
+     - :gf:`port-pointer`
+     - :gf:`port-server-path`
 
 .. generic-function:: queue-event
 
@@ -4635,9 +4635,9 @@ are exported from the *duim-sheets* module.
 
      Queues *event* on the event-queue for *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`handle-event`
+     - :gf:`handle-event`
 
 .. generic-function:: queue-repaint
 
@@ -4652,11 +4652,11 @@ are exported from the *duim-sheets* module.
 
      Queues a repaint for the area** of *sheet* defined by *region*.
 
-   See also
+   :seealso:
 
-   - :gf:`handle-repaint`
-   - :gf:`repaint-sheet`
-   - :class:`<window-repaint-event>`
+     - :gf:`handle-repaint`
+     - :gf:`repaint-sheet`
+     - :class:`<window-repaint-event>`
 
 .. generic-function:: raise-sheet
 
@@ -4671,11 +4671,11 @@ are exported from the *duim-sheets* module.
 
      Raises *sheet* to the top of the current hierarchy of sheets.
 
-   See also
+   :seealso:
 
-   - :gf:`lower-frame`
-   - :gf:`lower-sheet`
-   - :gf:`raise-frame`
+     - :gf:`lower-frame`
+     - :gf:`lower-sheet`
+     - :gf:`raise-frame`
 
 .. generic-function:: remove-child
 
@@ -4693,10 +4693,10 @@ are exported from the *duim-sheets* module.
      Removes *child* from *sheet*. The remaining children in the sheet are
      laid out again appropriately.
 
-   See also
+   :seealso:
 
-   - :gf:`add-child`
-   - :gf:`replace-child`
+     - :gf:`add-child`
+     - :gf:`replace-child`
 
 .. generic-function:: repaint-sheet
 
@@ -4713,11 +4713,11 @@ are exported from the *duim-sheets* module.
      Repaints the are of *sheet* defined by *region*. If specified, the
      appropriate *medium* is used.
 
-   See also
+   :seealso:
 
-   - :gf:`handle-repaint`
-   - :gf:`queue-repaint`
-   - :class:`<window-repaint-event>`
+     - :gf:`handle-repaint`
+     - :gf:`queue-repaint`
+     - :class:`<window-repaint-event>`
 
 .. generic-function:: replace-child
 
@@ -4736,10 +4736,10 @@ are exported from the *duim-sheets* module.
      Replaces *old-child* with *new-child* in *sheet*. The children in the
      sheet are laid out again appropriately.
 
-   See also
+   :seealso:
 
-   - :gf:`add-child`
-   - :gf:`remove-child`
+     - :gf:`add-child`
+     - :gf:`remove-child`
 
 .. constant:: $right-button
 
@@ -4755,11 +4755,11 @@ are exported from the *duim-sheets* module.
      A constant that represents the right button on the attached pointing
      device.
 
-   See also
+   :seealso:
 
-   - :const:`$left-button`
-   - :const:`$middle-button`
-   - :const:`$pointer-buttons`
+     - :const:`$left-button`
+     - :const:`$middle-button`
+     - :const:`$pointer-buttons`
 
 .. generic-function:: set-caret-position
 
@@ -4776,10 +4776,10 @@ are exported from the *duim-sheets* module.
 
      Sets the position of *cursor* to *(* *x* *,* *y* *)*.
 
-   See also
+   :seealso:
 
-   - :gf:`caret-position`
-   - :gf:`set-pointer-position`
+     - :gf:`caret-position`
+     - :gf:`set-pointer-position`
 
 .. generic-function:: set-pointer-position
 
@@ -4797,10 +4797,10 @@ are exported from the *duim-sheets* module.
      Sets the position of *pointer* to *(* *x* *,* *y* *)*, relative to the
      top left corner of *sheet*, if specified. Units are measured in pixels.
 
-   See also
+   :seealso:
 
-   - :gf:`pointer-position`
-   - :gf:`set-pointer-position`
+     - :gf:`pointer-position`
+     - :gf:`set-pointer-position`
 
 .. generic-function:: set-sheet-edges
 
@@ -4820,11 +4820,11 @@ are exported from the *duim-sheets* module.
      Each edge is specified relative to the corresponding edge of the parent
      of *sheet*. The layout of *sheet* is recalculated automatically.
 
-   See also
+   :seealso:
 
-   - :gf:`set-sheet-position`
-   - :gf:`set-sheet-size`
-   - :gf:`sheet-edges`
+     - :gf:`set-sheet-position`
+     - :gf:`set-sheet-size`
+     - :gf:`sheet-edges`
 
 .. generic-function:: set-sheet-position
 
@@ -4842,11 +4842,11 @@ are exported from the *duim-sheets* module.
      position of its parent. The layout of *sheet* is recalculated
      automatically.
 
-   See also
+   :seealso:
 
-   - :gf:`set-sheet-edges`
-   - :gf:`set-sheet-size`
-   - :gf:`sheet-position`
+     - :gf:`set-sheet-edges`
+     - :gf:`set-sheet-size`
+     - :gf:`sheet-position`
 
 .. generic-function:: set-sheet-size
 
@@ -4863,10 +4863,10 @@ are exported from the *duim-sheets* module.
      Sets the size of *sheet*. The layout of *sheet* is recalculated
      automatically.
 
-   See also
+   :seealso:
 
-   - :gf:`set-sheet-edges`
-   - :gf:`set-sheet-position`
+     - :gf:`set-sheet-edges`
+     - :gf:`set-sheet-position`
 
 .. class:: <sheet>
    :open:
@@ -5096,10 +5096,10 @@ are exported from the *duim-sheets* module.
 
          make(<text-editor>, lines: 10, fixed-height?: #t);
 
-   See also
+   :seealso:
 
-   - :class:`<display>`
-   - :class:`<port>`
+     - :class:`<display>`
+     - :class:`<port>`
 
 .. generic-function:: sheet?
 
@@ -5115,9 +5115,9 @@ are exported from the *duim-sheets* module.
 
      Returns true if *object* is a sheet.
 
-   See also
+   :seealso:
 
-   - :gf:`medium?`
+     - :gf:`medium?`
 
 .. generic-function:: sheet-ancestor?
 
@@ -5134,9 +5134,9 @@ are exported from the *duim-sheets* module.
 
      Returns true if *putative-ancestor* is an ancestor of *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet?`
+     - :gf:`sheet?`
 
 .. generic-function:: sheet-child
 
@@ -5152,10 +5152,10 @@ are exported from the *duim-sheets* module.
 
      Returns the child of *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-children`
-   - :gf:`sheet-child-setter`
+     - :gf:`sheet-children`
+     - :gf:`sheet-child-setter`
 
 .. generic-function:: sheet-children
 
@@ -5173,11 +5173,11 @@ are exported from the *duim-sheets* module.
      classes support only a single child; in this case, the return value of
      sheet-children is a list of one element.
 
-   See also
+   :seealso:
 
-   - :gf:`do-sheet-children`
-   - :gf:`sheet-child`
-   - :gf:`sheet-children-setter`
+     - :gf:`do-sheet-children`
+     - :gf:`sheet-child`
+     - :gf:`sheet-children-setter`
 
 .. generic-function:: sheet-children-setter
 
@@ -5195,10 +5195,10 @@ are exported from the *duim-sheets* module.
      Sets the children of *sheet*. Some sheet classes support only a single
      child; in this case, *children* is a list of one element.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-children`
-   - :gf:`sheet-child-setter`
+     - :gf:`sheet-children`
+     - :gf:`sheet-child-setter`
 
 .. generic-function:: sheet-child-setter
 
@@ -5215,10 +5215,10 @@ are exported from the *duim-sheets* module.
 
      Sets the child of *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-child`
-   - :gf:`sheet-children-setter`
+     - :gf:`sheet-child`
+     - :gf:`sheet-children-setter`
 
 .. generic-function:: sheet-edges
 
@@ -5238,12 +5238,12 @@ are exported from the *duim-sheets* module.
      Returns the edges of *sheet*. Each edge is specified relative to the
      corresponding edge of the parent of *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`set-sheet-edges`
-   - :gf:`sheet-position`
-   - :gf:`sheet-size`
-   - :gf:`sheet-transform`
+     - :gf:`set-sheet-edges`
+     - :gf:`sheet-position`
+     - :gf:`sheet-size`
+     - :gf:`sheet-transform`
 
 .. class:: <sheet-event>
    :open:
@@ -5268,9 +5268,9 @@ are exported from the *duim-sheets* module.
 
      - :gf:`event-sheet`
 
-   See also
+   :seealso:
 
-   - :class:`<device-event>`
+     - :class:`<device-event>`
 
 .. generic-function:: sheet-event-mask
 
@@ -5286,10 +5286,10 @@ are exported from the *duim-sheets* module.
 
      Returns the event mask of *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-event-mask-setter`
-   - :gf:`sheet-event-queue`
+     - :gf:`sheet-event-mask-setter`
+     - :gf:`sheet-event-queue`
 
 .. generic-function:: sheet-event-mask-setter
 
@@ -5306,9 +5306,9 @@ are exported from the *duim-sheets* module.
 
      Sets the event mask of *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-event-mask`
+     - :gf:`sheet-event-mask`
 
 .. generic-function:: sheet-event-queue
 
@@ -5325,9 +5325,9 @@ are exported from the *duim-sheets* module.
      Returns the event mask of *sheet*. This is a list of all the events
      that are currently queued ready for execution.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-event-mask`
+     - :gf:`sheet-event-mask`
 
 .. generic-function:: sheet-frame
 
@@ -5343,10 +5343,10 @@ are exported from the *duim-sheets* module.
 
      Returns the frame associated with *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-medium`
-   - :gf:`sheet-parent`
+     - :gf:`sheet-medium`
+     - :gf:`sheet-parent`
 
 .. generic-function:: sheet-mapped?
 
@@ -5363,10 +5363,10 @@ are exported from the *duim-sheets* module.
      Returns true if *sheet* is mapped, that is, displayed on screen (issues
      of occluding windows notwithstanding).
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-mapped?-setter`
-   - :gf:`sheet-withdrawn?`
+     - :gf:`sheet-mapped?-setter`
+     - :gf:`sheet-withdrawn?`
 
 .. generic-function:: sheet-mapped?-setter
 
@@ -5385,9 +5385,9 @@ are exported from the *duim-sheets* module.
      (issues of occluding windows notwithstanding). If ``#t``, *sheet* is
      mapped, if ``#f``, it is not.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-mapped?`
+     - :gf:`sheet-mapped?`
 
 .. generic-function:: sheet-medium
 
@@ -5403,9 +5403,9 @@ are exported from the *duim-sheets* module.
 
      Returns the medium associated with *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-frame`
+     - :gf:`sheet-frame`
 
 .. generic-function:: sheet-parent
 
@@ -5421,11 +5421,11 @@ are exported from the *duim-sheets* module.
 
      Returns the parent of *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-medium`
-   - :gf:`sheet-parent-setter`
-   - :gf:`sheet-position`
+     - :gf:`sheet-medium`
+     - :gf:`sheet-parent-setter`
+     - :gf:`sheet-position`
 
 .. generic-function:: sheet-parent-setter
 
@@ -5442,9 +5442,9 @@ are exported from the *duim-sheets* module.
 
      Sets the parent of *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-parent`
+     - :gf:`sheet-parent`
 
 .. generic-function:: sheet-pointer-cursor
 
@@ -5462,10 +5462,10 @@ are exported from the *duim-sheets* module.
      used to represent the mouse pointer whenever the mouse pointer is inside
      the boundary of *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-pointer-cursor-setter`
-   - :gf:`sheet-text-cursor`
+     - :gf:`sheet-pointer-cursor-setter`
+     - :gf:`sheet-text-cursor`
 
 .. generic-function:: sheet-pointer-cursor-setter
 
@@ -5484,9 +5484,9 @@ are exported from the *duim-sheets* module.
      used to represent the mouse pointer whenever the mouse pointer is inside
      the boundary of *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-pointer-cursor`
+     - :gf:`sheet-pointer-cursor`
 
 .. generic-function:: sheet-position
 
@@ -5505,13 +5505,13 @@ are exported from the *duim-sheets* module.
      coordinate (x,y), as measured relative to the parent of *sheet*, or
      relative to the top left of the screen if *sheet* has no parent.
 
-   See also
+   :seealso:
 
-   - :gf:`set-sheet-position`
-   - :gf:`sheet-edges`
-   - :gf:`sheet-parent`
-   - :gf:`sheet-size`
-   - :gf:`sheet-transform`
+     - :gf:`set-sheet-position`
+     - :gf:`sheet-edges`
+     - :gf:`sheet-parent`
+     - :gf:`sheet-size`
+     - :gf:`sheet-transform`
 
 .. generic-function:: sheet-region
 
@@ -5529,9 +5529,9 @@ are exported from the *duim-sheets* module.
      the set of points to which *sheet* refers. The region is expressed in
      the same coordinate system as *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-region-setter`
+     - :gf:`sheet-region-setter`
 
 .. generic-function:: sheet-region-setter
 
@@ -5550,9 +5550,9 @@ are exported from the *duim-sheets* module.
      set of points to which *sheet* refers. The region is expressed in the same
      coordinate system as *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-region`
+     - :gf:`sheet-region`
 
 .. generic-function:: sheet-size
 
@@ -5570,12 +5570,12 @@ are exported from the *duim-sheets* module.
      Returns the width and height of the specified sheet. Use
      :gf:`set-sheet-size` to set or modify the size of a sheet.
 
-   See also
+   :seealso:
 
-   - :gf:`set-sheet-size`
-   - :gf:`sheet-edges`
-   - :gf:`sheet-position`
-   - :gf:`sheet-transform`
+     - :gf:`set-sheet-size`
+     - :gf:`sheet-edges`
+     - :gf:`sheet-position`
+     - :gf:`sheet-transform`
 
 .. generic-function:: sheet-state
 
@@ -5614,9 +5614,9 @@ are exported from the *duim-sheets* module.
      children that allow some form of text-based input have an associated
      text cursor.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-pointer-cursor`
+     - :gf:`sheet-pointer-cursor`
 
 .. generic-function:: sheet-transform
 
@@ -5632,12 +5632,12 @@ are exported from the *duim-sheets* module.
 
      Returns the transform associated with *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-transform`
-   - :gf:`sheet-edges`
-   - :gf:`sheet-position`
-   - :gf:`sheet-size`
+     - :gf:`medium-transform`
+     - :gf:`sheet-edges`
+     - :gf:`sheet-position`
+     - :gf:`sheet-size`
 
 .. generic-function:: sheet-transform-setter
 
@@ -5654,9 +5654,9 @@ are exported from the *duim-sheets* module.
 
      Sets or modifies the transform associated with *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`medium-transform-setter`
+     - :gf:`medium-transform-setter`
 
 .. generic-function:: sheet-withdrawn?
 
@@ -5673,9 +5673,9 @@ are exported from the *duim-sheets* module.
      Returns true if *sheet* has been withdrawn from the display, and is no
      longer mapped.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-mapped?`
+     - :gf:`sheet-mapped?`
 
 .. constant:: $shift-key
 
@@ -5689,17 +5689,17 @@ are exported from the *duim-sheets* module.
 
      A constant that represents the SHIFT key on the keyboard.
 
-   See also
+   :seealso:
 
-   - :const:`$alt-key`
-   - :const:`$control-key`
-   - :const:`$hyper-key`
-   - :const:`$meta-key`
-   - :gf:`modifier-key-index`
-   - :gf:`modifier-key-index-name`
-   - :const:`$modifier-keys`
-   - :const:`$option-key`
-   - :const:`$super-key`
+     - :const:`$alt-key`
+     - :const:`$control-key`
+     - :const:`$hyper-key`
+     - :const:`$meta-key`
+     - :gf:`modifier-key-index`
+     - :gf:`modifier-key-index-name`
+     - :const:`$modifier-keys`
+     - :const:`$option-key`
+     - :const:`$super-key`
 
 .. constant:: $super-key
 
@@ -5716,17 +5716,17 @@ are exported from the *duim-sheets* module.
      constant :const:`$option-key` is bound to this
      constant.
 
-   See also
+   :seealso:
 
-   - :const:`$alt-key`
-   - :const:`$control-key`
-   - :const:`$hyper-key`
-   - :const:`$meta-key`
-   - :gf:`modifier-key-index`
-   - :gf:`modifier-key-index-name`
-   - :const:`$modifier-keys`
-   - :const:`$option-key`
-   - :const:`$shift-key`
+     - :const:`$alt-key`
+     - :const:`$control-key`
+     - :const:`$hyper-key`
+     - :const:`$meta-key`
+     - :gf:`modifier-key-index`
+     - :gf:`modifier-key-index-name`
+     - :const:`$modifier-keys`
+     - :const:`$option-key`
+     - :const:`$shift-key`
 
 .. generic-function:: synchronize-display
 
@@ -5804,11 +5804,11 @@ are exported from the *duim-sheets* module.
      If *character-set* is specified, then this character set is used instead
      of the default. This is most useful for non-English displays.
 
-   See also
+   :seealso:
 
-   - :gf:`text-style-mapping-exists?`
-   - :gf:`text-style-mapping-setter`
-   - :class:`<undefined-text-style-mapping>`
+     - :gf:`text-style-mapping-exists?`
+     - :gf:`text-style-mapping-setter`
+     - :class:`<undefined-text-style-mapping>`
 
 .. generic-function:: text-style-mapping-exists?
 
@@ -5833,11 +5833,11 @@ are exported from the *duim-sheets* module.
      a previous mapping before creating a new one, thereby ensuring that
      existing mappings are not overwritten.
 
-   See also
+   :seealso:
 
-   - :gf:`text-style-mapping`
-   - :gf:`text-style-mapping-setter`
-   - :class:`<undefined-text-style-mapping>`
+     - :gf:`text-style-mapping`
+     - :gf:`text-style-mapping-setter`
+     - :class:`<undefined-text-style-mapping>`
 
 .. generic-function:: text-style-mapping-setter
 
@@ -5865,11 +5865,11 @@ are exported from the *duim-sheets* module.
      If *character-set* is specified, then this character set is used instead
      of the default. This is most useful for non-English displays.
 
-   See also
+   :seealso:
 
-   - :gf:`text-style-mapping`
-   - :gf:`text-style-mapping-exists?`
-   - :class:`<undefined-text-style-mapping>`
+     - :gf:`text-style-mapping`
+     - :gf:`text-style-mapping-exists?`
+     - :class:`<undefined-text-style-mapping>`
 
 .. class:: <timer-event>
    :sealed:
@@ -5918,11 +5918,11 @@ are exported from the *duim-sheets* module.
 
    :operations:
 
-   See also
+   :seealso:
 
-   - :gf:`text-style-mapping`
-   - :gf:`text-style-mapping-exists?`
-   - :gf:`text-style-mapping-setter`
+     - :gf:`text-style-mapping`
+     - :gf:`text-style-mapping-exists?`
+     - :gf:`text-style-mapping-setter`
 
 .. class:: <window-configuration-event>
    :sealed:
@@ -5938,9 +5938,9 @@ are exported from the *duim-sheets* module.
 
    :operations:
 
-   See also
+   :seealso:
 
-   - :class:`<window-repaint-event>`
+     - :class:`<window-repaint-event>`
 
 .. class:: <window-event>
    :open:
@@ -5968,11 +5968,11 @@ are exported from the *duim-sheets* module.
 
      - :gf:`event-region`
 
-   See also
+   :seealso:
 
-   - :gf:`event-region`
-   - :class:`<window-configuration-event>`
-   - :class:`<window-repaint-event>`
+     - :gf:`event-region`
+     - :class:`<window-configuration-event>`
+     - :class:`<window-repaint-event>`
 
 .. class:: <window-repaint-event>
    :sealed:
@@ -5988,12 +5988,12 @@ are exported from the *duim-sheets* module.
 
    :operations:
 
-   See also
+   :seealso:
 
-   - :gf:`handle-repaint`
-   - :gf:`queue-repaint`
-   - :gf:`repaint-sheet`
-   - :class:`<window-configuration-event>`
+     - :gf:`handle-repaint`
+     - :gf:`queue-repaint`
+     - :gf:`repaint-sheet`
+     - :class:`<window-configuration-event>`
 
 .. macro:: with-brush
 
@@ -6013,9 +6013,9 @@ are exported from the *duim-sheets* module.
      *brush-initargs* can be any valid arguments that specify an instance of
      :class:`<brush>`.
 
-   See also
+   :seealso:
 
-   - :gf:`with-pen`
+     - :gf:`with-pen`
 
 .. macro:: with-clipboard
 
@@ -6051,9 +6051,9 @@ are exported from the *duim-sheets* module.
      object onto the clipboard, for use within your own application, and a
      string representation for other tools applications to see.
 
-   See also
+   :seealso:
 
-   - :class:`<clipboard>`
+     - :class:`<clipboard>`
 
 .. macro:: with-clipping-region
 
@@ -6136,10 +6136,10 @@ are exported from the *duim-sheets* module.
            draw-rectangle (medium, 0, 0, 100, 200, filled?: #t)
          end;
 
-   See also
+   :seealso:
 
-   - :gf:`do-with-drawing-options`
-   - :gf:`with-sheet-medium`
+     - :gf:`do-with-drawing-options`
+     - :gf:`with-sheet-medium`
 
 .. generic-function:: withdraw-sheet
 
@@ -6179,9 +6179,9 @@ are exported from the *duim-sheets* module.
      platform, this is unlikely to be the case, and you can forego use of
      this macro.
 
-   See also
+   :seealso:
 
-   - :class:`<frame-manager>`
+     - :class:`<frame-manager>`
 
 .. macro:: with-identity-transform
 
@@ -6218,9 +6218,9 @@ are exported from the *duim-sheets* module.
      :class:`<medium>`. The *pen-initargs* can be any valid
      arguments that specify an instance of :class:`<pen>`.
 
-   See also
+   :seealso:
 
-   - :gf:`with-brush`
+     - :gf:`with-brush`
 
 .. macro:: with-pointer-grabbed
 
@@ -6242,9 +6242,9 @@ are exported from the *duim-sheets* module.
      specified by *body* is used to create a stand-alone method that is used
      as the code that is run by *do-with-pointer-grabbed*.
 
-   See also
+   :seealso:
 
-   - :gf:`do-with-pointer-grabbed`
+     - :gf:`do-with-pointer-grabbed`
 
 .. macro:: with-rotation
 
@@ -6265,11 +6265,11 @@ are exported from the *duim-sheets* module.
      The *medium* specified should be an instance of type :class:`<medium>`.
      The *angle* should evaluate to an instance of type ``<real>``.
 
-   See also
+   :seealso:
 
-   - :gf:`with-scaling`
-   - :gf:`with-transform`
-   - :gf:`with-translation`
+     - :gf:`with-scaling`
+     - :gf:`with-transform`
+     - :gf:`with-translation`
 
 .. macro:: with-scaling
 
@@ -6293,11 +6293,11 @@ are exported from the *duim-sheets* module.
      The *scale-x* and *scale-y* should evaluate to an instance of type
      ``<real>``.
 
-   See also
+   :seealso:
 
-   - :gf:`with-rotation`
-   - :gf:`with-transform`
-   - :gf:`with-translation`
+     - :gf:`with-rotation`
+     - :gf:`with-transform`
+     - :gf:`with-translation`
 
 .. macro:: with-sheet-medium
 
@@ -6344,10 +6344,10 @@ are exported from the *duim-sheets* module.
            end
          end
 
-   See also
+   :seealso:
 
-   - :gf:`do-with-sheet-medium`
-   - :gf:`with-drawing-options`
+     - :gf:`do-with-sheet-medium`
+     - :gf:`with-drawing-options`
 
 .. macro:: with-text-style
 
@@ -6369,9 +6369,9 @@ are exported from the *duim-sheets* module.
 
      Methods for :gf:`do-with-text-style` are invoked to run the code.
 
-   See also
+   :seealso:
 
-   - :gf:`do-with-text-style`
+     - :gf:`do-with-text-style`
 
 .. macro:: with-transform
 
@@ -6394,12 +6394,12 @@ are exported from the *duim-sheets* module.
      The *transform* specified should be an instance of type
      :class:`<transform>`.
 
-   See also
+   :seealso:
 
-   - :gf:`do-with-transform`
-   - :gf:`with-rotation`
-   - :gf:`with-scaling`
-   - :gf:`with-translation`
+     - :gf:`do-with-transform`
+     - :gf:`with-rotation`
+     - :gf:`with-scaling`
+     - :gf:`with-translation`
 
 .. macro:: with-translation
 
@@ -6421,8 +6421,8 @@ are exported from the *duim-sheets* module.
      The *medium* specified should be an instance of type :class:`<medium>`.
      The *dx* and*dy* should evaluate to an instance of type ``<real>``.
 
-   See also
+   :seealso:
 
-   - :gf:`with-rotation`
-   - :gf:`with-scaling`
-   - :gf:`with-transform`
+     - :gf:`with-rotation`
+     - :gf:`with-scaling`
+     - :gf:`with-transform`

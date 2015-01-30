@@ -153,10 +153,10 @@ are exported from the *duim-dcs* module.
 
      An indirect ink that uses the medium's background design.
 
-   See also
+   :seealso:
 
-   - :class:`<palette>`
-   - :gf:`image-height`
+     - :class:`<palette>`
+     - :gf:`image-height`
 
 .. constant:: $black
 
@@ -169,9 +169,9 @@ are exported from the *duim-dcs* module.
      The usual definition black, the absence of all colors. In the *rgb*
      color model, its value is *000*.
 
-   See also
+   :seealso:
 
-   - :class:`<color>`
+     - :class:`<color>`
 
 .. constant:: $blue
 
@@ -183,9 +183,9 @@ are exported from the *duim-dcs* module.
 
      The usual definition of the color blue.
 
-   See also
+   :seealso:
 
-   - :class:`<color>`
+     - :class:`<color>`
 
 .. constant:: $boole-clr
 
@@ -391,9 +391,9 @@ are exported from the *duim-dcs* module.
      A stipple pattern for use in creating a patterned brush with horizontal
      and vertical lines in the pattern of the mortar in a brick wall.
   
-   See also
+   :seealso:
 
-   - :gf:`brush-stipple`
+     - :gf:`brush-stipple`
 
 .. class:: <brush>
    :abstract:
@@ -434,9 +434,9 @@ are exported from the *duim-dcs* module.
      - :gf:`brush-ts-x`
      - :gf:`brush-ts-y`
 
-   See also
+   :seealso:
 
-   - :gf:`make`
+     - :gf:`make`
 
 .. generic-function:: brush?
 
@@ -466,9 +466,9 @@ are exported from the *duim-dcs* module.
 
      Returns the *ink* that is the background color of *brush*.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-fill-rule`
+     - :gf:`brush-fill-rule`
 
 .. generic-function:: brush-fill-rule
 
@@ -485,9 +485,9 @@ are exported from the *duim-dcs* module.
      Returns the fill rule for *brush*, or ``#f`` if *brush* does not have a
      fill rule.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-fill-style`
+     - :gf:`brush-fill-style`
 
 .. generic-function:: brush-fill-style
 
@@ -504,9 +504,9 @@ are exported from the *duim-dcs* module.
      Returns the fill style of *brush*, or ``#f``, if *brush* does not have a
      fill style.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-fill-rule`
+     - :gf:`brush-fill-rule`
 
 .. generic-function:: brush-foreground
 
@@ -522,9 +522,9 @@ are exported from the *duim-dcs* module.
 
      Returns the *ink* that is the foreground color of *brush*.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-stipple`
+     - :gf:`brush-stipple`
 
 .. generic-function:: brush-mode
 
@@ -540,9 +540,9 @@ are exported from the *duim-dcs* module.
 
      Returns an integer representing the drawing mode of *brush*.
 
-   See also
+   :seealso:
 
-   - :const:`$boole-1`
+     - :const:`$boole-1`
 
 .. generic-function:: brush-stipple
 
@@ -558,11 +558,11 @@ are exported from the *duim-dcs* module.
 
      Returns the stipple pattern of *brush*.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-tile`
-   - :gf:`brush-fill-rule`
-   - :gf:`brush-fill-style`
+     - :gf:`brush-tile`
+     - :gf:`brush-fill-rule`
+     - :gf:`brush-fill-style`
 
 .. generic-function:: brush-stretch-mode
 
@@ -592,11 +592,11 @@ are exported from the *duim-dcs* module.
 
      Returns the tile pattern of *brush*.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-stipple`
-   - :gf:`brush-ts-x`
-   - :gf:`brush-ts-y`
+     - :gf:`brush-stipple`
+     - :gf:`brush-ts-x`
+     - :gf:`brush-ts-y`
 
 .. generic-function:: brush-ts-x
 
@@ -615,9 +615,9 @@ are exported from the *duim-dcs* module.
      or stipple pattern of *brush*. If *brush* has no tile or stipple
      pattern, *brush-ts-x* returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-ts-y`
+     - :gf:`brush-ts-y`
 
 .. generic-function:: brush-ts-y
 
@@ -636,9 +636,9 @@ are exported from the *duim-dcs* module.
      or stipple pattern of *brush*. If *brush* has no tile or stipple
      pattern, *brush-ts-y* returns *#f.*
 
-   See also
+   :seealso:
 
-   - :gf:`brush-ts-x`
+     - :gf:`brush-ts-x`
 
 .. class:: <color>
    :abstract:
@@ -713,15 +713,15 @@ are exported from the *duim-dcs* module.
      - :gf:`color-ihs`
      - :gf:`color-luminosity`
 
-   See also
+   :seealso:
 
-   - :gf:`color?`
-   - :gf:`color-ihs`
-   - :gf:`color-luminosity`
-   - :class:`<color-not-found>`
-   - :gf:`color-palette?`
-   - :gf:`color-rgb`
-   - :class:`<ink>`
+     - :gf:`color?`
+     - :gf:`color-ihs`
+     - :gf:`color-luminosity`
+     - :class:`<color-not-found>`
+     - :gf:`color-palette?`
+     - :gf:`color-rgb`
+     - :class:`<ink>`
 
 .. generic-function:: color?
 
@@ -737,14 +737,14 @@ are exported from the *duim-dcs* module.
 
      Returns ``#t`` if object is a color, otherwise returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :class:`<color>`
-   - :gf:`color-ihs`
-   - :gf:`color-luminosity`
-   - :class:`<color-not-found>`
-   - :gf:`color-palette?`
-   - :gf:`color-rgb`
+     - :class:`<color>`
+     - :gf:`color-ihs`
+     - :gf:`color-luminosity`
+     - :class:`<color-not-found>`
+     - :gf:`color-palette?`
+     - :gf:`color-rgb`
 
 .. generic-function:: color-ihs
 
@@ -767,13 +767,13 @@ are exported from the *duim-dcs* module.
      number between *0* and *sqrt{3* } (inclusive). The second and third
      values are real numbers between *0* and *1* (inclusive).
 
-   See also
+   :seealso:
 
-   - :class:`<color>`
-   - :gf:`color?`
-   - :gf:`color-luminosity`
-   - :gf:`color-palette?`
-   - :gf:`color-rgb`
+     - :class:`<color>`
+     - :gf:`color?`
+     - :gf:`color-luminosity`
+     - :gf:`color-palette?`
+     - :gf:`color-rgb`
 
 .. generic-function:: color-luminosity
 
@@ -791,13 +791,13 @@ are exported from the *duim-dcs* module.
      *1*. The value is the solution of a function that describes the
      perception of the color by the human retina.
 
-   See also
+   :seealso:
 
-   - :class:`<color>`
-   - :gf:`color?`
-   - :gf:`color-ihs`
-   - :gf:`color-palette?`
-   - :gf:`color-rgb`
+     - :class:`<color>`
+     - :gf:`color?`
+     - :gf:`color-ihs`
+     - :gf:`color-palette?`
+     - :gf:`color-rgb`
 
 .. class:: <color-not-found>
    :sealed:
@@ -820,12 +820,12 @@ are exported from the *duim-dcs* module.
 
      - None.
 
-   See also
+   :seealso:
 
-   - :class:`<color>`
-   - :gf:`find-color`
-   - :gf:`remove-colors`
-   - :gf:`find-color`
+     - :class:`<color>`
+     - :gf:`find-color`
+     - :gf:`remove-colors`
+     - :gf:`find-color`
 
 .. generic-function:: color-palette?
 
@@ -841,13 +841,13 @@ are exported from the *duim-dcs* module.
 
      Returns ``#t`` if the stream or medium supports color.
 
-   See also
+   :seealso:
 
-   - :class:`<color>`
-   - :gf:`color?`
-   - :gf:`color-ihs`
-   - :gf:`color-luminosity`
-   - :gf:`color-rgb`
+     - :class:`<color>`
+     - :gf:`color?`
+     - :gf:`color-ihs`
+     - :gf:`color-luminosity`
+     - :gf:`color-rgb`
 
 .. generic-function:: color-rgb
 
@@ -869,13 +869,13 @@ are exported from the *duim-dcs* module.
      components of the color *color.* The values are real numbers between 0
      and 1 (inclusive).
 
-   See also
+   :seealso:
 
-   - :class:`<color>`
-   - :gf:`color?`
-   - :gf:`color-ihs`
-   - :gf:`color-luminosity`
-   - :gf:`color-palette?`
+     - :class:`<color>`
+     - :gf:`color?`
+     - :gf:`color-ihs`
+     - :gf:`color-luminosity`
+     - :gf:`color-palette?`
 
 .. generic-function:: contrasting-colors-limit
 
@@ -896,10 +896,10 @@ are exported from the *duim-dcs* module.
      possible, but it must be at least 8. All classes that obey the medium
      protocol must implement a method for this generic function.
   
-   See also
+   :seealso:
 
-   - :gf:`contrasting-dash-patterns-limit`
-   - :gf:`make-contrasting-colors`
+     - :gf:`contrasting-dash-patterns-limit`
+     - :gf:`make-contrasting-colors`
 
 .. generic-function:: contrasting-dash-patterns-limit
 
@@ -917,10 +917,10 @@ are exported from the *duim-dcs* module.
      Returns the number of contrasting dash patterns that the specified port
      can generate.
 
-   See also
+   :seealso:
 
-   - :gf:`contrasting-colors-limit`
-   - :gf:`make-contrasting-dash-patterns`
+     - :gf:`contrasting-colors-limit`
+     - :gf:`make-contrasting-dash-patterns`
 
 .. constant:: $cross-hatch
 
@@ -934,9 +934,9 @@ are exported from the *duim-dcs* module.
      A stipple pattern for use in creating a patterned brush with alternating
      solid and dashed lines.
 
-   See also
+   :seealso:
 
-   - :class:`<color>`.
+     - :class:`<color>`.
 
 .. constant:: $cyan
 
@@ -948,9 +948,9 @@ are exported from the *duim-dcs* module.
 
      The usual definition for the color cyan.
 
-   See also
+   :seealso:
 
-   - :class:`<color>`.
+     - :class:`<color>`.
 
 .. constant:: $dash-dot-dot-pen
 
@@ -963,13 +963,13 @@ are exported from the *duim-dcs* module.
      A pen that draws a line with two dots between each dash. The line width
      is *1* and *dashes:* is *#[4, 1, 1, 1, 1, 1]*.
 
-   See also
+   :seealso:
 
-   - :class:`<pen>`
-   - :const:`$solid-pen`
-   - :const:`$magenta`
-   - :const:`$dash-dot-pen`
-   - :const:`$dotted-pen`
+     - :class:`<pen>`
+     - :const:`$solid-pen`
+     - :const:`$magenta`
+     - :const:`$dash-dot-pen`
+     - :const:`$dotted-pen`
 
 .. constant:: $dash-dot-pen
 
@@ -982,13 +982,13 @@ are exported from the *duim-dcs* module.
      A pen that draws a dashed and dotted line. The line width is *1* and
      *dashes:* is *#[4, 1, 1, 1]*.
 
-   See also
+   :seealso:
 
-   - :class:`<pen>`
-   - :const:`$solid-pen`
-   - :const:`$magenta`
-   - :const:`$dash-dot-pen`
-   - :const:`$dotted-pen`
+     - :class:`<pen>`
+     - :const:`$solid-pen`
+     - :const:`$magenta`
+     - :const:`$dash-dot-pen`
+     - :const:`$dotted-pen`
 
 .. constant:: $dashed-pen
 
@@ -1001,13 +1001,13 @@ are exported from the *duim-dcs* module.
      A pen that draws a dashed line. The line width is *1* and *dashes:* is
      ``#t``.
 
-   See also
+   :seealso:
 
-   - :class:`<pen>`
-   - :const:`$solid-pen`
-   - :const:`$magenta`
-   - :const:`$dash-dot-pen`
-   - :const:`$dotted-pen`
+     - :class:`<pen>`
+     - :const:`$solid-pen`
+     - :const:`$magenta`
+     - :const:`$dash-dot-pen`
+     - :const:`$dotted-pen`
 
 .. generic-function:: default-background
 
@@ -1023,11 +1023,11 @@ are exported from the *duim-dcs* module.
 
      Returns the ink that is the default background of its argument.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-fill-style`
-   - :gf:`default-background-setter`
-   - :gf:`default-foreground`
+     - :gf:`brush-fill-style`
+     - :gf:`default-background-setter`
+     - :gf:`default-foreground`
 
 .. generic-function:: default-background-setter
 
@@ -1044,11 +1044,11 @@ are exported from the *duim-dcs* module.
 
      Sets the default background for *object*.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-fill-style`
-   - :gf:`default-background`
-   - :gf:`default-foreground-setter`
+     - :gf:`brush-fill-style`
+     - :gf:`default-background`
+     - :gf:`default-foreground-setter`
 
 .. generic-function:: default-foreground
 
@@ -1064,11 +1064,11 @@ are exported from the *duim-dcs* module.
 
      Returns the ink that is the default foreground of its argument.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-fill-rule`
-   - :gf:`default-background`
-   - :gf:`default-foreground-setter`
+     - :gf:`brush-fill-rule`
+     - :gf:`default-background`
+     - :gf:`default-foreground-setter`
 
 .. generic-function:: default-foreground-setter
 
@@ -1085,11 +1085,11 @@ are exported from the *duim-dcs* module.
 
      Sets the default foreground for *object*.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-fill-rule`
-   - :gf:`default-background-setter`
-   - :gf:`default-foreground`
+     - :gf:`brush-fill-rule`
+     - :gf:`default-background-setter`
+     - :gf:`default-foreground`
 
 .. generic-function:: default-text-style
 
@@ -1107,9 +1107,9 @@ are exported from the *duim-dcs* module.
      merge against if the text style is not fully specified, or if no text
      style is specified.
 
-   See also
+   :seealso:
 
-   - :gf:`default-text-style-setter`
+     - :gf:`default-text-style-setter`
 
 .. generic-function:: default-text-style-setter
 
@@ -1126,9 +1126,9 @@ are exported from the *duim-dcs* module.
 
      Sets the default text style.
 
-   See also
+   :seealso:
 
-   - :gf:`default-text-style`
+     - :gf:`default-text-style`
 
 .. class:: <device-font>
    :sealed:
@@ -1149,9 +1149,9 @@ are exported from the *duim-dcs* module.
 
     - None.
 
-   See also
+   :seealso:
 
-   - :gf:`<text-style>`
+     - :gf:`<text-style>`
 
 .. constant:: $diagonal-hatch-down
 
@@ -1166,9 +1166,9 @@ are exported from the *duim-dcs* module.
      dashes and spaces, the first line starting with a dash, followed by a
      space, and the second line starting with a space followed by a dash.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-stipple`
+     - :gf:`brush-stipple`
 
 .. constant:: $diagonal-hatch-up
 
@@ -1183,9 +1183,9 @@ are exported from the *duim-dcs* module.
      dashes and spaces, the first line starting with a space, followed by a
      dash, and the second line starting with a dash followed by a space.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-stipple`
+     - :gf:`brush-stipple`
 
 .. constant:: $dotted-pen
 
@@ -1198,11 +1198,11 @@ are exported from the *duim-dcs* module.
      A pen that draws a dotted line. The line width is *1* and *dashes:* is
      ``#[1, 1]``.
 
-   See also
+   :seealso:
 
-   - :class:`<pen>`
-   - :const:`$solid-pen`
-   - :const:`$dash-dot-pen`
+     - :class:`<pen>`
+     - :const:`$solid-pen`
+     - :const:`$dash-dot-pen`
 
 .. generic-function:: find-color
 
@@ -1355,16 +1355,16 @@ are exported from the *duim-dcs* module.
      they are commonly used in the X Windows community, not because there is
      anything special about these particular colors.
 
-   See also
+   :seealso:
 
-   - :gf:`stencil?`
-   - :gf:`contrasting-dash-patterns-limit`
-   - :const:`$black`
-   - :const:`$red`
-   - :const:`$yellow`
-   - :const:`$green`
-   - :const:`$blue`
-   - :const:`$magenta`
+     - :gf:`stencil?`
+     - :gf:`contrasting-dash-patterns-limit`
+     - :const:`$black`
+     - :const:`$red`
+     - :const:`$yellow`
+     - :const:`$green`
+     - :const:`$blue`
+     - :const:`$magenta`
 
 .. constant:: $foreground
 
@@ -1376,10 +1376,10 @@ are exported from the *duim-dcs* module.
 
      An indirect ink that uses the medium's foreground design.
 
-   See also
+   :seealso:
 
-   - :class:`<ink>`
-   - :class:`<palette>`
+     - :class:`<ink>`
+     - :class:`<palette>`
 
 .. generic-function:: fully-merged-text-style?
 
@@ -1395,9 +1395,9 @@ are exported from the *duim-dcs* module.
 
      Returns ``#t`` if the specified text style is completely specified.
 
-   See also
+   :seealso:
 
-   - :gf:`merge-text-styles`
+     - :gf:`merge-text-styles`
 
 .. constant:: $green
 
@@ -1409,9 +1409,9 @@ are exported from the *duim-dcs* module.
 
      The usual definition of the color green.
 
-   See also
+   :seealso:
 
-   - :class:`<color>`
+     - :class:`<color>`
 
 .. constant:: $hearts-stipple
 
@@ -1425,9 +1425,9 @@ are exported from the *duim-dcs* module.
      A stipple pattern for use in creating a patterned brush that draws a
      heart shape.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-stipple`
+     - :gf:`brush-stipple`
 
 .. constant:: $horizontal-hatch
 
@@ -1441,9 +1441,9 @@ are exported from the *duim-dcs* module.
      A stipple pattern for use in creating a patterned brush with alternating
      horizontal rows of lines and spaces.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-stipple`
+     - :gf:`brush-stipple`
 
 .. class:: <image>
    :abstract:
@@ -1466,13 +1466,13 @@ are exported from the *duim-dcs* module.
 
      - :class:`<graphics>`
 
-   See also
+   :seealso:
 
-   - :gf:`image?`
-   - :gf:`image-depth`
-   - :gf:`image-height`
-   - :gf:`image-width`
-   - :class:`<ink>`
+     - :gf:`image?`
+     - :gf:`image-depth`
+     - :gf:`image-height`
+     - :gf:`image-width`
+     - :class:`<ink>`
 
 .. generic-function:: image?
 
@@ -1488,12 +1488,12 @@ are exported from the *duim-dcs* module.
 
      Returns ``#t`` if its argument is an image.
 
-   See also
+   :seealso:
 
-   - :class:`<image>`
-   - :gf:`image-depth`
-   - :gf:`image-height`
-   - :gf:`image-width`
+     - :class:`<image>`
+     - :gf:`image-depth`
+     - :gf:`image-height`
+     - :gf:`image-width`
 
 .. generic-function:: image-depth
 
@@ -1509,12 +1509,12 @@ are exported from the *duim-dcs* module.
 
      Returns the depth of the image *image*.
 
-   See also
+   :seealso:
 
-   - :class:`<image>`
-   - :gf:`image?`
-   - :gf:`image-height`
-   - :gf:`image-width`
+     - :class:`<image>`
+     - :gf:`image?`
+     - :gf:`image-height`
+     - :gf:`image-width`
 
 .. generic-function:: image-height
 
@@ -1530,12 +1530,12 @@ are exported from the *duim-dcs* module.
 
      Returns the height of the image *image*.
 
-   See also
+   :seealso:
 
-   - :class:`<image>`
-   - :gf:`image?`
-   - :gf:`image-depth`
-   - :gf:`image-width`
+     - :class:`<image>`
+     - :gf:`image?`
+     - :gf:`image-depth`
+     - :gf:`image-width`
 
 .. generic-function:: image-width
 
@@ -1551,12 +1551,12 @@ are exported from the *duim-dcs* module.
 
      Returns the width of the image *image*.
 
-   See also
+   :seealso:
 
-   - :class:`<image>`
-   - :gf:`image?`
-   - :gf:`image-depth`
-   - :gf:`image-height`
+     - :class:`<image>`
+     - :gf:`image?`
+     - :gf:`image-depth`
+     - :gf:`image-height`
 
 .. class:: <ink>
    :abstract:
@@ -1580,9 +1580,9 @@ are exported from the *duim-dcs* module.
 
      - :gf:`ink?`
 
-   See also
+   :seealso:
 
-   - :gf:`ink?`
+     - :gf:`ink?`
 
 .. generic-function:: ink?
 
@@ -1598,9 +1598,9 @@ are exported from the *duim-dcs* module.
 
      Returns ``#t`` if *object* is an ink, otherwise returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :class:`<ink>`
+     - :class:`<ink>`
 
 .. constant:: $magenta
 
@@ -1612,9 +1612,9 @@ are exported from the *duim-dcs* module.
 
      The usual definition of the color magenta.
 
-   See also
+   :seealso:
 
-   - :class:`<color>`
+     - :class:`<color>`
 
 .. generic-function:: make
 
@@ -1651,10 +1651,10 @@ are exported from the *duim-dcs* module.
      provided, or the keywords can be given explicitly to override the
      defaults.
 
-   See also
+   :seealso:
 
-   - :class:`<brush>`
-   - :class:`<pen>`
+     - :class:`<brush>`
+     - :class:`<pen>`
 
 .. generic-function:: make-color-for-contrasting-color
 
@@ -1670,9 +1670,9 @@ are exported from the *duim-dcs* module.
 
      Returns a color that is recognizably different from the main color.
 
-   See also
+   :seealso:
 
-   - :func:`make-contrasting-colors`
+     - :func:`make-contrasting-colors`
 
 .. function:: make-contrasting-colors
 
@@ -1704,12 +1704,12 @@ are exported from the *duim-dcs* module.
      The rendering of the color is a true color or a stippled pattern,
      depending on whether the output medium supports color.
 
-   See also
+   :seealso:
 
-   - :gf:`contrasting-colors-limit`
-   - :const:`$green`
-   - :gf:`make-color-for-contrasting-color`
-   - :gf:`make-contrasting-dash-patterns`
+     - :gf:`contrasting-colors-limit`
+     - :const:`$green`
+     - :gf:`make-color-for-contrasting-color`
+     - :gf:`make-contrasting-dash-patterns`
 
 .. function:: make-contrasting-dash-patterns
 
@@ -1735,10 +1735,10 @@ are exported from the *duim-dcs* module.
      The argument *k* represents the index in the vector of dash patterns
      indicating the pattern to use.
 
-   See also
+   :seealso:
 
-   - :gf:`contrasting-dash-patterns-limit`
-   - :gf:`make-contrasting-colors`
+     - :gf:`contrasting-dash-patterns-limit`
+     - :gf:`make-contrasting-colors`
 
 .. function:: make-device-font
 
@@ -1784,10 +1784,10 @@ are exported from the *duim-dcs* module.
      gray. On a white-on-black display device, *0* means white, *1* means
      black, and the values in between are shades of gray.
 
-   See also
+   :seealso:
 
-   - :gf:`make-ihs-color`
-   - :gf:`make-rgb-color`
+     - :gf:`make-ihs-color`
+     - :gf:`make-rgb-color`
 
 .. function:: make-ihs-color
 
@@ -1807,10 +1807,10 @@ are exported from the *duim-dcs* module.
      number between *0* and sqrt(*3*) (inclusive). The *hue* and
      *saturation* arguments are real numbers between 0 and 1 (inclusive).
 
-   See also
+   :seealso:
 
-   - :gf:`make-gray-color`
-   - :gf:`make-rgb-color`
+     - :gf:`make-gray-color`
+     - :gf:`make-rgb-color`
 
 .. generic-function:: make-palette
 
@@ -1892,10 +1892,10 @@ are exported from the *duim-dcs* module.
      When all three color components are 1, the resulting color is white.
      When all three color components are 0, the resulting color is black.
 
-   See also
+   :seealso:
 
-   - :gf:`make-gray-color`
-   - :gf:`make-ihs-color`
+     - :gf:`make-gray-color`
+     - :gf:`make-ihs-color`
 
 .. function:: make-stencil
 
@@ -1950,9 +1950,9 @@ are exported from the *duim-dcs* module.
      Implementations are permitted to extend legal values for family, face,
      and size.
 
-   See also
+   :seealso:
 
-   - :const:`$solid-pen`
+     - :const:`$solid-pen`
 
 .. generic-function:: merge-text-styles
 
@@ -1981,9 +1981,9 @@ are exported from the *duim-dcs* module.
      of sizes, from smallest to largest, is *#"tiny"*, *#"very-small"*,
      *#"small"*, *#"normal"*, *#"large"*,*#"very-large"*, and *#"huge"*.
 
-   See also
+   :seealso:
 
-   - :gf:`default-background-setter`
+     - :gf:`default-background-setter`
 
 .. class:: <palette>
    :abstract:
@@ -2006,9 +2006,9 @@ are exported from the *duim-dcs* module.
     - :gf:`color-palette?`
     - :gf:`dynamic-palette?`
 
-   See also
+   :seealso:
 
-   - :gf:`palette?`
+     - :gf:`palette?`
 
 .. generic-function:: palette?
 
@@ -2025,9 +2025,9 @@ are exported from the *duim-dcs* module.
      Returns ``#t`` if the object *object* is a palette. A palette is a color
      map that maps 16 bit colors into a, for example, 8 bit display.
 
-   See also
+   :seealso:
 
-   - :class:`<palette>`
+     - :class:`<palette>`
 
 .. class:: <palette-full>
    :sealed:
@@ -2042,9 +2042,9 @@ are exported from the *duim-dcs* module.
 
      The class for errors that are signalled when a color palette is full.
 
-   See also
+   :seealso:
 
-   - :class:`<palette>`
+     - :class:`<palette>`
 
 .. constant:: $parquet-stipple
 
@@ -2058,9 +2058,9 @@ are exported from the *duim-dcs* module.
      A stipple pattern for use in creating a patterned brush that looks like
      a parquet floor.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-stipple`
+     - :gf:`brush-stipple`
 
 .. class:: <pattern>
    :sealed:
@@ -2084,10 +2084,10 @@ are exported from the *duim-dcs* module.
 
      - :gf:`pattern?`
 
-   See also
+   :seealso:
 
-   - :class:`<stencil>`
-   - :gf:`make-pattern`
+     - :class:`<stencil>`
+     - :gf:`make-pattern`
 
 .. generic-function:: pattern?
 
@@ -2103,9 +2103,9 @@ are exported from the *duim-dcs* module.
 
      Returns ``#t`` if *object* is a pattern.
 
-   See also
+   :seealso:
 
-   - :gf:`make-pattern`
+     - :gf:`make-pattern`
 
 .. class:: <pen>
    :abstract:
@@ -2137,16 +2137,16 @@ are exported from the *duim-dcs* module.
      - :gf:`pen-units`
      - :gf:`pen-width`
 
-   See also
+   :seealso:
 
-   - :class:`<ink>`
-   - :gf:`make`
-   - :gf:`pen?`
-   - :gf:`pen-cap-shape`
-   - :gf:`pen-dashes`
-   - :gf:`pen-joint-shape`
-   - :gf:`pen-units`
-   - :gf:`pen-width`
+     - :class:`<ink>`
+     - :gf:`make`
+     - :gf:`pen?`
+     - :gf:`pen-cap-shape`
+     - :gf:`pen-dashes`
+     - :gf:`pen-joint-shape`
+     - :gf:`pen-units`
+     - :gf:`pen-width`
 
 .. generic-function:: pen?
 
@@ -2162,14 +2162,14 @@ are exported from the *duim-dcs* module.
 
      Returns ``#t`` if *object* is a pen, otherwise returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :class:`<pen>`
-   - :gf:`pen-cap-shape`
-   - :gf:`pen-dashes`
-   - :gf:`pen-joint-shape`
-   - :gf:`pen-units`
-   - :gf:`pen-width`
+     - :class:`<pen>`
+     - :gf:`pen-cap-shape`
+     - :gf:`pen-dashes`
+     - :gf:`pen-joint-shape`
+     - :gf:`pen-units`
+     - :gf:`pen-width`
 
 .. generic-function:: pen-cap-shape
 
@@ -2185,15 +2185,15 @@ are exported from the *duim-dcs* module.
 
      Returns the shape of the end of a line or an arc drawn by *pen*.
 
-   See also
+   :seealso:
 
-   - :gf:`make-contrasting-dash-patterns`
-   - :class:`<pen>`
-   - :gf:`pen?`
-   - :gf:`pen-dashes`
-   - :gf:`pen-joint-shape`
-   - :gf:`pen-units`
-   - :gf:`pen-width`
+     - :gf:`make-contrasting-dash-patterns`
+     - :class:`<pen>`
+     - :gf:`pen?`
+     - :gf:`pen-dashes`
+     - :gf:`pen-joint-shape`
+     - :gf:`pen-units`
+     - :gf:`pen-width`
 
 .. generic-function:: pen-dashes
 
@@ -2213,14 +2213,14 @@ are exported from the *duim-dcs* module.
      length of the inked dashes and the even elements indicate the length of
      the gaps between dashes.
 
-   See also
+   :seealso:
 
-   - :class:`<pen>`
-   - :gf:`pen?`
-   - :gf:`pen-cap-shape`
-   - :gf:`pen-joint-shape`
-   - :gf:`pen-units`
-   - :gf:`pen-width`
+     - :class:`<pen>`
+     - :gf:`pen?`
+     - :gf:`pen-cap-shape`
+     - :gf:`pen-joint-shape`
+     - :gf:`pen-units`
+     - :gf:`pen-width`
 
 .. generic-function:: pen-joint-shape
 
@@ -2238,15 +2238,15 @@ are exported from the *duim-dcs* module.
      Returns the shape of the joints between line segments of a closed,
      unfilled figure drawn by *pen*.
 
-   See also
+   :seealso:
 
-   - :gf:`make-contrasting-dash-patterns`
-   - :class:`<pen>`
-   - :gf:`pen?`
-   - :gf:`pen-cap-shape`
-   - :gf:`pen-dashes`
-   - :gf:`pen-units`
-   - :gf:`pen-width`
+     - :gf:`make-contrasting-dash-patterns`
+     - :class:`<pen>`
+     - :gf:`pen?`
+     - :gf:`pen-cap-shape`
+     - :gf:`pen-dashes`
+     - :gf:`pen-units`
+     - :gf:`pen-width`
 
 .. generic-function:: pen-units
 
@@ -2264,15 +2264,15 @@ are exported from the *duim-dcs* module.
      normal, points, or device-dependent. A width of *#"normal"* is a
      comfortably visible thin line.
 
-   See also
+   :seealso:
 
-   - :gf:`make-contrasting-dash-patterns`
-   - :class:`<pen>`
-   - :gf:`pen?`
-   - :gf:`pen-cap-shape`
-   - :gf:`pen-dashes`
-   - :gf:`pen-joint-shape`
-   - :gf:`pen-width`
+     - :gf:`make-contrasting-dash-patterns`
+     - :class:`<pen>`
+     - :gf:`pen?`
+     - :gf:`pen-cap-shape`
+     - :gf:`pen-dashes`
+     - :gf:`pen-joint-shape`
+     - :gf:`pen-width`
 
 .. generic-function:: pen-width
 
@@ -2290,15 +2290,15 @@ are exported from the *duim-dcs* module.
      Returns the pen width, that is how wide a stroke the pen draws, of *pen*
      . A width of *#"normal"* is a comfortably visible thin line.
 
-   See also
+   :seealso:
 
-   - :gf:`make-contrasting-dash-patterns`
-   - :class:`<pen>`
-   - :gf:`pen?`
-   - :gf:`pen-cap-shape`
-   - :gf:`pen-dashes`
-   - :gf:`pen-joint-shape`
-   - :gf:`pen-units`
+     - :gf:`make-contrasting-dash-patterns`
+     - :class:`<pen>`
+     - :gf:`pen?`
+     - :gf:`pen-cap-shape`
+     - :gf:`pen-dashes`
+     - :gf:`pen-joint-shape`
+     - :gf:`pen-units`
 
 .. generic-function:: read-image
 
@@ -2316,9 +2316,9 @@ are exported from the *duim-dcs* module.
      Reads an image from the location *resource-id*. This function calls
      *read-image-as*.
 
-   See also
+   :seealso:
 
-   - :gf:`read-image-as`
+     - :gf:`read-image-as`
 
 .. generic-function:: read-image-as
 
@@ -2340,9 +2340,9 @@ are exported from the *duim-dcs* module.
      The *class* represents the class that the image is read as an instance
      of.
 
-   See also
+   :seealso:
 
-   - :gf:`read-image`
+     - :gf:`read-image`
 
 .. constant:: $red
 
@@ -2354,9 +2354,9 @@ are exported from the *duim-dcs* module.
 
      The usual definition of the color red.
 
-   See also
+   :seealso:
 
-   - :const:`$blue`
+     - :const:`$blue`
 
 .. generic-function:: remove-colors
 
@@ -2385,12 +2385,12 @@ are exported from the *duim-dcs* module.
      A pen that draws a solid line. The width of the line is *1*, and
      *dashes:* is *#f.*
 
-   See also
+   :seealso:
 
-   - :class:`<pen>`
-   - :func:`make`
-   - :const:`$dash-dot-pen`
-   - :const:`$dotted-pen`
+     - :class:`<pen>`
+     - :func:`make`
+     - :const:`$dash-dot-pen`
+     - :const:`$dotted-pen`
 
 .. class:: <stencil>
    :concrete:
@@ -2420,11 +2420,11 @@ are exported from the *duim-dcs* module.
 
      - :gf:`box-edges`
 
-   See also
+   :seealso:
 
-   - :class:`<image>`
-   - :gf:`make-pattern`
-   - :gf:`stencil?`
+     - :class:`<image>`
+     - :gf:`make-pattern`
+     - :gf:`stencil?`
 
 .. generic-function:: stencil?
 
@@ -2440,10 +2440,10 @@ are exported from the *duim-dcs* module.
 
      Returns ``#t`` if its argument is a stencil.
 
-   See also
+   :seealso:
 
-   - :func:`make-pattern`
-   - :class:`<stencil>`
+     - :func:`make-pattern`
+     - :class:`<stencil>`
 
 .. class:: <text-style>
    :abstract:
@@ -2502,16 +2502,16 @@ are exported from the *duim-dcs* module.
      - :gf:`medium-text-style`
      - :gf:`medium-text-style-setter`
 
-   See also
+   :seealso:
 
-   - :gf:`text-style?`
-   - :gf:`text-style-components`
-   - :gf:`text-style-family`
-   - :gf:`text-style-size`
-   - :gf:`text-style-slant`
-   - :gf:`text-style-strikeout?`
-   - :gf:`text-style-underline?`
-   - :gf:`text-style-weight`
+     - :gf:`text-style?`
+     - :gf:`text-style-components`
+     - :gf:`text-style-family`
+     - :gf:`text-style-size`
+     - :gf:`text-style-slant`
+     - :gf:`text-style-strikeout?`
+     - :gf:`text-style-underline?`
+     - :gf:`text-style-weight`
 
 .. generic-function:: text-style?
 
@@ -2527,16 +2527,16 @@ are exported from the *duim-dcs* module.
 
      Returns ``#t`` if its argument is a text-style.
 
-   See also
+   :seealso:
 
-   - :gf:`<text-style>`
-   - :gf:`text-style-components`
-   - :gf:`text-style-family`
-   - :gf:`text-style-size`
-   - :gf:`text-style-slant`
-   - :gf:`text-style-strikeout?`
-   - :gf:`text-style-underline?`
-   - :gf:`text-style-weight`
+     - :gf:`<text-style>`
+     - :gf:`text-style-components`
+     - :gf:`text-style-family`
+     - :gf:`text-style-size`
+     - :gf:`text-style-slant`
+     - :gf:`text-style-strikeout?`
+     - :gf:`text-style-underline?`
+     - :gf:`text-style-weight`
 
 .. generic-function:: text-style-components
 
@@ -2559,16 +2559,16 @@ are exported from the *duim-dcs* module.
      Returns the components of the text style *text-style* as the values
      family, face, slant, size, underline and strikeout.
 
-   See also
+   :seealso:
 
-   - :class:`<text-style>`
-   - :gf:`text-style?`
-   - :gf:`text-style-family`
-   - :gf:`text-style-size`
-   - :gf:`text-style-slant`
-   - :gf:`text-style-strikeout?`
-   - :gf:`text-style-underline?`
-   - :gf:`text-style-weight`
+     - :class:`<text-style>`
+     - :gf:`text-style?`
+     - :gf:`text-style-family`
+     - :gf:`text-style-size`
+     - :gf:`text-style-slant`
+     - :gf:`text-style-strikeout?`
+     - :gf:`text-style-underline?`
+     - :gf:`text-style-weight`
 
 .. generic-function:: text-style-family
 
@@ -2584,16 +2584,16 @@ are exported from the *duim-dcs* module.
 
      Returns the family component of the specified text style.
 
-   See also
+   :seealso:
 
-   - :class:`<text-style>`
-   - :gf:`text-style?`
-   - :gf:`text-style-components`
-   - :gf:`text-style-size`
-   - :gf:`text-style-slant`
-   - :gf:`text-style-strikeout?`
-   - :gf:`text-style-underline?`
-   - :gf:`text-style-weight`
+     - :class:`<text-style>`
+     - :gf:`text-style?`
+     - :gf:`text-style-components`
+     - :gf:`text-style-size`
+     - :gf:`text-style-slant`
+     - :gf:`text-style-strikeout?`
+     - :gf:`text-style-underline?`
+     - :gf:`text-style-weight`
 
 .. generic-function:: text-style-size
 
@@ -2609,16 +2609,16 @@ are exported from the *duim-dcs* module.
 
      Returns the style component of the specified text style.
 
-   See also
+   :seealso:
 
-   - :class:`<text-style>`
-   - :gf:`text-style?`
-   - :gf:`text-style-components`
-   - :gf:`text-style-family`
-   - :gf:`text-style-slant`
-   - :gf:`text-style-strikeout?`
-   - :gf:`text-style-underline?`
-   - :gf:`text-style-weight`
+     - :class:`<text-style>`
+     - :gf:`text-style?`
+     - :gf:`text-style-components`
+     - :gf:`text-style-family`
+     - :gf:`text-style-slant`
+     - :gf:`text-style-strikeout?`
+     - :gf:`text-style-underline?`
+     - :gf:`text-style-weight`
 
 .. generic-function:: text-style-slant
 
@@ -2634,16 +2634,16 @@ are exported from the *duim-dcs* module.
 
      Returns the slant component of the specified text style.
 
-   See also
+   :seealso:
 
-   - :class:`<text-style>`
-   - :gf:`text-style?`
-   - :gf:`text-style-components`
-   - :gf:`text-style-family`
-   - :gf:`text-style-size`
-   - :gf:`text-style-strikeout?`
-   - :gf:`text-style-underline?`
-   - :gf:`text-style-weight`
+     - :class:`<text-style>`
+     - :gf:`text-style?`
+     - :gf:`text-style-components`
+     - :gf:`text-style-family`
+     - :gf:`text-style-size`
+     - :gf:`text-style-strikeout?`
+     - :gf:`text-style-underline?`
+     - :gf:`text-style-weight`
 
 .. generic-function:: text-style-strikeout?
 
@@ -2661,16 +2661,16 @@ are exported from the *duim-dcs* module.
      Returns ``#t`` if the text style includes a line through it, striking it
      out.
 
-   See also
+   :seealso:
 
-   - :class:`<text-style>`
-   - :gf:`text-style?`
-   - :gf:`text-style-components`
-   - :gf:`text-style-family`
-   - :gf:`text-style-size`
-   - :gf:`text-style-slant`
-   - :gf:`text-style-underline?`
-   - :gf:`text-style-weight`
+     - :class:`<text-style>`
+     - :gf:`text-style?`
+     - :gf:`text-style-components`
+     - :gf:`text-style-family`
+     - :gf:`text-style-size`
+     - :gf:`text-style-slant`
+     - :gf:`text-style-underline?`
+     - :gf:`text-style-weight`
 
 .. generic-function:: text-style-underline?
 
@@ -2686,16 +2686,16 @@ are exported from the *duim-dcs* module.
 
      Returns ``#t`` if the text style is underlined.
 
-   See also
+   :seealso:
 
-   - :class:`<text-style>`
-   - :gf:`text-style?`
-   - :gf:`text-style-components`
-   - :gf:`text-style-family`
-   - :gf:`text-style-size`
-   - :gf:`text-style-slant`
-   - :gf:`text-style-strikeout?`
-   - :gf:`text-style-weight`
+     - :class:`<text-style>`
+     - :gf:`text-style?`
+     - :gf:`text-style-components`
+     - :gf:`text-style-family`
+     - :gf:`text-style-size`
+     - :gf:`text-style-slant`
+     - :gf:`text-style-strikeout?`
+     - :gf:`text-style-weight`
 
 .. generic-function:: text-style-weight
 
@@ -2711,16 +2711,16 @@ are exported from the *duim-dcs* module.
 
      Returns the weight component of the text style.
 
-   See also
+   :seealso:
 
-   - :class:`<text-style>`
-   - :gf:`text-style?`
-   - :gf:`text-style-components`
-   - :gf:`text-style-family`
-   - :gf:`text-style-size`
-   - :gf:`text-style-slant`
-   - :gf:`text-style-strikeout?`
-   - :gf:`text-style-underline?`
+     - :class:`<text-style>`
+     - :gf:`text-style?`
+     - :gf:`text-style-components`
+     - :gf:`text-style-family`
+     - :gf:`text-style-size`
+     - :gf:`text-style-slant`
+     - :gf:`text-style-strikeout?`
+     - :gf:`text-style-underline?`
 
 .. constant:: $tiles-stipple
 
@@ -2734,9 +2734,9 @@ are exported from the *duim-dcs* module.
      A stipple pattern for use in creating a patterned brush with lines and
      spaces suggesting tiles
 
-   See also
+   :seealso:
 
-   - :gf:`brush-stipple`
+     - :gf:`brush-stipple`
 
 .. constant:: $vertical-hatch
 
@@ -2750,9 +2750,9 @@ are exported from the *duim-dcs* module.
      A stipple pattern for use in creating a patterned brush with alternating
      vertical columns of lines and spaces.
 
-   See also
+   :seealso:
 
-   - :gf:`brush-stipple`
+     - :gf:`brush-stipple`
 
 .. constant:: $white
 
@@ -2765,9 +2765,9 @@ are exported from the *duim-dcs* module.
      The usual definition of white. In the *rgb* color model, its value is
      *111*.
 
-   See also
+   :seealso:
 
-   - :class:`<color>`
+     - :class:`<color>`
 
 .. generic-function:: write-image
 
@@ -2802,6 +2802,6 @@ are exported from the *duim-dcs* module.
 
      The usual definition of the color yellow.
 
-   See also
+   :seealso:
 
-   - :class:`<color>`
+     - :class:`<color>`

@@ -218,7 +218,7 @@ month that the date refers to.
 For each function except *date-day-of-week*, the value returned is an
 instance of :drm:`<integer>`. The *date-day-of-week* function returns an
 object of type ``<day-of-week>``. For more information, please refer to
-the reference entries of each function. See also the function
+the reference entries of each function. Also see the function
 :func:`date-time-zone-offset-setter`, which allows you to set
 the time-zone offset of a ``<date>`` explicitly.
 
@@ -263,9 +263,9 @@ Date module.
      Any differences in microseconds between *date1* and *date2* are
      ignored.
 
-   See also
+   :seealso:
 
-   - :meth:`< <<(<date>)>`
+     - :meth:`< <<(<date>)>`
 
 .. method:: =
    :specializer: <duration>
@@ -286,9 +286,9 @@ Date module.
      :class:`<day/time-duration>`, any differences in microseconds
      between *duration1* and *duration2* are ignored.
 
-   See also
+   :seealso:
 
-   - :meth:`< <<(<duration>)>`
+     - :meth:`< <<(<duration>)>`
 
 .. method:: <
    :sealed:
@@ -308,9 +308,9 @@ Date module.
      differences in microseconds between *date1* and *date2* are
      ignored.
 
-   See also
+   :seealso:
 
-   - :meth:`= <=(<date>)>`
+     - :meth:`= <=(<date>)>`
 
 .. method:: <
    :sealed:
@@ -331,9 +331,9 @@ Date module.
      differences in microseconds between *duration1* and *duration2* are
      ignored.
 
-   See also
+   :seealso:
 
-   - :meth:`= <=(<duration>)>`
+     - :meth:`= <=(<duration>)>`
 
 .. method:: +
    :sealed:
@@ -367,13 +367,13 @@ Date module.
      | :class:`<duration>`            | :class:`<date>`                | :class:`<date>`                |
      +--------------------------------+--------------------------------+--------------------------------+
 
-   See also:
+   :seealso:
 
-   * :meth:`+(<duration>)`
-   * :meth:`-(<date>)`
-   * :meth:`-(<duration>)`
-   * :meth:`*(<duration>)`
-   * :meth:`/(<duration>)`
+     - :meth:`+(<duration>)`
+     - :meth:`-(<date>)`
+     - :meth:`-(<duration>)`
+     - :meth:`*(<duration>)`
+     - :meth:`/(<duration>)`
 
 .. method:: +
    :sealed:
@@ -407,13 +407,13 @@ Date module.
      | :class:`<day/time-duration>`   | :class:`<day/time-duration>`   | :class:`<day/time-duration>`   |
      +--------------------------------+--------------------------------+--------------------------------+
 
-   See also:
+   :seealso:
 
-   * :meth:`+(<date>)`
-   * :meth:`-(<date>)`
-   * :meth:`-(<duration>)`
-   * :meth:`*(<duration>)`
-   * :meth:`/(<duration>)`
+     - :meth:`+(<date>)`
+     - :meth:`-(<date>)`
+     - :meth:`-(<duration>)`
+     - :meth:`*(<duration>)`
+     - :meth:`/(<duration>)`
 
 .. method:: -
    :sealed:
@@ -451,13 +451,13 @@ Date module.
      | :class:`<date>`                | :class:`<date>`                | :class:`<day/time-duration>`   |
      +--------------------------------+--------------------------------+--------------------------------+
 
-   See also:
+   :seealso:
 
-   * :meth:`+(<date>)`
-   * :meth:`+(<duration>)`
-   * :meth:`-(<duration>)`
-   * :meth:`*(<duration>)`
-   * :meth:`/(<duration>)`
+     - :meth:`+(<date>)`
+     - :meth:`+(<duration>)`
+     - :meth:`-(<duration>)`
+     - :meth:`*(<duration>)`
+     - :meth:`/(<duration>)`
 
 .. method:: -
    :sealed:
@@ -493,13 +493,13 @@ Date module.
      | :class:`<day/time-duration>`   | :class:`<day/time-duration>`   | :class:`<day/time-duration>`   |
      +--------------------------------+--------------------------------+--------------------------------+
 
-   See also:
+   :seealso:
 
-   * :meth:`+(<date>)`
-   * :meth:`+(<duration>)`
-   * :meth:`-(<date>)`
-   * :meth:`*(<duration>)`
-   * :meth:`/(<duration>)`
+     - :meth:`+(<date>)`
+     - :meth:`+(<duration>)`
+     - :meth:`-(<date>)`
+     - :meth:`*(<duration>)`
+     - :meth:`/(<duration>)`
 
 .. method:: *
    :sealed:
@@ -523,13 +523,13 @@ Date module.
      that the duration can be placed first or second in the list of
      arguments.
 
-   See also:
+   :seealso:
 
-   * :meth:`+(<date>)`
-   * :meth:`+(<duration>)`
-   * :meth:`-(<date>)`
-   * :meth:`-(<duration>)`
-   * :meth:`/(<duration>)`
+     - :meth:`+(<date>)`
+     - :meth:`+(<duration>)`
+     - :meth:`-(<date>)`
+     - :meth:`-(<duration>)`
+     - :meth:`/(<duration>)`
 
 .. method:: /
    :sealed:
@@ -545,13 +545,13 @@ Date module.
 
    :description:
 
-   See also:
+   :seealso:
 
-   * :meth:`+(<date>)`
-   * :meth:`+(<duration>)`
-   * :meth:`-(<date>)`
-   * :meth:`-(<duration>)`
-   * :meth:`*(<duration>)`
+     - :meth:`+(<date>)`
+     - :meth:`+(<duration>)`
+     - :meth:`-(<date>)`
+     - :meth:`-(<duration>)`
+     - :meth:`*(<duration>)`
 
 .. function:: as-iso8601-string
 
@@ -583,14 +583,14 @@ Date module.
 
         format-date("%Y-%m-%dT%H:%M:%S%:z", date);
 
-   See also
+   :seealso:
 
-   - :class:`<date>`
-   - :func:`as-rfc822-string`
-   - :func:`as-rfc1123-string`
-   - :func:`format-date`
-   - :func:`parse-date-string`
-   - :func:`parse-iso8601-string`
+     - :class:`<date>`
+     - :func:`as-rfc822-string`
+     - :func:`as-rfc1123-string`
+     - :func:`format-date`
+     - :func:`parse-date-string`
+     - :func:`parse-iso8601-string`
 
 .. function:: as-rfc822-string
 
@@ -614,13 +614,13 @@ Date module.
 
         format-date("%a, %d %b %y %H:%M:%S %z", date);
 
-   See also
+   :seealso:
 
-   - :class:`<date>`
-   - :func:`as-rfc1123-string`
-   - :func:`as-iso8601-string`
-   - :func:`format-date`
-   - :func:`parse-date-string`
+     - :class:`<date>`
+     - :func:`as-rfc1123-string`
+     - :func:`as-iso8601-string`
+     - :func:`format-date`
+     - :func:`parse-date-string`
 
 .. function:: as-rfc1123-string
 
@@ -649,13 +649,13 @@ Date module.
      RSS feeds and other protocols where date representations
      are used.
 
-   See also
+   :seealso:
 
-   - :class:`<date>`
-   - :func:`as-rfc822-string`
-   - :func:`as-iso8601-string`
-   - :func:`format-date`
-   - :func:`parse-date-string`
+     - :class:`<date>`
+     - :func:`as-rfc822-string`
+     - :func:`as-iso8601-string`
+     - :func:`format-date`
+     - :func:`parse-date-string`
 
 .. function:: current-date
 
@@ -738,12 +738,12 @@ Date module.
      - :func:`date-year`
      - :func:`decode-date`
 
-   See also
+   :seealso:
 
-   - :func:`as-iso8601-string`
-   - :func:`as-rfc822-string`
-   - :func:`as-rfc1123-string`
-   - :class:`<day-of-week>`
+     - :func:`as-iso8601-string`
+     - :func:`as-rfc822-string`
+     - :func:`as-rfc1123-string`
+     - :class:`<day-of-week>`
 
 .. function:: date-day
 
@@ -760,17 +760,17 @@ Date module.
      example, if passed a :class:`<date>` that represented 16:36 on the
      20th June, 1997, *date-day* returns the value 20.
 
-   See also
+   :seealso:
 
-   - :func:`decode-date`
-   - :func:`date-month`
-   - :func:`date-year`
-   - :func:`date-hours`
-   - :func:`date-minutes`
-   - :func:`date-seconds`
-   - :func:`date-microseconds`
-   - :func:`date-time-zone-offset`
-   - :func:`date-day-of-week`
+     - :func:`decode-date`
+     - :func:`date-month`
+     - :func:`date-year`
+     - :func:`date-hours`
+     - :func:`date-minutes`
+     - :func:`date-seconds`
+     - :func:`date-microseconds`
+     - :func:`date-time-zone-offset`
+     - :func:`date-day-of-week`
 
 .. function:: date-day-of-week
 
@@ -785,18 +785,18 @@ Date module.
 
      Returns the day of the week of the specified *date*.
 
-   See also
+   :seealso:
 
-   - :func:`decode-date`
-   - :func:`date-month`
-   - :func:`date-year`
-   - :func:`date-hours`
-   - :func:`date-minutes`
-   - :func:`date-seconds`
-   - :func:`date-microseconds`
-   - :func:`date-time-zone-offset`
-   - :func:`date-day`
-   - :class:`<day-of-week>`
+     - :func:`decode-date`
+     - :func:`date-month`
+     - :func:`date-year`
+     - :func:`date-hours`
+     - :func:`date-minutes`
+     - :func:`date-seconds`
+     - :func:`date-microseconds`
+     - :func:`date-time-zone-offset`
+     - :func:`date-day`
+     - :class:`<day-of-week>`
 
 .. function:: date-hours
 
@@ -812,17 +812,17 @@ Date module.
      Returns the hour component of the specified *date*. This component is
      always expressed in 24 hour format.
 
-   See also
+   :seealso:
 
-   - :func:`decode-date`
-   - :func:`date-month`
-   - :func:`date-day`
-   - :func:`date-year`
-   - :func:`date-minutes`
-   - :func:`date-seconds`
-   - :func:`date-microseconds`
-   - :func:`date-time-zone-offset`
-   - :func:`date-day-of-week`
+     - :func:`decode-date`
+     - :func:`date-month`
+     - :func:`date-day`
+     - :func:`date-year`
+     - :func:`date-minutes`
+     - :func:`date-seconds`
+     - :func:`date-microseconds`
+     - :func:`date-time-zone-offset`
+     - :func:`date-day-of-week`
 
 .. function:: date-microseconds
 
@@ -841,17 +841,17 @@ Date module.
      *microseconds:* init-keyword when the :class:`<date>` object was
      created.
 
-   See also
+   :seealso:
 
-   - :func:`decode-date`
-   - :func:`date-month`
-   - :func:`date-day`
-   - :func:`date-hours`
-   - :func:`date-minutes`
-   - :func:`date-seconds`
-   - :func:`date-year`
-   - :func:`date-time-zone-offset`
-   - :func:`date-day-of-week`
+     - :func:`decode-date`
+     - :func:`date-month`
+     - :func:`date-day`
+     - :func:`date-hours`
+     - :func:`date-minutes`
+     - :func:`date-seconds`
+     - :func:`date-year`
+     - :func:`date-time-zone-offset`
+     - :func:`date-day-of-week`
 
 .. function:: date-minutes
 
@@ -866,17 +866,17 @@ Date module.
 
      Returns the minutes component of the specified *date*.
 
-   See also
+   :seealso:
 
-   - :func:`decode-date`
-   - :func:`date-month`
-   - :func:`date-day`
-   - :func:`date-hours`
-   - :func:`date-year`
-   - :func:`date-seconds`
-   - :func:`date-microseconds`
-   - :func:`date-time-zone-offset`
-   - :func:`date-day-of-week`
+     - :func:`decode-date`
+     - :func:`date-month`
+     - :func:`date-day`
+     - :func:`date-hours`
+     - :func:`date-year`
+     - :func:`date-seconds`
+     - :func:`date-microseconds`
+     - :func:`date-time-zone-offset`
+     - :func:`date-day-of-week`
 
 .. function:: date-month
 
@@ -891,17 +891,17 @@ Date module.
 
      Returns the month of the specified *date*.
 
-   See also
+   :seealso:
 
-   - :func:`decode-date`
-   - :func:`date-year`
-   - :func:`date-day`
-   - :func:`date-hours`
-   - :func:`date-minutes`
-   - :func:`date-seconds`
-   - :func:`date-microseconds`
-   - :func:`date-time-zone-offset`
-   - :func:`date-day-of-week`
+     - :func:`decode-date`
+     - :func:`date-year`
+     - :func:`date-day`
+     - :func:`date-hours`
+     - :func:`date-minutes`
+     - :func:`date-seconds`
+     - :func:`date-microseconds`
+     - :func:`date-time-zone-offset`
+     - :func:`date-day-of-week`
 
 .. function:: date-seconds
 
@@ -919,17 +919,17 @@ Date module.
      number of seconds; it returns any value assigned to the *seconds:*
      init-keyword when the :class:`<date>` object was created.
 
-   See also
+   :seealso:
 
-   - :func:`decode-date`
-   - :func:`date-month`
-   - :func:`date-day`
-   - :func:`date-hours`
-   - :func:`date-minutes`
-   - :func:`date-year`
-   - :func:`date-microseconds`
-   - :func:`date-time-zone-offset`
-   - :func:`date-day-of-week`
+     - :func:`decode-date`
+     - :func:`date-month`
+     - :func:`date-day`
+     - :func:`date-hours`
+     - :func:`date-minutes`
+     - :func:`date-year`
+     - :func:`date-microseconds`
+     - :func:`date-time-zone-offset`
+     - :func:`date-day-of-week`
 
 .. function:: date-time-zone-offset
 
@@ -950,18 +950,18 @@ Date module.
      returned is an instance of :drm:`<integer>` (for example, -300
      represents the offset for EST, which is 5 hours behind GMT).
 
-   See also
+   :seealso:
 
-   - :func:`decode-date`
-   - :func:`date-month`
-   - :func:`date-day`
-   - :func:`date-hours`
-   - :func:`date-minutes`
-   - :func:`date-seconds`
-   - :func:`date-year`
-   - :func:`date-microseconds`
-   - :func:`date-time-zone-offset-setter`
-   - :func:`date-day-of-week`
+     - :func:`decode-date`
+     - :func:`date-month`
+     - :func:`date-day`
+     - :func:`date-hours`
+     - :func:`date-minutes`
+     - :func:`date-seconds`
+     - :func:`date-year`
+     - :func:`date-microseconds`
+     - :func:`date-time-zone-offset-setter`
+     - :func:`date-day-of-week`
 
 .. function:: date-time-zone-offset-setter
 
@@ -985,9 +985,9 @@ Date module.
      representing EST, which is 5 hours behind GMT,
      *new-time-zone-offset* should have the value -300.
 
-   See also
+   :seealso:
 
-   - :func:`date-time-zone-offset`
+     - :func:`date-time-zone-offset`
 
 .. function:: date-year
 
@@ -1002,17 +1002,17 @@ Date module.
 
      Returns the year of the specified *date*.
 
-   See also
+   :seealso:
 
-   - :func:`decode-date`
-   - :func:`date-month`
-   - :func:`date-day`
-   - :func:`date-hours`
-   - :func:`date-minutes`
-   - :func:`date-seconds`
-   - :func:`date-microseconds`
-   - :func:`date-time-zone-offset`
-   - :func:`date-day-of-week`
+     - :func:`decode-date`
+     - :func:`date-month`
+     - :func:`date-day`
+     - :func:`date-hours`
+     - :func:`date-minutes`
+     - :func:`date-seconds`
+     - :func:`date-microseconds`
+     - :func:`date-time-zone-offset`
+     - :func:`date-day-of-week`
 
 :: todo Make this a type.
 
@@ -1033,9 +1033,9 @@ Date module.
 
      - :func:`date-day-of-week`
 
-   See also
+   :seealso:
 
-   - :func:`date-day-of-week`
+     - :func:`date-day-of-week`
 
 .. class:: <day/time-duration>
    :sealed:
@@ -1067,10 +1067,10 @@ Date module.
      - :gf:`decode-duration`
      - :func:`encode-day/time-duration`
 
-   See also
+   :seealso:
 
-   - :class:`<duration>`
-   - :class:`<year/month-duration>`
+     - :class:`<duration>`
+     - :class:`<year/month-duration>`
 
 .. function:: decode-date
 
@@ -1097,9 +1097,9 @@ Date module.
      :class:`<date>`, but it does return the appropriate
      ``<day-of-week>``.
 
-   See also
+   :seealso:
 
-   - :func:`encode-date`
+     - :func:`encode-date`
 
 .. generic-function:: decode-duration
    :sealed:
@@ -1118,10 +1118,10 @@ Date module.
      on :class:`<year/month-duration>` and :class:`<day/time-duration>`
      respectively, as described below.
 
-   See also
+   :seealso:
 
-   - :meth:`decode-duration <decode-duration(<day/time-duration>)>`
-   - :meth:`decode-duration <decode-duration(<year/month-duration>)>`
+     - :meth:`decode-duration <decode-duration(<day/time-duration>)>`
+     - :meth:`decode-duration <decode-duration(<year/month-duration>)>`
 
 .. method:: decode-duration
    :specializer: <day/time-duration>
@@ -1143,11 +1143,11 @@ Date module.
      Decodes an instance of :class:`<day/time-duration>` into its
      constituent parts.
 
-   See also
+   :seealso:
 
-   - :gf:`decode-duration`
-   - :meth:`decode-duration <decode-duration(<year/month-duration>)>`
-   - :func:`encode-day/time-duration`
+     - :gf:`decode-duration`
+     - :meth:`decode-duration <decode-duration(<year/month-duration>)>`
+     - :func:`encode-day/time-duration`
 
 .. method:: decode-duration
    :specializer: <year/month-duration>
@@ -1166,11 +1166,11 @@ Date module.
      Decodes an instance of :class:`<year/month-duration>` into its
      constituent parts.
 
-   See also
+   :seealso:
 
-   - :gf:`decode-duration`
-   - :meth:`decode-duration <decode-duration(<day/time-duration>)>`
-   - :func:`encode-year/month-duration`
+     - :gf:`decode-duration`
+     - :meth:`decode-duration <decode-duration(<day/time-duration>)>`
+     - :func:`encode-year/month-duration`
 
 .. class:: <duration>
    :sealed:
@@ -1213,10 +1213,10 @@ Date module.
      - :meth:`\* <*(<duration>)>`
      - :meth:`/ </(<duration>)>`
 
-   See also
+   :seealso:
 
-   - :class:`<day/time-duration>`
-   - :class:`<year/month-duration>`
+     - :class:`<day/time-duration>`
+     - :class:`<year/month-duration>`
 
 .. function:: encode-date
 
@@ -1240,11 +1240,11 @@ Date module.
 
      Creates a :class:`<date>` object for the specified date and time.
 
-   See also
+   :seealso:
 
-   - :gf:`decode-date`
-   - :func:`local-time-zone-offset`
-   - :meth:`make <make(<date>)>`
+     - :gf:`decode-date`
+     - :func:`local-time-zone-offset`
+     - :meth:`make <make(<date>)>`
 
 .. function:: encode-day/time-duration
 
@@ -1263,10 +1263,10 @@ Date module.
 
      Creates an instance of :class:`<day/time-duration>`.
 
-   See also
+   :seealso:
 
-   - :gf:`decode-duration`
-   - :func:`encode-year/month-duration`
+     - :gf:`decode-duration`
+     - :func:`encode-year/month-duration`
 
 .. function:: encode-year/month-duration
 
@@ -1282,10 +1282,10 @@ Date module.
 
      Creates an instance of :class:`<year/month-duration>`.
 
-   See also
+   :seealso:
 
-   - :gf:`decode-duration`
-   - :func:`encode-day/time-duration`
+     - :gf:`decode-duration`
+     - :func:`encode-day/time-duration`
 
 .. function:: format-date
 
@@ -1325,13 +1325,13 @@ Date module.
      - ``%n`` - A new line.
      - ``%%`` - A % character.
 
-   See also
+   :seealso:
 
-   - :func:`as-rfc822-string`
-   - :func:`as-rfc1123-string`
-   - :func:`as-iso8601-string`
-   - :func:`parse-date-string`
-   - :func:`parse-iso8601-string`
+     - :func:`as-rfc822-string`
+     - :func:`as-rfc1123-string`
+     - :func:`as-iso8601-string`
+     - :func:`parse-date-string`
+     - :func:`parse-iso8601-string`
 
 .. function:: local-daylight-savings-time?
 
@@ -1425,11 +1425,11 @@ Date module.
 
        make (<date>, iso8601-string: "19970717T1148-0400")
 
-   See also
+   :seealso:
 
-   - :class:`<date>`
-   - :func:`encode-date`
-   - :func:`parse-iso8601-string`
+     - :class:`<date>`
+     - :func:`encode-date`
+     - :func:`parse-iso8601-string`
 
 .. function:: parse-date-string
 
@@ -1447,10 +1447,10 @@ Date module.
      Parses a date in string form according to a control string, ``format``.
      The control string uses the same directives as :func:`format-date`.
 
-   See also
+   :seealso:
 
-   * :func:`format-date`
-   * :func:`parse-iso8601-string`
+     - :func:`format-date`
+     - :func:`parse-iso8601-string`
 
 .. function:: parse-iso8601-string
 
@@ -1497,11 +1497,11 @@ Date module.
         * s    = one or more digits representing a decimal fraction of a second
         * TZD  = time zone designator (Z or +hh:mm or -hh:mm)
 
-   See also
+   :seealso:
 
-   * :func:`as-iso8601-string`
-   * :func:`format-date`
-   * :func:`parse-date-string`
+     - :func:`as-iso8601-string`
+     - :func:`format-date`
+     - :func:`parse-date-string`
 
 .. class:: <year/month-duration>
    :sealed:
@@ -1531,7 +1531,7 @@ Date module.
      - :func:`decode-duration`
      - :func:`encode-year/month-duration`
 
-   See also
+   :seealso:
 
-   - :class:`<day/time-duration>`
-   - :class:`<duration>`
+     - :class:`<day/time-duration>`
+     - :class:`<duration>`

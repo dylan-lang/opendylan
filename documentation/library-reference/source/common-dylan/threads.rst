@@ -811,9 +811,9 @@ Semaphores
      Decrements the internal count of the semaphore object, blocking if
      the count is zero.
 
-   See also
+   :seealso:
 
-   :gf:`wait-for`.
+     - :gf:`wait-for`.
 
 .. method:: release
    :specializer: <semaphore>
@@ -840,9 +840,9 @@ Semaphores
 
      Releases a semaphore object, by incrementing its internal count.
 
-   See also
+   :seealso:
 
-   - :gf:`release`.
+     - :gf:`release`.
 
 Exclusive locks
 ---------------
@@ -965,9 +965,9 @@ Recursive locks
 
      Claims a recursive lock, blocking if it is owned by another thread.
 
-   See also
+   :seealso:
 
-   :gf:`wait-for`.
+     - :gf:`wait-for`.
 
 .. method:: release
    :specializer: <recursive-lock>
@@ -1039,9 +1039,9 @@ Simple locks
 
      Claims a simple lock, blocking if it is owned by another thread.
 
-   See also
+   :seealso:
 
-   :gf:`wait-for`.
+     - :gf:`wait-for`.
 
 .. method:: release
    :specializer: <simple-lock>
@@ -1057,9 +1057,9 @@ Simple locks
 
      Releases a simple lock.
 
-   See also
+   :seealso:
 
-   :gf:`release`.
+     - :gf:`release`.
 
 .. method:: owned?
    :specializer: <simple-lock>

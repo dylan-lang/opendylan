@@ -789,9 +789,9 @@ are exported from the *duim-gadgets* module.
     - :gf:`gadget-activate-callback`
     - :gf:`gadget-activate-callback-setter`
 
-   See also
+   :seealso:
 
-   - :class:`<gadget>`
+     - :class:`<gadget>`
 
 .. generic-function:: activate-gadget
 
@@ -827,9 +827,9 @@ are exported from the *duim-gadgets* module.
      on the item for each row of *table*. The *index* specifies where in the
      column order the new column should be added.
 
-   See also
+   :seealso:
 
-   - :gf:`remove-column`
+     - :gf:`remove-column`
 
 .. generic-function:: add-item
 
@@ -849,15 +849,15 @@ are exported from the *duim-gadgets* module.
 
      The *after* argument indicates which item to place the new item after.
 
-   See also
+   :seealso:
 
-   - :gf:`find-item`
-   - :class:`<list-control>`
-   - :class:`<list-item>`
-   - :gf:`make-item`
-   - :gf:`remove-item`
-   - :class:`<table-control>`
-   - :class:`<table-item>`
+     - :gf:`find-item`
+     - :class:`<list-control>`
+     - :class:`<list-item>`
+     - :gf:`make-item`
+     - :gf:`remove-item`
+     - :class:`<table-control>`
+     - :class:`<table-item>`
 
 .. generic-function:: add-node
 
@@ -881,12 +881,12 @@ are exported from the *duim-gadgets* module.
      If *setting-roots?* is true, then the new node is added at the root of
      *tree*.
 
-   See also
+   :seealso:
 
-   - :gf:`find-node`
-   - :gf:`make-node`
-   - :gf:`remove-node`
-   - :class:`<tree-control>`
+     - :gf:`find-node`
+     - :gf:`make-node`
+     - :gf:`remove-node`
+     - :class:`<tree-control>`
 
 .. class:: <border>
    :open:
@@ -922,10 +922,10 @@ are exported from the *duim-gadgets* module.
      Borders are usually created using the :macro:`with-border` macro, rather
      than by making direct instances of this class.
 
-   See also
+   :seealso:
 
-   - :class:`<group-box>`
-   - :macro:`with-border`
+     - :class:`<group-box>`
+     - :macro:`with-border`
 
 .. class:: <button>
    :open:
@@ -1038,15 +1038,15 @@ are exported from the *duim-gadgets* module.
                  "A button with a really really long label");
         end
 
-   See also
+   :seealso:
 
-   - `<button-box>`
-   - `<check-button>`
-   - `$fill`
-   - `gadget-accelerator`
-   - `<menu-button>`
-   - `<radio-button>`
-   - `<space-requirement>`
+     - :class:`<button-box>`
+     - :class:`<check-button>`
+     - :var:`$fill`
+     - :gf:`gadget-accelerator`
+     - :class:`<menu-button>`
+     - :class:`<radio-button>`
+     - :class:`<space-requirement>`
 
 .. class:: <button-box>
    :open:
@@ -1126,11 +1126,11 @@ are exported from the *duim-gadgets* module.
                      layout-class: <table-layout>
                      rows: 2));
 
-   See also
+   :seealso:
 
-   - :class:`<check-box>`
-   - :class:`<push-box>`
-   - :class:`<radio-box>`
+     - :class:`<check-box>`
+     - :class:`<push-box>`
+     - :class:`<radio-box>`
 
 .. class:: <check-box>
    :open:
@@ -1161,11 +1161,11 @@ are exported from the *duim-gadgets* module.
                      layout-class: <table-layout>
                      rows: 2));
 
-   See also
+   :seealso:
 
-   - :class:`<group-box>`
-   - :class:`<push-box>`
-   - :class:`<radio-box>`
+     - :class:`<group-box>`
+     - :class:`<push-box>`
+     - :class:`<radio-box>`
 
 .. class:: <check-button>
    :open:
@@ -1189,11 +1189,11 @@ are exported from the *duim-gadgets* module.
 
         contain(make(<check-button>, label: "Check button"));
 
-   See also
+   :seealso:
 
-   - :class:`<check-menu-button>`
-   - :class:`<push-button>`
-   - :class:`<radio-button>`
+     - :class:`<check-menu-button>`
+     - :class:`<push-button>`
+     - :class:`<radio-button>`
 
 .. class:: <check-menu-box>
    :open:
@@ -1226,11 +1226,11 @@ are exported from the *duim-gadgets* module.
                                  "Everyone")),
         )));
 
-   See also
+   :seealso:
 
-   - :class:`<menu-box>`
-   - :class:`<push-menu-box>`
-   - :class:`<radio-menu-box>`
+     - :class:`<menu-box>`
+     - :class:`<push-menu-box>`
+     - :class:`<radio-menu-box>`
 
 .. class:: <check-menu-button>
    :open:
@@ -1260,10 +1260,10 @@ are exported from the *duim-gadgets* module.
                     notify-user(format-to-string
                       ("Toggled button %=", gadget)) end));
 
-   See also
+   :seealso:
 
-   - :class:`<check-button>`
-   - :class:`<radio-menu-button>`
+     - :class:`<check-button>`
+     - :class:`<radio-menu-button>`
 
 .. class:: <collection-gadget>
    :open:
@@ -1353,19 +1353,19 @@ are exported from the *duim-gadgets* module.
      - :gf:`gadget-test`
      - :gf:`gadget-value-key`
 
-   See also
+   :seealso:
 
-   - :class:`<button-box>`
-   - :class:`<check-box>`
-   - :class:`<check-menu-box>`
-   - :class:`<combo-box>`
-   - :class:`<list-box>`
-   - :class:`<list-control>`
-   - :class:`<option-box>`
-   - :class:`<radio-box>`
-   - :class:`<radio-menu-box>`
-   - :class:`<table-control>`
-   - :class:`<tree-control>`
+     - :class:`<button-box>`
+     - :class:`<check-box>`
+     - :class:`<check-menu-box>`
+     - :class:`<combo-box>`
+     - :class:`<list-box>`
+     - :class:`<list-control>`
+     - :class:`<option-box>`
+     - :class:`<radio-box>`
+     - :class:`<radio-menu-box>`
+     - :class:`<table-control>`
+     - :class:`<tree-control>`
 
 .. class:: <combo-box>
    :open:
@@ -1415,10 +1415,10 @@ are exported from the *duim-gadgets* module.
         contain(make(<combo-box>, value-type: <integer>
                      items: range(from: 1 to: 5)));
 
-   See also
+   :seealso:
 
-   - :class:`<option-box>`
-   - :class:`<text-field>`
+     - :class:`<option-box>`
+     - :class:`<text-field>`
 
 .. generic-function:: contract-node
 
@@ -1434,9 +1434,9 @@ are exported from the *duim-gadgets* module.
      Contracts the specified *node* in *tree-control*, thereby hiding any
      children of the node that were displayed.
 
-   See also
+   :seealso:
 
-   - :gf:`expand-node`
+     - :gf:`expand-node`
 
 .. generic-function:: display-menu
 
@@ -1456,9 +1456,9 @@ are exported from the *duim-gadgets* module.
 
      The function returns when the menu has been popped down again.
 
-   See also
+   :seealso:
 
-   - :class:`<menu>`
+     - :class:`<menu>`
 
 .. generic-function:: expand-node
 
@@ -1479,10 +1479,10 @@ are exported from the *duim-gadgets* module.
      expanded, they are generated by calling the tree’s children generating
      function on the node.
 
-   See also
+   :seealso:
 
-   - :gf:`contract-node`
-   - :gf:`tree-control-children-generator`
+     - :gf:`contract-node`
+     - :gf:`tree-control-children-generator`
 
 .. generic-function:: find-item
 
@@ -1499,15 +1499,15 @@ are exported from the *duim-gadgets* module.
      Finds the item in a list control or a table control that corresponds to
      *object*.
 
-   See also
+   :seealso:
 
-   - :gf:`add-item`
-   - :class:`<list-control>`
-   - :class:`<list-item>`
-   - :gf:`make-item`
-   - :gf:`remove-item`
-   - :class:`<table-control>`
-   - :class:`<table-item>`
+     - :gf:`add-item`
+     - :class:`<list-control>`
+     - :class:`<list-item>`
+     - :gf:`make-item`
+     - :gf:`remove-item`
+     - :class:`<table-control>`
+     - :class:`<table-item>`
 
 .. generic-function:: find-node
 
@@ -1524,12 +1524,12 @@ are exported from the *duim-gadgets* module.
 
      Finds the item in a tree control that corresponds to *object*.
 
-   See also
+   :seealso:
 
-   - :gf:`add-node`
-   - :gf:`make-node`
-   - :gf:`remove-node`
-   - :class:`<tree-control>`
+     - :gf:`add-node`
+     - :gf:`make-node`
+     - :gf:`remove-node`
+     - :class:`<tree-control>`
 
 .. class:: <gadget>
    :open:
@@ -1627,20 +1627,20 @@ are exported from the *duim-gadgets* module.
      - :gf:`gadget-scrolling-vertically?`
      - :gf:`update-gadget`
 
-   See also
+   :seealso:
 
-   - :class:`<action-gadget>`
-   - :class:`<border>`
-   - :gf:`gadget-value`
-   - :class:`<group-box>`
-   - :class:`<label>`
-   - :class:`<menu>`
-   - :class:`<page>`
-   - :class:`<separator>`
-   - :class:`<spacing>`
-   - :class:`<tool-bar>`
-   - :class:`<value-gadget>`
-   - :class:`<viewport>`
+     - :class:`<action-gadget>`
+     - :class:`<border>`
+     - :gf:`gadget-value`
+     - :class:`<group-box>`
+     - :class:`<label>`
+     - :class:`<menu>`
+     - :class:`<page>`
+     - :class:`<separator>`
+     - :class:`<spacing>`
+     - :class:`<tool-bar>`
+     - :class:`<value-gadget>`
+     - :class:`<viewport>`
 
 .. generic-function:: gadget?
 
@@ -1664,9 +1664,9 @@ are exported from the *duim-gadgets* module.
                               items: range(from: 0, to: 20)));
         gadget?(*gadget*);
 
-   See also
+   :seealso:
 
-   - :class:`<gadget>`
+     - :class:`<gadget>`
 
 .. generic-function:: gadget-accelerator
 
@@ -1686,12 +1686,12 @@ are exported from the *duim-gadgets* module.
      Accelerators are of most use with button gadgets, and in particular menu
      button gadgets.
 
-   See also
+   :seealso:
 
-   - :class:`<button>`
-   - :gf:`gadget-accelerator-setter`
-   - :class:`<gesture>`
-   - :class:`<menu-button>`
+     - :class:`<button>`
+     - :gf:`gadget-accelerator-setter`
+     - :class:`<gesture>`
+     - :class:`<menu-button>`
 
 .. generic-function:: gadget-accelerator-setter
 
@@ -1712,12 +1712,12 @@ are exported from the *duim-gadgets* module.
      Accelerators are of most use with button gadgets, and in particular menu
      button gadgets.
 
-   See also
+   :seealso:
 
-   - :class:`<button>`
-   - :gf:`gadget-accelerator`
-   - :class:`<gesture>`
-   - :class:`<menu-button>`
+     - :class:`<button>`
+     - :gf:`gadget-accelerator`
+     - :class:`<gesture>`
+     - :class:`<menu-button>`
 
 .. generic-function:: gadget-activate-callback
 
@@ -1736,9 +1736,9 @@ are exported from the *duim-gadgets* module.
      When this function returns ``#f``, this indicates that there is no
      activate callback for the gadget.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-activate-callback-setter`
+     - :gf:`gadget-activate-callback-setter`
 
 .. generic-function:: gadget-activate-callback-setter
 
@@ -1754,9 +1754,9 @@ are exported from the *duim-gadgets* module.
 
      Sets the activate callback for *gadget* to *activate-callback*.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-activate-callback`
+     - :gf:`gadget-activate-callback`
 
 .. generic-function:: gadget-client
 
@@ -1789,9 +1789,9 @@ are exported from the *duim-gadgets* module.
      Gadget clients enable you to pass messages between the gadget and its
      client when a callback is received.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-client-setter`
+     - :gf:`gadget-client-setter`
 
 .. generic-function:: gadget-client-setter
 
@@ -1815,9 +1815,9 @@ are exported from the *duim-gadgets* module.
      Gadget clients enable you to pass messages between the gadget and its
      client when a callback is received.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-client`
+     - :gf:`gadget-client`
 
 .. generic-function:: gadget-command
 
@@ -1837,9 +1837,9 @@ are exported from the *duim-gadgets* module.
      with a menu button would represent the callback that is invoked when the
      user chooses the relevant menu command.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-command-setter`
+     - :gf:`gadget-command-setter`
 
 .. generic-function:: gadget-command-setter
 
@@ -1860,9 +1860,9 @@ are exported from the *duim-gadgets* module.
      with a menu button would represent the callback that is invoked when the
      user chooses the relevant menu command.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-command`
+     - :gf:`gadget-command`
 
 .. generic-function:: gadget-default?
 
@@ -1885,9 +1885,9 @@ are exported from the *duim-gadgets* module.
      in the frame invokes the activate callback for the default gadget. The
      default gesture is usually pressing the RETURN button.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-default?-setter`
+     - :gf:`gadget-default?-setter`
 
 .. generic-function:: gadget-default?-setter
 
@@ -1914,9 +1914,9 @@ are exported from the *duim-gadgets* module.
      in the frame invokes the activate callback for the default gadget. The
      default gesture is usually pressing the RETURN button.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-default?`
+     - :gf:`gadget-default?`
 
 .. generic-function:: gadget-documentation
 
@@ -1944,9 +1944,9 @@ are exported from the *duim-gadgets* module.
      significant gadgets in your application. Because of the nature of their
      presentation, you should keep them as short as possible.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-documentation-setter`
+     - :gf:`gadget-documentation-setter`
 
 .. generic-function:: gadget-documentation-setter
 
@@ -1975,10 +1975,10 @@ are exported from the *duim-gadgets* module.
      significant gadgets in your application. Because of the nature of their
      presentation, you should keep them as short as possible.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-documentation`
-   - :class:`<status-bar>`
+     - :gf:`gadget-documentation`
+     - :class:`<status-bar>`
 
 .. generic-function:: gadget-enabled?
 
@@ -2009,10 +2009,10 @@ are exported from the *duim-gadgets* module.
                               items: range(from: 0, to: 20)));
         gadget-enabled?(*gadget*);
 
-   See also
+   :seealso:
 
-   - :class:`<gadget>`
-   - :gf:`gadget-enabled?-setter`
+     - :class:`<gadget>`
+     - :gf:`gadget-enabled?-setter`
 
 .. generic-function:: gadget-enabled?-setter
 
@@ -2046,10 +2046,10 @@ are exported from the *duim-gadgets* module.
                               items: range(from: 0, to: 20)));
         gadget-enabled?(*gadget*) := #f;
 
-   See also
+   :seealso:
 
-   - :class:`<gadget>`
-   - :gf:`gadget-enabled?`
+     - :class:`<gadget>`
+     - :gf:`gadget-enabled?`
 
 .. generic-function:: gadget-id
 
@@ -2089,11 +2089,11 @@ are exported from the *duim-gadgets* module.
                                  label: "Test"));
         gadget-id(*gadget*);
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-id-setter`
-   - :gf:`gadget-value`
-   - :class:`<tab-control>`
+     - :gf:`gadget-id-setter`
+     - :gf:`gadget-value`
+     - :class:`<tab-control>`
 
 .. generic-function:: gadget-id-setter
 
@@ -2125,11 +2125,11 @@ are exported from the *duim-gadgets* module.
         gadget-id(*gadget*) := #test-two;
         gadget-id(*gadget*);
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-id`
-   - :gf:`gadget-value`
-   - :class:`<tab-control>`
+     - :gf:`gadget-id`
+     - :gf:`gadget-value`
+     - :class:`<tab-control>`
 
 .. generic-function:: gadget-items
 
@@ -2169,11 +2169,11 @@ are exported from the *duim-gadgets* module.
 
       This returns the symbol: ``#(#"one", #"two", #"three")``.
 
-   See also
-   - :gf:`gadget-items-setter`
-   - :gf:`gadget-label-key`
-   - :gf:`gadget-selection`
-   - :gf:`gadget-value-key`
+   :seealso:
+     - :gf:`gadget-items-setter`
+     - :gf:`gadget-label-key`
+     - :gf:`gadget-selection`
+     - :gf:`gadget-value-key`
 
 .. generic-function:: gadget-items-setter
 
@@ -2199,9 +2199,9 @@ are exported from the *duim-gadgets* module.
 
         gadget-items(*gadget*) := range(from: 0, to: 15);
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-items`
+     - :gf:`gadget-items`
 
 .. generic-function:: gadget-key-press-callback
 
@@ -2224,13 +2224,13 @@ are exported from the *duim-gadgets* module.
      filename, selects the first file in the current folder whose name
      matches that typed.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-key-press-callback-setter`
-   - :class:`<list-control>`
-   - :class:`<tab-control>`
-   - :class:`<table-control>`
-   - :class:`<tree-control>`
+     - :gf:`gadget-key-press-callback-setter`
+     - :class:`<list-control>`
+     - :class:`<tab-control>`
+     - :class:`<table-control>`
+     - :class:`<tree-control>`
 
 .. generic-function:: gadget-key-press-callback-setter
 
@@ -2254,13 +2254,13 @@ are exported from the *duim-gadgets* module.
      filename, selects the first file in the current folder whose name
      matches that typed.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-key-press-callback`
-   - :class:`<list-control>`
-   - :class:`<tab-control>`
-   - :class:`<table-control>`
-   - :class:`<tree-control>`
+     - :gf:`gadget-key-press-callback`
+     - :class:`<list-control>`
+     - :class:`<tab-control>`
+     - :class:`<table-control>`
+     - :class:`<tree-control>`
 
 .. generic-function:: gadget-label
 
@@ -2282,10 +2282,10 @@ are exported from the *duim-gadgets* module.
        *gadget* := contain(make(<button>, label: "Hello"));
        gadget-label(*gadget*);
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-label-key`
-   - :gf:`gadget-label-setter`
+     - :gf:`gadget-label-key`
+     - :gf:`gadget-label-setter`
 
 .. generic-function:: gadget-label-key
 
@@ -2328,11 +2328,11 @@ are exported from the *duim-gadgets* module.
 
         gadget-label-key(*gadget*);
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-label`
-   - :gf:`gadget-label-setter`
-   - :gf:`gadget-value-key`
+     - :gf:`gadget-label`
+     - :gf:`gadget-label-setter`
+     - :gf:`gadget-value-key`
 
 .. generic-function:: gadget-label-setter
 
@@ -2359,10 +2359,10 @@ are exported from the *duim-gadgets* module.
         *gadget* := contain(make(<button>, label: "Hello"));
         gadget-label(*gadget*) := "Hello world";
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-label`
-   - :gf:`gadget-label-key`
+     - :gf:`gadget-label`
+     - :gf:`gadget-label-key`
 
 .. generic-function:: gadget-mnemonic
 
@@ -2380,10 +2380,10 @@ are exported from the *duim-gadgets* module.
      pressing the key for that character activates the gadget or gives it the
      focus.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-accelerator`
-   - :gf:`gadget-mnemonic-setter`
+     - :gf:`gadget-accelerator`
+     - :gf:`gadget-mnemonic-setter`
 
 .. generic-function:: gadget-mnemonic-setter
 
@@ -2402,10 +2402,10 @@ are exported from the *duim-gadgets* module.
      pressing the key for that character activates the gadget or gives it the
      focus.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-accelerator-setter`
-   - :gf:`gadget-mnemonic`
+     - :gf:`gadget-accelerator-setter`
+     - :gf:`gadget-mnemonic`
 
 .. generic-function:: gadget-orientation
 
@@ -2453,9 +2453,9 @@ are exported from the *duim-gadgets* module.
      commands. It is generally invoked when the user right clicks on the
      gadget.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-popup-menu-callback-setter`
+     - :gf:`gadget-popup-menu-callback-setter`
 
 .. generic-function:: gadget-popup-menu-callback-setter
 
@@ -2474,9 +2474,9 @@ are exported from the *duim-gadgets* module.
      which the function is called. The function is generally invoked by
      right-clicking on the gadget.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-popup-menu-callback`
+     - :gf:`gadget-popup-menu-callback`
 
 .. generic-function:: gadget-ratios
 
@@ -2517,9 +2517,9 @@ are exported from the *duim-gadgets* module.
      Returns true if *gadget* is read-only. The read-only attribute of a
      gadget is of most use with text gadgets.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-enabled?`
+     - :gf:`gadget-enabled?`
 
 .. generic-function:: gadget-scrolling-horizontally?
 
@@ -2536,9 +2536,9 @@ are exported from the *duim-gadgets* module.
      Returns true if the *gadget* has an associated horizontal scroll bar,
      false otherwise.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-scrolling-vertically?`
+     - :gf:`gadget-scrolling-vertically?`
 
 .. generic-function:: gadget-scrolling-vertically?
 
@@ -2555,9 +2555,9 @@ are exported from the *duim-gadgets* module.
      Returns true if the *gadget* has an associated vertical scroll bar,
      false otherwise.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-scrolling-horizontally?`
+     - :gf:`gadget-scrolling-horizontally?`
 
 .. generic-function:: gadget-selection
 
@@ -2597,12 +2597,12 @@ are exported from the *duim-gadgets* module.
 
         gadget-selection(*radio*);
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-items`
-   - :gf:`gadget-selection-mode`
-   - :gf:`gadget-selection-setter`
-   - :gf:`gadget-value`
+     - :gf:`gadget-items`
+     - :gf:`gadget-selection-mode`
+     - :gf:`gadget-selection-setter`
+     - :gf:`gadget-value`
 
 .. generic-function:: gadget-selection-mode
 
@@ -2641,12 +2641,12 @@ are exported from the *duim-gadgets* module.
      Because the gadget is a radio box, only one item of which may be
      selected at a time, the selection mode returned is ``#"single"``.
 
-   See also
+   :seealso:
 
-   - :gf:`<button-box>`
-   - :gf:`gadget-selection`
-   - :gf:`gadget-selection-setter`
-   - :class:`<list-box>`
+     - :gf:`<button-box>`
+     - :gf:`gadget-selection`
+     - :gf:`gadget-selection-setter`
+     - :class:`<list-box>`
 
 .. generic-function:: gadget-selection-setter
 
@@ -2694,11 +2694,11 @@ are exported from the *duim-gadgets* module.
      been invoked had the item been set manually, rather than
      programmatically (assuming that such a callback has been defined).
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-selection`
-   - :gf:`gadget-selection-mode`
-   - :gf:`gadget-value-setter`
+     - :gf:`gadget-selection`
+     - :gf:`gadget-selection-mode`
+     - :gf:`gadget-value-setter`
 
 .. generic-function:: gadget-slug-size
 
@@ -2720,10 +2720,10 @@ are exported from the *duim-gadgets* module.
         *scroll-shaft*. You should be aware of this difference if you are using
         those guidelines as a reference.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-slug-size-setter`
-   - :gf:`gadget-value-range`
+     - :gf:`gadget-slug-size-setter`
+     - :gf:`gadget-value-range`
 
 .. generic-function:: gadget-slug-size-setter
 
@@ -2745,9 +2745,9 @@ are exported from the *duim-gadgets* module.
         *scroll-shaft*. You should be aware of this difference if you are using
         those guidelines as a reference.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-slug-size`
+     - :gf:`gadget-slug-size`
 
 .. generic-function:: gadget-test
 
@@ -2794,10 +2794,10 @@ are exported from the *duim-gadgets* module.
 
         gadget-text(*g*);
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-text-setter`
-   - :class:`<text-gadget>`
+     - :gf:`gadget-text-setter`
+     - :class:`<text-gadget>`
 
 .. generic-function:: gadget-text-setter
 
@@ -2829,10 +2829,10 @@ are exported from the *duim-gadgets* module.
 
         gadget-text-setter("Hello world", *g*);
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-text`
-   - :class:`<text-gadget>`
+     - :gf:`gadget-text`
+     - :class:`<text-gadget>`
 
 .. generic-function:: gadget-value
 
@@ -2884,14 +2884,14 @@ are exported from the *duim-gadgets* module.
      If the radio button is selected, :gf:`gadget-value` returns ``#t``. If not
      selected, :gf:`gadget-value` returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :class:`<gadget>`
-   - :gf:`gadget-id`
-   - :gf:`gadget-value-key`
-   - :gf:`gadget-value-range`
-   - :gf:`gadget-value-setter`
-   - :gf:`gadget-value-type`
+     - :class:`<gadget>`
+     - :gf:`gadget-id`
+     - :gf:`gadget-value-key`
+     - :gf:`gadget-value-range`
+     - :gf:`gadget-value-setter`
+     - :gf:`gadget-value-type`
 
 .. generic-function:: gadget-value-changed-callback
 
@@ -2914,9 +2914,9 @@ are exported from the *duim-gadgets* module.
      If :gf:`gadget-value-changed-callback` returns ``#f``, there is no value
      changed callback for *gadget*.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-value-changed-callback-setter`
+     - :gf:`gadget-value-changed-callback-setter`
 
 .. generic-function:: gadget-value-changed-callback-setter
 
@@ -2937,9 +2937,9 @@ are exported from the *duim-gadgets* module.
      The value-changed callback function is invoked with one argument, the
      gadget.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-value-changed-callback`
+     - :gf:`gadget-value-changed-callback`
 
 .. generic-function:: gadget-value-changing-callback
 
@@ -2957,9 +2957,9 @@ are exported from the *duim-gadgets* module.
      *function* will be invoked with a two arguments, *gadget* and the new
      value.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-value-changing-callback-setter`
+     - :gf:`gadget-value-changing-callback-setter`
 
 .. generic-function:: gadget-value-changing-callback-setter
 
@@ -2978,9 +2978,9 @@ are exported from the *duim-gadgets* module.
      *function* will be invoked with a two arguments, *gadget* and the new
      value.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-value-changing-callback`
+     - :gf:`gadget-value-changing-callback`
 
 .. generic-function:: gadget-value-key
 
@@ -3024,10 +3024,10 @@ are exported from the *duim-gadgets* module.
 
         gadget-value-key(*list*);
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-label-key`
-   - :gf:`gadget-value`
+     - :gf:`gadget-label-key`
+     - :gf:`gadget-value`
 
 .. generic-function:: gadget-value-range
 
@@ -3074,11 +3074,11 @@ are exported from the *duim-gadgets* module.
 
      which in this case returns *{range -20 through 20, by 5}*.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-slug-size`
-   - :gf:`gadget-value`
-   - :gf:`gadget-value-range-setter`
+     - :gf:`gadget-slug-size`
+     - :gf:`gadget-value`
+     - :gf:`gadget-value-range-setter`
 
 .. generic-function:: gadget-value-range-setter
 
@@ -3110,9 +3110,9 @@ are exported from the *duim-gadgets* module.
         gadget-value-range(*slider*) :=
           (range (from: -20 to: 20, by: 5});
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-value-range`
+     - :gf:`gadget-value-range`
 
 .. generic-function:: gadget-value-setter
 
@@ -3155,9 +3155,9 @@ are exported from the *duim-gadgets* module.
      Setting the gadget value to ``#t`` selects the button, and setting it to
      ``#f`` deselects it.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-value`
+     - :gf:`gadget-value`
 
 .. generic-function:: gadget-value-type
 
@@ -3189,9 +3189,9 @@ are exported from the *duim-gadgets* module.
 
         gadget-value-type(*numeric*);
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-value`
+     - :gf:`gadget-value`
 
 .. generic-function:: gadget-x-alignment
 
@@ -3209,9 +3209,9 @@ are exported from the *duim-gadgets* module.
      horizontal alignment of a gadget when first initializing that gadget,
      using the ``x-alignment:`` init-keyword.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-y-alignment`
+     - :gf:`gadget-y-alignment`
 
 .. generic-function:: gadget-y-alignment
 
@@ -3229,9 +3229,9 @@ are exported from the *duim-gadgets* module.
      vertical alignment of a gadget when first initializing that gadget,
      using the ``y-alignment:`` init-keyword.
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-x-alignment`
+     - :gf:`gadget-x-alignment`
 
 .. class:: <group-box>
    :open:
@@ -3274,12 +3274,12 @@ are exported from the *duim-gadgets* module.
                      orientation: #"vertical"),
                      label: "Select integer:"));
 
-   See also
+   :seealso:
 
-   - :class:`<border>`
-   - :class:`<check-box>`
-   - :class:`<push-box>`
-   - :class:`<radio-box>`
+     - :class:`<border>`
+     - :class:`<check-box>`
+     - :class:`<push-box>`
+     - :class:`<radio-box>`
 
 .. generic-function:: item-object
 
@@ -3332,7 +3332,7 @@ are exported from the *duim-gadgets* module.
 
         contain(make(<label>, label: "Hello"));
 
-   See also
+   :seealso:
 
    :macro:`labelling`
 
@@ -3370,9 +3370,9 @@ are exported from the *duim-gadgets* module.
           make(<check-box>, items: #("Color", "Monochrome"))
         end;
 
-   See also
+   :seealso:
 
-   - :class:`<label>`
+     - :class:`<label>`
 
 .. class:: <list-box>
    :open:
@@ -3425,10 +3425,10 @@ are exported from the *duim-gadgets* module.
                                value-key: second,
                                scroll-bars: #f));
 
-   See also
+   :seealso:
 
-   - :class:`<list-control>`
-   - :class:`<list-item>`
+     - :class:`<list-control>`
+     - :class:`<list-item>`
 
 .. class:: <list-control>
    :open:
@@ -3509,12 +3509,12 @@ are exported from the *duim-gadgets* module.
      - :gf:`make-item`
      - :gf:`remove-item`
 
-   See also
+   :seealso:
 
-   - :gf:`add-item`
-   - :gf:`list-control-view`
-   - :gf:`make-item`
-   - :gf:`remove-item`
+     - :gf:`add-item`
+     - :gf:`list-control-view`
+     - :gf:`make-item`
+     - :gf:`remove-item`
 
 .. generic-function:: list-control-icon-function
 
@@ -3539,10 +3539,10 @@ are exported from the *duim-gadgets* module.
      Note that, unlike tree controls, the icon function for a list control
      can be changed once the list control has been created.
 
-   See also
+   :seealso:
 
-   - :class:`<list-control>`
-   - :gf:`list-control-icon-function-setter`
+     - :class:`<list-control>`
+     - :gf:`list-control-icon-function-setter`
 
 .. generic-function:: list-control-icon-function-setter
 
@@ -3568,10 +3568,10 @@ are exported from the *duim-gadgets* module.
      Note that, unlike tree controls, the icon function for a list control
      can be changed once the list control has been created.
 
-   See also
+   :seealso:
 
-   - :class:`<list-control>`
-   - :gf:`list-control-icon-function`
+     - :class:`<list-control>`
+     - :gf:`list-control-icon-function`
 
 .. type:: <list-control-view>
 
@@ -3600,11 +3600,11 @@ are exported from the *duim-gadgets* module.
        Displays each item in the list control using a small icon
        to the left of the item. Items are arranged vertically in one column.
 
-   See also
+   :seealso:
 
-   - :class;`<list-control>`
-   - :gf:`list-control-view`
-   - :type:`<table-control-view>`
+     - :class;`<list-control>`
+     - :gf:`list-control-view`
+     - :type:`<table-control-view>`
 
 .. generic-function:: list-control-view
 
@@ -3643,11 +3643,11 @@ are exported from the *duim-gadgets* module.
 
         list-control-view(*list*);
 
-   See also
+   :seealso:
 
-   - :class:`<list-control>`
-   - :type:`<list-control-view>`
-   - :gf:`list-control-view-setter`
+     - :class:`<list-control>`
+     - :type:`<list-control-view>`
+     - :gf:`list-control-view-setter`
 
 .. generic-function:: list-control-view-setter
 
@@ -3685,11 +3685,11 @@ are exported from the *duim-gadgets* module.
 
         list-control-view(*list*) := #"view";
 
-   See also
+   :seealso:
 
-   - :class:`<list-control>`
-   - :type:`<list-control-view>`
-   - :gf:`list-control-view`
+     - :class:`<list-control>`
+     - :type:`<list-control-view>`
+     - :gf:`list-control-view`
 
 .. class:: <list-item>
    :open:
@@ -3712,10 +3712,10 @@ are exported from the *duim-gadgets* module.
      - :gf:`item-object`
      - :gf:`remove-item`
 
-   See also
+   :seealso:
 
-   - :class:`<list-control>`
-   - :class:`<table-item>`
+     - :class:`<list-control>`
+     - :class:`<table-item>`
 
 .. generic-function:: make-item
 
@@ -3740,15 +3740,15 @@ are exported from the *duim-gadgets* module.
      If the *frame-manager* argument is specified, then this is used instead
      of the default frame manager.
 
-   See also
+   :seealso:
 
-   - :gf:`add-item`
-   - :gf:`find-item`
-   - :class:`<list-control>`
-   - :class:`<list-item>`
-   - :gf:`remove-item`
-   - :class:`<table-control>`
-   - :class:`<table-item>`
+     - :gf:`add-item`
+     - :gf:`find-item`
+     - :class:`<list-control>`
+     - :class:`<list-item>`
+     - :gf:`remove-item`
+     - :class:`<table-control>`
+     - :class:`<table-item>`
 
 .. generic-function:: make-menu-from-items
 
@@ -3790,9 +3790,9 @@ are exported from the *duim-gadgets* module.
      background colors for the menu: *foreground* being used for the text in
      the menu, and *background* for the menu itself.
 
-   See also
+   :seealso:
 
-   - :gf:`display-menu`
+     - :gf:`display-menu`
 
 .. generic-function:: make-node
 
@@ -3812,12 +3812,12 @@ are exported from the *duim-gadgets* module.
      :gf:`add-node` and the node is created automatically before it is added
      to the tree control.
 
-   See also
+   :seealso:
 
-   - :gf:`add-node`
-   - :gf:`find-node`
-   - :gf:`remove-node`
-   - :class:`<tree-control>`
+     - :gf:`add-node`
+     - :gf:`find-node`
+     - :gf:`remove-node`
+     - :class:`<tree-control>`
 
 .. class:: <menu>
    :open:
@@ -3888,10 +3888,10 @@ are exported from the *duim-gadgets* module.
                                    (make(<menu-button>,
                                          label: "World"))));
 
-   See also
+   :seealso:
 
-   - :gf:`display-menu`
-   - :gf:`make-menu-from-items`
+     - :gf:`display-menu`
+     - :gf:`make-menu-from-items`
 
 .. class:: <menu-bar>
    :open:
@@ -3933,9 +3933,9 @@ are exported from the *duim-gadgets* module.
                                              label: "World")
         ))));
 
-   See also
+   :seealso:
 
-   - :class:`<menu>`
+     - :class:`<menu>`
 
 .. class:: <menu-box>
    :open:
@@ -3980,11 +3980,11 @@ are exported from the *duim-gadgets* module.
                                    items: range
                                      (from: 0, to: 5)));
 
-   See also
+   :seealso:
 
-   - :class:`<check-menu-box>`
-   - :class:`<push-menu-box>`
-   - :class:`<radio-menu-box>`
+     - :class:`<check-menu-box>`
+     - :class:`<push-menu-box>`
+     - :class:`<radio-menu-box>`
 
 .. class:: <menu-button>
    :open:
@@ -4020,13 +4020,13 @@ are exported from the *duim-gadgets* module.
                         ("Pressed button %=", gadget),
                        owner: gadget) end));
 
-   See also
+   :seealso:
 
-   - :class:`<check-menu-button>`
-   - :gf:`gadget-accelerator`
-   - :class:`<menu-box>`
-   - :class:`<push-menu-button>`
-   - :class:`<radio-menu-button>`
+     - :class:`<check-menu-button>`
+     - :gf:`gadget-accelerator`
+     - :class:`<menu-box>`
+     - :class:`<push-menu-button>`
+     - :class:`<radio-menu-button>`
 
 .. generic-function:: menu-owner
 
@@ -4058,12 +4058,12 @@ are exported from the *duim-gadgets* module.
 
      Returns the children of *tree-node* in a tree control.
 
-   See also
+   :seealso:
 
-   - :gf:`node-children-setter`
-   - :gf:`node-parents`
-   - :gf:`tree-control-children-generator`
-   - :class:`<tree-node>`
+     - :gf:`node-children-setter`
+     - :gf:`node-parents`
+     - :gf:`tree-control-children-generator`
+     - :class:`<tree-node>`
 
 .. generic-function:: node-children-setter
 
@@ -4079,12 +4079,12 @@ are exported from the *duim-gadgets* module.
 
      Sets the children of *tree-node* in a tree control.
 
-   See also
+   :seealso:
 
-   - :gf:`node-children`
-   - :gf:`node-parents`
-   - :gf:`tree-control-children-generator`
-   - :class:`<tree-node>`
+     - :gf:`node-children`
+     - :gf:`node-parents`
+     - :gf:`tree-control-children-generator`
+     - :class:`<tree-node>`
 
 .. generic-function:: node-expanded?
 
@@ -4100,9 +4100,9 @@ are exported from the *duim-gadgets* module.
      Returns true if *tree-node* is expanded in a tree control, so that its
      children are displayed in the tree control.
 
-   See also
+   :seealso:
 
-   - :class:`<tree-node>`
+     - :class:`<tree-node>`
 
 .. generic-function:: node-object
 
@@ -4117,9 +4117,9 @@ are exported from the *duim-gadgets* module.
 
       Returns the object that *tree-node* represents.
 
-   See also
+   :seealso:
 
-   - :class:`<tree-node>`
+     - :class:`<tree-node>`
 
 .. generic-function:: node-parents
 
@@ -4134,10 +4134,10 @@ are exported from the *duim-gadgets* module.
 
      Returns the parents of *tree-node* in a tree control.
 
-   See also
+   :seealso:
 
-   - :gf:`node-children`
-   - :class:`<tree-node>`
+     - :gf:`node-children`
+     - :class:`<tree-node>`
 
 .. generic-function:: node-state
 
@@ -4154,10 +4154,10 @@ are exported from the *duim-gadgets* module.
      is currently expanded or contracted. This function returns ``#f`` if
      tree-node does not exist.
 
-   See also
+   :seealso:
 
-   - :gf:`node-expanded?`
-   - :class:`<tree-node>`
+     - :gf:`node-expanded?`
+     - :class:`<tree-node>`
 
 .. class:: <option-box>
    :open:
@@ -4191,9 +4191,9 @@ are exported from the *duim-gadgets* module.
 
      Internally, this class maps into the Windows drop-down list control.
 
-   See also
+   :seealso:
 
-   - :class:`<combo-box>`
+     - :class:`<combo-box>`
 
 .. class:: <page>
    :open:
@@ -4220,11 +4220,11 @@ are exported from the *duim-gadgets* module.
      - `<frames.htm#88015>`
      - `<frames.htm#89408>`
 
-   See also
+   :seealso:
 
-   - `<frames.htm#93333>`
-   - :class:`<tab-control-page>`
-   - `<frames.htm#87607>`
+     - `<frames.htm#93333>`
+     - :class:`<tab-control-page>`
+     - `<frames.htm#87607>`
 
 .. class:: <password-field>
    :open:
@@ -4251,7 +4251,7 @@ are exported from the *duim-gadgets* module.
 
         *pass* := contain(make(<password-field>));
 
-   See also
+   :seealso:
 
    :class:`<text-field>`
 
@@ -4297,9 +4297,9 @@ are exported from the *duim-gadgets* module.
 
         for (i from 0 to 100) gadget-value(*prog*) := i end;
 
-   See also
+   :seealso:
 
-   - :class:`<slider>`
+     - :class:`<slider>`
 
 .. class:: <push-box>
 
@@ -4331,11 +4331,11 @@ are exported from the *duim-gadgets* module.
                         (make(<push-box>,
                               items: range(from: 0, to: 5)));
 
-   See also
+   :seealso:
 
-   - :class:`<check-box>`
-   - :class:`<group-box>`
-   - :class:`<radio-box>`
+     - :class:`<check-box>`
+     - :class:`<group-box>`
+     - :class:`<radio-box>`
 
 .. class:: <push-button>
    :open:
@@ -4387,10 +4387,10 @@ are exported from the *duim-gadgets* module.
                                       gadget-label(gadget)),
                                    owner: gadget) end));
 
-   See also
+   :seealso:
 
-   - :class:`<check-button>`
-   - :class:`<radio-button>`
+     - :class:`<check-button>`
+     - :class:`<radio-button>`
 
 .. class:: <push-menu-box>
    :open:
@@ -4417,11 +4417,11 @@ are exported from the *duim-gadgets* module.
         contain(make(<push-menu-box>,
                      items: range(from: 0, to: 5)));
 
-   See also
+   :seealso:
 
-   - :class:`<check-menu-box>`
-   - :class:`<menu-box>`
-   - :class:`<radio-menu-box>`
+     - :class:`<check-menu-box>`
+     - :class:`<menu-box>`
+     - :class:`<radio-menu-box>`
 
 .. class:: <push-menu-button>
    :open:
@@ -4446,11 +4446,11 @@ are exported from the *duim-gadgets* module.
 
      Internally, this class maps into the menu item Windows control.
 
-   See also
+   :seealso:
 
-   - :class:`<check-menu-button>`
-   - :class:`<menu-button>`
-   - :class:`<radio-menu-button>`
+     - :class:`<check-menu-button>`
+     - :class:`<menu-button>`
+     - :class:`<radio-menu-button>`
 
 .. class:: <radio-box>
    :open:
@@ -4493,11 +4493,11 @@ are exported from the *duim-gadgets* module.
                     format-to-string("===%d===",
                       item) end));
 
-   See also
+   :seealso:
 
-   - :class:`<check-box>`
-   - :class:`<group-box>`
-   - :class:`<push-box>`
+     - :class:`<check-box>`
+     - :class:`<group-box>`
+     - :class:`<push-box>`
 
 .. class:: <radio-button>
    :open:
@@ -4522,12 +4522,12 @@ are exported from the *duim-gadgets* module.
 
         contain(make(<radio-button>, label: "Hello"));
 
-   See also
+   :seealso:
 
-   - :class:`<button>`
-   - :class:`<check-button>`
-   - :class:`<menu-button>`
-   - :class:`<radio-box>`
+     - :class:`<button>`
+     - :class:`<check-button>`
+     - :class:`<menu-button>`
+     - :class:`<radio-box>`
 
 .. class:: <radio-menu-box>
    :open:
@@ -4575,11 +4575,11 @@ are exported from the *duim-gadgets* module.
                                        items: #(1, 2, 3)))
         ))));
 
-   See also
+   :seealso:
 
-   - :class:`<menu-box>`
-   - :class:`<push-menu-box>`
-   - :class:`<radio-menu-button>`
+     - :class:`<menu-box>`
+     - :class:`<push-menu-box>`
+     - :class:`<radio-menu-button>`
 
 .. class:: <radio-menu-button>
    :open:
@@ -4604,11 +4604,11 @@ are exported from the *duim-gadgets* module.
 
         contain(make(<radio-menu-button>, label: "Hello"));
 
-   See also
+   :seealso:
 
-   - :class:`<menu-button>`
-   - :class:`<push-menu-button>`
-   - :class:`<radio-menu-box>`
+     - :class:`<menu-button>`
+     - :class:`<push-menu-button>`
+     - :class:`<radio-menu-box>`
 
 .. generic-function:: remove-column
 
@@ -4623,9 +4623,9 @@ are exported from the *duim-gadgets* module.
 
      Removes a column from *table*.
 
-   See also
+   :seealso:
 
-   - :gf:`add-column`
+     - :gf:`add-column`
 
 .. generic-function:: remove-item
 
@@ -4640,15 +4640,15 @@ are exported from the *duim-gadgets* module.
 
      Removes *item* from *list-or-table*.
 
-   See also
+   :seealso:
 
-   - :gf:`add-item`
-   - :gf:`find-item`
-   - :class:`<list-control>`
-   - :class:`<list-item>`
-   - :gf:`make-item`
-   - :class:`<table-control>`
-   - :class:`<table-item>`
+     - :gf:`add-item`
+     - :gf:`find-item`
+     - :class:`<list-control>`
+     - :class:`<list-item>`
+     - :gf:`make-item`
+     - :class:`<table-control>`
+     - :class:`<table-item>`
 
 .. generic-function:: remove-node
 
@@ -4664,12 +4664,12 @@ are exported from the *duim-gadgets* module.
 
      Removes *node* from *tree*.
 
-   See also
+   :seealso:
 
-   - :gf:`add-node`
-   - :gf:`find-node`
-   - :gf:`make-node`
-   - :class:`<tree-control>`
+     - :gf:`add-node`
+     - :gf:`find-node`
+     - :gf:`make-node`
+     - :class:`<tree-control>`
 
 .. class:: <scroll-bar>
    :open:
@@ -4735,9 +4735,9 @@ are exported from the *duim-gadgets* module.
                   value-range: range(from: 0, to: 100)
                   slug-size: 20));
 
-   See also
+   :seealso:
 
-   - :class:`<slider>`
+     - :class:`<slider>`
 
 .. macro:: scrolling
    :statement:
@@ -4786,11 +4786,11 @@ are exported from the *duim-gadgets* module.
                items: range(from: 1, to: 50))
         end
 
-   See also
+   :seealso:
 
-   - :class:`<scroll-bar>`
-   - :gf:`scroll-position`
-   - :gf:`set-scroll-position`
+     - :class:`<scroll-bar>`
+     - :gf:`scroll-position`
+     - :gf:`set-scroll-position`
 
 .. generic-function:: scroll-position
 
@@ -4814,10 +4814,10 @@ are exported from the *duim-gadgets* module.
         as the *scroll-shaft*. You should be aware of this difference
         if you are using those guidelines as a reference.
 
-   See also
+   :seealso:
 
-   - :macro:`scrolling`
-   - :gf:`set-scroll-position`
+     - :macro:`scrolling`
+     - :gf:`set-scroll-position`
 
 .. class:: <separator>
    :open:
@@ -4856,9 +4856,9 @@ are exported from the *duim-gadgets* module.
                   make(<button>, label: "World")
                 end);
 
-   See also
+   :seealso:
 
-   - :class:`<spacing>`
+     - :class:`<spacing>`
 
 .. generic-function:: set-scroll-position
 
@@ -4882,10 +4882,10 @@ are exported from the *duim-gadgets* module.
         as the *scroll-shaft*. You should be aware of this difference
         if you are using those guidelines as a reference.
 
-   See also
+   :seealso:
 
-   - :gf:`scroll-position`
-   - :macro:`scrolling`
+     - :gf:`scroll-position`
+     - :macro:`scrolling`
 
 .. generic-function:: sheet-viewport
 
@@ -4900,10 +4900,10 @@ are exported from the *duim-gadgets* module.
 
      Returns the viewport that is clipping *sheet*.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-viewport-region`
-   - :class:`<viewport>`
+     - :gf:`sheet-viewport-region`
+     - :class:`<viewport>`
 
 .. generic-function:: sheet-viewport-region
 
@@ -4920,10 +4920,10 @@ are exported from the *duim-gadgets* module.
      Returns the sheet region of *sheet* ’s viewport, if it has one. If sheet
      has no viewport, it returns *sheet* ’s own region.
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-viewport`
-   - :class:`<viewport>`
+     - :gf:`sheet-viewport`
+     - :class:`<viewport>`
 
 .. class:: <slider>
    :open:
@@ -4984,10 +4984,10 @@ are exported from the *duim-gadgets* module.
                      value-range:
                        range(from: -20, to: 20, by: 5)));
 
-   See also
+   :seealso:
 
-   - :class:`<scroll-bar>`
-   - :class:`<spin-box>`
+     - :class:`<scroll-bar>`
+     - :class:`<spin-box>`
 
 .. class:: <spacing>
    :open:
@@ -5029,11 +5029,11 @@ are exported from the *duim-gadgets* module.
           make(<button>, label: "World")
         end);
 
-   See also
+   :seealso:
 
-   - :class:`<null-pane>`
-   - :class:`<separator>`
-   - :macro:`with-spacing`
+     - :class:`<null-pane>`
+     - :class:`<separator>`
+     - :macro:`with-spacing`
 
 .. class:: <spin-box>
    :open:
@@ -5076,9 +5076,9 @@ are exported from the *duim-gadgets* module.
         contain(make(<spin-box>,
                      items: range(from: 1, to: 10)));
 
-   See also
+   :seealso:
 
-   - :class:`<slider>`
+     - :class:`<slider>`
 
 .. class:: <splitter>
    :abstract:
@@ -5272,13 +5272,13 @@ are exported from the *duim-gadgets* module.
                      value-range: range(from: 0, to: 50)
                      label: "Status"));
 
-   See also
+   :seealso:
 
-   - `<frames.htm#12376>`
-   - `<frames.htm#36830>`
-   - :gf:`gadget-documentation`
-   - :gf:`status-bar-label-pane`
-   - :gf:`status-bar-progress-bar`
+     - `<frames.htm#12376>`
+     - `<frames.htm#36830>`
+     - :gf:`gadget-documentation`
+     - :gf:`status-bar-label-pane`
+     - :gf:`status-bar-progress-bar`
 
 .. generic-function:: status-bar-label-pane
 
@@ -5311,10 +5311,10 @@ are exported from the *duim-gadgets* module.
 
         status-bar-label-pane(*status*);
 
-   See also
+   :seealso:
 
-   - :class:`<status-bar>`
-   - :gf:`status-bar-progress-bar`
+     - :class:`<status-bar>`
+     - :gf:`status-bar-progress-bar`
 
 .. generic-function:: status-bar-progress-bar
 
@@ -5329,9 +5329,9 @@ are exported from the *duim-gadgets* module.
 
      Returns the progress bar for *status-bar*, if there is one.
 
-   See also
+   :seealso:
 
-   - :class:`<progress-bar>`
+     - :class:`<progress-bar>`
 
 .. class:: <tab-control>
    :open:
@@ -5402,9 +5402,9 @@ are exported from the *duim-gadgets* module.
                                                  #(1, 2, 3)
         )))));
 
-   See also
+   :seealso:
 
-   - :class:`<page>`
+     - :class:`<page>`
 
 .. generic-function:: tab-control-current-page
 
@@ -5447,12 +5447,12 @@ are exported from the *duim-gadgets* module.
 
         tab-control-current-page(*tab*);
 
-   See also
+   :seealso:
 
-   - :class:`<page>`
-   - :class:`<tab-control>`
-   - :gf:`tab-control-current-page-setter`
-   - :gf:`tab-control-pages`
+     - :class:`<page>`
+     - :class:`<tab-control>`
+     - :gf:`tab-control-current-page-setter`
+     - :gf:`tab-control-pages`
 
 .. generic-function:: tab-control-current-page-setter
 
@@ -5503,11 +5503,11 @@ are exported from the *duim-gadgets* module.
 
         tab-control-current-page(*tab*) := *page*;
 
-   See also
+   :seealso:
 
-   - :class:`<page>`
-   - :class:`<tab-control>`
-   - :gf:`tab-control-current-page`
+     - :class:`<page>`
+     - :class:`<tab-control>`
+     - :gf:`tab-control-current-page`
 
 .. generic-function:: tab-control-labels
 
@@ -5550,10 +5550,10 @@ are exported from the *duim-gadgets* module.
 
         tab-control-labels(*tab*);
 
-   See also
+   :seealso:
 
-   - :class:`<tab-control>`
-   - :gf:`tab-control-pages`
+     - :class:`<tab-control>`
+     - :gf:`tab-control-pages`
 
 .. class:: <tab-control-page>
    :open:
@@ -5573,12 +5573,12 @@ are exported from the *duim-gadgets* module.
      
         A tab control page
 
-   See also
+   :seealso:
 
-   - :class:`<page>`
-   - :class:`<tab-control>`
-   - `<frames.htm#93333>`
-   - `<frames.htm#87607>`
+     - :class:`<page>`
+     - :class:`<tab-control>`
+     - `<frames.htm#93333>`
+     - `<frames.htm#87607>`
 
 .. generic-function:: tab-control-pages
 
@@ -5621,13 +5621,13 @@ are exported from the *duim-gadgets* module.
 
        tab-control-pages(*tab*);
 
-   See also
+   :seealso:
 
-   - :class:`<page>`
-   - :class:`<tab-control>`
-   - :gf:`tab-control-current-page`
-   - :gf:`tab-control-labels`
-   - :gf:`tab-control-pages-setter`
+     - :class:`<page>`
+     - :class:`<tab-control>`
+     - :gf:`tab-control-current-page`
+     - :gf:`tab-control-labels`
+     - :gf:`tab-control-pages-setter`
 
 .. generic-function:: tab-control-pages-setter
 
@@ -5657,11 +5657,11 @@ are exported from the *duim-gadgets* module.
         tab-control-pages(my-tab-control, page: my-page)
           := my-pages
 
-   See also
+   :seealso:
 
-   - :class:`<page>`
-   - :class:`<tab-control>`
-   - :gf:`tab-control-pages`
+     - :class:`<page>`
+     - :class:`<tab-control>`
+     - :gf:`tab-control-pages`
 
 .. class:: <table-column>
    :sealed:
@@ -5694,9 +5694,9 @@ are exported from the *duim-gadgets* module.
      sorting the items in the table column, using the ``callback:``
      init-keyword.
 
-   See also
+   :seealso:
 
-   - :class:`<table-control>`
+     - :class:`<table-control>`
 
 .. class:: <table-control>
    :open:
@@ -5788,10 +5788,10 @@ are exported from the *duim-gadgets* module.
      - :gf:`table-control-view`
      - :gf:`table-control-view-setter`
 
-   See also
+   :seealso:
 
-   - :class: `<table-column>`
-   - :type:`<table-control-view>`
+     - :class: `<table-column>`
+     - :type:`<table-control-view>`
 
 .. type:: <table-control-view>
 
@@ -5830,11 +5830,11 @@ are exported from the *duim-gadgets* module.
         displayed in the table control, additional details may include the
         author of the e-mail, its subject, and the date and time it was sent.
 
-   See also
+   :seealso:
 
-   - :class:`<list-control-view>`
-   - :class:`<table-control>`
-   - :gf:`table-control-view`
+     - :class:`<list-control-view>`
+     - :class:`<table-control>`
+     - :gf:`table-control-view`
 
 .. generic-function:: table-control-view
 
@@ -5850,10 +5850,10 @@ are exported from the *duim-gadgets* module.
      Returns the current view of *table-control*. The available views are
      described in the entry for :class:`<table-control-view>`.
 
-   See also
+   :seealso:
 
-   - :class:`<table-control-view>`
-   - :gf:`table-control-view-setter`
+     - :class:`<table-control-view>`
+     - :gf:`table-control-view-setter`
 
 .. generic-function:: table-control-view-setter
 
@@ -5872,10 +5872,10 @@ are exported from the *duim-gadgets* module.
      The *view* argument is used to specify the way in which the items in the
      table control are displayed.
 
-   See also
+   :seealso:
 
-   - :class:`<table-control-view>`
-   - :gf:`table-control-view`
+     - :class:`<table-control-view>`
+     - :gf:`table-control-view`
 
 .. class:: <table-item>
    :open:
@@ -5895,13 +5895,13 @@ are exported from the *duim-gadgets* module.
      The ``object:`` init-keyword describes the object that an instance of
      table item represents.
 
-   See also
+   :seealso:
 
-   - :gf:`add-item`
-   - :gf:`find-item`
-   - :gf:`make-item`
-   - :gf:`remove-item`
-   - :class:`<table-control>`
+     - :gf:`add-item`
+     - :gf:`find-item`
+     - :gf:`make-item`
+     - :gf:`remove-item`
+     - :class:`<table-control>`
 
 .. class:: <text-editor>
    :open:
@@ -5950,9 +5950,9 @@ are exported from the *duim-gadgets* module.
 
         make(<text-editor>, lines: 10, fixed-height?: #t);
 
-   See also
+   :seealso:
 
-   - :class:`<text-field>`
+     - :class:`<text-field>`
 
 .. class:: <text-field>
    :open:
@@ -6013,9 +6013,9 @@ are exported from the *duim-gadgets* module.
                                    gadget-value(gadget)),
                                 owner: gadget) end));
 
-   See also
+   :seealso:
 
-   - :class:`<password-field>`
+     - :class:`<password-field>`
 
 .. class:: <text-gadget>
    :open:
@@ -6084,13 +6084,13 @@ are exported from the *duim-gadgets* module.
         contain(make(<text-field>, value-type: <integer>
                      text: "1234"));
 
-   See also
+   :seealso:
 
-   - :class:`<combo-box>`
-   - :gf:`gadget-value-type`
-   - :class:`<password-field>`
-   - :class:`<text-editor>`
-   - :class:`<text-field>`
+     - :class:`<combo-box>`
+     - :gf:`gadget-value-type`
+     - :class:`<password-field>`
+     - :class:`<text-editor>`
+     - :class:`<text-field>`
 
 .. class:: <tool-bar>
    :open:
@@ -6129,10 +6129,10 @@ are exported from the *duim-gadgets* module.
      - `<frames.htm#88622>`
      - `<frames.htm#56600>`
 
-   See also
+   :seealso:
 
-   - :class:`<button-box>`
-   - :class:`<status-bar>`
+     - :class:`<button-box>`
+     - :class:`<status-bar>`
 
 .. class:: <tree-control>
    :open:
@@ -6234,12 +6234,12 @@ are exported from the *duim-gadgets* module.
                                  even?(item) => $even-icon;
                                end);
 
-   See also
+   :seealso:
 
-   - :gf:`add-node`
-   - :gf:`find-node`
-   - :gf:`make-node`
-   - :gf:`remove-node`
+     - :gf:`add-node`
+     - :gf:`find-node`
+     - :gf:`make-node`
+     - :gf:`remove-node`
 
 .. generic-function:: tree-control-children-predicate
 
@@ -6254,11 +6254,11 @@ are exported from the *duim-gadgets* module.
 
      Returns the children predicate function of *tree-control*.
 
-   See also
+   :seealso:
 
-   - :class:`<tree-control>`
-   - :gf:`tree-control-children-predicate-setter`
-   - :gf:`tree-control-children-generator`
+     - :class:`<tree-control>`
+     - :gf:`tree-control-children-predicate-setter`
+     - :gf:`tree-control-children-generator`
 
 .. generic-function:: tree-control-children-predicate-setter
 
@@ -6274,11 +6274,11 @@ are exported from the *duim-gadgets* module.
 
      Sets the children predicate function of *tree-control*.
 
-   See also
+   :seealso:
 
-   - :class:`<tree-control>`
-   - :gf:`tree-control-children-predicate`
-   - :gf:`tree-control-children-generator-setter`
+     - :class:`<tree-control>`
+     - :gf:`tree-control-children-predicate`
+     - :gf:`tree-control-children-generator-setter`
 
 .. generic-function:: tree-control-children-generator
 
@@ -6295,11 +6295,11 @@ are exported from the *duim-gadgets* module.
      This is the function that is used to generate the children below the
      root of *tree-control*.
 
-   See also
+   :seealso:
 
-   - :class:`<tree-control>`
-   - :gf:`tree-control-children-predicate`
-   - :gf:`tree-control-children-generator-setter`
+     - :class:`<tree-control>`
+     - :gf:`tree-control-children-predicate`
+     - :gf:`tree-control-children-generator-setter`
 
 .. generic-function:: tree-control-children-generator-setter
 
@@ -6318,11 +6318,11 @@ are exported from the *duim-gadgets* module.
      is the function that is used to generate the children below the root of
      *tree-control*.
 
-   See also
+   :seealso:
 
-   - :class:`<tree-control>`
-   - :gf:`tree-control-children-predicate-setter`
-   - :gf:`tree-control-children-generator`
+     - :class:`<tree-control>`
+     - :gf:`tree-control-children-predicate-setter`
+     - :gf:`tree-control-children-generator`
 
 .. generic-function:: tree-control-icon-function
 
@@ -6347,10 +6347,10 @@ are exported from the *duim-gadgets* module.
      Note that, unlike list controls, the icon function for a tree control
      cannot be changed once the list control has been created.
 
-   See also
+   :seealso:
 
-   - :gf:`list-control-icon-function`
-   - :class:`<tree-control>`
+     - :gf:`list-control-icon-function`
+     - :class:`<tree-control>`
 
 .. generic-function:: tree-control-initial-depth
 
@@ -6370,10 +6370,10 @@ are exported from the *duim-gadgets* module.
      outline is expanded to a depth of one (that is, any direct subnodes of
      the top level are displayed, but no others).
 
-   See also
+   :seealso:
 
-   - :class:`<tree-control>`
-   - :gf:`tree-control-initial-depth-setter`
+     - :class:`<tree-control>`
+     - :gf:`tree-control-initial-depth-setter`
 
 .. generic-function:: tree-control-initial-depth-setter
 
@@ -6394,10 +6394,10 @@ are exported from the *duim-gadgets* module.
      outline is expanded to a depth of one (that is, any direct subnodes of
      the top level are displayed, but no others).
 
-   See also
+   :seealso:
 
-   - :class:`<tree-control>`
-   - :gf:`tree-control-initial-depth`
+     - :class:`<tree-control>`
+     - :gf:`tree-control-initial-depth`
 
 .. generic-function:: tree-control-roots
 
@@ -6431,10 +6431,10 @@ are exported from the *duim-gadgets* module.
 
         tree-control-roots(*tree*);
 
-   See also
+   :seealso:
 
-   - :class:`<tree-control>`
-   - :gf:`tree-control-roots-setter`
+     - :class:`<tree-control>`
+     - :gf:`tree-control-roots-setter`
 
 .. generic-function:: tree-control-roots-setter
 
@@ -6471,10 +6471,10 @@ are exported from the *duim-gadgets* module.
 
      The tree control is updated on the screen to reflect this change.
 
-   See also
+   :seealso:
 
-   - :class:`<tree-control>`
-   - :gf:`tree-control-roots`
+     - :class:`<tree-control>`
+     - :gf:`tree-control-roots`
 
 .. class:: <tree-node>
    :open:
@@ -6518,9 +6518,9 @@ are exported from the *duim-gadgets* module.
      - :gf:node-expanded?`
      - :gf:node-parents`
 
-   See also
+   :seealso:
 
-   - :class:`<tree-control>`
+     - :class:`<tree-control>`
 
 .. generic-function:: update-gadget
 
@@ -6569,10 +6569,10 @@ are exported from the *duim-gadgets* module.
      - :gf:`gadget-value-setter`
      - :gf:`gadget-value-type`
 
-   See also
+   :seealso:
 
-   - :gf:`gadget-value`
-   - :gf:`gadget-value-changed-callback`
+     - :gf:`gadget-value`
+     - :gf:`gadget-value-changed-callback`
 
 .. class:: <value-range-gadget>
    :open:
@@ -6611,12 +6611,12 @@ are exported from the *duim-gadgets* module.
                      value-range:
                        range(from: -20, to: 20, by: 5)));
 
-   See also
+   :seealso:
 
-   - :class:`<progress-bar>`
-   - :class:`<scroll-bar>`
-   - :class:`<slider>`
-   - :class:`<value-gadget>`
+     - :class:`<progress-bar>`
+     - :class:`<scroll-bar>`
+     - :class:`<slider>`
+     - :class:`<value-gadget>`
 
 .. class:: <viewport>
    :open:
@@ -6661,12 +6661,12 @@ are exported from the *duim-gadgets* module.
 
      - :gf:`viewport-region`
 
-   See also
+   :seealso:
 
-   - :gf:`sheet-viewport`
-   - :gf:`sheet-viewport-region`
-   - :gf:`viewport?`
-   - :gf:`viewport-region`
+     - :gf:`sheet-viewport`
+     - :gf:`sheet-viewport-region`
+     - :gf:`viewport?`
+     - :gf:`viewport-region`
 
 .. generic-function:: viewport?
 
@@ -6689,11 +6689,11 @@ are exported from the *duim-gadgets* module.
 
         viewport?(*gadget*);
 
-   See also
+   :seealso:
 
-   - :class:`<viewport>`
-   - :class:`<button-box>`
-   - :class:`<border>`
+     - :class:`<viewport>`
+     - :class:`<button-box>`
+     - :class:`<border>`
 
 .. generic-function:: viewport-region
 
@@ -6716,9 +6716,9 @@ are exported from the *duim-gadgets* module.
 
         viewport-region(*viewer*);
 
-   See also
+   :seealso:
 
-   - :class:`<viewport>`
+     - :class:`<viewport>`
 
 .. macro:: with-border
    :statement:
@@ -6755,11 +6755,11 @@ are exported from the *duim-gadgets* module.
                   make(<button>,
                        label: "Hello") end);
 
-   See also
+   :seealso:
 
-   - :class:`<border>`
-   - :macro:`labelling`
-   - :macro:`with-spacing`
+     - :class:`<border>`
+     - :macro:`labelling`
+     - :macro:`with-spacing`
 
 .. macro:: with-spacing
    :statement:
@@ -6798,11 +6798,11 @@ are exported from the *duim-gadgets* module.
                   end)
                 end);
 
-   See also
+   :seealso:
 
-   - :class:`<null-pane>`
-   - :class:`<spacing>`
-   - :macro:`with-border`
+     - :class:`<null-pane>`
+     - :class:`<spacing>`
+     - :macro:`with-border`
 
 .. |image0| image:: images/gadgets-15.png
 .. |image1| image:: images/gadgets-17.png

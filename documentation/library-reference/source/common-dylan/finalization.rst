@@ -330,12 +330,12 @@ finalization interface. These items are exported from the
 
      Returns true if automatic finalization is enabled, and false otherwise.
 
-   See also
+   :seealso:
 
-   - :func:`automatic-finalization-enabled?-setter`
-   - :func:`drain-finalization-queue`
-   - :func:`finalize-when-unreachable`
-   - :gf:`finalize`
+     - :func:`automatic-finalization-enabled?-setter`
+     - :func:`drain-finalization-queue`
+     - :func:`finalize-when-unreachable`
+     - :gf:`finalize`
 
 .. function:: automatic-finalization-enabled?-setter
 
@@ -355,12 +355,12 @@ finalization interface. These items are exported from the
      environment (that is, no dynamic condition handlers). If the state
      changes from ``#t`` to ``#f``, the thread exits.
 
-   See also
+   :seealso:
 
-   - :func:`automatic-finalization-enabled?`
-   - :func:`drain-finalization-queue`
-   - :func:`finalize-when-unreachable`
-   - :gf:`finalize`
+     - :func:`automatic-finalization-enabled?`
+     - :func:`drain-finalization-queue`
+     - :func:`finalize-when-unreachable`
+     - :gf:`finalize`
 
 .. function:: drain-finalization-queue
 
@@ -383,12 +383,12 @@ finalization interface. These items are exported from the
      finalized is not defined. Applications should not make any
      assumptions about finalization ordering.
 
-   See also
+   :seealso:
 
-   - :func:`finalize-when-unreachable`
-   - :gf:`finalize`
-   - :func:`automatic-finalization-enabled?`
-   - :func:`automatic-finalization-enabled?-setter`
+     - :func:`finalize-when-unreachable`
+     - :gf:`finalize`
+     - :func:`automatic-finalization-enabled?`
+     - :func:`automatic-finalization-enabled?-setter`
 
 .. function:: finalize-when-unreachable
 
@@ -411,12 +411,12 @@ finalization interface. These items are exported from the
 
      The function returns its argument.
 
-   See also
+   :seealso:
 
-   - :gf:`finalize`
-   - :func:`drain-finalization-queue`
-   - :func:`automatic-finalization-enabled?`
-   - :func:`automatic-finalization-enabled?-setter`
+     - :gf:`finalize`
+     - :func:`drain-finalization-queue`
+     - :func:`automatic-finalization-enabled?`
+     - :func:`automatic-finalization-enabled?-setter`
 
 .. generic-function:: finalize
 
@@ -456,13 +456,13 @@ finalization interface. These items are exported from the
      method would itself reference the object, and hence prevent it from
      becoming unreachable.
 
-   See also
+   :seealso:
 
-   - :meth:`finalize <finalize(<object>)>`
-   - :func:`finalize-when-unreachable`
-   - :func:`drain-finalization-queue`
-   - :func:`automatic-finalization-enabled?`
-   - :func:`automatic-finalization-enabled?-setter`
+     - :meth:`finalize <finalize(<object>)>`
+     - :func:`finalize-when-unreachable`
+     - :func:`drain-finalization-queue`
+     - :func:`automatic-finalization-enabled?`
+     - :func:`automatic-finalization-enabled?-setter`
 
 .. method:: finalize
    :specializer: <object>
@@ -479,10 +479,10 @@ finalization interface. These items are exported from the
      is provided only to make ``next-method`` calls safe for all methods on
      :gf:`finalize`.
 
-   See also
+   :seealso:
 
-   - :func:`finalize-when-unreachable`
-   - :gf:`finalize`
-   - :func:`drain-finalization-queue`
-   - :func:`automatic-finalization-enabled?`
-   - :func:`automatic-finalization-enabled?-setter`
+     - :func:`finalize-when-unreachable`
+     - :gf:`finalize`
+     - :func:`drain-finalization-queue`
+     - :func:`automatic-finalization-enabled?`
+     - :func:`automatic-finalization-enabled?-setter`

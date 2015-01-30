@@ -545,11 +545,11 @@ are exported from the *duim-graphics* module.
      Aborts the current path on *drawable*. Any operations that have been
      performed since the last call to :gf:`start-path` are discarded.
 
-   See also
+   :seealso:
 
-   - :gf:`close-path`
-   - :gf:`end-path`
-   - :gf:`start-path`
+     - :gf:`close-path`
+     - :gf:`end-path`
+     - :gf:`start-path`
 
 .. generic-function:: arc-to
 
@@ -609,13 +609,13 @@ are exported from the *duim-graphics* module.
      You should be aware that using this function may lead to a loss of
      performance.
 
-   See also
+   :seealso:
 
-   - :gf:`curve-to`
-   - :gf:`draw-bezier-curve`
-   - :gf:`draw-line`
-   - :gf:`line-to`
-   - :gf:`move-to`
+     - :gf:`curve-to`
+     - :gf:`draw-bezier-curve`
+     - :gf:`draw-line`
+     - :gf:`line-to`
+     - :gf:`move-to`
 
 .. generic-function:: close-path
 
@@ -637,11 +637,11 @@ are exported from the *duim-graphics* module.
      Only closed paths can be filled, although :gf:`fill-path` will close
      a non-closed path automatically.
 
-   See also
+   :seealso:
 
-   - :gf:`abort-path`
-   - :gf:`end-path`
-   - :gf:`start-path`
+     - :gf:`abort-path`
+     - :gf:`end-path`
+     - :gf:`start-path`
 
 .. generic-function:: copy-area
 
@@ -669,10 +669,10 @@ are exported from the *duim-graphics* module.
      y values are transformed by the user transformation. The copying must be
      done by *medium-copy-copy*.
 
-   See also
+   :seealso:
 
-   - :gf:`copy-from-pixmap`
-   - :gf:`copy-to-pixmap`
+     - :gf:`copy-from-pixmap`
+     - :gf:`copy-to-pixmap`
 
 .. generic-function:: copy-from-pixmap
 
@@ -700,11 +700,11 @@ are exported from the *duim-graphics* module.
      a stream, then *medium-x* and *medium-y* are transformed by the user
      transformation. The copying must be done by *medium-copy-copy*.
 
-   See also
+   :seealso:
 
-   - :gf:`copy-area`
-   - :gf:`copy-to-pixmap`
-   - :class:`<pixmap>`
+     - :gf:`copy-area`
+     - :gf:`copy-to-pixmap`
+     - :class:`<pixmap>`
 
 .. generic-function:: copy-to-pixmap
 
@@ -734,10 +734,10 @@ are exported from the *duim-graphics* module.
 
      If *pixmap* is not supplied, a new pixmap will be allocated.
 
-   See also
+   :seealso:
 
-   - :gf:`copy-area`
-   - :gf:`copy-from-pixmap`
+     - :gf:`copy-area`
+     - :gf:`copy-from-pixmap`
 
 .. generic-function:: curve-to
 
@@ -780,13 +780,13 @@ are exported from the *duim-graphics* module.
      arguments. You should be aware that using this function may lead to a
      loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`arc-to`
-   - :gf:`draw-bezier-curve`
-   - :gf:`draw-line`
-   - :gf:`line-to`
-   - :gf:`move-to`
+     - :gf:`arc-to`
+     - :gf:`draw-bezier-curve`
+     - :gf:`draw-line`
+     - :gf:`line-to`
+     - :gf:`move-to`
 
 .. generic-function:: destroy-pixmap
 
@@ -800,9 +800,9 @@ are exported from the *duim-graphics* module.
 
      Destroys *pixmap*.
 
-   See also
+   :seealso:
 
-   - :gf:`draw-pixmap`
+     - :gf:`draw-pixmap`
 
 .. generic-function:: do-with-output-to-pixmap
 
@@ -830,9 +830,9 @@ are exported from the *duim-graphics* module.
      enough to contain all of the output done by the body of code executed by
      :macro:`with-output-to-pixmap`.
 
-   See also
+   :seealso:
 
-   - :gf:`with-output-to-pixmap`
+     - :gf:`with-output-to-pixmap`
 
 .. generic-function:: draw-arrow
 
@@ -883,9 +883,9 @@ are exported from the *duim-graphics* module.
      arguments. You should be aware that using this function may lead to a
      loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`draw-line`
+     - :gf:`draw-line`
 
 .. generic-function:: draw-bezier-curve
 
@@ -920,10 +920,10 @@ are exported from the *duim-graphics* module.
      coordinates, in its arguments. You should be aware that using this
      function may lead to a loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`curve-to`
-   - :gf:`draw-line`
+     - :gf:`curve-to`
+     - :gf:`draw-line`
 
 .. generic-function:: draw-circle
 
@@ -962,10 +962,10 @@ are exported from the *duim-graphics* module.
      arguments. You should be aware that using this function may lead to a
      loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`draw-ellipse`
-   - :gf:`draw-oval`
+     - :gf:`draw-ellipse`
+     - :gf:`draw-oval`
 
 .. generic-function:: draw-ellipse
 
@@ -1024,10 +1024,10 @@ are exported from the *duim-graphics* module.
      its arguments. You should be aware that using this function may lead to
      a loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`draw-circle`
-   - :gf:`draw-oval`
+     - :gf:`draw-circle`
+     - :gf:`draw-oval`
 
 .. generic-function:: draw-image
 
@@ -1057,10 +1057,10 @@ are exported from the *duim-graphics* module.
      arguments. You should be aware that using this function may lead to a
      loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`draw-pixmap`
-   - :gf:`draw-text`
+     - :gf:`draw-pixmap`
+     - :gf:`draw-text`
 
 .. generic-function:: draw-line
 
@@ -1093,14 +1093,14 @@ are exported from the *duim-graphics* module.
      arguments. You should be aware that using this function may lead to a
      loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`curve-to`
-   - :gf:`draw-arrow`
-   - :gf:`draw-bezier-curve`
-   - :gf:`draw-lines`
-   - :gf:`draw-point`
-   - :gf:`line-to`
+     - :gf:`curve-to`
+     - :gf:`draw-arrow`
+     - :gf:`draw-bezier-curve`
+     - :gf:`draw-lines`
+     - :gf:`draw-point`
+     - :gf:`line-to`
 
 .. generic-function:: draw-lines
 
@@ -1140,11 +1140,11 @@ are exported from the *duim-graphics* module.
                            300, 350,
                            400, 450));
 
-   See also
+   :seealso:
 
-   - :gf:`draw-line`
-   - :gf:`draw-points`
-   - :gf:`draw-rectangles`
+     - :gf:`draw-line`
+     - :gf:`draw-points`
+     - :gf:`draw-rectangles`
 
 .. generic-function:: draw-oval
 
@@ -1185,10 +1185,10 @@ are exported from the *duim-graphics* module.
      arguments. You should be aware that using this function may lead to a
      loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`draw-circle`
-   - :gf:`draw-ellipse`
+     - :gf:`draw-circle`
+     - :gf:`draw-ellipse`
 
 .. generic-function:: draw-pixmap
 
@@ -1219,12 +1219,12 @@ are exported from the *duim-graphics* module.
      arguments. You should be aware that using this function may lead to a
      loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`destroy-pixmap`
-   - :gf:`draw-image`
-   - :gf:`draw-text`
-   - :gf:`make-pixmap`
+     - :gf:`destroy-pixmap`
+     - :gf:`draw-image`
+     - :gf:`draw-text`
+     - :gf:`make-pixmap`
 
 .. generic-function:: draw-point
 
@@ -1253,10 +1253,10 @@ are exported from the *duim-graphics* module.
      arguments. You should be aware that using this function may lead to a
      loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`draw-line`
-   - :gf:`draw-points`
+     - :gf:`draw-line`
+     - :gf:`draw-points`
 
 .. generic-function:: draw-points
 
@@ -1284,11 +1284,11 @@ are exported from the *duim-graphics* module.
      arguments. You should be aware that using this function may lead to a
      loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`draw-lines`
-   - :gf:`draw-point`
-   - :gf:`draw-rectangles`
+     - :gf:`draw-lines`
+     - :gf:`draw-point`
+     - :gf:`draw-rectangles`
 
 .. generic-function:: draw-polygon
 
@@ -1326,11 +1326,11 @@ are exported from the *duim-graphics* module.
      its arguments. You should be aware that using this function may lead to
      a loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`draw-rectangle`
-   - :gf:`draw-regular-polygon`
-   - :gf:`draw-triangle`
+     - :gf:`draw-rectangle`
+     - :gf:`draw-regular-polygon`
+     - :gf:`draw-triangle`
 
 .. generic-function:: draw-rectangle
 
@@ -1374,12 +1374,12 @@ are exported from the *duim-graphics* module.
      arguments. You should be aware that using this function may lead to a loss
      of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`draw-polygon`
-   - :gf:`draw-rectangles`
-   - :gf:`draw-regular-polygon`
-   - :gf:`draw-triangle`
+     - :gf:`draw-polygon`
+     - :gf:`draw-rectangles`
+     - :gf:`draw-regular-polygon`
+     - :gf:`draw-triangle`
 
 .. generic-function:: draw-rectangles
 
@@ -1413,11 +1413,11 @@ are exported from the *duim-graphics* module.
      coordinates, in its arguments. You should be aware that using this
      function may lead to a loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`draw-lines`
-   - :gf:`draw-points`
-   - :gf:`draw-rectangle`
+     - :gf:`draw-lines`
+     - :gf:`draw-points`
+     - :gf:`draw-rectangle`
 
 .. generic-function:: draw-regular-polygon
 
@@ -1462,11 +1462,11 @@ are exported from the *duim-graphics* module.
      than separate coordinates, in its arguments. You should be aware that
      using this function may lead to a loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`draw-polygon`
-   - :gf:`draw-rectangle`
-   - :gf:`draw-triangle`
+     - :gf:`draw-polygon`
+     - :gf:`draw-rectangle`
+     - :gf:`draw-triangle`
 
 .. generic-function:: draw-text
 
@@ -1536,10 +1536,10 @@ are exported from the *duim-graphics* module.
      arguments. You should be aware that using this function may lead to a
      loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`draw-image`
-   - :gf:`draw-pixmap`
+     - :gf:`draw-image`
+     - :gf:`draw-pixmap`
 
 .. generic-function:: draw-triangle
 
@@ -1583,11 +1583,11 @@ are exported from the *duim-graphics* module.
      its arguments. You should be aware that using this function may lead to
      a loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`draw-polygon`
-   - :gf:`draw-rectangle`
-   - :gf:`draw-regular-polygon`
+     - :gf:`draw-polygon`
+     - :gf:`draw-rectangle`
+     - :gf:`draw-regular-polygon`
 
 .. generic-function:: end-path
 
@@ -1607,11 +1607,11 @@ are exported from the *duim-graphics* module.
      The function :gf:`close-path` can also be used to end the definition of
      a path.
 
-   See also
+   :seealso:
 
-   - :gf:`abort-path`
-   - :gf:`close-path`
-   - :gf:`start-path`
+     - :gf:`abort-path`
+     - :gf:`close-path`
+     - :gf:`start-path`
 
 .. generic-function:: fill-path
 
@@ -1628,10 +1628,10 @@ are exported from the *duim-graphics* module.
      path has not already been closed using
      :gf:`close-path`, it is closed automatically.
 
-   See also
+   :seealso:
 
-   - :gf:`stroke-path`
-   - :gf:`close-path`
+     - :gf:`stroke-path`
+     - :gf:`close-path`
 
 .. generic-function:: line-to
 
@@ -1665,13 +1665,13 @@ are exported from the *duim-graphics* module.
      arguments. You should be aware that using this function may lead to a
      loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`arc-to`
-   - :gf:`curve-to`
-   - :gf:`draw-bezier-curve`
-   - :gf:`draw-line`
-   - :gf:`move-to`
+     - :gf:`arc-to`
+     - :gf:`curve-to`
+     - :gf:`draw-bezier-curve`
+     - :gf:`draw-line`
+     - :gf:`move-to`
 
 .. generic-function:: make-pixmap
 
@@ -1690,11 +1690,11 @@ are exported from the *duim-graphics* module.
      Creates a pixmap from *medium* with a specified size, in pixels, given
      by *width* and *height*.
 
-   See also
+   :seealso:
 
-   - :gf:`draw-pixmap`
-   - :class:`<pixmap>`
-   - :gf:`pixmap?`
+     - :gf:`draw-pixmap`
+     - :class:`<pixmap>`
+     - :gf:`pixmap?`
 
 .. generic-function:: move-to
 
@@ -1732,11 +1732,11 @@ are exported from the *duim-graphics* module.
      arguments. You should be aware that using this function may lead to a
      loss of performance.
 
-   See also
+   :seealso:
 
-   - :gf:`arc-to`
-   - :gf:`curve-to`
-   - :gf:`line-to`
+     - :gf:`arc-to`
+     - :gf:`curve-to`
+     - :gf:`line-to`
 
 .. class:: <pixmap>
    :open:
@@ -1775,11 +1775,11 @@ are exported from the *duim-graphics* module.
      - :gf:`image-height`
      - :gf:`image-width`
 
-   See also
+   :seealso:
 
-   - :gf:`draw-pixmap`
-   - :gf:`make-pixmap`
-   - :gf:`pixmap?`
+     - :gf:`draw-pixmap`
+     - :gf:`make-pixmap`
+     - :gf:`pixmap?`
 
 .. generic-function:: pixmap?
 
@@ -1795,9 +1795,9 @@ are exported from the *duim-graphics* module.
 
      Returns true if *object* is a pixmap.
 
-   See also
+   :seealso:
 
-   - :class:`<pixmap>`
+     - :class:`<pixmap>`
 
 .. class:: <pixmap-medium>
    :open:
@@ -1817,10 +1817,10 @@ are exported from the *duim-graphics* module.
 
      - :gf:`with-output-to-pixmap`
 
-   See also
+   :seealso:
 
-   - :class:`<medium>`
-   - :macro:`with-output-to-pixmap`
+     - :class:`<medium>`
+     - :macro:`with-output-to-pixmap`
 
 .. generic-function:: restore-clipping-region
 
@@ -1842,11 +1842,11 @@ are exported from the *duim-graphics* module.
      After creating the path, use either :gf:`close-path` or :gf:`end-path` to
      finish the path, or :gf:`abort-path` to abandon it altogether.
 
-   See also
+   :seealso:
 
-   - :gf:`abort-path`
-   - :gf:`close-path`
-   - :gf:`end-path`
+     - :gf:`abort-path`
+     - :gf:`close-path`
+     - :gf:`end-path`
 
 .. generic-function:: stroke-path
 
@@ -1864,10 +1864,10 @@ are exported from the *duim-graphics* module.
      close the path: you must use :gf:`close-path` if
      you wish to do this.
 
-   See also
+   :seealso:
 
-   - :gf:`close-path`
-   - :gf:`fill-path`
+     - :gf:`close-path`
+     - :gf:`fill-path`
 
 .. macro:: with-output-to-pixmap
 
@@ -1893,7 +1893,7 @@ are exported from the *duim-graphics* module.
      The returned value is a pixmap that can be drawn onto *medium* using
      :gf:`copy-from-pixmap`.
 
-   See also
+   :seealso:
 
-   - :gf:`do-with-output-to-pixmap`
-   - :class:`<pixmap-medium>`
+     - :gf:`do-with-output-to-pixmap`
+     - :class:`<pixmap-medium>`

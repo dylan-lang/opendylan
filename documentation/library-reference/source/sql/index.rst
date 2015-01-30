@@ -1197,9 +1197,9 @@ The SQL module
       The function :drm:`type-for-copy` returns
       :drm:`<simple-object-vector>` when applied to objects of this class.
 
-   See also:
+   :seealso:
 
-   * :class:`<scrollable-result-set>`
+     - :class:`<scrollable-result-set>`
 
 .. class:: <implicit-zero-bit-padding>
    :open:
@@ -1553,10 +1553,10 @@ The SQL module
      :drm:`type-for-copy` function returns :drm:`<simple-object-vector>`
      for objects of this class.
 
-   See also:
+   :seealso:
 
-   * :class:`<forward-only-result-set>`
-   * :class:`<scrollable-result-set>`
+     - :class:`<forward-only-result-set>`
+     - :class:`<scrollable-result-set>`
 
 .. class:: <schema-not-found>
 
@@ -1587,9 +1587,9 @@ The SQL module
      The :drm:`type-for-copy` function returns :drm:`<simple-object-vector>`
      for objects of this class.
 
-   See also:
+   :seealso:
 
-   * :class:`<forward-only-result-set>`
+     - :class:`<forward-only-result-set>`
 
 
 .. class:: <search-condition-too-long-for-information-schema>
@@ -2932,9 +2932,9 @@ The SQL module
 
      Returns a string containing the text of ``sql-statement``.
 
-   See also:
+   :seealso:
 
-   * :gf:`text-setter`
+     - :gf:`text-setter`
 
 .. generic-function:: text-setter
    :open:
@@ -2952,9 +2952,9 @@ The SQL module
      Changes the text of the SQL statement in ``sql-statement``
      to ``new-text``.
 
-   See also:
+   :seealso:
 
-   * :gf:`text`
+     - :gf:`text`
 
 .. generic-function:: transaction-mode
 

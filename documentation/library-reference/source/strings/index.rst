@@ -1257,7 +1257,9 @@ Miscellaneous Functions
      // Remove empty lines...
      split-lines("abc\r\rdef", remove-if-empty?: #t) => #["abc", "def"]
 
-   See also:  :func:`split`
+   :seealso:
+
+     - :func:`split`
 
 .. generic-function:: strip
    :sealed:

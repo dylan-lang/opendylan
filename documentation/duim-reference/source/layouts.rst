@@ -185,9 +185,9 @@ are exported from the *duim-layouts* module.
      calculations.  Client code may specialize :class:`do-allocate-space`, but
      not call it. Call :gf:`allocate-space` instead.
 
-   See also
+   :seealso:
 
-   - :gf:`do-allocate-space`
+     - :gf:`do-allocate-space`
 
 .. class:: <basic-user-pane>
 
@@ -230,9 +230,9 @@ are exported from the *duim-layouts* module.
      *help-context:* can be found. A list of context-IDs should be provided
      by the author of the online help system.
 
-   See also
+   :seealso:
 
-   - :macro:`define pane`
+     - :macro:`define pane`
 
 .. class:: <column-layout>
    :open:
@@ -313,14 +313,14 @@ are exported from the *duim-layouts* module.
                       x-alignment: #"right",
                       ratios: #(1, 3)));
 
-   See also
+   :seealso:
 
-   - :class:`<grid-layout>`
-   - :class:`<layout>`
-   - :class:`<row-layout>`
-   - :class:`<stack-layout>`
-   - :class:`<table-layout>`
-   - :gf:`vertically`
+     - :class:`<grid-layout>`
+     - :class:`<layout>`
+     - :class:`<row-layout>`
+     - :class:`<stack-layout>`
+     - :class:`<table-layout>`
+     - :gf:`vertically`
 
 
 .. generic-function:: compose-space
@@ -357,10 +357,10 @@ are exported from the *duim-layouts* module.
      space calculations. Client code may specialize :class:`do-compose-space`
      but should not call it. Call ``compose-space`` instead.
 
-   See also
+   :seealso:
 
-   - :gf:`do-compose-space`
-   - :class:`<space-requirement>`
+     - :gf:`do-compose-space`
+     - :class:`<space-requirement>`
 
 .. generic-function:: current-pane
 
@@ -419,9 +419,9 @@ are exported from the *duim-layouts* module.
              init-keyword: exit-buttons:;
          end pane <my-pane>;
 
-   See also
+   :seealso:
 
-   - :macro:`define frame`
+     - :macro:`define frame`
 
 
 .. generic-function:: do-allocate-space
@@ -444,9 +444,9 @@ are exported from the *duim-layouts* module.
      add methods to this function, but not call it directly. Call
      :gf:`allocate-space` instead.
 
-   See also
+   :seealso:
 
-   - :gf:`allocate-space`
+     - :gf:`allocate-space`
 
 .. generic-function:: do-compose-space
    :open:
@@ -502,9 +502,9 @@ are exported from the *duim-layouts* module.
            end
          end method do-compose-space;
 
-   See also
+   :seealso:
 
-   - :gf:`compose-space`
+     - :gf:`compose-space`
 
 
 .. class:: <drawing-pane>
@@ -528,11 +528,11 @@ are exported from the *duim-layouts* module.
      pane. This gets called by the :gf:`handle-repaint` method for
      :class:`<simple-pane>`.
 
-   See also
+   :seealso:
 
-   - :gf:`handle-repaint`
-   - :gf:`pane-display-function`
-   - :class:`<simple-pane>`
+     - :gf:`handle-repaint`
+     - :gf:`pane-display-function`
+     - :class:`<simple-pane>`
 
 .. constant:: $fill
 
@@ -553,9 +553,9 @@ are exported from the *duim-layouts* module.
      layout. This default behavior can be changed if either the ``min-width:``
      or ``min-height:`` init-keywords are specified explicitly.
 
-   See also
+   :seealso:
 
-   - :gf:`make`
+     - :gf:`make`
 
 .. class:: <fixed-layout>
    :open:
@@ -583,10 +583,10 @@ are exported from the *duim-layouts* module.
      Fixed layouts are most useful if you know exactly what size and position
      every child in the layout should be.
 
-   See also
+   :seealso:
 
-   - :class:`<layout>`
-   - :class:`<pinboard-layout>`
+     - :class:`<layout>`
+     - :class:`<pinboard-layout>`
 
 .. class:: <grid-layout>
    :open:
@@ -608,12 +608,12 @@ are exported from the *duim-layouts* module.
      The ``cell-space-requirement:`` init-keyword lets you specify the
      preferred space requirement for any individual cell in the grid layout.
 
-   See also
+   :seealso:
 
-   - :class:`<column-layout>`
-   - :class:`<row-layout>`
-   - :class:`<stack-layout>`
-   - :class:`<table-layout>`
+     - :class:`<column-layout>`
+     - :class:`<row-layout>`
+     - :class:`<stack-layout>`
+     - :class:`<table-layout>`
 
 .. macro:: horizontally
    :statement:
@@ -647,11 +647,11 @@ are exported from the *duim-layouts* module.
                    make(<button>, label: "World")
                  end);
 
-   See also
+   :seealso:
 
-   - :class:`<row-layout>`
-   - :gf:`tabling`
-   - :gf:`vertically`
+     - :class:`<row-layout>`
+     - :gf:`tabling`
+     - :gf:`vertically`
 
 
 .. class:: <layout>
@@ -699,14 +699,14 @@ are exported from the *duim-layouts* module.
      values of these init-keywords in different ways, such that, for
      instance, a row layout has a fixed height.
 
-   See also
+   :seealso:
 
-   - :class:`<column-layout>`
-   - :class:`<grid-layout>`
-   - :class:`<pinboard-layout>`
-   - :class:`<row-layout>`
-   - :class:`<stack-layout>`
-   - :class:`<table-layout>`
+     - :class:`<column-layout>`
+     - :class:`<grid-layout>`
+     - :class:`<pinboard-layout>`
+     - :class:`<row-layout>`
+     - :class:`<stack-layout>`
+     - :class:`<table-layout>`
 
 .. generic-function:: layout-border
 
@@ -726,9 +726,9 @@ are exported from the *duim-layouts* module.
      positioning of the children in a pinboard layout is completely in the
      control of the programmer.
 
-   See also
+   :seealso:
 
-   - :gf:`layout-border-setter`
+     - :gf:`layout-border-setter`
 
 .. generic-function:: layout-border-setter
 
@@ -752,9 +752,9 @@ are exported from the *duim-layouts* module.
      positioning of the children in a pinboard layout is completely in the
      control of the programmer.
 
-   See also
+   :seealso:
 
-   - :gf:`layout-border`
+     - :gf:`layout-border`
 
 .. generic-function:: layout-equalize-heights?
 
@@ -775,9 +775,9 @@ are exported from the *duim-layouts* module.
      ``equalize-heights?:`` init-keyword. There is no equivalent setter
      function.
 
-   See also
+   :seealso:
 
-   - :gf:`layout-equalize-widths?`
+     - :gf:`layout-equalize-widths?`
 
 .. generic-function:: layout-equalize-widths?
 
@@ -798,9 +798,9 @@ are exported from the *duim-layouts* module.
      ``equalize-widths?:`` init-keyword. There is no equivalent setter
      function.
 
-   See also
+   :seealso:
 
-   - :gf:`layout-equalize-heights?`
+     - :gf:`layout-equalize-heights?`
 
 .. class:: <leaf-pane>
    :open:
@@ -849,10 +849,10 @@ are exported from the *duim-layouts* module.
      control the width and height of a layout under various circumstances. See
      :class:`<space-requirement>`, for a full description of this behavior.
 
-   See also
+   :seealso:
 
-   - :const:`$fill`
-   - :class:`<space-requirement>`
+     - :const:`$fill`
+     - :class:`<space-requirement>`
 
 .. class:: <multiple-child-composite-pane>
    :open:
@@ -868,9 +868,9 @@ are exported from the *duim-layouts* module.
      this class if you want to create a class of pane that can have more than
      one child.
 
-   See also
+   :seealso:
 
-   - :class:`<single-child-composite-pane>`
+     - :class:`<single-child-composite-pane>`
 
 .. class:: <null-pane>
    :sealed:
@@ -885,10 +885,10 @@ are exported from the *duim-layouts* module.
      The class of null panes. This class acts as a filler: use it when you
      need to "fill space" somewhere in a complex layout.
 
-   See also
+   :seealso:
 
-   - :class:`<spacing>`
-   - :macro:`with-spacing`
+     - :class:`<spacing>`
+     - :macro:`with-spacing`
 
 .. generic-function:: pane-display-function
 
@@ -910,9 +910,9 @@ are exported from the *duim-layouts* module.
      The display function gets called by the :gf:`handle-repaint` method for
      :class:`<simple-pane>` and :class:`<drawing-pane>`.
 
-   See also
+   :seealso:
 
-   - :class:`<drawing-pane>`
+     - :class:`<drawing-pane>`
 
 .. generic-function:: pane-layout
 
@@ -927,9 +927,9 @@ are exported from the *duim-layouts* module.
 
      Returns the layout that contains the specified pane in :macro:`define pane`.
 
-   See also
+   :seealso:
 
-   - :macro:`define pane`
+     - :macro:`define pane`
 
 .. class:: <pinboard-layout>
    :open:
@@ -971,10 +971,10 @@ are exported from the *duim-layouts* module.
      dynamically as its parent is resized (for instance, by the user resizing
      a window on screen).
 
-   See also
+   :seealso:
 
-   - :class:`<fixed-layout>`
-   - :class:`<layout>`
+     - :class:`<fixed-layout>`
+     - :class:`<layout>`
 
 .. generic-function:: relayout-children
 
@@ -989,9 +989,9 @@ are exported from the *duim-layouts* module.
 
      Lays out the children of *sheet* again.
 
-   See also
+   :seealso:
 
-   - :gf:`relayout-parent`
+     - :gf:`relayout-parent`
 
 .. generic-function:: relayout-parent
 
@@ -1009,9 +1009,9 @@ are exported from the *duim-layouts* module.
      specified, then the parent is laid out in accordance with these
      dimensions.
 
-   See also
+   :seealso:
 
-   - :gf:`relayout-children`
+     - :gf:`relayout-children`
 
 .. class:: <row-layout>
    :open:
@@ -1089,14 +1089,14 @@ are exported from the *duim-layouts* module.
                       equalize-widths?: #t,
                       children: buttons))
 
-   See also
+   :seealso:
 
-   - :class:`<column-layout>`
-   - :macro:`horizontally`
-   - :class:`<layout>`
-   - :class:`<grid-layout>`
-   - :class:`<stack-layout>`
-   - :class:`<table-layout>`
+     - :class:`<column-layout>`
+     - :macro:`horizontally`
+     - :class:`<layout>`
+     - :class:`<grid-layout>`
+     - :class:`<stack-layout>`
+     - :class:`<table-layout>`
 
 
 .. class:: <simple-pane>
@@ -1118,11 +1118,11 @@ are exported from the *duim-layouts* module.
      the pane. This gets called by the :gf:`handle-repaint` method for
      :class:`<simple-pane>`.
 
-   See also
+   :seealso:
 
-   - :class:`<drawing-pane>`
-   - :gf:`handle-repaint`
-   - :gf:`pane-display-function`
+     - :class:`<drawing-pane>`
+     - :gf:`handle-repaint`
+     - :gf:`pane-display-function`
 
 .. class:: <single-child-composite-pane>
    :open:
@@ -1136,9 +1136,9 @@ are exported from the *duim-layouts* module.
 
      The class of composite panes that can only have one child.
 
-   See also
+   :seealso:
 
-   - :class:`<multiple-child-composite-pane>`
+     - :class:`<multiple-child-composite-pane>`
 
 .. class:: <space-requirement>
    :abstract:
@@ -1226,9 +1226,9 @@ are exported from the *duim-layouts* module.
                  height: 15)
          end method do-compose-space;
 
-   See also
+   :seealso:
 
-   - :const:`$fill`
+     - :const:`$fill`
 
 .. generic-function:: space-requirement?
 
@@ -1243,9 +1243,9 @@ are exported from the *duim-layouts* module.
 
      Returns true if *object* is an instance of :class:`<space-requirement>`.
 
-   See also
+   :seealso:
 
-   - :class:`<space-requirement>`
+     - :class:`<space-requirement>`
 
 .. generic-function:: space-requirement-height
 
@@ -1262,10 +1262,10 @@ are exported from the *duim-layouts* module.
      Returns preferred the height of *space-req*. This is the value of the
      ``height:`` init-keyword that was passed when the object was created.
 
-   See also
+   :seealso:
 
-   - :gf:`space-requirement-max-height`
-   - :gf:`space-requirement-min-height`
+     - :gf:`space-requirement-max-height`
+     - :gf:`space-requirement-min-height`
 
 .. generic-function:: space-requirement-max-height
 
@@ -1283,10 +1283,10 @@ are exported from the *duim-layouts* module.
      the ``max-height:`` init-keyword that was passed when the object was
      created.
 
-   See also
+   :seealso:
 
-   - :gf:`space-requirement-height`
-   - :gf:`space-requirement-min-height`
+     - :gf:`space-requirement-height`
+     - :gf:`space-requirement-min-height`
 
 .. generic-function:: space-requirement-max-width
 
@@ -1304,10 +1304,10 @@ are exported from the *duim-layouts* module.
      the ``max-width:`` init-keyword that was passed when the object was
      created.
 
-   See also
+   :seealso:
 
-   - :gf:`space-requirement-min-width`
-   - :gf:`space-requirement-width`
+     - :gf:`space-requirement-min-width`
+     - :gf:`space-requirement-width`
 
 .. generic-function:: space-requirement-min-height
 
@@ -1325,10 +1325,10 @@ are exported from the *duim-layouts* module.
      the ``min-height:`` init-keyword that was passed when the object was
      created.
 
-   See also
+   :seealso:
 
-   - :gf:`space-requirement-height`
-   - :gf:`space-requirement-max-height`
+     - :gf:`space-requirement-height`
+     - :gf:`space-requirement-max-height`
 
 .. generic-function:: space-requirement-min-width
 
@@ -1346,10 +1346,10 @@ are exported from the *duim-layouts* module.
      the ``min-width:`` init-keyword that was passed when the object was
      created.
 
-   See also
+   :seealso:
 
-   - :gf:`space-requirement-max-width`
-   - :gf:`space-requirement-width`
+     - :gf:`space-requirement-max-width`
+     - :gf:`space-requirement-width`
 
 .. generic-function:: space-requirement-width
 
@@ -1366,10 +1366,10 @@ are exported from the *duim-layouts* module.
      Returns the preferred width of *space-req*. This is the value of the
      ``width:`` init-keyword that was passed when the object was created.
 
-   See also
+   :seealso:
 
-   - :gf:`space-requirement-max-width`
-   - :gf:`space-requirement-min-width`
+     - :gf:`space-requirement-max-width`
+     - :gf:`space-requirement-min-width`
 
 .. class:: <stack-layout>
    :open:
@@ -1405,13 +1405,13 @@ are exported from the *duim-layouts* module.
      onto the screen when a stack layout is first created. If it is not
      specified, then the first page in the stack layout is mapped.
 
-   See also
+   :seealso:
 
-   - :class:`<column-layout>`
-   - :class:`<grid-layout>`
-   - :class:`<layout>`
-   - :class:`<row-layout>`
-   - :class:`<table-layout>`
+     - :class:`<column-layout>`
+     - :class:`<grid-layout>`
+     - :class:`<layout>`
+     - :class:`<row-layout>`
+     - :class:`<table-layout>`
 
 .. generic-function:: stack-layout-mapped-page
 
@@ -1453,9 +1453,9 @@ are exported from the *duim-layouts* module.
 
      Returns the contents of *table*.
 
-   See also
+   :seealso:
 
-   - :gf:`table-contents-setter`
+     - :gf:`table-contents-setter`
 
 .. generic-function:: table-contents-setter
 
@@ -1471,9 +1471,9 @@ are exported from the *duim-layouts* module.
 
      Sets the contents of *table*.
 
-   See also
+   :seealso:
 
-   - :gf:`table-contents`
+     - :gf:`table-contents`
 
 .. class:: <table-layout>
    :open:
@@ -1585,14 +1585,14 @@ are exported from the *duim-layouts* module.
                     x-spacing: 10, y-spacing: 0,
                     children: *t*, columns: 3));
 
-   See also
+   :seealso:
 
-   - :class:`<column-layout>`
-   - :class:`<grid-layout>`
-   - :class:`<layout>`
-   - :class:`<row-layout>`
-   - :class:`<stack-layout>`
-   - :macro:`tabling`
+     - :class:`<column-layout>`
+     - :class:`<grid-layout>`
+     - :class:`<layout>`
+     - :class:`<row-layout>`
+     - :class:`<stack-layout>`
+     - :macro:`tabling`
 
 .. macro:: tabling
    :statement:
@@ -1618,11 +1618,11 @@ are exported from the *duim-layouts* module.
      which creates an instance of a gadget or layout that is to be included
      in the vertical layout.
 
-   See also
+   :seealso:
 
-   - :macro:`horizontally`
-   - :class:`<table-layout>`
-   - :macro:`vertically`
+     - :macro:`horizontally`
+     - :class:`<table-layout>`
+     - :macro:`vertically`
 
 .. class:: <top-level-sheet>
    :open:
@@ -1683,8 +1683,8 @@ are exported from the *duim-layouts* module.
          make(<button>, label: "World")
        end);
 
-   See also
+   :seealso:
 
-   - :class:`<column-layout>`
-   - :macro:`horizontally`
-   - :macro:`tabling`
+     - :class:`<column-layout>`
+     - :macro:`horizontally`
+     - :macro:`tabling`

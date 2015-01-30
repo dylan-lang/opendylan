@@ -291,9 +291,9 @@ are exported from the *duim-frames* module.
      menu, and keystroke accelerator are removed from the command table
      before creating the new one.
 
-   See also
+   :seealso:
 
-   - :gf:`remove-command`
+     - :gf:`remove-command`
 
 .. generic-function:: add-command-table-menu-item
 
@@ -420,10 +420,10 @@ are exported from the *duim-frames* module.
      is removed from the menu before adding the new item. Note that the
      character case of *string* is ignored when searching the command table.
 
-   See also
+   :seealso:
 
-   - :class:`<command-table-menu-item>`
-   - :gf:`remove-command-table-menu-item`
+     - :class:`<command-table-menu-item>`
+     - :gf:`remove-command-table-menu-item`
 
 .. class:: <application-exited-event>
    :sealed:
@@ -439,10 +439,10 @@ are exported from the *duim-frames* module.
      this class is distributed when your application is exited, for instance
      by choosing *File > Exit* from its main menu bar.
 
-   See also
+   :seealso:
 
-   - :gf:`exit-frame`
-   - :class:`<frame-exited-event>`
+     - :gf:`exit-frame`
+     - :class:`<frame-exited-event>`
 
 .. generic-function:: apply-in-frame
 
@@ -463,9 +463,9 @@ are exported from the *duim-frames* module.
      You must supply at least one argument (*arg*), though you can
      optionally supply as many additional arguments as you like.
 
-   See also
+   :seealso:
 
-   - :gf:`call-in-frame`
+     - :gf:`call-in-frame`
 
 .. generic-function:: call-in-frame
 
@@ -482,9 +482,9 @@ are exported from the *duim-frames* module.
 
      Calls *function* with the given arguments in the main thread of *frame*.
 
-   See also
+   :seealso:
 
-   - :gf:`apply-in-frame`
+     - :gf:`apply-in-frame`
 
 .. generic-function:: cancel-dialog
 
@@ -533,12 +533,12 @@ are exported from the *duim-frames* module.
 
         start-frame(*dialog*);
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-cancel-callback`
-   - :class:`<dialog-frame>`
-   - :gf:`start-dialog`
-   - :gf:`exit-dialog`
+     - :gf:`dialog-cancel-callback`
+     - :class:`<dialog-frame>`
+     - :gf:`start-dialog`
+     - :gf:`exit-dialog`
 
 .. generic-function:: clear-progress-note
 
@@ -601,13 +601,13 @@ are exported from the *duim-frames* module.
      - :gf:`remove-command`
      - :gf:`undo-command`
 
-   See also
+   :seealso:
 
-   - :gf:`command?`
-   - :gf:`command-arguments`
-   - :gf:`command-function`
-   - :gf:`execute-command`
-   - :class:`<simple-command>`
+     - :gf:`command?`
+     - :gf:`command-arguments`
+     - :gf:`command-function`
+     - :gf:`execute-command`
+     - :class:`<simple-command>`
 
 .. generic-function:: command?
 
@@ -622,9 +622,9 @@ are exported from the *duim-frames* module.
 
      Returns true if *object* is an instance of :class:`<command>`.
 
-   See also
+   :seealso:
 
-   - :class:`<command>`
+     - :class:`<command>`
 
 .. generic-function:: command-arguments
 
@@ -639,9 +639,9 @@ are exported from the *duim-frames* module.
 
      Returns the arguments to *command*.
 
-   See also
+   :seealso:
 
-   - :class:`<command>`
+     - :class:`<command>`
 
 .. generic-function:: command-enabled?
 
@@ -657,10 +657,10 @@ are exported from the *duim-frames* module.
 
      Returns true if *command* in *frame* is enabled.
 
-   See also
+   :seealso:
 
-   - :class:`<command>`
-   - :gf:`command-enabled?-setter`
+     - :class:`<command>`
+     - :gf:`command-enabled?-setter`
 
 .. generic-function:: command-enabled?-setter
 
@@ -685,9 +685,9 @@ are exported from the *duim-frames* module.
      immediately after saving a file, enabling it again only when the file
      has been modified.
 
-   See also
+   :seealso:
 
-   - :gf:`command-enabled?`
+     - :gf:`command-enabled?`
 
 .. generic-function:: command-function
 
@@ -706,10 +706,10 @@ are exported from the *duim-frames* module.
      invoked in order to perform some action. Command functions take at least
      one argument: a :class:`<frame>` object.
 
-   See also
+   :seealso:
 
-   - :class:`<command>`
-   - :gf:`execute-command`
+     - :class:`<command>`
+     - :gf:`execute-command`
 
 .. class:: <command-table>
    :open:
@@ -776,10 +776,10 @@ are exported from the *duim-frames* module.
             documentation: $delete-doc;
         end command-table *clipboard-command-table*;
 
-   See also
+   :seealso:
 
-   - :var:`*global-command-table*`
-   - :var:`*user-command-table*`
+     - :var:`*global-command-table*`
+     - :var:`*user-command-table*`
 
 .. generic-function:: command-table?
 
@@ -794,9 +794,9 @@ are exported from the *duim-frames* module.
 
      Returns true if *object* is a command table.
 
-   See also
+   :seealso:
 
-   - :class:`<command-table>`
+     - :class:`<command-table>`
 
 .. generic-function:: command-table-accelerators
 
@@ -811,9 +811,9 @@ are exported from the *duim-frames* module.
 
      Returns the keyboard accelerators for *command-table*.
 
-   See also
+   :seealso:
 
-   - :gf:`command-table-commands`
+     - :gf:`command-table-commands`
 
 .. generic-function:: command-table-commands
 
@@ -828,10 +828,10 @@ are exported from the *duim-frames* module.
 
      Returns the commands defined for *command-table*.
 
-   See also
+   :seealso:
 
-   - :gf:`command-table-accelerators`
-   - :gf:`command-table-menu`
+     - :gf:`command-table-accelerators`
+     - :gf:`command-table-menu`
 
 .. generic-function:: command-table-menu
 
@@ -846,10 +846,10 @@ are exported from the *duim-frames* module.
 
      Returns the menu items in *command-table*.
 
-   See also
+   :seealso:
 
-   - :gf:`command-table-commands`
-   - :gf:`command-table-name`
+     - :gf:`command-table-commands`
+     - :gf:`command-table-name`
 
 .. class:: <command-table-menu-item>
    :sealed:
@@ -921,9 +921,9 @@ are exported from the *duim-frames* module.
      - :gf:`menu-item-type`
      - :gf:`menu-item-value`
 
-   See also
+   :seealso:
 
-   - :gf:`add-command-table-menu-item`
+     - :gf:`add-command-table-menu-item`
 
 .. generic-function:: command-table-name
 
@@ -939,10 +939,10 @@ are exported from the *duim-frames* module.
      Returns the name of *command-table*, as defined by the ``name:``
      init-keyword for :class:`<command-table>`.
 
-   See also
+   :seealso:
 
-   - :class:`<command-table>`
-   - :gf:`command-table-menu`
+     - :class:`<command-table>`
+     - :gf:`command-table-menu`
 
 .. generic-function:: command-undoable?
 
@@ -959,9 +959,9 @@ are exported from the *duim-frames* module.
      command that the user can choose (for instance, by choosing *Edit >
      Undo*) that will reverse the effects of command.
 
-   See also
+   :seealso:
 
-   - :gf:`undo-command`
+     - :gf:`undo-command`
 
 .. generic-function:: complete-from-generator
 
@@ -1028,9 +1028,9 @@ are exported from the *duim-frames* module.
                    end
                  end method, #[' ', '-'])
 
-   See also
+   :seealso:
 
-   - :gf:`complete-from-sequence`
+     - :gf:`complete-from-sequence`
 
 .. generic-function:: complete-from-sequence
 
@@ -1096,9 +1096,9 @@ are exported from the *duim-frames* module.
           label-key: identity,
           value-key: identity)
 
-   See also
+   :seealso:
 
-   - :gf:`complete-from-generator`
+     - :gf:`complete-from-generator`
 
 .. generic-function:: compute-next-page
 
@@ -1113,10 +1113,10 @@ are exported from the *duim-frames* module.
 
      Returns the next page in *dialog*, which must be a wizard.
 
-   See also
+   :seealso:
 
-   - :gf:`compute-previous-page`
-   - :class:`<wizard-frame>`
+     - :gf:`compute-previous-page`
+     - :class:`<wizard-frame>`
 
 .. generic-function:: compute-previous-page
 
@@ -1131,10 +1131,10 @@ are exported from the *duim-frames* module.
 
      Returns the previous page in *dialog*, which must be a wizard.
 
-   See also
+   :seealso:
 
-   - :gf:`compute-next-page`
-   - :class:`<wizard-frame>`
+     - :gf:`compute-next-page`
+     - :class:`<wizard-frame>`
 
 .. generic-function:: contain
 
@@ -1352,9 +1352,9 @@ are exported from the *duim-frames* module.
           menu-item "Help" = *help-menu-command-table*;
         end command-table *application-command-table*;
         
-   See also
+   :seealso:
 
-   - :var:`*global-command-table*`
+     - :var:`*global-command-table*`
 
 .. macro:: define frame
    :defining:
@@ -1521,10 +1521,10 @@ are exported from the *duim-frames* module.
           end;
         end frame <multiple-values-dialog>;
 
-   See also
+   :seealso:
 
-   - :class:`<simple-frame>`
-   - :class:`<wizard-frame>`
+     - :class:`<simple-frame>`
+     - :class:`<wizard-frame>`
 
 .. generic-function:: deiconify-frame
 
@@ -1552,12 +1552,12 @@ are exported from the *duim-frames* module.
         iconify-frame(*frame*);
         deiconify-frame(*frame*);
 
-   See also
+   :seealso:
 
-   - :gf:`destroy-frame`
-   - :gf:`exit-frame`
-   - :gf:`frame-icon`
-   - :gf:`iconify-frame`
+     - :gf:`destroy-frame`
+     - :gf:`exit-frame`
+     - :gf:`frame-icon`
+     - :gf:`iconify-frame`
 
 .. generic-function:: destroy-frame
 
@@ -1575,14 +1575,14 @@ are exported from the *duim-frames* module.
      correct order, including calling :gf:`destroy-frame` if the *destroy?*
      argument to :gf:`exit-frame` is true.
 
-   See also
+   :seealso:
 
-   - :gf:`deiconify-frame`
-   - :gf:`exit-frame`
-   - :class:`<frame-destroyed-event>`
-   - :gf:`iconify-frame`
-   - :gf:`lower-frame`
-   - :gf:`raise-frame`
+     - :gf:`deiconify-frame`
+     - :gf:`exit-frame`
+     - :class:`<frame-destroyed-event>`
+     - :gf:`iconify-frame`
+     - :gf:`lower-frame`
+     - :gf:`raise-frame`
 
 .. generic-function:: dialog-apply-button
 
@@ -1600,12 +1600,12 @@ are exported from the *duim-frames* module.
      the changes that have been made in the dialog, without removing the
      dialog from the screen itself.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-cancel-button`
-   - :gf:`dialog-apply-button-setter`
-   - :gf:`dialog-apply-callback`
-   - :gf:`dialog-help-button`
+     - :gf:`dialog-cancel-button`
+     - :gf:`dialog-apply-button-setter`
+     - :gf:`dialog-apply-callback`
+     - :gf:`dialog-help-button`
 
 .. generic-function:: dialog-apply-button-setter
 
@@ -1624,12 +1624,12 @@ are exported from the *duim-frames* module.
      the changes that have been made in the dialog, without removing the
      dialog from the screen itself.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-cancel-button`
-   - :gf:`dialog-apply-button`
-   - :gf:`dialog-apply-callback`
-   - :gf:`dialog-help-button`
+     - :gf:`dialog-cancel-button`
+     - :gf:`dialog-apply-button`
+     - :gf:`dialog-apply-callback`
+     - :gf:`dialog-help-button`
 
 .. generic-function:: dialog-apply-callback
 
@@ -1651,12 +1651,12 @@ are exported from the *duim-frames* module.
      .. note:: If you supply ``#f`` as the callback, then the button does not
         appear.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-cancel-button`
-   - :gf:`dialog-apply-button`
-   - :gf:`dialog-apply-button-setter`
-   - :gf:`dialog-help-button`
+     - :gf:`dialog-cancel-button`
+     - :gf:`dialog-apply-button`
+     - :gf:`dialog-apply-button-setter`
+     - :gf:`dialog-help-button`
 
 .. generic-function:: dialog-back-button
 
@@ -1674,12 +1674,12 @@ are exported from the *duim-frames* module.
      Back and Next buttons that let the user navigate forward and backward
      through the sequence of pages that comprise the dialog.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-back-button-setter`
-   - :gf:`dialog-back-callback`
-   - :gf:`dialog-exit-button`
-   - :gf:`dialog-help-button`
+     - :gf:`dialog-back-button-setter`
+     - :gf:`dialog-back-callback`
+     - :gf:`dialog-exit-button`
+     - :gf:`dialog-help-button`
 
 .. generic-function:: dialog-back-button-setter
 
@@ -1698,12 +1698,12 @@ are exported from the *duim-frames* module.
      navigate forward and backward through the sequence of pages that
      comprise the dialog.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-back-button`
-   - :gf:`dialog-back-callback`
-   - :gf:`dialog-exit-button-setter`
-   - :gf:`dialog-help-button`
+     - :gf:`dialog-back-button`
+     - :gf:`dialog-back-callback`
+     - :gf:`dialog-exit-button-setter`
+     - :gf:`dialog-help-button`
 
 .. generic-function:: dialog-back-callback
 
@@ -1728,12 +1728,12 @@ are exported from the *duim-frames* module.
         describing how the user can navigate through the sequence of pages in
         the dialog.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-back-button`
-   - :gf:`dialog-back-button-setter`
-   - :gf:`dialog-exit-callback`
-   - :gf:`dialog-help-button`
+     - :gf:`dialog-back-button`
+     - :gf:`dialog-back-button-setter`
+     - :gf:`dialog-exit-callback`
+     - :gf:`dialog-help-button`
 
 .. generic-function:: dialog-cancel-button
 
@@ -1748,12 +1748,12 @@ are exported from the *duim-frames* module.
 
      Returns the Cancel button in *dialog*.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-cancel-button-setter`
-   - :gf:`dialog-cancel-callback`
-   - :gf:`dialog-exit-button`
-   - :gf:`dialog-help-button`
+     - :gf:`dialog-cancel-button-setter`
+     - :gf:`dialog-cancel-callback`
+     - :gf:`dialog-exit-button`
+     - :gf:`dialog-help-button`
 
 .. generic-function:: dialog-cancel-button-setter
 
@@ -1792,12 +1792,12 @@ are exported from the *duim-frames* module.
                 max-width: $fill), *dialog*);
         start-frame(*dialog*);
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-cancel-button`
-   - :gf:`dialog-cancel-callback`
-   - :gf:`dialog-exit-button-setter`
-   - :gf:`dialog-help-button-setter`
+     - :gf:`dialog-cancel-button`
+     - :gf:`dialog-cancel-callback`
+     - :gf:`dialog-exit-button-setter`
+     - :gf:`dialog-help-button-setter`
 
 .. generic-function:: dialog-cancel-callback
 
@@ -1814,13 +1814,13 @@ are exported from the *duim-frames* module.
      Returns the function invoked when the cancel button is clicked in
      *dialog*. This defaults to :gf:`cancel-dialog`.
 
-   See also
+   :seealso:
 
-   - :gf:`cancel-dialog`
-   - :gf:`dialog-cancel-button`
-   - :gf:`dialog-cancel-button-setter`
-   - :gf:`dialog-exit-callback`
-   - :gf:`dialog-help-callback`
+     - :gf:`cancel-dialog`
+     - :gf:`dialog-cancel-button`
+     - :gf:`dialog-cancel-button-setter`
+     - :gf:`dialog-exit-callback`
+     - :gf:`dialog-help-callback`
 
 .. generic-function:: dialog-cancel-callback-setter
 
@@ -1838,12 +1838,12 @@ are exported from the *duim-frames* module.
 
      Sets the function invoked when the cancel button is clicked in *dialog*.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-cancel-button`
-   - :gf:`dialog-cancel-button-setter`
-   - :gf:`dialog-exit-callback`
-   - :gf:`dialog-help-callback`
+     - :gf:`dialog-cancel-button`
+     - :gf:`dialog-cancel-button-setter`
+     - :gf:`dialog-exit-callback`
+     - :gf:`dialog-help-callback`
 
 .. generic-function:: dialog-current-page
 
@@ -1858,9 +1858,9 @@ are exported from the *duim-frames* module.
 
      Returns the current page in *dialog*.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-current-page-setter`
+     - :gf:`dialog-current-page-setter`
 
 .. generic-function:: dialog-current-page-setter
 
@@ -1876,9 +1876,9 @@ are exported from the *duim-frames* module.
 
      Sets the current page in *dialog*.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-current-page`
+     - :gf:`dialog-current-page`
 
 .. generic-function:: dialog-exit-button
 
@@ -1896,13 +1896,13 @@ are exported from the *duim-frames* module.
      sequence at any point (as well as navigate through the sequence using
      Next and Back buttons).
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-cancel-button`
-   - :gf:`dialog-exit-button-setter`
-   - :gf:`dialog-exit-enabled?`
-   - :gf:`dialog-exit-callback`
-   - :gf:`dialog-help-button`
+     - :gf:`dialog-cancel-button`
+     - :gf:`dialog-exit-button-setter`
+     - :gf:`dialog-exit-enabled?`
+     - :gf:`dialog-exit-callback`
+     - :gf:`dialog-help-button`
 
 .. generic-function:: dialog-exit-button-setter
 
@@ -1944,13 +1944,13 @@ are exported from the *duim-frames* module.
                 max-width: $fill), *dialog*);
         start-frame(*dialog*);
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-cancel-button-setter`
-   - :gf:`dialog-exit-button`
-   - :gf:`dialog-exit-enabled?`
-   - :gf:`dialog-exit-callback`
-   - :gf:`dialog-help-button-setter`
+     - :gf:`dialog-cancel-button-setter`
+     - :gf:`dialog-exit-button`
+     - :gf:`dialog-exit-enabled?`
+     - :gf:`dialog-exit-callback`
+     - :gf:`dialog-help-button-setter`
 
 .. generic-function:: dialog-exit-callback
 
@@ -1970,13 +1970,13 @@ are exported from the *duim-frames* module.
      user is given the option to exit the sequence at any point (as well as
      navigate through the sequence using Next and Back buttons).
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-cancel-callback`
-   - :gf:`dialog-exit-button`
-   - :gf:`dialog-exit-button-setter`
-   - :gf:`dialog-exit-callback-setter`
-   - :gf:`dialog-help-callback`
+     - :gf:`dialog-cancel-callback`
+     - :gf:`dialog-exit-button`
+     - :gf:`dialog-exit-button-setter`
+     - :gf:`dialog-exit-callback-setter`
+     - :gf:`dialog-help-callback`
 
 .. generic-function:: dialog-exit-callback-setter
 
@@ -2003,13 +2003,13 @@ are exported from the *duim-frames* module.
      In addition, supplying ``#f`` means that no Exit button is displayed at
      all.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-cancel-callback-setter`
-   - :gf:`dialog-exit-button`
-   - :gf:`dialog-exit-button-setter`
-   - :gf:`dialog-exit-callback`
-   - :gf:`dialog-help-callback`
+     - :gf:`dialog-cancel-callback-setter`
+     - :gf:`dialog-exit-button`
+     - :gf:`dialog-exit-button-setter`
+     - :gf:`dialog-exit-callback`
+     - :gf:`dialog-help-callback`
 
 .. generic-function:: dialog-exit-enabled?
 
@@ -2028,12 +2028,12 @@ are exported from the *duim-frames* module.
      the option to exit the sequence at any point (as well as navigate
      through the sequence using Next and Back buttons).
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-exit-button`
-   - :gf:`dialog-exit-button-setter`
-   - :gf:`dialog-exit-enabled?-setter`
-   - :gf:`dialog-exit-callback`
+     - :gf:`dialog-exit-button`
+     - :gf:`dialog-exit-button-setter`
+     - :gf:`dialog-exit-enabled?-setter`
+     - :gf:`dialog-exit-callback`
 
 .. generic-function:: dialog-exit-enabled?-setter
 
@@ -2074,12 +2074,12 @@ are exported from the *duim-frames* module.
         dialog-exit-enabled?-setter(#f, *dialog*);
         start-frame(*dialog*);
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-exit-button`
-   - :gf:`dialog-exit-button-setter`
-   - :gf:`dialog-exit-enabled?`
-   - :gf:`dialog-exit-callback`
+     - :gf:`dialog-exit-button`
+     - :gf:`dialog-exit-button-setter`
+     - :gf:`dialog-exit-enabled?`
+     - :gf:`dialog-exit-callback`
 
 .. class:: <dialog-frame>
    :open:
@@ -2237,13 +2237,13 @@ are exported from the *duim-frames* module.
 
         start-frame(*dialog*);
 
-   See also
+   :seealso:
 
-   - :gf:`cancel-dialog`
-   - :gf:`exit-dialog`
-   - :class:`<property-frame>`
-   - :class:`<simple-frame>`
-   - :class:`<wizard-frame>`
+     - :gf:`cancel-dialog`
+     - :gf:`exit-dialog`
+     - :class:`<property-frame>`
+     - :class:`<simple-frame>`
+     - :class:`<wizard-frame>`
 
 .. generic-function:: dialog-help-button
 
@@ -2260,12 +2260,12 @@ are exported from the *duim-frames* module.
      that, when clicked, displays a relevant topic from the online help
      system for the application.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-cancel-button`
-   - :gf:`dialog-exit-button`
-   - :gf:`dialog-help-button-setter`
-   - :gf:`dialog-help-callback`
+     - :gf:`dialog-cancel-button`
+     - :gf:`dialog-exit-button`
+     - :gf:`dialog-help-button-setter`
+     - :gf:`dialog-help-callback`
 
 .. generic-function:: dialog-help-button-setter
 
@@ -2314,12 +2314,12 @@ are exported from the *duim-frames* module.
 
         start-frame(*dialog*);
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-cancel-button-setter`
-   - :gf:`dialog-exit-button-setter`
-   - :gf:`dialog-help-button`
-   - :gf:`dialog-help-callback`
+     - :gf:`dialog-cancel-button-setter`
+     - :gf:`dialog-exit-button-setter`
+     - :gf:`dialog-help-button`
+     - :gf:`dialog-help-callback`
 
 .. generic-function:: dialog-help-callback
 
@@ -2341,12 +2341,12 @@ are exported from the *duim-frames* module.
         in any dialog. If the callback is ``#f``, then there will be no Help
         button present in the dialog.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-cancel-callback`
-   - :gf:`dialog-exit-callback`
-   - :gf:`dialog-help-button`
-   - :gf:`dialog-help-button-setter`
+     - :gf:`dialog-cancel-callback`
+     - :gf:`dialog-exit-callback`
+     - :gf:`dialog-help-button`
+     - :gf:`dialog-help-button-setter`
 
 .. generic-function:: dialog-next-button
 
@@ -2364,12 +2364,12 @@ are exported from the *duim-frames* module.
      Back and Next buttons that let the user navigate forward and backward
      through the sequence of pages that comprise the dialog.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-back-button`
-   - :gf:`dialog-exit-button`
-   - :gf:`dialog-next-button-setter`
-   - :gf:`dialog-next-callback`
+     - :gf:`dialog-back-button`
+     - :gf:`dialog-exit-button`
+     - :gf:`dialog-next-button-setter`
+     - :gf:`dialog-next-callback`
 
 .. generic-function:: dialog-next-button-setter
 
@@ -2388,12 +2388,12 @@ are exported from the *duim-frames* module.
      typically have Back and Next buttons that let the user navigate forward
      and backward through the sequence of pages that comprise the dialog.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-back-button-setter`
-   - :gf:`dialog-exit-button`
-   - :gf:`dialog-next-button`
-   - :gf:`dialog-next-callback`
+     - :gf:`dialog-back-button-setter`
+     - :gf:`dialog-exit-button`
+     - :gf:`dialog-next-button`
+     - :gf:`dialog-next-callback`
 
 .. generic-function:: dialog-next-callback
 
@@ -2421,13 +2421,13 @@ are exported from the *duim-frames* module.
 
      The default value for this callback is :gf:`move-to-next-page`.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-back-button`
-   - :gf:`dialog-exit-callback`
-   - :gf:`dialog-next-button`
-   - :gf:`dialog-next-button-setter`
-   - :gf:`move-to-next-page`
+     - :gf:`dialog-back-button`
+     - :gf:`dialog-exit-callback`
+     - :gf:`dialog-next-button`
+     - :gf:`dialog-next-button-setter`
+     - :gf:`move-to-next-page`
 
 .. generic-function:: dialog-next-enabled?
 
@@ -2447,13 +2447,13 @@ are exported from the *duim-frames* module.
      user navigate forward and backward through the sequence of pages that
      comprise the dialog.
 
-   See also
+   :seealso:
 
-   - :class:`<dialog-frame>`
-   - :gf:`dialog-next-button`
-   - :gf:`dialog-next-button-setter`
-   - :gf:`dialog-next-enabled?-setter`
-   - :gf:`dialog-next-callback`
+     - :class:`<dialog-frame>`
+     - :gf:`dialog-next-button`
+     - :gf:`dialog-next-button-setter`
+     - :gf:`dialog-next-enabled?-setter`
+     - :gf:`dialog-next-callback`
 
 .. generic-function:: dialog-next-enabled?-setter
 
@@ -2480,12 +2480,12 @@ are exported from the *duim-frames* module.
      with :gf:`dialog-page-complete?`, and then enabling
      or disabling the Next button as appropriate.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-next-button`
-   - :gf:`dialog-next-button-setter`
-   - :gf:`dialog-next-callback`
-   - :gf:`dialog-next-enabled?`
+     - :gf:`dialog-next-button`
+     - :gf:`dialog-next-button-setter`
+     - :gf:`dialog-next-callback`
+     - :gf:`dialog-next-enabled?`
 
 .. generic-function:: dialog-next-page
 
@@ -2508,13 +2508,13 @@ are exported from the *duim-frames* module.
      to the next logical page in the sequence, but you are free to
      dynamically change it as the state of the dialog changes.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-next-button`
-   - :gf:`dialog-next-button-setter`
-   - :gf:`dialog-next-callback`
-   - :gf:`dialog-next-page-setter`
-   - :gf:`dialog-previous-page`
+     - :gf:`dialog-next-button`
+     - :gf:`dialog-next-button-setter`
+     - :gf:`dialog-next-callback`
+     - :gf:`dialog-next-page-setter`
+     - :gf:`dialog-previous-page`
 
 .. generic-function:: dialog-next-page-setter
 
@@ -2538,13 +2538,13 @@ are exported from the *duim-frames* module.
      to the next logical page in the sequence, but you are free to
      dynamically change it as the state of the dialog changes.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-next-button`
-   - :gf:`dialog-next-button-setter`
-   - :gf:`dialog-next-callback`
-   - :gf:`dialog-next-page`
-   - :gf:`dialog-previous-page-setter`
+     - :gf:`dialog-next-button`
+     - :gf:`dialog-next-button-setter`
+     - :gf:`dialog-next-callback`
+     - :gf:`dialog-next-page`
+     - :gf:`dialog-previous-page-setter`
 
 .. generic-function:: dialog-page-changed-callback
 
@@ -2563,12 +2563,12 @@ are exported from the *duim-frames* module.
      dialogs, as a test that can be performed before the next page of the
      dialog is displayed.
 
-   See also
+   :seealso:
 
-   - :class:`<dialog-frame>`
-   - :gf:`dialog-page-changed-callback-setter`
-   - :class:`<property-frame>`
-   - :class:`<wizard-frame>`
+     - :class:`<dialog-frame>`
+     - :gf:`dialog-page-changed-callback-setter`
+     - :class:`<property-frame>`
+     - :class:`<wizard-frame>`
 
 .. generic-function:: dialog-page-changed-callback-setter
 
@@ -2588,12 +2588,12 @@ are exported from the *duim-frames* module.
      dialogs, as a test that can be performed before the next page of the
      dialog is displayed.
 
-   See also
+   :seealso:
 
-   - :class:`<dialog-frame>`
-   - :gf:`dialog-page-changed-callback`
-   - :class:`<property-frame>`
-   - :class:`<wizard-frame>`
+     - :class:`<dialog-frame>`
+     - :gf:`dialog-page-changed-callback`
+     - :class:`<property-frame>`
+     - :class:`<wizard-frame>`
 
 .. generic-function:: dialog-page-complete?
 
@@ -2618,9 +2618,9 @@ are exported from the *duim-frames* module.
        necessary information has been supplied, before allowing the user to
        apply any changes.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-page-complete?-setter`
+     - :gf:`dialog-page-complete?-setter`
 
 .. generic-function:: dialog-page-complete?-setter
 
@@ -2646,9 +2646,9 @@ are exported from the *duim-frames* module.
        information has been supplied, so that the user can apply any
        changes.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-page-complete?`
+     - :gf:`dialog-page-complete?`
 
 .. generic-function:: dialog-pages
 
@@ -2664,12 +2664,12 @@ are exported from the *duim-frames* module.
      Returns the pages of *dialog*. Each of the items in sequence is an
      instance of :class:`<page>`.
 
-   See also
+   :seealso:
 
-   - :class:`<dialog-frame>`
-   - :gf:`dialog-pages-setter`
-   - :class:`<property-frame>`
-   - :class:`<wizard-frame>`
+     - :class:`<dialog-frame>`
+     - :gf:`dialog-pages-setter`
+     - :class:`<property-frame>`
+     - :class:`<wizard-frame>`
 
 .. generic-function:: dialog-pages-setter
 
@@ -2685,12 +2685,12 @@ are exported from the *duim-frames* module.
      Sets the pages of *dialog*. Each of the items in sequence must be an
      instance of :class:`<page>`.
 
-   See also
+   :seealso:
 
-   - :class:`<dialog-frame>`
-   - :gf:`dialog-pages`
-   - :class:`<property-frame>`
-   - :class:`<wizard-frame>`
+     - :class:`<dialog-frame>`
+     - :gf:`dialog-pages`
+     - :class:`<property-frame>`
+     - :class:`<wizard-frame>`
 
 .. generic-function:: dialog-previous-page
 
@@ -2714,13 +2714,13 @@ are exported from the *duim-frames* module.
      to the previous logical page in the sequence, but you are free to
      dynamically change it as the state of the dialog changes.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-back-button`
-   - :gf:`dialog-back-button-setter`
-   - :gf:`dialog-back-callback`
-   - :gf:`dialog-next-page`
-   - :gf:`dialog-previous-page-setter`
+     - :gf:`dialog-back-button`
+     - :gf:`dialog-back-button-setter`
+     - :gf:`dialog-back-callback`
+     - :gf:`dialog-next-page`
+     - :gf:`dialog-previous-page-setter`
 
 .. generic-function:: dialog-previous-page-setter
 
@@ -2745,13 +2745,13 @@ are exported from the *duim-frames* module.
      to the previous logical page in the sequence, but you are free to
      dynamically change it as the state of the dialog changes.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-back-button`
-   - :gf:`dialog-back-button-setter`
-   - :gf:`dialog-back-callback`
-   - :gf:`dialog-next-page-setter`
-   - :gf:`dialog-previous-page`
+     - :gf:`dialog-back-button`
+     - :gf:`dialog-back-button-setter`
+     - :gf:`dialog-back-callback`
+     - :gf:`dialog-next-page-setter`
+     - :gf:`dialog-previous-page`
 
 .. generic-function:: display-progress-note
 
@@ -2781,9 +2781,9 @@ are exported from the *duim-frames* module.
 
      Returns information about the frame was destroyed in *event*.
 
-   See also
+   :seealso:
 
-   - :class:`<frame-exit-event>`
+     - :class:`<frame-exit-event>`
 
 .. generic-function:: event-status-code
 
@@ -2798,9 +2798,9 @@ are exported from the *duim-frames* module.
 
      Returns the status code of *event*.
 
-   See also
+   :seealso:
 
-   - :class:`<frame-exited-event>`
+     - :class:`<frame-exited-event>`
 
 .. generic-function:: execute-command
 
@@ -2868,11 +2868,11 @@ are exported from the *duim-frames* module.
 
         start-frame(*dialog*);
 
-   See also
+   :seealso:
 
-   - :gf:`cancel-dialog`
-   - :class:`<dialog-frame>`
-   - :gf:`start-dialog`
+     - :gf:`cancel-dialog`
+     - :class:`<dialog-frame>`
+     - :gf:`start-dialog`
 
 .. generic-function:: exit-frame
 
@@ -2905,14 +2905,14 @@ are exported from the *duim-frames* module.
         start-frame(*frame*); // RETURN
         exit-frame(*frame*); // RETURN
 
-   See also
+   :seealso:
 
-   - :gf:`destroy-frame`
-   - :gf:`frame-can-exit?`
-   - :class:`<frame-exited-event>`
-   - :class:`<frame-exit-event>`
-   - :gf:`frame-mapped?-setter`
-   - :gf:`start-frame`
+     - :gf:`destroy-frame`
+     - :gf:`frame-can-exit?`
+     - :class:`<frame-exited-event>`
+     - :class:`<frame-exit-event>`
+     - :gf:`frame-mapped?-setter`
+     - :gf:`start-frame`
 
 .. function:: find-frame
 
@@ -2957,9 +2957,9 @@ are exported from the *duim-frames* module.
      If desired, you can supply a *test* which must evaluate to true for a
      frame to match successfully.
 
-   See also
+   :seealso:
 
-   - :class:`<frame>`
+     - :class:`<frame>`
 
 .. class:: <frame>
    :open:
@@ -3147,10 +3147,10 @@ are exported from the *duim-frames* module.
      that an object is a frame before carrying out frame-related operations
      on it.
 
-   See also
+   :seealso:
 
-   - :gf:`current-frame`
-   - :class:`<frame>`
+     - :gf:`current-frame`
+     - :class:`<frame>`
 
 .. generic-function:: frame-accelerators
 
@@ -3165,9 +3165,9 @@ are exported from the *duim-frames* module.
 
      Returns the keyboard accelerators defined for *frame*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-accelerators-setter`
+     - :gf:`frame-accelerators-setter`
 
 .. generic-function:: frame-accelerators-setter
 
@@ -3183,7 +3183,7 @@ are exported from the *duim-frames* module.
 
      Defines the keyboard accelerators for *frame*.
 
-   See also
+   :seealso:
 
      :gf:`frame-accelerators`
 
@@ -3215,9 +3215,9 @@ are exported from the *duim-frames* module.
                       style: #"question")
         end method frame-can-exit?;
 
-   See also
+   :seealso:
 
-   - :gf:`exit-frame`
+     - :gf:`exit-frame`
 
 .. generic-function:: frame-command-table
 
@@ -3232,9 +3232,9 @@ are exported from the *duim-frames* module.
 
      Returns the command table associated with *frame*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-command-table-setter`
+     - :gf:`frame-command-table-setter`
 
 .. generic-function:: frame-command-table-setter
 
@@ -3250,9 +3250,9 @@ are exported from the *duim-frames* module.
 
      Specifies the command table associated with *frame*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-command-table`
+     - :gf:`frame-command-table`
 
 .. class:: <frame-created-event>
    :sealed:
@@ -3268,10 +3268,10 @@ are exported from the *duim-frames* module.
      of this class is distributed to the frame when it is created. Only one
      of these events is passed during the lifetime of any frame.
 
-   See also
+   :seealso:
 
-   - :class:`<frame-destroyed-event>`
-   - :class:`<frame-exited-event>`
+     - :class:`<frame-destroyed-event>`
+     - :class:`<frame-exited-event>`
 
 .. class:: <frame-destroyed-event>
    :sealed:
@@ -3287,11 +3287,11 @@ are exported from the *duim-frames* module.
      instance of this class is distributed to the frame when it is destroyed.
      Only one of these events is passed during the lifetime of any frame.
 
-   See also
+   :seealso:
 
-   - :gf:`destroy-frame`
-   - :class:`<frame-created-event>`
-   - :class:`<frame-exited-event>`
+     - :gf:`destroy-frame`
+     - :class:`<frame-created-event>`
+     - :class:`<frame-exited-event>`
 
 .. generic-function:: frame-default-button
 
@@ -3306,9 +3306,9 @@ are exported from the *duim-frames* module.
 
      Returns the default button associated with *frame*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-default-button-setter`
+     - :gf:`frame-default-button-setter`
 
 .. generic-function:: frame-default-button-setter
 
@@ -3324,9 +3324,9 @@ are exported from the *duim-frames* module.
 
      Sets the default button associated with *frame*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-default-button`
+     - :gf:`frame-default-button`
 
 .. generic-function:: frame-event-queue
 
@@ -3341,9 +3341,9 @@ are exported from the *duim-frames* module.
 
      Returns the event queue that *frame* is running in.
 
-   See also
+   :seealso:
 
-   - :class:`<frame>`
+     - :class:`<frame>`
 
 .. class:: <frame-exited-event>
    :sealed:
@@ -3369,12 +3369,12 @@ are exported from the *duim-frames* module.
      desired. This code can be used to pass the reason that the frame was
      exited.
 
-   See also
+   :seealso:
 
-   - :class:`<application-exited-event>`
-   - :gf:`exit-frame`
-   - :class:`<frame-created-event>`
-   - :class:`<frame-destroyed-event>`
+     - :class:`<application-exited-event>`
+     - :gf:`exit-frame`
+     - :class:`<frame-created-event>`
+     - :class:`<frame-destroyed-event>`
 
 .. class:: <frame-exit-event>
    :sealed:
@@ -3398,11 +3398,11 @@ are exported from the *duim-frames* module.
 
      If ``destroy-frame?:`` is ``#t``, then the frame is destroyed.
 
-   See also
+   :seealso:
 
-   - :gf:`event-destroy-frame?`
-   - :gf:`frame-can-exit?`
-   - :class:`<frame-exited-event>`
+     - :gf:`event-destroy-frame?`
+     - :gf:`frame-can-exit?`
+     - :class:`<frame-exited-event>`
 
 .. class:: <frame-focus-event>
    :sealed:
@@ -3416,11 +3416,11 @@ are exported from the *duim-frames* module.
 
      The class of events distributed when a frame receives the mouse focus.
 
-   See also
+   :seealso:
 
-   - :gf:`event-destroy-frame?`
-   - :gf:`frame-can-exit?`
-   - :class:`<frame-exited-event>`
+     - :gf:`event-destroy-frame?`
+     - :gf:`frame-can-exit?`
+     - :class:`<frame-exited-event>`
 
 .. generic-function:: frame-fixed-height?
 
@@ -3435,10 +3435,10 @@ are exported from the *duim-frames* module.
 
      Returns true if the height of *frame* is not resizable.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-fixed-width?`
-   - :gf:`frame-resizable?`
+     - :gf:`frame-fixed-width?`
+     - :gf:`frame-resizable?`
 
 .. generic-function:: frame-fixed-width?
 
@@ -3453,10 +3453,10 @@ are exported from the *duim-frames* module.
 
      Returns true if the width of *frame* is not resizable.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-fixed-height?`
-   - :gf:`frame-resizable?`
+     - :gf:`frame-fixed-height?`
+     - :gf:`frame-resizable?`
 
 .. generic-function:: frame-icon
 
@@ -3474,11 +3474,11 @@ are exported from the *duim-frames* module.
      NT 4.0, this icon is also visible in the left hand corner of the title
      bar of the frame when it is not iconized.
 
-   See also
+   :seealso:
 
-   - :gf:`deiconify-frame`
-   - :gf:`frame-icon-setter`
-   - :gf:`iconify-frame`
+     - :gf:`deiconify-frame`
+     - :gf:`frame-icon-setter`
+     - :gf:`iconify-frame`
 
 .. generic-function:: frame-icon-setter
 
@@ -3496,9 +3496,9 @@ are exported from the *duim-frames* module.
      frame is iconified, and in Windows 95 and Windows NT 4.0 is also visible
      on the left hand side of the title bar of the frame.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-icon`
+     - :gf:`frame-icon`
 
 .. generic-function:: frame-input-focus
 
@@ -3513,9 +3513,9 @@ are exported from the *duim-frames* module.
 
      Returns the sheet in *frame* that has the input focus.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-input-focus-setter`
+     - :gf:`frame-input-focus-setter`
 
 .. generic-function:: frame-input-focus-setter
 
@@ -3531,9 +3531,9 @@ are exported from the *duim-frames* module.
 
      Sets which sheet in *frame* has the input focus.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-input-focus`
+     - :gf:`frame-input-focus`
 
 .. generic-function:: frame-layout
 
@@ -3548,9 +3548,9 @@ are exported from the *duim-frames* module.
 
      Returns the layout used in *frame*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-layout-setter`
+     - :gf:`frame-layout-setter`
 
 .. generic-function:: frame-layout-setter
 
@@ -3566,9 +3566,9 @@ are exported from the *duim-frames* module.
 
      Specifies the layout used in *frame*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-layout`
+     - :gf:`frame-layout`
 
 .. generic-function:: frame-mapped?
 
@@ -3607,9 +3607,9 @@ are exported from the *duim-frames* module.
         frame-mapped?(*frame*); // RETURN
         => #f
 
-   See also
+   :seealso:
 
-   - :gf:`frame-mapped?-setter`
+     - :gf:`frame-mapped?-setter`
 
 .. class:: <frame-mapped-event>
    :sealed:
@@ -3640,9 +3640,9 @@ are exported from the *duim-frames* module.
             (format-to-string("Frame %= mapped", frame))
         end method handle-event;
 
-   See also
+   :seealso:
 
-   - :class:`<frame-unmapped-event>`
+     - :class:`<frame-unmapped-event>`
 
 .. generic-function:: frame-mapped?-setter
 
@@ -3677,11 +3677,11 @@ are exported from the *duim-frames* module.
         frame-mapped?-setter(#t, *frame*); // RETURN
         frame-mapped?-setter(#f, *frame*); // RETURN
 
-   See also
+   :seealso:
 
-   - :gf:`exit-frame`
-   - :gf:`frame-mapped?`
-   - :gf:`start-frame`
+     - :gf:`exit-frame`
+     - :gf:`frame-mapped?`
+     - :gf:`start-frame`
 
 .. generic-function:: frame-menu-bar
 
@@ -3696,9 +3696,9 @@ are exported from the *duim-frames* module.
 
      Returns the menu bar used in *frame*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-menu-bar-setter`
+     - :gf:`frame-menu-bar-setter`
 
 .. generic-function:: frame-menu-bar-setter
 
@@ -3714,9 +3714,9 @@ are exported from the *duim-frames* module.
 
      Sets the menu bar used in *frame*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-menu-bar`
+     - :gf:`frame-menu-bar`
 
 .. generic-function:: frame-mode
 
@@ -3751,9 +3751,9 @@ are exported from the *duim-frames* module.
      .. note:: You can only set the mode of a frame when it is first created.
         The mode cannot subsequently be changed.
 
-   See also
+   :seealso:
 
-   - :class:`<frame>`
+     - :class:`<frame>`
 
 .. generic-function:: frame-owner
 
@@ -3785,9 +3785,9 @@ are exported from the *duim-frames* module.
 
      Returns the palette used in *frame*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-palette-setter`
+     - :gf:`frame-palette-setter`
 
 .. generic-function:: frame-palette-setter
 
@@ -3803,9 +3803,9 @@ are exported from the *duim-frames* module.
 
      Sets the palette used in *frame*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-palette`
+     - :gf:`frame-palette`
 
 .. generic-function:: frame-position
 
@@ -3837,11 +3837,11 @@ are exported from the *duim-frames* module.
         start-frame(*frame*); // RETURN
         frame-position(*frame*); // RETURN
 
-   See also
+   :seealso:
 
-   - :gf:`frame-size`
-   - :gf:`frame-state`
-   - :gf:`set-frame-position`
+     - :gf:`frame-size`
+     - :gf:`frame-state`
+     - :gf:`set-frame-position`
 
 .. generic-function:: frame-resizable?
 
@@ -3857,10 +3857,10 @@ are exported from the *duim-frames* module.
      Returns true if *frame* is resizable, that is can have one or both of
      its width and height modified by the user.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-fixed-height?`
-   - :gf:`frame-fixed-width?`
+     - :gf:`frame-fixed-height?`
+     - :gf:`frame-fixed-width?`
 
 .. generic-function:: frame-size
 
@@ -3890,11 +3890,11 @@ are exported from the *duim-frames* module.
         start-frame(*frame*); // RETURN
         frame-size(*frame*); // RETURN
 
-   See also
+   :seealso:
 
-   - :gf:`frame-position`
-   - :gf:`frame-state`
-   - :gf:`set-frame-size`
+     - :gf:`frame-position`
+     - :gf:`frame-state`
+     - :gf:`set-frame-size`
 
 .. generic-function:: frame-state
 
@@ -3928,10 +3928,10 @@ are exported from the *duim-frames* module.
         frame-state(*frame*); // RETURN
         => #"mapped"
 
-   See also
+   :seealso:
 
-   - :gf:`frame-position`
-   - :gf:`frame-size`
+     - :gf:`frame-position`
+     - :gf:`frame-size`
 
 .. generic-function:: frame-status-bar
 
@@ -3946,9 +3946,9 @@ are exported from the *duim-frames* module.
 
      Returns the status bar used in *frame*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-status-bar-setter`
+     - :gf:`frame-status-bar-setter`
 
 .. generic-function:: frame-status-bar-setter
 
@@ -3964,9 +3964,9 @@ are exported from the *duim-frames* module.
 
      Sets the status bar used in *frame*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-status-bar`
+     - :gf:`frame-status-bar`
 
 .. generic-function:: frame-status-message
    :open:
@@ -3984,11 +3984,11 @@ are exported from the *duim-frames* module.
      bar for the frame. If the frame has no status bar, or if the label is
      not set, this this function returns false.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-status-bar`
-   - :gf:`frame-status-message-setter`
-   - :class:`<status-bar>`
+     - :gf:`frame-status-bar`
+     - :gf:`frame-status-message-setter`
+     - :class:`<status-bar>`
 
 .. generic-function:: frame-status-message-setter
 
@@ -4006,11 +4006,11 @@ are exported from the *duim-frames* module.
      bar for the frame. If the frame has no status bar, then attempting to
      set the label fails silently.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-status-bar-setter`
-   - :gf:`frame-status-message`
-   - :class:`<status-bar>`
+     - :gf:`frame-status-bar-setter`
+     - :gf:`frame-status-message`
+     - :class:`<status-bar>`
 
 .. generic-function:: frame-thread
 
@@ -4044,9 +4044,9 @@ are exported from the *duim-frames* module.
      then a default message is displayed. Whether the title bar can be
      removed from the frame or not is platform dependent.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-title-setter`
+     - :gf:`frame-title-setter`
 
 .. generic-function:: frame-title-setter
 
@@ -4064,9 +4064,9 @@ are exported from the *duim-frames* module.
      title bar of the frame. If *title* is ``#f``, then the platform attempts
      to remove the title bar from the frame, if possible.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-title`
+     - :gf:`frame-title`
 
 .. generic-function:: frame-tool-bar
 
@@ -4081,9 +4081,9 @@ are exported from the *duim-frames* module.
 
      Returns the tool bar used in *frame*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-tool-bar-setter`
+     - :gf:`frame-tool-bar-setter`
 
 .. generic-function:: frame-tool-bar-setter
 
@@ -4099,9 +4099,9 @@ are exported from the *duim-frames* module.
 
      Sets the tool bar used in *frame*.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-tool-bar`
+     - :gf:`frame-tool-bar`
 
 .. generic-function:: frame-top-level
 
@@ -4120,9 +4120,9 @@ are exported from the *duim-frames* module.
      The default method for :gf:`frame-top-level` calls :gf:`read-event`
      and then :gf:`handle-event`.
 
-   See also
+   :seealso:
 
-   - :gf:`handle-event`
+     - :gf:`handle-event`
 
 .. class:: <frame-unmapped-event>
    :sealed:
@@ -4155,9 +4155,9 @@ are exported from the *duim-frames* module.
             (format-to-string("Frame %= unmapped", frame))
         end method handle-event;
 
-   See also
+   :seealso:
 
-   - :class:`<frame-mapped-event>`
+     - :class:`<frame-mapped-event>`
 
 .. variable:: *global-command-table*
 
@@ -4173,10 +4173,10 @@ are exported from the *duim-frames* module.
      system-wide commands. You should not casually install any commands or
      translators into this command table.
 
-   See also
+   :seealso:
 
-   - :class:`<command-table>`
-   - :var:`*user-command-table*`
+     - :class:`<command-table>`
+     - :var:`*user-command-table*`
 
 .. generic-function:: iconify-frame
 
@@ -4207,14 +4207,14 @@ are exported from the *duim-frames* module.
         start-frame(*frame*); // RETURN
         iconify-frame(*frame*); // RETURN
 
-   See also
+   :seealso:
 
-   - :gf:`deiconify-frame`
-   - :gf:`destroy-frame`
-   - :gf:`exit-frame`
-   - :gf:`frame-icon`
-   - :gf:`lower-frame`
-   - :gf:`raise-frame`
+     - :gf:`deiconify-frame`
+     - :gf:`destroy-frame`
+     - :gf:`exit-frame`
+     - :gf:`frame-icon`
+     - :gf:`lower-frame`
+     - :gf:`raise-frame`
 
 .. generic-function:: layout-frame
 
@@ -4271,13 +4271,13 @@ are exported from the *duim-frames* module.
         start-frame(*frame*);
         lower-frame(*frame*);
 
-   See also
+   :seealso:
 
-   - :gf:`deiconify-frame`
-   - :gf:`destroy-frame`
-   - :gf:`exit-frame`
-   - :gf:`iconify-frame`
-   - :gf:`raise-frame`
+     - :gf:`deiconify-frame`
+     - :gf:`destroy-frame`
+     - :gf:`exit-frame`
+     - :gf:`iconify-frame`
+     - :gf:`raise-frame`
 
 .. method:: make
    :specializer: <frame>
@@ -4377,9 +4377,9 @@ are exported from the *duim-frames* module.
      for the frame. In addition, *text-style* specifies a text style for the
      frame, and *palette* specifies a color palette for the frame.
 
-   See also
+   :seealso:
 
-   - :class:`<frame>`
+     - :class:`<frame>`
 
 .. generic-function:: make-menu-from-command-table-menu
 
@@ -4423,9 +4423,9 @@ are exported from the *duim-frames* module.
      The *mnemonic* argument defines a keyboard mnemonic for the menu
      created.
 
-   See also
+   :seealso:
 
-   - :gf:`make-menus-from-command-table`
+     - :gf:`make-menus-from-command-table`
 
 .. generic-function:: make-menus-from-command-table
 
@@ -4449,7 +4449,7 @@ are exported from the *duim-frames* module.
 
      The *label* argument lets you specify a label for the set of menus.
 
-   See also
+   :seealso:
 
      :gf:`make-menu-from-command-table`
 
@@ -4467,9 +4467,9 @@ are exported from the *duim-frames* module.
      Returns the keyboard accelerator for *menu-item*. Note that *menu-item*
      must be defined in a command table.
 
-   See also
+   :seealso:
 
-   - :gf:`menu-item-mnemonic`
+     - :gf:`menu-item-mnemonic`
 
 .. generic-function:: menu-item-mnemonic
 
@@ -4484,9 +4484,9 @@ are exported from the *duim-frames* module.
 
      Returns the keyboard mnemonic for *menu-item*.
 
-   See also
+   :seealso:
 
-   - :gf:`menu-item-accelerator`
+     - :gf:`menu-item-accelerator`
 
 .. generic-function:: menu-item-name
 
@@ -4501,11 +4501,11 @@ are exported from the *duim-frames* module.
 
      Returns the name of *menu-item*.
 
-   See also
+   :seealso:
 
-   - :gf:`menu-item-options`
-   - :gf:`menu-item-type`
-   - :gf:`menu-item-value`
+     - :gf:`menu-item-options`
+     - :gf:`menu-item-type`
+     - :gf:`menu-item-value`
 
 .. generic-function:: menu-item-options
 
@@ -4520,11 +4520,11 @@ are exported from the *duim-frames* module.
 
      Returns the options for *menu-item*.
 
-   See also
+   :seealso:
 
-   - :gf:`menu-item-name`
-   - :gf:`menu-item-type`
-   - :gf:`menu-item-value`
+     - :gf:`menu-item-name`
+     - :gf:`menu-item-type`
+     - :gf:`menu-item-value`
 
 .. generic-function:: menu-item-type
 
@@ -4539,11 +4539,11 @@ are exported from the *duim-frames* module.
 
      Returns the type of *menu-item*.
 
-   See also
+   :seealso:
 
-   - :gf:`menu-item-name`
-   - :gf:`menu-item-options`
-   - :gf:`menu-item-value`
+     - :gf:`menu-item-name`
+     - :gf:`menu-item-options`
+     - :gf:`menu-item-value`
 
 .. generic-function:: menu-item-value
 
@@ -4558,11 +4558,11 @@ are exported from the *duim-frames* module.
 
      Returns the value of *menu-item*.
 
-   See also
+   :seealso:
 
-   - :gf:`menu-item-name`
-   - :gf:`menu-item-options`
-   - :gf:`menu-item-type`
+     - :gf:`menu-item-name`
+     - :gf:`menu-item-options`
+     - :gf:`menu-item-type`
 
 .. generic-function:: move-to-next-page
 
@@ -4577,10 +4577,10 @@ are exported from the *duim-frames* module.
      Moves to the next page in sequence of *wizard*. This is the default
      callback for the Next button in a wizard frame.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-next-callback`
-   - :class:`<wizard-frame>`
+     - :gf:`dialog-next-callback`
+     - :class:`<wizard-frame>`
 
 .. generic-function:: move-to-previous-page
 
@@ -4595,10 +4595,10 @@ are exported from the *duim-frames* module.
      Moves to the previous page in sequence of *wizard*. This is the default
      callback for the Back button in a wizard frame.
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-back-callback`
-   - :class:`<wizard-frame>`
+     - :gf:`dialog-back-callback`
+     - :class:`<wizard-frame>`
 
 .. generic-function:: note-progress
 
@@ -4624,10 +4624,10 @@ are exported from the *duim-frames* module.
      If supplied, *pointer-cursor* is used as a cursor when the mouse pointer
      is placed over the owner frame.
 
-   See also
+   :seealso:
 
-   - :macro:`noting-progress`
-   - :var:`*progress-note*`
+     - :macro:`noting-progress`
+     - :var:`*progress-note*`
 
 .. macro:: noting-progress
    :statement:
@@ -4652,9 +4652,9 @@ are exported from the *duim-frames* module.
      :class:`<sheet>`. The label argument is an expression
      that evaluates to an instance of :drm:`<string>`.
 
-   See also
+   :seealso:
 
-   - :gf:`note-progress`
+     - :gf:`note-progress`
 
 .. variable:: *progress-note*
    :thread:
@@ -4670,9 +4670,9 @@ are exported from the *duim-frames* module.
      This variable is used to supply a default progress note to use if no
      progress note is explicitly specified.
 
-   See also
+   :seealso:
 
-   - :gf:`note-progress`
+     - :gf:`note-progress`
 
 .. class:: <property-frame>
    :open:
@@ -4733,13 +4733,13 @@ are exported from the *duim-frames* module.
      - :gf:`dialog-pages`
      - :gf:`dialog-pages-setter`
 
-   See also
+   :seealso:
 
-   - :gf:`dialog-apply-button`
-   - :gf:`dialog-apply-callback`
-   - :class:`<dialog-frame>`
-   - :class:`<property-page>`
-   - :class:`<wizard-frame>`
+     - :gf:`dialog-apply-button`
+     - :gf:`dialog-apply-callback`
+     - :class:`<dialog-frame>`
+     - :class:`<property-page>`
+     - :class:`<wizard-frame>`
 
 .. class:: <property-page>
    :open:
@@ -4761,13 +4761,13 @@ are exported from the *duim-frames* module.
 
      Internally, this class maps into the Windows property page control.
 
-   See also
+   :seealso:
 
-   - :class:`<page>`
-   - :class:`<property-frame>`
-   - :class:`<property-page>`
-   - :class:`<tab-control-page>`
-   - :class:`<wizard-page>`
+     - :class:`<page>`
+     - :class:`<property-frame>`
+     - :class:`<property-page>`
+     - :class:`<tab-control-page>`
+     - :class:`<wizard-page>`
 
 .. generic-function:: raise-frame
 
@@ -4798,13 +4798,13 @@ are exported from the *duim-frames* module.
         lower-frame(*frame*); // RETURN
         raise-frame(*frame*); // RETURN
 
-   See also
+   :seealso:
 
-   - :gf:`deiconify-frame`
-   - :gf:`destroy-frame`
-   - :gf:`exit-frame`
-   - :gf:`iconify-frame`
-   - :gf:`lower-frame`
+     - :gf:`deiconify-frame`
+     - :gf:`destroy-frame`
+     - :gf:`exit-frame`
+     - :gf:`iconify-frame`
+     - :gf:`lower-frame`
 
 .. generic-function:: redo-command
 
@@ -4825,9 +4825,9 @@ are exported from the *duim-frames* module.
 
      You can both specialize this function and call it directly in your code.
 
-   See also
+   :seealso:
 
-   - :gf:`execute-command`
+     - :gf:`execute-command`
 
 .. generic-function:: remove-command
 
@@ -4843,9 +4843,9 @@ are exported from the *duim-frames* module.
 
      Removes *command* from *command-table*.
 
-   See also
+   :seealso:
 
-   - :gf:`add-command`
+     - :gf:`add-command`
 
 .. function:: remove-command-table
 
@@ -4873,9 +4873,9 @@ are exported from the *duim-frames* module.
 
      Removes the menu item identified by *string* from *command-table*.
 
-   See also
+   :seealso:
 
-   - :gf:`add-command-table-menu-item`
+     - :gf:`add-command-table-menu-item`
 
 .. generic-function:: set-frame-position
 
@@ -4892,10 +4892,10 @@ are exported from the *duim-frames* module.
      Sets the position of *frame*. The coordinates *x* and *y* are measured
      from the top left of the screen, measured in pixels.
 
-   See also
+   :seealso:
 
-   - :gf:`frame-position`
-   - :gf:`set-frame-size`
+     - :gf:`frame-position`
+     - :gf:`set-frame-size`
 
 .. generic-function:: set-frame-size
 
@@ -4924,10 +4924,10 @@ are exported from the *duim-frames* module.
                layout: make(<button>, label: "Button")); // RETURN
         set-frame-size(*frame*, 100, 500); // RETURN
 
-   See also
+   :seealso:
 
-   - :gf:`frame-size`
-   - :gf:`set-frame-position`
+     - :gf:`frame-size`
+     - :gf:`set-frame-position`
 
 .. class:: <simple-command>
    :open:
@@ -4948,9 +4948,9 @@ are exported from the *duim-frames* module.
 
      The first argument to the function is always the frame.
 
-   See also
+   :seealso:
 
-   - :class:`<command>`
+     - :class:`<command>`
 
 .. class:: <simple-frame>
    :open:
@@ -5027,9 +5027,9 @@ are exported from the *duim-frames* module.
      command that can undo it, represented by the ``undo-command:``
      init-keyword.
 
-   See also
+   :seealso:
 
-   - :class:`<simple-command>`
+     - :class:`<simple-command>`
 
 .. generic-function:: start-dialog
 
@@ -5053,12 +5053,12 @@ are exported from the *duim-frames* module.
      that cancel gestures and for debugging DUIM applications from Dylan
      debuggers.
 
-   See also
+   :seealso:
 
-   - :gf:`cancel-dialog`
-   - :class:`<dialog-frame>`
-   - :gf:`exit-dialog`
-   - :gf:`start-frame`
+     - :gf:`cancel-dialog`
+     - :class:`<dialog-frame>`
+     - :gf:`exit-dialog`
+     - :gf:`start-frame`
 
 .. generic-function:: start-frame
 
@@ -5100,11 +5100,11 @@ are exported from the *duim-frames* module.
 
         start-frame(*frame*);  // RETURN
 
-   See also
+   :seealso:
 
-   - :gf:`exit-frame`
-   - :gf:`frame-mapped?-setter`
-   - :gf:`start-dialog`
+     - :gf:`exit-frame`
+     - :gf:`frame-mapped?-setter`
+     - :gf:`start-dialog`
 
 .. generic-function:: undo-command
 
@@ -5124,9 +5124,9 @@ are exported from the *duim-frames* module.
      You can call this command directly in your own code, as well as
      specialize it.
 
-   See also
+   :seealso:
 
-   - :gf:`command-undoable?`
+     - :gf:`command-undoable?`
 
 .. variable:: *user-command-table*
 
@@ -5144,10 +5144,10 @@ are exported from the *duim-frames* module.
      If desired, all new command tables can inherit the command table
      specified by this variable.
 
-   See also
+   :seealso:
 
-   - :class:`<command-table>`
-   - :var:`*global-command-table*`
+     - :class:`<command-table>`
+     - :var:`*global-command-table*`
 
 .. class:: <wizard-frame>
 
@@ -5271,11 +5271,11 @@ are exported from the *duim-frames* module.
           keyword title: = "My Wizard";
         end frame <my-wizard>;
 
-   See also
+   :seealso:
 
-   - :class:`<dialog-frame>`
-   - :class:`<property-frame>`
-   - :class:`<wizard-page>`
+     - :class:`<dialog-frame>`
+     - :class:`<property-frame>`
+     - :class:`<wizard-page>`
 
 .. class:: <wizard-page>
    :open:
@@ -5297,9 +5297,9 @@ are exported from the *duim-frames* module.
 
         A wizard page
 
-   See also
+   :seealso:
 
-   - :class:`<page>`
-   - :class:`<property-page>`
-   - :class:`<tab-control-page>`
-   - :class:`<wizard-frame>`
+     - :class:`<page>`
+     - :class:`<property-page>`
+     - :class:`<tab-control-page>`
+     - :class:`<wizard-frame>`

@@ -246,9 +246,9 @@ from the module *table-extensions*.
      :func:`case-insensitive-equal`, which does not consider the case of
      the characters in the strings it compares.
 
-   See also
+   :seealso:
 
-   :func:`case-insensitive-equal`
+     - :func:`case-insensitive-equal`
 
 .. function:: case-insensitive-equal
 
@@ -290,9 +290,9 @@ from the module *table-extensions*.
      Conversely, the standard method on *=* returns false when passed those
      strings.
 
-   See also
+   :seealso:
 
-   :func:`case-insensitive-string-hash`
+     - :func:`case-insensitive-string-hash`
 
 .. generic-function:: remove-all-keys!
    :open:

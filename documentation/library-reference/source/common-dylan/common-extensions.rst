@@ -64,9 +64,9 @@ The extensions are:
      If *expression* is not ``#f``, ``assert`` does not evaluate
      *format-string* or any instances of *format-arg*.
 
-   See also
+   :seealso:
 
-   - :macro:`debug-assert`
+     - :macro:`debug-assert`
 
 .. class:: <byte-character>
    :sealed:
@@ -91,12 +91,12 @@ The extensions are:
    :parameter object: An instance of :drm:`<object>`.
    :value storage-address: An instance of :class:`<machine-word>`.
 
-   See also:
+   :seealso:
 
-   - :meth:`byte-storage-address(<buffer>)`
-   - :meth:`byte-storage-address(<byte-string>)`
-   - :meth:`byte-storage-address(<byte-vector>)`
-   - :gf:`byte-storage-offset-address`
+     - :meth:`byte-storage-address(<buffer>)`
+     - :meth:`byte-storage-address(<byte-string>)`
+     - :meth:`byte-storage-address(<byte-vector>)`
+     - :gf:`byte-storage-offset-address`
 
 .. method:: byte-storage-address
    :specializer: <byte-string>
@@ -104,9 +104,9 @@ The extensions are:
 
    Returns the address of the raw byte storage of a :drm:`<byte-string>`.
 
-   See also:
+   :seealso:
 
-   - :gf:`byte-storage-address`
+     - :gf:`byte-storage-address`
 
 .. method:: byte-storage-address
    :specializer: <byte-vector>
@@ -114,9 +114,9 @@ The extensions are:
 
    Returns the address of the raw byte storage of a :class:`<byte-vector>`.
 
-   See also:
+   :seealso:
 
-   - :gf:`byte-storage-address`
+     - :gf:`byte-storage-address`
 
 .. generic-function:: byte-storage-offset-address
    :open:
@@ -129,12 +129,12 @@ The extensions are:
    :parameter offset: An instance of :drm:`<integer>`.
    :value storage-address: An instance of :class:`<machine-word>`.
 
-   See also:
+   :seealso:
 
-   - :meth:`byte-storage-offset-address(<buffer>)`
-   - :meth:`byte-storage-offset-address(<byte-string>)`
-   - :meth:`byte-storage-offset-address(<byte-vector>)`
-   - :gf:`byte-storage-address`
+     - :meth:`byte-storage-offset-address(<buffer>)`
+     - :meth:`byte-storage-offset-address(<byte-string>)`
+     - :meth:`byte-storage-offset-address(<byte-vector>)`
+     - :gf:`byte-storage-address`
 
 .. method:: byte-storage-offset-address
    :specializer: <byte-string>
@@ -142,9 +142,9 @@ The extensions are:
 
    Returns the address of the raw byte storage of a :drm:`<byte-string>`, with an offset.
 
-   See also:
+   :seealso:
 
-   - :gf:`byte-storage-offset-address`
+     - :gf:`byte-storage-offset-address`
 
 .. method:: byte-storage-offset-address
    :specializer: <byte-vector>
@@ -152,9 +152,9 @@ The extensions are:
 
    Returns the address of the raw byte storage of a :class:`<byte-vector>`, with an offset.
 
-   See also:
+   :seealso:
 
-   - :gf:`byte-storage-offset-address`
+     - :gf:`byte-storage-offset-address`
 
 .. generic-function:: concatenate!
    :open:
@@ -247,9 +247,9 @@ The extensions are:
      The *format-string* is a format string as defined on page 112 of
      the DRM.
 
-   See also
+   :seealso:
 
-   - :macro:`assert`
+     - :macro:`assert`
 
 .. function:: debug-message
 
@@ -319,10 +319,10 @@ The extensions are:
 
      Where ``{<my-warning>}`` means an instance of ``<my-warning>``.
 
-   See also
+   :seealso:
 
-   - :func:`debug-message`.
-   - :drm:`default-handler`, page 361 of the DRM.
+     - :func:`debug-message`.
+     - :drm:`default-handler`, page 361 of the DRM.
 
 .. function:: default-last-handler
 
@@ -363,11 +363,11 @@ The extensions are:
        define last-handler <serious-condition>
          = default-last-handler;
 
-   See also
+   :seealso:
 
-   - :macro:`define last-handler`
-   - *win32-last-handler* in the *C FFI and Win32* library reference, under
-     library *win32-user* and module *win32-default-handler*.
+     - :macro:`define last-handler`
+     - *win32-last-handler* in the *C FFI and Win32* library reference, under
+       library *win32-user* and module *win32-default-handler*.
 
 .. macro:: define last-handler
    :defining:
@@ -432,10 +432,10 @@ The extensions are:
        define last-handler <serious-condition>
          = default-last-handler;
 
-   See also
+   :seealso:
 
-   - *win32-last-handler* in the *C FFI and Win32* library reference,
-     under library *win32-user* and module *win32-default-handler*.
+     - *win32-last-handler* in the *C FFI and Win32* library reference,
+       under library *win32-user* and module *win32-default-handler*.
 
 .. macro:: define table
    :defining:
@@ -606,9 +606,9 @@ The extensions are:
 
      It is the superclass of Dylan’s :class:`<simple-condition>`.
 
-   See also
+   :seealso:
 
-   - The :doc:`Format module <../io/format>` in the :doc:`IO library <../io/index>`.
+     - The :doc:`Format module <../io/format>` in the :doc:`IO library <../io/index>`.
 
 .. function:: found?
 
@@ -671,9 +671,9 @@ The extensions are:
        let (x,y,z) = fn();
        ignore(y);
 
-   See also
+   :seealso:
 
-   - :func:`ignorable`
+     - :func:`ignorable`
 
 .. function:: ignorable
 
@@ -723,9 +723,9 @@ The extensions are:
        let (x,y,z) = fn();
        ignorable(y);
 
-   See also
+   :seealso:
 
-   - :func:`ignore`
+     - :func:`ignore`
 
 .. function:: integer-to-string
 
@@ -1130,11 +1130,11 @@ The extensions are:
      value, :const:`$unsupplied`, and false if it is. It uses ``\=`` as
      the equivalence predicate.
 
-   See also
+   :seealso:
 
-   - :const:`$unsupplied`
-   - :func:`unsupplied`
-   - :func:`unsupplied?`
+     - :const:`$unsupplied`
+     - :func:`unsupplied`
+     - :func:`unsupplied?`
 
 .. macro:: timing
    :statement:
@@ -1184,11 +1184,11 @@ The extensions are:
      A unique value that can be used to indicate that a search operation
      failed.
 
-   See also
+   :seealso:
 
-   - :func:`found?`
-   - :func:`unfound?`
-   - :func:`unfound`
+     - :func:`found?`
+     - :func:`unfound?`
+     - :func:`unfound`
 
 .. function:: unfound
 
@@ -1202,11 +1202,11 @@ The extensions are:
 
    Returns the unique "unfound" value, :const:`$unfound`.
 
-   See also
+   :seealso:
 
-   - :func:`found?`
-   - :func:`unfound?`
-   - :const:`$unfound`
+     - :func:`found?`
+     - :func:`unfound?`
+     - :const:`$unfound`
 
 .. function:: unfound?
 
@@ -1224,11 +1224,11 @@ The extensions are:
      :const:`$unfound`, and false if it is not. It uses ``\=``
      as the equivalence predicate.
 
-   See also
+   :seealso:
 
-   - :func:`found?`
-   - :const:`$unfound`
-   - :func:`unfound`
+     - :func:`found?`
+     - :const:`$unfound`
+     - :func:`unfound`
 
 .. constant:: $unsupplied
 
@@ -1243,11 +1243,11 @@ The extensions are:
      A unique value that can be used to indicate that a keyword was not
      supplied.
 
-   See also
+   :seealso:
 
-   - :func:`supplied?`
-   - :func:`unsupplied`
-   - :func:`unsupplied?`
+     - :func:`supplied?`
+     - :func:`unsupplied`
+     - :func:`unsupplied?`
 
 .. function:: unsupplied
 
@@ -1261,11 +1261,11 @@ The extensions are:
 
      Returns the unique "unsupplied" value, :const:`$unsupplied`.
 
-   See also
+   :seealso:
 
-   - :func:`supplied?`
-   - :const:`$unsupplied`
-   - :func:`unsupplied?`
+     - :func:`supplied?`
+     - :const:`$unsupplied`
+     - :func:`unsupplied?`
 
 .. function:: unsupplied?
 
@@ -1283,11 +1283,11 @@ The extensions are:
      value, :const:`$unsupplied`, and false if it is not. It uses ``\=``
      as the equivalence predicate.
 
-   See also
+   :seealso:
 
-   - :func:`supplied?`
-   - :const:`$unsupplied`
-   - :func:`unsupplied`
+     - :func:`supplied?`
+     - :const:`$unsupplied`
+     - :func:`unsupplied`
 
 .. macro:: when
    :statement:
@@ -1388,9 +1388,9 @@ The extensions are:
 
        split("a.b.c", '.') => #("a", "b", "c")
 
-   See also
+   :seealso:
 
-   - :gf:`join`
+     - :gf:`join`
 
 .. generic-function:: join
    :open:
@@ -1428,10 +1428,10 @@ The extensions are:
           key: integer-to-string, conjunction: " and ")
      => "1, 2 and 3"
 
-   See also
+   :seealso:
 
-   - :meth:`join <join(<sequence>, <sequence>)>`
-   - :func:`split`
+     - :meth:`join <join(<sequence>, <sequence>)>`
+     - :func:`split`
 
 .. method:: join
    :specializer: <sequence>, <sequence>
@@ -1446,7 +1446,7 @@ The extensions are:
    :parameter #key conjunction: Last separator. An instance of ``false-or(<sequence>)``.
    :value joined: An instance of :drm:`<sequence>`.
 
-   See also
+   :seealso:
 
-   - :gf:`join`
-   - :func:`split`
+     - :gf:`join`
+     - :func:`split`

@@ -69,9 +69,9 @@ Reference
    :parameter plist: An instance of :drm:`<sequence>`.
    :value keywords: An instance of :drm:`<sequence>`.
 
-   See also:
+   :seealso:
 
-   - :gf:`value-sequence`
+     - :gf:`value-sequence`
 
 .. macro:: put-property!
    :statement:
@@ -94,9 +94,9 @@ Reference
        put-property!(buffer-contents-properties(buffer),
                      #"optimization-colors", #f)
 
-   See also:
+   :seealso:
 
-   - :macro:`remove-property!`
+     - :macro:`remove-property!`
 
 .. generic-function:: remove-keywords
 
@@ -108,10 +108,10 @@ Reference
    :parameter keywords: An instance of :drm:`<sequence>`.
    :value plist: An instance of :drm:`<sequence>`.
 
-   See also:
+   :seealso:
 
-   - :macro:`remove-property!`
-   - :macro:`with-keywords-removed`
+     - :macro:`remove-property!`
+     - :macro:`with-keywords-removed`
 
 .. macro:: remove-property!
    :statement:
@@ -134,11 +134,11 @@ Reference
 
        remove-property!(buffer-properties(buffer), #"project");
 
-   See also:
+   :seealso:
 
-   - :macro:`put-property!`
-   - :gf:`remove-keywords`
-   - :macro:`with-keywords-removed`
+     - :macro:`put-property!`
+     - :gf:`remove-keywords`
+     - :macro:`with-keywords-removed`
 
 .. generic-function:: value-sequence
 
@@ -149,9 +149,9 @@ Reference
    :parameter plist: An instance of :drm:`<sequence>`.
    :value values: An instance of :drm:`<sequence>`.
 
-   See also:
+   :seealso:
 
-   - :gf:`keyword-sequence`
+     - :gf:`keyword-sequence`
 
 .. macro:: with-keywords-removed
    :statement:
@@ -197,8 +197,8 @@ Reference
          end
        end method make;
 
-   See also:
+   :seealso:
 
-   - :gf:`remove-keywords`
-   - :macro:`remove-property!`
-   - :macro:`with-keywords-removed`
+     - :gf:`remove-keywords`
+     - :macro:`remove-property!`
+     - :macro:`with-keywords-removed`

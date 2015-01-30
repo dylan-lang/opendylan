@@ -31,9 +31,9 @@ system.
 
    :parameter timer: An instance of :class:`<profiling-timer>`.
 
-   See also:
+   :seealso:
 
-   * :gf:`timer-stop`
+     - :gf:`timer-stop`
 
 .. generic-function:: timer-stop
 
@@ -45,9 +45,9 @@ system.
    :value seconds: An instance of :drm:`<integer>`.
    :value microseconds: An instance of :drm:`<integer>`.
 
-   See also:
+   :seealso:
 
-   * :gf:`timer-start`
+     - :gf:`timer-start`
 
 .. generic-function:: timer-accumulated-time
 

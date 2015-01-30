@@ -440,9 +440,11 @@ objects of class :drm:`<serious-condition>`.
 
          define last-handler <serious-condition> = win32-last-handler;
 
-     See also *last-handler-definer* and *default-last-handler*, exported
-     from the Functional Dylan-Extensions library and module, in the
-     *Core Features* reference manual.
+     :seealso:
+
+       *last-handler-definer* and *default-last-handler*, exported
+       from the Functional Dylan-Extensions library and module, in the
+       *Core Features* reference manual.
 
 Dealing with the C function WinMain
 ===================================

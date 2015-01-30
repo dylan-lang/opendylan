@@ -102,10 +102,10 @@ File-System module.
      action of this function is controlled by the value of *if-exists*. The
      default is to prompt you before overwriting an existing file.
 
-   See also
+   :seealso:
 
-   - :type:`<copy/rename-disposition>`
-   - :class:`rename-file`
+     - :type:`<copy/rename-disposition>`
+     - :class:`rename-file`
 
 .. type:: <copy/rename-disposition>
 
@@ -130,10 +130,10 @@ File-System module.
      - :func:`copy-file`
      - :func:`rename-file`
 
-   See also
+   :seealso:
 
-   - :func:`copy-file`
-   - :func:`rename-file`
+     - :func:`copy-file`
+     - :func:`rename-file`
 
 .. function:: create-directory
 
@@ -151,9 +151,9 @@ File-System module.
      value of this function can be used with :drm:`concatenate` to
      create pathnames of entities in the new directory.
 
-   See also
+   :seealso:
 
-   - :func:`delete-directory`
+     - :func:`delete-directory`
 
 .. function:: delete-directory
 
@@ -168,10 +168,10 @@ File-System module.
      Deletes the specified directory. Whether or not the directory must
      be empty before it can be deleted is platform dependent.
 
-   See also
+   :seealso:
 
-   - :func:`create-directory`
-   - :func:`delete-file`
+     - :func:`create-directory`
+     - :func:`delete-file`
 
 .. function:: delete-file
 
@@ -267,9 +267,9 @@ File-System module.
 
        ensure-directories-exist("C:\\USERS\\JOHN\\FOO.TEXT")
 
-   See also
+   :seealso:
 
-   - :func:`create-directory`
+     - :func:`create-directory`
 
 .. function:: file-exists?
 
@@ -306,10 +306,10 @@ File-System module.
 
        file-properties() [#"size"]
 
-   See also
+   :seealso:
 
-   - :gf:`file-property`
-   - :func:`file-property-setter`
+     - :gf:`file-property`
+     - :func:`file-property-setter`
 
 .. generic-function:: file-property
    :sealed:
@@ -363,10 +363,10 @@ File-System module.
      All keys listed above are implemented by Win32, though note that
      ``#"author"`` always returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :gf:`file-property-setter`
-   - :func:`file-properties`
+     - :gf:`file-property-setter`
+     - :func:`file-properties`
 
 .. generic-function:: file-property-setter
    :sealed:
@@ -423,10 +423,10 @@ File-System module.
 
      The only property that can be set on Win32 is ``#"writeable?"``.
 
-   See also
+   :seealso:
 
-   - :gf:`file-property`
-   - :func:`file-properties`
+     - :gf:`file-property`
+     - :func:`file-properties`
 
 .. class:: <file-system-error>
 
@@ -535,10 +535,10 @@ File-System module.
      This operation may fail if the source and destination are not on
      the same file system.
 
-   See also
+   :seealso:
 
-   - :func:`copy-file`
-   - :type:`<copy/rename-disposition>`
+     - :func:`copy-file`
+     - :type:`<copy/rename-disposition>`
 
 .. function:: root-directories
 
@@ -587,9 +587,9 @@ File-System module.
      :drm:`concatenate` to specify pathnames of entities in the working
      directory.
 
-   See also
+   :seealso:
 
-   - :func:`working-directory-setter`
+     - :func:`working-directory-setter`
 
 .. function:: working-directory-setter
 
@@ -626,6 +626,6 @@ File-System module.
 
        working-directory() := "C:\\USERS\\JOHN\\";
 
-   See also
+   :seealso:
 
-   - :func:`working-directory`
+     - :func:`working-directory`

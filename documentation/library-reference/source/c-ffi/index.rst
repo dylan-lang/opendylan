@@ -1117,9 +1117,9 @@ these classes.
      It is an error if *C-typed-pointer* does not point to a valid
      address or is a null pointer.
 
-   See also
+   :seealso:
 
-   - :gf:`pointer-value-setter`.
+     - :gf:`pointer-value-setter`.
 
 .. generic-function:: pointer-value-setter
    :open:
@@ -1231,9 +1231,9 @@ these classes.
      defined on :class:`<C-pointer>`. If pointer arithmetic operations are
      required, use :gf:`pointer-value` with an ``index:`` argument.
 
-   See also
+   :seealso:
 
-   - :gf:`pointer-value`.
+     - :gf:`pointer-value`.
 
 .. method:: <
    :specializer: <C-pointer>
@@ -1256,9 +1256,9 @@ these classes.
      defined on :class:`<C-pointer>`. If pointer arithmetic operations
      are required, use :gf:`pointer-value` with an ``index:`` argument.
 
-   See also
+   :seealso:
 
-   - :gf:`pointer-value`.
+     - :gf:`pointer-value`.
 
 The following functions comprise the conceptual foundation on which the
 pointer accessing protocol is based. In the signatures of these
@@ -3271,7 +3271,9 @@ using :macro:`define c-mapped-subtype`.
      Copies an arbitrary number of bytes at arbitrary alignment instead
      of copying whole words.
 
-   See also :func:`copy-into!`.
+   :seealso:
+
+     - :func:`copy-into!`.
 
 .. function:: copy-into!
 
@@ -3292,7 +3294,9 @@ using :macro:`define c-mapped-subtype`.
      pointers are word-aligned and that the two storage areas do not
      overlap.
 
-   See also :func:`copy-bytes!`.
+   :seealso:
+
+     - :func:`copy-bytes!`.
 
 .. function:: equal-memory?
 
@@ -3354,7 +3358,9 @@ using :macro:`define c-mapped-subtype`.
      assures that the handle passed to C is not accidentally corrupted
      (from C’s point of view) by the memory manager.
 
-   See also :func:`unregister-C-Dylan-object`.
+   :seealso:
+
+     - :func:`unregister-C-Dylan-object`.
 
 .. function:: unregister-C-Dylan-object
 

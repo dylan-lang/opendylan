@@ -76,9 +76,9 @@ are exported from the *duim-extended-geometry* module.
      *polygon*. *function* is a function of two arguments, the *x* and *y*
      coordinates of the vertex. *do-polygon-coordinates* returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :gf:`do-polygon-segments`
+     - :gf:`do-polygon-segments`
 
 .. generic-function:: do-polygon-segments
 
@@ -100,9 +100,9 @@ are exported from the *duim-extended-geometry* module.
 
      The function *do-polygon-segments* returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :gf:`do-polygon-coordinates`
+     - :gf:`do-polygon-coordinates`
 
 .. generic-function:: draw-design
 
@@ -176,10 +176,10 @@ are exported from the *duim-extended-geometry* module.
      - :gf:`box-edges`
      - :gf:`transform-region`
 
-   See also
+   :seealso:
 
-   - :class:`<area>`
-   - :gf:`make-ellipse`
+     - :class:`<area>`
+     - :gf:`make-ellipse`
 
 .. generic-function:: ellipse?
 
@@ -197,7 +197,7 @@ are exported from the *duim-extended-geometry* module.
 
    See Also
 
-   - :class:`<ellipse>`
+     - :class:`<ellipse>`
 
 .. generic-function:: ellipse-center-point
 
@@ -213,9 +213,9 @@ are exported from the *duim-extended-geometry* module.
 
      Returns the center point of *ellipse-object* as a :class:`<point>` object.
 
-   See also
+   :seealso:
 
-   - :gf:`make-ellipse`
+     - :gf:`make-ellipse`
 
 .. generic-function:: ellipse-center-position
 
@@ -236,9 +236,9 @@ are exported from the *duim-extended-geometry* module.
      The arguments *x* and *y* represent the x and y coordinates of the
      center of the elliptical object, respectively.
 
-   See also
+   :seealso:
 
-   - :gf:`make-ellipse`
+     - :gf:`make-ellipse`
 
 .. generic-function:: ellipse-end-angle
 
@@ -257,9 +257,9 @@ are exported from the *duim-extended-geometry* module.
      otherwise the value is a number greater than zero, and less than or
      equal to *2p*.
 
-   See also
+   :seealso:
 
-   - :gf:`make-ellipse`
+     - :gf:`make-ellipse`
 
 .. generic-function:: ellipse-radii
 
@@ -282,9 +282,9 @@ are exported from the *duim-extended-geometry* module.
      *elliptical-object*. These values may be canonicalized in some way, and
      so may not be the same as the values passed to the constructor function.
 
-   See also
+   :seealso:
 
-   - :gf:`make-ellipse`
+     - :gf:`make-ellipse`
 
 .. generic-function:: ellipse-start-angle
 
@@ -304,9 +304,9 @@ are exported from the *duim-extended-geometry* module.
      otherwise the value will be a number greater than or equal to zero, and
      less than *2p*.
 
-   See also
+   :seealso:
 
-   - :gf:`make-ellipse`
+     - :gf:`make-ellipse`
 
 .. class:: <elliptical-arc>
    :abstract:
@@ -351,10 +351,10 @@ are exported from the *duim-extended-geometry* module.
      - :gf:`box-edges`
      - :gf:`transform-region`
 
-   See also
+   :seealso:
 
-   - :gf:`elliptical-arc?`
-   - :gf:`make-elliptical-arc`
+     - :gf:`elliptical-arc?`
+     - :gf:`make-elliptical-arc`
 
 .. generic-function:: elliptical-arc?
 
@@ -370,9 +370,9 @@ are exported from the *duim-extended-geometry* module.
 
      Returns ``#t`` if *object* is an elliptical arc, otherwise returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :class:`<elliptical-arc>`
+     - :class:`<elliptical-arc>`
 
 .. class:: <line>
    :abstract:
@@ -417,10 +417,10 @@ are exported from the *duim-extended-geometry* module.
      - :gf:`box-edges`
      - :gf:`transform-region`
 
-   See also
+   :seealso:
 
-   - :class:`<path>`
-   - :gf:`make-line`
+     - :class:`<path>`
+     - :gf:`make-line`
 
 .. generic-function:: line?
 
@@ -450,9 +450,9 @@ are exported from the *duim-extended-geometry* module.
 
      Returns the ending point of *line* as a *<point>* object.
 
-   See also
+   :seealso:
 
-   - :gf:`line-start-point`
+     - :gf:`line-start-point`
 
 .. generic-function:: line-end-position
 
@@ -473,9 +473,9 @@ are exported from the *duim-extended-geometry* module.
      The arguments *x* and *y* represent the x and y coordinates of the end
      of the line, respectively.
 
-   See also
+   :seealso:
 
-   - :gf:`line-start-position`
+     - :gf:`line-start-position`
 
 .. generic-function:: line-start-point
 
@@ -491,9 +491,9 @@ are exported from the *duim-extended-geometry* module.
 
      Returns the starting point of *line* as a *<point>* object.
 
-   See also
+   :seealso:
 
-   - :gf:`line-end-point`
+     - :gf:`line-end-point`
 
 .. generic-function:: line-start-position
 
@@ -514,9 +514,9 @@ are exported from the *duim-extended-geometry* module.
      The arguments *x* and *y* represent the x and y coordinates of the start
      of the line, respectively.
 
-   See also
+   :seealso:
 
-   - :gf:`line-end-position`
+     - :gf:`line-end-position`
 
 .. function:: make-ellipse
 
@@ -570,9 +570,9 @@ are exported from the *duim-extended-geometry* module.
      its arguments. You should be aware that using this function may lead to
      a loss of performance.
 
-   See also
+   :seealso:
 
-   - :class:`<ellipse>`
+     - :class:`<ellipse>`
 
 .. function:: make-elliptical-arc
 
@@ -625,9 +625,9 @@ are exported from the *duim-extended-geometry* module.
      than separate coordinates, in its arguments. You should be aware that
      using this function may lead to a loss of performance.
 
-   See also
+   :seealso:
 
-   - :class:`<elliptical-arc>`
+     - :class:`<elliptical-arc>`
 
 .. function:: make-line
 
@@ -798,13 +798,13 @@ are exported from the *duim-extended-geometry* module.
      - :gf:`box-edges`
      - :gf:`transform-region`
 
-   See also
+   :seealso:
 
-   - :class:`<area>`
-   - :func:`make-polygon`
-   - :gf:`polygon?`
-   - :gf:`polygon-coordinates`
-   - :gf:`polygon-points`
+     - :class:`<area>`
+     - :func:`make-polygon`
+     - :gf:`polygon?`
+     - :gf:`polygon-coordinates`
+     - :gf:`polygon-points`
 
 .. generic-function:: polygon?
 
@@ -820,11 +820,11 @@ are exported from the *duim-extended-geometry* module.
 
      Returns ``#t`` if *object* is a polygon, otherwise returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :class:`<polygon>`
-   - :gf:`polygon-coordinates`
-   - :gf:`polygon-points`
+     - :class:`<polygon>`
+     - :gf:`polygon-coordinates`
+     - :gf:`polygon-points`
 
 .. generic-function:: polygon-coordinates
 
@@ -842,11 +842,11 @@ are exported from the *duim-extended-geometry* module.
      Returns a sequence of coordinate pairs that specify the segments in
      *polygon-or-polyline*.
 
-   See also
+   :seealso:
 
-   - :class:`<polygon>`
-   - :gf:`polygon?`
-   - :gf:`polygon-points`
+     - :class:`<polygon>`
+     - :gf:`polygon?`
+     - :gf:`polygon-points`
 
 .. generic-function:: polygon-points
 
@@ -866,11 +866,11 @@ are exported from the *duim-extended-geometry* module.
      Returns a sequence of points that specify the segments in
      *polygon-or-polyline*.
 
-   See also
+   :seealso:
 
-   - :class:`<polygon>`
-   - :gf:`polygon?`
-   - :gf:`polygon-coordinates`
+     - :class:`<polygon>`
+     - :gf:`polygon?`
+     - :gf:`polygon-coordinates`
 
 .. class:: <polyline>
    :abstract:
@@ -918,12 +918,12 @@ are exported from the *duim-extended-geometry* module.
      - :gf:`box-edges`
      - :gf:`transform-region`
 
-   See also
+   :seealso:
 
-   - :class:`<path>`
-   - :func:`make-polyline`
-   - :gf:`polyline?`
-   - :gf:`polyline-closed?`
+     - :class:`<path>`
+     - :func:`make-polyline`
+     - :gf:`polyline?`
+     - :gf:`polyline-closed?`
 
 .. generic-function:: polyline?
 
@@ -941,10 +941,10 @@ are exported from the *duim-extended-geometry* module.
 
      Returns ``#t`` if *object* is a polyline, otherwise returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :class:`<polyline>`
-   - :gf:`polyline-closed?`
+     - :class:`<polyline>`
+     - :gf:`polyline-closed?`
 
 .. generic-function:: polyline-closed?
 
@@ -962,10 +962,10 @@ are exported from the *duim-extended-geometry* module.
      ``#f``. This function need be implemented only for polylines, not for
      polygons.
 
-   See also
+   :seealso:
 
-   - :class:`<polyline>`
-   - :gf:`polyline?`
+     - :class:`<polyline>`
+     - :gf:`polyline?`
 
 .. class:: <rectangle>
    :abstract:
@@ -1017,19 +1017,19 @@ are exported from the *duim-extended-geometry* module.
      - :gf:`box-edges`
      - :gf:`transform-region`
 
-   See also
+   :seealso:
 
-   - :class:`<polygon>`
-   - :gf:`make-rectangle`
-   - :gf:`rectangle?`
-   - :gf:`rectangle-edges`
-   - :gf:`rectangle-height`
-   - :gf:`rectangle-max-point`
-   - :gf:`rectangle-max-position`
-   - :gf:`rectangle-min-point`
-   - :gf:`rectangle-min-position`
-   - :gf:`rectangle-size`
-   - :gf:`rectangle-width`
+     - :class:`<polygon>`
+     - :gf:`make-rectangle`
+     - :gf:`rectangle?`
+     - :gf:`rectangle-edges`
+     - :gf:`rectangle-height`
+     - :gf:`rectangle-max-point`
+     - :gf:`rectangle-max-position`
+     - :gf:`rectangle-min-point`
+     - :gf:`rectangle-min-position`
+     - :gf:`rectangle-size`
+     - :gf:`rectangle-width`
 
 .. generic-function:: rectangle?
 
@@ -1045,17 +1045,17 @@ are exported from the *duim-extended-geometry* module.
 
      Returns ``#t`` if *object* is a rectangle, otherwise returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :class:`<rectangle>`
-   - :gf:`rectangle-edges`
-   - :gf:`rectangle-height`
-   - :gf:`rectangle-max-point`
-   - :gf:`rectangle-max-position`
-   - :gf:`rectangle-min-point`
-   - :gf:`rectangle-min-position`
-   - :gf:`rectangle-size`
-   - :gf:`rectangle-width`
+     - :class:`<rectangle>`
+     - :gf:`rectangle-edges`
+     - :gf:`rectangle-height`
+     - :gf:`rectangle-max-point`
+     - :gf:`rectangle-max-position`
+     - :gf:`rectangle-min-point`
+     - :gf:`rectangle-min-position`
+     - :gf:`rectangle-size`
+     - :gf:`rectangle-width`
 
 .. generic-function:: rectangle-edges
 
@@ -1088,17 +1088,17 @@ are exported from the *duim-extended-geometry* module.
      The argument *max-y* represents the *y* coordinate of the bottom right
      of the rectangle.
 
-   See also
+   :seealso:
 
-   - :class:`<rectangle>`
-   - :gf:`rectangle?`
-   - :gf:`rectangle-height`
-   - :gf:`rectangle-max-point`
-   - :gf:`rectangle-max-position`
-   - :gf:`rectangle-min-point`
-   - :gf:`rectangle-min-position`
-   - :gf:`rectangle-size`
-   - :gf:`rectangle-width`
+     - :class:`<rectangle>`
+     - :gf:`rectangle?`
+     - :gf:`rectangle-height`
+     - :gf:`rectangle-max-point`
+     - :gf:`rectangle-max-position`
+     - :gf:`rectangle-min-point`
+     - :gf:`rectangle-min-position`
+     - :gf:`rectangle-size`
+     - :gf:`rectangle-width`
 
 .. generic-function:: rectangle-height
 
@@ -1115,17 +1115,17 @@ are exported from the *duim-extended-geometry* module.
      Returns the height of the rectangle, which is the difference between the
      maximum *y* and its minimum *y*.
 
-   See also
+   :seealso:
 
-   - :class:`<rectangle>`
-   - :gf:`rectangle?`
-   - :gf:`rectangle-edges`
-   - :gf:`rectangle-max-point`
-   - :gf:`rectangle-max-position`
-   - :gf:`rectangle-min-point`
-   - :gf:`rectangle-min-position`
-   - :gf:`rectangle-size`
-   - :gf:`rectangle-width`
+     - :class:`<rectangle>`
+     - :gf:`rectangle?`
+     - :gf:`rectangle-edges`
+     - :gf:`rectangle-max-point`
+     - :gf:`rectangle-max-position`
+     - :gf:`rectangle-min-point`
+     - :gf:`rectangle-min-position`
+     - :gf:`rectangle-size`
+     - :gf:`rectangle-width`
 
 .. generic-function:: rectangle-max-point
 
@@ -1141,17 +1141,17 @@ are exported from the *duim-extended-geometry* module.
 
      Returns the bottom right point of the rectangle.
 
-   See also
+   :seealso:
 
-   - :class:`<rectangle>`
-   - :gf:`rectangle?`
-   - :gf:`rectangle-edges`
-   - :gf:`rectangle-height`
-   - :gf:`rectangle-max-position`
-   - :gf:`rectangle-min-point`
-   - :gf:`rectangle-min-position`
-   - :gf:`rectangle-size`
-   - :gf:`rectangle-width`
+     - :class:`<rectangle>`
+     - :gf:`rectangle?`
+     - :gf:`rectangle-edges`
+     - :gf:`rectangle-height`
+     - :gf:`rectangle-max-position`
+     - :gf:`rectangle-min-point`
+     - :gf:`rectangle-min-position`
+     - :gf:`rectangle-size`
+     - :gf:`rectangle-width`
 
 .. generic-function:: rectangle-max-position
 
@@ -1170,17 +1170,17 @@ are exported from the *duim-extended-geometry* module.
      Returns the *x* and *y* coordinates of the bottom right of the
      rectangle.
 
-   See also
+   :seealso:
 
-   - :class:`<rectangle>`
-   - :gf:`rectangle?`
-   - :gf:`rectangle-edges`
-   - :gf:`rectangle-height`
-   - :gf:`rectangle-max-point`
-   - :gf:`rectangle-min-point`
-   - :gf:`rectangle-min-position`
-   - :gf:`rectangle-size`
-   - :gf:`rectangle-width`
+     - :class:`<rectangle>`
+     - :gf:`rectangle?`
+     - :gf:`rectangle-edges`
+     - :gf:`rectangle-height`
+     - :gf:`rectangle-max-point`
+     - :gf:`rectangle-min-point`
+     - :gf:`rectangle-min-position`
+     - :gf:`rectangle-size`
+     - :gf:`rectangle-width`
 
 .. generic-function:: rectangle-min-point
 
@@ -1196,17 +1196,17 @@ are exported from the *duim-extended-geometry* module.
 
      Returns the left top point of the rectangle.
 
-   See also
+   :seealso:
 
-   - :class:`<rectangle>`
-   - :gf:`rectangle?`
-   - :gf:`rectangle-edges`
-   - :gf:`rectangle-height`
-   - :gf:`rectangle-max-point`
-   - :gf:`rectangle-max-position`
-   - :gf:`rectangle-min-position`
-   - :gf:`rectangle-size`
-   - :gf:`rectangle-width`
+     - :class:`<rectangle>`
+     - :gf:`rectangle?`
+     - :gf:`rectangle-edges`
+     - :gf:`rectangle-height`
+     - :gf:`rectangle-max-point`
+     - :gf:`rectangle-max-position`
+     - :gf:`rectangle-min-position`
+     - :gf:`rectangle-size`
+     - :gf:`rectangle-width`
 
 .. generic-function:: rectangle-min-position
 
@@ -1223,17 +1223,17 @@ are exported from the *duim-extended-geometry* module.
 
      Returns the *x* and *y* coordinates of the left top of the rectangle.
 
-   See also
+   :seealso:
 
-   - :class:`<rectangle>`
-   - :gf:`rectangle?`
-   - :gf:`rectangle-edges`
-   - :gf:`rectangle-height`
-   - :gf:`rectangle-max-point`
-   - :gf:`rectangle-max-position`
-   - :gf:`rectangle-min-point`
-   - :gf:`rectangle-size`
-   - :gf:`rectangle-width`
+     - :class:`<rectangle>`
+     - :gf:`rectangle?`
+     - :gf:`rectangle-edges`
+     - :gf:`rectangle-height`
+     - :gf:`rectangle-max-point`
+     - :gf:`rectangle-max-position`
+     - :gf:`rectangle-min-point`
+     - :gf:`rectangle-size`
+     - :gf:`rectangle-width`
 
 .. generic-function:: rectangle-size
 
@@ -1250,17 +1250,17 @@ are exported from the *duim-extended-geometry* module.
 
      Returns two values, the width and the height.
 
-   See also
+   :seealso:
 
-   - :class:`<rectangle>`
-   - :gf:`rectangle?`
-   - :gf:`rectangle-edges`
-   - :gf:`rectangle-height`
-   - :gf:`rectangle-max-point`
-   - :gf:`rectangle-max-position`
-   - :gf:`rectangle-min-point`
-   - :gf:`rectangle-min-position`
-   - :gf:`rectangle-width`
+     - :class:`<rectangle>`
+     - :gf:`rectangle?`
+     - :gf:`rectangle-edges`
+     - :gf:`rectangle-height`
+     - :gf:`rectangle-max-point`
+     - :gf:`rectangle-max-position`
+     - :gf:`rectangle-min-point`
+     - :gf:`rectangle-min-position`
+     - :gf:`rectangle-width`
 
 .. generic-function:: rectangle-width
 
@@ -1277,14 +1277,14 @@ are exported from the *duim-extended-geometry* module.
      Returns the width of the rectangle *rectangle*, which is the difference
      between the maximum *x* and its minimum *x*.
 
-   See also
+   :seealso:
 
-   - :class:`<rectangle>`
-   - :gf:`rectangle?`
-   - :gf:`rectangle-edges`
-   - :gf:`rectangle-height`
-   - :gf:`rectangle-max-point`
-   - :gf:`rectangle-max-position`
-   - :gf:`rectangle-min-point`
-   - :gf:`rectangle-min-position`
-   - :gf:`rectangle-size`
+     - :class:`<rectangle>`
+     - :gf:`rectangle?`
+     - :gf:`rectangle-edges`
+     - :gf:`rectangle-height`
+     - :gf:`rectangle-max-point`
+     - :gf:`rectangle-max-position`
+     - :gf:`rectangle-min-point`
+     - :gf:`rectangle-min-position`
+     - :gf:`rectangle-size`

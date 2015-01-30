@@ -162,9 +162,9 @@ are exported from the *duim-geometry* module.
 
      - :gf:`area?`
 
-   See also
+   :seealso:
 
-   - :gf:`area?`
+     - :gf:`area?`
 
 .. generic-function:: area?
 
@@ -179,9 +179,9 @@ are exported from the *duim-geometry* module.
 
      Returns ``#t`` if *object* is an area, otherwise returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :class:`<area>`
+     - :class:`<area>`
 
 .. class:: <bounding-box>
    :open:
@@ -229,11 +229,11 @@ are exported from the *duim-geometry* module.
      - :gf:`transform-region`
      - :gf:`untransform-region`
 
-   See also
+   :seealso:
 
-   - :gf:`bounding-box?`
-   - :gf:`bounding-box`
-   - :gf:`box-edges`
+     - :gf:`bounding-box?`
+     - :gf:`bounding-box`
+     - :gf:`box-edges`
 
 .. generic-function:: bounding-box?
 
@@ -249,11 +249,11 @@ are exported from the *duim-geometry* module.
      Returns ``#t`` if *object* is a bounding box (that is, supports the
      bounding box protocol), otherwise returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :class:`<bounding-box>`
-   - :gf:`bounding-box`
-   - :gf:`box-edges`
+     - :class:`<bounding-box>`
+     - :gf:`bounding-box`
+     - :gf:`box-edges`
 
 .. generic-function:: bounding-box
 
@@ -277,11 +277,11 @@ are exported from the *duim-geometry* module.
      If *into* is supplied, it is a bounding box that might be
      destructively modified to contain the result.
 
-   See also
+   :seealso:
 
-   - :class:`<bounding-box>`
-   - :gf:`bounding-box?`
-   - :gf:`box-edges`
+     - :class:`<bounding-box>`
+     - :gf:`bounding-box?`
+     - :gf:`box-edges`
 
 .. function:: box-bottom
 
@@ -300,11 +300,11 @@ are exported from the *duim-geometry* module.
      bounded region or some other object that obeys the bounding box
      protocol.
 
-   See also
+   :seealso:
 
-   - :func:`box-left`
-   - :func:`box-right`
-   - :func:`box-top`
+     - :func:`box-left`
+     - :func:`box-right`
+     - :func:`box-top`
 
 .. generic-function:: box-edges
 
@@ -334,11 +334,11 @@ are exported from the *duim-geometry* module.
        *left* <= *right*
        *top* <= *bottom*
 
-   See also
+   :seealso:
 
-   - :class:`<bounding-box>`
-   - :gf:`bounding-box?`
-   - :gf:`bounding-box`
+     - :class:`<bounding-box>`
+     - :gf:`bounding-box?`
+     - :gf:`bounding-box`
 
 .. function:: box-height
 
@@ -357,11 +357,11 @@ are exported from the *duim-geometry* module.
      either a bounded region or some other object that obeys the
      bounding box protocol.
 
-   See also
+   :seealso:
 
-   - :gf:`box-position`
-   - :gf:`box-size`
-   - :func:`box-width`
+     - :gf:`box-position`
+     - :gf:`box-size`
+     - :func:`box-width`
 
 .. function:: box-left
 
@@ -380,11 +380,11 @@ are exported from the *duim-geometry* module.
      or some other object that obeys the bounding box protocol, such as
      a sheet.
 
-   See also
+   :seealso:
 
-   - :func:`box-bottom`
-   - :func:`box-right`
-   - :func:`box-top`
+     - :func:`box-bottom`
+     - :func:`box-right`
+     - :func:`box-top`
 
 .. generic-function:: box-position
 
@@ -401,11 +401,11 @@ are exported from the *duim-geometry* module.
      Returns the position of the bounding box of *region* as two values.
      The position of a bounding box is specified by its top left point.
 
-   See also
+   :seealso:
 
-   - :func:`box-height`
-   - :gf:`box-size`
-   - :func:`box-width`
+     - :func:`box-height`
+     - :gf:`box-size`
+     - :func:`box-width`
 
 .. function:: box-right
 
@@ -424,11 +424,11 @@ are exported from the *duim-geometry* module.
      bounded region or some other object that obeys the bounding box
      protocol, such as a sheet.
 
-   See also
+   :seealso:
 
-   - :func:`box-bottom`
-   - :func:`box-left`
-   - :func:`box-top`
+     - :func:`box-bottom`
+     - :func:`box-left`
+     - :func:`box-top`
 
 .. generic-function:: box-size
 
@@ -448,11 +448,11 @@ are exported from the *duim-geometry* module.
      some other object that obeys the bounding box protocol, such as a
      sheet.
 
-   See also
+   :seealso:
 
-   - :func:`box-height`
-   - :gf:`box-position`
-   - :func:`box-width`
+     - :func:`box-height`
+     - :gf:`box-position`
+     - :func:`box-width`
 
 .. function:: box-top
 
@@ -470,11 +470,11 @@ are exported from the *duim-geometry* module.
      box *region*. The argument *region* must be either a bounded region
      or some other object that obeys the bounding box protocol.
 
-   See also
+   :seealso:
 
-   - :func:`box-bottom`
-   - :func:`box-left`
-   - :func:`box-right`
+     - :func:`box-bottom`
+     - :func:`box-left`
+     - :func:`box-right`
 
 .. function:: box-width
 
@@ -493,11 +493,11 @@ are exported from the *duim-geometry* module.
      must be either a bounded region or some other object that obeys the
      bounding box protocol, such as a sheet.
 
-   See also
+   :seealso:
 
-   - :gf:`box-height`
-   - :gf:`box-position`
-   - :gf:`box-size`
+     - :gf:`box-height`
+     - :gf:`box-position`
+     - :gf:`box-size`
 
 .. generic-function:: compose-rotation-with-transform
 
@@ -522,9 +522,9 @@ are exported from the *duim-geometry* module.
      provided because it is common to build up a transform as a series
      of simple transforms.
 
-   See also
+   :seealso:
 
-   - :func:`make-rotation-transform`
+     - :func:`make-rotation-transform`
 
 .. generic-function:: compose-scaling-with-transform
 
@@ -559,9 +559,9 @@ are exported from the *duim-geometry* module.
      provided because it is common to build up a transform as a series
      of simple transforms.
 
-   See also
+   :seealso:
 
-   - :func:`make-scaling-transform`
+     - :func:`make-scaling-transform`
 
 .. generic-function:: compose-transforms
 
@@ -581,9 +581,9 @@ are exported from the *duim-geometry* module.
      resulting transform represents the effects of applying the
      transform *transform2* followed by the transform *transform1*.
 
-   See also
+   :seealso:
 
-   - :gf:`compose-transform-with-rotation`
+     - :gf:`compose-transform-with-rotation`
 
 .. generic-function:: compose-transform-with-rotation
 
@@ -614,10 +614,10 @@ are exported from the *duim-geometry* module.
      provided because it is common to build up a transform as a series
      of simple transforms.
 
-   See also
+   :seealso:
 
-   - :gf:`compose-transforms`
-   - :func:`make-rotation-transform`
+     - :gf:`compose-transforms`
+     - :func:`make-rotation-transform`
 
 .. generic-function:: compose-transform-with-scaling
 
@@ -652,10 +652,10 @@ are exported from the *duim-geometry* module.
      provided because it is common to build up a transform as a series
      of simple transforms.
 
-   See also
+   :seealso:
 
-   - :gf:`compose-transforms`
-   - :func:`make-scaling-transform`
+     - :gf:`compose-transforms`
+     - :func:`make-scaling-transform`
 
 .. generic-function:: compose-transform-with-translation
 
@@ -686,10 +686,10 @@ are exported from the *duim-geometry* module.
      is provided because it is common to build up a transform as a
      series of simple transforms.
 
-   See also
+   :seealso:
 
-   - :func:`make-translation-transform`
-   - :gf:`compose-transforms`
+     - :func:`make-translation-transform`
+     - :gf:`compose-transforms`
 
 .. generic-function:: compose-translation-with-transform
 
@@ -721,10 +721,10 @@ are exported from the *duim-geometry* module.
      is provided, because it is common to build up a transform as a
      series of simple transforms.
 
-   See also
+   :seealso:
 
-   - :func:`make-translation-transform`
-   - :gf:`compose-transforms`
+     - :func:`make-translation-transform`
+     - :gf:`compose-transforms`
 
 .. function:: do-coordinates
 
@@ -815,9 +815,9 @@ are exported from the *duim-geometry* module.
      The region that includes all the points on the two-dimensional
      infinite drawing plane.
 
-   See also
+   :seealso:
 
-   - :const:`$nowhere`
+     - :const:`$nowhere`
 
 .. function:: fix-coordinate
 
@@ -844,9 +844,9 @@ are exported from the *duim-geometry* module.
      An instance of a transform that is guaranteed to be an identity
      transform, that is, the transform that does nothing.
 
-   See also
+   :seealso:
 
-   - :gf:`identity-transform?`
+     - :gf:`identity-transform?`
 
 .. generic-function:: identity-transform?
 
@@ -863,9 +863,9 @@ are exported from the *duim-geometry* module.
      of *transform-equal*) to the identity transform, otherwise returns
      ``#f``.
 
-   See also
+   :seealso:
 
-   - :const:`$identity-transform`
+     - :const:`$identity-transform`
 
 .. generic-function:: invert-transform
 
@@ -895,9 +895,9 @@ are exported from the *duim-geometry* module.
      *transform*. The result of composing a transform with its inverse
      is equal to the identity transform.
 
-   See also
+   :seealso:
 
-   - :gf:`invertible-transform?`
+     - :gf:`invertible-transform?`
 
 .. generic-function:: invertible-transform?
 
@@ -913,9 +913,9 @@ are exported from the *duim-geometry* module.
      Returns ``#t`` if the transform *transform* has an inverse,
      otherwise returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :gf:`invert-transform`
+     - :gf:`invert-transform`
 
 .. constant:: $largest-coordinate
 
@@ -927,9 +927,9 @@ are exported from the *duim-geometry* module.
 
      The largest valid coordinate.
 
-   See also
+   :seealso:
 
-   - :const:`$smallest-coordinate`
+     - :const:`$smallest-coordinate`
 
 .. function:: make-3-point-transform
 
@@ -1057,13 +1057,13 @@ are exported from the *duim-geometry* module.
      think of the drawing plane on a transparent sheet of paper, a
      reflection is a transformation that turns the paper over.
 
-   See also
+   :seealso:
 
-   - :func:`make-rotation-transform`
-   - :func:`make-scaling-transform`
-   - :func:`make-transform`
-   - :func:`make-translation-transform`
-   - :class:`<reflection-underspecified>`
+     - :func:`make-rotation-transform`
+     - :func:`make-scaling-transform`
+     - :func:`make-transform`
+     - :func:`make-translation-transform`
+     - :class:`<reflection-underspecified>`
 
 .. function:: make-reflection-transform
 
@@ -1096,13 +1096,13 @@ are exported from the *duim-geometry* module.
      should be aware that using this function may lead to a loss of
      performance.
 
-   See also
+   :seealso:
 
-   - :func:`make-rotation-transform`
-   - :func:`make-scaling-transform`
-   - :func:`make-transform`
-   - :func:`make-translation-transform`
-   - :class:`<reflection-underspecified>`
+     - :func:`make-rotation-transform`
+     - :func:`make-scaling-transform`
+     - :func:`make-transform`
+     - :func:`make-translation-transform`
+     - :class:`<reflection-underspecified>`
 
 .. function:: make-rotation-transform
 
@@ -1142,12 +1142,12 @@ are exported from the *duim-geometry* module.
      rather than separate coordinates, in its arguments. You should be aware
      that using this function may lead to a loss of performance.
 
-   See also
+   :seealso:
 
-   - :func:`make-reflection-transform`
-   - :func:`make-scaling-transform`
-   - :func:`make-transform`
-   - :func:`make-translation-transform`
+     - :func:`make-reflection-transform`
+     - :func:`make-scaling-transform`
+     - :func:`make-transform`
+     - :func:`make-translation-transform`
 
 .. function:: make-scaling-transform
 
@@ -1200,12 +1200,12 @@ are exported from the *duim-geometry* module.
      rather than separate coordinates, in its arguments. You should be aware
      that using this function may lead to a loss of performance.
 
-   See also
+   :seealso:
 
-   - :func:`make-reflection-transform`
-   - :func:`make-rotation-transform`
-   - :func:`make-transform`
-   - :func:`make-translation-transform`
+     - :func:`make-reflection-transform`
+     - :func:`make-rotation-transform`
+     - :func:`make-transform`
+     - :func:`make-translation-transform`
 
 .. function:: make-transform
 
@@ -1235,12 +1235,12 @@ are exported from the *duim-geometry* module.
 
      This is a convenient shorthand for ``make(<transform>, ...)``.
 
-   See also
+   :seealso:
 
-   - :func:`make-reflection-transform`
-   - :func:`make-rotation-transform`
-   - :func:`make-scaling-transform`
-   - :func:`make-translation-transform`
+     - :func:`make-reflection-transform`
+     - :func:`make-rotation-transform`
+     - :func:`make-scaling-transform`
+     - :func:`make-translation-transform`
 
 .. function:: make-translation-transform
 
@@ -1267,12 +1267,12 @@ are exported from the *duim-geometry* module.
      A translation is a transform that preserves length, angle, and
      orientation of all geometric entities.
 
-   See also
+   :seealso:
 
-   - :func:`make-reflection-transform`
-   - :func:`make-rotation-transform`
-   - :func:`make-scaling-transform`
-   - :func:`make-transform`
+     - :func:`make-reflection-transform`
+     - :func:`make-rotation-transform`
+     - :func:`make-scaling-transform`
+     - :func:`make-transform`
 
 .. constant:: $nowhere
 
@@ -1284,9 +1284,9 @@ are exported from the *duim-geometry* module.
 
      The empty region, the opposite of :const:`$everywhere`.
 
-   See also
+   :seealso:
 
-   - :const:`$everywhere`
+     - :const:`$everywhere`
 
 .. class:: <path>
    :open:
@@ -1312,9 +1312,9 @@ are exported from the *duim-geometry* module.
 
      - :gf:`path?`
 
-   See also
+   :seealso:
 
-   - :gf:`path?`
+     - :gf:`path?`
 
 .. generic-function:: path?
 
@@ -1329,9 +1329,9 @@ are exported from the *duim-geometry* module.
 
      Returns ``#t`` if *object* is a path, otherwise returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :class:`<path>`
+     - :class:`<path>`
 
 .. class:: <point>
    :open:
@@ -1393,10 +1393,10 @@ are exported from the *duim-geometry* module.
      Returns both the *x* and *y* coordinates of the point *point* as
      two values.
 
-   See also
+   :seealso:
 
-   - :gf:`point-x`
-   - :gf:`point-y`
+     - :gf:`point-x`
+     - :gf:`point-y`
 
 .. generic-function:: point-x
 
@@ -1411,10 +1411,10 @@ are exported from the *duim-geometry* module.
 
      Returns the *x* coordinate of *point*.
 
-   See also
+   :seealso:
 
-   - :gf:`point-position`
-   - :gf:`point-y`
+     - :gf:`point-position`
+     - :gf:`point-y`
 
 .. generic-function:: point-y
 
@@ -1429,10 +1429,10 @@ are exported from the *duim-geometry* module.
 
      Returns the *y* coordinate of *point*.
 
-   See also
+   :seealso:
 
-   - :gf:`point-position`
-   - :gf:`point-x`
+     - :gf:`point-position`
+     - :gf:`point-x`
 
 .. generic-function:: rectilinear-transform?
 
@@ -1495,9 +1495,9 @@ are exported from the *duim-geometry* module.
      ``points:`` initarg, which is used to supply the points that are in
      error.
 
-   See also
+   :seealso:
 
-   - :func:`make-reflection-transform`
+     - :func:`make-reflection-transform`
 
 .. class:: <region>
    :open:
@@ -1532,9 +1532,9 @@ are exported from the *duim-geometry* module.
      - :gf:`region-set-regions`
      - :gf:`region-union`
 
-   See also
+   :seealso:
 
-   - :gf:`region?`
+     - :gf:`region?`
 
 .. generic-function:: region?
 
@@ -1549,9 +1549,9 @@ are exported from the *duim-geometry* module.
 
      Returns ``#t`` if *object* is a region, otherwise returns``#f``.
 
-   See also
+   :seealso:
 
-   - :class:`<region>`
+     - :class:`<region>`
 
 .. generic-function:: region-contains-position?
 
@@ -1571,9 +1571,9 @@ are exported from the *duim-geometry* module.
      closed, this returns ``#t`` if the point at *x,y* is on the
      region's boundary.
 
-   See also
+   :seealso:
 
-   - :gf:`region-contains-region?`
+     - :gf:`region-contains-region?`
 
 .. generic-function:: region-contains-region?
 
@@ -1594,9 +1594,9 @@ are exported from the *duim-geometry* module.
      :gf:`region-contains-region?` in which the region is the point
      *x,y*.
 
-   See also
+   :seealso:
 
-   - :gf:`region-contains-position?`
+     - :gf:`region-contains-position?`
 
 .. generic-function:: region-difference
 
@@ -1682,9 +1682,9 @@ are exported from the *duim-geometry* module.
      .. note:: ``region-intersection`` may return either a simple region
         or a region set.
 
-   See also
+   :seealso:
 
-   - :gf:`region-union`
+     - :gf:`region-union`
 
 .. generic-function:: region-intersects-region?
 
@@ -1729,9 +1729,9 @@ are exported from the *duim-geometry* module.
      - :gf:`region-union`
      - :gf:`transform-region`
 
-   See also
+   :seealso:
 
-   - :gf:`region-set?`
+     - :gf:`region-set?`
 
 .. generic-function:: region-set?
 
@@ -1747,9 +1747,9 @@ are exported from the *duim-geometry* module.
      Returns ``#t`` if *object* is a region set, otherwise returns
      ``#f``.
 
-   See also
+   :seealso:
 
-   - :class:`<region-set>`
+     - :class:`<region-set>`
 
 .. generic-function:: region-set-function
 
@@ -1823,9 +1823,9 @@ are exported from the *duim-geometry* module.
      .. note:: *region-union* may return either a simple region
        or a region set.
 
-   See also
+   :seealso:
 
-   - :gf:`region-intersection`
+     - :gf:`region-intersection`
 
 .. generic-function:: rigid-transform?
 
@@ -1934,9 +1934,9 @@ are exported from the *duim-geometry* module.
      This condition handles the ``transform:`` initarg, which is used to
      supply the transform that is singular.
 
-   See also
+   :seealso:
 
-   - :gf:`invert-transform`
+     - :gf:`invert-transform`
 
 .. constant:: $smallest-coordinate
 
@@ -1949,9 +1949,9 @@ are exported from the *duim-geometry* module.
      The smallest valid coordinate. Coordinates must be instances of type
      ``<integer>``.
 
-   See also
+   :seealso:
 
-   - :const:`$largest-coordinate`
+     - :const:`$largest-coordinate`
 
 .. class:: <transform>
    :open:
@@ -2006,9 +2006,9 @@ are exported from the *duim-geometry* module.
      - :gf:`untransform-position`
      - :gf:`untransform-region`
 
-   See also
+   :seealso:
 
-   - :gf:`transform?`
+     - :gf:`transform?`
 
 .. generic-function:: transform?
 
@@ -2023,9 +2023,9 @@ are exported from the *duim-geometry* module.
 
      Returns ``#t`` if *object* is a transform, otherwise returns ``#f``.
 
-   See also
+   :seealso:
 
-   - :class:`<transform>`
+     - :class:`<transform>`
 
 .. generic-function:: transform-angles
 
@@ -2164,9 +2164,9 @@ are exported from the *duim-geometry* module.
      ``points:`` initarg, which is used to supply the points that are in
      error.
 
-   See also
+   :seealso:
 
-   - :func:`make-3-point-transform`
+     - :func:`make-3-point-transform`
 
 .. generic-function:: translation-transform?
 
@@ -2307,7 +2307,7 @@ are exported from the *duim-geometry* module.
 
    :conditions:
 
-   - :class:`<singular-transform>` cannot be inverted.
+     - :class:`<singular-transform>` cannot be inverted.
 
    :description:
 

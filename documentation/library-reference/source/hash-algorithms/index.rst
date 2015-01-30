@@ -97,11 +97,11 @@ The hash-algorithms Module
 
         // digest-separate and digest-combined will be the same
 
-   See also:
+   :seealso:
 
-   * :gf:`digest`
-   * :meth:`hexdigest(<hash>)`
-   * :meth:`hexdigest(<byte-vector>)`
+     - :gf:`digest`
+     - :meth:`hexdigest(<hash>)`
+     - :meth:`hexdigest(<byte-vector>)`
 
 .. generic-function:: digest
 
@@ -118,11 +118,11 @@ The hash-algorithms Module
 
       Use :gf:`update-hash` to add data to the hash.
 
-   See also:
+   :seealso:
 
-   * :gf:`update-hash`
-   * :meth:`hexdigest(<hash>)`
-   * :meth:`hexdigest(<byte-vector>)`
+     - :gf:`update-hash`
+     - :meth:`hexdigest(<hash>)`
+     - :meth:`hexdigest(<byte-vector>)`
 
 .. method:: hexdigest
    :specializer: <hash>
@@ -134,10 +134,10 @@ The hash-algorithms Module
    :parameter hash: An instance of :class:`<hash>`.
    :value hexdigest: An instance of :drm:`<byte-string>`.
 
-   See also:
+   :seealso:
 
-   * :gf:`digest`
-   * :meth:`hexdigest(<byte-vector>)`
+     - :gf:`digest`
+     - :meth:`hexdigest(<byte-vector>)`
 
 .. method:: hexdigest
    :specializer: <byte-vector>
@@ -149,10 +149,10 @@ The hash-algorithms Module
    :parameter digest: An instance of :class:`collections:byte-vector:<byte-vector>`.
    :value hexdigest: An instance of :drm:`<byte-string>`.
 
-   See also:
+   :seealso:
 
-   * :gf:`digest`
-   * :meth:`hexdigest(<hash>)`
+     - :gf:`digest`
+     - :meth:`hexdigest(<hash>)`
 
 MD5
 ---

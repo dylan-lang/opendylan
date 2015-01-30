@@ -59,9 +59,9 @@ This section contains a reference entry for each item exported from the
      The floating point precision is given by the precision of ``b``. The
      result is a single-float if ``b`` is an integer.
 
-See also
+   :seealso:
 
-- :func:`exp`
+     - :func:`exp`
 
 .. generic-function:: acos
 
@@ -80,10 +80,10 @@ See also
      the result is given by the precision of ``x``. The result is a
      single-float if ``x`` is an integer.
 
-See also
+   :seealso:
 
-- :func:`asin`
-- :func:`atan`
+     - :func:`asin`
+     - :func:`atan`
 
 .. generic-function:: acosh
 
@@ -101,10 +101,10 @@ See also
      precision of the result is given by the precision of ``x``. The result is
      a single-float if ``x`` is an integer.
 
-See also
+   :seealso:
 
-- :func:`asinh`
-- :func:`atanh`
+     - :func:`asinh`
+     - :func:`atanh`
 
 .. generic-function:: asin
 
@@ -123,10 +123,10 @@ See also
      the result is given by the precision of ``x``. The result is a
      single-float if ``x`` is an integer.
 
-See also
+   :seealso:
 
-- :func:`acos`
-- :func:`atan`
+     - :func:`acos`
+     - :func:`atan`
 
 .. generic-function:: asinh
 
@@ -144,10 +144,10 @@ See also
      precision of the result is given by the precision of ``x``. The result is
      a single-float if ``x`` is an integer.
 
-See also
+   :seealso:
 
-- :func:`acosh`
-- :func:`atanh`
+     - :func:`acosh`
+     - :func:`atanh`
 
 .. generic-function:: atan
 
@@ -166,10 +166,10 @@ See also
      the result is given by the precision of *x*. The result is a
      single-float if *x* is an integer.
 
-See also
+   :seealso:
 
-- :func:`acos`
-- :func:`asin`
+     - :func:`acos`
+     - :func:`asin`
 
 .. generic-function:: atan2
 
@@ -207,10 +207,10 @@ See also
      precision of the result is given by the precision of ``x``. The result is
      a single-float if ``x`` is an integer.
 
-See also
+   :seealso:
 
-- :func:`acosh`
-- :func:`asinh`
+     - :func:`acosh`
+     - :func:`asinh`
 
 .. generic-function:: cos
 
@@ -228,10 +228,10 @@ See also
      result is given by the precision of ``x``. The result is a single-float
      if ``x`` is an integer.
 
-See also
+   :seealso:
 
-- :func:`sin`
-- :func:`tan`
+     - :func:`sin`
+     - :func:`tan`
 
 .. generic-function:: cosh
 
@@ -249,10 +249,10 @@ See also
      precision of the result is given by the precision of ``x``. The result is
      a single-float if ``x`` is an integer.
 
-See also
+   :seealso:
 
-- :func:`sinh`
-- :func:`tanh`
+     - :func:`sinh`
+     - :func:`tanh`
 
 
 .. constant:: $double-e
@@ -270,9 +270,9 @@ See also
       The value of *e*, the base of natural logarithms, as a double precision
       floating point number.
 
-See also
+   :seealso:
 
-- :const:`$single-e`
+     - :const:`$single-e`
 
 .. constant:: $double-pi
 
@@ -287,9 +287,9 @@ See also
 
      The value of *π* as a double precision floating point number.
 
-See also
+   :seealso:
 
-- :const:`$single-pi`
+     - :const:`$single-pi`
 
 .. generic-function:: exp
 
@@ -307,10 +307,10 @@ See also
      Returns *e*, the base of natural logarithms, raised to the power ``x``.
      The floating point precision is given by the precision of ``x``.
 
-See also
+   :seealso:
 
-- :func:`^`
-- :func:`log`
+     - :func:`^`
+     - :func:`log`
 
 .. generic-function:: isqrt
 
@@ -328,9 +328,9 @@ See also
      less than or equal to the exact positive square root of ``x``. If ``x`` <
      ``0``, an error is signalled.
 
-See also
+   :seealso:
 
-- :func:`sqrt`
+     - :func:`sqrt`
 
 .. generic-function:: log
 
@@ -349,10 +349,10 @@ See also
      by the precision of ``x``. The result is a single-float if ``x`` is an
      integer.
 
-See also
+   :seealso:
 
-- :func:`exp`
-- :func:`logn`
+     - :func:`exp`
+     - :func:`logn`
 
 .. generic-function:: logn
 
@@ -372,10 +372,10 @@ See also
      given by the precision of ``x``. The result is a single-float if
      ``x`` is an integer.
 
-See also
+   :seealso:
 
-- :func:`logn`
-- :func:`exp`
+     - :func:`logn`
+     - :func:`exp`
 
 .. generic-function:: sin
 
@@ -393,10 +393,10 @@ See also
      result is given by the precision of ``x``. The result is a single-float
      if ``x`` is an integer.
 
-See also
+   :seealso:
 
-- :func:`cos`
-- :func:`tan`
+     - :func:`cos`
+     - :func:`tan`
 
 .. constant:: $single-e
 
@@ -413,9 +413,9 @@ See also
      The value of *e*, the base of natural logarithms, as a single precision
      floating point number.
 
-See also
+   :seealso:
 
-- :const:`$double-e`
+     - :const:`$double-e`
 
 .. constant:: $single-pi
 
@@ -430,9 +430,9 @@ See also
 
      The value of *π* as a single precision floating point number.
 
-See also
+   :seealso:
 
-- :const:`$double-pi`
+     - :const:`$double-pi`
 
 .. generic-function:: sinh
 
@@ -450,10 +450,10 @@ See also
      precision of the result is given by the precision of ``x``. The result is
      a single-float if ``x`` is an integer.
 
-See also
+   :seealso:
 
-- :func:`cosh`
-- :func:`tanh`
+     - :func:`cosh`
+     - :func:`tanh`
 
 .. generic-function:: sqrt
 
@@ -471,9 +471,9 @@ See also
      signalled. The floating point precision of the result is given by the
      precision of ``x``. The result is a single-float if ``x`` is an integer.
 
-See also
+   :seealso:
 
-- :func:`isqrt`
+     - :func:`isqrt`
 
 .. generic-function:: tan
 
@@ -491,10 +491,10 @@ See also
      result is given by the precision of ``x``. The result is a single-float
      if ``x`` is an integer.
 
-See also
+   :seealso:
 
-- :func:`cos`
-- :func:`sin`
+     - :func:`cos`
+     - :func:`sin`
 
 .. generic-function:: tanh
 
@@ -508,11 +508,11 @@ See also
 
    :description:
 
-   Returns the hyperbolic tangent of its argument. The floating point
-   precision of the result is given by the precision of ``x``. The result is
-   a single-float if ``x`` is an integer.
+     Returns the hyperbolic tangent of its argument. The floating point
+     precision of the result is given by the precision of ``x``. The result is
+     a single-float if ``x`` is an integer.
 
-See also
+   :seealso:
 
-- :func:`cosh`
-- :func:`sinh`
+     - :func:`cosh`
+     - :func:`sinh`
