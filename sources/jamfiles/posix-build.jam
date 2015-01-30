@@ -70,7 +70,7 @@ SUPPORT = $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/$(SUPOBJS_$(COMPILER_BACK_END))
 
 RTOBJS_harp ?= $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/libdylan-harp-runtime.a ;
 
-RTOBJS_llvm ?= ;
+RTOBJS_llvm ?= $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/libdylan-llvm-runtime.a ;
 
 RTOBJS_c    ?= $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/libdylan-c-runtime.a ;
 
