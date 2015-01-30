@@ -335,8 +335,8 @@ describe any event that can occur on a device connected to the computer.
 |                |                  | <key-release-event>    |                          |                        |
 +----------------+------------------+------------------------+--------------------------+------------------------+
 
-*Note:* The :class:`<pointer-drag-event>` class is a subclass of both
-:class:`<pointer-button-event>` and :class:`<pointer-motion-event>`.
+.. note:: The :class:`<pointer-drag-event>` class is a subclass of both
+   :class:`<pointer-button-event>` and :class:`<pointer-motion-event>`.
 
 Device events fall into two distinct categories:
 
@@ -402,8 +402,7 @@ are exported from the *duim-sheets* module.
 
    :parameter gesture1: An instance of type :class:`<gesture>`.
    :parameter gesture2: An instance of type :class:`<gesture>`.
-
-   :value equal?: An instance of type ``<boolean>``.
+   :value equal?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -421,8 +420,7 @@ are exported from the *duim-sheets* module.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter child: An instance of type :class:`<sheet>`.
-   :parameter index: An instance of type *false-or(<integer>)*.
-
+   :parameter index: An instance of type ``false-or(<integer>)``.
    :value sheet: An instance of type :class:`<sheet>`.
 
    :description:
@@ -442,7 +440,6 @@ are exported from the *duim-sheets* module.
 
    :parameter clipboard: An instance of :class:`<clipboard>`.
    :parameter data: An instance of :drm:`<object>`.
-
    :value success?: An instance of :class:`<boolean>`.
 
    :description:
@@ -456,17 +453,16 @@ are exported from the *duim-sheets* module.
 
    :signature: add-clipboard-data *type clipboard data* => *success?*
 
-   :parameter type: An instance of *type-union(<symbol>,* *<type>)*.
+   :parameter type: An instance of ``type-union(<symbol>, <type>)``.
    :parameter clipboard: An instance of :class:`<clipboard>`.
    :parameter data: An instance of :drm:`<object>`.
-
    :value success?: An instance of :class:`<boolean>`.
 
    :description:
 
      This generic function adds *data* to *clipboard*, first coercing it to
-     *type*. The argument *type* is an instance of *type-union(<symbol>,*
-     *<type>)*. It returns ``#t`` if *data* was successfully added to the
+     *type*. The argument *type* is an instance of ``type-union(<symbol>,
+     <type>)``. It returns ``#t`` if *data* was successfully added to the
      clipboard.
 
 .. constant:: $alt-key
@@ -499,7 +495,7 @@ are exported from the *duim-sheets* module.
 
    :signature: beep *drawable* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
    :description:
 
@@ -510,8 +506,7 @@ are exported from the *duim-sheets* module.
    :signature: boundary-event-kind *event* => *symbol*
 
    :parameter event: An instance of type :class:`<event>`.
-
-   :value symbol: An instance of type *one-of(#"ancestor", #"virtual", #"inferior", #"nonlinear", #"nonlinear-virtual", #f)*.
+   :value symbol: An instance of type ``one-of(#"ancestor", #"virtual", #"inferior", #"nonlinear", #"nonlinear-virtual", #f)``.
 
    :description:
 
@@ -528,9 +523,8 @@ are exported from the *duim-sheets* module.
 
    :signature: button-index *button* => *index*
 
-   :parameter button: An instance of type *one-of(#"left", #"middle", #"right")*.
-
-   :value index: An instance of type ``<integer>``.
+   :parameter button: An instance of type ``one-of(#"left", #"middle", #"right")``.
+   :value index: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -550,9 +544,8 @@ are exported from the *duim-sheets* module.
 
    :signature: button-index-name *index* => *button*
 
-   :parameter index: An instance of type ``<integer>``.
-
-   :value button: An instance of type *one-of(#"left", #"middle", #"right")*.
+   :parameter index: An instance of type :drm:`<integer>`.
+   :value button: An instance of type ``one-of(#"left", #"middle", #"right")``.
 
    :description:
 
@@ -615,20 +608,20 @@ are exported from the *duim-sheets* module.
    :superclasses: :drm:`<object>`
 
    :keyword sheet: An instance of type false-or(:class:`<sheet>`).
-   :keyword x: An instance of type ``<integer>``. Default value: 0.
-   :keyword y: An instance of type ``<integer>``. Default value: 0.
-   :keyword width: An instance of type ``<integer>``. Default value: 0.
-   :keyword height: An instance of type ``<integer>``. Default value: 0.
+   :keyword x: An instance of type :drm:`<integer>`. Default value: 0.
+   :keyword y: An instance of type :drm:`<integer>`. Default value: 0.
+   :keyword width: An instance of type :drm:`<integer>`. Default value: 0.
+   :keyword height: An instance of type :drm:`<integer>`. Default value: 0.
 
    :description:
 
      The class of carets, or text cursors. A cursor can actually be any
      instance of :class:`<symbol>` or any instance of :class:`<image>`.
 
-     The *sheet:* init-keyword specifies the sheet that the caret is
+     The ``sheet:`` init-keyword specifies the sheet that the caret is
      positioned in.
 
-     The *x:*, *y:*, *width:*, and *height:* init-keywords define the
+     The ``x:``, ``y:``, ``width:``, and ``height:`` init-keywords define the
      position and size of the caret, with respect to the sheet that contains
      it. The position of the caret is measured from the top left of the
      sheet. All units are measured in pixels.
@@ -659,9 +652,8 @@ are exported from the *duim-sheets* module.
    :signature: cursor-position *caret* => *x y*
 
    :parameter caret: An instance of type :class:`<caret>`.
-
-   :value x: An instance of type ``<integer>``.
-   :value y: An instance of type ``<integer>``.
+   :value x: An instance of type :drm:`<integer>`.
+   :value y: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -679,7 +671,6 @@ are exported from the *duim-sheets* module.
    :signature: cursor-sheet *caret* => *sheet*
 
    :parameter caret: An instance of type :class:`<caret>`.
-
    :value sheet: An instance of type :class:`<sheet>`.
 
    :description:
@@ -698,9 +689,8 @@ are exported from the *duim-sheets* module.
    :signature: cursor-size *caret* => *width height*
 
    :parameter caret: An instance of type :class:`<caret>`.
-
-   :value width: An instance of type ``<integer>``.
-   :value height: An instance of type ``<integer>``.
+   :value width: An instance of type :drm:`<integer>`.
+   :value height: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -718,8 +708,7 @@ are exported from the *duim-sheets* module.
    :signature: cursor-visible? *caret* => *visible?*
 
    :parameter caret: An instance of type :class:`<caret>`.
-
-   :value visible?: An instance of type ``<boolean>``.
+   :value visible?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -736,10 +725,9 @@ are exported from the *duim-sheets* module.
 
    :signature: cursor-visible?-setter *visible? caret* => *boolean*
 
-   :parameter visible?: An instance of type ``<boolean>``.
+   :parameter visible?: An instance of type :drm:`<boolean>`.
    :parameter caret: An instance of type :class:`<caret>`.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -758,15 +746,14 @@ are exported from the *duim-sheets* module.
    :signature: child-containing-position *sheet x y* => *value*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-   :parameter x: An instance of type ``<real>``.
-   :parameter y: An instance of type ``<real>``.
-
+   :parameter x: An instance of type :drm:`<real>`.
+   :parameter y: An instance of type :drm:`<real>`.
    :value value: An instance of type false-or(:class:`<sheet>`).
 
    :description:
 
      Returns the topmost enabled direct child of *sheet* whose region
-     contains the position *(* *x* *,* *y* *)*. The position is expressed in
+     contains the position ``(x, y)``. The position is expressed in
      the coordinate system used by *sheet*.
 
    :seealso:
@@ -782,8 +769,7 @@ are exported from the *duim-sheets* module.
    :signature: children-overlapping-region *sheet region* => *sheets*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-   :parameter region: An instance of type `<region> <geom.htm#79228>`_.
-
+   :parameter region: An instance of type :class:`<region>`.
    :value sheets: An instance of type limited(``<sequence>``, of: :class:`<sheet>`).
 
    :description:
@@ -809,7 +795,6 @@ are exported from the *duim-sheets* module.
    :parameter exit-boxes: An instance of type :drm:`<object>`.
    :parameter name: An instance of type :drm:`<object>`.
    :parameter default: An instance of type :drm:`<object>`.
-
    :value color: An instance of type :class:`<color>`
 
    :description:
@@ -879,8 +864,7 @@ are exported from the *duim-sheets* module.
    :parameter exit-boxes: An instance of type :drm:`<object>`.
    :parameter name: An instance of type :drm:`<object>`.
    :parameter default: An instance of type :drm:`<object>`.
-
-   :value locator: An instance of type *type-union(<string>, <locator>)*.
+   :value locator: An instance of type ``type-union(<string>, <locator>)``.
 
    :description:
 
@@ -946,12 +930,11 @@ are exported from the *duim-sheets* module.
    :parameter owner: An instance of type :class:`<sheet>`. Default value: ``#f``.
    :parameter title: An instance of type :class:`<string>`.
    :parameter documentation: An instance of type :class:`<string>`.
-   :parameter direction: An instance of type *one-of(#"input", #"output")*. Default value: *#"input"*.
-   :parameter filters: An instance of type *limited(<sequence>, of: <sequence>)*.
+   :parameter direction: An instance of type ``one-of(#"input", #"output")``. Default value: ``#"input"``.
+   :parameter filters: An instance of type ``limited(<sequence>, of: <sequence>)``.
    :parameter exit-boxes: An instance of type :drm:`<object>`.
    :parameter name: An instance of type :drm:`<object>`.
    :parameter default: An instance of type :class:`<string>`.
-
    :value locator: An instance of type :class:`<string>`.
 
    :description:
@@ -1067,22 +1050,21 @@ are exported from the *duim-sheets* module.
 
    :signature: choose-from-dialog *items*  #key *frame owner title value default-item label-key value-key selection-mode gadget-class gadget-options width height foreground background text-style* => *value success?*
 
-   :parameter items: An instance of *type-union(* :class:`<sequence>`, :class:`<menu>` *)*.
+   :parameter items: An instance of ``type-union(<sequence>, <menu>)``.
    :parameter frame: An instance of type :class:`<frame>`. Default value: ``#f``.
    :parameter owner: An instance of type :class:`<sheet>`. Default value: ``#f``.
    :parameter title: An instance of type :class:`<string>`.
    :parameter default-item: An instance of type :drm:`<object>`.
-   :parameter label-key: An instance of type ``<function>``. Default value: *identity*.
-   :parameter value-key: An instance of type ``<function>``. Default value: *identity*.
-   :parameter selection-mode: An instance of :class:`<symbol>`. Default value: *#"single"*.
+   :parameter label-key: An instance of type :drm:`<function>`. Default value: :drm:`identity`.
+   :parameter value-key: An instance of type :drm:`<function>`. Default value: :drm:`identity`.
+   :parameter selection-mode: An instance of :class:`<symbol>`. Default value: ``#"single"``.
    :parameter gadget-class: An instance of type :class:`<gadget>`.
    :parameter gadget-options: An instance of type :class:`<sequence>`.
    :parameter foreground: An instance of type :class:`<ink>`.
    :parameter background: An instance of type :class:`<ink>`.
    :parameter text-style: An instance of type :class:`<text-style>`.
-
    :value value: An instance of type :drm:`<object>`.
-   :value success?: An instance of type ``<boolean>``.
+   :value success?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1117,7 +1099,7 @@ are exported from the *duim-sheets* module.
      in the menu. The *selection-mode* keyword is used to make the dialog box
      single-selection (the user can only choose one value) or
      multiple-selection (the user can return any number of values). The
-     default value of *selection-mode* is *#"single"*. By specifying
+     default value of *selection-mode* is ``#"single"``. By specifying
      *selection-mode: #"multiple"*, the user can choose several values from
      the dialog box. The *gadget-class* keyword lets you specify which type
      of collection gadget is displayed in the dialog box. This lets you, for
@@ -1142,19 +1124,18 @@ are exported from the *duim-sheets* module.
 
    :signature: choose-from-menu *items*  #key *frame owner title value default-item label-key value-key width height foreground background text-style multiple-sets?* => *value success?*
 
-   :parameter items: An instance of *type-union(* :class:`<sequence>`, :class:`<menu>` *)*.
+   :parameter items: An instance of ``type-union(<sequence>, <menu>)``.
    :parameter frame: An instance of type :class:`<frame>`. Default value: ``#f``.
    :parameter owner: An instance of type :class:`<sheet>`. Default value: ``#f``.
    :parameter title: An instance of type :class:`<string>`. Default value: ``#f``.
    :parameter default-item: An instance of type :drm:`<object>`.
-   :parameter label-key: An instance of type ``<function>``. Default value: *identity*.
-   :parameter value-key: An instance of type ``<function>``. Default value: *identity*.
+   :parameter label-key: An instance of type :drm:`<function>`. Default value: :drm:`identity`.
+   :parameter value-key: An instance of type :drm:`<function>`. Default value: :drm:`identity`.
    :parameter foreground: An instance of type :class:`<ink>`.
    :parameter background: An instance of type :class:`<ink>`.
    :parameter text-style: An instance of type :class:`<text-style>`.
-
    :value value: An instance of type :drm:`<object>`.
-   :value success?: An instance of type ``<boolean>``.
+   :value success?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1206,7 +1187,6 @@ are exported from the *duim-sheets* module.
    :parameter frame: An instance of type :class:`<frame>`. Default value: ``#f``.
    :parameter owner: An instance of type :class:`<sheet>`. Default value: ``#f``.
    :parameter title: An instance of type :class:`<string>`. Default value: ``#f``.
-
    :value font: An instance of :class:`<text-style>`.
 
    :description:
@@ -1233,14 +1213,14 @@ are exported from the *duim-sheets* module.
 
    :parameter drawable: An instance of type type-union(:class:`<sheet>`, :class:`<medium>`).
 
-   The following arguments are specific to *clear-box*.
+   The following arguments are specific to ``clear-box``.
 
    :parameter left: An instance of type :class:`<coordinate>`.
    :parameter top: An instance of type :class:`<coordinate>`.
    :parameter right: An instance of type :class:`<coordinate>`.
    :parameter bottom: An instance of type :class:`<coordinate>`.
 
-   The following argument is specific to *clear-box\**.
+   The following argument is specific to ``clear-box\*``.
 
    :parameter region: An instance of type :class:`<region>`.
 
@@ -1300,16 +1280,15 @@ are exported from the *duim-sheets* module.
 
    :signature: clipboard-data-available? *type clipboard* => *available?*
 
-   :parameter type: An instance of *type-union(<symbol>,* *<type>)*.
+   :parameter type: An instance of ``type-union(<symbol>, <type>)``.
    :parameter clipboard: An instance of :class:`<clipboard>`.
-
    :value available?: An instance of :class:`<boolean>`.
 
    :description:
 
      Returns ``#f`` if and only if there is any data of type *type* on the
-     clipboard. The argument *type* is an instance of *type-union(<symbol>,*
-     *<type>)*.
+     clipboard. The argument *type* is an instance of ``type-union(<symbol>,
+     <type>)``.
 
    :seealso:
 
@@ -1325,7 +1304,6 @@ are exported from the *duim-sheets* module.
    :signature: clipboard-sheet *clipboard* => *sheet*
 
    :parameter clipboard: An instance of :class:`<clipboard>`.
-
    :value sheet: An instance of :class:`<sheet>`.
 
    :description:
@@ -1343,7 +1321,6 @@ are exported from the *duim-sheets* module.
    :signature: clipboard-owner *clipboard* => *owner*
 
    :parameter clipboard: An instance of :class:`<clipboard>`.
-
    :value owner: An instance of :class:`<sheet>`.
 
    :description:
@@ -1433,8 +1410,7 @@ are exported from the *duim-sheets* module.
    :signature: cursor? *object* => *cursor?*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value cursor?: An instance of type ``<boolean>``.
+   :value cursor?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1451,8 +1427,7 @@ are exported from the *duim-sheets* module.
 
    :signature: default-port #key *server-path* => *port*
 
-   :parameter server-path: An instance of type :class:`<vector>`. Default value: *#(#"local")*.
-
+   :parameter server-path: An instance of type :class:`<vector>`. Default value: ``#(#"local")``.
    :parameter port: An instance of type false-or(:class:`<port>`).
 
    :description:
@@ -1471,7 +1446,6 @@ are exported from the *duim-sheets* module.
    :signature: default-port-setter *port* => *port*
 
    :parameter port: An instance of type :class:`<port>`. Default value: ``#f``.
-
    :value port: An instance of type :class:`<port>`.
 
    :description:
@@ -1521,13 +1495,13 @@ are exported from the *duim-sheets* module.
    :superclasses: :class:`<sheet-event>`
 
    :keyword sheet: An instance of type :class:`<sheet>`.
-   :keyword modifier-state: An instance of type ``<integer>``. Default value: 0.
+   :keyword modifier-state: An instance of type :drm:`<integer>`. Default value: 0.
 
    :description:
 
      The class of device events.
 
-     The *modifier-state:* init-keyword is used to record the state of the
+     The ``modifier-state:`` init-keyword is used to record the state of the
      device at the time the event occurred.
 
    :operations:
@@ -1542,8 +1516,8 @@ are exported from the *duim-sheets* module.
 
    :superclasses: :class:`<sheet>`
 
-   :keyword orientation: An instance of type *one-of(#"vertical", #"horizontal", #"default")*. Default value: *#"default"*.
-   :keyword units: An instance of type *one-of(#"device", #"mm", #"pixels")*. Default value: *#"device"*.
+   :keyword orientation: An instance of type ``one-of(#"vertical", #"horizontal", #"default")``. Default value: ``#"default"``.
+   :keyword units: An instance of type ``one-of(#"device", #"mm", #"pixels")``. Default value: ``#"device"``.
 
    :description:
 
@@ -1553,10 +1527,10 @@ are exported from the *duim-sheets* module.
      all the sheets attached to it, are associated with a :class:`<port>` that
      is a connection to a display server.
 
-     The *orientation:* init-keyword is used to specify the orientation of a
+     The ``orientation:`` init-keyword is used to specify the orientation of a
      display.
 
-     The *units:* init-keyword is used to specify the units in which height
+     The ``units:`` init-keyword is used to specify the units in which height
      and width measurements are made with respect to the display. The default
      is whatever units are standard for the display device (usually pixels).
 
@@ -1594,7 +1568,6 @@ are exported from the *duim-sheets* module.
    :signature: display *object* => *display*
 
    :parameter object: An instance of type :drm:`<object>`.
-
    :parameter display: An instance of type false-or(:class:`<display>`).
 
    :description:
@@ -1614,8 +1587,7 @@ are exported from the *duim-sheets* module.
    :signature: display? *object* => *display?*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value display?: An instance of type ``<boolean>``.
+   :value display?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1632,8 +1604,7 @@ are exported from the *duim-sheets* module.
    :signature: display-depth *display* => *depth*
 
    :parameter display: An instance of type :class:`<display>`.
-
-   :value depth: An instance of type ``<integer>``.
+   :value depth: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -1653,8 +1624,7 @@ are exported from the *duim-sheets* module.
    :signature: display-height *display* #key *units* => *height*
 
    :parameter display: An instance of type :class:`<display>`.
-   :parameter units: An instance of *one-of(#"device", #"mm", #"pixels")*. Default value: *#"device"*.
-
+   :parameter units: An instance of ``one-of(#"device", #"mm", #"pixels")``. Default value: ``#"device"``.
    :value height: An instance of type :class:`<number>`.
 
    :description:
@@ -1679,13 +1649,12 @@ are exported from the *duim-sheets* module.
    :signature: display-mm-height *display* => *height*
 
    :parameter display: An instance of type :class:`<display>`.
-
    :value height: An instance of type :class:`<number>`.
 
    :description:
 
      Returns the height of *display* in millimeters. This is equivalent to
-     calling :gf:`display-height` with the *units* argument set to *#"mm"*.
+     calling :gf:`display-height` with the *units* argument set to ``#"mm"``.
 
    :seealso:
 
@@ -1701,13 +1670,12 @@ are exported from the *duim-sheets* module.
    :signature: display-mm-width *display* => *width*
 
    :parameter display: An instance of type :class:`<display>`.
-
    :value width: An instance of type :class:`<number>`.
 
    :description:
 
      Returns the width of *display* in millimeters. This is equivalent to
-     calling :gf:`display-width` with the *units* argument set to *#"mm"*.
+     calling :gf:`display-width` with the *units* argument set to ``#"mm"``.
 
    :seealso:
 
@@ -1723,13 +1691,12 @@ are exported from the *duim-sheets* module.
    :signature: display-orientation *display* => *orientation*
 
    :parameter display: An instance of type :class:`<display>`.
-
-   :value orientation: An instance of type *one-of(#"vertical", #"horizontal", #"default")*.
+   :value orientation: An instance of type ``one-of(#"vertical", #"horizontal", #"default")``.
 
    :description:
 
      Returns the orientation of *display*. Unless specified otherwise, the
-     orientation of any display is *#"default"*.
+     orientation of any display is ``#"default"``.
 
    :seealso:
 
@@ -1744,13 +1711,12 @@ are exported from the *duim-sheets* module.
    :signature: display-pixel-height *display* => *height*
 
    :parameter display: An instance of type :class:`<display>`.
-
-   :value height: An instance of type ``<integer>``.
+   :value height: An instance of type :drm:`<integer>`.
 
    :description:
 
      Returns the height of *display* in pixels. This is equivalent to calling
-     :gf:`display-height` with the *units* argument set to *#"pixels"*.
+     :gf:`display-height` with the *units* argument set to ``#"pixels"``.
 
    :seealso:
 
@@ -1766,7 +1732,6 @@ are exported from the *duim-sheets* module.
    :signature: display-pixels-per-point *display* => *number*
 
    :parameter display: An instance of type :class:`<display>`.
-
    :value number: An instance of type :class:`<number>`.
 
    :description:
@@ -1786,13 +1751,12 @@ are exported from the *duim-sheets* module.
    :signature: display-pixel-width *display* => *width*
 
    :parameter display: An instance of type :class:`<display>`.
-
-   :value width: An instance of type ``<integer>``.
+   :value width: An instance of type :drm:`<integer>`.
 
    :description:
 
      Returns the height of *display* in pixels. This is equivalent to calling
-     :gf:`display-width` with the *units* argument set to *#"pixels"*.
+     :gf:`display-width` with the *units* argument set to ``#"pixels"``.
 
    :seealso:
 
@@ -1808,15 +1772,14 @@ are exported from the *duim-sheets* module.
    :signature: display-units *display* => *value*
 
    :parameter display: An instance of type :class:`<display>`.
-
-   :value value: An instance of type *one-of(#"device", #"pixels", #"mm")*.
+   :value value: An instance of type ``one-of(#"device", #"pixels", #"mm")``.
 
    :description:
 
      Returns the default units for *display*. These are the units in which
      height and width measurements are made, both for the display, and for
      any children of the display. Unless otherwise specified, the value
-     returned is *#"default"*, so as to maintain a device-independent
+     returned is ``#"default"``, so as to maintain a device-independent
      measurement as far as possible.
 
    :seealso:
@@ -1831,8 +1794,7 @@ are exported from the *duim-sheets* module.
    :signature: display-width *display* #key *units* => *width*
 
    :parameter display: An instance of type :class:`<display>`.
-   :parameter units: An instance of *one-of(#"device", #"mm", #"pixels")*. Default value: *#"device"*.
-
+   :parameter units: An instance of ``one-of(#"device", #"mm", #"pixels")``. Default value: ``#"device"``.
    :value width: An instance of type :class:`<number>`.
 
    :description:
@@ -1857,15 +1819,15 @@ are exported from the *duim-sheets* module.
 
    :signature: do-children-containing-position *function sheet x y* => ()
 
-   :parameter function: An instance of type ``<function>``.
+   :parameter function: An instance of type :drm:`<function>`.
    :parameter sheet: An instance of type :class:`<sheet>`.
-   :parameter x: An instance of type ``<real>``.
-   :parameter y: An instance of type ``<real>``.
+   :parameter x: An instance of type :drm:`<real>`.
+   :parameter y: An instance of type :drm:`<real>`.
 
    :description:
 
-     Invokes *function* on any children that occupy position *(* *x* *,* *y*
-     *)* in *sheet*. This is used by :gf:`child-containing-position` to
+     Invokes *function* on any children that occupy position ``(x, y)``
+     in *sheet*. This is used by :gf:`child-containing-position` to
      ascertain which children occupy the position. The function
      :gf:`child-containing-position` then decides which of the children
      returned is the topmost direct enabled child.
@@ -1881,7 +1843,7 @@ are exported from the *duim-sheets* module.
 
    :signature: do-children-overlapping-region *function sheet region* => ()
 
-   :parameter function: An instance of type ``<function>``.
+   :parameter function: An instance of type :drm:`<function>`.
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter region: An instance of type :class:`<region>`.
 
@@ -1902,7 +1864,7 @@ are exported from the *duim-sheets* module.
 
    :signature: do-displays *function port* => ()
 
-   :parameter function: An instance of type ``<function>``.
+   :parameter function: An instance of type :drm:`<function>`.
    :parameter port: An instance of type :class:`<port>`.
 
    :description:
@@ -1916,7 +1878,7 @@ are exported from the *duim-sheets* module.
 
    :signature: do-frames *function* #key *port frame-manager* => ()
 
-   :parameter function: An instance of type ``<function>``.
+   :parameter function: An instance of type :drm:`<function>`.
    :parameter port: An instance of type :class:`<port>`.
    :parameter frame-manager: An instance of type :class:`<frame-manager>`.
 
@@ -1932,7 +1894,7 @@ are exported from the *duim-sheets* module.
 
    :signature: do-ports *function* => ()
 
-   :parameter function: An instance of type ``<function>``.
+   :parameter function: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -1944,7 +1906,7 @@ are exported from the *duim-sheets* module.
 
    :signature: do-sheet-children *function sheet* => ()
 
-   :parameter function: An instance of type ``<function>``.
+   :parameter function: An instance of type :drm:`<function>`.
    :parameter sheet: An instance of type :class:`<sheet>`.
 
    :description:
@@ -1963,7 +1925,7 @@ are exported from the *duim-sheets* module.
 
    :signature: do-sheet-tree *function sheet* => ()
 
-   :parameter function: An instance of type ``<function>``.
+   :parameter function: An instance of type :drm:`<function>`.
    :parameter sheet: An instance of type :class:`<sheet>`.
 
    :description:
@@ -1998,14 +1960,13 @@ are exported from the *duim-sheets* module.
 
    :signature: do-with-drawing-options *drawable function* #key *brush pen text-style clipping-region transform* => #rest *values*
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
-   :parameter function: An instance of type ``<function>``.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
+   :parameter function: An instance of type :drm:`<function>`.
    :parameter brush: An instance of type :class:`<brush>`.
    :parameter pen: An instance of type :class:`<pen>`.
    :parameter text-style: An instance of type :class:`<text-style>`.
    :parameter clipping-region: An instance of type :class:`<region>`.
    :parameter transform: An instance of type :class:`<transform>`.
-
    :value values: An instance of type :drm:`<object>`.
 
    :description:
@@ -2035,8 +1996,7 @@ are exported from the *duim-sheets* module.
 
    :parameter port: An instance of type :class:`<port>`.
    :parameter sheet: An instance of type :class:`<sheet>`.
-   :parameter continuation: An instance of type ``<function>``.
-
+   :parameter continuation: An instance of type :drm:`<function>`.
    :value values: An instance of type :drm:`<object>`.
 
    :description:
@@ -2060,8 +2020,7 @@ are exported from the *duim-sheets* module.
    :signature: do-with-sheet-medium *sheet continuation* => #rest *values*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-   :parameter continuation: An instance of type ``<function>``.
-
+   :parameter continuation: An instance of type :drm:`<function>`.
    :value values: An instance of type :drm:`<object>`.
 
    :description:
@@ -2078,9 +2037,9 @@ are exported from the *duim-sheets* module.
 
    :signature: do-with-text-style *drawable function text-style* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
-   :parameter function: An instance of type ``<function>``.
-   :parameter text-style: An instance of type `<text-style> <dcs.htm#85385>`_.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
+   :parameter function: An instance of type :drm:`<function>`.
+   :parameter text-style: An instance of type :class:`<text-style>`.
 
    :description:
 
@@ -2097,10 +2056,9 @@ are exported from the *duim-sheets* module.
 
    :signature: do-with-transform *drawable function transform* => #rest *values*
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
-   :parameter function: An instance of type ``<function>``.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
+   :parameter function: An instance of type :drm:`<function>`.
    :parameter transform: An instance of type :class:`<transform>`.
-
    :value values: An instance of type :drm:`<object>`.
 
    :description:
@@ -2123,13 +2081,13 @@ are exported from the *duim-sheets* module.
 
    :superclasses: :drm:`<object>`
 
-   :keyword timestamp: An instance of type ``<integer>``. Default value: *next-event-timestamp()*.
+   :keyword timestamp: An instance of type :drm:`<integer>`. Default value: :gf:`next-event-timestamp()`.
 
    :description:
 
      The base class of all DUIM events.
 
-     The *timestamp:* init-keyword is used to give a unique identifier for
+     The ``timestamp:`` init-keyword is used to give a unique identifier for
      the event.
 
    :operations:
@@ -2151,8 +2109,7 @@ are exported from the *duim-sheets* module.
    :signature: event? *object* => *event?*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value event?: An instance of type ``<boolean>``.
+   :value event?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2171,8 +2128,7 @@ are exported from the *duim-sheets* module.
    :signature: event-button *event* => *integer*
 
    :parameter event: An instance of type :class:`<event>`.
-
-   :value integer: An instance of type ``<integer>``.
+   :value integer: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -2180,9 +2136,9 @@ are exported from the *duim-sheets* module.
      released, which will be one of :const:`$left-button`,
      :const:`$middle-button`, or :const:`$right-button`.
 
-     *Note:* The function *event-button* records the button state at the time
-     that the event occurred, and hence can be different from
-     :gf:`pointer-button-state`.
+     .. note:: The function *event-button* records the button state at the time
+        that the event occurred, and hence can be different from
+        :gf:`pointer-button-state`.
 
    :seealso:
 
@@ -2199,8 +2155,7 @@ are exported from the *duim-sheets* module.
    :signature: event-character *event* => *value*
 
    :parameter event: An instance of type :class:`<event>`.
-
-   :value value: An instance of type *false-or(<character>)*.
+   :value value: An instance of type ``false-or(<character>)``.
 
    :description:
 
@@ -2220,7 +2175,6 @@ are exported from the *duim-sheets* module.
    :signature: event-key-name *event* => name
 
    :parameter event: An instance of type :class:`<event>`.
-
    :value name: An instance of type :class:`<symbol>`.
 
    :description:
@@ -2241,9 +2195,8 @@ are exported from the *duim-sheets* module.
    :signature: event-matches-gesture? *event gesture-name* => *matches?*
 
    :parameter event: An instance of type :class:`<event>`.
-   :parameter gesture-name: An instance of type *type-union(* :class:`<gesture>`, ``<character>`` *)*.
-
-   :value matches?: An instance of type ``<boolean>``.
+   :parameter gesture-name: An instance of type ``type-union(<gesture>, <character>)``.
+   :value matches?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2257,13 +2210,12 @@ are exported from the *duim-sheets* module.
    :signature: event-modifier-state *event* => *integer*
 
    :parameter event: An instance of type :class:`<event>`.
-
-   :value integer: An instance of type ``<integer>``.
+   :value integer: An instance of type :drm:`<integer>`.
 
    :description:
 
      Returns an integer value that encodes the state of all the modifier keys on
-     the keyboard. This is a mask consisting of the *logior* of
+     the keyboard. This is a mask consisting of the :drm:`logior` of
      :const:`$shift-key`, :const:`$control-key`, :const:`$meta-key`,
      :const:`$super-key`, and :const:`$hyper-key`.
 
@@ -2281,7 +2233,6 @@ are exported from the *duim-sheets* module.
    :signature: event-pointer *event* => *pointer*
 
    :parameter event: An instance of type :class:`<event>`.
-
    :value pointer: An instance of type :class:`<pointer>`.
 
    :description:
@@ -2301,7 +2252,6 @@ are exported from the *duim-sheets* module.
    :signature: event-region *event* => *region*
 
    :parameter event: An instance of type :class:`<event>`.
-
    :value region: An instance of type :class:`<region>`.
 
    :description:
@@ -2321,7 +2271,6 @@ are exported from the *duim-sheets* module.
    :signature: event-sheet *event* => *sheet*
 
    :parameter event: An instance of type :class:`<event>`.
-
    :value sheet: An instance of type :class:`<sheet>`.
 
    :description:
@@ -2339,8 +2288,7 @@ are exported from the *duim-sheets* module.
    :signature: event-x *event* => *x*
 
    :parameter event: An instance of type :class:`<event>`.
-
-   :value x: An instance of type ``<integer>``.
+   :value x: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -2360,8 +2308,7 @@ are exported from the *duim-sheets* module.
    :signature: event-y *event* => *y*
 
    :parameter event: An instance of type :class:`<event>`.
-
-   :value y: An instance of type ``<integer>``.
+   :value y: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -2381,11 +2328,10 @@ are exported from the *duim-sheets* module.
 
    :signature: find-display #key *server-path port orientation units* => *display*
 
-   :parameter server-path: An instance of type :class:`<symbol>`. Default value: *#(#"local")*.
+   :parameter server-path: An instance of type :class:`<symbol>`. Default value: ``#(#"local")``.
    :parameter port: An instance of type :class:`<port>`.
-   :parameter orientation: An instance of type *one-of(#"default")*. Default value: *#"default"*.
-   :parameter units: An instance of type *one-of(#"device", #"pixels", #"mm")*. Default value: *#"device"*.
-
+   :parameter orientation: An instance of type ``one-of(#"default")``. Default value: ``#"default"``.
+   :parameter units: An instance of type ``one-of(#"device", #"pixels", #"mm")``. Default value: ``#"device"``.
    :value display: An instance of type :class:`<display>`.
 
    :description:
@@ -2411,7 +2357,6 @@ are exported from the *duim-sheets* module.
    :parameter server-path: An instance of type :drm:`<object>`.
    :parameter class: An instance of type :class:`<type>`.
    :parameter palette: An instance of type :class:`<palette>`.
-
    :value framem: An instance of type :class:`<frame-manager>`.
 
    :description:
@@ -2430,8 +2375,7 @@ are exported from the *duim-sheets* module.
    :signature: find-port #rest *initargs* #key *server-path* => *port*
 
    :parameter initargs: An instance of type :drm:`<object>`.
-   :parameter server-path: An instance of type :drm:`<object>`. Default value: *\*default-server-path\**.
-
+   :parameter server-path: An instance of type :drm:`<object>`. Default value: :var:`*default-server-path*`.
    :value port: An instance of type :class:`<port>`.
 
    :description:
@@ -2448,11 +2392,10 @@ are exported from the *duim-sheets* module.
 
    :signature: fixed-width-font? *text-style port* #key *character-set* => *fixed?*
 
-   :parameter text-style: An instance of type `<text-style> <dcs.htm#85385>`_.
+   :parameter text-style: An instance of type :class:`<text-style>`.
    :parameter port: An instance of type :class:`<port>`.
-   :parameter character-set: An instance of type :drm:`<object>`. Default value: *$standard-character-set*.
-
-   :value fixed?: An instance of type ``<boolean>``.
+   :parameter character-set: An instance of type :drm:`<object>`. Default value: :const:`$standard-character-set`.
+   :value fixed?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2464,11 +2407,10 @@ are exported from the *duim-sheets* module.
 
    :signature: font-ascent *text-style port* #key *character-set* => *ascent*
 
-   :parameter text-style: An instance of type `<text-style> <dcs.htm#85385>`_.
+   :parameter text-style: An instance of type :class:`<text-style>`.
    :parameter port: An instance of type :class:`<port>`.
-   :parameter character-set: An instance of type :drm:`<object>`. Default value: *$standard-character-set*.
-
-   :value ascent: An instance of type ``<real>``.
+   :parameter character-set: An instance of type :drm:`<object>`. Default value: :const:`$standard-character-set`.
+   :value ascent: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -2490,8 +2432,7 @@ are exported from the *duim-sheets* module.
    :parameter text-style: An instance of type :class:`<text-style>`.
    :parameter port: An instance of type :class:`<port>`.
    :parameter character-set: An instance of type :drm:`<object>`.
-
-   :value descent: An instance of type ``<real>``.
+   :value descent: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -2513,8 +2454,7 @@ are exported from the *duim-sheets* module.
    :parameter text-style: An instance of type :class:`<text-style>`.
    :parameter port: An instance of type :class:`<port>`.
    :parameter character-set: An instance of type :drm:`<object>`.
-
-   :value height: An instance of type ``<real>``.
+   :value height: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -2536,12 +2476,11 @@ are exported from the *duim-sheets* module.
    :parameter text-style: An instance of type :class:`<text-style>`.
    :parameter port: An instance of type :class:`<port>`.
    :parameter character-set: An instance of type :drm:`<object>`.
-
    :value font: An instance of type :drm:`<object>`.
-   :value width: An instance of type ``<real>``.
-   :value height: An instance of type ``<real>``.
-   :value ascent: An instance of type ``<real>``.
-   :value descent: An instance of type ``<real>``.
+   :value width: An instance of type :drm:`<real>`.
+   :value height: An instance of type :drm:`<real>`.
+   :value ascent: An instance of type :drm:`<real>`.
+   :value descent: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -2563,8 +2502,7 @@ are exported from the *duim-sheets* module.
    :parameter text-style: An instance of type :class:`<text-style>`.
    :parameter port: An instance of type :class:`<port>`.
    :parameter character-set: An instance of type :drm:`<object>`.
-
-   :value width: An instance of type ``<real>``.
+   :value width: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -2583,7 +2521,7 @@ are exported from the *duim-sheets* module.
 
    :signature: force-display *drawable* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
    :description:
 
@@ -2601,7 +2539,7 @@ are exported from the *duim-sheets* module.
 
    :description:
 
-     The class of events that occur in frames. The *frame:* init-keyword
+     The class of events that occur in frames. The ``frame:`` init-keyword
      specified the frame in which the event occurs.
 
    :seealso:
@@ -2678,8 +2616,7 @@ are exported from the *duim-sheets* module.
    :signature: frame-manager *object* => *value*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :parameter value: An instance of type *false-or(* :class:`<frame-manager>` *)*.
+   :parameter value: An instance of type ``false-or(<frame-manager>)``.
 
    :description:
 
@@ -2700,8 +2637,7 @@ are exported from the *duim-sheets* module.
    :signature: frame-manager? *object* => *framem?*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value framem?: An instance of type ``<boolean>``.
+   :value framem?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2719,8 +2655,7 @@ are exported from the *duim-sheets* module.
    :signature: frame-manager-frames *framem* => *frames*
 
    :parameter framem: An instance of type :class:`<frame-manager>`.
-
-   :parameter frames: An instance of type *limited(<sequence>, of:* :class:`<frame>` *)*.
+   :parameter frames: An instance of type ``limited(<sequence>, of: <frame>)``.
 
    :description:
 
@@ -2733,7 +2668,6 @@ are exported from the *duim-sheets* module.
    :signature: frame-manager-palette *framem* => *palette*
 
    :parameter framem: An instance of type :class:`<frame-manager>`.
-
    :value palette: An instance of type :class:`<palette>`.
 
    :description:
@@ -2752,7 +2686,6 @@ are exported from the *duim-sheets* module.
 
    :parameter palette: An instance of type :class:`<palette>`.
    :parameter framem: An instance of type :class:`<frame-manager>`.
-
    :value palette: An instance of type :class:`<palette>`.
 
    :description:
@@ -2772,8 +2705,8 @@ are exported from the *duim-sheets* module.
    :superclasses: :drm:`<object>`
 
    :keyword keysym: An instance of type :class:`<symbol>`. Required.
-   :keyword button: An instance of type ``<integer>``. Required.
-   :keyword modifier-state: An instance of type ``<integer>``. Required.
+   :keyword button: An instance of type :drm:`<integer>`. Required.
+   :keyword modifier-state: An instance of type :drm:`<integer>`. Required.
    :keyword modifiers: An instance of type :class:`<sequence>`.
 
    :description:
@@ -2801,8 +2734,7 @@ are exported from the *duim-sheets* module.
    :signature: gesture-button *pointer-gesture* => *button*
 
    :parameter pointer-gesture: An instance of type :class:`<pointer-gesture>`.
-
-   :value button: An instance of type ``<integer>``.
+   :value button: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -2819,7 +2751,6 @@ are exported from the *duim-sheets* module.
    :signature: gesture-keysym *keyboard-gesture* => *keysym*
 
    :parameter keyboard-gesture: An instance of type :class:`<keyboard-gesture>`.
-
    :value keysym: An instance of type :class:`<symbol>`.
 
    :description:
@@ -2837,8 +2768,7 @@ are exported from the *duim-sheets* module.
    :signature: gesture-modifier-state *gesture* => *modifier-state*
 
    :parameter gesture: An instance of type :class:`<gesture>`.
-
-   :value modifier-state: An instance of type ``<integer>``.
+   :value modifier-state: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -2859,8 +2789,7 @@ are exported from the *duim-sheets* module.
 
    :parameter gesture1: An instance of type :class:`<gesture>`.
    :parameter gesture2: An instance of type :class:`<gesture>`.
-
-   :value equal?: An instance of type ``<boolean>``.
+   :value equal?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2876,15 +2805,14 @@ are exported from the *duim-sheets* module.
 
    :signature: get-clipboard-data-as *type clipboard* => *data*
 
-   :parameter type: An instance of *type-union(<symbol>,* *<type>)*.
+   :parameter type: An instance of ``type-union(<symbol>, <type>)``.
    :parameter clipboard: An instance of :class:`<clipboard>`.
-
    :value data: Instances of :drm:`<object>`.
 
    :description:
 
      This generic function returns *data* of *type* from the clipboard. The
-     argument *type* is an instance of *type-union(<symbol>, <type>)*.
+     argument *type* is an instance of ``type-union(<symbol>, <type>)``.
 
    :seealso:
 
@@ -2902,7 +2830,6 @@ are exported from the *duim-sheets* module.
    :parameter port: An instance of type :class:`<port>`.
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter background: An instance of type :class:`<ink>`.
-
    :value background: An instance of type :class:`<ink>`.
 
    :description:
@@ -2925,7 +2852,6 @@ are exported from the *duim-sheets* module.
    :parameter port: An instance of type :class:`<port>`.
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter foreground: An instance of type :class:`<ink>`.
-
    :value foreground: An instance of type :class:`<ink>`.
 
    :description:
@@ -2948,7 +2874,6 @@ are exported from the *duim-sheets* module.
    :parameter port: An instance of type :class:`<port>`.
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter text-style: An instance of type :class:`<text-style>`.
-
    :value text-style: An instance of type :class:`<text-style>`.
 
    :description:
@@ -3072,8 +2997,8 @@ are exported from the *duim-sheets* module.
 
    :superclasses: :class:`<device-event>`
 
-   :keyword key-name: An instance of type *false-or(<symbol>)*. Default value: ``#f``.
-   :keyword character: An instance of type *false-or(<character>)*. Default value: ``#f``.
+   :keyword key-name: An instance of type ``false-or(<symbol>)``. Default value: ``#f``.
+   :keyword character: An instance of type ``false-or(<character>)``. Default value: ``#f``.
 
    :description:
 
@@ -3082,7 +3007,7 @@ are exported from the *duim-sheets* module.
      The key-name: init-keyword represents the name of the key on the
      keyboard that was pressed.
 
-     The *character:* init-keyword represents the keyboard character that was
+     The ``character:`` init-keyword represents the keyboard character that was
      pressed for characters in the standard character set.
 
    :operations:
@@ -3107,14 +3032,14 @@ are exported from the *duim-sheets* module.
    :superclasses: :class:`<gesture>`
 
    :keyword keysym: An instance of type :class:`<symbol>`.
-   :keyword modifier-state: An instance of type ``<integer>``.
+   :keyword modifier-state: An instance of type :drm:`<integer>`.
 
    :description:
 
      The base class of all keyboard gestures.
 
-     The *keysym:* init-keyword represents the keysym for the gesture, and
-     the *modifier-state:* init-keyword represents its modifier state.
+     The ``keysym:`` init-keyword represents the keysym for the gesture, and
+     the ``modifier-state:`` init-keyword represents its modifier state.
 
    :operations:
 
@@ -3210,7 +3135,6 @@ are exported from the *duim-sheets* module.
 
    :parameter port: An instance of type :class:`<port>`.
    :parameter palette: An instance of type :class:`<palette>`.
-
    :parameter framem: An instance of type :class:`<frame-manager>`.
 
    :description:
@@ -3228,9 +3152,8 @@ are exported from the *duim-sheets* module.
 
    :signature: make-modifier-state #rest *modifiers* => *integer*
 
-   :parameter modifiers: An instance of type *limited(<sequence>, of: <integer>)*.
-
-   :value integer: An instance of type ``<integer>``.
+   :parameter modifiers: An instance of type ``limited(<sequence>, of: <integer>)``.
+   :value integer: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -3252,7 +3175,6 @@ are exported from the *duim-sheets* module.
    :parameter pane-class: An instance of type :class:`<class>`.
    :parameter pane-options: Instances of type :drm:`<object>`.
    :parameter frame-manager: An instance of type :class:`<frame-manager>`.
-
    :value sheet: An instance of type :class:`<sheet>`.
 
    :description:
@@ -3355,8 +3277,7 @@ are exported from the *duim-sheets* module.
    :signature: medium? *object* => *medium?*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value medium?: An instance of type ``<boolean>``.
+   :value medium?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -3374,7 +3295,6 @@ are exported from the *duim-sheets* module.
    :signature: medium-background *medium* => *ink*
 
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value ink: An instance of type :class:`<ink>`.
 
    :description:
@@ -3394,7 +3314,6 @@ are exported from the *duim-sheets* module.
 
    :parameter background: An instance of type :class:`<ink>`.
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value background: An instance of type :class:`<ink>`.
 
    :description:
@@ -3413,7 +3332,6 @@ are exported from the *duim-sheets* module.
    :signature: medium-brush *medium* => *brush*
 
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value brush: An instance of type :class:`<brush>`.
 
    :description:
@@ -3434,7 +3352,6 @@ are exported from the *duim-sheets* module.
 
    :parameter brush: An instance of type :class:`<brush>`.
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value brush: An instance of type :class:`<brush>`.
 
    :description:
@@ -3454,7 +3371,6 @@ are exported from the *duim-sheets* module.
    :signature: medium-clipping-region *medium* => *region*
 
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value region: An instance of type :class:`<region>`.
 
    :description:
@@ -3473,7 +3389,6 @@ are exported from the *duim-sheets* module.
 
    :parameter region: An instance of type :class:`<region>`.
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value region: An instance of type :class:`<region>`.
 
    :description:
@@ -3491,7 +3406,6 @@ are exported from the *duim-sheets* module.
    :signature: medium-default-text-style *medium* => *text-style*
 
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value text-style: An instance of type :class:`<text-style>`.
 
    :description:
@@ -3513,7 +3427,6 @@ are exported from the *duim-sheets* module.
 
    :parameter text-style: An instance of type :class:`<text-style>`.
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value text-style: An instance of type :class:`<text-style>`.
 
    :description:
@@ -3533,7 +3446,6 @@ are exported from the *duim-sheets* module.
    :signature: medium-drawable *medium* => *drawable*
 
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value drawable: An instance of type :drm:`<object>`.
 
    :description:
@@ -3550,9 +3462,8 @@ are exported from the *duim-sheets* module.
 
    :signature: medium-drawable-setter *drawable medium* => *object*
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value object: An instance of type :drm:`<object>`.
 
    :description:
@@ -3570,7 +3481,6 @@ are exported from the *duim-sheets* module.
    :signature: medium-foreground *medium* => *ink*
 
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value ink: An instance of type :class:`<ink>`.
 
    :description:
@@ -3590,7 +3500,6 @@ are exported from the *duim-sheets* module.
 
    :parameter foreground: An instance of type :class:`<ink>`.
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value foreground: An instance of type :class:`<ink>`.
 
    :description:
@@ -3609,7 +3518,6 @@ are exported from the *duim-sheets* module.
    :signature: medium-merged-text-style *medium* => *text-style*
 
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value text-style: An instance of type :class:`<text-style>`.
 
    :description:
@@ -3628,7 +3536,6 @@ are exported from the *duim-sheets* module.
    :signature: medium-pen *medium* => *pen*
 
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value pen: An instance of type :class:`<pen>`.
 
    :description:
@@ -3649,7 +3556,6 @@ are exported from the *duim-sheets* module.
 
    :parameter pen: An instance of type :class:`<pen>`.
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value pen: An instance of type :class:`<pen>`.
 
    :description:
@@ -3669,8 +3575,7 @@ are exported from the *duim-sheets* module.
    :signature: medium-pixmap *medium* => *value*
 
    :parameter medium: An instance of type :class:`<medium>`.
-
-   :value value: An instance of type *false-or(* :class:`<pixmap>` *)*.
+   :value value: An instance of type ``false-or(<pixmap>)``.
 
    :description:
 
@@ -3689,8 +3594,7 @@ are exported from the *duim-sheets* module.
 
    :parameter pixmap: An instance of type :class:`<pixmap>`.
    :parameter medium: An instance of type :class:`<medium>`.
-
-   :value value: An instance of type *false-or(* :class:`<pixmap>` *)*.
+   :value value: An instance of type ``false-or(<pixmap>)``.
 
    :description:
 
@@ -3708,8 +3612,7 @@ are exported from the *duim-sheets* module.
    :signature: medium-sheet *medium* => *sheet*
 
    :parameter medium: An instance of type :class:`<medium>`.
-
-   :value sheet: An instance of type *false-or(* :class:`<sheet>` *)*.
+   :value sheet: An instance of type ``false-or(<sheet>)``.
 
    :description:
 
@@ -3722,7 +3625,6 @@ are exported from the *duim-sheets* module.
    :signature: medium-text-style *medium* => *text-style*
 
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value text-style: An instance of type :class:`<text-style>`.
 
    :description:
@@ -3743,7 +3645,6 @@ are exported from the *duim-sheets* module.
 
    :parameter text-style: An instance of type :class:`<text-style>`.
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value text-style: An instance of type :class:`<text-style>`.
 
    :description:
@@ -3762,7 +3663,6 @@ are exported from the *duim-sheets* module.
    :signature: medium-transform *medium* => *transform*
 
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value transform: An instance of type :class:`<transform>`.
 
    :description:
@@ -3782,7 +3682,6 @@ are exported from the *duim-sheets* module.
 
    :parameter transform: An instance of type :class:`<transform>`.
    :parameter medium: An instance of type :class:`<medium>`.
-
    :value transform: An instance of type :class:`<transform>`.
 
    :description:
@@ -3847,8 +3746,7 @@ are exported from the *duim-sheets* module.
    :signature: modifier-key-index *key-name* => *index*
 
    :parameter key-name: An instance of type :class:`<symbol>`.
-
-   :value index: An instance of type ``<integer>``.
+   :value index: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -3875,8 +3773,7 @@ are exported from the *duim-sheets* module.
 
    :signature: modifier-key-index-name *index* => *key-name*
 
-   :parameter index: An instance of type ``<integer>``.
-
+   :parameter index: An instance of type :drm:`<integer>`.
    :value key-name: An instance of type :class:`<symbol>`.
 
    :description:
@@ -3934,15 +3831,14 @@ are exported from the *duim-sheets* module.
    :parameter frame: An instance of type :class:`<frame>`. Default value: :gf:`current-frame` ().
    :parameter owner: An instance of type :class:`<sheet>`.
    :parameter title: An instance of type :class:`<string>`.
-   :parameter documentation: An instance of type *false-or(<string>)*. Default value: ``#f``.
+   :parameter documentation: An instance of type ``false-or(<string>)``. Default value: ``#f``.
    :parameter exit-boxes: An instance of type :drm:`<object>`.
    :parameter name: An instance of type :drm:`<object>`.
-   :parameter style: An instance of type *one-of(#"information", #"question", #"warning", #"error", #"serious-error", #"fatal-error")*.
-   :parameter foreground: An instance of type *false-or(* :class:`<ink>` *)*. Default value: ``#f``.
-   :parameter background: An instance of type *false-or(* :class:`<ink>` *)*. Default value: ``#f``.
-   :parameter text-style: An instance of type *false-or(* :class:`<text-style>` *)*. Default value: ``#f``.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :parameter style: An instance of type ``one-of(#"information", #"question", #"warning", #"error", #"serious-error", #"fatal-error")``.
+   :parameter foreground: An instance of type ``false-or(<ink>)``. Default value: ``#f``.
+   :parameter background: An instance of type ``false-or(<ink>)``. Default value: ``#f``.
+   :parameter text-style: An instance of type ``false-or(<text-style>)``. Default value: ``#f``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -3963,7 +3859,7 @@ are exported from the *duim-sheets* module.
      The *exit-boxes* argument lets you specify the buttons that are
      available in the dialog. If not supplied, then a single *OK* button is
      used by default, unless the *style* of the dialog is set to
-     *#"question"*, in which case, two buttons are created, to allow the
+     ``#"question"``, in which case, two buttons are created, to allow the
      user to respond "yes" or "no".
 
      The *style* argument lets you specify the style of dialog that is
@@ -3991,7 +3887,6 @@ are exported from the *duim-sheets* module.
 
    :parameter port: An instance of :class:`<port>`.
    :parameter sheet: An instance of :class:`<sheet>`.
-
    :value clipboard: An instance of :class:`<clipboard>`.
 
    :description:
@@ -4076,8 +3971,7 @@ are exported from the *duim-sheets* module.
    :signature: pointer? *object* => *pointer?*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value pointer?: An instance of type ``<boolean>``.
+   :value pointer?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -4096,14 +3990,14 @@ are exported from the *duim-sheets* module.
 
    :superclasses: :class:`<pointer-motion-event>`
 
-   :keyword kind: An instance of type *one-of(#"ancestor", #"virtual", #"inferior", #"nonlinear", #"nonlinear-virtual", #f)*. Default value: ``#f``.
+   :keyword kind: An instance of type ``one-of(#"ancestor", #"virtual", #"inferior", #"nonlinear", #"nonlinear-virtual", #f)``. Default value: ``#f``.
 
    :description:
 
      The class that corresponds to a pointer motion event that crosses some
      sort of sheet boundary.
 
-     The *kind:* init-keyword represents the boundary event kind. These
+     The ``kind:`` init-keyword represents the boundary event kind. These
      correspond to the detail members for X11 enter and exit events.
 
    :operations:
@@ -4126,7 +4020,7 @@ are exported from the *duim-sheets* module.
 
    :superclasses: :class:`<pointer-event>`
 
-   :keyword button: An instance of type *one-of(* :const:`$left-button`, :const:`$middle-button`, :const:`$right-button` *)*.
+   :keyword button: An instance of type ``one-of($left-button, $middle-button, $right-button)``.
 
    :description:
 
@@ -4182,8 +4076,7 @@ are exported from the *duim-sheets* module.
    :signature: pointer-button-state *pointer* => *integer*
 
    :parameter pointer: An instance of type :class:`<pointer>`.
-
-   :value integer: An instance of type ``<integer>``.
+   :value integer: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -4196,7 +4089,6 @@ are exported from the *duim-sheets* module.
    :signature: pointer-cursor *pointer* => *cursor*
 
    :parameter pointer: An instance of type :class:`<pointer>`.
-
    :value cursor: An instance of type :class:`<cursor>`.
 
    :description:
@@ -4215,7 +4107,6 @@ are exported from the *duim-sheets* module.
 
    :parameter cursor: An instance of type :class:`<cursor>`.
    :parameter pointer: An instance of type :class:`<pointer>`.
-
    :value cursor: An instance of type :class:`<cursor>`.
 
    :description:
@@ -4234,7 +4125,7 @@ are exported from the *duim-sheets* module.
 
    :superclasses: :class:`<pointer-motion-event>` :class:`<pointer-button-event>`
 
-   :keyword button: An instance of type *one-of(* :const:`$left-button`, :const:`$middle-button`, :const:`$right-button` *)*.
+   :keyword button: An instance of type ``one-of($left-button, $middle-button, $right-button)``.
 
    :description:
 
@@ -4242,7 +4133,7 @@ are exported from the *duim-sheets* module.
      :class:`<pointer-motion-event>`, except that a button on the attached
      pointing device must also be held down as the pointer is moving.
 
-     The *button:* init-keyword is inherited from the superclass
+     The ``button:`` init-keyword is inherited from the superclass
      :class:`<pointer-button-event>`.
 
    :operations:
@@ -4279,16 +4170,16 @@ are exported from the *duim-sheets* module.
 
    :superclasses: :class:`<device-event>`
 
-   :keyword x: An instance of type ``<real>``.
-   :keyword y: An instance of type ``<real>``.
+   :keyword x: An instance of type :drm:`<real>`.
+   :keyword y: An instance of type :drm:`<real>`.
    :keyword pointer: An instance of type :class:`<pointer>`.
 
    :description:
 
      The base class of events occurring on pointers on the computer screen.
 
-     The *x:* and *y:* init-keywords specify the location of the pointer when
-     the event occurs. The *pointer:* init-keyword specifies the pointer to
+     The ``x:`` and ``y:`` init-keywords specify the location of the pointer when
+     the event occurs. The ``pointer:`` init-keyword specifies the pointer to
      which the event occurs.
 
    :operations:
@@ -4329,15 +4220,15 @@ are exported from the *duim-sheets* module.
 
    :superclasses: :class:`<gesture>`
 
-   :keyword button: An instance of type ``<integer>``.
-   :keyword modifier-state: An instance of type ``<integer>``.
+   :keyword button: An instance of type :drm:`<integer>`.
+   :keyword modifier-state: An instance of type :drm:`<integer>`.
 
    :description:
 
      The class of all gestures that occur on pointers.
 
-     The *button:* init-keyword specifies the button on the attached pointer
-     device on which the gesture has occurred, and the *modifier-state:*
+     The ``button:`` init-keyword specifies the button on the attached pointer
+     device on which the gesture has occurred, and the ``modifier-state:``
      init-keyword specifies the modifier-state of the gesture.
 
    :operations:
@@ -4374,9 +4265,8 @@ are exported from the *duim-sheets* module.
 
    :parameter pointer: An instance of type :class:`<pointer>`.
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :value x: An instance of type ``<real>``.
-   :value y: An instance of type ``<real>``.
+   :value x: An instance of type :drm:`<real>`.
+   :value y: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -4395,8 +4285,7 @@ are exported from the *duim-sheets* module.
    :signature: pointer-sheet *pointer* => *sheet*
 
    :parameter pointer: An instance of type :class:`<pointer>`.
-
-   :parameter sheet: An instance of type *false-or(* :class:`<sheet>` *)*.
+   :parameter sheet: An instance of type ``false-or(<sheet>)``.
 
    :description:
 
@@ -4462,8 +4351,7 @@ are exported from the *duim-sheets* module.
    :signature: port *object* => *value*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :parameter value: An instance of type *false-or(* :class:`<port>` *)*.
+   :parameter value: An instance of type ``false-or(<port>)``.
 
    :description:
 
@@ -4483,8 +4371,7 @@ are exported from the *duim-sheets* module.
    :signature: port? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -4502,8 +4389,7 @@ are exported from the *duim-sheets* module.
    :signature: port-modifier-state *port* => *integer*
 
    :parameter port: An instance of type :class:`<port>`.
-
-   :value integer: An instance of type ``<integer>``.
+   :value integer: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -4526,7 +4412,6 @@ are exported from the *duim-sheets* module.
    :signature: port-name *port* => *name*
 
    :parameter port: An instance of type :class:`<port>`.
-
    :value name: An instance of type :drm:`<object>`.
 
    :description:
@@ -4547,7 +4432,6 @@ are exported from the *duim-sheets* module.
    :signature: port-pointer *port* => *pointer*
 
    :parameter port: An instance of type :class:`<port>`.
-
    :value pointer: An instance of type :class:`<pointer>`.
 
    :description:
@@ -4568,7 +4452,6 @@ are exported from the *duim-sheets* module.
    :signature: port-server-path *port* => *object*
 
    :parameter port: An instance of type :class:`<port>`.
-
    :value object: An instance of type :drm:`<object>`.
 
    :description:
@@ -4596,7 +4479,7 @@ are exported from the *duim-sheets* module.
 
      The class of events that describe the termination of a port.
 
-     The *condition:* init-keyword returns the error condition signalled when
+     The ``condition:`` init-keyword returns the error condition signalled when
      the port was terminated.
 
    :operations:
@@ -4608,7 +4491,6 @@ are exported from the *duim-sheets* module.
    :signature: port-type *port* => *type*
 
    :parameter port: An instance of type :class:`<port>`.
-
    :value type: An instance of type :class:`<symbol>`.
 
    :description:
@@ -4685,7 +4567,6 @@ are exported from the *duim-sheets* module.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter child: An instance of type :class:`<sheet>`.
-
    :value sheet: An instance of type :class:`<sheet>`.
 
    :description:
@@ -4728,7 +4609,6 @@ are exported from the *duim-sheets* module.
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter old-child: An instance of type :drm:`<object>`.
    :parameter new-child: An instance of type :drm:`<object>`.
-
    :value sheet: An instance of type :class:`<sheet>`.
 
    :description:
@@ -4768,8 +4648,8 @@ are exported from the *duim-sheets* module.
    :signature: set-cursor-position *cursor x y* => ()
 
    :parameter cursor: An instance of type :class:`<caret>`.
-   :parameter x: An instance of type ``<real>``.
-   :parameter y: An instance of type ``<real>``.
+   :parameter x: An instance of type :drm:`<real>`.
+   :parameter y: An instance of type :drm:`<real>`.
 
 
    :description:
@@ -4788,8 +4668,8 @@ are exported from the *duim-sheets* module.
    :signature: set-pointer-position *pointer x y* #key *sheet* => ()
 
    :parameter pointer: An instance of type :class:`<pointer>`.
-   :parameter x: An instance of type ``<real>``.
-   :parameter y: An instance of type ``<real>``.
+   :parameter x: An instance of type :drm:`<real>`.
+   :parameter y: An instance of type :drm:`<real>`.
    :parameter sheet: An instance of type :class:`<sheet>`.
 
    :description:
@@ -4808,11 +4688,11 @@ are exported from the *duim-sheets* module.
 
    :signature: set-sheet-edges *sheet left top right bottom* => ()
 
-   -  *sheet* An instance of type :class:`<sheet>`.
-   -  *left* An instance of type ``<integer>``.
-   -  *top* An instance of type ``<integer>``.
-   -  *right* An instance of type ``<integer>``.
-   -  *bottom* An instance of type ``<integer>``.
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter left: An instance of type :drm:`<integer>`.
+   :parameter top: An instance of type :drm:`<integer>`.
+   :parameter right: An instance of type :drm:`<integer>`.
+   :parameter bottom: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -4833,8 +4713,8 @@ are exported from the *duim-sheets* module.
    :signature: set-sheet-position *sheet x y* => ()
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-   :parameter x: An instance of type ``<real>``.
-   :parameter y: An instance of type ``<real>``.
+   :parameter x: An instance of type :drm:`<real>`.
+   :parameter y: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -4855,8 +4735,8 @@ are exported from the *duim-sheets* module.
    :signature: set-sheet-size *sheet width height* => ()
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-   :parameter width: An instance of type ``<integer>``.
-   :parameter height: An instance of type ``<integer>``.
+   :parameter width: An instance of type :drm:`<integer>`.
+   :parameter height: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -4876,59 +4756,59 @@ are exported from the *duim-sheets* module.
 
    :superclasses: :drm:`<object>`
 
-   :keyword region: An instance of type :class:`<region>`. Default value *$nowhere*.
+   :keyword region: An instance of type :class:`<region>`. Default value ``$nowhere``.
    :keyword transform: An instance of type :class:`<transform>`. Default value :const:`$identity-transform`.
-   :keyword port: An instance of type *false-or(* :class:`<port>` *)*. Default value ``#f``.
-   :keyword style-descriptor: An instance of type *false-or(style-descriptor)*. Default value ``#f``.
-   :keyword help-context: An instance of type :class:`<object-table>`. Default value *make(<object-table>)*.
-   :keyword help-source: An instance of type :class:`<object-table>`. Default value *make(<object-table>)*.
-   :keyword parent: An instance of type *false-or(<sheet>)*. Default value: ``#f``.
-   :keyword child: An instance of type *false-or(<sheet>)*. Default value: ``#f``.
-   :keyword children: An instance of type *limited(<sequence>, of: <sheet>)*. Default value: *#[]*.
-   :keyword x: An instance of type ``<integer>``.
-   :keyword y: An instance of type ``<integer>``.
-   :keyword withdrawn?: An instance of type ``<boolean>``. Default value: ``#f``.
-   :keyword accepts-focus?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :keyword port: An instance of type ``false-or(<port>)``. Default value ``#f``.
+   :keyword style-descriptor: An instance of type ``false-or(style-descriptor)``. Default value ``#f``.
+   :keyword help-context: An instance of type :class:`<object-table>`. Default value ``make(<object-table>)``.
+   :keyword help-source: An instance of type :class:`<object-table>`. Default value ``make(<object-table>)``.
+   :keyword parent: An instance of type ``false-or(<sheet>)``. Default value: ``#f``.
+   :keyword child: An instance of type ``false-or(<sheet>)``. Default value: ``#f``.
+   :keyword children: An instance of type ``limited(<sequence>, of: <sheet>)``. Default value: ``#[]``.
+   :keyword x: An instance of type :drm:`<integer>`.
+   :keyword y: An instance of type :drm:`<integer>`.
+   :keyword withdrawn?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
+   :keyword accepts-focus?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
    :keyword cursor: An instance of type :class:`<cursor>`.
-   :keyword caret: An instance of type *type-union(<caret>, one-of(#f, #t))*. Default value: ``#f``.
+   :keyword caret: An instance of type ``type-union(<caret>, one-of(#f, #t))``. Default value: ``#f``.
    :keyword foreground: An instance of type :class:`<ink>`.
    :keyword background: An instance of type :class:`<ink>`.
    :keyword text-style: An instance of type :class:`<text-style>`.
-   :keyword fixed-width?: An instance of type ``<boolean>``.
-   :keyword fixed-height?: An instance of type ``<boolean>``.
-   :keyword resizable?: An instance of type ``<boolean>``.
+   :keyword fixed-width?: An instance of type :drm:`<boolean>`.
+   :keyword fixed-height?: An instance of type :drm:`<boolean>`.
+   :keyword resizable?: An instance of type :drm:`<boolean>`.
 
    :description:
 
-     The *port:* init-keyword is true if the pane (and its mirror, if it has
+     The ``port:`` init-keyword is true if the pane (and its mirror, if it has
      one) has been mapped, ``#f`` otherwise. In this case, the term *mapped*
      means visible on the display, ignoring issues of occlusion.
 
-     The *help-source:* and *help-context:* keywords let you specify pointers
+     The ``help-source:`` and ``help-context:`` keywords let you specify pointers
      to valid information available in any online help you supply with your
-     application. The *help-context:* keyword should specify a context-ID
+     application. The ``help-context:`` keyword should specify a context-ID
      present in the online help. This context-ID identifies the help topic
-     that is applicable to the current pane. The *help-source:* init-keyword
+     that is applicable to the current pane. The ``help-source:`` init-keyword
      identifies the source file in which the help topic identified by
-     *help-context:* can be found. A list of context-IDs should be provided
+     ``help-context:`` can be found. A list of context-IDs should be provided
      by the author of the online help system.
 
-     The *parent:*, *child:*, and *children:* init-keywords let you specify
+     The ``parent:``, ``child:``, and ``children:`` init-keywords let you specify
      a lineage for the sheet if you wish, specifying the parent of the sheet
      and as many children as you wish.
 
-     The *x:* and *y:* init-keywords specify the initial position of the
-     sheet relative to its parent. When *accepts-focus?:* is true, the sheet
+     The ``x:`` and ``y:`` init-keywords specify the initial position of the
+     sheet relative to its parent. When ``accepts-focus?:`` is true, the sheet
      will accept the pointer focus.
 
-     The init-keywords *cursor:*, *foreground:*, *background:*, and
-     *text-style:* can be used to specify the appearance of elements in the
+     The init-keywords ``cursor:``, ``foreground:``, ``background:``, and
+     ``text-style:`` can be used to specify the appearance of elements in the
      sheet.
 
-     The *caret:* init-keyword is used to specify the caret to be used within
+     The ``caret:`` init-keyword is used to specify the caret to be used within
      the drawing pane, if one is to be used at all.
 
-     The *fixed-width?:* and *fixed-height?:* init-keywords are used to fix
+     The ``fixed-width?:`` and ``fixed-height?:`` init-keywords are used to fix
      the width or height of a sheet to the size defined by other appropriate
      init-keywords. This is a useful way of ensuring that the default size
      defined for a sheet is fixed in either direction. The init-keywords
@@ -4938,10 +4818,10 @@ are exported from the *duim-sheets* module.
      want to ensure that any child of that sheet is fixed at that size,
      whatever it may be.
 
-     If *resizable?:* is ``#t`` then the sheet can be resized in either
-     direction. If *resizable?:* is ``#f`` then it cannot be resized in either
-     direction. If *resizable?:* is ``#t``, but one of *fixed-width?:* or
-     *fixed-height?:* is ``#t``, then the sheet can only be resized in one
+     If ``resizable?:`` is ``#t`` then the sheet can be resized in either
+     direction. If ``resizable?:`` is ``#f`` then it cannot be resized in either
+     direction. If ``resizable?:`` is ``#t``, but one of ``fixed-width?:`` or
+     ``fixed-height?:`` is ``#t``, then the sheet can only be resized in one
      direction as appropriate.
 
    :operations:
@@ -5075,9 +4955,9 @@ are exported from the *duim-sheets* module.
 
      The following operations are exported from the *DUIM-DCS* module.
 
-     - :gf:`default-background <dcs.htm#19900>`
-     - :gf:`default-foreground <dcs.htm#40602>`
-     - :gf:`default-text-style <dcs.htm#95321>`
+     - :gf:`default-background`
+     - :gf:`default-foreground`
+     - :gf:`default-text-style`
 
      The following operations are exported from the *DUIM-Geometry* module.
 
@@ -5108,8 +4988,7 @@ are exported from the *duim-sheets* module.
    :signature: sheet? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -5127,8 +5006,7 @@ are exported from the *duim-sheets* module.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter putative-ancestor: An instance of type :class:`<sheet>`.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -5145,8 +5023,7 @@ are exported from the *duim-sheets* module.
    :signature: sheet-child *sheet* => *child*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :parameter child: An instance of type *false-or(* :class:`<sheet>` *)*.
+   :parameter child: An instance of type ``false-or(<sheet>)``.
 
    :description:
 
@@ -5164,8 +5041,7 @@ are exported from the *duim-sheets* module.
    :signature: sheet-children *sheet* => *sheets*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :parameter sheets: An instance of type *limited(<sequence>, of:* :class:`<sheet>` *)*.
+   :parameter sheets: An instance of type ``limited(<sequence>, of: <sheet>)``.
 
    :description:
 
@@ -5185,10 +5061,9 @@ are exported from the *duim-sheets* module.
 
    :signature: sheet-children-setter *children sheet* => *sheets*
 
-   :parameter children: An instance of type *limited(<sequence>, of:* :class:`<sheet>` *)*.
+   :parameter children: An instance of type ``limited(<sequence>, of: <sheet>)``.
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :parameter children: An instance of type *limited(<sequence>, of:* :class:`<sheet>` *)*.
+   :parameter children: An instance of type ``limited(<sequence>, of: <sheet>)``.
 
    :description:
 
@@ -5208,8 +5083,7 @@ are exported from the *duim-sheets* module.
 
    :parameter child: An instance of type :class:`<sheet>`.
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :parameter child: An instance of type *false-or(* :class:`<sheet>` *)*.
+   :parameter child: An instance of type ``false-or(<sheet>)``.
 
    :description:
 
@@ -5227,7 +5101,6 @@ are exported from the *duim-sheets* module.
    :signature: sheet-edges *sheet* => *left top right bottom*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
    :parameter left: An instance of type :class:`<coordinate>`.
    :parameter top: An instance of type :class:`<coordinate>`.
    :parameter right: An instance of type :class:`<coordinate>`.
@@ -5253,13 +5126,13 @@ are exported from the *duim-sheets* module.
 
    :superclasses: :class:`<event>`
 
-   :keyword sheet: An instance of type *false-or(* :class:`<sheet>` *)*. Required.
+   :keyword sheet: An instance of type ``false-or(<sheet>)``. Required.
 
    :description:
 
      The class of events that can occur in sheets.
 
-     The required init-keyword *sheet:* specifies a sheet in which the event
+     The required init-keyword ``sheet:`` specifies a sheet in which the event
      occurs.
 
    :operations:
@@ -5279,8 +5152,7 @@ are exported from the *duim-sheets* module.
    :signature: sheet-event-mask *sheet* => *integer*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :value integer: An instance of type ``<integer>``.
+   :value integer: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -5297,10 +5169,9 @@ are exported from the *duim-sheets* module.
 
    :signature: sheet-event-mask-setter *mask sheet* => *mask*
 
-   :parameter mask: An instance of type ``<integer>``.
+   :parameter mask: An instance of type :drm:`<integer>`.
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :value mask: An instance of type ``<integer>``.
+   :value mask: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -5317,7 +5188,6 @@ are exported from the *duim-sheets* module.
    :signature: sheet-event-queue *sheet* => *event-queue*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
    :value event-queue: An instance of type :class:`<event-queue>`.
 
    :description:
@@ -5336,8 +5206,7 @@ are exported from the *duim-sheets* module.
    :signature: sheet-frame *sheet* => *frame*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :parameter frame: An instance of type *false-or(* :class:`<frame>` *)*.
+   :parameter frame: An instance of type ``false-or(<frame>)``.
 
    :description:
 
@@ -5355,8 +5224,7 @@ are exported from the *duim-sheets* module.
    :signature: sheet-mapped? *sheet* => *mapped?*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :value mapped?: An instance of type ``<boolean>``.
+   :value mapped?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -5374,10 +5242,9 @@ are exported from the *duim-sheets* module.
 
    :signature: sheet-mapped?-setter *mapped? sheet* => *boolean*
 
-   :parameter mapped?: An instance of type ``<boolean>``.
+   :parameter mapped?: An instance of type :drm:`<boolean>`.
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -5396,8 +5263,7 @@ are exported from the *duim-sheets* module.
    :signature: sheet-medium *sheet* => *medium*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :parameter medium: An instance of type *false-or(* :class:`<medium>` *)*.
+   :parameter medium: An instance of type ``false-or(<medium>)``.
 
    :description:
 
@@ -5414,8 +5280,7 @@ are exported from the *duim-sheets* module.
    :signature: sheet-parent *sheet* => *parent*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :parameter parent: An instance of type *false-or(* :class:`<sheet>` *)*.
+   :parameter parent: An instance of type ``false-or(<sheet>)``.
 
    :description:
 
@@ -5433,10 +5298,9 @@ are exported from the *duim-sheets* module.
 
    :signature: sheet-parent-setter *parent sheet* => *value*
 
-   :parameter parent: An instance of type *false-or(* :class:`<sheet>` *)*.
+   :parameter parent: An instance of type false-or(<sheet>)``.
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :value value: An instance of type *false-or(* :class:`<sheet>` *)*.
+   :value value: An instance of type false-or(<sheet>)``.
 
    :description:
 
@@ -5453,7 +5317,6 @@ are exported from the *duim-sheets* module.
    :signature: sheet-pointer-cursor *sheet* => *cursor*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
    :value cursor: An instance of type :class:`<cursor>`.
 
    :description:
@@ -5475,7 +5338,6 @@ are exported from the *duim-sheets* module.
 
    :parameter cursor: An instance of type :class:`<cursor>`.
    :parameter sheet: An instance of type :class:`<sheet>`.
-
    :value cursor: An instance of type :class:`<cursor>`.
 
    :description:
@@ -5495,9 +5357,8 @@ are exported from the *duim-sheets* module.
    :signature: sheet-position *sheet* => *x y*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :value x: An instance of type ``<real>``.
-   :value y: An instance of type ``<real>``.
+   :value x: An instance of type :drm:`<real>`.
+   :value y: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -5520,7 +5381,6 @@ are exported from the *duim-sheets* module.
    :signature: sheet-region *sheet* => *region*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
    :value region: An instance of type :class:`<region>`.
 
    :description:
@@ -5541,7 +5401,6 @@ are exported from the *duim-sheets* module.
 
    :parameter region: An instance of type :class:`<region>`.
    :parameter sheet: An instance of type :class:`<sheet>`.
-
    :value region: An instance of type :class:`<region>`.
 
    :description:
@@ -5561,9 +5420,8 @@ are exported from the *duim-sheets* module.
    :signature: sheet-size *sheet* => *width height*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :value width: An instance of type ``<integer>``.
-   :value height: An instance of type ``<integer>``.
+   :value width: An instance of type :drm:`<integer>`.
+   :value height: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -5584,8 +5442,7 @@ are exported from the *duim-sheets* module.
    :signature: sheet-state *sheet* => *value*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :value value: An instance of type *one-of(#"withdrawn", #"managed", #"mapped", #"unknown")*.
+   :value value: An instance of type ``one-of(#"withdrawn", #"managed", #"mapped", #"unknown")``.
 
    :description:
 
@@ -5600,8 +5457,7 @@ are exported from the *duim-sheets* module.
    :signature: sheet-text-cursor *sheet* => *text-cursor*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :parameter text-cursor: An instance of type *false-or(* :class:`<cursor>` *)*.
+   :parameter text-cursor: An instance of type ``false-or(<cursor>)``.
 
    :description:
 
@@ -5625,7 +5481,6 @@ are exported from the *duim-sheets* module.
    :signature: sheet-transform *sheet* => *transform*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
    :value transform: An instance of type :class:`<transform>`.
 
    :description:
@@ -5647,7 +5502,6 @@ are exported from the *duim-sheets* module.
 
    :parameter transform: An instance of type :class:`<transform>`.
    :parameter sheet: An instance of type :class:`<sheet>`.
-
    :value transform: An instance of type :class:`<transform>`.
 
    :description:
@@ -5665,8 +5519,7 @@ are exported from the *duim-sheets* module.
    :signature: sheet-withdrawn? *sheet* => *withdrawn?*
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-
-   :value withdrawn?: An instance of type ``<boolean>``.
+   :value withdrawn?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -5734,7 +5587,7 @@ are exported from the *duim-sheets* module.
 
    :signature: synchronize-display *drawable* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
 
    :description:
@@ -5749,18 +5602,17 @@ are exported from the *duim-sheets* module.
    :signature: text-size *medium text* #key *text-style start end do-newlines?* => *largest-x largest-y cursor-x cursor-y baseline*
 
    :parameter medium: An instance of type :class:`<medium>`.
-   :parameter text: An instance of type *type-union(<string>, <character>)*.
+   :parameter text: An instance of type ``type-union(<string>, <character>)``.
    :parameter text-style: An instance of type :class:`<text-style>`.
-   :parameter start: An instance of type ``<integer>``. Default value: 0.
-   :parameter end: An instance of type ``<integer>``. Default value: *size(* *text* *)*.
-   :parameter do-newlines?: An instance of type ``<boolean>``. Default value: ``#f``.
-   :parameter do-tabs?: An instance of type ``<boolean>``. Default value: ``#f``.
-
-   :value largest-x: An instance of type ``<integer>``.
-   :value total-height: An instance of type ``<integer>``.
-   :value last-x: An instance of type ``<integer>``.
-   :value last-y: An instance of type ``<integer>``.
-   :value baseline: An instance of type ``<integer>``.
+   :parameter start: An instance of type :drm:`<integer>`. Default value: ``0``.
+   :parameter end: An instance of type :drm:`<integer>`. Default value: ``size(text)``.
+   :parameter do-newlines?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
+   :parameter do-tabs?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
+   :value largest-x: An instance of type :drm:`<integer>`.
+   :value total-height: An instance of type :drm:`<integer>`.
+   :value last-x: An instance of type :drm:`<integer>`.
+   :value last-y: An instance of type :drm:`<integer>`.
+   :value baseline: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -5789,7 +5641,6 @@ are exported from the *duim-sheets* module.
    :parameter port: An instance of type :class:`<port>`.
    :parameter text-style: An instance of type :class:`<text-style>`
    :parameter character-set: An instance of type :drm:`<object>`.
-
    :value font: An instance of type :drm:`<object>`.
 
    :description:
@@ -5820,9 +5671,8 @@ are exported from the *duim-sheets* module.
    :parameter port: An instance of type :class:`<port>`.
    :parameter text-style: An instance of type :class:`<text-style>`.
    :parameter character-set: An instance of type :drm:`<object>`.
-   :parameter exact-size?: An instance of type ``<boolean>``. Default value: ``#f``.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :parameter exact-size?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -5849,7 +5699,6 @@ are exported from the *duim-sheets* module.
    :parameter port: An instance of type :class:`<port>`.
    :parameter text-style: An instance of type :class:`<text-style>`.
    :parameter character-set: An instance of type :drm:`<object>`.
-
    :value font: An instance of type :drm:`<object>`.
 
    :description:
@@ -5892,8 +5741,7 @@ are exported from the *duim-sheets* module.
    :signature: top-level-sheet *object* => *top-level-sheet*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value top-level-sheet: An instance of type *false-or(* :class:`<sheet>` *)*.
+   :value top-level-sheet: An instance of type ``false-or(<sheet>)``.
 
    :description:
 
@@ -5960,7 +5808,7 @@ are exported from the *duim-sheets* module.
      - Changes to the configuration of the window.
      - Changes that require the window to be repainted.
 
-     The *region:* init-keyword specifies a region in which the event occurs.
+     The ``region:`` init-keyword specifies a region in which the event occurs.
 
    :operations:
 
@@ -6023,10 +5871,9 @@ are exported from the *duim-sheets* module.
 
    :macrocall: with-clipboard (*clipboard* = *sheet*) *body* end
 
-   :parameter clipboard: A Dylan variable-name*bnf*.
-   :parameter sheet: A Dylan variable-name*bnf*.
-   :parameter body: A Dylan body*bnf*.
-
+   :parameter clipboard: A Dylan variable-name *bnf*.
+   :parameter sheet: A Dylan variable-name *bnf*.
+   :parameter body: A Dylan body *bnf*.
    :value values: Instances of :drm:`<object>`.
 
    :description:
@@ -6263,7 +6110,7 @@ are exported from the *duim-sheets* module.
      to perform the rotation.
 
      The *medium* specified should be an instance of type :class:`<medium>`.
-     The *angle* should evaluate to an instance of type ``<real>``.
+     The *angle* should evaluate to an instance of type :drm:`<real>`.
 
    :seealso:
 
@@ -6419,7 +6266,7 @@ are exported from the *duim-sheets* module.
      :macro:`with-transform` to perform the translation.
 
      The *medium* specified should be an instance of type :class:`<medium>`.
-     The *dx* and*dy* should evaluate to an instance of type ``<real>``.
+     The *dx* and*dy* should evaluate to an instance of type :drm:`<real>`.
 
    :seealso:
 

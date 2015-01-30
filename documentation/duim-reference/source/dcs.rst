@@ -121,8 +121,7 @@ are exported from the *duim-dcs* module.
    :parameter brush2: An instance of type :class:`<brush>`.
    :parameter text-style1: An instance of type :class:`<text-style>`.
    :parameter text-style2: An instance of type :class:`<text-style>`.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -136,7 +135,6 @@ are exported from the *duim-dcs* module.
 
    :parameter palette: An instance of type :class:`<palette>`.
    :parameter colors: Instances of type :class:`<color>`.
-
    :value palette: An instance of type :class:`<palette>`.
 
    :description:
@@ -405,13 +403,13 @@ are exported from the *duim-dcs* module.
 
    :keyword foreground: An instance of type :class:`<ink>`.
    :keyword background: An instance of type :class:`<ink>`.
-   :keyword mode: An instance of type ``<integer>``.
-   :keyword fill-style: An instance of type *false-or(<integer>)*. Default value: ``#f``.
-   :keyword fill-rule: An instance of type *false-or(<integer>)*. Default value: ``#f``.
-   :keyword tile: An instance of type *false-or(<integer>)*. Default value: ``#f``.
-   :keyword stipple: An instance of type *false-or(<integer>)*. Default value: ``#f``.
-   :keyword ts-x: An instance of *false-or(<integer>).* Default value: ``#f``.
-   :keyword ts-y: An instance of *false-or(<integer>).* Default value: ``#f``.
+   :keyword mode: An instance of type :drm:`<integer>`.
+   :keyword fill-style: An instance of type ``false-or(<integer>)``. Default value: ``#f``.
+   :keyword fill-rule: An instance of type ``false-or(<integer>)``. Default value: ``#f``.
+   :keyword tile: An instance of type ``false-or(<integer>)``. Default value: ``#f``.
+   :keyword stipple: An instance of type ``false-or(<integer>)``. Default value: ``#f``.
+   :keyword ts-x: An instance of ``false-or(<integer>)``. Default value: ``#f``.
+   :keyword ts-y: An instance of ``false-or(<integer>)``. Default value: ``#f``.
 
    :description:
 
@@ -445,8 +443,7 @@ are exported from the *duim-dcs* module.
    :signature: brush? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -459,7 +456,6 @@ are exported from the *duim-dcs* module.
    :signature: brush-background *brush* => *ink*
 
    :parameter brush: An instance of type :class:`<brush>`.
-
    :value ink: An instance of type :class:`<ink>`.
 
    :description:
@@ -477,8 +473,7 @@ are exported from the *duim-dcs* module.
    :signature: brush-fill-rule *brush* => *fill-rule*
 
    :parameter brush: An instance of type :class:`<brush>`.
-
-   :value fill-rule: An instance of type ``fill-rule`` or ``<boolean>``.
+   :value fill-rule: An instance of type ``fill-rule`` or :drm:`<boolean>`.
 
    :description:
 
@@ -496,8 +491,7 @@ are exported from the *duim-dcs* module.
    :signature: brush-fill-style *brush* => *fill-style*
 
    :parameter brush: An instance of type :class:`<brush>`.
-
-   :value fill-style: An instance of ``fill-style`` or ``<boolean>``.
+   :value fill-style: An instance of ``fill-style`` or :drm:`<boolean>`.
 
    :description:
 
@@ -515,7 +509,6 @@ are exported from the *duim-dcs* module.
    :signature: brush-foreground *brush* => *ink*
 
    :parameter brush: An instance of type :class:`<brush>`.
-
    :value ink: An instance of type :class:`<ink>`.
 
    :description:
@@ -533,8 +526,7 @@ are exported from the *duim-dcs* module.
    :signature: brush-mode *brush* => *integer*
 
    :parameter brush: An instance of type :class:`<brush>`.
-
-   :value integer: An instance of type ``<integer>``. Default value: *$boole-1*.
+   :value integer: An instance of type :drm:`<integer>`. Default value: :const:`$boole-1`.
 
    :description:
 
@@ -551,7 +543,6 @@ are exported from the *duim-dcs* module.
    :signature: brush-stipple *brush* => *stipple*
 
    :parameter brush: An instance of type :class:`<brush>`.
-
    :value stipple: A *(stipple)* or ``#f``.
 
    :description:
@@ -571,8 +562,7 @@ are exported from the *duim-dcs* module.
    :signature: brush-stretch-mode *brush* => *stretch-mode*
 
    :parameter brush: An instance of type :class:`<brush>`.
-
-   :value stretch-mode: An instance of *stretch-mode* or ``<boolean>``.
+   :value stretch-mode: An instance of *stretch-mode* or :drm:`<boolean>`.
 
    :description:
 
@@ -585,7 +575,6 @@ are exported from the *duim-dcs* module.
    :signature: brush-tile *brush* => *image*
 
    :parameter brush: An instance of type :class:`<brush>`.
-
    :value image: An instance of type :class:`<image>`.
 
    :description:
@@ -606,8 +595,7 @@ are exported from the *duim-dcs* module.
    :signature: brush-ts-x *brush* => *value*
 
    :parameter brush: An instance of type :class:`<brush>`.
-
-   :value value: An instance of type *false-or(<integer>)*.
+   :value value: An instance of type ``false-or(<integer>)``.
 
    :description:
 
@@ -627,14 +615,13 @@ are exported from the *duim-dcs* module.
    :signature: brush-ts-y *brush* => *value*
 
    :parameter brush: An instance of type :class:`<brush>`.
-
-   :value value: An instance of type *false-or(<integer>)*.
+   :value value: An instance of type ``false-or(<integer>)``.
 
    :description:
 
      Returns the value of the *y* coordinate that is used to align the tile
      or stipple pattern of *brush*. If *brush* has no tile or stipple
-     pattern, *brush-ts-y* returns *#f.*
+     pattern, *brush-ts-y* returns ``#f``.
 
    :seealso:
 
@@ -651,10 +638,10 @@ are exported from the *duim-dcs* module.
    :keyword red: An instance of type ``<real>``.
    :keyword green: An instance of type ``<real>``.
    :keyword blue: An instance of type ``<real>``.
-   :keyword intensity: An instance of type *limited(<real>, min: 0, max: sqrt(3()*.
-   :keyword hue: An instance of type *limited(<real>, min: 0, max: 1)*.
-   :keyword saturation: An instance of type *limited(<real>, min: 0, max: 1)*.
-   :keyword opacity: An instance of type *limited(<real>, min: 0, max: 1)*.
+   :keyword intensity: An instance of type ``limited(<real>, min: 0, max: sqrt(3))``.
+   :keyword hue: An instance of type ``limited(<real>, min: 0, max: 1)``.
+   :keyword saturation: An instance of type ``limited(<real>, min: 0, max: 1)``.
+   :keyword opacity: An instance of type ``limited(<real>, min: 0, max: 1)``.
 
    :description:
 
@@ -666,7 +653,7 @@ are exported from the *duim-dcs* module.
      every point in the drawing plane to that color, and sets the opacity to
      1.
 
-     The *red:*, *green:*, and *blue:* init-keywords represent the red,
+     The ``red:``, ``green:``, and ``blue:`` init-keywords represent the red,
      green, and blue components of the color. For an 8-bit color scheme,
      these can take any real number in the range 0 to 255.
 
@@ -730,8 +717,7 @@ are exported from the *duim-dcs* module.
    :signature: color? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -754,18 +740,17 @@ are exported from the *duim-dcs* module.
    :signature: color-ihs *color* => *intensity* *hue* *saturation* *opacity*
 
    :parameter color: An instance of type :class:`<color>`.
-
-   :value intensity: An instance of type *limited(<real>, min: 0, max: sqrt(3()*.
-   :value hue: An instance of type *limited(<real>, min: 0, max: 1)*.
-   :value saturation: An instance of type *limited(<real>, min: 0, max: 1)*.
-   :value opacity: An instance of type *limited(<real>, min: 0, max: 1)*.
+   :value intensity: An instance of type ``limited(<real>, min: 0, max: sqrt(3))``.
+   :value hue: An instance of type ``limited(<real>, min: 0, max: 1)``.
+   :value saturation: An instance of type ``limited(<real>, min: 0, max: 1)``.
+   :value opacity: An instance of type ``limited(<real>, min: 0, max: 1)``.
 
    :description:
 
      Returns four values, the *intensity*, *hue,* *saturation*, and
      *opacity* components of the color *color*. The first value is a real
      number between *0* and *sqrt{3* } (inclusive). The second and third
-     values are real numbers between *0* and *1* (inclusive).
+     values are real numbers between *0* and ``1`` (inclusive).
 
    :seealso:
 
@@ -782,13 +767,12 @@ are exported from the *duim-dcs* module.
    :signature: color-luminosity* *color* => *luminosity*
 
    :parameter color: An instance of type :class:`<color>`.
-
-   :value luminosity: An instance of type *limited(<real>, min: 0, max: 1)*.
+   :value luminosity: An instance of type ``limited(<real>, min: 0, max: 1)``.
 
    :description:
 
      Returns the brightness of color *color* as real number between *0* and
-     *1*. The value is the solution of a function that describes the
+     ``1``. The value is the solution of a function that describes the
      perception of the color by the human retina.
 
    :seealso:
@@ -813,7 +797,7 @@ are exported from the *duim-dcs* module.
    :description:
 
      The class of the error that is signalled when a color that is not
-     available is requested. The *color:* init-keyword is used to specify the
+     available is requested. The ``color:`` init-keyword is used to specify the
      color that was requested but was not available.
 
    :operations:
@@ -834,8 +818,7 @@ are exported from the *duim-dcs* module.
    :signature: color-palette? *palette* => *boolean*
 
    :parameter palette: An instance of type :class:`<palette>`.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -857,11 +840,10 @@ are exported from the *duim-dcs* module.
    :signature: color-rgb *color* => *ref* *green* *blue* *opacity*
 
    :parameter color: An instance of type :class:`<color>`.
-
-   :value red: An instance of type *limited(<real>, min: 0, max: 1)*
-   :value gree: n An instance of type *limited(<real>, min: 0, max: 1)*
-   :value blue: An instance of type *limited(<real>, min: 0, max: 1)*
-   :value opacity: An instance of type *limited(<real>, min: 0, max: 1)*.
+   :value red: An instance of type ``limited(<real>, min: 0, max: 1)``
+   :value gree: n An instance of type ``limited(<real>, min: 0, max: 1)``
+   :value blue: An instance of type ``limited(<real>, min: 0, max: 1)``
+   :value opacity: An instance of type ``limited(<real>, min: 0, max: 1)``.
 
    :description:
 
@@ -886,7 +868,7 @@ are exported from the *duim-dcs* module.
 
    :parameter port: An instance of type :class:`<silica>`
 
-   :value integer: An instance of type ``<integer>``.
+   :value integer: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -909,8 +891,7 @@ are exported from the *duim-dcs* module.
    :signature: contrasting-dash-patterns-limit *port* => *no-of-patterns*
 
    :parameter port: An instance of type :class:`<silica>`.
-
-   :value no-of-patterns: An instance of type ``<integer>``.
+   :value no-of-patterns: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -961,7 +942,7 @@ are exported from the *duim-dcs* module.
    :description:
 
      A pen that draws a line with two dots between each dash. The line width
-     is *1* and *dashes:* is *#[4, 1, 1, 1, 1, 1]*.
+     is ``1`` and ``dashes:`` is ``#[4, 1, 1, 1, 1, 1]``.
 
    :seealso:
 
@@ -979,8 +960,8 @@ are exported from the *duim-dcs* module.
 
    :description:
 
-     A pen that draws a dashed and dotted line. The line width is *1* and
-     *dashes:* is *#[4, 1, 1, 1]*.
+     A pen that draws a dashed and dotted line. The line width is ``1`` and
+     ``dashes:`` is ``#[4, 1, 1, 1]``.
 
    :seealso:
 
@@ -998,7 +979,7 @@ are exported from the *duim-dcs* module.
 
    :description:
 
-     A pen that draws a dashed line. The line width is *1* and *dashes:* is
+     A pen that draws a dashed line. The line width is ``1`` and ``dashes:`` is
      ``#t``.
 
    :seealso:
@@ -1016,7 +997,6 @@ are exported from the *duim-dcs* module.
    :signature: default-foreground *object* => *background*
 
    :parameter object: An instance of type :drm:`<object>`.
-
    :value background: An instance of type :class:`<ink>`.
 
    :description:
@@ -1037,7 +1017,6 @@ are exported from the *duim-dcs* module.
 
    :parameter background: An instance of type :class:`<ink>`.
    :parameter object: An instance of type :drm:`<object>`.
-
    :value background: An instance of type :class:`<ink>`.
 
    :description:
@@ -1057,7 +1036,6 @@ are exported from the *duim-dcs* module.
    :signature: default-foreground *object* => *foreground*
 
    :parameter object: An instance of type :drm:`<object>`.
-
    :value foreground: An instance of type :class:`<ink>`.
 
    :description:
@@ -1078,7 +1056,6 @@ are exported from the *duim-dcs* module.
 
    :parameter foreground: An instance of type :class:`<ink>`.
    :parameter object: An instance of type :drm:`<object>`.
-
    :value foreground: An instance of type :class:`<ink>`.
 
    :description:
@@ -1098,7 +1075,6 @@ are exported from the *duim-dcs* module.
    :signature: default-text-style *object* => *text-style*
 
    :parameter object: An instance of type :drm:`<object>`.
-
    :value text-style: An instance of type :class:`<text-style>`.
 
    :description:
@@ -1119,7 +1095,6 @@ are exported from the *duim-dcs* module.
 
    :parameter text-style: An instance of type :class:`<text-style>`.
    :parameter object: An instance of type :drm:`<object>`.
-
    :value text-style: An instance of type :class:`<text-style>`.
 
    :description:
@@ -1195,7 +1170,7 @@ are exported from the *duim-dcs* module.
 
    :description:
 
-     A pen that draws a dotted line. The line width is *1* and *dashes:* is
+     A pen that draws a dotted line. The line width is ``1`` and ``dashes:`` is
      ``#[1, 1]``.
 
    :seealso:
@@ -1212,8 +1187,7 @@ are exported from the *duim-dcs* module.
 
    :parameter name: An instance of type :class:`<string>`.
    :parameter palette: An instance of type :class:`<palette>`.
-   :parameter error?: An instance of type ``<boolean>``. Default value: ``#f``.
-
+   :parameter error?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
    :value color: An instance of type :class:`<color>`.
 
    :description:
@@ -1388,8 +1362,7 @@ are exported from the *duim-dcs* module.
    :signature: fully-merged-text-style? *text-style* => *boolean*
 
    :parameter text-style: An instance of type :class:`<text-style>`.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1481,8 +1454,7 @@ are exported from the *duim-dcs* module.
    :signature: image? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1502,7 +1474,6 @@ are exported from the *duim-dcs* module.
    :signature: image-depth *image* => *depth*
 
    :parameter image: An instance of type :class:`<image>`.
-
    :value depth: An instance of type ``<real>``.
 
    :description:
@@ -1523,7 +1494,6 @@ are exported from the *duim-dcs* module.
    :signature: image-height *image* => *height*
 
    :parameter image: An instance of type :class:`<image>`.
-
    :value height: An instance of type ``<real>``.
 
    :description:
@@ -1544,7 +1514,6 @@ are exported from the *duim-dcs* module.
    :signature: image-width *image* => *width*
 
    :parameter image: An instance of type :class:`<image>`.
-
    :value width: An instance of type ``<real>``.
 
    :description:
@@ -1591,8 +1560,7 @@ are exported from the *duim-dcs* module.
    :signature: ink? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1625,22 +1593,21 @@ are exported from the *duim-dcs* module.
    :signature: *make* *(class* *==* *<brush>)* *#key* *foreground* *background* *mode* *fill-style* *fill-rule* *tile* *stipple* *ts-x* *ts-y* => *brush*
 
    :parameter (class==<pen>): The class :class:`<pen>`.
-   :parameter width: An instance of type :class:`<pen-width>`. Default value: *1*.
-   :parameter units: An instance of type :class:`<pen-units>`. Default value: *#"normal"*.
+   :parameter width: An instance of type :class:`<pen-width>`. Default value: ``1``.
+   :parameter units: An instance of type :class:`<pen-units>`. Default value: ``#"normal"``.
    :parameter dashes: An instance of type :class:`<pen-dashes>`. Default value: ``#f``.
-   :parameter joint-shape: An instance of type :class:`<pen-joint-shape>`. Default value: *#"miter"*.
-   :parameter cap-shape: An instance of type :class:`<pen-cap-shape>`. Default value: *#"butt"*.
+   :parameter joint-shape: An instance of type :class:`<pen-joint-shape>`. Default value: ``#"miter"``.
+   :parameter cap-shape: An instance of type :class:`<pen-cap-shape>`. Default value: ``#"butt"``.
    :parameter (class==<brush>): The class :class:`<brush>`.
-   :parameter foreground: An instance of type :class:`<ink>`. Default value: *$foreground*.
-   :parameter background: An instance of type :class:`<ink>`. Default value: *$background*.
-   :parameter mode: An instance of type ``<integer>``. Default value: *$boole-1*.
+   :parameter foreground: An instance of type :class:`<ink>`. Default value: :const:`$foreground`.
+   :parameter background: An instance of type :class:`<ink>`. Default value: :const:`$background`.
+   :parameter mode: An instance of type :drm:`<integer>`. Default value: :const:`$boole-1`.
    :parameter fill-style: A *(fill-style)* or ``#f``. Default value: ``#f``.
    :parameter fill-rule: A *(fill-rule)* or ``#f``. Default value: ``#f``.
    :parameter tile: An *(image)* or ``#f``. Default value: ``#f``.
    :parameter stipple: A *(stipple)* or ``#f``. Default value: ``#f``.
-   :parameter ts-x: An instance of *false-or(<integer>).* Default value: ``#f``.
-   :parameter ts-y: An instance of *false-or(<integer>).* Default value: ``#f``.
-
+   :parameter ts-x: An instance of ``false-or(<integer>)``. Default value: ``#f``.
+   :parameter ts-y: An instance of ``false-or(<integer>)``. Default value: ``#f``.
    :value pen: An instance of type :class:`<pen>`.
    :value brush: An instance of type :class:`<brush>`.
 
@@ -1663,7 +1630,6 @@ are exported from the *duim-dcs* module.
    :signature: make-color-for-contrasting-color *ink* => *color*
 
    :parameter ink: An instance of type :class:`<ink>`.
-
    :value color: An instance of type :class:`<color>`.
 
    :description:
@@ -1680,8 +1646,8 @@ are exported from the *duim-dcs* module.
 
    :signature: make-contrasting-colors *n* #key *k* => *colors*
 
-   :parameter n: An instance of type ``<integer>``.
-   :parameter k: An instance of type ``<integer>``.
+   :parameter n: An instance of type :drm:`<integer>`.
+   :parameter k: An instance of type :drm:`<integer>`.
 
    :parameter colors: An instance of type limited(``<sequence>``, of: :class:`<color>`).
 
@@ -1689,11 +1655,11 @@ are exported from the *duim-dcs* module.
 
      Returns a vector of n colors with recognizably different appearance.
      Elements of the vector are guaranteed to be acceptable values for the
-     *brush:* argument to the drawing functions, and do not include
-     *$foreground*, *$background*, or *nil*. Their class is otherwise
+     ``brush:`` argument to the drawing functions, and do not include
+     :const:`$foreground`, :const:`$background`, or *nil*. Their class is otherwise
      unspecified. The vector is a fresh object that may be modified.
 
-     If *k* is supplied, it must be an integer between *0* and *n* - *1*
+     If *k* is supplied, it must be an integer between ``0`` and ``n - 1``
      (inclusive), in which case *make-contrasting-colors* returns the *k* th
      color in the vector rather than the whole vector.
 
@@ -1718,9 +1684,8 @@ are exported from the *duim-dcs* module.
 
    :signature: make-contrasting-dash-patterns *n* *#key* *k* => *dashes*
 
-   :parameter n: An instance of type ``<integer>``.
-   :parameter k: An instance of type ``<integer>``.
-
+   :parameter n: An instance of type :drm:`<integer>`.
+   :parameter k: An instance of type :drm:`<integer>`.
    :value dashes: An instance of type :class:`<vector>`.
 
    :description:
@@ -1748,7 +1713,6 @@ are exported from the *duim-dcs* module.
 
    :parameter port: An instance of type ``<silica>``.
    :parameter font: An instance of type :drm:`<object>`.
-
    :value device-font: A font object or the name of a font.
 
    :description:
@@ -1771,17 +1735,16 @@ are exported from the *duim-dcs* module.
 
    :signature: make-gray-color *luminosity* #key *opacity* => *color*
 
-   :parameter luminosity: An instance of type *limited(<real>, min: 0, max: 1)*.
-   :parameter opacity: An instance of type *limited(<real>, min: 0, max: 1)*. Default value: *1.0*.
-
+   :parameter luminosity: An instance of type ``limited(<real>, min: 0, max: 1)``.
+   :parameter opacity: An instance of type ``limited(<real>, min: 0, max: 1)``. Default value: ``1.0``.
    :value color: An instance of type :class:`<color>`.
 
    :description:
 
      Returns a member of class :class:`<color>`. The *luminance* is a real number
-     between *0* and *1* (inclusive). On a black-on-white display device, *0*
-     means black, *1* means white, and the values in between are shades of
-     gray. On a white-on-black display device, *0* means white, *1* means
+     between *0* and ``1`` (inclusive). On a black-on-white display device, *0*
+     means black, ``1`` means white, and the values in between are shades of
+     gray. On a white-on-black display device, *0* means white, ``1`` means
      black, and the values in between are shades of gray.
 
    :seealso:
@@ -1794,11 +1757,10 @@ are exported from the *duim-dcs* module.
    Returns a member of the class :class:`<color>`.
 
    :signature: make-ihs-color *intensity* *hue* *saturation* #key *opacity* => *color*
-   :parameter intensity: An instance of type *limited(<real>, min: 0, max: sqrt(3))*.
-   :parameter hue: An instance of type *limited(<real>, min: 0, max: 1)*.
-   :parameter saturation: An instance of type *limited(<real>, min: 0, max: 1)*.
-   :parameter opacity: An instance of type *limited(<real>, min: 0, max: 1)*. Default value: *1.0*.
-
+   :parameter intensity: An instance of type ``limited(<real>, min: 0, max: sqrt(3))``.
+   :parameter hue: An instance of type ``limited(<real>, min: 0, max: 1)``.
+   :parameter saturation: An instance of type ``limited(<real>, min: 0, max: 1)``.
+   :parameter opacity: An instance of type ``limited(<real>, min: 0, max: 1)``. Default value: ``1.0``.
    :value color: An instance of type :class:`<color>`.
 
    :description:
@@ -1819,7 +1781,6 @@ are exported from the *duim-dcs* module.
    :signature: make-palette *port* *#key* => *palette*
 
    :parameter port: An instance of type :class:`<silica>`.
-
    :value palette: An instance of type :class:`<palette>`.
 
    :description:
@@ -1833,8 +1794,7 @@ are exported from the *duim-dcs* module.
    :signature: make-pattern *array* *colors* => *pattern*
 
    :parameter array: An instance of type :class:`<array>`.
-   :parameter colors: An instance of type limited(<sequence>, of:* :class:`<color>`).
-
+   :parameter colors: An instance of type ``limited(<sequence>, of: <color>)``.
    :value pattern: An instance of type :class:`<pattern>`.
 
    :description:
@@ -1876,11 +1836,10 @@ are exported from the *duim-dcs* module.
 
    :signature: make-rgb-color *red* *green* *blue* #key *opacity* => *color*
 
-   :parameter red: An instance of type *limited(<real>, min: 0, max: 1)*.
-   :parameter green: An instance of type *limited(<real>, min: 0, max: 1)*.
-   :parameter blue: An instance of type *limited(<real>, min: 0, max: 1)*.
-   :parameter opacity: An instance of type *limited(<real>, min: 0, max: 1)*. Default value: *1.0*.
-
+   :parameter red: An instance of type ``limited(<real>, min: 0, max: 1)``.
+   :parameter green: An instance of type ``limited(<real>, min: 0, max: 1)``.
+   :parameter blue: An instance of type ``limited(<real>, min: 0, max: 1)``.
+   :parameter opacity: An instance of type ``limited(<real>, min: 0, max: 1)``. Default value: ``1.0``.
    :value color: An instance of type :class:`<color>`.
 
    :description:
@@ -1904,7 +1863,6 @@ are exported from the *duim-dcs* module.
    :signature: make-stencil *array* => *stencil*
 
    :parameter array: An instance of type :class:`<array>`.
-
    :value stencil: An instance of type :class:`<stencil>`.
 
    :description:
@@ -1914,7 +1872,7 @@ are exported from the *duim-dcs* module.
      the horizontal direction. *array* must be a two-dimensional array of
      real numbers between 0 and 1 (inclusive) that represent opacities. The
      design in cell *i,j* of the resulting pattern is the value of
-     *(make-opacity (aref* *array* *i j))*.
+     ``(make-opacity (aref array i j))``.
 
 .. function:: make-text-style
 
@@ -1922,13 +1880,12 @@ are exported from the *duim-dcs* module.
 
    :signature: make-text-style *family* *weight* *slant* *size* #key *underline?* *strikeout?* => *text-style*
 
-   :parameter family: An instance of type *one-of(#"fix", #"serif", #"sans-serif", #f)*.
-   :parameter weight: An instance of type *one-of(#"normal", #"condensed", #"thin", #"extra-light", #"light", #"medium", #"demibold", #"bold", #"extra-bold", #"black", #f)*.
-   :parameter slant: An instance of type *one-of(#"roman", #"italic", #"oblique", #f)*.
-   :parameter size: An instance of :class:`<integer>`, or an instance of type *one-of(#"normal", #"tiny", #"very-small", #"small", #"large", #"very-large:", #"huge", #"smaller", #"larger", #f)*.
-   :parameter underline?: An instance of type ``<boolean>``.
-   :parameter strikeout?: An instance of type ``<boolean>``.
-
+   :parameter family: An instance of type ``one-of(#"fix", #"serif", #"sans-serif", #f)``.
+   :parameter weight: An instance of type ``one-of(#"normal", #"condensed", #"thin", #"extra-light", #"light", #"medium", #"demibold", #"bold", #"extra-bold", #"black", #f)``.
+   :parameter slant: An instance of type ``one-of(#"roman", #"italic", #"oblique", #f)``.
+   :parameter size: An instance of :class:`<integer>`, or an instance of type ``one-of(#"normal", #"tiny", #"very-small", #"small", #"large", #"very-large:", #"huge", #"smaller", #"larger", #f)``.
+   :parameter underline?: An instance of type :drm:`<boolean>`.
+   :parameter strikeout?: An instance of type :drm:`<boolean>`.
    :value text-style: An instance of type :class:`<text-style>`.
 
    :description:
@@ -1942,7 +1899,7 @@ are exported from the *duim-dcs* module.
      have ``#f`` in them) may be filled in by the components of a default style
      object. A text style object is called *fully specified* if none of its
      components is ``#f``, and the size component is not a relative size (that
-     is, neither *#"smaller"* nor *#"larger"*).
+     is, neither ``#"smaller"`` nor ``#"larger"``).
 
      If *size* is an integer, it represents the size of the font in printer’s
      points.
@@ -1964,7 +1921,6 @@ are exported from the *duim-dcs* module.
 
    :parameter text-style: An instance of type :class:`<text-style>`.
    :parameter default-style: An instance of type :class:`<text-style>`.
-
    :value text-style: An instance of type :class:`<text-style>`.
 
    :description:
@@ -1978,8 +1934,8 @@ are exported from the *duim-dcs* module.
      When merging the sizes of two text styles, if the size from the first
      style is a relative size, the resulting size is either the next smaller
      or next larger size than is specified by *default-style*. The ordering
-     of sizes, from smallest to largest, is *#"tiny"*, *#"very-small"*,
-     *#"small"*, *#"normal"*, *#"large"*,*#"very-large"*, and *#"huge"*.
+     of sizes, from smallest to largest, is ``#"tiny"``, ``#"very-small"``,
+     ``#"small"``, ``#"normal"``, ``#"large"``, ``#"very-large"``, and ``#"huge"``.
 
    :seealso:
 
@@ -2017,8 +1973,7 @@ are exported from the *duim-dcs* module.
    :signature: palette? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2096,8 +2051,7 @@ are exported from the *duim-dcs* module.
    :signature: pattern? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2115,11 +2069,11 @@ are exported from the *duim-dcs* module.
 
    :superclasses: :drm:`<object>`
 
-   :keyword width: An instance of type ``<integer>``. Default value: *1*.
-   :keyword units: An instance of type *one-of(#"normal", #"point", #"device")* . Default value: *#"normal"*.
-   :keyword dashes: An instance of type *union(<boolean>, <sequence>)*. Default value: ``#f``.
-   :keyword joint-shape: An instance of type *one-of(#"miter", #"bevel", #"round", #"none")*. Default value: *#"miter"*.
-   :keyword cap-shape: An instance of type *one-of(#"butt", #"square", #"round", #"no-end-point")*. Default value: *#"butt"*.
+   :keyword width: An instance of type :drm:`<integer>`. Default value: ``1``.
+   :keyword units: An instance of type ``one-of(#"normal", #"point", #"device")`` . Default value: ``#"normal"``.
+   :keyword dashes: An instance of ``type-union(<boolean>, <sequence>)``. Default value: ``#f``.
+   :keyword joint-shape: An instance of type ``one-of(#"miter", #"bevel", #"round", #"none")``. Default value: ``#"miter"``.
+   :keyword cap-shape: An instance of type ``one-of(#"butt", #"square", #"round", #"no-end-point")``. Default value: ``#"butt"``.
 
    :description:
 
@@ -2155,8 +2109,7 @@ are exported from the *duim-dcs* module.
    :signature: pen? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2178,8 +2131,7 @@ are exported from the *duim-dcs* module.
    :signature: pen-cap-shape *pen* => *value*
 
    :parameter pen: An instance of type :class:`<pen>`.
-
-   :value value: An instance of type *one-of(#"butt", #"square", #"round", #"no-end-point")*.
+   :value value: An instance of type ``one-of(#"butt", #"square", #"round", #"no-end-point")``.
 
    :description:
 
@@ -2202,8 +2154,7 @@ are exported from the *duim-dcs* module.
    :signature: pen-dashes *pen* => *value*
 
    :parameter pen: An instance of type :class:`<pen>`.
-
-   :value value: An instance of type *type-union(<boolean>, <sequence>)*.
+   :value value: An instance of type ``type-union(<boolean>, <sequence>)``.
 
    :description:
 
@@ -2230,8 +2181,7 @@ are exported from the *duim-dcs* module.
    :signature: pen-joint-shape *pen* => *value*
 
    :parameter pen: An instance of type :class:`<pen>`.
-
-   :parameter value: An instance of type *one-of(#"miter", #"bevel", #"round", #"none")*.
+   :parameter value: An instance of type ``one-of(#"miter", #"bevel", #"round", #"none")``.
 
    :description:
 
@@ -2255,13 +2205,12 @@ are exported from the *duim-dcs* module.
    :signature: pen-units *pen* => *value*
 
    :parameter pen: An instance of type :class:`<pen>`.
-
-   :value value: An instance of type *one-of(#"normal", #"point", #"device")*.
+   :value value: An instance of type ``one-of(#"normal", #"point", #"device")``.
 
    :description:
 
      Returns the units in which the pen width is specified. They may be
-     normal, points, or device-dependent. A width of *#"normal"* is a
+     normal, points, or device-dependent. A width of ``#"normal"`` is a
      comfortably visible thin line.
 
    :seealso:
@@ -2282,13 +2231,12 @@ are exported from the *duim-dcs* module.
    :signature: pen-width *pen* => *width*
 
    :parameter pen: An instance of type :class:`<pen>`.
-
-   :value width: An instance of type :class:`<pen-width>`. The units that specify the width of the pen may be *#"normal"*, *#"points"*, or *#"device"*.
+   :value width: An instance of type :class:`<pen-width>`. The units that specify the width of the pen may be ``#"normal"``, ``#"points"``, or ``#"device"``.
 
    :description:
 
      Returns the pen width, that is how wide a stroke the pen draws, of *pen*
-     . A width of *#"normal"* is a comfortably visible thin line.
+     . A width of ``#"normal"`` is a comfortably visible thin line.
 
    :seealso:
 
@@ -2306,9 +2254,8 @@ are exported from the *duim-dcs* module.
 
    :signature: read-image *resource-id* *#key image-type:* *image-type* *#all-keys* => *image*
 
-   :parameter locator: An instance of type *type-union(<string>, <locator>)*.
-   :parameter image-type: On Windows, an instance of type *one-of(#"bitmap", #"icon")*.
-
+   :parameter locator: An instance of type ``type-union(<string>, <locator>)``.
+   :parameter image-type: On Windows, an instance of type ``one-of(#"bitmap", #"icon")``.
    :value image: An instance of type :class:`<image>`.
 
    :description:
@@ -2328,8 +2275,7 @@ are exported from the *duim-dcs* module.
 
    :parameter class: An instance of type :drm:`<object>`.
    :parameter locator: An instance of type :class:`<string>`.
-   :parameter image-type: On Windows, *#"bitmap"* or *#"icon"*.
-
+   :parameter image-type: On Windows, ``#"bitmap"`` or ``#"icon"``.
    :value image: An instance of type :class:`<image>`.
 
    :description:
@@ -2367,7 +2313,6 @@ are exported from the *duim-dcs* module.
 
    :parameter palette: An instance of type :class:`<palette>`.
    :parameter colors: Instances of type :class:`<color>`.
-
    :value palette:
 
    :description:
@@ -2382,8 +2327,8 @@ are exported from the *duim-dcs* module.
 
    :description:
 
-     A pen that draws a solid line. The width of the line is *1*, and
-     *dashes:* is *#f.*
+     A pen that draws a solid line. The width of the line is ``1``, and
+     ``dashes:`` is ``#f``.
 
    :seealso:
 
@@ -2433,8 +2378,7 @@ are exported from the *duim-dcs* module.
    :signature: stencil? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2453,12 +2397,12 @@ are exported from the *duim-dcs* module.
 
    :superclasses: :drm:`<object>`
 
-   :keyword family: An instance of type *one-of(#"fix", #"serif", #"sans-serif", #f)*. Default value: ``#f``.
-   :keyword weight: An instance of type *one-of(#"normal", #"condensed", #"thin", #"extra-light", #"light", #"medium", #"demibold", #"bold", #"extra-bold", #"black", #f)*.
-   :keyword slant: An instance of type *one-of(#"roman", #"italic", #"oblique", #f)*.
-   :keyword size: An instance of :class:`<integer>`, or an instance of type *one-of(#"normal", #"tiny", #"very-small", #"small", #"large", #"very-large:", #"huge", #"smaller", #"larger", #f)*. Default value: ``#f``.
-   :keyword underline?: An instance of type ``<boolean>``. Default value: ``#f``.
-   :keyword strikeout?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :keyword family: An instance of type ``one-of(#"fix", #"serif", #"sans-serif", #f)``. Default value: ``#f``.
+   :keyword weight: An instance of type ``one-of(#"normal", #"condensed", #"thin", #"extra-light", #"light", #"medium", #"demibold", #"bold", #"extra-bold", #"black", #f)``.
+   :keyword slant: An instance of type ``one-of(#"roman", #"italic", #"oblique", #f)``.
+   :keyword size: An instance of :class:`<integer>`, or an instance of type ``one-of(#"normal", #"tiny", #"very-small", #"small", #"large", #"very-large:", #"huge", #"smaller", #"larger", #f)``. Default value: ``#f``.
+   :keyword underline?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
+   :keyword strikeout?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
 
    :description:
 
@@ -2475,7 +2419,7 @@ are exported from the *duim-dcs* module.
      specifying device fonts by name, allowing the programmer to sacrifice
      portability for control.
 
-     If *size:* is specified as an integer, then it represents the font size
+     If ``size:`` is specified as an integer, then it represents the font size
      in printer’s points.
 
    :operations:
@@ -2520,8 +2464,7 @@ are exported from the *duim-dcs* module.
    :signature: text-style? *object* => *text-style?*
 
    :parameter object: An instance of type :drm:`<object>`.
-
-   :value text-style?: An instance of type ``<boolean>``.
+   :value text-style?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2546,13 +2489,12 @@ are exported from the *duim-dcs* module.
    :signature: text-style-components *text-style* => *family* *weight* *slant* *size* *underline?* *strikeout?*
 
    :parameter text-style: An instance of type :class:`<text-style>`.
-
-   :value family: An instance of type *one-of(#"fix", #"serif", #"sans-serif", #f)*.
-   :value weight: An instance of type *one-of(#"normal", #"condensed", #"thin", #"extra-light", #"light", #"medium", #"demibold", #"bold", #"extra-bold", #"black", #f)*.
-   :parameter slant: An instance of type *one-of(#"roman", #"italic", #"oblique", #f)*.
-   :value size: An instance of :class:`<integer>`, or an instance of type *one-of(#"normal", #"tiny", #"very-small", #"small", #"large", #"very-large:", #"huge", #"smaller", #"larger", #f)*. Default value: ``#f``.
-   :value underline?: An instance of type ``<boolean>``.
-   :value strikeout?: An instance of type ``<boolean>``.
+   :value family: An instance of type ``one-of(#"fix", #"serif", #"sans-serif", #f)``.
+   :value weight: An instance of type ``one-of(#"normal", #"condensed", #"thin", #"extra-light", #"light", #"medium", #"demibold", #"bold", #"extra-bold", #"black", #f)``.
+   :parameter slant: An instance of type ``one-of(#"roman", #"italic", #"oblique", #f)``.
+   :value size: An instance of :class:`<integer>`, or an instance of type ``one-of(#"normal", #"tiny", #"very-small", #"small", #"large", #"very-large:", #"huge", #"smaller", #"larger", #f)``. Default value: ``#f``.
+   :value underline?: An instance of type :drm:`<boolean>`.
+   :value strikeout?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2577,8 +2519,7 @@ are exported from the *duim-dcs* module.
    :signature: text-style-family *text-style* => *family*
 
    :parameter text-style: An instance of type :class:`<text-style>`.
-
-   :value family: An instance of type *one-of(#"fix", #"serif", #"sans-serif", #f)*.
+   :value family: An instance of type ``one-of(#"fix", #"serif", #"sans-serif", #f)``.
 
    :description:
 
@@ -2602,8 +2543,7 @@ are exported from the *duim-dcs* module.
    :signature: text-style-size *text-style* => *size*
 
    :parameter text-style: An instance of type :class:`<text-style>`.
-
-   :value size: An instance of :class:`<integer>`, or an instance of type *one-of(#"normal", #"tiny", #"very-small", #"small", #"large", #"very-large:", #"huge", #"smaller", #"larger", #f)*. Default value: ``#f``.
+   :value size: An instance of :class:`<integer>`, or an instance of type ``one-of(#"normal", #"tiny", #"very-small", #"small", #"large", #"very-large:", #"huge", #"smaller", #"larger", #f)``. Default value: ``#f``.
 
    :description:
 
@@ -2627,8 +2567,7 @@ are exported from the *duim-dcs* module.
    :signature: text-style-slant *text-style* => *slant*
 
    :parameter text-style: An instance of type :class:`<text-style>`.
-
-   :value slant: An instance of type *one-of(#"roman", #"italic", #"oblique", #f)*.
+   :value slant: An instance of type ``one-of(#"roman", #"italic", #"oblique", #f)``.
 
    :description:
 
@@ -2653,8 +2592,7 @@ are exported from the *duim-dcs* module.
    :signature: text-style-strikeout? *text-style* => *strikeout?*
 
    :parameter text-style: An instance of type :class:`<text-style>`.
-
-   :value strikeout?: An instance of type ``<boolean>``.
+   :value strikeout?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2679,8 +2617,7 @@ are exported from the *duim-dcs* module.
    :signature: text-style-underline? *text-style* => *underline?*
 
    :parameter text-style: An instance of type :class:`<text-style>`.
-
-   :value underline?: An instance of type ``<boolean>``.
+   :value underline?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2704,8 +2641,7 @@ are exported from the *duim-dcs* module.
    :signature: text-style-weight *text-style* => *weight*
 
    :parameter text-style: An instance of type :class:`<text-style>`.
-
-   :value weight: An instance of type *one-of(#"normal", #"condensed", #"thin", #"extra-light", #"light", #"medium", #"demibold", #"bold", #"extra-bold", #"black", #f)*.
+   :value weight: An instance of type ``one-of(#"normal", #"condensed", #"thin", #"extra-light", #"light", #"medium", #"demibold", #"bold", #"extra-bold", #"black", #f)``.
 
    :description:
 
