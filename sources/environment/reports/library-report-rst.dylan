@@ -55,26 +55,6 @@ end method write-definition-name;
 
 define method write-definition-name
     (stream :: <rst-report-stream>, report :: <module-report>,
-     class :: <class-object>)
- => ()
-  next-method();
-  do(method (mod) format(stream, "   :%s:\n", as-lowercase(mod)) end,
-     split(class-modifiers(report.report-project, class), " ",
-           remove-if-empty?: #t))
-end method write-definition-name;
-
-define method write-definition-name
-    (stream :: <rst-report-stream>, report :: <module-report>,
-     function :: <generic-function-object>)
- => ()
-  next-method();
-  do(method (mod) format(stream, "   :%s:\n", as-lowercase(mod)) end,
-     split(generic-function-modifiers(report.report-project, function), " ",
-           remove-if-empty?: #t))
-end method write-definition-name;
-
-define method write-definition-name
-    (stream :: <rst-report-stream>, report :: <module-report>,
      definition :: <definition-object>)
  => ()
   let project = report.report-project;
@@ -85,9 +65,43 @@ define method write-definition-name
         "Generic" => "generic-function";
         otherwise => as-lowercase(type);
       end;
-  format(stream, "\n.. %s:: %s\n",
-         rst-directive, title)
+  format(stream, "\n.. %s:: %s\n", rst-directive, title);
+  write-definition-adjectives(stream, report, definition);
 end method write-definition-name;
+
+define method write-definition-adjectives
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     definition :: <class-object>)
+ => ()
+  do(method (mod) format(stream, "   :%s:\n", as-lowercase(mod)) end,
+     split(class-modifiers(report.report-project, definition), " ",
+           remove-if-empty?: #t));
+  next-method();
+end method write-definition-adjectives;
+
+define method write-definition-adjectives
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     definition :: <generic-function-object>)
+ => ()
+  do(method (mod) format(stream, "   :%s:\n", as-lowercase(mod)) end,
+     split(generic-function-modifiers(report.report-project, definition), " ",
+           remove-if-empty?: #t));
+  next-method();
+end method write-definition-adjectives;
+
+define method write-definition-adjectives
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     definition :: <thread-variable-object>)
+ => ()
+  format(stream, "   :thread:\n");
+  next-method();
+end method write-definition-adjectives;
+
+define method write-definition-adjectives
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     definition :: <definition-object>)
+ => ()
+end method write-definition-adjectives;
 
 define method write-superclasses-header
     (stream :: <rst-report-stream>, report :: <module-report>,
