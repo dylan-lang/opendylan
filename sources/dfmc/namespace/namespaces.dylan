@@ -122,7 +122,7 @@ define method strip-incremental-slots (x :: <namespace>)
   remove-all-keys!(imported-name-cache(x));
 end method;
 
-// These protocl functions support module-level macro hygiene.
+// These protocol functions support module-level macro hygiene.
 
 // Lookup the value of an implicitly-exported name. An error is signaled
 // if the name is not implicitly exported (<name-not-implicitly-exported>)
