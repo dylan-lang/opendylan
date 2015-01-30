@@ -149,7 +149,7 @@ static int low_memory_allocation_per_thread = 128 * 1024;
 
 static define_CRITICAL_SECTION(reservoir_limit_set_lock);
 
-static __inline
+STATIC_INLINE
 void update_runtime_thread_count(int increment)
 {
 
@@ -282,13 +282,13 @@ void *wrapper_class(void *wrapper);
 }
 
 
-__inline
+EXTERN_INLINE
 void *MMReserveObject(size_t size, void *wrapper, gc_teb_t gc_teb)
 {
   reserve_memory_for_object(size, wrapper, gc_teb, gc_teb_main_ap, main_handler, "MMReserveObject");
 }
 
-__inline
+EXTERN_INLINE
 int MMCommitObject(void *p, size_t size, gc_teb_t gc_teb)
 {
   assert(gc_teb->gc_teb_inside_tramp);
@@ -297,13 +297,13 @@ int MMCommitObject(void *p, size_t size, gc_teb_t gc_teb)
 }
 
 
-__inline
+EXTERN_INLINE
 void *MMReserveLeaf(size_t size, void *wrapper, gc_teb_t gc_teb)
 {
   reserve_memory_for_object(size, wrapper, gc_teb, gc_teb_leaf_ap, leaf_handler, "MMReserveLeaf");
 }
 
-__inline
+EXTERN_INLINE
 int MMCommitLeaf(void *p, size_t size, gc_teb_t gc_teb)
 {
   assert(gc_teb->gc_teb_inside_tramp);
@@ -318,13 +318,13 @@ MMAllocHandler MMReserveLeafHandler(MMAllocHandler handler)
   return h;
 }
 
-__inline
+EXTERN_INLINE
 void *MMReserveExactAWL(size_t size, void *wrapper, gc_teb_t gc_teb)
 {
   reserve_memory_for_object(size, wrapper, gc_teb, gc_teb_exact_awl_ap, exact_awl_handler, "MMReserveExactAWL");
 }
 
-__inline
+EXTERN_INLINE
 int MMCommitExactAWL(void *p, size_t size, gc_teb_t gc_teb)
 {
   assert(gc_teb->gc_teb_inside_tramp);
@@ -339,13 +339,13 @@ MMAllocHandler MMReserveExactAWLHandler(MMAllocHandler handler)
   return h;
 }
 
-__inline
+EXTERN_INLINE
 void *MMReserveWeakAWL(size_t size, void *wrapper, gc_teb_t gc_teb)
 {
   reserve_memory_for_object(size, wrapper, gc_teb, gc_teb_weak_awl_ap, weak_awl_handler, "MMReserveWeakAWL");
 }
 
-__inline
+EXTERN_INLINE
 int MMCommitWeakAWL(void *p, size_t size, gc_teb_t gc_teb)
 {
   assert(gc_teb->gc_teb_inside_tramp);
@@ -368,7 +368,7 @@ MMAllocHandler MMReserveObjectHandler(MMAllocHandler handler)
   return h;
 }
 
-__inline
+EXTERN_INLINE
 void *MMReserveWrapper(size_t size, void *wrapper, gc_teb_t gc_teb)
 {
   mps_res_t res;
@@ -391,7 +391,7 @@ void *MMReserveWrapper(size_t size, void *wrapper, gc_teb_t gc_teb)
  * happen between reserve and commit, the wrapper may be initialized
  * to contain any moveable references.
  */
-__inline
+EXTERN_INLINE
 int MMCommitWrapper(void *p, size_t size, gc_teb_t gc_teb)
 {
   mps_res_t res;

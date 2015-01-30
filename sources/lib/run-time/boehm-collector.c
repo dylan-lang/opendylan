@@ -82,7 +82,7 @@ static int num_threads = 0;
 
 static define_CRITICAL_SECTION(reservoir_limit_set_lock);
 
-static __inline
+STATIC_INLINE
 void update_runtime_thread_count(int increment)
 {
   enter_CRITICAL_SECTION(&reservoir_limit_set_lock);
@@ -112,7 +112,7 @@ MMError dylan_mm_deregister_thread_from_teb(gc_teb_t gc_teb)
   return 0;
 }
 
-__inline
+EXTERN_INLINE
 void *MMAllocateObject(size_t size, void *wrapper, gc_teb_t gc_teb)
 {
   unused(wrapper);
@@ -121,7 +121,7 @@ void *MMAllocateObject(size_t size, void *wrapper, gc_teb_t gc_teb)
   return GC_MALLOC(size);
 }
 
-__inline
+EXTERN_INLINE
 void *MMAllocateLeaf(size_t size, void *wrapper, gc_teb_t gc_teb)
 {
   unused(wrapper);
@@ -130,7 +130,7 @@ void *MMAllocateLeaf(size_t size, void *wrapper, gc_teb_t gc_teb)
   return GC_MALLOC_ATOMIC(size);
 }
 
-__inline
+EXTERN_INLINE
 void *MMAllocateExactAWL(size_t size, void *wrapper, gc_teb_t gc_teb)
 {
   unused(wrapper);
@@ -139,7 +139,7 @@ void *MMAllocateExactAWL(size_t size, void *wrapper, gc_teb_t gc_teb)
   return GC_MALLOC(size);
 }
 
-__inline
+EXTERN_INLINE
 void *MMAllocateWeakAWL(size_t size, void *wrapper, gc_teb_t gc_teb)
 {
   unused(wrapper);
@@ -148,7 +148,7 @@ void *MMAllocateWeakAWL(size_t size, void *wrapper, gc_teb_t gc_teb)
   return GC_MALLOC(size);
 }
 
-__inline
+EXTERN_INLINE
 void *MMAllocateWrapper(size_t size, void *wrapper, gc_teb_t gc_teb)
 {
   unused(wrapper);

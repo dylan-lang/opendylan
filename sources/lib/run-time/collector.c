@@ -58,6 +58,15 @@ void force_reference_to_spy_interface()
 #include "windows-types.h"
 #endif
 
+#if defined(__clang__)
+#define EXTERN_INLINE
+#define STATIC_INLINE static inline
+#else
+#define EXTERN_INLINE __inline
+#define STATIC_INLINE static __inline
+#endif
+
+
 /* Configuration
  *
  * MISC* configure the MV pool.
@@ -84,7 +93,7 @@ typedef void*                   dylan_object;
 
 typedef int                     dylan_bool_t;
 
-__inline
+EXTERN_INLINE
 void fill_dylan_object_mem(dylan_object *mem, dylan_object fill, int count)
 {
   // This really should be controlled by a better define, but we don't have
@@ -125,7 +134,7 @@ void fill_dylan_object_mem(dylan_object *mem, dylan_object fill, int count)
 
 
 #define define_fill_mem(type) \
-__inline  \
+EXTERN_INLINE  \
 void fill_ ## type ## _mem(type *mem, type fill, int count) \
 { \
   int index = 0; \
@@ -143,7 +152,7 @@ define_fill_mem(single_float)
 define_fill_mem(double_float)
 
 
-__inline
+EXTERN_INLINE
 void untraced_fill_byte_char_mem(void **object, byte_char fill, int count, int count_slot, dylan_bool_t ztq)
 {
   byte_char *d = (byte_char*)(&(object[count_slot + 1]));
@@ -154,7 +163,7 @@ void untraced_fill_byte_char_mem(void **object, byte_char fill, int count, int c
 }
 
 #define define_untraced_fill_mem(type) \
-__inline  \
+EXTERN_INLINE  \
 void untraced_fill_ ## type ## _mem(void **object, type fill, size_t count, size_t count_slot, dylan_bool_t ztq) \
 { \
   size_t index = 0; \
@@ -235,7 +244,7 @@ extern void set_wrapper_breakpoint (void *wrapper, int count);
 extern void clear_wrapper_breakpoint (void *wrapper);
 extern BOOL check_wrapper_breakpoint_for_objectQ;
 
-__inline
+EXTERN_INLINE
 void *class_wrapper(void *class)
 {
   void *iclass = ((void**)class)[3];
@@ -389,7 +398,7 @@ static int polling_thread_index (HANDLE hThread)
   return(-1);
 }
 
-static __inline
+STATIC_INLINE
 BOOL polling_threadQ (HANDLE hThread)
 {
   int index = polling_thread_index(hThread);
@@ -398,7 +407,7 @@ BOOL polling_threadQ (HANDLE hThread)
   else return TRUE;
 }
 
-static __inline
+STATIC_INLINE
 BOOL polling_individual_threadsQ ()
 {
   if (polling_threads_cursor > -1) return TRUE;
@@ -478,7 +487,7 @@ extern BOOL Prunning_dylan_spy_functionQ;
 #include "mps-collector.c"
 #endif
 
-static __inline
+STATIC_INLINE
 void update_allocation_counter(gc_teb_t gc_teb, size_t count, void* wrapper)
 {
 #ifdef GC_USE_MPS
@@ -514,7 +523,7 @@ static void zero_allocation_counter(gc_teb_t gc_teb)
 }
 
 
-__inline
+EXTERN_INLINE
 gc_teb_t current_gc_teb()
 {
   gc_teb_t gc_teb;
@@ -606,7 +615,7 @@ void dylan__finish__malloc(void)
 }
 
 
-__inline
+EXTERN_INLINE
 void *wrapper_class(void *wrapper)
 {
   void *iclass = ((void**)wrapper)[1];
