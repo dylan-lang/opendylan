@@ -35,8 +35,8 @@ end class <internal-method-object>;
 define class <simple-function-object> (<dylan-function-object>)
 end class <simple-function-object>;
 
-define class <foreign-function-object> 
-    (<function-object>, 
+define class <foreign-function-object>
+    (<function-object>,
      <foreign-object>)
 end class <foreign-function-object>;
 
@@ -46,7 +46,7 @@ define class <parameter> (<object>)
   constant slot parameter-type :: <environment-object>,
     required-init-keyword: type:;
 end class <parameter>;
- 
+
 define class <optional-parameter> (<parameter>)
   constant slot parameter-keyword :: false-or(<string>) = #f,
     init-keyword: keyword:;
@@ -77,12 +77,12 @@ define open generic do-generic-function-methods
      #key client)
  => ();
 
-define open generic method-specializers 
+define open generic method-specializers
     (server :: <server>, object :: <method-object>)
  => (specializers :: <sequence>);
 
 define open generic method-generic-function
-    (server :: <server>, object :: <method-object>) 
+    (server :: <server>, object :: <method-object>)
  => (function :: false-or(<generic-function-object>));
 
 
@@ -110,10 +110,10 @@ define method do-generic-function-methods
   let server = choose-server(project, generic-function);
   server
     & do-generic-function-methods(function, server, generic-function,
-				  client: client)
+                                  client: client)
 end method do-generic-function-methods;
 
-define method method-specializers 
+define method method-specializers
     (project :: <project-object>, function :: <method-object>)
  => (specializers :: <sequence>)
   let server = choose-server(project, function, error?: #t);
@@ -121,7 +121,7 @@ define method method-specializers
 end method method-specializers;
 
 define method method-generic-function
-    (project :: <project-object>, function :: <method-object>) 
+    (project :: <project-object>, function :: <method-object>)
  => (function :: false-or(<generic-function-object>))
   let server = choose-server(project, function);
   server & method-generic-function(server, function)

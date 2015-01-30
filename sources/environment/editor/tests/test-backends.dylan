@@ -112,8 +112,8 @@ define function backend-setup-function ()
        ("Testing the %= editor backend.\n"
         "Some checks may succeed but cause an editor error; please "
         "record any such errors.\n"
-	"Please close any editor windows opened by previous checks,\n"
-	"then click 'Continue' to proceed.", name));
+        "Please close any editor windows opened by previous checks,\n"
+        "then click 'Continue' to proceed.", name));
   gui-progress-pause();
   gui-progress-display-message
     (#"information",

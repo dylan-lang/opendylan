@@ -93,15 +93,15 @@ define method maybe-add-extra-pane
   let extra-pane = displayer.displayer-extra-pane;
   if (extra-pane)
     make(<column-splitter>,
-	 ratios: displayer.displayer-ratios,
-	 children: vector(pane, extra-pane),
-	 split-bar-moved-callback:
-	   method (splitter :: <splitter>, #rest arguments)
-	     ignore(arguments);
-	     let callback = displayer.displayer-ratios-changed-callback;
-	     displayer.displayer-ratios := splitter.gadget-ratios;
-	     callback & callback(displayer)
-	   end)
+         ratios: displayer.displayer-ratios,
+         children: vector(pane, extra-pane),
+         split-bar-moved-callback:
+           method (splitter :: <splitter>, #rest arguments)
+             ignore(arguments);
+             let callback = displayer.displayer-ratios-changed-callback;
+             displayer.displayer-ratios := splitter.gadget-ratios;
+             callback & callback(displayer)
+           end)
   else
     pane
   end
@@ -111,7 +111,7 @@ define open generic make-displayer-state
     (displayer :: <displayer-mixin>, object) => (state :: <displayer-state>);
 
 define open generic note-displayer-state-updated
-    (displayer :: <displayer-mixin>, 
+    (displayer :: <displayer-mixin>,
      #key after-function, new-thread?,
           state :: false-or(<displayer-state>))
  => ();
@@ -120,7 +120,7 @@ define open generic refresh-displayer-state
     (state :: <displayer-state>) => ();
 
 define method note-displayer-state-updated
-    (displayer :: <displayer-mixin>, 
+    (displayer :: <displayer-mixin>,
      #key after-function, new-thread? = #f,
           state :: false-or(<displayer-state>) = #f)
  => ()
@@ -144,10 +144,10 @@ define method execute-displayer-gadget-activate-callback
     let values = gadget-value(gadget);
     let value
       = case
-	  ~instance?(values, <sequence>) => values;
-	  ~empty?(values)                => values[0];
-	  otherwise                      => #f;
-	end;
+          ~instance?(values, <sequence>) => values;
+          ~empty?(values)                => values[0];
+          otherwise                      => #f;
+        end;
     execute-displayer-activate-callback(displayer, value)
   end
 end method execute-displayer-gadget-activate-callback;
@@ -167,7 +167,7 @@ end method pane-sheet-with-selection;
 
 /// Displayer operations
 
-define constant <operation-state> 
+define constant <operation-state>
   = one-of(#"querying", #"cancelled", #"finished");
 
 define class <displayer-operation> (<object>)
@@ -179,7 +179,7 @@ define macro with-displayer-lock
       ?body:body
     end }
  => { with-lock (?displayer.%lock)
-	?body
+        ?body
       end }
 end macro with-displayer-lock;
 
@@ -188,8 +188,8 @@ define macro with-displayer-operation
       ?body:body
     end }
  => { with-displayer-lock (?displayer)
-	let ?operation = ?displayer.displayer-operation;
-	?body
+        let ?operation = ?displayer.displayer-operation;
+        ?body
       end }
 end macro with-displayer-operation;
 
@@ -274,24 +274,24 @@ define class <collection-gadget-displayer-state> (<displayer-state>)
 end class <collection-gadget-displayer-state>;
 
 define macro with-displayer-items-cache
-  { with-displayer-items-cache 
+  { with-displayer-items-cache
         (?displayer:expression, ?cache:name, ?object:expression)
       ?body:body
     end }
     =>
     { begin
-	let state = ?displayer.displayer-state;
-	let cache 
-	  = state.?cache
-	      | begin
-		  ?cache ## "-setter"
-		    (make-displayer-items-cache(?displayer),
-		     state)
-		end;
-	object-cached-items(?object, cache)
-	  | begin
-	      object-cached-items(?object, cache) := ?body
-	    end
+        let state = ?displayer.displayer-state;
+        let cache
+          = state.?cache
+              | begin
+                  ?cache ## "-setter"
+                    (make-displayer-items-cache(?displayer),
+                     state)
+                end;
+        object-cached-items(?object, cache)
+          | begin
+              object-cached-items(?object, cache) := ?body
+            end
       end }
 end macro with-displayer-items-cache;
 
@@ -394,13 +394,13 @@ define method displayer-information-available?
   let test-value
     = displayer.displayer-state
         & begin
-	    let function = displayer.displayer-information-available?-function;
-	    if (function)
-	      function()
-	    else
-	      project-compiler-database(displayer.displayer-project)
-	    end
-	  end;
+            let function = displayer.displayer-information-available?-function;
+            if (function)
+              function()
+            else
+              project-compiler-database(displayer.displayer-project)
+            end
+          end;
   test-value ~= #f
 end method displayer-information-available?;
 
@@ -410,20 +410,20 @@ define method displayer-sorted-items
   let sort-function = displayer.displayer-sort-function;
   let items
     = if (sort-function == identity)
-	displayer-display-items(displayer, object)
+        displayer-display-items(displayer, object)
       else
-	with-displayer-items-cache 
-	    (displayer, displayer-state-sorted-items-cache, object)
-	  let state = displayer.displayer-state;
-	  let items = displayer-display-items(displayer, object);
-	  let sort-function = displayer.displayer-sort-function;
-	  let sort-order = state.displayer-state-sort-order;
-	  if (sort-order)
-	    sort-function(items, sort-order)
-	  else
-	    items
-	  end
-	end
+        with-displayer-items-cache
+            (displayer, displayer-state-sorted-items-cache, object)
+          let state = displayer.displayer-state;
+          let items = displayer-display-items(displayer, object);
+          let sort-function = displayer.displayer-sort-function;
+          let sort-order = state.displayer-state-sort-order;
+          if (sort-order)
+            sort-function(items, sort-order)
+          else
+            items
+          end
+        end
       end;
   //--- We do this so that the names are computed and then cached during
   //--- this slow operation, rather than when the items are about to be
@@ -433,7 +433,7 @@ define method displayer-sorted-items
       (displayer, displayer-state-names-cached?-cache, object)
     ensure-displayer-item-labels-cached(displayer, items);
     //--- Return empty list to fill the cache, since it has to be a sequence
-    #()    
+    #()
   end;
   items
 end method displayer-sorted-items;
@@ -466,8 +466,8 @@ define method displayer-item-label
   let cache = state.displayer-state-labels-cache;
   element(cache, item, default: #f)
     | begin
-	let label = displayer.displayer-label-key(item);
-	element(cache, item) := label
+        let label = displayer.displayer-label-key(item);
+        element(cache, item) := label
       end
 end method displayer-item-label;
 
@@ -522,7 +522,7 @@ end method displayer-object-icon;
 define method make-displayer-state
     (pane :: <collection-gadget-displayer-mixin>, object)
  => (class :: <collection-gadget-displayer-state>)
-  make(<collection-gadget-displayer-state>, 
+  make(<collection-gadget-displayer-state>,
        object: object,
        sort-order: pane.displayer-sort-order)
 end method make-displayer-state;
@@ -547,24 +547,24 @@ define method displayer-object-setter
     with-displayer-lock (displayer)
       let old-state = displayer.displayer-state;
       let new-state
-	= case
-	    old-state & (old-state.displayer-state-object == object) =>
-	      old-state;
-	    otherwise =>
-	      let state = object & make-displayer-state(displayer, object);
-	      displayer.displayer-state := state
-	  end;
+        = case
+            old-state & (old-state.displayer-state-object == object) =>
+              old-state;
+            otherwise =>
+              let state = object & make-displayer-state(displayer, object);
+              displayer.displayer-state := state
+          end;
       let new-state? = displayer.displayer-new-state?;
       let clean? = ~displayer.displayer-valid? | clean?;
       if (clean? | new-state?)
-	refresh-displayer
-	  (displayer, clean?: clean?, new-thread?: new-thread?,
-	   after-function: after-function)
+        refresh-displayer
+          (displayer, clean?: clean?, new-thread?: new-thread?,
+           after-function: after-function)
       else
-	//--- We need to do this to get the status bar to update,
-	//--- but it doesn't feel quite right somehow...
-	note-displayer-items-changed(displayer);
-	after-function & after-function()
+        //--- We need to do this to get the status bar to update,
+        //--- but it doesn't feel quite right somehow...
+        note-displayer-items-changed(displayer);
+        after-function & after-function()
       end
     end
   end
@@ -596,7 +596,7 @@ define macro with-displayer-transaction-method
       ?body:body
     end }
     =>
-    { 
+    {
      let transaction-function = ?displayer.displayer-transaction-function;
      let display-method = method () ?body end;
      if (transaction-function)
@@ -623,24 +623,24 @@ define method refresh-displayer
     set-displayer-contents(displayer, #[]);
     with-frame-background-operation (frame, "Refreshing...")
       with-abort-restart ()
-	with-environment-handlers (frame)
-	  with-displayer-transaction (displayer)
-	    note-displayer-state-updated
-	      (displayer, 
-	       after-function: after-function,
-	       new-thread?: #t,
-	       state: state)
-	  end
-	end
+        with-environment-handlers (frame)
+          with-displayer-transaction (displayer)
+            note-displayer-state-updated
+              (displayer,
+               after-function: after-function,
+               new-thread?: #t,
+               state: state)
+          end
+        end
       end
     end
   else
     with-busy-cursor (frame)
       with-displayer-transaction (displayer)
-	note-displayer-state-updated
-	  (displayer,
-	   after-function: after-function,
-	   state: state)
+        note-displayer-state-updated
+          (displayer,
+           after-function: after-function,
+           state: state)
       end
     end
   end
@@ -656,7 +656,7 @@ define method note-displayer-items-changed
       callback(displayer)
     else
       note-displayer-items-updated
-	(displayer, displayer.displayer-element-label)
+        (displayer, displayer.displayer-element-label)
     end
   end
 end method note-displayer-items-changed;
@@ -688,13 +688,13 @@ define method set-displayer-contents
     let value = if (state) state.displayer-state-value end;
     gadget-value(gadget)
       := case
-	   value =>
-	     value;
-	   gadget-selection-mode(gadget) == #"multiple" =>
-	     #[];
-	   otherwise =>
-	     #f;
-	 end
+           value =>
+             value;
+           gadget-selection-mode(gadget) == #"multiple" =>
+             #[];
+           otherwise =>
+             #f;
+         end
   end
 end method set-displayer-contents;
 
@@ -707,39 +707,39 @@ define method note-displayer-state-updated
   if (new-thread?)
     let current-operation
       = with-displayer-operation (operation = displayer)
-	  if (operation)
-	    operation.operation-state := #"cancelled"
-	  end;
-	  displayer.displayer-operation := make(<displayer-operation>)
-	end;
+          if (operation)
+            operation.operation-state := #"cancelled"
+          end;
+          displayer.displayer-operation := make(<displayer-operation>)
+        end;
     let sorted-items = compute-displayer-contents(displayer);
     call-in-frame(frame,
-		  with-displayer-transaction-method (displayer)
-		    with-displayer-operation (operation = displayer)
-		      if (operation
-			    & operation == current-operation
-			    & operation.operation-state ~== #"cancelled")
-			displayer.displayer-operation := #f;
-			set-displayer-contents
-			  (displayer, sorted-items, state: state);
-			displayer.displayer-valid? := #t;
-			displayer.displayer-new-state? := #f;
-			note-displayer-items-changed(displayer);
-			operation.operation-state := #"finished";
-		      end
-		    end;
-		    after-function & after-function()
-		  end)
+                  with-displayer-transaction-method (displayer)
+                    with-displayer-operation (operation = displayer)
+                      if (operation
+                            & operation == current-operation
+                            & operation.operation-state ~== #"cancelled")
+                        displayer.displayer-operation := #f;
+                        set-displayer-contents
+                          (displayer, sorted-items, state: state);
+                        displayer.displayer-valid? := #t;
+                        displayer.displayer-new-state? := #f;
+                        note-displayer-items-changed(displayer);
+                        operation.operation-state := #"finished";
+                      end
+                    end;
+                    after-function & after-function()
+                  end)
   else
     let sorted-items = compute-displayer-contents(displayer);
     call-in-frame
       (frame,
        with-displayer-transaction-method (displayer)
-	 set-displayer-contents(displayer, sorted-items, state: state);
-	 displayer.displayer-valid? := #t;
-	 displayer.displayer-new-state? := #f;
-	 note-displayer-items-changed(displayer);
-	 after-function & after-function();
+         set-displayer-contents(displayer, sorted-items, state: state);
+         displayer.displayer-valid? := #t;
+         displayer.displayer-new-state? := #f;
+         note-displayer-items-changed(displayer);
+         after-function & after-function();
        end)
   end
 
@@ -752,18 +752,18 @@ define function displayer-toggle-sort-order
   if (state)
     with-busy-cursor (sheet-frame(displayer))
       with-displayer-lock (displayer)
-	let old-order = state.displayer-state-sort-order;
-	state.displayer-state-sort-order
-	  := select (order by instance?)
-	       <sequence> =>
-		 let order-0 = order[0];
-		 let order-1 = order[1];
-		 if (old-order = order-0) order-1 else order-0 end;
-	       otherwise =>
-		 if (old-order = order) #f else order end;
-	     end;
-	clear-items-cache(state.displayer-state-sorted-items-cache);
-	note-displayer-state-updated(displayer)
+        let old-order = state.displayer-state-sort-order;
+        state.displayer-state-sort-order
+          := select (order by instance?)
+               <sequence> =>
+                 let order-0 = order[0];
+                 let order-1 = order[1];
+                 if (old-order = order-0) order-1 else order-0 end;
+               otherwise =>
+                 if (old-order = order) #f else order end;
+             end;
+        clear-items-cache(state.displayer-state-sorted-items-cache);
+        note-displayer-state-updated(displayer)
       end
     end
   end
@@ -773,34 +773,34 @@ define function project-not-built-message
     (project :: <project-object>, #key message = $no-information-available)
  => (message :: <string>)
   concatenate(message,
-	      if (~project.project-compiler-database
-		    & project.project-can-be-built?)
-		concatenate(" ", $project-not-built)
-	      else
-		""
-	      end)
+              if (~project.project-compiler-database
+                    & project.project-can-be-built?)
+                concatenate(" ", $project-not-built)
+              else
+                ""
+              end)
 end function project-not-built-message;
 
 define method note-displayer-items-updated
     (displayer :: <collection-gadget-displayer-mixin>, name :: <string>) => ()
   let frame = sheet-frame(displayer);
   let project = displayer.displayer-project;
-  let (count, total) 
+  let (count, total)
     = displayer-information-available?(displayer)
         & displayer-item-count(displayer);
   let message
     = case
-	total & total ~= count =>
-	  format-to-string("%d %s (%d total)",
-			   count,
-			   string-pluralize(name, count: count),
-			   total);
-	count =>
-	  format-to-string("%d %s",
-			   count,
-			   string-pluralize(name, count: count));
-	otherwise =>
-	  project-not-built-message(project);
+        total & total ~= count =>
+          format-to-string("%d %s (%d total)",
+                           count,
+                           string-pluralize(name, count: count),
+                           total);
+        count =>
+          format-to-string("%d %s",
+                           count,
+                           string-pluralize(name, count: count));
+        otherwise =>
+          project-not-built-message(project);
       end;
   frame-status-message(frame) := message
 end method note-displayer-items-updated;
@@ -808,7 +808,7 @@ end method note-displayer-items-updated;
 
 /// Filtering displayers
 
-define pane <filtering-collection-gadget-displayer-mixin> 
+define pane <filtering-collection-gadget-displayer-mixin>
     (<collection-gadget-displayer-mixin>)
   constant slot displayer-filter-function :: <function>,
     required-init-keyword: filter-function:;
@@ -829,35 +829,35 @@ define pane <filtering-collection-gadget-displayer-mixin>
   pane displayer-type-filter-pane (pane)
     make(<option-box>,
          items: pane.displayer-filter-types,
-	 value: pane.displayer-filter-type,
-	 label-key: first,
-	 value-key: second,
+         value: pane.displayer-filter-type,
+         label-key: first,
+         value-key: second,
          value-changed-callback: method (sheet)
                                    update-displayer-filter(pane)
                                  end,
-	 documentation: "Chooses the subset of objects to show.",
+         documentation: "Chooses the subset of objects to show.",
          fixed-width?: ~pane.displayer-filter-type-only?);
   pane displayer-extra-type-filter-pane (pane)
     make(<option-box>,
          items: pane.displayer-filter-extra-types,
-	 value: pane.displayer-filter-extra-type,
-	 label-key: first,
-	 value-key: second,
+         value: pane.displayer-filter-extra-type,
+         label-key: first,
+         value-key: second,
          value-changed-callback: method (sheet)
                                    update-displayer-filter(pane)
                                  end,
-	 documentation: "Chooses the subset of objects to show.",
+         documentation: "Chooses the subset of objects to show.",
          fixed-width?: #t);
   pane displayer-substring-filter-pane (pane)
     make(<text-field>,
          value-changed-callback: method (sheet)
                                    update-displayer-filter(pane)
                                  end,
-	 activate-callback: method (sheet)
-			      update-displayer-filter(pane)
-			    end,
-	 documentation: "Filters the subset of objects by substring.",
-	 //---*** What should the width really be?
+         activate-callback: method (sheet)
+                              update-displayer-filter(pane)
+                            end,
+         documentation: "Filters the subset of objects by substring.",
+         //---*** What should the width really be?
          width: 100, fixed-width?: #t);
   pane displayer-filters-layout (pane)
     begin
@@ -865,20 +865,20 @@ define pane <filtering-collection-gadget-displayer-mixin>
       let extra-label = pane.displayer-filter-extra-text-label;
       let filter-type-only? = pane.displayer-filter-type-only?;
       let children
-	= if (filter-type-only?)
-	    vector(pane.displayer-type-filter-pane)
-	  else
-	    vector(pane.displayer-type-filter-pane,
-		   extra-label
-		     & make(<label>, label: extra-label),
-		   extra-types?
-		     & pane.displayer-extra-type-filter-pane,
-		   make(<label>, label: pane.displayer-filter-text-label),
-		   pane.displayer-substring-filter-pane)
-	  end;
+        = if (filter-type-only?)
+            vector(pane.displayer-type-filter-pane)
+          else
+            vector(pane.displayer-type-filter-pane,
+                   extra-label
+                     & make(<label>, label: extra-label),
+                   extra-types?
+                     & pane.displayer-extra-type-filter-pane,
+                   make(<label>, label: pane.displayer-filter-text-label),
+                   pane.displayer-substring-filter-pane)
+          end;
       make(<row-layout>,
-	   spacing: 2, y-alignment: #"center",
-	   children: remove(children, #f))
+           spacing: 2, y-alignment: #"center",
+           children: remove(children, #f))
     end;
   pane displayer-filtered-collection-gadget (pane)
     vertically (spacing: 2)
@@ -906,7 +906,7 @@ end class <filtering-collection-gadget-displayer-state>;
 define method make-displayer-state
     (displayer :: <filtering-collection-gadget-displayer-mixin>, object)
  => (state :: <filtering-collection-gadget-displayer-state>)
-  make(<filtering-collection-gadget-displayer-state>, 
+  make(<filtering-collection-gadget-displayer-state>,
        object: object,
        sort-order: displayer.displayer-sort-order,
        type-filter: displayer.displayer-filter-type,
@@ -961,7 +961,7 @@ define method set-displayer-contents
     := type-filter | displayer.displayer-filter-type;
   gadget-value(extra-type-filter-pane)
     := extra-type-filter | displayer.displayer-filter-extra-type;
-  gadget-value(substring-filter-pane) 
+  gadget-value(substring-filter-pane)
     := substring-filter | $default-substring-filter;
 end method set-displayer-contents;
 
@@ -972,17 +972,17 @@ define method update-displayer-filter
   if (state)
     with-displayer-lock (displayer)
       let (type-filter, extra-type-filter, substring-filter)
-	= displayer.displayer-filter-options;
+        = displayer.displayer-filter-options;
       unless (type-filter = state.displayer-state-type-filter
-		& extra-type-filter = state.displayer-state-extra-type-filter
-		& substring-filter = state.displayer-state-substring-filter)
-	state.displayer-state-type-filter := type-filter;
-	state.displayer-state-extra-type-filter := extra-type-filter;
-	state.displayer-state-substring-filter := substring-filter;
-	clear-items-cache(state.displayer-state-filtered-items-cache);
-	clear-items-cache(state.displayer-state-sorted-items-cache);
-	note-displayer-state-updated(displayer);
-	#t
+                & extra-type-filter = state.displayer-state-extra-type-filter
+                & substring-filter = state.displayer-state-substring-filter)
+        state.displayer-state-type-filter := type-filter;
+        state.displayer-state-extra-type-filter := extra-type-filter;
+        state.displayer-state-substring-filter := substring-filter;
+        clear-items-cache(state.displayer-state-filtered-items-cache);
+        clear-items-cache(state.displayer-state-sorted-items-cache);
+        note-displayer-state-updated(displayer);
+        #t
       end
     end
   end
@@ -996,17 +996,17 @@ define method displayer-display-items
     displayer-items(displayer, object)
   else
     with-displayer-items-cache
-	(displayer, displayer-state-filtered-items-cache, object)
+        (displayer, displayer-state-filtered-items-cache, object)
       let state = displayer.displayer-state;
       let items = displayer-items(displayer, object);
       let type-filter = state.displayer-state-type-filter;
       let extra-type-filter = state.displayer-state-extra-type-filter;
       let substring-filter = state.displayer-state-substring-filter;
       if (extra-type-filter)
-	filter-function
-	  (items, type-filter, extra-type-filter, substring-filter)
+        filter-function
+          (items, type-filter, extra-type-filter, substring-filter)
       else
-	filter-function(items, type-filter, substring-filter)
+        filter-function(items, type-filter, substring-filter)
       end
     end
   end
@@ -1030,23 +1030,23 @@ end method displayer-object-items-count;
 
 /// List control displayer
 
-define pane <list-control-displayer> 
+define pane <list-control-displayer>
     (<collection-gadget-displayer-mixin>)
   pane displayer-collection-gadget (pane)
     make(<list-control>,
          selection-mode: pane.displayer-selection-mode,
          client: pane,
          label-key: curry(displayer-item-label, pane),
-	 test: displayer-test-function(pane),
+         test: displayer-test-function(pane),
          value-key: displayer-value-key(pane),
          icon-function: curry(displayer-object-icon, pane),
          always-show-selection?: displayer-always-show-selection?(pane),
-	 value-changed-callback: method (gadget)
+         value-changed-callback: method (gadget)
                                    let frame = sheet-frame(gadget);
                                    note-frame-selection-updated(frame);
-				   let callback
-				     = pane.displayer-value-changed-callback;
-				   callback & callback(pane, gadget-value(gadget))
+                                   let callback
+                                     = pane.displayer-value-changed-callback;
+                                   callback & callback(pane, gadget-value(gadget))
                                  end,
          activate-callback: execute-displayer-gadget-activate-callback,
          popup-menu-callback: display-environment-popup-menu);
@@ -1082,8 +1082,8 @@ define pane <table-control-displayer>
          generators: pane.table-control-displayer-generators,
          widths: pane.table-control-displayer-widths,
          alignments: pane.table-control-displayer-alignments,
-	 callbacks: pane.table-control-displayer-sort-callbacks,
-	 test: pane.displayer-test-function,
+         callbacks: pane.table-control-displayer-sort-callbacks,
+         test: pane.displayer-test-function,
          label-key: curry(displayer-item-label, pane),
          value-key: pane.displayer-value-key,
          icon-function: curry(displayer-object-icon, pane),
@@ -1091,9 +1091,9 @@ define pane <table-control-displayer>
          value-changed-callback: method (gadget)
                                    let frame = sheet-frame(gadget);
                                    note-frame-selection-updated(frame);
-				   let callback
-				     = pane.displayer-value-changed-callback;
-				   callback & callback(pane, gadget-value(gadget))
+                                   let callback
+                                     = pane.displayer-value-changed-callback;
+                                   callback & callback(pane, gadget-value(gadget))
                                  end,
          activate-callback: execute-displayer-gadget-activate-callback,
          popup-menu-callback: display-environment-popup-menu);
@@ -1101,7 +1101,7 @@ define pane <table-control-displayer>
     maybe-add-extra-pane(pane, pane.displayer-collection-gadget);
 end pane <table-control-displayer>;
 
-define pane <filtering-table-control-displayer> 
+define pane <filtering-table-control-displayer>
     (<filtering-collection-gadget-displayer-mixin>,
      <table-control-displayer>)
 end pane <filtering-table-control-displayer>;
@@ -1112,12 +1112,12 @@ define function table-control-displayer-sort-callbacks
   let sort-orders = displayer.table-control-displayer-sort-orders;
   if (sort-orders)
     map(method (order) => (callback :: <function>)
-	  method (gadget)
-	    ignore(gadget);
-	    displayer-toggle-sort-order(displayer, order)
-	  end
-	end,
-	sort-orders)
+          method (gadget)
+            ignore(gadget);
+            displayer-toggle-sort-order(displayer, order)
+          end
+        end,
+        sort-orders)
   end
 end function table-control-displayer-sort-callbacks;
 
@@ -1132,7 +1132,7 @@ define method ensure-displayer-item-labels-cached
     for (generator in generators)
       let column-item = generator(item);
       unless (element(cache, column-item, default: #f))
-	element(cache, column-item) := label-key(column-item)
+        element(cache, column-item) := label-key(column-item)
       end
     end
   end;
@@ -1154,21 +1154,21 @@ define pane <tree-control-displayer> (<collection-gadget-displayer-mixin>)
          depth: pane.displayer-depth,
          children-generator: curry(tree-control-displayer-children, pane),
          children-predicate: curry(tree-control-displayer-children?, pane),
-	 //---*** Unfortunately, this hides the expand boxes, too
-	 // show-root-edges?: #f,
-	 test: pane.displayer-test-function,
+         //---*** Unfortunately, this hides the expand boxes, too
+         // show-root-edges?: #f,
+         test: pane.displayer-test-function,
          label-key: curry(displayer-item-label, pane),
          value-key: pane.displayer-value-key,
          icon-function: curry(displayer-object-icon, pane),
          always-show-selection?: pane.displayer-always-show-selection?,
          //---*** Unfortunately, this scrolls badly in the X direction, too
-	 keep-selection-visible?: #f,
-	 value-changed-callback: method (gadget)
+         keep-selection-visible?: #f,
+         value-changed-callback: method (gadget)
                                    let frame = sheet-frame(gadget);
                                    note-frame-selection-updated(frame);
-				   let callback
-				     = pane.displayer-value-changed-callback;
-				   callback & callback(pane, gadget-value(gadget))
+                                   let callback
+                                     = pane.displayer-value-changed-callback;
+                                   callback & callback(pane, gadget-value(gadget))
                                  end,
          activate-callback: execute-displayer-gadget-activate-callback,
          popup-menu-callback: display-environment-popup-menu);
@@ -1176,7 +1176,7 @@ define pane <tree-control-displayer> (<collection-gadget-displayer-mixin>)
     maybe-add-extra-pane(pane, pane.displayer-collection-gadget);
 end pane <tree-control-displayer>;
 
-define pane <filtering-tree-control-displayer> 
+define pane <filtering-tree-control-displayer>
     (<filtering-collection-gadget-displayer-mixin>,
      <tree-control-displayer>)
 end pane <filtering-tree-control-displayer>;
@@ -1204,18 +1204,18 @@ define method compute-displayer-contents
   dynamic-bind (*handle-item-callbacks?* = #f)
     let depth = displayer.displayer-depth;
     local method object-children
-	      (object :: <object>, current-depth :: <integer>)
-	   => (children :: <sequence>)
-	    let children = tree-control-displayer-children(displayer, object);
-	    // Fill in the caches for the children
-	    map(if (depth == current-depth)
-		  curry(tree-control-displayer-children?, displayer)
-		else
-		  rcurry(object-children, current-depth + 1)
-		end,
-		children);
-	    children
-	  end method object-children;
+              (object :: <object>, current-depth :: <integer>)
+           => (children :: <sequence>)
+            let children = tree-control-displayer-children(displayer, object);
+            // Fill in the caches for the children
+            map(if (depth == current-depth)
+                  curry(tree-control-displayer-children?, displayer)
+                else
+                  rcurry(object-children, current-depth + 1)
+                end,
+                children);
+            children
+          end method object-children;
     if (displayer-information-available?(displayer))
       let object = displayer.displayer-object;
       object-children(object, 0)
@@ -1234,14 +1234,14 @@ define method set-displayer-contents
     let tree-control = displayer.displayer-collection-gadget;
     with-atomic-redisplay (tree-control)
       if (tree-control-roots(tree-control) ~= new-roots)
-	tree-control-roots(tree-control) := new-roots
+        tree-control-roots(tree-control) := new-roots
       else
-	update-gadget(tree-control)
+        update-gadget(tree-control)
       end;
       if (state)
-	tree-control-expanded-objects(tree-control)
-	  := state.displayer-state-expanded-objects;
-	gadget-value(tree-control) := state.displayer-state-value
+        tree-control-expanded-objects(tree-control)
+          := state.displayer-state-expanded-objects;
+        gadget-value(tree-control) := state.displayer-state-value
       end
     end
   end

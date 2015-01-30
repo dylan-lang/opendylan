@@ -21,7 +21,7 @@ define constant $help-topics-title   = "Contents and Index";
 define command-table *help-command-table* (*global-command-table*)
   menu-item $help-topics-title = frame-help-contents-and-index,
   //        $help-topics-title = <help-on-topics>,
-    accelerator: make-keyboard-gesture(#"f1"),	// ---*** F1 really be context sensitive help
+    accelerator: make-keyboard-gesture(#"f1"),        // ---*** F1 really be context sensitive help
     documentation: "Opens Help.";
   // Comment out these until there is some content for them to work on
   // menu-item "What's This?" = (<help-on-context>, pane: #"by-focus"),

@@ -74,7 +74,7 @@ end method execute-command;
 define method ensure-server-started
     (sccs :: <generic-source-control-system>)
   when (sccs.%use-session?)
-    #f		//--- implement the "session" code here
+    #f                //--- implement the "session" code here
   end
 end method ensure-server-started;
 
@@ -101,11 +101,11 @@ end method do-source-control-commands;
 define method do-source-control-command
     (sccs :: <generic-source-control-system>, string :: <string>)
   if (sccs.%use-session?)
-    #f		//--- implement the "session" code here
+    #f                //--- implement the "session" code here
   else
     //--- This already waits, but don't we want to return a status code?
     run-application(concatenate-as(<string>, sccs.%image-name, " ", string),
-		    under-shell?: #t)
+                    under-shell?: #t)
   end
 end method do-source-control-command;
 
@@ -159,21 +159,21 @@ end function maybe-format-to-string;
 define macro generic-command-definer
   { define generic-command ?:name ?slots:* end }
     => { define sealed string-command "<generic-" ## ?name ## "-command>"
-	     ("<sccs-" ## ?name ## "-command>", <generic-source-control-command>)
-	   inherited named-argument pathname is sccs-command-pathname;
-	   inherited named-argument compound is sccs-command-compound;
-	   inherited named-argument unit     is sccs-command-unit;
-	   inherited named-argument branch   is sccs-command-branch;
-	   inherited named-argument reason   is sccs-command-reason;
-	   ?slots
-	 end;
-	 define sealed domain make (singleton("<generic-" ## ?name ## "-command>"));
-	 define sealed domain initialize ("<generic-" ## ?name ## "-command>");
-	 define sealed method class-for-sccs-command
-	     (sccs :: <generic-source-control-system>, class == "<sccs-" ## ?name ## "-command>")
-	  => (class == "<generic-" ## ?name ## "-command>")
-	   "<generic-" ## ?name ## "-command>"
-	 end method class-for-sccs-command; }
+             ("<sccs-" ## ?name ## "-command>", <generic-source-control-command>)
+           inherited named-argument pathname is sccs-command-pathname;
+           inherited named-argument compound is sccs-command-compound;
+           inherited named-argument unit     is sccs-command-unit;
+           inherited named-argument branch   is sccs-command-branch;
+           inherited named-argument reason   is sccs-command-reason;
+           ?slots
+         end;
+         define sealed domain make (singleton("<generic-" ## ?name ## "-command>"));
+         define sealed domain initialize ("<generic-" ## ?name ## "-command>");
+         define sealed method class-for-sccs-command
+             (sccs :: <generic-source-control-system>, class == "<sccs-" ## ?name ## "-command>")
+          => (class == "<generic-" ## ?name ## "-command>")
+           "<generic-" ## ?name ## "-command>"
+         end method class-for-sccs-command; }
 end macro generic-command-definer;
 
 
@@ -273,52 +273,52 @@ define method get-source-control-arguments
     let min-width = 250;
     let compound-field
       = make(<text-field>,
-	     min-width: min-width,
-	     value: compound | "",
-	     value-changing-callback:
-	       method (gadget)
-		 let dialog = sheet-frame(gadget);
-		 dialog-exit-enabled?(dialog) := ~empty?(gadget-value(gadget))
-	       end method);
+             min-width: min-width,
+             value: compound | "",
+             value-changing-callback:
+               method (gadget)
+                 let dialog = sheet-frame(gadget);
+                 dialog-exit-enabled?(dialog) := ~empty?(gadget-value(gadget))
+               end method);
     let unit-field
       = make(<text-field>,
-	     min-width: min-width,
-	     value: unit | "");
+             min-width: min-width,
+             value: unit | "");
     let branch-field
       = make(<text-field>,
-	     min-width: min-width,
-	     value: branch | "");
+             min-width: min-width,
+             value: branch | "");
     let reason-field
       = reason? & make(<text-field>,
-		       min-width: min-width);
+                       min-width: min-width);
     let layout
       = if (reason?)
-	  make(<table-layout>,
-	       x-spacing: 8, y-spacing: 2,
-	       contents: vector(vector(make(<label>, label: "&Compound:"), compound-field),
-				vector(make(<label>, label: "&Unit:"),     unit-field),
-				vector(make(<label>, label: "&Branch:"),   branch-field),
-				vector(make(<label>, label: "&Reason:"),   reason-field)))
-	else
-	  make(<table-layout>,
-	       x-spacing: 8, y-spacing: 2,
-	       contents: vector(vector(make(<label>, label: "&Compound:"), compound-field),
-				vector(make(<label>, label: "&Unit:"),     unit-field),
-				vector(make(<label>, label: "&Branch:"),   branch-field)))
-	end;
+          make(<table-layout>,
+               x-spacing: 8, y-spacing: 2,
+               contents: vector(vector(make(<label>, label: "&Compound:"), compound-field),
+                                vector(make(<label>, label: "&Unit:"),     unit-field),
+                                vector(make(<label>, label: "&Branch:"),   branch-field),
+                                vector(make(<label>, label: "&Reason:"),   reason-field)))
+        else
+          make(<table-layout>,
+               x-spacing: 8, y-spacing: 2,
+               contents: vector(vector(make(<label>, label: "&Compound:"), compound-field),
+                                vector(make(<label>, label: "&Unit:"),     unit-field),
+                                vector(make(<label>, label: "&Branch:"),   branch-field)))
+        end;
     let dialog = make(<dialog-frame>,
-		      title: "Select Compound and Unit",
-		      layout: layout,
-		      input-focus: compound-field,
-		      mode: #"modal",
-		      owner: frame);
+                      title: "Select Compound and Unit",
+                      layout: layout,
+                      input-focus: compound-field,
+                      mode: #"modal",
+                      owner: frame);
     let exit-status = start-dialog(dialog);
     if (exit-status & ~empty?(gadget-value(compound-field)))
       values(pathname,
-	     gadget-value(compound-field),
-	     ~empty?(gadget-value(unit-field))   & gadget-value(unit-field),
-	     ~empty?(gadget-value(branch-field)) & gadget-value(branch-field),
-	     reason? & ~empty?(gadget-value(reason-field)) & gadget-value(reason-field))
+             gadget-value(compound-field),
+             ~empty?(gadget-value(unit-field))   & gadget-value(unit-field),
+             ~empty?(gadget-value(branch-field)) & gadget-value(branch-field),
+             reason? & ~empty?(gadget-value(reason-field)) & gadget-value(reason-field))
     else
       values(#f, #f, #f, #f, #f)
     end

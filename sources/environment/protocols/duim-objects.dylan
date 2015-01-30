@@ -18,7 +18,7 @@ define open generic duim-object-composite?
  => (composite? :: <boolean>);
 
 define open generic do-duim-object-children
-    (function :: <function>, 
+    (function :: <function>,
      server :: <server>,
      duim-object :: <duim-object>)
  => ();
@@ -28,90 +28,90 @@ define open generic do-duim-object-children
 
 define constant $duim-sheets-library-id
   = make(<library-id>,
-	 name: "duim-sheets");
+         name: "duim-sheets");
 
 define constant $duim-sheets-module-id
-  = make(<module-id>, 
-	 name: "duim-sheets", 
-	 library: $duim-sheets-library-id);
+  = make(<module-id>,
+         name: "duim-sheets",
+         library: $duim-sheets-library-id);
 
 define constant $duim-sheets-internals-module-id
-  = make(<module-id>, 
-	 name: "duim-sheets-internals", 
-	 library: $duim-sheets-library-id);
+  = make(<module-id>,
+         name: "duim-sheets-internals",
+         library: $duim-sheets-library-id);
 
 define constant $port-displays-id
-  = make(<definition-id>, 
-	 name: "port-displays",
-	 module: $duim-sheets-internals-module-id);
+  = make(<definition-id>,
+         name: "port-displays",
+         module: $duim-sheets-internals-module-id);
 
 define constant $port-frame-managers-id
-  = make(<definition-id>, 
-	 name: "port-frame-managers",
-	 module: $duim-sheets-internals-module-id);
+  = make(<definition-id>,
+         name: "port-frame-managers",
+         module: $duim-sheets-internals-module-id);
 
 define constant $frame-manager-frames-id
-  = make(<definition-id>, 
-	 name: "frame-manager-frames",
-	 module: $duim-sheets-module-id);
+  = make(<definition-id>,
+         name: "frame-manager-frames",
+         module: $duim-sheets-module-id);
 
 define constant $sheet-children-id
-  = make(<definition-id>, 
-	 name: "sheet-children",
-	 module: $duim-sheets-module-id);
+  = make(<definition-id>,
+         name: "sheet-children",
+         module: $duim-sheets-module-id);
 
 define constant $duim-gadgets-library-id
   = make(<library-id>,
-	 name: "duim-gadgets");
+         name: "duim-gadgets");
 
 define constant $duim-gadgets-module-id
-  = make(<module-id>, 
-	 name: "duim-gadgets", 
-	 library: $duim-gadgets-library-id);
+  = make(<module-id>,
+         name: "duim-gadgets",
+         library: $duim-gadgets-library-id);
 
 define constant $gadget-label-id
-  = make(<definition-id>, 
-	 name: "gadget-label",
-	 module: $duim-gadgets-module-id);
+  = make(<definition-id>,
+         name: "gadget-label",
+         module: $duim-gadgets-module-id);
 
 define constant $duim-frames-library-id
   = make(<library-id>,
-	 name: "duim-frames");
+         name: "duim-frames");
 
 define constant $duim-frames-module-id
-  = make(<module-id>, 
-	 name: "duim-frames", 
-	 library: $duim-frames-library-id);
+  = make(<module-id>,
+         name: "duim-frames",
+         library: $duim-frames-library-id);
 
 define constant $duim-frames-internals-module-id
-  = make(<module-id>, 
-	 name: "duim-frames-internals",
-	 library: $duim-frames-library-id);
+  = make(<module-id>,
+         name: "duim-frames-internals",
+         library: $duim-frames-library-id);
 
 define constant $frame-title-id
-  = make(<definition-id>, 
-	 name: "frame-title",
-	 module: $duim-frames-module-id);
+  = make(<definition-id>,
+         name: "frame-title",
+         module: $duim-frames-module-id);
 
 define constant $frame-menu-bar-id
-  = make(<definition-id>, 
-	 name: "%menu-bar",
-	 module: $duim-frames-internals-module-id);
+  = make(<definition-id>,
+         name: "%menu-bar",
+         module: $duim-frames-internals-module-id);
 
 define constant $frame-tool-bar-id
-  = make(<definition-id>, 
-	 name: "%tool-bar",
-	 module: $duim-frames-internals-module-id);
+  = make(<definition-id>,
+         name: "%tool-bar",
+         module: $duim-frames-internals-module-id);
 
 define constant $frame-layout-id
-  = make(<definition-id>, 
-	 name: "%layout",
-	 module: $duim-frames-internals-module-id);
+  = make(<definition-id>,
+         name: "%layout",
+         module: $duim-frames-internals-module-id);
 
 define constant $frame-status-bar-id
-  = make(<definition-id>, 
-	 name: "%status-bar",
-	 module: $duim-frames-internals-module-id);
+  = make(<definition-id>,
+         name: "%status-bar",
+         module: $duim-frames-internals-module-id);
 
 
 // DUIM classes
@@ -185,11 +185,11 @@ define method do-duim-object-children
     (function :: <function>, server :: <server>, frame :: <duim-frame>)
  => ()
   local method maybe-call
-	    (object :: false-or(<environment-object>)) => ()
-	  if (instance?(object, <duim-object>))
-	    function(object)
-	  end
-	end method maybe-call;
+            (object :: false-or(<environment-object>)) => ()
+          if (instance?(object, <duim-object>))
+            function(object)
+          end
+        end method maybe-call;
   maybe-call(user-object-slot-value(server, frame, $frame-menu-bar-id));
   maybe-call(user-object-slot-value(server, frame, $frame-tool-bar-id));
   maybe-call(user-object-slot-value(server, frame, $frame-layout-id));

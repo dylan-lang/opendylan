@@ -15,9 +15,9 @@ define constant $project-channel :: <channel> = make(<channel>);
 
 /// Current messages:
 ///
-/// MESSAGE			ARGUMENTS PASSED
+/// MESSAGE                        ARGUMENTS PASSED
 ///
-/// #"make-application"		project :: <project-object>
+/// #"make-application"                project :: <project-object>
 
 
 /// Some useful project message classes

@@ -6,7 +6,7 @@ Copyright:        Copyright (c) 1998-2000 Functional Objects, Inc. All rights re
 Major-Version:    2
 Minor-Version:    1
 Files:  library
-	module
+        module
         classes
 Linker-Options:   $(guilflags)
 Compilation-Mode: loose

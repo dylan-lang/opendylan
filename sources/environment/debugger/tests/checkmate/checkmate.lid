@@ -1,8 +1,8 @@
-Library:	checkmate
-Files:		library
-		module
-		raise-exception
-		checkmate
+Library: checkmate
+Files:  library
+        module
+        raise-exception
+        checkmate
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.

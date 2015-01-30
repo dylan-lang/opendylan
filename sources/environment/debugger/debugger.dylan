@@ -16,7 +16,7 @@ define constant $default-debugger-frame-height :: <integer> = 600;
 define thread variable *debugger* :: false-or(<debugger>) = #f;
 
 define sealed frame <debugger>
-    (<frame-refresh-mixin>, 
+    (<frame-refresh-mixin>,
      <frame-undo-mixin>,
      <frame-module-gadget-mixin>,
      <frame-cascading-window-mixin>,
@@ -40,28 +40,28 @@ define sealed frame <debugger>
   pane debugger-stack-pane (debugger)       make(<debugger-stack-pane>);
   pane debugger-source-pane (debugger)      make(<debugger-source-pane>);
   pane debugger-interactor1-pane (debugger)
-    make(<interactor-pane>, 
-	 project: debugger.ensure-frame-project,
-	 thread:  debugger.debugger-thread);
+    make(<interactor-pane>,
+         project: debugger.ensure-frame-project,
+         thread:  debugger.debugger-thread);
   pane debugger-interactor2-pane (debugger)
-    make(<interactor-pane>, 
-	 project: debugger.ensure-frame-project,
-	 thread:  debugger.debugger-thread);
+    make(<interactor-pane>,
+         project: debugger.ensure-frame-project,
+         thread:  debugger.debugger-thread);
   pane debugger-status-bar (debugger)
     make(<debugger-status-bar>);
   pane debugger-stack-source-splitter (debugger)
     make(<row-splitter>,
-	 children: vector(debugger.debugger-stack-pane,
-			  debugger.debugger-source-pane));
+         children: vector(debugger.debugger-stack-pane,
+                          debugger.debugger-source-pane));
   pane debugger-basic-debugging-layout (debugger)
     make(<column-splitter>,
-	 children:
-	   vector(debugger.debugger-stack-source-splitter,
-		  debugger.debugger-interactor1-pane));
+         children:
+           vector(debugger.debugger-stack-source-splitter,
+                  debugger.debugger-interactor1-pane));
   pane debugger-switchable-layout (debugger)
     make(<stack-layout>,
-	 children: vector(debugger.debugger-basic-debugging-layout,
-			  debugger.debugger-interactor2-pane));
+         children: vector(debugger.debugger-basic-debugging-layout,
+                          debugger.debugger-interactor2-pane));
   pane debugger-default-layout (debugger)
     vertically (spacing: $vertical-spacing)
       debugger.debugger-context-pane;
@@ -85,11 +85,11 @@ define sealed domain make (singleton(<debugger>));
 define method make-clone
     (debugger :: <debugger>, #rest initargs)
  => (debugger :: <debugger>)
-  apply(next-method, debugger, 
-	native-thread: debugger.debugger-thread,
-	thread-index:  debugger.debugger-thread-index,
-	zoom:          debugger.debugger-auto-zoom,
-	initargs)
+  apply(next-method, debugger,
+        native-thread: debugger.debugger-thread,
+        thread-index:  debugger.debugger-thread-index,
+        zoom:          debugger.debugger-auto-zoom,
+        initargs)
 end method make-clone;
 
 define sealed method initialize
@@ -111,7 +111,7 @@ define sealed method reinitialize-frame
   activate-debugger(debugger);
 end method reinitialize-frame;
 
-define sealed method handle-event 
+define sealed method handle-event
     (debugger :: <debugger>, event :: <frame-mapped-event>)
  => ()
   next-method();
@@ -119,7 +119,7 @@ define sealed method handle-event
   update-debugger-focus(debugger);
 end method handle-event;
 
-define sealed method generate-frame-title 
+define sealed method generate-frame-title
     (debugger :: <debugger>)
  => (title :: <byte-string>)
   with-output-to-string (stream)
@@ -166,17 +166,17 @@ define method restore-window-settings
   next-method();
   debugger.debugger-stack-source-splitter.gadget-ratios
     := vector($debugger-settings.stack-pane-ratio,
-	      $debugger-settings.source-pane-ratio);
+              $debugger-settings.source-pane-ratio);
   debugger.debugger-basic-debugging-layout.gadget-ratios
     := vector($debugger-settings.stack-source-ratio,
-	      $debugger-settings.interactor-pane-ratio);
+              $debugger-settings.interactor-pane-ratio);
 end method restore-window-settings;
 
 
 /// Debugger virtual slots
 
 // Returns whichever of the interactor panes is currently mapped.
-define function debugger-interactor-pane 
+define function debugger-interactor-pane
     (debugger :: <debugger>)
  => (interactor-pane :: <interactor-pane>)
   let interactor1-pane = debugger.debugger-interactor1-pane;
@@ -220,12 +220,12 @@ define method debugger-select-thread
     let threads = application.application-threads;
     let (thread :: false-or(<thread-object>), success?, width, height)
       = choose-from-dialog(threads,
-			   owner: debugger,
-			   title: "Select Thread",
-			   label-key: curry(frame-default-object-name, debugger),
-			   value:  debugger.debugger-thread,
-			   width:  $select-thread-dialog-width,
-			   height: $select-thread-dialog-height);
+                           owner: debugger,
+                           title: "Select Thread",
+                           label-key: curry(frame-default-object-name, debugger),
+                           value:  debugger.debugger-thread,
+                           width:  $select-thread-dialog-width,
+                           height: $select-thread-dialog-height);
     when (success? & thread)
       $select-thread-dialog-width  := width;
       $select-thread-dialog-height := height;
@@ -247,15 +247,15 @@ define method frame-note-application-threads-changed
     ~thread =>
       let index = debugger.debugger-thread-index;
       let new-thread
-	= block (return)
-	    for (thread :: <thread-object> in threads)
-	      let thread-index = thread-index(application, thread);
-	      if (index == thread-index) return(thread) end
-	    end;
-	    #f
-	  end;
+        = block (return)
+            for (thread :: <thread-object> in threads)
+              let thread-index = thread-index(application, thread);
+              if (index == thread-index) return(thread) end
+            end;
+            #f
+          end;
       if (new-thread)
-	debugger.debugger-thread := new-thread
+        debugger.debugger-thread := new-thread
       end;
     ~member?(thread, threads) =>
       deactivate-debugger(debugger);
@@ -272,35 +272,35 @@ end method frame-note-application-threads-changed;
 /// stored, but only so that a handle-event method on <frame-mapped-event>
 /// can call this again at the appropriate point.
 
-define sealed method debugger-zoom-setter 
+define sealed method debugger-zoom-setter
     (zoom :: <symbol>, debugger :: <debugger>)
  => (zoom :: <symbol>)
   unless (debugger.debugger-zoom == zoom)
     with-busy-cursor (debugger)
       unless (zoom == #"zoom-debugging" | zoom == #"zoom-interacting")
-	debug-out(#"environment-debugger", "Invalid debugger zoom setting: %=", zoom);
-	zoom := #"zoom-debugging";
+        debug-out(#"environment-debugger", "Invalid debugger zoom setting: %=", zoom);
+        zoom := #"zoom-debugging";
       end;
       // Keep the point in a sensible place after switching layouts
       let (current, new)
-	= select (zoom)
-	    #"zoom-debugging"   =>
-	      values(debugger.debugger-interactor2-pane.%interactor-control,
-		     debugger.debugger-interactor1-pane.%interactor-control);
-	    #"zoom-interacting" =>
-	      values(debugger.debugger-interactor1-pane.%interactor-control,
-		     debugger.debugger-interactor2-pane.%interactor-control);
-	  end;
+        = select (zoom)
+            #"zoom-debugging"   =>
+              values(debugger.debugger-interactor2-pane.%interactor-control,
+                     debugger.debugger-interactor1-pane.%interactor-control);
+            #"zoom-interacting" =>
+              values(debugger.debugger-interactor1-pane.%interactor-control,
+                     debugger.debugger-interactor2-pane.%interactor-control);
+          end;
       let point = window-point(current);
       move-bp!(window-point(new), bp-line(point), bp-index(point));
       // Now switch layouts
       let stack = debugger.debugger-switchable-layout;
       let children = sheet-children(stack);
       let child-index
-	= select (zoom)
-	    #"zoom-debugging"   => 0;
-	    #"zoom-interacting" => 1;
-	  end;
+        = select (zoom)
+            #"zoom-debugging"   => 0;
+            #"zoom-interacting" => 1;
+          end;
       stack-layout-mapped-page(stack) := children[child-index];
       //--- Some panes that weren't mapped may need to be updated
       //--- when they become mapped.
@@ -322,7 +322,7 @@ define function zoom-description-from-startup-option
   end select
 end function zoom-description-from-startup-option;
 
-define function debugger-auto-zoom 
+define function debugger-auto-zoom
     (debugger :: <debugger>)
  => (zoom :: <symbol>)
   let project = debugger.frame-project;
@@ -337,15 +337,15 @@ define function debugger-auto-zoom
       #"zoom-debugging";
     #"stopped" =>
       case
-	application-just-initialized?(application)
-	  | application-reached-interaction-point?(application) =>
-	  zoom-according-to-startup;
-	thread
-	  & (application-just-interacted?(project, thread)
-	       | application-just-stepped?(project, thread)) =>
-	  debugger.debugger-zoom | zoom-according-to-startup;
-	otherwise =>
-	  #"zoom-debugging";
+        application-just-initialized?(application)
+          | application-reached-interaction-point?(application) =>
+          zoom-according-to-startup;
+        thread
+          & (application-just-interacted?(project, thread)
+               | application-just-stepped?(project, thread)) =>
+          debugger.debugger-zoom | zoom-according-to-startup;
+        otherwise =>
+          #"zoom-debugging";
       end;
     otherwise =>
       #"zoom-debugging";
@@ -355,7 +355,7 @@ end function debugger-auto-zoom;
 
 /// Debugger reuse
 
-define function do-project-debuggers 
+define function do-project-debuggers
     (function :: <function>,
      project :: <project-object>,
      #key thread :: false-or(<thread-object>),
@@ -363,28 +363,28 @@ define function do-project-debuggers
           in-frame? :: <boolean> = #t)
  => ()
   local method matching-frame?
-	    (frame :: <frame>) => (match? :: <boolean>)
-	  when (instance?(frame, <debugger>)
-		  & frame.frame-state ~== #"destroyed"
-		  & frame.frame-current-project == project)
-	    let frame-thread = frame.debugger-thread;
-	    (~thread | thread == frame-thread)
-	      & (~test | test(frame))
-	  end
-	end method matching-frame?;
+            (frame :: <frame>) => (match? :: <boolean>)
+          when (instance?(frame, <debugger>)
+                  & frame.frame-state ~== #"destroyed"
+                  & frame.frame-current-project == project)
+            let frame-thread = frame.debugger-thread;
+            (~thread | thread == frame-thread)
+              & (~test | test(frame))
+          end
+        end method matching-frame?;
   do-frames
     (method (frame :: <frame>) => ()
        when (matching-frame?(frame))
-	 case
-	   in-frame? => call-in-frame(frame, function, frame);
-	   otherwise => function(frame)
-	 end
+         case
+           in-frame? => call-in-frame(frame, function, frame);
+           otherwise => function(frame)
+         end
        end
      end method,
      z-order: #"top-down")
 end function do-project-debuggers;
 
-define sealed sideways method find-debugger-from-environment 
+define sealed sideways method find-debugger-from-environment
     (portd :: type-union(<port>, <frame>),
      #key project :: <project-object>,
           thread :: false-or(<thread-object>) = #f,
@@ -394,13 +394,13 @@ define sealed sideways method find-debugger-from-environment
     = thread | project.application-default-thread;
   if (thread)
     ensure-environment-frame(portd, <debugger>,
-			     project:       project,
-			     native-thread: thread,
-			     zoom:          zoom)
+                             project:       project,
+                             native-thread: thread,
+                             zoom:          zoom)
   else
     let frame = instance?(portd, <frame>) & portd;
     environment-error-message("No application thread to interact with.",
-			      owner: frame)
+                              owner: frame)
   end if;
 end method find-debugger-from-environment;
 
@@ -415,12 +415,12 @@ define method choose-debugger-for-thread
   block (return)
     do-project-debuggers
       (method (debugger :: <debugger>)
-	 if (~first-debugger)
-	   first-debugger := debugger
-	 end;
-	 if (debugger.debugger-thread == thread)
-	   return(debugger)
-	 end
+         if (~first-debugger)
+           first-debugger := debugger
+         end;
+         if (debugger.debugger-thread == thread)
+           return(debugger)
+         end
        end,
        project, in-frame?: #f);
     reuse? & first-debugger
@@ -447,9 +447,9 @@ define method start-debugging
  => ()
   let debug?
     = if (thread)
-	choose-debug?(project, thread)
+        choose-debug?(project, thread)
       else
-	(startup-option | $debugger-settings.open-debugger-on-pause)
+        (startup-option | $debugger-settings.open-debugger-on-pause)
       end;
   let thread = thread | project.application-default-thread;
   let ignore-interactive-breakpoint?
@@ -459,27 +459,27 @@ define method start-debugging
     let refresh-all? = $debugger-settings.refresh-all-on-debug;
     let zoom
       = case
-	  application-just-hit-error?(project, thread) =>
-	    #"zoom-debugging";
-	  otherwise =>
-	    zoom-description-from-startup-option(startup-option);
-	end;
+          application-just-hit-error?(project, thread) =>
+            #"zoom-debugging";
+          otherwise =>
+            zoom-description-from-startup-option(startup-option);
+        end;
     do-project-debuggers
       (if (refresh-all?) activate-debugger else enable-debugger end,
        project, test: curry(\~==, debugger));
     if (debugger)
-      let interacted? 
-	= application-just-interacted?(project, thread);
+      let interacted?
+        = application-just-interacted?(project, thread);
       debugger.debugger-updated? := #f;
       call-in-frame
-	(debugger, reuse-debugger, debugger, thread,
-	 zoom: zoom, interacted?: interacted?)
+        (debugger, reuse-debugger, debugger, thread,
+         zoom: zoom, interacted?: interacted?)
     else
       fork-environment-frame
-	(default-port(), <debugger>,
-	 project:       project, 
-	 native-thread: thread,
-	 zoom:          zoom)
+        (default-port(), <debugger>,
+         project:       project,
+         native-thread: thread,
+         zoom:          zoom)
     end
   end
 end method start-debugging;
@@ -503,16 +503,16 @@ end method frame-continue-application;
 define function note-project-process-started
     (project :: <project-object>) => ()
   local method close (debugger :: <debugger>)
-	  within-frame (debugger)
-	    exit-frame(debugger, destroy?: #t)
-	  end;
+          within-frame (debugger)
+            exit-frame(debugger, destroy?: #t)
+          end;
         end method;
   if ($debugger-settings.one-debugger-per-thread)
     do-project-debuggers(close, project)
   end
 end function note-project-process-started;
 
-define function activate-debugger 
+define function activate-debugger
     (debugger :: <debugger>, #key interacted?) => ()
   enable-debugger(debugger, update?: #f);
   update-debugger(debugger, interacted?: interacted?)
@@ -526,10 +526,10 @@ define function enable-debugger
     debugger.debugger-interactor1-pane.interactor-pane-enabled? := #t;
     debugger.debugger-interactor2-pane.interactor-pane-enabled? := #t;
 
-    // NB debuggers can be enabled without being updated so update 
+    // NB debuggers can be enabled without being updated so update
     // enough of the debugger now to make it consistent.
     if (update?)
-      update-debugger-command-table(debugger); 
+      update-debugger-command-table(debugger);
       update-debugger-status-bar(debugger);
       update-debugger-context-pane(debugger)
     end
@@ -561,13 +561,13 @@ define function update-debugger
        update-debugger-interactor-pane(debugger, refresh?: refresh?);
 
        unless (interacted? &
-	       debugger-unchanged-during-interaction?(debugger))
-	 if (refresh?)
-	   update-debugger-context-pane(debugger);
-	   update-debugger-source-pane(debugger, refresh?: #t);
-	 end;
-	 update-debugger-stack-pane(debugger, refresh?: refresh?);
-	 update-debugger-register-window(debugger);
+               debugger-unchanged-during-interaction?(debugger))
+         if (refresh?)
+           update-debugger-context-pane(debugger);
+           update-debugger-source-pane(debugger, refresh?: #t);
+         end;
+         update-debugger-stack-pane(debugger, refresh?: refresh?);
+         update-debugger-register-window(debugger);
        end;
 
        debugger.debugger-updated? := #t; // NB set flag before updating status display
@@ -607,7 +607,7 @@ end method note-debugger-thread-changed;
 // Determine on completion of an interaction if the debugger frame
 // has been updated since the interaction began; if so, it needs to
 // be updated again, otherwise no updates will be necessary as the
-// Debugger Manager should ensure that thread contexts before and 
+// Debugger Manager should ensure that thread contexts before and
 // after interactions are identical.
 
 define function debugger-unchanged-during-interaction?
@@ -625,7 +625,7 @@ end function;
 
 /// Debugger shutdown
 
-define function disable-debugger 
+define function disable-debugger
     (debugger :: <debugger>) => ()
   if (debugger.debugger-enabled?)
     debugger.debugger-enabled? := #f;
@@ -635,7 +635,7 @@ define function disable-debugger
   end
 end function disable-debugger;
 
-define function deactivate-debugger 
+define function deactivate-debugger
     (debugger :: <debugger>) => ()
   disable-debugger(debugger);
   debugger.debugger-updated? := #f;

@@ -12,7 +12,7 @@ end class <debugger-interactor>;
 
 /// INTERACTOR-REMOTE-THREAD (environment-deuce)
 
-define sealed method interactor-remote-thread 
+define sealed method interactor-remote-thread
     (interactor :: <debugger-interactor>)
  => (thread :: <thread-object>)
   let debugger = interactor.sheet-frame;
@@ -22,7 +22,7 @@ end method interactor-remote-thread;
 /// INTERACTOR-STACK-FRAME-CONTEXT (environment-deuce)
 
 define sealed method interactor-stack-frame-context
-    (interactor :: <debugger-interactor>) 
+    (interactor :: <debugger-interactor>)
  => (maybe-frame :: false-or(<stack-frame-object>))
   let debugger = interactor.sheet-frame;
   debugger.debugger-current-stack-frame
@@ -73,19 +73,19 @@ define method note-application-interactive-results
   block (return)
     do-project-debuggers
        (method (debugger :: <debugger>)
-	 let interactor-pane = debugger.debugger-interactor-pane;
-	 interactor-pane.interactor-transaction := transaction-id;
-	 interactor-pane.interactor-results-pending? := #t;
-	 return();
+         let interactor-pane = debugger.debugger-interactor-pane;
+         interactor-pane.interactor-transaction := transaction-id;
+         interactor-pane.interactor-results-pending? := #t;
+         return();
        end,
        project, thread: thread, in-frame?: #f);
   end;
   do-frames(method (frame :: <frame>) => ()
-	      if (instance?(frame, <environment-frame>))
-		call-in-frame(frame, frame-note-interaction-returned, 
-			      frame, thread, transaction-id)
-	      end
-	    end);
+              if (instance?(frame, <environment-frame>))
+                call-in-frame(frame, frame-note-interaction-returned,
+                              frame, thread, transaction-id)
+              end
+            end);
   let application :: <application> = project.project-application;
   let running? =
     application-state-at-code-entry(transaction-id) == #"running";
@@ -101,7 +101,7 @@ define constant $debugger-interactor-doc :: <string> = "Interactor";
 
 /// <INTERACTOR-PANE> (internal)
 
-define sealed pane <interactor-pane> 
+define sealed pane <interactor-pane>
     (/* <environment-frame> */)
   sealed slot interactor-project :: <project-object>,
     required-init-keyword: project:;
@@ -117,13 +117,13 @@ define sealed pane <interactor-pane>
       let thread  = pane.interactor-thread;
       let buffer  = interactor-buffer-for-thread(project, thread);
       let interactor
-	= make-dylan-interactor
-	    (class: <debugger-interactor>,
-	     buffer: buffer,
-	     documentation: $debugger-pane-tooltips? & $debugger-interactor-doc);
+        = make-dylan-interactor
+            (class: <debugger-interactor>,
+             buffer: buffer,
+             documentation: $debugger-pane-tooltips? & $debugger-interactor-doc);
       when (thread & ~buffer)
-	interactor-buffer-for-thread(project, thread) 
-	  := window-buffer(interactor)
+        interactor-buffer-for-thread(project, thread)
+          := window-buffer(interactor)
       end;
       interactor
     end;
@@ -172,9 +172,9 @@ define method interactor-buffer-table
     (project :: <project-object>) => (table :: <object-table>)
   get-property(project.project-properties, #"thread-buffer", default: #f)
     | begin
-	let table = make(<object-table>);
-	put-property!(project.project-properties, #"thread-buffer", table);
-	table
+        let table = make(<object-table>);
+        put-property!(project.project-properties, #"thread-buffer", table);
+        table
       end
 end method interactor-buffer-table;
 
@@ -190,13 +190,13 @@ define method interactor-buffer-for-thread
   let table = interactor-buffer-table(project);
   element(table, thread, default: #f)
     | begin
-	let buffer = make-interactor-buffer();
-	interactor-buffer-for-thread(project, thread) := buffer
+        let buffer = make-interactor-buffer();
+        interactor-buffer-for-thread(project, thread) := buffer
       end
 end method interactor-buffer-for-thread;
 
 define method interactor-buffer-for-thread-setter
-    (buffer :: false-or(<buffer>), project :: <project-object>, 
+    (buffer :: false-or(<buffer>), project :: <project-object>,
      thread :: <thread-object>)
  => (buffer :: false-or(<buffer>))
   let table = interactor-buffer-table(project);
@@ -222,7 +222,7 @@ end function note-application-thread-finished;
 //  compiler warnings to Deuce for display in the interactor pane.
 
 define method frame-note-interactive-compilation-warnings
-    (frame :: <debugger>, thread :: <thread-object>, 
+    (frame :: <debugger>, thread :: <thread-object>,
      id :: <object>, warnings :: <sequence>) => ()
   if (frame.debugger-thread == thread)
     let interactor-pane = frame.debugger-interactor1-pane;
@@ -241,7 +241,7 @@ define function update-debugger-interactor-pane
   let interactor-pane = debugger.debugger-interactor-pane;
   if (interactor-pane.interactor-results-pending?)
     let id = interactor-pane.interactor-transaction;
-    let environment-object-sequence 
+    let environment-object-sequence
       = fetch-interactor-return-values(debugger.frame-project, id);
     interactor-receive-values
       (interactor-pane.%interactor-control,

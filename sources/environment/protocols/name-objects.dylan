@@ -21,7 +21,7 @@ define open generic name-value
     (server :: <server>, name :: <name-object>)
  => (value :: false-or(<environment-object>));
 
-define open generic name-type 
+define open generic name-type
     (server :: <server>, name :: <name-object>)
  => (type :: <environment-object>);
 
@@ -47,7 +47,7 @@ define method name-value
   end
 end method name-value;
 
-define method name-type 
+define method name-type
     (project :: <project-object>, name :: <name-object>)
  => (type :: <environment-object>)
   let server = choose-server(project, name);

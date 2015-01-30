@@ -66,7 +66,7 @@ define method application-object-class
 end method application-object-class;
 
 define method do-direct-subclasses
-    (function :: <function>, project :: <project-object>, 
+    (function :: <function>, project :: <project-object>,
      class :: <class-object>,
      #key client)
  => ()
@@ -75,7 +75,7 @@ define method do-direct-subclasses
 end method do-direct-subclasses;
 
 define method do-direct-superclasses
-    (function :: <function>, project :: <project-object>, 
+    (function :: <function>, project :: <project-object>,
      class :: <class-object>,
      #key client)
  => ()
@@ -84,8 +84,8 @@ define method do-direct-superclasses
 end method do-direct-superclasses;
 
 define method do-direct-methods
-    (function :: <function>, project :: <project-object>, 
-     class :: <class-object>, 
+    (function :: <function>, project :: <project-object>,
+     class :: <class-object>,
      #key client)
  => ()
   let server = choose-server(project, class);
@@ -93,8 +93,8 @@ define method do-direct-methods
 end method do-direct-methods;
 
 define method do-all-methods
-    (function :: <function>, project :: <project-object>, 
-     class :: <class-object>, 
+    (function :: <function>, project :: <project-object>,
+     class :: <class-object>,
      #key client)
  => ()
   let server = choose-server(project, class);
@@ -102,7 +102,7 @@ define method do-all-methods
 end method do-all-methods;
 
 define method do-direct-slots
-    (function :: <function>, project :: <project-object>, 
+    (function :: <function>, project :: <project-object>,
      class :: <class-object>,
      #key client)
  => ()
@@ -111,7 +111,7 @@ define method do-direct-slots
 end method do-direct-slots;
 
 define method do-all-superclasses
-    (function :: <function>, project :: <project-object>, 
+    (function :: <function>, project :: <project-object>,
      class :: <class-object>,
      #key client)
  => ()
@@ -120,7 +120,7 @@ define method do-all-superclasses
 end method do-all-superclasses;
 
 define method do-all-slots
-    (function :: <function>, project :: <project-object>, 
+    (function :: <function>, project :: <project-object>,
      class :: <class-object>,
      #key client)
  => ()
@@ -129,7 +129,7 @@ define method do-all-slots
 end method do-all-slots;
 
 define method do-init-keywords
-    (function :: <function>, project :: <project-object>, 
+    (function :: <function>, project :: <project-object>,
      class :: <class-object>,
      #key client, inherited? :: <boolean> = #t)
  => ()

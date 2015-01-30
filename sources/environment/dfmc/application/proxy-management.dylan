@@ -59,7 +59,7 @@ end class;
 //    The kind of application proxy that has something specifically to do
 //    with a <remote-value>.
 
-define abstract class <runtime-value-proxy> 
+define abstract class <runtime-value-proxy>
                          (<page-relative-object-table-entry>)
 end class;
 
@@ -199,8 +199,8 @@ define method application-proxy-primitive-name
  => (name :: <string>)
   let target = application.application-target-app;
   let value = runtime-proxy-to-remote-value(application, proxy);
-  print-dylan-object(target, value, length: 10, level: 3, 
-		     decorate?: decorate?)
+  print-dylan-object(target, value, length: 10, level: 3,
+                     decorate?: decorate?)
 end method;
 
 define method application-proxy-primitive-name
@@ -303,19 +303,19 @@ define method application-proxy-primitive-name
   // to be able to return it after a thread has died.
   let (dylan-thread?, dm-name)
     = if (thread-name)
-	values(#t, thread-name)
+        values(#t, thread-name)
       else
-	let target = application.application-target-app;
-	if (target)
-	  let (dylan-thread?, dm-name, dm-object)
-	    = remote-thread-information(target, proxy);
-	  if (dylan-thread? & dm-name)
-	    state-model.thread-state-thread-name := dm-name;
-	  end;
-	  values(dylan-thread?, dm-name)
-	else
-	  values(#f, #f)
-	end
+        let target = application.application-target-app;
+        if (target)
+          let (dylan-thread?, dm-name, dm-object)
+            = remote-thread-information(target, proxy);
+          if (dylan-thread? & dm-name)
+            state-model.thread-state-thread-name := dm-name;
+          end;
+          values(dylan-thread?, dm-name)
+        else
+          values(#f, #f)
+        end
       end;
   if (dylan-thread?)
     if (dm-name = access-path-name)
@@ -414,7 +414,7 @@ define method runtime-proxy-to-remote-value
 end method;
 
 define method runtime-proxy-to-remote-value
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
        proxy :: <static-dylan-runtime-proxy>) => (value :: <remote-value>)
   proxy.static-dylan-value
 end method;
@@ -422,7 +422,7 @@ end method;
 define method runtime-proxy-to-remote-value
     (application :: <dfmc-application>,
        proxy :: <tracked-dylan-runtime-proxy>) => (value :: <remote-value>)
-  remote-object-value(application.application-target-app, 
+  remote-object-value(application.application-target-app,
                       proxy.tracked-dylan-value) |
   $stale-remote-value
 end method;
@@ -432,7 +432,7 @@ define method runtime-proxy-to-remote-value
  => (value :: <remote-value>)
   let value = $stale-remote-value;
   block ()
-    value := read-dylan-value(application.application-target-app, 
+    value := read-dylan-value(application.application-target-app,
                               proxy.application-variable-address);
   exception (<remote-access-violation-error>)
     value := $stale-remote-value
@@ -459,7 +459,7 @@ end method;
 
 define method application-name-to-runtime-proxy
     (application :: <dfmc-application>,
-     binding-name :: <string>, module-name :: <string>, 
+     binding-name :: <string>, module-name :: <string>,
      library-name :: <string>,
      #key constant? = #t, address-already-known = #f, value-already-known = #f,
           class? = #f)
@@ -472,7 +472,7 @@ define method application-name-to-runtime-proxy
                             name: module-name,
                             library: make(<library-id>,
                                           name: library-name)));
-	end method;
+        end method;
 
   local method generate-new-proxy () => (p :: false-or(<runtime-proxy>))
           let context = make(<dylan-name-context>,
@@ -509,17 +509,17 @@ define method application-name-to-runtime-proxy
             // is thread local, based upon the contents of the value
             // cell.
 
-	    elseif (thread-local-variable?(target, address))
+            elseif (thread-local-variable?(target, address))
               make(<application-thread-local-variable>,
                    name: binding-name, namespace: context, address: address);
             else
               make(<application-thread-global-variable>,
                    name: binding-name, namespace: context, address: address);
-	    end if
-	  else
+            end if
+          else
             #f
-	  end if;
-	end method;
+          end if;
+        end method;
 
   let known-proxies = application.application-proxy-factory;
   let known-modules =
@@ -533,13 +533,13 @@ define method application-name-to-runtime-proxy
       if (binding-proxy-pair)
         if (tail(binding-proxy-pair))
           tail(binding-proxy-pair);
-	else
+        else
           let id = head(binding-proxy-pair);
           let proxy = generate-new-proxy();
           tail(binding-proxy-pair) := proxy;
           known-proxies.proxy-factory-proxy-to-id-mappings[proxy] := id;
           proxy;
-	end if;
+        end if;
       else
         let proxy = generate-new-proxy();
         let id = intern-id();
@@ -596,9 +596,9 @@ define method remote-value-to-runtime-proxy
   end
     | enquire-object(proxies.per-transaction-proxies, value)
     | remote-value-to-new-runtime-proxy
-        (application, value, 
-	 classification: classification,
-	 address?: address?)
+        (application, value,
+         classification: classification,
+         address?: address?)
 end method;
 
 
@@ -615,50 +615,50 @@ define method remote-value-to-new-runtime-proxy
 
   let is-definition?
     = member?(classification,
-	      #[#"dylan-class",
-		#"dylan-method",
-		#"dylan-generic-function"]);
+              #[#"dylan-class",
+                #"dylan-method",
+                #"dylan-generic-function"]);
 
   let is-primitive?
     = member?(classification,
-	      #[#"dylan-integer",
-		#"dylan-character"]);
-  
+              #[#"dylan-integer",
+                #"dylan-character"]);
+
   local method intern-value-proxy
-	    (style :: <symbol>) => (p :: <runtime-proxy>)
-	  let p
-	    = select (classification)
-		#"dylan-class" =>
-		  make(<static-dylan-class-proxy>, value: value);
-		#"foreign-function" =>
-		  let st = debug-target-symbol-table(target);
-		  let symbol 
-		    = symbol-table-symbol-relative-address(st, value);
-		  make(<foreign-function-runtime-proxy>, symbol: symbol);
-		#"foreign-object" =>
-		  make(<foreign-runtime-proxy>, value: value);
-		otherwise =>
-		  make(<static-dylan-runtime-proxy>, value: value);
-	      end;
+            (style :: <symbol>) => (p :: <runtime-proxy>)
+          let p
+            = select (classification)
+                #"dylan-class" =>
+                  make(<static-dylan-class-proxy>, value: value);
+                #"foreign-function" =>
+                  let st = debug-target-symbol-table(target);
+                  let symbol
+                    = symbol-table-symbol-relative-address(st, value);
+                  make(<foreign-function-runtime-proxy>, symbol: symbol);
+                #"foreign-object" =>
+                  make(<foreign-runtime-proxy>, value: value);
+                otherwise =>
+                  make(<static-dylan-runtime-proxy>, value: value);
+              end;
           unless (is-primitive?)
-	    let proxy-factory = application.application-proxy-factory;
-	    select (style)
-	      #"static" =>
-		let table
-		  = if (address?) 
-		      proxy-factory.static-address-proxies
-		    else
-		      proxy-factory.static-proxies
-		    end;
-		add-object(table, value, p);
-	      #"dynamic" =>
-		add-object(proxy-factory.per-transaction-proxies, value, p);
-	      otherwise =>
-		#f;
-	    end
-	  end;
-	  p
-	end method;
+            let proxy-factory = application.application-proxy-factory;
+            select (style)
+              #"static" =>
+                let table
+                  = if (address?)
+                      proxy-factory.static-address-proxies
+                    else
+                      proxy-factory.static-proxies
+                    end;
+                add-object(table, value, p);
+              #"dynamic" =>
+                add-object(proxy-factory.per-transaction-proxies, value, p);
+              otherwise =>
+                #f;
+            end
+          end;
+          p
+        end method;
 
   if (is-definition?)
     let (binding-name, name-context, precise?, constant?)
@@ -669,8 +669,8 @@ define method remote-value-to-new-runtime-proxy
       let library-name = name-context.context-library;
       let module-name = name-context.context-module;
       let library-id = make(<library-id>, name: library-name);
-      let module-id 
-	= make(<module-id>, name: module-name, library: library-id);
+      let module-id
+        = make(<module-id>, name: module-name, library: library-id);
       let id = make(<definition-id>, name: binding-name, module: module-id);
       factory.proxy-factory-proxy-to-id-mappings[proxy] := id;
       proxy;
@@ -701,7 +701,7 @@ define method exchange-value-proxy-for-browsable-class-proxy
   else
     let target = application.application-target-app;
     let instance-val = runtime-proxy-to-remote-value(application, value-proxy);
-    let (class-val, incarnation, current-incarnation, immediate?) = 
+    let (class-val, incarnation, current-incarnation, immediate?) =
       dylan-object-class(target, instance-val, browsable-only?: #t);
     if (class-val)
       let class-proxy = remote-value-to-runtime-proxy(application, class-val);
@@ -844,7 +844,7 @@ end method;
 
 ///// CLASS-PROXY-BROWSER-INFORMATION
 //    Given a <runtime-proxy> modelling a browsable class, obtain
-//    all navigation information for instances of the class, and 
+//    all navigation information for instances of the class, and
 //    fill in caches.
 //    Must be called from within a debugger transaction.
 
@@ -854,7 +854,7 @@ define method class-proxy-browser-information
      #key incarnation = #f)
   => (slots :: <sequence>, navigation :: <string-table>,
       repeat :: false-or(<string>), count-offset :: false-or(<integer>),
-      element-size :: false-or(<integer>), 
+      element-size :: false-or(<integer>),
       element-offset :: false-or(<integer>),
       class-slot-count :: <integer>)
   if (class-proxy.class-proxy-browser-data-cached? &
@@ -921,7 +921,7 @@ define method dispose-runtime-proxy
 end method;
 
 define method dispose-runtime-proxy
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      proxy :: <tracked-dylan-runtime-proxy>) => ()
   let target = application.application-target-app;
   free-remote-object(target, proxy.tracked-dylan-value);

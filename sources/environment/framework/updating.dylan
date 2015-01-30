@@ -26,7 +26,7 @@ define method refresh-frame (sheet :: <sheet>) => ()
   end
 end method refresh-frame;
 
-define method frame-auto-refresh? 
+define method frame-auto-refresh?
     (frame :: <frame>) => (auto-refresh? :: <boolean>)
   #t
 end method frame-auto-refresh?;

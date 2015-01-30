@@ -20,7 +20,7 @@ define method find-application-proxy
   perform-debugger-transaction
     (target,
      method ()
-       proxy := 
+       proxy :=
          application-name-to-runtime-proxy(application,
                                            binding-name,
                                            module-name,

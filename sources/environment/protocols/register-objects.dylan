@@ -68,7 +68,7 @@ end method;
 //                    the basic thread-local value will be used regardless of
 //                    the frame context.
 //    Results:
-//      obj         - The register's context, interpreted as an 
+//      obj         - The register's context, interpreted as an
 //                    <application-object>.
 
 define open generic register-contents
@@ -82,7 +82,7 @@ define method register-contents
      #key stack-frame-context = #f)
   => (obj :: false-or(<application-object>))
   let server = choose-server(project, reg);
-  server & register-contents(server, reg, thread, 
+  server & register-contents(server, reg, thread,
                              stack-frame-context: stack-frame-context)
 end method;
 
@@ -105,7 +105,7 @@ end method;
 //                    the basic thread-local value will be used regardless of
 //                    the frame context.
 //    Results:
-//      obj         - The register's context, interpreted as an 
+//      obj         - The register's context, interpreted as an
 //                    address <application-object>.
 
 define open generic register-contents-address
@@ -119,7 +119,7 @@ define method register-contents-address
      #key stack-frame-context = #f)
   => (obj :: false-or(<address-object>))
   let server = choose-server(project, reg);
-  server & register-contents-address(server, reg, thread, 
+  server & register-contents-address(server, reg, thread,
                                      stack-frame-context: stack-frame-context)
 end method;
 

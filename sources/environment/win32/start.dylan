@@ -35,15 +35,15 @@ define method process-arguments
     end
   end;
   maybe-set-roots(personal-root: personal-root,
-		  system-root:   system-root,
-		  build-root:    build-root);
+                  system-root:   system-root,
+                  build-root:    build-root);
   filename
 end method process-arguments;
 
 
 /// Now actually start the environment
 
-define method environment-startup-error 
+define method environment-startup-error
     (message :: <string>, #rest args)
   let message = apply(format-to-string, message, args);
   environment-error-message(message, owner: #f);
@@ -51,9 +51,9 @@ define method environment-startup-error
 end method environment-startup-error;
 
 //---*** We need to flesh out the argument handling
-define method main 
+define method main
     (name :: <string>, arguments :: <sequence>) => ()
-  duim-debug-message("Starting environment: %s with arguments '%='...\n", 
+  duim-debug-message("Starting environment: %s with arguments '%='...\n",
                 name, arguments);
   initialize-bitmaps();
   initialize-deuce();

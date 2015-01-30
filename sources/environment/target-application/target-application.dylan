@@ -8,16 +8,16 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define function thread-debug-message 
+define function thread-debug-message
     (string :: <string>, #rest pants) => ()
   if (*debugging-debugger?*)
-    let control = 
+    let control =
       concatenate(current-thread().thread-name | "???", " : ", string);
     apply(debugger-message, control, pants)
   end if
 end function;
 
-define constant <interruption-type> 
+define constant <interruption-type>
   = type-union(<function>, <thread>, singleton(#f));
 
 
@@ -125,7 +125,7 @@ end method;
 
 define method null-library-initialization-phase-callback
     (application :: <target-application>, thread :: <remote-thread>,
-     remote-library :: <remote-library>, 
+     remote-library :: <remote-library>,
      phase :: <library-initialization-phase>, top-level? :: <boolean>)
  => (interested? :: <boolean>)
   #f
@@ -137,7 +137,7 @@ end method;
 
 
 /// OBTAIN-COMPONENT-NAME
-/// 
+///
 /// Get the DLL name for a given library
 /// XXX does not work with library packs! find-library-info is broken
 /// we hope nobody calls it (it wasn't called during our debugging sessions)
@@ -158,7 +158,7 @@ end method obtain-component-name;
 
 define method handle-library-initialization-phase
     (application :: <target-application>, thread :: <remote-thread>,
-     remote-library :: <remote-library>, 
+     remote-library :: <remote-library>,
      phase :: <library-initialization-phase>, top-level? :: <boolean>)
  => (interested? :: <boolean>)
 
@@ -205,7 +205,7 @@ end class;
 //    This function runs on the calling thread, and does not return until
 //    the application quits.
 
-define method run-target-application 
+define method run-target-application
     (application :: <target-application>,
      #key stop-reason-callback = null-stop-reason-callback,
           dt-prolog = #f,
@@ -219,57 +219,57 @@ define method run-target-application
 
   local method manage-stop-reason
             (app :: <target-application>, sr :: <stop-reason>)
-	 => (interested? :: <boolean>)
+         => (interested? :: <boolean>)
 
            thread-debug-message
              ("Entering stop-reason callback for %=", sr);
            let stopping? :: <boolean> =
              if (instance?(sr, <temporary-internal-debugger-transaction-stop>))
                #t
-	     else
+             else
                block()
                  stop-reason-callback(app, sr)
                exception(<abort>)
                  #f
                end block;
-	     end if;
+             end if;
            thread-debug-message("Returning %= from sr callback", stopping?);
            stopping?
-	end method;
+        end method;
 
-  local method manage-debugger-transaction-for-stop-reason 
-	    (app :: <target-application>, sr :: <stop-reason>) => ()
+  local method manage-debugger-transaction-for-stop-reason
+            (app :: <target-application>, sr :: <stop-reason>) => ()
 
-	  unless (instance?(sr, <temporary-internal-debugger-transaction-stop>))
-	    application-state-callback(app, #"stopped");
+          unless (instance?(sr, <temporary-internal-debugger-transaction-stop>))
+            application-state-callback(app, #"stopped");
 
-	    if (dt-prolog)
-	      thread-debug-message("Running debugger transaction prolog");
-	      block()
-		dt-prolog(app, sr)
-	      exception(<abort>)
-		values()
-	      end block
-	    end if;
-	  end unless;
+            if (dt-prolog)
+              thread-debug-message("Running debugger transaction prolog");
+              block()
+                dt-prolog(app, sr)
+              exception(<abort>)
+                values()
+              end block
+            end if;
+          end unless;
 
-	  app.current-stop-reason := sr;
-	  manage-debugger-transaction(app);
+          app.current-stop-reason := sr;
+          manage-debugger-transaction(app);
 
-	  unless (instance?(sr, <temporary-internal-debugger-transaction-stop>))
-	    if (dt-epilog)
-	      thread-debug-message("Running debugger transaction epilog");
-	      block()
-		dt-epilog(app, sr)
-	      exception(<abort>)
-		values()
-	      end block
-	    end if;
-	    
-	    application-state-callback(app, #"running");
-	  end unless;
+          unless (instance?(sr, <temporary-internal-debugger-transaction-stop>))
+            if (dt-epilog)
+              thread-debug-message("Running debugger transaction epilog");
+              block()
+                dt-epilog(app, sr)
+              exception(<abort>)
+                values()
+              end block
+            end if;
 
-	end method;
+            application-state-callback(app, #"running");
+          end unless;
+
+        end method;
 
 
   if (application.been-managed?)
@@ -289,9 +289,9 @@ define method run-target-application
 
     with-lock (application.debugger-session, mode: #"write")
       manage-running-application
-	(application,
-	 stop-reason-callback: manage-stop-reason,
-	 ready-to-continue-callback: manage-debugger-transaction-for-stop-reason);
+        (application,
+         stop-reason-callback: manage-stop-reason,
+         ready-to-continue-callback: manage-debugger-transaction-for-stop-reason);
       application-state-callback(application, #"closed");
       application.under-management? := #f;
       application.been-managed? := #t;
@@ -312,16 +312,16 @@ define method initialize
   next-method();
 
   application.debugger-transaction-notification :=
-    make(<notification>, 
-	 lock: application.debugger-transaction);
+    make(<notification>,
+         lock: application.debugger-transaction);
 
   application.debugger-transaction-complete :=
-    make(<notification>, 
-	 lock: application.debugger-transaction);
+    make(<notification>,
+         lock: application.debugger-transaction);
 
   application.interruption-evaluated :=
     make(<notification>,
-	 lock: application.debugger-transaction);
+         lock: application.debugger-transaction);
 
 end method;
 

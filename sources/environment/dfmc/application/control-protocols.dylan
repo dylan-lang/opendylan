@@ -29,12 +29,12 @@ end method;
 //    This is basically Bill's original implementation, but altered
 //    slightly.
 
-define method run-application 
-    (application :: <dfmc-application>, 
-     #key startup-option :: <symbol> = #"start", 
+define method run-application
+    (application :: <dfmc-application>,
+     #key startup-option :: <symbol> = #"start",
           client,
           filename :: false-or(<file-locator>),
-          arguments :: false-or(<string>), 
+          arguments :: false-or(<string>),
           process :: false-or(<process>) = #f,
           system-data = "",
           machine :: <machine> = environment-host-machine(),
@@ -56,26 +56,26 @@ define method run-application
     //    callback.
 
     method wrapped-sr-callback
-	(target :: <target-application>, sr :: <stop-reason>)
+        (target :: <target-application>, sr :: <stop-reason>)
      => (interested? :: <boolean>)
       let done = instance?(sr, <exit-process-stop-reason>);
       let client-visible? = #t;
-      
+
       // We need to record this thread in our state-model table if it is
       // being created.
-      
-      if (instance?(sr, <create-thread-stop-reason>) |
-	    instance?(sr, <create-process-stop-reason>))
 
-	register-thread-in-state-model(application, sr);
+      if (instance?(sr, <create-thread-stop-reason>) |
+            instance?(sr, <create-process-stop-reason>))
+
+        register-thread-in-state-model(application, sr);
       end if;
 
       let thread :: <remote-thread> = sr.stop-reason-thread;
       if (application.registered-stop-reason-callback)
-	let stopping? = application.registered-stop-reason-callback(application, sr);
-	stopping?
+        let stopping? = application.registered-stop-reason-callback(application, sr);
+        stopping?
       else
-	#f
+        #f
       end if
     end method,
 
@@ -83,10 +83,10 @@ define method run-application
     //    Another adapter.
 
     method wrapped-DT-prolog
-	(target :: <target-application>, sr :: <stop-reason>) => ()
+        (target :: <target-application>, sr :: <stop-reason>) => ()
       reset-breakpoint-failure-recording(application);
       if (application.registered-debugger-transaction-prolog)
-	application.registered-debugger-transaction-prolog(application, sr)
+        application.registered-debugger-transaction-prolog(application, sr)
       end if;
     end method,
 
@@ -94,13 +94,13 @@ define method run-application
     //    Another adapter.
 
     method wrapped-DT-epilog
-	(target :: <target-application>, sr :: <stop-reason>) => ()
+        (target :: <target-application>, sr :: <stop-reason>) => ()
       note-all-recorded-breakpoint-failures(application);
       if (application.registered-debugger-transaction-epilog)
-	application.registered-debugger-transaction-epilog(application, sr)
+        application.registered-debugger-transaction-epilog(application, sr)
       end if;
       if (instance?(sr, <internal-stop-reason>))
-	process-next-interaction-request(application, sr.stop-reason-thread)
+        process-next-interaction-request(application, sr.stop-reason-thread)
       end if;
     end method,
 
@@ -108,31 +108,31 @@ define method run-application
     //    Aaaand another one...
 
     method wrapped-interactor-handler
-	(target :: <target-application>, thread :: <remote-thread>,
-	 trans-id :: <object>, #rest rvals)
+        (target :: <target-application>, thread :: <remote-thread>,
+         trans-id :: <object>, #rest rvals)
      => (stop? :: <boolean>)
       let project = application.server-project;
       let callback = application.registered-interactor-handler;
       let thread-obj
-	= make-environment-object(<thread-object>,
-				  project: project,
-				  application-object-proxy: thread);
+        = make-environment-object(<thread-object>,
+                                  project: project,
+                                  application-object-proxy: thread);
       let name-value-pairs = make(<vector>, size: rvals.size);
-      let deferred-id 
-	= element(application.application-target-app.interactor-deferred-id-table,
-		  trans-id,
-		  default: #f);
+      let deferred-id
+        = element(application.application-target-app.interactor-deferred-id-table,
+                  trans-id,
+                  default: #f);
       for (i :: <integer> from 0 below rvals.size)
-	let (index, name) 
-	  = record-object-in-thread-history(target, thread, rvals[i]);
-	name-value-pairs[i] := pair(name, rvals[i]);
+        let (index, name)
+          = record-object-in-thread-history(target, thread, rvals[i]);
+        name-value-pairs[i] := pair(name, rvals[i]);
       end for;
       application.interactor-results-table[trans-id] := name-value-pairs;
       suspend-evaluator-thread(application, thread, trans-id);
       if (callback)
-	callback(application, thread-obj, deferred-id | trans-id);
+        callback(application, thread-obj, deferred-id | trans-id);
       else
-	#f
+        #f
       end if;
     end method,
 
@@ -140,32 +140,32 @@ define method run-application
     //    This is absolutely the _last_ one of 'em...
 
     method wrapped-library-init-handler
-	(target :: <target-application>, thread :: <remote-thread>,
-	 lib :: <remote-library>, phase :: <library-initialization-phase>,
-	 top-level? :: <boolean>)
+        (target :: <target-application>, thread :: <remote-thread>,
+         lib :: <remote-library>, phase :: <library-initialization-phase>,
+         top-level? :: <boolean>)
      => (interested? :: <boolean>)
       let project = application.server-project;
       let callback = application.registered-library-init-handler;
       let thread-obj = make-environment-object(<thread-object>,
-					       project: project,
-					       application-object-proxy: thread);
+                                               project: project,
+                                               application-object-proxy: thread);
       let (dll-project?, dll-wrap?) = library-breakpoint-info(application, lib);
       let prepare-for-interaction?
-	= if (top-level?)
-	    ~dll-project? & phase == #"start"
-	  else
-	    dll-project? & dll-wrap? & phase == #"end"
-	  end;
+        = if (top-level?)
+            ~dll-project? & phase == #"start"
+          else
+            dll-project? & dll-wrap? & phase == #"end"
+          end;
       debugger-message("Preparing %=: top? %=, dll? %=, dll-wrap? %=, phase %=",
-		       prepare-for-interaction?, top-level?, dll-project?, dll-wrap?, phase);
+                       prepare-for-interaction?, top-level?, dll-project?, dll-wrap?, phase);
       if (prepare-for-interaction?)
-	initialize-interactive-threads(application, thread);
-	maybe-initialize-allocation-profiling(application)
+        initialize-interactive-threads(application, thread);
+        maybe-initialize-allocation-profiling(application)
       end if;
       if (callback)
-	callback(application, thread-obj, lib, phase, top-level?)
+        callback(application, thread-obj, lib, phase, top-level?)
       else
-	#f
+        #f
       end if;
     end method,
 
@@ -173,19 +173,19 @@ define method run-application
     //    ...apart from this one.
 
     method wrapped-application-state-setter
-	(target :: <target-application>, new-state :: <symbol>) => ()
+        (target :: <target-application>, new-state :: <symbol>) => ()
       if (new-state == #"closed")
-	let project = application.server-project;
-	disconnect-tether-from-all-projects(application);
-	for (bp in project.project-breakpoints)
-	  invalidate-application-proxy(project, bp)
-	end for;
-	clear-profiling-results(application);
-	application.application-target-app := #f;
-	application.application-state := #"closed";
-	project.project-application := #f
+        let project = application.server-project;
+        disconnect-tether-from-all-projects(application);
+        for (bp in project.project-breakpoints)
+          invalidate-application-proxy(project, bp)
+        end for;
+        clear-profiling-results(application);
+        application.application-target-app := #f;
+        application.application-state := #"closed";
+        project.project-application := #f
       else
-	application.application-state := new-state
+        application.application-state := new-state
       end if;
     end method;
 
@@ -203,31 +203,31 @@ define method run-application
 
   let fn :: <file-locator>
     = if (filename)
-	let app-obj-fn = application.application-filename;
-	if (filename ~= app-obj-fn)
-	  error("Filename supplied to 'make' of <application> different from "
-		"filename supplied to 'run-application'.");
-	else
-	  filename
-	end
+        let app-obj-fn = application.application-filename;
+        if (filename ~= app-obj-fn)
+          error("Filename supplied to 'make' of <application> different from "
+                "filename supplied to 'run-application'.");
+        else
+          filename
+        end
       else
-	application.application-filename;
+        application.application-filename;
       end;
 
   // Get the arguments to send to the target program in the same way.
 
   let args :: <string>
     = if (arguments)
-	let app-obj-args = application.application-arguments;
-	if ((app-obj-args ~= "") & (arguments ~= app-obj-args))
-	  error("Arguments: keyword supplied to 'make' of <application> "
-		"different from arguments: keyword supplied to "
-		"'run-application'.");
-	else
-	  arguments;
-	end;
+        let app-obj-args = application.application-arguments;
+        if ((app-obj-args ~= "") & (arguments ~= app-obj-args))
+          error("Arguments: keyword supplied to 'make' of <application> "
+                "different from arguments: keyword supplied to "
+                "'run-application'.");
+        else
+          arguments;
+        end;
       else
-	application.application-arguments;
+        application.application-arguments;
       end;
 
   // Set the debugger flag if we want to debug this application.
@@ -248,7 +248,7 @@ define method run-application
 
   let project-object = application.server-project;
   let compiler-project = project-object.project-proxy;
-  let context = 
+  let context =
     if (compiler-project)
       compiler-project.project-browsing-context;
     else
@@ -257,8 +257,8 @@ define method run-application
       #f
     end if;
 
-  make(<thread>, 
-        function: 
+  make(<thread>,
+        function:
           method ()
             block (exit)
 
@@ -266,22 +266,22 @@ define method run-application
                 = if (process)
                     make(<target-application>,
                          process: process.process-implementation-descriptor,
-			 application-object: application,
+                         application-object: application,
                          compilation-context: context,
                          system-attachment-information: system-data,
                          debugger-connection:
                            machine.machine-debug-connection)
                   else
                     make(<target-application>,
-                         application: as(<string>, fn), 
-			 application-object: application,
+                         application: as(<string>, fn),
+                         application-object: application,
                          arguments: args,
                          working-directory:
-			   (working-directory & as(<string>, working-directory)) | "",
+                           (working-directory & as(<string>, working-directory)) | "",
                          library-search-paths: library-search-paths,
-			 start-in-own-shell?:  ~share-console?,
+                         start-in-own-shell?:  ~share-console?,
                          compilation-context: context,
-                         debugger-connection: 
+                         debugger-connection:
                            machine.machine-debug-connection)
                   end if;
 
@@ -304,13 +304,13 @@ define method run-application
                  stop-reason-callback: wrapped-sr-callback,
                  dt-prolog: wrapped-dt-prolog,
                  dt-epilog: wrapped-dt-epilog,
-	         interactor-callback: wrapped-interactor-handler,
+                 interactor-callback: wrapped-interactor-handler,
                  library-init-callback: wrapped-library-init-handler,
                  application-state-callback: wrapped-application-state-setter);
             exception (type-union(<access-path-creation-error>, <abort>))
-	      application.application-target-app := #f;
-	      application.application-state := #"closed";
-	      note-run-application-failed(application);
+              application.application-target-app := #f;
+              application.application-state := #"closed";
+              note-run-application-failed(application);
             end block;
             note-application-threads-changed(application);
           end method,
@@ -360,7 +360,7 @@ define method perform-continuing-debugger-transaction
     (application.application-target-app, transaction,
      continue:
        method()
-	   continue-application-runtime(application, remote-thread)
+           continue-application-runtime(application, remote-thread)
        end);
 end method;
 
@@ -368,7 +368,7 @@ end method;
 //    Kills the target application, and closes down the tether.
 
 define method close-application
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      #key wait-for-termination? :: <boolean>)
  => ()
   unless (application.application-closed?)
@@ -379,21 +379,21 @@ define method close-application
     perform-continuing-debugger-transaction
       (application, #f,
        method ()
-	 kill-target-application(target);
+         kill-target-application(target);
        end);
-    
+
     // application.application-state := #"closed";
     application.runtime-class-user-class-mappings-initialized? := #f;
-    for (id-proxy-pair in 
-	   application.application-proxy-factory.proxy-factory-ordered-data)
+    for (id-proxy-pair in
+           application.application-proxy-factory.proxy-factory-ordered-data)
       tail(id-proxy-pair) := #f;
     end;
 
     if (wait-for-termination?)
       // synchronize with the Debugger Manager thread
       with-lock (target.application-shut-down-lock, timeout: 20)
-	failure
-	  error("Timeout expired in terminating application");
+        failure
+          error("Timeout expired in terminating application");
       end;
     end
   end
@@ -417,7 +417,7 @@ end method invalidate-interactive-compiler-proxies;
 ///// APPLICATION-RUNNING? (Environment Protocol Method)
 //    Is the application open and running?
 
-define method application-running? 
+define method application-running?
     (application :: <dfmc-application>) => (state :: <boolean>)
   target-application-state(application.application-target-app) == #"running"
 end method application-running?;
@@ -453,7 +453,7 @@ define method step-application-out
   let target = application.application-target-app;
   let remote-thread = thread.application-object-proxy;
   let call-frame =
-    if (stack-frame & 
+    if (stack-frame &
             instance?(stack-frame.application-object-proxy, <call-frame>))
       stack-frame.application-object-proxy
     else
@@ -489,7 +489,7 @@ define method step-application-over
   let target = application.application-target-app;
   let remote-thread = thread.application-object-proxy;
   let call-frame =
-    if (stack-frame & 
+    if (stack-frame &
             instance?(stack-frame.application-object-proxy, <call-frame>))
       stack-frame.application-object-proxy
     else
@@ -523,7 +523,7 @@ define method step-application-into
   let target = application.application-target-app;
   let remote-thread = thread.application-object-proxy;
   let top-function = function-at-top-of-stack(application, thread);
-  let callees = 
+  let callees =
     top-function & function-called-functions(application, top-function);
   perform-continuing-debugger-transaction
     (application, remote-thread,
@@ -538,7 +538,7 @@ define method step-application-into
            // the address lookups may have failed, meaning that the mapped
            // sequence could be polluted with #f. Canonicalize the
            // sequence before passing it to the debugger manager.
-           let addresses-canonical 
+           let addresses-canonical
              = remove
                  (remove-duplicates
                     (addresses-non-canonical, test: \=), #f);
@@ -559,10 +559,10 @@ define method register-thread-in-state-model
     (application :: <dfmc-application>, stop-reason :: <stop-reason>)
  => ()
   let thread = stop-reason.stop-reason-thread;
-  let thread-state 
+  let thread-state
     = make(<application-thread-state>,
-	   thread-index: application.application-thread-counter);
-  application.application-thread-counter 
+           thread-index: application.application-thread-counter);
+  application.application-thread-counter
     := application.application-thread-counter + 1;
   thread-state-model(application, thread)
     := thread-state;
@@ -580,7 +580,7 @@ define method create-thread-event-handler
  => (stop-reason :: <stop-reason>)
   let stop-reason :: <stop-reason> =
     apply(create-thread-event-handler,
-	  application.application-target-app, keys);
+          application.application-target-app, keys);
 
   register-thread-in-state-model(application, stop-reason);
 

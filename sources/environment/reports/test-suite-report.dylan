@@ -12,8 +12,8 @@ define class <test-suite-report> (<multi-file-report>, <project-report>)
 end class <test-suite-report>;
 
 //---*** Ultimately this should be available in all editions...
-install-report(#"test-suite", "Project test suite skeleton", 
-	       <test-suite-report>);
+install-report(#"test-suite", "Project test suite skeleton",
+               <test-suite-report>);
 
 
 /// Report protocols
@@ -48,47 +48,47 @@ define method write-report-as
     for (name :: <binding-name-object> in names)
       let value = name-value(project, name);
       let class-name
-	= select (value by instance?)
-	    <class-object>    => "class";
-	    <constant-object> => "constant";
-	    <function-object> => "function";
-	    <macro-object>    => "macro";
-	    <variable-object> => "variable";
+        = select (value by instance?)
+            <class-object>    => "class";
+            <constant-object> => "constant";
+            <function-object> => "function";
+            <macro-object>    => "macro";
+            <variable-object> => "variable";
             otherwise         => "constant"
-	  end;
+          end;
       let print-name = environment-object-primitive-name(project, name);
       let test-suffix
-	= if (instance?(value, <macro-object>)) "-test" else "" end;
+        = if (instance?(value, <macro-object>)) "-test" else "" end;
       format(stream, "\n");
       format(stream, "define %s %s-test %s%s ()\n",
-	     module-name, class-name, print-name, test-suffix);
+             module-name, class-name, print-name, test-suffix);
       format(stream, "  //---*** Fill this in...\n");
       format(stream, "end %s-test %s%s;\n",
-	     class-name, print-name, test-suffix)
+             class-name, print-name, test-suffix)
     end;
   end;
   format(stream, "\n");
   format(stream, "define library-spec %s ()\n", library-name);
   for (name :: <module-name-object> in module-names)
     format(stream, "  module %s;\n",
-	   as-lowercase(environment-object-primitive-name(project, name)))
+           as-lowercase(environment-object-primitive-name(project, name)))
   end;
   format(stream, "end library-spec %s;\n", library-name);
 end method write-report-as;
 
 define method write-binding-spec
-    (stream :: <stream>, report :: <test-suite-report>, 
+    (stream :: <stream>, report :: <test-suite-report>,
      name :: <binding-name-object>, variable :: <variable-object>)
  => ()
   let project = report.report-project;
   let name = environment-object-primitive-name(project, name);
   let type = variable-type(project, variable);
-  format(stream, "  %s %s :: ", 
-	 select (variable by instance?)
-	   <constant-object> => "constant";
-	   otherwise         => "variable";
-	 end,
-	 name);
+  format(stream, "  %s %s :: ",
+         select (variable by instance?)
+           <constant-object> => "constant";
+           otherwise         => "variable";
+         end,
+         name);
   //---*** What to do with unexported types?
   print-environment-object-name
     (stream, project, type, qualify-names?: #f);
@@ -96,7 +96,7 @@ define method write-binding-spec
 end method write-binding-spec;
 
 define method write-binding-spec
-    (stream :: <stream>, report :: <test-suite-report>, 
+    (stream :: <stream>, report :: <test-suite-report>,
      name :: <binding-name-object>, class :: <class-object>)
  => ()
   let project = report.report-project;
@@ -122,18 +122,18 @@ define method write-binding-spec
 end method write-binding-spec;
 
 define method write-binding-spec
-    (stream :: <stream>, report :: <test-suite-report>, 
+    (stream :: <stream>, report :: <test-suite-report>,
      name :: <binding-name-object>, function :: <function-object>)
  => ()
   let project = report.report-project;
   format(stream, "  function %s ",
-	 environment-object-primitive-name(project, name));
+         environment-object-primitive-name(project, name));
   write-binding-spec-parameters(stream, project, function);
   format(stream, ";\n");
 end method write-binding-spec;
 
 define method write-binding-spec
-    (stream :: <stream>, report :: <test-suite-report>, 
+    (stream :: <stream>, report :: <test-suite-report>,
      name :: <binding-name-object>, function :: <generic-function-object>)
  => ()
   let project = report.report-project;
@@ -223,21 +223,21 @@ define method write-binding-spec-parameters
 end method;
 
 define method write-binding-spec
-    (stream :: <stream>, report :: <test-suite-report>, 
+    (stream :: <stream>, report :: <test-suite-report>,
      name :: <binding-name-object>, macro-object :: <macro-object>)
  => ()
   let project = report.report-project;
   format(stream, "  macro-test %s-test;\n",
-	 environment-object-primitive-name(project, name))
+         environment-object-primitive-name(project, name))
 end method write-binding-spec;
 
 define method write-binding-spec
-    (stream :: <stream>, report :: <test-suite-report>, 
+    (stream :: <stream>, report :: <test-suite-report>,
      name :: <binding-name-object>, macro-object :: <source-form-object>)
  => ()
   let project = report.report-project;
   format(stream, "  constant %s;\n",
-	 environment-object-primitive-name(project, name))
+         environment-object-primitive-name(project, name))
 end method write-binding-spec;
 
 define method write-report-as
@@ -267,7 +267,7 @@ define method namespace-exported-names
   do-namespace-names
     (method (name :: <name-object>)
        if (name-exported?(project, name))
-	 add!(names, name)
+         add!(names, name)
        end
      end,
      project, namespace);

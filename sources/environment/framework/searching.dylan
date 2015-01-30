@@ -222,7 +222,7 @@ end method can-replace-in-frame?;
 define abstract class <frame-find-command> (<frame-focus-command>)
 end class <frame-find-command>;
 
-define abstract class <frame-find-selection-command> 
+define abstract class <frame-find-selection-command>
     (<frame-find-command>,
      <frame-selection-command>)
 end class <frame-find-selection-command>;
@@ -453,7 +453,7 @@ define function current-search-target-frame
   *current-search-target-frame*
 end function current-search-target-frame;
 
-define function current-search-target-frame-setter 
+define function current-search-target-frame-setter
     (target-frame :: false-or(<search-target-frame-mixin>))
  => (target-frame :: false-or(<search-target-frame-mixin>))
   when (*current-search-target-frame* ~== target-frame)
@@ -461,8 +461,8 @@ define function current-search-target-frame-setter
     let search-frame = current-search-options-frame();
     search-frame
       & call-in-frame(search-frame,
-		      note-search-frame-current-search-target-frame-changed,
-		      search-frame);
+                      note-search-frame-current-search-target-frame-changed,
+                      search-frame);
   end;
   target-frame
 end function current-search-target-frame-setter;
@@ -493,14 +493,14 @@ define function reset-current-search-target-frame
     // Search for the next available target frame
     let new-target-frame
       = block (return)
-	  do-frames(method (frame :: <frame>) => ()
-		      when (frame ~== old-target-frame
-			    & instance?(frame, <search-target-frame-mixin>))
-			return(frame)
-		      end
-		    end method,
-		    z-order: #"top-down");
-	end block;
+          do-frames(method (frame :: <frame>) => ()
+                      when (frame ~== old-target-frame
+                            & instance?(frame, <search-target-frame-mixin>))
+                        return(frame)
+                      end
+                    end method,
+                    z-order: #"top-down");
+        end block;
     //duim-debug-message("Resetting search target frame to: %=",
     //                   new-target-frame & new-target-frame.frame-title);
     current-search-target-frame() := new-target-frame;
@@ -554,24 +554,24 @@ define function string-contains?
     for (i from 1)
       let position = subsequence-position(string, pattern, count: i);
       when (position = #f)
-	return(#f)
+        return(#f)
       end;
       unless (match-word?)
-	return(#t);
+        return(#t);
       end;
       local method word-break? (c :: <character>) => (break? :: <boolean>)
-	      // Return whether a character is a word-break character
-	      //--- cpage: 1998.06.26 Do we have any library functions
-	      //           for this type of thing?
-	      member?(c, #[' ',',','\'','"','#','(',')','[',']'])
-	    end method;
+              // Return whether a character is a word-break character
+              //--- cpage: 1998.06.26 Do we have any library functions
+              //           for this type of thing?
+              member?(c, #[' ',',','\'','"','#','(',')','[',']'])
+            end method;
       let end-position = position + size(pattern) - 1;
       let end-string   = size(string) - 1;
       let at-start?    = position = 0;
       let at-end?      = end-position = end-string;
       when ((at-start? | word-break?(string[position - 1]))
-	      & (at-end? | word-break?(string[end-position + 1])))
-	return(#t);
+              & (at-end? | word-break?(string[end-position + 1])))
+        return(#t);
       end when
     end for
   end block
@@ -592,10 +592,10 @@ define method gadget-find-string
     for (i from start below size(items))
       let label = gadget-label-key(gadget)(items[i]);
       when (~match-case?)
-	label := as-lowercase(label);
+        label := as-lowercase(label);
       end;
       when (string-contains?(label, string, match-word?))
-	return(i)
+        return(i)
       end;
     end for;
     when (wrap? & (start > 0))
@@ -624,10 +624,10 @@ define method gadget-find-previous-string
     for (i from start to 0 by -1)
       let label = gadget-label-key(gadget)(items[i]);
       when (~match-case?)
-	label := as-lowercase(label);
+        label := as-lowercase(label);
       end;
       when (string-contains?(label, string, match-word?))
-	return(i)
+        return(i)
       end;
     end for;
     when (wrap? & (start < last-index))
@@ -653,30 +653,30 @@ define method find-in-sheet
  => (index :: false-or(<integer>))
   ignore(match-regexp?, progress-callback);
   let start = when (from-selection?)
-		let old-selection = gadget-selection(gadget);
-		unless (empty?(old-selection))
-		  let index = old-selection[0];
-		  if (backwards?)
-		    index - 1
-		  else
-		    index + 1
-		  end if;
-		end unless;
-	      end when;
+                let old-selection = gadget-selection(gadget);
+                unless (empty?(old-selection))
+                  let index = old-selection[0];
+                  if (backwards?)
+                    index - 1
+                  else
+                    index + 1
+                  end if;
+                end unless;
+              end when;
   if (backwards?)
     gadget-find-previous-string(gadget,
-				search-string,
-				start: start,
-				wrap?: wrap?,
-				match-case?: match-case?,
-				match-word?: match-word?)
+                                search-string,
+                                start: start,
+                                wrap?: wrap?,
+                                match-case?: match-case?,
+                                match-word?: match-word?)
   else
     gadget-find-string(gadget,
-		       search-string,
-		       start: start,
-		       wrap?: wrap?,
-		       match-case?: match-case?,
-		       match-word?: match-word?)
+                       search-string,
+                       start: start,
+                       wrap?: wrap?,
+                       match-case?: match-case?,
+                       match-word?: match-word?)
   end if
 end method find-in-sheet;
 
@@ -693,11 +693,11 @@ define method find-all-in-sheet
   let index = 0;
   while (index ~== #f)
     index := gadget-find-string(gadget,
-				search-string,
-				start: index,
-				wrap?: #f,
-				match-case?: match-case?,
-				match-word?: match-word?);
+                                search-string,
+                                start: index,
+                                wrap?: #f,
+                                match-case?: match-case?,
+                                match-word?: match-word?);
     index & register-object(index);
   end while;
 end find-all-in-sheet;
@@ -709,11 +709,11 @@ define method call-in-frame-synchronously
   else
     let v :: <sequence>
       = with-asynchronous-results (id, timeout: $asynchronous-timeout)
-	  call-in-frame(frame, method () => ()
-				 let (#rest _v) = apply(function, args);
-				 provide-results(id, _v);
-			       end);
-	end;
+          call-in-frame(frame, method () => ()
+                                 let (#rest _v) = apply(function, args);
+                                 provide-results(id, _v);
+                               end);
+        end;
     apply(values, v)
   end if
 end method call-in-frame-synchronously;
@@ -727,11 +727,11 @@ define method apply-in-frame-synchronously
   else
     let v :: <sequence>
       = with-asynchronous-results (id, timeout: $asynchronous-timeout)
-	  call-in-frame(frame, method () => ()
-				 let (#rest _v) = apply(apply, function, arg, args);
-				 provide-results(id, _v);
-			       end);
-	end;
+          call-in-frame(frame, method () => ()
+                                 let (#rest _v) = apply(apply, function, arg, args);
+                                 provide-results(id, _v);
+                               end);
+        end;
     apply(values, v)
   end if
 end method apply-in-frame-synchronously;
@@ -741,9 +741,9 @@ define method sheet-reveal-search-object
   let frame = sheet-frame(gadget);
   when (frame & (index < size(gadget.gadget-items)))
     call-in-frame-synchronously(frame, method () => ()
-					 gadget-selection(gadget) := vector(index);
-					 note-frame-selection-updated(frame);
-				       end);
+                                         gadget-selection(gadget) := vector(index);
+                                         note-frame-selection-updated(frame);
+                                       end);
     #t
   end
 end method sheet-reveal-search-object;
@@ -753,10 +753,10 @@ define method sheet-search-object-label
   let _gadget-label    = gadget.gadget-label;
   let collection-label = _gadget-label & as(<string>, _gadget-label);
   let object-label     = when (index < size(gadget-items(gadget)))
-			   let item  = gadget.gadget-items[index];
-			   let label = gadget-item-label(gadget, item);
-			   label & as(<string>, label)
-			 end;
+                           let item  = gadget.gadget-items[index];
+                           let label = gadget-item-label(gadget, item);
+                           label & as(<string>, label)
+                         end;
   concatenate(collection-label | "?", ": ", object-label | "?")
 end method sheet-search-object-label;
 
@@ -810,8 +810,8 @@ define method find-all-in-frame
   let sheet = frame-sheet-with-selection(frame);
   when (sheet)
     local method register-sheet-object (object :: <object>)
-	    register-object(pair(sheet, object))
-	  end;
+            register-object(pair(sheet, object))
+          end;
     apply(find-all-in-sheet, sheet, register-sheet-object, search-string, keys);
   end when;
 end find-all-in-frame;
@@ -848,29 +848,29 @@ define method replace-all-in-frame
   // First, replace the current selection if replacing from the selection
   when (from-selection?)
     when (replace-in-frame(frame,
-			   search-string,
-			   replace-string,
-			   match-case?:       match-case?,
-			   match-word?:       match-word?,
-			   match-regexp?:     match-regexp?,
-			   progress-callback: progress-callback))
+                           search-string,
+                           replace-string,
+                           match-case?:       match-case?,
+                           match-word?:       match-word?,
+                           match-regexp?:     match-regexp?,
+                           progress-callback: progress-callback))
       replace-count := replace-count + 1;
     end when;
   end when;
   // Find the next match, if any
   let object = apply(find-in-frame,
-		     frame, search-string, from-selection?: from-selection?, wrap?: #f, keys);
+                     frame, search-string, from-selection?: from-selection?, wrap?: #f, keys);
   while (object)
     // Select the found object, then replace it
     let revealed? = frame-reveal-search-object(frame, object);
     debug-assert(revealed?, "Unable to reveal found object %=", object);
     let replacement-object = replace-in-frame(frame,
-					      search-string,
-					      replace-string,
-					      match-case?:       match-case?,
-					      match-word?:       match-word?,
-					      match-regexp?:     match-regexp?,
-					      progress-callback: progress-callback);
+                                              search-string,
+                                              replace-string,
+                                              match-case?:       match-case?,
+                                              match-word?:       match-word?,
+                                              match-regexp?:     match-regexp?,
+                                              progress-callback: progress-callback);
     // Reveal the replacement object, if any, so we can continue searching past it
     // (There may not be one if the target turns out to be read-only)
     when (replacement-object)
@@ -944,8 +944,8 @@ define method search-domain-label
     (domain :: <current-frame-search-domain>) => (label :: <string>)
   let frame = current-search-target-frame();
   concatenate($current-frame, " - ",
-	      (frame & search-domain-target-label(domain, frame))
-		| $no-current-frame)
+              (frame & search-domain-target-label(domain, frame))
+                | $no-current-frame)
 end method search-domain-label;
 
 define method search-domain-targets
@@ -956,7 +956,7 @@ define method search-domain-targets
               when (instance?(frame, <search-target-frame-mixin>))
                 add!(targets, frame)
               end
-	    end method);
+            end method);
   targets
 end method search-domain-targets;
 
@@ -981,16 +981,16 @@ define method frame-short-title
   let suffix
     = $frame-title-optional-suffix
         | begin
-	    let suffix = concatenate(" - ", release-product-name());
-	    $frame-title-optional-suffix := suffix
-	  end;
+            let suffix = concatenate(" - ", release-product-name());
+            $frame-title-optional-suffix := suffix
+          end;
   let title = frame-title(frame);
   let title-size = size(title);
   let suffix-size = size($frame-title-optional-suffix);
   let title-includes-suffix?
     = (title-size > suffix-size)
-        & ($frame-title-optional-suffix 
-	     = copy-sequence(title, start: title-size - suffix-size));
+        & ($frame-title-optional-suffix
+             = copy-sequence(title, start: title-size - suffix-size));
   if (title-includes-suffix?)
     copy-sequence(title, end: title-size - suffix-size)
   else
@@ -1138,7 +1138,7 @@ define method search-domain-find-all
   ignore(target);
   let frame = current-search-target-frame();
   frame & apply(search-domain-find-all,
-		domain, frame, register-object, search-string, keys)
+                domain, frame, register-object, search-string, keys)
 end method search-domain-find-all;
 
 define method search-domain-replace-selection
@@ -1173,7 +1173,7 @@ define method search-domain-replace-selection
   ignore(target);
   let frame = current-search-target-frame();
   frame & apply(search-domain-replace-selection,
-		domain, frame, search-string, replace-string, keys)
+                domain, frame, search-string, replace-string, keys)
 end method search-domain-replace-selection;
 
 define method search-domain-replace-all
@@ -1216,7 +1216,7 @@ define method search-domain-replace-all
   let frame = current-search-target-frame();
   if (frame)
     apply(search-domain-replace-all,
-	  domain, frame, search-string, replace-string, keys)
+          domain, frame, search-string, replace-string, keys)
   else
     0
   end
@@ -1227,9 +1227,9 @@ define method search-domain-reveal-search-object
   let frame = object.head;
   when (frame & frame.frame-state ~= #"destroyed")
     call-in-frame-synchronously(frame, method () => ()
-					 deiconify-frame(frame);
-					 raise-frame(frame);
-				       end);
+                                         deiconify-frame(frame);
+                                         raise-frame(frame);
+                                       end);
     frame-reveal-search-object(frame, object.tail)
   end
 end method search-domain-reveal-search-object;
@@ -1255,7 +1255,7 @@ end method search-domain-search-object-icon;
 
 /// The set of registered search domains
 
-define constant $search-domains :: <stretchy-object-vector> 
+define constant $search-domains :: <stretchy-object-vector>
   = make(<stretchy-object-vector>, size: 1, fill: $current-frame-search-domain);
 
 define method do-search-domains
@@ -1264,7 +1264,7 @@ define method do-search-domains
   block (return)
     for (domain :: <search-domain> in $search-domains)
       if (~test | test(domain))
-	function(domain)
+        function(domain)
       end
     end
   end
@@ -1290,8 +1290,8 @@ define function note-search-domains-changed () => ()
 //  search-frame & note-search-frame-description-changed(search-frame);
   search-frame
     & call-in-frame(search-frame,
-		    note-search-frame-current-search-target-frame-changed,
-		    search-frame);
+                    note-search-frame-current-search-target-frame-changed,
+                    search-frame);
 end function note-search-domains-changed;
 
 // Update search frame UI to show new domain
@@ -1570,17 +1570,17 @@ define method note-frame-searching-updated (frame :: <frame-search-mixin>) => ()
     = can-find? & (wrap? | ~target-index | target-index < target-count - 1);
   let can-find-in-previous-target?
     = can-find? & (wrap? | ~target-index | target-index > 0);
-  
+
   command-enabled?(<frame-find-next-command>, frame)                 := can-find?;
   command-enabled?(<frame-find-previous-command>, frame)             := can-find?;
   command-enabled?(<frame-find-in-next-target-command>, frame)       := can-find-in-next-target?;
   command-enabled?(<frame-find-in-previous-target-command>, frame)   := can-find-in-previous-target?;
-  
+
   command-enabled?(<frame-copy-selection-to-search-command>, frame)  := has-selection?;
   command-enabled?(<frame-copy-selection-to-replace-command>, frame) := has-selection?;
   command-enabled?(<frame-find-selection-next-command>, frame)       := has-selection? & can-find?;
   command-enabled?(<frame-find-selection-previous-command>, frame)   := has-selection? & can-find?;
-  
+
   command-enabled?(<frame-replace-selection-command>, frame)         := can-replace?;
   command-enabled?(<frame-replace-and-find-next-command>, frame)     := can-replace?;
   command-enabled?(<frame-replace-and-find-previous-command>, frame) := can-replace?;
@@ -1632,12 +1632,12 @@ end method frame-can-replace?;
 
 // Search failure status messages
 define constant <search-result-message> = one-of(#"not-found",
-						 #"stopped-between-targets",
-						 #"all-targets-searched",
-						 #"cannot-replace",
-						 #"cannot-replace/no-match",
-						 #"cannot-replace/read-only",
-						 #"replace-all-completed");
+                                                 #"stopped-between-targets",
+                                                 #"all-targets-searched",
+                                                 #"cannot-replace",
+                                                 #"cannot-replace/no-match",
+                                                 #"cannot-replace/read-only",
+                                                 #"replace-all-completed");
 define table $search-result-message-table
   = { #"not-found"                => "Not Found",
       #"stopped-between-targets"  => "Stopped between targets",
@@ -1654,10 +1654,10 @@ define function frame-notify-search-message
   let status-message = frame-search-status-message(frame);
   let message-string = element($search-result-message-table, message, default: "");
   let message-text   = if (size(status-message) > 0)
-			 concatenate(status-message, " - ", message-string)
-		       else
-			 message-string
-		       end;
+                         concatenate(status-message, " - ", message-string)
+                       else
+                         message-string
+                       end;
   //---*** cpage: 1998.04.17 Here's some code that will display "Not Found" in
   //              the status bar of both the search target frame and the Find
   //              window. However, the message doesn't go away. I think what
@@ -1699,62 +1699,62 @@ define function do-frame-find
         | if (backwards?) target-count - 1 else 0 end;
 
   record-search-string(search-string);
-  
+
   //--- cpage: 1997.10.14 Need to add support for progress callback.
   let (object, message :: false-or(<search-result-message>))
     = block (return)
-	// Remember where we started
-	let start-target-index :: <integer> = target-index;
-	let wrapped?           :: <boolean> = #f;
-	while (#t)
-	  while ((target-index >= 0) & (target-index < target-count))
-	    current-search-target-index() := target-index;
-	    let object = search-domain-find(domain,
-					    targets[target-index],
-					    search-string,
-					    from-selection?: current-search-target-from-selection?(),
-					    backwards?:      backwards?,
-					    wrap?:           target-wrap?,
-					    match-case?:     match-case?,
-					    match-word?:     match-word?,
-					    match-regexp?:   match-regexp?);
-	    // Stop searching if...
-	    when (object           // ...match found
-		    | boundaries?) // ...end of target and boundaries in effect
-	      // Continue searching from the selection
-	      current-search-target-from-selection?() := #t;
-	      // Calculate the reason for stopping
-	      let message = when (boundaries?)
-			      if ((backwards? & (target-index > 0))
-				    | (~backwards? & (target-index < target-count - 1)))
-				#"stopped-between-targets"
-			      else
-				#"all-targets-searched"
-			      end if
-			    end when;
-	      return(object, message);
-	    end when;
-	    when (wrapped?         // ...all targets searched
-		    & (target-index = start-target-index))
-	      //---*** cpage: 1998.08.11 Do we want to reset when we've wrapped?
-	      //reset-current-search-target-index(domain);
-	      return(#f, #"all-targets-searched");
-	    end when;
-	    target-index := target-index + target-step;
-	  end while;
-	  unless (wrap?)
-	    reset-current-search-target-index(domain);
-	    return(#f, if (target-count > 1)
-			 #"all-targets-searched"
-		       else
-			 #"not-found"
-		       end);
-	  end unless;
-	  target-index := if (backwards?) target-count - 1 else 0 end;
-	  // Continue searching from the start
-	  current-search-target-from-selection?() := #f;
-	  wrapped? := #t;
-	end while;
+        // Remember where we started
+        let start-target-index :: <integer> = target-index;
+        let wrapped?           :: <boolean> = #f;
+        while (#t)
+          while ((target-index >= 0) & (target-index < target-count))
+            current-search-target-index() := target-index;
+            let object = search-domain-find(domain,
+                                            targets[target-index],
+                                            search-string,
+                                            from-selection?: current-search-target-from-selection?(),
+                                            backwards?:      backwards?,
+                                            wrap?:           target-wrap?,
+                                            match-case?:     match-case?,
+                                            match-word?:     match-word?,
+                                            match-regexp?:   match-regexp?);
+            // Stop searching if...
+            when (object           // ...match found
+                    | boundaries?) // ...end of target and boundaries in effect
+              // Continue searching from the selection
+              current-search-target-from-selection?() := #t;
+              // Calculate the reason for stopping
+              let message = when (boundaries?)
+                              if ((backwards? & (target-index > 0))
+                                    | (~backwards? & (target-index < target-count - 1)))
+                                #"stopped-between-targets"
+                              else
+                                #"all-targets-searched"
+                              end if
+                            end when;
+              return(object, message);
+            end when;
+            when (wrapped?         // ...all targets searched
+                    & (target-index = start-target-index))
+              //---*** cpage: 1998.08.11 Do we want to reset when we've wrapped?
+              //reset-current-search-target-index(domain);
+              return(#f, #"all-targets-searched");
+            end when;
+            target-index := target-index + target-step;
+          end while;
+          unless (wrap?)
+            reset-current-search-target-index(domain);
+            return(#f, if (target-count > 1)
+                         #"all-targets-searched"
+                       else
+                         #"not-found"
+                       end);
+          end unless;
+          target-index := if (backwards?) target-count - 1 else 0 end;
+          // Continue searching from the start
+          current-search-target-from-selection?() := #f;
+          wrapped? := #t;
+        end while;
       end block;
   // Notify the user if the search failed
   unless (object & search-domain-reveal-search-object(domain, object))
@@ -1779,21 +1779,21 @@ define function do-frame-replace-selection (frame :: <frame-search-mixin>) => ()
 
   record-search-string(search-string);
   record-replace-string(replace-string);
-  
+
   if (search-domain-target-can-replace?($current-frame-search-domain,
-					#"current-frame"))
+                                        #"current-frame"))
     //--- cpage: 1997.10.14 Need to add support for progress callback.
     let replacement-object
       = search-domain-replace-selection($current-frame-search-domain,
-					#"current-frame",
-					search-string,
-					replace-string,
-					match-case?:   match-case?,
-					match-word?:   match-word?,
-					match-regexp?: match-regexp?);
+                                        #"current-frame",
+                                        search-string,
+                                        replace-string,
+                                        match-case?:   match-case?,
+                                        match-word?:   match-word?,
+                                        match-regexp?: match-regexp?);
     if (replacement-object)
       search-domain-reveal-search-object($current-frame-search-domain,
-					 replacement-object);
+                                         replacement-object);
     else
       frame-notify-search-message(frame, #"cannot-replace/no-match");
     end;
@@ -1823,83 +1823,83 @@ define function do-frame-replace-all
 
   record-search-string(search-string);
   record-replace-string(replace-string);
-  
+
   //--- cpage: 1997.10.14 Need to add support for progress callback.
   let message :: false-or(<search-result-message>)
     = block (return)
-	// Remember where we started
-	let start-target-index :: <integer> = target-index;
-	let wrapped?           :: <boolean> = #f;
-	while (#t)
-	  while ((target-index >= 0) & (target-index < target-count))
-	    current-search-target-index() := target-index;
-	    let from-selection? = current-search-target-from-selection?();
-	    //---*** cpage: 1998.09.17 Prevent infinite recursion when wrap? is #t by
-	    //              stopping before we return to the target where we started
-	    //              (unlike searching, which will wrap into the starting target).
-	    //              Also, always replace from the start if wrap? is #t.
-	    //
-	    //              Ideally, we should add a protocol for getting some kind
-	    //              of token representing the current selection, then we'd be able to
-	    //              wrap to that point. Note that a simple fixed index or offset
-	    //              wouldn't be adequate because replacements may cause the position
-	    //              to move. Of course, we could just not allow wrapping with
-	    //              "Replace All", which is what some other environments do, but I
-	    //              think it's better to keep all search/replace operations as
-	    //              uniform as possible.
-	    when (wrapped?         // ...all targets searched
-		    & (target-index = start-target-index))
-	      //---*** cpage: 1998.08.11 Do we want to reset when we've wrapped?
-	      //reset-current-search-target-index(domain);
-	      return(#f, #"all-targets-searched");
-	    end when;
-	    when (wrap?)
-	      from-selection? := #f;
-	      target-wrap?    := #f;
-	    end;
-	    let replace-count
-	      = search-domain-replace-all(domain,
-					  targets[target-index],
-					  search-string,
-					  replace-string,
-					  from-selection?: from-selection?,
-					  backwards?:      backwards?,
-					  wrap?:           target-wrap?,
-					  match-case?:     match-case?,
-					  match-word?:     match-word?,
-					  match-regexp?:   match-regexp?);
-	    // Stop replacing if...
-	    when ((replace-count > 1) & boundaries?) // ...replacements made and boundaries in effect
-	      // Continue searching from the selection
-	      current-search-target-from-selection?() := #t;
-	      // Calculate the reason for stopping
-	      let message = if ((backwards? & (target-index > 0))
-				  | (~backwards? & (target-index < target-count - 1)))
-			      #"stopped-between-targets"
-			    else
-			      #"replace-all-completed"
-			    end if;
-	      return(message);
-	    end when;
-	    when (wrapped?    // ...all targets searched
-		    & (target-index = start-target-index))
-	      //---*** cpage: 1998.08.11 Do we want to reset when we've wrapped?
-	      //reset-current-search-target-index(domain);
-	      return(#"replace-all-completed");
-	    end when;
-	    target-index := target-index + target-step;
-	  end while;
-	  unless (wrap?)
-	    reset-current-search-target-index(domain);
-	    return(#"replace-all-completed");
-	  end unless;
-	  target-index := if (backwards?) target-count - 1 else 0 end;
-	  // Continue searching from the start
-	  current-search-target-from-selection?() := #f;
-	  wrapped? := #t;
-	end while;
+        // Remember where we started
+        let start-target-index :: <integer> = target-index;
+        let wrapped?           :: <boolean> = #f;
+        while (#t)
+          while ((target-index >= 0) & (target-index < target-count))
+            current-search-target-index() := target-index;
+            let from-selection? = current-search-target-from-selection?();
+            //---*** cpage: 1998.09.17 Prevent infinite recursion when wrap? is #t by
+            //              stopping before we return to the target where we started
+            //              (unlike searching, which will wrap into the starting target).
+            //              Also, always replace from the start if wrap? is #t.
+            //
+            //              Ideally, we should add a protocol for getting some kind
+            //              of token representing the current selection, then we'd be able to
+            //              wrap to that point. Note that a simple fixed index or offset
+            //              wouldn't be adequate because replacements may cause the position
+            //              to move. Of course, we could just not allow wrapping with
+            //              "Replace All", which is what some other environments do, but I
+            //              think it's better to keep all search/replace operations as
+            //              uniform as possible.
+            when (wrapped?         // ...all targets searched
+                    & (target-index = start-target-index))
+              //---*** cpage: 1998.08.11 Do we want to reset when we've wrapped?
+              //reset-current-search-target-index(domain);
+              return(#f, #"all-targets-searched");
+            end when;
+            when (wrap?)
+              from-selection? := #f;
+              target-wrap?    := #f;
+            end;
+            let replace-count
+              = search-domain-replace-all(domain,
+                                          targets[target-index],
+                                          search-string,
+                                          replace-string,
+                                          from-selection?: from-selection?,
+                                          backwards?:      backwards?,
+                                          wrap?:           target-wrap?,
+                                          match-case?:     match-case?,
+                                          match-word?:     match-word?,
+                                          match-regexp?:   match-regexp?);
+            // Stop replacing if...
+            when ((replace-count > 1) & boundaries?) // ...replacements made and boundaries in effect
+              // Continue searching from the selection
+              current-search-target-from-selection?() := #t;
+              // Calculate the reason for stopping
+              let message = if ((backwards? & (target-index > 0))
+                                  | (~backwards? & (target-index < target-count - 1)))
+                              #"stopped-between-targets"
+                            else
+                              #"replace-all-completed"
+                            end if;
+              return(message);
+            end when;
+            when (wrapped?    // ...all targets searched
+                    & (target-index = start-target-index))
+              //---*** cpage: 1998.08.11 Do we want to reset when we've wrapped?
+              //reset-current-search-target-index(domain);
+              return(#"replace-all-completed");
+            end when;
+            target-index := target-index + target-step;
+          end while;
+          unless (wrap?)
+            reset-current-search-target-index(domain);
+            return(#"replace-all-completed");
+          end unless;
+          target-index := if (backwards?) target-count - 1 else 0 end;
+          // Continue searching from the start
+          current-search-target-from-selection?() := #f;
+          wrapped? := #t;
+        end while;
       end block;
-  
+
   // Notify the user that the operation has finished
   frame-notify-search-message(frame, message);
 end function do-frame-replace-all;
@@ -2053,7 +2053,7 @@ define open frame <search-frame>
     make(<button>,
          min-width: 80,
          label: $find-next-title,
-	 accelerator: make-keyboard-gesture(#"f", #"control"),
+         accelerator: make-keyboard-gesture(#"f", #"control"),
          activate-callback: method (gadget)
                               let frame = sheet-frame(gadget);
                               if (frame.%search-backwards?)
@@ -2065,15 +2065,15 @@ define open frame <search-frame>
   pane %replace-button (frame)
     make(<button>,
          label: $replace-title,
-	 accelerator: make-keyboard-gesture(#"h", #"control"),
+         accelerator: make-keyboard-gesture(#"h", #"control"),
          activate-callback: method (gadget)
                               frame-replace-selection(sheet-frame(gadget));
                             end);
   pane %replace-and-find-button (frame)
     make(<button>,
          label: $replace-and-find-next-title,
-	// mnemonic: 'i',  //TESTING - 'i' ends up selecting space, for some reason
-	 accelerator: make-keyboard-gesture(#"j", #"control"),
+        // mnemonic: 'i',  //TESTING - 'i' ends up selecting space, for some reason
+         accelerator: make-keyboard-gesture(#"j", #"control"),
          activate-callback: method (gadget)
                               let frame = sheet-frame(gadget);
                               if (frame.%search-backwards?)
@@ -2163,7 +2163,7 @@ define open frame <search-frame>
       vertically (y-spacing: 8)
         make(<table-layout>,
              spacing: 8,
-	     y-alignment: #"center",
+             y-alignment: #"center",
              contents:
                vector(vector(make(<label>, label: "&Find:"),
                              frame.%search-text-pane),
@@ -2172,15 +2172,15 @@ define open frame <search-frame>
                       vector(make(<null-pane>),
                              make(<table-layout>,
                                   columns: 2,
-				  x-spacing: 15,
+                                  x-spacing: 15,
                                   equalize-widths?: #t,
                                   contents:
                                     vector(vector(frame.%match-word?-button, frame.%backwards?-button),
-					   vector(frame.%match-case?-button, frame.%wrap?-button),
-			                   vector(#f, frame.%boundaries?-button)))),
-		                        //---*** cpage: 1998.07.22 Not yet implemented.
-				        // vector(frame.%match-regexp?-button, frame.%batch?-button)
-		      vector(make(<null-pane>, max-height: $fill),
+                                           vector(frame.%match-case?-button, frame.%wrap?-button),
+                                           vector(#f, frame.%boundaries?-button)))),
+                                        //---*** cpage: 1998.07.22 Not yet implemented.
+                                        // vector(frame.%match-regexp?-button, frame.%batch?-button)
+                      vector(make(<null-pane>, max-height: $fill),
                              make(<null-pane>, max-height: $fill)),
                       vector(make(<label>, label: "&Look in:"),
                              frame.%look-in-pane)));
@@ -2246,7 +2246,7 @@ define method note-search-frame-gadget-values-changed
   let match-case?    = gadget-value(frame.%match-case?-button);
   let match-word?    = gadget-value(frame.%match-word?-button);
   let match-regexp?  = gadget-value(frame.%match-regexp?-button);
-  
+
   // Update search description from gadget values
   unless (description.search-description-domain == domain)
     description.search-description-domain  := domain;
@@ -2254,7 +2254,7 @@ define method note-search-frame-gadget-values-changed
     //              targets. Eventually, we'll add UI to select targets.
     description.search-description-targets := search-domain-targets(domain);
   end;
-  
+
   description.search-description-search-string  := search-string;
   description.search-description-replace-string := replace-string;
   description.search-description-batch?         := batch?;
@@ -2263,7 +2263,7 @@ define method note-search-frame-gadget-values-changed
   description.search-description-match-case?    := match-case?;
   description.search-description-match-word?    := match-word?;
   description.search-description-match-regexp?  := match-regexp?;
-  
+
   note-search-frame-description-changed(frame);
   note-search-frame-status-changed(frame);
 end method note-search-frame-gadget-values-changed;
@@ -2289,7 +2289,7 @@ define method note-search-frame-items-changed
   // gadget-items(frame.%replace-text-pane) := frame.search-frame-previous-replace-strings;
   gadget-items(frame.%search-text-pane)  := as(<vector>, frame.search-frame-previous-search-strings);
   gadget-items(frame.%replace-text-pane) := as(<vector>, frame.search-frame-previous-replace-strings);
-  
+
   //--- hughg, 1998/09/11: This call is intentionally *not* done with
   //--- call-in-frame, because the enclosing methos is only ever called
   //--- during the initialize method for the <search-frame>.  If that
@@ -2362,7 +2362,7 @@ define method search-frame-update-gadgets (frame :: <search-frame>) => ()
   gadget-enabled?(frame.%replace-all-button)      := can-replace?;
   //--- cpage: 1997.09.18 To be implemented.
   //  gadget-enabled?(frame.%stop-button)             := #f;
-  
+
   // The "Replace" button always replaces the selection in the current
   // target frame, regardless of the currently selected search domain.
   gadget-enabled?(frame.%replace-button)
@@ -2394,13 +2394,13 @@ define method frame-search-status-message
     let domain      = description.search-description-domain;
     let target      = description.search-description-targets[index];
     format-to-string("Looking in %s '%s'%s",
-		     search-domain-target-kind-label(domain, target),
-		     search-domain-target-label(domain, target),
-		     if (current-search-target-from-selection?())
-		       ""
-		     else
-		       " from start/end"
-		     end)
+                     search-domain-target-kind-label(domain, target),
+                     search-domain-target-label(domain, target),
+                     if (current-search-target-from-selection?())
+                       ""
+                     else
+                       " from start/end"
+                     end)
   else
     ""
   end if
@@ -2474,21 +2474,21 @@ define constant $replace-all-doc      = "Searches for and replaces all matches."
 
 define method make-search-tool-bar-buttons
     (frame :: <frame-search-mixin>) => (buttons :: <sequence>)
-  vector(make(<button>, 
+  vector(make(<button>,
               label: $find-bitmap,
               documentation: $find-title,
               command: frame-edit-search-options,
               activate-callback: method (sheet)
                                    frame-edit-search-options(sheet-frame(sheet))
                                  end),
-         make(<button>, 
+         make(<button>,
               label: $find-next-bitmap,
               documentation: $find-next-title,
               command: frame-find-next,
               activate-callback: method (sheet)
                                    frame-find-next(sheet-frame(sheet))
                                  end),
-         make(<button>, 
+         make(<button>,
               label: $find-previous-bitmap,
               documentation: $find-previous-title,
               command: frame-find-next,

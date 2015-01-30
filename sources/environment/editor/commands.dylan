@@ -25,7 +25,7 @@ define method make
     apply(next-method, class, server: editor, initargs)
   else
     error(make(<editor-unsupported-command>,
-	       editor: editor, command: class))
+               editor: editor, command: class))
   end
 end method make;
 

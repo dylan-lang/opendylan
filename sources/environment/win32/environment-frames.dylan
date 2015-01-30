@@ -15,7 +15,7 @@ define constant <frame-order>    = type-union(<relative-order>, <frame>);
 define constant <sheet-order>    = type-union(<relative-order>, <sheet>);
 define constant <mirror-order>   = type-union(<relative-order>, <mirror>);
 
-define sealed method reorder-mirror 
+define sealed method reorder-mirror
     (_port  :: <win32-port>,
      sheet  :: <sheet>, mirror :: <window-mirror>, where  :: <mirror-order>) => ()
   local method dbg-msg (where-to :: <string>) => ()

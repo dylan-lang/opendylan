@@ -13,12 +13,12 @@ define function dde-server-environment-message-receiver
   select (message by instance?)
     <environment-started-message>  => server-start();
     <environment-stopping-message> => server-stop();
-    otherwise			   => #f /* do nothing */;
+    otherwise                           => #f /* do nothing */;
   end;
 end function dde-server-environment-message-receiver;
 
 tune-in($environment-channel, dde-server-environment-message-receiver,
-	message-type: <environment-message>);
+        message-type: <environment-message>);
 
 define function server-start () => ()
     dde/server-start();

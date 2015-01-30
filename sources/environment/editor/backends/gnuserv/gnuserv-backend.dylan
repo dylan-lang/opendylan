@@ -37,16 +37,16 @@ end class <gnuserv-editor-command>;
 define macro gnuserv-command-definer
   { define gnuserv-command ?:name ?slots:* end }
     => { define sealed string-command "<gnuserv-" ## ?name ## "-command>"
-	     ("<editor-" ## ?name ## "-command>", <gnuserv-editor-command>)
-	   ?slots
-	 end;
-	 define sealed domain make (singleton("<gnuserv-" ## ?name ## "-command>"));
-	 define sealed domain initialize ("<gnuserv-" ## ?name ## "-command>");
-	 define sealed method class-for-editor-command
-	     (editor :: <gnuserv-editor>, class == "<editor-" ## ?name ## "-command>")
-	  => (class == "<gnuserv-" ## ?name ## "-command>")
-	   "<gnuserv-" ## ?name ## "-command>"
-	 end method class-for-editor-command; }
+             ("<editor-" ## ?name ## "-command>", <gnuserv-editor-command>)
+           ?slots
+         end;
+         define sealed domain make (singleton("<gnuserv-" ## ?name ## "-command>"));
+         define sealed domain initialize ("<gnuserv-" ## ?name ## "-command>");
+         define sealed method class-for-editor-command
+             (editor :: <gnuserv-editor>, class == "<editor-" ## ?name ## "-command>")
+          => (class == "<gnuserv-" ## ?name ## "-command>")
+           "<gnuserv-" ## ?name ## "-command>"
+         end method class-for-editor-command; }
 end macro gnuserv-command-definer;
 
 define gnuserv-command open
@@ -62,9 +62,9 @@ define gnuserv-command open-file
   inherited named-argument start-line   is editor-command-start-line;
   inherited named-argument start-column is editor-command-start-column;
   keyword pattern-string: = "\"(find-file \\\"$(pathname)\\\")"
-			    " (goto-line $(start-line))"
-			    " (beginning-of-line)"
-			    " (forward-char $(start-column))\""
+                            " (goto-line $(start-line))"
+                            " (beginning-of-line)"
+                            " (forward-char $(start-column))\""
 end;
 
 //--- What about 'close-file'?
@@ -88,14 +88,14 @@ define method string-for-argument
  => (string :: <string>)
   let value
     = begin
-	let result :: <stretchy-object-vector> = make(<stretchy-vector>);
-	for (char :: <character> in value)
-	  when (char == '\\')
-	    add!(result, '\\')
-	  end;
-	  add!(result, char)
-	end;
-	as(<string>, result)
+        let result :: <stretchy-object-vector> = make(<stretchy-vector>);
+        for (char :: <character> in value)
+          when (char == '\\')
+            add!(result, '\\')
+          end;
+          add!(result, char)
+        end;
+        as(<string>, result)
       end;
   next-method(server, command, name, value)
 end method string-for-argument;

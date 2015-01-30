@@ -26,53 +26,53 @@ define method find-in-buffer
   dynamic-bind (*buffer* = buffer)
     let bp = start-bp
                | if (backwards?)
-		   interval-end-bp(buffer)
-		 else
-		   interval-start-bp(buffer)
-		 end;
+                   interval-end-bp(buffer)
+                 else
+                   interval-start-bp(buffer)
+                 end;
     let syntax-table = match-word? & list-syntax-table(buffer-major-mode(buffer));
     let test         = if (match-case?) \= else char-equal? end;
     //---*** cpage: 1998.07.28 We need to find an appropriate way to cache these
     //              tables somewhere.
     let (skip-table, reoccurrence-table)
       = compute-boyer-tables(string,
-			     //  skip-table: editor-skip-table(editor),
-			     //  reoccurrence-table: editor-reoccurrence-table(editor),
-			     test: test);
+                             //  skip-table: editor-skip-table(editor),
+                             //  reoccurrence-table: editor-reoccurrence-table(editor),
+                             test: test);
     //--- cpage: 1988.07.29 This code was filched from Deuce's find-next-or-previous-string
     //           and I'm not sure why it uses 'state' to terminate searching, or why it
     //           assigns 'wrap?' to 'state'. We may want to clean this up a bit.
     let state :: <boolean> = #t;
     while (state)
       bp := search(bp,
-		   string,
-		   test:               test,
-		   reverse?:           backwards?,
-		   syntax-table:       syntax-table,
-		   skip-table:         skip-table,
-		   reoccurrence-table: reoccurrence-table);
+                   string,
+                   test:               test,
+                   reverse?:           backwards?,
+                   syntax-table:       syntax-table,
+                   skip-table:         skip-table,
+                   reoccurrence-table: reoccurrence-table);
       if (bp)
-	let length = size(string);
-	// Return #( point . mark ) with point at the start of the match
-	// for reverse searches.
-	object := if (backwards?)
-		    pair(bp, move-over-characters(bp, length))
-		  else
-		    pair(move-over-characters(bp, length), bp)
-		  end;
-	state := #f		// force the search to end
+        let length = size(string);
+        // Return #( point . mark ) with point at the start of the match
+        // for reverse searches.
+        object := if (backwards?)
+                    pair(bp, move-over-characters(bp, length))
+                  else
+                    pair(move-over-characters(bp, length), bp)
+                  end;
+        state := #f                // force the search to end
       else
-	if (wrap?)
-	  bp := if (backwards?)
-		  interval-end-bp(buffer);
-		else
-		  interval-start-bp(buffer);
-		end;
-	  state := wrap?;
-	  wrap? := #f;	       // give up next time around
-	else
-	  state := #f;         // done searching
-	end
+        if (wrap?)
+          bp := if (backwards?)
+                  interval-end-bp(buffer);
+                else
+                  interval-start-bp(buffer);
+                end;
+          state := wrap?;
+          wrap? := #f;               // give up next time around
+        else
+          state := #f;         // done searching
+        end
       end
     end
   end;
@@ -166,11 +166,11 @@ define method search-domain-find
     object & pair(frame, object)
   else
     let object = find-in-buffer(buffer,
-				search-string,
-				backwards?:  backwards?,
-				wrap?:       wrap?,
-				match-case?: match-case?,
-				match-word?: match-word?);
+                                search-string,
+                                backwards?:  backwards?,
+                                wrap?:       wrap?,
+                                match-case?: match-case?,
+                                match-word?: match-word?);
     // Pair with the buffer; we'll find a frame when we need to reveal
     object & pair(#f, pair(buffer, object))
   end
@@ -214,7 +214,7 @@ define method search-domain-replace-selection
     queue-redisplay(window, $display-all);
   end;
   let replacement-object = apply(replace-in-frame,
-				 frame, search-string, replace-string, keys);
+                                 frame, search-string, replace-string, keys);
   // Update the display
   call-in-frame(frame, redisplay-window, window);
   replacement-object & pair(frame, replacement-object)
@@ -238,13 +238,13 @@ define method search-domain-replace-all
   // Don't do anything unless we're replacing from the selection
   // or there is at least one match
   if (from-selection?
-	| find-in-buffer(buffer,
-			 search-string,
-			 backwards?:        backwards?,
-			 wrap?:             wrap?,
-			 match-case?:       match-case?,
-			 match-word?:       match-word?,
-			 progress-callback: progress-callback))
+        | find-in-buffer(buffer,
+                         search-string,
+                         backwards?:        backwards?,
+                         wrap?:             wrap?,
+                         match-case?:       match-case?,
+                         match-word?:       match-word?,
+                         progress-callback: progress-callback))
     let frame  = find-frame-for-buffer(buffer);
     let window = frame-window(frame);
     // Make sure the buffer is the current frame buffer
@@ -274,9 +274,9 @@ define method search-domain-reveal-search-object
   let frame          = object.head | find-frame-for-buffer(buffer);
   when (frame & frame.frame-state ~= #"destroyed")
     call-in-frame(frame, method () => ()
-			   deiconify-frame(frame);
-			   raise-frame(frame);
-			 end);
+                           deiconify-frame(frame);
+                           raise-frame(frame);
+                         end);
     frame-reveal-search-object(frame, buffer-and-bps)
   end
 end method search-domain-reveal-search-object;

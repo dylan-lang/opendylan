@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// -=- AUXILIARY DEFINITIONS -=-
 
 define class <file-library-not-found-warning> (<simple-warning>)
-  keyword format-string: 
+  keyword format-string:
     = "No library in the active project contains '%s'";
 end class;
 
@@ -28,14 +28,14 @@ define function find-libraries-from-pathname
   when (project)
     do-project-file-libraries
       (method (library :: <library-object>, record :: <source-record>)
-	 add!(libraries, vector(library, record))
+         add!(libraries, vector(library, record))
        end,
        project,
        locator);
   end;
   when (empty?(libraries))
     signal(make(<file-library-not-found-warning>,
-		format-arguments: vector(locator)));
+                format-arguments: vector(locator)));
     // --- The above 'signal' is allowed to return, though we have no
     // restarts yet to, say, allow the user to find/open the project.
   end;
@@ -56,7 +56,7 @@ define function find-projects-from-pathname
   end;
   when (empty?(projects))
     signal(make(<file-project-not-found-warning>,
-		format-arguments: vector(locator)));
+                format-arguments: vector(locator)));
     // --- The above 'signal' is allowed to return, though we have no
     // restarts yet to, say, allow the user to find/open the project.
   end;
@@ -81,7 +81,7 @@ define function location-info->source-location
     block ()
       make-line-location(record, start-line - offset)
     exception (type-union(<file-does-not-exist-error>,
-			  <source-record-missing>))
+                          <source-record-missing>))
       #f
     end
   end
@@ -114,20 +114,20 @@ define method coerce-for-command-call
   // Replace with common-dylan:split. --cgay
   local
     method split
-	(string :: <string>, char :: <character>)
+        (string :: <string>, char :: <character>)
      => (before :: <string>, after :: <string>)
       let split-index :: false-or(<integer>)
         = find-key(string, curry(\==, char));
       if (split-index)
-	values(copy-sequence(string, end: split-index),
-	       copy-sequence(string, start: split-index + 1))
+        values(copy-sequence(string, end: split-index),
+               copy-sequence(string, start: split-index + 1))
       else
-	values(string, "")
+        values(string, "")
       end if
     end method,
-  
+
     method get-integer
-	(string :: <string>) => (value :: <integer>)
+        (string :: <string>) => (value :: <integer>)
       block()
         string-to-integer(string);
       exception (<error>)
@@ -144,7 +144,7 @@ define method coerce-for-command-call
   // Any numbers we can't find default to 0.
   map(get-integer,
       vector(start-line-str, start-column-str,
-	     end-line-str, end-column-str))
+             end-line-str, end-column-str))
 end method;
 
 
@@ -252,7 +252,7 @@ define function do-cmd-edit-definitions
     let edited? = edit-definition(project, object);
     unless (edited?)
       error("Couldn't find '%s'.",
-	    environment-object-display-name(project, object, module))
+            environment-object-display-name(project, object, module))
     end
   end
 end function do-cmd-edit-definitions;
@@ -296,7 +296,7 @@ define command-function compile
   // Maybe return compilation log?
   let project = defaulted-find-project(project-name);
   let location
-    = project 
+    = project
         & location-info->source-location
             (project, as(<file-locator>, file), coords);
   when (location)

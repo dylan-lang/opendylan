@@ -1,20 +1,20 @@
 Library:   environment-framework
 Synopsis:  Environment Framework
 Author:    Andy Armstrong, Chris Page
-Files:	library
-	module
-	utilities
+Files:  library
+        module
+        utilities
         printing
         updating
-	object-names
+        object-names
         sorting
         input-focus
-	selection
+        selection
         undo
         clipboard
         view
-	history
-	linking
+        history
+        linking
         frame-reuse
         searching
         primary-object
@@ -22,7 +22,7 @@ Files:	library
         edit-menu
         go-menu
         file-menu
-	error-handling
+        error-handling
 Major-version: 2
 Minor-version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

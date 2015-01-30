@@ -200,10 +200,10 @@ define method frame-sheet-selection
     let items = gadget-items(gadget);
     let selection = sort!(remove-duplicates(gadget-selection(gadget)));
     map-as(<simple-vector>,
-	   method (index :: <integer>)
-	     gadget-item-value(gadget, items[index])
-	   end,
-	   selection)
+           method (index :: <integer>)
+             gadget-item-value(gadget, items[index])
+           end,
+           selection)
   else
     gadget-value(gadget)
   end
@@ -250,8 +250,8 @@ define method frame-sheet-selected-text
     otherwise =>
       let stream = make(<string-stream>, direction: #"output");
       for (index in sort(selection))
-	let label = gadget-item-label(gadget, items[index]);
-	format(stream, "%s\n", label);
+        let label = gadget-item-label(gadget, items[index]);
+        format(stream, "%s\n", label);
       end;
       stream-contents(stream);
   end

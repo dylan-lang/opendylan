@@ -1,11 +1,11 @@
 Library:   environment-test-suite
-Synopsis:  Environment test suite 
+Synopsis:  Environment test suite
 Author:    Andy Armstrong
-Files:	library
-	module
+Files:  library
+        module
         protocols
         framework
-	main-suite
+        main-suite
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.

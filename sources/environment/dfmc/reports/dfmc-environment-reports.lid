@@ -1,8 +1,8 @@
 Library:   dfmc-environment-reports
 Synopsis:  DFMC report generation
 Author:    Chris Page
-Files:	library
-	module
+Files:  library
+        module
         report
         utilities
         do-report

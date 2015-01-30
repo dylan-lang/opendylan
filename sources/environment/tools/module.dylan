@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module environment-tools
-  use environment-imports;	// this gets common-dylan
+  use environment-imports;        // this gets common-dylan
 
   use dylan-extensions, import: { \last-handler-definer };
 
@@ -15,21 +15,21 @@ define module environment-tools
 
   use duim-internals,
     exclude: { position, string-pluralize,
-	       get-property,
-	       \put-property!, do-put-property!,
-	       \remove-property!, do-remove-property!,
-	       remove-keywords, \with-keywords-removed };
+               get-property,
+               \put-property!, do-put-property!,
+               \remove-property!, do-remove-property!,
+               remove-keywords, \with-keywords-removed };
 
   // We need to use duim-deuce-internals to share its images
   use duim-deuce-internals,
     import: { $current-location-image,
-	      $disabled-breakpoint-image,
-	      $disabled-tracepoint-image,
-	      $enabled-breakpoint-image,
-	      $enabled-tracepoint-image,
+              $disabled-breakpoint-image,
+              $disabled-tracepoint-image,
+              $enabled-breakpoint-image,
+              $enabled-tracepoint-image,
               $potential-breakpoint-image,
-	      $profile-point-image,
-	      $step-breakpoint-image };
+              $profile-point-image,
+              $step-breakpoint-image };
 
   use environment-protocols;
   use environment-manager;
@@ -82,7 +82,7 @@ define module environment-tools
          environment-message,
          environment-question,
          environment-warning-message,
-	 filters-for-file-types,
+         filters-for-file-types,
          frame-sort-items,
          frame-undefined-callback,
          not-yet-implemented;
@@ -94,17 +94,17 @@ define module environment-tools
          make-environment-status-bar,
          make-environment-tool-bar,
          generate-frame-title,
-	 make-clone-tool-bar-buttons,
+         make-clone-tool-bar-buttons,
          make-environment-tool-bar-buttons,
          make-environment-popup-menu,
-	 frame-popup-menu-cache,
+         frame-popup-menu-cache,
          environment-activate-callback,
          update-environment-popup-menu,
          display-environment-popup-menu,
          do-display-environment-popup-menu,
          update-frame-commands-for-target,
-	 update-frame-commands-for-browse-target,
-	 frame-ensure-project-database,
+         update-frame-commands-for-browse-target,
+         frame-ensure-project-database,
          frame-note-application-starting,
          frame-note-application-starting-done,
          pane-sheet-with-selection;
@@ -112,8 +112,8 @@ define module environment-tools
   // Command tables
   export *environment-help-command-table*,
          *environment-specific-help-command-table*,
-	 *recent-files-command-table*,
-	 *recent-projects-command-table*,
+         *recent-files-command-table*,
+         *recent-projects-command-table*,
          *browse-locations-command-table*,
          *window-show-command-table*,
          *windows-command-table*,
@@ -122,7 +122,7 @@ define module environment-tools
          *project-settings-command-table*,
          *build-command-table*,
          *basic-run-command-table*,
-	 *all-breakpoints-command-table*,
+         *all-breakpoints-command-table*,
          *run-command-table*;
 
   // Exporting
@@ -134,17 +134,17 @@ define module environment-tools
          environment-object-small-icon,
          environment-object-large-icon,
          $edit-source-bitmap,
-	 $build-bitmap,
-	 $compile-bitmap,
-	 $load-bitmap,
-	 $run-bitmap,
-	 $pause-bitmap,
-	 $stop-bitmap,
+         $build-bitmap,
+         $compile-bitmap,
+         $load-bitmap,
+         $run-bitmap,
+         $pause-bitmap,
+         $stop-bitmap,
          $debug-bitmap,
          $interact-bitmap,
-	 $new-text-file-title,
-	 $open-file-title,
-	 $save-file-title;
+         $new-text-file-title,
+         $open-file-title,
+         $save-file-title;
 
   // Project handling
   export most-recent-file, most-recent-file-setter,
@@ -156,7 +156,7 @@ define module environment-tools
          frame-project,
          frame-current-project,
          frame-import-file,
-	 frame-note-project-changed,
+         frame-note-project-changed,
          frame-insert-source-file,
          frame-edit-project-settings;
 
@@ -173,7 +173,7 @@ define module environment-tools
   // Browsing functions
   export display-object-properties,
          frame-document-object, frame-document-object?,
-	 frame-describe-object, frame-describe-object?,
+         frame-describe-object, frame-describe-object?,
          frame-browse-object,   frame-browse-object?,
          frame-browse-object-type,
          frame-browse-object-generic-function,
@@ -186,14 +186,14 @@ define module environment-tools
          target-object,
          target-pane,
          frame-command-target, frame-command-target-setter,
-	 frame-command-table-for-target,
-	 frame-extra-command-table-for-target,
+         frame-command-table-for-target,
+         frame-extra-command-table-for-target,
          frame-selection-target,
          frame-sheet-target,
          frame-target-pane,
          frame-target-object,
          note-frame-command-target-updated,
-	 command-table-for-target;
+         command-table-for-target;
 
   // Target browsing functions
   export *popup-menu-command-table*,
@@ -215,37 +215,37 @@ define module environment-tools
          object-has-source?,
          frame-edit-target,
          frame-target-to-browse,
-	 frame-edit-target-clients,
-	 frame-edit-target-used-definitions,
-	 frame-edit-target-subclasses,
-	 frame-edit-target-superclasses,
-	 frame-edit-target-class-methods,
-	 frame-edit-target-generic-methods,
+         frame-edit-target-clients,
+         frame-edit-target-used-definitions,
+         frame-edit-target-subclasses,
+         frame-edit-target-superclasses,
+         frame-edit-target-class-methods,
+         frame-edit-target-generic-methods,
          frame-target-to-edit,
          frame-debug-target,
          frame-describe-target,
-	 frame-document-target,
+         frame-document-target,
          display-target-properties;
-         
+
   // Primary object functions
   export *primary-object-command-table*,
-	 *primary-object-browse-command-table*,
-	 *primary-object-documentation-command-table*,
-	 *primary-object-edit-command-table*,
-	 *primary-object-properties-command-table*,
-	 frame-describe-primary-object,
-	 frame-browse-primary-object,
-	 frame-browse-primary-object-type,
-	 frame-browse-primary-object-generic-function,
+         *primary-object-browse-command-table*,
+         *primary-object-documentation-command-table*,
+         *primary-object-edit-command-table*,
+         *primary-object-properties-command-table*,
+         frame-describe-primary-object,
+         frame-browse-primary-object,
+         frame-browse-primary-object-type,
+         frame-browse-primary-object-generic-function,
          frame-edit-primary-object,
-	 frame-edit-primary-object-clients,
-	 frame-edit-primary-object-used-definitions,
-	 frame-edit-primary-object-subclasses,
-	 frame-edit-primary-object-superclasses,
-	 frame-edit-primary-object-class-methods,
-	 frame-edit-primary-object-generic-methods,
-	 frame-display-primary-object-properties,
-	 frame-document-primary-object;
+         frame-edit-primary-object-clients,
+         frame-edit-primary-object-used-definitions,
+         frame-edit-primary-object-subclasses,
+         frame-edit-primary-object-superclasses,
+         frame-edit-primary-object-class-methods,
+         frame-edit-primary-object-generic-methods,
+         frame-display-primary-object-properties,
+         frame-document-primary-object;
 
   // Compilation driving functions
   export frame-parse-project,
@@ -254,12 +254,12 @@ define module environment-tools
          frame-link-project,
          frame-advanced-build-dialog,
          frame-build-project,
-	 frame-clean-build-project,
-	 frame-clean-project,
+         frame-clean-build-project,
+         frame-clean-project,
          frame-build-release,
-	 frame-note-project-rebuilt,
-	 frame-note-project-warnings-updated,
-	 \with-compiler-locked, $compiler-lock;
+         frame-note-project-rebuilt,
+         frame-note-project-warnings-updated,
+         \with-compiler-locked, $compiler-lock;
 
   // Application driving functions
   export frame-start-application,
@@ -273,7 +273,7 @@ define module environment-tools
          frame-resume-application,
          frame-continue-application,
          frame-stop-application,
-	 frame-note-application-state-changed,
+         frame-note-application-state-changed,
          frame-note-application-threads-changed;
 
   // Sort of halfway between the compiler and the application
@@ -338,22 +338,22 @@ define module environment-tools
 
   // Editor stuff
   export find-editor,
-	 editor-open-file,
+         editor-open-file,
          editor-new-file,
          editor-edit-definitions,
-	 //---*** Disgusting modularity hack for now
-	 make-code-viewer;
+         //---*** Disgusting modularity hack for now
+         make-code-viewer;
 
   // Source control stuff
   export claim-unit,
-	 check-unit-out,
-	 check-unit-in,
-	 abandon-unit,
-	 merge-unit,
-	 diff-unit,
-	 report-unit,
-	 add-unit,
-	 remove-unit;
+         check-unit-out,
+         check-unit-in,
+         abandon-unit,
+         merge-unit,
+         diff-unit,
+         report-unit,
+         add-unit,
+         remove-unit;
 
   // Window settings
   export <frame-window-settings-mixin>,
@@ -365,15 +365,15 @@ define module environment-tools
 
   // Environment settings
   export environment-default-save-databases,
-	 environment-default-save-databases,
-	 environment-default-link-mode,
-	 environment-default-upgrade-warnings,
-	 environment-application-confirm-stop?,
-	 environment-active-on-starting?,
-	 environment-active-on-opening?,
-	 environment-qualify-names?,
-	 environment-auto-raise-all-frames,
-	 environment-auto-lower-all-frames;
+         environment-default-save-databases,
+         environment-default-link-mode,
+         environment-default-upgrade-warnings,
+         environment-application-confirm-stop?,
+         environment-active-on-starting?,
+         environment-active-on-opening?,
+         environment-qualify-names?,
+         environment-auto-raise-all-frames,
+         environment-auto-lower-all-frames;
 
   // Useful frame mixins
   export <frame-cascading-window-mixin>,
@@ -383,65 +383,65 @@ define module environment-tools
          frame-cascades?,
          frame-cascade-offset,
          frame-cascade-position, set-frame-cascade-position;
- 
+
   // Breakpoint stuff
   export <breakpoint-location>,
          <breakpointable>,
          $breakpoint-slots,
          breakpoint-slot-abbreviation,
          breakpoint-slot-getter,
-	 frame-note-all-breakpoints-changed,
-	 frame-note-breakpoint-state-changed,
-	 record-breakpoint-source-locations,
-	 make-breakpoint-table-control-displayer,
-	 frame-create-breakpoint,
-	 frame-clear-breakpoint,
-	 frame-edit-breakpoint-options,
-	 frame-toggle-breakpoint-enabled?,
-	 frame-create-or-toggle-breakpoint,
-	 frame-run-to-cursor,
-	 frame-run-to-target,
-	 frame-new-breakpoint,
-	 frame-browse-all-breakpoints,
-	 frame-clear-all-breakpoints,
-	 frame-enable-all-breakpoints,
-	 frame-disable-all-breakpoints,
+         frame-note-all-breakpoints-changed,
+         frame-note-breakpoint-state-changed,
+         record-breakpoint-source-locations,
+         make-breakpoint-table-control-displayer,
+         frame-create-breakpoint,
+         frame-clear-breakpoint,
+         frame-edit-breakpoint-options,
+         frame-toggle-breakpoint-enabled?,
+         frame-create-or-toggle-breakpoint,
+         frame-run-to-cursor,
+         frame-run-to-target,
+         frame-new-breakpoint,
+         frame-browse-all-breakpoints,
+         frame-clear-all-breakpoints,
+         frame-enable-all-breakpoints,
+         frame-disable-all-breakpoints,
          frame-trace-target,
          frame-untrace-target,
          frame-untrace-all;
 
   export $application-bitmap,
-	 $class-bitmap,
-	 $clone-bitmap,
-	 $constant-bitmap,
-	 $default-bitmap,
-	 $definition-bitmap,
-	 $dylan-file-bitmap,
-	 $canonical-source-bitmap,
-	 $current-source-bitmap,
-	 $error-bitmap,
-	 $function-bitmap,
-	 $foreign-bitmap,
-	 $generic-bitmap,
-	 $home-bitmap,
-	 $library-bitmap,
-	 $macro-bitmap,
-	 $method-bitmap,
-	 $module-bitmap,
-	 $object-bitmap,
-	 $profile-bitmap,
-	 $project-bitmap,
-	 $restart-bitmap,
-	 $serious-warning-bitmap,
-	 $slot-bitmap,
-	 $stack-frame-bitmap,
-	 $text-file-bitmap,
-	 $threads-bitmap,
-	 $unbound-bitmap,
-	 $variable-bitmap,
-	 $warning-bitmap,
-	 $clients-folder-bitmap,
-	 $uses-folder-bitmap;
+         $class-bitmap,
+         $clone-bitmap,
+         $constant-bitmap,
+         $default-bitmap,
+         $definition-bitmap,
+         $dylan-file-bitmap,
+         $canonical-source-bitmap,
+         $current-source-bitmap,
+         $error-bitmap,
+         $function-bitmap,
+         $foreign-bitmap,
+         $generic-bitmap,
+         $home-bitmap,
+         $library-bitmap,
+         $macro-bitmap,
+         $method-bitmap,
+         $module-bitmap,
+         $object-bitmap,
+         $profile-bitmap,
+         $project-bitmap,
+         $restart-bitmap,
+         $serious-warning-bitmap,
+         $slot-bitmap,
+         $stack-frame-bitmap,
+         $text-file-bitmap,
+         $threads-bitmap,
+         $unbound-bitmap,
+         $variable-bitmap,
+         $warning-bitmap,
+         $clients-folder-bitmap,
+         $uses-folder-bitmap;
 
   export $new-text-file-bitmap,
          $new-project-file-bitmap,
@@ -467,11 +467,11 @@ define module environment-tools
          $open-large-bitmap;
 
   export $main-window-small-icon,
-	 $project-window-small-icon,
-	 $browser-window-small-icon,
-	 $editor-window-small-icon,
-	 $debugger-window-small-icon,
-	 $describer-window-small-icon,
+         $project-window-small-icon,
+         $browser-window-small-icon,
+         $editor-window-small-icon,
+         $debugger-window-small-icon,
+         $describer-window-small-icon,
          $find-window-small-icon;
 
   export <frame-module-gadget-mixin>,

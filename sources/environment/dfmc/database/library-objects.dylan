@@ -19,8 +19,8 @@ define sealed method library-definition
   let context = project.project-browsing-context;
   let definition = context & context.project-library-definition;
   assert(definition,
-	 "Library %s is missing its definition",
-	 name-to-string(project.project-library-name));
+         "Library %s is missing its definition",
+         name-to-string(project.project-library-name));
   definition
 end method library-definition;
 
@@ -43,49 +43,49 @@ define sealed method find-library
     (server :: <dfmc-database>, name :: <string>)
  => (library :: false-or(<library-object>))
   let library-name = as(<symbol>, name);
-  let project 
+  let project
     = find-project-for-library-name(server, library-name, error?: #f);
   if (project)
     make-environment-object(<library-object>,
-			    project: server.server-project,
-			    compiler-object-proxy: project)
+                            project: server.server-project,
+                            compiler-object-proxy: project)
   end
 end method find-library;
 
 define method project-executable-pathname
-    (server :: <server>, project :: <project>, 
+    (server :: <server>, project :: <project>,
      #key type, full-path?)
  => (name :: <file-locator>)
   let library-name :: <symbol> = project.project-library-name;
   let merged-name :: <symbol> = merged-project-name(library-name);
   let dll-project :: <project>
     = if (merged-name = library-name)
-	project
+        project
       else
-	let project-object = server.server-project;
-	let database = project-object.project-compiler-database;
-	//---*** How can we close the project opened through
-	//---*** lookup-named-project again without accidentally
-	//---*** closing it if the user already had it open?
-	if (database)
-	  find-project-for-library-name(database, merged-name, error?: #f)
-	end
-	  | lookup-named-project(merged-name)
+        let project-object = server.server-project;
+        let database = project-object.project-compiler-database;
+        //---*** How can we close the project opened through
+        //---*** lookup-named-project again without accidentally
+        //---*** closing it if the user already had it open?
+        if (database)
+          find-project-for-library-name(database, merged-name, error?: #f)
+        end
+          | lookup-named-project(merged-name)
       end;
   let base = dll-project.project-executable-name;
   let extension
     = select (type | dll-project.project-target-type)
-	#"dll"        => "dll";
-	#"executable" => "exe";
+        #"dll"        => "dll";
+        #"executable" => "exe";
       end;
   let filename = make(<file-locator>, base: base, extension: extension);
   if (full-path?)
     let directory
       = if (project.project-read-only?)
-	  as(<directory-locator>, release-runtime-directory())
-	else
-	  project.project-build-location
-	end;
+          as(<directory-locator>, release-runtime-directory())
+        else
+          project.project-build-location
+        end;
     merge-locators(filename, directory)
   else
     filename
@@ -102,9 +102,9 @@ define sealed method library-filename
   let project = library.library-compiler-project;
   as(<file-locator>,
      project-executable-pathname
-       (server, project, 
-	type: unless (main-library?) #"dll" end,
-	full-path?: #t))
+       (server, project,
+        type: unless (main-library?) #"dll" end,
+        full-path?: #t))
 end method library-filename;
 
 define sealed method library-project-filename
@@ -121,14 +121,14 @@ define sealed method library-interactive?
 end method library-interactive?;
 
 define sealed method library-read-only?
-    (server :: <dfmc-database>, library :: <library-object>) 
+    (server :: <dfmc-database>, library :: <library-object>)
  => (read-only? :: <boolean>)
   let project = library.library-compiler-project;
   project.project-read-only?
 end method library-read-only?;
 
 define sealed method library-read-only?-setter
-    (read-only? :: <boolean>, server :: <dfmc-database>, 
+    (read-only? :: <boolean>, server :: <dfmc-database>,
      library :: <library-object>)
  => (read-only? :: <boolean>);
   let project = library.library-compiler-project;
@@ -143,11 +143,11 @@ define sealed method do-namespace-names
  => ()
   let context = browsing-context(server, library.library-compiler-project);
   local method do-module (name :: <symbol>, export-kind :: <export-kind>) => ()
-	  unless (name == #"dylan-user")
-	    let environment-name = %make-module-name(server, library, name);
-	    function(environment-name)
-	  end
-	end method;
+          unless (name == #"dylan-user")
+            let environment-name = %make-module-name(server, library, name);
+            function(environment-name)
+          end
+        end method;
   dfmc/do-library-modules(context, do-module, inherited?: imported?, internal?: #t);
 end method do-namespace-names;
 
@@ -172,8 +172,8 @@ define sealed method do-used-definitions
     let project = find-project-for-library-name(server, library-name);
     let library
       = make-environment-object(<library-object>,
-				project: server.server-project,
-				compiler-object-proxy: project);
+                                project: server.server-project,
+                                compiler-object-proxy: project);
     function(library)
   end
 end method do-used-definitions;
@@ -188,11 +188,11 @@ define sealed method source-form-has-clients?
   block (return)
     do-all-client-contexts
       (method (context :: <context>)
-	 let definition = context.project-library-definition;
-	 let used-libraries = definition.library-definition-used-libraries;
-	 if (member?(library-name, used-libraries))
-	   return(#t)
-	 end
+         let definition = context.project-library-definition;
+         let used-libraries = definition.library-definition-used-libraries;
+         if (member?(library-name, used-libraries))
+           return(#t)
+         end
        end,
        server, context);
     #f
@@ -212,13 +212,13 @@ define sealed method do-client-source-forms
        let definition = context.project-library-definition;
        let used-libraries = definition.library-definition-used-libraries;
        if (member?(library-name, used-libraries))
-	 let name = definition.library-definition-name;
-	 let project = find-project-for-library-name(server, name);
-	 let library
-	   = make-environment-object(<library-object>,
-				     project: server.server-project,
-				     compiler-object-proxy: project);
-	 function(library)
+         let name = definition.library-definition-name;
+         let project = find-project-for-library-name(server, name);
+         let library
+           = make-environment-object(<library-object>,
+                                     project: server.server-project,
+                                     compiler-object-proxy: project);
+         function(library)
        end
      end,
      server, context)
@@ -234,14 +234,14 @@ define sealed method find-compiler-database-proxy
   block (return)
     let library-name = as(<symbol>, id-name(id));
     local method maybe-return-project
-	      (project :: <project>) => ()
-	    if (project.project-library-name == library-name)
-	      let context = project.project-browsing-context;
-	      if (context & context.project-library-definition)
-		return(project)
-	      end
-	    end
-	  end method maybe-return-project;
+              (project :: <project>) => ()
+            if (project.project-library-name == library-name)
+              let context = project.project-browsing-context;
+              if (context & context.project-library-definition)
+                return(project)
+              end
+            end
+          end method maybe-return-project;
     //---*** andrewa: is there a more efficient way to do this?
     do-all-projects(maybe-return-project, server)
   end
@@ -262,17 +262,17 @@ define sealed method do-project-file-libraries
   let project = server.server-project;
   let library = project.project-library;
   local method do-library-file-libraries
-	    (library :: <library-object>) => ()
-	  let project = library.library-compiler-project;
-	  let source-files = project.project-dylan-sources;
-	  for (source-file in source-files)
-	    when (file = source-file)
-	      let (record, modified?) 
-		= project-source-canonical-source-record(project, source-file);
-	      record & function(library, record)
-	    end
-	  end
-	end method do-library-file-libraries;
+            (library :: <library-object>) => ()
+          let project = library.library-compiler-project;
+          let source-files = project.project-dylan-sources;
+          for (source-file in source-files)
+            when (file = source-file)
+              let (record, modified?)
+                = project-source-canonical-source-record(project, source-file);
+              record & function(library, record)
+            end
+          end
+        end method do-library-file-libraries;
   library & do-library-file-libraries(library);
   do-project-used-libraries(do-library-file-libraries, project, project)
 end method do-project-file-libraries;

@@ -19,13 +19,13 @@ define open generic frame-default-property-type
  => (type :: false-or(<symbol>));
 
 define open generic make-frame-property-page
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      class :: subclass(<environment-object>),
      type :: <symbol>)
  => (page :: <property-page>);
 
 define open generic make-frame-property-page-displayer
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      class :: subclass(<environment-object>),
      type :: <symbol>)
  => (label :: <string>, displayer :: <displayer-mixin>);
@@ -45,18 +45,18 @@ define open generic invalidate-frame-property-page
 /// Default methods
 
 define method make-frame-property-page
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      class :: subclass(<environment-object>),
      type :: <symbol>)
  => (page :: <property-page>)
   with-frame-manager (frame-manager(frame))
-    let (label, displayer) 
+    let (label, displayer)
       = make-frame-property-page-displayer(frame, class, type);
     make(<property-page>,
-	 label: label,
-	 id: type,
-	 child: displayer,
-	 input-focus: displayer.displayer-default-input-focus)
+         label: label,
+         id: type,
+         child: displayer,
+         input-focus: displayer.displayer-default-input-focus)
   end
 end method make-frame-property-page;
 
@@ -95,7 +95,7 @@ define method refresh-frame-property-page
 end method refresh-frame-property-page;
 
 define method refresh-frame-property-page
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      displayer :: <displayer-mixin>,
      object :: false-or(<environment-object>), type :: <symbol>,
      #key clean? = #f, new-thread? = #t)
@@ -113,7 +113,7 @@ define method invalidate-frame-property-page
 end method invalidate-frame-property-page;
 
 define method invalidate-frame-property-page
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      displayer :: <displayer-mixin>,
      object :: false-or(<environment-object>), type :: <symbol>)
  => ()
@@ -122,7 +122,7 @@ end method invalidate-frame-property-page;
 
 /*---*** not currently used
 define method environment-property-page-type
-    (frame :: <environment-frame>,  pane :: <environment-property-mixin>, 
+    (frame :: <environment-frame>,  pane :: <environment-property-mixin>,
      page :: <property-page>)
  => (type :: <symbol>)
   let pages = environment-property-pages(pane);
@@ -135,15 +135,15 @@ define method environment-property-page-type
 end method environment-property-page-type;
 
 define method find-property-sheet
-    (pane :: <property-page>) 
+    (pane :: <property-page>)
  => (property-sheet :: <environment-property-mixin>)
   find-ancestor-of-type(pane, <environment-property-mixin>)
     | begin
-	let frame = sheet-frame(pane);
-	assert(instance?(frame, <environment-property-mixin>),
-	       "Failed to find environment-property-mixin parent for %=",
-	       pane);
-	frame
+        let frame = sheet-frame(pane);
+        assert(instance?(frame, <environment-property-mixin>),
+               "Failed to find environment-property-mixin parent for %=",
+               pane);
+        frame
       end
 end method find-property-sheet;
 
@@ -173,7 +173,7 @@ end class <environment-property-mixin>;
 
 define open generic pane-sheet-with-selection
     (pane) => (sheet :: false-or(<sheet>));
-    
+
 define method pane-sheet-with-selection
     (pane :: <environment-property-mixin>)
  => (sheet :: false-or(<sheet>))
@@ -190,9 +190,9 @@ define method pane-sheet-with-selection
   pane-sheet-with-selection(displayer)
 end method pane-sheet-with-selection;
 
-define class <environment-property-frame> 
+define class <environment-property-frame>
     (<environment-fixed-project-frame>,
-     <environment-property-mixin>, 
+     <environment-property-mixin>,
      <property-frame>)
 end class <environment-property-frame>;
 
@@ -214,16 +214,16 @@ define pane <environment-property-pane> (<environment-property-mixin>)
       let frame = environment-property-pane-frame(pane);
       let page = environment-property-pane-page(pane);
       let (pages, page)
-	= make-environment-property-pane-pages(pane, page: page);
+        = make-environment-property-pane-pages(pane, page: page);
       make(<tab-control>,
-	   pages: pages,
-	   current-page: page,
-	   client: pane,
-	   value-changed-callback: 
-	     method (gadget)
-	       ignore(gadget);
-	       note-environment-property-pane-page-changed(pane)
-	     end)
+           pages: pages,
+           current-page: page,
+           client: pane,
+           value-changed-callback:
+             method (gadget)
+               ignore(gadget);
+               note-environment-property-pane-page-changed(pane)
+             end)
     end;
   layout (pane) pane.environment-tab-control;
 end pane <environment-property-pane>;
@@ -281,9 +281,9 @@ define method environment-property-pane-class-setter
     // Just switch the pages and leave it at that
     let keyword
       = select (page by instance?)
-	  <symbol> => page;
-	  <gadget> => gadget-id(page)
-	end;
+          <symbol> => page;
+          <gadget> => gadget-id(page)
+        end;
     gadget-value(tab-control) := keyword
   else
     pane.%class := class;
@@ -302,7 +302,7 @@ define method environment-property-pane-class-setter
       let keyword = gadget-id(page);
       let page-state = element(page-states, keyword, default: #f);
       if (page-state)
-	displayer.displayer-state := page-state
+        displayer.displayer-state := page-state
       end
     end
   end;
@@ -319,7 +319,7 @@ define method environment-property-pane-object
 end method environment-property-pane-object;
 
 define method environment-property-pane-object-setter
-    (object, pane :: <environment-property-pane>, 
+    (object, pane :: <environment-property-pane>,
      #key page, state :: false-or(<environment-property-pane-state>))
  => (object)
   environment-property-pane-class(pane, page: page, state: state)
@@ -345,44 +345,44 @@ define method make-environment-property-pane-page
       end
 end method make-environment-property-pane-page;
 
-define method make-environment-property-pane-pages 
+define method make-environment-property-pane-pages
     (pane :: <environment-property-pane>, #key page)
  => (pages :: <sequence>, page :: <sheet>)
   let class = environment-property-pane-class(pane);
   let frame = environment-property-pane-frame(pane);
   let types = frame-property-types(frame, class);
   assert(~empty?(types),
-	 "No property pages found for class %=",
-	 class);
+         "No property pages found for class %=",
+         class);
   let default-type
     = page | frame-default-property-type(frame, class) | types[0];
   let index = find-key(types, curry(\=, default-type));
   assert(index,
-	 "Unexpectedly can't find the property type %=",
-	 default-type);
+         "Unexpectedly can't find the property type %=",
+         default-type);
   let pages
     = map(method (type :: <symbol>) => (page :: <property-page>)
-	    make-environment-property-pane-page(pane, frame, class, type)
-	  end,
-	  types);
+            make-environment-property-pane-page(pane, frame, class, type)
+          end,
+          types);
   let page :: <property-page> = pages[index];
   values(pages, page)
 end method make-environment-property-pane-pages;
 
 define method refresh-environment-property-pane
-    (pane :: <environment-property-pane>, 
+    (pane :: <environment-property-pane>,
      #key pages, clean?, new-thread? = #t, refresh-all? = #f)
  => ()
   let frame = environment-property-pane-frame(pane);
   let object = environment-property-pane-object(pane);
   refresh-frame-properties
-    (frame, pane, object, pages: pages, 
+    (frame, pane, object, pages: pages,
      clean?: clean?, new-thread?: new-thread?, refresh-all?: refresh-all?)
 end method refresh-environment-property-pane;
 
 define method refresh-frame-properties
     (frame :: <environment-frame>,
-     pane :: <environment-property-mixin>, 
+     pane :: <environment-property-mixin>,
      object :: false-or(<environment-object>),
      #key pages, clean?, new-thread? = #t, refresh-all? = #f)
  => ()
@@ -390,20 +390,20 @@ define method refresh-frame-properties
   let current-page = property-sheet-current-page(pane);
   let current-keyword = gadget-id(current-page);
   local method refresh-named-page (keyword :: <symbol>) => ()
-	  let page = environment-property-page(pane, keyword);
-	  if (page)
-	    case
-	      (refresh-all? | keyword == current-keyword) =>
-		refresh-frame-property-page
-		  (frame, page, object, keyword, 
-		   clean?: clean?, new-thread?: new-thread?);
-	      clean? =>
-		invalidate-frame-property-page(frame, page, object, keyword);
-	      otherwise =>
-		#f;
-	    end
-	  end
-	end method refresh-named-page;
+          let page = environment-property-page(pane, keyword);
+          if (page)
+            case
+              (refresh-all? | keyword == current-keyword) =>
+                refresh-frame-property-page
+                  (frame, page, object, keyword,
+                   clean?: clean?, new-thread?: new-thread?);
+              clean? =>
+                invalidate-frame-property-page(frame, page, object, keyword);
+              otherwise =>
+                #f;
+            end
+          end
+        end method refresh-named-page;
   with-busy-cursor (frame)
     case
       pages           => do(refresh-named-page, pages);
@@ -420,7 +420,7 @@ define method environment-property-page
   block (return)
     for (page in tab-control-pages(tab-control))
       if (gadget-id(page) = name)
-	return(page)
+        return(page)
       end
     end;
     #f
@@ -481,18 +481,18 @@ define method make-frame-property-frame
       else
         all-types
       end;
-  let pages 
+  let pages
     = map(method (type)
             make-frame-property-page(frame, class, type)
           end,
           types);
-  let title 
+  let title
     = title
       | format-to-string("%s Properties - %s",
                          environment-object-type-name(object),
                          frame-default-object-name(frame, object));
-  let dialog 
-    = make(<environment-property-frame>, 
+  let dialog
+    = make(<environment-property-frame>,
            owner: frame,
            title: title,
            project: frame.frame-project,
@@ -511,7 +511,7 @@ end method make-frame-property-frame;
 
 // Delegate pop-up menus to the frame containing this property sheet
 define method do-display-environment-popup-menu
-    (frame :: <environment-property-frame>, sheet :: <sheet>, object :: <environment-object>, 
+    (frame :: <environment-property-frame>, sheet :: <sheet>, object :: <environment-object>,
      #key x, y) => ()
   let owner = frame-owner(frame);
   when (owner)
@@ -545,7 +545,7 @@ define method display-object-properties
  => (pane :: <property-frame>)
   let property-frame
     = frame
-        | make-frame-property-frame(owner, object, 
+        | make-frame-property-frame(owner, object,
                                     page: page, title: title, types: types);
   if (frame)
     refresh-frame-properties

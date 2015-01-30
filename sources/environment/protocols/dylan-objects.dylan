@@ -13,7 +13,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// part of the language (e.g. a class) or whether it is an abstraction
 /// provided by the environment (e.g. a project)
 
-define open abstract class <dylan-object> 
+define open abstract class <dylan-object>
     (<environment-object>)
 end class <dylan-object>;
 
@@ -21,7 +21,7 @@ define open abstract class <dylan-application-object>
     (<dylan-object>, <application-object>)
 end class <dylan-application-object>;
 
-define open abstract class <immediate-application-object> 
+define open abstract class <immediate-application-object>
     (<dylan-application-object>)
 end class <immediate-application-object>;
 
@@ -34,47 +34,47 @@ end class <dylan-compiler-object>;
 
 define constant $dylan-library-id
   = make(<library-id>,
-	 name: "dylan");
+         name: "dylan");
 
 define constant $dylan-module-id
-  = make(<module-id>, 
-	 name: "dylan", 
-	 library: $dylan-library-id);
+  = make(<module-id>,
+         name: "dylan",
+         library: $dylan-library-id);
 
 define constant $dylan-extensions-module-id
-  = make(<module-id>, 
-	 name: "dylan-extensions", 
-	 library: $dylan-library-id);
+  = make(<module-id>,
+         name: "dylan-extensions",
+         library: $dylan-library-id);
 
 define constant $dispatch-engine-module-id
   = make(<module-id>,
-	 name: "dispatch-engine", 
-	 library: $dylan-library-id);
+         name: "dispatch-engine",
+         library: $dylan-library-id);
 
 define constant $<object>-id
-  = make(<definition-id>, 
-	 name: "<object>",
-	 module: $dylan-module-id);
+  = make(<definition-id>,
+         name: "<object>",
+         module: $dylan-module-id);
 
 define constant $<class>-id
-  = make(<definition-id>, 
-	 name: "<class>",
-	 module: $dylan-module-id);
+  = make(<definition-id>,
+         name: "<class>",
+         module: $dylan-module-id);
 
 define constant $<method>-id
-  = make(<definition-id>, 
-	 name: "<method>",
-	 module: $dylan-module-id);
+  = make(<definition-id>,
+         name: "<method>",
+         module: $dylan-module-id);
 
 define constant $<generic-function>-id
-  = make(<definition-id>, 
-	 name: "<generic-function>",
-	 module: $dylan-module-id);
+  = make(<definition-id>,
+         name: "<generic-function>",
+         module: $dylan-module-id);
 
 define constant $<boolean>-id
-  = make(<definition-id>, 
-	 name: "<boolean>",
-	 module: $dylan-module-id);
+  = make(<definition-id>,
+         name: "<boolean>",
+         module: $dylan-module-id);
 
 
 /// Characters
@@ -133,7 +133,7 @@ define open generic number-object-to-string
 
 /// Collections
 
-define class <collection-object> 
+define class <collection-object>
     (<composite-object>, <dylan-application-object>)
 end class <collection-object>;
 
@@ -167,7 +167,7 @@ end class <sequence-object>;
 define class <string-object> (<sequence-object>)
 end class <string-object>;
 
-define class <explicit-key-collection-object> 
+define class <explicit-key-collection-object>
     (<internal-object>, <collection-object>)
 end class <explicit-key-collection-object>;
 

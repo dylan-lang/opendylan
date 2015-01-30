@@ -23,7 +23,7 @@ define class <function-entry-tracepoint> (<entry-tracepoint>)
 
   slot function-entry-registered? :: <boolean> = #f;
 
-  constant 
+  constant
     slot function-entry-breakpoint-object :: <function-breakpoint-object>,
       required-init-keyword: breakpoint-object:;
 
@@ -80,28 +80,28 @@ define method make
     (class == <unknown-breakpoint-address>, #key breakpoint)
  => (condition :: <unknown-breakpoint-address>)
   next-method(class,
-	      format-string: "Cannot compute address for breakpoint: %=",
-	      format-arguments: vector(breakpoint))
+              format-string: "Cannot compute address for breakpoint: %=",
+              format-arguments: vector(breakpoint))
 end method make;
 
 
 define class <unknown-class-breakpoint> (<breakpoint-error>)
 end class <unknown-class-breakpoint>;
 
-define method make 
+define method make
     (class == <unknown-class-breakpoint>, #key breakpoint)
  => (condition :: <unknown-class-breakpoint>)
   next-method(class,
-	      format-string: "Cannot find class %= for breakpoint: %=",
-	      format-arguments: vector(breakpoint.breakpoint-object,
-				       breakpoint))
+              format-string: "Cannot find class %= for breakpoint: %=",
+              format-arguments: vector(breakpoint.breakpoint-object,
+                                       breakpoint))
 end method make;
 
 
 ///// ----------------------------- Callbacks --------------------------------
 
 ///// MAKE-RETURN-TRACEPOINT (Open GF Extension. DM Callback).
-//    Given a <function-entry-tracepoint>, create a 
+//    Given a <function-entry-tracepoint>, create a
 //    <function-return-tracepoint>.
 
 define method make-return-tracepoint
@@ -162,51 +162,51 @@ define method function-entry-callback
   let function = breakpoint.breakpoint-object;
   let signature
     = if (breakpoint.breakpoint-entry-point?)
-	let proxy = function.application-object-proxy;
-	case
-	  proxy =>
-	    let function-value
-	      = runtime-proxy-to-remote-value(application, proxy);
-	    remote-method-inspect(target, function-value);
-	  instance?(function, <method-object>) =>
-	    // Note that we can use the g.f. signature here
-	    // because it is only looking at its overall shape.
-	    let project = application.server-project;
-	    let gf = method-generic-function(project, function);
-	    let proxy = gf & gf.application-object-proxy;
-	    if (proxy)
-	      let function-value
-		= runtime-proxy-to-remote-value(application, proxy);
-	      remote-generic-function-inspect(target, function-value)
-	    else
-	      debug-out(#"dfmc-environment-application",
+        let proxy = function.application-object-proxy;
+        case
+          proxy =>
+            let function-value
+              = runtime-proxy-to-remote-value(application, proxy);
+            remote-method-inspect(target, function-value);
+          instance?(function, <method-object>) =>
+            // Note that we can use the g.f. signature here
+            // because it is only looking at its overall shape.
+            let project = application.server-project;
+            let gf = method-generic-function(project, function);
+            let proxy = gf & gf.application-object-proxy;
+            if (proxy)
+              let function-value
+                = runtime-proxy-to-remote-value(application, proxy);
+              remote-generic-function-inspect(target, function-value)
+            else
+              debug-out(#"dfmc-environment-application",
                         "Failed to find proxy for method or generic!")
-	    end;
-	  otherwise =>
-	    debug-out(#"dfmc-environment-application",
+            end;
+          otherwise =>
+            debug-out(#"dfmc-environment-application",
                       "Failed to find generic proxy!");
-	end
+        end
       end;
   let (required-values, rest-value, keyword-values)
     = if (signature)
-	let (required, rest, keywords)
-	  = dylan-trace-entry-arguments(target, thread, signature);
-	let constructor
-	  = curry(make-environment-object-for-runtime-value, 
-		  application);
-	values(map(constructor, required),
-	       rest & constructor(rest),
-	       keywords & map(constructor, keywords))
+        let (required, rest, keywords)
+          = dylan-trace-entry-arguments(target, thread, signature);
+        let constructor
+          = curry(make-environment-object-for-runtime-value,
+                  application);
+        values(map(constructor, required),
+               rest & constructor(rest),
+               keywords & map(constructor, keywords))
       else
-	debug-out(#"dfmc-environment-application",
+        debug-out(#"dfmc-environment-application",
                   "No signature for breakpoint function!");
-	values(#[], #f, #[])
+        values(#[], #f, #[])
       end;
   breakpoint-info(application, breakpoint)
     := make(<breakpoint-entry-info>,
-	    required-values: required-values,
-	    rest-value:      rest-value,
-	    keyword-values:  keyword-values);
+            required-values: required-values,
+            rest-value:      rest-value,
+            keyword-values:  keyword-values);
   #t
 end method function-entry-callback;
 
@@ -229,7 +229,7 @@ define method function-return-callback
       = curry(make-environment-object-for-runtime-value, application);
     breakpoint-info(application, breakpoint)
       := make(<breakpoint-return-info>,
-	      return-values: map(constructor, values));
+              return-values: map(constructor, values));
     #t;
   else
     #f;
@@ -262,7 +262,7 @@ end method location-breakpoint-callback;
 
 
 define method calculate-breakpoint-address
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      bp-object :: <source-location-breakpoint-object>,
      #key compilation-context = #f)
  => (address-we-hope :: false-or(<remote-value>))
@@ -273,13 +273,13 @@ define method calculate-breakpoint-address
   let project-proxy = source-record.source-record-project;
   let (address, exact)
     = if (project-proxy)
-	source-location-remote-address
-	  (target, 
-	   location, 
-	   interactive-only?: #f,
-	   compilation-context: project-proxy.project-browsing-context)
+        source-location-remote-address
+          (target,
+           location,
+           interactive-only?: #f,
+           compilation-context: project-proxy.project-browsing-context)
       else
-	values(#f, #f)
+        values(#f, #f)
       end;
   address;
 end method calculate-breakpoint-address;
@@ -290,7 +290,7 @@ define method function-object-breakpoint-address
  => (address-we-hope :: false-or(<remote-value>))
   let target = application.application-target-app;
   let project = application.server-project;
-  let source-location 
+  let source-location
     = environment-object-source-location(project, function-object);
   case
     source-location =>
@@ -298,12 +298,12 @@ define method function-object-breakpoint-address
       let project-proxy = source-record.source-record-project;
       let context = project-proxy & project-proxy.project-browsing-context;
       let (address, exact)
-	= source-location-remote-address
-	    (target,
-	     source-location,
-	     interactive-only?:   #f,
-	     entry-point-only?:   entry-point?,
-	     compilation-context: context);
+        = source-location-remote-address
+            (target,
+             source-location,
+             interactive-only?:   #f,
+             entry-point-only?:   entry-point?,
+             compilation-context: context);
       address;
     instance?(function-object, <generic-function-object>) =>
       #f;
@@ -311,10 +311,10 @@ define method function-object-breakpoint-address
       //---*** We need to handle entry-point? in here too!
       let proxy = ensure-application-proxy(application, function-object);
       if (proxy)
-	let function-value = runtime-proxy-to-remote-value(application, proxy);
-	let (sig, breakpoint-address, keyword-specifiers)
-	  = remote-method-inspect(target, function-value);
-	breakpoint-address
+        let function-value = runtime-proxy-to-remote-value(application, proxy);
+        let (sig, breakpoint-address, keyword-specifiers)
+          = remote-method-inspect(target, function-value);
+        breakpoint-address
       end;
   end
 end method function-object-breakpoint-address;
@@ -345,7 +345,7 @@ end method calculate-breakpoint-address;
 //    manager, then do so.
 
 define method register-proxy-if-necessary
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      proxy :: <function-entry-tracepoint>) => ()
   unless (proxy.function-entry-registered?)
     let target = application.application-target-app;
@@ -355,7 +355,7 @@ define method register-proxy-if-necessary
 end method register-proxy-if-necessary;
 
 define method register-proxy-if-necessary
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      proxy :: <location-breakpoint>) => ()
   unless (proxy.location-break-registered?)
     let target = application.application-target-app;
@@ -365,7 +365,7 @@ define method register-proxy-if-necessary
 end method register-proxy-if-necessary;
 
 define method register-proxy-if-necessary
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      proxy :: <class-breakpoint>) => ()
   unless (proxy.class-break-registered?)
     let target = application.application-target-app;
@@ -374,8 +374,8 @@ define method register-proxy-if-necessary
     let class = breakpoint.breakpoint-object;
     let remote-class = class.application-object-proxy;
     if (remote-class
-	  & set-application-class-breakpoint
-	      (application, thread, remote-class.static-dylan-value))
+          & set-application-class-breakpoint
+              (application, thread, remote-class.static-dylan-value))
       proxy.class-break-registered? := #t
     else
       make(<unknown-class-breakpoint>, breakpoint: breakpoint)
@@ -389,7 +389,7 @@ end method register-proxy-if-necessary;
 //    manager, this function will de-register it.
 
 define method deregister-proxy-if-necessary
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      proxy :: <function-entry-tracepoint>) => ()
   if (proxy.function-entry-registered?)
     let target = application.application-target-app;
@@ -399,7 +399,7 @@ define method deregister-proxy-if-necessary
 end method deregister-proxy-if-necessary;
 
 define method deregister-proxy-if-necessary
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      proxy :: <location-breakpoint>) => ()
   if (proxy.location-break-registered?)
     let target = application.application-target-app;
@@ -409,7 +409,7 @@ define method deregister-proxy-if-necessary
 end method deregister-proxy-if-necessary;
 
 define method deregister-proxy-if-necessary
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      proxy :: <class-breakpoint>) => ()
   if (proxy.class-break-registered?)
     let target = application.application-target-app;
@@ -418,8 +418,8 @@ define method deregister-proxy-if-necessary
     let class = breakpoint.breakpoint-object;
     let remote-class = class.application-object-proxy;
     if (remote-class
-	  & clear-application-class-breakpoint
-	      (application, thread, remote-class.static-dylan-value))
+          & clear-application-class-breakpoint
+              (application, thread, remote-class.static-dylan-value))
       proxy.class-break-registered? := #f
     else
       make(<unknown-class-breakpoint>, breakpoint: breakpoint)
@@ -439,17 +439,17 @@ define method find-or-instantiate-proxy
   if (bp.application-object-proxy)
     bp.application-object-proxy
   else
-    let addr 
+    let addr
       = calculate-breakpoint-address
-          (application, bp, 
-	   compilation-context: compilation-context);
+          (application, bp,
+           compilation-context: compilation-context);
     if (addr)
       let proxy
-	= make(<function-entry-tracepoint>,
-	       address: addr,
-	       callback: curry(function-entry-callback, application),
-	       return-callback: curry(function-return-callback, application),
-	       breakpoint-object: bp);
+        = make(<function-entry-tracepoint>,
+               address: addr,
+               callback: curry(function-entry-callback, application),
+               return-callback: curry(function-return-callback, application),
+               breakpoint-object: bp);
       bp.application-object-proxy := proxy;
       proxy;
     else
@@ -459,23 +459,23 @@ define method find-or-instantiate-proxy
 end method find-or-instantiate-proxy;
 
 define method find-or-instantiate-proxy
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      bp :: <source-location-breakpoint-object>,
      #key compilation-context = #f)
  => (proxy :: <location-breakpoint>)
   if (bp.application-object-proxy)
     bp.application-object-proxy
   else
-    let addr = 
-      calculate-breakpoint-address(application, 
+    let addr =
+      calculate-breakpoint-address(application,
                                    bp,
                                    compilation-context: compilation-context);
     if (addr)
       let proxy
-	= make(<location-breakpoint>,
-	       address: addr,
-	       callback: curry(location-breakpoint-callback, application),
-	       breakpoint-object: bp);
+        = make(<location-breakpoint>,
+               address: addr,
+               callback: curry(location-breakpoint-callback, application),
+               breakpoint-object: bp);
       bp.application-object-proxy := proxy;
       proxy;
     else
@@ -485,7 +485,7 @@ define method find-or-instantiate-proxy
 end method find-or-instantiate-proxy;
 
 define method find-or-instantiate-proxy
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      bp :: <class-breakpoint-object>,
      #key compilation-context = #f)
  => (proxy :: <class-breakpoint>)
@@ -514,7 +514,7 @@ end method reset-breakpoint-failure-recording;
 
 define method note-all-recorded-breakpoint-failures
     (application :: <dfmc-application>) => ()
-  for (breakpoints keyed-by state-change in 
+  for (breakpoints keyed-by state-change in
        application.breakpoint-state-change-failures)
     if (breakpoints.size > 0)
       note-breakpoint-state-changes-failed(application.server-project,
@@ -548,7 +548,7 @@ end method breakpoint-has-failed-already?;
 ///// SERVER-NOTE-BREAKPOINT-STATE-CHANGED (Environment Protocol Methods)
 
 define method server-note-breakpoint-state-changed
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      bp :: <generic-function-breakpoint-object>,
      state-change :: <breakpoint-state>,
      #key use-project-proxy = application.server-project.project-proxy)
@@ -566,39 +566,39 @@ define method server-note-breakpoint-state-changed
     let cc = use-project-proxy & use-project-proxy.project-browsing-context;
     with-debugger-transaction (target)
       block ()
-	select (state-change)
-	  #"created" =>
-	    let proxy = find-or-instantiate-proxy(application, bp,
-						  compilation-context: cc);
-	    if (bp.breakpoint-enabled?)
-	      register-proxy-if-necessary(application, proxy)
-	    end;
-	    
-	  #"destroyed" =>
-	    let proxy = find-or-instantiate-proxy(application, bp,
-						  compilation-context: cc);
-	    deregister-proxy-if-necessary(application, proxy);
-	    
-	  #"enabled?" =>
-	    let proxy = find-or-instantiate-proxy(application, bp,
-						  compilation-context: cc);
-	    if (bp.breakpoint-enabled?)
-	      register-proxy-if-necessary(application, proxy);
-	    else
-	      deregister-proxy-if-necessary(application, proxy);
-	    end;
-	    
-	  otherwise => #f;
-	  
-	end
+        select (state-change)
+          #"created" =>
+            let proxy = find-or-instantiate-proxy(application, bp,
+                                                  compilation-context: cc);
+            if (bp.breakpoint-enabled?)
+              register-proxy-if-necessary(application, proxy)
+            end;
+
+          #"destroyed" =>
+            let proxy = find-or-instantiate-proxy(application, bp,
+                                                  compilation-context: cc);
+            deregister-proxy-if-necessary(application, proxy);
+
+          #"enabled?" =>
+            let proxy = find-or-instantiate-proxy(application, bp,
+                                                  compilation-context: cc);
+            if (bp.breakpoint-enabled?)
+              register-proxy-if-necessary(application, proxy);
+            else
+              deregister-proxy-if-necessary(application, proxy);
+            end;
+
+          otherwise => #f;
+
+        end
       exception (<breakpoint-error>)
-	if (application.application-state == #"running")
-	  note-breakpoint-state-changes-failed
-	    (application.server-project, vector(bp), state-change);
-	else
-	  add!(application.breakpoint-state-change-failures[state-change],
-	       bp)
-	end
+        if (application.application-state == #"running")
+          note-breakpoint-state-changes-failed
+            (application.server-project, vector(bp), state-change);
+        else
+          add!(application.breakpoint-state-change-failures[state-change],
+               bp)
+        end
       end
     end
   end

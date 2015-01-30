@@ -29,17 +29,17 @@ define method frame-show-bars?
   let status-bar? = member?(#"status-bar", bars);
   let relayout?   = #f;
   local method show-or-hide (sheet, present?) => ()
-	  // Work extra hard to ensure that everything gets re-layed out,
-	  // since bars can have associated "decorations"
-	  when (sheet & sheet-withdrawn?(sheet) == present?)
-	    sheet-withdrawn?(sheet) := ~present?;
-	    for (s = sheet then sheet-parent(s),
-		 until: s == top-sheet)
-	      sheet-layed-out?(s) := #f
-	    end;
-	    relayout? := #t
-	  end
-	end method;
+          // Work extra hard to ensure that everything gets re-layed out,
+          // since bars can have associated "decorations"
+          when (sheet & sheet-withdrawn?(sheet) == present?)
+            sheet-withdrawn?(sheet) := ~present?;
+            for (s = sheet then sheet-parent(s),
+                 until: s == top-sheet)
+              sheet-layed-out?(s) := #f
+            end;
+            relayout? := #t
+          end
+        end method;
   show-or-hide(tool-bar,   tool-bar?);
   show-or-hide(status-bar, status-bar?);
   when (relayout?)

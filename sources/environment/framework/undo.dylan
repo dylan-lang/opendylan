@@ -60,10 +60,10 @@ define method make-undo-tool-bar-buttons
  => (buttons :: <sequence>)
   vector(make(<button>,
               label: $undo-bitmap,
-	      documentation: "Undo",
+              documentation: "Undo",
               command: <frame-undo-command>),
-	 make(<button>,
+         make(<button>,
               label: $redo-bitmap,
-	      documentation: "Redo",
+              documentation: "Redo",
               command: <frame-redo-command>))
 end method make-undo-tool-bar-buttons;

@@ -14,7 +14,7 @@ define method pair-head
  => (head-object :: false-or(<application-object>))
   let target = application.application-target-app;
   with-debugger-transaction (target)
-    let pair-value 
+    let pair-value
       = runtime-proxy-to-remote-value
           (application, pair-object.application-object-proxy);
     let (head-value, tail-value) = remote-pair-inspect(target, pair-value);
@@ -56,12 +56,12 @@ define method collection-size
   let target = application.application-target-app;
   let has-end?
     = with-debugger-transaction (target)
-	let range-value 
-	  = runtime-proxy-to-remote-value
-	      (application, range-object.application-object-proxy);
-	let (starter, ender, stepper)
-	  = remote-range-inspect(target, range-value);
-	ender ~== #f
+        let range-value
+          = runtime-proxy-to-remote-value
+              (application, range-object.application-object-proxy);
+        let (starter, ender, stepper)
+          = remote-range-inspect(target, range-value);
+        ender ~== #f
       end;
 
   // Use the next method to actually find out the size
@@ -79,7 +79,7 @@ define method range-start
  => (s :: <number-object>)
   let target = application.application-target-app;
   with-debugger-transaction (target)
-    let range-value 
+    let range-value
       = runtime-proxy-to-remote-value
           (application, range-object.application-object-proxy);
     let (starter, ender, stepper)
@@ -97,7 +97,7 @@ define method range-end
  => (e :: false-or(<number-object>))
   let target = application.application-target-app;
   with-debugger-transaction (target)
-    let range-value 
+    let range-value
       = runtime-proxy-to-remote-value
           (application, range-object.application-object-proxy);
     let (starter, ender, stepper)

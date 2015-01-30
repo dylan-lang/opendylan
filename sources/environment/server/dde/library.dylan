@@ -36,9 +36,9 @@ define module environment-dde-server
   use win32-dde;
 
   export server-start,
-	 server-stop,
-	 <dde-condition>,
-	 <dde-warning>,
-	 <dde-serious-condition>,
-	 *service-and-topic-name*;
+         server-stop,
+         <dde-condition>,
+         <dde-warning>,
+         <dde-serious-condition>,
+         *service-and-topic-name*;
 end module environment-dde-server;

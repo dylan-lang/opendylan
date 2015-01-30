@@ -14,5 +14,5 @@ define library source-control-manager
   use release-info;
 
   export source-control-manager,
-	 source-control-manager-internals;
+         source-control-manager-internals;
 end library source-control-manager;

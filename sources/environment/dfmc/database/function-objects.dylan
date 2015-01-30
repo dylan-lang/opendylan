@@ -44,59 +44,59 @@ define sealed method function-parameters
     local method make-parameter
               (var, type :: <type-expression>)
            => (parameter :: <parameter>)
-	    let name = name-to-string(var.variable-name);
-	    make(<parameter>,
-		 name: name-to-string(var.variable-name),
-		 type: make-environment-object-for-type-expression(server, type))
-	  end method;
+            let name = name-to-string(var.variable-name);
+            make(<parameter>,
+                 name: name-to-string(var.variable-name),
+                 type: make-environment-object-for-type-expression(server, type))
+          end method;
     local method make-optional-parameter
-	      //---*** Currently, it doesn't look like there's a way to get default
-	      //       values from dfmc-browser-support, so let's force it to #f.
-	      (var, type :: <type-expression>, key :: <symbol>) // ... default-value)
-	   => (parameter :: <optional-parameter>)
+              //---*** Currently, it doesn't look like there's a way to get default
+              //       values from dfmc-browser-support, so let's force it to #f.
+              (var, type :: <type-expression>, key :: <symbol>) // ... default-value)
+           => (parameter :: <optional-parameter>)
             let name = var.variable-name;
-	    make(<optional-parameter>,
-		 name: name-to-string(name),
-		 type: make-environment-object-for-type-expression(server, type),
-		 keyword: unless (key == name)
-			    name-to-string(key)
-			  end,
-		 default-value: $false-object
-				/* make-environment-object
-				  (<environment-object>,
-				   project: project,
-				   compiler-object-proxy: default-value) */ )
-	  end method;
+            make(<optional-parameter>,
+                 name: name-to-string(name),
+                 type: make-environment-object-for-type-expression(server, type),
+                 keyword: unless (key == name)
+                            name-to-string(key)
+                          end,
+                 default-value: $false-object
+                                /* make-environment-object
+                                  (<environment-object>,
+                                   project: project,
+                                   compiler-object-proxy: default-value) */ )
+          end method;
     let env-required
       = req-vars
          & map(make-parameter,
-	       req-vars,
-	       req-types
-		 | make(<simple-vector>, size: size(req-vars), fill: $<object>));
+               req-vars,
+               req-types
+                 | make(<simple-vector>, size: size(req-vars), fill: $<object>));
     let env-rest
       = rest-var
-	 & make-parameter(rest-var, rest-type | $<object>);
+         & make-parameter(rest-var, rest-type | $<object>);
     let env-keys
       = key-vars
-	 & map(make-optional-parameter,
-	       key-vars,
-	       key-types
-		| make(<simple-vector>, size: size(key-vars), fill: $<object>),
-	       keys);
+         & map(make-optional-parameter,
+               key-vars,
+               key-types
+                | make(<simple-vector>, size: size(key-vars), fill: $<object>),
+               keys);
     let env-next
       = next-var
-	 & make-parameter(next-var, next-type | $<object>);
+         & make-parameter(next-var, next-type | $<object>);
     let env-values
       = value-vars
-	 & map(make-parameter,
-	       value-vars,
-	       value-types
-		| make(<simple-vector>, size: size(value-vars), fill: $<object>));
+         & map(make-parameter,
+               value-vars,
+               value-types
+                | make(<simple-vector>, size: size(value-vars), fill: $<object>));
     let env-rest-value
       = rest-value-var
-	 & make-parameter(rest-value-var, rest-value-type | $<object>);
-    values(env-required | #(), env-rest, env-keys | #(), all-keys?, 
-	   env-next, env-values | #(), env-rest-value)
+         & make-parameter(rest-value-var, rest-value-type | $<object>);
+    values(env-required | #(), env-rest, env-keys | #(), all-keys?,
+           env-next, env-values | #(), env-rest-value)
   else
     values(#(), #f, #(), #f, #f, #(), #f)
   end
@@ -113,18 +113,18 @@ define sealed method do-generic-function-methods
     let project-object = server.server-project;
     do-generic-definition-methods
       (method (method-definition :: <method-definition>) => ()
-	 let environment-method
-	   = make-environment-object(<method-object>,
-				     project: project-object,
-				     compiler-object-proxy: method-definition);
-	 function(environment-method)
+         let environment-method
+           = make-environment-object(<method-object>,
+                                     project: project-object,
+                                     compiler-object-proxy: method-definition);
+         function(environment-method)
        end,
        server, definition)
   end
 end method do-generic-function-methods;
 
 define method do-generic-definition-methods
-    (function :: <function>, server :: <dfmc-database>, 
+    (function :: <function>, server :: <dfmc-database>,
      definition :: <generic-definition>,
      #key context :: false-or(<context>))
  => ()
@@ -134,9 +134,9 @@ define method do-generic-definition-methods
     let method-definitions
       = collect-from-all-client-contexts
           (method (context :: <context>)
-	     variable-active-method-definitions(context, variable)
-	   end,
-	   server, context);
+             variable-active-method-definitions(context, variable)
+           end,
+           server, context);
     do(function, method-definitions)
   end
 end method do-generic-definition-methods;
@@ -176,19 +176,19 @@ define sealed method find-method-with-specializers
   let gf-context = browsing-context(server, definition);
   let context :: <context>
     = if (class-definition)
-	let class-context = browsing-context(server, class-definition);
-	more-specific-context(class-context, gf-context) | gf-context
+        let class-context = browsing-context(server, class-definition);
+        more-specific-context(class-context, gf-context) | gf-context
       else
-	gf-context
+        gf-context
       end;
   block (return)
     do-generic-definition-methods
       (method (method-definition :: <method-definition>)
-	 let method-specializers 
-	   = method-definition-specializers(server, method-definition);
-	 if (method-specializers = specializers)
-	   return(method-definition)
-	 end
+         let method-specializers
+           = method-definition-specializers(server, method-definition);
+         if (method-specializers = specializers)
+           return(method-definition)
+         end
        end,
        server, definition,
        context: context);
@@ -197,7 +197,7 @@ define sealed method find-method-with-specializers
 end method find-method-with-specializers;
 
 define sealed method method-generic-function
-    (server :: <dfmc-database>, object :: <method-object>) 
+    (server :: <dfmc-database>, object :: <method-object>)
  => (function :: false-or(<generic-function-object>))
   let method-definition = object.compiler-object-proxy;
   let context = browsing-context(server, method-definition);
@@ -205,8 +205,8 @@ define sealed method method-generic-function
     = method-definition-generic-definition(context, method-definition);
   definition
     & make-environment-object(<generic-function-object>,
-			      project: server.server-project,
-			      compiler-object-proxy: definition)
+                              project: server.server-project,
+                              compiler-object-proxy: definition)
 end method method-generic-function;
 
 
@@ -272,18 +272,18 @@ define sealed method find-compiler-database-proxy
   if (instance?(definition, <generic-definition>))
     block (return)
       let specializers
-	= map(method (id :: <definition-id>)
-		let definition
-		  = find-compiler-database-proxy(server, id, imported?: #t);
-		// Note that we currently can only find methods that have
-		// exclusively classes as their specializers. This is because
-		// the compiler doesn't provide us a model of type-unions etc.
-		unless (instance?(definition, <class-definition>))
-		  return(#f)
-		end;
-		definition
-	      end,
-	      specializer-ids);
+        = map(method (id :: <definition-id>)
+                let definition
+                  = find-compiler-database-proxy(server, id, imported?: #t);
+                // Note that we currently can only find methods that have
+                // exclusively classes as their specializers. This is because
+                // the compiler doesn't provide us a model of type-unions etc.
+                unless (instance?(definition, <class-definition>))
+                  return(#f)
+                end;
+                definition
+              end,
+              specializer-ids);
       find-method-with-specializers(server, definition, specializers)
     end
   end
@@ -299,20 +299,20 @@ define sealed method compiler-database-proxy-id
     block (return)
       let specializer-ids = make(<stretchy-vector>);
       do-method-definition-specializers
-	(method (definition :: false-or(<definition>))
-	   let id
-	     = instance?(definition, <class-definition>)
-	         & compiler-database-proxy-id(server, definition);
-	   if (id)
-	     add!(specializer-ids, id)
-	   else
-	     return(#f)
-	   end
-	 end,
-	 server, definition);
+        (method (definition :: false-or(<definition>))
+           let id
+             = instance?(definition, <class-definition>)
+                 & compiler-database-proxy-id(server, definition);
+           if (id)
+             add!(specializer-ids, id)
+           else
+             return(#f)
+           end
+         end,
+         server, definition);
       make(<method-id>,
-	   generic-function: function-id,
-	   specializers: as(<simple-object-vector>, specializer-ids))
+           generic-function: function-id,
+           specializers: as(<simple-object-vector>, specializer-ids))
     end
   end
     | next-method()

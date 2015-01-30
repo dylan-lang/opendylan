@@ -29,8 +29,8 @@ end method state-object;
 
 /// Object Browser
 
-define frame <object-browser> 
-    (<frame-primary-object-mixin>, 
+define frame <object-browser>
+    (<frame-primary-object-mixin>,
      <frame-refresh-mixin>,
      <frame-module-gadget-mixin>,
      <frame-cascading-window-mixin>,
@@ -47,8 +47,8 @@ define frame <object-browser>
          selection-mode: #"single",
          depth: 1,
          children-generator: method (object)
-			       object-browser-children-generator(frame, object)
-			     end,
+                               object-browser-children-generator(frame, object)
+                             end,
          label-key: curry(frame-default-object-name, frame),
          popup-menu-callback: display-environment-popup-menu,
          value-changed-callback: method (sheet)
@@ -61,8 +61,8 @@ define frame <object-browser>
 */
 /*,
          activate-callback: method (sheet)
-			      let target = gadget-value(sheet);
-			      environment-activate-callback(sheet, target)
+                              let target = gadget-value(sheet);
+                              environment-activate-callback(sheet, target)
                             end);
 */
 */
@@ -93,15 +93,15 @@ define frame <object-browser>
          class: frame-primary-object-class(frame),
          frame: frame,
          page:  object-browser-page(frame),
-	 value-changed-callback: method (pane)
-				   let state :: false-or(<view-state>)
-				     = frame-raw-primary-object(frame);
-				   if (state)
-				     let page
-				       = environment-property-pane-page(pane);
-				     state-page(state) := page
-				   end
-				 end,
+         value-changed-callback: method (pane)
+                                   let state :: false-or(<view-state>)
+                                     = frame-raw-primary-object(frame);
+                                   if (state)
+                                     let page
+                                       = environment-property-pane-page(pane);
+                                     state-page(state) := page
+                                   end
+                                 end,
          activate-callback: environment-activate-callback);
   pane main-layout (frame)
     vertically (spacing: 2)
@@ -197,17 +197,17 @@ define method frame-show-bars?
   let status-bar? = member?(#"status-bar", bars);
   let relayout?   = #f;
   local method show-or-hide (sheet, present?) => ()
-	  // Work extra hard to ensure that everything gets re-layed out,
-	  // since bars can have associated "decorations"
-	  when (sheet & sheet-withdrawn?(sheet) == present?)
-	    sheet-withdrawn?(sheet) := ~present?;
-	    for (s = sheet then sheet-parent(s),
-		 until: s == top-sheet)
-	      sheet-layed-out?(s) := #f
-	    end;
-	    relayout? := #t
-	  end
-	end method show-or-hide;
+          // Work extra hard to ensure that everything gets re-layed out,
+          // since bars can have associated "decorations"
+          when (sheet & sheet-withdrawn?(sheet) == present?)
+            sheet-withdrawn?(sheet) := ~present?;
+            for (s = sheet then sheet-parent(s),
+                 until: s == top-sheet)
+              sheet-layed-out?(s) := #f
+            end;
+            relayout? := #t
+          end
+        end method show-or-hide;
   show-or-hide(tool-bar,   tool-bar?);
   show-or-hide(object-bar, object-bar?);
   show-or-hide(status-bar, status-bar?);
@@ -230,13 +230,13 @@ define method clipboard-object-to-browse
     <environment-object> =>
       let project = frame.frame-project;
       if (environment-object-home-server?(project, object))
-	object
+        object
       else
-	//---*** Note that environment-object-id ignores the project,
-	//---*** which is good because this is not its owner project!
-	//---*** Really environment-object-id shouldn't take a server.
-	let id = environment-object-id(project, object);
-	id & find-environment-object(project, id)
+        //---*** Note that environment-object-id ignores the project,
+        //---*** which is good because this is not its owner project!
+        //---*** Really environment-object-id shouldn't take a server.
+        let id = environment-object-id(project, object);
+        id & find-environment-object(project, id)
       end;
     <string> =>
       find-named-object(frame, object);
@@ -260,18 +260,18 @@ define method paste-object
   else
     let object-name
       = with-clipboard (clipboard = top-level-sheet(frame))
-	  if (clipboard-data-available?(<string>, clipboard))
-	    get-clipboard-data-as(<string>, clipboard)
-	  end
-	end;
+          if (clipboard-data-available?(<string>, clipboard))
+            get-clipboard-data-as(<string>, clipboard)
+          end
+        end;
     let message
       = if (object-name & size(object-name) < $maximum-object-name-length)
-	  format-to-string
-	    ("Cannot paste '%s' as it was not found in this project",
-	     object-name)
-	else
-	  "Cannot browse the current clipboard contents"
-	end;
+          format-to-string
+            ("Cannot paste '%s' as it was not found in this project",
+             object-name)
+        else
+          "Cannot browse the current clipboard contents"
+        end;
     environment-error-message(message, owner: frame)
   end
 end method paste-object;
@@ -285,7 +285,7 @@ define method make-browse-tool-bar-buttons
   let project = frame.frame-project;
   vector(make(<button>,
               label: $home-bitmap,
-	      documentation: "Browse library",
+              documentation: "Browse library",
               command: frame-browse-project-library,
               activate-callback: method (sheet)
                                    let frame = sheet-frame(sheet);
@@ -328,7 +328,7 @@ end method frame-edit-options;
 // Object hierarchy
 
 /*
-define method frame-secondary-object 
+define method frame-secondary-object
     (frame :: <object-browser>) => (object :: false-or(<environment-object>))
   frame-primary-object(frame)
   //---*** Experiment with removing the tree control
@@ -345,13 +345,13 @@ define method object-browser-children-generator
 end method object-browser-children-generator;
 
 define method object-browser-children-generator
-    (frame :: <object-browser>, class :: <class-object>) 
+    (frame :: <object-browser>, class :: <class-object>)
  => (objects :: <sequence>)
   class-direct-subclasses(frame.frame-project, class)
 end method object-browser-children-generator;
 
 define method object-browser-children-generator
-    (frame :: <object-browser>, function :: <generic-function-object>) 
+    (frame :: <object-browser>, function :: <generic-function-object>)
  => (objects :: <sequence>)
   generic-function-object-methods(frame.frame-project, function)
 end method object-browser-children-generator;
@@ -446,7 +446,7 @@ define method note-raw-primary-object-replaced
 end method note-raw-primary-object-replaced;
 
 define method note-primary-object-changed
-    (frame :: <object-browser>, 
+    (frame :: <object-browser>,
      old-object :: false-or(<environment-object>))
  => ()
   ignore(old-object);
@@ -523,13 +523,13 @@ define method refresh-frame (frame :: <object-browser>) => ()
   refresh-frame-view(frame)
 end method refresh-frame;
 
-define method refresh-frame-view 
-    (frame :: <object-browser>, 
+define method refresh-frame-view
+    (frame :: <object-browser>,
      #key pages, new-thread? = #t, refresh-all? = #f)
  => ()
   frame-status-message(frame) := "";
   refresh-environment-property-pane
-    (frame.tab-layout, pages: pages, 
+    (frame.tab-layout, pages: pages,
      clean?: #t, new-thread?: new-thread?, refresh-all?: refresh-all?)
 end method refresh-frame-view;
 
@@ -595,7 +595,7 @@ define method frame-browse-object?
 end method frame-browse-object?;
 
 
-define sideways method browse-object 
+define sideways method browse-object
     (project :: <project-object>, object :: <environment-object>, #key page)
  => (success? :: <boolean>)
   find-environment-frame(default-port(),
@@ -612,10 +612,10 @@ define sideways method browse-object-type
   let type = environment-object-type(project, object);
   if (type)
     find-environment-frame(default-port(),
-			   <object-browser>,
-			   project: project,
-			   object: type,
-			   page: page);
+                           <object-browser>,
+                           project: project,
+                           object: type,
+                           page: page);
     #t
   end
 end method browse-object-type;
@@ -624,10 +624,10 @@ define sideways method browse-object-generic-function
     (project :: <project-object>, function :: <generic-function-object>, #key page)
  => (success? :: <boolean>)
   find-environment-frame(default-port(),
-			 <object-browser>,
-			 project: project,
-			 object: function,
-			 page: page);
+                         <object-browser>,
+                         project: project,
+                         object: function,
+                         page: page);
   #t
 end method browse-object-generic-function;
 
@@ -637,10 +637,10 @@ define sideways method browse-object-generic-function
   let function = method-generic-function(project, object);
   if (function)
     find-environment-frame(default-port(),
-			   <object-browser>,
-			   project: project,
-			   object: function,
-			   page: page);
+                           <object-browser>,
+                           project: project,
+                           object: function,
+                           page: page);
     #t
   end
 end method browse-object-generic-function;
@@ -671,7 +671,7 @@ define method frame-note-application-threads-changed
   next-method();
   let object = frame-primary-object(frame);
   if (instance?(object, <application>)
-	& object.server-project == frame-project(frame))
+        & object.server-project == frame-project(frame))
     refresh-frame-view(frame, pages: #[#"threads"])
   end
 end method frame-note-application-threads-changed;
@@ -686,7 +686,7 @@ define method frame-note-all-breakpoints-changed
 end method frame-note-all-breakpoints-changed;
 
 define method frame-note-breakpoint-state-changed
-    (frame :: <object-browser>, breakpoint :: <breakpoint-object>, 
+    (frame :: <object-browser>, breakpoint :: <breakpoint-object>,
      state :: <breakpoint-state>)
  => ()
   next-method();

@@ -223,8 +223,8 @@ add-command-table-menu-item
   (*debugger-bar-options-command-table*,
    "", <check-box>, vector(#"tool-bar", #"status-bar", #"context"),
    items: #[#["Toolbar",        #"tool-bar"],
-	    #["Status Bar",     #"status-bar"],
-	    #["Context Window", #"context"]],
+            #["Status Bar",     #"status-bar"],
+            #["Context Window", #"context"]],
    label-key: first, value-key: second,
    callback: method (menu-box)
                frame-show-bars?(sheet-frame(menu-box), gadget-value(menu-box))
@@ -241,17 +241,17 @@ define method frame-show-bars?
   let context?    = member?(#"context",    bars);
   let relayout?   = #f;
   local method show-or-hide (sheet, present?) => ()
-	  // Work extra hard to ensure that everything gets re-layed out,
-	  // since bars can have associated "decorations"
-	  when (sheet & sheet-withdrawn?(sheet) == present?)
-	    sheet-withdrawn?(sheet) := ~present?;
-	    for (s = sheet then sheet-parent(s),
-		 until: s == top-sheet)
-	      sheet-layed-out?(s) := #f
-	    end;
-	    relayout? := #t
-	  end
-	end method;
+          // Work extra hard to ensure that everything gets re-layed out,
+          // since bars can have associated "decorations"
+          when (sheet & sheet-withdrawn?(sheet) == present?)
+            sheet-withdrawn?(sheet) := ~present?;
+            for (s = sheet then sheet-parent(s),
+                 until: s == top-sheet)
+              sheet-layed-out?(s) := #f
+            end;
+            relayout? := #t
+          end
+        end method;
   show-or-hide(tool-bar,   tool-bar?);
   show-or-hide(status-bar, status-bar?);
   show-or-hide(context,    context?);
@@ -336,7 +336,7 @@ end command-table *debugger-command-table*;
 
 /// EXECUTE-DEBUGGER-FUNCTION (internal)
 
-define function execute-debugger-function 
+define function execute-debugger-function
     (function :: <function>, debugger :: <debugger>,
      #key message :: <string> = "Processing ...")
  => (#rest values)
@@ -349,7 +349,7 @@ define function execute-debugger-function
     end;
   end;
   apply(values, return-values)
-end function;  
+end function;
 
 
 /// EXECUTE-COMMAND (duim-frames)
@@ -361,30 +361,30 @@ define sealed method do-execute-command
     (curry(execute-debugger-command, command),
      debugger,
      message: apply(format-to-string,
-		    command.progress-format-string, command.progress-format-arguments))
+                    command.progress-format-string, command.progress-format-arguments))
 end method;
 
 
 /// ---*** DEBUGGER: may want to offer option to stop application or
 /// refresh debugger here or may want to disable commands in menu bars
 /// and tool bars etc
-    
+
 define sealed method do-execute-command
     (debugger :: <debugger>, command :: <debugger-enabled-command>) => (#rest values)
   case
     // ---*** DEBUGGER: probably tested before we get here (if so how do we present message)
     ~command-enabled?(command, debugger) =>
       environment-error-message
-	(format-to-string
-	   ("You need to stop the application in order to do %s.", 
-	    command.command-label),
-	 owner: debugger);
+        (format-to-string
+           ("You need to stop the application in order to do %s.",
+            command.command-label),
+         owner: debugger);
     ~debugger.debugger-updated? =>
       environment-error-message
-	(format-to-string
-	   ("You need to refresh the debugger in order to do %s.", 
-	    command.command-label),
-	 owner: debugger);
+        (format-to-string
+           ("You need to refresh the debugger in order to do %s.",
+            command.command-label),
+         owner: debugger);
     otherwise =>
       next-method();
   end case;
@@ -421,7 +421,7 @@ define function application-abort-restart (project :: <project-object>, restarts
   block (return)
     for (restart in restarts)
       if (application-restart-abort?(project, restart))
-	return(restart);
+        return(restart);
       end if;
     end for;
   end block;
@@ -438,16 +438,16 @@ define sealed method execute-debugger-command
   if (empty?(restarts))
     environment-message
       (format-to-string("No available restarts in %s.",
-			environment-object-display-name(project, thread, #f)),
+                        environment-object-display-name(project, thread, #f)),
        owner: debugger)
   else
     let (chosen :: false-or(<restart-object>), success?, width, height)
       = choose-from-dialog(restarts,
-			   title: "Choose Restart",
-			   default-item: restarts[0],
-			   label-key: curry(application-restart-message, project),
-			   width:  $choose-restart-dialog-width,
-			   height: $choose-restart-dialog-height);
+                           title: "Choose Restart",
+                           default-item: restarts[0],
+                           label-key: curry(application-restart-message, project),
+                           width:  $choose-restart-dialog-width,
+                           height: $choose-restart-dialog-height);
     when (chosen & success?)
       $choose-restart-dialog-width  := width;
       $choose-restart-dialog-height := height;
@@ -465,17 +465,17 @@ end method;
 
 define sealed method execute-debugger-command
     (command :: <debugger-step-over-command>, debugger :: <debugger>)
-  step-application-over(debugger.frame-project, 
-			debugger.debugger-thread,
-			stack-frame: debugger.debugger-stepping-stack-frame)
+  step-application-over(debugger.frame-project,
+                        debugger.debugger-thread,
+                        stack-frame: debugger.debugger-stepping-stack-frame)
 end method;
 
 define sealed method execute-debugger-command
     (command :: <debugger-step-out-command>, debugger :: <debugger>)
   let frame = debugger.debugger-stepping-out-stack-frame;
-  step-application-out(debugger.frame-project, 
-		       debugger.debugger-thread,
-		       stack-frame: frame)
+  step-application-out(debugger.frame-project,
+                       debugger.debugger-thread,
+                       stack-frame: frame)
 end method;
 
 define sealed method execute-debugger-command
@@ -588,22 +588,22 @@ end method;
 
 
 /// WALK-NODES (internal)
-/// 
+///
 /// ---*** DUIM: perhaps DUIM should supply WALK-NODES
 
 define function walk-nodes (function :: <function>, tree :: <tree-control>)
  => ()
   let nqueue = make(<deque>);
   local method walk-tree ()
-	  unless (empty?(nqueue))
-	    let node = pop(nqueue);
-	    function(tree, node);
-	    for (child in node-children(node))
-	      push(nqueue, child);
-	    end for;
-	    walk-tree();
-	  end unless;
-	end method;
+          unless (empty?(nqueue))
+            let node = pop(nqueue);
+            function(tree, node);
+            for (child in node-children(node))
+              push(nqueue, child);
+            end for;
+            walk-tree();
+          end unless;
+        end method;
   for (object in tree-control-roots(tree))
     push(nqueue, find-node(tree, object));
   end for;
@@ -617,14 +617,14 @@ end function;
 
 define function update-debugger-command-table (debugger :: <debugger>)
   local method update (item, comtab :: <command-table>)
-	  let object = decorator-object(item);
-	  let type   = decorator-type(item);
-	  select (type)
-	    <command>, <function> => update-debugger-command(debugger, object);
-	    <command-table>       => do-command-table-menu-items(update, object);
-	    otherwise             => #f;	// <separator> etc
-	  end select;
-	end method;
+          let object = decorator-object(item);
+          let type   = decorator-type(item);
+          select (type)
+            <command>, <function> => update-debugger-command(debugger, object);
+            <command-table>       => do-command-table-menu-items(update, object);
+            otherwise             => #f;        // <separator> etc
+          end select;
+        end method;
   do-command-table-menu-items(update, frame-command-table(debugger));
 end function;
 
@@ -666,12 +666,12 @@ define sealed method update-debugger-command
   command-enabled?(command, debugger)
     := debugger.debugger-enabled?
          & begin
-	     let application = debugger.frame-project.project-application;
-	     select (application & application.application-state)
-	       #"stopped" => #t;
-	       otherwise  => #f;
-	     end
-	   end
+             let application = debugger.frame-project.project-application;
+             select (application & application.application-state)
+               #"stopped" => #t;
+               otherwise  => #f;
+             end
+           end
 end method update-debugger-command;
 
 define sealed method update-debugger-command
@@ -680,11 +680,11 @@ define sealed method update-debugger-command
   command-enabled?(command, debugger)
     := debugger.debugger-enabled?
          & begin
-	     let project = debugger.frame-project;
-	     let thread = debugger.debugger-thread;
-	     let restarts = application-thread-restarts(project, thread);
-	     application-abort-restart(project, restarts)
-	   end
+             let project = debugger.frame-project;
+             let thread = debugger.debugger-thread;
+             let restarts = application-thread-restarts(project, thread);
+             application-abort-restart(project, restarts)
+           end
          & #t
 end method update-debugger-command;
 
@@ -694,10 +694,10 @@ define sealed method update-debugger-command
   command-enabled?(command, debugger)
     := debugger.debugger-enabled?
          & begin
-	     let project = debugger.frame-project;
-	     let thread = debugger.debugger-thread;
-	     ~empty?(application-thread-restarts(project, thread));
-	   end
+             let project = debugger.frame-project;
+             let thread = debugger.debugger-thread;
+             ~empty?(application-thread-restarts(project, thread));
+           end
 end method update-debugger-command;
 
 
@@ -723,19 +723,19 @@ define function make-stack-navigation-tool-bar-buttons
  => (buttons :: <sequence>)
   vector(make(<button>,
               label: $top-of-stack-bitmap,
-	      documentation: $top-of-stack-title,
+              documentation: $top-of-stack-title,
               command: <debugger-top-stack-frame-command>),
-         make(<button>, 
+         make(<button>,
               label: $up-stack-bitmap,
-	      documentation: $up-stack-title,
+              documentation: $up-stack-title,
               command: <debugger-up-stack-frame-command>),
-         make(<button>, 
+         make(<button>,
               label: $down-stack-bitmap,
-	      documentation: $down-stack-title,
+              documentation: $down-stack-title,
               command: <debugger-down-stack-frame-command>),
-         make(<button>, 
+         make(<button>,
               label: $bottom-of-stack-bitmap,
-	      documentation: $bottom-of-stack-title,
+              documentation: $bottom-of-stack-title,
               command: <debugger-bottom-stack-frame-command>))
 end function;
 */
@@ -747,15 +747,15 @@ define function make-stepping-tool-bar-buttons
  => (buttons :: <sequence>)
   vector(make(<button>,
               label: $step-over-bitmap,
-	      documentation: $step-over-title,
+              documentation: $step-over-title,
               command: <debugger-step-over-command>),
-         make(<button>, 
+         make(<button>,
               label: $step-into-bitmap,
-	      documentation: $step-into-title,
+              documentation: $step-into-title,
               command: <debugger-step-into-command>),
-	 make(<button>, 
+         make(<button>,
               label: $step-out-bitmap,
-	      documentation: $step-out-title,
+              documentation: $step-out-title,
               command: <debugger-step-out-command>))
 end function;
 
@@ -769,11 +769,11 @@ define sealed method make-environment-tool-bar-buttons (debugger :: <debugger>)
     let step-buttons = make-stepping-tool-bar-buttons(debugger);
     let module-buttons = make-module-tool-bar-buttons(debugger);
     let next-buttons = next-method();
-    concatenate-as(<vector>, 
-		   next-buttons,
-		   vector(/* make(<row-layout>, children: stack-navigation-buttons, spacing: 0), */
-			  make(<row-layout>, children: step-buttons, spacing: 0),
-			  make(<row-layout>, children: module-buttons, spacing: 0)));
+    concatenate-as(<vector>,
+                   next-buttons,
+                   vector(/* make(<row-layout>, children: stack-navigation-buttons, spacing: 0), */
+                          make(<row-layout>, children: step-buttons, spacing: 0),
+                          make(<row-layout>, children: module-buttons, spacing: 0)));
   end;
 end method;
 
@@ -787,10 +787,10 @@ end method;
 // the pane to get the actual pane to copy/paste etc. on.
 define constant $debugger-focus-panes :: <vector>
   = vector(compose(%context-pane,                 debugger-context-pane),
-	   compose(displayer-collection-gadget, %displayer, debugger-stack-pane),
-	   compose(%source-gadget,                debugger-source-pane),
-	   compose(interactor-pane-default-focus, debugger-interactor1-pane),
-	   compose(interactor-pane-default-focus, debugger-interactor2-pane));
+           compose(displayer-collection-gadget, %displayer, debugger-stack-pane),
+           compose(%source-gadget,                debugger-source-pane),
+           compose(interactor-pane-default-focus, debugger-interactor1-pane),
+           compose(interactor-pane-default-focus, debugger-interactor2-pane));
 
 define sealed method debugger-sheet-with-focus
     (frame :: <debugger>)
@@ -801,19 +801,19 @@ define sealed method debugger-sheet-with-focus
     let sheet = frame-input-focus(frame);
     // debug-out(#"environment-debugger", "Frame input focus: %=", sheet);
     sheet := sheet
-	     & sheet-mapped?(sheet) // & (debug-out(#"environment-debugger", "Mapped") | #t)
-	     & (sheet-frame(sheet) = frame)
+             & sheet-mapped?(sheet) // & (debug-out(#"environment-debugger", "Mapped") | #t)
+             & (sheet-frame(sheet) = frame)
              //& (debug-out(#"environment-debugger", "Frame OK") | #t)
-	     & any?(method (pane-getter)
-		      /* debug-out(#"environment-debugger",
+             & any?(method (pane-getter)
+                      /* debug-out(#"environment-debugger",
                                 "Checking %=: %=",
                                 pane-getter, pane-getter(frame)); */
-		      when (sheet = pane-getter(frame))
-		        // debug-out(#"environment-debugger", "Matched");
-			sheet
-		      end;
-		    end,
-		    $debugger-focus-panes);
+                      when (sheet = pane-getter(frame))
+                        // debug-out(#"environment-debugger", "Matched");
+                        sheet
+                      end;
+                    end,
+                    $debugger-focus-panes);
     // debug-out(#"environment-debugger", "debugger-sheet-with-focus: %=", sheet);
     sheet
   end;
@@ -828,18 +828,18 @@ commands:
     => { define sealed method ?env-command (frame :: <debugger>)
           => ( ?values )
            let sheet-with-focus = debugger-sheet-with-focus(frame);
-	   sheet-with-focus
-	     & "debugger-sheet-" ## ?env-command (sheet-with-focus)
-	 end method ?env-command;
+           sheet-with-focus
+             & "debugger-sheet-" ## ?env-command (sheet-with-focus)
+         end method ?env-command;
          ... }
   { ?env-command:name ( ?keys:* ) => ( ?values:* ); ... }
     => { define sealed method ?env-command
-	     (frame :: <environment-editor>, #key ?keys)
+             (frame :: <environment-editor>, #key ?keys)
           => ( ?values )
            let sheet-with-focus = debugger-sheet-with-focus(frame);
-	   sheet-with-focus
-	     & "debugger-sheet-" ## ?env-command (sheet-with-focus, ?keys)
-	 end method ?env-command;
+           sheet-with-focus
+             & "debugger-sheet-" ## ?env-command (sheet-with-focus, ?keys)
+         end method ?env-command;
          ... }
 end macro delegate-to-debugger-sheet-with-focus;
 
@@ -965,10 +965,10 @@ end method;
 /// Specialised methods on commands from the *run-command-table*.
 
 define method frame-pause-application
-    (frame :: <debugger>, 
+    (frame :: <debugger>,
      #key thread,
           startup-option) => ()
-  next-method(frame, 
+  next-method(frame,
               thread: thread | frame.debugger-thread,
               startup-option: startup-option)
 end method frame-pause-application;

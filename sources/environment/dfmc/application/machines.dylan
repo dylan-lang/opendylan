@@ -27,8 +27,8 @@ end class;
 ///// MAKE (Dylan)
 //    Ensures that the <MACHINE> class is instantiable by clients.
 
-define sideways method make 
-    (c == <machine>, 
+define sideways method make
+    (c == <machine>,
      #rest args, #key network-address = #f, #all-keys) => (m)
   if (network-address)
     apply(make, <remotely-connected-machine>, args)
@@ -43,7 +43,7 @@ end method;
 define method initialize (m :: <remotely-connected-machine>, #key) => ()
   next-method();
   block ()
-    m.machine-debug-connection := 
+    m.machine-debug-connection :=
       make(<remote-debugger-connection>,
            network-address: m.machine-network-address,
            password: m.machine-password);

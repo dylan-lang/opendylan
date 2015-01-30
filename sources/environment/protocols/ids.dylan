@@ -37,8 +37,8 @@ define method make
   let (table, key) = apply(id-table-and-key, class, args);
   element(table, key, default: #f)
     | begin
-	let id = next-method();
-	element(table, key) := id
+        let id = next-method();
+        element(table, key) := id
       end
 end method make;
 
@@ -96,9 +96,9 @@ define method id-table-and-key
   let library-name = id-name(id-library(module));
   let mangled-name
     = concatenate-as(<string>,
-		     name,         $name-separator,
-		     module-name,  $name-separator,
-		     library-name);
+                     name,         $name-separator,
+                     module-name,  $name-separator,
+                     library-name);
   values($definition-ids, mangled-name)
 end method id-table-and-key;
 
@@ -120,21 +120,21 @@ define method id-table-and-key
           specializers :: <simple-object-vector>)
  => (table :: <string-table>, key :: <string>)
   let (table, key)
-    = id-table-and-key(<definition-id>, 
-		       name: generic-function.id-name,
-		       module: generic-function.id-module);
+    = id-table-and-key(<definition-id>,
+                       name: generic-function.id-name,
+                       module: generic-function.id-module);
   ignore(table);
   let mangled-name = key;
   for (specializer :: <definition-id> in specializers)
     let (table, key)
-      = id-table-and-key(<definition-id>, 
-			 name: specializer.id-name,
-			 module: specializer.id-module);
+      = id-table-and-key(<definition-id>,
+                         name: specializer.id-name,
+                         module: specializer.id-module);
     ignore(table);
     mangled-name
       := concatenate-as(<byte-string>,
-			mangled-name, $name-separator,
-			key)
+                        mangled-name, $name-separator,
+                        key)
   end;
   values($method-ids, mangled-name)
 end method id-table-and-key;
@@ -158,9 +158,9 @@ define method id-table-and-key
  => (table :: <string-table>, key :: <string>)
   let filename = as(<string>, filename);
   let mangled-name
-    = concatenate-as(<string>, 
-		     filename, $name-separator,
-		     integer-to-string(line-number));
+    = concatenate-as(<string>,
+                     filename, $name-separator,
+                     integer-to-string(line-number));
   values($object-location-ids, mangled-name)
 end method id-table-and-key;
 
@@ -183,9 +183,9 @@ define method id-table-and-key
   let filename = as(<string>, filename);
   let library-name = library.id-name;
   let mangled-name
-    = concatenate-as(<string>, 
-		     library-name, $name-separator,
-		     filename,     $name-separator,
-		     integer-to-string(line-number));
+    = concatenate-as(<string>,
+                     library-name, $name-separator,
+                     filename,     $name-separator,
+                     integer-to-string(line-number));
   values($library-object-location-ids, mangled-name)
 end method id-table-and-key;

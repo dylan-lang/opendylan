@@ -25,7 +25,7 @@ define method function-called-functions
             <method-object> =>
               add!(sequences, vector(def));
             <generic-function-object> =>
-              add!(sequences, 
+              add!(sequences,
                    generic-function-object-methods(project, def) | #[]);
             otherwise =>
               #f;
@@ -85,7 +85,7 @@ define method function-parameters
   let next = #f;
   let vals = #[];
   let rest-value = #f;
-  let all-keys? = #f;	//---*** need to get the real value for this!
+  let all-keys? = #f;        //---*** need to get the real value for this!
 
   // Within a debugger transaction, inspect the generic function for its
   // signature, and its list of methods. Construct all of the return
@@ -108,7 +108,7 @@ define method function-parameters
 
        // Call the DM's inspector for generic functions,
 
-       let (sig, methods) = 
+       let (sig, methods) =
          remote-generic-function-inspect(target, function-value);
 
        // Call the DM's inspector for the signature. We are not interested
@@ -131,7 +131,7 @@ define method function-parameters
 
        for (i from 0 below size(reqtypes))
          let name-i = format-to-string("r%d", i);
-         let type-i = 
+         let type-i =
            make-environment-object-for-runtime-value
              (application, reqtypes[i]);
          required[i] := make(<parameter>, name: name-i, type: type-i);
@@ -141,7 +141,7 @@ define method function-parameters
 
        for (i from 0 below size(valtypes))
          let name-i = format-to-string("v%d", i);
-         let type-i = 
+         let type-i =
            make-environment-object-for-runtime-value
              (application, valtypes[i]);
          vals[i] := make(<parameter>, name: name-i, type: type-i);
@@ -151,7 +151,7 @@ define method function-parameters
 
        if (rtype)
          let name-r = "args";
-         let type-r = 
+         let type-r =
            make-environment-object-for-runtime-value
              (application, rtype);
          rest := make(<parameter>, name: name-r, type: type-r);
@@ -169,12 +169,12 @@ define method function-parameters
                 (application, ktypes[k]);
            let default-k = #f;  // GF's can't have defaulted keyword args!!
                                 // Only methods can.
-	   //---*** need to get the real keyword
-	   let key-k = name-k;
+           //---*** need to get the real keyword
+           let key-k = name-k;
            keys[k] := make(<optional-parameter>,
-                           name: name-k, 
-			   keyword: key-k,
-                           type: type-k, 
+                           name: name-k,
+                           keyword: key-k,
+                           type: type-k,
                            default-value: default-k);
          end for
        end if;
@@ -211,7 +211,7 @@ define method function-parameters
   let next = #f;
   let vals = #[];
   let rest-value = #f;
-  let all-keys? = #f;	//---*** need to get the real value for this!
+  let all-keys? = #f;        //---*** need to get the real value for this!
 
   // GET-KEYWORD-DEFAULT
   // Given a keyword, and a sequence of alternating keywords and values,
@@ -253,7 +253,7 @@ define method function-parameters
 
        // Call the DM's inspector for methods.
 
-       let (sig, iep, keyword-specifiers) = 
+       let (sig, iep, keyword-specifiers) =
          remote-method-inspect(target, function-value);
 
        // Call the DM to inspect the signature. From there, we follow most
@@ -274,7 +274,7 @@ define method function-parameters
 
        for (i from 0 below size(reqtypes))
          let name-i = format-to-string("r%d", i);
-         let type-i = 
+         let type-i =
            make-environment-object-for-runtime-value
              (application, reqtypes[i]);
          required[i] := make(<parameter>, name: name-i, type: type-i);
@@ -284,7 +284,7 @@ define method function-parameters
 
        for (i from 0 below size(valtypes))
          let name-i = format-to-string("v%d", i);
-         let type-i = 
+         let type-i =
            make-environment-object-for-runtime-value
              (application, valtypes[i]);
          vals[i] := make(<parameter>, name: name-i, type: type-i);
@@ -294,7 +294,7 @@ define method function-parameters
 
        if (rtype)
          let name-r = "args";
-         let type-r = 
+         let type-r =
            make-environment-object-for-runtime-value
              (application, rtype);
          rest := make(<parameter>, name: name-r, type: type-r);
@@ -313,12 +313,12 @@ define method function-parameters
              make-environment-object-for-runtime-value
                 (application, ktypes[k]);
            let default-k = get-keyword-default(kwds[k], keyword-specifiers);
-	   //---*** Need to get the real value for this!
-	   let key-k = name-k;
+           //---*** Need to get the real value for this!
+           let key-k = name-k;
            keys[k] := make(<optional-parameter>,
-                           name: name-k, 
-			   keyword: key-k,
-                           type: type-k, 
+                           name: name-k,
+                           keyword: key-k,
+                           type: type-k,
                            default-value: default-k);
          end for
        end if;
@@ -353,21 +353,21 @@ define method do-generic-function-methods
       method ()
         let generic-proxy =
           ensure-application-value-proxy(application, gf);
-        let generic-value = 
+        let generic-value =
           runtime-proxy-to-remote-value(application, generic-proxy);
 
         // Inspect the generic function.
-        let (sig, method-values) = 
+        let (sig, method-values) =
           remote-generic-function-inspect(target, generic-value);
 
-	debug-out(#"dfmc-environment-application",
+        debug-out(#"dfmc-environment-application",
                   "Generic function: signature %=, methods %=",
                   sig, method-values);
 
-	//---*** andrewa: this won't match up with the same methods
-	//---*** from the compiler database. :-(
-	do-environment-objects-for-runtime-values
-	  (do-this-one, application, method-values)
+        //---*** andrewa: this won't match up with the same methods
+        //---*** from the compiler database. :-(
+        do-environment-objects-for-runtime-values
+          (do-this-one, application, method-values)
       end method);
 
 end method;
@@ -426,7 +426,7 @@ define method method-specializers
       end method);
 
   // Return the sequence of specializers.
-  specializers;  
+  specializers;
 end method;
 
 

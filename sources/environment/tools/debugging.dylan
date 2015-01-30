@@ -19,12 +19,12 @@ define sealed method find-debugger
  => (interactor)
   let zoom
     = select (startup-option)
-	#"start", #"debug" => #"zoom-debugging";
-	#"interact"	   => #"zoom-interacting";
+        #"start", #"debug" => #"zoom-debugging";
+        #"interact"           => #"zoom-interacting";
       end;
   find-debugger-from-environment(frame,
-				 project: frame.ensure-frame-project,
-				 zoom: zoom)
+                                 project: frame.ensure-frame-project,
+                                 zoom: zoom)
 end method find-debugger;
 
 
@@ -65,7 +65,7 @@ define method just-in-time-debugging-arguments
 end method just-in-time-debugging-arguments;
 
 define method frame-open-just-in-time-project
-    (frame :: <environment-frame>, process :: <string>, 
+    (frame :: <environment-frame>, process :: <string>,
      id :: false-or(<string>))
  => ()
   let process = lookup-process-by-id(process);
@@ -79,7 +79,7 @@ define method frame-open-just-in-time-project
 end method frame-open-just-in-time-project;
 
 define method frame-open-just-in-time-project
-    (frame :: <environment-frame>, process :: <process>, 
+    (frame :: <environment-frame>, process :: <process>,
      id :: false-or(<string>))
  => ()
   let filename = process-executable-file(process);
@@ -88,9 +88,9 @@ define method frame-open-just-in-time-project
     let project = coerce-project(project-filename);
     if (project)
       ensure-project-browser-showing-project
-	(project,
-	 application-process: process,
-	 application-id:      id)
+        (project,
+         application-process: process,
+         application-id:      id)
     end
   end
 end method frame-open-just-in-time-project;
@@ -105,61 +105,61 @@ define frame <choose-project-dialog> (<dialog-frame>)
     required-init-keyword: filename:;
   pane project-pane (frame)
     make(<combo-box>,
-	 items: map(curry(as, <string>), most-recent-projects()),
-	 value: guess-recent-project-for-filename(frame.%filename),
-	 min-width: 300,
-	 activate-callback: exit-dialog);
+         items: map(curry(as, <string>), most-recent-projects()),
+         value: guess-recent-project-for-filename(frame.%filename),
+         min-width: 300,
+         activate-callback: exit-dialog);
   pane browse-button (frame)
     make(<button>,
-	 label: "Browse...",
-	 activate-callback: 
-	   method (gadget)
-	     let project = gadget-value(frame.project-pane);
-	     let default = project & as(<file-locator>, project);
-	     let filename
-	       = environment-choose-file
-	           (title:  "Open",
-		    owner:   frame,
-		    default: default,
-		    filters: #[#"common-locate-project", #"project", #"lid"]);
-	     if (filename)
-	       frame.%filename := filename;
-	       gadget-text(frame.project-pane) := as(<string>, filename)
-	     end
-	   end);
+         label: "Browse...",
+         activate-callback:
+           method (gadget)
+             let project = gadget-value(frame.project-pane);
+             let default = project & as(<file-locator>, project);
+             let filename
+               = environment-choose-file
+                   (title:  "Open",
+                    owner:   frame,
+                    default: default,
+                    filters: #[#"common-locate-project", #"project", #"lid"]);
+             if (filename)
+               frame.%filename := filename;
+               gadget-text(frame.project-pane) := as(<string>, filename)
+             end
+           end);
   pane debug-project-button (frame)
     make(<radio-button>,
-	 id: #"project",
-	 label: "Use Dylan project database");
+         id: #"project",
+         label: "Use Dylan project database");
   pane debug-native-button (frame)
     make(<radio-button>,
-	 id: #"native",
-	 label: "Use native debug information only");
+         id: #"native",
+         label: "Use native debug information only");
   pane debug-project-pane (frame)
     vertically (spacing: 8)
       frame.debug-project-button;
       horizontally (spacing: 4)
         make(<null-pane>, width: 20, fixed-width?: #t);
-	frame.project-pane;
-	frame.browse-button;
+        frame.project-pane;
+        frame.browse-button;
       end;
     end;
   pane debug-options (frame)
     make(<radio-box>,
-	 child: vertically (spacing: 8)
-	          frame.debug-project-pane;
-	          frame.debug-native-button
+         child: vertically (spacing: 8)
+                  frame.debug-project-pane;
+                  frame.debug-native-button
                 end,
-	 value-changed-callback:
-	   method (gadget)
-	     let value = gadget-value(gadget);
-	     let enable? = value == #"project";
-	     gadget-enabled?(frame.project-pane)  := enable?;
-	     gadget-enabled?(frame.browse-button) := enable?;
-	   end);
+         value-changed-callback:
+           method (gadget)
+             let value = gadget-value(gadget);
+             let enable? = value == #"project";
+             gadget-enabled?(frame.project-pane)  := enable?;
+             gadget-enabled?(frame.browse-button) := enable?;
+           end);
   layout (frame)
     grouping (format-to-string("Debug '%s'", frame.%filename),
-	      max-width: $fill)
+              max-width: $fill)
       frame.debug-options
     end;
   keyword title: = release-product-name();
@@ -172,12 +172,12 @@ define method guess-recent-project-for-filename
   let base = filename.locator-base;
   let filename
     = block (return)
-	for (project in projects)
-	  if (base == project.locator-base)
-	    return(project)
-	  end
-	end;
-	~empty?(projects) & projects[0]
+        for (project in projects)
+          if (base == project.locator-base)
+            return(project)
+          end
+        end;
+        ~empty?(projects) & projects[0]
       end;
   filename & as(<string>, filename)
 end method guess-recent-project-for-filename;
@@ -187,19 +187,19 @@ define method frame-choose-project-for-filename
  => (filename :: false-or(<file-locator>))
   let dialog
     = make(<choose-project-dialog>,
-	   filename: filename,
-	   owner: frame,
-	   width: max($choose-project-dialog-width, 350));
+           filename: filename,
+           owner: frame,
+           width: max($choose-project-dialog-width, 350));
   if (start-dialog(dialog))
     let (width, height) = frame-size(dialog);
     $choose-project-dialog-width := width;
     let choice = gadget-value(dialog.debug-options);
     select (choice)
-      #"project" => 
-	let name = gadget-value(dialog.project-pane);
-	name & as(<file-locator>, name);
-      #"native" => 
-	filename;
+      #"project" =>
+        let name = gadget-value(dialog.project-pane);
+        name & as(<file-locator>, name);
+      #"native" =>
+        filename;
     end
   end
 end method frame-choose-project-for-filename;
@@ -214,44 +214,44 @@ define frame <application-attach-dialog> (<dialog-frame>)
     init-keyword: machine:;
   pane machine-pane (frame)
     make(<option-box>,
-	 items: available-machines(),
-	 value: frame.%machine,
-	 label-key: machine-hostname,
-	 enabled?: #t,
-	 value-changed-callback: method (gadget)
-				   frame.%machine := gadget-value(gadget);
-				   update-dialog-processes(frame)
-				 end);
+         items: available-machines(),
+         value: frame.%machine,
+         label-key: machine-hostname,
+         enabled?: #t,
+         value-changed-callback: method (gadget)
+                                   frame.%machine := gadget-value(gadget);
+                                   update-dialog-processes(frame)
+                                 end);
   pane process-pane (frame)
     make(<table-control>,
-	 items: keyed-sort(available-processes(machine: frame.%machine),
-			   key: process-name),
-	 headings:   #["Process", "ID", "File"],
-	 widths:     #[120, 50, 400],
-	 alignments: #[#"left", #"right", #"left"],
-	 generators: vector(process-name,
-			    process-id,
-			    process-executable-file),
-	 callbacks: vector(rcurry(sort-processes, #"process"),
-			   rcurry(sort-processes, #"id"),
-			   rcurry(sort-processes, #"file")),
-	 lines: 15,
-	 min-width: 400,
-	 activate-callback: method (gadget)
-			      exit-dialog(sheet-frame(gadget))
-			    end);
+         items: keyed-sort(available-processes(machine: frame.%machine),
+                           key: process-name),
+         headings:   #["Process", "ID", "File"],
+         widths:     #[120, 50, 400],
+         alignments: #[#"left", #"right", #"left"],
+         generators: vector(process-name,
+                            process-id,
+                            process-executable-file),
+         callbacks: vector(rcurry(sort-processes, #"process"),
+                           rcurry(sort-processes, #"id"),
+                           rcurry(sort-processes, #"file")),
+         lines: 15,
+         min-width: 400,
+         activate-callback: method (gadget)
+                              exit-dialog(sheet-frame(gadget))
+                            end);
   pane new-connection-button (frame)
     make(<button>,
-	 label: "Open New Connection...",
-	 activate-callback: method (button)
-			      let machine 
-				= open-remote-connection(owner: frame);
-			      if (machine)
-				update-dialog-machines(frame, machine: machine);
+         label: "Open New Connection...",
+         activate-callback: method (button)
+                              let machine
+                                = open-remote-connection(owner: frame);
+                              if (machine)
+                                update-dialog-machines(frame, machine: machine);
                                 frame.%machine := machine;
                                 update-dialog-processes(frame)
-			      end
-			    end);
+                              end
+                            end);
   layout (frame)
     grouping ("Attach to a running process:", max-width: $fill)
       vertically (spacing: 8)
@@ -260,7 +260,7 @@ define frame <application-attach-dialog> (<dialog-frame>)
           frame.machine-pane
         end;
         frame.process-pane;
-	frame.new-connection-button
+        frame.new-connection-button
       end
     end;
   keyword title: = release-product-name();
@@ -271,11 +271,11 @@ define method sort-processes
   let items = gadget-items(gadget);
   gadget-items(gadget)
     := keyed-sort(items,
-		  key: select (option)
-			 #"process" => process-name;
-			 #"id"      => process-id;
-			 #"file"    => process-executable-file
-		       end)
+                  key: select (option)
+                         #"process" => process-name;
+                         #"id"      => process-id;
+                         #"file"    => process-executable-file
+                       end)
 end method sort-processes;
 
 define method process-name
@@ -315,20 +315,20 @@ define function available-processes
   do-active-processes
     (method (process :: <process>)
        if (process-debuggable?(process))
-	 add!(processes, process)
+         add!(processes, process)
        end
      end,
      machine: machine);
   keyed-sort!(processes,
-	      key: method (process :: <process>)
-		     let filename = process.process-executable-file;
-		     filename.locator-name
-		   end);
+              key: method (process :: <process>)
+                     let filename = process.process-executable-file;
+                     filename.locator-name
+                   end);
   processes
 end function available-processes;
 
 define method frame-attach-application
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      #key process :: false-or(<process>),
           id :: false-or(<string>))
  => ()
@@ -336,22 +336,22 @@ define method frame-attach-application
   let process
     = process
         | begin
-	    let machine
-	      = if (project)
-		  project.project-debug-machine
-		end
-	          | environment-host-machine();
-	    let dialog
-	      = make(<application-attach-dialog>,
-		     owner:   frame,
-		     machine: machine,
-		     width:   max($application-attach-dialog-width, 450));
-	    if (start-dialog(dialog))
-	      let (width, height) = frame-size(dialog);
-	      $application-attach-dialog-width := width;
-	      gadget-value(dialog.process-pane)
-	    end
-	  end;
+            let machine
+              = if (project)
+                  project.project-debug-machine
+                end
+                  | environment-host-machine();
+            let dialog
+              = make(<application-attach-dialog>,
+                     owner:   frame,
+                     machine: machine,
+                     width:   max($application-attach-dialog-width, 450));
+            if (start-dialog(dialog))
+              let (width, height) = frame-size(dialog);
+              $application-attach-dialog-width := width;
+              gadget-value(dialog.process-pane)
+            end
+          end;
   if (process)
     if (project)
       attach-live-application(project, process, system-data: id)
@@ -374,31 +374,31 @@ define frame <new-connection-dialog> (<dialog-frame>)
   pane address-pane (frame)
     make(<text-field>,
          text: frame.%default-machine-address,
-	 min-width: 200,
-	 activate-callback: method (gadget)
-			      %open-remote-connection(frame)
-			    end);
+         min-width: 200,
+         activate-callback: method (gadget)
+                              %open-remote-connection(frame)
+                            end);
   pane password-pane (frame)
     make(<text-field>,
-	 min-width: 200,
-	 activate-callback: method (gadget)
-			      %open-remote-connection(frame)
-			    end);
+         min-width: 200,
+         activate-callback: method (gadget)
+                              %open-remote-connection(frame)
+                            end);
   layout (frame)
     vertically (spacing: 8)
       make(<label>, label: "Connect to a remote machine:");
       make(<table-layout>,
-	   columns: 2,
-	   spacing: 4,
-	   x-alignment: #[#"right", #"left"],
-	   children: vector(make(<label>, label: "IP address:"),
-			    frame.address-pane));
+           columns: 2,
+           spacing: 4,
+           x-alignment: #[#"right", #"left"],
+           children: vector(make(<label>, label: "IP address:"),
+                            frame.address-pane));
       make(<table-layout>,
-	   columns: 2,
-	   spacing: 4,
-	   x-alignment: #[#"right", #"left"],
-	   children: vector(make(<label>, label: "Password:"),
-			    frame.password-pane));
+           columns: 2,
+           spacing: 4,
+           x-alignment: #[#"right", #"left"],
+           children: vector(make(<label>, label: "Password:"),
+                            frame.password-pane));
     end;
   keyword exit-callback: = %open-remote-connection;
   keyword title: = "Open New Connection";
@@ -407,10 +407,10 @@ end frame <new-connection-dialog>;
 define method open-remote-connection
     (#key owner :: <frame>, default-address = "")
  => (machine :: false-or(<machine>))
-  let dialog = make(<new-connection-dialog>, 
+  let dialog = make(<new-connection-dialog>,
                     owner: owner,
                     machine-address: default-address,
-		    width: max($new-connection-dialog-width, 250));
+                    width: max($new-connection-dialog-width, 250));
   when (start-dialog(dialog))
     let (width, height) = frame-size(dialog);
     $new-connection-dialog-width := width;
@@ -440,12 +440,12 @@ end method %open-remote-connection;
 
 // Close all connections when the environment shuts down
 tune-in($environment-channel,
-	method (message :: <environment-stopping-message>)
-	  do-machine-connections
-	    (close-connection-to-machine,
-	     include-local?: #f)
-	end,
-	message-type: <environment-stopping-message>);
+        method (message :: <environment-stopping-message>)
+          do-machine-connections
+            (close-connection-to-machine,
+             include-local?: #f)
+        end,
+        message-type: <environment-stopping-message>);
 
 
 /// Application commands
@@ -511,7 +511,7 @@ define method verify-application-start-function
   if (~empty?(name) & ~project.project-start-function)
     let message
       = format-to-string("The start function '%s' was not found. Start anyway?",
-			 name);
+                         name);
     environment-question(message, owner: frame, style: #"warning")
   else
     #t
@@ -525,17 +525,17 @@ define method do-frame-start-application
  => ()
   let project = frame.ensure-frame-project;
   local method do-it ()
-	  let filename = project-full-build-filename(project);
-	  if (file-exists?(filename))
-	    if (~verify-start-function?
-		  | verify-application-start-function(frame))
-	      with-busy-cursor (frame)
-		frame-do-run-application
-		  (frame, project, startup-option: startup-option)
-	      end
-	    end
-	  end
-	end method do-it;
+          let filename = project-full-build-filename(project);
+          if (file-exists?(filename))
+            if (~verify-start-function?
+                  | verify-application-start-function(frame))
+              with-busy-cursor (frame)
+                frame-do-run-application
+                  (frame, project, startup-option: startup-option)
+              end
+            end
+          end
+        end method do-it;
   if (project-can-be-built?(project) & ~project-compiler-database(project))
     with-project-database (frame, link?: #t)
       do-it()
@@ -575,13 +575,13 @@ define method frame-browse-threads
     with-busy-cursor (frame)
       browse-object(project, application, page: #"threads");
     end
-  else 
+  else
     environment-error-message("No tethered application.", owner: frame);
   end if;
 end method frame-browse-threads;
 
 define method frame-pause-application
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      #key thread, startup-option)
  => ()
   let project = frame.ensure-frame-project;
@@ -609,14 +609,14 @@ define method frame-stop-application
   let project = frame.ensure-frame-project;
   let check? = environment-application-confirm-stop?();
   if (~check?
-	| environment-question
-	    (format-to-string
-	       ("All application state will be lost by stopping it.\n"
-		"Are you sure?",
-		frame-default-object-name(frame, project)),
-	     owner: frame,
-	     style: #"warning",
-	     exit-style: #"ok-cancel"))
+        | environment-question
+            (format-to-string
+               ("All application state will be lost by stopping it.\n"
+                "Are you sure?",
+                frame-default-object-name(frame, project)),
+             owner: frame,
+             style: #"warning",
+             exit-style: #"ok-cancel"))
     with-busy-cursor (frame)
       close-application(project, wait-for-termination?: #t)
     end
@@ -634,7 +634,7 @@ define method frame-restart-application
   end
 end method frame-restart-application;
 
-define method frame-start-or-resume-application 
+define method frame-start-or-resume-application
     (frame :: <environment-frame>) => ()
   let project = frame.ensure-frame-project;
   let (tethered?, state) = frame-application-tethered?(frame, project);
@@ -650,7 +650,7 @@ define variable $create-thread-dialog-width :: <integer> = 250;
 define frame <create-thread-dialog> (<dialog-frame>)
   pane thread-title-pane (dialog)
     make(<text-field>,
-	 documentation: "Enter the name for the new thread.");
+         documentation: "Enter the name for the new thread.");
   layout (dialog)
     horizontally (spacing: 4)
       make(<label>, label: "Title:");
@@ -665,8 +665,8 @@ define method frame-create-thread
     (frame :: <environment-frame>) => ()
   let project = frame.ensure-frame-project;
   let dialog = make(<create-thread-dialog>,
-		    owner: frame,
-		    width: max($create-thread-dialog-width, 250));
+                    owner: frame,
+                    width: max($create-thread-dialog-width, 250));
   if (start-dialog(dialog))
     let (width, height) = frame-size(dialog);
     $browse-object-dialog-width := width;
@@ -717,10 +717,10 @@ define method enable-application-command-table
   let application-can-be-debugged? = project-can-be-debugged?(project);
 
   local method enabled?-setter
-	    (enabled? :: <boolean>, command :: <function>)
-	  command-enabled?(command, frame)
-	    := application-can-be-debugged? & enabled?
-	end method enabled?-setter;
+            (enabled? :: <boolean>, command :: <function>)
+          command-enabled?(command, frame)
+            := application-can-be-debugged? & enabled?
+        end method enabled?-setter;
 
   let application-running? = state == #"running";
   let application-stopped? = state == #"stopped";
@@ -739,7 +739,7 @@ define method enable-application-command-table
   enabled?(frame-stop-application)            := application-started?;
   enabled?(frame-restart-application)         := application-started?;
   enabled?(frame-create-thread)               := application-started?;
-  
+
   enabled?(frame-pause-application)           := application-running?;
   enabled?(frame-resume-application)          := application-stopped?;
   enabled?(frame-start-or-resume-application) := application-not-running?;

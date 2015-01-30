@@ -38,7 +38,7 @@ begin
   make(<project-library-group>,
        id: #"core",
        libraries: #[#(#"dylan"),
-		    #"common-dylan"],
+                    #"common-dylan"],
        documentation: "Basic Dylan language and extension libraries");
 
   make(<project-library-group>,
@@ -50,17 +50,17 @@ begin
        id: #"databases",
        // If you change this, change the #"interoperability" one at the end
        libraries: #[#"odbc-ffi",
-		    #"sql",
-		    #"sql-odbc",
-		    #"c-ffi"],
+                    #"sql",
+                    #"sql-odbc",
+                    #"c-ffi"],
        documentation: "Dylan database interface libraries");
 
   make(<project-library-group>,
        id: #"duim",
        label: "DUIM",
        libraries: #[#"duim",
-		    #(#"duim-ole-server"),
-		    #(#"duim-ole-control")],
+                    #(#"duim-ole-server"),
+                    #(#"duim-ole-control")],
        documentation: "Dylan User Interface Manager libraries");
 
   make(<project-library-group>,
@@ -77,7 +77,7 @@ begin
   make(<project-library-group>,
        id: #"mathematics",
        libraries: #[#"big-integers",
-		    #"generic-arithmetic"],
+                    #"generic-arithmetic"],
        documentation: "Extra mathematics libraries");
 
   make(<project-library-group>,
@@ -90,35 +90,35 @@ begin
        label: "OLE",
        // If you change this, change the #"interoperability" one at the end
        libraries: #[#"com",
-		    #(#"duim-ole-server"),
-		    #(#"duim-ole-control"),
-		    #"ole",
-		    #"ole-automation",
-		    #"ole-control-framework",
-		    #"ole-controls",
-		    #"ole-dialogs",
-		    #"ole-server",
-		    #"c-ffi"],
+                    #(#"duim-ole-server"),
+                    #(#"duim-ole-control"),
+                    #"ole",
+                    #"ole-automation",
+                    #"ole-control-framework",
+                    #"ole-controls",
+                    #"ole-dialogs",
+                    #"ole-server",
+                    #"c-ffi"],
        documentation: "OLE and COM interface libraries");
 
   make(<project-library-group>,
        id: #"win32",
        // If you change this, change the #"interoperability" one at the end
        libraries: #[#"win32-common",
-		    #"win32-controls",
-		    #(#"win32-dde"),
-		    #"win32-dialog",
-		    #"win32-gdi",
-		    #(#"win32-gl"),
-		    #(#"win32-glu"),
-		    #"win32-kernel",
-		    #(#"win32-multimedia"),
-		    #(#"win32-rich-edit"),
-		    #(#"win32-registry"),
-		    #(#"win32-shell"),
-		    #"win32-user",
-		    #(#"win32-version"),
-		    #"c-ffi"],
+                    #"win32-controls",
+                    #(#"win32-dde"),
+                    #"win32-dialog",
+                    #"win32-gdi",
+                    #(#"win32-gl"),
+                    #(#"win32-glu"),
+                    #"win32-kernel",
+                    #(#"win32-multimedia"),
+                    #(#"win32-rich-edit"),
+                    #(#"win32-registry"),
+                    #(#"win32-shell"),
+                    #"win32-user",
+                    #(#"win32-version"),
+                    #"c-ffi"],
        documentation: "Win32 interface libraries");
 
   make(<project-library-group>,
@@ -132,38 +132,38 @@ begin
   make(<project-library-group>,
        id: #"interoperability",
        libraries: #[// Databases library group
-		    #"odbc-ffi",
-		    #"sql",
-		    #"sql-odbc",
-		    // OLE library group
-		    #"com",
-		    #(#"duim-ole-server"),
-		    #(#"duim-ole-control"),
-		    #"ole",
-		    #"ole-automation",
-		    #"ole-control-framework",
-		    #"ole-controls",
-		    #"ole-dialogs",
-		    #"ole-server",
-		    // Win32 library group
-		    #"win32-common",
-		    #"win32-controls",
-		    #(#"win32-dde"),
-		    #"win32-dialog",
-		    #"win32-gdi",
-		    #(#"win32-gl"),
-		    #(#"win32-glu"),
-		    #"win32-kernel",
-		    #(#"win32-multimedia"),
-		    #(#"win32-rich-edit"),
-		    #(#"win32-registry"),
-		    #(#"win32-shell"),
-		    #"win32-user",
-		    #(#"win32-version"),
-		    // CORBA library group
-		    #"dylan-orb",
-		    // We always want the C FFI
-		    #"c-ffi"],
+                    #"odbc-ffi",
+                    #"sql",
+                    #"sql-odbc",
+                    // OLE library group
+                    #"com",
+                    #(#"duim-ole-server"),
+                    #(#"duim-ole-control"),
+                    #"ole",
+                    #"ole-automation",
+                    #"ole-control-framework",
+                    #"ole-controls",
+                    #"ole-dialogs",
+                    #"ole-server",
+                    // Win32 library group
+                    #"win32-common",
+                    #"win32-controls",
+                    #(#"win32-dde"),
+                    #"win32-dialog",
+                    #"win32-gdi",
+                    #(#"win32-gl"),
+                    #(#"win32-glu"),
+                    #"win32-kernel",
+                    #(#"win32-multimedia"),
+                    #(#"win32-rich-edit"),
+                    #(#"win32-registry"),
+                    #(#"win32-shell"),
+                    #"win32-user",
+                    #(#"win32-version"),
+                    // CORBA library group
+                    #"dylan-orb",
+                    // We always want the C FFI
+                    #"c-ffi"],
        documentation: "Win32, OLE, SQL and ODBC interfaces plus low-level C access");
 end;
 
@@ -180,22 +180,22 @@ begin
        id: #"dylan",
        modules: #[#"dylan"],
        documentation: "Dylan language library");
-  
+
   // Doc volume: "Core Features and Mathematics".
   make(<project-library>,
        id: #"common-dylan",
        modules: #[#"common-dylan",
-		  #"dylan",
-		  #(#"common-extensions"),
-		  // from 'dylan'
-		  #(#"finalization"),
-		  #"threads",
-		  // from 'common-extensions'
-		  #"simple-format",
-		  #(#"simple-random"),
-		  #(#"byte-vector"),
-		  #(#"machine-words"),
-		  #(#"transcendentals")],
+                  #"dylan",
+                  #(#"common-extensions"),
+                  // from 'dylan'
+                  #(#"finalization"),
+                  #"threads",
+                  // from 'common-extensions'
+                  #"simple-format",
+                  #(#"simple-random"),
+                  #(#"byte-vector"),
+                  #(#"machine-words"),
+                  #(#"transcendentals")],
        documentation: format-to-string("Dylan language and %s language extensions",
                                        release-product-name()));
 
@@ -249,8 +249,8 @@ begin
        label: "DUIM",
        library-packs: library-packs(#[#"GUI"]),
        modules: #[#"duim",
-		  #(#"duim-extended-geometry"),
-		  #(#"win32-duim")],
+                  #(#"duim-extended-geometry"),
+                  #(#"win32-duim")],
        documentation: "The Dylan User Interface Manager");
 
   // The next two need a specific release tag as they're contained in
@@ -294,11 +294,11 @@ begin
        label: "IO",
        library-packs: library-packs(#[#"Core"]),
        modules: #[#"format",
-		  #"format-out",
-		  #(#"print"),
-		  #(#"pprint"),
-		  #"standard-io",
-		  #"streams"],
+                  #"format-out",
+                  #(#"print"),
+                  #(#"pprint"),
+                  #"standard-io",
+                  #"streams"],
        documentation: "Input-output facilities");
 
   /* Previous per-library documentation
@@ -314,7 +314,7 @@ begin
   /// "Mathematics" group
 
   // Doc volume: "Core Features and Mathematics".
-  make(<project-library>, 
+  make(<project-library>,
        id: #"big-integers",
        library-packs: library-packs(#[#"Core"]),
        modules: #[#"big-integers"],
@@ -327,10 +327,10 @@ begin
        id: #"generic-arithmetic",
        library-packs: library-packs(#[#"Core"]),
        modules: #[#"generic-arithmetic",
-		  #(#"generic-arithmetic-common-dylan"),
-		  #(#"generic-arithmetic-dylan")],
+                  #(#"generic-arithmetic-common-dylan"),
+                  #(#"generic-arithmetic-dylan")],
        documentation: "Generic arithmetic, allowing various implementations"
-		      " but providing none");
+                      " but providing none");
 
 
   //////
@@ -341,7 +341,7 @@ begin
        id: #"network",
        library-packs: library-packs(#[#"Network"]),
        modules: #[#"sockets",
-		  #(#"winsock2")],
+                  #(#"winsock2")],
        documentation: "Portable and platform-specific network facilities");
 
 
@@ -414,8 +414,8 @@ begin
        library-packs: library-packs(#[#"Core"]),
        //--- Modules also include 'commands' and 'settings'.
        modules: #[#"date",
-		  #"file-system",
-		  #"operating-system"],
+                  #"file-system",
+                  #"operating-system"],
        documentation: "Portable interface to general platform-specific facilities");
 
 
@@ -492,8 +492,8 @@ begin
        library-packs: library-packs(#[#"Win32"]),
        modules: #[#"win32-shell"],
        documentation: "An FFI interface to the Win32 Shell library");
-  
-  make(<project-library>, 
+
+  make(<project-library>,
        id: #"win32-rich-edit",
        library-packs: library-packs(#[#"Win32"]),
        modules: #[#"win32-rich-edit"],
@@ -546,22 +546,22 @@ begin
        extension: ".lid",
        base: "project",
        headers: #[#"author",
-		  #"copyright",
-		  #"synopsis",
-		  #"version",
-		  #"major-version",
-		  #"minor-version",
-		  #"library",
-		  #"files"],
+                  #"copyright",
+                  #"synopsis",
+                  #"version",
+                  #"major-version",
+                  #"minor-version",
+                  #"library",
+                  #"files"],
        documentation: "Dylan library interchange format file");
 
   make(<project-file>,
        id: #"library",
        name: "library.dylan",
        headers: #[#"author",
-		  #"copyright",
-		  #"synopsis",
-		  #"version"],
+                  #"copyright",
+                  #"synopsis",
+                  #"version"],
        //  contents: #"library", // ???
        documentation: "Library definition file");
 
@@ -569,9 +569,9 @@ begin
        id: #"module",
        name: "module.dylan",
        headers: #[#"author",
-		  #"copyright",
-		  #"synopsis",
-		  #"version"],
+                  #"copyright",
+                  #"synopsis",
+                  #"version"],
        //  contents: #"module", // ???
        documentation: "Modules definition file");
 
@@ -579,10 +579,10 @@ begin
        id: #"implementation",
        name: "implementation.dylan",
        headers: #[#"author",
-		  #"copyright",
-		  #"synopsis",
-		  #"version",
-		  #"module"],
+                  #"copyright",
+                  #"synopsis",
+                  #"version",
+                  #"module"],
        documentation: "Implementation file");
 
   make(<project-file>,

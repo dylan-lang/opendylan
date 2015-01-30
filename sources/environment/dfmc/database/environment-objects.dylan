@@ -15,16 +15,16 @@ define sealed method find-environment-object
   if (proxy)
     select (proxy by instance?)
       <source-form> =>
-	make-environment-object-for-source-form(server, proxy);
+        make-environment-object-for-source-form(server, proxy);
       <project> =>
-	make-environment-object(<library-object>,
-				project: server.server-project,
-				compiler-object-proxy: proxy);
+        make-environment-object(<library-object>,
+                                project: server.server-project,
+                                compiler-object-proxy: proxy);
       otherwise =>
-	debug-out(#"dfmc-environment-database",
+        debug-out(#"dfmc-environment-database",
                   "Failed to make environment object for %=",
                   proxy);
-	#f;
+        #f;
     end
   end
 end method find-environment-object;

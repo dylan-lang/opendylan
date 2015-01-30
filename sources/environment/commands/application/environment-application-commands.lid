@@ -1,7 +1,7 @@
 Library:   environment-application-commands
 Synopsis:  The application commands provided by the environment
-Author:	   Andy Armstrong
-Target-Type:	dll
+Author:    Andy Armstrong
+Target-Type: dll
 Files: library
        module
        context

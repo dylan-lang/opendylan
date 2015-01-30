@@ -1,6 +1,6 @@
 Module:    environment-application-commands
 Synopsis:  The application commands provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -33,18 +33,18 @@ define method do-execute-command
       message(context, "Profiling stopped");
     command.%allocation? =>
       let sampling-options
-	= make(<profile-sampling-options>,
-	       style: #"allocation",
-	       rate:  50);
+        = make(<profile-sampling-options>,
+               style: #"allocation",
+               rate:  50);
       let snapshot-options
-	= make(<profile-snapshot-options>,
-	       values: #[#"cpu", #"wall", #"page-faults", #"allocation",
-			 #"class"],
-	       depth: #f);
+        = make(<profile-snapshot-options>,
+               values: #[#"cpu", #"wall", #"page-faults", #"allocation",
+                         #"class"],
+               depth: #f);
       let options
-	= make(<profile-options>,
-	       sampling-options: sampling-options,
-	       snapshot-options: snapshot-options);
+        = make(<profile-options>,
+               sampling-options: sampling-options,
+               snapshot-options: snapshot-options);
       start-profiling-application(project, options: options);
       message(context, "Started allocation profiling...");
     otherwise =>

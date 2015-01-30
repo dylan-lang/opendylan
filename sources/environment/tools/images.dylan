@@ -66,26 +66,26 @@ define variable $find-window-small-icon      :: <label-type> = #f;
 
 /// environment-object-icon
 ///
-/// NB these functions deal with environment objects in a loose sense: 
+/// NB these functions deal with environment objects in a loose sense:
 /// objects visible in the environment. That is not just objects of type
 /// <environment-object>.
 
-define open generic environment-object-icon 
+define open generic environment-object-icon
     (project :: <project-object>, object :: <object>);
 
-define method environment-object-icon 
+define method environment-object-icon
     (project :: <project-object>, object :: <object>)
   values(environment-object-small-icon(project, object),
-	 environment-object-large-icon(project, object))
+         environment-object-large-icon(project, object))
 end method environment-object-icon;
 
 
 /// Large icons
 
-define open generic environment-object-large-icon 
+define open generic environment-object-large-icon
     (project :: <project-object>, object :: <object>);
 
-define method environment-object-large-icon 
+define method environment-object-large-icon
     (project :: <project-object>, object :: <object>)
   #f
 end method environment-object-large-icon;
@@ -93,25 +93,25 @@ end method environment-object-large-icon;
 
 /// Small icons
 
-define open generic environment-object-small-icon 
+define open generic environment-object-small-icon
     (project :: <project-object>, object :: <object>);
 
-define method environment-object-small-icon 
+define method environment-object-small-icon
     (project :: <project-object>, object :: <object>)
   $default-bitmap
 end method environment-object-small-icon;
 
-define method environment-object-small-icon 
+define method environment-object-small-icon
     (project :: <project-object>, sr :: <source-record>)
   environment-object-small-icon(project, source-record-location(sr));
 end method environment-object-small-icon;
 
-define method environment-object-small-icon 
+define method environment-object-small-icon
     (project :: <project-object>, loc :: <source-location>)
   $definition-bitmap // ---*** $range-source-location-bitmap
 end method environment-object-small-icon;
 
-define method environment-object-small-icon 
+define method environment-object-small-icon
     (project :: <project-object>, obj :: <environment-object>)
   select (obj by instance?)
     <application>               => $application-bitmap;
@@ -136,7 +136,7 @@ define method environment-object-small-icon
   end
 end method environment-object-small-icon;
 
-define method environment-object-small-icon 
+define method environment-object-small-icon
     (project :: <project-object>, object :: <method-object>)
   $method-bitmap
   /*---*** andrewa: this might be interesting, really we need a method-kind protocol
@@ -148,7 +148,7 @@ define method environment-object-small-icon
   */
 end method environment-object-small-icon;
 
-define method environment-object-small-icon 
+define method environment-object-small-icon
     (project :: <project-object>, name :: <name-object>)
   let object = name-value(project, name);
   if (object)
@@ -168,32 +168,32 @@ define method environment-object-small-icon
   end
 end method environment-object-small-icon;
 
-define method environment-object-small-icon 
+define method environment-object-small-icon
     (project :: <project-object>, object :: <thread-object>)
   $threads-bitmap
 end method environment-object-small-icon;
 
-define method environment-object-small-icon 
+define method environment-object-small-icon
     (project :: <project-object>, object :: <stack-frame-object>)
   let type = stack-frame-type(project, object);
   select (type)
     #"dylan-call" =>
       let function = stack-frame-function(project, object);
       if (function)
-	environment-object-small-icon(project, function);
+        environment-object-small-icon(project, function);
       else
-	$stack-frame-bitmap;
+        $stack-frame-bitmap;
       end if;
-    #"foreign-call" => 
+    #"foreign-call" =>
       $stack-frame-bitmap; // ---*** $foreign-function-bitmap
-    #"cleanup" => 
+    #"cleanup" =>
       $stack-frame-bitmap; // ---*** $cleanup-stack-frame-bitmap
-    #"unknown" => 
+    #"unknown" =>
       $stack-frame-bitmap; // ---*** $unknown-stack-frame-bitmap
   end select;
 end method environment-object-small-icon;
 
-define method environment-object-small-icon 
+define method environment-object-small-icon
     (project :: <project-object>, breakpoint :: <breakpoint-object>)
   case
     ~breakpoint =>
@@ -206,15 +206,15 @@ define method environment-object-small-icon
       $step-breakpoint-image;
     breakpoint.breakpoint-stop? =>
       if (breakpoint-enabled?(breakpoint))
-	$enabled-breakpoint-image
+        $enabled-breakpoint-image
       else
-	$disabled-breakpoint-image
+        $disabled-breakpoint-image
       end;
     breakpoint.breakpoint-message? =>
       if (breakpoint-enabled?(breakpoint))
-	$enabled-tracepoint-image
+        $enabled-tracepoint-image
       else
-	$disabled-tracepoint-image
+        $disabled-tracepoint-image
       end;
     otherwise =>
       $potential-breakpoint-image;

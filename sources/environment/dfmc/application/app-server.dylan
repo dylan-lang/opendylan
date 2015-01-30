@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 ///// <APPLICATION-PROXY-FACTORY>
-//    
+//
 //    The top level of this data structure is a string-table that maps
 //    library names to a second level of string-table. This table maps
 //    module names to a _third_ level of string-table. This final level
@@ -23,7 +23,7 @@ define class <application-proxy-factory> (<object>)
    slot static-proxies :: <page-relative-object-table>;
    slot static-address-proxies :: <page-relative-object-table>;
    slot per-transaction-proxies :: <page-relative-object-table>;
-   constant slot proxy-factory-known-names :: <string-table> 
+   constant slot proxy-factory-known-names :: <string-table>
      = make(<string-table>);
    constant slot proxy-factory-ordered-data :: <stretchy-vector>
      = make(<stretchy-vector>);
@@ -103,7 +103,7 @@ define sealed class <dfmc-application> (<application>)
   // class that will be used. If there are no matches, then <user-object>
   // will be used.
 
-  slot runtime-class-user-class-mappings :: <stretchy-vector> 
+  slot runtime-class-user-class-mappings :: <stretchy-vector>
      = make(<stretchy-vector>);
 
   slot runtime-class-user-class-mappings-initialized? :: <boolean> = #f;
@@ -125,7 +125,7 @@ define sealed class <dfmc-application> (<application>)
 
   // All callback registrations are atomic...
 
-  constant slot callback-registration-lock :: <simple-lock> 
+  constant slot callback-registration-lock :: <simple-lock>
      = make(<simple-lock>);
 
   // This table maps <remote-thread>s to <application-thread-state>
@@ -165,7 +165,7 @@ define sealed class <dfmc-application> (<application>)
   // entries in this vector must be notified using
   // PROJECT-CURRENT-DEBUG-TARGET-SETTER with #f.
 
-  // This slot has no init-value, because RUN-APPLICATION always 
+  // This slot has no init-value, because RUN-APPLICATION always
   // puts a freshly allocated stretchy-vector into it.
 
   slot interactor-contexts-used :: <stretchy-vector>;
@@ -208,8 +208,8 @@ define method initialize (application :: <dfmc-application>, #key)
   next-method();
   register-debugger-manager-callbacks(application);
   let project :: <project-object> = application.server-project;
-  project.project-application := application; // NB lace up project 
-                                              // and application before 
+  project.project-application := application; // NB lace up project
+                                              // and application before
                                               // broadcast
   broadcast($project-channel, #"make-application", project);
 end method;
@@ -308,14 +308,14 @@ end method application-pause-before-termination?;
 //    Indicates how the application was launched.
 
 define method application-startup-option
-    (application :: <dfmc-application>) 
+    (application :: <dfmc-application>)
  => (opt :: <application-startup-option>)
   application.application-tether-status
 end method application-startup-option;
 
 
 /// GET-ENVIRONMENT-OBJECT-PRIMITIVE-NAME (Environment Protocol Method)
-/// 
+///
 /// A name for the application itself.
 
 define method get-environment-object-primitive-name
@@ -364,6 +364,6 @@ define method application-just-hit-error?
   let stop-reason = application.application-stop-reason;
   instance?(stop-reason, <dylan-invoke-debugger-stop-reason>)
     | (instance?(stop-reason, <exception-stop-reason>)
-	 & ~instance?(stop-reason, <invoke-debugger-stop-reason>))
+         & ~instance?(stop-reason, <invoke-debugger-stop-reason>))
 end method application-just-hit-error?;
 

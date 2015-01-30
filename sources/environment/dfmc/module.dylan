@@ -14,9 +14,9 @@ define module dfmc-environment
   use environment-imports;
   use environment-protocols,
     rename: { close-project => env/close-project,
-	      project-source-location => env/project-source-location,
+              project-source-location => env/project-source-location,
               project-other-sources => env/project-other-sources,
-	      open-project => env/open-project,
+              open-project => env/open-project,
               save-project =>  env/save-project,
               project-compilation-mode => env/project-compilation-mode,
               project-compilation-mode-setter => env/project-compilation-mode-setter,
@@ -31,5 +31,5 @@ define module dfmc-environment
               project-major-version-setter => env/project-major-version-setter,
               project-minor-version => env/project-minor-version,
               project-minor-version-setter => env/project-minor-version-setter,
-	      project-read-only? => env/project-read-only? };
+              project-read-only? => env/project-read-only? };
 end module dfmc-environment;

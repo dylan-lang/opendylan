@@ -53,7 +53,7 @@ define method notify-warnings-to-environment
     (application :: <dfmc-application>, thread :: <thread-object>,
      transaction-id :: <object>, mod :: <module-object>) => ()
   let warnings = make(<stretchy-vector>);
-  let project-object = 
+  let project-object =
     application.server-project;
   let project = module-project-proxy(project-object, mod);
   // Acquire the set of warnings from the Project Manager.
@@ -62,18 +62,18 @@ define method notify-warnings-to-environment
        (project, record-id: transaction-id);
 
   // Use an iterator to build the sequence of compiler warning objects.
-  do-program-notes(method (warning) add!(warnings, warning) end method, 
+  do-program-notes(method (warning) add!(warnings, warning) end method,
                    project-object,
                    environment-object-library(project-object, mod),
                    notes);
 
   if (~empty?(warnings))
     let message
-      = make(<thread-interactive-warnings-message>, 
-	     project: project-object,
-	     thread: thread,
-	     transaction-id: transaction-id,
-	     warnings: warnings);
+      = make(<thread-interactive-warnings-message>,
+             project: project-object,
+             thread: thread,
+             transaction-id: transaction-id,
+             warnings: warnings);
     broadcast($project-channel, message);
     let message
       = make(<project-warnings-updated-message>, project: project-object);
@@ -132,7 +132,7 @@ define method project-valid-code?
     // Note the lack of warning/error handlers here. It is hoped that these
     // will be handled by the environment at a higher level.
 
-    let (valid?, warnings) = 
+    let (valid?, warnings) =
       parse-expression(project,
                        runtime-context,
                        as(<symbol>, module-actual-name),
@@ -160,7 +160,7 @@ define method project-runtime-context
   perform-debugger-transaction
      (target,
       method ()
-        context := 
+        context :=
           current-runtime-context(target, remote-thread, stack-frame: frame);
       end method);
   context;
@@ -173,7 +173,7 @@ end method;
 //    interactive downloader.
 
 define method project-execute-code
-    (app :: <dfmc-application>, code :: <byte-string>, 
+    (app :: <dfmc-application>, code :: <byte-string>,
      thread :: <thread-object>,
      #key module = #f, runtime-context = #f, stack-frame = #f)
     => (execution-id :: <object>, execution-deferred? :: <boolean>)
@@ -192,7 +192,7 @@ define method project-execute-code
   // thread's "current" runtime context for the evaluation.
 
   unless (runtime-context)
-    runtime-context := 
+    runtime-context :=
       project-runtime-context(app, thread, stack-frame: stack-frame)
   end unless;
 
@@ -236,32 +236,32 @@ define method project-execute-code
       (app, remote-thread,
        method ()
 
-	 let evaluation-on-suspended-thread? =
-	   thread-permanently-suspended?(path, remote-thread);
+         let evaluation-on-suspended-thread? =
+           thread-permanently-suspended?(path, remote-thread);
 
-	 if (evaluation-on-suspended-thread?)
-	   resume-evaluator-thread(app, thread.application-object-proxy);
-	 end;
+         if (evaluation-on-suspended-thread?)
+           resume-evaluator-thread(app, thread.application-object-proxy);
+         end;
 
          if (evaluation-on-suspended-thread?
-	     | thread-available-for-interaction?(target, remote-thread))
+             | thread-available-for-interaction?(target, remote-thread))
            execution-deferred? := #f;
-	   let transaction :: <interactor-return-breakpoint> =
-	     evaluate-expression(project,
-				 runtime-context,
-				 as(<symbol>, module-actual-name),
-				 code);
-	   id := transaction;
+           let transaction :: <interactor-return-breakpoint> =
+             evaluate-expression(project,
+                                 runtime-context,
+                                 as(<symbol>, module-actual-name),
+                                 code);
+           id := transaction;
 
-	     // Need to remember the application state on code entry
-	     // for interactions on suspended threads, as these happen
-	     // immediately behind the back of a running application
+             // Need to remember the application state on code entry
+             // for interactions on suspended threads, as these happen
+             // immediately behind the back of a running application
 
-	   transaction.interaction-request-application-state := state;
+           transaction.interaction-request-application-state := state;
 
-	   if (evaluation-on-suspended-thread?)
-	     thread-state-transaction(app, remote-thread) := transaction;
-	   end;
+           if (evaluation-on-suspended-thread?)
+             thread-state-transaction(app, remote-thread) := transaction;
+           end;
 
            // Since we have actually called the compiler, notify
            // warnings.
@@ -269,14 +269,14 @@ define method project-execute-code
               (app, thread, id, module);
 
            // Register the transaction ID in the debugger frame at the start
-	   // of the interaction -- this will be used to determine whether
-	   // the frame needs refreshing when the interaction returns;
-	   // NOTE: if we need to request an interaction and align to a 
-	   // source code location (see below), the debugger stack pane 
-	   // always needs to be refreshed, so it would be wrong to invoke
-	   // this callback.
-	   invoke-application-callback
-	     (app, application-started-interaction-callback, thread, id);
+           // of the interaction -- this will be used to determine whether
+           // the frame needs refreshing when the interaction returns;
+           // NOTE: if we need to request an interaction and align to a
+           // source code location (see below), the debugger stack pane
+           // always needs to be refreshed, so it would be wrong to invoke
+           // this callback.
+           invoke-application-callback
+             (app, application-started-interaction-callback, thread, id);
 
          else
            execution-deferred? := #t;
@@ -304,7 +304,7 @@ define method project-execute-code
   end if;
 end method;
 
-// A more general mechanism for interacting (e.g. calling C Runtime code) 
+// A more general mechanism for interacting (e.g. calling C Runtime code)
 // without involving the project manager or compiler
 
 define method execute-function
@@ -323,29 +323,29 @@ define method execute-function
       (target,
        method ()
 
-	 let evaluation-on-suspended-thread? =
-	   thread-permanently-suspended?(path, remote-thread);
+         let evaluation-on-suspended-thread? =
+           thread-permanently-suspended?(path, remote-thread);
 
-	 if (evaluation-on-suspended-thread?)
-	   resume-evaluator-thread(app, thread.application-object-proxy);
-	 end;
+         if (evaluation-on-suspended-thread?)
+           resume-evaluator-thread(app, thread.application-object-proxy);
+         end;
 
          if (evaluation-on-suspended-thread?
-	     | thread-available-for-interaction?(target, remote-thread))
-	   let transaction :: <interactor-return-breakpoint> = function();
-	   id := transaction;
+             | thread-available-for-interaction?(target, remote-thread))
+           let transaction :: <interactor-return-breakpoint> = function();
+           id := transaction;
 
-	   transaction.interaction-request-application-state := state;
+           transaction.interaction-request-application-state := state;
 
-	   if (evaluation-on-suspended-thread?)
-	     thread-state-transaction(app, remote-thread) := transaction;
-	   end;
+           if (evaluation-on-suspended-thread?)
+             thread-state-transaction(app, remote-thread) := transaction;
+           end;
 
-	   invoke-application-callback
-	     (app, application-started-interaction-callback, thread, id);
+           invoke-application-callback
+             (app, application-started-interaction-callback, thread, id);
 
-	 else
-	   error("Cannot perform the requested interaction");
+         else
+           error("Cannot perform the requested interaction");
          end if;
 
        end method);
@@ -423,7 +423,7 @@ end method;
 
 define method dispose-interactor-return-values
     (application :: <dfmc-application>, id :: <interactor-return-breakpoint>) => ()
-  let remote-value-seq = 
+  let remote-value-seq =
     element(application.interactor-results-table, id, default: #f);
   if (remote-value-seq)
     remove-key!(application.interactor-results-table, id)

@@ -27,7 +27,7 @@ define method find-source-control-system-named
 end method find-source-control-system-named;
 
 define method register-source-control-class
-    (class :: subclass(<source-control-system>), #rest initargs) 
+    (class :: subclass(<source-control-system>), #rest initargs)
  => (sccs :: <source-control-system>)
   let sccs
     = find-value(*all-source-control-systems*, method (e) object-class(e) == class end);
@@ -73,10 +73,10 @@ define function current-source-control-system
   unless (*cscs-initialized?*)
     let default-sccs = default-source-control-system();
     case
-      default-sccs => 
-	*current-source-control-system* := default-sccs;
+      default-sccs =>
+        *current-source-control-system* := default-sccs;
       otherwise =>
-	*current-source-control-system* := find-source-control-system-named(#"HOPE")
+        *current-source-control-system* := find-source-control-system-named(#"HOPE")
                                            | find-source-control-system-named(#"SourceSafe");
     end;
     *cscs-initialized?* := #t
@@ -125,7 +125,7 @@ define abstract class <source-control-command-error-mixin> (<object>)
   sealed constant slot %command,
     required-init-keyword: command:;
 end class <source-control-command-error-mixin>;
-  
+
 // The selected source control system doesn't support this command
 define sealed class <source-control-unsupported-command>
     (<source-control-command-error-mixin>, <source-control-error>)

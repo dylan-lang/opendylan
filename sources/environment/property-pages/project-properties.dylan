@@ -14,9 +14,9 @@ define sideways method frame-property-types
   concatenate(next-method(),
               #(#"sources",
                 #"warnings",
-		#"definitions",
-		#"libraries",
-		#"breakpoints"))
+                #"definitions",
+                #"libraries",
+                #"breakpoints"))
 end method frame-property-types;
 
 define sideways method frame-default-property-type
@@ -41,25 +41,25 @@ define constant $definition-type-filters
 define constant $default-definition-type-filter = #"definitions";
 
 define sideways method make-frame-property-page-displayer
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      class :: subclass(<environment-object>),
      type == #"definitions")
  => (label :: <string>, displayer :: <filtering-tree-control-displayer>)
   let project = frame.ensure-frame-project;
   let displayer
     = make(<filtering-tree-control-displayer>,
-	   element-label: "definition",
-	   children-generator: curry(definition-contents, frame),
-	   filter-types: $definition-type-filters,
-	   filter-type: $default-definition-type-filter,
-	   filter-function: curry(filter-definition-contents, frame),
-	   label-key: curry(definition-label-key, frame),
-	   value-changed-callback: method (displayer, value)
-				     ignore(value);
-				     note-frame-selection-updated(frame)
-				   end,
-	   popup-menu-callback: display-environment-popup-menu,
-	   items-changed-callback: note-definition-contents-updated);
+           element-label: "definition",
+           children-generator: curry(definition-contents, frame),
+           filter-types: $definition-type-filters,
+           filter-type: $default-definition-type-filter,
+           filter-function: curry(filter-definition-contents, frame),
+           label-key: curry(definition-label-key, frame),
+           value-changed-callback: method (displayer, value)
+                                     ignore(value);
+                                     note-frame-selection-updated(frame)
+                                   end,
+           popup-menu-callback: display-environment-popup-menu,
+           items-changed-callback: note-definition-contents-updated);
   values("Definitions", displayer)
 end method make-frame-property-page-displayer;
 
@@ -72,38 +72,38 @@ define method note-definition-contents-updated
   let root = state.displayer-state-object;
   let modules :: <sequence>
     = select (root by instance?)
-	<project-object> =>
-	  let library = project-library(root);
-	  if (library)
-	    tree-control-displayer-children(displayer, library);
-	  else
-	    #[]
-	  end;
-	<library-object> =>
-	  tree-control-displayer-children(displayer, root);
-	<module-object> =>
-	  vector(root);
+        <project-object> =>
+          let library = project-library(root);
+          if (library)
+            tree-control-displayer-children(displayer, library);
+          else
+            #[]
+          end;
+        <library-object> =>
+          tree-control-displayer-children(displayer, root);
+        <module-object> =>
+          vector(root);
       end;
   let message
     = if (project.project-compiler-database)
-	let all-definitions = 0;
-	let definitions = 0;
-	for (module in modules)
-	  let (n, total) = displayer-object-items-count(displayer, module);
-	  definitions := definitions + n;
-	  all-definitions := all-definitions + total
-	end;
-	format-to-string("%d %s%s",
-			 definitions,
-			 string-pluralize("definition", count: definitions),
-			 if (all-definitions ~= definitions)
-			   format-to-string(" (%d total)",
-					    all-definitions)
-			 else
-			   ""
-			 end)
+        let all-definitions = 0;
+        let definitions = 0;
+        for (module in modules)
+          let (n, total) = displayer-object-items-count(displayer, module);
+          definitions := definitions + n;
+          all-definitions := all-definitions + total
+        end;
+        format-to-string("%d %s%s",
+                         definitions,
+                         string-pluralize("definition", count: definitions),
+                         if (all-definitions ~= definitions)
+                           format-to-string(" (%d total)",
+                                            all-definitions)
+                         else
+                           ""
+                         end)
       else
-	project-not-built-message(project)
+        project-not-built-message(project)
       end;
   frame-status-message(frame) := message
 end method note-definition-contents-updated;
@@ -113,36 +113,36 @@ define method filter-definition-contents
      type-filter :: <symbol>, substring-filter :: <string>)
  => (names :: <sequence>)
   let no-filter? = empty?(substring-filter);
-  local method object-matches-type-filter? 
-	    (object :: <environment-object>) => (matches? :: <boolean>)
-	  select (type-filter)
-	    #"definitions" => #t;
-	    #"classes"     => instance?(object, <class-object>);
-	    #"constants"   => instance?(object, <constant-object>);
-	    #"domains"     => instance?(object, <domain-object>);
-	    #"functions"   => instance?(object, <function-object>);
-	    #"macros"      => instance?(object, <macro-object>);
-	    #"methods"     => instance?(object, <method-object>);
-	    #"variables"   => instance?(object, <variable-object>);
-	    otherwise      => #f;
-	  end
-	end method object-matches-type-filter?;
+  local method object-matches-type-filter?
+            (object :: <environment-object>) => (matches? :: <boolean>)
+          select (type-filter)
+            #"definitions" => #t;
+            #"classes"     => instance?(object, <class-object>);
+            #"constants"   => instance?(object, <constant-object>);
+            #"domains"     => instance?(object, <domain-object>);
+            #"functions"   => instance?(object, <function-object>);
+            #"macros"      => instance?(object, <macro-object>);
+            #"methods"     => instance?(object, <method-object>);
+            #"variables"   => instance?(object, <variable-object>);
+            otherwise      => #f;
+          end
+        end method object-matches-type-filter?;
   local method object-matches-substring-filter?
-	    (object :: <environment-object>) => (matches? :: <boolean>)
-	  no-filter?
-	    | begin
-		let label = definition-label-key(frame, object);
-		subsequence-position(label, substring-filter) ~= #f
-	      end
-	end method object-matches-substring-filter?;
+            (object :: <environment-object>) => (matches? :: <boolean>)
+          no-filter?
+            | begin
+                let label = definition-label-key(frame, object);
+                subsequence-position(label, substring-filter) ~= #f
+              end
+        end method object-matches-substring-filter?;
   local method show-object?
-	    (object :: <environment-object>) => (show? :: <boolean>)
-	  ~instance?(object, <definition-object>)
-	    | instance?(object, <module-object>)
-	    | instance?(object, <library-object>)
-	    | (object-matches-type-filter?(object)
-		 & object-matches-substring-filter?(object))
-	end method show-object?;
+            (object :: <environment-object>) => (show? :: <boolean>)
+          ~instance?(object, <definition-object>)
+            | instance?(object, <module-object>)
+            | instance?(object, <library-object>)
+            | (object-matches-type-filter?(object)
+                 & object-matches-substring-filter?(object))
+        end method show-object?;
   let results = make(<stretchy-vector>);
   for (object in contents)
     if (show-object?(object))
@@ -151,7 +151,7 @@ define method filter-definition-contents
   end;
   results
 end method filter-definition-contents;
-  
+
 // Definition labels
 
 define method definition-label-key
@@ -209,33 +209,33 @@ define constant $library-filters
 define constant $default-library-filter = #"used-libraries";
 
 define sideways method make-frame-property-page-displayer
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      class :: subclass(<project-object>),
      type == #"libraries")
  => (label :: <string>, displayer :: <filtering-table-control-displayer>)
   let project = frame.ensure-frame-project;
   let displayer
     = make(<filtering-table-control-displayer>,
-	   element-label: "library",
-	   children-generator: curry(frame-project-libraries, frame),
-	   headings: #["Library", "Location"],
-	   widths: #[200, 500],
-	   generators: vector(identity,
-			      curry(project-library-location-name, project)),
-	   sort-orders: #[#"library", #"location"],
-	   sort-order: #"library",
-	   sort-function: curry(frame-sort-project-libraries, frame),
-	   filter-types: $library-filters,
-	   filter-type: $default-library-filter,
-	   filter-function: curry(filter-project-libraries, frame),
-	   label-key: method (object)
-			select (object by instance?)
-			  <library-object> =>
-			    frame-default-object-name(frame, object);
-			  <string> =>
-			    object;
-			end
-		      end);
+           element-label: "library",
+           children-generator: curry(frame-project-libraries, frame),
+           headings: #["Library", "Location"],
+           widths: #[200, 500],
+           generators: vector(identity,
+                              curry(project-library-location-name, project)),
+           sort-orders: #[#"library", #"location"],
+           sort-order: #"library",
+           sort-function: curry(frame-sort-project-libraries, frame),
+           filter-types: $library-filters,
+           filter-type: $default-library-filter,
+           filter-function: curry(filter-project-libraries, frame),
+           label-key: method (object)
+                        select (object by instance?)
+                          <library-object> =>
+                            frame-default-object-name(frame, object);
+                          <string> =>
+                            object;
+                        end
+                      end);
   values("Libraries", displayer)
 end method make-frame-property-page-displayer;
 
@@ -260,13 +260,13 @@ define method frame-sort-project-libraries
       frame-sort-items(frame, libraries);
     #"read-only" =>
       keyed-sort(libraries,
-		 key: curry(library-read-only?, project),
-		 test: method (ro?-1 :: <boolean>, ro?-2 :: <boolean>)
-			 ~ro?-1 & ro?-2
-		       end);
+                 key: curry(library-read-only?, project),
+                 test: method (ro?-1 :: <boolean>, ro?-2 :: <boolean>)
+                         ~ro?-1 & ro?-2
+                       end);
     #"location" =>
       keyed-sort(libraries,
-		 key: curry(project-library-location-name, project));
+                 key: curry(project-library-location-name, project));
   end
 end method frame-sort-project-libraries;
 
@@ -279,31 +279,31 @@ define method filter-project-libraries
   let library = project-library(project);
   let used-libraries
     = if (library)
-	source-form-used-definitions(project, library)
+        source-form-used-definitions(project, library)
       else
-	#[]
+        #[]
       end;
-  local method object-matches-type-filter? 
-	    (library :: <library-object>) => (matches? :: <boolean>)
-	  select (type-filter)
-	    #"libraries"      => #t;
-	    #"used-libraries" => 
-	      member?(library, used-libraries);
-	  end
-	end method object-matches-type-filter?;
+  local method object-matches-type-filter?
+            (library :: <library-object>) => (matches? :: <boolean>)
+          select (type-filter)
+            #"libraries"      => #t;
+            #"used-libraries" =>
+              member?(library, used-libraries);
+          end
+        end method object-matches-type-filter?;
   local method object-matches-substring-filter?
-	    (library :: <library-object>) => (matches? :: <boolean>)
-	  no-filter?
-	    | begin
-		let name = frame-default-object-name(frame, library);
-		subsequence-position(name, substring-filter) ~= #f
-	      end
-	end method object-matches-substring-filter?;
+            (library :: <library-object>) => (matches? :: <boolean>)
+          no-filter?
+            | begin
+                let name = frame-default-object-name(frame, library);
+                subsequence-position(name, substring-filter) ~= #f
+              end
+        end method object-matches-substring-filter?;
   local method show-object?
-	    (library :: <library-object>) => (show? :: <boolean>)
-	  object-matches-type-filter?(library)
-	    & object-matches-substring-filter?(library)
-	end method show-object?;
+            (library :: <library-object>) => (show? :: <boolean>)
+          object-matches-type-filter?(library)
+            & object-matches-substring-filter?(library)
+        end method show-object?;
   let results = make(<stretchy-vector>);
   for (object in libraries)
     if (show-object?(object))
@@ -312,7 +312,7 @@ define method filter-project-libraries
   end;
   results
 end method filter-project-libraries;
-  
+
 define method project-library-location-name
     (project :: <project-object>, library :: <library-object>)
  => (name :: <string>)
@@ -343,59 +343,59 @@ define method frame-sort-project-breakpoints
      order :: <symbol>)
  => (breakpoints :: <sequence>)
   local method breakpoint-location<
-	    (breakpoint-info1 :: <pair>, breakpoint-info2 :: <pair>)
-	 => (less-than? :: <boolean>)
-	  let name1 = breakpoint-info1.head;
-	  let name2 = breakpoint-info2.head;
-	  case
-	    name1 = name2 =>
-	      breakpoint-info1.tail < breakpoint-info2.tail;
-	    ~name1 =>
-	      #t;
-	    ~name2 =>
-	      #f;
-	    otherwise =>
-	      name1 < name2;
-	  end
-	end method breakpoint-location<;
+            (breakpoint-info1 :: <pair>, breakpoint-info2 :: <pair>)
+         => (less-than? :: <boolean>)
+          let name1 = breakpoint-info1.head;
+          let name2 = breakpoint-info2.head;
+          case
+            name1 = name2 =>
+              breakpoint-info1.tail < breakpoint-info2.tail;
+            ~name1 =>
+              #t;
+            ~name2 =>
+              #f;
+            otherwise =>
+              name1 < name2;
+          end
+        end method breakpoint-location<;
   select (order)
     #"location" =>
-      keyed-sort(breakpoints, 
-		 key: method (breakpoint :: <breakpoint-object>)
-			let object = breakpoint-object(breakpoint);
-			select (breakpoint by instance?)
-			  <environment-object-breakpoint-object> =>
-			    pair(#f,
-				 frame-default-object-name(frame, object));
-			  <source-location-breakpoint-object> =>
-			    let record = source-location-source-record(object);
-			    let name
-			      = select (record by instance?)
-				  <source-record> => 
-				    record.source-record-name;
-				  <file-source-record> =>
-				    locator-name(record.source-record-location);
-				end;
-			    let line
-			      = object.source-location-start-offset.source-offset-line;
-			    pair(name,
-				 line);
-			end
-		      end,
-		 test: breakpoint-location<);
+      keyed-sort(breakpoints,
+                 key: method (breakpoint :: <breakpoint-object>)
+                        let object = breakpoint-object(breakpoint);
+                        select (breakpoint by instance?)
+                          <environment-object-breakpoint-object> =>
+                            pair(#f,
+                                 frame-default-object-name(frame, object));
+                          <source-location-breakpoint-object> =>
+                            let record = source-location-source-record(object);
+                            let name
+                              = select (record by instance?)
+                                  <source-record> =>
+                                    record.source-record-name;
+                                  <file-source-record> =>
+                                    locator-name(record.source-record-location);
+                                end;
+                            let line
+                              = object.source-location-start-offset.source-offset-line;
+                            pair(name,
+                                 line);
+                        end
+                      end,
+                 test: breakpoint-location<);
     #"message" =>
       keyed-sort(breakpoints,
-		 key: method (breakpoint)
-			breakpoint-message?(breakpoint) | ""
-		      end method);
+                 key: method (breakpoint)
+                        breakpoint-message?(breakpoint) | ""
+                      end method);
     #"library" =>
       let project = frame.ensure-frame-project;
       keyed-sort(breakpoints,
-		 key: method (breakpoint)
-			let library = environment-object-library(project, breakpoint);
-			(library & environment-object-primitive-name(project, library))
-			  | ""
-		      end method);
+                 key: method (breakpoint)
+                        let library = environment-object-library(project, breakpoint);
+                        (library & environment-object-primitive-name(project, library))
+                          | ""
+                      end method);
   end
 end method frame-sort-project-breakpoints;
 
@@ -411,25 +411,25 @@ define sideways method make-breakpoint-table-control-displayer
   let project = frame.ensure-frame-project;
   apply(make, <table-control-displayer>,
         concatenate
-	  (initargs,
-	   vector(element-label: "breakpoint",
-		  children-generator: curry(frame-project-breakpoints, frame),
-		  headings: #["Location", "Library", "Message Text"],
-		  widths:   #[300, 70, 400],
-		  sort-orders: #[#"location", #"library", #"message"],
-		  sort-order: #"location",
-		  sort-function: curry(frame-sort-project-breakpoints, frame),
-		  generators: vector(identity,
-				     curry(environment-object-library, project),
-				     method (breakpoint)
-				       breakpoint-message?(breakpoint) | ""
-				     end method),
-		  label-key: curry(breakpoint-object-label, frame)),
-	   #[]))
+          (initargs,
+           vector(element-label: "breakpoint",
+                  children-generator: curry(frame-project-breakpoints, frame),
+                  headings: #["Location", "Library", "Message Text"],
+                  widths:   #[300, 70, 400],
+                  sort-orders: #[#"location", #"library", #"message"],
+                  sort-order: #"location",
+                  sort-function: curry(frame-sort-project-breakpoints, frame),
+                  generators: vector(identity,
+                                     curry(environment-object-library, project),
+                                     method (breakpoint)
+                                       breakpoint-message?(breakpoint) | ""
+                                     end method),
+                  label-key: curry(breakpoint-object-label, frame)),
+           #[]))
 end method make-breakpoint-table-control-displayer;
 
 define sideways method make-frame-property-page-displayer
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      class :: subclass(<project-object>),
      type == #"breakpoints")
  => (label :: <string>, displayer :: <displayer-mixin>)
@@ -442,13 +442,13 @@ define method breakpoint-object-label
   ""
 end method breakpoint-object-label;
 
-define method breakpoint-object-label 
+define method breakpoint-object-label
     (frame :: <frame>, label :: <string>)
  => (label :: <string>)
   label
 end method breakpoint-object-label;
 
-define method breakpoint-object-label 
+define method breakpoint-object-label
     (frame :: <frame>, breakpoint :: <source-location-breakpoint-object>)
  => (label :: <string>)
   let stream :: <string-stream> = make(<string-stream>, direction: #"output");
@@ -500,58 +500,58 @@ define method project-sources-contents
     (frame :: <environment-frame>, project :: <project-object>)
  => (contents :: <sequence>)
   if (project == frame.ensure-frame-project | $show-subprojects)
-    let sources 
+    let sources
       = map(method (record :: <source-record>)
-	      make(<source-record-wrapper>,
-		   project: project,
-		   object: record)
-	    end,
-	    project.project-sources);
+              make(<source-record-wrapper>,
+                   project: project,
+                   object: record)
+            end,
+            project.project-sources);
     let directory = project.project-directory;
     let other-sources :: <sequence>
       = sort(map(method (filename :: <file-locator>)
-		   let location = merge-locators(filename, directory);
-		   make(<source-locator-wrapper>,
-			project: project,
-			object: location)
-		 end,
-		 project-other-sources(project)),
-	     test: method 
-		       (wrapper1 :: <source-locator-wrapper>,
-			wrapper2 :: <source-locator-wrapper>)
-		    => (less-than? :: <boolean>)
-		     let l1 = wrapper1.wrapper-object;
-		     let l2 = wrapper2.wrapper-object;
-		     let extension1 = l1.locator-extension | "";
-		     let extension2 = l2.locator-extension | "";
-		     if (extension1 = extension2)
-		       let base1 = l1.locator-base;
-		       let base2 = l2.locator-base;
-		       base1 < base2
-		     else
-		       extension1 < extension2
-		     end
-		   end);
+                   let location = merge-locators(filename, directory);
+                   make(<source-locator-wrapper>,
+                        project: project,
+                        object: location)
+                 end,
+                 project-other-sources(project)),
+             test: method
+                       (wrapper1 :: <source-locator-wrapper>,
+                        wrapper2 :: <source-locator-wrapper>)
+                    => (less-than? :: <boolean>)
+                     let l1 = wrapper1.wrapper-object;
+                     let l2 = wrapper2.wrapper-object;
+                     let extension1 = l1.locator-extension | "";
+                     let extension2 = l2.locator-extension | "";
+                     if (extension1 = extension2)
+                       let base1 = l1.locator-base;
+                       let base2 = l2.locator-base;
+                       base1 < base2
+                     else
+                       extension1 < extension2
+                     end
+                   end);
     //--- Might the order ever be useful?
     let used-projects :: <sequence>
       = sort(map(method (source-project :: <project-object>)
-		   make(<source-project-wrapper>,
-			project: project,
-			object: source-project)
-		 end,
-		 project-used-projects(project)),
-	     test: method 
-		       (wrapper1 :: <source-project-wrapper>,
-			wrapper2 :: <source-project-wrapper>)
-		    => (less-than? :: <boolean>)
-		     let p1 = wrapper1.wrapper-object;
-		     let p2 = wrapper2.wrapper-object;
-		     let name1 :: <string>
-		       = environment-object-primitive-name(p1, p1);
-		     let name2 :: <string>
-		       = environment-object-primitive-name(p2, p2);
-		     name1 < name2
-		   end);
+                   make(<source-project-wrapper>,
+                        project: project,
+                        object: source-project)
+                 end,
+                 project-used-projects(project)),
+             test: method
+                       (wrapper1 :: <source-project-wrapper>,
+                        wrapper2 :: <source-project-wrapper>)
+                    => (less-than? :: <boolean>)
+                     let p1 = wrapper1.wrapper-object;
+                     let p2 = wrapper2.wrapper-object;
+                     let name1 :: <string>
+                       = environment-object-primitive-name(p1, p1);
+                     let name2 :: <string>
+                       = environment-object-primitive-name(p2, p2);
+                     name1 < name2
+                   end);
     concatenate(sources, other-sources, used-projects)
   else
     #[]
@@ -565,7 +565,7 @@ define method project-sources-contents
 end method project-sources-contents;
 
 define method project-sources-contents
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      wrapper :: <source-record-wrapper>)
  => (contents :: <sequence>)
   let project = frame.ensure-frame-project;
@@ -575,7 +575,7 @@ define method project-sources-contents
   if (canonical-record)
     let top-level-forms
       = source-record-top-level-forms
-          (project, canonical-record, project: subproject); 
+          (project, canonical-record, project: subproject);
 /*
     frame-order-sequence
       (frame, top-level-forms,
@@ -602,31 +602,31 @@ end method project-sources-contents;
 
 // Return the label of a tree node
 
-define method project-sources-label-key 
+define method project-sources-label-key
     (frame :: <environment-frame>, wrapper :: <source-wrapper>)
  => (name :: <string>)
   project-sources-label-key(frame, wrapper.wrapper-object)
 end method project-sources-label-key;
 
-define method project-sources-label-key 
+define method project-sources-label-key
     (frame :: <environment-frame>, locator :: <locator>)
  => (name :: <string>)
   locator.locator-name
 end method project-sources-label-key;
 
-define method project-sources-label-key 
+define method project-sources-label-key
     (frame :: <environment-frame>, object :: <environment-object>)
  => (name :: <string>)
   frame-object-unique-name(frame, object)
 end method project-sources-label-key;
 
-define method project-sources-label-key 
+define method project-sources-label-key
     (frame :: <environment-frame>, record :: <source-record>)
  => (name :: <string>)
   source-record-name(record)
 end method project-sources-label-key;
 
-define method project-sources-label-key 
+define method project-sources-label-key
     (frame :: <environment-frame>, object :: <file-source-record>)
  => (name :: <string>)
   //---*** cpage: For now, call locator-name() directly in order to include the
@@ -644,19 +644,19 @@ define method project-sources-label-key
 end method project-sources-label-key;
 
 /*---*** andrewa: I don't believe that this is used...
-define method project-sources-label-key 
+define method project-sources-label-key
     (frame :: <environment-frame>, object :: <source-location>)
  => (name :: <string>)
   let line-contents = first-line(as(<string>, copy-source-location-contents(object)));
   line-contents;
 end method project-sources-label-key;
 
-define function first-line 
+define function first-line
     (str :: <string>) => (line :: <string>)
   let newline? = find-key(str,
-			  method (ch)
-			    member?(ch, #('\n', '\r'))
-			  end method);
+                          method (ch)
+                            member?(ch, #('\n', '\r'))
+                          end method);
   if (newline?)
     copy-sequence(str, end: newline?)
   else
@@ -669,17 +669,17 @@ end function first-line;
 /// Sources page
 
 define sideways method make-frame-property-page-displayer
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      class :: subclass(<project-object>),
      type == #"sources")
  => (label :: <string>, displayer :: <tree-control-displayer>)
   let displayer
     = make(<tree-control-displayer>,
-	   information-available?-function: always(#t),
-	   children-generator: curry(project-sources-contents, frame),
-	   label-key: curry(project-sources-label-key, frame),
-	   always-show-selection?: #t,
-	   items-changed-callback: note-project-sources-updated);
+           information-available?-function: always(#t),
+           children-generator: curry(project-sources-contents, frame),
+           label-key: curry(project-sources-label-key, frame),
+           always-show-selection?: #t,
+           items-changed-callback: note-project-sources-updated);
   values("Sources", displayer)
 end method make-frame-property-page-displayer;
 
@@ -694,8 +694,8 @@ define method note-project-sources-updated
   let count = size(sources);
   let message
     = format-to-string("%d %s",
-		       count,
-		       string-pluralize("source", count: count));
-  frame-status-message(frame) 
+                       count,
+                       string-pluralize("source", count: count));
+  frame-status-message(frame)
     := project-not-built-message(project, message: message)
 end method note-project-sources-updated;

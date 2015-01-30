@@ -21,14 +21,14 @@ define inline function environment-class-for-source-form
     (server :: <server>, source-form :: <source-form>)
  => (class :: subclass(<source-form-object>))
   local method method-class
-	    () => (class :: subclass(<source-form-object>))
-	  let database = ensure-server-database(server);
-	  if (internal-dylan-method?(database, source-form))
-	    <internal-method-object>
-	  else
-	    <method-object>
-	  end
-	end method method-class;
+            () => (class :: subclass(<source-form-object>))
+          let database = ensure-server-database(server);
+          if (internal-dylan-method?(database, source-form))
+            <internal-method-object>
+          else
+            <method-object>
+          end
+        end method method-class;
   select (source-form by instance?)
     //---*** andrewa: this mapping is no longer correct, we
     //---*** map <project>s to <library-object>.
@@ -46,9 +46,9 @@ define inline function environment-class-for-source-form
     <macro-form>                        => <simple-macro-call-object>;
     <variable-definition>               =>
       if (member?(#"thread", source-form-adjectives(source-form)))
-	<thread-variable-object>
+        <thread-variable-object>
       else
-	<global-variable-object>
+        <global-variable-object>
       end;
     otherwise =>
       <top-level-expression-object>;
@@ -61,8 +61,8 @@ define sealed method make-environment-object-for-source-form
   let environment-class
     = environment-class-for-source-form(server, definition);
   make-environment-object(environment-class,
-			  project: server.server-project,
-			  compiler-object-proxy: definition)
+                          project: server.server-project,
+                          compiler-object-proxy: definition)
 end method make-environment-object-for-source-form;
 
 //--- Special case 'define function' so that it doesn't look like
@@ -86,8 +86,8 @@ define sealed method make-environment-object-for-source-form
   let database = server.ensure-server-database;
   let project = find-project-for-library-name(database, name);
   make-environment-object(<library-object>,
-			  project: server.server-project,
-			  compiler-object-proxy: project)
+                          project: server.server-project,
+                          compiler-object-proxy: project)
 end method make-environment-object-for-source-form;
 
 define class <dfmc-type-expression-object> (<complex-type-expression-object>)
@@ -97,7 +97,7 @@ define method environment-object-primitive-name
   (server :: <server>, expression :: <dfmc-type-expression-object>) => (result :: false-or(<string>));
   let s :: <byte-string-stream>
     = make(<byte-string-stream>,
-	   contents: make(<byte-string>, size: 32), direction: #"output");
+           contents: make(<byte-string>, size: 32), direction: #"output");
   print(expression.compiler-object-proxy, s, escape?: #f);
   s.stream-contents
 end;
@@ -110,7 +110,7 @@ define function make-environment-object-for-type-expression
     make-environment-object-for-source-form
       (server.server-project, type-definition)
   else
-    make-environment-object(<dfmc-type-expression-object>, 
+    make-environment-object(<dfmc-type-expression-object>,
                             project: server.server-project,
                             compiler-object-proxy: type-expression)
   end
@@ -135,9 +135,9 @@ define method type-expression-to-definition
       find-<object>(server);
     instance?(type-expression, <variable>) =>
       let definition
-	= variable-active-definition(context, type-expression);
+        = variable-active-definition(context, type-expression);
       unless (definition)
-	debug-out(#"dfmc-environment-database",
+        debug-out(#"dfmc-environment-database",
                   "No active definition found for %=",
                   type-expression)
       end;

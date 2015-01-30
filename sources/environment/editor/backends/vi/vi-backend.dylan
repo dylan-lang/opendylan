@@ -26,16 +26,16 @@ end class <vi-editor-command>;
 define macro vi-command-definer
   { define vi-command ?:name ?slots:* end }
     => { define sealed string-command "<vi-" ## ?name ## "-command>"
-	     ("<editor-" ## ?name ## "-command>", <vi-editor-command>)
-	   ?slots
-	 end;
-	 define sealed domain make (singleton("<vi-" ## ?name ## "-command>"));
-	 define sealed domain initialize ("<vi-" ## ?name ## "-command>");
-	 define sealed method class-for-editor-command
-	     (editor :: <vi-editor>, class == "<editor-" ## ?name ## "-command>")
-	  => (class == "<vi-" ## ?name ## "-command>")
-	   "<vi-" ## ?name ## "-command>"
-	 end method class-for-editor-command; }
+             ("<editor-" ## ?name ## "-command>", <vi-editor-command>)
+           ?slots
+         end;
+         define sealed domain make (singleton("<vi-" ## ?name ## "-command>"));
+         define sealed domain initialize ("<vi-" ## ?name ## "-command>");
+         define sealed method class-for-editor-command
+             (editor :: <vi-editor>, class == "<editor-" ## ?name ## "-command>")
+          => (class == "<vi-" ## ?name ## "-command>")
+           "<vi-" ## ?name ## "-command>"
+         end method class-for-editor-command; }
 end macro vi-command-definer;
 
 define vi-command open

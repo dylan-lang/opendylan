@@ -103,34 +103,34 @@ define pane <choice-pane> ()
 
   pane choice-list-pane (pane)
     make(<table-control>,
-	 selection-mode: #"multiple",
-	 always-show-selection?: #t,
-	 headings:   vector(choice-type-label(pane)),
-	 generators: vector(choice-label),
-	 icon-function:
-	   method (choice)
-	     if (choice-included?(choice))
-	       values($check-mark-icon,   $check-mark-icon)
-	     else
-	       values($uncheck-mark-icon, $uncheck-mark-icon)
-	     end
-	   end method,
-	 //---*** andrewa: hack to make the controls the size of the headers!
-	 width: 134, fixed-width?: #t,
-	 widths: #[130],
-	 value-changed-callback:	// Update gadgets below
-	   method (gadget)
-	     // Update contents and enabling of next pane, if any
-	     update-next-choice-pane-list(pane)
-	   end method,
-	 activate-callback:		// Toggle "included" state
-	   method (gadget)
-	     let choice    = ~empty?(gadget-value(gadget)) & gadget-value(gadget)[0];
-	     let included? = choice-included?(choice);
-	     choice-included?(choice) := ~included?;
-	     // Update contents and enabling of panes, if any
-	     update-choice-pane-lists(pane)
-	   end method);
+         selection-mode: #"multiple",
+         always-show-selection?: #t,
+         headings:   vector(choice-type-label(pane)),
+         generators: vector(choice-label),
+         icon-function:
+           method (choice)
+             if (choice-included?(choice))
+               values($check-mark-icon,   $check-mark-icon)
+             else
+               values($uncheck-mark-icon, $uncheck-mark-icon)
+             end
+           end method,
+         //---*** andrewa: hack to make the controls the size of the headers!
+         width: 134, fixed-width?: #t,
+         widths: #[130],
+         value-changed-callback:  // Update gadgets below
+           method (gadget)
+             // Update contents and enabling of next pane, if any
+             update-next-choice-pane-list(pane)
+           end method,
+         activate-callback:  // Toggle "included" state
+           method (gadget)
+             let choice    = ~empty?(gadget-value(gadget)) & gadget-value(gadget)[0];
+             let included? = choice-included?(choice);
+             choice-included?(choice) := ~included?;
+             // Update contents and enabling of panes, if any
+             update-choice-pane-lists(pane)
+           end method);
   layout (pane)
     vertically (spacing: 4)
       pane.choice-list-pane;
@@ -179,31 +179,31 @@ define method update-next-choice-pane-list
   local method only-one-choice? (choices :: <sequence>)
           //--- Hack to work around bug in multi-select table controls
           //--- Should just be 'size(choices) == 1'
-	  when (~empty?(choices))
-	    block (return)
-	      let choice1 = choices[0];
-	      for (choice in choices)
-	        unless (choice == choice1) return(#f) end
-	      end;
-	      #t
-	    end
-	  end
-	end method;
+          when (~empty?(choices))
+            block (return)
+              let choice1 = choices[0];
+              for (choice in choices)
+                unless (choice == choice1) return(#f) end
+              end;
+              #t
+            end
+          end
+        end method;
   let next = next-pane(pane);
   when (next)
     let choices = gadget-value(choice-list-pane(pane));
     let (documentation, items, enabled?)
       = if (only-one-choice?(choices))
-	  // Exactly one item selected, so this pane can show documentation
-	  // and next pane can show children
-	  let choice = choices[0];
-	  let children = choice & choice-children(choice);
-	  let included? = choice & choice-included?(choice);
-	  values(choice-documentation(choice),
-		 children | #[], children & included?)
-	else
-	  values("", #[], #f)
-	end;
+          // Exactly one item selected, so this pane can show documentation
+          // and next pane can show children
+          let choice = choices[0];
+          let children = choice & choice-children(choice);
+          let included? = choice & choice-included?(choice);
+          values(choice-documentation(choice),
+                 children | #[], children & included?)
+        else
+          values("", #[], #f)
+        end;
     choice-pane-choices(next)  := items;
     choice-pane-enabled?(next) := enabled?;
     update-gadget(choice-list-pane(next));

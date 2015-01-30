@@ -1,6 +1,6 @@
 Module:    environment-application-commands
 Synopsis:  The application commands provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -29,19 +29,19 @@ define method show-property
   let registers = project.application-registers;
   let stream = context.context-server.server-output-stream;
   print-table(stream, registers,
-	      label-key: method (register :: <register-object>)
-			   print-environment-object-to-string
-			     (project, register, namespace: module)
-			 end,
-	      value-key: method (register :: <register-object>)
-			   let value
-			     = register-contents
-			         (project, register, thread,
-				  stack-frame-context: frame);
-			   print-environment-object-to-string
-			     (project, value, namespace: module)
-			 end,
-	      separator: " - ")
+              label-key: method (register :: <register-object>)
+                           print-environment-object-to-string
+                             (project, register, namespace: module)
+                         end,
+              value-key: method (register :: <register-object>)
+                           let value
+                             = register-contents
+                                 (project, register, thread,
+                                  stack-frame-context: frame);
+                           print-environment-object-to-string
+                             (project, value, namespace: module)
+                         end,
+              separator: " - ")
 end method show-property;
 
 
@@ -74,32 +74,32 @@ define method do-execute-command
     let address = string-to-machine-word(address-string);
     for (index :: <integer> from 0 below memory-size by group-size)
       let strings
-	= address-read-memory-contents
-	    (project, address-object,
-	     size:       #"word",
-	     format:     #"hexadecimal",
-	     from-index: index,
-	     to-index:   index + group-size);
+        = address-read-memory-contents
+            (project, address-object,
+             size:       #"word",
+             format:     #"hexadecimal",
+             from-index: index,
+             to-index:   index + group-size);
       format(stream, "%s  ", mw/+(address, as(<machine-word>, index)));
       for (string :: <string> in strings)
-	format(stream, "%s ", string)
+        format(stream, "%s ", string)
       end;
       let ascii-characters
-	= address-read-memory-contents
-	    (project, address-object,
-	     size:       #"byte",
-	     format:     #"byte-character",
-	     from-index: index,
-	     to-index:   index + group-size);
+        = address-read-memory-contents
+            (project, address-object,
+             size:       #"byte",
+             format:     #"byte-character",
+             from-index: index,
+             to-index:   index + group-size);
       format(stream, "    ");
       for (string :: <string> in strings)
-	format(stream, "%s", string)
+        format(stream, "%s", string)
       end;
       new-line(stream)
     end
   else
     message(context, "No address available for '%s'",
-	    environment-object-display-name(project, object, module))
+            environment-object-display-name(project, object, module))
   end
 end method do-execute-command;
 

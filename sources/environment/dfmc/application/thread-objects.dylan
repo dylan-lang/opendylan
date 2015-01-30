@@ -41,7 +41,7 @@ define inline method thread-state-model
 end method thread-state-model;
 
 define inline method thread-state-model-setter
-    (state :: <application-thread-state>, application :: <dfmc-application>, 
+    (state :: <application-thread-state>, application :: <dfmc-application>,
      thread :: <remote-thread>)
  => (state :: <application-thread-state>)
   application.application-thread-state-model[thread] := state
@@ -55,7 +55,7 @@ define inline method thread-state-transaction
 end method thread-state-transaction;
 
 define inline method thread-state-transaction-setter
-    (id :: <object>, application :: <dfmc-application>, 
+    (id :: <object>, application :: <dfmc-application>,
      thread :: <remote-thread>)
  => (id)
   let state-model = thread-state-model(application, thread);
@@ -125,12 +125,12 @@ define method process-next-interaction-request
     let module-actual-name
       = environment-object-primitive-name
           (application.server-project,
-	   request.interaction-request-module);
+           request.interaction-request-module);
     let actual-id
       = evaluate-expression(application.server-project.project-proxy,
-			    request.interaction-request-context,
-			    as(<symbol>, module-actual-name),
-			    request.interaction-request-string);
+                            request.interaction-request-context,
+                            as(<symbol>, module-actual-name),
+                            request.interaction-request-string);
     notify-warnings-to-environment
         (application,
          make-environment-object
@@ -160,7 +160,7 @@ end method;
 
 define method request-interaction
     (application :: <dfmc-application>, thread :: <remote-thread>,
-     context :: <runtime-context>, module :: <module-object>, 
+     context :: <runtime-context>, module :: <module-object>,
      code-string :: <byte-string>, state :: <application-state>)
  => (request :: <thread-interaction-request>)
   debugger-message("request-interaction on %=", thread);
@@ -206,7 +206,7 @@ end method;
 //    Returns a vector of all threads currently live in the application.
 
 define method application-threads
-     (application :: <dfmc-application>, #key client) 
+     (application :: <dfmc-application>, #key client)
  => (threads :: <sequence>)
   if (application-tethered?(application))
     let target = application.application-target-app;
@@ -214,16 +214,16 @@ define method application-threads
     with-debugger-transaction (target)
       let i = 0;
       let thread-sequence
-	= make(<vector>, size: number-of-active-threads(path));
+        = make(<vector>, size: number-of-active-threads(path));
       do-threads(method (t :: <remote-thread>)
-		   thread-sequence[i]
-		     := make-environment-object(<thread-object>,
-						project:
-						  application.server-project,
-						application-object-proxy: t);
-		   i := i + 1;
-		 end,
-		 path);
+                   thread-sequence[i]
+                     := make-environment-object(<thread-object>,
+                                                project:
+                                                  application.server-project,
+                                                application-object-proxy: t);
+                   i := i + 1;
+                 end,
+                 path);
       thread-sequence
     end
   else
@@ -236,7 +236,7 @@ end method application-threads;
 //    Returns the frame at the top of the stack for this thread.
 
 define method thread-stack-trace
-    (application :: <dfmc-application>, thread :: <thread-object>) 
+    (application :: <dfmc-application>, thread :: <thread-object>)
  => (top-frame :: <stack-frame-object>)
   let top-dm-frame = #f;
   let target = application.application-target-app;
@@ -274,9 +274,9 @@ define method thread-complete-stack-trace
     let all-frames = make(<stretchy-vector>);
     while (this-frame)
       add!(all-frames,
-	   make-environment-object(<stack-frame-object>,
-				   project: application.server-project,
-				   application-object-proxy: this-frame));
+           make-environment-object(<stack-frame-object>,
+                                   project: application.server-project,
+                                   application-object-proxy: this-frame));
       this-frame := previous-stack-frame(target, this-frame);
     end;
     all-frames
@@ -326,25 +326,25 @@ define method create-application-thread
   with-debugger-transaction (target)
     block ()
       unless (thread-available-for-interaction?
-		(target, application.dylan-thread-manager))
-	error("Thread Manager broken: Cannot create a new application thread");
+                (target, application.dylan-thread-manager))
+        error("Thread Manager broken: Cannot create a new application thread");
       end;
       thread-permanently-suspended?(path, application.dylan-thread-manager) := #f;
       let thread
-	= if (empty?(title))
-	    request-evaluator-thread(application);
-	  else
-	    request-evaluator-thread(application, name: title);
-	  end if;
+        = if (empty?(title))
+            request-evaluator-thread(application);
+          else
+            request-evaluator-thread(application, name: title);
+          end if;
       make-environment-object
-	(<thread-object>,
-	 project: application.server-project,
-	 application-object-proxy: thread)
+        (<thread-object>,
+         project: application.server-project,
+         application-object-proxy: thread)
     cleanup
       thread-permanently-suspended?(path, application.dylan-thread-manager) := #t;
       unless (thread-available-for-interaction?
-		(target, application.dylan-thread-manager))
-	error("Thread Manager broken while spawning new thread");
+                (target, application.dylan-thread-manager))
+        error("Thread Manager broken while spawning new thread");
       end;
     end block;
   end
@@ -469,7 +469,7 @@ define method add-application-object-to-thread-history
       let value = runtime-proxy-to-remote-value(application, proxy);
       let remote-thread = thread.application-object-proxy;
       let (index, name)
-	= record-object-in-thread-history(target, remote-thread, value);
+        = record-object-in-thread-history(target, remote-thread, value);
       name
     end if;
   end
@@ -484,7 +484,7 @@ define method next-evaluator-thread-name
     (application :: <dfmc-application>) => (name :: <byte-string>)
   let str = format-to-string("Interactive Thread %d",
                              application.evaluator-thread-counter);
-  application.evaluator-thread-counter := 
+  application.evaluator-thread-counter :=
     application.evaluator-thread-counter + 1;
   str;
 end method;
@@ -520,7 +520,7 @@ end method;
 //    application server reacts by calling this function.
 
 define method install-evaluator-thread
-    (application :: <dfmc-application>, thread :: <remote-thread>, 
+    (application :: <dfmc-application>, thread :: <remote-thread>,
      name :: <byte-string>) => ()
   debugger-message("install-evaluator-thread %= %=", name, thread);
   let target = application.application-target-app;
@@ -556,14 +556,14 @@ define method application-available-interactor-thread
   with-debugger-transaction (target)
     block (return)
       do-threads(method (t :: <remote-thread>) => ()
-		   if (thread-available-for-interaction?(target, t))
-		     return(make-environment-object
-			      (<thread-object>,
-			       project: application.server-project,
-			       application-object-proxy: t))
-		   end if;
-		 end method,
-		 path);
+                   if (thread-available-for-interaction?(target, t))
+                     return(make-environment-object
+                              (<thread-object>,
+                               project: application.server-project,
+                               application-object-proxy: t))
+                   end if;
+                 end method,
+                 path);
     end block
   end
 end method;
@@ -573,17 +573,17 @@ ignore(application-available-interactor-thread);
 
 // The Environment tries to guarantee interaction in an application
 // as follows.
-// 
+//
 // It tries to use only explicitly spawned interactive threads as
 // these are known to be in a sound state.
-// 
+//
 // If it doesn't find one, it just spawns a new one in the application
 // space, and uses that one
-// 
+//
 // This is only currently hooked up to the Editor, as the Interactor
 // itself is only currently thread-local (interactions pertain only
 // to the currently selected thread)
-// 
+//
 // Nosa   Mar 31, 1999
 
 
@@ -596,42 +596,42 @@ define method application-open-interactor-thread
   let interactive-threads? = application.dylan-thread-manager & #t;
   let thread :: <thread-object>
     = with-debugger-transaction (target)
-	block (return)
-	  do-threads(method (t :: <remote-thread>) => ()
-		       unless (reserved-interactive-thread?
-				 (application, t))
-			 if (thread-permanently-suspended?(path, t) |
-			     (~interactive-threads? &
-				thread-available-for-interaction?(target, t)))
-			   application-proxy-primitive-name(application, t);
-			   let thread
-			     = make-environment-object
-			         (<thread-object>,
-				  project: application.server-project,
-				  application-object-proxy: t);
-			   return(thread);
-			 end if;
-		       end unless;
-		     end method,
-		     path);
+        block (return)
+          do-threads(method (t :: <remote-thread>) => ()
+                       unless (reserved-interactive-thread?
+                                 (application, t))
+                         if (thread-permanently-suspended?(path, t) |
+                             (~interactive-threads? &
+                                thread-available-for-interaction?(target, t)))
+                           application-proxy-primitive-name(application, t);
+                           let thread
+                             = make-environment-object
+                                 (<thread-object>,
+                                  project: application.server-project,
+                                  application-object-proxy: t);
+                           return(thread);
+                         end if;
+                       end unless;
+                     end method,
+                     path);
 
-	  if (interactive-threads?)
-	    // If we fall through to here, spawn a new thread
-	    debugger-message("application-open-interactor-thread spawning new thread");
-	    create-application-thread(application, "")
-	  else
-	    // If we fall through to here, just use any thread.
-	    let remote-threads
-	      = key-sequence(application.application-thread-state-model);
-	    make-environment-object
-	      (<thread-object>,
-	       project: application.server-project,
-	       application-object-proxy: remote-threads[0]);
-	  end;
-	end
+          if (interactive-threads?)
+            // If we fall through to here, spawn a new thread
+            debugger-message("application-open-interactor-thread spawning new thread");
+            create-application-thread(application, "")
+          else
+            // If we fall through to here, just use any thread.
+            let remote-threads
+              = key-sequence(application.application-thread-state-model);
+            make-environment-object
+              (<thread-object>,
+               project: application.server-project,
+               application-object-proxy: remote-threads[0]);
+          end;
+        end
       end;
   debugger-message("application-open-interactor-thread chose Thread %=",
-		   thread.application-object-proxy);
+                   thread.application-object-proxy);
   thread
 end method;
 
@@ -683,7 +683,7 @@ define method reserved-interactive-thread?
     (application :: <dfmc-application>, thread :: <remote-thread>)
  => (reserved? :: <boolean>)
   select (thread)
-    
+
     application.dylan-thread-manager,
     application.application-target-app.target-spy-thread
       => #t;
@@ -706,16 +706,16 @@ define method initialize-interactive-threads
 
   application.dylan-thread-manager :=
   request-evaluator-thread(application,
-			   name: "Thread Manager",
-			   thread: thread);
+                           name: "Thread Manager",
+                           thread: thread);
 
-  // The Spy Thread is explicitly reserved for running 
+  // The Spy Thread is explicitly reserved for running
   // Debugger Manager spy calls in the application space
 
   let spy-thread =
     request-evaluator-thread(application,
-			     name: "Spy Thread",
-			     thread: thread);
+                             name: "Spy Thread",
+                             thread: thread);
 
   // Register this thread as a reserved Spy Thread in the debug-target
 
@@ -724,11 +724,11 @@ define method initialize-interactive-threads
      spy-thread,
      reserve?: #t);
 
-  // In addition, a regular interactive thread is spawned at 
+  // In addition, a regular interactive thread is spawned at
   // the same time
 
   request-evaluator-thread(application,
-			   thread: thread);
+                           thread: thread);
 
   application.application-initialized-interactive-threads? := #t;
 end method;

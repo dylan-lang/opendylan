@@ -10,28 +10,28 @@ define test application-ids-test ()
   let project = *test-application*;
   let library = project-library(project);
   check-equal("application library id",
-	      environment-object-id(project, library),
-	      $test-application-id);
+              environment-object-id(project, library),
+              $test-application-id);
   let modules = library-modules(project, library);
   check-equal("application has only one module",
-	      size(modules), 1);
+              size(modules), 1);
   check-equal("application module id",
-	      environment-object-id(project, modules[0]),
-	      $test-application-module-id);
+              environment-object-id(project, modules[0]),
+              $test-application-module-id);
 end test application-ids-test;
 
 define test library-ids-test ()
   let project = *test-library*;
   let library = project-library(project);
   check-equal("test library id",
-	      environment-object-id(project, library),
-	      $test-library-id);
+              environment-object-id(project, library),
+              $test-library-id);
   let modules = library-modules(project, library);
   check-equal("test library has only one module",
-	      size(modules), 2);
+              size(modules), 2);
   check-equal("test library module id",
-	      environment-object-id(project, modules[0]),
-	      $test-library-module-id);
+              environment-object-id(project, modules[0]),
+              $test-library-module-id);
 end test library-ids-test;
 
 define test home-name-test ()
@@ -41,19 +41,19 @@ define test home-name-test ()
   let internal-module
     = find-environment-object(project, $test-library-module-id);
   check-true("find-environment-object for application module",
-	     instance?(module, <module-object>));
+             instance?(module, <module-object>));
   check-true("find-environment-object for library module",
-	     instance?(internal-module, <module-object>));
+             instance?(internal-module, <module-object>));
   check-true("find-environment-object for internal class",
-	     instance?(class, <class-object>));
+             instance?(class, <class-object>));
   check-false("internal class has no name in application",
-	      environment-object-name(project, class, module));
+              environment-object-name(project, class, module));
   check-true("internal class has correct home name",
-	     begin
-	       let home-name = environment-object-home-name(project, class);
-	       instance?(home-name, <binding-name-object>)
-		 & name-namespace(project, home-name) = internal-module
-	     end);
+             begin
+               let home-name = environment-object-home-name(project, class);
+               instance?(home-name, <binding-name-object>)
+                 & name-namespace(project, home-name) = internal-module
+             end);
 end test home-name-test;
 
 

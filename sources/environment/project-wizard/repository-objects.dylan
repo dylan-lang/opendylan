@@ -205,21 +205,21 @@ define method make-repository-choice
   local
     method lookup-library (lib-name) => (lib)
       if (instance?(lib-name, <list>))
-	let lib = element($project-libraries, head(lib-name), default: #f);
-	lib & list(lib)
+        let lib = element($project-libraries, head(lib-name), default: #f);
+        lib & list(lib)
       else
-	element($project-libraries, lib-name, default: #f)
+        element($project-libraries, lib-name, default: #f)
       end
     end method;
   make(<choice>, object: group, included?: included?,
        children:
-	 make-repository-choices
-	   (map(method (lib-name)
-		  lookup-library(lib-name)
-		    | error("Library %s could not be found for group %s",
-			    lib-name, repository-object-label(group))
-		end,
-		group.project-library-group-libraries)))
+         make-repository-choices
+           (map(method (lib-name)
+                  lookup-library(lib-name)
+                    | error("Library %s could not be found for group %s",
+                            lib-name, repository-object-label(group))
+                end,
+                group.project-library-group-libraries)))
 end method;
 
 define method make-repository-choice
@@ -229,7 +229,7 @@ define method make-repository-choice
   // they say otherwise, for convenience.
   make(<choice>, object: library, included?: included?,
        children:
-	 make-repository-choices(library.project-library-modules))
+         make-repository-choices(library.project-library-modules))
 end method;
 
 define function find-repository-choice
@@ -237,11 +237,11 @@ define function find-repository-choice
      #key if-not-exists :: false-or(singleton(#"signal")) = #"signal")
  => (choice :: false-or(<choice>))
   find-element(repository-choices,
-	       method (choice)
-		 choice.choice-object.repository-object-id == id
-	       end)
+               method (choice)
+                 choice.choice-object.repository-object-id == id
+               end)
     | when (if-not-exists == #"signal")
-	error("Wizard error: the repository object %s could not be found", id)
+        error("Wizard error: the repository object %s could not be found", id)
       end;
 end function;
 

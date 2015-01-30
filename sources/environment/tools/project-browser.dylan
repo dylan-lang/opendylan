@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Project Browser
 
 define frame <project-browser>
-    (<frame-refresh-mixin>, 
+    (<frame-refresh-mixin>,
      <frame-cascading-window-mixin>,
      <environment-project-tool>)
   slot frame-initialized-callback :: false-or(<function>) = #f,
@@ -38,7 +38,7 @@ define frame <project-browser>
   keyword frame-class-name:, init-value: #"project-browser";
 end frame <project-browser>;
 
-define cascading-window-settings 
+define cascading-window-settings
   project-window :: <project-browser> = "Project Window";
 
 define method initialize (frame :: <project-browser>, #key) => ()
@@ -61,20 +61,20 @@ define method initialize (frame :: <project-browser>, #key) => ()
 end method initialize;
 
 tune-in($project-channel,
-	method (message :: <project-closed-message>)
-	  let project = message.message-project;
-	  let project-window 
-	    = find-project-browser-showing-project(project);
-	  if (project-window & frame-mapped?(project-window))
-	    exit-frame(project-window)
-	  end
-	end,
-	message-type: <project-closed-message>);
+        method (message :: <project-closed-message>)
+          let project = message.message-project;
+          let project-window
+            = find-project-browser-showing-project(project);
+          if (project-window & frame-mapped?(project-window))
+            exit-frame(project-window)
+          end
+        end,
+        message-type: <project-closed-message>);
 
 define method reinitialize-frame
     (frame :: <project-browser>,
      #key page :: false-or(<symbol>),
-          application-process: process, 
+          application-process: process,
           application-id: id) => ()
   next-method();
   when (page)
@@ -101,11 +101,11 @@ define constant $project-modification-commands
            frame-remove-selected-sources,
            frame-move-source-file-prev,
            frame-move-source-file-next,
-	   frame-build-project,
-	   frame-clean-build-project,
-	   frame-advanced-build-dialog,
-	   frame-clean-project,
-	   frame-build-release);
+           frame-build-project,
+           frame-clean-build-project,
+           frame-advanced-build-dialog,
+           frame-clean-project,
+           frame-build-release);
 
 define method handle-event
     (frame :: <project-browser>, event :: <frame-mapped-event>) => ()
@@ -114,58 +114,58 @@ define method handle-event
 
     let project
       = block (opened)
-	  let project = frame.ensure-frame-project;
-	  block ()
-	    open-project-compiler-database
-	      (project, error-handler: curry(compiler-condition-handler, frame));
-	  exception (error :: <project-error>)
-	    display-project-error(frame, project, error);
-	    exit-frame(frame);
-	    opened(#f)
-	  end;
-	  project.project-opened-by-user? := #t;
-	  project
-	exception (<abort>)
-	  //--- If the user aborts during this vital phase, then
-	  //--- all we can do is exit the frame.
-	  exit-frame(frame)
-	end;
+          let project = frame.ensure-frame-project;
+          block ()
+            open-project-compiler-database
+              (project, error-handler: curry(compiler-condition-handler, frame));
+          exception (error :: <project-error>)
+            display-project-error(frame, project, error);
+            exit-frame(frame);
+            opened(#f)
+          end;
+          project.project-opened-by-user? := #t;
+          project
+        exception (<abort>)
+          //--- If the user aborts during this vital phase, then
+          //--- all we can do is exit the frame.
+          exit-frame(frame)
+        end;
 
     if (project)
       // Build-related commands are always disabled for .exe projects
       unless (project.project-can-be-built?)
-	for (command in $project-modification-commands)
-	  command-enabled?(command, frame) := #f
-	end
+        for (command in $project-modification-commands)
+          command-enabled?(command, frame) := #f
+        end
       end;
-      
+
       // For projects without a .hdp file, disable "Save As"
       let has-project-file? = project.project-filename ~= #f;
       command-enabled?(frame-save-file-as, frame) := has-project-file?;
-      
+
       // Update the property page
       environment-property-pane-object(frame.tab-layout) := project;
-      
+
       // Now that the database is ready we can do the other initializations
       next-method();
-      
+
       // Hook up remote/just-in-time debugging now that the database is open.
       let process = frame.frame-application-process;
       let id = frame.frame-application-id;
       if (process)
-	frame-attach-application(frame, process: process, id: id)
+        frame-attach-application(frame, process: process, id: id)
       else
-	let machine-address = project.project-debug-machine-address;
-	if (machine-address)
-	  open-remote-connection(owner: frame, default-address: machine-address)
-	end if
+        let machine-address = project.project-debug-machine-address;
+        if (machine-address)
+          open-remote-connection(owner: frame, default-address: machine-address)
+        end if
       end;
-      
+
       // Call the initialized-callback, if there is one.
       let initialized-callback = frame.frame-initialized-callback;
       if (initialized-callback)
-	initialized-callback(frame);
-	frame.frame-initialized-callback := #f; // so it gets GC'd
+        initialized-callback(frame);
+        frame.frame-initialized-callback := #f; // so it gets GC'd
       end
     end
   end
@@ -191,9 +191,9 @@ define function do-project-frames
      #key exclude :: false-or(subclass(<frame>)) = #f,
      include :: subclass(<frame>) = <frame>) => ()
   local method project-frame? (frame :: <frame>) => (project-frame? :: <boolean>)
-	  instance?(frame, include)
-	  & ~(exclude & instance?(frame, exclude))
-	  & frame.frame-current-project = project
+          instance?(frame, include)
+          & ~(exclude & instance?(frame, exclude))
+          & frame.frame-current-project = project
         end method project-frame?;
   do-frames(method (frame :: <frame>) => ()
               when (project-frame?(frame))
@@ -211,29 +211,29 @@ define method frame-can-exit?
   // Check for build in progress
   frame.frame-exiting?
     | begin
-	let progress-window = find-compiler-progress-window(frame);
-	~progress-window
-	  | begin
-	      when (compiler-progress-stopped?(progress-window))
-		exit-frame(progress-window);
-		#t
-	      end
-	    end
-	  | begin
-	      deiconify-frame(progress-window);
-	      raise-frame(progress-window);
-	      let project = frame.ensure-frame-project;
-	      let message
-		= format-to-string("The project '%s' cannot be closed until it has stopped"
-				   " building. Stop building and close the project?",
-				   environment-object-primitive-name(project, project));
-	      let exit? = environment-question
-		(message, owner: frame, exit-style: #"ok-cancel");
-	      when (exit?)
-		exit-frame(progress-window);
-		#t
-	      end
-	    end;
+        let progress-window = find-compiler-progress-window(frame);
+        ~progress-window
+          | begin
+              when (compiler-progress-stopped?(progress-window))
+                exit-frame(progress-window);
+                #t
+              end
+            end
+          | begin
+              deiconify-frame(progress-window);
+              raise-frame(progress-window);
+              let project = frame.ensure-frame-project;
+              let message
+                = format-to-string("The project '%s' cannot be closed until it has stopped"
+                                   " building. Stop building and close the project?",
+                                   environment-object-primitive-name(project, project));
+              let exit? = environment-question
+                (message, owner: frame, exit-style: #"ok-cancel");
+              when (exit?)
+                exit-frame(progress-window);
+                #t
+              end
+            end;
       end
 end method frame-can-exit?;
 
@@ -241,64 +241,64 @@ define method frame-can-exit?
     (frame :: <project-browser>) => (exit? :: <boolean>)
   frame.frame-exiting?
     | block (return)
-	unless (next-method()) return(#f) end;
-	let project      = frame.ensure-frame-project;
-	let project-name = environment-object-primitive-name(project, project);
-	// Check for running target application
-	let message
-	  = format-to-string("The project '%s' cannot be closed while the target"
-			     " application is running.\n\n"
-			     "Stop the target application and close the project?",
-			     project-name);
-	if (frame-warn-if-application-tethered(frame, project, message: message))
-	  return(#f)
-	end;
-	// Check whether all other project-related frames can exit
-	let frames = make(<stretchy-vector>);
-	do-project-frames(method (frame :: <frame>)
-			    frames = add!(frames, frame);
-			  end method,
-			  project,
-			  include: <environment-fixed-project-frame>,
-			  exclude: <project-browser>);
-	do(method (frame :: <environment-fixed-project-frame>) => ()
-	     unless (frame-can-exit?(frame))
-	       do(method (frame :: <environment-fixed-project-frame>)
-		    frame.frame-exiting? := #f
-		  end,
-		  frames);
-	       return(#f)
-	     end;
-	     frame.frame-exiting? := #t;
-	     exit-frame(frame)
-	   end method,
-	   frames);
-	// Check whether the project database needs saving
-	when (project-database-changed?(project))
-	  let message
-	    = format-to-string("The compiler database for project '%s' contains unsaved"
-			       " changes. Do you want to save changes to the database?",
-			       project-name);
-	  let (save-db?, exit-type) = environment-question
-					(message,
-					 title: release-product-name(),
-					 owner: frame,
-					 style: #"warning",
-					 exit-style: #"yes-no-cancel");
-	  case
-	    save-db? =>
-	      with-busy-cursor (frame)
-		save-project(project, save-database?: #t);
-	      end;
-	    exit-type = #"cancel" =>
-	      return(#f);
-	    otherwise =>
-	      // else exit-type = #"no", so fall through and return #t
+        unless (next-method()) return(#f) end;
+        let project      = frame.ensure-frame-project;
+        let project-name = environment-object-primitive-name(project, project);
+        // Check for running target application
+        let message
+          = format-to-string("The project '%s' cannot be closed while the target"
+                             " application is running.\n\n"
+                             "Stop the target application and close the project?",
+                             project-name);
+        if (frame-warn-if-application-tethered(frame, project, message: message))
+          return(#f)
+        end;
+        // Check whether all other project-related frames can exit
+        let frames = make(<stretchy-vector>);
+        do-project-frames(method (frame :: <frame>)
+                            frames = add!(frames, frame);
+                          end method,
+                          project,
+                          include: <environment-fixed-project-frame>,
+                          exclude: <project-browser>);
+        do(method (frame :: <environment-fixed-project-frame>) => ()
+             unless (frame-can-exit?(frame))
+               do(method (frame :: <environment-fixed-project-frame>)
+                    frame.frame-exiting? := #f
+                  end,
+                  frames);
+               return(#f)
+             end;
+             frame.frame-exiting? := #t;
+             exit-frame(frame)
+           end method,
+           frames);
+        // Check whether the project database needs saving
+        when (project-database-changed?(project))
+          let message
+            = format-to-string("The compiler database for project '%s' contains unsaved"
+                               " changes. Do you want to save changes to the database?",
+                               project-name);
+          let (save-db?, exit-type) = environment-question
+                                        (message,
+                                         title: release-product-name(),
+                                         owner: frame,
+                                         style: #"warning",
+                                         exit-style: #"yes-no-cancel");
+          case
+            save-db? =>
+              with-busy-cursor (frame)
+                save-project(project, save-database?: #t);
+              end;
+            exit-type = #"cancel" =>
+              return(#f);
+            otherwise =>
+              // else exit-type = #"no", so fall through and return #t
               #f
           end
-	end when;
-	// Okay, shut'er down!
-	#t
+        end when;
+        // Okay, shut'er down!
+        #t
       end block
 end method frame-can-exit?;
 
@@ -376,9 +376,9 @@ define method ensure-project-browser-showing-project
      #rest args,
      #key port: _port :: <port> = default-port(),
      #all-keys) => ()
-  apply(ensure-environment-frame, _port, <project-browser>, 
-	project: project,
-	args)
+  apply(ensure-environment-frame, _port, <project-browser>,
+        project: project,
+        args)
 end method ensure-project-browser-showing-project;
 
 define method find-project-browser-showing-project
@@ -388,10 +388,10 @@ define method find-project-browser-showing-project
      #all-keys)
  => (project-browser :: false-or(<project-browser>))
   apply(choose-environment-frame, _port, <project-browser>,
-	project: project,
-	args)
+        project: project,
+        args)
 end method find-project-browser-showing-project;
-    
+
 define method reuse-matching-frame?
     (portd :: <port-designator>, frame :: <frame>, class :: subclass(<project-browser>),
      #rest initargs, #key project)
@@ -399,7 +399,7 @@ define method reuse-matching-frame?
   instance?(frame, <project-browser>)
     & frame.ensure-frame-project == project
 end method reuse-matching-frame?;
-  
+
 
 /// Project browser frame title
 
@@ -411,7 +411,7 @@ define method generate-frame-title
 //  let location = project-location(project.compiler-proxy);
 //  locator-name(location)
   concatenate("Project ",
-	      environment-object-primitive-name(project, project),
+              environment-object-primitive-name(project, project),
               " - ", release-product-name())
 end method generate-frame-title;
 
@@ -436,12 +436,12 @@ define method refresh-frame (frame :: <project-browser>) => ()
 end method refresh-frame;
 
 define method refresh-frame-view
-    (frame :: <project-browser>, 
+    (frame :: <project-browser>,
      #key pages, new-thread? = #t, refresh-all? = #f) => ()
   //--- Is there a better place to clear the status bar?
   frame-status-message(frame) := "";
   refresh-environment-property-pane
-    (frame.tab-layout, pages: pages, 
+    (frame.tab-layout, pages: pages,
      clean?: #t, new-thread?: new-thread?, refresh-all?: refresh-all?)
 end method refresh-frame-view;
 
@@ -463,21 +463,21 @@ define method frame-note-project-warnings-updated
   let project = frame.ensure-frame-project;
   let warnings?
     = block (return)
-	do-compiler-warnings
-	  (method (warning) return(#t) end, project, project);
-	#f
+        do-compiler-warnings
+          (method (warning) return(#t) end, project, project);
+        #f
       end;
   // We have to compute the warning information in this thread,
   // so that we are within the scope of the browser lock if this
   // is in the middle of a build.
   refresh-frame-view
-    (frame, pages: #[#"warnings"], 
+    (frame, pages: #[#"warnings"],
      new-thread?: #f, refresh-all?: #t);
   if (warnings?)
     call-in-frame
       (frame,
        method ()
-	 environment-property-pane-page(frame.tab-layout) := #"warnings"
+         environment-property-pane-page(frame.tab-layout) := #"warnings"
        end)
   end
 end method frame-note-project-warnings-updated;
@@ -511,7 +511,7 @@ define method frame-note-application-state-changed
 end method frame-note-application-state-changed;
 
 define method frame-note-breakpoint-state-changed
-    (frame :: <project-browser>, breakpoint :: <breakpoint-object>, 
+    (frame :: <project-browser>, breakpoint :: <breakpoint-object>,
      state :: <breakpoint-state>) => ()
   next-method();
   refresh-frame-view(frame, pages: #[#"breakpoints"])
@@ -529,7 +529,7 @@ define method find-project-browser-wrapper
   block (return)
     for (wrapper in gadget-items(gadget))
       when (wrapper.wrapper-object == object)
-	return(wrapper)
+        return(wrapper)
       end
     end
   end
@@ -544,8 +544,8 @@ define method find-project-browser-wrapper
   block (return)
     for (wrapper in gadget-items(gadget))
       when (instance?(wrapper, <source-wrapper>)
-	    & wrapper.wrapper-filename = object)
-	return(wrapper)
+            & wrapper.wrapper-filename = object)
+        return(wrapper)
       end
     end
   end
@@ -559,8 +559,8 @@ define method find-project-browser-wrapper
   block (return)
     for (wrapper in gadget-items(gadget))
       when (instance?(wrapper, <source-record-wrapper>)
-	    & wrapper.wrapper-object == object)
-	return(wrapper)
+            & wrapper.wrapper-object == object)
+        return(wrapper)
       end
     end
   end
@@ -626,8 +626,8 @@ define method frame-save-project-database (frame :: <project-browser>) => ()
   end;
 end method frame-save-project-database;
 
-define method frame-save-file-as 
-    (frame :: <project-browser>, 
+define method frame-save-file-as
+    (frame :: <project-browser>,
      #key filename :: false-or(<file-locator>) = #f) => ()
   let project = frame.frame-project;
   let (filename, filter)
@@ -635,11 +635,11 @@ define method frame-save-file-as
         values(filename, #"project")
       else
         environment-choose-file
-	  (title:     "Save As",
-	   owner:     frame,
-	   direction: #"output",
-	   default:   #f /* use project name here? */,
-	   filters:   #[#"project", #"lid"])
+          (title:     "Save As",
+           owner:     frame,
+           direction: #"output",
+           default:   #f /* use project name here? */,
+           filters:   #[#"project", #"lid"])
       end;
   when (filename)
     // If the user hasn't explicitly specified a valid file type extension,
@@ -656,17 +656,17 @@ define method frame-save-file-as
     with-busy-cursor (frame)
       let type = filename.environment-locator-type;
       let filename
-	= if (type == #"hdp" | type == #"lid")
-	    filename
-	  else
-	    make(object-class(filename),
-		 directory: filename.locator-directory,
-		 base:      filename.locator-base,
-		 extension: select (filter)
-			      #"project" => project-file-extension();
-			      #"lid"     => lid-file-extension();
-			    end)
-	  end;
+        = if (type == #"hdp" | type == #"lid")
+            filename
+          else
+            make(object-class(filename),
+                 directory: filename.locator-directory,
+                 base:      filename.locator-base,
+                 extension: select (filter)
+                              #"project" => project-file-extension();
+                              #"lid"     => lid-file-extension();
+                            end)
+          end;
       save-project(project, filename: filename);
     end
   end
@@ -689,29 +689,29 @@ define method frame-clean-project
   if (frame-confirm-clean-project(frame, project))
     if (project-can-be-built?(project))
       unless (frame-warn-if-application-tethered(frame, project))
-	do-project-frames
-	  (method (frame :: <object-browser>)
-	     exit-frame(frame)
-	   end,
-	   project,
-	   include: <object-browser>);
-	block ()
-	  clean-project
-	    (project, process-subprojects?: process-subprojects?);
-	cleanup
-	  refresh-frame(frame)
-	end
+        do-project-frames
+          (method (frame :: <object-browser>)
+             exit-frame(frame)
+           end,
+           project,
+           include: <object-browser>);
+        block ()
+          clean-project
+            (project, process-subprojects?: process-subprojects?);
+        cleanup
+          refresh-frame(frame)
+        end
       end
     else
       environment-error-message
-	(format-to-string
-	   (if (project-read-only?(project))
-	      "Project '%s' is read-only, so you cannot remove its build products"
-	    else
-	      "Project '%s' has no build products to remove"
-	    end,
-	    environment-object-primitive-name(project, project)),
-	 owner: frame)
+        (format-to-string
+           (if (project-read-only?(project))
+              "Project '%s' is read-only, so you cannot remove its build products"
+            else
+              "Project '%s' has no build products to remove"
+            end,
+            environment-object-primitive-name(project, project)),
+         owner: frame)
     end
   end
 end method frame-clean-project;
@@ -725,39 +725,39 @@ define constant $insert-file-filters
       #"all"];
 
 define method do-frame-insert-source-file
-    (frame :: <project-browser>, 
+    (frame :: <project-browser>,
      #key filename :: false-or(<file-locator>), after) => ()
   let project   = frame.frame-project;
   let filename :: false-or(<file-locator>)
     = filename
         | begin
-	    let title
-	      = format-to-string("Insert File into Project %s",
-				 environment-object-display-name
-				   (project, project, #f));
-	    environment-choose-file
-	      (title:     title,
-	       owner:     frame,
-	       directory: project.project-directory,
-	       filters:   $insert-file-filters,
-	       filter:    #"common-insert")
-	  end;
+            let title
+              = format-to-string("Insert File into Project %s",
+                                 environment-object-display-name
+                                   (project, project, #f));
+            environment-choose-file
+              (title:     title,
+               owner:     frame,
+               directory: project.project-directory,
+               filters:   $insert-file-filters,
+               filter:    #"common-insert")
+          end;
   when (filename)
     let after :: false-or(<file-locator>)
       = after
           | begin
-	      let selection = frame-selection(frame);
-	      let item = ~empty?(selection) & selection[0];
-	      if (item & instance?(item, <source-record-wrapper>))
-		item.wrapper-object.source-record-location;
-	      end
-	    end;
+              let selection = frame-selection(frame);
+              let item = ~empty?(selection) & selection[0];
+              if (item & instance?(item, <source-record-wrapper>))
+                item.wrapper-object.source-record-location;
+              end
+            end;
     local method file-source-record? (sr :: <source-record>)
-	    filename = sr.source-record-location
-	  end;
+            filename = sr.source-record-location
+          end;
     local method after-source-record? (sr :: <source-record>)
-	    after = sr.source-record-location
-	  end;
+            after = sr.source-record-location
+          end;
     // Warn the user if a file with the same name is already in the project
     let sources   = project-sources(project);
     let duplicate-name? = ~empty?(choose(file-source-record?, sources));
@@ -767,7 +767,7 @@ define method do-frame-insert-source-file
               let message
                 = format-to-string("The project already contains a source file named '%s'."
                                    " Do you want to replace it?",
-				   as(<string>, filename));
+                                   as(<string>, filename));
               environment-question(message, owner: frame, style: #"warning")
             end;
     // Add the file to the project
@@ -778,24 +778,24 @@ define method do-frame-insert-source-file
       end;
       project-add-source-record(project, filename);
       when (after)
-	let sources = project-sources(project);
-	let new-key = find-key(sources, file-source-record?);
-	debug-assert(new-key, "Failed to add source record???");
-	let after-key = find-key(sources, after-source-record?);
-	debug-assert(after-key, "Failed to select item %= in sources!", after);
-	when (new-key & after-key)
-	  let new-sources
-	    = concatenate(copy-sequence(sources, end: after-key + 1),
-			  vector(sources[new-key]),
-			  if (after-key < new-key)
-			    copy-sequence(sources, 
-					  start: after-key + 1,
-					  end: new-key)
-			  else
-			    #[]
-			  end);
-	  reorder-project-sources(project, new-sources);
-	end when;
+        let sources = project-sources(project);
+        let new-key = find-key(sources, file-source-record?);
+        debug-assert(new-key, "Failed to add source record???");
+        let after-key = find-key(sources, after-source-record?);
+        debug-assert(after-key, "Failed to select item %= in sources!", after);
+        when (new-key & after-key)
+          let new-sources
+            = concatenate(copy-sequence(sources, end: after-key + 1),
+                          vector(sources[new-key]),
+                          if (after-key < new-key)
+                            copy-sequence(sources,
+                                          start: after-key + 1,
+                                          end: new-key)
+                          else
+                            #[]
+                          end);
+          reorder-project-sources(project, new-sources);
+        end when;
       end when;
       save-project(project);
       frame-note-project-contents-changed(frame, selection: filename);
@@ -813,10 +813,10 @@ define method frame-remove-selected-sources (frame :: <project-browser>) => ()
     //              though, we should make it such that this cannot occur by
     //              disabling the command.
     let entries = choose(method (source)
-			   instance?(source, <source-wrapper>)
-			      & (source.wrapper-project = project)
-			 end,
-			 frame-selection(frame));
+                           instance?(source, <source-wrapper>)
+                              & (source.wrapper-project = project)
+                         end,
+                         frame-selection(frame));
     frame-remove-sources(frame, entries)
   end when;
 end method frame-remove-selected-sources;
@@ -828,43 +828,43 @@ define method frame-remove-sources
   let count = size(sources);
   unless (count < 1)
     local method source-wrapper-name
-	      (wrapper) => (name :: <string>)
-	    // The name used to remove the source from the project
-	    select (wrapper by instance?)
-	      <file-locator> =>
-		as(<string>, wrapper);
-	      <source-record-wrapper> =>
-		wrapper.wrapper-object.source-record-name;
-	      <source-locator-wrapper> =>
-		as(<string>, wrapper.wrapper-object);
-	      <source-project-wrapper> =>
-		as(<string>, project-filename(wrapper.wrapper-object));
-	    end
-	  end method source-wrapper-name;
+              (wrapper) => (name :: <string>)
+            // The name used to remove the source from the project
+            select (wrapper by instance?)
+              <file-locator> =>
+                as(<string>, wrapper);
+              <source-record-wrapper> =>
+                wrapper.wrapper-object.source-record-name;
+              <source-locator-wrapper> =>
+                as(<string>, wrapper.wrapper-object);
+              <source-project-wrapper> =>
+                as(<string>, project-filename(wrapper.wrapper-object));
+            end
+          end method source-wrapper-name;
     let message
       = if (count > 1)
-	  format-to-string("Remove the selected %d items from the project?", count)
-	else
-	  let wrapper = sources[0];
-	  // Special handling for <file-source-records> to display the
-	  // whole file name, rather than just the source record name,
-	  // which doesn't include the file extension.
-	  let filename
-	    = if (instance?(wrapper, <source-record-wrapper>)
-		    & instance?(wrapper.wrapper-object, <file-source-record>))
-		wrapper.wrapper-object.source-record-location.locator-name
-	      else
-		source-wrapper-name(wrapper)
-	      end if;
-	  format-to-string("Remove '%s' from the project?",
-			   filename)
-	end if;
+          format-to-string("Remove the selected %d items from the project?", count)
+        else
+          let wrapper = sources[0];
+          // Special handling for <file-source-records> to display the
+          // whole file name, rather than just the source record name,
+          // which doesn't include the file extension.
+          let filename
+            = if (instance?(wrapper, <source-record-wrapper>)
+                    & instance?(wrapper.wrapper-object, <file-source-record>))
+                wrapper.wrapper-object.source-record-location.locator-name
+              else
+                source-wrapper-name(wrapper)
+              end if;
+          format-to-string("Remove '%s' from the project?",
+                           filename)
+        end if;
     when (environment-question(message, owner: frame, style: #"warning"))
       do(method (wrapper)
-	   project-remove-source-record
-	     (project, source-wrapper-name(wrapper))
-	 end,
-	 sources);
+           project-remove-source-record
+             (project, source-wrapper-name(wrapper))
+         end,
+         sources);
       save-project(project);
       let gadget = frame.frame-sheet-with-selection;
       let old-value = gadget-value(gadget);
@@ -873,15 +873,15 @@ define method frame-remove-sources
       gadget-value(gadget) := old-value;
       // Update the selection
       unless (gadget-value(gadget))
-	gadget-selection(gadget)
-	  := case
-	       empty?(gadget-items(gadget)) =>
-		 #[];
-	       empty?(old-selection) =>
-		 vector(0);
-	       otherwise =>
-		 vector(max(old-selection[0] - 1, 0));
-	     end case;
+        gadget-selection(gadget)
+          := case
+               empty?(gadget-items(gadget)) =>
+                 #[];
+               empty?(old-selection) =>
+                 vector(0);
+               otherwise =>
+                 vector(max(old-selection[0] - 1, 0));
+             end case;
       end unless;
       note-frame-selection-updated(frame);
       #t
@@ -893,18 +893,18 @@ define function reorder-project-sources
     (project :: <project-object>, ordered-sources :: <sequence>) => ()
   let copy-of-sources = copy-sequence(ordered-sources);
   local method find-source-record-key
-	    (name :: <string>) => (key :: <integer>)
+            (name :: <string>) => (key :: <integer>)
           local method key-test
                     (name :: <string>, record :: <source-record>)
                  => (equal? :: <boolean>)
                   name = record.source-record-name;
                 end method key-test;
           let key = find-key(copy-of-sources, curry(key-test, name));
-	  debug-assert(key, "Failed to find name %s in %s [names: %s]",
-		       name, copy-of-sources,
-		       map(source-record-name, copy-of-sources));
-	  key
-	end method find-source-record-key;
+          debug-assert(key, "Failed to find name %s in %s [names: %s]",
+                       name, copy-of-sources,
+                       map(source-record-name, copy-of-sources));
+          key
+        end method find-source-record-key;
   local method compare-source-names
             (name1 :: <string>, name2 :: <string>)
          => (greater-than? :: <boolean>)
@@ -925,18 +925,18 @@ define method frame-move-source-file-prev (frame :: <project-browser>) => ()
     //              though, we should make it such that this cannot occur by
     //              disabling the command.
     let entries = choose(method (source)
-			   instance?(source, <source-record-wrapper>)
-			     & (source.wrapper-project = project)
-			 end,
-			 frame-selection(frame));
+                           instance?(source, <source-record-wrapper>)
+                             & (source.wrapper-project = project)
+                         end,
+                         frame-selection(frame));
     //---*** cpage: 1997.08.04 Temporarily, warn the user that we only move one item.
     //---*** cpage: 1998.04.15 As it turns out, as long as the Sources page is a
     //              tree-control, it will not allow multiple selection.
     when (size(entries) > 1)
       environment-message
-	("Moving more than one item is not yet implemented."
-	   " Only the first selected item will be moved.",
-	 owner: frame)
+        ("Moving more than one item is not yet implemented."
+           " Only the first selected item will be moved.",
+         owner: frame)
     end when;
     unless (size(entries) < 1)
       let wrapper :: <source-record-wrapper> = entries[0];
@@ -945,17 +945,17 @@ define method frame-move-source-file-prev (frame :: <project-browser>) => ()
       // Edit the sources in a temporary collection, then reorder the sources to match.
       let sources = copy-sequence(project-sources(project));
       let key = find-key(sources,
-			 method (source)
-			   source.source-record-name = source-name
-			 end);
+                         method (source)
+                           source.source-record-name = source-name
+                         end);
       debug-assert(key, "Failed to find name %s in %s", source-name, sources);
       let prev-key = key - 1;
       when (prev-key >= 0)
-	sources[key] := sources[prev-key];
-	sources[prev-key] := source;
-	reorder-project-sources(project, sources);
-	save-project(project);
-	frame-note-project-contents-changed(frame, selection: source);
+        sources[key] := sources[prev-key];
+        sources[prev-key] := source;
+        reorder-project-sources(project, sources);
+        save-project(project);
+        frame-note-project-contents-changed(frame, selection: source);
       end when;
     end unless;
   end when;
@@ -971,18 +971,18 @@ define method frame-move-source-file-next (frame :: <project-browser>) => ()
     //              though, we should make it such that this cannot occur by
     //              disabling the command.
     let entries = choose(method (source)
-			   instance?(source, <source-record-wrapper>)
-			     & (source.wrapper-project = project)
-			 end,
-			 frame-selection(frame));
+                           instance?(source, <source-record-wrapper>)
+                             & (source.wrapper-project = project)
+                         end,
+                         frame-selection(frame));
     //---*** cpage: 1997.08.04 Temporarily, warn the user that we only move one item.
     //---*** cpage: 1998.04.15 As it turns out, as long as the Sources page is a
     //              tree-control, it will not allow multiple selection.
     when (size(entries) > 1)
       environment-message
-	("Moving more than one item is not yet implemented."
-	   " Only the first selected item will be moved.",
-	 owner: frame)
+        ("Moving more than one item is not yet implemented."
+           " Only the first selected item will be moved.",
+         owner: frame)
     end when;
     unless (size(entries) < 1)
       let wrapper :: <source-record-wrapper> = entries[0];
@@ -991,16 +991,16 @@ define method frame-move-source-file-next (frame :: <project-browser>) => ()
       // Edit the sources in a temporary collection, then reorder the sources to match.
       let sources = copy-sequence(project-sources(project));
       let key = find-key(sources,
-			 method (source)
-			   source.source-record-name = source-name
-			 end);
+                         method (source)
+                           source.source-record-name = source-name
+                         end);
       let next-key = key + 1;
       when (next-key < size(sources))
-	sources[key] := sources[next-key];
-	sources[next-key] := source;
-	reorder-project-sources(project, sources);
-	save-project(project);
-	frame-note-project-contents-changed(frame, selection: source);
+        sources[key] := sources[next-key];
+        sources[next-key] := source;
+        reorder-project-sources(project, sources);
+        save-project(project);
+        frame-note-project-contents-changed(frame, selection: source);
       end when;
     end unless;
   end when;

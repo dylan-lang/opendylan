@@ -144,7 +144,7 @@ define function initialize-dde-server (server :: <environment-dde-server>)
       := DdeCreateStringHandle
            (server.dde-server-id, server.dde-server-service, $CP-WINANSI);
     dde-check-result("DdeCreateStringHandle",
-		     server, server.dde-server-service-handle);
+                     server, server.dde-server-service-handle);
     let result :: <HDDEDATA>
       = DdeNameService
           (server.dde-server-id, server.dde-server-service-handle,
@@ -225,49 +225,49 @@ define function broadcast-dde-transaction
     debug-message("DDE callback (uType = %=) {", uType);
     with-lock (*environment-dde-server*)
       let service-or-topic-handle :: <HSZ>
-	= *environment-dde-server*.dde-server-service-handle;
+        = *environment-dde-server*.dde-server-service-handle;
       result
-	:= select (uType) // by compose(\~, zero?, logand))
-	     $XTYP-CONNECT => // = #x1062 = 4194
-	       debug-message("  XTYP-CONNECT");
-	       // Allow connection, provided the topic (hsz1) and service (hsz2)
-	       // names are what we expect.
-	       if ( DdeCmpStringHandles(hsz1, service-or-topic-handle) = 0
-		  & DdeCmpStringHandles(hsz2, service-or-topic-handle) = 0 )
-		 1; // TRUE
-	       else
-		 0; // FALSE
-	       end if;
-	     $XTYP-WILDCONNECT => // = #x20e2 = 8418
-	       debug-message("  XTYP-WILDCONNECT");
-	       // Fail wild connections, since we don't have multiple topics.
-	       0; // i.e., NULL
-	     $XTYP-EXECUTE => // = #x4050 = 16464
-	       debug-message("  XTYP-EXECUTE");
-	       // Execute, provided the topic name (hsz1) is as expected.
-	       if ( DdeCmpStringHandles(hsz1, service-or-topic-handle) = 0 )
-		 broadcast-dde-execute-transaction
-		   (*environment-dde-server*, hdata); // Returns flags.
-	       else
-		 $DDE-FNOTPROCESSED;
-	       end if;
-	     $XTYP-ERROR => // = #x8002 = 32770
-	       debug-message("  XTYP-ERROR");
-	       dde-report-xtyp-error(dwData1);
-	       // The above may return, if some "Ignore" handler is established.
-	       0;
-	     otherwise =>
-	       dde-warning
-		 (format-string: "Unexpected DDE transaction type.  (%d)",
-		  format-arguments: uType);
-	       // This may return.
-	       0;
-	   end select;
+        := select (uType) // by compose(\~, zero?, logand))
+             $XTYP-CONNECT => // = #x1062 = 4194
+               debug-message("  XTYP-CONNECT");
+               // Allow connection, provided the topic (hsz1) and service (hsz2)
+               // names are what we expect.
+               if ( DdeCmpStringHandles(hsz1, service-or-topic-handle) = 0
+                  & DdeCmpStringHandles(hsz2, service-or-topic-handle) = 0 )
+                 1; // TRUE
+               else
+                 0; // FALSE
+               end if;
+             $XTYP-WILDCONNECT => // = #x20e2 = 8418
+               debug-message("  XTYP-WILDCONNECT");
+               // Fail wild connections, since we don't have multiple topics.
+               0; // i.e., NULL
+             $XTYP-EXECUTE => // = #x4050 = 16464
+               debug-message("  XTYP-EXECUTE");
+               // Execute, provided the topic name (hsz1) is as expected.
+               if ( DdeCmpStringHandles(hsz1, service-or-topic-handle) = 0 )
+                 broadcast-dde-execute-transaction
+                   (*environment-dde-server*, hdata); // Returns flags.
+               else
+                 $DDE-FNOTPROCESSED;
+               end if;
+             $XTYP-ERROR => // = #x8002 = 32770
+               debug-message("  XTYP-ERROR");
+               dde-report-xtyp-error(dwData1);
+               // The above may return, if some "Ignore" handler is established.
+               0;
+             otherwise =>
+               dde-warning
+                 (format-string: "Unexpected DDE transaction type.  (%d)",
+                  format-arguments: uType);
+               // This may return.
+               0;
+           end select;
       debug-message("}, result = %=", result);
       unless (null-pointer?(hdata))
-	let result :: <boolean> = DdeFreeDataHandle(hdata);
-	dde-check-result("DdeFreeDataHandle",
-			 *environment-dde-server*, result);
+        let result :: <boolean> = DdeFreeDataHandle(hdata);
+        dde-check-result("DdeFreeDataHandle",
+                         *environment-dde-server*, result);
       end unless;
     end with-lock;
   exception (<condition>)
@@ -293,7 +293,7 @@ define function broadcast-dde-execute-transaction
     unless (command-size <= 0) // It could happen ...
       // Copy the contents to a <string>.
       let command-buffer :: <C-char*>
-	= pointer-cast(<C-char*>, command-buffer);
+        = pointer-cast(<C-char*>, command-buffer);
       // The command-buffer contains the terminating ASCII NUL (if
       // there is one -- this is not guaranteed), which we don't want;
       // so we make a shorter <string> by copying up to the first NUL
@@ -302,20 +302,20 @@ define function broadcast-dde-execute-transaction
       // because command-buffer is not guaranteed to be NUL-terminated.
       // We can't force command-buffer to be NUL-terminated and then use
       // "as", because it must be treated as read-only.
-      //---*** What about Unicode? 
+      //---*** What about Unicode?
       let string-size =
-	for (i from 0 below command-size,
-	     until: as(<byte-character>,
-		       pointer-value(command-buffer, index: i)) = '\0')
-	  // Move along till we hit a NUL or the end of the buffer.
-	finally i
+        for (i from 0 below command-size,
+             until: as(<byte-character>,
+                       pointer-value(command-buffer, index: i)) = '\0')
+          // Move along till we hit a NUL or the end of the buffer.
+        finally i
         end for;
       let command-string :: <byte-string>
-	= make(<byte-string>, size: string-size);
+        = make(<byte-string>, size: string-size);
       for (i from 0 below string-size)
-	command-string[i]
-	  := as(<byte-character>,
-		pointer-value(command-buffer, index: i));
+        command-string[i]
+          := as(<byte-character>,
+                pointer-value(command-buffer, index: i));
       end for;
       // Send the command string.
       broadcast(server.dde-server-channel, command-string);
@@ -350,7 +350,7 @@ end function;
 // Get-/Translate-/DispatchMessage event loop, as well as when
 // functions in this library are called explicitly.  A
 // <parse-condition> or <command-call-condition> may be signalled
-// similarly. 
+// similarly.
 
 define class <dde-condition> (<condition>)
 end class;

@@ -32,12 +32,12 @@ define method user-object-slot-value
     if (class-proxy)
       let proxy-value = runtime-proxy-to-remote-value(application, proxy);
       let (class, incarnation, current-incarnation, immediate?)
-	= dylan-object-class(target, proxy-value);
+        = dylan-object-class(target, proxy-value);
       let (slots, navigation, repeat, count-offset, element-size,
-	   element-offset)
-	= class-proxy-browser-information
-	    (application, class-proxy, incarnation: incarnation);
-      
+           element-offset)
+        = class-proxy-browser-information
+            (application, class-proxy, incarnation: incarnation);
+
       // If this function has succeeded, 'target-val' should now hold a
       // <remote-value>. However, the logic of this function is such that
       // it might still hold #f. In the latter case, we can't build an
@@ -47,10 +47,10 @@ define method user-object-slot-value
       let offset = element(navigation, slot-name, default: #f);
 
       if (offset)
-	let target-val
-	  = read-dylan-value(target, 
-			     indexed-remote-value(proxy-value, offset));
-	make-environment-object-for-runtime-value(application, target-val)
+        let target-val
+          = read-dylan-value(target,
+                             indexed-remote-value(proxy-value, offset));
+        make-environment-object-for-runtime-value(application, target-val)
       end
     end
   end
@@ -58,12 +58,12 @@ end method user-object-slot-value;
 
 define method user-object-slot-value
     (application :: <dfmc-application>, obj :: <user-object>,
-     slt :: <slot-object>, 
+     slt :: <slot-object>,
      #key repeated-element = 0)
  => (val :: false-or(<environment-object>))
 
   let target = application.application-target-app;
- 
+
   // Within a debugger transaction, explosively inspect the user's object.
   // This will give us pairs of slot names and slot values. The supplied
   // slot object will also have a name in the runtime, hence we try to
@@ -79,20 +79,20 @@ define method user-object-slot-value
       let proxy-value = runtime-proxy-to-remote-value(application, proxy);
       let slot-proxy = slt.application-object-proxy;
       let actual-slot-descriptor
-	= runtime-proxy-to-remote-value(application, slot-proxy);
+        = runtime-proxy-to-remote-value(application, slot-proxy);
       let (class, incarnation, current-incarnation, immediate?)
-	= dylan-object-class(target, proxy-value);
+        = dylan-object-class(target, proxy-value);
       let (slots, navigation, repeat, count-offset, element-size,
-	   element-offset)
-	= class-proxy-browser-information
-	    (application, class-proxy, incarnation: incarnation);
+           element-offset)
+        = class-proxy-browser-information
+            (application, class-proxy, incarnation: incarnation);
       let slot-name = remote-slot-inspect(target, actual-slot-descriptor);
       let offset = element(navigation, slot-name, default: #f);
       if (offset)
-	let target-val
-	  = read-dylan-value(target, 
-			     indexed-remote-value(proxy-value, offset));
-	make-environment-object-for-runtime-value(application, target-val)
+        let target-val
+          = read-dylan-value(target,
+                             indexed-remote-value(proxy-value, offset));
+        make-environment-object-for-runtime-value(application, target-val)
       end
     end
   end

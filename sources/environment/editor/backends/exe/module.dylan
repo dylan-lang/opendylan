@@ -15,6 +15,6 @@ define module editor-exe-backend
   use editor-manager-internals;
 
   export <exe-editor>,
-	 editor-image,
-	 editor-process-id, editor-process-id-setter;
+         editor-image,
+         editor-process-id, editor-process-id-setter;
 end module editor-exe-backend;

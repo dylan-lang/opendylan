@@ -56,13 +56,13 @@ define function maybe-ensure-project-directory
     else
       let dir-string = as(<string>, directory);
       let message
-	= concatenate
-	    ("The directory '", dir-string, "' already exists"
-	     " and is not empty.\nAre you sure you want to use it?\n"
-	     "If not, you must enter a different location for the project.\n");
+        = concatenate
+            ("The directory '", dir-string, "' already exists"
+             " and is not empty.\nAre you sure you want to use it?\n"
+             "If not, you must enter a different location for the project.\n");
       notify-user
-	(message, style: #"information", exit-style: #"yes-no",
-	 owner: owner);
+        (message, style: #"information", exit-style: #"yes-no",
+         owner: owner);
     end
   else
     ensure-directories-exist(directory) & #t
@@ -110,15 +110,15 @@ define function all-included-choices
   else
     let included-choices = make(<stretchy-vector>);
     reduce1(method (choice)
-	      when (choice.choice-included?)
-		add!(included-choices,
-		     make(<choice>, object: choice.choice-object,
-			  children:
-			    all-included-choices(choice.choice-children),
-			  included?: #t))
-	      end;
-	    end,
-	    choices);
+              when (choice.choice-included?)
+                add!(included-choices,
+                     make(<choice>, object: choice.choice-object,
+                          children:
+                            all-included-choices(choice.choice-children),
+                          included?: #t))
+              end;
+            end,
+            choices);
     included-choices
   end
 end function;
@@ -149,13 +149,13 @@ define function union-choice-inclusion!
       let children2 = choice2.choice-children;
       let new-children
         = if (children1 & children2)
-	    union(children1, children2,
-		  test: rcurry(union-choice-inclusion!,
-			       test: test, recursive?: #t));
-	  else
-	    // Take whichever of the "sequences" is really a <sequence>
-	    children1 | children2
-	  end;
+            union(children1, children2,
+                  test: rcurry(union-choice-inclusion!,
+                               test: test, recursive?: #t));
+          else
+            // Take whichever of the "sequences" is really a <sequence>
+            children1 | children2
+          end;
       new-children := new-children & as(<vector>, new-children);
       choice1.choice-children := new-children;
       choice2.choice-children := new-children;
@@ -193,17 +193,17 @@ define pane <file-browse-pane> ()
     make(<text-field>);
   pane file-browse-button (pane)
     make(<push-button>, label: "Browse...",
-	 activate-callback:
-	   method (pb)
-	     // Do choose-file and update text pane with results.
-	     let location // ignore "filter"
-	       = apply(pane.file-browse-function,
-		       pane.%file-browse-function-initargs);
-	     when (instance?(location, <string>))
-	       gadget-value(pane.file-browse-text-pane, do-callback?: #t) 
-		  := location;
-	     end;
-	   end);
+         activate-callback:
+           method (pb)
+             // Do choose-file and update text pane with results.
+             let location // ignore "filter"
+               = apply(pane.file-browse-function,
+                       pane.%file-browse-function-initargs);
+             when (instance?(location, <string>))
+               gadget-value(pane.file-browse-text-pane, do-callback?: #t)
+                  := location;
+             end;
+           end);
   layout (pane)
     horizontally (x-spacing: 8, y-alignment: #"top", equalize-heights?: #t)
       pane.file-browse-text-pane;
@@ -244,10 +244,10 @@ define pane <text-field-option> ()
   sealed slot text-field-option-text-field-value = "";
   pane text-field-option-check-button (pane)
     make(<check-button>, label: pane.%label, value: #t,
-	 value-changed-callback:
-	   method (cb)
-	     text-field-option-enabled?(pane) := gadget-value(cb)
-	   end);
+         value-changed-callback:
+           method (cb)
+             text-field-option-enabled?(pane) := gadget-value(cb)
+           end);
   layout (pane)
     pane.text-field-option-check-button;
 end pane;
@@ -265,7 +265,7 @@ define method initialize
 end method initialize;
 
 define method text-field-option-enabled?-setter
-    (enabled? :: <boolean>, pane :: <text-field-option>) 
+    (enabled? :: <boolean>, pane :: <text-field-option>)
  => (enabled? :: <boolean>)
   let button = pane.text-field-option-check-button;
   gadget-value(button) := enabled?;
@@ -307,14 +307,14 @@ define method make
   let real-labels = map(method (l) make(<label>, label: l) end, labels);
   let space-req
     = make(<space-requirement>,
-	   function:
-	     method (mltp)
-	       let (tw, w-, w+, th, h-, h+)
-		 = strings-size-info(port(mltp), labels);
-	       values(w+, w+, $fill, th, th, $fill)
-	     end);
+           function:
+             method (mltp)
+               let (tw, w-, w+, th, h-, h+)
+                 = strings-size-info(port(mltp), labels);
+               values(w+, w+, $fill, th, th, $fill)
+             end);
   apply(next-method, class, labels: real-labels,
-	space-requirement: space-req, #())
+        space-requirement: space-req, #())
 end method initialize;
 
 
@@ -354,7 +354,7 @@ end method;
 define method initialize
     (pane :: <multi-page-pane>, #key pages, current-page, #all-keys)
   debug-assert("Attempt to create <multi-page-pane> with no pages",
-	       ~empty?(pages));
+               ~empty?(pages));
   next-method();
   pane.current-page := current-page | head(pages[0]);
 end method initialize;

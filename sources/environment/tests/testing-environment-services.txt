@@ -105,12 +105,13 @@ definition appears may also be given, depending on environment
 options.  Further information displayed depends on the kind of
 definition:
 
-  Definition		Information
-  ----------		-----------
-  class			superclasses list
-  function		parameter list and return values list
-  variable, constant	type
-  macro			none
+  Definition  Information
+  ----------  -----------
+  class       superclasses list
+  function    parameter list and return values list
+  variable    type
+  constant    type
+  macro       none
 
 *** Find Definitions
 

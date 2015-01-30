@@ -12,7 +12,7 @@ define sealed class <thread-message-log> (<object>)
   sealed slot thread-message-log-stream :: <interval-stream>;
 end class <thread-message-log>;
 
-define sealed method make 
+define sealed method make
     (class == <thread-message-log>,
      #key project :: <project-object>, thread :: false-or(<thread-object>))
  => (log :: <thread-message-log>)
@@ -20,15 +20,15 @@ define sealed method make
     | next-method()
 end method;
 
-define sealed method initialize 
+define sealed method initialize
     (log :: <thread-message-log>,
      #key project :: <project-object>, thread :: false-or(<thread-object>))
  => ()
   let buffer = interactor-buffer-for-thread(project, thread);
   let stream :: <interval-stream>
     = make(<interval-stream>,
-	   interval: buffer,
-	   direction: #"output");
+           interval: buffer,
+           direction: #"output");
   log.thread-message-log-buffer := buffer;
   log.thread-message-log-stream := stream;
   let logs = project-thread-message-logs(project);
@@ -41,20 +41,20 @@ define function project-thread-message-logs
   let properties = project.project-properties;
   get-property(properties, #"thread-message-logs", default: #f)
     | begin
-	let logs = make(<object-table>);
-	put-property!(properties, #"thread-message-logs", logs);
-	logs
+        let logs = make(<object-table>);
+        put-property!(properties, #"thread-message-logs", logs);
+        logs
       end
 end function project-thread-message-logs;
 
-define function project-thread-message-log 
+define function project-thread-message-log
     (project :: <project-object>, thread :: <thread-object>)
  => (log :: false-or(<thread-message-log>))
   let logs = project-thread-message-logs(project);
   element(logs, thread, default: #f)
 end function project-thread-message-log;
 
-define function reset-project-thread-message-logs 
+define function reset-project-thread-message-logs
     (project :: <project-object>) => ()
   let logs = project-thread-message-logs(project);
   remove-all-keys!(logs);
@@ -65,7 +65,7 @@ end function reset-project-thread-message-logs;
 
 /// NB If we get an application-wide message, broadcast it to all
 /// the threads.
-/// 
+///
 /// ---*** DEBUGGER: This may be a bit costly, but we're probably
 /// stopping because the user clicked on the stop button anyway. If it
 /// proves too expensive then we can invent a holding pen for
@@ -88,7 +88,7 @@ define sealed method print-application-message
 end method print-application-message;
 
 define sealed method print-application-message
-    (device == #"environment", project :: <project-object>, thread :: <thread-object>, 
+    (device == #"environment", project :: <project-object>, thread :: <thread-object>,
      message :: <string>)
  => ()
   let log :: <thread-message-log>
@@ -100,9 +100,9 @@ define sealed method print-application-message
   let section = prev-node & node-section(prev-node);
   let line
     = select (section by instance?)
-	<dylanworks-shell-section> => section-output-line(section);
-	<section>                  => section-end-line(section);
-	otherwise                  => #f;
+        <dylanworks-shell-section> => section-output-line(section);
+        <section>                  => section-end-line(section);
+        otherwise                  => #f;
       end;
   if (line)
     stream-position(stream) := line-start(line);
@@ -122,9 +122,9 @@ define sealed method print-application-message
  => ()
   let thread-prefix :: <string>
     = if (thread)
-	format-to-string("Thread %d", thread-index(project, thread))
+        format-to-string("Thread %d", thread-index(project, thread))
       else
-	environment-object-display-name(project, project, #f)
+        environment-object-display-name(project, project, #f)
       end if;
   debug-out(#"environment-debugger", "%s: %s\n", thread-prefix, message)
 end method print-application-message;

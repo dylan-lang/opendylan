@@ -14,17 +14,17 @@ define constant $debugger-context-doc :: <string> = "Context";
 define sealed pane <debugger-context-pane> ()
   pane %context-pane (pane)
     make(<text-editor>,
-	 lines: 2, fixed-height?: #t,
-	 scroll-bars: #"vertical",
-	 read-only?: #t, tab-stop?: #t,
-	 documentation: $debugger-pane-tooltips? & $debugger-context-doc);
+         lines: 2, fixed-height?: #t,
+         scroll-bars: #"vertical",
+         read-only?: #t, tab-stop?: #t,
+         documentation: $debugger-pane-tooltips? & $debugger-context-doc);
   layout (pane)
     pane.%context-pane;
 end pane <debugger-context-pane>;
 
 /// UPDATE-DEBUGGER-CONTEXT-PANE (internal)
 
-define function update-context-pane 
+define function update-context-pane
     (pane :: <debugger-context-pane>) => ()
   let debugger = pane.sheet-frame;
   let project = debugger.frame-project;
@@ -32,13 +32,13 @@ define function update-context-pane
   let thread = application & application.application-stopped-thread;
   let message
     = case
-	thread & (thread ~= debugger.debugger-thread) =>
-	  format-to-string("Stopped in %s",
-			   frame-default-object-name(debugger, thread));
-	application =>
-	  application.application-stop-reason-message | "";
-	otherwise =>
-	  "";
+        thread & (thread ~= debugger.debugger-thread) =>
+          format-to-string("Stopped in %s",
+                           frame-default-object-name(debugger, thread));
+        application =>
+          application.application-stop-reason-message | "";
+        otherwise =>
+          "";
       end;
   pane.%context-pane.gadget-value := message
 end function update-context-pane;

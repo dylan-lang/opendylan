@@ -66,13 +66,13 @@ define method environment-object-description
     let class = application-object-class(project, object);
     concatenate
       (format-to-string
-	 ("Object %s:\n",
-	  environment-object-unique-name
-	    (project, object, module, qualify-names?: #t)),
+         ("Object %s:\n",
+          environment-object-unique-name
+            (project, object, module, qualify-names?: #t)),
        if (class)
-	 environment-object-description(project, class, module)
+         environment-object-description(project, class, module)
        else
-	 #[]
+         #[]
        end)
   end
 end method environment-object-description;
@@ -85,8 +85,8 @@ define method environment-object-description
   concatenate
     (format-to-string
        ("Collection %s:\n",
-	environment-object-unique-name
-	  (project, object, module, qualify-names?: #t)),
+        environment-object-unique-name
+          (project, object, module, qualify-names?: #t)),
      format-to-string("Size: %s\n", size | ""))
 end method environment-object-description;
 
@@ -112,22 +112,22 @@ define function names->name-list
        0 => "";
        1 => names[0];
        otherwise =>
-	 reduce1
-	   (method (names-so-far, new-name)
-	      concatenate(names-so-far, ", ", new-name)
-	    end,
-	    names);
+         reduce1
+           (method (names-so-far, new-name)
+              concatenate(names-so-far, ", ", new-name)
+            end,
+            names);
      end,
      ")")
 end function names->name-list;
 
 define environment-object-description-method (<class-object>)
   // ---*** Can we show init-keywords, including those accepted by make
-  // and initialize methods? 
+  // and initialize methods?
   let superclass-names :: <sequence>
     = map(method (class-object)
-	    environment-object-display-name(project, class-object, module)
-	  end,
+            environment-object-display-name(project, class-object, module)
+          end,
           class-direct-superclasses(project, object));
   names->name-list(superclass-names)
 end environment-object-description-method;
@@ -152,7 +152,7 @@ end environment-object-description-method;
 
 define environment-object-description-method (<library-object>)
   concatenate
-    ("\nContents:\t", 
+    ("\nContents:\t",
      environment-object-contents(project, object));
 end environment-object-description-method;
 
@@ -162,7 +162,7 @@ end environment-object-description-method;
 
 define environment-object-description-method (<module-object>)
   concatenate
-    ("\nContents:\t", 
+    ("\nContents:\t",
      environment-object-contents(project, object));
 end environment-object-description-method;
 
@@ -239,15 +239,15 @@ define method environment-object-content-counts
   local
     method do-definition (definition :: <definition-object>) => ()
       select (definition by instance?)
-	<macro-object>            => macro-count    := macro-count + 1;
-	<class-object>            => class-count    := class-count + 1;
-	<constant-object>         => constant-count := constant-count + 1;
-	<variable-object>         => variable-count := variable-count + 1;
-	<generic-function-object> => gf-count       := gf-count + 1;
-	<method-object>           => method-count   := method-count + 1;
-	<domain-object>           => domain-count   := domain-count + 1;
-	<environment-object>      =>
-	  debug-out(#"environment-protocols",
+        <macro-object>            => macro-count    := macro-count + 1;
+        <class-object>            => class-count    := class-count + 1;
+        <constant-object>         => constant-count := constant-count + 1;
+        <variable-object>         => variable-count := variable-count + 1;
+        <generic-function-object> => gf-count       := gf-count + 1;
+        <method-object>           => method-count   := method-count + 1;
+        <domain-object>           => domain-count   := domain-count + 1;
+        <environment-object>      =>
+          debug-out(#"environment-protocols",
                     "Unexpected definition %= when counting -- ignored",
                     definition);
       end
@@ -316,11 +316,11 @@ define function content-type-name
        #"element"          => "element";
        #"macro"            => "macro";
        #"class"            => "class";
-	#"slot"            => "slot";
+        #"slot"            => "slot";
        #"variable"         => "variable";
        #"constant"         => "constant";
        #"generic-function" => "generic function";
-	#"method"          => "method";
+        #"method"          => "method";
        #"domain"           => "domain";
   end
 end function content-type-name;
@@ -332,8 +332,8 @@ define function print-content-count
     (stream :: <stream>, count :: <integer>, content-type :: <symbol>)
  => ()
   format(stream, "%d %s",
-	 count,
-	 string-pluralize(content-type-name(content-type), count: count))
+         count,
+         string-pluralize(content-type-name(content-type), count: count))
 end function print-content-count;
 
 
@@ -361,7 +361,7 @@ define generic print-environment-object-contents
  => ();
 
 define method print-environment-object-contents
-    (stream :: <stream>, project :: <project-object>, 
+    (stream :: <stream>, project :: <project-object>,
      environment-object :: <environment-object>)
  => ()
   write(stream, $not-applicable)
@@ -400,18 +400,18 @@ define method print-environment-object-contents
  => ()
   let need-separator? :: <boolean> = #f;
   local method maybe-print-content-count
-	    (stream :: <stream>, count :: <integer>, content-type :: <symbol>,
-	     #key prefix, suffix) => ()
-	  if (count > 0)
-	    if (need-separator?) 
-	      write(stream, $list-separator)
-	    end;
-	    if (prefix) write(stream, prefix) end;
-	    print-content-count(stream, count, content-type);
-	    if (suffix) write(stream, suffix) end;
-	    need-separator? := #t
-	  end
-	end method maybe-print-content-count;
+            (stream :: <stream>, count :: <integer>, content-type :: <symbol>,
+             #key prefix, suffix) => ()
+          if (count > 0)
+            if (need-separator?)
+              write(stream, $list-separator)
+            end;
+            if (prefix) write(stream, prefix) end;
+            print-content-count(stream, count, content-type);
+            if (suffix) write(stream, suffix) end;
+            need-separator? := #t
+          end
+        end method maybe-print-content-count;
   let (macro-count,
        class-count,
        constant-count,
@@ -491,40 +491,40 @@ define function print-function-parameters
       = function-parameters(server, function-object);
     format(stream, "(");
     local method do-parameter (parameter :: <parameter>) => ()
-	    let keyword 
-	      = instance?(parameter, <optional-parameter>)
-		  & parameter.parameter-keyword;
-	    let type = parameter.parameter-type;
-	    if ($show-keyword-function-names)
-	      if (keyword)
-		format(stream, "%s: ", keyword)
-	      end;
-	      format(stream, "%s", parameter.parameter-name);
-	    else
-	      format(stream, "%s", keyword | parameter.parameter-name)
-	    end;
-	    unless (type == <object>-class)
-	      format(stream, " :: %s",
-		     environment-object-display-name(server, type, namespace)
-		       | $type-n/a)
-	    end
-	  end method do-parameter;
+            let keyword
+              = instance?(parameter, <optional-parameter>)
+                  & parameter.parameter-keyword;
+            let type = parameter.parameter-type;
+            if ($show-keyword-function-names)
+              if (keyword)
+                format(stream, "%s: ", keyword)
+              end;
+              format(stream, "%s", parameter.parameter-name);
+            else
+              format(stream, "%s", keyword | parameter.parameter-name)
+            end;
+            unless (type == <object>-class)
+              format(stream, " :: %s",
+                     environment-object-display-name(server, type, namespace)
+                       | $type-n/a)
+            end
+          end method do-parameter;
     local method do-parameters (parameters :: <parameters>) => ()
-	    for (parameter :: <parameter> in parameters,
-		 separator = "" then ", ")
-	      format(stream, separator);
-	      do-parameter(parameter)
-	    end for;
-	  end method do-parameters;
+            for (parameter :: <parameter> in parameters,
+                 separator = "" then ", ")
+              format(stream, separator);
+              do-parameter(parameter)
+            end for;
+          end method do-parameters;
     do-parameters(required);
     let printed-something = size(required) > 0;
     local method print-separator () => ()
-	    if (printed-something)
-	      format(stream, ", ");
-	    else
-	      printed-something := #t;
-	    end;
-	  end method print-separator;
+            if (printed-something)
+              format(stream, ", ");
+            else
+              printed-something := #t;
+            end;
+          end method print-separator;
     if (next)
       print-separator();
       format(stream, "#next ");
@@ -537,17 +537,17 @@ define function print-function-parameters
     end;
     case
       key & size(key) > 0 =>
-	print-separator();
-	format(stream, "#key ");
-	do-parameters(key);
-	if (all-keys?) 
-	  format(stream, ", #all-keys")
-	end;
+        print-separator();
+        format(stream, "#key ");
+        do-parameters(key);
+        if (all-keys?)
+          format(stream, ", #all-keys")
+        end;
       all-keys? =>
-	print-separator();
-	format(stream, "#key, #all-keys");
+        print-separator();
+        format(stream, "#key, #all-keys");
       otherwise =>
-	#f;
+        #f;
     end;
     format(stream, ")");
   end
@@ -560,33 +560,33 @@ define function print-function-values
  => (name :: <string>)
   with-output-to-string (stream)
     let <object>-class = find-environment-object(server, $<object>-id);
-    let (required-params, rest-param, key-params, all-keys?, next-param, 
-	 required-values, rest-value)
+    let (required-params, rest-param, key-params, all-keys?, next-param,
+         required-values, rest-value)
       = function-parameters(server, function-object);
     ignore(required-params, rest-param, key-params, all-keys?, next-param);
     format(stream, "(");
     local method do-value (parameter :: <parameter>) => ()
-	    let type = parameter.parameter-type;
-	    format(stream, "%s", parameter.parameter-name);
-	    unless (type == <object>-class)
-	      format(stream, " :: %s",
-		     environment-object-display-name(server, type, namespace)
-		       | $type-n/a)
-	    end
-	  end method do-value;
+            let type = parameter.parameter-type;
+            format(stream, "%s", parameter.parameter-name);
+            unless (type == <object>-class)
+              format(stream, " :: %s",
+                     environment-object-display-name(server, type, namespace)
+                       | $type-n/a)
+            end
+          end method do-value;
     local method do-values (_values :: <parameters>) => ()
-	    for (value in _values,
-	      count from size(_values) - 1 by -1)
-	      do-value(value);
-	      if (count > 0)
-		format(stream, ", ")
-	      end;
-	    end for;
-	  end method do-values;
+            for (value in _values,
+              count from size(_values) - 1 by -1)
+              do-value(value);
+              if (count > 0)
+                format(stream, ", ")
+              end;
+            end for;
+          end method do-values;
     do-values(required-values);
     if (rest-value)
       if (size(required-values) > 0)
-	format(stream, ", ");
+        format(stream, ", ");
       end;
       format(stream, "#rest ");
       do-value(rest-value);
@@ -612,18 +612,18 @@ define method print-environment-object-location
     let source-record = source-location.source-location-source-record;
     select (source-record by instance?)
       <interactive-source-record> =>
-	$interactive-definition;
+        $interactive-definition;
       <file-source-record> =>
-	let location = source-record.source-record-location;
-	if (file-exists?(location)) 
-	  if (absolute-path?)
-	    locator-as-string(<byte-string>, location);
-	  else 
-	    location.locator-name;
-	  end;
-	end;
+        let location = source-record.source-record-location;
+        if (file-exists?(location))
+          if (absolute-path?)
+            locator-as-string(<byte-string>, location);
+          else
+            location.locator-name;
+          end;
+        end;
       otherwise =>
-	source-record.source-record-name;
+        source-record.source-record-name;
     end
   end
     | $n/a
@@ -637,14 +637,14 @@ define method print-environment-object-location
   ignore(project);
   block (ret)
     local method printit (locator :: false-or(<locator>))
-	    if (locator)
-	      if (absolute-path?)
-		ret(locator-as-string(<byte-string>, locator))
-	      else
-		ret(as(<string>, locator))
-	      end;
-	    end;
-	  end;
+            if (locator)
+              if (absolute-path?)
+                ret(locator-as-string(<byte-string>, locator))
+              else
+                ret(as(<string>, locator))
+              end;
+            end;
+          end;
     printit(project-object.project-filename);
     printit(project-object.project-debug-filename);
     $n/a;

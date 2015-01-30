@@ -45,9 +45,9 @@ define method do-destroy-sheet
   when (instance?(buffer, <basic-shell-buffer>))
     // Lose any Dylan objects we might be hanging on to...
     do-lines(method (line, si, ei, last?)
-	       ignore(si, ei, last?);
-	       remove-property!(line-properties(line), #"object");
-	     end method, buffer)
+               ignore(si, ei, last?);
+               remove-property!(line-properties(line), #"object");
+             end method, buffer)
   end
 end method do-destroy-sheet;
 
@@ -104,9 +104,9 @@ end function make-dylan-interactor;
 define method make-interactor-buffer
     (#key editor = $environment-editor) => (buffer :: <buffer>)
   let buffer = make-dylan-shell(anonymous?: #t,
-				section-class: <dylanworks-shell-section>,
-				major-mode: find-mode(<dylanworks-shell-mode>),
-				editor: editor);
+                                section-class: <dylanworks-shell-section>,
+                                major-mode: find-mode(<dylanworks-shell-mode>),
+                                editor: editor);
   let header = make-empty-section-node(buffer);
   add-node!(buffer, header, after: #"start");
   buffer
@@ -119,10 +119,10 @@ define method environment-empty-buffer
   let buffer
     = find-buffer(editor, name)
         | make-empty-buffer(<non-file-buffer>,
-			    anonymous?: #t,
-			    name: name,
-			    editor: editor,
-			    read-only?: #t);
+                            anonymous?: #t,
+                            name: name,
+                            editor: editor,
+                            read-only?: #t);
   buffer
 end method environment-empty-buffer;
 
@@ -149,28 +149,28 @@ define method shell-parse-input
   with-busy-cursor (frame)
     case
       interactor-empty-input?(pane, text) =>
-	values(#t, #f);
+        values(#t, #f);
       interactor-valid-command?(pane, text) =>
-	values(#t, #f);
+        values(#t, #f);
       //---*** Should be removed when the compiler gets its act together
       ~interactor-terminated-code?(pane, text) =>
-	values(#f, #f);
+        values(#f, #f);
       otherwise =>
-	let module  = frame-ensure-project-database(frame) & frame-current-module(frame);
-	when (module)
-	  let thread  = interactor-remote-thread(pane);
-	  let stack-frame = interactor-stack-frame-context(pane);
-	  let (complete?, warnings)
-	    = project-valid-code?(project, text, thread, module: module,
-				  stack-frame: stack-frame);
-	  if (complete?)
-	    //---*** Should construct a more specific message from the conditons
-	    let message = if (empty?(warnings)) #f else "Syntax error." end;
-	    values(#t, message);
-	  else
-	    values(#f, #f)
-	  end
-	end;
+        let module  = frame-ensure-project-database(frame) & frame-current-module(frame);
+        when (module)
+          let thread  = interactor-remote-thread(pane);
+          let stack-frame = interactor-stack-frame-context(pane);
+          let (complete?, warnings)
+            = project-valid-code?(project, text, thread, module: module,
+                                  stack-frame: stack-frame);
+          if (complete?)
+            //---*** Should construct a more specific message from the conditons
+            let message = if (empty?(warnings)) #f else "Syntax error." end;
+            values(#t, message);
+          else
+            values(#f, #f)
+          end
+        end;
     end
   end
 end method shell-parse-input;
@@ -180,7 +180,7 @@ define method interactor-empty-input?
   block (return)
     for (char in text)
       unless (any-whitespace-char?(char))
-	return(#f)
+        return(#f)
       end
     end;
     #t
@@ -192,12 +192,12 @@ define method interactor-terminated-code?
     (pane :: <dylan-interactor>, text :: <string>) => (terminated? :: <boolean>)
   block (return)
     for (char in text using backward-iteration-protocol)
-      unless (any-whitespace-char?(char))	// skip whitespace
+      unless (any-whitespace-char?(char))        // skip whitespace
         if (char == ';')
           return(#t)
-	else
-	  return(#f)
-	end
+        else
+          return(#f)
+        end
       end
     end;
     #f
@@ -220,11 +220,11 @@ define method shell-execute-code
   with-busy-cursor (frame)
     case
       interactor-empty-input?(pane, text) =>
-	#f;
+        #f;
       interactor-valid-command?(pane, text) =>
-	interactor-process-command(pane, text, bp);
+        interactor-process-command(pane, text, bp);
       otherwise =>
-	interactor-do-execute-code(pane, text, bp);
+        interactor-do-execute-code(pane, text, bp);
     end;
     unless (interactor-empty-input?(pane, text))
       interactor-last-input(pane) := text
@@ -250,15 +250,15 @@ define method interactor-do-execute-code
       let project = frame-current-project(frame);
       let module  = frame-ensure-project-database(frame) & frame-current-module(frame);
       when (module)
-	// Execute the form
-	let thread = interactor-remote-thread(pane);
-	let stack-frame = interactor-stack-frame-context(pane);
-	let transaction-id
-	  = project-execute-code(project, text, thread, module: module,
-				 stack-frame: stack-frame);
-	$transaction-types[transaction-id] := transaction-type;
-	// We'll use the transaction-id to figure out where to put the output
-	section.%transaction-id := transaction-id
+        // Execute the form
+        let thread = interactor-remote-thread(pane);
+        let stack-frame = interactor-stack-frame-context(pane);
+        let transaction-id
+          = project-execute-code(project, text, thread, module: module,
+                                 stack-frame: stack-frame);
+        $transaction-types[transaction-id] := transaction-type;
+        // We'll use the transaction-id to figure out where to put the output
+        section.%transaction-id := transaction-id
       end
     end
   end
@@ -271,21 +271,21 @@ define method interactor-receive-values
   select (type)
     #"describe" =>
       call-in-frame(sheet-frame(pane),
-		    method ()
-		      present-interactor-values
-			(pane, values, transaction-id: transaction-id,
-			 describe-function: interactor-do-show-contents)
-		    end);
+                    method ()
+                      present-interactor-values
+                        (pane, values, transaction-id: transaction-id,
+                         describe-function: interactor-do-show-contents)
+                    end);
     otherwise =>
       // Add the source record to the buffer for this project
       let source-record
-	= transaction-id-source-record(project, transaction-id);
+        = transaction-id-source-record(project, transaction-id);
       when (source-record)
-	add-interactive-source-section(project, source-record)
+        add-interactive-source-section(project, source-record)
       end;
       call-in-frame(sheet-frame(pane),
-		    present-interactor-values,
-		    pane, values, transaction-id: transaction-id);
+                    present-interactor-values,
+                    pane, values, transaction-id: transaction-id);
   end;
   remove-key!($transaction-types, transaction-id)
 end method interactor-receive-values;
@@ -310,8 +310,8 @@ define method present-interactor-values
     when (section & section-output-line(section))
       let line   = section-output-line(section);
       let stream = make(<interval-stream>,
-			interval: buffer,
-			direction: #"output");
+                        interval: buffer,
+                        direction: #"output");
       // Delete the "Waiting..." message
       delete!(make-interval(line-start(line), line-end(line), in-order?: #t));
       stream-position(stream) := line-end(line);
@@ -319,23 +319,23 @@ define method present-interactor-values
         format(stream, "No values\n")
       else
         for (name-value-pair in name-value-pairs)
-	  let name-label  = head(name-value-pair);
-	  let value       = tail(name-value-pair);
-	  let value-label
-	    = print-environment-object-to-string
-	        (project, value, namespace: module);
-	  // Bind 'line' now before we insert a '\n'...
-	  let line = bp-line(stream-position(stream));
-	  format(stream, "%4s = %s\n", name-label, value-label);
-	  // Set the contents properties after we've filled in the line
-	  let property = list(#"object", value);
-	  line-properties(line) := concatenate!(line-properties(line), property)
-	end;
-	when (describe-function)
-	  let first-object = tail(name-value-pairs[0]);
-	  let subset = interactor-make-subset(pane, first-object);
-	  describe-function(pane, stream, subset)
-	end
+          let name-label  = head(name-value-pair);
+          let value       = tail(name-value-pair);
+          let value-label
+            = print-environment-object-to-string
+                (project, value, namespace: module);
+          // Bind 'line' now before we insert a '\n'...
+          let line = bp-line(stream-position(stream));
+          format(stream, "%4s = %s\n", name-label, value-label);
+          // Set the contents properties after we've filled in the line
+          let property = list(#"object", value);
+          line-properties(line) := concatenate!(line-properties(line), property)
+        end;
+        when (describe-function)
+          let first-object = tail(name-value-pairs[0]);
+          let subset = interactor-make-subset(pane, first-object);
+          describe-function(pane, stream, subset)
+        end
       end;
       queue-redisplay(pane, $display-text, centering: 1);
       redisplay-window(pane);
@@ -358,21 +358,21 @@ define method present-interactor-warnings
     when (section & section-output-line(section))
       let line   = section-output-line(section);
       let stream = make(<interval-stream>,
-			interval: buffer,
-			direction: #"output");
+                        interval: buffer,
+                        direction: #"output");
       // Insert the warnings before the "Waiting..." line
       stream-position(stream) := line-start(line);
       for (warning-object in warning-objects)
         let formatted-warning
-	  = compiler-warning-full-message(project, warning-object);
-	  //---*** Use this as the formatted message
-	  /* = environment-object-display-name(project,
-					       warning-object,
-					       #f,	// no module context
-					       full-message?: #t); */
-	format(stream, "%s\n", formatted-warning);
-	// Keep 'section-output-line' pointing to the correct line
-	section-output-line(section) := bp-line(stream-position(stream))
+          = compiler-warning-full-message(project, warning-object);
+          //---*** Use this as the formatted message
+          /* = environment-object-display-name(project,
+                                               warning-object,
+                                               #f,        // no module context
+                                               full-message?: #t); */
+        format(stream, "%s\n", formatted-warning);
+        // Keep 'section-output-line' pointing to the correct line
+        section-output-line(section) := bp-line(stream-position(stream))
       end;
       queue-redisplay(pane, $display-text, centering: 1);
       redisplay-window(pane)
@@ -388,11 +388,11 @@ define function find-section-for-transaction-id
  => (section :: false-or(<dylanworks-shell-section>))
   block (return)
     for (node = buffer-end-node(buffer) then node-previous(node),
-	 until: ~node)
+         until: ~node)
       let section = node-section(node);
       when (instance?(section, <dylanworks-shell-section>)
-	    & section.%transaction-id = transaction-id)
-	return(section)
+            & section.%transaction-id = transaction-id)
+        return(section)
       end
     end;
     #f
@@ -422,7 +422,7 @@ define method interactor-process-command
       set-interactor-breakpoint(pane, arguments);
     $describe-command, $show-contents-command =>
       interactor-do-execute-code
-	(pane, arguments, bp, transaction-type: #"describe");
+        (pane, arguments, bp, transaction-type: #"describe");
     otherwise =>
       execute-command-line(server, text);
   end
@@ -435,7 +435,7 @@ define function parse-command-name
     let pos = position(text, ' ');
     if (pos)
       values(copy-sequence(text, start: 1, end: pos),
-	     copy-sequence(text, start: pos + 1))
+             copy-sequence(text, start: pos + 1))
     else
       values(text, #f)
     end
@@ -494,12 +494,12 @@ define method interactor-show-contents
   do-with-interactor-output
     (method (stream :: <stream>)
        if (class-name & size(class-name) > 0)
-	 let char    = if (size(class-name) > 1 & class-name[0] == '<') class-name[1]
-		       else class-name[0] end;
-	 let article = if (member?(char, "aeiouAEIOU")) "an" else "a" end;
-	 format(stream, "%s is %s %s", object-name, article, class-name)
+         let char    = if (size(class-name) > 1 & class-name[0] == '<') class-name[1]
+                       else class-name[0] end;
+         let article = if (member?(char, "aeiouAEIOU")) "an" else "a" end;
+         format(stream, "%s is %s %s", object-name, article, class-name)
        else
-	 format(stream, "%s is an object of unknown type", object-name, class-name)
+         format(stream, "%s is an object of unknown type", object-name, class-name)
        end
      end method,
      pane,
@@ -512,16 +512,16 @@ define method do-with-interactor-output
     (function :: <function>, pane :: <dylan-interactor>, prefix :: <string>) => ()
   with-editor-state-bound (buffer = pane)
     let stream = make(<interval-stream>,
-		      interval: buffer,
-		      direction: #"output");
+                      interval: buffer,
+                      direction: #"output");
     write-line(stream, prefix);
     local method processor (mode, buffer, section, #key window)
-	    ignore(mode, buffer, section, window);
-	    function(stream)
-	  end method;
+            ignore(mode, buffer, section, window);
+            function(stream)
+          end method;
     let section = line-section(bp-line(stream-position(stream)));
     process-shell-input(buffer-major-mode(buffer), buffer, section,
-			window: pane, processor: processor);
+                        window: pane, processor: processor);
     //---*** Remove the input property until we have a real command processor...
     put-property!(line-properties(section-start-line(section)), #"input", #f);
     close(stream);
@@ -549,7 +549,7 @@ define method interactor-make-subset
   let project = frame-current-project(frame);
   let (names, values) = composite-object-contents(project, object);
   let result = make(<result-contents>,
-		    object: object, names: names, values: values);
+                    object: object, names: names, values: values);
   make(<result-subset>, contents: result)
 end method interactor-make-subset;
 
@@ -561,7 +561,7 @@ define method interactor-make-subset
   let names   = collection-keys(project, object);
   let values  = collection-elements(project, object);
   let result = make(<result-contents>,
-		    object: object, names: names, values: values);
+                    object: object, names: names, values: values);
   make(<result-subset>, contents: result)
 end method interactor-make-subset;
 
@@ -588,9 +588,9 @@ define method interactor-object-contents-prefix
   let object-name
     = print-environment-object-to-string(project, object, namespace: module);
   format-to-string("Contents of %s%s",
-		   object-name,
-		   if (_start > 0) format-to-string(" [from %d]", _start)
-		   else "" end)
+                   object-name,
+                   if (_start > 0) format-to-string(" [from %d]", _start)
+                   else "" end)
 end method interactor-object-contents-prefix;
 
 define method interactor-do-show-contents
@@ -627,32 +627,32 @@ define method interactor-do-show-contents
     // Compute the name labels first, so that we can make
     // the output have nice columnar format
     for (i :: <integer> from _start below _end,
-	 offset from 0)
+         offset from 0)
       let name = names[i];
       let name-label
-	= select (name by instance?)
-	    <environment-object> =>
-	      environment-object-display-name(project, name, module);
-	    <string> =>
-	      name;
-	    otherwise =>
-	      format-to-string("%=", name);
-	  end;
+        = select (name by instance?)
+            <environment-object> =>
+              environment-object-display-name(project, name, module);
+            <string> =>
+              name;
+            otherwise =>
+              format-to-string("%=", name);
+          end;
       label-size := max(size(name-label), label-size);
       labels[offset]  := name-label
     end;
     let spaces :: <byte-string>
       = make(<byte-string>, size: label-size + 1, fill: ' ');
     for (i :: <integer> from _start below _end,
-	 name-label in labels)
+         name-label in labels)
       let value = values[i];
       let history-name
-	= add-application-object-to-thread-history(project, thread, value);
-      let history-label			// history label is 7 characters wide...
-	= if (history-name) format-to-string("%4s = ", history-name)
-	  else "       " end;
+        = add-application-object-to-thread-history(project, thread, value);
+      let history-label                        // history label is 7 characters wide...
+        = if (history-name) format-to-string("%4s = ", history-name)
+          else "       " end;
       let value-label
-	= print-environment-object-to-string(project, value, namespace: module);
+        = print-environment-object-to-string(project, value, namespace: module);
       write-element(stream, '\n');
       write(stream, history-label);
       write(stream, name-label);
@@ -667,9 +667,9 @@ define method interactor-do-show-contents
     if (_end < total)
       format(stream, "\n... [%d more]", total - _end);
       let next-subset
-	= make(<result-subset>,
-	       contents: result,
-	       start: _end);
+        = make(<result-subset>,
+               contents: result,
+               start: _end);
       interactor-next-subset(pane) := next-subset;
       // Set the contents properties after we've filled in the line
       let line = bp-line(stream-position(stream));
@@ -690,12 +690,12 @@ define method paste-object?
   let frame = sheet-frame(pane);
   dylan-clipboard-object-available?(frame, <application-object>)
     & begin
-	let project = frame-current-project(frame);
-	let value = dylan-clipboard-object(frame);
-	instance?(value, <application-object>)		// avoid race conditions!
-	  & environment-object-home-server?(project, value)
-	  & environment-object-exists?(project, value)
-	  & application-object-proxy(value) ~= #f
+        let project = frame-current-project(frame);
+        let value = dylan-clipboard-object(frame);
+        instance?(value, <application-object>)                // avoid race conditions!
+          & environment-object-home-server?(project, value)
+          & environment-object-exists?(project, value)
+          & application-object-proxy(value) ~= #f
       end
 end method paste-object?;
 
@@ -711,25 +711,25 @@ define method paste-object
     let thread  = interactor-remote-thread(pane);
     with-editor-state-bound (buffer = pane)
       let history-name
-	= add-application-object-to-thread-history(project, thread, value);
+        = add-application-object-to-thread-history(project, thread, value);
       let last-node = buffer-end-node(buffer);
       let prev-node = node-previous(last-node);
       let section   = prev-node & node-section(prev-node);
       when (section & section-output-line(section))
-	let line   = section-end-line(section);
-	let stream = make(<interval-stream>,
-			  interval: buffer,
-			  direction: #"output");
-	stream-position(stream) := line-end(line);
-	let value-label
-	  = print-environment-object-to-string(project, value, namespace: module);
-	format(stream, "\n");
-	let line = bp-line(stream-position(stream));
-	format(stream, "%4s = %s\n", history-name, value-label);
-	let property = list(#"object", value);
-	line-properties(line) := concatenate!(line-properties(line), property);
-	queue-redisplay(pane, $display-text, centering: 1);
-	redisplay-window(pane)
+        let line   = section-end-line(section);
+        let stream = make(<interval-stream>,
+                          interval: buffer,
+                          direction: #"output");
+        stream-position(stream) := line-end(line);
+        let value-label
+          = print-environment-object-to-string(project, value, namespace: module);
+        format(stream, "\n");
+        let line = bp-line(stream-position(stream));
+        format(stream, "%4s = %s\n", history-name, value-label);
+        let property = list(#"object", value);
+        line-properties(line) := concatenate!(line-properties(line), property);
+        queue-redisplay(pane, $display-text, centering: 1);
+        redisplay-window(pane)
       end
     end
   end
@@ -745,25 +745,25 @@ define method set-interactor-breakpoint
   let module  = frame-current-module(frame);
   with-editor-state-bound (buffer = pane)
     let stream = make(<interval-stream>,
-		      interval: buffer,
-		      direction: #"output");
+                      interval: buffer,
+                      direction: #"output");
     let object = find-environment-object(project, name);
     let set?
       = when (object)
-	  let old-breakpoints = as(<vector>, environment-object-breakpoints(project));
-	  make(<breakpoint-object>, project: project, object: object);
-	  let new-breakpoints = as(<vector>, environment-object-breakpoints(project));
-	  let seen-new-breakpoint? = #f;
-	  for (breakpoint in new-breakpoints)
-	    unless (member?(breakpoint, old-breakpoints))
-	      seen-new-breakpoint? := #t;
-	      format(stream, "Set breakpoint on '%s'\n",
-		     print-environment-object-to-string
-		       (project, breakpoint, namespace: module))
-	    end
-	  end;
-	  seen-new-breakpoint?
-	end;
+          let old-breakpoints = as(<vector>, environment-object-breakpoints(project));
+          make(<breakpoint-object>, project: project, object: object);
+          let new-breakpoints = as(<vector>, environment-object-breakpoints(project));
+          let seen-new-breakpoint? = #f;
+          for (breakpoint in new-breakpoints)
+            unless (member?(breakpoint, old-breakpoints))
+              seen-new-breakpoint? := #t;
+              format(stream, "Set breakpoint on '%s'\n",
+                     print-environment-object-to-string
+                       (project, breakpoint, namespace: module))
+            end
+          end;
+          seen-new-breakpoint?
+        end;
     unless (set?)
       format(stream, "Function '%s' not found\n", name)
     end;

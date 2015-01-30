@@ -10,19 +10,19 @@ define variable $notifier-dialog-height :: <integer> = 350;
 
 define sealed frame <notifier> (<dialog-frame>)
   sealed slot notifier-abort-restart :: false-or(<restart-object>) = #f;
-  sealed constant slot notifier-project :: <project-object>, 
+  sealed constant slot notifier-project :: <project-object>,
     required-init-keyword: project:;
-  sealed constant slot notifier-thread :: false-or(<thread-object>), 
+  sealed constant slot notifier-thread :: false-or(<thread-object>),
     required-init-keyword: remote-thread:;
   pane notifier-context-pane (dialog)
     make(<text-editor>,
-	 lines: 2,
-	 read-only?: #t, tab-stop?: #t,
-	 scroll-bars: #"none");
+         lines: 2,
+         read-only?: #t, tab-stop?: #t,
+         scroll-bars: #"none");
   pane notifier-restarts-pane (dialog)
     make(<list-box>,
-	 activate-callback: exit-dialog,
-	 label-key: curry(application-restart-message, dialog.notifier-project));
+         activate-callback: exit-dialog,
+         label-key: curry(application-restart-message, dialog.notifier-project));
   pane notifier-abort-button (dialog)
     make-notifier-button
       (dialog, #"abort",    "Abort the current operation and continue %s");
@@ -37,38 +37,38 @@ define sealed frame <notifier> (<dialog-frame>)
       (dialog, #"exit",     "Exit %s");
   pane notifier-button-box (dialog)
     make(<radio-box>,
-	 child: begin
-		  let project = dialog.notifier-project;
-		  let name = project.project-application-short-name;
-		  vertically (spacing: 5)
+         child: begin
+                  let project = dialog.notifier-project;
+                  let name = project.project-application-short-name;
+                  vertically (spacing: 5)
                     dialog.notifier-abort-button;
                     vertically (spacing: 5)
                       dialog.notifier-continue-button;
-		      horizontally (spacing: 0)
-		        make(<null-pane>, width: 18, fixed-width?: #t);
-		        dialog.notifier-restarts-pane;
-		      end
-		    end;
+                      horizontally (spacing: 0)
+                        make(<null-pane>, width: 18, fixed-width?: #t);
+                        dialog.notifier-restarts-pane;
+                      end
+                    end;
                     dialog.notifier-debug-button;
                     dialog.notifier-exit-button;
                   end
                 end,
          value-changed-callback: method (gadget)
-				   gadget-enabled?(dialog.notifier-restarts-pane)
-				     := gadget-value(gadget) == #"continue"
-				 end);
+                                   gadget-enabled?(dialog.notifier-restarts-pane)
+                                     := gadget-value(gadget) == #"continue"
+                                 end);
   layout (dialog)
     horizontally (spacing: 8, y-alignment: #"top")
       make(<label>,
-	   label: $internal-error-bitmap,
-	   width:  32, min-width:  32, max-width:  32,
-	   height: 32, min-height: 32, max-height: 32);
+           label: $internal-error-bitmap,
+           width:  32, min-width:  32, max-width:  32,
+           height: 32, min-height: 32, max-height: 32);
       vertically (spacing: 8, x-alignment: #"left")
         make(<label>,
-	     label: format-to-string("APPLICATION ERROR: %s",
-				     project-application-short-name
-				       (dialog.notifier-project)),
-	     text-style: make(<text-style>, weight: #"bold", size: #"large"));
+             label: format-to-string("APPLICATION ERROR: %s",
+                                     project-application-short-name
+                                       (dialog.notifier-project)),
+             text-style: make(<text-style>, weight: #"bold", size: #"large"));
         dialog.notifier-context-pane;
         dialog.notifier-button-box
       end
@@ -81,7 +81,7 @@ define sealed frame <notifier> (<dialog-frame>)
     dialog.dialog-exit-button;
 end frame <notifier>;
 
-define sealed method initialize 
+define sealed method initialize
     (dialog :: <notifier>, #key) => ()
   next-method();
   let project :: <project-object> = dialog.notifier-project;
@@ -89,15 +89,15 @@ define sealed method initialize
   let thread :: false-or(<thread-object>) = dialog.notifier-thread;
   let restarts
     = if (thread) application-thread-restarts(project, thread) else #[] end if;
-  let abort-restart 
-    = any?(conjoin(curry(application-restart-abort?, project), identity), 
-	   restarts);
+  let abort-restart
+    = any?(conjoin(curry(application-restart-abort?, project), identity),
+           restarts);
   let continue-restart = ~empty?(restarts) & restarts[0];
   let default-action
     = case
-	abort-restart    => #"abort";
-	continue-restart => #"continue";
-	otherwise        => #"debug";
+        abort-restart    => #"abort";
+        continue-restart => #"continue";
+        otherwise        => #"debug";
       end;
   let context-pane    = dialog.notifier-context-pane;
   let restarts-pane   = dialog.notifier-restarts-pane;
@@ -125,20 +125,20 @@ define function choose-debug?
   ~application-just-hit-error?(project, thread)
     | ~$debugger-settings.notifier-dialog
     | block (return)
-	let notifier
-	  = make(<notifier>,
-		 owner: owner,
-		 project: project,
-		 remote-thread: thread);
-	if (start-dialog(notifier))
-	  select (gadget-value(notifier.notifier-button-box))
-	    #"abort"    => notifier-invoke-abort(notifier);
-	    #"continue" => notifier-invoke-restart(notifier);
-	    #"debug"    => return(#t);
-	    #"exit"     => close-application(project);
-	  end;
-	  #f
-	end
+        let notifier
+          = make(<notifier>,
+                 owner: owner,
+                 project: project,
+                 remote-thread: thread);
+        if (start-dialog(notifier))
+          select (gadget-value(notifier.notifier-button-box))
+            #"abort"    => notifier-invoke-abort(notifier);
+            #"continue" => notifier-invoke-restart(notifier);
+            #"debug"    => return(#t);
+            #"exit"     => close-application(project);
+          end;
+          #f
+        end
       end
 end function choose-debug?;
 
@@ -153,7 +153,7 @@ define method notifier-application-message
  => (message :: <string>)
   let project = dialog.notifier-project;
   format-to-string(format-string,
-		   project.project-application-short-name)
+                   project.project-application-short-name)
 end method notifier-application-message;
 
 define method make-notifier-button
@@ -164,7 +164,7 @@ define method make-notifier-button
        label: notifier-application-message(dialog, format-string))
 end method make-notifier-button;
 
-define function notifier-invoke-restart 
+define function notifier-invoke-restart
     (dialog :: <notifier>) => ()
   let restart :: false-or(<restart-object>) = dialog.notifier-restarts-pane.gadget-value;
   let thread :: false-or(<thread-object>) = dialog.notifier-thread;
@@ -173,7 +173,7 @@ define function notifier-invoke-restart
   end
 end function notifier-invoke-restart;
 
-define function notifier-invoke-abort 
+define function notifier-invoke-abort
     (dialog :: <notifier>) => ()
   let restart :: false-or(<restart-object>) = dialog.notifier-abort-restart;
   let thread :: false-or(<thread-object>) = dialog.notifier-thread;

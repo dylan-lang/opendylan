@@ -17,9 +17,9 @@ define module environment-application-commands
     exclude: { \profiling };
   use environment-protocols,
     exclude: { <optional-parameter>,
-	       parameter-name,
-	       parameter-type,
-	       parameter-keyword };
+               parameter-name,
+               parameter-type,
+               parameter-keyword };
   use environment-manager;
   use environment-reports;
   use environment-commands;

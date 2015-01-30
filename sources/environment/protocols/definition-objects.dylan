@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Definition objects
 
-define open abstract class <definition-object> 
+define open abstract class <definition-object>
      (<macro-call-object>,
       <dylan-object>,
       <environment-object-with-id>)

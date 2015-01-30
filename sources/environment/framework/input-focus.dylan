@@ -46,9 +46,9 @@ define method make-command
   let frame :: <frame> = server;
   let focus = frame-input-focus(frame);
   //---*** Maybe make the server be the sheet?
-  apply(make, command-type, 
-	sheet: focus,
-	initargs)
+  apply(make, command-type,
+        sheet: focus,
+        initargs)
 end method make-command;
 
 define method do-execute-command

@@ -25,7 +25,7 @@ define method source-location-from-frame-proxy
 end method source-location-from-frame-proxy;
 
 define method source-location-from-frame-proxy
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      call-frame :: <application-stack-frame>)
  => (maybe-location :: false-or(<source-location>),
      location-exact? :: <boolean>)
@@ -36,7 +36,7 @@ end method source-location-from-frame-proxy;
 ///// FUNTION-OBJECT-FROM-FRAME-PROXY (Internal function)
 
 define method function-object-from-frame-proxy
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      call-frame :: <application-stack-frame>)
  => (function == #f)
   #f
@@ -57,7 +57,7 @@ define method function-object-from-frame-proxy
       // Found a foreign function
       let value = called-symbol.remote-symbol-address;
       make-environment-object-for-runtime-value
-	(application, value, address?: #t);
+        (application, value, address?: #t);
     otherwise =>
       // What is going on here...?
       #f;
@@ -75,7 +75,7 @@ define method stack-frame-function
   with-debugger-transaction (target)
     let project = application.server-project;
     let dm-frame = sf.application-object-proxy;
-    let (location, exact?) 
+    let (location, exact?)
       = source-location-from-frame-proxy(application, dm-frame);
     let definition-from-source
       = location & source-location-environment-object(project, location);
@@ -132,9 +132,9 @@ define method stack-frame-type
     let dm-frame = sf.application-object-proxy;
     if (instance?(dm-frame, <call-frame>))
       if (dylan-call-frame?(target, dm-frame))
-	#"dylan-call"
+        #"dylan-call"
       else
-	#"foreign-call"
+        #"foreign-call"
       end if
     elseif (instance?(dm-frame, <unwind-protect-frame>))
       #"cleanup"
@@ -213,9 +213,9 @@ define method stack-frame-local-variables
     let locvars = make(<vector>, size: count);
     for (i from 0 below count)
       locvars[i] :=
-	make-environment-object(<local-variable-object>,
-				project: application.server-project,
-				application-object-proxy: var-seq[i]);
+        make-environment-object(<local-variable-object>,
+                                project: application.server-project,
+                                application-object-proxy: var-seq[i]);
     end;
     locvars
   end

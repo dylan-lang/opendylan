@@ -45,8 +45,8 @@ define method search-domain-project-closed-receiver
   do-search-domains
     (method (domain :: <search-domain>)
        when (instance?(domain, <project-search-domain>)
-	     & domain.search-domain-project == project)
-	 add!(obsolete-domains, domain)
+             & domain.search-domain-project == project)
+         add!(obsolete-domains, domain)
        end
      end method);
   for (domain :: <search-domain> in obsolete-domains)
@@ -55,12 +55,12 @@ define method search-domain-project-closed-receiver
 end method search-domain-project-closed-receiver;
 
 tune-in($project-channel,
-	search-domain-project-opened-receiver,
-	message-type: <project-opened-message>);
+        search-domain-project-opened-receiver,
+        message-type: <project-opened-message>);
 
 tune-in($project-channel,
-	search-domain-project-closed-receiver,
-	message-type: <project-closed-message>);
+        search-domain-project-closed-receiver,
+        message-type: <project-closed-message>);
 
 // Search domain UI labels
 define constant $text-file-search-domain-target-kind-label  = "file";
@@ -82,7 +82,7 @@ define method search-domain-label
     (domain :: <project-search-domain>) => (label :: <string>)
   let project = domain.search-domain-project;
   format-to-string(project-search-domain-base-label(domain),
-		   environment-object-primitive-name(project, project))
+                   environment-object-primitive-name(project, project))
 end method search-domain-label;
 
 define function direct-project-text-source-files
@@ -121,10 +121,10 @@ define method search-domain-targets
   let project  = domain.search-domain-project;
   let locators = make(<stretchy-vector>);
   local method add-project-source-files (project :: <project-object>) => ()
-	  for (locator :: <file-locator> in direct-project-text-source-files(project))
-	    locators := add!(locators, locator);
-	  end;
-	end method;
+          for (locator :: <file-locator> in direct-project-text-source-files(project))
+            locators := add!(locators, locator);
+          end;
+        end method;
   add-project-source-files(project);
   for (used-project in project-used-projects(project, indirect?: #t))
     add-project-source-files(used-project);
@@ -204,23 +204,23 @@ define method search-domain-find
     object & pair(locator, object)
   else
     let object = find-in-buffer(buffer,
-				search-string,
-				backwards?:  backwards?,
-				wrap?:       wrap?,
-				match-case?: match-case?,
-				match-word?: match-word?);
+                                search-string,
+                                backwards?:  backwards?,
+                                wrap?:       wrap?,
+                                match-case?: match-case?,
+                                match-word?: match-word?);
     case
       object == #f & new-buffer? =>
-	// If no match and the buffer is new, close it
-	kill-buffer(buffer, frame: #f, editor: $environment-editor);
+        // If no match and the buffer is new, close it
+        kill-buffer(buffer, frame: #f, editor: $environment-editor);
       new-buffer? =>
-	// We got a match, put the new buffer into the right major mode
-	// and sectionize it.  We delay sectionization until a successful
-	// match just to make things a bit faster.
-	let container  = buffer-source-container(buffer);
-	let major-mode = find-mode-from-pathname(container-pathname(container));
-	enter-mode(buffer, major-mode);
-	sectionize-buffer(buffer);
+        // We got a match, put the new buffer into the right major mode
+        // and sectionize it.  We delay sectionization until a successful
+        // match just to make things a bit faster.
+        let container  = buffer-source-container(buffer);
+        let major-mode = find-mode-from-pathname(container-pathname(container));
+        enter-mode(buffer, major-mode);
+        sectionize-buffer(buffer);
     end;
     object & pair(locator, pair(buffer, object))
   end
@@ -287,7 +287,7 @@ define method search-domain-replace-all
   // Don't do anything unless we're replacing from the selection
   // or there is at least one match
   if (from-selection?
-	| apply(search-domain-find, domain, locator, search-string, keys))
+        | apply(search-domain-find, domain, locator, search-string, keys))
     let buffer = find-buffer-for-file(locator);
     let frame  = find-frame-for-buffer(buffer);
     let window = frame-window(frame);
@@ -316,9 +316,9 @@ define method search-domain-reveal-search-object
   let frame  = find-frame-for-buffer(buffer);
   when (frame & frame.frame-state ~= #"destroyed")
     call-in-frame(frame, method () => ()
-			   deiconify-frame(frame);
-			   raise-frame(frame);
-			 end);
+                           deiconify-frame(frame);
+                           raise-frame(frame);
+                         end);
     frame-reveal-search-object(frame, object.tail)
   end
 end method search-domain-reveal-search-object;

@@ -11,14 +11,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define class <domain-object> (<definition-object>)
 end class <domain-object>;
 
-define open generic domain-specializers 
+define open generic domain-specializers
     (server :: <server>, object :: <domain-object>)
  => (specializers :: <sequence>);
 
 
 /// Implementations
 
-define method domain-specializers 
+define method domain-specializers
     (project :: <project-object>, object :: <domain-object>)
  => (specializers :: <sequence>)
   let server = choose-server(project, object, error?: #t);

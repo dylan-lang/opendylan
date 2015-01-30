@@ -118,19 +118,19 @@ define method find-named-object
     let module  = frame.frame-current-module;
     let object
       = if (project.application-tethered?
-	      & name.size > 2
-	      & (name[0] == '#' | name[0] == '0')
-	      & name[1] == 'x')
-	  let address = string-to-address(project, copy-sequence(name, start: 2));
-	  unless (address == $invalid-address-object)
-	    let object = address-application-object(project, address);
-	    unless (instance?(object, <address-object>))
-	      object
-	    end
-	  end
-	else
-	  find-environment-object(project, name, module: module)
-	end;
+              & name.size > 2
+              & (name[0] == '#' | name[0] == '0')
+              & name[1] == 'x')
+          let address = string-to-address(project, copy-sequence(name, start: 2));
+          unless (address == $invalid-address-object)
+            let object = address-application-object(project, address);
+            unless (instance?(object, <address-object>))
+              object
+            end
+          end
+        else
+          find-environment-object(project, name, module: module)
+        end;
     if (~type | instance?(object, type))
       object
     end

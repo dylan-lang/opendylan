@@ -16,7 +16,7 @@ define constant <code-location>
 define constant <definition> = <source-form>;
 
 define sealed method environment-object-source-location
-    (server :: <dfmc-database>, object :: <library-object>) 
+    (server :: <dfmc-database>, object :: <library-object>)
  => (location :: false-or(<source-location>))
   let source-form = library-definition(object);
   source-form & find-source-form-location(source-form)

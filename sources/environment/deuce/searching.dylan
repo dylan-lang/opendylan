@@ -39,8 +39,8 @@ define function find-frame-for-buffer
   find-deuce-frame(buffer: buffer);
   // ...so now, let's look for a frame showing the buffer.
   let frame = choose-environment-frame(default-port(),
-				       <environment-editor>,
-				       buffer: buffer);
+                                       <environment-editor>,
+                                       buffer: buffer);
   debug-assert(frame, "Buffer not found in any frame");
   frame
 end function find-frame-for-buffer;

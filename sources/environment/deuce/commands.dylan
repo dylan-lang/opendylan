@@ -11,12 +11,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define function make-deuce-command
     (function :: <function>) => (command :: <function>)
   let command = method (frame)
-		  // Prefer the Deuce frame to the DUIM frame...
-		  let frame = find-relevant-editor-frame(frame);
-		  when (frame)
-		    deuce/execute-command-in-frame(frame, function)
-		  end
-		end method;
+                  // Prefer the Deuce frame to the DUIM frame...
+                  let frame = find-relevant-editor-frame(frame);
+                  when (frame)
+                    deuce/execute-command-in-frame(frame, function)
+                  end
+                end method;
   command
 end function make-deuce-command;
 
@@ -55,15 +55,15 @@ commands:
   { } => { }
   { ?env-command:name => ?deuce-command:name; ... }
     => { define sealed method ?env-command (frame :: <environment-editor>) => ()
-	   deuce/execute-command-in-frame(frame, ?deuce-command)
-	 end method ?env-command;
+           deuce/execute-command-in-frame(frame, ?deuce-command)
+         end method ?env-command;
          ... }
   { ?env-command:name ( ?ignored-keys:* ) => ?deuce-command:name; ... }
     => { define sealed method ?env-command
-	     (frame :: <environment-editor>, #key ?ignored-keys) => ()
-	   ignore(?ignored-keys);
-	   deuce/execute-command-in-frame(frame, ?deuce-command)
-	 end method ?env-command;
+             (frame :: <environment-editor>, #key ?ignored-keys) => ()
+           ignore(?ignored-keys);
+           deuce/execute-command-in-frame(frame, ?deuce-command)
+         end method ?env-command;
          ... }
 end macro delegate-to-deuce;
 
@@ -88,18 +88,18 @@ define method frame-open-file
   let type     = buffer & source-file-type(buffer-major-mode(buffer));
   // _This_ is a Deuce frame, so supply it as the 'deuce-frame:' keyword arg
   apply(next-method, frame,
-	deuce-frame:  frame,
-	default:      default & as(<string>, default),
-	default-type: type,
-	keys)
+        deuce-frame:  frame,
+        default:      default & as(<string>, default),
+        default-type: type,
+        keys)
 end method frame-open-file;
 
 delegate-to-deuce
-  frame-revert-file  (filename)	=> revert-file;
-  frame-close-file   (filename)	=> close-file;
-  frame-save-file    (filename)	=> save-file;
-  frame-save-file-as (filename)	=> save-file-as;
-  frame-save-all		=> save-all-files;
+  frame-revert-file  (filename)        => revert-file;
+  frame-close-file   (filename)        => close-file;
+  frame-save-file    (filename)        => save-file;
+  frame-save-file-as (filename)        => save-file-as;
+  frame-save-all                => save-all-files;
 end;
 
 
@@ -177,7 +177,7 @@ end;
 
 // ... selection commands
 
-/*---*** Hopefully not needed, since the Deuce gadget obeys 
+/*---*** Hopefully not needed, since the Deuce gadget obeys
 //---*** the text gadget protocols
 define method do-execute-command
     (frame :: <environment-editor>, command :: <frame-select-all>) => ()
@@ -301,14 +301,14 @@ define sealed method do-delegate-to-project-browser
     let current-project = editor-frame-current-project(frame);
     if (current-project)
       with-environment-frame (project-browser = frame, <project-browser>,
-			      project: current-project)
-	command(project-browser);
+                              project: current-project)
+        command(project-browser);
       end;
     else
       command-error("The document in this window is not in the active project.");
     end;
   exception (not-found :: type-union(<file-project-not-found-warning>,
-				     <file-library-not-found-warning>))
+                                     <file-library-not-found-warning>))
     command-error(condition-to-string(not-found))
   end;
 end method do-delegate-to-project-browser;
@@ -320,35 +320,35 @@ commands:
   { } => { }
   { ?command:name; ... }
     => { define sealed method ?command (frame :: <environment-editor>) => ()
-	   do-delegate-to-project-browser(frame, ?command)
-	 end method ?command;
-	 ... }
+           do-delegate-to-project-browser(frame, ?command)
+         end method ?command;
+         ... }
   { ?command:name ( ?ignored-keys:* ) ; ... }
     => { define sealed method ?command
-	     (frame :: <environment-editor>, #key ?ignored-keys) => ()
-	   ignore(?ignored-keys);
-	   do-delegate-to-project-browser(frame, ?command)
-	 end method ?command;
-	 ... }
+             (frame :: <environment-editor>, #key ?ignored-keys) => ()
+           ignore(?ignored-keys);
+           do-delegate-to-project-browser(frame, ?command)
+         end method ?command;
+         ... }
 end macro delegate-to-project-browser;
 
 //---*** These should probably all become delegated to deuce.
 delegate-to-project-browser
   // Project Menu
-  frame-advanced-build-dialog;		// Advanced Build...
-  frame-edit-project-settings;		// Settings...
+  frame-advanced-build-dialog;                // Advanced Build...
+  frame-edit-project-settings;                // Settings...
   // Go Menu
-  frame-browse-threads;			// Threads
+  frame-browse-threads;                        // Threads
   // Application Menu
-  frame-start-application;		// Start
-  frame-debug-application;		// Debug
-  frame-interact;			// Interact
+  frame-start-application;                // Start
+  frame-debug-application;                // Debug
+  frame-interact;                        // Interact
   frame-pause-application
-    (thread, startup-option);		// Pause
-  frame-resume-application;		// Resume
-  frame-stop-application;		// Stop
-  frame-restart-application;		// Restart
-  frame-start-or-resume-application;	// [Run] toolbar button
+    (thread, startup-option);                // Pause
+  frame-resume-application;                // Resume
+  frame-stop-application;                // Stop
+  frame-restart-application;                // Restart
+  frame-start-or-resume-application;        // [Run] toolbar button
 end;
 */
 
@@ -385,9 +385,9 @@ define method make-clone
     (frame :: <environment-editor>, #rest initargs)
  => (frame :: <environment-editor>)
   apply(next-method, frame,
-	// editor: $environment-editor,
-	buffer: frame-buffer(frame),
-	initargs);
+        // editor: $environment-editor,
+        buffer: frame-buffer(frame),
+        initargs);
 end method make-clone;
 
 
@@ -402,7 +402,7 @@ end method make-clone;
 define sealed method do-source-control-operation
     (window :: <environment-deuce-pane>, operation :: <source-control-operation>,
      #key pathname :: false-or(<pathname>),
-	  reason?  :: <boolean>)
+          reason?  :: <boolean>)
  => (success? :: <boolean>, pathname :: false-or(<pathname>), message :: false-or(<string>))
   ignore(reason?);
   let sccs = current-source-control-system();
@@ -410,36 +410,36 @@ define sealed method do-source-control-operation
     block ()
       let buffer = window-buffer(window);
       let class
-	= select (operation)
-	    #"claim"     => <sccs-claim-command>;
-	    #"check-out" => <sccs-check-out-command>;
-	    #"check-in"  => <sccs-check-in-command>;
-	    #"abandon"   => <sccs-abandon-command>;
-	    #"merge"     => <sccs-merge-command>;
-	    #"diff"      => <sccs-diff-command>;
-	    #"report"    => <sccs-report-command>;
-	    #"add"       => <sccs-add-command>;
-	    #"remove"    => <sccs-remove-command>;
-	  end;
+        = select (operation)
+            #"claim"     => <sccs-claim-command>;
+            #"check-out" => <sccs-check-out-command>;
+            #"check-in"  => <sccs-check-in-command>;
+            #"abandon"   => <sccs-abandon-command>;
+            #"merge"     => <sccs-merge-command>;
+            #"diff"      => <sccs-diff-command>;
+            #"report"    => <sccs-report-command>;
+            #"add"       => <sccs-add-command>;
+            #"remove"    => <sccs-remove-command>;
+          end;
       let (logged-in?, login-failure-message)
-	= source-control-maybe-login(sccs, class, owner: window);
+        = source-control-maybe-login(sccs, class, owner: window);
       if (logged-in?)
-	let filename = pathname & as(<file-locator>, pathname);
-	let previous-options
-	  = get-property(buffer-properties(buffer), #"source-control-options");
-	let info
-	  = source-control-command-info
-	      (sccs, class, pathname: filename, defaults: previous-options);
-	let options
-	  = get-source-control-arguments(sccs, info, owner: window, pathname: filename);
-	if (options)
-	  put-property!(buffer-properties(buffer), #"source-control-options", options);
-	  execute-command(make(class, options: options))
-	else
-	  values(#f, #f, #f)
-	end
+        let filename = pathname & as(<file-locator>, pathname);
+        let previous-options
+          = get-property(buffer-properties(buffer), #"source-control-options");
+        let info
+          = source-control-command-info
+              (sccs, class, pathname: filename, defaults: previous-options);
+        let options
+          = get-source-control-arguments(sccs, info, owner: window, pathname: filename);
+        if (options)
+          put-property!(buffer-properties(buffer), #"source-control-options", options);
+          execute-command(make(class, options: options))
+        else
+          values(#f, #f, #f)
+        end
       else
-	values(#f, #f, login-failure-message)
+        values(#f, #f, login-failure-message)
       end
     exception (condition :: <source-control-condition>)
       values(#f, #f, condition-to-string(condition))
@@ -450,7 +450,7 @@ define sealed method do-source-control-operation
 end method do-source-control-operation;
 
 define method source-control-maybe-login
-    (sccs :: <source-control-system>, 
+    (sccs :: <source-control-system>,
      class :: subclass(<source-code-control-command>),
      #key owner :: <environment-deuce-pane>)
  => (logged-in? :: <boolean>, message :: false-or(<string>))
@@ -482,62 +482,62 @@ define method get-source-control-arguments
     let min-width = 250;
     let contents :: <stretchy-object-vector> = make(<stretchy-object-vector>);
     local method dialog-complete?
-	      (dialog :: <dialog-frame>) => (complete? :: <boolean>)
-	    ignore(dialog);
-	    let complete? :: <boolean> = #t;
-	    for (gadgets in contents)
-	      let gadget :: <gadget> = gadgets[1];
-	      let option :: <source-control-option> = gadget.gadget-id;
-	      if (option-required?(option) & empty?(gadget-value(gadget)))
-		complete? := #f
-	      end
-	    end;
-	    complete?
-	  end method dialog-complete?;
+              (dialog :: <dialog-frame>) => (complete? :: <boolean>)
+            ignore(dialog);
+            let complete? :: <boolean> = #t;
+            for (gadgets in contents)
+              let gadget :: <gadget> = gadgets[1];
+              let option :: <source-control-option> = gadget.gadget-id;
+              if (option-required?(option) & empty?(gadget-value(gadget)))
+                complete? := #f
+              end
+            end;
+            complete?
+          end method dialog-complete?;
     for (option :: <source-control-option> in options)
       add!(contents,
-	   vector(make(<label>,
-		       label: option.option-label),
-		  begin
-		    let type = option.option-type;
-		    select (type)
-		      <string>, #"password" =>
-			make(if (type == #"password")
-			       <password-field>
-			     else
-			       <text-field>
-			     end,
-			     min-width: min-width,
-			     id: option,
-			     documentation: option.option-documentation,
-			     value: option.option-default,
-			     value-changing-callback:
-			       method (gadget)
-				 let dialog = sheet-frame(gadget);
-				 dialog-exit-enabled?(dialog)
-				   := dialog-complete?(dialog)
-			       end);
-		    end
-		  end))
+           vector(make(<label>,
+                       label: option.option-label),
+                  begin
+                    let type = option.option-type;
+                    select (type)
+                      <string>, #"password" =>
+                        make(if (type == #"password")
+                               <password-field>
+                             else
+                               <text-field>
+                             end,
+                             min-width: min-width,
+                             id: option,
+                             documentation: option.option-documentation,
+                             value: option.option-default,
+                             value-changing-callback:
+                               method (gadget)
+                                 let dialog = sheet-frame(gadget);
+                                 dialog-exit-enabled?(dialog)
+                                   := dialog-complete?(dialog)
+                               end);
+                    end
+                  end))
     end;
     let layout
       = make(<table-layout>,
-	     x-spacing: 8, y-spacing: 2,
-	     x-alignment: #[#"right", #"left"],
-	     contents: contents);
+             x-spacing: 8, y-spacing: 2,
+             x-alignment: #[#"right", #"left"],
+             contents: contents);
     let dialog
       = make(<dialog-frame>,
-	     title:  title,
-	     layout: layout,
-	     mode:   #"modal",
-	     owner:  frame);
+             title:  title,
+             layout: layout,
+             mode:   #"modal",
+             owner:  frame);
     if (start-dialog(dialog))
       let keys :: <stretchy-object-vector> = make(<stretchy-object-vector>);
       for (gadgets in contents)
-	let gadget :: <gadget> = gadgets[1];
-	let keyword = gadget.gadget-id.option-keyword;
-	add!(keys, keyword);
-	add!(keys, gadget-value(gadget))
+        let gadget :: <gadget> = gadgets[1];
+        let keyword = gadget.gadget-id.option-keyword;
+        add!(keys, keyword);
+        add!(keys, gadget-value(gadget))
       end;
       apply(make, class, pathname: pathname, keys)
     end
@@ -642,10 +642,10 @@ define function color-dispatch-optimizations-callback
     (box :: <value-gadget>) => ()
   let frame    = sheet-frame(box);
   let function = if (member?(#"dispatch-coloring", gadget-value(box)))
-		   color-dispatch-optimizations
-		 else
-		   reset-optimization-colors
-		 end;
+                   color-dispatch-optimizations
+                 else
+                   reset-optimization-colors
+                 end;
   deuce/execute-command-in-frame(frame, function)
 end function color-dispatch-optimizations-callback;
 
@@ -660,12 +660,12 @@ define method update-optimization-commands
   let frame  = sheet-frame(window);
   let color? = get-property(buffer-contents-properties(buffer), #"optimization-colors");
   local method update-command (gadget)
-	  if (color?)
-	    gadget-value(gadget) := add-new(gadget-value(gadget), #"dispatch-coloring")
-	  else
-	    gadget-value(gadget) := remove(gadget-value(gadget), #"dispatch-coloring")
-	  end
-	end method;
+          if (color?)
+            gadget-value(gadget) := add-new(gadget-value(gadget), #"dispatch-coloring")
+          else
+            gadget-value(gadget) := remove(gadget-value(gadget), #"dispatch-coloring")
+          end
+        end method;
   do-command-menu-gadgets(update-command, frame, color-dispatch-optimizations-callback)
 end method update-optimization-commands;
 
@@ -829,15 +829,15 @@ define method set-editor-breakpoint-popup-target
   let window = frame-window(frame);
   with-editor-state-bound (buffer = window)
     let line = if (instance?(primary-object-interval(window), <interval>))
-		 // We're here via a pop-up menu...
-		 bp-line(interval-start-bp(primary-object-interval(window)))
-	       else
-		 // We're here via a pull-down menu...
-		 bp-line(window-point(window))
-	       end;
+                 // We're here via a pop-up menu...
+                 bp-line(interval-start-bp(primary-object-interval(window)))
+               else
+                 // We're here via a pull-down menu...
+                 bp-line(window-point(window))
+               end;
     let target
       = get-property(line-properties(line), #"breakpoint-object")
-	| line-source-location(buffer-major-mode(buffer), line, shadow?: #t);
+        | line-source-location(buffer-major-mode(buffer), line, shadow?: #t);
     when (target)
       frame-command-target(frame) := make-command-target(window, target)
     end
@@ -853,9 +853,9 @@ define method set-editor-breakpoint-popup-target
       let line = bp-line(window-point(window));
       let target
         = get-property(line-properties(line), #"breakpoint-object")
-	  | line-source-location(buffer-major-mode(buffer), line, shadow?: #t);
+          | line-source-location(buffer-major-mode(buffer), line, shadow?: #t);
       when (target)
-	frame-command-target(frame) := make-command-target(window, target)
+        frame-command-target(frame) := make-command-target(window, target)
       end
     end
   end
@@ -995,41 +995,41 @@ define constant $dylanworks-mode-command-tables :: <vector>
 
 define constant $initially-disabled-commands
   = vector(// File Menu
-	   frame-revert-file,
-	   frame-close-file,
-	   // Edit Menu
-	   frame-find-next, frame-find-previous,
-	   // Object Menu
-	   frame-describe-primary-object,
-	   frame-document-primary-object,
-	   frame-browse-primary-object,
-	   frame-browse-primary-object-class,
-	   frame-browse-primary-object-generic-function,
-	   frame-edit-primary-object,
-	   frame-display-primary-object-properties,
-	   // Project Menu
-	   frame-parse-project,
-	   frame-compile-project,
-	   frame-clean-compile-project,
-	   frame-link-project,
-	   frame-build-project,
-	   frame-clean-build-project,
-	   frame-build-release,
-	   frame-edit-project-settings,
-	   // Go Menu
-	   frame-browse-threads,
-	   // Application Menu
-	   frame-start-application,
-	   frame-debug-application,
-	   frame-interact,
-	   frame-start-or-resume-application,
-	   frame-pause-application,
-	   frame-resume-application,
-	   frame-stop-application,
-	   frame-restart-application,
-	   // Window Menu
-	   clone-tool,
-	   clone-and-link-tool);
+           frame-revert-file,
+           frame-close-file,
+           // Edit Menu
+           frame-find-next, frame-find-previous,
+           // Object Menu
+           frame-describe-primary-object,
+           frame-document-primary-object,
+           frame-browse-primary-object,
+           frame-browse-primary-object-class,
+           frame-browse-primary-object-generic-function,
+           frame-edit-primary-object,
+           frame-display-primary-object-properties,
+           // Project Menu
+           frame-parse-project,
+           frame-compile-project,
+           frame-clean-compile-project,
+           frame-link-project,
+           frame-build-project,
+           frame-clean-build-project,
+           frame-build-release,
+           frame-edit-project-settings,
+           // Go Menu
+           frame-browse-threads,
+           // Application Menu
+           frame-start-application,
+           frame-debug-application,
+           frame-interact,
+           frame-start-or-resume-application,
+           frame-pause-application,
+           frame-resume-application,
+           frame-stop-application,
+           frame-restart-application,
+           // Window Menu
+           clone-tool,
+           clone-and-link-tool);
 
 /// Method on 'make' for <environment-editor>s.
 // This needs to come after $initially-disabled-commands, and all the
@@ -1039,6 +1039,6 @@ define method make
     (class == <environment-editor>, #rest keys, #key disabled-commands)
  => (editor :: <environment-editor>)
   apply(next-method, class,
-	disabled-commands: disabled-commands | $initially-disabled-commands,
-	keys)
+        disabled-commands: disabled-commands | $initially-disabled-commands,
+        keys)
 end method make;

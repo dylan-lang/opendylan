@@ -33,7 +33,7 @@ end method general-property-types;
 
 /// Values property page
 
-define constant <variable-thread-type> 
+define constant <variable-thread-type>
   = type-union(one-of(#"all"), <thread-object>);
 
 define sealed class <thread-wrapper> (<object-wrapper>)
@@ -51,11 +51,11 @@ define method frame-sort-variable-values
   select (order)
     #"thread" =>
       frame-sort-items(frame, values,
-		       key: wrapper-thread,
-		       label-key: curry(variable-value-label, frame));
+                       key: wrapper-thread,
+                       label-key: curry(variable-value-label, frame));
     #"value" =>
       frame-sort-items(frame, values,
-		       key: wrapper-object);
+                       key: wrapper-object);
   end
 end method frame-sort-variable-values;
 
@@ -66,9 +66,9 @@ define method frame-variable-values
   let project = frame.ensure-frame-project;
   let value = variable-value(project, variable);
   if (value)
-    vector(make(<thread-wrapper>, 
-		thread: #"all",
-		object: value))
+    vector(make(<thread-wrapper>,
+                thread: #"all",
+                object: value))
   else
     #[]
   end
@@ -84,11 +84,11 @@ define method frame-variable-values
     let threads = application-threads(application);
     let values = make(<vector>, size: threads.size);
     for (thread in threads,
-	 i from 0)
+         i from 0)
       values[i]
-	:= make(<thread-wrapper>, 
-		thread: thread,
-		object: variable-value(project, variable, thread: thread))
+        := make(<thread-wrapper>,
+                thread: thread,
+                object: variable-value(project, variable, thread: thread))
     end;
     values
   else
@@ -111,22 +111,22 @@ define method variable-value-label
 end method variable-value-label;
 
 define sideways method make-frame-property-page-displayer
-    (frame :: <environment-fixed-project-frame>, 
+    (frame :: <environment-fixed-project-frame>,
      class :: subclass(<variable-object>),
      type == #"values")
  => (label :: <string>, displayer :: <table-control-displayer>)
   let project = frame.ensure-frame-project;
   let displayer
     = make(<table-control-displayer>,
-	   element-label: "value",
-	   information-available?-function: curry(application-tethered?, project),
-	   transaction-function: curry(perform-application-transaction, project),
-	   children-generator: curry(frame-variable-values, frame),
-	   headings: #["Thread", "Value"],
-	   widths:   #[200, 800],
-	   sort-orders: #[#"thread", #"value"],
-	   sort-function: curry(frame-sort-variable-values, frame),
-	   generators: vector(wrapper-thread, wrapper-object),
-	   label-key: curry(variable-value-label, frame));
+           element-label: "value",
+           information-available?-function: curry(application-tethered?, project),
+           transaction-function: curry(perform-application-transaction, project),
+           children-generator: curry(frame-variable-values, frame),
+           headings: #["Thread", "Value"],
+           widths:   #[200, 800],
+           sort-orders: #[#"thread", #"value"],
+           sort-function: curry(frame-sort-variable-values, frame),
+           generators: vector(wrapper-thread, wrapper-object),
+           label-key: curry(variable-value-label, frame));
   values("Values", displayer)
 end method make-frame-property-page-displayer;

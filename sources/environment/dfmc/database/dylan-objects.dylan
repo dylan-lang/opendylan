@@ -17,7 +17,7 @@ end method symbol-name;
 
 /// Strings
 
-define sealed method string-contents 
+define sealed method string-contents
     (server :: <dfmc-database>, string :: <string-object>)
  => (contents :: <string>)
   next-method()

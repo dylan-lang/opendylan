@@ -19,7 +19,7 @@ define sealed pane <debugger-source-pane> ()
       // The source-pane will have no sheet-frame just now, so use the
       // dynamically-bound *debugger* instead.
       let (viewer, gadget)
-	= make-code-viewer(project: *debugger*.frame-project);
+        = make-code-viewer(project: *debugger*.frame-project);
       gadget.gadget-documentation := $debugger-pane-tooltips? & $debugger-source-doc;
       pane.%source-gadget := gadget;
       viewer
@@ -31,7 +31,7 @@ end pane;
 
 /// UPDATE-DEBUGGER-SOURCE-PANE (internal)
 
-define function update-debugger-source-pane 
+define function update-debugger-source-pane
     (debugger :: <debugger>, #key refresh? :: <boolean> = #f)
   => ()
   let source-pane = debugger.debugger-source-pane;

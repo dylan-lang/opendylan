@@ -11,18 +11,18 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    This can be hooked up to a STOP button.
 //    Asynchronously pausing running applications
 
-define method stop-target-application 
+define method stop-target-application
     (application :: <target-application>, #key client-data = #f)
     => ()
   thread-debug-message("Stopping target application");
-  let stop-reason = 
+  let stop-reason =
     make(<debugger-stop-application-stop-reason>,
-	 client-data: client-data);
+         client-data: client-data);
   stop-application(application, stop-reason: stop-reason);
 end method;
 
 // Asynchronously pausing running applications to do
-// internal functions   
+// internal functions
 
 define method stop-application-request
     (application :: <target-application>) => ()
@@ -45,7 +45,7 @@ end method;
 define inline function application-temporary-stop?
     (application :: <target-application>) => (temporary-stop :: <boolean>)
   instance?(application.current-stop-reason,
-	    <temporary-internal-debugger-transaction-stop>);
+            <temporary-internal-debugger-transaction-stop>);
 end function;
 
 
@@ -99,7 +99,7 @@ end method;
 
 
 ///// KILL-TARGET-APPLICATION
- 
+
 define method kill-target-application(application :: <target-application>)
   dm-kill-application(application);
 end method;

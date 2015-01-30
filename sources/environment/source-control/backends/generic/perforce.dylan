@@ -84,9 +84,9 @@ define method get-source-control-arguments
      reason   :: false-or(<string>))
   let frame    = sheet-frame(top-level-sheet(owner));
   let pathname = choose-file(owner: frame,
-			     direction: #"input",
-			     default: pathname,
-			     if-does-not-exist: #"ask");
+                             direction: #"input",
+                             default: pathname,
+                             if-does-not-exist: #"ask");
   if (pathname)
     let locator  = as(<file-locator>, pathname);
     let compound = as(<string>, locator-directory(locator));

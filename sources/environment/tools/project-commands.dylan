@@ -1060,9 +1060,9 @@ define method frame-do-build-project-1
     if (link?)
       if (~compiler-build?
           | ~serious-warnings?
-          | link-mode == #"always"	//--- obsolete, but it might be in the registry
+          | link-mode == #"always"        //--- obsolete, but it might be in the registry
           | link-mode == #"force"
-          | ((link-mode == #"warnings"	//--- obsolete, but it might be in the registry
+          | ((link-mode == #"warnings"        //--- obsolete, but it might be in the registry
               | link-mode == #"ask")
              & environment-question
                  ("There were serious warnings during compilation; link anyway?",

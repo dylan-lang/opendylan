@@ -44,22 +44,22 @@ define method find-in-window
   //---*** Do we need to bind both *buffer* _and_ *editor-frame*?
   with-editor-state-bound (buffer = window)
     let start-bp = when (from-selection?)
-		     let point-bp :: <bp>           = window-point(window);
-		     let mark-bp  :: false-or(<bp>) = window-mark(window);
-		     if (mark-bp ~== #f)
-		       let (start-bp, end-bp) = order-bps(mark-bp, point-bp);
-		       if (backwards?) start-bp else end-bp end
-		     else
-		       point-bp
-		     end
-		   end;
+                     let point-bp :: <bp>           = window-point(window);
+                     let mark-bp  :: false-or(<bp>) = window-mark(window);
+                     if (mark-bp ~== #f)
+                       let (start-bp, end-bp) = order-bps(mark-bp, point-bp);
+                       if (backwards?) start-bp else end-bp end
+                     else
+                       point-bp
+                     end
+                   end;
     let object = find-in-buffer(buffer,
-				search-string,
-				start-bp:    start-bp,
-				backwards?:  backwards?,
-				wrap?:       wrap?,
-				match-case?: match-case?,
-				match-word?: match-word?);
+                                search-string,
+                                start-bp:    start-bp,
+                                backwards?:  backwards?,
+                                wrap?:       wrap?,
+                                match-case?: match-case?,
+                                match-word?: match-word?);
     object & pair(buffer, object)
   end
 end method find-in-window;
@@ -75,81 +75,81 @@ define method replace-in-window
           progress-callback :: false-or(<function>))
  => (object :: false-or(<pair>))
   local method do-replace
-	    (window         :: <basic-window>,
-	     search-string  :: <string>,
-	     replace-string :: <string>,
-	     #key match-case?       :: <boolean>,
-	          match-word?       :: <boolean>,
-	          match-regexp?     :: <boolean>,
-	          progress-callback :: false-or(<function>))
-	 => (object :: false-or(<pair>))
-	  //---*** cpage: 1998.07.29 Add support for 'match-word?'? Don't replace
-	  //              the selection if it doesn't fall on "whole word" boundaries,
-	  //              even if the selected text is a match (?).
-	  ignore(match-word?);
-	  ignore(match-regexp?, progress-callback);
-	  local method compare-strings
-		    (char-test :: <function>, s1 :: <byte-string>, s2 :: <byte-string>)
-		 => (equal? :: <boolean>)
-		  // Automatically not equal if they're not the same size.
-		  let equal? = (size(s1) = size(s2));
-		  for (c1 in s1, c2 in s2, until: ~equal?)
-		    equal? := char-test(c1, c2)
-		  end;
-		  equal?
-		end method;
-	  //---*** Do we need to bind both *buffer* _and_ *editor-frame*?
-	  with-editor-state-bound (buffer = window)
-	    let test = if (match-case?) \= else char-equal? end;
-	    let bp   = point();
-	    // Only replace if the text is writable
-	    unless (buffer-read-only?(buffer) | line-read-only?(bp-line(bp)))
-	      let ebp      = window-mark(window);
-	      let interval = ebp & make-interval(bp, ebp);
-	      // If the selected text matches, replace it
+            (window         :: <basic-window>,
+             search-string  :: <string>,
+             replace-string :: <string>,
+             #key match-case?       :: <boolean>,
+                  match-word?       :: <boolean>,
+                  match-regexp?     :: <boolean>,
+                  progress-callback :: false-or(<function>))
+         => (object :: false-or(<pair>))
+          //---*** cpage: 1998.07.29 Add support for 'match-word?'? Don't replace
+          //              the selection if it doesn't fall on "whole word" boundaries,
+          //              even if the selected text is a match (?).
+          ignore(match-word?);
+          ignore(match-regexp?, progress-callback);
+          local method compare-strings
+                    (char-test :: <function>, s1 :: <byte-string>, s2 :: <byte-string>)
+                 => (equal? :: <boolean>)
+                  // Automatically not equal if they're not the same size.
+                  let equal? = (size(s1) = size(s2));
+                  for (c1 in s1, c2 in s2, until: ~equal?)
+                    equal? := char-test(c1, c2)
+                  end;
+                  equal?
+                end method;
+          //---*** Do we need to bind both *buffer* _and_ *editor-frame*?
+          with-editor-state-bound (buffer = window)
+            let test = if (match-case?) \= else char-equal? end;
+            let bp   = point();
+            // Only replace if the text is writable
+            unless (buffer-read-only?(buffer) | line-read-only?(bp-line(bp)))
+              let ebp      = window-mark(window);
+              let interval = ebp & make-interval(bp, ebp);
+              // If the selected text matches, replace it
               when (interval & compare-strings(test, as(<string>, interval), search-string))
-		queue-region-redisplay(window, bp, ebp, centering: 0);
-		let object
-		  = if (size(replace-string) > 0)
-		      with-change-recording (buffer, <replace-change-record>,
-					     interval: interval, moving?: #t)
-			let dbp = delete!(interval);
-			let nbp = insert!(interval-start-bp(interval), replace-string);
-			pair(nbp, dbp)
-		      end
-		    else
-		      with-change-recording (buffer, <kill-change-record>, interval: interval)
-			let dbp = delete!(interval);
-			pair(dbp, dbp)
-		      end
-		    end;
-		// Update the selection
-		let pbp = head(object);
-		let mbp = tail(object);
-		move-point!(pbp, window: window);
-		if (pbp = mbp)
-		  clear-mark!(window: window, redisplay?: #t)
-		else
-		  move-mark!(mbp, window: window)
-		end;
-		frame-last-command-type(window-frame(window)) := #"insert";
-		queue-redisplay(window, $display-point, centering: 0);
-		// Update the display
-		redisplay-window(window);
-		// Update Undo/Redo enabling
-		let section = line-section(bp-line(bp));
-		let history = buffer-undo-history(buffer, section: section);
-		when (history)
-		  let (n-undo, n-redo) = undo-history-state(history);
-		  window-note-undo/redo(window, n-undo ~= 0, n-redo ~= 0)
-		end;
-		object & pair(buffer, object)
-	      end
-	    end
-	  end
+                queue-region-redisplay(window, bp, ebp, centering: 0);
+                let object
+                  = if (size(replace-string) > 0)
+                      with-change-recording (buffer, <replace-change-record>,
+                                             interval: interval, moving?: #t)
+                        let dbp = delete!(interval);
+                        let nbp = insert!(interval-start-bp(interval), replace-string);
+                        pair(nbp, dbp)
+                      end
+                    else
+                      with-change-recording (buffer, <kill-change-record>, interval: interval)
+                        let dbp = delete!(interval);
+                        pair(dbp, dbp)
+                      end
+                    end;
+                // Update the selection
+                let pbp = head(object);
+                let mbp = tail(object);
+                move-point!(pbp, window: window);
+                if (pbp = mbp)
+                  clear-mark!(window: window, redisplay?: #t)
+                else
+                  move-mark!(mbp, window: window)
+                end;
+                frame-last-command-type(window-frame(window)) := #"insert";
+                queue-redisplay(window, $display-point, centering: 0);
+                // Update the display
+                redisplay-window(window);
+                // Update Undo/Redo enabling
+                let section = line-section(bp-line(bp));
+                let history = buffer-undo-history(buffer, section: section);
+                when (history)
+                  let (n-undo, n-redo) = undo-history-state(history);
+                  window-note-undo/redo(window, n-undo ~= 0, n-redo ~= 0)
+                end;
+                object & pair(buffer, object)
+              end
+            end
+          end
         end method;
   apply-in-frame-synchronously(sheet-frame(window),
-			       do-replace, window, search-string, replace-string, keys)
+                               do-replace, window, search-string, replace-string, keys)
 end method replace-in-window;
 
 // Reveal and select matched/replaced text
@@ -163,32 +163,32 @@ end method replace-in-window;
 define method window-reveal-search-object
     (window :: <deuce-pane>, object :: <pair>) => (revealed? :: <boolean>)
   local method reveal (window :: <basic-window>, object :: <pair>) => ()
-	  let buffer   = object.head;
-	  let bps      = object.tail;
-	  let point-bp = bps.head;
-	  let mark-bp  = bps.tail;
-	  // Reveal the buffer
-	  when (buffer ~= window-buffer(window))
-	    select-buffer(window, buffer);
-	    queue-redisplay(window, $display-all);
-	  end;
-	  // Reveal the selection
-	  //---*** Do we need to bind both *buffer* _and_ *editor-frame*?
-	  let frame = window-frame(window);
-	  dynamic-bind (*editor-frame* = frame,
-			*buffer*       = buffer)
-	    // Do nothing if the text is already selected
-	    unless (point-bp = window-point(window)
-		      & mark-bp = window-mark(window))
-	      clear-mark!(window: window, redisplay?: #t);
-	      move-point!(point-bp, window: window);
-	      move-mark!(mark-bp, window: window);
-	      frame-last-command-type(frame) := #"motion";
-	      queue-redisplay(window, $display-point, centering: 0);
-	    end;
-	    // Update the display
-	    redisplay-window(window);
-	  end;
+          let buffer   = object.head;
+          let bps      = object.tail;
+          let point-bp = bps.head;
+          let mark-bp  = bps.tail;
+          // Reveal the buffer
+          when (buffer ~= window-buffer(window))
+            select-buffer(window, buffer);
+            queue-redisplay(window, $display-all);
+          end;
+          // Reveal the selection
+          //---*** Do we need to bind both *buffer* _and_ *editor-frame*?
+          let frame = window-frame(window);
+          dynamic-bind (*editor-frame* = frame,
+                        *buffer*       = buffer)
+            // Do nothing if the text is already selected
+            unless (point-bp = window-point(window)
+                      & mark-bp = window-mark(window))
+              clear-mark!(window: window, redisplay?: #t);
+              move-point!(point-bp, window: window);
+              move-mark!(mark-bp, window: window);
+              frame-last-command-type(frame) := #"motion";
+              queue-redisplay(window, $display-point, centering: 0);
+            end;
+            // Update the display
+            redisplay-window(window);
+          end;
         end method;
   call-in-frame-synchronously(sheet-frame(window), reveal, window, object);
   #t

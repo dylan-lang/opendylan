@@ -2,12 +2,12 @@ Library:   environment-protocols
 Synopsis:  Environment Protocols
 Author:    Andy Armstrong
 Target-Type: dll
-Files:	library
-	module
+Files:  library
+        module
         server-objects
         ids
         environment-objects
-	environment-options
+        environment-options
         compiler-objects
         application-objects
         application-and-compiler-objects
@@ -29,8 +29,8 @@ Files:	library
         definition-objects
         thread-objects
         namespace-objects
-	library-objects
-	module-objects
+        library-objects
+        module-objects
         macro-objects
         variable-objects
         constant-objects
@@ -45,12 +45,12 @@ Files:	library
         restart-objects
         condition-objects
         duim-objects
-	compiler-warning-objects
+        compiler-warning-objects
         code-execution
         profiling
         naming
-	channels
-	utils
+        channels
+        utils
 Major-version: 2
 Minor-version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

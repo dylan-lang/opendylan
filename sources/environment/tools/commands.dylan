@@ -148,11 +148,11 @@ define method make-command-target
   else
     let object
       = select (size(object))
-	  0 => #f;
-	  1 => object[0];
-	  otherwise =>
-	    make(<command-target-sequence>, sequence: object);
-	end;
+          0 => #f;
+          1 => object[0];
+          otherwise =>
+            make(<command-target-sequence>, sequence: object);
+        end;
     make(<basic-command-target>, object: object, pane: pane)
   end
 end method make-command-target;
@@ -271,12 +271,12 @@ define function frame-edit-target-clients
     let object = frame-target-to-browse(frame, target: target);
     if (instance?(object, <source-form-object>))
       let callers
-	= concatenate-as(<vector>,
-			 vector(object), source-form-clients(project, object));
+        = concatenate-as(<vector>,
+                         vector(object), source-form-clients(project, object));
       let title
-	= print-environment-object-name-to-string(project, object);
+        = print-environment-object-name-to-string(project, object);
       frame-edit-objects(frame, callers,
-			 title: format-to-string("Callers of %s", title))
+                         title: format-to-string("Callers of %s", title))
     else
       environment-action-unavailable(frame, "'Edit Clients' is not available")
     end
@@ -290,15 +290,15 @@ define function frame-edit-target-used-definitions
     let object = frame-target-to-browse(frame, target: target);
     if (instance?(object, <source-form-object>))
       let callees
-	= concatenate-as(<vector>,
-			 vector(object), source-form-used-definitions(project, object));
+        = concatenate-as(<vector>,
+                         vector(object), source-form-used-definitions(project, object));
       let title
-	= print-environment-object-name-to-string(project, object);
+        = print-environment-object-name-to-string(project, object);
       frame-edit-objects(frame, callees,
-			 title: format-to-string("Used definitions of %s", title))
+                         title: format-to-string("Used definitions of %s", title))
     else
       environment-action-unavailable
-	(frame, "'Edit Used Definitions' is not available")
+        (frame, "'Edit Used Definitions' is not available")
     end
   end
 end function frame-edit-target-used-definitions;
@@ -310,15 +310,15 @@ define function frame-edit-target-subclasses
     let class = frame-target-to-browse(frame, target: target);
     if (instance?(class, <class-object>))
       let subclasses
-	= concatenate-as(<vector>,
-			 vector(class), class-direct-subclasses(project, class));
+        = concatenate-as(<vector>,
+                         vector(class), class-direct-subclasses(project, class));
       let title
-	= print-environment-object-name-to-string(project, class);
+        = print-environment-object-name-to-string(project, class);
       frame-edit-objects(frame, subclasses,
-			 title: format-to-string("Subclasses of %s", title))
+                         title: format-to-string("Subclasses of %s", title))
     else
       environment-action-unavailable
-	(frame, "'Edit Subclasses' is not available")
+        (frame, "'Edit Subclasses' is not available")
     end
   end
 end function frame-edit-target-subclasses;
@@ -330,15 +330,15 @@ define function frame-edit-target-superclasses
     let class = frame-target-to-browse(frame, target: target);
     if (instance?(class, <class-object>))
       let superclasses
-	= concatenate-as(<vector>,
-			 vector(class), class-direct-superclasses(project, class));
+        = concatenate-as(<vector>,
+                         vector(class), class-direct-superclasses(project, class));
       let title
-	= print-environment-object-name-to-string(project, class);
+        = print-environment-object-name-to-string(project, class);
       frame-edit-objects(frame, superclasses,
-			 title: format-to-string("Superclasses of %s", title))
+                         title: format-to-string("Superclasses of %s", title))
     else
       environment-action-unavailable
-	(frame, "'Edit Superclasses' is not available")
+        (frame, "'Edit Superclasses' is not available")
     end
   end
 end function frame-edit-target-superclasses;
@@ -352,10 +352,10 @@ define function frame-edit-target-class-methods
       let methods = class-direct-superclasses(project, class);
       let title   = print-environment-object-name-to-string(project, class);
       frame-edit-objects(frame, methods,
-			 title: format-to-string("Methods of %s", title))
+                         title: format-to-string("Methods of %s", title))
     else
       environment-action-unavailable
-	(frame, "'Edit Class Methods' is not available")
+        (frame, "'Edit Class Methods' is not available")
     end
   end
 end function frame-edit-target-class-methods;
@@ -367,21 +367,21 @@ define function frame-edit-target-generic-methods
     let function = frame-target-to-browse(frame, target: target);
     let generic
       = select (function by instance?)
-	  <generic-function-object> => function;
-	  <method-object>           => method-generic-function(project, function);
-	  otherwise                 => #f;
-	end;
+          <generic-function-object> => function;
+          <method-object>           => method-generic-function(project, function);
+          otherwise                 => #f;
+        end;
     if (generic)
       let methods
-	= concatenate-as(<vector>,
-			 vector(generic), generic-function-object-methods(project, generic));
+        = concatenate-as(<vector>,
+                         vector(generic), generic-function-object-methods(project, generic));
       let title
-	= print-environment-object-name-to-string(project, generic);
+        = print-environment-object-name-to-string(project, generic);
       frame-edit-objects(frame, methods,
-			 title: format-to-string("Methods of %s", title))
+                         title: format-to-string("Methods of %s", title))
     else
       environment-action-unavailable
-	(frame, "'Edit Generic Methods' is not available")
+        (frame, "'Edit Generic Methods' is not available")
     end
   end
 end function frame-edit-target-generic-methods;
@@ -437,8 +437,8 @@ define function frame-debug-target
   let thread = frame-target-to-browse(frame, target: target);
   when (project & instance?(thread, <thread-object>))
     find-debugger-from-environment(default-port(),
-				   project: project,
-				   thread: thread)
+                                   project: project,
+                                   thread: thread)
   end
 end function frame-debug-target;
 
@@ -520,39 +520,39 @@ define function make-command-decorator
     (label :: <string>, function :: <function>, #rest initargs)
  => (decorator :: <command-decorator>)
   apply(make, <command-decorator>,
-	label: label,
-	object: function,
-	type: <function>,
-	initargs)
+        label: label,
+        object: function,
+        type: <function>,
+        initargs)
 end function make-command-decorator;
 
 define constant $describe-target-command
   = make-command-decorator("Describe", frame-describe-target,
-			   documentation: $describe-target-doc);
+                           documentation: $describe-target-doc);
 
 define constant $browse-target-command
   = make-command-decorator("Browse", frame-browse-target,
-			   documentation: $browse-target-doc);
+                           documentation: $browse-target-doc);
 
 define constant $browse-target-type-command
   = make-command-decorator("Browse Type", frame-browse-target-type,
-			   documentation: $browse-target-type-doc);
+                           documentation: $browse-target-type-doc);
 
 define constant $browse-target-generic-function-command
   = make-command-decorator("Browse Generic Function", frame-browse-target-generic-function,
-			   documentation: $browse-target-generic-function-doc);
+                           documentation: $browse-target-generic-function-doc);
 
 define command-table *popup-menu-browse-command-table*
     (*global-command-table*)
-  command $describe-target-command;  
-  command $browse-target-command;  
-  command $browse-target-type-command;  
+  command $describe-target-command;
+  command $browse-target-command;
+  command $browse-target-type-command;
 end command-table *popup-menu-browse-command-table*;
 
 define command-table *popup-menu-method-browse-command-table*
     (*global-command-table*)
   command $describe-target-command;
-  command $browse-target-command;  
+  command $browse-target-command;
   command $browse-target-type-command;
   command $browse-target-generic-function-command;
 end command-table *popup-menu-method-browse-command-table*;
@@ -560,11 +560,11 @@ end command-table *popup-menu-method-browse-command-table*;
 
 define constant $document-target-command
   = make-command-decorator("Show Documentation", frame-document-target,
-			   documentation: $document-target-doc);
+                           documentation: $document-target-doc);
 
 define command-table *popup-menu-documentation-command-table*
     (*global-command-table*)
-  command $document-target-command;  
+  command $document-target-command;
 end command-table *popup-menu-documentation-command-table*;
 
 
@@ -572,39 +572,39 @@ end command-table *popup-menu-documentation-command-table*;
 
 define constant $open-target-command
   = make-command-decorator("Open", frame-open-target,
-			   documentation: $open-target-doc);
+                           documentation: $open-target-doc);
 
 define constant $open-target-project-command
   = make-command-decorator("Open Project", frame-open-target-project,
-			   documentation: $open-target-project-doc);
+                           documentation: $open-target-project-doc);
 
 define constant $edit-target-source-command
   = make-command-decorator("Edit Source", frame-edit-target,
-			   documentation: $edit-target-source-doc);
+                           documentation: $edit-target-source-doc);
 
 define constant $edit-target-clients-command
   = make-command-decorator("Edit Clients", frame-edit-target-clients,
-			   documentation: $edit-target-clients-doc);
+                           documentation: $edit-target-clients-doc);
 
 define constant $edit-target-used-definitions-command
   = make-command-decorator("Edit Used Definitions", frame-edit-target-used-definitions,
-			   documentation: $edit-target-used-definitions-doc);
+                           documentation: $edit-target-used-definitions-doc);
 
 define constant $edit-target-subclasses-command
   = make-command-decorator("Edit Subclasses", frame-edit-target-subclasses,
-			   documentation: $edit-target-subclasses-doc);
+                           documentation: $edit-target-subclasses-doc);
 
 define constant $edit-target-superclasses-command
   = make-command-decorator("Edit Superclasses", frame-edit-target-superclasses,
-			   documentation: $edit-target-superclasses-doc);
+                           documentation: $edit-target-superclasses-doc);
 
 define constant $edit-target-class-methods-command
   = make-command-decorator("Edit Methods", frame-edit-target-class-methods,
-			   documentation: $edit-target-class-methods-doc);
+                           documentation: $edit-target-class-methods-doc);
 
 define constant $edit-target-generic-methods-command
   = make-command-decorator("Edit Methods", frame-edit-target-generic-methods,
-			   documentation: $edit-target-generic-methods-doc);
+                           documentation: $edit-target-generic-methods-doc);
 
 define command-table *popup-menu-edit-command-table*
     (*global-command-table*)
@@ -646,7 +646,7 @@ define command-table *popup-menu-properties-command-table*
     documentation: "Displays the properties of the selected items.";
 */
 end command-table *popup-menu-properties-command-table*;
-  
+
 
 /// Breakpoint commands
 
@@ -819,8 +819,8 @@ define method frame-command-table-for-target
   if (extra-table)
     let new-table
       = make(<command-table>,
-	     name: command-table-name(command-table),
-	     inherit-from: #[]);
+             name: command-table-name(command-table),
+             inherit-from: #[]);
     add-command-table-menu-item(new-table, #f, <separator>, extra-table);
     add-command-table-menu-item(new-table, #f, <separator>, command-table);
     new-table
@@ -975,8 +975,8 @@ define method default-command-for-target
  => (command :: false-or(<function>))
   let project = frame-current-project(frame);
   if (project
-	& ~frame-open-by-default?(frame, object)
-	& object-has-source?(project, object))
+        & ~frame-open-by-default?(frame, object)
+        & object-has-source?(project, object))
     frame-edit-target
   else
     frame-open-target

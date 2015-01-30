@@ -39,32 +39,32 @@ define method do-execute-command (context :: <interactor-context>, command :: <i
   let frame = sheet-frame(pane);
   let the-project = frame-current-project(frame);
   local method current-module-and-library-name
-	    () => (module :: <string>, library :: <string>)
-	  let the-module
-	    = frame-current-module(frame);
-	  let the-library
-	    = environment-object-library(the-project, the-module);
-	  values(environment-object-primitive-name(the-project, the-module),
-		 environment-object-primitive-name(the-project, the-library))
-	end method current-module-and-library-name;
+            () => (module :: <string>, library :: <string>)
+          let the-module
+            = frame-current-module(frame);
+          let the-library
+            = environment-object-library(the-project, the-module);
+          values(environment-object-primitive-name(the-project, the-module),
+                 environment-object-primitive-name(the-project, the-library))
+        end method current-module-and-library-name;
   if (module)
     let the-module
       = find-module(frame-current-project(frame), module,
-		    library: library,
-		    all-libraries?: #t);
+                    library: library,
+                    all-libraries?: #t);
     let the-library
       = the-module & environment-object-library(the-project, the-module);
     case
       ~the-module =>
-	message(context, "No such module as '%s'.", module);
+        message(context, "No such module as '%s'.", module);
       ~library-interactive?(the-project, the-library) =>
-	message(context, "Module '%s' is not interactive.", module);
+        message(context, "Module '%s' is not interactive.", module);
       otherwise =>
-	frame-current-module(frame) := the-module;
+        frame-current-module(frame) := the-module;
         context.context-project-context.context-module := the-module;
-	update-module-gadget(frame);
-	let (module, library) = current-module-and-library-name();
-	message(context, "Module set to '%s' of library '%s'.", module, library);
+        update-module-gadget(frame);
+        let (module, library) = current-module-and-library-name();
+        message(context, "Module set to '%s' of library '%s'.", module, library);
     end
   else
     let (module, library) = current-module-and-library-name();
@@ -129,8 +129,8 @@ define interactor-command
   block (return)
     for (restart in restarts)
       when (application-restart-abort?(the-project, restart))
-	invoke-application-restart(the-project, thread, restart);
-	return()
+        invoke-application-restart(the-project, thread, restart);
+        return()
       end
     end;
     interactor-message(stream, "No abort restart found; please try another option.")
@@ -152,17 +152,17 @@ define interactor-command
     let abort-restart? = application-restart-abort?(the-project, restart);
     let prefix
       = case
-	  ~continue? & ~abort-restart? =>
-	    continue? := #t;
-	    "(continue) ";
-	  ~abort? & abort-restart? =>
-	    abort? := #t;
-	    "(abort) ";
-	  otherwise =>
-	    " ";
-	end;
+          ~continue? & ~abort-restart? =>
+            continue? := #t;
+            "(continue) ";
+          ~abort? & abort-restart? =>
+            abort? := #t;
+            "(abort) ";
+          otherwise =>
+            " ";
+        end;
     interactor-message(stream, "%=: %s%s", count, prefix,
-		       application-restart-message(the-project, restart))
+                       application-restart-message(the-project, restart))
   end;
   format(stream, "\n");
   if (empty?(restarts))

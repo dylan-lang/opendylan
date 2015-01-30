@@ -26,14 +26,14 @@ end class <profile-results>;
 define class <raw-profile-report> (<profile-report>)
 end class <raw-profile-report>;
 
-install-report(#"raw-profile", "Raw profile", 
-	       <raw-profile-report>);
+install-report(#"raw-profile", "Raw profile",
+               <raw-profile-report>);
 
 define class <profile-summary-report> (<profile-report>)
 end class <profile-summary-report>;
 
-install-report(#"profile-summary", "Profile summary", 
-	       <profile-summary-report>);
+install-report(#"profile-summary", "Profile summary",
+               <profile-summary-report>);
 
 define class <profile-call-history-report> (<profile-report>)
   //---*** Not currently used!
@@ -42,8 +42,8 @@ define class <profile-call-history-report> (<profile-report>)
 end class <profile-call-history-report>;
 
 /*---*** Not yet finished!
-install-report(#"profile-call-history", "Profile call history", 
-	       <profile-call-history-report>);
+install-report(#"profile-call-history", "Profile call history",
+               <profile-call-history-report>);
 */
 
 /*---*** Not yet implemented!
@@ -68,13 +68,13 @@ define method write-report-as
   let total-allocation :: <integer> = 0;
   let thread-totals :: <object-table> = make(<object-table>);
   format(stream, "Profile results for %s\n\n",
-	 application.application-filename);
+         application.application-filename);
   format(stream, "      Snapshots: %d\n",
-	 profile.application-total-snapshots);
+         profile.application-total-snapshots);
   format(stream, "      Wall time: %d\n",
-	 profile.application-total-wall-time);
+         profile.application-total-wall-time);
   format(stream, "     Page faults: %d\n",
-	 profile.application-total-page-faults);
+         profile.application-total-page-faults);
   new-line(stream);
   do-application-profile-snapshots
     (method (snapshot :: <application-snapshot>)
@@ -85,56 +85,56 @@ define method write-report-as
        increment!(elapsed-page-faults, page-faults);
        format(stream, "Snapshot %d\n", snapshot-index);
        format(stream, "       Wall time: %s [total %s]\n",
-	      integer-to-string(wall-time, size: 7, fill: ' '), 
-	      integer-to-string(elapsed-wall-time, size: 7, fill: ' '));
+              integer-to-string(wall-time, size: 7, fill: ' '),
+              integer-to-string(elapsed-wall-time, size: 7, fill: ' '));
        format(stream, "     Page faults: %s [total %s]\n",
-	      integer-to-string(page-faults, size: 7, fill: ' '),
-	      integer-to-string(elapsed-page-faults, size: 7, fill: ' '));
+              integer-to-string(page-faults, size: 7, fill: ' '),
+              integer-to-string(elapsed-page-faults, size: 7, fill: ' '));
        new-line(stream);
        do-application-snapshot-thread-snapshots
-	 (method (snapshot :: <thread-snapshot>)
-	    let thread = snapshot.thread-snapshot-thread;
-	    format(stream, "Snapshot: %s\n", 
-		   profile-object-name(report, thread));
-	    let cpu-time   = snapshot.thread-snapshot-cpu-time;
-	    let allocation = snapshot.thread-snapshot-allocation;
-	    let class      = snapshot.thread-snapshot-allocated-class;
-	    let thread-elapsed-cpu-time 
-	      = element(thread-totals, #"cpu", default: 0);
-	    let thread-total-allocation
-	      = element(thread-totals, #"allocation", default: 0);
-	    element(thread-totals, #"cpu")
-	      := thread-elapsed-cpu-time + cpu-time;
-	    element(thread-totals, #"allocation")
-	      := thread-total-allocation + allocation;
-	    increment!(total-allocation, allocation);
-	    format(stream, "        CPU time: %s [thread total %s]\n",
-		   integer-to-string(cpu-time, size: 7, fill: ' '),
-		   integer-to-string(thread-elapsed-cpu-time, size: 7, fill: ' '));
-	    format(stream, "      Allocation: %s [thread total %s] [total %s]\n",
-		   integer-to-string(allocation, size: 7, fill: ' '),
-		   integer-to-string(thread-total-allocation, size: 7, fill: ' '),
-		   integer-to-string(total-allocation, size: 7, fill: ' '));
-	    if (class)
-	      format(stream, "           Class: %s\n",
-		     profile-object-name(report, class))
-	    end;
-	    new-line(stream);
-	    let frame-index :: <integer> = 1;
-	    do-thread-snapshot-functions
-	      (method 
-		   (form :: <application-code-object>,
-		    location :: false-or(<source-location>))
-		 let name = profile-object-name(report, form);
-		 format(stream, "%s. %s\n",
-			integer-to-string(frame-index, size: 5, fill: ' '),
-			name);
-		 increment!(frame-index)
-	       end,
-	       application, snapshot);
-	    format(stream, "\n\n");
-	  end,
-	  snapshot);
+         (method (snapshot :: <thread-snapshot>)
+            let thread = snapshot.thread-snapshot-thread;
+            format(stream, "Snapshot: %s\n",
+                   profile-object-name(report, thread));
+            let cpu-time   = snapshot.thread-snapshot-cpu-time;
+            let allocation = snapshot.thread-snapshot-allocation;
+            let class      = snapshot.thread-snapshot-allocated-class;
+            let thread-elapsed-cpu-time
+              = element(thread-totals, #"cpu", default: 0);
+            let thread-total-allocation
+              = element(thread-totals, #"allocation", default: 0);
+            element(thread-totals, #"cpu")
+              := thread-elapsed-cpu-time + cpu-time;
+            element(thread-totals, #"allocation")
+              := thread-total-allocation + allocation;
+            increment!(total-allocation, allocation);
+            format(stream, "        CPU time: %s [thread total %s]\n",
+                   integer-to-string(cpu-time, size: 7, fill: ' '),
+                   integer-to-string(thread-elapsed-cpu-time, size: 7, fill: ' '));
+            format(stream, "      Allocation: %s [thread total %s] [total %s]\n",
+                   integer-to-string(allocation, size: 7, fill: ' '),
+                   integer-to-string(thread-total-allocation, size: 7, fill: ' '),
+                   integer-to-string(total-allocation, size: 7, fill: ' '));
+            if (class)
+              format(stream, "           Class: %s\n",
+                     profile-object-name(report, class))
+            end;
+            new-line(stream);
+            let frame-index :: <integer> = 1;
+            do-thread-snapshot-functions
+              (method
+                   (form :: <application-code-object>,
+                    location :: false-or(<source-location>))
+                 let name = profile-object-name(report, form);
+                 format(stream, "%s. %s\n",
+                        integer-to-string(frame-index, size: 5, fill: ' '),
+                        name);
+                 increment!(frame-index)
+               end,
+               application, snapshot);
+            format(stream, "\n\n");
+          end,
+          snapshot);
        increment!(snapshot-index)
      end,
      profile)
@@ -150,9 +150,9 @@ define method write-report-as
       let section-title   = section[0];
       let section-keyword = section[1];
       write-html(stream,
-		 #"h2", section-title, #"/h2", '\n');
+                 #"h2", section-title, #"/h2", '\n');
       write-html(stream,
-		 '\n', #"p", '\n');
+                 '\n', #"p", '\n');
       write-html-profile-report-section(stream, report, section-keyword)
     end
   end
@@ -220,63 +220,63 @@ define method process-profile-summary
        add!(threads, thread-info);
        let objects = thread-info.info-objects;
        do-thread-profile-snapshots
-	 (method 
-	      (application-snapshot :: <application-snapshot>,
-	       thread-snapshot :: <thread-snapshot>)
-	    let cpu-time = thread-snapshot.thread-snapshot-cpu-time;
-	    let wall-time = application-snapshot.application-snapshot-wall-time;
-	    let allocation = thread-snapshot.thread-snapshot-allocation;
-	    let page-faults = application-snapshot.application-snapshot-page-faults;
-	    increment!(total-wall-time,   wall-time);
-	    increment!(total-page-faults, page-faults);
-	    increment!(thread-info.info-count);
-	    increment!(thread-info.info-cpu-time,   cpu-time);
-	    increment!(thread-info.info-allocation, allocation);
-	    select (type)
-	      #"function" =>
-	        if (cpu-time >= 0 | allocation >= 0)
-		  block (return)
-		    do-thread-snapshot-functions
-		      (method 
-			   (form :: <environment-object>,
-			    location :: false-or(<source-location>))
-			 unless (hidden-function?
-				   (project, form,
-				    show-foreign-functions?: 
-				      show-foreign-functions?))
-			   let info
-			     = element(objects, form, default: #f)
-			         | begin
-				     objects[form]
-				       := make(<profile-function-info>,
-					       function: form)
-				   end;
-			   increment!(info.info-count);
-			   increment!(info.info-cpu-time,   cpu-time);
-			   increment!(info.info-allocation, allocation);
-			   return()
-			 end
-		       end,
-		       application, thread-snapshot)
-		  end
-		end;
-	      #"class" =>
-		let class = thread-snapshot.thread-snapshot-allocated-class;
-		if (class)
-		  let info
-		    = element(objects, class, default: #f)
-		        | begin
-			    objects[class]
-			      := make(<profile-class-info>,
-				      class: class)
-			  end;
-		  increment!(info.info-count);
-		  increment!(info.info-cpu-time,   cpu-time);
-		  increment!(info.info-allocation, allocation);
-		end;
-	    end
-	  end,
-	  application, profile, thread)
+         (method
+              (application-snapshot :: <application-snapshot>,
+               thread-snapshot :: <thread-snapshot>)
+            let cpu-time = thread-snapshot.thread-snapshot-cpu-time;
+            let wall-time = application-snapshot.application-snapshot-wall-time;
+            let allocation = thread-snapshot.thread-snapshot-allocation;
+            let page-faults = application-snapshot.application-snapshot-page-faults;
+            increment!(total-wall-time,   wall-time);
+            increment!(total-page-faults, page-faults);
+            increment!(thread-info.info-count);
+            increment!(thread-info.info-cpu-time,   cpu-time);
+            increment!(thread-info.info-allocation, allocation);
+            select (type)
+              #"function" =>
+                if (cpu-time >= 0 | allocation >= 0)
+                  block (return)
+                    do-thread-snapshot-functions
+                      (method
+                           (form :: <environment-object>,
+                            location :: false-or(<source-location>))
+                         unless (hidden-function?
+                                   (project, form,
+                                    show-foreign-functions?:
+                                      show-foreign-functions?))
+                           let info
+                             = element(objects, form, default: #f)
+                                 | begin
+                                     objects[form]
+                                       := make(<profile-function-info>,
+                                               function: form)
+                                   end;
+                           increment!(info.info-count);
+                           increment!(info.info-cpu-time,   cpu-time);
+                           increment!(info.info-allocation, allocation);
+                           return()
+                         end
+                       end,
+                       application, thread-snapshot)
+                  end
+                end;
+              #"class" =>
+                let class = thread-snapshot.thread-snapshot-allocated-class;
+                if (class)
+                  let info
+                    = element(objects, class, default: #f)
+                        | begin
+                            objects[class]
+                              := make(<profile-class-info>,
+                                      class: class)
+                          end;
+                  increment!(info.info-count);
+                  increment!(info.info-cpu-time,   cpu-time);
+                  increment!(info.info-allocation, allocation);
+                end;
+            end
+          end,
+          application, profile, thread)
      end,
      profile);
   make(<profile-summary-info>,
@@ -301,7 +301,7 @@ define method write-report-as
     let thread = thread-info.info-thread;
     format(stream, "%s\n", $report-separator);
     format(stream, "%s\n",
-	   profile-object-name(report, thread));
+           profile-object-name(report, thread));
     format(stream, "  Totals:\n\n");
     format(stream, "      Samples: %d\n", thread-info.info-count);
     format(stream, "     CPU time: %d\n", thread-info.info-cpu-time);
@@ -309,23 +309,23 @@ define method write-report-as
     let functions = as(<simple-object-vector>, thread-info.info-objects);
     local
       method print-summary
-	  (title :: <string>, getter :: <function>) => ()
-	format(stream, "\n  %s:\n\n", title);
-	let functions
-	  = sort(functions,
-		 test: method 
-			   (f1 :: <profile-function-info>,
-			    f2 :: <profile-function-info>)
-			 f1.getter > f2.getter
-		       end);
-	for (function-info :: <profile-function-info> in functions,
-	    index from 1 to count)
-	  format(stream, "  %s. %s [%s] %s\n",
-		 integer-to-string(index, size: 5, fill: ' '),
-		 integer-to-string(function-info.getter, size: 7, fill: ' '),
-		 integer-to-string(function-info.info-count, size: 5, fill: ' '),
-		 profile-object-name(report, function-info.info-function))
-	end
+          (title :: <string>, getter :: <function>) => ()
+        format(stream, "\n  %s:\n\n", title);
+        let functions
+          = sort(functions,
+                 test: method
+                           (f1 :: <profile-function-info>,
+                            f2 :: <profile-function-info>)
+                         f1.getter > f2.getter
+                       end);
+        for (function-info :: <profile-function-info> in functions,
+            index from 1 to count)
+          format(stream, "  %s. %s [%s] %s\n",
+                 integer-to-string(index, size: 5, fill: ' '),
+                 integer-to-string(function-info.getter, size: 7, fill: ' '),
+                 integer-to-string(function-info.info-count, size: 5, fill: ' '),
+                 profile-object-name(report, function-info.info-function))
+        end
       end method print-summary;
 
     print-summary("Exclusive stack summary",      info-cpu-time);
@@ -342,9 +342,9 @@ define method write-report-as
       let section-title   = section[0];
       let section-keyword = section[1];
       write-html(stream,
-		 #"h2", section-title, #"/h2", '\n');
+                 #"h2", section-title, #"/h2", '\n');
       write-html(stream,
-		 '\n', #"p", '\n');
+                 '\n', #"p", '\n');
       write-html-profile-report-section(stream, report, section-keyword)
     end
   end
@@ -363,8 +363,8 @@ define method write-report-as
   do-application-profile-threads
     (method (thread :: <thread-object>)
        format(stream, "%s\n", $report-separator);
-       format(stream, "%s\n\n", 
-	      profile-object-name(report, thread));
+       format(stream, "%s\n\n",
+              profile-object-name(report, thread));
        write-thread-report(stream, report, thread, _format);
        increment!(thread-index)
      end,
@@ -382,9 +382,9 @@ define method write-report-as
       let section-title   = section[0];
       let section-keyword = section[1];
       write-html(stream,
-		 #"h2", section-title, #"/h2", '\n');
+                 #"h2", section-title, #"/h2", '\n');
       write-html(stream,
-		 '\n', #"p", '\n');
+                 '\n', #"p", '\n');
       write-html-profile-report-section(stream, report, section-keyword)
     end
   end
@@ -447,85 +447,85 @@ define method process-profile-call-history
     = make(<stretchy-object-vector>);
   do-application-profile-snapshots
     (method (snapshot :: <application-snapshot>)
-       let thread-snapshot 
-	 = application-snapshot-thread-snapshot(snapshot, thread);
+       let thread-snapshot
+         = application-snapshot-thread-snapshot(snapshot, thread);
        let wall-time   = snapshot.application-snapshot-wall-time;
        let page-faults = snapshot.application-snapshot-page-faults;
        increment!(elapsed-wall-time, wall-time);
        if (thread-snapshot)
-	 let cpu-time   = thread-snapshot.thread-snapshot-cpu-time;
-	 let allocation = thread-snapshot.thread-snapshot-allocation;
-	 let class      = thread-snapshot.thread-snapshot-allocated-class;
-	 let frames     = thread-snapshot-frame-snapshots(application, thread-snapshot);
-	 let stack-index :: <integer> = stack.size - 1;
-	 let frame-index :: <integer> = frames.size - 1;
-	 increment!(elapsed-cpu-time, cpu-time);
-	 // Increment the counts for all shared items on the stack
-	 block (return)
-	   while (stack-index >= 0 & frame-index >= 0)
-	     let frame = frames[frame-index];
-	     let info :: <profile-frame-history> = stack[stack-index];
-	     if (info.profile-frame-frame ~== frame)
-	       return()
-	     end;
-	     increment!(info.profile-frame-cpu-time,   cpu-time);
-	     increment!(info.profile-frame-allocation, allocation);
-	     increment!(info.profile-frame-wall-time,  wall-time);
-	     decrement!(frame-index);
-	     decrement!(stack-index)
-	   end
-	 end;
-	 // Remove any obsolete frames from the stack
-	 while (stack-index >= 0)
-	   pop(stack);
-	   decrement!(stack-index)
-	 end;
-	 let top-of-stack = ~empty?(stack) & stack[0];
-	 // Now pop on the new ones
-	 while (frame-index >= 0)
-	   let frame = frames[frame-index];
-	   let info
-	     = make(<profile-frame-history>, 
-		    frame:           frame,
-		    start-wall-time: elapsed-wall-time,
-		    start-cpu-time:  elapsed-cpu-time,
-		    cpu-time:        cpu-time,
-		    wall-time:       wall-time,
-		    allocation:      allocation);
-	   if (top-of-stack)
-	     add!(top-of-stack.profile-frame-references, info)
-	   else
-	     add!(root-references, info)
-	   end;
-	   top-of-stack := info;
-	   push(stack, info);
-	   decrement!(frame-index)
-	 end;
-	 // Add any allocated class to the first non-internal call on
-	 // the stack.
-	 if (class & top-of-stack)
-	   block (return)
-	     for (index :: <integer> from 0,
-		  function-call :: <profile-frame-history> in stack)
-	       if (index > 0)
-		 let frame = function-call.profile-frame-frame;
-		 unless (hidden-function?
-			   (project, frame.frame-snapshot-function,
-			    show-foreign-functions?: show-foreign-functions?))
-		   add!(function-call.profile-frame-references,
-			make(<profile-frame-allocated-class>,
-			     allocated-class: class,
-			     source-location: frame.frame-snapshot-source-location));
-		   return()
-		 end
-	       end
-	     end
-	   end
-	 end
+         let cpu-time   = thread-snapshot.thread-snapshot-cpu-time;
+         let allocation = thread-snapshot.thread-snapshot-allocation;
+         let class      = thread-snapshot.thread-snapshot-allocated-class;
+         let frames     = thread-snapshot-frame-snapshots(application, thread-snapshot);
+         let stack-index :: <integer> = stack.size - 1;
+         let frame-index :: <integer> = frames.size - 1;
+         increment!(elapsed-cpu-time, cpu-time);
+         // Increment the counts for all shared items on the stack
+         block (return)
+           while (stack-index >= 0 & frame-index >= 0)
+             let frame = frames[frame-index];
+             let info :: <profile-frame-history> = stack[stack-index];
+             if (info.profile-frame-frame ~== frame)
+               return()
+             end;
+             increment!(info.profile-frame-cpu-time,   cpu-time);
+             increment!(info.profile-frame-allocation, allocation);
+             increment!(info.profile-frame-wall-time,  wall-time);
+             decrement!(frame-index);
+             decrement!(stack-index)
+           end
+         end;
+         // Remove any obsolete frames from the stack
+         while (stack-index >= 0)
+           pop(stack);
+           decrement!(stack-index)
+         end;
+         let top-of-stack = ~empty?(stack) & stack[0];
+         // Now pop on the new ones
+         while (frame-index >= 0)
+           let frame = frames[frame-index];
+           let info
+             = make(<profile-frame-history>,
+                    frame:           frame,
+                    start-wall-time: elapsed-wall-time,
+                    start-cpu-time:  elapsed-cpu-time,
+                    cpu-time:        cpu-time,
+                    wall-time:       wall-time,
+                    allocation:      allocation);
+           if (top-of-stack)
+             add!(top-of-stack.profile-frame-references, info)
+           else
+             add!(root-references, info)
+           end;
+           top-of-stack := info;
+           push(stack, info);
+           decrement!(frame-index)
+         end;
+         // Add any allocated class to the first non-internal call on
+         // the stack.
+         if (class & top-of-stack)
+           block (return)
+             for (index :: <integer> from 0,
+                  function-call :: <profile-frame-history> in stack)
+               if (index > 0)
+                 let frame = function-call.profile-frame-frame;
+                 unless (hidden-function?
+                           (project, frame.frame-snapshot-function,
+                            show-foreign-functions?: show-foreign-functions?))
+                   add!(function-call.profile-frame-references,
+                        make(<profile-frame-allocated-class>,
+                             allocated-class: class,
+                             source-location: frame.frame-snapshot-source-location));
+                   return()
+                 end
+               end
+             end
+           end
+         end
        else
-	 for (function-call :: <profile-frame-history> in stack)
-	   increment!(function-call.profile-frame-wall-time, wall-time)
-	 end
+         for (function-call :: <profile-frame-history> in stack)
+           increment!(function-call.profile-frame-wall-time, wall-time)
+         end
        end
      end,
      profile);
@@ -568,9 +568,9 @@ define method write-report-as
       let section-title   = section[0];
       let section-keyword = section[1];
       write-html(stream,
-		 #"h2", section-title, #"/h2", '\n');
+                 #"h2", section-title, #"/h2", '\n');
       write-html(stream,
-		 '\n', #"p", '\n');
+                 '\n', #"p", '\n');
       write-html-profile-report-section(stream, report, section-keyword)
     end
   end
@@ -602,8 +602,8 @@ define method profile-results
  => (results :: <profile-results>)
   element($profile-results, profile, default: #f)
     | begin
-	let results = process-profile-results(project, profile);
-	$profile-results[profile] := results
+        let results = process-profile-results(project, profile);
+        $profile-results[profile] := results
       end
 end method profile-results;
 
@@ -614,7 +614,7 @@ define method process-profile-results
   do-application-profile-threads
     (method (thread :: <thread-object>)
        add!(thread-profile-results,
-	    process-thread-profile-results(project, thread))
+            process-thread-profile-results(project, thread))
      end,
      profile);
   make(<profile-results>,
@@ -655,9 +655,9 @@ define method thread-profile-total-value
  => (total-value :: <integer>)
   let total-value :: <integer> = 0;
   do-thread-profile-snapshots
-    (method 
-	 (application-snapshot :: <application-snapshot>,
-	  thread-snapshot :: <thread-snapshot>)
+    (method
+         (application-snapshot :: <application-snapshot>,
+          thread-snapshot :: <thread-snapshot>)
        let value = thread-snapshot-value(application, snapshot, type);
        increment!(total-value, value)
      end,

@@ -81,7 +81,7 @@ define method composite-object-contents
               element-offset, class-slot-count)
             = class-proxy-browser-information
                 (application, class-proxy, incarnation: incarnation);
-         let class-object = 
+         let class-object =
            runtime-proxy-to-remote-value(application, class-proxy);
          let (byte-size, fixed-count, element-count)
             = dylan-object-size(target, proxy-value);
@@ -98,7 +98,7 @@ define method composite-object-contents
          let i = 0;
          for (j from 0 below class-slot-count)
            names[i] := class-slot-names[j];
-           vals[i] := 
+           vals[i] :=
              make-environment-object-for-runtime-value
                (application, class-slot-values[i]);
            i := i + 1;

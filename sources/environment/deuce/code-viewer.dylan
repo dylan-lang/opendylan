@@ -63,7 +63,7 @@ define pane <code-viewer-displayer> (<displayer-mixin>)
     init-keyword: read-only?:;
   pane %code-viewer (pane)
     begin
-      let window = make(<code-viewer>,		// no tooltip, it's too intrusive
+      let window = make(<code-viewer>,                // no tooltip, it's too intrusive
                         project: pane.%project);
       dynamic-bind (*editor-frame* = window)
         inc!(*code-viewer-buffer-count*);
@@ -160,7 +160,7 @@ define pane <code-viewer-displayer> (<displayer-mixin>)
   slot %canonical-source-button = #f;
   layout (pane)
     vertically (spacing: 2)
-      horizontally (spacing: 8)		// same as $tool-bar-group-spacing
+      horizontally (spacing: 8)                // same as $tool-bar-group-spacing
         pane.%edit-source-button;
         pane.%current-location-gadget;
       end;

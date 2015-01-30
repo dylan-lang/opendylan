@@ -1,6 +1,6 @@
 Module:    environment-profiler
 Synopsis:  The profiling tool provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Profiler
 
-define frame <profiler> 
+define frame <profiler>
     (<frame-refresh-mixin>,
      <frame-module-gadget-mixin>,
      <frame-cascading-window-mixin>,
@@ -25,37 +25,37 @@ define frame <profiler>
     setter: %show-foreign-functions?-setter;
   pane thread-selector (frame)
     make(<option-box>,
-	 label-key:     curry(frame-default-object-name, frame),
-	 documentation: "Select Profiler Thread",
-	 min-width:     100,
-	 max-width:     $fill,
-	 value-changed-callback: method (gadget :: <option-box>) => ()
-				   let frame = sheet-frame(gadget);
-				   let thread = gadget.gadget-value;
-				   frame.frame-current-thread := thread
-				 end);
+         label-key:     curry(frame-default-object-name, frame),
+         documentation: "Select Profiler Thread",
+         min-width:     100,
+         max-width:     $fill,
+         value-changed-callback: method (gadget :: <option-box>) => ()
+                                   let frame = sheet-frame(gadget);
+                                   let thread = gadget.gadget-value;
+                                   frame.frame-current-thread := thread
+                                 end);
   pane tab-layout (frame)
     make(<tab-control>,
-	 pages: vector(frame.summary-page,
-		       frame.call-history-page,
-		       frame.functions-page,
-		       frame.classes-page
-		       // ,frame.time-line-page
-		       ),
-	 value-changed-callback: method (tab-control)
-				   ignore(tab-control);
-				   refresh-profiler(frame)
-				 end);
+         pages: vector(frame.summary-page,
+                       frame.call-history-page,
+                       frame.functions-page,
+                       frame.classes-page
+                       // ,frame.time-line-page
+                       ),
+         value-changed-callback: method (tab-control)
+                                   ignore(tab-control);
+                                   refresh-profiler(frame)
+                                 end);
   pane message-pane (frame)
     make(<label>,
-	 label: "",
-	 min-width: 150, max-width: 150,
-	 documentation: "Message Area");
+         label: "",
+         min-width: 150, max-width: 150,
+         documentation: "Message Area");
   pane selection-summary (frame)
     make(<label>,
-	 label: "",
-	 min-width: 100, max-width: $fill,
-	 documentation: "Selection Summary");
+         label: "",
+         min-width: 100, max-width: $fill,
+         documentation: "Selection Summary");
   pane main-layout (frame)
     vertically (spacing: 2)
       make(<separator>);
@@ -68,11 +68,11 @@ define frame <profiler>
     end;
   layout     (frame) frame.main-layout;
   tool-bar   (frame) make-environment-tool-bar(frame);
-  status-bar (frame) 
+  status-bar (frame)
     make(<status-bar>,
-	 label-pane: frame.message-pane,
-	 children: vector(frame.message-pane,
-			  frame.selection-summary));
+         label-pane: frame.message-pane,
+         children: vector(frame.message-pane,
+                          frame.selection-summary));
   command-table (frame) *profiler-command-table*;
   keyword width:  = $default-environment-frame-width;
   keyword height: = $default-environment-frame-height;
@@ -168,7 +168,7 @@ end method perform-profiler-transaction;
 
 /// Property page handling
 
-define method refresh-frame 
+define method refresh-frame
     (frame :: <profiler>) => ()
   next-method();
   refresh-profiler(frame, clean?: #t)
@@ -187,15 +187,15 @@ define method refresh-profiler
     end;
     let threads
       = keyed-sort(frame.profiler-available-threads,
-		   key: method (thread :: <thread-object>)
-			  //---*** It is a pity we can't find the index
-			  //---*** after the application has shut down.
-			  if (application)
-			    thread-index(application, thread)
-			  else
-			    $maximum-integer
-			  end
-			end);
+                   key: method (thread :: <thread-object>)
+                          //---*** It is a pity we can't find the index
+                          //---*** after the application has shut down.
+                          if (application)
+                            thread-index(application, thread)
+                          else
+                            $maximum-integer
+                          end
+                        end);
     gadget-items(frame.thread-selector) := threads;
     unless (member?(frame.frame-current-thread, threads))
       let new-thread = ~empty?(threads) & threads[0];
@@ -221,15 +221,15 @@ define method profiler-available-threads
   remove-duplicates
     (concatenate
        (if (application)
-	  application.application-threads
-	else
-	  #[]
-	end,
-	if (profile)
-	  profile.application-profile-threads
-	else
-	  #[]
-	end))
+          application.application-threads
+        else
+          #[]
+        end,
+        if (profile)
+          profile.application-profile-threads
+        else
+          #[]
+        end))
 end method profiler-available-threads;
 
 define method refresh-profiler-current-page
@@ -244,9 +244,9 @@ define method profiler-activate-callback
     (frame :: <frame>, values :: <object>) => ()
   let value
     = case
-	~instance?(values, <sequence>) => values;
-	~empty?(values)                => values[0];
-	otherwise                      => #f;
+        ~instance?(values, <sequence>) => values;
+        ~empty?(values)                => values[0];
+        otherwise                      => #f;
       end;
   environment-activate-callback(frame, value)
 end method profiler-activate-callback;

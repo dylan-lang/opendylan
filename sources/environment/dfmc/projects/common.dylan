@@ -13,7 +13,7 @@ end class <native-project-object>;
 define sealed domain make (subclass(<native-project-object>));
 define sealed domain initialize (<native-project-object>);
 
-define sealed method initialize 
+define sealed method initialize
     (project-object :: <native-project-object>, #key) => ()
   next-method();
   add-new!(*open-projects*, project-object);

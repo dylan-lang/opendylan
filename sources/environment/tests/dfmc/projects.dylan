@@ -24,14 +24,14 @@ define constant $test-library-module-id
   = make(<module-id>, name: $test-library, library: $test-library-id);
 
 define constant $test-class-id
-  = make(<definition-id>, 
-	 name: "<test-object>", 
-	 module: $test-library-module-id);
+  = make(<definition-id>,
+         name: "<test-object>",
+         module: $test-library-module-id);
 
 define constant $test-internal-class-id
-  = make(<definition-id>, 
-	 name: "<internal-test-object>", 
-	 module: $test-library-module-id);
+  = make(<definition-id>,
+         name: "<internal-test-object>",
+         module: $test-library-module-id);
 
 
 /// Test suite initialization
@@ -52,7 +52,7 @@ end function root-directory;
 define function test-project-location
     (name :: <string>) => (location :: <locator>)
   let directory = root-directory();
-  let location-name 
+  let location-name
     = format-to-string
         ("%s/environment/tests/%s/%s.hdp",
          directory,
@@ -72,14 +72,14 @@ define function open-test-projects () => ()
   let application = open-project(test-project-location($test-application));
   open-project-compiler-database(application);
   format-out("Building %s",
-	     environment-object-primitive-name(application, application));
+             environment-object-primitive-name(application, application));
   build-project(application,
-		clean?: #t,
-		error-handler: project-condition-handler,
-		progress-callback: method (#rest args)
-				     ignore(args);
-				     format-out(".")
-				   end);
+                clean?: #t,
+                error-handler: project-condition-handler,
+                progress-callback: method (#rest args)
+                                     ignore(args);
+                                     format-out(".")
+                                   end);
   format-out("\n");
   *test-library*     := library;
   *test-application* := application;
@@ -100,29 +100,29 @@ end function project-condition-handler;
 
 define test open-projects-test ()
   check-true("Application project open",
-	     instance?(*test-application*, <project-object>));
+             instance?(*test-application*, <project-object>));
   check-equal("Application project target type",
-	      project-target-type(*test-application*),
-	      #"executable");
+              project-target-type(*test-application*),
+              #"executable");
   check-equal("Application project interface type",
-	      project-interface-type(*test-application*),
-	      #"gui");
+              project-interface-type(*test-application*),
+              #"gui");
   check-equal("Application project name",
-	      environment-object-primitive-name
-		(*test-application*, *test-application*),
-	      $test-application);
+              environment-object-primitive-name
+                (*test-application*, *test-application*),
+              $test-application);
   check-true("Library project open",
-	     instance?(*test-library*, <project-object>));
+             instance?(*test-library*, <project-object>));
   check-equal("Library project target type",
-	      project-target-type(*test-library*),
-	      #"dll");
+              project-target-type(*test-library*),
+              #"dll");
   check-equal("Library interface target type",
-	      project-interface-type(*test-library*),
-	      #"console");
+              project-interface-type(*test-library*),
+              #"console");
   check-equal("Library project name",
-	      environment-object-primitive-name
-		(*test-library*, *test-library*),
-	      $test-library);
+              environment-object-primitive-name
+                (*test-library*, *test-library*),
+              $test-library);
 end test open-projects-test;
 
 

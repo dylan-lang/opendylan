@@ -18,7 +18,7 @@ define module dfmc-environment-test-suite
 
   use environment-protocols,
     exclude: { application-filename,
-	       application-arguments };
+               application-arguments };
   use environment-commands;
   use environment-test-suite;
 

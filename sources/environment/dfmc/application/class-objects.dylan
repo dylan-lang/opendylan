@@ -21,7 +21,7 @@ define method singleton-value
 
     // Call the DM to actually exchange the singleton for its object.
 
-    let remote-singleton-value 
+    let remote-singleton-value
       = remote-singleton-inspect(target, remote-singleton);
 
     // Re-package to an environment object
@@ -37,7 +37,7 @@ end method;
 //    an environment object for each one in turn.
 
 define method do-direct-subclasses
-    (function :: <function>, application :: <dfmc-application>, 
+    (function :: <function>, application :: <dfmc-application>,
      class :: <class-object>,
      #key client)
  => ()
@@ -51,8 +51,8 @@ define method do-direct-subclasses
   with-debugger-transaction (target)
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
-    let (direct-subs, direct-supers, all-supers, 
-	 direct-slots, all-slots, direct-meths)
+    let (direct-subs, direct-supers, all-supers,
+         direct-slots, all-slots, direct-meths)
       = remote-class-inspect(target, proxy-value);
     do-environment-objects-for-runtime-values
       (function, application, direct-subs)
@@ -65,7 +65,7 @@ end method;
 //    environment object for each one in turn.
 
 define method do-direct-superclasses
-    (function :: <function>, application :: <dfmc-application>, 
+    (function :: <function>, application :: <dfmc-application>,
      class :: <class-object>,
      #key client)
  => ()
@@ -79,8 +79,8 @@ define method do-direct-superclasses
   with-debugger-transaction (target)
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
-    let (direct-subs, direct-supers, all-supers, 
-	 direct-slots, all-slots, direct-meths)
+    let (direct-subs, direct-supers, all-supers,
+         direct-slots, all-slots, direct-meths)
       = remote-class-inspect(target, proxy-value);
     do-environment-objects-for-runtime-values
       (function, application, direct-supers)
@@ -93,7 +93,7 @@ end method;
 //    <method-object> for each one in turn.
 
 define method do-direct-methods
-    (function :: <function>, application :: <dfmc-application>, 
+    (function :: <function>, application :: <dfmc-application>,
      class :: <class-object>,
      #key client)
  => ()
@@ -107,8 +107,8 @@ define method do-direct-methods
   with-debugger-transaction (target)
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
-    let (direct-subs, direct-supers, all-supers, 
-	 direct-slots, all-slots, direct-meths)
+    let (direct-subs, direct-supers, all-supers,
+         direct-slots, all-slots, direct-meths)
       = remote-class-inspect(target, proxy-value);
     do-environment-objects-for-runtime-values
       (function, application, direct-meths)
@@ -121,7 +121,7 @@ end method;
 //    <slot-object> for each one in turn.
 
 define method do-direct-slots
-    (function :: <function>, application :: <dfmc-application>, 
+    (function :: <function>, application :: <dfmc-application>,
      class :: <class-object>,
      #key client)
  => ()
@@ -135,8 +135,8 @@ define method do-direct-slots
   with-debugger-transaction (target)
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
-    let (direct-subs, direct-supers, all-supers, 
-	 direct-slots, all-slots, direct-meths)
+    let (direct-subs, direct-supers, all-supers,
+         direct-slots, all-slots, direct-meths)
       = remote-class-inspect(target, proxy-value);
     do-environment-objects-for-runtime-values
       (function, application, direct-slots)
@@ -149,7 +149,7 @@ end method;
 //    <class-object> for each one in turn.
 
 define method do-all-superclasses
-    (function :: <function>, application :: <dfmc-application>, 
+    (function :: <function>, application :: <dfmc-application>,
      class :: <class-object>,
      #key client)
  => ()
@@ -163,8 +163,8 @@ define method do-all-superclasses
   with-debugger-transaction (target)
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
-    let (direct-subs, direct-supers, all-supers, 
-	 direct-slots, all-slots, direct-meths)
+    let (direct-subs, direct-supers, all-supers,
+         direct-slots, all-slots, direct-meths)
       = remote-class-inspect(target, proxy-value);
     do-environment-objects-for-runtime-values
       (function, application, all-supers)
@@ -177,7 +177,7 @@ end method;
 //    for each one in turn.
 
 define method do-all-slots
-    (function :: <function>, application :: <dfmc-application>, 
+    (function :: <function>, application :: <dfmc-application>,
      class :: <class-object>,
      #key client)
  => ()
@@ -191,8 +191,8 @@ define method do-all-slots
   with-debugger-transaction (target)
     let proxy = ensure-application-value-proxy(application, class);
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
-    let (direct-subs, direct-supers, all-supers, 
-	 direct-slots, all-slots, direct-meths)
+    let (direct-subs, direct-supers, all-supers,
+         direct-slots, all-slots, direct-meths)
       = remote-class-inspect(target, proxy-value);
     do-environment-objects-for-runtime-values
       (function, application, all-slots)

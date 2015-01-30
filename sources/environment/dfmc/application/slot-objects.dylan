@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    Returns a <class-object> for the class that owns this slot.
 
 define method slot-class
-    (application :: <dfmc-application>, slot :: <slot-object>) 
+    (application :: <dfmc-application>, slot :: <slot-object>)
          => (class :: <class-object>)
 
   let target = application.application-target-app;
@@ -23,7 +23,7 @@ define method slot-class
   perform-debugger-transaction
      (target,
       method ()
-        let slot-descriptor = 
+        let slot-descriptor =
           runtime-proxy-to-remote-value(application, slot-proxy);
 
         // Call the DM's inspector for slots.
@@ -35,8 +35,8 @@ define method slot-class
         // We are interested in the owner class, so build the
         // correct environment object for it.
         class-object
-	  := make-environment-object-for-runtime-value
-	       (application, owner-class)
+          := make-environment-object-for-runtime-value
+               (application, owner-class)
       end method);
 
   // Return the environment object.
@@ -48,7 +48,7 @@ end method;
 //    Returns a <function-object> (if applicable) for the getter function
 //    corresponding to this slot.
 
-define method slot-getter 
+define method slot-getter
     (application :: <dfmc-application>, slot :: <slot-object>)
          => (getter :: false-or(<function-object>))
 
@@ -62,7 +62,7 @@ define method slot-getter
   perform-debugger-transaction
      (target,
       method ()
-        let slot-descriptor = 
+        let slot-descriptor =
           runtime-proxy-to-remote-value(application, slot-proxy);
 
         // Call the DM's inspector for slots.
@@ -72,13 +72,13 @@ define method slot-getter
                = remote-slot-inspect(target, slot-descriptor);
 
         // We are interested in the getter function, but it might be #f.
-        // If it is a <remote-value>, then build the correct environment 
-	// object.
+        // If it is a <remote-value>, then build the correct environment
+        // object.
 
         if (getter)
           function-object
-	    := make-environment-object-for-runtime-value
-	         (application, getter)
+            := make-environment-object-for-runtime-value
+                 (application, getter)
         end if
       end method);
 
@@ -91,7 +91,7 @@ end method;
 //    Returns a <function-object> (if applicable) for the setter function
 //    corresponding to this slot.
 
-define method slot-setter 
+define method slot-setter
     (application :: <dfmc-application>, slot :: <slot-object>)
          => (setter :: false-or(<function-object>))
 
@@ -105,7 +105,7 @@ define method slot-setter
   perform-debugger-transaction
      (target,
       method ()
-        let slot-descriptor = 
+        let slot-descriptor =
           runtime-proxy-to-remote-value(application, slot-proxy);
 
         // Call the DM's inspector for slots.
@@ -115,13 +115,13 @@ define method slot-setter
                = remote-slot-inspect(target, slot-descriptor);
 
         // We are interested in the setter function, but it might be #f.
-        // If it is a <remote-value>, then build the correct environment 
-	// object.
+        // If it is a <remote-value>, then build the correct environment
+        // object.
 
         if (setter)
-          function-object 
-	    := make-environment-object-for-runtime-value
-	         (application, setter)
+          function-object
+            := make-environment-object-for-runtime-value
+                 (application, setter)
         end if
       end method);
 
@@ -134,7 +134,7 @@ end method;
 //    Returns a <type-object> for the specializer type corresponding to this
 //    slot.
 
-define method slot-type 
+define method slot-type
     (application :: <dfmc-application>, slot :: <slot-object>)
          => (type :: <type-object>)
 
@@ -148,7 +148,7 @@ define method slot-type
   perform-debugger-transaction
      (target,
       method ()
-        let slot-descriptor = 
+        let slot-descriptor =
           runtime-proxy-to-remote-value(application, slot-proxy);
 
         // Call the DM's inspector for slots.
@@ -162,7 +162,7 @@ define method slot-type
 
       end method);
 
-  type        
+  type
 end method;
 
 /* -- This is currently commented-out at the protocol level, so I need
@@ -171,9 +171,9 @@ end method;
 
 ///// SLOT-INIT-VALUE (Environment Protocol Method)
 //    If applicable, returns an <application-object> for the init-value
-//    used in this slot. 
+//    used in this slot.
 
-define method slot-init-value 
+define method slot-init-value
     (application :: <dfmc-application>, slot :: <slot-object>)
  => (value :: false-or(<environment-object>))
 
@@ -187,7 +187,7 @@ define method slot-init-value
   perform-debugger-transaction
      (target,
       method ()
-        let slot-descriptor = 
+        let slot-descriptor =
           runtime-proxy-to-remote-value(application, slot-proxy);
 
         // Call the DM's inspector for slots.
@@ -203,7 +203,7 @@ define method slot-init-value
 
       end method);
 
-  init 
+  init
 end method;
 */
 
@@ -222,7 +222,7 @@ end method;
 //    slot, if applicable. Also returns a flag to indicate whether the
 //    keyword is required in order to initialize the slot.
 
-define method slot-init-keyword 
+define method slot-init-keyword
     (application :: <dfmc-application>, slot :: <slot-object>)
          => (keyword :: false-or(<symbol>), required? :: <boolean>)
   //---*** andrewa: Paul will fix this at some time in the future,
@@ -240,7 +240,7 @@ define method slot-init-keyword
   perform-debugger-transaction
      (target,
       method ()
-        let slot-descriptor = 
+        let slot-descriptor =
           runtime-proxy-to-remote-value(application, slot-proxy);
 
         // Call the DM's inspector for slots.
@@ -254,8 +254,8 @@ define method slot-init-keyword
 
         if (init-key)
           symbol-object
-	    := make-environment-object-for-runtime-value
-	         (application, init-key)
+            := make-environment-object-for-runtime-value
+                 (application, init-key)
 
           // And set the required? flag.
           required? := init-req?;

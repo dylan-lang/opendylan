@@ -30,17 +30,17 @@ define open abstract class <environment-frame> (<frame>)
     setter: %command-target-setter;
 end class <environment-frame>;
 
-define open abstract class <environment-simple-frame> 
+define open abstract class <environment-simple-frame>
     (<environment-frame>,
      <simple-frame>)
 end class <environment-simple-frame>;
 
-define open abstract class <environment-dialog-frame> 
+define open abstract class <environment-dialog-frame>
     (<environment-frame>,
      <dialog-frame>)
 end class <environment-dialog-frame>;
 
-define method initialize 
+define method initialize
     (frame :: <environment-frame>, #key) => ()
   next-method();
   frame.frame-title := generate-frame-title(frame);
@@ -69,16 +69,16 @@ end method frame-primary-object-name;
 define open generic generate-frame-title
     (frame :: <environment-frame>) => (title :: <string>);
 
-define open generic frame-current-project 
+define open generic frame-current-project
     (frame :: <frame>)
  => (project :: false-or(<project-object>));
 
-define method generate-frame-title 
+define method generate-frame-title
     (frame :: <environment-frame>) => (title :: <string>)
   release-product-name()
 end method generate-frame-title;
 
-define method frame-current-project 
+define method frame-current-project
     (frame :: <frame>)
  => (project :: singleton(#f))
   #f;
@@ -153,12 +153,12 @@ define method frame-note-application-threads-changed
 end method frame-note-application-threads-changed;
 
 define open generic frame-note-breakpoint-state-changed
-    (frame :: <environment-frame>, breakpoint :: <breakpoint-object>, 
+    (frame :: <environment-frame>, breakpoint :: <breakpoint-object>,
      state :: <breakpoint-state>)
  => ();
 
 define method frame-note-breakpoint-state-changed
-    (frame :: <environment-frame>, breakpoint :: <breakpoint-object>, 
+    (frame :: <environment-frame>, breakpoint :: <breakpoint-object>,
      state :: <breakpoint-state>)
  => ()
   #f
@@ -207,67 +207,67 @@ define function environment-tools-application-message-receiver
   select (message by instance?)
     <run-application-requested-message> =>
       do-frames
-	(method (frame :: <frame>)
-	   when (instance?(frame, <environment-frame>))
-	     call-in-frame(frame, frame-note-application-starting, frame);
-	   end;
-	 end method,
-	 port: _default-port);
+        (method (frame :: <frame>)
+           when (instance?(frame, <environment-frame>))
+             call-in-frame(frame, frame-note-application-starting, frame);
+           end;
+         end method,
+         port: _default-port);
     <application-initialized-message> =>
       do-frames
-	(method (frame :: <frame>)
-	   when (instance?(frame, <environment-frame>))
-	     call-in-frame(frame, frame-note-application-starting-done, frame);
-	   end;
-	 end method,
-	 port: _default-port);
+        (method (frame :: <frame>)
+           when (instance?(frame, <environment-frame>))
+             call-in-frame(frame, frame-note-application-starting-done, frame);
+           end;
+         end method,
+         port: _default-port);
     <run-application-failed-message> =>
       do-frames
-	(method (frame :: <frame>)
-	   when (instance?(frame, <environment-frame>))
-	     call-in-frame(frame, frame-note-application-starting-done, frame);
-	   end;
-	 end method,
-	 port: _default-port);
+        (method (frame :: <frame>)
+           when (instance?(frame, <environment-frame>))
+             call-in-frame(frame, frame-note-application-starting-done, frame);
+           end;
+         end method,
+         port: _default-port);
       let application = project.project-application;
       with-environment-frame
-	  (frame = _default-port, <project-browser>, project: project)
-	let project-name = environment-object-display-name(project, project, #f);
-	let message
-	  = format-to-string("Could not execute the file '%s' to start project '%s'.",
-			     application.application-filename, project-name);
-	environment-error-message(message, owner: frame);
+          (frame = _default-port, <project-browser>, project: project)
+        let project-name = environment-object-display-name(project, project, #f);
+        let message
+          = format-to-string("Could not execute the file '%s' to start project '%s'.",
+                             application.application-filename, project-name);
+        environment-error-message(message, owner: frame);
       end;
     <application-state-changed-message> =>
       let application = project.project-application;
       if (application)
-	let state = application.application-state;
-	do-project-frames
-	  (method (frame :: <environment-frame>)
-	     call-in-frame(frame, 
-			   frame-note-application-state-changed,
-			   frame, state)
-	   end method,
-	   project,
-	   include: <environment-frame>)
+        let state = application.application-state;
+        do-project-frames
+          (method (frame :: <environment-frame>)
+             call-in-frame(frame,
+                           frame-note-application-state-changed,
+                           frame, state)
+           end method,
+           project,
+           include: <environment-frame>)
       end;
     <application-threads-changed-message> =>
       do-project-frames
-	(method (frame :: <environment-frame>)
-	   call-in-frame(frame, frame-note-application-threads-changed, frame)
-	 end method,
-	 project,
-	 include: <environment-frame>);
+        (method (frame :: <environment-frame>)
+           call-in-frame(frame, frame-note-application-threads-changed, frame)
+         end method,
+         project,
+         include: <environment-frame>);
     <thread-interactive-warnings-message> =>
       let thread = message.message-thread;
       let id = message.message-transaction-id;
       let warnings = message.message-warnings;
       do-project-frames
-	(method (frame)
-	   call-in-frame(frame, frame-note-interactive-compilation-warnings,
-			 frame, thread, id, warnings)
-	 end method,
-	 project);
+        (method (frame)
+           call-in-frame(frame, frame-note-interactive-compilation-warnings,
+                         frame, thread, id, warnings)
+         end method,
+         project);
     otherwise =>
       #f;
   end
@@ -275,8 +275,8 @@ end function environment-tools-application-message-receiver;
 
 //---*** Should we do this at top-level, or in some initialisation function?
 tune-in($project-channel,
-	environment-tools-application-message-receiver,
-	message-type: <application-message>);
+        environment-tools-application-message-receiver,
+        message-type: <application-message>);
 
 define function environment-tools-breakpoint-message-receiver
     (message :: <breakpoint-state-change-message>) => ()
@@ -286,31 +286,31 @@ define function environment-tools-breakpoint-message-receiver
     <single-breakpoint-state-change-message> =>
       let breakpoint = message.message-breakpoint;
       do-project-frames
-	(method (frame :: <environment-frame>)
-	   call-in-frame(frame, frame-note-breakpoint-state-changed, 
-			 frame, breakpoint, state)
-	 end,
-	 project,
-	 include: <environment-frame>);
+        (method (frame :: <environment-frame>)
+           call-in-frame(frame, frame-note-breakpoint-state-changed,
+                         frame, breakpoint, state)
+         end,
+         project,
+         include: <environment-frame>);
 
     <all-breakpoints-state-change-message> =>
       do-project-frames
-	(method (frame :: <environment-frame>)
-	   call-in-frame(frame, frame-note-all-breakpoints-changed,
-			 frame, state)
-	 end,
-	 project);
+        (method (frame :: <environment-frame>)
+           call-in-frame(frame, frame-note-all-breakpoints-changed,
+                         frame, state)
+         end,
+         project);
     <breakpoint-state-changes-failed-message> =>
       let breakpoints = message.message-breakpoints;
       notify-user-breakpoint-state-changes-failed
-	(project, state, breakpoints);
+        (project, state, breakpoints);
   end;
 end function environment-tools-breakpoint-message-receiver;
 
 //---*** Should we do this at top-level, or in some initialisation function?
 tune-in($project-channel,
-	environment-tools-breakpoint-message-receiver,
-	message-type: <breakpoint-state-change-message>);
+        environment-tools-breakpoint-message-receiver,
+        message-type: <breakpoint-state-change-message>);
 
 define open generic frame-note-all-breakpoints-changed
     (frame :: <environment-frame>, state :: <breakpoint-state>)
@@ -331,21 +331,21 @@ define macro with-frame-background-operation
       ?body:body
     end }
  => { call-in-frame(?frame,
-		    method() frame-status-message(?frame) := ?name end);
+                    method() frame-status-message(?frame) := ?name end);
       make(<thread>,
-	   name: ?name,
-	   function: method ()
-		       with-background-cursor (?frame)
-			 ?body
-		       end
-		     end)
+           name: ?name,
+           function: method ()
+                       with-background-cursor (?frame)
+                         ?body
+                       end
+                     end)
       }
 end macro with-frame-background-operation;
 
 
 /// Open
 
-define open generic frame-open-object 
+define open generic frame-open-object
     (frame :: <frame>, object :: <object>) => ();
 
 define method frame-open-object
@@ -385,9 +385,9 @@ end method locator-has-source?;
 
 /// Browsing
 
-define open generic frame-browse-object  
+define open generic frame-browse-object
     (frame :: <frame>, object :: <object>) => ();
-define open generic frame-browse-object? 
+define open generic frame-browse-object?
     (frame :: <frame>, object :: <object>) => (browse? :: <boolean>);
 
 define open generic frame-browse-object-type
@@ -411,7 +411,7 @@ define method frame-browse-object
   environment-action-unavailable
     (frame,
      format-to-string("No browser information for '%s'.",
-		      frame-default-object-name(frame, object)))
+                      frame-default-object-name(frame, object)))
 end method frame-browse-object;
 
 define method frame-browse-object
@@ -435,7 +435,7 @@ define method frame-browse-object-type
   environment-action-unavailable
     (frame,
      format-to-string("No type to browse for '%s'.",
-		      frame-default-object-name(frame, object)))
+                      frame-default-object-name(frame, object)))
 end method frame-browse-object-type;
 
 define method frame-browse-object-type
@@ -446,7 +446,7 @@ define method frame-browse-object-type
   with-current-environment-frame (frame)
     browse-object-type(project, object)
   end
-    | next-method() 
+    | next-method()
 end method frame-browse-object-type;
 
 // Default method
@@ -455,7 +455,7 @@ define method frame-browse-object-generic-function
   environment-action-unavailable
     (frame,
      format-to-string("No generic function to browse for '%s'.",
-		      frame-default-object-name(frame, object)))
+                      frame-default-object-name(frame, object)))
 end method frame-browse-object-generic-function;
 
 define method frame-browse-object-generic-function
@@ -467,7 +467,7 @@ define method frame-browse-object-generic-function
   with-current-environment-frame (frame)
     browse-object-generic-function(project, object)
   end
-    | next-method() 
+    | next-method()
 end method frame-browse-object-generic-function;
 
 
@@ -504,7 +504,7 @@ define method frame-describe-object
   environment-action-unavailable
     (frame,
      format-to-string("Cannot describe '%s'.",
-		      frame-default-object-name(frame, object)))
+                      frame-default-object-name(frame, object)))
 end method frame-describe-object;
 
 define method frame-describe-object
@@ -536,7 +536,7 @@ define method frame-document-object
   environment-action-unavailable
     (frame,
      format-to-string("Cannot show documentation for '%s'.",
-		      frame-default-object-name(frame, object)))
+                      frame-default-object-name(frame, object)))
 end method frame-document-object;
 
 define method frame-document-object
@@ -572,7 +572,7 @@ define method frame-target-object
 end method frame-target-object;
 
 define method frame-target-object
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      breakpoint :: <environment-object-breakpoint-object>)
  => (result :: false-or(<environment-object>))
   breakpoint-object(breakpoint)
@@ -696,9 +696,9 @@ define sealed method make
  => (wrapper :: <source-wrapper>)
   let concrete-class
     = select (object by instance?)
-	<source-record>  => <source-record-wrapper>;
-	<file-locator>   => <source-locator-wrapper>;
-	<project-object> => <source-project-wrapper>;
+        <source-record>  => <source-record-wrapper>;
+        <file-locator>   => <source-locator-wrapper>;
+        <project-object> => <source-project-wrapper>;
       end select;
   apply(make, concrete-class, keys)
 end method make;
@@ -799,11 +799,11 @@ define method target-sheet-items-to-string
     let columns = table-control-columns(gadget);
     for (item in items)
       for (column :: <table-column> in columns,
-	   prefix = "" then "\t")
-	let generator = table-column-generator(column);
-	let subitem = generator(item);
-	let label = gadget-item-label(gadget, subitem);
-	format(stream, "%s%s", prefix, label)
+           prefix = "" then "\t")
+        let generator = table-column-generator(column);
+        let subitem = generator(item);
+        let label = gadget-item-label(gadget, subitem);
+        format(stream, "%s%s", prefix, label)
       end;
       format(stream, "\n")
     end
@@ -816,19 +816,19 @@ end method target-sheet-items-to-string;
 // Displays and "executes" a target-specific menu
 define sealed method display-environment-popup-menu
     (frame :: <environment-frame>, target, #key x, y, #all-keys) => ()
-  ignore(x, y);		// let DUIM place the menu appropriately
+  ignore(x, y);                // let DUIM place the menu appropriately
   do-display-environment-popup-menu(frame, top-level-sheet(frame), target)
 end method display-environment-popup-menu;
 
 define sealed method display-environment-popup-menu
     (sheet :: <sheet>, target, #key x, y, #all-keys) => ()
-  ignore(x, y);		// let DUIM place the menu appropriately
+  ignore(x, y);                // let DUIM place the menu appropriately
   do-display-environment-popup-menu(sheet-frame(sheet), sheet, target)
 end method display-environment-popup-menu;
 
 define sealed method display-environment-popup-menu
     (sheet :: <collection-gadget>, target, #key x, y, #all-keys) => ()
-  ignore(x, y);		// let DUIM place the menu appropriately
+  ignore(x, y);                // let DUIM place the menu appropriately
   do-display-environment-popup-menu(sheet-frame(sheet), sheet, gadget-value-key(sheet)(target))
 end method display-environment-popup-menu;
 
@@ -873,7 +873,7 @@ define method frame-edit-object
     environment-action-unavailable
       (frame,
        format-to-string("No known source for '%s'.",
-			frame-default-object-name(frame, object)))
+                        frame-default-object-name(frame, object)))
   end
 end method frame-edit-object;
 
@@ -898,7 +898,7 @@ define method object-exists?
 end method object-exists?;
 
 define method object-exists?
-    (server :: <server>, object :: <environment-object>) 
+    (server :: <server>, object :: <environment-object>)
  => (exists? :: <boolean>)
   environment-object-exists?(server, object)
 end method object-exists?;
@@ -965,11 +965,11 @@ define method do-frame-edit-object
   environment-action-unavailable
     (frame,
      format-to-string("Don't know how to edit source for '%s'.",
-		      frame-default-object-name(frame, object)));
+                      frame-default-object-name(frame, object)));
   #f
 end method do-frame-edit-object;
 
-define method do-frame-edit-object 
+define method do-frame-edit-object
     (frame :: <environment-frame>, locator :: <file-locator>)
  => (found-definition? :: <boolean>)
   if (file-exists?(locator))
@@ -978,7 +978,7 @@ define method do-frame-edit-object
   end
 end method do-frame-edit-object;
 
-define method do-frame-edit-object 
+define method do-frame-edit-object
     (frame :: <environment-frame>, object :: <file-source-record>)
  => (found-definition? :: <boolean>)
   let project = frame-current-project(frame);
@@ -988,7 +988,7 @@ define method do-frame-edit-object
   end;
 end method do-frame-edit-object;
 
-define method do-frame-edit-object 
+define method do-frame-edit-object
     (frame :: <environment-frame>, object :: <source-location>)
  => (found-definition? :: <boolean>)
   let project = frame-current-project(frame);
@@ -998,12 +998,12 @@ define method do-frame-edit-object
       #t
     end;
   exception (type-union(<file-does-not-exist-error>,
-			<source-record-missing>))
+                        <source-record-missing>))
     #f;
   end
 end method do-frame-edit-object;
 
-define method do-frame-edit-object 
+define method do-frame-edit-object
     (frame :: <environment-frame>, object :: <environment-object>)
  => (found-definition? :: <boolean>)
   let project  = frame-current-project(frame);
@@ -1027,13 +1027,13 @@ define method do-frame-edit-object
        project, function);
     // Remove the generic function if it seems to be implicit
     when (any?(method (m)
-	         let l1 = environment-object-source-location(project, function);
-	         let l2 = environment-object-source-location(project, m);
+                 let l1 = environment-object-source-location(project, function);
+                 let l2 = environment-object-source-location(project, m);
                  m ~== function
                  & l1
                  & l2
-	         & source-location-source-record(l1) = source-location-source-record(l2)
-	         & source-location-start-offset(l1) = source-location-start-offset(l2)
+                 & source-location-source-record(l1) = source-location-source-record(l2)
+                 & source-location-start-offset(l1) = source-location-start-offset(l2)
                end method,
                methods))
       remove!(methods, function)
@@ -1076,7 +1076,7 @@ define method do-frame-edit-object
   end
 end method do-frame-edit-object;
 
-define method do-frame-edit-object 
+define method do-frame-edit-object
     (frame :: <environment-frame>, name :: <name-object>)
  => (found-definition? :: <boolean>)
   let project = frame-current-project(frame);
@@ -1094,7 +1094,7 @@ define method dylan-clipboard-object
     (clipboard-data-available?(<object>, clipboard)
        & get-clipboard-data-as(<object>, clipboard))
     | (clipboard-data-available?(<string>, clipboard)
-	 & get-clipboard-data-as(<string>, clipboard))
+         & get-clipboard-data-as(<string>, clipboard))
   end
 end method dylan-clipboard-object;
 
@@ -1121,7 +1121,7 @@ end method dylan-clipboard-object-available?;
 /// Popup menu handling
 
 define method make-environment-popup-menu
-    (frame :: <environment-frame>, sheet :: <sheet>, 
+    (frame :: <environment-frame>, sheet :: <sheet>,
      target :: <command-target>)
  => (menu :: false-or(<menu>))
   let framem = frame-manager(frame);
@@ -1131,13 +1131,13 @@ define method make-environment-popup-menu
   // Build a menu from the command table for this object
   element(cache, class, default: #f)
     | begin
-	let comtab = frame-command-table-for-target(frame, target);
-	let menu
-	  = make-menu-from-command-table-menu
-	      (command-table-menu(comtab), frame, framem,
-	       command-table: comtab,
-	       owner: frame);
-	element(cache, class) := menu
+        let comtab = frame-command-table-for-target(frame, target);
+        let menu
+          = make-menu-from-command-table-menu
+              (command-table-menu(comtab), frame, framem,
+               command-table: comtab,
+               owner: frame);
+        element(cache, class) := menu
       end
 end method make-environment-popup-menu;
 
@@ -1180,17 +1180,17 @@ define method update-frame-commands-for-browse-target
   let environment-object? = instance?(object, <environment-object>);
   let (describable?, documentable?, browsable?, type-browsable?, generic?)
     = if (project & object-exists?(project, object))
-	let type = environment-object? & environment-object-type(project, object);
-	let describable?    = frame-describe-object?(frame, object);
-	let documentable?   = frame-document-object?(frame, object);
-	let browsable?      = frame-browse-object?(frame, object);
-	let type-browsable? = type & (~ instance?(type, <complex-type-expression-object>));
-	let generic?
-	  = instance?(object, <method-object>)
-	      & method-generic-function(project, object) ~= #f;
-	values(describable?, documentable?, browsable?, type-browsable?, generic?)
+        let type = environment-object? & environment-object-type(project, object);
+        let describable?    = frame-describe-object?(frame, object);
+        let documentable?   = frame-document-object?(frame, object);
+        let browsable?      = frame-browse-object?(frame, object);
+        let type-browsable? = type & (~ instance?(type, <complex-type-expression-object>));
+        let generic?
+          = instance?(object, <method-object>)
+              & method-generic-function(project, object) ~= #f;
+        values(describable?, documentable?, browsable?, type-browsable?, generic?)
       else
-	values(#f, #f, #f, #f, #f)
+        values(#f, #f, #f, #f, #f)
       end;
   command-enabled?(frame-describe-target,     frame) := describable?;
   command-enabled?(frame-document-target,     frame) := documentable?;
@@ -1203,43 +1203,43 @@ end method update-frame-commands-for-browse-target;
 define method menu-default-gadget-setter
     (default-gadget :: false-or(<gadget>), menu :: <menu>) => ()
   local method update-gadget-default-state
-	    (button :: <push-menu-button>) => ()
-	  gadget-default?(button) := (button == default-gadget)
-	end method update-gadget-default-state;
+            (button :: <push-menu-button>) => ()
+          gadget-default?(button) := (button == default-gadget)
+        end method update-gadget-default-state;
   local method update-children-default-state
-	    (gadget :: <gadget>) => ()
-	  for (child in sheet-children(gadget))
-	    select (child by instance?)
-	      <menu> =>
-		//---*** Can we make a menu be the default?
-		#f;
-	      <menu-box> =>
-		update-children-default-state(child);
-	      <push-menu-button> =>
-		update-gadget-default-state(child);
-	      otherwise =>
-		#f;
-	    end
-	  end
-	end method update-children-default-state;
+            (gadget :: <gadget>) => ()
+          for (child in sheet-children(gadget))
+            select (child by instance?)
+              <menu> =>
+                //---*** Can we make a menu be the default?
+                #f;
+              <menu-box> =>
+                update-children-default-state(child);
+              <push-menu-button> =>
+                update-gadget-default-state(child);
+              otherwise =>
+                #f;
+            end
+          end
+        end method update-children-default-state;
   update-children-default-state(menu)
 end method menu-default-gadget-setter;
 
 //---*** Maybe this should be in DUIM?
-define method find-menu-button 
+define method find-menu-button
     (menu :: <menu>, function :: <function>)
  => (button :: false-or(<menu-button>))
   block (return)
     do-sheet-tree
       (method (sheet :: <sheet>)
-	 if (instance?(sheet, <menu-button>)
-	       & gadget-command(sheet) == function)
-	   return(sheet)
-	 end
+         if (instance?(sheet, <menu-button>)
+               & gadget-command(sheet) == function)
+           return(sheet)
+         end
        end,
        menu)
   end
-end method find-menu-button;  
+end method find-menu-button;
 
 //---*** andrewa: this is a lot of work to update the default command.
 //---*** Ideally we'd be able to change a command table's default command
@@ -1271,11 +1271,11 @@ define method environment-activate-callback
     environment-action-unavailable
       (frame,
        format-to-string("No action available",
-			if (name)
-			  format-to-string(" for %s", name)
-			else
-			  ""
-			end))
+                        if (name)
+                          format-to-string(" for %s", name)
+                        else
+                          ""
+                        end))
   end
 end method environment-activate-callback;
 
@@ -1287,7 +1287,7 @@ end method environment-activate-callback;
 
 /// Environment status bar
 
-define method make-environment-status-bar 
+define method make-environment-status-bar
     (frame :: <environment-frame>) => (bar :: <status-bar>)
   with-frame-manager (frame-manager(frame))
     make(<status-bar>)
@@ -1342,13 +1342,13 @@ define function store-search-settings () => ()
   $search-settings.match-regexp?      := description.search-description-match-regexp?;
 
   local method pad (c :: <collection>, min :: <integer>) => (c :: <collection>)
-	  let blanks = min - size(c);
-	  if (blanks > 0)
-	    concatenate(c, make(<vector>, fill: "", size: blanks))
-	  else
-	    c
-	  end;
-	end method pad;
+          let blanks = min - size(c);
+          if (blanks > 0)
+            concatenate(c, make(<vector>, fill: "", size: blanks))
+          else
+            c
+          end;
+        end method pad;
 
   let search-strings = pad(previous-search-strings(), $search-string-count);
   $search-settings.search1  := search-strings[0];
@@ -1385,28 +1385,28 @@ define function restore-search-settings () => ()
   description.search-description-match-case?   := $search-settings.match-case?;
   description.search-description-match-regexp? := $search-settings.match-regexp?;
   current-search-description() := description;
-  
+
   previous-search-strings() := vector($search-settings.search1,
-				      $search-settings.search2,
-				      $search-settings.search3,
-				      $search-settings.search4,
-				      $search-settings.search5,
-				      $search-settings.search6,
-				      $search-settings.search7,
-				      $search-settings.search8,
-				      $search-settings.search9,
-				      $search-settings.search10);
-  
+                                      $search-settings.search2,
+                                      $search-settings.search3,
+                                      $search-settings.search4,
+                                      $search-settings.search5,
+                                      $search-settings.search6,
+                                      $search-settings.search7,
+                                      $search-settings.search8,
+                                      $search-settings.search9,
+                                      $search-settings.search10);
+
   previous-replace-strings() := vector($search-settings.replace1,
-				       $search-settings.replace2,
-				       $search-settings.replace3,
-				       $search-settings.replace4,
-				       $search-settings.replace5,
-				       $search-settings.replace6,
-				       $search-settings.replace7,
-				       $search-settings.replace8,
-				       $search-settings.replace9,
-				       $search-settings.replace10);
+                                       $search-settings.replace2,
+                                       $search-settings.replace3,
+                                       $search-settings.replace4,
+                                       $search-settings.replace5,
+                                       $search-settings.replace6,
+                                       $search-settings.replace7,
+                                       $search-settings.replace8,
+                                       $search-settings.replace9,
+                                       $search-settings.replace10);
 end function restore-search-settings;
 
 restore-search-settings();
@@ -1421,8 +1421,8 @@ define function store-search-settings-receiver
 end function store-search-settings-receiver;
 
 tune-in($environment-channel,
-	store-search-settings-receiver,
-	message-type: <environment-stopping-message>);
+        store-search-settings-receiver,
+        message-type: <environment-stopping-message>);
 
 // Subclass <search-frame> in order to add persistent settings
 
@@ -1486,8 +1486,8 @@ define method handle-event
     (frame :: <environment-frame>, event :: <frame-focus-in-event>) => ()
   next-method();
   when (environment-auto-raise-all-frames() == #"all-frames"
-	| (environment-auto-raise-all-frames() == #"primary-frame"
-	   & instance?(frame, <environment-primary-frame>)))
+        | (environment-auto-raise-all-frames() == #"primary-frame"
+           & instance?(frame, <environment-primary-frame>)))
     raise-all-frames(frame);
   end when;
 end method handle-event;
@@ -1537,18 +1537,18 @@ define method note-frame-state-changed
   // If the state hasn't actually changed, don't trigger anything
   unless (new-state = old-state)
     when (environment-auto-lower-all-frames() == #"all-frames"
-	  | (environment-auto-lower-all-frames() == #"primary-frame"
-	     & instance?(frame, <environment-primary-frame>)))
+          | (environment-auto-lower-all-frames() == #"primary-frame"
+             & instance?(frame, <environment-primary-frame>)))
       select (new-state)
-	#"iconified"  =>
-	  minimize-all-frames(frame);
-	  // Make sure the trigger frame gets restored by
-	  // undo-minimize-all-frames, too.
-	  *minimized-frames* := add-new!(*minimized-frames*, frame);
-	#"deiconified" =>
-	  undo-minimize-all-frames(frame);
-	otherwise      => 
-	  #f;
+        #"iconified"  =>
+          minimize-all-frames(frame);
+          // Make sure the trigger frame gets restored by
+          // undo-minimize-all-frames, too.
+          *minimized-frames* := add-new!(*minimized-frames*, frame);
+        #"deiconified" =>
+          undo-minimize-all-frames(frame);
+        otherwise      =>
+          #f;
       end select;
     end when;
   end unless;
@@ -1576,7 +1576,7 @@ define sealed inline method frame-current-project
 end method frame-current-project;
 
 define sealed method frame-note-project-changed
-    (frame :: <environment-fixed-project-frame>, 
+    (frame :: <environment-fixed-project-frame>,
      project :: false-or(<project-object>))
  => ()
   error("Changed project in a fixed-project frame.")
@@ -1597,7 +1597,7 @@ define method reuse-matching-frame?
   frame.frame-project = project
     & next-method()
 end method reuse-matching-frame?;
-    
+
 define method handle-event
     (frame :: <environment-fixed-project-frame>, event :: <frame-mapped-event>)
  => ()
@@ -1652,7 +1652,7 @@ define method make-clone-tool-bar-buttons
  => (buttons :: <sequence>)
   vector(make(<button>,
               label: $clone-bitmap,
-	      documentation: "New Window",
+              documentation: "New Window",
               command: clone-tool,
               activate-callback: method (sheet)
                                    let frame = sheet-frame(sheet);
@@ -1673,15 +1673,15 @@ define open generic frame-import-file
 // Import a LID file as a project file
 
 define function import-lid-file
-    (#key frame :: false-or(<frame>) = #f, 
+    (#key frame :: false-or(<frame>) = #f,
           filename :: false-or(<file-locator>) = #f)
  => (status-code :: false-or(<integer>))
   let filename
     = filename
         | environment-choose-file
             (title:   "Import LID",
-	     owner:   frame,
-	     filters: #[#"lid"]);
+             owner:   frame,
+             filters: #[#"lid"]);
   when (filename)
     let project = import-project-from-file(filename);
     //--- cpage: 1997.09.10 We need to add a real error message.
@@ -1697,7 +1697,7 @@ end function import-lid-file;
 
 // Default method
 define method frame-import-file
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      #key filename :: false-or(<file-locator>) = #f)
  => ()
   import-lid-file(frame: frame, filename: filename);

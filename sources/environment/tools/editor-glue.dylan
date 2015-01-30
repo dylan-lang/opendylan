@@ -12,7 +12,7 @@ define method find-editor
     (frame :: <environment-frame>)
  => (found? :: <boolean>)
   execute-command(make(<editor-open-command>));
-  #t	//--- a bit of a cheat
+  #t        //--- a bit of a cheat
 end method find-editor;
 
 define function editor-open-file
@@ -24,21 +24,21 @@ define function editor-open-file
   let end-line     = end-line     | start-line;
   let end-column   = end-column   | start-column;
   execute-command(make(<editor-open-file-command>,
-		       pathname:     as(<string>, pathname),
-		       start-line:   start-line,
-		       start-column: start-column,
-		       end-line:     end-line,
-		       end-column:   end-column,
-		       editor-frame: deuce-frame));
-  #t	//--- a bit of a cheat
+                       pathname:     as(<string>, pathname),
+                       start-line:   start-line,
+                       start-column: start-column,
+                       end-line:     end-line,
+                       end-column:   end-column,
+                       editor-frame: deuce-frame));
+  #t        //--- a bit of a cheat
 end function editor-open-file;
 
 define method editor-new-file
     (#key pathname, deuce-frame)
  => (succeeded? :: <boolean>)
   execute-command(make(<editor-new-file-command>,
-		       pathname:     pathname & as(<string>, pathname),
-		       editor-frame: deuce-frame))
+                       pathname:     pathname & as(<string>, pathname),
+                       editor-frame: deuce-frame))
 end method editor-new-file;
 
 define method editor-edit-definitions
@@ -46,16 +46,16 @@ define method editor-edit-definitions
      #key deuce-frame, title)
  => (succeeded? :: <boolean>)
   execute-command(make(<editor-edit-definitions-command>,
-		       project:      project,
-		       definitions:  definitions,
-		       title:        title,
-		       editor-frame: deuce-frame))
+                       project:      project,
+                       definitions:  definitions,
+                       title:        title,
+                       editor-frame: deuce-frame))
 end method editor-edit-definitions;
 
 
 /// Glue from source locations to the Editor Manager
 
-define sideways method edit-definition 
+define sideways method edit-definition
     (project :: <project-object>, object :: <environment-object>)
  => (found-definition? :: <boolean>)
   let location = environment-object-source-location(project, object);
@@ -64,7 +64,7 @@ define sideways method edit-definition
       edit-source-location(project, location);
       #t
     exception (type-union(<file-does-not-exist-error>,
-			  <source-record-missing>))
+                          <source-record-missing>))
       #f;
     end
   end
@@ -81,21 +81,21 @@ define sideways method edit-source-location
   let start-column = source-offset-column(start-offset);
   if (start-offset == end-offset)
     edit-source-record
-      (project, record, 
+      (project, record,
        start-line: start-line, start-column: start-column)
   else
     let end-line   = source-offset-line(end-offset)   - 1;
     let end-column = source-offset-column(end-offset);
     edit-source-record
-      (project, record, 
-       start-line: start-line, start-column: start-column, 
+      (project, record,
+       start-line: start-line, start-column: start-column,
        end-line:   end-line,   end-column:   end-column)
   end
 end method edit-source-location;
 
 //---*** This needs to edit the newest source, not the canonical source, right?
 define sideways method edit-source-record
-    (project :: <project-object>, record :: <file-source-record>, 
+    (project :: <project-object>, record :: <file-source-record>,
      #key start-line, start-column, end-line, end-column)
  => ()
   block ()
@@ -104,11 +104,11 @@ define sideways method edit-source-record
     let start-line = if (start-line) start-line + first-line else 0 end;
     let end-line   = if (end-line)   end-line   + first-line else 0 end;
     editor-open-file
-      (locator, 
-       start-line: start-line, start-column: start-column, 
+      (locator,
+       start-line: start-line, start-column: start-column,
        end-line:   end-line,   end-column:   end-column)
   exception (type-union(<file-does-not-exist-error>,
-			<source-record-missing>))
+                        <source-record-missing>))
     #f
   end
 end method edit-source-record;
@@ -120,29 +120,29 @@ define method editor-save-project-files
     (project :: <project-object>, owner :: <frame>)
  => (all-saved? :: <boolean>)
   let subprojects = project-used-projects(project, indirect?: #t);
-  let sources 
+  let sources
     = apply(concatenate,
-	    project-all-sources(project), 
-	    map(project-all-sources, subprojects));
+            project-all-sources(project),
+            map(project-all-sources, subprojects));
   let pathnames = map(source-full-name, sources);
   //--- Maybe the following test should be some 'locator-equal?' function
   let pathnames = remove-duplicates(pathnames, test: \=);
   let reason
     = format-to-string("The following modified files belong to\n"
-		       "project %s or its subprojects.\n"
-		       "Choose which files to save before building.",
-		       environment-object-display-name(project, project, #f));
+                       "project %s or its subprojects.\n"
+                       "Choose which files to save before building.",
+                       environment-object-display-name(project, project, #f));
   //--- In theory, need to deal with the possibility of timeout while
   //--- waiting for results.  In practice, for now, Deuce never times out.
   //--- We might also want to disabled the owner frame while making this call,
   //--- but there's no guarantee the backend can do so.
   //--- We might later want to factor out the reason (and exit-label string).
   execute-command(make(<editor-save-files-command>,
-		       project:      project,
-		       pathnames:    pathnames,
-		       reason:       reason,
-		       editor-frame: owner,
-		       exit-label:   "&Build"))
+                       project:      project,
+                       pathnames:    pathnames,
+                       reason:       reason,
+                       editor-frame: owner,
+                       exit-label:   "&Build"))
 end method editor-save-project-files;
 
 

@@ -13,7 +13,7 @@ define constant $environment-user-exit-code   = 1;
 
 /// ENVIRONMENT-HANDLER
 
-define method environment-handler 
+define method environment-handler
     (condition :: <serious-condition>, next-handler :: <function>)
   block ()
     do-environment-handler(condition, next-handler);
@@ -55,7 +55,7 @@ define method do-environment-handler
     = format-to-string
         ("%s is running very low on memory, so unsaved data may be lost.\n"
          "Please close any unused projects or applications.",
-	 product-name);
+         product-name);
   let owner = current-frame();
   notify-user(message,
               title: product-name,
@@ -66,15 +66,15 @@ end method do-environment-handler;
 
 /// CHOOSE-CONDITION-ACTION
 
-define method choose-condition-action 
+define method choose-condition-action
     (condition :: <condition>)
  => (dialog :: <environment-handler-dialog>, ok? :: <boolean>)
   let framem = find-frame-manager();
   with-frame-manager (framem)
     let dialog
       = make(<environment-handler-dialog>,
-	     owner: current-frame(),
-	     condition: condition);
+             owner: current-frame(),
+             condition: condition);
     values(dialog, start-dialog(dialog) & #t);
   end;
 end method choose-condition-action;
@@ -115,7 +115,7 @@ define method safe-condition-to-string
       format-to-string("%s", condition);
     exception (print-error :: <error>)
       format-to-string("%=\nsignalled while trying to print an instance of %=",
-		       print-error, object-class(condition));
+                       print-error, object-class(condition));
     end block;
   exception (error :: <error>)
     "*** Crashed trying to print condition ***"
@@ -132,27 +132,27 @@ define frame <environment-handler-dialog> (<dialog-frame>)
     required-init-keyword: condition:;
   pane handler-dialog-message-pane (dialog)
     make(<text-editor>,
-	 read-only?: #t, tab-stop?: #t,
-	 border: #"sunken",
-	 scroll-bars: #"vertical",
-	 lines: 6, columns: 80);
+         read-only?: #t, tab-stop?: #t,
+         border: #"sunken",
+         scroll-bars: #"vertical",
+         lines: 6, columns: 80);
   pane handler-dialog-action-pane (dialog)
     make(<radio-box>,
-	 items: compute-handler-action-items(),
-	 label-key: tail,
-	 value-key: head,
-	 orientation: #"vertical",
-	 selection: vector(0));
+         items: compute-handler-action-items(),
+         label-key: tail,
+         value-key: head,
+         orientation: #"vertical",
+         selection: vector(0));
   layout (dialog)
     horizontally (spacing: 8, y-alignment: #"top")
       make(<label>,
-	   label: $internal-error-bitmap,
-	   width:  32, min-width:  32, max-width:  32,
-	   height: 32, min-height: 32, max-height: 32);
+           label: $internal-error-bitmap,
+           width:  32, min-width:  32, max-width:  32,
+           height: 32, min-height: 32, max-height: 32);
       vertically (spacing: 8, x-alignment: #"left")
         make(<label>,
-	     label: "INTERNAL ERROR",
-	     text-style: make(<text-style>, weight: #"bold", size: #"large"));
+             label: "INTERNAL ERROR",
+             text-style: make(<text-style>, weight: #"bold", size: #"large"));
         dialog.handler-dialog-message-pane;
         dialog.handler-dialog-action-pane;
       end;
@@ -164,7 +164,7 @@ end frame <environment-handler-dialog>;
 define method initialize
     (dialog :: <environment-handler-dialog>, #key)
   next-method();
-  let condition-message 
+  let condition-message
     = safe-condition-to-string(dialog.handler-dialog-condition);
   dialog.handler-dialog-message-pane.gadget-value := condition-message;
 end method initialize;
@@ -172,16 +172,16 @@ end method initialize;
 
 /// COMPUTE-HANDLER-ACTION-ITEMS
 
-define method compute-handler-action-items 
+define method compute-handler-action-items
     () => (items)
   let product-name = safe-release-product-name();
   local method add-product-name (item :: <pair>)
-	  pair(head(item),
-	       format-to-string(tail(item), product-name))
-	end method;
+          pair(head(item),
+               format-to-string(tail(item), product-name))
+        end method;
   let items = #[#(#"abort" . "Abort the current operation and continue %s"),
-		#(#"exit" . "Exit %s"),
-		#(#"debug" . "Debug %s")];
+                #(#"exit" . "Exit %s"),
+                #(#"debug" . "Debug %s")];
   map(add-product-name, items)
 end method compute-handler-action-items;
 

@@ -1,6 +1,6 @@
 Module:    environment-application-commands
 Synopsis:  The application commands provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -24,11 +24,11 @@ define method context-application-context
   let properties = project-context.context-properties;
   get-property(properties, #"application", default: #f)
     | begin
-	let application-context :: <application-context>
-	  = make(<application-context>);
-	project-context.context-properties
-	  := put-property!(properties, #"application", application-context);
-	application-context
+        let application-context :: <application-context>
+          = make(<application-context>);
+        project-context.context-properties
+          := put-property!(properties, #"application", application-context);
+        application-context
       end
 end method context-application-context;
 
@@ -53,7 +53,7 @@ define constant $application-command-library
 register-default-command-library($application-command-library);
 
 define method command-library-prompt
-    (context :: <environment-context>, 
+    (context :: <environment-context>,
      library :: <application-command-library>)
  => (prompt :: false-or(<string>))
   if (context.context-application-tethered?)
@@ -62,7 +62,7 @@ define method command-library-prompt
 end method command-library-prompt;
 
 define method command-library-default-command-class
-    (context :: <environment-context>, 
+    (context :: <environment-context>,
      library :: <application-command-library>)
  => (class :: false-or(subclass(<command>)))
   if (context.context-application-tethered?)
@@ -86,8 +86,8 @@ define method ensure-command-available
     (context :: <environment-context>, command :: <application-command>)
  => ()
   unless (context.context-application-tethered?)
-    command-error("Application command '%s' requires an open application", 
-		  command-title(context, command))
+    command-error("Application command '%s' requires an open application",
+                  command-title(context, command))
   end
 end method ensure-command-available;
 
@@ -118,9 +118,9 @@ define sideways method parse-next-argument
       let project = context.context-project;
       let thread = project & find-indexed-thread(project, index);
       if (thread)
-	values(thread, next-index)
+        values(thread, next-index)
       else
-	parse-error("No thread %d", index)
+        parse-error("No thread %d", index)
       end
     end
   else
@@ -135,8 +135,8 @@ define method find-indexed-thread
   if (application)
     block (return)
       for (thread :: <thread-object> in application.application-threads)
-	let thread-index = thread-index(application, thread);
-	if (index == thread-index) return(thread) end
+        let thread-index = thread-index(application, thread);
+        if (index == thread-index) return(thread) end
       end;
       #f
     end
@@ -164,9 +164,9 @@ define sideways method parse-next-argument
       let thread = application-context & application-context.context-thread;
       let restart = thread & find-indexed-restart(project, thread, index);
       if (restart)
-	values(restart, next-index)
+        values(restart, next-index)
       else
-	parse-error("No restart %d", index)
+        parse-error("No restart %d", index)
       end
     end
   else
@@ -180,7 +180,7 @@ define method find-indexed-restart
  => (restart :: false-or(<restart-object>))
   let application = project.project-application;
   if (application)
-    index := index - 1;	// restarts are one indexed
+    index := index - 1;        // restarts are one indexed
     let restarts = application-thread-restarts(project, thread);
     if (index >= 0 & index < restarts.size) restarts[index] end
   end
@@ -204,16 +204,16 @@ define sideways method parse-next-argument
     block (return)
       let project = context.context-project;
       let thread
-	= if (project)
-	    let application-context = context.context-application-context;
-	    application-context.context-thread
-	  end;
+        = if (project)
+            let application-context = context.context-application-context;
+            application-context.context-thread
+          end;
       let stack-frame
-	= thread & find-indexed-stack-frame(project, thread, index - 1);
+        = thread & find-indexed-stack-frame(project, thread, index - 1);
       if (stack-frame)
-	values(stack-frame, next-index)
+        values(stack-frame, next-index)
       else
-	parse-error("No stack-frame %d", index)
+        parse-error("No stack-frame %d", index)
       end
     end
   else

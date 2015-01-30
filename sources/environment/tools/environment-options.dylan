@@ -129,32 +129,32 @@ define pane <environment-general-options-page> ()
                                  end);
   pane %qualify-names-pane (pane)
     make(<check-button>,
-	 label: "&Qualify object names using module and/or library",
-	 value: pane.%qualify-names?,
-	 value-changed-callback: method (button)
-				   pane.%qualify-names? := gadget-value(button)
-				 end);
+         label: "&Qualify object names using module and/or library",
+         value: pane.%qualify-names?,
+         value-changed-callback: method (button)
+                                   pane.%qualify-names? := gadget-value(button)
+                                 end);
   pane %confirm-stop-pane (pane)
     make(<check-button>,
-	 label: "&Confirm before stopping application",
-	 value: pane.%confirm-stop?,
-	 value-changed-callback: method (button)
-				   pane.%confirm-stop? := gadget-value(button)
-				 end);
+         label: "&Confirm before stopping application",
+         value: pane.%confirm-stop?,
+         value-changed-callback: method (button)
+                                   pane.%confirm-stop? := gadget-value(button)
+                                 end);
   pane %active-on-opening-pane (pane)
     make(<check-button>,
-	 label: "Project becomes active when &opened",
-	 value: pane.%active-on-opening?,
-	 value-changed-callback: method (button)
-				   pane.%active-on-opening? := gadget-value(button)
-				 end);
+         label: "Project becomes active when &opened",
+         value: pane.%active-on-opening?,
+         value-changed-callback: method (button)
+                                   pane.%active-on-opening? := gadget-value(button)
+                                 end);
   pane %active-on-starting-pane (pane)
     make(<check-button>,
-	 label: "Project becomes active when application &started",
-	 value: pane.%active-on-starting?,
-	 value-changed-callback: method (button)
-				   pane.%active-on-starting? := gadget-value(button)
-				 end);
+         label: "Project becomes active when application &started",
+         value: pane.%active-on-starting?,
+         value-changed-callback: method (button)
+                                   pane.%active-on-starting? := gadget-value(button)
+                                 end);
   layout (pane)
     vertically (spacing: 2)
       grouping ("Startup", max-width: $fill)
@@ -195,21 +195,21 @@ define pane <environment-build-options-page> ()
 
   pane %build-script-browse-button (pane)
     make(<button>,
-	 label: "Browse...",
-	 activate-callback: 
-	   method (gadget)
-	     let filename
-	       = environment-choose-file
-	           (title:  "Open",
-		    owner:   sheet-frame(pane),
-		    default: pane.%build-script,
-		    filters: #[#"build-script", #"all"]);
-	     if (filename)
-	       pane.%build-script := filename;
-	       gadget-text(pane.%build-script-field-pane)
+         label: "Browse...",
+         activate-callback:
+           method (gadget)
+             let filename
+               = environment-choose-file
+                   (title:  "Open",
+                    owner:   sheet-frame(pane),
+                    default: pane.%build-script,
+                    filters: #[#"build-script", #"all"]);
+             if (filename)
+               pane.%build-script := filename;
+               gadget-text(pane.%build-script-field-pane)
                  := as(<string>, filename);
-	     end
-	   end);
+             end
+           end);
 
   pane %build-script-pane (pane)
     horizontally (spacing: 4)
@@ -219,12 +219,12 @@ define pane <environment-build-options-page> ()
 
   pane %save-databases-pane (pane)
     make(<check-button>,
-	 label: "&Save compiler databases after builds",
-	 value: pane.%save-databases?,
-	 value-changed-callback:
-	   method (b)
-	     pane.%save-databases? := gadget-value(b)
-	   end method);
+         label: "&Save compiler databases after builds",
+         value: pane.%save-databases?,
+         value-changed-callback:
+           method (b)
+             pane.%save-databases? := gadget-value(b)
+           end method);
   pane %save-databases-now-pane (pane)
     make(<push-button>,
          label: "Save Databases Now",
@@ -237,28 +237,28 @@ define pane <environment-build-options-page> ()
            end);
   pane %link-mode-pane (pane)
     make(<option-box>,
-	 items: $link-modes,
-	 value-key: first, label-key: second,
-	 value: pane.%link-mode,
-	 value-changed-callback:
-	   method (b)
-	     pane.%link-mode := gadget-value(b)
-	   end method);
+         items: $link-modes,
+         value-key: first, label-key: second,
+         value: pane.%link-mode,
+         value-changed-callback:
+           method (b)
+             pane.%link-mode := gadget-value(b)
+           end method);
   pane %upgrade-warnings-pane (pane)
     make(<check-button>,
-	 label: "Treat all &warnings as serious warnings",
-	 value: pane.%upgrade-warnings?,
-	 value-changed-callback:
-	   method (b)
-	     pane.%upgrade-warnings? := gadget-value(b)
-	   end method);
+         label: "Treat all &warnings as serious warnings",
+         value: pane.%upgrade-warnings?,
+         value-changed-callback:
+           method (b)
+             pane.%upgrade-warnings? := gadget-value(b)
+           end method);
   layout (pane)
     vertically (spacing: 5, equalize-widths?: #t)
       make(<group-box>,
            label: "Database options",
            child: vertically (spacing: 8)
                     pane.%save-databases-pane;
-		    pane.%save-databases-now-pane;
+                    pane.%save-databases-now-pane;
                   end);
       make(<group-box>,
            label: "Warnings options",
@@ -267,9 +267,9 @@ define pane <environment-build-options-page> ()
                     pane.%upgrade-warnings-pane;
                   end);
       make(<group-box>,
-	   label: "Build script",
-	   max-width: $fill,
-	   child: pane.%build-script-pane);
+           label: "Build script",
+           max-width: $fill,
+           child: pane.%build-script-pane);
     end vertically;
 end pane <environment-build-options-page>;
 
@@ -281,10 +281,10 @@ define pane <environment-windows-options-page> ()
   pane %raise-frames-pane (pane)
     make(<radio-box>,
          orientation: #"vertical",
-	 max-width: $fill,
+         max-width: $fill,
          items: #[#["Never", #"none"],
-		  #["When primary window is selected", #"primary-frame"],
-		  #["When any window is selected", #"all-frames"]],
+                  #["When primary window is selected", #"primary-frame"],
+                  #["When any window is selected", #"all-frames"]],
          value: pane.%raise-frames,
          label-key: first,
          value-key: second,
@@ -294,10 +294,10 @@ define pane <environment-windows-options-page> ()
   pane %lower-frames-pane (pane)
     make(<radio-box>,
          orientation: #"vertical",
-	 max-width: $fill,
+         max-width: $fill,
          items: #[#["Never", #"none"],
-		  #["When primary window is minimized", #"primary-frame"],
-		  #["When any window is minimized", #"all-frames"]],
+                  #["When primary window is minimized", #"primary-frame"],
+                  #["When any window is minimized", #"all-frames"]],
          value: pane.%lower-frames,
          label-key: first,
          value-key: second,
@@ -308,11 +308,11 @@ define pane <environment-windows-options-page> ()
     vertically (spacing: 5, equalize-widths?: #t)
       make(<group-box>,
            label: "Raise other windows",
-	   max-width: $fill,
+           max-width: $fill,
            child: pane.%raise-frames-pane);
       make(<group-box>,
            label: "Minimize other windows",
-	   max-width: $fill,
+           max-width: $fill,
            child: pane.%lower-frames-pane);
     end vertically;
 end pane <environment-windows-options-page>;
@@ -323,46 +323,46 @@ define method frame-edit-options (frame :: <environment-frame>) => ()
     let general-page
       = make(<environment-general-options-page>,
              start-action: environment-start-action(),
-	     qualify-names?:      environment-qualify-names?(),
-	     confirm-stop?:       environment-application-confirm-stop?(),
-	     active-on-opening?:  environment-active-on-opening?(),
-	     active-on-starting?: environment-active-on-starting?());
+             qualify-names?:      environment-qualify-names?(),
+             confirm-stop?:       environment-application-confirm-stop?(),
+             active-on-opening?:  environment-active-on-opening?(),
+             active-on-starting?: environment-active-on-starting?());
     let build-page
       = make(<environment-build-options-page>,
-	     save-databases?:   environment-default-save-databases(),
+             save-databases?:   environment-default-save-databases(),
              build-script:      default-build-script(),
-	     link-mode:         environment-default-link-mode(),
-	     upgrade-warnings?: environment-default-upgrade-warnings());
+             link-mode:         environment-default-link-mode(),
+             upgrade-warnings?: environment-default-upgrade-warnings());
     let windows-page
       = make(<environment-windows-options-page>,
-	     raise-frames: environment-auto-raise-all-frames(),
-	     lower-frames: environment-auto-lower-all-frames());
+             raise-frames: environment-auto-raise-all-frames(),
+             lower-frames: environment-auto-lower-all-frames());
     let pages
       = vector(make(<property-page>, child: general-page, label: "General"),
-	       make(<property-page>, child: build-page,   label: "Build"),
-	       make(<property-page>, child: windows-page, label: "Windows"));
+               make(<property-page>, child: build-page,   label: "Build"),
+               make(<property-page>, child: windows-page, label: "Windows"));
     local method update-environment-options (dialog) => ()
             ignore(dialog);
-	    let settings = $environment-settings;
+            let settings = $environment-settings;
 
-	    settings.start-action             := general-page.%start-action;
-	    settings.qualify-names            := general-page.%qualify-names?;
-	    settings.application-confirm-stop := general-page.%confirm-stop?;
-	    settings.opened-project-active    := general-page.%active-on-opening?;
-	    settings.started-project-active   := general-page.%active-on-starting?;
-	    settings.default-save-databases   := build-page.%save-databases?;
-	    settings.default-link-mode        := build-page.%link-mode;
-	    settings.default-upgrade-warnings := build-page.%upgrade-warnings?;
-	    settings.auto-raise-all-frames    := windows-page.%raise-frames;
-	    settings.auto-lower-all-frames    := windows-page.%lower-frames;
+            settings.start-action             := general-page.%start-action;
+            settings.qualify-names            := general-page.%qualify-names?;
+            settings.application-confirm-stop := general-page.%confirm-stop?;
+            settings.opened-project-active    := general-page.%active-on-opening?;
+            settings.started-project-active   := general-page.%active-on-starting?;
+            settings.default-save-databases   := build-page.%save-databases?;
+            settings.default-link-mode        := build-page.%link-mode;
+            settings.default-upgrade-warnings := build-page.%upgrade-warnings?;
+            settings.auto-raise-all-frames    := windows-page.%raise-frames;
+            settings.auto-lower-all-frames    := windows-page.%lower-frames;
 
             default-build-script() := build-page.%build-script;
           end method update-environment-options;
     let dialog
       = make(<property-frame>,
              title: "Environment Options",
-	     owner: frame,
-	     mode:  #"modal",
+             owner: frame,
+             mode:  #"modal",
              pages: pages,
              exit-callback: method (dialog)
                               update-environment-options(dialog);

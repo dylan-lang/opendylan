@@ -1,5 +1,5 @@
 Module:    dfmc-application
-Synopsis:  environment profiling backend implementation  
+Synopsis:  environment profiling backend implementation
 Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
@@ -28,16 +28,16 @@ define sealed domain initialize (<dfmc-application-profile-state>);
 define sealed method default-profile-options
     () => (options :: <profile-options>)
   make(<profile-options>,
-       sampling-options: make(<profile-sampling-options>, 
-			      style:         #"interval",
-			      sampling-rate: $default-sampling-rate),
+       sampling-options: make(<profile-sampling-options>,
+                              style:         #"interval",
+                              sampling-rate: $default-sampling-rate),
        snapshot-options: make(<profile-snapshot-options>,
-			      values:        $snapshot-values,
-			      stack-depth:   #f))
+                              values:        $snapshot-values,
+                              stack-depth:   #f))
 end method default-profile-options;
 
 define method state-class-profiling?
-    (state :: <dfmc-application-profile-state>, 
+    (state :: <dfmc-application-profile-state>,
      #key options = state.state-profile-options)
  => (class-profiling? :: <boolean>)
   let sampling-options = options.profile-sampling-options;
@@ -79,9 +79,9 @@ define method maybe-initialize-cpu-profiling
   let profile-state = application.application-profile-state;
   if (application.profiling-enabled?
         & profile-state
-	& ~profile-state.state-profile-initialized?
-	& ~profile-state.state-class-profiling?
-	& application.application-loaded-dylan-library?)
+        & ~profile-state.state-profile-initialized?
+        & ~profile-state.state-class-profiling?
+        & application.application-loaded-dylan-library?)
     let target = application.application-target-app;
     debugger-message("Initializing CPU profiling");
     with-debugger-transaction (target)
@@ -96,9 +96,9 @@ define method maybe-initialize-allocation-profiling
   let profile-state = application.application-profile-state;
   if (application.profiling-enabled?
         & profile-state
-	& ~profile-state.state-profile-initialized?
-	& profile-state.state-class-profiling?
-	& application.application-initialized-interactive-threads?)
+        & ~profile-state.state-profile-initialized?
+        & profile-state.state-class-profiling?
+        & application.application-initialized-interactive-threads?)
     let target = application.application-target-app;
     debugger-message("Initializing allocation profiling");
     //---*** Temporary hack, this may not always be what we want but
@@ -106,7 +106,7 @@ define method maybe-initialize-allocation-profiling
     let interactive-thread = application-open-interactor-thread(application);
     with-debugger-transaction (target)
       if (interactive-thread)
-	set-application-class-breakpoint(application, interactive-thread, #f)
+        set-application-class-breakpoint(application, interactive-thread, #f)
       end;
       start-profiling(target, class-profiling?: #t);
       profile-state.state-profile-initialized? := #t
@@ -124,7 +124,7 @@ define method set-application-class-breakpoint
        let target = application.application-target-app;
        let remote-thread = thread.application-object-proxy;
        apply(dm-set-application-class-breakpoint,
-	     target, remote-thread, args)
+             target, remote-thread, args)
      end,
      thread, state: #"running")
 end method set-application-class-breakpoint;
@@ -138,29 +138,29 @@ define sealed method stop-profiling-application
   let class-profiling? = state-class-profiling?(profile-state, options: options);
   let interactive-thread
     = if (class-profiling?)
-	//---*** Temporary hack, this may not always be what we want but
-	//---*** for now switch on breakpoints on all threads
-	application-open-interactor-thread(application);
+        //---*** Temporary hack, this may not always be what we want but
+        //---*** for now switch on breakpoints on all threads
+        application-open-interactor-thread(application);
       end;
   with-debugger-transaction (target)
     if (interactive-thread)
       debugger-message("Stopping general class breakpoint");
       let remote-thread = interactive-thread.application-object-proxy;
       clear-application-class-breakpoint
-	(application, interactive-thread, #f, stop-profile?: #t);
+        (application, interactive-thread, #f, stop-profile?: #t);
       #f
     else
       debugger-message("Failed to stop general class breakpoint");
       debugger-message("  thread: %=, class profiling?: %=",
-		       interactive-thread, class-profiling?);
+                       interactive-thread, class-profiling?);
     end;
     block ()
       unless (class-profiling?)
-	stop-profiling(target);
+        stop-profiling(target);
       end;
       profile-state.state-profile-initialized? := #f;
       profile-state.state-last-profile
-	:= process-profiling-results(application)
+        := process-profiling-results(application)
     cleanup
       profile-state.state-current-profile := #f
     end
@@ -176,7 +176,7 @@ define method clear-application-class-breakpoint
        let target = application.application-target-app;
        let remote-thread = thread.application-object-proxy;
        apply(dm-clear-application-class-breakpoint,
-	     target, remote-thread, args)
+             target, remote-thread, args)
      end,
      thread, state: #"running")
 end method clear-application-class-breakpoint;
@@ -233,48 +233,48 @@ define sealed method process-thread-snapshot-frame-snapshots
   let raw-snapshot = snapshot.%snapshot;
   let ips = raw-snapshot.instruction-pointers;
   local method compute-ip-frame-snapshot
-	    (ip :: <remote-value>)
-	  element(ip-cache, ip, default: #f)
-	    | begin
-		let source-location
-		  = remote-address-source-location
-		      (target, ip, line-only?: #t, interactive-only?: #f,
-		       exact-only?: #f);
-		let object
-		  = if (source-location)
-		      source-location-environment-object
-			(project, source-location)
-		    end;
-		let (object, location)
-		  = if (object)
-		      values(object, source-location)
-		    else
-		      let (start-ip, finish-ip)
-			= function-bounding-addresses(path, ip);
-		      let object
-			= make-environment-object-for-runtime-value
-			    (application, start-ip, address?: #t);
-		      values(object, #f)
-		    end;
-		let (object, location)
-		  = if (instance?(object, <application-code-object>))
-		      values(object, location)
-		    else
-		      debugger-message("Corrupted profile stack! Found %=",
-				       object
-					 & environment-object-display-name
-					     (project, object, #f));
-		      values(#f, #f)
-		    end;
-		if (object)
-		  let frame-snapshot
-		    = make(<dfmc-thread-frame-snapshot>,
-			   function:        object,
-			   source-location: location);
-		  ip-cache[ip] := frame-snapshot
-		end
-	      end
-	end method compute-ip-frame-snapshot;
+            (ip :: <remote-value>)
+          element(ip-cache, ip, default: #f)
+            | begin
+                let source-location
+                  = remote-address-source-location
+                      (target, ip, line-only?: #t, interactive-only?: #f,
+                       exact-only?: #f);
+                let object
+                  = if (source-location)
+                      source-location-environment-object
+                        (project, source-location)
+                    end;
+                let (object, location)
+                  = if (object)
+                      values(object, source-location)
+                    else
+                      let (start-ip, finish-ip)
+                        = function-bounding-addresses(path, ip);
+                      let object
+                        = make-environment-object-for-runtime-value
+                            (application, start-ip, address?: #t);
+                      values(object, #f)
+                    end;
+                let (object, location)
+                  = if (instance?(object, <application-code-object>))
+                      values(object, location)
+                    else
+                      debugger-message("Corrupted profile stack! Found %=",
+                                       object
+                                         & environment-object-display-name
+                                             (project, object, #f));
+                      values(#f, #f)
+                    end;
+                if (object)
+                  let frame-snapshot
+                    = make(<dfmc-thread-frame-snapshot>,
+                           function:        object,
+                           source-location: location);
+                  ip-cache[ip] := frame-snapshot
+                end
+              end
+        end method compute-ip-frame-snapshot;
   remove!(map-as(<simple-object-vector>, compute-ip-frame-snapshot, ips), #f)
 end method process-thread-snapshot-frame-snapshots;
 
@@ -297,57 +297,57 @@ define sealed method process-profiling-results
     let raw-threads = data.dm-application-profile-threads;
     let raw-snapshots = data.application-snapshots;
     debugger-message("Processing profile results: threads=%d, snapshots=%d",
-		     raw-threads.size, raw-snapshots.size);
+                     raw-threads.size, raw-snapshots.size);
     do(method (raw-snapshot :: dm-<application-snapshot>)
-	 let raw-snapshots = raw-snapshot.thread-snapshots;
-	 let thread-snapshots
-	   = map-as(<simple-object-vector>,
-		    method (raw-snapshot :: dm-<thread-snapshot>)
-		      let remote-thread = raw-snapshot.profile-thread;
-		      let thread
-			= make-environment-object
-			    (<thread-object>,
-			     project: project,
-			     application-object-proxy: remote-thread);
-		      let raw-class = raw-snapshot.allocated-class;
-		      let class
-			= if (raw-class)
-			    make-environment-object-for-runtime-value
-			      (application, raw-class)
-			  end;
-		      make(<dfmc-thread-snapshot>,
-			   thread:          thread,
-			   snapshot:        raw-snapshot,
-			   cpu-time:        raw-snapshot.cpu-time-increment,
-			   allocation:      raw-snapshot.allocation-increment,
-			   allocated-class: class)
-		    end,
-		    raw-snapshots);
-	 let wall-time   = raw-snapshot.wall-time-increment;
-	 let page-faults = raw-snapshot.page-faults-increment;
-	 add!(snapshots,
-	      make(<dfmc-application-snapshot>,
-		   wall-time:        wall-time,
-		   page-faults:      page-faults,
-		   thread-snapshots: thread-snapshots));
-	 total-wall-time   := total-wall-time + wall-time;
-	 total-page-faults := total-page-faults + page-faults;
+         let raw-snapshots = raw-snapshot.thread-snapshots;
+         let thread-snapshots
+           = map-as(<simple-object-vector>,
+                    method (raw-snapshot :: dm-<thread-snapshot>)
+                      let remote-thread = raw-snapshot.profile-thread;
+                      let thread
+                        = make-environment-object
+                            (<thread-object>,
+                             project: project,
+                             application-object-proxy: remote-thread);
+                      let raw-class = raw-snapshot.allocated-class;
+                      let class
+                        = if (raw-class)
+                            make-environment-object-for-runtime-value
+                              (application, raw-class)
+                          end;
+                      make(<dfmc-thread-snapshot>,
+                           thread:          thread,
+                           snapshot:        raw-snapshot,
+                           cpu-time:        raw-snapshot.cpu-time-increment,
+                           allocation:      raw-snapshot.allocation-increment,
+                           allocated-class: class)
+                    end,
+                    raw-snapshots);
+         let wall-time   = raw-snapshot.wall-time-increment;
+         let page-faults = raw-snapshot.page-faults-increment;
+         add!(snapshots,
+              make(<dfmc-application-snapshot>,
+                   wall-time:        wall-time,
+                   page-faults:      page-faults,
+                   thread-snapshots: thread-snapshots));
+         total-wall-time   := total-wall-time + wall-time;
+         total-page-faults := total-page-faults + page-faults;
        end,
        raw-snapshots);
     do(method (raw-thread :: <remote-thread>)
-	 add-new!(threads,
-		  make-environment-object
-		    (<thread-object>,
-		     project: project,
-		     application-object-proxy: raw-thread))
+         add-new!(threads,
+                  make-environment-object
+                    (<thread-object>,
+                     project: project,
+                     application-object-proxy: raw-thread))
        end,
        raw-threads);
     application-total-wall-time(profile)   := total-wall-time;
     application-total-page-faults(profile) := total-page-faults;
     reset-profile-data(target);
     debugger-message("Returning, %d snapshots, %d threads",
-		     profile.application-profile-snapshots.size,
-		     profile.application-profile-threads.size);
+                     profile.application-profile-snapshots.size,
+                     profile.application-profile-threads.size);
     profile
   else
     profile-state.state-last-profile

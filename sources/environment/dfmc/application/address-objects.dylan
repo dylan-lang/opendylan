@@ -110,12 +110,12 @@ define method string-to-address
 
   // The access-path can perform this transformation for us.
   with-debugger-transaction (target)
-    let value 
+    let value
       = string-as-remote-value(path, representation,
-			       numerical-base-description(format));
+                               numerical-base-description(format));
     make-environment-object(<address-object>,
-			    project: application.server-project,
-			    application-object-proxy: value)
+                            project: application.server-project,
+                            application-object-proxy: value)
   end
 end method string-to-address;
 
@@ -146,8 +146,8 @@ define method application-object-address
     if (proxy)
       let value = runtime-proxy-to-remote-value(application, proxy);
       make-environment-object(<address-object>,
-			      project: application.server-project,
-			      application-object-proxy: value)
+                              project: application.server-project,
+                              application-object-proxy: value)
     end
   end
 end method application-object-address;
@@ -165,9 +165,9 @@ define method indirect-address
       let path = target.debug-target-access-path;
       let i-value = read-value(path, raw-addr);
       make-environment-object
-	(<address-object>,
-	 project: application.server-project,
-	 application-object-proxy: i-value);
+        (<address-object>,
+         project: application.server-project,
+         application-object-proxy: i-value);
     exception(<remote-access-violation-error>)
       $invalid-address-object
     end block;
@@ -202,7 +202,7 @@ define method address-read-application-object
       let raw-addr = address.application-object-proxy;
       let val = read-dylan-value(target, raw-addr);
       make-environment-object-for-runtime-value
-	(application, val, address?: #t);
+        (application, val, address?: #t);
     exception(<remote-access-violation-error>)
       #f
     end
@@ -229,82 +229,82 @@ define method address-read-memory-contents
     let base-addr = address.application-object-proxy;
     let next-addr
       = select(size)
-	  #"byte" =>
-	    let next-addr = byte-indexed-remote-value(base-addr, to-index + 1);
-	    let target-addr = byte-indexed-remote-value(base-addr, from-index);
-	    let str
-	      = block ()
-		  read-byte-string(path, target-addr, sz)
-		exception(<remote-access-violation-error>)
-		  ""
-		end;
-	    for (x in as(<byte-vector>, str),
-		 i from 0)
-	      printable-strings[i]
-		:= select(format)
-		     #"hexadecimal"    => zero-pad!(format-to-string("%2x", x));
-		     #"octal"          => zero-pad!(format-to-string("%3o", x));
-		     #"decimal"        => zero-pad!(format-to-string("%3d", x));
-		     #"byte-character" => format-to-string("%c", str[i]);
-		     otherwise         => zero-pad!(format-to-string("%2x", x));
-		   end;
-	    end;
-	    next-addr;
-	  #"word" =>
-	    let j = 0;
-	    let next-addr = indexed-remote-value(base-addr, to-index + 1);
-	    for (i from from-index to to-index)
-	      let target-addr = indexed-remote-value(base-addr, i);
-	      block()
-		let content = read-value(path, target-addr);
-		printable-strings[j]
-		  := remote-value-as-string(path, content,
-					    numerical-base-description(format));
-	      exception(<remote-access-violation-error>)
-		printable-strings[j] := "????????"
-	      end block;
-	      j := j + 1;
-	    end for;
-	    next-addr;
-	  #"float" =>
-	    let j = 0;
-	    let next-addr = index-according-to-size(base-addr, to-index + 1, size);
-	    for (i from from-index to to-index)
-	      let target-addr = index-according-to-size(base-addr, i, size);
-	      block()
-		let content = read-single-float(path, target-addr);
-		printable-strings[j] := format-to-string("%=", content);
-	      exception(<remote-access-violation-error>)
-		printable-strings[j] := "????????????";
-	      end block;
-	      j := j + 1;
-	    end for;
-	    next-addr;
-	  #"double" =>
-	    let j = 0;
-	    let next-addr = index-according-to-size(base-addr, to-index + 1, size);
-	    for (i from from-index to to-index)
-	      let target-addr = index-according-to-size(base-addr, i, size);
-	      block()
-		let content = read-double-float(path, target-addr);
-		printable-strings[j] := format-to-string("%=", content);
-	      exception(<remote-access-violation-error>)
-		printable-strings[j] := "????????????";
-	      end block;
-	      j := j + 1;
-	    end for;
-	    next-addr;
-	  otherwise =>
-	    // TODO: Implement other cases.
-	    #f;
-	end select;
+          #"byte" =>
+            let next-addr = byte-indexed-remote-value(base-addr, to-index + 1);
+            let target-addr = byte-indexed-remote-value(base-addr, from-index);
+            let str
+              = block ()
+                  read-byte-string(path, target-addr, sz)
+                exception(<remote-access-violation-error>)
+                  ""
+                end;
+            for (x in as(<byte-vector>, str),
+                 i from 0)
+              printable-strings[i]
+                := select(format)
+                     #"hexadecimal"    => zero-pad!(format-to-string("%2x", x));
+                     #"octal"          => zero-pad!(format-to-string("%3o", x));
+                     #"decimal"        => zero-pad!(format-to-string("%3d", x));
+                     #"byte-character" => format-to-string("%c", str[i]);
+                     otherwise         => zero-pad!(format-to-string("%2x", x));
+                   end;
+            end;
+            next-addr;
+          #"word" =>
+            let j = 0;
+            let next-addr = indexed-remote-value(base-addr, to-index + 1);
+            for (i from from-index to to-index)
+              let target-addr = indexed-remote-value(base-addr, i);
+              block()
+                let content = read-value(path, target-addr);
+                printable-strings[j]
+                  := remote-value-as-string(path, content,
+                                            numerical-base-description(format));
+              exception(<remote-access-violation-error>)
+                printable-strings[j] := "????????"
+              end block;
+              j := j + 1;
+            end for;
+            next-addr;
+          #"float" =>
+            let j = 0;
+            let next-addr = index-according-to-size(base-addr, to-index + 1, size);
+            for (i from from-index to to-index)
+              let target-addr = index-according-to-size(base-addr, i, size);
+              block()
+                let content = read-single-float(path, target-addr);
+                printable-strings[j] := format-to-string("%=", content);
+              exception(<remote-access-violation-error>)
+                printable-strings[j] := "????????????";
+              end block;
+              j := j + 1;
+            end for;
+            next-addr;
+          #"double" =>
+            let j = 0;
+            let next-addr = index-according-to-size(base-addr, to-index + 1, size);
+            for (i from from-index to to-index)
+              let target-addr = index-according-to-size(base-addr, i, size);
+              block()
+                let content = read-double-float(path, target-addr);
+                printable-strings[j] := format-to-string("%=", content);
+              exception(<remote-access-violation-error>)
+                printable-strings[j] := "????????????";
+              end block;
+              j := j + 1;
+            end for;
+            next-addr;
+          otherwise =>
+            // TODO: Implement other cases.
+            #f;
+        end select;
     values(printable-strings,
-	   if (next-addr)
-	     make-environment-object(<address-object>,
-				     project: application.server-project,
-				     application-object-proxy: next-addr)
-	   else
-	     $invalid-address-object
-	   end)
+           if (next-addr)
+             make-environment-object(<address-object>,
+                                     project: application.server-project,
+                                     application-object-proxy: next-addr)
+           else
+             $invalid-address-object
+           end)
   end
 end method address-read-memory-contents;

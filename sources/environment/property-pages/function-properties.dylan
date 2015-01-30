@@ -44,7 +44,7 @@ define method frame-sort-generic-function-methods
       frame-sort-items(frame, methods);
     #"library" =>
       frame-sort-items(frame, methods,
-		       key: curry(environment-object-library, project));
+                       key: curry(environment-object-library, project));
   end
 end method frame-sort-generic-function-methods;
 
@@ -56,15 +56,15 @@ define sideways method make-frame-property-page-displayer
   let project = frame.ensure-frame-project;
   let displayer
     = make(<table-control-displayer>,
-	   element-label: "method",
-	   children-generator: curry(frame-generic-function-methods, frame),
-	   headings: #["Method", "Library"],
-	   widths:   #[300, 150],
-	   generators: vector(identity, 
-			      curry(environment-object-library, project)),
-	   sort-orders: #[#"method", #"library"],
-	   sort-order: #"method",
-	   sort-function: curry(frame-sort-generic-function-methods, frame),
-	   label-key: curry(frame-default-object-name, frame));
+           element-label: "method",
+           children-generator: curry(frame-generic-function-methods, frame),
+           headings: #["Method", "Library"],
+           widths:   #[300, 150],
+           generators: vector(identity,
+                              curry(environment-object-library, project)),
+           sort-orders: #[#"method", #"library"],
+           sort-order: #"method",
+           sort-function: curry(frame-sort-generic-function-methods, frame),
+           label-key: curry(frame-default-object-name, frame));
   values("Methods", displayer)
 end method make-frame-property-page-displayer;

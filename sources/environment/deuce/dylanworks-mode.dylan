@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// DylanWorks mode
 
-//---*** We should really have <dylanworks-syntax-mixin> that gets used by 
+//---*** We should really have <dylanworks-syntax-mixin> that gets used by
 //---*** both <dylanworks-mode> and <dylanworks-shell-mode>
 define open class <dylanworks-mode> (<dylan-mode>)
 end class <dylanworks-mode>;
@@ -34,20 +34,20 @@ define method initialize-major-mode
     #"emacs" =>
       let command-table = standard-command-table(command-set);
       add-commands!(command-table,
-		    vector('.',   control,       edit-next-compiler-warning),
-		    vector(#"f9", nothing,       frame-create-or-toggle-breakpoint),
-		    vector(#"f9", shift,         frame-new-breakpoint),
-		    vector(#"f9", control,       frame-run-to-target),
-		    vector(#"f9", control+shift, frame-edit-breakpoint-options),
-		    vector(#"f7", shift,         frame-advanced-build-dialog));
+                    vector('.',   control,       edit-next-compiler-warning),
+                    vector(#"f9", nothing,       frame-create-or-toggle-breakpoint),
+                    vector(#"f9", shift,         frame-new-breakpoint),
+                    vector(#"f9", control,       frame-run-to-target),
+                    vector(#"f9", control+shift, frame-edit-breakpoint-options),
+                    vector(#"f7", shift,         frame-advanced-build-dialog));
     #"windows" =>
       let command-table = standard-command-table(command-set);
       add-commands!(command-table,
-		    vector(#"f9", nothing,       frame-create-or-toggle-breakpoint),
-		    vector(#"f9", shift,         frame-new-breakpoint),
-		    vector(#"f9", control,       frame-run-to-target),
-		    vector(#"f9", control+shift, frame-edit-breakpoint-options),
-		    vector(#"f7", shift,         frame-advanced-build-dialog));
+                    vector(#"f9", nothing,       frame-create-or-toggle-breakpoint),
+                    vector(#"f9", shift,         frame-new-breakpoint),
+                    vector(#"f9", control,       frame-run-to-target),
+                    vector(#"f9", control+shift, frame-edit-breakpoint-options),
+                    vector(#"f7", shift,         frame-advanced-build-dialog));
     otherwise =>
       #[];
   end
@@ -101,8 +101,8 @@ define method frame-primary-object
       let section  = line-section(bp-line(interval-start-bp(interval)));
       let (module, project) = section-module(section);
       when (module)
-	let name = as(<byte-string>, interval);
-	find-environment-object(project, name, module: module)
+        let name = as(<byte-string>, interval);
+        find-environment-object(project, name, module: module)
       end
     end
   end
@@ -147,10 +147,10 @@ define method make-command-target
     let frame   = sheet-frame(pane);
     let project = frame-current-project(frame);
     make(<bp-command-target>,
-	 pane:    pane,
+         pane:    pane,
          buffer:  buffer,
-	 bp:      bp,
-	 project: project)
+         bp:      bp,
+         project: project)
   end
 end method make-command-target;
 
@@ -190,10 +190,10 @@ define method make-command-target
     let frame   = sheet-frame(pane);
     let project = frame-current-project(frame);
     make(<interval-command-target>,
-	 pane:     pane,
+         pane:     pane,
          buffer:   buffer,
-	 interval: interval,
-	 project:  project)
+         interval: interval,
+         project:  project)
   end
 end method make-command-target;
 
@@ -237,10 +237,10 @@ define method make-command-target
     let frame   = sheet-frame(pane);
     let project = frame-current-project(frame);
     make(<section-command-target>,
-	 pane:    pane,
+         pane:    pane,
          buffer:  buffer,
-	 section: section,
-	 project: project)
+         section: section,
+         project: project)
   end
 end method make-command-target;
 
@@ -268,9 +268,9 @@ define sealed method make-command-target
     let frame   = sheet-frame(pane);
     let project = frame-current-project(frame);
     make(<buffer-command-target>,
-	 pane:    pane,
+         pane:    pane,
          buffer:  buffer,
-	 project: project)
+         project: project)
   end
 end method make-command-target;
 
@@ -282,7 +282,7 @@ define method do-handle-presentation-event
      atom :: <basic-interval>, type == <dylan-atom>,
      #rest keys,
      #key bp, x, y, button = $left-button, modifiers = 0, event-type = #"press",
-	  menu-function = dylanworks-atom-menu) => ()
+          menu-function = dylanworks-atom-menu) => ()
   ignore(x, y);
   case
     gesture-matches?($edit-gesture, button, modifiers, event-type: event-type) =>
@@ -294,7 +294,7 @@ define method do-handle-presentation-event
       frame-edit-primary-object(sheet-frame(window));
     otherwise =>
       apply(next-method, mode, window, atom, type,
-	    menu-function: menu-function, keys);
+            menu-function: menu-function, keys);
   end
 end method do-handle-presentation-event;
 
@@ -323,7 +323,7 @@ define method do-handle-presentation-event
   case
     menu? =>
       apply(next-method, mode, window, line, type,
-	    menu-function: menu-function, keys);
+            menu-function: menu-function, keys);
     event-type == #"double-click"
     & gesture-matches?($move-gesture, button, modifiers) =>
       edit-home-definition(window-frame(window), section: line-section(line));
@@ -354,10 +354,10 @@ define method do-handle-presentation-event
      nothing, type == <blank-area>,
      #rest keys,
      #key bp, x, y, button, modifiers, event-type,
-	  menu-function = dylanworks-blank-area-menu) => ()
+          menu-function = dylanworks-blank-area-menu) => ()
   ignore(bp, x, y, button, modifiers, event-type);
   apply(next-method, mode, window, nothing, type,
-	menu-function: menu-function, keys)
+        menu-function: menu-function, keys)
 end method do-handle-presentation-event;
 
 define method dylanworks-blank-area-menu
@@ -373,10 +373,10 @@ define method do-handle-presentation-event
      nothing, type == <blank-area>,
      #rest keys,
      #key bp, x, y, button, modifiers, event-type,
-	  menu-function = dylanworks-default-editor-menu) => ()
+          menu-function = dylanworks-default-editor-menu) => ()
   ignore(bp, x, y, button, modifiers, event-type);
   apply(next-method, mode, window, nothing, type,
-	menu-function: menu-function, keys)
+        menu-function: menu-function, keys)
 end method do-handle-presentation-event;
 
 define method do-handle-presentation-event
@@ -384,10 +384,10 @@ define method do-handle-presentation-event
      atom :: <basic-interval>, type == <dylan-atom>,
      #rest keys,
      #key bp, x, y, button, modifiers, event-type,
-	  menu-function = dylanworks-default-editor-menu) => ()
+          menu-function = dylanworks-default-editor-menu) => ()
   ignore(bp, x, y, button, modifiers, event-type);
   apply(next-method, mode, window, atom, type,
-	menu-function: menu-function, keys)
+        menu-function: menu-function, keys)
 end method do-handle-presentation-event;
 
 define method dylanworks-default-editor-menu
@@ -413,7 +413,7 @@ end method blank-area-menu;
 
 define method window-note-mode-entered
     (window :: <environment-editor-pane>, mode :: <major-mode>) => ()
-  next-method();		// this will display the mode
+  next-method();                // this will display the mode
   let frame = sheet-frame(window);
   when (frame)
     frame-note-project-updated(frame)
@@ -428,22 +428,22 @@ define method window-note-mode-entered
     command-enabled?(reset-optimization-colors, frame)    := #f;
     command-enabled?(color-dispatch-optimizations, frame) := #f;
     local method disable-button (gadget)
-	    gadget-enabled?(gadget) := #f
-	  end method;
+            gadget-enabled?(gadget) := #f
+          end method;
     do-command-menu-gadgets(disable-button, frame, color-dispatch-optimizations-callback)
   end
 end method window-note-mode-entered;
 
 define method window-note-mode-entered
     (window :: <environment-editor-pane>, mode :: <dylanworks-mode>) => ()
-  next-method();		// this will display the mode
+  next-method();                // this will display the mode
   let frame = sheet-frame(window);
   when (frame)
     command-enabled?(reset-optimization-colors, frame)    := #t;
     command-enabled?(color-dispatch-optimizations, frame) := #t;
     local method enable-button (gadget)
-	    gadget-enabled?(gadget) := #t
-	  end method;
+            gadget-enabled?(gadget) := #t
+          end method;
     do-command-menu-gadgets(enable-button, frame, color-dispatch-optimizations-callback);
     frame-note-project-updated(frame)
   end
@@ -468,7 +468,7 @@ define method frame-note-application-state-changed
   // Unless the current buffer is a Dylan buffer with a buffer-project,
   // ignore any application-state-changed messages.
   //--- hughg, 1998/01/19: This method should maybe be on 'enable-
-  //--- application-command-table', but at the moment (a) that isn't 
+  //--- application-command-table', but at the moment (a) that isn't
   //--- exported from environment-tools; and (b) the only thing our
   //--- 'next-method' does is call that.
   let buffer = frame-buffer(frame);
@@ -535,38 +535,38 @@ define method complete-dylan-name
   let (module, project) = section-module(section);
   let (module, project)
     = if (module & project) values(module, project)
-      else window-module(window) end;	// returns both values...
+      else window-module(window) end;        // returns both values...
   if (module & project)
     local method generate-completions (string :: <string>, completer :: <function>)
-	    do-namespace-names
-	      (method (name)
-		 // Use the primitive name to avoid qualifiers
-		 completer(environment-object-primitive-name(project, name), name)
-	       end method,
-	       project, module)
-	  end method;
+            do-namespace-names
+              (method (name)
+                 // Use the primitive name to avoid qualifiers
+                 completer(environment-object-primitive-name(project, name), name)
+               end method,
+               project, module)
+          end method;
     let frame = sheet-frame(window);
     if (menu?)
       let (string, success?, object, n-matches, completions)
-	= with-busy-cursor (frame)
-	    complete-from-generator(string, generate-completions, #['-'],
-				    action: #"completions")
-	  end;
+        = with-busy-cursor (frame)
+            complete-from-generator(string, generate-completions, #['-'],
+                                    action: #"completions")
+          end;
       ignore(string, success?, object, n-matches);
       if (empty?(completions))
-	values(#f, #f)
+        values(#f, #f)
       else
-	let completion
-	  = deuce/choose-from-dialog(window, completions,
-				     title: "Choose a completion",
-				     label-key: first, value-key: first);
-	values(completion, #f)
+        let completion
+          = deuce/choose-from-dialog(window, completions,
+                                     title: "Choose a completion",
+                                     label-key: first, value-key: first);
+        values(completion, #f)
       end
     else
       let (string, success?, object, n-matches, completions)
-	= with-busy-cursor (frame)
-	    complete-from-generator(string, generate-completions, #['-'])
-	  end;
+        = with-busy-cursor (frame)
+            complete-from-generator(string, generate-completions, #['-'])
+          end;
       ignore(success?, object, completions);
       values(n-matches > 0 & string, n-matches > 1)
     end
@@ -671,46 +671,46 @@ define method definition-browser-parameters
     = definition
       & method (object) environment-object-display-name(project, object, module) end;
   let definition-generator :: false-or(<function>)
-    = definition 
+    = definition
       & select (what)
-	  #"class-subclasses" =>
-	    instance?(definition, <class-object>)
-	      & do-direct-subclasses;
-	  #"class-superclasses" =>
-	    instance?(definition, <class-object>)
-	      & do-direct-superclasses;
-	  #"class-methods" =>
-	    instance?(definition, <class-object>)
-	      & do-direct-methods;
-	  #"generic-function-methods" =>
-	    instance?(definition, <generic-function-object>)
-	      & do-generic-function-methods;
-	  #"function-callers" =>	// actually we can handle any kind of definition...
-	    instance?(definition, <definition-object>)
-	      & do-client-source-forms;
-	  #"function-callees" =>	// actually we can handle any kind of definition...
-	    instance?(definition, <definition-object>)
-	      & do-used-definitions;
-	end;
+          #"class-subclasses" =>
+            instance?(definition, <class-object>)
+              & do-direct-subclasses;
+          #"class-superclasses" =>
+            instance?(definition, <class-object>)
+              & do-direct-superclasses;
+          #"class-methods" =>
+            instance?(definition, <class-object>)
+              & do-direct-methods;
+          #"generic-function-methods" =>
+            instance?(definition, <generic-function-object>)
+              & do-generic-function-methods;
+          #"function-callers" =>        // actually we can handle any kind of definition...
+            instance?(definition, <definition-object>)
+              & do-client-source-forms;
+          #"function-callees" =>        // actually we can handle any kind of definition...
+            instance?(definition, <definition-object>)
+              & do-used-definitions;
+        end;
   if (definition-generator)
     local method section-generator
-	      (definition :: <definition-object>) => (sections :: <stretchy-object-vector>)
-	    let sections :: <stretchy-object-vector> = make(<stretchy-vector>);
-	    local method definition->section (definition) => ()
-		    let section
-		      = find-section-for-definition(project, definition, source-type: #"newest");
-		    section & add!(sections, section)
-		  end method;
-	    definition-generator(definition->section, project, definition);
-	    // More than one definition might live in the same Deuce section,
-	    // thus the call to 'remove-duplicates!'
-	    remove-duplicates!(sections)
-	  end method;
+              (definition :: <definition-object>) => (sections :: <stretchy-object-vector>)
+            let sections :: <stretchy-object-vector> = make(<stretchy-vector>);
+            local method definition->section (definition) => ()
+                    let section
+                      = find-section-for-definition(project, definition, source-type: #"newest");
+                    section & add!(sections, section)
+                  end method;
+            definition-generator(definition->section, project, definition);
+            // More than one definition might live in the same Deuce section,
+            // thus the call to 'remove-duplicates!'
+            remove-duplicates!(sections)
+          end method;
     values(definition, name-key, section-generator,
-	   mode, <dylan-definition-node>)
+           mode, <dylan-definition-node>)
   else
     values(#f, always(""), always(#[]),
-	   mode, <dylan-definition-node>)
+           mode, <dylan-definition-node>)
   end
 end method definition-browser-parameters;
 
@@ -777,57 +777,57 @@ define method find-section-for-source-location
     //    find and use its corresponding section in the newest source
     let index
       = source-record-start-line(record)
-	  // Deuce line indices are 0-based, source record line indices are 1-based...
-	  + source-offset-line(source-location-start-offset(location)) - 1;
+          // Deuce line indices are 0-based, source record line indices are 1-based...
+          + source-offset-line(source-location-start-offset(location)) - 1;
     let buffer
       = case
-	  ~canonical | ~file-exists?(canonical) =>
-	    find-buffer-from-pathname(editor, newest)
-	    | do-find-file(editor, newest, direction: #"input");
-	  source-type == #"canonical" =>
-	    find-buffer-from-pathname(editor, canonical)
-	    | do-find-file(editor, canonical, direction: #"input");
-	  get-file-property(newest, #"modification-date")
-	    <= get-file-property(canonical, #"modification-date") =>
-	    find-buffer-from-pathname(editor, newest)
-	    | do-find-file(editor, newest, direction: #"input");
-	  otherwise =>
-	    // Locate the section in the canonical source
-	    let cbuffer   = find-buffer-from-pathname(editor, canonical)
-			    | do-find-file(editor, canonical, direction: #"input");
-	    let cline     = cbuffer  & line-index->line(cbuffer, index);
-	    let csection  = cline    & line-section(cline);
-	    let signature = csection & section-definition-signature(csection);
-	    when (signature)
-	      // Now find the corresponding section in the newest source
-	      let nbuffer = find-buffer-from-pathname(editor, newest)
-			    | do-find-file(editor, newest, direction: #"input");
-	      for (node = buffer-start-node(nbuffer) then node-next(node),
-		   until: ~node)
-		let section = node-section(node);
-		when (section-definition-signature(section) = signature)
-		  // We found a matching section, now figure out what line
-		  // to point to in the newest file's section
-		  let index = line->line-index(csection, cline);
-		  let line  = line-index->line(section, index);
-		  return(section, line)
-		end
-	      end
-	    end;
-	end;
+          ~canonical | ~file-exists?(canonical) =>
+            find-buffer-from-pathname(editor, newest)
+            | do-find-file(editor, newest, direction: #"input");
+          source-type == #"canonical" =>
+            find-buffer-from-pathname(editor, canonical)
+            | do-find-file(editor, canonical, direction: #"input");
+          get-file-property(newest, #"modification-date")
+            <= get-file-property(canonical, #"modification-date") =>
+            find-buffer-from-pathname(editor, newest)
+            | do-find-file(editor, newest, direction: #"input");
+          otherwise =>
+            // Locate the section in the canonical source
+            let cbuffer   = find-buffer-from-pathname(editor, canonical)
+                            | do-find-file(editor, canonical, direction: #"input");
+            let cline     = cbuffer  & line-index->line(cbuffer, index);
+            let csection  = cline    & line-section(cline);
+            let signature = csection & section-definition-signature(csection);
+            when (signature)
+              // Now find the corresponding section in the newest source
+              let nbuffer = find-buffer-from-pathname(editor, newest)
+                            | do-find-file(editor, newest, direction: #"input");
+              for (node = buffer-start-node(nbuffer) then node-next(node),
+                   until: ~node)
+                let section = node-section(node);
+                when (section-definition-signature(section) = signature)
+                  // We found a matching section, now figure out what line
+                  // to point to in the newest file's section
+                  let index = line->line-index(csection, cline);
+                  let line  = line-index->line(section, index);
+                  return(section, line)
+                end
+              end
+            end;
+        end;
     // OK, we should now have a sectionized Dylan buffer
     // Figure out what section the definition's start line is in
     let line    = buffer & line-index->line(buffer, index);
     let section = line   & line-section(line);
     return(section, line);
   exception (type-union(<file-does-not-exist-error>,
-			<source-record-missing>))
+                        <source-record-missing>))
     values(#f, #f)
   end
 end method find-section-for-source-location;
 
 define method find-section-for-source-location
-    (project :: <project-object>, 
+    (project :: <project-object>,
      record :: <interactive-source-record>, location :: <source-location>,
      #key source-type :: <code-viewer-source-type> = $code-viewer-default-source-type)
  => (section :: false-or(<basic-section>), line :: false-or(<basic-line>))
@@ -835,7 +835,7 @@ define method find-section-for-source-location
   let section = gethash($interactive-source-sections, record);
   // Deuce line indices are 0-based, source record line indices are 1-based...
   let index = source-record-start-line(record)
-		+ source-offset-line(source-location-start-offset(location)) - 1;
+                + source-offset-line(source-location-start-offset(location)) - 1;
   let line  = section & line-index->line(section, index);
   values(section, line)
 end method find-section-for-source-location;
@@ -906,8 +906,8 @@ define function add-interactive-source-section
   let (buffer, container) = find-interactive-source-buffer(project);
   // Create a new section for this form
   let section = make(<dylan-section>,
-		     container: #f,
-		     start-line: #f, end-line: #f);
+                     container: #f,
+                     start-line: #f, end-line: #f);
   let code   = as(<byte-string>, source-record-contents(record));
   let stream = make(<string-stream>, contents: code);
   read-section-contents-from-stream(section, stream);
@@ -917,17 +917,17 @@ define function add-interactive-source-section
   // Add a section node for the new section to the buffer
   let start-bp
     = make(<bp>,
-	   line: section-start-line(section), index: 0,
-	   buffer: buffer);
+           line: section-start-line(section), index: 0,
+           buffer: buffer);
   let end-bp
     = make(<bp>,
-	   line: section-end-line(section), index: deuce/line-length(section-end-line(section)),
-	   buffer: buffer,
-	   moving?: #t);
+           line: section-end-line(section), index: deuce/line-length(section-end-line(section)),
+           buffer: buffer,
+           moving?: #t);
   let node
     = make(<dylan-definition-node>,
-	   start-bp: start-bp, end-bp: end-bp,
-	   section:  section);
+           start-bp: start-bp, end-bp: end-bp,
+           section:  section);
   push!(section-nodes(section), node);
   add-node!(buffer, node);
   gethash($interactive-source-sections, record)  := section;
@@ -946,16 +946,16 @@ define function find-interactive-source-buffer
       = environment-object-primitive-name(project, project);
     let container
       = make(<interactive-source-container>,
-	     project: project,
-	     pathname: name);		// not strictly correct!
+             project: project,
+             pathname: name);                // not strictly correct!
     let buffer
       = make-empty-buffer(<interactive-source-buffer>,
-			  name:      name,
-			  editor:    $environment-editor,
-			  container: container,
-			  major-mode:    find-mode(<dylanworks-mode>),
-			  section-class: <dylan-section>,
-			  node-class:    <dylan-definition-node>);
+                          name:      name,
+                          editor:    $environment-editor,
+                          container: container,
+                          major-mode:    find-mode(<dylanworks-mode>),
+                          section-class: <dylan-section>,
+                          node-class:    <dylan-definition-node>);
     container.%home-buffer := buffer;
     gethash($interactive-source-buffers, project) := buffer;
     values(buffer, container)
@@ -984,34 +984,34 @@ define method do-compile-to-core
     while (node)
       let section  = node-section(node);
       when (section)
-	let (module, project) = section-module(section);
-	if (~module)
-	  command-error("Couldn't find a module to compile in")
-	else
-	  let frame = sheet-frame(window);
-	  with-busy-cursor (frame)
-	    with-compiler-locked (frame, timeout: timeout)
-	      let thread = application-default-interactor-thread(project);
-	      if (~thread)
-		command-error("Couldn't find an interactive context for downloading")
-	      else
-		let text = as(<string>, section);
-		let transaction-id
-		  = project-execute-code(project, text, thread, module: module);
-		when (instance?(frame, <environment-editor>))
-		  // Record this transaction id so that 'frame-note-interaction-returned'
-		  // can add the #"interactive-record" property
-		  add!(frame.%transaction-ids, pair(transaction-id, section))
-		end
-	      end
-	    end
-	  end
+        let (module, project) = section-module(section);
+        if (~module)
+          command-error("Couldn't find a module to compile in")
+        else
+          let frame = sheet-frame(window);
+          with-busy-cursor (frame)
+            with-compiler-locked (frame, timeout: timeout)
+              let thread = application-default-interactor-thread(project);
+              if (~thread)
+                command-error("Couldn't find an interactive context for downloading")
+              else
+                let text = as(<string>, section);
+                let transaction-id
+                  = project-execute-code(project, text, thread, module: module);
+                when (instance?(frame, <environment-editor>))
+                  // Record this transaction id so that 'frame-note-interaction-returned'
+                  // can add the #"interactive-record" property
+                  add!(frame.%transaction-ids, pair(transaction-id, section))
+                end
+              end
+            end
+          end
         end
       end;
       if (node == end-node)
-	break()
+        break()
       else
-	node := node-next(node)
+        node := node-next(node)
       end
     end
   end
@@ -1041,9 +1041,9 @@ define method do-macroexpand
     let frame = sheet-frame(window);
     with-busy-cursor (frame)
       with-compiler-locked (frame, timeout: timeout)
-	let text = as(<string>, interval);
-	project-macroexpand-code(project, module, text,
-				 expansion-stream: stream)
+        let text = as(<string>, interval);
+        project-macroexpand-code(project, module, text,
+                                 expansion-stream: stream)
       end
     end
   end
@@ -1091,7 +1091,7 @@ define method line-source-location-index
     (buffer :: <basic-buffer>, line :: <basic-line>,
      #key shadow? = #f)
  => (index :: <integer>)
-  dynamic-bind (*buffer* = buffer)	//--- line->line-index should do this
+  dynamic-bind (*buffer* = buffer)        //--- line->line-index should do this
     let section = line-section(line);
     let interactive
       = get-property(line-properties(section-start-line(section)), #"interactive-record");
@@ -1106,14 +1106,14 @@ define method line-source-location-index
       // in the canonical source, use that section to provide the base
       // line number.
       let canonical-section
-	= find-canonical-source-section(buffer, section);
+        = find-canonical-source-section(buffer, section);
       let canonical-offset
-	= canonical-section
-	  & get-property(line-properties(section-start-line(canonical-section)), #"start-index");
+        = canonical-section
+          & get-property(line-properties(section-start-line(canonical-section)), #"start-index");
       if (canonical-offset)
-	line->line-index(section, line) + canonical-offset
+        line->line-index(section, line) + canonical-offset
       else
-	line->line-index(buffer, line)
+        line->line-index(buffer, line)
       end
     end
   end
@@ -1126,7 +1126,7 @@ define method line-source-location-index
      #key shadow? = #f)
  => (index :: <integer>)
   ignore(shadow?);
-  dynamic-bind (*buffer* = buffer)	//--- line->line-index should do this
+  dynamic-bind (*buffer* = buffer)        //--- line->line-index should do this
     let section = line-section(line);
     line->line-index(section, line)
   end
@@ -1156,27 +1156,27 @@ define method find-canonical-source-section
       //--- Issue a warning that the breakpoint may be in the
       //--- wrong place if the file is newer than the last build?
       when (canonical & canonical ~= newest & file-exists?(canonical))
-	let nt = get-file-property(newest,    #"modification-date");
-	let ct = get-file-property(canonical, #"modification-date");
-	when (nt <= ct)
-	  // OK, we've got a saved canonical source file that is no older than
-	  // the newest source.  Find the section in the canonical source that
-	  // corresponds to the (newest) section that was passed in.
-	  // This closely resembles 'find-section-for-source-location'...
-	  let signature = section-definition-signature(section);
-	  when (signature)
-	    let editor  = $environment-editor;
-	    let cbuffer = find-buffer-from-pathname(editor, canonical)
-			  | do-find-file(editor, canonical, direction: #"input");
-	    for (node = buffer-start-node(cbuffer) then node-next(node),
-		 until: ~node)
-	      let section = node-section(node);
-	      when (section-definition-signature(section) = signature)
-		return(section)
-	      end
-	    end
-	  end
-	end
+        let nt = get-file-property(newest,    #"modification-date");
+        let ct = get-file-property(canonical, #"modification-date");
+        when (nt <= ct)
+          // OK, we've got a saved canonical source file that is no older than
+          // the newest source.  Find the section in the canonical source that
+          // corresponds to the (newest) section that was passed in.
+          // This closely resembles 'find-section-for-source-location'...
+          let signature = section-definition-signature(section);
+          when (signature)
+            let editor  = $environment-editor;
+            let cbuffer = find-buffer-from-pathname(editor, canonical)
+                          | do-find-file(editor, canonical, direction: #"input");
+            for (node = buffer-start-node(cbuffer) then node-next(node),
+                 until: ~node)
+              let section = node-section(node);
+              when (section-definition-signature(section) = signature)
+                return(section)
+              end
+            end
+          end
+        end
       end
     end
   end
@@ -1232,25 +1232,25 @@ define method buffer-project-for-pathname
   unless (project)
     project
       := block ()
-	   let project = active-project();
-	   if (pathname & project)
-	     if (find-project-source-record(project, pathname))
-	       project
-	     else
-	       let libraries = find-libraries-from-pathname(pathname);
-	       unless (empty?(libraries))
-		 project
-	       end
-	     end
-	   else
-	     signal(make(<file-project-not-found-warning>,
-			 format-arguments: vector(buffer-name(buffer))));
-	   end
-	 exception (type-union(<file-project-not-found-warning>,
-			       <file-library-not-found-warning>),
-		    test: method (c) on-error ~== #"signal" end)
-	   #f
-	 end;
+           let project = active-project();
+           if (pathname & project)
+             if (find-project-source-record(project, pathname))
+               project
+             else
+               let libraries = find-libraries-from-pathname(pathname);
+               unless (empty?(libraries))
+                 project
+               end
+             end
+           else
+             signal(make(<file-project-not-found-warning>,
+                         format-arguments: vector(buffer-name(buffer))));
+           end
+         exception (type-union(<file-project-not-found-warning>,
+                               <file-library-not-found-warning>),
+                    test: method (c) on-error ~== #"signal" end)
+           #f
+         end;
     put-property!(buffer-properties(buffer), #"project", project | #"none")
   end;
   if (project == #"none") #f else project end
@@ -1259,7 +1259,7 @@ end method buffer-project-for-pathname;
 define generic buffer-module
     (buffer :: <basic-buffer>,
      #key on-error :: false-or(singleton(#"signal")) = #f)
- => (module :: false-or(<module-object>), 
+ => (module :: false-or(<module-object>),
      project :: false-or(<project-object>));
 
 define method buffer-module
@@ -1288,8 +1288,8 @@ define method window-module
     values(module, project)
   else
     let frame = sheet-frame(window);
-    values(frame-current-module(frame), 
-	   frame-current-project(frame))
+    values(frame-current-module(frame),
+           frame-current-project(frame))
   end
 end method window-module;
 
@@ -1323,7 +1323,7 @@ define method frame-current-project
   block ()
     editor-frame-current-project(frame)
   exception (type-union(<file-project-not-found-warning>,
-			<file-library-not-found-warning>))
+                        <file-library-not-found-warning>))
     #f
   end
 end method frame-current-project;
@@ -1335,7 +1335,7 @@ define method frame-current-module
     let buffer = frame-buffer(frame);
     buffer-module(buffer)
   exception (type-union(<file-project-not-found-warning>,
-			<file-library-not-found-warning>))
+                        <file-library-not-found-warning>))
     #f
   end
 end method frame-current-module;
@@ -1376,10 +1376,10 @@ define method buffer-source-record
   else
     let result
       = when (locator)
-	  let libraries = find-libraries-from-pathname(locator);
-	  let result    = ~empty?(libraries) & libraries[0];	//--- arbitrary
-	  result
-	end;
+          let libraries = find-libraries-from-pathname(locator);
+          let result    = ~empty?(libraries) & libraries[0];        //--- arbitrary
+          result
+        end;
     if (result)
       values(result[1], buffer-project(buffer))
     else
@@ -1402,7 +1402,7 @@ end method buffer-source-record;
 
 /// DylanWorks shells
 
-//--- It would be good for this to be abstract, but we can't make 
+//--- It would be good for this to be abstract, but we can't make
 //--- environment-deuce-gadget abstract.
 define class <environment-shell-window>
     (<primary-object-interval-mixin>, <environment-deuce-gadget>)
@@ -1463,9 +1463,9 @@ define method note-multi-line-deletion
     (mode :: <dylanworks-shell-mode>, interval :: <basic-interval>) => ()
   // Lose any Dylan objects we might be hanging on to...
   do-lines(method (line, si, ei, last?)
-	     ignore(si, ei, last?);
-	     remove-property!(line-properties(line), #"object");
-	   end method, interval)
+             ignore(si, ei, last?);
+             remove-property!(line-properties(line), #"object");
+           end method, interval)
 end method note-multi-line-deletion;
 
 
@@ -1509,24 +1509,24 @@ define sealed method do-presentation-at-position
     menu? & dline & x > display-line-width(dline) + 10 =>
       // Mouse-right (press) on blank area gets a presentation for a menu
       values(make(<presentation>,
-		  object: #f, type: <blank-area>),
-	     bp, #f);
+                  object: #f, type: <blank-area>),
+             bp, #f);
     menu? & get-property(properties, #"object") =>
       // This line has an object associated with it
       values(make(<presentation>,
-		  object: get-property(properties, #"object"), type: <object>),
-	     bp, #f);
+                  object: get-property(properties, #"object"), type: <object>),
+             bp, #f);
     menu? & get-property(properties, #"input") =>
       // This line has shell input associated with it
       values(make(<presentation>,
-		  object: get-property(properties, #"input"), type: <shell-input>),
-	     bp, #f);
+                  object: get-property(properties, #"input"), type: <shell-input>),
+             bp, #f);
     event-type == #"press" | event-type == #"release" & sbp & ebp =>
       // If it's a button press or release that is not a copy or move,
       // give it a presentation as well
       values(make(<presentation>,
-		  object: make-interval(sbp, ebp), type: <dylan-atom>),
-	     bp, ~menu?);	// don't move point if a menu is requested
+                  object: make-interval(sbp, ebp), type: <dylan-atom>),
+             bp, ~menu?);        // don't move point if a menu is requested
     otherwise =>
       // Everything else just gets a raw BP
       values(#f, bp, #t);
@@ -1537,7 +1537,7 @@ define sealed method do-handle-presentation-event
     (mode :: <dylanworks-shell-mode>, window :: <environment-deuce-pane>,
      object :: <environment-object>, type == <object>,
      #key bp, x, y, button = $left-button, modifiers = 0, event-type = #"press",
-     	  menu-function) => ()
+               menu-function) => ()
   ignore(x, y, menu-function);
   let menu? = gesture-matches?($menu-gesture, button, modifiers, event-type: event-type);
   case
@@ -1546,7 +1546,7 @@ define sealed method do-handle-presentation-event
       with-temporary-selection (window, bp)
         display-environment-popup-menu(window, object)
       selecter
-	move-mark!(line-start(bp-line(bp)), window: window);
+        move-mark!(line-start(bp-line(bp)), window: window);
         move-point!(line-end(bp-line(bp)),  window: window);
       end;
     otherwise => #f;
@@ -1557,7 +1557,7 @@ define sealed method do-handle-presentation-event
     (mode :: <dylanworks-shell-mode>, window :: <environment-deuce-pane>,
      object :: <result-subset>, type == <object>,
      #key bp, x, y, button = $left-button, modifiers = 0, event-type = #"press",
-     	  menu-function) => ()
+               menu-function) => ()
   ignore(x, y, menu-function);
   let menu? = gesture-matches?($menu-gesture, button, modifiers, event-type: event-type);
   case
@@ -1566,7 +1566,7 @@ define sealed method do-handle-presentation-event
       with-temporary-selection (window, bp)
         display-environment-popup-menu(window, object)
       selecter
-	move-mark!(line-start(bp-line(bp)), window: window);
+        move-mark!(line-start(bp-line(bp)), window: window);
         move-point!(line-end(bp-line(bp)),  window: window);
       end;
     otherwise => #f;
@@ -1577,19 +1577,19 @@ define sealed method do-handle-presentation-event
     (mode :: <dylanworks-shell-mode>, window :: <environment-deuce-pane>,
      input :: <basic-interval>, type == <shell-input>,
      #key bp, x, y, button = $left-button, modifiers = 0, event-type = #"press",
-	  menu-function) => ()
+          menu-function) => ()
   ignore(x, y, menu-function);
   let menu? = gesture-matches?($menu-gesture, button, modifiers, event-type: event-type);
   case
     menu? =>
       // Pop up a menu of operations for the object behind this line
       with-temporary-selection (window, bp)
-	let object = make(<shell-input>,
-			  start-bp: interval-start-bp(input),
-			  end-bp:   interval-end-bp(input));
+        let object = make(<shell-input>,
+                          start-bp: interval-start-bp(input),
+                          end-bp:   interval-end-bp(input));
         display-environment-popup-menu(window, object)
       selecter
-	move-mark!(line-start(bp-line(bp)), window: window);
+        move-mark!(line-start(bp-line(bp)), window: window);
         move-point!(line-end(bp-line(bp)),  window: window);
       end;
     otherwise => #f;
@@ -1605,12 +1605,12 @@ define command reset-optimization-colors (frame :: <environment-editor>)
   let window :: <basic-window> = frame-window(frame);
   let buffer :: <basic-buffer> = frame-buffer(frame);
   local method do-reset (buffer :: <basic-buffer>)
-	  do-lines(method (line, si, ei, last?)
-		     ignore(si, ei, last?);
-		     remove-property!(line-contents-properties(line), #"colors");
-		   end method, buffer);
-	  put-property!(buffer-contents-properties(buffer), #"optimization-colors", #f);
-	end method;
+          do-lines(method (line, si, ei, last?)
+                     ignore(si, ei, last?);
+                     remove-property!(line-contents-properties(line), #"colors");
+                   end method, buffer);
+          put-property!(buffer-contents-properties(buffer), #"optimization-colors", #f);
+        end method;
   if (composite-buffer?(buffer))
     do(do-reset, buffer-associated-buffers(buffer));
     put-property!(buffer-contents-properties(buffer), #"optimization-colors", #f)
@@ -1629,22 +1629,22 @@ define command color-dispatch-optimizations (frame :: <environment-editor>)
   let frame    = sheet-frame(window);
   let success? = #f;
   local method do-color (buffer :: <basic-buffer>)
-	  let mode = buffer-major-mode(buffer);
-	  let (data, record) = find-dispatch-color-data(buffer);
-	  when (data)
-	    process-dispatch-colorization-data(mode, buffer, data, record)
-	  end;
-	  put-property!(buffer-contents-properties(buffer), #"optimization-colors", data);
-	  data
-	end method;
+          let mode = buffer-major-mode(buffer);
+          let (data, record) = find-dispatch-color-data(buffer);
+          when (data)
+            process-dispatch-colorization-data(mode, buffer, data, record)
+          end;
+          put-property!(buffer-contents-properties(buffer), #"optimization-colors", data);
+          data
+        end method;
   with-busy-cursor (frame)
     if (composite-buffer?(buffer))
       for (b in buffer-associated-buffers(buffer))
-	let data = do-color(b);
-	success? := success? | (data ~= #f);
+        let data = do-color(b);
+        success? := success? | (data ~= #f);
       end;
       when (success?)
-	put-property!(buffer-contents-properties(buffer), #"optimization-colors", #t)
+        put-property!(buffer-contents-properties(buffer), #"optimization-colors", #t)
       end
     else
       let data = do-color(buffer);
@@ -1661,7 +1661,7 @@ define command color-dispatch-optimizations (frame :: <environment-editor>)
     //--- workaround to suggest in that case...
     deuce/warning-dialog
       (window, "Cannot find color information for this file in the database.\n"
-	       "Try 'Project > Build' to create it.")
+               "Try 'Project > Build' to create it.")
   end;
   frame-last-command-type(frame) := #"file"
 end command color-dispatch-optimizations;
@@ -1675,10 +1675,10 @@ define method force-redisplay (frame :: <environment-editor>) => ()
     when (old-data)
       let new-data = find-dispatch-color-data(buffer);
       when (new-data)
-	unless (new-data == old-data)
-	  reset-optimization-colors(frame);
-	  color-dispatch-optimizations(frame)
-	end
+        unless (new-data == old-data)
+          reset-optimization-colors(frame);
+          color-dispatch-optimizations(frame)
+        end
       end
     end
   end;
@@ -1694,9 +1694,9 @@ define constant $dispatch-colors :: <table>
       table[#"not-all-methods-known"]            := deuce/$magenta;
       table[#"failed-to-select-where-all-known"] := deuce/$red;
       table[#"lambda-call"]                      := deuce/$blue;
-      table[#"slot-accessor-fixed-offset"]       := make-color(  0, 128,   0);	// forest green, sort of
-      table[#"inlining"]                         := make-color(128, 128, 128);	// standard "shadow" grey
-      table[#"eliminated"]                       := make-color(192, 192, 192);	// standard "control" grey
+      table[#"slot-accessor-fixed-offset"]       := make-color(  0, 128,   0);        // forest green, sort of
+      table[#"inlining"]                         := make-color(128, 128, 128);        // standard "shadow" grey
+      table[#"eliminated"]                       := make-color(192, 192, 192);        // standard "control" grey
       //--- Ignoring dynamic-extent for now
       // table[#"dynamic-extent"]                   := deuce/$cyan;
       //--- Ignoring program-notes for now
@@ -1727,10 +1727,10 @@ define method process-dispatch-colorization-data
   let colors :: <simple-object-vector> = make(<vector>, size: n-lines);
   let i :: <integer> = 0;
   do-lines(method (line, si, ei, last?)
-	     ignore(si, ei, last?);
-	     lines[i] := line;
-	     inc!(i)
-	   end method, buffer);
+             ignore(si, ei, last?);
+             lines[i] := line;
+             inc!(i)
+           end method, buffer);
   // Deuce line indices are 0-based, source record line indices are 1-based
   // hence the "- 1" here to convert to deuce line indices
   let record-sl :: <integer> = source-record-start-line(record) - 1;
@@ -1755,7 +1755,7 @@ define method process-dispatch-colorization-data
     let line-colors = colors[i];
     when (line-colors)
       put-property!(line-contents-properties(line),
-		    #"colors", as(<vector>, line-colors))
+                    #"colors", as(<vector>, line-colors))
     end
   end;
 end method process-dispatch-colorization-data;

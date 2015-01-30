@@ -29,11 +29,11 @@ define method handle-invalid-object-error
     (frame :: <environment-tool>, error :: <invalid-object-error>)
   let message
     = block ()
-	format-to-string
-	  ("Object '%s' no longer exists, so cannot be browsed",
-	   frame-object-unique-name(frame, error.condition-object))
+        format-to-string
+          ("Object '%s' no longer exists, so cannot be browsed",
+           frame-object-unique-name(frame, error.condition-object))
       exception (object :: <invalid-object-error>)
-	"This object no longer exists, so cannot be browsed"
+        "This object no longer exists, so cannot be browsed"
       end;
   environment-warning-message(message, owner: frame);
   abort()
@@ -57,9 +57,9 @@ define method make-build-tool-bar-buttons
     (frame :: <environment-tool>)
  => (buttons :: <sequence>)
   vector(//---*** Do we want"Clean Build" on the tool bar as well?
-         make(<button>, 
+         make(<button>,
               label: $build-bitmap,
-	      documentation: $build-title,
+              documentation: $build-title,
               command: frame-build-project,
               activate-callback: method (sheet)
                                    let frame = sheet-frame(sheet);
@@ -72,15 +72,15 @@ define method make-application-tool-bar-buttons
  => (buttons :: <sequence>)
   vector(make(<button>,
               label: $run-bitmap,
-	      documentation: $run-title,
+              documentation: $run-title,
               command: frame-start-or-resume-application),
-         make(<button>, 
+         make(<button>,
               label: $pause-bitmap,
-	      documentation: $pause-title,
+              documentation: $pause-title,
               command: frame-pause-application),
-         make(<button>, 
+         make(<button>,
               label: $stop-bitmap,
-	      documentation: $stop-title,
+              documentation: $stop-title,
               command: frame-stop-application))
 end method make-application-tool-bar-buttons;
 
@@ -89,11 +89,11 @@ define method make-debug-tool-bar-buttons
  => (buttons :: <sequence>)
   vector(make(<button>,
               label: $debug-bitmap,
-	      documentation: $debug-title,
+              documentation: $debug-title,
               command: frame-debug-application),
-	 make(<button>,
+         make(<button>,
               label: $interact-bitmap,
-	      documentation: $interact-title,
+              documentation: $interact-title,
               command: frame-interact))
 end method make-debug-tool-bar-buttons;
 
@@ -104,38 +104,38 @@ define method make-profile-tool-bar-buttons
     (frame :: <environment-tool>)
  => (buttons :: <sequence>)
   local method profile-documentation
-	    (profiling? :: <boolean>)
-	  if (profiling?)
-	    $stop-profiling-title
-	  else
-	    $start-profiling-title
-	  end
-	end method profile-documentation;
+            (profiling? :: <boolean>)
+          if (profiling?)
+            $stop-profiling-title
+          else
+            $start-profiling-title
+          end
+        end method profile-documentation;
   let project = frame.frame-current-project;
   let profiling?
     = if (project)
-	let application = project.project-application;
-	//---*** Need to have a protocol to tell if profiling...
-	application & #f
+        let application = project.project-application;
+        //---*** Need to have a protocol to tell if profiling...
+        application & #f
       end;
   let button
     = make(<check-button>,
-	   label: $profile-bitmap,
-	   documentation: profile-documentation(profiling?),
-	   button-style: #"push-button",
-	   value: profiling?,
-	   value-changed-callback:
-	     method (gadget :: <check-button>)
-	       let profiling? = gadget-value(gadget);
-	       frame-profiling?(frame) := profiling?;
-	       gadget-documentation(gadget)
-		 := profile-documentation(profiling?)
-	     end);
+           label: $profile-bitmap,
+           documentation: profile-documentation(profiling?),
+           button-style: #"push-button",
+           value: profiling?,
+           value-changed-callback:
+             method (gadget :: <check-button>)
+               let profiling? = gadget-value(gadget);
+               frame-profiling?(frame) := profiling?;
+               gadget-documentation(gadget)
+                 := profile-documentation(profiling?)
+             end);
   tune-in($project-channel,
-	  method (message :: <profiling-state-change-message>)
-	    gadget-value(button) := message.message-enabled?
-	  end,
-	  message-type: <profiling-state-change-message>);
+          method (message :: <profiling-state-change-message>)
+            gadget-value(button) := message.message-enabled?
+          end,
+          message-type: <profiling-state-change-message>);
   vector(button)
 end method make-profile-tool-bar-buttons;
 
@@ -145,16 +145,16 @@ define method make-environment-tool-bar-buttons
   with-frame-manager (frame-manager(frame))
     let buttons :: <stretchy-object-vector> = make(<stretchy-object-vector>);
     local method add-buttons
-	      (make-buttons-function :: <function>, 
-	       #key type :: false-or(<type>))
-	   => ()
-	    if (~type | instance?(frame, type))
-	      add!(buttons,
-		   make(<row-layout>,
-			children: make-buttons-function(frame),
-			spacing: 0))
-	    end
-	  end method add-buttons;
+              (make-buttons-function :: <function>,
+               #key type :: false-or(<type>))
+           => ()
+            if (~type | instance?(frame, type))
+              add!(buttons,
+                   make(<row-layout>,
+                        children: make-buttons-function(frame),
+                        spacing: 0))
+            end
+          end method add-buttons;
     add-buttons(make-history-tool-bar-buttons,   type: <frame-history-mixin>);
     add-buttons(make-clipboard-tool-bar-buttons, type: <frame-clipboard-mixin>);
     add-buttons(make-undo-tool-bar-buttons,      type: <frame-undo-mixin>);
@@ -183,9 +183,9 @@ define method make-environment-tool-bar
         end;
     make(<tool-bar>,
          child: make(<row-layout>,
-		     children:  buttons,
-		     spacing:   $tool-bar-group-spacing,
-		     max-width: max-width))
+                     children:  buttons,
+                     spacing:   $tool-bar-group-spacing,
+                     max-width: max-width))
   end
 end method make-environment-tool-bar;
 
@@ -344,8 +344,8 @@ define method frame-print-environment-object
   let cache = frame.frame-printed-representations;
   element(cache, object, default: #f)
     | begin
-	let name = next-method();
-	element(cache, object) := name
+        let name = next-method();
+        element(cache, object) := name
       end
 end method frame-print-environment-object;
 
@@ -356,8 +356,8 @@ define method frame-default-object-name
   let cache = frame.frame-default-names;
   element(cache, object, default: #f)
     | begin
-	let name = next-method();
-	element(cache, object) := name
+        let name = next-method();
+        element(cache, object) := name
       end
 end method frame-default-object-name;
 
@@ -368,7 +368,7 @@ define method frame-object-unique-name
   let cache = frame.frame-unique-names;
   element(cache, object, default: #f)
     | begin
-	let name = next-method();
-	element(cache, object) := name
+        let name = next-method();
+        element(cache, object) := name
       end
 end method frame-object-unique-name;

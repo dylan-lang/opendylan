@@ -21,13 +21,13 @@ end class;
 //    This method applies to any <connected-machine>, whether it is
 //    local or remote.
 
-define method do-processes-on-machine 
+define method do-processes-on-machine
     (machine :: <connected-machine>, itr :: <function>) => ()
   do-processes
     (method (p :: <remote-process>) => ()
        let env-process = element(machine.process-mappings, p, default: #f);
        unless (env-process)
-	 let filename = as(<file-locator>, p.remote-process-name);
+         let filename = as(<file-locator>, p.remote-process-name);
          env-process := make(<debug-process>,
                              process-host-machine: machine,
                              process-executable-file: filename,

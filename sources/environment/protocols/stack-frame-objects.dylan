@@ -48,7 +48,7 @@ define class <stack-frame-object> (<application-object>)
   //   #"not-available"     - The cache is constructed, but there's
   //                          no available source location.
   //   #"location-inexact"  - A source location is stored in the
-  //                          cache, but it does not precisely 
+  //                          cache, but it does not precisely
   //                          correspond to the program counter.
   //   #"location-exact"    - An exact source location is stored in
   //                          the cache.
@@ -162,7 +162,7 @@ define method stack-frame-source-location
         stack-frame-source-location(server, stack-frame);
       if (location)
         if (exact?)
-          stack-frame.source-location-cache-slot := 
+          stack-frame.source-location-cache-slot :=
             pair(#"location-exact", location)
         else
           stack-frame.source-location-cache-slot :=
@@ -177,7 +177,7 @@ define method stack-frame-source-location
   end unless;
   select (stack-frame.source-location-cache-slot.head)
     #"not-available"      => values(#f, #f);
-    #"location-inexact"   => 
+    #"location-inexact"   =>
        values(stack-frame.source-location-cache-slot.tail, #f);
     #"location-exact"     =>
        values(stack-frame.source-location-cache-slot.tail, #t);
@@ -189,8 +189,8 @@ define method stack-frame-environment-object
  => (object :: false-or(<environment-object>))
   stack-frame-function(project, stack-frame)
     | begin
-	let location = stack-frame-source-location(project, stack-frame);
-	location & source-location-environment-object(project, location)
+        let location = stack-frame-source-location(project, stack-frame);
+        location & source-location-environment-object(project, location)
       end
 end method stack-frame-environment-object;
 
@@ -200,7 +200,7 @@ define method stack-frame-thread
   unless (stack-frame.thread-cache-slot)
     let server = choose-server(project, stack-frame);
     if (server)
-      stack-frame.thread-cache-slot := 
+      stack-frame.thread-cache-slot :=
         stack-frame-thread(server, stack-frame);
     end if;
   end unless;

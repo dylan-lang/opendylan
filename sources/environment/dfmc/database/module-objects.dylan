@@ -34,38 +34,38 @@ define sealed method search-for-module-definition
  => (definition :: false-or(<module-definition>))
   block (return)
     local method maybe-return-module (project :: <project>)
-	    let context = browsing-context(server, project);
-	    let definition = find-module-definition(context, module-name);
-	    definition & return(definition)
-	  end method maybe-return-module;
+            let context = browsing-context(server, project);
+            let definition = find-module-definition(context, module-name);
+            definition & return(definition)
+          end method maybe-return-module;
     do-all-projects(maybe-return-module, server)
   end
 end method search-for-module-definition;
 
 // Search for a module by name in a library
 define sealed method find-module
-    (server :: <dfmc-database>, name :: <string>, 
+    (server :: <dfmc-database>, name :: <string>,
      #key library :: false-or(type-union(<string>, <library-object>)),
           imported? = #t, all-libraries?)
  => (module :: false-or(<module-object>))
   let library-id :: false-or(<library-id>)
     = select (library by instance?)
-	<string> =>
-	  make(<library-id>, name: library);
-	otherwise =>
-	  let library = library | project-library(server.server-project);
-	  library & environment-object-id(server, library);
+        <string> =>
+          make(<library-id>, name: library);
+        otherwise =>
+          let library = library | project-library(server.server-project);
+          library & environment-object-id(server, library);
       end;
   let module-id :: <module-id> = parse-module-name(name, library: library-id);
   let definition
     = find-compiler-database-proxy(server, module-id, imported?: imported?)
         | if (all-libraries?)
-	    search-for-module-definition(server, as(<symbol>, module-id.id-name))
-	  end;
+            search-for-module-definition(server, as(<symbol>, module-id.id-name))
+          end;
   if (definition)
     make-environment-object(<module-object>,
-			    project: server.server-project,
-			    compiler-object-proxy: definition)
+                            project: server.server-project,
+                            compiler-object-proxy: definition)
   end
 end method find-module;
 
@@ -77,7 +77,7 @@ define sealed method source-form-uses-definitions?
   let project = server-project(server);
   let module-definition = compiler-object-proxy(module);
   ~empty?(remove(module-definition-used-modules(module-definition),
-		 #"dylan-user"))
+                 #"dylan-user"))
 end method source-form-uses-definitions?;
 
 define sealed method do-used-definitions
@@ -90,14 +90,14 @@ define sealed method do-used-definitions
   let context = browsing-context(server, module-definition);
   let used-modules = module-definition-used-modules(module-definition);
   local method do-module (module-name :: <symbol>) => ()
-	  //---*** dylan-user doesn't have a definition, for some reason
-	  unless (module-name == #"dylan-user")
-	    let definition = find-module-definition(context, module-name);
-	    let module
-	      = definition
-	          & make-environment-object(<module-object>,
-					    project: server.server-project,
-					    compiler-object-proxy: definition);
+          //---*** dylan-user doesn't have a definition, for some reason
+          unless (module-name == #"dylan-user")
+            let definition = find-module-definition(context, module-name);
+            let module
+              = definition
+                  & make-environment-object(<module-object>,
+                                            project: server.server-project,
+                                            compiler-object-proxy: definition);
             module & function(module)
           end
         end method;
@@ -113,20 +113,20 @@ define sealed method do-module-client-modules
   let module-name = module-definition.module-definition-name;
   do-all-client-contexts
     (method (context)
-       local method do-module 
-		 (used-module-name :: <symbol>, kind :: <export-kind>) => ()
-	       //---*** dylan-user doesn't have a definition, for some reason
-	       unless (module-name == #"dylan-user")
-		 let definition = find-module-definition(context, used-module-name);
-		 let used-module-names
-		   = definition.module-definition-used-modules;
-		 if (member?(module-name, used-module-names))
-		   function(definition)
-		 end
-	       end
-	     end method do-module;
+       local method do-module
+                 (used-module-name :: <symbol>, kind :: <export-kind>) => ()
+               //---*** dylan-user doesn't have a definition, for some reason
+               unless (module-name == #"dylan-user")
+                 let definition = find-module-definition(context, used-module-name);
+                 let used-module-names
+                   = definition.module-definition-used-modules;
+                 if (member?(module-name, used-module-names))
+                   function(definition)
+                 end
+               end
+             end method do-module;
        dfmc/do-library-modules
-	 (context, do-module, inherited?: #f, internal?: #t)
+         (context, do-module, inherited?: #f, internal?: #t)
      end,
      server, browsing-context(server, module-definition))
 end method do-module-client-modules;
@@ -139,7 +139,7 @@ define sealed method source-form-has-clients?
   block (return)
     do-module-client-modules
       (method (definition :: <module-definition>)
-	 return(#t)
+         return(#t)
        end,
        server, module);
     #f
@@ -155,10 +155,10 @@ define sealed method do-client-source-forms
   do-module-client-modules
     (method (definition :: <module-definition>)
        let module
-	 = make-environment-object
-	     (<module-object>,
-	      project: server.server-project,
-	      compiler-object-proxy: definition);
+         = make-environment-object
+             (<module-object>,
+              project: server.server-project,
+              compiler-object-proxy: definition);
        function(module)
      end,
      server, module)
@@ -172,13 +172,13 @@ define sealed method do-module-definitions
  => ()
   ignore(imported?, client);
   local method do-source-form (source-form :: <source-form-object>)
-	  if (instance?(source-form, <definition-object>))
-	    function(source-form)
-	  end;
-	  if (instance?(source-form, <macro-call-object>))
-	    do-macro-call-source-forms(do-source-form, server, source-form)
-	  end
-	end method do-source-form;
+          if (instance?(source-form, <definition-object>))
+            function(source-form)
+          end;
+          if (instance?(source-form, <macro-call-object>))
+            do-macro-call-source-forms(do-source-form, server, source-form)
+          end
+        end method do-source-form;
   let project = module-project-proxy(server, module);
   let context = browsing-context(server, project);
   let definition = compiler-object-proxy(module);
@@ -186,11 +186,11 @@ define sealed method do-module-definitions
   for (record :: <source-record> in project-canonical-source-records(project))
     block ()
       if (module-name == source-record-module-name(record))
-	let forms = dfmc/source-record-top-level-forms(context, record);
-	for (form :: <source-form> in forms)
-	  let object = make-environment-object-for-source-form(server, form);
-	  do-source-form(object)
-	end
+        let forms = dfmc/source-record-top-level-forms(context, record);
+        for (form :: <source-form> in forms)
+          let object = make-environment-object-for-source-form(server, form);
+          do-source-form(object)
+        end
       end
     //--- We'll ignore source records with badly formed file headers
     exception (<badly-formed-file-header>)
@@ -210,7 +210,7 @@ define sealed method do-namespace-names
   let context = browsing-context(server, project);
   let module-definition = module.compiler-object-proxy;
   local method do-variable
-	    (variable :: <variable>, export-kind :: <export-kind>) => ()
+            (variable :: <variable>, export-kind :: <export-kind>) => ()
           //---*** cpage: Some variables don't have definitions. It appears that
           //              this only happens for <variable>s that are parameters
           //              and some other names that the compiler sees, but that
@@ -219,7 +219,7 @@ define sealed method do-namespace-names
           //              find out whether there are any we really want to
           //              browse anyway.
           if (~variable-active-definition(context, variable))
-	    let (name, module) = variable-name(variable);
+            let (name, module) = variable-name(variable);
             debug-out(#"dfmc-environment-database",
                       "do-namespace-names: Variable '%s' has no definition in '%s'",
                       name-to-string(name),
@@ -233,7 +233,7 @@ define sealed method do-namespace-names
           end
         end method do-variable;
   do-module-variables(context, module-definition,  do-variable,
-		      inherited?: imported?, internal?: #t);
+                      inherited?: imported?, internal?: #t);
 end method do-namespace-names;
 
 define sealed method environment-object-name
@@ -272,8 +272,8 @@ define sealed method environment-object-name
     let home-definition = variable-active-definition(context, local-variable);
     if (definition == home-definition)
       make-environment-object(<binding-name-object>,
-			      project: server.server-project,
-			      compiler-object-proxy: local-variable)
+                              project: server.server-project,
+                              compiler-object-proxy: local-variable)
     end
   end
 end method environment-object-name;
@@ -331,8 +331,8 @@ define sealed method environment-object-library
  => (library :: <library-object>)
   let project = module-project-proxy(server, module);
   make-environment-object(<library-object>,
-			  project: server.server-project,
-			  compiler-object-proxy: project)
+                          project: server.server-project,
+                          compiler-object-proxy: project)
 end method environment-object-library;
 
 // Search for the name of an object in a module, specified by a string
@@ -355,7 +355,7 @@ define sealed method find-definition-in-module
     (server :: <dfmc-database>, name :: <string>,
      module-definition :: <module-definition>,
      #key imported? = #t)
- => (definition :: false-or(<definition>), 
+ => (definition :: false-or(<definition>),
      variable :: false-or(<variable>))
   // Create a <variable> with the desired name, then see if it defines
   // anything in the module. If so, get the "real" <variable>.
@@ -365,12 +365,12 @@ define sealed method find-definition-in-module
   let definition = variable-active-definition(context, variable);
   let definition-variable = definition & definition.source-form-variable;
   if (definition-variable
-	& (imported? 
-	     | begin
-		 let home = variable-home(context, definition-variable);
-		 let (home-name, home-module-name) = variable-name(home);
-		 home-module-name == module-name
-	       end))
+        & (imported?
+             | begin
+                 let home = variable-home(context, definition-variable);
+                 let (home-name, home-module-name) = variable-name(home);
+                 home-module-name == module-name
+               end))
     values(definition, definition-variable)
   else
     values(#f, #f)

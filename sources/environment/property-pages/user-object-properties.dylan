@@ -33,7 +33,7 @@ define sealed class <slot-wrapper> (<object-wrapper>)
   sealed constant slot wrapper-getter :: <slot-getter-type>,
     required-init-keyword: name:;
 end class <slot-wrapper>;
-  
+
 define sealed domain make (singleton(<slot-wrapper>));
 define sealed domain initialize (<slot-wrapper>);
 
@@ -42,10 +42,10 @@ define method frame-object-contents
  => (contents :: <sequence>)
   let project = frame.ensure-frame-project;
   let (names, values) = composite-object-contents(project, object);
-  map(method 
-	  (name :: <slot-getter-type>, value :: <environment-object>)
+  map(method
+          (name :: <slot-getter-type>, value :: <environment-object>)
        => (wrapper :: <slot-wrapper>)
-	make(<slot-wrapper>, name: name, object: value)
+        make(<slot-wrapper>, name: name, object: value)
       end,
       names, values)
 end method frame-object-contents;
@@ -55,20 +55,20 @@ define method frame-sort-object-contents
      order :: <symbol>)
  => (contents :: <sequence>)
   local method contents-label-key (object) => (label :: <string>)
-	  frame-print-object-content(frame, object)
-	end method contents-label-key;
+          frame-print-object-content(frame, object)
+        end method contents-label-key;
   select (order)
     #"slot" =>
       frame-sort-items(frame, contents,
-		       label-key: contents-label-key);
+                       label-key: contents-label-key);
     #"reverse-slot" =>
       frame-sort-items(frame, contents,
-		       label-key: contents-label-key,
-		       test: \>);
+                       label-key: contents-label-key,
+                       test: \>);
     #"value" =>
       frame-sort-items(frame, contents,
-		       key: wrapper-object,
-		       label-key: contents-label-key);
+                       key: wrapper-object,
+                       label-key: contents-label-key);
   end
 end method frame-sort-object-contents;
 
@@ -76,24 +76,24 @@ end method frame-sort-object-contents;
 /// Property page
 
 define sideways method make-frame-property-page-displayer
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      class :: subclass(<user-object>),
      type == #"contents")
  => (label :: <string>, displayer :: <table-control-displayer>)
   let project = frame.ensure-frame-project;
   let displayer
     = make(<table-control-displayer>,
-	   element-label: "slot",
-	   information-available?-function: curry(application-tethered?, project),
-	   transaction-function: curry(perform-application-transaction, project),
-	   children-generator: curry(frame-object-contents, frame),
-	   headings: #["Slot", "Value"],
-	   widths:   #[200, 1000],
-	   generators: vector(identity, wrapper-object),
-	   sort-orders: #[#[#"slot", #"reverse-slot"], #"value"],
-	   sort-order: #"slot",
-	   sort-function: curry(frame-sort-object-contents, frame),
-	   label-key: curry(frame-print-object-content, frame));
+           element-label: "slot",
+           information-available?-function: curry(application-tethered?, project),
+           transaction-function: curry(perform-application-transaction, project),
+           children-generator: curry(frame-object-contents, frame),
+           headings: #["Slot", "Value"],
+           widths:   #[200, 1000],
+           generators: vector(identity, wrapper-object),
+           sort-orders: #[#[#"slot", #"reverse-slot"], #"value"],
+           sort-order: #"slot",
+           sort-function: curry(frame-sort-object-contents, frame),
+           label-key: curry(frame-print-object-content, frame));
   values("Contents", displayer)
 end method make-frame-property-page-displayer;
 
@@ -135,9 +135,9 @@ define constant $browse-target-getter-doc
 
 define constant $browse-target-getter-command
   = make-command-decorator("Browse Slot Getter", frame-browse-target-getter,
-			   documentation: $browse-target-getter-doc);
+                           documentation: $browse-target-getter-doc);
 
-define command-table *slot-wrapper-browse-popup-menu-command-table* 
+define command-table *slot-wrapper-browse-popup-menu-command-table*
     (*global-command-table*)
   command $describe-target-command;
   command $browse-target-command;

@@ -13,8 +13,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    addresses.
 
 define constant <address-display-format> =
-  one-of(#"octal", 
-         #"decimal", 
+  one-of(#"octal",
+         #"decimal",
          #"hexadecimal");
 
 
@@ -33,7 +33,7 @@ define constant <non-address-display-format> =
 //    A union of the above types, therefore describing a number base for
 //    the display of arbitrary data.
 
-define constant <data-display-format> = 
+define constant <data-display-format> =
   type-union(<address-display-format>, <non-address-display-format>);
 
 
@@ -64,7 +64,7 @@ end class;
 //    the type, but without any valid interpretation. This is used in
 //    preference to #f as a failing result or argument.
 
-define constant $invalid-address-object = 
+define constant $invalid-address-object =
   make(<address-object>, application-object-proxy: #f);
 
 
@@ -86,7 +86,7 @@ define constant $invalid-address-object =
 //       characters.
 
 define open generic address-to-string
-   (server :: <server>, address :: <address-object>, 
+   (server :: <server>, address :: <address-object>,
     #key format :: <address-display-format>)
  => (s :: <string>);
 
@@ -150,7 +150,7 @@ end method;
 //                     <application-object>.
 
 define open generic address-application-object
-  (server :: <server>, addr :: <address-object>) 
+  (server :: <server>, addr :: <address-object>)
  => (obj :: <application-object>);
 
 define method address-application-object
@@ -216,7 +216,7 @@ define open generic indirect-address
   (server :: <server>, addr :: <address-object>) => (i-addr :: <address-object>);
 
 define method indirect-address
-  (project :: <project-object>, addr :: <address-object>) 
+  (project :: <project-object>, addr :: <address-object>)
  => (i-addr :: <address-object>);
   let server = choose-server(project, addr);
   (server & indirect-address(server, addr)) | $invalid-address-object
@@ -228,7 +228,7 @@ end method;
 //    Inputs:
 //      server   - The project dispatching context
 //      addr     - The base address.
-//      index    - An integer used as the index. 
+//      index    - An integer used as the index.
 //      size     - An instance of <data-display-size>. The implementation
 //                 will multiply the index by the appropriate factor according
 //                 to this. The default is #"word".
@@ -237,15 +237,15 @@ end method;
 
 define open generic indexed-address
   (server :: <server>, addr :: <address-object>, i :: <integer>,
-   #key size :: <data-display-size>) 
+   #key size :: <data-display-size>)
  => (i-addr :: <address-object>);
 
 define method indexed-address
   (project :: <project-object>, addr :: <address-object>, i :: <integer>,
-   #key size :: <data-display-size> = #"word") 
+   #key size :: <data-display-size> = #"word")
  => (i-addr :: <address-object>);
   let server = choose-server(project, addr);
-  (server & indexed-address(server, addr, i, size: size)) 
+  (server & indexed-address(server, addr, i, size: size))
     | $invalid-address-object
 end method;
 

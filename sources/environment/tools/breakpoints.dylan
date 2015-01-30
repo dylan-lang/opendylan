@@ -59,7 +59,7 @@ define open generic record-breakpoint-source-locations
 // ---*** kludge: use <line-source-location> instead of <source-location> to
 // avoid invoking code on the compiler's <range-source-location>s which don't
 // know squat about <source-location-table>s.
-define constant <breakpoint-location> 
+define constant <breakpoint-location>
   = type-union(<breakpoint-object>, <line-source-location>);
 
 define constant <breakpointable>
@@ -79,42 +79,42 @@ end class;
 
 define constant $breakpoint-slots =
   vector(
-	 make(<breakpoint-slot>,
-	      label: "Enabled",
-	      abbrev: 'E',
-	      key: #"enabled?",
-	      value: $default-breakpoint-enabled?,
-	      getter: breakpoint-enabled?,
-	      setter: breakpoint-enabled?-setter),
-	 make(<breakpoint-slot>,
-	      label: "Pause application",
-	      abbrev: 'B',
-	      key: #"stop?",
-	      value: $default-breakpoint-stop?,
-	      getter: breakpoint-stop?,
-	      setter: breakpoint-stop?-setter),
-	 make(<breakpoint-slot>,
-	      label: "Print message",
-	      abbrev: 'M',
-	      key: #"message?",
-	      value: $default-breakpoint-message?,
-	      getter: breakpoint-message?,
-	      setter: breakpoint-message?-setter),
-	 make(<breakpoint-slot>,
-	      label: "Toggle profiling",
-	      abbrev: 'P',
-	      key: #"profile?",
-	      value: $default-breakpoint-profile?,
-	      getter: breakpoint-profile?,
-	      setter: breakpoint-profile?-setter),
-	 make(<breakpoint-slot>,
-	      label: "One shot",
-	      abbrev: 'T',
-	      key: #"transient?",
-	      value: $default-breakpoint-transient?,
-	      getter: breakpoint-transient?,
-	      setter: breakpoint-transient?-setter)
-	   );
+         make(<breakpoint-slot>,
+              label: "Enabled",
+              abbrev: 'E',
+              key: #"enabled?",
+              value: $default-breakpoint-enabled?,
+              getter: breakpoint-enabled?,
+              setter: breakpoint-enabled?-setter),
+         make(<breakpoint-slot>,
+              label: "Pause application",
+              abbrev: 'B',
+              key: #"stop?",
+              value: $default-breakpoint-stop?,
+              getter: breakpoint-stop?,
+              setter: breakpoint-stop?-setter),
+         make(<breakpoint-slot>,
+              label: "Print message",
+              abbrev: 'M',
+              key: #"message?",
+              value: $default-breakpoint-message?,
+              getter: breakpoint-message?,
+              setter: breakpoint-message?-setter),
+         make(<breakpoint-slot>,
+              label: "Toggle profiling",
+              abbrev: 'P',
+              key: #"profile?",
+              value: $default-breakpoint-profile?,
+              getter: breakpoint-profile?,
+              setter: breakpoint-profile?-setter),
+         make(<breakpoint-slot>,
+              label: "One shot",
+              abbrev: 'T',
+              key: #"transient?",
+              value: $default-breakpoint-transient?,
+              getter: breakpoint-transient?,
+              setter: breakpoint-transient?-setter)
+           );
 
 define function breakpoint-default-keys
     () => (keys :: <sequence>)
@@ -129,16 +129,16 @@ end function;
 
 /// Breakpoint handling
 
-define method breakpoint-current? 
+define method breakpoint-current?
     (breakpoint :: <breakpoint-object>)
  => (stopped-at? :: <boolean>)
   let project = breakpoint.breakpoint-project;
   let application = project.project-application;
   if (application & (application-state(application) = #"stopped"))
     any?(method (thread :: <thread-object>)
-	   member?(breakpoint, current-stop-breakpoints(project, thread))
-	 end,
-	 application-threads(application))
+           member?(breakpoint, current-stop-breakpoints(project, thread))
+         end,
+         application-threads(application))
   end
 end method breakpoint-current?;
 
@@ -154,8 +154,8 @@ define method coerce-to-breakpoint
     (project :: <project-object>, object :: <object>)
  => (breakpoint :: false-or(<breakpoint-object>))
   find-breakpoint(<breakpoint-object>,
-		  project: project,
-		  object: object)
+                  project: project,
+                  object: object)
 end method coerce-to-breakpoint;
 
 define function frame-target-to-breakpoint
@@ -180,10 +180,10 @@ define function update-breakpoint-enabled-toggle
     let enabled? = breakpoint.breakpoint-enabled?;
     menu-box.gadget-enabled? := #t;
     menu-box.gadget-value := if (enabled?)
-			       #[#"enabled?"]
-			     else
-			       #[]
-			     end if;
+                               #[#"enabled?"]
+                             else
+                               #[]
+                             end if;
   else
     menu-box.gadget-enabled? := #f;
     menu-box.gadget-value := #[]
@@ -196,8 +196,8 @@ define method frame-create-breakpoint
   let target  = frame-target-to-breakpoint(frame);
   if (target & ~instance?(target, <breakpoint-object>))
     make(<breakpoint-object>,
-	 project: frame.ensure-frame-project,
-	 object:  target);
+         project: frame.ensure-frame-project,
+         object:  target);
   end if;
 end method frame-create-breakpoint;
 
@@ -219,7 +219,7 @@ define method frame-edit-breakpoint-options
     update-from-breakpoint-dialog(dialog, breakpoint | target);
   end if;
 end method frame-edit-breakpoint-options;
-       
+
 define method update-from-breakpoint-dialog
     (dialog :: <breakpoint-dialog>, target :: <breakpoint-object>) => ()
   apply(reinitialize-breakpoint, target, breakpoint-arguments(dialog));
@@ -228,10 +228,10 @@ end method update-from-breakpoint-dialog;
 define method update-from-breakpoint-dialog
     (dialog :: <breakpoint-dialog>, target :: <object>) => ()
   apply(make,
-	<breakpoint-object>,
-	object: target,
-	project: dialog.frame-owner.ensure-frame-project,
-	breakpoint-arguments(dialog))
+        <breakpoint-object>,
+        object: target,
+        project: dialog.frame-owner.ensure-frame-project,
+        breakpoint-arguments(dialog))
 end method update-from-breakpoint-dialog;
 
 define method frame-toggle-breakpoint-enabled?
@@ -239,7 +239,7 @@ define method frame-toggle-breakpoint-enabled?
   let breakpoint = frame-target-breakpoint(frame);
   if (breakpoint)
     reinitialize-breakpoint(breakpoint,
-			    enabled?: ~breakpoint.breakpoint-enabled?);
+                            enabled?: ~breakpoint.breakpoint-enabled?);
   end if;
 end method frame-toggle-breakpoint-enabled?;
 
@@ -250,11 +250,11 @@ define method frame-create-or-toggle-breakpoint
   let breakpoint = coerce-to-breakpoint(project, target);
   if (breakpoint)
     reinitialize-breakpoint(breakpoint,
-			    enabled?: ~breakpoint.breakpoint-enabled?);
+                            enabled?: ~breakpoint.breakpoint-enabled?);
   else
     make(<breakpoint-object>,
-	 project: project,
-	 object:  target);
+         project: project,
+         object:  target);
   end if;
 end method frame-create-or-toggle-breakpoint;
 
@@ -264,9 +264,9 @@ define method frame-run-to-cursor
   select (target by instance?)
     <source-location> =>
       make(<source-location-breakpoint-object>,
-	   project: project,
-	   object: target,
-	   transient?: #t);
+           project: project,
+           object: target,
+           transient?: #t);
     <breakpoint-object> =>
       // ---*** Ensure we stop if there is already a breakpoint here.
       // However, this means that this now always stops even if it didn't
@@ -279,11 +279,11 @@ define method frame-run-to-cursor
     #"running" => #f;
     #"stopped" =>
       frame-continue-application(frame);
-    #"uninitialized", #"closed", #f => 
+    #"uninitialized", #"closed", #f =>
       if (environment-question("The application is not currently running.\n"
-			       "Start it?",
-			       owner: frame))
-	frame-start-application(frame);
+                               "Start it?",
+                               owner: frame))
+        frame-start-application(frame);
       end if;
   end select;
 end method frame-run-to-cursor;
@@ -304,16 +304,16 @@ define method frame-new-breakpoint
     let object = find-named-object(frame, name);
     select (object by instance?)
       <function-object> =>
-	make(<breakpoint-object>, project: project, object: object);
+        make(<breakpoint-object>, project: project, object: object);
       <class-object> =>
-	make(<class-breakpoint-object>, project: project, object: object);
+        make(<class-breakpoint-object>, project: project, object: object);
       otherwise =>
-	let module
-	  = environment-object-primitive-name(project, frame.frame-current-module);
-	let message
-	  = format-to-string("'%s' is not a function or a class in module %s.",
-			     name, module);
-	environment-warning-message(message, owner: frame);
+        let module
+          = environment-object-primitive-name(project, frame.frame-current-module);
+        let message
+          = format-to-string("'%s' is not a function or a class in module %s.",
+                             name, module);
+        environment-warning-message(message, owner: frame);
     end
   end
 end method frame-new-breakpoint;
@@ -322,7 +322,7 @@ define method frame-browse-all-breakpoints
     (frame :: <environment-frame>) => ()
   let project = frame.ensure-frame-project;
   find-environment-frame
-    (frame, <project-browser>, 
+    (frame, <project-browser>,
      project: project,
      page: #"breakpoints")
 end method frame-browse-all-breakpoints;
@@ -356,15 +356,15 @@ end method frame-disable-all-breakpoints;
 define method frame-clear-all-breakpoints
     (frame :: <environment-frame>) => ()
   if (environment-question
-	("Clear all current breakpoints?", 
-	 owner: frame, style: #"warning"))
+        ("Clear all current breakpoints?",
+         owner: frame, style: #"warning"))
     let project = frame.ensure-frame-project;
     with-compressed-breakpoint-state-changes ()
       for (bkp in source-location-breakpoints(project))
-	destroy-breakpoint(bkp);
+        destroy-breakpoint(bkp);
       end for;
       for (bkp in environment-object-breakpoints(project))
-	destroy-breakpoint(bkp);
+        destroy-breakpoint(bkp);
       end for;
     end;
   end if;
@@ -385,22 +385,22 @@ define method frame-clear-obsolete-breakpoints
     let name
       = invalid-count == 1
           & block ()
-	      let breakpoint = invalid-breakpoints[0];
-	      let object = breakpoint.breakpoint-object;
-	      frame-object-unique-name(frame, object)
-	    exception (object :: <invalid-object-error>)
-	      #f
-	    end;
+              let breakpoint = invalid-breakpoints[0];
+              let object = breakpoint.breakpoint-object;
+              frame-object-unique-name(frame, object)
+            exception (object :: <invalid-object-error>)
+              #f
+            end;
     let message
       = if (name)
-	  format-to-string
-	    ("Removing breakpoint for '%s' which no longer exists",
-	     name);
-	else
-	  format-to-string
-	    ("Removing %d breakpoints for objects that no longer exist",
-	     invalid-count)
-	end;
+          format-to-string
+            ("Removing breakpoint for '%s' which no longer exists",
+             name);
+        else
+          format-to-string
+            ("Removing %d breakpoints for objects that no longer exist",
+             invalid-count)
+        end;
     environment-warning-message(message, owner: frame);
     for (breakpoint in invalid-breakpoints)
       destroy-breakpoint(breakpoint)
@@ -430,10 +430,10 @@ define function choose-breakpoint-options
  => (dialog :: <breakpoint-dialog>, ok? :: <boolean>)
   with-frame-manager(frame.frame-manager)
     let dialog = apply(make,
-		       <breakpoint-dialog>, 
-		       owner: frame,
-		       target: target,
-		       args);
+                       <breakpoint-dialog>,
+                       owner: frame,
+                       target: target,
+                       args);
     values(dialog, start-dialog(dialog) & #t);
   end;
 end function choose-breakpoint-options;
@@ -442,19 +442,19 @@ define frame <breakpoint-dialog> (<dialog-frame>)
   keyword title: = "Edit Breakpoint Options";
   pane options-box (dialog)
     make(<check-box>,
-	 items: $breakpoint-slots,
-	 orientation: #"vertical",
-	 value-changed-callback:
-	   method (gadget)
-	     let message? = member?(#"message?", dialog.options-box.gadget-value);
-	     dialog.message-field.gadget-enabled? := message?;
-	     dialog.message-label.gadget-enabled? := message?;
-	   end method,
-	 label-key: breakpoint-slot-label,
-	 value-key: breakpoint-slot-key);
+         items: $breakpoint-slots,
+         orientation: #"vertical",
+         value-changed-callback:
+           method (gadget)
+             let message? = member?(#"message?", dialog.options-box.gadget-value);
+             dialog.message-field.gadget-enabled? := message?;
+             dialog.message-label.gadget-enabled? := message?;
+           end method,
+         label-key: breakpoint-slot-label,
+         value-key: breakpoint-slot-key);
   pane message-label (dialog)
     make(<label>,
-	 label: "Message Text: ");
+         label: "Message Text: ");
   pane message-field (dialog)
     make(<text-field>, min-width: 200);
   layout (dialog)
@@ -510,10 +510,10 @@ define function breakpoint-arguments
     args[i + 1] :=
       member?(key, selected-keys)
       & if (key = #"message?")
-	  message?
-	else
-	  #t
-	end if;
+          message?
+        else
+          #t
+        end if;
   end for;
   args;
 end function breakpoint-arguments;
@@ -528,14 +528,14 @@ define frame <new-breakpoint-dialog> (<dialog-frame>)
     required-init-keyword: environment-frame:;
   pane breakpoint-dialog-name-pane (dialog)
     make(<text-field>,
-	 documentation: "Function name optionally qualified by namespaces (name:module:library).",
-	 value-changing-callback:
-	   method (gadget)
-	     let dialog = sheet-frame(gadget);
-	     let object = find-named-object(dialog.%frame, gadget-value(gadget) | "");
-	     dialog-exit-enabled?(dialog) := object & #t;
-	   end method,
-	 activate-callback: exit-dialog);
+         documentation: "Function name optionally qualified by namespaces (name:module:library).",
+         value-changing-callback:
+           method (gadget)
+             let dialog = sheet-frame(gadget);
+             let object = find-named-object(dialog.%frame, gadget-value(gadget) | "");
+             dialog-exit-enabled?(dialog) := object & #t;
+           end method,
+         activate-callback: exit-dialog);
   layout (dialog)
     horizontally (spacing: 4)
       make(<label>, label: "Function:");
@@ -551,9 +551,9 @@ define method choose-new-breakpoint
  => (dialog :: <new-breakpoint-dialog>, ok? :: <boolean>)
   with-frame-manager(frame.frame-manager)
     let dialog = make(<new-breakpoint-dialog>,
-		      owner: frame,
-		      width: max($new-breakpoint-dialog-width, 250),
-		      environment-frame: frame);
+                      owner: frame,
+                      width: max($new-breakpoint-dialog-width, 250),
+                      environment-frame: frame);
     dialog-exit-enabled?(dialog) := #f;
     let result = start-dialog(dialog) & #t;
     when (result)
@@ -572,7 +572,7 @@ define open generic make-breakpoint-table-control-displayer
  => (displayer :: <displayer-mixin>);
 
 define frame <breakpoint-state-changes-failed-dialog>
-    (<environment-fixed-project-frame>, 
+    (<environment-fixed-project-frame>,
      <frame-module-mixin>,
      <environment-dialog-frame>)
   sealed constant slot failed-breakpoints-state :: <breakpoint-state>,
@@ -585,28 +585,28 @@ define frame <breakpoint-state-changes-failed-dialog>
       let state = frame.failed-breakpoints-state;
       let breakpoints = frame.failed-breakpoints;
       let (pronoun-string, breakpoint-string)
-	= if (size(breakpoints) > 1)
-	    values("these", "breakpoints")
-	  else
-	    values("this", "breakpoint")
-	  end;
+        = if (size(breakpoints) > 1)
+            values("these", "breakpoints")
+          else
+            values("this", "breakpoint")
+          end;
       let label1 = concatenate("The following ", breakpoint-string,
-			       " could not be changed in the application.");
+                               " could not be changed in the application.");
       let label2 = concatenate("Click 'OK' to continue without ",
-			       pronoun-string, " ", breakpoint-string);
+                               pronoun-string, " ", breakpoint-string);
       let displayer
-	= make-breakpoint-table-control-displayer
-	    (frame, 
-	     //--- hughg, 1998/03/31: Can't display icons because that
-	     //--- requires recursively querying the runtime-manager to
-	     //--- get the breakpoint state, which causes a <lock> conflict!
-	     icon-function: always(#f),
-	     // icon-function: curry(environment-object-icon, project),
-	     widths: #[250, 70, 250],
-	     children-generator: method (project)
-				   ignore(project);
-				   frame.failed-breakpoints
-				 end);
+        = make-breakpoint-table-control-displayer
+            (frame,
+             //--- hughg, 1998/03/31: Can't display icons because that
+             //--- requires recursively querying the runtime-manager to
+             //--- get the breakpoint state, which causes a <lock> conflict!
+             icon-function: always(#f),
+             // icon-function: curry(environment-object-icon, project),
+             widths: #[250, 70, 250],
+             children-generator: method (project)
+                                   ignore(project);
+                                   frame.failed-breakpoints
+                                 end);
       // Disable double-click and right-click callbacks.
       let collection-gadget = displayer.displayer-collection-gadget;
       gadget-popup-menu-callback(collection-gadget) := #f;
@@ -615,11 +615,11 @@ define frame <breakpoint-state-changes-failed-dialog>
       frame.breakpoint-displayer := displayer;
       // At last, the layout!
       vertically (spacing: 8)
-	vertically ()
-	  make(<label>, label: label1);
-	  make(<label>, label: label2);
-	end;
-	frame.breakpoint-displayer;
+        vertically ()
+          make(<label>, label: label1);
+          make(<label>, label: label2);
+        end;
+        frame.breakpoint-displayer;
       end;
     end;
   keyword mode: = #"modal";
@@ -654,9 +654,9 @@ define method notify-user-breakpoint-state-changes-failed
   //---*** hughg, 1998/03/27: Disable all windows associated with the
   //---*** project until the dialog exits?
   let dialog = make(<breakpoint-state-changes-failed-dialog>,
-		    project: project,
-		    module: #f,
-		    breakpoint-state: state, breakpoints: breakpoints);
+                    project: project,
+                    module: #f,
+                    breakpoint-state: state, breakpoints: breakpoints);
   start-dialog(dialog);
 end method notify-user-breakpoint-state-changes-failed;
 

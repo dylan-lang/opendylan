@@ -25,17 +25,17 @@ define method %make-module-name
   let library-table
     = element(proxies, library, default: #f)
         | begin
-	    element(proxies, library) := make(<object-table>)
-	  end;
+            element(proxies, library) := make(<object-table>)
+          end;
   let proxy
     = element(library-table, name, default: #f)
         | begin
-	    let proxy = make(<module-name-proxy>, name: name, library: library);
-	    element(library-table, name) := proxy
-	  end;
+            let proxy = make(<module-name-proxy>, name: name, library: library);
+            element(library-table, name) := proxy
+          end;
   make-environment-object(<module-name-object>,
-			  project: server.server-project,
-			  compiler-object-proxy: proxy)
+                          project: server.server-project,
+                          compiler-object-proxy: proxy)
 end method %make-module-name;
 
 define method browsing-context
@@ -69,8 +69,8 @@ define sealed method name-value
   let definition  = find-module-definition(context, module-name);
   if (definition)
     make-environment-object(<module-object>,
-			    project: server.server-project,
-			    compiler-object-proxy: definition)
+                            project: server.server-project,
+                            compiler-object-proxy: definition)
   end
 end method name-value;
 
@@ -124,11 +124,11 @@ define sealed method name-namespace
   let definition = search-for-module-definition(server, module-name);
   if (definition)
     make-environment-object(<module-object>,
-			    project: server.server-project,
-			    compiler-object-proxy: definition)
+                            project: server.server-project,
+                            compiler-object-proxy: definition)
   else
-    error("Internal error: failed to find module %= for variable %=", 
-	  module-name, var-name)
+    error("Internal error: failed to find module %= for variable %=",
+          module-name, var-name)
   end
 end method name-namespace;
 

@@ -16,7 +16,7 @@ define open generic module-project-proxy
  => (proxy);
 
 define open generic find-module
-    (server :: <server>, name :: <string>, 
+    (server :: <server>, name :: <string>,
      #key library, imported?, all-libraries?)
  => (module :: false-or(<module-object>));
 
@@ -43,16 +43,16 @@ define method module-project-proxy
 end method module-project-proxy;
 
 define method find-module
-    (project :: <project-object>, name :: <string>, 
+    (project :: <project-object>, name :: <string>,
      #key library, all-libraries?,
           imported? = #t)
  => (module :: false-or(<module-object>))
   let database = project-compiler-database(project);
   database
-    & find-module(database, name, 
-		  library: library, 
-		  all-libraries?: all-libraries?,
-		  imported?: imported?)
+    & find-module(database, name,
+                  library: library,
+                  all-libraries?: all-libraries?,
+                  imported?: imported?)
 end method find-module;
 
 define method do-module-definitions
@@ -61,9 +61,9 @@ define method do-module-definitions
      #key client, imported? = #t)
  => ()
   let server = choose-server(project, module);
-  server 
-    & do-module-definitions(function, server, module, 
-			    client: client, imported?: imported?)
+  server
+    & do-module-definitions(function, server, module,
+                            client: client, imported?: imported?)
 end method do-module-definitions;
 
 
@@ -79,28 +79,28 @@ define function module-definitions
      #key client, imported? = #t)
  => (names :: <sequence>)
   collect-environment-objects(do-module-definitions, server, module,
-			      client: client, imported?: imported?)
+                              client: client, imported?: imported?)
 end function module-definitions;
 
 // Search for a module by name in a library
 define method find-module
-    (server :: <server>, name :: <string>, 
+    (server :: <server>, name :: <string>,
      #key library, imported? = #t, all-libraries?)
  => (module :: false-or(<module-object>))
   let project = server-project(server);
   block (return)
-    local method maybe-return-module 
-	      (library :: <library-object>, #key imported?) => ()
-	    let name = find-name(server, name, library, imported?: imported?);
-	    let module = name & name-value(server, name);
-	    module & return(module)
-	  end method maybe-return-module;
+    local method maybe-return-module
+              (library :: <library-object>, #key imported?) => ()
+            let name = find-name(server, name, library, imported?: imported?);
+            let module = name & name-value(server, name);
+            module & return(module)
+          end method maybe-return-module;
     let library
       = select (library by instance?)
-	  <library-object> => library;
-	  <string>         => find-library(server, library);
-	  otherwise        => project-library(project);
-	end;
+          <library-object> => library;
+          <string>         => find-library(server, library);
+          otherwise        => project-library(project);
+        end;
     maybe-return-module(library, imported?: imported?);
     if (all-libraries?)
       do-project-used-libraries(maybe-return-module, server, project)
@@ -119,11 +119,11 @@ define method file-module
   block (return)
     do-project-file-libraries
       (method (library :: <library-object>, record :: <source-record>)
-	 let module-name = source-record-module-name(record);
-	 let module
-	   = find-module(project, as(<string>, module-name),
-			 library: library);
-	 module & return(module, library)
+         let module-name = source-record-module-name(record);
+         let module
+           = find-module(project, as(<string>, module-name),
+                         library: library);
+         module & return(module, library)
        end,
        project,
        as(<file-locator>, filename));

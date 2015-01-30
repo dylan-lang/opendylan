@@ -13,7 +13,7 @@ define sideways method frame-property-types
  => (types :: <list>)
   if (~subtype?(class, <immediate-application-object>))
     concatenate(next-method(),
-		#[#"memory"])
+                #[#"memory"])
   else
     next-method()
   end
@@ -26,7 +26,7 @@ define method general-property-types
     next-method()
   else
     concatenate(next-method(),
-		#[#"address"])
+                #[#"address"])
   end
 end method general-property-types;
 
@@ -37,7 +37,7 @@ define method general-property-types
     (class :: subclass(<integer-object>))
  => (types :: <list>)
   concatenate(next-method(),
-	      #[#"decimal", #"hex", #"octal", #"binary"])
+              #[#"decimal", #"hex", #"octal", #"binary"])
 end method general-property-types;
 
 
@@ -50,8 +50,8 @@ define sideways method make-frame-property-page-displayer
   let project = frame.ensure-frame-project;
   let displayer
     = make(<memory-displayer>,
-	   information-available?-function: curry(application-tethered?, project),
-	   transaction-function: curry(perform-application-transaction, project),
-	   address-generator: curry(application-object-address, project));
+           information-available?-function: curry(application-tethered?, project),
+           transaction-function: curry(perform-application-transaction, project),
+           address-generator: curry(application-object-address, project));
   values("Memory", displayer)
 end method make-frame-property-page-displayer;

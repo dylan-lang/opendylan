@@ -117,14 +117,14 @@ define method close-document
   when (document)
     let (save?, close?)
       = if (document-modified?(document))
-	  let (value, type)
-	    = notify-user("The document is modified; save it first?",
-			  owner: frame,
-			  style: #"warning", exit-style: #"yes-no-cancel");
-	  values(value == #t, type ~== #"cancel")
-	else
-	  values(#f, #t)
-	end;
+          let (value, type)
+            = notify-user("The document is modified; save it first?",
+                          owner: frame,
+                          style: #"warning", exit-style: #"yes-no-cancel");
+          values(value == #t, type ~== #"cancel")
+        else
+          values(#f, #t)
+        end;
     when (save?)
       save-document(frame, document: document)
     end;
@@ -157,8 +157,8 @@ define method save-document-as
     end
   else
     notify-user("You must create a new document or open an existing one first",
-		owner: frame,
-		style: #"information", exit-style: #"ok");
+                owner: frame,
+                style: #"information", exit-style: #"ok");
   end
 end method save-document-as;
 
@@ -191,7 +191,7 @@ end method command-redo;
 
 define method clipboard-cut
     (frame :: <template-frame>) => ()
-  let gadget = frame.main-pane;	// *** GADGET TO CUT FROM ***
+  let gadget = frame.main-pane;        // *** GADGET TO CUT FROM ***
   with-clipboard (clipboard = gadget)
     when (clipboard)
       add-clipboard-data(clipboard, gadget-value(gadget))
@@ -202,7 +202,7 @@ end method clipboard-cut;
 
 define method clipboard-copy
     (frame :: <template-frame>) => ()
-  let gadget = frame.main-pane;	// *** GADGET TO COPY FROM ***
+  let gadget = frame.main-pane;        // *** GADGET TO COPY FROM ***
   with-clipboard (clipboard = gadget)
     when (clipboard)
       add-clipboard-data(clipboard, gadget-value(gadget))
@@ -212,12 +212,12 @@ end method clipboard-copy;
 
 define method clipboard-paste
     (frame :: <template-frame>) => ()
-  let gadget = frame.main-pane;	// *** GADGET TO PASTE INTO ***
+  let gadget = frame.main-pane;        // *** GADGET TO PASTE INTO ***
   with-clipboard (clipboard = gadget)
     when (clipboard)
       let text = get-clipboard-data-as(<string>, clipboard);
       when (text)
-	gadget-value(gadget) := text
+        gadget-value(gadget) := text
       end
     end
   end

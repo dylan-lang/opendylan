@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Type objects
 
-define class <type-object> 
+define class <type-object>
     (<internal-object>,
      <definition-object>,
      <application-and-compiler-object>)

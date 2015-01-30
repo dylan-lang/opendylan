@@ -98,77 +98,77 @@ define dispatch-client <IVSSItemOld> ()
 
   property IVSSItemOld/Deleted :: <boolean>, name: "Deleted", disp-id: 3;
 
-  constant property IVSSItemOld/Type :: type-union(<integer>, 
+  constant property IVSSItemOld/Type :: type-union(<integer>,
         <machine-word>), name: "Type", disp-id: 4;
 
-  property IVSSItemOld/LocalSpec :: <string>, name: "LocalSpec", disp-id: 
+  property IVSSItemOld/LocalSpec :: <string>, name: "LocalSpec", disp-id:
         5;
 
   property IVSSItemOld/Name :: <string>, name: "Name", disp-id: 6;
 
-  constant property IVSSItemOld/Parent :: <IVSSItem>, name: "Parent", 
+  constant property IVSSItemOld/Parent :: <IVSSItem>, name: "Parent",
         disp-id: 7;
 
-  constant property IVSSItemOld/VersionNumber :: type-union(<integer>, 
+  constant property IVSSItemOld/VersionNumber :: type-union(<integer>,
         <machine-word>), name: "VersionNumber", disp-id: 8;
 
-  constant property IVSSItemOld/Items (/*optional*/ arg-IncludeDeleted :: 
+  constant property IVSSItemOld/Items (/*optional*/ arg-IncludeDeleted ::
         <boolean>) :: <IVSSItems>, name: "Items", disp-id: 9;
 
-  function IVSSItemOld/Get (/*optional*/ arg-Local :: inout-ref(<BSTR>), 
-        /*optional*/ arg-iFlags :: type-union(<integer>, <machine-word>)) 
+  function IVSSItemOld/Get (/*optional*/ arg-Local :: inout-ref(<BSTR>),
+        /*optional*/ arg-iFlags :: type-union(<integer>, <machine-word>))
         => (), name: "Get", disp-id: 10;
 
-  function IVSSItemOld/Checkout (/*optional*/ arg-Comment :: <string>, 
-        /*optional*/ arg-Local :: <string>, /*optional*/ arg-iFlags :: 
-        type-union(<integer>, <machine-word>)) => (), name: "Checkout", 
+  function IVSSItemOld/Checkout (/*optional*/ arg-Comment :: <string>,
+        /*optional*/ arg-Local :: <string>, /*optional*/ arg-iFlags ::
+        type-union(<integer>, <machine-word>)) => (), name: "Checkout",
         disp-id: 11;
 
-  function IVSSItemOld/Checkin (/*optional*/ arg-Comment :: <string>, 
-        /*optional*/ arg-Local :: <string>, /*optional*/ arg-iFlags :: 
-        type-union(<integer>, <machine-word>)) => (), name: "Checkin", 
+  function IVSSItemOld/Checkin (/*optional*/ arg-Comment :: <string>,
+        /*optional*/ arg-Local :: <string>, /*optional*/ arg-iFlags ::
+        type-union(<integer>, <machine-word>)) => (), name: "Checkin",
         disp-id: 12;
 
-  function IVSSItemOld/UndoCheckout (/*optional*/ arg-Local :: <string>, 
-        /*optional*/ arg-iFlags :: type-union(<integer>, <machine-word>)) 
+  function IVSSItemOld/UndoCheckout (/*optional*/ arg-Local :: <string>,
+        /*optional*/ arg-iFlags :: type-union(<integer>, <machine-word>))
         => (), name: "UndoCheckout", disp-id: 13;
 
-  constant property IVSSItemOld/IsCheckedOut :: type-union(<integer>, 
+  constant property IVSSItemOld/IsCheckedOut :: type-union(<integer>,
         <machine-word>), name: "IsCheckedOut", disp-id: 14;
 
-  constant property IVSSItemOld/Checkouts :: <IVSSCheckouts>, name: 
+  constant property IVSSItemOld/Checkouts :: <IVSSCheckouts>, name:
         "Checkouts", disp-id: 15;
 
-  constant property IVSSItemOld/IsDifferent (/*optional*/ arg-Local :: 
+  constant property IVSSItemOld/IsDifferent (/*optional*/ arg-Local ::
         <string>) :: <boolean>, name: "IsDifferent", disp-id: 16;
 
-  function IVSSItemOld/Add (arg-Local :: <string>, /*optional*/ arg-Comment 
-        :: <string>, /*optional*/ arg-iFlags :: type-union(<integer>, 
-        <machine-word>)) => (arg-result :: <IVSSItem>), name: "Add", 
+  function IVSSItemOld/Add (arg-Local :: <string>, /*optional*/ arg-Comment
+        :: <string>, /*optional*/ arg-iFlags :: type-union(<integer>,
+        <machine-word>)) => (arg-result :: <IVSSItem>), name: "Add",
         disp-id: 17;
 
-  function IVSSItemOld/NewSubproject (arg-Name :: <string>, /*optional*/ 
-        arg-Comment :: <string>) => (arg-result :: <IVSSItem>), name: 
+  function IVSSItemOld/NewSubproject (arg-Name :: <string>, /*optional*/
+        arg-Comment :: <string>) => (arg-result :: <IVSSItem>), name:
         "NewSubproject", disp-id: 18;
 
-  function IVSSItemOld/Share (arg-pIItem :: <IVSSItem>, /*optional*/ 
-        arg-Comment :: <string>, /*optional*/ arg-iFlags :: 
-        type-union(<integer>, <machine-word>)) => (), name: "Share", 
+  function IVSSItemOld/Share (arg-pIItem :: <IVSSItem>, /*optional*/
+        arg-Comment :: <string>, /*optional*/ arg-iFlags ::
+        type-union(<integer>, <machine-word>)) => (), name: "Share",
         disp-id: 19;
 
   function IVSSItemOld/Destroy () => (), name: "Destroy", disp-id: 20;
 
-  function IVSSItemOld/Move (arg-pINewParent :: <IVSSItem>) => (), name: 
+  function IVSSItemOld/Move (arg-pINewParent :: <IVSSItem>) => (), name:
         "Move", disp-id: 21;
 
-  function IVSSItemOld/Label (arg-Label :: <string>, /*optional*/ 
+  function IVSSItemOld/Label (arg-Label :: <string>, /*optional*/
         arg-Comment :: <string>) => (), name: "Label", disp-id: 22;
 
-  constant property IVSSItemOld/Versions (/*optional*/ arg-iFlags :: 
-        type-union(<integer>, <machine-word>)) :: <IVSSVersions>, name: 
+  constant property IVSSItemOld/Versions (/*optional*/ arg-iFlags ::
+        type-union(<integer>, <machine-word>)) :: <IVSSVersions>, name:
         "Versions", disp-id: 23;
 
-  constant property IVSSItemOld/Version (/*optional*/ arg-Version :: 
+  constant property IVSSItemOld/Version (/*optional*/ arg-Version ::
         <object>) :: <IVSSItem>, name: "Version", disp-id: 24;
 
 end dispatch-client <IVSSItemOld>;
@@ -186,83 +186,83 @@ define dispatch-client <IVSSItem> ()
 
   property IVSSItem/Deleted :: <boolean>, name: "Deleted", disp-id: 3;
 
-  constant property IVSSItem/Type :: type-union(<integer>, <machine-word>), 
+  constant property IVSSItem/Type :: type-union(<integer>, <machine-word>),
         name: "Type", disp-id: 4;
 
   property IVSSItem/LocalSpec :: <string>, name: "LocalSpec", disp-id: 5;
 
   property IVSSItem/Name :: <string>, name: "Name", disp-id: 6;
 
-  constant property IVSSItem/Parent :: <IVSSItem>, name: "Parent", disp-id: 
+  constant property IVSSItem/Parent :: <IVSSItem>, name: "Parent", disp-id:
         7;
 
-  constant property IVSSItem/VersionNumber :: type-union(<integer>, 
+  constant property IVSSItem/VersionNumber :: type-union(<integer>,
         <machine-word>), name: "VersionNumber", disp-id: 8;
 
-  constant property IVSSItem/Items (/*optional*/ arg-IncludeDeleted :: 
+  constant property IVSSItem/Items (/*optional*/ arg-IncludeDeleted ::
         <boolean>) :: <IVSSItems>, name: "Items", disp-id: 9;
 
-  function IVSSItem/Get (/*optional*/ arg-Local :: inout-ref(<BSTR>), 
-        /*optional*/ arg-iFlags :: type-union(<integer>, <machine-word>)) 
+  function IVSSItem/Get (/*optional*/ arg-Local :: inout-ref(<BSTR>),
+        /*optional*/ arg-iFlags :: type-union(<integer>, <machine-word>))
         => (), name: "Get", disp-id: 10;
 
-  function IVSSItem/Checkout (/*optional*/ arg-Comment :: <string>, 
-        /*optional*/ arg-Local :: <string>, /*optional*/ arg-iFlags :: 
-        type-union(<integer>, <machine-word>)) => (), name: "Checkout", 
+  function IVSSItem/Checkout (/*optional*/ arg-Comment :: <string>,
+        /*optional*/ arg-Local :: <string>, /*optional*/ arg-iFlags ::
+        type-union(<integer>, <machine-word>)) => (), name: "Checkout",
         disp-id: 11;
 
-  function IVSSItem/Checkin (/*optional*/ arg-Comment :: <string>, 
-        /*optional*/ arg-Local :: <string>, /*optional*/ arg-iFlags :: 
-        type-union(<integer>, <machine-word>)) => (), name: "Checkin", 
+  function IVSSItem/Checkin (/*optional*/ arg-Comment :: <string>,
+        /*optional*/ arg-Local :: <string>, /*optional*/ arg-iFlags ::
+        type-union(<integer>, <machine-word>)) => (), name: "Checkin",
         disp-id: 12;
 
-  function IVSSItem/UndoCheckout (/*optional*/ arg-Local :: <string>, 
-        /*optional*/ arg-iFlags :: type-union(<integer>, <machine-word>)) 
+  function IVSSItem/UndoCheckout (/*optional*/ arg-Local :: <string>,
+        /*optional*/ arg-iFlags :: type-union(<integer>, <machine-word>))
         => (), name: "UndoCheckout", disp-id: 13;
 
-  constant property IVSSItem/IsCheckedOut :: type-union(<integer>, 
+  constant property IVSSItem/IsCheckedOut :: type-union(<integer>,
         <machine-word>), name: "IsCheckedOut", disp-id: 14;
 
-  constant property IVSSItem/Checkouts :: <IVSSCheckouts>, name: 
+  constant property IVSSItem/Checkouts :: <IVSSCheckouts>, name:
         "Checkouts", disp-id: 15;
 
-  constant property IVSSItem/IsDifferent (/*optional*/ arg-Local :: 
+  constant property IVSSItem/IsDifferent (/*optional*/ arg-Local ::
         <string>) :: <boolean>, name: "IsDifferent", disp-id: 16;
 
-  function IVSSItem/Add (arg-Local :: <string>, /*optional*/ arg-Comment :: 
-        <string>, /*optional*/ arg-iFlags :: type-union(<integer>, 
-        <machine-word>)) => (arg-result :: <IVSSItem>), name: "Add", 
+  function IVSSItem/Add (arg-Local :: <string>, /*optional*/ arg-Comment ::
+        <string>, /*optional*/ arg-iFlags :: type-union(<integer>,
+        <machine-word>)) => (arg-result :: <IVSSItem>), name: "Add",
         disp-id: 17;
 
-  function IVSSItem/NewSubproject (arg-Name :: <string>, /*optional*/ 
-        arg-Comment :: <string>) => (arg-result :: <IVSSItem>), name: 
+  function IVSSItem/NewSubproject (arg-Name :: <string>, /*optional*/
+        arg-Comment :: <string>) => (arg-result :: <IVSSItem>), name:
         "NewSubproject", disp-id: 18;
 
-  function IVSSItem/Share (arg-pIItem :: <IVSSItem>, /*optional*/ 
-        arg-Comment :: <string>, /*optional*/ arg-iFlags :: 
-        type-union(<integer>, <machine-word>)) => (), name: "Share", 
+  function IVSSItem/Share (arg-pIItem :: <IVSSItem>, /*optional*/
+        arg-Comment :: <string>, /*optional*/ arg-iFlags ::
+        type-union(<integer>, <machine-word>)) => (), name: "Share",
         disp-id: 19;
 
   function IVSSItem/Destroy () => (), name: "Destroy", disp-id: 20;
 
-  function IVSSItem/Move (arg-pINewParent :: <IVSSItem>) => (), name: 
+  function IVSSItem/Move (arg-pINewParent :: <IVSSItem>) => (), name:
         "Move", disp-id: 21;
 
-  function IVSSItem/Label (arg-Label :: <string>, /*optional*/ arg-Comment 
+  function IVSSItem/Label (arg-Label :: <string>, /*optional*/ arg-Comment
         :: <string>) => (), name: "Label", disp-id: 22;
 
-  constant property IVSSItem/Versions (/*optional*/ arg-iFlags :: 
-        type-union(<integer>, <machine-word>)) :: <IVSSVersions>, name: 
+  constant property IVSSItem/Versions (/*optional*/ arg-iFlags ::
+        type-union(<integer>, <machine-word>)) :: <IVSSVersions>, name:
         "Versions", disp-id: 23;
 
-  constant property IVSSItem/Version (/*optional*/ arg-Version :: <object>) 
+  constant property IVSSItem/Version (/*optional*/ arg-Version :: <object>)
         :: <IVSSItem>, name: "Version", disp-id: 24;
 
-  constant property IVSSItem/Links :: <IVSSItems>, name: "Links", disp-id: 
+  constant property IVSSItem/Links :: <IVSSItems>, name: "Links", disp-id:
         25;
 
-  function IVSSItem/Branch (/*optional*/ arg-Comment :: <string>, 
-        /*optional*/ arg-iFlags :: type-union(<integer>, <machine-word>)) 
+  function IVSSItem/Branch (/*optional*/ arg-Comment :: <string>,
+        /*optional*/ arg-iFlags :: type-union(<integer>, <machine-word>))
         => (arg-result :: <IVSSItem>), name: "Branch", disp-id: 26;
 end dispatch-client <IVSSItem>;
 
@@ -274,7 +274,7 @@ end dispatch-client <IVSSItem>;
 define dispatch-client <IVSSVersions> ()
   uuid "{783CD4E7-9D54-11CF-B8EE-00608CC9A71F}";
 
-  function IVSSVersions/_NewEnum () => (arg-result :: <LPUNKNOWN>), name: 
+  function IVSSVersions/_NewEnum () => (arg-result :: <LPUNKNOWN>), name:
         "_NewEnum", disp-id: -4;
 end dispatch-client <IVSSVersions>;
 
@@ -286,25 +286,25 @@ end dispatch-client <IVSSVersions>;
 define dispatch-client <IVSSVersionOld> ()
   uuid "{783CD4E8-9D54-11CF-B8EE-00608CC9A71F}";
 
-  constant property IVSSVersionOld/Username :: <string>, name: "Username", 
+  constant property IVSSVersionOld/Username :: <string>, name: "Username",
         disp-id: 1;
 
-  constant property IVSSVersionOld/VersionNumber :: type-union(<integer>, 
+  constant property IVSSVersionOld/VersionNumber :: type-union(<integer>,
         <machine-word>), name: "VersionNumber", disp-id: 2;
 
-  constant property IVSSVersionOld/Action :: <string>, name: "Action", 
+  constant property IVSSVersionOld/Action :: <string>, name: "Action",
         disp-id: 3;
 
-  constant property IVSSVersionOld/Date :: <double-float>, name: "Date", 
+  constant property IVSSVersionOld/Date :: <double-float>, name: "Date",
         disp-id: 4;
 
-  constant property IVSSVersionOld/Comment :: <string>, name: "Comment", 
+  constant property IVSSVersionOld/Comment :: <string>, name: "Comment",
         disp-id: 5;
 
-  constant property IVSSVersionOld/Label :: <string>, name: "Label", 
+  constant property IVSSVersionOld/Label :: <string>, name: "Label",
         disp-id: 6;
 
-  constant property IVSSVersionOld/VSSItem :: <IVSSItem>, name: "VSSItem", 
+  constant property IVSSVersionOld/VSSItem :: <IVSSItem>, name: "VSSItem",
         disp-id: 7;
 end dispatch-client <IVSSVersionOld>;
 
@@ -316,28 +316,28 @@ end dispatch-client <IVSSVersionOld>;
 define dispatch-client <IVSSVersion> ()
   uuid "{2A0DE0E9-2E9F-11D0-9236-00AA00A1EB95}";
 
-  constant property IVSSVersion/Username :: <string>, name: "Username", 
+  constant property IVSSVersion/Username :: <string>, name: "Username",
         disp-id: 1;
 
-  constant property IVSSVersion/VersionNumber :: type-union(<integer>, 
+  constant property IVSSVersion/VersionNumber :: type-union(<integer>,
         <machine-word>), name: "VersionNumber", disp-id: 2;
 
-  constant property IVSSVersion/Action :: <string>, name: "Action", 
+  constant property IVSSVersion/Action :: <string>, name: "Action",
         disp-id: 3;
 
-  constant property IVSSVersion/Date :: <double-float>, name: "Date", 
+  constant property IVSSVersion/Date :: <double-float>, name: "Date",
         disp-id: 4;
 
-  constant property IVSSVersion/Comment :: <string>, name: "Comment", 
+  constant property IVSSVersion/Comment :: <string>, name: "Comment",
         disp-id: 5;
 
-  constant property IVSSVersion/Label :: <string>, name: "Label", disp-id: 
+  constant property IVSSVersion/Label :: <string>, name: "Label", disp-id:
         6;
 
-  constant property IVSSVersion/VSSItem :: <IVSSItem>, name: "VSSItem", 
+  constant property IVSSVersion/VSSItem :: <IVSSItem>, name: "VSSItem",
         disp-id: 7;
 
-  constant property IVSSVersion/LabelComment :: <string>, name: 
+  constant property IVSSVersion/LabelComment :: <string>, name:
         "LabelComment", disp-id: 8;
 end dispatch-client <IVSSVersion>;
 
@@ -349,13 +349,13 @@ end dispatch-client <IVSSVersion>;
 define dispatch-client <IVSSItems> ()
   uuid "{783CD4E5-9D54-11CF-B8EE-00608CC9A71F}";
 
-  size constant property IVSSItems/Count :: type-union(<integer>, 
+  size constant property IVSSItems/Count :: type-union(<integer>,
         <machine-word>), name: "Count", disp-id: 1;
 
-  element constant property IVSSItems/Item (arg-sItem :: <object>) :: 
+  element constant property IVSSItems/Item (arg-sItem :: <object>) ::
         <IVSSItem>, name: "Item", disp-id: 0;
 
-  function IVSSItems/_NewEnum () => (arg-result :: <LPUNKNOWN>), name: 
+  function IVSSItems/_NewEnum () => (arg-result :: <LPUNKNOWN>), name:
         "_NewEnum", disp-id: -4;
 end dispatch-client <IVSSItems>;
 
@@ -367,13 +367,13 @@ end dispatch-client <IVSSItems>;
 define dispatch-client <IVSSCheckouts> ()
   uuid "{8903A770-F55F-11CF-9227-00AA00A1EB95}";
 
-  size constant property IVSSCheckouts/Count :: type-union(<integer>, 
+  size constant property IVSSCheckouts/Count :: type-union(<integer>,
         <machine-word>), name: "Count", disp-id: 1;
 
-  element constant property IVSSCheckouts/Item (arg-sItem :: <object>) :: 
+  element constant property IVSSCheckouts/Item (arg-sItem :: <object>) ::
         <IVSSCheckout>, name: "Item", disp-id: 0;
 
-  function IVSSCheckouts/_NewEnum () => (arg-result :: <LPUNKNOWN>), name: 
+  function IVSSCheckouts/_NewEnum () => (arg-result :: <LPUNKNOWN>), name:
         "_NewEnum", disp-id: -4;
 end dispatch-client <IVSSCheckouts>;
 
@@ -385,25 +385,25 @@ end dispatch-client <IVSSCheckouts>;
 define dispatch-client <IVSSCheckout> ()
   uuid "{783CD4E6-9D54-11CF-B8EE-00608CC9A71F}";
 
-  constant property IVSSCheckout/Username :: <string>, name: "Username", 
+  constant property IVSSCheckout/Username :: <string>, name: "Username",
         disp-id: 1;
 
-  constant property IVSSCheckout/Date :: <double-float>, name: "Date", 
+  constant property IVSSCheckout/Date :: <double-float>, name: "Date",
         disp-id: 2;
 
-  constant property IVSSCheckout/LocalSpec :: <string>, name: "LocalSpec", 
+  constant property IVSSCheckout/LocalSpec :: <string>, name: "LocalSpec",
         disp-id: 3;
 
-  constant property IVSSCheckout/Machine :: <string>, name: "Machine", 
+  constant property IVSSCheckout/Machine :: <string>, name: "Machine",
         disp-id: 4;
 
-  constant property IVSSCheckout/Project :: <string>, name: "Project", 
+  constant property IVSSCheckout/Project :: <string>, name: "Project",
         disp-id: 5;
 
-  constant property IVSSCheckout/Comment :: <string>, name: "Comment", 
+  constant property IVSSCheckout/Comment :: <string>, name: "Comment",
         disp-id: 6;
 
-  constant property IVSSCheckout/VersionNumber :: type-union(<integer>, 
+  constant property IVSSCheckout/VersionNumber :: type-union(<integer>,
         <machine-word>), name: "VersionNumber", disp-id: 7;
 end dispatch-client <IVSSCheckout>;
 
@@ -415,24 +415,24 @@ end dispatch-client <IVSSCheckout>;
 define dispatch-client <IVSSDatabaseOld> ()
   uuid "{783CD4E2-9D54-11CF-B8EE-00608CC9A71F}";
 
-  function IVSSDatabaseOld/Open (/*optional*/ arg-SrcSafeIni :: <string>, 
-        /*optional*/ arg-Username :: <string>, /*optional*/ arg-Password :: 
+  function IVSSDatabaseOld/Open (/*optional*/ arg-SrcSafeIni :: <string>,
+        /*optional*/ arg-Username :: <string>, /*optional*/ arg-Password ::
         <string>) => (), name: "Open", disp-id: 1;
 
-  constant property IVSSDatabaseOld/SrcSafeIni :: <string>, name: 
+  constant property IVSSDatabaseOld/SrcSafeIni :: <string>, name:
         "SrcSafeIni", disp-id: 2;
 
-  constant property IVSSDatabaseOld/DatabaseName :: <string>, name: 
+  constant property IVSSDatabaseOld/DatabaseName :: <string>, name:
         "DatabaseName", disp-id: 3;
 
-  constant property IVSSDatabaseOld/Username :: <string>, name: "Username", 
+  constant property IVSSDatabaseOld/Username :: <string>, name: "Username",
         disp-id: 4;
 
-  property IVSSDatabaseOld/CurrentProject :: <string>, name: 
+  property IVSSDatabaseOld/CurrentProject :: <string>, name:
         "CurrentProject", disp-id: 5;
 
-  constant property IVSSDatabaseOld/VSSItem (arg-Spec :: <string>, 
-        /*optional*/ arg-Deleted :: <boolean>) :: <IVSSItem>, name: 
+  constant property IVSSDatabaseOld/VSSItem (arg-Spec :: <string>,
+        /*optional*/ arg-Deleted :: <boolean>) :: <IVSSItem>, name:
         "VSSItem", disp-id: 6;
 end dispatch-client <IVSSDatabaseOld>;
 
@@ -444,40 +444,40 @@ end dispatch-client <IVSSDatabaseOld>;
 define dispatch-client <IVSSDatabase> ()
   uuid "{2A0DE0E2-2E9F-11D0-9236-00AA00A1EB95}";
 
-  function IVSSDatabase/Open (/*optional*/ arg-SrcSafeIni :: <string>, 
-        /*optional*/ arg-Username :: <string>, /*optional*/ arg-Password :: 
+  function IVSSDatabase/Open (/*optional*/ arg-SrcSafeIni :: <string>,
+        /*optional*/ arg-Username :: <string>, /*optional*/ arg-Password ::
         <string>) => (), name: "Open", disp-id: 1;
 
-  constant property IVSSDatabase/SrcSafeIni :: <string>, name: 
+  constant property IVSSDatabase/SrcSafeIni :: <string>, name:
         "SrcSafeIni", disp-id: 2;
 
-  constant property IVSSDatabase/DatabaseName :: <string>, name: 
+  constant property IVSSDatabase/DatabaseName :: <string>, name:
         "DatabaseName", disp-id: 3;
 
-  constant property IVSSDatabase/Username :: <string>, name: "Username", 
+  constant property IVSSDatabase/Username :: <string>, name: "Username",
         disp-id: 4;
 
-  property IVSSDatabase/CurrentProject :: <string>, name: "CurrentProject", 
+  property IVSSDatabase/CurrentProject :: <string>, name: "CurrentProject",
         disp-id: 5;
 
-  constant property IVSSDatabase/VSSItem (arg-Spec :: <string>, 
-        /*optional*/ arg-Deleted :: <boolean>) :: <IVSSItem>, name: 
+  constant property IVSSDatabase/VSSItem (arg-Spec :: <string>,
+        /*optional*/ arg-Deleted :: <boolean>) :: <IVSSItem>, name:
         "VSSItem", disp-id: 6;
 
-  function IVSSDatabase/AddUser (arg-User :: <string>, arg-Password :: 
-        <string>, arg-ReadOnly :: <boolean>) => (arg-result :: <IVSSUser>), 
+  function IVSSDatabase/AddUser (arg-User :: <string>, arg-Password ::
+        <string>, arg-ReadOnly :: <boolean>) => (arg-result :: <IVSSUser>),
         name: "AddUser", disp-id: 7;
 
-  constant property IVSSDatabase/User (arg-Name :: <string>) :: <IVSSUser>, 
+  constant property IVSSDatabase/User (arg-Name :: <string>) :: <IVSSUser>,
         name: "User", disp-id: 8;
 
-  constant property IVSSDatabase/Users :: <IVSSUsers>, name: "Users", 
+  constant property IVSSDatabase/Users :: <IVSSUsers>, name: "Users",
         disp-id: 9;
 
-  property IVSSDatabase/ProjectRightsEnabled :: <boolean>, name: 
+  property IVSSDatabase/ProjectRightsEnabled :: <boolean>, name:
         "ProjectRightsEnabled", disp-id: 10;
 
-  property IVSSDatabase/DefaultProjectRights :: type-union(<integer>, 
+  property IVSSDatabase/DefaultProjectRights :: type-union(<integer>,
         <machine-word>), name: "DefaultProjectRights", disp-id: 11;
 end dispatch-client <IVSSDatabase>;
 
@@ -493,16 +493,16 @@ define dispatch-client <IVSSUser> ()
 
   property IVSSUser/Name :: <string>, name: "Name", disp-id: 2;
 
-  write-only property IVSSUser/Password :: <string>, name: "Password", 
+  write-only property IVSSUser/Password :: <string>, name: "Password",
         disp-id: 3;
 
   property IVSSUser/ReadOnly :: <boolean>, name: "ReadOnly", disp-id: 4;
 
-  property IVSSUser/ProjectRights (/*optional*/ arg-Project :: <string>) :: 
-        type-union(<integer>, <machine-word>), name: "ProjectRights", 
+  property IVSSUser/ProjectRights (/*optional*/ arg-Project :: <string>) ::
+        type-union(<integer>, <machine-word>), name: "ProjectRights",
         disp-id: 5;
 
-  function IVSSUser/RemoveProjectRights (arg-Project :: <string>) => (), 
+  function IVSSUser/RemoveProjectRights (arg-Project :: <string>) => (),
         name: "RemoveProjectRights", disp-id: 6;
 end dispatch-client <IVSSUser>;
 
@@ -514,13 +514,13 @@ end dispatch-client <IVSSUser>;
 define dispatch-client <IVSSUsers> ()
   uuid "{2A0DE0E4-2E9F-11D0-9236-00AA00A1EB95}";
 
-  size constant property IVSSUsers/Count :: type-union(<integer>, 
+  size constant property IVSSUsers/Count :: type-union(<integer>,
         <machine-word>), name: "Count", disp-id: 1;
 
-  element constant property IVSSUsers/Item (arg-sItem :: <object>) :: 
+  element constant property IVSSUsers/Item (arg-sItem :: <object>) ::
         <IVSSUser>, name: "Item", disp-id: 0;
 
-  function IVSSUsers/_NewEnum () => (arg-result :: <LPUNKNOWN>), name: 
+  function IVSSUsers/_NewEnum () => (arg-result :: <LPUNKNOWN>), name:
         "_NewEnum", disp-id: -4;
 end dispatch-client <IVSSUsers>;
 
@@ -528,10 +528,10 @@ end dispatch-client <IVSSUsers>;
 /* COM class: VSSItem version 0.0
  * GUID: {783CD4E3-9D54-11CF-B8EE-00608CC9A71F}
  */
-define constant $VSSItem-class-id = as(<REFCLSID>, 
+define constant $VSSItem-class-id = as(<REFCLSID>,
         "{783CD4E3-9D54-11CF-B8EE-00608CC9A71F}");
 
-define function make-VSSItem () => (default-interface :: <IVSSItem>, 
+define function make-VSSItem () => (default-interface :: <IVSSItem>,
         interface-2 :: <IVSSItemOld>)
   let default-interface = make(<IVSSItem>, class-id: $VSSItem-class-id);
   values(default-interface,
@@ -542,11 +542,11 @@ end function make-VSSItem;
 /* COM class: VSSVersion version 0.0
  * GUID: {783CD4EC-9D54-11CF-B8EE-00608CC9A71F}
  */
-define constant $VSSVersion-class-id = as(<REFCLSID>, 
+define constant $VSSVersion-class-id = as(<REFCLSID>,
         "{783CD4EC-9D54-11CF-B8EE-00608CC9A71F}");
 
 define function make-VSSVersion () => (default-interface :: <IVSSVersion>)
-  let default-interface = make(<IVSSVersion>, class-id: 
+  let default-interface = make(<IVSSVersion>, class-id:
         $VSSVersion-class-id);
   values(default-interface)
 end function make-VSSVersion;
@@ -555,12 +555,12 @@ end function make-VSSVersion;
 /* COM class: VSSCheckout version 0.0
  * GUID: {2A0DE0E0-2E9F-11D0-9236-00AA00A1EB95}
  */
-define constant $VSSCheckout-class-id = as(<REFCLSID>, 
+define constant $VSSCheckout-class-id = as(<REFCLSID>,
         "{2A0DE0E0-2E9F-11D0-9236-00AA00A1EB95}");
 
-define function make-VSSCheckout () => (default-interface :: 
+define function make-VSSCheckout () => (default-interface ::
         <IVSSCheckout>)
-  let default-interface = make(<IVSSCheckout>, class-id: 
+  let default-interface = make(<IVSSCheckout>, class-id:
         $VSSCheckout-class-id);
   values(default-interface)
 end function make-VSSCheckout;
@@ -569,12 +569,12 @@ end function make-VSSCheckout;
 /* COM class: VSSDatabase version 0.0
  * GUID: {783CD4E4-9D54-11CF-B8EE-00608CC9A71F}
  */
-define constant $VSSDatabase-class-id = as(<REFCLSID>, 
+define constant $VSSDatabase-class-id = as(<REFCLSID>,
         "{783CD4E4-9D54-11CF-B8EE-00608CC9A71F}");
 
-define function make-VSSDatabase () => (default-interface :: 
+define function make-VSSDatabase () => (default-interface ::
         <IVSSDatabase>, interface-2 :: <IVSSDatabaseOld>)
-  let default-interface = make(<IVSSDatabase>, class-id: 
+  let default-interface = make(<IVSSDatabase>, class-id:
         $VSSDatabase-class-id);
   values(default-interface,
          make(<IVSSDatabaseOld>, disp-interface: default-interface))
@@ -584,7 +584,7 @@ end function make-VSSDatabase;
 /* COM class: VSSUser version 0.0
  * GUID: {2A0DE0E5-2E9F-11D0-9236-00AA00A1EB95}
  */
-define constant $VSSUser-class-id = as(<REFCLSID>, 
+define constant $VSSUser-class-id = as(<REFCLSID>,
         "{2A0DE0E5-2E9F-11D0-9236-00AA00A1EB95}");
 
 define function make-VSSUser () => (default-interface :: <IVSSUser>)
@@ -600,7 +600,7 @@ end function make-VSSUser;
 define dispatch-client <IVSS> ()
   uuid "{783CD4EB-9D54-11CF-B8EE-00608CC9A71F}";
 
-  constant property IVSS/VSSDatabase :: <IVSSDatabase>, name: 
+  constant property IVSS/VSSDatabase :: <IVSSDatabase>, name:
         "VSSDatabase", disp-id: 1;
 end dispatch-client <IVSS>;
 
@@ -608,7 +608,7 @@ end dispatch-client <IVSS>;
 /* COM class: VSSApp version 0.0
  * GUID: {2A0DE0E1-2E9F-11D0-9236-00AA00A1EB95}
  */
-define constant $VSSApp-class-id = as(<REFCLSID>, 
+define constant $VSSApp-class-id = as(<REFCLSID>,
         "{2A0DE0E1-2E9F-11D0-9236-00AA00A1EB95}");
 
 define function make-VSSApp () => (default-interface :: <IVSS>)

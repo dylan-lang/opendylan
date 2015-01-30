@@ -104,7 +104,7 @@ define method frame-coerce-raw-object
  => (object :: <object>)
   object
 end method frame-coerce-raw-object;
- 
+
 define method frame-primary-object
     (frame :: <frame-primary-object-mixin>)
  => (object :: <object>)
@@ -154,11 +154,11 @@ define method frame-primary-object-setter
   when (object & ~raw-object)
     let message
       = format-to-string(if (instance?(object, <string>))
-			   "Cannot find an object named '%s'."
-			 else
-			   "Cannot find object %=."
-			 end,
-			 object);
+                           "Cannot find an object named '%s'."
+                         else
+                           "Cannot find object %=."
+                         end,
+                         object);
     notify-user(message, owner: frame);
   end;
   when (raw-object & raw-object ~== old-raw-object)
@@ -187,47 +187,47 @@ define method frame-primary-object-class
   <object>
 end method frame-primary-object-class;
 
-define method make-frame-primary-object-selector 
+define method make-frame-primary-object-selector
     (frame :: <frame-primary-object-mixin>, #key label = "Object:")
  => (sheet :: <sheet>)
   local method find-named-object-in-history
-	    (name :: <string>) => (object)
-	  let name = as-lowercase(name);
-	  block (return)
-	    for (raw-object in frame-history(frame))
-	      let object = frame-coerce-raw-object(frame, raw-object);
-	      let object-name 
-		= as-lowercase(frame-primary-object-name(frame, object));
-	      if (name = object-name) return(raw-object) end
-	    end
-	  end
-	end method find-named-object-in-history;
+            (name :: <string>) => (object)
+          let name = as-lowercase(name);
+          block (return)
+            for (raw-object in frame-history(frame))
+              let object = frame-coerce-raw-object(frame, raw-object);
+              let object-name
+                = as-lowercase(frame-primary-object-name(frame, object));
+              if (name = object-name) return(raw-object) end
+            end
+          end
+        end method find-named-object-in-history;
   local method update-primary-object
-	    (gadget :: <combo-box>, callback :: <symbol>) => ()
-	  let frame = sheet-frame(gadget);
-	  with-busy-cursor (frame)
-	    let name = gadget-value(gadget);
-	    //--- This is a grotesque hack to avoid updating twice,
-	    //--- first from the value changed callback and then
-	    //--- again from the activate callback.
-	    unless (name == frame.frame-last-name
-		      & callback == #"activate"
-		      & frame.frame-last-callback == #"value-changed")
-	      let object = find-named-object-in-history(name) | name;
-	      frame-primary-object(frame) := object
-	    end;
-	    frame.frame-last-name     := name;
-	    frame.frame-last-callback := callback;
-	  end
+            (gadget :: <combo-box>, callback :: <symbol>) => ()
+          let frame = sheet-frame(gadget);
+          with-busy-cursor (frame)
+            let name = gadget-value(gadget);
+            //--- This is a grotesque hack to avoid updating twice,
+            //--- first from the value changed callback and then
+            //--- again from the activate callback.
+            unless (name == frame.frame-last-name
+                      & callback == #"activate"
+                      & frame.frame-last-callback == #"value-changed")
+              let object = find-named-object-in-history(name) | name;
+              frame-primary-object(frame) := object
+            end;
+            frame.frame-last-name     := name;
+            frame.frame-last-callback := callback;
+          end
         end method update-primary-object;
   let object = frame-primary-object(frame);
   horizontally (spacing: 2, y-alignment: #"center")
     make(<label>, label: label);
     frame-name-selector(frame)
       := make(<combo-box>,
-	      value: object & frame-primary-object-name(frame, object),
-	      min-width: 100,
-	      value-changed-callback: rcurry(update-primary-object, #"value-changed"),
+              value: object & frame-primary-object-name(frame, object),
+              min-width: 100,
+              value-changed-callback: rcurry(update-primary-object, #"value-changed"),
               activate-callback: rcurry(update-primary-object, #"activate"))
   end
 end method make-frame-primary-object-selector;
@@ -247,10 +247,10 @@ define method note-frame-history-changed
   when (name-selector)
     let history
       = map(method (raw-object)
-	      let object = frame-coerce-raw-object(frame, raw-object);
-	      frame-primary-object-name(frame, object)
-	    end,
-	    frame-most-recent-objects(frame));
+              let object = frame-coerce-raw-object(frame, raw-object);
+              frame-primary-object-name(frame, object)
+            end,
+            frame-most-recent-objects(frame));
     // ---*** hughg, 1997/01/22: HACK to work around bug on \= for <deque>s
     // gadget-items(name-selector) := history
     gadget-items(name-selector) := as(<vector>, history)
@@ -267,7 +267,7 @@ define method refresh-name-selector
   let name-selector = frame-name-selector(frame);
   if (name-selector)
     let object = frame-primary-object(frame);
-    gadget-value(name-selector) 
+    gadget-value(name-selector)
       := if (object) frame-primary-object-name(frame, object) end
   end
 end method refresh-name-selector;
@@ -288,28 +288,28 @@ define frame <select-object-dialog> (<dialog-frame>)
     init-keyword: items:;
   pane %object-selecter (frame)
     make(<combo-box>,
-	 value: frame.select-object-dialog-value,
-	 items: frame.select-object-dialog-items,
-	 value-changing-callback:
-	   method (gadget)
-	     let dialog = sheet-frame(gadget);
-	     let value = gadget-value(gadget);
-	     dialog-exit-enabled?(dialog) := ~empty?(value)
-	   end,
-	 value-changed-callback:
-	   method (gadget)
-	     let dialog = sheet-frame(gadget);
-	     let value = gadget-value(gadget);
-	     dialog.select-object-dialog-value := value;
-	     dialog-exit-enabled?(dialog) := ~empty?(value)
-	   end,
-	 activate-callback:
-	   method (gadget)
-	     let dialog = sheet-frame(gadget);
-	     when (dialog-exit-enabled?(dialog))
-	       exit-dialog(dialog)
-	     end
-	   end);
+         value: frame.select-object-dialog-value,
+         items: frame.select-object-dialog-items,
+         value-changing-callback:
+           method (gadget)
+             let dialog = sheet-frame(gadget);
+             let value = gadget-value(gadget);
+             dialog-exit-enabled?(dialog) := ~empty?(value)
+           end,
+         value-changed-callback:
+           method (gadget)
+             let dialog = sheet-frame(gadget);
+             let value = gadget-value(gadget);
+             dialog.select-object-dialog-value := value;
+             dialog-exit-enabled?(dialog) := ~empty?(value)
+           end,
+         activate-callback:
+           method (gadget)
+             let dialog = sheet-frame(gadget);
+             when (dialog-exit-enabled?(dialog))
+               exit-dialog(dialog)
+             end
+           end);
   layout (frame)
     make(<table-layout>,
          y-spacing: 14,
@@ -318,7 +318,7 @@ define frame <select-object-dialog> (<dialog-frame>)
            list(list(make(<null-pane>), //--- cpage: 1997.09.14 Put an icon here.
                      make(<label>, label: frame.select-object-dialog-prompt)),
                 list(make(<label>, label: frame.select-object-dialog-label),
-		     frame.%object-selecter)));
+                     frame.%object-selecter)));
 end frame <select-object-dialog>;
 
 define method handle-event
@@ -335,13 +335,13 @@ define method frame-select-primary-object
   let object = frame-primary-object(frame);
   let dialog
     = make(<select-object-dialog>,
-	   owner: frame,
-	   title: title,
-	   label: label,
-	   prompt: prompt,
-	   value: object & frame-primary-object-name(frame, object),
-	   items: gadget-items(frame-name-selector(frame)),
-	   width: max($select-object-dialog-width, 300));
+           owner: frame,
+           title: title,
+           label: label,
+           prompt: prompt,
+           value: object & frame-primary-object-name(frame, object),
+           items: gadget-items(frame-name-selector(frame)),
+           width: max($select-object-dialog-width, 300));
   frame-input-focus(dialog) := dialog.%object-selecter;
   when (start-dialog(dialog))
     let (width, height) = frame-size(dialog);

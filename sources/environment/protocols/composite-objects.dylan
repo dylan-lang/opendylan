@@ -31,7 +31,7 @@ define method composite-object-size
 end method composite-object-size;
 
 define method composite-object-contents
-    (project :: <project-object>, object :: <composite-object>, 
+    (project :: <project-object>, object :: <composite-object>,
      #key inherited?)
  => (names :: <sequence>, values :: <sequence>)
   let application = ensure-application-server(project, object);

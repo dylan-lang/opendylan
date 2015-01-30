@@ -1,7 +1,7 @@
 Library:   environment-profiler
 Synopsis:  The profiling tool provided by the environment
-Author:	   Andy Armstrong
-Target-Type:	dll
+Author:    Andy Armstrong
+Target-Type: dll
 Files: library
        module
        options

@@ -18,9 +18,9 @@ define sealed method do-direct-subclasses
   let direct-subclasses
     = collect-from-all-client-contexts
         (method (context)
-	   class-direct-subclass-definitions(context, class-definition)
-	 end,
-	 server, context);
+           class-direct-subclass-definitions(context, class-definition)
+         end,
+         server, context);
   do(method (subclass) => ()
        let environment-subclass
          = make-environment-object-for-source-form(project-object, subclass);
@@ -52,32 +52,32 @@ define sealed method do-direct-methods
   let direct-methods
     = collect-from-all-client-contexts
         (method (context)
-	   class-direct-method-definitions(context, class-definition)
-	 end,
-	 server, context);
+           class-direct-method-definitions(context, class-definition)
+         end,
+         server, context);
   do(method (method-definition) => ()
        let environment-method
          = make-environment-object(<method-object>,
-				   project: project,
-				   compiler-object-proxy: method-definition);
+                                   project: project,
+                                   compiler-object-proxy: method-definition);
        function(environment-method);
      end,
      direct-methods)
 end method do-direct-methods;
 
 define sealed method do-class-and-superclasses
-    (function :: <function>, server :: <dfmc-database>, 
+    (function :: <function>, server :: <dfmc-database>,
      class :: <class-object>,
      #key non-classes? = #t, ignore)
  => ()
   local method do-class
-	    (class :: <environment-object>)
-	  if (class ~== ignore
-		& (non-classes?
-		     | instance?(class, <class-object>)))
-	    function(class)
-	  end
-	end method do-class;
+            (class :: <environment-object>)
+          if (class ~== ignore
+                & (non-classes?
+                     | instance?(class, <class-object>)))
+            function(class)
+          end
+        end method do-class;
   do-class(class);
   do-all-superclasses(do-class, server, class)
 end method do-class-and-superclasses;
@@ -88,25 +88,25 @@ define sealed method do-all-methods
  => ()
   let project-object = server.server-project;
   local method do-methods
-	    (class :: <class-object>) => ()
-	  let class-definition :: <class-definition> = class.compiler-object-proxy;
-	  let context = browsing-context(server, class-definition);
-	  let direct-methods
-	    = collect-from-all-client-contexts
-	        (method (context)
-		   class-direct-method-definitions(context, class-definition)
-		 end,
-		 server, context);
-	  do(method (method-definition) => ()
-	       let environment-method
-	         = make-environment-object
-	             (<method-object>,
-		      project: project-object,
-		      compiler-object-proxy: method-definition);
-	       function(class, environment-method)
-	     end,
-	     direct-methods)
-	end method do-methods;
+            (class :: <class-object>) => ()
+          let class-definition :: <class-definition> = class.compiler-object-proxy;
+          let context = browsing-context(server, class-definition);
+          let direct-methods
+            = collect-from-all-client-contexts
+                (method (context)
+                   class-direct-method-definitions(context, class-definition)
+                 end,
+                 server, context);
+          do(method (method-definition) => ()
+               let environment-method
+                 = make-environment-object
+                     (<method-object>,
+                      project: project-object,
+                      compiler-object-proxy: method-definition);
+               function(class, environment-method)
+             end,
+             direct-methods)
+        end method do-methods;
   let object = find-environment-object(server, $<object>-id);
   //---*** andrewa: this brute force approach won't be too efficient,
   //---*** we could do with a more direct browser-support API.
@@ -114,8 +114,8 @@ define sealed method do-all-methods
     (do-methods, server, class,
      non-classes?: #f,
      ignore:       unless (class == object)
-		     object
-		   end)
+                     object
+                   end)
 end method do-all-methods;
 
 define sealed method do-direct-slots
@@ -128,8 +128,8 @@ define sealed method do-direct-slots
   do(method (slot-definition) => ()
        let environment-slot
          = make-environment-object(<slot-object>,
-				   project: project-object,
-				   compiler-object-proxy: slot-definition);
+                                   project: project-object,
+                                   compiler-object-proxy: slot-definition);
        function(environment-slot);
      end,
      direct-slots);
@@ -143,18 +143,18 @@ define function class-all-superclasses
   // class-all-superclasses-definitions(context, class-definition);
   let classes = make(<stretchy-vector>);
   local method do-superclasses
-	    (superclass :: <environment-object>)
-	  add!(classes, superclass);
-	  if (instance?(superclass, <class-object>))
-	    do-direct-superclasses(do-superclasses, server, superclass)
-	  end
-	end method do-superclasses;
+            (superclass :: <environment-object>)
+          add!(classes, superclass);
+          if (instance?(superclass, <class-object>))
+            do-direct-superclasses(do-superclasses, server, superclass)
+          end
+        end method do-superclasses;
   do-direct-superclasses(do-superclasses, server, class);
   remove-duplicates(classes)
 end function class-all-superclasses;
 
 define sealed method do-all-superclasses
-    (function :: <function>, server :: <dfmc-database>, 
+    (function :: <function>, server :: <dfmc-database>,
      class :: <class-object>,
      #key client)
  => ()
@@ -177,25 +177,25 @@ define sealed method do-all-slots
   if (~all-slots)
     do-class-and-superclasses
       (method (class :: <class-object>)
-	 do-direct-slots(function, server, class, client: client)
+         do-direct-slots(function, server, class, client: client)
        end,
        server, class, non-classes?: #f)
   else
     do(method (slot-definition) => ()
-	 let environment-slot
-	   = make-environment-object(<slot-object>,
-				     project: project-object,
-				     compiler-object-proxy: slot-definition);
-	 function(environment-slot);
+         let environment-slot
+           = make-environment-object(<slot-object>,
+                                     project: project-object,
+                                     compiler-object-proxy: slot-definition);
+         function(environment-slot);
        end,
        all-slots);
   end if;
 end method do-all-slots;
 
 define constant $initialize-id
-  = make(<definition-id>, 
-	 name: "initialize",
-	 module: $dylan-module-id);
+  = make(<definition-id>,
+         name: "initialize",
+         module: $dylan-module-id);
 
 define sealed method all-initialize-methods
     (server :: <dfmc-database>) => (methods :: <sequence>)
@@ -206,10 +206,10 @@ define sealed method all-initialize-methods
     let variable = definition.source-form-variable;
     if (variable)
       collect-from-all-client-contexts
-	(method (context)
-	   variable-active-method-definitions(context, variable)
-	 end,
-	 server, browsing-context(server, definition))
+        (method (context)
+           variable-active-method-definitions(context, variable)
+         end,
+         server, browsing-context(server, definition))
     end
   end
     | #[]
@@ -218,29 +218,29 @@ end method all-initialize-methods;
 define sealed method initialize-keywords-for-class
     (server :: <dfmc-database>, class :: <class-definition>,
      methods :: <sequence>)
- => (environment-method :: false-or(<method-object>), 
+ => (environment-method :: false-or(<method-object>),
      keywords :: <sequence>, types :: <sequence>)
   block (return)
     for (method-definition :: <method-definition> in methods)
       let context = browsing-context(server, method-definition);
       local method type-definition (type) => (definition)
-	      instance?(type, <variable>)
-	        & variable-active-definition(context, type)
-	  end method type-definition;
+              instance?(type, <variable>)
+                & variable-active-definition(context, type)
+          end method type-definition;
       let (req-types, rest-type, next-type, key-types)
-	= functional-parameter-types(method-definition);
+        = functional-parameter-types(method-definition);
       ignore(rest-type, next-type);
       let type = ~empty?(req-types) & req-types[0];
       let first-argument = type-definition(type);
       if (first-argument == class)
-	let keywords = functional-keys(method-definition);
-	// let keywords = map(fragment-value, functional-keys(method-definition));
-	let types = map(type-definition, key-types);
-	let environment-method
-	  = make-environment-object(<method-object>,
-				    project: server.server-project,
-				    compiler-object-proxy: method-definition);
-	return(environment-method, keywords, types)
+        let keywords = functional-keys(method-definition);
+        // let keywords = map(fragment-value, functional-keys(method-definition));
+        let types = map(type-definition, key-types);
+        let environment-method
+          = make-environment-object(<method-object>,
+                                    project: server.server-project,
+                                    compiler-object-proxy: method-definition);
+        return(environment-method, keywords, types)
       end
     end;
     values(#f, #(), #())
@@ -255,47 +255,47 @@ define sealed method do-init-keywords
   //---*** we could do with a more direct browser-support API.
   let initialize-methods = all-initialize-methods(server);
   local method do-keyword
-	    (definition :: false-or(<definition-object>), keyword :: <symbol>,
-	     type, required? :: <boolean>, inherited? :: <boolean>)
-	  let type
-	    = case
-		~type =>
-		  #f;
-		instance?(type, <source-form>) =>
-		  make-environment-object-for-source-form(server, type);
-		otherwise =>
-		  make-environment-object-for-type-expression(server, type);
-	      end;
-	  function(definition, keyword, type, required?, inherited?)
-	end method do-keyword,
+            (definition :: false-or(<definition-object>), keyword :: <symbol>,
+             type, required? :: <boolean>, inherited? :: <boolean>)
+          let type
+            = case
+                ~type =>
+                  #f;
+                instance?(type, <source-form>) =>
+                  make-environment-object-for-source-form(server, type);
+                otherwise =>
+                  make-environment-object-for-type-expression(server, type);
+              end;
+          function(definition, keyword, type, required?, inherited?)
+        end method do-keyword,
 
-	//--- We find keywords in the following places:
-	//---   - the class definition
-	//---   - each of the slots of the class
-	//---   - the initialize method for the class
+        //--- We find keywords in the following places:
+        //---   - the class definition
+        //---   - each of the slots of the class
+        //---   - the initialize method for the class
         method do-class-keywords (class :: <class-object>)
-	  let class-definition = class.compiler-object-proxy;
-	  let init-keywords = class-definition-init-keywords(class-definition);
-	  let direct-slots = class-definition-slot-definitions(class-definition);
-	  let (environment-method, method-keywords, method-keyword-types)
-	    = initialize-keywords-for-class
-	        (server, class-definition, initialize-methods);
-	  let inherited? = class ~== main-class;
-	  for (keyword in init-keywords)
-	    do-keyword(class, keyword, #f, #f, inherited?)
-	  end;
-	  for (slot in direct-slots)
-	    let (keyword, required?) = slot-definition-keyword(slot);
-	    if (keyword)
-	      let type = slot-definition-type(slot);
-	      do-keyword(class, keyword, type, required?, inherited?)
-	    end
-	  end;
-	  for (keyword in method-keywords,
-	       type in method-keyword-types)
-	    do-keyword(environment-method, keyword, type, #f, inherited?)
-	  end;
-	end method do-class-keywords;
+          let class-definition = class.compiler-object-proxy;
+          let init-keywords = class-definition-init-keywords(class-definition);
+          let direct-slots = class-definition-slot-definitions(class-definition);
+          let (environment-method, method-keywords, method-keyword-types)
+            = initialize-keywords-for-class
+                (server, class-definition, initialize-methods);
+          let inherited? = class ~== main-class;
+          for (keyword in init-keywords)
+            do-keyword(class, keyword, #f, #f, inherited?)
+          end;
+          for (slot in direct-slots)
+            let (keyword, required?) = slot-definition-keyword(slot);
+            if (keyword)
+              let type = slot-definition-type(slot);
+              do-keyword(class, keyword, type, required?, inherited?)
+            end
+          end;
+          for (keyword in method-keywords,
+               type in method-keyword-types)
+            do-keyword(environment-method, keyword, type, #f, inherited?)
+          end;
+        end method do-class-keywords;
 
   if (inherited?)
     do-class-and-superclasses(do-class-keywords, server, main-class, non-classes?: #f)
@@ -333,7 +333,7 @@ end method application-object-class;
 
 //--- A class expands into its getters and setters
 define sealed method do-macro-call-source-forms
-    (function :: <function>, server :: <dfmc-database>, 
+    (function :: <function>, server :: <dfmc-database>,
      class :: <class-object>)
  => ()
   do-direct-slots

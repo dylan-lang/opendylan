@@ -105,12 +105,12 @@ define function clipboard-function-disabled-message
   let read-only-modification? = (type ~== #"copy" & target-read-only?(target));
   let message
     = case
-	read-only-modification? =>
-	  format-to-string("Cannot %s as this file is read-only.", type);
-	type == #"paste" =>
-	  "Cannot paste into this file.";
-	otherwise =>
-	  format-to-string("Cannot %s from this file.", type);
+        read-only-modification? =>
+          format-to-string("Cannot %s as this file is read-only.", type);
+        type == #"paste" =>
+          "Cannot paste into this file.";
+        otherwise =>
+          format-to-string("Cannot %s from this file.", type);
       end;
   environment-error-message(message, owner: sheet-frame(gadget))
 end function clipboard-function-disabled-message;

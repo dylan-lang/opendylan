@@ -31,7 +31,7 @@ define open generic frame-select-previous-object
 define open generic frame-select-next-object
     (frame :: <frame-history-mixin>) => (object, success? :: <boolean>);
 
-define open generic frame-view-history 
+define open generic frame-view-history
     (frame :: <frame-history-mixin>) => ();
 
 define method initialize (frame :: <frame-history-mixin>, #key) => ()
@@ -56,19 +56,19 @@ define method update-frame-commands (frame :: <frame>) => ()
   // Update documentation strings to include the destination name
   gadget-documentation(frame.%history-back-button)
     := if (previous-history?)
-	 let previous-object
-	   = frame-coerce-raw-object(frame, second(frame.%history));
-         concatenate($history-back-to-prefix, 
-		     frame-primary-object-name(frame, previous-object))
+         let previous-object
+           = frame-coerce-raw-object(frame, second(frame.%history));
+         concatenate($history-back-to-prefix,
+                     frame-primary-object-name(frame, previous-object))
        else
          $history-back-title
        end if;
   gadget-documentation(frame.%history-forward-button)
     := if (next-history?)
-	 let next-object
-	   = frame-coerce-raw-object(frame, first(frame.%forward-history));
-         concatenate($history-forward-to-prefix, 
-		     frame-primary-object-name(frame, next-object))
+         let next-object
+           = frame-coerce-raw-object(frame, first(frame.%forward-history));
+         concatenate($history-forward-to-prefix,
+                     frame-primary-object-name(frame, next-object))
        else
          $history-forward-title
        end if;
@@ -117,12 +117,12 @@ define method note-frame-last-object-closed
   update-frame-commands(frame)
 end method note-frame-last-object-closed;
 
-define method frame-has-previous-history? 
+define method frame-has-previous-history?
     (frame :: <frame-history-mixin>) => (previous? :: <boolean>)
   size(frame.%history) > 1
 end method frame-has-previous-history?;
 
-define method frame-has-next-history? 
+define method frame-has-next-history?
     (frame :: <frame-history-mixin>) => (next? :: <boolean>)
   ~empty?(frame.%forward-history)
 end method frame-has-next-history?;
@@ -154,15 +154,15 @@ end method frame-select-next-object;
 
 define constant $frame-history-limit = 30;
 
-define method frame-most-recent-objects 
+define method frame-most-recent-objects
     (frame :: <frame-history-mixin>, #key count = $frame-history-limit)
-  let history 
+  let history
     = remove-duplicates(concatenate(frame.%forward-history, frame.%history),
-			test: method (raw1, raw2) => (equal? :: <boolean>)
-				let coerced1 = frame-coerce-raw-object(frame, raw1);
-				let coerced2 = frame-coerce-raw-object(frame, raw2);
-				coerced1 = coerced2
-			      end);
+                        test: method (raw1, raw2) => (equal? :: <boolean>)
+                                let coerced1 = frame-coerce-raw-object(frame, raw1);
+                                let coerced2 = frame-coerce-raw-object(frame, raw2);
+                                coerced1 = coerced2
+                              end);
   if (count & size(history) > count)
     copy-sequence(history, end: count)
   else
@@ -179,14 +179,14 @@ define method frame-view-history
     = choose-from-dialog
         (frame-most-recent-objects(frame, count: #f),
          label-key: method (raw-object)
-		      let object = frame-coerce-raw-object(frame, raw-object);
-		      frame-primary-object-name(frame, object)
-		    end,
+                      let object = frame-coerce-raw-object(frame, raw-object);
+                      frame-primary-object-name(frame, object)
+                    end,
          default-item: frame-raw-primary-object(frame),
          title: "History",
          owner: frame,
-	 width:  $view-history-dialog-width,
-	 height: $view-history-dialog-height);
+         width:  $view-history-dialog-width,
+         height: $view-history-dialog-height);
   if (success? & object)
     $view-history-dialog-width  := width;
     $view-history-dialog-height := height;
@@ -235,7 +235,7 @@ define method make-history-tool-bar-buttons
                                 frame-select-previous-object(frame)
                               end);
   frame.%history-forward-button
-    := make(<button>, 
+    := make(<button>,
            label: $forward-bitmap,
            documentation: $history-forward-title,
            command: frame-select-next-object,

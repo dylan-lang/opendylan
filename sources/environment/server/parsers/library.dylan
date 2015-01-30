@@ -16,8 +16,8 @@ define library environment-server-parsers
   export parser-interface;
   export string-parser;
 /* ---*** Expect to add:
-	 stream-parser // for TCP, later?; maybe subsumes string parser
-	 ole-automation-parser // if needed
+         stream-parser // for TCP, later?; maybe subsumes string parser
+         ole-automation-parser // if needed
 */
 end library environment-server-parsers;
 
@@ -30,10 +30,10 @@ define module parser-interface
   use threads;
 
   export parse-then-call,
-	 parse-commands,
-	 <parse-condition>,
-	 <parse-warning>,
-	 <parse-error>;
+         parse-commands,
+         <parse-condition>,
+         <parse-warning>,
+         <parse-error>;
 end module parser-interface;
 
 // Servers should use exactly one of the following parsers.

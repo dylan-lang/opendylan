@@ -1251,7 +1251,7 @@ define function project-start-function
     let module = library-default-module(project, library);
     if (module)
       let object = find-environment-object(project, name, module: module);
-      if (instance?(object, <function-object>))	object end
+      if (instance?(object, <function-object>))        object end
     end
   end
 end function project-start-function;

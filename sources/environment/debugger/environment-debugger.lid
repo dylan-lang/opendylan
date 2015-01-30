@@ -1,22 +1,22 @@
 Library:   environment-debugger
 Synopsis:  Environment debugger
 Author:    Bill Chiles, Jason Trenouth, Andy Armstrong
-Target-Type:	dll
-Files:	library
-	module
-    	utilities
-	status-pane
-	context-pane
-	stack-pane
-	source-pane
+Target-Type: dll
+Files:  library
+        module
+        utilities
+        status-pane
+        context-pane
+        stack-pane
+        source-pane
         interactor
-	notifier
-	message-logs
-       	debugger
+        notifier
+        message-logs
+        debugger
         register-window
-       	stop-reason-handlers
-	commands
-	options
+        stop-reason-handlers
+        commands
+        options
 Major-Version: 2
 Minor-Version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

@@ -1,6 +1,6 @@
 Module:    environment-profiler
 Synopsis:  The profiling tool provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -11,8 +11,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define frame <profiler-time-line> (<simple-frame>)
   pane time-line-page (frame)
     make(<tab-control-page>,
-	 label: "Time Line",
-	 id: #"time-line");
+         label: "Time Line",
+         id: #"time-line");
 //  pane time-line-pane (frame)
 //    make(<time-line-pane>);
 end frame <profiler-time-line>;
@@ -48,15 +48,15 @@ define pane <time-line-pane> ()
     begin
       let thread = pane.time-line-thread;
       make(<equation-chart>,
-	   equation: thread & make-allocation-equation(pane, thread))
+           equation: thread & make-allocation-equation(pane, thread))
     end;
   pane page-faults-chart (pane)
     make(<equation-chart>,
-	 equation: make-page-faults-equation(pane));
+         equation: make-page-faults-equation(pane));
   layout (pane)
     make(<column-splitter>,
-	 children: vector(pane.allocation-chart,
-			  pane.page-faults-chart));
+         children: vector(pane.allocation-chart,
+                          pane.page-faults-chart));
 end pane <time-line-pane>;
 
 define function make-time-line-equation
@@ -76,19 +76,19 @@ define function make-time-line-equation
       end-time := end-time + wall-time
     end;
     make(<equation>,
-	 values: snapshots,
-	 x-function:
-	   method (snapshot :: <application-snapshot>, old-time :: <integer>)
-	     let wall-time = snapshot.application-snapshot-wall-time;
-	     wall-time + old-time
-	   end,
-	 y-function:
-	   method (snapshot :: <application-snapshot>, old-value :: <integer>)
-	     ignore(old-value);
-	     snapshot.value-function
-	   end,
-	 region: 
-	   make-bounding-box(start-time, min-value, end-time, max-value))
+         values: snapshots,
+         x-function:
+           method (snapshot :: <application-snapshot>, old-time :: <integer>)
+             let wall-time = snapshot.application-snapshot-wall-time;
+             wall-time + old-time
+           end,
+         y-function:
+           method (snapshot :: <application-snapshot>, old-value :: <integer>)
+             ignore(old-value);
+             snapshot.value-function
+           end,
+         region:
+           make-bounding-box(start-time, min-value, end-time, max-value))
   end
 end function make-allocation-equation;
 
@@ -98,8 +98,8 @@ define function make-allocation-equation
   make-time-line-equation
     (pane,
      method (snapshot :: <application-snapshot>)
-       let thead-snapshot 
-	 = application-snapshot-thread-snapshot(snapshot, thread);
+       let thead-snapshot
+         = application-snapshot-thread-snapshot(snapshot, thread);
        thread-snapshot.thread-snapshot-allocation
      end)
 end function make-allocation-equation;
@@ -136,8 +136,8 @@ define method handle-repaint
     let (width, height) = sheet-size(pane);
     let total-wall-time = profile.application-total-wall-time;
     draw-chart(pane, medium, region, profile.application-profile-snapshots,
-	       application-snapshot-wall-time,   0, total-wall-time,
-	       application-snapshot-page-faults, 0, total-page-faults)
+               application-snapshot-wall-time,   0, total-wall-time,
+               application-snapshot-page-faults, 0, total-page-faults)
   end
 end method handle-repaint;
 
@@ -156,9 +156,9 @@ define method draw-chart
   let transform
     = compose-scaling-with-transform
         (compose-transforms
-	   (make-reflection-transform(0, 0, 100, 0),
-	    make-translation-transform(left, top)),
-	 x-scale, y-scale);
+           (make-reflection-transform(0, 0, 100, 0),
+            make-translation-transform(left, top)),
+         x-scale, y-scale);
   let x :: <real> = left;
   let y :: <real> = top;
   with-transform (medium, transform)

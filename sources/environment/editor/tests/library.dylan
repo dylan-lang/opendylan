@@ -26,10 +26,10 @@ define module test-editor-manager-common
   use editor-exe-backend;
   use editor-manager;
 
-  export *editor-call*, // Assign a <function> for "editor-call" to this. 
-	 *test-file-path*, // Assign <string>s to these two, to point to
-	 *test-file-name*, // a text file which exists.
-	 suite-test-frontend,
-	 suite-test-default-backend,
-	 suite-test-all-backends;
+  export *editor-call*, // Assign a <function> for "editor-call" to this.
+         *test-file-path*, // Assign <string>s to these two, to point to
+         *test-file-name*, // a text file which exists.
+         suite-test-frontend,
+         suite-test-default-backend,
+         suite-test-all-backends;
 end module test-editor-manager-common;

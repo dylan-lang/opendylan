@@ -8,15 +8,15 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Initialization
 
 define sideways sealed method make-project-application
-    (project :: <native-project-object>, 
+    (project :: <native-project-object>,
      #rest keys,
-     #key arguments, 
+     #key arguments,
      #all-keys)
  => (application :: <dfmc-application>)
-  apply(make, <dfmc-application>, 
-	project: project,
-	arguments: arguments | "", 
-	keys)
+  apply(make, <dfmc-application>,
+        project: project,
+        arguments: arguments | "",
+        keys)
 end method make-project-application;
 
 define sideways method note-application-initialized

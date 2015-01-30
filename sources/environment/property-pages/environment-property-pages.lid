@@ -1,11 +1,11 @@
 Library:   environment-property-pages
 Synopsis:  Environment property pages library
-Author:	   Andy Armstrong, Chris Page
-Target-Type:	dll
-Files:	library
-	module
+Author:    Andy Armstrong, Chris Page
+Target-Type: dll
+Files:  library
+        module
         application-object-properties
-	environment-object-properties
+        environment-object-properties
         source-form-properties
         project-properties
         application-properties

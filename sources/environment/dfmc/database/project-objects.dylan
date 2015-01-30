@@ -14,11 +14,11 @@ define sealed method source-record-top-level-forms
   let forms = make(<stretchy-vector>);
   let project
     = if (project)
-	project.project-proxy
+        project.project-proxy
       else
-	let library 
-	  = find-source-record-library(server.server-project, sr);
-	library.library-compiler-project;
+        let library
+          = find-source-record-library(server.server-project, sr);
+        library.library-compiler-project;
       end;
   let context = browsing-context(server, project);
   for (form :: <source-form> in dfmc/source-record-top-level-forms(context, sr))
@@ -69,15 +69,15 @@ define method do-all-client-contexts
   let main-context = browsing-context(server, server);
   let all-contexts = main-context.all-known-compilation-contexts;
   debug-assert(member?(context, context.all-known-compilation-contexts),
-	       "Calling do-all-client-contexts with wrong context %",
-	       context.compilation-context-name);
+               "Calling do-all-client-contexts with wrong context %",
+               context.compilation-context-name);
   for (used-context :: <context> in all-contexts)
     if (member?(context, used-context.all-known-compilation-contexts))
       function(used-context);
       if (both-contexts?)
-	let used-project = used-context.compilation-context-project;
-	let second-context = project-second-context(used-project, used-context);
-	second-context & function(second-context)
+        let used-project = used-context.compilation-context-project;
+        let second-context = project-second-context(used-project, used-context);
+        second-context & function(second-context)
       end
     end
   end
@@ -92,7 +92,7 @@ define method collect-from-all-client-contexts
     (method (context :: <context>)
        let results = function(context);
        if (results & ~empty?(results))
-	 add!(all-results, results)
+         add!(all-results, results)
        end
      end,
      server, context,
@@ -113,10 +113,10 @@ define method any-results-from-all-client-contexts?
   block (return)
     do-all-client-contexts
       (method (context :: <context>)
-	 let results = function(context);
-	 unless (empty?(results))
-	   return(#t)
-	 end
+         let results = function(context);
+         unless (empty?(results))
+           return(#t)
+         end
        end,
        server, context,
        both-contexts?: both-contexts?);
@@ -130,11 +130,11 @@ define function find-project-for-library-name
   block (return)
     do-all-projects
       (method (project :: <project>)
-	 let context = browsing-context(server, project);
-	 let definition = context.project-library-definition;
-	 if (definition.library-definition-name == name)
-	   return(project)
-	 end
+         let context = browsing-context(server, project);
+         let definition = context.project-library-definition;
+         if (definition.library-definition-name == name)
+           return(project)
+         end
        end,
        server);
     error? & error("Failed to find project for library %s", name)

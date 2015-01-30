@@ -10,16 +10,16 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant <breakpoint-state>
   = one-of(
-	   #"created",
-	   #"destroyed",
-	   #"stop?",
-	   #"message?",
-	   #"transient?",
-	   #"profile?",
-	   #"directions",
-	   #"enabled?",
-	   #"test"
-	   );
+           #"created",
+           #"destroyed",
+           #"stop?",
+           #"message?",
+           #"transient?",
+           #"profile?",
+           #"directions",
+           #"enabled?",
+           #"test"
+           );
 
 /// <BREAKPOINT-DIRECTION> (environment-protocols)
 
@@ -68,7 +68,7 @@ end class <breakpoint-object>;
 
 /// <ENVIRONMENT-OBJECT-BREAKPOINT-OBJECT> (environment-protocols)
 
-define abstract class <environment-object-breakpoint-object> 
+define abstract class <environment-object-breakpoint-object>
     (<breakpoint-object>)
 end class <environment-object-breakpoint-object>;
 
@@ -77,45 +77,45 @@ define method environment-object-library
  => (library :: false-or(<library-object>))
   breakpoint.breakpoint-library
     | begin
-	let object = breakpoint.breakpoint-object;
-	//---*** andrewa: why wouldn't this always be <environment-object>?
-	if (instance?(object, <environment-object>))
-	  let library = environment-object-library(server, object);
-	  breakpoint.breakpoint-library := library
-	else
-	  debug-out(#"environment-protocols",
+        let object = breakpoint.breakpoint-object;
+        //---*** andrewa: why wouldn't this always be <environment-object>?
+        if (instance?(object, <environment-object>))
+          let library = environment-object-library(server, object);
+          breakpoint.breakpoint-library := library
+        else
+          debug-out(#"environment-protocols",
                     "Breakpoint %= has unexpected object %=",
                     breakpoint, object)
-	end
+        end
       end
 end method environment-object-library;
 
 /// <FUNCTION-BREAKPOINT-OBJECT> (environment-protocols)
 
-define abstract class <function-breakpoint-object> 
+define abstract class <function-breakpoint-object>
     (<environment-object-breakpoint-object>)
   slot breakpoint-directions :: <sequence> = $default-breakpoint-directions,
     setter: %breakpoint-directions-setter,
-    init-keyword: directions:; 
+    init-keyword: directions:;
   slot breakpoint-entry-function? :: <boolean> = $default-breakpoint-entry-function?,
     init-keyword: entry-function?:;
   slot breakpoint-entry-point? :: <boolean> = #f,
     init-keyword: entry-point?:;
 end class <function-breakpoint-object>;
 
-define class <class-breakpoint-object> 
+define class <class-breakpoint-object>
     (<environment-object-breakpoint-object>)
 end class <class-breakpoint-object>;
 
-define class <simple-function-breakpoint-object> 
+define class <simple-function-breakpoint-object>
     (<function-breakpoint-object>)
 end class <simple-function-breakpoint-object>;
 
-define class <generic-function-breakpoint-object> 
+define class <generic-function-breakpoint-object>
     (<function-breakpoint-object>)
 end class <generic-function-breakpoint-object>;
 
-define class <method-breakpoint-object> 
+define class <method-breakpoint-object>
     (<function-breakpoint-object>)
 end class <method-breakpoint-object>;
 
@@ -129,11 +129,11 @@ define method environment-object-library
  => (library :: false-or(<library-object>))
   breakpoint.breakpoint-library
     | begin
-	let project = server.server-project;
-	let location = breakpoint.breakpoint-object;
-	let record = location.source-location-source-record;
-	let library = find-source-record-library(project, record);
-	breakpoint.breakpoint-library := library
+        let project = server.server-project;
+        let location = breakpoint.breakpoint-object;
+        let record = location.source-location-source-record;
+        let library = find-source-record-library(project, record);
+        breakpoint.breakpoint-library := library
       end
 end method environment-object-library;
 
@@ -155,12 +155,12 @@ define open generic project-breakpoints
     (project :: <project-object>)
  => (breakpoints :: <collection>);
 
-define method project-breakpoints 
+define method project-breakpoints
     (project :: <project-object>)
  => (breakpoints :: <collection>)
   concatenate-as(<vector>,
-		 as(<vector>, project.source-location-breakpoints),
-		 as(<vector>, project.environment-object-breakpoints));
+                 as(<vector>, project.source-location-breakpoints),
+                 as(<vector>, project.environment-object-breakpoints));
 end method project-breakpoints;
 
 /// MAKE (dylan)
@@ -173,7 +173,7 @@ define method make
   apply(make, class, args);
 end method make;
 
-define method make 
+define method make
     (class :: subclass(<breakpoint-object>), #rest args, #key)
  => (breakpoint :: <breakpoint-object>)
   let breakpoint = apply(find-breakpoint, class, args);
@@ -187,43 +187,43 @@ end method make;
 
 /// CLASS-FOR-BREAKPOINT
 
-define generic class-for-breakpoint 
+define generic class-for-breakpoint
     (object :: <object>)
  => (class :: false-or(<class>));
 //---*** was this, but the compiler can't deal with it!
 // => (class :: false-or(subclass(<breakpoint-object>)));
 
-define method class-for-breakpoint 
+define method class-for-breakpoint
     (object :: <object>)
  => (class :: singleton(#f))
   #f
 end method class-for-breakpoint;
 
-define method class-for-breakpoint 
+define method class-for-breakpoint
     (object :: <source-location>)
  => (class :: subclass(<breakpoint-object>))
   <source-location-breakpoint-object>
 end method class-for-breakpoint;
 
-define method class-for-breakpoint 
+define method class-for-breakpoint
     (object :: <class-object>)
  => (class :: subclass(<breakpoint-object>))
   <class-breakpoint-object>
 end method class-for-breakpoint;
 
-define method class-for-breakpoint 
+define method class-for-breakpoint
     (object :: <simple-function-object>)
  => (class :: subclass(<breakpoint-object>))
   <simple-function-breakpoint-object>
 end method class-for-breakpoint;
 
-define method class-for-breakpoint 
+define method class-for-breakpoint
     (object :: <method-object>)
  => (class :: subclass(<breakpoint-object>))
   <method-breakpoint-object>
 end method class-for-breakpoint;
 
-define method class-for-breakpoint 
+define method class-for-breakpoint
     (object :: <generic-function-object>)
  => (class :: subclass(<breakpoint-object>))
   <generic-function-breakpoint-object>
@@ -247,24 +247,24 @@ define function ensure-breakpoint-for-all-methods
   let entry-point?    = breakpoint.breakpoint-entry-point?;
   for (function in generic-function-object-methods(project, object))
     make(<method-breakpoint-object>,
-	 project:         project,
-	 object:          function,
-	 enabled?:        enabled?,
-	 transient?:      transient?,
-	 message?:        message?,
-	 profile?:        profile?,
-	 stop?:           stop?,
-	 test:            test,
-	 directions:      directions,
-	 entry-function?: entry-function?,
-	 entry-point?:    entry-point?)
+         project:         project,
+         object:          function,
+         enabled?:        enabled?,
+         transient?:      transient?,
+         message?:        message?,
+         profile?:        profile?,
+         stop?:           stop?,
+         test:            test,
+         directions:      directions,
+         entry-function?: entry-function?,
+         entry-point?:    entry-point?)
   end
 end function;
 
 
 /// INITIALIZE (dylan)
 
-define method initialize 
+define method initialize
     (breakpoint :: <breakpoint-object>, #rest args, #key) => ()
   next-method();
   apply(initialize-breakpoint, breakpoint, args);
@@ -273,16 +273,16 @@ end method initialize;
 
 /// INITIALIZE-BREAKPOINT (environment-protocol)
 
-define open generic initialize-breakpoint 
+define open generic initialize-breakpoint
     (breakpoint :: <breakpoint-object>, #key, #all-keys)
  => ();
 
-define method initialize-breakpoint 
+define method initialize-breakpoint
     (breakpoint :: <breakpoint-object>, #key)
  => ()
 end method initialize-breakpoint;
 
-define method initialize-breakpoint 
+define method initialize-breakpoint
     (breakpoint :: <source-location-breakpoint-object>, #key object)
  => ()
   next-method();
@@ -290,7 +290,7 @@ define method initialize-breakpoint
   element(breakpoints, object) := breakpoint
 end method initialize-breakpoint;
 
-define method initialize-breakpoint 
+define method initialize-breakpoint
     (breakpoint :: <environment-object-breakpoint-object>, #key object)
  => ()
   next-method();
@@ -299,7 +299,7 @@ define method initialize-breakpoint
   element(breakpoints, object) := breakpoint
 end method initialize-breakpoint;
 
-define method initialize-breakpoint 
+define method initialize-breakpoint
     (breakpoint :: <generic-function-breakpoint-object>, #key)
  => ()
   next-method();
@@ -308,26 +308,26 @@ end method initialize-breakpoint;
 
 /// FIND-BREAKPOINT (environment-protocol)
 
-define open generic find-breakpoint 
+define open generic find-breakpoint
     (class :: subclass(<breakpoint-object>), #rest args, #key, #all-keys)
  => (breakpoint :: false-or(<breakpoint-object>));
 
-define method find-breakpoint 
+define method find-breakpoint
     (class == <breakpoint-object>, #rest args, #key project, object)
  => (breakpoint :: false-or(<breakpoint-object>));
   let class = class-for-breakpoint(object);
   class & apply(find-breakpoint, class, args)
 end method find-breakpoint;
 
-define method find-breakpoint 
-    (class :: subclass(<environment-object-breakpoint-object>), 
+define method find-breakpoint
+    (class :: subclass(<environment-object-breakpoint-object>),
      #rest args, #key project, object)
  => (breakpoint :: false-or(<environment-object-breakpoint-object>))
   element(project.environment-object-breakpoints, object, default: #f)
 end method find-breakpoint;
 
 define method find-breakpoint
-    (class :: subclass(<source-location-breakpoint-object>), 
+    (class :: subclass(<source-location-breakpoint-object>),
      #rest args, #key project, object)
  => (breakpoint :: false-or(<source-location-breakpoint-object>))
   element(project.source-location-breakpoints, object, default: #f)
@@ -343,11 +343,11 @@ define method reinitialize-breakpoint
     (breakpoint :: <breakpoint-object>,
      #rest args,
      #key enabled? = unsupplied(),
-	  message? = unsupplied(),
-	  stop? = unsupplied(),
-	  transient? = unsupplied(),
-	  profile? = unsupplied(),
-	  test = unsupplied())
+          message? = unsupplied(),
+          stop? = unsupplied(),
+          transient? = unsupplied(),
+          profile? = unsupplied(),
+          test = unsupplied())
  => ()
   if (supplied?(enabled?))
     breakpoint.breakpoint-enabled? := enabled?;
@@ -438,28 +438,28 @@ define method destroy-breakpoint
 
   ///// BREAKPOINT-FOR-METHOD (Local convenience function)
   //    Given a <method-object>, returns a <method-breakpoint-object> if
-  //    there is a breakpoint on the method, otherwise returns #f. 
+  //    there is a breakpoint on the method, otherwise returns #f.
   //    The implementation is clearly trivial, but having this improves
   //    the clarity of some other code in this function.
 
-  local method breakpoint-for-method 
-	    (m :: <method-object>)
-	 => (maybe-bp :: false-or(<method-breakpoint-object>))
+  local method breakpoint-for-method
+            (m :: <method-object>)
+         => (maybe-bp :: false-or(<method-breakpoint-object>))
           find-breakpoint(<method-breakpoint-object>,
                           project: project, object: m)
-	end method breakpoint-for-method;
+        end method breakpoint-for-method;
 
 
   ///// ZERO-BREAKPOINTED-METHODS? (Local convenience function).
   //    Given a <generic-function-object>, returns #f if one or more of
   //    its methods has an associated breakpoint, otherwise returns #t.
 
-  local method zero-breakpointed-methods? 
-	    (gf :: <generic-function-object>)
-	 => (well? :: <boolean>)
+  local method zero-breakpointed-methods?
+            (gf :: <generic-function-object>)
+         => (well? :: <boolean>)
           let methods = generic-function-object-methods(project, gf);
           ~any?(breakpoint-for-method, methods);
-	end method zero-breakpointed-methods?;
+        end method zero-breakpointed-methods?;
 
 
   ///// MAYBE-GARBAGE-COLLECT-GF-BREAKPOINT (Local convenience function).
@@ -467,13 +467,13 @@ define method destroy-breakpoint
   //    generic function, but none of its methods have associated
   //    breakpoints, removes the breakpoint on the generic.
 
-  local method maybe-garbage-collect-gf-breakpoint 
-	    (gf :: <generic-function-object>)
-	 => ()
-          let gf-breakpoint 
-	    = find-breakpoint(<generic-function-breakpoint-object>,
-			      project: project, 
-			      object: gf);
+  local method maybe-garbage-collect-gf-breakpoint
+            (gf :: <generic-function-object>)
+         => ()
+          let gf-breakpoint
+            = find-breakpoint(<generic-function-breakpoint-object>,
+                              project: project,
+                              object: gf);
           if (gf-breakpoint & zero-breakpointed-methods?(gf))
             //---*** phoward. Jason noted that this call to DESTROY-BREAKPOINT
             // will try to destroy all subordinate method breakpoints. But,
@@ -483,7 +483,7 @@ define method destroy-breakpoint
             // function for destroying a GF breakpoint.
             destroy-breakpoint(gf-breakpoint);
           end if;
-	end method maybe-garbage-collect-gf-breakpoint;
+        end method maybe-garbage-collect-gf-breakpoint;
 
   next-method();
   let method-object = breakpoint.breakpoint-object;
@@ -771,11 +771,11 @@ define inline function do-with-compressed-breakpoint-state-changes
     continuation();
   end;
   if (*last-breakpoint-state-change-project*
-	& *last-breakpoint-state-change-state*)
+        & *last-breakpoint-state-change-state*)
     broadcast($project-channel,
-	      make(<all-breakpoints-state-change-message>,
-		   project: *last-breakpoint-state-change-project*,
-		   state: *last-breakpoint-state-change-state*));
+              make(<all-breakpoints-state-change-message>,
+                   project: *last-breakpoint-state-change-project*,
+                   state: *last-breakpoint-state-change-state*));
   end if;
 end function do-with-compressed-breakpoint-state-changes;
 
@@ -795,22 +795,22 @@ define method note-breakpoint-state-changes-failed
     (project :: <project-object>, breakpoints :: <sequence>,
      state :: <breakpoint-state>) => ()
   broadcast($project-channel,
-	    make(<breakpoint-state-changes-failed-message>,
-		 project: project,
-		 breakpoints: breakpoints,
-		 state: state));
+            make(<breakpoint-state-changes-failed-message>,
+                 project: project,
+                 breakpoints: breakpoints,
+                 state: state));
 end method note-breakpoint-state-changes-failed;
 
 
 /// SERVER-NOTE-BREAKPOINT-STATE-CHANGED (environment-protocols)
 
 define open generic server-note-breakpoint-state-changed
-    (server :: <server>, breakpoint :: <breakpoint-object>, 
+    (server :: <server>, breakpoint :: <breakpoint-object>,
      state :: <breakpoint-state>, #key use-project-proxy)
   => ();
 
 define method server-note-breakpoint-state-changed
-    (project :: <project-object>, breakpoint :: <breakpoint-object>, 
+    (project :: <project-object>, breakpoint :: <breakpoint-object>,
      state :: <breakpoint-state>, #key use-project-proxy = #f)
  => ()
   if (*compress-breakpoint-state-changes*)
@@ -818,9 +818,9 @@ define method server-note-breakpoint-state-changed
     *last-breakpoint-state-change-state* := state;
   else
     broadcast($project-channel, make(<single-breakpoint-state-change-message>,
-				     project: project,
-				     breakpoint: breakpoint,
-				     state: state));
+                                     project: project,
+                                     breakpoint: breakpoint,
+                                     state: state));
   end if;
 end method server-note-breakpoint-state-changed;
 
@@ -837,7 +837,7 @@ define open generic do-generic-breakpoint-methods
  => ();
 
 define method do-generic-breakpoint-methods
-    (operation :: <function>, 
+    (operation :: <function>,
      breakpoint :: <generic-function-breakpoint-object>)
  => ()
   let project = breakpoint.breakpoint-project;
@@ -861,7 +861,7 @@ define method environment-object-source-location
 end method environment-object-source-location;
 
 define method environment-object-source-location
-    (project :: <project-object>, 
+    (project :: <project-object>,
      breakpoint :: <function-breakpoint-object>)
  => (location :: <source-location>)
   environment-object-source-location(project, breakpoint-object(breakpoint))

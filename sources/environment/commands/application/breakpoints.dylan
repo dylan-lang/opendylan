@@ -1,6 +1,6 @@
 Module:    environment-application-commands
 Synopsis:  The application commands provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -24,9 +24,9 @@ define sideways method parse-next-argument
       let project = context.context-project;
       let breakpoint = project & find-indexed-breakpoint(project, index);
       if (breakpoint)
-	values(breakpoint, next-index)
+        values(breakpoint, next-index)
       else
-	parse-error("No breakpoint %d", index)
+        parse-error("No breakpoint %d", index)
       end
     end
   else
@@ -42,8 +42,8 @@ define method find-indexed-breakpoint
     block (return)
       let breakpoints = project.project-breakpoints;
       for (breakpoint :: <breakpoint-object> in breakpoints,
-	   breakpoint-index :: <integer> from 1)
-	if (index == breakpoint-index) return(breakpoint) end
+           breakpoint-index :: <integer> from 1)
+        if (index == breakpoint-index) return(breakpoint) end
       end;
       #f
     end
@@ -72,15 +72,15 @@ define method show-property
   let stream = context.context-server.server-output-stream;
   if (~empty?(breakpoints))
     for (breakpoint in breakpoints,
-	 index :: <integer> from 1)
+         index :: <integer> from 1)
       format(stream, "%d: ", index);
       select (breakpoint by instance?)
-	<source-location-breakpoint-object> =>
-	  print-source-location(stream, breakpoint.breakpoint-object);
-	<environment-object-breakpoint-object> =>
-	  let object = breakpoint.breakpoint-object;
-	  print-environment-object-name
-	    (stream, project, object, namespace: module);
+        <source-location-breakpoint-object> =>
+          print-source-location(stream, breakpoint.breakpoint-object);
+        <environment-object-breakpoint-object> =>
+          let object = breakpoint.breakpoint-object;
+          print-environment-object-name
+            (stream, project, object, namespace: module);
       end;
       new-line(stream)
     end
@@ -119,17 +119,17 @@ define method do-execute-command
   case
     object =>
       select (object by instance?)
-	<function-object>, <class-object> =>
-	  make(<breakpoint-object>, project: project, object: object);
-	otherwise =>
-	  command-error("Cannot set breakpoint for %s",
-			environment-object-display-name(project, object, #f));
+        <function-object>, <class-object> =>
+          make(<breakpoint-object>, project: project, object: object);
+        otherwise =>
+          command-error("Cannot set breakpoint for %s",
+                        environment-object-display-name(project, object, #f));
       end;
     file | line =>
       if (file & line)
-	command-error("Line breakpointing not yet implemented!")
+        command-error("Line breakpointing not yet implemented!")
       else
-	command-error("You must supply both of the /file and /line arguments")
+        command-error("You must supply both of the /file and /line arguments")
       end;
   end
 end method do-execute-command;
@@ -184,7 +184,7 @@ define method do-execute-command
   else
     for (breakpoint in project.project-breakpoints)
       if (~breakpoint.breakpoint-stop?)
-	destroy-breakpoint(breakpoint)
+        destroy-breakpoint(breakpoint)
       end
     end
   end

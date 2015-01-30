@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Variable objects
 
-define sealed method variable-type 
+define sealed method variable-type
     (server :: <dfmc-database>, variable :: <variable-object>)
  => (type :: false-or(<environment-object>))
   let definition = variable.compiler-object-proxy;

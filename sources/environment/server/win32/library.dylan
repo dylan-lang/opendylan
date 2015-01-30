@@ -36,10 +36,10 @@ define module environment-server
   use environment-manager;
 
   use environment-dde-server,
-	prefix: "dde/",
-	export: { dde/<dde-condition>, dde/<dde-error>,
-		  dde/*service-and-topic-name* };
+        prefix: "dde/",
+        export: { dde/<dde-condition>, dde/<dde-error>,
+                  dde/*service-and-topic-name* };
 
   export server-start,
-	 server-stop;
+         server-stop;
 end module environment-server;

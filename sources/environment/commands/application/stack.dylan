@@ -1,6 +1,6 @@
 Module:    environment-application-commands
 Synopsis:  The application commands provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -20,7 +20,7 @@ define method ensure-context-stack-frame
     old-frame
   else
     assert(~empty?(stack),
-	   "The thread stack was unexpectedly empty!");
+           "The thread stack was unexpectedly empty!");
     let frame = stack[0];
     application-context.context-stack-frame := frame;
     frame
@@ -33,10 +33,10 @@ define method ensure-context-bug-report
   let application-context = context.context-application-context;
   application-context.context-bug-report
     | begin
-	application-context.context-bug-report
-	  := make(<bug-report>,
-		  project: context.context-project,
-		  format:  #"text")
+        application-context.context-bug-report
+          := make(<bug-report>,
+                  project: context.context-project,
+                  format:  #"text")
       end
 end method ensure-context-bug-report;
 
@@ -204,8 +204,8 @@ define method do-execute-command
   let stream = context.context-server.server-output-stream;
   let all? = command.%all?;
   write-bug-report-thread-backtrace
-    (stream, report, thread, 
-     start: if (all?) 0 else index end, 
+    (stream, report, thread,
+     start: if (all?) 0 else index end,
      end:   unless (all?) index + count end)
 end method do-execute-command;
 

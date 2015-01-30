@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module environment-property-pages
-  use environment-imports;	// this gets common-dylan
+  use environment-imports;        // this gets common-dylan
   use operating-system,
     import: { environment-variable };
   use file-system;
@@ -16,10 +16,10 @@ define module environment-property-pages
 
   use duim-internals,
     exclude: { position, string-pluralize,
-	       get-property,
-	       \put-property!, do-put-property!,
-	       \remove-property!, do-remove-property!,
-	       remove-keywords, \with-keywords-removed };
+               get-property,
+               \put-property!, do-put-property!,
+               \remove-property!, do-remove-property!,
+               remove-keywords, \with-keywords-removed };
 
   use file-source-records;
 

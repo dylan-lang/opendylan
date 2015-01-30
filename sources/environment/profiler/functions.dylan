@@ -1,6 +1,6 @@
 Module:    environment-profiler
 Synopsis:  The profiling tool provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -11,28 +11,28 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define frame <profiler-functions> (<simple-frame>)
   pane functions-page (frame)
     make(<tab-control-page>,
-	 label: "Functions",
-	 id:    #"functions",
-	 child: frame.functions-displayer);
+         label: "Functions",
+         id:    #"functions",
+         child: frame.functions-displayer);
   pane functions-displayer (frame)
     make(<table-control-displayer>,
-	 element-label: "form",
-	 information-available?-function: curry(profiler-has-results?, frame),
-	 transaction-function: curry(perform-profiler-transaction, frame),
-	 children-generator: curry(frame-profile-info, frame),
-	 headings: #["Function", "Count", "Amount", "%"],
-	 alignments: #[#"left", #"right", #"right", #"right"],
-	 widths: #[200, 60, 60, 40],
-	 generators: vector(wrapper-object,
-			    wrapper-count,
-			    wrapper-amount,
-			    wrapper-percentage),
-	 sort-orders: #[#"function", #"count", #"amount", #"percentage"],
-	 sort-order: #"amount",
-	 sort-function: curry(frame-sort-profile-info, frame),
-	 label-key: curry(frame-default-object-name, frame),
-	 items-changed-callback: note-profiler-functions-updated,
-	 value-changed-callback: note-profiler-selected-functions-changed,
+         element-label: "form",
+         information-available?-function: curry(profiler-has-results?, frame),
+         transaction-function: curry(perform-profiler-transaction, frame),
+         children-generator: curry(frame-profile-info, frame),
+         headings: #["Function", "Count", "Amount", "%"],
+         alignments: #[#"left", #"right", #"right", #"right"],
+         widths: #[200, 60, 60, 40],
+         generators: vector(wrapper-object,
+                            wrapper-count,
+                            wrapper-amount,
+                            wrapper-percentage),
+         sort-orders: #[#"function", #"count", #"amount", #"percentage"],
+         sort-order: #"amount",
+         sort-function: curry(frame-sort-profile-info, frame),
+         label-key: curry(frame-default-object-name, frame),
+         items-changed-callback: note-profiler-functions-updated,
+         value-changed-callback: note-profiler-selected-functions-changed,
          activate-callback: curry(profiler-activate-callback, frame));
 end frame <profiler-functions>;
 
@@ -84,25 +84,25 @@ define method frame-profile-info
   let profile-info
     = process-profile-summary
         (project, profile,
-	 show-foreign-functions?: show-foreign-functions?);
+         show-foreign-functions?: show-foreign-functions?);
   let wrappers :: <stretchy-object-vector> = make(<stretchy-object-vector>);
   let amount-getter
     = if (profile.allocation-profiling?)
-	info-allocation
+        info-allocation
       else
-	info-cpu-time
+        info-cpu-time
       end;
   let total :: <integer> = 0;
   for (thread-info in profile-info.info-threads)
     if (thread-info.info-thread == thread)
       for (function-info :: <profile-function-info> in thread-info.info-objects)
-	let amount = function-info.amount-getter;
-	total := total + amount;
-	add!(wrappers,
-	     make(<profile-info-wrapper>,
-		  object:     function-info.info-function,
-		  count:      function-info.info-count,
-		  amount:     amount))
+        let amount = function-info.amount-getter;
+        total := total + amount;
+        add!(wrappers,
+             make(<profile-info-wrapper>,
+                  object:     function-info.info-function,
+                  count:      function-info.info-count,
+                  amount:     amount))
       end
     end
   end;
@@ -123,11 +123,11 @@ define method frame-sort-profile-info
       frame-sort-items(frame, wrappers, key: wrapper-object);
     otherwise =>
       let key
-	= select (order)
-	    #"count"      => wrapper-count;
-	    #"amount"     => wrapper-amount;
-	    #"percentage" => wrapper-percentage;
-	  end;
+        = select (order)
+            #"count"      => wrapper-count;
+            #"amount"     => wrapper-amount;
+            #"percentage" => wrapper-percentage;
+          end;
       keyed-sort(wrappers, key: key, test: \>);
   end
 end method frame-sort-profile-info;
@@ -151,9 +151,9 @@ define method update-profiler-functions-status
   let profile = frame.profiler-application-profile;
   let amount-to-string
     = if (profile & profile.allocation-profiling?)
-	allocation-to-string
+        allocation-to-string
       else
-	time-to-string
+        time-to-string
       end;
   update-profiler-status
     ("function", displayer,
@@ -170,31 +170,31 @@ define method update-profiler-status
   let gadget = displayer.displayer-collection-gadget;
   let (message :: <string>, selection-message :: <string>)
     = if (available?)
-	let items = gadget-items(gadget);
-	let value = gadget-value(gadget);
-	let total = total-amount(items);
-	let selection? = ~empty?(value);
-	let selected-total
-	  = if (selection?) total-amount(value) else total end;
-	values(if (selection?)
-		 let count = value.size;
-		 format-to-string("%d %s selected",
-				  count,
-				  string-pluralize(name, count: count))
-	       else
-		 let count = items.size;
-		 format-to-string("%d %s",
-				  count,
-				  string-pluralize(name, count: count))
-	       end,
-	       format-to-string("%s (%s)",
-				amount-to-string(selected-total),
-				percentage-label
-				  (percentage(selected-total, total),
-				   decimal-points: 0)))
+        let items = gadget-items(gadget);
+        let value = gadget-value(gadget);
+        let total = total-amount(items);
+        let selection? = ~empty?(value);
+        let selected-total
+          = if (selection?) total-amount(value) else total end;
+        values(if (selection?)
+                 let count = value.size;
+                 format-to-string("%d %s selected",
+                                  count,
+                                  string-pluralize(name, count: count))
+               else
+                 let count = items.size;
+                 format-to-string("%d %s",
+                                  count,
+                                  string-pluralize(name, count: count))
+               end,
+               format-to-string("%s (%s)",
+                                amount-to-string(selected-total),
+                                percentage-label
+                                  (percentage(selected-total, total),
+                                   decimal-points: 0)))
       else
-	let project = frame.ensure-frame-project;
-	values(project-not-built-message(project), "")
+        let project = frame.ensure-frame-project;
+        values(project-not-built-message(project), "")
       end;
   frame-status-message(frame)    := message;
   frame-selection-message(frame) := selection-message
@@ -207,13 +207,13 @@ define constant $hour   = $minute * 60;
 define method time-to-string
     (integer :: <integer>) => (string :: <string>)
   local method one-decimal-point-string
-	    (type :: <string>, value :: <single-float>)
-	 => (string :: <string>)
-	  let (whole, part) = floor/(round(value * 10), 10);
-	  format-to-string("%d.%d %s",
-			   whole, part,
-			   type)
-	end method one-decimal-point-string;
+            (type :: <string>, value :: <single-float>)
+         => (string :: <string>)
+          let (whole, part) = floor/(round(value * 10), 10);
+          format-to-string("%d.%d %s",
+                           whole, part,
+                           type)
+        end method one-decimal-point-string;
   let value = as(<single-float>, integer);
   select (integer by \>)
     10 * $hour   => one-decimal-point-string("hours",   value / $hour);
@@ -233,31 +233,31 @@ define method filter-profile-info
   let library = project-library(project);
   let used-libraries
     = if (library)
-	source-form-used-definitions(project, library)
+        source-form-used-definitions(project, library)
       else
-	#[]
+        #[]
       end;
-  local method object-matches-type-filter? 
-	    (library :: <library-object>) => (matches? :: <boolean>)
-	  select (type-filter)
-	    #"libraries"      => #t;
-	    #"used-libraries" => 
-	      member?(library, used-libraries);
-	  end
-	end method object-matches-type-filter?;
+  local method object-matches-type-filter?
+            (library :: <library-object>) => (matches? :: <boolean>)
+          select (type-filter)
+            #"libraries"      => #t;
+            #"used-libraries" =>
+              member?(library, used-libraries);
+          end
+        end method object-matches-type-filter?;
   local method object-matches-substring-filter?
-	    (library :: <library-object>) => (matches? :: <boolean>)
-	  no-filter?
-	    | begin
-		let name = frame-default-object-name(frame, library);
-		subsequence-position(name, substring-filter) ~= #f
-	      end
-	end method object-matches-substring-filter?;
+            (library :: <library-object>) => (matches? :: <boolean>)
+          no-filter?
+            | begin
+                let name = frame-default-object-name(frame, library);
+                subsequence-position(name, substring-filter) ~= #f
+              end
+        end method object-matches-substring-filter?;
   local method show-object?
-	    (library :: <library-object>) => (show? :: <boolean>)
-	  object-matches-type-filter?(library)
-	    & object-matches-substring-filter?(library)
-	end method show-object?;
+            (library :: <library-object>) => (show? :: <boolean>)
+          object-matches-type-filter?(library)
+            & object-matches-substring-filter?(library)
+        end method show-object?;
   let results = make(<stretchy-vector>);
   for (object in libraries)
     if (show-object?(object))

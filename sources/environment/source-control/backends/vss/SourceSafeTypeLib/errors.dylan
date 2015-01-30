@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define macro vss-error-code-definer
   { define vss-error-code ?:name MAKEHR(?code:expression) }
-	=> { define inline-only constant ?name :: <integer> = logand(?code, #xFFFF) }
+        => { define inline-only constant ?name :: <integer> = logand(?code, #xFFFF) }
 end macro vss-error-code-definer;
 
   // File %s may be corrupt

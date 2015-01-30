@@ -55,28 +55,28 @@ define function obtain-id () => (id-string :: false-or(<string>))
   with-lock ($id-pool-lock)
     let free-id :: <integer>
       = if (id-free?(*next-id*))
-	  // Just use the *next-id*.
-	  *next-id*
-	else
-	  // Scan all IDs after *next-id*, until we hit a free one or we get
-	  // all the way back round to *next-id*.  In the latter case, wait
-	  // for a while, then try again;
-	  let free-id = #f;
-	  until (free-id)
-	    for (id = following-id(*next-id*) then following-id(id),
-		 until: (id-free?(id) | (id = *next-id*)))
-	    finally
-	      if (id = *next-id*)
-		release($id-pool-lock);
-		sleep($obtain-id-retry-interval);
-		wait-for($id-pool-lock);
-	      else
-		free-id := id
-	      end;
-	    end;
-	  end;
-	  free-id
-	end;
+          // Just use the *next-id*.
+          *next-id*
+        else
+          // Scan all IDs after *next-id*, until we hit a free one or we get
+          // all the way back round to *next-id*.  In the latter case, wait
+          // for a while, then try again;
+          let free-id = #f;
+          until (free-id)
+            for (id = following-id(*next-id*) then following-id(id),
+                 until: (id-free?(id) | (id = *next-id*)))
+            finally
+              if (id = *next-id*)
+                release($id-pool-lock);
+                sleep($obtain-id-retry-interval);
+                wait-for($id-pool-lock);
+              else
+                free-id := id
+              end;
+            end;
+          end;
+          free-id
+        end;
     *next-id* := following-id(free-id);
     $ids-in-use[free-id] := #t;
     integer-to-string(free-id);
@@ -216,22 +216,22 @@ define function wait-for-results
   with-lock (notification.associated-lock)
     block ()
       unless (token.token-results)
-	until (got-notification?)
-	  got-notification? := wait-for(notification, timeout: timeout);
-	  unless (got-notification?)
-	    block ()
-	      error(make(<timeout-awaiting-results>, id: id));
-	    exception (<keep-waiting>)
-	      // Okay, go back round the "until".
-	    end;
-	  end;
-	end;
+        until (got-notification?)
+          got-notification? := wait-for(notification, timeout: timeout);
+          unless (got-notification?)
+            block ()
+              error(make(<timeout-awaiting-results>, id: id));
+            exception (<keep-waiting>)
+              // Okay, go back round the "until".
+            end;
+          end;
+        end;
       end;
       results := token.token-results;
     cleanup
       when (got-notification?)
-	abort-results(id);
-	// And now the notification and lock will just be GC'd.
+        abort-results(id);
+        // And now the notification and lock will just be GC'd.
       end;
     exception (assumption :: <assume-results>)
       results := assumption.results-to-assume;
@@ -267,18 +267,18 @@ end function abort-results;
 
 define macro with-asynchronous-results
   { with-asynchronous-results
-	(?:name, #key ?abort-on-condition?:expression = #t,
-		      ?timeout:expression = #f)
+        (?:name, #key ?abort-on-condition?:expression = #t,
+                      ?timeout:expression = #f)
       ?:body
     end }
  => { let _id = get-results-id();
       let ?name = _id;
       block ()
-	?body;
-	wait-for-results(_id, timeout: ?timeout)
+        ?body;
+        wait-for-results(_id, timeout: ?timeout)
       cleanup
-	when (?abort-on-condition?)
-	  abort-results(_id);
-	end;
+        when (?abort-on-condition?)
+          abort-results(_id);
+        end;
       end }
 end macro with-asynchronous-results;

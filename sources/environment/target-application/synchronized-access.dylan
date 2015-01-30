@@ -20,15 +20,15 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Revised the synchronization protocol to meet the higher demands
 // of interacting with suspended threads in running applications.
-// 
+//
 // Use explicit synchronization throughout.
-// 
+//
 // Use a single-exclusive/multiple-inclusive lock over the entire
 // debugger session, to lock all threads out until the Debugger
 // Manager thread itself effortlessly releases its exclusive rights
 // to the session lock.
-// 
-// 
+//
+//
 // Nosa   Mar 31, 1999
 
 define macro with-debugger-transaction
@@ -50,7 +50,7 @@ define method perform-debugger-transaction
 
   if (application.performing-debugger-transaction?)
     assert(~continue,
-	   "Cannot continue from inside another debugger transaction");
+           "Cannot continue from inside another debugger transaction");
     transaction()
   else
 
@@ -81,41 +81,41 @@ define method perform-debugger-transaction
       let temporary-stop? = #f;
 
       block ()
-	with-lock (application.debugger-session, mode: #"read")
+        with-lock (application.debugger-session, mode: #"read")
 
-	  // Discard the application stop request as we are now
-	  // being served
+          // Discard the application stop request as we are now
+          // being served
 
-	  discard-stop-application-request(application);
+          discard-stop-application-request(application);
 
           if (application.under-management?)
 
-	  temporary-stop? := application-temporary-stop?(application);
+          temporary-stop? := application-temporary-stop?(application);
 
-	  thread-debug-message("Performing debugger transaction");
-	  block()
-	    application.thread-being-served := transaction-thread;
-	    do-transaction();
-	  cleanup
-	    application.thread-being-served := #f
-	  end block;
+          thread-debug-message("Performing debugger transaction");
+          block()
+            application.thread-being-served := transaction-thread;
+            do-transaction();
+          cleanup
+            application.thread-being-served := #f
+          end block;
 
-	  end if;
+          end if;
 
-	end with-lock;
+        end with-lock;
       afterwards
         // Continue the application only if explicitly requested to do
-	// so by clients, or if we explicitly stopped the running application
+        // so by clients, or if we explicitly stopped the running application
         if (continue)
-	  thread-debug-message
-	    ("perform-debugger-transaction: continue application");
-	  continue();
-	elseif (temporary-stop?)
-	  thread-debug-message
-	    ("temporary-stop-reason for interrupting application");
-	  continue-target-application(application,
-				      application.application-selected-thread);
-	end if
+          thread-debug-message
+            ("perform-debugger-transaction: continue application");
+          continue();
+        elseif (temporary-stop?)
+          thread-debug-message
+            ("temporary-stop-reason for interrupting application");
+          continue-target-application(application,
+                                      application.application-selected-thread);
+        end if
       end
     end with-lock;
 
@@ -129,7 +129,7 @@ define inline function performing-debugger-transaction?
   application.thread-being-served == current-thread()
 end function;
 
-define method manage-debugger-transaction 
+define method manage-debugger-transaction
     (application :: <target-application>) => ()
 
   unless (application.debugger-session.owned?)
@@ -152,34 +152,34 @@ define method manage-debugger-transaction
     application.in-debugger-transaction? := #t;
 
     while (begin
-	     let wait-state = #"waiting";
+             let wait-state = #"waiting";
 
-	     while (wait-state == #"waiting")
+             while (wait-state == #"waiting")
 
-	     thread-debug-message("Waiting for debugger-transaction-notification");
-	     if (wait-for(application.debugger-transaction-notification,
-			  timeout: application.debugger-transaction-timeout))
-	       thunk := application.interruption-function;
-	       wait-state := thunk;
-	     else
-	       thread-debug-message("Waiting for debugger-session");
-	       if (wait-for(application.debugger-session, mode: #"write",
-			    timeout: application.debugger-transaction-timeout))
-		 wait-state := #f;
-	       end;
-	     end;
+             thread-debug-message("Waiting for debugger-transaction-notification");
+             if (wait-for(application.debugger-transaction-notification,
+                          timeout: application.debugger-transaction-timeout))
+               thunk := application.interruption-function;
+               wait-state := thunk;
+             else
+               thread-debug-message("Waiting for debugger-session");
+               if (wait-for(application.debugger-session, mode: #"write",
+                            timeout: application.debugger-transaction-timeout))
+                 wait-state := #f;
+               end;
+             end;
 
-	     end while;
+             end while;
 
-	     wait-state
-	   end)
+             wait-state
+           end)
       block()
-	application.interruption-function := #f;
-	let thunk-as-function :: <function> = thunk;
-	let (#rest results) = thunk-as-function();
-	application.interruption-results := results;
+        application.interruption-function := #f;
+        let thunk-as-function :: <function> = thunk;
+        let (#rest results) = thunk-as-function();
+        application.interruption-results := results;
       exception(<abort>)
-	application.interruption-results := #[];
+        application.interruption-results := #[];
       end block;
 
       thread-debug-message("Releasing interruption-evaluated");
@@ -219,7 +219,7 @@ end method;
 //    by notifying an interruption of the debugger transaction.
 
 define method call-debugger-function
-    (application :: <target-application>, function :: <function>, 
+    (application :: <target-application>, function :: <function>,
      #rest arguments)
   => (#rest results)
   thread-debug-message("Entered CALL-DEBUGGER-FUNCTION");
@@ -235,14 +235,14 @@ define method call-debugger-function
     with-lock (application.debugger-transaction)
 
       application.interruption-function :=
-	method() apply(function, arguments) end;
-      
+        method() apply(function, arguments) end;
+
       thread-debug-message("Releasing debugger-transaction-notification");
       release(application.debugger-transaction-notification);
 
       thread-debug-message("Waiting for interruption-evaluated");
       wait-for(application.interruption-evaluated);
-      
+
       let results = application.interruption-results;
       application.interruption-results := #[];
 

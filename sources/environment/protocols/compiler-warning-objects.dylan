@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define abstract class <warning-object> (<environment-object>)
 end class <warning-object>;
 
-define class <compiler-warning-object> 
+define class <compiler-warning-object>
     (<compiler-object>,
      <environment-object-with-library>,
      <warning-object>)
@@ -31,7 +31,7 @@ end class <compiler-error-object>;
 
 
 define open generic do-compiler-warnings
-    (function :: <function>, server :: <server>, 
+    (function :: <function>, server :: <server>,
      object :: <environment-object>,
      #key client)
  => ();
@@ -52,7 +52,7 @@ define open generic warning-owner
 /// Project dispatching methods
 
 define method do-compiler-warnings
-    (function :: <function>, project :: <project-object>, 
+    (function :: <function>, project :: <project-object>,
      object :: <environment-object>,
      #key client)
  => ()
@@ -61,23 +61,23 @@ define method do-compiler-warnings
 end method do-compiler-warnings;
 
 define method do-compiler-warnings
-    (function :: <function>, project :: <project-object>, 
+    (function :: <function>, project :: <project-object>,
      object :: <project-object>,
      #key client)
  => ()
   assert(project = object,
-	 "Querying %= through different project %=!",
-	 object, project);
+         "Querying %= through different project %=!",
+         object, project);
   local method do-library-warnings
-	    (library :: <library-object>) => ()
-	  do-compiler-warnings(function, project, library, client: client)
-	end method do-library-warnings;
+            (library :: <library-object>) => ()
+          do-compiler-warnings(function, project, library, client: client)
+        end method do-library-warnings;
   let library = project-library(project);
   library & do-library-warnings(library);
   do-project-used-libraries
     (method (library :: <library-object>)
        if (~library-read-only?(project, library))
-	 do-library-warnings(library)
+         do-library-warnings(library)
        end
      end,
      project, project)

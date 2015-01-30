@@ -6,12 +6,12 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define sealed method do-project-used-libraries
-    (function :: <function>, server :: <dfmc-project-object>, 
+    (function :: <function>, server :: <dfmc-project-object>,
      project-object :: <project-object>)
  => ()
   assert(server == project-object,
-	 "Querying libraries for %= through different project %=",
-	 project-object, server);
+         "Querying libraries for %= through different project %=",
+         project-object, server);
   let project = project-object.ensure-project-proxy;
   if (project-object.project-compiler-database)
     for (subproject :: <project> in project.all-used-projects)
@@ -37,8 +37,8 @@ define function %maybe-make-library
   let context = project.project-browsing-context;
   if (context & context.project-library-definition)
     make-environment-object(<library-object>,
-			    project: project-object,
-			    compiler-object-proxy: project)
+                            project: project-object,
+                            compiler-object-proxy: project)
   end
 end function %maybe-make-library;
 

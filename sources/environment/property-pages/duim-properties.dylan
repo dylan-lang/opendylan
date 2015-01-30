@@ -24,17 +24,17 @@ define method duim-object-children-generator
 end method duim-object-children-generator;
 
 define sideways method make-frame-property-page-displayer
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      class :: subclass(<duim-object>),
      type == #"hierarchy")
  => (label :: <string>, displayer :: <tree-control-displayer>)
   let project = frame.ensure-frame-project;
   let displayer
     = make(<tree-control-displayer>,
-	   element-label: "object",
-	   information-available?-function: curry(application-tethered?, project),
-	   transaction-function: curry(perform-application-transaction, project),
-	   children-generator: curry(duim-object-children-generator, frame),
-	   label-key: curry(frame-default-object-name, frame));
+           element-label: "object",
+           information-available?-function: curry(application-tethered?, project),
+           transaction-function: curry(perform-application-transaction, project),
+           children-generator: curry(duim-object-children-generator, frame),
+           label-key: curry(frame-default-object-name, frame));
   values("Hierarchy", displayer)
 end method make-frame-property-page-displayer;

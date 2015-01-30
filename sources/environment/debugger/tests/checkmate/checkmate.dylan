@@ -12,23 +12,23 @@ define sealed frame <checkmate> (<simple-frame>)
   sealed constant slot checkmate-data :: <stretchy-vector> = make(<stretchy-vector>);
   pane checkmate-error-types-pane (checkmate)
     make(<radio-box>,
-	 orientation: #"vertical",
-	 items: vector(#"simple-error",
-		       #"access-violation",
-		       #"array-bounds-exception",
-		       #"datatype-misalignment",
-		       #"illegal-instruction-exception",
-		       #"privileged-instruction-exception",
-		       #"denormal-exception",
-		       #"float-divide-by-zero-exception",
-		       #"inexact-result-exception",
-		       #"invalid-float-operation",
-		       #"float-overflow-exception",
-		       #"float-underflow-exception",
-		       #"float-stack-check-exception",
-		       #"integer-divide-by-zero-exception",
-		       #"noncontinuable-exception"),
-	 label-key: curry(as, <string>));
+         orientation: #"vertical",
+         items: vector(#"simple-error",
+                       #"access-violation",
+                       #"array-bounds-exception",
+                       #"datatype-misalignment",
+                       #"illegal-instruction-exception",
+                       #"privileged-instruction-exception",
+                       #"denormal-exception",
+                       #"float-divide-by-zero-exception",
+                       #"inexact-result-exception",
+                       #"invalid-float-operation",
+                       #"float-overflow-exception",
+                       #"float-underflow-exception",
+                       #"float-stack-check-exception",
+                       #"integer-divide-by-zero-exception",
+                       #"noncontinuable-exception"),
+         label-key: curry(as, <string>));
   layout (checkmate)
       grouping ("Error Type")
         checkmate.checkmate-error-types-pane
@@ -101,18 +101,18 @@ define sealed method initialize (checkmate :: <checkmate>, #key)
   add!(checkmate.checkmate-data, \=);
   add!(checkmate.checkmate-data, compose);
   add!(checkmate.checkmate-data, make(<simple-warning>,
-				      format-string: "1 2 %= 3",
-				      format-arguments: vector(make(<simple-warning>))));
+                                      format-string: "1 2 %= 3",
+                                      format-arguments: vector(make(<simple-warning>))));
   add!(checkmate.checkmate-data, make(<simple-restart>,
-				      format-string: "1 2 %= 3",
-				      format-arguments: vector(make(<simple-restart>))));
+                                      format-string: "1 2 %= 3",
+                                      format-arguments: vector(make(<simple-restart>))));
   add!(checkmate.checkmate-data, make(<abort>));
   add!(checkmate.checkmate-data, make(<simple-error>,
-				      format-string: "1 2 %= 3",
-				      format-arguments: vector(make(<simple-error>))));
+                                      format-string: "1 2 %= 3",
+                                      format-arguments: vector(make(<simple-error>))));
   add!(checkmate.checkmate-data, make(<type-error>,
-				      value: make(<type-error>),
-				      type: <type-error>));
+                                      value: make(<type-error>),
+                                      type: <type-error>));
 end method;
 
 
@@ -193,8 +193,8 @@ end function;
 
 define function exit-checkmate (checkmate :: <checkmate>)
   local method exit (frame)
-	  exit-frame(frame, destroy: #t);
-	end method;
+          exit-frame(frame, destroy: #t);
+        end method;
   do(exit, $checkmates);
   with-lock ($lock)
     release($notification);
@@ -213,8 +213,8 @@ end function;
 
 define function checkmate-warning (checkmate :: <checkmate>)
   signal(make(<simple-warning>,
-	      format-string: "warning from %s",
-	      format-arguments: checkmate.frame-title));
+              format-string: "warning from %s",
+              format-arguments: checkmate.frame-title));
 end function;
 
 
@@ -229,21 +229,21 @@ end function;
 
 define function checkmate-error (checkmate :: <checkmate>)
   select (checkmate.checkmate-error-types-pane.gadget-value)
-    #f, #"simple-error"			=> error("error from %s", checkmate.frame-title);
-    #"access-violation"			=> RaiseException($EXCEPTION-ACCESS-VIOLATION, 0, 0, 0);
-    #"array-bounds-exception"		=> RaiseException($EXCEPTION-ARRAY-BOUNDS-EXCEEDED, 0, 0, 0);
-    #"datatype-misalignment"		=> RaiseException($EXCEPTION-DATATYPE-MISALIGNMENT, 0, 0, 0);
-    #"illegal-instruction-exception"	=> RaiseException($EXCEPTION-ILLEGAL-INSTRUCTION, 0, 0, 0);
+    #f, #"simple-error"                        => error("error from %s", checkmate.frame-title);
+    #"access-violation"                        => RaiseException($EXCEPTION-ACCESS-VIOLATION, 0, 0, 0);
+    #"array-bounds-exception"                => RaiseException($EXCEPTION-ARRAY-BOUNDS-EXCEEDED, 0, 0, 0);
+    #"datatype-misalignment"                => RaiseException($EXCEPTION-DATATYPE-MISALIGNMENT, 0, 0, 0);
+    #"illegal-instruction-exception"        => RaiseException($EXCEPTION-ILLEGAL-INSTRUCTION, 0, 0, 0);
     #"privileged-instruction-exception" => RaiseException($EXCEPTION-PRIVILEGED-INSTRUCTION, 0, 0, 0);
-    #"denormal-exception"		=> RaiseException($EXCEPTION-FLOAT-DENORMAL-OPERAND, 0, 0, 0);
-    #"float-divide-by-zero-exception"	=> RaiseException($EXCEPTION-FLOAT-DIVIDE-BY-ZERO, 0, 0, 0);
-    #"inexact-result-exception"		=> RaiseException($EXCEPTION-FLOAT-INEXACT-RESULT, 0, 0, 0);
-    #"invalid-float-operation"		=> RaiseException($EXCEPTION-FLOAT-INVALID-OPERATION, 0, 0, 0);
-    #"float-overflow-exception"		=> RaiseException($EXCEPTION-FLOAT-OVERFLOW, 0, 0, 0);
-    #"float-underflow-exception"	=> RaiseException($EXCEPTION-FLOAT-UNDERFLOW, 0, 0, 0);
-    #"float-stack-check-exception"	=> RaiseException($EXCEPTION-FLOAT-STACK-CHECK, 0, 0, 0);
-    #"integer-divide-by-zero-exception"	=> RaiseException($EXCEPTION-INTEGER-DIVIDE-BY-ZERO, 0, 0, 0);
-    #"noncontinuable-exception"		=> RaiseException($EXCEPTION-NONCONTINUABLE-EXCEPTION, 0, 0, 0);
+    #"denormal-exception"                => RaiseException($EXCEPTION-FLOAT-DENORMAL-OPERAND, 0, 0, 0);
+    #"float-divide-by-zero-exception"        => RaiseException($EXCEPTION-FLOAT-DIVIDE-BY-ZERO, 0, 0, 0);
+    #"inexact-result-exception"                => RaiseException($EXCEPTION-FLOAT-INEXACT-RESULT, 0, 0, 0);
+    #"invalid-float-operation"                => RaiseException($EXCEPTION-FLOAT-INVALID-OPERATION, 0, 0, 0);
+    #"float-overflow-exception"                => RaiseException($EXCEPTION-FLOAT-OVERFLOW, 0, 0, 0);
+    #"float-underflow-exception"        => RaiseException($EXCEPTION-FLOAT-UNDERFLOW, 0, 0, 0);
+    #"float-stack-check-exception"        => RaiseException($EXCEPTION-FLOAT-STACK-CHECK, 0, 0, 0);
+    #"integer-divide-by-zero-exception"        => RaiseException($EXCEPTION-INTEGER-DIVIDE-BY-ZERO, 0, 0, 0);
+    #"noncontinuable-exception"                => RaiseException($EXCEPTION-NONCONTINUABLE-EXCEPTION, 0, 0, 0);
   end select;
 end function;
 
@@ -252,8 +252,8 @@ end function;
 
 define function checkmate-continuable-error (checkmate :: <checkmate>)
   cerror(format-to-string("continue running %s", checkmate.frame-title),
-	 "continuable error from %s",
-	 checkmate.frame-title);
+         "continuable error from %s",
+         checkmate.frame-title);
 end function;
 
 /// *FILE-COMMAND-TABLE* (internal)

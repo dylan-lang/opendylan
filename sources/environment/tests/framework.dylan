@@ -15,38 +15,38 @@ end class <test-history-frame>;
 define test environment-history-test ()
   let frame = make(<test-history-frame>);
   check-true("History frame has no initial history",
-	     empty?(frame-history(frame)));
+             empty?(frame-history(frame)));
   check-true("History frame has back and forward disabled",
-	     ~command-enabled?(frame-select-previous-object, frame)
-	       & ~command-enabled?(frame-select-next-object, frame));
+             ~command-enabled?(frame-select-previous-object, frame)
+               & ~command-enabled?(frame-select-next-object, frame));
   frame-add-to-history(frame, 1);
   check-true("History frame accepts new object",
-	     begin
-	       let history = frame-history(frame);
-	       size(history) == 1 & history[0] = 1
-	     end);
+             begin
+               let history = frame-history(frame);
+               size(history) == 1 & history[0] = 1
+             end);
   frame-add-to-history(frame, 2);
   check-true("History frame accepts a second object",
-	     begin
-	       let history = frame-history(frame);
-	       size(history) == 2 & history[0] = 2
-	     end);
+             begin
+               let history = frame-history(frame);
+               size(history) == 2 & history[0] = 2
+             end);
   frame-add-to-history(frame, 3);
   frame-select-previous-object(frame);
   check-true("History frame can move to previous object",
-	     begin
-	       let history = frame-history(frame);
-	       size(history) == 2 & history[0] = 2
-	     end);
+             begin
+               let history = frame-history(frame);
+               size(history) == 2 & history[0] = 2
+             end);
   check-true("History frame has back and forward enabled",
-	     command-enabled?(frame-select-previous-object, frame)
-	       & command-enabled?(frame-select-next-object, frame));
+             command-enabled?(frame-select-previous-object, frame)
+               & command-enabled?(frame-select-next-object, frame));
   frame-remove-from-history(frame, 1);
   check-true("History frame can remove first object",
-	     begin
-	       let history = frame-history(frame);
-	       size(history) == 1 & history[0] = 2
-	     end);
+             begin
+               let history = frame-history(frame);
+               size(history) == 1 & history[0] = 2
+             end);
 end test environment-history-test;
 
 

@@ -15,8 +15,8 @@ define thread variable *index* :: <integer> = 0;
 
 
 // Parse a string containing one or more commands, of the form
-// 
-//	[_command-name_(_argument_,...)]
+//
+//        [_command-name_(_argument_,...)]
 //
 // *No whitespace* is allowed, except within _argument_s.  If an
 // _argument_ is to contain ',' or ')', it must be enclosed in '"'s.
@@ -25,16 +25,16 @@ define thread variable *index* :: <integer> = 0;
 // string, with no whitespace between them.
 //
 // Examples:
-//	[foo(bar,baz)]		--> "foo", "bar", "baz"
-//	[foo(bar, baz)]		--> "foo", "bar", " baz"
-//	[foo("(1,2)",\]		--> "foo", "(1,2)", "\\"
-//	[foo("(1,2)","\\"]	--> "foo", "(1,2)", "\\"
-//	[foo("(1,2)","\b"]	--> "foo", "(1,2)", "b" // NOT "\b"
-//	[foo((1,2),"\\"]	--> <parse-warning>
-//	[foo("(1,2)","\"]	--> <parse-warning>
-//	foo(bar,baz)		--> <parse-warning>
-//	[foo(1)][bar(2,3)]	--> "foo", "1"; "bar", "2", "3"
-//	[foo(1)] [bar(2,3)]	--> <parse-warning>
+//        [foo(bar,baz)]                --> "foo", "bar", "baz"
+//        [foo(bar, baz)]                --> "foo", "bar", " baz"
+//        [foo("(1,2)",\]                --> "foo", "(1,2)", "\\"
+//        [foo("(1,2)","\\"]        --> "foo", "(1,2)", "\\"
+//        [foo("(1,2)","\b"]        --> "foo", "(1,2)", "b" // NOT "\b"
+//        [foo((1,2),"\\"]        --> <parse-warning>
+//        [foo("(1,2)","\"]        --> <parse-warning>
+//        foo(bar,baz)                --> <parse-warning>
+//        [foo(1)][bar(2,3)]        --> "foo", "1"; "bar", "2", "3"
+//        [foo(1)] [bar(2,3)]        --> <parse-warning>
 //
 // Any problems will result in a <parse-warning> being signalled.
 // Some internal bugs might result in a <parse-error> being
@@ -97,7 +97,7 @@ define method parse-commands
     while(*index* < *string-size*)
       let (cmd-name, cmd-args) = parse-1-command();
       if (cmd-name ~= #"")
-	commands := add!(commands, pair(cmd-name, cmd-args));
+        commands := add!(commands, pair(cmd-name, cmd-args));
       end if;
     end while;
   exception (<parse-warning>)
@@ -331,8 +331,8 @@ define function not-found-error
   error
     (make
        (<parse-warning>,
-	format-string:
-	  concatenate("%s %s ", what-format, " not found at position %=."),
-	format-arguments:
-	  concatenate(vector(first-phrase, where), what, vector(*index*))));
+        format-string:
+          concatenate("%s %s ", what-format, " not found at position %=."),
+        format-arguments:
+          concatenate(vector(first-phrase, where), what, vector(*index*))));
 end function;

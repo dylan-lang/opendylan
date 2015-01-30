@@ -14,7 +14,7 @@ define constant <application-state>
 define constant <application-startup-option>
   = one-of(#"start", #"debug", #"interact");
 
-define open abstract primary class <application> 
+define open abstract primary class <application>
     (<server>, <environment-object>)
   sealed constant slot server-project :: <project-object>,
     required-init-keyword: project:;
@@ -32,15 +32,15 @@ define open abstract primary class <application>
   slot application-temporary-stop? :: <boolean> = #f;
 end class <application>;
 
-define method application-state-setter 
+define method application-state-setter
     (state :: <application-state>, application :: <application>)
  => (state :: <application-state>)
   unless (state == application.application-state)
     application.%state := state;
     unless (application.application-temporary-stop?)
       broadcast($project-channel,
-		make(<application-state-changed-message>, 
-		     project: application.server-project))
+                make(<application-state-changed-message>,
+                     project: application.server-project))
     end
   end;
   state
@@ -52,7 +52,7 @@ define macro with-application-transaction
     end }
  => { perform-application-transaction
         (?server,
-	 method () ?body end) }
+         method () ?body end) }
 end macro with-application-transaction;
 
 define open generic note-application-initialized
@@ -133,10 +133,10 @@ define open generic update-application
     (server :: <server>, #key progress-callback) => ();
 
 define open generic continue-application
-    (server :: <server>, #key thread) => ();     
+    (server :: <server>, #key thread) => ();
 
 define open generic stop-application
-    (server :: <server>, #key client-data) => ();     
+    (server :: <server>, #key client-data) => ();
 
 define open generic close-application
     (server :: <server>, #key wait-for-termination? :: <boolean>) => ();
@@ -196,11 +196,11 @@ define method note-application-initialized
     (project :: <project-object>)
  => ()
   broadcast($project-channel,
-	    make(<application-initialized-message>, project: project));
+            make(<application-initialized-message>, project: project));
 end method note-application-initialized;
 
 define method choose-server
-    (project :: <project-object>, application :: <application>, 
+    (project :: <project-object>, application :: <application>,
      #key error?, default-server)
  => (application :: <application>)
   ignore(error?, default-server);
@@ -208,7 +208,7 @@ define method choose-server
 end method choose-server;
 
 define method record-client-query
-    (application :: <application>, client, object :: <application-object>, 
+    (application :: <application>, client, object :: <application-object>,
      type :: <query-type>)
  => ()
   record-client-query(server-project(application), client, object, type)
@@ -265,16 +265,16 @@ define method application-startup-option
 end method;
 
 
-/// RUN-APPLICATION (environment-protocols) 
+/// RUN-APPLICATION (environment-protocols)
 
-define method run-application 
+define method run-application
     (project :: <project-object>,
      #key startup-option = #"start",
           client = project,
           filename,
           arguments,
           working-directory,
-          pause-before-termination? 
+          pause-before-termination?
             = project.project-default-pause-before-termination?,
           share-console? = #f,
           library-search-paths = vector(release-runtime-directory()),
@@ -291,43 +291,43 @@ define method run-application
   let application = project-application(project);
   if (application)
     assert(application.application-closed?,
-	   "Attempting to restart an already running application: %s",
-	   filename);
+           "Attempting to restart an already running application: %s",
+           filename);
     application-filename(application) := filename;
     application-arguments(application) := arguments;
     application-machine(application) := machine;
     application-client(application) := client
   else
-    application 
+    application
       := make-project-application(project,
-				  client:    client,
-				  machine:   machine,
-				  filename:  filename, 
-				  arguments: arguments);
+                                  client:    client,
+                                  machine:   machine,
+                                  filename:  filename,
+                                  arguments: arguments);
     project-application(project) := application;
   end if;
   broadcast($project-channel,
-	    make(<run-application-requested-message>, project: project));
+            make(<run-application-requested-message>, project: project));
   initialize-application-client(client, application);
   let host-machine? = machine == environment-host-machine();
   run-application(application,
-		  startup-option: startup-option,
-		  client:    client,
-		  filename:  filename,
-		  arguments: arguments,
+                  startup-option: startup-option,
+                  client:    client,
+                  filename:  filename,
+                  arguments: arguments,
                   machine:   machine,
-		  library-search-paths: 
+                  library-search-paths:
                      if (host-machine?)
                        library-search-paths
                      else
                        #[]
                      end,
-		  working-directory: 
+                  working-directory:
                      if (host-machine?)
                        working-directory | project.project-bin-directory
                      end,
-		  share-console?:            share-console?,
-		  pause-before-termination?: pause-before-termination?);
+                  share-console?:            share-console?,
+                  pause-before-termination?: pause-before-termination?);
 end method run-application;
 
 define constant $dll-wrap-application = "bin/dll-wrap.exe";
@@ -353,10 +353,10 @@ define function project-debug-options
     target-type == #"dll" =>
       let directory = as(<directory-locator>, release-directory());
       values(merge-locators(as(<file-locator>, $dll-wrap-application),
-			    directory),
-	     format-to-string("\"%s\"",
-			      as(<string>, build-location)),
-	     #f);
+                            directory),
+             format-to-string("\"%s\"",
+                              as(<string>, build-location)),
+             #f);
     otherwise =>
       error("The project is neither a DLL nor an EXE?");
   end
@@ -376,32 +376,32 @@ define method note-run-application-failed
     (application :: <application>) => ()
   let project = application.server-project;
   broadcast($project-channel,
-	    make(<run-application-failed-message>, project: project))
+            make(<run-application-failed-message>, project: project))
 end method note-run-application-failed;
 
-define method continue-application 
+define method continue-application
     (project :: <project-object>, #key thread) => ()
   let application = project-application(project);
   application & continue-application(application, thread: thread)
 end method continue-application;
 
-define method stop-application 
+define method stop-application
     (project :: <project-object>, #key client-data = #f) => ()
   let application = project-application(project);
   application & stop-application(application, client-data: client-data)
 end method stop-application;
 
-define method close-application 
+define method close-application
     (project :: <project-object>,
      #key wait-for-termination? :: <boolean>)
  => ()
   let application = project-application(project);
   application
-    & close-application(application, 
-			wait-for-termination?: wait-for-termination?)
+    & close-application(application,
+                        wait-for-termination?: wait-for-termination?)
 end method close-application;
 
-define method update-application 
+define method update-application
     (project :: <project-object>, #key progress-callback) => ()
   let application = project-application(project);
   application
@@ -424,13 +424,13 @@ define function ensure-application-proxy
  => (proxy)
   application-object-proxy(object)
     | begin
-	let project = server-project(application);
-	let id = environment-object-id(project, object);
-	if (instance?(id, <id>))
-	  let proxy = find-application-proxy(application, id);
-	  if (proxy)
-	    application-object-proxy(object) := proxy
-	  end
-	end
+        let project = server-project(application);
+        let id = environment-object-id(project, object);
+        if (instance?(id, <id>))
+          let proxy = find-application-proxy(application, id);
+          if (proxy)
+            application-object-proxy(object) := proxy
+          end
+        end
       end
 end function ensure-application-proxy;

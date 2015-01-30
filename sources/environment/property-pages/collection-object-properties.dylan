@@ -38,17 +38,17 @@ define sealed class <sequence-collection-wrapper> (<collection-wrapper>)
   sealed constant slot wrapper-key :: <integer>,
     required-init-keyword: key:;
 end class <sequence-collection-wrapper>;
-  
+
 define sealed class <range-wrapper> (<collection-wrapper>)
   sealed constant slot wrapper-key :: <string>,
     required-init-keyword: key:;
 end class <range-wrapper>;
-  
+
 define sealed class <explicit-key-collection-wrapper> (<collection-wrapper>)
   sealed constant slot wrapper-key :: <explicit-key-type>,
     required-init-keyword: key:;
 end class <explicit-key-collection-wrapper>;
-  
+
 define method frame-collection-contents
     (frame :: <environment-frame>,
      collection :: <collection-object>)
@@ -59,21 +59,21 @@ define method frame-collection-contents
   let keys = collection-keys(project, collection, range: element-range);
   let elements = collection-elements(project, collection, range: element-range);
   map(method
-	  (key :: <explicit-key-type>, element :: <environment-object>)
+          (key :: <explicit-key-type>, element :: <environment-object>)
        => (wrapper :: <collection-wrapper>)
-	let class
-	  = select (collection by instance?)
-	      <range-object> =>
-		<range-wrapper>;
-	      <explicit-key-collection-object> => 
-		<explicit-key-collection-wrapper>;
-	      <sequence-object> =>
-		<sequence-collection-wrapper>;
-	      //---*** andrewa: shouldn't be necessary, but is...
-	      <collection-object> =>
-		<sequence-collection-wrapper>;
-	    end;
-	make(class, key: key, object: element)
+        let class
+          = select (collection by instance?)
+              <range-object> =>
+                <range-wrapper>;
+              <explicit-key-collection-object> =>
+                <explicit-key-collection-wrapper>;
+              <sequence-object> =>
+                <sequence-collection-wrapper>;
+              //---*** andrewa: shouldn't be necessary, but is...
+              <collection-object> =>
+                <sequence-collection-wrapper>;
+            end;
+        make(class, key: key, object: element)
       end,
       keys, elements)
 end method frame-collection-contents;
@@ -87,12 +87,12 @@ define method frame-element-count
   let project = frame.ensure-frame-project;
   let size = collection-size(project, object);
   if (size > $maximum-elements
-	& environment-question
-	    (format-to-string
-	       ("There are %d elements in '%s', show just the first %d?",
-		size, frame-object-unique-name(frame, object), 
-		$maximum-elements),
-	     owner: frame))
+        & environment-question
+            (format-to-string
+               ("There are %d elements in '%s', show just the first %d?",
+                size, frame-object-unique-name(frame, object),
+                $maximum-elements),
+             owner: frame))
     $maximum-elements
   else
     size
@@ -104,30 +104,30 @@ define method frame-sort-collection-contents
      order :: <symbol>)
  => (contents :: <sequence>)
   local method environment-object-key
-	    (object :: <environment-object>) => (label :: <string>)
-	  frame-print-collection-content(frame, object)
-	end method environment-object-key;
+            (object :: <environment-object>) => (label :: <string>)
+          frame-print-collection-content(frame, object)
+        end method environment-object-key;
   local method collection-label-key
-	    (wrapper :: <collection-wrapper>)
-	 => (label :: type-union(<string>, <integer>))
-	  let key = wrapper.wrapper-key;
-	  select (key by instance?)
-	    <environment-object> => environment-object-key(key);
-	    <integer>, <string>  => key;
-	  end
-	end method collection-label-key;
+            (wrapper :: <collection-wrapper>)
+         => (label :: type-union(<string>, <integer>))
+          let key = wrapper.wrapper-key;
+          select (key by instance?)
+            <environment-object> => environment-object-key(key);
+            <integer>, <string>  => key;
+          end
+        end method collection-label-key;
   select (order)
     #"key" =>
-      frame-sort-items(frame, contents, 
-		       label-key: collection-label-key);
+      frame-sort-items(frame, contents,
+                       label-key: collection-label-key);
     #"reverse-key" =>
       frame-sort-items(frame, contents,
-		       label-key: collection-label-key,
-		       test: \>);
+                       label-key: collection-label-key,
+                       test: \>);
     #"element" =>
       frame-sort-items
-	(frame, contents, key: wrapper-object,
-	 label-key: curry(frame-print-collection-content, frame));
+        (frame, contents, key: wrapper-object,
+         label-key: curry(frame-print-collection-content, frame));
   end
 end method frame-sort-collection-contents;
 
@@ -135,24 +135,24 @@ end method frame-sort-collection-contents;
 /// Elements property page
 
 define sideways method make-frame-property-page-displayer
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      class :: subclass(<collection-object>),
      type == #"elements")
  => (label :: <string>, displayer :: <table-control-displayer>)
   let project = frame.ensure-frame-project;
   let displayer
     = make(<table-control-displayer>,
-	   element-label: "element",
-	   information-available?-function: curry(application-tethered?, project),
-	   transaction-function: curry(perform-application-transaction, project),
-	   children-generator: curry(frame-collection-contents, frame),
-	   headings: #["Key", "Element"],
-	   widths:   #[200, 1000],
-	   sort-orders: #[#[#"key", #"reverse-key"], #"element"],
-	   sort-order: #"key",
-	   sort-function: curry(frame-sort-collection-contents, frame),
-	   generators: vector(identity, wrapper-object),
-	   label-key: curry(frame-print-collection-content, frame));
+           element-label: "element",
+           information-available?-function: curry(application-tethered?, project),
+           transaction-function: curry(perform-application-transaction, project),
+           children-generator: curry(frame-collection-contents, frame),
+           headings: #["Key", "Element"],
+           widths:   #[200, 1000],
+           sort-orders: #[#[#"key", #"reverse-key"], #"element"],
+           sort-order: #"key",
+           sort-function: curry(frame-sort-collection-contents, frame),
+           generators: vector(identity, wrapper-object),
+           label-key: curry(frame-print-collection-content, frame));
   values("Elements", displayer)
 end method make-frame-property-page-displayer;
 
@@ -196,17 +196,17 @@ define constant $browse-target-key-doc
 
 define constant $browse-target-key-command
   = make-command-decorator("Browse Key", frame-browse-target-key,
-			   documentation: $browse-target-key-doc);
+                           documentation: $browse-target-key-doc);
 
-define command-table *explicit-key-collection-browse-popup-menu-command-table* 
+define command-table *explicit-key-collection-browse-popup-menu-command-table*
     (*global-command-table*)
   command $describe-target-command;
-  command $browse-target-command;  
+  command $browse-target-command;
   command $browse-target-type-command;
   command $browse-target-key-command;
 end command-table *explicit-key-collection-browse-popup-menu-command-table*;
 
-define command-table *explicit-key-collection-popup-menu-command-table* 
+define command-table *explicit-key-collection-popup-menu-command-table*
     (*global-command-table*)
   include *explicit-key-collection-browse-popup-menu-command-table*;
   include *popup-menu-edit-command-table*;
@@ -216,7 +216,7 @@ define command-table *explicit-key-collection-popup-menu-command-table*
 end command-table *explicit-key-collection-popup-menu-command-table*;
 
 define method command-table-for-target
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      wrapper :: <explicit-key-collection-wrapper>)
  => (comtab :: <command-table>)
   if (instance?(wrapper.wrapper-key, <environment-object>))

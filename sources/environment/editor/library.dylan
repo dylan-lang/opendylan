@@ -11,5 +11,5 @@ define library editor-manager
   use commands;
 
   export editor-manager,
-	 editor-manager-internals;
+         editor-manager-internals;
 end library editor-manager;

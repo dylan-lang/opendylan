@@ -84,7 +84,7 @@ end function;
 
 ///// DO-MACHINE-CONNECTIONS
 //    Iterates a user-supplied function over all open <machine>s currently
-//    known to the environment. 
+//    known to the environment.
 
 //    The function 'f' should have the signature (<MACHINE>) => ().
 //    The keyword argument INCLUDE-LOCAL? is a boolean flag that determines
@@ -144,7 +144,7 @@ end class;
 //    connection has been closed. A connection can only become closed
 //    by using the function CLOSE-CONNECTION-TO-MACHINE.
 
-define class <remote-connection-closed-error> 
+define class <remote-connection-closed-error>
                 (<remote-debug-connection-error>)
 
   constant slot failed-connection :: <machine>,

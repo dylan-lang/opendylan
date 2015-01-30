@@ -8,8 +8,8 @@ Warranty:  Distributed WITHOUT WARRANTY OF ANY KIND
 define method start-compiler (stream)
   let input-stream = make(<string-stream>, direction: #"input");
   let output-stream = make(<emacs-output-wrapper-stream>,
-			   inner-stream: stream,
-			   direction: #"output");
+                           inner-stream: stream,
+                           direction: #"output");
   make-environment-command-line-server
     (input-stream:   input-stream,
      output-stream:  output-stream);

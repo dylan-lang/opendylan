@@ -1,10 +1,10 @@
 Library:   dfmc-environment
 Synopsis:  DFMC environment
 Author:    Andy Armstrong
-Files:	library
-	module
-	exe-projects
-	applications
+Files:  library
+        module
+        exe-projects
+        applications
 Major-version: 2
 Minor-version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

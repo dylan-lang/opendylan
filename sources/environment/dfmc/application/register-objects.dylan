@@ -13,7 +13,7 @@ define method do-application-registers
      #key category = #f)
  => ()
 
-  local method wrap-for-env 
+  local method wrap-for-env
                  (reg :: <remote-register>) => (obj :: <register-object>)
           make-environment-object
             (<register-object>,
@@ -22,7 +22,7 @@ define method do-application-registers
         end method;
 
   local method convert-category
-                 (env-cat :: false-or(<register-category>)) 
+                 (env-cat :: false-or(<register-category>))
                     => (ap-cat :: false-or(<symbol>))
           select(env-cat)
             #"general-purpose"   => #"general";
@@ -62,15 +62,15 @@ define method register-contents
        let path = target.debug-target-access-path;
        let reg-proxy = reg.application-object-proxy;
        let remote-thread = thread.application-object-proxy;
-       let frame = stack-frame-context & 
+       let frame = stack-frame-context &
                    stack-frame-context.application-object-proxy;
        let low-level-frame =
          if (instance?(frame, <call-frame>))
            call-frame-description(target, frame)
          end if;
-       let context-sensitive-register = 
+       let context-sensitive-register =
          active-register(path, remote-thread, reg-proxy);
-       let value = 
+       let value =
          read-value(path, context-sensitive-register,
                     stack-frame: low-level-frame);
        obj :=
@@ -95,15 +95,15 @@ define method register-contents-address
        let path = target.debug-target-access-path;
        let reg-proxy = reg.application-object-proxy;
        let remote-thread = thread.application-object-proxy;
-       let frame = stack-frame-context & 
+       let frame = stack-frame-context &
                    stack-frame-context.application-object-proxy;
        let low-level-frame =
          if (instance?(frame, <call-frame>))
            call-frame-description(target, frame)
          end if;
-       let context-sensitive-register = 
+       let context-sensitive-register =
          active-register(path, remote-thread, reg-proxy);
-       let value = 
+       let value =
          read-value(path, context-sensitive-register,
                     stack-frame: low-level-frame);
        obj := make-environment-object(<address-object>,
@@ -128,7 +128,7 @@ define method lookup-register-by-name
        block ()
          let ap-reg =
            enumeration-code-to-register(path, name);
-         reg := 
+         reg :=
            make-environment-object(<register-object>,
                                    project: application.server-project,
                                    application-object-proxy: ap-reg);

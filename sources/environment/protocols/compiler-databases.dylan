@@ -27,7 +27,7 @@ define open generic compiler-database-proxy-id
 /// Implementation
 
 define method choose-server
-    (project :: <project-object>, database :: <compiler-database>, 
+    (project :: <project-object>, database :: <compiler-database>,
      #key error?, default-server)
  => (database :: <compiler-database>)
   ignore(error?, default-server);
@@ -35,7 +35,7 @@ define method choose-server
 end method choose-server;
 
 define method record-client-query
-    (database :: <compiler-database>, client, object :: <compiler-object>, 
+    (database :: <compiler-database>, client, object :: <compiler-object>,
      type :: <query-type>)
  => ()
   record-client-query(server-project(database), client, object, type)
@@ -81,14 +81,14 @@ define function ensure-database-proxy
  => (proxy)
   compiler-object-proxy(object)
     | begin
-	let project = server-project(database);
-	let id = environment-object-id(project, object);
-	if (instance?(id, <id>))
-	  let proxy = find-compiler-database-proxy(database, id);
-	  if (proxy)
-	    compiler-object-proxy(object) := proxy
-	  end
-	end
+        let project = server-project(database);
+        let id = environment-object-id(project, object);
+        if (instance?(id, <id>))
+          let proxy = find-compiler-database-proxy(database, id);
+          if (proxy)
+            compiler-object-proxy(object) := proxy
+          end
+        end
       end
 end function ensure-database-proxy;
 

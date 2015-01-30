@@ -2,8 +2,8 @@ Library:   Editor-Vi-Backend
 Synopsis:  Environment-VI Editor Interface
 Author:    Scott McKay, Hugh Greene
 Files:  library
-	module
-	vi-backend
+        module
+        vi-backend
 Major-version: 2
 Minor-version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

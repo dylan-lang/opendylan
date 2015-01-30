@@ -135,21 +135,21 @@ define open generic process-thread-snapshot-frame-snapshots
 /// Project dispatching methods
 
 define method start-profiling-application
-    (project :: <project-object>, 
+    (project :: <project-object>,
      #key options :: false-or(<profile-options>) = #f)
  => ()
   let state = project.project-profile-state;
   let options = options | state.profile-state-default-options;
   assert(~state.profile-state-profiling-enabled?,
-	 "Attempting to start profiling when it is already enabled");
+         "Attempting to start profiling when it is already enabled");
   let application = project.project-application;
   state.profile-state-current-options := options;
   state.profile-state-profiling-enabled? := #t;
   application & ensure-profiling-started(application);
   broadcast($project-channel,
-	    make(<profiling-state-change-message>, 
-		 project: project,
-		 enabled?: #t))
+            make(<profiling-state-change-message>,
+                 project: project,
+                 enabled?: #t))
 end method start-profiling-application;
 
 define function ensure-profiling-started
@@ -165,21 +165,21 @@ define method stop-profiling-application
  => (profile :: false-or(<application-profile>))
   let state = project.project-profile-state;
   assert(state.profile-state-profiling-enabled?,
-	 "Attempting to stop profiling when it is already stopped");
+         "Attempting to stop profiling when it is already stopped");
   block ()
     let application = project.project-application;
     if (application)
       state.profile-state-last-profile
-	:= stop-profiling-application(application)
+        := stop-profiling-application(application)
     else
       state.profile-state-last-profile
     end
   cleanup
     state.profile-state-profiling-enabled? := #f;
     broadcast($project-channel,
-	      make(<profiling-state-change-message>, 
-		   project: project,
-		   enabled?: #f))
+              make(<profiling-state-change-message>,
+                   project: project,
+                   enabled?: #f))
   end
 end method stop-profiling-application;
 
@@ -188,7 +188,7 @@ define method clear-profiling-results
   let project = server.server-project;
   let state = project.project-profile-state;
   assert(~profiling-enabled?(project),
-	 "Attempting to clear profiling results while profiling is active");
+         "Attempting to clear profiling results while profiling is active");
   state.profile-state-last-profile := #f
 end method clear-profiling-results;
 
@@ -196,7 +196,7 @@ define method profile-snapshot-available-values
     (project :: <project-object>) => (values :: <sequence>)
   let application = project.project-application;
   assert(application,
-	 "Attempting to query snapshot values with no application!");
+         "Attempting to query snapshot values with no application!");
   profile-snapshot-available-values(application)
 end method profile-snapshot-available-values;
 
@@ -227,7 +227,7 @@ define function application-snapshot-thread-snapshot
   block (return)
     for (thread-snapshot :: <thread-snapshot> in snapshots)
       if (thread-snapshot.thread-snapshot-thread == thread)
-	return(thread-snapshot)
+        return(thread-snapshot)
       end
     end;
     #f
@@ -241,16 +241,16 @@ define inline function do-application-snapshot-thread-snapshots
 end function do-application-snapshot-thread-snapshots;
 
 define function do-thread-profile-snapshots
-    (function :: <function>, application :: <application>, 
+    (function :: <function>, application :: <application>,
      profile :: <application-profile>, thread :: <thread-object>)
  => (threads :: <sequence>)
   let snapshots :: <stretchy-object-vector> = make(<stretchy-vector>);
   do-application-profile-snapshots
     (method (application-snapshot :: <application-snapshot>)
        let thread-snapshot
-	 = application-snapshot-thread-snapshot(application-snapshot, thread);
+         = application-snapshot-thread-snapshot(application-snapshot, thread);
        if (thread-snapshot)
-	 function(application-snapshot, thread-snapshot)
+         function(application-snapshot, thread-snapshot)
        end
      end,
      profile);
@@ -275,20 +275,20 @@ define function thread-snapshot-frame-snapshots
  => (snapshots :: <simple-object-vector>)
   snapshot.%snapshots
     | begin
-	let snapshots
-	  = process-thread-snapshot-frame-snapshots(application, snapshot);
-	snapshot.%snapshots := snapshots
+        let snapshots
+          = process-thread-snapshot-frame-snapshots(application, snapshot);
+        snapshot.%snapshots := snapshots
       end
 end function thread-snapshot-frame-snapshots;
 
 define function do-thread-snapshot-functions
-    (function :: <function>, application :: <application>, 
+    (function :: <function>, application :: <application>,
      snapshot :: <thread-snapshot>)
  => ()
   let frame-snapshots = thread-snapshot-frame-snapshots(application, snapshot);
   for (frame-snapshot :: <thread-frame-snapshot> in frame-snapshots)
-    function(frame-snapshot.frame-snapshot-function, 
-	     frame-snapshot.frame-snapshot-source-location)
+    function(frame-snapshot.frame-snapshot-function,
+             frame-snapshot.frame-snapshot-source-location)
   end
 end function do-thread-snapshot-functions;
 

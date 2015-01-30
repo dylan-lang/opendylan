@@ -53,7 +53,7 @@ end class;
 
 
 ///// GET-LOCAL-VARIABLE-VALUE
-//    An internal function. Callers must already have ensured that a 
+//    An internal function. Callers must already have ensured that a
 //    debugger transaction is in effect before calling this function.
 //    Returns the <remote-value> corresponding to any lexical variable.
 
@@ -72,7 +72,7 @@ end method;
 
 
 ///// ALL-FRAME-LOCAL-VARIABLES
-//    An internal function. Callers must already have ensured that a 
+//    An internal function. Callers must already have ensured that a
 //    debugger transaction is in effect before calling this function.
 //    Constructs <application-local-variable> objects for all of the
 //    live variables in a stack frame.
@@ -91,7 +91,7 @@ end method;
 define method all-frame-local-variables
     (application :: <dfmc-application>, frame :: <call-frame>)
         => (var-seq :: <sequence>)
-  
+
   let target = application.application-target-app;
 
   // We know that a debugger transaction is in effect. If this method is
@@ -157,7 +157,7 @@ end method;
 //    Returns an environment object being the value of a local
 //    variable.
 
-define method variable-value 
+define method variable-value
     (application :: <dfmc-application>, variable :: <local-variable-object>,
      #key thread)
  => (value :: <application-object>);

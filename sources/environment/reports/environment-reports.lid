@@ -1,6 +1,6 @@
 Library:   environment-reports
 Synopsis:  The reports provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Target-Type: dll
 Files: library
        module

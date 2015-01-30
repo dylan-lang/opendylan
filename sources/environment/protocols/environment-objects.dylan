@@ -30,7 +30,7 @@ define open generic environment-object-type
     (server :: <server>, object :: <environment-object>)
  => (type :: false-or(<environment-object>));
 
-define open generic environment-object-type-name 
+define open generic environment-object-type-name
     (object :: <environment-object>)
  => (type-name :: <string>);
 
@@ -92,7 +92,7 @@ define method environment-object-type
   #f
 end method environment-object-type;
 
-define method environment-object-type-name 
+define method environment-object-type-name
     (object :: <environment-object>)
  => (label :: <string>)
   "Object"
@@ -106,7 +106,7 @@ define method environment-object-primitive-name
  => (name :: false-or(<string>))
   object.%primitive-name
     | begin
-	let name = get-environment-object-primitive-name(server, object);
+        let name = get-environment-object-primitive-name(server, object);
         object.%primitive-name := name
       end
 end method environment-object-primitive-name;
@@ -137,7 +137,7 @@ end method environment-object-id;
 
 //---*** Hack to make library a valid keyword
 define method initialize
-    (object :: <environment-object>, 
+    (object :: <environment-object>,
      #key library :: false-or(<library-object>), #all-keys)
   next-method()
 end method initialize;
@@ -149,7 +149,7 @@ define open abstract class <environment-object-with-library>
 end class <environment-object-with-library>;
 
 define method environment-object-library
-    (project :: <project-object>, object :: <environment-object>) 
+    (project :: <project-object>, object :: <environment-object>)
  => (library :: false-or(<library-object>))
   let server = choose-server(project, object);
   server & environment-object-library(server, object)
@@ -163,7 +163,7 @@ define method environment-object-library
 end method environment-object-library;
 
 define method environment-object-library
-    (server :: <server>, object :: <environment-object>) 
+    (server :: <server>, object :: <environment-object>)
  => (library :: false-or(<library-object>))
   #f
 end method environment-object-library;
@@ -172,7 +172,7 @@ end method environment-object-library;
 /// Source
 
 define method environment-object-source-location
-    (project :: <project-object>, object :: <environment-object>) 
+    (project :: <project-object>, object :: <environment-object>)
  => (location :: false-or(<source-location>))
   let server = choose-server(project, object);
   server & environment-object-source-location(server, object)
@@ -185,7 +185,7 @@ define method environment-object-source-location
 end method environment-object-source-location;
 
 define method source-location-environment-object
-    (project :: <project-object>, location :: <source-location>) 
+    (project :: <project-object>, location :: <source-location>)
  => (object :: false-or(<environment-object>))
   let database = project-compiler-database(project);
   database & source-location-environment-object(database, location)
@@ -229,12 +229,12 @@ define function tokenize-string
     if (position <= string-size)
       let end-position = position;
       while (end-position > old-position & string[end-position - 1] == ' ')
-	end-position := end-position - 1
+        end-position := end-position - 1
       end;
       add!(tokens, copy-sequence(string, start: old-position, end: end-position));
       old-position := position + 1;
       while (old-position < string-size & string[old-position] == ' ')
-	old-position := old-position + 1
+        old-position := old-position + 1
       end;
       position := old-position
     end;
@@ -246,7 +246,7 @@ define function tokenize-string
 end function tokenize-string;
 
 define method parse-environment-object-name
-    (name :: <string>, 
+    (name :: <string>,
      #key module :: false-or(<module-id>),
           library :: false-or(<library-id>),
      #all-keys)
@@ -261,16 +261,16 @@ define method parse-environment-object-name
       let keyword = as(<symbol>, copy-sequence(name, end: space-index));
       let name-remainder = copy-sequence(name, start: space-index + 1);
       select (keyword)
-	#"library" =>
-	  make(<library-id>, name: name-remainder);
-	#"module" =>
-	  let library = library | (module & id-library(module));
-	  parse-module-name(name-remainder, library: library);
-	#"method" =>
-	  let library = library | (module & id-library(module));
-	  parse-method-name(name-remainder, module: module, library: library);
-	otherwise =>
-	  #f;
+        #"library" =>
+          make(<library-id>, name: name-remainder);
+        #"module" =>
+          let library = library | (module & id-library(module));
+          parse-module-name(name-remainder, library: library);
+        #"method" =>
+          let library = library | (module & id-library(module));
+          parse-method-name(name-remainder, module: module, library: library);
+        otherwise =>
+          #f;
       end;
     otherwise =>
       parse-definition-name(name, module: module, library: library);
@@ -285,12 +285,12 @@ define method parse-module-name
   if (~any?(empty?, tokens))
     select (size(tokens))
       1 =>
-	library & make(<module-id>, name: tokens[0], library: library);
+        library & make(<module-id>, name: tokens[0], library: library);
       2 =>
-	let library = make(<library-id>, name: tokens[1]);
-	make(<module-id>, name: tokens[0], library: library);
+        let library = make(<library-id>, name: tokens[1]);
+        make(<module-id>, name: tokens[0], library: library);
       otherwise =>
-	#f;
+        #f;
     end
   end
 end method parse-module-name;
@@ -304,19 +304,19 @@ define method parse-definition-name
   if (~any?(empty?, tokens))
     select (size(tokens))
       1 =>
-	module & make(<definition-id>, name: tokens[0], module: module);
+        module & make(<definition-id>, name: tokens[0], module: module);
       2 =>
-	let library = library | (module & id-library(module));
-	if (library)
-	  let module = make(<module-id>, name: tokens[1], library: library);
-	  make(<definition-id>, name: tokens[0], module: module)
-	end;
+        let library = library | (module & id-library(module));
+        if (library)
+          let module = make(<module-id>, name: tokens[1], library: library);
+          make(<definition-id>, name: tokens[0], module: module)
+        end;
       3 =>
-	let library = make(<library-id>, name: tokens[2]);
-	let module = make(<module-id>, name: tokens[1], library: library);
-	make(<definition-id>, name: tokens[0], module: module);
+        let library = make(<library-id>, name: tokens[2]);
+        let module = make(<module-id>, name: tokens[1], library: library);
+        make(<definition-id>, name: tokens[0], module: module);
       otherwise =>
-	#f;
+        #f;
     end
   end
 end method parse-definition-name;
@@ -327,45 +327,45 @@ define method parse-method-name
           library :: false-or(<library-id>))
  => (id :: false-or(<method-id>))
   local method local-parse-definition-name
-	    (name :: <string>) => (id :: false-or(<definition-id>))
-	  parse-definition-name(name, module: module, library: library)
-	end method local-parse-definition-name;
+            (name :: <string>) => (id :: false-or(<definition-id>))
+          parse-definition-name(name, module: module, library: library)
+        end method local-parse-definition-name;
   let tokens = tokenize-string(name, '(');
   let (gf, specializers)
     = if (size(tokens) == 2)
-	let gf = tokens[0];
-	let rest = tokens[1];
-	let specializer-tokens = tokenize-string(rest, ')');
-	let specializers
-	  = if (size(specializer-tokens) <= 2)
-	      let string = specializer-tokens[0];
-	      if (empty?(string))
-		#[]
-	      else
-		tokenize-string(string, ',')
-	      end
-	    end;
-	if (specializers)
-	  values(gf, specializers)
-	else
-	  values(#f, #f)
-	end
+        let gf = tokens[0];
+        let rest = tokens[1];
+        let specializer-tokens = tokenize-string(rest, ')');
+        let specializers
+          = if (size(specializer-tokens) <= 2)
+              let string = specializer-tokens[0];
+              if (empty?(string))
+                #[]
+              else
+                tokenize-string(string, ',')
+              end
+            end;
+        if (specializers)
+          values(gf, specializers)
+        else
+          values(#f, #f)
+        end
       else
-	values(#f, #f)
+        values(#f, #f)
       end;
   let (function-id, specializer-ids)
     = if (gf & specializers)
-	let function-id = local-parse-definition-name(gf);
-	let specializer-ids 
-	  = map-as(<simple-object-vector>, local-parse-definition-name, specializers);
-	values(function-id, specializer-ids)
+        let function-id = local-parse-definition-name(gf);
+        let specializer-ids
+          = map-as(<simple-object-vector>, local-parse-definition-name, specializers);
+        values(function-id, specializer-ids)
       else
-	values(#f, #f)
+        values(#f, #f)
       end;
   if (function-id & every?(rcurry(instance?, <definition-id>), specializer-ids))
     make(<method-id>,
-	 generic-function: function-id,
-	 specializers: specializer-ids)
+         generic-function: function-id,
+         specializers: specializer-ids)
   end
 end method parse-method-name;
 

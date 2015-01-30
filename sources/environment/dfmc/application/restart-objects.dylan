@@ -23,14 +23,14 @@ define method application-thread-restarts
   with-debugger-transaction (target)
     let project = application.server-project;
     let remote-thread = thread.application-object-proxy;
-    let remote-restarts 
+    let remote-restarts
       = available-restarts-for-thread(target, remote-thread);
     map(method (remote-restart)
-	  make-environment-object(<restart-object>,
-				  project: project,
-				  application-object-proxy: remote-restart)
-	end,
-	remote-restarts)
+          make-environment-object(<restart-object>,
+                                  project: project,
+                                  application-object-proxy: remote-restart)
+        end,
+        remote-restarts)
   end
 end method application-thread-restarts;
 

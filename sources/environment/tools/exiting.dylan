@@ -30,9 +30,9 @@ define method frame-owned-modal-dialog
  => (dialog :: false-or(<frame>))
   block (return)
     do(method (frame :: <frame>) => ()
-	 when (frame.frame-mode ~== #"modeless")
-	   return (frame);
-	 end;
+         when (frame.frame-mode ~== #"modeless")
+           return (frame);
+         end;
        end method,
        frame-owned-frames(frame));
     #f
@@ -48,34 +48,34 @@ define sideways method frame-exit-application
     *application-exiting?*
       := block (return)
            frame-do-exitable-frames
-	     (frame,
-	      method (frame-to-exit :: <frame>) => ()
+             (frame,
+              method (frame-to-exit :: <frame>) => ()
                 // Before asking a frame whether it can exit, make sure it isn't
                 // a modal dialog, a modal dialog owner, or disabled (which
                 // usually means it owns a native modal dialog that doesn't have
                 // a DUIM mirror).
-		let owned-dialog          = frame-owned-modal-dialog(frame-to-exit);
-		let modal?   :: <boolean> = frame-to-exit.frame-mode ~== #"modeless";
+                let owned-dialog          = frame-owned-modal-dialog(frame-to-exit);
+                let modal?   :: <boolean> = frame-to-exit.frame-mode ~== #"modeless";
                 let enabled? :: <boolean> = frame-to-exit.frame-enabled?;
                 let dialog?  :: <boolean> = owned-dialog ~== #f | modal? | ~enabled?;
-		if (~dialog? & frame-can-exit?(frame-to-exit))
-		  if (instance?(frame-to-exit, <environment-fixed-project-frame>))
-		    frame-to-exit.frame-exiting? := #t
-		  end;
-		  exit-frame(frame-to-exit);
+                if (~dialog? & frame-can-exit?(frame-to-exit))
+                  if (instance?(frame-to-exit, <environment-fixed-project-frame>))
+                    frame-to-exit.frame-exiting? := #t
+                  end;
+                  exit-frame(frame-to-exit);
                 else
                   // Clear exiting? flags since exiting has been stopped
-		  frame-do-exitable-frames
-		    (frame,
+                  frame-do-exitable-frames
+                    (frame,
                      method (frame-to-stop-exiting :: <frame>) => ()
                        when (instance?(frame-to-stop-exiting,
                                        <environment-fixed-project-frame>))
                          frame-to-stop-exiting.frame-exiting? := #f
                        end
-		     end);
+                     end);
                   // Activate the dialog or owner frame
-		  when (dialog?)
-		    // Raise a frame so the user can see what's stopping the exit.
+                  when (dialog?)
+                    // Raise a frame so the user can see what's stopping the exit.
                     // If the exit-frame is disabled, beep in the original frame;
                     // restoring, raising and beeping won't occur until the
                     // exit-frame becomes enabled, which is too late to be useful.
@@ -92,10 +92,10 @@ define sideways method frame-exit-application
                                     beep(_frame);
                                   end method,
                                   frame-to-activate);
-		  end when;
-		  return(#f);
-		end;
-	      end method);
+                  end when;
+                  return(#f);
+                end;
+              end method);
            #t
          end block;
   end unless;
@@ -137,7 +137,7 @@ end method frame-do-exitable-frames;
 define method collect-frames ()
   let frames = make(<stretchy-vector>);
   do-frames(method (frame :: <frame>)
-	      frames := add!(frames, frame);
-	    end method);
+              frames := add!(frames, frame);
+            end method);
   frames
 end method collect-frames;

@@ -136,22 +136,22 @@ define macro with-html-output
        }
 end macro with-html-output;
 
-define method invoke-with-html-output 
+define method invoke-with-html-output
     (inner :: <html-wrapper-stream>, title :: <string>, body :: <function>)
  => ()
   invoke-with-html-rubric(inner, title, body);
 end method;
 
-define method invoke-with-html-output 
+define method invoke-with-html-output
     (inner :: <stream>, title :: <string>, body :: <function>)
  => ()
   invoke-with-html-rubric(make(<html-wrapper-stream>, inner-stream: inner),
-			  title,
-			  body)
+                          title,
+                          body)
 
 end method;
 
-define method invoke-with-html-rubric 
+define method invoke-with-html-rubric
     (stream :: <stream>, title :: <string>, body :: <function>)
  => ()
   write-html-header(stream, title);
@@ -162,17 +162,17 @@ end method;
 define function write-html-header
     (stream :: <html-wrapper-stream>, title :: <string>) => ()
   write-html(stream,
-	     #"html", '\n', '\n',
-	     #"head", '\n',
-	     #"title", title, #"/title", '\n',
-	     #"/head", '\n', '\n',
-	     #"body", '\n', '\n')
+             #"html", '\n', '\n',
+             #"head", '\n',
+             #"title", title, #"/title", '\n',
+             #"/head", '\n', '\n',
+             #"body", '\n', '\n')
 end function write-html-header;
 
 define function write-html-footer
     (stream :: <html-wrapper-stream>) => ()
   write-html(stream,
-	     '\n',
-	     #"/body", '\n',
-	     #"/html", '\n')
+             '\n',
+             #"/body", '\n',
+             #"/html", '\n')
 end function write-html-footer;

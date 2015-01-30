@@ -1,9 +1,9 @@
 Library:   dfmc-environment-test-suite
-Synopsis:  DFMC Environment test suite 
+Synopsis:  DFMC Environment test suite
 Author:    Andy Armstrong
-Target-Type:	dll
-Files:	library
-	module
+Target-Type: dll
+Files:  library
+        module
         projects
         names
         main-suite

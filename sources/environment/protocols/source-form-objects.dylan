@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Source form objects
 
-define open abstract class <source-form-object> 
+define open abstract class <source-form-object>
     (<application-code-object>,
      <application-and-compiler-object>,
      <environment-object-with-id>)
@@ -31,7 +31,7 @@ define open generic do-used-definitions
  => ();
 
 define open generic do-client-source-forms
-    (function :: <function>, server :: <server>, 
+    (function :: <function>, server :: <server>,
      object :: <source-form-object>,
      #key modules, libraries, client)
  => ();
@@ -61,7 +61,7 @@ end method environment-object-type-name;
 
 /// Macro call objects
 
-define class <simple-macro-call-object> 
+define class <simple-macro-call-object>
     (<top-level-expression-object>, <macro-call-object>)
 end class <simple-macro-call-object>;
 
@@ -81,7 +81,7 @@ define method source-form-uses-definitions?
   database
     & source-form-uses-definitions?
         (database, object,
-	 modules: modules, libraries: libraries, client: client)
+         modules: modules, libraries: libraries, client: client)
 end method source-form-uses-definitions?;
 
 define method source-form-has-clients?
@@ -92,35 +92,35 @@ define method source-form-has-clients?
   database
     & source-form-has-clients?
         (database, object,
-	 modules: modules, libraries: libraries, client: client)
+         modules: modules, libraries: libraries, client: client)
 end method source-form-has-clients?;
 
 define method do-used-definitions
-    (function :: <function>, project :: <project-object>, 
+    (function :: <function>, project :: <project-object>,
      object :: <source-form-object>,
      #key modules, libraries, client)
  => ()
   let database = ensure-database-server(project, object);
-  database 
+  database
     & do-used-definitions(function, database, object,
-			  modules: modules, libraries: libraries, 
-			  client: client)
+                          modules: modules, libraries: libraries,
+                          client: client)
 end method do-used-definitions;
 
 define method do-client-source-forms
-    (function :: <function>, project :: <project-object>, 
+    (function :: <function>, project :: <project-object>,
      object :: <source-form-object>,
      #key modules, libraries, client)
  => ()
   let database = ensure-database-server(project, object);
-  database 
+  database
     & do-client-source-forms(function, database, object,
-			     modules: modules, libraries: libraries, 
-			     client: client)
+                             modules: modules, libraries: libraries,
+                             client: client)
 end method do-client-source-forms;
 
 define method do-macro-call-source-forms
-    (function :: <function>, project :: <project-object>, 
+    (function :: <function>, project :: <project-object>,
      object :: <macro-call-object>)
  => ()
   let database = ensure-database-server(project, object);
@@ -135,7 +135,7 @@ define function source-form-used-definitions
      #key libraries, modules, client)
  => (used-definitions :: <sequence>)
   collect-environment-objects
-    (do-used-definitions, server, source-form, 
+    (do-used-definitions, server, source-form,
      libraries: libraries, modules: modules, client: client)
 end function source-form-used-definitions;
 

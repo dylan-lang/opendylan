@@ -19,7 +19,7 @@ define open generic frame-current-module
 define open generic frame-current-library
     (frame :: <frame-module-mixin>) => (library :: false-or(<library-object>));
 
-define open generic frame-current-module-setter 
+define open generic frame-current-module-setter
     (module :: false-or(<module-object>), frame :: <frame-module-mixin>)
  => (module :: false-or(<module-object>));
 
@@ -61,29 +61,29 @@ define method frame-choose-current-module
  => (module :: <module-object>)
   with-frame-manager (frame-manager(frame))
     let text-field
-      = make(<text-field>, 
-	     documentation: "Name of a module in the current project.",
-	     value-changing-callback:
-	       method (gadget)
-		 let dialog = sheet-frame(gadget);
-		 let module = find-module(frame.frame-project, gadget-value(gadget));
-		 dialog-exit-enabled?(dialog) := module & #t;
-	       end method,
-	     value-changed-callback: exit-dialog);
+      = make(<text-field>,
+             documentation: "Name of a module in the current project.",
+             value-changing-callback:
+               method (gadget)
+                 let dialog = sheet-frame(gadget);
+                 let module = find-module(frame.frame-project, gadget-value(gadget));
+                 dialog-exit-enabled?(dialog) := module & #t;
+               end method,
+             value-changed-callback: exit-dialog);
     let dialog
       = make(<dialog-frame>,
-	     owner: frame,
-	     title: "Choose a module",
-	     layout: text-field,
-	     input-focus: text-field,
-	     width: max($current-module-dialog-width, 250));
+             owner: frame,
+             title: "Choose a module",
+             layout: text-field,
+             input-focus: text-field,
+             width: max($current-module-dialog-width, 250));
     dialog-exit-enabled?(dialog) := #f;
     when (start-dialog(dialog))
       let (width, height) = frame-size(dialog);
       $current-module-dialog-width := width;
       let module = find-module(frame.frame-project, gadget-value(text-field));
       when (module)
-	frame-current-module(frame) := module
+        frame-current-module(frame) := module
       end;
     end
   end;
@@ -102,7 +102,7 @@ define constant $module-gadget-none-label = "(None)";
 define generic module-gadget-label-key
     (frame :: <frame-module-gadget-mixin>, value :: false-or(<module-object>))
  => (name :: <string>);
-  
+
 define method module-gadget-label-key
     (frame :: <frame-module-gadget-mixin>, value == #f)
  => (name :: <string>)
@@ -133,7 +133,7 @@ define method frame-available-modules
  => (items :: <sequence>) // limited(<sequence>, of: <module-object>)
   let project = frame.ensure-frame-project;
   let library = project.project-library;
-  if (library) 
+  if (library)
     library-modules(project, library, imported?: #t)
   else
     #[]
@@ -148,28 +148,28 @@ define function frame-sorted-available-modules
   let library = project.project-library;
   let sorted-modules
     = sort(modules,
-	   test: method
-		     (module1 :: <module-object>, module2 :: <module-object>)
-		  => (less-than? :: <boolean>)
-		   let library1 = environment-object-library(project, module1);
-		   let library2 = environment-object-library(project, module2);
-		   let main-library1? = library1 == library;
-		   let main-library2? = library2 == library;
-		   case
-		     main-library1? & ~main-library2? =>
-		       #t;
-		     ~main-library1? & main-library2? =>
-		       #f;
-		     otherwise =>
-		       let name1
-			 = environment-object-primitive-name(project, module1)
-			     | $n/a;
-		       let name2
-			 = environment-object-primitive-name(project, module2)
-			 | $n/a;
-		       name1 < name2;
-		   end
-		 end);
+           test: method
+                     (module1 :: <module-object>, module2 :: <module-object>)
+                  => (less-than? :: <boolean>)
+                   let library1 = environment-object-library(project, module1);
+                   let library2 = environment-object-library(project, module2);
+                   let main-library1? = library1 == library;
+                   let main-library2? = library2 == library;
+                   case
+                     main-library1? & ~main-library2? =>
+                       #t;
+                     ~main-library1? & main-library2? =>
+                       #f;
+                     otherwise =>
+                       let name1
+                         = environment-object-primitive-name(project, module1)
+                             | $n/a;
+                       let name2
+                         = environment-object-primitive-name(project, module2)
+                         | $n/a;
+                       name1 < name2;
+                   end
+                 end);
   concatenate(vector(#f), sorted-modules)
 end function frame-sorted-available-modules;
 

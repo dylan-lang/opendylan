@@ -16,8 +16,8 @@ define method environment-object-name
   let variable = source-form-variable(slot.compiler-object-proxy);
   if (variable)
     make-environment-object(<binding-name-object>,
-			    project: server.server-project,
-			    compiler-object-proxy: variable)
+                            project: server.server-project,
+                            compiler-object-proxy: variable)
   end
 end method environment-object-name;
 
@@ -47,7 +47,7 @@ define sealed method slot-getter
 end method slot-getter;
 
 // Return the setter method of a slot
-define sealed method slot-setter 
+define sealed method slot-setter
     (server :: <dfmc-database>, slot :: <slot-object>)
  => (setter :: false-or(<function-object>))
   let slot-definition = compiler-object-proxy(slot);
@@ -58,7 +58,7 @@ define sealed method slot-setter
                              compiler-object-proxy: setter-method)
 end method slot-setter;
 
-define sealed method slot-type 
+define sealed method slot-type
     (server :: <dfmc-database>, slot :: <slot-object>)
  => (type :: <environment-object>)
   let slot-definition = compiler-object-proxy(slot);
@@ -81,7 +81,7 @@ define sealed method slot-init-kind
   slot-definition-init-kind(slot.compiler-object-proxy)
 end method slot-init-kind;
 
-define sealed method slot-init-keyword 
+define sealed method slot-init-keyword
     (server :: <dfmc-database>, slot :: <slot-object>)
  => (keyword :: false-or(<symbol>), required? :: <boolean>)
   let (keyword, required?) = slot-definition-keyword(slot.compiler-object-proxy);

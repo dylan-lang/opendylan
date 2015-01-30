@@ -38,7 +38,7 @@ define method collection-keys
 end method collection-keys;
 
 define method collection-keys
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      collection :: <explicit-key-collection-object>,
      #key range = #f)
  => (key-seq :: <simple-object-vector>)
@@ -58,7 +58,7 @@ define method do-collection-keys
      collection :: <explicit-key-collection-object>)
  => ()
   do-collection-contents(application, collection, #"keys",
-			 function: function)
+                         function: function)
 end method do-collection-keys;
 
 
@@ -78,7 +78,7 @@ define method do-collection-elements
      collection :: <collection-object>)
  => ()
   do-collection-contents(application, collection, #"elements",
-			 function: function)
+                         function: function)
 end method do-collection-elements;
 
 
@@ -91,20 +91,20 @@ define method do-collection-contents
           function :: false-or(<function>) = #f)
  => (contents :: false-or(<simple-object-vector>))
   local method get-index-subset
-	    () => (start :: <integer>, fin :: false-or(<integer>))
-	  case
-	    ~range => 
-	      values(0, #f);
-	    range.empty? => 
-	      values(0, 0);
-	    otherwise =>
-	      let first = range.first;
-	      let last  = range.last;
-	      assert(first <= last,
-		     "Attempting to query collection-keys with bogus range %=",
-		     range);
-	      values(first, last);
-	  end
+            () => (start :: <integer>, fin :: false-or(<integer>))
+          case
+            ~range =>
+              values(0, #f);
+            range.empty? =>
+              values(0, 0);
+            otherwise =>
+              let first = range.first;
+              let last  = range.last;
+              assert(first <= last,
+                     "Attempting to query collection-keys with bogus range %=",
+                     range);
+              values(first, last);
+          end
         end method;
 
   let target = application.application-target-app;
@@ -119,19 +119,19 @@ define method do-collection-contents
     let proxy-value = runtime-proxy-to-remote-value(application, proxy);
     let (key-vals, el-vals)
       = remote-collection-inspect(target, proxy-value,
-				  first-index: start,
-				  last-index: fin);
+                                  first-index: start,
+                                  last-index: fin);
     let values = if (type == #"keys") key-vals | #[] else el-vals end;
     if (function)
       for (value in values)
-	let object 
-	  = make-environment-object-for-runtime-value(application, value);
-	function(object)
+        let object
+          = make-environment-object-for-runtime-value(application, value);
+        function(object)
       end
     else
       map-as(<simple-object-vector>,
-	     curry(make-environment-object-for-runtime-value, application),
-	     values)
+             curry(make-environment-object-for-runtime-value, application),
+             values)
     end
   end
 end method do-collection-contents;

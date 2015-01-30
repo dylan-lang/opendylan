@@ -74,13 +74,13 @@ define method environment-object-basic-name
     let home-name = environment-object-home-name(server, object);
     if (home-name)
       environment-object-basic-name
-	(server, home-name,
-	 namespace: namespace,
-	 qualify-names?: qualify-names?)
+        (server, home-name,
+         namespace: namespace,
+         qualify-names?: qualify-names?)
     else
       let id = environment-object-id(server, object);
-      instance?(id, <named-id>) 
-	& id.id-name
+      instance?(id, <named-id>)
+        & id.id-name
     end
   end
 end method environment-object-basic-name;
@@ -92,27 +92,27 @@ define method environment-object-basic-name
      #all-keys)
  => (name :: false-or(<string>))
   if (~qualify-names?
-	| begin
-	    let library
-	      = select (namespace by instance?)
-		  <library-object> => namespace;
-		  <module-object>  => environment-object-library(server, namespace);
-		  otherwise        => #f;
-		end;
-	    library & library == name-namespace(server, name)
-	  end)
+        | begin
+            let library
+              = select (namespace by instance?)
+                  <library-object> => namespace;
+                  <module-object>  => environment-object-library(server, namespace);
+                  otherwise        => #f;
+                end;
+            library & library == name-namespace(server, name)
+          end)
     environment-object-primitive-name(server, name) | $unknown-module
   end
 end method environment-object-basic-name;
 
 define method environment-object-basic-name
     (server :: <server>, name :: <binding-name-object>,
-     #key namespace, 
+     #key namespace,
           qualify-names? :: <boolean> = $default-qualify-names,
      #all-keys)
  => (name :: false-or(<string>))
   if (~qualify-names?
-	| (namespace & namespace == name-namespace(server, name)))
+        | (namespace & namespace == name-namespace(server, name)))
     environment-object-primitive-name(server, name)
   end
 end method environment-object-basic-name;
@@ -192,7 +192,7 @@ end method environment-object-basic-name;
 
 define method print-specializers
     (stream :: <stream>, server :: <server>, specializers :: <sequence>,
-     #key namespace, 
+     #key namespace,
           qualify-names? :: <boolean> = $default-qualify-names,
      #all-keys)
  => ()
@@ -217,10 +217,10 @@ define method print-module-name-object
   let primitive-name = environment-object-primitive-name(server, name);
   if (qualify-names? & (~library | name-library ~= library))
     format(stream, "%s:%s",
-	   primitive-name 
-	     | $unknown-module,
-	   environment-object-primitive-name(server, name-library)
-	     | $unknown-library)
+           primitive-name
+             | $unknown-module,
+           environment-object-primitive-name(server, name-library)
+             | $unknown-library)
   else
     write(stream, primitive-name | $unknown-module)
   end
@@ -245,9 +245,9 @@ define method print-module-name-object
   if (qualify-names?)
     let name-library = name-namespace(server, name);
     format(stream, "%s:%s",
-	   primitive-name | $unknown-module,
-	   environment-object-primitive-name(server, name-library)
-	     | $unknown-library)
+           primitive-name | $unknown-module,
+           environment-object-primitive-name(server, name-library)
+             | $unknown-library)
   else
     write(stream, primitive-name | $unknown)
   end
@@ -268,20 +268,20 @@ define method print-source-location
       end;
   let (start-line, end-line)
     = if (line-number)
-	values(line-number, line-number)
+        values(line-number, line-number)
       else
-	let start-offset = location.source-location-start-offset;
-	let end-offset   = location.source-location-end-offset;
-	values(start-offset.source-offset-line,
-	       end-offset.source-offset-line)
+        let start-offset = location.source-location-start-offset;
+        let end-offset   = location.source-location-end-offset;
+        values(start-offset.source-offset-line,
+               end-offset.source-offset-line)
       end;
   if (start-line == end-line)
-    format(stream, "%s:%s", name, 
-	   start-line + first-line)
+    format(stream, "%s:%s", name,
+           start-line + first-line)
   else
-    format(stream, "%s:%s-%s", name, 
-	   start-line + first-line,
-	   end-line + first-line)
+    format(stream, "%s:%s-%s", name,
+           start-line + first-line,
+           end-line + first-line)
   end
 end method print-source-location;
 
@@ -308,8 +308,8 @@ define method print-anonymous-object
      #key namespace)
  => ()
   write(stream,
-	environment-object-primitive-name(server, object)
-	  | $unknown-object-name)
+        environment-object-primitive-name(server, object)
+          | $unknown-object-name)
 end method print-anonymous-object;
 
 define method print-anonymous-object
@@ -389,7 +389,7 @@ define generic print-environment-object-id-name
     (stream :: <stream>, server :: <server>, object :: <environment-object>,
      #key qualify-names? :: <boolean> = $default-qualify-names)
  => (printed? :: <boolean>);
-    
+
 define method print-environment-object-id-name
     (stream :: <stream>, server :: <server>, object :: <environment-object>,
      #key qualify-names? :: <boolean> = $default-qualify-names)
@@ -399,15 +399,15 @@ define method print-environment-object-id-name
     write(stream, id.id-name);
     if (qualify-names?)
       select (id by instance?)
-	<library-id> =>
-	  #f;
-	<module-id> =>
-	  write(stream, id.id-library.id-name);
-	<definition-id> =>
-	  let module = id.id-module;
-	  write(stream, module.id-name);
-	  write(stream, ":");
-	  write(stream, module.id-library.id-name);
+        <library-id> =>
+          #f;
+        <module-id> =>
+          write(stream, id.id-library.id-name);
+        <definition-id> =>
+          let module = id.id-module;
+          write(stream, module.id-name);
+          write(stream, ":");
+          write(stream, module.id-library.id-name);
       end
     end;
     #t
@@ -445,14 +445,14 @@ define method print-environment-object-name
     else
       let home-name = environment-object-home-name(server, object);
       if (home-name)
-	print-environment-object-name
-	  (stream, server, home-name, namespace: namespace, 
-	   qualify-names?: qualify-names?)
+        print-environment-object-name
+          (stream, server, home-name, namespace: namespace,
+           qualify-names?: qualify-names?)
       else
-	print-environment-object-id-name
-	  (stream, server, object, qualify-names?: qualify-names?)
-	  | print-environment-object
-	      (stream, server, object, namespace: namespace)
+        print-environment-object-id-name
+          (stream, server, object, qualify-names?: qualify-names?)
+          | print-environment-object
+              (stream, server, object, namespace: namespace)
       end
     end
   end
@@ -470,7 +470,7 @@ end method print-environment-object-name;
 
 define method print-environment-object-name
     (stream :: <stream>, server :: <server>, name :: <binding-name-object>,
-     #key namespace: context-namespace, 
+     #key namespace: context-namespace,
           qualify-names? :: <boolean> = $default-qualify-names,
      #all-keys)
  => ()
@@ -479,8 +479,8 @@ define method print-environment-object-name
   if (qualify-names? & (~context-namespace | namespace ~= context-namespace))
     format(stream, "%s:", primitive-name);
     print-environment-object-name(stream, server, namespace,
-				  namespace: context-namespace,
-				  qualify-names?: qualify-names?)
+                                  namespace: context-namespace,
+                                  qualify-names?: qualify-names?)
   else
     write(stream, primitive-name)
   end
@@ -495,7 +495,7 @@ define method print-environment-object-name
      #key namespace, #all-keys)
  => ()
   let elements
-    = collection-elements(server, collection, 
+    = collection-elements(server, collection,
                           range: range(from: 0, to: *collection-print-length*));
   let separator = #f;
   for (element in elements)
@@ -507,24 +507,24 @@ end method print-environment-object-name;
 */
 
 define method print-environment-object-name
-    (stream :: <stream>, server :: <server>, method-object :: <method-object>, 
+    (stream :: <stream>, server :: <server>, method-object :: <method-object>,
      #key qualify-names? :: <boolean> = $default-qualify-names,
-          namespace, 
-          show-function-name? :: <boolean> = #t, 
+          namespace,
+          show-function-name? :: <boolean> = #t,
      #all-keys)
  => ()
   local
     method object-name
-	(object :: <environment-object>)
+        (object :: <environment-object>)
      => (name :: false-or(<binding-name-object>))
       if (namespace)
-	environment-object-name(server, object, namespace)
+        environment-object-name(server, object, namespace)
       end
-	| environment-object-home-name(server, object)
+        | environment-object-home-name(server, object)
     end method object-name,
 
     method method-name
-	(object :: <method-object>) 
+        (object :: <method-object>)
      => (name :: false-or(<binding-name-object>))
       let gf = method-generic-function(server, object);
       (gf & object-name(gf)) | object-name(object)
@@ -535,14 +535,14 @@ define method print-environment-object-name
     if (show-function-name?)
       let name = method-name(method-object);
       if (name)
-	print-environment-object-name
-	  (stream, server, name, 
-	   namespace: namespace, 
-	   qualify-names?: qualify-names?);
-	write(stream, " ")
+        print-environment-object-name
+          (stream, server, name,
+           namespace: namespace,
+           qualify-names?: qualify-names?);
+        write(stream, " ")
       else
-	print-environment-object-id-name
-	  (stream, server, method-object, qualify-names?: qualify-names?)
+        print-environment-object-id-name
+          (stream, server, method-object, qualify-names?: qualify-names?)
       end
     end;
     print-specializers
@@ -560,7 +560,7 @@ define method print-environment-object-name
 end method print-environment-object-name;
 
 define method print-environment-object-name
-    (stream :: <stream>, server :: <server>, domain-object :: <domain-object>, 
+    (stream :: <stream>, server :: <server>, domain-object :: <domain-object>,
      #key namespace,
           qualify-names? :: <boolean> = $default-qualify-names,
      #all-keys)
@@ -591,7 +591,7 @@ define method print-environment-object-name
 end method print-environment-object-name;
 
 define method print-environment-object-name
-    (stream :: <stream>, server :: <server>, 
+    (stream :: <stream>, server :: <server>,
      warning :: <warning-object>,
      #key namespace,
           full-message? :: <boolean>,
@@ -608,8 +608,8 @@ define method print-environment-object-name
   end;
   let message
     = case
-	full-message? => compiler-warning-full-message(server, warning);
-	otherwise     => compiler-warning-short-message(server, warning);
+        full-message? => compiler-warning-full-message(server, warning);
+        otherwise     => compiler-warning-short-message(server, warning);
       end;
   write(stream, message);
   if (full-message? & location)
@@ -623,26 +623,26 @@ define method print-environment-object-name
       print-source-location(stream, location)
     else
       local method output-line
-		(lineno :: <integer>, line :: false-or(<string>)) => ()
+                (lineno :: <integer>, line :: false-or(<string>)) => ()
               format(stream, "%4s  %s\n",
                      if (lines & lines.size > 1) lineno else ' ' end,
                      if (line) line else ' ' end);
-	    end method output-line;
+            end method output-line;
       format(stream, "%4s  %s\n", ' ', upper-dec);
       let no-of-lines = lines.size;
       if (no-of-lines <= $warning-max-lines)
-	for (line in lines, number from start-line)
-	  output-line(number, line)
-	end
+        for (line in lines, number from start-line)
+          output-line(number, line)
+        end
       else
-	let half-count = floor/($warning-max-lines, 2);
-	for (index from 0 below half-count)
-	  output-line(start-line + index, lines[index])
-	end;
+        let half-count = floor/($warning-max-lines, 2);
+        for (index from 0 below half-count)
+          output-line(start-line + index, lines[index])
+        end;
         format(stream, "%4s  [...]\n", ' ');
-	for (index from (no-of-lines - half-count + 1) below no-of-lines)
-	  output-line(start-line + index, lines[index])
-	end
+        for (index from (no-of-lines - half-count + 1) below no-of-lines)
+          output-line(start-line + index, lines[index])
+        end
       end;
       format(stream, "%4s  %s", ' ', lower-dec);
     end
@@ -683,9 +683,9 @@ define method print-environment-object-name-to-string
  => (name :: <string>)
   apply(environment-object-basic-name, server, object, args)
     | begin
-	let stream = make(<byte-string-stream>, direction: #"output");
-	apply(print-environment-object-name, stream, server, object, args);
-	as(<byte-string>, stream-contents(stream))
+        let stream = make(<byte-string-stream>, direction: #"output");
+        apply(print-environment-object-name, stream, server, object, args);
+        as(<byte-string>, stream-contents(stream))
       end
 end method print-environment-object-name-to-string;
 
@@ -695,9 +695,9 @@ define method environment-object-display-name
      #rest args,
      #key, #all-keys)
  => (name :: <string>)
-  apply(print-environment-object-name-to-string, server, object, 
-	namespace: namespace,
-	args)
+  apply(print-environment-object-name-to-string, server, object,
+        namespace: namespace,
+        args)
 end method environment-object-display-name;
 
 
@@ -720,8 +720,8 @@ define method environment-object-unique-name
  => (name :: <string>)
   let name = next-method();
   format-to-string("%s %s",
-		   as-lowercase(environment-object-type-name(object)),
-		   name)
+                   as-lowercase(environment-object-type-name(object)),
+                   name)
 end method environment-object-unique-name;
 
 define method environment-object-unique-name
@@ -785,14 +785,14 @@ define function environment-object-typed-name
  => (name :: <string>)
   let name = environment-object-display-name(server, object, namespace);
   format-to-string("%s %s",
-		   as-lowercase(environment-object-type-name(object)),
-		   name)
+                   as-lowercase(environment-object-type-name(object)),
+                   name)
 end function environment-object-typed-name;
 
 
 /// Application state
 
-define function thread-state-label 
+define function thread-state-label
     (project :: <project-object>, state :: <symbol>)
  => (label :: <string>)
   select (state)
@@ -802,7 +802,7 @@ define function thread-state-label
   end
 end function thread-state-label;
 
-define function application-state-label 
+define function application-state-label
     (project :: <project-object>)
  => (label :: <string>)
   let application = project.project-application;
@@ -823,44 +823,44 @@ define constant $newline-code = as(<integer>, '\n');
 
 //--- stolen from dfmc-reader
 //--- Should be moved to source records and shared from there.
-define function extract-lines 
+define function extract-lines
     (loc :: <source-location>)
  => (line-strings, upper-decorator, lower-decorator)
   let text
     = block ()
-	source-record-contents(loc.source-location-source-record)
+        source-record-contents(loc.source-location-source-record)
       exception (<source-record-missing>)
-	#f
+        #f
       end;
   if (~text)
     values(#f, #f, #f);
   else
     let line-count
       = loc.source-location-end-offset.source-offset-line
-	  - loc.source-location-start-offset.source-offset-line;
+          - loc.source-location-start-offset.source-offset-line;
     let line-one-start-index
       = compute-line-start-character
-	  (text, loc.source-location-start-offset.source-offset-line);
+          (text, loc.source-location-start-offset.source-offset-line);
     collecting (line-strings)
       local method walk-lines (cursor, lines)
-	if (lines <= line-count)
-	  let (line-string, next-cursor) = copy-next-line(text, cursor);
-	  collect-into(line-strings, line-string);
-	  walk-lines(next-cursor, lines + 1);
-	end;
+        if (lines <= line-count)
+          let (line-string, next-cursor) = copy-next-line(text, cursor);
+          collect-into(line-strings, line-string);
+          walk-lines(next-cursor, lines + 1);
+        end;
       end;
       walk-lines(line-one-start-index, 0);
       let line-strings = collected(line-strings);
       let start-col = loc.source-location-start-offset.source-offset-column;
       let end-col = loc.source-location-end-offset.source-offset-column;
       if (line-count = 0)
-	values(line-strings,
-	       make-closed-upper-decorator(start-col, end-col),
-	       make-closed-lower-decorator(start-col, end-col))
+        values(line-strings,
+               make-closed-upper-decorator(start-col, end-col),
+               make-closed-lower-decorator(start-col, end-col))
       else
-	values(line-strings,
-	       make-open-upper-decorator(start-col, size(line-strings.first)),
-	       make-open-lower-decorator(end-col))
+        values(line-strings,
+               make-open-upper-decorator(start-col, size(line-strings.first)),
+               make-open-lower-decorator(end-col))
       end;
     end;
   end;
@@ -869,7 +869,7 @@ end function extract-lines;
 // These functions construct the "decorator" lines used to indicate
 // the extent of a source location on a given line.
 
-define function make-closed-upper-decorator 
+define function make-closed-upper-decorator
     (start-col :: <integer>, end-col :: <integer>) => (decorator :: <string>)
   collecting (as <string>)
     for (i from 0 below start-col) collect(' ') end;
@@ -877,29 +877,29 @@ define function make-closed-upper-decorator
   end;
 end function make-closed-upper-decorator;
 
-define function make-closed-lower-decorator 
+define function make-closed-lower-decorator
     (start-col :: <integer>, end-col :: <integer>) => (decorator :: <string>)
   make-closed-upper-decorator(start-col, end-col);
 end function make-closed-lower-decorator;
 
-define function make-open-upper-decorator 
+define function make-open-upper-decorator
     (start-col :: <integer>, end-col :: <integer>) => (decorator :: <string>)
   make-closed-upper-decorator(start-col, end-col);
 end function make-open-upper-decorator;
 
-define function make-open-lower-decorator 
+define function make-open-lower-decorator
     (end-col :: <integer>) => (decorator :: <string>)
   make-closed-upper-decorator(0, end-col);
 end function make-open-lower-decorator;
 
-define function compute-line-start-character 
+define function compute-line-start-character
     (string, lines :: <integer>) => (character :: <integer>)
   let line-count = 1;
   for (i from 0, char in string, until: line-count == lines)
     if (char == $newline-code)
       line-count := line-count + 1;
     end;
-  finally 
+  finally
     i
   end;
 end function;

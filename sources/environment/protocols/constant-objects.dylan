@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Constant objects
 
-define class <constant-object> 
+define class <constant-object>
     (<variable-object>,
      <definition-object>)
 end class <constant-object>;

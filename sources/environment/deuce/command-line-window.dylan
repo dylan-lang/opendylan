@@ -19,9 +19,9 @@ define method do-destroy-sheet
   when (instance?(buffer, <basic-shell-buffer>))
     // Lose any Dylan objects we might be hanging on to...
     do-lines(method (line, si, ei, last?)
-	       ignore(si, ei, last?);
-	       remove-property!(line-properties(line), #"object");
-	     end method, buffer)
+               ignore(si, ei, last?);
+               remove-property!(line-properties(line), #"object");
+             end method, buffer)
   end
 end method do-destroy-sheet;
 
@@ -36,12 +36,12 @@ define function make-command-line-pane
     let buffer = buffer | make-command-line-pane-buffer();
     let stream
       = make(<interval-stream>,
-	     interval: buffer,
-	     direction: #"output");
+             interval: buffer,
+             direction: #"output");
     let server
       = make-environment-command-line-server
-          (input-stream: stream,	// ignored, so this is safe!
-	   output-stream: stream);
+          (input-stream: stream,        // ignored, so this is safe!
+           output-stream: stream);
     window.command-line-server := server;
     dynamic-bind (*buffer* = buffer)
       select-buffer(window, buffer)
@@ -53,9 +53,9 @@ end function make-command-line-pane;
 define method make-command-line-pane-buffer
     (#key editor = $environment-editor) => (buffer :: <buffer>)
   make-dylan-shell(anonymous?: #t,
-		   section-class: <dylanworks-shell-section>,
-		   major-mode: find-mode(<dylanworks-shell-mode>),
-		   editor: editor)
+                   section-class: <dylanworks-shell-section>,
+                   major-mode: find-mode(<dylanworks-shell-mode>),
+                   editor: editor)
 end method make-command-line-pane-buffer;
 
 define method shell-parse-input
@@ -111,10 +111,10 @@ define frame <command-line-window>
     *command-line-window-command-table*;
   keyword frame-class-name:, init-value: #"command-line-window";
   keyword editor: = $environment-editor;
-  keyword icon: = $interact-bitmap;	//---*** We need a real icon!
+  keyword icon: = $interact-bitmap;        //---*** We need a real icon!
 end frame <command-line-window>;
 
-define cascading-window-settings 
+define cascading-window-settings
   command-line-window :: <command-line-window> = "Command Line Window";
 
 define sideways method find-command-line-window
@@ -151,13 +151,13 @@ define method make-environment-tool-bar-buttons
   with-frame-manager (frame-manager(frame))
     let buttons :: <stretchy-object-vector> = make(<stretchy-object-vector>);
     local method add-buttons
-	      (make-buttons-function :: <function>)
-	   => ()
-	    add!(buttons,
-		 make(<row-layout>,
-		      children: make-buttons-function(frame),
-		      spacing: 0))
-	  end method add-buttons;
+              (make-buttons-function :: <function>)
+           => ()
+            add!(buttons,
+                 make(<row-layout>,
+                      children: make-buttons-function(frame),
+                      spacing: 0))
+          end method add-buttons;
     add-buttons(make-clipboard-tool-bar-buttons);
     add-buttons(make-undo-tool-bar-buttons);
     add-buttons(make-search-tool-bar-buttons);

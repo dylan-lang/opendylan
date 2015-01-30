@@ -96,7 +96,7 @@ define function lookup-and-coerced-apply
       format-string:
         "lookup-and-coerced-apply: too many args for command %=\n"
         "(got %=, need %=, rest = %=)\n%=",
-      format-arguments: 
+      format-arguments:
         vector(fun-name, args-size, req-number, rest?,
                as(<simple-vector>, args))));
   end if;
@@ -112,7 +112,7 @@ define function lookup-and-coerced-apply
     // Convert the required args and leave any #rest args alone.
     for ( i from 0 below req-number )
       if ( applicable-method?
-	     (coerce-for-command-call, types[i], coerced-args[i]) )
+             (coerce-for-command-call, types[i], coerced-args[i]) )
         coerced-args[i] := coerce-for-command-call(types[i], coerced-args[i]);
       else
         error(make(<command-call-error>,
@@ -192,7 +192,7 @@ end function;
 // is because some IPC mechanisms used might be of the blocking kind,
 // and so deadlock.  If the client wants to return the results to *its*
 // (external) client synchronously, it must wait for some observable
-// effect of the environment-return-call. 
+// effect of the environment-return-call.
 //
 // Use lookup-result-class to find out which subclass to make().
 

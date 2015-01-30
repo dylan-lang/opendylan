@@ -21,7 +21,7 @@ define method initialize-user-object-class-mappings
   application.runtime-class-user-class-mappings := make(<stretchy-vector>);
 
   // The environment-protocols library holds the ordered sequence of
-  // class mappings, and exports the USER-OBJECT-CLASS-MAPPINGS 
+  // class mappings, and exports the USER-OBJECT-CLASS-MAPPINGS
   // accessor to the servers. Get the mappings now.
 
   let mappings = user-object-class-mappings();
@@ -104,7 +104,7 @@ define method environment-class-for-runtime-proxy
     #"dylan-generic-function"          => <generic-function-object>;
     #"dylan-canonical-true"            => <boolean-object>;
     #"dylan-canonical-false"           => <boolean-object>;
-    #"dylan-general-object"            
+    #"dylan-general-object"
       => user-class-for-runtime-proxy(application, proxy);
     #"dylan-integer"                   => <integer-object>;
     #"dylan-character"                 => <character-object>;
@@ -139,18 +139,18 @@ define method make-environment-object-for-runtime-value
     = classify-runtime-value(target, value, address?: address?);
   let canonical-object
     = select (classification)
-	#"dylan-canonical-true"    => $true-object;
-	#"dylan-canonical-false"   => $false-object;
-	#"dylan-canonical-unbound" => $unbound-object;
-	otherwise                  => #f;
+        #"dylan-canonical-true"    => $true-object;
+        #"dylan-canonical-false"   => $false-object;
+        #"dylan-canonical-unbound" => $unbound-object;
+        otherwise                  => #f;
       end;
   if (canonical-object)
     //---*** andrewa: bad idea if more than one application is running!
     unless (canonical-object.application-object-proxy)
-      let proxy 
-	= remote-value-to-runtime-proxy
-	    (application, value,
-	     classification: classification);
+      let proxy
+        = remote-value-to-runtime-proxy
+            (application, value,
+             classification: classification);
       canonical-object.application-object-proxy := proxy;
     end unless;
     canonical-object
@@ -172,36 +172,36 @@ define method make-environment-object-for-runtime-value
 
     let environment-object
       = select (classification)
-	  #"dylan-method" =>
-	    let (sig, iep, kwds) = remote-method-inspect(target, value);
-	    let sl = remote-address-source-location(target, iep);
-	    sl & source-location-environment-object
-	      (application.server-project, sl); // Try to find existing.
-	  otherwise =>
-	    #f
-	end;
+          #"dylan-method" =>
+            let (sig, iep, kwds) = remote-method-inspect(target, value);
+            let sl = remote-address-source-location(target, iep);
+            sl & source-location-environment-object
+              (application.server-project, sl); // Try to find existing.
+          otherwise =>
+            #f
+        end;
 
     let proxy
       = remote-value-to-runtime-proxy
-	  (application, value, 
-	   classification: classification,
-	   address?: address?);
+          (application, value,
+           classification: classification,
+           address?: address?);
     if (environment-object
-	  & instance?(environment-object, <application-object>))
+          & instance?(environment-object, <application-object>))
       environment-object.application-object-proxy := proxy;
       environment-object
     else
-      let eclass 
-	= environment-class-for-runtime-proxy
-	    (application, proxy, classification: classification);
+      let eclass
+        = environment-class-for-runtime-proxy
+            (application, proxy, classification: classification);
       let environment-object
-	= make-environment-object(eclass,
-				  project: application.server-project,
-				  application-object-proxy: proxy);
+        = make-environment-object(eclass,
+                                  project: application.server-project,
+                                  application-object-proxy: proxy);
       assert(~address?
-	       | ~instance?(environment-object, <immediate-application-object>),
-	     "Whoops, created an immediate object %= for an address!",
-	     environment-object);
+               | ~instance?(environment-object, <immediate-application-object>),
+             "Whoops, created an immediate object %= for an address!",
+             environment-object);
       environment-object
     end if;
   end
@@ -265,8 +265,8 @@ define method application-object-class
     let proxy = obj.application-object-proxy;
     if (proxy)
       let proxy-value = runtime-proxy-to-remote-value(application, proxy);
-      let (class-value, incarnation, current-incarnation, immediate?)  
-	= dylan-object-class(target, proxy-value);
+      let (class-value, incarnation, current-incarnation, immediate?)
+        = dylan-object-class(target, proxy-value);
       ignore(incarnation);
       ignore(current-incarnation);
       ignore(immediate?);
@@ -277,17 +277,17 @@ define method application-object-class
       // prepared to handle it.
 
       if (class-value)
-	let class
-	  = make-environment-object-for-runtime-value
-	      (application, class-value);
-	// Again due to possible pathalogical case, discard any environment
-	// object that does not correspond to a class. (Eg. we may have been
-	// fooled into treating a foreign object as a dylan object, or possibly
-	// the runtime refused to yield enough information to construct the
-	// class due to some temporary instability).
-	if (instance?(class, <class-object>))
-	  class
-	end
+        let class
+          = make-environment-object-for-runtime-value
+              (application, class-value);
+        // Again due to possible pathalogical case, discard any environment
+        // object that does not correspond to a class. (Eg. we may have been
+        // fooled into treating a foreign object as a dylan object, or possibly
+        // the runtime refused to yield enough information to construct the
+        // class due to some temporary instability).
+        if (instance?(class, <class-object>))
+          class
+        end
       end
     end
   end

@@ -31,9 +31,9 @@ define function environment-message
  => ()
   assert-owner-supplied(owner);
   apply(notify-user, message,
-	title: title | release-product-name(),
-	style: #"information",
-	keys);
+        title: title | release-product-name(),
+        style: #"information",
+        keys);
 end function environment-message;
 
 define function environment-warning-message
@@ -45,9 +45,9 @@ define function environment-warning-message
  => ()
   assert-owner-supplied(owner);
   apply(notify-user, message,
-	title: title | release-product-name(),
-	style: #"warning",
-	keys);
+        title: title | release-product-name(),
+        style: #"warning",
+        keys);
 end function environment-warning-message;
 
 define function environment-error-message
@@ -59,9 +59,9 @@ define function environment-error-message
  => ()
   assert-owner-supplied(owner);
   apply(notify-user, message,
-	title: title | release-product-name(),
-	style: #"error",
-	keys);
+        title: title | release-product-name(),
+        style: #"error",
+        keys);
 end function environment-error-message;
 
 define function environment-question
@@ -75,13 +75,13 @@ define function environment-question
  => (ok? :: <boolean>, exit-type :: <exit-type>)
   assert-owner-supplied(owner);
   apply(notify-user, message,
-	title: title | release-product-name(),
-	exit-style: case
-		      exit-style => exit-style;
-		      cancel     => #"yes-no-cancel";
-		      otherwise  => #"yes-no";
-		    end,
-	keys)
+        title: title | release-product-name(),
+        exit-style: case
+                      exit-style => exit-style;
+                      cancel     => #"yes-no-cancel";
+                      otherwise  => #"yes-no";
+                    end,
+        keys)
 end function environment-question;
 
 define function environment-action-unavailable
@@ -96,7 +96,7 @@ define function environment-action-unavailable
 end function environment-action-unavailable;
 
 define function not-yet-implemented
-    (#key message :: false-or(<string>), 
+    (#key message :: false-or(<string>),
           owner = $unsupplied)
  => ()
   assert-owner-supplied(owner);
@@ -120,15 +120,15 @@ define function environment-choose-file
   let actual-filters = filters & apply(filters-for-file-types, filters);
   let (filename, filter-index)
     = choose-file(title:          title,
-		  frame:          owner,
-		  default:        default & as(<string>, default),
-		  direction:      direction,
-		  filters:        actual-filters,
-		  default-filter: if (filters)
-				    (filter & position(filters, filter)) | 0
-				  end);
+                  frame:          owner,
+                  default:        default & as(<string>, default),
+                  direction:      direction,
+                  filters:        actual-filters,
+                  default-filter: if (filters)
+                                    (filter & position(filters, filter)) | 0
+                                  end);
   values(filename & as(<file-locator>, filename),
-	 filters & filter-index & filters[filter-index])
+         filters & filter-index & filters[filter-index])
 end function environment-choose-file;
 
 define function make-filter
@@ -165,9 +165,9 @@ define macro lazy-table-definer
   { } => { }
   { ?key:expression => ?value:expression, ... }
     => { the-table[ ?key ]
-	   := make(<lazy-table-value>,
-		   thunk: method () ?value end);
-	 ... }
+           := make(<lazy-table-value>,
+                   thunk: method () ?value end);
+         ... }
 end macro lazy-table-definer;
 
 // cpage: 1997.02.04 Lazily initialize some filter values, in the same
@@ -184,7 +184,7 @@ define function filter-for-lid-as-hdp () => (filter :: <vector>)
   else
     %filter-for-lid-as-hdp
       := vector("Dylan Library Interchange Descriptions (import)",
-		make-filter(lid-file-extension()))
+                make-filter(lid-file-extension()))
   end if
 end function filter-for-lid-as-hdp;
 
@@ -196,7 +196,7 @@ define function filter-for-lid-as-text () => (filter :: <vector>)
   else
     %filter-for-lid-as-text
       := vector("Dylan Library Interchange Descriptions (as text)",
-		make-filter(lid-file-extension()))
+                make-filter(lid-file-extension()))
   end if
 end function filter-for-lid-as-text;
 
@@ -211,41 +211,41 @@ define function filter-for-lid-without-importing () => (filter :: <vector>)
   else
     %filter-for-lid-without-importing
       := vector("Dylan LIDs (without importing)",
-		make-filter(lid-file-extension()))
+                make-filter(lid-file-extension()))
   end if
 end function filter-for-lid-without-importing;
 
 define lazy-table $file-type-filters
   = { #"common"        => /* The common file types for opening files. */
         vector("Common Files",
-	       make-filter(project-file-extension()),
-	       make-filter(lid-file-extension()),
-	       make-filter(dylan-file-extension()), "*.dyl",
-	       "*.spec",
-	       "*.rc",
-	       "*.txt", "*.text",
-	       "*.c",   "*.cc", "*.cpp", "*.cxx",
-	       "*.h",   "*.hh", "*.hpp", "*.hxx", "*.inl"),
+               make-filter(project-file-extension()),
+               make-filter(lid-file-extension()),
+               make-filter(dylan-file-extension()), "*.dyl",
+               "*.spec",
+               "*.rc",
+               "*.txt", "*.text",
+               "*.c",   "*.cc", "*.cpp", "*.cxx",
+               "*.h",   "*.hh", "*.hpp", "*.hxx", "*.inl"),
       #"common-insert" => /* The common file types for inserting source files. */
         vector("Common Files",
-	       make-filter(project-file-extension()),
-	       make-filter(lid-file-extension()),
-	       make-filter(dylan-file-extension()), "*.dyl",
-	       "*.rc",
-	       "*.spec",
-	       "*.txt", "*.text",
-	       "*.c",   "*.cc", "*.cpp", "*.cxx",
-	       "*.h",   "*.hh", "*.hpp", "*.hxx", "*.inl",
-	       "*.lib"),
+               make-filter(project-file-extension()),
+               make-filter(lid-file-extension()),
+               make-filter(dylan-file-extension()), "*.dyl",
+               "*.rc",
+               "*.spec",
+               "*.txt", "*.text",
+               "*.c",   "*.cc", "*.cpp", "*.cxx",
+               "*.h",   "*.hh", "*.hpp", "*.hxx", "*.inl",
+               "*.lib"),
       #"common-locate-project" => /* The common file types for locating project/LID files. */
          vector("Common Files",
-	       make-filter(project-file-extension()),
-	       make-filter(lid-file-extension())),
+               make-filter(project-file-extension()),
+               make-filter(lid-file-extension())),
       #"project"       =>
         vector("Open Dylan Projects",
                make-filter(project-file-extension()),
-	       make-filter(lid-file-extension())),
-      #"lid"           => 
+               make-filter(lid-file-extension())),
+      #"lid"           =>
         vector("Dylan Library Interchange Descriptions",
                make-filter(lid-file-extension())),
       #"lid-as-hdp"    => filter-for-lid-as-hdp(),
@@ -254,8 +254,8 @@ define lazy-table $file-type-filters
       #"lid-as-text"   => filter-for-lid-as-text(),
       #"dylan"         =>
         vector("Dylan Source Files",
-	       make-filter(dylan-file-extension()),
-	       "*.dyl"),
+               make-filter(dylan-file-extension()),
+               "*.dyl"),
       #"tool-spec"     => #["Open Dylan Tool Specifications", "*.spec"],
       #"executable"    => #["Programs",        "*.exe"],
       #"resource"      => #["Resource Files",  "*.rc"],
@@ -322,7 +322,7 @@ define method percentage-label
  => (label :: <string>)
   let value = percentage.percentage-value;
   concatenate(float-to-string(value, decimal-points: decimal-points),
-	      $percentage-suffix)
+              $percentage-suffix)
 end method percentage-label;
 
 
@@ -339,21 +339,21 @@ define method frame-sort-items
  => (sorted-items :: <sequence>)
   let sorted-items
     = keyed-sort(items,
-	     key: if (key == identity)
-		    label-key | curry(frame-default-object-name, frame)
-		  else
-		    method (item)
-		      let object = item.key;
-		      if (label-key)
-			label-key(object)
-		      else
-			frame-default-object-name(frame, object)
-		      end
-		    end
-		  end,
-	     test: test);
+             key: if (key == identity)
+                    label-key | curry(frame-default-object-name, frame)
+                  else
+                    method (item)
+                      let object = item.key;
+                      if (label-key)
+                        label-key(object)
+                      else
+                        frame-default-object-name(frame, object)
+                      end
+                    end
+                  end,
+             test: test);
   assert(sorted-items,
-	 "This has to be a sequence!");
+         "This has to be a sequence!");
   sorted-items
 end method frame-sort-items;
 
@@ -363,19 +363,19 @@ define method frame-sort-items
      #key key = identity, label-key, test = \<)
  => (sorted-items :: <sequence>)
   keyed-sort(items,
-	     key: if (key == identity)
-		    label-key | curry(frame-default-object-name, frame)
-		  else
-		    method (item)
-		      let object = item.key;
-		      if (label-key)
-			label-key(object)
-		      else
-			frame-default-object-name(frame, object)
-		      end
-		    end
-		  end,
-	     test: test)
+             key: if (key == identity)
+                    label-key | curry(frame-default-object-name, frame)
+                  else
+                    method (item)
+                      let object = item.key;
+                      if (label-key)
+                        label-key(object)
+                      else
+                        frame-default-object-name(frame, object)
+                      end
+                    end
+                  end,
+             test: test)
 end method frame-sort-items;
 */
 
@@ -391,16 +391,16 @@ define function make-labels-layout
        index from 0)
     let label
       = if (prefix)
-	  concatenate-as(<byte-string>, prefix, description)
-	else
-	  description
-	end;
-    labels[index] 
-      := make(<label>, 
-	      label: label, 
-	      foreground: foreground,
-	      background: background,
-	      text-style: text-style)
+          concatenate-as(<byte-string>, prefix, description)
+        else
+          description
+        end;
+    labels[index]
+      := make(<label>,
+              label: label,
+              foreground: foreground,
+              background: background,
+              text-style: text-style)
   end;
   make(<column-layout>, children: labels, y-spacing: y-spacing, border: border)
 end function make-labels-layout;
@@ -482,7 +482,7 @@ define method frame-cascades?
   #f
 end method frame-cascades?;
 
-define method save-window-settings 
+define method save-window-settings
     (frame :: <frame-window-settings-mixin>) => ()
   let (x, y) = frame-position(frame);
   let (width, height) = frame-size(frame);
@@ -490,10 +490,10 @@ define method save-window-settings
   set-frame-default-size(frame, width, height);
   frame-default-state(frame)
     := case
-	 //--- Get these cases to work...
-	 // frame-minimized?(frame) => #"minimized";
-	 // frame-maximized?(frame) => #"maximized";
-	 otherwise               => #"normal";
+         //--- Get these cases to work...
+         // frame-minimized?(frame) => #"minimized";
+         // frame-maximized?(frame) => #"maximized";
+         otherwise               => #"normal";
        end;
   frame-status-message(frame) := "Window settings saved"
 end method save-window-settings;
@@ -545,7 +545,7 @@ end settings <windows-settings>;
 define macro window-settings-definer
   { define window-settings ?name:name :: ?type:expression
       = ?title:expression }
-    => 
+    =>
     { define settings "<" ## ?name ## "-settings>"
           (<windows-settings>)
         key-name ?title;
@@ -560,43 +560,43 @@ define macro window-settings-definer
         = make("<" ## ?name ## "-settings>");
 
       define method frame-default-position
-	  (frame :: ?type)
+          (frame :: ?type)
        => (x :: false-or(<integer>), y :: false-or(<integer>))
-	let settings = "$" ## ?name ## "-settings";
-	values(settings.?=default-x, settings.?=default-y)
+        let settings = "$" ## ?name ## "-settings";
+        values(settings.?=default-x, settings.?=default-y)
       end method frame-default-position;
 
       define method set-frame-default-position
-	  (frame :: ?type, x :: <integer>, y :: <integer>) => ()
-	let settings = "$" ## ?name ## "-settings";
-	settings.?=default-x := x;
-	settings.?=default-y := y;
+          (frame :: ?type, x :: <integer>, y :: <integer>) => ()
+        let settings = "$" ## ?name ## "-settings";
+        settings.?=default-x := x;
+        settings.?=default-y := y;
       end method set-frame-default-position;
 
       define method frame-default-size
-	  (frame :: ?type)
+          (frame :: ?type)
        => (width :: false-or(<integer>), height :: false-or(<integer>))
-	let settings = "$" ## ?name ## "-settings";
-	values(settings.?=default-width, settings.?=default-height)
+        let settings = "$" ## ?name ## "-settings";
+        values(settings.?=default-width, settings.?=default-height)
       end method frame-default-size;
 
       define method set-frame-default-size
-	  (frame :: ?type, width :: <integer>, height :: <integer>) => ()
-	let settings = "$" ## ?name ## "-settings";
-	settings.?=default-width  := width;
-	settings.?=default-height := height;
+          (frame :: ?type, width :: <integer>, height :: <integer>) => ()
+        let settings = "$" ## ?name ## "-settings";
+        settings.?=default-width  := width;
+        settings.?=default-height := height;
       end method set-frame-default-size;
 
       define method frame-default-state
-	  (frame :: ?type) => (state :: <symbol>)
-	let settings = "$" ## ?name ## "-settings";
-	settings.?=default-state
+          (frame :: ?type) => (state :: <symbol>)
+        let settings = "$" ## ?name ## "-settings";
+        settings.?=default-state
       end method frame-default-state;
 
       define method frame-default-state-setter
-	  (state :: <symbol>, frame :: ?type) => (state :: <symbol>)
-	let settings = "$" ## ?name ## "-settings";
-	settings.?=default-state := state
+          (state :: <symbol>, frame :: ?type) => (state :: <symbol>)
+        let settings = "$" ## ?name ## "-settings";
+        settings.?=default-state := state
       end method frame-default-state-setter;
     }
 end macro window-settings-definer;
@@ -619,7 +619,7 @@ define open generic frame-cascade-position
 
 define open generic set-frame-cascade-position
     (frame :: <frame-cascading-window-mixin>, x :: <integer>, y :: <integer>)
- => (); 
+ => ();
 
 define method handle-event
     (frame :: <frame-cascading-window-mixin>, event :: <frame-layed-out-event>)
@@ -632,7 +632,7 @@ define method handle-event
     (frame :: <frame-cascading-window-mixin>, event :: <frame-exit-event>)
  => ()
   // This is a simple scheme so that if you close the last frame then
-  // the cascading will start again from that position instead. The 
+  // the cascading will start again from that position instead. The
   // logic is if the cascaded position from the frame we are closing
   // is exactly that of the next cascaded position, then instead we
   // make the cascaded position be that of this old frame.
@@ -665,9 +665,9 @@ define method frame-position-fully-on-screen?
   let width-on-screen?  = x + width < screen-width;
   let height-on-screen? = y + height < screen-height;
   duim-debug-message("On screen?: %= & %=: [%=,%=,%=,%=, screen: %=,%=]",
-		width-on-screen?, height-on-screen?,
-		x, y, width, height,
-		screen-width, screen-height);
+                width-on-screen?, height-on-screen?,
+                x, y, width, height,
+                screen-width, screen-height);
   width-on-screen? & height-on-screen?
 end method frame-position-fully-on-screen?;
 
@@ -677,11 +677,11 @@ define method cascade-frame
   let fully-on-screen? = x & y & frame-position-fully-on-screen?(frame, x, y);
   let (x :: <integer>, y :: <integer>)
     = if (fully-on-screen?)
-	values(x, y)
+        values(x, y)
       else
-	let (default-x, default-y) = frame-default-cascaded-position(frame);
-	let (x, y) = frame-default-position(frame);
-	values(x | default-x, y | default-y)
+        let (default-x, default-y) = frame-default-cascaded-position(frame);
+        let (x, y) = frame-default-position(frame);
+        values(x | default-x, y | default-y)
       end;
   let framem = frame-manager(frame);
   let (x-offset, y-offset) = frame-cascade-offset(framem, frame);
@@ -697,7 +697,7 @@ define constant $cascade-y-offset = 15;
 define open generic frame-cascade-offset
     (framem :: <frame-manager>, frame :: <frame-cascading-window-mixin>)
  => (x :: <integer>, y :: <integer>);
-    
+
 define method frame-cascade-offset
     (framem :: <frame-manager>, frame :: <frame-cascading-window-mixin>)
  => (x :: <integer>, y :: <integer>)
@@ -716,7 +716,7 @@ end method save-window-settings;
 define macro cascading-window-settings-definer
   { define cascading-window-settings ?name:name :: ?type:expression
       = ?title:expression }
-    => 
+    =>
     { define window-settings ?name :: ?type = ?title;
 
       define variable "*" ## ?name ## "-default-x*" :: false-or(<integer>)
@@ -728,7 +728,7 @@ define macro cascading-window-settings-definer
           (frame :: ?type)
        => (x :: false-or(<integer>), y :: false-or(<integer>))
         values("*" ## ?name ## "-default-x*",
-	       "*" ## ?name ## "-default-y*")
+               "*" ## ?name ## "-default-y*")
       end method frame-cascade-position;
 
       define method set-frame-cascade-position
@@ -751,14 +751,14 @@ define function apply-to-environment-frames
   //           may need to create a new, independent thread in which
   //           to execute apply-to-environment-frames.
   local method call-function (_frame :: <frame>) => ()
-	  call-in-frame(_frame, function, _frame)
-	end method;
+          call-in-frame(_frame, function, _frame)
+        end method;
   do-frames(method (frame :: <frame>)
-	      when (frame-state(frame) ~== #"destroyed")
-		function(frame)
-	      end
-	    end method,
-	    z-order: if (reverse?) #"bottom-up" else #"top-down" end)
+              when (frame-state(frame) ~== #"destroyed")
+                function(frame)
+              end
+            end method,
+            z-order: if (reverse?) #"bottom-up" else #"top-down" end)
 end function apply-to-environment-frames;
 
 // The set of frames that were minimized with 'Minimize All';
@@ -772,24 +772,24 @@ define function command-enabled-in-all-frames?-setter
      command  :: <object>)
  => (enabled? :: <boolean>)
   do-frames(method (frame :: <frame>) => ()
-	      when (frame-state(frame) ~== #"destroyed")
-		call-in-frame(frame,
-			      command-enabled?-setter, enabled?, command, frame)
-	      end
-	    end method);
+              when (frame-state(frame) ~== #"destroyed")
+                call-in-frame(frame,
+                              command-enabled?-setter, enabled?, command, frame)
+              end
+            end method);
   enabled?
 end function command-enabled-in-all-frames?-setter;
 
 // Return whether a frame or any of its owned frames is modal
-define function frame-modal? 
+define function frame-modal?
     (frame :: <frame>) => (modal? :: <boolean>)
   if (frame.frame-mode ~== #"modeless")
     #t
   else
     any?(method (_frame :: <frame>) => (modal? :: <boolean>)
-	   _frame.frame-mode ~== #"modeless"
-	 end,
-	 frame.frame-owned-frames)
+           _frame.frame-mode ~== #"modeless"
+         end,
+         frame.frame-owned-frames)
   end if
 end function frame-modal?;
 
@@ -800,11 +800,11 @@ define method minimize-all-frames
     (frame,
      method (_frame :: <frame>) => ()
        when (frame-mapped?(_frame)
-	       & frame-enabled?(_frame)
-	       & ~frame-iconified?(_frame)
-	       & ~frame-modal?(frame))
-	 iconify-frame(_frame);
-	 *minimized-frames* := add!(*minimized-frames*, _frame);
+               & frame-enabled?(_frame)
+               & ~frame-iconified?(_frame)
+               & ~frame-modal?(frame))
+         iconify-frame(_frame);
+         *minimized-frames* := add!(*minimized-frames*, _frame);
        end
      end method,
      reverse?: #t);
@@ -848,9 +848,9 @@ end method undo-minimize-all-frames;
 define method restore-all-frames (frame :: <frame>) => ()
   *minimized-frames* := #();
   local method restore-a-frame (_frame :: <frame>)
-	  //call-in-frame(_frame, deiconify-frame, _frame);
-	  restore-frame(_frame);
-	end method restore-a-frame;
+          //call-in-frame(_frame, deiconify-frame, _frame);
+          restore-frame(_frame);
+        end method restore-a-frame;
   apply-to-environment-frames(frame, restore-a-frame);
   // Make sure the original frame is front and active
   raise-frame(frame);
@@ -868,8 +868,8 @@ end method restore-all-frames;
 define method raise-all-frames (frame :: <frame>) => ()
   let frames = #();
   local method add-to-list (_frame :: <frame>) => ()
-	  frames := add!(frames, _frame);
-	end method add-to-list;
+          frames := add!(frames, _frame);
+        end method add-to-list;
   apply-to-environment-frames(frame, add-to-list, reverse?: #t);
   order-frames(frames);
 end method raise-all-frames;
@@ -877,32 +877,32 @@ end method raise-all-frames;
 define function all-open-frames () => (frames :: <sequence>)
   let frames = make(<stretchy-vector>);
   do-frames(method (frame :: <frame>) => ()
-	      unless (frame-state(frame) == #"destroyed"
-			| frame-owner(frame)
-			| frame-mode(frame) == #"modal")
-		add!(frames, frame)
-	      end
-	    end method);
+              unless (frame-state(frame) == #"destroyed"
+                        | frame-owner(frame)
+                        | frame-mode(frame) == #"modal")
+                add!(frames, frame)
+              end
+            end method);
   sort!(frames,
-	test: method (frame1 :: <frame>, frame2 :: <frame>)
-	       => (less-than? :: <boolean>)
-		if (object-class(frame1) ~= object-class(frame2))
-		  case
-		    instance?(frame1, <environment-primary-frame>) =>
-		      #t;
-		    instance?(frame2, <environment-primary-frame>) =>
-		      #f;
-		    instance?(frame1, <project-browser>) =>
-		      #t;
-		    instance?(frame2, <project-browser>) =>
-		      #f;
-		    otherwise =>
-		      frame1.frame-title < frame2.frame-title
-		  end
-		else
-		  frame1.frame-title < frame2.frame-title
-		end
-	      end method)
+        test: method (frame1 :: <frame>, frame2 :: <frame>)
+               => (less-than? :: <boolean>)
+                if (object-class(frame1) ~= object-class(frame2))
+                  case
+                    instance?(frame1, <environment-primary-frame>) =>
+                      #t;
+                    instance?(frame2, <environment-primary-frame>) =>
+                      #f;
+                    instance?(frame1, <project-browser>) =>
+                      #t;
+                    instance?(frame2, <project-browser>) =>
+                      #f;
+                    otherwise =>
+                      frame1.frame-title < frame2.frame-title
+                  end
+                else
+                  frame1.frame-title < frame2.frame-title
+                end
+              end method)
 end function all-open-frames;
 
 define variable $frame-title-optional-suffix :: false-or(<string>) = #f;
@@ -914,16 +914,16 @@ define method frame-short-title
   let suffix
     = $frame-title-optional-suffix
         | begin
-	    let suffix = concatenate(" - ", release-product-name());
-	    $frame-title-optional-suffix := suffix
-	  end;
+            let suffix = concatenate(" - ", release-product-name());
+            $frame-title-optional-suffix := suffix
+          end;
   let title = frame-title(frame);
   let title-size = size(title);
   let suffix-size = size($frame-title-optional-suffix);
   let title-includes-suffix?
     = (title-size > suffix-size)
-        & ($frame-title-optional-suffix 
-	     = copy-sequence(title, start: title-size - suffix-size));
+        & ($frame-title-optional-suffix
+             = copy-sequence(title, start: title-size - suffix-size));
   if (title-includes-suffix?)
     copy-sequence(title, end: title-size - suffix-size)
   else
@@ -944,10 +944,10 @@ define function window-menu-items-from-frames
     // provide numeric access keys.
     let label
       = if (n <= 9)
-	  format-to-string("&%d %s", n, name)
-	else
-	  name
-	end if;
+          format-to-string("&%d %s", n, name)
+        else
+          name
+        end if;
     items[i] := vector(label, frame);
   end for;
   items
@@ -961,19 +961,19 @@ add-command-table-menu-item
    "", <push-box>, #f,
    documentation: "Activates this window.",
    update-callback: method (menu-box :: <menu-box>)
-		      let windows = all-open-frames();
-		      gadget-items(menu-box) := window-menu-items-from-frames(windows)
-		    end,
+                      let windows = all-open-frames();
+                      gadget-items(menu-box) := window-menu-items-from-frames(windows)
+                    end,
    label-key: first,
    value-key: second,
    callback: method (menu-box :: <menu-box>)
-	       let frame = gadget-value(menu-box);
-	       when (frame-iconified?(frame))
-		 deiconify-frame(frame)
-	       end;
-	       when (frame-mapped?)
-		 raise-frame(frame)
-	       end;
+               let frame = gadget-value(menu-box);
+               when (frame-iconified?(frame))
+                 deiconify-frame(frame)
+               end;
+               when (frame-mapped?)
+                 raise-frame(frame)
+               end;
              end);
 
 define command-table *window-actions-command-table* (*global-command-table*)
@@ -1039,22 +1039,22 @@ end method coerce-project;
 define macro with-environment-handlers
   { with-environment-handlers (?frame:name) ?body:body end }
     => { begin
-	   let handler <invalid-object-error>
-	     = method 
-		   (error :: <invalid-object-error>, 
-		    next-handler :: <function>)
-		 ignore(next-handler);
-		 handle-invalid-object-error(?frame, error)
-	       end;
-	   let handler <timeout-expired>
-	     = method
-		   (error :: <timeout-expired>, 
-		    next-handler :: <function>)
-		 ignore(next-handler);
-		 handle-expired-timeout(?frame, error)
-	       end;
-	   ?body
-	 end }
+           let handler <invalid-object-error>
+             = method
+                   (error :: <invalid-object-error>,
+                    next-handler :: <function>)
+                 ignore(next-handler);
+                 handle-invalid-object-error(?frame, error)
+               end;
+           let handler <timeout-expired>
+             = method
+                   (error :: <timeout-expired>,
+                    next-handler :: <function>)
+                 ignore(next-handler);
+                 handle-expired-timeout(?frame, error)
+               end;
+           ?body
+         end }
 end macro with-environment-handlers;
 
 define last-handler (<serious-condition>, test: always(#t)) = environment-handler;

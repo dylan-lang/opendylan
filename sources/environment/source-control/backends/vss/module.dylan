@@ -21,7 +21,7 @@ define module source-control-vss-backend
   use win32-registry;
   use ole-automation;
   use SourceSafeTypeLib;
-  use source-control-manager-internals; 
+  use source-control-manager-internals;
   export
     <vss-source-control-system>;
 end module source-control-vss-backend;

@@ -82,17 +82,17 @@ define method attach-live-application
      #key client = project, system-data)
  => (application :: <application>)
   assert(~project-application(project),
-	 "Attempting to attach a process to a project with an application!");
+         "Attempting to attach a process to a project with an application!");
   let filename = process-executable-file(process);
   let machine = process-host-machine(process);
-  let application 
+  let application
     = make-project-application
-        (project, 
-	 client:   client,
-	 machine:  machine,
-	 filename: filename);
+        (project,
+         client:   client,
+         machine:  machine,
+         filename: filename);
   project-application(project) := application;
   broadcast($project-channel,
-	    make(<run-application-requested-message>, project: project));
+            make(<run-application-requested-message>, project: project));
   attach-live-application(application, process, system-data: system-data | "")
 end method attach-live-application;

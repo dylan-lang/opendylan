@@ -16,8 +16,8 @@ define method initialize (editor :: <deuce-editor>, #key)
   load-policy-settings(editor-policy(editor));
   install-command-set(editor, command-set-policy(editor-policy(editor)));
   tune-in($project-channel,
-	  deuce-editor-project-message-receiver,
-	  message-type: <project-message>);
+          deuce-editor-project-message-receiver,
+          message-type: <project-message>);
 end method initialize;
 
 define function deuce-editor-project-message-receiver
@@ -56,8 +56,8 @@ define method deuce-note-active-project-changed () => ()
   do-environment-editor-windows
     (method (window :: <window>)
        when (instance?(sheet-frame(window), <environment-editor>))
-	 queue-redisplay(window, $display-all);
-	 sheet-mapped?(window) & redisplay-window(window)
+         queue-redisplay(window, $display-all);
+         sheet-mapped?(window) & redisplay-window(window)
        end
      end method)
 end method deuce-note-active-project-changed;
@@ -66,10 +66,10 @@ define sealed method do-environment-editor-windows
     (function :: <function>, #key project)
   for (window :: <basic-window> in editor-windows($environment-editor))
     when (~project
-	    | begin
-		let frame = sheet-frame(window);
-		frame & project == frame-current-project(frame)
-	      end)
+            | begin
+                let frame = sheet-frame(window);
+                frame & project == frame-current-project(frame)
+              end)
       function(window)
     end
   end
@@ -78,12 +78,12 @@ end method do-environment-editor-windows;
 // Apply FUNCTION to all DUIM frames containing (or being) one of the
 // $environment-editor's editor frames.  Apply it to each DUIM frame only
 // once (e.g., the debugger contains several editor-frames).
-define method call-in-editor-frame-duim-frames 
+define method call-in-editor-frame-duim-frames
     (function :: <function>, #key project) => ()
   // Other threads might modify the list of editor frames,
   // so we take a (very) little care to avoid race conditions
-  let _frames = editor-frames($environment-editor);	// Deuce frames
-  let frames  = make(<stretchy-object-vector>);		// DUIM frames
+  let _frames = editor-frames($environment-editor);        // Deuce frames
+  let frames  = make(<stretchy-object-vector>);                // DUIM frames
   for (_frame in _frames)
     let window = _frame & frame-window(_frame);
     let frame  = window & sheet-frame(window);
@@ -129,13 +129,13 @@ define method initialize (window :: <environment-deuce-pane>, #key)
   // Update all of the window's fonts
   window-default-font(window)
     := make-font(font-family(font), font-name(font), font-weight(font),
-		 font-slant(font), font-size(font));
+                 font-slant(font), font-size(font));
   window-default-bold-font(window)
     := make-font(font-family(font), font-name(font), #"bold",
-		 font-slant(font), font-size(font));
+                 font-slant(font), font-size(font));
   window-default-italic-font(window)
     := make-font(font-family(font), font-name(font), font-weight(font),
-		 #"italic", font-size(font));
+                 #"italic", font-size(font));
 end method initialize;
 
 define open class <environment-deuce-gadget>
@@ -152,7 +152,7 @@ end class <environment-editor-pane>;
 
 /// Environment editor frames
 
-define frame <environment-editor> 
+define frame <environment-editor>
     (<basic-editor-frame>,
      <frame-undo-mixin>,
      <frame-refresh-mixin>,
@@ -168,9 +168,9 @@ define frame <environment-editor>
   slot %transaction-ids :: <stretchy-object-vector> = make(<stretchy-vector>);
   pane %window (frame)
     make(<environment-editor-pane>,
-	 frame: frame,
-	 lines:   frame.%lines,
-	 columns: frame.%columns);
+         frame: frame,
+         lines:   frame.%lines,
+         columns: frame.%columns);
   layout (frame)
     scrolling (scroll-bars: #"both")
       frame.%window
@@ -189,19 +189,19 @@ define frame <environment-editor>
   keyword icon: = $editor-window-small-icon;
 end frame <environment-editor>;
 
-define cascading-window-settings 
+define cascading-window-settings
   editor-window :: <environment-editor> = "Editor Window";
 
 
 /// Frame start-up and initialization
 
 // Note: If you change this method, change the reinitialize-frame method below.
-define method initialize 
+define method initialize
     (frame :: <environment-editor>,
      #key buffer :: false-or(<basic-buffer>),
           buffer-pathname: pathname :: false-or(<string>),
           line, index = 0,
-	  new-file? :: <boolean> = #f,
+          new-file? :: <boolean> = #f,
           deuce-frame) => ()
   ignore(deuce-frame);
   next-method();
@@ -211,16 +211,16 @@ define method initialize
   let sccs = current-source-control-system();
   when (sccs)
     add-command-table-menu-item
-      (*editor-command-table*, 
+      (*editor-command-table*,
        sccs-label(sccs), <command-table>, *editor-source-control-command-table*,
        after: "Window",            //---*** SHOULD BE: after: "Application",
        error?: #f);
     disable-unimplemeted-sccs-commands(frame, sccs)
   end;
   do-reinitialize-frame(frame,
-			buffer: buffer, buffer-pathname: pathname,
-			line: line, index: index,
-			new-file?: new-file?)
+                        buffer: buffer, buffer-pathname: pathname,
+                        line: line, index: index,
+                        new-file?: new-file?)
 end method initialize;
 
 // Doing the file-loading work here means that on the first opening of
@@ -238,12 +238,12 @@ define method do-reinitialize-frame
   dynamic-bind (*editor-frame* = frame)
     let initial-buffer
       = buffer
-	| when (pathname) try-to-load-from-pathname(frame, pathname) end
-	| when (new-file?) make-empty-buffer(<non-file-buffer>) end
-	| get-initial-buffer(frame);
+        | when (pathname) try-to-load-from-pathname(frame, pathname) end
+        | when (new-file?) make-empty-buffer(<non-file-buffer>) end
+        | get-initial-buffer(frame);
     if (frame-mapped?(frame))
       try-to-select-buffer(frame, initial-buffer,
-			   line: line, index: index);
+                           line: line, index: index);
     else
       // We'll call 'try-to-select-buffer' in the <frame-created-event> handler.
       frame-buffer(frame) := initial-buffer;
@@ -262,17 +262,17 @@ define method frame-top-level
       select-buffer(frame-window(frame), buffer);
       let top-sheet = top-level-sheet(frame);
       while (#t)
-	let event = read-event(top-sheet);
-	block ()
-	  handle-event(event-handler(event-client(event)), event);
-	exception (e :: <command-error>)
-	  when (command-error-format-string(e))
-	    apply(deuce/display-error-message,
-		  command-error-window(e),
-		  command-error-format-string(e), command-error-format-arguments(e))
-	  end;
-	  #f
-	end
+        let event = read-event(top-sheet);
+        block ()
+          handle-event(event-handler(event-client(event)), event);
+        exception (e :: <command-error>)
+          when (command-error-format-string(e))
+            apply(deuce/display-error-message,
+                  command-error-window(e),
+                  command-error-format-string(e), command-error-format-arguments(e))
+          end;
+          #f
+        end
       end
     end
   end
@@ -296,7 +296,7 @@ end method handle-event;
 
 define method handle-event
     (frame :: <environment-editor>, event :: <frame-focus-in-event>) => ()
-  next-method();		// off to <search-target-frame-mixin>...
+  next-method();                // off to <search-target-frame-mixin>...
   frame-input-focus(frame) := frame.%window
 end method handle-event;
 
@@ -332,7 +332,7 @@ define function only-frame?
                 when (frames-of-class > 1)
                   exit();
                 end;
-	      end method,
+              end method,
               port: port(frame));
   end;
   (frames-of-class == 1)
@@ -346,52 +346,52 @@ define method frame-can-exit?
   let editor = frame-editor(frame);
   let policy = editor-policy(editor);
   local method maybe-save-then-maybe-kill-buffer (window, buffer)
-	  // Don't let 'kill-buffer' exit this frame, because we're already
-	  // in the 'frame-exit' code!
-	  let failed? = maybe-save-buffer(window, buffer);
-	  unless (failed?)
-	    // Kill the buffer 
-	    kill-buffer(buffer, frame: frame, no-exit-frame: frame);
-	    #t
-	  end
-	end method;
+          // Don't let 'kill-buffer' exit this frame, because we're already
+          // in the 'frame-exit' code!
+          let failed? = maybe-save-buffer(window, buffer);
+          unless (failed?)
+            // Kill the buffer
+            kill-buffer(buffer, frame: frame, no-exit-frame: frame);
+            #t
+          end
+        end method;
   // Bind *editor-frame* in case this is called on a different thread
   dynamic-bind (*editor-frame* = frame)
     case
       only-frame?(frame, <environment-editor>) =>
-	// If we're the only editor frame left...
-	let all-buffers
-	  = choose(method (b) ~buffer-anonymous?(b) end, editor-buffers(editor));
+        // If we're the only editor frame left...
+        let all-buffers
+          = choose(method (b) ~buffer-anonymous?(b) end, editor-buffers(editor));
         if (size(all-buffers) = 1 & all-buffers[0] == buffer)
-	  // ...then if there is exactly one buffer left, use the simple dialog
-	  maybe-save-then-maybe-kill-buffer(window, buffer)
-	else
-	  // ...then if there are multiple buffers left, use the "save all" dialog
-	  let buffers = save-buffers-dialog(window, exit-label: "&Close");
-	  select (buffers)
-	    #f        => #t;
-	    #"cancel" => #f;
-	    otherwise =>
-	      do-save-all-files(frame, buffers, curry(deuce/display-message, window));
-	      // With the 'fixed-frame-buffer?' policy, we have to kill the buffer
-	      // associated with this frame, no matter what, so that it doesn't come
-	      // back and haunt us later
-	      when (fixed-frame-buffer?(policy))
-		kill-buffer(buffer, frame: frame, no-exit-frame: frame)
-	      end;
-	      #t
-	  end
-	end;
+          // ...then if there is exactly one buffer left, use the simple dialog
+          maybe-save-then-maybe-kill-buffer(window, buffer)
+        else
+          // ...then if there are multiple buffers left, use the "save all" dialog
+          let buffers = save-buffers-dialog(window, exit-label: "&Close");
+          select (buffers)
+            #f        => #t;
+            #"cancel" => #f;
+            otherwise =>
+              do-save-all-files(frame, buffers, curry(deuce/display-message, window));
+              // With the 'fixed-frame-buffer?' policy, we have to kill the buffer
+              // associated with this frame, no matter what, so that it doesn't come
+              // back and haunt us later
+              when (fixed-frame-buffer?(policy))
+                kill-buffer(buffer, frame: frame, no-exit-frame: frame)
+              end;
+              #t
+          end
+        end;
       otherwise =>
-	// If we're not the only editor frame left...
-	if (fixed-frame-buffer?(policy))
-	  // ...then if the 'fixed-frame-buffer?' policy is in operation, offer
-	  // to save just this buffer, and kill it before closing the window
-	  maybe-save-then-maybe-kill-buffer(window, buffer)
-	else
-	  // ...then if we're just another Emacs-style frame, just close it
-	  #t
-	end;
+        // If we're not the only editor frame left...
+        if (fixed-frame-buffer?(policy))
+          // ...then if the 'fixed-frame-buffer?' policy is in operation, offer
+          // to save just this buffer, and kill it before closing the window
+          maybe-save-then-maybe-kill-buffer(window, buffer)
+        else
+          // ...then if we're just another Emacs-style frame, just close it
+          #t
+        end;
     end
   end
 end method frame-can-exit?;
@@ -459,18 +459,18 @@ define method try-to-select-buffer
   when (window)
     case
       buffer ~== window-buffer(window) =>
-	select-buffer(window, buffer);
-	when (line)
-	  move-point!(line, index: index, window: window)
-	end;
-	queue-redisplay(window, $display-all);
-	redisplay-window(window);
+        select-buffer(window, buffer);
+        when (line)
+          move-point!(line, index: index, window: window)
+        end;
+        queue-redisplay(window, $display-all);
+        redisplay-window(window);
       line =>
-	move-point!(line, index: index, window: window);
-	queue-redisplay(window, $display-point, centering: 0);
-	redisplay-window(window);
+        move-point!(line, index: index, window: window);
+        queue-redisplay(window, $display-point, centering: 0);
+        redisplay-window(window);
       otherwise =>
-	#f;
+        #f;
     end
   end
 end method try-to-select-buffer;
@@ -535,10 +535,10 @@ define method buffer-title
     when (locator)
       let directory = show-path? & locator-directory(locator);
       if (directory)
-	concatenate(locator-name(locator),
-		    " (", as(<string>, directory), ")")
+        concatenate(locator-name(locator),
+                    " (", as(<string>, directory), ")")
       else
-	locator-name(locator)
+        locator-name(locator)
       end
     end
   end
@@ -565,10 +565,10 @@ define method generate-frame-title
                 "No Name"
               end,
               if (current-project-name)
-		concatenate(" - Editing ", current-project-name)
-	      else
-		""
-	      end,
+                concatenate(" - Editing ", current-project-name)
+              else
+                ""
+              end,
               " - ", release-product-name())
 end method generate-frame-title;
 
@@ -597,30 +597,30 @@ end method make-environment-tool-bar-buttons;
 define method make-editor-tool-bar-left-buttons
     (frame :: <environment-editor>) => (buttons :: <vector>)
   vector(make(<button>,
-	      label: $new-text-file-bitmap,
-	      documentation: $new-text-file-title,
-	      command: editor-new-file,
-	      activate-callback:
-		method (sheet)
-		  ignore(sheet);
-		  editor-new-file();
-		end),
-	 make(<button>,
-	      label: $open-bitmap,
-	      documentation: $open-file-title,
-	      command: frame-open-file,
-	      activate-callback:
-		method (sheet)
-		  frame-open-file(sheet-frame(sheet));
-		end),
-	 make(<button>,
-	      label: $save-bitmap,
-	      documentation: $save-file-title,
-	      command: frame-save-file,
-	      activate-callback:
-		method (sheet)
-		  frame-save-file(sheet-frame(sheet));
-		end))
+              label: $new-text-file-bitmap,
+              documentation: $new-text-file-title,
+              command: editor-new-file,
+              activate-callback:
+                method (sheet)
+                  ignore(sheet);
+                  editor-new-file();
+                end),
+         make(<button>,
+              label: $open-bitmap,
+              documentation: $open-file-title,
+              command: frame-open-file,
+              activate-callback:
+                method (sheet)
+                  frame-open-file(sheet-frame(sheet));
+                end),
+         make(<button>,
+              label: $save-bitmap,
+              documentation: $save-file-title,
+              command: frame-save-file,
+              activate-callback:
+                method (sheet)
+                  frame-save-file(sheet-frame(sheet));
+                end))
 end method make-editor-tool-bar-left-buttons;
 
 define method make-editor-tool-bar-right-buttons
@@ -628,19 +628,19 @@ define method make-editor-tool-bar-right-buttons
   make-clone-tool-bar-buttons(frame);
 /* --- hughg, 1998/02/11: not used in release 1.0.
   vector(make(<button>,
-	      label: "|<-",
-	      command: unindent-rigidly,
-	      activate-callback:
-		method (sheet)
-		  execute-command-in-frame(sheet-frame(sheet), unindent-rigidly)
-		end),
-	 make(<button>,
-	      label: "->|",
-	      command: indent-rigidly,
-	      activate-callback:
-		method (sheet)
-		  execute-command-in-frame(sheet-frame(sheet), indent-rigidly)
-		end))
+              label: "|<-",
+              command: unindent-rigidly,
+              activate-callback:
+                method (sheet)
+                  execute-command-in-frame(sheet-frame(sheet), unindent-rigidly)
+                end),
+         make(<button>,
+              label: "->|",
+              command: indent-rigidly,
+              activate-callback:
+                method (sheet)
+                  execute-command-in-frame(sheet-frame(sheet), indent-rigidly)
+                end))
 */
 end method make-editor-tool-bar-right-buttons;
 
@@ -649,41 +649,41 @@ define method make-editor-tool-bar-mode-box
   //---*** There must be a better way to get the set of useful modes!
   let major-modes
     = sort(vector(find-mode(<fundamental-mode>),
-		  find-mode(<text-mode>),
-		  find-mode(<dylanworks-mode>)),
-	   test: method (m1, m2)
-		   mode-name(m1) < mode-name(m2)
-		 end method);
+                  find-mode(<text-mode>),
+                  find-mode(<dylanworks-mode>)),
+           test: method (m1, m2)
+                   mode-name(m1) < mode-name(m2)
+                 end method);
   let initial-mode
     = if (frame-buffer(frame))
-	buffer-major-mode(frame-buffer(frame))
+        buffer-major-mode(frame-buffer(frame))
       else
-	find-mode(<fundamental-mode>)
+        find-mode(<fundamental-mode>)
       end;
-  #f	/*---*** Not for Rel 1.0, since it doesn't work well
+  #f        /*---*** Not for Rel 1.0, since it doesn't work well
   let mode-box
     = make(<option-box>,
            label: "Mode",
            items: major-modes,
-	   label-key: mode-name,
+           label-key: mode-name,
            value: initial-mode,
            documentation: "Selects a new major mode for the current buffer.",
            min-width: 100, max-width: 150,
            value-changed-callback:
-	     method (box)
-	       let frame    = sheet-frame(box);
-	       let buffer   = frame-buffer(frame);
-	       let window   = frame-window(frame);
-	       let old-mode = buffer & buffer-major-mode(buffer);
-	       let new-mode = gadget-value(box);
-	       when (buffer & new-mode ~== old-mode)
-		 exit-mode(buffer, old-mode);
-		 enter-mode(buffer, new-mode);
-		 sectionize-buffer(buffer);
-		 queue-redisplay(window, $display-all);
-		 redisplay-window(window)
-	       end
-	     end method);
+             method (box)
+               let frame    = sheet-frame(box);
+               let buffer   = frame-buffer(frame);
+               let window   = frame-window(frame);
+               let old-mode = buffer & buffer-major-mode(buffer);
+               let new-mode = gadget-value(box);
+               when (buffer & new-mode ~== old-mode)
+                 exit-mode(buffer, old-mode);
+                 enter-mode(buffer, new-mode);
+                 sectionize-buffer(buffer);
+                 queue-redisplay(window, $display-all);
+                 redisplay-window(window)
+               end
+             end method);
   frame.%mode-box := mode-box;
   mode-box */
 end method make-editor-tool-bar-mode-box;
@@ -714,7 +714,7 @@ define method reuse-matching-frame?
       // a buffer requested and it's already showing that buffer.
       (buffer | pathname)
       & editor-frame-showing-buffer?
-	  (frame, buffer: buffer, buffer-pathname: pathname)
+          (frame, buffer: buffer, buffer-pathname: pathname)
     else
       // In non-SDI mode, we can reuse the frame by default.
       #t
@@ -731,11 +731,11 @@ define method find-matching-frames
           deuce-frame :: false-or(<basic-editor-frame>))
  => (frames :: <sequence>)
   let frames = next-method();
-  local method matching-frame? (frame) 
-	  frame-editor(frame) == editor
-	  & (editor-frame-showing-buffer?
-	       (frame, buffer: buffer, buffer-pathname: pathname))
-	end;
+  local method matching-frame? (frame)
+          frame-editor(frame) == editor
+          & (editor-frame-showing-buffer?
+               (frame, buffer: buffer, buffer-pathname: pathname))
+        end;
   if (deuce-frame
       & (frame-editor(deuce-frame) == editor)
       & member?(deuce-frame, frames))
@@ -753,7 +753,7 @@ define method find-matching-frames
 end method find-matching-frames;
 
 // Note: If you change this method, change the initialize method above.
-define method reinitialize-frame 
+define method reinitialize-frame
     (frame :: <environment-editor>,
      #rest initargs,
      #key buffer :: false-or(<basic-buffer>),
@@ -806,19 +806,19 @@ define method frame-note-interaction-returned
     let table  = buffer & buffer-breakpoints-table(buffer, project);
     when (table)
       do-lines
-	(method (line, start-index, end-index, last-line?)
-	   ignore(start-index, end-index, last-line?);
-	   let info = element(table, line, default: #f);
-	   when (info)
-	     let bkp = info.info-breakpoint;
-	     breakpoint-message?(bkp)
-	       := format-to-string("Hit breakpoint in out-of-date version of %s",
-				   section-definition-name(section) | "this function");
-	     remove-key!(table, line);
-	     queue-redisplay(window, $display-line, line: line, index: 0, centering: #f)
-	   end
-	 end method,
-	 section);
+        (method (line, start-index, end-index, last-line?)
+           ignore(start-index, end-index, last-line?);
+           let info = element(table, line, default: #f);
+           when (info)
+             let bkp = info.info-breakpoint;
+             breakpoint-message?(bkp)
+               := format-to-string("Hit breakpoint in out-of-date version of %s",
+                                   section-definition-name(section) | "this function");
+             remove-key!(table, line);
+             queue-redisplay(window, $display-line, line: line, index: 0, centering: #f)
+           end
+         end method,
+         section);
       redisplay-window(window)
     end;
     // Ensure the section and record are properly tracked
@@ -826,7 +826,7 @@ define method frame-note-interaction-returned
     gethash($interactive-source-records,  section) := record;
     let message
       = format-to-string("%s successfully downloaded",
-			 section-definition-name(section));
+                         section-definition-name(section));
     frame-status-message(frame) := message
   end
 end method frame-note-interaction-returned;
@@ -839,10 +839,10 @@ define method frame-note-interactive-compilation-warnings
     let section = tail(entry);
     let project = frame-current-project(frame);
     frame.%transaction-ids := remove!(frame.%transaction-ids, entry);
-    let message 
+    let message
       = format-to-string("%s compiled: %s",
-			 section-definition-name(section),
-			 compilation-warning-count-message(project, warnings: warnings));
+                         section-definition-name(section),
+                         compilation-warning-count-message(project, warnings: warnings));
     frame-status-message(frame) := message
   end
 end method frame-note-interactive-compilation-warnings;
@@ -855,17 +855,17 @@ end method frame-note-interactive-compilation-warnings;
 define sideways method find-deuce-frame
     (#rest initargs, #key, #all-keys) => ()
   apply(find-environment-frame,
-	default-port(), <environment-editor>,
-	initargs)
+        default-port(), <environment-editor>,
+        initargs)
 end method find-deuce-frame;
 
 define sideways method find-and-call-in-deuce-frame
     (function :: <function>, #rest initargs, #key, #all-keys) => ()
   apply(call-in-environment-frame,
-	function, default-port(), <environment-editor>,
-	initargs);
+        function, default-port(), <environment-editor>,
+        initargs);
 end method find-and-call-in-deuce-frame;
-    
+
 
 // Display the buffer name in the title bar
 define method deuce/display-buffer-name
@@ -883,7 +883,7 @@ end method deuce/display-buffer-name;
 define method window-note-buffer-changed
     (window :: <environment-editor-pane>,
      buffer :: <basic-buffer>, modified? :: <boolean>) => ()
-  next-method();		// this will display the buffer name, etc
+  next-method();                // this will display the buffer name, etc
 end method window-note-buffer-changed;
 */
 
@@ -892,7 +892,7 @@ end method window-note-buffer-changed;
 define method window-note-buffer-read-only
     (window :: <environment-deuce-pane>,
      buffer :: <basic-buffer>, read-only? :: <boolean>) => ()
-  next-method();		// this will display the modified state
+  next-method();                // this will display the modified state
   let frame = sheet-frame(window);
   when (frame)
     // Set the command enabling to fit the current selection...
@@ -909,7 +909,7 @@ end method window-note-buffer-read-only;
 
 
 define method window-note-buffer-selected
-    (window :: <environment-editor-pane>, buffer :: <basic-buffer>) => () 
+    (window :: <environment-editor-pane>, buffer :: <basic-buffer>) => ()
   // The next-method will update modification and read-only status fields
   // and the frame title.
   next-method();
@@ -1060,10 +1060,10 @@ define function editor-settings-font () => (font :: <font>)
   let name = *editor-display-settings*.default-font-name;
   let _size = *editor-display-settings*.default-font-point-size;
   make-font(*editor-display-settings*.default-font-family,
-	    if (empty?(name)) #f else name end,
-	    *editor-display-settings*.default-font-weight,
-	    *editor-display-settings*.default-font-slant,
-	    if (zero?(_size)) $default-font-point-size else _size end)
+            if (empty?(name)) #f else name end,
+            *editor-display-settings*.default-font-weight,
+            *editor-display-settings*.default-font-slant,
+            if (zero?(_size)) $default-font-point-size else _size end)
 end function editor-settings-font;
 
 define function load-policy-settings (policy :: <editor-policy>) => ()
@@ -1146,8 +1146,8 @@ define function save-policy-settings (policy :: <editor-policy>) => ()
   when (editor-settings-font() ~= policy-font)
     let (family, name, weight, slant, _size)
       = values(policy-font.font-family, policy-font.font-name,
-	       policy-font.font-weight, policy-font.font-slant,
-	       policy-font.font-point-size);
+               policy-font.font-weight, policy-font.font-slant,
+               policy-font.font-point-size);
     *editor-display-settings*.default-font-family
       := if (instance?(family, <symbol>)) family else #"fix" end;
     *editor-display-settings*.default-font-name

@@ -11,48 +11,48 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define pane <debugger-status-bar> ()
   pane %status-message-pane (pane)
     make(<label>,
-	 label: "",
-	 width: 100, min-width: 100, max-width: $fill,
-	 documentation: "Message Area");
+         label: "",
+         width: 100, min-width: 100, max-width: $fill,
+         documentation: "Message Area");
   pane %thread-status-pane (pane)
     make(<label>,
-	 label: "",
-	 width: 100, min-width: 100, max-width: $fill,
-	 documentation: "Thread Status");
+         label: "",
+         width: 100, min-width: 100, max-width: $fill,
+         documentation: "Thread Status");
   pane %application-status-pane (pane)
     make(<label>,
-	 label: "",
-	 width: 100, min-width: 100, max-width: $fill,
-	 documentation: "Application Status");
+         label: "",
+         width: 100, min-width: 100, max-width: $fill,
+         documentation: "Application Status");
   pane %updated-pane (pane)
     make(<label>,
-	 label: "",
-	 width: 50, min-width: 50, max-width: 50,
-	 documentation: "Needs Refreshing?");
+         label: "",
+         width: 50, min-width: 50, max-width: 50,
+         documentation: "Needs Refreshing?");
   pane %enabled-pane (pane)
     make(<label>,
-	 label: "",
-	 width: 50, min-width: 50, max-width: 50,
-	 documentation: "Currently Disabled?");
+         label: "",
+         width: 50, min-width: 50, max-width: 50,
+         documentation: "Currently Disabled?");
   layout (pane)
     make-debugger-status-bar(pane);
 end pane <debugger-status-bar>;
 
 /// MAKE-DEBUGGER-STATUS-BAR (internal)
 
-define function make-debugger-status-bar 
+define function make-debugger-status-bar
     (status-bar :: <debugger-status-bar>)
  => (status-bar :: <status-bar>)
   let framem = frame-manager(status-bar);
   with-frame-manager (framem)
     make(<status-bar>,
-	 label-pane: status-bar.%status-message-pane,
-	 children:
-	   vector(status-bar.%status-message-pane,
-		  status-bar.%thread-status-pane,
-		  status-bar.%application-status-pane,
-		  status-bar.%updated-pane,
-		  status-bar.%enabled-pane))
+         label-pane: status-bar.%status-message-pane,
+         children:
+           vector(status-bar.%status-message-pane,
+                  status-bar.%thread-status-pane,
+                  status-bar.%application-status-pane,
+                  status-bar.%updated-pane,
+                  status-bar.%enabled-pane))
   end;
 end function make-debugger-status-bar;
 
@@ -66,27 +66,27 @@ define function update-debugger-status-bar (debugger :: <debugger>) => ()
   status-bar.%status-message-pane.gadget-label := "";
   status-bar.%thread-status-pane.gadget-label
     := if (thread)
-	 let state = thread-state(project, thread);
-	 format-to-string("%s (was %s)",
-			  frame-default-object-name(debugger, thread),
-			  thread-state-label(project, state))
+         let state = thread-state(project, thread);
+         format-to-string("%s (was %s)",
+                          frame-default-object-name(debugger, thread),
+                          thread-state-label(project, state))
        else
-	 "No thread"
+         "No thread"
        end if;
   status-bar.%application-status-pane.gadget-label
     := format-to-string("%s (%s)",
-			environment-object-primitive-name(project, project),
-			application-state-label(project));
+                        environment-object-primitive-name(project, project),
+                        application-state-label(project));
   status-bar.%updated-pane.gadget-label
     := if (debugger.debugger-updated?)
-	 ""
+         ""
        else
-	 "Outdated"
+         "Outdated"
        end if;
   status-bar.%enabled-pane.gadget-label
     := if (debugger.debugger-enabled?)
-	 ""
+         ""
        else
-	 "Disabled"
+         "Disabled"
        end if;
 end function update-debugger-status-bar;

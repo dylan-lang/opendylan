@@ -98,7 +98,7 @@ define abstract class <editor-command-error-mixin> (<object>)
   sealed constant slot %command,
     required-init-keyword: command:;
 end class <editor-command-error-mixin>;
-  
+
 // The selected editor doesn't support this command
 define sealed class <editor-unsupported-command>
     (<editor-command-error-mixin>, <editor-error>)

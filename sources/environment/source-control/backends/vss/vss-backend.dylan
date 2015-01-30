@@ -55,7 +55,7 @@ define class <vss-login-options> (<source-control-login-options>)
 end class <vss-login-options>;
 
 define method source-control-login-info
-    (sccs :: <vss-source-control-system>, 
+    (sccs :: <vss-source-control-system>,
      command-class :: subclass(<source-code-control-command>),
      #key defaults :: false-or(<vss-login-options>),
           pathname :: false-or(<file-locator>) = #f)
@@ -63,33 +63,33 @@ define method source-control-login-info
   unless (sccs.%database)
     let options
       = vector(make(<source-control-option>,
-		    label: "User",
-		    keyword: user:,
-		    type:  <string>,
-		    getter: login-user,
-		    documentation: #f,
-		    default: login-name(),
-		    required?: #t),
-	       make(<source-control-option>,
-		    label: "Password",
-		    keyword: password:,
-		    type:  #"password",
-		    getter: login-password,
-		    documentation: #f,
-		    default: #f,
-		    required?: #t),
-	       make(<source-control-option>,
-		    label: "Database",
-		    keyword: database:,
-		    type:  <string>,
-		    getter: login-database,
-		    documentation: #f,
-		    default: default-database-name(),
-		    required?: #t));
+                    label: "User",
+                    keyword: user:,
+                    type:  <string>,
+                    getter: login-user,
+                    documentation: #f,
+                    default: login-name(),
+                    required?: #t),
+               make(<source-control-option>,
+                    label: "Password",
+                    keyword: password:,
+                    type:  #"password",
+                    getter: login-password,
+                    documentation: #f,
+                    default: #f,
+                    required?: #t),
+               make(<source-control-option>,
+                    label: "Database",
+                    keyword: database:,
+                    type:  <string>,
+                    getter: login-database,
+                    documentation: #f,
+                    default: default-database-name(),
+                    required?: #t));
     make(<source-control-login-info>,
-	 title: "Select Database",
-	 class: <vss-login-options>,
-	 options: options)
+         title: "Select Database",
+         class: <vss-login-options>,
+         options: options)
   end
 end method source-control-login-info;
 
@@ -102,7 +102,7 @@ define method source-control-login
       OLE-initialize();
       let db = make-VSSDatabase();
       IVSSDatabase/Open(db, as(<string>, database-pathname),
-			options.login-user, options.login-password);
+                        options.login-user, options.login-password);
       sccs.%database := db;
       values(#t, #f)
     exception (condition :: <ole-error>)
@@ -115,8 +115,8 @@ end method source-control-login;
 
 define function default-database-name () => (name :: false-or(<string>))
   local method try (path :: <string>) => (name :: false-or(<string>))
-	  path & locator-name(as(<directory-locator>, path))
-	end method try;
+          path & locator-name(as(<directory-locator>, path))
+        end method try;
   try($sourcesafe-settings.current-database)
     | try($sourcesafe-settings.api-current-database)
 end function default-database-name;
@@ -130,16 +130,16 @@ define function database-pathname-from-name
     with-stack-structure (count :: <LPDWORD>)
       pointer-value(count) := 0;
       let (status, type)
-	= RegQueryValueEx(handle, name, null-pointer(<LPDWORD>), null-pointer(<LPBYTE>), count);
+        = RegQueryValueEx(handle, name, null-pointer(<LPDWORD>), null-pointer(<LPBYTE>), count);
       when (zero?(status) & (type = $REG-SZ))
-	with-stack-structure (buffer :: <C-string>, size: pointer-value(count))
-	  let status
-	    = RegQueryValueEx(handle, name, null-pointer(<LPDWORD>), buffer, count);
-	  when (zero?(status))
-	    merge-locators(as(<file-locator>, "SRCSAFE.INI"),
-			   as(<directory-locator>, buffer))
-	  end
-	end
+        with-stack-structure (buffer :: <C-string>, size: pointer-value(count))
+          let status
+            = RegQueryValueEx(handle, name, null-pointer(<LPDWORD>), buffer, count);
+          when (zero?(status))
+            merge-locators(as(<file-locator>, "SRCSAFE.INI"),
+                           as(<directory-locator>, buffer))
+          end
+        end
       end
     end
   end
@@ -163,49 +163,49 @@ define constant *reason-allowed-commands*
   = vector(<sccs-claim-command>, <sccs-check-in-command>, <sccs-add-command>);
 
 define method source-control-command-info
-    (sccs :: <vss-source-control-system>, 
+    (sccs :: <vss-source-control-system>,
      command-class :: subclass(<source-code-control-command>),
      #key defaults :: false-or(<vss-command-options>),
           pathname :: false-or(<file-locator>) = #f)
  => (info :: <source-control-command-info>)
   let (project, file)
-    = if (pathname) 
-	get-project-and-file(pathname)
+    = if (pathname)
+        get-project-and-file(pathname)
       else
-	values(#f, #f)
+        values(#f, #f)
       end;
   let file-required? :: <boolean> = member?(command-class, *file-required-commands*);
   let reason? :: <boolean> = member?(command-class, *reason-allowed-commands*);
   let options
     = concatenate
         (vector(make(<source-control-option>,
-		     label: "Project",
-		     keyword: project:,
-		     type:  <string>,
-		     getter: command-project,
-		     documentation: #f,
-		     default: (defaults & defaults.command-project) | project,
-		     required?: #t),
-		make(<source-control-option>,
-		     label: "File",
-		     keyword: file:,
-		     type:  <string>,
-		     getter: command-file,
-		     documentation: #f,
-		     default: file | (defaults & defaults.command-file),
-		     required?: file-required?)),
-	 if (reason?) 
-	   vector(make(<source-control-option>,
-		       label: "Reason",
-		       keyword: reason:,
-		       type:  <string>,
-		       getter: command-reason,
-		       documentation: #f,
-		       default: (defaults & defaults.command-reason),
-		       required?: #f))
-	 else
-	   #[]
-	 end);
+                     label: "Project",
+                     keyword: project:,
+                     type:  <string>,
+                     getter: command-project,
+                     documentation: #f,
+                     default: (defaults & defaults.command-project) | project,
+                     required?: #t),
+                make(<source-control-option>,
+                     label: "File",
+                     keyword: file:,
+                     type:  <string>,
+                     getter: command-file,
+                     documentation: #f,
+                     default: file | (defaults & defaults.command-file),
+                     required?: file-required?)),
+         if (reason?)
+           vector(make(<source-control-option>,
+                       label: "Reason",
+                       keyword: reason:,
+                       type:  <string>,
+                       getter: command-reason,
+                       documentation: #f,
+                       default: (defaults & defaults.command-reason),
+                       required?: #f))
+         else
+           #[]
+         end);
   make(<source-control-command-info>,
        title: "Select Project and File",
        class: <vss-command-options>,
@@ -282,12 +282,12 @@ define function find-vss-item
                    project
                  end;
   values(IVSSDatabase/VSSItem(sccs.%database, vss-spec, #f),
-	 if (file & ~ignore-file?)
-	   let filename = as(<file-locator>, file);
-	   as(<string>, merge-locators(filename, locator-directory(pathname)))
-	 else
-	   as(<string>, locator-directory(pathname))
-	 end)
+         if (file & ~ignore-file?)
+           let filename = as(<file-locator>, file);
+           as(<string>, merge-locators(filename, locator-directory(pathname)))
+         else
+           as(<string>, locator-directory(pathname))
+         end)
 end function find-vss-item;
 
 ///---*** TO DO: Add other arguments?
@@ -296,21 +296,21 @@ define macro vss-command-definer
       ?:body
     end }
     => { define sealed class "<vss-" ## ?name ## "-command>"
-	     ("<sccs-" ## ?name ## "-command>", <vss-source-control-command>)
-	 end;
-	 define sealed domain make (singleton("<vss-" ## ?name ## "-command>"));
-	 define sealed domain initialize ("<vss-" ## ?name ## "-command>");
-	 define sealed method class-for-sccs-command
-	     (sccs :: <vss-source-control-system>, class == "<sccs-" ## ?name ## "-command>")
-	  => (class == "<vss-" ## ?name ## "-command>")
-	   "<vss-" ## ?name ## "-command>"
-	 end method class-for-sccs-command; 
+             ("<sccs-" ## ?name ## "-command>", <vss-source-control-command>)
+         end;
+         define sealed domain make (singleton("<vss-" ## ?name ## "-command>"));
+         define sealed domain initialize ("<vss-" ## ?name ## "-command>");
+         define sealed method class-for-sccs-command
+             (sccs :: <vss-source-control-system>, class == "<sccs-" ## ?name ## "-command>")
+          => (class == "<vss-" ## ?name ## "-command>")
+           "<vss-" ## ?name ## "-command>"
+         end method class-for-sccs-command;
          define sealed method do-source-control-command
-	     (?command :: "<sccs-" ## ?name ## "-command>")
+             (?command :: "<sccs-" ## ?name ## "-command>")
           => (#rest values)
            let ?sccs :: <vss-source-control-system> = command-server(?command);
-	   let ?options :: <vss-command-options> = sccs-command-options(?command);
-	   let ?pathname :: <string> = as(<string>, command-pathname(?options));
+           let ?options :: <vss-command-options> = sccs-command-options(?command);
+           let ?pathname :: <string> = as(<string>, command-pathname(?options));
            with-vss-ole-error-interpretation (?sccs, ?command)
              ?body
            end
@@ -342,15 +342,15 @@ end vss-command check-out;
 define vss-command check-in (sccs, command, options, pathname)
   let (target, pathname) = find-vss-item(sccs, command);
   if (command-file(options) & ~IVSSItem/IsDifferent(target, pathname))
-    values(#f, pathname, 
-	   format-to-string("%s has not been changed since it was checked out", 
-			    command-file(options)))
+    values(#f, pathname,
+           format-to-string("%s has not been changed since it was checked out",
+                            command-file(options)))
   else
     IVSSItem/CheckIn(target,
-		     command-reason(options) | "",
-		     pathname,
-		     //---*** TODO: Are these the right settings?
-		     %logior($VSSFLAG-REPREPLACE, $VSSFLAG-UPDUNCH));
+                     command-reason(options) | "",
+                     pathname,
+                     //---*** TODO: Are these the right settings?
+                     %logior($VSSFLAG-REPREPLACE, $VSSFLAG-UPDUNCH));
     values(#t, pathname, #f)
   end
 end vss-command check-in;
@@ -391,28 +391,28 @@ end vss-command report;
 define vss-command add (sccs, command, options, pathname)
   let target = find-vss-item(sccs, command, ignore-file?: #t);
   IVSSItem/Add(target,
-	       pathname,
-	       command-reason(options) | "",
+               pathname,
+               command-reason(options) | "",
                //---*** TODO: Are these the right settings?
-	       0);
-  values(#t, 
-	 pathname,
-	 format-to-string("%s has been added to %s",
-			  command-file(options), command-project(options)))
+               0);
+  values(#t,
+         pathname,
+         format-to-string("%s has been added to %s",
+                          command-file(options), command-project(options)))
 end vss-command add;
 
 define vss-command remove (sccs, command, options, pathname)
   let (target, pathname) = find-vss-item(sccs, command);
   if (IVSSItem/Deleted(target))
     values(#t,
-	   pathname, 
-	   format-to-string("%s already deleted; use the SourceSafe explorer to purge/restore it",
-			    command-file(options)))
+           pathname,
+           format-to-string("%s already deleted; use the SourceSafe explorer to purge/restore it",
+                            command-file(options)))
   else
     IVSSItem/Deleted(target) := #t;
     values(#t,
-	   pathname,
-	   format-to-string("%s has been marked as deleted", command-file(options)))
+           pathname,
+           format-to-string("%s has been marked as deleted", command-file(options)))
   end
 end vss-command remove;
 
@@ -420,7 +420,7 @@ end vss-command remove;
 /// Initialization
 
 when ($sourcesafe-settings.current-database ~= "None!"
-	| $sourcesafe-settings.api-current-database ~= "None!")
+        | $sourcesafe-settings.api-current-database ~= "None!")
   register-source-control-class(<vss-source-control-system>)
 end;
 

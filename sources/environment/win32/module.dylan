@@ -7,12 +7,12 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module win32-environment
-  use environment-imports;	// this gets common-dylan
+  use environment-imports;        // this gets common-dylan
   use operating-system,
     import: { application-name,
-	      application-arguments,
-	      run-application,
-	      exit-application,
+              application-arguments,
+              run-application,
+              exit-application,
               environment-variable, environment-variable-setter },
     rename: { run-application => run-os-application };
   use file-system,
@@ -30,9 +30,9 @@ define module win32-environment
               $SHGFI-LARGEICON,
               SHGetFileInfo,
               ShellExecute,
-	      <LPSHFILEINFOA>,
-	      <SHFILEINFO>,
-	      hIcon-value };
+              <LPSHFILEINFOA>,
+              <SHFILEINFO>,
+              hIcon-value };
 
   use duim-internals,
     exclude: { position,
@@ -42,8 +42,8 @@ define module win32-environment
   // Use these modules just to get bitmap and color constants
   use deuce-internals,
     import: { make-color,
-	      $region-marking-color, 
-	      $dylan-definition-line-color },
+              $region-marking-color,
+              $dylan-definition-line-color },
     rename: { make-color  => deuce/make-color };
   use duim-deuce;
 
@@ -57,7 +57,7 @@ define module win32-environment
   use environment-debugger;
   use environment-project-wizard,
     import: { $check-mark-icon,
-	      $uncheck-mark-icon };
+              $uncheck-mark-icon };
 
   use editor-deuce-backend;
 end module win32-environment;

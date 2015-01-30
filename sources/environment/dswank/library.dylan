@@ -36,8 +36,8 @@ define module dswank
   use environment-internal-commands;
   use environment-protocols,
     exclude: { application-filename,
-	       application-arguments,
-	       run-application };
+               application-arguments,
+               run-application };
   use build-system;
   use command-lines;
   use commands;

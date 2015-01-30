@@ -17,7 +17,7 @@ define function test-exe-editor-commands-init
 
   editor-add-command-factory!
     (test-exe-editor-commands, *test-string-based-command-factory*);
- 
+
   test-exe-editor-commands
 end function;
 
@@ -32,7 +32,7 @@ define function test-custom-editor-commands-init
 
   editor-add-command-factory!
     (test-custom-editor-commands, *test-table-based-command-factory*);
- 
+
   test-custom-editor-commands
 end function;
 

@@ -64,8 +64,8 @@ define function write-headers
     let order-bins = make(<table>, size: size(header-order) + 1);
     for (key in header-order)
       when (key)
-	// #f is invalid, and reserved for the "others" bin below.
-	order-bins[key] := make(<stretchy-vector>);
+        // #f is invalid, and reserved for the "others" bin below.
+        order-bins[key] := make(<stretchy-vector>);
       end;
     end;
     order-bins[#f] := make(<stretchy-vector>);
@@ -73,23 +73,23 @@ define function write-headers
     // Now copy the key-value pairs into the appropriate bins.
     for (header in headers)
       for (value keyed-by key in header)
-	let bin = element(order-bins, key, default: order-bins[#f]);
-	add!(bin, pair(key, value));
+        let bin = element(order-bins, key, default: order-bins[#f]);
+        add!(bin, pair(key, value));
       end;
     end;
 
     // Now flatten all the bins into the single headers-vector.
     for (key in header-order)
       when (key)
-	// #f is invalid, and reserved for the "others" bin.
-	headers-vector := concatenate!(headers-vector, order-bins[key]);
+        // #f is invalid, and reserved for the "others" bin.
+        headers-vector := concatenate!(headers-vector, order-bins[key]);
       end;
     end;
     headers-vector := concatenate!(headers-vector, order-bins[#f]);
   else
     for (header in headers)
       for (value keyed-by key in header)
-	add!(headers-vector, pair(key, value));
+        add!(headers-vector, pair(key, value));
       end;
     end;
   end;
@@ -106,7 +106,7 @@ define function write-headers
   let format-string = format-to-string("%%-%ds %%s\n", key-size);
   for (header-pair in headers-vector)
     write-header-pair(stream, format-string,
-		      head(header-pair), tail(header-pair));
+                      head(header-pair), tail(header-pair));
   end;
   new-line(stream);
 end function;
@@ -118,31 +118,31 @@ end function;
 define function process-interchange-file-headers
     (stream :: <stream>,
      #key direction,
-	  headers :: false-or(<vector> /* of: <table> */),
-	  header-order,
+          headers :: false-or(<vector> /* of: <table> */),
+          header-order,
      #all-keys)
  => (header :: false-or(<table>))
   select (direction)
     #"output" =>
       when (headers)
-	write-headers(stream, headers, header-order: header-order);
-	#f
+        write-headers(stream, headers, header-order: header-order);
+        #f
       end;
   end;
 end function;
 
 define macro with-open-interchange-file
   { with-open-interchange-file
-	(?stream:variable = ?locator:expression,
-	 ?headers:variable = ?headers-val:expression,
-	 #rest ?keys:*, #key, #all-keys)
+        (?stream:variable = ?locator:expression,
+         ?headers:variable = ?headers-val:expression,
+         #rest ?keys:*, #key, #all-keys)
       ?:body
     end }
  => { begin
-	with-open-file (?stream = ?locator, ?keys)
-	  let ?headers
-	    = process-interchange-file-headers
-		(?stream, headers: ?headers-val, ?keys);
+        with-open-file (?stream = ?locator, ?keys)
+          let ?headers
+            = process-interchange-file-headers
+                (?stream, headers: ?headers-val, ?keys);
           ?body
         end
       end }
@@ -159,11 +159,11 @@ define sealed method write-interchange-file
   let _stream = #f;
   block ()
     _stream := apply(make, <file-stream>, locator: location,
-		     direction: #"output", keys);
+                     direction: #"output", keys);
     let stream :: <file-stream> = _stream;
     let headers
       = apply(process-interchange-file-headers,
-	      stream, headers: header-groups, direction: #"output", keys);
+              stream, headers: header-groups, direction: #"output", keys);
     when (lines)
       for (line in lines)
         write-line(stream, line);

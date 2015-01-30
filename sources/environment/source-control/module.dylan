@@ -8,15 +8,15 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module source-control-manager
   create <source-control-system>,
-	 sccs-name,
-	 sccs-label,
-	 sccs-title,
+         sccs-name,
+         sccs-label,
+         sccs-title,
          default-source-control-system,
-	 find-source-control-system-named,
-	 register-source-control-class,
-	 unregister-source-control-class,
-	 current-source-control-system,
-	 current-source-control-system-setter;
+         find-source-control-system-named,
+         register-source-control-class,
+         unregister-source-control-class,
+         current-source-control-system,
+         current-source-control-system-setter;
 
   create <source-control-options>,
          <source-control-login-options>,
@@ -43,23 +43,23 @@ define module source-control-manager
          source-control-command-info;
 
   create <source-control-condition>,
-	 <source-control-error>,
-	 <source-control-warning>,
-	 <source-control-unavailable>,
-	 <source-control-unsupported-command>,
-	 <source-control-command-failed>;
+         <source-control-error>,
+         <source-control-warning>,
+         <source-control-unavailable>,
+         <source-control-unsupported-command>,
+         <source-control-command-failed>;
 
   create <source-code-control-command>,
          sccs-command-implemented?,
-	 <sccs-claim-command>,     *claim-command-string*,
-	 <sccs-check-out-command>, *check-out-command-string*,
-	 <sccs-check-in-command>,  *check-in-command-string*,
-	 <sccs-abandon-command>,   *abandon-command-string*,
-	 <sccs-merge-command>,     *merge-command-string*,
-	 <sccs-diff-command>,      *diff-command-string*,
-	 <sccs-report-command>,    *report-command-string*,
-	 <sccs-add-command>,       *add-command-string*,
-	 <sccs-remove-command>,    *remove-command-string*;
+         <sccs-claim-command>,     *claim-command-string*,
+         <sccs-check-out-command>, *check-out-command-string*,
+         <sccs-check-in-command>,  *check-in-command-string*,
+         <sccs-abandon-command>,   *abandon-command-string*,
+         <sccs-merge-command>,     *merge-command-string*,
+         <sccs-diff-command>,      *diff-command-string*,
+         <sccs-report-command>,    *report-command-string*,
+         <sccs-add-command>,       *add-command-string*,
+         <sccs-remove-command>,    *remove-command-string*;
 end module source-control-manager;
 
 define module source-control-manager-internals
@@ -73,9 +73,9 @@ define module source-control-manager-internals
   use source-control-manager, export: all;
 
   export class-for-sccs-command,
-	 sccs-command-options,
-	 sccs-command-title;
+         sccs-command-options,
+         sccs-command-title;
 
   export *current-source-control-system*,
-	 note-source-control-system-selected;
+         note-source-control-system-selected;
 end module source-control-manager-internals;

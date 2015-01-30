@@ -96,11 +96,11 @@ define open generic application-just-stepped?
 
 /// CURRENT-STOP-BREAKPOINTS
 
-define open generic current-stop-breakpoints 
+define open generic current-stop-breakpoints
     (server :: <server>, thread :: <thread-object>)
  => (breakpoints :: <sequence>);
 
-define method current-stop-breakpoints 
+define method current-stop-breakpoints
     (project :: <project-object>, thread :: <thread-object>)
  => (breakpoints :: <sequence>)
   let server = choose-server(project, thread);
@@ -215,7 +215,7 @@ define method create-application-thread
     create-application-thread(application, title)
   else
     error(make(<closed-server-error>,
-	       format-string: "Attempting to create thread from closed application"))
+               format-string: "Attempting to create thread from closed application"))
   end
 end method;
 
@@ -314,7 +314,7 @@ define method add-application-object-to-thread-history
      application-object :: <application-object>)
  => (varname :: false-or(<string>))
   let server = choose-server(project, thread);
-  server & 
+  server &
     add-application-object-to-thread-history
       (server, thread, application-object)
 end method;

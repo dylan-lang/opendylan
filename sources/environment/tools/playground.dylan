@@ -30,8 +30,8 @@ define pane <check-label> ()
       let null-pane  = make(<null-pane>);
       let check-pane = make(<label>, label: $check-bitmap);
       make(<stack-layout>,
-	   children: vector(null-pane, check-pane),
-	   mapped-page: if (pane.check-value) check-pane else null-pane end)
+           children: vector(null-pane, check-pane),
+           mapped-page: if (pane.check-value) check-pane else null-pane end)
     end;
   pane check-label-pane (pane)
     make(<label>, label: pane.check-label);
@@ -81,20 +81,20 @@ define frame <starting-playground-dialog>
   layout (frame)
     with-spacing (thickness: 8)
       vertically (y-spacing: 8, x-alignment: #"right")
-	tabling (columns: 2, spacing: 16, y-alignment: #"center")
-	  make(<label>,
-	       label: $playground-large-bitmap,
-	       width:  32, min-width:  32, max-width:  32,
-	       height: 32, min-height: 32, max-height: 32);
-	  make(<label>, label: "Please wait while the playground starts...");
-	  make(<null-pane>);
-	  vertically (y-spacing: 8)
-	    frame.pd-opening-project;
-	    frame.pd-starting-application;
-	    frame.pd-opening-interactor;
-	    frame.pd-ready;
-	  end;
-	end;
+        tabling (columns: 2, spacing: 16, y-alignment: #"center")
+          make(<label>,
+               label: $playground-large-bitmap,
+               width:  32, min-width:  32, max-width:  32,
+               height: 32, min-height: 32, max-height: 32);
+          make(<label>, label: "Please wait while the playground starts...");
+          make(<null-pane>);
+          vertically (y-spacing: 8)
+            frame.pd-opening-project;
+            frame.pd-starting-application;
+            frame.pd-opening-interactor;
+            frame.pd-ready;
+          end;
+        end;
         frame.pd-close-button;
       end;
     end;
@@ -104,12 +104,12 @@ define frame <starting-playground-dialog>
   keyword resizable?: = #f;
 end frame <starting-playground-dialog>;
 
-define method generate-frame-title 
+define method generate-frame-title
     (frame :: <starting-playground-dialog>) => (title :: <string>)
   "Starting Playground"
 end method generate-frame-title;
 
-define window-settings 
+define window-settings
     starting-playground-dialog :: <starting-playground-dialog>
   = "Starting Playground";
 
@@ -143,12 +143,12 @@ define function exit-playground-dialog (#rest args) => ()
     when (playground-dialog)
       *starting-playground-dialog* := #f;
       duim-debug-message("*starting-playground-dialog* = %=",
-		    *starting-playground-dialog*);
+                    *starting-playground-dialog*);
       call-in-frame(playground-dialog,
-		    method ()
-		      duim-debug-message("Exiting dialog");
-		      exit-dialog(playground-dialog);
-		    end);
+                    method ()
+                      duim-debug-message("Exiting dialog");
+                      exit-dialog(playground-dialog);
+                    end);
     end;
   end;
 end function;
@@ -158,7 +158,7 @@ define function error-playground-not-found () => ()
   environment-error-message
     (concatenate
        ("The Playground project could not be opened.\n",
-	"Make sure the example projects are installed."),
+        "Make sure the example projects are installed."),
      owner: *starting-playground-dialog*);
   exit-playground-dialog();
 end function;
@@ -177,8 +177,8 @@ define function check-playground-label (label-getter :: <function>) => ()
     call-in-frame
       (playground-dialog,
        method ()
-	 check-value(playground-dialog.label-getter) := #t;
-	 raise-frame(playground-dialog);
+         check-value(playground-dialog.label-getter) := #t;
+         raise-frame(playground-dialog);
        end);
   end;
 end function;
@@ -188,8 +188,8 @@ define function playground-opening-project-callback
   let frame = message.message-frame;
   duim-debug-message("'Opening project' callback got 'frame found' message.");
   when (instance?(frame, <environment-frame>)
-	& frame.environment-frame-class-name = #"project-browser"
-	& playground-project?(frame.frame-current-project, just-name?: #t))
+        & frame.environment-frame-class-name = #"project-browser"
+        & playground-project?(frame.frame-current-project, just-name?: #t))
     duim-debug-message("'Opening project' callback tuned-out.");
     // Tune out this callback.
     tune-out($project-channel, playground-opening-project-callback);
@@ -209,19 +209,19 @@ define function playground-interact (frame :: <project-browser>) => ()
     // and tune in the callback.
     check-playground-label(pd-opening-interactor);
     tune-in($environment-channel, playground-interactor-opened-callback,
-	    message-type: <frame-found-message>);
+            message-type: <frame-found-message>);
   else
     // Tell the dialog the project's open & we're starting the app.
     tune-in($project-channel, playground-application-started-callback,
-	    message-type: type-union(<run-application-failed-message>,
-				     <application-initialized-message>));
+            message-type: type-union(<run-application-failed-message>,
+                                     <application-initialized-message>));
   end;
   frame-interact(frame);
 end function;
 
 define function playground-application-started-callback
     (message :: type-union(<run-application-failed-message>,
-			   <application-initialized-message>))
+                           <application-initialized-message>))
  => ()
   let project = message.message-project;
   when (playground-project?(project))
@@ -229,7 +229,7 @@ define function playground-application-started-callback
     tune-out($project-channel, playground-application-started-callback);
     // Tune-in a callback for when the interactor has been found.
     tune-in($environment-channel, playground-interactor-opened-callback,
-	    message-type: <frame-found-message>);
+            message-type: <frame-found-message>);
     duim-debug-message("'Interactor opened' callback tuned-in.");
     // Note success or failure.
     if (instance?(message, <run-application-failed-message>))
@@ -245,8 +245,8 @@ define function playground-interactor-opened-callback
     (message :: <frame-found-message>) => ()
   let frame = message.message-frame;
   when (instance?(frame, <environment-frame>)
-	& frame.environment-frame-class-name = #"debugger"
-	& playground-project?(frame.frame-current-project))
+        & frame.environment-frame-class-name = #"debugger"
+        & playground-project?(frame.frame-current-project))
     // Tune out this callback.
     tune-out($project-channel, playground-interactor-opened-callback);
     // Tell dialog the app's started and we're awaiting an interactor.
@@ -256,11 +256,11 @@ define function playground-interactor-opened-callback
     //--- (We can't execute SLEEP via a CALL-IN-FRAME, or the window
     //--- won't repaint for 2 seconds!  So we spawn another thread.)
     make(<thread>, name: "Closing playground startup dialog...",
-	 function: method ()
-		     sleep(2);
-		     duim-debug-message("Calling exit-playground-dialog");
-		     exit-playground-dialog();
-		   end);
+         function: method ()
+                     sleep(2);
+                     duim-debug-message("Calling exit-playground-dialog");
+                     exit-playground-dialog();
+                   end);
   end;
 end function;
 
@@ -278,22 +278,22 @@ define method frame-open-playground
       // Find and open the project.
       let project = find-playground-project();
       if (project)
-	// Open (or reuse) a project browser window for the playground.
+        // Open (or reuse) a project browser window for the playground.
         let project-browser = find-project-browser-showing-project(project);
-	if (project-browser)
-	  check-playground-label(pd-opening-project);
-	  call-in-frame(project-browser, playground-interact, project-browser);
-	  0
-	else
-	  tune-in($environment-channel, playground-opening-project-callback,
-		  message-type: <frame-found-message>);
-	  find-project-browser(project,
-			       initialized-callback: playground-interact)
+        if (project-browser)
+          check-playground-label(pd-opening-project);
+          call-in-frame(project-browser, playground-interact, project-browser);
+          0
+        else
+          tune-in($environment-channel, playground-opening-project-callback,
+                  message-type: <frame-found-message>);
+          find-project-browser(project,
+                               initialized-callback: playground-interact)
 
-	end;
+        end;
       else
-	error-playground-not-found();
-	#f
+        error-playground-not-found();
+        #f
       end
     end;
   failure

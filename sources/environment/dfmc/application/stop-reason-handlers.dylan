@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// <STOP-REASON-ACTION> (internal)
 
 define sealed class <stop-reason-action> (<object>)
-  sealed constant slot stop-reason-action-label :: <string>, 
+  sealed constant slot stop-reason-action-label :: <string>,
     required-init-keyword: label:;
 end class <stop-reason-action>;
 
@@ -57,11 +57,11 @@ end function stop-reason-types;
 /// <STOP-REASON-TYPE> (internal)
 
 define sealed class <stop-reason-type> (<object>)
-  sealed constant slot stop-reason-class :: subclass(<stop-reason>), 
+  sealed constant slot stop-reason-class :: subclass(<stop-reason>),
     required-init-keyword: class:;
-  sealed constant slot stop-reason-label :: <string>, 
+  sealed constant slot stop-reason-label :: <string>,
     required-init-keyword: label:;
-  sealed slot stop-reason-action :: <stop-reason-action>, 
+  sealed slot stop-reason-action :: <stop-reason-action>,
     required-init-keyword: action:;
   sealed constant slot stop-reason-message :: false-or(<string>) = #f,
     init-keyword: message:;
@@ -94,16 +94,16 @@ define sealed method shallow-copy (type :: <stop-reason-type>)
 end method shallow-copy;
 
 
-/// STOP-REASON-TYPE-DEFINER (internal) 
+/// STOP-REASON-TYPE-DEFINER (internal)
 
 define macro stop-reason-type-definer
   { define stop-reason-type ?class:name ?initargs:* end }
-    => 
+    =>
     { make(<stop-reason-type>, class: ?class, ?initargs) }
 end macro;
 
 
-/// STOP-REASON-TYPE (internal) 
+/// STOP-REASON-TYPE (internal)
 
 define stop-reason-type <stop-reason>
   action:  stop-reason-debug-action,
@@ -127,8 +127,8 @@ define stop-reason-type <create-process-stop-reason>
   action:  stop-reason-report-action,
   message: "Application process created: %s.",
   argument-callback: method (application :: <dfmc-application>, stop-reason)
-		       application.application-filename
-		     end method,
+                       application.application-filename
+                     end method,
   label:   "Process creation"
 end stop-reason-type;
 
@@ -136,8 +136,8 @@ define stop-reason-type <exit-process-stop-reason>
   action:  stop-reason-report-action,
   message: "Application process exited with exit code: %d.",
   argument-callback: method (application, stop-reason)
-		       stop-reason.stop-reason-process-exit-code
-		     end method,
+                       stop-reason.stop-reason-process-exit-code
+                     end method,
   label:   "Process exit"
 end stop-reason-type;
 
@@ -163,8 +163,8 @@ define stop-reason-type <load-library-stop-reason>
   action:  stop-reason-report-action,
   message: "Application loaded a library: %s.",
   argument-callback: method (application, stop-reason)
-		       stop-reason.stop-reason-library.library-image-name
-		     end method,
+                       stop-reason.stop-reason-library.library-image-name
+                     end method,
   label:   "Library load"
 end stop-reason-type;
 
@@ -172,8 +172,8 @@ define stop-reason-type <unload-library-stop-reason>
   action:  stop-reason-report-action,
   message: "Application unloaded a library: %s.",
   argument-callback: method (application, stop-reason)
-		       stop-reason.stop-reason-library.library-image-name
-		     end method,
+                       stop-reason.stop-reason-library.library-image-name
+                     end method,
   label:   "Library unload"
 end stop-reason-type;
 
@@ -198,8 +198,8 @@ define stop-reason-type <system-initialized-stop-reason>
   action:  stop-reason-report-action,
   message: "System initialized: %s.",
   argument-callback: method (application :: <dfmc-application>, stop-reason)
-		       application.application-filename
-		     end method,
+                       application.application-filename
+                     end method,
   label:   "System initialization"
 end stop-reason-type;
 
@@ -207,8 +207,8 @@ define stop-reason-type <dylan-invoke-debugger-stop-reason>
   action:  stop-reason-debug-action,
   message: "Dylan error: %s",
   argument-callback: method (application, stop-reason)
-		       dylan-error-message-string(stop-reason)
-		     end method,
+                       dylan-error-message-string(stop-reason)
+                     end method,
   label:   "Dylan language error"
 end stop-reason-type;
 
@@ -327,14 +327,14 @@ define stop-reason-type <class-breakpoint-stop-reason>
   message: "Class breakpoint reached: %s.",
   argument-callback:
     method (application :: <dfmc-application>,
-	    stop-reason :: <class-breakpoint-stop-reason>)
+            stop-reason :: <class-breakpoint-stop-reason>)
       let target = application.application-target-app;
       let path = target.debug-target-access-path;
       let class :: <remote-value> = stop-reason.class-breakpoint-class;
 
       format-to-string("Allocating %d bytes of %s",
-		       stop-reason.class-breakpoint-size,
-		       print-dylan-object(target, class))
+                       stop-reason.class-breakpoint-size,
+                       print-dylan-object(target, class))
     end method,
   label:   "Environment class breakpoint"
 end stop-reason-type;
@@ -349,8 +349,8 @@ define stop-reason-type <dylan-debug-message-stop-reason>
   action:  stop-reason-report-action,
   message: "Debug: %s",
   argument-callback: method (application, stop-reason)
-		       dylan-debug-message-string(stop-reason)
-		     end method,
+                       dylan-debug-message-string(stop-reason)
+                     end method,
   label:   "Dylan debug message"
 end stop-reason-type;
 
@@ -358,8 +358,8 @@ define stop-reason-type <output-debug-string-stop-reason>
   action:  stop-reason-report-action,
   message: "Debug: %s",
   argument-callback: method (application, stop-reason)
-		       stop-reason-debug-string(stop-reason)
-		     end method,
+                       stop-reason-debug-string(stop-reason)
+                     end method,
   label:   "System debug message"
 end stop-reason-type;
 
@@ -372,7 +372,7 @@ end stop-reason-type;
 
 /// DETERMINE-STOP-REASON-ACTION (internal)
 
-define function determine-stop-reason-action 
+define function determine-stop-reason-action
     (stop-reason :: <stop-reason>)
  => (action :: <stop-reason-action>)
   let class = stop-reason.object-class;
@@ -394,10 +394,10 @@ define function handle-stop-reason
   stop-reason-report(action, application, stop-reason);
   stop-reason-stay-stopped?(action, application, stop-reason)
     | begin
-	let temporary-stop?
-	  = stop-reason-temporary-debug?(application, stop-reason);
-	application.application-temporary-stop? := temporary-stop?;
-	temporary-stop?
+        let temporary-stop?
+          = stop-reason-temporary-debug?(application, stop-reason);
+        application.application-temporary-stop? := temporary-stop?;
+        temporary-stop?
       end
 end function handle-stop-reason;
 
@@ -407,7 +407,7 @@ end function handle-stop-reason;
 define method note-application-thread-message
     (application :: <dfmc-application>, stop-reason :: <stop-reason>)
  => ()
-  let thread :: false-or(<thread-object>) 
+  let thread :: false-or(<thread-object>)
     = stop-reason-thread-object(application, stop-reason);
   let message :: <string> = compose-application-message(application, stop-reason);
   invoke-application-callback
@@ -456,7 +456,7 @@ define method print-application-message
     (stream :: <stream>, application :: <dfmc-application>,
      stop-reason :: <stop-reason>)
  => ()
-  let type :: false-or(<stop-reason-type>) 
+  let type :: false-or(<stop-reason-type>)
     = element(stop-reason-types(), stop-reason.object-class, default: #f);
   if (type)
     let callback = type.stop-reason-argument-callback;
@@ -466,9 +466,9 @@ define method print-application-message
     else
       let message = type.stop-reason-message;
       if (message)
-	write(stream, message)
+        write(stream, message)
       else
-	format(stream, "Known exception without message: %=", stop-reason)
+        format(stream, "Known exception without message: %=", stop-reason)
       end
     end
   else
@@ -477,7 +477,7 @@ define method print-application-message
 end method print-application-message;
 
 define sealed method print-application-message
-    (stream :: <stream>, application :: <dfmc-application>, 
+    (stream :: <stream>, application :: <dfmc-application>,
      stop-reason :: <breakpoint-stop-reason>)
  => ()
   if (instance?(stop-reason, <source-step-stop-reason>))
@@ -485,22 +485,22 @@ define sealed method print-application-message
   else
     let need-new-line? = #f;
     local method ensure-new-line ()
-	    if (need-new-line?)
-	      format(stream, "\n")
-	    end;
-	    need-new-line? := #t
-	  end method ensure-new-line;
+            if (need-new-line?)
+              format(stream, "\n")
+            end;
+            need-new-line? := #t
+          end method ensure-new-line;
     let thread = stop-reason-thread-object(application, stop-reason);
     let breakpoints = current-stop-breakpoints(application, thread);
     for (breakpoint :: <breakpoint-object> in breakpoints)
       let message? :: false-or(<string>) = breakpoint.breakpoint-message?;
       if (message?)
-	ensure-new-line();
-	print-application-breakpoint-message
-	  (stream, application, thread, breakpoint);
-	if (~empty?(message?))
-	  format(stream, " [%s]", message?)
-	end
+        ensure-new-line();
+        print-application-breakpoint-message
+          (stream, application, thread, breakpoint);
+        if (~empty?(message?))
+          format(stream, " [%s]", message?)
+        end
       end
     end;
     //---*** This is too irritating!
@@ -515,12 +515,12 @@ define sealed method print-application-message
     if (application.application-just-initialized?)
       ensure-new-line();
       format(stream, "Application initialized: %s.",
-	     application.application-filename)
+             application.application-filename)
     end;
     if (application.application-reached-interaction-point?)
       ensure-new-line();
-      format(stream, "Application ready for interaction: %s.", 
-	     application.application-filename)
+      format(stream, "Application ready for interaction: %s.",
+             application.application-filename)
     end
   end
 end method print-application-message;
@@ -528,7 +528,7 @@ end method print-application-message;
 /// APPLICATION-BREAKPOINT-MESSAGE-ARGUMENT (internal)
 
 define sealed method print-application-breakpoint-message
-    (stream :: <stream>, application :: <dfmc-application>, 
+    (stream :: <stream>, application :: <dfmc-application>,
      thread :: <thread-object>,  breakpoint :: <breakpoint-object>)
  => ()
   #f
@@ -547,32 +547,32 @@ define sealed method print-application-breakpoint-message
   let depth = thread-message-depth(application, thread);
   let (direction-arrow, current-depth, new-depth)
     = select (info by instance?)
-	<breakpoint-entry-info> =>
-	  values($breakpoint-arguments-prefix,
-		 depth,
-		 member?(#"out", directions) & (depth + 1));
-	<breakpoint-return-info> =>
-	  let new-depth
-	    = if (member?(#"in", directions))
-		depth - 1
-	      else
-		depth
-	      end;
-	  values($breakpoint-values-prefix,
-		 new-depth,
-		 new-depth);
-	otherwise =>
-	  values($breakpoint-arguments-prefix,
-		 depth,
-		 #f);
+        <breakpoint-entry-info> =>
+          values($breakpoint-arguments-prefix,
+                 depth,
+                 member?(#"out", directions) & (depth + 1));
+        <breakpoint-return-info> =>
+          let new-depth
+            = if (member?(#"in", directions))
+                depth - 1
+              else
+                depth
+              end;
+          values($breakpoint-values-prefix,
+                 new-depth,
+                 new-depth);
+        otherwise =>
+          values($breakpoint-arguments-prefix,
+                 depth,
+                 #f);
       end;
   if (new-depth)
     thread-message-depth(application, thread) := new-depth
   end;
   let indentation = current-depth * $depth-indentation;
   format(stream, "%s%d: ",
-	 make(<byte-string>, size: indentation, fill: ' '),
-	 current-depth);
+         make(<byte-string>, size: indentation, fill: ' '),
+         current-depth);
   print-environment-object-name
     (stream, project, breakpoint.breakpoint-object, qualify-names?: #f);
   format(stream, "%s ", direction-arrow);
@@ -580,8 +580,8 @@ define sealed method print-application-breakpoint-message
 end method print-application-breakpoint-message;
 
 define sealed method print-application-breakpoint-message
-    (stream :: <stream>, application :: <dfmc-application>, 
-     thread :: <thread-object>, 
+    (stream :: <stream>, application :: <dfmc-application>,
+     thread :: <thread-object>,
      breakpoint :: <source-location-breakpoint-object>)
  => ()
   let source-location :: <source-location> = breakpoint.breakpoint-object;
@@ -628,7 +628,7 @@ define function thread-message-depth
   element(depths, thread, default: 0);
 end function thread-message-depth;
 
-define function thread-message-depth-setter 
+define function thread-message-depth-setter
     (depth :: <integer>, application :: <dfmc-application>,
      thread :: <thread-object>)
  => (depth :: <integer>)
@@ -647,7 +647,7 @@ define sealed method stop-reason-report
 end method stop-reason-report;
 
 define sealed method stop-reason-report
-    (type :: <stop-reason-report-action>, application :: <dfmc-application>, 
+    (type :: <stop-reason-report-action>, application :: <dfmc-application>,
      stop-reason :: <stop-reason>)
  => ()
   note-application-thread-message(application, stop-reason)
@@ -668,15 +668,15 @@ define sealed method stop-reason-report
 end method stop-reason-report;
 
 define sealed method stop-reason-report
-    (type :: <stop-reason-report-action>, application :: <dfmc-application>, 
+    (type :: <stop-reason-report-action>, application :: <dfmc-application>,
      stop-reason :: <breakpoint-stop-reason>)
  => ()
   let thread :: <thread-object> = stop-reason-thread-object(application, stop-reason);
   if (any?(breakpoint-message?, current-stop-breakpoints(application, thread))
-	| application-just-stepped?(application, thread)
+        | application-just-stepped?(application, thread)
 //---*** andrewa: we don't print interaction messages anymore!
-//	| application-just-interacted?(application, thread)
-	| application.application-just-initialized?
+//        | application-just-interacted?(application, thread)
+        | application.application-just-initialized?
         | application.application-reached-interaction-point?)
     next-method()
   end if;
@@ -685,21 +685,21 @@ end method stop-reason-report;
 /// STOP-REASON-STAY-STOPPED? (internal)
 
 define sealed method stop-reason-stay-stopped?
-    (type :: <stop-reason-action>, application :: <dfmc-application>, 
+    (type :: <stop-reason-action>, application :: <dfmc-application>,
      stop-reason :: <stop-reason>)
  => (debug? :: <boolean>)
   #f
 end method stop-reason-stay-stopped?;
 
 define sealed method stop-reason-stay-stopped?
-    (type :: <stop-reason-debug-action>, application :: <dfmc-application>, 
+    (type :: <stop-reason-debug-action>, application :: <dfmc-application>,
      stop-reason :: <stop-reason>)
   => (debug? :: <boolean>)
   #t
 end method stop-reason-stay-stopped?;
 
 define sealed method stop-reason-stay-stopped?
-    (type :: <stop-reason-debug-action>, application :: <dfmc-application>, 
+    (type :: <stop-reason-debug-action>, application :: <dfmc-application>,
      stop-reason :: <source-code-alignment-stop-reason>)
   => (debug? :: <boolean>)
   #f
@@ -713,20 +713,20 @@ define sealed method stop-reason-stay-stopped?
 end method stop-reason-stay-stopped?;
 
 define sealed method stop-reason-stay-stopped?
-    (type :: <stop-reason-debug-action>, application :: <dfmc-application>, 
+    (type :: <stop-reason-debug-action>, application :: <dfmc-application>,
      stop-reason :: <breakpoint-stop-reason>)
  => (debug? :: <boolean>)
   let thread :: <thread-object> = stop-reason-thread-object(application, stop-reason);
   application-just-hit-breakpoint?(application, thread)
     | application-just-stepped?(application, thread)
     | (application-just-interacted?(application, thread)
-	 & ~application.application-target-app.application-running-on-code-entry?)
+         & ~application.application-target-app.application-running-on-code-entry?)
     | (application.application-startup-option == #"interact"
-	 & application.application-reached-interaction-point?)
+         & application.application-reached-interaction-point?)
     | (application.application-startup-option == #"debug"
-	 & application.application-reached-interaction-point?)
+         & application.application-reached-interaction-point?)
     | (application.application-just-finished-execution?
-	 & application.application-pause-before-termination?)
+         & application.application-pause-before-termination?)
 end method stop-reason-stay-stopped?;
 
 
@@ -740,42 +740,42 @@ define sealed method stop-reason-temporary-debug?
 end method stop-reason-temporary-debug?;
 
 define sealed method stop-reason-temporary-debug?
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      stop-reason :: <breakpoint-stop-reason>)
  => (debug? :: <boolean>)
   #t
 end method stop-reason-temporary-debug?;
 
 define sealed method stop-reason-temporary-debug?
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      stop-reason :: <source-code-alignment-stop-reason>)
  => (debug? :: <boolean>)
   #t
 end method stop-reason-temporary-debug?;
 
 define sealed method stop-reason-temporary-debug?
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      stop-reason :: <create-process-stop-reason>)
  => (debug? :: <boolean>)
   #t
 end method stop-reason-temporary-debug?;
 
 define sealed method stop-reason-temporary-debug?
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      stop-reason :: <exit-process-stop-reason>)
  => (debug? :: <boolean>)
   #t
 end method stop-reason-temporary-debug?;
 
 define sealed method stop-reason-temporary-debug?
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      stop-reason :: <create-thread-stop-reason>)
  => (debug? :: <boolean>)
   #t
 end method stop-reason-temporary-debug?;
 
 define sealed method stop-reason-temporary-debug?
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      stop-reason :: <exit-thread-stop-reason>)
  => (debug? :: <boolean>)
   #t
@@ -784,14 +784,14 @@ end method stop-reason-temporary-debug?;
 
 /// STOP-REASON-ADMIN (internal)
 
-define sealed method stop-reason-admin 
+define sealed method stop-reason-admin
     (type :: <stop-reason-action>,
      application :: <dfmc-application>,
      stop-reason :: <stop-reason>)
  => ()
 end method stop-reason-admin;
 
-define sealed method stop-reason-admin 
+define sealed method stop-reason-admin
     (type :: <stop-reason-action>,
      application :: <dfmc-application>,
      stop-reason :: <create-process-stop-reason>)
@@ -804,7 +804,7 @@ define sealed method stop-reason-admin
     (application, application-process-created-callback)
 end method stop-reason-admin;
 
-define sealed method stop-reason-admin 
+define sealed method stop-reason-admin
     (type :: <stop-reason-action>,
      application :: <dfmc-application>,
      stop-reason :: <load-library-stop-reason>)
@@ -857,38 +857,38 @@ end method stop-reason-admin;
 /// STOP-REASON-ADMIN since that is called by the DM with the target app
 /// already locked.
 
-define sealed method stop-reason-transaction-admin 
+define sealed method stop-reason-transaction-admin
     (application :: <dfmc-application>,
      stop-reason :: <stop-reason>)
  => ()
 end method stop-reason-transaction-admin;
 
 define sealed method stop-reason-transaction-admin
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      stop-reason :: <create-thread-stop-reason>) => ()
   note-application-threads-changed(application)
 end method stop-reason-transaction-admin;
 
 define sealed method stop-reason-transaction-admin
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      stop-reason :: <exit-thread-stop-reason>) => ()
   note-application-threads-changed(application)
 end method stop-reason-transaction-admin;
 
 define sealed method stop-reason-transaction-admin
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      stop-reason :: <create-process-stop-reason>) => ()
   note-application-threads-changed(application)
 end method stop-reason-transaction-admin;
 
 define sealed method stop-reason-transaction-admin
-    (application :: <dfmc-application>, 
+    (application :: <dfmc-application>,
      stop-reason :: <exit-process-stop-reason>) => ()
   note-application-threads-changed(application)
 end method stop-reason-transaction-admin;
 
 /// NB sweeps away transient breakpoints as we encounter them.
-define sealed method stop-reason-transaction-admin 
+define sealed method stop-reason-transaction-admin
     (application :: <dfmc-application>,
      stop-reason :: <breakpoint-stop-reason>)
  => (stay-stopped? :: <boolean>)
@@ -906,10 +906,10 @@ define sealed method stop-reason-transaction-admin
   // If we came across the special "initial" breakpoint, we need
   // to set the APPLICATION-REACHED-INTERACTION-POINT? property.
   if (any?(method (breakpoint)
-	     instance?(breakpoint, <function-breakpoint-object>)
-	       & breakpoint.breakpoint-entry-function?
-	   end,
-	   breakpoints))
+             instance?(breakpoint, <function-breakpoint-object>)
+               & breakpoint.breakpoint-entry-function?
+           end,
+           breakpoints))
     application.application-reached-interaction-point? := #t
   end if;
 
@@ -925,9 +925,9 @@ define sealed method stop-reason-transaction-admin
   for (breakpoint :: <breakpoint-object> in breakpoints)
     if (breakpoint.breakpoint-transient?)
       unless (instance?(breakpoint, <function-breakpoint-object>)
-		& instance?(breakpoint-info(application, breakpoint), <breakpoint-entry-info>)
-		& member?(#"out", breakpoint.breakpoint-directions))
-	destroy-breakpoint(breakpoint)
+                & instance?(breakpoint-info(application, breakpoint), <breakpoint-entry-info>)
+                & member?(#"out", breakpoint.breakpoint-directions))
+        destroy-breakpoint(breakpoint)
       end unless;
     end if;
   end for;
@@ -954,11 +954,11 @@ define sealed method stop-reason-transaction-admin
       let entry-function = project.project-start-function;
       if (entry-function)
         application.application-initial-breakpoint
-	  := make(<breakpoint-object>, 
-		  project: project,
-		  object: entry-function, entry-function?: #t,
-		  directions: #[#"in"],
-		  transient?: #t);
+          := make(<breakpoint-object>,
+                  project: project,
+                  object: entry-function, entry-function?: #t,
+                  directions: #[#"in"],
+                  transient?: #t);
       end if;
     end if;
 
@@ -992,18 +992,18 @@ define function start-debugging-transaction
     application.application-temporary-stop? =>
       application.application-temporary-stop? := #f;
       continue-application-runtime
-	(application,
-	 instance?(stop-reason, <internal-stop-reason>)
-	   & stop-reason.stop-reason-thread);
+        (application,
+         instance?(stop-reason, <internal-stop-reason>)
+           & stop-reason.stop-reason-thread);
     otherwise =>
       application.application-stop-reason := stop-reason;
       let thread :: false-or(<thread-object>)
-	= stop-reason-thread-object(application, stop-reason);
+        = stop-reason-thread-object(application, stop-reason);
       let startup-opt :: false-or(<application-startup-option>)
-	= stop-reason-startup-option(application, stop-reason);
+        = stop-reason-startup-option(application, stop-reason);
       invoke-application-callback
-	(application, application-debugging-callback,
-	 thread, startup-opt);
+        (application, application-debugging-callback,
+         thread, startup-opt);
   end
 end function start-debugging-transaction;
 
@@ -1023,7 +1023,7 @@ end function finish-debugging-transaction;
 /// HANDLE-INTERACTOR-RESULTS (internal)
 
 define function handle-interactor-results
-    (application :: <dfmc-application>, thread :: <thread-object>, 
+    (application :: <dfmc-application>, thread :: <thread-object>,
      transaction-id)
  => (stop? :: <boolean>)
   invoke-application-callback
@@ -1051,28 +1051,28 @@ define function handle-library-initialization
   let dll-under-dll-wrap? = dll-wrap? & dll-project?;
   let stop?
     = if (really-top-level? | dll-under-dll-wrap?)
-	select (phase)
-	  #"start" =>
-	    if (really-top-level?)
-	      application.application-just-initialized? := #t
-	    end;
-	  #"end" =>
-	    if (profiling-enabled?(project))
-	      stop-profiling-application(project);
-	      application.pause-before-termination-flag := #t
-	    end;
-	    if (dll-under-dll-wrap? | ~application.application-initial-breakpoint)
-	      application.application-reached-interaction-point? := #t;
-	      if (application.application-startup-option ~== #"start")
-		application.pause-before-termination-flag := #f
-	      end
-	    end;
-	    application.application-just-finished-execution? := #t;
-	end;
+        select (phase)
+          #"start" =>
+            if (really-top-level?)
+              application.application-just-initialized? := #t
+            end;
+          #"end" =>
+            if (profiling-enabled?(project))
+              stop-profiling-application(project);
+              application.pause-before-termination-flag := #t
+            end;
+            if (dll-under-dll-wrap? | ~application.application-initial-breakpoint)
+              application.application-reached-interaction-point? := #t;
+              if (application.application-startup-option ~== #"start")
+                application.pause-before-termination-flag := #f
+              end
+            end;
+            application.application-just-finished-execution? := #t;
+        end;
       end;
   /*
   debugger-message("Stopping? %=: top? %= dll? %=, dll-wrap? %=, phase %=",
-		   stop?, top-level?, dll-project?, dll-wrap?, phase);
+                   stop?, top-level?, dll-project?, dll-wrap?, phase);
   */
   stop?
 end function handle-library-initialization;
@@ -1091,10 +1091,10 @@ define function library-breakpoint-info
   // will be invoked by some external event
 
   values(if (library.self-contained-component?) #f
-	 else
-	   application.server-project.env/project-target-type == #"dll"
-	 end,
-	 as-lowercase(library.library-core-name) = "dll-wrap")
+         else
+           application.server-project.env/project-target-type == #"dll"
+         end,
+         as-lowercase(library.library-core-name) = "dll-wrap")
 end function library-breakpoint-info;
 
 
@@ -1104,19 +1104,19 @@ define generic stop-reason-thread-object
     (application :: <dfmc-application>, stop-reason :: <stop-reason>)
  => (thread :: false-or(<thread-object>));
 
-define sealed method stop-reason-thread-object 
+define sealed method stop-reason-thread-object
     (application :: <dfmc-application>, stop-reason :: <stop-reason>)
  => (thread :: singleton(#f))
   #f
 end method stop-reason-thread-object;
 
-define sealed method stop-reason-thread-object 
+define sealed method stop-reason-thread-object
     (application :: <dfmc-application>, stop-reason :: <internal-stop-reason>)
  => (thread :: <thread-object>)
   remote-thread-thread-object(application, stop-reason.stop-reason-thread)
 end method stop-reason-thread-object;
 
-define sealed method stop-reason-thread-object 
+define sealed method stop-reason-thread-object
     (application :: <dfmc-application>,
      stop-reason :: <debugger-generated-stop-reason>)
  => (thread :: false-or(<thread-object>))
@@ -1132,13 +1132,13 @@ end method stop-reason-thread-object;
 
 /// STOP-REASON-STARTUP-OPTION (Internal)
 
-define sealed method stop-reason-startup-option 
+define sealed method stop-reason-startup-option
     (application :: <dfmc-application>, sr :: false-or(<stop-reason>))
  => (sopt :: false-or(<application-startup-option>))
   #f
 end method stop-reason-startup-option;
 
-define sealed method stop-reason-startup-option 
+define sealed method stop-reason-startup-option
     (application :: <dfmc-application>, sr :: <debugger-generated-stop-reason>)
  => (sopt :: false-or(<application-startup-option>))
   let client-data = stop-reason-client-data(sr);
@@ -1157,18 +1157,18 @@ define generic remote-thread-thread-object
     (application :: <dfmc-application>, remote-thread :: false-or(<remote-thread>))
  => (thread :: false-or(<thread-object>));
 
-define sealed method remote-thread-thread-object 
+define sealed method remote-thread-thread-object
     (application :: <dfmc-application>, remote-thread == #f)
  => (thread == #f)
   #f
 end method remote-thread-thread-object;
 
-define sealed method remote-thread-thread-object 
+define sealed method remote-thread-thread-object
     (application :: <dfmc-application>, remote-thread :: <remote-thread>)
  => (thread :: <thread-object>)
-  make-environment-object(<thread-object>, 
-			  project: application.server-project, 
-			  application-object-proxy: remote-thread)
+  make-environment-object(<thread-object>,
+                          project: application.server-project,
+                          application-object-proxy: remote-thread)
 end method remote-thread-thread-object;
 
 

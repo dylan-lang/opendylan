@@ -27,9 +27,9 @@ define method keyed-sort!
     sequence[i] := pair(key(element), element)
   end;
   sort!(sequence,
-	test: method (object1, object2)
-		test(head(object1), head(object2))
-	      end);
+        test: method (object1, object2)
+                test(head(object1), head(object2))
+              end);
   for (element in sequence,
        i from 0)
     sequence[i] := tail(element)
@@ -46,9 +46,9 @@ define method keyed-sort!
     vector[i] := pair(key(element), element)
   end;
   sort!(vector,
-	test: method (object1, object2)
-		test(head(object1), head(object2))
-	      end);
+        test: method (object1, object2)
+                test(head(object1), head(object2))
+              end);
   for (element in vector,
        i from 0)
     vector[i] := tail(element)
@@ -59,8 +59,8 @@ end method keyed-sort!;
 //--- This is much faster if you supply a test, rather than forcing
 //--- the very generic name test.
 //---*** andrewa: remove this once we've stopped calling it...
-define method frame-order-sequence 
-    (frame :: <frame>, sequence :: <sequence>, 
+define method frame-order-sequence
+    (frame :: <frame>, sequence :: <sequence>,
      #key label-key = identity,
           test)
  => (ordered-sequence :: <sequence>)
@@ -68,8 +68,8 @@ define method frame-order-sequence
     sort(sequence, test: test | curry(frame-object<, frame))
   else
     keyed-sort(sequence,
-	       key: label-key,
-	       test: test | curry(frame-object<, frame))
+               key: label-key,
+               test: test | curry(frame-object<, frame))
   end
 end method frame-order-sequence;
 

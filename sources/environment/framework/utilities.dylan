@@ -49,8 +49,8 @@ define method update-command-availability
     (method (gadget :: <gadget>, command :: <class>)
        ignore(gadget);
        if (subtype?(command, class))
-	 command-enabled?(command, frame)
-	   := command-available?(frame, command)
+         command-enabled?(command, frame)
+           := command-available?(frame, command)
        end
      end,
      frame,

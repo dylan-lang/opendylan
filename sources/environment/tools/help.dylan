@@ -10,12 +10,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $license-font
   = make(<text-style>,
-	 family: #"fix");
+         family: #"fix");
 
 define constant $about-box-copyright-font
   = make(<text-style>,
-	 family: #"sans-serif",
-	 size:   #"small");
+         family: #"sans-serif",
+         size:   #"small");
 
 
 /// License agreement
@@ -27,10 +27,10 @@ define frame <license-agreement-box> (<dialog-frame>)
     make(<label>, label: $splash-screen-bitmap);
   pane license-agreement-copyright-pane (frame)
     make(<text-editor>,
-	 text: license-agreement-text(),
-	 text-style: $license-font,
-	 lines: 30, columns: $license-text-width + 5,
-	 read-only?: #t, tab-stop?: #f);
+         text: license-agreement-text(),
+         text-style: $license-font,
+         lines: 30, columns: $license-text-width + 5,
+         read-only?: #t, tab-stop?: #f);
   layout (frame)
     frame.license-agreement-copyright-pane;
   keyword title: = "License Agreement";
@@ -61,19 +61,19 @@ define frame <about-box> (<dialog-frame>)
       (about-box-info-text(),
        text-style: $about-box-copyright-font);
   pane license-agreement-button (frame)
-    make(<button>, 
-	 label: "&License Terms",
-	 activate-callback: 
-	   method (button)
-	     let dialog 
-	       = make(<license-agreement-box>, 
-		      owner: sheet-frame(button));
-	     start-dialog(dialog)
-	   end);
+    make(<button>,
+         label: "&License Terms",
+         activate-callback:
+           method (button)
+             let dialog
+               = make(<license-agreement-box>,
+                      owner: sheet-frame(button));
+             start-dialog(dialog)
+           end);
   pane ok-button (frame)
-    make(<button>, 
-	 label: "OK",
-	 activate-callback: exit-dialog);
+    make(<button>,
+         label: "OK",
+         activate-callback: exit-dialog);
   pane exit-buttons (frame)
     horizontally (x-spacing: 8, equalize-widths?: #t)
       frame.license-agreement-button;
@@ -93,8 +93,8 @@ define frame <about-box> (<dialog-frame>)
       end
     end;
   keyword title: = format-to-string("About %s %s",
-				    release-product-name(),
-				    release-short-version());
+                                    release-product-name(),
+                                    release-short-version());
   keyword exit-buttons?: = #f;
   keyword center?: = #t;
   //--- This would be a good idea if DUIM didn't screw it up!
@@ -141,14 +141,14 @@ define constant $functional-dylan-quotes
            "But it is, perhaps, the end of the beginning.\"\n"
            " -- Winston Churchill, 1942",
 
-	   "\"What we call the beginning is often the end, "
-	   "And to make an end is to make a beginning. "
-	   "The end is where we start from.\"\n"
-	   " -- T. S. Eliot, \"Little Gidding\", 5.",
+           "\"What we call the beginning is often the end, "
+           "And to make an end is to make a beginning. "
+           "The end is where we start from.\"\n"
+           " -- T. S. Eliot, \"Little Gidding\", 5.",
 
-	   "\"A hard beginning maketh a good ending.\"\n"
-	   " -- John Heywood, \"Proverbes\". Part i. Chap. iv."
-	   );
+           "\"A hard beginning maketh a good ending.\"\n"
+           " -- John Heywood, \"Proverbes\". Part i. Chap. iv."
+           );
 
 define variable *quote-index* :: <integer> = 0;
 
@@ -157,10 +157,10 @@ define frame <help-quote> (<dialog-frame>)
   keyword cancel-callback: = #f;
   pane help-credits-text-pane (help-credits)
     make(<text-editor>,
-	 read-only?: #t, tab-stop?: #f,
-	 value: format-to-string($functional-dylan-quotes[*quote-index*]),
-	 scroll-bars: #"none",
-	 lines: 4, columns: 40);
+         read-only?: #t, tab-stop?: #f,
+         value: format-to-string($functional-dylan-quotes[*quote-index*]),
+         scroll-bars: #"none",
+         lines: 4, columns: 40);
   layout (help-credits)
     with-border (type: #"raised")
       with-spacing (spacing: 16)
@@ -168,7 +168,7 @@ define frame <help-quote> (<dialog-frame>)
       end
     end;
   keyword center?: = #t;
-end frame; 
+end frame;
 
 define method help-credits (frame :: <about-box>)
   => ()
@@ -244,13 +244,13 @@ define method do-frame-help
       frame-open-object(frame, location);
     otherwise =>
       if (environment-question
-	    (format-to-string
-	       ("%s online documentation is not installed.  "
-		  "Download it from the web?",
-		release-product-name()),
-	     owner: frame,
-	     exit-style: #"yes-no"))
-	frame-open-dylan-web-page(frame, page: $download-doc-page)
+            (format-to-string
+               ("%s online documentation is not installed.  "
+                  "Download it from the web?",
+                release-product-name()),
+             owner: frame,
+             exit-style: #"yes-no"))
+        frame-open-dylan-web-page(frame, page: $download-doc-page)
       end;
   end
 end method do-frame-help;
@@ -289,15 +289,15 @@ end command-table *environment-web-links-command-table*;
 add-command-table-menu-item
   (*environment-web-links-command-table*, "", <push-box>, #f,
    update-callback: method (menu-box :: <menu-box>)
-		      let items
-			= vector(format-to-string("Register %s",
-						  release-product-name()));
-		      gadget-items(menu-box) := items
-		    end,
+                      let items
+                        = vector(format-to-string("Register %s",
+                                                  release-product-name()));
+                      gadget-items(menu-box) := items
+                    end,
    label-key: identity,
    callback: method (menu-box :: <menu-box>)
-	       let frame = sheet-frame(menu-box);
-	       frame-register-developer(frame)
+               let frame = sheet-frame(menu-box);
+               frame-register-developer(frame)
              end);
 */
 

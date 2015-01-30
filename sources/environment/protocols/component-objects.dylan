@@ -100,7 +100,7 @@ end method;
 //      f          - The iterator. A function of signature:
 //                   (<COMPONENT-OBJECT>) => ().
 //      server     - The dispatching context.
-//    Outputs:   
+//    Outputs:
 //      None.
 
 define open generic do-application-components

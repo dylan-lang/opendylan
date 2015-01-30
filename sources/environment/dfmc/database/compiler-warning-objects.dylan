@@ -14,12 +14,12 @@ define sealed method do-compiler-warnings
      #key client) => ()
   let project-object = server.server-project;
   local method do-context-notes
-	    (context :: <context>)
-	  let program-notes = compilation-context-notes(context);
-	  program-notes
-	    & do-program-notes
-	        (function, project-object, library, program-notes)
-	end method do-context-notes;
+            (context :: <context>)
+          let program-notes = compilation-context-notes(context);
+          program-notes
+            & do-program-notes
+                (function, project-object, library, program-notes)
+        end method do-context-notes;
   let project = library.library-compiler-project;
   let context = browsing-context(server, project);
   let second-context = project-second-context(project, context);
@@ -34,13 +34,13 @@ define sealed method do-compiler-warnings
   let project-object = server.server-project;
   let source-form :: <source-form> = object.compiler-object-proxy;
   local method do-context-notes
-	    (context :: <context>)
-	  let program-notes = source-form-notes(context, source-form);
-	  let library = project-library(project-object);
-	  program-notes
-	    & do-program-notes
-	        (function, project-object, library, program-notes)
-	end method do-context-notes;
+            (context :: <context>)
+          let program-notes = source-form-notes(context, source-form);
+          let library = project-library(project-object);
+          program-notes
+            & do-program-notes
+                (function, project-object, library, program-notes)
+        end method do-context-notes;
   let context = browsing-context(server, source-form);
   let project = context.compilation-context-project;
   let second-context = project-second-context(project, context);
@@ -49,7 +49,7 @@ define sealed method do-compiler-warnings
 end method do-compiler-warnings;
 
 define function do-program-notes
-    (function :: <function>, project :: <project-object>, 
+    (function :: <function>, project :: <project-object>,
      library :: <library-object>, notes :: <sequence>)
  => ()
   let server = project.project-compiler-database;
@@ -57,15 +57,15 @@ define function do-program-notes
     for (program-note :: <program-note> in notes)
       let class
         = select (program-note by instance?)
-	    <serious-program-warning> => <serious-compiler-warning-object>;
-	    <program-error>           => <compiler-error-object>;
-	    otherwise                 => <compiler-warning-object>;
-	  end;
+            <serious-program-warning> => <serious-compiler-warning-object>;
+            <program-error>           => <compiler-error-object>;
+            otherwise                 => <compiler-warning-object>;
+          end;
       let warning
         = make-environment-object(class,
-				  project: server.server-project,
-		 		  library: library,
-	  			  compiler-object-proxy: program-note);
+                                  project: server.server-project,
+                                   library: library,
+                                    compiler-object-proxy: program-note);
       function(warning)
     end
   end
@@ -76,7 +76,7 @@ define sealed method compiler-warning-full-message
  => (message :: <string>)
   program-note-message(compiler-object-proxy(warning))
 end method compiler-warning-full-message;
-    
+
 define sealed method compiler-warning-short-message
     (server :: <dfmc-database>, warning :: <compiler-warning-object>)
  => (message :: <string>)
@@ -84,20 +84,20 @@ define sealed method compiler-warning-short-message
   let message = compiler-warning-full-message(server, warning);
   first-line(message)
 end method compiler-warning-short-message;
-    
+
 define sealed method get-environment-object-primitive-name
     (server :: <dfmc-database>, warning :: <compiler-warning-object>)
  => (message :: <string>)
   compiler-warning-short-message(server, warning)
 end method get-environment-object-primitive-name;
 
-define function first-line 
+define function first-line
     (string :: <string>) => (line :: <string>)
   let newline-key
     = find-key(string,
-	       method (character)
-		 member?(character, #('\n', '\r'))
-	       end method);
+               method (character)
+                 member?(character, #('\n', '\r'))
+               end method);
   if (newline-key)
     // Strip off a single trailing period, if any
     if (newline-key > 0 & string[newline-key - 1] = '.')

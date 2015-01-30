@@ -57,7 +57,7 @@ define method get-application-variable-value
        => (variable-value :: <remote-value>)
   let target = application.application-target-app;
   if (thread)
-    evaluate-thread-local-variable(target, 
+    evaluate-thread-local-variable(target,
                                    thread,
                                    proxy.application-variable-address);
   else
@@ -103,18 +103,18 @@ end method;
 
 define method variable-value (application :: <dfmc-application>,
                               variable :: <global-variable-object>,
-			      #key thread = #f)
+                              #key thread = #f)
     => (value :: false-or(<application-object>));
 
   let target = application.application-target-app;
   let value = #f;
 
   perform-debugger-transaction
-    (target, 
+    (target,
      method () => ()
        let proxy =
           ensure-application-global-variable-proxy(application, variable);
-       let remote-value = 
+       let remote-value =
          if (proxy)
            get-application-variable-value(application, proxy);
          else
@@ -130,7 +130,7 @@ end method;
 
 define method variable-value (application :: <dfmc-application>,
                               variable :: <constant-object>,
-			      #key thread = #f)
+                              #key thread = #f)
     => (value :: false-or(<application-object>));
 
   let target = application.application-target-app;
@@ -141,11 +141,11 @@ define method variable-value (application :: <dfmc-application>,
   // may need to change one day.
 
   perform-debugger-transaction
-    (target, 
+    (target,
      method () => ()
        let proxy =
           ensure-application-global-variable-proxy(application, variable);
-       let remote-value = 
+       let remote-value =
          if (proxy)
            get-application-variable-value(application, proxy);
          else
@@ -161,18 +161,18 @@ end method;
 
 define method variable-value (application :: <dfmc-application>,
                               variable :: <thread-variable-object>,
-			      #key thread = #f)
+                              #key thread = #f)
     => (value :: false-or(<application-object>));
 
   let target = application.application-target-app;
   let value = #f;
 
   perform-debugger-transaction
-    (target, 
+    (target,
      method () => ()
-       let proxy = 
+       let proxy =
            ensure-application-thread-variable-proxy(application, variable);
-       let remote-value = 
+       let remote-value =
          if (proxy)
            get-application-variable-value
               (application, proxy, thread: thread.application-object-proxy);

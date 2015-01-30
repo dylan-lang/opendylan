@@ -40,35 +40,35 @@ define open generic ensure-environment-frame
 define open generic reuse-environment-frame (portd :: <port-designator>, class :: subclass(<frame>), #key, #all-keys)
  => (frame :: false-or(<frame>));
 
-define open generic find-matching-frames 
+define open generic find-matching-frames
     (portd :: <port-designator>, class :: subclass(<frame>), #key, #all-keys)
- => (frames :: <sequence>);    
+ => (frames :: <sequence>);
 
 define open generic choose-matching-frame
     (portd :: <port-designator>, class :: subclass(<frame>), #key, #all-keys)
- => (frame :: false-or(<frame>));    
+ => (frame :: false-or(<frame>));
 
 define open generic choose-environment-frame
     (portd :: <port-designator>, class :: subclass(<frame>), #key, #all-keys)
- => (frame :: false-or(<frame>));    
+ => (frame :: false-or(<frame>));
 
 define open generic choose-current-frame
     (portd :: <port-designator>, class :: subclass(<frame>), #key, #all-keys)
- => (frame :: false-or(<frame>));    
+ => (frame :: false-or(<frame>));
 
 define open generic current-environment-frame
     (portd :: <port-designator>)
- => (frame :: false-or(<frame>));    
+ => (frame :: false-or(<frame>));
 
-define open generic reuse-matching-frame? 
+define open generic reuse-matching-frame?
     (portd :: <port-designator>, frame :: <frame>, class :: subclass(<frame>), #key, #all-keys)
- => (reuse? :: <boolean>);    
+ => (reuse? :: <boolean>);
 
 define open generic choose-frame
     (portd :: <port-designator>, class :: subclass(<frame>), frames :: <sequence>, #key, #all-keys)
  => (frame :: false-or(<frame>));
 
-define open generic reinitialize-frame 
+define open generic reinitialize-frame
     (frame :: <frame>, #key, #all-keys)
  => ();
 
@@ -168,7 +168,7 @@ end class <frame-found-message>;
 
 
 /// FIND-ENVIRONMENT-FRAME (environment-framework)
-/// 
+///
 /// obsolete (use ensure-environment-frame)
 
 define method find-environment-frame
@@ -256,10 +256,10 @@ define macro wait-for-forking-frames
         if (forking-frame)
           if (wait-for(forking-frame.environment-frame-notification))
             ?body
-	  end if;
+          end if;
         else
           ?body
-	end if;
+        end if;
       end }
 end macro;
 
@@ -306,8 +306,8 @@ define method find-forking-environment-frame (class :: subclass(<frame>))
       // NB test both ways around in case MAKE makes a subclass
       // of requested class.
       if (subtype?(forking-frame.environment-frame-class, class)
-	    | subtype?(class, forking-frame.environment-frame-class))
-	found(forking-frame);
+            | subtype?(class, forking-frame.environment-frame-class))
+        found(forking-frame);
       end if;
     end for;
   end block;
@@ -322,16 +322,16 @@ define method note-environment-frame-forked (class :: subclass(<frame>))
     if (forking-frame)
       forking-frame.environment-frame-count := forking-frame.environment-frame-count - 1;
       if (forking-frame.environment-frame-count = 0)
-	*forking-environment-frames* := remove!(*forking-environment-frames*, forking-frame);
-	release-all(forking-frame.environment-frame-notification)
+        *forking-environment-frames* := remove!(*forking-environment-frames*, forking-frame);
+        release-all(forking-frame.environment-frame-notification)
       end if;
     end if;
   end;
 end method;
 
-/// FIND-MATCHING-FRAMES (environment-framework) 
+/// FIND-MATCHING-FRAMES (environment-framework)
 
-define method find-matching-frames 
+define method find-matching-frames
     (portd :: <port-designator>, class :: subclass(<frame>), #rest initargs, #key)
  => (frames :: <sequence>)
   let frames :: <list> = #();
@@ -341,9 +341,9 @@ define method find-matching-frames
     // list adds to the front...
     do-frames
       (method (frame :: <frame>) => ()
-	 when (apply(reuse-matching-frame?, portd, frame, class, initargs))
-	   frames := add!(frames, frame)
-	 end
+         when (apply(reuse-matching-frame?, portd, frame, class, initargs))
+           frames := add!(frames, frame)
+         end
        end method,
        z-order: #"bottom-up");
   end;
@@ -363,8 +363,8 @@ end method;
 
 /// CHOOSE-FRAME (environment-framework)
 
-define method choose-frame 
-    (portd :: <port-designator>, class :: subclass(<frame>), frames :: <sequence>, #rest initargs, #key) 
+define method choose-frame
+    (portd :: <port-designator>, class :: subclass(<frame>), frames :: <sequence>, #rest initargs, #key)
  => (frame :: false-or(<frame>))
   ~empty?(frames) & frames[0];
 end method choose-frame;
@@ -372,7 +372,7 @@ end method choose-frame;
 
 /// REINITIALIZE-FRAME (environment-framework)
 
-define method reinitialize-frame 
+define method reinitialize-frame
     (frame :: <frame>, #rest initargs, #key) => ()
   #f
 end method reinitialize-frame;
@@ -382,21 +382,21 @@ end method reinitialize-frame;
 /// FORK-ENVIRONMENT-FRAME (environment-framework)
 
 define method fork-environment-frame
-    (portd :: <port-designator>, class :: subclass(<frame>), #rest initargs, #key) 
+    (portd :: <port-designator>, class :: subclass(<frame>), #rest initargs, #key)
  => ()
   note-environment-frame-forking(class);
   fork-environment-function(portd,
-			    class,
-			    method ()
-			      let frame = #f;
-			      block ()
-				frame := apply(make-environment-frame, portd, class, initargs);
-			      cleanup
-				unless (frame)
-				  note-environment-frame-forked(class);
-				end unless;
-			      end block;
-			    end method);
+                            class,
+                            method ()
+                              let frame = #f;
+                              block ()
+                                frame := apply(make-environment-frame, portd, class, initargs);
+                              cleanup
+                                unless (frame)
+                                  note-environment-frame-forked(class);
+                                end unless;
+                              end block;
+                            end method);
 end method;
 
 /// HANDLE-EVENT
@@ -421,23 +421,23 @@ define method fork-environment-function
   // the new thread, where it will always be #f!
   let function = *environment-frame-function*;
   local method make-and-start-frame ()
-	  let frame = frame-maker();
-	  call-in-frame(frame, do-environment-frame, frame, function);
-	  start-environment-frame(frame);
-	end method;
+          let frame = frame-maker();
+          call-in-frame(frame, do-environment-frame, frame, function);
+          start-environment-frame(frame);
+        end method;
   //---*** cpage: 1998.10.09 TESTING: Use one thread and event queue for all frames.
   if (*one-thread-for-all-frames*)
     make-and-start-frame();
   else
     make-environment-thread(portd,
-			    class,
-			    name: frame-thread-name(portd, class),
-			    function: frame-thread-function(portd,
-							    class,
-							    make-and-start-frame));
+                            class,
+                            name: frame-thread-name(portd, class),
+                            function: frame-thread-function(portd,
+                                                            class,
+                                                            make-and-start-frame));
   end;
 end method;
-							    
+
 
 /// MAKE-ENVIRONMENT-FRAME (environment-framework)
 
@@ -470,7 +470,7 @@ end method;
 
 
 /// Support for managing the thread state
-    
+
 define variable *environment-thread-count* :: <integer> = 0;
 
 define constant $environment-thread-lock :: <lock>
@@ -504,7 +504,7 @@ define method frame-thread-function
   method ()
     block ()
       with-abort-restart ()
-	function()
+        function()
       end
     cleanup
       with-lock ($environment-thread-lock)
@@ -512,7 +512,7 @@ define method frame-thread-function
         // if this is the last environment thread
         *environment-thread-count* := *environment-thread-count* - 1;
         when (*environment-thread-count* = 0)
-	  exit-environment(0)
+          exit-environment(0)
         end
       end
     end
@@ -591,7 +591,7 @@ end method current-environment-frame;
 
 /// WITH-CURRENT-ENVIRONMENT-FRAME (environment-framework)
 
-define macro with-current-environment-frame 
+define macro with-current-environment-frame
   { with-current-environment-frame (?frame:expression)
      ?body:body
   end }
@@ -599,7 +599,7 @@ define macro with-current-environment-frame
     { dynamic-bind (*current-environment-frame* = ?frame)
        ?body
     end }
-end macro;       
+end macro;
 
 
 /// *ENVIRONMENT-FRAME-FUNCTION* (internal)
@@ -625,13 +625,13 @@ end method;
 
 /// WITH-ENVIRONMENT-FRAME (environment-framework)
 
-define macro with-environment-frame 
+define macro with-environment-frame
   { with-environment-frame (?frame:name = ?portd:expression, ?class:expression, ?initargs:*)
      ?body:body
   end }
     =>
     { call-in-environment-frame(method (?frame) ?body end method, ?portd, ?class, ?initargs) }
-end macro;       
+end macro;
 
 
 /// CALL-IN-ENVIRONMENT-FRAME (environment-framework)

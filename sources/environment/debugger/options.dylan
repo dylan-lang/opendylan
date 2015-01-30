@@ -40,10 +40,10 @@ define function stack-show-frame-types
   remove
     (vector
        (if (settings.stack-show-dylan-calls)    #"dylan-call"    end,
-	if (settings.stack-show-internal-calls) #"internal-call" end,
-	if (settings.stack-show-foreign-calls)  #"foreign-call"  end,
-	if (settings.stack-show-cleanup-frames) #"cleanup"       end,
-	if (settings.stack-show-unknown-frames) #"unknown"       end),
+        if (settings.stack-show-internal-calls) #"internal-call" end,
+        if (settings.stack-show-foreign-calls)  #"foreign-call"  end,
+        if (settings.stack-show-cleanup-frames) #"cleanup"       end,
+        if (settings.stack-show-unknown-frames) #"unknown"       end),
      #f)
 end function stack-show-frame-types;
 
@@ -52,45 +52,45 @@ end function stack-show-frame-types;
 define sealed pane <options-misc-page> ()
   pane options-one-debugger-per-thread-button (dialog)
     make(<check-button>,
-	 label: "Use a new debugger for each thread.",
-	 value: $debugger-settings.one-debugger-per-thread,
-	 documentation: "Does not allow debuggers to be recycled.");
+         label: "Use a new debugger for each thread.",
+         value: $debugger-settings.one-debugger-per-thread,
+         documentation: "Does not allow debuggers to be recycled.");
   pane options-notifier-dialog-button (dialog)
     make(<check-button>,
-	 label: "Confirm before entering the debugger after an error.",
-	 value: $debugger-settings.notifier-dialog,
-	 documentation: "Displays a dialog to confirm entering the debugger.");
+         label: "Confirm before entering the debugger after an error.",
+         value: $debugger-settings.notifier-dialog,
+         documentation: "Displays a dialog to confirm entering the debugger.");
   pane options-expand-stack-initially-button (dialog)
     make(<check-button>,
-	 label: "Expand stack backtrace when first opening debugger",
-	 value: $debugger-settings.expand-backtrace-initially,
-	 documentation: "Expands stack backtrace when debugger is first opened.");
+         label: "Expand stack backtrace when first opening debugger",
+         value: $debugger-settings.expand-backtrace-initially,
+         documentation: "Expands stack backtrace when debugger is first opened.");
   pane options-expand-first-frame-button (dialog)
     make(<check-button>,
-	 label: "Expand first stack frame when refreshing debugger",
-	 value: $debugger-settings.expand-first-frame,
-	 documentation: "Expands first stack frame when debugger is refreshed.");
+         label: "Expand first stack frame when refreshing debugger",
+         value: $debugger-settings.expand-first-frame,
+         documentation: "Expands first stack frame when debugger is refreshed.");
   pane options-refresh-all-on-debug-button (dialog)
     make(<check-button>,
-	 label: "Refresh all open debuggers when entering debugger",
-	 value: $debugger-settings.refresh-all-on-debug,
-	 documentation: "Refreshes contents of all open debuggers instead of simply enabling them.");
+         label: "Refresh all open debuggers when entering debugger",
+         value: $debugger-settings.refresh-all-on-debug,
+         documentation: "Refreshes contents of all open debuggers instead of simply enabling them.");
   pane options-debug-on-user-requested-pause-button (dialog)
     make(<check-button>,
-	 label: "Open debugger window on pause button",
-	 value: $debugger-settings.open-debugger-on-pause,
-	 documentation: "Opens debugger window for main thread when pause is requested.");
+         label: "Open debugger window on pause button",
+         value: $debugger-settings.open-debugger-on-pause,
+         documentation: "Opens debugger window for main thread when pause is requested.");
   layout (page)
     vertically () // hughg, 1998/03/10: Without this, the '$fill' doesn't work
       grouping ("Options", max-width: $fill)
-	vertically (spacing: $vertical-spacing)
-	  page.options-one-debugger-per-thread-button;
-	  page.options-notifier-dialog-button;
-	  page.options-expand-stack-initially-button;
-	  page.options-expand-first-frame-button;
-	  page.options-refresh-all-on-debug-button;
-	  page.options-debug-on-user-requested-pause-button;
-	end
+        vertically (spacing: $vertical-spacing)
+          page.options-one-debugger-per-thread-button;
+          page.options-notifier-dialog-button;
+          page.options-expand-stack-initially-button;
+          page.options-expand-first-frame-button;
+          page.options-refresh-all-on-debug-button;
+          page.options-debug-on-user-requested-pause-button;
+        end
       end
     end;
 end pane;
@@ -98,7 +98,7 @@ end pane;
 
 /// OPTIONS-PAGE-NAME (internal)
 
-define sealed method options-page-name 
+define sealed method options-page-name
     (page :: <options-misc-page>)
  => (name :: <string>)
   "Misc"
@@ -107,7 +107,7 @@ end method;
 
 /// UPDATE-FROM-PAGE (internal)
 
-define sealed method update-from-page 
+define sealed method update-from-page
     (debugger :: <debugger>, page :: <options-misc-page>)
  => ()
   $debugger-settings.one-debugger-per-thread
@@ -127,7 +127,7 @@ end method;
 
 /// INITIALIZE-PAGE (internal)
 
-define sealed method initialize-page 
+define sealed method initialize-page
     (debugger :: <debugger>, page :: <options-misc-page>)
  => ()
   //---*** andrewa: why do we initialize just this one gadget?
@@ -148,14 +148,14 @@ define frame <options-dialog> (<dialog-frame>)
     make(<options-stop-reason-page>);
   layout (dialog)
     make(<tab-control>,
-	 pages: map(method (page)
-		      make(<property-page>,
-			   child: page,
-			   label: options-page-name(page))
-		    end method,
-		    vector(dialog.options-stack-page,
-			   dialog.options-stop-reason-page,
-			   dialog.options-misc-page)));
+         pages: map(method (page)
+                      make(<property-page>,
+                           child: page,
+                           label: options-page-name(page))
+                    end method,
+                    vector(dialog.options-stack-page,
+                           dialog.options-stop-reason-page,
+                           dialog.options-misc-page)));
 end frame;
 
 

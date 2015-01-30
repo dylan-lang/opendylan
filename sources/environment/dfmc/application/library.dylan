@@ -31,7 +31,7 @@ end library dfmc-environment-application;
 define module dfmc-application
   use environment-imports,
     rename: { load-library => os/load-library,
-	      thread-name => threads/thread-name };
+              thread-name => threads/thread-name };
   use dylan-extensions,
      import: {<abstract-integer>};
   use threads,
@@ -51,10 +51,10 @@ define module dfmc-application
     // via project-manager-interface.  (Many of these are renamed but
     // not used.  Not sure why they weren't just excluded.  --cgay)
     rename: { close-project => env/close-project,
-	      project-name => env/project-name,
+              project-name => env/project-name,
               project-source-location => env/project-source-location,
-	      project-other-sources => env/project-other-sources,
-	      open-project => env/open-project,
+              project-other-sources => env/project-other-sources,
+              open-project => env/open-project,
               save-project => env/save-project,
               project-target-type => env/project-target-type,
               <project-target-type> => env/<project-target-type>,
@@ -74,24 +74,24 @@ define module dfmc-application
 
   use debugger-manager,
     rename: { stop-application   => dm-stop-application,
-	      kill-application   => dm-kill-application,
-	      stack-frame-thread => dm-stack-frame-thread,
-	      close-application  => dm-close-application,
-	      <thread-profile>   => dm-<thread-profile>,
-	      thread-state       => dm-thread-state,
-	      thread-suspended?  => dm-thread-suspended?,
-	      application-stopped? => dm-application-stopped?,
-	      application-just-interacted? => dm-application-just-interacted?,
-	      <application-profile> => dm-<application-profile>,
-	      <application-snapshot> => dm-<application-snapshot>,
-	      <thread-snapshot> => dm-<thread-snapshot>,
-	      application-profile-threads => dm-application-profile-threads,
-	     set-application-class-breakpoint => dm-set-application-class-breakpoint,
-	     clear-application-class-breakpoint => dm-clear-application-class-breakpoint,
-	     clear-application-class-breakpoints => dm-clear-application-class-breakpoints },
+              kill-application   => dm-kill-application,
+              stack-frame-thread => dm-stack-frame-thread,
+              close-application  => dm-close-application,
+              <thread-profile>   => dm-<thread-profile>,
+              thread-state       => dm-thread-state,
+              thread-suspended?  => dm-thread-suspended?,
+              application-stopped? => dm-application-stopped?,
+              application-just-interacted? => dm-application-just-interacted?,
+              <application-profile> => dm-<application-profile>,
+              <application-snapshot> => dm-<application-snapshot>,
+              <thread-snapshot> => dm-<thread-snapshot>,
+              application-profile-threads => dm-application-profile-threads,
+             set-application-class-breakpoint => dm-set-application-class-breakpoint,
+             clear-application-class-breakpoint => dm-clear-application-class-breakpoint,
+             clear-application-class-breakpoints => dm-clear-application-class-breakpoints },
     exclude: { connection-open?, connection-open?-setter },
     export: {application-running-on-code-entry?,
-	     application-running-on-code-entry?-setter};
+             application-running-on-code-entry?-setter};
   use tether-downloader;
   use interactive-downloader;
   use interactive-symbol-table;

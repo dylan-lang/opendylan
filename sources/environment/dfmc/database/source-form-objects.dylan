@@ -23,9 +23,9 @@ define method source-form-variable
   let variables = source-form.source-form-defined-variables;
   /*---*** andrewa: it is better to not blow up for now...
   debug-assert(instance?(source-form, <slot-definition>)
-		 | size(variables) <= 1,
-	       "More than one variable defined for %=: %=",
-	       source-form, map(variable-name, variables));
+                 | size(variables) <= 1,
+               "More than one variable defined for %=: %=",
+               source-form, map(variable-name, variables));
   */
   ~empty?(variables) & variables[0]
 end method source-form-variable;
@@ -35,8 +35,8 @@ define function find-source-form-location
     (source-form :: <source-form>) => (location :: false-or(<source-location>))
   source-form-location(source-form)
     | begin
-	let parent-form = source-form-parent-form(source-form);
-	parent-form & find-source-form-location(parent-form)
+        let parent-form = source-form-parent-form(source-form);
+        parent-form & find-source-form-location(parent-form)
       end
 end function find-source-form-location;
 
@@ -70,11 +70,11 @@ define sealed method do-used-definitions
   when (variables)
     local method do-variable (variable :: <variable>) => ()
             let definition = variable-active-definition(context, variable);
-	    unless (definition == source-form)
-	      let environment-definition
-		= make-environment-object-for-source-form(server, definition);
-	      function(environment-definition)
-	    end
+            unless (definition == source-form)
+              let environment-definition
+                = make-environment-object-for-source-form(server, definition);
+              function(environment-definition)
+            end
           end method;
     do(do-variable, variables);
   end when;
@@ -106,7 +106,7 @@ define sealed method source-form-has-clients?
   if (variable)
     any-results-from-all-client-contexts?
       (method (context)
-	 variable-referencing-forms(context, variable)
+         variable-referencing-forms(context, variable)
        end,
        server, context)
   end
@@ -125,16 +125,16 @@ define sealed method do-client-source-forms
     let clients
       = collect-from-all-client-contexts
           (method (context)
-	     variable-referencing-forms(context, variable)
-	   end,
-	   server, context);
+             variable-referencing-forms(context, variable)
+           end,
+           server, context);
     local method do-source-form (client :: <source-form>) => ()
-	    unless (client == source-form)
-	      let environment-object
-		= make-environment-object-for-source-form(server, client);
-	      function(environment-object)
-	    end
-	  end method;
+            unless (client == source-form)
+              let environment-object
+                = make-environment-object-for-source-form(server, client);
+              function(environment-object)
+            end
+          end method;
     do(do-source-form, clients)
   end
 end method do-client-source-forms;
@@ -166,14 +166,14 @@ end function source-location-first-line;
 /// Macro calls
 
 define sealed method do-macro-call-source-forms
-    (function :: <function>, server :: <dfmc-database>, 
+    (function :: <function>, server :: <dfmc-database>,
      object :: <macro-call-object>)
  => ()
   #f
 end method do-macro-call-source-forms;
 
 define sealed method do-macro-call-source-forms
-    (function :: <function>, server :: <dfmc-database>, 
+    (function :: <function>, server :: <dfmc-database>,
      object :: <simple-macro-call-object>)
  => ()
   let source-form = object.compiler-object-proxy;
@@ -195,8 +195,8 @@ define sealed method environment-object-library
   let project = context.compilation-context-project;
   project
     & make-environment-object(<library-object>,
-			      project: server.server-project,
-			      compiler-object-proxy: project)
+                              project: server.server-project,
+                              compiler-object-proxy: project)
 end method environment-object-library;
 
 
@@ -221,14 +221,14 @@ define sealed method find-compiler-database-proxy
     let line-number = id.id-line-number;
     let record :: false-or(<source-record>)
       = block (return)
-	  let records = project.project-canonical-source-records;
-	  for (record :: <source-record> in records)
-	    if (record.source-record-location = locator)
-	      return(record)
-	    end
-	  end
-	end;
-    record 
+          let records = project.project-canonical-source-records;
+          for (record :: <source-record> in records)
+            if (record.source-record-location = locator)
+              return(record)
+            end
+          end
+        end;
+    record
       & source-record-source-form(server, project, record, line-number)
   end
 end method find-compiler-database-proxy;
@@ -242,11 +242,11 @@ define sealed method compiler-database-definition-id
     <generic-definition>, <constant-method-definition>,
     <constant-definition>, <variable-definition> =>
       let (name, module-definition)
-	= definition-home-name-and-module(server, definition);
+        = definition-home-name-and-module(server, definition);
       if (name & module-definition)
-	let module-id
-	  = compiler-database-proxy-id(server, module-definition);
-	make(<definition-id>, name: name, module: module-id)
+        let module-id
+          = compiler-database-proxy-id(server, module-definition);
+        make(<definition-id>, name: name, module: module-id)
       end;
     otherwise =>
       #f
@@ -260,20 +260,20 @@ define sealed method compiler-database-proxy-id
   /*---*** andrewa: this isn't a good idea for now, because
     ---*** source locations aren't unique.
     | begin
-	let location = find-source-form-location(source-form);
-	let record = source-location-source-record(location);
-	if (instance?(record, <file-source-record>))
-	  let locator = record.source-record-location;
-	  let context = browsing-context(server, source-form);
-	  let project = context.compilation-context-project;
-	  let library-id = compiler-database-proxy-id(server, project);
-	  let offset = location.source-location-start-offset;
-	  let line = offset.source-offset-line + record.source-record-start-line;
-	  make(<library-object-location-id>,
-	       library: library-id,
-	       filename: as(<string>, locator),
-	       line-number: line)
-	end
+        let location = find-source-form-location(source-form);
+        let record = source-location-source-record(location);
+        if (instance?(record, <file-source-record>))
+          let locator = record.source-record-location;
+          let context = browsing-context(server, source-form);
+          let project = context.compilation-context-project;
+          let library-id = compiler-database-proxy-id(server, project);
+          let offset = location.source-location-start-offset;
+          let line = offset.source-offset-line + record.source-record-start-line;
+          make(<library-object-location-id>,
+               library: library-id,
+               filename: as(<string>, locator),
+               line-number: line)
+        end
       end
   */
 end method compiler-database-proxy-id;
@@ -288,11 +288,11 @@ define sealed method source-record-source-form
     for (form :: <source-form> in forms)
       let form-location = find-source-form-location(form);
       let form-start :: <integer>
-	= form-location.source-location-start-line;
+        = form-location.source-location-start-line;
       let form-end :: <integer>
-	= form-location.source-location-end-line;
+        = form-location.source-location-end-line;
       if (form-start <= line & line <= form-end)
-	return(form)
+        return(form)
       end;
     end;
     #f

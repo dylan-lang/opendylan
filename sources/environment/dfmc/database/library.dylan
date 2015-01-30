@@ -11,7 +11,7 @@ define library dfmc-environment-database
   use io, import: { print };
   use dfmc-browser-support;
   use user-projects;
-  use dfmc-conditions;	//---*** for the warning classes
+  use dfmc-conditions;        //---*** for the warning classes
 
   export dfmc-environment-database;
 end library dfmc-environment-database;

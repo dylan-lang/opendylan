@@ -9,14 +9,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Source form object properties
 
 define sideways method frame-property-types
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      class :: subclass(<source-form-object>))
  => (types :: <list>)
   concatenate(next-method(), #(#"source", #"warnings", #"usage"))
 end method frame-property-types;
 
 define sideways method frame-default-property-type
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      class :: subclass(<source-form-object>))
  => (type :: false-or(<symbol>))
   #"source"
@@ -73,70 +73,70 @@ define constant $warning-filters
 define constant $default-warning-filter = #"warnings";
 
 define sideways method make-frame-property-page-displayer
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      class :: subclass(<environment-object>),
      type == #"warnings")
  => (label :: <string>, displayer :: <filtering-table-control-displayer>)
   let project = frame.ensure-frame-project;
   let message-pane
     = make(<text-editor>,
-	   read-only?: #t, tab-stop?: #t,
-	   text-style:     make(<text-style>, family: #"fix"),
-	   documentation: "Shows the full compiler warning message",
-	   scroll-bars:   #"vertical");
+           read-only?: #t, tab-stop?: #t,
+           text-style:     make(<text-style>, family: #"fix"),
+           documentation: "Shows the full compiler warning message",
+           scroll-bars:   #"vertical");
   let browsing-project? = class == <project-object>;
   let (headings, sort-orders, generators, widths)
     = case
-	browsing-project? =>
-	  values(#["Source", "Library", "Owner", "Warning"],
-		 #[#"source", #"library", #"owner", #"message"],
-		 vector(curry(environment-object-source-location, project),
-			curry(environment-object-library, project),
-			curry(warning-owner, project),
-			identity),
-		 #[150, 70, 100, 1000]);
-	otherwise =>
-	  values(#["Source", "Owner", "Warning"],
-		 #[#"source", #"owner", #"message"],
-		 vector(curry(environment-object-source-location, project),
-			curry(warning-owner, project),
-			identity),
-		 #[150, 130, 1000]);
+        browsing-project? =>
+          values(#["Source", "Library", "Owner", "Warning"],
+                 #[#"source", #"library", #"owner", #"message"],
+                 vector(curry(environment-object-source-location, project),
+                        curry(environment-object-library, project),
+                        curry(warning-owner, project),
+                        identity),
+                 #[150, 70, 100, 1000]);
+        otherwise =>
+          values(#["Source", "Owner", "Warning"],
+                 #[#"source", #"owner", #"message"],
+                 vector(curry(environment-object-source-location, project),
+                        curry(warning-owner, project),
+                        identity),
+                 #[150, 130, 1000]);
       end;
   let displayer
     = make(<filtering-table-control-displayer>,
-	   extra-pane: message-pane,
-	   ratios: warnings-page-ratios(),
-	   ratios-changed-callback: note-warnings-displayer-ratios-changed,
-	   information-available?-function: browsing-project? & always(#t),
-	   headings: headings,
-	   widths: widths,
-	   sort-orders: sort-orders,
-	   sort-function: curry(frame-sort-source-form-warnings, frame),
-	   children-generator: curry(frame-source-form-warnings, frame),
-	   generators: generators,
-	   filter-types: $warning-filters,
-	   filter-type: $default-warning-filter,
-	   filter-function: curry(filter-source-form-warnings, frame),
-	   label-key:  curry(source-form-warnings-label-key, frame),
-	   value-changed-callback: method 
-				       (displayer :: <filtering-table-control-displayer>,
-					warnings :: <sequence>)
-				     let warning
-				       = ~empty?(warnings) & warnings[0];
-				     update-warning-message-pane
-				       (displayer, message-pane, project, warning)
-				   end,
-	   items-changed-callback: method (displayer :: <displayer-mixin>)
-				     let gadget
-				       = displayer.displayer-collection-gadget;
-				     let warnings = gadget-value(gadget);
-				     let warning
-				       = ~empty?(warnings) & warnings[0];
-				     update-warning-message-pane
-				       (displayer, message-pane, project, warning);
-				     update-status-bar-warning-count(displayer)
-				   end);
+           extra-pane: message-pane,
+           ratios: warnings-page-ratios(),
+           ratios-changed-callback: note-warnings-displayer-ratios-changed,
+           information-available?-function: browsing-project? & always(#t),
+           headings: headings,
+           widths: widths,
+           sort-orders: sort-orders,
+           sort-function: curry(frame-sort-source-form-warnings, frame),
+           children-generator: curry(frame-source-form-warnings, frame),
+           generators: generators,
+           filter-types: $warning-filters,
+           filter-type: $default-warning-filter,
+           filter-function: curry(filter-source-form-warnings, frame),
+           label-key:  curry(source-form-warnings-label-key, frame),
+           value-changed-callback: method
+                                       (displayer :: <filtering-table-control-displayer>,
+                                        warnings :: <sequence>)
+                                     let warning
+                                       = ~empty?(warnings) & warnings[0];
+                                     update-warning-message-pane
+                                       (displayer, message-pane, project, warning)
+                                   end,
+           items-changed-callback: method (displayer :: <displayer-mixin>)
+                                     let gadget
+                                       = displayer.displayer-collection-gadget;
+                                     let warnings = gadget-value(gadget);
+                                     let warning
+                                       = ~empty?(warnings) & warnings[0];
+                                     update-warning-message-pane
+                                       (displayer, message-pane, project, warning);
+                                     update-status-bar-warning-count(displayer)
+                                   end);
   values("Warnings", displayer)
 end method make-frame-property-page-displayer;
 
@@ -147,60 +147,60 @@ define method frame-sort-source-form-warnings
   let project = frame.ensure-frame-project;
   let original-warnings = copy-sequence(warnings);
   local method warning-location<
-	    (warning1 :: <warning-object>,
-	     warning2 :: <warning-object>)
-	 => (less-than? :: <boolean>)
-	  let location1
-	    = environment-object-source-location(project, warning1);
-	  let location2
-	    = environment-object-source-location(project, warning2);
-	  if (location1 & location2)
-	    let record1 = location1.source-location-source-record;
-	    let record2 = location2.source-location-source-record;
-	    let name1   = source-record-file-name(record1);
-	    let name2   = source-record-file-name(record2);
-	    if (name1 = name2)
-	      let offset1 = location1.source-location-start-offset;
-	      let offset2 = location2.source-location-start-offset;
-	      let line1   = offset1.source-offset-line;
-	      let line2   = offset2.source-offset-line;
-	      if (line1 = line2)
-		let column1 = offset1.source-offset-column;
-		let column2 = offset2.source-offset-column;
-		column1 < column2
-	      else
-		line1 < line2
-	      end if
-	    else
-	      name1 < name2
-	    end if;
-	  else
-	    location1 ~= #f
-	  end
-	end method warning-location<;
+            (warning1 :: <warning-object>,
+             warning2 :: <warning-object>)
+         => (less-than? :: <boolean>)
+          let location1
+            = environment-object-source-location(project, warning1);
+          let location2
+            = environment-object-source-location(project, warning2);
+          if (location1 & location2)
+            let record1 = location1.source-location-source-record;
+            let record2 = location2.source-location-source-record;
+            let name1   = source-record-file-name(record1);
+            let name2   = source-record-file-name(record2);
+            if (name1 = name2)
+              let offset1 = location1.source-location-start-offset;
+              let offset2 = location2.source-location-start-offset;
+              let line1   = offset1.source-offset-line;
+              let line2   = offset2.source-offset-line;
+              if (line1 = line2)
+                let column1 = offset1.source-offset-column;
+                let column2 = offset2.source-offset-column;
+                column1 < column2
+              else
+                line1 < line2
+              end if
+            else
+              name1 < name2
+            end if;
+          else
+            location1 ~= #f
+          end
+        end method warning-location<;
   let sorted-warnings
     = select (order)
-	#"message" =>
-	  keyed-sort(warnings, 
-		     key: curry(compiler-warning-short-message, project));
-	#"library" =>
-	  frame-sort-items(frame, warnings, 
-			   key: curry(environment-object-library, project));
-	#"source" =>
-	  sort(warnings, test: warning-location<);
-	#"owner" =>
-	  frame-sort-items
-	    (frame, warnings,
-	     key:       curry(warning-owner, project),
-	     label-key: curry(source-form-warnings-label-key, frame));
+        #"message" =>
+          keyed-sort(warnings,
+                     key: curry(compiler-warning-short-message, project));
+        #"library" =>
+          frame-sort-items(frame, warnings,
+                           key: curry(environment-object-library, project));
+        #"source" =>
+          sort(warnings, test: warning-location<);
+        #"owner" =>
+          frame-sort-items
+            (frame, warnings,
+             key:       curry(warning-owner, project),
+             label-key: curry(source-form-warnings-label-key, frame));
       end;
   assert(warnings = original-warnings,
-	 "Whoops, destructively modified compiler warnings!");
+         "Whoops, destructively modified compiler warnings!");
   sorted-warnings
 end method frame-sort-source-form-warnings;
 
 define method frame-source-form-warnings
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      object :: <source-form-object>)
  => (warnings :: <sequence>)
   let project = frame.ensure-frame-project;
@@ -208,7 +208,7 @@ define method frame-source-form-warnings
 end method frame-source-form-warnings;
 
 define method frame-source-form-warnings
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      project :: <project-object>)
  => (warnings :: <sequence>)
   project-warnings(project)
@@ -220,34 +220,34 @@ define method filter-source-form-warnings
  => (names :: <sequence>)
   let project = frame.ensure-frame-project;
   let no-filter? = empty?(substring-filter);
-  local method object-matches-type-filter? 
-	    (warning :: <warning-object>) => (matches? :: <boolean>)
-	  let location = environment-object-source-location(project, warning);
-	  let record = location & source-location-source-record(location);
-	  let interactive? = record & (source-record-name(record) == #f);
-	  let serious? = instance?(warning, <serious-compiler-warning-object>);
-	  select (type-filter)
-	    #"warnings"    => #t;
-	    #"serious"     => serious?;
-	    #"non-serious" => ~serious?;
-	    #"interactive" => interactive?;
-	    otherwise      => #f;
-	  end
-	end method object-matches-type-filter?;
+  local method object-matches-type-filter?
+            (warning :: <warning-object>) => (matches? :: <boolean>)
+          let location = environment-object-source-location(project, warning);
+          let record = location & source-location-source-record(location);
+          let interactive? = record & (source-record-name(record) == #f);
+          let serious? = instance?(warning, <serious-compiler-warning-object>);
+          select (type-filter)
+            #"warnings"    => #t;
+            #"serious"     => serious?;
+            #"non-serious" => ~serious?;
+            #"interactive" => interactive?;
+            otherwise      => #f;
+          end
+        end method object-matches-type-filter?;
   local method object-matches-substring-filter?
-	    (warning :: <warning-object>) => (matches? :: <boolean>)
-	  no-filter?
-	    | begin
-		//---*** This really needs to match against all the columns
-		let message = compiler-warning-short-message(project, warning);
-		subsequence-position(message, substring-filter) ~= #f
-	      end
-	end method object-matches-substring-filter?;
+            (warning :: <warning-object>) => (matches? :: <boolean>)
+          no-filter?
+            | begin
+                //---*** This really needs to match against all the columns
+                let message = compiler-warning-short-message(project, warning);
+                subsequence-position(message, substring-filter) ~= #f
+              end
+        end method object-matches-substring-filter?;
   local method show-object?
-	    (warning :: <warning-object>) => (show? :: <boolean>)
-	  object-matches-type-filter?(warning)
-	    & object-matches-substring-filter?(warning)
-	end method show-object?;
+            (warning :: <warning-object>) => (show? :: <boolean>)
+          object-matches-type-filter?(warning)
+            & object-matches-substring-filter?(warning)
+        end method show-object?;
   let results = make(<stretchy-vector>);
   for (object in warnings)
     if (show-object?(object))
@@ -256,7 +256,7 @@ define method filter-source-form-warnings
   end;
   results
 end method filter-source-form-warnings;
-  
+
 //--- Some warnings don't have definitions at all
 define method source-form-warnings-label-key
     (frame :: <environment-frame>, object == #f)
@@ -265,7 +265,7 @@ define method source-form-warnings-label-key
 end method source-form-warnings-label-key;
 
 define method source-form-warnings-label-key
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      object :: <environment-object>)
  => (label :: <string>)
   frame-object-unique-name(frame, object)
@@ -302,7 +302,7 @@ end method note-warnings-displayer-ratios-changed;
 define method warnings-page-ratios
     () => (ratios :: <sequence>)
   vector($warnings-page-settings.warnings-pane-ratio,
-	 $warnings-page-settings.message-pane-ratio)
+         $warnings-page-settings.message-pane-ratio)
 end method warnings-page-ratios;
 
 define method update-warning-message-pane
@@ -313,12 +313,12 @@ define method update-warning-message-pane
   let frame = sheet-frame(pane);
   let message
     = if (warning)
-	environment-object-display-name
-	  (project, warning, #f, 
-	   qualify-names?:   frame-qualify-names?(frame),
-	   full-message?:    #t)
+        environment-object-display-name
+          (project, warning, #f,
+           qualify-names?:   frame-qualify-names?(frame),
+           full-message?:    #t)
       else
-	""
+        ""
       end;
   gadget-text(pane) := message
 end method update-warning-message-pane;
@@ -331,10 +331,10 @@ define function update-status-bar-warning-count
   let warnings = gadget.gadget-items;
   let message
     = if (project.project-compiler-database)
-	compilation-warning-count-message(project, warnings: warnings)
-	  | "No warnings"
+        compilation-warning-count-message(project, warnings: warnings)
+          | "No warnings"
       else
-	project-not-built-message(project)
+        project-not-built-message(project)
       end;
   frame-status-message(frame) := message
 end function update-status-bar-warning-count;
@@ -343,7 +343,7 @@ end function update-status-bar-warning-count;
 /// Sources page
 
 define sideways method make-frame-property-page-displayer
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      class :: subclass(<environment-object>),
      type == #"source")
  => (label :: <string>, displayer :: <displayer-mixin>)
@@ -368,20 +368,20 @@ define constant $usage-definition-filters
 define constant $default-usage-definition-filter = #"definitions";
 
 define sideways method make-frame-property-page-displayer
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      class :: subclass(<source-form-object>),
      type == #"usage")
  => (label :: <string>, displayer :: <tree-control-displayer>)
   let displayer
     = make(<filtering-tree-control-displayer>,
-	   element-label: "source form",
-	   children-predicate: curry(source-form-usage-children-predicate, frame),
-	   children-generator: curry(source-form-usage-children-generator, frame),
-	   filter-types: $usage-definition-filters,
-	   filter-type: $default-usage-definition-filter,
-	   filter-function: curry(filter-source-form-usage, frame),
-	   label-key: curry(source-form-usage-label-key, frame),
-	   icon-function: curry(source-form-usage-icon-function, frame));
+           element-label: "source form",
+           children-predicate: curry(source-form-usage-children-predicate, frame),
+           children-generator: curry(source-form-usage-children-generator, frame),
+           filter-types: $usage-definition-filters,
+           filter-type: $default-usage-definition-filter,
+           filter-function: curry(filter-source-form-usage, frame),
+           label-key: curry(source-form-usage-label-key, frame),
+           icon-function: curry(source-form-usage-icon-function, frame));
   values("Usage", displayer)
 end method make-frame-property-page-displayer;
 
@@ -395,22 +395,22 @@ define method source-form-usage-children-predicate
 end method source-form-usage-children-predicate;
 
 define method source-form-usage-children-generator
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      source-form :: <source-form-object>)
  => (users :: <sequence>)
   let project = frame.ensure-frame-project;
   let uses-definitions? = source-form-uses-definitions?(project, source-form);
   let has-clients? = source-form-has-clients?(project, source-form);
   concatenate(if (uses-definitions?)
-		vector(vector(#"used-definitions", source-form))
-	      else
-		#[]
-	      end,
-	      if (has-clients?)
-		vector(vector(#"clients", source-form))
-	      else
-		#[]
-	      end)
+                vector(vector(#"used-definitions", source-form))
+              else
+                #[]
+              end,
+              if (has-clients?)
+                vector(vector(#"clients", source-form))
+              else
+                #[]
+              end)
 end method source-form-usage-children-generator;
 
 define method filter-source-form-usage
@@ -418,36 +418,36 @@ define method filter-source-form-usage
      type-filter :: <symbol>, substring-filter :: <string>)
  => (names :: <sequence>)
   let no-filter? = empty?(substring-filter);
-  local method object-matches-type-filter? 
-	    (object :: <environment-object>) => (matches? :: <boolean>)
-	  select (type-filter)
-	    #"definitions" => #t;
-	    #"classes"     => instance?(object, <class-object>);
-	    #"constants"   => instance?(object, <constant-object>);
-	    #"domains"     => instance?(object, <domain-object>);
-	    #"functions"   => instance?(object, <function-object>);
-	    #"libraries"   => instance?(object, <library-object>);
-	    #"macros"      => instance?(object, <macro-object>);
-	    #"methods"     => instance?(object, <method-object>);
-	    #"modules"     => instance?(object, <module-object>);
-	    #"variables"   => instance?(object, <variable-object>);
-	    otherwise      => #f;
-	  end
-	end method object-matches-type-filter?;
+  local method object-matches-type-filter?
+            (object :: <environment-object>) => (matches? :: <boolean>)
+          select (type-filter)
+            #"definitions" => #t;
+            #"classes"     => instance?(object, <class-object>);
+            #"constants"   => instance?(object, <constant-object>);
+            #"domains"     => instance?(object, <domain-object>);
+            #"functions"   => instance?(object, <function-object>);
+            #"libraries"   => instance?(object, <library-object>);
+            #"macros"      => instance?(object, <macro-object>);
+            #"methods"     => instance?(object, <method-object>);
+            #"modules"     => instance?(object, <module-object>);
+            #"variables"   => instance?(object, <variable-object>);
+            otherwise      => #f;
+          end
+        end method object-matches-type-filter?;
   local method object-matches-substring-filter?
-	    (object :: <environment-object>) => (matches? :: <boolean>)
-	  no-filter?
-	    | begin
-		let label = definition-label-key(frame, object);
-		subsequence-position(label, substring-filter) ~= #f
-	      end
-	end method object-matches-substring-filter?;
+            (object :: <environment-object>) => (matches? :: <boolean>)
+          no-filter?
+            | begin
+                let label = definition-label-key(frame, object);
+                subsequence-position(label, substring-filter) ~= #f
+              end
+        end method object-matches-substring-filter?;
   local method show-object?
-	    (object :: <object>) => (show? :: <boolean>)
-	  ~instance?(object, <definition-object>)
-	    | (object-matches-type-filter?(object)
-		 & object-matches-substring-filter?(object))
-	end method show-object?;
+            (object :: <object>) => (show? :: <boolean>)
+          ~instance?(object, <definition-object>)
+            | (object-matches-type-filter?(object)
+                 & object-matches-substring-filter?(object))
+        end method show-object?;
   let results = make(<stretchy-vector>);
   for (object in contents)
     if (show-object?(object))
@@ -456,7 +456,7 @@ define method filter-source-form-usage
   end;
   results
 end method filter-source-form-usage;
-  
+
 define method source-form-usage-label-key
     (frame :: <environment-frame>, object :: <environment-object>)
  => (label :: <string>)
@@ -483,10 +483,10 @@ define method source-form-usage-children-generator
   let source-form = usage-vector[1];
   let source-forms
     = select (type)
-	#"used-definitions" => 
-	  source-form-used-definitions(project, source-form);
-	#"clients" =>
-	  source-form-clients(project, source-form);
+        #"used-definitions" =>
+          source-form-used-definitions(project, source-form);
+        #"clients" =>
+          source-form-clients(project, source-form);
       end;
   frame-order-sequence(frame, source-forms,
                        label-key: curry(frame-default-object-name, frame))

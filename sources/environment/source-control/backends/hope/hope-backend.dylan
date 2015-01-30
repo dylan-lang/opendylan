@@ -51,60 +51,60 @@ define class <hope-command-options> (<source-control-command-options>)
 end class <hope-command-options>;
 
 define constant *reason-allowed-commands*
-  = vector(<sccs-claim-command>, <sccs-check-in-command>, 
-	   <sccs-add-command>, <sccs-remove-command>);
+  = vector(<sccs-claim-command>, <sccs-check-in-command>,
+           <sccs-add-command>, <sccs-remove-command>);
 
 define method source-control-command-info
-    (sccs :: <hope-source-control-system>, 
+    (sccs :: <hope-source-control-system>,
      command-class :: subclass(<source-code-control-command>),
      #key defaults :: false-or(<hope-command-options>),
           pathname :: false-or(<file-locator>) = #f)
  => (info :: <source-control-command-info>)
   let (compound, unit, branch)
-    = if (pathname) 
-	get-compound-and-unit(pathname)
+    = if (pathname)
+        get-compound-and-unit(pathname)
       else
-	values(#f, #f, #f)
+        values(#f, #f, #f)
       end;
   let reason? :: <boolean> = member?(command-class, *reason-allowed-commands*);
   let options
     = concatenate
         (vector(make(<source-control-option>,
-		     label: "Compound",
-		     keyword: compound:,
-		     type:  <string>,
-		     getter: command-compound,
-		     documentation: #f,
-		     default: compound | (defaults & defaults.command-compound),
-		     required?: #t),
-		make(<source-control-option>,
-		     label: "Unit",
-		     keyword: unit:,
-		     type:  <string>,
-		     getter: command-unit,
-		     documentation: #f,
-		     default: unit | (defaults & defaults.command-unit),
-		     required?: #f),
-		make(<source-control-option>,
-		     label: "Branch",
-		     keyword: branch:,
-		     type:  <string>,
-		     getter: command-branch,
-		     documentation: #f,
-		     default: branch | (defaults & defaults.command-branch),
-		     required?: #f)),
-	 if (reason?) 
-	   vector(make(<source-control-option>,
-		       label: "Reason",
-		       keyword: reason:,
-		       type:  <string>,
-		       getter: command-reason,
-		       documentation: #f,
-		       default: (defaults & defaults.command-reason),
-		       required?: #f))
-	 else
-	   #[]
-	 end);
+                     label: "Compound",
+                     keyword: compound:,
+                     type:  <string>,
+                     getter: command-compound,
+                     documentation: #f,
+                     default: compound | (defaults & defaults.command-compound),
+                     required?: #t),
+                make(<source-control-option>,
+                     label: "Unit",
+                     keyword: unit:,
+                     type:  <string>,
+                     getter: command-unit,
+                     documentation: #f,
+                     default: unit | (defaults & defaults.command-unit),
+                     required?: #f),
+                make(<source-control-option>,
+                     label: "Branch",
+                     keyword: branch:,
+                     type:  <string>,
+                     getter: command-branch,
+                     documentation: #f,
+                     default: branch | (defaults & defaults.command-branch),
+                     required?: #f)),
+         if (reason?)
+           vector(make(<source-control-option>,
+                       label: "Reason",
+                       keyword: reason:,
+                       type:  <string>,
+                       getter: command-reason,
+                       documentation: #f,
+                       default: (defaults & defaults.command-reason),
+                       required?: #f))
+         else
+           #[]
+         end);
   make(<source-control-command-info>,
        title: "Select Compound and Unit",
        class: <hope-command-options>,
@@ -159,7 +159,7 @@ end method execute-command;
 define method ensure-server-started
     (sccs :: <hope-source-control-system>)
   when (sccs.%use-session?)
-    #f		//--- implement the "session" code here
+    #f                //--- implement the "session" code here
   end
 end method ensure-server-started;
 
@@ -186,11 +186,11 @@ end method do-source-control-commands;
 define method do-source-control-command
     (sccs :: <hope-source-control-system>, string :: <string>)
   if (sccs.%use-session?)
-    #f		//--- implement the "session" code here
+    #f                //--- implement the "session" code here
   else
     //--- This already waits, but don't we want to return a status code?
     run-application(concatenate-as(<string>, sccs.%image-name, " ", string),
-		    under-shell?: #t)
+                    under-shell?: #t)
   end
 end method do-source-control-command;
 
@@ -237,20 +237,20 @@ end function maybe-format-to-string;
 define macro hope-command-definer
   { define hope-command ?:name ?slots:* end }
     => { define sealed string-command "<hope-" ## ?name ## "-command>"
-	     ("<sccs-" ## ?name ## "-command>", <hope-command>)
-	   inherited named-argument compound is sccs-command-compound;
-	   inherited named-argument unit     is sccs-command-unit;
-	   inherited named-argument branch   is sccs-command-branch;
-	   inherited named-argument reason   is sccs-command-reason;
-	   ?slots
-	 end;
-	 define sealed domain make (singleton("<hope-" ## ?name ## "-command>"));
-	 define sealed domain initialize ("<hope-" ## ?name ## "-command>");
-	 define sealed method class-for-sccs-command
-	     (sccs :: <hope-source-control-system>, class == "<sccs-" ## ?name ## "-command>")
-	  => (class == "<hope-" ## ?name ## "-command>")
-	   "<hope-" ## ?name ## "-command>"
-	 end method class-for-sccs-command; }
+             ("<sccs-" ## ?name ## "-command>", <hope-command>)
+           inherited named-argument compound is sccs-command-compound;
+           inherited named-argument unit     is sccs-command-unit;
+           inherited named-argument branch   is sccs-command-branch;
+           inherited named-argument reason   is sccs-command-reason;
+           ?slots
+         end;
+         define sealed domain make (singleton("<hope-" ## ?name ## "-command>"));
+         define sealed domain initialize ("<hope-" ## ?name ## "-command>");
+         define sealed method class-for-sccs-command
+             (sccs :: <hope-source-control-system>, class == "<sccs-" ## ?name ## "-command>")
+          => (class == "<hope-" ## ?name ## "-command>")
+           "<hope-" ## ?name ## "-command>"
+         end method class-for-sccs-command; }
 end macro hope-command-definer;
 
 
@@ -336,13 +336,13 @@ end;
 /// HOPE compound and unit heuristication
 
 define variable *hope-source-directories* :: <vector>
-  = #[#[#["dylan", "sources"],	"D",	"trunk"],
-      #[#["dylan"],		"D",	"trunk"],
-      #[#["lispsrc", "clc"],	"LISP",	"trunk"],
-      #[#["clc"],		"LISP",	"trunk"],
-      #[#["lucid", "mods"],	"LCL",	"trunk"],
-      #[#["clim2"],		"CLIM",	"trunk"],
-      #[#["clim2", "clim-top"],	"CLIM",	"trunk"]];
+  = #[#[#["dylan", "sources"],        "D",        "trunk"],
+      #[#["dylan"],                "D",        "trunk"],
+      #[#["lispsrc", "clc"],        "LISP",        "trunk"],
+      #[#["clc"],                "LISP",        "trunk"],
+      #[#["lucid", "mods"],        "LCL",        "trunk"],
+      #[#["clim2"],                "CLIM",        "trunk"],
+      #[#["clim2", "clim-top"],        "CLIM",        "trunk"]];
 
 define method get-compound-and-unit
     (pathname :: <pathname>)
@@ -355,10 +355,10 @@ define method get-compound-and-unit
     end;
     let name = locator-name(locator);
     let directory = begin
-		      let directory-locator = locator-directory(locator);
-		      if (directory-locator) locator-path(directory-locator)
-		      else #[] end
-		    end;
+                      let directory-locator = locator-directory(locator);
+                      if (directory-locator) locator-path(directory-locator)
+                      else #[] end
+                    end;
     unless (empty?(directory))
       // The idea here is to locate one of the "sub-paths" given in
       // *hope-source-directories* in the supplied directory.  When
@@ -366,21 +366,21 @@ define method get-compound-and-unit
       // append the rest of the stuff in the directory.  It's crude,
       // but it seems to work pretty well.
       for (entry in *hope-source-directories*)
-	let dir = entry[0];
-	let pos = subsequence-position(directory, dir, test: \=);
-	when (pos)
-	  let suffix = copy-sequence(directory, start: pos + size(dir));
-	  let compound :: <stretchy-object-vector> = as(<stretchy-vector>, entry[1]);
-	  let branch = entry[2];
-	  // Now append the rest of the compound name
-	  for (component in suffix)
-	    add!(compound, '-');
-	    for (char in component)
-	      add!(compound, char)
-	    end
-	  end;
-	  return(as(<string>, compound), name, branch)
-	end
+        let dir = entry[0];
+        let pos = subsequence-position(directory, dir, test: \=);
+        when (pos)
+          let suffix = copy-sequence(directory, start: pos + size(dir));
+          let compound :: <stretchy-object-vector> = as(<stretchy-vector>, entry[1]);
+          let branch = entry[2];
+          // Now append the rest of the compound name
+          for (component in suffix)
+            add!(compound, '-');
+            for (char in component)
+              add!(compound, char)
+            end
+          end;
+          return(as(<string>, compound), name, branch)
+        end
       end
     end;
     values(#f, name, #f)
@@ -394,39 +394,39 @@ define method read-version-file
     let version = merge-locators(as(<file-locator>, ".version"), locator);
     when (file-exists?(version))
       with-open-file (stream = version, direction: #"input")
-	let name = locator-name(locator);
-	local method position
-		  (string :: <byte-string>, char :: <byte-character>,
-		   #key start: _start :: <integer> = 0,
-			end:   _end   :: <integer> = size(string))
-	       => (index :: false-or(<integer>))
-		block (return)
-		  for (i :: <integer> = _start then i + 1,
-		       until: i = _end)
-		    when (string[i] = char)
-		      return(i)
-		    end
-		  end;
-		  #f
-		end
-	      end method;
-	while (~stream-at-end?(stream))
-	  let line = read-line(stream);
-	  let c1   =      position(line, ',');
-	  let c2   = c1 & position(line, ',', start: c1 + 1);
-	  let c3   = c2 & position(line, ',', start: c2 + 1);
-	  when (c3)
-	    let compound = copy-sequence(line, start: 0,      end: c1);
-	    let branch   = copy-sequence(line, start: c1 + 1, end: c2);
-	    let unit     = copy-sequence(line, start: c2 + 1, end: c3);
-	    when (branch = ".")
-	      branch := "trunk";
-	    end;
-	    when (unit = name)
-	      return(compound, unit, branch)
-	    end
-	  end
-	end 
+        let name = locator-name(locator);
+        local method position
+                  (string :: <byte-string>, char :: <byte-character>,
+                   #key start: _start :: <integer> = 0,
+                        end:   _end   :: <integer> = size(string))
+               => (index :: false-or(<integer>))
+                block (return)
+                  for (i :: <integer> = _start then i + 1,
+                       until: i = _end)
+                    when (string[i] = char)
+                      return(i)
+                    end
+                  end;
+                  #f
+                end
+              end method;
+        while (~stream-at-end?(stream))
+          let line = read-line(stream);
+          let c1   =      position(line, ',');
+          let c2   = c1 & position(line, ',', start: c1 + 1);
+          let c3   = c2 & position(line, ',', start: c2 + 1);
+          when (c3)
+            let compound = copy-sequence(line, start: 0,      end: c1);
+            let branch   = copy-sequence(line, start: c1 + 1, end: c2);
+            let unit     = copy-sequence(line, start: c2 + 1, end: c3);
+            when (branch = ".")
+              branch := "trunk";
+            end;
+            when (unit = name)
+              return(compound, unit, branch)
+            end
+          end
+        end
       end
     end;
     values(#f, #f, #f)

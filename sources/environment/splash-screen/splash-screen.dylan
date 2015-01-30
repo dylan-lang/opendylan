@@ -22,7 +22,7 @@ define function default-splash-screen-image
     //---*** calculate it correctly.
     let bitmap
       = read-image-as(<win32-bitmap>, $splash-screen-resource, #"bitmap",
-		      width: 500, height: 375);
+                      width: 500, height: 375);
     when (bitmap)
       $splash-screen-bitmap := bitmap
     end;
@@ -63,9 +63,9 @@ define function fork-splash-screen
   let image = default-splash-screen-image();
   when (image)
     make(<thread>,
-	 name: "splash screen timer",
-	 function: method ()
-		     display-splash-screen(image, duration: duration)
-		   end)
+         name: "splash screen timer",
+         function: method ()
+                     display-splash-screen(image, duration: duration)
+                   end)
   end
 end function fork-splash-screen;

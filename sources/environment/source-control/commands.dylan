@@ -24,7 +24,7 @@ define method make
     apply(next-method, class, server: sccs, initargs)
   else
     error(make(<source-control-unsupported-command>,
-	       source-control: sccs, command: class))
+               source-control: sccs, command: class))
   end
 end method make;
 

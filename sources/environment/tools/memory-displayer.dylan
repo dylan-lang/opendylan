@@ -22,8 +22,8 @@ define pane <memory-displayer> (<displayer-mixin>)
     init-keyword: memory-format:;
   pane displayer-editor-pane (pane)
     make(<text-editor>,
-	 read-only?: #t,
-	 text-style: make(<text-style>, family: #"fix"));
+         read-only?: #t,
+         text-style: make(<text-style>, family: #"fix"));
   layout (pane)
     pane.displayer-editor-pane;
 end pane <memory-displayer>;
@@ -40,11 +40,11 @@ define sideways method refresh-frame-property-page
   let state = displayer.displayer-state;
   let new-state
     = case
-	state & state.displayer-state-object == object =>
-	  state;
-	otherwise =>
-	  displayer.displayer-state
-	    := make(<memory-displayer-state>, object: object);
+        state & state.displayer-state-object == object =>
+          state;
+        otherwise =>
+          displayer.displayer-state
+            := make(<memory-displayer-state>, object: object);
       end;
   if (state ~= new-state | clean?)
     let address
@@ -52,19 +52,19 @@ define sideways method refresh-frame-property-page
           & displayer.displayer-address-generator(object);
     let text
       = if (address)
-	  with-output-to-string (stream)
-	    print-displayer-memory-contents(stream, displayer, address)
-	  end
-	else
-	  "No information available"
-	end;
+          with-output-to-string (stream)
+            print-displayer-memory-contents(stream, displayer, address)
+          end
+        else
+          "No information available"
+        end;
     gadget-text(displayer.displayer-editor-pane) := text;
     frame-status-message(frame) := ""
   end
 end method refresh-frame-property-page;
 
 define sideways method refresh-frame-property-page
-    (frame :: <environment-frame>, 
+    (frame :: <environment-frame>,
      displayer :: <memory-displayer>,
      environment-object == #f, type == #"memory",
      #key clean?, new-thread? = #t)
@@ -86,33 +86,33 @@ define method print-displayer-memory-contents
     let memory-format = displayer.displayer-memory-format;
     for (index :: <integer> from 0 below 256 by group-size)
       let strings
-	= address-read-memory-contents
-	    (project, object,
-	     size:       memory-size,
-	     format:     memory-format,
-	     from-index: index,
-	     to-index:   index + group-size - 1);
+        = address-read-memory-contents
+            (project, object,
+             size:       memory-size,
+             format:     memory-format,
+             from-index: index,
+             to-index:   index + group-size - 1);
       format(stream, "%s  ", mw/+(address, as(<machine-word>, index)));
       for (string :: <string> in strings)
-	format(stream, "%s ", string)
+        format(stream, "%s ", string)
       end;
       let ascii-characters
-	= address-read-memory-contents
-	    (project, object,
-	     size:       #"byte",
-	     format:     #"byte-character",
-	     from-index: (index * words-to-bytes),
-	     to-index:   ((index + group-size) * words-to-bytes) - 1);
+        = address-read-memory-contents
+            (project, object,
+             size:       #"byte",
+             format:     #"byte-character",
+             from-index: (index * words-to-bytes),
+             to-index:   ((index + group-size) * words-to-bytes) - 1);
       format(stream, "    ");
       //---*** This won't work properly with Unicode!
       for (string :: <string> in ascii-characters)
-	let character = string[0];
-	let code = as(<integer>, character);
-	if (code > 31 & code < 127)
-	  format(stream, "%s", string)
-	else
-	  write(stream, ".")
-	end
+        let character = string[0];
+        let code = as(<integer>, character);
+        if (code > 31 & code < 127)
+          format(stream, "%s", string)
+        else
+          write(stream, ".")
+        end
       end;
       new-line(stream)
     end

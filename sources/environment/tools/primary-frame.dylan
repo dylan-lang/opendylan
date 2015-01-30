@@ -19,13 +19,13 @@ define frame <environment-primary-frame>
   keyword max-width: = $fill;
   keyword x: = 0;
   keyword y: = 0;
-  keyword width: = 2000;	//---*** andrewa: quick hack!
+  keyword width: = 2000;        //---*** andrewa: quick hack!
   keyword fixed-height?: = #t;
   keyword icon: = $main-window-small-icon;
   keyword frame-class-name:, init-value: #"primary-frame";
 end frame <environment-primary-frame>;
 
-define window-settings 
+define window-settings
   primary-window :: <environment-primary-frame> = "Primary Window";
 
 define method initialize
@@ -110,7 +110,7 @@ define method make-new-file-tool-bar-buttons
               documentation: $new-project-file-title,
               command: create-new-project,
               activate-callback: method (sheet)
-				   let frame = sheet-frame(sheet);
+                                   let frame = sheet-frame(sheet);
                                    create-new-project(frame: frame)
                                  end))
 end method make-new-file-tool-bar-buttons;
@@ -177,11 +177,11 @@ define method make-help-tool-bar-buttons
               documentation: $playground-title,
               command: frame-open-playground,
               activate-callback: method (sheet)
-				   frame-open-playground(sheet-frame(sheet))
-				 end),
+                                   frame-open-playground(sheet-frame(sheet))
+                                 end),
          make(<button>,
-	      label: $help-bitmap,
-	      documentation: $help-topics-doc,
+              label: $help-bitmap,
+              documentation: $help-topics-doc,
               command: frame-help-contents-and-index,
               activate-callback: method (sheet)
                                    frame-help-contents-and-index(sheet-frame(sheet))
@@ -196,35 +196,35 @@ define constant $active-project-title = "Select Active Project";
 define method make-active-project-gadget
     (frame :: <environment-primary-frame>) => (gadget :: <option-box>)
   local method project-name
-	    (project :: <project-object>) => (name :: <string>)
-	  environment-object-primitive-name(project, project)
-	end method project-name;
+            (project :: <project-object>) => (name :: <string>)
+          environment-object-primitive-name(project, project)
+        end method project-name;
   let gadget
     = make(<option-box>,
-	   documentation: $active-project-title,
-	   label-key: project-name,
-	   width: 150, fixed-width?: #t,
-	   value-changed-callback: method (gadget :: <gadget>)
-				     let project = gadget-value(gadget);
-				     active-project() := project
-				   end);
+           documentation: $active-project-title,
+           label-key: project-name,
+           width: 150, fixed-width?: #t,
+           value-changed-callback: method (gadget :: <gadget>)
+                                     let project = gadget-value(gadget);
+                                     active-project() := project
+                                   end);
   tune-in($project-channel,
-	  method (message :: <project-message>)
-	    select (message by instance?)
-	      <project-opened-message>, <project-closed-message> =>
-		let projects = copy-sequence(open-projects());
-		gadget-items(gadget) 
-		  := keyed-sort(projects, key: project-name);
-	      <project-now-active-message> =>
-		let project = message.message-project;
-		gadget-value(gadget) := project;
-	      <no-active-project-message> =>
-		gadget-value(gadget) := #f;
-	      otherwise =>
-		#f;
-	    end
-	  end,
-	  message-type: <project-message>);
+          method (message :: <project-message>)
+            select (message by instance?)
+              <project-opened-message>, <project-closed-message> =>
+                let projects = copy-sequence(open-projects());
+                gadget-items(gadget)
+                  := keyed-sort(projects, key: project-name);
+              <project-now-active-message> =>
+                let project = message.message-project;
+                gadget-value(gadget) := project;
+              <no-active-project-message> =>
+                gadget-value(gadget) := #f;
+              otherwise =>
+                #f;
+            end
+          end,
+          message-type: <project-message>);
   gadget
 end method make-active-project-gadget;
 
@@ -241,7 +241,7 @@ define method make-environment-tool-bar-buttons
     let help-buttons     = make-help-tool-bar-buttons(frame);
     vector(make(<row-layout>, children: new-file-buttons, spacing: 0),
            make(<row-layout>, children: file-io-buttons,  spacing: 0),
-	   project-gadget,
+           project-gadget,
            make(<row-layout>, children: help-buttons,     spacing: 0))
    end
 end method make-environment-tool-bar-buttons;
@@ -272,10 +272,10 @@ end method frame-full-gc;
 
 define method frame-full-gc-and-report
     (frame :: <environment-frame>) => ()
-  let filename 
+  let filename
     = make(<file-locator>,
-	   directory: working-directory(),
-	   name:      "dylan-runtime.log");
+           directory: working-directory(),
+           name:      "dylan-runtime.log");
   with-busy-cursor (frame)
     collect-garbage(print-stats?: #t)
   end;
@@ -285,8 +285,8 @@ define method frame-full-gc-and-report
   /*---*** This doesn't work because the file is locked...
   let message
     = format-to-string("Heap statistics dumped to %s\n\n"
-		       "Would you like to view this file?",
-		       filename);
+                       "Would you like to view this file?",
+                       filename);
   if (environment-question(message, owner: frame))
     frame-open-file(frame, filename: as(<string>, filename))
   end
@@ -308,7 +308,7 @@ define variable $shell-execute-dialog-width :: <integer> = 250;
 define frame <shell-execute-dialog> (<dialog-frame>)
   pane shell-command-pane (dialog)
     make(<text-field>,
-	 documentation: "Enter a command line to execute.");
+         documentation: "Enter a command line to execute.");
   layout (dialog)
     horizontally (spacing: 4)
       make(<label>, label: "Command:");
@@ -322,8 +322,8 @@ end frame <shell-execute-dialog>;
 define method frame-execute-shell-command
     (frame :: <environment-frame>) => ()
   let dialog = make(<shell-execute-dialog>,
-		    owner: frame,
-		    width: max($shell-execute-dialog-width, 250));
+                    owner: frame,
+                    width: max($shell-execute-dialog-width, 250));
   if (start-dialog(dialog))
     let (width, height) = frame-size(dialog);
     $shell-execute-dialog-width := width;
@@ -337,10 +337,10 @@ end method frame-execute-shell-command;
 define method frame-load-library-command
     (frame :: <environment-frame>) => ()
   let filename = choose-file(title: "Load Library",
-			     owner: frame,
-			     direction: #"input",
-			     //---*** NOTE: Should add this to filters-for-file-types!
-			     filters: #[#["Libraries", "*.dll"]]);
+                             owner: frame,
+                             direction: #"input",
+                             //---*** NOTE: Should add this to filters-for-file-types!
+                             filters: #[#["Libraries", "*.dll"]]);
   when (filename)
     load-library(filename)
   end
@@ -351,7 +351,7 @@ define variable $find-registry-project-dialog-width :: <integer> = 250;
 define frame <find-registry-project-dialog> (<dialog-frame>)
   pane library-name-pane (dialog)
     make(<text-field>,
-	 documentation: "Enter a library name to lookup in the registry.");
+         documentation: "Enter a library name to lookup in the registry.");
   layout (dialog)
     horizontally (spacing: 4)
       make(<label>, label: "Library:");
@@ -366,8 +366,8 @@ define method frame-open-project-for-library
     (frame :: <environment-frame>) => ()
   let dialog
     = make(<find-registry-project-dialog>,
-	   owner: frame,
-	   width: max($find-registry-project-dialog-width, 250));
+           owner: frame,
+           width: max($find-registry-project-dialog-width, 250));
   if (start-dialog(dialog))
     let (width, height) = frame-size(dialog);
     $find-registry-project-dialog-width := width;

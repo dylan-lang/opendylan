@@ -2,8 +2,8 @@ Library:   Editor-Emacsserver-Backend
 Synopsis:  Environment-Emacs Server Interface
 Author:    Scott McKay, Hugh Greene
 Files:  library
-	module
-	emacsserver-backend
+        module
+        emacsserver-backend
 Major-version: 2
 Minor-version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

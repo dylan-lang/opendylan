@@ -98,7 +98,7 @@ define function initialize-bitmaps ()
     initialize-icon(#"16x16", $stop-bitmap,             "STOP");
 
     // Initialize the 16x16 tree control bitmaps
-    
+
     initialize-icon(#"16x16", $application-bitmap,    "APPLICATION");
     initialize-icon(#"16x16", $class-bitmap,      "CLASS");
     initialize-icon(#"16x16", $constant-bitmap,   "CONSTANT");

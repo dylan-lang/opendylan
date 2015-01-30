@@ -43,7 +43,7 @@ define method variable-value
   server & variable-value(server, variable, thread: thread)
 end method variable-value;
 
-define method variable-type 
+define method variable-type
     (project :: <project-object>, variable :: <variable-object>)
  => (type :: false-or(<environment-object>))
   let server = choose-server(project, variable);

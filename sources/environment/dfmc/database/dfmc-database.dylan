@@ -46,9 +46,9 @@ end method browsing-context;
 define sealed method browsing-context
     (server :: <dfmc-database>, database :: <dfmc-database>)
  => (context :: <context>)
-  assert(server == database, 
-	 "Querying database %= using different database %=!",
-	 database, server);
+  assert(server == database,
+         "Querying database %= using different database %=!",
+         database, server);
   let project = server.dfmc-database-proxy;
   project.project-browsing-context
     | context-missing-error(server, project)
@@ -58,7 +58,7 @@ define sealed method context-missing-error
     (server :: <dfmc-database>, project :: <project>)
   let name = project.project-library-name;
   error("No compilation context found for project '%s'",
-	name-to-string(name))
+        name-to-string(name))
 end method context-missing-error;
 
 define sealed method context-missing-error

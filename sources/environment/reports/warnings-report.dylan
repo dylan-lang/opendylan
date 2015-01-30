@@ -28,10 +28,10 @@ define method write-report-as
     let library = environment-object-library(project, warning);
     unless (library == last-library)
       if (last-library)
-	format(stream, "-----------------------\n\n")
+        format(stream, "-----------------------\n\n")
       end;
       format(stream, "Warnings in %s library:\n",
-	     environment-object-primitive-name(project, library));
+             environment-object-primitive-name(project, library));
       format(stream, "-----------------------\n\n");
       last-library := library
     end;

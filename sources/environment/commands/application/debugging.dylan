@@ -1,6 +1,6 @@
 Module:    environment-application-commands
 Synopsis:  The application commands provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -26,14 +26,14 @@ define method show-property
   let application-context = context.context-application-context;
   let show-messages? = application-context.context-show-messages?;
   message(context, "Messages: %s",
-	  case
-	    show-messages? => "verbose";
-	    otherwise      => "quiet";
-	  end)
+          case
+            show-messages? => "verbose";
+            otherwise      => "quiet";
+          end)
 end method show-property;
 
 define method set-property
-    (context :: <environment-context>, property :: <messages-property>, 
+    (context :: <environment-context>, property :: <messages-property>,
      messages :: <symbol>,
      #key save?)
  => ()
@@ -61,7 +61,7 @@ define method show-property
   let thread = application-context.context-thread;
   if (thread)
     message(context, "%s",
-	    environment-object-display-name(project, thread, #f))
+            environment-object-display-name(project, thread, #f))
   else
     message(context, "No active thread")
   end
@@ -102,11 +102,11 @@ define method show-property
       let current-thread = application-context.context-thread;
       let threads = application.application-threads;
       for (thread :: <thread-object> in threads)
-	message(context, "  Thread %d: %s%s%s",
-		thread-index(project, thread),
-		environment-object-primitive-name(project, thread),
-		if (thread.thread-suspended?) " [suspended]" else "" end,
-		if (thread == current-thread) " [*]" else "" end)
+        message(context, "  Thread %d: %s%s%s",
+                thread-index(project, thread),
+                environment-object-primitive-name(project, thread),
+                if (thread.thread-suspended?) " [suspended]" else "" end,
+                if (thread == current-thread) " [*]" else "" end)
       end;
   end
 end method show-property;
@@ -135,15 +135,15 @@ define method show-property
       let continue-restart = application-continue-restart(project, thread);
       let abort-restart    = application-abort-restart(project, thread);
       for (restart :: <restart-object> in restarts,
-	   index :: <integer> from 1)
-	message(context, "  %d%s: %s",
-		index,
-		select (restart)
-		  abort-restart    => " (abort)";
-		  continue-restart => " (continue)";
-		  otherwise        => "";
-		end,
-		application-restart-message(project, restart))
+           index :: <integer> from 1)
+        message(context, "  %d%s: %s",
+                index,
+                select (restart)
+                  abort-restart    => " (abort)";
+                  continue-restart => " (continue)";
+                  otherwise        => "";
+                end,
+                application-restart-message(project, restart))
       end;
   end
 end method show-property;
@@ -165,7 +165,7 @@ define method show-property
  => ()
   let project = context.context-project;
   message(context, "%s",
-	  project.project-debug-machine-address)
+          project.project-debug-machine-address)
 end method show-property;
 
 define method set-property
@@ -195,7 +195,7 @@ define method show-property
   if (~empty?(machines))
     for (machine :: <machine> in machines)
       message(context, "  %s",
-	      machine.machine-network-address)
+              machine.machine-network-address)
     end
   else
     message(context, "Local machine only")
@@ -218,7 +218,7 @@ define function available-machines
   do-machine-connections
     (method (machine :: <machine>)
        if (include-local? | machine ~== environment-host-machine())
-	 add!(machines, machine)
+         add!(machines, machine)
        end
      end);
   machines
@@ -242,7 +242,7 @@ define command-line connect => <connect-to-remote-machine-command>
 end command-line connect;
 
 define method do-execute-command
-    (context :: <environment-context>, 
+    (context :: <environment-context>,
      command :: <connect-to-remote-machine-command>)
  => ()
   let machine  = command.%machine;
@@ -262,14 +262,14 @@ define method find-remote-connection
     let machines = available-machines();
     for (machine :: <machine> in machines)
       if (address = machine.machine-network-address)
-	return(machine)
+        return(machine)
       end
     end
   end
 end method find-remote-connection;
 
 define method open-remote-connection
-    (context :: <environment-context>, address :: <string>, 
+    (context :: <environment-context>, address :: <string>,
      password :: false-or(<string>))
  => (machine :: <machine>)
   block ()
@@ -332,7 +332,7 @@ define method do-execute-command
   case
     project.project-can-be-built? & ~project.project-compiler-database =>
       command-error("Project %s has not been built, so cannot be run",
-		    project.project-name);
+                    project.project-name);
     ~file-exists?(filename) =>
       command-error("File '%s' does not exist", filename);
   end;
@@ -348,17 +348,17 @@ define method do-execute-command
     execute-command(command)
   end;
   message(context, "Starting: %s %s",
-	  project.project-name,
-	  arguments | "");
+          project.project-name,
+          arguments | "");
   synchronize-application-call
     (context,
      run-application, project,
      client:                    context,
      machine:                   machine | unsupplied(),
      startup-option:            case
-				  debug?    => #"debug";
-				  otherwise => #"start";
-				end,
+                                  debug?    => #"debug";
+                                  otherwise => #"start";
+                                end,
      share-console?:            share-console?,
      filename:                  filename,
      arguments:                 arguments,
@@ -398,10 +398,10 @@ define method do-execute-command
     (context :: <environment-context>, command :: <play-command>)
  => ()
   local method run
-	    (class :: subclass(<command>), #rest arguments) => ()
-	  let command = apply(make, class, server: context, arguments);
-	  execute-command(command)
-	end method run;
+            (class :: subclass(<command>), #rest arguments) => ()
+          let command = apply(make, class, server: context, arguments);
+          execute-command(command)
+        end method run;
   let name = playground-project-name();
   run(<open-project-command>, file: as(<file-locator>, name));
   run(<debug-application-command>)
@@ -454,7 +454,7 @@ define method do-execute-command
   let title   = command.%title;
   let thread = create-application-thread(project, title);
   message(context, "%s created",
-	  environment-object-display-name(project, thread, #f))
+          environment-object-display-name(project, thread, #f))
 end method do-execute-command;
 
 
@@ -478,7 +478,7 @@ define method do-execute-command
   let thread  = command.%thread | context.context-application-context.context-thread;
   suspend-application-thread(project, thread);
   message(context, "Thread %s suspended",
-	  environment-object-display-name(project, thread, #f))
+          environment-object-display-name(project, thread, #f))
 end method do-execute-command;
 
 
@@ -502,7 +502,7 @@ define method do-execute-command
   let thread  = command.%thread | context.context-application-context.context-thread;
   resume-application-thread(project, thread);
   message(context, "Thread %s resumed",
-	  environment-object-display-name(project, thread, #f))
+          environment-object-display-name(project, thread, #f))
 end method do-execute-command;
 
 
@@ -520,7 +520,7 @@ define command-line continue => <continue-application-command>
 end command-line continue;
 
 define method do-execute-command
-    (context :: <environment-context>, 
+    (context :: <environment-context>,
      command :: <continue-application-command>)
  => ()
   let project = context.context-project;
@@ -531,10 +531,10 @@ define method do-execute-command
     (context,
      method ()
        if (restart)
-	 let thread = application-context.context-thread;
-	 invoke-application-restart(project, thread, restart)
+         let thread = application-context.context-thread;
+         invoke-application-restart(project, thread, restart)
        else
-	 continue-application(project)
+         continue-application(project)
        end
      end)
 end method do-execute-command;
@@ -569,7 +569,7 @@ define command-line restart => <restart-application-command>
 end command-line restart;
 
 define method do-execute-command
-    (context :: <environment-context>, 
+    (context :: <environment-context>,
      command :: <restart-application-command>)
  => ()
   let start-command
@@ -602,10 +602,10 @@ define method command-complete?
   let thread = application-context.context-thread;
   let module = project-context.context-module;
   let stack-frame = application-context.context-stack-frame;
-  let (complete?, warnings) 
-    = project-valid-code?(project, command.command-code, thread, 
-			  module: module,
-			  stack-frame: stack-frame);
+  let (complete?, warnings)
+    = project-valid-code?(project, command.command-code, thread,
+                          module: module,
+                          stack-frame: stack-frame);
   complete?
 end method command-complete?;
 
@@ -627,9 +627,9 @@ define method do-execute-command
     (context,
      method ()
        let transaction-id
-	 = project-execute-code(project, command.command-code, thread,
-				module: module,
-				stack-frame: stack-frame);
+         = project-execute-code(project, command.command-code, thread,
+                                module: module,
+                                stack-frame: stack-frame);
        ignore(transaction-id)
      end)
 end method do-execute-command;
@@ -677,12 +677,12 @@ define sideways method initialize-application-client
      finished-execution-callback:  note-application-finished-execution
      );
   tune-in($project-channel,
-	  method (message :: <thread-interactive-warnings-message>)
-	    let application-context = context.context-application-context;
-	    let warnings = message.message-warnings;
-	    application-context.context-interactive-warnings := warnings
-	  end,
-	  message-type: <thread-interactive-warnings-message>);
+          method (message :: <thread-interactive-warnings-message>)
+            let application-context = context.context-application-context;
+            let warnings = message.message-warnings;
+            application-context.context-interactive-warnings := warnings
+          end,
+          message-type: <thread-interactive-warnings-message>);
 end method initialize-application-client;
 
 
@@ -712,7 +712,7 @@ define method note-application-thread-message
 end method note-application-thread-message;
 
 define method note-application-interactive-results
-    (context :: <environment-context>, thread :: <thread-object>, 
+    (context :: <environment-context>, thread :: <thread-object>,
      transaction-id)
  => ()
   let application-context = context.context-application-context;
@@ -726,7 +726,7 @@ define method note-application-finished-execution
   let project = context.context-project;
   let thread = application-context.context-thread;
   if (project.application-pause-before-termination?
-	& true?(project.project-last-profile))
+        & true?(project.project-last-profile))
     message(context, "Application paused before closing to view profiling results");
     synchronize-application-release
       (context,
@@ -744,10 +744,10 @@ define method note-application-process-finished
        let application-context = context.context-application-context;
        application-context.context-thread := #f;
        if (exit-code)
-	 message(context, "Application exited with exit code %d",
-		 exit-code)
+         message(context, "Application exited with exit code %d",
+                 exit-code)
        else
-	 message(context, "Application exited suddenly with no exit code")
+         message(context, "Application exited suddenly with no exit code")
        end
      end)
 end method note-application-process-finished;
@@ -774,9 +774,9 @@ define method refresh-application-context
     let stream = context.context-server.server-output-stream;
     for (warning :: <compiler-warning-object> in warnings)
       print-environment-object-name
-	(stream, project, warning, 
-	 namespace: module,
-	 full-message?: #t);
+        (stream, project, warning,
+         namespace: module,
+         full-message?: #t);
       new-line(stream)
     end;
     application-context.context-interactive-warnings := #[]
@@ -791,7 +791,7 @@ define method refresh-application-context
     if (stop-reason-message)
       message(context, "%s", stop-reason-message);
       message(context, "Restarts for %s:",
-	      environment-object-display-name(project, thread, #f));
+              environment-object-display-name(project, thread, #f));
       show-named-property(context, #"restarts")
     end
   end;
@@ -801,11 +801,11 @@ define method refresh-application-context
     dispose-interactor-return-values(project, transaction-id);
     for (result :: <pair> in results)
       let (name :: <string>, value :: <environment-object>)
-	= values(result.head, result.tail);
+        = values(result.head, result.tail);
       message(context, "  %s = %s",
-	      name,
-	      print-environment-object-to-string
-		(project, value, namespace: module))
+              name,
+              print-environment-object-to-string
+                (project, value, namespace: module))
     end;
     application-context.context-last-transaction-id := #f
   end
@@ -817,7 +817,7 @@ define function application-abort-restart
   block (return)
     for (restart in application-thread-restarts(project, thread))
       if (application-restart-abort?(project, restart))
-	return(restart)
+        return(restart)
       end
     end
   end
@@ -829,7 +829,7 @@ define function application-continue-restart
   block (return)
     for (restart in application-thread-restarts(project, thread))
       if (~application-restart-abort?(project, restart))
-	return(restart)
+        return(restart)
       end
     end
   end

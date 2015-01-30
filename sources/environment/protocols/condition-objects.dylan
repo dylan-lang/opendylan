@@ -17,14 +17,14 @@ define user-object-class <format-string-condition-object> (<condition-object>)
 end user-object-class <format-string-condition-object>;
 
 define constant $format-condition-string-id
-  = make(<definition-id>, 
-	 name: "format-condition-string",
-	 module: $dylan-extensions-module-id);
+  = make(<definition-id>,
+         name: "format-condition-string",
+         module: $dylan-extensions-module-id);
 
 define constant $format-condition-arguments-id
-  = make(<definition-id>, 
-	 name: "format-condition-arguments",
-	 module: $dylan-extensions-module-id);
+  = make(<definition-id>,
+         name: "format-condition-arguments",
+         module: $dylan-extensions-module-id);
 
 
 /// Printing support
@@ -39,7 +39,7 @@ define method condition-format-options
  => (string :: false-or(<string-object>),
      arguments :: false-or(<collection-object>))
   values(user-object-slot-value
-	   (server, condition, $format-condition-string-id),
-	 user-object-slot-value
-	   (server, condition, $format-condition-arguments-id))
+           (server, condition, $format-condition-string-id),
+         user-object-slot-value
+           (server, condition, $format-condition-arguments-id))
 end method condition-format-options;

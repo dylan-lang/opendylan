@@ -33,16 +33,16 @@ end class <emacsserver-editor-command>;
 define macro emacsserver-command-definer
   { define emacsserver-command ?:name ?slots:* end }
     => { define sealed string-command "<emacsserver-" ## ?name ## "-command>"
-	     ("<editor-" ## ?name ## "-command>", <emacsserver-editor-command>)
-	   ?slots
-	 end;
-	 define sealed domain make (singleton("<emacsserver-" ## ?name ## "-command>"));
-	 define sealed domain initialize ("<emacsserver-" ## ?name ## "-command>");
-	 define sealed method class-for-editor-command
-	     (editor :: <emacsserver-editor>, class == "<editor-" ## ?name ## "-command>")
-	  => (class == "<emacsserver-" ## ?name ## "-command>")
-	   "<emacsserver-" ## ?name ## "-command>"
-	 end method class-for-editor-command; }
+             ("<editor-" ## ?name ## "-command>", <emacsserver-editor-command>)
+           ?slots
+         end;
+         define sealed domain make (singleton("<emacsserver-" ## ?name ## "-command>"));
+         define sealed domain initialize ("<emacsserver-" ## ?name ## "-command>");
+         define sealed method class-for-editor-command
+             (editor :: <emacsserver-editor>, class == "<editor-" ## ?name ## "-command>")
+          => (class == "<emacsserver-" ## ?name ## "-command>")
+           "<emacsserver-" ## ?name ## "-command>"
+         end method class-for-editor-command; }
 end macro emacsserver-command-definer;
 
 
@@ -60,8 +60,8 @@ define emacsserver-command open-file
   inherited named-argument start-line   is editor-command-start-line;
   inherited named-argument start-column is editor-command-start-column;
   keyword pattern-string: = "emacsclient19 +$(start-line) $(pathname)"
-			    " >/dev/null 2>&1"
-			    " || emacs19 +$(start-line) $(pathname) &"
+                            " >/dev/null 2>&1"
+                            " || emacs19 +$(start-line) $(pathname) &"
 end;
 
 //--- What about 'close-file'?

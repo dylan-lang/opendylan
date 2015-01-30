@@ -1,35 +1,35 @@
 Library:   environment-tools
 Synopsis:  Environment tools library
-Author:	   Andy Armstrong, Chris Page
-Target-Type:	dll
-Files:	library
-	module
+Author:    Andy Armstrong, Chris Page
+Target-Type: dll
+Files:  library
+        module
         utilities
-	current-module
-	object-names
-	images
+        current-module
+        object-names
+        images
         commands
-	environment-frames
-	environment-options
-	property-pages
-	displayers
+        environment-frames
+        environment-options
+        property-pages
+        displayers
         editor-glue
         source-control-glue
         help
-	project-settings
-	progress
+        project-settings
+        progress
         project-commands
         debugging
         breakpoints
         tools
-	primary-frame
+        primary-frame
         object-browser
         project-browser
         describer
         memory-displayer
-	playground
+        playground
         initialization
-	exiting
+        exiting
 Major-version: 2
 Minor-version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

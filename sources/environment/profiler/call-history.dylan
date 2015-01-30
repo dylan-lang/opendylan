@@ -1,6 +1,6 @@
 Module:    environment-profiler
 Synopsis:  The profiling tool provided by the environment
-Author:	   Andy Armstrong
+Author:    Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -12,16 +12,16 @@ define frame <profiler-call-history> (<simple-frame>)
   sealed slot profiler-show-zero-cpu-time? :: <boolean> = #f;
   pane call-history-page (frame)
     make(<tab-control-page>,
-	 label: "Call History",
-	 id: #"call-history",
-	 child: frame.call-history-displayer);
+         label: "Call History",
+         id: #"call-history",
+         child: frame.call-history-displayer);
   pane call-history-displayer (frame)
     make(<tree-control-displayer>,
-	 element-label: "form",
-	 information-available?-function: curry(profiler-has-results?, frame),
-	 transaction-function: curry(perform-profiler-transaction, frame),
-	 children-generator: curry(frame-references, frame),
-	 label-key: curry(frame-reference-label, frame),
+         element-label: "form",
+         information-available?-function: curry(profiler-has-results?, frame),
+         transaction-function: curry(perform-profiler-transaction, frame),
+         children-generator: curry(frame-references, frame),
+         label-key: curry(frame-reference-label, frame),
          activate-callback: curry(profiler-activate-callback, frame));
 end frame <profiler-call-history>;
 
@@ -90,58 +90,58 @@ define method make-frame-reference-wrappers
   let allocation-profiling? = profile.allocation-profiling?;
   let last-frame-wrapper :: false-or(<profile-frame-wrapper>) = #f;
   local method add-wrapper
-	    (wrapper :: <profile-frame-wrapper>) => ()
-	  if (last-frame-wrapper
-		& wrapper.wrapper-object = last-frame-wrapper.wrapper-object)
-	    let amount     = wrapper.wrapper-profile-amount;
-	    let references = wrapper.wrapper-profile-references;
-	    last-frame-wrapper.wrapper-profile-amount
-	      := last-frame-wrapper.wrapper-profile-amount + amount;
-	    let all-references = last-frame-wrapper.wrapper-profile-references;
-	    for (reference in references)
-	      add!(all-references, reference)
-	    end
-	  else
-	    last-frame-wrapper := wrapper;
-	    add!(wrappers, wrapper)
-	  end
-	end method add-wrapper;
+            (wrapper :: <profile-frame-wrapper>) => ()
+          if (last-frame-wrapper
+                & wrapper.wrapper-object = last-frame-wrapper.wrapper-object)
+            let amount     = wrapper.wrapper-profile-amount;
+            let references = wrapper.wrapper-profile-references;
+            last-frame-wrapper.wrapper-profile-amount
+              := last-frame-wrapper.wrapper-profile-amount + amount;
+            let all-references = last-frame-wrapper.wrapper-profile-references;
+            for (reference in references)
+              add!(all-references, reference)
+            end
+          else
+            last-frame-wrapper := wrapper;
+            add!(wrappers, wrapper)
+          end
+        end method add-wrapper;
   for (reference in references)
     select (reference by instance?)
       <profile-frame-history> =>
-	let function = reference.profile-frame-frame.frame-snapshot-function;
-	if (instance?(function, <internal-method-object>)
-	      | (~show-foreign-functions?
-		   & instance?(function, <foreign-object>)))
-	  let references = reference.profile-frame-references;
-	  let subwrappers = make-frame-reference-wrappers(frame, references);
-	  for (wrapper :: <profile-frame-wrapper> in subwrappers)
-	    add-wrapper(wrapper)
-	  end
-	else
-	  if (show-zero-cpu-time? | reference.profile-frame-cpu-time >= 0)
-	    let amount
-	      = if (allocation-profiling?)
-		  reference.profile-frame-allocation
-		else
-		  reference.profile-frame-cpu-time
-		end;
-	    let wrapper
-	      = make(<profile-frame-wrapper>,
-		     object:     function,
-		     amount:     amount,
-		     references: reference.profile-frame-references);
-	    add-wrapper(wrapper)
-	  end
-	end;
+        let function = reference.profile-frame-frame.frame-snapshot-function;
+        if (instance?(function, <internal-method-object>)
+              | (~show-foreign-functions?
+                   & instance?(function, <foreign-object>)))
+          let references = reference.profile-frame-references;
+          let subwrappers = make-frame-reference-wrappers(frame, references);
+          for (wrapper :: <profile-frame-wrapper> in subwrappers)
+            add-wrapper(wrapper)
+          end
+        else
+          if (show-zero-cpu-time? | reference.profile-frame-cpu-time >= 0)
+            let amount
+              = if (allocation-profiling?)
+                  reference.profile-frame-allocation
+                else
+                  reference.profile-frame-cpu-time
+                end;
+            let wrapper
+              = make(<profile-frame-wrapper>,
+                     object:     function,
+                     amount:     amount,
+                     references: reference.profile-frame-references);
+            add-wrapper(wrapper)
+          end
+        end;
       <profile-frame-allocated-class> =>
-	let class    = reference.profile-frame-allocated-class;
-	let location = reference.profile-frame-source-location;
-	add!(wrappers,
-	     make(<allocated-class-wrapper>,
-		  object:          class,
-		  source-location: location));
-      
+        let class    = reference.profile-frame-allocated-class;
+        let location = reference.profile-frame-source-location;
+        add!(wrappers,
+             make(<allocated-class-wrapper>,
+                  object:          class,
+                  source-location: location));
+
     end
   end;
   wrappers
@@ -152,7 +152,7 @@ define method frame-reference-label
  => (label :: <string>)
   let class = wrapper.wrapper-object;
   format-to-string("Allocated %s",
-		   frame-default-object-name(frame, class))
+                   frame-default-object-name(frame, class))
 end method frame-reference-label;
 
 define method frame-reference-label
@@ -164,12 +164,12 @@ define method frame-reference-label
   let profile = project.project-last-profile;
   let units
     = if (profile.allocation-profiling?)
-	"bytes"
+        "bytes"
       else
-	"ms"
+        "ms"
       end;
   format-to-string("%d %s: %s",
-		   amount,
-		   units,
-		   frame-default-object-name(frame, function))
+                   amount,
+                   units,
+                   frame-default-object-name(frame, function))
 end method frame-reference-label;

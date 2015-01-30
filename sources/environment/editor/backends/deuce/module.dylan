@@ -14,20 +14,20 @@ define module editor-deuce-backend
 
   use duim,
     import: { <frame>,
-	      apply-in-frame,
-	      raise-frame,
-	      deiconify-frame,
-	      exit-frame };
+              apply-in-frame,
+              raise-frame,
+              deiconify-frame,
+              exit-frame };
   use deuce-internals,
     exclude: { <editor>,
-	       browse-class,
+               browse-class,
                browse-object,
-	       browse-function,
-	       show-documentation,
-	       position },
+               browse-function,
+               show-documentation,
+               position },
     rename: { execute-command => deuce/execute-command,
-	      undo-command    => deuce/undo-command,
-	      redo-command    => deuce/redo-command };
+              undo-command    => deuce/undo-command,
+              redo-command    => deuce/redo-command };
   use duim-deuce;
 
   use editor-manager-internals;

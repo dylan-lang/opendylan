@@ -11,39 +11,39 @@ define module dfmc-environment-database
   use print, import: { print };
   use environment-protocols,
     rename: { project-read-only? => env/project-read-only?,
-	      project-target-type => env/project-target-type,
+              project-target-type => env/project-target-type,
               project-executable-name => env/project-executable-name };
 
   use dfmc-derived-information,
     rename: { <source-location> => dfmc/<source-location>,
               do-library-modules => dfmc/do-library-modules,
-	      source-record-top-level-forms => dfmc/source-record-top-level-forms };
+              source-record-top-level-forms => dfmc/source-record-top-level-forms };
   use project-manager-interface,
     import: { <project>,
               lookup-named-project,
               project-library-name,
-	      all-used-projects,
-	      directly-used-projects,
-	      ensure-project-database,
+              all-used-projects,
+              directly-used-projects,
+              ensure-project-database,
               macroexpand-expression,
-	      project-source-records,
-	      project-dylan-sources,
-	      project-source-canonical-source-record,
-	      project-canonical-source-records,
-	      project-browsing-context,
-	      project-interaction-allowed?,
-	      project-owners,
+              project-source-records,
+              project-dylan-sources,
+              project-source-canonical-source-record,
+              project-canonical-source-records,
+              project-browsing-context,
+              project-interaction-allowed?,
+              project-owners,
               project-location,
               project-build-location,
               project-executable-name,
               project-target-type,
-	      project-read-only?, project-read-only?-setter };
+              project-read-only?, project-read-only?-setter };
   use dfmc-project-compilation,
     import: { all-known-compilation-contexts,
-	     compilation-context-project };
+             compilation-context-project };
   use dfmc-conditions,
     import: { <program-error>,
-	      <serious-program-warning> };
+              <serious-program-warning> };
 
   export <dfmc-database>;
 

@@ -45,7 +45,7 @@ define module target-application-internals
     rename: { thread-name => ap-thread-name};
   use debugger-manager,
     rename: { kill-application => dm-kill-application,
-	      thread-name => dm-thread-name };
+              thread-name => dm-thread-name };
 
   use target-application;
 end module target-application-internals;

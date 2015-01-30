@@ -47,8 +47,8 @@ define constant $build-operations
 
 
 define constant <link-mode>
-  = one-of(#"warnings",		//--- obsolete, but it might be in the registry
-           #"always",		//--- obsolete, but it might be in the registry
+  = one-of(#"warnings",                //--- obsolete, but it might be in the registry
+           #"always",                //--- obsolete, but it might be in the registry
            #"force", #"ask", #"no-warnings");
 
 define constant $link-modes
@@ -83,8 +83,8 @@ define frame <compiler-progress-window>
     init-keyword: cleanup-function:;
   sealed slot %progress-function-frame  :: false-or(<frame>)  = #f,
     init-keyword: progress-frame:;
-  sealed slot %stop-progress?    :: <boolean> = #f;	// request a stop
-  sealed slot %progress-stopped? :: <boolean> = #t;	// we are now stopped
+  sealed slot %stop-progress?    :: <boolean> = #f;        // request a stop
+  sealed slot %progress-stopped? :: <boolean> = #t;        // we are now stopped
   virtual slot compiler-progress-heading-label :: <string>;
   virtual slot compiler-progress-item-label    :: <string>;
   virtual slot compiler-progress-numerator     :: <integer>;
@@ -607,7 +607,7 @@ define method update-compiler-progress-window
          gadget-enabled?(window.%stop-button) := #f;
        end,
        window);
-    window.%stop-progress?    := #f;	// in case a cleanup updates the progress!
+    window.%stop-progress?    := #f;        // in case a cleanup updates the progress!
     window.%progress-stopped? := #t;
     abort()
   end

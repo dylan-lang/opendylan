@@ -1,5 +1,5 @@
 library:    target-application
-Target-Type:	dll
+Target-Type: dll
 files:      library
             target-application
             synchronized-access

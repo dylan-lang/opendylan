@@ -51,16 +51,16 @@ define method number-object-to-string
     let value = runtime-proxy-to-remote-value(application, proxy);
     let text = print-dylan-object(target, value, format: format);
     concatenate(if (prefix?)
-		  select (format)
-		    #"binary" => "#b";
-		    #"octal"  => "#o";
-		    #"hex"    => "#x";
-		    otherwise => "";
-		  end
-		else
-		  ""
-		end,
-		text)
+                  select (format)
+                    #"binary" => "#b";
+                    #"octal"  => "#o";
+                    #"hex"    => "#x";
+                    otherwise => "";
+                  end
+                else
+                  ""
+                end,
+                text)
   end
 end method number-object-to-string;
 

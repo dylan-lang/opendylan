@@ -14,7 +14,7 @@ end class <library-object>;
 define open generic project-library
     (server :: <server>) => (library :: false-or(<library-object>));
 
-define open generic library-project 
+define open generic library-project
     (server :: <server>, library :: <library-object>)
  => (project :: false-or(<project-object>));
 
@@ -35,11 +35,11 @@ define open generic library-interactive?
  => (interactive? :: <boolean>);
 
 define open generic library-read-only?
-    (server :: <server>, library :: <library-object>) 
+    (server :: <server>, library :: <library-object>)
  => (read-only? :: <boolean>);
 
 define open generic library-read-only?-setter
-    (read-only? :: <boolean>, server :: <server>, library :: <library-object>) 
+    (read-only? :: <boolean>, server :: <server>, library :: <library-object>)
  => (read-only? :: <boolean>);
 
 
@@ -96,7 +96,7 @@ define method library-read-only?
 end method library-read-only?;
 
 define method library-read-only?-setter
-    (read-only? :: <boolean>, project :: <project-object>, 
+    (read-only? :: <boolean>, project :: <project-object>,
      library :: <library-object>)
  => (read-only? :: <boolean>)
   let database = ensure-database-server(project, library);
@@ -111,7 +111,7 @@ define function library-modules
      #key client, imported? = #t)
  => (modules :: <sequence>)
   collect-environment-objects(do-library-modules, server, library,
-			      client: client, imported?: imported?)
+                              client: client, imported?: imported?)
 end function library-modules;
 
 define method environment-object-type-name
@@ -140,11 +140,11 @@ define method find-library
   let project = server-project(server);
   block (return)
     local method maybe-return-library
-	      (library :: <library-object>) => ()
-	    if (environment-object-primitive-name(server, library) = name)
-	      return(library)
-	    end
-	  end method maybe-return-library;
+              (library :: <library-object>) => ()
+            if (environment-object-primitive-name(server, library) = name)
+              return(library)
+            end
+          end method maybe-return-library;
     maybe-return-library(project-library(project));
     do-project-used-libraries(maybe-return-library, server, project)
   end

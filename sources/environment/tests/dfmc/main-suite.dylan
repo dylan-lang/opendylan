@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// DFMC environment suite
 
-define suite dfmc-environment-suite 
+define suite dfmc-environment-suite
     (setup-function:   open-test-projects,
      cleanup-function: close-test-projects)
   suite environment-suite;

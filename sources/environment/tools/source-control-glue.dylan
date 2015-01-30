@@ -13,8 +13,8 @@ define function claim-unit
      #key reason :: false-or(<string>))
  => (succeeded? :: <boolean>)
   execute-command(make(<sccs-claim-command>,
-		       compound: compound, unit: unit,
-		       reason: reason));
+                       compound: compound, unit: unit,
+                       reason: reason));
   #t
 end function claim-unit;
 
@@ -22,7 +22,7 @@ define function check-unit-out
     (compound :: <string>, unit :: false-or(<string>))
  => (succeeded? :: <boolean>)
   execute-command(make(<sccs-check-out-command>,
-		       compound: compound, unit: unit));
+                       compound: compound, unit: unit));
   #t
 end function check-unit-out;
 
@@ -31,8 +31,8 @@ define function check-unit-in
      #key reason :: false-or(<string>))
  => (succeeded? :: <boolean>)
   execute-command(make(<sccs-check-in-command>,
-		       compound: compound, unit: unit,
-		       reason: reason));
+                       compound: compound, unit: unit,
+                       reason: reason));
   #t
 end function check-unit-in;
 
@@ -40,7 +40,7 @@ define function abandon-unit
     (compound :: <string>, unit :: false-or(<string>))
  => (succeeded? :: <boolean>)
   execute-command(make(<sccs-abandon-command>,
-		       compound: compound, unit: unit));
+                       compound: compound, unit: unit));
   #t
 end function abandon-unit;
 
@@ -48,7 +48,7 @@ define function merge-unit
     (compound :: <string>, unit :: false-or(<string>))
  => (succeeded? :: <boolean>)
   execute-command(make(<sccs-merge-command>,
-		       compound: compound, unit: unit));
+                       compound: compound, unit: unit));
   #t
 end function merge-unit;
 
@@ -56,7 +56,7 @@ define function diff-unit
     (compound :: <string>, unit :: false-or(<string>))
  => (succeeded? :: <boolean>)
   execute-command(make(<sccs-diff-command>,
-		       compound: compound, unit: unit));
+                       compound: compound, unit: unit));
   #t
 end function diff-unit;
 
@@ -64,7 +64,7 @@ define function report-unit
     (compound :: <string>, unit :: false-or(<string>))
  => (succeeded? :: <boolean>)
   execute-command(make(<sccs-report-command>,
-		       compound: compound, unit: unit));
+                       compound: compound, unit: unit));
   #t
 end function report-unit;
 
@@ -73,8 +73,8 @@ define function add-unit
      #key reason :: false-or(<string>))
  => (succeeded? :: <boolean>)
   execute-command(make(<sccs-add-command>,
-		       compound: compound, unit: unit,
-		       reason: reason));
+                       compound: compound, unit: unit,
+                       reason: reason));
   #t
 end function add-unit;
 
@@ -83,7 +83,7 @@ define function remove-unit
      #key reason :: false-or(<string>))
  => (succeeded? :: <boolean>)
   execute-command(make(<sccs-remove-command>,
-		       compound: compound, unit: unit,
-		       reason: reason));
+                       compound: compound, unit: unit,
+                       reason: reason));
   #t
 end function remove-unit;

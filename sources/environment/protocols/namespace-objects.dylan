@@ -51,8 +51,8 @@ define method do-namespace-names
      #key client, imported? = #t)
  => ()
   let server = choose-server(project, namespace);
-  server 
-    & do-namespace-names(function, server, namespace, 
+  server
+    & do-namespace-names(function, server, namespace,
                          client: client, imported?: imported?)
 end method do-namespace-names;
 
@@ -95,7 +95,7 @@ define function namespace-names
      #key client, imported? = #t)
  => (names :: <sequence>)
   collect-environment-objects(do-namespace-names, server, namespace,
-			      client: client, imported?: imported?)
+                              client: client, imported?: imported?)
 end function namespace-names;
 
 define method environment-object-home-name

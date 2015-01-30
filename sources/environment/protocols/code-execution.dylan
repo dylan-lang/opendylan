@@ -82,8 +82,8 @@ define open generic transaction-id-source-record
 /// provides, or whatever the environment protocols provide.
 ///
 define open generic record-return-values (project :: <project-object>,
-					  execution-id :: <execution-id>,
-					  values :: <sequence>)
+                                          execution-id :: <execution-id>,
+                                          values :: <sequence>)
  => ();
 
 
@@ -92,7 +92,7 @@ define open generic record-return-values (project :: <project-object>,
 /// Returns the execution info associated with id, or #f if there is none.
 ///
 define open generic project-execution-info (project :: <project-object>,
-					    id :: <execution-id>)
+                                            id :: <execution-id>)
  => (info :: false-or(<execution-info>));
 
 /// Project-remove-execution-info
@@ -144,7 +144,7 @@ define method project-valid-code?
   let server = choose-server(project, thread, error?: #t);
   project-valid-code?
     (server, code, thread,
-     module: module, 
+     module: module,
      runtime-context: runtime-context,
      stack-frame: stack-frame)
 end method;

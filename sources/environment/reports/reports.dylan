@@ -30,12 +30,12 @@ define sealed domain initialize (<report>);
 define generic write-report-as
     (stream :: <stream>, report :: <report>, format :: <report-format>)
  => ();
- 
+
 define generic create-multi-file-report-as
-    (report :: <multi-file-report>, locator :: <directory-locator>, 
+    (report :: <multi-file-report>, locator :: <directory-locator>,
      format :: <report-format>)
  => (root-filename :: false-or(<file-locator>));
- 
+
 
 /// Some useful report subclasses
 
@@ -119,10 +119,10 @@ define function install-report
  => ()
   element($reports, name)
     := apply(make, <report-info>,
-	     name:    name,
-	     title:   title,
-	     class:   class,
-	     args)
+             name:    name,
+             title:   title,
+             class:   class,
+             args)
 end function install-report;
 
 define function find-report-info

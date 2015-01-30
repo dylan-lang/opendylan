@@ -14,26 +14,26 @@ end class <slot-object>;
 define open generic slot-class
     (server :: <server>, slot :: <slot-object>) => (class :: <class-object>);
 
-define open generic slot-getter 
+define open generic slot-getter
     (server :: <server>, slot :: <slot-object>)
  => (getter :: false-or(<function-object>));
 
-define open generic slot-setter 
+define open generic slot-setter
     (server :: <server>, slot :: <slot-object>)
  => (setter :: false-or(<function-object>));
 
-define open generic slot-type 
+define open generic slot-type
     (server :: <server>, slot :: <slot-object>)
  => (type :: <environment-object>);
 
 /*---*** Not used yet, do we need it?
-define open generic slot-init-value 
+define open generic slot-init-value
     (server :: <server>, slot :: <slot-object>)
  => (value :: false-or(<environment-object>));
 */
 
 define open generic user-object-slot-value
-    (server :: <server>, obj :: <user-object>, 
+    (server :: <server>, obj :: <user-object>,
      slot :: type-union(<definition-id>, <slot-object>),
      #key repeated-element)
  => (value :: false-or(<environment-object>));
@@ -41,7 +41,7 @@ define open generic user-object-slot-value
 
 /*---*** cpage: Remove this function?
 //---*** What should this return?
-define open generic slot-init-function 
+define open generic slot-init-function
     (server :: <server>, slot :: <slot-object>)
  => (function :: false-or(<function-object>));
 */
@@ -50,7 +50,7 @@ define open generic slot-init-kind
     (server :: <server>, slot :: <slot-object>)
  => (kind :: false-or(<symbol>));
 
-define open generic slot-init-keyword 
+define open generic slot-init-keyword
     (server :: <server>, slot :: <slot-object>)
  => (keyword :: false-or(<symbol>), required? :: <boolean>);
 
@@ -75,14 +75,14 @@ define method slot-getter
   slot-getter(server, slot)
 end method slot-getter;
 
-define method slot-setter 
+define method slot-setter
     (project :: <project-object>, slot :: <slot-object>)
  => (setter :: false-or(<function-object>))
   let server = choose-server(project, slot, error?: #t);
   slot-setter(server, slot)
 end method slot-setter;
 
-define method slot-type 
+define method slot-type
     (project :: <project-object>, slot :: <slot-object>)
  => (type :: <environment-object>)
   let server = choose-server(project, slot, error?: #t);
@@ -90,7 +90,7 @@ define method slot-type
 end method slot-type;
 
 /*---*** cpage: Cannot currently be implemented; remove this function?
-define method slot-init-value 
+define method slot-init-value
     (project :: <project-object>, slot :: <slot-object>)
  => (value :: <environment-object>)
   let server = choose-server(project, slot, error?: #t);
@@ -99,7 +99,7 @@ end method slot-init-value;
 */
 
 /*---*** cpage: Cannot currently be implemented; remove this function?
-define method slot-init-function 
+define method slot-init-function
     (project :: <project-object>, slot :: <slot-object>)
  => (function)
   let server = choose-server(project, slot, error?: #t);
@@ -143,8 +143,8 @@ define method environment-object-type-name
 end method environment-object-type-name;
 
 define method user-object-slot-value
-    (server :: <project-object>, object :: <user-object>, 
-     slot :: <slot-object>, 
+    (server :: <project-object>, object :: <user-object>,
+     slot :: <slot-object>,
      #key repeated-element = 0)
  => (value :: false-or(<environment-object>))
   let application = project-application(server);
@@ -154,8 +154,8 @@ define method user-object-slot-value
 end method user-object-slot-value;
 
 define method user-object-slot-value
-    (server :: <project-object>, object :: <user-object>, 
-     slot :: <definition-id>, 
+    (server :: <project-object>, object :: <user-object>,
+     slot :: <definition-id>,
      #key repeated-element = 0)
  => (value :: false-or(<environment-object>))
   let application = project-application(server);

@@ -45,9 +45,9 @@ define frame <environment-describer>
            documentation:
              "Displays summary information about the selected item.",
            columns: 80, lines: 4,
-	   text-style:  make(<text-style>, family: #"fix"),
+           text-style:  make(<text-style>, family: #"fix"),
            text:        $please-wait-doc,
-	   read-only?:  #t, tab-stop?: #t,
+           read-only?:  #t, tab-stop?: #t,
            scroll-bars: #"vertical");
   // We need to explicitly keep the project, as well as the module.
   slot frame-current-project :: false-or(<project-object>) = #f,
@@ -57,7 +57,7 @@ define frame <environment-describer>
   keyword icon: = $describer-window-small-icon;
 end frame <environment-describer>;
 
-define window-settings 
+define window-settings
   describer-window :: <environment-describer> = "Describer Window";
 
 // We need this method since we don't inherit from <environment-frame>.
@@ -89,35 +89,35 @@ define sideways method describe-object
      object :: false-or(<environment-object>))
  => (success? :: <boolean>)
   with-environment-frame (describer = default-port(), <environment-describer>,
-			  describer-project: project, module: module,
-			  describer-object: object)
+                          describer-project: project, module: module,
+                          describer-object: object)
     gadget-text(describer-text-editor(describer)) := $please-wait-doc;
     let project = frame-current-project(describer);
     let module = frame-current-module(describer);
     let object = describer-current-object(describer);
     let description :: <string>
       = case
-	  ~project | ~module =>
-	    format-to-string
-	      ("No project and module context in which to find %s.", name);
-	  object =>
-	    with-busy-cursor (describer)
-	      environment-object-description(project, object, module)
-	    end;
-	  otherwise =>
-	    let module-name = environment-object-home-name(project, module);
-	    if (module-name)
-	      let library = name-namespace(project, module-name);
-	      format-to-string
-		("No object found for '%s' in module %s, library %s.",
-		 name, 
-		 environment-object-primitive-name(project, module-name),
-		 environment-object-primitive-name(project, library))
-	    else
-	      format-to-string("Internal error: no name found for module %=",
-			       module)
-	    end;
-	end;
+          ~project | ~module =>
+            format-to-string
+              ("No project and module context in which to find %s.", name);
+          object =>
+            with-busy-cursor (describer)
+              environment-object-description(project, object, module)
+            end;
+          otherwise =>
+            let module-name = environment-object-home-name(project, module);
+            if (module-name)
+              let library = name-namespace(project, module-name);
+              format-to-string
+                ("No object found for '%s' in module %s, library %s.",
+                 name,
+                 environment-object-primitive-name(project, module-name),
+                 environment-object-primitive-name(project, library))
+            else
+              format-to-string("Internal error: no name found for module %=",
+                               module)
+            end;
+        end;
     gadget-text(describer-text-editor(describer)) := description;
     frame-title(describer) := generate-frame-title(describer)
   end;
@@ -134,7 +134,7 @@ define method generate-frame-title
   let object = describer-current-object(frame);
   let object-name
     = if (project & object)
-	environment-object-unique-name(project, object, module)
+        environment-object-unique-name(project, object, module)
       else
         "No definition"
       end;
@@ -192,7 +192,7 @@ define sealed method reuse-frames?-setter
   value // We ignore this, and stay always reusable.
 end method reuse-frames?-setter;
 
-define sealed method reinitialize-frame 
+define sealed method reinitialize-frame
     (frame :: <environment-describer>,
      #key describer-project, module, describer-object,
      #all-keys)

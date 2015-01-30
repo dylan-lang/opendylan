@@ -69,10 +69,10 @@ define function register-user-object-class
   let library = make(<library-id>, name: library-name);
   let module = make(<module-id>, name: module-name, library: library);
   let id = make(<definition-id>, name: name, module: module);
-  add-new!($user-object-classes, 
-	   make(<user-class-info>,
-		class: class,
-		id: id))
+  add-new!($user-object-classes,
+           make(<user-class-info>,
+                class: class,
+                id: id))
 end function register-user-object-class;
 
 define macro user-object-class-definer
@@ -82,7 +82,7 @@ define macro user-object-class-definer
         library: ?library-name:name;
     end }
     => { define sealed class ?name (?superclasses)
-	 end class ?name;
+         end class ?name;
          register-user-object-class
            (?name, ?"class-name", ?"module-name", ?"library-name"); }
 end macro user-object-class-definer;

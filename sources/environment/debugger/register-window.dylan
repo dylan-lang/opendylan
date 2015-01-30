@@ -13,18 +13,18 @@ define frame <register-window>
     required-init-keyword: remote-thread:;
   pane register-window-thread-pane (frame)
     make(<table-control-displayer>,
-	 element-label: "register",
-	 children-generator: curry(frame-thread-registers, frame),
-	 headings: #["Name", "Raw", "Value"],
-	 widths: #[50, 80, 800],
-	 generators: vector(wrapper-register,
+         element-label: "register",
+         children-generator: curry(frame-thread-registers, frame),
+         headings: #["Name", "Raw", "Value"],
+         widths: #[50, 80, 800],
+         generators: vector(wrapper-register,
                             wrapper-raw-value,
-			    wrapper-object),
-	 sort-orders: #[#"name", #"raw", #"value"],
-	 sort-order:  #"name",
-	 sort-function: curry(frame-sort-thread-registers, frame),
-	 label-key: curry(register-window-label, frame),
-	 activate-callback: curry(environment-activate-callback, frame));
+                            wrapper-object),
+         sort-orders: #[#"name", #"raw", #"value"],
+         sort-order:  #"name",
+         sort-function: curry(frame-sort-thread-registers, frame),
+         label-key: curry(register-window-label, frame),
+         activate-callback: curry(environment-activate-callback, frame));
   layout (frame)
     frame.register-window-thread-pane;
   keyword icon: = $debugger-window-small-icon;
@@ -61,9 +61,9 @@ define method debugger-show-registers
     let thread = debugger.debugger-thread;
     let dialog
       = make(<register-window>,
-	     owner: debugger,
-	     remote-thread: thread,
-	     project: project);
+             owner: debugger,
+             remote-thread: thread,
+             project: project);
     start-frame(dialog)
   end
 end method debugger-show-registers;
@@ -92,7 +92,7 @@ define method debugger-register-window
     let dialogs = debugger.frame-owned-frames;
     for (dialog in dialogs)
       if (instance?(dialog, <register-window>))
-	return(dialog)
+        return(dialog)
       end
     end
   end
@@ -104,7 +104,7 @@ define method generate-frame-title
   let project = debugger.ensure-frame-project;
   let thread = frame.register-window-thread;
   concatenate("Registers - ",
-	      frame-default-object-name(frame, thread))
+              frame-default-object-name(frame, thread))
 end method generate-frame-title;
 
 
@@ -116,7 +116,7 @@ define sealed class <register-wrapper> (<object-wrapper>)
   constant sealed slot wrapper-register :: <register-object>,
     required-init-keyword: register:;
 end class <register-wrapper>;
-  
+
 define sealed domain make (singleton(<register-wrapper>));
 define sealed domain initialize (<register-wrapper>);
 
@@ -127,12 +127,12 @@ define method frame-thread-registers
   let debugger :: <debugger> = frame.frame-owner;
   let project = debugger.ensure-frame-project;
   map(method (register :: <register-object>)
-	let object = frame-register-contents(frame, register);
+        let object = frame-register-contents(frame, register);
         let raw-value = frame-raw-register-contents(frame, register);
-	make(<register-wrapper>,
-	     object:    object,
+        make(<register-wrapper>,
+             object:    object,
              raw-value: raw-value,
-	     register:  register)
+             register:  register)
       end,
       project.application-registers)
 end method frame-thread-registers;
@@ -154,7 +154,7 @@ define method frame-register-contents
   let thread = debugger.debugger-thread;
   let stack-frame = debugger.debugger-current-stack-frame;
   register-contents(project, register, thread,
-		    stack-frame-context: stack-frame)
+                    stack-frame-context: stack-frame)
 end method frame-register-contents;
 
 define method frame-raw-register-contents
@@ -176,8 +176,8 @@ define method frame-sort-thread-registers
   frame-sort-items
     (frame, registers,
      key: select (order)
-	    #"name"  => wrapper-register;
-	    #"raw"   => wrapper-raw-value;
-	    #"value" => wrapper-object;
-	  end)
+            #"name"  => wrapper-register;
+            #"raw"   => wrapper-raw-value;
+            #"value" => wrapper-object;
+          end)
 end method frame-sort-thread-registers;

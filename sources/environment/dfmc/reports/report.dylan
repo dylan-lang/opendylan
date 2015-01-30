@@ -73,14 +73,14 @@ define macro report-indent-one
       ?:body
     end }
     => { block ()
-	   let save-indent-depth = ?report.report-indent-depth;
-	   ?report.report-indent-depth := save-indent-depth + 1;
+           let save-indent-depth = ?report.report-indent-depth;
+           ?report.report-indent-depth := save-indent-depth + 1;
            block ()
              ?body
-//	   exception (condition :: <condition>)
-	     // Prevent errors from stopping the report
-//	     debug-out(#"dfmc-environment-reports", "Condition: %=", condition);
-	   end;
+//           exception (condition :: <condition>)
+             // Prevent errors from stopping the report
+//             debug-out(#"dfmc-environment-reports", "Condition: %=", condition);
+           end;
            ?report.report-indent-depth := save-indent-depth;
          end }
 end macro report-indent-one;

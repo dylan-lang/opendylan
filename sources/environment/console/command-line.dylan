@@ -179,7 +179,7 @@ define method do-execute-command
       system-root
         & set-named-property(context, #"system-root",   system-root);
       back-end
-	& set-named-property(context, #"compiler-back-end", back-end);
+        & set-named-property(context, #"compiler-back-end", back-end);
       case
         command.%project => execute-main-command(context, command);
         otherwise        => execute-main-loop(context, command);

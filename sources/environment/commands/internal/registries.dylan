@@ -130,7 +130,7 @@ define method maybe-set-roots
           system-root :: false-or(<directory-locator>))
  => ()
   local method set-variable
-            (variable :: <string>, directory :: <directory-locator>, 
+            (variable :: <string>, directory :: <directory-locator>,
              subdirectories :: <sequence>)
           let subdirectory = apply(subdirectory-locator, directory, subdirectories);
           environment-variable(variable) := as(<string>, subdirectory)

@@ -80,9 +80,9 @@ define sealed class <custom-project-description> (<project-description>)
     required-init-keyword: module-name:;
   constant slot project-used-libraries :: <sequence>
       /* of: {<choice>:
-		object: = library-name :: <string>,
-		children: = used-modules :: <vector> of: <string>
-	     } */,
+                object: = library-name :: <string>,
+                children: = used-modules :: <vector> of: <string>
+             } */,
     required-init-keyword: used-libraries:;
   constant slot project-copy-templates? :: <boolean>,
     required-init-keyword: copy-templates?:;
@@ -98,7 +98,7 @@ define sealed class <motley-project-description>
   constant slot project-motley-spec-file :: <file-locator>,
     init-value: as(<file-locator>, "type-library.spec"),
     init-keyword: motley-spec-file:;
-  constant slot project-motley-type-library :: <file-locator>, 
+  constant slot project-motley-type-library :: <file-locator>,
     required-init-keyword: motley-type-library:;
   constant slot project-motley-module-name :: <string>,
     init-value: "type-library-module",
@@ -186,12 +186,12 @@ define method make
     (class == <scepter-using-project-description>,
      #rest initargs,
      #key name :: <string>,
-	  library-name :: <string>,
-	  directory :: <directory-locator>,
-	  main-keywords :: <table>,
-	  module-name :: <string>,
-	  module-keywords :: <table>,
-	  scepter-using-type :: <scepter-using-type>,
+          library-name :: <string>,
+          directory :: <directory-locator>,
+          main-keywords :: <table>,
+          module-name :: <string>,
+          module-keywords :: <table>,
+          scepter-using-type :: <scepter-using-type>,
      #all-keys)
  => (supd :: <scepter-using-project-description>)
   let type-string :: <string> = as(<string>, scepter-using-type);
@@ -215,16 +215,16 @@ define method make
   // Override some keywords; apart from that, we'll be passed the same initargs
   // as our parent project.
   apply(next-method, class,
-	name:              concatenate(name, type-string-suffix),
-	library-name:      using-library-name,
-	directory:         using-directory,
-	main-keywords:     using-main-keywords,
-	module-name:       using-module-name,
-	module-keywords:   using-module-keywords,
-	scepter-spec-file: scepter-spec-file,
-	initargs)
+        name:              concatenate(name, type-string-suffix),
+        library-name:      using-library-name,
+        directory:         using-directory,
+        main-keywords:     using-main-keywords,
+        module-name:       using-module-name,
+        module-keywords:   using-module-keywords,
+        scepter-spec-file: scepter-spec-file,
+        initargs)
 end method make;
-     
+
 
 
 /// ----------------------------------------------------------------------
@@ -302,49 +302,49 @@ define function libraries-from-use-path
       // below is important, as some later ones override earlier ones.
       ////// IO and System
       for (option in gadget-value(wizard.simple-io-and-system-options))
-	library-choice-included?
-	  (library-group-choices, option, option) := #t;
+        library-choice-included?
+          (library-group-choices, option, option) := #t;
       end;
       ////// Other enhanced-plus options
       // Network
       when (gadget-value(wizard.network-option))
-	library-choice-included?
-	  (library-group-choices, #"network", #"network") := #t;
+        library-choice-included?
+          (library-group-choices, #"network", #"network") := #t;
       end;
       // OLE-Automation
       // (We only want some of the OLE libraries at this point.)
       library-group-choice-included?
         (library-group-choices, #"ole", recursive?: #t) := #f;
       when (gadget-value(wizard.ole-automation-option))
-	library-choice-included?
-	  (library-group-choices, #"ole", #"ole-automation") := #t;
+        library-choice-included?
+          (library-group-choices, #"ole", #"ole-automation") := #t;
       end;
       ////// GUI Support
       let gui-type = gadget-value(wizard.simple-gui-option);
       select (gui-type)
-	#"none"  => #f; // Do nothing
-	#"duim"  => library-group-choice-included?
-		      (library-group-choices, #"duim") := #t;
-		    when (gadget-value(wizard.simple-gui-add-win32-option))
-		      library-group-choice-included?
-			(library-group-choices, #"win32") := #t;
-		    end;
-	#"win32" => library-group-choice-included?
-		      (library-group-choices, #"win32") := #t;
+        #"none"  => #f; // Do nothing
+        #"duim"  => library-group-choice-included?
+                      (library-group-choices, #"duim") := #t;
+                    when (gadget-value(wizard.simple-gui-add-win32-option))
+                      library-group-choice-included?
+                        (library-group-choices, #"win32") := #t;
+                    end;
+        #"win32" => library-group-choice-included?
+                      (library-group-choices, #"win32") := #t;
       end;
       ////// Database Support
       // (We only want some of the libraries from the Databases group.)
       let databases-option = gadget-value(wizard.simple-databases-option);
       unless (databases-option == #"none")
-	library-group-choice-included?
-	  (library-group-choices, #"databases", recursive?: #t) := #f;
-	library-choice-included?
-	  (library-group-choices, #"databases", databases-option) := #t;
+        library-group-choice-included?
+          (library-group-choices, #"databases", recursive?: #t) := #f;
+        library-choice-included?
+          (library-group-choices, #"databases", databases-option) := #t;
       end;
       collect-used-libraries(library-group-choices);
     #"custom" =>
       let library-group-choices
-	= gadget-items(wizard.project-library-group-chooser.choice-list-pane);
+        = gadget-items(wizard.project-library-group-chooser.choice-list-pane);
       collect-used-libraries(library-group-choices);
     otherwise =>
       // Should never happen, unless DUIM does something wrong or I make
@@ -363,7 +363,7 @@ define function get-used-libraries
   // libraries/modules and by logical-OR-ing the "included?" flag for
   // libraries and modules.
   union(basic-libraries, project-type-libraries,
-	test: rcurry(union-choice-inclusion!, test: \=, recursive?: #t))
+        test: rcurry(union-choice-inclusion!, test: \=, recursive?: #t))
 end function;
 
 define macro add-all!
@@ -378,28 +378,28 @@ define function make-description-from-wizard-dialog
     (wizard :: <project-wizard-frame>)
  => (description :: <project-description>);
   local method value (slot :: <function>)
-	  gadget-value(wizard.slot)
-	end method,
-	method maybe-insert-slot-value
-		   (table :: <table>, key, slot :: <function>, #key default)
-	  let val = value(slot);
-	  if (val)
-	    if (instance?(val, <collection>) & empty?(val))
-	      when (default) table[key] := default; end;
-	    else
-	      table[key] := val;
-	    end;
-	  else
-	    when (default) table[key] := default; end;
-	  end;
-	end method;
+          gadget-value(wizard.slot)
+        end method,
+        method maybe-insert-slot-value
+                   (table :: <table>, key, slot :: <function>, #key default)
+          let val = value(slot);
+          if (val)
+            if (instance?(val, <collection>) & empty?(val))
+              when (default) table[key] := default; end;
+            else
+              table[key] := val;
+            end;
+          else
+            when (default) table[key] := default; end;
+          end;
+        end method;
   let class = <custom-project-description>;
 /* #### TEMPLATE PROJECTS ###########################
   let class
     = if (value(project-custom-type-pane))
-	<custom-project-description>;
+        <custom-project-description>;
       else
-	<template-project-description>;
+        <template-project-description>;
       end;
 #### TEMPLATE PROJECTS ########################### */
   let main-keywords = make(<table>, size: 8);
@@ -410,7 +410,7 @@ define function make-description-from-wizard-dialog
   // Project location
   let directory
     = as(<directory-locator>,
-	 value(compose(file-browse-text-pane, project-location-pane)));
+         value(compose(file-browse-text-pane, project-location-pane)));
   // Library and module names
   let library-name = wizard.project-library-name;
   when (empty?(library-name))
@@ -462,8 +462,8 @@ define function make-description-from-wizard-dialog
       name: name, directory: directory,
 /* #### TEMPLATE PROJECTS ###########################
       template-source:
-	gadget-value
-	  (wizard.project-template-location-pane.file-browse-text-pane),
+        gadget-value
+          (wizard.project-template-location-pane.file-browse-text-pane),
 #### TEMPLATE PROJECTS ########################### */
       library-name: library-name, module-name: module-name,
       target-type: target-type, start-function-name: start-function-name,
@@ -478,54 +478,54 @@ define function make-description-from-wizard-dialog
   select (project-type)
     #"motley" =>
       let motley-type-library
-	= as(<file-locator>,
-	     value(compose(file-browse-text-pane,
-			   project-motley-location-pane)));
+        = as(<file-locator>,
+             value(compose(file-browse-text-pane,
+                           project-motley-location-pane)));
       let motley-generate = project-motley-stubs-pane.value;
-      let interfaces = 
-	select (project-motley-interfaces?-pane.value)
-	  #"all" => #();
-	  #"selected" => project-motley-interfaces-pane.value;
-	end select;
+      let interfaces =
+        select (project-motley-interfaces?-pane.value)
+          #"all" => #();
+          #"selected" => project-motley-interfaces-pane.value;
+        end select;
       let server-suffix = motley-server-suffix.value;
-      let client-suffix = wizard.motley-client-suffix.gadget-enabled? & 
-			  motley-client-suffix.value;
+      let client-suffix = wizard.motley-client-suffix.gadget-enabled? &
+                          motley-client-suffix.value;
       class := <motley-project-description>;
       keywords := add-all!(keywords,
-	motley-type-library: motley-type-library,
-	motley-generate: motley-generate,
-	motley-interfaces: interfaces, 
-	motley-server-suffix: server-suffix, motley-client-suffix: client-suffix
+        motley-type-library: motley-type-library,
+        motley-generate: motley-generate,
+        motley-interfaces: interfaces,
+        motley-server-suffix: server-suffix, motley-client-suffix: client-suffix
       );
     #"scepter" =>
       let scepter-generate = value(scepter-generate-pane);
       let client :: false-or(<scepter-using-project-description>)
-	= when (member?(#"client", scepter-generate))
-	    apply(make, <scepter-using-project-description>,
-		  scepter-using-type: #"client",
-		  scepter-use: value(scepter-client-use-pane),
-		  scepter-advanced-settings:
-		    second(gadget-id(wizard.scepter-client-advanced-settings-button)),
-		  keywords);
-	  end;
+        = when (member?(#"client", scepter-generate))
+            apply(make, <scepter-using-project-description>,
+                  scepter-using-type: #"client",
+                  scepter-use: value(scepter-client-use-pane),
+                  scepter-advanced-settings:
+                    second(gadget-id(wizard.scepter-client-advanced-settings-button)),
+                  keywords);
+          end;
       let server :: false-or(<scepter-using-project-description>)
-	= when (member?(#"server", scepter-generate))
-	    apply(make, <scepter-using-project-description>,
-		  scepter-using-type: #"server",
-		  scepter-use: value(scepter-server-use-pane),
-		  scepter-advanced-settings:
-		    second(gadget-id(wizard.scepter-server-advanced-settings-button)),
-		  keywords);
-	  end;
+        = when (member?(#"server", scepter-generate))
+            apply(make, <scepter-using-project-description>,
+                  scepter-using-type: #"server",
+                  scepter-use: value(scepter-server-use-pane),
+                  scepter-advanced-settings:
+                    second(gadget-id(wizard.scepter-server-advanced-settings-button)),
+                  keywords);
+          end;
       class := <scepter-project-description>;
       keywords := add-all!(keywords,
-	scepter-idl-file:
-	  value(scepter-use-idl-file?-pane)
-	  & as(<file-locator>,
-	       value(compose(file-browse-text-pane, scepter-idl-file-pane))),
+        scepter-idl-file:
+          value(scepter-use-idl-file?-pane)
+          & as(<file-locator>,
+               value(compose(file-browse-text-pane, scepter-idl-file-pane))),
         scepter-copy-idl-file?: value(scepter-copy-idl-file?-pane),
-	scepter-client: client,
-	scepter-server: server
+        scepter-client: client,
+        scepter-server: server
       );
     otherwise => #f; // Do nothing.
   end;
@@ -544,18 +544,18 @@ end function;
 
 define constant $project-file-header-order :: <vector>
     = #[#"Format-Version", // This must ALWAYS be first.
-	#"Library", #"Module",
-	#"Synopsis", #"Author", #"Copyright", #"Version",
-	#"Major-Version", #"Minor-Version",
-	#"Files", #"C-Header-Files", #"C-Source-Files", #"RC-Files",
-	#"C-Libraries",	#"C-Object-Files",
-	#"Linker-Options", #"Base-Address", #"Executable",
-	#"Debug-Command", #"Debug-Arguments"];
+        #"Library", #"Module",
+        #"Synopsis", #"Author", #"Copyright", #"Version",
+        #"Major-Version", #"Minor-Version",
+        #"Files", #"C-Header-Files", #"C-Source-Files", #"RC-Files",
+        #"C-Libraries",        #"C-Object-Files",
+        #"Linker-Options", #"Base-Address", #"Executable",
+        #"Debug-Command", #"Debug-Arguments"];
 
 define constant $scepter-spec-file-header-order :: <vector>
     = #[#"Origin", // This must ALWAYS be first.
-	#"IDL-File",
-	#"Protocol", #"Stubs", #"Skeletons"];
+        #"IDL-File",
+        #"Protocol", #"Stubs", #"Skeletons"];
 
 define sealed class <write-project-failed-error> (<error>)
   sealed constant slot files-written :: <stretchy-vector> /* of: <file-locator> */,
@@ -580,11 +580,11 @@ define sealed method write-project-from-description
   block ()
     let project-locations
       = do-write-project-from-description
-	  (description, files-written);
+          (description, files-written);
     values(project-locations, files-written)
   exception (c :: type-union(<stream-error>, <file-error>, <file-system-error>))
     error(make(<write-project-failed-error>, files-written: files-written,
-	       condition: c));
+               condition: c));
   end
 end method;
 
@@ -621,52 +621,52 @@ define method do-write-project-from-description
     for (key in #[#"Library", #"Major-Version", #"Minor-Version"])
       let new-value = main-keywords[key];
       when (new-value)
-	from-headers[key] := new-value;
+        from-headers[key] := new-value;
       end;
     end;
     write-interchange-file(to-loc, from-headers, #f,
-			   header-order: $project-file-header-order);
+                           header-order: $project-file-header-order);
     add!(files-written, to-loc);
   end;
 
   // Read'n'write each source file, overriding any lines containing
   //   "define library <old-name>" to the new name.
   let library-renamed? = #f;
-  local method copy-renaming-library 
-	    (from :: <file-locator>, to :: <file-locator>)
-	  with-open-interchange-file
-	      (from-stream = from, from-headers = #f, direction: #"input")
-	    with-open-interchange-file
-		(to-stream = to, to-headers = from-headers,
-		 direction: #"output", if-exists: #"signal",
-		 header-order: $project-file-header-order)
-	      let (line, nl?) = values(#f, #f);
-	      while (begin
-		       let (_line, _nl?)
-			 = read-line(from-stream, on-end-of-stream: #f);
-		       line := _line;
-		       nl? := _nl?;
-		       line
-		     end)
-		unless (library-renamed?)
-		  // Check if we need to substitute the library name.
-		  let pos = subsequence-position(line, $define-library-string);
-		  when (pos)
-		    // Replace the rest of the line with our new name.
-		    // We include the last ' ' to ensure the replacement
-		    // start index is within line.
-		    line := replace-subsequence!
-			      (line, concatenate(" ", to-name),
-			       start: pos + $define-library-string-size);
-		    library-renamed? := #t;
-		  end;
-		end;
-		write(to-stream, line);
-		when (nl?) new-line(to-stream); end;
-	      end;
-	    end;
-	  end;
-	end method;
+  local method copy-renaming-library
+            (from :: <file-locator>, to :: <file-locator>)
+          with-open-interchange-file
+              (from-stream = from, from-headers = #f, direction: #"input")
+            with-open-interchange-file
+                (to-stream = to, to-headers = from-headers,
+                 direction: #"output", if-exists: #"signal",
+                 header-order: $project-file-header-order)
+              let (line, nl?) = values(#f, #f);
+              while (begin
+                       let (_line, _nl?)
+                         = read-line(from-stream, on-end-of-stream: #f);
+                       line := _line;
+                       nl? := _nl?;
+                       line
+                     end)
+                unless (library-renamed?)
+                  // Check if we need to substitute the library name.
+                  let pos = subsequence-position(line, $define-library-string);
+                  when (pos)
+                    // Replace the rest of the line with our new name.
+                    // We include the last ' ' to ensure the replacement
+                    // start index is within line.
+                    line := replace-subsequence!
+                              (line, concatenate(" ", to-name),
+                               start: pos + $define-library-string-size);
+                    library-renamed? := #t;
+                  end;
+                end;
+                write(to-stream, line);
+                when (nl?) new-line(to-stream); end;
+              end;
+            end;
+          end;
+        end method;
 
   when (files)
     // If the "from" project had no files, that's a bug of sorts -- maybe
@@ -675,15 +675,15 @@ define method do-write-project-from-description
     let to-directory   = to.locator-directory;
     for (file in files)
       let from-location
-	= make(<file-locator>,
-	       directory: from-directory,
-	       base:      file,
-	       extension: $dylan-source-suffix);
+        = make(<file-locator>,
+               directory: from-directory,
+               base:      file,
+               extension: $dylan-source-suffix);
       let to-location
-	= make(<file-locator>,
-	       directory: to-directory,
-	       base:      file,
-	       extension: $dylan-source-suffix);
+        = make(<file-locator>,
+               directory: to-directory,
+               base:      file,
+               extension: $dylan-source-suffix);
       copy-renaming-library(from-location, to-location);
       add!(files-written, to-location);
     end;
@@ -717,76 +717,76 @@ define method copy-library-templates
       // Keep track of the base names of the files we create or copy here,
       // so they can be added to the project's "files:" entry.
       method note-file-written (location :: <file-locator>) => ()
-	add!(files-written, location);
-	add!(template-files-written, locator-base(location));
+        add!(files-written, location);
+        add!(template-files-written, locator-base(location));
       end,
       // Copy an interchange-format file from one locator to another,
       // overriding/inserting the "Module:" header line we want.
       method copy-changing-module
-	  (from :: <file-locator>, to :: <file-locator>) => ()
+          (from :: <file-locator>, to :: <file-locator>) => ()
 /* ---*** with-open-interchange-file doesn't support input yet, so
 // all we can do is copy from a headerless file.
-	with-open-interchange-file
-	    (from-stream = from, from-headers = #f, direction: #"input") 
-	  from-headers[#"Module"]
-	    := element(module-headers, #"Module", default: #f);
+        with-open-interchange-file
+            (from-stream = from, from-headers = #f, direction: #"input")
+          from-headers[#"Module"]
+            := element(module-headers, #"Module", default: #f);
 */
-	with-open-file (from-stream = from, direction: #"input")
-	  with-open-interchange-file
-	      (to-stream = to,
-	       to-headers = vector(common-keywords, module-keywords),
-	       direction: #"output", if-exists: #"signal",
-	       header-order: $project-file-header-order)
-	    block (done)
-	      while (#t)
-		let (line, nl?)
-		  = read-line(from-stream, on-end-of-stream: #f);
-		unless (line) done() end;
-		write(to-stream, line);
-		when (nl?) new-line(to-stream); end;
-	      end;
-	    end;
-	  end;
-	end;
+        with-open-file (from-stream = from, direction: #"input")
+          with-open-interchange-file
+              (to-stream = to,
+               to-headers = vector(common-keywords, module-keywords),
+               direction: #"output", if-exists: #"signal",
+               header-order: $project-file-header-order)
+            block (done)
+              while (#t)
+                let (line, nl?)
+                  = read-line(from-stream, on-end-of-stream: #f);
+                unless (line) done() end;
+                write(to-stream, line);
+                when (nl?) new-line(to-stream); end;
+              end;
+            end;
+          end;
+        end;
       end,
       // Copy all the dylan files in the directory to the project dir.
       method copy-template-source
-	  (from-directory :: <directory-locator>,
-	   to-directory :: <directory-locator>)
+          (from-directory :: <directory-locator>,
+           to-directory :: <directory-locator>)
        => ()
-	do-directory
-	  (method (directory-name :: <pathname>, file-name :: <string>, file-type :: <file-type>)
-	     when (file-type == #"file")
-	       let file-locator
-		 = make(<file-locator>,
-			directory: from-directory,
-			name:      file-name);
-	       when (case-insensitive-equal(locator-extension(file-locator),
-					    $dylan-source-suffix))
-		 let to-locator
-		   = make(<file-locator>,
-			  directory: to-directory,
-			  name:      file-name);
-		 copy-changing-module(file-locator, to-locator);
-		 note-file-written(to-locator);
-	       end;
-	     end;
-	   end,
-	   from-directory);
-	real-templates-copied? := #t;
+        do-directory
+          (method (directory-name :: <pathname>, file-name :: <string>, file-type :: <file-type>)
+             when (file-type == #"file")
+               let file-locator
+                 = make(<file-locator>,
+                        directory: from-directory,
+                        name:      file-name);
+               when (case-insensitive-equal(locator-extension(file-locator),
+                                            $dylan-source-suffix))
+                 let to-locator
+                   = make(<file-locator>,
+                          directory: to-directory,
+                          name:      file-name);
+                 copy-changing-module(file-locator, to-locator);
+                 note-file-written(to-locator);
+               end;
+             end;
+           end,
+           from-directory);
+        real-templates-copied? := #t;
       end;
 
     // Create "application-info" file, which defines constants for templates.
     let project-info-location
       = make(<file-locator>,
-	     directory: directory,
-	     base:      concatenate(name, "-info"),
-	     extension: $dylan-source-suffix);
+             directory: directory,
+             base:      concatenate(name, "-info"),
+             extension: $dylan-source-suffix);
     with-open-interchange-file
-	(stream = project-info-location,
-	 headers = vector(common-keywords, module-keywords),
-	 direction: #"output", if-exists: #"signal",
-	 header-order: $project-file-header-order)
+        (stream = project-info-location,
+         headers = vector(common-keywords, module-keywords),
+         direction: #"output", if-exists: #"signal",
+         header-order: $project-file-header-order)
       format(stream,
   "define constant $application-name :: <byte-string> = \"%s\";\n",
   name);
@@ -810,7 +810,7 @@ define method copy-library-templates
   "              $application-major-version, \".\",\n"
   "              $application-minor-version)\n"
   "end method application-full-name;\n"
-	     );
+             );
     end;
     note-file-written(project-info-location);
 
@@ -834,12 +834,12 @@ define method copy-library-templates
 
     // ---*** We only have a DUIM example for 1.0 Beta 2.
     when (find-repository-choice(libraries, #"duim", if-not-exists: #f)
-	    & ~find-repository-choice(libraries, #"ole", if-not-exists: #f))
+            & ~find-repository-choice(libraries, #"ole", if-not-exists: #f))
       // ---*** Making this locator should be handled in the release-info
       // library.
       let duim-template-directory
-	= subdirectory-locator(as(<directory-locator>, templates-directory),
-			       "duim");
+        = subdirectory-locator(as(<directory-locator>, templates-directory),
+                               "duim");
       copy-template-source(duim-template-directory, directory);
     end;
 
@@ -872,9 +872,9 @@ define method write-main-files
   // ?  For now, I'm doing the latter, as it's simplest.
   let main-file-location
     = make(<file-locator>,
-	   directory: directory,
-	   base:      name,
-	   extension: $dylan-source-suffix);
+           directory: directory,
+           base:      name,
+           extension: $dylan-source-suffix);
   //---*** hughg, 1998/03/20: Make this "define method", as "define
   //---*** function"s aren't found as initial breakpoints just now.
   // For EXE projects we provide a start function, for DLLs we don't.
@@ -886,17 +886,17 @@ define method write-main-files
     if (description.project-target-type == #"exe" & start-function-name)
       format(stream, "define method %s () => ()\n", start-function-name);
       format(stream, if (start-template?)
-		       "  start-template();\n"
-		     else
-		       "  // Your program starts here...\n"
-		     end);
+                       "  start-template();\n"
+                     else
+                       "  // Your program starts here...\n"
+                     end);
       format(stream, "end method %s;\n", start-function-name);
       format(stream, "\nbegin\n  %s();\nend;\n", start-function-name);
     else
       write-line(stream, "begin");
       write-line(stream, "  // Library initialization starts here ...");
       when (start-template?)
-	write-line(stream, "  start-template();")
+        write-line(stream, "  start-template();")
       end;
       write-line(stream, "end;");
     end;
@@ -931,9 +931,9 @@ define method do-write-project-from-description
   // Copy template code
   let (template-file-names, real-templates-copied?)
     = if (include-templates?)
-	copy-library-templates(description, files-written);
+        copy-library-templates(description, files-written);
       else
-	values(#[], #f)
+        values(#[], #f)
       end;
 
   // Create project file.
@@ -944,7 +944,7 @@ define method do-write-project-from-description
   // ---*** This should be done last, and be based on 'files-written'.
   main-keywords[#"Files"]
     := concatenate(vector("library", "module"), template-file-names,
-		   vector(name));
+                   vector(name));
   //---*** hughg, 1998/09/18: This Motley stuff should probably be set up
   //---*** at the stage of determining the init-keywords, in MAKE-DESCRIPTION-
   //---*** FROM-WIZARD-DIALOG.
@@ -963,20 +963,20 @@ define method do-write-project-from-description
       := as(<string>, description.project-scepter-spec-file);
     let idl-name
       = locator-base(description.project-scepter-parent-description.
-		       project-scepter-idl-file);
+                       project-scepter-idl-file);
     scepter-used-namespace-name
       := concatenate(idl-name, "-",
-		     as(<string>, description.project-scepter-use));
+                     as(<string>, description.project-scepter-use));
     // Advanced settings
     let settings
       = description.project-scepter-advanced-settings;
     local method add-option
-	(options :: <string>, new-option :: <string>)
+        (options :: <string>, new-option :: <string>)
      => (options :: <string>)
       if (empty?(options))
-	new-option
+        new-option
       else
-	concatenate(options, " ", new-option)
+        concatenate(options, " ", new-option)
       end if
     end method;
     let debug-arguments :: <string> = "";
@@ -992,7 +992,7 @@ define method do-write-project-from-description
     let port = settings.scepter-advanced-port;
     when (port)
       debug-arguments := add-option(debug-arguments,
-				    format-to-string("-ORBport %d", port));
+                                    format-to-string("-ORBport %d", port));
     end;
     unless (empty?(debug-arguments))
       main-keywords[#"Debug-Arguments"] := debug-arguments;
@@ -1008,9 +1008,9 @@ define method do-write-project-from-description
   let libraries = description.project-used-libraries;
   let library-location
     = make(<file-locator>,
-	   directory: directory,
-	   base:      "library",
-	   extension: $dylan-source-suffix);
+           directory: directory,
+           base:      "library",
+           extension: $dylan-source-suffix);
   with-open-interchange-file
       (stream = library-location,
        headers = vector(dylan-user-keywords, common-keywords),
@@ -1033,9 +1033,9 @@ define method do-write-project-from-description
   // ---*** What about separate interface and implementation modules?
   let module-location
     = make(<file-locator>,
-	   directory: directory,
-	   base:      "module",
-	   extension: $dylan-source-suffix);
+           directory: directory,
+           base:      "module",
+           extension: $dylan-source-suffix);
   with-open-interchange-file
       (stream = module-location,
        headers = vector(dylan-user-keywords, common-keywords),
@@ -1044,10 +1044,10 @@ define method do-write-project-from-description
     format(stream, "define module %s\n", module-name);
     for (library-choice in libraries)
       for (module-choice in library-choice.choice-children)
-	let module-name = module-choice.choice-object;
-	when (module-choice.choice-included?)
-	  format(stream, "  use %s;\n", module-name);
-	end;
+        let module-name = module-choice.choice-object;
+        when (module-choice.choice-included?)
+          format(stream, "  use %s;\n", module-name);
+        end;
       end;
     end;
     when (motley?)
@@ -1066,37 +1066,37 @@ define method do-write-project-from-description
     //---*** hughg, 1998/09/18: This should use WRITE-INTERCHANGE-FILE
     let motley-spec-location
       = merge-locators(as(<file-locator>, description.project-motley-spec-file),
-		       directory);
+                       directory);
     with-open-file (spec = motley-spec-location,
-		    direction: #"output", if-exists: #"signal")
+                    direction: #"output", if-exists: #"signal")
       format(spec, "Origin: COM-type-library\n");
       format(spec, "Type-library: %s\n"
-		   "Module: %s\n"
-		   "Module-file: %s\n"
-		   "Generate: %s\n"
-		   "Stub-file: %s\n",
-	     as(<string>, description.project-motley-type-library),
-	     description.project-motley-module-name,
-	     as(<string>, description.project-motley-module-file),
-	     as(<string>, description.project-motley-generate),
-	     as(<string>, description.project-motley-stub-file));
+                   "Module: %s\n"
+                   "Module-file: %s\n"
+                   "Generate: %s\n"
+                   "Stub-file: %s\n",
+             as(<string>, description.project-motley-type-library),
+             description.project-motley-module-name,
+             as(<string>, description.project-motley-module-file),
+             as(<string>, description.project-motley-generate),
+             as(<string>, description.project-motley-stub-file));
       select (description.project-motley-generate)
-	#"vtable-interfaces", #"dual-interfaces" =>
-	  if (description.project-motley-server-suffix &
-	      description.project-motley-server-suffix ~= "")
-	    format(spec, "Server-suffix: %s\n",
-		   description.project-motley-server-suffix);
-	  end if;
-	  if (description.project-motley-client-suffix)
-	    format(spec, "Client-suffix: %s\n",
-		   description.project-motley-client-suffix);
-	  end if;
-	otherwise => #f;
+        #"vtable-interfaces", #"dual-interfaces" =>
+          if (description.project-motley-server-suffix &
+              description.project-motley-server-suffix ~= "")
+            format(spec, "Server-suffix: %s\n",
+                   description.project-motley-server-suffix);
+          end if;
+          if (description.project-motley-client-suffix)
+            format(spec, "Client-suffix: %s\n",
+                   description.project-motley-client-suffix);
+          end if;
+        otherwise => #f;
       end select;
       let prefix = "Interfaces: ";
       for (iface in description.project-motley-interfaces | #())
-	format(spec, "%s%s\n", prefix, iface);
-	prefix := "            ";
+        format(spec, "%s%s\n", prefix, iface);
+        prefix := "            ";
       end for;
     end with-open-file;
     add!(files-written, motley-spec-location);
@@ -1106,13 +1106,13 @@ define method do-write-project-from-description
   when (scepter-using?)
     let scepter-spec-location
       = merge-locators(as(<file-locator>, description.project-scepter-spec-file),
-		       directory);
+                       directory);
     let scepter-spec-keywords = make(<table>, size: 3);
     scepter-spec-keywords[#"Origin"] := "OMG-IDL";
     // Store the IDL file location relative to this project's directory.
     let idl-file
       = description.project-scepter-parent-description.
-	  project-scepter-idl-file;
+          project-scepter-idl-file;
     idl-file := relative-locator(idl-file, directory);
     scepter-spec-keywords[#"IDL-File"] := as(<string>, idl-file);
     scepter-spec-keywords[description.project-scepter-use] := "yes";
@@ -1143,8 +1143,8 @@ define method do-write-project-from-description
     // Then copy the IDL file into the project directory, if required;
     let idl-file-in-project-directory
       = make(<file-locator>,
-	     directory: directory,
-	     name:      locator-name(idl-file));
+             directory: directory,
+             name:      locator-name(idl-file));
     //--- Maybe we should SIMPLIFY-LOCATOR on these for the \= call?
     // Note that we *don't* add the IDL file to the list of files written
     // if it was already there, otherwise the Wizard may delete it while
@@ -1152,9 +1152,9 @@ define method do-write-project-from-description
 
     // Note: the Wizard already checked that the source file exists.
     if ((idl-file ~= idl-file-in-project-directory)
-	  & description.project-scepter-copy-idl-file?)
+          & description.project-scepter-copy-idl-file?)
       copy-file(idl-file, idl-file-in-project-directory,
-		if-exists: #"signal");
+                if-exists: #"signal");
       description.project-scepter-idl-file := idl-file-in-project-directory;
       add!(files-written, idl-file-in-project-directory);
     end if;
@@ -1163,12 +1163,12 @@ define method do-write-project-from-description
     let name = description.project-name;
     idl-file
       := make(<file-locator>,
-	      directory: directory,
-	      base:      name,
-	      extension: $idl-suffix);
+              directory: directory,
+              base:      name,
+              extension: $idl-suffix);
     with-open-file (file = idl-file,
-		    direction: #"output",
-		    if-exists: #"signal")
+                    direction: #"output",
+                    if-exists: #"signal")
       format(file, "// IDL file for project '%s'.\n\n", name);
     end;
     description.project-scepter-idl-file := idl-file;

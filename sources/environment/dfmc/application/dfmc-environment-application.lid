@@ -1,6 +1,6 @@
 Library:   dfmc-environment-application
 Synopsis:  Environment runtime manager backend implementation
-Author:	   Bill Chiles, Paul Howard, Jason Trenouth, Andy Armstrong
+Author:    Bill Chiles, Paul Howard, Jason Trenouth, Andy Armstrong
 Files: library
        app-server
        machines
