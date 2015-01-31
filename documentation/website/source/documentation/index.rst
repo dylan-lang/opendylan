@@ -102,7 +102,7 @@ References
     as a foreign function interface and some low-level access to the
     Microsoft Win32 API.
 
-`DUIM library reference <http://opendylan.org/documentation/opendylan/dref/index.htm>`_
+`DUIM library reference <duim-reference/index.html>`_ [`pdf <duim-reference/DUIMReference.pdf>`__] [`epub <duim-reference/DUIMReference.epub>`__] [`old HTML <http://opendylan.org/documentation/opendylan/dref/index.htm>`__]
     Describes the libraries forming DUIM (Dylan User Interface Manager),
     the portable window programming toolkit. It complements
     Building Applications Using DUIM.
