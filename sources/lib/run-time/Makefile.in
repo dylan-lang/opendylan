@@ -201,6 +201,7 @@ install: $(PLATFORM_INSTALL_RUNTIMES)
 
 clean:
 	rm -rf $(OBJDIR_HARP) $(OBJDIR_LLVM) $(OBJDIR_C)
+	rm -f $(LLVM_RUNTIME_GEN) $(LLVM_RUNTIME_HEADER)
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) && ./config.status $(subdir)/Makefile
