@@ -40,9 +40,21 @@ define method print-class-c-struct-declaration
       format(stream, " %s;\n",
              raw-mangle(be, as(<string>, slotd.^debug-name)));
     else
-      format(stream, "  anon_slot_%d;\n", i);
+      format(stream, " anon_slot_%d;\n", i);
     end;
   end;
+
+  let rslotd = type.^repeated-slot-descriptor;
+  if (rslotd)
+    format(stream, "  ");
+    print-primitive-c-type(be, rslotd.^slot-type, stream);
+    if (rslotd.^debug-name)
+      format(stream, " %s[];\n",
+             raw-mangle(be, as(<string>, rslotd.^debug-name)));
+    else
+      format(stream, " repeated[];\n");
+    end;
+  end if;
 
   write(stream, "};\n\n");
 end method;
