@@ -12,9 +12,9 @@ define sealed class <native-file-accessor> (<external-file-accessor>)
   slot %file-handle :: false-or(<machine-word>) = #f;
   slot file-position :: <integer> = -1,
     init-keyword: file-position:;
-  slot actual-file-position :: <integer> = -1;	// The physical file position 
-  						// for async access.
-  constant slot asynchronous? :: <boolean> = #f, 
+  slot actual-file-position :: <integer> = -1;        // The physical file position
+                                                  // for async access.
+  constant slot asynchronous? :: <boolean> = #f,
     init-keyword: asynchronous?:;
   slot access-lock :: <simple-lock>;  // Lock for accesses - async stream only.
   sealed slot accessor-positionable? :: <boolean> = #f;
@@ -30,7 +30,7 @@ end method;
 
 // An attempt at a portable flexible interface to OS read/write/seek
 // functionality.  Legal values for TYPE might include #"file", #"pipe",
-// #"tcp", #"udp".  Legal values for LOCATOR depend on TYPE.  
+// #"tcp", #"udp".  Legal values for LOCATOR depend on TYPE.
 define sideways method platform-accessor-class
     (type == #"file", locator)
  => (class :: singleton(<native-file-accessor>))
@@ -44,7 +44,7 @@ define method accessor-fd
 end method;
 
 define method accessor-console?
-    (accessor :: <native-file-accessor>) 
+    (accessor :: <native-file-accessor>)
  => (result :: <boolean>)
   let fd = accessor.file-handle;
   fd & win32-isatty(fd)
@@ -95,11 +95,11 @@ define method accessor-open
 end method accessor-open;
 
 define method accessor-close (accessor :: <native-file-accessor>,
-			      #key abort? = #f, wait? = #t)
-			  => (closed? :: <boolean>)
+                              #key abort? = #f, wait? = #t)
+                          => (closed? :: <boolean>)
   if (accessor.asynchronous?)
     enqueue-operation(make(<pending-operation>, operation: accessor-close-async,
-			   accessor: accessor));
+                           accessor: accessor));
     if (wait?)
       async-wait-for-completion(accessor);
       async-check-for-errors(accessor);
@@ -114,8 +114,8 @@ define function accessor-close-async (op :: <pending-operation>) => ()
   accessor-close-internal(op.pending-accessor);
 end function accessor-close-async;
 
-define function accessor-close-internal (accessor :: <native-file-accessor>) 
-				     => ()
+define function accessor-close-internal (accessor :: <native-file-accessor>)
+                                     => ()
   let handle = accessor.%file-handle;
   if (handle)
     if (~win32-close(handle) /* & ~abort? */)
@@ -127,7 +127,7 @@ define function accessor-close-internal (accessor :: <native-file-accessor>)
 end function accessor-close-internal;
 
 define method accessor-wait-for-completion (accessor :: <native-file-accessor>)
-					=> ()
+                                        => ()
   async-wait-for-completion(accessor);
   async-check-for-errors(accessor);
 end method accessor-wait-for-completion;
@@ -170,10 +170,10 @@ define method accessor-position-setter
       let success = win32-set-file-position(handle, position, $FILE_BEGIN);
       if (success)
         accessor.accessor-at-end? := #f;
-	accessor.file-position := position;
+        accessor.file-position := position;
         position
       else
-	win32-file-error(accessor, "set position", "to %d", position);
+        win32-file-error(accessor, "set position", "to %d", position);
       end
     end if
   else
@@ -194,19 +194,19 @@ define method accessor-read-into!
     let nread :: false-or(<integer>) = #f;
 
     if (accessor.asynchronous?)
-      async-wait-for-overlapping-write-completion(accessor, 
-                                                  file-position-before-read, 
+      async-wait-for-overlapping-write-completion(accessor,
+                                                  file-position-before-read,
                                                   count);
 
       with-lock (accessor.access-lock)
         if (accessor.actual-file-position ~= file-position-before-read)
           if (~ win32-set-file-position(handle,
                                         file-position-before-read, $FILE_BEGIN))
-            win32-file-error(accessor, "set position", 
+            win32-file-error(accessor, "set position",
                              "to %d", file-position-before-read);
           end if;
         end if;
-	
+
         nread := win32-read(handle, buffer, offset, count);
         if (nread)
           accessor.actual-file-position := file-position-before-read + nread;
@@ -228,9 +228,9 @@ define method accessor-read-into!
 end method accessor-read-into!;
 
 define method accessor-write-from
-	(accessor :: <native-file-accessor>, stream :: <file-stream>,
-	 offset :: <buffer-index>, count :: <buffer-index>, #key buffer, 
-	 return-fresh-buffer? = #f)
+        (accessor :: <native-file-accessor>, stream :: <file-stream>,
+         offset :: <buffer-index>, count :: <buffer-index>, #key buffer,
+         return-fresh-buffer? = #f)
      => (number-of-bytes-written :: <integer>, new-buffer :: <buffer>)
   let buffer :: <buffer> = buffer | stream-output-buffer(stream);
   let file-position-before-write :: <integer> = accessor.file-position;
@@ -239,21 +239,21 @@ define method accessor-write-from
     if (accessor.asynchronous?)
       async-check-for-errors(accessor);
       buffer := enqueue-write(
-	make(<pending-write>, operation: accessor-write-from-async,
-	     stream: stream, accessor: accessor, 
-	     file-offset: file-position-before-write, count: count, 
-	     buffer: buffer, buffer-offset: offset),
-	return-fresh-buffer?
+        make(<pending-write>, operation: accessor-write-from-async,
+             stream: stream, accessor: accessor,
+             file-offset: file-position-before-write, count: count,
+             buffer: buffer, buffer-offset: offset),
+        return-fresh-buffer?
       );
       count
     else
-      accessor-write-from-internal(buffer, accessor, stream, 
-      				   file-position-before-write, offset, count)
+      accessor-write-from-internal(buffer, accessor, stream,
+                                         file-position-before-write, offset, count)
     end if;
 
   if (number-of-bytes-written > 0)
     // Windows should always perform complete write.
-    let file-position-after-write :: <integer> = 
+    let file-position-after-write :: <integer> =
       file-position-before-write + number-of-bytes-written;
     accessor.file-position := file-position-after-write;
   end if;
@@ -263,15 +263,15 @@ end method accessor-write-from;
 
 define function accessor-write-from-async (op :: <pending-write>) => ()
   accessor-write-from-internal(
-	op.pending-buffer, op.pending-accessor, op.pending-stream, 
-	op.pending-file-offset, op.pending-buffer-offset, op.pending-count
+        op.pending-buffer, op.pending-accessor, op.pending-stream,
+        op.pending-file-offset, op.pending-buffer-offset, op.pending-count
   );
 end function accessor-write-from-async;
 
 define function accessor-write-from-internal
-	(buffer :: <buffer>, accessor :: <native-file-accessor>, 
-	 stream :: <file-stream>, file-offset :: <integer>,
-	 buffer-offset :: <buffer-index>, count :: <buffer-index>)
+        (buffer :: <buffer>, accessor :: <native-file-accessor>,
+         stream :: <file-stream>, file-offset :: <integer>,
+         buffer-offset :: <buffer-index>, count :: <buffer-index>)
      => (number-of-bytes-written :: <integer>)
 
   let handle = accessor.file-handle;
@@ -280,22 +280,22 @@ define function accessor-write-from-internal
   if (accessor.asynchronous?)
     with-lock (accessor.access-lock)
       if (accessor.actual-file-position ~= file-offset)
-	if (~ win32-set-file-position(handle, file-offset, $FILE_BEGIN))
-	  win32-file-error(accessor, "set position", 
-			   "to %d", file-offset);
-	end if;
+        if (~ win32-set-file-position(handle, file-offset, $FILE_BEGIN))
+          win32-file-error(accessor, "set position",
+                           "to %d", file-offset);
+        end if;
       end if;
 
-      number-of-bytes-written := 
+      number-of-bytes-written :=
         win32-write(handle, buffer, buffer-offset, count);
 
       if (number-of-bytes-written)
-	accessor.actual-file-position := 
-		file-offset + number-of-bytes-written;
+        accessor.actual-file-position :=
+                file-offset + number-of-bytes-written;
       end if;
     end with-lock;
   else
-    number-of-bytes-written := 
+    number-of-bytes-written :=
       win32-write(handle, buffer, buffer-offset, count);
   end if;
 
@@ -304,7 +304,7 @@ define function accessor-write-from-internal
     if (number-of-bytes-written ~= count)
       // Should use win32-file-error or variant here ...
       error("win32-write: wrote fewer characters than asked (%d instead of %d)",
-	    number-of-bytes-written, count);
+            number-of-bytes-written, count);
     end if;
   else
     win32-file-error(accessor, "write", #f);

@@ -7,22 +7,22 @@ Copyright: See below.
 //
 // Copyright (c) 1994  Carnegie Mellon University
 // All rights reserved.
-// 
+//
 // Use and copying of this software and preparation of derivative
 // works based on this software are permitted, including commercial
 // use, provided that the following conditions are observed:
-// 
+//
 // 1. This copyright notice must be retained in full on any copies
 //    and on appropriate parts of any derivative works.
 // 2. Documentation (paper or online) accompanying any system that
 //    incorporates this software, or any part of it, must acknowledge
 //    the contribution of the Gwydion Project at Carnegie Mellon
 //    University.
-// 
+//
 // This software is made available "as is".  Neither the authors nor
 // Carnegie Mellon University make any warranty about the software,
 // its performance, or its conformity to any specification.
-// 
+//
 // Bug reports, questions, comments, and suggestions should be sent by
 // E-mail to the Internet address "gwydion-bugs@cs.cmu.edu".
 //
@@ -41,7 +41,7 @@ define variable *print-miser-width* :: false-or(<integer>) = #f;
 define variable *default-line-length* :: <integer> = 80;
 
 
-//// Random internal constants. 
+//// Random internal constants.
 
 define constant $initial-buffer-size = 128;
 
@@ -75,7 +75,7 @@ define method copy-maybe-overlapping-bytes
          end;
     src-start > dst-start
       => // Left shift, so iterate left to right.
-         for (src-i :: <integer> from src-start to src-start + n - 1, 
+         for (src-i :: <integer> from src-start to src-start + n - 1,
               dst-i :: <integer> from dst-start to dst-start + n - 1)
            dst[dst-i] := src[src-i];
          end;
@@ -92,7 +92,7 @@ end method;
 //  <column> - offset (in characters) from the start of the current line.
 //  <position> - some position in the stream of characters cycling through
 //               the output buffer.
-// 
+//
 define constant <index> = limited(<integer>, min: 0);
 define constant <column> = limited(<integer>, min: 0);
 define constant <position> = <integer>;
@@ -100,7 +100,7 @@ define constant <position> = <integer>;
 // <pretty-stream> -- exported.
 //
 // Stream used for pretty printing.
-// 
+//
 define class <pretty-stream> (<sequence-stream>)
   inherited slot stream-direction, init-value: #"output";
 
@@ -148,12 +148,12 @@ define class <pretty-stream> (<sequence-stream>)
   // Stack of logical blocks in effect at the buffer start.
   slot pretty-stream-blocks :: <list>
     = list(make(<logical-block>,
-		start-column: 0,
-		section-column: 0,
-		per-line-prefix-end: 0,
-		prefix-length: 0,
-		suffix-length: 0,
-		section-start-line: 0));
+                start-column: 0,
+                section-column: 0,
+                per-line-prefix-end: 0,
+                prefix-length: 0,
+                suffix-length: 0,
+                section-start-line: 0));
   //
   // Buffer holding the per-line prefix active at the buffer start.
   // Indentation is included in this.  The amount of this currently in use
@@ -213,7 +213,7 @@ end;
 // Convert a position to a column.  First, convert the position to an index
 // and then convert that index to a column.  (Index-column is defined with
 // the tab related functions, because it has to take tabs into account.)
-// 
+//
 define method posn-column
     (posn :: <position>, stream :: <pretty-stream>)
  => (column :: <column>)
@@ -241,7 +241,7 @@ define method close
     maybe-output(stream, #f);
     expand-tabs(stream, #f);
     write(stream.pretty-stream-target, stream.pretty-stream-buffer,
-	  start: 0, end: stream.pretty-stream-buffer-fill-pointer);
+          start: 0, end: stream.pretty-stream-buffer-fill-pointer);
     stream.pretty-stream-closed? := #t;
   end;
 end;
@@ -260,24 +260,24 @@ end;
 // should just be dumped as is, and if that doesn't work on the native
 // platform, oh well, the user wasn't coding portably.  Having said that, I'm
 // not modifying this code, and we'll see if anyone notices :-).
-// 
+//
 define method append-output
     (stream :: <pretty-stream>, buffer :: <buffer>, start :: <buffer-index>,
      stop :: <buffer-index>) => ()
   local
     method repeat (chunk-start, index)
       if (index == stop)
-	unless (chunk-start == index)
-	  append-raw-output(stream, buffer, chunk-start, index);
-	end;
+        unless (chunk-start == index)
+          append-raw-output(stream, buffer, chunk-start, index);
+        end;
       elseif (buffer[index] == $newline)
-	unless (chunk-start == index)
-	  append-raw-output(stream, buffer, chunk-start, index);
-	end;
-	enqueue-newline(stream, #"literal");
-	repeat(index + 1, index + 1);
+        unless (chunk-start == index)
+          append-raw-output(stream, buffer, chunk-start, index);
+        end;
+        enqueue-newline(stream, #"literal");
+        repeat(index + 1, index + 1);
       else
-	repeat(chunk-start, index + 1);
+        repeat(chunk-start, index + 1);
       end;
     end;
   repeat(start, start);
@@ -289,17 +289,17 @@ define method append-output
   local
     method repeat (chunk-start, index)
       if (index == stop)
-	unless (chunk-start == index)
-	  append-raw-output(stream, buffer, chunk-start, index);
-	end;
+        unless (chunk-start == index)
+          append-raw-output(stream, buffer, chunk-start, index);
+        end;
       elseif (buffer[index] == '\n')
-	unless (chunk-start == index)
-	  append-raw-output(stream, buffer, chunk-start, index);
-	end;
-	enqueue-newline(stream, #"literal");
-	repeat(index + 1, index + 1);
+        unless (chunk-start == index)
+          append-raw-output(stream, buffer, chunk-start, index);
+        end;
+        enqueue-newline(stream, #"literal");
+        repeat(index + 1, index + 1);
       else
-	repeat(chunk-start, index + 1);
+        repeat(chunk-start, index + 1);
       end;
     end;
   repeat(start, start);
@@ -312,7 +312,7 @@ end;
 //
 // Assure-space-in-buffer is not guarenteed to return all the space we want
 // so we might have to iterate.
-// 
+//
 define method append-raw-output
     (stream :: <pretty-stream>, stuff :: type-union(<buffer>, <byte-string>),
      start :: <buffer-index>, stop :: <buffer-index>) => ()
@@ -358,7 +358,7 @@ define class <logical-block> (<object>)
   // The overall length of the suffix.
   slot logical-block-suffix-length :: <index>,
     required-init-keyword: suffix-length:;
-  // 
+  //
   // The line number the current section started on.
   slot logical-block-section-start-line :: <integer>,
     required-init-keyword: section-start-line:;
@@ -375,7 +375,7 @@ define sealed domain initialize (<logical-block>);
 // line.  We set the indentation to whatever column we are currently at, and
 // add the prefix (which is a per-line-prefix) and suffix to the total
 // per-line-prefix and suffix stored in the stream.
-// 
+//
 define method really-start-logical-block
     (stream :: <pretty-stream>, column :: <column>,
      prefix :: false-or(<string>), suffix :: false-or(<string>)) => ()
@@ -385,12 +385,12 @@ define method really-start-logical-block
   let prefix-length = prev-block.logical-block-prefix-length;
   let suffix-length = prev-block.logical-block-suffix-length;
   let new-block = make(<logical-block>,
-		       start-column: column,
-		       section-column: column,
-		       per-line-prefix-end: per-line-end,
-		       prefix-length: prefix-length,
-		       suffix-length: suffix-length,
-		       section-start-line: stream.pretty-stream-line-number);
+                       start-column: column,
+                       section-column: column,
+                       per-line-prefix-end: per-line-end,
+                       prefix-length: prefix-length,
+                       suffix-length: suffix-length,
+                       section-start-line: stream.pretty-stream-line-number);
   stream.pretty-stream-blocks := pair(new-block, blocks);
   set-indentation(stream, column);
   if (prefix)
@@ -401,8 +401,8 @@ define method really-start-logical-block
     // we are about to put the per-line-prefix.
     new-block.logical-block-per-line-prefix-end := column;
     copy-bytes(stream.pretty-stream-prefix, column - prefix.size,
-	       prefix, 0,
-	       prefix.size);
+               prefix, 0,
+               prefix.size);
   end;
   if (suffix)
     let total-suffix = stream.pretty-stream-suffix;
@@ -411,19 +411,19 @@ define method really-start-logical-block
     let new-suffix-len = suffix-length + additional;
     if (new-suffix-len > total-suffix-len)
       let new-total-suffix-len
-	= max(total-suffix-len * 2,
-	      suffix-length + floor/(additional * 5, 4));
+        = max(total-suffix-len * 2,
+              suffix-length + floor/(additional * 5, 4));
       let new-total-suffix = make(<byte-string>, size: new-total-suffix-len);
       copy-bytes(new-total-suffix, new-total-suffix-len - suffix-length,
-		 total-suffix, total-suffix-len - suffix-length,
+                 total-suffix, total-suffix-len - suffix-length,
      suffix-length);
       total-suffix := new-total-suffix;
       total-suffix-len := new-total-suffix-len;
       stream.pretty-stream-suffix := total-suffix;
     end;
     copy-bytes(total-suffix, total-suffix-len - new-suffix-len,
-	       suffix, 0,
-	       additional);
+               suffix, 0,
+               additional);
     new-block.logical-block-suffix-length := new-suffix-len;
   end;
 end method;
@@ -458,7 +458,7 @@ end;
 //
 // Called by maybe-output at the end of a logical block that didn't fit on
 // one line.  We just finish off the block, and reset the indentation.
-// 
+//
 define method really-end-logical-block
     (stream :: <pretty-stream>) => ()
   let old = stream.pretty-stream-blocks.head;
@@ -468,7 +468,7 @@ define method really-end-logical-block
   let new-indent = new.logical-block-prefix-length;
   if (new-indent > old-indent)
     fill!(stream.pretty-stream-prefix, ' ',
-	  start: old-indent, end: new-indent);
+          start: old-indent, end: new-indent);
   end;
 end;
 
@@ -486,7 +486,7 @@ end;
 //
 // While stuff is in the buffer/queue, it represents stuff we've been told
 // about but haven't decided what to do about yet.
-// 
+//
 define abstract class <queued-op> (<object>)
   //
   // The position this op occurred at.
@@ -501,7 +501,7 @@ define sealed domain initialize (<queued-op>);
 //
 // Add the op to the stream's queue after setting the ops position to
 // the current position.
-// 
+//
 define method enqueue
     (stream :: <pretty-stream>, op :: <queued-op>)
  => (op :: <queued-op>)
@@ -535,7 +535,7 @@ define sealed domain make (singleton(<section-start>));
 //
 // The different kinds of newlines.  <pretty-newline-kind> just covers those
 // that are pretty.  <newline-kind> adds literal newlines.
-// 
+//
 define constant <pretty-newline-kind>
   = one-of(#"linear", #"fill", #"miser", #"mandatory");
 //
@@ -543,7 +543,7 @@ define constant <newline-kind>
   = type-union(<pretty-newline-kind>, singleton(#"literal"));
 
 // <newline> -- internal.
-// 
+//
 define class <newline> (<section-start>)
   //
   // The kind of newline it is.
@@ -567,9 +567,9 @@ define method enqueue-newline
   let newline = enqueue(stream, make(<newline>, kind: kind, depth: depth));
   for (entry in stream.pretty-stream-queue)
     if (~(newline == entry)
-	  & instance?(entry, <section-start>)
-	  & ~entry.section-start-section-end
-	  & depth <= entry.section-start-depth)
+          & instance?(entry, <section-start>)
+          & ~entry.section-start-section-end
+          & depth <= entry.section-start-depth)
       entry.section-start-section-end := newline;
     end;
   end;
@@ -579,14 +579,14 @@ end;
 // <indentation-kind> -- internal
 //
 // The different kinds of indentations.
-// 
+//
 define constant <indentation-kind>
   = one-of(#"block", #"current");
 
 // <indentation> -- internal.
 //
 // Represents a change in the indentation.
-// 
+//
 define class <indentation> (<queued-op>)
   //
   // What the indentation is relative to.
@@ -605,7 +605,7 @@ define sealed domain make (singleton(<indentation>));
 // enqueue-indent -- internal.
 //
 // Queue up a change in the indentation.
-// 
+//
 define method enqueue-indent
     (stream :: <pretty-stream>, kind :: <indentation-kind>, amount :: <integer>) => ()
   enqueue(stream, make(<indentation>, kind: kind, amount: amount));
@@ -647,17 +647,17 @@ define method start-logical-block
   end;
   let pending-blocks = stream.pretty-stream-pending-blocks;
   let start = enqueue(stream,
-		      make(<block-start>,
-			   prefix: per-line? & prefix,
-			   suffix: suffix,
-			   depth: pending-blocks.size));
+                      make(<block-start>,
+                           prefix: per-line? & prefix,
+                           suffix: suffix,
+                           depth: pending-blocks.size));
   stream.pretty-stream-pending-blocks := pair(start, pending-blocks);
 end;
 
 // <block-end> -- internal.
 //
 // Represents the end of a logical-block.
-// 
+//
 define class <block-end> (<queued-op>)
   /*---*** andrewa: this isn't used...
   //
@@ -690,7 +690,7 @@ define method end-logical-block
 end;
 
 // <tab> -- internal.
-// 
+//
 define class <tab> (<queued-op>)
   //
   // Various parameters for the tab.
@@ -708,27 +708,27 @@ define sealed domain initialize (<tab>);
 // <tab-kind> -- internal.
 //
 // The different kinds of tabs.
-// 
+//
 define constant <tab-kind>
   = one-of(#"line", #"line-relative", #"section", #"section-relative");
 
 // enqueue-tab -- internal.
 //
 // Queue up a tab.  Not too exciting.
-// 
+//
 define method enqueue-tab
     (stream :: <pretty-stream>, kind :: <tab-kind>, colnum :: <column>,
      colinc :: <integer>) => ()
   let (section?, relative?)
     = select (kind)
-	#"line" => values(#f, #f);
-	#"line-relative" => values(#f, #t);
-	#"section" => values(#t, #f);
-	#"section-relative" => values(#t, #t);
+        #"line" => values(#f, #f);
+        #"line-relative" => values(#f, #t);
+        #"section" => values(#t, #f);
+        #"section-relative" => values(#t, #t);
       end;
   enqueue(stream,
-	  make(<tab>, section?: section?, relative?: relative?,
-	       colnum: colnum, colinc: colinc));
+          make(<tab>, section?: section?, relative?: relative?,
+               colnum: colnum, colinc: colinc));
 end;
 
 
@@ -738,7 +738,7 @@ end;
 //
 // Figure out the size (i.e. number of spaces) this tab will expand to
 // if started at the given column and section-start.
-// 
+//
 define method compute-tab-size
     (tab :: <tab>, section-start :: <column>, column :: <column>)
  => (size :: <integer>)
@@ -750,7 +750,7 @@ define method compute-tab-size
       let newposn = column + colnum;
       let rem = remainder(newposn, colinc);
       unless (zero?(rem))
-	colnum := colnum + colinc - rem;
+        colnum := colnum + colinc - rem;
       end;
     end;
     colnum;
@@ -771,7 +771,7 @@ end;
 // instead of the real column directly.  So we have to add the index in
 // if we want the real column.  We do this because it makes the record keeping
 // a little easier.
-// 
+//
 define method index-column
     (index :: <index>, stream :: <pretty-stream>)
  => (column :: <column>)
@@ -782,14 +782,14 @@ define method index-column
   block (return)
     for (op in stream.pretty-stream-queue)
       if (op.op-posn >= end-posn)
-	return();
+        return();
       end;
       if (instance?(op, <tab>))
-	column := column
-	  + compute-tab-size(op, section-start,
-			     column + posn-index(op.op-posn, stream));
+        column := column
+          + compute-tab-size(op, section-start,
+                             column + posn-index(op.op-posn, stream));
       elseif (instance?(op, <section-start>))
-	section-start := column + posn-index(op.op-posn, stream);
+        section-start := column + posn-index(op.op-posn, stream);
       end;
     end;
   end;
@@ -801,7 +801,7 @@ end;
 // Find and expand (i.e. replace with spaces) the tabs up though the given
 // queued-op.  We do this in two passes.  First, we figure out how much
 // we need to insert where.  And second, we do the actual insertions.
-// 
+//
 define method expand-tabs
     (stream :: <pretty-stream>, through :: false-or(<queued-op>)) => ()
   let insertions = #();
@@ -812,18 +812,18 @@ define method expand-tabs
   block (return)
     for (op in stream.pretty-stream-queue)
       if (instance?(op, <tab>))
-	let index = posn-index(op.op-posn, stream);
-	let tabsize = compute-tab-size(op, section-start, column + index);
-	unless (zero?(tabsize))
-	  insertions := pair(pair(index, tabsize), insertions);
-	  additional := additional + tabsize;
-	  column := column + tabsize;
-	end;
+        let index = posn-index(op.op-posn, stream);
+        let tabsize = compute-tab-size(op, section-start, column + index);
+        unless (zero?(tabsize))
+          insertions := pair(pair(index, tabsize), insertions);
+          additional := additional + tabsize;
+          column := column + tabsize;
+        end;
       elseif (instance?(op, <section-start>))
-	section-start := column + posn-index(op.op-posn, stream);
+        section-start := column + posn-index(op.op-posn, stream);
       end;
       if (op == through)
-	return();
+        return();
       end;
     end;
   end;
@@ -867,7 +867,7 @@ end;
 // Make sure there is some space in the buffer, and return how much that is.
 // If there isn't any space in the buffer, first try to output some stuff
 // in order to make space.  If that doesn't work, then grow the buffer.
-// 
+//
 define method assure-space-in-buffer
     (stream :: <pretty-stream>, want :: <integer>)
  => (available :: <integer>)
@@ -893,7 +893,7 @@ end;
 
 // maybe-output -- internal.
 //
-// See if anything can be output, and if so, do so.  
+// See if anything can be output, and if so, do so.
 //
 // We scan down the queue, checking each op to see if there is anything
 // we can do.  If there isn't, then we leave that op in the queue and quit
@@ -909,81 +909,81 @@ define method maybe-output
       // Don't actually pop the queue until we've actually processed this op.
       let next = queue.first;
       if (instance?(next, <newline>))
-	// For newlines, check to see if we should break.  If so, output a
-	// line.
-	let kind = next.newline-kind;
-	if (if (kind == #"literal" | kind == #"mandatory" | kind == #"linear")
-	      // We always break at linear newlines, because if this block
-	      // fit on a single line, everything inside it would have been
-	      // deleted from the queue.
-	      #t;
-	    elseif (kind == #"miser")
-	      stream.misering?;
-	    elseif (kind == #"fill")
-	      stream.misering?
-		| (stream.pretty-stream-line-number
-		     > (stream.pretty-stream-blocks.head
-			  .logical-block-section-start-line))
-		| (select (fits-on-line?(stream,
-					 next.section-start-section-end,
-					 force-newlines?))
-		     #t => #f;
-		     #f => #t;
-		     #"dont-know" => return();
-		   end);
-	    else
-	      error("Strange kind of newline: %=", kind);
-	    end)
-	  output-anything? := #t;
-	  output-line(stream, next);
-	end;
+        // For newlines, check to see if we should break.  If so, output a
+        // line.
+        let kind = next.newline-kind;
+        if (if (kind == #"literal" | kind == #"mandatory" | kind == #"linear")
+              // We always break at linear newlines, because if this block
+              // fit on a single line, everything inside it would have been
+              // deleted from the queue.
+              #t;
+            elseif (kind == #"miser")
+              stream.misering?;
+            elseif (kind == #"fill")
+              stream.misering?
+                | (stream.pretty-stream-line-number
+                     > (stream.pretty-stream-blocks.head
+                          .logical-block-section-start-line))
+                | (select (fits-on-line?(stream,
+                                         next.section-start-section-end,
+                                         force-newlines?))
+                     #t => #f;
+                     #f => #t;
+                     #"dont-know" => return();
+                   end);
+            else
+              error("Strange kind of newline: %=", kind);
+            end)
+          output-anything? := #t;
+          output-line(stream, next);
+        end;
       elseif (instance?(next, <indentation>))
-	// For indentations, set the indent level unless we are misering.
-	unless (misering?(stream))
-	  set-indentation(stream,
-			  next.indentation-amount
-			    + select (next.indentation-kind)
-				#"block" =>
-				  stream.pretty-stream-blocks.head
-				    .logical-block-start-column;
-				#"current" =>
-				  posn-column(next.op-posn, stream);
-				otherwise =>
-				  error("Strange kind of indentation: %=",
-					next.indentation-kind);
-			      end);
-	end;
+        // For indentations, set the indent level unless we are misering.
+        unless (misering?(stream))
+          set-indentation(stream,
+                          next.indentation-amount
+                            + select (next.indentation-kind)
+                                #"block" =>
+                                  stream.pretty-stream-blocks.head
+                                    .logical-block-start-column;
+                                #"current" =>
+                                  posn-column(next.op-posn, stream);
+                                otherwise =>
+                                  error("Strange kind of indentation: %=",
+                                        next.indentation-kind);
+                              end);
+        end;
       elseif (instance?(next, <block-start>))
-	// For block-starts, check to see if the whole block fits on a line.
-	select (fits-on-line?(stream, next.section-start-section-end,
-			      force-newlines?))
-	  #t =>
-	    // If so, delete everything up to the block-end.  We leave the
-	    // block-end in the queue so that when we get to the pop below
-	    // it has something to remove.
-	    let stop = next.block-start-block-end;
-	    expand-tabs(stream, stop);
-	    until (queue.first == stop)
-	      pop(queue);
-	    end;
-	  #f =>
-	    // If not, then really start the logical block.
-	    really-start-logical-block(stream,
-				       posn-column(next.op-posn, stream),
-				       next.block-start-prefix,
-				       next.block-start-suffix);
-	  #"dont-know" =>
-	    // If we can't tell, give up for now.
-	    return();
-	end;
+        // For block-starts, check to see if the whole block fits on a line.
+        select (fits-on-line?(stream, next.section-start-section-end,
+                              force-newlines?))
+          #t =>
+            // If so, delete everything up to the block-end.  We leave the
+            // block-end in the queue so that when we get to the pop below
+            // it has something to remove.
+            let stop = next.block-start-block-end;
+            expand-tabs(stream, stop);
+            until (queue.first == stop)
+              pop(queue);
+            end;
+          #f =>
+            // If not, then really start the logical block.
+            really-start-logical-block(stream,
+                                       posn-column(next.op-posn, stream),
+                                       next.block-start-prefix,
+                                       next.block-start-suffix);
+          #"dont-know" =>
+            // If we can't tell, give up for now.
+            return();
+        end;
       elseif (instance?(next, <block-end>))
-	// Done with this block.
-	really-end-logical-block(stream);
+        // Done with this block.
+        really-end-logical-block(stream);
       elseif (instance?(next, <tab>))
-	// Expand out the tab.
-	expand-tabs(stream, next);
+        // Expand out the tab.
+        expand-tabs(stream, next);
       else
-	error("Strange thing in queue: %=", next);
+        error("Strange thing in queue: %=", next);
       end;
       pop(queue);
     end;
@@ -994,7 +994,7 @@ end;
 // misering? -- internal.
 //
 // Return #t if we should be misering, #f if not.
-// 
+//
 define method misering?
     (stream :: <pretty-stream>) => (misering? :: <boolean>)
   if (*print-miser-width*)
@@ -1009,23 +1009,23 @@ end;
 //
 // Return #t if everything until until-op fits on a single line, #f if not,
 // and #"dont-know" if we can't tell.
-// 
+//
 define method fits-on-line?
     (stream :: <pretty-stream>, until-op :: false-or(<queued-op>),
      force-newlines? :: <boolean>)
  => (fits :: one-of(#t, #f, #"dont-know"))
   let available = stream.pretty-stream-line-length;
   //(when (and *print-lines*
-  //	       (= *print-lines* (pretty-stream-line-number stream)))
+  //               (= *print-lines* (pretty-stream-line-number stream)))
   //  (decf available 3) ; for the `` ..''
   //  (decf available (logical-block-suffix-length
-  //		       (car (pretty-stream-blocks stream)))))
+  //                       (car (pretty-stream-blocks stream)))))
   if (until-op)
     posn-column(until-op.op-posn, stream) <= available;
   elseif (force-newlines?)
     #f;
   elseif (index-column(stream.pretty-stream-buffer-fill-pointer, stream)
-	    > available)
+            > available)
     #f;
   else
     #"dont-know";
@@ -1037,7 +1037,7 @@ end;
 // Actually output a line worth of stuff.  Newline is the newline that ends
 // this line.  All tabs will already have been expanded, so we don't have to
 // mess with them.
-// 
+//
 define method output-line (stream :: <pretty-stream>, newline :: <newline>) => ()
   let target = stream.pretty-stream-target;
   let buffer = stream.pretty-stream-buffer;
@@ -1046,37 +1046,37 @@ define method output-line (stream :: <pretty-stream>, newline :: <newline>) => (
   let amount-to-consume = posn-index(newline.op-posn, stream);
   let amount-to-print
     = if (literal?)
-	amount-to-consume;
+        amount-to-consume;
       else
-	// It it wasn't a literal newline, back up the amount we are going
-	// to print to get rid of any spaces at the end.
-	local method repeat (index)
-		if (zero?(index))
-		  0;
-		else
-		  let new-index = index - 1;
-		  if (buffer[new-index] ~= ' ')
-		    index;
-		  else
-		    repeat(new-index);
-		  end;
-		end;
-	      end;
-	repeat(amount-to-consume);
+        // It it wasn't a literal newline, back up the amount we are going
+        // to print to get rid of any spaces at the end.
+        local method repeat (index)
+                if (zero?(index))
+                  0;
+                else
+                  let new-index = index - 1;
+                  if (buffer[new-index] ~= ' ')
+                    index;
+                  else
+                    repeat(new-index);
+                  end;
+                end;
+              end;
+        repeat(amount-to-consume);
       end;
   write(target, buffer, start: 0, end: amount-to-print);
   let line-number = stream.pretty-stream-line-number + 1;
   //  (when (and *print-lines* (>= line-number *print-lines*))
-  //	(write-string " .." target)
-  //	(let ((suffix-length (logical-block-suffix-length
-  //			      (car (pretty-stream-blocks stream)))))
-  //	  (unless (zerop suffix-length)
-  //	    (let* ((suffix (pretty-stream-suffix stream))
-  //		   (len (length suffix)))
-  //	      (write-string suffix target
-  //			    :start (- len suffix-length)
-  //			    :end len))))
-  //	(throw 'line-limit-abbreviation-happened t))
+  //        (write-string " .." target)
+  //        (let ((suffix-length (logical-block-suffix-length
+  //                              (car (pretty-stream-blocks stream)))))
+  //          (unless (zerop suffix-length)
+  //            (let* ((suffix (pretty-stream-suffix stream))
+  //                   (len (length suffix)))
+  //              (write-string suffix target
+  //                            :start (- len suffix-length)
+  //                            :end len))))
+  //        (throw 'line-limit-abbreviation-happened t))
   new-line(target);
   stream.pretty-stream-line-number := line-number;
   stream.pretty-stream-buffer-start-column := 0;
@@ -1085,10 +1085,10 @@ define method output-line (stream :: <pretty-stream>, newline :: <newline>) => (
   let fill-ptr = stream.pretty-stream-buffer-fill-pointer;
   let next-block = stream.pretty-stream-blocks.head;
   let prefix-len = if (literal?)
-		     next-block.logical-block-per-line-prefix-end;
-		   else
-		     next-block.logical-block-prefix-length;
-		   end;
+                     next-block.logical-block-per-line-prefix-end;
+                   else
+                     next-block.logical-block-prefix-length;
+                   end;
   let shift = amount-to-consume - prefix-len;
   let new-fill-ptr = fill-ptr - shift;
   let new-buffer = buffer;
@@ -1096,12 +1096,12 @@ define method output-line (stream :: <pretty-stream>, newline :: <newline>) => (
   if (new-fill-ptr > buffer-length)
     let extra = new-fill-ptr - buffer-length;
     new-buffer := make(<byte-string>,
-		       size: max(buffer-length * 2,
-				 buffer-length + floor/(extra * 5, 4)));
+                       size: max(buffer-length * 2,
+                                 buffer-length + floor/(extra * 5, 4)));
     stream.pretty-stream-buffer := new-buffer;
   end;
   copy-maybe-overlapping-bytes
-    (buffer, amount-to-consume, new-buffer, prefix-len, 
+    (buffer, amount-to-consume, new-buffer, prefix-len,
        fill-ptr - amount-to-consume);
   copy-bytes(new-buffer, 0, stream.pretty-stream-prefix, 0, prefix-len);
   stream.pretty-stream-buffer-fill-pointer := new-fill-ptr;
@@ -1117,15 +1117,15 @@ end;
 //
 // Output as much of a line as we can.  Basically, everything up until the
 // first op in the queue.
-// 
+//
 define method output-partial-line (stream :: <pretty-stream>) => ()
   let fill-ptr = stream.pretty-stream-buffer-fill-pointer;
   let queue = stream.pretty-stream-queue;
   let count = if (empty?(queue))
-		fill-ptr;
-	      else
-		posn-index(queue.first.op-posn, stream);
-	      end;
+                fill-ptr;
+              else
+                posn-index(queue.first.op-posn, stream);
+              end;
   let new-fill-ptr = fill-ptr - count;
   let buffer = stream.pretty-stream-buffer;
   if (zero?(count))
@@ -1146,15 +1146,15 @@ end;
 define macro printing-logical-block
   { printing-logical-block (?stream:name, #rest ?options:expression) ?:body end }
     => { begin
-	   let print-body = method (?stream) ?body end;
-	   pprint-logical-block(?stream, body: print-body, ?options)
-	 end }
+           let print-body = method (?stream) ?body end;
+           pprint-logical-block(?stream, body: print-body, ?options)
+         end }
 end macro printing-logical-block;
 
 // pprint-logical-block -- exported.
 //
 // Start a logical block, creating a pretty-stream if necessary.
-// 
+//
 define open generic pprint-logical-block
     (stream :: <stream>,
      #key column :: <integer>,
@@ -1165,7 +1165,7 @@ define open generic pprint-logical-block
 
 //
 // When called on a regular stream, create <pretty-stream> and use it instead.
-// 
+//
 define method pprint-logical-block
     (stream :: <stream>,
      #key column :: <integer> = 0,
@@ -1177,17 +1177,17 @@ define method pprint-logical-block
     error("Can't specify both a prefix: and a per-line-prefix:");
   end;
   case
-    (*print-pretty?*) =>	//---*** argh, we shouldn't have to do this
+    (*print-pretty?*) =>        //---*** argh, we shouldn't have to do this
       let stream = make(<pretty-stream>, target: stream, column: column);
       pprint-logical-block(stream,
-			   prefix: prefix,
-			   per-line-prefix: per-line-prefix,
-			   body: body,
-			   suffix: suffix);
+                           prefix: prefix,
+                           per-line-prefix: per-line-prefix,
+                           body: body,
+                           suffix: suffix);
       close(stream);
     otherwise =>
       if (prefix | per-line-prefix)
-	write(stream, (prefix | per-line-prefix));
+        write(stream, (prefix | per-line-prefix));
       end;
       body(stream);
       if (suffix) write(stream, suffix) end;
@@ -1195,7 +1195,7 @@ define method pprint-logical-block
 end;
 //
 // When called on a <pretty-stream>, just use it directly.
-// 
+//
 define sealed method pprint-logical-block
     (stream :: <pretty-stream>,
      #key column :: <integer> = 0,
@@ -1212,8 +1212,8 @@ define sealed method pprint-logical-block
   let aborted? = #t;
   block ()
     start-logical-block(stream, prefix | per-line-prefix,
-			per-line-prefix ~= #f,
-			suffix);
+                        per-line-prefix ~= #f,
+                        suffix);
     body(stream);
     aborted? := #f;
   cleanup
@@ -1224,7 +1224,7 @@ end;
 // pprint-newline -- exported.
 //
 // Output a conditional newline of some kind.
-// 
+//
 define open generic pprint-newline
     (kind :: <pretty-newline-kind>, stream :: <stream>) => ();
 
@@ -1239,7 +1239,7 @@ end;
 // pprint-indent -- exported.
 //
 // Change the indentation.
-// 
+//
 define open generic pprint-indent
     (relative-to :: <indentation-kind>, n :: <integer>,
      stream :: <stream>) => ();
@@ -1256,7 +1256,7 @@ end;
 // pprint-tab -- exported.
 //
 // Output a tab.
-// 
+//
 define open generic pprint-tab
     (kind :: <tab-kind>, colnum :: <integer>, colinc :: <integer>,
      stream :: <stream>) => ();

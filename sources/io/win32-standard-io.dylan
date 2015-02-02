@@ -64,7 +64,7 @@ define function make-std-stream
   end if
 end function;
 
-define variable *standard-input* 
+define variable *standard-input*
   = make-std-stream($STD_INPUT_HANDLE, #"input");
 
 define variable *standard-output*

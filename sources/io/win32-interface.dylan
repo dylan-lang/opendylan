@@ -36,7 +36,7 @@ define function call-succeeded? (result :: <machine-word>) => (success :: <boole
     (primitive-unwrap-machine-word(result),
      integer-as-raw(-1))
 end function call-succeeded?;
- 
+
 
 // Now the actual interfaces ...
 
@@ -54,7 +54,7 @@ define function win32-std-handle
 end function win32-std-handle;
 
 define function win32-isatty
-    (std-handle :: <machine-word>) 
+    (std-handle :: <machine-word>)
  => (result :: <boolean>)
   // http://blogs.msdn.com/b/michkap/archive/2010/05/07/10008232.aspx
 /*
@@ -105,7 +105,7 @@ define function win32-file-type
  => (type :: <integer>)
   raw-as-integer
     (%call-c-function ("GetFileType", c-modifiers: "__stdcall")
-          (handle :: <raw-c-pointer>) 
+          (handle :: <raw-c-pointer>)
        => (eof :: <raw-c-unsigned-long>)
        (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(handle)))
      end)
@@ -115,7 +115,7 @@ define function win32-file-size (handle :: <machine-word>)
  => (fsize :: false-or(<integer>))
   let fsize = primitive-wrap-machine-word
                 (%call-c-function ("GetFileSize", c-modifiers: "__stdcall")
-                     (handle :: <raw-c-pointer>, lpFileSizeHigh :: <raw-c-pointer>) 
+                     (handle :: <raw-c-pointer>, lpFileSizeHigh :: <raw-c-pointer>)
                   => (eof :: <raw-c-unsigned-long>)
                    (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(handle)),
                     primitive-cast-raw-as-pointer(integer-as-raw(0)))
@@ -152,27 +152,27 @@ define variable actual-count-ptr =
         end));
 
 define function win32-read
-    (handle :: <machine-word>, data :: <buffer>, data-offset :: <integer>, 
+    (handle :: <machine-word>, data :: <buffer>, data-offset :: <integer>,
      count :: <integer> /* , overlapped :: false-or(<win32-overlapped>) */ )
  => (nread :: false-or(<integer>))
   let success?
     = primitive-raw-as-boolean
         (%call-c-function ("ReadFile", c-modifiers: "__stdcall")
-	     (handle :: <raw-c-pointer>, buffer-ptr :: <raw-c-pointer>,
-	      count :: <raw-c-unsigned-long>, actual-count :: <raw-c-pointer>,
-	      lpOverlapped :: <raw-c-pointer>)
-	  => (success? :: <raw-c-signed-int>)
-	   (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(handle)),
-	    primitive-cast-raw-as-pointer
-	      (primitive-machine-word-add
-		 (primitive-cast-pointer-as-raw
-		    (primitive-repeated-slot-as-raw(data,
-						    primitive-repeated-slot-offset(data))),
-		  integer-as-raw(data-offset))),
-	    integer-as-raw(count),
-	    primitive-cast-raw-as-pointer
-	      (primitive-unwrap-machine-word(actual-count-ptr)),
-	    primitive-cast-raw-as-pointer(integer-as-raw(0)))
+             (handle :: <raw-c-pointer>, buffer-ptr :: <raw-c-pointer>,
+              count :: <raw-c-unsigned-long>, actual-count :: <raw-c-pointer>,
+              lpOverlapped :: <raw-c-pointer>)
+          => (success? :: <raw-c-signed-int>)
+           (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(handle)),
+            primitive-cast-raw-as-pointer
+              (primitive-machine-word-add
+                 (primitive-cast-pointer-as-raw
+                    (primitive-repeated-slot-as-raw(data,
+                                                    primitive-repeated-slot-offset(data))),
+                  integer-as-raw(data-offset))),
+            integer-as-raw(count),
+            primitive-cast-raw-as-pointer
+              (primitive-unwrap-machine-word(actual-count-ptr)),
+            primitive-cast-raw-as-pointer(integer-as-raw(0)))
         end);
   if (~success?)
     let last-error = win32-raw-last-error();
@@ -183,34 +183,34 @@ define function win32-read
 
   success? & raw-as-integer
                (primitive-c-unsigned-long-at
-		  (primitive-unwrap-machine-word(actual-count-ptr),
-		   integer-as-raw(0),
-		   integer-as-raw(0)))
+                  (primitive-unwrap-machine-word(actual-count-ptr),
+                   integer-as-raw(0),
+                   integer-as-raw(0)))
 end function win32-read;
 
 define function win32-write
-    (handle :: <machine-word>, data :: <buffer>, data-offset :: <integer>, 
+    (handle :: <machine-word>, data :: <buffer>, data-offset :: <integer>,
      count :: <integer> /* , overlapped :: false-or(<win32-overlapped>) */ )
  => (nwritten :: false-or(<integer>))
   let success?
     = primitive-raw-as-boolean
         (%call-c-function ("WriteFile", c-modifiers: "__stdcall")
-	     (handle :: <raw-c-pointer>, buffer-ptr :: <raw-c-pointer>,
-	      count :: <raw-c-unsigned-long>, actual-count :: <raw-c-pointer>,
-	      lpOverlapped :: <raw-c-pointer>)
-	  => (success? :: <raw-c-signed-int>)
-	     (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(handle)),
-	      primitive-cast-raw-as-pointer
-		(primitive-machine-word-add
-		   (primitive-cast-pointer-as-raw
-		      (primitive-repeated-slot-as-raw(data,
-						      primitive-repeated-slot-offset(data))),
-		    integer-as-raw(data-offset))),
-	      integer-as-raw(count),
-	      primitive-cast-raw-as-pointer
-		(primitive-unwrap-machine-word(actual-count-ptr)),
-	      primitive-cast-raw-as-pointer(integer-as-raw(0)))
-	 end);
+             (handle :: <raw-c-pointer>, buffer-ptr :: <raw-c-pointer>,
+              count :: <raw-c-unsigned-long>, actual-count :: <raw-c-pointer>,
+              lpOverlapped :: <raw-c-pointer>)
+          => (success? :: <raw-c-signed-int>)
+             (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(handle)),
+              primitive-cast-raw-as-pointer
+                (primitive-machine-word-add
+                   (primitive-cast-pointer-as-raw
+                      (primitive-repeated-slot-as-raw(data,
+                                                      primitive-repeated-slot-offset(data))),
+                    integer-as-raw(data-offset))),
+              integer-as-raw(count),
+              primitive-cast-raw-as-pointer
+                (primitive-unwrap-machine-word(actual-count-ptr)),
+              primitive-cast-raw-as-pointer(integer-as-raw(0)))
+         end);
   success? & raw-as-integer
                (primitive-c-unsigned-long-at
                   (primitive-unwrap-machine-word(actual-count-ptr),
@@ -248,10 +248,10 @@ define variable message-buffer-ptr =
 
 define function win32-last-error-message () => (message :: <string>)
   let status = primitive-wrap-machine-word
-		 (%call-c-function ("GetLastError", c-modifiers: "__stdcall")
-		      () => (status :: <raw-c-unsigned-long>)
-		    ()
-		  end);
+                 (%call-c-function ("GetLastError", c-modifiers: "__stdcall")
+                      () => (status :: <raw-c-unsigned-long>)
+                    ()
+                  end);
   %call-c-function ("FormatMessageA", c-modifiers: "__stdcall")
       (flags :: <raw-c-unsigned-long>, lpSource :: <raw-c-pointer>,
        message-id :: <raw-c-unsigned-long>, language-id :: <raw-c-unsigned-long>,

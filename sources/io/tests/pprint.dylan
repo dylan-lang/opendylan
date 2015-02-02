@@ -10,9 +10,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Pretty stream testing
 
 register-stream-class-info("<pretty-stream>", <pretty-stream>,
-			   input-stream?: #f,
-			   output-stream?: #t,
-			   element-type: <object>);
+                           input-stream?: #f,
+                           output-stream?: #t,
+                           element-type: <object>);
 
 define constant $pretty-printing-test-string
   = "This is an extremely long paragraph that should be"
@@ -27,26 +27,26 @@ define sideways method make-stream-tests-of-size
   let character-sequence = copy-sequence($pretty-printing-test-string, end: stream-size);
   let tests :: <stretchy-object-vector> = make(<stretchy-object-vector>);
   local method add-pretty-stream-test
-	    (contents :: <sequence>)
-	 => (test :: <stream-test-info>)
-	  let test
-	    = make(<stream-test-info>,
-		   test-name: format-to-string("%s size %d",
-					       class-info.info-class-name,
-					       stream-size),
-		   class-info: class-info,
-		   contents: contents,
-		   direction: #"output",
-		   make-function: method ()
-				    let target-stream
-				      = make(<sequence-stream>, direction: #"output");
-				    make(<pretty-stream>,
-					 sequence: contents,
-					 target: target-stream);
-				  end);
-	  add!(tests, test);
-	  test
-	end method add-pretty-stream-test;
+            (contents :: <sequence>)
+         => (test :: <stream-test-info>)
+          let test
+            = make(<stream-test-info>,
+                   test-name: format-to-string("%s size %d",
+                                               class-info.info-class-name,
+                                               stream-size),
+                   class-info: class-info,
+                   contents: contents,
+                   direction: #"output",
+                   make-function: method ()
+                                    let target-stream
+                                      = make(<sequence-stream>, direction: #"output");
+                                    make(<pretty-stream>,
+                                         sequence: contents,
+                                         target: target-stream);
+                                  end);
+          add!(tests, test);
+          test
+        end method add-pretty-stream-test;
   add-pretty-stream-test(character-sequence);
   tests
 end method make-stream-tests-of-size;

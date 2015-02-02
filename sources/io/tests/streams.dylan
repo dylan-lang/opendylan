@@ -235,9 +235,9 @@ end method test-stream-limit-setter;
 
 
 register-stream-class-info("<sequence-stream>", <sequence-stream>,
-			   input-stream?: #t,
-			   output-stream?: #t,
-			   element-type: <object>);
+                           input-stream?: #t,
+                           output-stream?: #t,
+                           element-type: <object>);
 
 define sideways method make-stream-tests-of-size
     (class :: subclass(<sequence-stream>), stream-size :: <integer>)
@@ -247,26 +247,26 @@ define sideways method make-stream-tests-of-size
   let integer-sequence = range(from: 1, to: stream-size);
   let character-sequence = copy-sequence($default-string, end: stream-size);
   local method add-stream-test-info
-	    (class :: subclass(<sequence>), sequence :: <sequence>, element-type :: <type>,
-	     direction :: <symbol>)
-	 => ()
-	  add!(tests,
-	       make(<stream-test-info>,
-		    test-name: format-to-string("%s %s on %s size %d",
-						direction,
-						class-info.info-class-name,
-						class,
-						stream-size),
-		    class-info: class-info,
-		    contents: sequence,
-		    direction: direction,
-		    make-function: method () => (stream :: <sequence-stream>)
-				     make(<sequence-stream>,
-					  contents: as(class, sequence),
-					  element-type: element-type,
-					  direction: direction)
-				   end))
-	end method add-stream-test-info;
+            (class :: subclass(<sequence>), sequence :: <sequence>, element-type :: <type>,
+             direction :: <symbol>)
+         => ()
+          add!(tests,
+               make(<stream-test-info>,
+                    test-name: format-to-string("%s %s on %s size %d",
+                                                direction,
+                                                class-info.info-class-name,
+                                                class,
+                                                stream-size),
+                    class-info: class-info,
+                    contents: sequence,
+                    direction: direction,
+                    make-function: method () => (stream :: <sequence-stream>)
+                                     make(<sequence-stream>,
+                                          contents: as(class, sequence),
+                                          element-type: element-type,
+                                          direction: direction)
+                                   end))
+        end method add-stream-test-info;
   add-stream-test-info(<range>, integer-sequence, <integer>, #"input");
   add-stream-test-info(<range>, integer-sequence, <integer>, #"output");
   add-stream-test-info(<byte-string>, character-sequence, <character>, #"input");
@@ -282,14 +282,14 @@ define sideways method make-stream-tests-of-size
 end method make-stream-tests-of-size;
 
 register-stream-class-info("<string-stream>", <string-stream>,
-			   input-stream?: #t,
-			   output-stream?: #t,
-			   element-type: <character>);
+                           input-stream?: #t,
+                           output-stream?: #t,
+                           element-type: <character>);
 
 register-stream-class-info("<byte-string-stream>", <byte-string-stream>,
-			   input-stream?: #t,
-			   output-stream?: #t,
-			   element-type: <character>);
+                           input-stream?: #t,
+                           output-stream?: #t,
+                           element-type: <character>);
 
 define sideways method make-stream-tests-of-size
     (class :: subclass(<string-stream>), stream-size :: <integer>)
@@ -298,23 +298,23 @@ define sideways method make-stream-tests-of-size
   let tests :: <stretchy-object-vector> = make(<stretchy-object-vector>);
   let character-sequence = copy-sequence($default-string, end: stream-size);
   local method add-stream-test-info
-	    (direction :: <symbol>) => ()
-	  add!(tests,
-	       make(<stream-test-info>,
-		    test-name: format-to-string("%s %s size %d",
-						direction,
-						class-info.info-class-name,
-						stream-size),
-		    class-info: class-info,
-		    contents: character-sequence,
-		    direction: direction,
-		    make-function: method () => (stream :: <string-stream>)
-				     make(class,
-					  contents: character-sequence,
-					  element-type: <character>,
-					  direction: direction)
-				   end))
-	end method add-stream-test-info;
+            (direction :: <symbol>) => ()
+          add!(tests,
+               make(<stream-test-info>,
+                    test-name: format-to-string("%s %s size %d",
+                                                direction,
+                                                class-info.info-class-name,
+                                                stream-size),
+                    class-info: class-info,
+                    contents: character-sequence,
+                    direction: direction,
+                    make-function: method () => (stream :: <string-stream>)
+                                     make(class,
+                                          contents: character-sequence,
+                                          element-type: <character>,
+                                          direction: direction)
+                                   end))
+        end method add-stream-test-info;
   add-stream-test-info(#"input");
   add-stream-test-info(#"output");
   tests
@@ -322,9 +322,9 @@ end method make-stream-tests-of-size;
 
 /*---*** andrewa: not yet...
 register-stream-class-info("<unicode-string-stream>", <unicode-string-stream>,
-			   input-stream?: #t,
-			   output-stream?: #t,
-			   element-type: <unicode-character>);
+                           input-stream?: #t,
+                           output-stream?: #t,
+                           element-type: <unicode-character>);
 */
 
 
@@ -349,9 +349,9 @@ end method test-inner-stream-setter;
 
 
 register-stream-class-info("<wrapper-stream>", <wrapper-stream>,
-			   input-stream?: #t,
-			   output-stream?: #t,
-			   element-type: <object>);
+                           input-stream?: #t,
+                           output-stream?: #t,
+                           element-type: <object>);
 
 define sideways method make-stream-tests-of-size
     (class == <wrapper-stream>, stream-size :: <integer>)
@@ -359,22 +359,22 @@ define sideways method make-stream-tests-of-size
   let class-info = stream-class-info(<wrapper-stream>);
   let tests :: <stretchy-object-vector> = make(<stretchy-object-vector>);
   local method add-wrapper-stream-test
-	    (test :: <stream-test-info>) => (test :: <stream-test-info>)
-	  let test
-	    = make(<stream-test-info>,
-		   test-name: format-to-string("%s for %s",
-					       class-info.info-class-name,
-					       test.info-test-name),
-		   class-info: class-info,
-		   contents: test.info-contents,
-		   direction: test.info-direction,
-		   make-function: method ()
-				    let stream = test.info-make-function();
-				    make(<wrapper-stream>, inner-stream: stream)
-				  end);
-	  add!(tests, test);
-	  test
-	end method add-wrapper-stream-test;
+            (test :: <stream-test-info>) => (test :: <stream-test-info>)
+          let test
+            = make(<stream-test-info>,
+                   test-name: format-to-string("%s for %s",
+                                               class-info.info-class-name,
+                                               test.info-test-name),
+                   class-info: class-info,
+                   contents: test.info-contents,
+                   direction: test.info-direction,
+                   make-function: method ()
+                                    let stream = test.info-make-function();
+                                    make(<wrapper-stream>, inner-stream: stream)
+                                  end);
+          add!(tests, test);
+          test
+        end method add-wrapper-stream-test;
   for (class :: subclass(<stream>) in registered-stream-classes())
     if (class ~== <wrapper-stream>)
       let inner-stream-tests = make-stream-tests-of-size(<sequence-stream>, stream-size);
@@ -386,16 +386,16 @@ define sideways method make-stream-tests-of-size
   end;
   add!(tests,
        make(<stream-test-info>,
-	    test-name: "<test-wrapper-stream> for <test-input-stream>",
-	    class-info: stream-class-info(<test-wrapper-stream>),
-	    contents: $default-string,
-	    direction: #"input",
-	    make-function: method ()
-			     let stream
-			       = make(<test-input-stream>, 
-				      test-sequence: $default-string);
-			     make(<test-wrapper-stream>, inner-stream: stream)
-			   end));
+            test-name: "<test-wrapper-stream> for <test-input-stream>",
+            class-info: stream-class-info(<test-wrapper-stream>),
+            contents: $default-string,
+            direction: #"input",
+            make-function: method ()
+                             let stream
+                               = make(<test-input-stream>,
+                                      test-sequence: $default-string);
+                             make(<test-wrapper-stream>, inner-stream: stream)
+                           end));
   tests
 end method make-stream-tests-of-size;
 
@@ -406,9 +406,9 @@ define class <test-wrapper-stream> (<wrapper-stream>)
 end class <test-wrapper-stream>;
 
 register-stream-class-info("<test-wrapper-stream>", <test-wrapper-stream>,
-			   input-stream?: #t,
-			   output-stream?: #t,
-			   element-type: <object>);
+                           input-stream?: #t,
+                           output-stream?: #t,
+                           element-type: <object>);
 
 define method read-element
     (stream :: <test-wrapper-stream>, #rest keys, #key on-end-of-stream)
@@ -426,7 +426,7 @@ end method write-element;
 /// Miscellaneous stream testing
 
 // Note:  Refs to <unicode-character> and <unicode-string-stream> have been
-// 	  commented out since they are not yet implemented.  1997-06-19
+//           commented out since they are not yet implemented.  1997-06-19
 
 define streams constant-test <buffer-index> ()
   // ---*** Fill this in.
@@ -538,31 +538,31 @@ end;
 define streams macro-test with-output-to-string-test ()
   let test-string = "Hello world";
   check-equal("with-output-to-string test",
-	      with-output-to-string (stream)
-		write(stream, test-string)
-	      end,
-	      test-string)
+              with-output-to-string (stream)
+                write(stream, test-string)
+              end,
+              test-string)
 end;
 
 define streams macro-test with-input-from-string-test ()
   let test-string = "Hello world";
   check-equal("with-input-from-string test, no class spec",
               test-string,
-	      with-input-from-string (stream = test-string)
-		read-to-end(stream)
-	      end);
+              with-input-from-string (stream = test-string)
+                read-to-end(stream)
+              end);
   check-equal("with-input-from-string test, with class spec",
               test-string,
-	      with-input-from-string (stream :: <string-stream> = test-string)
-		read-to-end(stream)
-	      end);
+              with-input-from-string (stream :: <string-stream> = test-string)
+                read-to-end(stream)
+              end);
 end;
 
 
 /// Miscellaneous stream tests
 
 /*---*** andrewa: not currently used
-define constant $line-end :: <string> 
+define constant $line-end :: <string>
   = select ($os-name)
       #"win32" => "\r\n";
       #"carbon" => "\r";
@@ -587,7 +587,7 @@ end method stream-contents-and-close;
 define function default-stream-setup-function
     (stream, #key direction = #"input", contents = "")
  => (stream :: <object>)
-  if (contents ~= "") 
+  if (contents ~= "")
     make(stream, direction: direction, contents: contents);
   else
     make(stream, direction: direction);
@@ -598,7 +598,7 @@ define function default-stream-cleanup-function (stream :: <stream>) => ()
   ignore(stream);
 end function;
 
-define method line-test 
+define method line-test
     (class :: subclass(<stream>),
      tester-without-line-end :: <string>,
      line-end :: <string>,
@@ -611,18 +611,18 @@ define method line-test
   if (member?('\n', tester))
     check("read-line", \=, read-line(s), tester-without-line-end);
   else
-    check-condition("read-line condition", 
-		    <end-of-stream-error>, read-line(s));
+    check-condition("read-line condition",
+                    <end-of-stream-error>, read-line(s));
   end if;
   cleanup-function(s);
-  
+
   s := setup-function(class, direction: #"output");
   write-line(s, tester-without-line-end);
   if (line-end.size = 2)
     let the-contents = stream-contents-and-close(s);
-    check-true("write line worked?", 
-	       (last(the-contents) = second(line-end)) &
-		 (the-contents[the-contents.size - 2] = first(line-end)));
+    check-true("write line worked?",
+               (last(the-contents) = second(line-end)) &
+                 (the-contents[the-contents.size - 2] = first(line-end)));
   else
     check("write line worked?", \=, last(stream-contents-and-close(s)), line-end.last);
   end if;
@@ -638,43 +638,43 @@ define method line-test
     check("read-write write check", \=, stream-contents-and-close(s), tester);
   end if;
   cleanup-function(s);
-end method;  
-  
-define method positionable-stream-test 
-    (class :: subclass(<positionable-stream>), tester, 
+end method;
+
+define method positionable-stream-test
+    (class :: subclass(<positionable-stream>), tester,
      #key setup-function = default-stream-setup-function,
      cleanup-function = default-stream-cleanup-function)
  => ()
   let s = setup-function(class, direction: #"input", contents: tester);
   check("stream position is zero?", zero?, as(<integer>, stream-position(s)));
-  check("stream position is end?", \=, size(tester), 
-	as(<integer>, adjust-stream-position(s, size(tester), from: #"start")));
+  check("stream position is end?", \=, size(tester),
+        as(<integer>, adjust-stream-position(s, size(tester), from: #"start")));
   if (size(tester) > 2)
     stream-position-setter(2, s);
-    check("stream position works?", \=, 
-	  read-element(s),
-	  third(tester));
+    check("stream position works?", \=,
+          read-element(s),
+          third(tester));
   end if;
   check("stream-size works?", \=, size(tester), stream-size(s));
   // unless (instance?(s, <file-stream>))
     stream-contents(s, clear-contents?: #t);
-    check("clear contents", zero?, 
-	  stream-size(s));
+    check("clear contents", zero?,
+          stream-size(s));
   // end unless;
   cleanup-function(s);
 end method positionable-stream-test;
 
 define test test-line-functions ()
-  // String streams always use the "platform independent" terminator 
+  // String streams always use the "platform independent" terminator
   line-test(<string-stream>, "hello there!", "\n");
 /*
   line-test(<file-stream>, "hello there!", $line-end,
-	    setup-function: create-file-stream,
-	    cleanup-function: destroy-file-stream);
+            setup-function: create-file-stream,
+            cleanup-function: destroy-file-stream);
 */
 end test;
 
-define test test-position-string-streams ()  
+define test test-position-string-streams ()
   positionable-stream-test(<string-stream>, "hello there");
   positionable-stream-test(<string-stream>, "");
 end test;
@@ -687,8 +687,8 @@ end test;
 define test test-position-alt-string-streams ()
   positionable-stream-test(<byte-string-stream>, "yo baby!");
   /*
-  positionable-stream-test(<unicode-string-stream>, 
-			   concatenate("here we go baby", $line-end));
+  positionable-stream-test(<unicode-string-stream>,
+                           concatenate("here we go baby", $line-end));
   */
 end test;
 
@@ -698,12 +698,12 @@ define test test-stretchy-stream (description: "<string-stream> stretchy vector 
     let s = make(<string-stream>, contents: sv, direction: #"output");
     write(s, #(1, 2, 3));
     write(s, #(4, 5, 6));
-	
+
     check-true("stretchy vector streched", sv = #(1, 2, 3, 4, 5, 6));
-    check("stretchy vector", \=, stream-contents(s), 
-	  as(<stretchy-vector>, list(1,2,3,4,5,6))  );
+    check("stretchy vector", \=, stream-contents(s),
+          as(<stretchy-vector>, list(1,2,3,4,5,6))  );
   end;
- 
+
  begin
     let v = make(<vector>, size: 3);
     let s = make(<string-stream>, contents: v, direction: #"output");
@@ -717,8 +717,8 @@ define test test-stretchy-stream (description: "<string-stream> stretchy vector 
     let s = make(<sequence-stream>, contents: sv, direction: #"output");
     write(s, #(1, 2, 3));
     write(s, #(4, 5, 6));
-    check("test stream with stretchy vector", \=, stream-contents(s), 
-	    as(<stretchy-vector>, list(1,2,3,4,5,6)));
+    check("test stream with stretchy vector", \=, stream-contents(s),
+            as(<stretchy-vector>, list(1,2,3,4,5,6)));
   end;
  begin
     let v = make(<vector>, size: 3);

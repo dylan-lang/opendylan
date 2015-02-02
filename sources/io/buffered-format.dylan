@@ -61,58 +61,58 @@ define method format
     while (start < control-len)
       // Skip to dispatch char.
       for (i = start then (i + 1),
-	   until: ((i == control-len)
-		   | (control-string[i] == $dispatch-char)
-		   | (control-string[i] == '\n')))
+           until: ((i == control-len)
+                   | (control-string[i] == $dispatch-char)
+                   | (control-string[i] == '\n')))
       finally
         if (i ~== start)
           buffered-write(stream, sb, control-string, start: start, end: i);
         end;
-	if (i == control-len)
-	  exit()
-	else
-	  start := i + 1
-	end
+        if (i == control-len)
+          exit()
+        else
+          start := i + 1
+        end
       end;
       if (control-string[start - 1] == '\n')
-	new-line(stream)
+        new-line(stream)
       else
-	// Parse for field within which to pad output.
-	let (field, field-spec-end)
-	  = if (char-classes[as(<byte>, control-string[start])] == #"digit")
-	      parse-integer(control-string, start)
-	    end;
-	if (field)
-	  // Capture output in string and compute padding.
-	  // Assume the output is very small in length.
-	  let s = make(<byte-string-stream>,
-		       contents: make(<byte-string>, size: 80),
-		       direction: #"output");
-	  if (do-dispatch(control-string[field-spec-end], s,
-			  element(args, arg-i, default: #f)))
-	    arg-i := arg-i + 1
-	  end;
-	  let output = s.stream-contents;
-	  let output-len :: <integer> = output.size;
-	  let padding :: <integer> = (abs(field) - output-len);
-	  case
-	    (padding < 0) =>
-	      buffered-write(stream, sb, output);
-	    (field > 0) =>
-	      buffered-write(stream, sb, make(<byte-string>, size: padding, fill: ' '));
-	      buffered-write(stream, sb, output);
-	    otherwise =>
-	      buffered-write(stream, sb, output);
-	      buffered-write(stream, sb, make(<byte-string>, size: padding, fill: ' '));
-	  end;
-	  start := field-spec-end + 1	// Add one to skip dispatch char.
-	else
-	  if (buffered-do-dispatch(control-string[start], stream, sb,
-				   element(args, arg-i, default: #f)))
-	    arg-i := arg-i + 1
-	  end;
-	  start := start + 1		// Add one to skip dispatch char.
-	end
+        // Parse for field within which to pad output.
+        let (field, field-spec-end)
+          = if (char-classes[as(<byte>, control-string[start])] == #"digit")
+              parse-integer(control-string, start)
+            end;
+        if (field)
+          // Capture output in string and compute padding.
+          // Assume the output is very small in length.
+          let s = make(<byte-string-stream>,
+                       contents: make(<byte-string>, size: 80),
+                       direction: #"output");
+          if (do-dispatch(control-string[field-spec-end], s,
+                          element(args, arg-i, default: #f)))
+            arg-i := arg-i + 1
+          end;
+          let output = s.stream-contents;
+          let output-len :: <integer> = output.size;
+          let padding :: <integer> = (abs(field) - output-len);
+          case
+            (padding < 0) =>
+              buffered-write(stream, sb, output);
+            (field > 0) =>
+              buffered-write(stream, sb, make(<byte-string>, size: padding, fill: ' '));
+              buffered-write(stream, sb, output);
+            otherwise =>
+              buffered-write(stream, sb, output);
+              buffered-write(stream, sb, make(<byte-string>, size: padding, fill: ' '));
+          end;
+          start := field-spec-end + 1        // Add one to skip dispatch char.
+        else
+          if (buffered-do-dispatch(control-string[start], stream, sb,
+                                   element(args, arg-i, default: #f)))
+            arg-i := arg-i + 1
+          end;
+          start := start + 1                // Add one to skip dispatch char.
+        end
       end
     end while;
   cleanup
@@ -126,21 +126,21 @@ define method buffered-do-dispatch
   select (char by \==)
     ('s'), ('S') =>
       if (instance?(arg, <byte-string>))
-	// Simulate "write-message" upon the argument.  This code must be
-	// changed if the semantics of "write-message" changes.
-	buffered-write(stream, sb, arg)
+        // Simulate "write-message" upon the argument.  This code must be
+        // changed if the semantics of "write-message" changes.
+        buffered-write(stream, sb, arg)
       else
-	print-message(arg, stream)
+        print-message(arg, stream)
       end;
       #t;
     ('c'), ('C') =>
       select (arg by instance?)
-	<byte-character> =>
-	  buffered-write-element(stream, sb, arg);
-	<character> =>
-	  print-message(arg, stream);
-	otherwise =>
-	  error("The %%C format directive only works for characters: %=", arg);
+        <byte-character> =>
+          buffered-write-element(stream, sb, arg);
+        <character> =>
+          print-message(arg, stream);
+        otherwise =>
+          error("The %%C format directive only works for characters: %=", arg);
       end;
       #t;
     ('=') =>
@@ -183,17 +183,17 @@ define method buffered-format-integer
     (arg :: <integer>, radix :: limited(<integer>, min: 2, max: 36),
      stream :: <buffered-stream>, sb :: <buffer>) => ()
   local method repeat (arg :: <integer>, digits :: <list>)
-	  let (quotient :: <integer>, remainder :: <integer>)
-	    = floor/(arg, radix);
-	  let digits = pair($digits[remainder], digits);
-	  if (zero?(quotient))
-	    for (digit in digits)
-	      buffered-write-element(stream, sb, digit)
-	    end
-	  else
-	    repeat(quotient, digits)
-	  end
-	end;
+          let (quotient :: <integer>, remainder :: <integer>)
+            = floor/(arg, radix);
+          let digits = pair($digits[remainder], digits);
+          if (zero?(quotient))
+            for (digit in digits)
+              buffered-write-element(stream, sb, digit)
+            end
+          else
+            repeat(quotient, digits)
+          end
+        end;
   // Set up for the iteration.
   if (negative?(arg))
     buffered-write-element(stream, sb, '-');

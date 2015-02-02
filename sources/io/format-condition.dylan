@@ -11,7 +11,7 @@ define sideways method print-object (c :: <condition>, s :: <stream>) => ()
   if (*print-escape?* | ~message)
     printing-object (c, s)
       if (message)
-	format(s, ": %s", message)
+        format(s, ": %s", message)
       end
     end
   else

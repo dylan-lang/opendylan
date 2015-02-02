@@ -1,18 +1,18 @@
 Library:       io
 Synopsis:      A portable IO library
 Author:        Gail Zacharias
-Files:	library
-	streams/defs
-	streams/stream
-	streams/sequence-stream
+Files:  library
+        streams/defs
+        streams/stream
+        streams/sequence-stream
         streams/native-buffer
-	streams/buffer
-	streams/typed-stream
-	streams/external-stream
-	streams/buffered-stream
-	streams/convenience
-	streams/wrapper-stream
-	streams/cleanup-streams
+        streams/buffer
+        streams/typed-stream
+        streams/external-stream
+        streams/buffered-stream
+        streams/convenience
+        streams/wrapper-stream
+        streams/cleanup-streams
         streams/native-speed
         streams/async-writes
         streams/file-stream
@@ -20,14 +20,14 @@ Files:	library
         pprint
         print
         print-double-integer-kludge
-	format
-	buffered-format
-	format-condition
+        format
+        buffered-format
+        format-condition
         unix-file-accessor
-	unix-standard-io
-	unix-interface
-	format-out
-C-Source-Files:	unix-portability.c
+        unix-standard-io
+        unix-interface
+        format-out
+C-Source-Files: unix-portability.c
 Major-Version: 2
 Minor-Version: 1
 Target-Type:   dll

@@ -36,7 +36,7 @@ define module-spec streams ()
   open generic-function read-text (<stream>, <integer>, #"key", #"on-end-of-stream")
     => (<object>);
   open generic-function read-text-into! (<stream>, <integer>, <string>,
-					 #"key", #"start", #"on-end-of-stream")
+                                         #"key", #"start", #"on-end-of-stream")
     => (<object>);
   function skip-through (<stream>, <object>, #"key", #"test")
     => (<boolean>);
@@ -68,7 +68,7 @@ define module-spec streams ()
   open generic-function inner-stream-setter (<stream>, <wrapper-stream>)
     => (<stream>);
   open generic-function outer-stream (<stream>) => (<wrapper-stream>);
-  open generic-function outer-stream-setter 
+  open generic-function outer-stream-setter
        (<wrapper-stream>, <stream>)
     => (<wrapper-stream>);
 

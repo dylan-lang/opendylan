@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define variable *standard-input* 
+define variable *standard-input*
   = make(<file-stream>, locator: 0, file-descriptor: 0, direction: #"input");
 
 define variable *standard-output*

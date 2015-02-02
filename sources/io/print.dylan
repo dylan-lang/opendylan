@@ -8,22 +8,22 @@ Copyright: See below.
 ///
 /// Copyright (c) 1994  Carnegie Mellon University
 /// All rights reserved.
-/// 
+///
 /// Use and copying of this software and preparation of derivative
 /// works based on this software are permitted, including commercial
 /// use, provided that the following conditions are observed:
-/// 
+///
 /// 1. This copyright notice must be retained in full on any copies
 ///    and on appropriate parts of any derivative works.
 /// 2. Documentation (paper or online) accompanying any system that
 ///    incorporates this software, or any part of it, must acknowledge
 ///    the contribution of the Gwydion Project at Carnegie Mellon
 ///    University.
-/// 
+///
 /// This software is made available "as is".  Neither the authors nor
 /// Carnegie Mellon University make any warranty about the software,
 /// its performance, or its conformity to any specification.
-/// 
+///
 /// Bug reports, questions, comments, and suggestions should be sent by
 /// E-mail to the Internet address "gwydion-bugs@cs.cmu.edu".
 ///
@@ -62,7 +62,7 @@ define thread variable *print-escape?* :: <boolean> = *default-escape?*;
 // Print-depth holds the current level of printing.  When incrementing this
 // slot causes the depth to exceed print-level, then the print function
 // only outputs $print-level-exceeded-string.
-define thread variable *print-depth* :: <integer> = -1; 
+define thread variable *print-depth* :: <integer> = -1;
 
 /// <circular-print-stream> Class -- Internal.
 ///
@@ -193,7 +193,7 @@ define generic print (object, stream :: <stream>,
 define constant <boolean-or-unsupplied> = <object>;  // !@#$ HACK can't deal
 //  = type-union(<boolean>, singleton($unsupplied));
 define constant <integer-or-false-or-unsupplied> = <object>; // !@#$ HACK ditto
-//  = type-union(<integer>, one-of(#f, $unsupplied)); 
+//  = type-union(<integer>, one-of(#f, $unsupplied));
 
 /// Print -- Method for Exported Interface.
 ///
@@ -369,7 +369,7 @@ define method print-object (object :: <object>, stream :: <stream>) => ()
 end method;
 
 /*---*** This doesn't seem to be used anymore... anyone care to flush it?
-define method print-object-slots 
+define method print-object-slots
     (object :: <object>, stream :: <stream>)
  => ()
   printing-logical-block (stream, prefix: "{", suffix: "}")
@@ -437,7 +437,7 @@ end method print-object;
 /// Utility routine used for printing characters appropriately escaped.
 ///
 define method write-char-maybe-escape
-    (stream :: <stream>, char :: <character>, _quote :: one-of('\'', '"')) 
+    (stream :: <stream>, char :: <character>, _quote :: one-of('\'', '"'))
  => ()
   case
     char < ' ' =>
@@ -806,7 +806,7 @@ end method print-specializer;
 // print the type, it will call print, and we would just end up back here.
 // Instead, we carefully enumerate the types that print-specializer can
 // deal with.
-// 
+//
 
 define sealed method print-object
     (object :: type-union(<singleton>, <limited-integer>, <union>), stream :: <stream>) => ()
@@ -820,7 +820,7 @@ define sealed method print-object
 end method print-object;
 
 /// For classes, we just print the class name if there is one.
-/// 
+///
 define sealed method print-object (object :: <class>, stream :: <stream>) => ();
   write(stream, "{class ");
   write-class-name(object, stream);
@@ -1191,7 +1191,7 @@ define macro printing-object
          end }
 end macro printing-object;
 
-define method do-printing-object 
+define method do-printing-object
     (object, stream :: <stream>, continuation :: <function>,
      #key type? = #t, identity? = #t) => ()
   let class = object.object-class;

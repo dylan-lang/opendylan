@@ -15,52 +15,52 @@ end test basic-format;
 
 define test decimal-control-strings ()
   check-equal("format %d with a positive integer",
-	      format-to-string("-%d-", 12), "-12-");
+              format-to-string("-%d-", 12), "-12-");
   check-equal("format %d with a negative integer",
-	      format-to-string("'%D'", -12), "'-12'");
+              format-to-string("'%D'", -12), "'-12'");
 end test decimal-control-strings;
 
 define test binary-control-strings ()
   check-equal("format %b with a positive integer",
-	      format-to-string("%B", 43), "101011");
+              format-to-string("%B", 43), "101011");
   check-equal("format %b with a negative integer",
-	      format-to-string("%b", -37), "-100101");
-end test binary-control-strings; 
+              format-to-string("%b", -37), "-100101");
+end test binary-control-strings;
 
 define test octal-control-strings ()
-  check-equal("format %o with a positive integer", 
-	      format-to-string("%O", 28), "34");
+  check-equal("format %o with a positive integer",
+              format-to-string("%O", 28), "34");
   check-equal("format %o with a negative integer",
-	      format-to-string("%o", -9483672),"-44132630");
+              format-to-string("%o", -9483672),"-44132630");
 end test octal-control-strings;
 
 define test hex-control-strings ()
-  check-equal("format %x with a positive integer", 
-	      format-to-string("%X", 117), "75");
+  check-equal("format %x with a positive integer",
+              format-to-string("%X", 117), "75");
   check-equal("format %x with a negative integer",
-	      format-to-string("%x", -91827364), "-5792CA4");
+              format-to-string("%x", -91827364), "-5792CA4");
 end test hex-control-strings;
 
 define test multiple-basic-control-strings ()
-  check-equal("multiple control strings 1", 
-	      format-to-string("Hex: %x, Dec: %d", 234, 567), "Hex: EA, Dec: 567");
+  check-equal("multiple control strings 1",
+              format-to-string("Hex: %x, Dec: %d", 234, 567), "Hex: EA, Dec: 567");
   check-equal("multiple control strings 2",
-	      format-to-string("Bin: %b, Oct: %o", 12, 34), "Bin: 1100, Oct: 42");
+              format-to-string("Bin: %b, Oct: %o", 12, 34), "Bin: 1100, Oct: 42");
   check-equal("multiple control strings 3",
-	      format-to-string("%d %% %b %% %o %% %x", 42, 42, 42, 42), "42 % 101010 % 52 % 2A");
+              format-to-string("%d %% %b %% %o %% %x", 42, 42, 42, 42), "42 % 101010 % 52 % 2A");
 end test multiple-basic-control-strings;
- 
+
 define test existing-string-messages ()
-  check-equal("format %s with a string", 
-	      format-to-string("Byte string: %s.", "random byte string"),
-	      "Byte string: random byte string.");
+  check-equal("format %s with a string",
+              format-to-string("Byte string: %s.", "random byte string"),
+              "Byte string: random byte string.");
   check-equal("format %s with a symbol",
-	      as-lowercase(format-to-string("Symbol: %s.", #"ranDOM syMBol")),
-	      "symbol: random symbol.");
+              as-lowercase(format-to-string("Symbol: %s.", #"ranDOM syMBol")),
+              "symbol: random symbol.");
   check-equal("format %s with a character",
-	      format-to-string("Character: %s.", 'c'), "Character: c.");
+              format-to-string("Character: %s.", 'c'), "Character: c.");
 end test existing-string-messages;
-  
+
 define suite format-test-suite ()
   test basic-format;
   test decimal-control-strings;
