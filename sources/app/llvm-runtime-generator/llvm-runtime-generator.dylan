@@ -59,7 +59,8 @@ define constant $runtime-referenced-classes
       #"<recursive-lock>",
       #"<simple-lock>",
       #"<read-write-lock>",
-      #"<notification>"];
+      #"<notification>",
+      #"<simple-object-vector>"];
 
 define constant $debug-producer = "Open Dylan LLVM Runtime Generator";
 
