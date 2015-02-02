@@ -97,7 +97,7 @@ define method retract-local-methods-in-heap(heap :: <model-heap>) => ()
       let code-vec  = code & ~empty?(code) & lambda-code(head(code));
       let code-size = if (code-vec) size(code-vec) else 0 end;
       total-code-size := total-code-size + code-size;
-      unless (lambda-top-level?(literal) | ~*retract-dfm?*)
+      unless (lambda-top-level?(literal))
 	format-out?("\nRETRACTING %=\n", literal);
 	retract-method-dfm(literal);
 	retract-method-dfm(literal.function);
@@ -136,12 +136,10 @@ define method emit-code
   if (re-emit?)
     o.code := #();
     apply(emit-lambda, back-end, #f, o, flags);
-    if (*retract-dfm?*)
-      if (lambda-top-level?(o))
-        format-out?("\nRETRACTING %=\n", o);
-        retract-method-dfm(o);
-        retract-method-dfm(o.function);
-      end if;
+    if (lambda-top-level?(o))
+      format-out?("\nRETRACTING %=\n", o);
+      retract-method-dfm(o);
+      retract-method-dfm(o.function);
     end if;
   end if;
 end method emit-code;
@@ -260,11 +258,9 @@ define method emit-init-code-body
     emit-lambda-body(back-end, stream, o);
     ins--tag(back-end, back-end.cg-variables.exit-tag);
   end with-harp-variables;
-  if (*retract-dfm?*)
-    format-out?("\nRETRACTING %=\n", o);
-    retract-method-dfm(o);
-    retract-method-dfm(o.function);
-  end if;
+  format-out?("\nRETRACTING %=\n", o);
+  retract-method-dfm(o);
+  retract-method-dfm(o.function);
 end method;
 
 define method emit-system-init-code

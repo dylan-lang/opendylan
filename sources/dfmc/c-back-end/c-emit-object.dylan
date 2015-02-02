@@ -765,11 +765,9 @@ define method emit-code (back-end :: <c-back-end>, o :: <&iep>)
     emit-lambda(back-end, stream, o);
     o.code := stream-contents-as(<byte-string>, stream);
     // format-out("%s\n", o.code);
-    if (*retract-dfm?*)
-      if (lambda-top-level?(o))
-        retract-method-dfm(o);
-        retract-method-dfm(o.function);
-      end if;
+    if (lambda-top-level?(o))
+      retract-method-dfm(o);
+      retract-method-dfm(o.function);
     end if;
   end unless;
 end method;

@@ -181,11 +181,9 @@ define method emit-code
     end block;
 
     // Done with this DFM?
-    if (*retract-dfm?*)
-      if (lambda-top-level?(o))
-	retract-method-dfm(o);
-	retract-method-dfm(o.function);
-      end if;
+    if (lambda-top-level?(o))
+      retract-method-dfm(o);
+      retract-method-dfm(o.function);
     end if;
   end unless;
 end method;

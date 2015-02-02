@@ -76,9 +76,9 @@ end method;
 define method retract-local-methods-in-heap(heap :: <model-heap>) => ()
   for (literal in heap.heap-defined-object-sequence)
     if (instance?(literal, <&iep>))
-      unless (lambda-top-level?(literal) | ~*retract-dfm?*)
-	retract-method-dfm(literal);
-	retract-method-dfm(literal.function);
+      unless (lambda-top-level?(literal))
+        retract-method-dfm(literal);
+        retract-method-dfm(literal.function);
       end unless;
     end if;
   end for;
