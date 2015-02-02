@@ -21,7 +21,9 @@ end method;
 
 define method emit-definition
     (back-end :: <c-back-end>, stream :: <stream>, o :: <module-binding>) => ()
-  format-emit*(back-end, stream, "~ %;\n", $dylan-type-string, o);
+  let linkage
+    = if (model-externally-visible?(o)) "" else "static " end;
+  format-emit*(back-end, stream, "~~ %;\n", linkage, $dylan-type-string, o);
 end method;
 
 // CODE
