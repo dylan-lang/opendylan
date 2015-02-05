@@ -30,7 +30,7 @@ define sideways method output-compiled-lambda
     (be :: <harp-back-end>, outputter :: <harp-mnemonic-assembler-outputter>, lambda :: <fully-compiled-lambda>,
      #key)
     => ()
-// This produces assemby output for one function.
+// This produces assembly output for one function.
 
   let name = lambda.lambda-name;
   let code = lambda.lambda-code;
