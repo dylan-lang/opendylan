@@ -75,16 +75,9 @@ void primitive_break() {
   extern void __stdcall DebugBreak(void);
   DebugBreak();
 #else
-#ifdef SIGTRAP
   fprintf(stderr, "Breaking into debugger.\n");
   fflush(stderr);
   raise(SIGTRAP);
-#else
-  int *ptr = (int*)0;
-  puts("Breaking into debugger.");
-  fflush(stdout);
-  *ptr = 0; /* generate a memory fault */
-#endif
 #endif
 }
 
