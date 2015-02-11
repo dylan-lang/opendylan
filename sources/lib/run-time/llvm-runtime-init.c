@@ -44,15 +44,20 @@ void _Init_Run_Time(void)
     GC_INIT();
 
 #ifdef OPEN_DYLAN_PLATFORM_DARWIN
-    dyld_register_tlv_state_change_handler(dyld_tlv_state_allocated,
-      ^(enum dyld_tlv_states state, const dyld_tlv_info *info) {
+    dyld_tlv_state_change_handler handler
+      = ^(enum dyld_tlv_states state, const dyld_tlv_info *info) {
        char *start = info->tlv_addr;
        char *end = start + info->tlv_size;
        if (state == dyld_tlv_state_allocated) {
          GC_add_roots(start, end);
        }
-     }
-    );
+       else if (state == dyld_tlv_state_deallocated) {
+         GC_remove_roots(start, end);
+       }
+    };
+    dyld_enumerate_tlv_storage(handler);
+    dyld_register_tlv_state_change_handler(dyld_tlv_state_allocated, handler);
+    dyld_register_tlv_state_change_handler(dyld_tlv_state_deallocated, handler);
 #endif
 #endif
   }
