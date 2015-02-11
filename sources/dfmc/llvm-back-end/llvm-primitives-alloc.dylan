@@ -603,3 +603,40 @@ define method op--allocate-vector
                  llvm-back-end-value-function(back-end, size-slot-offset),
                  fill-ref)
 end method;
+
+define c-callable auxiliary mapped-parameter &runtime-primitive-descriptor primitive-grow-vector
+    (v :: <simple-object-vector>, minimum-size :: <raw-integer>)
+ => (new-vector :: <simple-object-vector>);
+  let word-size = back-end-word-size(be);
+
+  // Compute the expanded size for the vector. It is said that a
+  // growth factor of phi (i.e., the golden ratio) is best, but 3/2 is
+  // easy to compute and is close enough.
+  let current-size = call-primitive(be, primitive-vector-size-descriptor, v);
+  let thrice = ins--mul(be, current-size, 3);
+  let halved-thrice = ins--ashr(be, thrice, 1);
+
+  let cmp = ins--icmp-sge(be, halved-thrice, minimum-size);
+  let expanded-size = ins--select(be, cmp, halved-thrice, minimum-size);
+
+  let new-vector = op--allocate-vector(be, expanded-size);
+
+  // Copy elements of the old vector into the new one
+  let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
+  let new-vector-cast
+    = op--object-pointer-cast(be, new-vector, sov-class);
+  let dst-slot-ptr
+    = op--getslotptr(be, new-vector-cast, sov-class, #"vector-element");
+  let dst-byte-ptr = ins--bitcast(be, dst-slot-ptr, $llvm-i8*-type);
+
+  let src-slot-ptr
+    = op--getslotptr(be, v, sov-class, #"vector-element");
+  let src-byte-ptr = ins--bitcast(be, src-slot-ptr, $llvm-i8*-type);
+
+  let vector-byte-size = ins--mul(be, current-size, word-size);
+  ins--call-intrinsic(be, "llvm.memcpy",
+                      vector(dst-byte-ptr, src-byte-ptr, vector-byte-size,
+                             i32(word-size), $llvm-false));
+
+  new-vector
+end;
