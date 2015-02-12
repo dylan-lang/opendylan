@@ -230,6 +230,8 @@ define module llvm-builder
     llvm-builder-dbg,
     llvm-builder-dbg-setter,
 
+    with-builder-function,
+
     llvm-builder-value,
     llvm-builder-value-function,
 

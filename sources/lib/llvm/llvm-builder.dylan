@@ -27,6 +27,26 @@ define sealed method make
   apply(next-method, <llvm-concrete-builder>, keys)
 end method;
 
+define macro with-builder-function
+  { with-builder-function(?builder:expression, ?function:expression)
+      ?:body
+    end }
+    => { let builder :: <llvm-builder> = ?builder;
+         let save-function = builder.llvm-builder-function;
+         let save-bb = builder.llvm-builder-basic-block;
+         let save-dbg = builder.llvm-builder-dbg;
+         block ()
+           builder.llvm-builder-function := ?function;
+           builder.llvm-builder-basic-block := #f;
+           builder.llvm-builder-dbg := #f;
+           ?body
+         cleanup
+           builder.llvm-builder-dbg := save-dbg;
+           builder.llvm-builder-basic-block := save-bb;
+           builder.llvm-builder-function := save-function;
+         end block }
+end macro;
+
 
 /// Value transformation
 
