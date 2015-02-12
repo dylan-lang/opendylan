@@ -125,5 +125,5 @@ end method;
 define method print-primitive-c-type
     (be :: <llvm-back-end>, type, stream :: <stream>)
  => ();
-  print-message("D", stream);
+  print-message("dylan_value", stream);
 end method;
