@@ -95,6 +95,16 @@ define method op--teb-getelementptr
 end method;
 
 
+/// Thread-local variables
+
+define runtime-variable %tlv-initializations :: <simple-object-vector> = #[],
+  section: #"ambiguous-data";
+
+// Element index of the first unused vector element
+define runtime-variable %tlv-initializations-cursor :: <raw-integer>
+  = make-raw-literal(0);
+
+
 /// Thread primitives
 
 define side-effecting stateful dynamic-extent &c-primitive-descriptor primitive-make-thread
@@ -208,6 +218,9 @@ define side-effecting stateful dynamic-extent &primitive-descriptor primitive-co
     => (res :: <integer>)
 end;
 */
+
+define side-effecting stateful indefinite-extent auxiliary &c-primitive-descriptor primitive-register-thread-variable-initializer
+    (initial-value :: <object>, initializer-function :: <raw-pointer>) => ();
 
 define side-effecting stateful indefinite-extent &c-primitive-descriptor primitive-allocate-thread-variable
     (initial-value :: <object>) => (handle :: <raw-pointer>);

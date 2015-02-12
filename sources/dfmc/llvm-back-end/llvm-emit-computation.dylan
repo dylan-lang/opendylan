@@ -1160,20 +1160,72 @@ end method;
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <definition>) => ()
   let the-value = emit-reference(back-end, m, c.computation-value);
-  if (c.assigned-binding.binding-thread?
-	& ~llvm-thread-local-support?(back-end))
-    let handle
-      = call-primitive(back-end, primitive-allocate-thread-variable-descriptor,
-		       the-value);
-    let name = emit-name(back-end, m, c.assigned-binding);
-    let global = llvm-builder-global(back-end, name);
-    llvm-constrain-type(global.llvm-value-type,
-                        llvm-pointer-to(back-end, handle.llvm-value-type));
-    ins--store(back-end, handle, global);
-    computation-result(back-end, c, the-value);
+  if (c.assigned-binding.binding-thread?)
+    if (llvm-thread-local-support?(back-end))
+      let initializer-function
+        = emit-binding-initializer-function(back-end, m, c.assigned-binding);
+      let type = llvm-reference-type(back-end, dylan-value(#"<raw-pointer>"));
+      let initializer-function-cast
+        = ins--bitcast(back-end, initializer-function, type);
+      call-primitive(back-end,
+                     primitive-register-thread-variable-initializer-descriptor,
+                     the-value, initializer-function-cast);
+      next-method();
+    else
+      let handle
+        = call-primitive(back-end,
+                         primitive-allocate-thread-variable-descriptor,
+                         the-value);
+      let name = emit-name(back-end, m, c.assigned-binding);
+      let global = llvm-builder-global(back-end, name);
+      llvm-constrain-type(global.llvm-value-type,
+                          llvm-pointer-to(back-end, handle.llvm-value-type));
+      ins--store(back-end, handle, global);
+      computation-result(back-end, c, the-value);
+    end if;
   else
     next-method();
   end if;
+end method;
+
+define constant $tlv-initializer-prefix = "RTLVINIT_";
+
+define method emit-binding-initializer-function
+    (back-end :: <llvm-back-end>, m :: <llvm-module>, binding :: <binding>)
+ => (function :: <llvm-function>);
+  let binding-name = emit-name(back-end, m, binding);
+  let global = llvm-builder-global(back-end, binding-name);
+
+  let function-name = concatenate($tlv-initializer-prefix, binding-name);
+
+  let function-type
+    = make(<llvm-function-type>,
+           return-type: $llvm-void-type,
+           parameter-types: vector($llvm-object-pointer-type),
+           varargs?: #f);
+  let argument
+    = make(<llvm-argument>,
+           type: $llvm-object-pointer-type,
+           name: "value",
+           index: 0);
+  let function
+    = make(<llvm-function>,
+           name: function-name,
+           type: llvm-pointer-to(back-end, function-type),
+           arguments: vector(argument),
+           linkage: #"internal");
+  llvm-builder-define-global(back-end, function-name, function);
+
+  with-builder-function (back-end, function)
+    ins--local(back-end, argument.llvm-argument-name, argument);
+
+    ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
+    llvm-constrain-type(global.llvm-value-type,
+                        llvm-pointer-to(back-end, argument.llvm-value-type));
+    ins--store(back-end, argument, global);
+    ins--ret(back-end);
+  end;
+  function
 end method;
 
 /*
