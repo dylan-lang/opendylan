@@ -54,14 +54,6 @@ void _Init_Run_Time(void)
      }
     );
 #endif
-
-    const char *heap_size = getenv("OPEN_DYLAN_MAX_BOEHM_HEAP_SIZE");
-    if (NULL != heap_size) {
-      size_t max_heap_size = strtoul(heap_size, (char **)NULL, 10);
-      if (max_heap_size > 0) {
-        GC_set_max_heap_size(max_heap_size);
-      }
-    }
 #endif
   }
 }
