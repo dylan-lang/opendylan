@@ -1133,14 +1133,6 @@ MMError dylan_init_memory_manager(void)
   /* Not required for the dll version of Boehm. */
   /* GC_init(); */
 
-  const char *heap_size = getenv("OPEN_DYLAN_MAX_BOEHM_HEAP_SIZE");
-  if (NULL != heap_size) {
-    size_t max_heap_size = strtoul(heap_size, (char **)NULL, 10);
-    if (max_heap_size > 0) {
-      GC_set_max_heap_size(max_heap_size);
-    }
-  }
-
   /* Call this to enable incrementality. This doesn't work with the MM GC. */
   /* GC_enable_incremental(); */
 
