@@ -117,7 +117,8 @@ LLVM_RUNTIME_OBJS = \
 		  $(OBJDIR_LLVM)/unix-spy-interfaces.o \
 		  $(OBJDIR_LLVM)/llvm-runtime-init.o \
 		  $(OBJDIR_LLVM)/llvm-nlx.o \
-		  $(OBJDIR_LLVM)/llvm-posix-os.o
+		  $(OBJDIR_LLVM)/llvm-posix-os.o \
+		  $(OBJDIR_LLVM)/llvm-posix-threads.o
 
 C_RUNTIME_OBJS	= $(OBJDIR_C)/break.o \
 		  $(OBJDIR_C)/collector.o \
