@@ -81,10 +81,14 @@ AR = ar -rcs
 
 CFLAGS		= $(PLATFORM_CFLAGS) -Wall -O -g -I$(srcdir)
 
+HARP_CFLAGS     = -DOPEN_DYLAN_BACKEND_HARP
+
 LLVM_CFLAGS     = -DOPEN_DYLAN_BACKEND_LLVM \
 	          -DOPEN_DYLAN_RUNTIME_HEADER=\"llvm-$(OPEN_DYLAN_TARGET_PLATFORM)-runtime.h\" \
 		  -I. \
 		  -fexceptions
+
+C_CFLAGS        = -DOPEN_DYLAN_BACKEND_C
 
 HARP_SUPPORT_DIR = $(srcdir)/harp-support/$(OPEN_DYLAN_TARGET_PLATFORM)
 HARP_RUNTIME_OBJS = \
@@ -150,7 +154,7 @@ $(C_RUNTIME_LIBDEST):
 
 $(OBJDIR_HARP)/%.o: $(srcdir)/%.c
 	mkdir -p $(OBJDIR_HARP)
-	$(CC) $(CFLAGS) $(HARP_GC_CFLAGS) -MMD -c -o $@ $<
+	$(CC) $(CFLAGS) $(HARP_CFLAGS) $(HARP_GC_CFLAGS) -MMD -c -o $@ $<
 
 $(LLVM_RUNTIME_GEN) $(LLVM_RUNTIME_HEADER): $(OPEN_DYLAN_LLVM_RUNTIME_GENERATOR)
 	$(OPEN_DYLAN_LLVM_RUNTIME_GENERATOR) \
@@ -166,7 +170,7 @@ $(OBJDIR_LLVM)/%.o: %.bc
 
 $(OBJDIR_C)/%.o: $(srcdir)/%.c
 	mkdir -p $(OBJDIR_C)
-	$(CC) $(CFLAGS) $(C_GC_CFLAGS) -MMD -c -o $@ $<
+	$(CC) $(CFLAGS) $(C_CFLAGS) $(C_GC_CFLAGS) -MMD -c -o $@ $<
 
 $(HARP_RUNTIME_LIBRARY): $(HARP_RUNTIME_OBJS)
 	$(AR) $(HARP_RUNTIME_LIBRARY) $(HARP_RUNTIME_OBJS)
