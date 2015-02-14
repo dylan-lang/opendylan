@@ -39,6 +39,13 @@ def dylan_byte_string_data(value):
   else:
     return string
 
+def dylan_double_integer_value(value):
+  target = lldb.debugger.GetSelectedTarget()
+  int_type = target.FindFirstType('int')
+  lo = dylan_slot_element_raw(value, 0).Cast(int_type)
+  hi = dylan_slot_element_raw(value, 1).Cast(int_type)
+  return lo.GetValueAsSigned() + (hi.GetValueAsSigned() << 32)
+
 def dylan_function_name(value):
   return dylan_byte_string_data(dylan_slot_element(value, GENERIC_FUNCTION_DEBUG_NAME))
 
@@ -74,12 +81,15 @@ def dylan_slot_descriptor_name(value):
   getter = dylan_slot_descriptor_getter(value)
   return dylan_function_name(getter)
 
+def dylan_slot_element_raw(value, index):
+  dylan_object = dylan_value_as_object(value)
+  slots = dylan_object.GetChildMemberWithName('slots')
+  return slots.GetChildAtIndex(index, lldb.eNoDynamicValues, True)
+
 def dylan_slot_element(value, index):
   target = lldb.debugger.GetSelectedTarget()
   dylan_value_type = target.FindFirstType('dylan_value')
-  dylan_object = dylan_value_as_object(value)
-  slots = dylan_object.GetChildMemberWithName('slots')
-  slot_value = slots.GetChildAtIndex(index, lldb.eNoDynamicValues, True)
+  slot_value = dylan_slot_element_raw(value, index)
   return slot_value.Cast(dylan_value_type)
 
 def dylan_symbol_name(value):

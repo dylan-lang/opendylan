@@ -37,6 +37,10 @@ def dylan_byte_string_summary(value, internal_dict):
   else:
     return '{<byte-string>: size: %d, data: "%s"}' % (len(string_data), string_data)
 
+def dylan_double_integer_summary(value, internal_dict):
+  di = dylan_double_integer_value(value)
+  return '{<double-integer>: %s}' % di
+
 def dylan_empty_list_summary(value, internal_dict):
   return '{<empty-list>: #()}'
 
@@ -72,6 +76,7 @@ def dylan_user_defined_object_summary(value, internal_dict):
 SUMMARY_DISPATCH_TABLE = {
   '<boolean>': dylan_boolean_summary,
   '<byte-string>': dylan_byte_string_summary,
+  '<double-integer>': dylan_double_integer_summary,
   '<empty-list>': dylan_empty_list_summary,
   '<generic-function>': dylan_generic_function_summary,
   '<incremental-generic-function>': dylan_generic_function_summary,
