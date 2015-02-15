@@ -494,6 +494,28 @@ check:	bootstrap-stage-$(CHECK_COMPILER_STAGE)
 	    $(abs_builddir)/Bootstrap.$(CHECK_STAGE)/bin/$$app $(OPEN_DYLAN_CHECK_FLAGS); \
 	  done
 
+BOOTSTRAP_4_RTG = $(abs_builddir)/Bootstrap.3/bin/llvm-runtime-generator
+
+LLVM_CHECK_APPS = \
+	dylan-test-suite-app
+
+check-llvm: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)
+	$(MAKE) bootstrap-stage-3 \
+	  BOOTSTRAP_3_LIBRARIES="llvm-runtime-generator dylan-compiler"
+	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM) \
+	  $(MAKE) -C sources/jamfiles install
+	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM) \
+	  OPEN_DYLAN_LLVM_RUNTIME_GENERATOR=$(BOOTSTRAP_4_RTG) \
+          OPEN_DYLAN_TARGET_PLATFORM=$(OPEN_DYLAN_TARGET_PLATFORM) \
+	  $(MAKE) -C $(RUNTIME_SOURCES) install-llvm-runtime
+	@$(BOOTSTRAP_4_ENV) \
+	  $(fdmake) --compiler="$(BOOTSTRAP_4_COMPILER) -back-end llvm" \
+	  $(LLVM_CHECK_APPS)
+	@for app in $(LLVM_CHECK_APPS); do \
+	  echo "Executing test app $$app ..."; \
+	  $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/bin/$$app $(OPEN_DYLAN_CHECK_FLAGS); \
+	done
+
 installcheck:
 
 installdirs:

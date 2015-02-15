@@ -53,6 +53,7 @@ MMError dylan_init_thread(void **rReturn, void *(*f)(void *, size_t), void *p, s
 }
 
 
+#ifdef OPEN_DYLAN_BACKEND_HARP
 void *dylan_callin_handler(void *arg_base, size_t s)
 {
   void *res;
@@ -73,4 +74,4 @@ void *dylan_callin_handler(void *arg_base, size_t s)
 
   return res;
 }
-
+#endif

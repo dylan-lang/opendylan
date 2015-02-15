@@ -8,6 +8,7 @@ typedef void                   *dylan_value;
 typedef void                   *D;
 typedef char                   *DBSTR;
 typedef const char             *DCBSTR;
+typedef uint8_t                 DBYTE;
 typedef intptr_t                DSINT;
 typedef uintptr_t               DUINT;
 typedef uintptr_t               DBOOL;
