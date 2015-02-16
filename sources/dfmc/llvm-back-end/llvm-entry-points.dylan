@@ -1165,8 +1165,9 @@ define method op--process-keyword-optionals
   end ins--iterate;
 
   // Put keyword values in the proper slots
-  ins--iterate process-keywords-loop (be, i = 0)
-    let keywords-cmp = ins--icmp-slt(be, i, optionals-size);
+  let optionals-last-index = ins--sub(be, optionals-size, 2);
+  ins--iterate process-keywords-loop (be, i = optionals-last-index)
+    let keywords-cmp = ins--icmp-sge(be, i, 0);
     ins--if (be, keywords-cmp)
       let keyword = call-primitive(be, primitive-vector-element-descriptor,
                                    optionals-cast, i);
@@ -1192,7 +1193,7 @@ define method op--process-keyword-optionals
             ins--store(be, value, element-ptr, alignment: word-size);
 
             // Go to the next keyword in optionals
-            process-keywords-loop(ins--add(be, i, 2));
+            process-keywords-loop(ins--sub(be, i, 2));
           ins--else
             // Didn't match, try the next specifier
             search-specifiers-loop(ins--add(be, j, 2));
@@ -1200,7 +1201,7 @@ define method op--process-keyword-optionals
         ins--else
           // Reached the end of the specifiers without finding a match:
           // go to the next keyword in optionals
-          process-keywords-loop(ins--add(be, i, 2));
+          process-keywords-loop(ins--sub(be, i, 2));
         end ins--if;
       end ins--iterate;
     end ins--if;
