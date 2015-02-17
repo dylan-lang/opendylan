@@ -26,6 +26,7 @@ Open Proposals (under consideration)
 ==== ============= ========== =============================================
 1    Process       Draft      `DEP Purpose and Guidelines <dep-0001.html>`_  (`source <../_sources/proposals/dep-0001.txt>`__)
 6    Standard      Draft      `Single File Libraries <dep-0006.html>`_  (`source <../_sources/proposals/dep-0006.txt>`__)
+8    Standard      Draft      `Multi-line Strings <dep-0008.html>`_  (`source <../_sources/proposals/dep-0008.txt>`__)
 ==== ============= ========== =============================================
 
 
@@ -40,4 +41,5 @@ All Proposals by Number
 5    Standard      Final      `Subclass <dep-0005.html>`_  (`source <../_sources/proposals/dep-0005.txt>`__)
 6    Standard      Draft      `Single File Libraries <dep-0006.html>`_  (`source <../_sources/proposals/dep-0006.txt>`__)
 7    Standard      Draft      `Type-Safe Limited Collections <dep-0007.html>`_  (`source <../_sources/proposals/dep-0007.txt>`__)
+8    Standard      Draft      `Multi-line Strings <dep-0008.html>`_  (`source <../_sources/proposals/dep-0008.txt>`__)
 ==== ============= ========== =============================================
