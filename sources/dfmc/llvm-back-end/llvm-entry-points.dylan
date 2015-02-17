@@ -1764,7 +1764,7 @@ define single-method outer entry-point-descriptor explicit-keyed-single-method
       let keys-ptr
         = op--getslotptr(be, engine-node-cast, smen-class,
                          #"single-method-engine-node-keys");
-      let keys = ins--load(be, data-ptr, alignment: word-size);
+      let keys = ins--load(be, keys-ptr, alignment: word-size);
       let keys-cast
         = op--object-pointer-cast(be, keys, sov-class);
 
