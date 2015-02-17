@@ -1401,7 +1401,7 @@ define method emit-computation
   ins--br(back-end, loop.%label);
 
   // Fake result
-  computation-result(back-end, c, emit-reference(back-end, m, &false));
+  emit-dead-assignment(back-end, c.temporary);
 end method;
 
 define method emit-computation
@@ -1539,7 +1539,7 @@ define method emit-computation
   end if;
 
   // Fake result
-  computation-result(back-end, c, emit-reference(back-end, m, &false));
+  emit-dead-assignment(back-end, c.temporary);
 end method;
 
 define method emit-computation
