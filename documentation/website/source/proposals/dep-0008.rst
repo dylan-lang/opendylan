@@ -1,0 +1,126 @@
+******************
+Multi-line Strings
+******************
+
+===============  =============================================
+DEP #:           8
+Type:            Standards Track
+Affects-DRM:     Yes
+Author:          Carl Gay
+Status:          Draft
+Created:         16-Feb-2015
+Last-Modified:   16-Feb-2015
+Post-History:    16-Feb-2015 hackers@lists.opendylan.org
+Target-Version:  2014.2
+===============  =============================================
+
+.. contents:: Contents
+   :local:
+
+
+Abstract
+========
+
+Dylan currently has no way to encode multi-line strings into a single source
+token that crosses multiple source lines.  This DEP proposes a literal syntax
+for multi-line strings.
+
+
+Rationale
+=========
+
+While it should be noted that encoding long string literals into source code is
+not good practice when internationalization is desired, it is convenient to
+have this ability for quick scripts and especially for encoding test data.
+Most modern programming languages provide this ability.
+
+For very short multi-line strings one can get away with using \\n or
+\\r\\n in a regular string::
+
+  "line one\nline two"
+
+but readability quickly suffers as these strings get longer.  An alternative is
+to put one string on each line and rely on automatic string concatenation by
+the compiler::
+
+  "line one\n"
+  "line two"
+
+The problem here is that changing the contents of the string quickly becomes an
+editing chore as you attempt to keep the lines similar length and remember to
+put the \\n at the end.  Having a multi-line string literal syntax would
+alleviate both of these problems.
+
+
+Specification
+=============
+
+Multi-line string literals are delimited by three double quote characters on
+each end.  The BNF, which augments the `Character and String Literals
+<http://opendylan.org/books/drm/Lexical_Grammar#HEADING-117-38>`_ section in
+the DRM, is ::
+
+  MULTI-LINE-STRING:
+
+      """ more-multi-line-string
+
+  MORE-MULTI-LINE-STRING:
+
+      multi-line-string-character more-multi-line-string
+
+      """
+
+  MULTI-LINE-STRING-CHARACTER:
+
+      any printing character (including space) except for \\
+
+      \\ escape-character
+
+Escape characters are interpreted as with the standard STRING production.
+Literal end-of-line sequences (\\n and \\r\\n) are always interpreted as a
+single newline character, regardless of operating system platform.
+
+Examples:
+
+Equivalent to ``"abc"``::
+
+  """abc"""
+
+Equivalent to ``"line one\nline two"``::
+
+  """line one
+  line two"""
+
+Equivalent to ``"let x = \"foo\";"``::
+
+  """let x = "foo";"""
+
+Equivalent to ``"\nfoo\nbar\n"``::
+
+  """
+  foo
+  bar
+  """
+
+
+Reference Implementation
+========================
+
+A reference implementation can be found `on github
+<https://github.com/cgay/opendylan/commits/multi-line-strings>`_.  As of this
+writing, the implementation is functional but needs a few internal cleanups.
+
+
+Open Issues
+===========
+
+This proposal currently has no provision for string literals in which there
+is no escape sequence interpretation, i.e. "raw" strings.
+
+
+
+Revision History
+================
+
+The revision history of this document is available here:
+https://github.com/dylan-lang/website/commits/master/source/proposals/dep-0008.rst
