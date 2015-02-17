@@ -30,7 +30,7 @@ define class <state> (<object>)
   // makes it out of the lexer (e.g. whitespace), classes for simple
   // tokens that don't need any extra parsing, and functions for more
   // complex tokens.
-  constant slot result :: type-union(<false>, <symbol>, <class>, <function>),
+  constant slot result :: type-union(singleton(#f), <symbol>, <class>, <function>),
     required-init-keyword: result:;
   //
   // Either #f or a vector of next-states indexed by character code.
@@ -105,7 +105,7 @@ end method add-transition;
 //
 define method state
     (name :: <symbol>,
-     result :: type-union(<false>, <symbol>, <class>, <function>),
+     result :: type-union(singleton(#f), <symbol>, <class>, <function>),
      #rest transitions)
   let table = size(transitions) > 0
     & make(<vector>, size: $max-lexer-code + 1, fill: #f);

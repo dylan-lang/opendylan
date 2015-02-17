@@ -207,8 +207,6 @@ end macro;
 
 define variable *current-module* = #f;
 
-define constant <false>                  = <boolean>;
-
 // TODO: CORRECTNESS: This should be <abstract-integer>
 
 define constant <extended-integer>       = <object>;
