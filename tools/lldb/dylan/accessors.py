@@ -67,6 +67,15 @@ def dylan_object_class(value):
   iclass = dylan_object_implementation_class(value)
   return iclass.GetChildMemberWithName('the_class')
 
+def dylan_object_class_slot_descriptors(value):
+  # XXX: Add the repeated slot descriptor to this.
+  iclass = dylan_object_implementation_class(value)
+  descriptors = dylan_implementation_class_instance_slot_descriptors(iclass)
+  return dylan_vector_elements(descriptors)
+
+def dylan_object_class_slot_names(value):
+  return [dylan_slot_descriptor_name(d) for d in dylan_object_class_slot_descriptors(value)]
+
 def dylan_object_class_name(value):
   class_object = dylan_object_class(value)
   return dylan_byte_string_data(class_object.GetChildMemberWithName('debug_name'))

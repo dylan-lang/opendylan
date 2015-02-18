@@ -56,9 +56,9 @@ class SyntheticObject(object):
 
   def get_child_at_index(self, index):
     if index >= 0 and index < len(self.slots):
-      slot_data = self.slots[index]
-      offset = (slot_data[0] + 1) * self.dylan_value_type.GetByteSize()
-      return self.value.CreateChildAtOffset('[%s]' % slot_data[1],
+      slot_name = self.slots[index]
+      offset = (index + 1) * self.dylan_value_type.GetByteSize()
+      return self.value.CreateChildAtOffset('[%s]' % slot_name,
                                             offset, self.dylan_value_type)
     return None
 
@@ -68,15 +68,7 @@ class SyntheticObject(object):
   def update(self):
     target = lldb.debugger.GetSelectedTarget()
     self.dylan_value_type = target.FindFirstType('dylan_value')
-
-    iclass = dylan_object_implementation_class(self.value)
-    slot_descriptors = dylan_implementation_class_instance_slot_descriptors(iclass)
-    slot_count = dylan_vector_size(slot_descriptors)
-    self.slots = []
-    for index in range(0, slot_count):
-      slot_descriptor = dylan_vector_element(slot_descriptors, index)
-      slot_name = dylan_slot_descriptor_name(slot_descriptor)
-      self.slots.append([index, slot_name])
+    self.slots = dylan_object_class_slot_names(self.value)
 
 class SyntheticSimpleObjectVector(object):
   """A synthetic for representing a <simple-object-vector>."""
