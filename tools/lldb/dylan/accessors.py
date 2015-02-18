@@ -46,7 +46,7 @@ def dylan_double_integer_value(value):
   hi = dylan_slot_element_raw(value, 1).Cast(int_type)
   return lo.GetValueAsSigned() + (hi.GetValueAsSigned() << 32)
 
-def dylan_function_name(value):
+def dylan_generic_function_name(value):
   return dylan_byte_string_data(dylan_slot_element(value, GENERIC_FUNCTION_DEBUG_NAME))
 
 def dylan_implementation_class_instance_slot_descriptors(iclass):
@@ -79,7 +79,7 @@ def dylan_slot_descriptor_getter(value):
 
 def dylan_slot_descriptor_name(value):
   getter = dylan_slot_descriptor_getter(value)
-  return dylan_function_name(getter)
+  return dylan_generic_function_name(getter)
 
 def dylan_slot_element_raw(value, index):
   dylan_object = dylan_value_as_object(value)
