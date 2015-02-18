@@ -93,7 +93,7 @@ end function read-clock;
 
 define generic native-clock-to-tm (time) => (tm :: <machine-word>);
 
-define method native-clock-to-tm (time :: <integer>) => (tm :: <machine-word>)
+define method native-clock-to-tm (time :: <abstract-integer>) => (tm :: <machine-word>)
   native-clock-to-tm(primitive-wrap-machine-word(abstract-integer-as-raw(time)))
 end method native-clock-to-tm;
 
