@@ -144,12 +144,18 @@ end method;
 define method op--typeid
     (back-end :: <llvm-back-end>, entry-state :: <entry-state>)
  => (typeid :: <llvm-value>);
-  let name
+  let base-name
     = concatenate(back-end.llvm-builder-function.llvm-global-name,
                   ".",
                   hygienic-mangle(back-end,
                                   entry-state.name,
                                   entry-state.frame-offset));
+  let name
+    = if (llvm-builder-global-defined?(back-end, base-name))
+        concatenate(base-name, "_")
+      else
+        base-name
+      end if;
   let typeid
     = make(<llvm-global-variable>,
            name: name,
