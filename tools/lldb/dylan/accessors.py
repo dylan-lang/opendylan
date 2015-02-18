@@ -8,6 +8,8 @@ UNICODE_CHARACTER_TAG = 3
 GENERIC_FUNCTION_DEBUG_NAME = 3
 IMPLEMENTATION_CLASS_REPEATED_SLOT_DESCRIPTOR = 4
 IMPLEMENTATION_CLASS_INSTANCE_SLOT_DESCRIPTORS = 17
+PAIR_HEAD = 0
+PAIR_TAIL = 1
 SLOT_DESCRIPTOR_GETTER = 4
 SIMPLE_OBJECT_VECTOR_SIZE = 0
 SIMPLE_OBJECT_VECTOR_DATA = 1
@@ -62,6 +64,13 @@ def dylan_implementation_class_repeated_slot_descriptor(iclass):
 
 def dylan_integer_value(value):
   return value.GetValueAsUnsigned() >> 2
+
+def dylan_list_elements(value):
+  elements = []
+  while (dylan_object_class_name(value) != '<empty-list>'):
+    elements += [dylan_slot_element(value, PAIR_HEAD)]
+    value = dylan_slot_element(value, PAIR_TAIL)
+  return elements
 
 def dylan_object_class(value):
   iclass = dylan_object_implementation_class(value)
