@@ -6,6 +6,7 @@ BYTE_CHARACTER_TAG = 2
 UNICODE_CHARACTER_TAG = 3
 
 GENERIC_FUNCTION_DEBUG_NAME = 3
+GENERIC_FUNCTION_METHODS = 4
 IMPLEMENTATION_CLASS_REPEATED_SLOT_DESCRIPTOR = 4
 IMPLEMENTATION_CLASS_INSTANCE_SLOT_DESCRIPTORS = 17
 PAIR_HEAD = 0
@@ -52,6 +53,9 @@ def dylan_double_integer_value(value):
 
 def dylan_generic_function_name(value):
   return dylan_byte_string_data(dylan_slot_element(value, GENERIC_FUNCTION_DEBUG_NAME))
+
+def dylan_generic_function_methods(value):
+  return dylan_list_elements(dylan_slot_element(value, GENERIC_FUNCTION_METHODS))
 
 def dylan_implementation_class_instance_slot_descriptors(iclass):
   target = lldb.debugger.GetSelectedTarget()
