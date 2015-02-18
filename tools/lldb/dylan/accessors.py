@@ -127,10 +127,13 @@ def dylan_value_as_object(value):
   return value.Cast(object_type)
 
 def dylan_vector_size(vector):
-  return dylan_integer_value(vector.GetChildMemberWithName('size'))
+  return dylan_integer_value(dylan_slot_element(vector, SIMPLE_OBJECT_VECTOR_SIZE))
 
 def dylan_vector_element(vector, index):
-  target = lldb.debugger.GetSelectedTarget()
-  dylan_value_type = target.FindFirstType('dylan_value')
-  value = vector.GetChildMemberWithName('data').GetChildAtIndex(index, lldb.eNoDynamicValues, True)
-  return value.Cast(dylan_value_type)
+  return dylan_slot_element(vector, SIMPLE_OBJECT_VECTOR_DATA + index)
+
+def dylan_vector_elements(vector):
+  elements = []
+  for idx in range(0, dylan_vector_size(vector)):
+    elements += [dylan_vector_element(vector, idx)]
+  return elements
