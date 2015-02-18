@@ -45,11 +45,8 @@ def dylan_empty_list_summary(value, internal_dict):
   return '{<empty-list>: #()}'
 
 def dylan_generic_function_summary(value, internal_dict):
-  target = lldb.debugger.GetSelectedTarget()
-  gf_type = target.FindFirstType('dylan_generic_function').GetPointerType()
-  value = value.Cast(gf_type)
   class_name = dylan_object_class_name(value)
-  function_name = dylan_byte_string_data(value.GetChildMemberWithName('debug_name'))
+  function_name = dylan_generic_function_name(value)
   return '{%s: %s}' % (class_name, function_name)
 
 def dylan_integer_summary(value, internal_dict):
