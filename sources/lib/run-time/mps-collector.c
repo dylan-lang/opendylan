@@ -1087,7 +1087,7 @@ void *primitive_alloc_rt(size_t size,
     object = MMReserveObject(size, wrapper, gc_teb);
     object[0] = wrapper;
     object[rep_size_slot] = (void*)((rep_size << 2) + 1);
-    memcpy(object + rep_size_slot + 1, template, rep_size << 2);
+    memcpy(object + rep_size_slot + 1, template, rep_size * sizeof(void *));
   }
   while (!MMCommitObject(object, size, gc_teb));
 
@@ -1132,7 +1132,7 @@ void *primitive_copy_r(size_t size,
 
   do {
     object = MMReserveObject(size, wrapper, gc_teb);
-    memcpy(object, template, rep_size_slot << 2);
+    memcpy(object, template, rep_size_slot * sizeof(void *));
     object[rep_size_slot] = (void*)((rep_size << 2) + 1);
     /* ### kludge to prevent committing uninitialized memory */
     fill_dylan_object_mem((void **)(object + rep_size_slot + 1),
