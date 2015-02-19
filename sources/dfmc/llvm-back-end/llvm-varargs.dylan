@@ -15,12 +15,39 @@ define method llvm-back-end-va-list-type-alignment
   values($llvm-i8*-type, dylan-value(#"<raw-pointer>").raw-type-alignment)
 end method;
 
+// See http://www.x86-64.org/documentation/abi.pdf
+define method llvm-back-end-va-list-type-alignment
+    (back-end :: <llvm-x86_64-back-end>)
+ => (type :: <llvm-type>, alignment :: <integer>);
+  let t = back-end.%type-table;
+  let va-list-struct-name = "struct.__va_list_tag";
+  let struct-type
+    = element(t, va-list-struct-name, default: #f)
+    | (t[va-list-struct-name]
+         := make(<llvm-struct-type>,
+                 name: va-list-struct-name,
+                 elements: vector(// gp_offset
+                                  $llvm-i32-type,
+                                  // fp_offset
+                                  $llvm-i32-type,
+                                  // overflow_arg_area
+                                  $llvm-i8*-type,
+                                  // reg_save_area
+                                  $llvm-i8*-type)));
+  let va-list-type
+    = element(t, "va_list", default: #f)
+    | (t["va_list"]
+         := make(<llvm-array-type>, size: 1, element-type: struct-type));
+  values(va-list-type, 16)
+end method;
+
 define method op--va-decl-start
     (back-end :: <llvm-back-end>) => (va-list :: <llvm-value>);
   // Allocate a va_list stack variable
   let (va-list-type, va-list-alignment)
     = llvm-back-end-va-list-type-alignment(back-end);
-  let va-list = ins--alloca(back-end, va-list-type, i32(va-list-alignment));
+  let va-list = ins--alloca(back-end, va-list-type, i32(1),
+                            alignment: va-list-alignment);
   let va-list-cast = ins--bitcast(back-end, va-list, $llvm-i8*-type);
 
   // Initialize it
@@ -36,6 +63,58 @@ define method op--va-arg
     (back-end :: <llvm-back-end>, va-list :: <llvm-value>, type :: <llvm-type>)
  => (value :: <llvm-value>);
   ins--va-arg(back-end, va-list, type)
+end method;
+
+define method op--va-arg
+    (back-end :: <llvm-x86_64-back-end>, va-list :: <llvm-value>,
+     type :: <llvm-pointer-type>)
+ => (value :: <llvm-value>);
+  let va-list-type = back-end.%type-table["va_list"];
+  let ap = ins--bitcast(back-end, va-list,
+                        llvm-pointer-to(back-end, va-list-type));
+
+  // Read gp_offset
+  let gp-offset-p = ins--gep(back-end, ap, 0, 0, i32(0));
+  let gp-offset = ins--load(back-end, gp-offset-p, alignment: 16);
+
+  // Is this arg in the reg save area? (step 3)
+  let cmp = ins--icmp-ule(back-end, gp-offset, i32(48 - 8 * 1));
+  ins--if (back-end, cmp)
+    // Read reg_save_area (step 4)
+    let reg-save-area-p = ins--gep(back-end, ap, 0, 0, i32(3));
+    let reg-save-area = ins--load(back-end, reg-save-area-p, alignment: 16);
+
+    // Load argument
+    let gp-offset-zext = ins--zext(back-end, gp-offset, $llvm-i64-type);
+    let arg-p = ins--gep(back-end, reg-save-area, gp-offset-zext);
+    let arg-p-cast = ins--bitcast(back-end, arg-p,
+                                  llvm-pointer-to(back-end, type));
+    let arg = ins--load(back-end, arg-p-cast, alignment: 8);
+
+    // Update gp_offset (step 5)
+    let gp-offset-new = ins--add(back-end, gp-offset, i32(8));
+    ins--store(back-end, gp-offset-new, gp-offset-p);
+
+    // Return fetched value (step 6)
+    arg
+  ins--else
+    // Read overflow_arg_area (step 8)
+    let overflow-arg-area-p = ins--gep(back-end, ap, 0, 0, i32(2));
+    let overflow-arg-area
+      = ins--load(back-end, overflow-arg-area-p, alignment: 8);
+
+    // Load argument
+    let arg-p-cast = ins--bitcast(back-end, overflow-arg-area,
+                                  llvm-pointer-to(back-end, type));
+    let arg = ins--load(back-end, arg-p-cast, alignment: 8);
+
+    // Update overflow_arg_area (step 9)
+    let overflow-arg-area-new = ins--gep(back-end, overflow-arg-area, 8);
+    ins--store(back-end, overflow-arg-area-new, overflow-arg-area-p);
+
+    // Return fetched value (step 11)
+    arg
+  end ins--if;
 end method;
 
 define method op--va-list-to-stack-vector
