@@ -2,6 +2,17 @@ import lldb
 from accessors import *
 import synthetics
 
+def format_machine_word_value(value):
+  target = lldb.debugger.GetSelectedTarget()
+  word_size = target.GetAddressByteSize()
+  if word_size == 4:
+    fmt = "%#010x"
+  elif word_size == 8:
+    fmt = "%#018x"
+  else:
+    fmt = "%#x"
+  return fmt % value
+
 def dylan_value_summary(value, internal_dict):
   tag = dylan_tag_bits(value)
   if tag == OBJECT_TAG:
@@ -52,6 +63,10 @@ def dylan_generic_function_summary(value, internal_dict):
 def dylan_integer_summary(value, internal_dict):
   return '{<integer>: %s}' % dylan_integer_value(value)
 
+def dylan_machine_word_summary(value, internal_dict):
+  machine_word_value = dylan_machine_word_value(value)
+  return '{<machine-word>: %s}' % format_machine_word_value(machine_word_value)
+
 def dylan_simple_object_vector_summary(value, internal_dict):
   size = synthetics.SyntheticDylanValue(value, internal_dict).num_children()
   return '{<simple-object-vector>: size: %s}' % size
@@ -77,6 +92,7 @@ SUMMARY_DISPATCH_TABLE = {
   '<empty-list>': dylan_empty_list_summary,
   '<generic-function>': dylan_generic_function_summary,
   '<incremental-generic-function>': dylan_generic_function_summary,
+  '<machine-word>': dylan_machine_word_summary,
   '<sealed-generic-function>': dylan_generic_function_summary,
   '<simple-object-vector>': dylan_simple_object_vector_summary,
   '<symbol>': dylan_symbol_summary,

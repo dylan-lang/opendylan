@@ -76,6 +76,9 @@ def dylan_list_elements(value):
     value = dylan_slot_element(value, PAIR_TAIL)
   return elements
 
+def dylan_machine_word_value(value):
+  return dylan_slot_element_raw(value, 0).GetValueAsUnsigned()
+
 def dylan_object_class(value):
   iclass = dylan_object_implementation_class(value)
   return iclass.GetChildMemberWithName('the_class')
