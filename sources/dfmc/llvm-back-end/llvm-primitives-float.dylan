@@ -252,9 +252,7 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
     let high = ins--trunc(be, high-64, type);
     values(low, high)
   elseif (word-size = 8)
-    let low = ins--and(be, f-bits, generic/-(generic/ash(1, 32), 1));
-    let high = ins--lshr(be, f-bits, 32);
-    values(low, high)
+    values(f-bits, i64(0))
   else
     error("Unsupported word-size "
             "for primitive-cast-double-float-as-machine-words");
@@ -272,8 +270,7 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
         let high-64-shifted = ins--shl(be, high-64, i64(32));
         ins--or(be, high-64-shifted, low-64)
       elseif (word-size = 8)
-        let high-shifted = ins--shl(be, high, i64(32));
-        ins--or(be, high-shifted, low)
+        low
       end if;
   ins--bitcast(be, f-bits, $llvm-double-type)
 end;
