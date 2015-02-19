@@ -14,6 +14,7 @@ PAIR_TAIL = 1
 SLOT_DESCRIPTOR_GETTER = 4
 SIMPLE_OBJECT_VECTOR_SIZE = 0
 SIMPLE_OBJECT_VECTOR_DATA = 1
+SYMBOL_NAME = 0
 
 def dylan_tag_bits(value):
   return value.GetValueAsUnsigned() & 3
@@ -58,10 +59,7 @@ def dylan_generic_function_methods(value):
   return dylan_list_elements(dylan_slot_element(value, GENERIC_FUNCTION_METHODS))
 
 def dylan_implementation_class_instance_slot_descriptors(iclass):
-  target = lldb.debugger.GetSelectedTarget()
-  vector_type = target.FindFirstType('dylan_simple_object_vector').GetPointerType()
-  sds = dylan_slot_element(iclass, IMPLEMENTATION_CLASS_INSTANCE_SLOT_DESCRIPTORS)
-  return sds.Cast(vector_type)
+  return dylan_slot_element(iclass, IMPLEMENTATION_CLASS_INSTANCE_SLOT_DESCRIPTORS)
 
 def dylan_implementation_class_repeated_slot_descriptor(iclass):
   return dylan_slot_element(iclass, IMPLEMENTATION_CLASS_REPEATED_SLOT_DESCRIPTOR)
@@ -120,10 +118,8 @@ def dylan_slot_element(value, index):
   return slot_value.Cast(dylan_value_type)
 
 def dylan_symbol_name(value):
-  target = lldb.debugger.GetSelectedTarget()
-  symbol_type = target.FindFirstType('dylan_symbol').GetPointerType()
-  value = value.Cast(symbol_type)
-  return dylan_byte_string_data(value.GetChildMemberWithName('name'))
+  name = dylan_slot_element(value, SYMBOL_NAME)
+  return dylan_byte_string_data(name)
 
 def dylan_unicode_character_value(value):
   return unichr(value.GetValueAsUnsigned() >> 2).encode('utf8')
