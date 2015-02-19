@@ -43,48 +43,26 @@ define method op--va-list-to-stack-vector
  => (value :: <llvm-value>);
   let module = back-end.llvm-builder-module;
 
-  // Basic blocks
-  let entry-bb = back-end.llvm-builder-basic-block;
-  let loop-head-bb = make(<llvm-basic-block>);
-  let loop-tail-bb = make(<llvm-basic-block>);
-  let new-vector-bb = make(<llvm-basic-block>);
-  let return-common-bb = make(<llvm-basic-block>);
-
   // Check the count to see if we want to return an empty vector
   let cmp = ins--icmp-ne(back-end, count, 0);
-  ins--br(back-end, cmp, new-vector-bb, return-common-bb);
-
-  // Allocate a new vector
-  ins--block(back-end, new-vector-bb);
-  let new-vector = op--stack-allocate-vector(back-end, count);
-  ins--br(back-end, loop-head-bb);
-
-  // Loop head
-  ins--block(back-end, loop-head-bb);
-  let index-placeholder
-    = make(<llvm-symbolic-value>,
-           type: back-end.%type-table["iWord"], name: "index");
-  let index
-    = ins--phi*(back-end, 0, new-vector-bb, index-placeholder, loop-tail-bb);
-  let cmp = ins--icmp-slt(back-end, index, count);
-  ins--br(back-end, cmp, loop-tail-bb, return-common-bb);
-
-  // Loop tail: retrieve a varargs item and store it in the vector
-  ins--block(back-end, loop-tail-bb);
-  let arg = op--va-arg(back-end, va-list, $llvm-object-pointer-type);
-  call-primitive(back-end, primitive-vector-element-setter-descriptor,
-                 arg, new-vector, index);
-
-  let next-index = ins--add(back-end, index, 1);
-  index-placeholder.llvm-placeholder-value-forward := next-index;
-  ins--br(back-end, loop-head-bb);
-
-  // Return the canonical empty vector it the count was zero, or the
-  // newly allocated vector if it was not
-  ins--block(back-end, return-common-bb);
-  let empty-vector
-    = emit-reference(back-end, module, dylan-value(#"%empty-vector"));
-  ins--phi*(back-end, empty-vector, entry-bb, new-vector, loop-head-bb)
+  ins--if (back-end, cmp)
+    let new-vector = op--stack-allocate-vector(back-end, count);
+    ins--iterate loop (back-end, index = 0)
+      let cmp = ins--icmp-slt(back-end, index, count);
+      ins--if (back-end, cmp)
+        // Retrieve a varargs item and store it in the vector
+        let arg = op--va-arg(back-end, va-list, $llvm-object-pointer-type);
+        call-primitive(back-end, primitive-vector-element-setter-descriptor,
+                       arg, new-vector, index);
+        loop(ins--add(back-end, index, 1));
+      ins--else
+        new-vector
+      end ins--if;
+    end ins--iterate;
+  ins--else
+    // Return the canonical empty vector it the count was zero
+    emit-reference(back-end, module, dylan-value(#"%empty-vector"))
+  end ins--if
 end method;
 
 define method op--va-end

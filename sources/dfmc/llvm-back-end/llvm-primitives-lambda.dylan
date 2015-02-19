@@ -875,35 +875,17 @@ define method op--init-closure-environment
   let va-list = op--va-decl-start(be);
   let closure-cast = op--object-pointer-cast(be, closure, class);
 
-  // Basic blocks
-  let entry-bb = be.llvm-builder-basic-block;
-  let loop-head-bb = make(<llvm-basic-block>);
-  let loop-tail-bb = make(<llvm-basic-block>);
-  let return-bb    = make(<llvm-basic-block>);
+  ins--iterate loop (be, index = 0)
+    let cmp = ins--icmp-ult(be, index, closure-size);
+    ins--if (be, cmp)
+      let arg = op--va-arg(be, va-list, $llvm-object-pointer-type);
+      let ptr
+        = op--getslotptr(be, closure-cast, class, #"environment-element", index);
+      ins--store(be, arg, ptr);
+      loop(ins--add(be, index, 1));
+    end ins--if;
+  end ins--iterate;
 
-  ins--br(be, loop-head-bb);
-
-  // Loop head
-  ins--block(be, loop-head-bb);
-  let index-placeholder
-    = make(<llvm-symbolic-value>, type: be.%type-table["iWord"], name: "index");
-  let index
-    = ins--phi*(be, 0, entry-bb, index-placeholder, loop-tail-bb);
-  let cmp = ins--icmp-ult(be, index, closure-size);
-  ins--br(be, cmp, loop-tail-bb, return-bb);
-
-  // Loop tail: retrieve a varargs item and store it in the closure
-  ins--block(be, loop-tail-bb);
-  let arg = op--va-arg(be, va-list, $llvm-object-pointer-type);
-  let ptr
-    = op--getslotptr(be, closure-cast, class, #"environment-element", index);
-  ins--store(be, arg, ptr);
-
-  let next-index = ins--add(be, index, 1);
-  index-placeholder.llvm-placeholder-value-forward := next-index;
-  ins--br(be, loop-head-bb);
-
-  ins--block(be, return-bb);
   op--va-end(be, va-list);
 end method;
 
@@ -958,7 +940,7 @@ define side-effecting stateful indefinite-extent auxiliary &runtime-primitive-de
      #rest environment)
  => ();
   let class :: <&class> = dylan-value(#"<keyword-closure-method>");
-   op--init-closure-environment(be, class, closure, closure-size);
+  op--init-closure-environment(be, class, closure, closure-size);
 end;
 
 define side-effecting stateful indefinite-extent auxiliary &runtime-primitive-descriptor primitive-initialize-closure
@@ -966,7 +948,7 @@ define side-effecting stateful indefinite-extent auxiliary &runtime-primitive-de
      #rest environment)
  => ();
   let class :: <&class> = dylan-value(#"<simple-closure-method>");
-   op--init-closure-environment(be, class, closure, closure-size);
+  op--init-closure-environment(be, class, closure, closure-size);
 end;
 
 // Mark the IEP's closure object as read-only to facilitate CSE
