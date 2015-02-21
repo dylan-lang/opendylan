@@ -5,16 +5,23 @@ INTEGER_TAG = 1
 BYTE_CHARACTER_TAG = 2
 UNICODE_CHARACTER_TAG = 3
 
+BYTE_STRING_SIZE = 0
+BYTE_STRING_DATA = 1
+CLASS_DEBUG_NAME = 1
 GENERIC_FUNCTION_DEBUG_NAME = 3
 GENERIC_FUNCTION_METHODS = 4
+IMPLEMENTATION_CLASS_CLASS = 1
 IMPLEMENTATION_CLASS_REPEATED_SLOT_DESCRIPTOR = 4
 IMPLEMENTATION_CLASS_INSTANCE_SLOT_DESCRIPTORS = 17
+MM_WRAPPER_IMPLEMENTATION_CLASS = 0
 PAIR_HEAD = 0
 PAIR_TAIL = 1
 SLOT_DESCRIPTOR_GETTER = 4
 SIMPLE_OBJECT_VECTOR_SIZE = 0
 SIMPLE_OBJECT_VECTOR_DATA = 1
 SYMBOL_NAME = 0
+UNICODE_STRING_SIZE = 0
+UNICODE_STRING_DATA = 1
 
 def ensure_value_class(value, wrapper_symbol_name, class_name):
   wrappersym = dylan_object_wrapper_symbol_name(value)
@@ -38,19 +45,18 @@ def dylan_byte_character_value(value):
 
 def dylan_byte_string_data(value):
   ensure_value_class(value, 'KLbyte_stringGVKdW', '<byte-string>')
-  target = lldb.debugger.GetSelectedTarget()
-  byte_string_type = target.FindFirstType('dylan_byte_string').GetPointerType()
-  value = value.Cast(byte_string_type)
-  size = dylan_integer_value(value.GetChildMemberWithName('size'))
+  size = dylan_integer_value(dylan_slot_element(value, BYTE_STRING_SIZE))
   if size == 0:
     return ''
-  data = value.GetChildMemberWithName('data').GetPointeeData(0, size + 1)
+  target = lldb.debugger.GetSelectedTarget()
+  word_size = target.GetAddressByteSize()
+  data_start = value.GetValueAsUnsigned() + ((1 + BYTE_STRING_DATA) * word_size)
   error = lldb.SBError()
-  string = data.GetString(error, 0)
-  if error.Fail():
-    return '<error: %s>' % (error.GetCString(),)
+  data = value.process.ReadMemory(data_start, size, error)
+  if error.Success():
+    return data
   else:
-    return string
+    raise Exception(error.description)
 
 def dylan_double_integer_value(value):
   ensure_value_class(value, 'KLdouble_integerGVKeW', '<double-integer>')
@@ -88,7 +94,7 @@ def dylan_machine_word_value(value):
 
 def dylan_object_class(value):
   iclass = dylan_object_implementation_class(value)
-  return iclass.GetChildMemberWithName('the_class')
+  return dylan_slot_element(iclass, IMPLEMENTATION_CLASS_CLASS)
 
 def dylan_object_class_slot_descriptors(value):
   # XXX: Add the repeated slot descriptor to this.
@@ -101,12 +107,12 @@ def dylan_object_class_slot_names(value):
 
 def dylan_object_class_name(value):
   class_object = dylan_object_class(value)
-  return dylan_byte_string_data(class_object.GetChildMemberWithName('debug_name'))
+  class_name = dylan_slot_element(class_object, CLASS_DEBUG_NAME)
+  return dylan_byte_string_data(class_name)
 
 def dylan_object_implementation_class(value):
-  value = dylan_value_as_object(value)
-  wrapper = value.GetChildMemberWithName('mm_wrapper')
-  return wrapper.GetChildMemberWithName('iclass')
+  wrapper = dylan_object_wrapper(value)
+  return dylan_slot_element(wrapper, MM_WRAPPER_IMPLEMENTATION_CLASS)
 
 def dylan_object_wrapper(value):
   value = dylan_value_as_object(value)
@@ -144,22 +150,20 @@ def dylan_unicode_character_value(value):
 
 def dylan_unicode_string_data(value):
   ensure_value_class(value, 'KLunicode_stringGVKdW', '<unicode-string>')
-  target = lldb.debugger.GetSelectedTarget()
-  byte_string_type = target.FindFirstType('dylan_byte_string').GetPointerType()
-  value = value.Cast(byte_string_type)
-  size = dylan_integer_value(value.GetChildMemberWithName('size'))
+  size = dylan_integer_value(dylan_slot_element(value, UNICODE_STRING_SIZE))
   if size == 0:
     return ''
   # We don't need to read the null termination because we don't want that in
   # our UTF-8 encoded result.
-  size = size * 4
-  data_pointer = value.GetChildMemberWithName('data').AddressOf().GetValueAsUnsigned(0)
+  target = lldb.debugger.GetSelectedTarget()
+  word_size = target.GetAddressByteSize()
+  data_start = value.GetValueAsUnsigned() + ((1 + UNICODE_STRING_DATA) * word_size)
   error = lldb.SBError()
-  data = value.process.ReadMemory(data_pointer, size, error)
-  if error.Fail():
-    return '<error: %s>' % (error.GetCString(),)
-  else:
+  data = value.process.ReadMemory(data_start, size * 4, error)
+  if error.Success():
     return data.decode('utf-32').encode('utf-8')
+  else:
+    raise Exception(error.description)
 
 def dylan_value_as_object(value):
   target = lldb.debugger.GetSelectedTarget()
