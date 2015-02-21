@@ -16,10 +16,16 @@ SIMPLE_OBJECT_VECTOR_SIZE = 0
 SIMPLE_OBJECT_VECTOR_DATA = 1
 SYMBOL_NAME = 0
 
+def ensure_value_class(value, wrapper_symbol_name, class_name):
+  wrappersym = dylan_object_wrapper_symbol_name(value)
+  if wrappersym != wrapper_symbol_name:
+    raise Exception("%#x is not a %s (%s != %s)" % (int(value.address_of.GetValueAsUnsigned()), class_name, wrappersym, wrapper_symbol_name))
+
 def dylan_tag_bits(value):
   return value.GetValueAsUnsigned() & 3
 
 def dylan_boolean_value(value):
+  ensure_value_class(value, 'KLbooleanGVKdW', '<boolean>')
   target = lldb.debugger.GetSelectedTarget()
   true_value = target.FindFirstGlobalVariable('KPtrueVKi').AddressOf().GetValueAsUnsigned()
   return value.GetValueAsUnsigned() == true_value
@@ -31,6 +37,7 @@ def dylan_byte_character_value(value):
   return chr(byte_value)
 
 def dylan_byte_string_data(value):
+  ensure_value_class(value, 'KLbyte_stringGVKdW', '<byte-string>')
   target = lldb.debugger.GetSelectedTarget()
   byte_string_type = target.FindFirstType('dylan_byte_string').GetPointerType()
   value = value.Cast(byte_string_type)
@@ -46,6 +53,7 @@ def dylan_byte_string_data(value):
     return string
 
 def dylan_double_integer_value(value):
+  ensure_value_class(value, 'KLdouble_integerGVKeW', '<double-integer>')
   target = lldb.debugger.GetSelectedTarget()
   int_type = target.FindFirstType('int')
   lo = dylan_slot_element_raw(value, 0).Cast(int_type)
@@ -75,6 +83,7 @@ def dylan_list_elements(value):
   return elements
 
 def dylan_machine_word_value(value):
+  ensure_value_class(value, 'KLmachine_wordGVKeW', '<machine-word>')
   return dylan_slot_element_raw(value, 0).GetValueAsUnsigned()
 
 def dylan_object_class(value):
@@ -126,6 +135,7 @@ def dylan_slot_element(value, index):
   return slot_value.Cast(dylan_value_type)
 
 def dylan_symbol_name(value):
+  ensure_value_class(value, 'KLsymbolGVKdW', '<symbol>')
   name = dylan_slot_element(value, SYMBOL_NAME)
   return dylan_byte_string_data(name)
 
@@ -133,6 +143,7 @@ def dylan_unicode_character_value(value):
   return unichr(value.GetValueAsUnsigned() >> 2).encode('utf8')
 
 def dylan_unicode_string_data(value):
+  ensure_value_class(value, 'KLunicode_stringGVKdW', '<unicode-string>')
   target = lldb.debugger.GetSelectedTarget()
   byte_string_type = target.FindFirstType('dylan_byte_string').GetPointerType()
   value = value.Cast(byte_string_type)

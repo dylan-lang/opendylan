@@ -83,7 +83,10 @@ def dylan_unicode_string_summary(value, internal_dict):
   return '{<unicode-string>: %s}' % unicode_string
 
 def dylan_user_defined_object_summary(value, internal_dict):
-  return '{%s}' % dylan_object_class_name(value)
+  try:
+    return '{%s}' % dylan_object_class_name(value)
+  except:
+    return '{uninitialized}'
 
 SUMMARY_DISPATCH_TABLE = {
   'KLbooleanGVKdW': dylan_boolean_summary,
