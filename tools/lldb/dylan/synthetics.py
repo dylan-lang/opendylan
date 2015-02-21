@@ -4,11 +4,8 @@ from accessors import *
 class SyntheticHideChildren(object):
   """A synthetic that shows no children."""
   def __init__(self, value, internal_dict):
-    self.value = self.cast_value(value)
+    self.value = value
     self.update()
-
-  def cast_value(self, value):
-    return value
 
   def num_children(self):
     return 0
@@ -39,15 +36,12 @@ class SyntheticDylanValue(SyntheticHideChildren):
          self.__class__ = new_class
     else:
       pass
-    self.value = self.cast_value(value)
+    self.value = value
     self.update()
 
 class SyntheticObject(object):
   """A synthetic that knows how to walk the slots of an arbitrary Dylan
      object."""
-  def cast_value(self, value):
-    return dylan_value_as_object(value)
-
   def num_children(self):
     return len(self.slots)
 
@@ -72,11 +66,6 @@ class SyntheticObject(object):
 
 class SyntheticSimpleObjectVector(object):
   """A synthetic for representing a <simple-object-vector>."""
-  def cast_value(self, value):
-    target = lldb.debugger.GetSelectedTarget()
-    vector_type = target.FindFirstType('dylan_simple_object_vector').GetPointerType()
-    return value.Cast(vector_type)
-
   def num_children(self):
     return self.element_count
 
