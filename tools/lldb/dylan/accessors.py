@@ -14,6 +14,7 @@ IMPLEMENTATION_CLASS_CLASS = 1
 IMPLEMENTATION_CLASS_REPEATED_SLOT_DESCRIPTOR = 4
 IMPLEMENTATION_CLASS_INSTANCE_SLOT_DESCRIPTORS = 17
 MM_WRAPPER_IMPLEMENTATION_CLASS = 0
+MM_WRAPPER_SUBTYPE_MASK = 1
 PAIR_HEAD = 0
 PAIR_TAIL = 1
 SLOT_DESCRIPTOR_GETTER = 4
@@ -117,6 +118,11 @@ def dylan_object_implementation_class(value):
 def dylan_object_wrapper(value):
   value = dylan_value_as_object(value)
   return value.GetChildMemberWithName('mm_wrapper')
+
+def dylan_object_wrapper_subtype_mask(value):
+  wrapper = dylan_object_wrapper(value)
+  mask = dylan_slot_element(wrapper, MM_WRAPPER_SUBTYPE_MASK)
+  return dylan_integer_value(mask)
 
 def dylan_object_wrapper_symbol_name(value):
   wrapper = dylan_object_wrapper(value).Dereference()
