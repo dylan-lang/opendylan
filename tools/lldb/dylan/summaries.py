@@ -27,8 +27,8 @@ def dylan_value_summary(value, internal_dict):
     return 'Invalid tag'
 
 def dylan_object_summary(value, internal_dict):
-  class_name = dylan_object_class_name(value)
-  summary_func = SUMMARY_DISPATCH_TABLE.get(class_name, dylan_user_defined_object_summary)
+  wrapper_symbol_name = dylan_object_wrapper_symbol_name(value)
+  summary_func = SUMMARY_DISPATCH_TABLE.get(wrapper_symbol_name, dylan_user_defined_object_summary)
   return summary_func(value, internal_dict)
 
 def dylan_boolean_summary(value, internal_dict):
@@ -86,15 +86,15 @@ def dylan_user_defined_object_summary(value, internal_dict):
   return '{%s}' % dylan_object_class_name(value)
 
 SUMMARY_DISPATCH_TABLE = {
-  '<boolean>': dylan_boolean_summary,
-  '<byte-string>': dylan_byte_string_summary,
-  '<double-integer>': dylan_double_integer_summary,
-  '<empty-list>': dylan_empty_list_summary,
-  '<generic-function>': dylan_generic_function_summary,
-  '<incremental-generic-function>': dylan_generic_function_summary,
-  '<machine-word>': dylan_machine_word_summary,
-  '<sealed-generic-function>': dylan_generic_function_summary,
-  '<simple-object-vector>': dylan_simple_object_vector_summary,
-  '<symbol>': dylan_symbol_summary,
-  '<unicode-string>': dylan_unicode_string_summary
+  'KLbooleanGVKdW': dylan_boolean_summary,
+  'KLbyte_stringGVKdW': dylan_byte_string_summary,
+  'KLdouble_integerGVKeW': dylan_double_integer_summary,
+  'KLempty_listGVKdW': dylan_empty_list_summary,
+  'KLgeneric_functionGVKdW': dylan_generic_function_summary,
+  'KLincremental_generic_functionGVKdW': dylan_generic_function_summary,
+  'KLmachine_wordGVKeW': dylan_machine_word_summary,
+  'KLsealed_generic_functionGVKdW': dylan_generic_function_summary,
+  'KLsimple_object_vectorGVKdW': dylan_simple_object_vector_summary,
+  'KLsymbolGVKdW': dylan_symbol_summary,
+  'KLunicode_stringGVKdW': dylan_unicode_string_summary
 }

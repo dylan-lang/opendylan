@@ -33,8 +33,8 @@ class SyntheticDylanValue(SyntheticHideChildren):
     tag = dylan_tag_bits(value)
     new_class = None
     if tag == OBJECT_TAG:
-      class_name = dylan_object_class_name(value)
-      new_class = SYNTHETIC_CLASS_TABLE.get(class_name, SyntheticObject)
+      wrapper_symbol_name = dylan_object_wrapper_symbol_name(value)
+      new_class = SYNTHETIC_CLASS_TABLE.get(wrapper_symbol_name, SyntheticObject)
       if new_class:
          self.__class__ = new_class
     else:
@@ -102,8 +102,8 @@ class SyntheticSimpleObjectVector(object):
     self.element_count = dylan_vector_size(self.value)
 
 SYNTHETIC_CLASS_TABLE = {
-  '<byte-string>': SyntheticHideChildren,
-  '<empty-list>': SyntheticHideChildren,
-  '<simple-object-vector>': SyntheticSimpleObjectVector,
-  '<symbol>': SyntheticHideChildren
+  'KLbyte_stringGVKdW': SyntheticHideChildren,
+  'KLempty_listGVKdW': SyntheticHideChildren,
+  'KLsimple_object_vectorGVKdW': SyntheticSimpleObjectVector,
+  'KLsymbolGVKdW': SyntheticHideChildren
 }

@@ -99,6 +99,14 @@ def dylan_object_implementation_class(value):
   wrapper = value.GetChildMemberWithName('mm_wrapper')
   return wrapper.GetChildMemberWithName('iclass')
 
+def dylan_object_wrapper(value):
+  value = dylan_value_as_object(value)
+  return value.GetChildMemberWithName('mm_wrapper')
+
+def dylan_object_wrapper_symbol_name(value):
+  wrapper = dylan_object_wrapper(value).Dereference()
+  return wrapper.addr.symbol.name
+
 def dylan_slot_descriptor_getter(value):
   return dylan_slot_element(value, SLOT_DESCRIPTOR_GETTER)
 
