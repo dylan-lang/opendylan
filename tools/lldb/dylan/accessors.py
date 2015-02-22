@@ -153,10 +153,10 @@ def dylan_slot_descriptor_name(value):
 
 def dylan_slot_element(value, index):
   target = lldb.debugger.GetSelectedTarget()
-  object_type = target.FindFirstType('struct _dylan_object').GetPointerType()
-  dylan_object = value.Cast(object_type)
-  slots = dylan_object.GetChildMemberWithName('slots')
-  return slots.GetChildAtIndex(index, lldb.eNoDynamicValues, True)
+  word_size = target.GetAddressByteSize()
+  dylan_value_type = target.FindFirstType('dylan_value')
+  slot_address = value.GetValueAsUnsigned() + ((index + 1) * word_size)
+  return value.CreateValueFromAddress("slot %d" % index, slot_address, dylan_value_type)
 
 def dylan_symbol_name(value):
   ensure_value_class(value, 'KLsymbolGVKdW', '<symbol>')
