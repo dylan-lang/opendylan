@@ -43,6 +43,8 @@ def dylan_byte_character_summary(value, internal_dict):
 
 def dylan_byte_string_summary(value, internal_dict):
   string_data = dylan_byte_string_data(value)
+  string_data = string_data.replace('\r\n', '\\n')
+  string_data = string_data.replace('\n', '\\n')
   if string_data == '':
     return '{<byte-string>: size: 0}'
   else:
