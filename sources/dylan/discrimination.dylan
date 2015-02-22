@@ -754,7 +754,8 @@ define function transmogrify-method-list-grounded
             end if;
         if (~more)
           $absent-engine-node
-        elseif (~nextp & more == #() & (keyspec == #t | keyspec == #f))
+        elseif (~nextp & more == #() & (keyspec == #t | keyspec == #f)
+                  & primitive-callable-as-engine-node?(m))
           m
         else
           make-single-method-engine-node(m, data: more, keys: keyspec)
