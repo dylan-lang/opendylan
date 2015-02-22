@@ -30,10 +30,14 @@ class SyntheticDylanValue(SyntheticHideChildren):
     tag = dylan_tag_bits(value)
     new_class = None
     if tag == OBJECT_TAG:
-      wrapper_symbol_name = dylan_object_wrapper_symbol_name(value)
-      new_class = SYNTHETIC_CLASS_TABLE.get(wrapper_symbol_name, SyntheticObject)
-      if new_class:
-         self.__class__ = new_class
+      try:
+        wrapper_symbol_name = dylan_object_wrapper_symbol_name(value)
+        new_class = SYNTHETIC_CLASS_TABLE.get(wrapper_symbol_name, SyntheticObject)
+        if new_class:
+           self.__class__ = new_class
+      except:
+        # Something went wrong getting the wrapper's symbol name.
+        self.__class__ = SyntheticHideChildren
     else:
       pass
     self.value = value
