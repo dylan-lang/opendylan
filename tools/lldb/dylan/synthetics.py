@@ -42,13 +42,17 @@ class SyntheticDylanValue(SyntheticHideChildren):
 class SyntheticObject(object):
   """A synthetic that knows how to walk the slots of an arbitrary Dylan
      object."""
+  # We lazily initialize this to avoid circular loops in creating synthetics
+  # and getting slots, which creates more synthetics, etc.
   def num_children(self):
+    self.initialize_if_needed()
     return len(self.slots)
 
   def get_child_index(self, name):
     return -1
 
   def get_child_at_index(self, index):
+    self.initialize_if_needed()
     if index >= 0 and index < len(self.slots):
       slot_name = self.slots[index]
       offset = (index + 1) * self.dylan_value_type.GetByteSize()
@@ -62,7 +66,13 @@ class SyntheticObject(object):
   def update(self):
     target = lldb.debugger.GetSelectedTarget()
     self.dylan_value_type = target.FindFirstType('dylan_value')
-    self.slots = dylan_object_class_slot_names(self.value)
+    self.initialized = False
+    self.slots = []
+
+  def initialize_if_needed(self):
+    if not self.initialized:
+      self.slots = dylan_object_class_slot_names(self.value)
+      self.initialized = True
 
 class SyntheticSimpleObjectVector(object):
   """A synthetic for representing a <simple-object-vector>."""

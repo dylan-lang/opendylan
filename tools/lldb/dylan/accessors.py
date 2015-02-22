@@ -116,8 +116,18 @@ def dylan_object_implementation_class(value):
   return dylan_slot_element(wrapper, MM_WRAPPER_IMPLEMENTATION_CLASS)
 
 def dylan_object_wrapper(value):
-  value = dylan_value_as_object(value)
-  return value.GetChildMemberWithName('mm_wrapper')
+  address = dylan_object_wrapper_address(value)
+  target = lldb.debugger.GetSelectedTarget()
+  dylan_value_type = target.FindFirstType('dylan_value')
+  return value.CreateValueFromAddress("wrapper", address, dylan_value_type)
+
+def dylan_object_wrapper_address(value):
+  error = lldb.SBError()
+  address = value.process.ReadPointerFromMemory(value.GetValueAsUnsigned(), error)
+  if error.Success():
+    return address
+  else:
+    raise Exception(error.description)
 
 def dylan_object_wrapper_subtype_mask(value):
   wrapper = dylan_object_wrapper(value)
@@ -125,8 +135,14 @@ def dylan_object_wrapper_subtype_mask(value):
   return dylan_integer_value(mask)
 
 def dylan_object_wrapper_symbol_name(value):
-  wrapper = dylan_object_wrapper(value).Dereference()
-  return wrapper.addr.symbol.name
+  # We don't want to get the actual wrapper value object here
+  # as that creates circular loops with synthetics by creating
+  # an object, which creates a synthetic which looks at the wrapper
+  # symbol name, which if it accessed the wrapper value object
+  # would create a new object and synthetic, etc.
+  target = lldb.debugger.GetSelectedTarget()
+  address = lldb.SBAddress(dylan_object_wrapper_address(value), target)
+  return address.symbol.name
 
 def dylan_slot_descriptor_getter(value):
   return dylan_slot_element(value, SLOT_DESCRIPTOR_GETTER)
