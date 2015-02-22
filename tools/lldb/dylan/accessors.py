@@ -63,8 +63,8 @@ def dylan_double_integer_value(value):
   ensure_value_class(value, 'KLdouble_integerGVKeW', '<double-integer>')
   target = lldb.debugger.GetSelectedTarget()
   int_type = target.GetBasicType(lldb.eBasicTypeInt)
-  lo = dylan_slot_element_raw(value, 0).Cast(int_type)
-  hi = dylan_slot_element_raw(value, 1).Cast(int_type)
+  lo = dylan_slot_element(value, 0).Cast(int_type)
+  hi = dylan_slot_element(value, 1).Cast(int_type)
   return lo.GetValueAsSigned() + (hi.GetValueAsSigned() << 32)
 
 def dylan_generic_function_name(value):
@@ -91,7 +91,7 @@ def dylan_list_elements(value):
 
 def dylan_machine_word_value(value):
   ensure_value_class(value, 'KLmachine_wordGVKeW', '<machine-word>')
-  return dylan_slot_element_raw(value, 0).GetValueAsUnsigned()
+  return dylan_slot_element(value, 0).GetValueAsUnsigned()
 
 def dylan_object_class(value):
   iclass = dylan_object_implementation_class(value)
@@ -151,16 +151,12 @@ def dylan_slot_descriptor_name(value):
   getter = dylan_slot_descriptor_getter(value)
   return dylan_generic_function_name(getter)
 
-def dylan_slot_element_raw(value, index):
-  dylan_object = dylan_value_as_object(value)
-  slots = dylan_object.GetChildMemberWithName('slots')
-  return slots.GetChildAtIndex(index, lldb.eNoDynamicValues, True)
-
 def dylan_slot_element(value, index):
   target = lldb.debugger.GetSelectedTarget()
-  dylan_value_type = target.FindFirstType('dylan_value')
-  slot_value = dylan_slot_element_raw(value, index)
-  return slot_value.Cast(dylan_value_type)
+  object_type = target.FindFirstType('struct _dylan_object').GetPointerType()
+  dylan_object = value.Cast(object_type)
+  slots = dylan_object.GetChildMemberWithName('slots')
+  return slots.GetChildAtIndex(index, lldb.eNoDynamicValues, True)
 
 def dylan_symbol_name(value):
   ensure_value_class(value, 'KLsymbolGVKdW', '<symbol>')
@@ -186,13 +182,6 @@ def dylan_unicode_string_data(value):
     return data.decode('utf-32').encode('utf-8')
   else:
     raise Exception(error.description)
-
-def dylan_value_as_object(value):
-  target = lldb.debugger.GetSelectedTarget()
-  # We use 'struct _dylan_object' here rather than 'dylan_object' as the latter
-  # fails for some reason at the time this was written.
-  object_type = target.FindFirstType('struct _dylan_object').GetPointerType()
-  return value.Cast(object_type)
 
 def dylan_vector_size(vector):
   return dylan_integer_value(dylan_slot_element(vector, SIMPLE_OBJECT_VECTOR_SIZE))
