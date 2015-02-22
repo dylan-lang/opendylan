@@ -62,7 +62,7 @@ def dylan_byte_string_data(value):
 def dylan_double_integer_value(value):
   ensure_value_class(value, 'KLdouble_integerGVKeW', '<double-integer>')
   target = lldb.debugger.GetSelectedTarget()
-  int_type = target.FindFirstType('int')
+  int_type = target.GetBasicType(lldb.eBasicTypeInt)
   lo = dylan_slot_element_raw(value, 0).Cast(int_type)
   hi = dylan_slot_element_raw(value, 1).Cast(int_type)
   return lo.GetValueAsSigned() + (hi.GetValueAsSigned() << 32)
