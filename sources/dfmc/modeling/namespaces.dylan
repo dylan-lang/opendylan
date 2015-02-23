@@ -431,7 +431,8 @@ define &module dylan-primitives
   // Calling Convention.
   create
     primitive-function-parameter,
-    primitive-next-methods-parameter;
+    primitive-next-methods-parameter,
+    primitive-callable-as-engine-node?;
 
   // Simple Streams and Streams
 

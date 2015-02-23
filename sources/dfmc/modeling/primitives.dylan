@@ -511,6 +511,10 @@ define side-effecting stateless dynamic-extent &primitive primitive-set-accessor
     (accessor-method :: <accessor-method>, what :: <integer>)
  => (accessor-method :: <accessor-method>);
 
+define side-effect-free stateless dynamic-extent &primitive primitive-callable-as-engine-node?
+    (meth :: <method>)
+ => (mep-callable? :: <boolean>);
+
 
 /// APPLY
 

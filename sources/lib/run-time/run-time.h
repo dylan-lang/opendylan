@@ -1850,6 +1850,7 @@ extern dylan_value primitive_raw_as_string(DBSTR buffer);
 
 #define primitive_function_parameter()                  ((dylan_value)(get_teb()->function))
 #define primitive_next_methods_parameter()              ((dylan_value)(get_teb()->next_methods))
+#define primitive_callable_as_engine_nodeQ(m)           ((dylan_value)DTRUE)
 
 /* APPLY PRIMITIVES */
 

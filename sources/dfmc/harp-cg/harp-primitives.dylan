@@ -1255,6 +1255,14 @@ define method op--false?(back-end :: <harp-back-end>, result, x) => (result :: <
 
 end method op--false?;
 
+define method op--true(back-end :: <harp-back-end>, result, #rest args) => (result :: <test-result>)
+
+  make(<test-result>,
+       branch: #f,
+       result: result,
+       continue: make-tag(back-end));
+
+end method op--true;
 
 define method op--raw-as-boolean(back-end :: <harp-back-end>, result, x) => (result :: <test-result>)
 
@@ -2127,6 +2135,7 @@ define &primitive-descriptor primitive-function-parameter, emitter: op--function
 define &primitive-descriptor primitive-next-methods-parameter, emitter: op--next-methods-parameter;
 define &primitive-descriptor primitive-set-generic-function-entrypoints;
 define &primitive-descriptor primitive-set-accessor-method-xep;
+define &primitive-descriptor primitive-callable-as-engine-node?, emitter: op--true;
 
 // Apply.
 define &primitive-descriptor primitive-xep-apply;

@@ -179,6 +179,17 @@ define side-effecting stateless dynamic-extent mapped &primitive-descriptor prim
   accessor-method
 end;
 
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-callable-as-engine-node?
+    (meth :: <method>)
+ => (mep-callable? :: <boolean>);
+  // This depends on the fact that the mep slot in <method> and
+  // engine-node-entry-point are in the same slot position, and the
+  // entry-point calling conventions are similar.
+  let km-class :: <&class> = dylan-value(#"<keyword-method>");
+  let cmp = op--heap-object-subtype-bit-instance-cmp(be, meth, km-class);
+  op--boolean(be, cmp)
+end;
+
 
 /// Discriminator/engine-node Initialization
 
