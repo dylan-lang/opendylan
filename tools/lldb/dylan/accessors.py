@@ -116,7 +116,7 @@ def dylan_object_implementation_class(value):
   return dylan_slot_element(wrapper, MM_WRAPPER_IMPLEMENTATION_CLASS)
 
 def dylan_object_wrapper(value):
-  address = dylan_object_wrapper_address(value)
+  address = value.GetValueAsUnsigned()
   target = lldb.debugger.GetSelectedTarget()
   dylan_value_type = target.FindFirstType('dylan_value')
   return value.CreateValueFromAddress("wrapper", address, dylan_value_type)
