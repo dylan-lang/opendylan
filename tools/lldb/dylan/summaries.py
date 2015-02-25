@@ -69,6 +69,10 @@ def dylan_machine_word_summary(value, internal_dict):
   machine_word_value = dylan_machine_word_value(value)
   return '{<machine-word>: %s}' % format_machine_word_value(machine_word_value)
 
+def dylan_mm_wrapper_summary(value, internal_dict):
+  class_name = dylan_object_wrapper_class_name(value)
+  return '{<mm-wrapper>: %s}' % class_name
+
 def dylan_simple_object_vector_summary(value, internal_dict):
   size = synthetics.SyntheticDylanValue(value, internal_dict).num_children()
   return '{<simple-object-vector>: size: %s}' % size
@@ -98,6 +102,7 @@ SUMMARY_DISPATCH_TABLE = {
   'KLgeneric_functionGVKdW': dylan_generic_function_summary,
   'KLincremental_generic_functionGVKdW': dylan_generic_function_summary,
   'KLmachine_wordGVKeW': dylan_machine_word_summary,
+  'KLmm_wrapperGVKiW': dylan_mm_wrapper_summary,
   'KLsealed_generic_functionGVKdW': dylan_generic_function_summary,
   'KLsimple_object_vectorGVKdW': dylan_simple_object_vector_summary,
   'KLsymbolGVKdW': dylan_symbol_summary,

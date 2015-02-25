@@ -59,6 +59,12 @@ def dylan_byte_string_data(value):
   else:
     raise Exception(error.description)
 
+def dylan_class_name(value):
+  # We can't check that this is a <class> here as it might also
+  # be a <function-class> or other subclass of <class>.
+  class_name = dylan_slot_element(value, CLASS_DEBUG_NAME)
+  return dylan_byte_string_data(class_name)
+
 def dylan_double_integer_value(value):
   ensure_value_class(value, 'KLdouble_integerGVKeW', '<double-integer>')
   target = lldb.debugger.GetSelectedTarget()
@@ -95,6 +101,7 @@ def dylan_machine_word_value(value):
 
 def dylan_object_class(value):
   iclass = dylan_object_implementation_class(value)
+  ensure_value_class(iclass, 'KLimplementation_classGVKeW', '<implementation-class>')
   return dylan_slot_element(iclass, IMPLEMENTATION_CLASS_CLASS)
 
 def dylan_object_class_slot_descriptors(value):
@@ -108,8 +115,7 @@ def dylan_object_class_slot_names(value):
 
 def dylan_object_class_name(value):
   class_object = dylan_object_class(value)
-  class_name = dylan_slot_element(class_object, CLASS_DEBUG_NAME)
-  return dylan_byte_string_data(class_name)
+  return dylan_class_name(class_object)
 
 def dylan_object_implementation_class(value):
   wrapper = dylan_object_wrapper(value)
@@ -128,6 +134,16 @@ def dylan_object_wrapper_address(value):
     return address
   else:
     raise Exception(error.description)
+
+def dylan_object_wrapper_class(value):
+  ensure_value_class(value, 'KLmm_wrapperGVKiW', '<mm-wrapper>')
+  iclass = dylan_slot_element(value, MM_WRAPPER_IMPLEMENTATION_CLASS)
+  ensure_value_class(iclass, 'KLimplementation_classGVKeW', '<implementation-class>')
+  return dylan_slot_element(iclass, IMPLEMENTATION_CLASS_CLASS)
+
+def dylan_object_wrapper_class_name(value):
+  class_object = dylan_object_wrapper_class(value)
+  return dylan_class_name(class_object)
 
 def dylan_object_wrapper_subtype_mask(value):
   wrapper = dylan_object_wrapper(value)
