@@ -889,7 +889,7 @@ end function;
 // Comment out these stubs and reinstate the slot in class objects in order
 // to re-enable instance check counting.
 
-define inline-only method class-instance?-count
+define /* inline-only */ method class-instance?-count
     (c :: <class>) => (count :: <integer>)
   0
 end method;
