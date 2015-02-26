@@ -23,7 +23,8 @@ end;
 define module OLE-Server
   use Dylan;
   use common-extensions,
-    import: { \assert, false-or, \function-definer, ignore, format-to-string };
+    import: { \assert, false-or, \function-definer, ignore };
+  use simple-format;
   use OLE,
     export: { make-GUID, <REFGUID>, <REFCLSID>,
 	     // Export names that may be needed by application methods on 

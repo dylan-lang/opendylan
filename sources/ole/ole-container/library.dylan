@@ -21,6 +21,7 @@ end;
 
 define module OLE-Container
   use common-dylan;
+  use simple-format;
   use OLE,
     export: {$OLEIVERB-PRIMARY, $OLEIVERB-SHOW, $OLEIVERB-OPEN,
 	     $OLEIVERB-HIDE, $OLEIVERB-UIACTIVATE,

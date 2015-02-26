@@ -25,6 +25,7 @@ end library;
 
 define module OLE-Control-Framework
   use common-dylan;
+  use simple-format;
   use OLE,
     export: {$OLEMISC-RECOMPOSEONRESIZE, $OLEMISC-ONLYICONIC,
 	     $OLEMISC-INSERTNOTREPLACE, $OLEMISC-STATIC,

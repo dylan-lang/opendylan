@@ -31,6 +31,7 @@ end;
 
 define module COM
   use common-dylan;
+  use simple-format;
   use streams-protocol;
   use Dylan-extensions, import: {<byte>,
 				 <byte-character>,

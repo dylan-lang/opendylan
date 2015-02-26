@@ -950,6 +950,7 @@ end module Win32-user;
 define module Win32-default-handler
   use common-dylan;
   use dylan-extensions, import: { \last-handler-definer };
+  use simple-format;
   use Win32-common;
   use Win32-user;
   use Win32-kernel;

@@ -21,6 +21,7 @@ end;
 
 define module OLE-Automation
   use common-dylan;
+  use simple-format;
   use Dylan-extensions,
     import: {<abstract-integer>, <big-integer>, <double-integer>,
 	     <simple-byte-vector>, <simple-double-byte-vector>,
