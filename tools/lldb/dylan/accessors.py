@@ -90,7 +90,9 @@ def dylan_integer_value(value):
 
 def dylan_list_elements(value):
   elements = []
-  while (dylan_object_class_name(value) != '<empty-list>'):
+  target = lldb.debugger.GetSelectedTarget()
+  empty_list = target.FindFirstGlobalVariable('KPempty_listVKi').AddressOf().GetValueAsUnsigned()
+  while value.GetValueAsUnsigned() != empty_list:
     elements += [dylan_slot_element(value, PAIR_HEAD)]
     value = dylan_slot_element(value, PAIR_TAIL)
   return elements
