@@ -35,7 +35,6 @@ SUFDLL  ?= .so ;                # shared library suffix
 SUFMKF  ?= .mkf ;               # build-system files
 
 if $(COMPILER_BACK_END) = llvm {
-  CC      = clang ;
   CCFLAGS += $(LLVM_GC_CFLAGS) -fexceptions ;
   SUFOUT  ?= .bc ;             # DFMC output suffix
 } else if $(COMPILER_BACK_END) = c {
