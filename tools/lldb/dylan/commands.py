@@ -53,3 +53,34 @@ def dylan_bt(debugger, command, result, internal_dict):
       file=file_name,
       line=line_number
       )
+
+def dylan_break_gf(debugger, command, result, internal_dict):
+  command_args = shlex.split(command)
+  usage = 'usage: %prog [gf]'
+  description = 'Set a breakpoint that covers every method on the generic function.'
+  parser = optparse.OptionParser(description=description, prog='dylan-break-gf', usage=usage)
+
+  try:
+    (options, args) = parser.parse_args(command_args)
+  except:
+    return
+
+  # We use a dummy_value here rather than SBTarget::CreateValueFromExpression
+  # because the SBTarget method isn't in shipping xcode yet.
+  target = debugger.GetSelectedTarget()
+  dummy_value = target.FindFirstGlobalVariable("KPtrueVKi")
+
+  for arg in args:
+    gf = dummy_value.CreateValueFromExpression("gf", arg)
+    if not gf.IsValid():
+      print "No generic function %s was found." % arg
+      continue
+    if not gf.GetType().IsPointerType():
+      gf = gf.address_of
+    methods = dylan_generic_function_methods(gf)
+    ieps = [dylan_method_iep_function(m) for m in methods]
+    # Create a breakpoint for each IEP rather than a single one for
+    # all IEPs since there isn't an appropriate typemap in the SWIG
+    # bindings for SBTarget::BreakpointCreateByNames().
+    for iep in ieps:
+      target.BreakpointCreateByName(iep.name)

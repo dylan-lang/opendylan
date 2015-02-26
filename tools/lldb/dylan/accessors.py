@@ -13,6 +13,8 @@ GENERIC_FUNCTION_METHODS = 4
 IMPLEMENTATION_CLASS_CLASS = 1
 IMPLEMENTATION_CLASS_REPEATED_SLOT_DESCRIPTOR = 4
 IMPLEMENTATION_CLASS_INSTANCE_SLOT_DESCRIPTORS = 17
+KEYWORD_METHOD_IEP = 3
+METHOD_MEP = 2
 MM_WRAPPER_IMPLEMENTATION_CLASS = 0
 MM_WRAPPER_SUBTYPE_MASK = 1
 PAIR_HEAD = 0
@@ -100,6 +102,17 @@ def dylan_list_elements(value):
 def dylan_machine_word_value(value):
   ensure_value_class(value, 'KLmachine_wordGVKeW', '<machine-word>')
   return dylan_slot_element(value, 0).GetValueAsUnsigned()
+
+def dylan_method_iep_function(value):
+  def get_iep(value):
+    if dylan_object_wrapper_subtype_mask(value) & 8192:
+      return dylan_slot_element(value, KEYWORD_METHOD_IEP)
+    else:
+      return dylan_slot_element(value, METHOD_MEP)
+  iep = get_iep(value)
+  target = lldb.debugger.GetSelectedTarget()
+  address = lldb.SBAddress(iep.GetValueAsUnsigned(), target)
+  return address.GetFunction()
 
 def dylan_object_class(value):
   iclass = dylan_object_implementation_class(value)

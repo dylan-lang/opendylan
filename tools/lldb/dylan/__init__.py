@@ -11,9 +11,11 @@ dylan_simple_object_vector_summary = summaries.dylan_simple_object_vector_summar
 dylan_symbol_summary = summaries.dylan_symbol_summary
 dylan_value_summary = summaries.dylan_value_summary
 
+dylan_break_gf = commands.dylan_break_gf
 dylan_bt = commands.dylan_bt
 
 def __lldb_init_module(debugger, internal_dict):
+  debugger.HandleCommand('command script add -f dylan.dylan_break_gf dylan-break-gf')
   debugger.HandleCommand('command script add -f dylan.dylan_bt dylan-bt')
   debugger.HandleCommand('type format    add dylan_value -f hex')
   debugger.HandleCommand('type synthetic add dylan_value -l dylan.SyntheticDylanValue -w dylan')
