@@ -1241,18 +1241,30 @@ end method;
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <conditional-update!>) => ()
   let the-value = emit-reference(back-end, m, c.computation-value);
-/*
   if (c.assigned-binding.binding-locked?)
-    let name = emit-name(back-end, m, c.referenced-binding);
+    let word-type = back-end.%type-table["iWord"];
+    let the-value = emit-reference(back-end, m, c.computation-value);
+    let the-value-cast
+      = ins--ptrtoint(back-end, the-value, word-type);
+    let test-value = emit-reference(back-end, m, c.computation-test-value);
+    let test-value-cast
+      = ins--ptrtoint(back-end, test-value, word-type);
+    let name = emit-name(back-end, m, c.assigned-binding);
     let global = llvm-builder-global(back-end, name);
-
-    // FIXME
-
-    computation-result(back-end, c, the-value);
+    let global-cast
+      = make(<llvm-cast-constant>,
+             operator: #"BITCAST",
+             type: llvm-pointer-to(back-end, word-type),
+             operands: vector(global));
+    let cmpxchg-result
+      = ins--cmpxchg(back-end, global-cast, test-value-cast, the-value-cast,
+                     ordering: #"sequentially-consistent",
+                     failure-ordering: #"sequentially-consistent");
+    let cmp = ins--extractvalue(back-end, cmpxchg-result, 1);
+    computation-result(back-end, c, op--boolean(back-end, cmp));
   else
     error("<conditional-update!>");
   end if;
-*/
 end method;
 
 /*
