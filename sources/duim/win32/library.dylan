@@ -8,6 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library win32-duim
   use dylan;
+  use common-dylan;
 
   use duim-utilities;
   use duim-core;
