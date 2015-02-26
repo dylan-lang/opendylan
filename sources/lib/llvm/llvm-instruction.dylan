@@ -275,14 +275,24 @@ end method;
 
 define class <llvm-cmpxchg-instruction> (<llvm-atomic-instruction>,
                                          <llvm-volatile-instruction>)
+  slot %llvm-value-type :: <llvm-type>;
+  constant slot llvm-cmpxchg-instruction-failure-ordering :: <llvm-atomic-ordering>,
+    init-value: #"not-atomic", init-keyword: failure-ordering:;
+  constant slot llvm-cmpxchg-instruction-weak? :: <boolean>,
+    init-value: #f, init-keyword: weak?:;
 end class;
 
 define method llvm-value-type
     (value :: <llvm-cmpxchg-instruction>)
  => (type :: <llvm-type>);
-  let pointer-type
-    = type-forward(llvm-value-type(value.llvm-instruction-operands[0]));
-  type-forward(pointer-type.llvm-pointer-type-pointee)
+  if (slot-initialized?(value, %llvm-value-type))
+    value.%llvm-value-type
+  else
+    let memory-type = llvm-value-type(value.llvm-instruction-operands[1]);
+    value.%llvm-value-type
+      := make(<llvm-struct-type>,
+              elements: vector(memory-type, $llvm-i1-type))
+  end if
 end method;
 
 define constant <llvm-atomicrmw-operation>

@@ -101,7 +101,7 @@ define bitcode-block $FUNCTION_BLOCK = 12
   record INST_CALL        = 34; // CALL:       [attr, fnty, fnid, args...]
   record DEBUG_LOC        = 35; // DEBUG_LOC:  [Line,Col,ScopeVal, IAVal]
   record INST_FENCE       = 36; // FENCE:      [ordering, synchscope]
-  record INST_CMPXCHG     = 37; // CMPXCHG:    [ptrty,ptr,cmp,new, align, vol, ordering, synchscope]
+  record INST_CMPXCHG     = 37; // CMPXCHG:    [ptrty, ptr, cmp, new, vol, successordering, synchscope, failureordering?, isweak?]
   record INST_ATOMICRMW   = 38; // ATOMICRMW:  [ptrty,ptr,val, operation, align, vol, ordering, synchscope]
   record INST_RESUME      = 39; // RESUME:     [opval]
   record INST_LANDINGPAD  = 40; // LANDINGPAD: [ty,val,val,num,id0,val0...]
@@ -1925,6 +1925,8 @@ define method write-instruction-record
   add!(operands, if (value.llvm-instruction-volatile?) 1 else 0 end);
   add!(operands, atomic-ordering-encoding(value.llvm-atomic-instruction-ordering));
   add!(operands, atomic-scope-encoding(value.llvm-atomic-instruction-scope));
+  add!(operands, atomic-ordering-encoding(value.llvm-cmpxchg-instruction-failure-ordering));
+  add!(operands, if (value.llvm-cmpxchg-instruction-weak?) 1 else 0 end);
   write-record(stream, #"INST_CMPXCHG", operands);
 end method;
 
