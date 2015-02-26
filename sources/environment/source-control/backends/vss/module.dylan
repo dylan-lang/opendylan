@@ -8,6 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module source-control-vss-backend
   use common-dylan;
+  use simple-format;
   use machine-words,
     import: { %logior };
   use date;
