@@ -1240,7 +1240,6 @@ end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <conditional-update!>) => ()
-  let the-value = emit-reference(back-end, m, c.computation-value);
   if (c.assigned-binding.binding-locked?)
     let word-type = back-end.%type-table["iWord"];
     let the-value = emit-reference(back-end, m, c.computation-value);
