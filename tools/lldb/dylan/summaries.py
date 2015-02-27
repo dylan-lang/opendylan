@@ -50,6 +50,9 @@ def dylan_byte_string_summary(value, internal_dict):
   else:
     return '{<byte-string>: size: %d, data: "%s"}' % (len(string_data), string_data)
 
+def dylan_class_summary(value, internal_dict):
+  return '{<class>: %s}' % dylan_class_name(value)
+
 def dylan_double_integer_summary(value, internal_dict):
   di = dylan_double_integer_value(value)
   return '{<double-integer>: %s}' % di
@@ -77,6 +80,13 @@ def dylan_mm_wrapper_summary(value, internal_dict):
   class_name = dylan_object_wrapper_class_name(value)
   return '{<mm-wrapper>: %s}' % class_name
 
+def dylan_module_summary(value, internal_dict):
+  module_name = dylan_slot_element_by_name(value, 'namespace-name')
+  home_library = dylan_slot_element_by_name(value, 'home-library')
+  home_library_name = dylan_slot_element_by_name(home_library, 'namespace-name')
+  return '{<module>: %s in %s}' % (dylan_byte_string_data(module_name),
+                                   dylan_byte_string_data(home_library_name))
+
 def dylan_simple_object_vector_summary(value, internal_dict):
   size = synthetics.SyntheticDylanValue(value, internal_dict).num_children()
   return '{<simple-object-vector>: size: %s}' % size
@@ -92,6 +102,11 @@ def dylan_unicode_string_summary(value, internal_dict):
   unicode_string = dylan_unicode_string_data(value)
   return '{<unicode-string>: %s}' % unicode_string
 
+def dylan_used_library_summary(value, internal_dict):
+  used_library = dylan_slot_element_by_name(value, 'used-library')
+  name = dylan_slot_element_by_name(used_library, 'namespace-name')
+  return '{<used-library>: %s}' % dylan_byte_string_data(name)
+
 def dylan_user_defined_object_summary(value, internal_dict):
   try:
     return '{%s}' % dylan_object_class_name(value)
@@ -101,6 +116,7 @@ def dylan_user_defined_object_summary(value, internal_dict):
 SUMMARY_DISPATCH_TABLE = {
   'KLbooleanGVKdW': dylan_boolean_summary,
   'KLbyte_stringGVKdW': dylan_byte_string_summary,
+  'KLclassGVKdW': dylan_class_summary,
   'KLdouble_integerGVKeW': dylan_double_integer_summary,
   'KLempty_listGVKdW': dylan_empty_list_summary,
   'KLgeneric_functionGVKdW': dylan_generic_function_summary,
@@ -108,8 +124,10 @@ SUMMARY_DISPATCH_TABLE = {
   'KLlibraryGVKeW': dylan_library_summary,
   'KLmachine_wordGVKeW': dylan_machine_word_summary,
   'KLmm_wrapperGVKiW': dylan_mm_wrapper_summary,
+  'KLmoduleGVKeW': dylan_module_summary,
   'KLsealed_generic_functionGVKdW': dylan_generic_function_summary,
   'KLsimple_object_vectorGVKdW': dylan_simple_object_vector_summary,
   'KLsymbolGVKdW': dylan_symbol_summary,
-  'KLunicode_stringGVKdW': dylan_unicode_string_summary
+  'KLunicode_stringGVKdW': dylan_unicode_string_summary,
+  'KLused_libraryGVKeW': dylan_used_library_summary
 }
