@@ -105,6 +105,7 @@ class SyntheticSimpleObjectVector(object):
     self.element_count = dylan_vector_size(self.value)
 
 SYNTHETIC_CLASS_TABLE = {
+  'KLbooleanGVKdW': SyntheticHideChildren,
   'KLbyte_stringGVKdW': SyntheticHideChildren,
   'KLempty_listGVKdW': SyntheticHideChildren,
   'KLsimple_object_vectorGVKdW': SyntheticSimpleObjectVector,
