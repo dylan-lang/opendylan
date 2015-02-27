@@ -91,8 +91,8 @@ class SyntheticSimpleObjectVector(object):
 
   def get_child_at_index(self, index):
     if index >= 0 and index < self.element_count:
-      # +1 is to skip past the object header
-      offset = (index + 1) * self.dylan_value_type.GetByteSize()
+      # +2 is to skip past the object header and the size.
+      offset = (index + 2) * self.dylan_value_type.GetByteSize()
       return self.value.CreateChildAtOffset('[%d]' % index, offset, self.dylan_value_type)
     return None
 
