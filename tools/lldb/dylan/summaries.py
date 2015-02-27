@@ -65,6 +65,10 @@ def dylan_generic_function_summary(value, internal_dict):
 def dylan_integer_summary(value, internal_dict):
   return '{<integer>: %s}' % dylan_integer_value(value)
 
+def dylan_library_summary(value, internal_dict):
+  name = dylan_slot_element_by_name(value, 'namespace-name')
+  return '{<library>: %s}' % dylan_byte_string_data(name)
+
 def dylan_machine_word_summary(value, internal_dict):
   machine_word_value = dylan_machine_word_value(value)
   return '{<machine-word>: %s}' % format_machine_word_value(machine_word_value)
@@ -101,6 +105,7 @@ SUMMARY_DISPATCH_TABLE = {
   'KLempty_listGVKdW': dylan_empty_list_summary,
   'KLgeneric_functionGVKdW': dylan_generic_function_summary,
   'KLincremental_generic_functionGVKdW': dylan_generic_function_summary,
+  'KLlibraryGVKeW': dylan_library_summary,
   'KLmachine_wordGVKeW': dylan_machine_word_summary,
   'KLmm_wrapperGVKiW': dylan_mm_wrapper_summary,
   'KLsealed_generic_functionGVKdW': dylan_generic_function_summary,
