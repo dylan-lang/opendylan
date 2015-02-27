@@ -175,6 +175,10 @@ def dylan_object_wrapper_symbol_name(value):
   address = lldb.SBAddress(dylan_object_wrapper_address(value), target)
   return address.symbol.name
 
+def dylan_slot_index(value, name):
+  slot_names = dylan_object_class_slot_names(value)
+  return slot_names.index(name)
+
 def dylan_slot_descriptor_getter(value):
   return dylan_slot_element(value, SLOT_DESCRIPTOR_GETTER)
 
@@ -188,6 +192,10 @@ def dylan_slot_element(value, index):
   dylan_value_type = target.FindFirstType('dylan_value')
   slot_address = value.GetValueAsUnsigned() + ((index + 1) * word_size)
   return value.CreateValueFromAddress("slot %d" % index, slot_address, dylan_value_type)
+
+def dylan_slot_element_by_name(value, name):
+  slot_index = dylan_slot_index(value, name)
+  return dylan_slot_element(value, slot_index)
 
 def dylan_symbol_name(value):
   ensure_value_class(value, 'KLsymbolGVKdW', '<symbol>')
