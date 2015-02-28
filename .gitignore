@@ -1,4 +1,5 @@
 *~
+*.pyc
 Makefile
 /aclocal.m4
 /Bootstrap.*/
