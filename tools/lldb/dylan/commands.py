@@ -1,6 +1,8 @@
 import lldb
+import mangling
 import optparse
 import shlex
+import utils
 
 from accessors import *
 
@@ -71,7 +73,13 @@ def dylan_break_gf(debugger, command, result, internal_dict):
   dummy_value = target.FindFirstGlobalVariable("KPtrueVKi")
 
   for arg in args:
-    gf = dummy_value.CreateValueFromExpression("gf", arg)
+    try:
+      (binding, module, library) = utils.parse_binding(arg)
+      symbol_name = mangling.dylan_mangle_binding(binding, module, library)
+    except InvalidBindingException:
+      print 'Invalid binding name: %s' % arg
+      continue
+    gf = dummy_value.CreateValueFromExpression("gf", symbol_name)
     if not gf.IsValid():
       print "No generic function %s was found." % arg
       continue
