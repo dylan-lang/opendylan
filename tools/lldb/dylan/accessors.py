@@ -1,4 +1,5 @@
 import lldb
+import struct
 
 OBJECT_TAG = 0
 INTEGER_TAG = 1
@@ -8,6 +9,7 @@ UNICODE_CHARACTER_TAG = 3
 BYTE_STRING_SIZE = 0
 BYTE_STRING_DATA = 1
 CLASS_DEBUG_NAME = 1
+DOUBLE_FLOAT_DATA = 0
 GENERIC_FUNCTION_DEBUG_NAME = 3
 GENERIC_FUNCTION_METHODS = 4
 IMPLEMENTATION_CLASS_CLASS = 1
@@ -19,6 +21,7 @@ MM_WRAPPER_IMPLEMENTATION_CLASS = 0
 MM_WRAPPER_SUBTYPE_MASK = 1
 PAIR_HEAD = 0
 PAIR_TAIL = 1
+SINGLE_FLOAT_DATA = 0
 SLOT_DESCRIPTOR_GETTER = 4
 SIMPLE_OBJECT_VECTOR_SIZE = 0
 SIMPLE_OBJECT_VECTOR_DATA = 1
@@ -51,21 +54,18 @@ def dylan_byte_string_data(value):
   size = dylan_integer_value(dylan_slot_element(value, BYTE_STRING_SIZE))
   if size == 0:
     return ''
-  target = lldb.debugger.GetSelectedTarget()
-  word_size = target.GetAddressByteSize()
-  data_start = value.GetValueAsUnsigned() + ((1 + BYTE_STRING_DATA) * word_size)
-  error = lldb.SBError()
-  data = value.process.ReadMemory(data_start, size, error)
-  if error.Success():
-    return data
-  else:
-    raise Exception(error.description)
+  return dylan_read_raw_data(value, BYTE_STRING_DATA, size)
 
 def dylan_class_name(value):
   # We can't check that this is a <class> here as it might also
   # be a <function-class> or other subclass of <class>.
   class_name = dylan_slot_element(value, CLASS_DEBUG_NAME)
   return dylan_byte_string_data(class_name)
+
+def dylan_double_float_data(value):
+  ensure_value_class(value, 'KLdouble_floatGVKdW', '<double-float>')
+  data = dylan_read_raw_data(value, DOUBLE_FLOAT_DATA, 8)
+  return struct.unpack('d', data)[0]
 
 def dylan_double_integer_value(value):
   ensure_value_class(value, 'KLdouble_integerGVKeW', '<double-integer>')
@@ -175,6 +175,22 @@ def dylan_object_wrapper_symbol_name(value):
   address = lldb.SBAddress(dylan_object_wrapper_address(value), target)
   return address.symbol.name
 
+def dylan_read_raw_data(value, slot_index, size):
+  target = lldb.debugger.GetSelectedTarget()
+  word_size = target.GetAddressByteSize()
+  data_start = value.GetValueAsUnsigned() + ((1 + slot_index) * word_size)
+  error = lldb.SBError()
+  data = value.process.ReadMemory(data_start, size, error)
+  if error.Success():
+    return data
+  else:
+    raise Exception(error.description)
+
+def dylan_single_float_data(value):
+  ensure_value_class(value, 'KLsingle_floatGVKdW', '<single-float>')
+  data = dylan_read_raw_data(value, SINGLE_FLOAT_DATA, 4)
+  return struct.unpack('f', data)[0]
+
 def dylan_slot_index(value, name):
   slot_names = dylan_object_class_slot_names(value)
   return slot_names.index(name)
@@ -212,15 +228,7 @@ def dylan_unicode_string_data(value):
     return ''
   # We don't need to read the null termination because we don't want that in
   # our UTF-8 encoded result.
-  target = lldb.debugger.GetSelectedTarget()
-  word_size = target.GetAddressByteSize()
-  data_start = value.GetValueAsUnsigned() + ((1 + UNICODE_STRING_DATA) * word_size)
-  error = lldb.SBError()
-  data = value.process.ReadMemory(data_start, size * 4, error)
-  if error.Success():
-    return data.decode('utf-32').encode('utf-8')
-  else:
-    raise Exception(error.description)
+  data = dylan_read_raw_data(value, UNICODE_STRING_DATA, size * 4)
 
 def dylan_vector_size(vector):
   return dylan_integer_value(dylan_slot_element(vector, SIMPLE_OBJECT_VECTOR_SIZE))

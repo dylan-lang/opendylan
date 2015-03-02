@@ -107,7 +107,10 @@ class SyntheticSimpleObjectVector(object):
 SYNTHETIC_CLASS_TABLE = {
   'KLbooleanGVKdW': SyntheticHideChildren,
   'KLbyte_stringGVKdW': SyntheticHideChildren,
+  'KLdouble_floatGVKdW': SyntheticHideChildren,
   'KLempty_listGVKdW': SyntheticHideChildren,
   'KLsimple_object_vectorGVKdW': SyntheticSimpleObjectVector,
-  'KLsymbolGVKdW': SyntheticHideChildren
+  'KLsingle_floatGVKdW': SyntheticHideChildren,
+  'KLsymbolGVKdW': SyntheticHideChildren,
+  'KLunboundGVKeW': SyntheticHideChildren
 }

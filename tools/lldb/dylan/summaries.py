@@ -53,6 +53,10 @@ def dylan_byte_string_summary(value, internal_dict):
 def dylan_class_summary(value, internal_dict):
   return '{<class>: %s}' % dylan_class_name(value)
 
+def dylan_double_float_summary(value, internal_dict):
+  df = dylan_double_float_data(value)
+  return '{<double-float>: %g}' % df
+
 def dylan_double_integer_summary(value, internal_dict):
   di = dylan_double_integer_value(value)
   return '{<double-integer>: %s}' % di
@@ -91,6 +95,10 @@ def dylan_simple_object_vector_summary(value, internal_dict):
   size = synthetics.SyntheticDylanValue(value, internal_dict).num_children()
   return '{<simple-object-vector>: size: %s}' % size
 
+def dylan_single_float_summary(value, internal_dict):
+  sf = dylan_single_float_data(value)
+  return '{<single-float>: %g}' % sf
+
 def dylan_symbol_summary(value, internal_dict):
   return'{<symbol>: #"%s"}' % dylan_symbol_name(value)
 
@@ -117,6 +125,7 @@ SUMMARY_DISPATCH_TABLE = {
   'KLbooleanGVKdW': dylan_boolean_summary,
   'KLbyte_stringGVKdW': dylan_byte_string_summary,
   'KLclassGVKdW': dylan_class_summary,
+  'KLdouble_floatGVKdW': dylan_double_float_summary,
   'KLdouble_integerGVKeW': dylan_double_integer_summary,
   'KLempty_listGVKdW': dylan_empty_list_summary,
   'KLgeneric_functionGVKdW': dylan_generic_function_summary,
@@ -127,6 +136,7 @@ SUMMARY_DISPATCH_TABLE = {
   'KLmoduleGVKeW': dylan_module_summary,
   'KLsealed_generic_functionGVKdW': dylan_generic_function_summary,
   'KLsimple_object_vectorGVKdW': dylan_simple_object_vector_summary,
+  'KLsingle_floatGVKdW': dylan_single_float_summary,
   'KLsymbolGVKdW': dylan_symbol_summary,
   'KLunicode_stringGVKdW': dylan_unicode_string_summary,
   'KLused_libraryGVKeW': dylan_used_library_summary
