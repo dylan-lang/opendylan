@@ -2135,6 +2135,9 @@ extern dylan_value cache_header_engine_6 (dylan_value a1, dylan_value a2, dylan_
 extern dylan_value cache_header_engine_7 (dylan_value a1, dylan_value a2, dylan_value a3, dylan_value a4, dylan_value a5, dylan_value a6, dylan_value a7);
 extern dylan_value cache_header_engine_n (dylan_value argvec);
 
+extern dylan_value primitive_initialize_discriminator(dylan_value discriminator);
+extern dylan_value primitive_initialize_engine_node (dylan_value engine);
+
 
 /* additions to run-time.c specific to handling pass-by-reference of non-first
    return values of primitives  (gts,9/97) */
