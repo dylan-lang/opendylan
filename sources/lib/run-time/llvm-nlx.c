@@ -225,36 +225,42 @@ _Unwind_Reason_Code __opendylan_personality_v0(int version,
     if (landing_pad != 0 && start < ip_offset && ip_offset <= start + length) {
       // Found a matching call site, now determine which corresponding
       // action entry applies
-      const uint8_t *action_entry = call_site_limit + action - 1;
-      while (action_entry) {
-        intptr_t filter = get_SLEB128(&action_entry);
+      if (action == 0) {
+        cleanup_found = true;
+        cleanup_ip = region_start + landing_pad;
+      }
+      else {
+        const uint8_t *action_entry = call_site_limit + action - 1;
+        while (action_entry) {
+          intptr_t filter = get_SLEB128(&action_entry);
 
-        if (filter > 0) {
-          // Catch types precede the TType offset
-          const uint8_t *type_entry = ttable - filter * ttype_entry_size;
-          uintptr_t type = get_encoded(&type_entry, ttype_encoding);
-          if (type == (uintptr_t) bef->bef_typeid) {
-            // Found a catch
-            return handler_found(actions, ex, context,
-                                 region_start + landing_pad, filter);
+          if (filter > 0) {
+            // Catch types precede the TType offset
+            const uint8_t *type_entry = ttable - filter * ttype_entry_size;
+            uintptr_t type = get_encoded(&type_entry, ttype_encoding);
+            if (type == (uintptr_t) bef->bef_typeid) {
+              // Found a catch
+              return handler_found(actions, ex, context,
+                                   region_start + landing_pad, filter);
+            }
           }
-        }
-        else if (filter == 0) {
-          // Found a cleanup
-          if (cleanup_found && cleanup_ip != region_start + landing_pad) {
-            abort();
+          else if (filter == 0) {
+            // Found a cleanup
+            if (cleanup_found && cleanup_ip != region_start + landing_pad) {
+              abort();
+            }
+            else {
+              cleanup_found = true;
+              cleanup_ip = region_start + landing_pad;
+            }
           }
-          else {
-            cleanup_found = true;
-            cleanup_ip = region_start + landing_pad;
-          }
-        }
 
-        // This one didn't match, so try the next entry by following
-        // the next link
-        const uint8_t *next_base = action_entry;
-        intptr_t next = get_SLEB128(&action_entry);
-        action_entry = (next != 0) ? next_base + next : 0;
+          // This one didn't match, so try the next entry by following
+          // the next link
+          const uint8_t *next_base = action_entry;
+          intptr_t next = get_SLEB128(&action_entry);
+          action_entry = (next != 0) ? next_base + next : 0;
+        }
       }
     }
   }
