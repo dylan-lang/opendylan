@@ -51,6 +51,9 @@ def dylan_mangle_binding(binding, module, library):
   mangle_namespace_into(buf, module, library)
   return ''.join(buf)
 
+def dylan_mangle_wrapper(binding, module, library):
+  return dylan_mangle_binding(binding, module, library) + WRAPPER_SUFFIX
+
 def mangle_name_into(buf, name):
   for c in name:
     buf.extend(MANGLE_SYMBOLS.get(c, c.lower()))
