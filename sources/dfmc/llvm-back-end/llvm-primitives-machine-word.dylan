@@ -314,12 +314,12 @@ end;
 
 define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor primitive-machine-word-count-low-zeros
     (x :: <raw-machine-word>) => (result :: <raw-machine-word>);
-  ins--call-intrinsic(be, "llvm.cttz", vector(x, $llvm-true))
+  ins--call-intrinsic(be, "llvm.cttz", vector(x, $llvm-false))
 end;
 
 define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor primitive-machine-word-count-high-zeros
     (x :: <raw-machine-word>) => (result :: <raw-machine-word>);
-  ins--call-intrinsic(be, "llvm.ctlz", vector(x, $llvm-true))
+  ins--call-intrinsic(be, "llvm.ctlz", vector(x, $llvm-false))
 end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-add
