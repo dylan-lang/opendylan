@@ -227,6 +227,18 @@ define method op--object-mm-wrapper
   end ins--if
 end method;
 
+define method op--likely
+    (be :: <llvm-back-end>, cmp :: <llvm-value>) => (cmp :: <llvm-value>);
+  ins--call-intrinsic(be, "llvm.expect", vector(cmp, $llvm-true));
+  cmp
+end method;
+
+define method op--unlikely
+    (be :: <llvm-back-end>, cmp :: <llvm-value>) => (cmp :: <llvm-value>);
+  ins--call-intrinsic(be, "llvm.expect", vector(cmp, $llvm-false));
+  cmp
+end method;
+
 
 /// Overflow trap
 
