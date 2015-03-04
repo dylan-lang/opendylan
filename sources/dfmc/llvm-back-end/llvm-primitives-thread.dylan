@@ -98,10 +98,14 @@ end method;
 /// Thread-local variables
 
 define runtime-variable %tlv-initializations :: <simple-object-vector> = #[],
-  section: #"ambiguous-data";
+  section: #"variables";
 
 // Element index of the first unused vector element
 define runtime-variable %tlv-initializations-cursor :: <raw-integer>
+  = make-raw-literal(0), section: #"data";
+
+// Marker for TLV initializations already perfomed in the current thread
+define thread-local runtime-variable %tlv-initializations-local-cursor :: <raw-integer>
   = make-raw-literal(0);
 
 
@@ -221,6 +225,33 @@ end;
 
 define side-effecting stateful indefinite-extent auxiliary &c-primitive-descriptor primitive-register-thread-variable-initializer
     (initial-value :: <object>, initializer-function :: <raw-pointer>) => ();
+
+define side-effecting stateful dynamic-extent auxiliary &c-primitive-descriptor primitive-initialize-thread-variables
+    () => ();
+
+define method op--initialize-thread-variables
+    (back-end :: <llvm-back-end>) => ();
+  let word-size = back-end-word-size(back-end);
+  let m = back-end.llvm-builder-module;
+
+  let init-bb = make(<llvm-basic-block>);
+  let common-bb = make(<llvm-basic-block>);
+
+  let cursor
+    = ins--load(back-end, llvm-runtime-variable(back-end, m, %tlv-initializations-cursor-descriptor),
+                alignment: word-size);
+  let local-cursor
+    = ins--load(back-end, llvm-runtime-variable(back-end, m, %tlv-initializations-local-cursor-descriptor),
+                alignment: word-size);
+  let cmp = ins--icmp-ult(back-end, local-cursor, cursor);
+  ins--br(back-end, op--unlikely(back-end, cmp), init-bb, common-bb);
+
+  ins--block(back-end, init-bb);
+  call-primitive(back-end, primitive-initialize-thread-variables-descriptor);
+  ins--br(back-end, common-bb);
+
+  ins--block(back-end, common-bb);
+end method;
 
 define side-effecting stateful indefinite-extent &c-primitive-descriptor primitive-allocate-thread-variable
     (initial-value :: <object>) => (handle :: <raw-pointer>);

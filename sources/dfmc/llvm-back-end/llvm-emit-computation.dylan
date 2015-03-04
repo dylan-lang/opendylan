@@ -610,10 +610,14 @@ define method emit-computation
 				      $llvm-object-pointer-type));
   let value = ins--load(back-end, global);
   let result
-    = if (c.referenced-binding.binding-thread?
-	    & ~llvm-thread-local-support?(back-end))
-        call-primitive(back-end, primitive-read-thread-variable-descriptor,
-                       value)
+    = if (c.referenced-binding.binding-thread?)
+        if (llvm-thread-local-support?(back-end))
+          op--initialize-thread-variables(back-end);
+          value
+        else
+          call-primitive(back-end, primitive-read-thread-variable-descriptor,
+                         value)
+        end if
       else
 	value
       end if;
@@ -1141,17 +1145,23 @@ define method emit-computation
   let the-value = emit-reference(back-end, m, c.computation-value);
   let name = emit-name(back-end, m, c.assigned-binding);
   let global = llvm-builder-global(back-end, name);
-  if (c.assigned-binding.binding-thread?
-	& ~llvm-thread-local-support?(back-end))
-    llvm-constrain-type(global.llvm-value-type,
-			llvm-pointer-to(back-end, $llvm-object-pointer-type));
-    let handle = ins--load(back-end, global);
-    call-primitive(back-end, primitive-write-thread-variable-descriptor,
-		   handle,
-		   the-value);
+  if (c.assigned-binding.binding-thread?)
+    if (llvm-thread-local-support?(back-end))
+      op--initialize-thread-variables(back-end);
+      let global-type = llvm-pointer-to(back-end, the-value.llvm-value-type);
+      llvm-constrain-type(global.llvm-value-type, global-type);
+      ins--store(back-end, the-value, global);
+    else
+      let global-type = llvm-pointer-to(back-end, $llvm-object-pointer-type);
+      llvm-constrain-type(global.llvm-value-type, global-type);
+      let handle = ins--load(back-end, global);
+      call-primitive(back-end, primitive-write-thread-variable-descriptor,
+                     handle,
+                     the-value);
+    end if
   else
-    llvm-constrain-type(global.llvm-value-type,
-                        llvm-pointer-to(back-end, the-value.llvm-value-type));
+    let global-type = llvm-pointer-to(back-end, the-value.llvm-value-type);
+    llvm-constrain-type(global.llvm-value-type, global-type);
     ins--store(back-end, the-value, global);
   end if;
   computation-result(back-end, c, the-value);
@@ -1170,7 +1180,6 @@ define method emit-computation
       call-primitive(back-end,
                      primitive-register-thread-variable-initializer-descriptor,
                      the-value, initializer-function-cast);
-      next-method();
     else
       let handle
         = call-primitive(back-end,
@@ -1198,32 +1207,25 @@ define method emit-binding-initializer-function
 
   let function-name = concatenate($tlv-initializer-prefix, binding-name);
 
+  let global-ptr-type
+    = llvm-pointer-to(back-end, $llvm-object-pointer-type);
   let function-type
     = make(<llvm-function-type>,
-           return-type: $llvm-void-type,
-           parameter-types: vector($llvm-object-pointer-type),
+           return-type: global-ptr-type,
+           parameter-types: #[],
            varargs?: #f);
-  let argument
-    = make(<llvm-argument>,
-           type: $llvm-object-pointer-type,
-           name: "value",
-           index: 0);
   let function
     = make(<llvm-function>,
            name: function-name,
            type: llvm-pointer-to(back-end, function-type),
-           arguments: vector(argument),
+           arguments: #[],
            linkage: #"internal");
   llvm-builder-define-global(back-end, function-name, function);
 
   with-builder-function (back-end, function)
-    ins--local(back-end, argument.llvm-argument-name, argument);
-
     ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
-    llvm-constrain-type(global.llvm-value-type,
-                        llvm-pointer-to(back-end, argument.llvm-value-type));
-    ins--store(back-end, argument, global);
-    ins--ret(back-end);
+    llvm-constrain-type(global.llvm-value-type, global-ptr-type);
+    ins--ret(back-end, global);
   end;
   function
 end method;

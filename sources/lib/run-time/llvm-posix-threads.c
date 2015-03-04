@@ -114,6 +114,97 @@ void primitive_register_thread_variable_initializer(dylan_value value, D functio
   initializations->vector_element[Ptlv_initializations_cursor++] = function;
 
   pthread_mutex_unlock(&tlv_initializations_lock);
+
+  // Perform the initialization and any others pending in this thread
+  primitive_initialize_thread_variables();
+}
+
+void primitive_initialize_thread_variables(void)
+{
+  // Initialize thread-local variables to their init values
+  // and register them as GC roots
+  pthread_mutex_lock(&tlv_initializations_lock);
+
+  struct KLsimple_object_vectorGVKd *initializations
+    = (struct KLsimple_object_vectorGVKd *) Ptlv_initializations;
+  DSINT size = Ptlv_initializations_cursor;
+
+  char *range_start = NULL, *range_end = NULL;
+
+  // Ensure that the TEB is registered
+  if (Ptlv_initializations_local_cursor == 0) {
+    range_start = (char *) &Pteb;
+    range_end = (char *) (&Pteb + 1);
+  }
+
+  // Locate each TLV, initialize it, and register it as (part of a
+  // range of) GC roots
+  for (DSINT i = Ptlv_initializations_local_cursor; i < size; i += 2) {
+    dylan_value *(*function)(void)
+      = (dylan_value *(*)(void)) initializations->vector_element[i + 1];
+    dylan_value *tlv = (*function)();
+    *tlv = initializations->vector_element[i];
+
+    // Does this address extend the current range?
+    if ((char *) tlv == range_end) {
+      range_end = (char *) (tlv + 1);
+    }
+    else {
+#if defined(GC_USE_BOEHM)
+      if (range_start != NULL) {
+        GC_add_roots(range_start, range_end);
+      }
+#endif
+      range_start = (char *) tlv;
+      range_end = (char *) (tlv + 1);
+    }
+  }
+
+#if defined(GC_USE_BOEHM)
+  GC_add_roots(range_start, range_end);
+#endif
+  Ptlv_initializations_local_cursor = size;
+
+  pthread_mutex_unlock(&tlv_initializations_lock);
+}
+
+void deinitialize_thread_variables(void)
+{
+  // Deregister TLV areas as GC roots
+  pthread_mutex_lock(&tlv_initializations_lock);
+
+  struct KLsimple_object_vectorGVKd *initializations
+    = (struct KLsimple_object_vectorGVKd *) Ptlv_initializations;
+  DSINT size = Ptlv_initializations_cursor;
+
+  // Ensure that the TEB is deregistered
+  char *range_start = (char *) &Pteb, *range_end = (char *) (&Pteb + 1);
+
+  // Locate each TLV and deregister it as (part of a range of) GC
+  // roots
+  for (DSINT i = 0; i < size; i += 2) {
+    dylan_value *(*function)(void)
+      = (dylan_value *(*)(void)) initializations->vector_element[i + 1];
+    dylan_value *tlv = (*function)();
+
+    // Does this address extend the current range?
+    if ((char *) tlv == range_end) {
+      range_end = (char *) (tlv + 1);
+    }
+    else {
+#if defined(GC_USE_BOEHM)
+      GC_remove_roots(range_start, range_end);
+#endif
+      range_start = (char *) tlv;
+      range_end = (char *) (tlv + 1);
+    }
+  }
+
+#if defined(GC_USE_BOEHM)
+  GC_remove_roots(range_start, range_end);
+#endif
+
+  pthread_mutex_unlock(&tlv_initializations_lock);
 }
 
 
@@ -151,6 +242,8 @@ static void *trampoline(void *arg)
   // FIXME set thread name
   // FIXME set thread priority
 
+  primitive_initialize_thread_variables();
+
   Pteb.teb_current_thread_handle = (D) pthread_self();
 
   // Execute the thread function using the Dylan trampoline
@@ -158,6 +251,8 @@ static void *trampoline(void *arg)
 
   // Drop references to the the <thread> object
   Pteb.teb_current_thread = NULL;
+
+  deinitialize_thread_variables();
 
   // Mark the thread as completed
   pthread_mutex_lock(&thread_join_lock);
@@ -311,21 +406,6 @@ void primitive_initialize_current_thread(dylan_value t, DBOOL synchronize)
   thread->handle2 = NULL;      // Drop reference to trampoline closure
 
   Pteb.teb_current_thread = t;
-
-  // Initialize thread-local variables to their init values
-  pthread_mutex_lock(&tlv_initializations_lock);
-
-  struct KLsimple_object_vectorGVKd *initializations
-    = (struct KLsimple_object_vectorGVKd *) Ptlv_initializations;
-  DSINT size = Ptlv_initializations_cursor;
-
-  for (DSINT i = 0; i < size; i += 2) {
-    dylan_value value = initializations->vector_element[i];
-    void (*function)(dylan_value) = (void (*)(dylan_value)) initializations->vector_element[i + 1];
-    (*function)(value);
-  }
-
-  pthread_mutex_unlock(&tlv_initializations_lock);
 }
 
 // primitive-initialize-special-thread
