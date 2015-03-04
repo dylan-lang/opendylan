@@ -1,6 +1,8 @@
 import lldb
 import struct
 
+import mangling
+
 OBJECT_TAG = 0
 INTEGER_TAG = 1
 BYTE_CHARACTER_TAG = 2
@@ -29,8 +31,9 @@ SYMBOL_NAME = 0
 UNICODE_STRING_SIZE = 0
 UNICODE_STRING_DATA = 1
 
-def ensure_value_class(value, wrapper_symbol_name, class_name):
+def ensure_value_class(value, class_name, module, library):
   wrappersym = dylan_object_wrapper_symbol_name(value)
+  wrapper_symbol_name = mangling.dylan_mangle_wrapper(class_name, module, library)
   if wrappersym != wrapper_symbol_name:
     raise Exception("%#x is not a %s (%s != %s)" % (int(value.address_of.GetValueAsUnsigned()), class_name, wrappersym, wrapper_symbol_name))
 
@@ -38,7 +41,7 @@ def dylan_tag_bits(value):
   return value.GetValueAsUnsigned() & 3
 
 def dylan_boolean_value(value):
-  ensure_value_class(value, 'KLbooleanGVKdW', '<boolean>')
+  ensure_value_class(value, '<boolean>', 'dylan', 'dylan')
   target = lldb.debugger.GetSelectedTarget()
   true_value = target.FindFirstGlobalVariable('KPtrueVKi').AddressOf().GetValueAsUnsigned()
   return value.GetValueAsUnsigned() == true_value
@@ -50,7 +53,7 @@ def dylan_byte_character_value(value):
   return chr(byte_value)
 
 def dylan_byte_string_data(value):
-  ensure_value_class(value, 'KLbyte_stringGVKdW', '<byte-string>')
+  ensure_value_class(value, '<byte-string>', 'dylan', 'dylan')
   size = dylan_integer_value(dylan_slot_element(value, BYTE_STRING_SIZE))
   if size == 0:
     return ''
@@ -63,12 +66,12 @@ def dylan_class_name(value):
   return dylan_byte_string_data(class_name)
 
 def dylan_double_float_data(value):
-  ensure_value_class(value, 'KLdouble_floatGVKdW', '<double-float>')
+  ensure_value_class(value, '<double-float>', 'dylan', 'dylan')
   data = dylan_read_raw_data(value, DOUBLE_FLOAT_DATA, 8)
   return struct.unpack('d', data)[0]
 
 def dylan_double_integer_value(value):
-  ensure_value_class(value, 'KLdouble_integerGVKeW', '<double-integer>')
+  ensure_value_class(value, '<double-integer>', 'dylan-extensions', 'dylan')
   target = lldb.debugger.GetSelectedTarget()
   int_type = target.GetBasicType(lldb.eBasicTypeInt)
   lo = dylan_slot_element(value, 0).Cast(int_type)
@@ -100,7 +103,7 @@ def dylan_list_elements(value):
   return elements
 
 def dylan_machine_word_value(value):
-  ensure_value_class(value, 'KLmachine_wordGVKeW', '<machine-word>')
+  ensure_value_class(value, '<machine-word>', 'dylan-extensions', 'dylan')
   return dylan_slot_element(value, 0).GetValueAsUnsigned()
 
 def dylan_method_iep_function(value):
@@ -116,7 +119,7 @@ def dylan_method_iep_function(value):
 
 def dylan_object_class(value):
   iclass = dylan_object_implementation_class(value)
-  ensure_value_class(iclass, 'KLimplementation_classGVKeW', '<implementation-class>')
+  ensure_value_class(iclass, '<implementation-class>', 'dylan-extensions', 'dylan')
   return dylan_slot_element(iclass, IMPLEMENTATION_CLASS_CLASS)
 
 def dylan_object_class_slot_descriptors(value):
@@ -151,9 +154,9 @@ def dylan_object_wrapper_address(value):
     raise Exception(error.description)
 
 def dylan_object_wrapper_class(value):
-  ensure_value_class(value, 'KLmm_wrapperGVKiW', '<mm-wrapper>')
+  ensure_value_class(value, '<mm-wrapper>', 'internal', 'dylan')
   iclass = dylan_slot_element(value, MM_WRAPPER_IMPLEMENTATION_CLASS)
-  ensure_value_class(iclass, 'KLimplementation_classGVKeW', '<implementation-class>')
+  ensure_value_class(iclass, '<implementation-class>', 'dylan-extensions', 'dylan')
   return dylan_slot_element(iclass, IMPLEMENTATION_CLASS_CLASS)
 
 def dylan_object_wrapper_class_name(value):
@@ -187,7 +190,7 @@ def dylan_read_raw_data(value, slot_index, size):
     raise Exception(error.description)
 
 def dylan_single_float_data(value):
-  ensure_value_class(value, 'KLsingle_floatGVKdW', '<single-float>')
+  ensure_value_class(value, '<single-float>', 'dylan', 'dylan')
   data = dylan_read_raw_data(value, SINGLE_FLOAT_DATA, 4)
   return struct.unpack('f', data)[0]
 
@@ -214,7 +217,7 @@ def dylan_slot_element_by_name(value, name):
   return dylan_slot_element(value, slot_index)
 
 def dylan_symbol_name(value):
-  ensure_value_class(value, 'KLsymbolGVKdW', '<symbol>')
+  ensure_value_class(value, '<symbol>', 'dylan', 'dylan')
   name = dylan_slot_element(value, SYMBOL_NAME)
   return dylan_byte_string_data(name)
 
@@ -222,7 +225,7 @@ def dylan_unicode_character_value(value):
   return unichr(value.GetValueAsUnsigned() >> 2).encode('utf8')
 
 def dylan_unicode_string_data(value):
-  ensure_value_class(value, 'KLunicode_stringGVKdW', '<unicode-string>')
+  ensure_value_class(value, '<unicode-string>', 'dylan', 'dylan')
   size = dylan_integer_value(dylan_slot_element(value, UNICODE_STRING_SIZE))
   if size == 0:
     return ''
