@@ -50,7 +50,7 @@ define function unix-read
             (primitive-machine-word-add
                (primitive-cast-pointer-as-raw
                   (primitive-repeated-slot-as-raw(data, primitive-repeated-slot-offset(data))),
-                primitive-cast-pointer-as-raw(integer-as-raw(offset)))),
+                integer-as-raw(offset))),
           integer-as-raw(count))
        end)
   end
@@ -69,7 +69,7 @@ define function unix-write
             (primitive-machine-word-add
                (primitive-cast-pointer-as-raw
                   (primitive-repeated-slot-as-raw(data, primitive-repeated-slot-offset(data))),
-                primitive-cast-pointer-as-raw(integer-as-raw(offset)))),
+                integer-as-raw(offset))),
           integer-as-raw(count))
        end)
   end

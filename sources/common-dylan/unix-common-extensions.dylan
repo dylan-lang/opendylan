@@ -16,20 +16,20 @@ define inline function write-console
      #key end: _end,
           stream :: one-of(#"standard-output", #"standard-error") = #"standard-output")
  => ()
-  let stream = if (stream == #"standard-output")
-                 1
-               elseif (stream == #"standard-error")
-                 2
-               end;
+  let istream :: <integer>
+    = select (stream)
+	#"standard-output" => 1;
+	#"standard-error" => 2;
+      end;
   let string-size :: <integer> = _end | size(string);
   %call-c-function ("write")
       (fd :: <raw-c-signed-int>, buffer :: <raw-byte-string>, size :: <raw-c-unsigned-long>)
    => (count :: <raw-c-signed-int>)
-    (integer-as-raw(stream), primitive-string-as-raw(string), integer-as-raw(string-size))
+    (integer-as-raw(istream), primitive-string-as-raw(string), integer-as-raw(string-size))
   end;
   //---*** NOTE: Should we do something here if we can't do the I/O???
   %call-c-function ("fsync") (fd :: <raw-c-signed-int>) => (result :: <raw-c-signed-int>)
-    (integer-as-raw(stream))
+    (integer-as-raw(istream))
   end;
 end function write-console;
 
@@ -40,7 +40,7 @@ define thread variable *time-buffer* :: <byte-string>
 define function default-random-seed () => (seed :: <integer>)
   %call-c-function ("time")
       (time :: <raw-c-pointer>) => (time :: <raw-c-signed-long>)
-    (primitive-cast-raw-as-pointer(primitive-string-as-raw(*time-buffer*)))
+    (primitive-string-as-raw(*time-buffer*))
   end;
   logior(as(<integer>, *time-buffer*[0]),
          ash(as(<integer>, *time-buffer*[1]), 8),

@@ -8,8 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define inline-only function get-application-commandline
     () => (res :: <string>, arguments == #f)
-  let cursize = 128;
-  let len = 128;
+  let cursize :: <integer> = 128;
+  let len :: <integer> = 128;
   let buffer = #f;
   while (len >= cursize)
     cursize := cursize * 2;

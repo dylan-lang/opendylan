@@ -84,7 +84,7 @@ define function unix-file-exists? (path :: <byte-string>) => (exists? :: <boolea
        (path :: <raw-byte-string>, statbuf :: <raw-pointer>)
       => (result :: <raw-c-signed-int>)
        (primitive-string-as-raw(path),
-        primitive-cast-raw-as-pointer(primitive-string-as-raw(*stat-buffer*)))
+        primitive-string-as-raw(*stat-buffer*))
      end)
 end function unix-file-exists?;
 

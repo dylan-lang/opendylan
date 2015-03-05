@@ -45,7 +45,8 @@ end;
 define macro with-storage
   { with-storage (?:name, ?size:expression) ?:body end }
   => { begin
-         let ?name = primitive-wrap-machine-word(integer-as-raw(0));
+         let ?name :: <machine-word>
+           = primitive-wrap-machine-word(integer-as-raw(0));
          block ()
            ?name := primitive-wrap-machine-word
                       (primitive-cast-pointer-as-raw

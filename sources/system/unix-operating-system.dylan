@@ -11,12 +11,13 @@ define macro with-storage
   { with-storage (?:name, ?size:expression) ?:body end }
   => { begin
          let ?name = primitive-wrap-machine-word(integer-as-raw(0));
+         let storage-size :: <integer> = ?size;
          block ()
            ?name := primitive-wrap-machine-word
                       (primitive-cast-pointer-as-raw
                          (%call-c-function ("MMAllocMisc")
                             (nbytes :: <raw-c-size-t>) => (p :: <raw-c-pointer>)
-                            (integer-as-raw(?size))
+                            (integer-as-raw(storage-size))
                           end));
            if (primitive-machine-word-equal?
                  (primitive-unwrap-machine-word(?name), integer-as-raw(0)))
@@ -29,7 +30,7 @@ define macro with-storage
              %call-c-function ("MMFreeMisc")
                (p :: <raw-c-pointer>, nbytes :: <raw-c-size-t>) => (void :: <raw-c-void>)
                  (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?name)),
-                  integer-as-raw(?size))
+                  integer-as-raw(storage-size))
              end;
              #f
            end
@@ -145,8 +146,9 @@ define function make-pipe() => (read-fd :: <integer>, write-fd :: <integer>);
     let result
       = raw-as-integer
           (%call-c-function("pipe")
-             (new-value :: <raw-byte-string>) => (result :: <raw-c-signed-int>)
-             (primitive-unwrap-machine-word(fildes))
+             (new-value :: <raw-c-pointer>) => (result :: <raw-c-signed-int>)
+             (primitive-cast-raw-as-pointer
+                (primitive-unwrap-machine-word(fildes)))
            end);
     if (result < 0)
       error("pipe creation failed");
@@ -288,7 +290,7 @@ define function run-application
 
   let dir = working-directory & as(<byte-string>, working-directory);
 
-  let (program, argv-size)
+  let (program :: <byte-string>, argv-size :: <integer>)
     = if (under-shell?)
         if (instance?(command, <string>))
           values($posix-shell, 4)
@@ -343,16 +345,18 @@ define function run-application
                 make-envp(environment)
               else
                 values(primitive-wrap-machine-word
-                         (%call-c-function ("system_environ")
-                            () => (environ :: <raw-c-pointer>)
-                            ()
-                          end), 0)
+			 (primitive-cast-pointer-as-raw
+			    (%call-c-function ("system_environ")
+			       () => (environ :: <raw-c-pointer>)
+			       ()
+			     end)),
+		       0)
               end if;
 
         block ()
           primitive-c-pointer-at(primitive-unwrap-c-pointer(argv),
                                  integer-as-raw(argv-size - 1), integer-as-raw(0))
-            := integer-as-raw(0);
+            := primitive-cast-raw-as-pointer(integer-as-raw(0));
 
           raw-as-integer
             (%call-c-function("system_spawn")
@@ -369,9 +373,12 @@ define function run-application
                   (primitive-unwrap-machine-word(argv)),
                 primitive-cast-raw-as-pointer
                   (primitive-unwrap-machine-word(envp)),
-                if (dir) primitive-string-as-raw(dir)
-                else integer-as-raw(0) end,
-                primitive-boolean-as-raw(inherit-console?),
+                if (dir)
+                  primitive-string-as-raw(dir)
+                else
+                  primitive-cast-raw-as-pointer(integer-as-raw(0))
+                end,
+                integer-as-raw(if (inherit-console?) 1 else 0 end),
                 integer-as-raw(input-fd),
                 integer-as-raw(output-fd),
                 integer-as-raw(error-fd))
@@ -413,7 +420,8 @@ define function run-outputter
   let dylan-output-buffer = make(<byte-string>, size: $BUFFER-MAX, fill: '\0');
   let output-buffer
     = primitive-wrap-machine-word
-        (primitive-string-as-raw(dylan-output-buffer));
+        (primitive-cast-pointer-as-raw
+           (primitive-string-as-raw(dylan-output-buffer)));
   iterate loop ()
     let count = unix-raw-read(outputter-read-fd, output-buffer, $BUFFER-MAX);
     if (count > 0)
@@ -447,7 +455,10 @@ define function %waitpid
       = raw-as-integer
           (%call-c-function ("waitpid")
              (wpid :: <raw-c-signed-int>, timeloc :: <raw-c-pointer>, options :: <raw-c-unsigned-int>) => (pid :: <raw-c-signed-int>)
-             (integer-as-raw(wpid), primitive-unwrap-machine-word(statusp), integer-as-raw(options))
+             (integer-as-raw(wpid),
+              primitive-cast-raw-as-pointer
+                (primitive-unwrap-machine-word(statusp)),
+              integer-as-raw(options))
            end);
     let status
       = raw-as-integer
@@ -467,16 +478,17 @@ define function make-envp
   // Obtain the current environment as a <string-table> keyed by the
   // environment variable name
   let old-envp :: <machine-word>
-    = primitive-wrap-machine-word
+    = primitive-wrap-machine-word(primitive-cast-pointer-as-raw
         (%call-c-function ("system_environ") () => (environ :: <raw-c-pointer>)
            ()
-         end);
+         end));
   block (envp-done)
     for (i :: <integer> from 0)
       let raw-item
         = primitive-c-pointer-at(primitive-unwrap-machine-word(old-envp),
                                  integer-as-raw(i), integer-as-raw(0));
-      if (primitive-machine-word-equal?(raw-item, integer-as-raw(0)))
+      if (primitive-machine-word-equal?
+            (raw-item, primitive-cast-raw-as-pointer(integer-as-raw(0))))
         envp-done();
       else
         let item = primitive-raw-as-string(raw-item);
@@ -539,16 +551,16 @@ end function signal-application-event;
 
 define function load-library
     (name :: <string>) => (module)
-  let module =
-    primitive-wrap-machine-word
-    (%call-c-function ("system_dlopen")
-       (name :: <raw-byte-string>)
-       => (handle :: <raw-c-pointer>)
-       (primitive-cast-raw-as-pointer(primitive-string-as-raw(name)))
-    end);
+  let module
+    = primitive-wrap-machine-word
+        (primitive-cast-pointer-as-raw
+	   (%call-c-function ("system_dlopen")
+	        (name :: <raw-byte-string>)
+	     => (handle :: <raw-c-pointer>)
+	      (primitive-string-as-raw(name))
+	    end));
   module
 end function load-library;
-
 
 define function current-process-id
     () => (pid :: <integer>)

@@ -229,9 +229,10 @@ end method type-for-copy;
 define sealed inline method byte-storage-address
     (the-buffer :: <buffer>)
  => (result-offset :: <machine-word>)
-      primitive-wrap-machine-word
-        (primitive-repeated-slot-as-raw
-           (the-buffer, primitive-repeated-slot-offset(the-buffer)))
+  primitive-wrap-machine-word
+    (primitive-cast-pointer-as-raw
+       (primitive-repeated-slot-as-raw
+	  (the-buffer, primitive-repeated-slot-offset(the-buffer))))
 end method;
 
 define sealed inline method byte-storage-offset-address
@@ -239,6 +240,7 @@ define sealed inline method byte-storage-offset-address
  => (result-offset :: <machine-word>)
   u%+(data-offset,
       primitive-wrap-machine-word
-        (primitive-repeated-slot-as-raw
-           (the-buffer, primitive-repeated-slot-offset(the-buffer))))
+	(primitive-cast-pointer-as-raw
+	   (primitive-repeated-slot-as-raw
+	      (the-buffer, primitive-repeated-slot-offset(the-buffer)))))
 end method;

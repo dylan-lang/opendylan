@@ -206,9 +206,10 @@ define constant <byte-vector-like> = type-union(<byte-string>, <byte-vector>);
 define sealed inline method byte-storage-address
     (the-buffer :: <byte-vector-like>)
  => (result-offset :: <machine-word>)
-      primitive-wrap-machine-word
-        (primitive-repeated-slot-as-raw
-           (the-buffer, primitive-repeated-slot-offset(the-buffer)))
+  primitive-wrap-machine-word
+    (primitive-cast-pointer-as-raw
+       (primitive-repeated-slot-as-raw
+          (the-buffer, primitive-repeated-slot-offset(the-buffer))))
 end method;
 
 define sealed inline method byte-storage-offset-address
@@ -216,6 +217,7 @@ define sealed inline method byte-storage-offset-address
  => (result-offset :: <machine-word>)
   u%+(data-offset,
       primitive-wrap-machine-word
-        (primitive-repeated-slot-as-raw
-           (the-buffer, primitive-repeated-slot-offset(the-buffer))))
+        (primitive-cast-pointer-as-raw
+           (primitive-repeated-slot-as-raw
+              (the-buffer, primitive-repeated-slot-offset(the-buffer)))))
 end method;

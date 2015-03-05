@@ -15,14 +15,17 @@ define constant $KERN_PROCARGS2 = 49;
 define function darwin-sysctl
   (mib :: <vector>) => (ret :: false-or(<byte-string>))
   let wsize = raw-as-integer(primitive-word-size());
-  let rmib = make(<byte-string>, size: size(mib) * 4, fill: '\0');
+  let mib-size :: <integer> = size(mib);
+  let rmib-size :: <integer> = mib-size * 4;
+  let rmib = make(<byte-string>, size: rmib-size, fill: '\0');
   let rosize = make(<byte-string>, size: wsize, fill: '\0');
 
   // create the real mib vector
-  for (i from 0 below size(mib))
+  for (i from 0 below mib-size)
+    let mibval :: <integer> = mib[i];
     primitive-c-signed-int-at
-      (primitive-cast-raw-as-pointer(primitive-string-as-raw(rmib)),
-        integer-as-raw(0), integer-as-raw(i * 4)) := integer-as-raw(mib[i])
+      (primitive-string-as-raw(rmib),
+       integer-as-raw(0), integer-as-raw(i * 4)) := integer-as-raw(mibval)
   end for;
 
   // get the size of the available data
@@ -31,19 +34,19 @@ define function darwin-sysctl
      out :: <raw-byte-string> , osize :: <raw-byte-string>,
      in :: <raw-byte-string>, isize :: <raw-c-unsigned-int>)
     => (ret :: <raw-c-signed-int>)
-    (primitive-string-as-raw(rmib), integer-as-raw(size(rmib)),
-     primitive-unwrap-machine-word($machine-word-zero),
+    (primitive-string-as-raw(rmib), integer-as-raw(rmib-size),
+     primitive-cast-raw-as-pointer(integer-as-raw(0)),
      primitive-string-as-raw(rosize),
-     primitive-unwrap-machine-word($machine-word-zero),
-     primitive-unwrap-machine-word($machine-word-zero)) end) >= 0)
+     primitive-cast-raw-as-pointer(integer-as-raw(0)),
+     integer-as-raw(0)) end) >= 0)
 
     let osize = raw-as-integer(primitive-c-unsigned-long-at
-      (primitive-cast-raw-as-pointer(primitive-string-as-raw(rosize)),
+      (primitive-string-as-raw(rosize),
        integer-as-raw(0), integer-as-raw(0))) + 1;
     let out = make(<byte-string>, size: osize, fill: '\0');
 
-    primitive-c-unsigned-long-at(primitive-cast-raw-as-pointer
-      (primitive-string-as-raw(rosize)), integer-as-raw(0), integer-as-raw(0))
+    primitive-c-unsigned-long-at(primitive-string-as-raw(rosize),
+                                 integer-as-raw(0), integer-as-raw(0))
       := integer-as-raw(osize);
 
     // do the actual sysctl
@@ -52,10 +55,10 @@ define function darwin-sysctl
        out :: <raw-byte-string>, osize :: <raw-byte-string>,
        in :: <raw-byte-string>, isize :: <raw-c-unsigned-int>)
       => (ret :: <raw-c-signed-int>)
-      (primitive-string-as-raw(rmib), integer-as-raw(size(mib)),
+      (primitive-string-as-raw(rmib), integer-as-raw(mib-size),
        primitive-string-as-raw(out), primitive-string-as-raw(rosize),
-       primitive-unwrap-machine-word($machine-word-zero),
-       primitive-unwrap-machine-word($machine-word-zero)) end) >= 0)
+       primitive-cast-raw-as-pointer(integer-as-raw(0)),
+       integer-as-raw(0)) end) >= 0)
       out
     end when;
   end when;
@@ -80,7 +83,7 @@ define inline-only function get-application-commandline
   if (cmdline)
     let argc =
       raw-as-integer(primitive-c-signed-int-at
-                       (primitive-cast-raw-as-pointer(primitive-string-as-raw(cmdline)),
+                       (primitive-string-as-raw(cmdline),
                         integer-as-raw(0), integer-as-raw(0)));
     // tokenize the returned buffer
     let tokens = make(<stretchy-vector>);

@@ -118,7 +118,7 @@ define inline-only function dirent-name (dirent :: <machine-word>) => (name :: <
   primitive-raw-as-string
     (%call-c-function ("system_dirent_name")
        (dirent :: <raw-c-pointer>) => (name :: <raw-byte-string>)
-       (primitive-unwrap-machine-word(dirent))
+       (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(dirent)))
      end);
 end function dirent-name;
 
