@@ -560,14 +560,21 @@ define side-effecting stateless dynamic-extent &c-primitive-descriptor primitive
 define side-effect-free stateless dynamic-extent &c-primitive-descriptor primitive-mps-ld-isstale
     (primitive-hash-state) => (is-stale? :: <raw-integer>);
 
-define side-effect-free stateful &unimplemented-primitive-descriptor primitive-allocation-count
+define thread-local runtime-variable %allocation-count :: <raw-integer>
+  = make-raw-literal(0);
+
+define side-effect-free stateful &primitive-descriptor primitive-allocation-count
   () => (count :: <raw-integer>);
-  //---*** Fill this in...
+  let ptr = llvm-runtime-variable(be, be.llvm-builder-module,
+                                  %allocation-count-descriptor);
+  ins--load(be, ptr, alignment: back-end-word-size(be))
 end;
 
-define side-effecting stateful &unimplemented-primitive-descriptor primitive-initialize-allocation-count
+define side-effecting stateful &primitive-descriptor primitive-initialize-allocation-count
     () => ()
-  //---*** Fill this in...
+  let ptr = llvm-runtime-variable(be, be.llvm-builder-module,
+                                  %allocation-count-descriptor);
+  ins--store(be, 0, ptr, alignment: back-end-word-size(be));
 end;
 
 define side-effecting stateful &c-primitive-descriptor primitive-begin-heap-alloc-stats

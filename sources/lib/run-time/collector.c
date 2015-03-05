@@ -52,6 +52,11 @@ void force_reference_to_spy_interface()
 #include <stdlib.h>
 #include <assert.h>
 
+#ifdef OPEN_DYLAN_BACKEND_LLVM
+#include <inttypes.h>
+typedef intptr_t DSINT;
+#endif
+
 #ifdef OPEN_DYLAN_PLATFORM_UNIX
 #include "unix-types.h"
 #else
@@ -492,6 +497,9 @@ void update_allocation_counter(gc_teb_t gc_teb, size_t count, void* wrapper)
 {
 #ifdef GC_USE_MPS
   gc_teb->gc_teb_allocation_counter += count;
+#elif defined(OPEN_DYLAN_BACKEND_LLVM)
+  extern __thread DSINT Pallocation_count;
+  Pallocation_count += count;
 #else
   unused(gc_teb);
 #endif
