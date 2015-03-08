@@ -644,4 +644,7 @@ int main ()
 
 #endif
 
+#ifndef OPEN_DYLAN_BACKEND_LLVM
 #include "exceptions.c"
+#endif
+
