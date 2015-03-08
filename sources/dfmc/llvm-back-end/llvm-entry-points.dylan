@@ -692,7 +692,7 @@ define entry-point-descriptor apply-mep
                 = call-primitive(be, primitive-vector-size-descriptor,
                                  optionals-cast);
               let cmp = ins--icmp-slt(be, optionals-size, -count);
-              ins--if (be, cmp)
+              ins--if (be, op--unlikely(be, cmp))
                 op--argument-count-error(be, meth, optionals-size);
               end ins--if;
 
@@ -815,7 +815,7 @@ define outer entry-point-descriptor xep
 
   // Check argument count
   let cmp = ins--icmp-ne(be, n, num);
-  ins--br(be, cmp, error-bb, typecheck-bb);
+  ins--br(be, op--unlikely(be, cmp), error-bb, typecheck-bb);
 
   // If argument counts do not match, throw an error
   ins--block(be, error-bb);
@@ -858,7 +858,7 @@ define variable-arity outer entry-point-descriptor rest-xep
 
   // Check argument count
   let cmp = ins--icmp-slt(be, n, num);
-  ins--br(be, cmp, error-bb, typecheck-bb);
+  ins--br(be, op--unlikely(be, cmp), error-bb, typecheck-bb);
 
   // If argument counts do not match, throw an error
   ins--block(be, error-bb);
@@ -919,7 +919,7 @@ define variable-arity outer entry-point-descriptor rest-key-xep
 
     // Check argument count
     let cmp = ins--icmp-slt(be, n, nreq);
-    ins--if (be, cmp)
+    ins--if (be, op--unlikely(be, cmp))
       op--argument-count-error(be, function, n);
     ins--else
       // Allocate a buffer for the required, optionals, and keyword arguments
@@ -1067,7 +1067,7 @@ define outer entry-point-descriptor gf-xep
 
   // Check argument count
   let cmp = ins--icmp-ne(be, n, num);
-  ins--br(be, cmp, error-bb, call-bb);
+  ins--br(be, op--unlikely(be, cmp), error-bb, call-bb);
 
   // If argument counts do not match, throw an error
   ins--block(be, error-bb);
@@ -1090,7 +1090,7 @@ define variable-arity outer entry-point-descriptor gf-optional-xep
 
   // Check argument count
   let cmp = ins--icmp-slt(be, n, num);
-  ins--br(be, cmp, error-bb, call-bb);
+  ins--br(be, op--unlikely(be, cmp), error-bb, call-bb);
 
   // If argument counts do not match, throw an error
   ins--block(be, error-bb);
@@ -1299,7 +1299,7 @@ define method op--slotacc-xep
 
   // Check argument count
   let cmp = ins--icmp-ne(be, n, arguments.size);
-  ins--br(be, cmp, error-bb, call-bb);
+  ins--br(be, op--unlikely(be, cmp), error-bb, call-bb);
 
   // If argument counts do not match, throw an error
   ins--block(be, error-bb);
@@ -1652,7 +1652,7 @@ define single-method outer entry-point-descriptor implicit-keyed-single-method
       = call-primitive(be, primitive-vector-size-descriptor, optionals);
     let masked = ins--and(be, optionals-count, 1);
     let odd-cmp = ins--icmp-ne(be, masked, 0);
-    ins--if (be, odd-cmp)
+    ins--if (be, op--unlikely(be, odd-cmp))
       op--odd-keyword-arguments-error(be, function);
     ins--else
       let word-size = back-end-word-size(be);
@@ -1687,7 +1687,7 @@ define single-method outer entry-point-descriptor implicit-keyed-single-method
         = op--verify-keywords(be, optionals, optionals-count,
                               keyword-specifiers-cast, 2);
       let bad-key-cmp = ins--icmp-ne(be, bad-key, $null-object-pointer);
-      ins--if (be, bad-key-cmp)
+      ins--if (be, op--unlikely(be, bad-key-cmp))
         // This wasn't one of the keywords accepted by the method, so
         // call invalid-keyword-trap with a vector of function arguments.
         let mepargs = op--stack-allocate-vector(be, num);
@@ -2033,13 +2033,13 @@ define singular outer entry-point-descriptor boxed-repeated-instance-slot-getter
 
   // Check for out-of-range index values
   let range-cmp = ins--icmp-ult(be, index-raw, repeated-size-raw);
-  ins--if (be, range-cmp)
+  ins--if (be, op--likely(be, range-cmp))
     // Read the value and check for unbound
     let value = call-primitive(be, primitive-repeated-slot-value-descriptor,
                                object, repeated-slot-offset, index-raw);
-    let unbound-cmp
+    let bound-cmp
       = ins--icmp-ne(be, value, emit-reference(be, module, &unbound));
-    ins--if (be, unbound-cmp)
+    ins--if (be, op--likely(be, bound-cmp))
       op--global-mv-struct(be, value, i8(1))
     ins--else
       op--call-error-iep(be, #"unbound-repeated-slot", object, index);
@@ -2067,7 +2067,7 @@ define singular outer entry-point-descriptor boxed-repeated-instance-slot-setter
 
   // Check for out-of-range index values
   let range-cmp = ins--icmp-ult(be, index-raw, repeated-size-raw);
-  ins--if (be, range-cmp)
+  ins--if (be, op--likely(be, range-cmp))
     // Set the value
     call-primitive(be, primitive-repeated-slot-value-setter-descriptor,
                    value, object, repeated-slot-offset, index-raw);
@@ -2094,7 +2094,7 @@ define singular outer entry-point-descriptor raw-byte-repeated-instance-slot-get
 
   // Check for out-of-range index values
   let range-cmp = ins--icmp-ult(be, index-raw, repeated-size-raw);
-  ins--if (be, range-cmp)
+  ins--if (be, op--likely(be, range-cmp))
     let repeated-element-offset
       = ins--add(be, repeated-slot-offset,
                  dylan-value(#"$number-header-words"));
@@ -2126,7 +2126,7 @@ define singular outer entry-point-descriptor raw-byte-repeated-instance-slot-set
 
   // Check for out-of-range index values
   let range-cmp = ins--icmp-ult(be, index-raw, repeated-size-raw);
-  ins--if (be, range-cmp)
+  ins--if (be, op--likely(be, range-cmp))
     // Set the value
     let repeated-element-offset
       = ins--add(be, repeated-slot-offset,

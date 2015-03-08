@@ -658,7 +658,7 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   // Compare the slot value against the uninitialized slot marker
   let unbound = emit-reference(be, module, &unbound);
   let cmp = ins--icmp-eq(be, result, unbound);
-  ins--br(be, cmp, error-bb, result-bb);
+  ins--br(be, op--unlikely(be, cmp), error-bb, result-bb);
 
   // Throw an error
   ins--block(be, error-bb);

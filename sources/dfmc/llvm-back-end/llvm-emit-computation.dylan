@@ -937,7 +937,7 @@ define method emit-computation
     // Compare the slot value against the uninitialized slot marker
     let unbound = emit-reference(back-end, m, &unbound);
     let cmp = ins--icmp-eq(back-end, result, unbound);
-    ins--br(back-end, cmp, error-bb, result-bb);
+    ins--br(back-end, op--unlikely(back-end, cmp), error-bb, result-bb);
 
     // Throw an error
     ins--block(back-end, error-bb);

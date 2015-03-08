@@ -49,7 +49,7 @@ define method do-emit-type-check
   let result-bb = make(<llvm-basic-block>);
 
   let cmp = do-emit-instance-cmp(back-end, object, type, type-ref);
-  ins--br(back-end, cmp, result-bb, error-bb);
+  ins--br(back-end, op--likely(back-end, cmp), result-bb, error-bb);
 
   // Not an instance: throw an error
   ins--block(back-end, error-bb);
