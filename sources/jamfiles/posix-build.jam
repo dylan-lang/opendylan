@@ -43,8 +43,8 @@ if $(COMPILER_BACK_END) = llvm {
 } else {
   CCFLAGS += $(HARP_GC_CFLAGS) ;
   SUFOUT  ?= $(SUFOBJ) ;
-  LINKFLAGSDLL += -T $(SYSTEM_LIBDIR)/dylan-elf-dll.script ;
-  LINKFLAGSEXE += -T $(SYSTEM_LIBDIR)/dylan-elf-exe.script ;
+  LINKFLAGSDLL += -Wl,-T,$(SYSTEM_LIBDIR)/dylan-elf-dll.script ;
+  LINKFLAGSEXE += -Wl,-T,$(SYSTEM_LIBDIR)/dylan-elf-exe.script ;
 }
 
 OBJCOPY   ?= objcopy ;
