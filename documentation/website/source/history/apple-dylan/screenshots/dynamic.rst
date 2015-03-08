@@ -31,7 +31,7 @@ or "fat" binaries with no additional effort.
    Different project types in Apple Dylan.
 
 I'm not going to to into extreme detail about all the tools available to
-you for debugging an applicatioin, but let me quickly present a grab bag
+you for debugging an application, but let me quickly present a grab bag
 of these tools. A developer could
 
 - inspect the run-time heaps (top left)
