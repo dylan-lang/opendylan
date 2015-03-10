@@ -842,7 +842,6 @@ define overflow side-effect-free stateless dynamic-extent &primitive-descriptor 
   // Signal <arithmetic-overflow-error>
   ins--block(be, trap);
   op--overflow-trap(be);
-  ins--unreachable(be);
 
   // Return the sum
   ins--block(be, return);
@@ -864,7 +863,6 @@ define overflow side-effect-free stateless dynamic-extent &primitive-descriptor 
   // Signal <arithmetic-overflow-error>
   ins--block(be, trap);
   op--overflow-trap(be);
-  ins--unreachable(be);
 
   // Return the difference
   ins--block(be, return);
@@ -886,7 +884,6 @@ define overflow side-effect-free stateless dynamic-extent &primitive-descriptor 
   // Signal <arithmetic-overflow-error>
   ins--block(be, trap);
   op--overflow-trap(be);
-  ins--unreachable(be);
 
   // Return the difference
   ins--block(be, return);
@@ -907,7 +904,6 @@ define sign-extend overflow side-effect-free stateless dynamic-extent &primitive
   // Signal <arithmetic-overflow-error>
   ins--block(be, trap);
   op--overflow-trap(be);
-  ins--unreachable(be);
 
   // Return the difference
   ins--block(be, return);
@@ -930,7 +926,6 @@ define sign-extend overflow side-effect-free stateless dynamic-extent &primitive
   // Signal <arithmetic-overflow-error>
   ins--block(be, trap);
   op--overflow-trap(be);
-  ins--unreachable(be);
 
   // Return the absolute value
   ins--block(be, return);
@@ -952,7 +947,6 @@ define sign-extend overflow side-effect-free stateless dynamic-extent &primitive
   ins--if (be, overflow)
     // Signal <arithmetic-overflow-error>
     op--overflow-trap(be);
-    ins--unreachable(be);
   ins--else
     let raw-machine-word-type
       = llvm-reference-type(be, dylan-value(#"<raw-machine-word>"));

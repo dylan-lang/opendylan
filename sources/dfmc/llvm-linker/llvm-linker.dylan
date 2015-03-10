@@ -411,7 +411,8 @@ end method;
 define constant $code-extern-names
   = #[#"%resolve-symbol",
       #"unbound-instance-slot",
-      #"type-check-error"];
+      #"type-check-error",
+      #"machine-word-overflow"];
 
 define method emit-code-externs
     (back-end :: <llvm-back-end>, m :: <llvm-module>)
