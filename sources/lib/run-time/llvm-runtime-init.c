@@ -23,6 +23,7 @@ void _Init_Run_Time(void)
     signal(SIGPIPE, SIG_IGN);
 #endif
 #endif
+    EstablishDylanExceptionHandlers();
 
 #ifdef GC_USE_BOEHM
     GC_INIT();

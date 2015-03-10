@@ -242,6 +242,8 @@ static void *trampoline(void *arg)
   // FIXME set thread name
   // FIXME set thread priority
 
+  EstablishDylanExceptionHandlers();
+
   primitive_initialize_thread_variables();
 
   Pteb.teb_current_thread_handle = (D) pthread_self();
@@ -253,6 +255,8 @@ static void *trampoline(void *arg)
   Pteb.teb_current_thread = NULL;
 
   deinitialize_thread_variables();
+
+  RemoveDylanExceptionHandlers();
 
   // Mark the thread as completed
   pthread_mutex_lock(&thread_join_lock);

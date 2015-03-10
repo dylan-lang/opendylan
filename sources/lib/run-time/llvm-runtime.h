@@ -22,4 +22,7 @@ typedef double                  DDFLT;
 
 #include OPEN_DYLAN_RUNTIME_HEADER
 
+extern void EstablishDylanExceptionHandlers(void);
+extern void RemoveDylanExceptionHandlers(void);
+
 #endif // LLVM_RUNTIME_H_
