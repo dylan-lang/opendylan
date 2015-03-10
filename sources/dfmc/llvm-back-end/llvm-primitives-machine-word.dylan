@@ -940,24 +940,24 @@ end;
 define sign-extend overflow side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-shift-left-signal-overflow
     (x :: <raw-machine-word>, shift :: <raw-machine-word>)
  => (result :: <raw-machine-word>);
-  let trap = make(<llvm-basic-block>);
-  let return = make(<llvm-basic-block>);
+  // Extend the operands to double the word width and perform the shift
+  let iDoubleWord-type = be.%type-table["iDoubleWord"];
+  let double-x = ins--zext(be, x, iDoubleWord-type);
+  let double-shift = ins--sext(be, shift, iDoubleWord-type);
+  let full = ins--shl(be, double-x, double-shift);
 
-  let y = ins--shl(be, 1, shift);
-  let result
-    = ins--call-intrinsic(be, "llvm.smul.with.overflow", vector(x, y));
-  let product = ins--extractvalue(be, result, 0);
-  let overflow = ins--extractvalue(be, result, 1);
-  ins--br(be, overflow, trap, return);
-
-  // Signal <arithmetic-overflow-error>
-  ins--block(be, trap);
-  op--overflow-trap(be);
-  ins--unreachable(be);
-
-  // Return the shifted value
-  ins--block(be, return);
-  product
+  // Shift the result back to see if any bits disappeared
+  let unfull = ins--ashr(be, full, double-shift);
+  let overflow = ins--icmp-ne(be, double-x, unfull);
+  ins--if (be, overflow)
+    // Signal <arithmetic-overflow-error>
+    op--overflow-trap(be);
+    ins--unreachable(be);
+  ins--else
+    let raw-machine-word-type
+      = llvm-reference-type(be, dylan-value(#"<raw-machine-word>"));
+    ins--trunc(be, full, raw-machine-word-type)
+  end ins--if;
 end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-floor/-quotient
