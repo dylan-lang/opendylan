@@ -274,44 +274,6 @@ define method op--heap-object-subtype-bit-instance-cmp
   ins--icmp-ne(back-end, masked, 0)
 end method;
 
-// Compile-time instance check against a <union> instance
-define method do-emit-instance-cmp
-    (back-end :: <llvm-back-end>, object :: <llvm-value>,
-     type :: <&union>, type-ref :: <llvm-value>)
- => (cmp :: <llvm-value>)
-  let word-size = back-end-word-size(back-end);
-  let class :: <&class> = dylan-value(#"<union>");
-
-  // Basic blocks
-  let type2-bb = make(<llvm-basic-block>);
-  let result-bb = make(<llvm-basic-block>);
-
-  let union-type = op--object-pointer-cast(back-end, type-ref, class);
-
-  // Check against union-type1
-  let type1-slot-ptr
-    = op--getslotptr(back-end, union-type, class, #"union-type1");
-  let type1-ref = ins--load(back-end, type1-slot-ptr, alignment: word-size);
-  let cmp1
-    = do-emit-instance-cmp(back-end, object, type.^union-type1, type1-ref);
-  let type1-branch-bb = back-end.llvm-builder-basic-block;
-  ins--br(back-end, cmp1, result-bb, type2-bb);
-
-  // cmp1 failed, check against union-type2
-  ins--block(back-end, type2-bb);
-  let type2-slot-ptr
-    = op--getslotptr(back-end, union-type, class, #"union-type2");
-  let type2-ref = ins--load(back-end, type2-slot-ptr, alignment: word-size);
-  let cmp2
-    = do-emit-instance-cmp(back-end, object, type.^union-type2, type2-ref);
-  let type2-branch-bb = back-end.llvm-builder-basic-block;
-  ins--br(back-end, result-bb);
-
-  // Result
-  ins--block(back-end, result-bb);
-  ins--phi*(back-end, $llvm-true, type1-branch-bb, cmp2, type2-branch-bb)
-end method;
-
 // Compile-time instance check against a <singleton> instance
 define method do-emit-instance-cmp
     (back-end :: <llvm-back-end>, object :: <llvm-value>,
