@@ -55,12 +55,7 @@ define sideways method emit-all
 
           let literals = heap.heap-defined-object-sequence;
           when (dfm-output?)
-            with-build-area-output (stream = current-library-description(),
-                                    name: concatenate(cr.compilation-record-name, ".dfm"))
-              for (literal in literals)
-                apply(emit-dfm, back-end, stream, literal, flags);
-              end for;
-            end with-build-area-output;
+            emit-all-dfm(back-end, cr, flags);
           end when;
 
           for (literal in heap.heap-defined-object-sequence)

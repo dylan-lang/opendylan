@@ -180,18 +180,7 @@ define method emit-all (back-end :: <c-back-end>, cr :: <compilation-record>,
     let heap = cr.compilation-record-model-heap;
     let literals = heap.heap-defined-object-sequence;
     when (dfm-output?)
-      with-build-area-output (stream = current-library-description(),
-                              name: concatenate(cr.compilation-record-name, ".dfm"))
-        for (literal in literals)
-          apply(emit-dfm, back-end, stream, literal, flags);
-        end for;
-        for (code in heap.heap-root-system-init-code)
-          apply(emit-dfm, back-end, stream, code.^iep, flags);
-        end for;
-        for (code in heap.heap-root-init-code)
-          apply(emit-dfm, back-end, stream, code.^iep, flags);
-        end for;
-      end with-build-area-output;
+      emit-all-dfm(back-end, cr, flags);
     end when;
     for (literal in literals)
       emit-code(back-end, literal);

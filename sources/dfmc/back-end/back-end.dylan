@@ -10,6 +10,24 @@ define variable *retract-dfm?* = #t;
 define compiler-open generic emit-all
     (back-end :: <back-end>, record, #rest flags, #key, #all-keys);
 
+define function emit-all-dfm
+    (back-end :: <back-end>, cr :: <compilation-record>, flags :: <sequence>)
+ => ()
+  let heap = cr.compilation-record-model-heap;
+  with-build-area-output (stream = current-library-description(),
+                          name: concatenate(cr.compilation-record-name, ".dfm"))
+    for (literal in heap.heap-defined-object-sequence)
+      apply(emit-dfm, back-end, stream, literal, flags);
+    end for;
+    for (code in heap.heap-root-system-init-code)
+      apply(emit-dfm, back-end, stream, code.^iep, flags);
+    end for;
+    for (code in heap.heap-root-init-code)
+      apply(emit-dfm, back-end, stream, code.^iep, flags);
+    end for;
+  end with-build-area-output;
+end function emit-all-dfm;
+
 define compiler-open generic emit-dfm
   (back-end :: <back-end>, stream, object, #rest flags, #key, #all-keys) => ();
 
