@@ -1417,7 +1417,7 @@ define singular variable-arity outer entry-point-descriptor general-engine-node-
 
   let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
   ins--call(be, iep-func,
-	    vector(mepargs-vector, parent, engine, undef, undef),
+	    vector(mepargs-vector, engine, parent, undef, undef),
 	    calling-convention:
 	      llvm-calling-convention(be, typical-callback-iep));
 end entry-point-descriptor;
@@ -1530,7 +1530,7 @@ define singular variable-arity outer entry-point-descriptor general-engine-node-
 
   let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
   ins--call(be, iep-func,
-	    vector(spreadargs-vector, parent, engine, undef, undef),
+	    vector(spreadargs-vector, engine, parent, undef, undef),
 	    calling-convention:
 	      llvm-calling-convention(be, typical-callback-iep));
 end entry-point-descriptor;
