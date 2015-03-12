@@ -118,6 +118,7 @@ define module dfmc-back-end
     emit-reference,
     emit-indirect-reference,
     emit-all,
+    emit-all-dfm,
     emit-dfm,
 
     initialize-back-end, \with-back-end-initialization,
