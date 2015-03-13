@@ -70,10 +70,12 @@ else ifeq ($(OPEN_DYLAN_TARGET_PLATFORM),x86-darwin)
   PLATFORM_CFLAGS=-arch i386 -D_REENTRANT=1 \
     -DOPEN_DYLAN_PLATFORM_DARWIN -DOPEN_DYLAN_PLATFORM_UNIX \
     -DOPEN_DYLAN_ARCH_X86
+  DARWIN=yes
 else ifeq ($(OPEN_DYLAN_TARGET_PLATFORM),x86_64-darwin)
   PLATFORM_CFLAGS=-arch x86_64 -D_REENTRANT=1 \
     -DOPEN_DYLAN_PLATFORM_DARWIN -DOPEN_DYLAN_PLATFORM_UNIX \
     -DOPEN_DYLAN_ARCH_X86_64
+  DARWIN=yes
 endif
 
 CC = @CC@
@@ -125,6 +127,15 @@ LLVM_RUNTIME_OBJS = \
 		  $(OBJDIR_LLVM)/llvm-posix-threads.o \
 		  $(OBJDIR_LLVM)/llvm-exceptions.o
 
+ifdef DARWIN
+mach_exc.h mach_excServer.c:
+	mig /usr/include/mach/mach_exc.defs
+
+$(OBJDIR_LLVM)/llvm-exceptions.o: mach_exc.h
+
+LLVM_RUNTIME_OBJS += $(OBJDIR_LLVM)/mach_excServer.o
+endif
+
 C_RUNTIME_OBJS	= $(OBJDIR_C)/break.o \
 		  $(OBJDIR_C)/collector.o \
 		  $(OBJDIR_C)/debug-print.o \
@@ -161,7 +172,7 @@ $(LLVM_RUNTIME_GEN) $(LLVM_RUNTIME_HEADER): $(OPEN_DYLAN_LLVM_RUNTIME_GENERATOR)
 	$(OPEN_DYLAN_LLVM_RUNTIME_GENERATOR) \
 	  $(top_srcdir)/sources/dylan/dylan.lid $(OPEN_DYLAN_TARGET_PLATFORM)
 
-$(OBJDIR_LLVM)/%.o: $(srcdir)/%.c $(LLVM_RUNTIME_HEADER)
+$(OBJDIR_LLVM)/%.o: %.c $(LLVM_RUNTIME_HEADER)
 	mkdir -p $(OBJDIR_LLVM)
 	$(CC) $(CFLAGS) $(LLVM_CFLAGS) $(LLVM_GC_CFLAGS) -MMD -c -o $@ $<
 
@@ -211,6 +222,7 @@ install: $(PLATFORM_INSTALL_RUNTIMES)
 clean:
 	rm -rf $(OBJDIR_HARP) $(OBJDIR_LLVM) $(OBJDIR_C)
 	rm -f $(LLVM_RUNTIME_GEN) $(LLVM_RUNTIME_HEADER)
+	rm -f mach_exc*
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) && ./config.status $(subdir)/Makefile
