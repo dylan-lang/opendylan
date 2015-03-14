@@ -82,12 +82,39 @@ define side-effect-free stateless dynamic-extent &unimplemented-primitive-descri
   //---*** Fill this in...
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-compare-words
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-compare-words
     (base1 :: <raw-pointer>, offset1 :: <raw-integer>,
      base2 :: <raw-pointer>, offset2 :: <raw-integer>,
      size-in-words :: <raw-integer>)
  => (same? :: <boolean>)
-  //---*** Fill this in...
+  let module = be.llvm-builder-module;
+  let word-size = be.back-end-word-size;
+  let iWord-type = be.%type-table["iWord"];
+
+  let start1 = ins--gep(be, base1, offset1);
+  let start1-word-ptr
+    = ins--bitcast(be, start1, llvm-pointer-to(be, iWord-type));
+  let start2 = ins--gep(be, base1, offset2);
+  let start2-word-ptr
+    = ins--bitcast(be, start2, llvm-pointer-to(be, iWord-type));
+
+  ins--iterate loop (be, i = 0)
+    let limit-cmp = ins--icmp-ult(be, i, size-in-words);
+    ins--if (be, limit-cmp)
+      let ptr1 = ins--gep(be, start1-word-ptr, i);
+      let word1 = ins--load(be, ptr1);
+      let ptr2 = ins--gep(be, start2-word-ptr, i);
+      let word2 = ins--load(be, ptr2);
+      let words-cmp = ins--icmp-eq(be, word1, word2);
+      ins--if (be, words-cmp)
+        loop(ins--add(be, i, 1))
+      ins--else
+        emit-reference(be, module, &false)
+      end ins--if;
+    ins--else
+      emit-reference(be, module, &true)
+    end ins--if
+  end ins--iterate
 end;
 
 
