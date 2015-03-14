@@ -161,21 +161,14 @@ define method emit-code
     cleanup
       back-end.llvm-builder-dbg := #f;
       back-end.llvm-builder-function := #f;
+      back-end.llvm-builder-basic-block := #f; // FIXME
     EXCEPTION (e :: <error>)    // FIXME
       back-end.llvm-builder-basic-block := #f;
       back-end.llvm-builder-function.llvm-function-basic-blocks.size := 0;
       remove-all-keys!(back-end.llvm-builder-function.llvm-function-value-table);
       ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
-      // Return a dummy value
-      let undef-struct
-        = make(<llvm-undef-constant>,
-               type: function-type.llvm-function-type-return-type);
-      let value-struct
-        = ins--insertvalue(back-end, undef-struct,
-                           emit-reference(back-end, module, #x4300430), 0);
-      let value-count-struct
-        = ins--insertvalue(back-end, value-struct, i8(0), 1);
-      ins--ret(back-end, value-count-struct);
+      ins--call-intrinsic(back-end, "llvm.trap", vector());
+      ins--unreachable(back-end);
       format(*standard-output*, "emit %s: %s\n", function-name, e);
       force-output(*standard-output*);
     end block;
