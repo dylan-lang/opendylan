@@ -180,7 +180,10 @@ def dylan_object_wrapper_symbol_name(value):
   # symbol name, which if it accessed the wrapper value object
   # would create a new object and synthetic, etc.
   target = lldb.debugger.GetSelectedTarget()
-  address = lldb.SBAddress(dylan_object_wrapper_address(value), target)
+  if value.GetValueAsUnsigned() == 0:
+    return None
+  wrapper_address = dylan_object_wrapper_address(value)
+  address = lldb.SBAddress(wrapper_address, target)
   return address.symbol.name
 
 def dylan_read_raw_data(value, slot_index, size):

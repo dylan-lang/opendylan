@@ -32,6 +32,8 @@ def dylan_object_summary(value, internal_dict):
   if not value.GetType().IsPointerType():
     value = value.address_of
   wrapper_symbol_name = dylan_object_wrapper_symbol_name(value)
+  if not wrapper_symbol_name:
+    return '{uninitialized}'
   summary_func = SUMMARY_DISPATCH_TABLE.get(wrapper_symbol_name, dylan_user_defined_object_summary)
   return summary_func(value, internal_dict)
 
