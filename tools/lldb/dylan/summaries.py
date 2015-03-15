@@ -27,6 +27,10 @@ def dylan_value_summary(value, internal_dict):
     return 'Invalid tag'
 
 def dylan_object_summary(value, internal_dict):
+  # In case we're looking at an object on the stack and not a
+  # pointer to it.
+  if not value.GetType().IsPointerType():
+    value = value.address_of
   wrapper_symbol_name = dylan_object_wrapper_symbol_name(value)
   summary_func = SUMMARY_DISPATCH_TABLE.get(wrapper_symbol_name, dylan_user_defined_object_summary)
   return summary_func(value, internal_dict)

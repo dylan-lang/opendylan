@@ -22,6 +22,7 @@ def __lldb_init_module(debugger, internal_dict):
   debugger.HandleCommand('type summary   add dylan_byte_string -F dylan.dylan_byte_string_summary -w dylan')
   debugger.HandleCommand('type summary   add dylan_object -F dylan.dylan_object_summary -w dylan')
   debugger.HandleCommand('type summary   add dylan_simple_object_vector -F dylan.dylan_simple_object_vector_summary -w dylan')
+  debugger.HandleCommand('type summary   add _KL.* --regex -F dylan.dylan_object_summary -w dylan')
   debugger.HandleCommand('type summary   add dylan_symbol -F dylan.dylan_symbol_summary -w dylan')
   debugger.HandleCommand('type summary   add dylan_value -F dylan.dylan_value_summary -e -w dylan')
   debugger.HandleCommand('type category enable dylan')
