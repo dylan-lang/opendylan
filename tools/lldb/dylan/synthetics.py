@@ -27,6 +27,10 @@ class SyntheticDylanValue(SyntheticHideChildren):
      class to an appropriate synthetic when there is one.
   """
   def __init__(self, value, internal_dict):
+    # In case we're looking at an object on the stack and not a
+    # pointer to it.
+    if not value.GetType().IsPointerType():
+      value = value.address_of
     tag = dylan_tag_bits(value)
     new_class = None
     if tag == OBJECT_TAG:

@@ -19,6 +19,7 @@ def __lldb_init_module(debugger, internal_dict):
   debugger.HandleCommand('command script add -f dylan.dylan_bt dylan-bt')
   debugger.HandleCommand('type format    add dylan_value -f hex')
   debugger.HandleCommand('type synthetic add dylan_value -l dylan.SyntheticDylanValue -w dylan')
+  debugger.HandleCommand('type synthetic add _K.* --regex -l dylan.SyntheticDylanValue -w dylan')
   debugger.HandleCommand('type summary   add dylan_byte_string -F dylan.dylan_byte_string_summary -w dylan')
   debugger.HandleCommand('type summary   add dylan_object -F dylan.dylan_object_summary -w dylan')
   debugger.HandleCommand('type summary   add dylan_simple_object_vector -F dylan.dylan_simple_object_vector_summary -w dylan')
