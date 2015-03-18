@@ -182,7 +182,10 @@ def dylan_object_wrapper_symbol_name(value):
   target = lldb.debugger.GetSelectedTarget()
   if value.GetValueAsUnsigned() == 0:
     return None
-  wrapper_address = dylan_object_wrapper_address(value)
+  try:
+    wrapper_address = dylan_object_wrapper_address(value)
+  except:
+    return None
   address = lldb.SBAddress(wrapper_address, target)
   return address.symbol.name
 

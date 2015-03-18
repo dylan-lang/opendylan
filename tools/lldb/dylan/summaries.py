@@ -33,7 +33,12 @@ def dylan_object_summary(value, internal_dict):
     value = value.address_of
   wrapper_symbol_name = dylan_object_wrapper_symbol_name(value)
   if not wrapper_symbol_name:
-    return '{uninitialized}'
+    # We have no valid wrapper symbol, so just find the symbol
+    # for the address and use that. This is probably not actually
+    # a dylan_value.
+    target = lldb.debugger.GetSelectedTarget()
+    address = lldb.SBAddress(value.GetValueAsUnsigned(), target)
+    return address.symbol.name
   summary_func = SUMMARY_DISPATCH_TABLE.get(wrapper_symbol_name, dylan_user_defined_object_summary)
   return summary_func(value, internal_dict)
 
