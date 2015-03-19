@@ -1872,8 +1872,7 @@ define function convert-lambda-into*-d
       = join-2x2!(ret-types-first, ret-types-last, type-first, type-last);
     ret-types-first := _types-first;
     ret-types-last  := _types-last;
-    fixed-types[i]
-      := type-checked-at-run-time?(fast-constant-value(type-temp)) & type-temp;
+    fixed-types[i]  := type-temp;
   end for;
   let (ret-types-first, ret-types-last, rest-type-temp)
     = if (rest-type)
@@ -1924,7 +1923,7 @@ define function convert-lambda-into*-d
       let (types-first, types-last)
         = join-1x1!(types-first, check-c);
       values(types-last, check-temp)
-    elseif (size(fixed-types) = 0 /* | (size(fixed-types) = 1 & ~fixed-types[0]) */)
+    elseif (empty?(fixed-types))
       // no types to check
       values(types-first, adj-temp)
     // elseif (size(fixed-types) = 1)
@@ -4176,8 +4175,7 @@ define method convert-lambda-into*
                   = join-2x2!(types-first, types-last, type-first, type-last);
                 types-first := _types-first;
                 types-last  := _types-last;
-                type-checked-at-run-time?(fast-constant-value(type-temp)) &
-                  type-temp
+                type-temp
               end;
         let fixed-types = map(convert-type, required-values);
 
