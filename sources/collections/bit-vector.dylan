@@ -69,13 +69,13 @@ end function;
 */
 
 define inline-only function raw-mask-for-bits-above
-    (bit :: <integer>) // => (mask :: <raw-machine-word>)
+    (bit :: <integer>) => (mask :: <raw-machine-word>)
   primitive-machine-word-shift-left-low
     (integer-as-raw(-1), integer-as-raw(bit));
 end function;
 
 define inline-only function raw-mask-for-bits-strictly-below
-    (bit :: <integer>) // => (mask :: <raw-machine-word>)
+    (bit :: <integer>) => (mask :: <raw-machine-word>)
   primitive-machine-word-lognot
     (primitive-machine-word-shift-left-low
       (integer-as-raw(-1), integer-as-raw(bit)));
@@ -83,7 +83,7 @@ end function;
 
 define inline-only function raw-mask-and-pad-word
     (word :: <raw-machine-word>, bit :: <integer>, pad :: <bit>)
-// => (result :: <raw-machine-word>)
+ => (result :: <raw-machine-word>)
   if (bit = 0)
     word;
   elseif (pad = 0)

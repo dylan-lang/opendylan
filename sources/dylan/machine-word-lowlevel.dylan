@@ -35,15 +35,13 @@ end function as-unsigned;
 
 /// These "convenience" functions are exported for external use.
 
-///---*** Compiler "bug" causes bogus warnings/code if return type is declared!
 define inline-only function integer-as-raw (x :: <integer>)
- /*=> (raw-x :: <raw-machine-word>)*/
+ => (raw-x :: <raw-machine-word>)
   primitive-unwrap-machine-word(coerce-integer-to-machine-word(x))
 end function integer-as-raw;
 
-///---*** Compiler "bug" causes bogus warnings/code if return type is declared!
 define inline-only function interpret-integer-as-raw (x :: <integer>)
- /*=> (raw-x :: <raw-machine-word>)*/
+ => (raw-x :: <raw-machine-word>)
   primitive-unwrap-machine-word(interpret-integer-as-machine-word(x))
 end function interpret-integer-as-raw;
 
@@ -54,9 +52,8 @@ define inline-only function raw-as-integer (raw-x :: <raw-machine-word>)
   coerce-machine-word-to-integer(primitive-wrap-machine-word(raw-x))
 end function raw-as-integer;
 
-///---*** Compiler "bug" causes bogus warnings/code if return type is declared!
 define inline-only function abstract-integer-as-raw (x :: <abstract-integer>)
- /*=> (raw-x :: <raw-machine-word>)*/
+ => (raw-x :: <raw-machine-word>)
   primitive-unwrap-machine-word(coerce-abstract-integer-to-machine-word(x))
 end function abstract-integer-as-raw;
 
