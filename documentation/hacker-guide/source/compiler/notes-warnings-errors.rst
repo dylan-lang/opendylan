@@ -59,29 +59,6 @@ This is an abstract class and one of the subclasses such as
 :class:`<program-note>`, :class:`<program-error>` or
 :class:`<program-restart>` should be subclassed instead.
 
-* :class:`<program-condition>`
-
-  * :class:`<program-note>`
-
-    * :class:`<program-warning>`
-
-      * :class:`<serious-program-warning>`
-
-        * :class:`<program-error>`
-
-      * :class:`<run-time-error-warning>` *(Unused)*
-      * :class:`<style-warning>` *(Unused)*
-
-    * :class:`<performance-note>`
-    * :class:`<portability-note>` *(Unused)*
-
-  * :class:`<program-restart>` *(Unused)*
-
-.. note:: While :class:`<program-error>` is currently a subclass
-   of :class:`<serious-program-warning>`, this is an open TODO item
-   as it should be a direct subclass of :class:`<program-note>`
-   instead.
-
 Reporting a Program Condition
 *****************************
 
