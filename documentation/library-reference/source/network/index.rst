@@ -387,9 +387,9 @@ The <abstract-socket> class
 
    :description:
 
-   The common superclass of all socket objects including
-   :class:`<socket>` (IP client socket), :class:`<server-socket>` and
-   :class:`<socket-accessor>`.
+     The common superclass of all socket objects including
+     :class:`<socket>` (IP client socket), :class:`<server-socket>` and
+     :class:`<socket-accessor>`.
 
 Each subclass of :class:`<abstract-socket>` must provide methods for :gf:`close`
 and for the following generic functions:
