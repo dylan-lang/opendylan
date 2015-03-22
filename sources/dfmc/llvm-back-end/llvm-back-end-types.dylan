@@ -9,6 +9,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // (integers and characters)
 define constant $llvm-object-pointer-type :: <llvm-type> = $llvm-i8*-type;
 
+// "Don't care" placeholder value of that type
+define constant $object-pointer-undef
+  = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
+
 
 /// Memoized pointer types
 

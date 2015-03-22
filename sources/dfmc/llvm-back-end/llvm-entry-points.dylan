@@ -830,19 +830,10 @@ define outer entry-point-descriptor xep
   let mep-slot-ptr = op--getslotptr(be, function-cast, #"<lambda>", #"mep");
   let iep = ins--load(be, mep-slot-ptr, alignment: word-size);
 
-  let iep-type
-    = make(<llvm-function-type>,
-           return-type: llvm-reference-type(be, be.%mv-struct-type),
-           parameter-types: make(<simple-object-vector>,
-                                 size: num + 2,
-                                 fill: $llvm-object-pointer-type),
-           varargs?: #f);
-  let iep-cast = ins--bitcast(be, iep, llvm-pointer-to(be, iep-type));
-  ins--tail-call
-    (be, iep-cast,
-     concatenate(arguments,
-                 vector(emit-reference(be, module, &false), function)),
-     calling-convention: $llvm-calling-convention-fast)
+  op--call-iep(be, iep, arguments,
+               next: emit-reference(be, module, &false),
+               function: function,
+               tail-call?: #t)
 end entry-point-descriptor;
 
 // For direct method calls with #rest
@@ -879,21 +870,9 @@ define variable-arity outer entry-point-descriptor rest-xep
   let mep-slot-ptr = op--getslotptr(be, function-cast, #"<lambda>", #"mep");
   let iep = ins--load(be, mep-slot-ptr, alignment: word-size);
 
-  let iep-type
-    = make(<llvm-function-type>,
-           return-type: llvm-reference-type(be, be.%mv-struct-type),
-           parameter-types: make(<simple-object-vector>,
-                                 size: num + 3,
-                                 fill: $llvm-object-pointer-type),
-           varargs?: #f);
-  let iep-cast = ins--bitcast(be, iep, llvm-pointer-to(be, iep-type));
-  ins--call
-    (be, iep-cast,
-     concatenate(arguments,
-                 vector(rest-vector,
-                        emit-reference(be, module, &false),
-                        function)),
-     calling-convention: $llvm-calling-convention-fast)
+  op--call-iep(be, iep, concatenate(arguments, vector(rest-vector)),
+               next: emit-reference(be, module, &false),
+               function: function)
 end entry-point-descriptor;
 
 // For direct method calls with #key (and possibly #rest)
@@ -980,19 +959,9 @@ define variable-arity outer entry-point-descriptor rest-key-xep
       let iep = ins--load(be, iep-slot-ptr, alignment: word-size);
 
       // Chain to the method's IEP
-      let iep-type
-        = make(<llvm-function-type>,
-               return-type: llvm-reference-type(be, be.%mv-struct-type),
-               parameter-types: make(<simple-object-vector>,
-                                     size: num + 2,
-                                     fill: $llvm-object-pointer-type),
-               varargs?: #f);
-      let iep-cast = ins--bitcast(be, iep, llvm-pointer-to(be, iep-type));
-      ins--call
-        (be, iep-cast,
-         concatenate(arguments,
-                     vector(emit-reference(be, module, &false), function)),
-         calling-convention: $llvm-calling-convention-fast);
+      op--call-iep(be, iep, arguments,
+                   next: emit-reference(be, module, &false),
+                   function: function)
     end ins--if;
   end if
 end entry-point-descriptor;
@@ -1272,18 +1241,10 @@ define variable-arity outer entry-point-descriptor rest-key-mep
     let iep = ins--load(be, iep-slot-ptr, alignment: word-size);
 
     // Chain to the method's IEP
-    let iep-type
-      = make(<llvm-function-type>,
-             return-type: llvm-reference-type(be, be.%mv-struct-type),
-             parameter-types: make(<simple-object-vector>,
-                                   size: num + 2,
-                                   fill: $llvm-object-pointer-type),
-             varargs?: #f);
-    let iep-cast = ins--bitcast(be, iep, llvm-pointer-to(be, iep-type));
-    ins--tail-call
-      (be, iep-cast,
-       concatenate(arguments, vector(next-methods, meth)),
-       calling-convention: $llvm-calling-convention-fast);
+    op--call-iep(be, iep, arguments,
+                 next: next-methods,
+                 function: meth,
+                 tail-call?: #t)
   end if
 end entry-point-descriptor;
 
@@ -1620,18 +1581,9 @@ define single-method outer entry-point-descriptor single-method
   let iep = ins--load(be, mep-slot-ptr, alignment: word-size);
 
   // Chain to the method's IEP
-  let iep-type
-    = make(<llvm-function-type>,
-           return-type: llvm-reference-type(be, be.%mv-struct-type),
-           parameter-types: make(<simple-object-vector>,
-                                 size: num + 2,
-                                 fill: $llvm-object-pointer-type),
-           varargs?: #f);
-  let iep-cast = ins--bitcast(be, iep, llvm-pointer-to(be, iep-type));
-  ins--tail-call
-    (be, iep-cast,
-     concatenate(arguments, vector(data, meth)),
-     calling-convention: $llvm-calling-convention-fast)
+  op--call-iep(be, iep, arguments,
+               next: data,
+               function: meth)
 end entry-point-descriptor;
 
 define constant $null-object-pointer
@@ -2151,16 +2103,12 @@ define cross outer entry-point-descriptor discriminate-on-argument
   // Invoke the discriminator callback with on the argument to be
   // discriminated on, the function (or cache header), and the engine node.
   let typical-callback-iep = dylan-value(#"%gf-dispatch-linear-by-class").^iep;
-  let func-type
-    = llvm-pointer-to(be, llvm-lambda-type(be, typical-callback-iep));
-  let iep-func = ins--bitcast(be, callback-iep, func-type);
 
-  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
   let callback-ret
-    = ins--call(be, iep-func,
-                vector(arguments[pos], function, engine, undef, undef),
-                calling-convention:
-                  llvm-calling-convention(be, typical-callback-iep));
+    = op--call-iep(be, callback-iep, vector(arguments[pos], function, engine),
+                   function-type: llvm-lambda-type(be, typical-callback-iep),
+                   calling-convention:
+                     llvm-calling-convention(be, typical-callback-iep));
   let next-engine = ins--extractvalue(be, callback-ret, 0);
 
   // Chain to the engine node's entry point

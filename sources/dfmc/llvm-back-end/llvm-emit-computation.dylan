@@ -646,7 +646,6 @@ define method emit-call
  => (call :: <llvm-value>);
   let name = emit-name(back-end, m, f);
   let global = llvm-builder-global(back-end, name);
-  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
   let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
   let env = f.environment;
   let fn
@@ -656,11 +655,11 @@ define method emit-call
       else
         emit-reference(back-end, m, c.function);
       end if;
-  op--call(back-end, global,
-           concatenate(map(curry(emit-reference, back-end, m), c.arguments),
-                       vector(undef, fn)),
-           type: return-type,
-           calling-convention: llvm-calling-convention(back-end, f))
+  op--call-iep(back-end, global,
+               map(curry(emit-reference, back-end, m), c.arguments),
+               function-type: llvm-lambda-type(back-end, f),
+               function: fn,
+               calling-convention: llvm-calling-convention(back-end, f))
 end method;
 
 // Call a known top-level method with the possibility of next methods
@@ -670,7 +669,6 @@ define method emit-call
  => (call :: <llvm-value>);
   let name = emit-name(back-end, m, f);
   let global = llvm-builder-global(back-end, name);
-  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
   let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
   let next
     = if (^next?(function(f)))
@@ -678,11 +676,11 @@ define method emit-call
       else
         undef
       end if;
-  op--call(back-end, global,
-           concatenate(map(curry(emit-reference, back-end, m), c.arguments),
-                       vector(next, undef)),
-           type: return-type,
-           calling-convention: llvm-calling-convention(back-end, f))
+  op--call-iep(back-end, global,
+               map(curry(emit-reference, back-end, m), c.arguments),
+               function-type: llvm-lambda-type(back-end, f),
+               next: next,
+               calling-convention: llvm-calling-convention(back-end, f))
 end method;
 
 // Method calls
@@ -724,26 +722,10 @@ define method emit-call
              type: return-type,
              calling-convention: $llvm-calling-convention-c)
   ins--else
-    // IEP-only case
-    let parameter-types
-      = make(<simple-object-vector>,
-             size: c.arguments.size + 2,
-             fill: $llvm-object-pointer-type);
-    let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
-    let iep-type
-      = make(<llvm-function-type>,
-             return-type: return-type,
-             parameter-types: parameter-types,
-             varargs?: #f);
-    let iep-cast
-      = ins--bitcast(back-end, mep, llvm-pointer-to(back-end, iep-type));
-
-    op--call(back-end, iep-cast,
-             concatenate(map(curry(emit-reference, back-end, m),
-                             c.arguments),
-                         vector(next, fn)),
-             type: return-type,
-             calling-convention: $llvm-calling-convention-fast)
+    op--call-iep(back-end, mep,
+                 map(curry(emit-reference, back-end, m), c.arguments),
+                 next: next,
+                 function: fn)
   end ins--if
 end method;
 

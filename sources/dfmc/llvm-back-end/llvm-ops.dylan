@@ -259,7 +259,48 @@ define method op--overflow-trap
 end method;
 
 
-/// Error calls
+/// IEP calls
+
+define method iep-function
+    (back-end :: <llvm-back-end>, iep :: <llvm-value>,
+     function-type :: <llvm-function-type>)
+ => (function :: <llvm-value>)
+  ins--bitcast(back-end, iep, llvm-pointer-to(back-end, function-type))
+end method;
+
+define method iep-function
+    (back-end :: <llvm-back-end>, iep :: <llvm-constant-value>,
+     function-type :: <llvm-function-type>)
+ => (function :: <llvm-value>)
+  llvm-constrain-type(iep.llvm-value-type,
+                      llvm-pointer-to(back-end, function-type));
+  iep
+end method;
+
+define method op--call-iep
+    (back-end :: <llvm-back-end>, iep :: <llvm-value>,
+     arguments :: <sequence>,
+     #key function-type :: false-or(<llvm-function-type>),
+          next :: <llvm-value> = $object-pointer-undef,
+          function :: <llvm-value> = $object-pointer-undef,
+          calling-convention :: <integer> = $llvm-calling-convention-fast,
+          tail-call? = #f)
+ => (call :: <llvm-value>);
+  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+  let function-type
+    = function-type
+    | make(<llvm-function-type>,
+           return-type: return-type,
+           parameter-types: make(<simple-object-vector>,
+                                 size: arguments.size + 2,
+                                 fill: $llvm-object-pointer-type),
+           varargs?: #f);
+  op--call(back-end, iep-function(back-end, iep, function-type),
+           concatenate(arguments, vector(next, function)),
+           type: return-type,
+           calling-convention: calling-convention,
+           tail-call?: tail-call?)
+end method;
 
 define method op--call-error-iep
     (back-end :: <llvm-back-end>, name :: <symbol>, #rest arguments) => ();
@@ -268,15 +309,9 @@ define method op--call-error-iep
   let err-iep = dylan-value(name).^iep;
   let err-name = emit-name(back-end, module, err-iep);
   let err-global = llvm-builder-global(back-end, err-name);
-  llvm-constrain-type
-    (err-global.llvm-value-type,
-     llvm-pointer-to(back-end, llvm-lambda-type(back-end, err-iep)));
-  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
-  op--call(back-end, err-global,
-           concatenate(arguments, vector(undef, undef)),
-           type: llvm-reference-type(back-end, back-end.%mv-struct-type),
-           calling-convention: llvm-calling-convention(back-end, err-iep),
-           tail-call?: #t);
+  op--call-iep(back-end, err-global, arguments,
+               function-type: llvm-lambda-type(back-end, err-iep),
+               calling-convention: llvm-calling-convention(back-end, err-iep),
+               tail-call?: #t);
   ins--unreachable(back-end);
 end method;
-
