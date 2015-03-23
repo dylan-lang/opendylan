@@ -89,13 +89,10 @@ Dylan Types for Threads Portability
 -----------------------------------
 
 Three Dylan types merit discussion for their use with portability
-primitives: ``<thread>``, ``<portable-container>``, and ``<optional-name>``.
-Objects that are instances of the ``<thread>`` and
-``<portable-container>`` classes have slots which contain lower-level
-objects that are specific to the Dylan runtime or operating system. The
-``<optional-name>`` type allows an object, such as a lock, to have a name
-represented as a string or, if no name is supplied, as the Boolean false
-value ``#f``.
+primitives: ``<thread>``, ``<portable-container>``.  Objects that are
+instances of the ``<thread>`` and ``<portable-container>`` classes have
+slots which contain lower-level objects that are specific to the Dylan
+runtime or operating system.
 
 <thread>
 
@@ -116,15 +113,6 @@ superclass for all the concrete synchronization classes (``<simple-lock>``,
 ``<portable-container>`` object contains an OS handle, which is available
 to the runtime for storing any OS-specific data. Subclasses may provide
 additional slots.
-
-<optional-name>
-
-[Type]
-------
-
-This is a union type which is used to represent names of synchronization
-objects. Values of the type are either strings (of class :drm:`<byte-string>`)
-or false (``#f``).
 
 Various classes of Dylan objects are passed through the portability
 interface, and hence require description in terms of lower level
@@ -168,7 +156,7 @@ Correspondence Between Dylan Types and C Types
 |                               |               | *char data[ ];*                      |
 |                               |               | *} B\_STRING;*                       |
 +-------------------------------+---------------+--------------------------------------+
-| ``<optional-name>``           | *D\_NAME*     | *typedef void\* D\_NAME;*            |
+| ``false-or(<byte-string>)``   | *D\_NAME*     | *typedef void\* D\_NAME;*            |
 +-------------------------------+---------------+--------------------------------------+
 | ``<portable-container>``      | *CONTAINER\** | *typedef struct \_ctr {              |
 |                               |               | * *D class;                          |

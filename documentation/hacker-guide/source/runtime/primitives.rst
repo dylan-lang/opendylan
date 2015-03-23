@@ -16,7 +16,7 @@ primitive-make-thread
 
 Signature
 
-(thread :: <thread>, name :: <optional-name>, priority :: <integer>, function :: <function>) => ()
+(thread :: <thread>, name :: false-or(<byte-string>), priority :: <integer>, function :: <function>) => ()
 
 Arguments
 
@@ -159,7 +159,7 @@ primitive-make-simple-lock
 
 Signature
 
-(lock :: <portable-container>, name :: <optional-name>) => ()
+(lock :: <portable-container>, name :: false-or(<byte-string>)) => ()
 
 Arguments
 
@@ -286,7 +286,7 @@ primitive-make-recursive-lock
 
 Signature
 
-(lock :: <portable-container>, name :: <optional-name>) => ()
+(lock :: <portable-container>, name :: false-or(<byte-string>)) => ()
 
 Arguments
 
@@ -418,7 +418,7 @@ primitive-make-semaphore
 
 Signature
 
-(lock :: <portable-container>, name :: <optional-name>,
+(lock :: <portable-container>, name :: false-or(<byte-string>),
  initial :: <integer>, max :: <integer>) => ()
 
 Arguments
@@ -530,7 +530,7 @@ primitive-make-notification
 
 Signature
 
-(notification :: <portable-container>, name :: <optional-name>) => ()
+(notification :: <portable-container>, name :: false-or(<byte-string>)) => ()
 
 Arguments
 

@@ -40,9 +40,3 @@ define abstract primary class <portable-double-container> (<portable-container>)
   slot handle2 :: <object>;
 
 end class;
-
-
-
-/// <optional-name> is not exactly related, but gets defined here anyway
-
-define constant <optional-name> = type-union(<byte-string>, singleton(#f));

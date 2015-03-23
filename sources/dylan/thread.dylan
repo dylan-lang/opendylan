@@ -20,7 +20,7 @@ define sealed class <thread> (<portable-double-container>)
   constant slot priority :: <integer>,
     init-value: $normal-priority, init-keyword: priority:;
 
-  constant slot thread-name :: <optional-name>,
+  constant slot thread-name :: false-or(<byte-string>),
     init-value: #f, init-keyword: name:;
 
   constant slot function :: <function>,
