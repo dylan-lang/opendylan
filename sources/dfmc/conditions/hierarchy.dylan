@@ -251,14 +251,12 @@ define program-condition-definer serious-program-warning;
 // A <program-error> is a language error.  Examples would be (most)
 // syntax errors, inconsistent direct superclasses, or a reference to
 // an undefined name.
-// gts,98apr06 -- short term hack -- instead of having <program-error> be
-//   interesting in its own right, just stick it under serious-program-warning
-//   for now.
 
-// define open abstract program-note <program-error>
-define open abstract serious-program-warning <program-error>
+define open abstract program-note <program-error>
+  filter $signal-program-note;
+  // This doesn't show anything yet and needs further work.
   // filter $signal-program-error;
-end serious-program-warning <program-error>;
+end program-note <program-error>;
 
 define program-condition-definer program-error;
 

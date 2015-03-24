@@ -59,7 +59,7 @@ define macro with-program-conditions
 end macro with-program-conditions;
 
 define function do-with-program-conditions (body)
-  let handler <program-warning>
+  let handler <program-note>
     = method (condition, next-handler)
         present-program-note(condition)
       end;

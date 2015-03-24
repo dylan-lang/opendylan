@@ -63,8 +63,7 @@ define method condition-classification (o :: <program-note>)
 end method;
 
 define method condition-classification (o :: <program-error>)
-  // gts,98apr06: temporary fix: ppml-string("Error");
-  next-method();
+  ppml-string("Error");
 end method;
 
 define method condition-classification (o :: <program-warning>)
