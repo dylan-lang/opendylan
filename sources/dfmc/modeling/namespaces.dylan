@@ -1905,7 +1905,6 @@ define &module threads-primitives
     *dylan-library-initialized?*;
 
   export
-    <optional-name>,
     <portable-container>, handle1, handle1-setter,
     <portable-double-container>, handle2, handle2-setter,
     $success,

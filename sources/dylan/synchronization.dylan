@@ -10,14 +10,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define open abstract class <synchronization> (<object>)
 
-  constant slot synchronization-name :: <optional-name>,
+  constant slot synchronization-name :: false-or(<byte-string>),
     init-value: #f, init-keyword: name:;
 
 end class;
 
 
 define open generic synchronization-name
-   (object :: <synchronization>) => (name :: <optional-name>);
+   (object :: <synchronization>) => (name :: false-or(<byte-string>));
 
 define open generic wait-for
    (object :: <synchronization>, #key timeout = #f) => (success?);
