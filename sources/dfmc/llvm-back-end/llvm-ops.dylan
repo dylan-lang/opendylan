@@ -286,15 +286,46 @@ define method op--call-iep
           calling-convention :: <integer> = $llvm-calling-convention-fast,
           tail-call? = #f)
  => (call :: <llvm-value>);
+  let word-size = back-end-word-size(back-end);
   let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
-  let function-type
-    = function-type
-    | make(<llvm-function-type>,
-           return-type: return-type,
-           parameter-types: make(<simple-object-vector>,
-                                 size: arguments.size + 2,
-                                 fill: $llvm-object-pointer-type),
-           varargs?: #f);
+
+  let (arguments, function-type)
+    = if (arguments.size > $entry-point-argument-count)
+        let extra
+          = ins--alloca(back-end, $llvm-object-pointer-type,
+                        arguments.size - $entry-point-argument-count,
+                        alignment: word-size);
+        for (i from $entry-point-argument-count below arguments.size)
+          let ptr = ins--gep(back-end, extra, i - $entry-point-argument-count);
+          ins--store(back-end, arguments[i], ptr, alignment: word-size);
+        end for;
+        let arguments
+          = concatenate(copy-sequence(arguments,
+                                      end: $entry-point-argument-count),
+                        vector(extra));
+        let parameter-types
+          = make(<simple-object-vector>,
+                 size: $entry-point-argument-count + 3,
+                 fill: $llvm-object-pointer-type);
+        parameter-types[$entry-point-argument-count]
+          := llvm-pointer-to(back-end, $llvm-object-pointer-type);
+        let function-type
+          = make(<llvm-function-type>,
+                 return-type: return-type,
+                 parameter-types: parameter-types,
+                 varargs?: #f);
+        values(arguments, function-type)
+      else
+        let function-type
+          = function-type
+          | make(<llvm-function-type>,
+                 return-type: return-type,
+                 parameter-types: make(<simple-object-vector>,
+                                       size: arguments.size + 2,
+                                       fill: $llvm-object-pointer-type),
+                 varargs?: #f);
+        values(arguments, function-type)
+      end if;
   op--call(back-end, iep-function(back-end, iep, function-type),
            concatenate(arguments, vector(next, function)),
            type: return-type,

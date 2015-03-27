@@ -71,6 +71,8 @@ define method emit-code
   // Do nothing
 end method;
 
+define constant $extra-parameter-name = ".extra";
+
 define method emit-code
     (back-end :: <llvm-back-end>, module :: <llvm-module>, o :: <&iep>,
      #key init? = #f)
@@ -79,7 +81,14 @@ define method emit-code
     let function-name = emit-name(back-end, module, o);
     let function-type = llvm-lambda-type(back-end, o);
 
-    let parameter-types = function-type.llvm-function-type-parameter-types;
+    let fun = o.function;
+    let signature = ^function-signature(fun);
+    let parameter-types
+      = if (signature)
+          llvm-signature-types(back-end, o, signature-spec(fun), signature)
+        else
+          llvm-dynamic-signature-types(back-end, o, signature-spec(fun))
+        end if;
     let arguments
       = map(method (arg-type, index, param)
               make(<llvm-argument>,
@@ -89,18 +98,31 @@ define method emit-code
                    index: index)
             end,
             parameter-types,
-            range(below: parameter-types.size),
+            range(below: min(parameter-types.size,
+                             $entry-point-argument-count)),
             parameters(o));
 
+    let extra
+      = if (parameter-types.size > $entry-point-argument-count)
+          vector(make(<llvm-argument>,
+                      type: llvm-pointer-to(back-end,
+                                            $llvm-object-pointer-type),
+                      name: $extra-parameter-name,
+                      index: arguments.size))
+        else
+          #[]
+        end if;
+
+    let calling-convention-index = arguments.size + extra.size;
     let calling-convention-parameters
       = vector(make(<llvm-argument>,
                     type: $llvm-object-pointer-type,
                     name: $next-methods-parameter-name,
-                    index: parameter-types.size),
+                    index: calling-convention-index),
                make(<llvm-argument>,
                     type: $llvm-object-pointer-type,
                     name: $function-parameter-name,
-                    index: parameter-types.size + 1));
+                    index: calling-convention-index + 1));
 
     let linkage
       = if (o.model-definition & ~init?) #"external" else #"internal" end;
@@ -113,7 +135,9 @@ define method emit-code
         := make(<llvm-function>,
                 name: function-name,
                 type: llvm-pointer-to(back-end, function-type),
-                arguments: concatenate(arguments, calling-convention-parameters),
+                arguments: concatenate(arguments,
+                                       extra,
+                                       calling-convention-parameters),
                 linkage: linkage,
                 section: llvm-section-name(back-end, section),
                 calling-convention:
@@ -128,10 +152,26 @@ define method emit-code
                     *computation-dbg-scope-table* = make(<object-table>))
         // Add function arguments to the function's value table,
         // and to the temporary value mapping
-        for (argument in arguments, param in parameters(o))
+        for (argument in arguments, param in o.parameters)
           ins--local(back-end, argument.llvm-argument-name, argument);
           temporary-value(param) := argument;
         end for;
+
+        // Add extra parameters to the function's value table,
+        // and to the temporary value mapping
+        if (~empty?(extra))
+          ins--local(back-end, extra.first.llvm-argument-name, extra.first);
+
+          for (i from $entry-point-argument-count below o.parameters.size)
+            let param = o.parameters[i];
+            let name = hygienic-mangle(back-end, param.name, param.frame-offset);
+            let offset = i - $entry-point-argument-count;
+            let value-ptr = ins--gep-inbounds(back-end, extra.first, offset);
+            let value = ins--load(back-end, value-ptr); // FIXME invariant load
+            ins--local(back-end, name, value);
+            temporary-value(param) := value;
+          end for;
+        end if;
 
         // Add calling convention parameters to the function's value table
         for (argument in calling-convention-parameters)

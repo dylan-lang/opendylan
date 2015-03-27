@@ -325,10 +325,6 @@ define method llvm-signature-types
   for (spec in spec-argument-key-variable-specs(sig-spec))
     add!(parameter-types, $llvm-object-pointer-type);
   end for;
-  // Calling convention parameters
-  add!(parameter-types, $llvm-object-pointer-type); // next-methods
-  add!(parameter-types, $llvm-object-pointer-type); // function
-
   parameter-types
 end method;
 
@@ -349,10 +345,6 @@ define method llvm-dynamic-signature-types
   for (spec in spec-argument-key-variable-specs(sig-spec))
     add!(parameter-types, $llvm-object-pointer-type);
   end for;
-  // Calling convention parameters
-  add!(parameter-types, $llvm-object-pointer-type); // next-methods
-  add!(parameter-types, $llvm-object-pointer-type); // function
-
   parameter-types
 end method;
 
@@ -370,9 +362,24 @@ define method llvm-lambda-type
       else
         llvm-dynamic-signature-types(back-end, o, signature-spec(fun))
       end if;
+
+  let calling-convention-parameter-types
+    = vector($llvm-object-pointer-type,  // next-methods
+             $llvm-object-pointer-type); // function
   make(<llvm-function-type>,
        return-type: llvm-reference-type(back-end, back-end.%mv-struct-type),
-       parameter-types: parameter-types,
+       parameter-types:
+         if (parameter-types.size > $entry-point-argument-count)
+           let extra-parameter-type
+             = llvm-pointer-to(back-end, $llvm-object-pointer-type);
+           concatenate(copy-sequence(parameter-types,
+                                     end: $entry-point-argument-count),
+                       vector(extra-parameter-type),
+                       calling-convention-parameter-types)
+         else
+           concatenate(parameter-types,
+                       calling-convention-parameter-types)
+         end if,
        varargs?: #f)
 end method;
 

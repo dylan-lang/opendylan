@@ -59,16 +59,26 @@ define method emit-lambda-dbg-function
       else
         llvm-dynamic-signature-dbg-types(back-end, o, sig-spec)
       end if;
+
+  let obj-dbg-type
+    = llvm-reference-dbg-type(back-end, dylan-value(#"<object>"));
+  let dbg-calling-convention-parameter-types
+    = vector(obj-dbg-type,      // next-methods
+             obj-dbg-type);     // function
+
+  let dbg-function-parameter-types
+    = if (o.parameters.size > $entry-point-argument-count)
+        concatenate(copy-sequence(dbg-parameter-types,
+                                  end: $entry-point-argument-count),
+                    vector(llvm-dbg-pointer-to(back-end, obj-dbg-type)),
+                    dbg-calling-convention-parameter-types)
+      else
+        concatenate(dbg-parameter-types,
+                    dbg-calling-convention-parameter-types)
+      end if;
   let dbg-function-type
     = llvm-make-dbg-function-type(dbg-file, dbg-return-type,
-                                  dbg-parameter-types);
-
-  let parameter-types
-    = if (signature)
-        llvm-signature-types(back-end, o, sig-spec, signature)
-      else
-        llvm-dynamic-signature-types(back-end, o, sig-spec)
-      end if;
+                                  dbg-function-parameter-types);
 
   // Construct the function metadata
   let module = back-end.llvm-builder-module;
@@ -128,9 +138,6 @@ define method llvm-signature-dbg-types
   for (spec in spec-argument-key-variable-specs(sig-spec))
     add!(parameter-types, llvm-reference-dbg-type(back-end, obj-type));
   end for;
-  // Calling convention parameters (next-methods, function)
-  add!(parameter-types, llvm-reference-dbg-type(back-end, obj-type));
-  add!(parameter-types, llvm-reference-dbg-type(back-end, obj-type));
 
   let return-type
     = llvm-reference-dbg-type(back-end, back-end.%mv-struct-type);
@@ -158,9 +165,6 @@ define method llvm-dynamic-signature-dbg-types
   for (spec in spec-argument-key-variable-specs(sig-spec))
     add!(parameter-types, obj-dbg-type);
   end for;
-  // Calling convention parameters
-  add!(parameter-types, obj-dbg-type); // next-methods
-  add!(parameter-types, obj-dbg-type); // function
 
   let return-type
     = llvm-reference-dbg-type(back-end, back-end.%mv-struct-type);
@@ -255,6 +259,18 @@ define method llvm-reference-dbg-type
             end)
 end method;
 
+define function llvm-dbg-pointer-to
+    (back-end :: <llvm-back-end>, dbg-type :: false-or(<llvm-metadata-value>))
+ => (dbg-type :: <llvm-metadata-value>);
+  let word-size = back-end-word-size(back-end);
+  llvm-make-dbg-derived-type(#"pointer",
+                             #f,
+                             "",
+                             #f, #f,
+                             8 * word-size, 8 * word-size, 0,
+                             #f)
+end function;
+
 define method llvm-reference-dbg-type
     (back-end :: <llvm-back-end>, o :: <&type>)
  => (dbg-type :: <llvm-metadata-value>);
@@ -263,13 +279,7 @@ define method llvm-reference-dbg-type
   element(back-end.%dbg-type-table, obj-type, default: #f)
     | begin
         let dummy-file = llvm-make-dbg-file("dummy-objects.dylan", "");
-        let pointer-type
-          = llvm-make-dbg-derived-type(#"pointer",
-                                       #f,
-                                       "",
-                                       #f, #f,
-                                       8 * word-size, 8 * word-size, 0,
-                                       #f);
+        let pointer-type = llvm-dbg-pointer-to(back-end, #f);
         back-end.%dbg-type-table[obj-type]
          := llvm-make-dbg-derived-type(#"typedef",
                                        #f,
