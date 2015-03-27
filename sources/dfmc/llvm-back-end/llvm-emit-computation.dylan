@@ -497,10 +497,13 @@ define method emit-computation
           let class = o.^object-class;
           llvm-constrain-type
             (global.llvm-value-type,
-             llvm-pointer-to(back-end, llvm-reference-type(back-end, class)));
+             llvm-pointer-to(back-end, llvm-object-type(back-end, class)));
           let signature-ptr
             = op--getslotptr(back-end, global, class, #"function-signature");
           ins--store(back-end, signature, signature-ptr);
+
+          let result = ins--bitcast(back-end, global, $llvm-object-pointer-type);
+          computation-result(back-end, c, result);
         else
           let result
             = if (init?)
