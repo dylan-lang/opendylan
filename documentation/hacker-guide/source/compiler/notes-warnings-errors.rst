@@ -390,18 +390,13 @@ Program Conditions
    :open:
    :abstract:
 
-   :superclasses: :class:`<serious-program-warning>`
+   :superclasses: :class:`<program-note>`
 
    :description:
 
      A ``<program-error>`` is a language error.  Examples would be (most)
      syntax errors, inconsistent direct superclasses, or a reference to
      an undefined name.
-
-     .. note:: This is currently a :class:`<serious-program-warning>`
-        rather than a separate subclass of :class:`<program-note>`.
-        This is noted in the source as a short term hack since
-        April 6, 1998.
 
 .. class:: <program-restart>
    :open:
