@@ -51,6 +51,7 @@ define constant $runtime-referenced-functions
       #"machine-word-overflow",
       #"integer-divide-by-0",
       #"float-divide-by-0",
+      #"float-invalid",
       #"float-overflow",
       #"float-underflow",
       #"call-application-exit-functions"];

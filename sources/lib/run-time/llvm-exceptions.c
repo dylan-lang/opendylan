@@ -15,13 +15,13 @@ void primitive_reset_float_environment(void)
 {
   feclearexcept(FE_ALL_EXCEPT);
 #if defined OPEN_DYLAN_PLATFORM_FREEBSD || defined OPEN_DYLAN_PLATFORM_LINUX
-  feenableexcept(FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW);
+  feenableexcept(FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW | FE_INVALID);
 #elif defined OPEN_DYLAN_PLATFORM_DARWIN \
   && (defined OPEN_DYLAN_ARCH_X86 || defined OPEN_DYLAN_ARCH_X86_64)
   fenv_t fenv;
   fegetenv(&fenv);
-  fenv.__control &= ~(FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW);
-  fenv.__mxcsr &= ~((FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW) << 7);
+  fenv.__control &= ~(FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW | FE_INVALID);
+  fenv.__mxcsr &= ~((FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW | FE_INVALID) << 7);
   fesetenv(&fenv);
 #endif
 }
@@ -81,6 +81,10 @@ static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
 
   case FPE_FLTDIV:
     SetIP(uap, (uintptr_t) &dylan_float_divide_by_0_error);
+    break;
+
+  case FPE_FLTINV:
+    SetIP(uap, (uintptr_t) &dylan_float_invalid_error);
     break;
 
   case FPE_FLTOVF:
@@ -234,6 +238,9 @@ kern_return_t catch_mach_exception_raise_state_identity
     // code[1] contains the floating point status word
     if (code[1] & FE_DIVBYZERO) {
       handler = (uintptr_t) &dylan_float_divide_by_0_error;
+    }
+    else if (code[1] & FE_INVALID) {
+      handler = (uintptr_t) &dylan_float_invalid_error;
     }
     else if (code[1] & FE_OVERFLOW) {
       handler = (uintptr_t) &dylan_float_overflow_error;

@@ -26,6 +26,11 @@ define c-callable auxiliary &runtime-primitive-descriptor dylan-float-divide-by-
   op--call-error-iep(be, #"float-divide-by-0");
 end;
 
+define c-callable auxiliary &runtime-primitive-descriptor dylan-float-invalid-error () => ();
+  call-primitive(be, primitive-reset-float-environment-descriptor);
+  op--call-error-iep(be, #"float-invalid")
+end;
+
 define c-callable auxiliary &runtime-primitive-descriptor dylan-float-overflow-error () => ();
   call-primitive(be, primitive-reset-float-environment-descriptor);
   op--call-error-iep(be, #"float-overflow")
