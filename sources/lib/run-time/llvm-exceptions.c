@@ -57,6 +57,11 @@ static inline void SetIP(void *uap, uintptr_t ip)
   *--esp = uc->uc_mcontext.gregs[REG_EIP];
   uc->uc_mcontext.gregs[REG_ESP] = (greg_t) esp;
   uc->uc_mcontext.gregs[REG_EIP] = (greg_t) ip;
+#elif defined OPEN_DYLAN_ARCH_X86_64
+  uintptr_t *rsp = (uintptr_t *) uc->uc_mcontext.gregs[REG_RSP];
+  *--rsp = uc->uc_mcontext.gregs[REG_RIP];
+  uc->uc_mcontext.gregs[REG_RSP] = (uintptr_t) rsp;
+  uc->uc_mcontext.gregs[REG_RIP] = ip;
 #else
 #error Unsupported Linux arch
 #endif
@@ -106,13 +111,20 @@ static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
 #define INT_OPCODE  0xCD        /* x86 INT instruction */
 #define INTO_OPCODE 0xCE        /* x86 INTO instruction */
 
+#if defined(OPEN_DYLAN_ARCH_X86)
+#define IP_REGISTER REG_EIP
+#endif
+#if defined(OPEN_DYLAN_ARCH_X86_64)
+#define IP_REGISTER REG_RIP
+#endif
+
 static struct sigaction oldsegvhandler;
 
 static void DylanSEGVHandler (int sig, siginfo_t *info, void *uap)
 {
   ucontext_t *uc = (ucontext_t *) uap;
   const unsigned char *eip
-    = (const unsigned char *) uc->uc_mcontext.gregs[REG_EIP];
+    = (const unsigned char *) uc->uc_mcontext.gregs[IP_REGISTER];
   switch (info->si_code) {
   case SEGV_MAPERR:
   case SEGV_ACCERR:

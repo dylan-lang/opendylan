@@ -51,6 +51,7 @@ case $host in
   x86_64-*-linux*)
       OPEN_DYLAN_TARGET_PLATFORM=x86_64-linux;
       MULTIARCH=x86_64-linux-gnu
+      SUPPORT_LLVM=yes
     ;;
   arm-*-linux*)
       OPEN_DYLAN_TARGET_PLATFORM=arm-linux;
