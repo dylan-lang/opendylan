@@ -57,6 +57,11 @@ static inline void SetIP(void *uap, uintptr_t ip)
   *--esp = uc->uc_mcontext.gregs[REG_EIP];
   uc->uc_mcontext.gregs[REG_ESP] = (greg_t) esp;
   uc->uc_mcontext.gregs[REG_EIP] = (greg_t) ip;
+#elif defined OPEN_DYLAN_ARCH_X86_64
+  uintptr_t *rsp = (uintptr_t *) uc->uc_mcontext.gregs[REG_RSP];
+  *--rsp = uc->uc_mcontext.gregs[REG_RIP];
+  uc->uc_mcontext.gregs[REG_RSP] = (uintptr_t) rsp;
+  uc->uc_mcontext.gregs[REG_RIP] = ip;
 #else
 #error Unsupported Linux arch
 #endif
