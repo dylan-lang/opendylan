@@ -1336,5 +1336,5 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   let full-shifted = ins--lshr(be, full, shift-ext);
 
   // Extract the high and low words of the result
-  op--split-double-integer(be, full)
+  op--split-double-integer(be, full-shifted)
 end;
