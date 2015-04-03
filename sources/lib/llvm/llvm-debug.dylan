@@ -389,7 +389,7 @@ define function llvm-make-dbg-local-variable
                                scope,
                                make(<llvm-metadata-string>, string: name),
                                dbg-file,
-                               i32(logior(line-number | 0, ash(arg, 24))),
+                               i32(generic-logior(line-number | 0, generic-ash(arg, 24))),
                                type,
                                i32(0), // flags
                                i32(0)));
