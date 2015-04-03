@@ -32,15 +32,15 @@ define method variable-value
               end);
   end unless;
   let val =
-    primitive-cast-raw-as-pointer
-    (%call-c-function ("dlsym")
-         (handle :: <raw-machine-word>, name :: <raw-byte-string>)
-      => (object :: <raw-machine-word>)
-         (primitive-unwrap-machine-word(*dl-handle*),
-          primitive-string-as-raw(mangled-name))
-     end);
+    %call-c-function ("dlsym")
+        (handle :: <raw-machine-word>, name :: <raw-byte-string>)
+     => (object :: <raw-machine-word>)
+      (primitive-unwrap-machine-word(*dl-handle*),
+       primitive-string-as-raw(mangled-name))
+    end;
   if (primitive-machine-word-equal?(val, integer-as-raw(0)))
     failed-lookup();
-  else val
+  else
+    primitive-cast-raw-as-pointer(val)
   end if;
 end method;

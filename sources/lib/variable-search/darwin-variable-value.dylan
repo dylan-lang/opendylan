@@ -19,16 +19,16 @@ define method variable-value
          mangle-binding-spread
            (*mangler*, variable-name, module-name, library-name));
   let val =
-    primitive-cast-raw-as-pointer
-    (%call-c-function ("dlsym")
-         (handle :: <raw-machine-word>, name :: <raw-byte-string>)
-      => (object :: <raw-machine-word>)
-         (integer-as-raw($RTLD-DEFAULT),
-          primitive-string-as-raw(mangled-name))
-     end);
+    %call-c-function ("dlsym")
+        (handle :: <raw-machine-word>, name :: <raw-byte-string>)
+     => (object :: <raw-machine-word>)
+        (integer-as-raw($RTLD-DEFAULT),
+         primitive-string-as-raw(mangled-name))
+    end;
   if (primitive-machine-word-equal?(val, integer-as-raw(0)))
     error("Failed to locate variable %= in module %= of library %=",
           variable-name, module-name, library-name);
-  else val
+  else
+    primitive-cast-raw-as-pointer(val)
   end if;
 end method;
