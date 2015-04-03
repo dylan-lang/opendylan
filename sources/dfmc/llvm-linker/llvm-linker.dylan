@@ -408,6 +408,9 @@ end method;
 
 /// Externs referenced from <computation> expansions (and not explicitly in DFM)
 
+define constant $object-extern-names
+  = #[#"%empty-vector"];
+
 define constant $code-extern-names
   = #[#"%resolve-symbol",
       #"unbound-instance-slot",
@@ -417,6 +420,14 @@ define constant $code-extern-names
 define method emit-code-externs
     (back-end :: <llvm-back-end>, m :: <llvm-module>)
  => ();
+  for (object-name in $object-extern-names)
+    let object = dylan-value(object-name);
+    let def = llvm-builder-global(back-end, emit-name(back-end, m, object));
+    if (instance?(def, <llvm-symbolic-constant>))
+      emit-extern(back-end, m, object);
+    end if;
+  end for;
+
   for (function-name in $code-extern-names)
     let iep = ^iep(dylan-value(function-name));
     let def = llvm-builder-global(back-end, emit-name(back-end, m, iep));

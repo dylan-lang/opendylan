@@ -343,7 +343,7 @@ define method emit-local-merge-assignment
                  max(count, mv.llvm-mv-fixed.size),
                  rest? | (mv.llvm-mv-rest & temp.rest-values?))
           else
-            loop(i + 2, max(count, 1), rest?)
+            loop(i + 2, max(count, 1), rest? | temp.rest-values?)
           end if
         else
           values(count, rest?)
@@ -1633,19 +1633,36 @@ define method do-emit-return
     ins--ret(back-end, result);
   else
     // Store values beyond the first in the MV area
-    let count = mv.llvm-mv-fixed.size;
-    for (i from 1 below count)
+    let fixed-count = mv.llvm-mv-fixed.size;
+    for (i from 1 below fixed-count)
       let ptr = op--teb-getelementptr(back-end, #"teb-mv-area", i);
       ins--store(back-end, mv.llvm-mv-fixed[i], ptr);
     end for;
 
-    if (mv.llvm-mv-rest)
-      error("FIXME return llvm-mv-rest")
-    end;
+    let count
+      = if (mv.llvm-mv-rest)
+          // Copy a rest vector into the MV area
+          let sov-class :: <&class> = dylan-value(#"<simple-object-vector>");
+          let rest-cast
+            = op--object-pointer-cast(back-end, mv.llvm-mv-rest, sov-class);
+          let rest-count
+            = call-primitive(back-end, primitive-vector-size-descriptor,
+                             rest-cast);
+          let src-ptr
+            = op--getslotptr(back-end, rest-cast, sov-class,
+                             #"vector-element", 0);
+          op--copy-into-mv-area(back-end, fixed-count, src-ptr, rest-count);
+
+          // Add the count of values from the rest vector into the MV count
+          let total-count = ins--add(back-end, fixed-count, rest-count);
+          ins--trunc(back-end, total-count, $llvm-i8-type)
+        else
+          i8(fixed-count)
+        end;
 
     // Return the primary value in the MV struct
     let result
-      = op--global-mv-struct(back-end, mv.llvm-mv-fixed.first, i8(count));
+      = op--global-mv-struct(back-end, mv.llvm-mv-fixed.first, count);
     ins--ret(back-end, result);
   end if;
 end method;
