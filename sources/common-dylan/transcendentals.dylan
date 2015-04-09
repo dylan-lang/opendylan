@@ -60,11 +60,7 @@ define may-inline function logn (x :: <number>, base :: <number>) => (result :: 
   log(x) / log(base)
 end function logn;
 
-define unary-transcendental sqrt (x)
-  if (negative?(x))
-    error("SQRT would produce a complex number")
-  end
-end unary-transcendental sqrt;
+define unary-transcendental sqrt (x) end;
 
 define may-inline function isqrt (x :: <integer>) => (result :: <integer>)
   floor(sqrt(x))
