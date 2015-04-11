@@ -46,6 +46,16 @@ define common-extensions class-test <division-by-zero-error> ()
                   force-float-division-by-zero(0.0d0));
 end class-test <division-by-zero-error>;
 
+define not-inline function force-domain-error (f :: <float>)
+  sqrt(f)
+end;
+
+define common-extensions class-test <arithmetic-domain-error> ()
+  check-condition("sqrt(-1.0) signals <arithmetic-domain-error>",
+                  <arithmetic-domain-error>,
+                  force-domain-error(-1.0));
+end class-test <arithmetic-domain-error>;
+
 define not-inline function force-integer-overflow (x :: <integer>, i :: <integer>)
   x + i
 end;
