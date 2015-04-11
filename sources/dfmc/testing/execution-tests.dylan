@@ -39,23 +39,23 @@ define function compile-to-top-level-forms (string :: <string>) => (ld, tlf*)
 end;
 
 define execution-test basic
-  "define no-inline method f () 1 end; f()" => 1
+  "define not-inline method f () 1 end; f()" => 1
 end;
 
 define execution-test addition
-  "define no-inline method f (x :: <integer>) x + 1 end; f(3)" => 4
+  "define not-inline method f (x :: <integer>) x + 1 end; f(3)" => 4
 end;
 
 define execution-test constant
-  "define constant $y = 1; define no-inline method f (x) x + $y end; f(3)" => 4
+  "define constant $y = 1; define not-inline method f (x) x + $y end; f(3)" => 4
 end;
 
 define execution-test variable
-  "define variable *y* = 1; define no-inline method f (x) x + *y* end; f(3)" => 4
+  "define variable *y* = 1; define not-inline method f (x) x + *y* end; f(3)" => 4
 end;
 
 define execution-test size
-  "define no-inline method f (x) size(x) end; f(#[1, 2, 3])" => 3
+  "define not-inline method f (x) size(x) end; f(#[1, 2, 3])" => 3
 end;
 
 define suite dfmc-execution-suite ()
