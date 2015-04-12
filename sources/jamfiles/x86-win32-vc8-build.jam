@@ -47,16 +47,16 @@ LINKFLAGS ?= /NODEFAULTLIB /INCREMENTAL:NO /DEBUG /MANIFEST ;
 # Runtime
 #
 
+libcmt	?= libcmt.lib ;
+
 # External libraries linked with the dylan library
 # (via the Linker-Options: keyword in Sources/dylan/dylan.lid)
 rtlibs  ?= kernel32.lib pentium-run-time.lib mmdw.lib mpsplinth.lib 
-           minvcrt.lib ;
+           $(libcmt) ;
 
 # External libraries linked with libraries other than the dylan library
 # (via the DylanLibrary function defined below)
 suplibs ?= kernel32.lib dylan-support.lib ;
-
-libcmt	?= libcmt.lib ;
 
 # Linker flags and libraries for GUI applications
 # Used in the Linker-Options: LID keyword of DUIM applications.

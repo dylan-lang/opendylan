@@ -42,12 +42,10 @@ OBJS	 = collector.obj break.obj $(HEAPOBJS) harp-support\x86-windows\runtime.obj
 LIBFILE	 = pentium-run-time.lib
 USEROBJ	 = harp-support\x86-windows\dylan-support.obj
 USERLIB	 = dylan-support.lib
-MINCRT   = minvcrt.lib
 
 RUNTIMELIBDEST	 = $(LIBDEST)\pentium-run-time.lib
 MMDWDEST	 = $(LIBDEST)\mmdw.lib
 PLINTHDEST	 = $(LIBDEST)\mpsplinth.lib
-MINCRTDEST	 = $(LIBDEST)\minvcrt.lib
 
 RELEASEMMDW     = $(SDK4MEMORY_POOL_SYSTEM)\code\w3i3mv\hi\mmdw.lib
 RELEASEPLINTH	  = $(SDK4MEMORY_POOL_SYSTEM)\code\w3i3mv\hi\mpsplan.lib
@@ -60,17 +58,6 @@ SYMBOLICPLINTH	 = mpsplan.lib
 
 PLINTHOBJS       = plinth.obj mpsiowin32.obj
 DYLANPLINTH      = dylan-plinth.lib
-
-!if defined(fullcrt)
-$(MINCRT):
-!else
-$(MINCRT): minvcrt.def rtsyms.obj
-	$(LINKLIB)$(MINCRT) /def:minvcrt.def /machine:ix86
-	$(LINKLIB)$(MINCRT) $(MINCRT) rtsyms.obj
-
-rtsyms.obj: rtsyms.s
-	as -n -o rtsyms.obj rtsyms.s
-!endif
 
 $(DYLANPLINTH): $(PLINTHOBJS)
 	$(LINKLIB)$(DYLANPLINTH) $(PLINTHOBJS)
@@ -122,23 +109,13 @@ install-plinth: install-dylan-plinth
   echo Building pentium run time: install-plinth
 
 
-!if defined(fullcrt)
-install-mincrt:
-   echo Building pentium run time: install-mincrt (fullcrt)
-!else
-install-mincrt: $(MINCRT)
-  echo Building pentium run time: install-mincrt
-	if exist $(MINCRTDEST) del /q /f $(MINCRTDEST)
-	copy $(MINCRT) $(MINCRTDEST)
-!endif
-
 install-mmdw:
-  echo Building pentium run time: install-mmdw
+	echo Building pentium run time: install-mmdw
 	if exist $(MMDWDEST) del /q /f $(MMDWDEST)
 	if not exist $(RELEASEMMDW) pushd $(SDK4MEMORY_POOL_SYSTEM)\code \
 	& $(MAKE) /k /f w3i3mv.nmk mmdw.lib > $(BUILD_LOGS)\make-mmdw.log \
 	& popd
-  copy $(RELEASEMMDW) $(MMDWDEST)
+	copy $(RELEASEMMDW) $(MMDWDEST)
 
 install-symbolic-mmdw: $(SYMBOLICMMDW)
   echo Building pentium run time: install-symbolic-mmdw
@@ -151,7 +128,7 @@ install-debug-mmdw: $(DEBUGMMDW)
 	copy $(DEBUGMMDW) $(MMDWDEST)
 
 
-install-common-libs: ensure-dirs install-plinth install-userlib install-mincrt
+install-common-libs: ensure-dirs install-plinth install-userlib
 
 
 install-stripped: ensure-dirs install-mmdw install-runtime install-common-libs
@@ -167,7 +144,6 @@ install: ensure-dirs install-stripped install-build
 # (The files runtime.obj & dylan-support.obj are checked out from HOPE)
 clean:
 	pushd . & (del /f /q *collector.obj break.obj $(HEAPOBJS) windows-threads-primitives.obj windows-spy-interfaces.obj) & popd
-        pushd . & (del /f /q *pentium-run-time.lib $(USERLIB)) & popd
-        pushd . & (del /f /q $(MINCRT) mincrt.def) & popd
-        pushd . & (del /f /q $(DYLANPLINTH) $(PLINTHOBJS)) & popd
+	pushd . & (del /f /q *pentium-run-time.lib $(USERLIB)) & popd
+	pushd . & (del /f /q $(DYLANPLINTH) $(PLINTHOBJS)) & popd
 
