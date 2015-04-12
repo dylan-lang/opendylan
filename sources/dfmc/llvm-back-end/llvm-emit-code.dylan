@@ -138,6 +138,7 @@ define method emit-code
                 arguments: concatenate(arguments,
                                        extra,
                                        calling-convention-parameters),
+                attribute-list: llvm-function-attributes(back-end, o),
                 linkage: linkage,
                 section: llvm-section-name(back-end, section),
                 calling-convention:
@@ -237,3 +238,22 @@ define method llvm-calling-convention
   $llvm-calling-convention-c
 end method;
 
+define method llvm-function-attributes
+    (back-end :: <llvm-back-end>, o :: <&iep>)
+ => (attributes :: <llvm-attribute-list>)
+  let function-attributes = $llvm-attribute-none;
+  let parameter-attributes = #[];
+  let return-attributes = $llvm-attribute-none;
+  let form = o.function.model-definition;
+  if (form)
+    select (form.form-inline-policy)
+      #"not-inline" =>
+        function-attributes := llvm-attribute-merge(function-attributes, $llvm-attribute-noinline);
+      otherwise =>
+    end select;
+  end if;
+  make(<llvm-attribute-list>,
+       return-attributes: return-attributes,
+       function-attributes: function-attributes,
+       parameter-attributes: parameter-attributes)
+end method;

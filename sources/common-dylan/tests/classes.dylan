@@ -24,100 +24,62 @@ define common-extensions class-test <arithmetic-error> ()
   //---*** Fill this in...
 end class-test <arithmetic-error>;
 
-/// NOTE: These rather strange expressions are used to prevent the compiler from
-///       attempting any compile-time optimizations of the original expressions.
+define not-inline function force-integer-division-by-zero (i :: <integer>)
+  /* Commented out due to https://github.com/dylan-lang/opendylan/issues/633
+  floor/(3, i)
+  */
+end;
+
+define not-inline function force-float-division-by-zero (f :: <float>)
+  3 / f
+end;
 
 define common-extensions class-test <division-by-zero-error> ()
-  /* Commented out due to https://github.com/dylan-lang/opendylan/issues/633
   check-condition("floor/(1, 0) signals <division-by-zero-error>",
                   <division-by-zero-error>,
-                  begin
-                    let x :: <integer> = 0;
-                    for (i from 0 below 1)
-                      x := x + 1;
-                      x := floor/(x, 0);
-                    end
-                  end);
-  */
-  // Placeholder so we don't forget the above bug.
-  check-true("floor/(1, 0) signals <division-by-zero-error>", #f);
-
+                  force-integer-division-by-zero(0));
   check-condition("1.0s0 / 0.0s0 signals <division-by-zero-error>",
                   <division-by-zero-error>,
-                  begin
-                    let x :: <single-float> = 0.0s0;
-                    for (i from 0 below 1)
-                      x := x + 1.0s0;
-                      x := x / 0.0s0;
-                    end
-                  end);
+                  force-float-division-by-zero(0.0s0));
   check-condition("1.0d0 / 0.0d0 signals <division-by-zero-error>",
                   <division-by-zero-error>,
-                  begin
-                    let x :: <double-float> = 0.0d0;
-                    for (i from 0 below 1)
-                      x := x + 1.0d0;
-                      x := x / 0.0d0;
-                    end
-                  end);
+                  force-float-division-by-zero(0.0d0));
 end class-test <division-by-zero-error>;
+
+define not-inline function force-integer-overflow (x :: <integer>, i :: <integer>)
+  x + i
+end;
+
+define not-inline function force-float-overflow (x :: <float>, f :: <float>)
+  x * f
+end;
 
 define common-extensions class-test <arithmetic-overflow-error> ()
   check-condition("$maximum-integer + 1 signals <arithmetic-overflow-error>",
                   <arithmetic-overflow-error>,
-                  begin
-                    let x :: <integer> = $maximum-integer - 1;
-                    for (i from 0 below 2)
-                      x := x + 1;
-                    end
-                  end);
+                  force-integer-overflow($maximum-integer, 1));
   check-condition("$minimum-integer - 1 signals <arithmetic-overflow-error>",
                   <arithmetic-overflow-error>,
-                  begin
-                    let x :: <integer> = $minimum-integer + 1;
-                    for (i from 0 below 2)
-                      x := x - 1;
-                    end
-                  end);
+                  force-integer-overflow($minimum-integer, -1));
   check-condition("1.0s20 * 1.0s20 signals <arithmetic-overflow-error>",
                   <arithmetic-overflow-error>,
-                  begin
-                    let x :: <single-float> = 1.0s0;
-                    for (i from 0 below 2)
-                      x := x * 1.0s20;
-                    end;
-                    x
-                  end);
+                  force-float-overflow(1.0s20, 1.0s20));
   check-condition("1.0d160 * 1.0d160 signals <arithmetic-overflow-error>",
                   <arithmetic-overflow-error>,
-                  begin
-                    let x :: <double-float> = 1.0d0;
-                    for (i from 0 below 2)
-                      x := x * 1.0d160;
-                    end;
-                    x
-                  end);
+                  force-float-overflow(1.0d160, 1.0d160));
 end class-test <arithmetic-overflow-error>;
+
+define not-inline function force-float-underflow (x :: <float>, f :: <float>)
+  x * f
+end;
 
 define common-extensions class-test <arithmetic-underflow-error> ()
   check-condition("1.0s-20 * 1.0s-20 signals <arithmetic-underflow-error>",
                   <arithmetic-underflow-error>,
-                  begin
-                    let x :: <single-float> = 1.0s0;
-                    for (i from 0 below 2)
-                      x := x * 1.0s-20;
-                    end;
-                    x
-                  end);
+                  force-float-underflow(1.0s-20, 1.0s-20));
   check-condition("1.0d-160 * 1.0d-160 signals <arithmetic-underflow-error>",
                   <arithmetic-underflow-error>,
-                  begin
-                    let x :: <double-float> = 1.0d0;
-                    for (i from 0 below 2)
-                      x := x * 1.0d-160;
-                    end;
-                    x
-                  end);
+                  force-float-underflow(1.0d-160, 1.0d-160));
 end class-test <arithmetic-underflow-error>;
 
 define sideways method make-test-instance
