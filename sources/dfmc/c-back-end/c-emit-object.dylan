@@ -657,6 +657,10 @@ define method emit-lambda-interface-using-function
   unless (external-lambda?(fun))
     write(stream, "static ");
   end;
+  let form = fn.model-definition;
+  if (form & form.form-inline-policy == #"not-inline")
+    write(stream, "OPEN_DYLAN_NO_INLINE ");
+  end if;
   emit-return-types(back-end, stream, o);
   format-emit*(back-end, stream, " ^ ", o);
   let sig = ^function-signature(fn);

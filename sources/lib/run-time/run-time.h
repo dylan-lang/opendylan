@@ -92,6 +92,13 @@ typedef void*                   D;
 
 /* COMPILER-SPECIFIC INTRINSICS */
 
+
+#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
+#  define OPEN_DYLAN_NO_INLINE __attribute__((noinline))
+#else
+#  define OPEN_DYLAN_NO_INLINE
+#endif
+
 #ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
 #  define NORETURN_FUNCTION __attribute__((noreturn))
 #else

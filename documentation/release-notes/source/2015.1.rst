@@ -66,6 +66,9 @@ Compiler
   * Previously, ``define domain`` was accepted without warning. This is
     not valid Dylan syntax as it should be ``define sealed domain``.
 
+* Dylan functions that are marked as ``not-inline`` now take that into
+  account when generating code in the LLVM and C back-ends.
+
 Documentation
 =============
 
