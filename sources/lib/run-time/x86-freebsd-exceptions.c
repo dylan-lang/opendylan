@@ -6,6 +6,7 @@ extern void dylan_stack_overflow_handler(void *base_address, int size, unsigned 
 extern void dylan_integer_overflow_handler();
 extern void dylan_integer_divide_0_handler();
 extern void dylan_float_divide_0_handler();
+extern void dylan_float_invalid_handler();
 extern void dylan_float_overflow_handler();
 extern void dylan_float_underflow_handler();
 
@@ -34,6 +35,13 @@ EstablishDylanExceptionHandlers(&oldFPEHandler, &oldTRAPHandler);      \
 static void DylanFPEHandler (int sig, siginfo_t *info, void *sc);
 static void DylanTRAPHandler (int sig, siginfo_t *info, void *sc);
 
+static __inline
+void RestoreFPState ()
+{
+  fpresetsticky(fpgetsticky());
+  fpsetmask(FP_X_INV | FP_X_DZ | FP_X_OFL | FP_X_UFL);
+}
+
 static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
                                              struct sigaction * oldTRAPHandler)
 {
@@ -51,6 +59,9 @@ static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
   sigaction(SIGTRAP, &newTRAPHandler, oldTRAPHandler);
 
   signal(SIGPIPE, SIG_IGN);
+
+  // set up FP exception masks
+  RestoreFPState();
 }
 
 static void RemoveDylanExceptionHandlers (struct sigaction * oldFPEHandler,
@@ -58,14 +69,6 @@ static void RemoveDylanExceptionHandlers (struct sigaction * oldFPEHandler,
 {
   sigaction(SIGFPE, oldFPEHandler, NULL);
   sigaction(SIGTRAP, oldTRAPHandler, NULL);
-}
-
-static __inline
-void RestoreFPState ()
-{
-  fpresetsticky(fpgetsticky());
-  fpsetmask(FP_X_INV | FP_X_DZ | FP_X_OFL);
-  return;
 }
 
 static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
@@ -89,6 +92,10 @@ static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
       RestoreFPState();
       uc->uc_mcontext.mc_eip = (long) dylan_float_divide_0_handler;
       break;
+
+    case FPE_FLTINV:
+      RestoreFPState();
+      uc->uc_mcontext.mc_eip = (long) dylan_float_invalid_handler;
 
     case FPE_FLTOVF:
       RestoreFPState();

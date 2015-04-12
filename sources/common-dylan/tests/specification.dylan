@@ -67,6 +67,7 @@ define module-spec common-extensions ()
   open generic-function condition-to-string (<condition>) => (<string>);
   open abstract class <arithmetic-error> (<error>);
   sealed instantiable class <division-by-zero-error> (<arithmetic-error>);
+  sealed instantiable class <arithmetic-domain-error> (<arithmetic-error>);
   sealed instantiable class <arithmetic-overflow-error> (<arithmetic-error>);
   sealed instantiable class <arithmetic-underflow-error> (<arithmetic-error>);
 
