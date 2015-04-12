@@ -79,6 +79,18 @@ Documentation
 
     export -format rst -file my-lib.rst interface-reference
 
+Runtime
+=======
+
+* Support for handling "invalid" floating point exceptions has been
+  added. These are generated when taking the square root of a negative
+  number and other similar situations where the numerical domain
+  is invalid.
+
+  When an invalid floating point exception occurs,
+  ``<arithmetic-domain-error>`` will be signaled (much like the other
+  ``<arithmetic-error>`` situations).
+
 system
 ======
 
