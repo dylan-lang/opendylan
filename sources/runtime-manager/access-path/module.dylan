@@ -130,7 +130,6 @@ define module access-path
       remote-value-<,
       remote-value-<=,
       as-integer-losing-precision,
-      as-remote-value-losing-precision,
       remote-value-as-string,
       string-as-remote-value,
       remote-value-low-order-bits,

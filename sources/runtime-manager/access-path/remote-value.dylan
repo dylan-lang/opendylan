@@ -77,7 +77,7 @@ end method;
 
 define method indexed-remote-value 
     (x :: <remote-value>, i :: <integer>) => (ptr :: <remote-value>)
-  nub-primitive-indexed-remote-value(x, i);
+  u%+(x, u%*(i, truncate/($machine-word-size, 8)))
 end method;
 
 
@@ -88,7 +88,7 @@ end method;
 
 define method byte-indexed-remote-value
     (x :: <remote-value>, i :: <integer>) => (ptr :: <remote-value>)
-  nub-primitive-byte-indexed-remote-value(x, i);
+  u%+(x, i)
 end method;
 
 
@@ -100,7 +100,8 @@ end method;
 define method remote-value-low-order-bits
     (x :: <remote-value>, bit-count :: <integer>)
        => (value :: <integer>)
-  nub-primitive-select-low-order-bits(x, bit-count)
+  let lower = %logand(x, u%-(%shift-left(1, bit-count), 1));
+  as(<integer>, lower)
 end method;
 
 
@@ -113,8 +114,7 @@ end method;
 
 define method tagged-remote-value-as-integer (x :: <remote-value>)
     => (i :: <integer>)
-  let stripped :: <remote-value> =
-    nub-primitive-tagged-value-as-integer (x);
+  let stripped :: <remote-value> = %shift-right(x, 2);
   as(<integer>, stripped);
 end method;
 
@@ -124,8 +124,7 @@ end method;
 
 define method tagged-remote-value-as-character (x :: <remote-value>)
     => (c :: <character>)
-  let int-bit =
-    nub-primitive-tagged-value-as-character (x);
+  let int-bit = %shift-right(x, 2);
   as(<character>, int-bit);
 end method;
 
@@ -136,7 +135,7 @@ end method;
 
 define method integer-as-tagged-remote-value (i :: <integer>)
     => (x :: <remote-value>)
-  nub-primitive-integer-as-tagged-value(i)
+  %logior(%shift-left(i, 2), #b01)
 end method;
 
 
@@ -146,7 +145,7 @@ end method;
 
 define method character-as-tagged-remote-value (c :: <character>)
     => (x :: <remote-value>)
-  nub-primitive-character-as-tagged-value(as(<integer>, c))
+  %logior(%shift-left(as(<integer>, c), 2), #b10)
 end method;
 
 
@@ -183,16 +182,7 @@ end method;
 
 define method as-integer-losing-precision (x :: <remote-value>)
     => (i :: <integer>)
-  nub-primitive-remote-value-as-integer-losing-precision(x);
-end method;
-
-
-///// AS-REMOTE-VALUE-LOSING-PRECISION
-//    Going in the other direction...
-
-define method as-remote-value-losing-precision (i :: <integer>)
-    => (x :: <remote-value>)
-  nub-primitive-integer-as-remote-value-losing-precision(i);
+  as(<integer>, %shift-right(x, 3))  // There goes our precision! Bollox!
 end method;
 
 

@@ -6,35 +6,6 @@
 /* **                                 All Rights Reserved           ** */
 /* ******************************************************************* */
 
-// Temporary C primitives to strip/add tags for conversion between
-// <remote-value> and <integer> or <character>. These won't make
-// up part of the nub API in the end, because these manipulations
-// can be done on dylan <machine-word>s
-
-TARGET_ADDRESS
-  nub_primitive_indexed_remote_value
-    (TARGET_ADDRESS base, NUBINT i);
-
-TARGET_ADDRESS
-  nub_primitive_byte_indexed_remote_value
-    (TARGET_ADDRESS base, NUBINT i);
-
-TARGET_ADDRESS
-  nub_primitive_tagged_value_as_integer
-    (TARGET_ADDRESS x);
-
-char
-  nub_primitive_tagged_value_as_character
-    (TARGET_ADDRESS x);
-
-TARGET_ADDRESS
-  nub_primitive_integer_as_tagged_value
-    (NUBINT i);
-
-TARGET_ADDRESS
-  nub_primitive_character_as_tagged_value
-    (char c);
-
 // Debugger nub API
 
 // Process creation and tethering.

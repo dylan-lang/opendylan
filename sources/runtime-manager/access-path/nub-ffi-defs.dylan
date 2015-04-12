@@ -56,66 +56,6 @@ define C-pointer-type <TARGET-ADDRESS-POINTER>
                                 => <TARGET-ADDRESS>;
 
 
-
-// PRIMITIVES TO DO TAG STRIPPING/ADDING
-
-define C-function nub-primitive-tagged-value-as-integer
-       parameter         x :: <TARGET-ADDRESS>;
-       result            i :: <TARGET-ADDRESS>;
-       c-name: "nub_primitive_tagged_value_as_integer";
-end C-function;
-
-define C-function nub-primitive-tagged-value-as-character
-       parameter         x :: <TARGET-ADDRESS>;
-       result            c :: <C-char>;
-       c-name: "nub_primitive_tagged_value_as_character";
-end C-function;
-
-define C-function nub-primitive-integer-as-tagged-value
-       parameter         i :: <NUBINT>;
-       result            x :: <TARGET-ADDRESS>;
-       c-name: "nub_primitive_integer_as_tagged_value";
-end C-function;
-
-define C-function nub-primitive-character-as-tagged-value
-       parameter         c :: <C-char>;
-       result            x :: <TARGET-ADDRESS>;
-       c-name: "nub_primitive_character_as_tagged_value";
-end C-function;
-
-define C-function nub-primitive-indexed-remote-value
-       parameter         x :: <TARGET-ADDRESS>;
-       parameter         i :: <NUBINT>;
-       result            r :: <TARGET-ADDRESS>;
-       c-name: "nub_primitive_indexed_remote_value";
-end C-function;
-
-define C-function nub-primitive-byte-indexed-remote-value
-       parameter         x :: <TARGET-ADDRESS>;
-       parameter         i :: <NUBINT>;
-       result            r :: <TARGET-ADDRESS>;
-       c-name: "nub_primitive_byte_indexed_remote_value";
-end C-function;
-
-define C-function nub-primitive-remote-value-as-integer-losing-precision
-       parameter         x :: <TARGET-ADDRESS>;
-       result            i :: <NUBINT>;
-       c-name: "nub_primitive_remote_value_as_integer_losing_precision";
-end C-function;
-
-define C-function nub-primitive-integer-as-remote-value-losing-precision
-       parameter         i :: <NUBINT>;
-       result            x :: <TARGET-ADDRESS>;
-       c-name: "nub_primitive_integer_as_remote_value_losing_precision";
-end C-function;
-
-define C-function nub-primitive-select-low-order-bits
-       parameter         x :: <TARGET-ADDRESS>;
-       parameter         n :: <NUBINT>;
-       result            k :: <NUBINT>;
-       c-name: "nub_primitive_select_low_order_bits";
-end C-function;
-
 define C-function open-local-tether
        parameter command          :: <C-string>;
        parameter arguments        :: <C-string>;
