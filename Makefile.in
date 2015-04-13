@@ -85,19 +85,12 @@ endif
 # stage 1 libraries.
 
 BOOTSTRAP_1_PRIMITIVE_LIBS = \
-	dylan functional-extensions machine-word byte-vector \
-	threads transcendentals functional-dylan \
-	common-extensions common-dylan unix-portability \
-	c-ffi bit-vector bit-set collectors plists set \
-	table-extensions collections streams standard-io \
-	print format format-out io date file-system \
-	operating-system locators settings system \
+	dylan common-dylan c-ffi collections io system \
 	generic-arithmetic big-integers duim-utilities \
 	duim-geometry duim-dcs duim-sheets duim-graphics \
 	duim-layouts duim-gadgets duim-frames duim-core \
-	duim-extended-geometry duim-gadget-panes duim \
-	winsock2 sockets network midi \
-	deuce duim-deuce com ole ole-server sql odbc-ffi \
+	duim-extended-geometry duim-gadget-panes duim network \
+	midi deuce duim-deuce com ole ole-server sql odbc-ffi \
 	sql-odbc corba-dylan corba-protocol dylan-orb \
 	iop-protocol ir-protocol ir-stubs orb-connections \
 	orb-core orb-iiop orb-ir orb-poa orb-streams \
