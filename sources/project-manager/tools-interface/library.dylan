@@ -19,7 +19,7 @@ end library tools-interface;
 
 define module tools-interface
   use dylan;
-  use common-extensions, exclude: { format-to-string };
+  use common-extensions;
   use machine-words;
   use format;
   use format-out;

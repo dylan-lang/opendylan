@@ -61,7 +61,7 @@ define module win32-resources-internal
   use win32-kernel,
     exclude: { sleep };
 
-  use simple-io;
+  use simple-format;
 
   use win32-resources;
 end module win32-resources-internal;

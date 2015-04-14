@@ -23,7 +23,7 @@ define library gnu-as-outputter
 end library;
 
 define module gnu-as-outputter
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use dylan-extensions;
   use byte-vector;
   use format;

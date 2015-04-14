@@ -79,7 +79,7 @@ define module source-records
 end module;
 
 define module source-records-implementation
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use threads;
   // Probably don't need all this, sort it out later
   // use collectors;

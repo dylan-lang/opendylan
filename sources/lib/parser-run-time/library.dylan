@@ -15,7 +15,7 @@ define module parser-run-time
   use common-dylan;
   use dylan-extensions,
     import: { vector-element, vector-element-setter, pointer-id? };
-  use simple-io;
+  use simple-format;
   export
     <parser>, run-parser;
 end module;

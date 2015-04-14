@@ -13,5 +13,5 @@ end library;
 
 define module hello-world
   use common-dylan;
-  use simple-io;
+  use simple-format;
 end module;

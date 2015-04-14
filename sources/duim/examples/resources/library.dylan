@@ -17,7 +17,7 @@ define library duim-resource-example
 end library duim-resource-example;
 
 define module duim-resource-example
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use format;
   use format-out;
   use operating-system;

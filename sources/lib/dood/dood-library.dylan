@@ -18,7 +18,7 @@ define library dood
 end library;
 
 define module dood
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use dylan-extensions;
   use dylan-primitives;
   use dylan-incremental;

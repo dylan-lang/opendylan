@@ -58,7 +58,7 @@ define module chat-client-implementation
 end module;
 
 define module chat-client-gui
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use duim;
   use threads;
   use operating-system;

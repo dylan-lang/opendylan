@@ -16,7 +16,7 @@ define library tether-downloader
 end library;
 
 define module tether-downloader
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use byte-vector;
   use format;
   use access-path;
@@ -71,7 +71,7 @@ define module tether-downloader
 end module;
 
 define module tether-downloader-internals
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use byte-vector;
   use format;
   use format-out;

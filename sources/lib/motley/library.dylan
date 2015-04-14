@@ -23,7 +23,7 @@ define library motley
 end library motley;
 
 define module motley
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use com;
   use ole-automation;
   use win32-kernel;

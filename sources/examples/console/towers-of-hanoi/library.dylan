@@ -13,5 +13,5 @@ end library hanoi;
 
 define module hanoi
   use common-dylan;
-  use simple-io;
+  use simple-format;
 end module hanoi;

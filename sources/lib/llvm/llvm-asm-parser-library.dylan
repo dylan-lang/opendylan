@@ -29,7 +29,7 @@ define module llvm-asm-parser-internals
     import: { <double-integer>, %double-integer-low, %double-integer-high,
               decode-single-float, decode-double-float,
               encode-single-float, encode-double-float };
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use streams;
   use machine-words;
   use parser-run-time;

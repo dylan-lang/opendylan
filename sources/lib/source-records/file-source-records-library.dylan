@@ -30,7 +30,7 @@ define module file-source-records
 end module;
 
 define module file-source-records-implementation
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use threads;
   use locators;
   // Probably don't need all this, sort it out later

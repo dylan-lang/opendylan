@@ -24,7 +24,7 @@ end module;
 
 // Main implementation module
 define module t-lists-internal
-  use common-dylan, exclude: {close, format-to-string};
+  use common-dylan;
   use streams;
   use print;
   use format;

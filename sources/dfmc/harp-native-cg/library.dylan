@@ -23,7 +23,7 @@ end library dfmc-harp-native-cg;
 
 define module dfmc-harp-native-cg
 
- use common-dylan, exclude: { format-to-string };
+ use common-dylan;
  use streams-internals;
 
  use harp-native,

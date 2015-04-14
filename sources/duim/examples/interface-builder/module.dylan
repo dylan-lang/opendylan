@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module interface-builder
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use threads;
   use streams;
   use file-system;

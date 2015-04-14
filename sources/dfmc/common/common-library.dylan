@@ -42,7 +42,7 @@ define module dfmc-imports
              <ordered-object-table>,
              <ordered-object-set> },
     export: all;
-  use common-extensions, exclude: { format-to-string }, export: all;
+  use common-extensions, export: all;
   use threads, export: all;
   use collectors, export: all;
   use set, export: all;

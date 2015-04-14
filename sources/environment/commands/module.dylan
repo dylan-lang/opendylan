@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module command-lines
   use dylan;
-  use common-extensions, exclude: { format-to-string };
+  use common-extensions;
   use dylan-extensions,
     import: { <keyboard-interrupt>,
               keyboard-interrupt?, keyboard-interrupt?-setter,

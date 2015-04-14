@@ -9,7 +9,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module common-harp-imports
   use common-extensions,
-    exclude: { format-to-string },
     rename: { <stretchy-object-vector> => <stretchy-vector> },
     export: all;
   use dylan-extensions, 

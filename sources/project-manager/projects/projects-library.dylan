@@ -141,7 +141,7 @@ end module;
 
 define module projects-implementation
   use dylan;
-  use common-extensions, exclude: { format-to-string };
+  use common-extensions;
   use threads;
   use memory-manager;
   use build-system;
@@ -232,7 +232,7 @@ end module;
 
 define module lid-projects
   use dylan;
-  use common-extensions, exclude: { format-to-string };
+  use common-extensions;
   use simple-debugging, import: { debug-out };
   // Probably don't need all this, sort it out later...
   use locators;

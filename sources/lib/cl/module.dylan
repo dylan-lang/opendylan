@@ -47,7 +47,7 @@ define module CL-strings
 end module CL-strings;
 
 define module CL-internals
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use format;
 
   use CL-macros, export: all;

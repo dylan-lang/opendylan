@@ -20,7 +20,7 @@ end library;
 
 define module disasm
   use generic-arithmetic-dylan;
-  use common-extensions, exclude: { format-to-string };
+  use common-extensions;
   use dylan-extensions, import: { <byte-character> };
   use byte-vector;
   use format;

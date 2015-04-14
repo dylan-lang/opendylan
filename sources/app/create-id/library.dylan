@@ -16,6 +16,6 @@ end library;
 define module create-id
   use common-dylan;
   use operating-system;
-  use simple-io;
+  use simple-format;
   use COM;
 end module;

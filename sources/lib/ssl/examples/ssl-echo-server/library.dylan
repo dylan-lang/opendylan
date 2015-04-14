@@ -16,7 +16,7 @@ end library;
 define module ssl-echo-server
   use dylan;
   use streams;
-  use simple-io;
+  use simple-format;
   use threads;
   use sockets;
 end module;

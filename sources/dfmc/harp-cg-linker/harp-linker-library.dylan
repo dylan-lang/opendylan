@@ -16,7 +16,7 @@ define library dfmc-harp-cg-linker
 end library;
 
 define module dfmc-harp-cg-linker
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use machine-word-lowlevel,
     import: { machine-word-unsigned-shift-left,
               machine-word-unsigned-shift-right };

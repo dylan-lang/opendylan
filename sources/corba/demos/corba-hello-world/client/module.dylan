@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define module corba-hello-world-client
   use byte-vector;
   use finalization;
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use machine-words;
   use simple-random;
   use transcendentals;

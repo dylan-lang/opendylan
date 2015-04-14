@@ -36,7 +36,7 @@ define module c-lexer-utilities
 end module;
 
 define module c-lexer-utilities-internal
-  use common-dylan, exclude: { <union>, clex-digit?, format-to-string };
+  use common-dylan, exclude: { <union>, clex-digit? };
   use streams;
   use standard-io;
   use print;
@@ -121,7 +121,7 @@ define module C-lexer
 end module;
 
 define module C-lexer-internal
-  use common-dylan, exclude: { format-to-string }; //  exclude: {<union>, close, clex-digit?}
+  use common-dylan;
   use streams, export: {read-element, unread-element};
   use standard-io;
   use print;
@@ -150,7 +150,7 @@ define module cpp
 end module cpp;
 
 define module cpp-internal
-  use common-dylan, exclude: { <union>, format-to-string };
+  use common-dylan, exclude: { <union> };
   use table-extensions, exclude: { table };
   use streams, export: {read-element, unread-element};
   use standard-io;

@@ -14,7 +14,7 @@ end library;
 
 
 define module cpp-tester
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use standard-io;
   use streams;
   use c-lexer;

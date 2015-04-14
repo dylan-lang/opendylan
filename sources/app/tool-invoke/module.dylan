@@ -8,7 +8,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module tool-invoke
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use operating-system;
   use streams;
   use standard-io;

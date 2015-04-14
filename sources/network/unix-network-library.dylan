@@ -16,7 +16,7 @@ end;
 
 define module unix-sockets
   use common-dylan,
-    exclude: { close, format-to-string };
+    exclude: { close };
   use C-FFI;
 
   // Misc
@@ -248,7 +248,7 @@ end module sockets;
 
 define module sockets-internals
   use dylan;
-  use common-extensions, exclude: { format-to-string };
+  use common-extensions;
   use dylan-extensions;
   use machine-words;
   use C-FFI;

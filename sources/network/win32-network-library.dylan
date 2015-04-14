@@ -520,7 +520,7 @@ define module sockets
 end module sockets;
 
 define module sockets-internals
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use dylan-extensions;
   use machine-words;
   use C-FFI;

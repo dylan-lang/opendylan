@@ -33,7 +33,7 @@ define library mm-debugger
 end library;
 
 define module devel-dbg-ui
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use collectors;
   use c-ffi;
   use operating-system, 

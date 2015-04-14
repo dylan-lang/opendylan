@@ -40,7 +40,7 @@ end module parser-interface;
 // They should rely on the definition of parser-user for an interface.
 
 define module string-parser
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use threads;
   use format;
 

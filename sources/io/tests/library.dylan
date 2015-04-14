@@ -20,8 +20,7 @@ define library io-test-suite
 end library io-test-suite;
 
 define module io-test-suite
-  use common-dylan,
-    exclude: { format-to-string };
+  use common-dylan;
   use simple-random;
   use threads;
   use date;

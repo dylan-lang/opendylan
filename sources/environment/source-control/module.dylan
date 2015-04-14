@@ -64,7 +64,7 @@ end module source-control-manager;
 
 define module source-control-manager-internals
   use dylan;
-  use common-extensions, exclude: { format-to-string };
+  use common-extensions;
   use threads;
   use locators;
   use settings;

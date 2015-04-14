@@ -36,7 +36,6 @@ end library;
 
 define module devel-dbg-ui
   use common-dylan,
-    exclude: { format-to-string },
     rename: { application-filename => os-application-filename };
   use dylan-extensions,
     import: { *class-profiling-enabled?*,

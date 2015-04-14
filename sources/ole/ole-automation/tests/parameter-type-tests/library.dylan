@@ -22,7 +22,7 @@ end library parameter-type-tests;
 
 define module parameter-type-tests
   use machine-words;
-  use simple-io;
+  use simple-format;
   use simple-random;
   use big-integers;
   use generic-arithmetic-common-dylan;

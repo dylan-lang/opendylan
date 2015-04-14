@@ -20,7 +20,7 @@ define module duim-imports
 	      element-range-error },
     export: all;
   use simple-debugging, export: all;
-  use simple-io, export: all;
+  use simple-format, export: all;
   use threads, export: all;
   use transcendentals, export: all;
   use table-extensions, exclude: { table }, export: all;

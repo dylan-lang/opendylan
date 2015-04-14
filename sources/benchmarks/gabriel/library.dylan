@@ -17,7 +17,7 @@ define module gabriel-benchmarks
     import: { sin, cos, $single-pi, $double-pi };
   use threads,
     import: { dynamic-bind };
-  use simple-io;
+  use simple-format;
   use simple-random;
   use simple-profiling;
 end module gabriel-benchmarks;

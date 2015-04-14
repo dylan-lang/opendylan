@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define module database-viewer
   use common-dylan;
   use threads;
-  use simple-io;
+  use simple-format;
   use sql-odbc,
     exclude: { command-function };
   use duim;

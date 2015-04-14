@@ -14,7 +14,7 @@ define library helpmate
 end library;
 
 define module helpmate
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use duim;
   use format;
 end module;

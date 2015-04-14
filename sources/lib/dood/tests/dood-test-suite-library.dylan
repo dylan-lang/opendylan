@@ -15,7 +15,7 @@ define library dood-test-suite
 end library;
 
 define module dood-test-suite
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use streams;
   use standard-io;
   use format;

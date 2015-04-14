@@ -21,7 +21,7 @@ define module common-dylan-test-suite
   use streams-protocol;
   use locators-protocol;
   use finalization;
-  use simple-io;
+  use simple-format;
   use simple-random;
   use simple-profiling;
   use transcendentals;

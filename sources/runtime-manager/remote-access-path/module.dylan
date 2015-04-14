@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define module remote-access-path
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use dylan-extensions,
      import: {<machine-word>, 
               <double-integer>, 

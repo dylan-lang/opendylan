@@ -12,7 +12,7 @@ end library quicksort;
 
 define module quicksort
   use common-dylan;
-  use simple-io;
+  use simple-format;
   use simple-random;
   use simple-profiling;
 end module quicksort;

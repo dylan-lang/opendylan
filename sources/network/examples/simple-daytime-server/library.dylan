@@ -14,7 +14,7 @@ define library daytime-server
 end library;
 
 define module daytime-server
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use streams;
   use standard-io;
   use format;

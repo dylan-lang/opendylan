@@ -17,7 +17,6 @@ end library;
 
 define module corba-dylan
   use generic-arithmetic-common-dylan,
-    exclude: { format-to-string },
     export: all;
   use dylan-arithmetic,
     export: all,

@@ -14,7 +14,7 @@ define library cn2
 end library cn2;
 
 define module cn2
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use dylan-extensions, import: { without-bounds-checks };
   use streams;
   use format;

@@ -97,7 +97,7 @@ define module interactive-symbol-table
 end module;
 
 define module ist-implementation
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use table-extensions, import: {<string-table>};
   use format;
   use format-out;

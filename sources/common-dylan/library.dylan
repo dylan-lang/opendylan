@@ -298,5 +298,5 @@ define module common-dylan-internals
   use simple-random;
   use simple-profiling;
   use simple-timers;
-  use simple-io;
+  use simple-format;
 end module common-dylan-internals;

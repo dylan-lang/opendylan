@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module windows-hook
   use common-dylan;
-  use simple-io;
+  use simple-format;
 
   use c-ffi;
   use win32-common;

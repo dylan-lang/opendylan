@@ -22,7 +22,7 @@ define module scepter-tests
   use standard-io;
   use print;
   use format;
-  use common-extensions, exclude: {format-to-string, <union>};
+  use common-extensions, exclude: {<union>};
   use parser-run-time;
   use c-lexer,
     rename: { constant-value => lexer-value, $eoi-token => $lexer-eoi-token };
