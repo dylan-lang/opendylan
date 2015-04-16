@@ -234,6 +234,7 @@ kern_return_t catch_mach_exception_raise_state_identity
     handler = (uintptr_t) &dylan_integer_overflow_error;
     break;
 
+  case EXC_I386_EXTERR:
   case EXC_I386_SSEEXTERR:
     // code[1] contains the floating point status word
     if (code[1] & FE_DIVBYZERO) {
