@@ -19,10 +19,13 @@ Makefile
 /sources/app/llvm-tablegen/tablegen-parser.dylan
 /sources/jamfiles/config.jam
 /sources/lib/llvm/llvm-asm-parser.dylan
+/sources/lib/run-time/*-runtime.bc
 /sources/lib/run-time/collector.obj
 /sources/lib/run-time/dylan-plinth.lib
 /sources/lib/run-time/dylan-support.lib
 /sources/lib/run-time/heap-*.obj
+/sources/lib/run-time/llvm-*-runtime.h
+/sources/lib/run-time/mach_exc*
 /sources/lib/run-time/minvcrt.exp
 /sources/lib/run-time/minvcrt.lib
 /sources/lib/run-time/mpsiowin32.obj
