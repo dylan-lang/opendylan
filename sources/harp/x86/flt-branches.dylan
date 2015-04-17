@@ -46,7 +46,7 @@ with-ops-in pentium-instructions (fble, dble) info := bls-x end;
 
 /// We assume no canonicalisation here, as for clipper branches.
 
-/// the argument frig to make-flags-avail allows aribitary flipping of bits
+/// the argument frig to make-flags-avail allows arbitrary flipping of bits
 /// within the status word before doing the conditional branch. This is used so
 /// that both equality and "orderedness" can be tested in one instruction
 
