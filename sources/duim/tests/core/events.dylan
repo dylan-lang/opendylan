@@ -28,7 +28,7 @@ define sideways method class-test-function
   test-event-class
 end method class-test-function;
 
-define open generic test-event-class
+define generic test-event-class
     (class :: subclass(<event>), #key, #all-keys) => ();
 
 define method test-event-class

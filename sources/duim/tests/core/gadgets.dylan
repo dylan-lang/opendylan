@@ -340,7 +340,7 @@ define sideways method class-test-function
   test-gadget-class
 end method class-test-function;
 
-define open generic test-gadget-class
+define generic test-gadget-class
     (class :: subclass(<abstract-gadget>), #key, #all-keys) => ();
 
 define method test-gadget-class

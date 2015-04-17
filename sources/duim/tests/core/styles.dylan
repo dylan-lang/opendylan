@@ -64,9 +64,9 @@ define duim-dcs class-test <color> ()
   //---*** Fill this in...
 end class-test <color>;
 
-define duim-dcs constant-test <contrasting-color> ()
+define duim-dcs class-test <contrasting-color> ()
   //---*** Fill this in...
-end constant-test <contrasting-color>;
+end class-test <contrasting-color>;
 
 define duim-dcs class-test <dynamic-color> ()
   //---*** Fill this in...

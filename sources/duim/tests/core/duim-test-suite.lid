@@ -3,7 +3,6 @@ Synopsis:     DUIM Test Suite
 Author:	      Andy Armstrong
 Files:	library
 	module
-        specification
         utilities
         test-port
         classes
@@ -21,6 +20,7 @@ Files:	library
         events
         gestures
         commands
+        specification
         main-suite
 Target-Type: DLL
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
