@@ -309,7 +309,7 @@ define sign-extend &machine-word-primitive primitive-machine-word-shift-right
   generic/ash(x, generic/negative(shift))
 end;
 
-/// NOTE: We can still try to fold the overflow signalling primtives because, if the
+/// NOTE: We can still try to fold the overflow signalling primitives because, if the
 /// computation overflows at compile time, the folding will be abandoned, the primitive
 /// will be called at run-time, and the overflow will be signalled.
 define overflow &machine-word-primitive primitive-machine-word-add-signal-overflow

@@ -247,7 +247,7 @@ define method do-deep-copy
   copy
 end method;
 
-// Unlike primitves, of which they're a slightly suspect subclass,
+// Unlike primitives, of which they're a slightly suspect subclass,
 // raw c-function and objc-msgsend objects don't have definitions
 // of their own and must be copied.
 define method deep-copy
