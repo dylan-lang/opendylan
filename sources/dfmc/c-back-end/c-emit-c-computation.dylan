@@ -68,7 +68,7 @@ define method emit-primitive-call
     end unless;
     format-emit(b, s, d, "^", type);
   end for;
-  format(s, "))objc_msgSend%s)", f.c-modifiers);
+  format(s, "))%s)", f.binding-name);
   emit-objc-msgsend-arguments(b, s, d, f, c.arguments);
   write(s, ";");
 end method;

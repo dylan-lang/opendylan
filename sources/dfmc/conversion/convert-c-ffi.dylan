@@ -164,11 +164,13 @@ define method convert-%objc-msgsend
      signature, arguments, modifiers)
   let sig-spec = parse-primitive-signature(name, signature);
   let (ffi-signature, signature) = make-ffi-signature(sig-spec);
+  let modifiers = as-string(modifiers);
   let function
     = make(<&objc-msgsend>,
+           binding-name: format-to-string("objc_msgSend", modifiers),
            c-signature: ffi-signature,
            signature: signature,
-           c-modifiers: as-string(modifiers));
+           c-modifiers: modifiers);
   convert-primitive-call(env, context, <primitive-call>, function, arguments);
 end method;
 
