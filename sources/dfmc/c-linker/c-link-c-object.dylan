@@ -89,7 +89,7 @@ end method;
 
 define method emit-forward
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&objc-msgsend>) => ();
-  format(stream, "extern void objc_msgSend%s(void);\n", o.c-modifiers);
+  format(stream, "extern void %s(void);\n", o.binding-name);
 end;
 
 

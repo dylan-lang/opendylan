@@ -348,7 +348,7 @@ end method;
 
 define method emit-name-internal
     (back-end :: <back-end>, stream, o :: <&objc-msgsend>) => (name)
-  "objc_msgSend"
+  o.binding-name
 end method;
 
 define method emit-name-internal
