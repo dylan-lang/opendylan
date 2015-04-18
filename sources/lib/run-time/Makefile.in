@@ -180,7 +180,7 @@ $(OBJDIR_LLVM)/%.o: %.c $(LLVM_RUNTIME_HEADER)
 
 $(OBJDIR_LLVM)/%.o: %.bc
 	mkdir -p $(OBJDIR_LLVM)
-	$(CC) $(CFLAGS) $(LLVM_CFLAGS) -MMD -c -o $@ $<
+	$(CC) $(CFLAGS) $(LLVM_CFLAGS) -c -o $@ $<
 
 $(OBJDIR_C)/%.o: $(srcdir)/%.c
 	mkdir -p $(OBJDIR_C)
