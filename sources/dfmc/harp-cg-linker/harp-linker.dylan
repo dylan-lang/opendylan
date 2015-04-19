@@ -360,11 +360,11 @@ define method locally-defined-c-function?
   member?(object, c-functions,
           test: method (object, c-function)
                   let c-fun = c-function.function;
-                  if (object.binding-name = c-fun.binding-name)
+                  if (object.c-function-name = c-fun.c-function-name)
                     (object.c-modifiers = c-fun.c-modifiers)
                       | error("c-function %= has different calling convention "
                                 "from its c-callable-function",
-                              object.binding-name)
+                              object.c-function-name)
                     end if
                 end method)
 end method;

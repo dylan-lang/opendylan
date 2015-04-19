@@ -2150,7 +2150,7 @@ end;
 
 define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, element :: <&c-function>, ct-ref?)
-  unless (element.binding-name)
+  unless (element.c-function-name)
     mark-emitted-name(heap, element);
   end unless;
   do-record-external-heap-element-reference(heap, element, ct-ref?);

@@ -81,7 +81,7 @@ define method convert-%c-call-function
   let (ffi-signature, signature) = make-ffi-signature(sig-spec);
   let function
     = make(<&c-function>,
-           binding-name: name & as-string(name),
+           c-function-name: name & as-string(name),
            c-signature: ffi-signature,
            signature: signature,
            c-modifiers: as-string(modifiers));
@@ -105,7 +105,7 @@ define method convert-%c-call-function-indirect
   let (ffi-signature, signature) = make-ffi-signature(sig-spec);
   let function
      = make(<&c-function>,
-            binding-name: #f,
+            c-function-name: #f,
             signature: signature,
             c-signature: ffi-signature,
             value: #f,
@@ -138,7 +138,7 @@ define method convert-%c-callable-function
   let model
     = compute-method-explicitly
         (<&c-callable-function>, #f, #f, signature-spec, body,
-         binding-name: ^top-level-eval(name),
+         c-function-name: ^top-level-eval(name),
          c-modifiers: ^top-level-eval(modifiers),
          alternate-name: as-string(other-name),
          export: export.fragment-value);
@@ -167,7 +167,7 @@ define method convert-%objc-msgsend
   let modifiers = as-string(modifiers);
   let function
     = make(<&objc-msgsend>,
-           binding-name: format-to-string("objc_msgSend", modifiers),
+           c-function-name: format-to-string("objc_msgSend", modifiers),
            c-signature: ffi-signature,
            signature: signature,
            c-modifiers: modifiers);

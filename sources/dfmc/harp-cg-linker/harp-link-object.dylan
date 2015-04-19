@@ -332,7 +332,7 @@ define method emit-extern/import
     (back-end :: <harp-back-end>, stream,
      o :: <&c-function>, import? :: <boolean>)
  => ()
-  if (o.binding-name)
+  if (o.c-function-name)
     let name = emit-name(back-end, stream, o);
     emit-extern(back-end, stream, name, unsupplied(), import?);
   end if;

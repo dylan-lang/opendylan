@@ -1064,7 +1064,7 @@ define method emit-primitive-call
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
      c :: <primitive-call>, primitive :: <&c-function>)
  => ();
-  let name = primitive.binding-name;
+  let name = primitive.c-function-name;
   let calling-convention
     = llvm-c-function-calling-convention(back-end, primitive);
   let function-type = llvm-c-function-type(back-end, primitive);

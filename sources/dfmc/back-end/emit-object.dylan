@@ -323,8 +323,8 @@ end method;
 
 define method emit-name-internal
     (back-end :: <back-end>, stream, o :: <&c-function>) => (name)
-  if (o.binding-name)
-    o.binding-name;
+  if (o.c-function-name)
+    o.c-function-name;
   else
     emit-anonymous-name(back-end, stream, o);
   end if;
@@ -333,8 +333,8 @@ end method;
 define method emit-name-internal
     (back-end :: <back-end>, stream, o :: <&c-callable-function>)
  => (name)
-  if (o.binding-name)
-    o.binding-name;
+  if (o.c-function-name)
+    o.c-function-name;
   else // use alternate-name
     concatenate("c_callable_", local-mangle(back-end, o.alternate-name));
   end;
@@ -348,7 +348,7 @@ end method;
 
 define method emit-name-internal
     (back-end :: <back-end>, stream, o :: <&objc-msgsend>) => (name)
-  o.binding-name
+  o.c-function-name
 end method;
 
 define method emit-name-internal

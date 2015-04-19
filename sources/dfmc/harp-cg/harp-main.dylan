@@ -23,7 +23,7 @@ define method emit-lambda(back-end :: <harp-back-end>, stream, o :: <&iep>,
     select(fun by instance?)
       <&c-callable-function> => 
 	let export? = if (fun.dll-export?) #"code-stub" else #f end;
-	values(~ fun.binding-name, export?);
+	values(~ fun.c-function-name, export?);
       <&lambda> =>
 	let public? = fun.model-has-definition?;
 	values(~ public?,

@@ -21,7 +21,7 @@ end method;
 define method emit-primitive-call
     (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <primitive-call>, f :: <&c-function>)
-  format-emit(b, s, d, "~", f.binding-name);
+  format-emit(b, s, d, "~", f.c-function-name);
   emit-c-function-arguments(b, s, d, f, c.arguments);
   write(s, ";");
 end method;
@@ -62,7 +62,7 @@ define method emit-primitive-call
     end unless;
     format-emit(b, s, d, "^", type);
   end for;
-  format(s, "))%s)", f.binding-name);
+  format(s, "))%s)", f.c-function-name);
   emit-c-function-arguments(b, s, d, f, c.arguments);
   write(s, ";");
 end method;
