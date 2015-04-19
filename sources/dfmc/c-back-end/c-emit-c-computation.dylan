@@ -13,12 +13,6 @@ end method;
 
 define method emit-call
     (b :: <c-back-end>, s :: <stream>, d :: <integer>,
-     c :: <primitive-call>, f :: <&objc-msgsend>)
-  emit-primitive-call(b, s, d, c, f);
-end method;
-
-define method emit-call
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <c-variable-pointer-call>, f)
   format-emit(b, s, d, "&~;", c.c-variable.name);
 end method;
@@ -69,23 +63,9 @@ define method emit-primitive-call
     format-emit(b, s, d, "^", type);
   end for;
   format(s, "))%s)", f.binding-name);
-  emit-objc-msgsend-arguments(b, s, d, f, c.arguments);
+  emit-c-function-arguments(b, s, d, f, c.arguments);
   write(s, ";");
 end method;
-
-define method emit-objc-msgsend-arguments
-    (back-end :: <c-back-end>, s :: <stream>, d :: <integer>,
-     c :: <&objc-msgsend>, arguments)
- => ()
-  write(s, "(");
-  for (arg in arguments,
-       parm in c.c-signature.^signature-required,
-       first? = #t then #f)
-    unless (first?) write(s, ", "); end;
-    emit-c-function-argument-out(back-end, s, d, arg, parm);
-  end;
-  write(s, ")");
-end;
 
 // general method
 define method emit-c-function-argument-out
