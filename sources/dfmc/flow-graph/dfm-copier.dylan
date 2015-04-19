@@ -256,11 +256,6 @@ define method deep-copy
 end method;
 
 define method deep-copy
-    (copier :: <dfm-copier>, object :: <&objc-msgsend>) => (value)
-  maybe-do-deep-copy(copier, object)
-end method;
-
-define method deep-copy
     (copier :: <dfm-copier>, object :: <&raw-object>) => (value)
   maybe-do-deep-copy(copier, object)
 end method;
