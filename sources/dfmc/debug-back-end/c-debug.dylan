@@ -5,11 +5,9 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// !@#$ might not be nec now that c-functions are primitives
-
 define compiler-sideways method print-object
     (o :: <&c-function>, stream :: <stream>) => ()
-  format(stream, "&[C-FUNCTION %s]", o.binding-name);
+  format(stream, "&[C-FUNCTION %s]", o.c-function-name);
 end method;
 
 // !@#$ perhaps this should be split into function-name-string

@@ -734,6 +734,7 @@ define module-with-models dfmc-modeling
   export
     <&c-function>,
     <&c-callable-function>,
+      c-function-name,
       c-modifiers,
       c-signature,
       c-signature-setter,

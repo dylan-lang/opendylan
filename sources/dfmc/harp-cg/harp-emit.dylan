@@ -554,14 +554,14 @@ end function;
 define sideways method emit-name-internal
     (back-end :: <harp-back-end>, stream, o :: <&c-callable-function>)
  => (c-name :: <string>);
-  let binding-name
-    = o.binding-name
+  let function-name
+    = o.c-function-name
     | concatenate("c_callable_", local-mangle(back-end, o.alternate-name));
   let c-emitted-name =
     select(o.c-modifiers by \=)
       "__stdcall" =>
-        stdcall-name(o.^function-signature, binding-name);
-      otherwise => c-name(back-end, binding-name);
+        stdcall-name(o.^function-signature, function-name);
+      otherwise => c-name(back-end, function-name);
     end select;
   c-emitted-name
 end method;
@@ -570,11 +570,11 @@ define sideways method emit-name-internal
     (back-end :: <harp-back-end>, stream, o :: <&c-function>)
  => (c-name :: <string>);
   let c-emitted-name =
-    if (o.binding-name)
+    if (o.c-function-name)
       select(o.c-modifiers by \=)
         "__stdcall" =>
-          stdcall-name(o.c-signature, o.binding-name);
-        otherwise => c-name(back-end, o.binding-name);
+          stdcall-name(o.c-signature, o.c-function-name);
+        otherwise => c-name(back-end, o.c-function-name);
       end select;
     else
       debug-assert(o.emitted-name, "Missing emitted-name for %s", o);

@@ -188,8 +188,8 @@ define method primitive-name (o :: <&primitive>) => (name)
   end;
 end method;
 
-define method primitive-name (o :: <&objc-msgsend>) => (name)
-  o.binding-name
+define method primitive-name (o :: <&c-function>) => (name)
+  o.c-function-name
 end method;
 
 define compiler-sideways method print-object

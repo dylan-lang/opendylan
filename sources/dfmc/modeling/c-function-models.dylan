@@ -6,10 +6,13 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+define sealed generic c-function-name
+    (fun :: type-union(<&c-function>, <&c-callable-function>))
+ => (name :: false-or(<string>));
+
 define class <&c-function> (<&primitive>)
-  // !@#$ should be c-name
-  constant slot binding-name,
-    required-init-keyword: binding-name:;
+  constant slot c-function-name :: false-or(<string>),
+    required-init-keyword: c-function-name:;
   constant slot c-modifiers :: <string> = "",
     init-keyword: c-modifiers:;
   slot c-signature :: <&signature>,
@@ -26,10 +29,9 @@ define method initialize
 end method;
 
 define &class <c-callable-function> (<lambda>)
-  // !@#$ should be c-name
   // !@#$ should be somewhat virtual
-  constant slot binding-name,
-    required-init-keyword: binding-name:;
+  constant slot c-function-name :: false-or(<string>),
+    required-init-keyword: c-function-name:;
   constant slot c-modifiers :: <string> = "",
     init-keyword: c-modifiers:;
   slot c-signature :: <&signature>;

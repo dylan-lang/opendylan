@@ -110,7 +110,7 @@ end method;
 define method emit-extern
     (back-end :: <llvm-back-end>, module :: <llvm-module>, o :: <&c-function>)
  => ();
-  let name = o.binding-name;
+  let name = o.c-function-name;
   if (name & ~llvm-builder-global-defined?(back-end, name))
     let calling-convention
       = llvm-c-function-calling-convention(back-end, o);
@@ -124,7 +124,7 @@ define method emit-extern
     let global
       = make(<llvm-function>,
              linkage: #"external",
-             name: primitive.binding-name,
+             name: name,
              type: llvm-pointer-to(back-end, function-type),
              arguments: args,
              calling-convention: calling-convention);

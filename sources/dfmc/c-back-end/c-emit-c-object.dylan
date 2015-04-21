@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method external-lambda? (o :: <&c-callable-function>) => (well?)
-  o.binding-name
+  o.c-function-name
 end method;
 
 
@@ -64,7 +64,7 @@ define method emit-lambda-interface-using-function
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&iep>,
      fun :: <&c-callable-function>)
  => ();
-  let global-name = fun.binding-name;
+  let global-name = fun.c-function-name;
   unless (global-name)
     write(stream, "static ");
   end;

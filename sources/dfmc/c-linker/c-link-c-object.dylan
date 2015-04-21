@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define method emit-parameter-types
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&c-function>) => ()
   format(stream, "(");
-  for (type in if (o.binding-name)
+  for (type in if (o.c-function-name)
                  o.c-signature.^signature-required
                else
                  // If there's no C name, it's an indirect function and the
@@ -32,18 +32,18 @@ define constant $generic-names-not-to-emit = #["pseudo_primitive_command_name",
 
 define method emit-forward
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&c-function>) => ();
-  unless(member?(o.binding-name, $generic-names-not-to-emit, test: \=))
+  unless(member?(o.c-function-name, $generic-names-not-to-emit, test: \=))
     let sig-values = o.primitive-signature.^signature-values;
     let return-type = first(sig-values, default: dylan-value(#"<object>"));
     if (target-os-name() == #"win32")
       format-emit*(back-end, stream, "~ ^ ~ ^ ",
-                   if (o.binding-name) "extern" else "typedef" end,
+                   if (o.c-function-name) "extern" else "typedef" end,
                    return-type,
                    o.c-modifiers,
                    o);
     else
       format-emit*(back-end, stream, "~ ^ ^ ",
-                   if (o.binding-name) "extern" else "typedef" end,
+                   if (o.c-function-name) "extern" else "typedef" end,
                    return-type,
                    o);
     end if;
@@ -89,7 +89,7 @@ end method;
 
 define method emit-forward
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&objc-msgsend>) => ();
-  format(stream, "extern void %s(void);\n", o.binding-name);
+  format(stream, "extern void %s(void);\n", o.c-function-name);
 end;
 
 
