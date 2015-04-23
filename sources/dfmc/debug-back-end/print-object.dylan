@@ -183,8 +183,6 @@ define method primitive-name (o :: <&primitive>) => (name)
   if (var)
     let name = var.fragment-identifier;
     copy-sequence(as(<string>, name), start: size("primitive-"));
-  else
-    o.binding-name
   end;
 end method;
 
