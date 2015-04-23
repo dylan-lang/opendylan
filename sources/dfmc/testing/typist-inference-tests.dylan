@@ -166,6 +166,10 @@ end;
 define function raw-te(rt :: <symbol>) => (rte :: <type-estimate-raw>)
   make(<type-estimate-raw>, raw: dylan-value(rt))
 end;
+
+define function bottom-te () => (bte :: <type-estimate-bottom>)
+  make(<type-estimate-bottom>)
+end;
 
 ///
 /// Here follow the actual tests
@@ -329,6 +333,12 @@ define typist-inference-test typist-raw-constants
              rest: #f
 end;
 
+define typist-inference-test typist-bottom
+  "define method typist-test () error(\"Error\") end;"
+       TYPE: fixed: vector(bottom-te()),
+             rest: #f;
+end;
+
 define suite dfmc-typist-inference-suite ()
   test typist-constants;
   test typist-values;
@@ -340,4 +350,5 @@ define suite dfmc-typist-inference-suite ()
   test typist-bind-exit;
   test typist-primops;
   test typist-raw-constants;
+  test typist-bottom;
 end;
