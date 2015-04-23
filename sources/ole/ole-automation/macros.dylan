@@ -260,7 +260,7 @@ constant-property-desc:
 	      help-context: ?help-context) }
 property-init:
     // TODO: really want a compile-time error if got neither a
-    // property-init nor a value: paramater
+    // property-init nor a value: parameter
     { } => { error("Missing initial value for constant property") }
     { = ?:expression } => { ?expression }
 
