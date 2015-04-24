@@ -95,9 +95,9 @@ implementation based on your platform.
 
 If you are on a platform using MPS (``x86-linux`` or ``x86-freebsd``),
 you will need to add a flag to ``configure`` to point it at the MPS
-sources, using ``--with-gc-path``::
+sources, using ``--with-mps``::
 
-  ./configure --prefix=/opt/opendylan-current --with-gc-path=/path/to/mps
+  ./configure --prefix=/opt/opendylan-current --with-mps=/path/to/mps
 
 See the `Dependencies`_ section above for details on obtaining a copy
 of the MPS library.
@@ -107,9 +107,9 @@ Boehm GC via your operating system package manager, you may not need to
 specify the location of the Boehm GC. It will be found automatically if
 it is in ``/usr`` or ``/usr/local``. If you have installed the Boehm GC
 into a non-standard location or the configure script can not find it,
-you can point it in the right direction by using ``--with-gc-path``::
+you can point it in the right direction by using ``--with-gc``::
 
-  ./configure --prefix=/opt/opendylan-current --with-gc-path=/path/to/boehm
+  ./configure --prefix=/opt/opendylan-current --with-gc=/path/to/boehm
 
 By default, this will build a fully bootstrapped compiler with the
 first generation in ``Bootstrap.1/bin/dylan-compiler``, the second
