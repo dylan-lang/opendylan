@@ -850,6 +850,8 @@ define function encode-attributes
     encoding-low
   elseif ($machine-word-size = 32)
     make(<double-machine-word>, low: encoding-low, high: encoding-high)
+  elseif ($machine-word-size = 64)
+    %logior(encoding-low, %shift-left(encoding-high, 32))
   else
     error("encode-attributes $machine-word-size = %d", $machine-word-size);
   end if
