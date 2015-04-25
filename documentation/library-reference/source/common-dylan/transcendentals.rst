@@ -462,7 +462,7 @@ This section contains a reference entry for each item exported from the
 
    :signature: sqrt x => y
 
-   :parameter x: An instance of type :class:`<real>`. The angle, in radians.
+   :parameter x: An instance of type :class:`<real>`.
    :value y: An instance of type :class:`<float>`.
 
    :description:
