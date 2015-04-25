@@ -20,8 +20,9 @@ by the argument name, unless otherwise noted. Thus, the arguments
 The class ``<machine-word>`` is a sealed subclass of :drm:`<object>`, defined
 in the Dylan library. The class ``<machine-word>`` represents a limited
 range of integral values. The representation used has the natural size
-suggested by the implementation architecture. (On the PC, a
-``<machine-word>`` is 32 bits wide.) The class ``<machine-word>`` is
+suggested by the implementation architecture. (When running a 32 bit OS,
+a ``<machine-word>`` is 32 bits wide. When running a 64 bit OS, then
+``<machine-word>`` is 64 bits wide.) The class ``<machine-word>`` is
 disjoint from all other classes specified by the Dylan language.
 
 The ``\\==`` function compares instances of ``<machine-word>`` by value.
