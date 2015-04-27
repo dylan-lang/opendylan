@@ -288,8 +288,7 @@ define module native-instructions
     ins--restore-frame, harp-restore-frame, harp-restore-frame-setter,
     ins--init-fpu, harp-init-fpu, harp-init-fpu-setter,
     ins--init-control-word, harp-init-control-word, harp-init-control-word-setter,
-    ins--clear-float-exceptions, harp-clear-float-exceptions, harp-clear-float-exceptions-setter,
-    ins--classify-float, harp-classify-float, harp-classify-float-setter;
+    ins--clear-float-exceptions, harp-clear-float-exceptions, harp-clear-float-exceptions-setter;
 
 end module;
 
@@ -551,8 +550,7 @@ define module native-instructions-for-clients
     ins--restore-frame,
     ins--init-fpu,
     ins--init-control-word,
-    ins--clear-float-exceptions,
-    ins--classify-float
+    ins--clear-float-exceptions
     }
 end module;
 

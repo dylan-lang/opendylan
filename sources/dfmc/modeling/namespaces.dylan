@@ -271,10 +271,6 @@ define &module dylan-primitives
 //    primitive-extended-float-as-double,
 //    primitive-extended-float-as-single;
 
-  create
-    primitive-single-float-class,
-    primitive-double-float-class;
-
   // Address.
 
   // Pointer.
@@ -690,7 +686,6 @@ define &module dylan-extensions
 
   // Floats
   create
-    // classify-float,
     decode-single-float, encode-single-float,
     decode-double-float, encode-double-float,
     float-divide-by-0, float-invalid, float-overflow, float-underflow;

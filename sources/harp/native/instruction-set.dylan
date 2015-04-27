@@ -128,7 +128,6 @@ define instruction-set <instruction-set>
           move-to-dfreg;
   u    op set-rounding-mode, restore-frame;
   none op init-fpu, init-control-word, clear-float-exceptions;
-  du   op classify-float;
 end;
 
 

@@ -564,38 +564,3 @@ end pentium-template;
 
 
 define constant mc-fstsw = #b111000;
-
-
-/*  Classify floats as follows:
-
-    #x0      Unsupported
-    #x100    Nan
-    #x400    Normal finite number
-    #x500    Infinity
-    #x4000   Zero
-    #x4100   Empty
-    #x4400   Denormal number
-
-*/
-
-
-define pentium-template classify-float
-  pattern (be, d, s)
-    let double = instance?(s, <dfspill>);
-    unless (st-ref(s))
-      push-float(be, double, s);
-    end;
-    emit(be, flt-esc + 1, #b11100101);                    // fxam
-    harp-out (be) push(be, 0) end;
-    emit(be, flt-esc + #b101);                            // fnstsw dword ptr [esp]
-    emit-reg-offset(be, reg--stack, 0, mc-fstsw);
-    harp-out (be)
-      and2-mem(be, reg--stack, 0, 0, #x4500);
-    end harp-out;
-    harp-out (be) pop(be, d) end;
-    unless (st-ref(s))
-      pop-float(be, double, s);
-    end;
-end pentium-template;
-
-

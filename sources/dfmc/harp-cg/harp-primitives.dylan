@@ -2085,10 +2085,6 @@ define &primitive-descriptor primitive-double-float-atan, emitter: op--datan;
 define &primitive-descriptor primitive-single-float-as-double, emitter: ins--single-to-double-float;
 define &primitive-descriptor primitive-double-float-as-single, emitter: ins--double-to-single-float;
 
-define &local-primitive-descriptor primitive-float-class;
-define &constant-primitive-descriptor primitive-single-float-class = primitive-float-class;
-define &constant-primitive-descriptor primitive-double-float-class = primitive-float-class;
-
 // Checks
 define &primitive-descriptor primitive-instance?, emitter: emit-instance-check;
 define &primitive-descriptor primitive-type-check, reference: $primitive-type-check;
