@@ -338,21 +338,13 @@ define function string-to-integer
   end
 end function string-to-integer;
 
-//---*** NOTE: The following function is a kludge that's needed until
-//---*** the necessary primitives are added and the Dylan library provides
-//---*** an interface.  Unfortunately, this kludge relies on a code generation
-//---*** bug which causes all NaNs to compare equal to any other value.
-//---*** When that bug is fixed, we'll need a new way to check for NaNs.
 define inline-only function nan? (float :: <float>) => (nan? :: <boolean>)
-  float = 0.0 & float = 1.0
+  classify-float(float) == #"nan"
 end function nan?;
 
-//---*** NOTE: The following function is a kludge that's needed until
-//---*** the necessary primitives are added and the Dylan library provides
-//---*** an interface.
-define inline-only function infinity? (float :: <float>) => (infinity? :: <boolean>)
-  ~zero?(float) & (float / 2.0) = float
-end function infinity?;
+define inline-only function infinite? (float :: <float>) => (infinite? :: <boolean>)
+  classify-float(float) == #"infinite"
+end function infinite?;
 
 define function float-to-string
     (float :: <float>,
@@ -379,7 +371,7 @@ define function float-to-string
         else
           format-to-string("{NaN}%c0", marker)
         end;
-      infinity?(float) =>
+      infinite?(float) =>
         let sign :: <byte-character> = if (negative?(float)) '-' else '+' end;
         if (class == <single-float>)
           format-to-string("%c{infinity}", sign)
