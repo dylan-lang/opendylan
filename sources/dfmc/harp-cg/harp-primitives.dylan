@@ -1732,23 +1732,6 @@ define macro &primitive-descriptor-definer
          install-primitive-descriptor(?#"name", ?name ## "-descriptor"); }
 end macro;
 
-define macro &local-primitive-descriptor-definer
-  { define &local-primitive-descriptor ?:name, 
-      #key ?emitter:expression = #f}
-    => { define constant ?name ## "-descriptor" =
-           begin
-             let emitter = ?emitter | &call-primitive(?"name", #f);
-	     make(<primitive-descriptor>, emitter: emitter);
-           end; }
-end macro;
-
-define macro &constant-primitive-descriptor-definer
-  { define &constant-primitive-descriptor ?:name = ?primitive:* }
-    => { define constant ?name ## "-descriptor" =
-           ?primitive ## "-descriptor";
-         install-primitive-descriptor(?#"name", ?name ## "-descriptor"); }
-end macro;
-
 define function &call-c-primitive(primitive :: <string>) => (call-primitive :: <function>)
   let primitive-name =
     make-c-runtime-reference(harp-raw-mangle(as-lowercase(primitive)));
@@ -2084,10 +2067,6 @@ define &primitive-descriptor primitive-double-float-atan, emitter: op--datan;
 // float conversions
 define &primitive-descriptor primitive-single-float-as-double, emitter: ins--single-to-double-float;
 define &primitive-descriptor primitive-double-float-as-single, emitter: ins--double-to-single-float;
-
-define &local-primitive-descriptor primitive-float-class;
-define &constant-primitive-descriptor primitive-single-float-class = primitive-float-class;
-define &constant-primitive-descriptor primitive-double-float-class = primitive-float-class;
 
 // Checks
 define &primitive-descriptor primitive-instance?, emitter: emit-instance-check;

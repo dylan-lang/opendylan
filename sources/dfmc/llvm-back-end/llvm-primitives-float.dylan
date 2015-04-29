@@ -381,18 +381,3 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   let type = llvm-reference-type(be, dylan-value(#"<raw-single-float>"));
   ins--fptrunc(be, d, type)
 end;
-
-
-/// Float Classification (e.g. nan, infinity, zero, normal)
-
-/*
-define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-single-float-class
-    (x :: <raw-single-float>) => (class :: <string>);
-  //---*** Fill this in...
-end;
-
-define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-double-float-class
-    (x :: <raw-double-float>) => (class :: <string>);
-  //---*** Fill this in...
-end;
-*/

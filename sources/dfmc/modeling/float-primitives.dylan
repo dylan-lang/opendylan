@@ -194,11 +194,3 @@ define side-effect-free stateless dynamic-extent &primitive-and-override primiti
     (d :: <raw-double-float>) => (s :: <raw-single-float>)
   make-raw-literal(as(<single-float>, ^raw-object-value(d)))
 end;
-
-/// FLOAT CLASSIFICATION (e.g. nan, infinity, zero, normal)
-
-define side-effect-free stateless dynamic-extent &primitive primitive-single-float-class
-    (x :: <raw-single-float>) => (class :: <string>);
-
-define side-effect-free stateless dynamic-extent &primitive primitive-double-float-class
-    (x :: <raw-double-float>) => (class :: <string>);
