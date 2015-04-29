@@ -1732,23 +1732,6 @@ define macro &primitive-descriptor-definer
          install-primitive-descriptor(?#"name", ?name ## "-descriptor"); }
 end macro;
 
-define macro &local-primitive-descriptor-definer
-  { define &local-primitive-descriptor ?:name, 
-      #key ?emitter:expression = #f}
-    => { define constant ?name ## "-descriptor" =
-           begin
-             let emitter = ?emitter | &call-primitive(?"name", #f);
-	     make(<primitive-descriptor>, emitter: emitter);
-           end; }
-end macro;
-
-define macro &constant-primitive-descriptor-definer
-  { define &constant-primitive-descriptor ?:name = ?primitive:* }
-    => { define constant ?name ## "-descriptor" =
-           ?primitive ## "-descriptor";
-         install-primitive-descriptor(?#"name", ?name ## "-descriptor"); }
-end macro;
-
 define function &call-c-primitive(primitive :: <string>) => (call-primitive :: <function>)
   let primitive-name =
     make-c-runtime-reference(harp-raw-mangle(as-lowercase(primitive)));
