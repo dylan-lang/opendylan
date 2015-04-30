@@ -1,6 +1,6 @@
 import lldb
 from dylan.accessors import *
-from dylan import summaries, synthetics
+from dylan import summaries
 
 @summaries.register('<boolean>', 'dylan', 'dylan')
 def dylan_boolean_summary(value, internal_dict):
@@ -81,7 +81,7 @@ def dylan_module_summary(value, internal_dict):
 
 @summaries.register('<simple-object-vector>', 'dylan', 'dylan')
 def dylan_simple_object_vector_summary(value, internal_dict):
-  size = synthetics.SyntheticDylanValue(value, internal_dict).num_children()
+  size = dylan_vector_size(value)
   return '{<simple-object-vector>: size: %s}' % size
 
 @summaries.register('<single-float>', 'dylan', 'dylan')
