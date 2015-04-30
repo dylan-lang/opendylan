@@ -93,21 +93,40 @@ define method emit-object
 end method;
 
 define method print-raw-object (o :: <float>, stream :: <stream>) => ()
+  // Sometimes, we can end up with an infinite or nan value here, so
+  // we want to make sure we print an appropriate C representation.
+  // In the future, we can look at using classify-float, but this
+  // is not yet available to us here.
   let s = float-to-string(o);
-  //---*** Is there a better way to do this???
-  block (done)
-    let i = size(s) - 1;
-    while (i > -1)
-      select (s[i])
-        's' => s[i] := 'e'; done();        //---*** Should be 'f' but GCC complains!
-        'd' => s[i] := 'e'; done();
-        'x' => s[i] := 'e'; done();        //---*** Should be 'l' but GCC complains!
-        otherwise => ;
-      end;
-      i := i - 1
-    end
-  end;
-  write(stream, s)
+  write(stream,
+        select (s by \=)
+          "-{infinity}" => "-INFINITY";
+          "-{infinity}d0" => "(double)-INFINITY";
+          "-{infinity}x0" => "(long double)-INFINITY";
+          "+{infinity}" => "INFINITY";
+          "+{infinity}d0" => "(double)INFINITY";
+          "+{infinity}x0" => "(long double)INFINITY";
+          "{NaN}" => "NAN";
+          "{NaN}d0" => "(double)NAN";
+          "{NaN}x0" => "(long double)NAN";
+          otherwise =>
+            begin
+              //---*** Is there a better way to do this???
+              block (done)
+                let i = size(s) - 1;
+                while (i > -1)
+                  select (s[i])
+                    's' => s[i] := 'e'; done();        //---*** Should be 'f' but GCC complains!
+                    'd' => s[i] := 'e'; done();
+                    'x' => s[i] := 'e'; done();        //---*** Should be 'l' but GCC complains!
+                    otherwise => ;
+                  end select;
+                  i := i - 1
+                end while
+              end block;
+              s
+            end;
+        end select);
 end method;
 
 // INTEGERS
