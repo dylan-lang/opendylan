@@ -4,12 +4,16 @@ import commands
 import summaries
 import synthetics
 
+import summaries.core
+
 SyntheticDylanValue = synthetics.SyntheticDylanValue
-dylan_byte_string_summary = summaries.dylan_byte_string_summary
 dylan_object_summary = summaries.dylan_object_summary
-dylan_simple_object_vector_summary = summaries.dylan_simple_object_vector_summary
-dylan_symbol_summary = summaries.dylan_symbol_summary
 dylan_value_summary = summaries.dylan_value_summary
+
+# Some core summaries
+dylan_byte_string_summary = summaries.core.dylan_byte_string_summary
+dylan_simple_object_vector_summary = summaries.core.dylan_simple_object_vector_summary
+dylan_symbol_summary = summaries.core.dylan_symbol_summary
 
 dylan_break_gf = commands.dylan_break_gf
 dylan_bt = commands.dylan_bt
