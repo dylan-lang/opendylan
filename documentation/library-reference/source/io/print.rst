@@ -163,6 +163,7 @@ IO library’s *print* module.
      that changed the value to ``#t``, the value reverts back to ``#f``.
 
 .. variable:: *print-circle?*
+   :thread:
 
    Controls whether or not to print recursively.
 
@@ -178,6 +179,7 @@ IO library’s *print* module.
      terminate.
 
 .. variable:: *print-length*
+   :thread:
 
    Controls the number of elements of an expression to print.
 
@@ -191,6 +193,7 @@ IO library’s *print* module.
      expression.
 
 .. variable:: *print-level*
+   :thread:
 
    Controls how deeply into a nested expression to print.
 
@@ -218,10 +221,11 @@ IO library’s *print* module.
      :func:`print` to print various objects by adding methods to the
      ``print-object`` function. When :func:`print` actually prints an
      object, it calls ``print-object``.
-     
+
      You should never call ``print-object`` directly.
 
 .. variable:: *print-pretty?*
+   :thread:
 
    Controls whether or not pretty printing is used.
 
@@ -398,7 +402,7 @@ IO library’s *pprint* module.
      - ``#"line-relative"``
        Output *colnum* spaces. Then output enough spaces to tab to a column
        that is a multiple of *colinc* from the beginning of the line.
-  
+
      - ``#"section"``
        Similar to ``#"line"``, but column counting is relative
        to the beginning of the current *section* rather than the beginning
