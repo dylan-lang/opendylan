@@ -37,6 +37,11 @@ def ensure_value_class(value, class_name, module, library):
   if wrappersym != wrapper_symbol_name:
     raise Exception("%#x is not a %s (%s != %s)" % (int(value.address_of.GetValueAsUnsigned()), class_name, wrappersym, wrapper_symbol_name))
 
+def check_value_class(value, class_name, module, library):
+  actual_wrapper_name = dylan_object_wrapper_symbol_name(value)
+  desired_wrapper_name = mangling.dylan_mangle_wrapper(class_name, module, library)
+  return actual_wrapper_name == desired_wrapper_name
+
 def dylan_tag_bits(value):
   return value.GetValueAsUnsigned() & 3
 
@@ -78,6 +83,15 @@ def dylan_double_integer_value(value):
   hi = dylan_slot_element(value, 1).Cast(int_type)
   return lo.GetValueAsSigned() + (hi.GetValueAsSigned() << 32)
 
+def dylan_float_data(value):
+  if dylan_is_single_float(value):
+    return dylan_single_float_data(value)
+  elif dylan_is_double_float(value):
+    return dylan_double_float_data(value)
+  else:
+    class_name = dylan_object_class_name(value)
+    raise Exception("%s is a new type of float? %s" % (value, class_name))
+
 def dylan_generic_function_name(value):
   return dylan_byte_string_data(dylan_slot_element(value, GENERIC_FUNCTION_DEBUG_NAME))
 
@@ -97,6 +111,21 @@ def dylan_implementation_class_repeated_slot_descriptor(iclass):
 
 def dylan_integer_value(value):
   return value.GetValueAsUnsigned() >> 2
+
+def dylan_is_boolean(value):
+  return check_value_class(value, '<boolean>', 'dylan', 'dylan')
+
+def dylan_is_byte_string(value):
+  return check_value_class(value, '<byte-string>', 'dylan', 'dylan')
+
+def dylan_is_double_flaot(value):
+  return check_value_class(value, '<double-float>', 'dylan', 'dylan')
+
+def dylan_is_single_float(value):
+  return check_value_class(value, '<single-float>', 'dylan', 'dylan')
+
+def dylan_is_unicode_string(value):
+  return check_value_class(value, '<unicode-string>', 'dylan', 'dylan')
 
 def dylan_list_elements(value):
   elements = []
@@ -226,6 +255,15 @@ def dylan_slot_element(value, index):
 def dylan_slot_element_by_name(value, name):
   slot_index = dylan_slot_index(value, name)
   return dylan_slot_element(value, slot_index)
+
+def dylan_string_data(value):
+  if dylan_is_byte_string(value):
+    return dylan_byte_string_data(value)
+  elif dylan_is_unicode_string(value):
+    return dylan_unicode_string_data(value)
+  else:
+    class_name = dylan_object_class_name(value)
+    raise Exception("%s is a new type of string? %s" % (value, class_name))
 
 def dylan_symbol_name(value):
   ensure_value_class(value, '<symbol>', 'dylan', 'dylan')
