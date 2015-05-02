@@ -12,6 +12,7 @@ import summaries.core
 
 # LLVM summaries
 import summaries.llvm.types
+import summaries.llvm.constant
 import summaries.llvm.function
 
 def __lldb_init_module(debugger, internal_dict):
