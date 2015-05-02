@@ -15,6 +15,10 @@ dylan_byte_string_summary = summaries.core.dylan_byte_string_summary
 dylan_simple_object_vector_summary = summaries.core.dylan_simple_object_vector_summary
 dylan_symbol_summary = summaries.core.dylan_symbol_summary
 
+# LLVM summaries
+import summaries.llvm.types
+import summaries.llvm.function
+
 dylan_break_gf = commands.dylan_break_gf
 dylan_bt = commands.dylan_bt
 
