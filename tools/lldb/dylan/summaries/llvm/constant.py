@@ -10,7 +10,7 @@ def llvm_float_constant_value(value):
 
 @summaries.register('<llvm-float-constant>', 'llvm', 'llvm')
 def llvm_float_constant_summary(value, internal_dict):
-  return '{<llvm-float-constant>: %s}' % llvm_float_constant_value(value)
+  return llvm_float_constant_value(value)
 
 def llvm_integer_constant_value(value):
   type_value = dylan_slot_element_by_name(value, 'llvm-value-type')
@@ -20,4 +20,4 @@ def llvm_integer_constant_value(value):
 
 @summaries.register('<llvm-integer-constant>', 'llvm', 'llvm')
 def llvm_integer_constant_summary(value, internal_dict):
-  return '{<llvm-integer-constant>: %s}' % llvm_integer_constant_value(value)
+  return llvm_integer_constant_value(value)

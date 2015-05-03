@@ -42,7 +42,7 @@ def llvm_function_type_name(value):
 
 @summaries.register('<llvm-function-type>', 'llvm', 'llvm')
 def llvm_function_type_summary(value, internal_dict):
-  return '{<llvm-function-type>: %s}' % llvm_function_type_name(value)
+  return llvm_function_type_name(value)
 
 @llvm_type_namer('<llvm-integer-type>', 'llvm', 'llvm')
 def llvm_integer_type_name(value):
@@ -51,7 +51,7 @@ def llvm_integer_type_name(value):
 
 @summaries.register('<llvm-integer-type>', 'llvm', 'llvm')
 def llvm_integer_type_summary(value, internal_dict):
-  return '{<llvm-integer-type>: %s}' % llvm_integer_type_name(value)
+  return llvm_integer_type_name(value)
 
 @llvm_type_namer('<llvm-pointer-type>', 'llvm', 'llvm')
 def llvm_pointer_type_name(value):
@@ -65,7 +65,7 @@ def llvm_pointer_type_name(value):
 
 @summaries.register('<llvm-pointer-type>', 'llvm', 'llvm')
 def llvm_pointer_type_summary(value, internal_dict):
-  return '{<llvm-pointer-type>: %s}' % llvm_pointer_type_name(value)
+  return llvm_pointer_type_name(value)
 
 @llvm_type_namer('<llvm-primitive-type>', 'llvm', 'llvm')
 def llvm_primitive_type_name(value):
@@ -75,4 +75,4 @@ def llvm_primitive_type_name(value):
 
 @summaries.register('<llvm-primitive-type>', 'llvm', 'llvm')
 def llvm_primitive_type_summary(value, internal_dict):
-  return '{<llvm-primitive-type>: %s}' % llvm_primitive_type_name(value)
+  return llvm_primitive_type_name(value)

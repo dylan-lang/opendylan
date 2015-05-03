@@ -28,8 +28,19 @@ def dylan_object_summary(value, internal_dict):
     target = lldb.debugger.GetSelectedTarget()
     address = lldb.SBAddress(value.GetValueAsUnsigned(), target)
     return address.symbol.name
-  summary_func = SUMMARY_DISPATCH_TABLE.get(wrapper_symbol_name, dylan_user_defined_object_summary)
-  return summary_func(value, internal_dict)
+  summary_func = SUMMARY_DISPATCH_TABLE.get(wrapper_symbol_name, None)
+  if summary_func:
+    # Look this up now so that we know we're probably valid given that
+    # we have a summary func. If not, we wrap it in try/except below
+    # to catch possible errors.
+    class_name = dylan_object_class_name(value)
+    summary = summary_func(value, internal_dict)
+    return '{%s: %s}' % (class_name, summary)
+  else:
+    try:
+      return '{%s}' % dylan_object_class_name(value)
+    except:
+      return '{uninitialized}'
 
 def dylan_byte_character_summary(value, internal_dict):
   byte_character = dylan_byte_character_value(value)
@@ -41,12 +52,6 @@ def dylan_integer_summary(value, internal_dict):
 def dylan_unicode_character_summary(value, internal_dict):
   unicode_character = dylan_unicode_character_value(value)
   return '{<unicode-character>: %s}' % unicode_character
-
-def dylan_user_defined_object_summary(value, internal_dict):
-  try:
-    return '{%s}' % dylan_object_class_name(value)
-  except:
-    return '{uninitialized}'
 
 def register(binding, module, library):
   def _register(function):
