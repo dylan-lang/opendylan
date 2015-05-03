@@ -15,6 +15,16 @@ def dylan_value_summary(value, internal_dict):
   else:
     return 'Invalid tag'
 
+def summary(value):
+  wrapper_symbol_name = dylan_object_wrapper_symbol_name(value)
+  if not wrapper_symbol_name:
+    return ''
+  summary_func = SUMMARY_DISPATCH_TABLE.get(wrapper_symbol_name, None)
+  if summary_func:
+    return summary_func(value, {})
+  else:
+    return ''
+
 def dylan_object_summary(value, internal_dict):
   # In case we're looking at an object on the stack and not a
   # pointer to it.
