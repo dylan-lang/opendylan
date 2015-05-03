@@ -10,6 +10,9 @@ import synthetics
 # Core summaries
 import summaries.core
 
+# Compiler (DFMC) summaries
+import summaries.dfmc.primitives
+
 # LLVM summaries
 import summaries.llvm.types
 import summaries.llvm.constant
