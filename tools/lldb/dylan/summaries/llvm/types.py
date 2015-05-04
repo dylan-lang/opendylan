@@ -1,6 +1,13 @@
 from dylan.accessors import *
 from dylan import summaries
 
+@summaries.register('<llvm-array-type>', 'llvm', 'llvm')
+def llvm_array_type_summary(value, internal_dict):
+  size_value = dylan_slot_element_by_name(value, 'llvm-array-type-size')
+  size = dylan_integer_value(size_value)
+  element_type = dylan_slot_element_by_name(value, 'llvm-array-type-element-type')
+  return '[%d x %s]' % size, summaries.summary(element_type)
+
 @summaries.register('<llvm-function-type>', 'llvm', 'llvm')
 def llvm_function_type_summary(value, internal_dict):
   return_type = dylan_slot_element_by_name(value, 'llvm-function-type-return-type')
@@ -42,3 +49,29 @@ def llvm_primitive_type_summary(value, internal_dict):
   kind = dylan_slot_element_by_name(value, 'llvm-primitive-type-kind')
   kind_name = dylan_symbol_name(kind)
   return kind_name.lower()
+
+@summaries.register('<llvm-struct-type>', 'llvm', 'llvm')
+def llvm_struct_type_summary(value, internal_dict):
+  struct_name = dylan_slot_element_by_name(value, 'llvm-struct-type-name')
+  if dylan_is_string(struct_name):
+    return '%' + dylan_string_data(struct_name)
+  elif dylan_is_boolean(struct_name):
+    name = '{'
+    first = True
+    type_elements = dylan_slot_element_by_name(value, 'llvm-struct-type-elements')
+    for e in dylan_vector_elements(type_elements):
+      if not first:
+        name += ', '
+      name += summaries.summary(e)
+      first = False
+    name += '}'
+    return name
+  else:
+    return '%' + str(dylan_integer_value(struct_name))
+
+@summaries.register('<llvm-vector-type>', 'llvm', 'llvm')
+def llvm_vector_type_summary(value, internal_dict):
+  size_value = dylan_slot_element_by_name(value, 'llvm-vector-type-size')
+  size = dylan_integer_value(size_value)
+  element_type = dylan_slot_element_by_name(value, 'llvm-vector-type-element-type')
+  return '[%d x %s]' % size, summaries.summary(element_type)
