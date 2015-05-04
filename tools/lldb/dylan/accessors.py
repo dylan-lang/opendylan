@@ -121,6 +121,11 @@ def dylan_is_byte_string(value):
 def dylan_is_double_flaot(value):
   return check_value_class(value, '<double-float>', 'dylan', 'dylan')
 
+def dylan_is_simple_vector(value):
+  # XXX: Check for just <simple-object-vector> until we start looking at
+  #      actual inheritance data.
+  return check_value_class(value, '<simple-object-vector>', 'dylan', 'dylan')
+
 def dylan_is_single_float(value):
   return check_value_class(value, '<single-float>', 'dylan', 'dylan')
 
@@ -229,6 +234,12 @@ def dylan_read_raw_data(value, slot_index, size):
   else:
     raise Exception(error.description)
 
+def dylan_simple_vector_size(vector):
+  return dylan_integer_value(dylan_slot_element(vector, SIMPLE_OBJECT_VECTOR_SIZE))
+
+def dylan_simple_vector_element(vector, index):
+  return dylan_slot_element(vector, SIMPLE_OBJECT_VECTOR_DATA + index)
+
 def dylan_single_float_data(value):
   ensure_value_class(value, '<single-float>', 'dylan', 'dylan')
   data = dylan_read_raw_data(value, SINGLE_FLOAT_DATA, 4)
@@ -283,13 +294,24 @@ def dylan_unicode_string_data(value):
   data = dylan_read_raw_data(value, UNICODE_STRING_DATA, size * 4)
 
 def dylan_vector_size(vector):
-  return dylan_integer_value(dylan_slot_element(vector, SIMPLE_OBJECT_VECTOR_SIZE))
+  if dylan_is_simple_vector(vector):
+    return dylan_simple_vector_size(vector)
+  else:
+    return 0
 
 def dylan_vector_element(vector, index):
-  return dylan_slot_element(vector, SIMPLE_OBJECT_VECTOR_DATA + index)
+  if dylan_is_simple_vector(vector):
+    return dylan_simple_vector_element(vector, index)
+  else:
+    return None
 
 def dylan_vector_elements(vector):
   elements = []
-  for idx in range(0, dylan_vector_size(vector)):
-    elements += [dylan_vector_element(vector, idx)]
+  # Specialize a bit to save a lot of extra type checks.
+  if dylan_is_simple_vector(vector):
+    for idx in range(0, dylan_simple_vector_size(vector)):
+      elements += [dylan_simple_vector_element(vector, idx)]
+  else:
+    for idx in range(0, dylan_vector_size(vector)):
+      elements += [dylan_vector_element(vector, idx)]
   return elements
