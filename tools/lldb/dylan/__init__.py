@@ -17,6 +17,7 @@ import summaries.dfmc.primitives
 import summaries.llvm.types
 import summaries.llvm.constant
 import summaries.llvm.function
+import summaries.llvm.misc
 
 def __lldb_init_module(debugger, internal_dict):
   debugger.HandleCommand('command script add -f dylan.commands.dylan_break_gf dylan-break-gf')
