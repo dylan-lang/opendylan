@@ -118,8 +118,11 @@ def dylan_is_boolean(value):
 def dylan_is_byte_string(value):
   return check_value_class(value, '<byte-string>', 'dylan', 'dylan')
 
-def dylan_is_double_flaot(value):
+def dylan_is_double_float(value):
   return check_value_class(value, '<double-float>', 'dylan', 'dylan')
+
+def dylan_is_float(value):
+  return dylan_is_double_float(value) or dylan_is_single_float(value)
 
 def dylan_is_simple_vector(value):
   # XXX: Check for just <simple-object-vector> until we start looking at
@@ -128,6 +131,9 @@ def dylan_is_simple_vector(value):
 
 def dylan_is_single_float(value):
   return check_value_class(value, '<single-float>', 'dylan', 'dylan')
+
+def dylan_is_string(value):
+  return dylan_is_byte_string(value) or dylan_is_unicode_string(value)
 
 def dylan_is_unicode_string(value):
   return check_value_class(value, '<unicode-string>', 'dylan', 'dylan')
