@@ -31,6 +31,8 @@ SYMBOL_NAME = 0
 UNICODE_STRING_SIZE = 0
 UNICODE_STRING_DATA = 1
 
+CLASS_SLOT_NAMES_CACHE = {}
+
 def ensure_value_class(value, class_name, module, library):
   wrappersym = dylan_object_wrapper_symbol_name(value)
   wrapper_symbol_name = mangling.dylan_mangle_wrapper(class_name, module, library)
@@ -179,7 +181,13 @@ def dylan_object_class_slot_descriptors(value):
   return dylan_vector_elements(descriptors)
 
 def dylan_object_class_slot_names(value):
-  return [dylan_slot_descriptor_name(d) for d in dylan_object_class_slot_descriptors(value)]
+  wrapper_address = dylan_object_wrapper_address(value)
+  cached_slot_names = CLASS_SLOT_NAMES_CACHE.get(wrapper_address, None)
+  if cached_slot_names:
+    return cached_slot_names
+  slot_names = [dylan_slot_descriptor_name(d) for d in dylan_object_class_slot_descriptors(value)]
+  CLASS_SLOT_NAMES_CACHE[wrapper_address] = slot_names
+  return slot_names
 
 def dylan_object_class_name(value):
   class_object = dylan_object_class(value)
