@@ -20,7 +20,6 @@ end class <settings>;
 define generic initialize-settings
     (settings :: <settings>, for-writing? :: <boolean>) => ();
 
-///---*** BOOTSTRAP: Change to dynamic and remove export after 2.1a1 is released...
 define open generic invalidate-settings-caches
     (settings :: <settings>) => ();
 
@@ -43,7 +42,6 @@ define open generic settings-key-name
     (settings :: <settings>) => (key-name :: <byte-string>);
 define open generic settings-key-name-setter
     (key-name :: <byte-string>, settings :: <settings>) => (key-name :: <byte-string>);
-///---*** BOOTSTRAP: Change to dynamic and remove export after 2.1a1 is released...
 define open generic %settings-key-name-setter
     (key-name :: <byte-string>, settings :: <settings>) => (key-name :: <byte-string>);
 
