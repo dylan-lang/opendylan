@@ -88,7 +88,7 @@ def dylan_stretchy_object_vector_summary(value, internal_dict):
 
 @summaries.register('<symbol>', 'dylan', 'dylan')
 def dylan_symbol_summary(value, internal_dict):
-  return dylan_symbol_name(value)
+  return '#"%s"' % dylan_symbol_name(value)
 
 @summaries.register('<unicode-string>', 'dylan', 'dylan')
 def dylan_unicode_string_summary(value, internal_dict):
