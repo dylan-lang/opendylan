@@ -108,6 +108,31 @@ class SyntheticSimpleObjectVector(object):
     self.dylan_value_type = target.FindFirstType('dylan_value')
     self.element_count = dylan_vector_size(self.value)
 
+class SyntheticStretchyObjectVector(object):
+  """A synthetic for representing a <stretchy-object-vector>."""
+  def num_children(self):
+    return self.element_count
+
+  def get_child_index(self, name):
+    try:
+      return int(name.lstrip('[').rstrip(']'))
+    except:
+      return -1
+
+  def get_child_at_index(self, index):
+    if index >= 0 and index < self.element_count:
+      representation = dylan_slot_element(self.value, 0)
+      return dylan_slot_element(representation, 2 + index, '[%s]' % index)
+    return None
+
+  def has_children(self):
+    return True
+
+  def update(self):
+    target = lldb.debugger.GetSelectedTarget()
+    self.dylan_value_type = target.FindFirstType('dylan_value')
+    self.element_count = dylan_stretchy_vector_size(self.value)
+
 SYNTHETIC_CLASS_TABLE = {
   'KLbooleanGVKdW': SyntheticHideChildren,
   'KLbyte_stringGVKdW': SyntheticHideChildren,
@@ -115,6 +140,7 @@ SYNTHETIC_CLASS_TABLE = {
   'KLempty_listGVKdW': SyntheticHideChildren,
   'KLsimple_object_vectorGVKdW': SyntheticSimpleObjectVector,
   'KLsingle_floatGVKdW': SyntheticHideChildren,
+  'KLstretchy_object_vectorGVKeW': SyntheticStretchyObjectVector,
   'KLsymbolGVKdW': SyntheticHideChildren,
   'KLunboundGVKeW': SyntheticHideChildren
 }

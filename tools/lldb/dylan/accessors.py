@@ -132,6 +132,11 @@ def dylan_is_simple_vector(value):
 def dylan_is_single_float(value):
   return check_value_class(value, '<single-float>', 'dylan', 'dylan')
 
+def dylan_is_stretchy_vector(value):
+  # XXX: Check for just <stretchy-object-vector> until we start looking at
+  #      actual inheritance data.
+  return check_value_class(value, '<stretchy-object-vector>', 'dylan', 'dylan')
+
 def dylan_is_string(value):
   return dylan_is_byte_string(value) or dylan_is_unicode_string(value)
 
@@ -262,16 +267,25 @@ def dylan_slot_descriptor_name(value):
   getter = dylan_slot_descriptor_getter(value)
   return dylan_generic_function_name(getter)
 
-def dylan_slot_element(value, index):
+def dylan_slot_element(value, index, name=None):
   target = lldb.debugger.GetSelectedTarget()
   word_size = target.GetAddressByteSize()
   dylan_value_type = target.FindFirstType('dylan_value')
-  slot_address = value.GetValueAsUnsigned() + ((index + 1) * word_size)
-  return value.CreateValueFromAddress("slot %d" % index, slot_address, dylan_value_type)
+  offset = (index + 1) * word_size
+  name = name or '[%s]' % index
+  return value.CreateChildAtOffset(name, offset, dylan_value_type)
 
 def dylan_slot_element_by_name(value, name):
   slot_index = dylan_slot_index(value, name)
-  return dylan_slot_element(value, slot_index)
+  return dylan_slot_element(value, slot_index, name)
+
+def dylan_stretchy_vector_size(vector):
+  representation = dylan_slot_element_by_name(vector, 'stretchy-representation')
+  return dylan_integer_value(dylan_slot_element(representation, SIMPLE_OBJECT_VECTOR_SIZE))
+
+def dylan_stretchy_vector_element(vector, index):
+  representation = dylan_slot_element_by_name(vector, 'stretchy-representation')
+  return dylan_slot_element(representation, SIMPLE_OBJECT_VECTOR_DATA + index)
 
 def dylan_string_data(value):
   if dylan_is_byte_string(value):
@@ -302,12 +316,16 @@ def dylan_unicode_string_data(value):
 def dylan_vector_size(vector):
   if dylan_is_simple_vector(vector):
     return dylan_simple_vector_size(vector)
+  elif dylan_is_stretchy_vector(vector):
+    return dylan_stretchy_vector_size(vector)
   else:
     return 0
 
 def dylan_vector_element(vector, index):
   if dylan_is_simple_vector(vector):
     return dylan_simple_vector_element(vector, index)
+  elif dylan_is_stretchy_vector(vector):
+    return dylan_stretchy_vector_element(vector, index)
   else:
     return None
 
@@ -317,6 +335,9 @@ def dylan_vector_elements(vector):
   if dylan_is_simple_vector(vector):
     for idx in range(0, dylan_simple_vector_size(vector)):
       elements += [dylan_simple_vector_element(vector, idx)]
+  elif dylan_is_stretchy_vector(vector):
+    for idx in range(0, dylan_stretchy_vector_size(vector)):
+      elements += [dylan_stretchy_vector_element(vector, idx)]
   else:
     for idx in range(0, dylan_vector_size(vector)):
       elements += [dylan_vector_element(vector, idx)]
