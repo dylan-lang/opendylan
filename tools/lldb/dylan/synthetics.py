@@ -63,17 +63,13 @@ class SyntheticObject(object):
     self.initialize_if_needed()
     if index >= 0 and index < len(self.slots):
       slot_name = self.slots[index]
-      offset = (index + 1) * self.dylan_value_type.GetByteSize()
-      return self.value.CreateChildAtOffset('[%s]' % slot_name,
-                                            offset, self.dylan_value_type)
+      return dylan_slot_element(self.value, index, '[' + slot_name + ']')
     return None
 
   def has_children(self):
     return True
 
   def update(self):
-    target = lldb.debugger.GetSelectedTarget()
-    self.dylan_value_type = target.FindFirstType('dylan_value')
     self.initialized = False
     self.slots = []
 
