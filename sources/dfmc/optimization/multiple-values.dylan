@@ -147,7 +147,7 @@ end method;
 define method extract-single-value
     (t :: <temporary>, c :: <if-merge>, index :: <integer>)
   let merge-users = users(temporary(c));
-  // HACK: VERY RETRICTED AT PRESENT BECAUSE WE CAN TOLERATE ONLY
+  // HACK: VERY RESTRICTED AT PRESENT BECAUSE WE CAN TOLERATE ONLY
   //       ONE MERGE PER IF
   if (size(merge-users) = 1
         // & instance?(merge-users[0], <extract-single-value>))
