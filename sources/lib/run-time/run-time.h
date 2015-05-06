@@ -608,10 +608,6 @@ PURE_FUNCTION static inline TEB* get_teb()
 
 /* CALLING CONVENTION ENTRY POINTS */
 
-extern dylan_value XEP(dylan_simple_method*, int, ...);
-
-extern dylan_value topI();
-
 extern dylan_value xep_0 (dylan_simple_method*,int);
 extern dylan_value xep_1 (dylan_simple_method*,int,dylan_value);
 extern dylan_value xep_2 (dylan_simple_method*,int,dylan_value,dylan_value);
