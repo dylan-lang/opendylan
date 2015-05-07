@@ -15,6 +15,7 @@ define library access-path
   use io;
   use system;
   use c-ffi;
+  use debugger-nub;
 
   export
     access-path, access-path-nub;
