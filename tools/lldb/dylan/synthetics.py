@@ -57,7 +57,12 @@ class SyntheticObject(object):
     return len(self.slots)
 
   def get_child_index(self, name):
-    return -1
+    self.initialize_if_needed()
+    name = name.lstrip('[').rstrip(']')
+    try:
+      return self.slots.index(name)
+    except ValueError:
+      return -1
 
   def get_child_at_index(self, index):
     self.initialize_if_needed()
