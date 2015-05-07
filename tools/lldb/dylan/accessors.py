@@ -285,7 +285,7 @@ def dylan_slot_element(value, index, name=None):
 
 def dylan_slot_element_by_name(value, name):
   slot_index = dylan_slot_index(value, name)
-  return dylan_slot_element(value, slot_index, name)
+  return dylan_slot_element(value, slot_index, '[' + name + ']')
 
 def dylan_stretchy_vector_size(vector):
   representation = dylan_slot_element_by_name(vector, 'stretchy-representation')
