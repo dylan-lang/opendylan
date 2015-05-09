@@ -6,9 +6,9 @@ def posix_directory_locator_summary(value, internal_dict):
   relative = dylan_slot_element_by_name(value, 'locator-relative?')
   path = dylan_slot_element_by_name(value, 'locator-path')
   summary = ''
-  if not dylan_boolean_value(relaitive):
+  if not dylan_boolean_value(relative):
     summary += '/'
-  for p in dylan_simple_vector_elements(path):
+  for p in dylan_vector_elements(path):
     summary += dylan_string_data(p)
     summary += '/'
   return summary
