@@ -9,6 +9,7 @@ import synthetics
 
 # Core summaries
 import summaries.core
+import summaries.system
 
 # Compiler (DFMC) summaries
 import summaries.dfmc.primitives
