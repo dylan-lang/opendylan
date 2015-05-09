@@ -1,5 +1,5 @@
 from dylan.accessors import *
-from dylan import mangling, summaries
+from dylan import summaries
 
 @summaries.register('<&primitive>', 'dfmc-modeling', 'dfmc-modeling')
 def primitive_summary(value, internal_dict):

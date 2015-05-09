@@ -1,5 +1,5 @@
 from dylan.accessors import *
-from dylan import mangling, summaries
+from dylan import summaries
 
 @summaries.register('<llvm-argument>', 'llvm', 'llvm')
 def llvm_argument_summary(value, internal_dict):
