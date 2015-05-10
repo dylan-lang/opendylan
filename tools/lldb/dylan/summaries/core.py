@@ -90,6 +90,14 @@ def dylan_stretchy_object_vector_summary(value, internal_dict):
 def dylan_symbol_summary(value, internal_dict):
   return '#"%s"' % dylan_symbol_name(value)
 
+@summaries.register('<thread>', 'threads', 'dylan')
+@summaries.register('<synchronous-thread>', 'threads', 'dylan')
+def dylan_thread_summary(value, internal_dict):
+  thread_name = dylan_slot_element_by_name(value, '')
+  if not dylan_is_boolean(thread_name):
+    return dylan_string_data(thread_name)
+  return None
+
 @summaries.register('<unicode-string>', 'dylan', 'dylan')
 def dylan_unicode_string_summary(value, internal_dict):
   return dylan_unicode_string_data(value)
