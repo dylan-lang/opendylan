@@ -50,7 +50,7 @@ define constant *spy-weakly-registered-objects* :: <table> = make(<table>);
 ///// *SPY-GLOBAL-REGISTRATION-COOKIE*
 //    Is returned as the handle on a registered object. Incremented each
 //    time an object is registered, either strongly or weakly. Since this
-//    just ticks up and up and up, there is an implementational limit
+//    just ticks up and up and up, there is an implementation limit
 //    on the number of objects that can be tracked. However, this limit
 //    should be far and away above the number of registrations that will
 //    ever be performed in practice. I think we are justified in completely
