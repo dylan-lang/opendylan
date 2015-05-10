@@ -24,6 +24,7 @@ define method jam-read-mkf
   // DylanLibraryCObjects image : objects ;
   // DylanLibraryCSources image : sources ;
   // DylanLibraryCHeaders image : headers ;
+  // DylanLibraryC++Sources image ; sources ;
   // DylanLibraryRCFiles image : rcfiles ;
   // DylanLibraryJamIncludes image : includes ;
   let rule-specs
@@ -35,6 +36,7 @@ define method jam-read-mkf
         #["DylanLibraryCObjects", #"c-object-files", #f],
         #["DylanLibraryCSources", #"c-source-files", #f],
         #["DylanLibraryCHeaders", #"c-header-files", #f],
+        #["DylanLibraryC++Sources", #"c++-source-files", #f],
         #["DylanLibraryRCFiles", #"rc-files", #f]];
   for (spec in rule-specs)
     let value = element(variables, spec[1], default: #());

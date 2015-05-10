@@ -23,6 +23,7 @@ define constant $standard-lid-keyword = #[#"comment",
                                           #"c-header-files",
                                           #"c-object-files",
                                           #"c-libraries",
+                                          #"c++-source-files",
                                           #"rc-files",
                                           #"major-version",
                                           #"minor-version",
@@ -46,6 +47,7 @@ define constant $list-build-keyword = #[#"linker-options",
                                         #"c-header-files",
                                         #"c-object-files",
                                         #"c-libraries",
+                                        #"c++-source-files",
                                         #"rc-files",
                                         #"other-files",
                                         #"broken-files",
@@ -504,6 +506,8 @@ define function lid-build-settings (source-loc, properties)
   if (o-names) add-setting(c-object-files: map(source-dir, o-names)) end;
   let c-libs = element(properties, #"c-libraries", default: #f);
   if (c-libs) add-setting(c-libraries: c-libs) end;
+  let c++-names = element(properties, #"c++-source-files", default: #f);
+  if (c++-names) add-setting(c++-source-files: map(source-dir, c++-names)) end;
   let rc-names = element(properties, #"rc-files", default: #f);
   if (rc-names) add-setting(rc-files: map(source-dir, rc-names)) end;
   let jam-names = element(properties, #"jam-includes", default: #f);
@@ -616,6 +620,7 @@ define method copy-extra-records (project :: <lid-project>,
                           c-source-files = #(),
                           c-header-files = #(),
                           c-object-files = #(),
+                          c++-source-files = #(),
                           rc-files = #(),
                           jam-includes = #(),
                           c-libraries = #())
@@ -637,13 +642,14 @@ define method copy-extra-records (project :: <lid-project>,
                   end for
                 end method do-one-set;
           if (~empty?(c-source-files) | ~empty?(c-header-files) | ~empty?(c-object-files)
-                | ~empty?(rc-files) | ~empty?(jam-includes))
+                | ~empty?(c++-source-files) | ~empty?(rc-files) | ~empty?(jam-includes))
             debug-out(#"project-manager",
                       "Copying extra files for: %s",
                       project);
             do-one-set(c-source-files);
             do-one-set(c-header-files);
             do-one-set(c-object-files);
+            do-one-set(c++-source-files);
             do-one-set(rc-files);
             do-one-set(jam-includes);
           end

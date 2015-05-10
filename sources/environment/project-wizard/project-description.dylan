@@ -547,7 +547,8 @@ define constant $project-file-header-order :: <vector>
         #"Library", #"Module",
         #"Synopsis", #"Author", #"Copyright", #"Version",
         #"Major-Version", #"Minor-Version",
-        #"Files", #"C-Header-Files", #"C-Source-Files", #"RC-Files",
+        #"Files", #"C-Header-Files", #"C-Source-Files",
+        #"C++-Source-Files", #"RC-Files",
         #"C-Libraries",        #"C-Object-Files",
         #"Linker-Options", #"Base-Address", #"Executable",
         #"Debug-Command", #"Debug-Arguments"];

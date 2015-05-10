@@ -322,6 +322,28 @@ rule DylanLibraryCSources image : sources {
   }
 }
 
+rule DylanLibraryC++Sources image : sources {
+  # DylanLibraryC++Sources image : sources ;
+  #Echo DylanLibraryC++Sources $(image) ":" $(sources) ;
+
+  # Link C++ source files into the shared library.
+  if ! $(SYSTEM) {
+    local _dll = [ FDLLName $(image) ] ;
+    local _exe = [ FEXEName $(image) ] ;
+
+    local _i ;
+    for _i in [ FGristFiles $(sources) ] {
+      SEARCH on $(_i) = $(SEARCH_SOURCE) ;
+      local _obj = [ FGristFiles $(_i:S=$(SUFOBJ)) ] ;
+      MakeLocate $(_obj) : $(LOCATE_TARGET) ;
+
+      C++ $(_obj) : $(_i) ;
+
+      LinkDLL $(_dll) : $(_obj) ;
+    }
+  }
+}
+
 rule DylanLibraryCHeaders image : headers {
   # DylanLibraryCHeaders image : headers ;
   #Echo DylanLibraryCHeaders $(image) ":" $(headers) ;

@@ -5,6 +5,8 @@
 
 CC                ?= @CC@ ;
 CCFLAGS           ?= @DISABLE_WARNINGS_CFLAGS@ @CFLAGS@ ;
+C++               ?= @CXX@ ;
+C++FLAGS          ?= $(CCFLAGS) ;
 
 MPS_CFLAGS        ?= @MPS_CFLAGS@ -DGC_USE_MPS ;
 MPS_LIBS          ?= @MPS_LIBS@ ;

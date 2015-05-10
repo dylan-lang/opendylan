@@ -6,6 +6,8 @@ CC      ?= pocc ;
 CCFLAGS ?= -DWIN32 -D_WIN32 -D_MT -D_DLL -MD -Ze
            -DOPEN_DYLAN_PLATFORM_WINDOWS
            -DOPEN_DYLAN_ARCH_X86 ;
+C++     ?= pellesc-has-no-c++compiler ;
+C++FLAGS ?= $(CCFLAGS);
 RC      ?= porc ;
 LINK    ?= polink ;
 
