@@ -25,7 +25,8 @@ define method project-other-sources (project :: <lid-project>)
           add-sources(filenames)
         end method add-project-filenames;
   for (key in #[#"c-source-files", #"c-header-files", #"jam-includes", #"c-object-files",
-                  #"c-libraries", #"rc-files", #"other-files", #"broken-files"])
+                  #"c-libraries", #"c++-source-files", #"rc-files", #"other-files",
+                  #"broken-files"])
     add-project-filenames(key)
   end;
   sources
@@ -100,6 +101,12 @@ define method project-add-file-of-type
     (type == $C-libraries-file-type, p :: <user-project>,
      file-locator :: <file-locator>)
   project-add-list-property(p, #"c-libraries", as(<string>, shorten-pathname(file-locator)))
+end;
+
+define method project-add-file-of-type
+    (type :: $c++-source-file-types, p :: <user-project>,
+     file-locator :: <file-locator>)
+  project-add-list-property(p, #"c++-source-files", as(<string>, file-locator))
 end;
 
 define method project-add-file-of-type
@@ -224,6 +231,13 @@ define method project-remove-file-of-type
     (type == $C-libraries-file-type, p :: <user-project>,
      file-locator :: <file-locator>)
   project-remove-list-property(p, #"c-libraries", as(<string>, file-locator))
+end;
+
+define method project-remove-file-of-type
+    (type :: $c++-source-file-types, p :: <user-project>,
+     file-locator :: <file-locator>)
+  project-remove-list-property(p, #"c++-source-files",
+                               project-relative-file(p, file-locator))
 end;
 
 define method project-remove-file-of-type

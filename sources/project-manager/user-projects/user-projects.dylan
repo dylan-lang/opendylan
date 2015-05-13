@@ -16,6 +16,7 @@ define constant $C-source-file-type    = #"C";
 define constant $C-header-file-type    = #"h";
 define constant $C-object-file-type    = #"obj";
 define constant $C-libraries-file-type = #"lib";
+define constant $c++-source-file-types = one-of(#"cpp", #"cxx", #"cc", #"c++");
 define constant $rc-file-type          = #"rc";
 define constant $ico-file-type         = #"ico";
 define constant $bmp-file-type         = #"bmp";

@@ -37,6 +37,9 @@ Build System
   back-ends. These shouldn't be changed unless you're sure you know
   what you're doing.
 
+* A new option for building C++ code, ``c++-source-files``,  has been
+  added to LID files.  This matches the ``c-source-files:`` keyword.
+
 C-FFI
 =====
 

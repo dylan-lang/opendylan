@@ -21,6 +21,7 @@ define function lid-project-build-settings
      c-header-files :: <sequence>,
      c-object-files :: <sequence>,
      c-libraries :: <sequence>,
+     c++-source-files :: <sequence>,
      rc-files :: <sequence>,
      jam-includes :: <sequence>)
 
@@ -39,6 +40,7 @@ define function lid-project-build-settings
          project-build-property(p, #"c-header-files") | #[],
          project-build-property(p, #"c-object-files") | #[],
          project-build-property(p, #"c-libraries") | #[],
+         project-build-property(p, #"c++-source-files") | #[],
          project-build-property(p, #"rc-files") | #[],
          project-build-property(p, #"jam-includes") | #[])
 end function lid-project-build-settings;
@@ -140,7 +142,8 @@ define function save-lid-info
   let (executable, base-address-string,
        debug-command, debug-arguments-string, debug-machine, debug-directory,
        start-function, linker-options, c-source-files,
-       c-header-files, c-object-files, c-libraries, rc-files, jam-includes)
+       c-header-files, c-object-files, c-libraries,
+       c++-source-files, rc-files, jam-includes)
     = lid-project-build-settings(p);
   let relative = if (flatten-extras?)
                    curry(map, convert-path-to-filename)
@@ -161,6 +164,7 @@ define function save-lid-info
   save-list-value(stream, #"c-header-files", relative(c-header-files));
   save-list-value(stream, #"c-object-files", relative(c-object-files));
   save-list-value(stream, #"c-libraries", c-libraries);
+  save-list-value(stream, #"c++-source-files", relative(c++-source-files));
   save-list-value(stream, #"rc-files", relative(rc-files));
   save-list-value(stream, #"jam-includes", relative(jam-includes));
   save-single-value(stream, #"major-version", p.project-major-version);

@@ -6,6 +6,8 @@ CC      ?= cl /nologo ;
 CCFLAGS ?= -DWIN32 -D_WIN32 -D_MT -D_DLL -MD -Z7 -Od
            -DOPEN_DYLAN_PLATFORM_WINDOWS
            -DOPEN_DYLAN_ARCH_X86 ;
+C++     ?= $(CC) ;
+C++FLAGS ?= $(CCFLAGS) ;
 CP      ?= copy /y ;
 RC      ?= rc ;
 RM      ?= del/f/q ;
@@ -270,6 +272,30 @@ rule DylanLibraryCHeaders image : headers {
 
   # Mark the shared library as depending on the given header files.
   # TODO: The original build-system didn't do anything with this either.
+}
+
+rule DylanLibraryC++Sources image : sources {
+  # DylanLibraryC++Sources image : sources ;
+  #Echo DylanLibraryC++Sources $(image) ":" $(sources) ;
+
+  # Link C source files into the shared library.
+  if ! $(SYSTEM) {
+    local _dll = [ FDLLName $(image) ] ;
+    local _lib = [ FLIBName $(image) ] ;
+    local _exe = [ FEXEName $(image) ] ;
+
+    local _i ;
+    for _i in [ FGristFiles $(sources) ] {
+      SEARCH on $(_i) = $(SEARCH_SOURCE) ;
+      local _obj = [ FGristFiles $(_i:S=$(SUFOBJ)) ] ;
+      MakeLocate $(_obj) : $(LOCATE_TARGET) ;
+
+      C++ $(_obj) : $(_i) ;
+
+      LinkDLL $(_dll) $(_lib) : $(_obj) ;
+      LinkEXE $(_exe) : $(_obj) ;
+    }
+  }
 }
 
 rule DylanLibraryRCFiles image : rcfiles {

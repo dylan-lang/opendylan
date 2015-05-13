@@ -104,6 +104,7 @@ bootstrap_target=3-stage-bootstrap
 AC_SUBST(bootstrap_target)
 
 AC_PROG_CC([clang-3.5 clang gcc cc])
+AC_PROG_CXX([clang++-3.5 clang++ g++ c++])
 
 if test -n "$SUPPORT_LLVM"; then
     AC_MSG_CHECKING([whether Clang is new enough])

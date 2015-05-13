@@ -229,6 +229,9 @@ component is the base name of the executable or shared library (from the
     normally used to ensure that files of various sorts (not just C header
     files) are copied into the build directory.
 
+``DylanLibraryC++Sources *image* : *sources* ;``
+    Link C++ source files into the shared library.
+
 ``DylanLibraryRCFiles *image* : *rcfiles* ;``
     Link Win32 resource files into the shared library and executable.
 

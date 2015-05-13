@@ -58,6 +58,21 @@ rule Cc
 	CCDEFS on $(<) = [ on $(<) FDefines $(DEFINES) ] ;
 }
 
+rule C++
+{
+	Depends $(<) : $(>) ;
+
+	if $(RELOCATE)
+	{
+	    CcMv $(<) : $(>) ;
+	}
+
+	C++FLAGS on $(<) += $(C++FLAGS) $(SUBDIRC++FLAGS) $(OPTIM) ;
+
+	CCHDRS on $(<) = [ on $(<) FIncludes $(HDRS) ] ;
+	CCDEFS on $(<) = [ on $(<) FDefines $(DEFINES) ] ;
+}
+
 rule Chmod
 {
 	if $(CHMOD) { Chmod1 $(<) ; }
@@ -241,6 +256,11 @@ rule FIncludes { return -I$(<) ; }
 actions Cc
 {
 	$(CC) -c -o "$(<)" $(CCFLAGS) $(CCDEFS) $(CCHDRS) "$(>)"
+}
+
+actions C++
+{
+	$(C++) -c -o "$(<)" $(C++FLAGS) $(CCDEFS) $(CCHDRS) "$(>)"
 }
 
 actions Chmod1
