@@ -2965,7 +2965,7 @@ are exported from the *duim-gadgets* module.
 
    Sets the value-changing callback of the specified gadget.
 
-   :signature: gadget-value-changing-callback-setter *value-changing-callback gadget* => *value-chaning-callback*
+   :signature: gadget-value-changing-callback-setter *value-changing-callback gadget* => *value-changing-callback*
 
    :param value-changing-callback: An instance of type ``<function>``.
    :param gadget: An instance of type :class:`<gadget>`.
