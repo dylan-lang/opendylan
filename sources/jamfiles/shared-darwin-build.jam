@@ -3,7 +3,7 @@
 #
 SUFDLL  ?= .dylib ;             # shared library suffix
 
-CCFLAGS  += -fno-strict-aliasing -D_POSIX_C_SOURCE
+CCFLAGS  += -fno-strict-aliasing -D_POSIX_C_SOURCE=200112L
             -DOPEN_DYLAN_PLATFORM_UNIX -DOPEN_DYLAN_PLATFORM_DARWIN ;
 
 DSYMUTIL ?= /usr/bin/dsymutil ;
