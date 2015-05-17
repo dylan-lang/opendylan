@@ -511,11 +511,12 @@ define method adjust-stream-position
                    "Can't set position of closed stream"));
     else
        error(make(<stream-position-error>, stream: stream,
-                  size: stream.accessor.accessor-size, position: position));
+                  size: stream.accessor.accessor-size,
+                  position: position-from-start));
     end if;
   else
     // Don't call next-method() it just figures out everything above again
-    stream.current-position := position;
+    stream.current-position := position-from-start;
     adjust-stream-position-from-start
       (position-from-start, stream, size-of-stream);
   end if;
