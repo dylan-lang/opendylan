@@ -190,10 +190,10 @@ define generic print (object, stream :: <stream>,
                       #key level, length, circle?, pretty?, escape?) => ();
 
 
-define constant <boolean-or-unsupplied> = <object>;  // !@#$ HACK can't deal
-//  = type-union(<boolean>, singleton($unsupplied));
-define constant <integer-or-false-or-unsupplied> = <object>; // !@#$ HACK ditto
-//  = type-union(<integer>, one-of(#f, $unsupplied));
+define constant <boolean-or-unsupplied>
+  = type-union(<boolean>, singleton($unsupplied));
+define constant <integer-or-false-or-unsupplied>
+  = type-union(<integer>, one-of(#f, $unsupplied));
 
 /// Print -- Method for Exported Interface.
 ///
