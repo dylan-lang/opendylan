@@ -962,7 +962,7 @@ define constant $primitive-write-thread-variable-string
 
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <assignment>)
-  // TODO: split out <definition>, tie that to the actual definiton
+  // TODO: split out <definition>, tie that to the actual definition
   if (c.assigned-binding.binding-thread?)
     format-emit(b, s, d, "\t#~(@, @);\n",
                 c.temporary,

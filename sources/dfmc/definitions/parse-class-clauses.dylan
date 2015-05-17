@@ -702,7 +702,7 @@ define function parse-inherited-slot-clause (clause, name, pre-adjectives,
         option-initargs);
 end;
 
-//// Initarg definitons.
+//// Initarg definitions.
 
 define dood-class <init-arg-spec> (<slot-keyword-initialization-spec>)
   lazy constant slot form-source-location,

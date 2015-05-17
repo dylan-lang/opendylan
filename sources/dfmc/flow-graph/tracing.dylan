@@ -23,7 +23,7 @@ define variable *trace-dfm-method-printer* :: false-or(<function>) = #f;
 define variable *trace-dfm-library* :: false-or(<symbol>) = #f;
 //file filter
 // #f       -- no filter
-// filename -- only trace top level defintions with this locator-base
+// filename -- only trace top level definitions with this locator-base
 define variable *trace-dfm-file* :: false-or(<symbol>) = #f;
 //method filter
 // #f                   -- no filter

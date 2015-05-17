@@ -204,7 +204,7 @@ define method draw-graphic
 end method draw-graphic;
 
 
-/// The main frame definiton and the layout of the various gadgets
+/// The main frame definition and the layout of the various gadgets
 
 define command-table *graphics-test-file-comtab* (*global-command-table*)
   menu-item "&Direct BitBlt" = frame-direct-bitblt,
