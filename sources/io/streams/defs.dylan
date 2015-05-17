@@ -12,8 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define open abstract class <stream-position> (<object>)
 end class <stream-position>;
 
-//---*** Should be 'type-union(<stream-position>, <integer>)'
-define constant <position-type> = <object>;
+define constant <position-type> = type-union(<stream-position>, <integer>);
 
 /// Conditions
 
