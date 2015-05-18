@@ -2144,7 +2144,6 @@ define &module dispatch-engine
       ckd-ref, ckd-ref-setter, ckd-size,
       %ckd-ref, %ckd-ref-setter, %ckd-size, %ckd-mask, $ckd-empty,
       grounded-class-keyed-discriminator-default,
-      %second-hash-values,
     <linear-class-keyed-discriminator>,
       lckd-index, lckd-index-setter,
       lckd-hits, lckd-hits-setter,
