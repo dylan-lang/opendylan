@@ -874,25 +874,24 @@ define inline function %hckd-first-index
 end function;
 
 // See %hckd-hash-step.
-define function %second-hash-values () => (v :: <simple-object-vector>)
-  #[2,                                // index = 0,  step = 1
-    6,                                // index = 1,  Step = 3
-    10,                               // index = 2,  Step = 5
-    14,                               // index = 3,  Step = 7
-    22,                               // index = 4,  step = 11
-    26,                               // index = 5,  step = 13
-    34,                               // index = 6,  step = 17
-    38,                               // index = 7,  step = 19
-    46,                               // index = 8,  step = 23
-    58,                               // index = 9,  step = 29
-    62,                               // index = 10, step = 31
-    74,                               // index = 11, step = 37
-    82,                               // index = 12, step = 41
-    86,                               // index = 13, step = 43
-    94,                               // index = 14, step = 47
-    106                               // index = 15, step = 53
-      ]
-end function;
+define constant $second-hash-values :: <simple-object-vector>
+ = #[2,                                // index = 0,  step = 1
+     6,                                // index = 1,  Step = 3
+     10,                               // index = 2,  Step = 5
+     14,                               // index = 3,  Step = 7
+     22,                               // index = 4,  step = 11
+     26,                               // index = 5,  step = 13
+     34,                               // index = 6,  step = 17
+     38,                               // index = 7,  step = 19
+     46,                               // index = 8,  step = 23
+     58,                               // index = 9,  step = 29
+     62,                               // index = 10, step = 31
+     74,                               // index = 11, step = 37
+     82,                               // index = 12, step = 41
+     86,                               // index = 13, step = 43
+     94,                               // index = 14, step = 47
+     106                               // index = 15, step = 53
+       ];
 
 // Mask to compute index mod the size of $second-hash-values.
 define constant $second-hash-mask :: <integer> = 15;
@@ -900,7 +899,7 @@ define constant $second-hash-mask :: <integer> = 15;
 define inline function %hckd-hash-step
     (key :: <integer>, d :: <hashed-class-keyed-discriminator>) => (step :: <integer>, mask :: <integer>)
   let log2size :: <integer> = %load-byte(ckd$v-log2size, ckd$s-log2size, properties(d));
-  values(vector-element(%second-hash-values(),
+  values(vector-element($second-hash-values,
                         logand(%scale-down(key, log2size), $second-hash-mask)),
          %twopower(log2size) - 2)
 end function;
