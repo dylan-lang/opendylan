@@ -126,6 +126,9 @@ def dylan_is_double_float(value):
 def dylan_is_float(value):
   return dylan_is_double_float(value) or dylan_is_single_float(value)
 
+def dylan_is_list(value):
+  return check_value_class(value, '<pair>', 'dylan', 'dylan')
+
 def dylan_is_simple_vector(value):
   # XXX: Check for just <simple-object-vector> until we start looking at
   #      actual inheritance data.
@@ -144,6 +147,11 @@ def dylan_is_string(value):
 
 def dylan_is_unicode_string(value):
   return check_value_class(value, '<unicode-string>', 'dylan', 'dylan')
+
+def dylan_list_empty(value):
+  target = lldb.debugger.GetSelectedTarget()
+  empty_list = target.FindFirstGlobalVariable('KPempty_listVKi').AddressOf().GetValueAsUnsigned()
+  return value.GetValueAsUnsigned() == empty_list
 
 def dylan_list_elements(value):
   elements = []
@@ -320,6 +328,17 @@ def dylan_unicode_string_data(value):
   # We don't need to read the null termination because we don't want that in
   # our UTF-8 encoded result.
   data = dylan_read_raw_data(value, UNICODE_STRING_DATA, size * 4)
+
+def dylan_sequence_empty(sequence):
+  if dylan_is_simple_vector(sequence):
+    return dylan_simple_vector_size(sequence) == 0
+  elif dylan_is_stretchy_vector(sequence):
+    return dylan_stretchy_vector_size(sequence) == 0
+  elif dylan_is_list(sequence):
+    return dylan_list_empty(sequence)
+  else:
+    class_name = dylan_object_class_name(sequence)
+    raise Exception("%s is a new type of sequence? %s" % (sequence, class_name))
 
 def dylan_vector_size(vector):
   if dylan_is_simple_vector(vector):
