@@ -41,6 +41,11 @@ def dylan_empty_list_summary(value, internal_dict):
 def dylan_generic_function_summary(value, internal_dict):
   return dylan_generic_function_name(value)
 
+@summaries.register('<instance-slot-descriptor>', 'dylan-extensions', 'dylan')
+@summaries.register('<repeated-slot-descriptor>', 'dylan-extensions', 'dylan')
+def dylan_slot_descriptor_summary(value, internal_dict):
+  return dylan_slot_descriptor_name(value)
+
 @summaries.register('<library>', 'dylan-extensions', 'dylan')
 def dylan_library_summary(value, internal_dict):
   name = dylan_slot_element_by_name(value, 'namespace-name')
