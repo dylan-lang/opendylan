@@ -20,6 +20,9 @@ import summaries.llvm.constant
 import summaries.llvm.function
 import summaries.llvm.misc
 
+# Testworks
+import summaries.testworks
+
 def __lldb_init_module(debugger, internal_dict):
   debugger.HandleCommand('command script add -f dylan.commands.dylan_break_gf dylan-break-gf')
   debugger.HandleCommand('command script add -f dylan.commands.dylan_bt dylan-bt')
