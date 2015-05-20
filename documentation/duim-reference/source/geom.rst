@@ -39,8 +39,8 @@ The <region> class and its subclasses
 The DUIM-Geometry library exposes the <region> class and its subclasses as
 shown in the following table . None of these subclasses have any further
 subclasses exposed in the DUIM-Geometry library, although the
-DUIM-Extended-Geometry library exposes some subclasses of *<area>* and
-*<path>*.
+DUIM-Extended-Geometry library exposes some subclasses of :class:`<area>`
+and :class:`<path>`.
 
 +----------+----------------+
 | <region> |                |
@@ -64,7 +64,7 @@ DUIM-Extended-Geometry library exposes some subclasses of *<area>* and
   regions.
 - :class:`<point>` This class is used to represent mathematical points (that
   is, regions with dimensionality 0).
-- :class:`<path>` The class *<path>* denotes bounded regions with a length,
+- :class:`<path>` The class ``<path>`` denotes bounded regions with a length,
   but no area (that is, they have dimensionality 1).
 - :class:`<area>` This class denotes bounded regions that have an area (that
   is, they have dimensionality 2).
@@ -76,8 +76,8 @@ Error classes provided by DUIM-Geometry
 
 The DUIM-Geometry library exposes a number of errors that can be signalled in
 certain circumstances. They are shown in the following table . All the errors
-shown are subclasses of the *<error>* class. Note that the subclasses of
-*<transform-error>* are all specific to particular errors.
+shown are subclasses of the :drm:`<error>` class. Note that the subclasses of
+:class:`<transform-error>` are all specific to particular errors.
 
 +-------------------+----------------------------+------------------------------+
 | <transform-error> |                            |                              |
@@ -821,7 +821,7 @@ are exported from the *duim-geometry* module.
 
 .. function:: fix-coordinate
 
-   Coerces the given coordinate into an *<integer>*.
+   Coerces the given coordinate into an :drm:`<integer>`.
 
    :signature: fix-coordinate *coordinate* => *integer*
 
@@ -850,7 +850,7 @@ are exported from the *duim-geometry* module.
 
 .. generic-function:: identity-transform?
 
-   Returns ``#t`` if a transform is equal (in the sense of *transform-equal*) to the identity transform.
+   Returns ``#t`` if a transform is equal (in the sense of :gf:`transform-equal`) to the identity transform.
 
    :signature: identity-transform? *transform* => *boolean*
 
@@ -860,7 +860,7 @@ are exported from the *duim-geometry* module.
    :description:
 
      Returns ``#t`` if the transform *transform* is equal (in the sense
-     of *transform-equal*) to the identity transform, otherwise returns
+     of :gf:`transform-equal`) to the identity transform, otherwise returns
      ``#f``.
 
    :seealso:
