@@ -193,9 +193,9 @@ are exported from the *duim-extended-geometry* module.
 
    :description:
 
-     Returns ``#t`` if *object* is an ellipse, otherwise returns *#f.*
+     Returns ``#t`` if *object* is an ellipse, otherwise returns ``#f``.
 
-   See Also
+   :seealso:
 
      - :class:`<ellipse>`
 
@@ -427,7 +427,7 @@ are exported from the *duim-extended-geometry* module.
 
    :description:
 
-     Returns ``#t`` if *object* is a line, otherwise returns *#f.*
+     Returns ``#t`` if *object* is a line, otherwise returns ``#f``.
 
 .. generic-function:: line-end-point
 
