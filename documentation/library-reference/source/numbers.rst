@@ -939,33 +939,20 @@ The Dylan-Excluding-Arithmetic module imports and re-exports all of the
 interfaces exported by the *dylan* module from the Dylan library, except
 for the following excluded interfaces:
 
-<integer>
-
-range
-
-+ - \* /
-
-negative
-
-floor ceiling round truncate
-
-floor/ ceiling/ round/ truncate/
-
-modulo remainder
-
-^
-
-abs
-
-logior logxor logand lognot
-
-logbit?
-
-ash
-
-lcm gcd
-
-for
+* :drm:`<integer>`
+* :drm:`range`
+* :drm:`+` :drm:`-` :drm:`*` :drm:`/`
+* :drm:`negative`
+* :drm:`floor` :drm:`ceiling` :drm:`round` :drm:`truncate`
+* :drm:`floor/` :drm:`ceiling/` :drm:`round/` :drm:`truncate/`
+* :drm:`modulo` :drm:`remainder`
+* :drm:`^`
+* :drm:`abs`
+* :drm:`logior` :drm:`logxor` :drm:`logand` :drm:`lognot`
+* :drm:`logbit?`
+* :drm:`ash`
+* :drm:`lcm` :drm:`gcd`
+* :drm:`for`
 
 The Dylan-Arithmetic module
 ---------------------------
