@@ -69,22 +69,22 @@ subclasses of the base :class:`<layout>` class, and are described in
 `Subclasses of \<layout\>`_. In addition, a number of
 different types of pane are supplied by the DUIM-Layouts library.
 
--  :class:`<basic-composite-pane>` This is a basic type of pane that is used to
-   create any sheet that can contain children. It has two subclasses, one used
-   for sheets that take only a single child, and one for sheets that can take
-   several children.
--  :class:`<drawing-pane>` This type of pane is used to create sheets on which
-   geometric objects are drawn, for example, using the function provided by the
-   DUIM-Geometry module or the DUIM-Graphics module. For more information on
-   these modules, see :doc:`geom`, and :doc:`graphics`, respectively.
--  :class:`<top-level-sheet>` This class is used for any sheets that are at the
-   top level of the hierarchy of windows on the screen: that is, there is no
-   other sheet that is the parent of an instance of :class:`<top-level-sheet>`.
--  :class:`<leaf-pane>` In contrast to :class:`<top-level-sheet>`, an instance of
-   :class:`<leaf-pane>` cannot have any children, and is at the end of the
-   hierarchy of windows on the screen.
--  :class:`<simple-pane>` This class is the most basic type of pane, and is
-   used when no other more suitable class is available.
+- :class:`<basic-composite-pane>` This is a basic type of pane that is used to
+  create any sheet that can contain children. It has two subclasses, one used
+  for sheets that take only a single child, and one for sheets that can take
+  several children.
+- :class:`<drawing-pane>` This type of pane is used to create sheets on which
+  geometric objects are drawn, for example, using the function provided by the
+  DUIM-Geometry module or the DUIM-Graphics module. For more information on
+  these modules, see :doc:`geom`, and :doc:`graphics`, respectively.
+- :class:`<top-level-sheet>` This class is used for any sheets that are at the
+  top level of the hierarchy of windows on the screen: that is, there is no
+  other sheet that is the parent of an instance of :class:`<top-level-sheet>`.
+- :class:`<leaf-pane>` In contrast to :class:`<top-level-sheet>`, an instance of
+  :class:`<leaf-pane>` cannot have any children, and is at the end of the
+  hierarchy of windows on the screen.
+- :class:`<simple-pane>` This class is the most basic type of pane, and is
+  used when no other more suitable class is available.
 
 Subclasses of <layout>
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -116,37 +116,35 @@ The subclasses of :class:`<layout>` are shown in :ref:`subclasses-of-the-layout-
 
 The layouts provided by DUIM fall roughly into two categories:
 
--  Layout classes that calculate the position and size of their children
-   for you, subject to some constraints.
--  Layout classes that let you specify precisely the position of their
-   children, and, optionally, the size of the children as well.
+- Layout classes that calculate the position and size of their children
+  for you, subject to some constraints.
+- Layout classes that let you specify precisely the position of their
+  children, and, optionally, the size of the children as well.
 
 The classes of layout available are as follows:
 
-
-
--  :class:`<column-layout>` This class lays out its children in a single
-   column, with all its children left-aligned by default.
--  :class:`<row-layout>` This class lays out its children in a single row.
--  :class:`<stack-layout>` This class lays out its children one on top of
-   another, aligned at the top left corner by default. It is
-   specifically for windows that contain a number of layouts, only one
-   of which is visible at any one time, such as property sheets, tab
-   controls, or wizards.
--  :class:`<table-layout>` This class lays out its children in a table,
-   according to a specified number of rows and columns.
--  :class:`<pinboard-layout>` This does not constrain the position of its
-   children in any way. It is up to you to position each child individually,
-   like pins on a pinboard.
--  :class:`<fixed-layout>` This class is like :class:`<pinboard-layout>`, in that you
-   must specify the position of each child. Unlike :class:`<pinboard-layout>`,
-   however, you must also specify the size of each child.
+- :class:`<column-layout>` This class lays out its children in a single
+  column, with all its children left-aligned by default.
+- :class:`<row-layout>` This class lays out its children in a single row.
+- :class:`<stack-layout>` This class lays out its children one on top of
+  another, aligned at the top left corner by default. It is
+  specifically for windows that contain a number of layouts, only one
+  of which is visible at any one time, such as property sheets, tab
+  controls, or wizards.
+- :class:`<table-layout>` This class lays out its children in a table,
+  according to a specified number of rows and columns.
+- :class:`<pinboard-layout>` This does not constrain the position of its
+  children in any way. It is up to you to position each child individually,
+  like pins on a pinboard.
+- :class:`<fixed-layout>` This class is like :class:`<pinboard-layout>`, in that you
+  must specify the position of each child. Unlike :class:`<pinboard-layout>`,
+  however, you must also specify the size of each child.
 
 In addition to the basic types of layout described above, a subclass of
 :class:`<table-layout>` is provided, as follows:
 
--  :class:`<grid-layout>` This is a specialized version of :class:`<table-layout>`,
-   in which all the cells in the table are forced to be the same size.
+- :class:`<grid-layout>` This is a specialized version of :class:`<table-layout>`,
+  in which all the cells in the table are forced to be the same size.
 
 .. figure:: images/layouts-3.png
    :align: center
@@ -817,12 +815,12 @@ are exported from the *duim-layouts* module.
 
      Subclass this class if you want to create a basic leaf pane.
 
-     -  If you want to do output to it, mix in one of the
-        :class:`<sheet-with-medium-mixin>` classes.
-     -  If you want to do input from it, min in one of the
-        :class:`<sheet-with-event-queue>` classes.
-     -  If you want to repaint it, mix in one of the
-        :class:`<sheet-with-repainting-mixin>` classes.
+     - If you want to do output to it, mix in one of the
+       :class:`<sheet-with-medium-mixin>` classes.
+     - If you want to do input from it, min in one of the
+       :class:`<sheet-with-event-queue>` classes.
+     - If you want to repaint it, mix in one of the
+       :class:`<sheet-with-repainting-mixin>` classes.
 
 .. method:: make
    :specializer: <space-requirement>

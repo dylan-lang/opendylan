@@ -23,12 +23,12 @@ and ``<transform>``, both of which are subclasses of :drm:`<object>`. While
 the ``<region>`` class has a number of subclasses, ``<transform>`` has no
 direct subclasses.
 
--  ``<transform>`` The superclass of all transforms. A transform describes
-   the mapping of one set of points onto another. There are one or more
-   subclasses of :class:`<transform>` that implement
-   transforms. These subclasses have implementation-dependent names
-   which are explicitly unspecified. All of the instantiable
-   transformation classes provided by DUIM are immutable.
+- ``<transform>`` The superclass of all transforms. A transform describes
+  the mapping of one set of points onto another. There are one or more
+  subclasses of :class:`<transform>` that implement
+  transforms. These subclasses have implementation-dependent names
+  which are explicitly unspecified. All of the instantiable
+  transformation classes provided by DUIM are immutable.
 
 In addition, there are a number of error classes which may be signalled.
 These are all subclasses of :drm:`<error>`.
@@ -56,20 +56,20 @@ DUIM-Extended-Geometry library exposes some subclasses of *<area>* and
 |          | <bounding-box> |
 +----------+----------------+
 
--  :class:`<region>` This class is used to represent any set of points.
-   The:class:`<region>` class includes both bounded regions (that is, regions
-   whose edges are known) and unbounded regions (that is, regions with
-   no known edges).
--  :class:`<region-set>` This class represents a region set, that is, a set of
-   regions.
--  :class:`<point>` This class is used to represent mathematical points (that
-   is, regions with dimensionality 0).
--  :class:`<path>` The class *<path>* denotes bounded regions with a length,
-   but no area (that is, they have dimensionality 1).
--  :class:`<area>` This class denotes bounded regions that have an area (that
-   is, they have dimensionality 2).
--  :class:`<bounding-box>` A bounding box is an axis aligned rectangle that
-   contains some region.
+- :class:`<region>` This class is used to represent any set of points.
+  The:class:`<region>` class includes both bounded regions (that is, regions
+  whose edges are known) and unbounded regions (that is, regions with
+  no known edges).
+- :class:`<region-set>` This class represents a region set, that is, a set of
+  regions.
+- :class:`<point>` This class is used to represent mathematical points (that
+  is, regions with dimensionality 0).
+- :class:`<path>` The class *<path>* denotes bounded regions with a length,
+  but no area (that is, they have dimensionality 1).
+- :class:`<area>` This class denotes bounded regions that have an area (that
+  is, they have dimensionality 2).
+- :class:`<bounding-box>` A bounding box is an axis aligned rectangle that
+  contains some region.
 
 Error classes provided by DUIM-Geometry
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -89,15 +89,15 @@ shown are subclasses of the *<error>* class. Note that the subclasses of
 |                   | <singular-transform>       |                              |
 +-------------------+----------------------------+------------------------------+
 
--  :class:`<transform-error>` The superclass of all error conditions signalled
-   when there is an error with a transform.
--  :class:`<transform-underspecified>` The error that is signalled when
-   :func:`make-3-point-transform` is given three colinear image points.
--  :class:`<reflection-underspecified>` The error that is signalled when
-   :func:`make-reflection-transform` is given two coincident points.
--  :class:`<singular-transform>` The error that is signalled when
-   :func:`invert-transform` is called on a singular transform, that is,
-   a transform that has no inverse.
+- :class:`<transform-error>` The superclass of all error conditions signalled
+  when there is an error with a transform.
+- :class:`<transform-underspecified>` The error that is signalled when
+  :func:`make-3-point-transform` is given three colinear image points.
+- :class:`<reflection-underspecified>` The error that is signalled when
+  :func:`make-reflection-transform` is given two coincident points.
+- :class:`<singular-transform>` The error that is signalled when
+  :func:`invert-transform` is called on a singular transform, that is,
+  a transform that has no inverse.
 
 DUIM-Geometry Module
 ====================
