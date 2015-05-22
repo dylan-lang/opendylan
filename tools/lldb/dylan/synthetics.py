@@ -54,7 +54,10 @@ class SyntheticObject(object):
   # and getting slots, which creates more synthetics, etc.
   def num_children(self):
     self.initialize_if_needed()
-    return len(self.slots)
+    if self.repeated_slot:
+      return len(self.slots) + self.repeated_size()
+    else:
+      return len(self.slots)
 
   def get_child_index(self, name):
     self.initialize_if_needed()
@@ -69,6 +72,11 @@ class SyntheticObject(object):
     if index >= 0 and index < len(self.slots):
       slot_name = self.slots[index]
       return dylan_slot_element(self.value, index, '[' + slot_name + ']')
+    elif self.repeated_slot and (index >= len(self.slots)):
+      repeated_index = index - len(self.slots)
+      if repeated_index < self.repeated_size():
+        slot_name = '[' + self.repeated_slot + ',' + str(repeated_index) + ']'
+        return dylan_slot_element(self.value, index, slot_name)
     return None
 
   def has_children(self):
@@ -77,11 +85,17 @@ class SyntheticObject(object):
   def update(self):
     self.initialized = False
     self.slots = []
+    self.repeated_slot = None
 
   def initialize_if_needed(self):
     if not self.initialized:
       self.slots = dylan_object_class_slot_names(self.value)
+      self.repeated_slot = dylan_object_class_repeated_slot_name(self.value)
       self.initialized = True
+
+  def repeated_size(self):
+    size_slot = len(self.slots) - 1
+    return dylan_integer_value(dylan_slot_element(self.value, size_slot))
 
 class SyntheticSimpleObjectVector(object):
   """A synthetic for representing a <simple-object-vector>."""

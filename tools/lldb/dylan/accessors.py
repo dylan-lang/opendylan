@@ -197,6 +197,13 @@ def dylan_object_class_slot_names(value):
   CLASS_SLOT_NAMES_CACHE[wrapper_address] = slot_names
   return slot_names
 
+def dylan_object_class_repeated_slot_name(value):
+  iclass = dylan_object_implementation_class(value)
+  slot = dylan_implementation_class_repeated_slot_descriptor(iclass)
+  if slot:
+    return dylan_slot_descriptor_name(slot)
+  return None
+
 def dylan_object_class_name(value):
   class_object = dylan_object_class(value)
   return dylan_class_name(class_object)
