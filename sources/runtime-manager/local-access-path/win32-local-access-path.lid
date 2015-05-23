@@ -1,5 +1,5 @@
-library:     access-path
-LID:         access-path.lid
+library:     local-access-path
+LID:         local-access-path.lid
 C-libraries: devnub.lib
              minvcrt.lib
              dbghelp.LIB

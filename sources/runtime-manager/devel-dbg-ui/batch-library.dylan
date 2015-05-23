@@ -15,7 +15,8 @@ define library batch-debug
   use io;
   use release-info;
   use access-path;
-  // Plug-in for Remote Debugging
+  // Plug-ins for debugging
+  use local-access-path;
   use remote-access-path;
   use debugger-manager;
   use collections;

@@ -14,7 +14,8 @@ define library devel-dbg-ui
   use system;
   use io;
   use access-path;
-  // Plug-in for Remote Debugging
+  // Plug-ins for debugging
+  use local-access-path;
   use remote-access-path;
   use debugger-manager;
   use collections;

@@ -361,21 +361,6 @@ define open generic wait-for-stop-reason-with-timeout
      #key)
  => (code :: <integer>);
 
-define method wait-for-stop-reason-with-timeout 
-    (conn :: <local-access-connection>, timeout :: <integer>,
-     #key profile-at = #f)
-  => (code :: <integer>)
-  let code :: <integer> =
-    if (profile-at) 
-      nub-profile-wait-for-stop-reason-with-timeout 
-        (conn.connection-process, timeout, profile-at);
-    else
-      nub-wait-for-stop-reason-with-timeout
-        (conn.connection-process, timeout);
-    end if;
-  code;
-end method;
-
 
 ///// WAIT-FOR-STOP-REASON-NO-TIMEOUT
 //    Called if no timeout keyword is supplied.
@@ -383,20 +368,6 @@ end method;
 define open generic wait-for-stop-reason-no-timeout 
     (conn :: <access-connection>,
      #key) => (code :: <integer>);
-
-define method wait-for-stop-reason-no-timeout 
-    (conn :: <local-access-connection>,
-     #key profile-at = #f) => (code :: <integer>)
-
-  let code :: <integer> =
-    if (profile-at)
-      nub-profile-wait-for-stop-reason-no-timeout (conn.connection-process, profile-at);
-    else
-      nub-wait-for-stop-reason-no-timeout (conn.connection-process);
-    end if;
-
-  code;
-end method;
 
 
 ///// GET-DEBUG-EVENT-PROCESS-EXIT-CODE
@@ -406,17 +377,6 @@ end method;
 define open generic get-debug-event-process-exit-code
     (conn :: <access-connection>) => (code :: <integer>);
 
-define method get-debug-event-process-exit-code
-    (conn :: <local-access-connection>) => (code :: <integer>)
-  let raw-code =
-    nub-stop-reason-process-exit-code (conn.connection-process);
-  if (instance?(raw-code, <integer>))
-    raw-code
-  else
-    0
-  end if;
-end method;
-
 
 ///// GET-DEBUG-EVENT-THREAD-EXIT-CODE
 //    Given that the last received stop reason was an
@@ -424,17 +384,6 @@ end method;
 
 define open generic get-debug-event-thread-exit-code
     (conn :: <access-connection>) => (code :: <integer>);
-
-define method get-debug-event-thread-exit-code
-    (conn :: <local-access-connection>) => (code :: <integer>)
-  let raw-code =
-    nub-stop-reason-thread-exit-code (conn.connection-process);
-  if (instance?(raw-code, <integer>))
-    raw-code
-  else
-    0
-  end if
-end method;
 
 
 ///// GET-DEBUG-EVENT-STRING-INFORMATION
@@ -448,27 +397,6 @@ define open generic get-debug-event-string-information
      sz :: <integer>,
      unicode? :: <boolean>);
 
-define method get-debug-event-string-information
-    (conn :: <local-access-connection>)
-       => (addr :: <remote-value>,
-           sz :: <integer>,
-           unicode? :: <boolean>)
-  let string-addr
-    = nub-stop-reason-debug-string-address(conn.connection-process);
-  let string-len
-    = nub-stop-reason-debug-string-length(conn.connection-process);
-  let unicode-answer
-    = nub-stop-reason-debug-string-is-unicode(conn.connection-process);
-
-  unless(instance?(string-len, <integer>))
-    string-len := 0
-  end unless;
-
-  values (string-addr,
-          string-len,
-          unicode-answer == 1);
-end method;
-
 
 ///// GET-DEBUG-EVENT-LIBRARY
 //    Given that the last received stop reason was one that has to
@@ -478,11 +406,6 @@ end method;
 define open generic get-debug-event-library
     (conn :: <access-connection>) => (lib :: <NUBLIBRARY>);
 
-define method get-debug-event-library
-    (conn :: <local-access-connection>) => (lib :: <NUBLIBRARY>)
-  nub-stop-reason-library (conn.connection-process);
-end method;
-
 
 ///// GET-DEBUG-EVENT-THREAD
 //    All stop reasons are associated with the thread that generated
@@ -491,11 +414,6 @@ end method;
 define open generic get-debug-event-thread 
     (conn :: <access-connection>)=> (thr :: <NUBTHREAD>);
 
-define method get-debug-event-thread 
-    (conn :: <local-access-connection>)=> (thr :: <NUBTHREAD>)
-  nub-stop-reason-thread (conn.connection-process);
-end method;
-
 
 ///// GET-DEBUG-EVENT-PROCESS
 //    This function is currently pointless, since there is only one
@@ -503,14 +421,6 @@ end method;
 
 define open generic get-debug-event-process 
     (conn :: <access-connection>) => (proc :: <remote-process>);
-
-define method get-debug-event-process 
-    (conn :: <local-access-connection>) => (proc :: <remote-process>)
-  let nub-process = nub-stop-reason-process (conn.connection-process);
-  let process = make (<remote-process>,
-                      nub-descriptor: nub-process);
-  process;
-end method;
 
 
 ///// GET-EXCEPTION-ADDRESS
@@ -521,23 +431,12 @@ end method;
 define open generic get-exception-address (conn :: <access-connection>)
     => (ptr :: <remote-value>);
 
-define method get-exception-address (conn :: <local-access-connection>)
-    => (ptr :: <remote-value>)
-  nub-stop-reason-exception-address (conn.connection-process);
-end method;
-
 
 ///// EXCEPTION-IS-FIRST-CHANCE?
 //    Decides whether an exception is a first-chance exception
 
 define open generic exception-is-first-chance? (conn :: <access-connection>)
     => (answer :: <boolean>);
-
-define method exception-is-first-chance? (conn :: <local-access-connection>)
-    => (answer :: <boolean>)
-  let int-answer = nub-exception-first-chance (conn.connection-process);
-  int-answer == 1
-end method;
 
 
 ///// GET-EXCEPTION-VIOLATION-ADDRESS
@@ -548,12 +447,6 @@ define open generic get-exception-violation-address
   (conn :: <access-connection>)
     => (ptr :: <remote-value>);
 
-define method get-exception-violation-address 
-  (conn :: <local-access-connection>)
-    => (ptr :: <remote-value>)
-  nub-stop-reason-violation-address (conn.connection-process);
-end method;
-
 
 ///// GET-EXCEPTION-VIOLATION-OP
 //    Returns a code for the operation that the application was trying
@@ -561,11 +454,6 @@ end method;
 
 define open generic get-exception-violation-op (conn :: <access-connection>)
     => (op :: <integer>);
-
-define method get-exception-violation-op (conn :: <local-access-connection>)
-    => (op :: <integer>)
-  nub-stop-reason-violation-op (conn.connection-process);
-end method;
 
 
 ///// FIRST-DEBUGGER-INVOCATION?
@@ -579,12 +467,6 @@ end method;
 
 define open generic first-debugger-invocation?
     (conn :: <access-connection>) => (well? :: <boolean>);
-
-define method first-debugger-invocation?
-    (conn :: <local-access-connection>) => (well? :: <boolean>)
-  let int-answer = nub-first-hard-coded-breakpoint(conn.connection-process);
-  int-answer == 1
-end method;
 
 
 ///// CONSTRUCT-STOP-REASON
@@ -964,18 +846,6 @@ define open generic connection-can-receive-first-chance
    (conn :: <access-connection>, code :: <integer>)
      => (yes-or-no :: <boolean>);
 
-define method connection-can-receive-first-chance
-   (conn :: <local-access-connection>, code :: <integer>)
-     => (yes-or-no :: <boolean>)
-  let answer
-    = nub-can-receive-first-chance(conn.connection-process, code);
-  if (answer == 1)
-    #t
-  else
-    #f
-  end if
-end method;
-
 
 ///// RECEIVING-FIRST-CHANCE?
 //    Is the given exception class currently being first-chance processed
@@ -1141,11 +1011,6 @@ end method;
 define open generic connection-set-first-chance
    (conn :: <access-connection>, code :: <integer>) => ();
 
-define method connection-set-first-chance
-   (conn :: <local-access-connection>, code :: <integer>) => ()
-  nub-set-first-chance(conn.connection-process, code);
-end method;
-
 define method receiving-first-chance?-setter
     (set == #f, ap :: <access-path>, etype :: <class>) => (b :: <boolean>)
   if (member?(etype, receivable-first-chance-exceptions(ap)))
@@ -1163,11 +1028,6 @@ end method;
 define open generic connection-unset-first-chance
    (conn :: <access-connection>, code :: <integer>) => ();
 
-define method connection-unset-first-chance
-   (conn :: <local-access-connection>, code :: <integer>) => ()
-  nub-unset-first-chance(conn.connection-process, code);
-end method;
-
 
 ///// FIRST-CHANCE-EXCEPTION?
 //    Is a thread stopped at a first-chance exception or not?
@@ -1180,16 +1040,4 @@ end method;
 define open generic connection-thread-stopped-at-first-chance?
     (conn :: <access-connection>, thread :: <remote-thread>)
       => (b :: <boolean>);
-
-define method connection-thread-stopped-at-first-chance?
-    (conn :: <local-access-connection>, thread :: <remote-thread>)
-      => (b :: <boolean>)
-  let (code, fchance)
-    = nub-thread-stop-information(conn.connection-process, thread.nub-descriptor);
-  if (fchance == 1)
-    #t
-  else
-    #f
-  end if
-end method;
 

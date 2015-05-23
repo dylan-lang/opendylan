@@ -203,16 +203,6 @@ define open generic remote-value-as-string-on-connection
      radix :: <integer>, pad :: <integer>, sz :: <integer>)
        => (str :: <string>);
 
-define method remote-value-as-string-on-connection
-    (conn :: <local-access-connection>, val :: <remote-value>,
-     radix :: <integer>, pad :: <integer>, sz :: <integer>)
-       => (str :: <string>)
-  let str = make(<byte-string>, size: sz);
-  let trunc? =
-    nub-target-address-to-string(conn.connection-process, val, sz, str, radix, pad);
-  str;
-end method;
-
 
 ///// STRING-AS-REMOTE-VALUE
 //    Converts a string to a <remote-value> on the application's machine.
@@ -228,12 +218,3 @@ define open generic string-as-remote-value-on-connection
     (conn :: <access-connection>, sz :: <integer>,
      str :: <string>, radix :: <integer>)
          => (val :: <remote-value>);
-
-define method string-as-remote-value-on-connection
-    (conn :: <local-access-connection>, sz :: <integer>,
-     str :: <string>, radix :: <integer>)
-         => (val :: <remote-value>)
-  let (val, overflow?) =
-    nub-string-to-target-address(conn.connection-process, sz, str, radix);
-  val;
-end method;

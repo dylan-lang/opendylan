@@ -28,7 +28,8 @@ define library dylan-environment-with-tools
   use motley;
   use tool-scepter;
 
-  // Plug-in for Remote Debugging
+  // Plug-ins for debugging
+  use local-access-path;
   use remote-access-path;
 
   export console-environment;

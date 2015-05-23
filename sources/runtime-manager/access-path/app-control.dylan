@@ -71,10 +71,6 @@ end method;
 
 define open generic restart-application (conn :: <access-connection>) => ();
 
-define method restart-application (conn :: <local-access-connection>) => ()
-  nub-application-restart (conn.connection-process)
-end method;
-
 ///// KILL-APPLICATION
 
 define method kill-application 
@@ -88,11 +84,6 @@ end method;
 define open generic kill-app-on-connection (conn :: <access-connection>)
     => (success-code :: <integer>);
 
-define method kill-app-on-connection (conn :: <local-access-connection>)
-    => (success-code :: <integer>)
-  nub-kill-application (conn.connection-process);
-end method;
-
 define method register-exit-process-function
     (ap :: <access-path>, exit-process :: <remote-symbol>) => ()
   register-exit-process-function-on-connection (ap.connection, exit-process);
@@ -101,13 +92,6 @@ end method;
 define open generic register-exit-process-function-on-connection
     (conn :: <access-connection>, exit-process :: <remote-symbol>)
     => ();
-
-define method register-exit-process-function-on-connection
-    (conn :: <local-access-connection>, exit-process :: <remote-symbol>)
-    => ()
-  nub-register-exit-process-function
-    (conn.connection-process, exit-process.remote-symbol-address);
-end method;
 
 
 ///// CLOSE-APPLICATION
@@ -121,11 +105,6 @@ end method;
 
 define open generic close-application-on-connection
    (conn :: <access-connection>) => ();
-
-define method close-application-on-connection
-   (conn :: <local-access-connection>) => ()
-  nub-close-application(conn.connection-process)
-end method;
 
 ///// STOP
 //    This operation is only legal if the application is running. 
@@ -142,11 +121,6 @@ end method;
 
 define open generic stop-application 
     (conn :: <access-connection>) => ();
-
-define method stop-application 
-    (conn :: <local-access-connection>) => ()
-  nub-application-stop(conn.connection-process)
-end method;
 
 
 ///// CONTINUE
@@ -189,11 +163,6 @@ end method;
 define open generic continue-application 
     (conn :: <access-connection>) => ();
 
-define method continue-application 
-    (conn :: <local-access-connection>) => ()
-  nub-application-continue (conn.connection-process)
-end method;
-
 ///// CONTINUE-UNHANDLED
 
 //  Now takes a resume keyword, which is a set of previously
@@ -234,11 +203,6 @@ end method;
 define open generic unhandled-continue-application 
     (conn :: <access-connection>) => ();
 
-define method unhandled-continue-application 
-    (conn :: <local-access-connection>) => ()
-  nub-application-continue-unhandled (conn.connection-process)
-end method;
-
 
 ///// SUSPEND-THREAD
 
@@ -254,11 +218,6 @@ end method;
 
 define open generic suspend-application-thread 
     (conn :: <access-connection>, thread :: <remote-thread>);
-
-define method suspend-application-thread 
-    (conn :: <local-access-connection>, thread :: <remote-thread>)
-  nub-thread-stop(conn.connection-process, thread.nub-descriptor);
-end method;
 
 
 ///// RESUME-THREAD
@@ -289,11 +248,6 @@ end method;
 define open generic resume-application-thread 
     (conn :: <access-connection>, thread :: <remote-thread>);
 
-define method resume-application-thread 
-    (conn :: <local-access-connection>, thread :: <remote-thread>)
-  nub-thread-continue (conn.connection-process, thread.nub-descriptor);
-end method;
-
 
 // Managing permanently debugger-suspended threads in an application.
 // Query slots in the debugger NUB.
@@ -307,12 +261,6 @@ define open generic application-thread-permanently-suspended?
     (conn :: <access-connection>, thread :: <remote-thread>)
  => (suspended? :: <boolean>);
 
-define method application-thread-permanently-suspended?
-    (conn :: <local-access-connection>, thread :: <remote-thread>)
- => (suspended? :: <boolean>)
-  nub-thread-suspended?(thread.nub-descriptor);
-end method;
-
 define method thread-permanently-suspended?-setter
     (suspend? :: <boolean>, ap :: <access-path>, thread :: <remote-thread>)
  => (suspend? :: <boolean>)
@@ -323,19 +271,6 @@ define open generic application-thread-permanently-suspended?-setter
     (suspend? :: <boolean>, conn :: <access-connection>,
      thread :: <remote-thread>)
  => (suspend? :: <boolean>);
-
-define method application-thread-permanently-suspended?-setter
-    (suspend? :: <boolean>, conn :: <local-access-connection>,
-     thread :: <remote-thread>)
- => (suspend? :: <boolean>)
-  if (suspend?)
-    nub-thread-suspended(thread.nub-descriptor);
-  else
-    nub-thread-resumed(thread.nub-descriptor);
-  end;
-  suspend?
-end method;
-
 
 
 ///// STEP
@@ -352,11 +287,6 @@ end method;
 define open generic step-application 
     (conn :: <access-connection>, n :: <integer>) => ();
 
-define method step-application 
-    (conn :: <local-access-connection>, n :: <integer>) => ()
-  nub-application-step(conn.connection-process, n)
-end method;
-
 
 ///// STEP-OVER
 
@@ -372,11 +302,6 @@ end method;
 define open generic step-over-application 
     (conn :: <access-connection>, n :: <integer>) => ();
 
-define method step-over-application 
-    (conn :: <local-access-connection>, n :: <integer>) => ()
-  nub-application-step-over(conn.connection-process, n)
-end method;
-
 
 ///// STEP-OUT
 
@@ -391,11 +316,6 @@ end method;
 
 define open generic step-out-application
     (conn :: <access-connection>) => ();
-
-define method step-out-application
-    (conn :: <local-access-connection>) => ()
-  nub-application-step-out(conn.connection-process)
-end method;
 
 
 ///// APPLICATION-STATE-...?

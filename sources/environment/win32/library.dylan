@@ -50,7 +50,8 @@ define library win32-environment
   use tool-scepter;
   use tool-parser-generator;
 
-  // Plug-in for Remote Debugging
+  // Plug-ins for Debugging
+  use local-access-path;
   use remote-access-path;
 
   export win32-environment;
