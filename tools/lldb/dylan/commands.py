@@ -67,24 +67,19 @@ def dylan_break_gf(debugger, command, result, internal_dict):
   except:
     return
 
-  # We use a dummy_value here rather than SBTarget::CreateValueFromExpression
-  # because the SBTarget method isn't in shipping xcode yet.
   target = debugger.GetSelectedTarget()
-  dummy_value = target.FindFirstGlobalVariable("KPtrueVKi")
-
   for arg in args:
     try:
       (binding, module, library) = utils.parse_binding(arg)
       symbol_name = mangling.dylan_mangle_binding(binding, module, library)
-    except InvalidBindingException:
+    except utils.InvalidBindingIdentifier:
       print 'Invalid binding name: %s' % arg
       continue
-    gf = dummy_value.CreateValueFromExpression("gf", symbol_name)
-    if not gf.IsValid():
+    expression = '(dylan_value)&%s' % symbol_name
+    gf = target.CreateValueFromExpression(symbol_name, expression)
+    if gf.GetError().Fail():
       print "No generic function %s was found." % arg
       continue
-    if not gf.GetType().IsPointerType():
-      gf = gf.address_of
     methods = dylan_generic_function_methods(gf)
     ieps = [dylan_method_iep_function(m) for m in methods]
     # Create a breakpoint for each IEP rather than a single one for
@@ -92,3 +87,4 @@ def dylan_break_gf(debugger, command, result, internal_dict):
     # bindings for SBTarget::BreakpointCreateByNames().
     for iep in ieps:
       target.BreakpointCreateByName(iep.name)
+    print "Set breakpoints on %d entry points." % len(ieps)
