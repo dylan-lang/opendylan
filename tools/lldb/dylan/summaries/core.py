@@ -104,7 +104,7 @@ def dylan_symbol_summary(value, internal_dict):
 @summaries.register('<thread>', 'threads', 'dylan')
 @summaries.register('<synchronous-thread>', 'threads', 'dylan')
 def dylan_thread_summary(value, internal_dict):
-  thread_name = dylan_slot_element_by_name(value, '')
+  thread_name = dylan_slot_element_by_name(value, 'thread-name')
   if not dylan_is_false(thread_name):
     return dylan_string_data(thread_name)
   return None
