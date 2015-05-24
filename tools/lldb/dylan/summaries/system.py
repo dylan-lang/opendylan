@@ -19,11 +19,11 @@ def posix_file_locator_summary(value, internal_dict):
   base = dylan_slot_element_by_name(value, 'locator-base')
   extension = dylan_slot_element_by_name(value, 'locator-extension')
   summary = ''
-  if not dylan_is_boolean(directory):
+  if not dylan_is_false(directory):
     summary += summaries.summary(directory)
-  if not dylan_is_boolean(base):
+  if not dylan_is_false(base):
     summary += dylan_string_data(base)
-  if not dylan_is_boolean(extension):
+  if not dylan_is_false(extension):
     summary += '.'
     summary += dylan_string_data(extension)
   return summary

@@ -104,10 +104,8 @@ def dylan_implementation_class_instance_slot_descriptors(iclass):
   return dylan_slot_element(iclass, IMPLEMENTATION_CLASS_INSTANCE_SLOT_DESCRIPTORS)
 
 def dylan_implementation_class_repeated_slot_descriptor(iclass):
-  target = lldb.debugger.GetSelectedTarget()
-  false_value = target.FindFirstGlobalVariable('KPfalseVKi').AddressOf().GetValueAsUnsigned()
   repeated_slot = dylan_slot_element(iclass, IMPLEMENTATION_CLASS_REPEATED_SLOT_DESCRIPTOR)
-  if repeated_slot.GetValueAsUnsigned() == false_value:
+  if dylan_is_false(repeated_slot):
     return None
   return repeated_slot
 
@@ -122,6 +120,11 @@ def dylan_is_byte_string(value):
 
 def dylan_is_double_float(value):
   return check_value_class(value, '<double-float>', 'dylan', 'dylan')
+
+def dylan_is_false(value):
+  target = lldb.debugger.GetSelectedTarget()
+  false_value = target.FindFirstGlobalVariable('KPfalseVKi').AddressOf().GetValueAsUnsigned()
+  return value.GetValueAsUnsigned() == false_value
 
 def dylan_is_float(value):
   return dylan_is_double_float(value) or dylan_is_single_float(value)
