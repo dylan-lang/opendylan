@@ -41,6 +41,12 @@ def dylan_empty_list_summary(value, internal_dict):
 def dylan_generic_function_summary(value, internal_dict):
   return dylan_generic_function_name(value)
 
+@summaries.register('<hash-state>', 'dylan-extensions', 'dylan')
+def dylan_hash_state_summary(value, internal_dict):
+  w0 = dylan_slot_element_by_name(value, 'mps-w0').GetValueAsUnsigned()
+  w1 = dylan_slot_element_by_name(value, 'mps-w1').GetValueAsUnsigned()
+  return 'w0: %s w1: %s' % (format_machine_word_value(w0), format_machine_word_value(w1))
+
 @summaries.register('<instance-slot-descriptor>', 'dylan-extensions', 'dylan')
 @summaries.register('<repeated-slot-descriptor>', 'dylan-extensions', 'dylan')
 def dylan_slot_descriptor_summary(value, internal_dict):

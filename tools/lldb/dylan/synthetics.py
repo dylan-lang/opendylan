@@ -153,6 +153,7 @@ SYNTHETIC_CLASS_TABLE = {
   'KLbyte_stringGVKdW': SyntheticHideChildren,
   'KLdouble_floatGVKdW': SyntheticHideChildren,
   'KLempty_listGVKdW': SyntheticHideChildren,
+  'KLhash_stateGVKeW': SyntheticHideChildren,
   'KLsimple_object_vectorGVKdW': SyntheticSimpleObjectVector,
   'KLsingle_floatGVKdW': SyntheticHideChildren,
   'KLstretchy_object_vectorGVKeW': SyntheticStretchyObjectVector,
