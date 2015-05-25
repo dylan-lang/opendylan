@@ -87,7 +87,7 @@ def dylan_module_summary(value, internal_dict):
 
 @summaries.register('<simple-object-vector>', 'dylan', 'dylan')
 def dylan_simple_object_vector_summary(value, internal_dict):
-  return dylan_simple_vector_size(value)
+  return 'size: %s' % dylan_simple_vector_size(value)
 
 @summaries.register('<single-float>', 'dylan', 'dylan')
 def dylan_single_float_summary(value, internal_dict):
@@ -95,7 +95,7 @@ def dylan_single_float_summary(value, internal_dict):
 
 @summaries.register('<stretchy-object-vector>', 'dylan-extensions', 'dylan')
 def dylan_stretchy_object_vector_summary(value, internal_dict):
-  return dylan_stretchy_vector_size(value)
+  return 'size: %s' % dylan_stretchy_vector_size(value)
 
 @summaries.register('<symbol>', 'dylan', 'dylan')
 def dylan_symbol_summary(value, internal_dict):
