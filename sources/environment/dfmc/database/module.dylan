@@ -37,6 +37,7 @@ define module dfmc-environment-database
               project-build-location,
               project-executable-name,
               project-target-type,
+              project-platform-name,
               project-read-only?, project-read-only?-setter };
   use dfmc-project-compilation,
     import: { all-known-compilation-contexts,
