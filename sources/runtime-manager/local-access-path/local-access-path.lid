@@ -1,6 +1,7 @@
-library:     access-path
+library:     local-access-path
 files:       library
              module
+             enhanced-nub-interfacing
              nub-ffi-defs
              remote-value
              access-connections
@@ -18,8 +19,6 @@ files:       library
              dylan-utilities
              profile
              access-path-callbacks
-C-Source-Files: local-hostname.c
-Target-Type:  dll
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.

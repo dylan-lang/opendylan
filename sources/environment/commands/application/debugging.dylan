@@ -683,6 +683,13 @@ define sideways method initialize-application-client
             application-context.context-interactive-warnings := warnings
           end,
           message-type: <thread-interactive-warnings-message>);
+  tune-in($project-channel,
+          method (raf-message :: <run-application-failed-message>)
+            message(context,
+                    "Could not execute the file '%s'.",
+                    application.application-filename);
+          end,
+          message-type: <run-application-failed-message>);
 end method initialize-application-client;
 
 

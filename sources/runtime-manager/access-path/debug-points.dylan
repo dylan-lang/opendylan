@@ -81,12 +81,6 @@ define open generic set-breakpoint-in-application
     (conn :: <access-connection>, ra :: <remote-value>) 
  => (success :: <integer>);
 
-define method set-breakpoint-in-application
-    (conn :: <local-access-connection>, ra :: <remote-value>) 
-       => (success :: <integer>)
-  nub-set-breakpoint (conn.connection-process, ra);
-end method;
-
 
 ///// DISABLE-BREAKPOINT
 
@@ -105,12 +99,6 @@ define open generic clear-breakpoint-in-application
     (conn :: <access-connection>, ra :: <remote-value>) 
  => (success :: <integer>);
 
-define method clear-breakpoint-in-application
-    (conn :: <local-access-connection>, ra :: <remote-value>) 
-      => (success :: <integer>)
-  nub-clear-breakpoint (conn.connection-process, ra);
-end method;
-
 define method recover-breakpoint 
     (ap :: <access-path>, thread :: <remote-thread>)
       => ()
@@ -122,12 +110,6 @@ end method;
 define open generic recover-breakpoint-in-application
     (conn :: <access-connection>, thread :: <remote-thread>) 
  => ();
-
-define method recover-breakpoint-in-application
-    (conn :: <local-access-connection>, thread :: <remote-thread>) 
-       => ()
-  nub-recover-breakpoint (conn.connection-process, thread.nub-descriptor);
-end method;
 
 
 ///// QUERY-BREAKPOINT?
@@ -146,12 +128,6 @@ end method;
 define open generic query-breakpoint-in-application
     (conn :: <access-connection>, ra :: <remote-value>) 
  => (success :: <integer>);
-
-define method query-breakpoint-in-application
-    (conn :: <local-access-connection>, ra :: <remote-value>) 
-      => (success :: <integer>)
-  nub-query-breakpoint (conn.connection-process, ra);
-end method;
 
 
 ///// ENABLE-READ-WATCHPOINT
@@ -295,28 +271,6 @@ define open generic apply-thread-stepping-control-on-connection
      locations :: <sequence>, operation :: <integer>)
  => ();
 
-define method apply-thread-stepping-control-on-connection
-    (ap :: <access-path>, conn :: <local-access-connection>, thread :: <remote-thread>,
-     fp :: <remote-value>, calling-fp :: <remote-value>, count :: <integer>,
-     locations :: <sequence>, operation :: <integer>)
-  => ()
-  let ap-locations :: <REMOTE-ARG-ARRAY> = ap.stepping-locations-vector;
-
-  // Fill in a pre-allocated vector of addresses with those that the
-  // client has calculated.
-
-  for (i from 0 below count)
-    pointer-value(ap-locations, index: i)
-      := locations[i]
-  end for;
-
-  let error-code =
-    nub-set-stepping-control-on-thread
-      (conn.connection-process, thread.nub-descriptor, fp, calling-fp, count,
-       ap-locations, operation);
-  values();
-end method;
-
 
 ///// REMOVE-ALL-STEPPING-CONTROL-FOR-THREAD
 //    Removes all stepping traps that have been applied on a
@@ -336,11 +290,4 @@ end method;
 
 define open generic remove-all-stepping-control-for-thread-on-connection
     (conn :: <access-connection>, thread :: <remote-thread>) => ();
-
-define method remove-all-stepping-control-for-thread-on-connection
-    (conn :: <local-access-connection>, thread :: <remote-thread>) => ()
-  let error-code =
-    nub-clear-stepping-control-on-thread(conn.connection-process, thread.nub-descriptor);
-  values();
-end method;
 

@@ -79,20 +79,6 @@ define open generic calculate-step-into-on-connection
      use-function-register? :: <boolean>,
      success? :: <boolean>);
 
-define method calculate-step-into-on-connection
-    (conn :: <local-access-connection>, thread :: <remote-thread>)
-  => (address :: <remote-value>,
-      use-function-register? :: <boolean>,
-      success? :: <boolean>)
-  let (address :: <remote-value>,
-       use-freg :: <integer>,
-       ok :: <integer>) =
-    nub-dylan-calculate-step-into(conn.connection-process, thread.nub-descriptor);
-  values (address,
-          use-freg == 1,
-          ok == 1)
-end method;
-
 
 ///// DYLAN-THREAD-ENVIRONMENT-BLOCK-ADDRESS
 //    Gets the thread-local pointer to the dylan-level thread environment
@@ -107,19 +93,6 @@ end method;
 define open generic teb-on-connection
     (conn :: <access-connection>, thread :: <remote-thread>)
        => (teb :: <remote-value>);
-
-define method teb-on-connection
-    (conn :: <local-access-connection>, thread :: <remote-thread>)
-       => (teb :: <remote-value>)
-  let (teb-pointer :: <remote-value>, valid :: <integer>)
-    = nub-dylan-thread-environment-block-address
-        (conn.connection-process, thread.nub-descriptor);
-  if (valid == 1)
-    teb-pointer;
-  else
-    as-remote-value(0);
-  end if
-end method;
 
 
 ///// DYLAN-CURRENT-FUNCTION
@@ -137,12 +110,6 @@ define open generic current-function-on-connection
     (conn :: <access-connection>, thread :: <remote-thread>)
  => (remote-lambda :: <remote-value>);
 
-define method current-function-on-connection
-    (conn :: <local-access-connection>, thread :: <remote-thread>)
-       => (remote-lambda :: <remote-value>)
-  nub-dylan-current-function(conn.connection-process, thread.nub-descriptor);
-end method;
-
 
 ///// DYLAN-THREAD-MV-BUFFER-LIVE?
 //    Queries the necessary flags in the context of a dylan thread to
@@ -156,9 +123,3 @@ end method;
 define open generic mv-buffer-live-on-connection
     (conn :: <access-connection>, thread :: <remote-thread>)
   => (code :: <integer>);
-
-define method mv-buffer-live-on-connection
-    (conn :: <local-access-connection>, thread :: <remote-thread>)
-  => (code :: <integer>)
-  nub-dylan-thread-mv-buffer-live(conn.connection-process, thread.nub-descriptor)
-end method;

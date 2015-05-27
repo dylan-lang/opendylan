@@ -7,10 +7,6 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-
-define constant $empty-string = "";
-
-
 ///// <ACCESS-PATH-CREATION-ERROR>
 //    Signalled if the world turns to housemite-shit while trying to fire up
 //    a new access path.
@@ -77,13 +73,7 @@ define abstract class <access-path> (<object>)
   constant slot register-code-to-descriptor :: <table>
     = make(<table>);
 
-  constant slot spy-function-argument-vector :: <REMOTE-ARG-ARRAY>
-    = make(<REMOTE-ARG-ARRAY>, element-count: $max-spy-function-arguments);
-
   slot spy-function-argument-remote-vector = #f;
-
-  constant slot stepping-locations-vector :: <REMOTE-ARG-ARRAY>
-    = make(<REMOTE-ARG-ARRAY>, element-count: $max-stepping-locations);
 
   slot stepping-locations-remote-vector = #f;
 
@@ -101,7 +91,7 @@ define class <application-access-path> (<access-path>)
 
   constant slot access-path-arguments :: <string>,
     init-keyword: arguments:,
-    init-value: $empty-string;
+    init-value: "";
 
   constant slot access-path-own-shell? :: <boolean>,
     init-value: #t,
@@ -192,15 +182,6 @@ end method;
 define open generic make-access-connection
     (ap :: <access-path>, conn :: <debugger-connection>,
      #key) => (conn :: <access-connection>);
-
-define method make-access-connection
-    (ap :: <access-path>, conn :: <local-debugger-connection>,
-     #key description = ap.access-path-application)
- => (conn :: <local-access-connection>)
-  make(<local-access-connection>,
-       debugger-connection: conn,
-       description: description)
-end method;
 
 
 ///// INITIALIZE
@@ -321,16 +302,6 @@ define function debugger-message
 
 end function;
 
-define c-callable-wrapper debugger-message-wrapper
-    of debugger-message
-  parameter message           :: <C-string>;
-  parameter arg1              :: <TARGET-ADDRESS>;
-  parameter arg2              :: <TARGET-ADDRESS>;
-  c-name: "debugger_message"
-end;
-
-ignore(debugger-message-wrapper);
-
 define function nub-debug-message
     (string :: <string>, #rest args) => ()
 
@@ -340,30 +311,9 @@ define function nub-debug-message
 
 end function;
 
-define c-callable-wrapper nub-debug-message-wrapper
-    of nub-debug-message
-  parameter message           :: <C-string>;
-  parameter arg1              :: <TARGET-ADDRESS>;
-  parameter arg2              :: <TARGET-ADDRESS>;
-  c-name: "nub_debug_message"
-end;
-
-ignore(nub-debug-message-wrapper);
-
 define function debugger-error
     (string :: <string>, #rest args) => ()
 
   apply(error, as(<byte-string>, string), args)
 
 end function;
-
-define c-callable-wrapper debugger-error-wrapper
-    of debugger-error
-  parameter message           :: <C-string>;
-  parameter arg1              :: <TARGET-ADDRESS>;
-  parameter arg2              :: <TARGET-ADDRESS>;
-  c-name: "debugger_error"
-end;
-
-ignore(debugger-error-wrapper);
-

@@ -87,11 +87,6 @@ end method;
 define open generic inform-profiling-started-on-connection
     (conn :: <access-connection>) => ();
 
-define method inform-profiling-started-on-connection
-    (conn :: <local-access-connection>) => ()
-  nub-inform-profiling-started(conn.connection-process);
-end method;
-
 
 ///// INFORM-PROFILING-STOPPED (Added by phoward, 1-APR-1997)
 //    Calls a function in the debugger nub, allowing it to do any
@@ -103,11 +98,6 @@ end method;
 
 define open generic inform-profiling-stopped-on-connection
     (conn :: <access-connection>) => ();
-
-define method inform-profiling-stopped-on-connection
-    (conn :: <local-access-connection>) => ()
-  nub-inform-profiling-stopped(conn.connection-process);
-end method;
 
 
 ///// GET-PROCESS-WALL-CLOCK-TIME
@@ -121,9 +111,3 @@ end method;
 define open generic get-process-wc-time-on-connection
   (conn :: <access-connection>)
      => (timer :: <integer>);
-
-define method get-process-wc-time-on-connection
-  (conn :: <local-access-connection>)
-     => (timer :: <integer>)
-  nub-get-process-wall-clock-time(conn.connection-process);
-end method;

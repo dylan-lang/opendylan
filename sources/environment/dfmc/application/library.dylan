@@ -66,6 +66,8 @@ define module dfmc-application
               project-read-only? => env/project-read-only?,
               project-compiler-back-end => env/project-compiler-back-end,
               project-compiler-back-end-setter => env/project-compiler-back-end-setter,
+              project-executable-name => env/project-executable-name,
+              project-executable-name-setter => env/project-executable-name-setter,
               session-property => env/session-property,
               session-property-setter => env/session-property-setter };
 

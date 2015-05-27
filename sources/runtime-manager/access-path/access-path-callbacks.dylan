@@ -48,16 +48,6 @@ end;
 // This registers a thread created as part of a spy call in
 // the client
 
-define c-callable-wrapper create-thread-stop-reason-handler-wrapper
-    of create-thread-stop-reason-handler
-  parameter process          :: <NUBPROCESS>;
-  parameter thread           :: <NUBTHREAD>;
-  parameter priority         :: <NUBINT>;
-  c-name: "create_thread_stop_reason_handler";
-end;
-
-ignore(create-thread-stop-reason-handler-wrapper);
-
 define function create-thread-stop-reason-handler
     (process :: <NUBPROCESS>, thread :: <NUBTHREAD>,
      priority :: <integer>) => ()

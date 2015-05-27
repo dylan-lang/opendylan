@@ -56,44 +56,6 @@ define open generic remote-call-on-connection
      #rest arguments)
        => (ra :: <remote-value>, cookie :: <object>);
 
-define method remote-call-on-connection
-    (conn :: <local-access-connection>, thr :: <remote-thread>,
-     function :: <remote-value>, 
-     thread-was-suspended? :: <boolean>,
-     #rest arguments)
-       => (ra :: <remote-value>, cookie :: <object>)
-
-  // The arguments need to be converted from the #rest sequence
-  // into a primitive vector of <remote-value> objects.
-
-  let arg-count :: <integer>
-    = size(arguments);
-  let arg-vector
-    = make (<REMOTE-ARG-ARRAY>,
-            element-count: arg-count);
-  for (i from 0 below arg-count)
-    pointer-value(arg-vector, index: i) := arguments[i];
-  end for;
-
-  // We have everything we need to make the call. The return
-  // value is a thread context cookie. The nub function is called
-  // as a side-effect.
-
-  let (ret-addr, context-cookie)
-    = nub-setup-function-call(conn.connection-process, thr.nub-descriptor,
-                              function, arg-count, arg-vector);
-
-  // Since the debugger nub will now have copied the arguments onto the
-  // runtime stack, we can destroy the allocated vector.
-
-  destroy(arg-vector);
-
-  values (ret-addr,
-          make (<THREAD-CONTEXT>,
-                suspended?: thread-was-suspended?,
-                nub-descriptor: context-cookie));
-end method;
-
 
 ///// REMOTE-CALL-RESULT
 
@@ -110,12 +72,6 @@ end method;
 define open generic remote-call-result-on-connection
     (conn :: <access-connection>, thr :: <remote-thread>)
       => (result :: <remote-value>);
-
-define method remote-call-result-on-connection
-    (conn :: <local-access-connection>, thr :: <remote-thread>)
-      => (result :: <remote-value>)
-  nub-get-function-result(conn.connection-process, thr.nub-descriptor);
-end method;
 
 
 ///// REMOTE-RESTORE-CONTEXT
@@ -139,14 +95,6 @@ define open generic remote-restore-context-on-connection
     (conn :: <access-connection>, thr :: <remote-thread>, 
      ctx :: <THREAD-CONTEXT>)
  => ();
-
-define method remote-restore-context-on-connection
-    (conn :: <local-access-connection>, thr :: <remote-thread>, 
-     ctx :: <THREAD-CONTEXT>)
-      => ()
-  nub-restore-context(conn.connection-process, thr.nub-descriptor,
-                      ctx.nub-descriptor);
-end method;
 
 
 ///// REMOTE-CALL-SPY
@@ -209,31 +157,3 @@ define open generic remote-call-spy-on-connection
     (ap :: <access-path>, conn :: <access-connection>, thr :: <remote-thread>,
      function :: <remote-value>, #rest arguments)
  => (result :: <remote-value>, errcode :: <integer>);
-
-define method remote-call-spy-on-connection
-    (ap :: <access-path>, conn :: <local-access-connection>, thr :: <remote-thread>,
-     function :: <remote-value>, #rest arguments)
-       => (result :: <remote-value>, errcode :: <integer>)
-
-  let arg-vector :: <REMOTE-ARG-ARRAY> = ap.spy-function-argument-vector;
-
-  // Construct the vector of arguments
-
-  let arg-count :: <integer>
-    = size(arguments);
-
-  if (arg-count > $max-spy-function-arguments)
-    error("Serious internal debugger error: Exceeded maximum arg count "
-          "in a spy call.")
-  end if;
-
-  for (i from 0 below arg-count)
-    pointer-value(arg-vector, index: i) := arguments[i];
-  end for;
-
-  // And make the call, returning the results from the nub.
-
-  nub-remote-call-spy(conn.connection-process, thr.nub-descriptor,
-                      function, arg-count, arg-vector);
-end method;
-

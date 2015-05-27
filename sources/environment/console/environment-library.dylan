@@ -24,5 +24,8 @@ define library dylan-environment
   // Back-ends
   use dfmc-back-end-implementations;
 
+  // Plug-ins for debugging
+  use local-access-path;
+
   export console-environment;
 end library dylan-environment;

@@ -40,21 +40,3 @@ define open generic interpret-instruction-on-connection
  => (flow,
      destination :: false-or(<remote-value>),
      length :: false-or(<integer>));
-
-define method interpret-instruction-on-connection
-    (conn :: <local-access-connection>, thread :: <remote-thread>)
-       => (flow,
-           destination :: false-or(<remote-value>),
-           length :: false-or(<integer>))
-  let (flow-code :: <integer>,
-       target :: <remote-value>,
-       size-in-bytes :: <integer>) =
-    nub-interpret-instruction-at-current-location
-       (conn.connection-process, thread.nub-descriptor);
-
-  if (flow-code == $flowIllegal)
-    values(flow-code, #f, #f)
-  else
-    values(flow-code, target, size-in-bytes)
-  end if
-end method;

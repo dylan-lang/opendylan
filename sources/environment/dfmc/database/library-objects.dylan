@@ -72,13 +72,27 @@ define method project-executable-pathname
         end
           | lookup-named-project(merged-name)
       end;
+  let platform = dll-project.project-platform-name;
   let base = dll-project.project-executable-name;
-  let extension
+  let filename
     = select (type | dll-project.project-target-type)
-        #"dll"        => "dll";
-        #"executable" => "exe";
+        #"dll" =>
+          select (platform)
+            #"x86-win32" =>
+              make(<file-locator>, base: base, extension: "dll");
+            #"x86-darwin", #"x86_64-darwin" =>
+              make(<file-locator>, base: concatenate("lib", base), extension: "dylib");
+            otherwise =>
+              make(<file-locator>, base: concatenate("lib", base), extension: "so");
+          end select;
+        #"executable" =>
+          select (platform)
+            #"x86-win32" =>
+              make(<file-locator>, base: base, extension: "exe");
+            otherwise =>
+              make(<file-locator>, base: base);
+          end select;
       end;
-  let filename = make(<file-locator>, base: base, extension: extension);
   if (full-path?)
     let directory
       = if (project.project-read-only?)

@@ -1,5 +1,5 @@
 Origin:   OMG-IDL
-Idl-File: ..\remote-nub.idl
+Idl-File: ../remote-nub.idl
 Stubs:    yes
 Skeletons: yes
 

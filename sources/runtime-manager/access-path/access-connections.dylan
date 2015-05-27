@@ -178,9 +178,6 @@ define open abstract class <access-connection> (<object>)
     init-keyword: process:;
 end class;
 
-define class <local-access-connection> (<access-connection>)
-end class;
-
 
 ///// START-APPLICATION-ON-CONNECTION
 //    This function is called to initialize an instance of 
@@ -198,59 +195,6 @@ define open generic start-application-on-connection
    library-search-paths :: <sequence>,
    #key) => ();
 
-define method start-application-on-connection
-  (conn :: <local-access-connection>,
-   command :: <string>, 
-   arguments :: <string>,
-   symbol-file-directories :: <sequence>,
-   working-directory :: false-or(<string>),
-   library-search-paths :: <sequence>,
-   #key own-shell? = #t) => ()
-
-  let create-shell =
-    if (own-shell?)
-      1
-    else
-      0
-    end if;
-
-  let symfile-c-strings = map(curry(as, <C-string>), symbol-file-directories);
-  let symfile-dir-array = make(<C-string*>, 
-                               element-count: symfile-c-strings.size);
-  for (i :: <integer> from 0 below symfile-c-strings.size)
-    symfile-dir-array[i] := symfile-c-strings[i];
-  end for;
-
-  let lsp-c-strings = map(curry(as, <C-string>), library-search-paths);
-  let lsp-dir-array = make(<C-string*>, 
-                           element-count: lsp-c-strings.size);
-  for (i :: <integer> from 0 below lsp-c-strings.size)
-    lsp-dir-array[i] := lsp-c-strings[i];
-  end for;
-
-  let (process, success)
-    = open-local-tether(command, 
-                        arguments, 
-                        symbol-file-directories.size,
-                        symfile-dir-array,
-                        library-search-paths.size,
-                        lsp-dir-array,
-                        working-directory | "",
-                        create-shell);
-
-  destroy(symfile-dir-array);
-  do(destroy, symfile-c-strings);
-  destroy(lsp-dir-array);
-  do(destroy, lsp-c-strings);
-
-  if (success == 0)
-    signal(make(<access-path-creation-error>));
-  else
-    conn.connection-process := process;
-    add!(conn.access-debugger-connection.connection-open-tethers, conn);
-  end if;
-end method;
-
 
 ///// ATTACH-APPLICATION-ON-CONNECTION
 //    This function is called to initialize an instance of 
@@ -264,36 +208,6 @@ define open generic attach-application-on-connection
    process :: <remote-process>,
    symbol-file-directories :: <sequence>,
    system-info :: <string>) => ();
-
-define method attach-application-on-connection
-  (conn :: <local-access-connection>,
-   process :: <remote-process>,
-   symbol-file-directories :: <sequence>,
-   system-info :: <string>) => ()
-
-  let symfile-c-strings = map(curry(as, <C-string>), symbol-file-directories);
-  let symfile-dir-array = make(<C-string*>, 
-                               element-count: symfile-c-strings.size);
-  for (i :: <integer> from 0 below symfile-c-strings.size)
-    symfile-dir-array[i] := symfile-c-strings[i];
-  end for;
-
-  let (process, success)
-    = attach-local-tether(process.nub-descriptor, 
-                          symbol-file-directories.size,
-                          symfile-dir-array,
-                          system-info);
-
-  destroy(symfile-dir-array);
-  do(destroy, symfile-c-strings);
-
-  if (success == 0)
-    signal(make(<access-path-creation-error>));
-  else
-    conn.connection-process := process;
-    add!(conn.access-debugger-connection.connection-open-tethers, conn);
-  end if;
-end method;
 
 
 ///// CLOSE-REMOTE-DEBUGGER-CONNECTION

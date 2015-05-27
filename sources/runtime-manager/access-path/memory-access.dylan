@@ -234,53 +234,6 @@ end method;
 define open generic register-vector-on-connection
     (conn :: <access-connection>) => (vec :: <vector>);
 
-define method register-vector-on-connection
-    (conn :: <local-access-connection>) => (vec :: <vector>)
-
-  local method nub-register-descriptor
-          (cat :: <symbol>, r :: <integer>)
-            => (descriptor :: <unassigned-remote-register>)
-          let name-length :: <integer> =
-          nub-get-register-name-length (conn.connection-process, r);
-          let enum-code :: <integer> =
-            nub-get-register-enumeration-code(conn.connection-process, r);
-          let register-name = make (<byte-string>, size: name-length);
-          nub-get-register-name 
-            (conn.connection-process, r, name-length, register-name);
-          let reg = make (<unassigned-remote-register>,
-                          descriptor: r,
-                          name: register-name,
-                          code: enum-code,
-                          category: cat);
-
-          reg;
-        end method;
-
-  let (first-general, last-general)
-    = nub-general-registers (conn.connection-process);
-
-  let (first-special, last-special)
-    = nub-special-registers (conn.connection-process);
-
-  let (first-register, last-register)
-    = nub-all-registers (conn.connection-process);
-
-  let register-vector =
-    make (<vector>, size: (last-register - first-register + 1));
-
-  for (i from first-general to last-general)
-    register-vector[i - 1] := 
-      nub-register-descriptor (#"general", i);
-  end for;
-
-  for (i from first-special to last-special)
-    register-vector[i - 1] := 
-      nub-register-descriptor (#"special", i);
-  end for;
-
-  register-vector;
-end method;
-
 
 ///// REGISTER-TO-ENUMERATION-CODE
 
@@ -388,45 +341,9 @@ define open generic read-value-from-register
      #key)
       => (val :: <remote-value>);
 
-define method read-value-from-register 
-    (conn :: <local-access-connection>, register :: <active-remote-register>,
-     #key frame-index = #f)
-      => (val :: <remote-value>)
-
-  let (value, error) = 
-    if (frame-index)
-      nub-read-value-from-process-register-in-stack-frame
-         (conn.connection-process, register.register-thread.nub-descriptor,
-          register.nub-descriptor, frame-index);
-    else
-      nub-read-value-from-process-register
-	(conn.connection-process,
-	 register.register-thread.nub-descriptor,
-	 register.nub-descriptor);
-    end if;
-
-  if (error ~= $access-ok)
-    signal (make (<remote-access-violation-error>));
-  end if;
-  value;
-end method;
-
 define open generic read-value-from-memory 
     (conn :: <access-connection>, location :: <remote-value>)
       => (val :: <remote-value>);
-
-define method read-value-from-memory 
-    (conn :: <local-access-connection>, location :: <remote-value>)
-      => (val :: <remote-value>)
-
-  let (value, error) =
-    nub-read-value-from-process-memory (conn.connection-process, location);
-
-  if (error ~= $access-ok)
-    signal (make (<remote-access-violation-error>));
-  end if;
-  value;
-end method;
 
 define method read-value 
     (ap :: <access-path>, address :: <active-remote-register>,
@@ -456,37 +373,9 @@ define open generic write-value-to-register
      register :: <active-remote-register>,
      value :: <remote-value>) => ();
 
-define method write-value-to-register 
-    (conn :: <local-access-connection>,
-     register :: <active-remote-register>,
-     value :: <remote-value>) => ()
-
-  let err = 
-    nub-write-value-to-process-register
-    (conn.connection-process,
-     register.register-thread.nub-descriptor,
-     register.nub-descriptor,
-     value);
-  if (err ~= $access-ok)
-    signal (make (<remote-access-violation-error>));
-  end if;
-end method;
-
 define open generic write-value-to-memory 
     (conn :: <access-connection>, address :: <remote-value>,
      value :: <remote-value>) => ();
-
-define method write-value-to-memory 
-    (conn :: <local-access-connection>, address :: <remote-value>,
-     value :: <remote-value>) => ()
-
-  let err =
-    nub-write-value-to-process-memory (conn.connection-process, address, value);
-
-  if (err ~= $access-ok)
-     signal (make (<remote-access-violation-error>));
-  end if
-end method;
 
 define method write-value 
     (ap :: <access-path>, address :: <active-remote-register>,
@@ -510,33 +399,9 @@ define open generic read-single-float-from-register
      register :: <active-remote-register>)
        => (val :: <single-float>);
 
-define method read-single-float-from-register 
-    (conn :: <local-access-connection>,
-     register :: <active-remote-register>)
-       => (val :: <single-float>)
-  let (value, error) = 
-    nub-read-single-float-from-process-register
-      (conn.connection-process, register.register-thread.nub-descriptor, register.nub-descriptor);
-  if (error ~= $access-ok)
-    signal (make (<remote-access-violation-error>));
-  end if;
-  value;
-end method;
-
 define open generic read-single-float-from-memory 
     (conn :: <access-connection>, location :: <remote-value>)
        => (val :: <single-float>);
-
-define method read-single-float-from-memory 
-    (conn :: <local-access-connection>, location :: <remote-value>)
-       => (val :: <single-float>)
-  let (value, error) =
-    nub-read-single-float-from-process-memory (conn.connection-process, location);
-  if (error ~= $access-ok)
-    signal (make (<remote-access-violation-error>));
-  end if;
-  value;
-end method;
 
 define method read-single-float 
     (ap :: <access-path>, address :: <active-remote-register>)
@@ -559,35 +424,10 @@ define open generic write-single-float-to-register
      value :: <single-float>) 
  => ();
 
-define method write-single-float-to-register 
-    (conn :: <local-access-connection>, 
-     register :: <active-remote-register>,
-     value :: <single-float>) 
-       => ()
-  let error = 
-    nub-write-single-float-to-process-register 
-      (conn.connection-process, register.register-thread.nub-descriptor, register.nub-descriptor,
-       value);
-  if (error ~= $access-ok)
-    signal (make (<remote-access-violation-error>));
-  end if
-end method;
-
 define open generic write-single-float-to-memory 
     (conn :: <access-connection>, address :: <remote-value>,
      value :: <single-float>) 
  => ();
-
-define method write-single-float-to-memory 
-    (conn :: <local-access-connection>, address :: <remote-value>,
-     value :: <single-float>) 
-       => ()
-  let error =
-    nub-write-single-float-to-process-memory (conn.connection-process, address, value);
-  if (error ~= $access-ok)
-    signal (make (<remote-access-violation-error>));
-  end if
-end method;
 
 define method write-single-float 
     (ap :: <access-path>, address :: <active-remote-register>,
@@ -612,33 +452,9 @@ define open generic read-double-float-from-register
      register :: <active-remote-register>)
        => (val :: <double-float>);
 
-define method read-double-float-from-register 
-    (conn :: <local-access-connection>,
-     register :: <active-remote-register>)
-       => (val :: <double-float>)
-  let (value, error) = 
-    nub-read-double-float-from-process-register 
-      (conn.connection-process, register.register-thread.nub-descriptor, register.nub-descriptor);
-  if (error ~= $access-ok)
-    signal (make (<remote-access-violation-error>));
-  end if;
-  value;
-end method;
-
 define open generic read-double-float-from-memory 
     (conn :: <access-connection>, location :: <remote-value>)
        => (val :: <double-float>);
-
-define method read-double-float-from-memory 
-    (conn :: <local-access-connection>, location :: <remote-value>)
-       => (val :: <double-float>)
-  let (value, error) =
-    nub-read-double-float-from-process-memory (conn.connection-process, location);
-  if (error ~= $access-ok)
-    signal (make (<remote-access-violation-error>));
-  end if;
-  value;
-end method;
 
 define method read-double-float 
     (ap :: <access-path>, address :: <active-remote-register>)
@@ -661,35 +477,10 @@ define open generic write-double-float-to-register
      value :: <double-float>) 
  => ();
 
-define method write-double-float-to-register 
-    (conn :: <local-access-connection>, 
-     register :: <active-remote-register>,
-     value :: <double-float>) 
-       => ()
-  let error = 
-    nub-write-double-float-to-process-register 
-      (conn.connection-process, register.register-thread.nub-descriptor, register.nub-descriptor,
-       value);
-  if (error ~= $access-ok)
-    signal (make (<remote-access-violation-error>));
-  end if
-end method;
-
 define open generic write-double-float-to-memory 
     (conn :: <access-connection>, address :: <remote-value>,
      value :: <double-float>) 
        => ();
-
-define method write-double-float-to-memory 
-    (conn :: <local-access-connection>, address :: <remote-value>,
-     value :: <double-float>) 
-       => ()
-  let error =
-    nub-write-double-float-to-process-memory (conn.connection-process, address, value);
-  if (error ~= $access-ok)
-    signal (make (<remote-access-violation-error>));
-  end if
-end method;
 
 define method write-double-float 
     (ap :: <access-path>, address :: <active-remote-register>,
@@ -714,23 +505,6 @@ define open generic read-byte-string-from-memory
     length :: <integer>)
  => (val :: <byte-string>);
 
-define method read-byte-string-from-memory 
-   (conn :: <local-access-connection>, address :: <remote-value>,
-    length :: <integer>)
-      => (val :: <byte-string>)
-
-  let string-destination = make (<byte-string>, size: length);
-
-  let error =
-    nub-read-byte-string-from-process-memory (conn.connection-process, address, length,
-                                      string-destination);
-
-  if (error ~= $access-ok)
-    signal (make (<remote-access-violation-error>));
-  end if;
-  string-destination
-end method;
-
 define method read-byte-string 
     (ap :: <access-path>, address :: <remote-value>, length :: <integer>)
       => (val :: <byte-string>)
@@ -743,17 +517,6 @@ end method;
 define open generic write-byte-string-to-memory
     (conn :: <access-connection>, address :: <remote-value>,
      string-source :: <byte-string>, ending-index :: <integer>) => ();
-
-define method write-byte-string-to-memory
-    (conn :: <local-access-connection>, address :: <remote-value>,
-     string-source :: <byte-string>, ending-index :: <integer>) => ()
-  let error =
-    nub-write-byte-string-to-process-memory
-      (conn.connection-process, address, ending-index + 1, string-source);
-  if (error ~== $access-ok)
-    signal(make(<remote-access-violation-error>));
-  end if;
-end method;
 
 define method write-byte-string 
     (ap :: <access-path>, address :: <remote-value>, value :: <byte-string>,
@@ -784,14 +547,6 @@ define open generic calculate-stack-address-on-connection
      offset :: <integer>)
        => (addr :: <remote-value>);
 
-define method calculate-stack-address-on-connection
-    (conn :: <local-access-connection>, thread :: <remote-thread>, 
-     offset :: <integer>)
-       => (addr :: <remote-value>)
-  nub-calculate-stack-address
-    (conn.connection-process, thread.nub-descriptor, offset);
-end method;
-
 
 ///// REMOTE-VIRTUAL-PAGE-SIZE
 //    Returns the size of a memory page on the remote machine. This is
@@ -804,11 +559,6 @@ end method;
 
 define open generic virtual-page-size-on-connection
     (conn :: <access-connection>) => (page-size :: <integer>);
-
-define method virtual-page-size-on-connection
-    (conn :: <local-access-connection>) => (page-size :: <integer>)
-  nub-virtual-page-size(conn.connection-process)
-end method;
 
 
 ///// REMOTE-VALUE-BYTE-SIZE
@@ -829,11 +579,6 @@ end method;
 define open generic remote-value-byte-size-on-connection
     (conn :: <access-connection>) => (value-size :: <integer>);
 
-define method remote-value-byte-size-on-connection
-    (conn :: <local-access-connection>) => (value-size :: <integer>)
-  nub-remote-value-byte-size(conn.connection-process)
-end method;
-
 
 ///// PAGE-READ-PERMISSION?
 //    Queries whether the given address lies within a read-protected page.
@@ -847,17 +592,6 @@ define open generic page-read-permission-on-connection?
     (conn :: <access-connection>, address :: <remote-value>)
  => (answer :: <boolean>);
 
-define method page-read-permission-on-connection?
-    (conn :: <local-access-connection>, address :: <remote-value>)
-       => (answer :: <boolean>)
-  let nub-answer = nub-page-read-permission(conn.connection-process, address);
-  if (nub-answer == 0)
-    #f
-  else
-    #t
-  end if
-end method;
-
 
 ///// PAGE-WRITE-PERMISSION?
 //    Queries whether the given address lies within a write-protected page.
@@ -870,17 +604,6 @@ end method;
 define open generic page-write-permission-on-connection?
     (conn :: <access-connection>, address :: <remote-value>)
  => (answer :: <boolean>);
-
-define method page-write-permission-on-connection?
-    (conn :: <local-access-connection>, address :: <remote-value>)
-       => (answer :: <boolean>)
-  let nub-answer = nub-page-write-permission(conn.connection-process, address);
-  if (nub-answer == 0)
-    #f
-  else
-    #t
-  end if
-end method;
 
 
 ///// PAGE-EXECUTE-PERMISSION?
@@ -917,14 +640,6 @@ define open generic page-relative-address-on-connection
     (conn :: <access-connection>, addr :: <remote-value>)
        => (id :: <integer>, offset :: <integer>);
 
-define method page-relative-address-on-connection
-    (conn :: <local-access-connection>, addr :: <remote-value>)
-       => (id :: <integer>, offset :: <integer>)
-  let (pagenum, offset) =
-     nub-page-relative-address(conn.connection-process, addr);
-  values(pagenum, offset);
-end method;
-
 
 ///// PERFORM-COFF-RELOCATION
 //    Alters the contents of an address 'ra' according to COFF-file relocation
@@ -944,21 +659,3 @@ define open generic perform-coff-relocation-on-connection
      #key)
  => (worked? :: <boolean>);
 
-define method perform-coff-relocation-on-connection
-    (conn :: <local-access-connection>, 
-     ra :: <remote-value>, da :: <remote-value>,
-     #key relative? = #f)
-       => (worked? :: <boolean>)
-  let success =
-    if (relative?)
-      nub-perform-relative-relocation(conn.connection-process, ra, da)
-    else
-      nub-perform-absolute-relocation(conn.connection-process, ra, da)
-    end if;
-  // Turn the integer success code into a boolean.
-  if (success == 1)
-    #t
-  else
-    #f
-  end if;
-end method;
