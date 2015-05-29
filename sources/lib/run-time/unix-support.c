@@ -61,18 +61,39 @@ int mps_lib_fputs_(const char *s, int end, FILE *stream)
 }
 
 // this is our stack walker, used in SIGTRAP
-#ifdef OPEN_DYLAN_ARCH_X86
-static long getebp () {
+#if defined(OPEN_DYLAN_PLATFORM_DARWIN)
+
+#include <unwind.h>
+
+static _Unwind_Reason_Code frame_func(struct _Unwind_Context *context, void *arg)
+{
+  void *ip = (void*)_Unwind_GetIP(context);
+  Dl_info info;
+  dladdr(ip, &info);
+  printf("  %p %s\n", ip, info.dli_sname);
+  return(_URC_NO_REASON);
+}
+
+void walkstack(void)
+{
+  _Unwind_Backtrace(frame_func, NULL);
+}
+
+#elif defined(OPEN_DYLAN_ARCH_X86) && \
+      (defined(OPEN_DYLAN_PLATFORM_LINUX) || \
+       defined(OPEN_DYLAN_PLATFORM_FREEBSD))
+
+static long getebp (void)
+{
     long ebp;
     asm("mov (%%ebp), %0"
         :"=r"(ebp));
     return ebp;
     return 0;
 }
-#endif
 
-void walkstack() {
-#ifdef OPEN_DYLAN_ARCH_X86
+void walkstack(void)
+{
   long ebp = getebp();
   long eip;
   int rc;
@@ -95,5 +116,12 @@ void walkstack() {
     }
     ebp = *((long*)ebp);
   }
-#endif
 }
+
+#else
+
+void walkstack(void)
+{
+}
+
+#endif
