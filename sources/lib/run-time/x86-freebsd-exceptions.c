@@ -10,7 +10,7 @@ extern void dylan_float_invalid_handler();
 extern void dylan_float_overflow_handler();
 extern void dylan_float_underflow_handler();
 
-extern void walkstack();
+extern void walkstack(void);
 
 /* FreeBSD exception handling:  Setup a signal handler for SIGFPE (floating point exceptions).
    We rely on the fact that FreeBSD passes a second argument containing the error context. */

@@ -21,7 +21,7 @@ extern void dylan_float_invalid_handler();
 extern void dylan_float_overflow_handler();
 extern void dylan_float_underflow_handler();
 
-extern void walkstack();
+extern void walkstack(void);
 
 /* Linux exception handling: Setup signal handlers for SIGFPE
  * (floating point exceptions), SIGSEGV (segmentation violation), and

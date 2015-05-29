@@ -108,6 +108,7 @@ HARP_RUNTIME_OBJS = \
 		  $(OBJDIR_HARP)/break.o \
 		  $(OBJDIR_HARP)/collector.o \
 		  $(OBJDIR_HARP)/debug-print.o \
+		  $(OBJDIR_HARP)/stack-walker.o \
 		  $(OBJDIR_HARP)/trace.o \
 		  $(OBJDIR_HARP)/unix-spy-interfaces.o \
 		  $(OBJDIR_HARP)/unix-support.o \
@@ -131,6 +132,7 @@ LLVM_RUNTIME_OBJS = \
 		  $(OBJDIR_LLVM)/$(OPEN_DYLAN_TARGET_PLATFORM)-runtime.o \
 		  $(OBJDIR_LLVM)/break.o \
 		  $(OBJDIR_LLVM)/collector.o \
+		  $(OBJDIR_LLVM)/stack-walker.o \
 		  $(OBJDIR_LLVM)/unix-spy-interfaces.o \
 		  $(OBJDIR_LLVM)/llvm-runtime-init.o \
 		  $(OBJDIR_LLVM)/llvm-nlx.o \
@@ -150,6 +152,7 @@ endif
 C_RUNTIME_OBJS	= $(OBJDIR_C)/break.o \
 		  $(OBJDIR_C)/collector.o \
 		  $(OBJDIR_C)/debug-print.o \
+		  $(OBJDIR_C)/stack-walker.o \
 		  $(OBJDIR_C)/trace.o \
 		  $(OBJDIR_C)/unix-spy-interfaces.o \
 		  $(OBJDIR_C)/unix-support.o \
