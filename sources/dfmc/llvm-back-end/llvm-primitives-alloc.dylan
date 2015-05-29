@@ -441,8 +441,6 @@ define side-effect-free stateful indefinite-extent &primitive-descriptor primiti
   let total-size = ins--add(be, repeated-byte-size, repeated-size);
   let total-size-rounded = op--round-up-to-word(be, total-size);
 
-  let byte-fill = op--untag-character(be, fill-value);
-
   let raw-number-slots
     = instance?(number-slots, <llvm-integer-constant>)
     & number-slots.llvm-integer-constant-integer;
@@ -451,13 +449,13 @@ define side-effect-free stateful indefinite-extent &primitive-descriptor primiti
       // Allocate a byte-repeated leaf object with no fixed slots
       call-primitive(be, primitive-alloc-leaf-rbf-descriptor,
                      total-size-rounded, class-wrapper,
-                     repeated-size, repeated-size-offset, byte-fill);
+                     repeated-size, repeated-size-offset, repeated-fill-value);
     otherwise =>
       // Allocate a byte-repeated leaf object with fixed slots
       call-primitive(be, primitive-alloc-leaf-s-rbf-descriptor,
                      total-size-rounded, class-wrapper,
                      number-slots, fill-value,
-                     repeated-size, repeated-size-offset, byte-fill);
+                     repeated-size, repeated-size-offset, repeated-fill-value);
   end select
 end;
 
