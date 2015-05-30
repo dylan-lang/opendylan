@@ -1,6 +1,28 @@
 #include <dlfcn.h>
 #include <stdio.h>
 
+void print_frame(void *ip)
+{
+#ifdef OPEN_DYLAN_PLATFORM_UNIX
+  Dl_info info;
+  int rc;
+
+  rc = dladdr(ip, &info);
+  if (!rc||(!info.dli_sname && !info.dli_fname)) {
+    printf("0x%lx (unknown)\n", (long)ip);
+  } else {
+    if (!info.dli_sname) {
+      printf("0x%lx (%s)\n", (long)ip, info.dli_fname);
+    } else {
+      printf("%s+%ld (%s)\n",
+             info.dli_sname,
+             (long)ip - (long)info.dli_saddr,
+             info.dli_fname);
+    }
+  }
+#endif
+}
+
 // this is our stack walker, used in SIGTRAP
 #if defined(OPEN_DYLAN_PLATFORM_DARWIN)
 
@@ -9,9 +31,7 @@
 static _Unwind_Reason_Code frame_func(struct _Unwind_Context *context, void *arg)
 {
   void *ip = (void*)_Unwind_GetIP(context);
-  Dl_info info;
-  dladdr(ip, &info);
-  printf("  %p %s\n", ip, info.dli_sname);
+  print_frame(ip);
   return(_URC_NO_REASON);
 }
 
@@ -36,25 +56,9 @@ static long getebp (void)
 void dylan_dump_callstack(void)
 {
   long ebp = getebp();
-  long eip;
-  int rc;
-  Dl_info info;
-
   while (ebp) {
-    eip = *((long *)ebp + 1);
-    rc = dladdr((void*)eip, &info);
-    if (!rc||(!info.dli_sname && !info.dli_fname)) {
-      printf("0x%lx (unknown)\n", eip);
-    } else {
-      if (!info.dli_sname) {
-        printf("0x%lx (%s)\n", eip, info.dli_fname);
-      } else {
-        printf("%s+%ld (%s)\n",
-               info.dli_sname,
-               eip - (long)info.dli_saddr,
-               info.dli_fname);
-      }
-    }
+    long eip = *((long *)ebp + 1);
+    print_frame((void*)eip);
     ebp = *((long*)ebp);
   }
 }
