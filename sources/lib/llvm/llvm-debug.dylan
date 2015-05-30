@@ -134,6 +134,9 @@ define constant $DW-LANG-lo-user :: <integer> = 32768;
 define constant $DW-LANG-Mips-Assembler = 32769;
 define constant $DW-LANG-hi-user :: <integer> = 65535;
 
+// From llvm/DebugInfo.h
+define constant $flag-artificial :: <integer> = ash(1, 6);
+
 
 /// Debug information constructor functions
 
@@ -374,7 +377,8 @@ define function llvm-make-dbg-local-variable
      type :: <llvm-metadata-value>,
      #key arg :: <integer> = 0,
           module :: false-or(<llvm-module>) = #f,
-          function-name :: <string> = "fn")
+          function-name :: <string> = "fn",
+          artificial? = #f)
  => (dbg-local-variable :: <llvm-metadata-value>);
   let tag
     = select (kind)
@@ -382,6 +386,12 @@ define function llvm-make-dbg-local-variable
         #"argument" => $DW-TAG-arg-variable;
         #"return"   => $DW-TAG-return-variable;
       end select;
+  let flags
+    = if (artificial?)
+        i32($flag-artificial)
+      else
+        i32(0)
+      end;
   let node
     = make(<llvm-metadata-node>,
            function-local?: #f,
@@ -391,7 +401,7 @@ define function llvm-make-dbg-local-variable
                                dbg-file,
                                i32(generic-logior(line-number | 0, generic-ash(arg, 24))),
                                type,
-                               i32(0), // flags
+                               flags,
                                i32(0)));
   if (module)
     add-to-named-metadata(module,
