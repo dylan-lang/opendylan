@@ -15,7 +15,7 @@ static _Unwind_Reason_Code frame_func(struct _Unwind_Context *context, void *arg
   return(_URC_NO_REASON);
 }
 
-void walkstack(void)
+void dylan_dump_callstack(void)
 {
   _Unwind_Backtrace(frame_func, NULL);
 }
@@ -33,7 +33,7 @@ static long getebp (void)
     return 0;
 }
 
-void walkstack(void)
+void dylan_dump_callstack(void)
 {
   long ebp = getebp();
   long eip;
@@ -61,7 +61,7 @@ void walkstack(void)
 
 #else
 
-void walkstack(void)
+void dylan_dump_callstack(void)
 {
 }
 
