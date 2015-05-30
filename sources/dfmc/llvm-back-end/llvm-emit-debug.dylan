@@ -96,6 +96,7 @@ define method emit-lambda-dbg-function
   add!(back-end.llvm-back-end-dbg-functions, dbg-function);
 
   // Emit a llvm.dbg.value call for each parameter
+  // FIXME handle "extra" parameters
   ins--dbg(back-end, dbg-line, 0, dbg-function, #f);
   for (index from 1, param in parameters(o),
        dbg-param-type in dbg-parameter-types)
@@ -112,6 +113,32 @@ define method emit-lambda-dbg-function
                                      arg: index);
     ins--call-intrinsic(back-end, "llvm.dbg.value", vector(v, i64(0), lv));
   end for;
+
+  // Emit a llvm.dbg.value call for each of the calling convention
+  // parameters
+  local
+    method artificial-parameter(name :: <string>, index :: <integer>)
+      let v
+        = make(<llvm-metadata-node>,
+               function-local?: #t,
+               node-values: list(llvm-builder-local(back-end, name)));
+      let obj-dbg-type
+        = llvm-reference-dbg-type(back-end, dylan-value(#"<object>"));
+      let lv
+        = llvm-make-dbg-local-variable(#"argument",
+                                       dbg-function,
+                                       name,
+                                       dbg-file, dbg-line,
+                                       obj-dbg-type,
+                                       arg: index + 1,
+                                       artificial?: #t);
+      ins--call-intrinsic(back-end, "llvm.dbg.value", vector(v, i64(0), lv));
+    end method;
+  let calling-convention-index = parameters(o).size;
+  artificial-parameter($next-methods-parameter-name,
+                       calling-convention-index);
+  artificial-parameter($function-parameter-name,
+                       calling-convention-index + 1);
 
   // Assign debug scopes to each computation
   assign-computations-dbg-scope(back-end, dbg-function, o.body, #f);
