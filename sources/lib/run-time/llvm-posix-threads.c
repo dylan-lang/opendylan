@@ -251,7 +251,7 @@ static void *trampoline(void *arg)
   // Execute the thread function using the Dylan trampoline
   dylan_value result = call_dylan_function(thread->handle2, 0);
 
-  // Drop references to the the <thread> object
+  // Drop references to the <thread> object
   Pteb.teb_current_thread = NULL;
 
   deinitialize_thread_variables();
