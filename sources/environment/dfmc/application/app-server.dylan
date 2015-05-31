@@ -82,7 +82,7 @@ define sealed class <dfmc-application> (<application>)
 
   slot application-proxy-factory :: <application-proxy-factory>;
 
-  // When the interactor returns, the a mapping from the transaction
+  // When the interactor returns, a mapping from the transaction
   // ID to the sequence of return values is installed in this table.
   // The value in the table is a pair, with the head of the pair being
   // a history variable name, and the tail being the actual <remote-value>
@@ -268,7 +268,7 @@ end method invoke-application-callback;
 //    Indicates whether the application is running for debugging purposes.
 //    TODO: Remove in favour of APPLICATION-STARTUP-OPTION.
 //          This method has been retained purely for backwards
-//          compatability.
+//          compatibility.
 
 define method application-debug?
     (application :: <dfmc-application>) => (debug? :: <boolean>)

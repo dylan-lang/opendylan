@@ -153,7 +153,7 @@ Functions which return a dynamically-sized number of values return their
 values as above, but also return a count of the number being returned in
 a register. If a function dynamically happens to return zero values,
 then the return count will be set to zero, but the value *#f* will be
-returned as if it were a the first return value.
+returned as if it were the first return value.
 
 If the caller of a function can statically determine the number of
 return values (i.e. at compile-time), then it need perform no checks.

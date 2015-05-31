@@ -306,7 +306,7 @@ end method;
 
 
 ///// ADD-OBJECT
-//    Adds an object to the a page-relative-object-table. If there is
+//    Adds an object to the page-relative-object-table. If there is
 //    already an entry for the object, it will be overwritten with this
 //    entry.
 //    (Generic function and its default method)
