@@ -373,7 +373,6 @@ define module environment-protocols
          application-stopped?,
          application-closed?,
          application-tethered?,
-         application-debug?,
          application-pause-before-termination?,
          application-just-hit-breakpoint?,
          application-just-hit-dylan-error?,
