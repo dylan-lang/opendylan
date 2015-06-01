@@ -263,18 +263,6 @@ define method invoke-application-callback
   callback & apply(callback, application.application-client, args)
 end method invoke-application-callback;
 
-
-///// APPLICATION-DEBUG? (Environment Protocol Method)
-//    Indicates whether the application is running for debugging purposes.
-//    TODO: Remove in favour of APPLICATION-STARTUP-OPTION.
-//          This method has been retained purely for backwards
-//          compatibility.
-
-define method application-debug?
-    (application :: <dfmc-application>) => (debug? :: <boolean>)
-  application.application-tether-status ~== #"start"
-end method;
-
 define method application-just-stepped?
     (application :: <dfmc-application>, thread :: <thread-object>)
  => (just-stepped? :: <boolean>)

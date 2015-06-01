@@ -87,10 +87,6 @@ define open generic application-proxy-id
     (application :: <application>, proxy)
  => (id :: false-or(<id>));
 
-define open generic application-debug?
-    (server :: <server>)
- => (debug? :: <boolean>);
-
 define open generic application-pause-before-termination?
     (server :: <server>)
  => (well? :: <boolean>);
@@ -237,13 +233,6 @@ define method environment-object-home-server?
   let proxy = application-object-proxy(object);
   proxy & lookup-environment-object-by-proxy(application, proxy) & #t
 end method environment-object-home-server?;
-
-
-define method application-debug?
-    (project :: <project-object>) => (debug? :: <boolean>)
-  let application = project.project-application;
-  application & application-debug?(application);
-end method;
 
 define method application-pause-before-termination?
     (project :: <project-object>) => (pause? :: <boolean>)
