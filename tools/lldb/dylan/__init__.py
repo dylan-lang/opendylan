@@ -12,6 +12,7 @@ import summaries.core
 import summaries.system
 
 # Compiler (DFMC) summaries
+import summaries.dfmc.modeling
 import summaries.dfmc.primitives
 
 # LLVM summaries
