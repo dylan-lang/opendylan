@@ -454,7 +454,7 @@ define function environment-variable
     copy-sequence(envvar-buffer, end: envvar-size)
   else
     %call-c-function ("SetLastError", c-modifiers: "__stdcall")
-        (dwErrorCode :: <raw-c-unsigned-long>) => (nothing :: <raw-c-void>)
+        (dwErrorCode :: <raw-c-unsigned-long>) => ()
       (integer-as-raw(0))
     end;
     #f

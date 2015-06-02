@@ -63,7 +63,7 @@ define macro with-storage
            if (primitive-machine-word-not-equal?
                  (primitive-unwrap-machine-word(?name), integer-as-raw(0)))
              %call-c-function ("MMFreeMisc")
-               (p :: <raw-c-pointer>, nbytes :: <raw-c-size-t>) => (void :: <raw-c-void>)
+               (p :: <raw-c-pointer>, nbytes :: <raw-c-size-t>) => ()
                  (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?name)),
                   integer-as-raw(?size))
              end;
@@ -81,7 +81,7 @@ define inline function %timer-current-time
   with-storage (timeloc, 8)
     %call-c-function ("timer_get_point_in_time")
         (time :: <raw-c-pointer>)
-     => (nothing :: <raw-c-void>)
+     => ()
       (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(timeloc)))
     end;
     secs := primitive-wrap-machine-word(

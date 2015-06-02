@@ -85,7 +85,7 @@ define thread variable *filetime-buffer* :: <byte-string>
 
 define function default-random-seed () => (seed :: <integer>)
   %call-c-function ("GetSystemTimeAsFileTime", c-modifiers: "__stdcall")
-      (lpSystemTimeAsFileTime :: <raw-c-pointer>) => (void :: <raw-c-void>)
+      (lpSystemTimeAsFileTime :: <raw-c-pointer>) => ()
     (primitive-string-as-raw(*filetime-buffer*))
   end;
   logior(as(<integer>, *filetime-buffer*[0]),
