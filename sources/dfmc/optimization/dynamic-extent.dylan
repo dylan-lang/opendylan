@@ -106,7 +106,7 @@ define constant <dynamic-extent> =
 
 // COMPUTE-DYNAMIC-EXTENT-OF-LAMBDA-PARAMETERS
 //
-//   Given a lambda, constuct a conservative estimate of which parameters can
+//   Given a lambda, construct a conservative estimate of which parameters can
 //   safely have dynamic extent.
 //
 

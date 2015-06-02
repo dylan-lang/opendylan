@@ -249,7 +249,7 @@ define test c-struct-test (description: "C-Struct Tests")
   check-equal("struct simple address valued slot value",
               pointer-address($foos-address),
               pointer-address(minimal-struct.slot-2));
-  check-equal("stuct set pointer value address valued slot",
+  check-equal("struct set pointer value address valued slot",
           pointer-value(minimal-struct.slot-2) := 12345,
           12345);
   check-equal("struct pointer value check alias",
