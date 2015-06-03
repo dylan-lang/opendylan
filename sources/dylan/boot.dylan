@@ -888,7 +888,7 @@ define not-inline function no-applicable-method-error
     (gf :: <generic-function>, args :: <simple-object-vector>)
   block ()
     error(make(<dispatch-error>,
-                 format-string: "No applicable method, applying %= to %=.",
+               format-string: "No applicable method, applying %= to %=.",
                format-arguments: list(gf, args)))
   exception (<simple-restart>,
              init-arguments:
