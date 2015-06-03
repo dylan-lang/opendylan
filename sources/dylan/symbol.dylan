@@ -24,7 +24,8 @@ end method as;
 
 define sealed inline method \=
     (symbol-1 :: <symbol>, symbol-2 :: <symbol>) => (well? :: <boolean>)
-  as(<string>, symbol-1) = as(<string>, symbol-2)
+  /* This is safe to do as symbols are interned. */
+  symbol-1 == symbol-2
 end method \=;
 
 define sealed inline method \<
