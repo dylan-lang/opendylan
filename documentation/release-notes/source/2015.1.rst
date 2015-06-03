@@ -12,6 +12,12 @@ XXX XX, 2015.
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
 * `Source code <https://github.com/dylan-lang/opendylan/tree/v2015.1>`_
 
+Dylan Standard Library
+======================
+
+* Symbol comparisons when using ``\=`` are now the same as using ``\==``
+  rather than being significantly more expensive. See `issue #899`_.
+
 Build System
 ============
 
@@ -124,3 +130,5 @@ system
   from strings for the ``<file-system-directory-locator>`` and
   ``<file-system-file-locator>`` classes. These aren't typically used but
   their omission led to possible confusion for users.
+
+.. _issue #899: https://github.com/dylan-lang/opendylan/issues/899
