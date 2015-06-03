@@ -30,6 +30,13 @@ define method parse-expressions (expressions-form)
   end macro-case
 end method;
 
+define method parse-ffi-result-type (results-form)
+  macro-case (results-form)
+    { } => #{ nothing :: <raw-c-void> };
+    { ?results:* } => #{ ?results };
+  end
+end method;
+
 define method as-string (name :: <symbol>)
   as-lowercase(as(<string>, name))
 end method;
@@ -92,10 +99,13 @@ define &converter %call-c-function
   { %call-c-function (?name:expression, #key ?c-modifiers:expression = "")
         (?parameters:*) => (?results:*)
       (?arguments:*) end }
-  => convert-%c-call-function (env, context, name,
-                               #{ (?parameters) => (?results) },
-                               parse-expressions(arguments),
-                               as-string(c-modifiers))
+  => begin
+       let results = parse-ffi-result-type(results);
+       convert-%c-call-function (env, context, name,
+                                 #{ (?parameters) => (?results) },
+                                 parse-expressions(arguments),
+                                 as-string(c-modifiers));
+     end
 end &converter;
 
 define method convert-%c-call-function-indirect
@@ -117,14 +127,16 @@ define &converter %call-c-function-indirect
   { %call-c-function-indirect (#key ?c-modifiers:expression = "")
         (?fparam:*, ?parameters:*) => (?results:*)
       (?arguments:*) end }
-  =>
-  // We peel off and ignore the indirect function pointer parameter spec,
-  // but leave the argument, leaving the contract the back end expects.
-  convert-%c-call-function-indirect
-    (env, context,
-     #{ (?parameters) => (?results) },
-     parse-expressions(arguments),
-     c-modifiers)
+  => begin
+       let results = parse-ffi-result-type(results);
+       // We peel off and ignore the indirect function pointer parameter spec,
+       // but leave the argument, leaving the contract the back end expects.
+       convert-%c-call-function-indirect
+         (env, context,
+          #{ (?parameters) => (?results) },
+          parse-expressions(arguments),
+          c-modifiers);
+     end
 end &converter;
 
 define method convert-%c-callable-function
@@ -178,10 +190,13 @@ define &converter %objc-msgsend
   { %objc-msgsend (?target:expression, ?selector:expression, #key ?c-modifiers:expression = "")
         (?parameters:*) => (?results:*)
       (?arguments:*) end }
-  => convert-%objc-msgsend (env, context,
-                            #{ (target :: <raw-machine-word>, selector :: <raw-machine-word>, ?parameters) => (?results) },
-                            pair(target, pair(selector, parse-expressions(arguments))),
-                            as-string(c-modifiers))
+  => begin
+       let results = parse-ffi-result-type(results);
+       convert-%objc-msgsend (env, context,
+                              #{ (target :: <raw-machine-word>, selector :: <raw-machine-word>, ?parameters) => (?results) },
+                              pair(target, pair(selector, parse-expressions(arguments))),
+                              as-string(c-modifiers));
+     end
 end &converter;
 
 

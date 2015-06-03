@@ -53,7 +53,7 @@ define method emit-primitive-call
     (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <primitive-call>, f :: <&objc-msgsend>)
   let sig-values = f.primitive-signature.^signature-values;
-  let return-type = first(sig-values, default: dylan-value(#"<object>"));
+  let return-type = first(sig-values, default: dylan-value(#"<raw-c-void>"));
   format-emit(b, s, d, "((^(*)(", return-type);
   for (type in f.c-signature.^signature-required,
        first? = #t then #f)

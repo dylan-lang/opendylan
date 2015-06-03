@@ -278,7 +278,7 @@ define macro with-localtime-as-systemtime
              error("Can't get space for local time")
            end;
            %call-c-function ("GetLocalTime", c-modifiers: "__stdcall")
-               (st :: <raw-c-pointer>) => (void :: <raw-c-void>)
+               (st :: <raw-c-pointer>) => ()
              (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?st)))
            end;
            ?body
