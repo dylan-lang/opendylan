@@ -210,6 +210,13 @@ define method do-deep-copy
 end method;
 
 define method do-deep-copy
+    (copier :: <copier>, object :: limited(<vector>, of: <integer>)) => (value)
+  let copy = copy-sequence(object);
+  copier-register-copied(copier, object, copy);
+  copy
+end method;
+
+define method do-deep-copy
     (copier :: <copier>, object :: <table>) => (value)
   let size :: <integer> = size(object);
   let copy :: <table> = make(object-class(object), size: size);

@@ -262,6 +262,7 @@ define module-with-models dfmc-modeling
 //    <&incremental-setter-method>,
 //    <&incremental-repeated-getter-method>,
 //    <&incremental-repeated-setter-method>,
+    <dynamic-extent>,
     <&generic-function>,
       &slot %gf-cache,
       ^generic-function-methods,
