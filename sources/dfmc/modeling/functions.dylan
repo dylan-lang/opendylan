@@ -64,6 +64,14 @@ define primary &class <simple-typechecked-gf-cache-info> (<gf-cache-info>)
     init-value: 0, init-keyword: argmask:;
 end &class;
 
+// We associate a <dynamic-extent> with each lambda, method and GF.
+// It contains a list of those arguments that can safely have dynamic
+// extent when passed to the function.  We use #t as an abbreviation
+// to indicate that they all can.  The value #f is used to indicate that
+// the extent has not been computed yet.
+
+define constant <dynamic-extent> =
+  type-union(limited(<vector>, of: <integer>), <boolean>);
 
 define compiler-open generic ^generic-function-methods (gf :: <&generic-function>);
 define compiler-open generic ^generic-function-methods-setter (value, gf :: <&generic-function>);
@@ -89,8 +97,7 @@ define abstract primary &class <generic-function> (<function>)
   lazy slot signature-spec :: <signature-spec>,
     required-init-keyword: signature-spec:;
   lazy slot %generic-function-domains :: <list> = #();
-  slot parameters-dynamic-extent,
-    init-value: #f,
+  slot parameters-dynamic-extent :: <dynamic-extent> = #f,
     init-keyword: dynamic-extent:;
   slot ^generic-function-cache-info = #f;
   metaclass <function-class>;
@@ -286,8 +293,7 @@ define primary &class <lambda> (<method>)
   lazy slot signature-spec :: <signature-spec>,
     required-init-keyword: signature-spec:;
   // model slots
-  slot parameters-dynamic-extent,
-    init-value: #f,
+  slot parameters-dynamic-extent :: <dynamic-extent> = #f,
     init-keyword: dynamic-extent:;
   lazy slot lambda-heap = #f;
   // dfm slots
@@ -608,7 +614,8 @@ end &class <getter-method>;
 //end &class <incremental-getter-method>;
 
 define method parameters-dynamic-extent (m :: <&getter-method>)
-  #[]
+ => (extent :: <dynamic-extent>)
+  as(limited(<vector>, of: <integer>), #[])
 end method;
 
 define &class <setter-method> (<setter-accessor-method>,
@@ -619,7 +626,8 @@ end &class <setter-method>;
 //end &class <incremental-setter-method>;
 
 define method parameters-dynamic-extent (m :: <&setter-method>)
-  #[1]
+ => (extent :: <dynamic-extent>)
+  as(limited(<vector>, of: <integer>), #[1])
 end method;
 
 define &class <repeated-getter-method> (<getter-accessor-method>,
@@ -631,7 +639,8 @@ end &class <repeated-getter-method>;
 //end &class <incremental-repeated-getter-method>;
 
 define method parameters-dynamic-extent (m :: <&repeated-getter-method>)
-  #[1]
+ => (extent :: <dynamic-extent>)
+  as(limited(<vector>, of: <integer>), #[1])
 end method;
 
 define &class <repeated-setter-method> (<setter-accessor-method>,
@@ -643,7 +652,8 @@ end &class <repeated-setter-method>;
 //end &class <incremental-repeated-setter-method>;
 
 define method parameters-dynamic-extent (m :: <&repeated-setter-method>)
-  #[1, 2]
+ => (extent :: <dynamic-extent>)
+  as(limited(<vector>, of: <integer>), #[1, 2])
 end method;
 
 /*

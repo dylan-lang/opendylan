@@ -92,17 +92,8 @@ end;
 // moment this problem seems to be the biggest cause of parameters not
 // being flagged as having dynamic extent when they should have.
 
-
-// We associate a <dynamic-extent> with each lambda, method and GF.
-// It contains a list of those arguments that can safely have dynamic
-// extent when passed to the function.  We use #t as an abbreviation
-// to indicate that they all can.  The value #f is used to indicate that
-// the extent has not been computed yet.
-
-define constant <dynamic-extent> =
-  // type-union(limited(<vector>, of: <integer>), <boolean>);
-  // NEED TO CLEAN UP REFS TO #[] FIRST
-  type-union(<simple-object-vector>, <boolean>);
+define constant $none-with-dynamic-extent
+  = as(limited(<vector>, of: <integer>), #[]);
 
 // COMPUTE-DYNAMIC-EXTENT-OF-LAMBDA-PARAMETERS
 //
@@ -124,11 +115,11 @@ define method compute-dynamic-extent-of-lambda-parameters
     // The extent has already been computed, e.g. inherited from GF
     initial-extent
   else
-    f.parameters-dynamic-extent := #[];  // Crude mechanism to prevent looping
+    f.parameters-dynamic-extent := $none-with-dynamic-extent;  // Crude mechanism to prevent looping
     // Calculate extent
     if (f.parameters)
-      let extent :: <simple-object-vector> =
-        as(<vector>,
+      let extent :: limited(<vector>, of: <integer>) =
+        as(limited(<vector>, of: <integer>),
            choose-by(really-dynamic-extent?, f.parameters, range(from: 0)));
       if (*colorize-dispatch*) color-extent(f, extent) end;
       f.parameters-dynamic-extent := (extent.size = f.parameters.size) | extent
@@ -136,7 +127,7 @@ define method compute-dynamic-extent-of-lambda-parameters
       // Occasionally we encounter a lambda with no parameters, presumably
       // because the optimizer is being called on something that's not
       // initialized yet?  Anyhow, we just take a pessimistic view in this case
-      f.parameters-dynamic-extent := #[]
+      f.parameters-dynamic-extent := $none-with-dynamic-extent
     end;
   end
 end;
@@ -352,13 +343,13 @@ define generic get-extent-of-parameters-in-call
 
 define method get-extent-of-parameters-in-call
     (call :: <call>, typ :: <type-estimate>, temp) => (extent :: <dynamic-extent>)
-  #[] // Let's be conservative...
+  $none-with-dynamic-extent // Let's be conservative...
 end;
 
 define method get-extent-of-parameters-in-call
     (call :: <call>, typ :: <type-estimate-limited-function>, temp)
         => (extent :: <dynamic-extent>)
-  #[] // The function could do anything, so take the worst case...
+  $none-with-dynamic-extent // The function could do anything, so take the worst case...
 end;
 
 define method get-extent-of-parameters-in-call
@@ -366,7 +357,7 @@ define method get-extent-of-parameters-in-call
         => (extent :: <dynamic-extent>)
   // TODO: return the intersection of the extents of each component.  The
   // typist needs to export more before we can do this.
-  #[]
+  $none-with-dynamic-extent
 end;
 
 define method get-extent-of-parameters-in-call
@@ -417,14 +408,14 @@ define method get-extent-of-parameters-in-call
             reduce(intersect-extents, #t, leading-sorted);
           reduce(intersect-extents, extent-of-leading-sorted, others)
         else
-          model.parameters-dynamic-extent | #[]
+          model.parameters-dynamic-extent | $none-with-dynamic-extent
         end;
 
-      otherwise => #[];
-    end case;
+      otherwise => $none-with-dynamic-extent;
+    end case
   else
-    #[];
-  end if;
+    $none-with-dynamic-extent
+  end if
 end method;
 
 
