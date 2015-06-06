@@ -353,8 +353,8 @@ should be an instance of :class:`<locator>` or a string that can be
 coerced to one.
 
 The *direction:* init-keyword specifies the direction of the stream.
-This can be one of *#"input"*, *#"output"*, or *#"input-output"*. The
-default is *#"input"*.
+This can be one of ``#"input"``, ``#"output"``, or ``#"input-output"``.
+The default is ``#"input"``.
 
 The *if-exists:* and *if-does-not-exist:* init-keywords specify actions
 to take if the file named by *filename* does or does not already exist
@@ -385,34 +385,33 @@ The *if-exists:* init-keyword allows you to specify an action to take if
 the file named by *filename* already exists. The options are:
 
 -  ``#f`` The file is opened with the stream position at the beginning.
-   This is the default when the stream’s direction is *#"input"* or
-   *#"input-output"*.
--  *#"new-version"* If the underlying file system supports file versioning,
+   This is the default when the stream’s direction is ``#"input"`` or
+   ``#"input-output"``.
+-  ``#"new-version"`` If the underlying file system supports file versioning,
    a new version of the file is created. This is the default when the stream’s
-   direction is *#"output"*.
+   direction is ``#"output"``.
    If the file system does not support file versioning, the default is
-   *#"replace"* when the direction of the stream is *#"output"*.
--  *#"overwrite"* Set the stream’s position to the beginning of the
+   ``#"replace"`` when the direction of the stream is ``#"output"``.
+-  ``#"overwrite"`` Set the stream’s position to the beginning of the
    file, but preserve the current contents of the file. This is useful
-   when the direction is *#"input-output"* or *#"output"* and you want
+   when the direction is ``#"input-output"`` or ``#"output"`` and you want
    to overwrite an existing file.
--  *#"replace"* Delete the existing file and create a new file.
--  *#"append"* Set the stream’s initial position to the end of the
+-  ``#"replace"`` Delete the existing file and create a new file.
+-  ``#"append"`` Set the stream’s initial position to the end of the
    existing file so that all new output occurs at the end of the file.
    This option is only useful if the file is writeable.
--  *#"truncate"* If the file exists, it is truncated, setting the size
+-  ``#"truncate"`` If the file exists, it is truncated, setting the size
    of the file to 0. If the file does not exist, create a new file.
--  *#"signal"* Signal a :class:`<file-exists-error>`
-   condition.
+-  ``#"signal"`` Signal a :class:`<file-exists-error>` condition.
 
 The *if-does-not-exist:* init-keyword allows you to specify an action to
 take if the file named by *filename* does not exist. The options are:
 
 -  ``#f`` No action.
--  *#"signal"* ** Signal a :class:`<file-does-not-exist-error>` condition. This is
-   the default when the stream’s direction is *#"input"*.
--  *#"create"* Create a new zero-length file. This is the default when
-   the stream’s direction is *#"output"* or *#"input-output"*.
+-  ``#"signal"`` Signal a :class:`<file-does-not-exist-error>` condition. This is
+   the default when the stream’s direction is ``#"input"``.
+-  ``#"create"`` Create a new zero-length file. This is the default when
+   the stream’s direction is ``#"output"`` or ``#"input-output"``.
 
 Because creating a file stream *always* involves an attempt to open the
 underlying file, the aforementioned error conditions will occur during
@@ -457,13 +456,13 @@ may occur after *close* is called.
 The *share-mode:* keyword determines how a file can be accessed by other
 streams while the stream has it open. The possible values are:
 
--  *#"share-read"* Allow other streams to be opened to the file for
+-  ``#"share-read"`` Allow other streams to be opened to the file for
    reading but not for writing.
--  *#"share-write"* Allow other streams to be opened for writing but not
+-  ``#"share-write"`` Allow other streams to be opened for writing but not
    for reading.
--  *#"share-read-write"* Allow other streams to be opened for writing
+-  ``#"share-read-write"`` Allow other streams to be opened for writing
    or reading.
--  *#"exclusive"* Do not allow other streams to be opened to this file.
+-  ``#"exclusive"`` Do not allow other streams to be opened to this file.
 
 Sequence streams
 ^^^^^^^^^^^^^^^^
