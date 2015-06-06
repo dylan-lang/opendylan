@@ -90,8 +90,8 @@ including:
 -  General object dumping and loading.
 -  A comprehensive range of I/O facilities for using memory-mapped
    files, network connections, and so on.
--  An interface for naming files. The Locators module provides such an
-   interface.
+-  An interface for naming files. The :doc:`Locators <../system/locators>`
+   module provides such an interface.
 -  An interface to operating system functionality, such as file renaming
    or deleting operations. The :doc:`File-System <../system/file-system>`
    module provides such an interface.
@@ -348,8 +348,9 @@ subclass to be instantiated, this method calls the generic function
 :gf:`type-for-file-stream`.
 
 The *locator:* init-keyword should be a string naming a file. If the
-Locators library is in use, *filename* should be an instance of
-:class:`<locator>` or a string that can be coerced to one.
+:doc:`Locators <../system/locators>` library is in use, *filename*
+should be an instance of :class:`<locator>` or a string that can be
+coerced to one.
 
 The *direction:* init-keyword specifies the direction of the stream.
 This can be one of *#"input"*, *#"output"*, or *#"input-output"*. The
@@ -1551,8 +1552,9 @@ are exported from the *streams* module.
      :gf:`type-for-file-stream`.
 
      The *filename* init-keyword should be a string naming a file. If
-     the Locators library is in use, *filename* should be an instance of
-     :class:`<locator>` or a string that can be coerced to one.
+     the :doc:`Locators <../system/locators>` library is in use,
+     *filename* should be an instance of :class:`<locator>` or a string
+     that can be coerced to one.
 
      The *direction* init-keyword specifies the direction of the stream.
 
