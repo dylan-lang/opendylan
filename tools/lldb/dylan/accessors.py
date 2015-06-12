@@ -49,9 +49,7 @@ def dylan_tag_bits(value):
 
 def dylan_boolean_value(value):
   ensure_value_class(value, '<boolean>', 'dylan', 'dylan')
-  target = lldb.debugger.GetSelectedTarget()
-  true_value = target.FindFirstGlobalVariable('KPtrueVKi').AddressOf().GetValueAsUnsigned()
-  return value.GetValueAsUnsigned() == true_value
+  return not dylan_is_false(value)
 
 def dylan_byte_character_value(value):
   byte_value = value.GetValueAsUnsigned() >> 2
@@ -123,8 +121,9 @@ def dylan_is_double_float(value):
 
 def dylan_is_false(value):
   target = lldb.debugger.GetSelectedTarget()
-  false_value = target.FindFirstGlobalVariable('KPfalseVKi').AddressOf().GetValueAsUnsigned()
-  return value.GetValueAsUnsigned() == false_value
+  address = lldb.SBAddress(value.GetValueAsUnsigned(), target)
+  if address.symbol.name == 'KPfalseVKi':
+    return True
 
 def dylan_is_float(value):
   return dylan_is_double_float(value) or dylan_is_single_float(value)
