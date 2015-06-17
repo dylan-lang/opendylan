@@ -1913,31 +1913,31 @@ extern void  primitive_exit_application (DSINT code) NORETURN_FUNCTION;
 
 /* TEMPORARY PRIMITIVES FOR ASSIGNMENT */
 
-extern dylan_value MAKE_DYLAN_VALUE_CELL(dylan_value);
+extern dylan_value* MAKE_DYLAN_VALUE_CELL(dylan_value);
 #define GET_DYLAN_VALUE_CELL_VAL(c)       (*(dylan_value*)c)
 #define SET_DYLAN_VALUE_CELL_VAL(c, v)    (*(dylan_value*)c = v)
 
-extern dylan_value MAKE_DBCHR_CELL(DBCHR);
+extern dylan_value* MAKE_DBCHR_CELL(DBCHR);
 #define GET_DBCHR_CELL_VAL(c)           (*(DBCHR*)c)
 #define SET_DBCHR_CELL_VAL(c, v)        (*(DBCHR*)c = v)
 
-extern dylan_value MAKE_DDBYTE_CELL(DDBYTE);
+extern dylan_value* MAKE_DDBYTE_CELL(DDBYTE);
 #define GET_DDBYTE_CELL_VAL(c)          (*(DDBYTE*)c)
 #define SET_DDBYTE_CELL_VAL(c, v)       (*(DDBYTE*)c = v)
 
-extern dylan_value MAKE_DWORD_CELL(DWORD);
+extern dylan_value* MAKE_DWORD_CELL(DWORD);
 #define GET_DWORD_CELL_VAL(c)           (*(DWORD*)c)
 #define SET_DWORD_CELL_VAL(c, v)        (*(DWORD*)c = v)
 
-extern dylan_value MAKE_DDWORD_CELL(DDWORD);
+extern dylan_value* MAKE_DDWORD_CELL(DDWORD);
 #define GET_DDWORD_CELL_VAL(c)          (*(DDWORD*)c)
 #define SET_DDWORD_CELL_VAL(c, v)       (*(DDWORD*)c = v)
 
-extern dylan_value MAKE_DSFLT_CELL(DSFLT);
+extern dylan_value* MAKE_DSFLT_CELL(DSFLT);
 #define GET_DSFLT_CELL_VAL(c)           (*(DSFLT*)c)
 #define SET_DSFLT_CELL_VAL(c, v)        (*(DSFLT*)c = v)
 
-extern dylan_value MAKE_DDFLT_CELL(DDFLT);
+extern dylan_value* MAKE_DDFLT_CELL(DDFLT);
 #define GET_DDFLT_CELL_VAL(c)           (*(DDFLT*)c)
 #define SET_DDFLT_CELL_VAL(c, v)        (*(DDFLT*)c = v)
 

@@ -3567,17 +3567,17 @@ dylan_value primitive_engine_node_apply_spread (ENGINE* e, dylan_value parent, i
 
 /* temporary primitives for assignment */
 
-dylan_value MAKE_DYLAN_VALUE_CELL(dylan_value value) {
-  dylan_value cell = primitive_allocate(1);
-  *(dylan_value*)cell = value;
+dylan_value* MAKE_DYLAN_VALUE_CELL(dylan_value value) {
+  dylan_value* cell = primitive_allocate(1);
+  *cell = value;
   return cell;
 }
 
 #define define_make_cell(type) \
-  dylan_value MAKE_ ## type ## _CELL(type value) { \
+  dylan_value* MAKE_ ## type ## _CELL(type value) { \
     type* cell = (type*)allocate(sizeof(type)); \
     *cell = value; \
-    return cell; \
+    return (dylan_value*)cell; \
   }
 
 define_make_cell(DBCHR)
