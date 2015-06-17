@@ -713,15 +713,7 @@ define method emit-lambda-body-using-function
      fun)
   dynamic-bind (*current-environment* = o.environment)
     write(stream, "{\n");
-    let volatile?
-      = block (result)
-          for-computations (c in o)
-            if (instance?(c, <block>) & ~c.entry-state.local-entry-state?)
-              result(#t);
-            end if;
-          end for-computations;
-          #f
-        end block;
+    let volatile? = need-volatile-locals?(o);
     for-temporary (tmp in o.environment)
       if (used?(tmp))
         emit-local-definition(back-end, stream, tmp, volatile?);

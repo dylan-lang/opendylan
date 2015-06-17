@@ -36,15 +36,7 @@ define method emit-lambda-body-using-function
       end;
     end;
 
-    let volatile?
-      = block (result)
-          for-computations (c in o)
-            if (instance?(c, <block>) & ~c.entry-state.local-entry-state?)
-              result(#t);
-            end if;
-          end for-computations;
-          #f
-        end block;
+    let volatile? = need-volatile-locals?(o);
     for (tmp in o.environment.temporaries)
       if (used?(tmp))
         emit-local-definition(back-end, stream, tmp, volatile?);

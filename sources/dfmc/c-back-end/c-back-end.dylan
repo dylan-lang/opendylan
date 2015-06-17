@@ -210,3 +210,21 @@ define method retract-local-methods-in-heap(heap) => ()
     end for;
   end if;
 end method;
+
+// In the C back-end, due to the use of setjmp / longjmp, we need to flag
+// any local variables as being volatile so that the compiler will emit
+// code to reload them.
+// If the iep contains any <unwind-protect> or a <bind-exit> where it isn't
+// entirely local, then we'll be emitting a setjmp / longjmp and therefore need
+// volatile locals.
+define method need-volatile-locals? (o :: <&iep>) => (volatile? :: <boolean>)
+  block (result)
+    for-computations (c in o)
+      if (instance?(c, <unwind-protect>) |
+          (instance?(c, <block>) & ~c.entry-state.local-entry-state?))
+        result(#t);
+      end if;
+    end for-computations;
+    #f
+  end block;
+end;
