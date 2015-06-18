@@ -1373,11 +1373,15 @@ end method;
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <multiple-value-check-type-rest>)
+  for (i from 0 below required-values(temporary(c)))
+    emit-transfer(b, s, d,
+                  mv-temp-lhs(c.temporary, i),
+                  mv-temp-ref(c.computation-value, i));
+  end;
   if (compiling-dylan-library?())
     next-method();
   else
-    format-emit(b, s, d, "\t#~(@, @, ~",
-                temporary(c),
+    format-emit(b, s, d, "\t~(@, @, ~",
                 $multiple-value-check-type-rest-string,
                 mv-temp-ref(computation-value(c), 0),
                 canonicalize-check-type(rest-type(c)),
