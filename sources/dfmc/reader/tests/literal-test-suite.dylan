@@ -35,6 +35,10 @@ define test integer-literal-test ()
   verify-literal(f, 123, <integer-fragment>);
 end test integer-literal-test;
 
+define test ratio-literal-test ()
+  assert-signals(<ratios-not-supported>, read-fragment("1/2"));
+end test ratio-literal-test;
+
 define test string-literal-test ()
   let f = read-fragment("\"abc\"");
   verify-literal(f, "abc", <string-fragment>);
@@ -52,6 +56,7 @@ define suite literal-test-suite ()
   test boolean-literal-test;
   test character-literal-test;
   test integer-literal-test;
+  test ratio-literal-test;
   test string-literal-test;
   test symbol-literal-test;
 end suite literal-test-suite;

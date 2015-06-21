@@ -66,6 +66,9 @@ define module dfmc-reader
   export
     <reader-error>,
       <invalid-token>,
+        <integer-too-large>,
+        <character-code-too-large>,
+        <ratios-not-supported>,
       <invalid-end-of-input>,
       <parser-error>,
       <manual-parser-error>,
