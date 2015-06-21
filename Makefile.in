@@ -451,6 +451,7 @@ CHECK_COMPILER_STAGE = $(CHECK_STAGE)
 
 CHECK_APPS = \
 	libraries-test-suite-app \
+	dfmc-reader-test-suite-app \
 	strings-test-suite-app \
 	c-ffi-test-suite-app \
 	duim-test-suite-app \
