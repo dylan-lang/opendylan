@@ -6,6 +6,7 @@ define library dfmc-reader-test-suite
   use common-dylan;
   use dfmc-reader;
   use dfmc-common;
+  use io;
   use source-records;
   use testworks;
 
@@ -17,6 +18,7 @@ define module dfmc-reader-test-suite
   use dfmc-reader;
   use dfmc-common, import { <interactive-compilation-record> };
   use source-records, import { <interactive-source-record> };
+  use streams;
   use testworks;
 
   export dfmc-reader-test-suite;
