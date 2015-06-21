@@ -162,6 +162,7 @@ define module dfmc-reader
             <symbol-fragment>,
               <symbol-syntax-symbol-fragment>,
               <keyword-syntax-symbol-fragment>,
+            <character-fragment>,
             <string-fragment>,
             <boolean-fragment>,
               <true-fragment>,

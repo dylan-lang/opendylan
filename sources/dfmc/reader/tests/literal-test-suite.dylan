@@ -18,7 +18,7 @@ end test boolean-literal-test;
 
 define test character-literal-test ()
   let f = read-fragment("'n'");
-  verify-literal(f, 'n', <literal-fragment>);
+  verify-literal(f, 'n', <character-fragment>);
 
   let f = read-fragment("'\\\\'");
   assert-equal(f.fragment-value, '\\');
