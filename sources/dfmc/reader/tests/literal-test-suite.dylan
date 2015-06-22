@@ -46,6 +46,10 @@ define test character-literal-test ()
   let f = read-fragment("'\\<01>'");
   assert-equal(as(<integer>, f.fragment-value), 1);
   verify-presentation(f, "'\\<1>'");
+
+  let f = read-fragment("'\\<fF>'");
+  assert-equal(as(<integer>, f.fragment-value), 255);
+  verify-presentation(f, "'\\<FF>'");
 end test character-literal-test;
 
 define test integer-literal-test ()
