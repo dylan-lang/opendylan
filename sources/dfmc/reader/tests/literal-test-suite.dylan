@@ -52,7 +52,7 @@ define test character-literal-test ()
   verify-presentation(f, "'\\<FF>'");
 end test character-literal-test;
 
-define test integer-literal-test ()
+define test decimal-integer-literal-test ()
   let f = read-fragment("123");
   verify-literal(f, 123, <integer-fragment>);
   verify-presentation(f, "123");
@@ -64,7 +64,7 @@ define test integer-literal-test ()
   let f = read-fragment("+789");
   verify-literal(f, 789, <integer-fragment>);
   verify-presentation(f, "789");
-end test integer-literal-test;
+end test decimal-integer-literal-test;
 
 define test ratio-literal-test ()
   assert-signals(<ratios-not-supported>, read-fragment("1/2"));
@@ -91,7 +91,7 @@ end test symbol-literal-test;
 define suite literal-test-suite ()
   test boolean-literal-test;
   test character-literal-test;
-  test integer-literal-test;
+  test decimal-integer-literal-test;
   test ratio-literal-test;
   test string-literal-test;
   test symbol-literal-test;
