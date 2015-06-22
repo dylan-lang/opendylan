@@ -73,6 +73,9 @@ end test ratio-literal-test;
 define test string-literal-test ()
   let f = read-fragment("\"abc\"");
   verify-literal(f, "abc", <string-fragment>);
+
+  let f = read-fragment("\"a\\nc\"");
+  verify-literal(f, "a\nc", <string-fragment>);
 end test string-literal-test;
 
 define test symbol-literal-test ()
