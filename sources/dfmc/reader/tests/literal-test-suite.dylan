@@ -56,6 +56,14 @@ define test integer-literal-test ()
   let f = read-fragment("123");
   verify-literal(f, 123, <integer-fragment>);
   verify-presentation(f, "123");
+
+  let f = read-fragment("-456");
+  verify-literal(f, -456, <integer-fragment>);
+  verify-presentation(f, "-456");
+
+  let f = read-fragment("+789");
+  verify-literal(f, 789, <integer-fragment>);
+  verify-presentation(f, "789");
 end test integer-literal-test;
 
 define test ratio-literal-test ()
