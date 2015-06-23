@@ -16,6 +16,13 @@ define function verify-presentation
   assert-equal(stream.stream-contents, presentation);
 end function verify-presentation;
 
+define test binary-integer-literal-test ()
+  let f = read-fragment("#b010");
+  verify-literal(f, 2, <integer-fragment>);
+
+  assert-signals(<invalid-token>, read-fragment("#b2"));
+end test binary-integer-literal-test;
+
 define test boolean-literal-test ()
   let t = read-fragment("#t");
   verify-literal(t, #t, <true-fragment>);
@@ -66,6 +73,20 @@ define test decimal-integer-literal-test ()
   verify-presentation(f, "789");
 end test decimal-integer-literal-test;
 
+define test hexadecimal-integer-literal-test ()
+  let f = read-fragment("#xff");
+  verify-literal(f, 255, <integer-fragment>);
+
+  assert-signals(<invalid-token>, read-fragment("#xh"));
+end test hexadecimal-integer-literal-test;
+
+define test octal-integer-literal-test ()
+  let f = read-fragment("#o70");
+  verify-literal(f, 56, <integer-fragment>);
+
+  assert-signals(<invalid-token>, read-fragment("#o8"));
+end test octal-integer-literal-test;
+
 define test ratio-literal-test ()
   assert-signals(<ratios-not-supported>, read-fragment("1/2"));
 end test ratio-literal-test;
@@ -89,9 +110,12 @@ define test symbol-literal-test ()
 end test symbol-literal-test;
 
 define suite literal-test-suite ()
+  test binary-integer-literal-test;
   test boolean-literal-test;
   test character-literal-test;
   test decimal-integer-literal-test;
+  test hexadecimal-integer-literal-test;
+  test octal-integer-literal-test;
   test ratio-literal-test;
   test string-literal-test;
   test symbol-literal-test;
