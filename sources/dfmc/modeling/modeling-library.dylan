@@ -408,6 +408,8 @@ define module-with-models dfmc-modeling
       &getter limited-collection-size,
       &getter limited-collection-dimensions,
       lookup-any-limited-collection-element-type,
+    <&limited-function>,
+      &getter limited-function-signature,
     <&limited-integer>,
       ^limited-integer,
       &getter limited-integer-min,

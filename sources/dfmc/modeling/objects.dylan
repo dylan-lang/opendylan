@@ -46,7 +46,7 @@ define sealed domain initialize-packed-slots (<&object>);
 // place.
 
 define constant <model-value>
-  = type-union(<&top>, <heap-deferred-model>,
+  = type-union(<&top>, <heap-deferred-model>, <function>,
                <number>, <character>, <boolean>, <mapped-unbound>,
                <list>, <vector>, <string>, <symbol>); // etc.
 
