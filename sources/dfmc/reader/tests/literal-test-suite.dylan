@@ -89,12 +89,25 @@ define test hexadecimal-integer-literal-test ()
   assert-signals(<invalid-token>, read-fragment("#xh"));
 end test hexadecimal-integer-literal-test;
 
+define test list-literal-test ()
+  let f = read-fragment("#()");
+  verify-literal(f, #(), <proper-list-fragment>);
+
+  let f = read-fragment("#('a', 'b')");
+  verify-literal(f, #('a', 'b'), <proper-list-fragment>);
+end test list-literal-test;
+
 define test octal-integer-literal-test ()
   let f = read-fragment("#o70");
   verify-literal(f, 56, <integer-fragment>);
 
   assert-signals(<invalid-token>, read-fragment("#o8"));
 end test octal-integer-literal-test;
+
+define test pair-literal-test ()
+  let f = read-fragment("#(1 . 2)");
+  verify-literal(f, #(1 . 2), <improper-list-fragment>);
+end test pair-literal-test;
 
 define test ratio-literal-test ()
   assert-signals(<ratios-not-supported>, read-fragment("1/2"));
@@ -118,14 +131,28 @@ define test symbol-literal-test ()
   verify-presentation(sym, "#\"hello world\"");
 end test symbol-literal-test;
 
+define test vector-literal-test ()
+  let f = read-fragment("#[]");
+  verify-literal(f, #(), <vector-fragment>);
+
+  let f = read-fragment("#[-1, 2]");
+  verify-literal(f, #(-1, 2), <vector-fragment>);
+
+  let f = read-fragment("#[\"a\", b:]");
+  verify-literal(f, #("a", #"b"), <vector-fragment>);
+end test vector-literal-test;
+
 define suite literal-test-suite ()
   test binary-integer-literal-test;
   test boolean-literal-test;
   test character-literal-test;
   test decimal-integer-literal-test;
   test hexadecimal-integer-literal-test;
+  test list-literal-test;
   test octal-integer-literal-test;
+  test pair-literal-test;
   test ratio-literal-test;
   test string-literal-test;
   test symbol-literal-test;
+  test vector-literal-test;
 end suite literal-test-suite;

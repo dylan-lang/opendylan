@@ -168,6 +168,8 @@ define module dfmc-reader
               <true-fragment>,
               <false-fragment>,
           <list-fragment>, fragment-elements,
+            <improper-list-fragment>,
+            <proper-list-fragment>,
           <vector-fragment>,
         <macro-call-fragment>, fragment-macro, fragment-argument,
           <definition-fragment>, fragment-modifiers, fragment-define-word,
