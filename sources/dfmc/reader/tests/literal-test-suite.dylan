@@ -50,6 +50,10 @@ define test character-literal-test ()
   assert-equal(f.fragment-value, '\n');
   verify-presentation(f, "'\\n'");
 
+  let f = read-fragment("'\\<1>'");
+  assert-equal(as(<integer>, f.fragment-value), 1);
+  verify-presentation(f, "'\\<1>'");
+
   let f = read-fragment("'\\<01>'");
   assert-equal(as(<integer>, f.fragment-value), 1);
   verify-presentation(f, "'\\<1>'");
@@ -57,6 +61,11 @@ define test character-literal-test ()
   let f = read-fragment("'\\<fF>'");
   assert-equal(as(<integer>, f.fragment-value), 255);
   verify-presentation(f, "'\\<FF>'");
+
+  assert-signals(<invalid-token>, read-fragment("'21'"));
+  assert-signals(<invalid-token>, read-fragment("'\\j'"));
+  assert-signals(<invalid-token>, read-fragment("'\\<gg>'"));
+  assert-signals(<character-code-too-large>, read-fragment("'\\<fff>'"));
 end test character-literal-test;
 
 define test decimal-integer-literal-test ()
