@@ -159,6 +159,7 @@ define module dfmc-reader
               <abstract-integer-fragment>,
                 <integer-fragment>,
                 <big-integer-fragment>,
+              <float-fragment>,
             <symbol-fragment>,
               <symbol-syntax-symbol-fragment>,
               <keyword-syntax-symbol-fragment>,

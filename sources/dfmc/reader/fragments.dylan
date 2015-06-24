@@ -291,6 +291,8 @@ define /* abstract */ class <abstract-integer-fragment> (<number-fragment>) end;
 define class <integer-fragment> (<abstract-integer-fragment>) end;
 define class <big-integer-fragment> (<abstract-integer-fragment>) end;
 
+define class <float-fragment> (<number-fragment>) end;
+
 define abstract class <literal-sequence-fragment>
     (<literal-fragment>, <compound-fragment>)
   constant slot fragment-elements,

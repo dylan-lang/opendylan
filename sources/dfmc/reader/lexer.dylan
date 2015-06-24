@@ -1322,12 +1322,12 @@ end method atof;
 
 define method parse-fp-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
- => (res :: <number-fragment>)
+ => (res :: <float-fragment>)
   let (class, value) = atof(extract-string(source-location));
 
   // TODO: Decide how to maintain precision and representation,
   // since we lose it here. (CMU used a ratio representation).
-  make(<number-fragment>,
+  make(<float-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
        value: as-fragment-float-value(class, value));
