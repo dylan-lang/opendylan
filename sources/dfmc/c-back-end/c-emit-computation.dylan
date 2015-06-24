@@ -83,6 +83,7 @@ define method emit-local-tmp-definition
   if (tmp.cell?)
     if(closed-over?(tmp))
       emit-parameter-type(back-end, stream, dylan-value(#"<object>"));
+      format-emit*(back-end, stream, "*");
     else
       emit-parameter-type(back-end, stream, cell-representation-type(tmp));
     end;
