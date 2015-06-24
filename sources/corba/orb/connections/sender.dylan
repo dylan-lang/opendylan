@@ -110,9 +110,9 @@ end method;
 
 define method marshall-request-context (request :: <request>, stream :: <marshalling-stream>)
   let context-values = request-context-values(request);
-  when (context-values)
+  unless (empty?(context-values))
     marshall(make(<sequence-typecode>, element-typecode: corba/$string-typecode, max-length: 0),
 	     context-values,
 	     stream);
-  end when;
+  end unless;
 end method;
