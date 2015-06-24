@@ -363,8 +363,10 @@ define method do-deep-copy
   make-name-fragment(fragment-name(f));
 end method;
 
+// This is used by macro expansion with a variety of types such as
+// <&class>, <&raw-integer>, <&mm-wrapper>, <&instance-slot-descriptor>.
 define method make-literal-fragment (value :: <object>)
-  make-in-expansion(<elementary-literal-fragment>, value: value);
+  make-in-expansion(<model-object-literal-fragment>, value: value);
 end method;
 
 define method make-literal-fragment (value :: <integer>)

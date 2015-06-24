@@ -217,9 +217,6 @@ end class;
 
 define constant <literal-constant-fragment> = <literal-fragment>;
 
-// TODO: CORRECTNESS: Provide a subclass of <elementary-literal-fragment>
-// for use for "other values", rather than instantiating this one.
-
 define /* abstract */ class <elementary-literal-fragment>
     (<literal-fragment>, <elementary-fragment>)
 end class;
@@ -227,6 +224,9 @@ end class;
 define method fragment-kind (f :: <elementary-literal-fragment>) => kind;
   $literal-token
 end method;
+
+// This is used internally by the macro expander.
+define class <model-object-literal-fragment> (<elementary-literal-fragment>) end;
 
 define /* abstract */ class <boolean-fragment> (<elementary-literal-fragment>)
 end class;

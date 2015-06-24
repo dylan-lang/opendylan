@@ -168,6 +168,7 @@ define module dfmc-reader
             <boolean-fragment>,
               <true-fragment>,
               <false-fragment>,
+            <model-object-literal-fragment>,
           <list-fragment>, fragment-elements,
             <improper-list-fragment>,
             <proper-list-fragment>,
