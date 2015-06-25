@@ -90,7 +90,7 @@ end method;
 
 define method substitute-as-symbol (f :: <fragment-or-template>)
   make-in-expansion
-    (<symbol-fragment>, value: as(<symbol>, stringify(f)));
+    (<symbol-syntax-symbol-fragment>, value: as(<symbol>, stringify(f)));
 end method;
 
 //// Splicing substitutions.
@@ -152,7 +152,7 @@ end method;
 define method substitute-spliced-as-symbol
     (prefix :: <string>, name :: <variable-name-fragment>, suffix :: <string>)
   make-in-expansion
-    (<symbol-fragment>,
+    (<symbol-syntax-symbol-fragment>,
        value: as-fragment-value
                 (as(<symbol>,
                     concatenate(prefix, fragment-name-string(name), suffix))))
@@ -363,8 +363,10 @@ define method do-deep-copy
   make-name-fragment(fragment-name(f));
 end method;
 
+// This is used by macro expansion with a variety of types such as
+// <&class>, <&raw-integer>, <&mm-wrapper>, <&instance-slot-descriptor>.
 define method make-literal-fragment (value :: <object>)
-  make-in-expansion(<elementary-literal-fragment>, value: value);
+  make-in-expansion(<model-object-literal-fragment>, value: value);
 end method;
 
 define method make-literal-fragment (value :: <integer>)
@@ -388,7 +390,7 @@ define method make-literal-fragment (value :: <boolean>)
 end method;
 
 define method make-literal-fragment (value :: <character>)
-  make-in-expansion(<elementary-literal-fragment>, value: value);
+  make-in-expansion(<character-fragment>, value: value);
 end method;
 
 // TODO: CORRECTNESS: Decide what do do about elements/values and

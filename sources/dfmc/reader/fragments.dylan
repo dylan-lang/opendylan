@@ -217,10 +217,7 @@ end class;
 
 define constant <literal-constant-fragment> = <literal-fragment>;
 
-// TODO: CORRECTNESS: Provide a subclass of <elementary-literal-fragment>
-// for use for "other values", rather than instantiating this one.
-
-define /* abstract */ class <elementary-literal-fragment>
+define abstract class <elementary-literal-fragment>
     (<literal-fragment>, <elementary-fragment>)
 end class;
 
@@ -228,7 +225,10 @@ define method fragment-kind (f :: <elementary-literal-fragment>) => kind;
   $literal-token
 end method;
 
-define /* abstract */ class <boolean-fragment> (<elementary-literal-fragment>)
+// This is used internally by the macro expander.
+define class <model-object-literal-fragment> (<elementary-literal-fragment>) end;
+
+define abstract class <boolean-fragment> (<elementary-literal-fragment>)
 end class;
 
 define class <true-fragment> (<boolean-fragment>)
@@ -241,7 +241,7 @@ define class <false-fragment> (<boolean-fragment>)
   // keyword value: = #f;
 end class;
 
-define /* abstract */ class <character-fragment>
+define class <character-fragment>
     (<elementary-literal-fragment>)
 end class;
 
@@ -249,7 +249,7 @@ define method fragment-kind (f :: <character-fragment>) => kind;
   $character-literal-token
 end method;
 
-define /* abstract */ class <string-fragment> (<elementary-literal-fragment>)
+define class <string-fragment> (<elementary-literal-fragment>)
 end class;
 
 define method fragment-kind (f :: <string-fragment>) => kind;
@@ -257,7 +257,7 @@ define method fragment-kind (f :: <string-fragment>) => kind;
 end method;
 
 
-define /* abstract */ class <symbol-fragment> (<elementary-literal-fragment>)
+define abstract class <symbol-fragment> (<elementary-literal-fragment>)
 end class;
 
 define method fragment-kind (f :: <symbol-fragment>) => kind;
@@ -276,7 +276,7 @@ end method;
 define class <symbol-syntax-symbol-fragment> (<symbol-fragment>) end;
 define class <keyword-syntax-symbol-fragment> (<symbol-fragment>) end;
 
-define /* abstract */ class <number-fragment>
+define abstract class <number-fragment>
     (<literal-fragment>, <elementary-fragment>)
 end class;
 
@@ -287,9 +287,11 @@ end method;
 
 // TODO: CORRECTNESS: Decide how to represent big integers.
 
-define /* abstract */ class <abstract-integer-fragment> (<number-fragment>) end;
+define abstract class <abstract-integer-fragment> (<number-fragment>) end;
 define class <integer-fragment> (<abstract-integer-fragment>) end;
 define class <big-integer-fragment> (<abstract-integer-fragment>) end;
+
+define class <float-fragment> (<number-fragment>) end;
 
 define abstract class <literal-sequence-fragment>
     (<literal-fragment>, <compound-fragment>)
