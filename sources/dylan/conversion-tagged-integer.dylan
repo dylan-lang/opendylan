@@ -34,12 +34,12 @@ end function interpret-integer-as-machine-word;
 
 define inline-only function strip-integer-tag
     (x :: <machine-word>) => (result :: <machine-word>)
-  machine-word-logxor(x, $integer-tag-value)
+  machine-word-subtract(x, $integer-tag-value)
 end function strip-integer-tag;
 
 define inline-only function insert-integer-tag
     (x :: <machine-word>) => (result :: <machine-word>)
-  machine-word-logior(x, $integer-tag-value)
+  machine-word-add(x, $integer-tag-value)
 end function insert-integer-tag;
 
 define inline-only function force-integer-tag

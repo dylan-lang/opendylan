@@ -19,11 +19,11 @@ Files:     dfmc-boot
            condition
            condition-extras
            object
+           machine-word-lowlevel
            character
            unicode-character
            number
            conversion-tagged-integer
-           machine-word-lowlevel
            machine-word-constants
            integer
            double-integer-basics

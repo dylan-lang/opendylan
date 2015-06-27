@@ -231,6 +231,23 @@ define counter machine-word-count-high-zeros;
 //////////////////////////////////////////////////////////////////////////////
 // Arithmetic
 
+define macro simple-arithmetic-definer
+  { define simple-arithmetic ?:name }
+    => { define inline-only function ?name
+             (x :: <machine-word>, y :: <machine-word>)
+          => (result :: <machine-word>)
+           let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
+           let raw-y :: <raw-machine-word> = primitive-unwrap-machine-word(y);
+           let result :: <raw-machine-word>
+                 = "primitive-" ## ?name(raw-x, raw-y);
+           primitive-wrap-machine-word(result)
+         end function ?name
+       }
+end macro;
+
+define simple-arithmetic machine-word-add;
+define simple-arithmetic machine-word-subtract;
+
 define macro simple-arithmetic-with-overflow-definer
   { define simple-arithmetic-with-overflow ?:name }
     => { define inline-only function ?name
