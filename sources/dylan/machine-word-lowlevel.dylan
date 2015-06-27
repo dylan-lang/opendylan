@@ -231,8 +231,8 @@ define counter machine-word-count-high-zeros;
 //////////////////////////////////////////////////////////////////////////////
 // Arithmetic
 
-define macro simple-arithmetic-definer
-  { define simple-arithmetic ?:name }
+define macro simple-arithmetic-with-overflow-definer
+  { define simple-arithmetic-with-overflow ?:name }
     => { define inline-only function ?name
              (x :: <machine-word>, y :: <machine-word>)
           => (result :: <machine-word>, overflow? :: <boolean>)
@@ -245,8 +245,8 @@ define macro simple-arithmetic-definer
        }
 end macro;
 
-define simple-arithmetic machine-word-add-with-overflow;
-define simple-arithmetic machine-word-subtract-with-overflow;
+define simple-arithmetic-with-overflow machine-word-add-with-overflow;
+define simple-arithmetic-with-overflow machine-word-subtract-with-overflow;
 
 define inline-only function machine-word-multiply-with-overflow
     (x :: <machine-word>, y :: <machine-word>)
