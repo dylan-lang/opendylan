@@ -1201,7 +1201,7 @@ define abstract class <definition-fragment> (<macro-call-fragment>)
     required-init-keyword: define-word:;
 end class;
 
-define /* abstract */ class <definition-tail-fragment> (<compound-fragment>)
+define class <definition-tail-fragment> (<compound-fragment>)
   constant slot fragment-end,
     required-init-keyword: end:;
   constant slot fragment-tail-name-1 = #f,
