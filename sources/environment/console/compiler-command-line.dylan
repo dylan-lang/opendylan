@@ -28,6 +28,8 @@ define command-line main => <main-command>
   flag echo-input       = "echoes all input to the console";
   flag verbose          = "show verbose output";
 
+  keyword show :: <command-property> = "show a compiler setting";
+
   flag import           = "import the project";
   flag build            = "build the project";
   flag compile          = "compile the project";

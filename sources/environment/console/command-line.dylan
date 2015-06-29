@@ -19,6 +19,8 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: internal-debug:;
   constant slot %project :: false-or(<file-locator>) = #f,
     init-keyword: project:;
+  constant slot %show           :: false-or(<command-property>) = #f,
+    init-keyword: show:;
   constant slot %help?          :: <boolean> = #f,
     init-keyword: help?:;
   constant slot %logo?          :: <boolean> = #f,
@@ -169,6 +171,8 @@ define method do-execute-command
       run(<version-command>)
     elseif (command.%shortversion?)
       run(<version-command>, short: "short")
+    elseif (command.%show)
+      run(<show-property-command>, property: command.%show);
     else
       command.%logo? & message(context, dylan-banner());
       let personal-root = command.%personal-root;
