@@ -669,7 +669,7 @@ sub parse_header {
             # Continuation line -- part of a multi-line value
             $contents{$last_keyword} .= ' ' . $1;
         } else {
-            if(!/^([-A-Za-z0-9_!&*<>|^\$\%\@\?]+):\s*(.*)\s*$/) {
+            if(!/^([-+A-Za-z0-9_!&*<>|^\$\%\@\?]+):\s*(.*)\s*$/) {
                 print STDERR "$file:$lidfile_line: Warning: ",
                              "bad keyword line\n";
                 next;
