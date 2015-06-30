@@ -55,8 +55,6 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: verbose?:;
   constant slot %unify? :: <boolean> = #f,
     init-keyword: unify?:;
-  constant slot %save? :: <boolean> = #t,
-    init-keyword: save?:;
   constant slot %harp?          :: <boolean> = #f,
     init-keyword: harp?:;
   constant slot %assemble?                   = #f,
@@ -96,7 +94,6 @@ define method execute-main-command
   if (build? | command.%compile?)
     run(<build-project-command>,
         clean?:      command.%clean?,
-        save?:       command.%save?,
         link?:       #f,
         release?:    command.%release?,
         verbose?:    command.%verbose?,
