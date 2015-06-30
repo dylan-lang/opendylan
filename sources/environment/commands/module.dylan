@@ -133,6 +133,8 @@ define module environment-commands
   // Environment context
   export <environment-context>,
          context-notification,
+         context-call-active?,
+         context-call-active?-setter,
          context-project;
 
   // Project context

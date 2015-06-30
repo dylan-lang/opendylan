@@ -13,6 +13,8 @@ define constant $command-prefix-character = ':';
 define open abstract class <environment-context> (<server-context>)
   constant slot context-notification :: <notification>
     = make(<notification>, lock: make(<lock>));
+  slot context-call-active? :: <boolean>,
+    init-value: #f;
   constant slot context-project-contexts :: <object-table>
     = make(<object-table>);
 end class <environment-context>;

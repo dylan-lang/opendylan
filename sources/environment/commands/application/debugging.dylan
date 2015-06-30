@@ -850,8 +850,11 @@ define method synchronize-application-call
  => (#rest objects)
   let notification = context.context-notification;
   with-lock (associated-lock(notification))
+    context.context-call-active? := #t;
     apply(function, args);
-    wait-for(notification);
+    while (context.context-call-active?)
+      wait-for(notification);
+    end while;
     refresh-application-context(context)
   end
 end method synchronize-application-call;
@@ -867,6 +870,7 @@ define method synchronize-application-release
       let application-context = context.context-application-context;
       application-context.context-thread := thread
     end;
+    context.context-call-active? := #f;
     release(notification)
   end
 end method synchronize-application-release;
