@@ -1,0 +1,35 @@
+#! /bin/sh
+
+# Find some pathnames
+compiler=`which dylan-compiler`
+lldb=$OPEN_DYLAN_LLDB
+if test ! -x "$lldb"; then
+  lldb=`which lldb`
+fi
+
+# Exit if there's an error
+# We do this after finding the path names as the script
+# would exit if `which ...` failed to find something.
+set -e
+
+# Validate pathnames
+if test ! -x "$compiler"; then
+  echo "Could not find 'dylan-compiler' on the PATH."
+  exit 1
+fi
+
+if test ! -x "$lldb"; then
+  echo "Could not find 'lldb' on the PATH."
+  exit 1
+fi
+
+compilerDir="`dirname "$compiler"`"
+# Normalize the path name. Can't use realpath or readlink due to portability.
+dylanDir="`cd "${compilerDir}"/..;pwd`"
+helper=$dylanDir/share/opendylan/lldb/dylan
+if test ! -d "$helper"; then
+  echo "Could not find $helper."
+  exit 1
+fi
+
+$lldb -O "command script import $helper" "$@"

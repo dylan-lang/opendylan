@@ -101,6 +101,18 @@ Compiler
 * The C back-end no longer generates invalid C when outputting a
   float with a value of infinity or NaN.
 
+Debugging
+=========
+
+* There is a new ``dylan-lldb`` wrapper script which can be used to
+  launch ``lldb`` and pre-load the Open Dylan LLDB integration scripts.
+  ``lldb`` is the debugger that is part of the LLVM project. It is the
+  default debugger on Mac OS X.
+
+  If you need it to launch a custom build of LLDB, you can set the
+  ``OPEN_DYLAN_LLDB`` environment variable to point to an alternative
+  ``lldb`` executable.
+
 Documentation
 =============
 
