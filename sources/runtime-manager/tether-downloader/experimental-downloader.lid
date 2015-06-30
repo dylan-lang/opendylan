@@ -1,4 +1,5 @@
 library:    tether-downloader
+target-type: dll
 files:      library
             static-block
             alignment

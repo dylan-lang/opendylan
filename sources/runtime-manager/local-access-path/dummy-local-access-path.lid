@@ -1,4 +1,5 @@
 library:     local-access-path
+target-type: dll
 files:       library
              module
              dummy-access-path

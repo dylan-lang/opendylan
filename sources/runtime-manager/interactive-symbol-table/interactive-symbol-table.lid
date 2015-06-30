@@ -1,4 +1,5 @@
 library:     interactive-symbol-table
+target-type: dll
 files:       library
              interactive-symbol-table
              internal-utilities

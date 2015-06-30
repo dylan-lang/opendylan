@@ -1,6 +1,7 @@
 Library:   dfmc-environment
 Synopsis:  DFMC environment
 Author:    Andy Armstrong
+Target-Type: dll
 Files:  library
         module
         exe-projects

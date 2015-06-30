@@ -1,4 +1,5 @@
 library:     local-access-path
+target-type: dll
 files:       library
              module
              enhanced-nub-interfacing

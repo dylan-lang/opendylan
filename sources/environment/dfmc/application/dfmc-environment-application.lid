@@ -1,6 +1,7 @@
 Library:   dfmc-environment-application
 Synopsis:  Environment runtime manager backend implementation
 Author:    Bill Chiles, Paul Howard, Jason Trenouth, Andy Armstrong
+Target-Type: dll
 Files: library
        app-server
        machines
