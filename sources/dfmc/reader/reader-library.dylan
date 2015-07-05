@@ -188,6 +188,11 @@ define module dfmc-reader
             fragment-body-fragment,
               <local-declaration-fragment>, fragment-list-fragment,
         <function-call-fragment>, fragment-function, fragment-arguments,
+          <prefix-call-fragment>,
+          <dot-call-fragment>,
+          <array-call-fragment>,
+          <binary-operator-call-fragment>,
+          <unary-operator-call-fragment>,
         <body-fragment>, body-fragment, fragment-constituents,
         <macro-definition-fragment>;
 
