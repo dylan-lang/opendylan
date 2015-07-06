@@ -653,7 +653,7 @@ statement:
            verify-statement-tail(arg$1, arg$3);
            make(<statement-fragment>,
                 record:          fragment-record(arg$1),
-                  source-position: position-between(arg$1, arg$3),
+                source-position: position-between(arg$1, arg$3),
                 macro: arg$1,
                 body-fragment: arg$2);
          end;;
