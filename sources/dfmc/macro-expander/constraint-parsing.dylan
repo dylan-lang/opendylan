@@ -12,7 +12,7 @@ define method parse-constraint
   let all-tokens = pair(constraint-start, tokens);
   let token-stack = all-tokens;
   let nesting-stack = #();
-  // TODO: PERORMANCE: If we only count top level tokens, we could win in
+  // TODO: PERFORMANCE: If we only count top level tokens, we could win in
   // certain situations - if you fail anywhere within a nested fragment, no
   // subsequence of the nested fragment will win, so rewind back to the
   // next top level token.
@@ -77,7 +77,7 @@ define method parse-bounded-constraint
   let all-tokens = pair(constraint-start, tokens);
   let token-stack = all-tokens;
   let nesting-stack = #();
-  // TODO: PERORMANCE: If we only count top level tokens, we could win in
+  // TODO: PERFORMANCE: If we only count top level tokens, we could win in
   // certain situations - if you fail anywhere within a nested fragment, no
   // subsequence of the nested fragment will win, so rewind back to the
   // next top level token.
@@ -144,7 +144,7 @@ define method parse-bounded-constraint-no-backtracking
   let all-tokens = pair(constraint-start, tokens);
   let token-stack = all-tokens;
   let nesting-stack = #();
-  // TODO: PERORMANCE: If we only count top level tokens, we could win in
+  // TODO: PERFORMANCE: If we only count top level tokens, we could win in
   // certain situations - if you fail anywhere within a nested fragment, no
   // subsequence of the nested fragment will win, so rewind back to the
   // next top level token.
