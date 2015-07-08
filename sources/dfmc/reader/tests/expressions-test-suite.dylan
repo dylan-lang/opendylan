@@ -29,6 +29,72 @@ define test negative-unary-operator-test ()
   assert-equal(f-arg.fragment-name, #"x");
 end test negative-unary-operator-test;
 
+define function verify-binary-operator
+    (code :: <string>, operator :: <symbol>)
+ => ()
+  let f = read-fragment(code);
+  assert-true(instance?(f, <binary-operator-call-fragment>));
+  assert-equal(f.fragment-function.fragment-name, operator);
+  assert-equal(f.fragment-arguments.size, 2);
+  let f-x-arg = f.fragment-arguments.first;
+  assert-true(instance?(f-x-arg, <variable-name-fragment>));
+  assert-equal(f-x-arg.fragment-name, #"x");
+  let f-1-arg = f.fragment-arguments.second;
+  verify-literal(f-1-arg, 1, <integer-fragment>);
+end function verify-binary-operator;
+
+define test binary-+-test ()
+  verify-binary-operator("x + 1", #"+");
+end test binary-+-test;
+
+define test binary---test ()
+  verify-binary-operator("x - 1", #"-");
+end test binary---test;
+
+define test binary-*-test ()
+  verify-binary-operator("x * 1", #"*");
+end test binary-*-test;
+
+define test binary-/-test ()
+  verify-binary-operator("x / 1", #"/");
+end test binary-/-test;
+
+define  test binary-^-test ()
+  verify-binary-operator("x ^ 1", #"^");
+end test binary-^-test;
+
+define test binary-=-test ()
+  verify-binary-operator("x = 1", #"=");
+end test binary-=-test;
+
+define test binary-==-test ()
+  verify-binary-operator("x == 1", #"==");
+end test binary-==-test;
+
+define test binary-~=-test ()
+  verify-binary-operator("x ~= 1", #"~=");
+end test binary-~=-test;
+
+define test binary-~==-test ()
+  verify-binary-operator("x ~== 1", #"~==");
+end test binary-~==-test;
+
+define test binary-<-test ()
+  verify-binary-operator("x < 1", #"<");
+end test binary-<-test;
+
+define test binary-<=-test ()
+  verify-binary-operator("x <= 1", #"<=");
+end test binary-<=-test;
+
+define test binary->-test ()
+  verify-binary-operator("x > 1", #">");
+end test binary->-test;
+
+define test binary->=-test ()
+  verify-binary-operator("x >= 1", #">=");
+end test binary->=-test;
+
 define test escaped-name-test ()
   let f = read-fragment("\\+");
   assert-true(instance?(f, <escaped-name-fragment>));
@@ -39,5 +105,19 @@ define suite expressions-test-suite ()
   test variable-name-test;
   test not-unary-operator-test;
   test negative-unary-operator-test;
+  test binary-+-test;
+  test binary---test;
+  test binary-*-test;
+  test binary-/-test;
+  test binary-^-test;
+  test binary-=-test;
+  test binary-==-test;
+  test binary-~=-test;
+  test binary-~==-test;
+  test binary-<-test;
+  test binary-<=-test;
+  test binary->-test;
+  test binary->=-test;
+  // This doesn't test &, | and := yet.
   test escaped-name-test;
 end suite expressions-test-suite;
