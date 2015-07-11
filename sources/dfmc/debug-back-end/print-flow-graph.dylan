@@ -112,7 +112,7 @@ end method;
 define method print-computations
     (stream :: <stream>, first :: <computation>, #key before: last) => ();
   for-computations (c from first before last)
-    indent(stream, *offset*);
+    print-indent(stream, *offset*);
     format(stream, "%=\n", c);
   end for-computations;
 end method print-computations;
