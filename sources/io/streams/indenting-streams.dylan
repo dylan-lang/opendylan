@@ -46,8 +46,9 @@ author: William Lott, Peter S. Housel
 define sealed class <indenting-stream> (<wrapper-stream>)
   slot is-space-column :: false-or(<integer>) = 0;
   slot is-indentation :: <integer> = 0, init-keyword: indentation:;
-  slot is-input-tab-width :: <integer> = 8, init-keyword: input-tab-width:;
-  slot is-output-tab-width :: false-or(<integer>) = 8,
+  constant slot is-input-tab-width :: <integer> = 8,
+    init-keyword: input-tab-width:;
+  constant slot is-output-tab-width :: false-or(<integer>) = 8,
     init-keyword: output-tab-width:;
 end;
 
