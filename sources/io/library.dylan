@@ -118,7 +118,8 @@ define module streams
 
   // Indenting streams
   export
-    <indenting-stream>, indent;
+    <indenting-stream>, indent,
+    \with-indentation;
 end module streams;
 
 define module streams-internals

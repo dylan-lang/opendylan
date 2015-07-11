@@ -193,3 +193,19 @@ define method indent (stream :: <indenting-stream>, delta :: <integer>)
     => ();
   stream.is-indentation := stream.is-indentation + delta;
 end;
+
+define macro with-indentation
+  { with-indentation (?stream:expression) ?:body end }
+  => { with-indentation (?stream, 4) ?body end }
+  { with-indentation (?stream:expression, ?indentation:expression) ?:body end }
+  => { begin
+         let _stream = ?stream;
+         let _indentation = ?indentation;
+         block ()
+           indent(_stream, _indentation);
+           ?body
+         cleanup
+           indent(_stream, -_indentation)
+         end
+       end }
+end macro with-indentation
