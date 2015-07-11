@@ -17,7 +17,7 @@ define module scepter-utilities
 
   export          // from indenting.dylan
     \with-indented-body,
-    <indenting-stream>,
+    <scepter-indenting-stream>,
     indent+,
     indent-;
 

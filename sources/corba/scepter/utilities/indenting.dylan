@@ -5,26 +5,26 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define class <indenting-stream> (<wrapper-stream>)
+define class <scepter-indenting-stream> (<wrapper-stream>)
   slot indent-depth :: <integer> = 0;
   slot %indent-string :: <string> = make(<string>, size: 64);
   constant slot indent-tab :: <integer> = 2;
 end class;
 
-define method indent+ (stream :: <indenting-stream>)
+define method indent+ (stream :: <scepter-indenting-stream>)
   stream.indent-depth := stream.indent-depth + 1;
 end method;
 
-define method indent- (stream :: <indenting-stream>)
+define method indent- (stream :: <scepter-indenting-stream>)
   stream.indent-depth := stream.indent-depth - 1;
 end method;
 
-define method indent-string (stream :: <indenting-stream>)
+define method indent-string (stream :: <scepter-indenting-stream>)
   stream.grow-indent-string;
   stream.%indent-string;
 end method;
 
-define method grow-indent-string (stream :: <indenting-stream>)
+define method grow-indent-string (stream :: <scepter-indenting-stream>)
   if (stream.%indent-string.size < stream.indent-size)
     let new-size = 2 * stream.%indent-string.size;
     let required-size = stream.indent-size;
@@ -35,11 +35,11 @@ define method grow-indent-string (stream :: <indenting-stream>)
   end if;
 end method;
 
-define method indent-size (stream :: <indenting-stream>)
+define method indent-size (stream :: <scepter-indenting-stream>)
   stream.indent-depth * stream.indent-tab;
 end method;
 
-define method new-line (stream :: <indenting-stream>)
+define method new-line (stream :: <scepter-indenting-stream>)
  => ()
   next-method();
   write(stream, stream.indent-string, end: stream.indent-size);

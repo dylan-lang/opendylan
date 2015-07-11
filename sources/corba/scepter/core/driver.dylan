@@ -59,7 +59,7 @@ define open abstract class <scepter> (<object>)
   slot scepter-program-name :: <string> = "IDL compiler";
 
   slot scepter-output :: <stream>
-    = make(<indenting-stream>, inner-stream: *standard-output*);
+    = make(<scepter-indenting-stream>, inner-stream: *standard-output*);
 
   slot scepter-front-end :: false-or(<scepter-front-end>) = #f;
   slot scepter-back-ends :: <deque> = make(<deque>);

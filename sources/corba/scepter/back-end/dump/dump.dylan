@@ -44,7 +44,7 @@ define method scepter-back-end-emit (back-end :: <dump-back-end>, root :: <ast-r
     with-open-file(stream = filename, direction: #"output")
       let old-idl-output = scepter.scepter-output;
       block ()
-        scepter.scepter-output := make(<indenting-stream>, inner-stream: stream);
+        scepter.scepter-output := make(<scepter-indenting-stream>, inner-stream: stream);
         dump-definition(back-end, root, scepter.scepter-output);
       cleanup
         close(scepter.scepter-output);
