@@ -170,6 +170,14 @@ define method runstage (state :: <machine-state>, x :: <&raw-machine-word>) => (
   primitive-wrap-machine-word(primitive-cast-pointer-as-raw(^raw-object-value(x)))
 end method;
 
+define method runstage (state :: <machine-state>, x :: <&single-float>) => (value)
+  ^raw-object-value(^%single-float-data(x))
+end method;
+
+define method runstage (state :: <machine-state>, x :: <&double-float>) => (value)
+  ^raw-object-value(^%double-float-data(x))
+end method;
+
 // define method runstage (state :: <machine-state>, x :: <&iep>) => (value)
 //   // have to handle specially
 //   #f

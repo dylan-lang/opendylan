@@ -57,10 +57,25 @@ define execution-test size
   "define not-inline method f (x) size(x) end; f(#[1, 2, 3])" => 3
 end;
 
+define execution-test float-addition
+  "define not-inline method f (x) x + 1.0 end; f(2.0)" => 3.0
+end;
+
+define execution-test single-float-subtraction
+  "define not-inline method f (x :: <single-float>) x - 1.0s0 end; f(2.0s0)" => 1.0s0
+end;
+
+define execution-test double-float-multiplication
+  "define not-inline method f (x) x * 2.0d0 end; f(2.0d0)" => 4.0d0
+end;
+
 define suite dfmc-execution-suite ()
   test execution-basic;
   test execution-addition;
   test execution-constant;
   test execution-variable;
   test execution-size;
+  test execution-float-addition;
+  test execution-single-float-subtraction;
+  test execution-double-float-multiplication;
 end;
