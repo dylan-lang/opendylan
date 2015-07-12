@@ -49,7 +49,7 @@ define execution-test constant
 end;
 
 define execution-test variable
-  "define variable *y* = 1; define not-inline method f (x) x + *y* end; f(3)" => 4
+  "define variable *y* = 1; define not-inline method f (x) x + *y* end; *y* := 2; f(2)" => 4
 end;
 
 define execution-test size
@@ -68,6 +68,22 @@ define execution-test double-float-multiplication
   "define not-inline method f (x) x * 2.0d0 end; f(2.0d0)" => 4.0d0
 end;
 
+define execution-test string-size
+  "define not-inline method f (x :: <byte-string>) size(x) end; f(\"abc\")" => 3
+end;
+
+define execution-test for-loop
+  "define not-inline method f (args) let sum = 0; for (x in args) sum := sum + x; end for; sum; end; f(#[1, 2, 3])" => 6
+end;
+
+define execution-test block-exit-1
+  "define not-inline method f (x) block (return) if (odd?(x)) return(x); else -1; end if; end block; end; f(3)" => 3
+end;
+
+define execution-test block-exit-2
+  "define not-inline method f (x) block (return) if (odd?(x)) return(x); else -1; end if; end block; end; f(2)" => -1
+end;
+
 define suite dfmc-execution-suite ()
   test execution-basic;
   test execution-addition;
@@ -77,4 +93,8 @@ define suite dfmc-execution-suite ()
   test execution-float-addition;
   test execution-single-float-subtraction;
   test execution-double-float-multiplication;
+  test execution-string-size;
+  test execution-for-loop;
+  test execution-block-exit-1;
+  test execution-block-exit-2;
 end;
