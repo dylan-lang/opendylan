@@ -20,7 +20,6 @@ define macro execution-test-definer
           transaction-id := interpret-top-level-form(tlf,
                                                      trace?: $trace-execution);
         end;
-        format-out("transaction-id: %=\n", transaction-id);
         assert-equal(?result, interpreter-transaction-value(transaction-id), ?test-code);
       end;
     end }
