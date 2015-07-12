@@ -184,7 +184,7 @@ end method;
 // end method;
 
 define method make-runstage (state :: <machine-state>, x) => (value)
-  error("No Runstage for %=.", x);
+  error("No Runstage for %= (%=).", x, x.object-class);
 end method;
 
 define method make-runstage (state :: <machine-state>, x :: <vector>) => (value)
