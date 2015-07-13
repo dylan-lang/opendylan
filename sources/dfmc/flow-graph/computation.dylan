@@ -826,7 +826,7 @@ end graph-class <end-block>;
 define graph-class <end-exit-block> (<end-block>)
   // This is a terminating computation, because it terminates execution of
   // an interpreter thread, but not an <end>, because it doesn't terminate
-  // control flow in the DFM graph -- there is a next-compution, which is
+  // control flow in the DFM graph -- there is a next-computation, which is
   // outside of the block.  For data flow, that's right.
 end graph-class <end-exit-block>;
 

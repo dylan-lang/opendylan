@@ -121,7 +121,7 @@ define method redirect-previous-computation!
     (prev-c :: <if>, old-c :: <computation>, new-c :: <computation>) => ()
   // if (next-computation(prev-c) == old-c)
   //   assert(instance?(old-c, <if-merge>),
-  //          "next-compution of if must be merge");
+  //          "next-computation of if must be merge");
   //   if (instance?(new-c, <if-merge>))
   //     next-computation(prev-c) := new-c;
   //   elseif (temporary(new-c) == merge-left-value(old-c))
@@ -210,7 +210,7 @@ define method redirect-next-computation!
     (next-c :: <if-merge>,
      old-c :: <computation>, new-c :: false-or(<computation>)) => ()
   if (previous-computation(next-c) == old-c)
-    assert(instance?(old-c, <if>), "previous-compution of merge must be if");
+    assert(instance?(old-c, <if>), "previous-computation of merge must be if");
     if (instance?(new-c, <if>))
       previous-computation(next-c) := new-c;
     elseif (temporary(new-c) == merge-left-value(next-c))

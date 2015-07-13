@@ -62,7 +62,7 @@ The runtime provides a set of functions the compiler uses to implement Dylan NLX
 These functions are not primitives, but like those have a very close relationship
 to corresponding compiler code.
 
-Relevant compiler code can be found in dfmc/c-back-end/c-emit-compution.dylan
+Relevant compiler code can be found in dfmc/c-back-end/c-emit-computation.dylan
 when searching for <bind-exit> and <unwind-protect>.
 
 The runtime exposes the following pseudo-primitives for NLX:
