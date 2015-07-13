@@ -559,6 +559,90 @@ define streams macro-test with-input-from-string-test ()
 end;
 
 
+/// Indenting stream tests
+register-stream-class-info("<indenting-stream>", <indenting-stream>,
+                           input-stream?: #f,
+                           output-stream?: #t,
+                           element-type: <byte-character>);
+
+define sideways method make-stream-tests-of-size
+    (class :: subclass(<indenting-stream>), stream-size :: <integer>)
+ => (tests :: <sequence>)
+  let class-info = stream-class-info(class);
+  let tests :: <stretchy-object-vector> = make(<stretchy-object-vector>);
+  let character-sequence = copy-sequence($default-string, end: stream-size);
+  local method add-stream-test-info () => ()
+          add!(tests,
+               make(<stream-test-info>,
+                    test-name: format-to-string("%s %s size %d",
+                                                #"output",
+                                                class-info.info-class-name,
+                                                stream-size),
+                    class-info: class-info,
+                    contents: character-sequence,
+                    direction: #"output",
+                    make-function: method () => (stream :: <indenting-stream>)
+                                     let string-stream = make(<byte-string-stream>);
+                                     make(class, inner-stream: string-stream)
+                                   end))
+        end method add-stream-test-info;
+  add-stream-test-info();
+  tests
+end method make-stream-tests-of-size;
+
+define streams function-test indent ()
+  check-equal("indent works",
+              "   hello",
+              with-output-to-string (stream)
+                let is = make(<indenting-stream>, inner-stream: stream);
+                indent(is, 3);
+                write(is, "hello");
+              end);
+  check-equal("indent combines",
+              "      hello",
+              with-output-to-string (stream)
+                let is = make(<indenting-stream>, inner-stream: stream);
+                indent(is, 3);
+                indent(is, 3);
+                write(is, "hello");
+              end);
+  check-equal("indent unindents",
+              "hello",
+              with-output-to-string (stream)
+                let is = make(<indenting-stream>, inner-stream: stream);
+                indent(is, 3);
+                indent(is, -3);
+                write(is, "hello");
+              end);
+  check-equal("indent obeys indentation",
+              "    hello",
+              with-output-to-string (stream)
+                let is = make(<indenting-stream>, inner-stream: stream, indentation: 1);
+                indent(is, 3);
+                write(is, "hello");
+              end);
+end;
+
+define streams macro-test with-indentation-test ()
+  check-equal("with-indentation test, default indentation",
+              "    hello",
+              with-output-to-string (stream)
+                let is = make(<indenting-stream>, inner-stream: stream);
+                with-indentation (is)
+                  write(is, "hello");
+                end;
+              end);
+  check-equal("with-indentation test, specifying indentation",
+              "   hello",
+              with-output-to-string (stream)
+                let is = make(<indenting-stream>, inner-stream: stream);
+                with-indentation (is, 3)
+                  write(is, "hello");
+                end;
+              end);
+end;
+
+
 /// Miscellaneous stream tests
 
 /*---*** andrewa: not currently used

@@ -33,6 +33,7 @@ define module io-test-suite
   use print;
   use print-internals;
   use format;
+  use standard-io;
 
   use testworks;
   use testworks-specs;
