@@ -123,6 +123,13 @@ Documentation
 
     export -format rst -file my-lib.rst interface-reference
 
+IO
+==
+
+* An implementation of indenting streams for handling indented text
+  output has been added. See ``<indented-stream>``, ``indent``, and
+  ``with-indentation`` in the ``streams`` module.
+
 Runtime
 =======
 
