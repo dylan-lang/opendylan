@@ -6,6 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $trace-execution = #f;
+define constant $show-dfm = #f;
 
 define macro execution-test-definer
   { define execution-test ?testname:name
@@ -15,6 +16,30 @@ define macro execution-test-definer
     define test "execution-" ## ?testname ()
       let (ld, tlf*) = compile-to-top-level-forms(?test-code);
       with-library-context (ld)
+        if ($show-dfm)
+          let is = make(<indenting-stream>, inner-stream: *standard-output*);
+          format(is, "\nCompiled:\n");
+          with-indentation (is, 2)
+            format(is, "%=", ?test-code);
+          end with-indentation;
+          new-line(is);
+          format(is, "Into:\n");
+          with-indentation (is, 2)
+            for (tlf in tlf*)
+              dynamic-bind (*print-method-bodies?* = #t)
+                print-object(tlf, is);
+                new-line(is);
+                with-indentation (is, 2)
+                  for (m in tlf.form-top-level-methods)
+                    print-object(m, is);
+                    new-line(is);
+                  end for;
+                end with-indentation;
+              end
+            end for;
+          end with-indentation;
+          format(is, "---\n");
+        end if;
         let transaction-id = #f;
         for (tlf in tlf*)
           transaction-id := interpret-top-level-form(tlf,
