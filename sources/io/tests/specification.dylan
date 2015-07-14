@@ -131,6 +131,12 @@ define module-spec streams ()
   macro-test with-output-buffer-test;
   macro-test with-output-to-string-test;
   macro-test with-input-from-string-test;
+
+  // Indenting streams
+  sealed instantiable class <indenting-stream> (<wrapper-stream>);
+  function indent (<indenting-stream>, <integer>)
+    => ();
+  macro-test with-indentation-test;
 end module-spec streams;
 
 

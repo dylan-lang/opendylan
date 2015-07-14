@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define thread variable *offset* = 0;
 
-define method indent (stream, offset :: <integer>)
+define method print-indent (stream, offset :: <integer>)
   for (i from 0 below offset)
     format(stream, "  ");
   end for;

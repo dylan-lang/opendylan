@@ -17,6 +17,7 @@ Files:  library
         streams/native-speed
         streams/file-stream
         streams/multi-buffered-streams
+        streams/indenting-streams
         pprint
         print
         print-double-integer-kludge

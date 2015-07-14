@@ -115,6 +115,11 @@ define module streams
   create <wrapper-stream>,
          inner-stream, inner-stream-setter,
          outer-stream, outer-stream-setter;
+
+  // Indenting streams
+  export
+    <indenting-stream>, indent,
+    \with-indentation;
 end module streams;
 
 define module streams-internals

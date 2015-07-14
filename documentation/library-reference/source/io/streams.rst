@@ -315,6 +315,8 @@ Streams module classes
 - :class:`<buffered-stream>`
 - :class:`<file-stream>`
 - :class:`<sequence-stream>`
+- :class:`<wrapper-stream>`
+- :class:`<indenting-stream>`
 
 Creating streams
 ^^^^^^^^^^^^^^^^
@@ -815,6 +817,34 @@ the accessor function for the *locator:* init-keyword for
 
 For more information, please refer to the reference entry for the
 individual conditions.
+
+Indenting streams
+-----------------
+
+The Streams module provides an :class:`<indenting-stream>` which supports
+managing indentation when printing text to a stream. Indenting streams
+are implemented as wrapper streams, so the destination stream must be
+provided at instantiation.
+
+.. code-block:: dylan
+
+   let is = make(<indenting-stream>, inner-stream: *standard-output*);
+   with-indentation(is, 4)
+     // Write normally to the indenting stream.
+     format(is, "Hello %=!\n", name);
+   end with-indentation;
+
+Indenting streams analyze everything written to them so that indentation
+can be maintained, without having to call :gf:`new-line` directly.
+
+Using indenting streams
+^^^^^^^^^^^^^^^^^^^^^^^
+
+All operations available to :class:`<wrapper-stream>` are available, as
+well as:
+
+* :gf:`indent`
+* :macro:`with-indentation`
 
 Streams protocols
 -----------------
@@ -1387,6 +1417,60 @@ are exported from the *streams* module.
      - :class:`<file-error>`
      - :class:`<file-exists-error>`
      - :class:`<invalid-file-permissions-error>`
+
+.. class:: <indenting-stream>
+   :sealed:
+   :instantiable:
+
+   A wrapper stream which outputs indented text.
+
+   :superclasses: :class:`<wrapper-stream>`
+
+   :keyword inner-stream: An instance of :class:`<stream>`. Inherited from
+     :class:`<wrapper-stream>`.
+   :keyword indentation: An instance of :drm:`<integer>`.
+     Default value is ``0``.
+   :keyword input-tab-width: An instance of :drm:`<integer>`.
+     Default value is ``8``.
+   :keyword output-tab-width: An instance of ``#f`` or :drm:`<integer>`.
+     Default value is ``#f``.
+
+   :description:
+
+      A wrapper stream which outputs indented text.
+
+      The initial indentation is controlled by ``indentation:``.
+
+      When ``output-tab-width:`` is not false, then the indenting stream
+      converts sequences of spaces used for indentation to tabs.
+
+   :operations:
+
+     * :gf:`indent`
+     * :macro:`with-indentation`
+
+.. generic-function:: indent
+
+   Alters the indentation level of an :class:`<indenting-stream>`.
+
+   :signature: indent *stream* *delta* => ()
+
+   :parameter stream: An instance of :class:`<indenting-stream>`.
+   :parameter delta: An instance of :drm:`<integer>`.
+
+   :example:
+
+     .. code-block:: dylan
+
+        let is = make(<indenting-stream>, inner-stream: *standard-output*);
+        indent(is, 4);
+        format(is, "Hello, %=\n", name);
+        indent(is, -4);
+
+   :seealso:
+
+     * :class:`<indenting-stream>`
+     * :macro:`with-indentation`
 
 .. generic-function:: inner-stream
    :open:
@@ -2875,6 +2959,48 @@ are exported from the *streams* module.
      If *file-stream* is asynchronous, waits for all pending write or
      close operations to complete and signals any queued errors. If
      *file-stream* is not asynchronous, returns immediately.
+
+.. macro:: with-indentation
+   :statement:
+
+   :macrocall:
+
+     .. code-block:: dylan
+
+        with-indentation (*stream*)
+          *body*
+        end;
+
+     .. code-block:: dylan
+
+        with-indentation (*stream*, 4)
+          *body*
+        end;
+
+   :parameter stream: A Dylan expression *bnf*. An instance of
+     :class:`<indenting-stream>`.
+   :parameter indentation: A Dylan expression *bnf*. An instance
+     of :drm:`<integer>`. Optional.
+   :parameter body: A Dylan body *bnf*.
+
+   :description:
+
+     Runs a body of code with an indentation level managed automatically.
+     This avoids the need to call :gf:`indent` to indent and then unindent
+     around the body of code.
+
+   :example:
+
+     .. code-block:: dylan
+
+        with-indentation(is, 4)
+          format(is, "Hello %=\n", name);
+        end with-indentation;
+
+   :seealso:
+
+     * :class:`<indenting-stream>`
+     * :gf:`indent`
 
 .. macro:: with-open-file
    :statement:
