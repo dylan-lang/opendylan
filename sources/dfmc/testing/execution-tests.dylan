@@ -175,6 +175,17 @@ define execution-test block-exit-2
   => -1
 end;
 
+define execution-test multiple-functions
+  "define not-inline function f (a)\n"
+  "  a * 2\n"
+  "end;\n"
+  "define not-inline function g (b)\n"
+  "  f(b) + b\n"
+  "end;\n"
+  "g(2)"
+  => 6
+end;
+
 define suite dfmc-execution-suite ()
   test execution-basic;
   test execution-addition;
@@ -188,4 +199,5 @@ define suite dfmc-execution-suite ()
   test execution-for-loop;
   test execution-block-exit-1;
   test execution-block-exit-2;
+  test execution-multiple-functions;
 end;
