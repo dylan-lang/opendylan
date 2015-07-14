@@ -20,7 +20,7 @@ define macro execution-test-definer
           let is = make(<indenting-stream>, inner-stream: *standard-output*);
           format(is, "\nCompiled:\n");
           with-indentation (is, 2)
-            format(is, "%=", ?test-code);
+            format(is, "%s", ?test-code);
           end with-indentation;
           new-line(is);
           format(is, "Into:\n");
@@ -62,51 +62,117 @@ define function compile-to-top-level-forms (string :: <string>) => (ld, tlf*)
 end;
 
 define execution-test basic
-  "define not-inline method f () 1 end; f()" => 1
+  "define not-inline method f ()\n"
+  "  1\n"
+  "end;\n"
+  "f()\n"
+  => 1
 end;
 
 define execution-test addition
-  "define not-inline method f (x :: <integer>) x + 1 end; f(3)" => 4
+  "define not-inline method f (x :: <integer>)\n"
+  "  x + 1\n"
+  "end;\n"
+  "f(3)"
+  => 4
 end;
 
 define execution-test constant
-  "define constant $y = 1; define not-inline method f (x) x + $y end; f(3)" => 4
+  "define constant $y = 1;\n"
+  "define not-inline method f (x)\n"
+  "  x + $y\n"
+  "end;\n"
+  "f(3)"
+  => 4
 end;
 
 define execution-test variable
-  "define variable *y* = 1; define not-inline method f (x) x + *y* end; *y* := 2; f(2)" => 4
+  "define variable *y* = 1;\n"
+  "define not-inline method f (x)\n"
+  "  x + *y*\n"
+  "end;\n"
+  "*y* := 2;\n"
+  "f(2)" => 4
 end;
 
 define execution-test size
-  "define not-inline method f (x) size(x) end; f(#[1, 2, 3])" => 3
+  "define not-inline method f (x)\n"
+  "  size(x)\n"
+  "end;\n"
+  "f(#[1, 2, 3])"
+  => 3
 end;
 
 define execution-test float-addition
-  "define not-inline method f (x) x + 1.0 end; f(2.0)" => 3.0
+  "define not-inline method f (x)\n"
+  "  x + 1.0\n"
+  "end;\n"
+  "f(2.0)"
+  => 3.0
 end;
 
 define execution-test single-float-subtraction
-  "define not-inline method f (x :: <single-float>) x - 1.0s0 end; f(2.0s0)" => 1.0s0
+  "define not-inline method f (x :: <single-float>)\n"
+  "  x - 1.0s0\n"
+  "end;\n"
+  "f(2.0s0)"
+  => 1.0s0
 end;
 
 define execution-test double-float-multiplication
-  "define not-inline method f (x) x * 2.0d0 end; f(2.0d0)" => 4.0d0
+  "define not-inline method f (x)\n"
+  "  x * 2.0d0\n"
+  "end;\n"
+  "f(2.0d0)"
+  => 4.0d0
 end;
 
 define execution-test string-size
-  "define not-inline method f (x :: <byte-string>) size(x) end; f(\"abc\")" => 3
+  "define not-inline method f (x :: <byte-string>)\n"
+  "  size(x)\n"
+  "end;\n"
+  "f(\"abc\")"
+  => 3
 end;
 
 define execution-test for-loop
-  "define not-inline method f (args) let sum = 0; for (x in args) sum := sum + x; end for; sum; end; f(#[1, 2, 3])" => 6
+  "define not-inline method f (args)\n"
+  "  let sum = 0;\n"
+  "  for (x in args)\n"
+  "    sum := sum + x;\n"
+  "  end for;\n"
+  "  sum;\n"
+  "end;\n"
+  "f(#[1, 2, 3])"
+  => 6
 end;
 
 define execution-test block-exit-1
-  "define not-inline method f (x) block (return) if (odd?(x)) return(x); else -1; end if; end block; end; f(3)" => 3
+  "define not-inline method f (x)\n"
+  "  block (return)\n"
+  "    if (odd?(x))\n"
+  "      return(x)\n"
+  "    else\n"
+  "      -1\n"
+  "    end if\n"
+  "  end block\n"
+  "end;\n"
+  "f(3)"
+  => 3
 end;
 
 define execution-test block-exit-2
-  "define not-inline method f (x) block (return) if (odd?(x)) return(x); else -1; end if; end block; end; f(2)" => -1
+  "define not-inline method f (x)\n"
+  "  block (return)\n"
+  "    if (odd?(x))\n"
+  "      return(x)\n"
+  "    else\n"
+  "      -1\n"
+  "    end if\n"
+  "  end block\n"
+  "end;\n"
+  "f(2)"
+  => -1
 end;
 
 define suite dfmc-execution-suite ()
