@@ -623,8 +623,16 @@ end macro;
 
 define method bind-call-arguments
     (state :: <machine-state>, c :: <call>) => (args :: <simple-object-vector>)
-  let args     = make(<vector>, size: size(c.arguments) + 1);
-  args[size(args) - 1] := #[];
+  let function = fetch(state, c.function);
+  let (_required, rest?, key?) = function-arguments(function);
+  let args =
+    if (rest? | key?)
+      make(<vector>, size: size(c.arguments));
+    else
+      let args = make(<vector>, size: size(c.arguments) + 1);
+      args[size(args) - 1] := #[];
+      args
+    end if;
   map-into(args, curry(fetch, state), c.arguments);
   args
 end method;
