@@ -40,6 +40,7 @@ define print function-test print-to-string ()
   test-print-string();
   test-print-booleans();
   test-print-numbers();
+  test-print-functions();
   test-print-miscellaneous();
   extend-print-object();
   test-print-variables();
@@ -109,6 +110,39 @@ define function test-print-numbers ()
   check-equal("integer", print-to-string(100), "100");
   check-equal("negative integer", print-to-string(-55), "-55");
 end function test-print-numbers;
+
+define generic test-print-1 () => ();
+define generic test-print-2 ();
+define generic test-print-3 (a :: <integer>) => num;
+define generic test-print-4 (a :: <number>, #rest args) => (num :: <integer>);
+define generic test-print-5 (a :: <string>, #key test) => (num :: <integer>, #rest vals);
+define generic test-print-6 (a :: <string>, #key #all-keys) => (#rest vals :: <string>);
+
+define method test-print-1 () => ()
+end method test-print-1;
+
+define function test-print-functions ()
+  check-equal("function: test-print-1",
+              print-to-string(test-print-1),
+              "{generic function test-print-1 () => ()}");
+  check-equal("function: test-print-2",
+              print-to-string(test-print-2),
+              "{generic function test-print-2 () => (#rest)}");
+  check-equal("function: test-print-3",
+              print-to-string(test-print-3),
+              "{generic function test-print-3 (<integer>) => (<object>)}");
+  check-equal("function: test-print-4",
+              print-to-string(test-print-4),
+              "{generic function test-print-4 (<number>, #rest) => (<integer>)}");
+  check-equal("function: test-print-5",
+              print-to-string(test-print-5),
+              "{generic function test-print-5 (<string>, #key test:) => (<integer>, #rest)}");
+  check-equal("function: test-print-6",
+              print-to-string(test-print-6),
+              "{generic function test-print-6 (<string>, #key #all-keys) => (#rest <string>)}");
+  let m = generic-function-methods(test-print-1).first;
+  check-equal("method: test-print-1", print-to-string(m), "{method () => ()}");
+end function test-print-functions;
 
 define function test-print-miscellaneous ()
   check-print("<object>", <object>);
