@@ -673,6 +673,9 @@ define sealed method print-object
       pprint-newline(#"fill", stream);
       write(stream, as-lowercase(as(<byte-string>, name)));
     end;
+    write-element(stream, ' ');
+    pprint-newline(#"fill", stream);
+    print-signature(object, stream);
   end
 end method;
 
@@ -685,26 +688,92 @@ define sealed method print-object (object :: <method>, stream :: <stream>) => ()
       pprint-newline(#"fill", stream);
       write(stream, as(<byte-string>, name));
     end;
-    let specializers = function-specializers(object);
     write-element(stream, ' ');
     pprint-newline(#"fill", stream);
-    printing-logical-block (stream, prefix: "(", suffix: ")")
-      print-function-specializers(object, stream)
-    end
+    print-signature(object, stream);
   end
 end method;
 
-define method print-function-specializers
+define method print-signature
     (object :: <function>, stream :: <stream>) => ();
   let specializers = function-specializers(object);
-  if (~ (specializers = #()))
-    write-element(stream, ' ');
-    pprint-newline(#"fill", stream);
-    printing-logical-block (stream, prefix: "(", suffix: ")")
-      print-items(specializers, print-specializer, stream)
-    end
-  end if;
-end method print-function-specializers;
+  let (_, rest?, keywords) = function-arguments(object);
+  let (return-value-types, rest-return-value) = function-return-values(object);
+  print-signature-internal(stream, specializers, rest?, keywords,
+                           return-value-types, rest-return-value);
+end method print-signature;
+
+define inline function maybe-copy-sig-types
+  (v :: <simple-object-vector>, n :: <integer>) => (res :: <simple-object-vector>)
+  if (n = size(v)) v else copy-sequence(v, end: n) end if
+end function;
+
+define method print-signature
+    (sig :: <signature>, stream :: <stream>)
+ => ()
+  let specializers = maybe-copy-sig-types(sig.signature-required,
+                                          sig.signature-number-required);
+  let rest? = sig.signature-rest?;
+  let keywords = if (signature-all-keys?(sig))
+                   #"all"
+                 else
+                   sig.signature-key? & sig.signature-keys
+                 end if;
+  let return-value-types = maybe-copy-sig-types(sig.signature-values,
+                                                sig.signature-number-values);
+  let rest-return-value = sig.signature-rest-value;
+  print-signature-internal(stream, specializers, rest?, keywords,
+                           return-value-types, rest-return-value);
+end method print-signature;
+
+define function print-signature-internal
+    (stream :: <stream>, specializers :: <sequence>,
+     rest? :: <boolean>, keywords,
+     return-value-types :: <sequence>,
+     rest-return-value :: false-or(<type>))
+ => ()
+  printing-logical-block (stream, prefix: "(", suffix: ")")
+    print-items(specializers, print-specializer, stream);
+    if (rest?)
+      if (~ empty?(specializers))
+        write(stream, ", ");
+      end if;
+      write(stream, "#rest");
+    end if;
+    if (keywords)
+      if (rest? | ~empty?(specializers))
+        write(stream, ", ");
+      end if;
+      write(stream, "#key ");
+      if (keywords = #"all")
+        write(stream, "#all-keys");
+      else
+        print-items(keywords, print-keyword, stream);
+      end if;
+    end if;
+  end printing-logical-block;
+  write(stream, " => ");
+  printing-logical-block (stream, prefix: "(", suffix: ")")
+    print-items(return-value-types, print-specializer, stream);
+    if (rest-return-value)
+      if (~empty?(return-value-types))
+        write(stream, ", ");
+      end if;
+      write(stream, "#rest");
+      if (rest-return-value ~= <object>)
+        write(stream, " ");
+        print-specializer(rest-return-value, stream);
+      end if;
+    end if;
+  end printing-logical-block;
+end;
+
+define function print-keyword
+    (keyword :: <symbol>, stream :: <stream>)
+ => ()
+  write(stream, as-lowercase(as(<string>, keyword)));
+  write(stream, ":");
+end;
 
 /// print-items -- Internal Interface.
 ///
