@@ -867,7 +867,7 @@ define method write-main-files
 
   // Create main source file(s).
   // ---*** Do we want them to be called
-  //   "[<project>-]{implemetation,interface}.dylan"
+  //   "[<project>-]{implementation,interface}.dylan"
   // or just one file called
   //   "<project>.dylan"
   // ?  For now, I'm doing the latter, as it's simplest.

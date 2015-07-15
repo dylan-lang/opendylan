@@ -1116,7 +1116,7 @@ format-to-string("from the groups of libraries supplied with %s.",
     make(<text-editor>,
          read-only?: #t, tab-stop?: #f,
          scroll-bars: #"vertical",
-         text: "Every Dylan program uses other libaries.  On this page you"
+         text: "Every Dylan program uses other libraries.  On this page you"
                " will decide how the Wizard will help you choose which"
                " libraries your project will use.");
 */
