@@ -41,6 +41,43 @@ define function type-union (type :: <type>, #rest more-types) => (type :: <type>
   reduce(binary-type-union, type, more-types)
 end;
 
+// Utility functions for working with and displaying type-unions.
+
+define sealed method type-union-members (union :: <union>)
+ => (members :: <sequence>)
+  let union-first = union.union-type1;
+  let union-second = union.union-type2;
+  let members = make(<stretchy-vector>);
+  add!(members, union-second);
+  while (instance?(union-first, <union>))
+    let new-union = union-first;
+    add!(members, new-union.union-type2);
+    union-first := new-union.union-type1;
+  end while;
+  add!(members, union-first);
+  reverse!(members)
+end method;
+
+define constant <type-union-classification> = one-of(#"normal", #"false-or", #"one-of");
+
+define method classify-type-union (union :: <union>)
+ => (classification :: <type-union-classification>)
+  let members = type-union-members(union);
+  local method is-singleton? (m :: <type>) => (well? :: <boolean>)
+          instance?(m, <singleton>)
+        end,
+        method is-singleton-false? (m :: <type>) => (well? :: <boolean>)
+          instance?(m, <singleton>) & (m.singleton-object = #f)
+        end;
+  if (every?(is-singleton?, members))
+    #"one-of"
+  elseif (any?(is-singleton-false?, members))
+    #"false-or"
+  else
+    #"normal"
+  end if
+end;
+
 // This protocol allows types with specific knowledge about how to merge
 // to bring it into play.
 
