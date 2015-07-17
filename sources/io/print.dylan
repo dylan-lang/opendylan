@@ -844,26 +844,48 @@ end method;
 
 define method print-specializer (type :: <limited-integer>, stream :: <stream>)
     => ();
-  write(stream, "{Limited integer ");
-  // write-class-name(type.limited-integer-class, stream);
-  // write-element(stream, ' ');
-  print(type.limited-integer-min, stream);
-  write(stream, "..");
-  print(type.limited-integer-max, stream);
-  write(stream, "}");
+  write(stream, "limited(<integer>");
+  if (type.limited-integer-min)
+    write(stream, ", min: ");
+    print(type.limited-integer-min, stream);
+  end;
+  if (type.limited-integer-max)
+    write(stream, ", max: ");
+    print(type.limited-integer-max, stream);
+  end;
+  write(stream, ")");
 end method print-specializer;
 
 define method print-specializer (type :: <union>, stream :: <stream>)
     => ();
-  printing-logical-block (stream, prefix: "{", suffix: "}")
-    write(stream, "Union ");
-    pprint-newline(#"fill", stream);
-    // print(type.union-members, stream);
-    print(union-type1(type), stream);
-    write(stream, ", ");
-    pprint-newline(#"linear", stream);
-    print(union-type2(type), stream);
-  end
+  let members = type-union-members(type);
+  select (classify-type-union(type))
+    #"normal" =>
+      begin
+        printing-logical-block (stream, prefix: "type-union(", suffix: ")")
+          print-items(members, print-specializer, stream);
+        end printing-logical-block;
+      end;
+    #"false-or" =>
+      begin
+        local method not-singleton-false (m)
+                ~instance?(m, <singleton>) | m.singleton-object ~= #f
+              end;
+        let non-false-members = choose(not-singleton-false, members);
+        printing-logical-block (stream, prefix: "false-or(", suffix: ")")
+          print-items(non-false-members, print-specializer, stream);
+        end printing-logical-block;
+      end;
+    #"one-of" =>
+      begin
+        local method print-singleton-value (m :: <singleton>, stream :: <stream>)
+                print(m.singleton-object, stream);
+              end;
+        printing-logical-block (stream, prefix: "one-of(", suffix: ")")
+          print-items(members, print-singleton-value, stream);
+        end printing-logical-block;
+      end;
+  end select;
 end method print-specializer;
 
 
