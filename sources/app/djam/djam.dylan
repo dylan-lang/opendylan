@@ -67,7 +67,7 @@ define function main(name, arguments)
       = method (w :: <warning>, next :: <function>)
           format-err("djam: %s\n", w);
         end;
-    
+
     let targets = make(<stretchy-vector>);
     let force? = #f;
     iterate loop(i :: <integer> = 0)
@@ -105,7 +105,7 @@ define function main(name, arguments)
       jam-target-build(state, #["all"],
                        force?: force?, progress-callback: progress);
     else
-      jam-target-build(state, targets, 
+      jam-target-build(state, targets,
                        force?: force?, progress-callback: progress);
     end if;
   exception (e :: <error>)
