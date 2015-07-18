@@ -717,21 +717,24 @@ define function print-method
   let specializers = function-specializers(object);
   let (_, rest, keywords) = function-arguments(object);
   print-string(buffer, " (");
-  unless (empty?(specializers) & ~rest & empty?(keywords))
-    print-elements(buffer, specializers, print-function: print-specializer);
-    if (rest)
-      if (~empty?(specializers))
-        print-string(buffer, ", ");
-      end if;
-      print-string(buffer, "#rest");
+  print-elements(buffer, specializers, print-function: print-specializer);
+  if (rest)
+    if (~empty?(specializers))
+      print-string(buffer, ", ");
     end if;
-    if (keywords)
-      if (rest | ~empty?(specializers))
-        print-string(buffer, ", ");
-      end if;
+    print-string(buffer, "#rest");
+  end if;
+  if (keywords)
+    if (rest | ~empty?(specializers))
+      print-string(buffer, ", ");
+    end if;
+    print-string(buffer, "#key ");
+    if (keywords = #"all")
+      print-string(buffer, "#all-keys");
+    else
       print-elements(buffer, keywords, print-function: print-keyword);
     end if;
-  end unless;
+  end if;
   print-string(buffer, ") => (");
   let (value-types, values-rest) = function-return-values(object);
   unless (empty?(value-types))
@@ -741,8 +744,11 @@ define function print-method
     end if;
   end unless;
   if (values-rest)
-    print-string(buffer, "#rest ");
-    print-specializer(buffer, values-rest);
+    print-string(buffer, "#rest");
+    if (values-rest ~= <object>)
+      print-string(buffer, " ");
+      print-specializer(buffer, values-rest);
+    end if
   end if;
   print-string(buffer, ")}");
 end function print-method;
@@ -769,6 +775,38 @@ define method print-specializer
   print-string(buffer, "subclass(");
   print-pretty-name(buffer, subclass-class(type));
   print-string(buffer, ")")
+end method print-specializer;
+
+define method print-specializer
+    (buffer :: <string-buffer>, type :: <union>) => ()
+  let members = type-union-members(type);
+  select (classify-type-union(type))
+    #"normal" =>
+      begin
+        print-string(buffer, "type-union(");
+        print-elements(buffer, members, print-function: print-specializer);
+        print-string(buffer, ")");
+      end;
+    #"false-or" =>
+      begin
+        local method not-singleton-false (m)
+                ~instance?(m, <singleton>) | m.singleton-object ~= #f
+              end;
+        let non-false-members = choose(not-singleton-false, members);
+        print-string(buffer, "false-or(");
+        print-elements(buffer, non-false-members, print-function: print-specializer);
+        print-string(buffer, ")");
+      end;
+    #"one-of" =>
+      begin
+        local method print-singleton-value (buffer :: <string-buffer>, m :: <singleton>)
+                print-unique-name(buffer, m.singleton-object);
+              end;
+        print-string(buffer, "one-of(");
+        print-elements(buffer, members, print-function: print-singleton-value);
+        print-string(buffer, ")");
+      end;
+  end select;
 end method print-specializer;
 
 define function print-keyword

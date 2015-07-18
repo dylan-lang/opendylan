@@ -563,7 +563,8 @@ define simple-format function-test format-to-string ()
   check-equal("format-to-string(\"%%\")",
               format-to-string("%%"),
               "%");
-  format-object-tests()
+  format-object-tests();
+  format-function-tests();
 end function-test format-to-string;
 
 define constant $format-object-mappings
@@ -625,6 +626,98 @@ define function format-object-tests
                        class-name, class-name);
   test-print-name(type, expected-name, expected-name)
 end function format-object-tests;
+
+define generic test-print-1 () => ();
+define generic test-print-2 ();
+define generic test-print-3 (a :: <integer>) => num;
+define generic test-print-4 (a :: <number>, #rest args) => (num :: <integer>);
+define generic test-print-5 (a :: <string>, #key test) => (num :: <integer>, #rest vals);
+define generic test-print-6 (a :: <string>, #key #all-keys) => (#rest vals :: <string>);
+define generic test-print-7 (a :: subclass(<string>)) => ();
+define generic test-print-8 (a :: false-or(<string>)) => ();
+define generic test-print-9 (a :: type-union(<integer>, <float>)) => ();
+define generic test-print-10 (a :: one-of(#"a", #"b")) => ();
+
+define method test-print-1 () => ()
+end method test-print-1;
+
+define method test-print-2 ()
+end method test-print-2;
+
+define method test-print-3 (a :: <integer>) => (num)
+  #f
+end method test-print-3;
+
+define method test-print-4 (a :: <number>, #rest args) => (num :: <integer>)
+  0
+end method test-print-4;
+
+define method test-print-5 (a :: <string>, #key test) => (num :: <integer>, #rest vals)
+  0
+end method test-print-5;
+
+define method test-print-6 (a :: <string>, #key #all-keys) => (#rest vals :: <string>)
+end method test-print-6;
+
+define method test-print-7 (a :: subclass(<string>)) => ()
+end method test-print-7;
+
+define method test-print-8 (a :: false-or(<string>)) => ()
+end method test-print-8;
+
+define method test-print-9 (a :: type-union(<integer>, <float>)) => ()
+end method test-print-9;
+
+define method test-print-10 (a :: one-of(#"a", #"b")) => ()
+end method test-print-10;
+
+define constant $format-function-mappings
+  = vector(vector(test-print-1,
+                  "{<sealed-generic-function>: test-print-1}",
+                  "{<simple-method>: ??? () => ()}"),
+           vector(test-print-2,
+                  "{<sealed-generic-function>: test-print-2}",
+                  "{<simple-method>: ??? () => (#rest)}"),
+           vector(test-print-3,
+                  "{<sealed-generic-function>: test-print-3}",
+                  "{<simple-method>: ??? (<integer>) => (<object>)}"),
+           vector(test-print-4,
+                  "{<sealed-generic-function>: test-print-4}",
+                  "{<simple-method>: ??? (<number>, #rest) => (<integer>)}"),
+           vector(test-print-5,
+                  "{<sealed-generic-function>: test-print-5}",
+                  "{<keyword-method>: ??? (<string>, #key test:) => (<integer>, #rest)}"),
+           vector(test-print-6,
+                  "{<sealed-generic-function>: test-print-6}",
+                  "{<keyword-method>: ??? (<string>, #key #all-keys) => (#rest <string>)}"),
+           vector(test-print-7,
+                  "{<sealed-generic-function>: test-print-7}",
+                  "{<simple-method>: ??? (subclass(<string>)) => ()}"),
+           vector(test-print-8,
+                  "{<sealed-generic-function>: test-print-8}",
+                  "{<simple-method>: ??? (false-or(<string>)) => ()}"),
+           vector(test-print-9,
+                  "{<sealed-generic-function>: test-print-9}",
+                  "{<simple-method>: ??? (type-union(<integer>, <float>)) => ()}"),
+           vector(test-print-10,
+                  "{<sealed-generic-function>: test-print-10}",
+                  "{<simple-method>: ??? (one-of(#\"a\", #\"b\")) => ()}"));
+
+define function format-function-tests
+    () => ()
+  for (mapping in $format-function-mappings)
+    let gf = mapping[0];
+    let gf-expected-text = mapping[1];
+    check-equal(format-to-string("format-to-string(\"%%=\", %s)", gf-expected-text),
+                format-to-string("%=", gf),
+                gf-expected-text);
+    let meth = generic-function-methods(gf).first;
+    let meth-expected-text = mapping[2];
+    check-equal(format-to-string("format-to-string(\"%%=\", %s)", meth-expected-text),
+                format-to-string("%=", meth),
+                meth-expected-text);
+  end for;
+end function format-function-tests;
 
 
 /// simple-random tests
