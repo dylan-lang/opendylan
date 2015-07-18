@@ -482,7 +482,7 @@ CHECK_ENV = \
 check:	bootstrap-stage-$(CHECK_COMPILER_STAGE)
 	@$(CHECK_ENV) \
 	  $(fdmake) \
-	  --compiler="$(abs_builddir)/Bootstrap.$(CHECK_COMPILER_STAGE)/bin/dylan-compiler -build -save" \
+	  --compiler="$(abs_builddir)/Bootstrap.$(CHECK_COMPILER_STAGE)/bin/dylan-compiler -build" \
 	  $(CHECK_APPS) && \
 	  for app in $(CHECK_APPS); do \
 	    echo "Executing test app $$app ..."; \
