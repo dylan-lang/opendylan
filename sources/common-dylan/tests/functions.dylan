@@ -637,6 +637,9 @@ define generic test-print-7 (a :: subclass(<string>)) => ();
 define generic test-print-8 (a :: false-or(<string>)) => ();
 define generic test-print-9 (a :: type-union(<integer>, <float>)) => ();
 define generic test-print-10 (a :: one-of(#"a", #"b")) => ();
+define generic test-print-11
+    (a :: limited(<integer>, min: 0), b :: limited(<integer>, max: 64))
+ => (c :: limited(<integer>, min: 0, max: 64));
 
 define method test-print-1 () => ()
 end method test-print-1;
@@ -671,6 +674,12 @@ end method test-print-9;
 define method test-print-10 (a :: one-of(#"a", #"b")) => ()
 end method test-print-10;
 
+define method test-print-11
+    (a :: limited(<integer>, min: 0), b :: limited(<integer>, max: 64))
+ => (c :: limited(<integer>, min: 0, max: 64))
+  0
+end method test-print-11;
+
 define constant $format-function-mappings
   = vector(vector(test-print-1,
                   "{<sealed-generic-function>: test-print-1}",
@@ -701,7 +710,10 @@ define constant $format-function-mappings
                   "{<simple-method>: ??? (type-union(<integer>, <float>)) => ()}"),
            vector(test-print-10,
                   "{<sealed-generic-function>: test-print-10}",
-                  "{<simple-method>: ??? (one-of(#\"a\", #\"b\")) => ()}"));
+                  "{<simple-method>: ??? (one-of(#\"a\", #\"b\")) => ()}"),
+           vector(test-print-11,
+                  "{<sealed-generic-function>: test-print-11}",
+                  "{<simple-method>: ??? (limited(<integer>, min: 0), limited(<integer>, max: 64)) => (limited(<integer>, min: 0, max: 64))}"));
 
 define function format-function-tests
     () => ()

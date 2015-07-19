@@ -764,6 +764,18 @@ define method print-specializer
 end method print-specializer;
 
 define method print-specializer
+    (buffer :: <string-buffer>, type :: <limited-integer>) => ()
+  print-string(buffer, "limited(<integer>");
+  if (type.limited-integer-min)
+    print-format(buffer, ", min: %d", type.limited-integer-min);
+  end if;
+  if (type.limited-integer-max)
+    print-format(buffer, ", max: %d", type.limited-integer-max);
+  end if;
+  print-string(buffer, ")");
+end method print-specializer;
+
+define method print-specializer
     (buffer :: <string-buffer>, type :: <singleton>) => ()
   print-string(buffer, "singleton(");
   print-unique-name(buffer, singleton-object(type));
