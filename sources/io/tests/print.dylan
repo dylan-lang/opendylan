@@ -170,7 +170,9 @@ define constant $type-printing-tests
      vector("limited-integer max", limited(<integer>, max: 64),
             "{Type limited(<integer>, max: 64)}"),
      vector("limited-integer min-max", limited(<integer>, min: 0, max: 32),
-            "{Type limited(<integer>, min: 0, max: 32)}")
+            "{Type limited(<integer>, min: 0, max: 32)}"),
+     vector("subclass", subclass(<string>),
+            "{Type subclass(<string>)}")
    );
 
 define function test-print-types ()
