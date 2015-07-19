@@ -899,8 +899,15 @@ end method print-specializer;
 // deal with.
 //
 
+define constant <types-with-specializer-printing>
+ = type-union(<class>,
+              <limited-integer>,
+              <singleton>,
+              <subclass>,
+              <union>);
+
 define sealed method print-object
-    (object :: type-union(<singleton>, <limited-integer>, <union>), stream :: <stream>) => ()
+    (object :: <types-with-specializer-printing>, stream :: <stream>) => ()
   pprint-logical-block
     (stream,
      prefix: "{Type ",
