@@ -764,6 +764,21 @@ define method print-specializer
 end method print-specializer;
 
 define method print-specializer
+    (buffer :: <string-buffer>, type :: <limited-collection-type>) => ()
+  print-format(buffer, "limited(%s, of: %s",
+               type.limited-collection-class,
+               type.limited-collection-element-type);
+  if (type.limited-collection-size)
+    print-format(buffer, ", size: %d", type.limited-collection-size);
+  elseif (type.limited-collection-dimensions)
+    print-string(buffer, ", dimensions: #[");
+    print-elements(buffer, type.limited-collection-dimensions);
+    print-string(buffer, "]");
+  end if;
+  print-string(buffer, ")");
+end method print-specializer;
+
+define method print-specializer
     (buffer :: <string-buffer>, type :: <limited-integer>) => ()
   print-string(buffer, "limited(<integer>");
   if (type.limited-integer-min)

@@ -640,6 +640,10 @@ define generic test-print-10 (a :: one-of(#"a", #"b")) => ();
 define generic test-print-11
     (a :: limited(<integer>, min: 0), b :: limited(<integer>, max: 64))
  => (c :: limited(<integer>, min: 0, max: 64));
+define generic test-print-12
+    (a :: limited(<vector>, of: <float>),
+     b :: limited(<vector>, of: <double-float>, size: 4))
+ => (c :: false-or(limited(<array>, of: <float>, dimensions: #[2, 2])));
 
 define method test-print-1 () => ()
 end method test-print-1;
@@ -680,6 +684,13 @@ define method test-print-11
   0
 end method test-print-11;
 
+define method test-print-12
+    (a :: limited(<vector>, of: <float>),
+     b :: limited(<vector>, of: <double-float>, size: 4))
+ => (c :: false-or(limited(<array>, of: <float>, dimensions: #[2, 2])))
+  #f
+end method test-print-12;
+
 define constant $format-function-mappings
   = vector(vector(test-print-1,
                   "{<sealed-generic-function>: test-print-1}",
@@ -713,7 +724,10 @@ define constant $format-function-mappings
                   "{<simple-method>: ??? (one-of(#\"a\", #\"b\")) => ()}"),
            vector(test-print-11,
                   "{<sealed-generic-function>: test-print-11}",
-                  "{<simple-method>: ??? (limited(<integer>, min: 0), limited(<integer>, max: 64)) => (limited(<integer>, min: 0, max: 64))}"));
+                  "{<simple-method>: ??? (limited(<integer>, min: 0), limited(<integer>, max: 64)) => (limited(<integer>, min: 0, max: 64))}"),
+           vector(test-print-12,
+                  "{<sealed-generic-function>: test-print-12}",
+                  "{<simple-method>: ??? (limited(<simple-vector>, of: <float>), limited(<simple-vector>, of: <double-float>, size: 4)) => (false-or(limited(<array>, of: <float>, dimensions: #[2, 2])))}"));
 
 define function format-function-tests
     () => ()
