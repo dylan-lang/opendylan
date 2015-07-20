@@ -135,6 +135,22 @@ define execution-test string-size
   => 3
 end;
 
+define execution-test string-index
+  "define not-inline method f (x :: <byte-string>)\n"
+  "  x[0]\n"
+  "end;\n"
+  "f(\"abc\")"
+  => 'a'
+end;
+
+define execution-test string-concatenate
+  "define not-inline method f (fun :: <function>, x :: <byte-string>, y :: <byte-string>)\n"
+  "  apply(fun, vector(x, y))\n"
+  "end;\n"
+  "f(concatenate, \"abc\", \"def\")"
+  => "abcdef"
+end;
+
 define execution-test for-loop
   "define not-inline method f (args)\n"
   "  let sum = 0;\n"
@@ -196,6 +212,8 @@ define suite dfmc-execution-suite ()
   test execution-single-float-subtraction;
   test execution-double-float-multiplication;
   test execution-string-size;
+  test execution-string-index;
+  test execution-string-concatenate;
   test execution-for-loop;
   test execution-block-exit-1;
   test execution-block-exit-2;
