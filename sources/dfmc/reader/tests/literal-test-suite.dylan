@@ -82,6 +82,32 @@ define test decimal-integer-literal-test ()
   verify-presentation(f, "789");
 end test decimal-integer-literal-test;
 
+define test float-literal-test ()
+  let f = read-fragment("3.0");
+  verify-literal(f, 3.0, <float-fragment>);
+
+  let f = read-fragment("-3.0");
+  verify-literal(f, -3.0, <float-fragment>);
+
+  let f = read-fragment(".5");
+  verify-literal(f, 0.5, <float-fragment>);
+
+  let f = read-fragment("3.0s0");
+  verify-literal(f, 3.0, <float-fragment>);
+
+  let f = read-fragment("30.0s-1");
+  verify-literal(f, 3.0, <float-fragment>);
+
+  let f = read-fragment("3.0d0");
+  verify-literal(f, 3.0, <float-fragment>);
+
+  let f = read-fragment("-3.0d0");
+  verify-literal(f, -3.0, <float-fragment>);
+
+  let f = read-fragment("-3.0d3");
+  verify-literal(f, -3000.0, <float-fragment>);
+end test float-literal-test;
+
 define test hexadecimal-integer-literal-test ()
   let f = read-fragment("#xff");
   verify-literal(f, 255, <integer-fragment>);
@@ -147,6 +173,7 @@ define suite literal-test-suite ()
   test boolean-literal-test;
   test character-literal-test;
   test decimal-integer-literal-test;
+  test float-literal-test;
   test hexadecimal-integer-literal-test;
   test list-literal-test;
   test octal-integer-literal-test;
