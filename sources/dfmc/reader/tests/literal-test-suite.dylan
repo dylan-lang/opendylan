@@ -89,7 +89,22 @@ define test float-literal-test ()
   let f = read-fragment("-3.0");
   verify-literal(f, -3.0, <float-fragment>);
 
+  let f = read-fragment("3e0");
+  verify-literal(f, 3.0, <float-fragment>);
+
+  let f = read-fragment("3.0e0");
+  verify-literal(f, 3.0, <float-fragment>);
+
+  let f = read-fragment("3.e0");
+  verify-literal(f, 3.0, <float-fragment>);
+
   let f = read-fragment(".5");
+  verify-literal(f, 0.5, <float-fragment>);
+
+  let f = read-fragment("-.5");
+  verify-literal(f, -0.5, <float-fragment>);
+
+  let f = read-fragment("+.5");
   verify-literal(f, 0.5, <float-fragment>);
 
   let f = read-fragment("3.0s0");
@@ -105,6 +120,9 @@ define test float-literal-test ()
   verify-literal(f, -3.0, <float-fragment>);
 
   let f = read-fragment("-3.0d3");
+  verify-literal(f, -3000.0, <float-fragment>);
+
+  let f = read-fragment("-3d3");
   verify-literal(f, -3000.0, <float-fragment>);
 end test float-literal-test;
 
