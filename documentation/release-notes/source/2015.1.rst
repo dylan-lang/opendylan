@@ -101,6 +101,10 @@ Compiler
 * The C back-end no longer generates invalid C when outputting a
   float with a value of infinity or NaN.
 
+* Some bugs that didn't permit valid floating point literals to be
+  used have been fixed. These are typically edge cases like ``+.5``
+  or ``-3d3`` rather than commonly used literal notations.
+
 Debugging
 =========
 
