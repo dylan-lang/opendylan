@@ -41,6 +41,7 @@ define print function-test print-to-string ()
   test-print-booleans();
   test-print-numbers();
   test-print-functions();
+  test-print-types();
   test-print-miscellaneous();
   extend-print-object();
   test-print-variables();
@@ -144,8 +145,44 @@ define function test-print-functions ()
   check-equal("method: test-print-1", print-to-string(m), "{method () => ()}");
 end function test-print-functions;
 
+define constant $type-printing-tests
+ = vector(
+     vector("<object>", <object>, "{class <object>}"),
+     vector("singleton(3)", singleton(3), "{Type singleton(3)}"),
+     vector("false-or(<integer>)", false-or(<integer>),
+            "{Type false-or(<integer>)}"),
+     vector("false-or, manual", type-union(singleton(#f), <integer>),
+            "{Type false-or(<integer>)}"),
+     vector("false-or, manual 2", type-union(<integer>, singleton(#f)),
+            "{Type false-or(<integer>)}"),
+     vector("false-or(<integer>, <float>)", false-or(<integer>, <float>),
+            "{Type false-or(<integer>, <float>)}"),
+     vector("type-union", type-union(<integer>, <string>),
+            "{Type type-union(<integer>, <string>)}"),
+     vector("type-union nested", type-union(<integer>, <string>, <float>),
+            "{Type type-union(<integer>, <string>, <float>)}"),
+     vector("one-of", one-of(1, 2, "hello"),
+            "{Type one-of(1, 2, \"hello\")}"),
+     vector("one-of symbols", one-of(#"a", #"b"),
+            "{Type one-of(#\"a\", #\"b\")}"),
+     vector("limited-integer min", limited(<integer>, min: 0),
+            "{Type limited(<integer>, min: 0)}"),
+     vector("limited-integer max", limited(<integer>, max: 64),
+            "{Type limited(<integer>, max: 64)}"),
+     vector("limited-integer min-max", limited(<integer>, min: 0, max: 32),
+            "{Type limited(<integer>, min: 0, max: 32)}"),
+     vector("subclass", subclass(<string>),
+            "{Type subclass(<string>)}")
+   );
+
+define function test-print-types ()
+  for (type-test in $type-printing-tests)
+    check-print(type-test[0], type-test[1]);
+    check-equal(type-test[0], print-to-string(type-test[1]), type-test[2]);
+  end for;
+end function test-print-types;
+
 define function test-print-miscellaneous ()
-  check-print("<object>", <object>);
   check-print("class", <test-class>);
   check-print("make(class)", make(<test-class>));
   check-print("list", #(1, 2, 3));
@@ -153,12 +190,6 @@ define function test-print-miscellaneous ()
   check-print("function", add);
   check-print("range", range(from: 10, by: 2, to: 20));
   check-print("symbol", #"symbol");
-
-  // common types/specializers
-  check-print("singleton(3)", singleton(3));
-  check-print("false-or(<integer>)", false-or(<integer>));
-  check-print("limited <integer>", limited(<integer>, min: 0, max: 255));
-  check-print("type-union", type-union(<integer>, <string>));
 end function test-print-miscellaneous;
 
 // extend-print-object
