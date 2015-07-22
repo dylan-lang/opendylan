@@ -844,7 +844,7 @@ define &module dylan-extensions
     <union>, union-type1, union-type2,
     <limited-integer>, limited-integer-min, limited-integer-max;
 
-  create type-union-members;
+  create type-union-members,
          <type-union-classification>, classify-type-union;
 
   /// TEMPORARILY FOR METHOD DISPATCH
