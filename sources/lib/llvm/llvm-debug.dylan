@@ -529,3 +529,11 @@ define function llvm-make-dbg-unspecified-parameters
        node-values:
          vector(i32($llvm-debug-version + $DW-TAG-unspecified-parameters)))
 end function;
+
+define function llvm-make-dbg-value-metadata
+    (value :: <llvm-value>)
+ => (dbg-local-value :: <llvm-metadata-value>);
+  make(<llvm-metadata-node>,
+       function-local?: #t,
+       node-values: list(value))
+end function;
