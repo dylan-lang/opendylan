@@ -185,7 +185,6 @@ define method slot-initialized?
   let icls :: <implementation-class> = object-implementation-class(object);
   let offset = slot-offset-i(slot-descriptor, icls);
   if (offset)
-    let offset :: <integer> = offset;  // TODO: TYPE ONLY
     ~iclass-slot-element(icls, offset).unbound?
   else
     error(make(<simple-slot-error>,
@@ -471,8 +470,8 @@ end method repeated-slot-value-setter;
 
 define function slot-offset-i
     (slot-descriptor :: <slot-descriptor>, in-iclass :: <implementation-class>)
- => (offset :: <object> /* union(singleton(#f), <integer>) */,
-     suboffset :: <object> /* union(singleton(#f), <integer>) */);
+ => (offset :: false-or(<integer>),
+     suboffset :: false-or(<integer>))
   case
     instance?(slot-descriptor, <repeated-slot-descriptor>) =>
       values(size(instance-slot-descriptors(in-iclass)), #f);
