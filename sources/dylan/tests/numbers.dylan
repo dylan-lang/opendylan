@@ -27,7 +27,7 @@ define method test-number-class
   end
 end method test-number-class;
 
-//--- An extra method to test special features of arrays
+//--- An extra method to test floating point values
 define method test-number-class
     (class :: subclass(<float>), #key abstract?, #all-keys) => ()
   next-method();
