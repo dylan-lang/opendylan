@@ -37,6 +37,12 @@ define method test-number-class
   end
 end method test-number-class;
 
+define method test-number-class
+    (class == <integer>, #key abstract?, #all-keys) => ()
+  next-method();
+  test-limited-integers();
+end method test-number-class;
+
 
 /// Number test functions
 /*
@@ -338,3 +344,49 @@ define arithmetic function-test logbit? () end;
 define arithmetic function-test ash () end;
 define arithmetic function-test lcm () end;
 define arithmetic function-test gcd () end;
+
+define method test-limited-integers () => ()
+  test-limited-integer-instance?();
+end method test-limited-integers;
+
+define method test-limited-integer-instance? () => ()
+  check-limited-integer-instance?("limited(<integer>, min: 0)",
+                                   limited(<integer>, min: 0));
+  check-limited-integer-instance?("limited(<integer>, min: 1)",
+                                   limited(<integer>, min: 1));
+  check-limited-integer-instance?("limited(<integer>, min: 0, max: 255)",
+                                   limited(<integer>, min: 0, max: 255));
+  check-limited-integer-instance?("limited(<integer>, min: 1, max: 100000000)",
+                                   limited(<integer>, min: 1, max: 100000000));
+  check-limited-integer-instance?("limited(<integer>, min: -128, max: 128)",
+                                   limited(<integer>, min: -128, max: 128));
+  check-limited-integer-instance?("limited(<integer>, max: 0)",
+                                   limited(<integer>, max: 0));
+end method test-limited-integer-instance?;
+
+define method check-limited-integer-instance?
+    (name :: <string>, limited-type :: <limited-integer>)
+ => ()
+  let lower-bound = limited-type.limited-integer-min;
+  if (lower-bound)
+    check-true (concatenate("lower bound of ", name),
+                instance?(lower-bound, limited-type));
+    check-false(concatenate("below lower bound of ", name),
+                instance?(lower-bound - 1, limited-type));
+    check-true (concatenate("above lower bound of ", name),
+                instance?(lower-bound + 1, limited-type));
+  end if;
+  let upper-bound = limited-type.limited-integer-max;
+  if (upper-bound)
+    check-true (concatenate("upper bound of ", name),
+                instance?(upper-bound, limited-type));
+    check-true (concatenate("below upper bound of ", name),
+                instance?(upper-bound - 1, limited-type));
+    check-false(concatenate("above upper bound of ", name),
+                instance?(upper-bound + 1, limited-type));
+  end if;
+  check-false(concatenate("string is not a ", name),
+              instance?("Howdy!", limited-type));
+  check-false(concatenate("floats are not a ", name),
+              instance?(1.0, limited-type));
+end method check-limited-integer-instance?;
