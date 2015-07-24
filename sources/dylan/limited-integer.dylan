@@ -35,10 +35,19 @@ end method;
 define function min+max-limited-integer-instance?-function
     (i, limint :: <limited-integer>) => (result :: <boolean>)
   if (instance?(i, <integer>))
-    let i :: <integer> = i;
-    let min = limint.limited-integer-min;
-    let max = limint.limited-integer-max;
-    min <= i & i <= max
+    // optimize because of the property of negative signed integers
+    // being greater than all positive signed integers
+    //   min <= i & i <= max
+    // ->
+    //   unsigned(i - min)  <= unsigned(max - min)
+    // For min: -128, max: 128
+    //   unsigned(i - -128) <= unsigned(128 - -128)
+    //   unsigned(i + 128)  <= unsigned(256)
+    let min = interpret-integer-as-machine-word(limint.limited-integer-min);
+    let max = interpret-integer-as-machine-word(limint.limited-integer-max);
+    let i = machine-word-subtract(interpret-integer-as-machine-word(i), min);
+    let bound = machine-word-subtract(max, min);
+    machine-word-unsigned-not-greater-than?(i, bound)
   else
     #f
   end if
