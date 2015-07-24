@@ -110,6 +110,7 @@ end macro;
 
 define comparison machine-word-equal?;
 define comparison machine-word-less-than?;
+define comparison machine-word-not-greater-than?;
 
 //////////////////////////////////////////////////////////////////////////////
 // Comparison predicates

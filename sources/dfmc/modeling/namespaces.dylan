@@ -2547,8 +2547,6 @@ define &module internal
 
     union-instance?,
 
-    limited-integer-instance?-function,
-
     subclass-instance?;
 
   export

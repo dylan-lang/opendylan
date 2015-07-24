@@ -18,7 +18,7 @@ define method limited
     // I'm not sure that's worthwhile.
     let type :: <limited-integer> = make(<limited-integer>, min: min, max: max);
     unless (instance?-iep(type))
-      instance?-iep(type) := simple-method-iep(limited-integer-instance?-function);
+      instance?-iep(type) := simple-method-iep(instance?-function(type));
     end unless;
     type
   else
@@ -32,21 +32,58 @@ end method;
 
 //// Instance? relationships
 
-define function limited-integer-instance?-function
+define function min+max-limited-integer-instance?-function
     (i, limint :: <limited-integer>) => (result :: <boolean>)
   if (instance?(i, <integer>))
     let i :: <integer> = i;
     let min = limint.limited-integer-min;
     let max = limint.limited-integer-max;
-    (if (min) let min :: <integer> = min; min <= i else #t end)
-       & (if (max) let max :: <integer> = max; i <= max else #t end)
+    min <= i & i <= max
+  else
+    #f
+  end if
+end function;
+
+define function min-only-limited-integer-instance?-function
+    (i, limint :: <limited-integer>) => (result :: <boolean>)
+  if (instance?(i, <integer>))
+    // We do this directly via primitives rather than via \<= because
+    // the compiler doesn't know for sure that limited-integer-min is
+    // an integer here, so it introduces overhead.
+    // There's no need to untag integers for this comparison.
+    let i = interpret-integer-as-machine-word(i);
+    let min = interpret-integer-as-machine-word(limint.limited-integer-min);
+    machine-word-not-greater-than?(min, i)
+  else
+    #f
+  end if
+end function;
+
+define function max-only-limited-integer-instance?-function
+    (i, limint :: <limited-integer>) => (result :: <boolean>)
+  if (instance?(i, <integer>))
+    // We do this directly via primitives rather than via \<= because
+    // the compiler doesn't know for sure that limited-integer-max is
+    // an integer here, so it introduces overhead.
+    // There's no need to untag integers for this comparison.
+    let i = interpret-integer-as-machine-word(i);
+    let max = interpret-integer-as-machine-word(limint.limited-integer-max);
+    machine-word-not-greater-than?(i, max)
   else
     #f
   end if
 end function;
 
 define method instance?-function (t :: <limited-integer>) => (m :: <method>)
-  limited-integer-instance?-function
+  if (t.limited-integer-max)
+    if (t.limited-integer-min)
+      min+max-limited-integer-instance?-function
+    else
+      max-only-limited-integer-instance?-function
+    end if
+  else
+    min-only-limited-integer-instance?-function
+  end if
 end method;
 
 
