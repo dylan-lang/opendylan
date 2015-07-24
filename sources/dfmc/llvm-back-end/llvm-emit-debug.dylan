@@ -100,10 +100,7 @@ define method emit-lambda-dbg-function
   ins--dbg(back-end, dbg-line, 0, dbg-function, #f);
   for (index from 1, param in parameters(o),
        dbg-param-type in dbg-parameter-types)
-    let v
-      = make(<llvm-metadata-node>,
-             function-local?: #t,
-             node-values: list(temporary-value(param)));
+    let v = llvm-make-dbg-value-metadata(temporary-value(param));
     let lv
       = llvm-make-dbg-local-variable(#"argument",
                                      dbg-function,
@@ -118,10 +115,7 @@ define method emit-lambda-dbg-function
   // parameters
   local
     method artificial-parameter(name :: <string>, index :: <integer>)
-      let v
-        = make(<llvm-metadata-node>,
-               function-local?: #t,
-               node-values: list(llvm-builder-local(back-end, name)));
+      let v = llvm-make-dbg-value-metadata(llvm-builder-local(back-end, name));
       let obj-dbg-type
         = llvm-reference-dbg-type(back-end, dylan-value(#"<object>"));
       let lv
@@ -212,10 +206,7 @@ define method emit-dbg-local-variable
       = source-location-dbg-file-line(back-end, source-location);
     let var-type
       = llvm-reference-dbg-type(back-end, type-estimate(tmp));
-    let v
-      = make(<llvm-metadata-node>,
-             function-local?: #t,
-             node-values: list(value));
+    let v = llvm-make-dbg-value-metadata(value);
     let lv
       = llvm-make-dbg-local-variable(kind,
                                      *computation-dbg-scope-table*[c],

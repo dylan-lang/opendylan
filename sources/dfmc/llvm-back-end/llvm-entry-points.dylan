@@ -239,10 +239,7 @@ define function llvm-emit-entry-point-dbg-function
   ins--dbg(back-end, 0, 0, dbg-function, #f);
   for (dbg-parameter in dbg-parameters,
        argument in function.llvm-function-arguments)
-    let v
-      = make(<llvm-metadata-node>,
-             function-local?: #t,
-             node-values: list(argument));
+    let v = llvm-make-dbg-value-metadata(argument);
     ins--call-intrinsic(back-end, "llvm.dbg.value",
                         vector(v, i64(0), dbg-parameter));
   end for;
