@@ -349,44 +349,87 @@ define method test-limited-integers () => ()
   test-limited-integer-instance?();
 end method test-limited-integers;
 
-define method test-limited-integer-instance? () => ()
-  check-limited-integer-instance?("limited(<integer>, min: 0)",
-                                   limited(<integer>, min: 0));
-  check-limited-integer-instance?("limited(<integer>, min: 1)",
-                                   limited(<integer>, min: 1));
-  check-limited-integer-instance?("limited(<integer>, min: 0, max: 255)",
-                                   limited(<integer>, min: 0, max: 255));
-  check-limited-integer-instance?("limited(<integer>, min: 1, max: 100000000)",
-                                   limited(<integer>, min: 1, max: 100000000));
-  check-limited-integer-instance?("limited(<integer>, min: -128, max: 128)",
-                                   limited(<integer>, min: -128, max: 128));
-  check-limited-integer-instance?("limited(<integer>, max: 0)",
-                                   limited(<integer>, max: 0));
-end method test-limited-integer-instance?;
+// This is used below to hide some info from the compiler
+// so that we don't get a compile time warning in our test
+// for some run-time behavior.
+define not-inline function hide-type-info(o) => (o)
+  o
+end;
 
-define method check-limited-integer-instance?
-    (name :: <string>, limited-type :: <limited-integer>)
- => ()
-  let lower-bound = limited-type.limited-integer-min;
-  if (lower-bound)
-    check-true (concatenate("lower bound of ", name),
-                instance?(lower-bound, limited-type));
-    check-false(concatenate("below lower bound of ", name),
-                instance?(lower-bound - 1, limited-type));
-    check-true (concatenate("above lower bound of ", name),
-                instance?(lower-bound + 1, limited-type));
-  end if;
-  let upper-bound = limited-type.limited-integer-max;
-  if (upper-bound)
-    check-true (concatenate("upper bound of ", name),
-                instance?(upper-bound, limited-type));
-    check-true (concatenate("below upper bound of ", name),
-                instance?(upper-bound - 1, limited-type));
-    check-false(concatenate("above upper bound of ", name),
-                instance?(upper-bound + 1, limited-type));
-  end if;
-  check-false(concatenate("string is not a ", name),
-              instance?("Howdy!", limited-type));
-  check-false(concatenate("floats are not a ", name),
-              instance?(1.0, limited-type));
-end method check-limited-integer-instance?;
+define macro check-limited-integer-instance?
+  { check-limited-integer-instance?(?limited-type:expression) }
+  =>
+  {
+    begin
+      let name = ?"limited-type";
+      let limited-type = ?limited-type;
+      let lower-bound = limited-type.limited-integer-min;
+      if (lower-bound)
+        check-true (concatenate("lower bound of ", name),
+                    instance?(lower-bound, limited-type));
+        check-false(concatenate("below lower bound of ", name),
+                    instance?(lower-bound - 1, limited-type));
+        check-true (concatenate("above lower bound of ", name),
+                    instance?(lower-bound + 1, limited-type));
+        check-no-condition(concatenate("(inline) lower bound of ", name),
+                           begin
+                             let x :: ?limited-type = lower-bound;
+                           end);
+        check-condition   (concatenate("(inline) below lower bound of ", name),
+                           <type-error>,
+                           begin
+                             let x :: ?limited-type = lower-bound - 1;
+                           end);
+        check-no-condition(concatenate("(inline) above lower bound of ", name),
+                           begin
+                             let x :: ?limited-type = lower-bound + 1;
+                           end);
+      end if;
+      let upper-bound = limited-type.limited-integer-max;
+      if (upper-bound)
+        check-true (concatenate("upper bound of ", name),
+                    instance?(upper-bound, limited-type));
+        check-true (concatenate("below upper bound of ", name),
+                    instance?(upper-bound - 1, limited-type));
+        check-false(concatenate("above upper bound of ", name),
+                    instance?(upper-bound + 1, limited-type));
+        check-no-condition(concatenate("(inline) upper bound of ", name),
+                           begin
+                             let x :: ?limited-type = upper-bound;
+                           end);
+        check-no-condition(concatenate("(inline) below upper bound of ", name),
+                           begin
+                             let x :: ?limited-type = upper-bound - 1;
+                           end);
+        check-condition   (concatenate("(inline) above upper bound of ", name),
+                           <type-error>,
+                           begin
+                             let x :: ?limited-type = upper-bound + 1;
+                           end);
+      end if;
+      check-false(concatenate("string is not a ", name),
+                  instance?("Howdy!", limited-type));
+      check-false(concatenate("floats are not a ", name),
+                  instance?(1.0, limited-type));
+      check-condition(concatenate("(inline) string is not a ", name),
+                      <type-error>,
+                      begin
+                        let x :: ?limited-type = hide-type-info("Howdy!");
+                      end);
+      check-condition(concatenate("(inline) floats are not a ", name),
+                      <type-error>,
+                      begin
+                        let x :: ?limited-type = hide-type-info(1.0);
+                      end);
+    end;
+  }
+end macro check-limited-integer-instance?;
+
+define method test-limited-integer-instance? () => ()
+  check-limited-integer-instance?(limited(<integer>, min: 0));
+  check-limited-integer-instance?(limited(<integer>, min: 1));
+  check-limited-integer-instance?(limited(<integer>, min: 0, max: 255));
+  check-limited-integer-instance?(limited(<integer>, min: 1, max: 100000000));
+  check-limited-integer-instance?(limited(<integer>, min: -128, max: 128));
+  check-limited-integer-instance?(limited(<integer>, max: 0));
+end method test-limited-integer-instance?;
