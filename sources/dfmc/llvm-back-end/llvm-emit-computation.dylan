@@ -1046,10 +1046,20 @@ define method emit-primitive-call
     = element($llvm-primitive-descriptors, primitive-name, default: #f)
     | error("No primitive named %=", primitive-name);
 
+  let model-arguments = c.arguments;
   let arguments
-    = map(curry(emit-reference, back-end, m), c.arguments);
+    = map(curry(emit-reference, back-end, m), model-arguments);
   let (#rest results)
-    = apply(descriptor.primitive-mapped-emitter, back-end, arguments);
+    = if (primitive-name == #"primitive-instance?")
+	// Special case, since we can do more specific tests based on
+	// the type if is available
+	let cmp
+	  = do-emit-instance-cmp(back-end, arguments[0],
+				 model-arguments[1], arguments[1]);
+	op--boolean(back-end, cmp)
+      else
+	apply(descriptor.primitive-mapped-emitter, back-end, arguments)
+      end if;
   if (llvm-primitive-values-rest?(back-end, descriptor))
     let mv = make(<llvm-global-mv>, struct: results.first);
     computation-result(back-end, c, mv);

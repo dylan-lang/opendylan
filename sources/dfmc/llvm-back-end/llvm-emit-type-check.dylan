@@ -70,6 +70,13 @@ end method;
 
 /// Instance testing
 
+define method do-emit-instance-cmp
+    (back-end :: <llvm-back-end>, object :: <llvm-value>,
+     type :: <object-reference>, type-ref :: <llvm-value>)
+ => (cmp :: <llvm-value>)
+  do-emit-instance-cmp(back-end, object, type.reference-value, type-ref)
+end method;
+
 // Default dynamic instance check using the function stored in the
 // instance?-iep slot of the <type> object.
 define method do-emit-instance-cmp
