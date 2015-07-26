@@ -339,19 +339,13 @@ define method do-emit-instance-cmp
   case
     // Both limits
     tagged-min & tagged-max =>
-      let above-bb = make(<llvm-basic-block>);
-      let min-cmp = ins--icmp-sge(back-end, object-word, tagged-min);
-      ins--br(back-end, min-cmp, above-bb, result-bb);
-
-      ins--block(back-end, above-bb);
-      let max-cmp = ins--icmp-sle(back-end, object-word, tagged-max);
+      let bound = ins--sub(back-end, tagged-max, tagged-min);
+      let val = ins--sub(back-end, object-word, tagged-min);
+      let cmp = ins--icmp-ule(back-end, val, bound);
       ins--br(back-end, result-bb);
 
       ins--block(back-end, result-bb);
-      ins--phi*(back-end,
-		$llvm-false, entry-bb,
-		$llvm-false, integer-bb,
-		max-cmp, above-bb);
+      ins--phi*(back-end, $llvm-false, entry-bb, cmp, integer-bb);
 
     // Lower limit only
     tagged-min =>
@@ -359,8 +353,7 @@ define method do-emit-instance-cmp
       ins--br(back-end, result-bb);
 
       ins--block(back-end, result-bb);
-      ins--phi*(back-end, $llvm-false, entry-bb,
-		min-cmp, integer-bb);
+      ins--phi*(back-end, $llvm-false, entry-bb, min-cmp, integer-bb);
 
     // Upper limit only
     tagged-max =>

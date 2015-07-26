@@ -110,6 +110,7 @@ end macro;
 
 define comparison machine-word-equal?;
 define comparison machine-word-less-than?;
+define comparison machine-word-not-greater-than?;
 
 //////////////////////////////////////////////////////////////////////////////
 // Comparison predicates
@@ -401,13 +402,8 @@ define inline-only function machine-word-unsigned-shift-left
        (integer-as-raw(0), raw-x, raw-count))
 end function machine-word-unsigned-shift-left;
 
-define inline-only function machine-word-unsigned-less-than?
-    (x :: <machine-word>, y :: <machine-word>)
- => (result :: <boolean>)
-  let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
-  let raw-y :: <raw-machine-word> = primitive-unwrap-machine-word(y);
-  primitive-machine-word-unsigned-less-than?(raw-x, raw-y)
-end function machine-word-unsigned-less-than?;
+define comparison machine-word-unsigned-less-than?;
+define comparison machine-word-unsigned-not-greater-than?;
 
 //////////////////////////////////////////////////////////////////////////////
 // Signal overflow

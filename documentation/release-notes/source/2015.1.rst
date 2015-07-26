@@ -146,6 +146,9 @@ Runtime
   ``<arithmetic-domain-error>`` will be signaled (much like the other
   ``<arithmetic-error>`` situations).
 
+* Limited integer instance checks have been optimized. This will have
+  the most impact when using the LLVM compiler backend.
+
 system
 ======
 
