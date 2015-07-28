@@ -65,7 +65,7 @@ define method find-frame-manager
 	    case
 	      empty?(framems) => #f;
 	      ~class => framems[0];
-	      otherwise => find-value(framems, method (f) object-class(f) == class end);
+	      otherwise => find-element(framems, method (f) object-class(f) == class end);
 	    end
 	  end;
       case

@@ -2420,8 +2420,8 @@ define function item-handle->tree-node
     (pane :: <win32-tree-control>, item-handle :: <HTREEITEM>)
  => (node :: false-or(<tree-node>))
   unless (null-pointer?(item-handle))
-    find-value(pane.%nodes,
-               method (node) node.%handle = item-handle end)
+    find-element(pane.%nodes,
+                 method (node) node.%handle = item-handle end)
   end
 end function item-handle->tree-node;
 

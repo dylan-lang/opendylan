@@ -97,7 +97,7 @@ end method find-buffer;
 
 define method find-buffer
     (editor :: <basic-editor>, test-function :: <function>)
-  find-value(editor-buffers(editor), test-function)
+  find-element(editor-buffers(editor), test-function)
 end method find-buffer;
 
 define method find-buffer-from-pathname

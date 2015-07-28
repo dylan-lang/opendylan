@@ -23,14 +23,14 @@ end class <source-control-system>;
 
 define method find-source-control-system-named
     (name :: <symbol>) => (sccs :: false-or(<source-control-system>))
-  find-value(*all-source-control-systems*, method (sccs) sccs-name(sccs) == name end)
+  find-element(*all-source-control-systems*, method (sccs) sccs-name(sccs) == name end)
 end method find-source-control-system-named;
 
 define method register-source-control-class
     (class :: subclass(<source-control-system>), #rest initargs)
  => (sccs :: <source-control-system>)
   let sccs
-    = find-value(*all-source-control-systems*, method (e) object-class(e) == class end);
+    = find-element(*all-source-control-systems*, method (e) object-class(e) == class end);
   if (sccs)
     sccs
   else
@@ -43,7 +43,7 @@ end method register-source-control-class;
 define method unregister-source-control-class
     (class :: subclass(<source-control-system>)) => ()
   let sccs
-    = find-value(*all-source-control-systems*, method (e) object-class(e) == class end);
+    = find-element(*all-source-control-systems*, method (e) object-class(e) == class end);
   when (sccs)
     remove!(*all-source-control-systems*, sccs)
   end

@@ -1076,10 +1076,10 @@ define method layout-graph-nodes
     local method collect-node-size (parent, hash, child, depth)
 	    ignore(parent, hash, depth);
 	    unless (sheet-withdrawn?(child))
-	      let descr = find-value(generation-descriptors, 
-				     method (gd)
-				       generation-generation(gd) = node-generation(child)
-				     end);
+	      let descr = find-element(generation-descriptors,
+				       method (gd)
+				         generation-generation(gd) = node-generation(child)
+				       end);
 	      inc!(generation-size(descr));
 	      inc!(generation-breadth(descr), breadthfun(child));
 	      max!(generation-depth(descr),   depthfun(child))
@@ -1108,10 +1108,10 @@ define method layout-graph-nodes
     local method place-node (parent, hash, child, depth)
 	    ignore(parent, hash, depth);
 	    unless (sheet-withdrawn?(child))	    
-	      let descr = find-value(generation-descriptors,
-				     method (gd)
-				       generation-generation(gd) = node-generation(child)
-				     end);
+	      let descr = find-element(generation-descriptors,
+				       method (gd)
+				         generation-generation(gd) = node-generation(child)
+				       end);
 	      inc!(generation-breadth-so-far(descr),
 		   if (generation-touched?(descr))
 		     generation-inner-breadth-separation(descr)

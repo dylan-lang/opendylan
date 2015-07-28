@@ -643,10 +643,10 @@ define sealed method select-buffer
   let frame   = window-frame(window);
   let buffers = window-selected-buffers(window);
   let new-buffer = buffer;
-  let new-entry  = find-value(buffers, method (s) selection-buffer(s) == new-buffer end);
+  let new-entry  = find-element(buffers, method (s) selection-buffer(s) == new-buffer end);
   let new-mode   = buffer-major-mode(new-buffer);
   let old-buffer = window-buffer(window);
-  let old-entry  = find-value(buffers, method (s) selection-buffer(s) == old-buffer end);
+  let old-entry  = find-element(buffers, method (s) selection-buffer(s) == old-buffer end);
   let old-mode   = old-buffer & buffer-major-mode(old-buffer);
   // Update the buffer history
   unless (buffer == window-buffer(window))                // maybe avoid some work

@@ -538,7 +538,7 @@ define method add-command-table-menu-item
   let menu = command-table-menu(command-table);
   let old-item
     = label
-      & find-value(menu, method (decorator :: <command-decorator>)
+      & find-element(menu, method (decorator :: <command-decorator>)
 			   label-equal?(decorator-label(decorator), label)
 			 end method);
   when (old-item)
@@ -1256,10 +1256,10 @@ define method remove-presentation-translator
   when (translators)
     let translator
       = if (instance?(translator-name, <symbol>))
-	  find-value(command-table-translators(comtab),
-		     method (entry) 
-		       presentation-translator-name(entry) == translator-name
-		     end)
+          find-element(command-table-translators(comtab),
+                       method (entry)
+                         presentation-translator-name(entry) == translator-name
+                       end)
 	else
 	  translator-name
 	end;

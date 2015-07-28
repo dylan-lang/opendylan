@@ -3062,7 +3062,7 @@ define method do-save-file-as
         for (window :: <basic-window> in editor-windows(editor))
           let buffers = window-selected-buffers(window);
           let entry
-            = find-value(buffers, method (s) selection-buffer(s) == buffer end);
+            = find-element(buffers, method (s) selection-buffer(s) == buffer end);
           when (entry)
             remove!(buffers, entry)
           end;

@@ -442,7 +442,7 @@ define method kill-buffer
     let selected-buffers
       = window-selected-buffers(window);
     let entry
-      = find-value(selected-buffers, method (s) selection-buffer(s) == buffer end);
+      = find-element(selected-buffers, method (s) selection-buffer(s) == buffer end);
     when (entry)
       remove!(selected-buffers, entry)
     end;
@@ -464,7 +464,7 @@ define method kill-buffer
               // window, try a non-anonymous buffer from any old window.
               // If there are no other buffers at all, create a new one.
               let new-buffer
-                = find-value(buffers, method (b) ~buffer-anonymous?(b) end);
+                = find-element(buffers, method (b) ~buffer-anonymous?(b) end);
               new-buffer | make-initial-buffer(editor: editor)
             else
               // Otherwise, choose buffer most recently shown in this window

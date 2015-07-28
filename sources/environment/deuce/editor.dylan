@@ -790,7 +790,7 @@ end method frame-note-project-changed;
 
 define method frame-note-interaction-returned
     (frame :: <environment-editor>, thread :: <thread-object>, id :: <object>) => ()
-  let entry = find-value(frame.%transaction-ids, method (e) head(e) == id end);
+  let entry = find-element(frame.%transaction-ids, method (e) head(e) == id end);
   when (entry)
     let id      = head(entry);
     let section = tail(entry);
@@ -834,7 +834,7 @@ end method frame-note-interaction-returned;
 define method frame-note-interactive-compilation-warnings
     (frame :: <environment-editor>, thread :: <thread-object>, id :: <object>,
      warnings :: <sequence>) => ()
-  let entry = find-value(frame.%transaction-ids, method (e) head(e) == id end);
+  let entry = find-element(frame.%transaction-ids, method (e) head(e) == id end);
   when (entry)
     let section = tail(entry);
     let project = frame-current-project(frame);

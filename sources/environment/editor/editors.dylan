@@ -21,7 +21,7 @@ end class <editor>;
 define method find-editor-of-class
     (class :: subclass(<editor>)) => (editor :: <editor>)
   let editor
-    = find-value(*all-editors*, method (e) object-class(e) == class end);
+    = find-element(*all-editors*, method (e) object-class(e) == class end);
   editor
   | error(make(<editor-unavailable>))
 end method find-editor-of-class;
@@ -30,7 +30,7 @@ define method register-editor-class
     (class :: subclass(<editor>), #rest initargs)
  => (editor :: <editor>)
   let editor
-    = find-value(*all-editors*, method (e) object-class(e) == class end);
+    = find-element(*all-editors*, method (e) object-class(e) == class end);
   if (editor)
     editor
   else
@@ -43,7 +43,7 @@ end method register-editor-class;
 define method unregister-editor-class
     (class :: subclass(<editor>)) => ()
   let editor
-    = find-value(*all-editors*, method (e) object-class(e) == class end);
+    = find-element(*all-editors*, method (e) object-class(e) == class end);
   when (editor)
     remove!(*all-editors*, editor)
   end

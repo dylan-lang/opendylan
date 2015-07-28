@@ -534,7 +534,7 @@ define method layout-graph-nodes
     // Determine the breadth and depth of each generation
     local method collect-node-size (p, ph, child-node, nothing)
 	    ignore(p, ph, nothing);
-	    let descr = find-value(generation-descriptors, 
+	    let descr = find-element(generation-descriptors,
 				   method (gd)
 				     generation-generation(gd) = node-generation(child-node)
 				   end);
@@ -564,7 +564,7 @@ define method layout-graph-nodes
     end;
     local method place-node (p, ph, child-node, nothing)
 	    ignore(p, ph, nothing);
-	    let descr = find-value(generation-descriptors,
+	    let descr = find-element(generation-descriptors,
 				   method (gd)
 				     generation-generation(gd) = node-generation(child-node)
 				   end);

@@ -908,7 +908,7 @@ define sealed method normalize-box-set
 		    local method intersects? (box) => (intersects :: <boolean>)
 			    region-intersects-region?(box, head(pending-boxes))
 			  end method;
-                    find-value(tail(pending-boxes), intersects?)
+                    find-element(tail(pending-boxes), intersects?)
                   end;
               if (empty?(intersecting-region))
                 reduce-boxes
