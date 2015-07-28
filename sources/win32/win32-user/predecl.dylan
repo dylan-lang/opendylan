@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define C-pointer-type <LPHKL> => <HKL>;
 define C-pointer-type <LPHWND> => <HWND>;
 
-// Slot acessors defined both here and in "win32-controls":
+// Slot accessors defined both here and in "win32-controls":
 
 define open-accessor hIcon-value;
 define open-accessor hInstance-value;
