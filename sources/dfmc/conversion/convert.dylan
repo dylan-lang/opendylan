@@ -2856,6 +2856,27 @@ define method convert-using-definition
   end;
 end method;
 
+define serious-program-warning <forward-macro-reference>
+  slot condition-macro-name,
+    required-init-keyword: macro-name:;
+  format-string    "Forward reference to macro %=.";
+  format-arguments macro-name;
+end serious-program-warning;
+
+define method convert-using-definition
+    (env :: <environment>, context :: <value-context>,
+     def :: <expander-defining-form>, form :: <variable-name-fragment>)
+ => (first :: false-or(<computation>), last :: false-or(<computation>), ref :: false-or(<value-reference>))
+  note(<forward-macro-reference>,
+       source-location: fragment-source-location(form),
+       context-id:      dfm-context-id(env),
+       macro-name:      form.fragment-name);
+  convert-error-call(env, context,
+                     concatenate("Forward reference to macro \"",
+                                 as(<string>, form.fragment-name),
+                                 "\"."))
+end method;
+
 define method convert-using-definition
     (env :: <environment>, context :: <value-context>,
      def :: <&definition-definition>, form)
