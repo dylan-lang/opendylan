@@ -163,6 +163,8 @@ define test string-literal-test ()
 
   let f = read-fragment("\"a\\nc\"");
   verify-literal(f, "a\nc", <string-fragment>);
+
+  assert-signals(<invalid-token>, read-fragment("\"\\1<b>\""));
 end test string-literal-test;
 
 define test symbol-literal-test ()
