@@ -185,7 +185,7 @@ define method layout-item-list
   unless (x-spacing)
     x-spacing := if (max-width)
 		   let total-width = 0;
-		   for (column :: <integer> from 0 below n-columns)
+		   for (column :: <integer> from 0 below ncolumns)
 		     inc!(total-width, column-widths[column])
 		   end;
 		   floor/(max-width - total-width, ncolumns + 1)
