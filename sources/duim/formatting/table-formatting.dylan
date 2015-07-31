@@ -144,12 +144,12 @@ end method do-table-columns;
 define method do-table-cells
     (function :: <function>, table :: <row-record>) => ()
   do-table-elements(function, table, #"cell")
-end method do-table-rows;
+end method do-table-cells;
 
 define method do-table-cells
     (function :: <function>, table :: <column-record>) => ()
   do-table-elements(function, table, #"cell")
-end method do-table-rows;
+end method do-table-cells;
 
 
 define method do-table-elements
