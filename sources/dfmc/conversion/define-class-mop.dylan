@@ -1190,8 +1190,8 @@ define method explain-precedes(c1, c2, in)
         for (s in direct-supers)
           if (member?(c2, s.^all-superclasses))
             return(make(<subclass-explanation-1>,
-                     class-1: c1.name, class-2: c2.name, class-3: s.name,
-                     subnotes: list(explain-precedes(s, c2, s))))
+                        class-1: c1.name, class-2: c2.name, class-3: s.name,
+                        subnotes: list(explain-precedes(s, c2, s))))
           end
         end
       end
