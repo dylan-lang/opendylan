@@ -27,8 +27,8 @@ define method analyze-block
   entry.local-entry-state?
     := every?(curry(local-exit?, env), entry.exits)
     & ~computations-exit-with-intervening-block?(block-c.body,
-						 block-c.next-computation,
-						 entry, #f)
+                                                 block-c.next-computation,
+                                                 entry, #f)
 end method;
 
 define method local-exit?
@@ -73,11 +73,11 @@ define method exit-with-intervening-block?
      entry :: <entry-state>, block-intervening? :: <boolean>)
  => (well? :: <boolean>);
   computations-exit-with-intervening-block?(c.consequent,
-					    c.next-computation,
-					    entry, block-intervening?)
+                                            c.next-computation,
+                                            entry, block-intervening?)
     | computations-exit-with-intervening-block?(c.alternative,
-						c.next-computation,
-						entry, block-intervening?)
+                                                c.next-computation,
+                                                entry, block-intervening?)
 end method;
 
 define method exit-with-intervening-block?
@@ -85,7 +85,7 @@ define method exit-with-intervening-block?
      entry :: <entry-state>, block-intervening? :: <boolean>)
  => (well? :: <boolean>);
   computations-exit-with-intervening-block?(c.loop-body, c.next-computation,
-					    entry, block-intervening?)
+                                            entry, block-intervening?)
 end method;
 
 define method exit-with-intervening-block?
@@ -93,7 +93,7 @@ define method exit-with-intervening-block?
      entry :: <entry-state>, block-intervening? :: <boolean>)
  => (well? :: <boolean>);
   computations-exit-with-intervening-block?(c.body, c.next-computation,
-					    entry, #t)
+                                            entry, #t)
 end method;
 
 define method exit-with-intervening-block?
@@ -101,9 +101,9 @@ define method exit-with-intervening-block?
      entry :: <entry-state>, block-intervening? :: <boolean>)
  => (well? :: <boolean>);
   computations-exit-with-intervening-block?(c.body, c.next-computation,
-					    entry, #t)
+                                            entry, #t)
     | computations-exit-with-intervening-block?(c.cleanups, c.next-computation,
-						entry, block-intervening?)
+                                                entry, block-intervening?)
 end method;
 
 // If a temporary has references outside its generating environment
