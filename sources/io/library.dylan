@@ -117,7 +117,7 @@ define module streams
          outer-stream, outer-stream-setter;
 
   // Indenting streams
-  export
+  create
     <indenting-stream>, indent,
     \with-indentation;
 end module streams;
