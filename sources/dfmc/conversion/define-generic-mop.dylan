@@ -6,26 +6,21 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define serious-program-warning <method-not-congruent>
+define abstract serious-program-warning <method-not-congruent>
   slot condition-incongruent-method,
     required-init-keyword: meth:;
-  slot condition-problem,
-    required-init-keyword: problem:;
-  format-string "Method %= not congruent with generic function "
-                "- %s.";
-  format-arguments meth, problem;
+  format-arguments meth;
 end serious-program-warning;
 
 define method check-congruence
     (gf :: <&generic-function>, m :: <&method>) => (ok? :: <boolean>)
-  let (congruent?, problem)
+  let (congruent?, warning-class)
     = ^signatures-congruent?
          (^function-signature(gf), ^function-signature(m));
   if (~congruent?)
-    note(<method-not-congruent>,
+    note(warning-class,
          source-location: model-source-location(m),
-         meth:            model-definition(m),
-         problem:         problem);
+         meth:            model-definition(m));
   end;
   congruent?
 end method;
@@ -55,51 +50,84 @@ end method;
 // the 29 Sep 95 DRM.  The congruent rules in the comments are lifted
 // from that text and Copyright (C) 1995 by Apple Computer.
 
-define constant $required-argument-count
-  = "they don't have the same number of required arguments";
+define serious-program-warning <method-not-congruent-required-argument-count>
+    (<method-not-congruent>)
+  format-string "Method %= not congruent with generic function - "
+    "they don't have the same number of required arguments";
+end serious-program-warning;
 
-define constant $required-argument-type
-  = "some of the method's required parameter specializers aren't subtypes "
+define serious-program-warning <method-not-congruent-required-argument-type>
+    (<method-not-congruent>)
+  format-string "Method %= not congruent with generic function - "
+    "some of the method's required parameter specializers aren't subtypes "
     "of their counterparts in the generic";
+end serious-program-warning;
 
-define constant $not-both-keyword
-  = "one parameter list includes #key, but the other does not";
+define serious-program-warning <method-not-congruent-not-both-keyword>
+    (<method-not-congruent>)
+  format-string "Method %= not congruent with generic function - "
+    "one parameter list includes #key, but the other does not";
+end serious-program-warning;
 
-define constant $not-both-variable
-  = "one parameter list includes #rest, but the other does not";
+define serious-program-warning <method-not-congruent-not-both-variable>
+    (<method-not-congruent>)
+  format-string "Method %= not congruent with generic function - "
+    "one parameter list includes #rest, but the other does not";
+end serious-program-warning;
 
-define constant $mandatory-keyword
-  = "the method does not recognize some mandatory keywords of the "
+define serious-program-warning <method-not-congruent-mandatory-keyword>
+    (<method-not-congruent>)
+  format-string "Method %= not congruent with generic function - "
+    "the method does not recognize some mandatory keywords of the "
     "generic";
+end serious-program-warning;
 
-define constant $required-values-count
-  = "they don't have the same number of required results";
+define serious-program-warning <method-not-congruent-required-values-count>
+    (<method-not-congruent>)
+  format-string "Method %= not congruent with generic function - "
+    "they don't have the same number of required results";
+end serious-program-warning;
 
-define constant $required-values-type
-  = "some of the method's required values types don't match the type "
+define serious-program-warning <method-not-congruent-required-values-type>
+    (<method-not-congruent>)
+  format-string "Method %= not congruent with generic function - "
+    "some of the method's required values types don't match the type "
     "constraints of the generic";
+end serious-program-warning;
 
-define constant $generic-values-not-variable
-  = "the method's values list includes #rest, but the generic's values list "
+define serious-program-warning <method-not-congruent-generic-values-not-variable>
+    (<method-not-congruent>)
+  format-string "Method %= not congruent with generic function - "
+    "the method's values list includes #rest, but the generic's values list "
     "does not";
+end serious-program-warning;
 
-define constant $required-values-count-too-small
-  = "the generic has more required return values than the method";
+define serious-program-warning <method-not-congruent-required-values-count-too-small>
+    (<method-not-congruent>)
+  format-string "Method %= not congruent with generic function - "
+    "the generic has more required return values than the method";
+end serious-program-warning;
 
-define constant $no-required-values
-  = "the generic has required return values, but the method does not";
+define serious-program-warning <method-not-congruent-no-required-values>
+    (<method-not-congruent>)
+  format-string "Method %= not congruent with generic function - "
+    "the generic has required return values, but the method does not";
+end serious-program-warning;
 
-define constant $rest-values-type
-  = "the method's rest value type is not a subtype of the rest value "
+define serious-program-warning <method-not-congruent-rest-values-type>
+    (<method-not-congruent>)
+  format-string "Method %= not congruent with generic function - "
+    "the method's rest value type is not a subtype of the rest value "
     "type of the generic";
+end serious-program-warning;
 
 define method ^signatures-congruent?
     (gsig :: <&signature>, msig :: <&signature>)
- => (congruent? :: <boolean>, reason)
+ => (congruent? :: <boolean>, warning-class :: false-or(<class>))
 
   block (return)
-    local method fail (reason)
-            return(#f, reason)
+    local method fail (warning-class)
+            return(#f, warning-class)
           end method fail;
 
     // --- required arguments ---
@@ -112,10 +140,10 @@ define method ^signatures-congruent?
     let greq = gsig.^signature-required;
     let mreq = msig.^signature-required;
     if (gsig.^signature-number-required ~= msig.^signature-number-required)
-      fail($required-argument-count);
+      fail(<method-not-congruent-required-argument-count>);
     end if;
     unless (every?(^subtype?, mreq, greq))
-      fail($required-argument-type);
+      fail(<method-not-congruent-required-argument-type>);
     end unless;
 
     // --- optional arguments ---
@@ -135,26 +163,26 @@ define method ^signatures-congruent?
 
       gsig.^signature-key? =>
         unless (msig.^signature-key?)
-          fail($not-both-keyword);
+          fail(<method-not-congruent-not-both-keyword>);
         end unless;
         for (key in gsig.^signature-keys)
           unless (member?(key, msig.^signature-keys, test: ^id?))
-            fail($mandatory-keyword);
+            fail(<method-not-congruent-mandatory-keyword>);
           end unless;
         end for;
 
       msig.^signature-key? =>
-        fail($not-both-keyword);
+        fail(<method-not-congruent-not-both-keyword>);
 
       // If neither has keys, we move on to the variable number cases.
 
       gsig.^signature-rest? =>
         unless (msig.^signature-rest?)
-          fail($not-both-variable);
+          fail(<method-not-congruent-not-both-variable>);
         end;
 
       msig.^signature-rest? =>
-        fail($not-both-variable);
+        fail(<method-not-congruent-not-both-variable>);
 
       // This is exhaustive. At this point neither has key, and neither
       // has rest, so they must both have a fixed number.
@@ -183,15 +211,15 @@ define method ^signatures-congruent?
       //   function's parameter list.
 
       if (msig.^signature-rest-value)
-        fail($generic-values-not-variable);
+        fail(<method-not-congruent-generic-values-not-variable>);
       end if;
       let gvals = gsig.^signature-values;
       let mvals = msig.^signature-values;
       if (gsig.^signature-number-values ~= msig.^signature-number-values)
-        fail($required-values-count);
+        fail(<method-not-congruent-required-values-count>);
       end if;
       unless (every?(^subtype?, mvals, gvals))
-        fail($required-values-type);
+        fail(<method-not-congruent-required-values-type>);
       end unless;
 
     else
@@ -218,25 +246,25 @@ define method ^signatures-congruent?
       let mvals = msig.^signature-values;
       if (msig.^signature-number-values < gsig.^signature-number-values)
         if (msig.^signature-number-values = 0)
-          fail($no-required-values);
+          fail(<method-not-congruent-no-required-values>);
         else
-          fail($required-values-count-too-small);
+          fail(<method-not-congruent-required-values-count-too-small>);
         end;
       end if;
       for (mval in mvals, index from 0 below msig.^signature-number-values)
         let gval = element(gvals, index, default: grest);
         unless (^subtype?(mval, gval))
-          fail($required-values-type);
+          fail(<method-not-congruent-required-values-type>);
         end unless;
       end for;
       let mrest = msig.^signature-rest-value;
       if (mrest & ~^subtype?(mrest, grest))
-        fail($rest-values-type);
+        fail(<method-not-congruent-rest-values-type>);
       end if;
 
     end if;
 
-    values(#t, #"congruent")
+    values(#t, #f)
   end block;
 
 end method ^signatures-congruent?;
