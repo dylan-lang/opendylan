@@ -17,7 +17,8 @@ define macro execution-test-definer
       let (ld, tlf*) = compile-to-top-level-forms(?test-code);
       with-library-context (ld)
         if ($show-dfm)
-          let is = make(<indenting-stream>, inner-stream: *standard-output*);
+          let output-stream = runner-output-stream(*runner*);
+          let is = make(<indenting-stream>, inner-stream: output-stream);
           format(is, "\nCompiled:\n");
           with-indentation (is, 2)
             format(is, "%s", ?test-code);
