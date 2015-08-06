@@ -250,7 +250,7 @@ define method gather-restarts-and-handlers (condition :: <condition>)
            // dynamic extent of the handler, but the letter of the law
            // probably means that its dynamic extent is only during
            // the call to the argument of do-handlers.  Workarounds
-           // are possibly but awkward.
+           // are possible but awkward.
            add!(handlers, handler-fn);
          end if;
        end if;
