@@ -73,6 +73,13 @@ C-FFI
        (integer-as-raw(0))
      end;
 
+Coloring-Stream
+===============
+
+* A new library for doing colored text output has been added. It currently
+  supports ANSI codes on Unix terminals. It has been
+  `documented in the library reference`_.
+
 Compiler
 ========
 
@@ -158,3 +165,4 @@ system
   their omission led to possible confusion for users.
 
 .. _issue #899: https://github.com/dylan-lang/opendylan/issues/899
+.. _documented in the library reference: http://opendylan.org/documentation/library-reference/coloring-stream/
