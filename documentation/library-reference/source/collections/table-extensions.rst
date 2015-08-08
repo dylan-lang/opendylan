@@ -71,14 +71,14 @@ this volume for information about weakness.
 You can create weak tables with the :drm:`<table>` class’s *weak:*
 init-keyword. The legal values for this keyword are:
 
--  *#"key"* Creates a table with weak keys. When there are no longer any
-   strong references to a key, the table entry of which it is part
-   becomes eligible for garbage collection.
--  *#"value"* Creates a table with weak values. When there are no longer
-   any strong references to a value, the table entry of which it is a
-   part becomes eligible for garbage collection.
--  *#f* Creates a table with strong keys and values. This is the default
-   value.
+- ``#"key"`` Creates a table with weak keys. When there are no longer any
+  strong references to a key, the table entry of which it is part
+  becomes eligible for garbage collection.
+- ``#"value"`` Creates a table with weak values. When there are no longer
+  any strong references to a value, the table entry of which it is a
+  part becomes eligible for garbage collection.
+- ``#f`` Creates a table with strong keys and values. This is the default
+  value.
 
 The table-extensions Module
 ===========================

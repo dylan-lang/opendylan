@@ -23,11 +23,11 @@ functions is explicitly unspecified. Note, however, that a program
 expects the following, even in libraries that are implemented by calling
 foreign libraries:
 
--  Domain and range errors should be signalled as Dylan errors.
--  Floating point precision *contagion* must obey Dylan rules (that is,
-   functions called on single precision values return single precision
-   results, and functions on double precision values return double
-   precision results)
+- Domain and range errors should be signalled as Dylan errors.
+- Floating point precision *contagion* must obey Dylan rules (that is,
+  functions called on single precision values return single precision
+  results, and functions on double precision values return double
+  precision results)
 
 The Transcendentals module
 ==========================

@@ -45,46 +45,46 @@ The libraries are:
 
 Win32-Common
 
--  Data types, constants (including error codes), and structure
-   accessors that are shared by the other modules.
--  Most of these come from the Win32 header files *WINDEF.H*, *WINNT.H*,
-   and *WINERROR.H*. (There is no DLL file supplied as standard with
-   Windows that corresponds with this library, because there are no C
-   functions in the header files to which it forms an interface.)
--  Win32-Kernel Non-GUI system services, as implemented in
-   *KERNEL32.DLL* and declared in *WINBASE.H* (files, pipes, semaphores,
-   atoms, time, and so on) and *WINNLS.H* (National Language Support).
--  *Note:* This library does not provide thread support. Thread support
-   is being handled at a higher level by Dylan’s own Threads library.
-   See the *Core Features* manual for details.
--  Win32-GDI Graphics Device Interface, drawing graphics and text, and
-   printing. Corresponds to *WINGDI.H* and *GDI32.DLL*.
--  Win32-User Other windowing functions. Corresponds to *WINUSER.H* and
-   *USER32.DLL*. Also contains :func:`win32-last-handler` which can handle
-   conditions and display them to the application user a simply Win32
-   dialog. That function is exported from the module
-   Win32-Default-Handler.
--  Win32-Version Version management. Corresponds to *WINVER.H* and
-   *VERSION.DLL*.
--  Win32-Dialog Common dialog boxes, as implemented in *COMDLG32.DLL*
-   and declared in *COMMDLG.H*, *DLGS.H*, and *CDERR.H*.
+- Data types, constants (including error codes), and structure
+  accessors that are shared by the other modules.
+- Most of these come from the Win32 header files *WINDEF.H*, *WINNT.H*,
+  and *WINERROR.H*. (There is no DLL file supplied as standard with
+  Windows that corresponds with this library, because there are no C
+  functions in the header files to which it forms an interface.)
+- Win32-Kernel Non-GUI system services, as implemented in
+  *KERNEL32.DLL* and declared in *WINBASE.H* (files, pipes, semaphores,
+  atoms, time, and so on) and *WINNLS.H* (National Language Support).
+- *Note:* This library does not provide thread support. Thread support
+  is being handled at a higher level by Dylan’s own Threads library.
+  See the *Core Features* manual for details.
+- Win32-GDI Graphics Device Interface, drawing graphics and text, and
+  printing. Corresponds to *WINGDI.H* and *GDI32.DLL*.
+- Win32-User Other windowing functions. Corresponds to *WINUSER.H* and
+  *USER32.DLL*. Also contains :func:`win32-last-handler` which can handle
+  conditions and display them to the application user a simply Win32
+  dialog. That function is exported from the module
+  Win32-Default-Handler.
+- Win32-Version Version management. Corresponds to *WINVER.H* and
+  *VERSION.DLL*.
+- Win32-Dialog Common dialog boxes, as implemented in *COMDLG32.DLL*
+  and declared in *COMMDLG.H*, *DLGS.H*, and *CDERR.H*.
 
 Win32-Controls
 
--  "Common controls", including list view, tree view, property sheets,
-   and so on (*COMMCTRL.H* and *COMCTL32.DLL*).
+- "Common controls", including list view, tree view, property sheets,
+  and so on (*COMMCTRL.H* and *COMCTL32.DLL*).
 
 Win32-Registry
 
--  Registry (*WINREG.H* and *ADVAPI32.DLL*).
+- Registry (*WINREG.H* and *ADVAPI32.DLL*).
 
 Win32-Rich-Edit
 
--  "Rich edit" controls (*RICHEDIT.H* and *RICHED32.DLL*).
--  Win32-DDE Dynamic Data Exchange (*DDE.H* and *DDEML.H*).
--  Win32-Shell API for querying and extending the Windows Shell.
-   Corresponds to *SHELLAPI.H* and *SHELL32.DLL*.
--  Winsock2 Corresponds to *WINSOCK2.H*, *QOS.H*, and *MSWSOCK.H*.
+- "Rich edit" controls (*RICHEDIT.H* and *RICHED32.DLL*).
+- Win32-DDE Dynamic Data Exchange (*DDE.H* and *DDEML.H*).
+- Win32-Shell API for querying and extending the Windows Shell.
+  Corresponds to *SHELLAPI.H* and *SHELL32.DLL*.
+- Winsock2 Corresponds to *WINSOCK2.H*, *QOS.H*, and *MSWSOCK.H*.
 
 Content and organization of the Win32 API libraries
 ===================================================
@@ -518,16 +518,16 @@ It can be used in most places that accept a bit mask (C types *DWORD*,
 arguments are a ``<machine-word>``. The contexts where this is likely to
 occur are:
 
--  Window style parameter of *CreateWindow ($WS-...)*
--  Flags value for *CreateFile* or *CreateNamedPipe* *($FILE-FLAG-...)*
--  *$LOCALE-NOUSEROVERRIDE* for *LCTYPE* parameters for *GetLocaleInfoA*
-   , *GetLocaleInfo*, and possibly others, or *dwFlags* parameter of
-   *GetTimeFormat*, *GetNumberFormat*, *GetCurrencyFormat*, or
-   *GetDateFormat*.
--  Mask and effects values in *CHARFORMAT* structure for "rich edit"
-   controls *($CFM-...* and *$CFE-...)*
--  Mask value in *PARAFORMAT* structure for "rich edit" controls
-    *($PFM-...)*
+- Window style parameter of *CreateWindow ($WS-...)*
+- Flags value for *CreateFile* or *CreateNamedPipe* *($FILE-FLAG-...)*
+- *$LOCALE-NOUSEROVERRIDE* for *LCTYPE* parameters for *GetLocaleInfoA*,
+  *GetLocaleInfo*, and possibly others, or *dwFlags* parameter of
+  *GetTimeFormat*, *GetNumberFormat*, *GetCurrencyFormat*, or
+  *GetDateFormat*.
+- Mask and effects values in *CHARFORMAT* structure for "rich edit"
+  controls *($CFM-...* and *$CFE-...)*
+- Mask value in *PARAFORMAT* structure for "rich edit" controls
+  *($PFM-...)*
 
 Other minor details
 ===================

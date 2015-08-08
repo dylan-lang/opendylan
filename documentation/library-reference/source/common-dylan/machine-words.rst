@@ -305,8 +305,8 @@ before performing the operation.
    :parameter m: An instance of :class:`<machine-word>`
    :value r: An instance of :class:`<machine-word>`
 
-These four functions have the same semantics as *logior*, *logxor*,
-*logand*, and *lognot* in the Dylan library, but they operate on
+These four functions have the same semantics as :drm:`logior`, :drm:`logxor`,
+:drm:`logand`, and :drm:`lognot` in the Dylan library, but they operate on
 ``<machine-word>`` s instead of :drm:`<integer>` s.
 
 .. function:: %logbit?
@@ -454,20 +454,20 @@ dividend by the divisor, returning a quotient and remainder such that:
 When the division is inexact (in other words, when the remainder is not
 zero), the kind of rounding depends on the operation:
 
--  :func:`%floor/` The quotient is rounded toward
-   negative infinity.
--  :func:`%ceiling/` The quotient is rounded toward
-   positive infinity.
--  :func:`%round/` The quotient is rounded toward
-   the nearest integer. If the mathematical quotient is exactly halfway
-   between two integers, then the resulting quotient is rounded to the
-   nearest even integer.
--  :func:`%truncate/` The quotient is rounded toward
-   zero.
--  :func:`%divide` If both operands are
-   non-negative, then the quotient is rounded toward zero. If either
-   operand is negative, then the direction of rounding is unspecified,
-   as is the sign of the remainder.
+- :func:`%floor/` The quotient is rounded toward
+  negative infinity.
+- :func:`%ceiling/` The quotient is rounded toward
+  positive infinity.
+- :func:`%round/` The quotient is rounded toward
+  the nearest integer. If the mathematical quotient is exactly halfway
+  between two integers, then the resulting quotient is rounded to the
+  nearest even integer.
+- :func:`%truncate/` The quotient is rounded toward
+  zero.
+- :func:`%divide` If both operands are
+  non-negative, then the quotient is rounded toward zero. If either
+  operand is negative, then the direction of rounding is unspecified,
+  as is the sign of the remainder.
 
 For all of these functions, an error is signaled if the value of the
 divisor is zero or if the correct value for the quotient exceeds the
@@ -672,20 +672,20 @@ that
 When the division is inexact (in other words, when the remainder is not
 zero), the kind of rounding depends on the operation:
 
--  :func:`d%floor/` The quotient is rounded toward
-   negative infinity.
--  :func:`d%ceiling/` The quotient is rounded toward
-   positive infinity.
--  :func:`d%round/` The quotient is rounded toward
-   the nearest integer. If the mathematical quotient is exactly halfway
-   between two integers then the resulting quotient is rounded to the
-   nearest even integer.
--  :func:`d%truncate/` The quotient is rounded
-   toward zero.
--  :func:`d%divide` If both operands are
-   non-negative, then the quotient is rounded toward zero. If either
-   operand is negative, then the direction of rounding is unspecified,
-   as is the sign of the remainder.
+- :func:`d%floor/` The quotient is rounded toward
+  negative infinity.
+- :func:`d%ceiling/` The quotient is rounded toward
+  positive infinity.
+- :func:`d%round/` The quotient is rounded toward
+  the nearest integer. If the mathematical quotient is exactly halfway
+  between two integers then the resulting quotient is rounded to the
+  nearest even integer.
+- :func:`d%truncate/` The quotient is rounded
+  toward zero.
+- :func:`d%divide` If both operands are
+  non-negative, then the quotient is rounded toward zero. If either
+  operand is negative, then the direction of rounding is unspecified,
+  as is the sign of the remainder.
 
 For all of these functions, an error is signaled if the value of the
 divisor is zero or if the correct value for the quotient exceeds the

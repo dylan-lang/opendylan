@@ -510,13 +510,13 @@ Terminology
 For the rest of this chapter, we adopt the following terminology,
 hopefully not too inconsistent with common C terminology:
 
--  *Base type* Basic units of data storage (C’s variously sized
-   integers, characters, and floating point numbers) and aggregate
-   records (structs and unions).
--  *Derived type*. A type based on some other type (C’s pointer, array,
-   and function types).
--  *Fundamental numeric type*. One of C’s integer or floating point types.
-   This does not include pointer types, structure types, or union types.
+- *Base type* Basic units of data storage (C’s variously sized
+  integers, characters, and floating point numbers) and aggregate
+  records (structs and unions).
+- *Derived type*. A type based on some other type (C’s pointer, array,
+  and function types).
+- *Fundamental numeric type*. One of C’s integer or floating point types.
+  This does not include pointer types, structure types, or union types.
 
 Basic options in C-FFI macros
 =============================
@@ -524,25 +524,25 @@ Basic options in C-FFI macros
 The defining macros of the C-FFI share a consistent core set of options
 which are worth describing here:
 
--  A *c-name* argument. Every defining form allows you to specify the
-   corresponding C entity through the keyword *c-name:*. It is optional
-   in some forms but required in others. You can define types that have
-   no named opposite number in C, and the c-name option is always
-   optional in type definitions. On the other hand, you must always name
-   an imported C function or variable so that Dylan knows the correct
-   name from the compiled C library to link with.
+- A *c-name* argument. Every defining form allows you to specify the
+  corresponding C entity through the keyword *c-name:*. It is optional
+  in some forms but required in others. You can define types that have
+  no named opposite number in C, and the c-name option is always
+  optional in type definitions. On the other hand, you must always name
+  an imported C function or variable so that Dylan knows the correct
+  name from the compiled C library to link with.
 
-   In general, any C entity you can declare in C using ``extern`` can only be
-   found by the C-FFI if you pass a *c-name* argument to the corresponding
-   C-FFI definition.
+  In general, any C entity you can declare in C using ``extern`` can only be
+  found by the C-FFI if you pass a *c-name* argument to the corresponding
+  C-FFI definition.
 
-   The sole exception to this is the ``define objc-selector`` form which
-   instead takes a ``selector:`` keyword.
+  The sole exception to this is the ``define objc-selector`` form which
+  instead takes a ``selector:`` keyword.
 
--  A *pointer-type-name* argument. All the type-defining forms allow you
-   to name the type for a pointer to the type being defined. This is
-   normally specified throughout the *pointer-type-name:* keyword
-   option.
+- A *pointer-type-name* argument. All the type-defining forms allow you
+  to name the type for a pointer to the type being defined. This is
+  normally specified throughout the *pointer-type-name:* keyword
+  option.
 
 Designator classes
 ==================
@@ -723,8 +723,8 @@ an example — translate C integer values to instances of :drm:`<integer>`. If
 the integer being translated is too big for the destination, the C-FFI
 signals an error. There are two ways this can happen.
 
--  On export, the C-FFI signals an error if the Dylan value has more
-   significant bits than the C integer.
+- On export, the C-FFI signals an error if the Dylan value has more
+  significant bits than the C integer.
 
 This can happen if, for example, the designator is ``<C-unsigned-short>``,
 and the Dylan value is negative, or if *unsigned* *short* on that
@@ -733,8 +733,8 @@ significant bits. The check will be omitted if the compiler can
 determine that no Dylan value outside the safe range can reach there.
 This can be done using a limited integer type.
 
--  On import into Dylan, the C-FFI signals an error if it cannot
-   represent the C value using a Dylan :drm:`<integer>`.
+- On import into Dylan, the C-FFI signals an error if it cannot
+  represent the C value using a Dylan :drm:`<integer>`.
 
 This can happen with any C integer type that is more than 30 bits wide.
 The size of a Dylan :drm:`<integer>` depends on the particular platform, but

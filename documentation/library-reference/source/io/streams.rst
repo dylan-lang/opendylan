@@ -70,31 +70,31 @@ Goals of the module
 
 The Streams module provides:
 
--  A generic, easy-to-use interface for streaming over sequences and
-   files. The same high-level interface for consuming or producing is
-   available irrespective of the type of stream, or the types of the
-   elements being streamed over.
--  Efficiency, especially for the common case of file I/O.
--  Access to an underlying buffer management protocol.
+- A generic, easy-to-use interface for streaming over sequences and
+  files. The same high-level interface for consuming or producing is
+  available irrespective of the type of stream, or the types of the
+  elements being streamed over.
+- Efficiency, especially for the common case of file I/O.
+- Access to an underlying buffer management protocol.
 
 The Streams module does not address a number of related issues,
 including:
 
--  A standard object-printing package such as Smalltalk’s *printOn:* or
-   Lisp’s *print-object*, or a formatted printing facility such as
-   Lisp’s *format*. These facilities are provided by the
-   :doc:`Print <print>`, :doc:`Format <format>`,
-   and :doc:`Format-out <format-out>` libraries. For convenience,
-   the :doc:`Common Dylan <../common-dylan/index>` library also
-   provides simple formatting capabilities.
--  General object dumping and loading.
--  A comprehensive range of I/O facilities for using memory-mapped
-   files, network connections, and so on.
--  An interface for naming files. The :doc:`Locators <../system/locators>`
-   module provides such an interface.
--  An interface to operating system functionality, such as file renaming
-   or deleting operations. The :doc:`File-System <../system/file-system>`
-   module provides such an interface.
+- A standard object-printing package such as Smalltalk’s *printOn:* or
+  Lisp’s *print-object*, or a formatted printing facility such as
+  Lisp’s *format*. These facilities are provided by the
+  :doc:`Print <print>`, :doc:`Format <format>`,
+  and :doc:`Format-out <format-out>` libraries. For convenience,
+  the :doc:`Common Dylan <../common-dylan/index>` library also
+  provides simple formatting capabilities.
+- General object dumping and loading.
+- A comprehensive range of I/O facilities for using memory-mapped
+  files, network connections, and so on.
+- An interface for naming files. The :doc:`Locators <../system/locators>`
+  module provides such an interface.
+- An interface to operating system functionality, such as file renaming
+  or deleting operations. The :doc:`File-System <../system/file-system>`
+  module provides such an interface.
 
 Concepts
 --------
@@ -108,8 +108,8 @@ Streams are represented as Dylan objects, and all are general instances
 of the class :class:`<stream>`, which the Streams module defines.
 
 It is usual to say that a stream is established *over* the data
-aggregate. Hence, a stream providing access to the string *"hello
-world"* is said to be a stream over the string *"hello world"*.
+aggregate. Hence, a stream providing access to the string ``"hello
+world"`` is said to be a stream over the string ``"hello world"``.
 
 Streams permitting reading operations are called *input* streams. Input
 streams allow elements from the underlying data aggregate to be
@@ -124,7 +124,7 @@ buffering, and so on. For instance, the function :gf:`read-element`
 reads a single data element from an input stream.
 
 The following expression binds *stream* to an input stream over the
-string *"hello world"*:
+string ``"hello world"``:
 
 .. code-block:: dylan
 
@@ -178,7 +178,7 @@ Some streams are *positionable*; that is, any element of the stream can
 be accessed at any time. Positionable streams allow you to set the
 position at which the stream is accessed by the next operation. The
 following example uses positioning to return the character "w" from a
-stream over the string *"hello world"*:
+stream over the string ``"hello world"``:
 
 .. code-block:: dylan
 
@@ -219,7 +219,7 @@ example:
                start: 6,
                end: 11));
 
-This example evaluates to *"there"*. The interval (*start*, *end*)
+This example evaluates to ``"there"``. The interval (*start*, *end*)
 includes the index *start* but excludes the index *end*. This is
 consistent with standard Dylan functions over sequences, such as
 :drm:`copy-sequence`. The :gf:`read-to-end` function is one of a number
@@ -256,8 +256,8 @@ For example:
     let stream = make(<sequence-stream>,
                       contents: sv,
                       direction: #"output");
-    write(stream,#(1, 2, 3, 4, 5, 6, 7, 8, 9));
-    write(stream,"ABCDEF");
+    write(stream, #(1, 2, 3, 4, 5, 6, 7, 8, 9));
+    write(stream, "ABCDEF");
     values(sv, stream-contents(stream));
 
 The example returns two values. Each value is the same (``==``) stretchy
@@ -275,8 +275,8 @@ If a stretchy vector is not supplied, the result is different:
     let stream = make(<sequence-stream>,
                       contents: v,
                       direction: #"output");
-    write(stream,#(1, 2, 3, 4, 5, 6, 7, 8, 9));
-    write(stream,"ABCDEF");
+    write(stream, #(1, 2, 3, 4, 5, 6, 7, 8, 9));
+    write(stream, "ABCDEF");
     values(v, stream-contents(stream));
 
 This example returns as its first value the original vector, whose
@@ -376,44 +376,44 @@ Options when creating file streams
 When creating file streams, you can supply the following init-keywords
 to *make* in addition to those described in `File streams`_:
 
--  *if-exists:* An action to take if the file already exists.
--  *if-does-not-exist*: An action to take if the file does not already exist.
--  *element-type:* How the elements of the underlying file are accessed.
--  *asynchronous?:* Allows asynchronous writing of stream data to disk.
--  *share-mode:* How the file can be accessed while the stream is
-   operating on it.
+- *if-exists:* An action to take if the file already exists.
+- *if-does-not-exist*: An action to take if the file does not already exist.
+- *element-type:* How the elements of the underlying file are accessed.
+- *asynchronous?:* Allows asynchronous writing of stream data to disk.
+- *share-mode:* How the file can be accessed while the stream is
+  operating on it.
 
 The *if-exists:* init-keyword allows you to specify an action to take if
 the file named by *filename* already exists. The options are:
 
--  ``#f`` The file is opened with the stream position at the beginning.
-   This is the default when the stream’s direction is ``#"input"`` or
-   ``#"input-output"``.
--  ``#"new-version"`` If the underlying file system supports file versioning,
-   a new version of the file is created. This is the default when the stream’s
-   direction is ``#"output"``.
-   If the file system does not support file versioning, the default is
-   ``#"replace"`` when the direction of the stream is ``#"output"``.
--  ``#"overwrite"`` Set the stream’s position to the beginning of the
-   file, but preserve the current contents of the file. This is useful
-   when the direction is ``#"input-output"`` or ``#"output"`` and you want
-   to overwrite an existing file.
--  ``#"replace"`` Delete the existing file and create a new file.
--  ``#"append"`` Set the stream’s initial position to the end of the
-   existing file so that all new output occurs at the end of the file.
-   This option is only useful if the file is writeable.
--  ``#"truncate"`` If the file exists, it is truncated, setting the size
-   of the file to 0. If the file does not exist, create a new file.
--  ``#"signal"`` Signal a :class:`<file-exists-error>` condition.
+- ``#f`` The file is opened with the stream position at the beginning.
+  This is the default when the stream’s direction is ``#"input"`` or
+  ``#"input-output"``.
+- ``#"new-version"`` If the underlying file system supports file versioning,
+  a new version of the file is created. This is the default when the stream’s
+  direction is ``#"output"``.
+  If the file system does not support file versioning, the default is
+  ``#"replace"`` when the direction of the stream is ``#"output"``.
+- ``#"overwrite"`` Set the stream’s position to the beginning of the
+  file, but preserve the current contents of the file. This is useful
+  when the direction is ``#"input-output"`` or ``#"output"`` and you want
+  to overwrite an existing file.
+- ``#"replace"`` Delete the existing file and create a new file.
+- ``#"append"`` Set the stream’s initial position to the end of the
+  existing file so that all new output occurs at the end of the file.
+  This option is only useful if the file is writeable.
+- ``#"truncate"`` If the file exists, it is truncated, setting the size
+  of the file to 0. If the file does not exist, create a new file.
+- ``#"signal"`` Signal a :class:`<file-exists-error>` condition.
 
 The *if-does-not-exist:* init-keyword allows you to specify an action to
 take if the file named by *filename* does not exist. The options are:
 
--  ``#f`` No action.
--  ``#"signal"`` Signal a :class:`<file-does-not-exist-error>` condition. This is
-   the default when the stream’s direction is ``#"input"``.
--  ``#"create"`` Create a new zero-length file. This is the default when
-   the stream’s direction is ``#"output"`` or ``#"input-output"``.
+- ``#f`` No action.
+- ``#"signal"`` Signal a :class:`<file-does-not-exist-error>` condition. This is
+  the default when the stream’s direction is ``#"input"``.
+- ``#"create"`` Create a new zero-length file. This is the default when
+  the stream’s direction is ``#"output"`` or ``#"input-output"``.
 
 Because creating a file stream *always* involves an attempt to open the
 underlying file, the aforementioned error conditions will occur during
@@ -458,13 +458,13 @@ may occur after *close* is called.
 The *share-mode:* keyword determines how a file can be accessed by other
 streams while the stream has it open. The possible values are:
 
--  ``#"share-read"`` Allow other streams to be opened to the file for
-   reading but not for writing.
--  ``#"share-write"`` Allow other streams to be opened for writing but not
-   for reading.
--  ``#"share-read-write"`` Allow other streams to be opened for writing
-   or reading.
--  ``#"exclusive"`` Do not allow other streams to be opened to this file.
+- ``#"share-read"`` Allow other streams to be opened to the file for
+  reading but not for writing.
+- ``#"share-write"`` Allow other streams to be opened for writing but not
+  for reading.
+- ``#"share-read-write"`` Allow other streams to be opened for writing
+  or reading.
+- ``#"exclusive"`` Do not allow other streams to be opened to this file.
 
 Sequence streams
 ^^^^^^^^^^^^^^^^
@@ -2596,7 +2596,7 @@ are exported from the *streams* module.
    :example:
 
      The following example uses positioning to return the character "w"
-     from a stream over the string *"hello world"*:
+     from a stream over the string ``"hello world"``:
 
      .. code-block:: dylan
 
