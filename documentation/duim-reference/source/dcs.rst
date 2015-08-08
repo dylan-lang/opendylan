@@ -40,29 +40,29 @@ which is a subclass of :drm:`<object>`. They are shown in the following table
 |          |              | <device-font>                |
 +----------+--------------+------------------------------+
 
--  :class:`<pen>` This is protocol class for pens. A pen is used to draw 1
-   dimensional graphics such as lines or outline, using a specific color
-   or pattern.
--  :class:`<brush>` The protocol class for brushes. Brushes are used to fill in
-   2 dimensional areas with a specific color or pattern.
--  :class:`<palette>` The protocol class for palettes. A palette provides a set
-   of colors which can be made available to an application.
--  :class:`<ink>` This class can be thought of as anything that can be drawn.
-   As the name implies, an ink describes the color and opacity features
-   used by a given pen or brush. That is, the pen and brush define the
-   drawing style (outlining or filling, respectively), and an ink is
-   used to describe the color or pattern that is drawn. This class has a
-   number of subclasses, described in `Subclasses of \<ink\>`_.
--  :class:`<text-style>` The protocol class for text styles. A text style is a
-   portable way of describing the appearance of a piece of text on
-   screen (its font family, size, weight, and so on) in an abstract
-   fashion. Because the fonts available on a particular computer may not
-   necessarily match the fonts available on the computer of the
-   programmer, DUIM provides a portable model which allows the most
-   suitable font on the user’s machine to be chosen at run-time.
--  :class:`<device-font>` The protocol class for device-specific fonts, that
-   is, fonts that are resident on a particular device. This is a direct
-   subclass of :class:`<text-style>`.
+- :class:`<pen>` This is protocol class for pens. A pen is used to draw 1
+  dimensional graphics such as lines or outline, using a specific color
+  or pattern.
+- :class:`<brush>` The protocol class for brushes. Brushes are used to fill in
+  2 dimensional areas with a specific color or pattern.
+- :class:`<palette>` The protocol class for palettes. A palette provides a set
+  of colors which can be made available to an application.
+- :class:`<ink>` This class can be thought of as anything that can be drawn.
+  As the name implies, an ink describes the color and opacity features
+  used by a given pen or brush. That is, the pen and brush define the
+  drawing style (outlining or filling, respectively), and an ink is
+  used to describe the color or pattern that is drawn. This class has a
+  number of subclasses, described in `Subclasses of \<ink\>`_.
+- :class:`<text-style>` The protocol class for text styles. A text style is a
+  portable way of describing the appearance of a piece of text on
+  screen (its font family, size, weight, and so on) in an abstract
+  fashion. Because the fonts available on a particular computer may not
+  necessarily match the fonts available on the computer of the
+  programmer, DUIM provides a portable model which allows the most
+  suitable font on the user’s machine to be chosen at run-time.
+- :class:`<device-font>` The protocol class for device-specific fonts, that
+  is, fonts that are resident on a particular device. This is a direct
+  subclass of :class:`<text-style>`.
 
 Subclasses of <ink>
 -------------------
@@ -70,20 +70,20 @@ Subclasses of <ink>
 A number of subclasses of <ink> are exposed by the DUIM-DCs library, as
 follows:
 
--  :class:`<color>` The class of all colors available on the system. This is a
-   direct subclass of :class:`<ink>`.
--  :class:`<image>` The class of all images, such as icons and bitmap images.
-   Images may often be acquired from an outside source, such as a file
-   on disk. This is a direct subclass of :class:`<ink>`.
--  :class:`<stencil>` A stencil is a special kind of pattern that contains only
-   opacities, that is, it provides a layer of transparency. This can be
-   useful, for instance, when overlaying a color onto an image, so as to
-   provide the impression of shading. This is a direct subclass of
-   :class:`<image>`.
--  :class:`<pattern>` A pattern is a bounded rectangular arrangement of color,
-   like a checkerboard. Drawing a pattern draws a different design in
-   each rectangular cell of the pattern. This is a direct subclass of
-   :class:`<stencil>`.
+- :class:`<color>` The class of all colors available on the system. This is a
+  direct subclass of :class:`<ink>`.
+- :class:`<image>` The class of all images, such as icons and bitmap images.
+  Images may often be acquired from an outside source, such as a file
+  on disk. This is a direct subclass of :class:`<ink>`.
+- :class:`<stencil>` A stencil is a special kind of pattern that contains only
+  opacities, that is, it provides a layer of transparency. This can be
+  useful, for instance, when overlaying a color onto an image, so as to
+  provide the impression of shading. This is a direct subclass of
+  :class:`<image>`.
+- :class:`<pattern>` A pattern is a bounded rectangular arrangement of color,
+  like a checkerboard. Drawing a pattern draws a different design in
+  each rectangular cell of the pattern. This is a direct subclass of
+  :class:`<stencil>`.
 
 Error classes provided by DUIM-DCs
 ----------------------------------
@@ -91,12 +91,12 @@ Error classes provided by DUIM-DCs
 Two error classes are provided by the DUIM-DCs library, both of which
 are immediate subclasses of :class:`<error>`.
 
--  :class:`<color-not-found>` This class of error is signalled when a color is
-   requested but is not available on the user’s system.
--  :class:`<palette-full>` This class of error is signalled when an attempt is
-   made to add a color to a palette, and the palette cannot accept any
-   more colors. The number of colors in a palette depends on the color
-   depth of the connected monitor.
+- :class:`<color-not-found>` This class of error is signalled when a color is
+  requested but is not available on the user’s system.
+- :class:`<palette-full>` This class of error is signalled when an attempt is
+  made to add a color to a palette, and the palette cannot accept any
+  more colors. The number of colors in a palette depends on the color
+  depth of the connected monitor.
 
 DUIM-DCs Module
 ===============
@@ -635,9 +635,9 @@ are exported from the *duim-dcs* module.
 
    :superclasses: :class:`<ink>`
 
-   :keyword red: An instance of type ``<real>``.
-   :keyword green: An instance of type ``<real>``.
-   :keyword blue: An instance of type ``<real>``.
+   :keyword red: An instance of type :drm:`<real>`.
+   :keyword green: An instance of type :drm:`<real>`.
+   :keyword blue: An instance of type :drm:`<real>`.
    :keyword intensity: An instance of type ``limited(<real>, min: 0, max: sqrt(3))``.
    :keyword hue: An instance of type ``limited(<real>, min: 0, max: 1)``.
    :keyword saturation: An instance of type ``limited(<real>, min: 0, max: 1)``.
@@ -1474,7 +1474,7 @@ are exported from the *duim-dcs* module.
    :signature: image-depth *image* => *depth*
 
    :parameter image: An instance of type :class:`<image>`.
-   :value depth: An instance of type ``<real>``.
+   :value depth: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -1494,7 +1494,7 @@ are exported from the *duim-dcs* module.
    :signature: image-height *image* => *height*
 
    :parameter image: An instance of type :class:`<image>`.
-   :value height: An instance of type ``<real>``.
+   :value height: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -1514,7 +1514,7 @@ are exported from the *duim-dcs* module.
    :signature: image-width *image* => *width*
 
    :parameter image: An instance of type :class:`<image>`.
-   :value width: An instance of type ``<real>``.
+   :value width: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -1649,7 +1649,7 @@ are exported from the *duim-dcs* module.
    :parameter n: An instance of type :drm:`<integer>`.
    :parameter k: An instance of type :drm:`<integer>`.
 
-   :parameter colors: An instance of type limited(``<sequence>``, of: :class:`<color>`).
+   :parameter colors: An instance of type ``limited(<sequence>, of: <color>)``.
 
    :description:
 
@@ -1711,7 +1711,7 @@ are exported from the *duim-dcs* module.
 
    :signature: make-device-font *port* *font* => *device-font*
 
-   :parameter port: An instance of type ``<silica>``.
+   :parameter port: An instance of type :class:`<silica>`.
    :parameter font: An instance of type :drm:`<object>`.
    :value device-font: A font object or the name of a font.
 
@@ -2025,7 +2025,7 @@ are exported from the *duim-dcs* module.
 
    :superclasses: :class:`<stencil>`
 
-   :keyword colors: An instance of type limited(``<sequence>`` of: :class:`<color>`).
+   :keyword colors: An instance of type ``limited(<sequence>, of: <color>)``.
 
    :description:
 

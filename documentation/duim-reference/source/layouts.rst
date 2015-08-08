@@ -165,8 +165,8 @@ are exported from the *duim-layouts* module.
    :signature: allocate-space *pane* *width height* => ()
 
    :parameter pane: An instance of type :class:`<sheet>`.
-   :parameter width: An instance of type ``<integer>``.
-   :parameter height: An instance of type ``<integer>``.
+   :parameter width: An instance of type :drm:`<integer>`.
+   :parameter height: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -197,8 +197,8 @@ are exported from the *duim-layouts* module.
    :keyword transform: An instance of type :class:`<transform>`. Default value: :const:`$identity-transform`.
    :keyword port: An instance of type ``false-or(<port>)``. Default value: ``#f``.
    :keyword style-descriptor: An instance of type ``false-or(<object>)``. Default value: ``#f``.
-   :keyword help-context: An instance of type ``<object-table>``. Default value: ``make(<object-table>)``.
-   :keyword help-source: An instance of type ``<object-table>``. Default value: ``make(<object-table>)``.
+   :keyword help-context: An instance of type :drm:`<object-table>`. Default value: ``make(<object-table>)``.
+   :keyword help-source: An instance of type :drm:`<object-table>`. Default value: ``make(<object-table>)``.
 
    :description:
 
@@ -241,11 +241,11 @@ are exported from the *duim-layouts* module.
 
    :superclasses: :class:`<layout>`
 
-   :keyword border: An instance of type ``<integer>``. Default value: 0.
-   :keyword spacing: An instance of type ``<integer>``. Default value: 0.
-   :keyword y-spacing: An instance of type ``<integer>``. Default value: 0.
-   :keyword equalize-heights?: An instance of type ``<boolean>``. Default value: ``#f``.
-   :keyword equalize-widths?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :keyword border: An instance of type :drm:`<integer>`. Default value: 0.
+   :keyword spacing: An instance of type :drm:`<integer>`. Default value: 0.
+   :keyword y-spacing: An instance of type :drm:`<integer>`. Default value: 0.
+   :keyword equalize-heights?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
+   :keyword equalize-widths?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
    :keyword x-alignment: An instance of type ``one-of(#"left", #"right", #"center")``. Default value: ``#"left"``.
    :keyword ratios: An instance of type ``false-or(limited(<sequence>), of: <integer>))``. Default value: ``#f``.
    :keyword y-ratios: An instance of type ``false-or(limited(<sequence>), of: <integer>))``. Default value: ``#f``.
@@ -329,8 +329,8 @@ are exported from the *duim-layouts* module.
    :signature: compose-space *pane* #key *width height* => *space-req*
 
    :parameter pane: An instance of type :class:`<sheet>`.
-   :parameter width: An instance of type ``<integer>``.
-   :parameter height: An instance of type ``<integer>``.
+   :parameter width: An instance of type :drm:`<integer>`.
+   :parameter height: An instance of type :drm:`<integer>`.
    :value space-req: An instance of type :class:`<space-requirement>`.
 
    :description:
@@ -396,7 +396,7 @@ are exported from the *duim-layouts* module.
      slots should take.
 
      Panes are sheets which represent a "useful unit" in a GUI. There is no
-     protocol class called ``<pane>``.
+     protocol class called :class:`<pane>`.
 
      A.  In most cases (such as when defining a frame using ``define frame``),
          a pane class groups existing gadgets (or panes) to form effectively a
@@ -431,8 +431,8 @@ are exported from the *duim-layouts* module.
    :signature: do-allocate-space *pane width height* => ()
 
    :parameter pane: An instance of type :class:`<sheet>`.
-   :parameter width: An instance of type ``<integer>``.
-   :parameter height: An instance of type ``<integer>``.
+   :parameter width: An instance of type :drm:`<integer>`.
+   :parameter height: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -455,8 +455,8 @@ are exported from the *duim-layouts* module.
    :signature: do-compose-space *pane* #key *width height* => *space-req*
 
    :parameter pane: An instance of type :class:`<sheet>`.
-   :parameter width: An instance of type ``<integer>``.
-   :parameter height: An instance of type ``<integer>``.
+   :parameter width: An instance of type :drm:`<integer>`.
+   :parameter height: An instance of type :drm:`<integer>`.
    :value space-req: An instance of type :class:`<space-requirement>`.
 
    :description:
@@ -661,15 +661,15 @@ are exported from the *duim-layouts* module.
    :superclasses: :class:`<sheet>`
 
    :keyword space-requirement: An instance of type :class:`<space-requirement>`. Required.
-   :keyword width: An instance of type ``<integer>``. Required.
-   :keyword height: An instance of type ``<integer>``. Required.
-   :keyword min-width: An instance of type ``<integer>``. Default value: ``0``.
-   :keyword min-height: An instance of type ``<integer>``. Default value: ``0``.
-   :keyword max-width: An instance of type ``<integer>``. Default value: :const:`$fill`.
-   :keyword max-height: An instance of type ``<integer>``. Default value: :const:`$fill`.
-   :keyword resizable?: An instance of type ``<boolean>``. Default value: ``#t``.
-   :keyword fixed-width?: An instance of type ``<boolean>``. Default value: ``#f``.
-   :keyword fixed-height?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :keyword width: An instance of type :drm:`<integer>`. Required.
+   :keyword height: An instance of type :drm:`<integer>`. Required.
+   :keyword min-width: An instance of type :drm:`<integer>`. Default value: ``0``.
+   :keyword min-height: An instance of type :drm:`<integer>`. Default value: ``0``.
+   :keyword max-width: An instance of type :drm:`<integer>`. Default value: :const:`$fill`.
+   :keyword max-height: An instance of type :drm:`<integer>`. Default value: :const:`$fill`.
+   :keyword resizable?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
+   :keyword fixed-width?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
+   :keyword fixed-height?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
 
    :description:
 
@@ -713,7 +713,7 @@ are exported from the *duim-layouts* module.
    :signature: layout-border *layout* => *border*
 
    :parameter layout: An instance of type ``type-union(<row-layout>, <column-layout>, <table-layout>, <grid-layout>, <stack-layout>)``.
-   :value border: An instance of type ``<integer>``.
+   :value border: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -734,9 +734,9 @@ are exported from the *duim-layouts* module.
 
    :signature: layout-border *border* *layout* => *border*
 
-   :parameter border: An instance of type ``<integer>``.
+   :parameter border: An instance of type :drm:`<integer>`.
    :parameter layout: An instance of type ``type-union(<row-layout>, <column-layout>, <table-layout>, <grid-layout>, <stack-layout>)``.
-   :value border: An instance of type ``<integer>``.
+   :value border: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -762,7 +762,7 @@ are exported from the *duim-layouts* module.
    :signature: layout-equalize-heights? *layout* => *equal?*
 
    :parameter layout: An instance of type ``type-union(<row-layout>, <column-layout>)``.
-   :value equal?: An instance of type ``<boolean>``.
+   :value equal?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -785,7 +785,7 @@ are exported from the *duim-layouts* module.
    :signature: layout-equalize-widths? *layout* => *equal?*
 
    :parameter layout: An instance of type type-union(<row-layout>, <column-layout>)``.
-   :value equal?: An instance of type ``<boolean>``.
+   :value equal?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -830,12 +830,12 @@ are exported from the *duim-layouts* module.
    :signature: make *space-requirement-class* #key *width min-width max-width height min-height max-height* => *space-req*
 
    :parameter space-requirement-class: The class :class:`<space-requirement>`.
-   :parameter width: An instance of type ``<integer>``. Default value: :const:`$fill`.
-   :parameter min-width: An instance of type ``<integer>``. Default value: *width*.
-   :parameter max-width: An instance of type ``<integer>``. Default value: *width*.
-   :parameter height: An instance of type ``<integer>``. Default value: :const:`$fill`.
-   :parameter min-height: An instance of type ``<integer>``. Default value: *height*.
-   :parameter max-height: An instance of type ``<integer>``. Default value: *height*.
+   :parameter width: An instance of type :drm:`<integer>`. Default value: :const:`$fill`.
+   :parameter min-width: An instance of type :drm:`<integer>`. Default value: *width*.
+   :parameter max-width: An instance of type :drm:`<integer>`. Default value: *width*.
+   :parameter height: An instance of type :drm:`<integer>`. Default value: :const:`$fill`.
+   :parameter min-height: An instance of type :drm:`<integer>`. Default value: *height*.
+   :parameter max-height: An instance of type :drm:`<integer>`. Default value: *height*.
    :value space-req: An instance of type :class:`<space-requirement>`.
 
    :description:
@@ -938,7 +938,7 @@ are exported from the *duim-layouts* module.
 
    :superclasses: :class:`<layout>`
 
-   :keyword stretchable?: An instance of type ``<boolean>``.
+   :keyword stretchable?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -981,7 +981,7 @@ are exported from the *duim-layouts* module.
    :signature: relayout-children *sheet* #key *port-did-it?* => ()
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-   :parameter port-did-it?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :parameter port-did-it?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
 
    :description:
 
@@ -998,8 +998,8 @@ are exported from the *duim-layouts* module.
    :signature: relayout-parent *sheet* #key *width height* => ()
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-   :parameter width: An instance of type ``<integer>``.
-   :parameter height: An instance of type ``<integer>``.
+   :parameter width: An instance of type :drm:`<integer>`.
+   :parameter height: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -1020,12 +1020,12 @@ are exported from the *duim-layouts* module.
 
    :superclasses: :class:`<layout>`
 
-   :keyword border: An instance of type ``<integer>``. Default value: 0.
+   :keyword border: An instance of type :drm:`<integer>`. Default value: 0.
 
-   :keyword x-spacing: An instance of type ``<integer>``. Default value: 0.
-   :keyword spacing: An instance of type ``<integer>``. Default value: 0.
-   :keyword equalize-heights?: An instance of type ``<boolean>``. Default value: ``#f``.
-   :keyword equalize-widths?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :keyword x-spacing: An instance of type :drm:`<integer>`. Default value: 0.
+   :keyword spacing: An instance of type :drm:`<integer>`. Default value: 0.
+   :keyword equalize-heights?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
+   :keyword equalize-widths?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
    :keyword y-alignment: An instance of type ``one-of(#"top", #"bottom", #"center")``. Default value: ``#"top"``.
    :keyword x-ratios: An instance of type ``false-or(<sequence>)``. Default value: ``#f``.
    :keyword ratios: An instance of type ``false-or(<sequence>)``. Default value: ``#f``.
@@ -1146,12 +1146,12 @@ are exported from the *duim-layouts* module.
 
    :superclasses: :drm:`<object>`
 
-   :keyword width: An instance of type ``<integer>``. Default value: :const:`$fill`.
-   :keyword min-width: An instance of type ``<integer>``. Default value: *width*.
-   :keyword max-width: An instance of type ``<integer>``. Default value: *width*.
-   :keyword height: An instance of type ``<integer>``. Default value: :const:`$fill`.
-   :keyword min-height: An instance of type ``<integer>``. Default value: *height*.
-   :keyword max-height: An instance of type ``<integer>``. Default value: *height*.
+   :keyword width: An instance of type :drm:`<integer>`. Default value: :const:`$fill`.
+   :keyword min-width: An instance of type :drm:`<integer>`. Default value: *width*.
+   :keyword max-width: An instance of type :drm:`<integer>`. Default value: *width*.
+   :keyword height: An instance of type :drm:`<integer>`. Default value: :const:`$fill`.
+   :keyword min-height: An instance of type :drm:`<integer>`. Default value: *height*.
+   :keyword max-height: An instance of type :drm:`<integer>`. Default value: *height*.
    :keyword label: An instance of type ``type-union(<string>, <image>)``.
 
    :description:
@@ -1235,7 +1235,7 @@ are exported from the *duim-layouts* module.
    :signature: space-requirement? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1253,7 +1253,7 @@ are exported from the *duim-layouts* module.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
-   :value height: An instance of type ``<number>``.
+   :value height: An instance of type :drm:`<number>`.
 
    :description:
 
@@ -1273,7 +1273,7 @@ are exported from the *duim-layouts* module.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
-   :value max-height: An instance of type ``<number>``.
+   :value max-height: An instance of type :drm:`<number>`.
 
    :description:
 
@@ -1294,7 +1294,7 @@ are exported from the *duim-layouts* module.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
-   :value max-width: An instance of type ``<number>``.
+   :value max-width: An instance of type :drm:`<number>`.
 
    :description:
 
@@ -1315,7 +1315,7 @@ are exported from the *duim-layouts* module.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
-   :value min-height: An instance of type ``<number>``.
+   :value min-height: An instance of type :drm:`<number>`.
 
    :description:
 
@@ -1336,7 +1336,7 @@ are exported from the *duim-layouts* module.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
-   :value min-width: An instance of type ``<number>``.
+   :value min-width: An instance of type :drm:`<number>`.
 
    :description:
 
@@ -1357,7 +1357,7 @@ are exported from the *duim-layouts* module.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
-   :value width: An instance of type ``<number>``.
+   :value width: An instance of type :drm:`<number>`.
 
    :description:
 
@@ -1378,7 +1378,7 @@ are exported from the *duim-layouts* module.
 
    :superclasses: :class:`<layout>`
 
-   :keyword border: An instance of type ``<integer>``. Default value: 0.
+   :keyword border: An instance of type :drm:`<integer>`. Default value: 0.
    :keyword mapped-page: An instance of :class:`<sheet>`.
 
    :description:
@@ -1482,12 +1482,12 @@ are exported from the *duim-layouts* module.
 
    :superclasses: :class:`<layout>`
 
-   :keyword border: An instance of type ``<integer>``. Default value: 0.
+   :keyword border: An instance of type :drm:`<integer>`. Default value: 0.
    :keyword rows: An instance of type ``false-or(<integer>)``. Default value: ``#f``.
    :keyword columns: An instance of type ``false-or(<integer>)``. Default value: ``#f``.
    :keyword contents: An instance of type ``limited(<sequence>, of: limited(<sequence>, of: <sheet>))``.
-   :keyword x-spacing: An instance of type ``<integer>``. Default value: 0.
-   :keyword y-spacing: An instance of type ``<integer>``. Default value: 0.
+   :keyword x-spacing: An instance of type :drm:`<integer>`. Default value: 0.
+   :keyword y-spacing: An instance of type :drm:`<integer>`. Default value: 0.
    :keyword x-ratios: An instance of type ``false-or(<sequence>)``. Default value: ``#f``.
    :keyword y-ratios: An instance of type ``false-or(<sequence>)``. Default value: ``#f``.
    :keyword x-alignment: An instance of type ``one-of(#"left", #"right", #"center")``. Default value: ``#"left"``.

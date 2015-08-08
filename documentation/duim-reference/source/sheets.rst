@@ -16,17 +16,17 @@ and :class:`<frame>`, all of which are subclasses of :drm:`<object>`.
 Sheets are the most basic visual GUI element, and can be any unique part
 of a window: either a control such as a gadget or pane, or a layout.
 
--  Sheets have a visual presence: size, drawing context and so on.
--  The essential component of a sheet is its region; the area of the
-   screen that the sheet occupies.
--  In practice sheets always also have a transform that maps the
-   coordinate system of the sheet’s region to the coordinate system of
-   its parent, because in practice all sheets maintain a pointer to a
-   parent sheet.
--  Sheets can be output-only (labels, for example), input-output (most
-   gadgets are like this) or even, in principle, input-only (for
-   instance, you may need to provide some kind of simple drag’n’drop
-   target).
+- Sheets have a visual presence: size, drawing context and so on.
+- The essential component of a sheet is its region; the area of the
+  screen that the sheet occupies.
+- In practice sheets always also have a transform that maps the
+  coordinate system of the sheet’s region to the coordinate system of
+  its parent, because in practice all sheets maintain a pointer to a
+  parent sheet.
+- Sheets can be output-only (labels, for example), input-output (most
+  gadgets are like this) or even, in principle, input-only (for
+  instance, you may need to provide some kind of simple drag’n’drop
+  target).
 
 Most of the sheet classes that you need to use on a day to day basis are
 exposed in the DUIM-Gadgets and DUIM-Layouts libraries. The DUIM-Sheets
@@ -47,12 +47,12 @@ A sheet is the basic unit in a DUIM window. Inside any window, sheets
 are nested in a parent-child hierarchy. All sheets have the following
 attributes:
 
--  :gf:`sheet-region`, expressed in the sheet’s own coordinate system.
--  :gf:`sheet-transform`, which maps the sheet’s coordinate system to the
-   coordinate system of its parent.
--  :gf:`sheet-parent`, which is ``#f`` if the sheet has no parent.
--  :gf:`sheet-mapped?`, which tells if the sheet is visible on a display,
-   ignoring issues of occluding windows.
+- :gf:`sheet-region`, expressed in the sheet’s own coordinate system.
+- :gf:`sheet-transform`, which maps the sheet’s coordinate system to the
+  coordinate system of its parent.
+- :gf:`sheet-parent`, which is ``#f`` if the sheet has no parent.
+- :gf:`sheet-mapped?`, which tells if the sheet is visible on a display,
+  ignoring issues of occluding windows.
 
 The :gf:`sheet-transform` is an instance of a concrete subclass of
 :class:`<transform>`. The :gf:`sheet-region` can be an instance of any concrete
@@ -63,10 +63,10 @@ Some sheets (menu bars, button boxes, or tool bars, for instance) also
 have single or multiple children, in which case they have additional
 attributes:
 
--  A :gf:`sheet-children` slot. This is a sequence of sheets. Each sheet in
-   the sequence is a child of the current sheet.
--  Methods to add, remove, and replace a child.
--  Methods to map over children.
+- A :gf:`sheet-children` slot. This is a sequence of sheets. Each sheet in
+  the sequence is a child of the current sheet.
+- Methods to add, remove, and replace a child.
+- Methods to map over children.
 
 The functions that maintain the sheet’s region and transform are part of
 the *sheet-geometry* protocol. Functions that maintain a sheet’s parent
@@ -84,8 +84,8 @@ and :gf:`set-sheet-edges`.
 
 Some classes of sheet can receive input. These have:
 
--  A :gf:`sheet-event-queue` slot.
--  Methods for :class:`<handle-event>`.
+- A :gf:`sheet-event-queue` slot.
+- Methods for :class:`<handle-event>`.
 
 Sheets that can be repainted have methods for :gf:`handle-repaint`.
 
@@ -108,9 +108,9 @@ A display (and all the sheets attached to the display) is associated
 with a :class:`<port>` that is a connection to a display server. The port
 manages:
 
--  a primary input device, such as a keyboard.
--  a pointing device, such as a mouse.
--  an event processor that *dispatches* events to the appropriate sheet.
+- a primary input device, such as a keyboard.
+- a pointing device, such as a mouse.
+- an event processor that *dispatches* events to the appropriate sheet.
 
 There is a protocol for using the Windows clipboard. In order to
 manipulate the Windows clipboard from within DUIM, the clipboard needs
@@ -187,51 +187,51 @@ Overall class hierarchy for the DUIM-Sheets library
 |          | <event>         |           |
 +----------+-----------------+-----------+
 
--  :class:`<sheet>` As already mentioned, a sheet is the basic unit of window
-   applications, and they can be nested in a parent-child hierarchy. A
-   subclass of sheet is provided — :class:`<display>` — which is an object that
-   represents a single display (or screen) on a display server. All
-   sheets can be attached to a display.
--  :class:`<port>` A port is a connection to a display server. A display,
-   together with all the sheets attached to it, is associated with a
-   port, which manages a primary input device, such as a keyboard, a
-   pointing device, such as a mouse, and an event processor that
-   dispatches events to the appropriate sheet.
--  :class:`<clipboard>` This class is used as a clipboard that can be used to
-   hold information temporarily while it is transferred from one sheet
-   to another, or between applications. Clipboards provide support for
-   the standard *Cut*, *Copy*, and *Paste* commands common in most
-   applications.
--  :class:`<caret>` and :class:`<pointer>` These two classes form an interface
-   between the keyboard and the display, and the pointing device and the
-   display, respectively.
--  The :class:`<caret>` represents the position on screen that characters typed
-   on the keyboard will be placed. This is often a position in a
-   document.
--  The :class:`<pointer>` represents the position of the pointing device on the
-   screen, and thus shows the area that will be affected by any events
-   generated with the pointing device, such as pressing or clicking one
-   of the buttons on the device.
--  :class:`<pointer-drag-event>` The class of events where the pointer for the
-   pointing device attached to the computer is moving, and one of the buttons
-   on the pointing device is pressed down as well. The effects of this event
-   are rather like a combination of the :class:`<button-press-event>` and
-   :class:`<pointer-motion-event>` classes. For more information about these
-   and other pointer event classes, see `Subclasses of \<device-event\>`_.
--  :class:`<pointer-enter-event>` This event is used to describe the event
-   where the pointer for the pointing device enters a specified area of the
-   screen, such as a sheet. For more information about these and other pointer
-   event classes, see `Subclasses of \<device-event\>`_.
--  :class:`<medium>` A medium represents a destination for drawn or written
-   output. It has several items associated with it, such as a drawing
-   plane, foreground and background colors, and default line and text
-   styles.
--  :class:`<frame-manager>` A frame manager represents the "look and feel" of
-   a frame. This controls standard interface elements for the platform you are
-   delivering on, such as the appearance and behavior of title bars, borders,
-   menu commands and scroll bars. Unless you are developing for more than one
-   platform, you do not need to be too concerned with frame managers, since you
-   will only using the default frame manager.
+- :class:`<sheet>` As already mentioned, a sheet is the basic unit of window
+  applications, and they can be nested in a parent-child hierarchy. A
+  subclass of sheet is provided — :class:`<display>` — which is an object that
+  represents a single display (or screen) on a display server. All
+  sheets can be attached to a display.
+- :class:`<port>` A port is a connection to a display server. A display,
+  together with all the sheets attached to it, is associated with a
+  port, which manages a primary input device, such as a keyboard, a
+  pointing device, such as a mouse, and an event processor that
+  dispatches events to the appropriate sheet.
+- :class:`<clipboard>` This class is used as a clipboard that can be used to
+  hold information temporarily while it is transferred from one sheet
+  to another, or between applications. Clipboards provide support for
+  the standard *Cut*, *Copy*, and *Paste* commands common in most
+  applications.
+- :class:`<caret>` and :class:`<pointer>` These two classes form an interface
+  between the keyboard and the display, and the pointing device and the
+  display, respectively.
+- The :class:`<caret>` represents the position on screen that characters typed
+  on the keyboard will be placed. This is often a position in a
+  document.
+- The :class:`<pointer>` represents the position of the pointing device on the
+  screen, and thus shows the area that will be affected by any events
+  generated with the pointing device, such as pressing or clicking one
+  of the buttons on the device.
+- :class:`<pointer-drag-event>` The class of events where the pointer for the
+  pointing device attached to the computer is moving, and one of the buttons
+  on the pointing device is pressed down as well. The effects of this event
+  are rather like a combination of the :class:`<button-press-event>` and
+  :class:`<pointer-motion-event>` classes. For more information about these
+  and other pointer event classes, see `Subclasses of \<device-event\>`_.
+- :class:`<pointer-enter-event>` This event is used to describe the event
+  where the pointer for the pointing device enters a specified area of the
+  screen, such as a sheet. For more information about these and other pointer
+  event classes, see `Subclasses of \<device-event\>`_.
+- :class:`<medium>` A medium represents a destination for drawn or written
+  output. It has several items associated with it, such as a drawing
+  plane, foreground and background colors, and default line and text
+  styles.
+- :class:`<frame-manager>` A frame manager represents the "look and feel" of
+  a frame. This controls standard interface elements for the platform you are
+  delivering on, such as the appearance and behavior of title bars, borders,
+  menu commands and scroll bars. Unless you are developing for more than one
+  platform, you do not need to be too concerned with frame managers, since you
+  will only using the default frame manager.
 
 Subclasses of <event>
 ^^^^^^^^^^^^^^^^^^^^^
@@ -262,8 +262,8 @@ exposed by the DUIM-Sheets library.
 The classes of event that are exposed by the DUIM-Sheets library fall
 into two categories:
 
--  Events that occur in frames: subclasses of the :class:`<frame-event>` class
--  Events that occur in sheets: subclasses of the :class:`<sheet-event>` class
+- Events that occur in frames: subclasses of the :class:`<frame-event>` class
+- Events that occur in sheets: subclasses of the :class:`<sheet-event>` class
 
 Most subclasses of :class:`<frame-event>` are exposed by the DUIM-Frames
 library. See :doc:`frames`, for full details about these
@@ -276,10 +276,10 @@ the DUIM-Sheets library:
 
 Subclasses of :class:`<sheet-event>` fall into two categories:
 
--  Device events that occur to devices attached to the computer
-   (typically the keyboard and the pointing device). These are described
-   in `Subclasses of <device-event>`_.
--  Window events that occur in a window.
+- Device events that occur to devices attached to the computer
+  (typically the keyboard and the pointing device). These are described
+  in `Subclasses of <device-event>`_.
+- Window events that occur in a window.
 
 Events that occur in a window are subclasses of :class:`<window-event>`. Two
 such events are supplied:
@@ -340,10 +340,10 @@ describe any event that can occur on a device connected to the computer.
 
 Device events fall into two distinct categories:
 
--  Keyboard events that occur on the keyboard attached to the computer:
-   subclasses of :class:`<keyboard-event>`
--  Pointer events that occur on the pointing device attached to the
-   computer: subclasses of :class:`<pointer-event>`
+- Keyboard events that occur on the keyboard attached to the computer:
+  subclasses of :class:`<keyboard-event>`
+- Pointer events that occur on the pointing device attached to the
+  computer: subclasses of :class:`<pointer-event>`
 
 There are two classes of keyboard event. The classes :class:`<key-press-event>`
 and :class:`<key-release-event>` describe the events that occur when any key on
@@ -770,7 +770,7 @@ are exported from the *duim-sheets* module.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter region: An instance of type :class:`<region>`.
-   :value sheets: An instance of type limited(``<sequence>``, of: :class:`<sheet>`).
+   :value sheets: An instance of type ``limited(<sequence>, of: <sheet>)``.
 
    :description:
 
@@ -6138,7 +6138,7 @@ are exported from the *duim-sheets* module.
 
      The *medium* specified should be an instance of type :class:`<medium>`.
      The *scale-x* and *scale-y* should evaluate to an instance of type
-     ``<real>``.
+     :drm:`<real>`.
 
    :seealso:
 

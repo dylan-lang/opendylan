@@ -161,8 +161,8 @@ internal state of DUIM.
 Functions that return mutable objects that are not fresh objects fall
 into two categories:
 
--  Those that return *read-only state*
--  Those that return *read/write state*
+- Those that return *read-only state*
+- Those that return *read/write state*
 
 If a function returns read-only state, programmers must not modify that
 object; doing so might corrupt the state of DUIM. If a function returns
@@ -176,14 +176,14 @@ Specialized arguments to generic functions
 Unless otherwise stated, this manual uses the following convention for
 specifying which arguments to generic functions are specialized:
 
--  If the generic function is a ``-setter`` function, the second argument
-   is the one that is intended to be specialized.
--  If the generic function is a "mapping" function (such as ``do-sheets``),
-   the second argument (the object that specifies what is being
-   mapped over) is the one that is specialized. The first argument (the
-   functional argument) is not intended to be specialized.
--  Otherwise, the first argument is the one that is intended to be
-   specialized.
+- If the generic function is a ``-setter`` function, the second argument
+  is the one that is intended to be specialized.
+- If the generic function is a "mapping" function (such as ``do-sheets``),
+  the second argument (the object that specifies what is being
+  mapped over) is the one that is specialized. The first argument (the
+  functional argument) is not intended to be specialized.
+- Otherwise, the first argument is the one that is intended to be
+  specialized.
 
 Macros that expand into calls to advertised functions
 =====================================================
@@ -220,9 +220,9 @@ Terminology pertaining to error conditions
 When this documentation specifies that it "is an error" for some
 situation to occur, this means that:
 
--  No valid DUIM program should cause this situation to occur.
--  If this situation does occur, the effects and results are undefined.
--  DUIM often tries to detect such an error, but it might not.
+- No valid DUIM program should cause this situation to occur.
+- If this situation does occur, the effects and results are undefined.
+- DUIM often tries to detect such an error, but it might not.
 
 When this manual specifies that some argument "must be a *type* " or
 uses the phrase "the *type* argument", this means that it is an
@@ -232,10 +232,10 @@ detect such type errors, but it might not always be successful.
 When this documentation says that "an error is signalled" in some
 situation, this means that:
 
--  If the situation occurs, DUIM will signal an error using ``error`` or
-   ``cerror``.
--  Valid DUIM programs may rely on the fact that an error will be
-   signalled.
+- If the situation occurs, DUIM will signal an error using ``error`` or
+  ``cerror``.
+- Valid DUIM programs may rely on the fact that an error will be
+  signalled.
 
 When this manual states that "a condition is signalled" in a given
 situation, this is the same as saying that "an error is signalled", with

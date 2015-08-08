@@ -49,36 +49,36 @@ Definitions
 This section contains definitions of terms that will be used in this
 chapter.
 
--  *Drawing plane* A drawing plane is an infinite two-dimensional plane
-   on which graphical output occurs. The drawing plane contains an
-   arrangement of colors and opacities that is modified by each
-   graphical output operation. It is not possible to read back the
-   contents of a drawing plane, except by examining the output-history.
-   Normally each window has its own drawing plane.
--  *Coordinates* Coordinates are a pair of real numbers in
-   implementation-defined units that identify a point in the drawing
-   plane.
--  *Mediums* In this chapter, we use a medium as a destination for
-   output. The medium has a drawing plane, two designs (called the
-   medium’s foreground and background), a transformation, a clipping
-   region, a line style, and a text style. There are per-medium,
-   dynamically scoped, default drawing options. Different medium classes
-   are provided to allow you to draw on different sorts of devices, such
-   as displays, printers, and virtual devices such as bitmaps.
--  *Sheets* Many sheets can be used for doing output, so the drawing
-   functions can also take a sheet as the output argument. In this case,
-   drawing function "trampolines" to the sheet’s medium. So, while the
-   functions defined here are specified to be called on mediums, they
-   can also be called on sheets.
--  *Streams* A stream is a special kind of sheet that implements the
-   stream protocol; streams include additional state such as the current
-   text cursor (which is some point in the drawing plane).
--  By default, the "fundamental" coordinate system of a DUIM stream (not
-   a general sheet or medium, whose fundamental coordinate system is not
-   defined) is a left handed system with x increasing to the right, and
-   y increasing downward. (0,0) is at the upper left corner.
--  For more general information about DUIM streams, you should refer to
-   the manual *Library Reference: System and I/O*.
+- *Drawing plane* A drawing plane is an infinite two-dimensional plane
+  on which graphical output occurs. The drawing plane contains an
+  arrangement of colors and opacities that is modified by each
+  graphical output operation. It is not possible to read back the
+  contents of a drawing plane, except by examining the output-history.
+  Normally each window has its own drawing plane.
+-*Coordinates* Coordinates are a pair of real numbers in
+  implementation-defined units that identify a point in the drawing
+  plane.
+- *Mediums* In this chapter, we use a medium as a destination for
+  output. The medium has a drawing plane, two designs (called the
+  medium’s foreground and background), a transformation, a clipping
+  region, a line style, and a text style. There are per-medium,
+  dynamically scoped, default drawing options. Different medium classes
+  are provided to allow you to draw on different sorts of devices, such
+  as displays, printers, and virtual devices such as bitmaps.
+- *Sheets* Many sheets can be used for doing output, so the drawing
+  functions can also take a sheet as the output argument. In this case,
+  drawing function "trampolines" to the sheet’s medium. So, while the
+  functions defined here are specified to be called on mediums, they
+  can also be called on sheets.
+- *Streams* A stream is a special kind of sheet that implements the
+  stream protocol; streams include additional state such as the current
+  text cursor (which is some point in the drawing plane).
+- By default, the "fundamental" coordinate system of a DUIM stream (not
+  a general sheet or medium, whose fundamental coordinate system is not
+  defined) is a left handed system with x increasing to the right, and
+  y increasing downward. (0,0) is at the upper left corner.
+- For more general information about DUIM streams, you should refer to
+  the manual *Library Reference: System and I/O*.
 
 Drawing is approximate
 ======================
@@ -134,15 +134,15 @@ speed and accuracy, and these trade-offs depend on the hardware and
 software environment and the user concerns in any given situation. For
 example:
 
--  If the device only supports a limited number of colors, the desired
-   color may be approximated using techniques such as dithering or
-   stippling.
--  If the device cannot draw curves precisely, they may be approximated,
-   with or without anti-aliasing.
--  If the device has limited opacity resolution, color blending may be
-   approximate. A viewport might display colors that do not appear in
-   the drawing plane, both because of color and opacity approximation
-   and because of anti-aliasing at the edges of drawn shapes.
+- If the device only supports a limited number of colors, the desired
+  color may be approximated using techniques such as dithering or
+  stippling.
+- If the device cannot draw curves precisely, they may be approximated,
+  with or without anti-aliasing.
+- If the device has limited opacity resolution, color blending may be
+  approximate. A viewport might display colors that do not appear in
+  the drawing plane, both because of color and opacity approximation
+  and because of anti-aliasing at the edges of drawn shapes.
 
 Drawing computations are always carried out "in color", even if the
 viewport is only capable of displaying black and white. In other words,
@@ -174,13 +174,13 @@ is usually composed of pixels, which are roughly square, and are
 specified in "device coordinates". Device coordinates are calculated by
 transforming the user-supplied coordinates by each of the following:
 
--  The user-supplied transformation
--  The medium transformation
--  The transformation that maps from the sheet to the display device
+- The user-supplied transformation
+- The medium transformation
+- The transformation that maps from the sheet to the display device
 
-*Note:* If the last of these is a pure translation that translates by an
-integer multiple of device units, then it has no effect on the rendering
-other than placement of the figure drawn on the display device.
+.. note:: If the last of these is a pure translation that translates by an
+   integer multiple of device units, then it has no effect on the rendering
+   other than placement of the figure drawn on the display device.
 
 Roughly speaking, a pixel is affected by drawing a shape only when it is
 inside that shape. Since pixels are little squares, and the abstract
@@ -198,28 +198,28 @@ how much of it is inside the shape.
 The conventions used by DUIM are the same as the conventions used by
 X11:
 
--  A pixel is a addressed by its upper-left corner.
--  A pixel is considered to be inside a shape, and hence affected by the
-   rendering of that shape, if the center of the pixel is inside the
-   shape. If the center of the pixel lies exactly on the boundary of the
-   shape, it is considered to be inside the shape if the inside of the
-   shape is immediately to the right of the center point of the pixel
-   (that is, an increasing x direction on the display device). If the
-   center of the pixel lies exactly on a horizontal boundary, it is
-   considered to be inside the shape if the inside of the shape is
-   immediately below the center point of the pixel (that is, an
-   increasing y direction on the display device). This situation is
-   illustrated in :ref:`how-pixels-are-defined-inside-outside`.
--  An unfilled idealized geometric shape is drawn by calculating an
-   artificial area for the shape, and then deciding which pixels are
-   inside or outside that area, using the rules described above. The
-   artificial area is calculated by taking the filled shape consisting
-   of those points that are within half the line thickness from the
-   outline curve (using a normal distance function, that is, the length
-   of the line drawn at right angles to the tangent to the outline curve
-   at the nearest point). To visualize this, imagine a filled shape the
-   same size as the unfilled shape, and overlay on this filled shape an
-   identical, but slightly smaller, unfilled shape.
+- A pixel is a addressed by its upper-left corner.
+- A pixel is considered to be inside a shape, and hence affected by the
+  rendering of that shape, if the center of the pixel is inside the
+  shape. If the center of the pixel lies exactly on the boundary of the
+  shape, it is considered to be inside the shape if the inside of the
+  shape is immediately to the right of the center point of the pixel
+  (that is, an increasing x direction on the display device). If the
+  center of the pixel lies exactly on a horizontal boundary, it is
+  considered to be inside the shape if the inside of the shape is
+  immediately below the center point of the pixel (that is, an
+  increasing y direction on the display device). This situation is
+  illustrated in :ref:`how-pixels-are-defined-inside-outside`.
+- An unfilled idealized geometric shape is drawn by calculating an
+  artificial area for the shape, and then deciding which pixels are
+  inside or outside that area, using the rules described above. The
+  artificial area is calculated by taking the filled shape consisting
+  of those points that are within half the line thickness from the
+  outline curve (using a normal distance function, that is, the length
+  of the line drawn at right angles to the tangent to the outline curve
+  at the nearest point). To visualize this, imagine a filled shape the
+  same size as the unfilled shape, and overlay on this filled shape an
+  identical, but slightly smaller, unfilled shape.
 
 .. _how-pixels-are-defined-inside-outside:
 
@@ -363,22 +363,21 @@ single path, rendering the graphic itself only when the whole path has
 been defined explicitly. You can use these functions by following the
 general procedure below:
 
-1. Create a new path using *start-path*.
-2. Define the appearance of the path using any combination of *line-to*
-   , *move-to*, *curve-to*, and *arc-to*.
-3. Optionally, use *close-path* to create a closed path from the
+1. Create a new path using :gf:`start-path`.
+2. Define the appearance of the path using any combination of :gf:`line-to`,
+   :gf:`move-to`, :gf:`curve-to`, and :gf:`arc-to`.
+3. Optionally, use :gf:`close-path` to create a closed path from the
    segments defined in step 2 above.
-4. End the current path definition using *end-path* (if you have not
-   already used *close-path*).
+4. End the current path definition using :gf:`end-path` (if you have not
+   already used :gf:`close-path`).
 5. Render the outline of the path to the drawable object using
-   *stroke-path*.
+   :gf:`stroke-path`.
 6. If the path you created is closed, flood fill the path using
-   *fill-path*.
+   :gf:`fill-path`.
 
 Each of these functions is described in a little more in the following
 sections. For full details about each individual function, refer to its
-full reference entry in `DUIM-Graphics
-Module`_.
+full reference entry in `DUIM-Graphics Module`_.
 
 Functions for controlling the definition of a path
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -394,9 +393,9 @@ sheet or a medium.
    :description:
 
      Starts a new path on *drawable*. The path can be created with any
-     number of calls to *line-to*, *curve-to*, *arc-to*, and *move-to*.
-     Its appearance can also be manipulated using *fill-path* and
-     *stroke-path*.
+     number of calls to :gf:`line-to`, :gf:`curve-to`, :gf:`arc-to`,
+     and :gf:`move-to`.  Its appearance can also be manipulated using
+     :gf:`fill-path` and :gf:`stroke-path`.
 
      After creating the path, use either :gf:`close-path` or :gf:`end-path` to
      finish the path, or :gf:`abort-path` to abandon it altogether.
@@ -409,7 +408,7 @@ sheet or a medium.
 
      Ends the definition of the current path in *drawable*. Once the
      definition has been ended, the path can be rendered to the drawable
-     using *fill-path* or *stroke-path*.
+     using :gf:`fill-path` or :gf:`stroke-path`.
 
      The function :gf:`close-path` can also be used to end the definition of a
      path.
@@ -455,14 +454,14 @@ sheet or a medium.
 
      Uses the current pen to draw the current path on *drawable*. Note that
      the path must not have been previously filled. This function does not
-     close the path: you must use *close-path* if you wish to do this.
+     close the path: you must use :gf:`close-path` if you wish to do this.
 
 Functions for describing the appearance of a path
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The following generic functions actually perform drawing operations
 within a path. Again, in each case, the argument *drawable* is either a
-sheet or a medium. All other arguments are instances of ``<real>``.
+sheet or a medium. All other arguments are instances of :drm:`<real>`.
 
 .. generic-function:: line-to
 
@@ -479,7 +478,7 @@ sheet or a medium. All other arguments are instances of ``<real>``.
    :description:
 
      Draws a curve in the current path on *drawable* starting from the
-     current position, and passing through (*x1*,*y1*), (*x2*, *y2*), and
+     current position, and passing through (*x1*, *y1*), (*x2*, *y2*), and
      (*x3*, *y3*).
 
 .. generic-function:: move-to
@@ -490,7 +489,7 @@ sheet or a medium. All other arguments are instances of ``<real>``.
 
      Move the position in the current path on *drawable* to (*x*, *y*).
 
-     The function *move-to* can be used several times within the definition
+     The function :gf:`move-to` can be used several times within the definition
      of a path, allowing for the definition of several visually separate
      sections within the same path.
 
@@ -520,8 +519,8 @@ sheet or a medium. All other arguments are instances of ``<real>``.
      For each function listed above, an equivalent function is also provided
      that passes composite objects in its arguments, rather than separate
      coordinates. These functions take the same name as the functions above,
-     but with a *\** character appended. (Thus, *line-to\** performs the same
-     operation as *line-to*, but passes composite objects in its arguments).
+     but with a ``*`` character appended. (Thus, :gf:`line-to*` performs the same
+     operation as :gf:`line-to`, but passes composite objects in its arguments).
      You should be aware that using these composite object functions may lead
      to a loss of performance. For more details, see the full reference
      entries for each function.
@@ -538,7 +537,7 @@ are exported from the *duim-graphics* module.
 
    :signature: abort-path *drawable* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
    :description:
 
@@ -559,20 +558,20 @@ are exported from the *duim-graphics* module.
 
    :signature: arc-to\* *drawable center radius-1-dx radius-1-dy radius-2-dx radius-2-dy* #key *start-angle end-angle* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
-   :parameter radius-1-dx: An instance of type ``<real>``.
-   :parameter radius-1-dy: An instance of type ``<real>``.
-   :parameter radius-2-dx: An instance of type ``<real>``.
-   :parameter radius-2-dy: An instance of type ``<real>``.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
+   :parameter radius-1-dx: An instance of type :drm:`<real>`.
+   :parameter radius-1-dy: An instance of type :drm:`<real>`.
+   :parameter radius-2-dx: An instance of type :drm:`<real>`.
+   :parameter radius-2-dy: An instance of type :drm:`<real>`.
    :parameter start-angle: An instance of type ``false-or(<real>)``.
    :parameter end-angle: An instance of type ``false-or(<real>)``.
 
-   The following arguments are specific to *arc-to*.
+   The following arguments are specific to ``arc-to``.
 
-   :parameter center-x: An instance of type ``<real>``.
-   :parameter center-y: An instance of type ``<real>``.
+   :parameter center-x: An instance of type :drm:`<real>`.
+   :parameter center-y: An instance of type :drm:`<real>`.
 
-   The following argument is specific to *arc-to\**.
+   The following argument is specific to ``arc-to*``.
 
    :parameter center: An instance of type :class:`<transform>`.
 
@@ -594,7 +593,7 @@ are exported from the *duim-graphics* module.
      *radius-2-dy* to *center-x* and *center-y* respectively (to calculate
      the outermost points for the second radius).
 
-     Please note that *arc-to* does not currently support arcs whose
+     Please note that :gf:`arc-to` does not currently support arcs whose
      orientation is not axis-aligned ellipses. For all practical purposes,
      this means that *radius-1-dy* and *radius-2-dx* must always be 0.
 
@@ -604,7 +603,7 @@ are exported from the *duim-graphics* module.
      The arguments *start-angle* and *end-angle* define the extent of the arc
      that is drawn.
 
-     The function *arc-to\** is identical to *arc-to*, except that it passes
+     The function ``arc-to*`` is identical to ``arc-to``, except that it passes
      composite objects, rather than separate coordinates, in its arguments.
      You should be aware that using this function may lead to a loss of
      performance.
@@ -623,7 +622,7 @@ are exported from the *duim-graphics* module.
 
    :signature: close-path *drawable* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
    :description:
 
@@ -631,7 +630,7 @@ are exported from the *duim-graphics* module.
      figure from the elements already defined.
 
      For example, if you create a path that has four connected lines (using
-     :gf:`line-to`), you can use *close-path* to join the first and last lines
+     :gf:`line-to`), you can use :gf:`close-path` to join the first and last lines
      in the path to create a closed, five-sided figure.
 
      Only closed paths can be filled, although :gf:`fill-path` will close
@@ -652,11 +651,11 @@ are exported from the *duim-graphics* module.
    :parameter medium: An instance of type :class:`<medium>`.
    :parameter from-x: An instance of type :class:`<coordinate>`.
    :parameter from-y: An instance of type :class:`<coordinate>`.
-   :parameter width: An instance of type ``<integer>``.
-   :parameter height: An instance of type ``<integer>``.
+   :parameter width: An instance of type :drm:`<integer>`.
+   :parameter height: An instance of type :drm:`<integer>`.
    :parameter to-x: An instance of type :class:`<coordinate>`.
    :parameter to-y: An instance of type :class:`<coordinate>`.
-   :parameter function: An instance of type ``<function>``. Default value: :const:`$boole-1`.
+   :parameter function: An instance of type :drm:`<function>`. Default value: :const:`$boole-1`.
    
 
 
@@ -684,18 +683,18 @@ are exported from the *duim-graphics* module.
    :parameter pixmap: An instance of type :class:`<pixmap>`.
    :parameter pixmap-x: An instance of type :class:`<coordinate>`.
    :parameter pixmap-y: An instance of type :class:`<coordinate>`.
-   :parameter width: An instance of type ``<integer>``.
-   :parameter height: An instance of type ``<integer>``.
+   :parameter width: An instance of type :drm:`<integer>`.
+   :parameter height: An instance of type :drm:`<integer>`.
    :parameter medium: An instance of type :class:`<coordinate>`.
    :parameter medium-x: An instance of type :class:`<coordinate>`.
    :parameter medium-y: An instance of type :class:`<coordinate>`.
-   :parameter function: An instance of type ``<function>``. Default value: :const:`$boole-1`.
+   :parameter function: An instance of type :drm:`<function>`. Default value: :const:`$boole-1`.
 
    :description:
 
      Copies a rectangle of pixels from *pixmap* starting at the position
-     specified by (*pixmap-x*,*pixmap-y*) into *medium* at the position
-     (*medium-x*,*medium-y*). A rectangle whose width and height is
+     specified by (*pixmap-x*, *pixmap-y*) into *medium* at the position
+     (*medium-x*, *medium-y*). A rectangle whose width and height is
      specified by *width* and *height* is copied. If *medium* is a medium or
      a stream, then *medium-x* and *medium-y* are transformed by the user
      transformation. The copying must be done by *medium-copy-copy*.
@@ -716,18 +715,18 @@ are exported from the *duim-graphics* module.
    :parameter medium: An instance of type :class:`<medium>`.
    :parameter medium-x: An instance of type :class:`<coordinate>`.
    :parameter medium-y: An instance of type :class:`<coordinate>`.
-   :parameter width: An instance of type ``<integer>``.
-   :parameter height: An instance of type ``<integer>``.
+   :parameter width: An instance of type :drm:`<integer>`.
+   :parameter height: An instance of type :drm:`<integer>`.
    :parameter pixmap: An instance of type :class:`<pixmap>`.
    :parameter pixmap-x: An instance of type :class:`<coordinate>`.
    :parameter pixmap-y: An instance of type :class:`<coordinate>`.
-   :parameter function: An instance of type ``<function>``. Default value: :const:`$boole-1`.
+   :parameter function: An instance of type :drm:`<function>`. Default value: :const:`$boole-1`.
 
    :description:
 
      Copies the pixels from the *medium* starting at the position specified
-     by (*medium-x*,*medium-y*) into *pixmap* at the position specified by
-     (*pixmap-x*,*pixmap-y*). A rectangle whose width and height is
+     by (*medium-x*, *medium-y*) into *pixmap* at the position specified by
+     (*pixmap-x*, *pixmap-y*). A rectangle whose width and height is
      specified by *width* and *height* is copied. If *medium* is a medium or
      a stream, then *medium-x* and *medium-y* are transformed by the user
      transformation. The copying must be done by *medium-copy-copy*.
@@ -747,18 +746,18 @@ are exported from the *duim-graphics* module.
    :signature: curve-to *drawable x1 y1 x2 y2 x3 y3* => ()
    :signature: curve-to\* *drawable point1 point2 point3* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
-   The following arguments are specific to *curve-to*.
+   The following arguments are specific to ``curve-to``.
 
-   :parameter x1: An instance of type ``<real>``.
-   :parameter y1: An instance of type ``<real>``.
-   :parameter x2: An instance of type ``<real>``.
-   :parameter y2: An instance of type ``<real>``.
-   :parameter x3: An instance of type ``<real>``.
-   :parameter y3: An instance of type ``<real>``.
+   :parameter x1: An instance of type :drm:`<real>`.
+   :parameter y1: An instance of type :drm:`<real>`.
+   :parameter x2: An instance of type :drm:`<real>`.
+   :parameter y2: An instance of type :drm:`<real>`.
+   :parameter x3: An instance of type :drm:`<real>`.
+   :parameter y3: An instance of type :drm:`<real>`.
 
-   The following arguments are specific to *curve-to\**.
+   The following arguments are specific to ``curve-to*``.
 
    :parameter point1: An instance of type :class:`<transform>`.
    :parameter point2: An instance of type :class:`<transform>`.
@@ -767,7 +766,7 @@ are exported from the *duim-graphics* module.
    :description:
 
      Draws a curve in the current path on *drawable* starting from the
-     current position, and passing through (*x1*,*y1*), (*x2*, *y2*), and
+     current position, and passing through (*x1*, *y1*), (*x2*, *y2*), and
      (*x3*, *y3*).
 
      This function is used, in combination with :gf:line-to`, :gf:`move-to`,
@@ -775,7 +774,7 @@ are exported from the *duim-graphics* module.
      be used to start the definition of the path, and :gf:`end-path` can be
      used to finish the definition.
 
-     The function *curve-to\** is identical to *curve-to*, except that it
+     The function ``curve-to*`` is identical to ``curve-to``, except that it
      passes composite objects, rather than separate coordinates, in its
      arguments. You should be aware that using this function may lead to a
      loss of performance.
@@ -811,10 +810,10 @@ are exported from the *duim-graphics* module.
    :signature: do-with-output-to-pixmap *medium continuation* #key *width height clear?* => *pixmap*
 
    :parameter medium: An instance of type :class:`<medium>`.
-   :parameter continuation: An instance of type ``<function>``.
-   :parameter width: An instance of type ``<integer>``.
-   :parameter height: An instance of type ``<integer>``.
-   :parameter clear?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :parameter continuation: An instance of type :drm:`<function>`.
+   :parameter width: An instance of type :drm:`<integer>`.
+   :parameter height: An instance of type :drm:`<integer>`.
+   :parameter clear?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
 
    :value pixmap: An instance of type :class:`<pixmap>`.
 
@@ -841,33 +840,33 @@ are exported from the *duim-graphics* module.
    :signature: draw-arrow *drawable x1 y1 x2 y2* #key *from-head? to-head? head-length head-width* => ()
    :signature: draw-arrow\* *drawable point1 point2* #key *from-head? to-head? head-length head-width* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
-   :parameter from-head?: An instance of type ``<boolean>``. Default value: ``#f``.
-   :parameter to-head?: An instance of type ``<boolean>``. Default value: ``#t``.
-   :parameter head-length: An instance of type ``<integer>``. Default value: *10*.
-   :parameter head-width: An instance of type ``<integer>``. Default value: *5*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
+   :parameter from-head?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
+   :parameter to-head?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
+   :parameter head-length: An instance of type :drm:`<integer>`. Default value: *10*.
+   :parameter head-width: An instance of type :drm:`<integer>`. Default value: *5*.
 
-   The following arguments are specific to *draw-arrow*.
+   The following arguments are specific to ``draw-arrow``.
 
-   :parameter x1: An instance of type ``<real>``.
-   :parameter y1: An instance of type ``<real>``.
-   :parameter x2: An instance of type ``<real>``.
-   :parameter y2: An instance of type ``<real>``.
+   :parameter x1: An instance of type :drm:`<real>`.
+   :parameter y1: An instance of type :drm:`<real>`.
+   :parameter x2: An instance of type :drm:`<real>`.
+   :parameter y2: An instance of type :drm:`<real>`.
 
-   The following arguments are specific to *draw-arrow\**.
+   The following arguments are specific to ``draw-arrow*``.
 
    :parameter point1: An instance of type :class:`<transform>`.
    :parameter point2: An instance of type :class:`<transform>`.
 
    :description:
 
-     Draws an arrow on *drawable* between two (*x1*,*y1*) and (*x2*, *y2*
+     Draws an arrow on *drawable* between two (*x1*, *y1*) and (*x2*, *y2*
      ), using the current pen. Dashed lines start dashing from the first
      point.
 
-     If *from-head?* is ``#t``, then the arrow-head points from (*x1*,*y1*)
+     If *from-head?* is ``#t``, then the arrow-head points from (*x1*, *y1*)
      to (*x2*, *y2*). If *to-head?* is ``#t``, then the arrow-head points
-     from (*x2*, *y2*) to (*x1*,*y1*).
+     from (*x2*, *y2*) to (*x1*, *y1*).
 
      If both *from-head?* and *to-head?* are ``#t``, then a double-headed
      arrow is drawn.
@@ -878,7 +877,7 @@ are exported from the *duim-graphics* module.
      .. figure:: images/graphics-13.png
         :align: center
 
-     The function *draw-arrow\** is identical to *draw-arrow*, except that
+     The function ``draw-arrow*`` is identical to ``draw-arrow``, except that
      it passes composite objects, rather than separate coordinates, in its
      arguments. You should be aware that using this function may lead to a
      loss of performance.
@@ -894,17 +893,17 @@ are exported from the *duim-graphics* module.
    :signature: draw-bezier-curve *sheet coord-seq* #key *filled?* => ()
    :signature: draw-bezier-curve\* *drawable points* #key *filled?* => ()
 
-   :parameter filled?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :parameter filled?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
 
-   The following arguments are specific to *draw-bezier-curve*.
+   The following arguments are specific to ``draw-bezier-curve``.
 
    :parameter sheet: An instance of type :class:`<sheet>`.
-   :parameter coord-seq: An instance of type *limited(* :class:`<sequence>` *, of:* :class:`<coordinate>` *)*.
+   :parameter coord-seq: An instance of type ``limited(<sequence>, of: <coordinate>)``.
 
-   The following arguments are specific to *draw-bezier-curve\**.
+   The following arguments are specific to ``draw-bezier-curve*``.
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
-   :parameter points: An instance of type *limited(* :class:`<sequence>` *, of:* :class:`<point>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
+   :parameter points: An instance of type ``limited(<sequence>, of: <point>)``.
 
    :description:
 
@@ -915,7 +914,7 @@ are exported from the *duim-graphics* module.
      If *filled?* is ``#t`` then the bezier-curve will be filled, using the
      current brush.
 
-     The function *draw-bezier-curve\** is identical to *draw-bezier-curve*,
+     The function ``draw-bezier-curve*`` is identical to ``draw-bezier-curve``,
      except that it passes composite objects, rather than separate
      coordinates, in its arguments. You should be aware that using this
      function may lead to a loss of performance.
@@ -931,24 +930,24 @@ are exported from the *duim-graphics* module.
 
    :signature: draw-circle *drawable center-x center-y radius* #key *start-angle end-angle filled?* => ()
    :signature: draw-circle\* *drawable center radius #key start-angle end-angle filled?* => ()
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, `<medium>` *)*.
-   :parameter radius: An instance of type ``<real>``.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
+   :parameter radius: An instance of type :drm:`<real>`.
    :parameter start-angle: An instance of type ``false-or(<real>)``.
    :parameter end-angle: An instance of type ``false-or(<real>)``.
-   :parameter filled?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :parameter filled?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
 
-   The following arguments are specific to *draw-circle*.
+   The following arguments are specific to ``draw-circle``.
 
-   :parameter center-x: An instance of type ``<real>``.
-   :parameter center-y: An instance of type ``<real>``.
+   :parameter center-x: An instance of type :drm:`<real>`.
+   :parameter center-y: An instance of type :drm:`<real>`.
 
-   The following argument is specific to *draw-circle\**.
+   The following argument is specific to ``draw-circle*``.
 
    :parameter center: An instance of type :class:`<transform>`.
 
    :description:
 
-     Draws a circle on *drawable* with center (*center-x*,*center-y*) and a
+     Draws a circle on *drawable* with center (*center-x*, *center-y*) and a
      radius of *radius* pixels, using the current pen.
 
      The *start-angle* and *end-angle* arguments let you draw a sector of a
@@ -957,7 +956,7 @@ are exported from the *duim-graphics* module.
      If *filled?* is ``#t``, then the circle will be filled, using the current
      brush.
 
-     The function *draw-circle\** is identical to *draw-circle*, except that
+     The function ``draw-circle*`` is identical to ``draw-circle``, except that
      it passes composite objects, rather than separate coordinates, in its
      arguments. You should be aware that using this function may lead to a
      loss of performance.
@@ -974,21 +973,21 @@ are exported from the *duim-graphics* module.
    :signature: draw-ellipse *drawable center-x center-y radius-1-dx radius-1-dy radius-2-dx radius-2-dy* #key *start-angle end-angle filled?* => ()
    :signature: draw-ellipse\* *drawable center radius-1-dx radius-1-dy radius-2-dx radius-2-dy* #key *start-angle end-angle filled?* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, `<medium>` *)*.
-   :parameter radius-1-dx: An instance of type ``<real>``.
-   :parameter radius-1-dy: An instance of type ``<real>``.
-   :parameter radius-2-dx: An instance of type ``<real>``.
-   :parameter radius-2-dy: An instance of type ``<real>``.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
+   :parameter radius-1-dx: An instance of type :drm:`<real>`.
+   :parameter radius-1-dy: An instance of type :drm:`<real>`.
+   :parameter radius-2-dx: An instance of type :drm:`<real>`.
+   :parameter radius-2-dy: An instance of type :drm:`<real>`.
    :parameter start-angle: An instance of type ``false-or(<real>)``.
    :parameter end-angle: An instance of type ``false-or(<real>)``.
-   :parameter filled?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :parameter filled?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
 
-   The following arguments are specific to *draw-ellipse*.
+   The following arguments are specific to ``draw-ellipse``.
 
-   :parameter center-x: An instance of type ``<real>``.
-   :parameter center-y: An instance of type ``<real>``.
+   :parameter center-x: An instance of type :drm:`<real>`.
+   :parameter center-y: An instance of type :drm:`<real>`.
 
-   The following argument is specific to *draw-ellipse\**.
+   The following argument is specific to ``draw-ellipse*``.
 
    :parameter center: An instance of type :class:`<transform>`.
 
@@ -1019,7 +1018,7 @@ are exported from the *duim-graphics* module.
      If *filled?* is ``#t`` then the ellipse will be filled, using the current
      brush.
 
-     The function *draw-ellipse\** is identical to *draw-ellipse*, except
+     The function ``draw-ellipse*`` is identical to ``draw-ellipse``, except
      that it passes composite objects, rather than separate coordinates, in
      its arguments. You should be aware that using this function may lead to
      a loss of performance.
@@ -1036,23 +1035,23 @@ are exported from the *duim-graphics* module.
    :signature: draw-image *drawable image x y* => ()
    :signature: draw-image\* *drawable image point* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
    :parameter image: An instance of type :class:`<image>`.
 
-   The following arguments are specific to *draw-image*.
+   The following arguments are specific to ``draw-image``.
 
-   :parameter x: An instance of type ``<real>``.
-   :parameter y: An instance of type ``<real>``.
+   :parameter x: An instance of type :drm:`<real>`.
+   :parameter y: An instance of type :drm:`<real>`.
 
-   The following argument is specific to *draw-image\**.
+   The following argument is specific to ``draw-image*``.
 
    :parameter point: An instance of type :class:`<transform>`.
 
    :description:
 
-     Draws *image* on *drawable* at (*x*,*y*).
+     Draws *image* on *drawable* at (*x*, *y*).
 
-     The function *draw-image\** is identical to *draw-image*, except that
+     The function ``draw-image*`` is identical to ``draw-image``, except that
      it passes composite objects, rather than separate coordinates, in its
      arguments. You should be aware that using this function may lead to a
      loss of performance.
@@ -1069,26 +1068,26 @@ are exported from the *duim-graphics* module.
    :signature: draw-line *drawable x1 y1 x2 y2* => ()
    :signature: draw-line\* *drawable point1 point2* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, `<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
-   The following arguments are specific to *draw-line*.
+   The following arguments are specific to ``draw-line``.
 
-   :parameter x1: An instance of type ``<real>``.
-   :parameter y1: An instance of type ``<real>``.
-   :parameter x2: An instance of type ``<real>``.
-   :parameter y2: An instance of type ``<real>``.
+   :parameter x1: An instance of type :drm:`<real>`.
+   :parameter y1: An instance of type :drm:`<real>`.
+   :parameter x2: An instance of type :drm:`<real>`.
+   :parameter y2: An instance of type :drm:`<real>`.
 
-   The following arguments are specific to *draw-line\**.
+   The following arguments are specific to ``draw-line*``.
 
    :parameter point1: An instance of type :class:`<transform>`.
    :parameter point2: An instance of type :class:`<transform>`.
 
    :description:
 
-     Draws a line on *drawable* between (*x1*, *y1*) and (*x2*,*y2*),
+     Draws a line on *drawable* between (*x1*, *y1*) and (*x2*, *y2*),
      using the current pen. Dashed lines start dashing from the first point.
 
-     The function *draw-line\** is identical to *draw-line*, except that it
+     The function ``draw-line*`` is identical to ``draw-line``, except that it
      passes composite objects, rather than separate coordinates, in its
      arguments. You should be aware that using this function may lead to a
      loss of performance.
@@ -1109,15 +1108,15 @@ are exported from the *duim-graphics* module.
    :signature: draw-lines *drawable coord-seq* => ()
    :signature: draw-lines\* *drawable points* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, `<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
-   The following argument is specific to *draw-lines*.
+   The following argument is specific to ``draw-lines``.
 
-   :parameter coord-seq: An instance of type *limited(* :class:`<sequence>` *, of:* :class:`<coordinate>` *)*.
+   :parameter coord-seq: An instance of type ``limited(<sequence>, of: <coordinate>)``.
 
-   The following argument is specific to *draw-lines\**.
+   The following argument is specific to ``draw-lines*``.
 
-   :parameter points: An instance of type *limited(* :class:`<sequence>` *, of:* :class:`<point>` *)*.
+   :parameter points: An instance of type ``limited(<sequence>, of: <point>)``.
 
    :description:
 
@@ -1125,7 +1124,7 @@ are exported from the *duim-graphics* module.
      points, using the current pen. Dashed lines start dashing from the first
      point of each line.
 
-     The function *draw-lines\** is identical to *draw-line*, except that it
+     The function ``draw-lines*`` is identical to ``draw-line``, except that it
      passes composite objects, rather than separate coordinates, in its
      arguments. You should be aware that using this function may lead to a
      loss of performance.
@@ -1153,23 +1152,23 @@ are exported from the *duim-graphics* module.
    :signature: draw-oval *drawable center-x center-y x-radius y-radius* #key *filled?* => ()
    :signature: draw-oval\* *drawable center x-radius y-radius* #key *filled?* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
-   :parameter x-radius: An instance of type ``<real>``.
-   :parameter y-radius: An instance of type ``<real>``.
-   :parameter filled?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
+   :parameter x-radius: An instance of type :drm:`<real>`.
+   :parameter y-radius: An instance of type :drm:`<real>`.
+   :parameter filled?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
 
-   The following arguments are specific to *draw-oval*.
+   The following arguments are specific to ``draw-oval``.
 
-   :parameter center-x: An instance of type ``<real>``.
-   :parameter center-y: An instance of type ``<real>``.
+   :parameter center-x: An instance of type :drm:`<real>`.
+   :parameter center-y: An instance of type :drm:`<real>`.
 
-   The following argument is specific to *draw-oval\**.
+   The following argument is specific to ``draw-oval*``.
 
    :parameter center: An instance of type :class:`<transform>`.
 
    :description:
 
-     Draws an oval on *drawable* with center (*center-x*,*center-y*) and
+     Draws an oval on *drawable* with center (*center-x*, *center-y*) and
      radii defined by *x-radius* and *y-radius*, using the current pen.
 
      Ovals are similar to ellipses, except that they have straight edges.
@@ -1180,7 +1179,7 @@ are exported from the *duim-graphics* module.
      If *filled?* is ``#t`` then the oval will be filled, using the current
      brush.
 
-     The function *draw-oval\** is identical to *draw-oval*, except that it
+     The function ``draw-oval*`` is identical to ``draw-oval``, except that it
      passes composite objects, rather than separate coordinates, in its
      arguments. You should be aware that using this function may lead to a
      loss of performance.
@@ -1197,24 +1196,24 @@ are exported from the *duim-graphics* module.
    :signature: draw-pixmap *drawable pixmap x y* #key *function* => ()
    :signature: draw-pixmap\* *drawable pixmap point* #key *function* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
    :parameter pixmap: An instance of type :class:`<pixmap>`.
-   :parameter function: An instance of type ``<function>``. Default value: :const:`$boole-1`.
+   :parameter function: An instance of type :drm:`<function>`. Default value: :const:`$boole-1`.
 
-   The following arguments are specific to *draw-pixmap*.
+   The following arguments are specific to ``draw-pixmap``.
 
-   :parameter x: An instance of type ``<real>``.
-   :parameter y: An instance of type ``<real>``.
+   :parameter x: An instance of type :drm:`<real>`.
+   :parameter y: An instance of type :drm:`<real>`.
 
-   The following argument is specific to *draw-pixmap\**.
+   The following argument is specific to ``draw-pixmap*``.
 
    :parameter point: An instance of type :class:`<transform>`.
 
    :description:
 
-     Draws the contents of *pixmap* on *drawable* at (*x*,*y*).
+     Draws the contents of *pixmap* on *drawable* at (*x*, *y*).
 
-     The function *draw-pixmap\** is identical to *draw-pixmap*, except that
+     The function ``draw-pixmap*`` is identical to ``draw-pixmap``, except that
      it passes composite objects, rather than separate coordinates, in its
      arguments. You should be aware that using this function may lead to a
      loss of performance.
@@ -1233,22 +1232,22 @@ are exported from the *duim-graphics* module.
    :signature: draw-point *drawable x y* => ()
    :signature: draw-point\* *drawable point* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class;`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
-   The following arguments are specific to *draw-point*.
+   The following arguments are specific to ``draw-point``.
 
    :parameter x: The x coordinate.
    :parameter y: The y coordinate.
 
-   The following argument is specific to *draw-point\**.
+   The following argument is specific to ``draw-point*``.
 
    :parameter point: An instance of type :class:`<transform>`.
 
    :description:
 
-     Draws a single point on *drawable* at (*x*,*y*).
+     Draws a single point on *drawable* at (*x*, *y*).
 
-     The function *draw-point\** is identical to *draw-point*, except that
+     The function ``draw-point*`` is identical to ``draw-point``, except that
      it passes composite objects, rather than separate coordinates, in its
      arguments. You should be aware that using this function may lead to a
      loss of performance.
@@ -1265,21 +1264,21 @@ are exported from the *duim-graphics* module.
    :signature: draw-points *drawable coord-seq* => ()
    :signature: draw-points\* *drawable points* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
-   The following argument is specific to *draw-points*.
+   The following argument is specific to ``draw-points``.
 
-   :parameter coord-seq: An instance of type *limited(* ``<sequence>`` *, of:* :class:`<coordinate>` *)*.
+   :parameter coord-seq: An instance of type ``limited(<sequence>, of: <coordinate>)``.
 
-   The following argument is specific to *draw-points\**.
+   The following argument is specific to ``draw-points*``.
 
-   :parameter points: An instance of type *limited(* ``<sequence>`` *, of:* :class:`<point>` *)*.
+   :parameter points: An instance of type ``limited(<sequence>, of: <point>)``.
 
    :description:
 
      Draws a sequence of points on *drawable* at the specified positions.
 
-     The function *draw-points\** is identical to *draw-points*, except that
+     The function ``draw-points*`` is identical to ``draw-points``, except that
      it passes composite objects, rather than separate coordinates, in its
      arguments. You should be aware that using this function may lead to a
      loss of performance.
@@ -1297,17 +1296,17 @@ are exported from the *duim-graphics* module.
    :signature: draw-polygon *drawable coord-seq* #key *closed? filled?* => ()
    :signature: draw-polygon\* *drawable points* #key *closed? filled?* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
-   :parameter closed?: An instance of type ``<boolean>``. Default value: ``#t``.
-   :parameter filled?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
+   :parameter closed?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
+   :parameter filled?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
 
-   The following argument is specific to *draw-polygon*.
+   The following argument is specific to ``draw-polygon``.
 
-   :parameter coord-seq: An instance of type *limited(* ``<sequence>`` *, of:* :class:`<coordinate>` *)*.
+   :parameter coord-seq: An instance of type ``limited(<sequence>, of: <coordinate>)``.
 
-   The following argument is specific to *draw-polygon\**.
+   The following argument is specific to ``draw-polygon*``.
 
-   :parameter points: An instance of type *limited(* ``<sequence>`` *, of:* :class:`<point>` *)*.
+   :parameter points: An instance of type ``limited(<sequence>, of: <point>)``.
 
    :description:
 
@@ -1321,7 +1320,7 @@ are exported from the *duim-graphics* module.
      If *filled?* is ``#t`` then the polygon will be filled, using the current
      brush.
 
-     The function *draw-polygon\** is identical to *draw-polygon*, except
+     The function ``draw-polygon*`` is identical to ``draw-polygon``, except
      that it passes composite objects, rather than separate coordinates, in
      its arguments. You should be aware that using this function may lead to
      a loss of performance.
@@ -1339,17 +1338,17 @@ are exported from the *duim-graphics* module.
    :signature: draw-rectangle *drawable x1 y1 x2 y2* #key *filled?* => ()
    :signature: draw-rectangle\* *drawable point1 point2* #key *filled?* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
-   :parameter filled?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
+   :parameter filled?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
 
-   The following arguments are specific to *draw-rectangle*.
+   The following arguments are specific to ``draw-rectangle``.
 
-   :parameter x1: An instance of type ``<real>``.
-   :parameter y1: An instance of type ``<real>``.
-   :parameter x2: An instance of type ``<real>``.
-   :parameter y2: An instance of type ``<real>``.
+   :parameter x1: An instance of type :drm:`<real>`.
+   :parameter y1: An instance of type :drm:`<real>`.
+   :parameter x2: An instance of type :drm:`<real>`.
+   :parameter y2: An instance of type :drm:`<real>`.
 
-   The following arguments are specific to *draw-rectangle\**.
+   The following arguments are specific to ``draw-rectangle*``.
 
    :parameter point1: An instance of type :class:`<transform>`.
    :parameter point2: An instance of type :class:`<transform>`.
@@ -1357,7 +1356,7 @@ are exported from the *duim-graphics* module.
    :description:
 
      Draws a rectangle on *drawable* with left and right corners at (*x1*,
-     *y1*) and (*x2*,*y2*), using the current pen. Dashed lines start dashing
+     *y1*) and (*x2*, *y2*), using the current pen. Dashed lines start dashing
      at the starting point of the first segment.
 
      Note that the specified points could represent either top or bottom
@@ -1369,7 +1368,7 @@ are exported from the *duim-graphics* module.
      If *filled?* is ``#t`` then the rectangle will be filled, using the
      current brush.
 
-     The function *draw-rectangle\** is identical to *draw-rectangle*, except
+     The function ``draw-rectangle*`` is identical to ``draw-rectangle``, except
      that it passes composite objects, rather than separate coordinates, in its
      arguments. You should be aware that using this function may lead to a loss
      of performance.
@@ -1388,16 +1387,16 @@ are exported from the *duim-graphics* module.
    :signature: draw-rectangles *drawable coord-seq* #key *filled?* => ()
    :signature: draw-rectangles\* *drawable points* #key *filled?* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
-   :parameter filled?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
+   :parameter filled?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
 
-   The following argument is specific to *draw-rectangles*.
+   The following argument is specific to ``draw-rectangles``.
 
-   :parameter coord-seq: An instance of type *limited(* ``<sequence>`` *, of:* :class:`<coordinate>` *)*.
+   :parameter coord-seq: An instance of type ``limited(<sequence>, of: <coordinate>)``.
 
-   The following argument is specific to *draw-rectangles\**.
+   The following argument is specific to ``draw-rectangles*``.
 
-   :parameter points: An instance of type *limited(* ``<sequence>`` *, of:* :class:`<point>` *)*.
+   :parameter points: An instance of type ``limited(<sequence>, of: <point>)``.
 
    :description:
 
@@ -1408,7 +1407,7 @@ are exported from the *duim-graphics* module.
      If *filled?* is ``#t`` then the rectangles will be filled, using the
      current brush.
 
-     The function *draw-rectangles\** is identical to *draw-rectangles*,
+     The function ``draw-rectangles*`` is identical to ``draw-rectangles``,
      except that it passes composite objects, rather than separate
      coordinates, in its arguments. You should be aware that using this
      function may lead to a loss of performance.
@@ -1427,20 +1426,20 @@ are exported from the *duim-graphics* module.
    :signature: draw-regular-polygon *drawable x1 y1 x2 y2 nsides* #key *handedness closed? filled?* => ()
    :signature: draw-regular-polygon\* *drawable point1 point2 nsides* #key *handedness closed? filled?* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
-   :parameter nsides: An instance of type ``<integer>``.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
+   :parameter nsides: An instance of type :drm:`<integer>`.
    :parameter handedness: Default value: ``#"left"``.
-   :parameter closed?: An instance of type ``<boolean>``. Default value: ``#t``.
-   :parameter filled?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :parameter closed?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
+   :parameter filled?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
 
-   The following arguments are specific to *draw-regular-polygon*.
+   The following arguments are specific to ``draw-regular-polygon``.
 
-   :parameter x1: An instance of type ``<real>``.
-   :parameter y1: An instance of type ``<real>``.
-   :parameter x2: An instance of type ``<real>``.
-   :parameter y2: An instance of type ``<real>``.
+   :parameter x1: An instance of type :drm:`<real>`.
+   :parameter y1: An instance of type :drm:`<real>`.
+   :parameter x2: An instance of type :drm:`<real>`.
+   :parameter y2: An instance of type :drm:`<real>`.
 
-   The following arguments are specific to *draw-regular-polygon\**.
+   The following arguments are specific to ``draw-regular-polygon*``.
 
    :parameter point1: An instance of type :class:`<transform>`.
    :parameter point2: An instance of type :class:`<transform>`.
@@ -1457,8 +1456,8 @@ are exported from the *duim-graphics* module.
      If *filled?* is ``#t`` then the polygon will be filled, using the current
      brush.
 
-     The function *draw-regular-polygon\** is identical to
-     *draw-regular-polygon*, except that it passes composite objects, rather
+     The function ``draw-regular-polygon*`` is identical to
+     ``draw-regular-polygon``, except that it passes composite objects, rather
      than separate coordinates, in its arguments. You should be aware that
      using this function may lead to a loss of performance.
 
@@ -1475,31 +1474,31 @@ are exported from the *duim-graphics* module.
    :signature: draw-text *drawable text x y* #key *start end align-x align-y towards-point transform-glyphs?* => ()
    :signature: draw-text\* *drawable text point* #key *start end align-x align-y towards-point transform-glyphs?* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
-   :parameter text: An instance of type *type-union(<string>, <character>)*.
-   :parameter start: An instance of type ``<integer>``. Default value: 0.
-   :parameter end: An instance of type ``<integer>``. Default value: *size(text)*.
-   :parameter align-x: An instance of type *one-of(#"left", #"right", #"center")* . Default value: ``#"left"``.
-   :parameter align-y: An instance of type *one-of(#"top", #"bottom", #"baseline")*. Default value: ``#"baseline"``.
-   :parameter transform-glyphs?: An instance of type ``<boolean>``. Default value: ``#f``.
-   :parameter do-tabs?: An instance of type ``<boolean>``. Default value: ``#f``
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
+   :parameter text: An instance of type ``type-union(<string>, <character>)``.
+   :parameter start: An instance of type :drm:`<integer>`. Default value: 0.
+   :parameter end: An instance of type :drm:`<integer>`. Default value: ``size(text)``.
+   :parameter align-x: An instance of type ``one-of(#"left", #"right", #"center")``. Default value: ``#"left"``.
+   :parameter align-y: An instance of type ``one-of(#"top", #"bottom", #"baseline")``. Default value: ``#"baseline"``.
+   :parameter transform-glyphs?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
+   :parameter do-tabs?: An instance of type :drm:`<boolean>`. Default value: ``#f``
 
-   The following arguments are specific to *draw-text*.
+   The following arguments are specific to ``draw-text``.
 
-   :parameter towards-x: An instance of type ``<real>``.
-   :parameter towards-y: An instance of type ``<real>``.
-   :parameter x: An instance of type ``<real>``.
-   :parameter y: An instance of type ``<real>``.
+   :parameter towards-x: An instance of type :drm:`<real>`.
+   :parameter towards-y: An instance of type :drm:`<real>`.
+   :parameter x: An instance of type :drm:`<real>`.
+   :parameter y: An instance of type :drm:`<real>`.
 
-   The following arguments are specific to *draw-text\**.
+   The following arguments are specific to ``draw-text*``.
 
    :parameter towards-point: An instance of type :class:`<transform>`.
    :parameter point: An instance of type :class:`<transform>`.
 
    :description:
 
-     Draws text from *text* on *drawable* at (*x*,*y*). Text is drawn in
-     the direction of the point (*towards-x*,*towards-y*).
+     Draws text from *text* on *drawable* at (*x*, *y*). Text is drawn in
+     the direction of the point (*towards-x*, *towards-y*).
 
      .. figure:: images/graphics-18.png
         :align: center
@@ -1512,26 +1511,26 @@ are exported from the *duim-graphics* module.
      alignment and the top-bottom alignment (respectively) of the text that
      is written to *drawable*.
 
-     For *align-x*, the whole of the distance between (*x*,*y*) and
-     (*towards-x*,*towards-y*) is used to align *text*. Thus, if *align-x*
-     is *#"right"*, the text will appear closer to (*towards-x*,*towards-y*
-     ) than to (*x*,*y*), assuming *text* occupies less space than the
+     For *align-x*, the whole of the distance between (*x*, *y*) and
+     (*towards-x*, *towards-y*) is used to align *text*. Thus, if *align-x*
+     is *#"right"*, the text will appear closer to (*towards-x*, *towards-y*)
+     than to (*x*, *y*), assuming *text* occupies less space than the
      distance between these two points.
 
      The argument *transform-glyphs?* controls whether the text is reversed
      in cases when *towards-x* is less than *x*. If *transform-glyphs?* is
      ``#t``, then text is reversed in these cases, that is, the last character
-     of *text* to be written is still closest to the point (*towards-x*
-     ,*towards-y*), and the text appears reversed. If *transform-glyphs?* is
+     of *text* to be written is still closest to the point (*towards-x*,
+     *towards-y*), and the text appears reversed. If *transform-glyphs?* is
      ``#f``, then the first character of *text* to be written is closest to
-     the point (*towards-x*,*towards-y*), and the text does not appear
+     the point (*towards-x*, *towards-y*), and the text does not appear
      reversed.
 
      If *do-tabs?* is ``#t``, then any tab characters in *text* are honored,
      and are drawn as tabs. If *do-tabs?* is ``#f``, then tab characters are
      replaced by spaces.
 
-     The function *draw-text\** is identical to *draw-text*, except that it
+     The function ``draw-text*`` is identical to ``draw-text``, except that it
      passes composite objects, rather than separate coordinates, in its
      arguments. You should be aware that using this function may lead to a
      loss of performance.
@@ -1548,19 +1547,19 @@ are exported from the *duim-graphics* module.
    :signature: draw-triangle *drawable x1 y1 x2 y2 x3 y3* #key *filled?* => ()
    :signature: draw-triangle\* *drawable p1 p2 p3* #key *filled?* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
-   :parameter filled?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
+   :parameter filled?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
 
-   The following arguments are specific to *draw-triangle*.
+   The following arguments are specific to ``draw-triangle``.
 
-   :parameter x1: An instance of type ``<real>``.
-   :parameter y1: An instance of type ``<real>``.
-   :parameter x2: An instance of type ``<real>``.
-   :parameter y2: An instance of type ``<real>``.
-   :parameter x3: An instance of type ``<real>``.
-   :parameter y3: An instance of type ``<real>``.
+   :parameter x1: An instance of type :drm:`<real>`.
+   :parameter y1: An instance of type :drm:`<real>`.
+   :parameter x2: An instance of type :drm:`<real>`.
+   :parameter y2: An instance of type :drm:`<real>`.
+   :parameter x3: An instance of type :drm:`<real>`.
+   :parameter y3: An instance of type :drm:`<real>`.
 
-   The following arguments are specific to *draw-triangle\**.
+   The following arguments are specific to ``draw-triangle*``.
 
    :parameter p1: An instance of type :class:`<transform>`.
    :parameter p2: An instance of type :class:`<transform>`.
@@ -1578,7 +1577,7 @@ are exported from the *duim-graphics* module.
      If *filled?* is ``#t`` then the triangle will be filled, using the current
      brush.
 
-     The function *draw-triangle\** is identical to *draw-triangle*, except
+     The function ``draw-triangle*`` is identical to ``draw-triangle``, except
      that it passes composite objects, rather than separate coordinates, in
      its arguments. You should be aware that using this function may lead to
      a loss of performance.
@@ -1596,7 +1595,7 @@ are exported from the *duim-graphics* module.
 
    :signature: end-path *drawable* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
    :description:
 
@@ -1620,7 +1619,7 @@ are exported from the *duim-graphics* module.
 
    :signature: fill-path *drawable* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
    :description:
 
@@ -1640,27 +1639,27 @@ are exported from the *duim-graphics* module.
    :signature: line-to *drawable x y* => ()
    :signature: line-to\* *drawable point* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
-   The following arguments are specific to *line-to*.
+   The following arguments are specific to ``line-to``.
 
-   :parameter x: An instance of type ``<real>``.
-   :parameter y: An instance of type ``<real>``.
+   :parameter x: An instance of type :drm:`<real>`.
+   :parameter y: An instance of type :drm:`<real>`.
 
-   The following argument is specific to *line-to\**.
+   The following argument is specific to ``line-to*``.
 
    :parameter point: An instance of type :class:`<transform>`.
 
    :description:
 
-     Draws a line from the current position in the path to (*x*,*y*).
+     Draws a line from the current position in the path to (*x*, *y*).
 
      This function is used, in combination with :gf:`move-to`, :gf:`curve-to`,
      and :gf:`arc-to`, to define a path. The function :gf:`start-path` should
      be used to start the definition of the path, and :gf:`end-path` can be
      used to finish the definition.
 
-     The function *line-to\** is identical to *line-to*, except that it
+     The function ``line-to*`` is identical to ``line-to``, except that it
      passes composite objects, rather than separate coordinates, in its
      arguments. You should be aware that using this function may lead to a
      loss of performance.
@@ -1680,8 +1679,8 @@ are exported from the *duim-graphics* module.
    :signature: make-pixmap *medium width height* => *pixmap*
 
    :parameter medium: An instance of type :class:`<medium>`.
-   :parameter width: An instance of type ``<integer>``.
-   :parameter height: An instance of type ``<integer>``.
+   :parameter width: An instance of type :drm:`<integer>`.
+   :parameter height: An instance of type :drm:`<integer>`.
 
    :value pixmap: An instance of type :class:`<pixmap>`.
 
@@ -1703,31 +1702,31 @@ are exported from the *duim-graphics* module.
    :signature: move-to *drawable x y* => ()
    :signature: move-to\* *drawable point* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
-   The following arguments are specific to *move-to*.
+   The following arguments are specific to ``move-to``.
 
-   :parameter x: An instance of type ``<real>``.
-   :parameter y: An instance of type ``<real>``.
+   :parameter x: An instance of type :drm:`<real>`.
+   :parameter y: An instance of type :drm:`<real>`.
 
-   The following argument is specific to *move-to\**.
+   The following argument is specific to ``move-to*``.
 
    :parameter point: An instance of type :class:`<transform>`.
 
    :description:
 
-     Move the position in the current path on *drawable* to (*x*,*y*).
+     Move the position in the current path on *drawable* to (*x*, *y*).
 
      This function is used, in combination with :gf:`line-to`, :gf:`curve-to`,
      and :gf:`arc-to`, to define a path. The function :gf:`start-path` should
      be used to start the definition of the path, and :gf:`end-path` can be
      used to finish the definition.
 
-     The function *move-to* can be used several times within the definition
+     The function ``move-to`` can be used several times within the definition
      of a path, allowing for the definition of several visually separate
      drawings within the same path.
 
-     The function *move-to\** is identical to *move-to*, except that it
+     The function ``move-to*`` is identical to ``move-to``, except that it
      passes composite objects, rather than separate coordinates, in its
      arguments. You should be aware that using this function may lead to a
      loss of performance.
@@ -1789,7 +1788,7 @@ are exported from the *duim-graphics* module.
 
    :parameter object: An instance of type :drm:`<object>`.
 
-   :value pixmap?: An instance of type ``<boolean>``.
+   :value pixmap?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1830,7 +1829,7 @@ are exported from the *duim-graphics* module.
 
    :signature: start-path *drawable* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
    :description:
 
@@ -1855,7 +1854,7 @@ are exported from the *duim-graphics* module.
 
    :signature: stroke-path *drawable* => ()
 
-   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
    :description:
 

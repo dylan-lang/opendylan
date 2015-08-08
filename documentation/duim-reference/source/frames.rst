@@ -221,7 +221,7 @@ are exported from the *duim-frames* module.
 
    :param command1: An instance of type :class:`<command>`.
    :param command2: An instance of type :class:`<command>`.
-   :value equal?: An instance of type ``<boolean>``.
+   :value equal?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -240,7 +240,7 @@ are exported from the *duim-frames* module.
    :param #key image: An instance of type ``false-or(<image>)``.
    :param #key accelerator: An instance of type ``false-or(<gesture>)``.
    :param #key mnemonic: An instance of type ``false-or(<gesture>)``.
-   :param #key error?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :param #key error?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
 
    :description:
 
@@ -313,12 +313,12 @@ are exported from the *duim-frames* module.
    :param #key accelerator: An instance of type ``false-or(<gesture>)``.
    :param #key mnemonic: An instance of type ``false-or(<gesture>)``.
    :param #key text-style: An instance of type :class:`<text-style>`.
-   :param #key error?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :param #key error?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
    :param #key items: An instance of type ``limited(<sequence>, of: )``.
-   :param #key label-key: An instance of type ``<function>``.
-   :param #key value-key: An instance of type ``<function>``.
-   :param #key test: An instance of type ``<function>``.
-   :param #key callback: An instance of type ``<function>``.
+   :param #key label-key: An instance of type :drm:`<function>`.
+   :param #key value-key: An instance of type :drm:`<function>`.
+   :param #key test: An instance of type :drm:`<function>`.
+   :param #key callback: An instance of type :drm:`<function>`.
    :value menu-item: An instance of type :class:`<command-table-menu-item>`.
 
    :description:
@@ -452,7 +452,7 @@ are exported from the *duim-frames* module.
    :signature: apply-in-frame *frame function arg* #rest *args* => ()
 
    :param frame: An instance of type :class:`<frame>`.
-   :param function: An instance of type ``<function>``.
+   :param function: An instance of type :drm:`<function>`.
    :param arg: An instance of type :drm:`<object>`.
    :param #rest args: Instances of type :drm:`<object>`.
 
@@ -475,7 +475,7 @@ are exported from the *duim-frames* module.
    :signature: call-in-frame *frame function* #rest *args* => ()
 
    :param frame: An instance of type :class:`<frame>`.
-   :param function: An instance of type ``<function>``.
+   :param function: An instance of type :drm:`<function>`.
    :param #rest args: Instances of type :drm:`<object>`.
 
    :description:
@@ -493,7 +493,7 @@ are exported from the *duim-frames* module.
    :signature: cancel-dialog *dialog* #key *destroy?* => ()
 
    :param dialog: An instance of type :class:`<dialog-frame>`.
-   :param destroy?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :param destroy?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
 
    :description:
 
@@ -562,7 +562,7 @@ are exported from the *duim-frames* module.
 
    :superclasses: :drm:`<object>`
 
-   :keyword function: An instance of type ``<function>``.
+   :keyword function: An instance of type :drm:`<function>`.
    :keyword arguments: An instance of type :drm:`<sequence>`. Default value: ``#[]``.
 
    :description:
@@ -616,7 +616,7 @@ are exported from the *duim-frames* module.
    :signature: command? *object* => *command?*
 
    :param object: An instance of type :drm:`<object>`.
-   :value command?: An instance of type ``<boolean>``.
+   :value command?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -651,7 +651,7 @@ are exported from the *duim-frames* module.
 
    :param command: An instance of type ``type-union(<command>, <command-table>)``.
    :param frame: An instance of type :class:`<frame>`.
-   :value enabled?: An instance of type ``<boolean>``.
+   :value enabled?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -668,10 +668,10 @@ are exported from the *duim-frames* module.
 
    :signature: command-enabled?-setter *enabled?* *command* *frame* => *enabled?*
 
-   :param enabled?: An instance of type ``<boolean>``.
+   :param enabled?: An instance of type :drm:`<boolean>`.
    :param command: An instance of type ``type-union(<command>, <command-table>)``.
    :param frame: An instance of type :class:`<frame>`.
-   :value enabled?: An instance of type ``<boolean>``.
+   :value enabled?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -696,7 +696,7 @@ are exported from the *duim-frames* module.
    :signature: command-function *command* => *function*
 
    :param command: An instance of type :class:`<command>`.
-   :value function: An instance of type ``<function>``.
+   :value function: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -788,7 +788,7 @@ are exported from the *duim-frames* module.
    :signature: command-table? *object* => *command-table?*
 
    :param object: An instance of type :drm:`<object>`.
-   :value command-table?: An instance of type ``<boolean>``.
+   :value command-table?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -951,7 +951,7 @@ are exported from the *duim-frames* module.
    :signature: command-undoable? *command* => *undoable?*
 
    :param command: An instance of type :class:`<command>`.
-   :param undoable?: An instance of type ``<boolean>``.
+   :param undoable?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -972,7 +972,7 @@ are exported from the *duim-frames* module.
     => *string success object nmatches completions*
 
    :param string: An instance of type :drm:`<string>`.
-   :param generator: An instance of type ``<function>``.
+   :param generator: An instance of type :drm:`<function>`.
    :param delimiters: An instance of type ``limited(<sequence>, of: <character>)``.
    :param action: An instance of type ``one-of(#"complete",
      #"complete-limited", #"complete-maximal", #"completions",
@@ -980,9 +980,9 @@ are exported from the *duim-frames* module.
    :param predicate: An instance of type ``false-or(<function>)``. Default
      value ``#f``.
    :value string: An instance of type ``false-or(<string>)``.
-   :value success: An instance of type ``<boolean>``.
+   :value success: An instance of type :drm:`<boolean>`.
    :value object: An instance of type :drm:`<object>`.
-   :value nmatches: An instance of type ``<integer>``.
+   :value nmatches: An instance of type :drm:`<integer>`.
    :value completions: An instance of type :drm:`<sequence>`.
 
    :description:
@@ -1048,12 +1048,12 @@ are exported from the *duim-frames* module.
      #"apropos-completions")``. Default value ``#"complete"``.
    :param #key predicate: An instance of type ``false-or(<function>)``. Default
      value ``#f``.
-   :param #key label-key: An instance of type ``<function>``. Default value :drm:`first`.
-   :param #key value-key: An instance of type ``<function>``. Default value :drm:`second`.
+   :param #key label-key: An instance of type :drm:`<function>`. Default value :drm:`first`.
+   :param #key value-key: An instance of type :drm:`<function>`. Default value :drm:`second`.
    :value string: An instance of type ``false-or(<string>)``.
-   :value success: An instance of type ``<boolean>``.
+   :value success: An instance of type :drm:`<boolean>`.
    :value object: An instance of type :drm:`<object>`.
-   :value nmatches: An instance of type ``<integer>``.
+   :value nmatches: An instance of type :drm:`<integer>`.
    :valuecompletions: An instance of type :drm:`<sequence>`.
 
    :description:
@@ -2019,7 +2019,7 @@ are exported from the *duim-frames* module.
    :signature: dialog-exit-enabled? *dialog* => *enabled?*
 
    :param dialog: An instance of type :class:`<dialog-frame>`.
-   :value enabled?: An instance of type ``<boolean>``.
+   :value enabled?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2041,9 +2041,9 @@ are exported from the *duim-frames* module.
 
    :signature: dialog-exit-enabled?-setter *enabled?* *dialog* => *enabled?*
 
-   :param enabled?: An instance of type ``<boolean>``.
+   :param enabled?: An instance of type :drm:`<boolean>`.
    :param dialog: An instance of type :class:`<dialog-frame>`.
-   :value enabled?: An instance of type ``<boolean>``.
+   :value enabled?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2096,7 +2096,7 @@ are exported from the *duim-frames* module.
      Default value: :gf:`exit-dialog`.
    :keyword exit-button: An instance of type ``false-or(<button>)``.
      Default value: ``#f``.
-   :keyword exit-enabled?: An instance of type ``<boolean>``.
+   :keyword exit-enabled?: An instance of type :drm:`<boolean>`.
      Default value: ``#t``.
    :keyword cancel-callback: An instance of type ``false-or(type-union(<command>, <function>))``.
      Default value: :gf:`cancel-dialog`.
@@ -2437,7 +2437,7 @@ are exported from the *duim-frames* module.
    :signature: dialog-next-enabled? *dialog* => *enabled?*
 
    :param dialog: An instance of type :class:`<dialog-frame>`.
-   :value enabled?: An instance of type ``<boolean>``.
+   :value enabled?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2461,9 +2461,9 @@ are exported from the *duim-frames* module.
 
    :signature: dialog-next-enabled?-setter *enabled?* *dialog* => *enabled?*
 
-   :param enabled?: An instance of type ``<boolean>``.
+   :param enabled?: An instance of type :drm:`<boolean>`.
    :param dialog: An instance of type :class:`<dialog-frame>`.
-   :value enabled?: An instance of type ``<boolean>``.
+   :value enabled?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2603,7 +2603,7 @@ are exported from the *duim-frames* module.
    :signature: dialog-page-complete? *dialog* => *complete?*
 
    :param dialog: An instance of type :class:`<dialog-frame>`.
-   :value complete?: An instance of type ``<boolean>``.
+   :value complete?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2629,9 +2629,9 @@ are exported from the *duim-frames* module.
 
    :signature: dialog-page-complete? *complete?* *dialog* => *complete?*
 
-   :param complete?: An instance of type ``<boolean>``.
+   :param complete?: An instance of type :drm:`<boolean>`.
    :param dialog: An instance of type :class:`<dialog-frame>`.
-   :value complete?: An instance of type ``<boolean>``.
+   :value complete?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2775,7 +2775,7 @@ are exported from the *duim-frames* module.
    :signature: event-destroy-frame? *event* => *destroyed?*
 
    :param event: An instance of type :class:`<frame-exit-event>`.
-   :value destroyed?: An instance of type ``<boolean>``.
+   :value destroyed?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2824,7 +2824,7 @@ are exported from the *duim-frames* module.
    :signature: exit-dialog *dialog* #key *destroy?* => ()
 
    :param dialog: An instance of type :class:`<dialog-frame>`.
-   :destroy?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :destroy?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
 
    :description:
 
@@ -2881,7 +2881,7 @@ are exported from the *duim-frames* module.
    :signature: exit-frame *frame* #key *destroy?* => ()
 
    :param frame: An instance of type :class:`<frame>`.
-   :param destroy?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :param destroy?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
 
    :description:
 
@@ -2922,12 +2922,12 @@ are exported from the *duim-frames* module.
 
    :param frame-class: An instance of type :drm:`<object>`.
    :param #rest initargs: An instance of type :drm:`<object>`.
-   :param #key create?: An instance of type ``<boolean>``. Default value: ``#t``.
-   :param #key activate?: An instance of type ``<boolean>``. Default value: ``#t``.
-   :param #key own-thread?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :param #key create?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
+   :param #key activate?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
+   :param #key own-thread?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
    :param #key port: An instance of type :class:`<port>`.
    :param #key frame-manager: An instance of type :class:`<frame-manager>`.
-   :param #key test: An instance of type ``<function>``. Default value: :drm:`identity`.
+   :param #key test: An instance of type :drm:`<function>`. Default value: :drm:`identity`.
    :value frame: An instance of type :class:`<frame>`.
 
    :description:
@@ -2974,10 +2974,10 @@ are exported from the *duim-frames* module.
      Default value: ``#"modeless"``.
    :keyword default-button: An instance of type ``false-or(<button>)``.
      Default value: ``#f``.
-   :keyword x: An instance of type ``<integer>``.
-   :keyword y: An instance of type ``<integer>``.
-   :keyword width: An instance of type ``<integer>``.
-   :keyword height: An instance of type ``<integer>``.
+   :keyword x: An instance of type :drm:`<integer>`.
+   :keyword y: An instance of type :drm:`<integer>`.
+   :keyword width: An instance of type :drm:`<integer>`.
+   :keyword height: An instance of type :drm:`<integer>`.
    :keyword disabled-commands: An instance of type :drm:`<sequence>`.
    :keyword top-level-sheet: An instance of type ``false-or(<sheet>)``.
      Default value: ``#f``.
@@ -3003,9 +3003,9 @@ are exported from the *duim-frames* module.
    :keyword document: An instance of type ``false-or(<object>)``.
      Default value: ``#f``.
    :keyword resource-id: An instance of type ``false-or(<integer>)``.
-   :keyword resizable?: An instance of type ``<boolean>``. Default value: ``#t``.
-   :keyword fixed-width?: An instance of type ``<boolean>``. Default value: ``#f``.
-   :keyword fixed-height?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :keyword resizable?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
+   :keyword fixed-width?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
+   :keyword fixed-height?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
 
    :description:
 
@@ -3139,7 +3139,7 @@ are exported from the *duim-frames* module.
    :signature: frame? *object* => *frame?*
 
    :param object: An instance of type :drm:`<object>`.
-   :value frame?: An instance of type ``<boolean>``.
+   :value frame?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -3195,7 +3195,7 @@ are exported from the *duim-frames* module.
    :signature: frame-can-exit? *frame* => *can-exit?*
 
    :param frame: An instance of type :class:`<frame>`.
-   :value can-exit?: An instance of type ``<boolean>``.
+   :value can-exit?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -3384,7 +3384,7 @@ are exported from the *duim-frames* module.
 
    :superclasses: :class:`<frame-event>`
 
-   :keyword destroy-frame?: An instance of type ``<boolean>``.
+   :keyword destroy-frame?: An instance of type :drm:`<boolean>`.
      Default value: ``#f``.
 
    :description:
@@ -3429,7 +3429,7 @@ are exported from the *duim-frames* module.
    :signature: frame-fixed-width? *frame* => *fixed-height?*
 
    :param frame: An instance of type :class:`<frame>`.
-   :value fixed-height?: An instance of type ``<boolean>``.
+   :value fixed-height?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -3447,7 +3447,7 @@ are exported from the *duim-frames* module.
    :signature: frame-fixed-width? *frame* => *fixed-width?*
 
    :param frame: An instance of type :class:`<frame>`.
-   :value fixed-width?: An instance of type ``<boolean>``.
+   :value fixed-width?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -3577,7 +3577,7 @@ are exported from the *duim-frames* module.
    :signature: frame-mapped? *frame* => *mapped?*
 
    :param frame: An instance of type :class:`<frame>`.
-   :value mapped?: An instance of type ``<boolean>``.
+   :value mapped?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -3650,9 +3650,9 @@ are exported from the *duim-frames* module.
 
    :signature: frame-mapped?-setter *mapped?* *frame* => *mapped?*
 
-   :param mapped?: An instance of type ``<boolean>``.
+   :param mapped?: An instance of type :drm:`<boolean>`.
    :param frame: An instance of type :class:`<frame>`.
-   :value mapped?: An instance of type ``<boolean>``.
+   :value mapped?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -3814,8 +3814,8 @@ are exported from the *duim-frames* module.
    :signature: frame-position *frame* => *x* *y*
 
    :param frame: An instance of type :class:`<frame>`.
-   :value x: An instance of type ``<integer>``.
-   :value y: An instance of type ``<integer>``.
+   :value x: An instance of type :drm:`<integer>`.
+   :value y: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -3850,7 +3850,7 @@ are exported from the *duim-frames* module.
    :signature: frame-resizable? *frame* => *resizable?*
 
    :param frame: An instance of type :class:`<frame>`.
-   :value resizable?: An instance of type ``<boolean>``.
+   :value resizable?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -3869,8 +3869,8 @@ are exported from the *duim-frames* module.
    :signature: frame-size *frame* => *width* *height*
 
    :param frame: An instance of type :class:`<frame>`.
-   :value width: An instance of type ``<integer>``.
-   :value height: An instance of type ``<integer>``.
+   :value width: An instance of type :drm:`<integer>`.
+   :value height: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -4110,7 +4110,7 @@ are exported from the *duim-frames* module.
    :signature: frame-top-level *frame* => *top-level*
 
    :param frame: An instance of type :class:`<frame>`.
-   :value top-level: An instance of type ``<function>``.
+   :value top-level: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -4309,7 +4309,7 @@ are exported from the *duim-frames* module.
    :param #key state: An instance of type ``one-of(#"detached", #"unmapped",
      #"mapped", #"iconified")``. Default value: ``#"detached"``.
    :param #key geometry: An instance of type :drm:`<vector>`. Default value: ``vector(#f, #f, #f, #f)``.
-   :param #key resizable?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :param #key resizable?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
    :param #key properties: An instance of type :drm:`<stretchy-object-vector>`. Default value: ``make(<stretchy-vector>)``.
    :param #key thread: An instance of type ``false-or(<thread>)``. Default value: ``#f``.
    :param #key event-queue: An instance of type ``false-or(<event-queue>)``. Default value: ``#f``.
@@ -4317,8 +4317,8 @@ are exported from the *duim-frames* module.
    :param #key background: An instance of type ``false-or(<ink>)``. Default value: ``#f``.
    :param #key text-style: An instance of type ``false-or(<text-style>)``. Default value: ``#f``.
    :param #key palette: An instance of type ``false-or(<palette>)``. Default value: ``#f``.
-   :param #key save-under?: An instance of type ``<boolean>``. Default value: ``#f``.
-   :param #key drop-shadow?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :param #key save-under?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
+   :param #key drop-shadow?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
    :param #key dialog-for: An instance of type :class:`<dialog-frame>`.
    :value simple-frame: An instance of type :class:`<frame>`.
 
@@ -4396,7 +4396,7 @@ are exported from the *duim-frames* module.
    :param #key command-table: An instance of type :class:`<command-table>`.
    :param #key label: An instance of type :class:`<label>`.
    :param #key mnemonic: An instance of type ``false-or(<gesture>)``.
-   :param #key item-callback: An instance of type ``<function>``.
+   :param #key item-callback: An instance of type :drm:`<function>`.
    :value menu: An instance of type :class:`<menu>`.
 
    :description:
@@ -4606,8 +4606,8 @@ are exported from the *duim-frames* module.
 
    :signature: note-progress *numerator* *denominator* #key *note* *label* *pointer-cursor* => ()
 
-   :param numerator: An instance of type ``<integer>``.
-   :param denominator: An instance of type ``<integer>``.
+   :param numerator: An instance of type :drm:`<integer>`.
+   :param denominator: An instance of type :drm:`<integer>`.
    :param #key note: An instance of type :class:`<progress-note>`.
      Default value: :var:`*progress-note*`.
    :param #key label: An instance of type :class:`<label>`.
@@ -4884,8 +4884,8 @@ are exported from the *duim-frames* module.
    :signature: set-frame-position *frame* *x* *y* => ()
 
    :param frame: An instance of type :class:`<frame>`.
-   :param x: An instance of type ``<integer>``.
-   :param y: An instance of type ``<integer>``.
+   :param x: An instance of type :drm:`<integer>`.
+   :param y: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -4904,8 +4904,8 @@ are exported from the *duim-frames* module.
    :signature: set-frame-size *frame* *width* *height* => ()
 
    :param frame: An instance of type :class:`<frame>`.
-   :param width: An instance of type ``<integer>``.
-   :param height: An instance of type ``<integer>``.
+   :param width: An instance of type :drm:`<integer>`.
+   :param height: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -4938,7 +4938,7 @@ are exported from the *duim-frames* module.
 
    :superclasses: :drm:`<object>`
 
-   :keyword function: An instance of type ``<function>``. Required.
+   :keyword function: An instance of type :drm:`<function>`. Required.
    :keyword arguments: An instance of type :drm:`<sequence>`. Default value ``#[]``.
 
    :description:
@@ -5070,7 +5070,7 @@ are exported from the *duim-frames* module.
    :param owner: An instance of type ``false-or(<frame>)``. Default value: ``#f``.
    :param mode: An instance of type ``one-of("modal", #"modeless", #"system-modal")``.
      Default value: ``#f``.
-   :value status-code: An instance of type ``<integer>``.
+   :value status-code: An instance of type :drm:`<integer>`.
 
    :description:
 

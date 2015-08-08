@@ -31,12 +31,12 @@ Three subclasses of :class:`<area>` are exposed in the DUIM-Extended-Geometry
 library, each of which provides the ability to create instances of
 particular shapes. Their usage is relatively obvious.
 
--  :class:`<rectangle>` This class is used to create rectangular shapes on a
-   drawable object.
--  :class:`<ellipse>` This class is used to create elliptical shapes on a
-   drawable object.
--  :class:`<polygon>` This class is used to create more general polygon shapes
-   on a drawable object.
+- :class:`<rectangle>` This class is used to create rectangular shapes on a
+  drawable object.
+- :class:`<ellipse>` This class is used to create elliptical shapes on a
+  drawable object.
+- :class:`<polygon>` This class is used to create more general polygon shapes
+  on a drawable object.
 
 Subclass of <path>
 ^^^^^^^^^^^^^^^^^^
@@ -45,13 +45,13 @@ Three subclasses of :class:`<path>` are exposed in the DUIM-Extended-Geometry
 library, each of which provides the ability to create instances of
 particular types of line. Their usage is relatively obvious.
 
--  :class:`<line>` This class is used to create straight lines between two
-   points on a drawable object.
--  :class:`<elliptical-arc>` This class is used to create elliptical arcs
-   (portions of an ellipse) on a drawable object.
--  :class:`<polyline>` This class is used to create lines that pass through an
-   arbitrary set of coordinates. It produces a jagged line with vertices
-   at each coordinate.
+- :class:`<line>` This class is used to create straight lines between two
+  points on a drawable object.
+- :class:`<elliptical-arc>` This class is used to create elliptical arcs
+  (portions of an ellipse) on a drawable object.
+- :class:`<polyline>` This class is used to create lines that pass through an
+  arbitrary set of coordinates. It produces a jagged line with vertices
+  at each coordinate.
 
 DUIM-Extended-Geometry Module
 =============================
@@ -66,7 +66,7 @@ are exported from the *duim-extended-geometry* module.
 
    :signature: do-polygon-coordinates *function* *polygon* => ()
 
-   :parameter function: An instance of type ``<function>``.
+   :parameter function: An instance of type :drm:`<function>`.
    :parameter polygon: An instance of type :class:`<polygon>`.
 
 
@@ -86,7 +86,7 @@ are exported from the *duim-extended-geometry* module.
 
    :signature: do-polygon-segments *function* *polygon* => ()
 
-   :parameter function: An instance of type ``<function>``.
+   :parameter function: An instance of type :drm:`<function>`.
    :parameter polygon: An instance of type :class:`<polygon>`.
 
    :description:
@@ -125,13 +125,13 @@ are exported from the *duim-extended-geometry* module.
 
    :superclasses: :class:`<area>`
 
-   :keyword center-x: An instance of type ``<real>``.
-   :keyword center-y: An instance of type ``<real>``.
+   :keyword center-x: An instance of type :drm:`<real>`.
+   :keyword center-y: An instance of type :drm:`<real>`.
    :keyword center-point: An instance of type :class:`<point>`.
-   :keyword radius-1-dx: An instance of type ``<real>``
-   :keyword radius-1-dy: An instance of type ``<real>``
-   :keyword radius-2-dx: An instance of type ``<real>``
-   :keyword radius-2-dy: An instance of type ``<real>``
+   :keyword radius-1-dx: An instance of type :drm:`<real>`
+   :keyword radius-1-dy: An instance of type :drm:`<real>`
+   :keyword radius-2-dx: An instance of type :drm:`<real>`
+   :keyword radius-2-dy: An instance of type :drm:`<real>`
    :keyword start-angle: An instance of ``false-or(<real>)``.
    :keyword end-angle: An instance of ``false-or(<real>)``.
 
@@ -189,7 +189,7 @@ are exported from the *duim-extended-geometry* module.
 
    :parameter object: An instance of type :drm:`<object>`.
 
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -226,8 +226,8 @@ are exported from the *duim-extended-geometry* module.
 
    :parameter elliptical-object: An instance of type type-union(:class:`<ellipse>`, :class:`<elliptical-arc>`).
 
-   :value x: An instance of type ``<real>``.
-   :value y: An instance of type ``<real>``.
+   :value x: An instance of type :drm:`<real>`.
+   :value y: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -268,10 +268,10 @@ are exported from the *duim-extended-geometry* module.
    :signature: ellipse-radii *elliptical-object* => *r1-dx* *r1-dy* *r2-dx* *d2-dy*
 
    :parameter elliptical-object: An instance of type ``type-union(<ellipse>, <elliptical-arc>)``.
-   :value r1-dx: An instance of type ``<real>``.
-   :value r1-dy: An instance of type ``<real>``.
-   :value r2-dx: An instance of type ``<real>``.
-   :value d2-dy: An instance of type ``<real>``.
+   :value r1-dx: An instance of type :drm:`<real>`.
+   :value r1-dy: An instance of type :drm:`<real>`.
+   :value r2-dx: An instance of type :drm:`<real>`.
+   :value d2-dy: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -312,13 +312,13 @@ are exported from the *duim-extended-geometry* module.
 
    :superclasses: :class:`<path>`
 
-   :keyword center-x: An instance of type ``<real>``.
-   :keyword center-y: An instance of ``<real>``.
+   :keyword center-x: An instance of type :drm:`<real>`.
+   :keyword center-y: An instance of :drm:`<real>`.
    :keyword center-point: An instance of type :class:`<point>`.
-   :keyword radius-1-dx: An instance of ``<real>``.
-   :keyword radius-1-dy: An instance of ``<real>``.
-   :keyword radius-2-dx: An instance of ``<real>``.
-   :keyword radius-2-dy: An instance of ``<real>``.
+   :keyword radius-1-dx: An instance of :drm:`<real>`.
+   :keyword radius-1-dy: An instance of :drm:`<real>`.
+   :keyword radius-2-dx: An instance of :drm:`<real>`.
+   :keyword radius-2-dy: An instance of :drm:`<real>`.
    :keyword start-angle: An instance of ``false-or(<real>)``.
    :keyword end-angle: An instance of ``false-or(<real>)``.
 
@@ -358,7 +358,7 @@ are exported from the *duim-extended-geometry* module.
    :signature: elliptical-arc? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -376,10 +376,10 @@ are exported from the *duim-extended-geometry* module.
 
    :superclasses: :class:`<path>`
 
-   :keyword start-x: An instance of ``<real>``.
-   :keyword start-y: An instance of ``<real>``.
-   :keyword end-x: An instance of ``<real>``.
-   :keyword end-y: An instance of ``<real>``.
+   :keyword start-x: An instance of :drm:`<real>`.
+   :keyword start-y: An instance of :drm:`<real>`.
+   :keyword end-x: An instance of :drm:`<real>`.
+   :keyword end-y: An instance of :drm:`<real>`.
    :keyword points: Instances of :class:`<point>`.
 
    :description:
@@ -423,7 +423,7 @@ are exported from the *duim-extended-geometry* module.
    :signature: line? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -453,8 +453,8 @@ are exported from the *duim-extended-geometry* module.
    :signature: line-end-position *line* => *x y*
 
    :parameter line: An instance of type :class:`<line>`.
-   :value x: An instance of type ``<real>``.
-   :value y: An instance of type ``<real>``.
+   :value x: An instance of type :drm:`<real>`.
+   :value y: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -493,8 +493,8 @@ are exported from the *duim-extended-geometry* module.
 
    :parameter line: An instance of type :class:`<line>`.
 
-   :value x: An instance of type ``<real>``.
-   :value y: An instance of type ``<real>``.
+   :value x: An instance of type :drm:`<real>`.
+   :value y: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -515,17 +515,17 @@ are exported from the *duim-extended-geometry* module.
    :signature: make-ellipse *center-x* *center-y* *radius-1-dx* *radius-1-dy* *radius-2-dx* *radius-2-dy* #key *start-angle* *end-angle* => *ellipse*
    :signature: make-ellipse\* *center-point* *radius-1-dx* *radius-1-dy* *radius-2-dx* *radius-2-dy* #key *start-angle* *end-angle* => *ellipse*
 
-   :parameter radius-1-dx: An instance of type ``<real>``.
-   :parameter radius-1-dy: An instance of type ``<real>``.
-   :parameter radius-2-dx: An instance of type ``<real>``.
-   :parameter radius-2-dy: An instance of type ``<real>``.
+   :parameter radius-1-dx: An instance of type :drm:`<real>`.
+   :parameter radius-1-dy: An instance of type :drm:`<real>`.
+   :parameter radius-2-dx: An instance of type :drm:`<real>`.
+   :parameter radius-2-dy: An instance of type :drm:`<real>`.
    :parameter start-angle: An instance of type ``false-or(<real>)``.
    :parameter end-angle: An instance of type ``false-or(<real>)``.
     
    The following arguments are specific to *make-ellipse*.
 
-   :parameter center-x: An instance of type ``<real>``.
-   :parameter center-y: An instance of type ``<real>``.
+   :parameter center-x: An instance of type :drm:`<real>`.
+   :parameter center-y: An instance of type :drm:`<real>`.
 
    The following argument is specific to *make-ellipse*.
 
@@ -571,17 +571,17 @@ are exported from the *duim-extended-geometry* module.
    :signature: make-elliptical-arc *center-x* *center-y* *radius-1-dx* *radius-1-dy* *radius-2-dx* *radius-2-dy* #key *start-angle* *end-angle* => *arc*
    :signature: make-elliptical-arc\* *center-point* *radius-1-dx* *radius-1-dy* *radius-2-dx* *radius-2-dy* #key *start-angle* *end-angle* => *arc*
 
-   :parameter radius-1-dx: An instance of type ``<real>``.
-   :parameter radius-1-dy: An instance of type ``<real>``.
-   :parameter radius-2-dx: An instance of type ``<real>``.
-   :parameter radius-2-dy: An instance of type ``<real>``.
+   :parameter radius-1-dx: An instance of type :drm:`<real>`.
+   :parameter radius-1-dy: An instance of type :drm:`<real>`.
+   :parameter radius-2-dx: An instance of type :drm:`<real>`.
+   :parameter radius-2-dy: An instance of type :drm:`<real>`.
    :parameter start-angle: An instance of type ``false-or(<real>)``.
    :parameter end-angle: An instance of type ``false-or(<real>)``.
 
    The following arguments are specific to *make-elliptical-arc*.
 
-   :parameter center-x: An instance of type ``<real>``.
-   :parameter center-y: An instance of type ``<real>``.
+   :parameter center-x: An instance of type :drm:`<real>`.
+   :parameter center-y: An instance of type :drm:`<real>`.
 
    The following argument is specific to *make-elliptical-arc\**.
 
@@ -626,10 +626,10 @@ are exported from the *duim-extended-geometry* module.
    :signature: make-line *start-x* *start-y* *end-x* *end-y* => *line*
    :signature: make-line\* *start-point* *end-point* => *line*
 
-   :parameter start-x: An instance of type ``<real>``.
-   :parameter start-y: An instance of type ``<real>``.
-   :parameter end-x: An instance of type ``<real>``.
-   :parameter end-y: An instance of type ``<real>``.
+   :parameter start-x: An instance of type :drm:`<real>`.
+   :parameter start-y: An instance of type :drm:`<real>`.
+   :parameter end-x: An instance of type :drm:`<real>`.
+   :parameter end-y: An instance of type :drm:`<real>`.
    :parameter start-point: An instance of type :class:`<point>`.
    :parameter end-point: An instance of type :class:`<point>`.
 
@@ -652,9 +652,9 @@ are exported from the *duim-extended-geometry* module.
 
    :parameter coord-seq: An instance of type *limited(<sequence>, of: <real>)*.
 
-   The following argument is specific to ``make-polygon\*``.
+   The following argument is specific to ``make-polygon*``.
 
-   :parameter point-seq: An instance of type limited(``<sequence>``, of: :class:`<point>`).
+   :parameter point-seq: An instance of type ``limited(<sequence>, of: <point>)``.
 
    :value polygon: An instance of type :class:`<polygon>`.
 
@@ -679,7 +679,7 @@ are exported from the *duim-extended-geometry* module.
    :signature: make-polyline *coord-seq* #key *closed?* => *polyline*
    :signature: make-polyline\* *point-seq* #key *closed?* => *polyline*
 
-   :parameter closed?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :parameter closed?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
 
    The following argument is specific to ``make-polyline``.
 
@@ -693,7 +693,7 @@ are exported from the *duim-extended-geometry* module.
 
    :description:
 
-     Returns an object of class ``<polyline>`` consisting of the segments
+     Returns an object of class :class:`<polyline>` consisting of the segments
      connecting each of the points in *point-seq* or the points represented
      by the coordinate pairs in *coord-seq*. *point-seq* is a sequence of
      points; *coord-seq* is a sequence of coordinate pairs, which are real
@@ -718,10 +718,10 @@ are exported from the *duim-extended-geometry* module.
 
    The following arguments are specific to ``make-rectangle``.
 
-   :parameter x1: An instance of type ``<real>``. The *x* coordinate of the left top of the rectangle.
-   :parameter y1: An instance of type ``<real>``. The *y* coordinate of the left top of the rectangle
-   :parameter x2: An instance of type ``<real>``. The *x* coordinate of the bottom right of the rectangle.
-   :parameter y2: An instance of type ``<real>``. The *y* coordinate of the bottom right of the rectangle.
+   :parameter x1: An instance of type :drm:`<real>`. The *x* coordinate of the left top of the rectangle.
+   :parameter y1: An instance of type :drm:`<real>`. The *y* coordinate of the left top of the rectangle
+   :parameter x2: An instance of type :drm:`<real>`. The *x* coordinate of the bottom right of the rectangle.
+   :parameter y2: An instance of type :drm:`<real>`. The *y* coordinate of the bottom right of the rectangle.
 
    The following arguments are specific to ``make-rectangle\*``.
 
@@ -803,7 +803,7 @@ are exported from the *duim-extended-geometry* module.
    :signature: polygon? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -918,7 +918,7 @@ are exported from the *duim-extended-geometry* module.
    :signature: polyline? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -936,7 +936,7 @@ are exported from the *duim-extended-geometry* module.
    :signature: polyline-closed? *polyline* => *boolean*
 
    :parameter polyline: An instance of type :class:`<polyline>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -957,11 +957,11 @@ are exported from the *duim-extended-geometry* module.
 
    :superclasses: :class:`<area>`
 
-   :keyword min-x: An instance of type ``<real>``.
-   :keyword min-y: An instance of type ``<real>``.
-   :keyword max-x: An instance of type ``<real>``.
-   :keyword max-y: An instance of type ``<real>``.
-   :keyword points: An instance of type limited(``<sequence>``, of: :class:`<point>`)
+   :keyword min-x: An instance of type :drm:`<real>`.
+   :keyword min-y: An instance of type :drm:`<real>`.
+   :keyword max-x: An instance of type :drm:`<real>`.
+   :keyword max-y: An instance of type :drm:`<real>`.
+   :keyword points: An instance of type ``limited(<sequence>, of: <point>)``.
 
    :description:
 
@@ -1020,7 +1020,7 @@ are exported from the *duim-extended-geometry* module.
    :signature: rectangle? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1045,10 +1045,10 @@ are exported from the *duim-extended-geometry* module.
    :signature: rectangle-edges *rectangle* => *x1* *y1* *x2* *y2*
    :parameter rectangle: An instance of type :class:`<rectangle>`.
 
-   :value min-x: An instance of type ``<real>``.
-   :value min-y: An instance of type ``<real>``.
-   :value max-x: An instance of type ``<real>``.
-   :value max-y: An instance of type ``<real>``.
+   :value min-x: An instance of type :drm:`<real>`.
+   :value min-y: An instance of type :drm:`<real>`.
+   :value max-x: An instance of type :drm:`<real>`.
+   :value max-y: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -1087,7 +1087,7 @@ are exported from the *duim-extended-geometry* module.
    :signature: rectangle-height *rectangle* => *height*
 
    :parameter rectangle: An instance of type :class:`<rectangle>`.
-   :value height: An instance of type ``<real>``.
+   :value height: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -1139,8 +1139,8 @@ are exported from the *duim-extended-geometry* module.
    :signature: rectangle-max-position *rectangle* => *x2* *y2*
 
    :parameter rectangle: An instance of type :class:`<rectangle>`.
-   :value x2: An instance of type ``<real>``.
-   :value y2: An instance of type ``<real>``.
+   :value x2: An instance of type :drm:`<real>`.
+   :value y2: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -1191,8 +1191,8 @@ are exported from the *duim-extended-geometry* module.
    :signature: rectangle-min-position *rectangle* => *x1* *y1*
 
    :parameter rectangle: An instance of type :class:`<rectangle>`.
-   :value x1: An instance of type ``<real>``.
-   :value y1: An instance of type ``<real>``.
+   :value x1: An instance of type :drm:`<real>`.
+   :value y1: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -1217,8 +1217,8 @@ are exported from the *duim-extended-geometry* module.
    :signature: rectangle-size *rectangle* => *width* *height*
 
    :parameter rectangle: An instance of type :class:`<rectangle>`.
-   :value width: An instance of type ``<real>``.
-   :value height: An instance of type ``<real>``.
+   :value width: An instance of type :drm:`<real>`.
+   :value height: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -1243,7 +1243,7 @@ are exported from the *duim-extended-geometry* module.
    :signature: rectangle-width *rectangle* => *width*
 
    :parameter rectangle: An instance of type :class:`<rectangle>`.
-   :value width: An instance of type ``<real>``.
+   :value width: An instance of type :drm:`<real>`.
 
    :description:
 

@@ -18,12 +18,12 @@ contains complete reference entries for each exposed interface.
 The class hierarchy for DUIM-Geometry
 =====================================
 
-The base classes for classes in the DUIM-Geometry library are ``<region>``
-and ``<transform>``, both of which are subclasses of :drm:`<object>`. While
-the ``<region>`` class has a number of subclasses, ``<transform>`` has no
+The base classes for classes in the DUIM-Geometry library are :class:`<region>`
+and :class:`<transform>`, both of which are subclasses of :drm:`<object>`. While
+the :class:`<region>` class has a number of subclasses, :class:`<transform>` has no
 direct subclasses.
 
-- ``<transform>`` The superclass of all transforms. A transform describes
+- :class:`<transform>` The superclass of all transforms. A transform describes
   the mapping of one set of points onto another. There are one or more
   subclasses of :class:`<transform>` that implement
   transforms. These subclasses have implementation-dependent names
@@ -114,7 +114,7 @@ are exported from the *duim-geometry* module.
 
    :parameter region1: An instance of type :class:`<region>`.
    :parameter region2: An instance of type :class:`<region>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -131,7 +131,7 @@ are exported from the *duim-geometry* module.
 
    :parameter transform1: An instance of type :class:`<transform>`.
    :parameter transform2: An instance of type :class:`<transform>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -173,7 +173,7 @@ are exported from the *duim-geometry* module.
    :signature: area? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -192,10 +192,10 @@ are exported from the *duim-geometry* module.
 
    :superclasses: :class:`<region>`
 
-   :keyword left: An instance of type ``<integer>``.
-   :keyword top: An instance of type ``<integer>``.
-   :keyword right: An instance of type ``<integer>``.
-   :keyword bottom: An instance of type ``<integer>``.
+   :keyword left: An instance of type :drm:`<integer>`.
+   :keyword top: An instance of type :drm:`<integer>`.
+   :keyword right: An instance of type :drm:`<integer>`.
+   :keyword bottom: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -242,7 +242,7 @@ are exported from the *duim-geometry* module.
    :signature: bounding-box? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -291,7 +291,7 @@ are exported from the *duim-geometry* module.
    :signature: box-bottom *region* => *bottom*
 
    :parameter region: An instance of type :class:`<region>`.
-   :value bottom: An instance of type ``<integer>``.
+   :value bottom: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -313,10 +313,10 @@ are exported from the *duim-geometry* module.
    :signature: box-edges *region* => *left* *top* *right* *bottom*
 
    :parameter region: An instance of type :class:`<region>`.
-   :value left: An instance of type ``<integer>``.
-   :value top: An instance of type ``<integer>``.
-   :value right: An instance of type ``<integer>``.
-   :value bottom: An instance of type ``<integer>``.
+   :value left: An instance of type :drm:`<integer>`.
+   :value top: An instance of type :drm:`<integer>`.
+   :value right: An instance of type :drm:`<integer>`.
+   :value bottom: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -347,7 +347,7 @@ are exported from the *duim-geometry* module.
    :signature: box-height *region* => *height*
 
    :parameter region: An instance of type :class:`<region>`.
-   :value height: An instance of type ``<integer>``.
+   :value height: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -371,7 +371,7 @@ are exported from the *duim-geometry* module.
    :signature: box-left *region* => *left*
 
    :parameter region: An instance of type :class:`<region>`.
-   :value left: An instance of type ``<integer>``.
+   :value left: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -415,7 +415,7 @@ are exported from the *duim-geometry* module.
    :signature: box-right *region* => *right*
 
    :parameter region: An instance of type :class:`<region>`.
-   :value right: An instance of type ``<integer>``.
+   :value right: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -438,8 +438,8 @@ are exported from the *duim-geometry* module.
    :signature: box-size *region* => *width* *height*
 
    :parameter region: An instance of type :class:`<region>`.
-   :value width: An instance of type ``<integer>``.
-   :value height: An instance of type ``<integer>``.
+   :value width: An instance of type :drm:`<integer>`.
+   :value height: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -462,7 +462,7 @@ are exported from the *duim-geometry* module.
    :signature: box-top *region* => *top*
 
    :parameter region: An instance of type :class:`<region>`.
-   :value top: An instance of type ``<integer>``.
+   :value top: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -483,7 +483,7 @@ are exported from the *duim-geometry* module.
    :signature: box-width *region* => *width*
 
    :parameter region: An instance of type :class:`<region>`.
-   :value width: An instance of type ``<integer>``.
+   :value width: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -506,7 +506,7 @@ are exported from the *duim-geometry* module.
    :signature: compose-rotation-with-transform *transform* *angle* *#key* *origin* => *transform*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :parameter angle: An instance of type ``<real>``.
+   :parameter angle: An instance of type :drm:`<real>`.
    :parameter #key origin: An instance of type :class:`<point>`. Default
      value: (0, 0).
    :value transform: An instance of type :class:`<transform>`.
@@ -533,8 +533,8 @@ are exported from the *duim-geometry* module.
    :signature: compose-scaling-with-transform *transform* *scale-x* *scale-y* #key *origin* => *transform*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :parameter scale-x: An instance of type ``<real>``.
-   :parameter scale-y: An instance of type ``<real>``.
+   :parameter scale-x: An instance of type :drm:`<real>`.
+   :parameter scale-y: An instance of type :drm:`<real>`.
    :parameter #key origin: An instance of type :class:`<point>`. Default
      value: (0, 0).
    :value transform: An instance of type :class:`<transform>`.
@@ -592,7 +592,7 @@ are exported from the *duim-geometry* module.
    :signature: compose-transform-with-rotation *transform* *angle* #key *origin* => *transform*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :parameter angle: An instance of type ``<real>``.
+   :parameter angle: An instance of type :drm:`<real>`.
    :parameter #key origin: An instance of type :class:`<point>`. Default
      value: (0,0).
    :value transform: An instance of type :class:`<transform>`.
@@ -626,8 +626,8 @@ are exported from the *duim-geometry* module.
    :signature: compose-transform-with-scaling *transform* *scale-x* *scale-y* *#key* *origin* => *transform*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :parameter scale-x: An instance of type ``<real>``.
-   :parameter scale-y: An instance of type ``<real>``.
+   :parameter scale-x: An instance of type :drm:`<real>`.
+   :parameter scale-y: An instance of type :drm:`<real>`.
    :parameter #key origin: An instance of type :class:`<point>`. Default
      value: (0,0).
    :value transform: An instance of type :class:`<transform>`.
@@ -665,8 +665,8 @@ are exported from the *duim-geometry* module.
    :signature: compose-transform-with-translation *transform* *dx* *dy* => *transform*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :parameter dx: An instance of type ``<real>``.
-   :parameter dy: An instance of type ``<real>``.
+   :parameter dx: An instance of type :drm:`<real>`.
+   :parameter dy: An instance of type :drm:`<real>`.
    :value transform: An instance of type :class:`<transform>`.
 
    :description:
@@ -699,8 +699,8 @@ are exported from the *duim-geometry* module.
    :signature: compose-translation-with-transform *transform* *dx* *dy* => *transform*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :parameter dx: An instance of type ``<real>``.
-   :parameter dy: An instance of type ``<real>``.
+   :parameter dx: An instance of type :drm:`<real>`.
+   :parameter dy: An instance of type :drm:`<real>`.
    :value transform: An instance of type :class:`<transform>`.
 
    :description:
@@ -732,7 +732,7 @@ are exported from the *duim-geometry* module.
 
    :signature: do-coordinates *function* *coordinates* => ()
 
-   :parameter function: An instance of type ``<function>``.
+   :parameter function: An instance of type :drm:`<function>`.
    :parameter coordinates: An instance of type ``limited(<sequence>, of: <real>)``.
 
    :description:
@@ -747,7 +747,7 @@ are exported from the *duim-geometry* module.
 
    :signature: do-endpoint-coordinates *function* *coordinates* => ()
 
-   :parameter function: An instance of type ``<function>``.
+   :parameter function: An instance of type :drm:`<function>`.
    :parameter coordinates: An instance of type ``limited(<sequence>, of: <real>)``.
 
    :description:
@@ -764,9 +764,9 @@ are exported from the *duim-geometry* module.
 
    :signature: do-regions *function* *region* *#key* *normalize?* => ()
 
-   :parameter function: An instance of type ``<function>``.
+   :parameter function: An instance of type :drm:`<function>`.
    :parameter region: An instance of type :class:`<region>`.
-   :parameter #key normalize?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :parameter #key normalize?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
 
    :description:
 
@@ -794,7 +794,7 @@ are exported from the *duim-geometry* module.
    :signature: even-scaling-transform? *transform* => *boolean*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -825,12 +825,12 @@ are exported from the *duim-geometry* module.
 
    :signature: fix-coordinate *coordinate* => *integer*
 
-   :parameter coordinate: An instance of type ``<real>``.
-   :value integer: An instance of type ``<integer>``.
+   :parameter coordinate: An instance of type :drm:`<real>`.
+   :value integer: An instance of type :drm:`<integer>`.
 
    :description:
 
-     Coerces the given coordinate into an ``<integer>``.
+     Coerces the given coordinate into an :drm:`<integer>`.
 
 .. constant:: $identity-transform
 
@@ -855,7 +855,7 @@ are exported from the *duim-geometry* module.
    :signature: identity-transform? *transform* => *boolean*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -906,7 +906,7 @@ are exported from the *duim-geometry* module.
    :signature: invertible-transform? *transform* => *boolean*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -942,18 +942,18 @@ are exported from the *duim-geometry* module.
 
    The following arguments are specific to ``make-3-point-transform``.
 
-   :parameter x1: An instance of type ``<real>``.
-   :parameter y1: An instance of type ``<real>``.
-   :parameter x2: An instance of type ``<real>``.
-   :parameter y2: An instance of type ``<real>``.
-   :parameter x3: An instance of type ``<real>``.
-   :parameter y3: An instance of type ``<real>``.
-   :parameter x1-image: An instance of type ``<real>``.
-   :parameter y1-image: An instance of type ``<real>``.
-   :parameter x2-image: An instance of type ``<real>``.
-   :parameter y2-image: An instance of type ``<real>``.
-   :parameter x3-image: An instance of type ``<real>``.
-   :parameter y3-image: An instance of type ``<real>``.
+   :parameter x1: An instance of type :drm:`<real>`.
+   :parameter y1: An instance of type :drm:`<real>`.
+   :parameter x2: An instance of type :drm:`<real>`.
+   :parameter y2: An instance of type :drm:`<real>`.
+   :parameter x3: An instance of type :drm:`<real>`.
+   :parameter y3: An instance of type :drm:`<real>`.
+   :parameter x1-image: An instance of type :drm:`<real>`.
+   :parameter y1-image: An instance of type :drm:`<real>`.
+   :parameter x2-image: An instance of type :drm:`<real>`.
+   :parameter y2-image: An instance of type :drm:`<real>`.
+   :parameter x3-image: An instance of type :drm:`<real>`.
+   :parameter y3-image: An instance of type :drm:`<real>`.
 
    The following arguments are specific to ``make-3-point-transform*``.
 
@@ -992,10 +992,10 @@ are exported from the *duim-geometry* module.
 
    :signature: make-bounding-box *x1* *y1* *x2* *y2* => *box*
 
-   :parameter x1: An instance of type ``<real>``.
-   :parameter y1: An instance of type ``<real>``.
-   :parameter x2: An instance of type ``<real>``.
-   :parameter y2: An instance of type ``<real>``.
+   :parameter x1: An instance of type :drm:`<real>`.
+   :parameter y1: An instance of type :drm:`<real>`.
+   :parameter x2: An instance of type :drm:`<real>`.
+   :parameter y2: An instance of type :drm:`<real>`.
    :value box: An instance of type :class:`<bounding-box>`.
 
    :description:
@@ -1020,8 +1020,8 @@ are exported from the *duim-geometry* module.
 
    :signature: make-point *x* *y* => *point*
 
-   :parameter x: An instance of ``<real>``.
-   :parameter y: An instance of ``<real>``.
+   :parameter x: An instance of :drm:`<real>`.
+   :parameter y: An instance of :drm:`<real>`.
    :value point: An instance of type :class:`<point>`.
 
    :description:
@@ -1036,10 +1036,10 @@ are exported from the *duim-geometry* module.
 
    :signature: make-reflection-transform *x1* *y1* *x2* *y2* => *transform*
 
-   :parameter x1: An instance of type ``<real>``.
-   :parameter y1: An instance of type ``<real>``.
-   :parameter x2: An instance of type ``<real>``.
-   :parameter y2: An instance of type ``<real>``.
+   :parameter x1: An instance of type :drm:`<real>`.
+   :parameter y1: An instance of type :drm:`<real>`.
+   :parameter x2: An instance of type :drm:`<real>`.
+   :parameter y2: An instance of type :drm:`<real>`.
    :value transform: An instance of type :class:`<transform>`. The
      resultant transformation.
 
@@ -1114,12 +1114,12 @@ are exported from the *duim-geometry* module.
 
    :signature: make-rotation-transform\* *angle* #key *origin* => *transform*
 
-   :parameter angle: An instance of type ``<real>``.
+   :parameter angle: An instance of type :drm:`<real>`.
 
    The following arguments are specific to ``make-rotation-transform``.
 
-   :parameter origin-x: An instance of type ``<real>``. Default value: 0.
-   :parameter origin-y: An instance of type ``<real>``. Default value: 0.
+   :parameter origin-x: An instance of type :drm:`<real>`. Default value: 0.
+   :parameter origin-y: An instance of type :drm:`<real>`. Default value: 0.
 
    The following argument is specific to ``make-reflection-transform*``.
 
@@ -1159,13 +1159,13 @@ are exported from the *duim-geometry* module.
 
    :signature: make-scaling-transform\* *scale-x* *scale-y* #key *origin* => *transform*
 
-   :parameter scale-x: An instance of type ``<real>``.
-   :parameter scale-y: An instance of type ``<real>``.
+   :parameter scale-x: An instance of type :drm:`<real>`.
+   :parameter scale-y: An instance of type :drm:`<real>`.
 
    The following arguments are specific to ``make-scaling-transform``.
 
-   :parameter origin-x: An instance of type ``<real>``. Default value: 0.
-   :parameter origin-y: An instance of type ``<real>``. Default value: 0.
+   :parameter origin-x: An instance of type :drm:`<real>`. Default value: 0.
+   :parameter origin-y: An instance of type :drm:`<real>`. Default value: 0.
 
    The following argument is specific to ``make-scaling-transform*``.
 
@@ -1213,12 +1213,12 @@ are exported from the *duim-geometry* module.
 
    :signature: make-transform *mxx* *mxy* *myx* *myy* *tx* *ty* => *transform*
 
-   :parameter mxx: An instance of type ``<real>``.
-   :parameter mxy: An instance of type ``<real>``.
-   :parameter myx: An instance of type ``<real>``.
-   :parameter myy: An instance of type ``<real>``.
-   :parameter tx: An instance of type ``<real>``.
-   :parameter ty: An instance of type ``<real>``.
+   :parameter mxx: An instance of type :drm:`<real>`.
+   :parameter mxy: An instance of type :drm:`<real>`.
+   :parameter myx: An instance of type :drm:`<real>`.
+   :parameter myy: An instance of type :drm:`<real>`.
+   :parameter tx: An instance of type :drm:`<real>`.
+   :parameter ty: An instance of type :drm:`<real>`.
    :value transform: An instance of type :class:`<transform>`.
 
    :description:
@@ -1249,8 +1249,8 @@ are exported from the *duim-geometry* module.
 
    :signature: make-translation-transform *dx* *dy* => *transform*
 
-   :parameter dx: An instance of type ``<real>``.
-   :parameter dy: An instance of type ``<real>``.
+   :parameter dx: An instance of type :drm:`<real>`.
+   :parameter dy: An instance of type :drm:`<real>`.
    :value transform: An instance of type :class:`<transform>`.
 
    :description:
@@ -1323,7 +1323,7 @@ are exported from the *duim-geometry* module.
    :signature: path? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1342,8 +1342,8 @@ are exported from the *duim-geometry* module.
 
    :superclasses: :class:`<region>`
 
-   :keyword x: An instance of type ``<integer>``.
-   :keyword y: An instance of type ``<integer>``.
+   :keyword x: An instance of type :drm:`<integer>`.
+   :keyword y: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -1372,7 +1372,7 @@ are exported from the *duim-geometry* module.
    :signature: point? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1385,8 +1385,8 @@ are exported from the *duim-geometry* module.
    :signature: point-position *point* => *x* *y*
 
    :parameter point: An instance of type :class:`<point>`.
-   :value x: An instance of type ``<real>``.
-   :value y: An instance of type ``<real>``.
+   :value x: An instance of type :drm:`<real>`.
+   :value y: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -1405,7 +1405,7 @@ are exported from the *duim-geometry* module.
    :signature: point-x *point* => *x*
 
    :parameter point: An instance of type :class:`<point>`.
-   :value x: An instance of type ``<real>``.
+   :value x: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -1423,7 +1423,7 @@ are exported from the *duim-geometry* module.
    :signature: point-y *point* => *y*
 
    :parameter point: An instance of type :class:`<point>`.
-   :value y: An instance of type ``<real>``
+   :value y: An instance of type :drm:`<real>`
 
    :description:
 
@@ -1442,7 +1442,7 @@ are exported from the *duim-geometry* module.
    :signature: rectilinear-transform? *transform* => *boolean*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1466,7 +1466,7 @@ are exported from the *duim-geometry* module.
    :signature: reflection-transform? *transform* => *boolean*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1543,7 +1543,7 @@ are exported from the *duim-geometry* module.
    :signature: region? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1560,9 +1560,9 @@ are exported from the *duim-geometry* module.
    :signature: region-contains-position? *region* *x* *y* => *boolean*
 
    :parameter region: An instance of type :class:`<region>`.
-   :parameter x: An instance of type ``<real>``.
-   :parameter y: An instance of type ``<real>``.
-   :value boolean: An instance of type ``<boolean>``.
+   :parameter x: An instance of type :drm:`<real>`.
+   :parameter y: An instance of type :drm:`<real>`.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1584,7 +1584,7 @@ are exported from the *duim-geometry* module.
 
    :parameter region1: An instance of type :class:`<region>`.
    :parameter region2: An instance of type :class:`<region>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1631,7 +1631,7 @@ are exported from the *duim-geometry* module.
    :signature: region-empty? *region* => *boolean*
 
    :parameter region: An instance of type :class:`<region>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1646,7 +1646,7 @@ are exported from the *duim-geometry* module.
 
    :parameter region1: An instance of type :class:`<region>`.
    :parameter region2: An instance of type :class:`<region>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1694,7 +1694,7 @@ are exported from the *duim-geometry* module.
 
    :parameter region1: An instance of type :class:`<region>`.
    :parameter region2: An instance of type :class:`<region>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1740,7 +1740,7 @@ are exported from the *duim-geometry* module.
    :signature: region-set? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1758,7 +1758,7 @@ are exported from the *duim-geometry* module.
    :signature: region-set-function *region* => *function*
 
    :parameter region: An instance of type :class:`<region>`.
-   :value function: An instance of type ``<function>``.
+   :value function: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -1835,7 +1835,7 @@ are exported from the *duim-geometry* module.
    :signature: rigid-transform? *transform* => *boolean*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1855,7 +1855,7 @@ are exported from the *duim-geometry* module.
    :signature: scaling-transform? *transform* => *boolean*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1871,10 +1871,10 @@ are exported from the *duim-geometry* module.
    :signature: set-box-edges *box* *left* *top* *right* *bottom* => *box*
 
    :parameter box: An instance of type :class:`<bounding-box>`.
-   :parameter left: An instance of type ``<integer>``.
-   :parameter top: An instance of type ``<integer>``.
-   :parameter right: An instance of type ``<integer>``.
-   :parameter bottom: An instance of type ``<integer>``.
+   :parameter left: An instance of type :drm:`<integer>`.
+   :parameter top: An instance of type :drm:`<integer>`.
+   :parameter right: An instance of type :drm:`<integer>`.
+   :parameter bottom: An instance of type :drm:`<integer>`.
    :value box: An instance of type :class:`<bounding-box>`.
 
    :description:
@@ -1891,8 +1891,8 @@ are exported from the *duim-geometry* module.
    :signature: set-box-position *box* *x* *y* => *box*
 
    :parameter box: An instance of type :class:`<bounding-box>`.
-   :parameter x: An instance of type ``<real>``.
-   :parameter y: An instance of type ``<real>``.
+   :parameter x: An instance of type :drm:`<real>`.
+   :parameter y: An instance of type :drm:`<real>`.
    :value box: An instance of type :class:`<bounding-box>`.
 
    :description:
@@ -1907,8 +1907,8 @@ are exported from the *duim-geometry* module.
    :signature: set-box-size *box* *width* *height* => *box*
 
    :parameter box: An instance of type :class:`<bounding-box>`.
-   :parameter width: An instance of type ``<integer>``.
-   :parameter height: An instance of type ``<integer>``
+   :parameter width: An instance of type :drm:`<integer>`.
+   :parameter height: An instance of type :drm:`<integer>`
    :value box: An instance of type :class:`<bounding-box>`.
 
    :description:
@@ -1947,7 +1947,7 @@ are exported from the *duim-geometry* module.
    :description:
 
      The smallest valid coordinate. Coordinates must be instances of type
-     ``<integer>``.
+     :drm:`<integer>`.
 
    :seealso:
 
@@ -1962,12 +1962,12 @@ are exported from the *duim-geometry* module.
 
    :superclasses: <object>
 
-   :keyword mxx: An instance of type ``<real>``.
-   :keyword mxy: An instance of type ``<real>``.
-   :keyword myx: An instance of type ``<real>``.
-   :keyword myy: An instance of type ``<real>``.
-   :keyword tx: An instance of type ``<real>``.
-   :keyword ty: An instance of type ``<real>``.
+   :keyword mxx: An instance of type :drm:`<real>`.
+   :keyword mxy: An instance of type :drm:`<real>`.
+   :keyword myx: An instance of type :drm:`<real>`.
+   :keyword myy: An instance of type :drm:`<real>`.
+   :keyword tx: An instance of type :drm:`<real>`.
+   :keyword ty: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -2017,7 +2017,7 @@ are exported from the *duim-geometry* module.
    :signature: transform? *object* => *boolean*
 
    :parameter object: An instance of type :drm:`<object>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2035,10 +2035,10 @@ are exported from the *duim-geometry* module.
    :signature: transform-angles *transform* *start-angle* *end-angle* => *new-start* *new-end*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :parameter start-angle: An instance of type ``<real>``.
-   :parameter end-angle: An instance of type ``<real>``.
-   :value new-start: An instance of type ``<real>``.
-   :value new-end: An instance of type ``<real>``.
+   :parameter start-angle: An instance of type :drm:`<real>`.
+   :parameter end-angle: An instance of type :drm:`<real>`.
+   :value new-start: An instance of type :drm:`<real>`.
+   :value new-end: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -2053,14 +2053,14 @@ are exported from the *duim-geometry* module.
    :signature: transform-box *transform* *x1* *y1* *x2* *y2* => *left top* *right bottom*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :parameter x1: An instance of type ``<real>``.
-   :parameter y1: An instance of type ``<real>``.
-   :parameter x2: An instance of type ``<real>``.
-   :parameter y2: An instance of type ``<real>``.
-   :value left: An instance of type ``<real>``.
-   :value top: An instance of type ``<real>``.
-   :value right: An instance of type ``<real>``.
-   :value bottom: An instance of type ``<real>``.
+   :parameter x1: An instance of type :drm:`<real>`.
+   :parameter y1: An instance of type :drm:`<real>`.
+   :parameter x2: An instance of type :drm:`<real>`.
+   :parameter y2: An instance of type :drm:`<real>`.
+   :value left: An instance of type :drm:`<real>`.
+   :value top: An instance of type :drm:`<real>`.
+   :value right: An instance of type :drm:`<real>`.
+   :value bottom: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -2086,10 +2086,10 @@ are exported from the *duim-geometry* module.
 
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :parameter dx: An instance of type ``<real>``.
-   :parameter dy: An instance of type ``<real>``.
-   :value dx: An instance of type ``<real>``.
-   :value dy: An instance of type ``<real>``.
+   :parameter dx: An instance of type :drm:`<real>`.
+   :parameter dy: An instance of type :drm:`<real>`.
+   :value dx: An instance of type :drm:`<real>`.
+   :value dy: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -2120,10 +2120,10 @@ are exported from the *duim-geometry* module.
    :signature: transform-position *transform* *x* *y* => new-*x* new-*y*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :parameter x: An instance of type ``<real>``
-   :parameter y: An instance of type ``<real>``
-   :value new-x: An instance of type ``<real>``
-   :value new-y: An instance of type ``<real>``
+   :parameter x: An instance of type :drm:`<real>`
+   :parameter y: An instance of type :drm:`<real>`
+   :value new-x: An instance of type :drm:`<real>`
+   :value new-y: An instance of type :drm:`<real>`
 
    :description:
 
@@ -2177,7 +2177,7 @@ are exported from the *duim-geometry* module.
    :signature: translation-transform? *transform* => *boolean*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :value boolean: An instance of type ``<boolean>``.
+   :value boolean: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2194,10 +2194,10 @@ are exported from the *duim-geometry* module.
    :signature: untransform-angles *transform* *start-angle* *end-angle* => *orig-start* *orig-end*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :parameter start-angle: An instance of type ``<real>``.
-   :parameter end-angle: An instance of type ``<real>``.
-   :value orig-start: An instance of type ``<real>``.
-   :value orig-end: An instance of type ``<real>``.
+   :parameter start-angle: An instance of type :drm:`<real>`.
+   :parameter end-angle: An instance of type :drm:`<real>`.
+   :value orig-start: An instance of type :drm:`<real>`.
+   :value orig-end: An instance of type :drm:`<real>`.
 
    :conditions:
 
@@ -2221,14 +2221,14 @@ are exported from the *duim-geometry* module.
    :signature: untransform-box *transform x1 y1 x2 y2* => *left top right bottom*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :parameter x1: An instance of type ``<real>``.
-   :parameter y1: An instance of type ``<real>``.
-   :parameter x2: An instance of type ``<real>``.
-   :parameter y2: An instance of type ``<real>``.
-   :value left: An instance of type ``<real>``.
-   :value top: An instance of type ``<real>``.
-   :value right: An instance of type ``<real>``.
-   :value bottom: An instance of type ``<real>``.
+   :parameter x1: An instance of type :drm:`<real>`.
+   :parameter y1: An instance of type :drm:`<real>`.
+   :parameter x2: An instance of type :drm:`<real>`.
+   :parameter y2: An instance of type :drm:`<real>`.
+   :value left: An instance of type :drm:`<real>`.
+   :value top: An instance of type :drm:`<real>`.
+   :value right: An instance of type :drm:`<real>`.
+   :value bottom: An instance of type :drm:`<real>`.
 
    :conditions:
      - :class:`<singular-transform>` cannot be inverted.
@@ -2251,10 +2251,10 @@ are exported from the *duim-geometry* module.
    :signature: untransform-distance *transform* *dx* *dy* => *dx* *dy*
 
    :parameter transform: An instance of type :class:`<transform>`.
-   :parameter dx: An instance of type ``<real>``.
-   :parameter dy: An instance of type ``<real>``.
-   :value dx: An instance of type ``<real>``.
-   :value dy: An instance of type ``<real>``.
+   :parameter dx: An instance of type :drm:`<real>`.
+   :parameter dy: An instance of type :drm:`<real>`.
+   :value dx: An instance of type :drm:`<real>`.
+   :value dy: An instance of type :drm:`<real>`.
 
    :conditions:
 
@@ -2277,10 +2277,10 @@ are exported from the *duim-geometry* module.
    :signature: untransform-position *transform* *x* *y* => *x* *y*
 
    :parameter transform* An instance of type :class:`<transform>`.
-   :parameter x: An instance of type ``<real>``.
-   :parameter y: An instance of type ``<real>``.
-   :value x: An instance of type ``<real>``.
-   :value y: An instance of type ``<real>``.
+   :parameter x: An instance of type :drm:`<real>`.
+   :parameter y: An instance of type :drm:`<real>`.
+   :value x: An instance of type :drm:`<real>`.
+   :value y: An instance of type :drm:`<real>`.
 
    :conditions:
      - :class:`<singular-transform>` cannot be inverted.

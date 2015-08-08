@@ -26,14 +26,14 @@ reference entries for each exposed interface.
 Gadgets are the basic behavioral GUI element (above the level of
 events).
 
--  Gadgets do not *need* to have a visual presence, though in practice
-   every gadget provided by DUIM does, since all general instances of
-   :class:`<gadget>` are also general instances of :class:`<sheet>`.
--  Many classes of gadget maintain some kind of state for their
-   behavior, and in practice some of this is usually reflected in the
-   UI. For example, you can tell that a check box is selected just by
-   looking at it.
--  They handle events and turn these into callbacks, for convenience.
+- Gadgets do not *need* to have a visual presence, though in practice
+  every gadget provided by DUIM does, since all general instances of
+  :class:`<gadget>` are also general instances of :class:`<sheet>`.
+- Many classes of gadget maintain some kind of state for their
+  behavior, and in practice some of this is usually reflected in the
+  UI. For example, you can tell that a check box is selected just by
+  looking at it.
+- They handle events and turn these into callbacks, for convenience.
 
 Some of the more important types of gadget are as follows:
 
@@ -129,13 +129,13 @@ Gadgets are objects that make up an interface: the menus, buttons,
 sliders, check lists, tool bars, menu bars, and so on. Gadget classes
 may support three protocols, *value*, *items*, and *activate*.
 
--  Gadgets that support the *value* protocol respond to the
-   :gf:`gadget-value` message, a value-changed callback, and have a setter
-   function associated with them.
--  Gadgets that support the *items* protocol respond to :gf:`gadget-items`
-   and have a gadget setter function associated with them.
--  Gadgets that support the *activate* protocol have an activation
-   callback associated with them.
+- Gadgets that support the *value* protocol respond to the
+  :gf:`gadget-value` message, a value-changed callback, and have a setter
+  function associated with them.
+- Gadgets that support the *items* protocol respond to :gf:`gadget-items`
+  and have a gadget setter function associated with them.
+- Gadgets that support the *activate* protocol have an activation
+  callback associated with them.
 
 Gadgets have a set of slots, or properties, associated with them:
 :gf:`gadget-label`, :gf:`gadget-value`, :gf:`gadget-items`, and
@@ -816,8 +816,8 @@ are exported from the *duim-gadgets* module.
 
    :param table: An instance of type :class:`<table-control>`.
    :param heading: An instance of type ``type-union(<string>, <label>)``.
-   :param generator: An instance of type ``<function>``.
-   :param index: An instance of type ``<integer>``.
+   :param generator: An instance of type :drm:`<function>`.
+   :param index: An instance of type :drm:`<integer>`.
 
 
    :description:
@@ -869,7 +869,7 @@ are exported from the *duim-gadgets* module.
    :param parent: An instance of :class:`<tree-control>`.
    :param node: An instance of type :class:`<tree-node>`.
    :param #key after: An instance of type :class:`<tree-node>`.
-   :param #key setting-roots?: An instance of type ``<boolean>``.
+   :param #key setting-roots?: An instance of type :drm:`<boolean>`.
    :value node: An instance of type :class:`<tree-node>`.
 
    :description:
@@ -897,7 +897,7 @@ are exported from the *duim-gadgets* module.
 
    :superclasses: :class:`<gadget>` :class:`<single-child-composite-pane>`
 
-   :keyword thickness: An instance of type ``<integer>``. Default value: 1.
+   :keyword thickness: An instance of type :drm:`<integer>`. Default value: 1.
    :keyword type: An instance of type ``one-of(#f, #"flat", #"sunken",
      #"raised", #"ridge", #"groove", #"input", #"output")``. Default
      value: ``#f``.
@@ -1274,9 +1274,9 @@ are exported from the *duim-gadgets* module.
    :superclasses: :class:`<value-gadget>`
 
    :keyword items: An instance of type :drm:`<sequence>`. Default value: ``#[]``.
-   :keyword label-key: An instance of type ``<function>``.
-   :keyword value-key: An instance of type ``<function>``. Default value: :drm:`identity`.
-   :keyword test: An instance of type ``<function>``. Default value: ``==``.
+   :keyword label-key: An instance of type :drm:`<function>`.
+   :keyword value-key: An instance of type :drm:`<function>`. Default value: :drm:`identity`.
+   :keyword test: An instance of type :drm:`<function>`. Default value: ``==``.
    :keyword selection: An instance of type ``limited(<sequence>, of: <integer>)``.
      Default value: ``#[]``.
    :keyword selection-mode: An instance of type ``one-of(#"single", #"multiple", #"none")``.
@@ -1543,8 +1543,8 @@ are exported from the *duim-gadgets* module.
    :keyword client: An instance of type ``false-or(<object>)``. Default value: ``#f``.
    :keyword label: An instance of type ``type-union(<string>, <image>)``. Required.
    :keyword documentation: An instance of type ``false-or(<string>)``. Default value: ``#f``.
-   :keyword enabled?: An instance of type ``<boolean>``. Default value: ``#t``.
-   :keyword read-only?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :keyword enabled?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
+   :keyword read-only?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
 
    :description:
 
@@ -1649,7 +1649,7 @@ are exported from the *duim-gadgets* module.
    :signature: gadget? *object* => *gadget?*
 
    :param object: An instance of type :drm:`<object>`.
-   :value gadget?: An instance of type ``<boolean>``.
+   :value gadget?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1871,7 +1871,7 @@ are exported from the *duim-gadgets* module.
    :signature: gadget-default? *gadget* => *default?*
 
    :param gadget: An instance of type :class:`<gadget>`.
-   :value default?: An instance of type ``<boolean>``.
+   :value default?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1896,9 +1896,9 @@ are exported from the *duim-gadgets* module.
 
    :signature: gadget-default?-setter *default? button* => *default?*
 
-   :param default?: An instance of type ``<boolean>``.
+   :param default?: An instance of type :drm:`<boolean>`.
    :param button: An instance of type :class:`<button>`.
-   :value default?: An instance of type ``<boolean>``.
+   :value default?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -1987,7 +1987,7 @@ are exported from the *duim-gadgets* module.
    :signature: gadget-enabled? *gadget* => *enabled?*
 
    :param gadget: An instance of type :class:`<gadget>`.
-   :value enabled?: An instance of type ``<boolean>``.
+   :value enabled?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2020,9 +2020,9 @@ are exported from the *duim-gadgets* module.
 
    :signature: gadget-enabled?-setter *enabled?* *gadget* => *enabled?*
 
-   :param enabled?: An instance of type ``<boolean>``.
+   :param enabled?: An instance of type :drm:`<boolean>`.
    :param gadget: An instance of type :class:`<gadget>`.
-   :value enabled?: An instance of type ``<boolean>``.
+   :value enabled?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2295,7 +2295,7 @@ are exported from the *duim-gadgets* module.
    :signature: gadget-label-key *gadget* => *label-key*
 
    :param gadget: An instance of type :class:`<collection-gadget>`.
-   :value label-key: An instance of type ``<function>``.
+   :value label-key: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -2444,7 +2444,7 @@ are exported from the *duim-gadgets* module.
    :signature: gadget-popup-menu-callback *gadget* => *popup-menu-callback*
 
    :param gadget: An instance of type :class:`<gadget>`.
-   :value popup-menu-callback: An instance of type ``<function>``.
+   :value popup-menu-callback: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -2463,9 +2463,9 @@ are exported from the *duim-gadgets* module.
 
    :signature: gadget-popup-menu-callback-setter *popup-menu-callback gadget* => *popup-menu-callback*
 
-   :param popup-menu-callback: An instance of type ``<function>``.
+   :param popup-menu-callback: An instance of type :drm:`<function>`.
    :param gadget: An instance of type :class:`<gadget>`.
-   :value popup-menu-callback: An instance of type ``<function>``.
+   :value popup-menu-callback: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -2510,7 +2510,7 @@ are exported from the *duim-gadgets* module.
    :signature: gadget-read-only? *gadget* => *read-only?*
 
    :param gadget: An instance of type :class:`<gadget>`.
-   :value read-only?: An instance of type ``<boolean>``.
+   :value read-only?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2529,7 +2529,7 @@ are exported from the *duim-gadgets* module.
    :signature: gadget-scrolling-horizontally? *gadget* => *horizontal?*
 
    :param gadget: An instance of type :class:`<gadget>`.
-   :value horizontal?: An instance of type ``<boolean>``.
+   :value horizontal?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2548,7 +2548,7 @@ are exported from the *duim-gadgets* module.
    :signature: gadget-scrolling-vertically? *gadget* => *vertical?*
 
    :param gadget: An instance of type :class:`<gadget>`.
-   :value vertical?: An instance of type ``<boolean>``.
+   :value vertical?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -2656,7 +2656,7 @@ are exported from the *duim-gadgets* module.
 
    :param selection: An instance of type ``limited(<sequence>, of: <integer>)``.
    :param gadget: An instance of type :class:`<collection-gadget>`.
-   :param do-callback?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :param do-callback?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
 
    :value selection: An instance of type ``limited(<sequence>, of: <integer>)``.
 
@@ -2707,7 +2707,7 @@ are exported from the *duim-gadgets* module.
    :signature: gadget-slug-size *gadget* => *slug-size*
 
    :param gadget: An instance of type :class:`<scroll-bar>`.
-   :value slug-size: An instance of type ``<real>``.
+   :value slug-size: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -2731,9 +2731,9 @@ are exported from the *duim-gadgets* module.
 
    :signature: gadget-slug-size-setter *slug-size gadget* => *slug-size*
 
-   :param slug-size: An instance of type ``<real>``.
+   :param slug-size: An instance of type :drm:`<real>`.
    :param gadget: An instance of type :class:`<gadget>`.
-   :value slug-size: An instance of type ``<real>``.
+   :value slug-size: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -2756,7 +2756,7 @@ are exported from the *duim-gadgets* module.
    :signature: gadget-test *gadget* => *gadget-test*
 
    :param gadget: An instance of type :class:`<collection-gadget>`.
-   :value gadget-test: An instance of type ``<function>``.
+   :value gadget-test: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -2948,7 +2948,7 @@ are exported from the *duim-gadgets* module.
    :signature: gadget-value-changing-callback *gadget* => *value-changing-callback*
 
    :param gadget: An instance of type :class:`<gadget>`.
-   :value value-changing-callback: An instance of type ``<function>``.
+   :value value-changing-callback: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -2967,9 +2967,9 @@ are exported from the *duim-gadgets* module.
 
    :signature: gadget-value-changing-callback-setter *value-changing-callback gadget* => *value-changing-callback*
 
-   :param value-changing-callback: An instance of type ``<function>``.
+   :param value-changing-callback: An instance of type :drm:`<function>`.
    :param gadget: An instance of type :class:`<gadget>`.
-   :value value-changing-callback: An instance of type ``<function>``.
+   :value value-changing-callback: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -2990,7 +2990,7 @@ are exported from the *duim-gadgets* module.
    :signature: gadget-value-key *gadget* => *value-key*
 
    :param gadget: An instance of type :class:`<collection-gadget>`.
-   :value value-key: An instance of type ``<function>``. Default value: :drm:`identity`.
+   :value value-key: An instance of type :drm:`<function>`. Default value: :drm:`identity`.
 
    :description:
 
@@ -3122,7 +3122,7 @@ are exported from the *duim-gadgets* module.
 
    :param value: An instance of type :drm:`<object>`.
    :param gadget: An instance of type :class:`<value-gadget>`.
-   :param do-callback?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :param do-callback?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
    :value value: An instance of type :drm:`<object>`.
 
    :description:
@@ -3183,7 +3183,7 @@ are exported from the *duim-gadgets* module.
                                   value-type: <integer>));
 
      Evaluating the following code confirms the gadget value type to be the
-     class ``<integer>``.
+     class :drm:`<integer>`.
 
      .. code-block:: dylan
 
@@ -3439,7 +3439,7 @@ are exported from the *duim-gadgets* module.
 
    :superclasses: :class:`<collection-gadget>` :class:`<action-gadget>`
 
-   :keyword icon-function: An instance of type ``<function>``.
+   :keyword icon-function: An instance of type :drm:`<function>`.
    :keyword view: An instance of type :class:`<list-control-view>`.
      Default value: ``#"list"``.
    :keyword borders: An instance of type ``one-of(#f, #"none", #"flat",
@@ -3448,7 +3448,7 @@ are exported from the *duim-gadgets* module.
    :keyword scroll-bars: An instance of type ``one-of(#f, #"none",
      #"horizontal", #"vertical", #"both", #"dynamic")``.
      Default value: ``#"both"``.
-   :keyword popup-menu-callback: An instance of type ``<function>``.
+   :keyword popup-menu-callback: An instance of type :drm:`<function>`.
    :keyword key-press-callback: An instance of type ``false-or(<frames.htm#40934>, <function>)``.
 
    :description:
@@ -3523,7 +3523,7 @@ are exported from the *duim-gadgets* module.
    :signature: list-control-icon-function *list-control* => *icon-function*
 
    :param list-control: An instance of :class:`<list-control>`.
-   :value icon-function: An instance of type ``<function>``.
+   :value icon-function: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -3550,9 +3550,9 @@ are exported from the *duim-gadgets* module.
 
    :signature: list-control-icon-function-setter *icon-function* *list-control* => *icon-function*
 
-   :param icon-function: An instance of type ``<function>``.
+   :param icon-function: An instance of type :drm:`<function>`.
    :param list-control: An instance of :class:`<list-control>`.
-   :value icon-function: An instance of type ``<function>``.
+   :value icon-function: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -3760,8 +3760,8 @@ are exported from the *duim-gadgets* module.
    :param items: An instance of type :drm:`<sequence>`.
    :param #key owner: An instance of type :class:`<sheet>`.
    :param #key title: An instance of type :drm:`<string>``.
-   :param #key label-key: An instance of ``<function>``. Default value: :drm:`identity`.
-   :param #key value-key: An instance of ``<function>``. Default value: :drm:`identity`.
+   :param #key label-key: An instance of :drm:`<function>`. Default value: :drm:`identity`.
+   :param #key value-key: An instance of :drm:`<function>`. Default value: :drm:`identity`.
    :param #key foreground: An instance of type ``false-or(<ink>)``. Default value: ``#f``.
    :param #key background: An instance of type ``false-or(<ink>)``. Default value: ``#f``.
    :param #key text-style: An instance of type :class:`<text-style>`.
@@ -3902,7 +3902,7 @@ are exported from the *duim-gadgets* module.
 
    :superclasses: :class:`<value-gadget>` :class:`<multiple-child-composite-pane>`
 
-   :keyword update-callback: An instance of type ``<function>``.
+   :keyword update-callback: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -3995,7 +3995,7 @@ are exported from the *duim-gadgets* module.
 
    :superclasses: :class:`<button>`
 
-   :keyword update-callback: An instance of type ``<function>``.
+   :keyword update-callback: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -4093,7 +4093,7 @@ are exported from the *duim-gadgets* module.
    :signature: node-expanded? *tree-node* => *expanded?*
 
    :param tree-node: An instance of type :class:`<tree-node>`.
-   :value expanded?: An instance of type ``<boolean>``.
+   :value expanded?: An instance of type :drm:`<boolean>`.
 
    :description:
 
@@ -4346,7 +4346,7 @@ are exported from the *duim-gadgets* module.
 
    :superclasses: :class:`<button>` :class:`<action-gadget>`
 
-   :keyword default?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :keyword default?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
 
    :description:
 
@@ -4432,7 +4432,7 @@ are exported from the *duim-gadgets* module.
 
    :superclasses: :class:`<push-menu-button>`
 
-   :keyword default?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :keyword default?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
 
    :description:
 
@@ -4617,7 +4617,7 @@ are exported from the *duim-gadgets* module.
    :signature: remove-column *table index* =>
 
    :param table: An instance of type :class:`<table-control>`.
-   :param index: An instance of type ``<integer>``.
+   :param index: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -4682,9 +4682,9 @@ are exported from the *duim-gadgets* module.
 
    :keyword orientation: An instance of type ``one-of(#"horizontal",
      #"vertical", #"none")``. Default value: ``#"none"``.
-   :keyword value-changing-callback: An instance of type ``<function>``.
-   :keyword value-changed-callback: An instance of type ``<function>``.
-   :keyword slug-size: An instance of type ``<real>``.
+   :keyword value-changing-callback: An instance of type :drm:`<function>`.
+   :keyword value-changed-callback: An instance of type :drm:`<function>`.
+   :keyword slug-size: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -4799,8 +4799,8 @@ are exported from the *duim-gadgets* module.
    :signature: scroll-position *sheet* => *x y*
 
    :param sheet: An instance of type :class:`<sheet>`.
-   :value x: An instance of type ``<integer>``.
-   :value y: An instance of type ``<integer>``.
+   :value x: An instance of type :drm:`<integer>`.
+   :value y: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -4867,8 +4867,8 @@ are exported from the *duim-gadgets* module.
    :signature: set-scroll-position *sheet x y* => ()
 
    :param sheet: An instance of type :class:`<sheet>`.
-   :param x: An instance of type ``<integer>``.
-   :param y: An instance of type ``<integer>``.
+   :param x: An instance of type :drm:`<integer>`.
+   :param y: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -4943,7 +4943,7 @@ are exported from the *duim-gadgets* module.
      Default value: ``#f``
    :keyword orientation: An instance of type ``one-of(#"horizontal", #"vertical")``.
      Default value: ``#"horizontal"``.
-   :keyword value-changing-callback: An instance of type ``<function>``.
+   :keyword value-changing-callback: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -4999,7 +4999,7 @@ are exported from the *duim-gadgets* module.
    :superclasses: :class:`<gadget>`
 
    :keyword child: An instance of type ``limited(<sequence> of: <sheet>)``.
-   :keyword thickness: An instance of type ``<integer>``. Default value: 1.
+   :keyword thickness: An instance of type :drm:`<integer>`. Default value: 1.
 
    :description:
 
@@ -5120,7 +5120,7 @@ are exported from the *duim-gadgets* module.
    :signature: splitter-split-bar-moved-callback *splitter* => *function*
 
    :param splitter: An instance of type :class:`<splitter>`.
-   :value function: An instance of type ``<function>``.
+   :value function: An instance of type :drm:`<function>`.
 
 .. generic-function:: splitter-split-bar-moved-callback-setter
 
@@ -5128,9 +5128,9 @@ are exported from the *duim-gadgets* module.
 
    :signature: splitter-split-bar-moved-callback-setter *function splitter* => *function*
 
-   :param function: An instance of type ``<function>``.
+   :param function: An instance of type :drm:`<function>`.
    :param splitter: An instance of type :class:`<splitter>`.
-   :value function: An instance of type ``<function>``.
+   :value function: An instance of type :drm:`<function>`.
 
 .. generic-function:: splitter-split-box-callback
 
@@ -5140,7 +5140,7 @@ are exported from the *duim-gadgets* module.
    :signature: splitter-split-box-callback *splitter* => *function*
 
    :param splitter: An instance of type :class:`<splitter>`.
-   :value function: An instance of type ``<function>``.
+   :value function: An instance of type :drm:`<function>`.
 
 .. generic-function:: splitter-split-box-callback-setter
 
@@ -5149,9 +5149,9 @@ are exported from the *duim-gadgets* module.
    :signature: splitter-split-box-callback-setter *function splitter* => *function*
 
 
-   :param function: An instance of type ``<function>``.
+   :param function: An instance of type :drm:`<function>`.
    :param splitter: An instance of type :class:`<splitter>`.
-   :value function: An instance of type ``<function>``.
+   :value function: An instance of type :drm:`<function>`.
 
 .. class:: <status-bar>
    :open:
@@ -5165,7 +5165,7 @@ are exported from the *duim-gadgets* module.
    :keyword label: An instance of type ``type-union(<string>, <image>)``.
    :keyword label-pane: An instance of ``false-or(<gadget>)``.
      Default value: ``#f``.
-   :keyword progress-bar?: An instance of type ``<boolean>``.
+   :keyword progress-bar?: An instance of type :drm:`<boolean>`.
      Default value: ``#f``.
    :keyword progress-bar: An instance of ``false-or(<progress-bar>)``.
      Default value: ``#f``.
@@ -5671,10 +5671,10 @@ are exported from the *duim-gadgets* module.
    :superclasses: :drm:`<object>`
 
    :keyword heading: An instance of type :drm:`<string>`.
-   :keyword width: An instance of type ``<integer>``. Default value: 100.
+   :keyword width: An instance of type :drm:`<integer>`. Default value: 100.
    :keyword alignment: An instance of type ``one-of(#"left", #"right",
      #"center")``. Default value: ``#"left"``.
-   :keyword generator: An instance of type ``<function>``.
+   :keyword generator: An instance of type :drm:`<function>`.
    :keyword callback: An instance of type ``false-or(<function>)``.
      Default value: ``#f``.
 
@@ -5716,7 +5716,7 @@ are exported from the *duim-gadgets* module.
    :keyword scroll-bars: An instance of type ``one-of(#f, #"none",
      #"horizontal", #"vertical", #"both", #"dynamic")``.
      Default value: ``#"both"``.
-   :keyword popup-menu-callback: An instance of type ``<function>``.
+   :keyword popup-menu-callback: An instance of type :drm:`<function>`.
    :keyword key-press-callback: An instance of type ``false-or(<frames.htm#40934>, <function>)``.
    :keyword widths: An instance of type ``limited(<sequence>, of: <integer>)``.
 
@@ -5967,7 +5967,7 @@ are exported from the *duim-gadgets* module.
      #"center")``. Default value: ``#"left"``.
    :keyword case: An instance of type ``one-of(#f, #"lower", #"upper")``.
      Default value: ``#f``.
-   :keyword auto-scroll?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :keyword auto-scroll?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
 
    :description:
 
@@ -6025,8 +6025,8 @@ are exported from the *duim-gadgets* module.
 
    :superclasses: :class:`<value-gadget>` :class:`<action-gadget>`
 
-   :keyword text: An instance of type ``<string>``. Default value: ``""``.
-   :keyword value-type: An instance of type ``<type>``. Default value: ``<string>``.
+   :keyword text: An instance of type :drm:`<string>`. Default value: ``""``.
+   :keyword value-type: An instance of type :drm:`<type>`. Default value: :drm:`<string>`.
    :keyword value-changing-callback: An instance of type ``false-or(<function>)``.
 
    :description:
@@ -6037,8 +6037,8 @@ are exported from the *duim-gadgets* module.
      The ``text:`` init-keyword specifies a text value for the combo box.
 
      The ``value-type:`` init-keyword specifies the type of the gadget value of
-     the text gadget, which by default is ``<string>``. Other supported types
-     are ``<integer>`` and ``<symbol>``. The string entered in the text gadget
+     the text gadget, which by default is :drm:`<string>`. Other supported types
+     are :drm:`<integer>` and :drm:`<symbol>`. The string entered in the text gadget
      is parsed, and converted to the appropriate type automatically.
 
      Text gadgets have a method on :gf:`gadget-value`
@@ -6054,7 +6054,7 @@ are exported from the *duim-gadgets* module.
      characters that are not appropriate to the
      :gf:`gadget-value-type` (for example, if the string
      contains any non-integers, and the
-     :gf:`gadget-value-type` is ``<integer>``), then
+     :gf:`gadget-value-type` is :drm:`<integer>`), then
      :gf:`gadget-value` returns ``#f``.
 
      Setting the gadget value "prints" the value and inserts the appropriate
@@ -6101,7 +6101,7 @@ are exported from the *duim-gadgets* module.
 
    :superclasses: :class:`<gadget>` :class:`<multiple-child-composite-pane>`
 
-   :keyword update-callback: An instance of type ``<function>``.
+   :keyword update-callback: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -6143,17 +6143,17 @@ are exported from the *duim-gadgets* module.
 
    :superclasses: :class: `<collection-gadget>`
 
-   :keyword children-generator: An instance of type ``<function>``.
-   :keyword children-predicate: An instance of type ``<function>``.
-   :keyword icon-function: An instance of type ``<function>``.
-   :keyword show-edges?: An instance of type ``<boolean>``. Default value: ``#t``.
-   :keyword show-root-edges?: An instance of type ``<boolean>``. Default value: ``#t``.
-   :keyword show-buttons?: An instance of type ``<boolean>``. Default value: ``#t``.
-   :keyword initial-depth: An instance of type ``<integer>``. Default value: 0.
+   :keyword children-generator: An instance of type :drm:`<function>`.
+   :keyword children-predicate: An instance of type :drm:`<function>`.
+   :keyword icon-function: An instance of type :drm:`<function>`.
+   :keyword show-edges?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
+   :keyword show-root-edges?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
+   :keyword show-buttons?: An instance of type :drm:`<boolean>`. Default value: ``#t``.
+   :keyword initial-depth: An instance of type :drm:`<integer>`. Default value: 0.
    :keyword scroll-bars: An instance of type ``one-of(#f, #"none",
      #"horizontal", #"vertical", #"both", #"dynamic")``.
      Default value: ``#"both"``.
-   :keyword popup-menu-callback: An instance of type ``<function>``.
+   :keyword popup-menu-callback: An instance of type :drm:`<function>`.
    :keyword key-press-callback: An instance of type ``false-or(<frames.htm#40934>, <function>)``.
    :keyword roots: An instance of type :drm:`<sequence>`. Default value: ``#[]``.
 
@@ -6248,7 +6248,7 @@ are exported from the *duim-gadgets* module.
    :signature: tree-control-children-predicate *tree-control* => *children-predicate*
 
    :param tree-control: An instance of type :class:`<tree-control>`.
-   :value children-predicate: An instance of type ``<function>``.
+   :value children-predicate: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -6266,9 +6266,9 @@ are exported from the *duim-gadgets* module.
 
    :signature: tree-control-children-predicate-setter *children-predicate tree-control* => *children-predicate*
 
-   :param children-predicate: An instance of type ``<function>``.
+   :param children-predicate: An instance of type :drm:`<function>`.
    :param tree-control: An instance of type :class:`<tree-control>`.
-   :value children-predicate: An instance of type ``<function>``.
+   :value children-predicate: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -6287,7 +6287,7 @@ are exported from the *duim-gadgets* module.
    :signature: tree-control-children-generator *tree-control* => *children-generator*
 
    :param tree-control: An instance of type :class:`<tree-control>`.
-   :value children-generator: An instance of type ``<function>``.
+   :value children-generator: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -6308,9 +6308,9 @@ are exported from the *duim-gadgets* module.
 
    :signature: tree-control-children-generator-setter *children-generator tree-control * => *children-generator*
 
-   :param children-generator: An instance of type ``<function>``.
+   :param children-generator: An instance of type :drm:`<function>`.
    :param tree-control: An instance of type :class:`<tree-control>`.
-   :value children-generator: An instance of type ``<function>``.
+   :value children-generator: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -6331,7 +6331,7 @@ are exported from the *duim-gadgets* module.
    :signature: tree-control-icon-function *tree-control* => *icon-function*
 
    :param tree-control: An instance of :class:`<tree-control>`.
-   :value icon-function: An instance of type ``<function>``.
+   :value icon-function: An instance of type :drm:`<function>`.
 
    :description:
 
@@ -6359,7 +6359,7 @@ are exported from the *duim-gadgets* module.
    :signature: tree-control-initial-depth *tree-control* => *initial-depth*
 
    :param tree-control: An instance of type :class:`<tree-control>`.
-   :value initial-depth: An instance of type ``<integer>``.
+   :value initial-depth: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -6381,9 +6381,9 @@ are exported from the *duim-gadgets* module.
 
    :signature: tree-control-inital-depth *initial-depth* *tree-control* => *initial-depth*
 
-   :param initial-depth: An instance of type ``<integer>``.
+   :param initial-depth: An instance of type :drm:`<integer>`.
    :param tree-control: An instance of type :class:`<tree-control>`.
-   :value initial-depth: An instance of type ``<integer>``.
+   :value initial-depth: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -6487,7 +6487,7 @@ are exported from the *duim-gadgets* module.
 
    :keyword parent-nodes: An instance of type :drm:`<sequence>`.
    :keyword child-nodes: An instance of type :drm:`<sequence>`.
-   :keyword generation: An instance of type ``<integer>``. Default value: 0.
+   :keyword generation: An instance of type :drm:`<integer>`. Default value: 0.
    :keyword object: An instance of type :drm:`<object>`.
 
    :description:
@@ -6675,7 +6675,7 @@ are exported from the *duim-gadgets* module.
    :signature: viewport? *object* => *viewport?*
 
    :param object: An instance of type :drm:`<object>`.
-   :value viewport?: An instance of type ``<boolean>``.
+   :value viewport?: An instance of type :drm:`<boolean>`.
 
    :description:
 
