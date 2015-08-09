@@ -842,6 +842,22 @@ define method print-specializer (type :: <subclass>, stream :: <stream>) => ()
   write(stream, ")");
 end method;
 
+define method print-specializer
+    (type :: <limited-collection-type>, stream :: <stream>) => ()
+  write(stream, "limited(");
+  print-specializer(type.limited-collection-class, stream);
+  write(stream, ", of: ");
+  print-specializer(type.limited-collection-element-type, stream);
+  if (type.limited-collection-size)
+    format(stream, ", size: %d", type.limited-collection-size);
+  elseif (type.limited-collection-dimensions)
+    printing-logical-block (stream, prefix: ", dimensions: #[", suffix: "]")
+      print-items(type.limited-collection-dimensions, print, stream);
+    end printing-logical-block;
+  end if;
+  write(stream, ")");
+end method print-specializer;
+
 define method print-specializer (type :: <limited-integer>, stream :: <stream>)
     => ();
   write(stream, "limited(<integer>");

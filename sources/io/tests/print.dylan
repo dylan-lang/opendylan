@@ -118,6 +118,17 @@ define generic test-print-3 (a :: <integer>) => num;
 define generic test-print-4 (a :: <number>, #rest args) => (num :: <integer>);
 define generic test-print-5 (a :: <string>, #key test) => (num :: <integer>, #rest vals);
 define generic test-print-6 (a :: <string>, #key #all-keys) => (#rest vals :: <string>);
+define generic test-print-7 (a :: subclass(<string>)) => ();
+define generic test-print-8 (a :: false-or(<string>)) => ();
+define generic test-print-9 (a :: type-union(<integer>, <float>)) => ();
+define generic test-print-10 (a :: one-of(#"a", #"b")) => ();
+define generic test-print-11
+    (a :: limited(<integer>, min: 0), b :: limited(<integer>, max: 64))
+ => (c :: limited(<integer>, min: 0, max: 64));
+define generic test-print-12
+    (a :: limited(<vector>, of: <float>),
+     b :: limited(<vector>, of: <double-float>, size: 4))
+ => (c :: false-or(limited(<array>, of: <float>, dimensions: #[2, 2])));
 
 define method test-print-1 () => ()
 end method test-print-1;
@@ -141,6 +152,24 @@ define function test-print-functions ()
   check-equal("function: test-print-6",
               print-to-string(test-print-6),
               "{generic function test-print-6 (<string>, #key #all-keys) => (#rest <string>)}");
+  check-equal("function: test-print-7",
+              print-to-string(test-print-7),
+              "{generic function test-print-7 (subclass(<string>)) => ()}");
+  check-equal("function: test-print-8",
+              print-to-string(test-print-8),
+              "{generic function test-print-8 (false-or(<string>)) => ()}");
+  check-equal("function: test-print-9",
+              print-to-string(test-print-9),
+              "{generic function test-print-9 (type-union(<integer>, <float>)) => ()}");
+  check-equal("function: test-print-10",
+              print-to-string(test-print-10),
+              "{generic function test-print-10 (one-of(#\"a\", #\"b\")) => ()}");
+  check-equal("function: test-print-11",
+              print-to-string(test-print-11),
+              "{generic function test-print-11 (limited(<integer>, min: 0), limited(<integer>, max: 64)) => (limited(<integer>, min: 0, max: 64))}");
+  check-equal("function: test-print-12",
+              print-to-string(test-print-12),
+              "{generic function test-print-12 (limited(<simple-vector>, of: <float>), limited(<simple-vector>, of: <double-float>, size: 4)) => (false-or(limited(<array>, of: <float>, dimensions: #[2, 2])))}");
   let m = generic-function-methods(test-print-1).first;
   check-equal("method: test-print-1", print-to-string(m), "{method () => ()}");
 end function test-print-functions;
