@@ -917,6 +917,7 @@ end method print-specializer;
 
 define constant <types-with-specializer-printing>
  = type-union(<class>,
+              <limited-collection-type>,
               <limited-integer>,
               <singleton>,
               <subclass>,
