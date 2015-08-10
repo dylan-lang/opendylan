@@ -1573,7 +1573,7 @@ define method check-maybe-mv-call-compatibility
   check-call-compatibility(f, call, arg-te*);
 end method;
 
-define serious-program-warning <incompatible-call>
+define abstract serious-program-warning <incompatible-call>
   slot condition-function,
     required-init-keyword: function:;
 end serious-program-warning;
@@ -1601,7 +1601,7 @@ define program-warning <unknown-keyword-in-call> (<incompatible-call>)
     function, supplied-keyword, known-keywords;
 end program-warning;
 
-define program-warning <argument-count-mismatch-in-call> (<incompatible-call>)
+define abstract program-warning <argument-count-mismatch-in-call> (<incompatible-call>)
   slot condition-supplied-count,
     required-init-keyword: supplied-count:;
   slot condition-required-count,
