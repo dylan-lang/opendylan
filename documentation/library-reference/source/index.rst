@@ -15,6 +15,7 @@ provided with Open Dylan.
    collections/index
    hash-algorithms/index
    io/index
+   coloring-stream/index
    logging/index
    numbers
    network/index
