@@ -29,10 +29,10 @@ color, a background color and an intensity:
 
 .. code-block:: dylan
 
-   let error-text = text-attributes(foreground: $color-red);
-   let blinding = text-attributes(foreground: $color-green,
-                                  background: $color-red,
-                                  intensity: $bright-intensity);
+   let error-attributes = text-attributes(foreground: $color-red);
+   let blinding-attributes = text-attributes(foreground: $color-green,
+                                             background: $color-red,
+                                             intensity: $bright-intensity);
 
 To reset text back to the defaults, use the predefined
 :const:`$reset-attributes` constant.
@@ -193,7 +193,7 @@ Text Attributes
 
      .. code-block:: dylan
 
-        let error-text = text-attributes(foreground: $color-red);
+        let error-attributes = text-attributes(foreground: $color-red);
 
 .. constant:: $reset-attributes
 
