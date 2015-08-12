@@ -104,6 +104,12 @@ The COLORING-STREAM module
      text to :var:`*standard-output*` or when writing a network server
      where the user may have an ANSI-capable client.
 
+     When called on a :class:`<coloring-stream>`, if *force-ansi?* is
+     set and the stream is not an ANSI coloring stream, then the stream
+     will be unwrapped and a new ANSI coloring stream wrapper will
+     be created. Otherwise, calling ``colorize-stream`` on a
+     :class:`<coloring-stream>` will return the same stream.
+
    :example:
 
      .. code-block:: dylan

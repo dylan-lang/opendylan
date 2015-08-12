@@ -39,6 +39,11 @@ define method coloring-stream-class-for-stream
   end if
 end method coloring-stream-class-for-stream;
 
+define generic colorize-stream
+    (stream :: <stream>,
+     #key force-ansi?)
+ => (coloring-stream :: <coloring-stream>);
+
 define method colorize-stream
     (stream :: <stream>,
      #key force-ansi? = #f)
@@ -48,6 +53,30 @@ define method colorize-stream
   else
     make(<coloring-stream>, inner-stream: stream)
   end if
+end;
+
+define method colorize-stream
+    (stream :: <coloring-stream>,
+     #key force-ansi? = #f)
+ => (coloring-stream :: <coloring-stream>)
+  if (force-ansi?)
+    // This isn't an <ansi-coloring-stream>, so unwrap and rewrap.
+    // We know it isn't an <ansi-coloring-stream> because if it were,
+    // we'd be in the other method that is specialized on that.
+    make(<ansi-coloring-stream>,
+         inner-stream: stream.inner-stream)
+  else
+    stream
+  end if
+end;
+
+define method colorize-stream
+    (stream :: <ansi-coloring-stream>,
+     #key force-ansi? = #f)
+ => (coloring-stream :: <coloring-stream>)
+  // We're already an ANSI coloring stream, so we can ignore this.
+  ignore(force-ansi?);
+  stream
 end;
 
 define method stream-supports-color?

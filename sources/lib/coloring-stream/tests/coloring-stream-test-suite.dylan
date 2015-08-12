@@ -57,13 +57,22 @@ define coloring-stream function-test colorize-stream ()
   let c = colorize-stream(*standard-output*);
   check-instance?("colorize-stream(file stream) returns a <coloring-stream>",
                   <coloring-stream>, c);
+
   let string-stream = make(<byte-string-stream>, direction: #"output");
   let c = colorize-stream(string-stream);
   check-instance?("colorize-stream(string stream) returns a <null-coloring-stream>",
                   <null-coloring-stream>, c);
+  let f = colorize-stream(c, force-ansi?: #t);
+  check-instance?("colorize-stream can be forced to rewrap as ansi stream",
+                  <ansi-coloring-stream>, f);
+  check-equal("colorize-stream on coloring stream returns same",
+              c, colorize-stream(c));
+
   let c = colorize-stream(string-stream, force-ansi?: #t);
   check-instance?("colorize-stream can be forced to return an ansi stream",
                   <ansi-coloring-stream>, c);
+  check-equal("colorize-stream on ansi coloring stream returns same",
+              c, colorize-stream(c));
 end function-test colorize-stream;
 
 define function encode-to-ansi (attributes :: false-or(<text-attributes>))
