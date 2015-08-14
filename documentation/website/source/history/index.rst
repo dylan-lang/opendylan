@@ -70,7 +70,7 @@ Sometime in 1993, Harlequin started a project to produce a Dylan
 development environment, DylanWorks. Harlequin, at the time, was known
 for their LispWorks product. Keith Playford was their first hire to
 work specifically on the Dylan project. Keith had previously
-been involved `EuLisp <http://en.wikipedia.org/wiki/EuLisp>`_.
+been involved with `EuLisp <http://en.wikipedia.org/wiki/EuLisp>`_.
 
 Harlequin's Dylan was originally implemented using the prefix syntax
 and later converted to the current infix syntax. The first implementation
