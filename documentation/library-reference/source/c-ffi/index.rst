@@ -630,7 +630,7 @@ itself. You can override this by defining a new subclass with the macro
 :macro:`define C-mapped-subtype`.
 
 You can define a designator’s *import-function* and *export-function* by
-using the macro :macro:`define c-mapped-subtype`. These functions are
+using the macro :macro:`define C-mapped-subtype`. These functions are
 merely the procedural specifications for translating the C data to Dylan
 and back. The *import* and *export* functions are inherited when you
 define a subclass for a designator.
@@ -1912,19 +1912,20 @@ Defining specialized designator classes
      .. code-block:: dylan
 
        define *modifiers* C-mapped-subtype *type-name* (*superclasses*)
-         [map *high-level-type* [, import-function: *import-fun* ]
-         [, export-function: *export-fun* ];]
+         [map *high-level-type*
+           [, import-function: *import-fun* ]
+           [, export-function: *export-fun* ];]
          [import-map *high-level-type*,
-         import-function: *import-function* ;]
+           import-function: *import-fun* ;]
          [export-map *high-level-type*,
-         export-function: *export-function* ;]
+           export-function: *export-fun* ;]
          [type-options]
        end
 
    :parameter modifiers: The same as the modifiers allowed in :drm:`define-class <class>`.
    :parameter type-name: A Dylan variable name.
    :parameter superclasses: A list of Dylan names.
-   :parameter high-level-type: An instance of :drm:`<function>`.
+   :parameter high-level-type: An instance of a Dylan :drm:`<type>`.
    :parameter import-fun: An instance of :drm:`<function>`.
    :parameter export-fun: An instance of :drm:`<function>`.
    :parameter type-options: A property list.
@@ -1933,8 +1934,8 @@ Defining specialized designator classes
 
      Allows you to define a name to which to bind a pointer designator.
 
-     The *modifiers* may be *sealed* or *open*. (The default is
-     *sealed*.) Their effect on the class defined is the same as the
+     The *modifiers* may be ``sealed`` or ``open``. (The default is
+     ``sealed``.) Their effect on the class defined is the same as the
      similar modifiers on an ordinary class.
 
      The possible combinations are, a map clause, an import-map clause,
@@ -1990,12 +1991,14 @@ Defining specialized designator classes
 
          define C-mapped-subtype <bool> (<C-int>)
            map <boolean>,
-           export-function:
-             method (v :: <boolean>) => (result :: <integer>)
-               as(<integer>, if(v) 1 else 0 end if) end,
-           import-function:
-             method (v :: <integer>) => (result :: <boolean>)
-               ~zero?(v) end;
+             export-function:
+               method (v :: <boolean>) => (result :: <integer>)
+                 as(<integer>, if(v) 1 else 0 end if)
+               end,
+             import-function:
+               method (v :: <integer>) => (result :: <boolean>)
+                 ~zero?(v)
+               end;
          end;
 
          //end module
@@ -2020,18 +2023,19 @@ Defining specialized designator classes
          module: my-module
 
          define C-mapped-subtype <C-example-string> (<C-char*>, <string>)
-           export-map type-union(<byte-string>,
-                                 <C-example-string>),
-           export-function: c-string-exporter;
+           export-map type-union(<byte-string>, <C-example-string>),
+             export-function: c-string-exporter;
          end;
 
          define method c-string-exporter
-             (s :: <byte-string>) => (result :: <C-char*>)
+             (s :: <byte-string>)
+          => (result :: <C-char*>)
            as(<C-example-string>, s)
          end;
 
          define method c-string-exporter
-             (s :: <C-example-string>) => (result :: <C-example-string>)
+             (s :: <C-example-string>)
+          => (result :: <C-example-string>)
            s
          end;
 
@@ -2058,10 +2062,11 @@ Defining specialized designator classes
        define C-mapped-subtype <other-string>
            (<C-example-string>)
          import-map <byte-string>,
-         import-function: method (v :: <byte-string>) =>
-               (result :: <C-example-string>)
-             as(<C-example-string>, v)
-           end method;
+           import-function:
+             method (v :: <byte-string>)
+              => (result :: <C-example-string>)
+               as(<C-example-string>, v)
+             end method;
        end;
 
      The import signature is :drm:`<byte-string>`. The export signature is
@@ -2080,22 +2085,26 @@ Defining specialized designator classes
 
          define C-mapped-subtype <C-mapped-int> (<C-raw-int>)
            map <boolean>,
-           export-function:
-             method (v :: <integer>) => (result :: <machine-word>)
-               as(<machine-word>, v) end,
-           import-function:
-             method (v :: <machine-word>) => (result :: <integer>)
-               as(<integer>, v) end;
+             export-function:
+               method (v :: <integer>) => (result :: <machine-word>)
+                 as(<machine-word>, v)
+               end,
+             import-function:
+               method (v :: <machine-word>) => (result :: <integer>)
+                 as(<integer>, v)
+               end;
          end;
 
          define C-mapped-subtype <bool> (<C-mapped-int>)
            map <boolean>,
-           export-function:
-             method (v :: <boolean>) => (result :: <integer>)
-               if(v) 1 else 0 end if) end,
-           import-function:
-             method (v :: <integer>) => (result :: <boolean>)
-               ~zero?(v) end;
+             export-function:
+               method (v :: <boolean>) => (result :: <integer>)
+                 if(v) 1 else 0 end if
+               end,
+             import-function:
+               method (v :: <integer>) => (result :: <boolean>)
+                 ~zero?(v)
+               end;
          end;
 
 Describing structure types
