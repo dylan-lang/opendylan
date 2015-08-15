@@ -28,7 +28,7 @@ LINK    ?= polink ;
   BINDIR ?= $(_bin:P=$(PERSONAL_ROOT:E=$(.:P))) ;
 }
 
-libcmt	?= crtmt.lib ;
+libcmt ?= crtmt.lib ;
 
 LINKFLAGS ?= /NODEFAULTLIB /DEBUG /DEBUGTYPE:CV ;
 
