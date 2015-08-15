@@ -361,7 +361,7 @@ end;
 
 // The intuition we apply is that #f is often used as a kind of "null"
 // value for the types it appears with in a type-union. Hence, whenever
-// we see #f in a type-union, we remove it and compute disjointess with
+// we see #f in a type-union, we remove it and compute disjointness with
 // the remainder of the type-union only.
 
 define method null-type? (t :: <type-estimate>) => (well? :: <boolean>)
