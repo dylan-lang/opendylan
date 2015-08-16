@@ -75,8 +75,6 @@ uses the Dylan library.
    :parameter m: An instance of :class:`<machine-word>`
    :value r: An instance of :drm:`<boolean>`
 
-    negative? (m :: <machine-word>) => _ :: <boolean>
-
 These functions return a result based on interpreting ``m`` as a signed
 integer value.
 
