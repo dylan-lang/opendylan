@@ -18,10 +18,12 @@ The bit-vector Module
    :description:
 
      A compact representation of a vector of bits. The elements of the
-     vector have the type ``<bit>`` and may be the values 0 and 1. The
+     vector have the type :type:`<bit>` and may be the values 0 and 1. The
      elements are indexed from ``0`` up to ``(size - 1)``.
 
-.. constant:: <bit>
+.. type:: <bit>
+
+   :equivalent: ``limited(<integer>, min: 0, max: 1)``
 
    :description:
 
@@ -34,7 +36,7 @@ The bit-vector Module
    :signature: bit-count *vector* #key *bit-value* => *count*
 
    :parameter vector: An instance of :class:`<bit-vector>`.
-   :parameter #key bit-value: An instance of :class:`<bit>`.
+   :parameter #key bit-value: An instance of :type:`<bit>`.
    :value count: An instance of :drm:`<integer>`.
 
    :description:
@@ -48,10 +50,10 @@ The bit-vector Module
 
    :parameter vector1: An instance of :class:`<bit-vector>`.
    :parameter vector2: An instance of :class:`<bit-vector>`.
-   :parameter #key pad1: An instance of :class:`<bit>`.
-   :parameter #key pad2: An instance of :class:`<bit>`.
+   :parameter #key pad1: An instance of :type:`<bit>`.
+   :parameter #key pad2: An instance of :type:`<bit>`.
    :value result: An instance of :class:`<bit-vector>`.
-   :value pad: An instance of :class:`<bit>`.
+   :value pad: An instance of :type:`<bit>`.
 
    :description:
 
@@ -71,10 +73,10 @@ The bit-vector Module
 
    :parameter vector1: An instance of :class:`<bit-vector>`.
    :parameter vector2: An instance of :class:`<bit-vector>`.
-   :parameter #key pad1: An instance of :class:`<bit>`.
-   :parameter #key pad2: An instance of :class:`<bit>`.
+   :parameter #key pad1: An instance of :type:`<bit>`.
+   :parameter #key pad2: An instance of :type:`<bit>`.
    :value result: An instance of :class:`<bit-vector>`.
-   :value pad: An instance of :class:`<bit>`.
+   :value pad: An instance of :type:`<bit>`.
 
    :description:
 
@@ -94,10 +96,10 @@ The bit-vector Module
 
    :parameter vector1: An instance of :class:`<bit-vector>`.
    :parameter vector2: An instance of :class:`<bit-vector>`.
-   :parameter #key pad1: An instance of :class:`<bit>`.
-   :parameter #key pad2: An instance of :class:`<bit>`.
+   :parameter #key pad1: An instance of :type:`<bit>`.
+   :parameter #key pad2: An instance of :type:`<bit>`.
    :value result: An instance of :class:`<bit-vector>`.
-   :value pad: An instance of :class:`<bit>`.
+   :value pad: An instance of :type:`<bit>`.
 
    :description:
 
@@ -117,10 +119,10 @@ The bit-vector Module
 
    :parameter vector1: An instance of :class:`<bit-vector>`.
    :parameter vector2: An instance of :class:`<bit-vector>`.
-   :parameter #key pad1: An instance of :class:`<bit>`.
-   :parameter #key pad2: An instance of :class:`<bit>`.
+   :parameter #key pad1: An instance of :type:`<bit>`.
+   :parameter #key pad2: An instance of :type:`<bit>`.
    :value result: An instance of :class:`<bit-vector>`.
-   :value pad: An instance of :class:`<bit>`.
+   :value pad: An instance of :type:`<bit>`.
 
    :description:
 
@@ -140,9 +142,9 @@ The bit-vector Module
    :signature: bit-vector-not *vector* #key *pad* => *result* *result-pad*
 
    :parameter vector: An instance of :class:`<bit-vector>`.
-   :parameter #key pad: An instance of :class:`<bit>`.
+   :parameter #key pad: An instance of :type:`<bit>`.
    :value result: An instance of :class:`<bit-vector>`.
-   :value result-pad: An instance of :class:`<bit>`.
+   :value result-pad: An instance of :type:`<bit>`.
 
    :description:
 
@@ -153,9 +155,9 @@ The bit-vector Module
    :signature: bit-vector-not! *vector* #key *pad* => *result* *result-pad*
 
    :parameter vector: An instance of :class:`<bit-vector>`.
-   :parameter #key pad: An instance of :class:`<bit>`.
+   :parameter #key pad: An instance of :type:`<bit>`.
    :value result: An instance of :class:`<bit-vector>`.
-   :value result-pad: An instance of :class:`<bit>`.
+   :value result-pad: An instance of :type:`<bit>`.
 
    :description:
 
@@ -168,10 +170,10 @@ The bit-vector Module
 
    :parameter vector1: An instance of :class:`<bit-vector>`.
    :parameter vector2: An instance of :class:`<bit-vector>`.
-   :parameter #key pad1: An instance of :class:`<bit>`.
-   :parameter #key pad2: An instance of :class:`<bit>`.
+   :parameter #key pad1: An instance of :type:`<bit>`.
+   :parameter #key pad2: An instance of :type:`<bit>`.
    :value result: An instance of :class:`<bit-vector>`.
-   :value pad: An instance of :class:`<bit>`.
+   :value pad: An instance of :type:`<bit>`.
 
    :description:
 
@@ -191,10 +193,10 @@ The bit-vector Module
 
    :parameter vector1: An instance of :class:`<bit-vector>`.
    :parameter vector2: An instance of :class:`<bit-vector>`.
-   :parameter #key pad1: An instance of :class:`<bit>`.
-   :parameter #key pad2: An instance of :class:`<bit>`.
+   :parameter #key pad1: An instance of :type:`<bit>`.
+   :parameter #key pad2: An instance of :type:`<bit>`.
    :value result: An instance of :class:`<bit-vector>`.
-   :value pad: An instance of :class:`<bit>`.
+   :value pad: An instance of :type:`<bit>`.
 
    :description:
 
@@ -214,10 +216,10 @@ The bit-vector Module
 
    :parameter vector1: An instance of :class:`<bit-vector>`.
    :parameter vector2: An instance of :class:`<bit-vector>`.
-   :parameter #key pad1: An instance of :class:`<bit>`.
-   :parameter #key pad2: An instance of :class:`<bit>`.
+   :parameter #key pad1: An instance of :type:`<bit>`.
+   :parameter #key pad2: An instance of :type:`<bit>`.
    :value result: An instance of :class:`<bit-vector>`.
-   :value pad: An instance of :class:`<bit>`.
+   :value pad: An instance of :type:`<bit>`.
 
    :description:
 
@@ -237,10 +239,10 @@ The bit-vector Module
 
    :parameter vector1: An instance of :class:`<bit-vector>`.
    :parameter vector2: An instance of :class:`<bit-vector>`.
-   :parameter #key pad1: An instance of :class:`<bit>`.
-   :parameter #key pad2: An instance of :class:`<bit>`.
+   :parameter #key pad1: An instance of :type:`<bit>`.
+   :parameter #key pad2: An instance of :type:`<bit>`.
    :value result: An instance of :class:`<bit-vector>`.
-   :value pad: An instance of :class:`<bit>`.
+   :value pad: An instance of :type:`<bit>`.
 
    :description:
 
