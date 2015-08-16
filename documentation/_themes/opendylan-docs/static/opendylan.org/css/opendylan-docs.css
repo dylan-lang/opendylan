@@ -1,17 +1,10 @@
-.navbar {
-  margin-bottom: 5px;
-}
-
-.section h1,
-.section h2,
-.section h3 {
-  border-bottom: 1px solid #EEE;
-  margin-bottom: 10px;
-}
-
-/* We don't want indenting here. */
-dt.dylan-api + dd {
-  margin-left: 0;
+/* Underline and better spacing under object type name */
+dt.dylan-api {
+  width: 100%;
+  padding-top: 1em;
+  padding-bottom: 0.4em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid;
 }
 
 /* Make the headerlink less obnoxiously visible */
@@ -25,125 +18,14 @@ em.property {
   font-style: normal;
 }
 
-/* Underline and better spacing under object type name */
-dt.dylan-api {
-  padding-top: 1em;
-  padding-bottom: 0.4em;
-  margin-bottom: 1em;
-  border-bottom: 1px solid;
+/* work around https://github.com/snide/sphinx_rtd_theme/issues/149 */
+/* copied from https://github.com/Lasagne/Lasagne/pull/282/files */
+.rst-content table.field-list .field-body {
+    padding-top: 8px;
 }
 
-/* Don't allow field names to wrap
-   and set the width so that it is consistent. */
-.field-list .field-name {
-  white-space: nowrap;
-  width: 7em;
+/* work around unreported bug where lists within a field list body
+   get an incorrect line height */
+.rst-content td.field-body ul {
+    line-height: initial;
 }
-
-/* Without this, the UL content is too far to the
-   left and breaks the box for the column it is in. */
-.field-list ul {
-  margin-left: 0.5em;
-}
-
-/* Undo an annoyance from Bootstrap */
-li {
-  color: black;
-}
-
-/* Make all xref / tt stuff look the same as literal below */
-tt.xref, a tt {
-  background-color: whitesmoke;
-  font-weight: normal;
-}
-
-/* Add back inter-paragraph spacing.
-   Use top rather than bottom since the first paragraph
-   isn't in a <p> tag. */
-.field-list p,
-.field-list pre {
-  margin-top: 9px;
-}
-
-.navbar .logo {
-  float: left;
-  padding: 5px 5px;
-  width: 32px;
-  height: 30px;
-}
-
-.literal {
-  background-color:#f5f5f5;
-  padding:0 3px 2px;
-  font-family:Monaco, Andale Mono, Courier New, monospace;
-  font-size:12px;
-  border:1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius:3px;
-  -moz-border-radius:3px;
-  border-radius:3px;
-}
-
-/* Sidebar */
-
-div.doc-sidebar {
-  font-size: .9em;
-}
-
-div.doc-sidebar a, div.header a {
-  text-decoration: none;
-}
-
-div.doc-sidebar a:hover, div.header a:hover {
-  text-decoration: underline;
-}
-
-div.doc-sidebar h3 {
-  color: #2e3436;
-  text-transform: uppercase;
-  font-size: 130%;
-  letter-spacing: .1em;
-}
-
-div.doc-sidebar ul {
-  list-style-type: none;
-}
-
-div.doc-sidebar li.toctree-l1 a {
-  display: block;
-  padding: 1px;
-  border: 1px solid #dddddd;
-  background-color: #eeeeec;
-  margin-bottom: .4em;
-  padding-left: 3px;
-  color: #2e3436;
-}
-
-div.doc-sidebar li.toctree-l2 a {
-  background-color: transparent;
-  border: none;
-  margin-left: 1em;
-  border-bottom: 1px solid #dddddd;
-}
-
-div.doc-sidebar li.toctree-l3 a {
-  background-color: transparent;
-  border: none;
-  margin-left: 2em;
-  border-bottom: 1px solid #dddddd;
-}
-
-div.doc-sidebar li.toctree-l2:last-child a {
-  border-bottom: none;
-}
-
-div.doc-sidebar li.toctree-l1.current a {
-  border-right: 5px solid;
-}
-
-div.doc-sidebar li.toctree-l1.current li.toctree-l2 a {
-  border-right: none;
-}
-
-div.doc-sidebar .pinned { height: 100%; overflow-y: hidden; }
-div.doc-sidebar .pinned.pin-set { position: fixed; height: 100%; top: 50px; z-index: 99; }
-div.doc-sidebar .pinned:hover { overflow-y: auto !important; }
