@@ -17,11 +17,11 @@ by the argument name, unless otherwise noted. Thus, the arguments
 *machine-word* and *integer* are instances of ``<machine-word>`` and
 :drm:`<integer>`, respectively.
 
-The class ``<machine-word>`` is a sealed subclass of :drm:`<object>`, defined
-in the Dylan library. The class ``<machine-word>`` represents a limited
-range of integral values. The representation used has the natural size
-suggested by the implementation architecture. (When running a 32 bit OS,
-a ``<machine-word>`` is 32 bits wide. When running a 64 bit OS, then
+The class :class:`<machine-word>` is a sealed subclass of :drm:`<object>`,
+defined in the Dylan library. The class ``<machine-word>`` represents a
+limited range of integral values. The representation used has the natural
+size suggested by the implementation architecture. (When running a 32 bit
+OS, a ``<machine-word>`` is 32 bits wide. When running a 64 bit OS, then
 ``<machine-word>`` is 64 bits wide.) The class ``<machine-word>`` is
 disjoint from all other classes specified by the Dylan language.
 
@@ -43,21 +43,21 @@ uses the Dylan library.
    :signature: odd? m => r
 
    :parameter m: An instance of :class:`<machine-word>`
-   :value r: An instance of :class:`<boolean>`
+   :value r: An instance of :drm:`<boolean>`
 
 .. function:: even?
 
    :signature: even? m => r
 
    :parameter m: An instance of :class:`<machine-word>`
-   :value r: An instance of :class:`<boolean>`
+   :value r: An instance of :drm:`<boolean>`
 
 .. function:: zero?
 
    :signature: zero? m => r
 
    :parameter m: An instance of :class:`<machine-word>`
-   :value r: An instance of :class:`<boolean>`
+   :value r: An instance of :drm:`<boolean>`
 
 .. note:: Cannot be used as the name of a result. It is not a valid Dylan name.
 
@@ -66,14 +66,14 @@ uses the Dylan library.
    :signature: positive? m => r
 
    :parameter m: An instance of :class:`<machine-word>`
-   :value r: An instance of :class:`<boolean>`
+   :value r: An instance of :drm:`<boolean>`
 
 .. function:: negative?
 
    :signature: negative? m => r
 
    :parameter m: An instance of :class:`<machine-word>`
-   :value r: An instance of :class:`<boolean>`
+   :value r: An instance of :drm:`<boolean>`
 
     negative? (m :: <machine-word>) => _ :: <boolean>
 
@@ -90,7 +90,7 @@ integer value.
    :parameter m2: An instance of :class:`<machine-word>`
    :parameter i1: An instance of :class:`<abstract-integer>`
    :parameter i2: An instance of :class:`<abstract-integer>`
-   :value r: An instance of :class:`<boolean>`
+   :value r: An instance of :drm:`<boolean>`
 
    :description:
 
@@ -107,7 +107,7 @@ integer value.
    :parameter m2: An instance of :class:`<machine-word>`
    :parameter i1: An instance of :class:`<abstract-integer>`
    :parameter i2: An instance of :class:`<abstract-integer>`
-   :value r: An instance of :class:`<boolean>`
+   :value r: An instance of :drm:`<boolean>`
 
    :description:
 
@@ -119,13 +119,13 @@ integer value.
    :signature: as t == <integer> m => r
 
    :parameter m: An instance of :class:`<machine-word>`
-   :value r: An instance of :class:`<integer>`
+   :value r: An instance of :drm:`<integer>`
 
    :description:
 
-     The result is an :class:`<integer>` with the same value as ``m`` when
+     The result is an :drm:`<integer>` with the same value as ``m`` when
      interpreted as a signed integer value. An error is signaled if the value
-     of ``m`` cannot be represented as an instance of :class:`<integer>`.
+     of ``m`` cannot be represented as an instance of :drm:`<integer>`.
 
 .. function:: as
 
@@ -140,7 +140,7 @@ integer value.
      when interpreted as a signed integer value.
 
      (The uses for an instance of :class:`<abstract-integer>` that is not also
-     an instance of :class:`<integer>` are rather limited without the
+     an instance of :drm:`<integer>` are rather limited without the
      Generic-Arithmetic library.)
 
 .. function:: as
@@ -161,7 +161,7 @@ integer value.
 
    :signature: limited t == <machine-word> #key signed? min max => r
 
-   :parameter #key signed?: An instance of :class:`<boolean>`. Defaults to
+   :parameter #key signed?: An instance of :drm:`<boolean>`. Defaults to
                             ``#t``
    :parameter #key min: An instance of :class:`<machine-word>`
    :parameter #key max: An instance of :class:`<machine-word>`
@@ -216,7 +216,7 @@ The following variables are exported from the Machine-Words module.
 
 .. constant:: $machine-word-size
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -313,9 +313,9 @@ These four functions have the same semantics as :drm:`logior`, :drm:`logxor`,
 
    :signature: %logbit? index m => set?
 
-   :parameter index: An instance of :class:`<integer>`
+   :parameter index: An instance of :drm:`<integer>`
    :parameter m: An instance of :class:`<machine-word>`
-   :value set?: An instance of :class:`<boolean>`
+   :value set?: An instance of :drm:`<boolean>`
 
    :description:
 
@@ -328,7 +328,7 @@ These four functions have the same semantics as :drm:`logior`, :drm:`logxor`,
    :signature: %count-low-zeros m => c
 
    :parameter m: An instance of :class:`<machine-word>`
-   :value c: An instance of :class:`<integer>`
+   :value c: An instance of :drm:`<integer>`
 
    :description:
 
@@ -344,7 +344,7 @@ These four functions have the same semantics as :drm:`logior`, :drm:`logxor`,
    :signature: %count-high-zeros m => c
 
    :parameter m: An instance of :class:`<machine-word>`
-   :parameter c: An instance of :class:`<integer>`
+   :parameter c: An instance of :drm:`<integer>`
 
    :description:
 
@@ -364,7 +364,7 @@ These four functions have the same semantics as :drm:`logior`, :drm:`logxor`,
    :parameter m1: An instance of :class:`<machine-word>`
    :parameter m2: An instance of :class:`<machine-word>`
    :value sum: An instance of :class:`<machine-word>`
-   :value overflow?: An instance of :class:`<boolean>`
+   :value overflow?: An instance of :drm:`<boolean>`
 
    :description:
 
@@ -377,7 +377,7 @@ These four functions have the same semantics as :drm:`logior`, :drm:`logxor`,
    :parameter m1: An instance of :class:`<machine-word>`
    :parameter m2: An instance of :class:`<machine-word>`
    :value difference: An instance of :class:`<machine-word>`
-   :value overflow?: An instance of :class:`<boolean>`
+   :value overflow?: An instance of :drm:`<boolean>`
 
    :description:
 
@@ -391,7 +391,7 @@ These four functions have the same semantics as :drm:`logior`, :drm:`logxor`,
    :parameter m2: An instance of :class:`<machine-word>`
    :value low: An instance of :class:`<machine-word>`
    :value high: An instance of :class:`<machine-word>`
-   :value overflow?: An instance of :class:`<boolean>`
+   :value overflow?: An instance of :drm:`<boolean>`
 
    :description:
 
@@ -479,7 +479,7 @@ machine word range.
 
    :parameter m: An instance of :class:`<machine-word>`
    :value r: An instance of :class:`<machine-word>`
-   :value overflow?: An instance of :class:`<boolean>`
+   :value overflow?: An instance of :drm:`<boolean>`
 
 .. function:: %abs
 
@@ -487,17 +487,17 @@ machine word range.
 
    :parameter m: An instance of :class:`<machine-word>`
    :value r: An instance of :class:`<machine-word>`
-   :value overflow?: An instance of :class:`<boolean>`
+   :value overflow?: An instance of :drm:`<boolean>`
 
 .. function:: %shift-left
 
    :signature: %shift-left m count => low high overflow?
 
    :parameter m: An instance of :class:`<machine-word>`
-   :parameter count: An instance of :class:`<integer>`
+   :parameter count: An instance of :drm:`<integer>`
    :value low: An instance of :class:`<machine-word>`
    :value high: An instance of :class:`<machine-word>`
-   :value overflow?: An instance of :class:`<boolean>`
+   :value overflow?: An instance of :drm:`<boolean>`
 
    :description:
 
@@ -510,7 +510,7 @@ machine word range.
    :signature: %shift-right m count => r
 
    :parameter m: An instance of :class:`<machine-word>`
-   :parameter count: An instance of :class:`<integer>`
+   :parameter count: An instance of :drm:`<integer>`
    :value r: An instance of :class:`<machine-word>`
 
    :description:
@@ -589,7 +589,7 @@ before performing the operation.
    :signature: so%shift-left m count => r
 
    :parameter m: An instance of :class:`<machine-word>`
-   :parameter count: An instance of :class:`<integer>`
+   :parameter count: An instance of :drm:`<integer>`
    :value r: An instance of :class:`<machine-word>`
 
    :description:
@@ -764,7 +764,7 @@ before performing the operation.
    :signature: u%rotate-left m count => r
 
    :parameter m: An instance of :class:`<machine-word>`
-   :parameter count: An instance of :class:`<integer>`
+   :parameter count: An instance of :drm:`<integer>`
    :value r: An instance of :class:`<machine-word>`
 
    :description:
@@ -777,7 +777,7 @@ before performing the operation.
    :signature: u%rotate-right m count => r
 
    :parameter m: An instance of :class:`<machine-word>`
-   :parameter count: An instance of :class:`<integer>`
+   :parameter count: An instance of :drm:`<integer>`
    :value r: An instance of :class:`<machine-word>`
 
    :description:
@@ -790,7 +790,7 @@ before performing the operation.
    :signature: u%shift-left m count => r
 
    :parameter m: An instance of :class:`<machine-word>`
-   :parameter count: An instance of :class:`<integer>`
+   :parameter count: An instance of :drm:`<integer>`
    :value r: An instance of :class:`<machine-word>`
 
    :description:
@@ -803,7 +803,7 @@ before performing the operation.
    :signature: u%shift-right m count => r
 
    :parameter m: An instance of :class:`<machine-word>`
-   :parameter count: An instance of :class:`<integer>`
+   :parameter count: An instance of :drm:`<integer>`
    :value r: An instance of :class:`<machine-word>`
 
    :description:
@@ -817,7 +817,7 @@ before performing the operation.
 
    :parameter m1: An instance of :class:`<machine-word>`
    :parameter m2: An instance of :class:`<machine-word>`
-   :value smaller?: An instance of :class:`<boolean>`
+   :value smaller?: An instance of :drm:`<boolean>`
 
    :description:
 
@@ -859,7 +859,7 @@ before performing the operation.
 
    :parameter low: An instance of :class:`<machine-word>`
    :parameter high: An instance of :class:`<machine-word>`
-   :parameter count: An instance of :class:`<integer>`
+   :parameter count: An instance of :drm:`<integer>`
    :value low: An instance of :class:`<machine-word>`
    :value high: An instance of :class:`<machine-word>`
 
@@ -875,7 +875,7 @@ before performing the operation.
 
    :parameter low: An instance of :class:`<machine-word>`
    :parameter high: An instance of :class:`<machine-word>`
-   :parameter count: An instance of :class:`<integer>`
+   :parameter count: An instance of :drm:`<integer>`
    :value low: An instance of :class:`<machine-word>`
    :value high: An instance of :class:`<machine-word>`
 

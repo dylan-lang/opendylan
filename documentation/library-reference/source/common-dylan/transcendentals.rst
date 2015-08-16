@@ -43,9 +43,9 @@ This section contains a reference entry for each item exported from the
 
    :signature: ^ b x => y
 
-   :parameter b: An instance of type :class:`<real>`.
-   :parameter x: An instance of type :class:`<real>`.
-   :value y: An instance of type :class:`<real>`.
+   :parameter b: An instance of type :drm:`<real>`.
+   :parameter x: An instance of type :drm:`<real>`.
+   :value y: An instance of type :drm:`<real>`.
 
    :description:
 
@@ -70,9 +70,9 @@ This section contains a reference entry for each item exported from the
 
    :signature: acos x => y
 
-   :parameter x: an instance of type :class:`<real>`. The angle, in radians.
+   :parameter x: an instance of type :drm:`<real>`. The angle, in radians.
                  If ``x`` is not in the range ``[-1,+1]``, an error is signalled.
-   :value y: An instance of type :class:`<float>`.
+   :value y: An instance of type :drm:`<float>`.
 
    :description:
 
@@ -92,8 +92,8 @@ This section contains a reference entry for each item exported from the
 
    :signature: acosh x => y
 
-   :parameter x: An instance of type :class:`<real>`. The angle, in radians.
-   :value y: An instance of type :class:`<float>`.
+   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :value y: An instance of type :drm:`<float>`.
 
    :description:
 
@@ -113,9 +113,9 @@ This section contains a reference entry for each item exported from the
 
    :signature: asin x => y
 
-   :parameter x: An instance of type :class:`<real>`. The angle, in radians.
+   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
                  If ``x`` is not in the range `[-1,+1]`, an error is signalled.
-   :value y: An instance of type :class:`<float>`.
+   :value y: An instance of type :drm:`<float>`.
 
    :description:
 
@@ -135,8 +135,8 @@ This section contains a reference entry for each item exported from the
 
    :signature: asinh x => y
 
-   :parameter x: An instance of type :class:`<real>`. The angle, in radians.
-   :value y: An instance of type :class:`<float>`.
+   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :value y: An instance of type :drm:`<float>`.
 
    :description:
 
@@ -156,9 +156,9 @@ This section contains a reference entry for each item exported from the
 
    :signature: atan x => y
 
-   :parameter x: An instance of type :class:`<real>`. The angle, in radians.
+   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
                  If ``x`` is not in the range `[-1,+1]`, an error is signalled.
-   :value y: An instance of type :class:`<float>`.
+   :value y: An instance of type :drm:`<float>`.
 
    :description:
 
@@ -178,9 +178,9 @@ This section contains a reference entry for each item exported from the
 
    :signature: atan2 x y => z
 
-   :parameter x: An instance of type :class:`<real>`. The first angle, in radians.
-   :parameter y: An instance of type :class:`<real>`. The second angle, in radians.
-   :value z: An instance of type :class:`<float>`.
+   :parameter x: An instance of type :drm:`<real>`. The first angle, in radians.
+   :parameter y: An instance of type :drm:`<real>`. The second angle, in radians.
+   :value z: An instance of type :drm:`<float>`.
 
    :description:
 
@@ -198,8 +198,8 @@ This section contains a reference entry for each item exported from the
 
    :signature: atanh x => y
 
-   :parameter x: An instance of type :class:`<real>`. The angle, in radians.
-   :value y: An instance of type :class:`<float>`.
+   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :value y: An instance of type :drm:`<float>`.
 
    :description:
 
@@ -219,8 +219,8 @@ This section contains a reference entry for each item exported from the
 
    :signature: cos x => y
 
-   :parameter x: An instance of type :class:`<real>`. The angle, in radians.
-   :value y: An instance of type :class:`<float>`.
+   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :value y: An instance of type :drm:`<float>`.
 
    :description:
 
@@ -240,8 +240,8 @@ This section contains a reference entry for each item exported from the
 
    :signature: cosh x => y
 
-   :parameter x: An instance of type :class:`<real>`. The angle, in radians.
-   :value y: An instance of type :class:`<float>`.
+   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :value y: An instance of type :drm:`<float>`.
 
    :description:
 
@@ -299,8 +299,8 @@ This section contains a reference entry for each item exported from the
 
    :signature: exp x => y
 
-   :parameter x: An instance of type :class:`<real>`.
-   :value y: An instance of type :class:`<float>`.
+   :parameter x: An instance of type :drm:`<real>`.
+   :value y: An instance of type :drm:`<float>`.
 
    :description:
 
@@ -319,8 +319,8 @@ This section contains a reference entry for each item exported from the
 
    :signature: isqrt x => y
 
-   :parameter x: An instance of type :class:`<integer>`.
-   :value y: An instance of type :class:`<integer>`.
+   :parameter x: An instance of type :drm:`<integer>`.
+   :value y: An instance of type :drm:`<integer>`.
 
    :description:
 
@@ -339,8 +339,8 @@ This section contains a reference entry for each item exported from the
 
    :signature: log x => y
 
-   :parameter x: An instance of type :class:`<real>`.
-   :value y: An instance of type :class:`<float>`.
+   :parameter x: An instance of type :drm:`<real>`.
+   :value y: An instance of type :drm:`<float>`.
 
    :description:
 
@@ -361,9 +361,9 @@ This section contains a reference entry for each item exported from the
 
    :signature: logn x b => y
 
-   :parameter x: An instance of :class:`<number>`
-   :parameter b: An instance of :class:`<number>`. The base.
-   :value y: An instance of :class:`<number>`.
+   :parameter x: An instance of :drm:`<number>`
+   :parameter b: An instance of :drm:`<number>`. The base.
+   :value y: An instance of :drm:`<number>`.
 
    :description:
 
@@ -384,8 +384,8 @@ This section contains a reference entry for each item exported from the
 
    :signature: sin x => y
 
-   :parameter x: An instance of type :class:`<real>`. The angle, in radians.
-   :value y: An instance of type :class:`<float>`.
+   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :value y: An instance of type :drm:`<float>`.
 
    :description:
 
@@ -441,8 +441,8 @@ This section contains a reference entry for each item exported from the
 
    :signature: sinh x => y
 
-   :parameter x: An instance of type :class:`<real>`. The angle, in radians.
-   :value y: An instance of type :class:`<float>`.
+   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :value y: An instance of type :drm:`<float>`.
 
    :description:
 
@@ -462,8 +462,8 @@ This section contains a reference entry for each item exported from the
 
    :signature: sqrt x => y
 
-   :parameter x: An instance of type :class:`<real>`.
-   :value y: An instance of type :class:`<float>`.
+   :parameter x: An instance of type :drm:`<real>`.
+   :value y: An instance of type :drm:`<float>`.
 
    :description:
 
@@ -482,8 +482,8 @@ This section contains a reference entry for each item exported from the
 
    :signature: tan x => y
 
-   :parameter x: An instance of type :class:`<real>`. The angle, in radians.
-   :value y: An instance of type :class:`<float>`.
+   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :value y: An instance of type :drm:`<float>`.
 
    :description:
 
@@ -503,8 +503,8 @@ This section contains a reference entry for each item exported from the
 
    :signature: tanh x => y
 
-   :parameter x: An instance of type :class:`<real>`. The angle, in radians.
-   :parameter y: An instance of type :class:`<float>`.
+   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :parameter y: An instance of type :drm:`<float>`.
 
    :description:
 
