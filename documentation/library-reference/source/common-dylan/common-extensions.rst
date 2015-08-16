@@ -74,7 +74,7 @@ The extensions are:
    The class of 8-bit characters that instances of :drm:`<byte-string>` can
    contain.
 
-   :superclasses: <character>
+   :superclasses: :drm:`<character>`
 
    :description:
 
@@ -597,7 +597,7 @@ The extensions are:
 
    The class of conditions that take a format string.
 
-   :superclasses: <condition>
+   :superclasses: :drm:`<condition>`
 
    :description:
 
@@ -880,7 +880,7 @@ The extensions are:
 
    The class of stretchy sequences.
 
-   :superclasses: <sequence> <stretchy-collection>
+   :superclasses: :drm:`<sequence>`, :drm:`<stretchy-collection>`
 
    :description:
 
@@ -892,7 +892,7 @@ The extensions are:
 
    The class of tables that use strings for keys.
 
-   :superclasses: <table>
+   :superclasses: :drm:`<table>`
 
    :description:
 

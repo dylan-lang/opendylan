@@ -91,7 +91,7 @@ from the module *table-extensions*.
 
    A table class that uses strings for keys.
 
-   :superclasses: <table>
+   :superclasses: :drm:`<table>`
 
    :description:
 
@@ -111,7 +111,7 @@ from the module *table-extensions*.
    
    A table class that uses case-insensitive strings for keys.
    
-   :superclasses: <table>
+   :superclasses: :drm:`<table>`
    
    :description:
    
@@ -131,7 +131,7 @@ from the module *table-extensions*.
 
    A hash state.
 
-   :superclasses:  <object>
+   :superclasses: :drm:`<object>`
 
    :description:
 

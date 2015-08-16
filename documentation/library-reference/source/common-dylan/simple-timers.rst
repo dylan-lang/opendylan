@@ -16,7 +16,7 @@ system.
 
    The timer class.
 
-   :superclasses: <object>
+   :superclasses: :drm:`<object>`
 
    :description:
 

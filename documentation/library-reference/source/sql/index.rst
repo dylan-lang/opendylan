@@ -975,7 +975,7 @@ The SQL module
 .. class:: <connection-not-specified>
    :open:
 
-   :superclasses: ``<error>``
+   :superclasses: :drm:`<error>`
 
 
 .. class:: <connection>
@@ -1027,21 +1027,21 @@ The SQL module
 .. class:: <data-not-available>
    :open:
 
-   :superclasses: ``<error>``
+   :superclasses: :drm:`<error>`
 
 
 .. class:: <database-collection>
    :open:
    :abstract:
 
-   :superclasses: ``<sequence>``
+   :superclasses: :drm:`<sequence>`
 
 
 .. class:: <database-error>
    :open:
    :abstract:
 
-   :superclasses: ``<error>``
+   :superclasses: :drm:`<error>`
 
 
 .. class:: <database-object-not-found>
@@ -1092,7 +1092,7 @@ The SQL module
 .. class:: <dbms-not-specified>
    :open:
 
-   :superclasses: ``<error>``
+   :superclasses: :drm:`<error>`
 
 
 .. class:: <dbms>
@@ -1125,7 +1125,7 @@ The SQL module
    :open:
    :abstract:
 
-   :superclasses: ``<condition>``
+   :superclasses: :drm:`<condition>`
 
    :keyword class-code:
    :keyword condition-number:
@@ -1250,7 +1250,7 @@ The SQL module
 .. class:: <invalid-argument>
    :open:
 
-   :superclasses: ``<error>``
+   :superclasses: :drm:`<error>`
 
 
 .. class:: <invalid-authorization-specification>
@@ -1298,7 +1298,7 @@ The SQL module
 .. class:: <invalid-datatype-hint>
    :open:
 
-   :superclasses: ``<warning>``
+   :superclasses: :drm:`<warning>`
 
    :keyword datatype-hint:
 
@@ -1514,7 +1514,7 @@ The SQL module
 .. class:: <result-set-mutation-error>
    :open:
 
-   :superclasses: ``<error>``
+   :superclasses: :drm:`<error>`
 
 
 .. class:: <result-set-policy>

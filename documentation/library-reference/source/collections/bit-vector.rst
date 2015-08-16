@@ -10,7 +10,7 @@ The bit-vector Module
    :abstract:
    :primary:
 
-   :superclasses: <vector>
+   :superclasses: :drm:`<vector>`
 
    :keyword size: Specifies the number of bits in the bit-vector. The
                   default is 0.

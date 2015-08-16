@@ -2614,7 +2614,7 @@ are exported from the *streams* module.
 
    The class representing non-integer stream positions.
 
-   :superclasses: <object>
+   :superclasses: :drm:`<object>`
 
    :description:
 

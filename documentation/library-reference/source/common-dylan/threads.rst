@@ -417,7 +417,7 @@ Operations on threads
 
    The class of threads.
 
-   :superclasses: <object>
+   :superclasses: :drm:`<object>`
    :keyword function: An instance of :drm:`<function>`. Required.
    :keyword priority: A signed integer.
    :keyword name: An instance of :drm:`<string>`.
@@ -568,7 +568,7 @@ Basic features
 
    The class of objects that are used for inter-thread synchronization.
 
-   :superclasses: <object>
+   :superclasses: :drm:`<object>`
 
    :keyword name: An instance of :drm:`<string>`.
 

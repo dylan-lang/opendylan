@@ -66,7 +66,7 @@ Reference
 
    The superclass of all regular expression-related errors.
 
-   :superclasses: <format-string-condition>, <error>
+   :superclasses: :class:`<format-string-condition>`, :drm:`<error>`
 
 
 .. class:: <invalid-regex>

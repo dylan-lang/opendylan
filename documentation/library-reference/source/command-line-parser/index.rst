@@ -96,7 +96,7 @@ The command-line-parser Module
 
    Encapsulates a set of command-line options.
 
-   :superclasses: <object>
+   :superclasses: :drm:`<object>`
 
    :keyword provide-help-option?:
 
@@ -133,7 +133,7 @@ The command-line-parser Module
 
    Superclass of all errors signaled by this library.
 
-   :superclasses: <format-string-condition>, <error>
+   :superclasses: :class:`<format-string-condition>`, :drm:`<error>`
 
 
 .. class:: <usage-error>
@@ -141,7 +141,7 @@ The command-line-parser Module
 
    Signaled when a command-line cannot be parsed.
 
-   :superclasses: <command-line-parser-error>
+   :superclasses: :class:`<command-line-parser-error>`
 
    :description:
 
@@ -154,7 +154,7 @@ The command-line-parser Module
    Signaled when help was explicitly requested via the help option,
    usually ``--help``.
 
-   :superclasses: <usage-error>
+   :superclasses: :class:`<usage-error>`
 
    :description:
 
@@ -265,7 +265,7 @@ Option Classes
 
    Superclass of all other option types.
 
-   :superclasses: <object>
+   :superclasses: :drm:`<object>`
 
    :keyword names:
 

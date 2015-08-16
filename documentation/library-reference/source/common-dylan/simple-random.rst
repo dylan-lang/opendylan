@@ -18,7 +18,7 @@ integers. Given an instance of :class:`<random>`, the function
 
    The class of random number generators.
 
-   :superclasses: <object>
+   :superclasses: :drm:`<object>`
 
    :keyword seed: An instance of :drm:`<integer>`. Default value: computed
      to be random.

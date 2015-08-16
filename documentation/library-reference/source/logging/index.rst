@@ -385,7 +385,7 @@ Log Targets
    :open:
    :abstract:
 
-   :superclasses: <closable-object>:common-extensions:common-dylan
+   :superclasses: :class:`<closable-object>`
 
 
 .. class:: <null-log-target>

@@ -522,7 +522,7 @@ The <tcp-server-socket> class
 
 .. class:: <tcp-server-socket>
 
-   :superclass: <server-socket>
+   :superclasses: :class:`<server-socket>`
 
    :keyword element-type: Establishes a new default for the *element-type* of
       :class:`<TCP-socket>` instances returned by calling :gf:`accept` with this
@@ -707,7 +707,7 @@ The class of UDP server sockets.
 
 .. class:: <udp-server-socket>
 
-   :superclass: :class:`<server-socket>`
+   :superclasses: :class:`<server-socket>`
 
    :keyword element-type: Establishes a new default for the element-type of
       :class:`<UDP-socket>` instances returned by calling :gf:`accept` with this

@@ -263,7 +263,7 @@ This section contains a reference entry for each item exported from the
 
     :type: <double-float>
 
-    :superclass: <float>
+    :superclasses: :drm:`<float>`
 
     :description:
 
@@ -281,7 +281,7 @@ This section contains a reference entry for each item exported from the
 
    :type: <double-float>
 
-   :superclass: <float>
+   :superclasses: :drm:`<float>`
 
    :description:
 
@@ -406,7 +406,7 @@ This section contains a reference entry for each item exported from the
 
    :type: <single-float>
 
-   :superclass: <float>
+   :superclasses: :drm:`<float>`
 
    :description:
 
@@ -424,7 +424,7 @@ This section contains a reference entry for each item exported from the
 
    :type: <single-float>
 
-   :superclass: <float>
+   :superclasses: :drm:`<float>`
 
    :description:
 
