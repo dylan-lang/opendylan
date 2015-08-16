@@ -49,7 +49,7 @@ a Table-extensions module, which you can read about in
 
        hash-function *key* *initial-state* => *id* *result-state*
 
-     In this signature, *initial-state* is an instance of ``<hash-state>``.
+     In this signature, *initial-state* is an instance of :class:`<hash-state>`.
      The hash function computes the hash code of *key*, using the hash
      function that is associated with the table’s equivalence predicate. The
      hash code is returned as two values: an integer *id* and a hash-state
@@ -98,9 +98,9 @@ a Table-extensions module, which you can read about in
    :signature: object-hash *object* *initial-state* => *hash-id* *result-state*
 
    :parameter object: An instance of :drm:`<integer>`.
-   :parameter initial-state: An instance of ``<hash-state>``.
+   :parameter initial-state: An instance of :class:`<hash-state>`.
    :value hash-id: An instance of :drm:`<integer>`.
-   :value result-state: An instance of ``<hash-state>``.
+   :value result-state: An instance of :class:`<hash-state>`.
 
    :description:
 

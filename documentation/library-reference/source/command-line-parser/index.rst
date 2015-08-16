@@ -28,10 +28,10 @@ Let's say you want to parse a command line that looks like this::
 
   frob --name=zoo --debug -r a -r b -r c --choice=foo one two three
 
-The "frob" command accepts a --name argument that takes a value, a
-boolean --debug (or --nodebug) a -r argument that may be repeated, and
-then at least one positional argument (here "one", "two", and
-"three").  Here's how to create a parser for the frob command:
+The "frob" command accepts a ``--name`` argument that takes a value, a
+boolean ``--debug`` (or ``--nodebug``) a ``-r`` argument that may be
+repeated, and then at least one positional argument (here "one", "two",
+and "three").  Here's how to create a parser for the frob command:
 
 .. code-block:: dylan
 
@@ -146,7 +146,7 @@ The command-line-parser Module
    :description:
 
      This is commonly handled by calling ``exit-application(2)`` since
-     the error has already been displayed on ``*standard-error*``.
+     the error has already been displayed on :var:`*standard-error*`.
 
 .. class:: <help-requested>
    :sealed:
@@ -160,7 +160,7 @@ The command-line-parser Module
 
      This is commonly handled by calling ``exit-application(0)`` since
      the command-line synopsis has already been displayed on
-     ``*standard-output*``.
+     :var:`*standard-output*`.
 
 
 .. function:: add-option
@@ -183,7 +183,7 @@ The command-line-parser Module
    :signature: parse-command-line (parser argv) => ()
    :parameter parser: An instance of :class:`<command-line-parser>`.
    :parameter argv: An instance of :drm:`<sequence>`.  Normally the value
-     returned by ``application-arguments()`` is passed here.
+     returned by :func:`application-arguments` is passed here.
    :parameter #key usage: As for :func:`print-synopsis`.
    :parameter #key description: As for :func:`print-synopsis`.
    :description:
