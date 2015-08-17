@@ -11,7 +11,7 @@ define macro with-end-of-line-action
       ?:body
     end }
     => { begin
-	   let with-end-of-line-action-body = method () ?body end;
+           let with-end-of-line-action-body = method () ?body end;
            do-with-end-of-line-action(?sheet, with-end-of-line-action-body, ?action)
          end }
 end macro with-end-of-line-action;
@@ -21,7 +21,7 @@ define macro with-end-of-page-action
       ?:body
     end }
     => { begin
-	   let with-end-of-page-action-body = method () ?body end;
+           let with-end-of-page-action-body = method () ?body end;
            do-with-end-of-page-action(?sheet, with-end-of-page-action-body, ?action)
          end }
 end macro with-end-of-page-action;
@@ -45,8 +45,8 @@ define macro with-new-output-record
       ?:body
     end }
     => { begin
-	   let with-new-output-record-body
-	     = method (?record) ?body end;
+           let with-new-output-record-body
+             = method (?record) ?body end;
            do-with-new-output-record
              (?sheet, with-new-output-record-body, ?options)
          end }
@@ -55,7 +55,7 @@ define macro with-new-output-record
     end }
     => { begin
            let with-new-output-record-body
-	     = method (_record) ignore(_record); ?body end;
+             = method (_record) ignore(_record); ?body end;
            do-with-new-output-record
              (?sheet, with-new-output-record-body, ?options)
          end }
@@ -80,7 +80,7 @@ define macro with-output-to-output-record
     => { begin
            let with-output-to-output-record-body
              = method (_record)
-		 ignore(_record);
+                 ignore(_record);
                  with-caret-position-saved (?sheet) ?body end
                end;
            do-with-output-to-output-record

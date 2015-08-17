@@ -157,7 +157,7 @@ define constant $win32-logical-sizes :: <simple-object-vector>
         #[#"tiny",        5],
         #[#"huge",       16]];
 
-//--- This approach seems unnecessarily clumsy; we might as well just have 
+//--- This approach seems unnecessarily clumsy; we might as well just have
 //--- 'do-text-style-mapping' do the table lookup directly itself.  We shouldn't
 //--- need to cons up a whole new text-style object just to map the size.
 define sealed method standardize-text-style
@@ -331,7 +331,7 @@ define method make-text-style-from-font
 end method make-text-style-from-font;
 
 define method make-text-style-from-font-components
-    (_port :: <win32-port>, 
+    (_port :: <win32-port>,
      lfFamily :: <integer>, lfFaceName :: <string>, lfWeight :: <integer>,
      lfItalic :: <integer>, lfHeight :: <integer>, lfUnderline :: <integer>,
      lfStrikeout :: <integer>,

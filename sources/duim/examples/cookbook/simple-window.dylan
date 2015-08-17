@@ -12,7 +12,7 @@ define constant $message = "Dylan lives!";
 define constant $title = "Simple Example";
 define constant $long-dash-pen = make(<pen>, dashes: #[18, 6]);
 
-define method draw-graphics 
+define method draw-graphics
     (pane :: <drawing-pane>, medium :: <medium>, region :: <region>)
  => ()
   draw-text(medium, $message, 100, 50);
@@ -28,94 +28,94 @@ end method draw-graphics;
 define frame <simple-window> (<simple-frame>)
   pane drawing-surface (frame)
     make(<drawing-pane>,
-	      display-function: draw-graphics);
+              display-function: draw-graphics);
   pane file-component (frame)
     make(<menu-box>,
-	      children: vector(make(<menu-button>,
-					 label: "&New",
-					 enabled?: #f),
-			       make(<menu-button>,
-					 label: "&Open...",
-					 enabled?: #f),
-			       make(<menu-button>,
-					 label: "&Save",
-					 enabled?: #f),
-			       make(<menu-button>,
-					 label: "Save &As...",
-					 enabled?: #f)));
+              children: vector(make(<menu-button>,
+                                         label: "&New",
+                                         enabled?: #f),
+                               make(<menu-button>,
+                                         label: "&Open...",
+                                         enabled?: #f),
+                               make(<menu-button>,
+                                         label: "&Save",
+                                         enabled?: #f),
+                               make(<menu-button>,
+                                         label: "Save &As...",
+                                         enabled?: #f)));
   pane print-component (frame)
     make(<menu-box>,
-	      children: vector(make(<menu-button>,
-					 label: "&Print...",
-					 enabled?: #f),
-			       make(<menu-button>,
-					 label: "P&rint Setup...",
-					 enabled?: #f)));
+              children: vector(make(<menu-button>,
+                                         label: "&Print...",
+                                         enabled?: #f),
+                               make(<menu-button>,
+                                         label: "P&rint Setup...",
+                                         enabled?: #f)));
   pane exit-button (frame)
     make(<menu-button>,
-	      label: "E&xit",
-	      activate-callback: method (sheet)
-				   exit-frame(sheet-frame(sheet))
-				 end);
+              label: "E&xit",
+              activate-callback: method (sheet)
+                                   exit-frame(sheet-frame(sheet))
+                                 end);
   pane file-menu (frame)
     make(<menu>,
-	      label: "&File",
-	      children: vector(frame.file-component,
-			       frame.print-component ,
-			       frame.exit-button));
+              label: "&File",
+              children: vector(frame.file-component,
+                               frame.print-component ,
+                               frame.exit-button));
   pane undo-button (frame)
     make(<menu-button>,
-	      label: "&Undo",
-	      enabled?: #f);
+              label: "&Undo",
+              enabled?: #f);
   pane clipboard-component (frame)
     make(<menu-box>,
-	      children: vector(make(<menu-button>,
-					 label: "Cu&t",
-					 enabled?: #f),
-			       make(<menu-button>,
-					 label: "&Copy",
-					 enabled?: #f),
-			       make(<menu-button>,
-					 label: "&Paste",
-					 enabled?: #f),
-			       make(<menu-button>,
-					 label: "Paste &Link",
-					 enabled?: #f)));
+              children: vector(make(<menu-button>,
+                                         label: "Cu&t",
+                                         enabled?: #f),
+                               make(<menu-button>,
+                                         label: "&Copy",
+                                         enabled?: #f),
+                               make(<menu-button>,
+                                         label: "&Paste",
+                                         enabled?: #f),
+                               make(<menu-button>,
+                                         label: "Paste &Link",
+                                         enabled?: #f)));
   pane links-button (frame)
     make(<menu-button>,
-	      label: "Lin&ks...",
-	      enabled?: #f);
+              label: "Lin&ks...",
+              enabled?: #f);
   pane edit-menu (frame)
     make(<menu>,
-	      label: "&Edit",
-	      children: vector(frame.undo-button,
-			       frame.clipboard-component,
-			       frame.links-button));
+              label: "&Edit",
+              children: vector(frame.undo-button,
+                               frame.clipboard-component,
+                               frame.links-button));
   pane help-component (frame)
     make(<menu-box>,
-	      children: vector(make(<menu-button>,
-					 label: "&Contents"),
-			       make(<menu-button>,
-					 label: "&Search for Help On..."),
-			       make(<menu-button>,
-					 label: "&How to Use Help")));
+              children: vector(make(<menu-button>,
+                                         label: "&Contents"),
+                               make(<menu-button>,
+                                         label: "&Search for Help On..."),
+                               make(<menu-button>,
+                                         label: "&How to Use Help")));
   pane about-button (frame)
     make(<menu-button>,
-	      label: "&About Example...",
-	      activate-callback: method (sheet)
-				   about-example(sheet-frame(sheet))
-				 end);
+              label: "&About Example...",
+              activate-callback: method (sheet)
+                                   about-example(sheet-frame(sheet))
+                                 end);
   pane help-menu (frame)
     make(<menu>,
-	      label: "&Help",
-	      children: vector(frame.help-component,
-			       frame.about-button));
+              label: "&Help",
+              children: vector(frame.help-component,
+                               frame.about-button));
   layout (frame) frame.drawing-surface;
   menu-bar (frame)
     make(<menu-bar>,
-	      children: vector(frame.file-menu,
-			       frame.edit-menu,
-			       frame.help-menu));
+              children: vector(frame.file-menu,
+                               frame.edit-menu,
+                               frame.help-menu));
 end frame <simple-window>;
 
 define method about-example (frame :: <simple-window>) => ()
@@ -130,11 +130,11 @@ define method about-example (frame :: <simple-window>) => ()
                                    make(<label>,
                                              label: "Version 0.0")));
     make(<dialog-frame>,
-	 layout: text-layout,
-	 title: "About Example",
-	 owner: frame,
-	 cancel-function: #f,
-	 mapped?: #t);
+         layout: text-layout,
+         title: "About Example",
+         owner: frame,
+         cancel-function: #f,
+         mapped?: #t);
   end
 end method about-example;
 

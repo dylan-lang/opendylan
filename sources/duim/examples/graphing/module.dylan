@@ -8,13 +8,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module duim-graphing
   create <bar-chart>,
-	 <bar-chart-pane>;
+         <bar-chart-pane>;
 
   create <bar>,
-	 <bar-pane>,
-	 bar-scaling, bar-scaling-setter,
-	 bar-minor-size, bar-minor-size-setter,
-	 bar-spacing, bar-spacing-setter;
+         <bar-pane>,
+         bar-scaling, bar-scaling-setter,
+         bar-minor-size, bar-minor-size-setter,
+         bar-spacing, bar-spacing-setter;
 end module duim-graphing;
 
 define module duim-graphing-internals

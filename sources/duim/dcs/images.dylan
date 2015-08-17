@@ -95,8 +95,8 @@ define method transform-image
     stencil
   else
     make(<stencil>,
-	 array: stencil.%array,
-	 transform: transform)
+         array: stencil.%array,
+         transform: transform)
   end
 end method transform-image;
 
@@ -114,14 +114,14 @@ define sealed domain initialize (<pattern>);
 
 define protocol-predicate pattern;
 
-define method make-pattern 
+define method make-pattern
     (array :: <array>, colors) => (pattern :: <pattern>)
   make(<pattern>,
        array:  array,
        colors: as(<simple-vector>, colors))
 end method make-pattern;
 
-define method make-pattern 
+define method make-pattern
     (sequence :: <sequence>, colors) => (pattern :: <pattern>)
   let array = make-array-from-contents(sequence);
   make(<pattern>,
@@ -151,8 +151,8 @@ define method transform-image
     pattern
   else
     make(<pattern>,
-	 array: pattern.%array, colors: pattern.%colors,
-	 transform: transform)
+         array: pattern.%array, colors: pattern.%colors,
+         transform: transform)
   end
 end method transform-image;
 

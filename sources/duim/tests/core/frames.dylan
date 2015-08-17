@@ -40,7 +40,7 @@ define method expected-named-size
   apply(expected-named-size, top-level-sheet(frame), name, args)
 end method expected-named-size;
 
-define method sheet-alternative-size 
+define method sheet-alternative-size
     (sheet) => (width :: false-or(<integer>), height :: false-or(<integer>))
   let (old-width, old-height) = box-size(sheet);
   let (width, height) = expected-constrained-size(sheet,
@@ -68,15 +68,15 @@ define method check-frame-resize (frame, name) => ()
   end;
 end method check-frame-resize;
 
-define method check-frame-layout 
+define method check-frame-layout
     (frame, layout, name, #key width, height) => ()
   let top-sheet = top-level-sheet(frame);
   check-equal(concatenate(name, " layout"), frame-layout(frame), layout);
   if (layout)
-    check-true(concatenate(name, " has top-level-sheet"), 
+    check-true(concatenate(name, " has top-level-sheet"),
                instance?(top-sheet, <top-level-sheet>));
     check-layout-pane-layout(top-sheet, name,
-                             width: width | expected-width(top-sheet), 
+                             width: width | expected-width(top-sheet),
                              height: height | expected-height(top-sheet),
                              allocate-space?: #f);
     check-frame-resize(frame, name);
@@ -86,33 +86,33 @@ define method check-frame-layout
   frame
 end method check-frame-layout;
 
-define method test-frame-layout 
+define method test-frame-layout
     (name, layout, #key width, height) => (frame :: <frame>)
   let frame
     = make-test-frame(<test-frame>,
-		      layout: layout, width: width, height: height);
+                      layout: layout, width: width, height: height);
   let name = concatenate(name, " ", gadget-class-name(<simple-frame>));
-  check-frame-layout(frame, layout, name, 
+  check-frame-layout(frame, layout, name,
                      width: width, height: height);
   frame
 end method test-frame-layout;
 
 define test frame-layouts-test ()
   test-frame-layout("empty", #f);
-  test-frame-layout("fixed layout", 
-		    make-test-pane(<spacing>, child: make-test-pane(<button>)));
-  test-frame-layout("non-fixed layout", 
-		    make-test-pane(<spacing>, child: make-test-pane(<list-box>)));
+  test-frame-layout("fixed layout",
+                    make-test-pane(<spacing>, child: make-test-pane(<button>)));
+  test-frame-layout("non-fixed layout",
+                    make-test-pane(<spacing>, child: make-test-pane(<list-box>)));
   test-frame-layout("explicit width",
-		    make-test-pane(<spacing>, child: make-test-pane(<list-box>)),
-		    width: 500);
+                    make-test-pane(<spacing>, child: make-test-pane(<list-box>)),
+                    width: 500);
   test-frame-layout("explicit height",
-		    make-test-pane(<spacing>, child: make-test-pane(<list-box>)),
-		    height: 600);
+                    make-test-pane(<spacing>, child: make-test-pane(<list-box>)),
+                    height: 600);
   test-frame-layout("explicit size",
-		    make-test-pane(<spacing>, child: make-test-pane(<list-box>)),
-		    width: 400,
-		    height: 500);
+                    make-test-pane(<spacing>, child: make-test-pane(<list-box>)),
+                    width: 400,
+                    height: 500);
 end test frame-layouts-test;
 
 
@@ -125,18 +125,18 @@ define test frame-wrappers-test ()
   let status-bar = make-test-pane(<status-bar>);
   let frame
     = make-test-frame(<test-frame>,
-		      layout: layout,
-		      tool-bar: tool-bar,
-		      menu-bar: menu-bar,
-		      status-bar: status-bar);
+                      layout: layout,
+                      tool-bar: tool-bar,
+                      menu-bar: menu-bar,
+                      status-bar: status-bar);
   check-equal("Frame menu bar installed",
-	      frame-menu-bar(frame), menu-bar);
+              frame-menu-bar(frame), menu-bar);
   check-equal("Frame tool bar installed",
-	      frame-tool-bar(frame), tool-bar);
+              frame-tool-bar(frame), tool-bar);
   check-equal("Frame layout installed",
-	      frame-layout(frame), layout);
+              frame-layout(frame), layout);
   check-equal("Frame status bar installed",
-	      frame-status-bar(frame), status-bar);
+              frame-status-bar(frame), status-bar);
 end test frame-wrappers-test;
 
 

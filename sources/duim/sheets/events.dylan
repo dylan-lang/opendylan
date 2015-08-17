@@ -156,7 +156,7 @@ end class <pointer-drag-event>;
 
 define constant <boundary-event-kind>
     = one-of(#"ancestor", #"virtual", #"inferior",
-	     #"nonlinear", #"nonlinear-virtual", #f);
+             #"nonlinear", #"nonlinear-virtual", #f);
 
 define sealed class <pointer-boundary-event> (<pointer-motion-event>)
   sealed constant slot boundary-event-kind :: <boundary-event-kind> = #f,
@@ -316,13 +316,13 @@ define method handle-button-event
 end method handle-button-event;
 
 // Default method on non-sheet event handlers does nothing
-define method handle-event 
+define method handle-event
     (handler :: <event-handler>, event :: <window-repaint-event>) => ()
   #f
 end method handle-event;
 
 // Default method on sheets repaints the sheet, which is usually the right thing
-define method handle-event 
+define method handle-event
     (sheet :: <sheet>, event :: <window-repaint-event>) => ()
   repaint-sheet(sheet, event-region(event))
 end method handle-event;
@@ -471,12 +471,12 @@ define method wait-for-event
   until (event-pending?(sheet))
     select (port-event-processor-type(_port))
       #"n" =>
-	// Single threaded, so run the event processing loop right here
-	process-next-event(_port, timeout: timeout);
+        // Single threaded, so run the event processing loop right here
+        process-next-event(_port, timeout: timeout);
       #"n+1" =>
-	event-queue-wait(sheet-event-queue(sheet), timeout: timeout);
+        event-queue-wait(sheet-event-queue(sheet), timeout: timeout);
       #"2n" =>
-	event-queue-wait(sheet-event-queue(sheet), timeout: timeout);
+        event-queue-wait(sheet-event-queue(sheet), timeout: timeout);
     end
   end
 end method wait-for-event;
@@ -582,26 +582,26 @@ define method repaint-sheet
   when (sheet-mapped?(sheet) | force?)
     unless (region-empty?(region))
       when (sheet-handles-repaint?(sheet))
-	with-caret-hidden (sheet)
-	  let repaint-region
-	    = if (everywhere?(region)) sheet-region(sheet) else region end;
-	  if (medium)
-	    let old-transform = medium-device-transform(medium);
-	    block ()
-	      medium-device-transform(medium) := sheet-device-transform(sheet);
-	      handle-repaint(sheet, medium, repaint-region)
-	    cleanup
-	      medium-device-transform(medium) := old-transform;
-	    end
-	  else
-	    with-sheet-medium (medium = sheet)
-	      handle-repaint(sheet, medium, repaint-region)
-	    end
-	  end
-	end
+        with-caret-hidden (sheet)
+          let repaint-region
+            = if (everywhere?(region)) sheet-region(sheet) else region end;
+          if (medium)
+            let old-transform = medium-device-transform(medium);
+            block ()
+              medium-device-transform(medium) := sheet-device-transform(sheet);
+              handle-repaint(sheet, medium, repaint-region)
+            cleanup
+              medium-device-transform(medium) := old-transform;
+            end
+          else
+            with-sheet-medium (medium = sheet)
+              handle-repaint(sheet, medium, repaint-region)
+            end
+          end
+        end
       end;
       when (~empty?(sheet-children(sheet)))
-	repaint-children(sheet, region, medium: medium, force?: force?)
+        repaint-children(sheet, region, medium: medium, force?: force?)
       end
     end
   end
@@ -617,8 +617,8 @@ define method repaint-children
       let intersecting-region = region-intersection(region, child-region);
       unless (region-empty?(intersecting-region))
         let exposed-region = untransform-region(transform, intersecting-region);
-	repaint-sheet(child, exposed-region,
-		      medium: medium, force?: force?)
+        repaint-sheet(child, exposed-region,
+                      medium: medium, force?: force?)
       end
     end
   end
@@ -637,12 +637,12 @@ define method repaint-children
       let (cl, ct, cr, cb) = box-edges(sheet-region(child));
       let (l2, t2, r2, b2) = transform-box(transform, cl, ct, cr, cb);
       let (intersects?, l3, t3, r3, b3)
-	= ltrb-intersects-ltrb?(l1, t1, r1, b1, l2, t2, r2, b2);
+        = ltrb-intersects-ltrb?(l1, t1, r1, b1, l2, t2, r2, b2);
       if (intersects?)
-	let (l4, t4, r4, b4) = untransform-box(transform, l3, t3, r3, b3);
-	set-box-edges(intersecting-region, l4, t4, r4, b4);
-	repaint-sheet(child, intersecting-region, 
-		      medium: medium, force?: force?)
+        let (l4, t4, r4, b4) = untransform-box(transform, l3, t3, r3, b3);
+        set-box-edges(intersecting-region, l4, t4, r4, b4);
+        repaint-sheet(child, intersecting-region,
+                      medium: medium, force?: force?)
       end
     end
   end
@@ -727,8 +727,8 @@ define method do-queue-repaint
   //--- queued repaint events
   let (left, top, right, bottom) = box-edges(region);
   queue-event(sheet, make(<window-repaint-event>,
-			  sheet: sheet,
-			  region: make-bounding-box(left, top, right, bottom)))
+                          sheet: sheet,
+                          region: make-bounding-box(left, top, right, bottom)))
 end method do-queue-repaint;
 
 
@@ -780,7 +780,7 @@ end method do-with-atomic-redisplay;
 // This supports deep mirroring, that is, ports where there can be mirrors at
 // any level of the sheet hierarchy.  There's a lot of seemingly unnecessary hair
 // in this code because a sheet's region isn't always definitively correct...
-define method generate-crossing-events 
+define method generate-crossing-events
     (_port :: <basic-port>, event :: <pointer-event>) => (sheet :: false-or(<sheet>))
   with-port-locked (_port)
     let mirrored-sheet = event-sheet(event);
@@ -793,171 +793,171 @@ define method generate-crossing-events
     let pointer = event-pointer(event);
     let mirrored-sheet-ancestors
       = begin
-	  let sheets :: <stretchy-object-vector> = _port.%ancestor-stack;
-	  sheets.size := 0;
-	  //---*** Suspicious! Should maybe use 'sheet-device-parent'
-	  for (sheet = sheet-parent(mirrored-sheet) then sheet-parent(sheet),
-	       // Null test in case the event thread is running behind and
-	       // the mouse moved off of all known sheets in the meanwhile
-	       until: display?(sheet) | ~sheet)
-	    add!(sheets, sheet);
-	  finally
-	    sheets
-	  end
-	end;
+          let sheets :: <stretchy-object-vector> = _port.%ancestor-stack;
+          sheets.size := 0;
+          //---*** Suspicious! Should maybe use 'sheet-device-parent'
+          for (sheet = sheet-parent(mirrored-sheet) then sheet-parent(sheet),
+               // Null test in case the event thread is running behind and
+               // the mouse moved off of all known sheets in the meanwhile
+               until: display?(sheet) | ~sheet)
+            add!(sheets, sheet);
+          finally
+            sheets
+          end
+        end;
     local method generate-enter-event (sheet, kind, update?) => ()
-	    when (update?)
-	      update-focus-for-enter-event(_port, sheet, pointer)
-	    end;
-	    dispatch-event(sheet, make(<pointer-enter-event>,
-				       sheet: sheet,
-				       x: x, y: y,
-				       kind: kind,
-				       modifier-state: modifiers,
-				       pointer: pointer))
-	  end method,
+            when (update?)
+              update-focus-for-enter-event(_port, sheet, pointer)
+            end;
+            dispatch-event(sheet, make(<pointer-enter-event>,
+                                       sheet: sheet,
+                                       x: x, y: y,
+                                       kind: kind,
+                                       modifier-state: modifiers,
+                                       pointer: pointer))
+          end method,
           method generate-exit-event (sheet, kind, update?) => ()
-	    when (update?)
-	      update-focus-for-exit-event(_port, sheet, pointer)
-	    end;
-	    dispatch-event(sheet, make(<pointer-exit-event>,
-				       sheet: sheet,
-				       x: x, y: y,
-				       kind: kind,
-				       modifier-state: modifiers,
-				       pointer: pointer))
-	  end method;
+            when (update?)
+              update-focus-for-exit-event(_port, sheet, pointer)
+            end;
+            dispatch-event(sheet, make(<pointer-exit-event>,
+                                       sheet: sheet,
+                                       x: x, y: y,
+                                       kind: kind,
+                                       modifier-state: modifiers,
+                                       pointer: pointer))
+          end method;
     // Walk from the mirrored sheet up to the top level sheet,
     // getting X and Y into the top level sheet's coordinate system
     unless (display?(sheet-parent(mirrored-sheet)))
       let new-x = x;
       let new-y = y;
       block (return)
-	local method transform-xy (sheet :: <basic-sheet>) => ()
-		when (display?(sheet-parent(sheet)))
-		  x := new-x;
-		  y := new-y;
-		  top-sheet := sheet;
-		  return()
-		end;
-		let (_new-x, _new-y)
-		  = transform-position(sheet-transform(sheet), new-x, new-y);
-		new-x := _new-x;
-		new-y := _new-y
-	      end method;
-	transform-xy(mirrored-sheet);
-	for (sheet in mirrored-sheet-ancestors)
-	  transform-xy(sheet)
-	end
+        local method transform-xy (sheet :: <basic-sheet>) => ()
+                when (display?(sheet-parent(sheet)))
+                  x := new-x;
+                  y := new-y;
+                  top-sheet := sheet;
+                  return()
+                end;
+                let (_new-x, _new-y)
+                  = transform-position(sheet-transform(sheet), new-x, new-y);
+                new-x := _new-x;
+                new-y := _new-y
+              end method;
+        transform-xy(mirrored-sheet);
+        for (sheet in mirrored-sheet-ancestors)
+          transform-xy(sheet)
+        end
       end
     end;
     let trace-stack :: <stretchy-object-vector> = _port.%trace-stack;
     let exited-sheet?
       = instance?(event, <pointer-exit-event>)
-	& ~(boundary-event-kind(event) == #"inferior");
+        & ~(boundary-event-kind(event) == #"inferior");
     let entered-from-child?
       = instance?(event, <pointer-enter-event>)
-	& boundary-event-kind(event) == #"inferior";
+        & boundary-event-kind(event) == #"inferior";
     let exited-top-level-sheet?
       = exited-sheet? & top-sheet == mirrored-sheet;
     when (~exited-sheet? | exited-top-level-sheet?)
       // Pop up the stack of sheets
       unless (empty?(trace-stack))
-	let m :: <integer>
-	  = if (~exited-top-level-sheet? & trace-stack[0] == top-sheet)
-	      let new-x = x;
-	      let new-y = y;
-	      let mirrored-sheet-in-trace = position(trace-stack, mirrored-sheet);
-	      let sheet = #f;
-	      when (mirrored-sheet-in-trace & mirrored-sheet-in-trace > 1)
-		without-bounds-checks
-		  for (i :: <integer> = 1 then i + 1,
-		       until: i > mirrored-sheet-in-trace)
-		    let (_new-x, _new-y)	// transform to child coordinate space
-		      = untransform-position(sheet-transform(trace-stack[i]), new-x, new-y);
-		    new-x := _new-x;
-		    new-y := _new-y
-		  end
-		end
-	      end;
-	      block (return)
-		without-bounds-checks
-		  for (i :: <integer>
-			 = if (mirrored-sheet-in-trace) mirrored-sheet-in-trace + 1 else 0 end
-			 then i + 1,
-		       until: i >= size(trace-stack))
-		    sheet := trace-stack[i];
-		    unless (zero?(i))
-		      let (_new-x, _new-y)	// transform to child coordinate space
-			= untransform-position(sheet-transform(sheet), new-x, new-y);
-		      new-x := _new-x;
-		      new-y := _new-y
-		    end;
-		    when ((~mirrored-sheet-in-trace
-			   & ~member?(sheet, mirrored-sheet-ancestors))
-			  | ~sheet-mapped?(sheet)
-			  | ~region-contains-position?(sheet-region(sheet), new-x, new-y))
-		      return(i)
-		    end;
-		  finally
-		    size(trace-stack)
-		  end
-	        end
-	      end
-	    else
-	      0
-	    end;
-	without-bounds-checks
-	  let n :: <integer> = size(trace-stack) - 1;
+        let m :: <integer>
+          = if (~exited-top-level-sheet? & trace-stack[0] == top-sheet)
+              let new-x = x;
+              let new-y = y;
+              let mirrored-sheet-in-trace = position(trace-stack, mirrored-sheet);
+              let sheet = #f;
+              when (mirrored-sheet-in-trace & mirrored-sheet-in-trace > 1)
+                without-bounds-checks
+                  for (i :: <integer> = 1 then i + 1,
+                       until: i > mirrored-sheet-in-trace)
+                    let (_new-x, _new-y)        // transform to child coordinate space
+                      = untransform-position(sheet-transform(trace-stack[i]), new-x, new-y);
+                    new-x := _new-x;
+                    new-y := _new-y
+                  end
+                end
+              end;
+              block (return)
+                without-bounds-checks
+                  for (i :: <integer>
+                         = if (mirrored-sheet-in-trace) mirrored-sheet-in-trace + 1 else 0 end
+                         then i + 1,
+                       until: i >= size(trace-stack))
+                    sheet := trace-stack[i];
+                    unless (zero?(i))
+                      let (_new-x, _new-y)        // transform to child coordinate space
+                        = untransform-position(sheet-transform(sheet), new-x, new-y);
+                      new-x := _new-x;
+                      new-y := _new-y
+                    end;
+                    when ((~mirrored-sheet-in-trace
+                           & ~member?(sheet, mirrored-sheet-ancestors))
+                          | ~sheet-mapped?(sheet)
+                          | ~region-contains-position?(sheet-region(sheet), new-x, new-y))
+                      return(i)
+                    end;
+                  finally
+                    size(trace-stack)
+                  end
+                end
+              end
+            else
+              0
+            end;
+        without-bounds-checks
+          let n :: <integer> = size(trace-stack) - 1;
           for (i :: <integer> = n then i - 1, until: i < m)
-	    generate-exit-event(trace-stack[i], #"ancestor", i = n);
-	    unless (zero?(i))
-	      generate-enter-event(trace-stack[i - 1], #"inferior", i = m)
-	    end
-	  end
-	end;
-	trace-stack.size := m
+            generate-exit-event(trace-stack[i], #"ancestor", i = n);
+            unless (zero?(i))
+              generate-enter-event(trace-stack[i - 1], #"inferior", i = m)
+            end
+          end
+        end;
+        trace-stack.size := m
       end
     end;
     when (~exited-sheet?
-	  & ~entered-from-child?
-	  & region-contains-position?(sheet-region(top-sheet), x, y))
+          & ~entered-from-child?
+          & region-contains-position?(sheet-region(top-sheet), x, y))
       // If it's empty initialize it with the top level sheet
       when (empty?(trace-stack))
-	add!(trace-stack, top-sheet);
-	generate-enter-event(top-sheet, #"ancestor", #t)
+        add!(trace-stack, top-sheet);
+        generate-enter-event(top-sheet, #"ancestor", #t)
       end;
       // Now add all sheets between the last sheet on the trace
       // and the mirrored sheet
       unless (position(trace-stack, mirrored-sheet))
-	let last-sheet = trace-stack[size(trace-stack) - 1];
-	let sheets = #();
-	let n :: <integer> = 0;
-	for (sheet = mirrored-sheet then sheet-parent(sheet),
-	     until: sheet == last-sheet
-		    | when (display?(sheet))
-			sheets := #();
-			#t
-		      end)
-	  push!(sheets, sheet);
-	  inc!(n)
-	end;
-	for (sheet in sheets,
-	     i :: <integer> from 0,
-	     first? = #t then #f)
-	  generate-exit-event(trace-stack[size(trace-stack) - 1], #"inferior", first?);
-	  generate-enter-event(sheet, #"ancestor", i = n);
-	  add!(trace-stack, sheet)
-	end
+        let last-sheet = trace-stack[size(trace-stack) - 1];
+        let sheets = #();
+        let n :: <integer> = 0;
+        for (sheet = mirrored-sheet then sheet-parent(sheet),
+             until: sheet == last-sheet
+                    | when (display?(sheet))
+                        sheets := #();
+                        #t
+                      end)
+          push!(sheets, sheet);
+          inc!(n)
+        end;
+        for (sheet in sheets,
+             i :: <integer> from 0,
+             first? = #t then #f)
+          generate-exit-event(trace-stack[size(trace-stack) - 1], #"inferior", first?);
+          generate-enter-event(sheet, #"ancestor", i = n);
+          add!(trace-stack, sheet)
+        end
       end;
       // We have to get the sheets into the correct coordinate space
       without-bounds-checks
-	for (i :: <integer> from 1 below size(trace-stack))
-	  let (_x, _y)	// transform to child coordinate space
-	    = untransform-position(sheet-transform(trace-stack[i]), x, y);
-	  x := _x;
-	  y := _y
-	end
+        for (i :: <integer> from 1 below size(trace-stack))
+          let (_x, _y)        // transform to child coordinate space
+            = untransform-position(sheet-transform(trace-stack[i]), x, y);
+          x := _x;
+          y := _y
+        end
       end;
       // Finally add progeny of the mirrored sheet
       let new-x = x;
@@ -965,23 +965,23 @@ define method generate-crossing-events
       let sheet = trace-stack[size(trace-stack) - 1];
       let child = #f;
       block (return)
-	while (#t)
-	  when (empty?(sheet-children(sheet)))
-	    return(#f)
-	  end;
-	  child := child-containing-position(sheet, new-x, new-y);
-	  unless (child)
-	    return(#f)
-	  end;
-	  generate-exit-event(sheet, #"inferior", #t);
-	  generate-enter-event(child, #"ancestor", #t);
-	  let (_new-x, _new-y)	// transform to child coordinate space
-	    = untransform-position(sheet-transform(child), new-x, new-y);
-	  new-x := _new-x;
-	  new-y := _new-y;
-	  sheet := child;
-	  add!(trace-stack, child)
-	end
+        while (#t)
+          when (empty?(sheet-children(sheet)))
+            return(#f)
+          end;
+          child := child-containing-position(sheet, new-x, new-y);
+          unless (child)
+            return(#f)
+          end;
+          generate-exit-event(sheet, #"inferior", #t);
+          generate-enter-event(child, #"ancestor", #t);
+          let (_new-x, _new-y)        // transform to child coordinate space
+            = untransform-position(sheet-transform(child), new-x, new-y);
+          new-x := _new-x;
+          new-y := _new-y;
+          sheet := child;
+          add!(trace-stack, child)
+        end
       end
     end;
     // Return the top sheet on the trace stack
@@ -1045,51 +1045,51 @@ define method do-distribute-event
     pointer.%position-changed? := #t;
     select (event by instance?)
       <pointer-enter-event> =>
-	update-focus-for-enter-event(_port, sheet, pointer);
+        update-focus-for-enter-event(_port, sheet, pointer);
       <pointer-exit-event> =>
-	update-focus-for-exit-event(_port, sheet, pointer);
+        update-focus-for-exit-event(_port, sheet, pointer);
       <pointer-drag-event> =>
-	dispatch-event(sheet, make(<pointer-drag-event>,
-				   sheet: sheet,
-				   x: tx, y: ty,
-				   modifier-state: modifiers,
-				   button: event-button(event),
-				   pointer: pointer));
+        dispatch-event(sheet, make(<pointer-drag-event>,
+                                   sheet: sheet,
+                                   x: tx, y: ty,
+                                   modifier-state: modifiers,
+                                   button: event-button(event),
+                                   pointer: pointer));
       <pointer-motion-event> =>
-	dispatch-event(sheet, make(<pointer-motion-event>,
-				   sheet: sheet,
-				   x: tx, y: ty,
-				   modifier-state: modifiers,
-				   pointer: pointer));
+        dispatch-event(sheet, make(<pointer-motion-event>,
+                                   sheet: sheet,
+                                   x: tx, y: ty,
+                                   modifier-state: modifiers,
+                                   pointer: pointer));
       <pointer-button-event> =>
-	let event-class = object-class(event);
-	let new-focus = sheet;
-	let old-focus = port-input-focus(_port);
+        let event-class = object-class(event);
+        let new-focus = sheet;
+        let old-focus = port-input-focus(_port);
         when (new-focus ~== old-focus
-	      & event-class == <button-press-event>
-	      & port-focus-policy(_port) == #"click-to-select"
-	      & sheet-handles-keyboard?(new-focus))
-	  port-input-focus(_port) := new-focus;
-	end;
-	when (_port.%double-click-interval
-	      & event-class == <button-press-event>)
-	  // If the port is supposed to be generating double click
-	  // events itself, this is where it happens
-	  let last-time = _port.%last-button-press-time;
-	  let time = get-internal-real-time();
-	  if (time < last-time + _port.%double-click-interval)
-	    event-class := <double-click-event>;
-	    _port.%last-button-press-time := 0
-	  else
-	    _port.%last-button-press-time := time
-	  end
-	end;
-	dispatch-event(sheet, make(event-class,
-				   sheet: sheet,
-				   x: tx, y: ty,
-				   modifier-state: modifiers,
-				   button: event-button(event),
-				   pointer: pointer));
+              & event-class == <button-press-event>
+              & port-focus-policy(_port) == #"click-to-select"
+              & sheet-handles-keyboard?(new-focus))
+          port-input-focus(_port) := new-focus;
+        end;
+        when (_port.%double-click-interval
+              & event-class == <button-press-event>)
+          // If the port is supposed to be generating double click
+          // events itself, this is where it happens
+          let last-time = _port.%last-button-press-time;
+          let time = get-internal-real-time();
+          if (time < last-time + _port.%double-click-interval)
+            event-class := <double-click-event>;
+            _port.%last-button-press-time := 0
+          else
+            _port.%last-button-press-time := time
+          end
+        end;
+        dispatch-event(sheet, make(event-class,
+                                   sheet: sheet,
+                                   x: tx, y: ty,
+                                   modifier-state: modifiers,
+                                   button: event-button(event),
+                                   pointer: pointer));
       otherwise => #f
     end
   end
@@ -1100,8 +1100,8 @@ define method update-focus-for-enter-event
   let new-focus = sheet;
   let old-focus = port-input-focus(_port);
   when (new-focus ~== old-focus
-	& port-focus-policy(_port) == #"sheet-under-pointer"
-	& sheet-handles-keyboard?(new-focus))
+        & port-focus-policy(_port) == #"sheet-under-pointer"
+        & sheet-handles-keyboard?(new-focus))
     port-input-focus(_port) := new-focus;
   end;
   unless (sheet == pointer-sheet(pointer))
@@ -1115,7 +1115,7 @@ define method update-focus-for-exit-event
     (_port :: <basic-port>, sheet :: <sheet>, pointer :: <pointer>)
   let old-focus = port-input-focus(_port);
   when (old-focus
-	& port-focus-policy(_port) == #"sheet-under-pointer")
+        & port-focus-policy(_port) == #"sheet-under-pointer")
     port-input-focus(_port) := #f
   end;
   pointer-sheet(pointer) := #f
@@ -1142,8 +1142,8 @@ define method distribute-function-event
   let _port = port(sheet);
   when (_port)
     distribute-event(_port, make(<function-event>,
-				 frame: sheet-frame(sheet),
-				 function: function));
+                                 frame: sheet-frame(sheet),
+                                 function: function));
     let top-sheet = top-level-sheet(sheet);
     when (top-sheet)
       generate-trigger-event(_port, top-sheet)
@@ -1156,8 +1156,8 @@ define method distribute-function-event
   let _port = port(frame);
   when (_port)
     distribute-event(_port, make(<function-event>,
-				 frame: frame,
-				 function: function));
+                                 frame: frame,
+                                 function: function));
     let top-sheet = top-level-sheet(frame);
     when (top-sheet)
       generate-trigger-event(_port, top-sheet)

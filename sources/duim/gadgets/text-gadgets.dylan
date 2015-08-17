@@ -235,19 +235,19 @@ define method initialize
      #key x-alignment = #"left", case: text-case = #f, auto-scroll? = #f)
   next-method();
   let xa = select (x-alignment)
-	     #"left"  => %x_alignment_left;
-	     #"right" => %x_alignment_right;
-	     #"center", #"centre" => %x_alignment_center;
-	   end;
+             #"left"  => %x_alignment_left;
+             #"right" => %x_alignment_right;
+             #"center", #"centre" => %x_alignment_center;
+           end;
   let c = select (text-case)
-	    #f       => %text_case_false;
-	    #"lower" => %text_case_lower;
-	    #"upper" => %text_case_upper;
-	  end;
+            #f       => %text_case_false;
+            #"lower" => %text_case_lower;
+            #"upper" => %text_case_upper;
+          end;
   let scroll = if (auto-scroll?) %auto_scroll else 0 end;
   gadget-flags(gadget)
     := logior(logand(gadget-flags(gadget), lognot(%x_alignment_mask)),
-	      xa + c + scroll)
+              xa + c + scroll)
 end method initialize;
 
 define constant $text-field-cases :: <simple-object-vector>
@@ -256,7 +256,7 @@ define constant $text-field-cases :: <simple-object-vector>
 define sealed inline method text-field-case
     (gadget :: <text-field>) => (text-case)
   let index = ash(logand(gadget-flags(gadget), %text_case_mask),
-		  -%text_case_shift);
+                  -%text_case_shift);
   $text-field-cases[index]
 end method text-field-case;
 
@@ -412,7 +412,7 @@ end protocol <<text-editor-protocol>>;
 // A multi-line text editing field
 define open abstract class <text-editor>
     (<scrolling-gadget-mixin>, <text-field>)
-  sealed constant slot gadget-lines   :: false-or(<integer>) = #f,	// i.e., bottomless
+  sealed constant slot gadget-lines   :: false-or(<integer>) = #f,        // i.e., bottomless
     init-keyword: lines:;
   sealed constant slot gadget-columns :: false-or(<integer>) = #f,
     init-keyword: columns:;
@@ -478,9 +478,9 @@ end method handle-event;
 define function distribute-text-changing-callback
     (gadget :: <text-gadget>, text :: <string>) => ()
   distribute-event(port(gadget),
-		   make(<text-changing-gadget-event>,
-			gadget: gadget,
-			text: text))
+                   make(<text-changing-gadget-event>,
+                        gadget: gadget,
+                        text: text))
 end function distribute-text-changing-callback;
 
 
@@ -499,7 +499,7 @@ end method handle-event;
 define function distribute-text-changed-callback
     (gadget :: <text-gadget>, text :: <string>) => ()
   distribute-event(port(gadget),
-		   make(<text-changed-gadget-event>,
-			gadget: gadget,
-			text: text))
+                   make(<text-changed-gadget-event>,
+                        gadget: gadget,
+                        text: text))
 end function distribute-text-changed-callback;

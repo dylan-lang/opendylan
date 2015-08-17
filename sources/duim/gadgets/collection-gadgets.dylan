@@ -23,7 +23,7 @@ end class <collection-gadget>;
 define protocol <<collection-gadget-protocol>> ()
   getter gadget-items
     (gadget :: <collection-gadget>) => (items :: <sequence>);
-  getter gadget-items-setter 
+  getter gadget-items-setter
     (items :: <sequence>, gadget :: <collection-gadget>) => (items :: <sequence>);
   function note-gadget-items-changed
     (gadget :: <collection-gadget>) => ();
@@ -31,7 +31,7 @@ define protocol <<collection-gadget-protocol>> ()
     (gadget :: <collection-gadget>) => (test :: <function>);
   getter gadget-selection
     (gadget :: <collection-gadget>) => (selection :: <sequence>);
-  getter gadget-selection-setter 
+  getter gadget-selection-setter
     (selection-specifier :: <selection-specifier>, gadget :: <collection-gadget>,
      #key do-callback?)
  => (selection :: <sequence>);
@@ -40,7 +40,7 @@ define protocol <<collection-gadget-protocol>> ()
 end protocol <<collection-gadget-protocol>>;
 
 // Mix-in for gadgets that operate upon collections (e.g. button-boxes)
-define open abstract class <collection-gadget-mixin> 
+define open abstract class <collection-gadget-mixin>
     (<value-gadget-mixin>,
      <collection-gadget>)
   slot gadget-items :: <sequence> = #[],
@@ -96,7 +96,7 @@ define method collection-gadget-item-label
  => (label :: <string>)
   let label = gadget-label-key(gadget)(item);
   assert(instance?(label, <string>),
-	 "'gadget-label-key' returned non-string %= for gadget %=", label, gadget);
+         "'gadget-label-key' returned non-string %= for gadget %=", label, gadget);
   let ampersand = position(label, '&');
   if (ampersand & (ampersand < size(label) - 1))
     remove(label, '&', count: 1)
@@ -145,19 +145,19 @@ define open abstract class <gadget-selection-mixin> (<collection-gadget>)
     setter: %selection-setter;
 end class <gadget-selection-mixin>;
 
-define method initialize 
+define method initialize
     (gadget :: <gadget-selection-mixin>,
      #key keep-selection-visible? = #t, value = $unsupplied) => ()
   next-method();
   gadget-flags(gadget)
     := logior(logand(gadget-flags(gadget), lognot(%keep_selection_visible)),
-	      if (keep-selection-visible?) %keep_selection_visible else 0 end);
+              if (keep-selection-visible?) %keep_selection_visible else 0 end);
   if (unsupplied?(value))
     let selection = gadget-selection(gadget);
     let items = gadget-items(gadget);
     when (empty?(selection)
-	  & items & size(items) > 0
-	  & gadget-selection-mode(gadget) = #"single")
+          & items & size(items) > 0
+          & gadget-selection-mode(gadget) = #"single")
       gadget-selection(gadget) := #[0]
     end
   else
@@ -173,13 +173,13 @@ define sealed method gadget-selection-setter
     let items-size = size(gadget-items(gadget));
     for (key in selection)
       assert(instance?(key, <integer>) & key >= 0 & key < items-size,
-	     "Invalid key %= in selection for %=",
-	     key, gadget)
+             "Invalid key %= in selection for %=",
+             key, gadget)
     end;
     gadget.%selection := selection;
     when (do-callback?)
       execute-value-changed-callback
-	(gadget, gadget-client(gadget), gadget-id(gadget))
+        (gadget, gadget-client(gadget), gadget-id(gadget))
     end;
     note-gadget-value-changed(gadget);
     note-gadget-selection-changed(gadget)
@@ -188,7 +188,7 @@ define sealed method gadget-selection-setter
 end method gadget-selection-setter;
 
 define sealed method gadget-selection-setter
-    (selection == #"all", gadget :: <gadget-selection-mixin>, 
+    (selection == #"all", gadget :: <gadget-selection-mixin>,
      #key do-callback? = #f)
  => (new-selection :: <sequence>)
   assert(gadget-selection-mode(gadget) == #"multiple",
@@ -218,17 +218,17 @@ define method gadget-value (gadget :: <gadget-selection-mixin>) => (value)
   when (selection)
     select (gadget-selection-mode(gadget))
       #"single" =>
-	unless (empty?(selection))
-	  gadget-item-value(gadget, items[selection[0]])
-	end;
+        unless (empty?(selection))
+          gadget-item-value(gadget, items[selection[0]])
+        end;
       #"multiple" =>
-	map-as(<simple-vector>,
-	       method (index :: <integer>)
-		 gadget-item-value(gadget, items[index])
-	       end,
-	       selection);
+        map-as(<simple-vector>,
+               method (index :: <integer>)
+                 gadget-item-value(gadget, items[index])
+               end,
+               selection);
       #"none" =>
-	#f;
+        #f;
     end
   end
 end method gadget-value;
@@ -243,7 +243,7 @@ define sealed method gadget-value-index
            end)
 end method gadget-value-index;
 
-define sealed method gadget-selection-for-value 
+define sealed method gadget-selection-for-value
     (gadget :: <gadget-selection-mixin>, value) => (selection :: <sequence>)
   select (gadget-selection-mode(gadget))
     #"single" =>
@@ -251,10 +251,10 @@ define sealed method gadget-selection-for-value
       if (index) vector(index) else #[] end;
     #"multiple" =>
       error("Non-sequence %= supplied as value for multiple selection gadget %=",
-	    value, gadget);
+            value, gadget);
   end
 end method gadget-selection-for-value;
-  
+
 define sealed method gadget-selection-for-value
     (gadget :: <gadget-selection-mixin>, value :: <collection>)
  => (selection :: <sequence>)
@@ -263,16 +263,16 @@ define sealed method gadget-selection-for-value
       next-method();
     #"multiple" =>
       let indices
-	= map-as(<simple-vector>,
-		 method (subvalue)
-		   gadget-value-index(gadget, subvalue)
-		 end,
-		 value);
+        = map-as(<simple-vector>,
+                 method (subvalue)
+                   gadget-value-index(gadget, subvalue)
+                 end,
+                 value);
       remove!(indices, #f)
   end
 end method gadget-selection-for-value;
 
-define sealed method do-gadget-value-setter 
+define sealed method do-gadget-value-setter
     (gadget :: <gadget-selection-mixin>, value) => ()
   unless (value = gadget-value(gadget))
     let selection = gadget-selection-for-value(gadget, value);
@@ -280,7 +280,7 @@ define sealed method do-gadget-value-setter
     note-gadget-selection-changed(gadget)
   end
 end method do-gadget-value-setter;
-  
+
 // Returns #t if the item is selected in the collection gadget
 define sealed method gadget-item-selected?
     (gadget :: <collection-gadget-mixin>, item) => (true? :: <boolean>)
@@ -326,7 +326,7 @@ end method gadget-state-setter;
 
 
 // The base class for hairy controls like list and tree controls, etc
-define open abstract class <basic-choice-gadget> 
+define open abstract class <basic-choice-gadget>
     (<gadget-selection-mixin>,
      <collection-gadget-mixin>,
      <basic-gadget>)
@@ -367,7 +367,7 @@ define open abstract class <option-box>
   keyword read-only?: = #t;
 end class <option-box>;
 
-define sealed method gadget-selection-mode 
+define sealed method gadget-selection-mode
     (pane :: <option-box>) => (selection-mode :: <selection-mode>)
   #"single"
 end method gadget-selection-mode;
@@ -395,7 +395,7 @@ define open abstract class <combo-box>
   keyword read-only?: = #f;
 end class <combo-box>;
 
-define sealed method gadget-selection-mode 
+define sealed method gadget-selection-mode
     (pane :: <combo-box>) => (selection-mode :: <selection-mode>)
   #"single"
 end method gadget-selection-mode;
@@ -428,7 +428,7 @@ define open abstract class <spin-box>
      <basic-gadget>)
 end class <spin-box>;
 
-define sealed method gadget-selection-mode 
+define sealed method gadget-selection-mode
     (pane :: <spin-box>) => (selection-mode :: <selection-mode>)
   #"single"
 end method gadget-selection-mode;
@@ -475,7 +475,7 @@ define sealed class <tool-bar-pane>
     (<tool-bar>, <single-child-wrapping-pane>)
 end class <tool-bar-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <tool-bar>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<tool-bar-pane>, #f)
@@ -500,7 +500,7 @@ define open abstract class <status-bar>
     init-keyword: progress-bar:;
 end class <status-bar>;
 
-define method initialize 
+define method initialize
     (pane :: <status-bar>,
      #key frame-manager: framem, label, value, value-range, progress-bar?)
  => ()
@@ -508,24 +508,24 @@ define method initialize
   when (empty?(sheet-children(pane)))
     with-frame-manager (framem)
       let label-pane
-	= make(<label>, label: label | "", 
-	       min-width: $status-bar-label-min-width, max-width: $fill);
+        = make(<label>, label: label | "",
+               min-width: $status-bar-label-min-width, max-width: $fill);
       status-bar-label-pane(pane) := label-pane;
       let children
-	= if (progress-bar? | (value | value-range))
-	    let best-width  = $progress-bar-best-width;
-	    let value-range = value-range | range(from: 0, to: 100);
+        = if (progress-bar? | (value | value-range))
+            let best-width  = $progress-bar-best-width;
+            let value-range = value-range | range(from: 0, to: 100);
             let progress-bar
-              = make(<progress-bar>, 
-		     value-range: value-range,
-		     value:       value | value-range[0],
-		     withdrawn?:  ~value,
-		     min-width: best-width, max-width: best-width);
+              = make(<progress-bar>,
+                     value-range: value-range,
+                     value:       value | value-range[0],
+                     withdrawn?:  ~value,
+                     min-width: best-width, max-width: best-width);
             status-bar-progress-bar(pane) := progress-bar;
             vector(label-pane, progress-bar)
-	  else
-	    vector(label-pane)
-	  end;
+          else
+            vector(label-pane)
+          end;
       sheet-children(pane) := children
     end
   end;
@@ -543,7 +543,7 @@ define open generic status-bar-progress-bar
 
 // The label of a status bar is the label of the label pane in the
 // status bar, if it has one.  Setting the label updates the label pane.
-define method gadget-label 
+define method gadget-label
     (status-bar :: <status-bar>) => (message :: false-or(<string>))
   let label-pane = status-bar-label-pane(status-bar);
   label-pane & gadget-label(label-pane)
@@ -596,7 +596,7 @@ define method do-gadget-value-setter
   end
 end method do-gadget-value-setter;
 
-define method gadget-value-range-setter 
+define method gadget-value-range-setter
     (range :: <range>, status-bar :: <status-bar>)
  => (range :: <range>)
   next-method();
@@ -616,7 +616,7 @@ define sealed class <status-bar-pane>
   inherited slot layout-y-alignment = #"center";
 end class <status-bar-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <status-bar>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<status-bar-pane>, #f)
@@ -642,7 +642,7 @@ define function button-box-selection-mode-class
 end function button-box-selection-mode-class;
 
 define sealed inline method make
-    (class == <button-box>, #rest initargs, 
+    (class == <button-box>, #rest initargs,
      #key selection-mode :: <selection-mode> = #"none", #all-keys)
  => (button :: <button-box>)
   apply(make, button-box-selection-mode-class(selection-mode), initargs)
@@ -651,13 +651,13 @@ end method make;
 
 /// Push box
 
-define open abstract class <push-box> 
+define open abstract class <push-box>
     (<action-gadget-mixin>,
      <button-box>,
      <basic-value-gadget>)
 end class <push-box>;
 
-define sealed method gadget-selection-mode 
+define sealed method gadget-selection-mode
     (box :: <push-box>) => (selection-mode :: <selection-mode>)
   #"none"
 end method gadget-selection-mode;
@@ -704,7 +704,7 @@ define method collection-gadget-default-label-key
   string
 end method collection-gadget-default-label-key;
 
-define method collection-gadget-default-label-key 
+define method collection-gadget-default-label-key
     (n :: <integer>) => (name :: <string>)
   integer-to-string(n)
 end method collection-gadget-default-label-key;
@@ -735,7 +735,7 @@ end method handle-event;
 define function distribute-selection-changed-callback
     (gadget :: <gadget-selection-mixin>, selection :: <sequence>) => ()
   distribute-event(port(gadget),
-		   make(<selection-changed-gadget-event>,
+                   make(<selection-changed-gadget-event>,
                         selection: selection,
-			gadget: gadget))
+                        gadget: gadget))
 end function distribute-selection-changed-callback;

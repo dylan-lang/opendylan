@@ -20,7 +20,7 @@ end class-test <pixmap-medium>;
 
 /// Graphic modelling
 
-define method record-operation 
+define method record-operation
     (medium :: <test-medium>, type, #rest args) => ()
   add!(graphic-operations(medium), apply(list, type, args))
 end method record-operation;
@@ -32,7 +32,7 @@ define method draw-point
   #f
 end method draw-point;
 
-define method draw-points 
+define method draw-points
     (medium :: <test-medium>, coord-seq :: <coordinate-sequence>) => (record)
   record-operation(medium, #"points", coord-seq);
   #f
@@ -44,7 +44,7 @@ define method draw-line
   #f
 end method draw-line;
 
-define method draw-lines 
+define method draw-lines
     (medium :: <test-medium>, coord-seq :: <coordinate-sequence>) => (record)
   record-operation(medium, #"lines", coord-seq);
   #f
@@ -65,7 +65,7 @@ define method draw-rectangles
 end method draw-rectangles;
 
 define method draw-rounded-rectangle
-    (medium :: <test-medium>, left, top, right, bottom, 
+    (medium :: <test-medium>, left, top, right, bottom,
      #key filled? = #t, radius) => (record)
   record-operation
     (medium, #"rectangle", left, top, right, bottom, filled?, radius);
@@ -83,7 +83,7 @@ define method draw-ellipse
     (medium :: <test-medium>, center-x, center-y, radius-1-dx,
      radius-1-dy, radius-2-dx, radius-2-dy,
      #key start-angle, end-angle, filled? = #t) => (record)
-  record-operation(medium, #"ellipse", center-x, center-y, 
+  record-operation(medium, #"ellipse", center-x, center-y,
                    radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
                    start-angle | 0.0, end-angle | $2pi, filled?);
   #f
@@ -160,15 +160,15 @@ define method line-to (medium :: <test-medium>, x, y) => (record)
   record-operation(medium, #"line-to", x, y)
 end method line-to;
 
-define method arc-to 
+define method arc-to
     (medium :: <test-medium>, center-x, center-y,
      radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
      #key start-angle, end-angle) => (record)
   record-operation(medium, #"arc-to", center-x, center-y,
-		   radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy)
+                   radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy)
 end method arc-to;
 
-define method curve-to 
+define method curve-to
     (medium :: <test-medium>, x1, y1, x2, y2, x3, y3) => (record)
   record-operation(medium, #"curve-to", x1, y1, x2, y2, x3, y3)
 end method curve-to;
@@ -182,7 +182,7 @@ define method make-graphics-test-sheet ()
   sheet
 end method make-graphics-test-sheet;
 
-define method check-operation 
+define method check-operation
     (name, medium :: <test-medium>, type, #rest args)
   let operations = graphic-operations(medium);
   check(concatenate(name, " caused correct number of operations"),
@@ -195,7 +195,7 @@ define method check-operations-happened (name, medium)
   check-true(name, size(graphic-operations(medium)) > 0)
 end method check-operations-happened;
 
-define method check-ellipse-operation 
+define method check-ellipse-operation
     (name, medium :: <test-medium>, type, #rest args)
   let operations = graphic-operations(medium);
   let operation = operations[0];
@@ -232,7 +232,7 @@ define method test-draw-rectangle (#key filled?)
           #f => "Draw Rectangle";
         end;
     draw-rectangle*(medium, make-point(100, 100), make-point(200, 200),
-		    filled?: filled?);
+                    filled?: filled?);
     check-operation(name, medium,
                     #"rectangle", 100, 100, 200, 200, filled?);
     clear-graphic-operations(medium);
@@ -253,17 +253,17 @@ define method test-draw-rectangles (#key filled?) => ()
         end;
     let points
       = vector(make-point(100, 150), make-point(200, 250),
-	       make-point(300, 350), make-point(400, 450));
+               make-point(300, 350), make-point(400, 450));
     draw-rectangles*(medium, points, filled?: filled?);
     check-operation(name, medium,
-                    #"rectangles", 
+                    #"rectangles",
                     vector(100, 150, 200, 250, 300, 350, 400, 450),
                     filled?);
     clear-graphic-operations(medium);
     let coordinates = vector(100, 150, 200, 250, 300, 350, 400, 450);
     draw-rectangles(medium, coordinates, filled?: filled?);
     check-operation(concatenate("Split ", name), medium,
-                    #"rectangles", 
+                    #"rectangles",
                     coordinates,
                     filled?);
   end
@@ -274,23 +274,23 @@ define method test-polygons (#key filled?, closed?) => ()
   with-sheet-medium (medium = sheet)
     let name = "Polygon";
     if (filled?) name := concatenate("Filled ", name) end;
-    if (closed?) name := concatenate("Closed ", name) end; 
+    if (closed?) name := concatenate("Closed ", name) end;
     draw-polygon*(medium,
-		  vector(make-point(100, 100),
-			 make-point(200, 200),
-			 make-point(100, 300)),
-		  closed?: closed?,
-		  filled?: filled?);
+                  vector(make-point(100, 100),
+                         make-point(200, 200),
+                         make-point(100, 300)),
+                  closed?: closed?,
+                  filled?: filled?);
     check-operation(name, medium,
                     #"polygon", vector(100, 100, 200, 200, 100, 300),
                     closed?, filled?);
     clear-graphic-operations(medium);
     draw-polygon(medium,
-		 vector(100, 100,
-			200, 200,
-			100, 300),
-		 closed?: closed?,
-		 filled?: filled?);
+                 vector(100, 100,
+                        200, 200,
+                        100, 300),
+                 closed?: closed?,
+                 filled?: filled?);
     check-operation(concatenate("Split ", name), medium,
                     #"polygon", vector(100, 100, 200, 200, 100, 300),
                     closed?, filled?);
@@ -306,24 +306,24 @@ define method test-ellipses (#key filled?, start-angle, end-angle) => ()
     if (start-angle) name := concatenate(name, " [start]") end;
     if (end-angle) name := concatenate(name, " [end]") end;
     draw-ellipse*(medium,
-		  make-point(100, 100),
-		  100, 150, 200, 250,
-		  start-angle: start-angle,
-		  end-angle: end-angle,
-		  filled?: filled?);
+                  make-point(100, 100),
+                  100, 150, 200, 250,
+                  start-angle: start-angle,
+                  end-angle: end-angle,
+                  filled?: filled?);
     check-ellipse-operation(name, medium,
-			    #"ellipse", 100, 100, 100, 150, 200, 250,
-			    start-angle | 0.0, end-angle | $2pi, filled?);
+                            #"ellipse", 100, 100, 100, 150, 200, 250,
+                            start-angle | 0.0, end-angle | $2pi, filled?);
     clear-graphic-operations(medium);
     draw-ellipse(medium,
-		 100, 100,
-		 100, 150, 200, 250,
-		 start-angle: start-angle,
-		 end-angle: end-angle,
-		 filled?: filled?) ;
+                 100, 100,
+                 100, 150, 200, 250,
+                 start-angle: start-angle,
+                 end-angle: end-angle,
+                 filled?: filled?) ;
     check-ellipse-operation(concatenate("Split ", name), medium,
-			    #"ellipse", 100, 100, 100, 150, 200, 250,
-			    start-angle | 0.0, end-angle | $2pi, filled?);
+                            #"ellipse", 100, 100, 100, 150, 200, 250,
+                            start-angle | 0.0, end-angle | $2pi, filled?);
     medium
   end
 end method test-ellipses;
@@ -336,23 +336,23 @@ define method test-circles (#key filled?, start-angle, end-angle) => ()
     if (start-angle) name := concatenate(name, " [start]") end;
     if (end-angle) name := concatenate(name, " [end]") end;
     draw-circle*(medium,
-		 make-point(50, 100),
-		 150,
-		 start-angle: start-angle,
-		 end-angle: end-angle,
-		 filled?: filled?);
+                 make-point(50, 100),
+                 150,
+                 start-angle: start-angle,
+                 end-angle: end-angle,
+                 filled?: filled?);
     check-ellipse-operation(name, medium,
-			    #"ellipse", 50, 100, 150, 0, 0, 150,
-			    start-angle | 0.0, end-angle | $2pi, filled?);
+                            #"ellipse", 50, 100, 150, 0, 0, 150,
+                            start-angle | 0.0, end-angle | $2pi, filled?);
     clear-graphic-operations(medium);
     draw-circle(medium,
-		50, 100, 150,
-		start-angle: start-angle,
-		end-angle: end-angle,
-		filled?: filled?);
+                50, 100, 150,
+                start-angle: start-angle,
+                end-angle: end-angle,
+                filled?: filled?);
   check-ellipse-operation(concatenate("Split ", name), medium,
-			  #"ellipse", 50, 100, 150, 0, 0, 150,
-			  start-angle | 0.0, end-angle | $2pi, filled?);
+                          #"ellipse", 50, 100, 150, 0, 0, 150,
+                          start-angle | 0.0, end-angle | $2pi, filled?);
   medium
 end
   end method test-circles;
@@ -365,25 +365,25 @@ define method test-ovals (#key filled?, start-angle, end-angle) => ()
   if (start-angle) name := concatenate(name, " [start]") end;
   if (end-angle) name := concatenate(name, " [end]") end;
   draw-oval*(medium,
-	     make-point(200, 200),
-	     100, 150,
-	     start-angle: start-angle,
-	     end-angle: end-angle,
-	     filled?: filled?) ;
+             make-point(200, 200),
+             100, 150,
+             start-angle: start-angle,
+             end-angle: end-angle,
+             filled?: filled?) ;
     check-operations-happened(name, medium);
     clear-graphic-operations(medium);
     draw-oval(medium,
-	      200, 200,
-	      100, 150,
-	      start-angle: start-angle,
-	      end-angle: end-angle,
-	      filled?: filled?);
+              200, 200,
+              100, 150,
+              start-angle: start-angle,
+              end-angle: end-angle,
+              filled?: filled?);
     check-operations-happened(concatenate("Split ", name), medium);
     medium
   end
 end method test-ovals;
 
-define method test-text-drawing 
+define method test-text-drawing
     (string-or-char :: type-union(<string>, <character>)) => ()
   let sheet = make-graphics-test-sheet();
   with-sheet-medium (medium = sheet)
@@ -427,7 +427,7 @@ end method test-pixmaps;
 define method test-arrow-drawing (name, #rest args) => ()
   let sheet = make-graphics-test-sheet();
   with-sheet-medium (medium = sheet)
-    apply(draw-arrow*, medium, 
+    apply(draw-arrow*, medium,
           make-point(100, 150), make-point(200, 250),
           args);
     check-operations-happened(name, medium);
@@ -441,7 +441,7 @@ end method test-arrow-drawing;
 define method test-triangle-drawing (name, #rest args)
   let sheet = make-graphics-test-sheet();
   with-sheet-medium (medium = sheet)
-    apply(draw-triangle*, medium, 
+    apply(draw-triangle*, medium,
           make-point(100, 150), make-point(200, 250), make-point(300, 350),
           args);
     check-operations-happened(name, medium);
@@ -455,7 +455,7 @@ end method test-triangle-drawing;
 define method test-bezier-curves (name, #rest args)
   let sheet = make-graphics-test-sheet();
   with-sheet-medium (medium = sheet)
-    apply(draw-bezier-curve*, medium, 
+    apply(draw-bezier-curve*, medium,
           vector(make-point(100, 150), make-point(200, 250),
                  make-point(300, 350), make-point(400, 450)),
           args);
@@ -471,7 +471,7 @@ end method test-bezier-curves;
 define method test-draw-regular-polygon (name, edges, #rest args)
   let sheet = make-graphics-test-sheet();
   with-sheet-medium (medium = sheet)
-    apply(draw-regular-polygon*, medium, 
+    apply(draw-regular-polygon*, medium,
           make-point(100, 150), make-point(200, 250),
           edges,
           args);
@@ -488,14 +488,14 @@ define method test-draw-lines ()
   let sheet = make-graphics-test-sheet();
   with-sheet-medium (medium = sheet)
     let name = "Draw Lines";
-    draw-lines*(medium, 
-		vector(make-point(100, 150), make-point(200, 250),
-		       make-point(300, 350), make-point(400, 450)));
+    draw-lines*(medium,
+                vector(make-point(100, 150), make-point(200, 250),
+                       make-point(300, 350), make-point(400, 450)));
     check-operation(name, medium, #"lines",
                     vector(100, 150, 200, 250, 300, 350, 400, 450));
     clear-graphic-operations(medium);
     draw-lines(medium,
-	       vector(100, 150, 200, 250, 300, 350, 400, 450));
+               vector(100, 150, 200, 250, 300, 350, 400, 450));
     check-operation(concatenate("Split ", name), medium, #"lines",
                     vector(100, 150, 200, 250, 300, 350, 400, 450));
     medium
@@ -507,13 +507,13 @@ define method test-draw-points ()
   with-sheet-medium (medium = sheet)
     let name = "Draw Points";
     draw-points*(medium,
-		 vector(make-point(100, 150), make-point(200, 250),
-			make-point(300, 350), make-point(400, 450)));
+                 vector(make-point(100, 150), make-point(200, 250),
+                        make-point(300, 350), make-point(400, 450)));
     check-operation(name, medium, #"points",
                     vector(100, 150, 200, 250, 300, 350, 400, 450));
     clear-graphic-operations(medium);
     draw-points(medium,
-		vector(100, 150, 200, 250, 300, 350, 400, 450));
+                vector(100, 150, 200, 250, 300, 350, 400, 450));
     check-operation(concatenate("Split ", name), medium, #"points",
                     vector(100, 150, 200, 250, 300, 350, 400, 450));
     medium

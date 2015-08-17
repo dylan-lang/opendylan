@@ -54,10 +54,10 @@ define method generate-next-name
                      remove-number?: remove-number?)
 end method generate-next-name;
 
-define method add-model-child 
+define method add-model-child
     (sheet :: <model-sheet>, class :: subclass(<sheet>))
  => (child :: <model-sheet>)
-  let new-child 
+  let new-child
     = make(<model-sheet>,
            class: class,
            parent: sheet,
@@ -66,10 +66,10 @@ define method add-model-child
   new-child
 end method add-model-child;
 
-define method add-model-child 
+define method add-model-child
     (sheet :: <model-sheet>, class :: subclass(<gadget>))
  => (child :: <model-sheet>)
-  let new-child 
+  let new-child
     = make(<model-sheet>,
            class: class,
            parent: sheet,
@@ -79,7 +79,7 @@ define method add-model-child
 end method add-model-child;
 
 
-define method remove-model-child 
+define method remove-model-child
     (sheet :: <model-sheet>, child :: <model-sheet>)
  => (child :: <model-sheet>)
   remove!(model-children(sheet), child);
@@ -118,25 +118,25 @@ define method generate-next-name
                      remove-number?: remove-number?)
 end method generate-next-name;
 
-define method add-model-child 
+define method add-model-child
     (frame :: <model-frame>, class :: subclass(<menu-bar>))
   model-frame-menu-bar(frame)
     := make(<model-sheet>,
             class: class,
             parent: frame,
-            name: "menu-bar");          
+            name: "menu-bar");
 end method add-model-child;
 
-define method add-model-child 
+define method add-model-child
     (frame :: <model-frame>, class :: subclass(<tool-bar>))
   model-frame-tool-bar(frame)
     := make(<model-sheet>,
             class: class,
             parent: frame,
-            name: "tool-bar");            
+            name: "tool-bar");
 end method add-model-child;
 
-define method add-model-child 
+define method add-model-child
     (frame :: <model-frame>, class :: subclass(<layout-pane>))
   model-frame-layout(frame)
     := make(<model-sheet>,
@@ -145,16 +145,16 @@ define method add-model-child
             name: "layout");
 end method add-model-child;
 
-define method add-model-child 
+define method add-model-child
     (frame :: <model-frame>, class :: subclass(<status-bar>))
   model-frame-status-bar(frame)
     := make(<model-sheet>,
             class: class,
             parent: frame,
-            name: "status-bar");            
+            name: "status-bar");
 end method add-model-child;
 
-define method remove-model-child 
+define method remove-model-child
     (frame :: <model-frame>, child :: <model-sheet>)
  => (child :: <model-sheet>)
   case

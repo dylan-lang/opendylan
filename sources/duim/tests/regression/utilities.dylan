@@ -17,8 +17,8 @@ define method test-activate-callback
     (gadget :: <gadget>) => ()
   let frame = sheet-frame(gadget);
   let message
-    = format-to-string("Activated %=", 
-		       gadget-label(gadget) | gadget);
+    = format-to-string("Activated %=",
+                       gadget-label(gadget) | gadget);
   frame-status-message(frame) := message
 end method test-activate-callback;
 

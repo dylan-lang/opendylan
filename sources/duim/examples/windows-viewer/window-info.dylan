@@ -66,12 +66,12 @@ define method window-label
     if (window-valid?(handle))
       let length = SendMessage(handle, $WM-GETTEXTLENGTH, 0, 0);
       if (length > 0)
-	let buffer-size = length + 1;
-	with-stack-structure (buffer :: <C-string>, size: buffer-size)
-	  let actual-length = GetWindowText(handle, buffer, buffer-size);
-	  when (actual-length = 0) ensure-no-win32-error("GetWindowText") end;
-	  as(<byte-string>, buffer)
-	end
+        let buffer-size = length + 1;
+        with-stack-structure (buffer :: <C-string>, size: buffer-size)
+          let actual-length = GetWindowText(handle, buffer, buffer-size);
+          when (actual-length = 0) ensure-no-win32-error("GetWindowText") end;
+          as(<byte-string>, buffer)
+        end
       end
     end
   end
@@ -85,9 +85,9 @@ define method window-name
       label
     else
       format-to-string
-	("%s: %s",
-	 window-class-description(handle),
-	 number-to-hex-string(handle.pointer-address))
+        ("%s: %s",
+         window-class-description(handle),
+         number-to-hex-string(handle.pointer-address))
     end
   else
     "[destroyed]"
@@ -103,10 +103,10 @@ define constant $children :: <stretchy-vector> = make(<stretchy-vector>);
 define macro <WNDENUMPROC>-callback-wrapper
   { <WNDENUMPROC>-callback-wrapper(?new:name,?old:name) } =>
     { define C-callable-wrapper ?new of ?old
-	parameter hWnd :: <HWND>;
-	parameter lParam :: <LPARAM>;
-	result    value :: <BOOL>;
-	c-modifiers: "__stdcall";
+        parameter hWnd :: <HWND>;
+        parameter lParam :: <LPARAM>;
+        result    value :: <BOOL>;
+        c-modifiers: "__stdcall";
       end C-callable-wrapper }
 end;
 
@@ -118,7 +118,7 @@ define method enum-children
     add!($children, handle);
 //  else
 //    debug-message("Non-child found during EnumChildWindows: %= [%=]",
-//		  window-name(handle), handle.pointer-address)
+//                  window-name(handle), handle.pointer-address)
 //  end;
   #t
 end method enum-children;
@@ -228,11 +228,11 @@ define method menu-items
     for (index :: <integer> from 0 below count)
       GetMenuItemInfo(handle, index, 1, item-info);
       let flags = item-info.fState-value;
-      items[index] 
-	:= make(<menu-item>,
-		label:    "Unknown",
-		enabled?: #f,
-		chcked?:  #f)
+      items[index]
+        := make(<menu-item>,
+                label:    "Unknown",
+                enabled?: #f,
+                chcked?:  #f)
     end
   end;
   items
@@ -244,68 +244,68 @@ end method menu-items;
 
 define constant $basic-styles
   = vector(pair($WS-BORDER,           "WS_BORDER"),
-	   pair($WS-CAPTION,          "WS_CAPTION"),
-	   pair($WS-CHILD,            "WS_CHILD"),
-	   pair($WS-CHILDWINDOW,      "WS_CHILDWINDOW"),
-	   pair($WS-CLIPCHILDREN,     "WS_CLIPCHILDREN"),
-	   pair($WS-CLIPSIBLINGS,     "WS_CLIPSIBLINGS"),
-	   pair($WS-DISABLED,         "WS_DISABLED"),
-	   pair($WS-DLGFRAME,         "WS_DLGFRAME"),
-	   pair($WS-GROUP,            "WS_GROUP"),
-	   pair($WS-HSCROLL,          "WS_HSCROLL"),
-	   pair($WS-ICONIC,           "WS_ICONIC"),
-	   pair($WS-MAXIMIZE,         "WS_MAXIMIZE"),
-	   pair($WS-MAXIMIZEBOX,      "WS_MAXIMIZEBOX"),
-	   pair($WS-MINIMIZE,         "WS_MINIMIZE"),
-	   pair($WS-MINIMIZEBOX,      "WS_MINIMIZEBOX"),
-	   pair($WS-MAXIMIZE,         "WS_MAXIMIZE"),
-	   pair($WS-OVERLAPPED,       "WS_OVERLAPPED"),
-	   pair($WS-OVERLAPPEDWINDOW, "WS_OVERLAPPEDWINDOW"),
-	   pair($WS-POPUP,            "WS_POPUP"),
-	   pair($WS-POPUPWINDOW,      "WS_POPUPWINDOW"),
-	   pair($WS-SIZEBOX,          "WS_SIZEBOX"),
-	   pair($WS-SYSMENU,          "WS_SYSMENU"),
-	   pair($WS-TABSTOP,          "WS_TABSTOP"),
-	   pair($WS-THICKFRAME,       "WS_THICKFRAME"),
-	   pair($WS-TILED,            "WS_TILED"),
-	   pair($WS-TILEDWINDOW,      "WS_TILEDWINDOW"),
-	   pair($WS-VISIBLE,          "WS_VISIBLE"),
-	   pair($WS-VSCROLL,          "WS_VSCROLL"));
+           pair($WS-CAPTION,          "WS_CAPTION"),
+           pair($WS-CHILD,            "WS_CHILD"),
+           pair($WS-CHILDWINDOW,      "WS_CHILDWINDOW"),
+           pair($WS-CLIPCHILDREN,     "WS_CLIPCHILDREN"),
+           pair($WS-CLIPSIBLINGS,     "WS_CLIPSIBLINGS"),
+           pair($WS-DISABLED,         "WS_DISABLED"),
+           pair($WS-DLGFRAME,         "WS_DLGFRAME"),
+           pair($WS-GROUP,            "WS_GROUP"),
+           pair($WS-HSCROLL,          "WS_HSCROLL"),
+           pair($WS-ICONIC,           "WS_ICONIC"),
+           pair($WS-MAXIMIZE,         "WS_MAXIMIZE"),
+           pair($WS-MAXIMIZEBOX,      "WS_MAXIMIZEBOX"),
+           pair($WS-MINIMIZE,         "WS_MINIMIZE"),
+           pair($WS-MINIMIZEBOX,      "WS_MINIMIZEBOX"),
+           pair($WS-MAXIMIZE,         "WS_MAXIMIZE"),
+           pair($WS-OVERLAPPED,       "WS_OVERLAPPED"),
+           pair($WS-OVERLAPPEDWINDOW, "WS_OVERLAPPEDWINDOW"),
+           pair($WS-POPUP,            "WS_POPUP"),
+           pair($WS-POPUPWINDOW,      "WS_POPUPWINDOW"),
+           pair($WS-SIZEBOX,          "WS_SIZEBOX"),
+           pair($WS-SYSMENU,          "WS_SYSMENU"),
+           pair($WS-TABSTOP,          "WS_TABSTOP"),
+           pair($WS-THICKFRAME,       "WS_THICKFRAME"),
+           pair($WS-TILED,            "WS_TILED"),
+           pair($WS-TILEDWINDOW,      "WS_TILEDWINDOW"),
+           pair($WS-VISIBLE,          "WS_VISIBLE"),
+           pair($WS-VSCROLL,          "WS_VSCROLL"));
 
 define constant $extended-styles
   = vector(pair($WS-EX-ACCEPTFILES,      "WS_EX_ACCEPTFILES"),
-	   pair($WS-EX-APPWINDOW,        "WS_EX_APPWINDOW"),
-	   pair($WS-EX-CLIENTEDGE,       "WS_EX_CLIENTEDGE"),
-	   pair($WS-EX-CONTEXTHELP,      "WS_EX_CONTEXTHELP"),
-	   pair($WS-EX-CONTROLPARENT,    "WS_EX_CONTROLPARENT"),
-	   pair($WS-EX-DLGMODALFRAME,    "WS_EX_DLGMODALFRAME"),
-	   // NT 5.0 options
-	   // pair($WS-EX-LAYERED,          "WS_EX_LAYERED"),
-	   // pair($WS-EX-LAYOUTRTL,        "WS_EX_LAYOUTRTL"),
-	   pair($WS-EX-LEFT,             "WS_EX_LEFT"),
-	   pair($WS-EX-LEFTSCROLLBAR,    "WS_EX_LEFTSCROLLBAR"),
-	   pair($WS-EX-LTRREADING,       "WS_EX_LTRREADING"),
-	   pair($WS-EX-MDICHILD,         "WS_EX_MDICHILD"),
-	   // NT 5.0 options
-	   // pair($WS-EX-NOACTIVATE,        "WS_EX_NOACTIVATE"),
-	   // pair($WS-EX-NOINHERITLAYOUT,  "WS_EX_NOINHERITLAYOUT"),
-	   pair($WS-EX-NOPARENTNOTIFY,   "WS_EX_NOPARENTNOTIFY"),
-	   pair($WS-EX-OVERLAPPEDWINDOW, "WS_EX_OVERLAPPEDWINDOW"),
-	   pair($WS-EX-PALETTEWINDOW,    "WS_EX_PALETTEWINDOW"),
-	   pair($WS-EX-RIGHT,            "WS_EX_RIGHT"),
-	   pair($WS-EX-RIGHTSCROLLBAR,   "WS_EX_RIGHTSCROLLBAR"),
-	   pair($WS-EX-RTLREADING,       "WS_EX_RTLREADING"),
-	   pair($WS-EX-STATICEDGE,       "WS_EX_STATICEDGE"),
-	   pair($WS-EX-TOOLWINDOW,       "WS_EX_TOOLWINDOW"),
-	   pair($WS-EX-TOPMOST,          "WS_EX_TOPMOST"),
-	   pair($WS-EX-TRANSPARENT,      "WS_EX_TRANSPARENT"),
-	   pair($WS-EX-WINDOWEDGE,       "WS_EX_WINDOWEDGE"));
+           pair($WS-EX-APPWINDOW,        "WS_EX_APPWINDOW"),
+           pair($WS-EX-CLIENTEDGE,       "WS_EX_CLIENTEDGE"),
+           pair($WS-EX-CONTEXTHELP,      "WS_EX_CONTEXTHELP"),
+           pair($WS-EX-CONTROLPARENT,    "WS_EX_CONTROLPARENT"),
+           pair($WS-EX-DLGMODALFRAME,    "WS_EX_DLGMODALFRAME"),
+           // NT 5.0 options
+           // pair($WS-EX-LAYERED,          "WS_EX_LAYERED"),
+           // pair($WS-EX-LAYOUTRTL,        "WS_EX_LAYOUTRTL"),
+           pair($WS-EX-LEFT,             "WS_EX_LEFT"),
+           pair($WS-EX-LEFTSCROLLBAR,    "WS_EX_LEFTSCROLLBAR"),
+           pair($WS-EX-LTRREADING,       "WS_EX_LTRREADING"),
+           pair($WS-EX-MDICHILD,         "WS_EX_MDICHILD"),
+           // NT 5.0 options
+           // pair($WS-EX-NOACTIVATE,        "WS_EX_NOACTIVATE"),
+           // pair($WS-EX-NOINHERITLAYOUT,  "WS_EX_NOINHERITLAYOUT"),
+           pair($WS-EX-NOPARENTNOTIFY,   "WS_EX_NOPARENTNOTIFY"),
+           pair($WS-EX-OVERLAPPEDWINDOW, "WS_EX_OVERLAPPEDWINDOW"),
+           pair($WS-EX-PALETTEWINDOW,    "WS_EX_PALETTEWINDOW"),
+           pair($WS-EX-RIGHT,            "WS_EX_RIGHT"),
+           pair($WS-EX-RIGHTSCROLLBAR,   "WS_EX_RIGHTSCROLLBAR"),
+           pair($WS-EX-RTLREADING,       "WS_EX_RTLREADING"),
+           pair($WS-EX-STATICEDGE,       "WS_EX_STATICEDGE"),
+           pair($WS-EX-TOOLWINDOW,       "WS_EX_TOOLWINDOW"),
+           pair($WS-EX-TOPMOST,          "WS_EX_TOPMOST"),
+           pair($WS-EX-TRANSPARENT,      "WS_EX_TRANSPARENT"),
+           pair($WS-EX-WINDOWEDGE,       "WS_EX_WINDOWEDGE"));
 
 define method window-raw-styles
     (handle :: <HWND>)
  => (style, extended-style)
   values(GetWindowLong(handle, $GWL-STYLE),
-	 GetWindowLong(handle, $GWL-EXSTYLE))
+         GetWindowLong(handle, $GWL-EXSTYLE))
 end method window-raw-styles;
 
 define method window-styles
@@ -356,32 +356,32 @@ end method decode-window-styles;
 
 define constant $button-styles
   = vector(pair($BS-3STATE,          "BS_3STATE"),
-	   pair($BS-AUTO3STATE,      "BS_AUTO3STATE"),
-	   pair($BS-AUTOCHECKBOX,    "BS_AUTOCHECKBOX"),
-	   pair($BS-AUTORADIOBUTTON, "BS_AUTORADIOBUTTON"),
-	   pair($BS-BITMAP,          "BS_BITMAP"),
-	   pair($BS-BOTTOM,          "BS_BOTTOM"),
-	   pair($BS-CENTER,          "BS_CENTER"),
-	   pair($BS-CHECKBOX,        "BS_CHECKBOX"),
-	   pair($BS-DEFPUSHBUTTON,   "BS_DEFPUSHBUTTON"),
-	   pair($BS-FLAT,            "BS_FLAT"),
-	   pair($BS-GROUPBOX,        "BS_GROUPBOX"),
-	   pair($BS-ICON,            "BS_ICON"),
-	   pair($BS-LEFT,            "BS_LEFT"),
-	   pair($BS-LEFTTEXT,        "BS_LEFTTEXT"),
-	   pair($BS-MULTILINE,       "BS_MULTILINE"),
-	   pair($BS-NOTIFY,          "BS_NOTIFY"),
-	   pair($BS-OWNERDRAW,       "BS_OWNERDRAW"),
-	   pair($BS-PUSHBUTTON,      "BS_PUSHBUTTON"),
-	   pair($BS-PUSHLIKE,        "BS_PUSHLIKE"),
-	   pair($BS-RADIOBUTTON,     "BS_RADIOBUTTON"),
-	   pair($BS-RIGHT,           "BS_RIGHT"),
-	   pair($BS-RIGHTBUTTON,     "BS_RIGHTBUTTON"),
-	   pair($BS-TEXT,            "BS_TEXT"),
-	   pair($BS-TOP,             "BS_TOP"),
-	   // Now obsolete
-	   // pair($BS-USERBUTTON,     "BS_USERBUTTON"),
-	   pair($BS-VCENTER,         "BS_VCENTER"));
+           pair($BS-AUTO3STATE,      "BS_AUTO3STATE"),
+           pair($BS-AUTOCHECKBOX,    "BS_AUTOCHECKBOX"),
+           pair($BS-AUTORADIOBUTTON, "BS_AUTORADIOBUTTON"),
+           pair($BS-BITMAP,          "BS_BITMAP"),
+           pair($BS-BOTTOM,          "BS_BOTTOM"),
+           pair($BS-CENTER,          "BS_CENTER"),
+           pair($BS-CHECKBOX,        "BS_CHECKBOX"),
+           pair($BS-DEFPUSHBUTTON,   "BS_DEFPUSHBUTTON"),
+           pair($BS-FLAT,            "BS_FLAT"),
+           pair($BS-GROUPBOX,        "BS_GROUPBOX"),
+           pair($BS-ICON,            "BS_ICON"),
+           pair($BS-LEFT,            "BS_LEFT"),
+           pair($BS-LEFTTEXT,        "BS_LEFTTEXT"),
+           pair($BS-MULTILINE,       "BS_MULTILINE"),
+           pair($BS-NOTIFY,          "BS_NOTIFY"),
+           pair($BS-OWNERDRAW,       "BS_OWNERDRAW"),
+           pair($BS-PUSHBUTTON,      "BS_PUSHBUTTON"),
+           pair($BS-PUSHLIKE,        "BS_PUSHLIKE"),
+           pair($BS-RADIOBUTTON,     "BS_RADIOBUTTON"),
+           pair($BS-RIGHT,           "BS_RIGHT"),
+           pair($BS-RIGHTBUTTON,     "BS_RIGHTBUTTON"),
+           pair($BS-TEXT,            "BS_TEXT"),
+           pair($BS-TOP,             "BS_TOP"),
+           // Now obsolete
+           // pair($BS-USERBUTTON,     "BS_USERBUTTON"),
+           pair($BS-VCENTER,         "BS_VCENTER"));
 
 define method window-class-style-info
     (handle :: <HWND>, class == #"button")
@@ -408,18 +408,18 @@ end method get-window-class-description;
 
 define constant $combo-box-styles
   = vector(pair($CBS-AUTOHSCROLL,       "CBS_AUTOHSCROLL"),
-	   pair($CBS-DISABLENOSCROLL,   "CBS_DISABLENOSCROLL"),
-	   pair($CBS-DROPDOWN,          "CBS_DROPDOWN"),
-	   pair($CBS-DROPDOWNLIST,      "CBS_DROPDOWNLIST"),
-	   pair($CBS-HASSTRINGS,        "CBS_HASSTRINGS"),
-	   pair($CBS-LOWERCASE,         "CBS_LOWERCASE"),
-	   pair($CBS-NOINTEGRALHEIGHT,  "CBS_NOINTEGRALHEIGHT"),
-	   pair($CBS-OEMCONVERT,        "CBS_OEMCONVERT"),
-	   pair($CBS-OWNERDRAWFIXED,    "CBS_OWNERDRAWFIXED"),
-	   pair($CBS-OWNERDRAWVARIABLE, "CBS_OWNERDRAWVARIABLE"),
-	   pair($CBS-SIMPLE,            "CBS_SIMPLE"),
-	   pair($CBS-SORT,              "CBS_SORT"),
-	   pair($CBS-UPPERCASE,         "CBS_UPPERCASE"));
+           pair($CBS-DISABLENOSCROLL,   "CBS_DISABLENOSCROLL"),
+           pair($CBS-DROPDOWN,          "CBS_DROPDOWN"),
+           pair($CBS-DROPDOWNLIST,      "CBS_DROPDOWNLIST"),
+           pair($CBS-HASSTRINGS,        "CBS_HASSTRINGS"),
+           pair($CBS-LOWERCASE,         "CBS_LOWERCASE"),
+           pair($CBS-NOINTEGRALHEIGHT,  "CBS_NOINTEGRALHEIGHT"),
+           pair($CBS-OEMCONVERT,        "CBS_OEMCONVERT"),
+           pair($CBS-OWNERDRAWFIXED,    "CBS_OWNERDRAWFIXED"),
+           pair($CBS-OWNERDRAWVARIABLE, "CBS_OWNERDRAWVARIABLE"),
+           pair($CBS-SIMPLE,            "CBS_SIMPLE"),
+           pair($CBS-SORT,              "CBS_SORT"),
+           pair($CBS-UPPERCASE,         "CBS_UPPERCASE"));
 
 define method window-class-style-info
     (handle :: <HWND>, class == #"combobox")
@@ -443,19 +443,19 @@ end method get-window-class-description;
 
 define constant $edit-control-styles
   = vector(pair($ES-AUTOHSCROLL, "ES_AUTOHSCROLL"),
-	   pair($ES-AUTOVSCROLL, "ES_AUTOVSCROLL"),
-	   pair($ES-CENTER,      "ES_CENTER"),
-	   pair($ES-LEFT,        "ES_LEFT"),
-	   pair($ES-LOWERCASE,   "ES_LOWERCASE"),
-	   pair($ES-MULTILINE,   "ES_MULTILINE"),
-	   pair($ES-NOHIDESEL,   "ES_NOHIDESEL"),
-	   pair($ES-NUMBER,      "ES_NUMBER"),
-	   pair($ES-OEMCONVERT,  "ES_OEMCONVERT"),
-	   pair($ES-PASSWORD,    "ES_PASSWORD"),
-	   pair($ES-READONLY,    "ES_READONLY"),
-	   pair($ES-RIGHT,       "ES_RIGHT"),
-	   pair($ES-UPPERCASE,   "ES_UPPERCASE"),
-	   pair($ES-WANTRETURN,  "ES_WANTRETURN"));
+           pair($ES-AUTOVSCROLL, "ES_AUTOVSCROLL"),
+           pair($ES-CENTER,      "ES_CENTER"),
+           pair($ES-LEFT,        "ES_LEFT"),
+           pair($ES-LOWERCASE,   "ES_LOWERCASE"),
+           pair($ES-MULTILINE,   "ES_MULTILINE"),
+           pair($ES-NOHIDESEL,   "ES_NOHIDESEL"),
+           pair($ES-NUMBER,      "ES_NUMBER"),
+           pair($ES-OEMCONVERT,  "ES_OEMCONVERT"),
+           pair($ES-PASSWORD,    "ES_PASSWORD"),
+           pair($ES-READONLY,    "ES_READONLY"),
+           pair($ES-RIGHT,       "ES_RIGHT"),
+           pair($ES-UPPERCASE,   "ES_UPPERCASE"),
+           pair($ES-WANTRETURN,  "ES_WANTRETURN"));
 
 define method window-class-style-info
     (handle :: <HWND>, class == #"edit")
@@ -479,21 +479,21 @@ end method get-window-class-description;
 
 define constant $list-box-styles
   = vector(pair($LBS-DISABLENOSCROLL,   "LBS_DISABLENOSCROLL"),
-	   pair($LBS-EXTENDEDSEL,       "LBS_EXTENDEDSEL"),
-	   pair($LBS-HASSTRINGS,        "LBS_HASSTRINGS"),
-	   pair($LBS-MULTICOLUMN,       "LBS_MULTICOLUMN"),
-	   pair($LBS-MULTIPLESEL,       "LBS_MULTIPLESEL"),
-	   pair($LBS-NODATA,            "LBS_NODATA"),
-	   pair($LBS-NOINTEGRALHEIGHT,  "LBS_NOINTEGRALHEIGHT"),
-	   pair($LBS-NOREDRAW,          "LBS_NOREDRAW"),
-	   pair($LBS-NOSEL,             "LBS_NOSEL"),
-	   pair($LBS-NOTIFY,            "LBS_NOTIFY"),
-	   pair($LBS-OWNERDRAWFIXED,    "LBS_OWNERDRAWFIXED"),
-	   pair($LBS-OWNERDRAWVARIABLE, "LBS_OWNERDRAWVARIABLE"),
-	   pair($LBS-SORT,              "LBS_SORT"),
-	   pair($LBS-STANDARD,          "LBS_STANDARD"),
-	   pair($LBS-USETABSTOPS,       "LBS_USETABSTOPS"),
-	   pair($LBS-WANTKEYBOARDINPUT, "LBS_WANTKEYBOARDINPUT"));
+           pair($LBS-EXTENDEDSEL,       "LBS_EXTENDEDSEL"),
+           pair($LBS-HASSTRINGS,        "LBS_HASSTRINGS"),
+           pair($LBS-MULTICOLUMN,       "LBS_MULTICOLUMN"),
+           pair($LBS-MULTIPLESEL,       "LBS_MULTIPLESEL"),
+           pair($LBS-NODATA,            "LBS_NODATA"),
+           pair($LBS-NOINTEGRALHEIGHT,  "LBS_NOINTEGRALHEIGHT"),
+           pair($LBS-NOREDRAW,          "LBS_NOREDRAW"),
+           pair($LBS-NOSEL,             "LBS_NOSEL"),
+           pair($LBS-NOTIFY,            "LBS_NOTIFY"),
+           pair($LBS-OWNERDRAWFIXED,    "LBS_OWNERDRAWFIXED"),
+           pair($LBS-OWNERDRAWVARIABLE, "LBS_OWNERDRAWVARIABLE"),
+           pair($LBS-SORT,              "LBS_SORT"),
+           pair($LBS-STANDARD,          "LBS_STANDARD"),
+           pair($LBS-USETABSTOPS,       "LBS_USETABSTOPS"),
+           pair($LBS-WANTKEYBOARDINPUT, "LBS_WANTKEYBOARDINPUT"));
 
 define method window-class-style-info
     (handle :: <HWND>, class == #"listbox")
@@ -513,15 +513,15 @@ end method get-window-class-description;
 
 define constant $scroll-bar-styles
   = vector(pair($SBS-BOTTOMALIGN,             "SBS_BOTTOMALIGN"),
-	   pair($SBS-HORZ,                    "SBS_HORZ"),
-	   pair($SBS-LEFTALIGN,               "SBS_LEFTALIGN"),
-	   pair($SBS-RIGHTALIGN,              "SBS_RIGHTALIGN"),
-	   pair($SBS-SIZEBOX,                 "SBS_SIZEBOX"),
-	   pair($SBS-SIZEBOXBOTTOMRIGHTALIGN, "SBS_SIZEBOXBOTTOMRIGHTALIGN"),
-	   pair($SBS-SIZEBOXTOPLEFTALIGN,     "SBS_SIZEBOXTOPLEFTALIGN"),
-	   pair($SBS-SIZEGRIP,                "SBS_SIZEGRIP"),
-	   pair($SBS-TOPALIGN,                "SBS_TOPALIGN"),
-	   pair($SBS-VERT,                    "SBS_VERT"));
+           pair($SBS-HORZ,                    "SBS_HORZ"),
+           pair($SBS-LEFTALIGN,               "SBS_LEFTALIGN"),
+           pair($SBS-RIGHTALIGN,              "SBS_RIGHTALIGN"),
+           pair($SBS-SIZEBOX,                 "SBS_SIZEBOX"),
+           pair($SBS-SIZEBOXBOTTOMRIGHTALIGN, "SBS_SIZEBOXBOTTOMRIGHTALIGN"),
+           pair($SBS-SIZEBOXTOPLEFTALIGN,     "SBS_SIZEBOXTOPLEFTALIGN"),
+           pair($SBS-SIZEGRIP,                "SBS_SIZEGRIP"),
+           pair($SBS-TOPALIGN,                "SBS_TOPALIGN"),
+           pair($SBS-VERT,                    "SBS_VERT"));
 
 define method window-class-style-info
     (handle :: <HWND>, class == #"scrollbar")
@@ -545,32 +545,32 @@ end method get-window-class-description;
 
 define constant $static-styles
   = vector(pair($SS-BITMAP,         "SS_BITMAP"),
-	   pair($SS-BLACKFRAME,     "SS_BLACKFRAME"),
-	   pair($SS-BLACKRECT,      "SS_BLACKRECT"),
-	   pair($SS-CENTER,         "SS_CENTER"),
-	   pair($SS-CENTERIMAGE,    "SS_CENTERIMAGE"),
-	   pair($SS-ENDELLIPSIS,    "SS_ENDELLIPSIS"),
-	   pair($SS-ENHMETAFILE,    "SS_ENHMETAFILE"),
-	   pair($SS-ETCHEDFRAME,    "SS_ETCHEDFRAME"),
-	   pair($SS-ETCHEDHORZ,     "SS_ETCHEDHORZ"),
-	   pair($SS-ETCHEDVERT,     "SS_ETCHEDVERT"),
-	   pair($SS-GRAYFRAME,      "SS_GRAYFRAME"),
-	   pair($SS-GRAYRECT,       "SS_GRAYRECT"),
-	   pair($SS-ICON,           "SS_ICON"),
-	   pair($SS-LEFT,           "SS_LEFT"),
-	   pair($SS-LEFTNOWORDWRAP, "SS_LEFTNOWORDWRAP"),
-	   pair($SS-NOPREFIX,       "SS_NOPREFIX"),
-	   pair($SS-NOTIFY,         "SS_NOTIFY"),
-	   pair($SS-OWNERDRAW,      "SS_OWNERDRAW"),
-	   pair($SS-PATHELLIPSIS,   "SS_PATHELLIPSIS"),
-	   pair($SS-REALSIZEIMAGE,  "SS_REALSIZEIMAGE"),
-	   pair($SS-RIGHT,          "SS_RIGHT"),
-	   pair($SS-RIGHTJUST,      "SS_RIGHTJUST"),
-	   pair($SS-SIMPLE,         "SS_SIMPL"),
-	   pair($SS-SUNKEN,         "SS_SUNKEN"),
-	   pair($SS-WHITEFRAME,     "SS_WHITEFRAME"),
-	   pair($SS-WHITERECT,      "SS_WHITERECT"),
-	   pair($SS-WORDELLIPSIS,   "SS_WORDELLIPSIS"));
+           pair($SS-BLACKFRAME,     "SS_BLACKFRAME"),
+           pair($SS-BLACKRECT,      "SS_BLACKRECT"),
+           pair($SS-CENTER,         "SS_CENTER"),
+           pair($SS-CENTERIMAGE,    "SS_CENTERIMAGE"),
+           pair($SS-ENDELLIPSIS,    "SS_ENDELLIPSIS"),
+           pair($SS-ENHMETAFILE,    "SS_ENHMETAFILE"),
+           pair($SS-ETCHEDFRAME,    "SS_ETCHEDFRAME"),
+           pair($SS-ETCHEDHORZ,     "SS_ETCHEDHORZ"),
+           pair($SS-ETCHEDVERT,     "SS_ETCHEDVERT"),
+           pair($SS-GRAYFRAME,      "SS_GRAYFRAME"),
+           pair($SS-GRAYRECT,       "SS_GRAYRECT"),
+           pair($SS-ICON,           "SS_ICON"),
+           pair($SS-LEFT,           "SS_LEFT"),
+           pair($SS-LEFTNOWORDWRAP, "SS_LEFTNOWORDWRAP"),
+           pair($SS-NOPREFIX,       "SS_NOPREFIX"),
+           pair($SS-NOTIFY,         "SS_NOTIFY"),
+           pair($SS-OWNERDRAW,      "SS_OWNERDRAW"),
+           pair($SS-PATHELLIPSIS,   "SS_PATHELLIPSIS"),
+           pair($SS-REALSIZEIMAGE,  "SS_REALSIZEIMAGE"),
+           pair($SS-RIGHT,          "SS_RIGHT"),
+           pair($SS-RIGHTJUST,      "SS_RIGHTJUST"),
+           pair($SS-SIMPLE,         "SS_SIMPL"),
+           pair($SS-SUNKEN,         "SS_SUNKEN"),
+           pair($SS-WHITEFRAME,     "SS_WHITEFRAME"),
+           pair($SS-WHITERECT,      "SS_WHITERECT"),
+           pair($SS-WORDELLIPSIS,   "SS_WORDELLIPSIS"));
 
 define method window-class-style-info
     (handle :: <HWND>, class == #"static")

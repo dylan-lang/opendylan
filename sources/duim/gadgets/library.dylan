@@ -14,7 +14,7 @@ define library duim-gadgets
   use duim-geometry;
   use duim-DCs;
   use duim-sheets;
-  use duim-graphics;  
+  use duim-graphics;
   use duim-layouts;
 
   export duim-gadgets;

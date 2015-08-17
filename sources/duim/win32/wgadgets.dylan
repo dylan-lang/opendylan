@@ -45,7 +45,7 @@ define constant $text-editor-extra-height :: <integer> = 12;    // in pixels
 
 define protocol <<win32-gadgets-protocol>> ()
   function make-gadget-control
-    (gadget :: <win32-gadget-mixin>, parent :: <HWND>, 
+    (gadget :: <win32-gadget-mixin>, parent :: <HWND>,
      options :: <options-type>,
      #key x, y, width, height)
  => (handle :: <HWND>);
@@ -149,7 +149,7 @@ define sealed method make-sheet-mirror-from-resource
        resource: resource,
        region: make-bounding-box(left, top, right, bottom))
 end method make-sheet-mirror-from-resource;
-  
+
 define sealed method update-gadget-font
     (gadget :: <win32-gadget-mixin>, mirror :: <window-mirror>) => ()
   let handle = window-handle(mirror);
@@ -319,7 +319,7 @@ define method handle-command-for-id
     (sheet :: <sheet>, id :: <integer>) => (handled? :: <boolean>)
   let frame = sheet-frame(sheet);
   select (id)
-    $IDOK => 
+    $IDOK =>
       duim-debug-message("Handling command IDOK for %=", sheet);
       activate-default-button(frame);
     $IDCANCEL =>
@@ -391,7 +391,7 @@ define sealed method cancel-frame
   #f
 end method cancel-frame;
 
-define sealed method cancel-gadget 
+define sealed method cancel-gadget
     (gadget :: <gadget>) => (handled? :: <boolean>)
   #f
 end method cancel-gadget;
@@ -511,13 +511,13 @@ end method initialize;
 
 /// Labels
 
-define sealed class <win32-label> 
+define sealed class <win32-label>
     (<win32-gadget-mixin>,
      <label>,
      <leaf-pane>)
 end class <win32-label>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <label>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-label>, #f)
@@ -577,7 +577,7 @@ define method update-gadget-image
     (gadget :: <win32-label>, handle :: <HWND>, image :: <win32-bitmap>) => ()
   //---*** Apparently if this control is in a dialog box, we should be using
   //---*** SendDlgItemMessage instead of SendMessage.
-  SendMessage(handle, $STM-SETIMAGE, $IMAGE-BITMAP, 
+  SendMessage(handle, $STM-SETIMAGE, $IMAGE-BITMAP,
               pointer-address(image-handle(image)))
 end method update-gadget-image;
 
@@ -585,11 +585,11 @@ define method update-gadget-image
     (gadget :: <win32-label>, handle :: <HWND>, image :: <win32-icon>) => ()
   //---*** Apparently if this control is in a dialog box, we should be using
   //---*** SendDlgItemMessage instead of SendMessage.
-  SendMessage(handle, $STM-SETIMAGE, $IMAGE-ICON,   
+  SendMessage(handle, $STM-SETIMAGE, $IMAGE-ICON,
               pointer-address(image-handle(image)))
 end method update-gadget-image;
 
-define sealed method do-compose-space 
+define sealed method do-compose-space
     (gadget :: <win32-label>, #key width, height)
  => (space-req :: <space-requirement>)
   ignore(width, height);
@@ -601,7 +601,7 @@ define sealed method do-compose-space
   else
     let (width, height) = gadget-label-size(gadget);
     make(<space-requirement>,
-         width: width, height: height) 
+         width: width, height: height)
   end
 end method do-compose-space;
 
@@ -702,7 +702,7 @@ define sealed domain gadget-text-buffer-setter (<string>, <win32-text-gadget-mix
 
 define sealed method make-gadget-control
     (gadget :: <win32-text-gadget-mixin>,
-     parent :: <HWND>, 
+     parent :: <HWND>,
      options :: <options-type>,
      #key x, y, width, height)
  => (handle :: <HWND>)
@@ -752,7 +752,7 @@ define method gadget-convert-from-windows-newlines
   string
 end method gadget-convert-from-windows-newlines;
 
-define sealed method note-gadget-text-changed 
+define sealed method note-gadget-text-changed
     (gadget :: <win32-text-gadget-mixin>) => ()
   next-method();
   let mirror = sheet-direct-mirror(gadget);
@@ -965,7 +965,7 @@ define sealed class <win32-text-field>
      <leaf-pane>)
 end class <win32-text-field>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <text-field>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-text-field>, #f)
@@ -989,7 +989,7 @@ define sealed class <win32-password-field>
      <leaf-pane>)
 end class <win32-password-field>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <password-field>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-password-field>, #f)
@@ -1014,7 +1014,7 @@ define sealed class <win32-text-editor>
   sealed slot %text :: false-or(<byte-string>) = #f;
 end class <win32-text-editor>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <text-editor>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-text-editor>, #f)
@@ -1152,8 +1152,8 @@ define constant $mnemonic-escape = '&';
 // Create a new label given a string label and a mnemonic
 // Clients are responsible for destroying the C string when done
 //--- This only works on <byte-string> since <C-string> is effectively a byte string...
-define sealed method make-win32-mnemonic-label 
-    (label :: <byte-string>, mnemonic :: false-or(<mnemonic>), 
+define sealed method make-win32-mnemonic-label
+    (label :: <byte-string>, mnemonic :: false-or(<mnemonic>),
      index :: false-or(<integer>), new-index :: false-or(<integer>),
      #key postfix :: <byte-string> = "")
  => (new-label :: <C-string>)
@@ -1193,7 +1193,7 @@ define sealed method make-win32-mnemonic-label
 end method make-win32-mnemonic-label;
 
 define sealed method make-gadget-control
-    (gadget :: <win32-button-mixin>, parent :: <HWND>, 
+    (gadget :: <win32-button-mixin>, parent :: <HWND>,
      options :: <options-type>,
      #key x, y, width, height)
  => (handle :: <HWND>)
@@ -1247,7 +1247,7 @@ define sealed method make-gadget-control
     = CreateWindowEx(gadget-extended-options(gadget),
                      "BUTTON",
                      label,
-                     %logior(options, 
+                     %logior(options,
                              button-style, group-style, image-style),
                      x, y, width, height,
                      parent,
@@ -1266,7 +1266,7 @@ define sealed method update-gadget-image
     (gadget :: <win32-button-mixin>, handle :: <HWND>, image :: <win32-bitmap>) => ()
   //---*** Apparently if this control is in a dialog box, we should be using
   //---*** SendDlgItemMessage instead of SendMessage.
-  SendMessage(handle, $BM-SETIMAGE, $IMAGE-BITMAP, 
+  SendMessage(handle, $BM-SETIMAGE, $IMAGE-BITMAP,
               pointer-address(image-handle(image)))
 end method update-gadget-image;
 
@@ -1274,7 +1274,7 @@ define sealed method update-gadget-image
     (gadget :: <win32-button-mixin>, handle :: <HWND>, image :: <win32-icon>) => ()
   //---*** Apparently if this control is in a dialog box, we should be using
   //---*** SendDlgItemMessage instead of SendMessage.
-  SendMessage(handle, $BM-SETIMAGE, $IMAGE-ICON,   
+  SendMessage(handle, $BM-SETIMAGE, $IMAGE-ICON,
               pointer-address(image-handle(image)))
 end method update-gadget-image;
 
@@ -1314,7 +1314,7 @@ define sealed method note-mirror-created
   update-button-selection(gadget)
 end method note-mirror-created;
 
-define sealed method note-gadget-value-changed 
+define sealed method note-gadget-value-changed
     (gadget :: <win32-button-mixin>) => ()
   next-method();
   update-button-selection(gadget)
@@ -1382,7 +1382,7 @@ define sealed class <win32-push-button>
      <leaf-pane>)
 end class <win32-push-button>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <push-button>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-push-button>, #f)
@@ -1402,14 +1402,14 @@ define sealed method compose-space-for-push-button
  => (space-req :: <space-requirement>)
   let (width, height) = gadget-label-size(gadget);
   let (extra-width, extra-height)
-    = select (gadget-label(gadget) by instance?)        
+    = select (gadget-label(gadget) by instance?)
         <image> =>
           values($push-button-extra-icon-width, $push-button-extra-icon-height);
         otherwise =>
           values($push-button-extra-text-width, $push-button-extra-text-height);
       end;
   let border*2 = $gadget-border-thickness * 2;
-  make(<space-requirement>, 
+  make(<space-requirement>,
        width:  width  + border*2 + extra-width,
        height: height + border*2 + extra-height)
 end method compose-space-for-push-button;
@@ -1437,7 +1437,7 @@ define sealed class <win32-radio-button>
      <leaf-pane>)
 end class <win32-radio-button>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <radio-button>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-radio-button>, #f)
@@ -1486,7 +1486,7 @@ define sealed method do-compose-space
   else
     let (width, height) = gadget-label-size(gadget);
     let border*2 = $gadget-border-thickness * 2;
-    make(<space-requirement>, 
+    make(<space-requirement>,
          width:  width + border*2 + $button-icon-width,
          height: height)
   end
@@ -1612,7 +1612,7 @@ define sealed class <win32-scroll-bar>
      <leaf-pane>)
 end class <win32-scroll-bar>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <scroll-bar>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-scroll-bar>, #f)
@@ -1803,7 +1803,7 @@ define sealed domain gadget-selection (<win32-collection-gadget-mixin>);
 define sealed domain gadget-selection-setter (<sequence>, <win32-collection-gadget-mixin>);
 
 define sealed method update-gadget-items
-    (gadget :: <win32-collection-gadget-mixin>, 
+    (gadget :: <win32-collection-gadget-mixin>,
      reset-message :: <integer>,
      add-message :: <integer>) => ()
   let handle = window-handle(gadget);
@@ -1832,13 +1832,13 @@ end method set-single-selection-gadget-selection;
 
 /// List boxes
 
-define sealed class <win32-list-box> 
+define sealed class <win32-list-box>
     (<win32-collection-gadget-mixin>,
      <list-box>,
      <leaf-pane>)
 end class <win32-list-box>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <list-box>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-list-box>, #f)
@@ -1856,7 +1856,7 @@ define sealed method make-gadget-control
     = CreateWindowEx(gadget-extended-options(gadget),
                      "LISTBOX",
                      "",
-                     %logior(options, 
+                     %logior(options,
                              if (sheet-tab-stop?(gadget)) %logior($WS-GROUP, $WS-TABSTOP) else 0 end,
                              $LBS-DISABLENOSCROLL, $LBS-NOTIFY,
                              select (selection-mode)
@@ -1879,7 +1879,7 @@ define sealed method gadget-default-options
   %logand(next-method(), %lognot($WS-HSCROLL))
 end method gadget-default-options;
 
-define sealed method do-compose-space 
+define sealed method do-compose-space
     (pane :: <win32-list-box>, #key width, height)
  => (space-req :: <space-requirement>)
   compose-space-for-list-box(pane,
@@ -2041,7 +2041,7 @@ define sealed method handle-command
     $LBN-DBLCLK =>
       activate-win32-gadget(gadget);
       #t;
-    otherwise => 
+    otherwise =>
       next-method();
   end
 end method handle-command;
@@ -2049,13 +2049,13 @@ end method handle-command;
 
 /// Option boxes
 
-define sealed class <win32-option-box> 
+define sealed class <win32-option-box>
     (<win32-collection-gadget-mixin>,
      <option-box>,
      <leaf-pane>)
 end class <win32-option-box>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <option-box>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-option-box>, #f)
@@ -2072,7 +2072,7 @@ define sealed method make-gadget-control
     = CreateWindowEx(gadget-extended-options(gadget),
                      "COMBOBOX",
                      "",
-                     %logior(options, 
+                     %logior(options,
                              if (sheet-tab-stop?(gadget)) %logior($WS-GROUP, $WS-TABSTOP) else 0 end,
                              $CBS-DROPDOWNLIST),
                      x, y, width, height,
@@ -2084,7 +2084,7 @@ define sealed method make-gadget-control
   handle
 end method make-gadget-control;
 
-define sealed method do-compose-space 
+define sealed method do-compose-space
     (gadget :: <win32-option-box>, #key width, height)
  => (space-req :: <space-requirement>)
   ignore(height);
@@ -2105,7 +2105,7 @@ end method do-compose-space;
 // Windows expects when we set the mirror's size.
 define sealed method set-mirror-edges
     (_port :: <win32-port>, gadget :: <win32-option-box>, mirror :: <window-mirror>,
-     left  :: <integer>, top    :: <integer>, 
+     left  :: <integer>, top    :: <integer>,
      right :: <integer>, bottom :: <integer>) => ()
   let height = win32-option-box-height(gadget);
   next-method(_port, gadget, mirror,
@@ -2183,7 +2183,7 @@ define sealed method handle-command
   end
 end method handle-command;
 
-define sealed method cancel-gadget 
+define sealed method cancel-gadget
     (gadget :: <win32-option-box>) => (handled? :: <boolean>)
   let handle = window-handle(gadget);
   when (handle & (SendMessage(handle, $CB-GETDROPPEDSTATE, 0, 0) = $true))
@@ -2195,7 +2195,7 @@ end method cancel-gadget;
 
 /// Combo boxes
 
-define sealed class <win32-combo-box> 
+define sealed class <win32-combo-box>
     (<win32-collection-gadget-mixin>,
      <combo-box>,
      <leaf-pane>)
@@ -2218,7 +2218,7 @@ define sealed class <win32-combo-box-text-field>
      <win32-text-field>)
 end class <win32-combo-box-text-field>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <combo-box>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-combo-box>, #f)
@@ -2235,7 +2235,7 @@ define sealed method make-gadget-control
     = CreateWindowEx(gadget-extended-options(gadget),
                      "COMBOBOX",
                      "",
-                     %logior(options, 
+                     %logior(options,
                              if (sheet-tab-stop?(gadget)) %logior($WS-GROUP, $WS-TABSTOP) else 0 end,
                              $CBS-DROPDOWN, $CBS-AUTOHSCROLL),
                      x, y, width, height,
@@ -2261,7 +2261,7 @@ define function subclass-combo-box-text-field
   gadget.%text-field := text-field
 end function subclass-combo-box-text-field;
 
-define sealed method do-compose-space 
+define sealed method do-compose-space
     (gadget :: <win32-combo-box>, #key width, height)
  => (space-req :: <space-requirement>)
   ignore(height);
@@ -2282,7 +2282,7 @@ end method do-compose-space;
 // Windows expects when we set the mirror's size.
 define sealed method set-mirror-edges
     (_port :: <win32-port>, gadget :: <win32-combo-box>, mirror :: <window-mirror>,
-     left  :: <integer>, top    :: <integer>, 
+     left  :: <integer>, top    :: <integer>,
      right :: <integer>, bottom :: <integer>) => ()
   let height = win32-combo-box-height(gadget);
   next-method(_port, gadget, mirror,
@@ -2318,7 +2318,7 @@ define sealed method note-gadget-items-changed
   end
 end method note-gadget-items-changed;
 
-define sealed method note-gadget-text-changed 
+define sealed method note-gadget-text-changed
     (gadget :: <win32-combo-box>) => ()
   next-method();
   let mirror = sheet-direct-mirror(gadget);
@@ -2396,7 +2396,7 @@ define sealed method handle-control-message
   end
 end method handle-control-message;
 
-define sealed method cancel-gadget 
+define sealed method cancel-gadget
     (gadget :: <win32-combo-box>) => (handled? :: <boolean>)
   let handle = window-handle(gadget);
   when (handle & (SendMessage(handle, $CB-GETDROPPEDSTATE, 0, 0) = $true))
@@ -2459,7 +2459,7 @@ define sealed class <win32-viewport>
      <single-child-composite-pane>)
 end class <win32-viewport>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <viewport>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-viewport>, #f)
@@ -2539,7 +2539,7 @@ define sealed class <win32-border>
   sealed slot %brush :: false-or(type-union(<standard-brush>, <ink>)) = #f;
 end class <win32-border>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <border>, #key label)
  => (class :: <class>, options :: false-or(<sequence>))
   let border-class = if (label) <win32-group-box> else <win32-border> end;

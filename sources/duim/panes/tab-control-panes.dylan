@@ -32,27 +32,27 @@ define sealed method initialize
     = if (tabs-at-top?) <top-tab-button> else <bottom-tab-button> end;
   let button-box
     = with-frame-manager (framem)
-        make(<radio-box>, 
-	     items: pages,
-	     label-key: method (page)
-			  let label = gadget-label-key(pane)(page);
-			  compute-mnemonic-from-label
-			    (page, label, remove-ampersand?: #t)
-			end,
-	     spacing: 0,
-	     value: tab-control-current-page(pane),
-	     button-class: button-class,
-	     value-changed-callback:
-	       method (radio-box)
-		 tab-control-map-page(pane, gadget-value(radio-box))
-	       end method)
+        make(<radio-box>,
+             items: pages,
+             label-key: method (page)
+                          let label = gadget-label-key(pane)(page);
+                          compute-mnemonic-from-label
+                            (page, label, remove-ampersand?: #t)
+                        end,
+             spacing: 0,
+             value: tab-control-current-page(pane),
+             button-class: button-class,
+             value-changed-callback:
+               method (radio-box)
+                 tab-control-map-page(pane, gadget-value(radio-box))
+               end method)
       end;
   pane.%button-box := button-box;
   let children
     = case
-	~layout      => vector(button-box);
-	tabs-at-top? => vector(button-box, layout);
-	otherwise    => vector(layout, button-box);
+        ~layout      => vector(button-box);
+        tabs-at-top? => vector(button-box, layout);
+        otherwise    => vector(layout, button-box);
       end;
   sheet-children(pane) := children
 end method initialize;
@@ -148,36 +148,36 @@ define method handle-repaint
   let indentation = 4;
   let selected? = gadget-value(pane);
   let position = pane.%position;
-  with-brush (medium, 
-	      foreground: if (selected?) $background else $foreground end)
+  with-brush (medium,
+              foreground: if (selected?) $background else $foreground end)
     with-pen (medium, width: 2)
       draw-line(medium, left, bottom, right, bottom)
-    end 
+    end
   end;
   inc!(left);
   dec!(right);
   inc!(top);
   with-pen (medium,
-	    width: if (selected?) 2 else 1 end)
+            width: if (selected?) 2 else 1 end)
     let (y1, y2, y3)
       = select (position)
           #"top"    => values(bottom, top + indentation, top);
-	  #"bottom" => values(top, bottom - indentation, bottom);
-	end;
+          #"bottom" => values(top, bottom - indentation, bottom);
+        end;
     draw-polygon(medium,
-		 vector(left, y1,
-			left, y2,
-			left + indentation, y3,
-			right - indentation, y3,
-			right, y2,
-			right, y1),
-		 filled?: #f,
-		 closed?: #f)
+                 vector(left, y1,
+                        left, y2,
+                        left + indentation, y3,
+                        right - indentation, y3,
+                        right, y2,
+                        right, y1),
+                 filled?: #f,
+                 closed?: #f)
   end;
   draw-gadget-label(pane, medium, 6, 6)
 end method handle-repaint;
 
-define method handle-event 
+define method handle-event
     (pane :: <tab-button>, event :: <button-press-event>) => ()
   when (gadget-enabled?(pane)
         & event-button(event) == $left-button

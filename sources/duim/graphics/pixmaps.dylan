@@ -78,7 +78,7 @@ define method copy-area
      #key function = $boole-1) => ()
   with-sheet-medium (medium = sheet)
     do-copy-area(medium, from-x, from-y, width, height,
-		 medium, to-x, to-y, function: function)
+                 medium, to-x, to-y, function: function)
   end
 end method copy-area;
 
@@ -87,7 +87,7 @@ define method copy-area
      #key function = $boole-1) => ()
   let medium = sheet-medium(sheet);
   do-copy-area(medium, from-x, from-y, width, height,
-	       medium, to-x, to-y, function: function)
+               medium, to-x, to-y, function: function)
 end method copy-area;
 
 define sealed inline method copy-area
@@ -95,7 +95,7 @@ define sealed inline method copy-area
      from-x, from-y, width, height, to-x, to-y,
      #key function = $boole-1) => ()
   do-copy-area(medium, from-x, from-y, width, height,
-	       medium, to-x, to-y, function: function)
+               medium, to-x, to-y, function: function)
 end method copy-area;
 
 
@@ -104,7 +104,7 @@ define sealed method copy-from-pixmap
      medium :: <medium>, medium-x, medium-y,
      #key function = $boole-1) => ()
   do-copy-area(pixmap, pixmap-x, pixmap-y, width, height,
-	       medium, medium-x, medium-y, function: function)
+               medium, medium-x, medium-y, function: function)
 end method copy-from-pixmap;
 
 define sealed method copy-to-pixmap
@@ -115,7 +115,7 @@ define sealed method copy-to-pixmap
     pixmap := make-pixmap(medium, width, height)
   end;
   do-copy-area(medium, medium-x, medium-y, width, height,
-	       pixmap, pixmap-x, pixmap-y, function: function);
+               pixmap, pixmap-x, pixmap-y, function: function);
   pixmap
 end method copy-to-pixmap;
 
@@ -162,14 +162,14 @@ end method update-mirror-transform;
 define macro with-output-to-pixmap
   { with-output-to-pixmap (?medium:name = ?sheet:name, #rest ?options:expression) ?:body end }
     => { begin
-	   let with-output-to-pixmap-body = method (?medium) ?body end;
-	   do-with-output-to-pixmap(?sheet, with-output-to-pixmap-body, ?options)
-	 end }
+           let with-output-to-pixmap-body = method (?medium) ?body end;
+           do-with-output-to-pixmap(?sheet, with-output-to-pixmap-body, ?options)
+         end }
   { with-output-to-pixmap (?medium:name, #rest ?options:expression) ?:body end }
     => { begin
-	   let with-output-to-pixmap-body = method (?medium) ?body end;
-	   do-with-output-to-pixmap(?medium, with-output-to-pixmap-body, ?options)
-	 end }
+           let with-output-to-pixmap-body = method (?medium) ?body end;
+           do-with-output-to-pixmap(?medium, with-output-to-pixmap-body, ?options)
+         end }
 end macro with-output-to-pixmap;
 
 define method do-with-output-to-pixmap
@@ -182,7 +182,7 @@ define method do-with-output-to-pixmap
                          width: width, height: height);
   let pixmap-sheet
     = make(<pixmap-sheet>,
-	   port: _port, medium: pixmap-medium,
+           port: _port, medium: pixmap-medium,
            width: width, height: height);
   medium-foreground(pixmap-medium) := medium-foreground(medium);
   medium-background(pixmap-medium) := medium-background(medium);
@@ -211,14 +211,14 @@ end method do-with-output-to-pixmap;
 define macro with-double-buffering
   { with-double-buffering (?medium:name = ?sheet:name, #rest ?options:expression) ?:body end }
     => { begin
-	   let with-double-buffering-body = method (?medium) ?body end;
-	   do-with-double-buffering(?sheet, with-double-buffering-body, ?options)
-	 end }
+           let with-double-buffering-body = method (?medium) ?body end;
+           do-with-double-buffering(?sheet, with-double-buffering-body, ?options)
+         end }
   { with-double-buffering (?medium:name, #rest ?options:expression) ?:body end }
     => { begin
-	   let with-double-buffering-body = method (?medium) ?body end;
-	   do-with-double-buffering(?medium, with-double-buffering-body, ?options)
-	 end }
+           let with-double-buffering-body = method (?medium) ?body end;
+           do-with-double-buffering(?medium, with-double-buffering-body, ?options)
+         end }
 end macro with-double-buffering;
 
 define method do-with-double-buffering
@@ -255,7 +255,7 @@ define method do-with-double-buffering
      #key x = 0, y = 0, width, height, pixmap) => (#rest values)
   with-sheet-medium (medium = sheet)
     do-with-double-buffering(medium, continuation,
-			     x: x, y: y, width: width, height: height, pixmap: pixmap)
+                             x: x, y: y, width: width, height: height, pixmap: pixmap)
   end
 end method do-with-double-buffering;
 
@@ -286,7 +286,7 @@ define function draw-pixmap*
   dynamic-extent(keys);
   ignore(function);
   apply(draw-pixmap, medium, pixmap,
-	point-x(point), point-y(point), keys)
+        point-x(point), point-y(point), keys)
 end function draw-pixmap*;
 
 

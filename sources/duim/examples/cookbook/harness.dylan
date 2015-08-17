@@ -20,7 +20,7 @@ define method find-example-class (class :: <class>)
   end
 end method find-example-class;
 
-define method install-example 
+define method install-example
     (frame-class :: <class>, title :: <string>)
   let example = find-example-class(frame-class);
   if (example)
@@ -31,8 +31,8 @@ define method install-example
   frame-class
 end method install-example;
 
-define method start-example-frame 
-    (frame :: <frame>, class :: <class>, 
+define method start-example-frame
+    (frame :: <frame>, class :: <class>,
      #rest args,
      #key frame-manager: framem)
  => (example-frame :: <frame>)
@@ -43,10 +43,10 @@ define method start-example-frame
         let title = example[1];
         let example-frame
           = if (example)
-	      apply(make, frame-class, owner: frame, title: title, args)
-	    else
-	      apply(make, class, owner: frame, title: "Example", args)
-	    end;
+              apply(make, frame-class, owner: frame, title: title, args)
+            else
+              apply(make, class, owner: frame, title: "Example", args)
+            end;
         frame-mapped?(example-frame) := #t;
         example-frame
       end;
@@ -67,8 +67,8 @@ end method sorted-example-frames;
 define frame <examples-harness> (<simple-frame>)
   pane update (frame)
     make(<push-button>,
-	      label: "Update",
-	      activate-callback: update-examples-harness);
+              label: "Update",
+              activate-callback: update-examples-harness);
   pane examples (frame)
     make(<list-control>,
          items: sorted-example-frames(),
@@ -87,13 +87,13 @@ define frame <examples-harness> (<simple-frame>)
   layout (frame) frame.main-layout;
 end frame <examples-harness>;
 
-define method update-examples-harness 
+define method update-examples-harness
     (sheet :: <sheet>) => ()
   let frame = sheet-frame(sheet);
   gadget-items(frame.examples) := sorted-example-frames()
 end method update-examples-harness;
 
-define method start-examples 
+define method start-examples
     () => (status-code :: <integer>)
   let frame = make(<examples-harness>, title: "Examples");
   start-frame(frame)

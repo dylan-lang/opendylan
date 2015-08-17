@@ -35,15 +35,15 @@ end;
 // Make a button with a specified label that, when pressed, sends a
 // specified action to the game-pane.
 
-define method make-action-button 
+define method make-action-button
     (frame :: <game-frame>, action :: <action>,
      label :: type-union(<string>, <image>))
  => (button :: <push-button>)
   make(<push-button>, label: label, accepts-focus?: #f,
        activate-callback:
-	 method (button)
-	   act(frame.game-pane, action)
-	 end);
+         method (button)
+           act(frame.game-pane, action)
+         end);
 end;
 
 // The frame for a game of tetris contains:
@@ -71,12 +71,12 @@ define frame <game-frame> (<simple-frame>)
   slot ready-for-tick :: <boolean>, init-value: #t;
   pane exit-button (frame)
     make(<push-menu-button>, label: "E&xit",
-	 accelerator:
-	   make(<keyboard-gesture>, keysym: #"f4", modifier-state: $alt-key),
-	 activate-callback:
-	   method (button)
-	     exit-frame(sheet-frame(button))
-	   end);
+         accelerator:
+           make(<keyboard-gesture>, keysym: #"f4", modifier-state: $alt-key),
+         activate-callback:
+           method (button)
+             exit-frame(sheet-frame(button))
+           end);
   pane controls (frame)
     horizontally (spacing: 2)
       make-action-button(frame, #"left", "L");
@@ -94,25 +94,25 @@ define frame <game-frame> (<simple-frame>)
   pane status (frame)
     make(<status-bar>);
   menu-bar (frame)
-    make(<menu-bar>, 
-	 children:
-	   vector(make(<menu>, label: "&File", 
-		       children: 
-			 vector(make(<menu-button>, label: "New Game",
-				     activate-callback: (method (b) new-game(frame); end),
-				     accelerator: make(<keyboard-gesture>,
-						       keysym: #"n", modifier-state: $control-key)),
-				make(<menu-box>,
-				     children: vector(frame.exit-button))
-				  )),
-     make(<menu>, label: "&Help", 
-	  children: 
-	    vector(make(<menu-button>, label: "About Tetris",
-			activate-callback: (method (b) about-display(frame); end),
-			accelerator: make(<keyboard-gesture>,
-					  keysym: #"f1", modifier-state: 0))
-		     ))
-		    ));
+    make(<menu-bar>,
+         children:
+           vector(make(<menu>, label: "&File",
+                       children:
+                         vector(make(<menu-button>, label: "New Game",
+                                     activate-callback: (method (b) new-game(frame); end),
+                                     accelerator: make(<keyboard-gesture>,
+                                                       keysym: #"n", modifier-state: $control-key)),
+                                make(<menu-box>,
+                                     children: vector(frame.exit-button))
+                                  )),
+     make(<menu>, label: "&Help",
+          children:
+            vector(make(<menu-button>, label: "About Tetris",
+                        activate-callback: (method (b) about-display(frame); end),
+                        accelerator: make(<keyboard-gesture>,
+                                          keysym: #"f1", modifier-state: 0))
+                     ))
+                    ));
   layout (frame) frame.main-layout;
   status-bar (frame) frame.status;
   keyword title: = "Tetris";
@@ -148,7 +148,7 @@ define method handle-repaint (me :: <game-pane>, med :: <medium>, reg :: <region
     cx := 0;
     for (x :: <integer> from 0 below me.game.width)
       with-drawing-options (med, brush: me.game.wall[x,y])
-	draw-rectangle(med, cx, cy, cx + cs + 1, cy + cs + 1, filled?: #t);
+        draw-rectangle(med, cx, cy, cx + cs + 1, cy + cs + 1, filled?: #t);
       end;
       cx := cx + cs;
     end;
@@ -198,7 +198,7 @@ end;
 define method new-game(frame :: <game-frame>)
   restart-game(frame.game);
   repaint-sheet(frame.game-pane, $everywhere);
-  update-score(frame); 
+  update-score(frame);
 end;
 
 // Display a simple about message
@@ -206,6 +206,6 @@ end;
 define method about-display (frame :: <game-frame>)
   notify-user
     ("Tetris, version 1.0\n\n"
-     "Use arrow keys to move and space to drop, or click on the buttons.", 
+     "Use arrow keys to move and space to drop, or click on the buttons.",
      owner: frame)
 end;

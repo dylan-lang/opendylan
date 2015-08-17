@@ -49,7 +49,7 @@ define sealed method char-less?
   code1 < code2
 end method char-less?;
 
-define sealed method char-greater? 
+define sealed method char-greater?
     (char1 :: <byte-character>, char2 :: <byte-character>)
  => (true? :: <boolean>)
   let code1 = as(<integer>, char1);
@@ -66,26 +66,26 @@ end method char-greater?;
 
 /// Case-insensitive string comparisons
 
-define sealed method string-equal? 
+define sealed method string-equal?
     (string1 :: <byte-string>, string2 :: <byte-string>,
      #key start1 :: <integer> = 0, end1 :: <integer> = size(string1),
-	  start2 :: <integer> = 0, end2 :: <integer> = size(string2))
+          start2 :: <integer> = 0, end2 :: <integer> = size(string2))
  => (true? :: <boolean>)
   range-check(string1, size(string1), start1, end1);
   range-check(string2, size(string2), start2, end2);
   block (return)
     end1 - start1 = end2 - start2
     & without-bounds-checks
-	for (i :: <integer> from start1 below end1,
-	     j :: <integer> from start2 below end2)
-	  let char1 :: <byte-character> = string1[i];
-	  let char2 :: <byte-character> = string2[j];
-	  unless (char-equal?(char1, char2))
-	    return(#f)
-	  end;
-	finally
-	  return(#t);
-	end
+        for (i :: <integer> from start1 below end1,
+             j :: <integer> from start2 below end2)
+          let char1 :: <byte-character> = string1[i];
+          let char2 :: <byte-character> = string2[j];
+          unless (char-equal?(char1, char2))
+            return(#f)
+          end;
+        finally
+          return(#t);
+        end
       end
   end
 end method string-equal?;
@@ -93,14 +93,14 @@ end method string-equal?;
 define sealed method string-less?
     (string1 :: <byte-string>, string2 :: <byte-string>,
      #key start1 :: <integer> = 0, end1 :: <integer> = size(string1),
-	  start2 :: <integer> = 0, end2 :: <integer> = size(string2))
+          start2 :: <integer> = 0, end2 :: <integer> = size(string2))
  => (true? :: <boolean>)
   range-check(string1, size(string1), start1, end1);
   range-check(string2, size(string2), start2, end2);
   let length1 = end1 - start1;
   let length2 = end2 - start2;
-  let result = string-compare(string1, start1, 
-			      string2, start2, min(length1, length2));
+  let result = string-compare(string1, start1,
+                              string2, start2, min(length1, length2));
   if (result = 0)
     length1 < length2
   else
@@ -111,14 +111,14 @@ end method string-less?;
 define sealed method string-greater?
     (string1 :: <byte-string>, string2 :: <byte-string>,
      #key start1 :: <integer> = 0, end1 :: <integer> = size(string1),
-	  start2 :: <integer> = 0, end2 :: <integer> = size(string2))
+          start2 :: <integer> = 0, end2 :: <integer> = size(string2))
  => (true? :: <boolean>)
   range-check(string1, size(string1), start1, end1);
   range-check(string2, size(string2), start2, end2);
   let length1 = end1 - start1;
   let length2 = end2 - start2;
   let result = string-compare(string1, start1,
-			      string2, start2, min(length1, length2));
+                              string2, start2, min(length1, length2));
   if (result = 0)
     length1 > length2
   else
@@ -127,7 +127,7 @@ define sealed method string-greater?
 end method string-greater?;
 
 define sealed method string-compare
-    (string1 :: <byte-string>, start1 :: <integer>, 
+    (string1 :: <byte-string>, start1 :: <integer>,
      string2 :: <byte-string>, start2 :: <integer>, count :: <integer>)
  => (result :: <integer>)
   let subrange1 = size(string1) - start1;
@@ -136,12 +136,12 @@ define sealed method string-compare
   case
     count > subrange1 =>
       case
-	count > subrange2 =>
-	  count := min(subrange1, subrange2);
-	  state := 1;
-	otherwise =>
-	  count := subrange1;
-	  state := 2
+        count > subrange2 =>
+          count := min(subrange1, subrange2);
+          state := 1;
+        otherwise =>
+          count := subrange1;
+          state := 2
       end;
     count > subrange2 =>
       count := subrange2;
@@ -150,29 +150,29 @@ define sealed method string-compare
   block (return)
     without-bounds-checks
       for (i1 :: <integer> = start1 then i1 + 1,
-	   i2 :: <integer> = start2 then i2 + 1,
-	   until: count = 0)
-	let char1 :: <byte-character> = string1[i1];
-	let char2 :: <byte-character> = string2[i2];
-	unless (char-equal?(char1, char2))
-	  return(if (char-less?(char1, char2))
-		   (start1 - i1) - 1
-		 else
-		   (i1 + 1) - start1
-		 end)
-	end;
-	count := count - 1;
+           i2 :: <integer> = start2 then i2 + 1,
+           until: count = 0)
+        let char1 :: <byte-character> = string1[i1];
+        let char2 :: <byte-character> = string2[i2];
+        unless (char-equal?(char1, char2))
+          return(if (char-less?(char1, char2))
+                   (start1 - i1) - 1
+                 else
+                   (i1 + 1) - start1
+                 end)
+        end;
+        count := count - 1;
       finally
-	select (state)
-	  0 => 0;
-	  1 => case
-		 subrange1 = subrange2 => 0;
-		 subrange1 < subrange2 => -1 - i1;
-		 otherwise => i1 + 1
-	       end;
-	  2 => (start1 - i1) - 1;
-	  otherwise => (i1 - start1) + 1
-	end
+        select (state)
+          0 => 0;
+          1 => case
+                 subrange1 = subrange2 => 0;
+                 subrange1 < subrange2 => -1 - i1;
+                 otherwise => i1 + 1
+               end;
+          2 => (start1 - i1) - 1;
+          otherwise => (i1 - start1) + 1
+        end
       end
     end
   end
@@ -193,7 +193,7 @@ define sealed method digit-char?
   (as(<integer>, '0') <= code & code <= as(<integer>, '9'))
   | (radix > 10 & radix < 36
      & ((code   >= as(<integer>, 'A') & code - as(<integer>, 'A') < radix - 10)
-	| (code >= as(<integer>, 'a') & code - as(<integer>, 'a') < radix - 10)))
+        | (code >= as(<integer>, 'a') & code - as(<integer>, 'a') < radix - 10)))
 end method digit-char?;
 
 define sealed inline method alphanumeric-char?
@@ -260,21 +260,21 @@ define sealed method string-capitalize!
     for (i :: <integer> from _start below _end)
       let char :: <byte-character> = string[i];
       case
-	~state =>		// between words
-	  case
-	    alpha-char?(char) =>
-	      string[i] := as-uppercase(char);
-	      state := #t;
-	    digit-char?(char) =>
-	      state := #t;
-	  end;
-	otherwise =>
-	  case
-	    alpha-char?(char) =>
-	      string[i] := as-lowercase(char);
-	    ~digit-char?(char) =>
-	      state := #f;
-	  end;
+        ~state =>                // between words
+          case
+            alpha-char?(char) =>
+              string[i] := as-uppercase(char);
+              state := #t;
+            digit-char?(char) =>
+              state := #t;
+          end;
+        otherwise =>
+          case
+            alpha-char?(char) =>
+              string[i] := as-lowercase(char);
+            ~digit-char?(char) =>
+              state := #f;
+          end;
       end
     end
   end;
@@ -298,42 +298,42 @@ define method string-pluralize
     let penult-char :: <byte-character>
       = if (length > 1) string[length - 2] else '*' end;
     local method find-char (chars :: <byte-string>, char :: <byte-character>)
-	    member?(char, chars, test: char-equal?)
-	  end method;
+            member?(char, chars, test: char-equal?)
+          end method;
     case
       char-equal?(last-char, 'y')
       & ~find-char("aeiou", penult-char) =>
-	flush  := 1;
-	suffix := "ies";
+        flush  := 1;
+        suffix := "ies";
       string-equal?(string, "ox", start1: pos)
       | string-equal?(string, "vax", start1: pos) =>
-	suffix := "en";
+        suffix := "en";
       length >= 5
       & string-equal?(string, "index", start1: length - 5) =>
-	flush  := 2;
-	suffix := "ices";
+        flush  := 2;
+        suffix := "ices";
       (char-equal?(last-char, 'h') & find-char("cs", penult-char))
       | find-char("szx", last-char) =>
-	suffix := "es";
+        suffix := "es";
       length >= 3
       & string-equal?(string, "man", start1: length - 3)
       & ~string-equal?(string, "human", start1: pos) =>
-	flush  := 2;
-	suffix := "en";
+        flush  := 2;
+        suffix := "en";
       length >= 3
       & string-equal?(string, "ife", start1: length - 3) =>
-	flush  := 2;
-	suffix := "ves";
+        flush  := 2;
+        suffix := "ves";
       length >= 5
       & string-equal?(string, "child", start1: length - 5) =>
-	suffix := "ren";
+        suffix := "ren";
       otherwise =>
-	suffix := "s";
+        suffix := "s";
     end;
     concatenate-as(<byte-string>,
-		   if (flush) copy-sequence(string, start: 0, end: length - flush)
-		   else string end,
-		   suffix)
+                   if (flush) copy-sequence(string, start: 0, end: length - flush)
+                   else string end,
+                   suffix)
   end
 end method string-pluralize;
 
@@ -346,25 +346,25 @@ define method string-a-or-an
     ""
   else
     let char :: <byte-character> = string[0];
-    if (digit-char?(char))	// pronounce leading digits number
+    if (digit-char?(char))        // pronounce leading digits number
       string-a-or-an(pronounce-string(string))
     else
       local method find-char (chars :: <byte-string>, char :: <byte-character>)
-	      member?(char, chars, test: char-equal?)
-	    end method;
+              member?(char, chars, test: char-equal?)
+            end method;
       case
-	string-equal?(string, "one")
-	| (length >= 4 & string-equal?(string, "one ", end1: 4)) =>
-	  "a ";
-	length = 1
-	// "an x", but "a xylophone"
-	// "an fff", but "a frog"
-	| ~string-search-set(string, "aeiou")
-	// "an xl400", but "a xylophone"
+        string-equal?(string, "one")
+        | (length >= 4 & string-equal?(string, "one ", end1: 4)) =>
+          "a ";
+        length = 1
+        // "an x", but "a xylophone"
+        // "an fff", but "a frog"
+        | ~string-search-set(string, "aeiou")
+        // "an xl400", but "a xylophone"
         | string-search-set(string, "0123456789") =>
-	  if (find-char("aefhilmnorsx", char)) "an " else "a " end;
-	otherwise =>
-	  if (find-char("aio", char)
+          if (find-char("aefhilmnorsx", char)) "an " else "a " end;
+        otherwise =>
+          if (find-char("aio", char)
               // "an egg", but "a eunich"
               | (char-equal?(char, 'e')
                  & ~string-equal?(string, "eu", end1: 2))
@@ -376,10 +376,10 @@ define method string-a-or-an
                      & (length < 5
                         // Treat "y" as a vowel here, e.g., "unicycle"
                         | ~find-char("bcdfghjklmnpqrstvwxz", string[4])))))
-	    "an "
-	  else
+            "an "
+          else
             "a "
-	  end
+          end
       end
     end
   end
@@ -395,38 +395,38 @@ end method pronounce-string;
 define method string-search-set
     (string :: <byte-string>, char-set :: <sequence>,
      #key start: _start :: <integer> = 0, end: _end :: <integer> = size(string),
-	  from-end? :: <boolean> = #f, test = char-equal?)
+          from-end? :: <boolean> = #f, test = char-equal?)
  => (index :: false-or(<integer>))
   range-check(string, size(string), _start, _end);
   block (return)
     let set-length :: <integer> = size(char-set);
     without-bounds-checks
       if (from-end?)
-	for (i :: <integer> = _end - 1 then i - 1,
-	     until: i < _start)
-	  let char :: <byte-character> = string[i];
-	  for (j :: <integer> = 0 then j + 1,
-	       until: j >= set-length)
-	    when (test(char, char-set[j]))
-	      return(i)
-	    end;
-	  finally #f;
-	  end;
-	finally #f;
-	end
+        for (i :: <integer> = _end - 1 then i - 1,
+             until: i < _start)
+          let char :: <byte-character> = string[i];
+          for (j :: <integer> = 0 then j + 1,
+               until: j >= set-length)
+            when (test(char, char-set[j]))
+              return(i)
+            end;
+          finally #f;
+          end;
+        finally #f;
+        end
       else
-	for (i :: <integer> = _start then i + 1,
-	     until: i >= _end)
-	  let char :: <byte-character> = string[i];
-	  for (j :: <integer> = 0 then j + 1,
-	       until: j >= set-length)
-	    when (test(char, char-set[j]))
-	      return(i)
-	    end;
-	  finally #f;
-	  end;
-	finally #f;
-	end
+        for (i :: <integer> = _start then i + 1,
+             until: i >= _end)
+          let char :: <byte-character> = string[i];
+          for (j :: <integer> = 0 then j + 1,
+               until: j >= set-length)
+            when (test(char, char-set[j]))
+              return(i)
+            end;
+          finally #f;
+          end;
+        finally #f;
+        end
       end
     end
   end

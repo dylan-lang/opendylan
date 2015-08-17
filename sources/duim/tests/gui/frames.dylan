@@ -101,13 +101,13 @@ define frame <frame-test-frame> (<simple-frame>)
   pane frame-height-pane (frame)
     make(<text-field>, value-type: <integer>, value: 300);
   pane make-frame-button (frame)
-    make(<push-button>, 
+    make(<push-button>,
          label: "Make the frame",
          activate-callback: method (gadget)
                               frame-test-make-frame(sheet-frame(gadget))
                             end);
   pane update-frame-button (frame)
-    make(<push-button>, 
+    make(<push-button>,
          label: "Update it",
          enabled?: #f,
          activate-callback: method (gadget)
@@ -129,14 +129,14 @@ define frame <frame-test-frame> (<simple-frame>)
                             frame.frame-extras-pane,
                             make(<label>, label: "Layout:"),
                             frame.frame-layout-pane,
-			    make(<label>, label: "X:"),
-			    frame.frame-x-pane,
-			    make(<label>, label: "Y:"),
-			    frame.frame-y-pane,
-			    make(<label>, label: "Width:"),
-			    frame.frame-width-pane,
-			    make(<label>, label: "Height:"),
-			    frame.frame-height-pane));
+                            make(<label>, label: "X:"),
+                            frame.frame-x-pane,
+                            make(<label>, label: "Y:"),
+                            frame.frame-y-pane,
+                            make(<label>, label: "Width:"),
+                            frame.frame-width-pane,
+                            make(<label>, label: "Height:"),
+                            frame.frame-height-pane));
       make(<separator>);
       horizontally (spacing: 4)
         frame.make-frame-button;
@@ -165,10 +165,10 @@ define method frame-test-make-frame (frame :: <frame-test-frame>) => ()
                       end);
   let menu-bar
     = if (member?(#"menu-bar", extras))
-	let menu
-	  = make(<menu>, 
-		 label: "Menu",
-		 children: vector(make(<menu-box>, items: #(1, 2, 3))));
+        let menu
+          = make(<menu>,
+                 label: "Menu",
+                 children: vector(make(<menu-box>, items: #(1, 2, 3))));
         make(<menu-bar>, children: vector(menu))
       end;
   let layout
@@ -177,8 +177,8 @@ define method frame-test-make-frame (frame :: <frame-test-frame>) => ()
           make(<button>, label: "Press Me!");
         <tree-control> =>
           make(<tree-control>,
-	       roots: #(1), 
-               children-generator: method (x) 
+               roots: #(1),
+               children-generator: method (x)
                                     vector(x * 2, 1 + (x * 2))
                                   end);
         #f =>
@@ -212,24 +212,24 @@ define method frame-test-update-frame (frame :: <frame-test-frame>) => ()
   frame-title(test-frame) := title;
   let current-layout-option
     = select (frame-layout(test-frame) by instance?)
-	<button>       => <button>;
-	<tree-control> => <tree-control>;
-	otherwise      => #f;
+        <button>       => <button>;
+        <tree-control> => <tree-control>;
+        otherwise      => #f;
       end;
   if (layout-option ~= current-layout-option)
     let layout
       = select (layout-option)
-	  <button> =>
-	    make(<button>, label: "Press Me!");
-	  <tree-control> =>
-	    make(<tree-control>,
-		 roots: #(1), 
-		 children-generator: method (x) 
-				      vector(x * 2, 1 + (x * 2))
-				    end);
-	  #f =>
-	    #f;
-	end;
+          <button> =>
+            make(<button>, label: "Press Me!");
+          <tree-control> =>
+            make(<tree-control>,
+                 roots: #(1),
+                 children-generator: method (x)
+                                      vector(x * 2, 1 + (x * 2))
+                                    end);
+          #f =>
+            #f;
+        end;
     frame-layout(test-frame) := layout;
   end;
   if (x & y)
@@ -247,70 +247,70 @@ define frame <multiple-layout-frame> (<simple-frame>)
   slot current-layout = #"debugging";
   pane file-menu (frame)
     make(<menu>,
-	 label: "File",
-	 children: vector(frame.switch-button,
-			  frame.exit-button));
+         label: "File",
+         children: vector(frame.switch-button,
+                          frame.exit-button));
   pane switch-button (frame)
     make(<menu-button>,
-	 label: "Switch layouts",
-	 activate-callback: method (button)
-			      select (frame.current-layout)
-         			#"debugging" =>
-         			  frame.current-layout := #"interacting";
-         			  frame-layout(frame)  := frame.interacting-layout;
-         			#"interacting" =>
-         			  frame.current-layout := #"debugging";
-         			  frame-layout(frame)  := frame.debugging-layout;
-			      end
-			    end);
+         label: "Switch layouts",
+         activate-callback: method (button)
+                              select (frame.current-layout)
+                                 #"debugging" =>
+                                   frame.current-layout := #"interacting";
+                                   frame-layout(frame)  := frame.interacting-layout;
+                                 #"interacting" =>
+                                   frame.current-layout := #"debugging";
+                                   frame-layout(frame)  := frame.debugging-layout;
+                              end
+                            end);
   pane exit-button (frame)
     make(<menu-button>,
-	 label: "Exit",
-	 activate-callback: method (button)
-			      exit-frame(sheet-frame(button))
-			    end);
+         label: "Exit",
+         activate-callback: method (button)
+                              exit-frame(sheet-frame(button))
+                            end);
   pane context-pane (frame)
     make(<drawing-pane>,
-	 display-function:
-	   method (pane, medium, region)
-	     draw-text(medium, "[Error message]", 0, 0,
-		       align-x: #"left", align-y: #"top")
-	   end);
+         display-function:
+           method (pane, medium, region)
+             draw-text(medium, "[Error message]", 0, 0,
+                       align-x: #"left", align-y: #"top")
+           end);
   pane stack-pane (frame)
     make(<drawing-pane>,
-	 display-function:
-	   method (pane, medium, region)
-	     draw-text(medium, "[Stack trace]", 0, 0,
-		       align-x: #"left", align-y: #"top")
-	   end);
+         display-function:
+           method (pane, medium, region)
+             draw-text(medium, "[Stack trace]", 0, 0,
+                       align-x: #"left", align-y: #"top")
+           end);
   pane source-pane (frame)
     make(<drawing-pane>,
-	 display-function:
-	   method (pane, medium, region)
-	     draw-text(medium, "[Source code]", 0, 0,
-		       align-x: #"left", align-y: #"top")
-	   end);
+         display-function:
+           method (pane, medium, region)
+             draw-text(medium, "[Source code]", 0, 0,
+                       align-x: #"left", align-y: #"top")
+           end);
   pane interactor-pane (frame)
     make(<drawing-pane>,
-	 display-function:
-	   method (pane, medium, region)
-	     draw-text(medium, "[Interactor]", 0, 0,
-		       align-x: #"left", align-y: #"top")
-	   end,
+         display-function:
+           method (pane, medium, region)
+             draw-text(medium, "[Interactor]", 0, 0,
+                       align-x: #"left", align-y: #"top")
+           end,
          height: $fill);
   pane message-pane (frame)
     make(<drawing-pane>,
-	 display-function:
-	   method (pane, medium, region)
-	     draw-text(medium, "[Other messages]", 0, 0,
-		       align-x: #"left", align-y: #"top")
-	   end);
+         display-function:
+           method (pane, medium, region)
+             draw-text(medium, "[Other messages]", 0, 0,
+                       align-x: #"left", align-y: #"top")
+           end);
   pane debugging-layout (frame)
     vertically ()
       with-border (type: #"sunken") frame.context-pane end;
       horizontally ()
-	with-border (type: #"sunken") frame.stack-pane end;
-	with-border (type: #"sunken") frame.source-pane end;
+        with-border (type: #"sunken") frame.stack-pane end;
+        with-border (type: #"sunken") frame.source-pane end;
       end;
       with-border (type: #"sunken") frame.interactor-pane end;
       with-border (type: #"sunken") frame.message-pane end;
@@ -322,9 +322,9 @@ define frame <multiple-layout-frame> (<simple-frame>)
     end;
   layout (frame)
     frame.debugging-layout;
-  menu-bar (frame) 
+  menu-bar (frame)
     make(<menu-bar>,
-	 children: vector(frame.file-menu));
+         children: vector(frame.file-menu));
   keyword width:  = 300;
   keyword height: = 400;
 end frame <multiple-layout-frame>;

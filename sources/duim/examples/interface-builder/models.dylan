@@ -66,10 +66,10 @@ define method generate-next-name
                      remove-number?: remove-number?)
 end method generate-next-name;
 
-define method add-model-child 
+define method add-model-child
     (sheet :: <model-sheet>, info :: <gadget-info>)
  => (child :: <model-gadget>)
-  let new-child 
+  let new-child
     = make(<model-gadget>,
            class: info,
            parent: sheet,
@@ -78,10 +78,10 @@ define method add-model-child
   new-child
 end method add-model-child;
 
-define method add-model-child 
+define method add-model-child
     (sheet :: <model-sheet>, info :: <layout-info>)
  => (child :: <model-layout>)
-  let new-child 
+  let new-child
     = make(<model-layout>,
            class: info,
            parent: sheet);
@@ -89,7 +89,7 @@ define method add-model-child
   new-child
 end method add-model-child;
 
-define method remove-model-child 
+define method remove-model-child
     (sheet :: <model-sheet>, child :: <model-sheet>)
  => (child :: <model-sheet>)
   remove!(model-children(sheet), child);
@@ -133,7 +133,7 @@ define method generate-next-name
                      remove-number?: remove-number?)
 end method generate-next-name;
 
-define method add-model-child 
+define method add-model-child
     (frame :: <model-frame>, info :: <gadget-info>)
  => (child :: <model-gadget>)
   let model = make(<model-gadget>, class: info, parent: frame);
@@ -144,13 +144,13 @@ define method add-model-child
   end
 end method add-model-child;
 
-define method add-model-child 
+define method add-model-child
     (frame :: <model-frame>, info :: <layout-info>)
  => (child :: <model-layout>)
   frame.model-layout := make(<model-layout>, class: info, parent: frame)
 end method add-model-child;
 
-define method remove-model-child 
+define method remove-model-child
     (frame :: <model-frame>, child :: <model-sheet>)
  => (child :: <model-sheet>)
   select (child)

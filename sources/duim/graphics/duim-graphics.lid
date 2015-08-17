@@ -3,7 +3,7 @@ Synopsis:     DUIM graphics
 Author:       Scott McKay, Andy Armstrong
 Target-Type:  dll
 Files:  library
-	module
+        module
         figure-graphics
         path-graphics
         pixmaps

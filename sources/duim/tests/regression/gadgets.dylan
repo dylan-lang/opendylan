@@ -11,18 +11,18 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define frame <bug-4195-frame> (<simple-frame>)
   pane list-control-pane (frame)
     make(<list-control>,
-	 items: #[1, 2, 3, 4, 5],
-	 selection-mode: #"multiple",
-	 value-changed-callback: test-value-changed-callback,
-	 activate-callback:      test-activate-callback);
+         items: #[1, 2, 3, 4, 5],
+         selection-mode: #"multiple",
+         value-changed-callback: test-value-changed-callback,
+         activate-callback:      test-activate-callback);
   pane table-control-pane (frame)
     make(<table-control>,
-	 items: #[1, 2, 3, 4, 5],
-	 headings: #["Value", "Doubled"],
-	 generators: vector(identity, method (x) x * 2 end),
-	 selection-mode: #"multiple",
-	 value-changed-callback: test-value-changed-callback,
-	 activate-callback:      test-activate-callback);
+         items: #[1, 2, 3, 4, 5],
+         headings: #["Value", "Doubled"],
+         generators: vector(identity, method (x) x * 2 end),
+         selection-mode: #"multiple",
+         value-changed-callback: test-value-changed-callback,
+         activate-callback:      test-activate-callback);
   layout (frame)
     vertically (spacing: 4)
       frame.list-control-pane;

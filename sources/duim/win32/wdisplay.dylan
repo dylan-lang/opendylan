@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Win32 displays, i.e., the screen
 
 // Mirror the display, set its region, and set its characteristics
-define sealed method initialize-display 
+define sealed method initialize-display
     (_port :: <win32-port>, _display :: <standard-display>) => ()
   let (display-width, display-height) = display-size(_display);
   //---*** Not sure what to do for this one:

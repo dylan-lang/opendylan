@@ -27,10 +27,10 @@ end class <menu-mirror>;
 define sealed domain make (singleton(<menu-mirror>));
 define sealed domain initialize (<menu-mirror>);
 
-define sealed method destroy-mirror 
+define sealed method destroy-mirror
     (_port :: <win32-port>, sheet :: <sheet>, mirror :: <menu-mirror>) => ()
   let handle :: <HMENU> = window-handle(mirror);
-  unless (null-handle?(handle))  
+  unless (null-handle?(handle))
     check-result("DestroyMenu", DestroyMenu(handle))
   end;
   // We have to explicitly do this here, since menus don't receive
@@ -167,12 +167,12 @@ define sealed method compute-standard-win32-mnemonic
   end
 end method compute-standard-win32-mnemonic;
 
-define inline function vowel? 
+define inline function vowel?
     (char :: <character>) => (vowel? :: <boolean>)
   member?(as-uppercase(char), "AEIOU")
 end function vowel?;
 
-define inline function consonant? 
+define inline function consonant?
     (char :: <character>) => (consonant? :: <boolean>)
   member?(as-uppercase(char), "BCDFGHJKLMNPQRSTVWXYZ")
 end function consonant?;
@@ -216,7 +216,7 @@ end method compute-used-mnemonics;
 // Note that all of the standard mnemonics and any user chosen ones
 // have already been removed from consideration by 'compute-used-mnemonics'.
 // Also note that we stop the processing at the first tab we find.
-define sealed method allocate-unique-mnemonic 
+define sealed method allocate-unique-mnemonic
     (gadget :: <gadget>, string :: <string>)
  => (index :: false-or(<integer>))
   assert(~empty?(string),
@@ -329,7 +329,7 @@ end class <menu-bar-mirror>;
 define sealed domain make (singleton(<menu-bar-mirror>));
 define sealed domain initialize (<menu-bar-mirror>);
 
-define sealed method do-make-mirror 
+define sealed method do-make-mirror
     (_port :: <win32-port>, menu-bar :: <win32-menu-bar>)
  => (mirror :: <win32-mirror>)
   let parent = top-level-sheet(menu-bar);
@@ -436,7 +436,7 @@ define sealed class <win32-menu>
   sealed slot menu-record-selection? = #f;
 end class <win32-menu>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <menu>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-menu>, #f)
@@ -473,9 +473,9 @@ define sealed method make-menu-mirror-for-owner
     (owner :: <sheet>, menu :: <win32-menu>, handle :: <HMENU>)
  => (mirror :: <popup-menu-mirror>)
   let selection-owner = menu-record-selection?(menu) & menu;
-  make(<popup-menu-mirror>, 
+  make(<popup-menu-mirror>,
        selection-owner: selection-owner,
-       sheet: menu, 
+       sheet: menu,
        handle: handle)
 end method make-menu-mirror-for-owner;
 
@@ -488,7 +488,7 @@ define sealed method make-menu-mirror-for-owner
   let new-index = ~mnemonic & allocate-unique-mnemonic(menu, text);
   let parent = sheet-device-parent(menu);
   let label = make-win32-mnemonic-label(text, mnemonic, index, new-index);
-  AppendMenu(window-handle(parent), 
+  AppendMenu(window-handle(parent),
              %logior($MF-POPUP, $MF-STRING),
              pointer-address(handle),
              label);
@@ -514,7 +514,7 @@ define inline-only C-function TrackPopupMenu-cmd
 end;
 
 define sealed method map-mirror
-    (_port :: <win32-port>, menu :: <win32-menu>, 
+    (_port :: <win32-port>, menu :: <win32-menu>,
      mirror :: <popup-menu-mirror>) => ()
   let owner  = menu-owner(menu);
   let owner  = if (frame?(owner)) top-level-sheet(owner) else owner end;
@@ -564,7 +564,7 @@ end method map-mirror;
 /*
 //--- Old asynchronous menu code
 define sealed method map-mirror
-    (_port :: <win32-port>, menu :: <win32-menu>, 
+    (_port :: <win32-port>, menu :: <win32-menu>,
      mirror :: <popup-menu-mirror>) => ()
   let owner  = menu-owner(menu);
   let owner  = if (frame?(owner)) top-level-sheet(owner) else owner end;
@@ -795,7 +795,7 @@ end method handle-gadget-activation;
 
 //--- This code is getting tricky... maybe we should cache the
 //--- item position in the button itself?
-define sealed method menu-button-position 
+define sealed method menu-button-position
     (menu :: <menu>, button :: <win32-menu-button-mixin>)
  => (position :: <integer>)
   let position = 0;
@@ -860,7 +860,7 @@ define sealed method menu-item-handle-and-position
             let submenu = GetSubMenu(parent-handle, i);
             if (submenu = handle) return(i) end
           end;
-          error("Failed to find menu position for %= in %=", 
+          error("Failed to find menu position for %= in %=",
                 gadget-label(menu) | menu,
                 (instance?(parent, <menu>) & gadget-label(parent)) | parent)
         end;
@@ -887,13 +887,13 @@ define sealed method note-gadget-value-changed
     (gadget :: <win32-menu-button-mixin>) => ()
   let (handle, id) = menu-item-handle-and-id(gadget);
   when (handle)
-    CheckMenuItem(handle, id, 
+    CheckMenuItem(handle, id,
                   %logior($MF-BYCOMMAND,
                           if (gadget-value(gadget)) $MF-CHECKED else $MF-UNCHECKED end))
   end
 end method note-gadget-value-changed;
 
-define sealed method note-gadget-enabled 
+define sealed method note-gadget-enabled
     (client, gadget :: <win32-menu-button-mixin>) => ()
   ignore(client);
   let (handle, id) = menu-item-handle-and-id(gadget);
@@ -911,7 +911,7 @@ define sealed method note-gadget-disabled
   end
 end method note-gadget-disabled;
 
-define sealed method note-gadget-enabled 
+define sealed method note-gadget-enabled
     (client, gadget :: <win32-menu>) => ()
   ignore(client);
   let (handle, position) = menu-item-handle-and-position(gadget);
@@ -970,7 +970,7 @@ define sealed class <win32-radio-menu-button>
      <leaf-pane>)
 end class <win32-radio-menu-button>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <radio-menu-button>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-radio-menu-button>, #f)
@@ -986,7 +986,7 @@ define sealed class <win32-check-menu-button>
      <leaf-pane>)
 end class <win32-check-menu-button>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <check-menu-button>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-check-menu-button>, #f)
@@ -1000,7 +1000,7 @@ define sealed domain initialize (<win32-check-menu-button>);
 
 define sealed method do-choose-from-menu
     (framem :: <win32-frame-manager>, owner :: <sheet>, menu :: <menu>,
-     #key title, value, label-key, value-key, 
+     #key title, value, label-key, value-key,
           width, height, foreground, background, text-style,
           multiple-sets?,
      #all-keys)

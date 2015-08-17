@@ -84,7 +84,7 @@ define method repaint-sheet
     (sheet :: <output-recording-mixin>, region :: <region>, #key medium, force?) => ()
   next-method();
   repaint-sheet(sheet-output-history(sheet), region,
-		medium: medium, force?: force?)
+                medium: medium, force?: force?)
 end method repaint-sheet;
 
 // Text recording supplies this method
@@ -140,8 +140,8 @@ define macro output-record-constructor-definer
   { define output-record-constructor ?class:name (?arglist:*) ?initargs:* end }
     => { define constant ?class ## "-constructor"
            = method (?arglist)
-	       make(?class, ?initargs)
-	     end method;
+               make(?class, ?initargs)
+             end method;
          gethash(*output-record-constructors*, ?class) := ?class ## "-constructor"
        }
 end macro output-record-constructor-definer;
@@ -167,7 +167,7 @@ define method do-with-output-recording-options
      #key record? = sheet-recording?(sheet), draw? = sheet-drawing?(sheet))
  => (#rest values)
   dynamic-bind (sheet-recording?(sheet) = record?,
-		sheet-drawing?(sheet) = draw?)
+                sheet-drawing?(sheet) = draw?)
     continuation()
   end
 end method do-with-output-recording-options;
@@ -181,7 +181,7 @@ define method do-with-new-output-record
   dynamic-extent(initargs);
   with-keywords-removed (initargs = initargs, #[record-class:, constructor:, parent:])
     apply(do-with-new-output-record-1,
-	  sheet, continuation, record-class, constructor, parent, initargs)
+          sheet, continuation, record-class, constructor, parent, initargs)
   end
 end method do-with-new-output-record;
 
@@ -210,19 +210,19 @@ define method do-with-new-output-record-1
     // Output records that care about the caret position will
     // record the caret position inside of 'initialize'
     new-record := if (constructor)
-		    apply(constructor,
-			  sheet: sheet,
-			  region: region,
-			  transform: transform,
-			  initargs)
-		  else
-		    apply(make-output-record,
-			  record-class,
-			  sheet: sheet,
-			  region: region,
-			  transform: transform,
-			  initargs)
-		  end;
+                    apply(constructor,
+                          sheet: sheet,
+                          region: region,
+                          transform: transform,
+                          initargs)
+                  else
+                    apply(make-output-record,
+                          record-class,
+                          sheet: sheet,
+                          region: region,
+                          transform: transform,
+                          initargs)
+                  end;
   end;
   do-with-output-record(sheet, new-record, continuation, record-x, record-y);
   when (redisplaying?)
@@ -241,7 +241,7 @@ define method do-with-new-output-record
     (sheet :: <sheet>, continuation :: <function>, #rest initargs, #key)
  => (record :: singleton(#f))
   ignore(initargs);
-  continuation(#f);		// no output record for you!
+  continuation(#f);                // no output record for you!
   #f
 end method do-with-new-output-record;
 
@@ -259,8 +259,8 @@ define method do-with-output-record
   stream-close-text-output-record(outer-stream(sheet));
   let current-position = sheet-output-record-position(sheet);
   dynamic-bind (point-x(current-position) = record-x,
-		point-y(current-position) = record-y,
-		sheet-output-record(sheet) = record)
+                point-y(current-position) = record-y,
+                sheet-output-record(sheet) = record)
     continuation(record);
     // Close the any text record here.  Records that care about
     // the caret position should also record the end caret position.
@@ -280,8 +280,8 @@ define method do-with-output-to-output-record
   dynamic-extent(initargs);
   with-output-recording-options (sheet, draw?: #f, record?: #t)
     dynamic-bind (sheet.%output-history = make(<sequence-output-history>),
-		  sheet-output-record(sheet) = #f,
-		  stream-text-output-record(sheet) = #f)
+                  sheet-output-record(sheet) = #f,
+                  stream-text-output-record(sheet) = #f)
       apply(do-with-new-output-record, sheet, continuation, initargs)
     end
   end
@@ -291,7 +291,7 @@ define method do-with-output-to-output-record
     (sheet :: <sheet>, continuation :: <function>, #rest initargs, #key)
  => (record :: singleton(#f))
   ignore(initargs);
-  continuation(#f);		// no output record for you!
+  continuation(#f);                // no output record for you!
   #f
 end method do-with-output-to-output-record;
 
@@ -356,15 +356,15 @@ define method note-region-changed
     let (sleft, stop, sright, sbottom) = box-edges(sheet);
     // Update the sheet's region, and then the scroll bars
     when (left  < sleft
-	  | top < stop
-	  | right  > sright
-	  | bottom > sbottom)
+          | top < stop
+          | right  > sright
+          | bottom > sbottom)
       min!(left, sleft);
       min!(top,  stop);
       max!(right,  sright);
       max!(bottom, sbottom);
-      sheet-region(sheet) :=		// might cons a new region...
-	set-box-edges(sheet-region(sheet), left, top, right, bottom);
+      sheet-region(sheet) :=                // might cons a new region...
+        set-box-edges(sheet-region(sheet), left, top, right, bottom);
       note-region-changed(sheet)
     end;
     update-scroll-bars(viewport)
@@ -453,8 +453,8 @@ define method do-with-room-for-graphics
   when (height)
     inc!(y, height - box-height(record))
   end;
-  set-sheet-position(record, x, y);	//---*** just mung the transform?
-  recompute-region(record);		//---*** do we really need to do this?
+  set-sheet-position(record, x, y);        //---*** just mung the transform?
+  recompute-region(record);                //---*** do we really need to do this?
   when (sheet-drawing?(sheet))
     repaint-sheet(record, $everywhere)
   end;
@@ -526,7 +526,7 @@ define method erase-output-record
   let bb = $smallest-coordinate;
   let medium = sheet-medium(sheet);
   dynamic-bind (medium-transform(medium) = $identity-transform,
-		medium-brush(medium) = $background)
+                medium-brush(medium) = $background)
     for (record in records)
       let parent = sheet-parent(record);
       let (left, top, right, bottom) = box-edges(record);
@@ -537,9 +537,9 @@ define method erase-output-record
       max!(br, right);
       max!(bb, bottom);
       if (left = right | top = bottom)
-	draw-line(medium, left, top, right, bottom)
+        draw-line(medium, left, top, right, bottom)
       else
-	draw-rectangle(medium, left, top, right, bottom, filled?: #t)
+        draw-rectangle(medium, left, top, right, bottom, filled?: #t)
       end;
       when (parent)
         remove-child(parent, record)

@@ -16,7 +16,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // the life world and traverses the entire array each time it is
 // called.  As it traverses the array it updates a second copy of the
 // array with the new state of the world.  The two arrays are then
-// swapped and the process starts over again.  
+// swapped and the process starts over again.
 
 // Parameters:
 //   n: the number of generations to run.
@@ -97,7 +97,7 @@ define method do-n-generations
       end for;
     end with-lock;
     generations := generations - 1;
-    let temp = board;		// swap(board, buffer-board)
+    let temp = board;                // swap(board, buffer-board)
     board := buffer-board;
     buffer-board := temp;
   end while;

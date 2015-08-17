@@ -15,12 +15,12 @@ define frame <dynamic-layout-frame> (<simple-frame>)
          activate-callback: dynamic-layout-add-sheet);
   pane replace-button (frame)
     make(<button>,
-	 label: "Replace sheet",
-	 activate-callback: dynamic-layout-replace-sheet);
+         label: "Replace sheet",
+         activate-callback: dynamic-layout-replace-sheet);
   pane remove-button (frame)
     make(<button>,
-	 label: "Remove sheet",
-	 activate-callback: dynamic-layout-remove-sheet);
+         label: "Remove sheet",
+         activate-callback: dynamic-layout-remove-sheet);
   pane dynamic-layout (frame)
     vertically (spacing: 2)
       make(<text-field>)
@@ -58,7 +58,7 @@ define function find-child-of-class
   end
 end function find-child-of-class;
 
-define method dynamic-layout-replace-sheet 
+define method dynamic-layout-replace-sheet
     (sheet :: <sheet>) => ()
   let frame = sheet-frame(sheet);
   let layout = frame.dynamic-layout;

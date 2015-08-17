@@ -30,14 +30,14 @@ define module duim-gadget-panes
 
   // Graph control panes
   create <graph-control-pane>,
-	 <tree-graph-pane>, <DAG-graph-pane>,
-	 <graph-node-pane>,
-	 <graph-edge-pane>,
-	 <line-graph-edge>, <arrow-graph-edge>;
+         <tree-graph-pane>, <DAG-graph-pane>,
+         <graph-node-pane>,
+         <graph-edge-pane>,
+         <line-graph-edge>, <arrow-graph-edge>;
 
   // Splitters
   create <column-splitter-pane>,
-	 <row-splitter-pane>;
+         <row-splitter-pane>;
 
   // Carets
   create <simple-caret>;
@@ -75,28 +75,28 @@ define module duim-gadget-panes-internals
          default-dialog-button-x-alignment,
          default-dialog-button-y-alignment,
          default-dialog-spacing,
-	 make-exit-box,
-	 make-exit-buttons,
-	 make-exit-button;
+         make-exit-box,
+         make-exit-buttons,
+         make-exit-button;
 
   // Homegrown controls
   export <homegrown-control-mixin>,
-	 <homegrown-control-button-mixin>,
-	 <homegrown-control-layout-mixin>;
+         <homegrown-control-button-mixin>,
+         <homegrown-control-layout-mixin>;
 
   // Tree control panes
   export $tree-control-black, $tree-control-gray,
-	 $tree-expand-icon, $tree-contract-icon,
-	 <homegrown-tree-control-mixin>,
-	 <tree-control-layout>,
-	 <tree-node-control-button>,
-	 <tree-node-label-button>,
-	 <tree-node-pane-mixin>,
-	 tree-control-expand-icon, tree-control-expand-icon-setter,
-	 tree-control-contract-icon, tree-control-contract-icon-setter,
-	 initialize-tree-control-icons;
+         $tree-expand-icon, $tree-contract-icon,
+         <homegrown-tree-control-mixin>,
+         <tree-control-layout>,
+         <tree-node-control-button>,
+         <tree-node-label-button>,
+         <tree-node-pane-mixin>,
+         tree-control-expand-icon, tree-control-expand-icon-setter,
+         tree-control-contract-icon, tree-control-contract-icon-setter,
+         initialize-tree-control-icons;
 
   // Graph control panes
   export <graph-control-layout>,
-	 <tree-graph-layout>, <DAG-graph-layout>;
+         <tree-graph-layout>, <DAG-graph-layout>;
 end module duim-gadget-panes-internals;

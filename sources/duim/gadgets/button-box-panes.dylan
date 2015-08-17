@@ -19,7 +19,7 @@ end class <gadget-box-pane-mixin>;
 
 define open generic button-class-for-gadget-box (box);
 
-define method gadget-box-button-value 
+define method gadget-box-button-value
     (box :: <gadget-box-pane-mixin>, item)
   let value-key = gadget-value-key(box);
   select (gadget-selection-mode(box))
@@ -38,11 +38,11 @@ define method make-button-for-gadget-box
   with-frame-manager (framem)
     make-pane(button-class,
               selection-mode: selection-mode,
-	      button-style: push-button-like?(box) & #"push-button",
+              button-style: push-button-like?(box) & #"push-button",
               enabled?: gadget-enabled?(box),
               client: box,
               label: label,
-	      documentation: documentation,
+              documentation: documentation,
               value: gadget-box-button-value(box, item),
               foreground: default-foreground(box),
               background: default-background(box),
@@ -50,37 +50,37 @@ define method make-button-for-gadget-box
   end
 end method make-button-for-gadget-box;
 
-define function make-buttons-for-gadget-box 
+define function make-buttons-for-gadget-box
     (box :: <gadget-box-pane-mixin>, items :: <sequence>)
  => (buttons :: <vector>)
-  let button-class 
+  let button-class
     = gadget-box-button-class(box)
       | button-class-for-gadget-box(box);
   // Make a stretchy vector of the buttons because these are going
   // to go into the children of some lucky sheet...
   let buttons
     = map-as(<stretchy-vector>,
-	     method (item)
-	       make-button-for-gadget-box(box, item, button-class)
-	     end,
-	     items);
+             method (item)
+               make-button-for-gadget-box(box, item, button-class)
+             end,
+             items);
   gadget-box-buttons(box) := buttons
 end function make-buttons-for-gadget-box;
 
-define method gadget-box-button-index 
+define method gadget-box-button-index
     (box :: <gadget-box-pane-mixin>, button :: <button>)
  => (index :: false-or(<integer>))
   position(gadget-box-buttons(box), button)
 end method gadget-box-button-index;
 
-define method update-button-selections 
+define method update-button-selections
     (box :: <gadget-box-pane-mixin>, selection) => ()
   let buttons = gadget-box-buttons(box);
   when (buttons)
     for (index :: <integer> from 0 below size(buttons))
       let button = buttons[index];
       gadget-value(button) := (selection & member?(index, selection))
-    end  
+    end
   end
 end method update-button-selections;
 
@@ -111,7 +111,7 @@ define method initialize
       let layout
         = if (layout-class)
             with-keywords-removed (pane-args = initargs,
-				   #[layout-class:, border:, x:, y:])
+                                   #[layout-class:, border:, x:, y:])
               apply(make-pane,
                     layout-class,
                     spacing: spacing | button-box-spacing(framem, box),
@@ -124,7 +124,7 @@ define method initialize
       let buttons = make-buttons-for-gadget-box(box, items);
       sheet-children(layout) := buttons;
       unless (gadget-selection-mode(box) = #"none")
-	update-button-selections(box, gadget-selection(box))
+        update-button-selections(box, gadget-selection(box))
       end
     end
   end
@@ -148,8 +148,8 @@ define method button-first-in-group?
       let children = sheet-children(parent);
       let index = position(children, gadget);
       index == 0
-	| (index > 0
-	     & object-class(children[index - 1]) ~== object-class(gadget));
+        | (index > 0
+             & object-class(children[index - 1]) ~== object-class(gadget));
   end
 end method button-first-in-group?;
 
@@ -157,9 +157,9 @@ define method button-in-tool-bar?
     (gadget :: <button>) => (in-tool-bar? :: <boolean>)
   block (return)
     for (parent = sheet-parent(gadget) then sheet-parent(parent),
-	 while: parent)
+         while: parent)
       when (instance?(parent, <tool-bar>))
-	return(#t)
+        return(#t)
       end
     end;
     #f
@@ -195,7 +195,7 @@ define method note-gadget-selection-changed
   update-button-selections(box, gadget-selection(box))
 end method note-gadget-selection-changed;
 
-define method update-button-enabled-states 
+define method update-button-enabled-states
     (box :: <gadget-box-pane-mixin>, enabled? :: <boolean>) => ()
   let buttons = gadget-box-buttons(box);
   for (button in buttons)
@@ -239,25 +239,25 @@ define method find-button-box-buttons
   let button-class = button-class-for-gadget-box(box);
   let buttons = make(<stretchy-vector>);
   do-sheet-tree(method (sheet)
-		  when (instance?(sheet, button-class))
+                  when (instance?(sheet, button-class))
                     gadget-client(sheet) := box;
-		    add!(buttons, sheet)
-		  end
-		end,
-		child);
+                    add!(buttons, sheet)
+                  end
+                end,
+                child);
   buttons
 end method find-button-box-buttons;
 
 
 /// Push box panes
 
-define sealed class <push-box-pane> 
+define sealed class <push-box-pane>
     (<button-box-pane-mixin>,
      <push-box>,
      <single-child-wrapping-pane>)
 end class <push-box-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <push-box>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<push-box-pane>, #f)
@@ -288,7 +288,7 @@ define sealed class <radio-box-pane>
      <single-child-wrapping-pane>)
 end class <radio-box-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <radio-box>, #key)
  => (class :: <class>, options :: false-or(<sequence>));
   values(<radio-box-pane>, #f)
@@ -307,9 +307,9 @@ define method do-execute-value-changed-callback
   ignore(id);
   gadget-selection(box, do-callback?: #t)
     := if (gadget-value(button) == #t)
-	 vector(gadget-box-button-index(box, button))
+         vector(gadget-box-button-index(box, button))
        else
-	 #[]
+         #[]
        end;
   next-method()
 end method do-execute-value-changed-callback;
@@ -330,7 +330,7 @@ define sealed class <check-box-pane>
      <single-child-wrapping-pane>)
 end class <check-box-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <check-box>, #key)
  => (class :: <class>, options :: false-or(<sequence>));
   values(<check-box-pane>, #f)
@@ -352,7 +352,7 @@ define method do-execute-value-changed-callback
     = if (gadget-value(button) == #t)
         add-new(gadget-selection(box), index)
       else
-	remove(gadget-selection(box), index)
+        remove(gadget-selection(box), index)
       end;
   gadget-selection(box, do-callback?: #t) := new-selection;
   next-method()

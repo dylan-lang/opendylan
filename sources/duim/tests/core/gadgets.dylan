@@ -16,14 +16,14 @@ end method make-test-instance;
 define sideways method make-test-instance
     (class == <table-control>) => (instance :: <table-control>)
   make-test-pane(<table-control>,
-		 headings: #["Heading"],
-		 generators: vector(identity))
+                 headings: #["Heading"],
+                 generators: vector(identity))
 end method make-test-instance;
 
 define sideways method make-test-instance
     (class == <tree-control>) => (instance :: <tree-control>)
   make-test-pane(<tree-control>,
-		 children-generator: always(#[]))
+                 children-generator: always(#[]))
 end method make-test-instance;
 
 define duim-gadgets class-test <gadget> ()
@@ -94,17 +94,17 @@ define duim-gadgets class-test <check-box> ()
     = make-test-pane(<column-layout>, children: vector(button1, sub-layout));
   let cbp = make-test-pane(<check-box>, child: layout);
   check-equal("arbitrary layout <check-box> items",
-	      gadget-items(cbp),
-	      #[#"one", #"two", #"three"]);
+              gadget-items(cbp),
+              #[#"one", #"two", #"three"]);
   check-equal("arbitrary layout <check-box> initial value",
               gadget-value(cbp),
-	      #[]);
+              #[]);
   check-equal("arbitrary layout <check-box> set value",
-	      begin
-		gadget-value(cbp) := #[#"two", #"three"];
-		gadget-value(cbp)
-	      end,
-	      #[#"two", #"three"]);
+              begin
+                gadget-value(cbp) := #[#"two", #"three"];
+                gadget-value(cbp)
+              end,
+              #[#"two", #"three"]);
 end class-test <check-box>;
 
 define duim-gadgets class-test <check-button> ()
@@ -184,17 +184,17 @@ define duim-gadgets class-test <radio-box> ()
     = make-test-pane(<column-layout>, children: vector(button1, sub-layout));
   let rbp = make-test-pane(<radio-box>, child: layout);
   check-equal("arbitrary layout <radio-box> items",
-	      gadget-items(rbp),
-	      #[#"one", #"two", #"three"]);
+              gadget-items(rbp),
+              #[#"one", #"two", #"three"]);
   check-equal("arbitrary layout <radio-box> initial value",
               gadget-value(rbp),
-	      #"one");
+              #"one");
   check-equal("arbitrary layout <radio-box> set value",
-	      begin
-		gadget-value(rbp) := #"two";
-		gadget-value(rbp)
-	      end,
-	      #"two");
+              begin
+                gadget-value(rbp) := #"two";
+                gadget-value(rbp)
+              end,
+              #"two");
 end class-test <radio-box>;
 
 define duim-gadgets class-test <radio-button> ()
@@ -219,7 +219,7 @@ end class-test <spin-box>;
 
 define duim-gadgets class-test <status-bar> ()
   test-gadget-label(<status-bar>);
-  test-range-pane-values(<status-bar>, 
+  test-range-pane-values(<status-bar>,
                          make-function: method (class, #rest args)
                                           apply(make-test-pane, class,
                                                 progress-bar?: #t,
@@ -267,31 +267,31 @@ define duim-gadgets class-test <tab-control> ()
   let frame = make-test-frame(<test-frame>, layout: tab-control);
   ignore(frame);
   check-equal("Tab control default visible child",
-	      tab-control-current-page(tab-control),
-	      button-1);
+              tab-control-current-page(tab-control),
+              button-1);
   check-equal("Tab control default value",
-	      gadget-value(tab-control), "One");
+              gadget-value(tab-control), "One");
   tab-control-current-page(tab-control) := button-2;
   check-equal("Tab control new visible child",
-	      tab-control-current-page(tab-control),
-	      button-2);
+              tab-control-current-page(tab-control),
+              button-2);
   gadget-value(tab-control) := gadget-label(button-1);
   check-equal("Tab control new value",
-	      gadget-value(tab-control), gadget-label(button-1));
+              gadget-value(tab-control), gadget-label(button-1));
   let button-3 = make-test-pane(<button>, label: "Three");
   tab-control-pages(tab-control) := vector(button-1, button-2, button-3);
   check-equal("Tab control keeps visible child after contents change",
-	      tab-control-current-page(tab-control),
-	      button-1);
+              tab-control-current-page(tab-control),
+              button-1);
   tab-control-current-page(tab-control) := button-3;
   check-equal("Tab control additional visible child",
-	      tab-control-current-page(tab-control),
-	      button-3);
+              tab-control-current-page(tab-control),
+              button-3);
   tab-control-pages(tab-control) := #[];
   check-equal("Empty tab control",
-	      tab-control-pages(tab-control), #[]);
+              tab-control-pages(tab-control), #[]);
   check-equal("Empty tab control has no visible child",
-	      tab-control-current-page(tab-control), #f);
+              tab-control-current-page(tab-control), #f);
 end class-test <tab-control>;
 
 define duim-gadget class-test <page> ()
@@ -352,7 +352,7 @@ end method test-gadget-class;
 
 /// parent tests
 
-define method subchild? 
+define method subchild?
     (sheet :: <object>, child :: <sheet>) => (subchild? :: <boolean>)
   let parent = sheet-parent(child);
   if (parent)
@@ -370,20 +370,20 @@ define test parents-test ()
   check-equal("Initial gadget parent", layout, button.sheet-parent);
   let frame = make-test-frame(<test-frame>, layout: layout);
   check-true("Parent after initializing frame layout",
-	      subchild?(top-level-sheet(frame), layout));
+              subchild?(top-level-sheet(frame), layout));
   remove-child(layout, button);
   let check-button = make-test-pane(<check-button>);
   sheet-children(layout) := vector(button, check-button);
   check-equal("Parent after setting sheet children 1",
-	      layout, button.sheet-parent);
+              layout, button.sheet-parent);
   check-equal("Parent after setting sheet children 2",
-	      layout, check-button.sheet-parent);
+              layout, check-button.sheet-parent);
 end test parents-test;
 
 
 /// Gadget tests
 
-define method verify-gadget-box-pane-button-selection 
+define method verify-gadget-box-pane-button-selection
     (box :: <gadget>) => ()
   let buttons = box.gadget-box-buttons;
   let items = box.gadget-items;
@@ -404,7 +404,7 @@ define method verify-gadget-box-pane-button-selection
 end method verify-gadget-box-pane-button-selection;
 
 define constant $default-collection-items
-  = #(#("Red", #"red"), 
+  = #(#("Red", #"red"),
       #("Green", #"green"),
       #("Blue", #"blue"));
 
@@ -415,7 +415,7 @@ define method make-collection-gadget
           value-key = second,
      #all-keys)
  => (gadget :: <collection-gadget>)
-  apply(make-test-pane, class, 
+  apply(make-test-pane, class,
         items: items,
         label-key: label-key,
         value-key: value-key,
@@ -429,7 +429,7 @@ define method make-collection-gadget
           value-key = second,
      #all-keys)
  => (gadget :: <collection-gadget>)
-  apply(make-test-pane, class, 
+  apply(make-test-pane, class,
         items: items,
         label-key: label-key,
         value-key: value-key,
@@ -438,21 +438,21 @@ define method make-collection-gadget
         args)
 end method make-collection-gadget;
 
-define method verify-gadget-box-pane-buttons 
+define method verify-gadget-box-pane-buttons
     (test :: <string>, box :: <gadget>) => ()
   let buttons = box.gadget-box-buttons;
   let items = box.gadget-items;
   check-equal(test, buttons & size(buttons), items & size(items));
 end method verify-gadget-box-pane-buttons;
 
-define method test-gadget-box-pane-buttons 
+define method test-gadget-box-pane-buttons
     (class :: subclass(<gadget>)) => ()
   let box-pane = make-collection-gadget(class);
   let name = gadget-class-name(class);
   verify-gadget-box-pane-buttons(concatenate(name, " pane buttons"),
                                  box-pane);
   gadget-items(box-pane)
-    := #(#("Four", 4), 
+    := #(#("Four", 4),
          #("Five", 5),
          #("Six", 6),
          #("Seven", 7));
@@ -460,27 +460,27 @@ define method test-gadget-box-pane-buttons
                                  box-pane);
 end method test-gadget-box-pane-buttons;
 
-define method check-value 
+define method check-value
     (name :: <string>, gadget :: <value-gadget>, expected-value) => ()
   check-equal(concatenate(name, " value"),
               gadget-value(gadget), expected-value)
 end method check-value;
 
-define method test-collection-gadget-value 
+define method test-collection-gadget-value
     (gadget-class :: subclass(<collection-gadget>)) => ()
   let class-name = gadget-class-name(gadget-class);
   let pane = make-collection-gadget(gadget-class, selection-mode: #"none");
   let name = concatenate("single selection ", class-name);
   check-value(name, pane, #f);
   test-single-selection-collection-gadget-values(gadget-class, name: name);
-  
+
   let pane = make-collection-gadget(gadget-class, selection-mode: #"multiple");
   let name = concatenate("multiple selection ", class-name);
   check-value(concatenate(name, " default"), pane, #());
   let pane
     = make-collection-gadget(gadget-class,
-			     selection-mode: #"multiple",
-			     value: #(#"red", #"green"));
+                             selection-mode: #"multiple",
+                             value: #(#"red", #"green"));
   check-value(concatenate(name, " initial"), pane, #(#"red", #"green"));
   gadget-value(pane) := #(#"red", #"blue");
   check-value(concatenate(name, " new"), pane, #(#"red", #"blue"));
@@ -488,10 +488,10 @@ define method test-collection-gadget-value
   check-value(concatenate(name, " after selection cleared"), pane, #());
   gadget-selection(pane) := #(0, 1);
   check-value(concatenate(name, " after selection changed"),
-	      pane, #(#"red", #"green"));
+              pane, #(#"red", #"green"));
   gadget-items(pane) := reverse($default-collection-items);
   check-value(concatenate(name, " after items reordered"),
-	      pane, #(#"red", #"green"));
+              pane, #(#"red", #"green"));
   gadget-items(pane) := #(#("One", 1), #("Two", 2), #("Three", 3));
   check-value(concatenate(name, " after items changed"), pane, #())
 end method test-collection-gadget-value;
@@ -502,7 +502,7 @@ define method test-single-selection-collection-gadget-values
           value = #"green") => ()
   let pane = make-collection-gadget(gadget-class, selection-mode: #"single");
   check-value(concatenate(name, " default"), pane, #"red");
-  let pane 
+  let pane
     = make-collection-gadget(gadget-class,
                              selection-mode: #"single",
                              value: value);
@@ -520,7 +520,7 @@ define method test-range-pane-values
   let name = gadget-class-name(class);
   let gadget = make-function(class, value-range: range(from: 10, to: 100));
   check-value(concatenate(name, " default"), gadget, default);
-  let gadget 
+  let gadget
     = make-function(class, value-range: range(from: 10, to: 100), value: 20);
   check-value(concatenate(name, " initial"), gadget, 20);
   gadget-value(gadget) := 120;
@@ -530,22 +530,22 @@ define method test-range-pane-values
   let new-range = range(from: 200, to: 300);
   gadget-value-range(gadget) := new-range;
   check-equal(concatenate(name, " new range"),
-	      gadget-value-range(gadget), new-range);
+              gadget-value-range(gadget), new-range);
   check-value(concatenate(name, " after range change"),
-	      gadget, 200);
+              gadget, 200);
 end method test-range-pane-values;
 
 define method test-slug-gadget-values
-    (class :: <class>, 
-     #key default = 10, 
+    (class :: <class>,
+     #key default = 10,
           slug-size = 20,
           make-function = make-test-pane) => ()
   let name = gadget-class-name(class);
   let gadget
     = make-function(class, slug-size: slug-size, value-range: range(from: 10, to: 100));
   check-value(concatenate(name, " default"), gadget, default);
-  let gadget 
-    = make-function(class, 
+  let gadget
+    = make-function(class,
                     slug-size: slug-size,
                     value-range: range(from: 10, to: 100), value: 20);
   check-value(concatenate(name, " initial"), gadget, 20);
@@ -556,9 +556,9 @@ define method test-slug-gadget-values
   let new-range = range(from: 200, to: 300);
   gadget-value-range(gadget) := new-range;
   check-equal(concatenate(name, " new range"),
-	      gadget-value-range(gadget), new-range);
+              gadget-value-range(gadget), new-range);
   check-value(concatenate(name, " after range change"),
-	      gadget, 200);
+              gadget, 200);
 end method test-slug-gadget-values;
 
 define method test-button-values
@@ -571,7 +571,7 @@ define method test-button-values
   check-value(concatenate(name, " initial"), make-test-pane(class, value: #t), #t);
 end method test-button-values;
 
-define method test-text-field-values 
+define method test-text-field-values
     (class :: <class>) => ()
   let name = gadget-class-name(class);
   let text-field = make-test-pane(class);
@@ -579,7 +579,7 @@ define method test-text-field-values
   gadget-value(text-field) := "Hello";
   check-value(concatenate(name, " changed"), text-field, "Hello");
   check-value(concatenate(name, " initial"),
-	      make-test-pane(class, value: "Initial"), "Initial");
+              make-test-pane(class, value: "Initial"), "Initial");
   let text-field = make-test-pane(class, value: 0, value-type: <integer>);
   check-equal(concatenate(name, " integer initial value"),
               gadget-value(text-field), 0);
@@ -597,14 +597,14 @@ define method test-text-field-values
               gadget-text(text-field), "100");
 end method test-text-field-values;
 
-define method test-no-value-gadget-values 
+define method test-no-value-gadget-values
     (class :: <class>) => ()
   let name = gadget-class-name(class);
   check-value(concatenate(name, " default"), make-test-pane(class), #f);
   check-value(concatenate(name, " initial"), make-test-pane(class, value: 10), #f);
 end method test-no-value-gadget-values;
 
-define method test-tree-control-children-generator 
+define method test-tree-control-children-generator
     (x :: <integer>) => (children :: <vector>)
   let children
     = if (x < 8)
@@ -615,7 +615,7 @@ define method test-tree-control-children-generator
   children
 end method test-tree-control-children-generator;
 
-define method make-test-tree-control 
+define method make-test-tree-control
     (#rest args, #key depth = 2, #all-keys)
  => (tree-control :: <tree-control>)
   apply(make-test-pane, <tree-control>,
@@ -644,10 +644,10 @@ define method test-tree-control-values () => ()
   check-value(concatenate(name, " after selection cleared"), pane, #());
   gadget-selection(pane) := #(0, 1);
   check-value(concatenate(name, " after selection changed"),
-	      pane, #(1, 2));
+              pane, #(1, 2));
 end method test-tree-control-values;
 
-define method make-test-table-control 
+define method make-test-table-control
     (#rest args, #key, #all-keys)
  => (table-control :: <table-control>)
   apply(make-test-pane, <table-control>,
@@ -694,7 +694,7 @@ define method test-text-gadget-text
   gadget-text(text-field) := "Hello";
   check-equal(concatenate(name, " changed text"), gadget-text(text-field), "Hello");
   check-equal(concatenate(name, " specified text"),
-	      gadget-text(make-test-pane(class, text: "Initial")), "Initial")
+              gadget-text(make-test-pane(class, text: "Initial")), "Initial")
 end method test-text-gadget-text;
 
 
@@ -707,7 +707,7 @@ define method expected-named-border-size
   let double-thickness = thickness * 2;
   if (child)
     let size-function = expected-size-function(name);
-    size-function(child, 
+    size-function(child,
                   width:  width & width - double-thickness,
                   height: height & height - double-thickness)
       + double-thickness
@@ -733,7 +733,7 @@ define method expected-named-size
   apply(expected-named-border-size, pane, name, args)
 end method expected-named-size;
 
-define method expected-space-allocation 
+define method expected-space-allocation
     (pane :: <border>, #rest args, #key)
  => (space-allocation :: false-or(<sequence>))
   apply(expected-border-space-allocation, pane, args)
@@ -746,7 +746,7 @@ define method expected-named-size
   apply(expected-named-border-size, pane, name, args)
 end method expected-named-size;
 
-define method expected-space-allocation 
+define method expected-space-allocation
     (pane :: <spacing>, #rest args, #key)
  => (space-allocation :: false-or(<sequence>))
   apply(expected-border-space-allocation, pane, args)
@@ -767,17 +767,17 @@ end method test-border-pane;
 define method test-border-pane-layout (class :: <class>) => ()
   test-border-pane(class, "empty", #f, thickness: 0);
   test-border-pane(class, "thickness 0", make-test-pane(<test-push-button-pane>),
-		   thickness: 0);
+                   thickness: 0);
   test-border-pane(class, "thickness 10", make-test-pane(<test-push-button-pane>),
-		   thickness: 10);
+                   thickness: 10);
   test-border-pane(class, "non-fixed thickness 10",
-		   make-test-pane(<test-list-box>),
-		   thickness: 10);
+                   make-test-pane(<test-list-box>),
+                   thickness: 10);
   test-border-pane(class, "nested",
-		   make-test-pane(<border-pane>,
+                   make-test-pane(<border-pane>,
                                   child: make-test-pane(<test-push-button-pane>)));
   test-border-pane(class, "non-fixed nested",
-		   make-test-pane(<border-pane>, 
+                   make-test-pane(<border-pane>,
                                   child: make-test-pane(<test-list-box>)));
 end method test-border-pane-layout;
 

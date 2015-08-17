@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Box Panes
 
 // In Motif, this would be a row-column widget...
-define open abstract class <box-layout-pane> 
+define open abstract class <box-layout-pane>
     (<layout-border-mixin>,
      <layout-pane>)
   sealed slot %max-major-size :: <integer> = 0;
@@ -24,7 +24,7 @@ define method initialize
     (box :: <box-layout-pane>, #key equalize-widths? = #f, equalize-heights? = #f)
   next-method();
   let bits = logior(if (equalize-widths?)  %equalize_widths  else 0 end,
-		    if (equalize-heights?) %equalize_heights else 0 end);
+                    if (equalize-heights?) %equalize_heights else 0 end);
   sheet-flags(box) := logior(sheet-flags(box), bits)
 end method initialize;
 
@@ -69,60 +69,60 @@ define function box-pane-compose-space
   let max-major-size :: <integer> = 0;
   let max-minor-size :: <integer> = 0;
   local method update-major-space (space-req) => ()
-	  let m  :: <integer> = fn-major (box-pane, space-req);
-	  let m+ :: <integer> = fn-major+(box-pane, space-req);
-	  let m- :: <integer> = fn-major-(box-pane, space-req);
-	  max!(max-major-size, m);
-	  inc!(major,  m);
-	  inc!(major+, m+);
-	  inc!(major-, m-)
-	end method,
+          let m  :: <integer> = fn-major (box-pane, space-req);
+          let m+ :: <integer> = fn-major+(box-pane, space-req);
+          let m- :: <integer> = fn-major-(box-pane, space-req);
+          max!(max-major-size, m);
+          inc!(major,  m);
+          inc!(major+, m+);
+          inc!(major-, m-)
+        end method,
         method update-minor-space (space-req) => ()
-	  let m  :: <integer> = fn-minor (box-pane, space-req);
-	  let m+ :: <integer> = fn-minor+(box-pane, space-req);
-	  let m- :: <integer> = fn-minor-(box-pane, space-req);
-	  max!(max-minor-size, m);
-	  max!(minor-max, m+);
-	  max!(minor-min, m-);
-	  minor := min(max(minor, m, minor-min), minor-max)
-	end method;
+          let m  :: <integer> = fn-minor (box-pane, space-req);
+          let m+ :: <integer> = fn-minor+(box-pane, space-req);
+          let m- :: <integer> = fn-minor-(box-pane, space-req);
+          max!(max-minor-size, m);
+          max!(minor-max, m+);
+          max!(minor-min, m-);
+          minor := min(max(minor, m, minor-min), minor-max)
+        end method;
   for (child in children)
     when (child)
-      let child :: <basic-sheet> = child;	// force tighter type...
+      let child :: <basic-sheet> = child;        // force tighter type...
       unless (sheet-withdrawn?(child))
-	let space-req = space-composer(child);
-	update-major-space(space-req);
-	update-minor-space(space-req)
+        let space-req = space-composer(child);
+        update-major-space(space-req);
+        update-minor-space(space-req)
       end
     end
   end;
   let border*2 = layout-border(box-pane) * 2;
   local method cleanup-major-space () => ()
-	  let size-for-spacing :: <integer>
-	    = (n-children - 1) * box-pane-major-spacing(box-pane) + border*2;
-	  if (equalize-major-size?)
-	    major := n-children * max-major-size + size-for-spacing;
-	    when (major- < $fill) major- := major end;
-	    when (major+ < $fill) major+ := major end
-	  else
-	    inc!(major,  size-for-spacing);
-	    inc!(major-, size-for-spacing);
-	    inc!(major+, size-for-spacing)
-	  end;
-	  // If there's a requested size, use it, but ensure that it
-	  // falls between the min and max sizes
-	  when (requested-major)
-	    major := max(major-, min(major+, requested-major))
-	  end
-	end method,
+          let size-for-spacing :: <integer>
+            = (n-children - 1) * box-pane-major-spacing(box-pane) + border*2;
+          if (equalize-major-size?)
+            major := n-children * max-major-size + size-for-spacing;
+            when (major- < $fill) major- := major end;
+            when (major+ < $fill) major+ := major end
+          else
+            inc!(major,  size-for-spacing);
+            inc!(major-, size-for-spacing);
+            inc!(major+, size-for-spacing)
+          end;
+          // If there's a requested size, use it, but ensure that it
+          // falls between the min and max sizes
+          when (requested-major)
+            major := max(major-, min(major+, requested-major))
+          end
+        end method,
         method cleanup-minor-space () => ()
-	  minor- := minor-min + border*2;
-	  minor+ := minor-max + border*2;
-	  minor  := minor + border*2;
-	  when (requested-minor)
-	    minor := max(minor-, min(minor+, requested-minor))
-	  end
-	end method;
+          minor- := minor-min + border*2;
+          minor+ := minor-max + border*2;
+          minor  := minor + border*2;
+          when (requested-minor)
+            minor := max(minor-, min(minor+, requested-minor))
+          end
+        end method;
   cleanup-major-space();
   cleanup-minor-space();
   box-pane.%max-major-size := max-major-size;
@@ -130,7 +130,7 @@ define function box-pane-compose-space
   space-req-creator(major, major-, major+, minor, minor-, minor+)
 end function box-pane-compose-space;
 
-define function box-pane-allocate-space 
+define function box-pane-allocate-space
     (box-pane :: <box-layout-pane>,
      major-sizes :: <vector>, box-major-size :: <integer>, box-minor-size :: <integer>,
      compose :: <function>, alignment-function :: <function>, set-child-edges :: <function>,
@@ -141,20 +141,20 @@ define function box-pane-allocate-space
   for (sheet in sheet-children(box-pane),
        suggested-major-size :: <integer> in major-sizes)
     when (sheet)
-      let sheet :: <basic-sheet> = sheet;	// force tighter type...
+      let sheet :: <basic-sheet> = sheet;        // force tighter type...
       unless (sheet-withdrawn?(sheet))
-	let (major-size :: <integer>, minor-size :: <integer>)
-	  = compose(sheet, 
-		    minor: box-minor-size,
-		    major: suggested-major-size);
-	let minor-position :: <integer>
-	  = alignment-function(box-pane, sheet, 0, box-minor-size - minor-size) + border;
-	let major-size :: <integer> = major-size-override | major-size;
-	let minor-size :: <integer> = minor-size-override | minor-size;
-	set-child-edges(sheet,
-			major-position, minor-position, 
-			major-position + major-size, minor-position + minor-size);
-	inc!(major-position, major-size + major-spacing)
+        let (major-size :: <integer>, minor-size :: <integer>)
+          = compose(sheet,
+                    minor: box-minor-size,
+                    major: suggested-major-size);
+        let minor-position :: <integer>
+          = alignment-function(box-pane, sheet, 0, box-minor-size - minor-size) + border;
+        let major-size :: <integer> = major-size-override | major-size;
+        let minor-size :: <integer> = minor-size-override | minor-size;
+        set-child-edges(sheet,
+                        major-position, minor-position,
+                        major-position + major-size, minor-position + minor-size);
+        inc!(major-position, major-size + major-spacing)
       end
     end
   end
@@ -176,16 +176,16 @@ define method do-compose-space
     (box-pane :: <row-layout>, #key width, height)
  => (space-req :: <space-requirement>)
   local method space-composer
-	    (child) => (sr :: <space-requirement>)
-	  compose-space(child, height: height)
-	end method,
+            (child) => (sr :: <space-requirement>)
+          compose-space(child, height: height)
+        end method,
         method space-req-creator
-	    (width, min-width, max-width, height, min-height, max-height)
-	 => (sr :: <space-requirement>)
-	  make(<space-requirement>,
-	       width:  width,  min-width:  min-width,  max-width:  max-width,
-	       height: height, min-height: min-height, max-height: max-height)
-	end method;
+            (width, min-width, max-width, height, min-height, max-height)
+         => (sr :: <space-requirement>)
+          make(<space-requirement>,
+               width:  width,  min-width:  min-width,  max-width:  max-width,
+               height: height, min-height: min-height, max-height: max-height)
+        end method;
   dynamic-extent(space-composer, space-req-creator);
   if (empty?(sheet-children(box-pane)))
     default-space-requirement(box-pane, width: width, height: height)
@@ -211,7 +211,7 @@ define method do-allocate-space
   let sizes
     = compose-space-for-items
         (box-pane,
-	 width - total-spacing, space-requirement, children,
+         width - total-spacing, space-requirement, children,
          space-requirement-width, space-requirement-min-width, space-requirement-max-width,
          method (child)
            compose-space(child, height: height)
@@ -252,7 +252,7 @@ define sealed class <row-layout-pane> (<row-layout>)
   keyword accepts-focus?: = #f;
 end class <row-layout-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <row-layout>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<row-layout-pane>, #f)
@@ -277,16 +277,16 @@ define method do-compose-space
     (box-pane :: <column-layout>, #key width, height)
  => (space-req :: <space-requirement>)
   local method space-composer
-	    (child) => (space-req :: <space-requirement>)
-	  compose-space(child, width: width)
-	end method,
+            (child) => (space-req :: <space-requirement>)
+          compose-space(child, width: width)
+        end method,
         method space-req-creator
-	    (height, min-height, max-height, width, min-width, max-width)
-	 => (space-req :: <space-requirement>)
-	  make(<space-requirement>,
-	       width:  width,  min-width:  min-width,  max-width:  max-width,
-	       height: height, min-height: min-height, max-height: max-height)
-	end method;
+            (height, min-height, max-height, width, min-width, max-width)
+         => (space-req :: <space-requirement>)
+          make(<space-requirement>,
+               width:  width,  min-width:  min-width,  max-width:  max-width,
+               height: height, min-height: min-height, max-height: max-height)
+        end method;
   dynamic-extent(space-composer, space-req-creator);
   if (empty?(sheet-children(box-pane)))
     default-space-requirement(box-pane, width: width, height: height)
@@ -312,8 +312,8 @@ define method do-allocate-space
   let sizes
     = compose-space-for-items
         (box-pane,
-	 height - total-spacing, space-requirement, children,
-         space-requirement-height, space-requirement-min-height, space-requirement-max-height, 
+         height - total-spacing, space-requirement, children,
+         space-requirement-height, space-requirement-min-height, space-requirement-max-height,
          method (sheet)
            compose-space(sheet, width: width)
          end,
@@ -324,11 +324,11 @@ define method do-allocate-space
        let space-req = compose-space(child, width: major, height: minor);
        let (w, w-, w+, h, h-, h+) = space-requirement-components(child, space-req);
        values(constrain-size(major | h, h-, h+),
-	      constrain-size(minor | w, w-, w+))
+              constrain-size(minor | w, w-, w+))
      end method,
      layout-align-sheet-x,
      method (sheet :: <basic-sheet>,
-	     top :: <integer>, left :: <integer>, bottom :: <integer>, right :: <integer>)
+             top :: <integer>, left :: <integer>, bottom :: <integer>, right :: <integer>)
        set-sheet-edges(sheet, left, top, right, bottom)
      end,
      major-size-override: layout-equalize-heights?(box-pane) & box-pane.%max-major-size,
@@ -357,7 +357,7 @@ define sealed class <column-layout-pane> (<column-layout>)
   keyword accepts-focus?: = #f;
 end class <column-layout-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <column-layout>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<column-layout-pane>, #f)

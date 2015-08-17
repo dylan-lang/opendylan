@@ -82,14 +82,14 @@ define sealed method set-sheet-edges
   let width  :: <integer> = right  - left;
   let height :: <integer> = bottom - top;
   let new-region = #f;
-  unless (sheet-layed-out-to-size?(sheet, width, height)) 
+  unless (sheet-layed-out-to-size?(sheet, width, height))
     validate-sheet-size(sheet, width, height);
     let (old-left, old-top) = box-position(sheet);
     // It should be safe to modify the sheet's region, since
     // each sheet gets a fresh region when it is created
-    new-region				// might cons a new region...
+    new-region                                // might cons a new region...
       := set-box-edges(sheet-region(sheet),
-		       old-left, old-top, old-left + width, old-top + height)
+                       old-left, old-top, old-left + width, old-top + height)
   end;
   case
     new-transform =>

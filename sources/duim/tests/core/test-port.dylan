@@ -75,13 +75,13 @@ end method do-set-sheet-cursor;
 
 /// Test Display
 
-define method initialize-display 
+define method initialize-display
     (port :: <test-port>, _display :: <display>) => ()
   let region = make-bounding-box(0, 0, 1000, 800);
   sheet-region(_display) := region;
   sheet-direct-mirror(_display) := make(<test-mirror>,
-					sheet: _display,
-					region: region);
+                                        sheet: _display,
+                                        region: region);
 end method initialize-display;
 
 
@@ -112,7 +112,7 @@ end method clear-graphic-operations;
 define class <test-pixmap> (<pixmap>)
 end class <test-pixmap>;
 
-define method do-make-pixmap 
+define method do-make-pixmap
     (port :: <test-port>, medium :: <test-medium>, width, height)
  => (pixmap :: <test-pixmap>)
   make(<test-pixmap>, width: width, height: height)
@@ -127,7 +127,7 @@ define method glyph-for-character
   ignore(font);
   let index = as(<integer>, char);
   values(index, text-style,
-	 8, 0, 0, 10, 8, 12)
+         8, 0, 0, 10, 8, 12)
 end method glyph-for-character;
 
 define method font-width
@@ -162,7 +162,7 @@ define method text-size
     (port :: <test-port>, string :: <string>,
      #key text-style :: <text-style> = $default-text-style,
           start: _start = 0, end: _end = size(string), do-newlines?, do-tabs?)
- => (largest-x :: <real>, largest-y :: <real>, 
+ => (largest-x :: <real>, largest-y :: <real>,
      cursor-x :: <real>, cursor-y :: <real>, baseline :: <real>)
   ignore(text-style, do-newlines?, do-tabs?);
   let length = _end - _start;
@@ -173,7 +173,7 @@ define method text-size
     (port :: <test-port>, string :: <character>,
      #key text-style :: <text-style> = $default-text-style,
           start: _start = 0, end: _end = size(string), do-newlines?, do-tabs?)
- => (largest-x :: <real>, largest-y :: <real>, 
+ => (largest-x :: <real>, largest-y :: <real>,
      cursor-x :: <real>, cursor-y :: <real>, baseline :: <real>)
   ignore(text-style, _start, _end, do-newlines?);
   values(8, 12, 8, 0, 10)
@@ -192,7 +192,7 @@ define class <test-mirror> (<mirror>)
   slot %region, init-keyword: region:;
 end class <test-mirror>;
 
-define method do-make-mirror 
+define method do-make-mirror
     (_port :: <test-port>, sheet :: <mirrored-sheet-mixin>)
  => (mirror :: <test-mirror>)
   // We're not using a real window system to back this up, so
@@ -204,8 +204,8 @@ define method do-make-mirror
     = transform-box(transform, left, top, right, bottom);
   let mirror
     = make(<test-mirror>,
-	   sheet: sheet,
-	   region: make-bounding-box(left, top, right, bottom));
+           sheet: sheet,
+           region: make-bounding-box(left, top, right, bottom));
   mirror
 end method do-make-mirror;
 
@@ -214,7 +214,7 @@ define method destroy-mirror
   sheet-direct-mirror(sheet) := #f
 end method destroy-mirror;
 
-define method map-mirror 
+define method map-mirror
     (_port :: <test-port>, sheet :: <sheet>, mirror :: <mirror>) => ()
   #t
 end method map-mirror;
@@ -261,7 +261,7 @@ define class <test-frame-manager> (<basic-frame-manager>)
 end class <test-frame-manager>;
 
 define method frame-wrapper
-    (framem :: <test-frame-manager>, frame :: <simple-frame>, 
+    (framem :: <test-frame-manager>, frame :: <simple-frame>,
      layout :: false-or(<sheet>))
  => (sheet :: false-or(<column-layout>))
   let menu-bar   = frame-menu-bar(frame);
@@ -307,7 +307,7 @@ end method port-handles-repaint?;
 
 
 define class <test-gadget-mixin>
-    (<sheet-with-medium-mixin>,		// here to support kludge 'handle-repaint' methods
+    (<sheet-with-medium-mixin>,                // here to support kludge 'handle-repaint' methods
      <test-pane-mixin>)
   constant slot handled-events :: <stretchy-vector>  = make(<stretchy-vector>);
 end class <test-gadget-mixin>;
@@ -325,7 +325,7 @@ define class <test-top-level-sheet>
   slot top-level-sheet-region = #f;
 end class <test-top-level-sheet>;
 
-define method mirror-edges 
+define method mirror-edges
     (port :: <test-port>, sheet :: <test-top-level-sheet>, mirror :: <mirror>)
  => (left :: <integer>, top :: <integer>, right :: <integer>, bottom :: <integer>)
   let region = top-level-sheet-region(sheet);
@@ -336,7 +336,7 @@ define method mirror-edges
   end
 end method mirror-edges;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <top-level-sheet>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-top-level-sheet>, #f)
@@ -353,13 +353,13 @@ define class <test-viewport>
     (<test-pane-mixin>,
      <viewport>,
      <single-child-composite-pane>)
-  constant slot horizontal-scroll-bar = #f, 
+  constant slot horizontal-scroll-bar = #f,
     init-keyword: horizontal-scroll-bar:;
-  constant slot vertical-scroll-bar   = #f, 
+  constant slot vertical-scroll-bar   = #f,
     init-keyword: vertical-scroll-bar:;
 end class <test-viewport>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <viewport>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-viewport>, #f)
@@ -372,7 +372,7 @@ define class <test-scroll-bar>
    <leaf-pane>)
 end class <test-scroll-bar>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <scroll-bar>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-scroll-bar>, #f)
@@ -384,12 +384,12 @@ define method do-compose-space
   select (gadget-orientation(pane))
     #"horizontal" =>
       make(<space-requirement>,
-	   width: width | 50, min-width: 50, max-width: $fill,
-	   height: 10);
+           width: width | 50, min-width: 50, max-width: $fill,
+           height: 10);
     #"vertical" =>
       make(<space-requirement>,
-	   width: 10,
-	   height: height | 50, min-height: 50, max-height: $fill);
+           width: 10,
+           height: height | 50, min-height: 50, max-height: $fill);
   end
 end method do-compose-space;
 
@@ -400,7 +400,7 @@ define class <test-slider-pane>
    <leaf-pane>)
 end class <test-slider-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <slider>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-slider-pane>, #f)
@@ -421,7 +421,7 @@ define method do-compose-space
        height: 15)
 end method do-compose-space;
 
-define method allocate-space 
+define method allocate-space
     (pane :: <basic-test-button>, width :: <integer>, height :: <integer>) => ()
 end method allocate-space;
 
@@ -431,7 +431,7 @@ define class <test-push-button-pane>
      <basic-test-button>)
 end class <test-push-button-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <push-button>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-push-button-pane>, #f)
@@ -455,7 +455,7 @@ define method do-compose-space
   end
 end method do-compose-space;
 
-define method handle-event 
+define method handle-event
     (pane :: <test-push-button-pane>, event :: <button-release-event>) => ()
   execute-activate-callback(pane, gadget-client(pane), gadget-id(pane))
 end method handle-event;
@@ -471,24 +471,24 @@ define method handle-repaint
     let x = right - left;
     let y = bottom + y-margin;
     draw-gadget-label(pane, medium, x, y,
-		      align-x: #"center", align-y: #"baseline");
+                      align-x: #"center", align-y: #"baseline");
   end;
   draw-rectangle(medium, left, top, right, bottom, filled?: #f)
 end method handle-repaint;
 
 
 define class <test-radio-button-pane>
-    (<radio-button>, 
+    (<radio-button>,
      <basic-test-button>)
 end class <test-radio-button-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <radio-button>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-radio-button-pane>, #f)
 end method class-for-make-pane;
 
-define method handle-event 
+define method handle-event
     (pane :: <test-radio-button-pane>, event :: <button-release-event>) => ()
   gadget-value(pane, do-callback?: #t) := ~gadget-value(pane)
 end method handle-event;
@@ -498,8 +498,8 @@ define method handle-repaint
     (pane :: <test-radio-button-pane>, medium :: <medium>, region :: <region>) => ()
   let (left, top, right, bottom) = box-edges(sheet-device-region(pane));
   //--- square, selected/deselected
-  draw-rectangle(medium, left, top, right, bottom, 
-		 filled?: gadget-value(pane))
+  draw-rectangle(medium, left, top, right, bottom,
+                 filled?: gadget-value(pane))
 end method handle-repaint;
 
 
@@ -508,13 +508,13 @@ define class <test-check-button-pane>
      <basic-test-button>)
 end class <test-check-button-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <check-button>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-check-button-pane>, #f)
 end method class-for-make-pane;
 
-define method handle-event 
+define method handle-event
     (pane :: <test-check-button-pane>, event :: <button-release-event>) => ()
   gadget-value(pane, do-callback?: #t) := ~gadget-value(pane)
 end method handle-event;
@@ -525,17 +525,17 @@ define method handle-repaint
   let (left, top, right, bottom) = box-edges(sheet-device-region(pane));
   //--- diamond, selected/deselected
   draw-rectangle(medium, left, top, right, bottom,
-		 filled?: gadget-value(pane))
+                 filled?: gadget-value(pane))
 end method handle-repaint;
 
 
-define class <test-list-box> 
+define class <test-list-box>
     (<test-gadget-mixin>,
      <list-box>,
      <leaf-pane>)
 end class <test-list-box>;
 
-define method do-compose-space 
+define method do-compose-space
     (pane :: <test-list-box>, #key width, height)
  => (space-req :: <space-requirement>)
   make(<space-requirement>,
@@ -547,7 +547,7 @@ define method do-compose-space
        max-height: $fill)
 end method do-compose-space;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <list-box>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-list-box>, #f)
@@ -561,13 +561,13 @@ define method handle-repaint
 end method handle-repaint;
 
 
-define class <test-option-box> 
+define class <test-option-box>
     (<test-gadget-mixin>,
      <option-box>,
      <leaf-pane>)
 end class <test-option-box>;
 
-define method do-compose-space 
+define method do-compose-space
     (pane :: <test-option-box>, #key width, height)
  => (space-req :: <space-requirement>)
   make(<space-requirement>,
@@ -579,20 +579,20 @@ define method do-compose-space
        max-height: $fill)
 end method do-compose-space;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <option-box>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-option-box>, #f)
 end method class-for-make-pane;
 
 
-define class <test-combo-box> 
+define class <test-combo-box>
     (<test-gadget-mixin>,
      <combo-box>,
      <leaf-pane>)
 end class <test-combo-box>;
 
-define method do-compose-space 
+define method do-compose-space
     (pane :: <test-combo-box>, #key width, height)
  => (space-req :: <space-requirement>)
   make(<space-requirement>,
@@ -604,20 +604,20 @@ define method do-compose-space
        max-height: $fill)
 end method do-compose-space;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <combo-box>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-combo-box>, #f)
 end method class-for-make-pane;
 
 
-define class <test-spin-box> 
+define class <test-spin-box>
     (<test-gadget-mixin>,
      <spin-box>,
      <leaf-pane>)
 end class <test-spin-box>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <spin-box>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-spin-box>, #f)
@@ -640,7 +640,7 @@ define method do-compose-space
        height: 15)
 end method do-compose-space;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <menu-bar>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-menu-bar-pane>, #f)
@@ -652,7 +652,7 @@ define class <test-menu-pane>
      <menu>)
 end class <test-menu-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <menu>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-menu-pane>, #f)
@@ -672,7 +672,7 @@ define class <test-push-menu-button-pane>
      <basic-test-button>)
 end class <test-push-menu-button-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <push-menu-button>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-push-menu-button-pane>, #f)
@@ -684,7 +684,7 @@ define class <test-radio-menu-button-pane>
      <basic-test-button>)
 end class <test-radio-menu-button-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <radio-menu-button>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-radio-menu-button-pane>, #f)
@@ -696,7 +696,7 @@ define class <test-check-menu-button-pane>
      <basic-test-button>)
 end class <test-check-menu-button-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <check-menu-button>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-check-menu-button-pane>, #f)
@@ -709,7 +709,7 @@ define class <test-text-field-pane>
      <leaf-pane>)
 end class <test-text-field-pane>;
 
-define method do-compose-space 
+define method do-compose-space
     (pane :: <test-text-field-pane>, #key width, height)
  => (space-req :: <space-requirement>)
   make(<space-requirement>,
@@ -721,7 +721,7 @@ define method do-compose-space
        max-height: $fill)
 end method do-compose-space;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <text-field>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-text-field-pane>, #f)
@@ -734,7 +734,7 @@ define class <test-password-field-pane>
      <leaf-pane>)
 end class <test-password-field-pane>;
 
-define method do-compose-space 
+define method do-compose-space
     (pane :: <test-password-field-pane>, #key width, height)
  => (space-req :: <space-requirement>)
   make(<space-requirement>,
@@ -746,7 +746,7 @@ define method do-compose-space
        max-height: $fill)
 end method do-compose-space;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <password-field>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-password-field-pane>, #f)
@@ -759,7 +759,7 @@ define class <test-text-editor-pane>
      <leaf-pane>)
 end class <test-text-editor-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <text-editor>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-text-editor-pane>, #f)
@@ -772,85 +772,85 @@ define class <test-splitter-pane>
      <leaf-pane>)
 end class <test-splitter-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <splitter>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-splitter-pane>, #f)
 end method class-for-make-pane;
 
 
-define class <test-progress-bar> 
+define class <test-progress-bar>
     (<test-gadget-mixin>,
      <progress-bar>,
      <leaf-pane>)
 end class <test-progress-bar>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <progress-bar>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-progress-bar>, #f)
 end method class-for-make-pane;
 
 
-define class <test-status-bar> 
+define class <test-status-bar>
     (<test-gadget-mixin>,
      <status-bar>,
      <leaf-pane>)
 end class <test-status-bar>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <status-bar>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-status-bar>, #f)
 end method class-for-make-pane;
 
 
-define class <test-list-control> 
+define class <test-list-control>
     (<test-gadget-mixin>,
      <list-control>,
      <leaf-pane>)
 end class <test-list-control>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <list-control>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-list-control>, #f)
 end method class-for-make-pane;
 
 
-define class <test-table-control> 
+define class <test-table-control>
     (<test-gadget-mixin>,
      <table-control>,
      <leaf-pane>)
 end class <test-table-control>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <table-control>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-table-control>, #f)
 end method class-for-make-pane;
 
 
-define class <test-tree-control> 
+define class <test-tree-control>
     (<test-gadget-mixin>,
      <tree-control>,
      <leaf-pane>)
 end class <test-tree-control>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <tree-control>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-tree-control>, #f)
 end method class-for-make-pane;
 
 
-define class <test-tab-control> 
+define class <test-tab-control>
     (<test-gadget-mixin>,
      <tab-control>,
      <leaf-pane>)
 end class <test-tab-control>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <tab-control>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-tab-control>, #f)
@@ -885,9 +885,9 @@ define method make-test-frame
   let framem = framem | find-test-frame-manager();
   with-frame-manager (framem)
     let frame
-      = apply(make, class, 
-	      title: "Test Frame",
-	      args);
+      = apply(make, class,
+              title: "Test Frame",
+              args);
     frame-mapped?(frame) := #t;
     frame
   end
@@ -982,13 +982,13 @@ define table $gadget-class-names :: <object-table>
 
 
 // gadget class name
-define method gadget-class-name 
+define method gadget-class-name
     (class :: <class>) => (name :: <string>)
   element($gadget-class-names, class, default: #f)
     | format-to-string("unknown gadget %=", class)
 end method gadget-class-name;
 
-define method gadget-class-name 
+define method gadget-class-name
     (class) => (name :: <string>)
   gadget-class-name(object-class(class))
 end method gadget-class-name;

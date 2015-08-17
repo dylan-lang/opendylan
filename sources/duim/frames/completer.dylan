@@ -43,7 +43,7 @@ define method complete-from-sequence
      n-matches :: <integer>, completions :: <sequence>)
   block (return)
     if (~member?(action, #[#"completions", #"apropos-completions"])
-	& size(string) = 0)
+        & size(string) = 0)
       return(#f, #f, #f, 0, #[])
     else
       let best-completion = #f;
@@ -52,34 +52,34 @@ define method complete-from-sequence
       let n-matches       = 0;
       let completions :: <stretchy-object-vector> = make(<stretchy-vector>);
       local method complete-1 (possibility) => ()
-	      let completion = label-key(possibility);
-	      let object     = value-key(possibility);
-	      when (~predicate | predicate(object))
-		// If we are doing simple completion and the user-supplied string is
-		// exactly equal to this completion, then claim success (even if there
-		// are other completions that have this one as a left substring!).
-		when (action == #"complete"
-		      & string-equal?(string, completion))
-		  return(completion, #t, object, 1, #[])
-		end;
-		let (bc, bl, bo, nm, p)
-		  = chunkwise-complete-string(string, completion, object, action, delimiters,
-					      best-completion, best-length, best-object,
-					      n-matches, completions);
-		best-completion := bc;
-		best-length     := bl;
-		best-object     := bo;
-		n-matches       := nm;
-		completions     := p
-	      end
-	    end method;
+              let completion = label-key(possibility);
+              let object     = value-key(possibility);
+              when (~predicate | predicate(object))
+                // If we are doing simple completion and the user-supplied string is
+                // exactly equal to this completion, then claim success (even if there
+                // are other completions that have this one as a left substring!).
+                when (action == #"complete"
+                      & string-equal?(string, completion))
+                  return(completion, #t, object, 1, #[])
+                end;
+                let (bc, bl, bo, nm, p)
+                  = chunkwise-complete-string(string, completion, object, action, delimiters,
+                                              best-completion, best-length, best-object,
+                                              n-matches, completions);
+                best-completion := bc;
+                best-length     := bl;
+                best-object     := bo;
+                n-matches       := nm;
+                completions     := p
+              end
+            end method;
       //--- If the completions were guaranteed to be sorted, this could be a bit faster
       do(complete-1, possibilities);
       return(if (best-completion) copy-sequence(best-completion, end: best-length) else string end,
-	     ~(best-object == $unfound),
-	     ~(best-object == $unfound) & best-object,
-	     n-matches,
-	     completions)
+             ~(best-object == $unfound),
+             ~(best-object == $unfound) & best-object,
+             n-matches,
+             completions)
     end
   end
 end method complete-from-sequence;
@@ -92,10 +92,10 @@ end method complete-from-sequence;
 // For example,
 //   complete-from-generator
 //     ("th", method (string, completer)
-//	        for (b in #["one", "two", "three", "four"])
-//		  completer(b, b)
-//	        end
-//	      end method, #[' ', '-'])
+//                for (b in #["one", "two", "three", "four"])
+//                  completer(b, b)
+//                end
+//              end method, #[' ', '-'])
 define method complete-from-generator
     (string :: <string>, generator :: <function>, delimiters :: <sequence>,
      #key action = #"complete", predicate :: false-or(<function>) = #f)
@@ -103,7 +103,7 @@ define method complete-from-generator
      n-matches :: <integer>, completions :: <sequence>)
   block (return)
     if (~member?(action, #[#"completions", #"apropos-completions"])
-	& size(string) = 0)
+        & size(string) = 0)
       return(#f, #f, #f, 0, #[])
     else
       let best-completion = #f;
@@ -112,28 +112,28 @@ define method complete-from-generator
       let n-matches       = 0;
       let completions :: <stretchy-object-vector> = make(<stretchy-vector>);
       local method complete-1 (completion, object) => ()
-	      when (~predicate | predicate(object))
-		when (action == #"complete"
-		      & string-equal?(string, completion))
-		  return(completion, #t, object, 1, #[])
-		end;
-		let (bc, bl, bo, nm, c)
-		  = chunkwise-complete-string(string, completion, object, action, delimiters,
-					      best-completion, best-length, best-object,
-					      n-matches, completions);
-		best-completion := bc;
-		best-length     := bl;
-		best-object     := bo;
-		n-matches       := nm;
-		completions     := c
-	      end
-	    end method;
+              when (~predicate | predicate(object))
+                when (action == #"complete"
+                      & string-equal?(string, completion))
+                  return(completion, #t, object, 1, #[])
+                end;
+                let (bc, bl, bo, nm, c)
+                  = chunkwise-complete-string(string, completion, object, action, delimiters,
+                                              best-completion, best-length, best-object,
+                                              n-matches, completions);
+                best-completion := bc;
+                best-length     := bl;
+                best-object     := bo;
+                n-matches       := nm;
+                completions     := c
+              end
+            end method;
       generator(string, complete-1);
       return(if (best-completion) copy-sequence(best-completion, end: best-length) else string end,
-	     ~(best-object == $unfound),
-	     ~(best-object == $unfound) & best-object,
-	     n-matches,
-	     completions)
+             ~(best-object == $unfound),
+             ~(best-object == $unfound) & best-object,
+             n-matches,
+             completions)
     end
   end
 end method complete-from-generator;
@@ -149,73 +149,73 @@ define method chunkwise-complete-string
     = size(string);
   let matches :: <integer>
     = if (action == #"apropos-completions")
-	if (subsequence-position(string, completion, test: char-equal?)) length else 0 end
+        if (subsequence-position(string, completion, test: char-equal?)) length else 0 end
       else
-	chunkwise-string-compare(string, completion, delimiters)
+        chunkwise-string-compare(string, completion, delimiters)
       end;
   when (matches = length)
     n-matches := n-matches + 1;
     select (action)
       #"completions", #"apropos-completions" =>
-	add!(completions, list(completion, object));
+        add!(completions, list(completion, object));
       #"complete", #"complete-maximal" =>
-	#f;
+        #f;
       #"complete-limited" =>
-	// Match up only as many chunks as the user has typed
-	local method count-delimiters
-		  (string :: <string>) => (n :: <integer>)
-		let n :: <integer> = 0;
-		for (char in string)
-		  when (member?(char, delimiters))
-		    n := n + 1
-		  end
-		end;
-		n
-	      end method;
-	local method find-delimiter
-		  (string :: <string>, start :: <integer>) => (i :: false-or(<integer>))
-		block (return)
-		  without-bounds-checks
-		    for (i from start below size(string))
-		      when (member?(string[i], delimiters))
-			return(i)
-		      end
-		    end
-		  end;
-		  #f
-		end
-	      end method;
-	let nchunks :: <integer>
-	  = count-delimiters(string) + 1;
-	let cutoff :: false-or(<integer>)
-	  = block (return)
-	      let start = 0;
-	      let cutoff = #f;
-	      for (i from 0 below nchunks)
-		let new = find-delimiter(completion, start);
-		unless (new) return(#f) end;
-		cutoff := new;
-		start  := new + 1
-	      end;
-	      cutoff
-	    end;
-	when (cutoff)
-	  completion := copy-sequence(completion, end: cutoff + 1);
-	  // Increment this once more to make the calling function think
-	  // that the completion is ambiguous
-	  n-matches := n-matches + 1
-	end;
+        // Match up only as many chunks as the user has typed
+        local method count-delimiters
+                  (string :: <string>) => (n :: <integer>)
+                let n :: <integer> = 0;
+                for (char in string)
+                  when (member?(char, delimiters))
+                    n := n + 1
+                  end
+                end;
+                n
+              end method;
+        local method find-delimiter
+                  (string :: <string>, start :: <integer>) => (i :: false-or(<integer>))
+                block (return)
+                  without-bounds-checks
+                    for (i from start below size(string))
+                      when (member?(string[i], delimiters))
+                        return(i)
+                      end
+                    end
+                  end;
+                  #f
+                end
+              end method;
+        let nchunks :: <integer>
+          = count-delimiters(string) + 1;
+        let cutoff :: false-or(<integer>)
+          = block (return)
+              let start = 0;
+              let cutoff = #f;
+              for (i from 0 below nchunks)
+                let new = find-delimiter(completion, start);
+                unless (new) return(#f) end;
+                cutoff := new;
+                start  := new + 1
+              end;
+              cutoff
+            end;
+        when (cutoff)
+          completion := copy-sequence(completion, end: cutoff + 1);
+          // Increment this once more to make the calling function think
+          // that the completion is ambiguous
+          n-matches := n-matches + 1
+        end;
     end;
     if (best-completion)
       let new-length :: <integer>
-	= chunkwise-string-compare(best-completion, completion, delimiters,
-				   merge?: #t, end1: best-length);
+        = chunkwise-string-compare(best-completion, completion, delimiters,
+                                   merge?: #t, end1: best-length);
       if (~best-length | new-length > best-length)
-	best-length := new-length;
-	best-object := object
+        best-length := new-length;
+        best-object := object
       else
-	best-length := new-length;
-	best-object := $unfound
+        best-length := new-length;
+        best-object := $unfound
       end
     else
       best-completion := copy-sequence(completion);
@@ -243,44 +243,44 @@ define method chunkwise-string-compare
   block (break)
     without-bounds-checks
       while (#t)
-	when (i1 >= len1 | i2 >= len2)
-	  break()
-	end;
-	let char1 :: <character> = string1[i1];
-	let char2 :: <character> = string2[i2];
-	if (char1 == char2 | char-equal?(char1, char2))
-	  when (merge?)
-	    string1[matched] := char1
-	  end;
-	  matched := matched + 1;
-	  i1 := i1 + 1;
-	  i2 := i2 + 1
-	else
-	  unless (ambiguous)
-	    ambiguous := matched
-	  end;
-	  case
-	    member?(char1, delimiters) =>
-	      when ((~merge? & i1 > matched)
-		    | member?(char2, delimiters))
-		break()
-	      end;
-	    member?(char2, delimiters) =>
-	      when ((~merge? & i2 > matched))
-		break()
-	      end;
-	    otherwise =>
-	      unless (merge?)
-		break()
-	      end;
-	  end;
-	  until (member?(string1[i1], delimiters)
-		 | (i1 := i1 + 1) >= len1)
-	  end;
-	  until (member?(string2[i2], delimiters)
-		 | (i2 := i2 + 1) >= len2)
-	  end;
-	end
+        when (i1 >= len1 | i2 >= len2)
+          break()
+        end;
+        let char1 :: <character> = string1[i1];
+        let char2 :: <character> = string2[i2];
+        if (char1 == char2 | char-equal?(char1, char2))
+          when (merge?)
+            string1[matched] := char1
+          end;
+          matched := matched + 1;
+          i1 := i1 + 1;
+          i2 := i2 + 1
+        else
+          unless (ambiguous)
+            ambiguous := matched
+          end;
+          case
+            member?(char1, delimiters) =>
+              when ((~merge? & i1 > matched)
+                    | member?(char2, delimiters))
+                break()
+              end;
+            member?(char2, delimiters) =>
+              when ((~merge? & i2 > matched))
+                break()
+              end;
+            otherwise =>
+              unless (merge?)
+                break()
+              end;
+          end;
+          until (member?(string1[i1], delimiters)
+                 | (i1 := i1 + 1) >= len1)
+          end;
+          until (member?(string2[i2], delimiters)
+                 | (i2 := i2 + 1) >= len2)
+          end;
+        end
       end
     end
   end;

@@ -22,12 +22,12 @@ define class <reversi-square> (<simple-pane>)
   slot %piece = #f, init-keyword: piece:;
 end class <reversi-square>;
 
-define method square-piece 
+define method square-piece
     (sheet :: <reversi-square>) => (piece :: <piece>)
   sheet.%piece
 end method square-piece;
 
-define method square-piece-setter 
+define method square-piece-setter
     (piece :: <piece>, sheet :: <reversi-square>)
  => (piece :: <piece>)
   sheet.%piece := piece;
@@ -37,11 +37,11 @@ define method square-piece-setter
   piece;
 end method square-piece-setter;
 
-define method do-compose-space 
+define method do-compose-space
     (sheet :: <reversi-square>, #key width, height)
  => (space-requirement :: <space-requirement>)
   make(<space-requirement>,
-       width: *reversi-square-size*, 
+       width: *reversi-square-size*,
        height: *reversi-square-size*);
 end method do-compose-space;
 
@@ -52,7 +52,7 @@ define method handle-repaint
   let frame = sheet-frame(sheet);
   with-drawing-options (medium, brush: default-background(sheet))
     draw-rectangle(medium, left, top, right, bottom, filled?: #t)
-  end; 
+  end;
   draw-piece(sheet, medium, *reversi-piece-shape*)
 end method handle-repaint;
 
@@ -101,34 +101,34 @@ define frame <reversi-frame> (<simple-frame>)
   slot %saved-file-name :: false-or(<pathname>) = #f;
   pane buttons (frame)
     make(<push-button>,
-	 label: "New game",
-	 activate-callback: reversi-frame-new-game);
+         label: "New game",
+         activate-callback: reversi-frame-new-game);
   /** Changing size is not fully implemented yet.
   pane size-box (frame)
     begin
       let game = reversi-frame-game(frame);
       make(<spin-box>,
-	   items: range(from: 6, to: 24, by: 2),
-	   value: reversi-game-size(game),
-	   value-changed-callback: method (b)
-				     reversi-frame-change-size(sheet-frame(b),
-							       gadget-value(b))
-				   end,
-	   label-key: method (item) 
-			format-to-string("%d", item)
-		      end)
+           items: range(from: 6, to: 24, by: 2),
+           value: reversi-game-size(game),
+           value-changed-callback: method (b)
+                                     reversi-frame-change-size(sheet-frame(b),
+                                                               gadget-value(b))
+                                   end,
+           label-key: method (item)
+                        format-to-string("%d", item)
+                      end)
     end;
   */
   pane reversi-frame-table-pane (frame)
     begin
       let game = reversi-frame-game(frame);
-      make(<grid-layout>, 
-	   children: reversi-frame-squares(frame),
-	   cell-space-requirement: make(<space-requirement>,
-					width: *reversi-square-size*, 
-					height: *reversi-square-size*),
-	   rows: reversi-game-size(game),
-	   spacing: 2)
+      make(<grid-layout>,
+           children: reversi-frame-squares(frame),
+           cell-space-requirement: make(<space-requirement>,
+                                        width: *reversi-square-size*,
+                                        height: *reversi-square-size*),
+           rows: reversi-game-size(game),
+           spacing: 2)
     end;
   pane status (frame)
     make(<status-bar>);
@@ -142,129 +142,129 @@ define frame <reversi-frame> (<simple-frame>)
         */
       end;
       make(<drawing-pane>,
-	   children: vector(reversi-frame-table-pane(frame)),
-	   foreground: *reversi-square-color*);
+           children: vector(reversi-frame-table-pane(frame)),
+           foreground: *reversi-square-color*);
     end;
   pane exit-button (frame)
     make(<push-menu-button>,
-	 label: "E&xit",
-	 activate-callback: method (button)
-			      exit-application(0);
-			    end);
+         label: "E&xit",
+         activate-callback: method (button)
+                              exit-application(0);
+                            end);
   pane file-menu (frame)
     make(<menu>,
-	 label: "&File",
-	 children: vector(make(<menu-button>,
-			       label: "New Game",
-			       activate-callback: reversi-frame-new-game),
-			  make(<menu-button>,
-			       label: "Open...",
-			       activate-callback:
-				 method (button)
-				   let file = choose-file(direction: #"input",
-							  owner: frame);
-				   if (file)
-				     reversi-frame-load-game(frame,
-							     file);
-				   end;
-				 end, 
-			       enabled?: *changed2?*),
-			  make(<menu-button>,
-			       label: "Save",
-			       activate-callback: 
-				 method (button)
-				   let file = frame.%saved-file-name 
-				     | begin 
-					 frame.%saved-file-name := 
-					   choose-file(direction: #"output", 
-						       owner: frame);
-				       end;
-				   if (file)
-				     reversi-frame-save-game(frame, file);
-				   end;
-				 end,
-			       enabled?: *changed2?*),
-			  make(<menu-button>,
-			       label: "Save As...",
-			       activate-callback: 
-				 method (button)
-				   let file = 
-				     choose-file(direction: #"output", 
-						    owner: frame);
-				   if (file)
-				     frame.%saved-file-name := file;
-				     reversi-frame-save-game(frame,
-							     file);
-				   end;
-				 end,
-			       enabled?: *changed2?*),
-			  make(<push-menu-box>,
-			       children: vector(frame.exit-button))));
+         label: "&File",
+         children: vector(make(<menu-button>,
+                               label: "New Game",
+                               activate-callback: reversi-frame-new-game),
+                          make(<menu-button>,
+                               label: "Open...",
+                               activate-callback:
+                                 method (button)
+                                   let file = choose-file(direction: #"input",
+                                                          owner: frame);
+                                   if (file)
+                                     reversi-frame-load-game(frame,
+                                                             file);
+                                   end;
+                                 end,
+                               enabled?: *changed2?*),
+                          make(<menu-button>,
+                               label: "Save",
+                               activate-callback:
+                                 method (button)
+                                   let file = frame.%saved-file-name
+                                     | begin
+                                         frame.%saved-file-name :=
+                                           choose-file(direction: #"output",
+                                                       owner: frame);
+                                       end;
+                                   if (file)
+                                     reversi-frame-save-game(frame, file);
+                                   end;
+                                 end,
+                               enabled?: *changed2?*),
+                          make(<menu-button>,
+                               label: "Save As...",
+                               activate-callback:
+                                 method (button)
+                                   let file =
+                                     choose-file(direction: #"output",
+                                                    owner: frame);
+                                   if (file)
+                                     frame.%saved-file-name := file;
+                                     reversi-frame-save-game(frame,
+                                                             file);
+                                   end;
+                                 end,
+                               enabled?: *changed2?*),
+                          make(<push-menu-box>,
+                               children: vector(frame.exit-button))));
   pane options-menu (frame)
     make(<menu>,
-	 label: "&Options",
-	 children: vector(make(<radio-menu-box>,
-			       items: #(#("&Black vs Computer", #"black"),
-					#("&White vs Computer", #"white"),
-					#("&Computer vs Computer", 
-					  #"computers"),
-					#("&Two Players", #"two-players")),
-			       label-key: first,
-			       value-key: second,
-			       value-changed-callback:
-				 method (b)
-				   reversi-frame-set-players(sheet-frame(b), 
-							     gadget-value(b))
-				 end), 
-			  
-			  make(<radio-menu-box>, 
-			       items: #(#("&Circles", #"circle"),
-					#("&Squares", #"square"),
-					#("&Triangles", #"triangle")),
-			       label-key: first,
-			       value-key: second,
-			       value-changed-callback:
-				 method (b)
-				   reversi-frame-set-shape(sheet-frame(b), 
-							   gadget-value(b))
-				 end, 
-			       enabled?: *changed?*))); 
+         label: "&Options",
+         children: vector(make(<radio-menu-box>,
+                               items: #(#("&Black vs Computer", #"black"),
+                                        #("&White vs Computer", #"white"),
+                                        #("&Computer vs Computer",
+                                          #"computers"),
+                                        #("&Two Players", #"two-players")),
+                               label-key: first,
+                               value-key: second,
+                               value-changed-callback:
+                                 method (b)
+                                   reversi-frame-set-players(sheet-frame(b),
+                                                             gadget-value(b))
+                                 end),
+
+                          make(<radio-menu-box>,
+                               items: #(#("&Circles", #"circle"),
+                                        #("&Squares", #"square"),
+                                        #("&Triangles", #"triangle")),
+                               label-key: first,
+                               value-key: second,
+                               value-changed-callback:
+                                 method (b)
+                                   reversi-frame-set-shape(sheet-frame(b),
+                                                           gadget-value(b))
+                                 end,
+                               enabled?: *changed?*)));
 /*  make(<menu-button>,
-	 label: "Black Algorithm...",
-	 activate-callback:
-	   rcurry(reversi-frame-choose-algorithm, 
-		  #"black")),
-	 make(<menu-button>,
-	      label: "White Algorithm...",
-	      activate-callback:
-		rcurry(reversi-frame-choose-algorithm, 
-		       #"white")),
-	 make(<menu-button>,
-	      label: "Board Size...",
-	      activate-callback: 
-		method (b)
-		  reversi-frame-change-size(sheet-frame(b))
-		end) */
+         label: "Black Algorithm...",
+         activate-callback:
+           rcurry(reversi-frame-choose-algorithm,
+                  #"black")),
+         make(<menu-button>,
+              label: "White Algorithm...",
+              activate-callback:
+                rcurry(reversi-frame-choose-algorithm,
+                       #"white")),
+         make(<menu-button>,
+              label: "Board Size...",
+              activate-callback:
+                method (b)
+                  reversi-frame-change-size(sheet-frame(b))
+                end) */
 
   pane help-menu (frame)
     make(<menu>,
-	 label: "Help",
-	 children: vector(make(<push-menu-button>,
-			       label: "About Reversi",
-			       activate-callback: 
-				 method (button)
-				   about-reversi(sheet-frame(button))
-				 end)));
+         label: "Help",
+         children: vector(make(<push-menu-button>,
+                               label: "About Reversi",
+                               activate-callback:
+                                 method (button)
+                                   about-reversi(sheet-frame(button))
+                                 end)));
   menu-bar (frame)
     make(<menu-bar>,
-	 children: vector(frame.file-menu, 
-			  frame.options-menu, 
-			  frame.help-menu));
+         children: vector(frame.file-menu,
+                          frame.options-menu,
+                          frame.help-menu));
   layout (frame) frame.main-layout;
   status-bar (frame) frame.status;
 end frame <reversi-frame>;
 
-define method reversi-frame-game 
+define method reversi-frame-game
     (frame :: <reversi-frame>)
  => (game :: <reversi-game>)
   frame.%game
@@ -301,7 +301,7 @@ define method reversi-frame-squares-setter
 end method reversi-frame-squares-setter;
 */
 
-define method make-reversi-squares 
+define method make-reversi-squares
     (frame :: <reversi-frame>) => (squares :: <sequence>)
   let game = reversi-frame-game(frame);
   let board = reversi-game-board(game);
@@ -312,13 +312,13 @@ define method make-reversi-squares
   for (i from 0 below no-of-squares)
     squares[i]
       := make(<reversi-square>,
-	      number: i,
-	      background: square-color)
+              number: i,
+              background: square-color)
   end;
 
   squares
 end method make-reversi-squares;
-                       
+
 define method reversi-frame-press-square
     (frame :: <reversi-frame>, square :: <integer>) => ()
   let game = reversi-frame-game(frame);
@@ -329,7 +329,7 @@ define method reversi-frame-press-square
   end;
 end method reversi-frame-press-square;
 
-define method reversi-frame-display-message 
+define method reversi-frame-display-message
     (frame :: <reversi-frame>, format-string :: <string>, #rest message-args) => ()
   let status-bar = frame-status-bar(frame);
   let message = apply(format-to-string, format-string, message-args);
@@ -346,7 +346,7 @@ define method reversi-frame-make-game
                           update-reversi-frame(frame)
                         end,
        message-function: method (message, #rest message-args)
-                           apply(reversi-frame-display-message, 
+                           apply(reversi-frame-display-message,
                                  frame, message, message-args)
                          end,
        board-size: board-size)
@@ -371,7 +371,7 @@ define method reversi-frame-change-size
   */
 end method reversi-frame-change-size;
 */
-  
+
 define method update-reversi-frame (frame :: <reversi-frame>) => ()
   let game = reversi-frame-game(frame);
   let board = reversi-game-board(game);
@@ -384,12 +384,12 @@ define method update-reversi-frame (frame :: <reversi-frame>) => ()
   force-display(port(frame))
 end method update-reversi-frame;
 
-define method play-reversi 
+define method play-reversi
     (#key port = default-port(), board-size = $default-board-size)
   let frame
     = make(<reversi-frame>,
-	   size: board-size,
-	   title: "Reversi");
+           size: board-size,
+           title: "Reversi");
   start-frame(frame);
   frame
 end method play-reversi;
@@ -403,7 +403,7 @@ define method reversi-frame-save-game
   reversi-game-save-game(game, file)
 end method reversi-frame-save-game;
 
-define method reversi-frame-save-game 
+define method reversi-frame-save-game
     (sheet :: <sheet>, file :: <pathname>) => ()
   let frame = sheet-frame(sheet);
   reversi-frame-save-game(frame, file)
@@ -415,19 +415,19 @@ define method reversi-frame-load-game
   reversi-game-load-game(game, file);
 end method reversi-frame-load-game;
 
-define method reversi-frame-load-game 
+define method reversi-frame-load-game
     (sheet :: <sheet>, file :: <pathname>) => ()
   let frame = sheet-frame(sheet);
   reversi-frame-load-game(frame, file);
 end method reversi-frame-load-game;
 
-define method reversi-frame-new-game 
+define method reversi-frame-new-game
     (frame :: <reversi-frame>) => ()
   let game = reversi-frame-game(frame);
   new-game(game)
 end method reversi-frame-new-game;
 
-define method reversi-frame-new-game 
+define method reversi-frame-new-game
     (sheet :: <sheet>) => ()
   let frame = sheet-frame(sheet);
   reversi-frame-new-game(frame)
@@ -447,7 +447,7 @@ define method reversi-frame-set-shape
 end method reversi-frame-set-shape;
 
 /*
-define method reversi-frame-choose-algorithm 
+define method reversi-frame-choose-algorithm
     (sheet :: <sheet>, player :: <player>) => ()
   let frame = sheet-frame(sheet);
   let game = reversi-frame-game(frame);

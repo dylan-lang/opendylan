@@ -17,7 +17,7 @@ define sealed class <list-control-pane>
      <single-child-wrapping-pane>)
 end class <list-control-pane>;
 
-define sideways method class-for-make-pane 
+define sideways method class-for-make-pane
     (framem :: <frame-manager>, class == <list-control>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<list-control-pane>, #f)
@@ -43,13 +43,13 @@ define sealed method initialize
     pane.%layout-pane    := layout;
     layout.%control-pane := pane;
     let scroll-bars = gadget-scroll-bars(pane);
-    sheet-child(pane) 
+    sheet-child(pane)
       := if (scroll-bars == #"none")
-	   layout
-	 else
-	   scrolling (scroll-bars: scroll-bars, border-type: #f)
-	     layout
-	    end
+           layout
+         else
+           scrolling (scroll-bars: scroll-bars, border-type: #f)
+             layout
+            end
          end
   end;
 end method initialize;
@@ -61,7 +61,7 @@ define method note-sheet-attached (pane :: <list-control-pane>) => ()
 end method note-sheet-attached;
 
 // Keep the children of the layout pane in step with 'gadget-items'
-define method note-gadget-items-changed 
+define method note-gadget-items-changed
     (pane :: <list-control-pane>) => ()
   next-method();
   delaying-layout (pane)
@@ -104,7 +104,7 @@ define sealed method initialize
   end
 end method initialize;
 
-define method do-make-item 
+define method do-make-item
     (pane :: <list-control-pane>, class == <list-item>,
      #rest initargs, #key object, frame-manager: framem = frame-manager(pane))
  => (item :: <list-item-pane>)
@@ -113,12 +113,12 @@ define method do-make-item
   let label = (label-function & label-function(object)) | "";
   let (small-icon, large-icon) = (icon-function  & icon-function(object));
   apply(make, <list-item-pane>,
-	label: label,
-	small-icon: small-icon,
-	large-icon: large-icon,
-	x-spacing: 4, y-alignment: #"center",
-	frame-manager: framem,
-	initargs)
+        label: label,
+        small-icon: small-icon,
+        large-icon: large-icon,
+        x-spacing: 4, y-alignment: #"center",
+        frame-manager: framem,
+        initargs)
 end method do-make-item;
 
 define sealed method do-find-item
@@ -130,7 +130,7 @@ define sealed method do-find-item
   block (return)
     for (item in sheet-children(pane))
       when (test(key(item-object(item)), the-key))
-	return(item)
+        return(item)
       end
     end;
     #f
@@ -165,10 +165,10 @@ define sealed method item-label-setter
   block (break)
     for (child in sheet-children(item))
       when (instance?(child, <list-item-label-button>))
-	gadget-label(child) := label;
-	clear-box*(item, sheet-region(item));
-	repaint-sheet(item, $everywhere);
-	break()
+        gadget-label(child) := label;
+        clear-box*(item, sheet-region(item));
+        repaint-sheet(item, $everywhere);
+        break()
       end
     end
   end;
@@ -186,10 +186,10 @@ define sealed method item-icon-setter
   block (break)
     for (child in sheet-children(item))
       when (instance?(child, <label>))
-	gadget-label(child) := icon;
-	clear-box*(item, sheet-region(item));
-	repaint-sheet(item, $everywhere);
-	break()
+        gadget-label(child) := icon;
+        clear-box*(item, sheet-region(item));
+        repaint-sheet(item, $everywhere);
+        break()
       end
     end
   end;

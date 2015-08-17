@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library tic-tac-toe
   use common-dylan;
   use system;
-  use duim;  
+  use duim;
   export tic-tac-toe;
 end library tic-tac-toe;
 

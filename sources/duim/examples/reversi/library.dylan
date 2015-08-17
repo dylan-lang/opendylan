@@ -11,6 +11,6 @@ define library reversi
   use system;
   use io;
   use duim;
-  
+
   export reversi;
 end library reversi;

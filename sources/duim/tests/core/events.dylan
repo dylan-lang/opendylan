@@ -69,7 +69,7 @@ define method check-event (name, number, class, client)
                & event-client(event) = client)
 end method check-event;
 
-define method make-event-frame 
+define method make-event-frame
     (#rest args,
      #key gadget-class = <list-box>,
           gadget-class-2,
@@ -78,16 +78,16 @@ define method make-event-frame
   let gadget2 = gadget-class-2 & make-test-pane(gadget-class-2);
   let layout
     = make-test-pane(<column-layout>,
-		     children: if (gadget2)
-				 vector(gadget1, gadget2)
-			       else
-				 vector(gadget1)
-			       end);
+                     children: if (gadget2)
+                                 vector(gadget1, gadget2)
+                               else
+                                 vector(gadget1)
+                               end);
   let frame = make-test-frame(<test-frame>, layout: layout);
   values(frame, layout, gadget1, gadget2);
 end method make-event-frame;
 
-define method handle-event 
+define method handle-event
     (sheet :: <test-gadget-mixin>, event :: <timer-event>) => ()
   record-event(sheet, event)
 end method handle-event;
@@ -100,42 +100,42 @@ define test timer-events-test ()
 end test timer-events-test;
 
 
-define method handle-event 
+define method handle-event
     (frame :: <test-frame>, event :: <frame-exit-event>) => ()
   record-event(frame, event)
 end method handle-event;
 
-define method handle-event 
+define method handle-event
     (frame :: <test-frame>, event :: <frame-exited-event>) => ()
   record-event(frame, event)
 end method handle-event;
 
-define method handle-event 
+define method handle-event
     (frame :: <test-frame>, event :: <application-exited-event>) => ()
   record-event(frame, event)
 end method handle-event;
 
-define method handle-event 
+define method handle-event
     (frame :: <test-frame>, event :: <frame-created-event>) => ()
   record-event(frame, event)
 end method handle-event;
 
-define method handle-event 
+define method handle-event
     (frame :: <test-frame>, event :: <frame-mapped-event>) => ()
   record-event(frame, event)
 end method handle-event;
 
-define method handle-event 
+define method handle-event
     (frame :: <test-frame>, event :: <frame-unmapped-event>) => ()
   record-event(frame, event)
 end method handle-event;
 
-define method handle-event 
+define method handle-event
     (frame :: <test-frame>, event :: <frame-destroyed-event>) => ()
   record-event(frame, event)
 end method handle-event;
 
-define method handle-event 
+define method handle-event
     (frame :: <test-frame>, event :: <port-terminated-event>) => ()
   record-event(frame, event)
 end method handle-event;
@@ -187,7 +187,7 @@ define test frame-events-test ()
 end test frame-events-test;
 
 
-define method handle-event 
+define method handle-event
     (sheet :: <test-gadget-mixin>, event :: <window-repaint-event>) => ()
   record-event(sheet, event)
 end method handle-event;
@@ -197,9 +197,9 @@ define test window-events-test ()
   let (frame, layout, sheet) = make-event-frame();
   ignore(layout);
   let event = make(<window-repaint-event>,
-		   //---- needs region and native region
-		   sheet: sheet,
-		   region: make-bounding-box(10, 10, 30, 40));
+                   //---- needs region and native region
+                   sheet: sheet,
+                   region: make-bounding-box(10, 10, 30, 40));
   distribute-event(port, event);
   let events = ensure-handled-events(sheet);
   check-true("Repaint event handled", size(events) = 1 & events[0] = event);
@@ -207,17 +207,17 @@ define test window-events-test ()
 end test window-events-test;
 
 
-define method handle-event 
+define method handle-event
     (sheet :: <test-gadget-mixin>, event :: <pointer-motion-event>) => ()
   record-event(sheet, event)
 end method handle-event;
 
-define method handle-event 
+define method handle-event
     (sheet :: <test-gadget-mixin>, event :: <pointer-enter-event>) => ()
   record-event(sheet, event)
 end method handle-event;
 
-define method handle-event 
+define method handle-event
     (sheet :: <test-gadget-mixin>, event :: <pointer-exit-event>) => ()
   record-event(sheet, event)
 end method handle-event;
@@ -229,21 +229,21 @@ define test pointer-events-test ()
   ignore(layout);
   // Should generate enter/motion on the list box
   distribute-event(port, make(<pointer-motion-event>,
-		              sheet: list-box,
-		              pointer: port-pointer(port),
-		              x: 10, y: 10));
+                              sheet: list-box,
+                              pointer: port-pointer(port),
+                              x: 10, y: 10));
   // Should generate exit on the list box, then enter/motion on the push button
   distribute-event(port, make(<pointer-motion-event>,
-		              sheet: push-button,
-		              pointer: port-pointer(port),
-		              x: 10, y: 10));
+                              sheet: push-button,
+                              pointer: port-pointer(port),
+                              x: 10, y: 10));
   // Should generate exit on the push button, then enter/motion on the list box
   distribute-event(port, make(<pointer-motion-event>,
-		              sheet: list-box,
-		              pointer: port-pointer(port),
-		              x: 10, y: 10));
+                              sheet: list-box,
+                              pointer: port-pointer(port),
+                              x: 10, y: 10));
   //---*** Screws up Vm-tether... put it back in at some point
-  // check-equal("event queues shared", 
+  // check-equal("event queues shared",
   //             sheet-event-queue(list-box), sheet-event-queue(push-button));
   let events = ensure-handled-events(list-box);
   check-equal("list box expected number of events",
@@ -263,7 +263,7 @@ define test pointer-events-test ()
 end test pointer-events-test;
 
 
-define method handle-event 
+define method handle-event
     (sheet :: <test-gadget-mixin>, event :: <key-press-event>) => ()
   record-event(sheet, event)
 end method handle-event;
@@ -272,11 +272,11 @@ define test keyboard-events-test ()
   let port = find-test-port();
   let (frame, layout, sheet) = make-event-frame();
   ignore(layout);
-  port-input-focus(port)   := sheet;	//--- kludge!
-  frame-input-focus(frame) := sheet;	//--- kludge!
+  port-input-focus(port)   := sheet;        //--- kludge!
+  frame-input-focus(frame) := sheet;        //--- kludge!
   let event = make(<key-press-event>,
-		   keysym: #"a",
-		   sheet: sheet);
+                   keysym: #"a",
+                   sheet: sheet);
   distribute-event(port, event);
   let events = ensure-handled-events(sheet);
   check-true("Keyboard event handled",
@@ -285,12 +285,12 @@ define test keyboard-events-test ()
 end test keyboard-events-test;
 
 
-define method handle-event 
+define method handle-event
     (sheet :: <test-gadget-mixin>, event :: <button-press-event>) => ()
   record-event(sheet, event)
 end method handle-event;
 
-define method handle-event 
+define method handle-event
     (sheet :: <test-gadget-mixin>, event :: <button-release-event>) => ()
   record-event(sheet, event)
 end method handle-event;
@@ -298,16 +298,16 @@ end method handle-event;
 define method sheet-press-button (sheet)
   let port = port(sheet);
   let event = make(<button-press-event>,
-		   sheet: sheet,
-		   pointer: port-pointer(port),
-		   button: $left-button,
-		   x: 10, y: 10);
+                   sheet: sheet,
+                   pointer: port-pointer(port),
+                   button: $left-button,
+                   x: 10, y: 10);
   distribute-event(port, event);
   let release-event = make(<button-release-event>,
-		           sheet: sheet,
-		           pointer: port-pointer(port),
-		           button: $left-button,
-		           x: 10, y: 10);
+                           sheet: sheet,
+                           pointer: port-pointer(port),
+                           button: $left-button,
+                           x: 10, y: 10);
   distribute-event(port, release-event);
   handle-all-events(top-level-sheet(sheet))
 end method sheet-press-button;
@@ -347,7 +347,7 @@ end method test-button-callbacks;
 define method test-button-clicking (button-class)
   let done-activate-callback? = #f;
   let done-value-changed-callback? = #f;
-  let (frame, layout, button) 
+  let (frame, layout, button)
     = make-event-frame
         (gadget-class: button-class,
          activate-callback: test-callback,
@@ -378,19 +378,19 @@ define method test-button-box-callbacks (box :: <button-box>, name)
   check-true(concatenate(name, " selection updated on activating button 3"),
              begin
                let selection = gadget-selection(box);
-	       select (box by instance?)
-		 <radio-box> => selection = #(2);
-		 <check-box> => size(selection) = 2
+               select (box by instance?)
+                 <radio-box> => selection = #(2);
+                 <check-box> => size(selection) = 2
                                   & every?(rcurry(member?, #(1, 2)), selection)
                end
              end)
 end method test-button-box-callbacks;
 
-define method test-button-box-clicking 
+define method test-button-box-clicking
     (button-box-class, #key items = #("red", "green", "blue"))
   let done-activate-callback? = #f;
   let done-value-changed-callback? = #f;
-  let (frame, layout, button) 
+  let (frame, layout, button)
     = make-event-frame
         (gadget-class: button-box-class,
          activate-callback: test-callback,

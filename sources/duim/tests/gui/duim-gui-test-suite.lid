@@ -1,17 +1,17 @@
 Library:      duim-gui-test-suite
 Author:       Andy Armstrong, Shri Amit
 Synopsis:     An interactive test-suite for DUIM objects
-Files:	  library
-	  module
+Files:    library
+          module
           harness
-	  graphics
-	  recording
+          graphics
+          recording
           sheet-mapping
-	  gadgets
+          gadgets
           borders
           colors
           frames
-	  input-focus
+          input-focus
           tab-controls
           graph-controls
           dialogs
@@ -23,7 +23,7 @@ Files:	  library
           menus
           command-tables
           clipboard
-	  random-rectangles
+          random-rectangles
           start-tests
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.

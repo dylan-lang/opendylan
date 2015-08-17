@@ -117,7 +117,7 @@ define protocol <<sheet-genealogy-protocol>> (<<sheet-protocol>>)
   // Replacing a child
   function replace-child
     (sheet :: <abstract-sheet>, old-child :: <abstract-sheet>, new-child :: <abstract-sheet>)
- => (sheet :: <abstract-sheet>); 
+ => (sheet :: <abstract-sheet>);
   function do-replace-child
     (sheet :: <abstract-sheet>, old-child :: <abstract-sheet>, new-child :: <abstract-sheet>) => ();
   // Traversing children
@@ -160,7 +160,7 @@ define open generic port
 define open generic port-setter
     (port :: false-or(<abstract-port>), object)
  => (port :: false-or(<abstract-port>));
-define open generic %port-setter	//--- sigh...
+define open generic %port-setter        //--- sigh...
     (port :: false-or(<abstract-port>), object)
  => (port :: false-or(<abstract-port>));
 
@@ -203,7 +203,7 @@ define open generic sheet-shell
 /// Decoding the sheet flags
 
 // Bits 0..1 are the sheet's state
-define constant %sheet_mapped_mask :: <integer>	= #o03;
+define constant %sheet_mapped_mask :: <integer>        = #o03;
 define constant %sheet_withdrawn   :: <integer> = #o00;
 define constant %sheet_managed     :: <integer> = #o01;
 define constant %sheet_mapped      :: <integer> = #o02;
@@ -244,8 +244,8 @@ define constant %tab_stop      :: <integer> = #o2000000;
 
 define constant $initial-sheet-flags :: <integer>
     = logior(%sheet_managed,
-	     %pointer_motion_mask, %pointer_button_mask, %keyboard_mask,
-	     %mirror_accepts_children, %accepts_focus, %tab_stop);
+             %pointer_motion_mask, %pointer_button_mask, %keyboard_mask,
+             %mirror_accepts_children, %accepts_focus, %tab_stop);
 
 // Note: these are intentionally not open
 define generic sheet-flags
@@ -307,21 +307,21 @@ define constant $default-sheet-size :: <integer> = 100;
 define method initialize
     (sheet :: <basic-sheet>,
      #key x, y, width, height, region, transform,
-	  withdrawn?, accepts-focus? = #t, tab-stop? = #t, cursor,
+          withdrawn?, accepts-focus? = #t, tab-stop? = #t, cursor,
           foreground, background, text-style,
-	  help-context, help-source)
+          help-context, help-source)
   // Be forgiving of things that pass in #f by mistake...
   initialize-sheet-geometry
     (sheet,
-     x | 0, y | 0, 
+     x | 0, y | 0,
      width | $default-sheet-size, height | $default-sheet-size,
      region: region, transform: transform);
   when (foreground | background | text-style)
     sheet.%style-descriptor
       := make(<style-descriptor>,
-	      foreground: foreground,
-	      background: background,
-	      text-style: text-style)
+              foreground: foreground,
+              background: background,
+              text-style: text-style)
   end;
   unless (accepts-focus?)
     // If this sheet doesn't accept the focus, turn off the flag
@@ -337,7 +337,7 @@ define method initialize
     let index = position($pointer-cursors, cursor) | 0;
     sheet-flags(sheet)
       := logior(logand(sheet-flags(sheet), lognot(%pointer_cursor_mask)),
-		ash(index, %pointer_cursor_shift))
+                ash(index, %pointer_cursor_shift))
   end;
   next-method();
   when (withdrawn?)
@@ -372,9 +372,9 @@ end method initialize-sheet-geometry;
 
 define method destroy-sheet (sheet :: <sheet>) => ()
   local method destroy (sheet :: <sheet>)
-	  do(destroy, sheet-children(sheet));
-	  do-destroy-sheet(sheet)
-	end method;
+          do(destroy, sheet-children(sheet));
+          do-destroy-sheet(sheet)
+        end method;
   // First remove the sheet from its parent, then destroy the
   // hierarchy under the sheet from the bottom up.  We are
   // relying on the fact that removing the top sheet from its
@@ -471,20 +471,20 @@ define method sheet-mapped?-setter
  => (mapped? :: <boolean>)
   //--- We should really do something like this to protect unwary users
   /* assert(sheet-mapped?(sheet-parent(sheet)),
-	    "Attempting to map %= whose parent %= is unmapped",
-	    sheet, sheet-parent(sheet)); */
+            "Attempting to map %= whose parent %= is unmapped",
+            sheet, sheet-parent(sheet)); */
   let flags = sheet-flags(sheet);
   let state = logand(flags, %sheet_mapped_mask);
-  unless (state = %sheet_withdrawn)	// sheet is withdrawn, stop here
+  unless (state = %sheet_withdrawn)        // sheet is withdrawn, stop here
     for (child :: <basic-sheet> in sheet-children(sheet))
       sheet-mapped?(child, do-repaint?: #f) := #t
     end;
     when (state = %sheet_managed)
       sheet-flags(sheet)
-	:= logior(logand(flags, lognot(%sheet_mapped_mask)), %sheet_mapped);
+        := logior(logand(flags, lognot(%sheet_mapped_mask)), %sheet_mapped);
       note-sheet-mapped(sheet);
       when (do-repaint? & sheet-handles-repaint?(sheet))
-	repaint-within-parent(sheet, clear?: clear?)
+        repaint-within-parent(sheet, clear?: clear?)
       end
     end
   end;
@@ -515,15 +515,15 @@ end method repaint-within-parent;
 // Unmap sheets from the top down
 // This can only move a sheet tree from the "mapped" to the "managed" state
 define method sheet-mapped?-setter
-    (mapped? == #f, sheet :: <basic-sheet>, 
+    (mapped? == #f, sheet :: <basic-sheet>,
      #key do-repaint? = #t, clear? = do-repaint?)
  => (mapped? :: <boolean>)
   let flags = sheet-flags(sheet);
   let state = logand(flags, %sheet_mapped_mask);
-  unless (state = %sheet_withdrawn)	// sheet is withdrawn, stop here
+  unless (state = %sheet_withdrawn)        // sheet is withdrawn, stop here
     when (state = %sheet_mapped)
       sheet-flags(sheet)
-	:= logior(logand(flags, lognot(%sheet_mapped_mask)), %sheet_managed);
+        := logior(logand(flags, lognot(%sheet_mapped_mask)), %sheet_managed);
       note-sheet-unmapped(sheet)
     end;
     for (child :: <basic-sheet> in sheet-children(sheet))
@@ -581,7 +581,7 @@ end method sheet-withdrawn?-setter;
 
 // Moves a sheet from "withdrawn" to "managed" (_not_ to "mapped")
 define method sheet-withdrawn?-setter
-    (withdrawn? == #f, sheet :: <basic-sheet>, 
+    (withdrawn? == #f, sheet :: <basic-sheet>,
      #key do-repaint? = #t, clear? = do-repaint?)
  => (withdrawn? :: <boolean>)
   ignore(do-repaint?, clear?);
@@ -612,7 +612,7 @@ define method sheet-layed-out?-setter
  => (layed-out? :: <boolean>)
   sheet-flags(sheet)
     := logior(logand(sheet-flags(sheet), lognot(%layed_out)),
-	      if (layed-out?) %layed_out else 0 end);
+              if (layed-out?) %layed_out else 0 end);
   layed-out?
 end method sheet-layed-out?-setter;
 
@@ -627,7 +627,7 @@ define method sheet-accepts-focus?-setter
  => (accepts-focus? :: <boolean>)
   sheet-flags(sheet)
     := logior(logand(sheet-flags(sheet), lognot(%accepts_focus)),
-	      if (accepts-focus?) %accepts_focus else 0 end);
+              if (accepts-focus?) %accepts_focus else 0 end);
   accepts-focus?
 end method sheet-accepts-focus?-setter;
 
@@ -668,7 +668,7 @@ end method display;
 
 // This method just provides a uniform protocol for setting the display
 //--- Note that setting the display is done only during the grafting process
-define method display-setter 
+define method display-setter
     (_display :: false-or(<display>), sheet :: <sheet>)
  => (_display :: false-or(<display>))
   _display
@@ -681,7 +681,7 @@ define method sheet-frame
   top-sheet & sheet-frame(top-sheet)
 end method sheet-frame;
 
-define method sheet-frame-setter 
+define method sheet-frame-setter
     (frame :: false-or(<frame>), sheet :: <sheet>)
  => (frame :: false-or(<frame>))
   error("Attempt to set frame of a non top-level sheet %=\n", sheet)
@@ -715,11 +715,11 @@ end method default-foreground;
 define sealed method default-foreground-setter
     (fg :: false-or(<ink>), sheet :: <basic-sheet>) => (fg :: false-or(<ink>))
   let style = sheet.%style-descriptor
-	      | begin
-		  let style = make(<style-descriptor>);
-		  sheet.%style-descriptor := style;
-		  style
-		end;
+              | begin
+                  let style = make(<style-descriptor>);
+                  sheet.%style-descriptor := style;
+                  style
+                end;
   default-foreground(style) := fg;
   fg
 end method default-foreground-setter;
@@ -733,11 +733,11 @@ end method default-background;
 define sealed method default-background-setter
     (bg :: false-or(<ink>), sheet :: <basic-sheet>) => (bg :: false-or(<ink>))
   let style = sheet.%style-descriptor
-	      | begin
-		  let style = make(<style-descriptor>);
-		  sheet.%style-descriptor := style;
-		  style
-		end;
+              | begin
+                  let style = make(<style-descriptor>);
+                  sheet.%style-descriptor := style;
+                  style
+                end;
   default-background(style) := bg;
   bg
 end method default-background-setter;
@@ -751,11 +751,11 @@ end method default-text-style;
 define sealed method default-text-style-setter
     (ts :: false-or(<text-style>), sheet :: <basic-sheet>) => (ts :: false-or(<text-style>))
   let style = sheet.%style-descriptor
-	      | begin
-		  let style = make(<style-descriptor>);
-		  sheet.%style-descriptor := style;
-		  style
-		end;
+              | begin
+                  let style = make(<style-descriptor>);
+                  sheet.%style-descriptor := style;
+                  style
+                end;
   default-text-style(style) := ts;
   ts
 end method default-text-style-setter;
@@ -787,33 +787,33 @@ end method sheet-help-source-setter;
 /// Cursors
 
 define constant $pointer-cursors :: <simple-object-vector>
-    = #[#"default",		// must be at index 0
-	#"busy",
-	#"vertical-scroll",
-	#"horizontal-scroll",
-	#"scroll-up",
-	#"scroll-down",
-	#"scroll-left",
-	#"scroll-right",
-	#"upper-left",
-	#"upper-right",
-	#"lower-left",
-	#"lower-right",
-	#"vertical-thumb",
-	#"horizontal-thumb",
-	#"button",
-	#"prompt",
-	#"move",
-	#"position",
-	#"i-beam",
-	#"cross",
-	#"starting",
-	#"hand"];
+    = #[#"default",                // must be at index 0
+        #"busy",
+        #"vertical-scroll",
+        #"horizontal-scroll",
+        #"scroll-up",
+        #"scroll-down",
+        #"scroll-left",
+        #"scroll-right",
+        #"upper-left",
+        #"upper-right",
+        #"lower-left",
+        #"lower-right",
+        #"vertical-thumb",
+        #"horizontal-thumb",
+        #"button",
+        #"prompt",
+        #"move",
+        #"position",
+        #"i-beam",
+        #"cross",
+        #"starting",
+        #"hand"];
 
-define method sheet-cursor 
+define method sheet-cursor
     (sheet :: <basic-sheet>) => (cursor :: <cursor>)
   let index = ash(logand(sheet-flags(sheet), %pointer_cursor_mask),
-		  -%pointer_cursor_shift);
+                  -%pointer_cursor_shift);
   $pointer-cursors[index]
 end method sheet-cursor;
 
@@ -824,7 +824,7 @@ define method sheet-cursor-setter
     let index = position($pointer-cursors, cursor) | 0;
     sheet-flags(sheet)
       := logior(logand(sheet-flags(sheet), lognot(%pointer_cursor_mask)),
-		ash(index, %pointer_cursor_shift))
+                ash(index, %pointer_cursor_shift))
   end;
   cursor
 end method sheet-cursor-setter;
@@ -875,7 +875,7 @@ define method add-child
       remove-child(sheet-parent(child), child)
     else
       assert(~sheet-parent(child),
-	     "The sheet %= already has a parent", child)
+             "The sheet %= already has a parent", child)
     end
   end;
   apply(do-add-child, sheet, child, keys);
@@ -907,7 +907,7 @@ define method graft-sheet (parent :: <sheet>, sheet :: <sheet>) => ()
   display(sheet) := _display;
   note-sheet-attached(sheet);
   for (child :: <sheet> in sheet-children(sheet))
-    graft-sheet(sheet, child)		// graft it, but don't map it
+    graft-sheet(sheet, child)                // graft it, but don't map it
   end
 end method graft-sheet;
 
@@ -956,7 +956,7 @@ define method replace-child
       remove-child(sheet-parent(child), child)
     else
       assert(~sheet-parent(child),
-	     "The sheet %= already has a parent", child)
+             "The sheet %= already has a parent", child)
     end
   end;
   do-replace-child(sheet, old-child, child);
@@ -1005,7 +1005,7 @@ define method do-add-child
   insert-at!(sheet-children(sheet), child, index)
 end method do-add-child;
 
-define method do-remove-child 
+define method do-remove-child
     (sheet :: <multiple-child-mixin>, child :: <sheet>) => ()
   remove!(sheet-children(sheet), child)
 end method do-remove-child;
@@ -1055,7 +1055,7 @@ define method sheet-child (sheet :: <single-child-mixin>) => (child :: false-or(
   end
 end method sheet-child;
 
-define method sheet-child-setter 
+define method sheet-child-setter
     (child :: <sheet>, sheet :: <single-child-mixin>) => (child :: <sheet>)
   sheet-children(sheet) := vector(child);
   child
@@ -1112,7 +1112,7 @@ define sealed method child-containing-position
  => (sheet :: false-or(<sheet>))
   block (return)
     for (child :: <basic-sheet> in sheet-children(sheet)
-	   using top-down-iteration-protocol)
+           using top-down-iteration-protocol)
       when (sheet-mapped?(child)
             & begin
                 let (x, y) = untransform-position(sheet-transform(child), x, y);
@@ -1130,7 +1130,7 @@ define sealed method do-children-containing-position
     (function :: <function>, sheet :: <basic-sheet>, x :: <real>, y :: <real>) => ()
   dynamic-extent(function);
   for (child :: <basic-sheet> in sheet-children(sheet)
-	 using top-down-iteration-protocol)
+         using top-down-iteration-protocol)
     when (sheet-mapped?(child)
           & begin
               let (x, y) = untransform-position(sheet-transform(child), x, y);
@@ -1150,17 +1150,17 @@ define sealed method children-overlapping-region
     let (left, top, right, bottom) = box-edges(region);
     let result :: <stretchy-object-vector> = make(<stretchy-vector>);
     for (child :: <basic-sheet> in sheet-children(sheet)
-	   using bottom-up-iteration-protocol)
+           using bottom-up-iteration-protocol)
       when (sheet-mapped?(child)
-	    & begin
-		let (left1, top1, right1, bottom1) = box-edges(child);
-		let (left2, top2, right2, bottom2)
-		  = untransform-box(sheet-transform(child),
-				    left, top, right, bottom);
-		ltrb-intersects-ltrb?(left1, top1, right1, bottom1,
-				      left2, top2, right2, bottom2)
-	      end)
-	add!(result, child)
+            & begin
+                let (left1, top1, right1, bottom1) = box-edges(child);
+                let (left2, top2, right2, bottom2)
+                  = untransform-box(sheet-transform(child),
+                                    left, top, right, bottom);
+                ltrb-intersects-ltrb?(left1, top1, right1, bottom1,
+                                      left2, top2, right2, bottom2)
+              end)
+        add!(result, child)
       end
     end;
     result
@@ -1173,7 +1173,7 @@ define sealed method do-children-overlapping-region
   dynamic-extent(function);
   if (everywhere?(region))
     for (child :: <basic-sheet> in sheet-children(sheet)
-	   using bottom-up-iteration-protocol)
+           using bottom-up-iteration-protocol)
       when (sheet-mapped?(child))
         function(child)
       end
@@ -1181,17 +1181,17 @@ define sealed method do-children-overlapping-region
   else
     let (left, top, right, bottom) = box-edges(region);
     for (child :: <basic-sheet> in sheet-children(sheet)
-	   using bottom-up-iteration-protocol)
+           using bottom-up-iteration-protocol)
       when (sheet-mapped?(child)
-	    & begin
-		let (left1, top1, right1, bottom1) = box-edges(child);
-		let (left2, top2, right2, bottom2)
-		  = untransform-box(sheet-transform(child),
-				    left, top, right, bottom);
-		ltrb-intersects-ltrb?(left1, top1, right1, bottom1,
-				      left2, top2, right2, bottom2)
-	      end)
-	function(child)
+            & begin
+                let (left1, top1, right1, bottom1) = box-edges(child);
+                let (left2, top2, right2, bottom2)
+                  = untransform-box(sheet-transform(child),
+                                    left, top, right, bottom);
+                ltrb-intersects-ltrb?(left1, top1, right1, bottom1,
+                                      left2, top2, right2, bottom2)
+              end)
+        function(child)
       end
     end
   end
@@ -1208,7 +1208,7 @@ define method sheet-delta-transform
     $identity-transform
   else
     local method delta-transform
-	      (s :: <sheet>, a :: <sheet>) => (transform :: <transform>)
+              (s :: <sheet>, a :: <sheet>) => (transform :: <transform>)
             let parent = sheet-parent(s);
             case
               parent == a =>
@@ -1216,7 +1216,7 @@ define method sheet-delta-transform
               ~parent =>
                 error("The sheet %= is not an ancestor of %=", ancestor, sheet);
               otherwise =>
-		//---*** Why doesn't this call the local 'delta-transform' function?
+                //---*** Why doesn't this call the local 'delta-transform' function?
                 compose-transforms(sheet-transform(s),
                                    sheet-delta-transform(parent, a));
             end
@@ -1232,9 +1232,9 @@ define method sheet-ancestor?
     (sheet :: <sheet>, putative-ancestor :: <sheet>) => (true? :: <boolean>)
   block (return)
     for (sheet = sheet then sheet-parent(sheet),
-	 until: ~sheet)
+         until: ~sheet)
       when (sheet == putative-ancestor)
-	return(#t)
+        return(#t)
       end
     end;
     #f
@@ -1255,7 +1255,7 @@ define method invalidate-cached-regions (sheet :: <sheet>) => ()
   // regions below that sheet are "normalized", so we can stop smashing
   // the cached regions
   unless (sheet-direct-mirror(sheet)
-	    & sheet-mirror-accepts-children?(sheet))
+            & sheet-mirror-accepts-children?(sheet))
     do(invalidate-cached-regions, sheet-children(sheet))
   end
 end method invalidate-cached-regions;
@@ -1267,7 +1267,7 @@ end method invalidate-cached-region;
 define method invalidate-cached-region (sheet :: <basic-sheet>) => ()
   let region = sheet-cached-device-region(sheet);
   when (region)
-    if (region == $nowhere)	// it can happen...
+    if (region == $nowhere)        // it can happen...
       sheet-cached-device-region(sheet) := #f
     else
       invalidate-box!(sheet-cached-device-region(sheet))
@@ -1287,7 +1287,7 @@ define method invalidate-cached-transforms (sheet :: <sheet>) => ()
   // transforms below that sheet are "normalized", so we can stop smashing
   // the cached transforms
   unless (sheet-direct-mirror(sheet)
-	    & sheet-mirror-accepts-children?(sheet))
+            & sheet-mirror-accepts-children?(sheet))
     do(invalidate-cached-transforms, sheet-children(sheet))
   end
 end method invalidate-cached-transforms;
@@ -1312,7 +1312,7 @@ define method do-sheet-children
     = if (z-order == #"top-down") top-down-iteration-protocol
       else bottom-up-iteration-protocol end;
   for (child :: <sheet> in sheet-children(sheet)
-	 using iteration-protocol)
+         using iteration-protocol)
     function(child)
   end
 end method do-sheet-children;
@@ -1343,7 +1343,7 @@ define method find-ancestor-of-type
   block (return)
     for (s = sheet-parent(sheet) then sheet-parent(s))
       when (~s | instance?(s, type))
-	return(s)
+        return(s)
       end
     end;
     #f

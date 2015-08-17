@@ -10,8 +10,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // The Win32 backend event protocol
 define protocol <<win32-event-protocol>> ()
-  function handle-message 
-    (sheet :: <abstract-sheet>, message :: <message-type>, 
+  function handle-message
+    (sheet :: <abstract-sheet>, message :: <message-type>,
      wParam :: <wparam-type>, lParam :: <lparam-type>)
  => (handled? :: <boolean>);
   function handle-scrolling
@@ -167,7 +167,7 @@ define method handle-message
   let handle = mirror & window-handle(mirror);
   let handled?
     = block (return)
-        select (message) 
+        select (message)
           $WM-COMMAND =>
             //--- We might need this so that clicking on a menu button
             //--- reverts the status bar back to its ordinary state
@@ -230,13 +230,13 @@ define method handle-message
             pointer-button-state(pointer) := button-state;
             let (x, y) = LPARAM-TO-XY(lParam);
             if (zero?(button-state))
-              distribute-event(_port, 
+              distribute-event(_port,
                                make(<pointer-motion-event>,
                                     sheet: sheet,
                                     pointer: port-pointer(_port),
                                     x: x, y: y))
             else
-              distribute-event(_port, 
+              distribute-event(_port,
                                make(<pointer-drag-event>,
                                     sheet: sheet,
                                     pointer: port-pointer(_port),
@@ -335,7 +335,7 @@ define method handle-message
               let (x, y) = LPARAM-TO-XY(lParam);
               handle-move(sheet, mirror, x, y)
             end;
-          $WM-GETMINMAXINFO =>  
+          $WM-GETMINMAXINFO =>
             // Return the min/max size of a window
             when (instance?(sheet, <top-level-sheet>))
               let size-info = make(<LPMINMAXINFO>, address: lParam);
@@ -526,7 +526,7 @@ define sealed method handle-wm-command
       end;
   end
 end method handle-wm-command;
-    
+
 define sealed method handle-wm-notify
     (sheet :: <sheet>, wParam :: <wparam-type>, lParam :: <lparam-type>)
  => (handled? :: <boolean>)
@@ -560,19 +560,19 @@ define sealed method handle-wm-scroll
   if (scroll-bar)
     handle-scrolling(scroll-bar, scroll-code, pos)
   else
-    warn("Ignored WM_SCROLL event #x%x on %s for window with no mirror", 
+    warn("Ignored WM_SCROLL event #x%x on %s for window with no mirror",
          scroll-code, sheet);
     #f
   end;
 end method handle-wm-scroll;
-    
+
 define sealed method handle-wm-mousewheel
     (sheet :: <sheet>, wParam :: <wparam-type>, lParam :: <lparam-type>)
  => (handled? :: <boolean>)
   warn("Ignored WM_MOUSEWHEEL event for non-scrolling window %s",
        sheet);
 end method handle-wm-mousewheel;
-    
+
 /* This implementation has several bugs:
 
    * HIWORD is supposed to return a signed value, not an unsigned value
@@ -583,7 +583,7 @@ end method handle-wm-mousewheel;
    * It should scroll three lines at once, not line per line
 
 At the moment, we scroll three lines per event we get, and forget about the proper
-computation. FIXME. 
+computation. FIXME.
 
 --andreas, 20060504 */
 define sealed method handle-wm-mousewheel
@@ -606,7 +606,7 @@ define sealed method handle-wm-mousewheel
     #f
   end
 end method handle-wm-mousewheel;
-    
+
 define method handle-command
     (sheet :: <sheet>, mirror :: <win32-mirror>,
      id :: <integer>, event :: <integer>)
@@ -655,7 +655,7 @@ define sealed method repaint-mirror
         = make-bounding-box(lpRect.left-value,  lpRect.top-value,
                             lpRect.right-value, lpRect.bottom-value);
       duim-debug-message("Repainting %= in box (%d,%d):(%d,%d)",
-                         sheet, 
+                         sheet,
                          lpRect.left-value,  lpRect.top-value,
                          lpRect.right-value, lpRect.bottom-value);
       // We call 'handle-event' instead of 'distribute-event' because we

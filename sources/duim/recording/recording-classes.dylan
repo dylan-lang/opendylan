@@ -44,11 +44,11 @@ define method default-background-setter
     let sheet = top-level-sheet(record);
     let medium = sheet-medium(sheet);
     dynamic-bind (medium-brush(medium) = medium-background(medium),
-		  medium-pen(medium)   = $solid-pen,
-		  medium-clipping-region(medium) = $everywhere)
+                  medium-pen(medium)   = $solid-pen,
+                  medium-clipping-region(medium) = $everywhere)
       let (left, top, right, bottom) = box-edges(record);
       transform-coordinates!(sheet-device-transform(record),
-			     left, top, right, bottom);
+                             left, top, right, bottom);
       draw-rectangle(medium, left, top, right, bottom, filled?: #t)
     end
   end;
@@ -62,9 +62,9 @@ end method default-background-setter;
 define method repaint-background
     (record :: <output-record-element-mixin>, medium :: <medium>) => ()
   dynamic-bind (medium-brush(medium) = default-background(record),
-		medium-pen(medium)   = $solid-pen,
-		//---*** This is not right, methinks (see 'with-record-medium-state')
-		medium-clipping-region(medium) = $everywhere)
+                medium-pen(medium)   = $solid-pen,
+                //---*** This is not right, methinks (see 'with-record-medium-state')
+                medium-clipping-region(medium) = $everywhere)
     let (left, top, right, bottom) = box-edges(record);
     draw-rectangle(medium, left, top, right, bottom, filled?: #t)
   end
@@ -156,16 +156,16 @@ define method sheet-device-transform
       let rec = record;
       let parent = record;
       block (return)
-	while (#t)
-	  parent := sheet-parent(parent);
-	  unless (parent)
-	    return()
-	  end;
-	  // If this record has a parent, transform the (dx,dy) by the
-	  // sheet->parent transform
-	  transform-coordinates!(sheet-transform(rec), dx, dy);
-	  rec := parent
-	end
+        while (#t)
+          parent := sheet-parent(parent);
+          unless (parent)
+            return()
+          end;
+          // If this record has a parent, transform the (dx,dy) by the
+          // sheet->parent transform
+          transform-coordinates!(sheet-transform(rec), dx, dy);
+          rec := parent
+        end
       end;
       // Cache and return the result
       record.%device-transform := make-translation-transform(dx, dy)
@@ -245,7 +245,7 @@ define method sheet-mapped?
 end method sheet-mapped?;
 
 define method sheet-mapped?-setter
-    (mapped? :: <boolean>, record :: <output-record-element-mixin>, 
+    (mapped? :: <boolean>, record :: <output-record-element-mixin>,
      #key do-repaint? = #t, clear? = do-repaint?)
  => (mapped? :: <boolean>)
   ignore(mapped?, do-repaint?, clear?);
@@ -560,8 +560,8 @@ define method repaint-sheet
   ignore(force?);
   let sheet = top-level-sheet(record);
   let medium = medium | sheet-medium(sheet);
-  let region = normalize-repaint-region(region, sheet); 
-  // Put a mutable transform into the sheet's medium so that the 
+  let region = normalize-repaint-region(region, sheet);
+  // Put a mutable transform into the sheet's medium so that the
   // 'handle-repaint' method on composite records can be more efficient
   let (tx, ty) = transform-position(sheet-device-transform(record), 0, 0);
   let transform = make(<mutable-translation-transform>, tx: tx, ty: ty);
@@ -589,7 +589,7 @@ define method normalize-repaint-region
       // new region in the proper coordinate system
       let (left, top, right, bottom) = box-edges(region);
       transform-coordinates!(sheet-device-transform(region),
-			     left, top, right, bottom);
+                             left, top, right, bottom);
       make-bounding-box(left, top, right, bottom);
     otherwise =>
       if (bounding-box?(region)) bounding-box(region) else region end;
@@ -649,35 +649,35 @@ define method update-region-for-new-child
   let (cleft, ctop, cright, cbottom) = box-edges(child);
   // Get the new child's box into the record's coordinate system
   transform-coordinates!(sheet-transform(child),
-			 cleft, ctop, cright, cbottom);
+                         cleft, ctop, cright, cbottom);
   let first-child?
     = sheet-child-count(record, fast?: #t) = 1;
   let growing?
     = ~first-child?
       & ~ltrb-contains-ltrb?(rleft, rtop, rright, rbottom,
-			     cleft, ctop, cright, cbottom);
+                             cleft, ctop, cright, cbottom);
   case
     first-child? =>
       // If this is the first child, we must always set the
       // bounding rectangle of the parent
       sheet-region(record)
-	:= set-box-edges(sheet-region(record),
-			 cleft, ctop, cright, cbottom);
+        := set-box-edges(sheet-region(record),
+                         cleft, ctop, cright, cbottom);
     growing? =>
       // Don't bother to change the edges if we're not growing
       sheet-region(record)
-	:= set-box-edges(sheet-region(record),
-			 min(rleft, cleft), min(rtop, ctop),
-			 max(rright, cright), max(rbottom, cbottom))
+        := set-box-edges(sheet-region(record),
+                         min(rleft, cleft), min(rtop, ctop),
+                         max(rright, cright), max(rbottom, cbottom))
   end;
   // Inform the parent only in the case where we actually grew or
   // added the initial child
   let parent = sheet-parent(record);
   when (parent & (first-child? | growing?))
     transform-coordinates!(sheet-transform(record),
-			   rleft, rtop, rright, rbottom);
+                           rleft, rtop, rright, rbottom);
     update-region-for-changed-child(parent, record,
-				    rleft, rtop, rright, rbottom)
+                                    rleft, rtop, rright, rbottom)
   end
 end method update-region-for-new-child;
 
@@ -693,15 +693,15 @@ define method update-region-for-changed-child
   let (rleft, rtop, rright, rbottom) = box-edges(record);
   let (cleft, ctop, cright, cbottom) = box-edges(child);
   transform-coordinates!(sheet-transform(child),
-			 cleft, ctop, cright, cbottom);
+                         cleft, ctop, cright, cbottom);
   // We must recompute the region if the child is not completely contained
   // or if it used to "define" one of the old edges.
   when (~ltrb-contains-ltrb?(rleft, rtop, rright, rbottom,
-			     cleft, ctop, cright, cbottom)
-	| old-left = rleft
-	| old-top  = rtop
-	| old-right  = rright
-	| old-bottom = rbottom)
+                             cleft, ctop, cright, cbottom)
+        | old-left = rleft
+        | old-top  = rtop
+        | old-right  = rright
+        | old-bottom = rbottom)
     update-region-for-changed-child-1(record)
   end
 end method update-region-for-changed-child;
@@ -717,15 +717,15 @@ define method update-region-for-changed-child-1
   let bottom :: <integer> = $smallest-coordinate;
   begin
     local method compute-child-region (child)
-	    let (cleft, ctop, cright, cbottom) = box-edges(child);
-	    transform-coordinates!(sheet-transform(child),
-				   cleft, ctop, cright, cbottom);
-	    min!(left, cleft);
-	    min!(top,  ctop);
-	    max!(right,  cright);
-	    max!(bottom, cbottom);
-	    once? := #t
-	  end method;
+            let (cleft, ctop, cright, cbottom) = box-edges(child);
+            transform-coordinates!(sheet-transform(child),
+                                   cleft, ctop, cright, cbottom);
+            min!(left, cleft);
+            min!(top,  ctop);
+            max!(right,  cright);
+            max!(bottom, cbottom);
+            once? := #t
+          end method;
     unless (once?)
       left := 0;
       top  := 0;
@@ -742,9 +742,9 @@ define method update-region-for-changed-child-1
   when (parent)
     // Pass these coordinates in parent's coordinate system
     transform-coordinates!(sheet-transform(record),
-			   old-left, old-top, old-right, old-bottom);
+                           old-left, old-top, old-right, old-bottom);
     update-region-for-changed-child(parent, record,
-				    old-left, old-top, old-right, old-bottom)
+                                    old-left, old-top, old-right, old-bottom)
   end
 end method update-region-for-changed-child-1;
 
@@ -758,9 +758,9 @@ define method recompute-region (record :: <output-record-element-mixin>) => ()
   let parent = sheet-parent(record);
   when (parent)
     transform-coordinates!(sheet-transform(record),
-			   old-left, old-top, old-right, old-bottom);
+                           old-left, old-top, old-right, old-bottom);
     update-region-for-changed-child(parent, record,
-				    old-left, old-top, old-right, old-bottom)
+                                    old-left, old-top, old-right, old-bottom)
   end
 end method recompute-region;
 
@@ -781,15 +781,15 @@ define method do-recompute-region
   let bottom :: <integer> = $smallest-coordinate;
   begin
     local method recompute-child-region (child)
-	    let (cleft, ctop, cright, cbottom) = do-recompute-region(child);
-	    transform-coordinates!(sheet-transform(child),
-				   cleft, ctop, cright, cbottom);
-	    min!(left, cleft);
-	    min!(top,  ctop);
-	    max!(right,  cright);
-	    max!(bottom, cbottom);
-	    once? := #t
-	  end method;
+            let (cleft, ctop, cright, cbottom) = do-recompute-region(child);
+            transform-coordinates!(sheet-transform(child),
+                                   cleft, ctop, cright, cbottom);
+            min!(left, cleft);
+            min!(top,  ctop);
+            max!(right,  cright);
+            max!(bottom, cbottom);
+            once? := #t
+          end method;
     do-sheet-children(recompute-child-region, record)
   end;
   unless (once?)
@@ -858,22 +858,22 @@ define sealed domain initialize (<medium-state>);
 define macro with-record-medium-state
   { with-record-medium-state (?state:name = ?medium:expression, ?record:expression) ?:body end }
     => { begin
-	   let ?state = record-medium-state(?record);
-	   dynamic-bind (medium-brush(?medium) = medium-state-brush(?state),
-			 medium-pen(?medium)   = medium-state-pen(?state),
-			 medium-clipping-region(?medium)
-			   = medium-state-clipping-region(?state))
-	     ?body
-	   end
+           let ?state = record-medium-state(?record);
+           dynamic-bind (medium-brush(?medium) = medium-state-brush(?state),
+                         medium-pen(?medium)   = medium-state-pen(?state),
+                         medium-clipping-region(?medium)
+                           = medium-state-clipping-region(?state))
+             ?body
+           end
          end }
   { with-record-medium-state (?medium:expression, ?record:expression) ?:body end }
     => { begin
-	   let _state = record-medium-state(?record);
-	   dynamic-bind (medium-brush(?medium) = medium-state-brush(_state),
-			 medium-pen(?medium)   = medium-state-pen(_state),
-			 medium-clipping-region(?medium)
-			   = medium-state-clipping-region(_state))
-	     ?body
-	   end
+           let _state = record-medium-state(?record);
+           dynamic-bind (medium-brush(?medium) = medium-state-brush(_state),
+                         medium-pen(?medium)   = medium-state-pen(_state),
+                         medium-clipping-region(?medium)
+                           = medium-state-clipping-region(_state))
+             ?body
+           end
          end }
 end macro with-record-medium-state;

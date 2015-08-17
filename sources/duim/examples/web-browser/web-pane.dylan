@@ -42,7 +42,7 @@ define method initialize (pane :: <text-web-pane>, #key frame-manager)
   end
 end method;
 
-define method note-web-page-changed 
+define method note-web-page-changed
     (pane :: <text-web-pane>, page :: <web-page>)
   let child = sheet-child(pane);
   if (child)
@@ -55,11 +55,11 @@ end method;
 /// Useful sheets
 
 define class <web-sheet-mixin> (<standard-input-mixin>)
-  slot web-link = #f, 
+  slot web-link = #f,
     init-keyword: link:;
 end class;
 
-define method handle-event 
+define method handle-event
     (sheet :: <web-sheet-mixin>, event :: <button-release-event>)
   let link = web-link(sheet);
   if (link)
@@ -67,14 +67,14 @@ define method handle-event
   end
 end method handle-event;
 
-define method web-sheet-follow-link 
+define method web-sheet-follow-link
     (sheet :: <web-sheet-mixin>, #key link = web-link(sheet))
   if (link)
     notify-user(format-to-string("Follow link to %=", link),
                 owner: sheet)
   end
 end method;
-  
+
 define class <web-text-pane> (<web-sheet-mixin>, <label-pane>)
 end class;
 
@@ -108,7 +108,7 @@ end class;
 
 define variable *bullet-diameter* = 14;
 
-define method handle-repaint 
+define method handle-repaint
     (sheet :: <web-bullet-pane>, medium :: <medium>, region :: <region>)
   let (width, height) = box-size(sheet);
   let radius = floor/(min(width, height) - 1, 2);
@@ -117,13 +117,13 @@ define method handle-repaint
   end
 end method;
 
-define method do-compose-space 
+define method do-compose-space
     (pane :: <web-bullet-pane>, #key width, height)
   make(<space-requirement>,
        width: *bullet-diameter*, height: *bullet-diameter*)
 end method;
 
-                      
+
 /// graphic web pane
 
 define class <graphic-web-pane> (<web-pane>, <single-child-wrapping-pane>)
@@ -132,12 +132,12 @@ end class;
 define method do-allocate-space (pane :: <graphic-web-pane>, width, height)
   let page = web-page(pane);
   // layout-web-page(pane, page, width, height);
-  next-method()  
+  next-method()
 end method;
 
-define method layout-web-page 
+define method layout-web-page
     (pane :: <graphic-web-pane>, page :: <web-page>, width, height)
-  let framem 
+  let framem
     = frame-manager(pane) | port-default-frame-manager(default-port());
   with-frame-manager (framem)
     let tokens = page-tokens(page);
@@ -177,7 +177,7 @@ define method layout-web-page
               if (in-list?)
                 parent := sheet-parent(parent)
               end;
-              parent := make(<row-pane>, 
+              parent := make(<row-pane>,
                                   parent: parent,
                                   spacing: 8);
               make(<null-pane>,
@@ -189,14 +189,14 @@ define method layout-web-page
             "hr" =>
               make(<separator>, parent: parent);
             otherwise =>
-	      ;
-	  end;
-	<html-text> =>
-	  make(<web-text-pane>,
-		    parent: parent,
-		    label: html-text(token),
-		    link: link,
-		    foreground: if (link) $red end)
+              ;
+          end;
+        <html-text> =>
+          make(<web-text-pane>,
+                    parent: parent,
+                    label: html-text(token),
+                    link: link,
+                    foreground: if (link) $red end)
       end
     end
   end

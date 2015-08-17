@@ -1,8 +1,8 @@
 Library:      duim-examples
 Author:       Andy Armstrong
 Synopsis:     DUIM example code
-Files:	  library
-	  module
+Files:    library
+          module
           harness
           simple-window
           event-tracer

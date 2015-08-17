@@ -17,71 +17,71 @@ define frame <clipboard-test-frame> (<simple-frame>)
     end;
   pane file-menu (frame)
     make(<menu>,
-	 label: "File",
-	 children: vector(frame.exit-button));
+         label: "File",
+         children: vector(frame.exit-button));
   pane exit-button (frame)
     make(<menu-button>,
-	 label: "Exit",
-	 accelerator: make(<gesture>, keysym: #"z", modifiers: #[#"control"]),
-	 activate-callback: method (button)
-			      exit-frame(sheet-frame(button))
-			    end);
+         label: "Exit",
+         accelerator: make(<gesture>, keysym: #"z", modifiers: #[#"control"]),
+         activate-callback: method (button)
+                              exit-frame(sheet-frame(button))
+                            end);
   pane edit-menu (frame)
     make(<menu>,
-	 label: "Edit",
-	 children: vector(frame.cut-menu-button, 
-			  frame.copy-menu-button,
-			  frame.paste-menu-button));
+         label: "Edit",
+         children: vector(frame.cut-menu-button,
+                          frame.copy-menu-button,
+                          frame.paste-menu-button));
   pane cut-menu-button (frame)
     make(<menu-button>,
-	 label: "Cut",
-	 accelerator: make(<gesture>, keysym: #"x", modifiers: #[#"control"]),
-	 activate-callback: method (button)
-			      frame-cut(sheet-frame(button))
-			    end);
+         label: "Cut",
+         accelerator: make(<gesture>, keysym: #"x", modifiers: #[#"control"]),
+         activate-callback: method (button)
+                              frame-cut(sheet-frame(button))
+                            end);
   pane copy-menu-button (frame)
     make(<menu-button>,
-	 label: "Copy",
-	 accelerator: make(<gesture>, keysym: #"c", modifiers: #[#"control"]),
-	 activate-callback: method (button)
-			      frame-copy(sheet-frame(button))
-			    end);
+         label: "Copy",
+         accelerator: make(<gesture>, keysym: #"c", modifiers: #[#"control"]),
+         activate-callback: method (button)
+                              frame-copy(sheet-frame(button))
+                            end);
   pane paste-menu-button (frame)
     make(<menu-button>,
-	 label: "Paste",
-	 accelerator: make(<gesture>, keysym: #"v", modifiers: #[#"control"]),
-	 activate-callback: method (button)
-			      frame-paste(sheet-frame(button))
-			    end);
+         label: "Paste",
+         accelerator: make(<gesture>, keysym: #"v", modifiers: #[#"control"]),
+         activate-callback: method (button)
+                              frame-paste(sheet-frame(button))
+                            end);
 
   pane cut-button (frame)
     make(<push-button>,
-	 label: "X",
-	 activate-callback: method (button)
-			      frame-cut(sheet-frame(button))
-			    end);
+         label: "X",
+         activate-callback: method (button)
+                              frame-cut(sheet-frame(button))
+                            end);
   pane copy-button (frame)
     make(<push-button>,
-	 label: "C",
-	 activate-callback: method (button)
-			      frame-copy(sheet-frame(button))
-			    end);
+         label: "C",
+         activate-callback: method (button)
+                              frame-copy(sheet-frame(button))
+                            end);
   pane paste-button (frame)
     make(<push-button>,
-	 label: "P",
-	 activate-callback: method (button)
-			      frame-paste(sheet-frame(button))
-			    end);
+         label: "P",
+         activate-callback: method (button)
+                              frame-paste(sheet-frame(button))
+                            end);
   layout (frame) frame.main-layout;
-  menu-bar (frame) 
+  menu-bar (frame)
     make(<menu-bar>,
-	 children: vector(frame.file-menu, frame.edit-menu));
+         children: vector(frame.file-menu, frame.edit-menu));
   tool-bar (frame)
     make(<tool-bar>,
          child: make(<row-layout>,
-		     children: vector(frame.cut-button,
-				      frame.copy-button,
-				      frame.paste-button)));
+                     children: vector(frame.cut-button,
+                                      frame.copy-button,
+                                      frame.paste-button)));
 end frame <clipboard-test-frame>;
 
 define method frame-cut
@@ -93,16 +93,16 @@ define method frame-cut
   end
 end method frame-cut;
 
-define method frame-copy 
+define method frame-copy
     (frame :: <clipboard-test-frame>) => (success? :: <boolean>)
   let gadget = clipboard-text-field(frame);
   with-clipboard (clipboard = gadget)
     if (clipboard)
       let text = selected-text(gadget) | gadget-value(gadget);
       if (add-clipboard-data(clipboard, text))
-	#t
+        #t
       else
-	notify-user("Failed to put text onto clipboard", owner: gadget)
+        notify-user("Failed to put text onto clipboard", owner: gadget)
       end
     else
       notify-user("Clipboard not available", owner: gadget)
@@ -110,17 +110,17 @@ define method frame-copy
   end
 end method frame-copy;
 
-define method frame-paste 
+define method frame-paste
     (frame :: <clipboard-test-frame>) => (success? :: <boolean>)
   let gadget = clipboard-text-field(frame);
   with-clipboard (clipboard = gadget)
     if (clipboard)
       let text = get-clipboard-data-as(<string>, clipboard);
       if (text)
-	gadget-value(gadget) := text;
-	#t
+        gadget-value(gadget) := text;
+        #t
       else
-	notify-user("No text on clipboard", owner: gadget)
+        notify-user("No text on clipboard", owner: gadget)
       end
     else
       notify-user("Clipboard not available", owner: gadget)

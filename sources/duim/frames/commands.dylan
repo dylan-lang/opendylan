@@ -110,9 +110,9 @@ define method command-enabled?-setter
   remhash(disabled-commands, comtab);
   when (do-inherited?)
     do-command-table-commands(method (c, ct)
-				ignore(ct);
-				command-enabled?(c, frame) := #t
-			      end method, comtab)
+                                ignore(ct);
+                                command-enabled?(c, frame) := #t
+                              end method, comtab)
   end;
   note-command-enabled(frame-manager(frame), frame, comtab);
   enabled?
@@ -126,9 +126,9 @@ define method command-enabled?-setter
   gethash(disabled-commands, comtab) := #t;
   when (do-inherited?)
     do-command-table-commands(method (c, ct)
-				ignore(ct);
-				command-enabled?(c, frame) := #f
-			      end method, comtab)
+                                ignore(ct);
+                                command-enabled?(c, frame) := #f
+                              end method, comtab)
   end;
   note-command-disabled(frame-manager(frame), frame, comtab);
   enabled?
@@ -194,8 +194,8 @@ define method distribute-command-event
   let _port = port(frame);
   when (_port)
     distribute-event(_port, make(<command-event>,
-				 frame:   frame,
-				 command: command));
+                                 frame:   frame,
+                                 command: command));
     let top-sheet = top-level-sheet(frame);
     when (top-sheet)
       generate-trigger-event(_port, top-sheet)

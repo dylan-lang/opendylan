@@ -201,12 +201,12 @@ define sealed method make-translation-transform
       make(<integer-translation-transform>,
            tx: truncate(tx), ty: truncate(ty));
     otherwise =>
-      make(<float-translation-transform>, 
-	   tx: as(<single-float>, tx), ty: as(<single-float>, ty))
+      make(<float-translation-transform>,
+           tx: as(<single-float>, tx), ty: as(<single-float>, ty))
   end
 end method make-translation-transform;
 
-define sealed inline method make 
+define sealed inline method make
     (class == <translation-transform>, #key tx = 0, ty = 0)
  => (transform :: <transform>)
   make-translation-transform(tx, ty)
@@ -356,7 +356,7 @@ define sealed method invert-transform
       // NB: the translations can be integers or single floats here, so this
       // call might make either a normal or an integer translation
       let inverse :: <translation-transform>
-	= make-translation-transform(-transform.%tx, -transform.%ty);
+        = make-translation-transform(-transform.%tx, -transform.%ty);
       inverse.%inverse := transform;
       transform.%inverse := inverse;
       inverse
@@ -480,7 +480,7 @@ define sealed inline method untransform-position
   values(x - transform.%tx, y - transform.%ty)
 end method untransform-position;
 
-define sealed inline method untransform-position 
+define sealed inline method untransform-position
     (transform :: <integer-translation-transform>, x :: <real>, y :: <real>)
  => (x :: <real>, y :: <real>)
   values(x - transform.%tx, y - transform.%ty)
@@ -578,7 +578,7 @@ define sealed method transform-box
   let nx2 = x2 + transform.%tx;
   let ny2 = y2 + transform.%ty;
   fix-box(min(nx1, nx2), min(ny1, ny2),
-	  max(nx1, nx2), max(ny1, ny2))
+          max(nx1, nx2), max(ny1, ny2))
 end method transform-box;
 
 define sealed method transform-box
@@ -591,7 +591,7 @@ define sealed method transform-box
   let nx2 = x2 + transform.%tx;
   let ny2 = y2 + transform.%ty;
   values(min(nx1, nx2), min(ny1, ny2),
-	 max(nx1, nx2), max(ny1, ny2))
+         max(nx1, nx2), max(ny1, ny2))
 end method transform-box;
 
 define sealed method untransform-box
@@ -611,7 +611,7 @@ define sealed method untransform-box
   let nx2 = x2 - transform.%tx;
   let ny2 = y2 - transform.%ty;
   fix-box(min(nx1, nx2), min(ny1, ny2),
-	  max(nx1, nx2), max(ny1, ny2))
+          max(nx1, nx2), max(ny1, ny2))
 end method untransform-box;
 
 define sealed method untransform-box
@@ -623,7 +623,7 @@ define sealed method untransform-box
   let nx2 = x2 - transform.%tx;
   let ny2 = y2 - transform.%ty;
   values(min(nx1, nx2), min(ny1, ny2),
-	 max(nx1, nx2), max(ny1, ny2))
+         max(nx1, nx2), max(ny1, ny2))
 end method untransform-box;
 
 
@@ -635,7 +635,7 @@ define method transform-coordinate-sequence
  => (coordinates :: <vector>)
   let length :: <integer> = size(coordinates);
   assert(even?(length),
-	 "Coordinate sequences must have an even number of x/y pairs");
+         "Coordinate sequences must have an even number of x/y pairs");
   if (transform == $identity-transform)
     if (copy?) copy-sequence(coordinates) else coordinates end
   else
@@ -650,7 +650,7 @@ define method transform-coordinate-sequence
   ignore(copy?);
   let length :: <integer> = size(coordinates);
   assert(even?(length),
-	 "Coordinate sequences must have an even number of x/y pairs");
+         "Coordinate sequences must have an even number of x/y pairs");
   let result = as(<simple-vector>, coordinates);
   if (transform == $identity-transform)
     result
@@ -666,7 +666,7 @@ define method transform-coordinates-into!
   let ncoords :: <integer> = size(coordinates);
   without-bounds-checks
     for (i :: <integer> = 0 then i + 2,
-	 until: i = ncoords)
+         until: i = ncoords)
       let x = coordinates[i];
       let y = coordinates[i + 1];
       transform-coordinates!(transform, x, y);
@@ -702,7 +702,7 @@ define method make-translation-transform-into!
     (tx :: <real>, ty :: <real>, into :: <transform>) => (into :: <transform>)
   if (integral?(tx) & integral?(ty))
     make(<mutable-translation-transform>,
-	 tx: truncate(tx), ty: truncate(ty))
+         tx: truncate(tx), ty: truncate(ty))
   else
     make-translation-transform(tx, ty)
   end

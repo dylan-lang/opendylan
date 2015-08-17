@@ -15,7 +15,7 @@ define sealed class <ruler-pane>
   keyword orientation: = #"vertical";
 end class <ruler-pane>;
 
-define method handle-repaint 
+define method handle-repaint
     (pane :: <ruler-pane>, medium :: <medium>, region :: <region>) => ()
   select (gadget-orientation(pane))
     #"vertical" =>
@@ -27,11 +27,11 @@ define method handle-repaint
       let quarter-x = floor/(right-x, 4);
       for (y from top to bottom by gradations)
         case
-	  modulo(y, 100) = 0 =>
+          modulo(y, 100) = 0 =>
             draw-line(medium, 0, y, right-x, y);
-            draw-text(medium, format-to-string("%d", y), 
-                      right-x, y, 
-                      align-x: #"left", 
+            draw-text(medium, format-to-string("%d", y),
+                      right-x, y,
+                      align-x: #"left",
                       align-y: case
                                  y == top                => #"top";
                                  y > bottom - gradations => #"bottom";
@@ -41,7 +41,7 @@ define method handle-repaint
             draw-line(medium, 0, y, half-x, y);
           otherwise =>
             draw-line(medium, 0, y, quarter-x, y);
-	end
+        end
       end;
     #"horizontal" =>
       let (left, top, right, bottom) = box-edges(pane);
@@ -52,10 +52,10 @@ define method handle-repaint
       let quarter-y = floor/(bottom-y, 4);
       for (x from left to right by gradations)
         case
-	  modulo(x, 100) = 0 =>
+          modulo(x, 100) = 0 =>
             draw-line(medium, x, 0, x, bottom-y);
             draw-text(medium, format-to-string("%d", x),
-                      x, bottom-y, 
+                      x, bottom-y,
                       align-x: case
                                  x == left              => #"left";
                                  x > right - gradations => #"right";
@@ -66,7 +66,7 @@ define method handle-repaint
             draw-line(medium, x, 0, x, half-y);
           otherwise =>
             draw-line(medium, x, 0, x, quarter-y);
-	end
+        end
       end;
   end
 end method handle-repaint;
@@ -90,7 +90,7 @@ end method do-compose-space;
 define sealed class <checkboard-pane> (<drawing-pane>)
 end class <checkboard-pane>;
 
-define method handle-repaint 
+define method handle-repaint
     (pane :: <checkboard-pane>, medium :: <medium>, region :: <region>) => ()
   let first-filled? = #f;
   let (width, height) = sheet-size(pane);
@@ -115,39 +115,39 @@ end method do-compose-space;
 
 /// scroll testing
 
-define method test-scrolling 
+define method test-scrolling
     (frame :: <frame>) => ()
   contain(scrolling ()
-	    make(<ruler-pane>, height: 800)
-	  end,
+            make(<ruler-pane>, height: 800)
+          end,
           title: "Simple Scrolling Test",
           height: 400)
 end method test-scrolling;
 
-define method test-two-pane-scrolling 
+define method test-two-pane-scrolling
     (frame :: <frame>) => ()
   let scroll-bar = make(<scroll-bar>, orientation: #"vertical");
   let viewport1
-    = make(<viewport>, 
-	   child: make(<ruler-pane>),
-	   min-width: 100,
-	   min-height: 100,
-	   height: 300,
-	   vertical-scroll-bar: scroll-bar);
+    = make(<viewport>,
+           child: make(<ruler-pane>),
+           min-width: 100,
+           min-height: 100,
+           height: 300,
+           vertical-scroll-bar: scroll-bar);
   let viewport2
-    = make(<viewport>, 
-	   child: make(<ruler-pane>),
-	   min-width: 100,
-	   min-height: 100,
-	   height: 300,
-	   vertical-scroll-bar: scroll-bar);
+    = make(<viewport>,
+           child: make(<ruler-pane>),
+           min-width: 100,
+           min-height: 100,
+           height: 300,
+           vertical-scroll-bar: scroll-bar);
   contain(with-border (type: #"sunken")
-	    horizontally ()
-	      viewport1; 
-	      viewport2;
-	      scroll-bar
+            horizontally ()
+              viewport1;
+              viewport2;
+              scroll-bar
             end
-	  end,
+          end,
           title: "Two Pane Scrolling Test")
 end method test-two-pane-scrolling;
 
@@ -156,45 +156,45 @@ define method test-three-pane-scrolling
   let horizontal-bar = make(<scroll-bar>, orientation: #"horizontal");
   let vertical-bar = make(<scroll-bar>, orientation: #"vertical");
   let horizontal-ruler
-    = make(<viewport>, 
-	   child: make(<ruler-pane>, orientation: #"horizontal"),
-	   horizontal-scroll-bar: horizontal-bar);
+    = make(<viewport>,
+           child: make(<ruler-pane>, orientation: #"horizontal"),
+           horizontal-scroll-bar: horizontal-bar);
   let vertical-ruler
-    = make(<viewport>, 
-	   child: make(<ruler-pane>, orientation: #"vertical"),
-	   vertical-scroll-bar:   vertical-bar);
+    = make(<viewport>,
+           child: make(<ruler-pane>, orientation: #"vertical"),
+           vertical-scroll-bar:   vertical-bar);
   let viewport
     = make(<viewport>,
-	   child: make(<checkboard-pane>),
-	   min-width: 300,
-	   min-height: 300,
-	   horizontal-scroll-bar: horizontal-bar,
-	   vertical-scroll-bar:   vertical-bar);
+           child: make(<checkboard-pane>),
+           min-width: 300,
+           min-height: 300,
+           horizontal-scroll-bar: horizontal-bar,
+           vertical-scroll-bar:   vertical-bar);
   let table-contents
     = vector(vector(#f, horizontal-ruler, #f),
              vector(vertical-ruler, viewport, vertical-bar),
              vector(#f, horizontal-bar, #f));
   contain(with-border (type: #"sunken", width: 300, height: 300)
-	    make(<table-layout>, contents: table-contents)
+            make(<table-layout>, contents: table-contents)
           end,
-	  title: "Three Pane Scrolling Test")
+          title: "Three Pane Scrolling Test")
 end method test-three-pane-scrolling;
 
 define method test-gadget-scrolling
     (frame :: <frame>, #key orientation = #"vertical") => ()
   contain(scrolling (width: 100, height: 100)
-	    make(<radio-box>,
-		 items: range(from: 1, to: 20),
-		 label-key: method (i) format-to-string("%d", i) end,
-		 orientation: orientation)
-	  end,
+            make(<radio-box>,
+                 items: range(from: 1, to: 20),
+                 label-key: method (i) format-to-string("%d", i) end,
+                 orientation: orientation)
+          end,
           title: "Gadget Scrolling Test")
 end method test-gadget-scrolling;
 
 
 /// Advanced scrolling
 
-define method make-spreadsheet 
+define method make-spreadsheet
     (frame :: <frame>) => (table :: <table-layout>)
   with-frame-manager (frame-manager(frame))
     let children = make(<vector>, size: 100);
@@ -205,26 +205,26 @@ define method make-spreadsheet
       end
     end;
     make(<table-layout>,
-	 columns: 10,
-	 x-spacing: 4,
-	 y-spacing: 4,
-	 children: children)
+         columns: 10,
+         x-spacing: 4,
+         y-spacing: 4,
+         children: children)
   end
 end method make-spreadsheet;
 
-define method test-advanced-scrolling 
+define method test-advanced-scrolling
     (frame :: <frame>) => ()
   contain(scrolling (width: 300, height: 200)
             make-spreadsheet(frame)
-	  end,
+          end,
           title: "Advanced Scrolling Test")
 end method test-advanced-scrolling;
 
 
 /// Hand-rolled scrolling
 
-define sealed class <hand-rolled-scrolling-pane> 
-    (<scrolling-sheet-mixin>, 
+define sealed class <hand-rolled-scrolling-pane>
+    (<scrolling-sheet-mixin>,
      <drawing-pane>)
   slot top-line-number :: <integer> = 0;
   constant slot last-line-number :: <integer> = 300;
@@ -303,7 +303,7 @@ define frame <hand-rolled-scrolling-test-frame> (<simple-frame>)
     end;
 end frame <hand-rolled-scrolling-test-frame>;
 
-define method test-hand-rolled-scrolling 
+define method test-hand-rolled-scrolling
     (frame :: <frame>) => ()
   let test-frame
     = make(<hand-rolled-scrolling-test-frame>,
@@ -317,22 +317,22 @@ end method test-hand-rolled-scrolling;
 
 define variable $scrolling-test-frame-tests
   = vector(vector("Simple",      test-scrolling),
-	   vector("Two-Pane",    test-two-pane-scrolling),
-	   vector("Three-Pane",  test-three-pane-scrolling),
-	   vector("Gadget",      test-gadget-scrolling),
-	   vector("Advanced",    test-advanced-scrolling),
-	   vector("Hand Rolled", test-hand-rolled-scrolling));
+           vector("Two-Pane",    test-two-pane-scrolling),
+           vector("Three-Pane",  test-three-pane-scrolling),
+           vector("Gadget",      test-gadget-scrolling),
+           vector("Advanced",    test-advanced-scrolling),
+           vector("Hand Rolled", test-hand-rolled-scrolling));
 
 define frame <scrolling-tests-frame> (<simple-frame>)
   pane tests (frame)
     make(<list-control>,
-	 items: $scrolling-test-frame-tests,
-	 lines: size($scrolling-test-frame-tests),
-	 label-key: first,
-	 value-key: second,
-	 activate-callback: method (sheet :: <sheet>)
-			      gadget-value(sheet)(sheet-frame(sheet))
-			    end);
+         items: $scrolling-test-frame-tests,
+         lines: size($scrolling-test-frame-tests),
+         label-key: first,
+         value-key: second,
+         activate-callback: method (sheet :: <sheet>)
+                              gadget-value(sheet)(sheet-frame(sheet))
+                            end);
   pane main-layout (frame)
     frame.tests;
   layout (frame) frame.main-layout;

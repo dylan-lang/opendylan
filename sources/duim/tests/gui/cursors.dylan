@@ -10,29 +10,29 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define frame <cursor-test-frame> (<simple-frame>)
   pane drawing-pane (frame)
-    make(<drawing-pane>,		// mirrored
-	 cursor: #"i-beam");
+    make(<drawing-pane>,                // mirrored
+         cursor: #"i-beam");
   pane simple-pane (frame)
-    make(<simple-pane>,			// unmirrored
-	 cursor: #"cross",
-	 display-function: ignore);
+    make(<simple-pane>,                        // unmirrored
+         cursor: #"cross",
+         display-function: ignore);
   pane button (frame)
     make(<push-button>,
-	 label: "Get Busy...",
-	 activate-callback: test-busy-cursor);
+         label: "Get Busy...",
+         activate-callback: test-busy-cursor);
   pane background-button (frame)
     make(<push-button>,
-	 label: "Background it...",
-	 activate-callback: test-background-busy-cursor);
+         label: "Background it...",
+         activate-callback: test-background-busy-cursor);
   layout (frame)
     vertically (y-spacing: 4)
       horizontally (min-width: 400)
         with-border (type: #"sunken")
           frame.drawing-pane
-	end;
+        end;
         with-border (type: #"sunken")
           frame.simple-pane
-	end;
+        end;
       end;
       horizontally (spacing: 4)
         frame.button;
@@ -41,13 +41,13 @@ define frame <cursor-test-frame> (<simple-frame>)
     end;
   status-bar (frame)
     make(<status-bar>, progress-bar?: #t);
-end frame <cursor-test-frame>; 
+end frame <cursor-test-frame>;
 
-define method note-operation-progress 
+define method note-operation-progress
     (frame :: <cursor-test-frame>, value :: <integer>, max :: <integer>) => ()
   note-progress(value, max,
-		label: format-to-string("%d%% of the way through",
-					floor/(value * 100, max)))
+                label: format-to-string("%d%% of the way through",
+                                        floor/(value * 100, max)))
 end method note-operation-progress;
 
 define method test-busy-cursor (sheet :: <sheet>) => ()
@@ -55,8 +55,8 @@ define method test-busy-cursor (sheet :: <sheet>) => ()
   with-busy-cursor (frame)
     noting-progress (frame, "Test")
       for (i from 0 to 100)
-	note-operation-progress(frame, i, 100);
-	sleep(0.1)
+        note-operation-progress(frame, i, 100);
+        sleep(0.1)
       end
     end
   end
@@ -65,17 +65,17 @@ end method test-busy-cursor;
 define method test-background-busy-cursor (sheet :: <sheet>) => ()
   let frame = sheet-frame(sheet);
   make(<thread>,
-       function: 
-	 method ()
-	   with-background-cursor (frame)
-	     noting-progress (frame, "Test")
-	       for (i from 0 to 100)
-		 note-operation-progress(frame, i, 100);
-		 sleep(0.1)
-	       end
-	     end
-	   end
-	 end)
+       function:
+         method ()
+           with-background-cursor (frame)
+             noting-progress (frame, "Test")
+               for (i from 0 to 100)
+                 note-operation-progress(frame, i, 100);
+                 sleep(0.1)
+               end
+             end
+           end
+         end)
 end method test-background-busy-cursor;
 
 

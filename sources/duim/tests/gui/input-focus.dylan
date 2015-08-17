@@ -59,7 +59,7 @@ define frame <input-focus-frame> (<simple-frame>)
       frame.test-sheet;
       frame.button;
     end;
-  status-bar (frame) 
+  status-bar (frame)
     make(<status-bar>);
 end frame <input-focus-frame>;
 

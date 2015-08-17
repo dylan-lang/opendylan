@@ -19,14 +19,14 @@ define frame <border-test-frame> (<simple-frame>)
     with-border (type: #"ridge")  make-ellipse-with-space() end;
   pane groove-border (frame)
     with-border (type: #"groove") make-ellipse-with-space() end;
-  pane group-box-border (frame) 
+  pane group-box-border (frame)
     grouping ("Test") make(<ellipse-pane>) end;
   layout (frame)
     make(<table-layout>,
          columns: 2,
          height: 500,
          x-alignment: #[#"right", #"left"], y-alignment: #"center",
-	 x-spacing: 4, y-spacing: 4,
+         x-spacing: 4, y-spacing: 4,
          children: vector(make(<label>, label: "Flat:"),
                           frame.flat-border,
                           make(<label>, label: "Raised:"),

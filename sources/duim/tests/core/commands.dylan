@@ -53,24 +53,24 @@ define test command-tables-test ()
   let command-table = make(<command-table>, name: #"Test Command Table");
   let command = test-callback;
   add-command(command-table, command);
-  check-true("Add function to command-table", 
+  check-true("Add function to command-table",
              command-present?(command-table, command));
   remove-command(command-table, command);
-  check-false("Remove function from command-table", 
+  check-false("Remove function from command-table",
               command-present?(command-table, command));
   let command = <functional-command>;
   add-command(command-table, command);
-  check-true("Add command class to command-table", 
+  check-true("Add command class to command-table",
              command-present?(command-table, command));
   remove-command(command-table, command);
-  check-false("Remove command class from command-table", 
+  check-false("Remove command class from command-table",
               command-present?(command-table, command));
   let command = make(<functional-command>, function: test-callback, server: #f);
   add-command(command-table, command);
-  check-true("Add command to command-table", 
+  check-true("Add command to command-table",
              command-present?(command-table, command));
   remove-command(command-table, command);
-  check-false("Remove command from command-table", 
+  check-false("Remove command from command-table",
               command-present?(command-table, command));
 end test command-tables-test;
 
@@ -88,7 +88,7 @@ define test command-table-menus-test ()
       (command-table, command-data[0], <command>, command-data[1])
   end;
   let framem = find-test-frame-manager();
-  let menus 
+  let menus
     = make-menus-from-command-table(command-table, #f, framem, label: "Test");
   let menu = size(menus) = 1 & menus[0];
   check-true("Command table menu created", menu & instance?(menu, <menu>));

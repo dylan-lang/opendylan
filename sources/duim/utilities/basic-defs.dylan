@@ -60,21 +60,21 @@ define sealed method table-protocol
     (table :: <string-or-object-table>)
  => (test-function :: <function>, hash-function :: <function>)
   values(method (obj1, obj2) => (equal? :: <boolean>)
-	   if (instance?(obj1, <string>) & instance?(obj1, <string>))
-	     obj1 = obj2
-	   else
-	     obj1 == obj2
-	   end
-	 end,
-	 method
-	     (key, initial-state :: <hash-state>)
-	  => (id :: <integer>, result-state :: <hash-state>)
-	   if (instance?(key, <string>))
-	     string-hash(key, initial-state)
-	   else
-	     object-hash(key, initial-state)
-	   end
-	 end)
+           if (instance?(obj1, <string>) & instance?(obj1, <string>))
+             obj1 = obj2
+           else
+             obj1 == obj2
+           end
+         end,
+         method
+             (key, initial-state :: <hash-state>)
+          => (id :: <integer>, result-state :: <hash-state>)
+           if (instance?(key, <string>))
+             string-hash(key, initial-state)
+           else
+             object-hash(key, initial-state)
+           end
+         end)
 end method table-protocol;
 
 
@@ -104,13 +104,13 @@ define method insert-at!
     (sv :: <stretchy-object-vector>, item, index)
  => (sv :: <stretchy-object-vector>)
   local method move-up
-	    (sv :: <stretchy-object-vector>, index :: <integer>) => ()
-	  without-bounds-checks
-	    for (i :: <integer> from (size(sv) - 1) to (index + 1) by -1)
-	      sv[i] := sv[i - 1]
-	    end
-	  end
-	end method;
+            (sv :: <stretchy-object-vector>, index :: <integer>) => ()
+          without-bounds-checks
+            for (i :: <integer> from (size(sv) - 1) to (index + 1) by -1)
+              sv[i] := sv[i - 1]
+            end
+          end
+        end method;
   select (index)
     #"start" =>
       sv.size := sv.size + 1;
@@ -130,13 +130,13 @@ define method remove-at!
     (sv :: <stretchy-object-vector>, index)
  => (sv :: <stretchy-object-vector>)
   local method move-down
-	    (sv :: <stretchy-object-vector>, index :: <integer>) => ()
-	  without-bounds-checks
-	    for (i :: <integer> from index to (size(sv) - 2))
-	      sv[i] := sv[i + 1]
-	    end
-	  end
-	end method;
+            (sv :: <stretchy-object-vector>, index :: <integer>) => ()
+          without-bounds-checks
+            for (i :: <integer> from index to (size(sv) - 2))
+              sv[i] := sv[i + 1]
+            end
+          end
+        end method;
   select (index)
     #"start"  => move-down(sv, 0);
     #"end"    => #f;
@@ -152,7 +152,7 @@ define method find-pair
   block (return)
     for (pair in sequence)
       when (pair & test(pair[0], item))
-	return(pair)
+        return(pair)
       end
     end;
     #f
@@ -181,10 +181,10 @@ define inline function primitive-position
   block (return)
     without-bounds-checks
       for (i :: <integer> = _start then i + 1,
-	   until: i = _end)
-	when (test(item, sequence[i]))
-	  return(i)
-	end
+           until: i = _end)
+        when (test(item, sequence[i]))
+          return(i)
+        end
       end
     end;
     #f
@@ -265,5 +265,5 @@ end method fill-array!;
 define function warn (format-string :: <string>, #rest format-args) => ()
   dynamic-extent(format-args);
   apply(duim-debug-message,
-	concatenate("Warning: ", format-string), format-args)
+        concatenate("Warning: ", format-string), format-args)
 end function warn;

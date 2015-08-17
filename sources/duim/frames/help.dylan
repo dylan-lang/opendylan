@@ -147,9 +147,9 @@ end method initialize;
 define macro help-source-definer
   { define help-source ?name:name ?locator:expression ?entries:* end }
     => { make(<help-source>,
-	      name: ?#"name",
-	      locator: ?locator,
-	      contexts: initialize-table (make(<table>)) ?entries end) }
+              name: ?#"name",
+              locator: ?locator,
+              contexts: initialize-table (make(<table>)) ?entries end) }
 end macro help-source-definer;
 
 define macro initialize-table
@@ -234,10 +234,10 @@ define method default-from-sheet
     (sheet :: false-or(<sheet>), getter :: <function>) => (default)
   block (return)
     for (sh = sheet then sheet-parent(sh),
-	 until: ~sh)
+         until: ~sh)
       let value = getter(sh);
       when (value)
-	return(value)
+        return(value)
       end
     end;
     #f
@@ -307,8 +307,8 @@ define method initialize-help
   next-method();
   help-source(command)
     := as(<help-source>,
-	  help-source(command)
-	  | frame-help-source(frame, command));
+          help-source(command)
+          | frame-help-source(frame, command));
   help-source-locator(help-source(command))
     := help-source-locator(help-source(command))
        | frame-help-source-locator(frame, help-source(command));

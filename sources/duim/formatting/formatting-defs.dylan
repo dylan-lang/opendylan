@@ -71,17 +71,17 @@ define method process-spacing-arg
     #"pixel"  => spacing;
     #"device" => spacing;
     #"mm"     => if (axis == #"horizontal")
-		   spacing * floor/(display-pixel-width(display), display-mm-width(display))
-		 else
-		   spacing * floor/(display-pixel-height(display), display-mm-height(display))
-		 end;
+                   spacing * floor/(display-pixel-width(display), display-mm-width(display))
+                 else
+                   spacing * floor/(display-pixel-height(display), display-mm-height(display))
+                 end;
     #"character" => begin
-		      let (width, height) = text-size(sheet, ' ');
-		      if (axis == #"horizontal") floor(spacing * width)
-		      else floor(spacing * height) end;
-		    end;
+                      let (width, height) = text-size(sheet, ' ');
+                      if (axis == #"horizontal") floor(spacing * width)
+                      else floor(spacing * height) end;
+                    end;
     #"line" => spacing * sheet-line-height(sheet)
-	       + (spacing - 1) * sheet-line-spacing(sheet);
+               + (spacing - 1) * sheet-line-spacing(sheet);
   end
 end method process-spacing-arg;
 

@@ -10,12 +10,12 @@ define module duim-frames
   //--- Try to make some DUIM-Sheets forward references less visible
   use duim-sheets,
     import: { <abstract-frame>,
-	      <frame>,
-	      current-frame,
-	      *current-frame*,
-	      destroy-frame,
-	      frame?,
-	      frame-input-focus, frame-input-focus-setter },
+              <frame>,
+              current-frame,
+              *current-frame*,
+              destroy-frame,
+              frame?,
+              frame-input-focus, frame-input-focus-setter },
     export: all;
 
   // Re-export all the Commands functionality
@@ -26,7 +26,7 @@ define module duim-frames
   create <application-exited-event>,
          <dialog-cancel-event>,
          <dialog-exit-event>,
-	 <frame-created-event>,
+         <frame-created-event>,
          <frame-destroyed-event>,
          <frame-exit-event>,
          <frame-exited-event>,
@@ -34,7 +34,7 @@ define module duim-frames
          <frame-focus-in-event>,
          <frame-focus-out-event>,
          <frame-input-focus-changed-event>,
-	 <frame-layed-out-event>,
+         <frame-layed-out-event>,
          <frame-mapped-event>,
          <frame-unmapped-event>,
          event-destroy-frame?,
@@ -44,19 +44,19 @@ define module duim-frames
 
   // Frames
   create <simple-frame>,
-	 apply-in-frame, queue-apply-in-frame,
-	 call-in-frame, queue-call-in-frame,
-	 deiconify-frame,
+         apply-in-frame, queue-apply-in-frame,
+         call-in-frame, queue-call-in-frame,
+         deiconify-frame,
          display-pointer-documentation,
          exit-frame,
          find-frame,
          frame-accelerators, frame-accelerators-setter,
-	 frame-can-exit?,
+         frame-can-exit?,
          frame-command-queue,
          frame-command-table, frame-command-table-setter,
          frame-controlling-frame,
-	 frame-default-button, frame-default-button-setter,
-	 frame-document, frame-document-setter,
+         frame-default-button, frame-default-button-setter,
+         frame-document, frame-document-setter,
          frame-enabled?, frame-enabled?-setter,
          frame-event-queue,
          frame-icon, frame-icon-setter,
@@ -67,12 +67,12 @@ define module duim-frames
          frame-menu-bar, frame-menu-bar-setter,
          frame-mode,
          frame-occluded?,
-	 frame-owner,
+         frame-owner,
          frame-palette, frame-palette-setter,
          frame-pointer-documentation, frame-pointer-documentation-setter,
          frame-position, set-frame-position,
          frame-properties,
-	 frame-thread,
+         frame-thread,
          frame-size, set-frame-size,
          frame-state,
          frame-status-bar, frame-status-bar-setter,
@@ -89,7 +89,7 @@ define module duim-frames
          make-command-menu-bar,
          make-command-tool-bar,
          maximize-frame,
-	 note-command-table-changed,
+         note-command-table-changed,
          raise-frame,
          start-frame,
          set-frame-position,
@@ -105,7 +105,7 @@ define module duim-frames
          <wizard-page>,
          cancel-dialog,
          compute-next-page, compute-previous-page,
-	 dialog-apply-button, dialog-apply-button-setter,
+         dialog-apply-button, dialog-apply-button-setter,
          dialog-apply-callback,
          dialog-back-button, dialog-back-button-setter,
          dialog-back-callback,
@@ -130,7 +130,7 @@ define module duim-frames
          move-to-next-page,
          move-to-previous-page,
          note-dialog-page-changed,
-	 exit-dialog,
+         exit-dialog,
          start-dialog;
 
   // Commands
@@ -150,23 +150,23 @@ define module duim-frames
 
   // Help
   create <help-command>,
-	 <help-on-contents>,
-	 <help-on-context>,
-	 <help-on-help>,
-	 <help-on-index>,
-	 <help-on-keyword>,
-	 <help-on-topics>,
-	 <help-on-version>,
-	 <help-quit>,
-	 <help-reposition>,
-	 <help-run-macro>,
-	 <help-source>,
-	 \help-source-definer,
-	 frame-help-context,
-	 frame-help-keyword,
-	 frame-help-source,
-	 frame-help-source-locator,
-	 frame-help-topic-id;
+         <help-on-contents>,
+         <help-on-context>,
+         <help-on-help>,
+         <help-on-index>,
+         <help-on-keyword>,
+         <help-on-topics>,
+         <help-on-version>,
+         <help-quit>,
+         <help-reposition>,
+         <help-run-macro>,
+         <help-source>,
+         \help-source-definer,
+         frame-help-context,
+         frame-help-keyword,
+         frame-help-source,
+         frame-help-source-locator,
+         frame-help-topic-id;
 
   // Command tables
   create <command-table>,
@@ -176,11 +176,11 @@ define module duim-frames
          add-command-line-name,
          add-command-table-menu-item,
          add-presentation-translator,
-         // \command-definer,		//--- not yet
+         // \command-definer,                //--- not yet
          command-table-accelerators,
          command-table-commands,
          command-table-inherit-from, command-table-inherit-from-setter,
-	 command-table-menu,
+         command-table-menu,
          command-table-name,
          command-table?,
          \command-table-definer,
@@ -200,25 +200,25 @@ define module duim-frames
 
   // Standard commands and command tables
   create *standard-edit-command-table*,
-	 *standard-file-command-table*,
-	 *standard-help-command-table*,
-	 *standard-view-command-table*,
-	 *standard-windows-command-table*,
-	 clipboard-clear,
-	 clipboard-copy,
-	 clipboard-cut,
-	 clipboard-paste,
-	 close-document,
-	 command-undo, command-redo, 
-	 new-document,
-	 note-document-changed,
-	 open-document,
-	 save-all-documents,
-	 save-document, save-document-as;
+         *standard-file-command-table*,
+         *standard-help-command-table*,
+         *standard-view-command-table*,
+         *standard-windows-command-table*,
+         clipboard-clear,
+         clipboard-copy,
+         clipboard-cut,
+         clipboard-paste,
+         close-document,
+         command-undo, command-redo,
+         new-document,
+         note-document-changed,
+         open-document,
+         save-all-documents,
+         save-document, save-document-as;
 
   // Completer
   create complete-from-generator,
-	 complete-from-sequence;
+         complete-from-sequence;
 
   // Progress notes
   create <progress-note>,
@@ -247,9 +247,9 @@ define module duim-frames
          \frame-layout-definer,
          \frame-panes-definer,
          \frame-gadget-bars-definer,
-         // \command-method-definer,	//--- not yet
-         // \command-parser-definer,	//--- not yet
-         // install-command,		//--- not yet
+         // \command-method-definer,        //--- not yet
+         // \command-parser-definer,        //--- not yet
+         // install-command,                //--- not yet
          \command-table-menu-definer,
          \command-table-variable-definer;
 end module duim-frames;
@@ -268,53 +268,53 @@ define module duim-frames-internals
 
   // Frames
   export <basic-frame>,
-	 <frame-mode>,
-	 <frame-state>,
-	 attach-frame,
+         <frame-mode>,
+         <frame-state>,
+         attach-frame,
          detach-frame,
          do-display-pointer-documentation,
-	 do-exit-frame,
-	 do-frame-occluded?,
-	 port-start-frame,
+         do-exit-frame,
+         do-frame-occluded?,
+         port-start-frame,
          frame-always-on-top?,
-	 frame-centered?,
-	 frame-fixed-width?,
+         frame-centered?,
+         frame-fixed-width?,
          frame-fixed-height?,
          frame-flags,
-	 frame-geometry,
+         frame-geometry,
          frame-keyboard-interrupt?,
          frame-minimize-box?, frame-maximize-box?,
-	 frame-needs-event-queue?,
+         frame-needs-event-queue?,
          frame-owned-frames,
          frame-owned-menus,
          frame-resizable?,
          frame-resource-id,
-	 frame-save-under?,
-	 frame-state-setter,
+         frame-save-under?,
+         frame-state-setter,
          frame-top-level-sheet-class,
          frame-top-level-sheet-size,
          frame-wrapper,
          install-frame-mnemonics,
          make-event-queue,
          note-accelerators-changed,
-	 note-frame-enabled, note-frame-disabled,
-	 note-frame-iconified, note-frame-deiconified,
-	 note-frame-icon-changed,
+         note-frame-enabled, note-frame-disabled,
+         note-frame-iconified, note-frame-deiconified,
+         note-frame-icon-changed,
          note-frame-mapped, note-frame-unmapped,
-	 note-frame-maximized, note-frame-unmaximized,
-	 note-frame-state-changed,
-	 note-frame-title-changed,
-	 pointer-documentation-sheet,
+         note-frame-maximized, note-frame-unmaximized,
+         note-frame-state-changed,
+         note-frame-title-changed,
+         pointer-documentation-sheet,
          update-frame-layout,
          update-frame-wrapper;
 
   // Windows hacks for Alt=Meta
   export frame-alt-key-is-meta?, frame-alt-key-is-meta?-setter,
-	 frame-allow-control-alt?, frame-allow-control-alt?-setter;
+         frame-allow-control-alt?, frame-allow-control-alt?-setter;
 
   // Embedded frames
   export <basic-embedded-frame>,
-	 <embedded-top-level-sheet>;
+         <embedded-top-level-sheet>;
 
   // Dialogs
   export <multi-page-dialog-frame>,
@@ -327,45 +327,45 @@ define module duim-frames-internals
   // Commands
   export <command-event>,
          distribute-command-event,
-	 note-command-disabled,
+         note-command-disabled,
          note-command-enabled;
 
   // Help systems
   export <help-system>,
-	 <help-system-error>,
-	 <help-system-not-installed>,
-	 <no-help-system>,
-	 help-system-installed?,
-	 help-system-name,
-	 *default-help-system*,
-	 frame-manager-help-system, frame-manager-help-system-setter;
+         <help-system-error>,
+         <help-system-not-installed>,
+         <no-help-system>,
+         help-system-installed?,
+         help-system-name,
+         *default-help-system*,
+         frame-manager-help-system, frame-manager-help-system-setter;
 
   // Help
   export <help-on-subject>,
-	 <help-from-source>,
-	 <help-on-pane>,
-	 display-help,
-	 help-context,
-	 help-keyword,
-	 help-macro,
-	 help-pane,
-	 help-popup?,
-	 help-secondary-window,
-	 help-source,
-	 help-source-context-map,
-	 help-source-locator,
-	 help-source-name,
-	 help-topic-id,
-	 help-window-region,
-	 initialize-help,
-	 initialize-help-pane,
-	 \initialize-table;
+         <help-from-source>,
+         <help-on-pane>,
+         display-help,
+         help-context,
+         help-keyword,
+         help-macro,
+         help-pane,
+         help-popup?,
+         help-secondary-window,
+         help-source,
+         help-source-context-map,
+         help-source-locator,
+         help-source-name,
+         help-topic-id,
+         help-window-region,
+         initialize-help,
+         initialize-help-pane,
+         \initialize-table;
 
   // Command tables
   export <standard-command-table>,
          command-accessible?,
          command-present?,
-	 command-table-resource-id,
+         command-table-resource-id,
          do-command-menu-gadgets,
          do-command-table-inheritance;
 
@@ -374,8 +374,8 @@ define module duim-frames-internals
 
   // Contain
   export *contain-uses-own-thread?*,
-	 <container-frame>,
-	 container-uses-own-thread?;
+         <container-frame>,
+         container-uses-own-thread?;
 
   // Debugging
   export print-sheet-layout;

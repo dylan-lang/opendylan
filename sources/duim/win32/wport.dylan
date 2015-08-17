@@ -206,14 +206,14 @@ define sealed method do-pointer-position
 end method do-pointer-position;
 
 define sealed method do-set-pointer-position
-    (_port :: <win32-port>, pointer :: <pointer>, sheet :: <sheet>, 
+    (_port :: <win32-port>, pointer :: <pointer>, sheet :: <sheet>,
      x :: <integer>, y :: <integer>) => ()
   let (dx, dy) = sheet-screen-position(_port, sheet);
   SetCursorPos(x + dx, y + dy)
 end method do-set-pointer-position;
 
 define sealed method do-set-pointer-position
-    (_port :: <win32-port>, pointer :: <pointer>, sheet :: <display>, 
+    (_port :: <win32-port>, pointer :: <pointer>, sheet :: <display>,
      x :: <integer>, y :: <integer>) => ()
   SetCursorPos(x, y)
 end method do-set-pointer-position;

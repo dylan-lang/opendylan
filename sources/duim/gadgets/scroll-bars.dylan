@@ -33,7 +33,7 @@ define method attach-scroll-bar
   scroll-bar.%scrolling-sheets := add-new!(scroll-bar.%scrolling-sheets, sheet)
 end method attach-scroll-bar;
 
-define method detach-scroll-bar 
+define method detach-scroll-bar
     (sheet :: <scrolling-sheet-mixin>, scroll-bar :: <scroll-bar>) => ()
   scroll-bar.%scrolling-sheets := remove!(scroll-bar.%scrolling-sheets, sheet)
 end method detach-scroll-bar;
@@ -79,17 +79,17 @@ define sealed method update-scroll-bar
   let new-size  = visible-end - visible-start + increment;
   let new-range
     = if (scroll-start = contents-start
-	  & scroll-end = contents-end)
-	gadget-value-range(scroll-bar)
+          & scroll-end = contents-end)
+        gadget-value-range(scroll-bar)
       else
-	range(from: contents-start, to: contents-end)
+        range(from: contents-start, to: contents-end)
       end;
   // We do this "the internal way" to avoid flashing the scroll bar
   // in the back end, which would happen if we individually updated
   // the range, then the value, then the slug size
   when (  gadget-value(scroll-bar)       ~= new-value
-	| gadget-slug-size(scroll-bar)   ~= new-size
-	| gadget-value-range(scroll-bar) ~= new-range)
+        | gadget-slug-size(scroll-bar)   ~= new-size
+        | gadget-value-range(scroll-bar) ~= new-range)
     scroll-bar.%value       := new-value;
     scroll-bar.%slug-size   := new-size;
     scroll-bar.%value-range := new-range;
@@ -111,9 +111,9 @@ define method scroll-attached-sheets
     let (vleft, vtop, vright, vbottom) = sheet-visible-range(sheet);
     select (gadget-orientation(scroll-bar))
       #"vertical" =>
-	set-sheet-visible-range(sheet, vleft, _start, vright, _end);
+        set-sheet-visible-range(sheet, vleft, _start, vright, _end);
       #"horizontal" =>
-	set-sheet-visible-range(sheet, _start, vtop, _end, vbottom);
+        set-sheet-visible-range(sheet, _start, vtop, _end, vbottom);
     end
   end
 end method scroll-attached-sheets;
@@ -126,8 +126,8 @@ define method line-scroll-amount
     ~empty?(sheets) =>
       let amount :: <integer> = $maximum-integer;
       for (sheet in sheets)
-	let sheet-amount = line-scroll-amount(sheet, orientation);
-	amount := min(amount, sheet-amount)
+        let sheet-amount = line-scroll-amount(sheet, orientation);
+        amount := min(amount, sheet-amount)
       end;
       amount;
     otherwise =>
@@ -135,14 +135,14 @@ define method line-scroll-amount
       // so see if we can find a plausible client sheet
       let client = gadget-client(scroll-bar);
       if (sheet?(client) & ~instance?(client, <scroller>))
-	line-scroll-amount(client, orientation)
+        line-scroll-amount(client, orientation)
       else
-	max(floor(gadget-value-increment(scroll-bar) * 3), 10)
+        max(floor(gadget-value-increment(scroll-bar) * 3), 10)
       end;
   end
 end method line-scroll-amount;
 
-define method page-scroll-amount 
+define method page-scroll-amount
     (scroll-bar :: <scroll-bar>, orientation :: <gadget-orientation>)
  => (amount :: <integer>)
   let sheets = scroll-bar.%scrolling-sheets;
@@ -150,21 +150,21 @@ define method page-scroll-amount
     ~empty?(sheets) =>
       let amount :: <integer> = $maximum-integer;
       for (sheet in sheets)
-	let sheet-amount = page-scroll-amount(sheet, orientation);
-	amount := min(amount, sheet-amount)
+        let sheet-amount = page-scroll-amount(sheet, orientation);
+        amount := min(amount, sheet-amount)
       end;
       amount;
     otherwise =>
       let client = gadget-client(scroll-bar);
       if (sheet?(client) & ~instance?(client, <scroller>))
-	page-scroll-amount(client, orientation)
+        page-scroll-amount(client, orientation)
       else
-	floor(gadget-slug-size(scroll-bar))
+        floor(gadget-slug-size(scroll-bar))
       end;
   end
 end method page-scroll-amount;
 
-define method scroll-by-pixels 
+define method scroll-by-pixels
     (scroll-bar :: <scroll-bar>, pixels :: <integer>) => ()
   let old-value = gadget-value(scroll-bar);
   let increment = gadget-value-increment(scroll-bar);
@@ -172,8 +172,8 @@ define method scroll-by-pixels
     = floor/(old-value, if (increment = 0) 1 else increment end) + pixels;
   let new-value
     = select (increment by instance?)
-	<integer> => floor(new-pixel-position * increment);
-	<real>    => new-pixel-position * increment;
+        <integer> => floor(new-pixel-position * increment);
+        <real>    => new-pixel-position * increment;
       end;
   gadget-value(scroll-bar, do-callback?: #t) := new-value
 end method scroll-by-pixels;
@@ -204,7 +204,7 @@ define method scroll-to-position
   gadget-value(scroll-bar, do-callback?: #t) := gadget-start-value(scroll-bar)
 end method scroll-to-position;
 
-define method scroll-to-position 
+define method scroll-to-position
     (scroll-bar :: <scroll-bar>, value == #"bottom") => ()
   let size = gadget-slug-size(scroll-bar);
   gadget-value(scroll-bar, do-callback?: #t)

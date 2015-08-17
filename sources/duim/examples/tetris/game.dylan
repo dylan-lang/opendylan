@@ -49,7 +49,7 @@ define method rotate (c :: <coord>, r :: <coord>) => (c :: <coord>);
   xy(c.x-coord * r.x-coord - c.y-coord * r.y-coord,
      c.x-coord * r.y-coord + c.y-coord * r.x-coord);
 end;
- 
+
 // An object of class <board> represents a game of tetris.
 // width           of the board in squares,
 // height          of the board in squares,
@@ -113,7 +113,7 @@ define method restart-game (board :: <board>)
   board.fixed := make(<array>,
     dimensions: vector(board.width, board.height), fill: #f);
   update-pieces(board);
-  board.full-rows := make(<vector>, size: board.height, fill: #f); 
+  board.full-rows := make(<vector>, size: board.height, fill: #f);
 end;
 
 // Make the game harder as the score increases, by gradually
@@ -154,7 +154,7 @@ define method check-row-full(board :: <board>, row :: <integer>)
     end;
     for (i :: <integer> from 0 below board.width)
       if (~board.fixed[i, row])
-	exit();
+        exit();
       end;
     end;
     board.full-rows[row] := #t;
@@ -192,25 +192,25 @@ define method remove-full-rows(board :: <board>)
       // this may result in from-row becoming -1 or less.
 
       while (from-row >= 0 & board.full-rows[from-row])
-	board.full-rows[from-row] := #f;
-	from-row := from-row - 1
+        board.full-rows[from-row] := #f;
+        from-row := from-row - 1
       end;
 
       // If from-row is < 0, we don't copy, just set to-row to empty.
 
       if (from-row < 0)
-	for (i from 0 below board.width)
-	  board.wall[i, to-row] := board.back-colour;
-	  board.fixed[i, to-row] := #f
-	end
+        for (i from 0 below board.width)
+          board.wall[i, to-row] := board.back-colour;
+          board.fixed[i, to-row] := #f
+        end
 
-	  // otherwise copy from-row onto to-row, if they are different
+          // otherwise copy from-row onto to-row, if they are different
 
       elseif (from-row ~= to-row)
-	for (i from 0 below board.width)
-	  board.wall[i, to-row] := board.wall[i, from-row];
-	  board.fixed[i, to-row] := board.fixed[i, from-row];
-	end
+        for (i from 0 below board.width)
+          board.wall[i, to-row] := board.wall[i, from-row];
+          board.fixed[i, to-row] := board.fixed[i, from-row];
+        end
       end
     end;
 
@@ -251,7 +251,7 @@ define method initialize (me :: <piece>, #key)
   // compute the centre of gravity times 2 by adding up all the
   // coordinates, multiplying by 2, then dividing by the number of
   // squares in the piece and rounding
- 
+
   let c :: <coord> = reduce(\+, xy(0, 0), me.shape);
   me.centre := xy(round/(2 * c.x-coord, n), round/(2 * c.y-coord, n));
   me.location := make(<position>, offset: xy(5,2), rotation: xy(1, 0));
@@ -297,10 +297,10 @@ define method cells (piece :: <piece>, pos :: <position>)
   let offset = pos.offset -
     xy(floor/(centre.x-coord, 2), floor/(centre.y-coord, 2));
   map-as(<coord-vector>,
-	 method (c :: <coord>)
-	   rotate(c, pos.rotation) + offset;
-	 end,
-	 piece.shape);
+         method (c :: <coord>)
+           rotate(c, pos.rotation) + offset;
+         end,
+         piece.shape);
 end;
 
 // Would a piece fit on the board in a given position?
@@ -354,16 +354,16 @@ end;
 // Move a piece left, right, or down, or turn it, if possible.
 // Returns true if the attempted move was successful.
 
-define method move-if-possible 
+define method move-if-possible
     (board :: <board>, piece :: <piece>, action :: <action>)
  => (r :: <boolean>);
 
   // Take a copy of the piece's location
-  
+
   let pos = dup(piece.location);
 
   // Update the copy of the location according to the action
-  
+
   select (action)
     #"left"  => pos.offset.x-coord := pos.offset.x-coord - 1;
     #"right" => pos.offset.x-coord := pos.offset.x-coord + 1;
@@ -394,10 +394,10 @@ define method act (board :: <board>, action :: <action>)
       // It should move down until it can't any more, and then stick.
 
       #"drop" =>
-	let p = first(board.pieces);
-	while (move-if-possible(board, p, #"down"))
-	end;
-	stick(board, p);
+        let p = first(board.pieces);
+        while (move-if-possible(board, p, #"down"))
+        end;
+        stick(board, p);
 
       // Tick causes full rows to be removed, and every
       // board.fall-frequency ticks, all the falling pieces
@@ -410,27 +410,27 @@ define method act (board :: <board>, action :: <action>)
       // would modify the set (board.pieces) we are iterating over.
 
       #"tick" =>
-	remove-full-rows(board);
-	if (modulo(board.time, board.fall-frequency) = 0)
-	  let stuck = make(<deque>);
-	  for (p in board.pieces)
-	    if (~move-if-possible(board, p, #"down"))
-	      push(stuck, p);
-	    end;
-	  end;
-	  for (p in stuck)
-	    stick(board, p);
-	  end;
-	end;
-	board.time := board.time + 1;
-	
-	// Other actions (left, right, turn) cause all pieces to
-	// move, if they can.
+        remove-full-rows(board);
+        if (modulo(board.time, board.fall-frequency) = 0)
+          let stuck = make(<deque>);
+          for (p in board.pieces)
+            if (~move-if-possible(board, p, #"down"))
+              push(stuck, p);
+            end;
+          end;
+          for (p in stuck)
+            stick(board, p);
+          end;
+        end;
+        board.time := board.time + 1;
 
-	otherwise
-	  for (p in board.pieces)
-	    move-if-possible(board, p, action);
-	  end;
+        // Other actions (left, right, turn) cause all pieces to
+        // move, if they can.
+
+        otherwise
+          for (p in board.pieces)
+            move-if-possible(board, p, action);
+          end;
     end;
     update-pieces(board);
   end;
@@ -463,47 +463,47 @@ end;
 define class <red-piece> (<piece>)
   keyword colour: = make-rgb-color(1, 0, 0);
   keyword shape: = as(<coord-vector>,
-		      vector(xy(0,0), xy(1,0), xy(2,0), xy(3,0)));
+                      vector(xy(0,0), xy(1,0), xy(2,0), xy(3,0)));
 end;
 
 define class <blue-piece> (<piece>)
   keyword colour: = make-rgb-color(0, 0, 1);
   keyword shape: = as(<coord-vector>,
-		      vector(xy(0,0), xy(1,0), xy(0,1), xy(1,1)));
+                      vector(xy(0,0), xy(1,0), xy(0,1), xy(1,1)));
 end;
 
 define class <orange-piece> (<piece>)
   keyword colour: = make-rgb-color(1, .7, 0);
   keyword shape: = as(<coord-vector>,
-		      vector(xy(0,0), xy(1,0), xy(2,0), xy(1,1)));
+                      vector(xy(0,0), xy(1,0), xy(2,0), xy(1,1)));
 end;
 
 define class <cyan-piece> (<piece>)
   keyword colour: = make-rgb-color(0, .8, 1);
   keyword shape: = as(<coord-vector>,
-		      vector(xy(0,0), xy(1,0), xy(1,1), xy(2,1)));
+                      vector(xy(0,0), xy(1,0), xy(1,1), xy(2,1)));
 end;
 
 define class <green-piece> (<piece>)
   keyword colour: = make-rgb-color(0, 1, .2);
   keyword shape: = as(<coord-vector>,
-		      vector(xy(0,1), xy(1,1), xy(1,0), xy(2,0)));
+                      vector(xy(0,1), xy(1,1), xy(1,0), xy(2,0)));
 end;
 
 define class <grey-piece> (<piece>)
   keyword colour: = make-rgb-color(.7, .7, .7);
   keyword shape: = as(<coord-vector>,
-		      vector(xy(0,0), xy(1,0), xy(2,0), xy(0,1)));
+                      vector(xy(0,0), xy(1,0), xy(2,0), xy(0,1)));
 end;
 
 define class <purple-piece> (<piece>)
   keyword colour: = make-rgb-color(1, .2, 1);
   keyword shape: = as(<coord-vector>,
-		      vector(xy(0,0), xy(1,0), xy(2,0), xy(2,1)));
+                      vector(xy(0,0), xy(1,0), xy(2,0), xy(2,1)));
 end;
 
-define constant $standard-pieces 
+define constant $standard-pieces
   = vector(<red-piece>, <blue-piece>, <orange-piece>,
-	   <purple-piece>, <green-piece>,
-	   <grey-piece>, <cyan-piece>);
+           <purple-piece>, <green-piece>,
+           <grey-piece>, <cyan-piece>);
 

@@ -37,7 +37,7 @@ end method;
 
 define method make-text-token (string :: <string>, #key start, end: _end)
   unless (blank-string?(string, start: start, end: _end))
-    make(<html-text>, 
+    make(<html-text>,
          text: copy-sequence(string,
                              start: start | 0,
                              end: _end | size(string)))
@@ -45,11 +45,11 @@ define method make-text-token (string :: <string>, #key start, end: _end)
 end method;
 
 define method make-tag (string :: <string>, #key start, end: _end)
-  let string 
+  let string
     = copy-sequence(string, start: start | 0, end: _end | size(string));
   let options-pos = find-key(string, curry(\=, ' '));
   if (options-pos)
-    make(<html-tag>, 
+    make(<html-tag>,
          name: as-lowercase!(copy-sequence(string, end: options-pos)),
          options: copy-sequence(string, start: options-pos + 1));
   else
@@ -125,10 +125,10 @@ end method;
 define method find-html-links (tokens :: <html-page>)
   let tokens = page-tokens(tokens);
   let link-tokens = choose(method (token)
-			     instance?(token, <html-tag>)
-			       & token-name(token) = "a"
-			   end,
-			   tokens);
+                             instance?(token, <html-tag>)
+                               & token-name(token) = "a"
+                           end,
+                           tokens);
   map-as(<vector>, html-tag-link, link-tokens)
 end method;
 
@@ -205,14 +205,14 @@ define method print-html-as-type
             format(stream, "\n\n  %s\n\n", separator);
           "img" =>
             format(stream, "[Image] ");
-          "head" => 
+          "head" =>
             in-header? := #t;
-          "/head", "body" => 
+          "/head", "body" =>
             in-header? := #f;
           "/td" =>
             format(stream, " ");
-          "/p", "a", "/a", "/body", "html", "/html", 
-          "head", "/head", "/title", "!--", "!doctype", 
+          "/p", "a", "/a", "/body", "html", "/html",
+          "head", "/head", "/title", "!--", "!doctype",
           "font", "/font", "table", "/table", "td", "/tr" =>
             ;
           "h1" =>
@@ -267,12 +267,12 @@ define method print-html-as-type
 end method;
 
 define method print-html
-    (page :: <html-page>, stream :: <stream>, 
+    (page :: <html-page>, stream :: <stream>,
      #key text-width = *default-html-text-width*, type = #"text")
   print-html-as-type(page, stream, type)
 end method;
 
-define method print-html-as-string 
+define method print-html-as-string
     (page :: <html-page>,
      #key text-width = *default-html-text-width*,
           type = #"text")

@@ -12,7 +12,7 @@ define frame <interface-builder> (<simple-frame>)
   slot frame-model-frame :: false-or(<model-frame>) = #f;
   pane hierarchy-pane (frame)
     make(<tree-control>,
-	 label-key: method (model :: <model-object>)
+         label-key: method (model :: <model-object>)
                       let name = model.model-name;
                       if (name)
                         as(<string>, name)
@@ -23,7 +23,7 @@ define frame <interface-builder> (<simple-frame>)
          children-predicate: method (model :: <model-object>)
                                ~empty?(model-children(model))
                              end,
-	 children-generator: model-children,
+         children-generator: model-children,
          value-changed-callback: method (gadget :: <tree-control>)
                                    let value = gadget-value(gadget);
                                    frame-selected-model(frame) := value
@@ -32,7 +32,7 @@ define frame <interface-builder> (<simple-frame>)
                                 apply(frame-popup-menu, frame, args)
                               end,
          always-show-selection?: #t,
-	 width: 300, height: 400);
+         width: 300, height: 400);
   pane status (frame)
     make(<status-bar>);
   pane main-layout (frame)
@@ -51,8 +51,8 @@ define method initialize
   frame-selected-model(frame) := #f;
 end method initialize;
 
-define method frame-current-model 
-    (frame :: <interface-builder>) 
+define method frame-current-model
+    (frame :: <interface-builder>)
  => (model :: false-or(<model-object>))
   gadget-value(hierarchy-pane(frame))
 end method frame-current-model;
@@ -63,7 +63,7 @@ define method frame-popup-menu
  => ()
   let framem = frame-manager(frame);
   let command-table = *model-command-table*;
-  let menu 
+  let menu
     = make-menu-from-command-table-menu
         (command-table-menu(command-table), frame, framem,
          command-table: command-table,
@@ -71,16 +71,16 @@ define method frame-popup-menu
   display-menu(menu, x: x, y: y)
 end method frame-popup-menu;
 
-define method frame-add-sheet 
+define method frame-add-sheet
     (frame :: <interface-builder>) => ()
   let parent = frame-current-model(frame);
   let classes = sheet-potential-child-classes(parent);
   if (~empty?(classes))
     let info
       = choose-from-dialog(classes,
-			   label-key: info-title,
-			   owner: frame,
-			   title: "Select a class of sheet to add:");
+                           label-key: info-title,
+                           owner: frame,
+                           title: "Select a class of sheet to add:");
     if (info)
       let new-child = add-model-child(parent, info);
       update-interface-builder(frame);
@@ -98,7 +98,7 @@ define method frame-add-sheet
   end
 end method frame-add-sheet;
 
-define method frame-remove-sheet 
+define method frame-remove-sheet
     (frame :: <interface-builder>) => ()
   let model = frame-current-model(frame);
   select (model by instance?)
@@ -118,7 +118,7 @@ define method frame-remove-sheet
   end
 end method frame-remove-sheet;
 
-define method frame-selected-model 
+define method frame-selected-model
     (frame :: <interface-builder>)
  => (model :: false-or(<model-object>))
   let gadget = hierarchy-pane(frame);
@@ -144,7 +144,7 @@ define method frame-ensure-node-expanded
   node & expand-node(gadget, node)
 end method frame-ensure-node-expanded;
 
-define method update-interface-builder 
+define method update-interface-builder
     (frame :: <interface-builder>) => ()
   let tree-control = hierarchy-pane(frame);
   let model-frame = frame-model-frame(frame);
@@ -163,11 +163,11 @@ define method update-interface-builder
   end
 end method update-interface-builder;
 
-define method frame-new-frame 
+define method frame-new-frame
     (frame :: <interface-builder>) => ()
   let old-model = frame.frame-model-frame;
   old-model & destroy-representation(old-model);
-  let model-frame 
+  let model-frame
     = make(<model-frame>, name: "my-frame", title: "My Frame");
   frame-model-frame(frame) := model-frame;
   refresh-representation(frame, model-frame);
@@ -198,7 +198,7 @@ end method frame-open-file;
 define method frame-save-as-file
     (frame :: <interface-builder>, #key filename) => ()
   let filename
-    = filename 
+    = filename
         | choose-file(owner: frame,
                       title: "Choose a filename for your code",
                       direction: #"output");

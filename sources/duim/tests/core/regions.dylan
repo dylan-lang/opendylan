@@ -36,13 +36,13 @@ end method printable-value;
 
 define constant *regions-for-region-equal-tests*
   = list($nowhere,
-	 $everywhere,
-	 make-point(0, 0),
-	 make-point(1, 1),
+         $everywhere,
+         make-point(0, 0),
+         make-point(1, 1),
          make-line(0, 0, 10, 10),
-	 make-line(10, 10, 20, 20),
+         make-line(10, 10, 20, 20),
          make-rectangle(0, 0, 10, 10),
-	 make-rectangle(10, 10, 20, 20),
+         make-rectangle(10, 10, 20, 20),
          make-polygon(#[0, 0, 10, 10, 20, 20, 30, 30, 0, 0]),
          make-polygon(#[0, 0, 10, 10, 20, 20, 30, 30, 40, 40, 0, 0]),
          make-ellipse(20, 20, 10, 0, 0, 10),
@@ -51,7 +51,7 @@ define constant *regions-for-region-equal-tests*
 define test region-equal-test ()
   for (region1 in *regions-for-region-equal-tests*)
     for (region2 in *regions-for-region-equal-tests*)
-      let name = format-to-string("%= = %=?", 
+      let name = format-to-string("%= = %=?",
                                   printable-value(region1),
                                   printable-value(region2));
       check-equal(name, region-equal(region1, region2), region1 == region2)
@@ -173,7 +173,7 @@ define test region-intersects-region-test ()
                                  printable-value(region1)),
                 region-intersects-region?(region2, region1),
                 expected);
-    check-true(format-to-string("%= intersects $everywhere", 
+    check-true(format-to-string("%= intersects $everywhere",
                                 printable-value(region1)),
                region-intersects-region?(region1, $everywhere));
     check-false(format-to-string("%= doesn't intersect $nowhere",
@@ -194,7 +194,7 @@ define method printable-value (sequence :: <sequence>) => (value)
   map-as(<vector>, printable-value, sequence)
 end method printable-value;
 
-define method expected-ltrb-equals-boxes? 
+define method expected-ltrb-equals-boxes?
     (expected, boxes)
  => (equal? :: <boolean>)
   expected = boxes
@@ -207,7 +207,7 @@ define method expected-ltrb-equals-boxes?
 end method expected-ltrb-equals-boxes?;
 
 // This method has to allow for the boxes to be in a different order
-define method expected-ltrb-equals-boxes? 
+define method expected-ltrb-equals-boxes?
     (expected :: <sequence>, boxes :: <sequence>)
  => (equal? :: <boolean>)
   size(expected) = size(boxes)
@@ -217,7 +217,7 @@ define method expected-ltrb-equals-boxes?
              expected)
 end method expected-ltrb-equals-boxes?;
 
-define method ltrb-transform-result 
+define method ltrb-transform-result
     (transform :: <transform>, value) => (value)
   value
 end method ltrb-transform-result;
@@ -227,14 +227,14 @@ define method ltrb-transform-result
   transform-region(transform, box)
 end method ltrb-transform-result;
 
-define method ltrb-transform-result 
+define method ltrb-transform-result
     (transform :: <transform>, value :: <sequence>) => (result)
   map-as(<vector>, curry(ltrb-transform-result, transform), value)
 end method ltrb-transform-result;
 
 define method ltrb-apply-with-transformed-box
     (function :: <function>, transform :: <transform>,
-     l1, t1, r1, b1, l2, t2, r2, b2, 
+     l1, t1, r1, b1, l2, t2, r2, b2,
      expected)
   let box1 = make-bounding-box(l1, t1, r1, b1);
   let box2 = make-bounding-box(l2, t2, r2, b2);
@@ -250,16 +250,16 @@ end method ltrb-apply-with-transformed-box;
 define method ltrb-apply-function
     (transform :: <transform>, function :: <function>, test :: <sequence>)
   ltrb-apply-with-transformed-box
-     (function, transform, 
+     (function, transform,
       test[0], test[1], test[2], test[3],
       test[4], test[5], test[6], test[7],
       test[8])
 end method ltrb-apply-function;
 
-define method ltrb-apply-to-x-and-y 
+define method ltrb-apply-to-x-and-y
     (transform :: <transform>, function :: <function>, test :: <sequence>)
   ltrb-apply-with-transformed-box
-     (function, transform, 
+     (function, transform,
       test[0], test[1], test[2], test[3],
       test[4], test[5], test[6], test[7],
       test[8])
@@ -298,17 +298,17 @@ define class <or-result> (<object>)
   constant slot or-values, init-keyword: values:;
 end class <or-result>;
 
-define method or-result 
+define method or-result
     (#rest values) => (or-result :: <or-result>)
   make(<or-result>, values: values)
 end method or-result;
 
 define method printable-value (value :: <or-result>) => (value)
-  format-to-string("OR %=", 
+  format-to-string("OR %=",
                    map-as(<vector>, printable-value, or-values(value)))
 end method printable-value;
 
-define method expected-ltrb-equals-boxes? 
+define method expected-ltrb-equals-boxes?
     (expected :: <or-result>, boxes) => (equal? :: <boolean>)
   any?(method (or-value)
          expected-ltrb-equals-boxes?(or-value, boxes)
@@ -316,7 +316,7 @@ define method expected-ltrb-equals-boxes?
        or-values(expected))
 end method expected-ltrb-equals-boxes?;
 
-define method ltrb-transform-result 
+define method ltrb-transform-result
     (transform :: <transform>, value :: <or-result>)
  => (result :: <or-result>)
   make(<or-result>,

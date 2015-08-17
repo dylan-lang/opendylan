@@ -30,23 +30,23 @@ define method handle-repaint
 end method handle-repaint;
 
 define method handle-button-event
-    (sheet :: <scribble-pane>, 
-     event :: <button-press-event>, 
+    (sheet :: <scribble-pane>,
+     event :: <button-press-event>,
      button == $left-button) => ()
   sheet.scribble-segment := make(<stretchy-vector>);
   add-scribble-segment(sheet, event.event-x, event.event-y)
 end method handle-button-event;
 
 define method handle-button-event
-    (sheet :: <scribble-pane>, 
-     event :: <pointer-drag-event>, 
+    (sheet :: <scribble-pane>,
+     event :: <pointer-drag-event>,
      button == $left-button) => ()
   add-scribble-segment(sheet, event.event-x, event.event-y)
 end method handle-button-event;
 
 define method handle-button-event
-    (sheet :: <scribble-pane>, 
-     event :: <button-release-event>, 
+    (sheet :: <scribble-pane>,
+     event :: <button-release-event>,
      button == $left-button) => ()
   when (add-scribble-segment(sheet, event.event-x, event.event-y))
     add!(sheet.scribble-segments, sheet.scribble-segment)
@@ -55,8 +55,8 @@ define method handle-button-event
 end method handle-button-event;
 
 define method handle-button-event
-    (sheet :: <scribble-pane>, 
-     event :: <button-release-event>, 
+    (sheet :: <scribble-pane>,
+     event :: <button-release-event>,
      button == $right-button) => ()
   let popup-menu-callback = scribble-popup-menu-callback(sheet);
   when (popup-menu-callback)
@@ -86,48 +86,48 @@ end method clear-surface;
 /// A top-level frame
 define frame <scribble-frame> (<simple-frame>)
   pane surface (frame)
-    make(<scribble-pane>, 
-	 popup-menu-callback: method (sheet, x, y)
-				let frame = sheet-frame(sheet);
-				popup-scribble-menu(frame, x, y)
-			      end,
-	 width:  300, max-width:  $fill,
-	 height: 200, max-height: $fill);
+    make(<scribble-pane>,
+         popup-menu-callback: method (sheet, x, y)
+                                let frame = sheet-frame(sheet);
+                                popup-scribble-menu(frame, x, y)
+                              end,
+         width:  300, max-width:  $fill,
+         height: 200, max-height: $fill);
   pane print-menu-box (frame)
     make(<menu-box>,
-	 children: vector(make(<menu-button>,
-			       label: "Page Setup...",
-			       activate-callback: method (button)
-						    scribble-page-setup(frame)
-						  end),
-			  make(<menu-button>,
-			       label: "Print...",
-			       activate-callback: method (button)
-						    scribble-print(frame)
-						  end)));
+         children: vector(make(<menu-button>,
+                               label: "Page Setup...",
+                               activate-callback: method (button)
+                                                    scribble-page-setup(frame)
+                                                  end),
+                          make(<menu-button>,
+                               label: "Print...",
+                               activate-callback: method (button)
+                                                    scribble-print(frame)
+                                                  end)));
   pane file-menu (frame)
     make(<menu>,
-	 label: "File",
-	 children: vector(make(<menu-button>,
-			       label: "Clear",
-			       activate-callback: method (button)
-						    clear-surface(frame.surface)
-						  end),
-			  frame.print-menu-box,
-			  make(<menu-button>,
-			       label: "Exit",
-			       activate-callback: method (button)
-						    exit-frame(sheet-frame(button))
-						  end)));
+         label: "File",
+         children: vector(make(<menu-button>,
+                               label: "Clear",
+                               activate-callback: method (button)
+                                                    clear-surface(frame.surface)
+                                                  end),
+                          frame.print-menu-box,
+                          make(<menu-button>,
+                               label: "Exit",
+                               activate-callback: method (button)
+                                                    exit-frame(sheet-frame(button))
+                                                  end)));
   pane scribble-popup-menu (frame)
     make(<menu>,
-	 owner: frame.surface,
-	 children: vector(make(<menu-button>,
-			       label: "&Clear",
-			       activate-callback: method (button)
-						    ignore(button);
-						    clear-surface(frame.surface)
-						  end)));
+         owner: frame.surface,
+         children: vector(make(<menu-button>,
+                               label: "&Clear",
+                               activate-callback: method (button)
+                                                    ignore(button);
+                                                    clear-surface(frame.surface)
+                                                  end)));
   layout (frame) frame.surface;
   menu-bar (frame)
     make(<menu-bar>, children: vector(frame.file-menu));

@@ -14,10 +14,10 @@ define module duim-imports
   use dylan-extensions,
     import: { <byte-character>,
               <keyboard-interrupt>,
-	      \without-bounds-checks,
-	      element-no-bounds-check,
-	      element-no-bounds-check-setter,
-	      element-range-error },
+              \without-bounds-checks,
+              element-no-bounds-check,
+              element-no-bounds-check-setter,
+              element-range-error },
     export: all;
   use simple-debugging, export: all;
   use simple-format, export: all;
@@ -50,16 +50,16 @@ define module duim-utilities
   // Protocol definer
   export \protocol-class-definer,
          \protocol-predicate-definer,
-	 \protocol-definer;
+         \protocol-definer;
 
   // Useful stuff
   export \inc!, \dec!,
          \min!, \max!,
          \push!, \pop!,
-	 \swap!,
+         \swap!,
          \destructuring-let,
          \simple-restart-loop,
-	 \with-abort-restart,
+         \with-abort-restart,
          \with-abort-restart-loop,
          \with-restart,
          \with-simple-restart,
@@ -72,22 +72,22 @@ define module duim-utilities
          upper-case?, lower-case?,
          graphic-char?, standard-char?, whitespace-char?,
          string-capitalize, string-capitalize!,
-	 string-pluralize, string-a-or-an;
+         string-pluralize, string-a-or-an;
 
   // Stack allocation
   export \with-stack-list, evacuate-list,
-	 \with-stack-object, evacuate-object,
+         \with-stack-object, evacuate-object,
          \with-stack-vector, evacuate-vector;
 
   export gethash, gethash-setter,
          remhash,
-	 <string-or-object-table>,
+         <string-or-object-table>,
          substitute, substitute!,
          insert-at!, remove-at!,
-	 find-pair,
-	 position, count,
+         find-pair,
+         position, count,
          make-array-from-contents, fill-array!,
-	 range-check;
+         range-check;
 
   //--- Need a way to cheaply get the current time in microseconds
   export get-internal-real-time;

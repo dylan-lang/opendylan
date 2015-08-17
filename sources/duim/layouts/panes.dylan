@@ -117,7 +117,7 @@ define macro pane-class-definer
  slot:
   { ?modifiers:* pane ?:name (?pane:variable) ?:body }
     => { ?modifiers slot ?name ## "-pane" :: false-or(<abstract-sheet>) = #f; }
-  { layout (?pane:variable) ?:body } => { }		// uses %pane-layout slot
+  { layout (?pane:variable) ?:body } => { }                // uses %pane-layout slot
   // Catch 'slot', 'keyword', and so forth
   { ?other:* } => { ?other; }
 end macro pane-class-definer;
@@ -125,21 +125,21 @@ end macro pane-class-definer;
 define macro pane-generators-definer
   { define pane-generators ?class:name (?superclasses:*) end }
     => { }
-  { define pane-generators ?class:name (?superclasses:*) 
+  { define pane-generators ?class:name (?superclasses:*)
       pane ?:name (?pane:variable) ?:body; ?more-slots:*
     end }
     => { define method ?name (?pane :: ?class)
-	   let framem = ?pane.%pane-framem;
-	   ?pane.?name ## "-pane"
-	   | (?pane.?name ## "-pane"
+           let framem = ?pane.%pane-framem;
+           ?pane.?name ## "-pane"
+           | (?pane.?name ## "-pane"
                 := with-frame-manager (framem)
                      dynamic-bind (*current-pane* = ?pane)
                        ?body
                      end
                    end)
-         end; 
+         end;
          define pane-generators ?class (?superclasses) ?more-slots end; }
-  { define pane-generators ?class:name (?superclasses:*) 
+  { define pane-generators ?class:name (?superclasses:*)
       ?non-pane-slot:*; ?more-slots:*
     end }
     => { define pane-generators ?class (?superclasses) ?more-slots end; }
@@ -148,20 +148,20 @@ end macro pane-generators-definer;
 define macro pane-layout-definer
   { define pane-layout ?class:name (?superclasses:*) end }
     => { }
-  { define pane-layout ?class:name (?superclasses:*) 
+  { define pane-layout ?class:name (?superclasses:*)
       layout (?pane:variable) ?:body; ?more-slots:*
     end }
     => { define method pane-layout (?pane :: ?class) => (sheet :: false-or(<abstract-sheet>))
-	   let framem = ?pane.%pane-framem;
-	   ?pane.%pane-layout
-	   | (?pane.%pane-layout
+           let framem = ?pane.%pane-framem;
+           ?pane.%pane-layout
+           | (?pane.%pane-layout
                 := with-frame-manager (framem)
                      dynamic-bind (*current-pane* = ?pane)
                        ?body
                      end
                    end)
          end }
-  { define pane-layout ?class:name (?superclasses:*) 
+  { define pane-layout ?class:name (?superclasses:*)
       ?non-layout-slot:*; ?more-slots:*
     end }
     => { define pane-layout ?class (?superclasses) ?more-slots end; }
@@ -191,7 +191,7 @@ define open abstract class <top-level-sheet>
     init-keyword: container-region:;
 end class <top-level-sheet>;
 
-define method top-level-sheet 
+define method top-level-sheet
     (sheet :: <top-level-sheet>) => (sheet :: <top-level-sheet>)
   sheet
 end method top-level-sheet;
@@ -221,14 +221,14 @@ end method frame-manager-setter;
 // "Sideways" because 'relayout-parent' is a forward reference from DUIM-Sheets.
 //--- We should maybe do something to protect users from calling this
 //--- before the sheets are mirrored, since 'compose-space' will blow out
-define sideways method relayout-parent 
+define sideways method relayout-parent
     (sheet :: <sheet>, #key width, height) => (did-layout? :: <boolean>)
-  when (sheet-attached?(sheet))		// be forgiving
-    reset-space-requirement(sheet);	// force 'compose-space' to run anew...
+  when (sheet-attached?(sheet))                // be forgiving
+    reset-space-requirement(sheet);        // force 'compose-space' to run anew...
     let (old-width, old-height) = box-size(sheet);
     let space-req = compose-space(sheet,
-				  width:  width  | old-width,
-				  height: height | old-height);
+                                  width:  width  | old-width,
+                                  height: height | old-height);
     let (w, w-, w+, h, h-, h+) = space-requirement-components(sheet, space-req);
     ignore(w-, w+, h-, h+);
     let new-width  :: <integer> = w;
@@ -237,8 +237,8 @@ define sideways method relayout-parent
       let parent = sheet-parent(sheet);
       sheet-layed-out?(sheet) := #f;
       when (~parent | display?(parent) | ~relayout-parent(parent))
-	set-sheet-size(sheet, new-width, new-height);
-	#t
+        set-sheet-size(sheet, new-width, new-height);
+        #t
       end
     end
   end
@@ -314,8 +314,8 @@ end method make;
 define open abstract class <drawing-pane>
     (<standard-input-mixin>,
      <standard-repainting-mixin>,
-     <permanent-medium-mixin>,		// drawing panes always want a medium
-     <mirrored-sheet-mixin>,		// mirroring them gives better behavior, too
+     <permanent-medium-mixin>,                // drawing panes always want a medium
+     <mirrored-sheet-mixin>,                // mirroring them gives better behavior, too
      <sheet-with-caret-mixin>,
      <pane-display-function-mixin>,
      <multiple-child-wrapping-pane>)

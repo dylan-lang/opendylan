@@ -48,7 +48,7 @@ define module duim-formatting-internals
 
   export <basic-graph-record>,
          <graph-edge-record>,
-	 <graph-node-record>,
+         <graph-node-record>,
          edge-attachment-points,
          generate-graph-nodes,
          graph-edge-from-node, graph-edge-to-node,

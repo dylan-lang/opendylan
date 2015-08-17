@@ -410,7 +410,7 @@ define sealed method establish-brush
 end method establish-brush;
 
 
-define sealed method establish-pen 
+define sealed method establish-pen
     (medium :: <win32-medium>, pen :: <standard-pen>, hDC :: <HDC>) => ();
   let hPen :: <HPEN>
     = case
@@ -466,21 +466,21 @@ define generic convert-ink-to-DC-components
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>));
 
-define sealed method convert-ink-to-DC-components 
+define sealed method convert-ink-to-DC-components
     (medium :: <win32-medium>, hDC :: <HDC>, brush :: <foreground>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   convert-ink-to-DC-components(medium, hDC, medium-foreground(medium))
 end method convert-ink-to-DC-components;
 
-define sealed method convert-ink-to-DC-components 
+define sealed method convert-ink-to-DC-components
     (medium :: <win32-medium>, hDC :: <HDC>, brush :: <background>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   convert-ink-to-DC-components(medium, hDC, medium-background(medium))
 end method convert-ink-to-DC-components;
 
-define sealed method convert-ink-to-DC-components 
+define sealed method convert-ink-to-DC-components
     (medium :: <win32-medium>, hDC :: <HDC>, brush :: <rgb-color>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
@@ -554,7 +554,7 @@ end method convert-ink-to-DC-components;
 // Compute and cache the clip rectangle
 define sealed method compute-clip-mask
     (medium :: <win32-medium>) => (mask)
-  medium.%clip-mask 
+  medium.%clip-mask
   | (medium.%clip-mask
        := begin
             let sheet = medium-sheet(medium);
@@ -568,7 +568,7 @@ define sealed method compute-clip-mask
               unless (mregion == $everywhere)
                 let (mleft, mtop, mright, mbottom) = box-edges(mregion);
                 let (mleft, mtop, mright, mbottom)
-                  = transform-box(sheet-device-transform(sheet), 
+                  = transform-box(sheet-device-transform(sheet),
                                   mleft, mtop, mright, mbottom);
                 let (v, left, top, right, bottom)
                   = ltrb-intersects-ltrb?(sleft, stop, sright, sbottom,

@@ -29,7 +29,7 @@ define module duim-graphics
 
   // "Pixel graphics" :-)
   create set-pixel, set-pixel*,
-	 set-pixels, set-pixels*;
+         set-pixels, set-pixels*;
 
   // Path graphics
   create abort-path,
@@ -78,6 +78,6 @@ define module duim-graphics-internals
          do-copy-area,
          do-make-pixmap,
          make-pixmap-medium,
-	 pixmap-drawable, pixmap-drawable-setter,
+         pixmap-drawable, pixmap-drawable-setter,
          pixmap-medium-pixmap;
 end module duim-graphics-internals;

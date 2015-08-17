@@ -10,7 +10,7 @@ define module duim-layouts
   //--- Try to make some DUIM-Sheets forward references less visible
   use duim-sheets,
     import: { relayout-children,
-	      relayout-parent },
+              relayout-parent },
     export: all;
 
   // Space requirements
@@ -29,14 +29,14 @@ define module duim-layouts
   create <basic-composite-pane>,
          <drawing-pane>,
          <layout>,
-	 <leaf-pane>,
+         <leaf-pane>,
          <multiple-child-composite-pane>,
          <null-pane>,
          <simple-pane>,
          <single-child-composite-pane>,
          <top-level-sheet>,
          layout?,
-	 pane-display-function, pane-display-function-setter,
+         pane-display-function, pane-display-function-setter,
          sheet-container,
          sheet-container-region;
 
@@ -52,7 +52,7 @@ define module duim-layouts
          compose-space, do-compose-space,
          \horizontally,
          stack-layout-mapped-page, stack-layout-mapped-page-setter,
-	 table-contents, table-contents-setter,
+         table-contents, table-contents-setter,
          \tabling,
          \vertically;
 
@@ -94,7 +94,7 @@ define module duim-layouts-internals
          <fixed-layout-pane>,
          <grid-layout-pane>,
          <horizontal-layout-mixin>,
-	 <horizontal-position>,
+         <horizontal-position>,
          <layout-border-mixin>,
          <layout-mixin>,
          <layout-pane>,
@@ -108,11 +108,11 @@ define module duim-layouts-internals
          <stack-layout-pane>,
          <table-layout-pane>,
          <vertical-layout-mixin>,
-	 <vertical-position>,
+         <vertical-position>,
          <wrapping-layout-mixin>,
-	 <x-alignment>,
-	 <y-alignment>,
-	 box-pane-allocate-space,
+         <x-alignment>,
+         <y-alignment>,
+         box-pane-allocate-space,
          box-pane-compose-space,
          compose-space-for-items,
          constrain-size,
@@ -126,5 +126,5 @@ define module duim-layouts-internals
          layout-y-ratios, layout-y-ratios-setter,
          layout-y-spacing, layout-y-spacing-setter,
          pane-space-requirement,
-	 reset-space-requirement;
+         reset-space-requirement;
 end module duim-layouts-internals;

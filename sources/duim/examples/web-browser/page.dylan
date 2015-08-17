@@ -36,7 +36,7 @@ define method web-page-directory (location :: <string>)
   end
 end method;
 
-define method web-relative-location 
+define method web-relative-location
     (new-location :: <string>, page :: <web-page>)
   case
     http-address?(new-location) =>

@@ -43,7 +43,7 @@ end method draw-design;
 define sealed method draw-design
     (drawable :: <drawable>, region :: <region-union>) => (record)
   do-regions(method (region) draw-design(region, drawable) end,
-	     region)
+             region)
 end method draw-design;
 
 define sealed method draw-design
@@ -95,11 +95,11 @@ define sealed method draw-design
   let (center-x, center-y) = ellipse-center-position(ellipse);
   let (radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy) = ellipse-radii(ellipse);
   draw-ellipse(drawable,
-	       center-x, center-y,
-	       radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
-	       start-angle: ellipse-start-angle(ellipse),
-	       end-angle: ellipse-end-angle(ellipse),
-	       filled?: #t)
+               center-x, center-y,
+               radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
+               start-angle: ellipse-start-angle(ellipse),
+               end-angle: ellipse-end-angle(ellipse),
+               filled?: #t)
 end method draw-design;
 
 define sealed method draw-design
@@ -107,9 +107,9 @@ define sealed method draw-design
   let (center-x, center-y) = ellipse-center-position(arc);
   let (radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy) = ellipse-radii(arc);
   draw-ellipse(drawable,
-	       center-x, center-y,
-	       radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
-	       start-angle: ellipse-start-angle(arc),
-	       end-angle: ellipse-end-angle(arc),
-	       filled?: #f)
+               center-x, center-y,
+               radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
+               start-angle: ellipse-start-angle(arc),
+               end-angle: ellipse-end-angle(arc),
+               filled?: #f)
 end method draw-design;

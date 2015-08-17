@@ -125,13 +125,13 @@ end method make;
 define method initialize
     (dialog :: <dialog-frame>,
      #key exit-buttons? = #t, save-under? = #f,
-	  minimize-box? = #f, maximize-box? = #f) => ()
+          minimize-box? = #f, maximize-box? = #f) => ()
   next-method();
   frame-flags(dialog)
     := logior(logand(frame-flags(dialog),
-		     lognot(logior(%frame_minimize_box, %frame_maximize_box))),
-	      if (minimize-box?) %frame_minimize_box else 0 end,
-	      if (maximize-box?) %frame_maximize_box else 0 end);
+                     lognot(logior(%frame_minimize_box, %frame_maximize_box))),
+              if (minimize-box?) %frame_minimize_box else 0 end,
+              if (maximize-box?) %frame_maximize_box else 0 end);
   unless (exit-buttons?)
     // If the user asked for no exit buttons, just claim their position is #f.
     // We do this because the user might want to lay out this own exit buttons,
@@ -177,8 +177,8 @@ define method exit-dialog
   let _port = port(dialog);
   when (_port)
     distribute-event(_port, make(<frame-exit-event>,
-				 frame: dialog,
-				 destroy-frame?: destroy?));
+                                 frame: dialog,
+                                 destroy-frame?: destroy?));
     let top-sheet = top-level-sheet(dialog);
     when (top-sheet)
       generate-trigger-event(_port, top-sheet)
@@ -192,7 +192,7 @@ define method exit-dialog
   exit-dialog(dialog, destroy?: destroy?)
 end method exit-dialog;
 
-define open generic do-exit-dialog 
+define open generic do-exit-dialog
     (framem :: <abstract-frame-manager>, dialog :: <dialog-frame>, #key destroy?) => ();
 
 define method handle-event
@@ -205,7 +205,7 @@ end method handle-event;
 define method handle-event
     (dialog :: <dialog-frame>, event :: <dialog-exit-event>) => ()
   do-exit-frame(frame-manager(dialog), dialog,
-		destroy?: event-destroy-frame?(event), status-code: 0)
+                destroy?: event-destroy-frame?(event), status-code: 0)
 end method handle-event;
 
 define method dialog-exit-enabled?-setter
@@ -240,13 +240,13 @@ define method cancel-dialog
   cancel-dialog(dialog, destroy?: destroy?)
 end method cancel-dialog;
 
-define open generic do-cancel-dialog 
+define open generic do-cancel-dialog
     (framem :: <abstract-frame-manager>, dialog :: <dialog-frame>, #key destroy?) => ();
 
 define method handle-event
     (dialog :: <dialog-frame>, event :: <dialog-cancel-event>) => ()
   do-exit-frame(frame-manager(dialog), dialog,
-		destroy?: event-destroy-frame?(event))
+                destroy?: event-destroy-frame?(event))
 end method handle-event;
 
 
@@ -264,7 +264,7 @@ define sideways method do-choose-from-dialog
     (framem :: <frame-manager>, owner :: <sheet>, items :: <sequence>,
      #key title, value,
           selection-mode = #"single",
-	  gadget-class = <list-box>, gadget-options = #[],
+          gadget-class = <list-box>, gadget-options = #[],
           label-key = collection-gadget-default-label-key,
           value-key = collection-gadget-default-value-key,
           width, height, foreground, background, text-style,
@@ -276,31 +276,31 @@ define sideways method do-choose-from-dialog
   with-frame-manager (framem)
     let gadget
       = apply(make-pane, gadget-class,
-	      items: items,
-	      selection-mode: selection-mode,
-	      title: title,
-	      value: value,
-	      label-key: label-key,
-	      value-key: value-key,
-	      activate-callback: exit-dialog,
-	      foreground: foreground,
-	      background: background,
-	      text-style: text-style,
-	      gadget-options);
+              items: items,
+              selection-mode: selection-mode,
+              title: title,
+              value: value,
+              label-key: label-key,
+              value-key: value-key,
+              activate-callback: exit-dialog,
+              foreground: foreground,
+              background: background,
+              text-style: text-style,
+              gadget-options);
     let dialog
       = make(<simple-chooser-dialog>,
-	     mode: #"modal",
-	     owner: sheet-frame(owner),
-	     title: title,
-	     layout: gadget,		// the gadget is the layout
-	     input-focus: gadget,	// ensure the gadget has the focus
-	     width:  if (width  = $fill) #f else width  | 300 end,
-	     height: if (height = $fill) #f else height | 200 end);
+             mode: #"modal",
+             owner: sheet-frame(owner),
+             title: title,
+             layout: gadget,                // the gadget is the layout
+             input-focus: gadget,        // ensure the gadget has the focus
+             width:  if (width  = $fill) #f else width  | 300 end,
+             height: if (height = $fill) #f else height | 200 end);
     let status-code     = start-dialog(dialog);
     let (width, height) = frame-size(dialog);
     values(status-code & gadget-value(gadget),
-	   status-code & #t,
-	   width, height)
+           status-code & #t,
+           width, height)
   end
 end method do-choose-from-dialog;
 
@@ -315,8 +315,8 @@ define open abstract primary class <multi-page-dialog-frame> (<dialog-frame>)
   slot dialog-page-changed-callback :: false-or(<callback-type>) = #f,
     init-keyword: page-changed-callback:;
 end class <multi-page-dialog-frame>;
-  
-define open generic update-dialog-buttons 
+
+define open generic update-dialog-buttons
     (dialog :: <multi-page-dialog-frame>) => ();
 
 define open generic note-dialog-page-changed
@@ -409,14 +409,14 @@ end function execute-page-changed-callback;
 
 define function distribute-page-changed-callback
     (dialog :: <multi-page-dialog-frame>) => ()
-  distribute-event(port(dialog), 
-		   make(<page-changed-dialog-event>, frame: dialog))
+  distribute-event(port(dialog),
+                   make(<page-changed-dialog-event>, frame: dialog))
 end function distribute-page-changed-callback;
 
 
 /// Property frames
 
-define open primary class <property-frame> 
+define open primary class <property-frame>
     (<multi-page-dialog-frame>)
   sealed slot dialog-apply-callback :: false-or(<callback-type>) = #f,
     init-keyword: apply-callback:;
@@ -430,12 +430,12 @@ define method initialize
     (frame :: <property-frame>, #key frame-manager: framem) => ()
   let tab-control
     = make(<tab-control>,
-	   pages: dialog-pages(frame),
-	   value-changed-callback: note-property-frame-current-page-changed,
-	   frame-manager: framem);
+           pages: dialog-pages(frame),
+           value-changed-callback: note-property-frame-current-page-changed,
+           frame-manager: framem);
   frame-layout(frame) := tab-control;
   next-method()
-end method initialize; 
+end method initialize;
 
 define method note-property-frame-current-page-changed
     (gadget :: <tab-control>) => ()
@@ -465,7 +465,7 @@ define sealed domain initialize (<property-page-pane>);
 
 /// Wizard frames
 
-define open primary class <wizard-frame> 
+define open primary class <wizard-frame>
     (<multi-page-dialog-frame>)
   slot dialog-image :: false-or(<image>) = #f,
     init-keyword: image:;

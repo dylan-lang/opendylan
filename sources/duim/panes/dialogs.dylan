@@ -82,7 +82,7 @@ define method do-compose-space
     space-req
   else
     space-requirement+(layout, space-req,
-		       width: extra-width, height: extra-height)
+                       width: extra-width, height: extra-height)
   end
 end method do-compose-space;
 
@@ -117,18 +117,18 @@ define method default-dialog-frame-wrapper
       let button-orientation
         = select (position)
             #"top", #"bottom" => #"vertical";
-	    #"left", #"right" => #"horizontal";
-	    otherwise         => #"vertical";
+            #"left", #"right" => #"horizontal";
+            otherwise         => #"vertical";
           end;
       let layout-children :: <stretchy-object-vector> = make(<stretchy-vector>);
       when (layout) add!(layout-children, layout) end;
       when (exit-box & dialog-needs-separator?(framem, dialog))
-	let separator-orientation
-	  = select (button-orientation)
-	      #"horizontal" => #"vertical";
-	      #"vertical"   => #"horizontal";
-	    end;
-	add!(layout-children, 
+        let separator-orientation
+          = select (button-orientation)
+              #"horizontal" => #"vertical";
+              #"vertical"   => #"horizontal";
+            end;
+        add!(layout-children,
              make(<separator>, orientation: separator-orientation))
       end;
       when (exit-box) add!(layout-children, exit-box) end;
@@ -237,46 +237,46 @@ define method update-default-dialog-layout
 end method update-default-dialog-layout;
 
 // Makes a layout containing all of the exit buttons
-define method make-exit-box 
+define method make-exit-box
     (framem :: <frame-manager>, dialog :: <dialog-frame>)
  => (layout :: false-or(<layout-pane>))
-  when (dialog-exit-buttons-position(dialog))	// if no position, no exit box...
+  when (dialog-exit-buttons-position(dialog))        // if no position, no exit box...
     with-frame-manager (framem)
       let children = make-exit-buttons(framem, dialog);
       let help-callback = dialog-help-callback(dialog);
-      let help-button 
-	= dialog-help-button(dialog)
-	  | when (help-callback)
-	      make-exit-button(framem, dialog, help-callback, $help-label)
-	    end;
+      let help-button
+        = dialog-help-button(dialog)
+          | when (help-callback)
+              make-exit-button(framem, dialog, help-callback, $help-label)
+            end;
       when (help-button)
-	add!(children, help-button);
-	dialog-help-button(dialog) := help-button
+        add!(children, help-button);
+        dialog-help-button(dialog) := help-button
       end;
       let spacing = default-dialog-button-spacing(framem, dialog);
       unless (empty?(children))
-	select (dialog-exit-buttons-position(dialog))      
-	  #"top", #"bottom" =>
-	    let button-layout
-	      = make(<row-layout>,
-		     spacing: spacing,
-		     equalize-widths?: #t, equalize-heights?: #t,
-		     children: children);
-	    make(<column-layout>,
-		 children: vector(button-layout),
-		 x-alignment: default-dialog-button-x-alignment(framem, dialog),
-		 max-width: $fill);
-	  #"left", #"right" =>
-	    let button-layout
-	      = make(<column-layout>,
-		     spacing: spacing,
-		     equalize-widths?: #t, equalize-heights?: #t,
-		     children: children);
-	    make(<row-layout>,
-		 children: vector(button-layout),
-		 y-alignment: default-dialog-button-y-alignment(framem, dialog),
-		 max-height: $fill);
-	end
+        select (dialog-exit-buttons-position(dialog))
+          #"top", #"bottom" =>
+            let button-layout
+              = make(<row-layout>,
+                     spacing: spacing,
+                     equalize-widths?: #t, equalize-heights?: #t,
+                     children: children);
+            make(<column-layout>,
+                 children: vector(button-layout),
+                 x-alignment: default-dialog-button-x-alignment(framem, dialog),
+                 max-width: $fill);
+          #"left", #"right" =>
+            let button-layout
+              = make(<column-layout>,
+                     spacing: spacing,
+                     equalize-widths?: #t, equalize-heights?: #t,
+                     children: children);
+            make(<row-layout>,
+                 children: vector(button-layout),
+                 y-alignment: default-dialog-button-y-alignment(framem, dialog),
+                 max-height: $fill);
+        end
       end
     end
   end
@@ -288,11 +288,11 @@ define method make-exit-buttons
  => (buttons :: <sequence>)
   let children :: <stretchy-object-vector> = make(<stretchy-vector>);
   let exit-enabled? = dialog-exit-enabled?(dialog);
-  let exit-button 
+  let exit-button
     = dialog-exit-button(dialog)
       | (dialog-exit-callback(dialog)
-	 & make-exit-button(framem, dialog, dialog-exit-callback(dialog), $ok-label, 
-			    enabled?: exit-enabled?));
+         & make-exit-button(framem, dialog, dialog-exit-callback(dialog), $ok-label,
+                            enabled?: exit-enabled?));
   when (exit-button)
     add!(children, exit-button);
     dialog-exit-button(dialog) := exit-button;
@@ -300,10 +300,10 @@ define method make-exit-buttons
       frame-default-button(dialog) := exit-button
     end
   end;
-  let cancel-button 
+  let cancel-button
     = dialog-cancel-button(dialog)
       | (dialog-cancel-callback(dialog)
-	 & make-exit-button(framem, dialog, dialog-cancel-callback(dialog), $cancel-label));
+         & make-exit-button(framem, dialog, dialog-cancel-callback(dialog), $cancel-label));
   when (cancel-button)
     add!(children, cancel-button);
     dialog-cancel-button(dialog) := cancel-button
@@ -315,19 +315,19 @@ end method make-exit-buttons;
 define method make-exit-button
     (framem :: <frame-manager>, dialog :: <dialog-frame>,
      callback :: false-or(<callback-type>), label :: <string>,
-     #rest initargs, 
+     #rest initargs,
      #key enabled? = (callback ~= #f), #all-keys)
  => (button :: false-or(<push-button>))
   when (callback)
     with-frame-manager (framem)
       apply(make, <push-button>,
-	    activate-callback: method (button)
-				 let dialog = sheet-frame(button);
-				 execute-callback(dialog, callback, dialog)
-			       end,
-	    label: label,
-	    enabled?: enabled?,
-	    initargs)
+            activate-callback: method (button)
+                                 let dialog = sheet-frame(button);
+                                 execute-callback(dialog, callback, dialog)
+                               end,
+            label: label,
+            enabled?: enabled?,
+            initargs)
     end
   end
 end method make-exit-button;
@@ -340,13 +340,13 @@ define method make-exit-buttons
  => (buttons :: <sequence>)
   let children = next-method();
   let apply-callback = dialog-apply-callback(dialog);
-  let apply-button 
+  let apply-button
     = make-exit-button(framem, dialog, apply-callback, $apply-label);
   when (apply-button)
     add!(children, apply-button);
     dialog-apply-button(dialog) := apply-button
   end;
-  children  
+  children
 end method make-exit-buttons;
 
 define method property-frame-tab-control
@@ -389,18 +389,18 @@ define method make-exit-buttons
     = make-exit-button(framem, dialog, cancel-callback, $cancel-label);
   let back-button
     = when (multiple-pages?)
-	make-exit-button(framem, dialog, back-callback, $back-label,
+        make-exit-button(framem, dialog, back-callback, $back-label,
                          enabled?: #f)
       end;
   let next-button
     = when (multiple-pages?)
-	make-exit-button(framem, dialog, next-callback, $next-label)
+        make-exit-button(framem, dialog, next-callback, $next-label)
       end;
   let exit-button
     = make-exit-button(framem, dialog, exit-callback, $finish-label,
-		       //---*** How do we handle enabling of this button?
-		       // enabled?: exit-enabled?,
-		       withdrawn?: multiple-pages?);
+                       //---*** How do we handle enabling of this button?
+                       // enabled?: exit-enabled?,
+                       withdrawn?: multiple-pages?);
   let buttons
     = if (multiple-pages?)
         vector(back-button, next-button, exit-button, cancel-button)
@@ -467,24 +467,24 @@ define sideways method initialize
       let image = dialog-image(dialog);
       let stack-layout = make(<stack-layout>, children: pages);
       let layout
-	= if (image)
-	    //--- This spacing is just a guess!
-	    let spacing = 2 * default-dialog-button-spacing(framem, dialog);
-	    let label = make(<label>, label: image);
-	    let border
-	      = with-border (type: #"sunken")
-	          label
-	        end;
-	    make(<row-layout>,
-		 children: vector(border, stack-layout),
-		 y-alignment: #"center",
-		 spacing: spacing)
-	  else
-	    stack-layout
-	  end;
+        = if (image)
+            //--- This spacing is just a guess!
+            let spacing = 2 * default-dialog-button-spacing(framem, dialog);
+            let label = make(<label>, label: image);
+            let border
+              = with-border (type: #"sunken")
+                  label
+                end;
+            make(<row-layout>,
+                 children: vector(border, stack-layout),
+                 y-alignment: #"center",
+                 spacing: spacing)
+          else
+            stack-layout
+          end;
       frame-layout(dialog) := layout;
       for (page in pages)
-	sheet-withdrawn?(page) := #t
+        sheet-withdrawn?(page) := #t
       end
     end
   end;

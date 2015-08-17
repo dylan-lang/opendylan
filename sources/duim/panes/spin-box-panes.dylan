@@ -34,8 +34,8 @@ define method handle-repaint
   draw-arrow-button(pane, medium, filled?: pane.%active)
 end method handle-repaint;
 
-define method draw-arrow-button 
-    (pane :: <arrow-button-pane>, medium :: <medium>, 
+define method draw-arrow-button
+    (pane :: <arrow-button-pane>, medium :: <medium>,
      #key filled?) => ()
   let (width, height) = box-size(pane);
   width  := width  - 1;
@@ -45,23 +45,23 @@ define method draw-arrow-button
   let base-y = if (direction = #"down") 0 else height end;
   let tip-y  = if (direction = #"down") height else 0 end;
   draw-polygon(medium,
-	       vector(0, base-y, width, base-y, half-width, tip-y),
-	       closed?: #t, filled?: filled?);
+               vector(0, base-y, width, base-y, half-width, tip-y),
+               closed?: #t, filled?: filled?);
 end method draw-arrow-button;
 
-define method handle-event 
+define method handle-event
     (pane :: <arrow-button-pane>, event :: <button-press-event>) => ()
   when (gadget-enabled?(pane)
-	& event-button(event) == $left-button)
+        & event-button(event) == $left-button)
     pane.%active := #t;
     repaint-sheet(pane, $everywhere)
   end
 end method handle-event;
 
-define method handle-event 
+define method handle-event
     (pane :: <arrow-button-pane>, event :: <button-release-event>) => ()
   when (gadget-enabled?(pane)
-	& event-button(event) == $left-button)
+        & event-button(event) == $left-button)
     with-sheet-medium (medium = pane)
       clear-box*(medium, sheet-region(pane));
       pane.%active := #f;
@@ -74,38 +74,38 @@ end method handle-event;
 
 /// Spin box pane
 
-define sealed pane <spin-box-pane> 
+define sealed pane <spin-box-pane>
     (<spin-box>,
      <standard-repainting-mixin>,
      <permanent-medium-mixin>)
   pane spin-box-pane-text-field (pane)
-    make(<text-field>, 
-	 client: pane,
-	 value: gadget-label(pane),
-	 min-width: 80,
-	 foreground: default-foreground(pane),
-	 background: default-background(pane),
-	 text-style: default-text-style(pane));
+    make(<text-field>,
+         client: pane,
+         value: gadget-label(pane),
+         min-width: 80,
+         foreground: default-foreground(pane),
+         background: default-background(pane),
+         text-style: default-text-style(pane));
   pane spin-box-pane-up-arrow (pane)
-    make(<arrow-button-pane>, 
-	 client: pane,
-	 direction: #"up",
-	 activate-callback: method (sheet) 
-			      ignore(sheet);
-			      spin-box-pane-up(pane)
-			    end,
-	 foreground: default-foreground(pane),
-	 background: default-background(pane));
+    make(<arrow-button-pane>,
+         client: pane,
+         direction: #"up",
+         activate-callback: method (sheet)
+                              ignore(sheet);
+                              spin-box-pane-up(pane)
+                            end,
+         foreground: default-foreground(pane),
+         background: default-background(pane));
   pane spin-box-pane-down-arrow (pane)
     make(<arrow-button-pane>,
-	 client: pane,
-	 direction: #"down",
-	 activate-callback: method (sheet)
-			      ignore(sheet);
-			      spin-box-pane-down(pane)
-			    end,
-	 foreground: default-foreground(pane),
-	 background: default-background(pane));
+         client: pane,
+         direction: #"down",
+         activate-callback: method (sheet)
+                              ignore(sheet);
+                              spin-box-pane-down(pane)
+                            end,
+         foreground: default-foreground(pane),
+         background: default-background(pane));
   layout (pane)
     horizontally (spacing: 2, y-alignment: #"center")
       spin-box-pane-text-field(pane);
@@ -116,7 +116,7 @@ define sealed pane <spin-box-pane>
     end;
 end pane <spin-box-pane>;
 
-define sideways method class-for-make-pane 
+define sideways method class-for-make-pane
     (framem :: <frame-manager>, class == <spin-box>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<spin-box-pane>, #f)
@@ -126,10 +126,10 @@ define method spin-box-pane-down (pane :: <spin-box-pane>) => (selection)
   let index   :: <integer> = gadget-selection(pane)[0];
   let n-items :: <integer> = size(gadget-items(pane));
   let selection = if (index = n-items - 1)
-		    0
-		  else
-		    index + 1
-		  end;
+                    0
+                  else
+                    index + 1
+                  end;
   gadget-selection(pane, do-callback?: #t) := vector(selection)
 end method spin-box-pane-down;
 

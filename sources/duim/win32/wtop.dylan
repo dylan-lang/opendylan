@@ -176,10 +176,10 @@ define sealed method sheet-parent-window
   let container = sheet-container(sheet);
   when (container)
     select (container by instance?)
-      <frame> => 
+      <frame> =>
         let top-sheet = top-level-sheet(container);
         top-sheet & window-handle(top-sheet);
-      <sheet> => 
+      <sheet> =>
         window-handle(container);
       <mirror> =>
         window-handle(container);
@@ -359,7 +359,7 @@ define sealed method map-mirror
   UpdateWindow(handle)  // Sends WM_PAINT message and returns status
 end method map-mirror;
 
-define sealed method raise-mirror 
+define sealed method raise-mirror
     (_port :: <win32-port>,
      sheet :: <win32-top-level-sheet-mixin>, mirror :: <top-level-mirror>,
      #key activate? = #t) => ()
@@ -403,7 +403,7 @@ define sealed method set-mirror-edges
                             left, top, width, height, flags))
 end method set-mirror-edges;
 
-define sealed method destroy-mirror 
+define sealed method destroy-mirror
     (_port :: <win32-port>,
      sheet :: <win32-top-level-sheet-mixin>, mirror :: <top-level-mirror>) => ()
   destroy-accelerator-table(sheet);
@@ -449,7 +449,7 @@ define sealed method do-compose-space
     let client-width  = width  & (width  - extra-width);
     let client-height = height & (height - extra-height);
     let child-space
-      = compose-space(client-layout, 
+      = compose-space(client-layout,
                       width: client-width, height: client-height);
     let (w, w-, w+, h, h-, h+)
       = space-requirement-components(client-layout, child-space);
@@ -479,7 +479,7 @@ define sealed method do-allocate-space
   let (extra-width, extra-height) = window-frame-extra-size(frame);
   let client-layout = top-level-client-layout(layout);
   set-sheet-edges(client-layout,
-                  0, 0, 
+                  0, 0,
                   width - extra-width, height - extra-height)
 end method do-allocate-space;
 
@@ -491,7 +491,7 @@ define sealed method frame-menu-bar-size
   // so we have to call 'compose-space' ourselves to measure it
   if (menu-bar)
     let space-req = compose-space(menu-bar);
-    let (w, w-, w+, h, h-, h+) 
+    let (w, w-, w+, h, h-, h+)
       = space-requirement-components(menu-bar, space-req);
     ignore(w-, w+, h-, h+);
     values(w, h)
@@ -523,7 +523,7 @@ define method window-frame-extra-size
 end method window-frame-extra-size;
 
 define method frame-non-client-geometry
-    (frame :: <basic-frame>, 
+    (frame :: <basic-frame>,
      left  :: <integer>, top    :: <integer>,
      right :: <integer>, bottom :: <integer>)
  => (x :: <integer>, y :: <integer>, width :: <integer>, height :: <integer>)
@@ -538,7 +538,7 @@ define method frame-non-client-geometry
 end method frame-non-client-geometry;
 
 define method client->frame-edges
-    (frame :: <basic-frame>, 
+    (frame :: <basic-frame>,
      left  :: <integer>, top    :: <integer>,
      right :: <integer>, bottom :: <integer>)
  => (l :: <integer>, t :: <integer>, r :: <integer>, b :: <integer>)
@@ -781,7 +781,7 @@ define sealed method handle-resize
      client-width :: <integer>, client-height :: <integer>)
  => (handled? :: <boolean>)
   let frame = sheet-frame(sheet);
-  let (left, top, right, bottom) 
+  let (left, top, right, bottom)
     = client->frame-edges(frame, 0, 0, client-width, client-height);
   let (width, height) = values(right - left, bottom - top);
   let (left, top) = box-position(mirror.%region);
@@ -892,7 +892,7 @@ define sealed method gadget-label-postfix
   if (gesture)
     let keysym = gesture-keysym(gesture);
     let (shift?, control?, alt?) = gesture-modifiers(gesture);
-    concatenate-as(<string>, 
+    concatenate-as(<string>,
                    "\t",
                    if (control?) "Ctrl+"  else "" end,
                    if (alt?)     "Alt+"   else "" end,

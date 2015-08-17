@@ -41,7 +41,7 @@ define function initialize-keysym-translations
   gethash(sym-table, as(<integer>, '\0')) := #"null";
   gethash(sym-table, 127)                 := #"rubout";
   // Windows function keys
-  for (entry :: <simple-object-vector> in 
+  for (entry :: <simple-object-vector> in
          vector(vector($VK-CANCEL,      #"cancel"),     // or maybe #"abort"?
                 vector($VK-BACK,        #"backspace"),
                 vector($VK-TAB,         #"tab"),
@@ -284,7 +284,7 @@ define sealed method handle-key-down
               // a WM_CHAR _is_ expected
               zero?(logand(aref($key-translations, wParam, 2), $function-key-mask))
             else
-              // Normal case -- expect a WM_CHAR message unless there's no-char 
+              // Normal case -- expect a WM_CHAR message unless there's no-char
               // is true (this key doesn't correspond to a character) or Alt is
               // true (this will generate a WM_SYSCHAR which we'll ignore)
               ~(no-char? | alt?)
@@ -411,7 +411,7 @@ end function find-external-character;
 
 define sealed method handle-key
     (sheet :: <sheet>, class :: subclass(<keyboard-event>),
-     vk :: false-or(<integer>), modifiers :: <integer>, 
+     vk :: false-or(<integer>), modifiers :: <integer>,
      #key character :: false-or(<character>) = #f) => ()
   let frame = sheet-frame(sheet);
   let _port = port(sheet);
@@ -511,7 +511,7 @@ define constant $vk->modifier :: <simple-object-vector>
 
 define constant $control+alt-key :: <integer> = logior($control-key, $alt-key);
 
-define sealed method update-modifier-state 
+define sealed method update-modifier-state
     (_port :: <win32-port>, #key alt-key-is-meta? = #t, allow-control-alt? = #t)
  => (state :: <integer>)
   let modifiers :: <integer> = 0;
@@ -536,7 +536,7 @@ define sealed method update-modifier-state
   port-modifier-state(_port) := modifiers;
   modifiers
 end method update-modifier-state;
-          
+
 // When the keyboard has an AltGr key rather than a right hand Alt key, this
 // key generates RMENU and LCONTROL.  Unfortunately, these L vs. R VK's are not
 // recognized on Windows-95/98 -- see the entry for GetAsynchKeyState.  In Win95/98,

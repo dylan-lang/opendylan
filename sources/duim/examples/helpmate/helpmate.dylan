@@ -22,7 +22,7 @@ define command-table *helpmate-command-table* (*global-command-table*)
 end command-table *project-browser-command-table*;
 
 /// <HELPMATE>
-  
+
 define frame <helpmate> (<simple-frame>)
   pane helpmate-locator (frame)
     make(<text-field>, text: "c:\\hqbin\\win32\\msoffice\\winword\\winword.hlp");
@@ -124,7 +124,7 @@ define method about-box-credits (pane :: <object>) => ()
   local method labelize (x) make(<label>, label: x) end method;
   with-frame-manager (frame-manager(pane))
     let credits-layout =
-      with-border (type: #"groove") 
+      with-border (type: #"groove")
         make(<table-layout>,
           rows: 10,
           x-spacing: 10,

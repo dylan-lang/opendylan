@@ -20,7 +20,7 @@ define protocol <<pointer-protocol>> ()
  => (x :: <integer>, y :: <integer>);
   function set-pointer-position
     (pointer :: <pointer>, x :: <integer>, y :: <integer>, #key sheet) => ();
-  function do-set-pointer-position 
+  function do-set-pointer-position
     (port :: <abstract-port>, pointer :: <pointer>, sheet :: <abstract-sheet>,
      x :: <integer>, y :: <integer>) => ();
   getter pointer-cursor
@@ -114,13 +114,13 @@ end method update-pointer-cursor;
 define macro with-busy-cursor
   { with-busy-cursor (?frame:expression, ?cursor:expression) ?:body end }
     => { begin
-	   let with-busy-cursor-body = method () ?body end;
-	   do-with-busy-cursor(?frame, ?cursor, with-busy-cursor-body)
+           let with-busy-cursor-body = method () ?body end;
+           do-with-busy-cursor(?frame, ?cursor, with-busy-cursor-body)
          end }
   { with-busy-cursor (?frame:expression) ?:body end }
     => { begin
-	   let with-busy-cursor-body = method () ?body end;
-	   do-with-busy-cursor(?frame, #"busy", with-busy-cursor-body)
+           let with-busy-cursor-body = method () ?body end;
+           do-with-busy-cursor(?frame, #"busy", with-busy-cursor-body)
          end }
 end macro with-busy-cursor;
 
@@ -130,7 +130,7 @@ define method do-with-busy-cursor
   if (frame)
     do-with-busy-cursor(frame, cursor, continuation)
   else
-    continuation()		// sheet is not grafted
+    continuation()                // sheet is not grafted
   end
 end method do-with-busy-cursor;
 
@@ -170,23 +170,23 @@ define sealed method set-pointer-position
   end
 end method set-pointer-position;
 
-define method pointer-state-changed? 
+define method pointer-state-changed?
     (pointer :: <standard-pointer>, old-sheet, old-x, old-y)
  => (changed? :: <boolean>, sheet :: <sheet>, x :: <integer>, x :: <integer>)
   let sheet = pointer-sheet(pointer);
   let (x-position, y-position) = pointer-position(pointer, sheet: sheet);
   values(~(sheet == old-sheet)
-	 // Compare coordinates with eql, not =, because null values can be passed in
-	 | ~(old-x == x-position)
-	 | ~(old-y == y-position),
-	 sheet, x-position, y-position)
+         // Compare coordinates with eql, not =, because null values can be passed in
+         | ~(old-x == x-position)
+         | ~(old-y == y-position),
+         sheet, x-position, y-position)
 end method pointer-state-changed?;
 
 
 /// Pointer grabbing
 
 //---*** What should we do if one thread tries to grab the pointer
-//---*** when another thread already has the grab?  
+//---*** when another thread already has the grab?
 define sealed method pointer-grabbed?-setter
     (sheet :: false-or(<sheet>), pointer :: <standard-pointer>)
  => (sheet :: false-or(<sheet>))
@@ -196,16 +196,16 @@ define sealed method pointer-grabbed?-setter
       let new-focus = sheet;
       let old-focus = port-input-focus(_port);
       when (grab-pointer(_port, pointer, sheet))
-	when (new-focus ~== old-focus
-	      & port-focus-policy(_port) == #"sheet-under-pointer"
-	      & sheet-handles-keyboard?(new-focus))
-	  port-input-focus(_port) := new-focus;
-	end;
-	pointer.%grabbed? := sheet
+        when (new-focus ~== old-focus
+              & port-focus-policy(_port) == #"sheet-under-pointer"
+              & sheet-handles-keyboard?(new-focus))
+          port-input-focus(_port) := new-focus;
+        end;
+        pointer.%grabbed? := sheet
       end
     else
       when (ungrab-pointer(_port, pointer))
-	pointer.%grabbed? := #f
+        pointer.%grabbed? := #f
       end
     end
   end;
@@ -228,8 +228,8 @@ define macro with-pointer-grabbed
   { with-pointer-grabbed (?sheet:name) ?:body end }
     => { begin
            let with-pointer-grabbed-body = method () ?body end;
-	   let _port = port(?sheet);
-	   do-with-pointer-grabbed(_port, ?sheet, with-pointer-grabbed-body)
+           let _port = port(?sheet);
+           do-with-pointer-grabbed(_port, ?sheet, with-pointer-grabbed-body)
          end }
 end macro with-pointer-grabbed;
 

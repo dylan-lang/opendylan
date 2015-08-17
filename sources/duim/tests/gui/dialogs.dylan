@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $default-title = "Test Suite";
 
-define method yes-or-no? 
+define method yes-or-no?
     (message :: <string>,
      #key title = $default-title,
           port = default-port(),
@@ -19,44 +19,44 @@ define method yes-or-no?
   with-frame-manager (frame-manager(owner))
     let yes-button
       = make(<push-button>, label: "Yes",
-	     activate-callback: exit-dialog,
-	     max-width: $fill);
+             activate-callback: exit-dialog,
+             max-width: $fill);
     let no-button
       = make(<push-button>, label: "No",
-	     activate-callback: cancel-dialog,
-	     max-width: $fill);
+             activate-callback: cancel-dialog,
+             max-width: $fill);
     let dialog
       = make(<dialog-frame>,
-	     title: title,
-	     owner: owner,
-	     resizable?: #f,
-	     exit-buttons?: #f, 	// we'll do our own exit buttons
-	     layout: vertically (x-alignment: #"center",
-				 y-spacing: 5)
-	               make(<label>, label: message);
+             title: title,
+             owner: owner,
+             resizable?: #f,
+             exit-buttons?: #f,         // we'll do our own exit buttons
+             layout: vertically (x-alignment: #"center",
+                                 y-spacing: 5)
+                       make(<label>, label: message);
                        horizontally (x-spacing: 2)
-	                 yes-button; 
-	                 no-button;
-		       end
+                         yes-button;
+                         no-button;
+                       end
                      end);
     start-dialog(dialog) ~= #f
   end
 end method yes-or-no?;
 
-define method choose-string 
+define method choose-string
     (#key title = "Select a string",
           port = default-port(),
           owner)
  => (string :: false-or(<string>))
   with-frame-manager (frame-manager(owner))
-    let text-field 
+    let text-field
       = make(<text-field>, activate-callback: exit-dialog);
     let dialog
-      = make(<dialog-frame>, 
-	     title: title, 
-	     owner: owner,
-	     layout: text-field,
-	     input-focus: text-field);
+      = make(<dialog-frame>,
+             title: title,
+             owner: owner,
+             layout: text-field,
+             input-focus: text-field);
     start-dialog(dialog)
       & gadget-value(text-field)
   end
@@ -68,7 +68,7 @@ define method choose-integer
           owner)
  => (integer :: false-or(<integer>))
   with-frame-manager (frame-manager(owner))
-    let text-field 
+    let text-field
       = make(<text-field>,
              value-type: <integer>,
              value-changing-callback: method (gadget)
@@ -76,13 +76,13 @@ define method choose-integer
                                         dialog-exit-enabled?(dialog)
                                           := gadget-value(gadget) ~= #f
                                       end,
-	     activate-callback: exit-dialog);
+             activate-callback: exit-dialog);
     let dialog
-      = make(<dialog-frame>, 
-	     title: title, 
-	     owner: owner,
-	     layout: text-field,
-	     input-focus: text-field);
+      = make(<dialog-frame>,
+             title: title,
+             owner: owner,
+             layout: text-field,
+             input-focus: text-field);
     dialog-exit-enabled?(dialog) := gadget-value(text-field) ~= #f;
     start-dialog(dialog)
       & gadget-value(text-field)
@@ -100,16 +100,16 @@ define method new-choose-from-dialog
   with-frame-manager (frame-manager(owner))
     let chooser
       = make(<list-box>,
-	     items: items,
-	     label-key: label-key,
-	     value-key: value-key,
-	     activate-callback: exit-dialog);
+             items: items,
+             label-key: label-key,
+             value-key: value-key,
+             activate-callback: exit-dialog);
     let dialog
-      = make(<dialog-frame>, 
-	     title: title, 
-	     owner: owner,
-	     layout: chooser,
-	     input-focus: chooser);
+      = make(<dialog-frame>,
+             title: title,
+             owner: owner,
+             layout: chooser,
+             input-focus: chooser);
     start-dialog(dialog)
       & gadget-value(chooser)
   end
@@ -128,7 +128,7 @@ define frame <multiple-values-dialog> (<dialog-frame>)
   pane radio-box (frame)
     make(<radio-box>,
          items: #("Option &1", "Option &2", "Option &3", "Option &4"),
-	 orientation: #"vertical");
+         orientation: #"vertical");
   pane first-group-box (frame)
     grouping ("Group box", max-width: $fill)
       vertically (spacing: 4)
@@ -171,11 +171,11 @@ define method choose-multiple-values
           owner)
  => (label :: false-or(<string>),
      check1? :: <boolean>,
-     check2? :: <boolean>, 
+     check2? :: <boolean>,
      radio1 :: false-or(<string>))
   with-frame-manager (frame-manager(owner))
     let dialog
-      = make(<multiple-values-dialog>, 
+      = make(<multiple-values-dialog>,
              title: title,
              exit-buttons-position: #"right",
              help-callback: multiple-values-help);
@@ -237,8 +237,8 @@ define method choose-from-wizard
      years-worked :: false-or(<integer>))
   let frame
     = make(<simple-wizard-test>,
-	   title: title, 
-	   owner: owner);
+           title: title,
+           owner: owner);
   if (start-dialog(frame))
     let years-worked = frame.years-employed-pane;
     values(gadget-value(frame.name-pane),
@@ -259,7 +259,7 @@ define frame <simple-property-test> (<property-frame>)
   pane job-description-pane (frame)
     make(<text-field>);
   pane years-employed-pane (frame)
-    make(<text-field>, 
+    make(<text-field>,
          value-type: <integer>,
          value-changing-callback: method (gadget)
                                     let dialog = sheet-frame(gadget);
@@ -315,10 +315,10 @@ define method display-properties
      organization :: false-or(<string>),
      job-description :: false-or(<string>),
      years-worked :: false-or(<integer>))
-  let frame 
+  let frame
     = make(<simple-property-test>,
-	   title: title,
-	   owner: owner);
+           title: title,
+           owner: owner);
   if (start-dialog(frame))
     let years-worked = frame.years-employed-pane;
     values(gadget-value(frame.name-pane),
@@ -336,7 +336,7 @@ define function start-modeless-dialog
      #key title = "Modeless Dialog",
           owner) => ()
   with-frame-manager (frame-manager(owner))
-    let text-field 
+    let text-field
       = make(<text-field>,
              value-type: <integer>,
              value-changing-callback: method (gadget)
@@ -344,18 +344,18 @@ define function start-modeless-dialog
                                         dialog-exit-enabled?(dialog)
                                           := gadget-value(gadget) ~= #f
                                       end,
-	     activate-callback: method (gadget)
+             activate-callback: method (gadget)
                                   let text = gadget-text(gadget);
                                   frame-status-message(frame)
                                     := format-to-string("Activated gadget: '%s'", text)
                                 end);
     let dialog
-      = make(<dialog-frame>, 
+      = make(<dialog-frame>,
              mode: #"modeless",
-	     title: title,
-	     owner: owner,
-	     layout: text-field,
-	     input-focus: text-field);
+             title: title,
+             owner: owner,
+             layout: text-field,
+             input-focus: text-field);
     start-dialog(dialog)
   end
 end function start-modeless-dialog;
@@ -374,26 +374,26 @@ end method test-yes-or-no?;
 define method test-choose-string (frame :: <simple-frame>) => ()
   show-result(frame, choose-string(owner: frame))
 end method test-choose-string;
-  
+
 define method test-choose-integer (frame :: <simple-frame>) => ()
   show-result(frame, choose-integer(owner: frame))
 end method test-choose-integer;
-  
+
 define method test-new-choose-from-dialog (frame :: <simple-frame>)
   show-result
     (frame,
      new-choose-from-dialog(#("Red", "Green", "Blue"),
-			    title: "Select a color",
-			    owner: frame))
+                            title: "Select a color",
+                            owner: frame))
 end method test-new-choose-from-dialog;
-  
+
 define method test-choose-multiple-values (frame :: <simple-frame>) => ()
   let (label, check1, check2, radio1) = choose-multiple-values(owner: frame);
   frame-status-message(frame)
     := format-to-string("Result: %=, %=, %=, %=",
-			label, check1, check2, radio1)
+                        label, check1, check2, radio1)
 end method test-choose-multiple-values;
-  
+
 define method test-choose-from-wizard (frame :: <simple-frame>) => ()
   let (name, organization, job-description, years-worked)
     = choose-from-wizard(owner: frame);
@@ -401,7 +401,7 @@ define method test-choose-from-wizard (frame :: <simple-frame>) => ()
     := format-to-string("Result: %=, %=, %=, %=",
                         name, organization, job-description, years-worked)
 end method test-choose-from-wizard;
-  
+
 define method test-display-properties (frame :: <simple-frame>) => ()
   let (name, organization, job-description, years-worked)
     = display-properties(owner: frame);
@@ -409,11 +409,11 @@ define method test-display-properties (frame :: <simple-frame>) => ()
     := format-to-string("Result: %=, %=, %=, %=",
                         name, organization, job-description, years-worked)
 end method test-display-properties;
-  
+
 define method test-modeless-dialog (frame :: <simple-frame>) => ()
   start-modeless-dialog(frame, owner: frame)
 end method test-modeless-dialog;
-  
+
 define frame <simple-dialogs-frame> (<simple-frame>)
   pane tests (frame)
     make(<list-box>,
@@ -427,7 +427,7 @@ define frame <simple-dialogs-frame> (<simple-frame>)
                        vector("Modeless Dialog",        test-modeless-dialog)),
          label-key: first,
          value-key: second,
-	 scroll-bars: #"none",
+         scroll-bars: #"none",
          activate-callback: method (sheet :: <sheet>)
                               gadget-value(sheet)(sheet-frame(sheet))
                             end);

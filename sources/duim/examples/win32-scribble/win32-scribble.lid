@@ -2,9 +2,9 @@ Library:      win32-scribble
 Author:       Scott McKay
 Synopsis:     Win32 version of the DUIM scribble application
 Files:  library
-	scribble
+        scribble
         printing
-	run
+        run
 Linker-Options: $(guilflags)
 Start-Function: scribble
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

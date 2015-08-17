@@ -12,24 +12,24 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define macro tracking-pointer
   { tracking-pointer (?event:name, ?sheet:expression, #rest ?options:expression) ?clauses:* end }
     => { begin
-	   local method tracking-pointer-clauses (?event)
-	     select (?event by instance?)
-	       ?clauses;
+           local method tracking-pointer-clauses (?event)
+             select (?event by instance?)
+               ?clauses;
                otherwise => #f;
-	     end
-	   end method;
-	   do-tracking-pointer(?sheet, tracking-pointer-clauses, ?options)
-	 end }
+             end
+           end method;
+           do-tracking-pointer(?sheet, tracking-pointer-clauses, ?options)
+         end }
   { tracking-pointer (?sheet:expression, #rest ?options:expression) ?clauses:* end }
     => { begin
-	   local method tracking-pointer-clauses (_event)
-	     select (_event by instance?)
-	       ?clauses;
+           local method tracking-pointer-clauses (_event)
+             select (_event by instance?)
+               ?clauses;
                otherwise => #f;
-	     end
-	   end method;
-	   do-tracking-pointer(?sheet, tracking-pointer-clauses, ?options)
-	 end }
+             end
+           end method;
+           do-tracking-pointer(?sheet, tracking-pointer-clauses, ?options)
+         end }
  clauses:
   { } => { }
   { ?clause:*; ... }

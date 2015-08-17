@@ -122,9 +122,9 @@ define sealed method add-item
     when (index)
       let selection = gadget-selection(pane);
       for (i :: <integer> from 0 below size(selection))
-	when (selection[i] > index)
-	  selection[i] := selection[i] + 1
-	end
+        when (selection[i] > index)
+          selection[i] := selection[i] + 1
+        end
       end;
       pane.%selection := selection
     end
@@ -143,10 +143,10 @@ define sealed method remove-item
     let selection = remove(gadget-selection(pane), index);
     for (i :: <integer> from 0 below size(selection))
       when (selection[i] > index)
-	selection[i] := selection[i] - 1
+        selection[i] := selection[i] - 1
       end
     end;
     pane.%selection := selection
   end;
-  do-remove-item(pane, item)  
+  do-remove-item(pane, item)
 end method remove-item;

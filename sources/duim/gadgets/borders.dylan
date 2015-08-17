@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Borders
 
 // Outline panes draw a dark (foreground) border around a pane
-define open abstract class <border> 
+define open abstract class <border>
     // This stuff acts like <layout-pane>, but manages only a single child
     (<cached-space-requirement-mixin>,
      <client-overridability-mixin>,
@@ -32,8 +32,8 @@ define macro with-border
   { with-border (#rest ?options:expression)
       ?child:body
     end }
-    => { let _child = ?child;		// child is a single expression
-	 make(<border>, child: _child, ?options) }
+    => { let _child = ?child;                // child is a single expression
+         make(<border>, child: _child, ?options) }
 end macro with-border;
 
 define open generic draw-border
@@ -54,7 +54,7 @@ end method draw-border;
 /// Spacing
 
 // Spacing panes leaves whitespace (background) around a pane
-define open abstract class <spacing> 
+define open abstract class <spacing>
     //--- Like <layout-pane>, but manages only a single child
     (<cached-space-requirement-mixin>,
      <client-overridability-mixin>,
@@ -72,7 +72,7 @@ end method border-type;
 
 define method initialize (sheet :: <spacing>, #key spacing) => ()
   next-method();
-  when (spacing) 
+  when (spacing)
     border-thickness(sheet) := spacing
   end
 end method initialize;
@@ -82,8 +82,8 @@ define macro with-spacing
   { with-spacing (#rest ?options:expression)
       ?child:body
     end }
-    => { let _child = ?child;		// child is a single expression
-	 make(<spacing>, child: _child, ?options) }
+    => { let _child = ?child;                // child is a single expression
+         make(<spacing>, child: _child, ?options) }
 end macro with-spacing;
 
 
@@ -100,11 +100,11 @@ define macro grouping
   { grouping (?label:expression)
       ?child:body
     end }
-    => { let _child = ?child;		// child is a single expression
-	 make(<group-box>, child: _child, label: ?label) }
+    => { let _child = ?child;                // child is a single expression
+         make(<group-box>, child: _child, label: ?label) }
   { grouping (?label:expression, #rest ?options:expression)
       ?child:body
     end }
-    => { let _child = ?child;		// child is a single expression
-	 make(<group-box>, ?options, child: _child, label: ?label) }
+    => { let _child = ?child;                // child is a single expression
+         make(<group-box>, ?options, child: _child, label: ?label) }
 end macro grouping;

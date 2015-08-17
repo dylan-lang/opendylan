@@ -13,26 +13,26 @@ define frame <tab-control-frame> (<simple-frame>)
   slot second-tab-pages :: false-or(<sequence>) = #f;
   pane which-pages (frame)
     make(<radio-box>,
-	 items: #[#["First pages",  1],
-		  #["Second pages", 2]],
+         items: #[#["First pages",  1],
+                  #["Second pages", 2]],
          label-key: first,
          value-key: second,
-	 value-changed-callback: method (gadget)
+         value-changed-callback: method (gadget)
                                    let frame = sheet-frame(gadget);
                                    update-tab-control-pages(frame, gadget-value(gadget))
                                  end);
   pane button (frame)
-    make(<button>, 
+    make(<button>,
          activate-callback: tab-control-activate-callback,
          label: "Press Me");
   pane list-box (frame)
-    make(<list-box>, 
+    make(<list-box>,
          activate-callback: tab-control-activate-callback,
          items: range(from: 1, to: 10));
   pane tree-control (frame)
     make(<tree-control>,
          roots: #(1),
-	 children-generator: method (x) vector(x * 2, 1 + (x * 2)) end,
+         children-generator: method (x) vector(x * 2, 1 + (x * 2)) end,
          activate-callback: tab-control-activate-callback);
   pane table-control (frame)
     make(<table-control>,
@@ -47,28 +47,28 @@ define frame <tab-control-frame> (<simple-frame>)
   pane table-layout-pane (frame)
     make(<table-layout>,
          columns: 2,
-	 x-alignment: #[#"right", #"left"],
-	 y-alignment: #"center",
-	 children: vector(make(<label>, label: "Name:"),
-			  make(<text-field>),
-			  make(<label>, label: "Organization:"),
-			  make(<text-field>)));
+         x-alignment: #[#"right", #"left"],
+         y-alignment: #"center",
+         children: vector(make(<label>, label: "Name:"),
+                          make(<text-field>),
+                          make(<label>, label: "Organization:"),
+                          make(<text-field>)));
   pane tab-control (frame)
     begin
       let first-pages
-	= vector(make(<tab-control-page>,
-		      label: "Button",   child: frame.button),
-		 make(<tab-control-page>,
-		      label: "List Box", child: frame.list-box),
-		 make(<tab-control-page>,
-		      label: "Layout",   child: frame.table-layout-pane));
+        = vector(make(<tab-control-page>,
+                      label: "Button",   child: frame.button),
+                 make(<tab-control-page>,
+                      label: "List Box", child: frame.list-box),
+                 make(<tab-control-page>,
+                      label: "Layout",   child: frame.table-layout-pane));
       let second-pages
-	= vector(make(<tab-control-page>,
-		      label: "Tree",     child: frame.tree-control),
-		 make(<tab-control-page>,
-		      label: "Table",    child: frame.table-control),
-		 make(<tab-control-page>,
-		      label: "Ellipse",  child: frame.ellipse-pane));
+        = vector(make(<tab-control-page>,
+                      label: "Tree",     child: frame.tree-control),
+                 make(<tab-control-page>,
+                      label: "Table",    child: frame.table-control),
+                 make(<tab-control-page>,
+                      label: "Ellipse",  child: frame.ellipse-pane));
       frame.first-tab-pages  := first-pages;
       frame.second-tab-pages := second-pages;
       make(<tab-control>, pages: first-pages)
@@ -99,8 +99,8 @@ define method update-tab-control-pages
   let gadget = tab-control(frame);
   tab-control-pages(gadget)
     := select (value)
-	 1 => frame.first-tab-pages;
-	 2 => frame.second-tab-pages;
+         1 => frame.first-tab-pages;
+         2 => frame.second-tab-pages;
        end;
 end method update-tab-control-pages;
 

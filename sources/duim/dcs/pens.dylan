@@ -75,22 +75,22 @@ define constant $dash-dot-dot-pen :: <standard-pen>
 
 define constant $solid-pens :: <simple-object-vector>
     = vector(make(<standard-pen>, width: 0, dashes: #f),
-	     $solid-pen,		// width: 1, dashes: #f
-	     make(<standard-pen>, width: 2, dashes: #f),
-	     make(<standard-pen>, width: 3, dashes: #f),
-	     make(<standard-pen>, width: 4, dashes: #f));
+             $solid-pen,                // width: 1, dashes: #f
+             make(<standard-pen>, width: 2, dashes: #f),
+             make(<standard-pen>, width: 3, dashes: #f),
+             make(<standard-pen>, width: 4, dashes: #f));
 
 define constant $dashed-pens :: <simple-object-vector>
     = vector(make(<standard-pen>, width: 0, dashes: #t),
-	     $dashed-pen,		// width: 1, dashes: #t
-	     make(<standard-pen>, width: 2, dashes: #t),
-	     make(<standard-pen>, width: 3, dashes: #t),
-	     make(<standard-pen>, width: 4, dashes: #t));
+             $dashed-pen,                // width: 1, dashes: #t
+             make(<standard-pen>, width: 2, dashes: #t),
+             make(<standard-pen>, width: 3, dashes: #t),
+             make(<standard-pen>, width: 4, dashes: #t));
 
 define sealed method make
-    (class == <pen>, 
+    (class == <pen>,
      #key width = 1, units = #"normal", dashes,
-	  joint-shape = #"miter", cap-shape = #"butt")
+          joint-shape = #"miter", cap-shape = #"butt")
  => (pen :: <standard-pen>)
   if (integral?(width)
       & (0 <= width & width <= 4)
@@ -102,8 +102,8 @@ define sealed method make
     (if (dashes) $dashed-pens else $solid-pens end)[width]
   else
     make(<standard-pen>,
-	 width: width, units: units, dashes: dashes,
-	 joint-shape: joint-shape, cap-shape: cap-shape)
+         width: width, units: units, dashes: dashes,
+         joint-shape: joint-shape, cap-shape: cap-shape)
   end
 end method make;
 
@@ -114,35 +114,35 @@ define constant $dash-pattern-grain-size :: <integer> = 3;
 
 define constant $contrasting-dash-patterns :: <simple-object-vector>
     = vector
-	(#[1, 1],						// 2
-	 #[2, 1], #[1, 2],					// 3
-	 #[3, 1], #[2, 2],					// 4
-	 #[2, 3], #[1, 4], #[2, 1, 1, 1], #[1, 2, 1, 1],	// 5
-	 #[4, 2], #[3, 3], #[2, 4], #[3, 1, 1, 1], #[2, 2, 1, 1], #[3, 2, 1, 1],
-	 #[3, 1, 2, 1]);
+        (#[1, 1],                                                // 2
+         #[2, 1], #[1, 2],                                        // 3
+         #[3, 1], #[2, 2],                                        // 4
+         #[2, 3], #[1, 4], #[2, 1, 1, 1], #[1, 2, 1, 1],        // 5
+         #[4, 2], #[3, 3], #[2, 4], #[3, 1, 1, 1], #[2, 2, 1, 1], #[3, 2, 1, 1],
+         #[3, 1, 2, 1]);
 
 define sealed method make-contrasting-dash-patterns
     (n :: <integer>, #key k = $unsupplied) => (dashes)
   check-type(n, limited(<integer>, min: 2, max: 16));
   local method make-dash-pattern (index) => (pattern :: <vector>)
-	  let known = $contrasting-dash-patterns[index];
-	  let pattern :: <simple-object-vector> = make(<simple-vector>, size: size(known));
-	  for (i :: <integer> from 0 below size(known))
-	    pattern[i] := pattern[i] * $dash-pattern-grain-size
-	  end;
-	  pattern
-	end method;
+          let known = $contrasting-dash-patterns[index];
+          let pattern :: <simple-object-vector> = make(<simple-vector>, size: size(known));
+          for (i :: <integer> from 0 below size(known))
+            pattern[i] := pattern[i] * $dash-pattern-grain-size
+          end;
+          pattern
+        end method;
   if (unsupplied?(k))
     let patterns :: <simple-object-vector> = make(<simple-vector>, size: n);
     without-bounds-checks
       for (i :: <integer> from 0 below n)
-	patterns[i] := make-dash-pattern(i)
+        patterns[i] := make-dash-pattern(i)
       end
     end;
     patterns
   else
     assert(k < n,
-	   "The index %d must be smaller than the count %d", k, n);
+           "The index %d must be smaller than the count %d", k, n);
     make-dash-pattern(k)
   end
 end method make-contrasting-dash-patterns;

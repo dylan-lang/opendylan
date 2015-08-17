@@ -21,7 +21,7 @@ define module windows-viewer
   use win32-user;
   use win32-dde,
     exclude: { $LT-LOWEST-LATENCY,
-	       $LT-DONT-CARE };
+               $LT-DONT-CARE };
 
   use duim,
     exclude: { <point> };

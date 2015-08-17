@@ -74,7 +74,7 @@ define variable *child-explicit-height* = 300;
 // pick and choose as to the simplest place to redefine. It works as
 // follows:
 //
-// 1. expected-named-size 
+// 1. expected-named-size
 // This takes the name of the size it is looking for. Redefining on this
 // method means you can implement a single method that will do everything.
 // 2. expected-named-width/expected-named-height
@@ -93,11 +93,11 @@ define generic expected-named-width
     (pane, name, #key width, height, #all-keys) => (size :: <integer>);
 define generic expected-named-height
     (pane, name, #key width, height, #all-keys) => (size :: <integer>);
-define generic expected-width 
+define generic expected-width
     (pane, #key, #all-keys) => (width :: <integer>);
-define generic expected-min-width 
+define generic expected-min-width
     (pane, #key, #all-keys) => (width :: <integer>);
-define generic expected-max-width 
+define generic expected-max-width
     (pane, #key, #all-keys) => (width :: <integer>);
 define generic expected-height
     (pane, #key, #all-keys) => (height :: <integer>);
@@ -108,7 +108,7 @@ define generic expected-max-height
 
 
 
-define method expected-default-size 
+define method expected-default-size
     (name :: <symbol>, #key width, height) => (size :: <integer>)
   select (name)
     #"width"      => width | 100;
@@ -120,7 +120,7 @@ define method expected-default-size
   end
 end method expected-default-size;
 
-define method expected-size-function 
+define method expected-size-function
     (name :: <symbol>) => (size-function :: <function>)
   select (name)
     #"width"      => expected-width;
@@ -153,7 +153,7 @@ define method expected-width-given-default
   */
 end method expected-width-given-default;
 
-define method expected-height-given-default 
+define method expected-height-given-default
     (pane, #rest args, #key height, #all-keys) => (width :: <integer>)
   apply(expected-constrained-height, pane, height, args)
   /*---*** code was this... is it still correct?
@@ -168,57 +168,57 @@ define method expected-named-width
   apply(expected-named-size, pane, name, args)
 end method expected-named-width;
 
-define method expected-named-height 
+define method expected-named-height
     (pane, name, #rest args, #key width, height, #all-keys)
  => (height :: <integer>)
   apply(expected-named-size, pane, name, args)
 end method expected-named-height;
 
-define method expected-width 
+define method expected-width
     (pane, #rest args, #key width, #all-keys)
  => (width :: <integer>)
   ignore(width);
   apply(expected-named-width, pane, #"width", args)
 end method expected-width;
 
-define method expected-height 
+define method expected-height
     (pane, #rest args, #key height, #all-keys)
  => (height :: <integer>)
   ignore(height);
   apply(expected-named-height, pane, #"height", args)
 end method expected-height;
 
-define method expected-min-width 
+define method expected-min-width
     (pane, #rest args, #key, #all-keys)
  => (min-width :: <integer>)
   apply(expected-named-width, pane, #"min-width", args)
 end method expected-min-width;
 
-define method expected-min-height 
+define method expected-min-height
     (pane, #rest args, #key, #all-keys)
  => (min-height :: <integer>)
   apply(expected-named-height, pane, #"min-height", args)
 end method expected-min-height;
 
-define method expected-max-width 
+define method expected-max-width
     (pane, #rest args, #key, #all-keys)
  => (max-width :: <integer>)
   apply(expected-named-width, pane, #"max-width", args)
 end method expected-max-width;
 
-define method expected-max-height 
+define method expected-max-height
     (pane, #rest args, #key, #all-keys)
  => (max-height :: <integer>)
   apply(expected-named-height, pane, #"max-height", args)
 end method expected-max-height;
 
-define method expected-fixed-width? 
+define method expected-fixed-width?
     (pane, #rest args, #key, #all-keys)
  => (fixed? :: <boolean>)
   apply(expected-width, pane, args) = apply(expected-max-width, pane, args)
 end method expected-fixed-width?;
 
-define method expected-fixed-height? 
+define method expected-fixed-height?
     (pane, #rest args, #key, #all-keys)
  => (fixed? :: <boolean>)
   apply(expected-height, pane, args) = apply(expected-max-height, pane, args)
@@ -280,9 +280,9 @@ define method check-default-pane-size
               normalize-max-size(apply(expected-max-height, pane, args)));
 end method check-default-pane-size;
 
-define method check-pane-size 
+define method check-pane-size
     (pane, name,
-     #rest args, 
+     #rest args,
      #key width: user-width, height: user-height, #all-keys)
  => ()
   invalidate-space-requirements(pane);
@@ -305,7 +305,7 @@ define method check-pane-size
   check-equal(concatenate(name, " accepts explicit height"),
               height,
               max(min-height, min(user-height, max-height)));
-  check-equal(concatenate(name, " requested width"),  
+  check-equal(concatenate(name, " requested width"),
               width,
               apply(expected-width, pane, args));
   check-equal(concatenate(name, " requested height"),
@@ -329,14 +329,14 @@ define generic expected-space-allocation
     (pane, #key, #all-keys)
  => (space-allocation :: false-or(<sequence>));
 
-define method sheet-position-in-parent 
+define method sheet-position-in-parent
     (sheet :: <sheet>) => (x :: <integer>, y :: <integer>)
   let point = transform-region(sheet-transform(sheet),
                                make(<point>, x: 0, y: 0));
   values(floor(point-x(point)), floor(point-y(point)))
 end method sheet-position-in-parent;
 
-define method enforce-fully-within-parent? 
+define method enforce-fully-within-parent?
     (sheet :: <sheet>) => (enforce? :: <boolean>)
   #t
 end method enforce-fully-within-parent?;
@@ -377,8 +377,8 @@ define method check-child-allocations (layout, name, #rest args) => ()
   end
 end method check-child-allocations;
 
-define method check-space-allocation 
-    (pane, name, #rest args, 
+define method check-space-allocation
+    (pane, name, #rest args,
      #key width = *layout-default-width*, height = *layout-default-height*,
      #all-keys)
  => ()
@@ -389,13 +389,13 @@ define method check-space-allocation
                       x = 0 & y = 0
                     end,
                     children));
-  apply(check-child-allocations, pane, name, 
+  apply(check-child-allocations, pane, name,
         width: width, height: height,
         args);
 end method check-space-allocation;
 
 define method expected-constrained-size
-    (sheet, width :: <integer>, height :: <integer>, 
+    (sheet, width :: <integer>, height :: <integer>,
      #rest args,
      #key, #all-keys)
  => (constrained-width :: <integer>, constrained-height :: <integer>)
@@ -406,7 +406,7 @@ define method expected-constrained-size
   values(w, h)
 end method expected-constrained-size;
 
-define method check-layout-pane-layout 
+define method check-layout-pane-layout
     (pane, name,
      #rest args,
      #key x = 0, y = 0, width, height, allocate-space? = #t,
@@ -450,7 +450,7 @@ define method expected-space-allocation
   let child = sheet-child(pane);
   if (child)
     let space = compose-space(child, width: width, height: height);
-    vector(vector(0, 0, 
+    vector(vector(0, 0,
                   width  | space-requirement-width(child, space),
                   height | space-requirement-height(child, space)))
   end
@@ -461,7 +461,7 @@ end method expected-space-allocation;
 define method test-top-level-sheet-layout
     (name, child, #rest args, #key) => ()
   let t-l-s = make-test-pane(<top-level-sheet>, child: child);
-  apply(check-layout-pane-layout, t-l-s, 
+  apply(check-layout-pane-layout, t-l-s,
         concatenate(name, " ", gadget-class-name(<top-level-sheet>)),
         args)
 end method test-top-level-sheet-layout;
@@ -508,16 +508,16 @@ end method expected-space-allocation;
 define duim-layouts class-test <fixed-layout> ()
   test-fixed-layout("empty", #());
   test-fixed-layout("one child",
-		    vector(make-test-pane(<test-list-box>, 
-					  x: 100, y: 200,
-					  width: 200, height: 300)));
+                    vector(make-test-pane(<test-list-box>,
+                                          x: 100, y: 200,
+                                          width: 200, height: 300)));
   test-fixed-layout("two children",
-		    vector(make-test-pane(<test-list-box>, 
-					  x: 100, y: 200,
-					  width: 200, height: 300),
-			   make-test-pane(<test-list-box>, 
-					  x: 200, y: 300,
-					  width: 400, height: 500)));
+                    vector(make-test-pane(<test-list-box>,
+                                          x: 100, y: 200,
+                                          width: 200, height: 300),
+                           make-test-pane(<test-list-box>,
+                                          x: 200, y: 300,
+                                          width: 400, height: 500)));
   test-layout-child-resizing(<fixed-layout>);
   test-multiple-child-layout-manipulation(<fixed-layout>);
 end class-test <fixed-layout>;
@@ -559,16 +559,16 @@ end method expected-space-allocation;
 define duim-layouts class-test <pinboard-layout> ()
   test-pinboard-layout("empty", #());
   test-pinboard-layout("one child",
-                       vector(make-test-pane(<test-list-box>, 
-					     x: 100, y: 200,
-					     width: 200, height: 300)));
+                       vector(make-test-pane(<test-list-box>,
+                                             x: 100, y: 200,
+                                             width: 200, height: 300)));
   test-pinboard-layout("two children",
-                       vector(make-test-pane(<test-list-box>, 
-					     x: 100, y: 200,
-					     width: 200, height: 300),
-                              make-test-pane(<test-list-box>, 
-					     x: 200, y: 300,
-					     width: 400, height: 500)));
+                       vector(make-test-pane(<test-list-box>,
+                                             x: 100, y: 200,
+                                             width: 200, height: 300),
+                              make-test-pane(<test-list-box>,
+                                             x: 200, y: 300,
+                                             width: 400, height: 500)));
   test-layout-child-resizing(<pinboard-layout>);
   test-multiple-child-layout-manipulation(<pinboard-layout>);
 end class-test <pinboard-layout>;
@@ -617,16 +617,16 @@ end method expected-space-allocation;
 define duim-layouts class-test <stack-layout> ()
   test-stack-layout("empty", #());
   test-stack-layout("one child",
-		    vector(make-test-pane(<test-list-box>, 
-					  x: 100, y: 200,
-					  width: 200, height: 300)));
+                    vector(make-test-pane(<test-list-box>,
+                                          x: 100, y: 200,
+                                          width: 200, height: 300)));
   test-stack-layout("two children",
-		    vector(make-test-pane(<test-list-box>, 
-					  x: 100, y: 200,
-					  width: 200, height: 300),
-			   make-test-pane(<test-list-box>, 
-					  x: 200, y: 300,
-					  width: 400, height: 500)));
+                    vector(make-test-pane(<test-list-box>,
+                                          x: 100, y: 200,
+                                          width: 200, height: 300),
+                           make-test-pane(<test-list-box>,
+                                          x: 200, y: 300,
+                                          width: 400, height: 500)));
   test-layout-child-resizing(<stack-layout>);
   test-multiple-child-layout-manipulation(<stack-layout>);
 end class-test <stack-layout>;
@@ -636,22 +636,22 @@ end class-test <stack-layout>;
 
 // we make this subclass so that we don't lose the contents field
 define class <test-table-layout-pane> (<table-layout>)
-  constant slot contents :: <sequence> = #(), 
+  constant slot contents :: <sequence> = #(),
     init-keyword: contents:;
 end class <test-table-layout-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <test-frame-manager>, class == <table-layout>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<test-table-layout-pane>, #f)
 end method class-for-make-pane;
 
-define method table-number-of-rows 
+define method table-number-of-rows
     (table :: <test-table-layout-pane>) => (rows :: <integer>)
   size(contents(table))
 end method table-number-of-rows;
 
-define method table-number-of-columns 
+define method table-number-of-columns
     (table :: <test-table-layout-pane>) => (columns :: <integer>)
   let contents = contents(table);
   case
@@ -678,7 +678,7 @@ define method expected-height
   end
 end method expected-height;
 
-define method expected-named-width 
+define method expected-named-width
     (table :: <test-table-layout-pane>, name,
      #rest args, #key width, height, x-spacing = 0)
  => (width :: <integer>)
@@ -689,12 +689,12 @@ define method expected-named-width
     for (column-index from 0 below no-of-columns)
       let subwidth = 0;
       for (column in contents(table))
-	if (column-index < size(column))
-	  let child = column[column-index];
-	  if (child)
-	    subwidth := max(subwidth, size-function(child))
-	  end
-	end
+        if (column-index < size(column))
+          let child = column[column-index];
+          if (child)
+            subwidth := max(subwidth, size-function(child))
+          end
+        end
       end;
       width := width + subwidth
     end;
@@ -704,8 +704,8 @@ define method expected-named-width
   end
 end method expected-named-width;
 
-define method expected-named-height 
-    (table :: <test-table-layout-pane>, name, 
+define method expected-named-height
+    (table :: <test-table-layout-pane>, name,
      #key y-spacing = 0, width, height)
  => (height :: <integer>)
   let size-function = expected-size-function(name);
@@ -716,9 +716,9 @@ define method expected-named-height
     for (row in rows)
       let subheight = 0;
       for (child in row)
-	if (child)
-	  subheight := max(subheight, size-function(child))
-	end
+        if (child)
+          subheight := max(subheight, size-function(child))
+        end
       end;
       height := height + subheight
     end;
@@ -728,7 +728,7 @@ define method expected-named-height
   end
 end method expected-named-height;
 
-define method expected-fixed-column? 
+define method expected-fixed-column?
     (table :: <test-table-layout-pane>, column-index)
  => (fixed-column? :: <boolean>)
   every?(method (row)
@@ -740,7 +740,7 @@ define method expected-fixed-column?
          contents(table))
 end method expected-fixed-column?;
 
-define method expected-fixed-row? 
+define method expected-fixed-row?
     (table :: <test-table-layout-pane>, row-index)
  => (fixed-row? :: <boolean>)
   every?(method (child)
@@ -751,7 +751,7 @@ define method expected-fixed-row?
          contents(table)[row-index])
 end method expected-fixed-row?;
 
-define method expected-column-named-width 
+define method expected-column-named-width
     (table :: <test-table-layout-pane>, name, column-index)
  => (width :: <integer>)
   let size-function = expected-size-function(name);
@@ -801,7 +801,7 @@ define method layout-fixed-size
   size
 end method layout-fixed-size;
 
-define method layout-ratio-unit 
+define method layout-ratio-unit
     (box :: <layout-pane>, no-of-items :: <integer>, total-size :: <integer>,
      size-function :: <function>, fixed-size?-function :: <function>,
      ratios :: false-or(<sequence>))
@@ -822,7 +822,7 @@ define method layout-ratio-unit
 end method layout-ratio-unit;
 
 define method expected-space-allocation
-    (table :: <test-table-layout-pane>, 
+    (table :: <test-table-layout-pane>,
      #key width, height,
           x-spacing = 0, y-spacing = 0,
           x-ratios, y-ratios,
@@ -858,20 +858,20 @@ define method expected-space-allocation
          column-index from 0)
       let x-ratio = layout-nth-ratio(column-index, x-ratios);
       let column-width = if (expected-fixed-column?(table, column-index))
-			   expected-column-named-width(table, #"width",
-						       column-index)
-			 else
-			   fix-coordinate(x-ratio-unit * x-ratio)
-			 end;
+                           expected-column-named-width(table, #"width",
+                                                       column-index)
+                         else
+                           fix-coordinate(x-ratio-unit * x-ratio)
+                         end;
       when (child)
-	let width = case
-		      expected-fixed-width?(child) => expected-width(child);
-		      otherwise => column-width;
-		    end;
-	let height = case
-		       expected-fixed-height?(child) => expected-height(child);
-		       otherwise => row-height;
-		     end;
+        let width = case
+                      expected-fixed-width?(child) => expected-width(child);
+                      otherwise => column-width;
+                    end;
+        let height = case
+                       expected-fixed-height?(child) => expected-height(child);
+                       otherwise => row-height;
+                     end;
         let this-x-alignment
           = if (instance?(x-alignment, <sequence>))
               x-alignment[column-index]
@@ -884,17 +884,17 @@ define method expected-space-allocation
             else
               y-alignment
             end;
-	let x-adjust = select (this-x-alignment)
-			 #"left"  => 0;
-			 #"right" => column-width - width;
-			 #"centre", #"center" => floor/(column-width - width, 2);
-		       end;
-	let y-adjust = select (this-y-alignment)
-			 #"top" => 0;
-			 #"bottom" => row-height - height;
-			 #"centre", #"center" => floor/(row-height - height, 2);
-		       end;
-	add!(allocation, vector(x + x-adjust, y + y-adjust, width, height));
+        let x-adjust = select (this-x-alignment)
+                         #"left"  => 0;
+                         #"right" => column-width - width;
+                         #"centre", #"center" => floor/(column-width - width, 2);
+                       end;
+        let y-adjust = select (this-y-alignment)
+                         #"top" => 0;
+                         #"bottom" => row-height - height;
+                         #"centre", #"center" => floor/(row-height - height, 2);
+                       end;
+        add!(allocation, vector(x + x-adjust, y + y-adjust, width, height));
       end;
       inc!(x, column-width + x-spacing)
     end;
@@ -903,7 +903,7 @@ define method expected-space-allocation
   allocation
 end method expected-space-allocation;
 
-define method make-table-layout-pane 
+define method make-table-layout-pane
     (children :: <sequence>, no-of-columns :: <integer>, #rest args, #key, #all-keys)
  => (sheet :: <table-layout>)
   let no-of-children = size(children);
@@ -917,20 +917,20 @@ define method make-table-layout-pane
   apply(make-test-pane, <test-table-layout-pane>, contents: contents, args)
 end method make-table-layout-pane;
 
-define method make-default-table-layout-pane 
+define method make-default-table-layout-pane
     (#rest args,
      #key gadget-class = <test-push-button-pane>,
           x-spacing = 0,
           y-spacing = 0)
  => (sheet :: <table-layout>)
   apply(make-table-layout-pane,
-	vector(make-test-pane(gadget-class),
-	       make-test-pane(gadget-class),
-	       make-test-pane(gadget-class),
-	       make-test-pane(gadget-class),
-	       make-test-pane(gadget-class)),
+        vector(make-test-pane(gadget-class),
+               make-test-pane(gadget-class),
+               make-test-pane(gadget-class),
+               make-test-pane(gadget-class),
+               make-test-pane(gadget-class)),
         2,
-	x-spacing: x-spacing, y-spacing: y-spacing,
+        x-spacing: x-spacing, y-spacing: y-spacing,
         args)
 end method make-default-table-layout-pane;
 
@@ -939,23 +939,23 @@ define method test-default-table-layout-pane-layout
   let gadget-name = gadget-class-name(<table-layout>);
   let table
     = apply(make-default-table-layout-pane,
-	    gadget-class: gadget-class,
-	    args);
+            gadget-class: gadget-class,
+            args);
   apply(check-layout-pane-layout, table,
         concatenate(name, " ", gadget-name),
         args)
 end method test-default-table-layout-pane-layout;
 
-define method test-table-layout-pane-layout 
+define method test-table-layout-pane-layout
     (children :: <sequence>, name, #rest args, #key, #all-keys) => ()
   let gadget-name = gadget-class-name(<table-layout>);
   let table = apply(make-table-layout-pane, children, 2, args);
-  apply(check-layout-pane-layout, table, 
+  apply(check-layout-pane-layout, table,
         concatenate(name, " ", gadget-name),
         args)
 end method test-table-layout-pane-layout;
 
-define method test-mixed-table-layout-pane-layout 
+define method test-mixed-table-layout-pane-layout
     (name, #rest args, #key, #all-keys) => ()
   let children = vector(make-test-pane(<test-push-button-pane>),
                         make-test-pane(<test-list-box>),
@@ -1001,11 +1001,11 @@ define duim-layouts class-test <table-layout> ()
 
   let children
     = vector(make-default-table-layout-pane(),
-	     make-test-pane(<test-list-box>),
-	     make-test-pane(<test-list-box>),
-	     make-default-table-layout-pane(),
-	     make-test-pane(<test-list-box>),
-	     make-default-table-layout-pane());
+             make-test-pane(<test-list-box>),
+             make-test-pane(<test-list-box>),
+             make-default-table-layout-pane(),
+             make-test-pane(<test-list-box>),
+             make-default-table-layout-pane());
   test-table-layout-pane-layout
     (children, "non-fixed recursive",
      x-spacing: x-spacing, y-spacing: y-spacing);
@@ -1016,18 +1016,18 @@ define duim-layouts class-test <table-layout> ()
 
   let children
     = vector(#f,
-	     make-test-pane(<test-push-button-pane>),
-	     make-test-pane(<test-push-button-pane>),
-	     #f);
+             make-test-pane(<test-push-button-pane>),
+             make-test-pane(<test-push-button-pane>),
+             #f);
   test-table-layout-pane-layout
     (children, "fixed with gaps",
      x-spacing: x-spacing, y-spacing: y-spacing);
 
   let children
     = vector(#f,
-	     make-test-pane(<test-list-box>),
-	     make-test-pane(<test-list-box>),
-	     #f);
+             make-test-pane(<test-list-box>),
+             make-test-pane(<test-list-box>),
+             #f);
   test-table-layout-pane-layout
     (children, "non-fixed with gaps",
      x-spacing: x-spacing, y-spacing: y-spacing);
@@ -1092,11 +1092,11 @@ define duim-layouts class-test <grid-layout> ()
 
   let children
     = vector(make-default-table-layout-pane(),
-	     make-test-pane(<test-list-box>),
-	     make-test-pane(<test-list-box>),
-	     make-default-table-layout-pane(),
-	     make-test-pane(<test-list-box>),
-	     make-default-table-layout-pane());
+             make-test-pane(<test-list-box>),
+             make-test-pane(<test-list-box>),
+             make-default-table-layout-pane(),
+             make-test-pane(<test-list-box>),
+             make-default-table-layout-pane());
   test-table-layout-pane-layout
     (children, "non-fixed recursive",
      cell-space-requirement: space-req,
@@ -1109,9 +1109,9 @@ define duim-layouts class-test <grid-layout> ()
 
   let children
     = vector(#f,
-	     make-test-pane(<test-push-button-pane>),
-	     make-test-pane(<test-push-button-pane>),
-	     #f);
+             make-test-pane(<test-push-button-pane>),
+             make-test-pane(<test-push-button-pane>),
+             #f);
   test-table-layout-pane-layout
     (children, "fixed with gaps",
      cell-space-requirement: space-req,
@@ -1119,15 +1119,15 @@ define duim-layouts class-test <grid-layout> ()
 
   let children
     = vector(#f,
-	     make-test-pane(<test-list-box>),
-	     make-test-pane(<test-list-box>),
-	     #f);
+             make-test-pane(<test-list-box>),
+             make-test-pane(<test-list-box>),
+             #f);
   test-table-layout-pane-layout
     (children, "non-fixed with gaps",
      cell-space-requirement: space-req,
      x-spacing: x-spacing, y-spacing: y-spacing);
   test-layout-child-resizing
-     (<grid-layout>, 
+     (<grid-layout>,
       cell-space-requirement: space-req,
       rows: 1);
   test-multiple-child-layout-manipulation
@@ -1140,8 +1140,8 @@ end class-test <grid-layout>;
 
 /// Box pane tests
 
-define method box-compute-major-size 
-    (box :: <box-layout-pane>, space-function :: <function>, 
+define method box-compute-major-size
+    (box :: <box-layout-pane>, space-function :: <function>,
      #key spacing = 0, #all-keys)
  => (major-size :: <integer>)
   let major-size = 0;
@@ -1162,7 +1162,7 @@ define method box-compute-minor-size
   size
 end method box-compute-minor-size;
 
-define generic box-compute-width 
+define generic box-compute-width
     (box :: <layout>, space-function :: <function>, #key, #all-keys)
  => (width :: <integer>);
 
@@ -1170,7 +1170,7 @@ define generic box-compute-height
     (box :: <layout>, space-function :: <function>, #key, #all-keys)
  => (height :: <integer>);
 
-define method box-compute-width 
+define method box-compute-width
     (box :: <row-layout>, space-function :: <function>, #rest args, #key)
  => (width :: <integer>)
   apply(box-compute-major-size, box, space-function, args)
@@ -1182,7 +1182,7 @@ define method box-compute-height
   box-compute-minor-size(box, space-function)
 end method box-compute-height;
 
-define method box-compute-width 
+define method box-compute-width
     (box :: <column-layout>, space-function :: <function>, #rest args, #key)
  => (width :: <integer>)
   box-compute-minor-size(box, space-function)
@@ -1222,7 +1222,7 @@ define method expected-named-width
   end
 end method expected-named-width;
 
-define method expected-named-height 
+define method expected-named-height
     (box :: <box-layout-pane>, name, #rest args, #key width, height)
  => (height :: <integer>)
   if (~empty?(sheet-children(box)))
@@ -1257,7 +1257,7 @@ define method expected-space-allocation
   for (child in children,
        count from 0)
     let ratio = layout-nth-ratio(count, ratios);
-    let child-width 
+    let child-width
       = if (expected-fixed-width?(child))
           expected-width(child)
         else
@@ -1277,7 +1277,7 @@ define method expected-space-allocation
 end method expected-space-allocation;
 
 define method expected-space-allocation
-    (box :: <column-layout>, 
+    (box :: <column-layout>,
      #key spacing = 0,
           x-alignment = #"left",
           y-ratios,
@@ -1320,7 +1320,7 @@ define method expected-space-allocation
   child-allocations
 end method expected-space-allocation;
 
-define method test-three-child-layout 
+define method test-three-child-layout
     (class :: <class>, child-class :: <class>,
      #rest args,
      #key name,
@@ -1340,19 +1340,19 @@ define method test-three-child-layout
   let layout = apply(make-test-pane, class, children: children, spacing: spacing, args);
   apply(check-layout-pane-layout, layout, test-name, spacing: spacing, args);
 
-  let children = vector(make-test-pane(first-child-class, 
+  let children = vector(make-test-pane(first-child-class,
                              width:  *child-explicit-width*,
                              height: *child-explicit-height*),
                         make-test-pane(child-class),
                         make-test-pane(child-class));
   let layout = apply(make-test-pane, class, children: children, spacing: spacing, args);
-  apply(check-layout-pane-layout, layout, 
+  apply(check-layout-pane-layout, layout,
         concatenate("explicit child size ", test-name),
         spacing: spacing,
         args);
 end method test-three-child-layout;
 
-define method test-box-pane-layout 
+define method test-box-pane-layout
     (class :: <class>, #key spacing = 10) => ()
   check-layout-pane-layout(make-test-pane(class),
                            concatenate("empty ", gadget-class-name(class)));
@@ -1415,7 +1415,7 @@ end class-test <row-layout>;
 
 /// Button box layout tests
 
-define method test-button-box 
+define method test-button-box
     (class :: <class>, #key items = #("red", "green", "blue")) => ()
   let name = gadget-class-name(class);
   let box = make-test-pane(class, items: items, spacing: 0);
@@ -1492,22 +1492,22 @@ end test layout-manipulation-test;
 
 /// Layout resizing
 
-define method test-layout-child-resizing 
+define method test-layout-child-resizing
     (class :: <class>, #rest args) => ()
   let gadget-name = gadget-class-name(class);
   let child-1 = make-test-pane(<push-button>, label: "Child 1");
   let sub-layout = make-test-pane(<column-layout>, children: vector(child-1));
-  let layout 
+  let layout
     = apply(make-test-pane, class,
-	    child: sub-layout, contents: vector(vector(sub-layout)),
-	    args);
+            child: sub-layout, contents: vector(vector(sub-layout)),
+            args);
   check-layout-pane-layout(layout,
-			   concatenate("Before resizing ", gadget-name));
+                           concatenate("Before resizing ", gadget-name));
   let child-2 = make-test-pane(<push-button>, label: "Child 2");
   sheet-children(sub-layout) := vector(child-1, child-2);
   relayout-parent(sub-layout);
   check-layout-pane-layout(layout,
-			   concatenate("After resizing ", gadget-name));
+                           concatenate("After resizing ", gadget-name));
 end method test-layout-child-resizing;
 
 define test layout-resizing-test ()

@@ -2,8 +2,8 @@
 
 #include <unknwn.h>
 
-void C_IMalloc_Free ( 
-	    IMalloc __RPC_FAR * This, 
+void C_IMalloc_Free (
+	    IMalloc __RPC_FAR * This,
 	    /* [in] */ void __RPC_FAR *pv) {
   This->lpVtbl->Free(This,pv);
 }

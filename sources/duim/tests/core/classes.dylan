@@ -47,7 +47,7 @@ define sideways method make-test-instance
     (class == <device-font>) => (instance :: <device-font>)
   make(<device-font>, port: find-test-port(), font: #"test-font")
 end method make-test-instance;
-           
+
 
 /// DUIM-Sheets classes
 
@@ -115,7 +115,7 @@ end method make-test-instance;
 
 define sideways method make-test-instance
     (class == <pointer-boundary-event>) => (instance :: <pointer-boundary-event>)
-  make(<pointer-boundary-event>, 
+  make(<pointer-boundary-event>,
        sheet: $dummy-sheet, pointer: find-test-pointer())
 end method make-test-instance;
 
@@ -137,7 +137,7 @@ end method make-test-instance;
 
 define sideways method make-test-instance
     (class == <pointer-motion-event>) => (instance :: <pointer-motion-event>)
-  make(<pointer-motion-event>, 
+  make(<pointer-motion-event>,
        sheet: $dummy-sheet, pointer: find-test-pointer())
 end method make-test-instance;
 
@@ -253,7 +253,7 @@ define sideways method make-test-instance
        min-point: make-point(0, 0),
        max-point: make-point(100, 100))
 end method make-test-instance;
-           
+
 
 /// Gadget pane classes
 

@@ -31,8 +31,8 @@ end method do-allocate-space;
 
 // Returns max random coordinates based on the width and height
 // of the drawing pane
-define method compute-random-coordinates 
-    (nrects :: <integer>, width :: <integer> , height :: <integer>) 
+define method compute-random-coordinates
+    (nrects :: <integer>, width :: <integer> , height :: <integer>)
  => (coordinates :: <coordinates>)
   let ncoords = nrects * 4;
   let coordinates = make(<coordinates>, size: ncoords, fill: 0);
@@ -59,9 +59,9 @@ define method draw-test-rectangles
   let coordinates :: <coordinates>
     = pane.%coordinates
         | begin
-	    pane.%coordinates
-	      := compute-random-coordinates(nrects, width, height);
-	  end;
+            pane.%coordinates
+              := compute-random-coordinates(nrects, width, height);
+          end;
   let ncoords :: <integer> = coordinates.size;
 
   local method draw-rectangles () => ()
@@ -118,32 +118,32 @@ define frame <random-rectangles-test-frame> (<simple-frame>)
 
   pane color-radio-box (frame)
     make(<radio-box>,
-	 items: vector(pair("Red",    $red),
+         items: vector(pair("Red",    $red),
                        pair("Blue",   $blue),
                        pair("Black",  $black),
-		       pair("Random", #"random")),
+                       pair("Random", #"random")),
          value: frame.%color,
          label-key: head,
-	 value-key: tail,
- 	 value-changed-callback: redraw-color-change);
+         value-key: tail,
+          value-changed-callback: redraw-color-change);
 
   pane filled-radio-box (frame)
     make(<radio-box>,
-	 items: vector(pair("Yes", #t),
+         items: vector(pair("Yes", #t),
                        pair("No",  #f)),
          value: frame.%filled?,
          label-key: head,
-	 value-key: tail,
- 	 value-changed-callback: redraw-filled-change);
+         value-key: tail,
+          value-changed-callback: redraw-filled-change);
 
   pane buffer-radio-box (frame)
     make(<radio-box>,
-	 items: vector(pair("Yes", #t),
+         items: vector(pair("Yes", #t),
                        pair("No",  #f)),
          value: frame.%buffer?,
          label-key: head,
-	 value-key: tail,
- 	 value-changed-callback: redraw-buffer-change);
+         value-key: tail,
+          value-changed-callback: redraw-buffer-change);
 
   pane thickness-list-box (frame)
     make(<spin-box>,
@@ -155,30 +155,30 @@ define frame <random-rectangles-test-frame> (<simple-frame>)
     make(<text-field>,
          label: "Number",
          value: frame.%number,
-	 value-type: <integer>,
+         value-type: <integer>,
          value-changed-callback: redraw-number-change);
 
   pane rectangle-drawable (frame)
     make(<rectangle-drawing-pane>,
          coordinates: #f,
-	 display-function: draw-test-rectangles);
+         display-function: draw-test-rectangles);
 
   pane main-layout (frame)
     vertically (spacing: 5)
       make(<table-layout>,
-	     x-spacing: 10, y-spacing: 2,
-	     x-alignment: #(#"right", #"left"), y-alignment: #"center",
-	   columns: 2,
-	   children: vector(make(<label>, label: "Color:"),
-			    frame.color-radio-box,
-			    make(<label>, label: "Filled?:"),
-			    frame.filled-radio-box,
-			    make(<label>, label: "Double buffering?:"),
-			    frame.buffer-radio-box,
-			    make(<label>, label: "Thickness:"),
-			    frame.thickness-list-box,
-			    make(<label>, label: "Number:"),
-			    frame.number-text-field));
+             x-spacing: 10, y-spacing: 2,
+             x-alignment: #(#"right", #"left"), y-alignment: #"center",
+           columns: 2,
+           children: vector(make(<label>, label: "Color:"),
+                            frame.color-radio-box,
+                            make(<label>, label: "Filled?:"),
+                            frame.filled-radio-box,
+                            make(<label>, label: "Double buffering?:"),
+                            frame.buffer-radio-box,
+                            make(<label>, label: "Thickness:"),
+                            frame.thickness-list-box,
+                            make(<label>, label: "Number:"),
+                            frame.number-text-field));
       with-border (type: #"sunken")
         frame.rectangle-drawable
       end;

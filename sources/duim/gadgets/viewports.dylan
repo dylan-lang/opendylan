@@ -11,9 +11,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // The single child of the viewport is the pane being scrolled.
 // Usually mirrored at the back-end
 //--- This should be split into an abstract and concrete class...
-define open abstract class <viewport> 
+define open abstract class <viewport>
     (<basic-gadget>,
-     <standard-input-mixin>,		// so we can pass on events to the child...
+     <standard-input-mixin>,                // so we can pass on events to the child...
      <client-overridability-mixin>,
      <scrolling-sheet-mixin>,
      <single-child-mixin>)
@@ -55,7 +55,7 @@ define protocol <<viewport-protocol>> ()
     (sheet :: <abstract-sheet>) => (true? :: <boolean>);
 end protocol <<viewport-protocol>>;
 
-define method initialize 
+define method initialize
     (viewport :: <viewport>, #key) => ()
   next-method();
   let (width, height) = box-size(viewport);
@@ -81,7 +81,7 @@ end method sheet-input-focus;
 
 
 // The idea here is that we allow the viewport to be infinitely
-// stretchable and shrinkable.  If no size is specified, we make the 
+// stretchable and shrinkable.  If no size is specified, we make the
 // viewport large enough to contain the entire child.
 // We also allow scrolling in only one direction, in which case the
 // other direction just picks up everything from the child.
@@ -97,9 +97,9 @@ define method do-compose-space
     = default-space-requirement(viewport, width: width, height: height);
   let space-req
     = if (child)
-	compose-space(child, width: width, height: height);
+        compose-space(child, width: width, height: height);
       else
-	default-space-req;
+        default-space-req;
       end;
   let ( w,  w-,  w+,  h,  h-,  h+)
     = space-requirement-components(child | viewport, space-req);
@@ -131,10 +131,10 @@ define method allocate-space
     (viewport :: <viewport>, width :: <integer>, height :: <integer>) => ()
   next-method();
   // Now reposition the viewport
-  let contents = sheet-child(viewport);		// i.e., the scrollable contents
+  let contents = sheet-child(viewport);                // i.e., the scrollable contents
   when (contents)
     let (owidth, oheight) = box-size(viewport-region(viewport));
-    viewport-region(viewport)			// might cons a new region...
+    viewport-region(viewport)                        // might cons a new region...
       := set-box-size(viewport-region(viewport), width, height);
     // If previously it was too small to display the entire contents
     // but now it is large enough, scroll the window
@@ -253,9 +253,9 @@ end method sheet-scrolls-vertically?;
 // change size when their kid changes size.  We need to (1) be sure the kid
 // really changes size, and (2) update the scroll bars.
 //--- Andy still doesn't buy this, and SWM doesn't know for sure
-define method relayout-parent 
+define method relayout-parent
     (viewport :: <viewport>, #key width, height) => (did-layout? :: <boolean>)
-  when (sheet-attached?(viewport))	// be forgiving
+  when (sheet-attached?(viewport))        // be forgiving
     let child = sheet-child(viewport);
     when (child)
       let space-req = compose-space(child, width: width, height: height);
@@ -264,7 +264,7 @@ define method relayout-parent
       let new-width  :: <integer> = w;
       let new-height :: <integer> = h;
       unless (sheet-layed-out-to-size?(child, new-width, new-height))
-	set-sheet-size(child, new-width, new-height)
+        set-sheet-size(child, new-width, new-height)
       end;
       update-scroll-bars(viewport);
       #t
@@ -275,10 +275,10 @@ end method relayout-parent;
 /*
 //--- This is closer to what we really want, but it doesn't manage to
 //--- propagate geometry changes to the scroll bars themselves.  Why not?
-define method relayout-parent 
+define method relayout-parent
     (viewport :: <viewport>, #key width, height) => (did-layout? :: <boolean>)
   ignore(width, height);
-  when (sheet-attached?(viewport))	// be forgiving
+  when (sheet-attached?(viewport))        // be forgiving
     block ()
       next-method()
     cleanup
@@ -316,7 +316,7 @@ define method sheet-visible-range
 end method sheet-visible-range;
 
 define method set-sheet-visible-range
-    (viewport :: <viewport>, 
+    (viewport :: <viewport>,
      left :: <real>, top :: <real>, right :: <real>, bottom :: <real>) => ()
   ignore(right, bottom);
   let x :: <integer> = truncate(left);
@@ -346,7 +346,7 @@ define method scroll-viewport
   let sheet = sheet-child(viewport);
   when (sheet)
     scroll-viewport-child(viewport, sheet, x, y,
-			  update-scroll-bars?: update-scroll-bars?)
+                          update-scroll-bars?: update-scroll-bars?)
   end
 end method scroll-viewport;
 
@@ -361,7 +361,7 @@ define method scroll-viewport-child
   unless (x = left & y = top)
     //--- This could actually bash the sheet-transform
     sheet-transform(sheet) := make-translation-transform(-x, -y);
-    viewport-region(viewport)		// might cons a new region...
+    viewport-region(viewport)                // might cons a new region...
       := set-box-position(viewport-region(viewport), x, y);
     // Must go after 'set-box-position'
     when (update-scroll-bars?)
@@ -374,30 +374,30 @@ define method scroll-viewport-child
       // If some of the stuff that was previously on display is still on
       // display, BITBLT it into the proper place and redraw the rest
       ltrb-intersects-ltrb?(left, top, right, bottom,
-			    nleft, ntop, nright, nbottom) =>
-	// Move the old stuff to the new position
-	shift-visible-region(sheet, left, top, right, bottom,
-				    nleft, ntop, nright, nbottom);
-	let rectangles
-	  = ltrb-difference(nleft, ntop, nright, nbottom,
-			    left, top, right, bottom);
-	with-sheet-medium (medium = sheet)
-	  for (region in rectangles)
-	    with-clipping-region (medium, region)
-	      clear-box*(medium, region);
-	      repaint-sheet(sheet, region)
-	    end
-	  end
-	end;
+                            nleft, ntop, nright, nbottom) =>
+        // Move the old stuff to the new position
+        shift-visible-region(sheet, left, top, right, bottom,
+                                    nleft, ntop, nright, nbottom);
+        let rectangles
+          = ltrb-difference(nleft, ntop, nright, nbottom,
+                            left, top, right, bottom);
+        with-sheet-medium (medium = sheet)
+          for (region in rectangles)
+            with-clipping-region (medium, region)
+              clear-box*(medium, region);
+              repaint-sheet(sheet, region)
+            end
+          end
+        end;
       // Otherwise, just redraw the whole visible viewport.
       // Adjust for the left and top margins by hand so 'clear-box'
       // doesn't erase the margin components.
       otherwise =>
-	let region = viewport-region(viewport);
-	with-sheet-medium (medium = sheet)
-	  clear-box*(medium, region)
-	end;
-	repaint-sheet(sheet, region)
+        let region = viewport-region(viewport);
+        with-sheet-medium (medium = sheet)
+          clear-box*(medium, region)
+        end;
+        repaint-sheet(sheet, region)
     end;
     let frame = sheet-frame(sheet);
     when ((left ~= x | top ~= y) & frame)
@@ -445,16 +445,16 @@ define method shift-visible-region
   let from-x = #f;
   let from-y = #f;
   case
-    dx >= 0 & dy >= 0 =>	// shifting down and to the right
+    dx >= 0 & dy >= 0 =>        // shifting down and to the right
       from-x := 0;
       from-y := 0;
-    dx >= 0 & dy <= 0 =>	// shifting up and to the right
+    dx >= 0 & dy <= 0 =>        // shifting up and to the right
       from-x := 0;
       from-y := -dy;
-    dy >= 0 =>			// shifting down and to the left
+    dy >= 0 =>                        // shifting down and to the left
       from-x := -dx;
       from-y := 0;
-    otherwise =>		// shifting up and to the left
+    otherwise =>                // shifting up and to the left
       from-x := -dx;
       from-y := -dy
   end;

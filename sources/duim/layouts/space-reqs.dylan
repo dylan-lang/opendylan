@@ -31,8 +31,8 @@ define protocol <<space-requirement>> ()
  => (max-height :: false-or(<integer>));
   function space-requirement-components
     (sheet :: <abstract-sheet>, space-req :: <space-requirement>)
- => (width      :: false-or(<integer>), 
-     min-width  :: false-or(<integer>), 
+ => (width      :: false-or(<integer>),
+     min-width  :: false-or(<integer>),
      max-width  :: false-or(<integer>),
      height     :: false-or(<integer>),
      min-height :: false-or(<integer>),
@@ -53,8 +53,8 @@ end class <null-space-requirement>;
 
 define sealed method space-requirement-components
     (sheet :: <sheet>, space-req :: <null-space-requirement>)
- => (width      :: <integer>, 
-     min-width  :: <integer>, 
+ => (width      :: <integer>,
+     min-width  :: <integer>,
      max-width  :: <integer>,
      height     :: <integer>,
      min-height :: <integer>,
@@ -72,7 +72,7 @@ define sealed method space-requirement-min-width
   0
 end method space-requirement-min-width;
 
-define sealed method space-requirement-max-width 
+define sealed method space-requirement-max-width
     (sheet :: <sheet>, sr :: <null-space-requirement>) => (max-width :: <integer>)
   0
 end method space-requirement-max-width;
@@ -105,8 +105,8 @@ end class <fixed-space-requirement>;
 
 define sealed method space-requirement-components
     (sheet :: <sheet>, space-req :: <fixed-space-requirement>)
- => (width      :: false-or(<integer>), 
-     min-width  :: false-or(<integer>), 
+ => (width      :: false-or(<integer>),
+     min-width  :: false-or(<integer>),
      max-width  :: false-or(<integer>),
      height     :: false-or(<integer>),
      min-height :: false-or(<integer>),
@@ -116,32 +116,32 @@ define sealed method space-requirement-components
   values(width, width, width, height, height, height)
 end method space-requirement-components;
 
-define sealed method space-requirement-width 
+define sealed method space-requirement-width
     (sheet :: <sheet>, sr :: <fixed-space-requirement>) => (width :: false-or(<integer>))
   sr.%width
 end method space-requirement-width;
 
-define sealed method space-requirement-min-width 
+define sealed method space-requirement-min-width
     (sheet :: <sheet>, sr :: <fixed-space-requirement>) => (min-width :: false-or(<integer>))
   sr.%width
 end method space-requirement-min-width;
 
-define sealed method space-requirement-max-width 
+define sealed method space-requirement-max-width
     (sheet :: <sheet>, sr :: <fixed-space-requirement>) => (max-width :: false-or(<integer>))
   sr.%width
 end method space-requirement-max-width;
 
-define sealed method space-requirement-height 
+define sealed method space-requirement-height
     (sheet :: <sheet>, sr :: <fixed-space-requirement>) => (height :: false-or(<integer>))
   sr.%height
 end method space-requirement-height;
 
-define sealed method space-requirement-min-height 
+define sealed method space-requirement-min-height
     (sheet :: <sheet>, sr :: <fixed-space-requirement>) => (min-height :: false-or(<integer>))
   sr.%height
 end method space-requirement-min-height;
 
-define sealed method space-requirement-max-height 
+define sealed method space-requirement-max-height
     (sheet :: <sheet>, sr :: <fixed-space-requirement>) => (max-height :: false-or(<integer>))
   sr.%height
 end method space-requirement-max-height;
@@ -156,42 +156,42 @@ end class <unbounded-space-requirement>;
 
 define sealed method space-requirement-components
     (sheet :: <sheet>, space-req :: <unbounded-space-requirement>)
- => (width      :: false-or(<integer>), 
-     min-width  :: <integer>, 
+ => (width      :: false-or(<integer>),
+     min-width  :: <integer>,
      max-width  :: <integer>,
      height     :: false-or(<integer>),
      min-height :: <integer>,
      max-height :: <integer>)
   values(space-req.%width,  0, $fill,
-	 space-req.%height, 0, $fill)
+         space-req.%height, 0, $fill)
 end method space-requirement-components;
 
-define sealed method space-requirement-width 
+define sealed method space-requirement-width
     (sheet :: <sheet>, sr :: <unbounded-space-requirement>) => (width :: false-or(<integer>))
   sr.%width
 end method space-requirement-width;
 
-define sealed method space-requirement-min-width 
+define sealed method space-requirement-min-width
     (sheet :: <sheet>, sr :: <unbounded-space-requirement>) => (min-width :: <integer>)
   0
 end method space-requirement-min-width;
 
-define sealed method space-requirement-max-width 
+define sealed method space-requirement-max-width
     (sheet :: <sheet>, sr :: <unbounded-space-requirement>) => (max-width :: <integer>)
   $fill
 end method space-requirement-max-width;
 
-define sealed method space-requirement-height 
+define sealed method space-requirement-height
     (sheet :: <sheet>, sr :: <unbounded-space-requirement>) => (height :: false-or(<integer>))
   sr.%height
 end method space-requirement-height;
 
-define sealed method space-requirement-min-height 
+define sealed method space-requirement-min-height
     (sheet :: <sheet>, sr :: <unbounded-space-requirement>) => (min-height :: <integer>)
   0
 end method space-requirement-min-height;
 
-define sealed method space-requirement-max-height 
+define sealed method space-requirement-max-height
     (sheet :: <sheet>, sr :: <unbounded-space-requirement>) => (max-height :: <integer>)
   $fill
 end method space-requirement-max-height;
@@ -214,42 +214,42 @@ end class <general-space-requirement>;
 
 define sealed method space-requirement-components
     (sheet :: <sheet>, space-req :: <general-space-requirement>)
- => (width      :: false-or(<integer>), 
-     min-width  :: false-or(<integer>), 
+ => (width      :: false-or(<integer>),
+     min-width  :: false-or(<integer>),
      max-width  :: false-or(<integer>),
      height     :: false-or(<integer>),
      min-height :: false-or(<integer>),
      max-height :: false-or(<integer>))
   values(space-req.%width,  space-req.%min-width,  space-req.%max-width,
-	 space-req.%height, space-req.%min-height, space-req.%max-height)
+         space-req.%height, space-req.%min-height, space-req.%max-height)
 end method space-requirement-components;
 
-define sealed method space-requirement-width 
+define sealed method space-requirement-width
     (sheet :: <sheet>, sr :: <general-space-requirement>) => (width :: false-or(<integer>))
   sr.%width
 end method space-requirement-width;
 
-define sealed method space-requirement-min-width 
+define sealed method space-requirement-min-width
     (sheet :: <sheet>, sr :: <general-space-requirement>) => (min-width :: false-or(<integer>))
   sr.%min-width
 end method space-requirement-min-width;
 
-define sealed method space-requirement-max-width 
+define sealed method space-requirement-max-width
     (sheet :: <sheet>, sr :: <general-space-requirement>) => (max-width :: false-or(<integer>))
   sr.%max-width
 end method space-requirement-max-width;
 
-define sealed method space-requirement-height 
+define sealed method space-requirement-height
     (sheet :: <sheet>, sr :: <general-space-requirement>) => (height :: false-or(<integer>))
   sr.%height
 end method space-requirement-height;
 
-define sealed method space-requirement-min-height 
+define sealed method space-requirement-min-height
     (sheet :: <sheet>, sr :: <general-space-requirement>) => (min-height :: false-or(<integer>))
   sr.%min-height
 end method space-requirement-min-height;
 
-define sealed method space-requirement-max-height 
+define sealed method space-requirement-max-height
     (sheet :: <sheet>, sr :: <general-space-requirement>) => (max-height :: false-or(<integer>))
   sr.%max-height
 end method space-requirement-max-height;
@@ -274,14 +274,14 @@ end class <label-space-requirement>;
 define sealed method space-requirement-components
     (sheet :: <sheet>, space-req :: <label-space-requirement>)
  => (width      :: <integer>,
-     min-width  :: <integer>, 
+     min-width  :: <integer>,
      max-width  :: <integer>,
      height     :: <integer>,
      min-height :: <integer>,
      max-height :: <integer>)
   let (width, height) = space-requirement-label-size(sheet, space-req);
   values(width,  space-req.%min-width  | width,  space-req.%max-width  | width,
-	 height, space-req.%min-height | height, space-req.%max-height | height)
+         height, space-req.%min-height | height, space-req.%max-height | height)
 end method space-requirement-components;
 
 define method space-requirement-label-size
@@ -294,9 +294,9 @@ define method space-requirement-label-size
       let text-style = get-default-text-style(_port, sheet);
       // Use the computed width of the label, but the height of the font
       // Add a few pixels in each direction to keep the label from being squeezed
-      values(ceiling(text-size(_port, label,	//--- what about tabs and newlines?
-			       text-style: text-style)) + 2,
-	     ceiling(font-height(text-style, _port)) + 2);
+      values(ceiling(text-size(_port, label,        //--- what about tabs and newlines?
+                               text-style: text-style)) + 2,
+             ceiling(font-height(text-style, _port)) + 2);
     <image> =>
       values(image-width(label), image-height(label));
   end
@@ -309,7 +309,7 @@ define sealed method space-requirement-width
   width
 end method space-requirement-width;
 
-define sealed method space-requirement-min-width 
+define sealed method space-requirement-min-width
     (sheet :: <sheet>, sr :: <label-space-requirement>) => (min-width :: <integer>)
   sr.%min-width
   | begin
@@ -319,7 +319,7 @@ define sealed method space-requirement-min-width
     end
 end method space-requirement-min-width;
 
-define sealed method space-requirement-max-width 
+define sealed method space-requirement-max-width
     (sheet :: <sheet>, sr :: <label-space-requirement>) => (max-width :: <integer>)
   sr.%max-width
   | begin
@@ -329,14 +329,14 @@ define sealed method space-requirement-max-width
     end
 end method space-requirement-max-width;
 
-define sealed method space-requirement-height 
+define sealed method space-requirement-height
     (sheet :: <sheet>, sr :: <label-space-requirement>) => (height :: <integer>)
   let (width, height) = space-requirement-label-size(sheet, sr);
   ignore(width);
   height
 end method space-requirement-height;
 
-define sealed method space-requirement-min-height 
+define sealed method space-requirement-min-height
     (sheet :: <sheet>, sr :: <label-space-requirement>) => (min-height :: <integer>)
   sr.%min-height
   | begin
@@ -346,7 +346,7 @@ define sealed method space-requirement-min-height
     end
 end method space-requirement-min-height;
 
-define sealed method space-requirement-max-height 
+define sealed method space-requirement-max-height
     (sheet :: <sheet>, sr :: <label-space-requirement>) => (max-height :: <integer>)
   sr.%max-height
   | begin
@@ -368,7 +368,7 @@ end class <functional-space-requirement>;
 define sealed method space-requirement-components
     (sheet :: <sheet>, space-req :: <functional-space-requirement>)
  => (width      :: <integer>,
-     min-width  :: <integer>, 
+     min-width  :: <integer>,
      max-width  :: <integer>,
      height     :: <integer>,
      min-height :: <integer>,
@@ -383,35 +383,35 @@ define sealed method space-requirement-width
   w
 end method space-requirement-width;
 
-define sealed method space-requirement-min-width 
+define sealed method space-requirement-min-width
     (sheet :: <sheet>, sr :: <functional-space-requirement>) => (min-width :: <integer>)
   let (w, w-, w+, h, h-, h+) = sr.%function(sheet);
   ignore(w, w+, h, h-, h+);
   w-
 end method space-requirement-min-width;
 
-define sealed method space-requirement-max-width 
+define sealed method space-requirement-max-width
     (sheet :: <sheet>, sr :: <functional-space-requirement>) => (max-width :: <integer>)
   let (w, w-, w+, h, h-, h+) = sr.%function(sheet);
   ignore(w, w-, h, h-, h+);
   w+
 end method space-requirement-max-width;
 
-define sealed method space-requirement-height 
+define sealed method space-requirement-height
     (sheet :: <sheet>, sr :: <functional-space-requirement>) => (height :: <integer>)
   let (w, w-, w+, h, h-, h+) = sr.%function(sheet);
   ignore(w, w-, w+, h-, h+);
   h
 end method space-requirement-height;
 
-define sealed method space-requirement-min-height 
+define sealed method space-requirement-min-height
     (sheet :: <sheet>, sr :: <functional-space-requirement>) => (min-height :: <integer>)
   let (w, w-, w+, h, h-, h+) = sr.%function(sheet);
   ignore(w, w-, w+, h, h+);
   h-
 end method space-requirement-min-height;
 
-define sealed method space-requirement-max-height 
+define sealed method space-requirement-max-height
     (sheet :: <sheet>, sr :: <functional-space-requirement>) => (max-height :: <integer>)
   let (w, w-, w+, h, h-, h+) = sr.%function(sheet);
   ignore(w, w-, w+, h, h-);
@@ -425,16 +425,16 @@ define sealed method make
     (class == <space-requirement>,
      #rest initargs,
      #key label, function,
-	  width  = 0, min-width  = width,  max-width  = width,
+          width  = 0, min-width  = width,  max-width  = width,
           height = 0, min-height = height, max-height = height)
  => (space-req :: <space-requirement>)
   case
     label =>
       apply(make, <label-space-requirement>,
-	    label: label, initargs);
+            label: label, initargs);
     function =>
       apply(make, <functional-space-requirement>,
-	    function: function, initargs);
+            function: function, initargs);
     width    == min-width
     & width  == max-width
     & height == min-height
@@ -451,11 +451,11 @@ define sealed method make
     & min-height == 0
     & max-height >= $fill =>
       make(<unbounded-space-requirement>,
-	   width: width, height: height);
+           width: width, height: height);
     otherwise =>
       make(<general-space-requirement>,
-	   width:  width,  min-width:  min-width,  max-width:  max-width,
-	   height: height, min-height: min-height, max-height: max-height);
+           width:  width,  min-width:  min-width,  max-width:  max-width,
+           height: height, min-height: min-height, max-height: max-height);
   end
 end method make;
 
@@ -492,11 +492,11 @@ end function space-requirement+*;
 define method space-requirement+
     (sheet :: <sheet>, space-req :: <space-requirement>,
      #key width      :: <integer> = 0,
-     	  min-width  :: <integer> = width,
-	  max-width  :: <integer> = width,
+               min-width  :: <integer> = width,
+          max-width  :: <integer> = width,
           height     :: <integer> = 0,
-	  min-height :: <integer> = height,
-	  max-height :: <integer> = height)
+          min-height :: <integer> = height,
+          max-height :: <integer> = height)
  => (space-req :: <space-requirement>)
   let (w :: <integer>, w- :: <integer>, w+ :: <integer>,
        h :: <integer>, h- :: <integer>, h+ :: <integer>)

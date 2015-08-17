@@ -93,7 +93,7 @@ define protocol <<medium-protocol>> ()
   setter medium-drawable-setter
     (drawable, medium :: <abstract-medium>) => (drawable);
   getter medium-pixmap
-    (medium :: <abstract-medium>) => (pixmap); 
+    (medium :: <abstract-medium>) => (pixmap);
   setter medium-pixmap-setter
     (pixmap, medium :: <abstract-medium>) => (pixmap);
   // Ring the bell...
@@ -140,11 +140,11 @@ define method do-destroy-sheet (sheet :: <sheet-with-medium-mixin>) => ()
   when (medium)
     destroy-medium(medium)
   end;
-  next-method()		// off to <basic-sheet> or <mirrored-sheet-mixin>
+  next-method()                // off to <basic-sheet> or <mirrored-sheet-mixin>
 end method do-destroy-sheet;
 
 define method invalidate-cached-region (sheet :: <sheet-with-medium-mixin>) => ()
-  next-method();	// off to <basic-sheet>...
+  next-method();        // off to <basic-sheet>...
   let medium = sheet-medium(sheet);
   when (medium)
     invalidate-cached-region(medium)
@@ -152,7 +152,7 @@ define method invalidate-cached-region (sheet :: <sheet-with-medium-mixin>) => (
 end method invalidate-cached-region;
 
 define method invalidate-cached-transform (sheet :: <sheet-with-medium-mixin>) => ()
-  next-method();	// off to <basic-sheet>...
+  next-method();        // off to <basic-sheet>...
   let medium = sheet-medium(sheet);
   when (medium)
     invalidate-cached-transform(medium)
@@ -211,14 +211,14 @@ end method do-note-sheet-attached;
 // of the sheet and return the first ancestor with a medium
 define function find-sheet-with-medium
     (sheet :: <sheet>) => (sheet :: <sheet>)
-  let parent = begin 
-		 for (parent = sheet then sheet-device-parent(parent),
-		      until: ~parent | sheet-has-medium?(parent))
-		 finally parent
-		 end
-	       end;
+  let parent = begin
+                 for (parent = sheet then sheet-device-parent(parent),
+                      until: ~parent | sheet-has-medium?(parent))
+                 finally parent
+                 end
+               end;
   assert(parent,
-	 "The sheet %= has no parent with a medium", sheet);
+         "The sheet %= has no parent with a medium", sheet);
   parent
 end function find-sheet-with-medium;
 
@@ -229,7 +229,7 @@ define constant $medium-brush-cached   :: <integer> = #o01;
 define constant $medium-pen-cached     :: <integer> = #o02;
 define constant $medium-font-cached    :: <integer> = #o04;
 define constant $medium-region-cached  :: <integer> = #o10;
-define constant $medium-fully-cached   :: <integer> = #o17;	// the sum of the above
+define constant $medium-fully-cached   :: <integer> = #o17;        // the sum of the above
 
 define open abstract primary class <basic-medium> (<medium>)
   sealed slot port :: false-or(<port>) = #f,
@@ -309,7 +309,7 @@ end method medium-drawing-state-cache-setter;
 define method invalidate-cached-drawing-state
     (medium :: <medium>, new-state :: <integer>) => ()
   ignore(new-state);
-  #f 
+  #f
 end method invalidate-cached-drawing-state;
 
 
@@ -342,7 +342,7 @@ define method medium-default-text-style-setter
   unless (text-style == medium-default-text-style(medium))
     when (medium-text-style(medium))
       medium-merged-text-style(medium)
-	:= merge-text-styles(medium-text-style(medium), text-style)
+        := merge-text-styles(medium-text-style(medium), text-style)
     end;
     medium.%default-text-style := text-style
   end;
@@ -410,7 +410,7 @@ end method invalidate-cached-region;
 define method invalidate-cached-transform (medium :: <medium>) => ()
   medium-device-transform(medium)
     := compose-transforms(sheet-device-transform(medium-sheet(medium)),
-			  medium-transform(medium))
+                          medium-transform(medium))
 end method invalidate-cached-transform;
 
 
@@ -497,7 +497,7 @@ define method do-with-sheet-medium
     // This means, for example, that we might not decache the
     // cached drawing state in the back end.
     dynamic-bind (sheet-medium(sheet) = medium,
-		  medium-sheet(medium) = sheet)
+                  medium-sheet(medium) = sheet)
       // Be sure the clipping region (and other medium state) is decached
       medium-clipping-region(medium)  := $everywhere;
       medium-device-transform(medium) := sheet-device-transform(sheet);
@@ -589,7 +589,7 @@ define sealed method do-with-drawing-options
     end;
     when (changed ~= 0)
       medium-drawing-state-cache(medium)
-	:= logand(medium-drawing-state-cache(medium), lognot(changed))
+        := logand(medium-drawing-state-cache(medium), lognot(changed))
     end;
     if (text-style)
       do-with-text-style(medium, continuation, text-style)
@@ -604,7 +604,7 @@ define sealed method do-with-drawing-options
     medium.%brush := saved-brush;
     when (changed ~= 0)
       medium-drawing-state-cache(medium)
-	:= logand(medium-drawing-state-cache(medium), lognot(changed))
+        := logand(medium-drawing-state-cache(medium), lognot(changed))
     end;
   end
 end method do-with-drawing-options;
@@ -618,8 +618,8 @@ define sealed method do-with-text-style
   if (~style | style == $null-text-style)
     continuation()
   else
-    dynamic-bind (medium-text-style(medium)	// flushes cache
-		    = merge-text-styles(style, medium-text-style(medium)))
+    dynamic-bind (medium-text-style(medium)        // flushes cache
+                    = merge-text-styles(style, medium-text-style(medium)))
       continuation()
     end
   end

@@ -1,12 +1,12 @@
 Library:      duim-resource-example
 Synopsis:     Example using windows resources in DUIM
 Author:       Roman Budzianowski, Andy Armstrong, Scott McKay
-Files: 	library
-	resdecl
-	example
+Files:        library
+              resdecl
+              example
 Linker-Options: $(guilflags)
-C-Header-Files:	resource.h
-RC-Files:	example.rc
+C-Header-Files: resource.h
+RC-Files:     example.rc
 Compilation-Mode: loose
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.

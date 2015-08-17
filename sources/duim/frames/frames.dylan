@@ -48,9 +48,9 @@ define protocol <<frame-protocol>> ()
   setter frame-status-message-setter
     (message :: false-or(<string>), frame :: <abstract-frame>)
  => (message :: false-or(<string>));
-//  getter frame-input-focus		// defined in DUIM-sheets
+//  getter frame-input-focus                // defined in DUIM-sheets
 //    (frame :: <abstract-frame>) => (sheet :: false-or(<abstract-sheet>));
-//  setter frame-input-focus-setter	// defined in DUIM-sheets
+//  setter frame-input-focus-setter        // defined in DUIM-sheets
 //    (sheet :: false-or(<abstract-sheet>), frame :: <abstract-frame>)
 // => (sheet :: false-or(<abstract-sheet>));
   getter frame-command-table
@@ -214,7 +214,7 @@ define constant %keyboard_interrupt :: <integer> = #o1000000;
 
 define constant $initial-frame-flags :: <integer>
     = logior(%frame_detached, %frame_modeless, %frame_enabled,
-	     %frame_minimize_box, %frame_maximize_box, %keyboard_interrupt);
+             %frame_minimize_box, %frame_maximize_box, %keyboard_interrupt);
 
 
 define open abstract primary class <basic-frame> (<frame>)
@@ -238,7 +238,7 @@ define open abstract primary class <basic-frame> (<frame>)
     init-keyword: default-button:,
     setter: %default-button-setter;
   sealed constant slot frame-geometry :: <simple-object-vector>
-    = vector(#f, #f, #f, #f),		// x, y, width, height
+    = vector(#f, #f, #f, #f),                // x, y, width, height
     init-keyword: geometry:;
   sealed constant slot frame-properties :: <stretchy-object-vector>
     = make(<stretchy-vector>);
@@ -338,11 +338,11 @@ define sealed method frame-state-setter
   unless (state == old-state)
     let new-state :: <integer>
       = select (state)
-	  #"detached"  => %frame_detached;
-	  #"unmapped"  => %frame_unmapped;
-	  #"mapped"    => %frame_mapped;
-	  #"destroyed" => %frame_destroyed;
-	end;
+          #"detached"  => %frame_detached;
+          #"unmapped"  => %frame_unmapped;
+          #"mapped"    => %frame_mapped;
+          #"destroyed" => %frame_destroyed;
+        end;
     frame-flags(frame)
       := logior(logand(frame-flags(frame), lognot(%frame_state_mask)), new-state);
     note-frame-state-changed(frame, old-state, state)
@@ -367,9 +367,9 @@ define sealed method frame-mode-setter
  => (mode :: <frame-mode>)
   let new-mode :: <integer>
     = select (mode)
-	#"modeless"     => %frame_modeless;
-	#"modal"        => %frame_modal;
-	#"system-modal" => %frame_system_modal;
+        #"modeless"     => %frame_modeless;
+        #"modal"        => %frame_modal;
+        #"system-modal" => %frame_system_modal;
       end;
   frame-flags(frame)
     := logior(logand(frame-flags(frame), lognot(%frame_mode_mask)), new-mode);
@@ -388,7 +388,7 @@ define sealed method frame-enabled?-setter
   when (frame-enabled?(frame) ~= enabled?)
     frame-flags(frame)
       := logior(logand(frame-flags(frame), lognot(%frame_enabled)),
-		if (enabled?) %frame_enabled else 0 end);
+                if (enabled?) %frame_enabled else 0 end);
     if (enabled?)
       note-frame-enabled(frame-manager(frame), frame)
     else
@@ -420,7 +420,7 @@ define sealed method frame-iconified?-setter
   when (frame-iconified?(frame) ~= iconified?)
     frame-flags(frame)
       := logior(logand(frame-flags(frame), lognot(%frame_iconified)),
-		if (iconified?) %frame_iconified else 0 end);
+                if (iconified?) %frame_iconified else 0 end);
     if (iconified?)
       note-frame-state-changed(frame, #"deiconified", #"iconified");
       note-frame-iconified(frame-manager(frame), frame)
@@ -454,7 +454,7 @@ define sealed method frame-maximized?-setter
   when (frame-maximized?(frame) ~= maximized?)
     frame-flags(frame)
       := logior(logand(frame-flags(frame), lognot(%frame_maximized)),
-		if (maximized?) %frame_maximized else 0 end);
+                if (maximized?) %frame_maximized else 0 end);
     if (maximized?)
       note-frame-state-changed(frame, #"unmaximized", #"maximized");
       note-frame-maximized(frame-manager(frame), frame)
@@ -502,7 +502,7 @@ define sealed method frame-alt-key-is-meta?-setter
     (alt-is-meta? :: <boolean>, frame :: <basic-frame>) => (alt-is-meta? :: <boolean>)
   frame-flags(frame)
     := logior(logand(frame-flags(frame), lognot(%frame_alt_is_meta)),
-	      if (alt-is-meta?) %frame_alt_is_meta else 0 end);
+              if (alt-is-meta?) %frame_alt_is_meta else 0 end);
   alt-is-meta?
 end method frame-alt-key-is-meta?-setter;
 
@@ -516,7 +516,7 @@ define sealed method frame-allow-control-alt?-setter
     (alt-is-meta? :: <boolean>, frame :: <basic-frame>) => (alt-is-meta? :: <boolean>)
   frame-flags(frame)
     := logior(logand(frame-flags(frame), lognot(%frame_alt_is_meta)),
-	      if (alt-is-meta?) %frame_alt_is_meta else 0 end);
+              if (alt-is-meta?) %frame_alt_is_meta else 0 end);
   alt-is-meta?
 end method frame-allow-control-alt?-setter;
 
@@ -594,11 +594,11 @@ end method default-foreground;
 define sealed method default-foreground-setter
     (fg :: false-or(<ink>), frame :: <basic-frame>) => (fg :: false-or(<ink>))
   let style = frame.%style-descriptor
-	      | begin
-		  let style = make(<style-descriptor>);
-		  frame.%style-descriptor := style;
-		  style
-		end;
+              | begin
+                  let style = make(<style-descriptor>);
+                  frame.%style-descriptor := style;
+                  style
+                end;
   default-foreground(style) := fg;
   fg
 end method default-foreground-setter;
@@ -612,11 +612,11 @@ end method default-background;
 define sealed method default-background-setter
     (bg :: false-or(<ink>), frame :: <basic-frame>) => (bg :: false-or(<ink>))
   let style = frame.%style-descriptor
-	      | begin
-		  let style = make(<style-descriptor>);
-		  frame.%style-descriptor := style;
-		  style
-		end;
+              | begin
+                  let style = make(<style-descriptor>);
+                  frame.%style-descriptor := style;
+                  style
+                end;
   default-background(style) := bg;
   bg
 end method default-background-setter;
@@ -630,11 +630,11 @@ end method default-text-style;
 define sealed method default-text-style-setter
     (ts :: false-or(<text-style>), frame :: <basic-frame>) => (ts :: false-or(<text-style>))
   let style = frame.%style-descriptor
-	      | begin
-		  let style = make(<style-descriptor>);
-		  frame.%style-descriptor := style;
-		  style
-		end;
+              | begin
+                  let style = make(<style-descriptor>);
+                  frame.%style-descriptor := style;
+                  style
+                end;
   default-text-style(style) := ts;
   ts
 end method default-text-style-setter;
@@ -651,31 +651,31 @@ define method frame-accelerators
       let top-sheet = top-level-sheet(frame);
       let framem    = frame-manager(frame);
       if (top-sheet)
-	local method do-accelerators (function :: <function>)
-		do-sheet-tree(method (sheet)
-				when (instance?(sheet, <accelerator-mixin>))
-				  let accelerator
-				    = defaulted-gadget-accelerator(framem, sheet);
-				  when (accelerator)
-				    function(sheet, accelerator)
-				  end
-				end
-			      end method, top-sheet)
-	      end method;
-	let n :: <integer> = 0;
-	do-accelerators(method (gadget, accelerator)
-			  ignore(gadget, accelerator);
-			  inc!(n)
-			end method);
-	let accelerators :: <simple-object-vector> = make(<vector>, size: n);
-	let i :: <integer> = 0;
-	do-accelerators(method (gadget, accelerator)
-			  accelerators[i] := vector(gadget, accelerator);
-			  inc!(i)
-			end method);
-	frame.%accelerators := accelerators
+        local method do-accelerators (function :: <function>)
+                do-sheet-tree(method (sheet)
+                                when (instance?(sheet, <accelerator-mixin>))
+                                  let accelerator
+                                    = defaulted-gadget-accelerator(framem, sheet);
+                                  when (accelerator)
+                                    function(sheet, accelerator)
+                                  end
+                                end
+                              end method, top-sheet)
+              end method;
+        let n :: <integer> = 0;
+        do-accelerators(method (gadget, accelerator)
+                          ignore(gadget, accelerator);
+                          inc!(n)
+                        end method);
+        let accelerators :: <simple-object-vector> = make(<vector>, size: n);
+        let i :: <integer> = 0;
+        do-accelerators(method (gadget, accelerator)
+                          accelerators[i] := vector(gadget, accelerator);
+                          inc!(i)
+                        end method);
+        frame.%accelerators := accelerators
       else
-	#[]
+        #[]
       end
     end
 end method frame-accelerators;
@@ -755,7 +755,7 @@ define method constrained-frame-position
   end
 end method constrained-frame-position;
 
-define method frame-size 
+define method frame-size
     (frame :: <basic-frame>)
  => (width :: false-or(<integer>), height :: false-or(<integer>))
   let top-sheet = top-level-sheet(frame);
@@ -802,10 +802,10 @@ define method frame-input-focus-setter
     end;
     when (frame-mapped?(frame))
       distribute-event(_port,
-		       make(<frame-input-focus-changed-event>,
-			    frame: frame,
-			    old-focus: old,
-			    new-focus: new))
+                       make(<frame-input-focus-changed-event>,
+                            frame: frame,
+                            old-focus: old,
+                            new-focus: new))
     end
   end;
   new
@@ -832,13 +832,13 @@ end method frame-cursor-override-setter;
 define macro with-background-cursor
   { with-background-cursor (?frame:expression, ?cursor:expression) ?:body end }
     => { begin
-	   let body = method () ?body end;
-	   do-with-background-cursor(?frame, ?cursor, body)
+           let body = method () ?body end;
+           do-with-background-cursor(?frame, ?cursor, body)
          end }
   { with-background-cursor (?frame:expression) ?:body end }
     => { begin
-	   let body = method () ?body end;
-	   do-with-background-cursor(?frame, #"starting", body)
+           let body = method () ?body end;
+           do-with-background-cursor(?frame, #"starting", body)
          end }
 end macro with-background-cursor;
 
@@ -848,15 +848,15 @@ define method do-with-background-cursor
   if (frame)
     do-with-background-cursor(frame, cursor, continuation)
   else
-    continuation()		// sheet is not grafted
+    continuation()                // sheet is not grafted
   end
 end method do-with-background-cursor;
 
 define method do-with-background-cursor
     (frame :: <frame>, cursor, continuation :: <function>) => (#rest values)
   block ()
-    call-in-frame(frame, 
-		  note-background-operation-started, frame, cursor: cursor);
+    call-in-frame(frame,
+                  note-background-operation-started, frame, cursor: cursor);
     continuation()
   cleanup
     call-in-frame(frame, note-background-operation-finished, frame)
@@ -916,22 +916,22 @@ define method handle-id-activation
   when (command-table)
     block (return)
       do-command-table-menu-items
-	(method (decorator, command-table)
-	   ignore(command-table);
-	   when (decorator-resource-id(decorator) = id)
-	     let object = decorator-object(decorator);
-	     let type   = decorator-type(decorator);
-	     select (type)
-	       <function>, <command> =>
-		 distribute-command-event(frame, object);
-		 return(#t);
-	       otherwise =>
-		 #f;
-	     end
-	   end
-	 end,
-	 command-table,
-	 do-inherited?: #t)
+        (method (decorator, command-table)
+           ignore(command-table);
+           when (decorator-resource-id(decorator) = id)
+             let object = decorator-object(decorator);
+             let type   = decorator-type(decorator);
+             select (type)
+               <function>, <command> =>
+                 distribute-command-event(frame, object);
+                 return(#t);
+               otherwise =>
+                 #f;
+             end
+           end
+         end,
+         command-table,
+         do-inherited?: #t)
     end
   end
 end method handle-id-activation;
@@ -1035,15 +1035,15 @@ define method initialize
     (frame :: <basic-frame>,
      #key frame-manager: framem, parent = $unsupplied,
           state = #"detached", mode = #"modeless",
-	  enabled? = #t, iconified? = #f, maximized? = #f,
-	  fixed-width? = #f, fixed-height? = #f, resizable? = #t,
-	  always-on-top? = #f,
-     	  alt-key-is-meta? = #f, allow-control-alt? = $unsupplied,
-	  x, y, width, height, disabled-commands = #[],
+          enabled? = #t, iconified? = #f, maximized? = #f,
+          fixed-width? = #f, fixed-height? = #f, resizable? = #t,
+          always-on-top? = #f,
+               alt-key-is-meta? = #f, allow-control-alt? = $unsupplied,
+          x, y, width, height, disabled-commands = #[],
           foreground, background, text-style,
           dialog-for = $unsupplied, save-under? = #f,
-	  minimize-box? = #t, maximize-box? = #t,
-	  center? = #f, keyboard-interrupt? = #t)
+          minimize-box? = #t, maximize-box? = #t,
+          center? = #f, keyboard-interrupt? = #t)
   next-method();
   // Initialize the event handler very early
   unless (event-handler(frame))
@@ -1051,16 +1051,16 @@ define method initialize
   end;
   let state :: <integer>
     = select (state)
-	#"detached"  => %frame_detached;
-	#"unmapped"  => %frame_unmapped;
-	#"mapped"    => %frame_mapped;
-	#"destroyed" => %frame_destroyed;
+        #"detached"  => %frame_detached;
+        #"unmapped"  => %frame_unmapped;
+        #"mapped"    => %frame_mapped;
+        #"destroyed" => %frame_destroyed;
       end;
   let mode :: <integer>
     = select (mode)
-	#"modeless"     => %frame_modeless;
-	#"modal"        => %frame_modal;
-	#"system-modal" => %frame_system_modal;
+        #"modeless"     => %frame_modeless;
+        #"modal"        => %frame_modal;
+        #"system-modal" => %frame_system_modal;
       end;
   let fixed-width?  = if (resizable?) fixed-width?  else #t end;
   let fixed-height? = if (resizable?) fixed-height? else #t end;
@@ -1068,25 +1068,25 @@ define method initialize
     = if (supplied?(allow-control-alt?)) allow-control-alt? else alt-key-is-meta? end;
   frame-flags(frame)
     := logior(state, mode,
-	      if (enabled?) %frame_enabled else 0 end,
-	      if (iconified?) %frame_iconified else 0 end,
-	      if (maximized?) %frame_maximized else 0 end,
-	      if (fixed-width?) %frame_fixed_width else 0 end,
-	      if (fixed-height?) %frame_fixed_height else 0 end,
-	      if (always-on-top?) %frame_on_top else 0 end,
-	      if (alt-key-is-meta?) %frame_alt_is_meta else 0 end,
-	      if (allow-control-alt?) %frame_allow_control_alt else 0 end,
-	      if (save-under?) %frame_save_under else 0 end,
-	      if (minimize-box?) %frame_minimize_box else 0 end,
-	      if (maximize-box?) %frame_maximize_box else 0 end,
-	      if (center?) %frame_centered else 0 end,
-	      if (keyboard-interrupt?) %keyboard_interrupt else 0 end);
+              if (enabled?) %frame_enabled else 0 end,
+              if (iconified?) %frame_iconified else 0 end,
+              if (maximized?) %frame_maximized else 0 end,
+              if (fixed-width?) %frame_fixed_width else 0 end,
+              if (fixed-height?) %frame_fixed_height else 0 end,
+              if (always-on-top?) %frame_on_top else 0 end,
+              if (alt-key-is-meta?) %frame_alt_is_meta else 0 end,
+              if (allow-control-alt?) %frame_allow_control_alt else 0 end,
+              if (save-under?) %frame_save_under else 0 end,
+              if (minimize-box?) %frame_minimize_box else 0 end,
+              if (maximize-box?) %frame_maximize_box else 0 end,
+              if (center?) %frame_centered else 0 end,
+              if (keyboard-interrupt?) %keyboard_interrupt else 0 end);
   when (foreground | background | text-style)
     frame.%style-descriptor
       := make(<style-descriptor>,
-	      foreground: foreground,
-	      background: background,
-	      text-style: text-style)
+              foreground: foreground,
+              background: background,
+              text-style: text-style)
   end;
   // Save various other frame properties
   let properties :: <stretchy-object-vector> = frame-properties(frame);
@@ -1110,15 +1110,15 @@ define method initialize
   let parent = if (parent-supplied?) parent else framem end;
   let framem
     = select (parent by instance?)
-	singleton(#f) =>
-	  unless (parent-supplied?)
-	    current-frame-manager() | find-frame-manager()
-	  end;
-	<frame-manager> => parent;
-	<frame>   => frame-manager(parent);
-	<port>    => find-frame-manager(port: parent);
-	<display> => find-frame-manager(port: port(parent));
-	<sheet>   => frame-manager(sheet-frame(parent))
+        singleton(#f) =>
+          unless (parent-supplied?)
+            current-frame-manager() | find-frame-manager()
+          end;
+        <frame-manager> => parent;
+        <frame>   => frame-manager(parent);
+        <port>    => find-frame-manager(port: parent);
+        <display> => find-frame-manager(port: port(parent));
+        <sheet>   => frame-manager(sheet-frame(parent))
       end;
   frame-manager(frame) := framem;
   // Now initialize the event queue
@@ -1126,10 +1126,10 @@ define method initialize
     let owner = frame-owner(frame);
     frame-event-queue(frame)
       := if (owner & ~frame-needs-event-queue?(framem, frame))
-	   frame-event-queue(owner)
-	 else
-	   make-event-queue(framem, frame)
-	 end
+           frame-event-queue(owner)
+         else
+           make-event-queue(framem, frame)
+         end
   end
 end method initialize;
 
@@ -1142,14 +1142,14 @@ end method frame-top-level-sheet-class;
 
 /// Creating frames
 
-// Create a frame of the specified type if one does not already exist, 
+// Create a frame of the specified type if one does not already exist,
 // and then run it, possibly in its own thread.  If one already exists,
 // just select it.
 define method find-frame
     (frame-class, #rest initargs,
      #key create? = #t, activate? = #t, own-thread? = #t,
           port: _port, frame-manager: framem, test = identity,
-	  z-order :: one-of(#"top-down", #"bottom-up") = #"top-down",
+          z-order :: one-of(#"top-down", #"bottom-up") = #"top-down",
      #all-keys)
  => (frame :: <frame>)
   dynamic-extent(initargs);
@@ -1157,18 +1157,18 @@ define method find-frame
     = unless (create? == #"force")
         block (return)
           do-frames(method (frame)
-		      when (instance?(frame, frame-class) & test(frame))
-			return(frame)
-		      end
-		    end method,
-		    // Restrict the search if these are supplied
-		    port: _port, frame-manager: framem, z-order: z-order)
+                      when (instance?(frame, frame-class) & test(frame))
+                        return(frame)
+                      end
+                    end method,
+                    // Restrict the search if these are supplied
+                    port: _port, frame-manager: framem, z-order: z-order)
         end
       end;
   when (create? & ~frame)
     with-keywords-removed
         (initargs = initargs,
-	 #[create?:, activate?:, own-thread?:, port:, frame-manager:, z-order:])
+         #[create?:, activate?:, own-thread?:, port:, frame-manager:, z-order:])
       case
         framem => #f;
         _port =>
@@ -1184,9 +1184,9 @@ define method find-frame
       frame-thread(frame) =>
         raise-frame(frame, activate?: #t);
       own-thread? =>
-	make(<thread>,
-	     function: method () start-frame(frame) end,
-	     name: frame-title(frame) | "Unnamed frame");
+        make(<thread>,
+             function: method () start-frame(frame) end,
+             name: frame-title(frame) | "Unnamed frame");
       otherwise =>
         start-frame(frame)
     end
@@ -1212,12 +1212,12 @@ define method attach-frame
     when (command-table)
       let menu-bar = frame-menu-bar(frame);
       if (menu-bar)
-	unless (sheet-resource-id(menu-bar))
-	  error("You can't supply both a menu bar and a command table for %=",
-		frame)
-	end
+        unless (sheet-resource-id(menu-bar))
+          error("You can't supply both a menu bar and a command table for %=",
+                frame)
+        end
       else
-	frame-menu-bar(frame) := make-command-menu-bar(framem, frame)
+        frame-menu-bar(frame) := make-command-menu-bar(framem, frame)
       end
     end;
     // Note that we always generate a frame wrapper, even when there are no
@@ -1230,18 +1230,18 @@ define method attach-frame
       //---*** How do we specify a different display than the default
       //---*** one for the port?
       let top-sheet
-	= attach-sheet(find-display(port: port(frame)), layout,
-		       sheet-class: frame-top-level-sheet-class(frame),
-		       fixed-width?:  frame-fixed-width?(frame),
-		       fixed-height?: frame-fixed-height?(frame),
-		       frame-manager: framem, frame: frame,
-		       event-queue: frame-event-queue(frame),
-		       container: frame.%container,
-		       container-region: frame.%container-region,
-		       foreground: default-foreground(frame),
-		       background: default-background(frame),
-		       text-style: default-text-style(frame),
-		       resource-id: frame-resource-id(frame));
+        = attach-sheet(find-display(port: port(frame)), layout,
+                       sheet-class: frame-top-level-sheet-class(frame),
+                       fixed-width?:  frame-fixed-width?(frame),
+                       fixed-height?: frame-fixed-height?(frame),
+                       frame-manager: framem, frame: frame,
+                       event-queue: frame-event-queue(frame),
+                       container: frame.%container,
+                       container-region: frame.%container-region,
+                       foreground: default-foreground(frame),
+                       background: default-background(frame),
+                       text-style: default-text-style(frame),
+                       resource-id: frame-resource-id(frame));
       top-level-sheet(frame) := top-sheet
     end
   end;
@@ -1249,11 +1249,11 @@ define method attach-frame
   let owner = frame-owner(frame);
   owner & add!(frame-owned-frames(owner), frame);
   add!(frame-manager-frames(framem), frame);
-  // This uses 'handle-event' rather than 'distribute-event' because 
+  // This uses 'handle-event' rather than 'distribute-event' because
   // the user needs to see this before the event loop starts, since by
   // that time everything has already happened (mapping etc).
   handle-event(event-handler(frame),
-	       make(<frame-created-event>, frame: frame));
+               make(<frame-created-event>, frame: frame));
   frame
 end method attach-frame;
 
@@ -1262,10 +1262,10 @@ define method detach-frame
     (framem :: <frame-manager>, frame :: <basic-frame>) => (frame :: <frame>)
   unless (frame-state(frame) == #"destroyed")
     assert(frame-manager(frame) == framem,
-	   "The frame %= does not belong to this frame manager", frame);
+           "The frame %= does not belong to this frame manager", frame);
     select (frame-state(frame))
       #"mapped" =>
-	frame-mapped?(frame) := #f;
+        frame-mapped?(frame) := #f;
       otherwise => #f
     end;
     // Detach the frame's top-level sheet from the display
@@ -1281,7 +1281,7 @@ define method detach-frame
       geometry[3] := height;
       let _display = display(top-sheet);
       when (_display)
-	detach-sheet(_display, top-sheet)
+        detach-sheet(_display, top-sheet)
       end
     end;
     top-level-sheet(frame) := #f;
@@ -1291,7 +1291,7 @@ define method detach-frame
       //--- Can we make 'detach-sheet' remove the owned menu?
       let _display = display(menu);
       when (_display)
-	detach-sheet(_display, menu)
+        detach-sheet(_display, menu)
       end
     end;
     size(owned-menus) := 0;
@@ -1319,8 +1319,8 @@ define macro frame-definer
   { define ?modifiers:* frame ?:name (?superclasses:*) ?slots:* end }
     => { define ?modifiers frame-class ?name (?superclasses) ?slots end;
          define frame-panes ?name (?superclasses) ?slots end;
-         define frame-gadget-bars ?name (?superclasses) ?slots end; 
-	 define frame-layout ?name (?superclasses) ?slots end; }
+         define frame-gadget-bars ?name (?superclasses) ?slots end;
+         define frame-layout ?name (?superclasses) ?slots end; }
 end macro frame-definer;
 
 define macro frame-class-definer
@@ -1336,13 +1336,13 @@ define macro frame-class-definer
     => { ?modifiers slot ?name ## "-pane" :: false-or(<abstract-sheet>) = #f; }
   // The next seven feel like the 'exception' clause in 'block', in that
   // they take an argument (the frame) and a body, but no 'end'
-  { layout (?frame:variable) ?:body } => { }		// uses %layout slot
-  { menu-bar (?frame:variable) ?:body } => { }		// uses %menu-bar slot
-  { tool-bar (?frame:variable) ?:body } => { }		// uses %tool-bar slot
-  { status-bar (?frame:variable) ?:body } => { }	// uses %status-bar slot
-  { command-table (?frame:variable) ?:body } => { }	// uses %command-table slot
-  { input-focus (?frame:variable) ?:body } => { }	// uses %input-focus slot
-  { pages  (?frame:variable) ?:body } => { }		// uses %pages slot
+  { layout (?frame:variable) ?:body } => { }                // uses %layout slot
+  { menu-bar (?frame:variable) ?:body } => { }                // uses %menu-bar slot
+  { tool-bar (?frame:variable) ?:body } => { }                // uses %tool-bar slot
+  { status-bar (?frame:variable) ?:body } => { }        // uses %status-bar slot
+  { command-table (?frame:variable) ?:body } => { }        // uses %command-table slot
+  { input-focus (?frame:variable) ?:body } => { }        // uses %input-focus slot
+  { pages  (?frame:variable) ?:body } => { }                // uses %pages slot
   // Catch 'slot', 'keyword', and so forth
   { ?other:* } => { ?other; }
 end macro frame-class-definer;
@@ -1350,31 +1350,31 @@ end macro frame-class-definer;
 define macro frame-panes-definer
   { define frame-panes ?class:name (?superclasses:*) end }
     => { }
-  { define frame-panes ?class:name (?superclasses:*) 
+  { define frame-panes ?class:name (?superclasses:*)
       pane ?:name (?frame:variable) ?:body; ?more-slots:*
     end }
     => { define method ?name (?frame :: ?class) => (pane :: <sheet>)
-	   let _framem = frame-manager(?frame);
-	   ?frame.?name ## "-pane"
-	   | (?frame.?name ## "-pane"
+           let _framem = frame-manager(?frame);
+           ?frame.?name ## "-pane"
+           | (?frame.?name ## "-pane"
                 := with-frame-manager (_framem)
                      ?body
                    end)
-	 end method ?name; 
+         end method ?name;
          define frame-panes ?class (?superclasses) ?more-slots end; }
-  { define frame-panes ?class:name (?superclasses:*) 
+  { define frame-panes ?class:name (?superclasses:*)
       resource ?:name :: ?type:name = ?resource-id:expression; ?more-slots:*
     end }
     => { define method ?name (_frame :: ?class) => (pane :: <sheet>)
-	   let _framem = frame-manager(_frame);
-	   _frame.?name ## "-pane"
-	   | (_frame.?name ## "-pane"
+           let _framem = frame-manager(_frame);
+           _frame.?name ## "-pane"
+           | (_frame.?name ## "-pane"
                 := with-frame-manager (_framem)
                      make(?type, resource-id: ?resource-id)
                    end)
-	 end method ?name; 
+         end method ?name;
          define frame-panes ?class (?superclasses) ?more-slots end; }
-  { define frame-panes ?class:name (?superclasses:*) 
+  { define frame-panes ?class:name (?superclasses:*)
       ?non-pane-slot:*; ?more-slots:*
     end }
     => { define frame-panes ?class (?superclasses) ?more-slots end; }
@@ -1383,96 +1383,96 @@ end macro frame-panes-definer;
 define macro frame-gadget-bars-definer
   { define frame-gadget-bars ?class:name (?superclasses:*) end }
     => { }
-  { define frame-gadget-bars ?class:name (?superclasses:*) 
+  { define frame-gadget-bars ?class:name (?superclasses:*)
       layout (?frame:variable) ?:body; ?more-slots:*
     end }
     => { define method frame-layout
-	     (?frame :: ?class) => (sheet :: false-or(<sheet>))
-	   let framem = frame-manager(?frame);
-	   ?frame.%layout
-	   | (?frame.%layout
+             (?frame :: ?class) => (sheet :: false-or(<sheet>))
+           let framem = frame-manager(?frame);
+           ?frame.%layout
+           | (?frame.%layout
                 := with-frame-manager (framem)
                      ?body
                    end)
-	 end method frame-layout; 
+         end method frame-layout;
          define frame-gadget-bars ?class (?superclasses) ?more-slots end; }
-  { define frame-gadget-bars ?class:name (?superclasses:*) 
+  { define frame-gadget-bars ?class:name (?superclasses:*)
       menu-bar (?frame:variable) ?:body; ?more-slots:*
     end }
     => { define method frame-menu-bar
-	     (?frame :: ?class) => (sheet :: false-or(<menu-bar>))
-	   let framem = frame-manager(?frame);
-	   ?frame.%menu-bar
-	   | (?frame.%menu-bar
+             (?frame :: ?class) => (sheet :: false-or(<menu-bar>))
+           let framem = frame-manager(?frame);
+           ?frame.%menu-bar
+           | (?frame.%menu-bar
                 := with-frame-manager (framem)
                      ?body
                    end)
-         end method frame-menu-bar; 
+         end method frame-menu-bar;
          define frame-gadget-bars ?class (?superclasses) ?more-slots end; }
-  { define frame-gadget-bars ?class:name (?superclasses:*) 
+  { define frame-gadget-bars ?class:name (?superclasses:*)
       tool-bar (?frame:variable) ?:body; ?more-slots:*
     end }
-    => { define method frame-tool-bar 
-	     (?frame :: ?class) => (sheet :: false-or(<tool-bar>))
-	   let framem = frame-manager(?frame);
-	   ?frame.%tool-bar
-	   | (?frame.%tool-bar
+    => { define method frame-tool-bar
+             (?frame :: ?class) => (sheet :: false-or(<tool-bar>))
+           let framem = frame-manager(?frame);
+           ?frame.%tool-bar
+           | (?frame.%tool-bar
                 := with-frame-manager (framem)
                      ?body
                    end)
-         end method frame-tool-bar; 
+         end method frame-tool-bar;
          define frame-gadget-bars ?class (?superclasses) ?more-slots end; }
-  { define frame-gadget-bars ?class:name (?superclasses:*) 
+  { define frame-gadget-bars ?class:name (?superclasses:*)
       status-bar (?frame:variable) ?:body; ?more-slots:*
     end }
-    => { define method frame-status-bar 
-	     (?frame :: ?class) => (sheet :: false-or(<status-bar>))
-	   let framem = frame-manager(?frame);
-	   ?frame.%status-bar
-	   | (?frame.%status-bar
+    => { define method frame-status-bar
+             (?frame :: ?class) => (sheet :: false-or(<status-bar>))
+           let framem = frame-manager(?frame);
+           ?frame.%status-bar
+           | (?frame.%status-bar
                 := with-frame-manager (framem)
                      ?body
                    end)
-         end method frame-status-bar; 
+         end method frame-status-bar;
          define frame-gadget-bars ?class (?superclasses) ?more-slots end; }
-  { define frame-gadget-bars ?class:name (?superclasses:*) 
+  { define frame-gadget-bars ?class:name (?superclasses:*)
       command-table (?frame:variable) ?:body; ?more-slots:*
     end }
     => { define method frame-command-table
-	     (?frame :: ?class) => (command-table :: false-or(<command-table>))
-	   ?frame.%command-table
-	   | (?frame.%command-table
+             (?frame :: ?class) => (command-table :: false-or(<command-table>))
+           ?frame.%command-table
+           | (?frame.%command-table
                 := begin
                      ?body
                    end)
-         end method frame-command-table; 
+         end method frame-command-table;
          define frame-gadget-bars ?class (?superclasses) ?more-slots end; }
-  { define frame-gadget-bars ?class:name (?superclasses:*) 
+  { define frame-gadget-bars ?class:name (?superclasses:*)
       input-focus (?frame:variable) ?:body; ?more-slots:*
     end }
     => { define method frame-input-focus
-	     (?frame :: ?class) => (sheet :: false-or(<sheet>))
-	   ?frame.%input-focus
-	   | (?frame.%input-focus
+             (?frame :: ?class) => (sheet :: false-or(<sheet>))
+           ?frame.%input-focus
+           | (?frame.%input-focus
                 := begin
                      ?body
                    end)
-         end method frame-input-focus; 
+         end method frame-input-focus;
          define frame-gadget-bars ?class (?superclasses) ?more-slots end; }
-  { define frame-gadget-bars ?class:name (?superclasses:*) 
+  { define frame-gadget-bars ?class:name (?superclasses:*)
       pages (?frame:variable) ?:body; ?more-slots:*
     end }
-    => { define method dialog-pages 
-	     (?frame :: ?class) => (pages :: <sequence>)
-	   let framem = frame-manager(?frame);
-	   ?frame.%pages
-	   | (?frame.%pages
+    => { define method dialog-pages
+             (?frame :: ?class) => (pages :: <sequence>)
+           let framem = frame-manager(?frame);
+           ?frame.%pages
+           | (?frame.%pages
                 := with-frame-manager (framem)
                      ?body
                    end)
-	 end method dialog-pages; 
+         end method dialog-pages;
          define frame-gadget-bars ?class (?superclasses) ?more-slots end; }
-  { define frame-gadget-bars ?class:name (?superclasses:*) 
+  { define frame-gadget-bars ?class:name (?superclasses:*)
       ?non-bar-slot:*; ?more-slots:*
     end }
     => { define frame-gadget-bars ?class (?superclasses) ?more-slots end; }
@@ -1481,12 +1481,12 @@ end macro frame-gadget-bars-definer;
 define macro frame-layout-definer
   { define frame-layout ?class:name (?superclasses:*) end }
     => { }
-  { define frame-layout ?class:name (?superclasses:*) 
+  { define frame-layout ?class:name (?superclasses:*)
       resource ?:name :: ?type:name = ?resource-id:expression; ?more-slots:*
     end }
     => { //---*** How do we now get this pane into a pinboard layout?
          define frame-layout ?class (?superclasses) ?more-slots end; }
-  { define frame-layout ?class:name (?superclasses:*) 
+  { define frame-layout ?class:name (?superclasses:*)
       ?non-resource-slot:*; ?more-slots:*
     end }
     => { define frame-layout ?class (?superclasses) ?more-slots end; }
@@ -1545,11 +1545,11 @@ define method layout-frame
   dynamic-bind (*current-frame* = frame)
     let top-sheet = top-level-sheet(frame);
     when (top-sheet)
-      let (new-width, new-height) 
+      let (new-width, new-height)
         = frame-top-level-sheet-size(frame-manager(frame), frame, width, height);
       when (width & new-width ~= width | height & new-height ~= height)
-	warn("Frame %= rejected size %dX%d, using %dX%d instead",
-	     frame, width, height, new-width, new-height)
+        warn("Frame %= rejected size %dX%d, using %dX%d instead",
+             frame, width, height, new-width, new-height)
       end;
       // Setting the top level sheets edges will call 'allocate-space'.
       //--- Don't bother with this if the size didn't change?
@@ -1574,7 +1574,7 @@ define method frame-layout (frame :: <simple-frame>) => (layout :: false-or(<she
   frame.%layout
 end method frame-layout;
 
-define method frame-layout-setter 
+define method frame-layout-setter
     (layout :: false-or(<sheet>), frame :: <simple-frame>)
  => (layout :: false-or(<sheet>))
   let old-layout = frame-layout(frame);
@@ -1582,7 +1582,7 @@ define method frame-layout-setter
     dynamic-bind (*old-layout* = old-layout)
       frame.%layout := layout;
       when (old-layout)
-	sheet-mapped?(old-layout) := #f
+        sheet-mapped?(old-layout) := #f
       end;
       let framem = frame-manager(frame);
       framem & update-frame-layout(framem, frame)
@@ -1661,28 +1661,28 @@ define method map-frame (frame :: <basic-frame>) => ()
       attach-frame(frame-manager(frame), frame);
       let top-sheet = top-level-sheet(frame);
       when (top-sheet)
-	let geometry = frame-geometry(frame);
-	let x      = geometry[0];
-	let y      = geometry[1];
-	let width  = geometry[2];
-	let height = geometry[3];
-	layout-frame(frame, width: width, height: height);
-	// This uses 'handle-event' rather than 'distribute-event' because 
-	// the user needs to see this before the event loop starts
-	handle-event(event-handler(frame),
-		     make(<frame-layed-out-event>, frame: frame));
-	// Position the frame on the screen
-	case 
-	  frame-centered?(frame) =>
-	    let (width, height) = frame-size(frame);
-	    let (screen-width, screen-height) = sheet-size(display(frame));
-	    let x = max(floor/(screen-width  - width,  2), 0);
-	    let y = max(floor/(screen-height - height, 2), 0);
-	    set-frame-position(frame, x, y);
-	  x & y => 
-	    set-frame-position(frame, x, y);
-	  otherwise => #f;
-	end
+        let geometry = frame-geometry(frame);
+        let x      = geometry[0];
+        let y      = geometry[1];
+        let width  = geometry[2];
+        let height = geometry[3];
+        layout-frame(frame, width: width, height: height);
+        // This uses 'handle-event' rather than 'distribute-event' because
+        // the user needs to see this before the event loop starts
+        handle-event(event-handler(frame),
+                     make(<frame-layed-out-event>, frame: frame));
+        // Position the frame on the screen
+        case
+          frame-centered?(frame) =>
+            let (width, height) = frame-size(frame);
+            let (screen-width, screen-height) = sheet-size(display(frame));
+            let x = max(floor/(screen-width  - width,  2), 0);
+            let y = max(floor/(screen-height - height, 2), 0);
+            set-frame-position(frame, x, y);
+          x & y =>
+            set-frame-position(frame, x, y);
+          otherwise => #f;
+        end
       end;
       map-frame(frame);
     #"unmapped" =>
@@ -1699,32 +1699,32 @@ define method note-frame-mapped
   when (top-sheet)
     sheet-mapped?(top-sheet) := #t
   end;
-  distribute-event(port(frame), 
-		   make(<frame-mapped-event>, frame: frame))
+  distribute-event(port(frame),
+                   make(<frame-mapped-event>, frame: frame))
 end method note-frame-mapped;
 
 
 define method unmap-frame (frame :: <basic-frame>) => ()
   unless (frame-state(frame) == #"destroyed")
     select (frame-state(frame))
-      #"detached", #"unmapped" => 
-	// Nothing to do
-	#f;
+      #"detached", #"unmapped" =>
+        // Nothing to do
+        #f;
       #"mapped" =>
-	frame-state(frame) := #"unmapped";
-	note-frame-unmapped(frame-manager(frame), frame);
-	// 'force-display' to ensure that the frame disappears immediately
-	force-display(frame);
-	let _port = port(frame);
-	// Distribute an exit event from the top level sheet so that none
-	// of the frame's sheets appear in the port's trace stack
-	distribute-event(_port, make(<pointer-exit-event>,
-				     sheet: top-level-sheet(frame),
-				     x: -1, y: -1,
-				     modifier-state: port-modifier-state(_port),
-				     pointer: port-pointer(_port)));
-	distribute-event(_port, make(<frame-unmapped-event>,
-				     frame: frame))
+        frame-state(frame) := #"unmapped";
+        note-frame-unmapped(frame-manager(frame), frame);
+        // 'force-display' to ensure that the frame disappears immediately
+        force-display(frame);
+        let _port = port(frame);
+        // Distribute an exit event from the top level sheet so that none
+        // of the frame's sheets appear in the port's trace stack
+        distribute-event(_port, make(<pointer-exit-event>,
+                                     sheet: top-level-sheet(frame),
+                                     x: -1, y: -1,
+                                     modifier-state: port-modifier-state(_port),
+                                     pointer: port-pointer(_port)));
+        distribute-event(_port, make(<frame-unmapped-event>,
+                                     frame: frame))
     end
   end
 end method unmap-frame;
@@ -1732,7 +1732,7 @@ end method unmap-frame;
 define method note-frame-unmapped
     (framem :: <frame-manager>, frame :: <basic-frame>) => ()
   let top-sheet = top-level-sheet(frame);
-  when (top-sheet)			// might be a pane-less frame
+  when (top-sheet)                        // might be a pane-less frame
     sheet-mapped?(top-sheet) := #f
   end
 end method note-frame-unmapped;
@@ -1750,7 +1750,7 @@ define sideways method destroy-frame (frame :: <frame>) => ()
       destroy-frame(owned-frame)
     end;
     let top-sheet = top-level-sheet(frame);
-    when (frame-manager(frame))		// just in case
+    when (frame-manager(frame))                // just in case
       detach-frame(frame-manager(frame), frame)
     end;
     when (top-sheet)
@@ -1759,7 +1759,7 @@ define sideways method destroy-frame (frame :: <frame>) => ()
     // Note that we use 'handle-event' instead of 'distribute-event',
     // because the event loop and event queue may well already be gone
     handle-event(event-handler(frame),
-		 make(<frame-destroyed-event>, frame: frame));
+                 make(<frame-destroyed-event>, frame: frame));
     frame-state(frame) := #"destroyed"
   end
 end method destroy-frame;
@@ -1948,17 +1948,17 @@ define method port-start-frame
       end;
       // If we are starting an "owned" frame, we need to be careful with
       // multiple threads -- in an "in thread" event processor, we mustn't
-      // start a new event loop since we already have one. 
+      // start a new event loop since we already have one.
       if (frame-needs-event-queue?(framem, frame, mode: frame-mode(frame)))
-	block ()
-	  let status-code = execute-frame-top-level(frame);
-	  return(status-code);
-	cleanup
-	  note-frame-top-level-finished(frame)
-	end
+        block ()
+          let status-code = execute-frame-top-level(frame);
+          return(status-code);
+        cleanup
+          note-frame-top-level-finished(frame)
+        end
       else
-	// Modeless, owned frame sharing a thread and event queue!
-	// Just return #f
+        // Modeless, owned frame sharing a thread and event queue!
+        // Just return #f
         return(#f)
       end
     end
@@ -1971,8 +1971,8 @@ define method execute-frame-top-level
   duim-debug-message("Starting up frame %=", frame);
   when (frame-thread(frame))
     cerror("Bludgeon ahead, assuming the risk",
-	   "The thread %= is already running the top-level function for frame %=",
-	   frame-thread(frame), frame)
+           "The thread %= is already running the top-level function for frame %=",
+           frame-thread(frame), frame)
   end;
   frame-thread(frame) := current-thread();
   block (return)
@@ -1980,7 +1980,7 @@ define method execute-frame-top-level
     frame.%exit-function := return;
     duim-debug-message("Starting top level loop for frame %=", frame);
     with-abort-restart-loop ("Exit frame %s",
-			     frame-title(frame) | "Unnamed frame")
+                             frame-title(frame) | "Unnamed frame")
       // This will return when a <frame-exited-event> comes in
       frame-top-level(frame)
     end;
@@ -1997,7 +1997,7 @@ define method frame-top-level
   // The "read-eval-print" loop for event-driven applications...
   let top-sheet = top-level-sheet(frame);
   assert(top-sheet,
-	 "The frame %= does not have a top-level sheet after it was started", frame);
+         "The frame %= does not have a top-level sheet after it was started", frame);
   while (#t)
     // Get an event and then handle it.  Note that the user
     // program is responsible for managing its own redisplay.
@@ -2016,7 +2016,7 @@ end method frame-top-level;
 define method note-frame-top-level-finished
     (frame :: <simple-frame>) => ()
   event-queue-clear(frame-command-queue(frame));
-  when (top-level-sheet(frame))		// some hackers do this themselves
+  when (top-level-sheet(frame))                // some hackers do this themselves
     let queue = sheet-event-queue(top-level-sheet(frame));
     when (queue)
       event-queue-clear(queue)
@@ -2033,8 +2033,8 @@ define method exit-frame
   let _port = port(frame);
   when (_port)
     distribute-event(_port, make(<frame-exit-event>,
-				 frame: frame,
-				 destroy-frame?: destroy?));
+                                 frame: frame,
+                                 destroy-frame?: destroy?));
     let top-sheet = top-level-sheet(frame);
     when (top-sheet)
       generate-trigger-event(_port, top-sheet)
@@ -2049,7 +2049,7 @@ define method exit-frame
 end method exit-frame;
 
 // Intended to be specialized by users
-define method frame-can-exit? 
+define method frame-can-exit?
     (frame :: <frame>) => (can-exit? :: <boolean>)
   #t
 end method frame-can-exit?;
@@ -2061,7 +2061,7 @@ define method handle-event
   end
 end method handle-event;
 
-define open generic do-exit-frame 
+define open generic do-exit-frame
     (framem :: <abstract-frame-manager>, frame :: <abstract-frame>,
      #key status-code, destroy?) => ();
 
@@ -2079,9 +2079,9 @@ define method do-exit-frame
   // Note that we use 'handle-event' instead of 'distribute-event',
   // because the event loop and event queue may well already be gone
   handle-event(event-handler(frame),
-	       make(<frame-exited-event>,
-		    frame: frame,
-		    status-code: status-code))
+               make(<frame-exited-event>,
+                    frame: frame,
+                    status-code: status-code))
 end method do-exit-frame;
 
 define method handle-event
@@ -2112,8 +2112,8 @@ define method do-display-pointer-documentation
     with-sheet-medium (medium = sheet)
       clear-box*(medium, sheet-viewport-region(sheet));
       when (string)
-	draw-text(medium, string, 0, 0,
-		  align-x: #"left", align-y: #"top")
+        draw-text(medium, string, 0, 0,
+                  align-x: #"left", align-y: #"top")
       end
     end
   end
@@ -2163,8 +2163,8 @@ define method display-presentation-documentation
       let time = get-internal-real-time();
       *last-pointer-documentation-modifier-state* := modifier-state;
       when (time < last-time + *pointer-documentation-interval*
-	    & modifier-state = old-modifier-state)
-	return(#f)
+            & modifier-state = old-modifier-state)
+        return(#f)
       end;
       *last-pointer-documentation-time* := time;
       //---*** See frame-manager-display-pointer-documentation

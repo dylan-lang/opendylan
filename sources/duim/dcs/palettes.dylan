@@ -185,21 +185,21 @@ end method recolor-dynamic-color;
 define macro with-delayed-recoloring
   { with-delayed-recoloring ?:body end }
     => { begin
-	   let _doing-delayed-recolors = *doing-delayed-recolors*;
-	   dynamic-bind (*doing-delayed-recolors* = #t)
-	     block ()
-	       ?body
-	     cleanup
-	       unless (_doing-delayed-recolors)
-		 for (_palette in *palettes*)
-		   let _recolors = palette-delayed-recolors(_palette);
-		   update-palette-entries(_palette, _recolors);
-		   _recolors.size := 0
-		 end
-	       end
-	     end
-	   end
-	 end }
+           let _doing-delayed-recolors = *doing-delayed-recolors*;
+           dynamic-bind (*doing-delayed-recolors* = #t)
+             block ()
+               ?body
+             cleanup
+               unless (_doing-delayed-recolors)
+                 for (_palette in *palettes*)
+                   let _recolors = palette-delayed-recolors(_palette);
+                   update-palette-entries(_palette, _recolors);
+                   _recolors.size := 0
+                 end
+               end
+             end
+           end
+         end }
 end macro with-delayed-recoloring;
 
 
@@ -231,7 +231,7 @@ define open generic layered-color (layered-color-set, #rest layers);
 
 define inline function make-layered-color-set
     (#rest layers) => (color-set :: <layered-color-set>)
-  make(<layered-color-set>, 
+  make(<layered-color-set>,
        layers: copy-sequence(layers),
        dynamic-array: make(<array>, dimensions: layers))
 end function make-layered-color-set;
@@ -253,25 +253,25 @@ end function make-layered-color;
 define method do-layered-colors
     (function :: <function>, set :: <layered-color-set>, #key layers = #()) => ()
   local method do-layers (layers, set-layers, dims) => ()
-	  if (empty?(set-layers))
-	    function(dimensions)
-	  else
-	    let layer = head(layers);
-	    let rest-layers = tail(layers);
-	    let set-layer :: <integer> = head(set-layers);
-	    let rest-set-layers = tail(set-layers);
-	    let rest-dims = tail(dims);
-	    if (layer)
-	      head(dims) := layer;
-	      do-layers(rest-layers, rest-set-layers, rest-dims)
-	    else
-	      for (i :: <integer> from 0 below set-layer)
-		head(dims) := i;
-		do-layers(rest-layers, rest-set-layers, rest-dims)
-	      end
-	    end
-	  end
-	end method;
+          if (empty?(set-layers))
+            function(dimensions)
+          else
+            let layer = head(layers);
+            let rest-layers = tail(layers);
+            let set-layer :: <integer> = head(set-layers);
+            let rest-set-layers = tail(set-layers);
+            let rest-dims = tail(dims);
+            if (layer)
+              head(dims) := layer;
+              do-layers(rest-layers, rest-set-layers, rest-dims)
+            else
+              for (i :: <integer> from 0 below set-layer)
+                head(dims) := i;
+                do-layers(rest-layers, rest-set-layers, rest-dims)
+              end
+            end
+          end
+        end method;
   let set-layers = layered-color-set-layers(set);
   let dimensions = make(<list>, size: size(set-layers));
   do-layers(as(<list>, layers), set-layers, dimensions)
@@ -317,17 +317,17 @@ define method layered-color-dynamic-colors
   else
     layered-color.%dynamic-colors
       := begin
-	   let dynamic-array
-	     = layered-color-set-dynamic-array(layered-color-set(layered-color));
-	   let dynamics :: <stretchy-object-vector> = make(<stretchy-vector>);
-	   do-layered-colors
-	     (method (dimensions)
-		add!(dynamics, apply(aref, dynamic-array, dimensions))
-	      end,
-	      layered-color-set(layered-color),
+           let dynamic-array
+             = layered-color-set-dynamic-array(layered-color-set(layered-color));
+           let dynamics :: <stretchy-object-vector> = make(<stretchy-vector>);
+           do-layered-colors
+             (method (dimensions)
+                add!(dynamics, apply(aref, dynamic-array, dimensions))
+              end,
+              layered-color-set(layered-color),
               layers: layered-color-layers(layered-color));
-	   dynamics
-	 end
+           dynamics
+         end
   end
 end method layered-color-dynamic-colors;
 

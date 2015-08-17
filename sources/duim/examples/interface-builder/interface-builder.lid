@@ -1,17 +1,17 @@
 Library:      interface-builder
 Author:       Andy Armstrong
 Synopsis:     DUIM interface builder
-Files:	library
-	module
-	name-generator
-	classes
-	models
-	duim-backend
-	representation
-	properties
-	frame
-	commands
-	start
+Files:        library
+              module
+              name-generator
+              classes
+              models
+              duim-backend
+              representation
+              properties
+              frame
+              commands
+              start
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.

@@ -79,5 +79,5 @@ define inline function ensure-command-decorator
     (decorator :: <command-decorator>) => ()
   let type = decorator-type(decorator);
   assert(type == <command> | type == <function>,
-	 "Trying to treat a non-command decorator as a command")
+         "Trying to treat a non-command decorator as a command")
 end function ensure-command-decorator;

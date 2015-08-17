@@ -34,11 +34,11 @@ define module-spec duim-geometry ()
     => (<bounding-box>);
   open generic-function box-position
        (<bounding-box>) => (<integer>, <integer>);
-  open generic-function set-box-position 
+  open generic-function set-box-position
        (<bounding-box>, <integer>, <integer>) => (<bounding-box>);
   open generic-function box-size
        (<bounding-box>) => (<integer>, <integer>);
-  open generic-function set-box-size 
+  open generic-function set-box-size
        (<bounding-box>, <integer>, <integer>) => (<bounding-box>);
   function box-left   (<bounding-box>) => (<integer>);
   function box-top    (<bounding-box>) => (<integer>);
@@ -46,7 +46,7 @@ define module-spec duim-geometry ()
   function box-bottom (<bounding-box>) => (<integer>);
   function box-width  (<bounding-box>) => (<integer>);
   function box-height (<bounding-box>) => (<integer>);
-  function make-bounding-box 
+  function make-bounding-box
       (<real>, <real>, <real>, <real>) => (<bounding-box>);
 
   // Regions
@@ -136,7 +136,7 @@ define protocol-spec duim-events ()
   open abstract class <frame-event> (<event>);
   sealed instantiable class <timer-event> (<frame-event>);
 end protocol-spec duim-events;
-           
+
 define module-spec duim-sheets ()
   open abstract class <caret> (<object>);
   open abstract class <display> (<sheet>);
@@ -150,7 +150,7 @@ define module-spec duim-sheets ()
   sealed instantiable class <undefined-text-style-mapping> (<error>);
   protocol duim-events;
 end module-spec duim-sheets;
-           
+
 
 /// Graphics
 
@@ -158,7 +158,7 @@ define module-spec duim-graphics ()
   open abstract instantiable class <pixmap> (<image>);
   open abstract instantiable class <pixmap-medium> (<medium>);
 end module-spec duim-graphics;
-           
+
 
 /// Layouts
 
@@ -180,7 +180,7 @@ define module-spec duim-layouts ()
   open abstract instantiable class <table-layout> (<layout>);
   open abstract instantiable class <grid-layout> (<table-layout>);
 end module-spec duim-layouts;
-           
+
 
 /// Gadget classes
 
@@ -239,7 +239,7 @@ define module-spec duim-gadgets ()
   open abstract instantiable class <table-item> (<object>);
   open abstract instantiable class <progress-bar> (<value-range-gadget>);
 end module-spec duim-gadgets;
-           
+
 
 /// Frames
 
@@ -250,7 +250,7 @@ define protocol-spec duim-commands ()
   open abstract instantiable class <command-table> (<object>);
 end protocol-spec duim-commands;
 
-define protocol-spec duim-frame-events ()           
+define protocol-spec duim-frame-events ()
   sealed instantiable class <frame-created-event> (<frame-event>);
   sealed instantiable class <frame-destroyed-event> (<frame-event>);
   sealed instantiable class <frame-exit-event> (<frame-event>);
@@ -283,7 +283,7 @@ define module-spec duim-extended-geometry ()
   open abstract instantiable class <polyline> (<path>);
   open abstract instantiable class <rectangle> (<area>);
 end module-spec duim-extended-geometry;
-           
+
 
 /// Gadget panes
 

@@ -1,9 +1,9 @@
 Library:      helpmate
 Author:       Jason Trenouth
 Synopsis:     Example DUIM Help code
-Files:	library
-	helpmate
-        start-helping
+Files:        library
+              helpmate
+              start-helping
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.

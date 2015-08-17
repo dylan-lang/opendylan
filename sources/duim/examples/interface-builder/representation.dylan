@@ -71,7 +71,7 @@ end method ensure-representation;
 
 // Make a representation
 
-define method make-representation 
+define method make-representation
     (frame :: <frame>, model :: <model-object>, #key add-to-parent? = #t)
  => (representation :: <representation>)
   do-make-representation(frame, model, add-to-parent?: add-to-parent?);
@@ -81,7 +81,7 @@ define method make-representation
   model.model-representation
 end method make-representation;
 
-define method do-make-representation 
+define method do-make-representation
     (frame :: <frame>, model :: <model-frame>, #key)
  => (new-frame :: <frame>)
   let (x, y) = frame-position(frame);
@@ -103,7 +103,7 @@ define method do-make-representation
   with-frame-manager (frame-manager(frame))
     let info = model-class(model);
     let class = info.info-class;
-    let arguments 
+    let arguments
       = concatenate(model-arguments(model),
                     representation-extra-arguments(model, class));
     let parent-rep = find-parent-representation(model);
@@ -143,7 +143,7 @@ define method representation-extra-arguments
                              end)
 end method representation-extra-arguments;
 
-define method update-representation-parent 
+define method update-representation-parent
     (sheet :: <sheet>, representation :: <representation-frame>) => ()
   select (sheet by instance?)
     <menu-bar>   => representation.frame-menu-bar   := sheet;
@@ -177,7 +177,7 @@ define method resize-representation
   #f
 end method resize-representation;
 
-    
+
 define method resize-representation
     (model :: <model-sheet>, representation :: <menu>)
   #f
@@ -313,7 +313,7 @@ end method frame-needs-refreshing?;
 
 /// Class information
 
-define method class-has-children? 
+define method class-has-children?
     (class :: <class>) => (has-children? :: <boolean>)
   subtype?(class, <layout>)
     | subtype?(class, <menu-bar>)

@@ -1,8 +1,8 @@
 Library:   win32-duim-regression-test-suite
 Author:    Andy Armstrong, Scott McKay
 Synopsis:  A regression test-suite for Win32 DUIM
-Files:	  library
-	  module
+Files:    library
+          module
           utilities
           harness
           general

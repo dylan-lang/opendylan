@@ -13,7 +13,7 @@ define library duim-formatting
   use duim-geometry;
   use duim-DCs;
   use duim-sheets;
-  use duim-graphics;  
+  use duim-graphics;
   use duim-layouts;
   use duim-gadgets;
   use duim-frames;

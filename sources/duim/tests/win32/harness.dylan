@@ -13,21 +13,21 @@ define variable *bitmaps-initialized?* :: <boolean> = #f;
 define macro initialize-bitmap
   { initialize-bitmap(?bitmap:name, ?resource-id:expression) }
     => { let _id     = as(<byte-string>, ?resource-id);
-	 let _bitmap = read-image-as(<win32-bitmap>, _id, #"bitmap",
-				     //--- Strictly speaking, we shouldn't need to do this
-				     width: 16, height: 16);
-	 when (_bitmap)
-	   ?bitmap := _bitmap
-	 end }
+         let _bitmap = read-image-as(<win32-bitmap>, _id, #"bitmap",
+                                     //--- Strictly speaking, we shouldn't need to do this
+                                     width: 16, height: 16);
+         when (_bitmap)
+           ?bitmap := _bitmap
+         end }
 end macro initialize-bitmap;
 
 define macro initialize-icon
   { initialize-icon(?icon:name, ?resource-id:expression) }
     => { let _id   = as(<byte-string>, ?resource-id);
-	 let _icon = read-image-as(<win32-icon>, _id, #"small-icon");
-	 when (_icon)
-	   ?icon := _icon
-	 end }
+         let _icon = read-image-as(<win32-icon>, _id, #"small-icon");
+         when (_icon)
+           ?icon := _icon
+         end }
 end macro initialize-icon;
 
 define variable $cut-icon   = #f;
@@ -70,7 +70,7 @@ define method find-test-class (class :: <class>)
   end
 end method find-test-class;
 
-define method install-test 
+define method install-test
     (frame-class :: <class>, title :: <string>)
   let test = find-test-class(frame-class);
   if (test)
@@ -81,8 +81,8 @@ define method install-test
   frame-class
 end method install-test;
 
-define method start-test-frame 
-    (frame :: <frame>, class :: <class>, 
+define method start-test-frame
+    (frame :: <frame>, class :: <class>,
      #rest args,
      #key frame-manager: framem)
  => (thread :: <thread>)
@@ -91,19 +91,19 @@ define method start-test-frame
     let frame-class = test[0];
     let title = test[1];
     local method create-test-frame () => ()
-	    with-abort-restart ()
-	      let test-frame
-	        = if (test)
-		    apply(make, frame-class, title: title, args)
-		  else
-		    apply(make, class, title: "Test", args)
-		  end;
-	      start-frame(test-frame)
-	    end
-	  end method create-test-frame;
+            with-abort-restart ()
+              let test-frame
+                = if (test)
+                    apply(make, frame-class, title: title, args)
+                  else
+                    apply(make, class, title: "Test", args)
+                  end;
+              start-frame(test-frame)
+            end
+          end method create-test-frame;
     make(<thread>,
-	 name: title,
-	 function: create-test-frame)
+         name: title,
+         function: create-test-frame)
   end
 end method start-test-frame;
 
@@ -120,12 +120,12 @@ end method sorted-test-frames;
 define frame <tests-harness> (<simple-frame>)
   pane update (frame)
     make(<push-button>,
-	 label: "Update",
-	 documentation: "Update the list of available tests",
-	 activate-callback: update-tests-harness);
+         label: "Update",
+         documentation: "Update the list of available tests",
+         activate-callback: update-tests-harness);
   pane tests (frame)
     make(<list-box>,
-	 documentation: "Double-click on a test name to run it",
+         documentation: "Double-click on a test name to run it",
          items: sorted-test-frames(),
          label-key: second,
          value-key: first,
@@ -142,13 +142,13 @@ define frame <tests-harness> (<simple-frame>)
   layout (frame) frame.main-layout;
 end frame <tests-harness>;
 
-define method update-tests-harness 
+define method update-tests-harness
     (sheet :: <sheet>) => ()
   let frame = sheet-frame(sheet);
   gadget-items(frame.tests) := sorted-test-frames()
 end method update-tests-harness;
 
-define method start-tests 
+define method start-tests
     () => (status-code :: <integer>)
   let frame = make(<tests-harness>, title: "Tests");
   frame-input-focus(frame) := frame.tests;

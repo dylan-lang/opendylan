@@ -1,9 +1,9 @@
 Library:      duim-core
 Synopsis:     DUIM core
 Author:       Scott McKay, Andy Armstrong
-Target-Type:	dll
+Target-Type:  dll
 Files:  library
-	module
+        module
 Major-version: 2
 Minor-version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

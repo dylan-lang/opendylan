@@ -104,8 +104,8 @@ define method do-add-child
           add!(new-children, old-child);
           add!(new-children, child);
         otherwise =>
-	  add!(new-children, child);
-	  add!(new-children, old-child);
+          add!(new-children, child);
+          add!(new-children, old-child);
       end;
       record.%children := new-children;
     otherwise =>
@@ -121,7 +121,7 @@ define method do-remove-child
       #f;
     output-record?(children) =>
       when (children == child)
-	record.%children := #f
+        record.%children := #f
       end;
     otherwise =>
       remove!(record.%children, child);
@@ -145,10 +145,10 @@ define method do-sheet-children
       function(children);
     otherwise =>
       let iteration-protocol
-	= if (z-order == #"top-down") top-down-iteration-protocol
-	  else bottom-up-iteration-protocol end;
+        = if (z-order == #"top-down") top-down-iteration-protocol
+          else bottom-up-iteration-protocol end;
       for (child :: <sheet> in children using iteration-protocol)
-	function(child)
+        function(child)
       end;
   end
 end method do-sheet-children;
@@ -166,10 +166,10 @@ define method do-sheet-tree
       do-sheet-tree(function, children);
     otherwise =>
       without-bounds-checks
-	for (i :: <integer> from 0 below size(children))
-	  let child = children[i];
-	  do-sheet-tree(function, child)
-	end
+        for (i :: <integer> from 0 below size(children))
+          let child = children[i];
+          do-sheet-tree(function, child)
+        end
       end;
   end
 end method do-sheet-tree;
@@ -187,19 +187,19 @@ define method do-children-containing-position
       let (left, top, right, bottom) = box-edges(child);
       transform-coordinates!(sheet-transform(child), left, top, right, bottom);
       when (ltrb-contains-position?(left, top, right, bottom, x, y))
-	function(child)
+        function(child)
       end;
     otherwise =>
       // Walk from the top to the bottom of the Z-ordering
       without-bounds-checks
-	for (i :: <integer> from size(children) - 1 to 0 by -1)
-	  let child = children[i];
-	  let (left, top, right, bottom) = box-edges(child);
-	  transform-coordinates!(sheet-transform(child), left, top, right, bottom);
-	  when (ltrb-contains-position?(left, top, right, bottom, x, y))
-	    function(child)
-	  end
-	end
+        for (i :: <integer> from size(children) - 1 to 0 by -1)
+          let child = children[i];
+          let (left, top, right, bottom) = box-edges(child);
+          transform-coordinates!(sheet-transform(child), left, top, right, bottom);
+          when (ltrb-contains-position?(left, top, right, bottom, x, y))
+            function(child)
+          end
+        end
       end;
   end
 end method do-children-containing-position;
@@ -214,35 +214,35 @@ define method do-children-overlapping-region
     output-record?(children) =>
       let child = children;
       if (everywhere?(region))
-	function(child)
+        function(child)
       else
-	let (left, top, right, bottom) = box-edges(region);
-	let (cleft, ctop, cright, cbottom) = box-edges(child);
-	transform-coordinates!(sheet-transform(child),
-			       cleft, ctop, cright, cbottom);
-	when (ltrb-intersects-ltrb?(left, top, right, bottom,
-				    cleft, ctop, cright, cbottom))
-	  function(child)
-	end
+        let (left, top, right, bottom) = box-edges(region);
+        let (cleft, ctop, cright, cbottom) = box-edges(child);
+        transform-coordinates!(sheet-transform(child),
+                               cleft, ctop, cright, cbottom);
+        when (ltrb-intersects-ltrb?(left, top, right, bottom,
+                                    cleft, ctop, cright, cbottom))
+          function(child)
+        end
       end;
     otherwise =>
       if (everywhere?(region))
-	do(function, children)
+        do(function, children)
       else
-	let (left, top, right, bottom) = box-edges(region);
-	// Walk from the bottom to the top of the Z-ordering
-	without-bounds-checks
-	  for (i :: <integer> from 0 below size(children))
-	    let child = children[i];
-	    let (cleft, ctop, cright, cbottom) = box-edges(child);
-	    transform-coordinates!(sheet-transform(child),
-				   cleft, ctop, cright, cbottom);
-	    when (ltrb-intersects-ltrb?(left, top, right, bottom,
-					cleft, ctop, cright, cbottom))
-	      function(child)
-	    end
-	  end
-	end
+        let (left, top, right, bottom) = box-edges(region);
+        // Walk from the bottom to the top of the Z-ordering
+        without-bounds-checks
+          for (i :: <integer> from 0 below size(children))
+            let child = children[i];
+            let (cleft, ctop, cright, cbottom) = box-edges(child);
+            transform-coordinates!(sheet-transform(child),
+                                   cleft, ctop, cright, cbottom);
+            when (ltrb-intersects-ltrb?(left, top, right, bottom,
+                                        cleft, ctop, cright, cbottom))
+              function(child)
+            end
+          end
+        end
       end
   end
 end method do-children-overlapping-region;

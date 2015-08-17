@@ -39,36 +39,36 @@ end macro with-temporary-medium;
 define macro with-drawing-options
   { with-drawing-options (?medium:name, #rest ?options:expression) ?:body end }
     => { begin
-	   let with-drawing-options-body = method () ?body end;
-	   do-with-drawing-options(?medium, with-drawing-options-body, ?options)
-	 end }
+           let with-drawing-options-body = method () ?body end;
+           do-with-drawing-options(?medium, with-drawing-options-body, ?options)
+         end }
 end macro with-drawing-options;
 
 define macro with-pen
   { with-pen (?medium:name, #rest ?options:expression) ?:body end }
     => { begin
-	   let with-pen-body = method () ?body end;
-	   let _pen = make(<pen>, ?options);
-	   do-with-drawing-options(?medium, with-pen-body, pen: _pen)
-	 end }
+           let with-pen-body = method () ?body end;
+           let _pen = make(<pen>, ?options);
+           do-with-drawing-options(?medium, with-pen-body, pen: _pen)
+         end }
 end macro with-pen;
 
 define macro with-brush
   { with-brush (?medium:name, #rest ?options:expression) ?:body end }
     => { begin
-	   let with-brush-body = method () ?body end;
-	   let _brush = make(<brush>, ?options);
-	   do-with-drawing-options(?medium, with-brush-body, brush: _brush)
-	 end }
+           let with-brush-body = method () ?body end;
+           let _brush = make(<brush>, ?options);
+           do-with-drawing-options(?medium, with-brush-body, brush: _brush)
+         end }
 end macro with-brush;
 
 define macro with-text-style
   { with-text-style (?medium:name, #rest ?options:expression) ?:body end }
     => { begin
-	   let with-text-style-body = method () ?body end;
-	   let _text-style = make(<text-style>, ?options);
-	   do-with-text-style(?medium, with-text-style-body, _text-style)
-	 end }
+           let with-text-style-body = method () ?body end;
+           let _text-style = make(<text-style>, ?options);
+           do-with-text-style(?medium, with-text-style-body, _text-style)
+         end }
 end macro with-text-style;
 
 
@@ -145,6 +145,6 @@ end macro with-clipping-region;
 define macro with-frame-manager
   { with-frame-manager (?framem:expression) ?:body end }
     => { dynamic-bind (*current-frame-manager* = ?framem)
-	   ?body
-	 end }
+           ?body
+         end }
 end macro with-frame-manager;

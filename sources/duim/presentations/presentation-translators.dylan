@@ -44,8 +44,8 @@ define presentation-action presentation-menu-action
      documentation: "Menu",
      gesture: XXX)
   call-presentation-menu(presentation, *input-context*, frame,
-			 sheet: sheet, x: x, y: y,
-			 for-menu?: #t
+                         sheet: sheet, x: x, y: y,
+                         for-menu?: #t
 end presentation-action presentation-menu-action;
 
 define method call-presentation-menu

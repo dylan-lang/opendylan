@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Table panes
 
-define open abstract class <table-layout> 
+define open abstract class <table-layout>
     (<layout-border-mixin>,
      <horizontal-layout-mixin>,
      <vertical-layout-mixin>,
@@ -23,67 +23,67 @@ define open abstract class <table-layout>
   sealed slot %cell-space-requirements :: false-or(<sequence>) = #f;
 end class <table-layout>;
 
-define method initialize 
+define method initialize
     (table :: <table-layout>, #key contents, children, rows, columns) => ()
   // Either the contents should be a sequence of sequences of sheets,
   // or supply children with a number of rows and columns
   assert(~(contents & children),
-	 "You can't supply both contents and children to a table pane");
+         "You can't supply both contents and children to a table pane");
   next-method();
   when (contents | (children & ~empty?(children)))
     // Compute size of contents array and allocate it
     if (children)
       case
-	rows    => columns := columns | ceiling/(size(children), rows);
-	columns => rows    := rows    | ceiling/(size(children), columns);
-	otherwise => error("You must supply either rows or columns for table panes");
+        rows    => columns := columns | ceiling/(size(children), rows);
+        columns => rows    := rows    | ceiling/(size(children), columns);
+        otherwise => error("You must supply either rows or columns for table panes");
       end
     elseif (contents)
       select (contents by instance?)
-	<sequence> =>
-	  rows    := size(contents);
-	  columns := if (empty?(contents))
-		       0		// he asked for a useless table
-		     else
-		       reduce(method (v, x) max(v, size(x)) end, 0, contents)
-		     end;
-	<array> => 
-	  rows    := dimension(contents, 0);
-	  columns := dimension(contents, 1);
+        <sequence> =>
+          rows    := size(contents);
+          columns := if (empty?(contents))
+                       0                // he asked for a useless table
+                     else
+                       reduce(method (v, x) max(v, size(x)) end, 0, contents)
+                     end;
+        <array> =>
+          rows    := dimension(contents, 0);
+          columns := dimension(contents, 1);
       end
     end;
-    let rows    :: <integer> = rows;	// tighten up the types
+    let rows    :: <integer> = rows;        // tighten up the types
     let columns :: <integer> = columns;
     table.%contents := make(<array>,
-			    dimensions: list(rows, columns));
+                            dimensions: list(rows, columns));
     if (children)
       // Initialize contents from a sequence of children
       assert(size(children) <= rows * columns,
-	     "You are giving too many children to %=", table);
+             "You are giving too many children to %=", table);
       fill-array!(table-contents(table), children)
     elseif (contents & ~empty?(contents))
       select (contents by instance?)
-	<sequence> =>
-	  // Initialize children nested sequence of contents
-	  for (cells in contents,	// a row of panes, that is...
-	       row :: <integer> from 0)
-	    for (cell in cells,		// a cell is one pane in a row
-		 column :: <integer> from 0)
-	      when (cell)
-		add-child(table, cell, row: row, column: column)
-	      end
-	    end
-	  end;
-	<array> => 
-	  // Initialize children from a contents array
-	  for (row :: <integer> from 0 below rows)
-	    for (column :: <integer> from 0 below columns)
-	      let cell = contents[row, column];
-	      when (cell)
-		add-child(table, cell, row: row, column: column)
-	      end
-	    end
-	  end
+        <sequence> =>
+          // Initialize children nested sequence of contents
+          for (cells in contents,        // a row of panes, that is...
+               row :: <integer> from 0)
+            for (cell in cells,                // a cell is one pane in a row
+                 column :: <integer> from 0)
+              when (cell)
+                add-child(table, cell, row: row, column: column)
+              end
+            end
+          end;
+        <array> =>
+          // Initialize children from a contents array
+          for (row :: <integer> from 0 below rows)
+            for (column :: <integer> from 0 below columns)
+              let cell = contents[row, column];
+              when (cell)
+                add-child(table, cell, row: row, column: column)
+              end
+            end
+          end
       end
     end
   end
@@ -97,7 +97,7 @@ define method do-raise-sheet
   #f
 end method do-raise-sheet;
 
-define method table-contents-setter 
+define method table-contents-setter
     (contents :: <array>, table :: <table-layout>)
   assert(size(dimensions(contents)) = 2,
          "You are supplying a non-two dimensional array for %=", table);
@@ -129,11 +129,11 @@ define method table-end-position
     for (index :: <integer> from ncells - 1 to 0 by -1)
       let (row, column) = floor/(index, nrows);
       when (contents[row, column])
-	return(if (index < ncells - 1)
-		 index + 1
-	       else
-		 error("The table pane %= is full", table)
-	       end)
+        return(if (index < ncells - 1)
+                 index + 1
+               else
+                 error("The table pane %= is full", table)
+               end)
       end
     end;
     // If the table is empty, the last shall be the first
@@ -148,21 +148,21 @@ define method do-add-child
   unless (row & column)
     let nrows = dimension(contents, 0);
     let index = select (index)
-		  #"start"  => 0;
-		  #"end"    => table-end-position(table);
-		  otherwise => index;
-		end;
+                  #"start"  => 0;
+                  #"end"    => table-end-position(table);
+                  otherwise => index;
+                end;
     let (the-column, the-row) = floor/(index, nrows);
     row := the-row;
     column := the-column;
   end;
   assert(~contents[row, column],
-	 "Attempting to replace an existing child in %= using ADD-CHILD", table);
+         "Attempting to replace an existing child in %= using ADD-CHILD", table);
   contents[row, column] := child;
   next-method()
 end method do-add-child;
 
-define method do-remove-child 
+define method do-remove-child
     (table :: <table-layout>, child :: <sheet>) => ()
   let contents = table-contents(table);
   let (row, col) = find-table-child(contents, child);
@@ -187,9 +187,9 @@ define method find-table-child
   block (return)
     for (row :: <integer> from 0 below nrows)
       for (col :: <integer> from 0 below ncols)
-	when (contents[row, col] == child)
-	  return(row, col)
-	end
+        when (contents[row, col] == child)
+          return(row, col)
+        end
       end
     end;
     values(#f, #f)
@@ -198,7 +198,7 @@ end method find-table-child;
 
 
 // Options can be any of the pane sizing options
-// Note that this has no syntax 
+// Note that this has no syntax
 define macro tabling
   { tabling (#rest ?options:expression)
       ?contents:*
@@ -235,23 +235,23 @@ define method do-compose-space
       let min-height :: <integer> = 0;
       let max-height :: <integer> = 0;
       for (cell :: <integer> from 0 below ncols)
-	let item = contents[row, cell];
-	when (item & ~sheet-withdrawn?(item))
-	  let space-req = compose-space(item);
-	  let (w, w-, w+, h, h-, h+) = space-requirement-components(item, space-req);
-	  ignore(w, w-, w+);
-	  // Max the heights
-	  max!(height,     h);
-	  max!(min-height, h-);
-	  // That max height of the row is the largest max height
-	  // for any cell in the row
-	  max!(max-height, h+)
-	end
+        let item = contents[row, cell];
+        when (item & ~sheet-withdrawn?(item))
+          let space-req = compose-space(item);
+          let (w, w-, w+, h, h-, h+) = space-requirement-components(item, space-req);
+          ignore(w, w-, w+);
+          // Max the heights
+          max!(height,     h);
+          max!(min-height, h-);
+          // That max height of the row is the largest max height
+          // for any cell in the row
+          max!(max-height, h+)
+        end
       end;
       add!(row-srs,
-	   make(<space-requirement>,
-		width: 0,
-		height: height, min-height: min-height, max-height: max-height));
+           make(<space-requirement>,
+                width: 0,
+                height: height, min-height: min-height, max-height: max-height));
       // Add the heights
       inc!(oh,     height);
       inc!(omin-h, min-height);
@@ -264,23 +264,23 @@ define method do-compose-space
       let min-width :: <integer> = 0;
       let max-width :: <integer> = 0;
       for (row :: <integer> from 0 below nrows)
-	let item = contents[row, cell];
-	when (item & ~sheet-withdrawn?(item))
-	  let space-req = compose-space(item);
-	  let (w, w-, w+, h, h-, h+) = space-requirement-components(item, space-req);
-	  ignore(h, h-, h+);
-	  // Max the widths
-	  max!(width,     w);
-	  max!(min-width, w-);
-	  // That max width of the column is the largest max height
-	  // for any cell in the column
-	  max!(max-width, w+)
-	end
+        let item = contents[row, cell];
+        when (item & ~sheet-withdrawn?(item))
+          let space-req = compose-space(item);
+          let (w, w-, w+, h, h-, h+) = space-requirement-components(item, space-req);
+          ignore(h, h-, h+);
+          // Max the widths
+          max!(width,     w);
+          max!(min-width, w-);
+          // That max width of the column is the largest max height
+          // for any cell in the column
+          max!(max-width, w+)
+        end
       end;
       add!(cell-srs,
-	   make(<space-requirement>,
-		width: width, min-width: min-width, max-width: max-width,
-		height: 0));
+           make(<space-requirement>,
+                width: width, min-width: min-width, max-width: max-width,
+                height: 0));
       inc!(ow,     width);
       inc!(omin-w, min-width);
       inc!(omax-w, max-width)
@@ -304,8 +304,8 @@ define method do-compose-space
     end;
     table.%cell-space-requirements := cell-srs;
     make(<space-requirement>,
-	 width:  ow, min-width:  omin-w, max-width:  omax-w,
-	 height: oh, min-height: omin-h, max-height: omax-h)
+         width:  ow, min-width:  omin-w, max-width:  omax-w,
+         height: oh, min-height: omin-h, max-height: omax-h)
   end
 end method do-compose-space;
 
@@ -323,48 +323,48 @@ define method do-allocate-space
     let total-y-spacing :: <integer> = y-spacing * (nrows - 1);
     let row-heights
       = compose-space-for-items
-	  (table,
-	   height - total-y-spacing, space-req, table.%row-space-requirements,
-	   space-requirement-height, space-requirement-min-height, space-requirement-max-height,
-	   identity,
-	   ratios: layout-y-ratios(table));
+          (table,
+           height - total-y-spacing, space-req, table.%row-space-requirements,
+           space-requirement-height, space-requirement-min-height, space-requirement-max-height,
+           identity,
+           ratios: layout-y-ratios(table));
     let cell-widths
       = compose-space-for-items
-	  (table,
-	   width - total-x-spacing, space-req, table.%cell-space-requirements,
-	   space-requirement-width, space-requirement-min-width, space-requirement-max-width,
-	   identity,
-	   ratios: layout-x-ratios(table));
+          (table,
+           width - total-x-spacing, space-req, table.%cell-space-requirements,
+           space-requirement-width, space-requirement-min-width, space-requirement-max-width,
+           identity,
+           ratios: layout-x-ratios(table));
     let y :: <integer> = border;
     for (row :: <integer> from 0 below nrows,
-	 row-height :: <integer> in row-heights)
+         row-height :: <integer> in row-heights)
       let cell-widths = cell-widths;
       let x :: <integer> = border;
       for (cell :: <integer> from 0 below ncols,
-	   cell-width :: <integer> in cell-widths)
+           cell-width :: <integer> in cell-widths)
         let item = contents[row, cell];
         when (item & ~sheet-withdrawn?(item))
           let item-space
             = compose-space(item, width: cell-width, height: row-height);
-	  let (w, w-, w+, h, h-, h+) = space-requirement-components(item, item-space);
-	  ignore(w, h);
-	  let item-width  :: <integer> = constrain-size(cell-width, w-, w+);
+          let (w, w-, w+, h, h-, h+) = space-requirement-components(item, item-space);
+          ignore(w, h);
+          let item-width  :: <integer> = constrain-size(cell-width, w-, w+);
           let item-height :: <integer> = constrain-size(row-height, h-, h+);
-	  let aligned-x :: <integer>
-	    = layout-align-sheet-x(table, item,
-				   x, x + cell-width - item-width,
-				   key: cell);
-	  let aligned-y :: <integer>
-	    = layout-align-sheet-y(table, item,
-				   y, y + row-height - item-height,
-				   key: row);
-	  set-sheet-edges(item,
-			  aligned-x, aligned-y,
-			  // Ensure end cells stay within table
-			  min(aligned-x + item-width, width),
-			  min(aligned-y + item-height, height))
-	end;
-	inc!(x, cell-width + x-spacing)
+          let aligned-x :: <integer>
+            = layout-align-sheet-x(table, item,
+                                   x, x + cell-width - item-width,
+                                   key: cell);
+          let aligned-y :: <integer>
+            = layout-align-sheet-y(table, item,
+                                   y, y + row-height - item-height,
+                                   key: row);
+          set-sheet-edges(item,
+                          aligned-x, aligned-y,
+                          // Ensure end cells stay within table
+                          min(aligned-x + item-width, width),
+                          min(aligned-y + item-height, height))
+        end;
+        inc!(x, cell-width + x-spacing)
       end;
       inc!(y, row-height + y-spacing)
     end
@@ -378,7 +378,7 @@ define sealed class <table-layout-pane> (<table-layout>)
   keyword accepts-focus?: = #f;
 end class <table-layout-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <table-layout>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<table-layout-pane>, #f)
@@ -410,7 +410,7 @@ define method do-compose-space
     let total-y-spacing :: <integer>
       = (layout-y-spacing(grid) * (nrows - 1)) + border*2;
     let (width :: <integer>, min-width :: <integer>, max-width :: <integer>,
-	 height :: <integer>, min-height :: <integer>, max-height :: <integer>)
+         height :: <integer>, min-height :: <integer>, max-height :: <integer>)
       = space-requirement-components(grid, cell-space-requirement(grid));
     width      := width      * ncols + total-x-spacing;
     min-width  := min-width  * ncols + total-x-spacing;
@@ -419,8 +419,8 @@ define method do-compose-space
     min-height := min-height * nrows + total-y-spacing;
     min-height := max-height * nrows + total-y-spacing;
     make(<space-requirement>,
-	 width:  width,  min-width:  min-width,  max-width:  max-width,
-	 height: height, min-height: min-height, max-height: max-height)
+         width:  width,  min-width:  min-width,  max-width:  max-width,
+         height: height, min-height: min-height, max-height: max-height)
   end
 end method do-compose-space;
 
@@ -434,7 +434,7 @@ define method do-allocate-space
     let x-spacing :: <integer> = layout-x-spacing(grid);
     let y-spacing :: <integer> = layout-y-spacing(grid);
     let (cell-width  :: <integer>, min-width, max-width,
-	 cell-height :: <integer>, min-height, max-height)
+         cell-height :: <integer>, min-height, max-height)
       = space-requirement-components(grid, cell-space-requirement(grid));
     ignore(min-width, max-width, min-height, max-height);
     //--- This should give extra space to the cell, obeying min and max sizes
@@ -444,9 +444,9 @@ define method do-allocate-space
       for (cell :: <integer> from 0 below ncols)
         let item = contents[row, cell];
         when (item & ~sheet-withdrawn?(item))
-	  set-sheet-edges(item, x, y, x + cell-width, y + cell-height)
-	end;
-	inc!(x, cell-width + x-spacing)
+          set-sheet-edges(item, x, y, x + cell-width, y + cell-height)
+        end;
+        inc!(x, cell-width + x-spacing)
       end;
       inc!(y, cell-height + y-spacing)
     end
@@ -460,7 +460,7 @@ define sealed class <grid-layout-pane> (<grid-layout>)
   keyword accepts-focus?: = #f;
 end class <grid-layout-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <grid-layout>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<grid-layout-pane>, #f)

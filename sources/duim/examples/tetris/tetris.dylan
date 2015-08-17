@@ -25,14 +25,14 @@ define function main () => ()
   // looking at the menus).
 
   local method tick-loop() => ();
-	  while (#t)
-	    sleep(board.speed);
-	    if (frame.ready-for-tick)
-	      frame.ready-for-tick := #f;
-	      call-in-frame(frame, act, frame.game-pane, #"tick");
-	    end;
-	  end;
-	end;
+          while (#t)
+            sleep(board.speed);
+            if (frame.ready-for-tick)
+              frame.ready-for-tick := #f;
+              call-in-frame(frame, act, frame.game-pane, #"tick");
+            end;
+          end;
+        end;
 
   // start a new thread to send the tick actions
 

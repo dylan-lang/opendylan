@@ -32,7 +32,7 @@ define constant *rotate-down-1/4* = make-rotation-transform(-0.25);
 
 define constant *transforms-to-invert*
   = list(list($identity-transform, $identity-transform),
-	 list(*translate-up-10+10*, *translate-down-10+10*),
+         list(*translate-up-10+10*, *translate-down-10+10*),
          list(*scale-up-4x4*, *scale-down-4x4*),
          list(*rotate-up-1/4*, *rotate-down-1/4*));
 
@@ -71,14 +71,14 @@ end test invert-transforms-test;
 
 define method check-transform-box
     (name :: <string>, transform :: <transform>,
-     l1 :: <real>, t1 :: <real>, r1 :: <real>, b1 :: <real>, 
+     l1 :: <real>, t1 :: <real>, r1 :: <real>, b1 :: <real>,
      l2 :: <real>, t2 :: <real>, r2 :: <real>, b2 :: <real>) => ()
   check-true(format-to-string("%s transform-box", name),
              begin
                let (left, top, right, bottom) = transform-box(transform, l1, t1, r1, b1);
                left = l2 & top = t2 & right = r2 & bottom = b2
              end)
-end method check-transform-box; 
+end method check-transform-box;
 
 define test transform-box-test ()
   check-transform-box
@@ -116,7 +116,7 @@ define function test-transform-position
      end-x :: <real>, end-y :: <real>) => ()
   let (new-x, new-y) = transform-position(transform, start-x, start-y);
   check-true(format-to-string("%s of %d, %d", name, start-x, start-y),
-	     new-x = end-x & new-y = end-y)
+             new-x = end-x & new-y = end-y)
 end function test-transform-position;
 
 define method transform-position-test-ok? (data)
@@ -125,8 +125,8 @@ define method transform-position-test-ok? (data)
   let end-point   = data[2];
   let test-name = format-to-string("Transform %s", printable-value(transform));
   test-transform-position(test-name, transform,
-			  point-x(start-point), point-y(start-point),
-			  point-x(end-point),   point-y(end-point))
+                          point-x(start-point), point-y(start-point),
+                          point-x(end-point),   point-y(end-point))
 end method transform-position-test-ok?;
 
 define test transform-position-test ()

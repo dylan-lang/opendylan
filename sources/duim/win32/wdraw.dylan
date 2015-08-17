@@ -29,7 +29,7 @@ end macro with-temporary-gdi-object;
 define macro with-fill-selected
   { with-fill-selected (?hDC:name, ?filled?:expression) ?body:body end }
     => { with-temporary-gdi-object (?hDC = if (?filled?) $null-hpen else $null-hbrush end)
-           ?body  
+           ?body
          end }
 end macro with-fill-selected;
 
@@ -44,10 +44,10 @@ define sealed method draw-point
     let thickness = pen-width(medium-pen(medium));
     if (thickness < 2)
       SetPixel(hDC, x, y, medium.%brush-color)
-    else 
+    else
       let thickness/2 = truncate/(thickness, 2);
       Ellipse(hDC,
-              x - thickness/2, y - thickness/2, 
+              x - thickness/2, y - thickness/2,
               x + thickness/2, y + thickness/2)
     end
   end;

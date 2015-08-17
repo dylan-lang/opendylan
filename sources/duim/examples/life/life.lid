@@ -1,14 +1,14 @@
 Library:      life
 Author:       Carl Gay
 Synopsis:     The game of Life
-Files:	library
-	util
-	logic
-	events
-	patterns
-	frame
-	display
-	life
+Files:        library
+              util
+              logic
+              events
+              patterns
+              frame
+              display
+              life
 Major-version: 2
 Minor-version: 1
 Start-Function: life

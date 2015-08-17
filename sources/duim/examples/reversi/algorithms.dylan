@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $algorithms = make(<table>);
 
-define method install-algorithm 
+define method install-algorithm
     (algorithm :: <algorithm>, title :: <string>) => ()
   $algorithms[algorithm] := title
 end method install-algorithm;
@@ -20,7 +20,7 @@ define constant $default-algorithm
 define constant $default-white-algorithm = $default-algorithm;
 define constant $default-black-algorithm = $default-algorithm;
 
-define method default-algorithm-for-player 
+define method default-algorithm-for-player
     (player :: <player>) => (algorithm :: <algorithm>)
   select (player)
     #"white" => $default-white-algorithm;
@@ -54,20 +54,20 @@ define method choose-move-for-player
      board :: <reversi-board>, player :: <player>, all-moves :: <sequence>)
  => (move :: false-or(<sequence>))
   let best-length = max-size(all-moves);
-  let best-moves 
+  let best-moves
     = choose(method (move)
-	       size(move) = best-length
-	     end,
-	     all-moves);
+               size(move) = best-length
+             end,
+             all-moves);
   choose-move-for-player(#"random", board, player, best-moves)
 end method choose-move-for-player;
 
-define method max-size 
+define method max-size
     (sequence :: <sequence>) => (max-size :: <integer>)
-  reduce(method(total, x) 
-	   max(total, size(x))
-	 end,
-	 0, sequence)
+  reduce(method(total, x)
+           max(total, size(x))
+         end,
+         0, sequence)
 end method max-size;
 
 
@@ -82,13 +82,13 @@ define method choose-move-for-player
   let worst-length = min-size(all-moves);
   let best-moves
     = choose(method (move)
-	       size(move) = worst-length
-	     end,
-	     all-moves);
+               size(move) = worst-length
+             end,
+             all-moves);
   choose-move-for-player(#"random", board, player, best-moves)
 end method choose-move-for-player;
 
-define method min-size 
+define method min-size
     (sequence :: <sequence>) => (min-size :: <integer>)
   reduce(method (total, x)
            if (total)
@@ -137,20 +137,20 @@ define method play-algorithm-aware-of-corners
     (algorithm :: <algorithm>, board :: <reversi-board>, player :: <player>,
      all-moves :: <sequence>)
  => (move :: false-or(<sequence>))
-  choose-move-for-player(algorithm, board, player, 
-			 all-corner-moves(board, all-moves))
+  choose-move-for-player(algorithm, board, player,
+                         all-corner-moves(board, all-moves))
     | choose-move-for-player(algorithm, board, player,
-			     all-but-next-to-untaken-corner-moves
-			       (board, player, all-moves))
+                             all-but-next-to-untaken-corner-moves
+                               (board, player, all-moves))
     | choose-move-for-player(algorithm, board, player, all-moves)
 end method play-algorithm-aware-of-corners;
 
 install-algorithm(#"most-pieces-aware-of-corners",
-		  "Most Pieces Aware Of Corners");
-install-algorithm(#"least-pieces-aware-of-corners", 
-		  "Least Pieces Aware Of Corners");
+                  "Most Pieces Aware Of Corners");
+install-algorithm(#"least-pieces-aware-of-corners",
+                  "Least Pieces Aware Of Corners");
 install-algorithm(#"minimize-opponents-choices-aware-of-corners",
-		  "Minimize Opponents Choices Aware Of Corners");
+                  "Minimize Opponents Choices Aware Of Corners");
 
 define method choose-move-for-player
     (algorithm == #"most-pieces-aware-of-corners",

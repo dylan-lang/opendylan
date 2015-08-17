@@ -22,8 +22,8 @@ define protocol <<path-graphics-protocol>> ()
   function move-to (drawable :: <drawable>, x, y) => (record);
   function line-to (drawable :: <drawable>, x, y) => (record);
   function arc-to (drawable :: <drawable>, center-x, center-y,
-		   radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
-		   #key start-angle, end-angle) => (record);
+                   radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
+                   #key start-angle, end-angle) => (record);
   function curve-to (drawable :: <drawable>, x1, y1, x2, y2, x3, y3) => (record);
 end protocol <<path-graphics-protocol>>;
 
@@ -213,7 +213,7 @@ define method arc-to
   ignore(start-angle, end-angle);
   with-sheet-medium (medium = sheet)
     apply(arc-to, medium, center-x, center-y,
-	  radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy, keys)
+          radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy, keys)
   end
 end method arc-to;
 
@@ -224,7 +224,7 @@ define method arc-to
   dynamic-extent(keys);
   ignore(start-angle, end-angle);
   apply(arc-to, sheet-medium(sheet), center-x, center-y,
-	radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy, keys)
+        radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy, keys)
 end method arc-to;
 
 define function arc-to*
@@ -234,7 +234,7 @@ define function arc-to*
   dynamic-extent(keys);
   ignore(start-angle, end-angle);
   apply(arc-to, medium, point-x(center), point-y(center),
-	radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy, keys)
+        radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy, keys)
 end function arc-to*;
 
 
@@ -252,10 +252,10 @@ define method curve-to
   curve-to(sheet-medium(sheet), x1, y1, x2, y2, x3, y3)
 end method curve-to;
 
-define function curve-to* 
-    (medium :: <drawable>, 
+define function curve-to*
+    (medium :: <drawable>,
      p1 :: <standard-point>, p2 :: <standard-point>, p3 :: <standard-point>) => (record)
-  curve-to(medium, point-x(p1), point-y(p1), 
+  curve-to(medium, point-x(p1), point-y(p1),
                    point-x(p2), point-y(p2),
                    point-x(p3), point-y(p3))
 end function curve-to*;

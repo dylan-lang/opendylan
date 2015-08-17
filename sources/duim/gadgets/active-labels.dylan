@@ -62,7 +62,7 @@ define method label-selected?-setter
     (selected? :: <boolean>, gadget :: <active-label>) => (selected? :: <boolean>)
   gadget.%label-flags
     := logior(logand(gadget.%label-flags, lognot(%label_selected)),
-	      if (selected?) %label_selected else 0 end);
+              if (selected?) %label_selected else 0 end);
   selected?
 end method label-selected?-setter;
 
@@ -76,7 +76,7 @@ define method label-underline?-setter
     (underline? :: <boolean>, gadget :: <active-label>) => (underline? :: <boolean>)
   gadget.%label-flags
     := logior(logand(gadget.%label-flags, lognot(%label_underline)),
-	      if (underline?) %label_underline else 0 end);
+              if (underline?) %label_underline else 0 end);
   underline?
 end method label-underline?-setter;
 
@@ -86,7 +86,7 @@ define method handle-semantic-event
      event :: <pointer-button-event>,
      #key x, y, button = $left-button, modifiers = 0) => ()
   handle-semantic-button-event(frame, gadget, object, event, button,
-			       modifiers: modifiers, x: x, y: y)
+                               modifiers: modifiers, x: x, y: y)
 end method handle-semantic-event;
 
 define method handle-semantic-button-event
@@ -146,7 +146,7 @@ define method handle-repaint
   let brush = if (selected?) $background else $foreground end;
   draw-gadget-label(gadget, medium, 0 + offset, 0,
                     brush: selected? & $background,
-		    underline?: label-underline?(gadget))
+                    underline?: label-underline?(gadget))
 end method handle-repaint;
 
 
@@ -159,29 +159,29 @@ define method handle-event
     repaint-sheet(gadget, $everywhere);
     select (event-button(event))
       $left-button, $middle-button =>
-	// Left and middle button generate the semantic event
-	// when the button is released
-	#f;
+        // Left and middle button generate the semantic event
+        // when the button is released
+        #f;
       $right-button =>
-	// Right button generates the semantic event when the
-	// button is pressed, since it gets used for pop-up menus
-	let x = event-x(event);
-	let y = event-y(event);
-	if (gadget-popup-menu-callback(gadget))
-	  execute-popup-menu-callback
-	    (gadget, gadget-client(gadget), gadget-id(gadget), gadget-value(gadget),
-	     x: x, y: y)
-	else
-	  handle-semantic-event
-	    (sheet-frame(gadget), gadget, gadget-value(gadget), event,
-	     button: event-button(event), modifiers: event-modifier-state(event),
-	     x: x, y: y)
-	end;
+        // Right button generates the semantic event when the
+        // button is pressed, since it gets used for pop-up menus
+        let x = event-x(event);
+        let y = event-y(event);
+        if (gadget-popup-menu-callback(gadget))
+          execute-popup-menu-callback
+            (gadget, gadget-client(gadget), gadget-id(gadget), gadget-value(gadget),
+             x: x, y: y)
+        else
+          handle-semantic-event
+            (sheet-frame(gadget), gadget, gadget-value(gadget), event,
+             button: event-button(event), modifiers: event-modifier-state(event),
+             x: x, y: y)
+        end;
     end
   end
 end method handle-event;
 
-define method handle-event 
+define method handle-event
     (gadget :: <active-label-pane>, event :: <double-click-event>) => ()
   when (gadget-enabled?(gadget))
     label-selected?(gadget) := #t;
@@ -197,34 +197,34 @@ define method handle-event
   end
 end method handle-event;
 
-define method handle-event 
+define method handle-event
     (gadget :: <active-label-pane>, event :: <button-release-event>) => ()
   when (gadget-enabled?(gadget) & label-selected?(gadget))
     label-selected?(gadget) := #f;
     repaint-sheet(gadget, $everywhere);
     select (event-button(event))
       $left-button, $middle-button =>
-	// Generate the semantic event for these now
-	let x = event-x(event);
-	let y = event-y(event);
-	if (gadget-activate-callback(gadget))
-	  execute-activate-callback
-	    (gadget, gadget-client(gadget), gadget-id(gadget))
-	else
-	  handle-semantic-event
-	    (sheet-frame(gadget), gadget, gadget-value(gadget), event,
-	     button: event-button(event), modifiers: event-modifier-state(event),
-	     x: x, y: y)
-	end;
+        // Generate the semantic event for these now
+        let x = event-x(event);
+        let y = event-y(event);
+        if (gadget-activate-callback(gadget))
+          execute-activate-callback
+            (gadget, gadget-client(gadget), gadget-id(gadget))
+        else
+          handle-semantic-event
+            (sheet-frame(gadget), gadget, gadget-value(gadget), event,
+             button: event-button(event), modifiers: event-modifier-state(event),
+             x: x, y: y)
+        end;
       $right-button =>
-	// The semantic event has already been generated for this
-	#f;
+        // The semantic event has already been generated for this
+        #f;
     end
   end
 end method handle-event;
 
 
-define method handle-event 
+define method handle-event
     (gadget :: <active-label-pane>, event :: <pointer-enter-event>) => ()
   when (gadget-enabled?(gadget))
     let pointer = port-pointer(port(gadget));
@@ -235,7 +235,7 @@ define method handle-event
   end
 end method handle-event;
 
-define method handle-event 
+define method handle-event
     (gadget :: <active-label-pane>, event :: <pointer-exit-event>) => ()
   when (gadget-enabled?(gadget))
     let pointer = port-pointer(port(gadget));

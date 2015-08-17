@@ -76,8 +76,8 @@ end method do-allocate-space;
 
 // Returns max random coordinates based on the width and height
 // of the drawing pane
-define method compute-random-coordinates 
-    (nrects :: <integer>, width :: <integer> , height :: <integer>, #key points = 2) 
+define method compute-random-coordinates
+    (nrects :: <integer>, width :: <integer> , height :: <integer>, #key points = 2)
  => (coordinates :: <coordinates>)
   let size = points * 2;
   let ncoords = nrects * size;
@@ -127,18 +127,18 @@ define method draw-benchmark-text
   results
     let time :: <float> = cpu-time-seconds + cpu-time-microseconds / 1000000.0;
     let rate :: <integer> = floor/(count, time);
-    frame-status-message(frame) 
-      := format-to-string("%d %s/second, allocated %s", 
-			  rate,
+    frame-status-message(frame)
+      := format-to-string("%d %s/second, allocated %s",
+                          rate,
                           as-lowercase(drawing-operation-name(text-class)),
-			  case
-			    allocation < 10 * 1024 =>
-			      format-to-string("%d bytes", allocation);
-			    allocation < 10 * 1024 * 1024 =>
-			      format-to-string("%= Kbytes", floor/(allocation, 1024));
-			    otherwise  =>
-			      format-to-string("%= Mbytes", floor/(allocation, 1024 * 1024));
-			  end)
+                          case
+                            allocation < 10 * 1024 =>
+                              format-to-string("%d bytes", allocation);
+                            allocation < 10 * 1024 * 1024 =>
+                              format-to-string("%= Kbytes", floor/(allocation, 1024));
+                            otherwise  =>
+                              format-to-string("%= Mbytes", floor/(allocation, 1024 * 1024));
+                          end)
   end
 end method draw-benchmark-text;
 
@@ -152,43 +152,43 @@ define macro drawing-benchmark-definer
     =>
     {
       define class "<" ## ?class ## "-info>" (<text-info>)
-	slot %coordinates :: false-or(<coordinates>) = #f,
-	  init-keyword: coordinates:;
+        slot %coordinates :: false-or(<coordinates>) = #f,
+          init-keyword: coordinates:;
       end class "<" ## ?class ## "-info>";
 
       define method initialize
-	  (info ::  "<" ## ?class ## "-info>", #next next-method, #key width, height) => ()
-	next-method();
-	info.%coordinates
-	  := compute-random-coordinates(info.%count, width, height, points: ?points)
+          (info ::  "<" ## ?class ## "-info>", #next next-method, #key width, height) => ()
+        next-method();
+        info.%coordinates
+          := compute-random-coordinates(info.%count, width, height, points: ?points)
       end method initialize;
 
       define method draw-text
-	  (pane :: <text-drawing-pane>, ?=medium :: <medium>, info ::  "<" ## ?class ## "-info>") => ()
-	let ?=coordinates :: <coordinates> = info.%coordinates;
-	let colors :: <colors> = info.%colors;
-	let ncoords = size(?=coordinates);
-	let points = ?points * 2;
-	let state = info.%state;
-	let color = state.%color;
-	let thickness = state.%thickness;
-	let ?=filled?   = state.%filled?;
-	let pen = make(<pen>, width: thickness);
-	if (color == #"random")
-	  let no-of-colors = size($colors);
-	  for (?=i :: <integer> from 0 below ncoords by points,
-	       color :: <color> in colors)
-	    with-drawing-options (?=medium, brush: color, pen: pen)
-	      ?body
-	    end with-drawing-options
-	  end for
-	else
-	  with-drawing-options (?=medium, brush: color, pen: pen)
-	    for (?=i :: <integer> from 0 below ncoords by points)
-	      ?body
-	    end for
-	  end with-drawing-options
-	end
+          (pane :: <text-drawing-pane>, ?=medium :: <medium>, info ::  "<" ## ?class ## "-info>") => ()
+        let ?=coordinates :: <coordinates> = info.%coordinates;
+        let colors :: <colors> = info.%colors;
+        let ncoords = size(?=coordinates);
+        let points = ?points * 2;
+        let state = info.%state;
+        let color = state.%color;
+        let thickness = state.%thickness;
+        let ?=filled?   = state.%filled?;
+        let pen = make(<pen>, width: thickness);
+        if (color == #"random")
+          let no-of-colors = size($colors);
+          for (?=i :: <integer> from 0 below ncoords by points,
+               color :: <color> in colors)
+            with-drawing-options (?=medium, brush: color, pen: pen)
+              ?body
+            end with-drawing-options
+          end for
+        else
+          with-drawing-options (?=medium, brush: color, pen: pen)
+            for (?=i :: <integer> from 0 below ncoords by points)
+              ?body
+            end for
+          end with-drawing-options
+        end
       end method draw-text;
 
       install-drawing-benchmark( "<" ## ?class ## "-info>", ?title)
@@ -196,7 +196,7 @@ define macro drawing-benchmark-definer
 end macro drawing-benchmark-definer;
 
 define drawing-benchmark ellipse ("Ellipse", 2)
-  draw-ellipse(medium, 
+  draw-ellipse(medium,
                coordinates[i + 0],
                coordinates[i + 1],
                coordinates[i + 2], 0,
@@ -205,7 +205,7 @@ define drawing-benchmark ellipse ("Ellipse", 2)
 end drawing-benchmark ellipse;
 
 define drawing-benchmark line ("Line", 2)
-  draw-line(medium, 
+  draw-line(medium,
             coordinates[i + 0],
             coordinates[i + 1],
             coordinates[i + 2],
@@ -213,22 +213,22 @@ define drawing-benchmark line ("Line", 2)
 end drawing-benchmark line;
 
 define drawing-benchmark point ("Point", 1)
-  draw-point(medium, 
+  draw-point(medium,
              coordinates[i + 0],
              coordinates[i + 1])
 end drawing-benchmark point;
 
 define drawing-benchmark rectangle ("Rectangle", 2)
-  draw-rectangle(medium, 
-		 coordinates[i + 0],
-		 coordinates[i + 1],
-		 coordinates[i + 2],
-		 coordinates[i + 3],
-		 filled?: filled?)
+  draw-rectangle(medium,
+                 coordinates[i + 0],
+                 coordinates[i + 1],
+                 coordinates[i + 2],
+                 coordinates[i + 3],
+                 filled?: filled?)
 end drawing-benchmark rectangle;
 
 define drawing-benchmark triangle ("Triangle", 3)
-  draw-triangle(medium, 
+  draw-triangle(medium,
                 coordinates[i + 0],
                 coordinates[i + 1],
                 coordinates[i + 2],
@@ -259,23 +259,23 @@ define frame <text-drawing-benchmark-frame> (<simple-frame>)
 
   pane color-radio-box (frame)
     make(<radio-box>,
-	 items: vector(pair("Red",    $red),
+         items: vector(pair("Red",    $red),
                        pair("Blue",   $blue),
                        pair("Black",  $black),
-		       pair("Random", #"random")),
+                       pair("Random", #"random")),
          value: frame.%state.%color,
          label-key: head,
-	 value-key: tail,
- 	 value-changed-callback: redraw-color-change);
+         value-key: tail,
+          value-changed-callback: redraw-color-change);
 
   pane filled-radio-box (frame)
     make(<radio-box>,
-	 items: vector(pair("Yes", #t),
+         items: vector(pair("Yes", #t),
                        pair("No",  #f)),
          value: frame.%state.%filled?,
          label-key: head,
-	 value-key: tail,
- 	 value-changed-callback: redraw-filled-change);
+         value-key: tail,
+          value-changed-callback: redraw-filled-change);
 
   pane thickness-list-box (frame)
     make(<spin-box>,
@@ -287,31 +287,31 @@ define frame <text-drawing-benchmark-frame> (<simple-frame>)
     make(<text-field>,
          label: "Number",
          value: frame.%count,
-	 value-type: <integer>,
+         value-type: <integer>,
          value-changed-callback: redraw-number-change);
 
   pane text-pane (frame)
     make(<text-drawing-pane>,
          coordinates: #f,
          width: 500, height: 300,
-	 display-function: draw-benchmark-text);
+         display-function: draw-benchmark-text);
 
   pane main-layout (frame)
     vertically (spacing: 8)
       make(<table-layout>,
-	     x-spacing: 10, y-spacing: 2,
-	     x-alignment: #(#"right", #"left"), y-alignment: #"center",
-	   columns: 2,
-	   children: vector(make(<label>, label: "Shape:"),
-			    frame.drawing-operation-pane,
+             x-spacing: 10, y-spacing: 2,
+             x-alignment: #(#"right", #"left"), y-alignment: #"center",
+           columns: 2,
+           children: vector(make(<label>, label: "Shape:"),
+                            frame.drawing-operation-pane,
                             make(<label>, label: "Color:"),
-			    frame.color-radio-box,
-			    make(<label>, label: "Filled?:"),
-			    frame.filled-radio-box,
-			    make(<label>, label: "Thickness:"),
-			    frame.thickness-list-box,
-			    make(<label>, label: "Number:"),
-			    frame.number-text-field));
+                            frame.color-radio-box,
+                            make(<label>, label: "Filled?:"),
+                            frame.filled-radio-box,
+                            make(<label>, label: "Thickness:"),
+                            frame.thickness-list-box,
+                            make(<label>, label: "Number:"),
+                            frame.number-text-field));
       with-border (type: #"sunken")
         frame.text-pane
       end;

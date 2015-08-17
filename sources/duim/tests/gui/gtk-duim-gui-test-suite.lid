@@ -1,17 +1,17 @@
 Library:   gtk-duim-gui-test-suite
 Author:    Andy Armstrong, Shri Amit
 Synopsis:  An interactive test-suite for DUIM objects
-Files:	  gtk-library
-	  module
+Files:    gtk-library
+          module
           harness
-	  graphics
-	  recording
+          graphics
+          recording
           sheet-mapping
-	  gadgets
+          gadgets
           borders
           colors
-	  frames
-	  input-focus
+          frames
+          input-focus
           tab-controls
           graph-controls
           dialogs
@@ -23,7 +23,7 @@ Files:	  gtk-library
           menus
           command-tables
           clipboard
-	  random-rectangles
+          random-rectangles
           gtk-tests
           start-tests
 Linker-Options: $(guilflags)

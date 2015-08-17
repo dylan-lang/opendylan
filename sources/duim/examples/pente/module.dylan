@@ -8,8 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module pente
   use common-dylan;
-  use simple-random;		// exported from common-dylan
-  use operating-system;		// exported from system
+  use simple-random;                // exported from common-dylan
+  use operating-system;                // exported from system
 
   use duim;
 

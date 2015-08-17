@@ -15,7 +15,7 @@ define constant <ambiguous-short> =     // 16 bits, signed or unsigned
 
 define constant <signed-long> =
   type-union(<integer>, <machine-word>);
-define constant <unsigned-long> = 
+define constant <unsigned-long> =
   type-union(limited(<integer>, min: 0), <machine-word>);
 
 define constant <signed-int> = <signed-long>;
@@ -83,7 +83,7 @@ define inline method LOWORD ( n :: <integer> ) => value :: <U16>;
 end LOWORD;
 
 define inline method HIWORD ( n :: <integer> ) => value :: <U16>;
-    logand( ash(n,-16), #xFFFF)  
+    logand( ash(n,-16), #xFFFF)
 end HIWORD;
 
 define inline method LOWORD ( n :: <machine-word> ) => value :: <U16>;
@@ -140,7 +140,7 @@ define inline method LOBYTE ( n :: <integer> ) => value :: <U8>;
 end LOBYTE;
 
 define inline method HIBYTE ( n :: <integer> ) => value :: <U8>;
-  logand(ash(n,-8), #xFF)  
+  logand(ash(n,-8), #xFF)
 end HIBYTE;
 
 define method LOBYTE ( n :: <machine-word> ) => value :: <U8>;

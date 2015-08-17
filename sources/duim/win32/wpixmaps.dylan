@@ -23,7 +23,7 @@ define sealed domain make (singleton(<win32-pixmap>));
 define sealed domain initialize (<win32-pixmap>);
 
 define sealed method do-make-pixmap
-    (_port :: <win32-port>, medium :: <win32-medium>, 
+    (_port :: <win32-port>, medium :: <win32-medium>,
      width :: <integer>, height :: <integer>)
  => (pixmap :: <win32-pixmap>)
   make(<win32-pixmap>, medium: medium, width: width, height: height)
@@ -56,7 +56,7 @@ define sealed method destroy-pixmap
   #f
 end method destroy-pixmap;
 
-define sealed method port 
+define sealed method port
     (pixmap :: <win32-pixmap>) => (port :: <win32-port>)
   port(pixmap.%medium)
 end method port;
@@ -90,7 +90,7 @@ end method draw-pixmap;
 /// Win32 pixmap mediums
 
 define sealed class <win32-pixmap-medium>
-    (<win32-medium>, 
+    (<win32-medium>,
      <basic-pixmap-medium>)
 end class <win32-pixmap-medium>;
 
@@ -124,7 +124,7 @@ define sealed method unmap-mirror
   #f
 end method unmap-mirror;
 
-define sealed method raise-mirror 
+define sealed method raise-mirror
     (_port :: <win32-port>, sheet :: <pixmap-sheet>, mirror :: <win32-pixmap>,
      #key activate? = #t) => ()
   ignore(activate?);
@@ -146,7 +146,7 @@ begin
   $function-map[$boole-clr]   := $BLACKNESS;
   $function-map[$boole-set]   := $WHITENESS;
   $function-map[$boole-1]     := $SRCCOPY;
-  $function-map[$boole-2]     := #xAA0029; 
+  $function-map[$boole-2]     := #xAA0029;
   $function-map[$boole-c1]    := $NOTSRCCOPY;
   $function-map[$boole-c2]    := $DSTINVERT;
   $function-map[$boole-and]   := $SRCAND;

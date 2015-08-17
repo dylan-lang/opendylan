@@ -17,7 +17,7 @@ define macro protocol-class-definer
   { define protocol-class ?:name (?supers:*) ?slots:* end }
     => { define open abstract class "<" ## ?name ## ">" (?supers)
            ?slots
-	 end class;
+         end class;
          define protocol-predicate ?name; }
  slots:
   { } => { }

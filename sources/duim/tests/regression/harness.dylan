@@ -32,18 +32,18 @@ define method find-test-class (class :: <class>)
   end
 end method find-test-class;
 
-define method install-test 
+define method install-test
     (frame-class :: <class>, bug-number :: <integer>, summary :: <string>,
      documentation :: <string>)
  => ()
   let test = find-test-class(frame-class);
   test & remove!($regression-tests, test);
-  add!($regression-tests, 
+  add!($regression-tests,
        make(<test-info>,
-	    class:         frame-class,
-	    bug-number:    bug-number,
-	    summary:       summary,
-	    documentation: documentation))
+            class:         frame-class,
+            bug-number:    bug-number,
+            summary:       summary,
+            documentation: documentation))
 end method install-test;
 
 define method test-label
@@ -52,13 +52,13 @@ define method test-label
     format-to-string("Bug %d", test.test-bug-number)
   else
     format-to-string("Bug %d: %s",
-		     test.test-bug-number,
-		     test.test-summary)
+                     test.test-bug-number,
+                     test.test-summary)
   end
 end method test-label;
 
-define method start-test-frame 
-    (frame :: <frame>, class :: <class>, 
+define method start-test-frame
+    (frame :: <frame>, class :: <class>,
      #rest args,
      #key frame-manager: framem)
  => (thread :: <thread>)
@@ -67,19 +67,19 @@ define method start-test-frame
     let frame-class = test.test-class;
     let title = test-label(test, short?: #t);
     local method create-test-frame () => ()
-	    with-abort-restart ()
-	      let test-frame
-	        = if (test)
-		    apply(make, frame-class, title: title, args)
-		  else
-		    apply(make, class, title: "Test", args)
-		  end;
-	      start-frame(test-frame)
-	    end
-	  end method create-test-frame;
+            with-abort-restart ()
+              let test-frame
+                = if (test)
+                    apply(make, frame-class, title: title, args)
+                  else
+                    apply(make, class, title: "Test", args)
+                  end;
+              start-frame(test-frame)
+            end
+          end method create-test-frame;
     make(<thread>,
-	 name: title,
-	 function: create-test-frame)
+         name: title,
+         function: create-test-frame)
   end
 end method start-test-frame;
 
@@ -96,15 +96,15 @@ end method sorted-test-frames;
 define frame <tests-harness> (<simple-frame>)
   pane tests-pane (frame)
     make(<list-box>,
-	 documentation: "Double-click on a test name to run it",
+         documentation: "Double-click on a test name to run it",
          items: sorted-test-frames(),
-	 lines: 15,
+         lines: 15,
          label-key: test-label,
-	 value-changed-callback: method (sheet :: <sheet>)
-				   let frame = sheet-frame(sheet);
-				   let test = gadget-value(sheet);
-				   note-test-selected(frame, test)
-				 end,
+         value-changed-callback: method (sheet :: <sheet>)
+                                   let frame = sheet-frame(sheet);
+                                   let test = gadget-value(sheet);
+                                   note-test-selected(frame, test)
+                                 end,
          activate-callback: method (sheet :: <sheet>)
                               let frame = sheet-frame(sheet);
                               let test = gadget-value(sheet);
@@ -112,21 +112,21 @@ define frame <tests-harness> (<simple-frame>)
                             end);
   pane test-description-pane (frame)
     make(<text-editor>,
-	 //---*** Should use a functional space requirement
-	 read-only?: #t,
-	 min-width: 400, max-width: $fill,
-	 lines: 5, fixed-height?: #t,
-	 scroll-bars: #"none");
+         //---*** Should use a functional space requirement
+         read-only?: #t,
+         min-width: 400, max-width: $fill,
+         lines: 5, fixed-height?: #t,
+         scroll-bars: #"none");
   pane main-layout (frame)
     vertically (spacing: 5)
       grouping ("Start a DUIM regression test:")
-	vertically (spacing: 8)
+        vertically (spacing: 8)
           frame.tests-pane;
           frame.test-description-pane;
-	end
+        end
       end
     end;
-  layout (frame) 
+  layout (frame)
     frame.main-layout;
 end frame <tests-harness>;
 

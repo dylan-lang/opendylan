@@ -10,37 +10,37 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $simple-gadgets-to-test
   = list(list(<label>,            "label"),
-	 list(<push-button>,      "push button"),
-	 list(<radio-button>,     "radio button"),
-	 list(<check-button>,     "check button"),
-	 list(<push-box>,         "push box"),
-	 list(<radio-box>,        "radio box"),
-	 list(<check-box>,        "check box"),
-	 list(<text-field>,       "text field"),
-	 list(<password-field>,   "password field"),
-	 list(<text-editor>,      "text editor"),
-	 list(<scroll-bar>,       "scroll bar"),
-	 list(<list-box>,         "list box"),
-	 list(<option-box>,       "option box"),
-	 list(<combo-box>,        "combo box"));
+         list(<push-button>,      "push button"),
+         list(<radio-button>,     "radio button"),
+         list(<check-button>,     "check button"),
+         list(<push-box>,         "push box"),
+         list(<radio-box>,        "radio box"),
+         list(<check-box>,        "check box"),
+         list(<text-field>,       "text field"),
+         list(<password-field>,   "password field"),
+         list(<text-editor>,      "text editor"),
+         list(<scroll-bar>,       "scroll bar"),
+         list(<list-box>,         "list box"),
+         list(<option-box>,       "option box"),
+         list(<combo-box>,        "combo box"));
 
 define constant $new-gadgets-to-test
   = list(list(<list-control>,     "list control"),
-	 list(<list-control>,     "list control",
-	      label-key:, method (x) format-to-string("This is the long label for %s", x) end),
-	 list(<progress-bar>,     "progress bar"),
-	 list(<slider>,           "slider"),
-	 list(<spin-box>,         "spin box"),
-	 list(<tab-control>,      "tab control"),
-	 list(<table-control>,    "table control"),
-	 list(<tree-control>,     "tree control"));
+         list(<list-control>,     "list control",
+              label-key:, method (x) format-to-string("This is the long label for %s", x) end),
+         list(<progress-bar>,     "progress bar"),
+         list(<slider>,           "slider"),
+         list(<spin-box>,         "spin box"),
+         list(<tab-control>,      "tab control"),
+         list(<table-control>,    "table control"),
+         list(<tree-control>,     "tree control"));
 
 define constant $vertical-gadgets-to-test
   = list(list(<push-box>,         "push box"),
-	 list(<radio-box>,        "radio box"),
-	 list(<check-box>,        "check box"),
-	 list(<scroll-bar>,       "scroll bar"),
-	 list(<slider>,           "slider"));
+         list(<radio-box>,        "radio box"),
+         list(<check-box>,        "check box"),
+         list(<scroll-bar>,       "scroll bar"),
+         list(<slider>,           "slider"));
 
 define constant $multiple-selection-gadgets-to-test
   = list(list(<check-box>,        "check box"),
@@ -72,13 +72,13 @@ define frame <gadget-test-frame> (<simple-frame>)
   pane enabling-button (frame)
     make(<check-button>,
          label: "Enabled?",
-	 documentation: "Switch this button to enable or disable the gadgets",
+         documentation: "Switch this button to enable or disable the gadgets",
          value: gadgets-enabled?(frame),
          value-changed-callback: update-gadget-enabling);
   pane value-button (frame)
     make(<radio-box>,
          items: $test-gadget-items,
-	 documentation: "Switch this button to change all the gadgets values",
+         documentation: "Switch this button to change all the gadgets values",
          value: gadgets-value(frame),
          value-changed-callback: update-gadgets-value);
   pane gadget-layout (frame)
@@ -188,62 +188,62 @@ define method make-test-gadget
     (label :: <string>, class :: subclass(<list-control>), #rest args, #key label-key)
  => (gadget :: <gadget>)
   apply(make, class,
-	items: $test-gadget-items,
+        items: $test-gadget-items,
         scroll-bars: #"none",
         value-changed-callback: gadget-test-value-changed-callback,
         activate-callback:      gadget-test-activate-callback,
         //--- This gets in the way of testing the other callbacks
         // key-press-callback:     gadget-test-key-press-callback,
-	label-key: label-key | collection-gadget-default-label-key,
-	args)
+        label-key: label-key | collection-gadget-default-label-key,
+        args)
 end method make-test-gadget;
 
 define method make-test-gadget
     (label :: <string>, class :: subclass(<table-control>), #rest args, #key)
  => (gadget :: <gadget>)
   apply(make, class,
-	items: range(from: 1, to: 5),
+        items: range(from: 1, to: 5),
         headings: #("Squared", "Doubled", "Identity"),
-	generators: vector(method (x) x * x end,
-			   method (x) x + x end,
-			   identity),
+        generators: vector(method (x) x * x end,
+                           method (x) x + x end,
+                           identity),
         scroll-bars: #"none",
         value-changed-callback: gadget-test-value-changed-callback,
         activate-callback:      gadget-test-activate-callback,
         //--- This gets in the way of testing the other callbacks
         // key-press-callback:     gadget-test-key-press-callback,
         popup-menu-callback:    select-table-control-view,
-	args)
+        args)
 end method make-test-gadget;
 
 define method select-table-control-view
     (table :: <table-control>, target, #key x, y) => ()
   local method change-view (box)
-	  let view = gadget-value(box);
-	  table-control-view(table) := view
-	end method;
+          let view = gadget-value(box);
+          table-control-view(table) := view
+        end method;
   let menu
     = if (target)
-	make(<menu>,
-	     owner: top-level-sheet(table),
-	     children: vector(make(<push-menu-button>,
-				   label: format-to-string("You clicked on %d", target))))
+        make(<menu>,
+             owner: top-level-sheet(table),
+             children: vector(make(<push-menu-button>,
+                                   label: format-to-string("You clicked on %d", target))))
       else
-	make(<menu>,
-	     owner: top-level-sheet(table),
-	     children: vector(make(<radio-menu-box>,
-				   items: #(#"table", #"list", #"small-icon", #"large-icon"),
-				   value: table-control-view(table),
-				   label-key: method (x)
-						select (x)
-						  #"table"      => "Details";
-						  #"list"       => "List";
-						  #"small-icon" => "Small Icon";
-						  #"large-icon" => "Large Icon";
-						end
-					      end method,
-				   documentation: "Changes the view",
-				   value-changed-callback: change-view)))
+        make(<menu>,
+             owner: top-level-sheet(table),
+             children: vector(make(<radio-menu-box>,
+                                   items: #(#"table", #"list", #"small-icon", #"large-icon"),
+                                   value: table-control-view(table),
+                                   label-key: method (x)
+                                                select (x)
+                                                  #"table"      => "Details";
+                                                  #"list"       => "List";
+                                                  #"small-icon" => "Small Icon";
+                                                  #"large-icon" => "Large Icon";
+                                                end
+                                              end method,
+                                   documentation: "Changes the view",
+                                   value-changed-callback: change-view)))
       end;
   display-menu(menu)
 end method select-table-control-view;
@@ -266,15 +266,15 @@ define method tree-control-popup-menu
     (tree :: <tree-control>, target, #key x, y) => ()
   let menu
     = if (target)
-	make(<menu>,
-	     owner: top-level-sheet(tree),
-	     children: vector(make(<push-menu-button>,
-				   label: format-to-string("You clicked on %d", target))))
+        make(<menu>,
+             owner: top-level-sheet(tree),
+             children: vector(make(<push-menu-button>,
+                                   label: format-to-string("You clicked on %d", target))))
       else
-	make(<menu>,
-	     owner: top-level-sheet(tree),
-	     children: vector(make(<push-menu-button>,
-				   label: "You clicked on background")))
+        make(<menu>,
+             owner: top-level-sheet(tree),
+             children: vector(make(<push-menu-button>,
+                                   label: "You clicked on background")))
       end;
   display-menu(menu)
 end method tree-control-popup-menu;
@@ -307,7 +307,7 @@ define method make-test-gadget
  => (gadget :: <gadget>)
   apply(make, class,
         value-range: range(from: 0, to: 100),
-	tick-marks: 10,
+        tick-marks: 10,
         value-changed-callback:  gadget-test-value-changed-callback,
         value-changing-callback: gadget-test-value-changing-callback,
         activate-callback:       gadget-test-activate-callback,
@@ -327,7 +327,7 @@ define method make-test-gadget
 end method make-test-gadget;
 
 define method make-test-gadgets
-    (frame :: <gadget-test-frame>, 
+    (frame :: <gadget-test-frame>,
      #key gadget-classes = gadget-classes-to-test(frame),
           enabled? = #t)
  => (gadgets :: <sequence>)
@@ -349,14 +349,14 @@ define method make-test-gadgets
       let documentation = format-to-string("A test %s", label);
       let gadget
         = apply(make-test-gadget, label, class,
-		documentation:  documentation,
-		enabled?:       enabled?,
-		foreground:     foreground,
-		background:     background,
-		text-style:     text-style,
+                documentation:  documentation,
+                enabled?:       enabled?,
+                foreground:     foreground,
+                background:     background,
+                text-style:     text-style,
                 orientation:    orientation,
                 selection-mode: selection-mode,
-		args);
+                args);
       update-gadget-value(gadget, value);
       children[index + 1] := gadget
     end
@@ -377,34 +377,34 @@ define method make-test-gadgets
   end
 end method make-test-gadgets;
 
-define method make-gadget-table 
+define method make-gadget-table
     (frame :: <gadget-test-frame>) => (table :: <table-layout>)
   let orientation = frame-gadgets-orientation(frame);
   with-frame-manager (frame-manager(frame))
     let children = make-test-gadgets(frame, enabled?: gadgets-enabled?(frame));
     select (orientation)
       #"horizontal" =>
-	make(<table-layout>, 
-	     columns: 2,
-	     x-spacing: 2, y-spacing: 5,
-	     x-alignment: #(#"right", #"left"), y-alignment: #"center",
-	     children: children);
+        make(<table-layout>,
+             columns: 2,
+             x-spacing: 2, y-spacing: 5,
+             x-alignment: #(#"right", #"left"), y-alignment: #"center",
+             children: children);
       #"vertical" =>
-	make(<table-layout>, 
-	     rows: 2,
-	     x-spacing: 10, y-spacing: 2,
-	     x-alignment: #"center",
-	     children: children);
+        make(<table-layout>,
+             rows: 2,
+             x-spacing: 10, y-spacing: 2,
+             x-alignment: #"center",
+             children: children);
     end
   end
 end method make-gadget-table;
 
-define method gadgets-enabled? 
+define method gadgets-enabled?
     (frame :: <gadget-test-frame>) => (enabled? :: <boolean>)
   frame.%enabled?
 end method gadgets-enabled?;
 
-define method update-gadget-enabling 
+define method update-gadget-enabling
     (gadget :: <gadget>) => ()
   let frame = sheet-frame(gadget);
   let enabled? = gadget-value(gadget);
@@ -510,17 +510,17 @@ end class <advanced-gadget-test-frame>;
 
 define method make-test-gadgets
     (frame :: <advanced-gadget-test-frame>,
-     #key gadget-classes, 
+     #key gadget-classes,
           enabled? = #t)
  => (gadgets :: <sequence>)
   ignore(gadget-classes);
   with-frame-manager (frame-manager(frame))
     let push-radio-box
       = make-test-gadget("push-style radio box", <radio-box>,
-			 button-style:, #"push-button");
+                         button-style:, #"push-button");
     let push-check-box
       = make-test-gadget("push-style check box", <check-box>,
-			 button-style:, #"push-button");
+                         button-style:, #"push-button");
     let item1 :: <string> = $test-gadget-items[0];
     let item2 :: <string> = $test-gadget-items[1];
     let item3 :: <string> = $test-gadget-items[2];
@@ -529,15 +529,15 @@ define method make-test-gadgets
              enabled?: enabled?,
              child: make(<column-layout>,
                          children:
-			   vector(grouping ("First group", max-width: $fill)
-				    make(<radio-button>, label: item1, id: item1)
-				  end,
-				  grouping ("Second group", max-width: $fill)
+                           vector(grouping ("First group", max-width: $fill)
+                                    make(<radio-button>, label: item1, id: item1)
+                                  end,
+                                  grouping ("Second group", max-width: $fill)
                                     vertically (spacing: 4)
-			              make(<radio-button>, label: item2, id: item2);
-			              make(<radio-button>, label: item3, id: item3)
+                                      make(<radio-button>, label: item2, id: item2);
+                                      make(<radio-button>, label: item3, id: item3)
                                     end
-			          end)));
+                                  end)));
     let tab-control
       = make(<tab-control>,
              tabs-position: #"bottom",
@@ -545,10 +545,10 @@ define method make-test-gadgets
              pages: vector(make(<tab-control-page>,
                                 label: item1,
                                 child: make(<button>, label: "One")),
-                           make(<tab-control-page>, 
+                           make(<tab-control-page>,
                                 label: item2,
                                 child: make(<list-box>, items: $test-gadget-items)),
-                           make(<tab-control-page>, 
+                           make(<tab-control-page>,
                                 label: item3,
                                 child: make(<ellipse-pane>))));
 
@@ -564,27 +564,27 @@ end method make-test-gadgets;
 
 define variable $gadget-test-frame-tests
   = vector(vector("Simple gadgets",             <simple-gadget-test-frame>),
-	   vector("Vertical gadgets",           <vertical-gadget-test-frame>),
-	   vector("Multiple selection gadgets", <multiple-selection-gadget-test-frame>),
-	   vector("New gadgets",                <new-gadget-test-frame>),
-	   vector("Advanced gadgets",           <advanced-gadget-test-frame>));
+           vector("Vertical gadgets",           <vertical-gadget-test-frame>),
+           vector("Multiple selection gadgets", <multiple-selection-gadget-test-frame>),
+           vector("New gadgets",                <new-gadget-test-frame>),
+           vector("Advanced gadgets",           <advanced-gadget-test-frame>));
 
 define frame <gadgets-test-frame> (<simple-frame>)
   pane examples (frame)
     make(<list-control>,
          scroll-bars: #"none",
-	 documentation: "Double-click on a test name to run it",
-	 items: $gadget-test-frame-tests,
-	 lines: size($gadget-test-frame-tests),
-	 label-key: first,
-	 activate-callback: method (gadget :: <gadget>)
+         documentation: "Double-click on a test name to run it",
+         items: $gadget-test-frame-tests,
+         lines: size($gadget-test-frame-tests),
+         label-key: first,
+         activate-callback: method (gadget :: <gadget>)
                               let frame = sheet-frame(gadget);
                               let value = gadget-value(gadget);
                               let title = first(value);
                               let class = second(value);
                               let test-frame = make(class, title: title, owner: frame);
                               start-frame(test-frame)
-			    end);
+                            end);
   pane main-layout (frame)
     frame.examples;
   layout (frame) frame.main-layout;

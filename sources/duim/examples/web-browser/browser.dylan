@@ -25,9 +25,9 @@ define frame <web-browser> (<simple-frame>)
     make(<label>, label: "Location:");
   pane location-pane (frame)
     make(<text-field>,
-	 value-changed-callback: method (tf)
-				   open-web-location(sheet-frame(tf), gadget-value(tf))
-				 end);
+         value-changed-callback: method (tf)
+                                   open-web-location(sheet-frame(tf), gadget-value(tf))
+                                 end);
   pane web-pane (frame)
     make(<web-pane>, width: 500, height: 500);
   pane text-web-pane (frame)
@@ -52,7 +52,7 @@ define frame <web-browser> (<simple-frame>)
   pane file-menu (frame)
     make(<menu>, label: "File",
          children: vector(make(<menu-button>, label: "Open Location..."),
-                          make(<menu-button>, 
+                          make(<menu-button>,
                                label: "Open File...",
                                activate-callback: open-web-file),
                           make(<menu-button>, label: "Save as...")));
@@ -65,9 +65,9 @@ define frame <web-browser> (<simple-frame>)
                                label-key: first,
                                value-key: second,
                                value-changed-callback:
-				 method (rb)
-				   set-web-browser-view(rb, gadget-value(rb))
-				 end)));
+                                 method (rb)
+                                   set-web-browser-view(rb, gadget-value(rb))
+                                 end)));
   pane help-menu (frame)
     make(<menu>, label: "Help",
          children: vector(make(<menu-button>,
@@ -78,8 +78,8 @@ define frame <web-browser> (<simple-frame>)
   tool-bar (frame) frame.tool-bar;
   menu-bar (frame)
     make(<menu-bar>,
-         children: vector(frame.file-menu, 
-                          frame.view-menu, 
+         children: vector(frame.file-menu,
+                          frame.view-menu,
                           frame.help-menu));
 end frame <web-browser>;
 
@@ -179,7 +179,7 @@ end method;
 define variable *browser-title* = "Function Developer Web Browser";
 define variable *version-number* = 1;
 define variable *copyright-message* = "(c) Functional Objects, Inc. 1995";
- 
+
 define method about-web-browser (sheet :: <sheet>)
   let (major-version, minor-version) = floor/(*version-number*, 100);
   let message = format-to-string("%s %d.%d %s",

@@ -82,14 +82,14 @@ define sealed inline method box-edges
   values(box.%left, box.%top, box.%right, box.%bottom)
 end method box-edges;
 
-define sealed method transform-region 
+define sealed method transform-region
     (transform :: <transform>, box :: <general-box>) => (box :: <bounding-box>)
   let (x1, y1, x2, y2)
     = transform-box(transform, box.%left, box.%top, box.%right, box.%bottom);
   make-bounding-box(x1, y1, x2, y2)
 end method transform-region;
 
-define sealed method untransform-region 
+define sealed method untransform-region
     (transform :: <transform>, box :: <general-box>) => (box :: <bounding-box>)
   let (x1, y1, x2, y2)
     = untransform-box(transform, box.%left, box.%top, box.%right, box.%bottom);
@@ -200,14 +200,14 @@ define sealed inline method box-edges
   values(0, 0, box.%width, box.%height)
 end method box-edges;
 
-define sealed method transform-region 
+define sealed method transform-region
     (transform :: <transform>, box :: <simple-box>) => (box :: <bounding-box>)
   let (x1, y1, x2, y2)
     = transform-box(transform, 0, 0, box.%width, box.%height);
   make-bounding-box(x1, y1, x2, y2)
 end method transform-region;
 
-define sealed method untransform-region 
+define sealed method untransform-region
     (transform :: <transform>, box :: <simple-box>) => (box :: <bounding-box>)
   let (x1, y1, x2, y2)
     = untransform-box(transform, 0, 0, box.%width, box.%height);
@@ -310,22 +310,22 @@ define sealed method region-equal
   let (left1, top1, right1, bottom1) = box-edges(box1);
   let (left2, top2, right2, bottom2) = box-edges(box2);
   ltrb-equals-ltrb?(left1, top1, right1, bottom1,
-		    left2, top2, right2, bottom2)
+                    left2, top2, right2, bottom2)
 end method region-equal;
 
-define sealed method region-contains-position? 
+define sealed method region-contains-position?
     (box :: <bounding-box>, x :: <real>, y :: <real>) => (true? :: <boolean>)
   let (left, top, right, bottom) = box-edges(box);
   ltrb-contains-position?(left, top, right, bottom,
-			  fix-coordinate(x), fix-coordinate(y))
+                          fix-coordinate(x), fix-coordinate(y))
 end method region-contains-position?;
 
-define sealed method region-contains-region? 
+define sealed method region-contains-region?
     (box1 :: <bounding-box>, box2 :: <bounding-box>) => (true? :: <boolean>)
   let (left1, top1, right1, bottom1) = box-edges(box1);
   let (left2, top2, right2, bottom2) = box-edges(box2);
   ltrb-contains-ltrb?(left1, top1, right1, bottom1,
-		      left2, top2, right2, bottom2)
+                      left2, top2, right2, bottom2)
 end method region-contains-region?;
 
 define sealed method region-intersects-region?
@@ -333,7 +333,7 @@ define sealed method region-intersects-region?
   let (left1, top1, right1, bottom1) = box-edges(box1);
   let (left2, top2, right2, bottom2) = box-edges(box2);
   ltrb-intersects-ltrb?(left1, top1, right1, bottom1,
-			left2, top2, right2, bottom2)
+                        left2, top2, right2, bottom2)
 end method region-intersects-region?;
 
 
@@ -400,7 +400,7 @@ define function box-sizes-equal
   let (left1, top1, right1, bottom1) = box-edges(region1);
   let (left2, top2, right2, bottom2) = box-edges(region2);
   ltrb-size-equal?(left1, top1, right1, bottom1,
-		   left2, top2, right2, bottom2)
+                   left2, top2, right2, bottom2)
 end function box-sizes-equal;
 
 
@@ -413,17 +413,17 @@ define sealed method bounding-box
   if (into)
     select (into by instance?)
       <simple-box> =>
-	assert(zero?(left) & zero?(top),
-	       "The simple box %= cannot be modified this way", into);
-	into.%width  := right;
-	into.%height := bottom;
-	into;
+        assert(zero?(left) & zero?(top),
+               "The simple box %= cannot be modified this way", into);
+        into.%width  := right;
+        into.%height := bottom;
+        into;
       <general-box> =>
-	into.%left := left;
-	into.%top  := top;
-	into.%right  := right;
-	into.%bottom := bottom;
-	into;
+        into.%left := left;
+        into.%top  := top;
+        into.%right  := right;
+        into.%bottom := bottom;
+        into;
     end
   else
     make-bounding-box(left, top, right, bottom)
@@ -438,10 +438,10 @@ define sealed method shift-box-position
   let (left, top, right, bottom) = box-edges(region);
   let box :: <general-box>
     = if (into & instance?(into, <general-box>))
-	into
+        into
       else
-	make(<general-box>,
-	     left: left, top: top, right: right, bottom: bottom)
+        make(<general-box>,
+             left: left, top: top, right: right, bottom: bottom)
       end;
   box.%left := box.%left + dx;
   box.%top  := box.%top + dy;

@@ -32,9 +32,9 @@ define method initialize (tree :: <tree>, #key) => ()
 end method initialize;
 
 define constant <ttt-board>
-  = limited(<array>,  
-	    dimensions: list($ttt-square-rows, $ttt-square-columns),
-	    of: false-or(<ttt-square>)); 
+  = limited(<array>,
+            dimensions: list($ttt-square-rows, $ttt-square-columns),
+            of: false-or(<ttt-square>));
 
 define class <ttt-game> (<object>)
   slot ttt-board :: false-or(<ttt-board>) = #f,
@@ -47,8 +47,8 @@ end class <ttt-game>;
 
 define method make-ttt-board () => (squares :: <ttt-board>)
   let squares = make(<ttt-board>,
-		     dimensions: list($ttt-square-rows, $ttt-square-columns),
-		     fill: #f);
+                     dimensions: list($ttt-square-rows, $ttt-square-columns),
+                     fill: #f);
   for (i from 0 below $ttt-square-rows)
     for (j from 0 below $ttt-square-columns)
       squares[i, j] := make(<ttt-square>,
@@ -58,13 +58,13 @@ define method make-ttt-board () => (squares :: <ttt-board>)
   squares
 end method make-ttt-board;
 
-define method heuristic 
-    (board :: <ttt-board>, moves :: <integer>, game-status :: <game-status>, 
+define method heuristic
+    (board :: <ttt-board>, moves :: <integer>, game-status :: <game-status>,
      player :: <integer>)
-  if (game-status = #"win") 
+  if (game-status = #"win")
     if (player = *computer-player*)
       1;
-    else 
+    else
       -1;
     end if
   elseif (game-status = #"draw")
@@ -73,7 +73,7 @@ define method heuristic
     debug-message("hahahaha");
   end if;
 end method heuristic;
- 
+
 define method move
     (board :: <ttt-board>, position :: <vector>, player :: <integer>) => ()
   let i = position[0];
@@ -89,10 +89,10 @@ define method undo-move
 end method undo-move;
 
 define method copy-game
-    (old :: <ttt-board>) => (new :: <ttt-board>) 
+    (old :: <ttt-board>) => (new :: <ttt-board>)
   let temp = make(<ttt-board>,
-		  dimensions: list($ttt-square-rows, $ttt-square-columns),
-		  fill: #f);
+                  dimensions: list($ttt-square-rows, $ttt-square-columns),
+                  fill: #f);
   temp := make-ttt-board();
   for (i from 0 below 3)
     for (j from 0 below 3)
@@ -110,12 +110,12 @@ define method get-max-child-value
     for (j from 0 below 3)
       let child = tree.children[i, j];
       if (child)
-	if (child.value > max)
-	  max := child.value;
-	end if;
+        if (child.value > max)
+          max := child.value;
+        end if;
       end if;
     end for;
-  end for; 
+  end for;
   max;
 end method get-max-child-value;
 
@@ -126,9 +126,9 @@ define method get-min-child-value
     for (j from 0 below 3)
       let child = tree.children[i, j];
       if (child)
-	if (child.value < min)
-	  min := child.value;
-	end if;
+        if (child.value < min)
+          min := child.value;
+        end if;
       end if;
     end for;
   end for;
@@ -141,27 +141,27 @@ define method find-winner
   let i = 0;
   let j = 0;
 
-  while ((i < 3) & ~ans) 
-    ans := row-winner?(board, vector(i, 0), p); 
+  while ((i < 3) & ~ans)
+    ans := row-winner?(board, vector(i, 0), p);
     i := i + 1;
   end while;
 
   while ((j < 3) & ~ans)
-    ans := col-winner?(board, vector(0, j), p); 
+    ans := col-winner?(board, vector(0, j), p);
     j := j + 1;
   end while;
 
   if (~ans)
-    ans := up-diagonal-winner?(board, vector(2, 0), p); 
+    ans := up-diagonal-winner?(board, vector(2, 0), p);
   end if;
 
   if (~ans)
-    ans := down-diagonal-winner?(board, vector(0, 0), p); 
+    ans := down-diagonal-winner?(board, vector(0, 0), p);
   end if;
   ans;
-end method find-winner;  
+end method find-winner;
 
-define method end-state? 
+define method end-state?
     (board :: <ttt-board>, moves :: <integer>, player :: <integer>)
  => (game-status :: <game-status>)
   case
@@ -170,30 +170,30 @@ define method end-state?
     otherwise                    => #f;
   end
 end method end-state?;
-  
+
 define method build-tree
     (board :: <ttt-board>, player :: <integer>, moves :: <integer>)
  => (game-tree :: <tree>)
   let root = make(<tree>, game: copy-game(board));
   let other-player = select(player)
-		       1 => 2;
-		       2 => 1;
-		     end;
+                       1 => 2;
+                       2 => 1;
+                     end;
   let over = end-state?(root.game.ttt-board, moves, other-player);
   if (over)
     root.value := heuristic(root.game.ttt-board, moves, over, other-player);
-  else 
-    for (i from 0 below $ttt-square-rows) 
+  else
+    for (i from 0 below $ttt-square-rows)
       for (j from 0 below $ttt-square-columns)
-	if (~board[i, j].square-occupied)
-	  move(root.game.ttt-board, vector(i, j), player);
-	  root.children[i, j] := build-tree(root.game.ttt-board,
-					    other-player, moves + 1);
-	  undo-move(root.game.ttt-board, vector(i, j));
-	end if;
+        if (~board[i, j].square-occupied)
+          move(root.game.ttt-board, vector(i, j), player);
+          root.children[i, j] := build-tree(root.game.ttt-board,
+                                            other-player, moves + 1);
+          undo-move(root.game.ttt-board, vector(i, j));
+        end if;
       end for;
     end for;
-	      
+
     if (player = *computer-player*)
       root.value := get-max-child-value(root);
     else
@@ -210,20 +210,20 @@ define method find-good-move
   let equal = #f;
   let my-value = tree.value;
   let good = vector(0, 0);
-  while ( (loopX < 3) & ~equal ) 
+  while ( (loopX < 3) & ~equal )
     while ( (loopY < 3) & ~equal )
-      let this-child = tree.children[loopX, loopY]; 
+      let this-child = tree.children[loopX, loopY];
       if (this-child)
-	if (this-child.value = my-value)
-	  if (~equal) 
-	    good[0] := loopX;
-	    good[1] := loopY;
-	    equal := #t;
-	  end if;
-	end if;
+        if (this-child.value = my-value)
+          if (~equal)
+            good[0] := loopX;
+            good[1] := loopY;
+            equal := #t;
+          end if;
+        end if;
       end if;
       if (~equal)
-	loopY := loopY + 1;
+        loopY := loopY + 1;
       end if;
     end while;
     if (~equal)
@@ -243,7 +243,7 @@ define method on-down-diagonal?( move :: <vector> ) => (b :: <boolean>)
   let col = second(move);
   row = col;
 end method on-down-diagonal?;
-    
+
 define method on-up-diagonal?( move :: <vector> ) => (b :: <boolean>)
   let row = first(move);
   let col = second(move);
@@ -251,7 +251,7 @@ define method on-up-diagonal?( move :: <vector> ) => (b :: <boolean>)
 end method on-up-diagonal?;
 
 define method down-diagonal-winner?
-    (board :: <ttt-board>, move :: <vector>, player :: <integer>) 
+    (board :: <ttt-board>, move :: <vector>, player :: <integer>)
  => (winner? :: <boolean>)
   (square-occupied(board[0, 0]) = square-occupied(board[1, 1]))
     & (square-occupied(board[1, 1]) = square-occupied(board[2, 2]))
@@ -259,7 +259,7 @@ define method down-diagonal-winner?
 end method down-diagonal-winner?;
 
 define method up-diagonal-winner?
-    (board :: <ttt-board>, move :: <vector>, player :: <integer>) 
+    (board :: <ttt-board>, move :: <vector>, player :: <integer>)
  => (winner? :: <boolean>)
   (square-occupied(board[0, 2]) = square-occupied(board[1, 1]))
     & (square-occupied(board[1, 1]) = square-occupied(board[2, 0]))
@@ -267,7 +267,7 @@ define method up-diagonal-winner?
 end method up-diagonal-winner?;
 
 define method row-winner?
-    (board :: <ttt-board>, move :: <vector>, player :: <integer>) 
+    (board :: <ttt-board>, move :: <vector>, player :: <integer>)
  => (winner? :: <boolean>)
   let row = move[0];
   (square-occupied(board[row, 0]) = square-occupied(board[row, 1]))
@@ -276,7 +276,7 @@ define method row-winner?
 end method row-winner?;
 
 define method col-winner?
-    (board :: <ttt-board>, move :: <vector>, player :: <integer>) 
+    (board :: <ttt-board>, move :: <vector>, player :: <integer>)
  => (winner? :: <boolean>)
   let col = move[1];
   (square-occupied(board[0, col]) = square-occupied(board[1, col]))
@@ -288,30 +288,30 @@ define method winning-move?
     (b :: <ttt-board>, s :: <ttt-square>)
  => ( won :: <boolean> )
   let last-move = s.square-coordinates;
-  let player = s.square-occupied; 
+  let player = s.square-occupied;
   if ( on-up-diagonal?( last-move ) )
     if (up-diagonal-winner?(b, last-move, player ))
       #t;
-    elseif ( on-down-diagonal?(last-move) ) 
+    elseif ( on-down-diagonal?(last-move) )
       if (down-diagonal-winner?(b, last-move, player ))
-	#t;
+        #t;
       else
-	(row-winner?(b, last-move, player ) 
-	   | col-winner?(b, last-move, player ));
+        (row-winner?(b, last-move, player )
+           | col-winner?(b, last-move, player ));
       end if;
     else
-      (row-winner?(b, last-move, player ) 
-	 | col-winner?(b, last-move, player ));
+      (row-winner?(b, last-move, player )
+         | col-winner?(b, last-move, player ));
     end if;
-  elseif ( on-down-diagonal?(last-move) ) 
+  elseif ( on-down-diagonal?(last-move) )
     if (down-diagonal-winner?(b, last-move, player ))
       #t;
     else
-      (row-winner?(b, last-move, player) 
-	| col-winner?(b, last-move, player));
+      (row-winner?(b, last-move, player)
+        | col-winner?(b, last-move, player));
     end if;
   else
-    (row-winner?(b, last-move, player) 
+    (row-winner?(b, last-move, player)
       | col-winner?(b, last-move, player));
   end if;
 end method winning-move?;
@@ -328,9 +328,9 @@ define method over? (g :: <ttt-game>, square :: <ttt-square>)
 end method over?;
 
 define method game-computers-turn
-    (game :: <ttt-game>, i :: <integer>, j :: <integer>) 
+    (game :: <ttt-game>, i :: <integer>, j :: <integer>)
  => (type :: one-of(#f, #"win", #"draw"))
-  ttt-square-setter(game.ttt-board[i, j], game.turn);  
+  ttt-square-setter(game.ttt-board[i, j], game.turn);
   game.moves := game.moves + 1;
   let over = over?(game, game.ttt-board[i, j]);
   over;
@@ -351,7 +351,7 @@ define method game-play-computers-move
     if (game.ttt-board[0, 0].square-occupied)
       values(0, 2);
     else
-      values(0, 0); 
+      values(0, 0);
     end if;
   else
     let tree = build-tree(game.ttt-board, *computer-player*, moves);

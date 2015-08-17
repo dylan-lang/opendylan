@@ -16,7 +16,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //
 // This thread also watches frame.command to see whether the user
 // has clicked on Start, Stop, Step, etc.
-// 
+//
 
 define method life-logic-loop (frame :: <life-frame>) => ()
   ensure-board(frame);
@@ -54,7 +54,7 @@ define method life-logic-loop (frame :: <life-frame>) => ()
               end;
           update-time(frame, sec, usec);
           update-live-cell-count(frame, cell-delta);
-                
+
           // new-board contains the new current board.  swap if necessary.
           if (new-board ~== frame.current-board)
             frame.buffer-board := frame.current-board;
@@ -207,7 +207,7 @@ define method ensure-board (frame :: <life-frame>, #key force-init?, pattern)
     initialize-game(frame, pattern: pattern);
   end if;
 end method ensure-board;
-  
+
 define inline method clear-display-sheet (frame :: <life-frame>) => ()
   clear-box*(frame.display-sheet, $everywhere);
 end method clear-display-sheet;

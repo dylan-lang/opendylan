@@ -61,24 +61,24 @@ define method add-proceed-items
     (frame :: <frame>, #rest items) => (buttons :: false-or(<menu-box>))
   let menu
     = block (return)
-	do-command-menu-gadgets(method (menu) return(menu) end,
-				frame, *proceed-command-table*,
-				tool-bar?: #f);
-	#f
+        do-command-menu-gadgets(method (menu) return(menu) end,
+                                frame, *proceed-command-table*,
+                                tool-bar?: #f);
+        #f
       end;
   when (menu)
     let buttons = make(<vector>, size: size(items));
     for (item in items,
          i :: <integer> from 0)
-      let label    = item;			//---*** name of handler here
-      let callback = method (sheet) #f end;	//---*** invoke the handler here
+      let label    = item;                        //---*** name of handler here
+      let callback = method (sheet) #f end;        //---*** invoke the handler here
       let button   = make(<push-menu-button>,
-			  label:   label,
-			  activate-callback: callback);
+                          label:   label,
+                          activate-callback: callback);
       buttons[i] := button
     end;
     let menu-box = make(<push-menu-box>,
-			children: as(<simple-vector>, buttons));
+                        children: as(<simple-vector>, buttons));
     add-child(menu, menu-box);
     menu-box
   end
@@ -88,10 +88,10 @@ define method remove-proceed-items
     (frame :: <frame>, buttons :: <menu-box>) => ()
   let menu
     = block (return)
-	do-command-menu-gadgets(method (menu) return(menu) end,
-				frame, *proceed-command-table*,
-				tool-bar?: #f);
-	#f
+        do-command-menu-gadgets(method (menu) return(menu) end,
+                                frame, *proceed-command-table*,
+                                tool-bar?: #f);
+        #f
       end;
   when (menu)
     remove-child(menu, buttons)

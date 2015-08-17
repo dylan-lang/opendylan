@@ -14,7 +14,7 @@ define class <name-generator> (<object>)
     init-keyword: name-separator:;
 end class <name-generator>;
 
-define method make-nth-name 
+define method make-nth-name
     (generator :: <name-generator>, name :: <string>, number :: <integer>)
  => (nth-name :: <string>)
   let separator = name-separator(generator);
@@ -34,7 +34,7 @@ define method generate-next-name
       else
         name
       end;
-  let number = last-generated-number(generator, name) + 1; 
+  let number = last-generated-number(generator, name) + 1;
   use-nth-name(generator, root-name, number);
   make-nth-name(generator, root-name, number)
 end method generate-next-name;
@@ -82,7 +82,7 @@ define method free-name
   free-nth-name(generator, key, number)
 end method free-name;
 
-define method split-name-and-number 
+define method split-name-and-number
     (name :: <string>, separator :: <character>)
  => (key :: <string>, number :: false-or(<integer>))
   let last-separator-position
@@ -93,7 +93,7 @@ define method split-name-and-number
           end
         end
       end;
-  let number 
+  let number
     = if (last-separator-position < size(name) - 1)
          copy-sequence(name, start: last-separator-position)
       end;

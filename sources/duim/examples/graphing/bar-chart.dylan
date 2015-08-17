@@ -47,7 +47,7 @@ define sealed class <simple-bar-chart-pane>
     (<bar-chart-pane>)
 end class <simple-bar-chart-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <bar-chart>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<simple-bar-chart-pane>, #f)
@@ -67,13 +67,13 @@ define method do-allocate-space
     #"horizontal" =>
       let x :: <integer> = bar-spacing(chart);
       for (bar :: <bar-pane> in sheet-children(chart))
-	unless (sheet-withdrawn?(bar))
-	  let space-req = compose-space(bar);
-	  let (w, w-, w+, h, h-, h+) = space-requirement-components(bar, space-req);
-	  ignore(w-, w+, h-, h+);
-	  set-sheet-edges(bar, x, height - 2 - h, x + w, height - 2);
-	  x := x + w + bar-spacing(bar)
-	end
+        unless (sheet-withdrawn?(bar))
+          let space-req = compose-space(bar);
+          let (w, w-, w+, h, h-, h+) = space-requirement-components(bar, space-req);
+          ignore(w-, w+, h-, h+);
+          set-sheet-edges(bar, x, height - 2 - h, x + w, height - 2);
+          x := x + w + bar-spacing(bar)
+        end
       end;
     #"vertical" =>
       //---*** Do this
@@ -82,7 +82,7 @@ define method do-allocate-space
 end method do-allocate-space;
 
 // The items are the bars, which are the children!
-define method note-gadget-items-changed 
+define method note-gadget-items-changed
     (chart :: <bar-chart-pane>) => ()
   next-method();
   sheet-children(chart) := gadget-items(chart);
@@ -105,9 +105,9 @@ define method note-gadget-selection-changed
   let items     = gadget-items(chart);
   let selection = gadget-selection(chart);
   local method set-selection (bar :: <bar-pane>, selection :: <boolean>) => ()
-	  bar-selected?(bar) := selection;
-	  repaint-sheet(bar, $everywhere)
-	end method;
+          bar-selected?(bar) := selection;
+          repaint-sheet(bar, $everywhere)
+        end method;
   for (bar in items)
     set-selection(bar, #f)
   end;
@@ -149,7 +149,7 @@ define sealed class <simple-bar-pane>
     (<bar-pane>)
 end class <simple-bar-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <bar>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<simple-bar-pane>, #f)
@@ -185,12 +185,12 @@ define method do-compose-space
       let bar-width  = bar-minor-size(bar);
       let bar-height = floor(gadget-value(bar) * bar-scaling(bar));
       make(<space-requirement>,
-	   width: bar-width, height: bar-height);
+           width: bar-width, height: bar-height);
     #"vertical" =>
       let bar-height = bar-minor-size(bar);
       let bar-width  = floor(gadget-value(bar) * bar-scaling(bar));
       make(<space-requirement>,
-	   width: bar-width, height: bar-height);
+           width: bar-width, height: bar-height);
   end
 end method do-compose-space;
 
@@ -208,26 +208,26 @@ define method handle-repaint
   end
 end method handle-repaint;
 
-define method handle-event 
+define method handle-event
     (bar :: <bar-pane>, event :: <button-press-event>) => ()
   when (gadget-enabled?(bar))
     let chart :: <bar-chart-pane> = set-bar-chart-selection(bar, event);
     select (event-button(event))
       $left-button => #f;
       $middle-button =>
-	activate-gadget(chart);
+        activate-gadget(chart);
       $right-button =>
-	execute-popup-menu-callback
-	  (chart, gadget-client(chart), gadget-id(chart), bar,
-	   x: event-x(event), y: event-y(event));
+        execute-popup-menu-callback
+          (chart, gadget-client(chart), gadget-id(chart), bar,
+           x: event-x(event), y: event-y(event));
     end
   end
 end method handle-event;
 
-define method handle-event 
+define method handle-event
     (bar :: <bar-pane>, event :: <double-click-event>) => ()
   when (gadget-enabled?(bar)
-	& event-button(event) == $left-button)
+        & event-button(event) == $left-button)
     // Set the selection and activate
     let chart :: <bar-chart-pane> = set-bar-chart-selection(bar, event);
     activate-gadget(chart)
@@ -241,9 +241,9 @@ define method set-bar-chart-selection
   let selection = gadget-selection(chart);
   let index     = position(items, bar);
   local method set-selection (bar :: <bar-pane>, selection :: <boolean>) => ()
-	  bar-selected?(bar) := selection;
-	  repaint-sheet(bar, $everywhere)
-	end method;
+          bar-selected?(bar) := selection;
+          repaint-sheet(bar, $everywhere)
+        end method;
   select (gadget-selection-mode(chart))
     #"none"   => #f;
     #"single" =>
@@ -254,20 +254,20 @@ define method set-bar-chart-selection
       set-selection(items[index], #t);
     #"multiple" =>
       if (event-modifier-state(event) == $shift-key)
-	// Adding to or removing from selection
-	if (member?(index, selection))
-	  gadget-selection(chart, do-callback?: #t) := remove(selection, index);
-	  set-selection(items[index], #f)
-	else
-	  gadget-selection(chart, do-callback?: #t) := add(selection, index);
-	  set-selection(items[index], #t)
-	end
+        // Adding to or removing from selection
+        if (member?(index, selection))
+          gadget-selection(chart, do-callback?: #t) := remove(selection, index);
+          set-selection(items[index], #f)
+        else
+          gadget-selection(chart, do-callback?: #t) := add(selection, index);
+          set-selection(items[index], #t)
+        end
       else
         for (index in selection)
-	  set-selection(items[index], #f)
-	end;
-	gadget-selection(chart, do-callback?: #t) := vector(index);
-	set-selection(items[index], #t);
+          set-selection(items[index], #f)
+        end;
+        gadget-selection(chart, do-callback?: #t) := vector(index);
+        set-selection(items[index], #t);
       end;
   end;
   chart
@@ -278,8 +278,8 @@ end method set-bar-chart-selection;
 chart := contain(make(<bar-chart>, width: 200, height: 100));
 
 gadget-items(chart) := vector(make(<bar>, value: 20),
-			      make(<bar>, value: 10),
-			      make(<bar>, value: 30));
+                              make(<bar>, value: 10),
+                              make(<bar>, value: 30));
 
 gadget-value(chart) & gadget-value(gadget-value(chart));
 */

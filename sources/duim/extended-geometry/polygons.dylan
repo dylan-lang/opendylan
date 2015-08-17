@@ -36,9 +36,9 @@ define method polygon-points
       let npoints :: <integer> = truncate/(size(coords), 2);
       let points :: <simple-object-vector> = make(<simple-vector>, size: npoints);
       without-bounds-checks
-	for (i :: <integer> from 0 below npoints)
-	  points[i] := make-point(coords[i * 2 + 0], coords[i * 2 + 1])
-	end
+        for (i :: <integer> from 0 below npoints)
+          points[i] := make-point(coords[i * 2 + 0], coords[i * 2 + 1])
+        end
       end;
       polygon.%points := points
     end
@@ -53,10 +53,10 @@ define method polygon-coordinates
       let npoints :: <integer> = size(points);
       let coords :: <simple-object-vector> = make(<simple-vector>, size: npoints * 2);
       without-bounds-checks
-	for (i :: <integer> from 0 below npoints)
-	  coords[i * 2 + 0] := point-x(points[i]);
-	  coords[i * 2 + 1] := point-y(points[i])
-	end
+        for (i :: <integer> from 0 below npoints)
+          coords[i * 2 + 0] := point-x(points[i]);
+          coords[i * 2 + 1] := point-y(points[i])
+        end
      end;
       polygon.%coords := coords
     end
@@ -73,8 +73,8 @@ define method do-polygon-coordinates
     end
   else
     local method do-coords (point) => ()
-	    function(point-x(point), point-y(point))
-	  end method;
+            function(point-x(point), point-y(point))
+          end method;
     do(do-coords, polygon.%points)
   end
 end method do-polygon-coordinates;
@@ -91,7 +91,7 @@ define method do-polygon-segments
     let i :: <integer> = 1;
     until (i = ncoords)
       function(x, y,
-	       x := coords[inc!(i)], y := coords[inc!(i)])
+               x := coords[inc!(i)], y := coords[inc!(i)])
     end;
     when (polyline-closed?(polygon))
       function(x, y, x1, y1)
@@ -122,11 +122,11 @@ define method box-edges
   let max-x = $smallest-coordinate;
   let max-y = $smallest-coordinate;
   local method add-coord (x, y) => ()
-	  min!(min-x, x);
-	  min!(min-y, y);
-	  max!(max-x, x);
-	  max!(max-y, y)
-	end method;
+          min!(min-x, x);
+          min!(min-y, y);
+          max!(max-x, x);
+          max!(max-y, y)
+        end method;
   do-polygon-coordinates(add-coord, polygon);
   fix-box(min-x, min-y, max-x, max-y)
 end method box-edges;
@@ -143,7 +143,7 @@ define sealed domain initialize (<standard-polyline>);
 define inline function make-polyline
     (coord-seq, #key closed?) => (polyline :: <standard-polyline>)
   assert(even?(size(coord-seq)),
-	 "There must be an even number of coordinates in %=", coord-seq);
+         "There must be an even number of coordinates in %=", coord-seq);
   make(<standard-polyline>,
        coordinates: as(<simple-vector>, coord-seq),
        closed?: closed?)
@@ -166,10 +166,10 @@ define method transform-region
  => (polyline :: <standard-polyline>)
   let coords :: <stretchy-object-vector> = make(<stretchy-vector>);
   local method transform-coord (x, y) => ()
-	  let (nx, ny) = transform-position(transform, x, y);
-	  add!(coords, ny);
-	  add!(coords, nx)
-	end method;
+          let (nx, ny) = transform-position(transform, x, y);
+          add!(coords, ny);
+          add!(coords, nx)
+        end method;
   do-polygon-coordinates(transform-coord, polyline);
   make-polyline(coords, closed?: polyline-closed?(polyline))
 end method transform-region;
@@ -190,7 +190,7 @@ define sealed domain initialize (<standard-polygon>);
 define inline function make-polygon
     (coord-seq) => (polygon :: <standard-polygon>)
   assert(even?(size(coord-seq)),
-	 "There must be an even number of coordinates in %=", coord-seq);
+         "There must be an even number of coordinates in %=", coord-seq);
   make(<standard-polygon>,
        coordinates: as(<simple-vector>, coord-seq))
 end function make-polygon;
@@ -216,10 +216,10 @@ define method transform-region
  => (polygon :: <standard-polygon>)
   let coords :: <stretchy-object-vector> = make(<stretchy-vector>);
   local method transform-coord (x, y) => ()
-	  let (nx, ny) = transform-position(transform, x, y);
-	  add!(coords, ny);
-	  add!(coords, nx)
-	end method;
+          let (nx, ny) = transform-position(transform, x, y);
+          add!(coords, ny);
+          add!(coords, nx)
+        end method;
   do-polygon-coordinates(transform-coord, polygon);
   make-polygon(coords)
 end method transform-region;
@@ -233,6 +233,6 @@ define method region-contains-position?
     (polygon :: <standard-polygon>, x :: <real>, y :: <real>) => (true? :: <boolean>)
   let (left, top, right, bottom) = box-edges(polygon);
   ltrb-contains-position?(left, top, right, bottom,
-			  fix-coordinate(x), fix-coordinate(y))
+                          fix-coordinate(x), fix-coordinate(y))
   & position-inside-polygon?(x, y, polygon-coordinates(polygon), closed?: #t)
 end method region-contains-position?;

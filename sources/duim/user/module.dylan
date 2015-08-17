@@ -21,7 +21,7 @@ end module duim-user;
 define module duim-internals-user
   use common-dylan,
     exclude: { position,
-	       \without-bounds-checks };
+               \without-bounds-checks };
   use streams;
   use standard-io;
   use print;

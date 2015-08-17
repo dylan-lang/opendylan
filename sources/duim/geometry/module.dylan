@@ -18,7 +18,7 @@ define module duim-geometry
   create <bounding-box>,
          bounding-box,
          bounding-box?,
-         box-edges, set-box-edges, 
+         box-edges, set-box-edges,
          box-position, set-box-position,
          box-size, set-box-size,
          box-left,
@@ -111,18 +111,18 @@ define module duim-geometry-internals
   // Coordinates
   export \convert-to-device-coordinates!,
          \convert-to-device-distances!,
-	 fix-box,
+         fix-box,
          \fix-coordinates!,
          spread-point-sequence,
          \translate-coordinates!,
          translate-coordinate-sequence!,
-	 \with-device-coordinates,
+         \with-device-coordinates,
          \with-device-distances;
 
   // Boxes
   export <general-box>,
          <simple-box>,
-	 box-center, box-center*,
+         box-center, box-center*,
          box-invalidated?,
          invalidate-box!,
          box-edges-equal,
@@ -158,9 +158,9 @@ define module duim-geometry-internals
   // Simple regions
   export <everywhere>,
          <nowhere>,
-	 <region-difference>,
-	 <region-intersection>,
-	 <region-union>,
+         <region-difference>,
+         <region-intersection>,
+         <region-union>,
          everywhere?,
          point-x-setter,
          point-y-setter,

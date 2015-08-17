@@ -13,14 +13,14 @@ define class <graphics-area> (<simple-pane>)
 end class <graphics-area>;
 
 define method graphics-area-pixmap (sheet :: <graphics-area>)
-  sheet.%pixmap 
-    | (sheet.%pixmap := 
+  sheet.%pixmap
+    | (sheet.%pixmap :=
          with-sheet-medium (medium = sheet)
            make-pixmap(medium, 200, 200)
          end)
 end method graphics-area-pixmap;
 
-define method handle-repaint 
+define method handle-repaint
     (sheet :: <graphics-area>, medium :: <medium>, region :: <region>)
  => ()
   with-double-buffering (medium, pixmap: graphics-area-pixmap(sheet))

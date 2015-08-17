@@ -22,7 +22,7 @@ define method find-test-class (class :: <class>)
   end
 end method find-test-class;
 
-define method install-test 
+define method install-test
     (frame-class :: <class>, title :: <string>)
   let test = find-test-class(frame-class);
   if (test)
@@ -33,8 +33,8 @@ define method install-test
   frame-class
 end method install-test;
 
-define method start-test-frame 
-    (frame :: <frame>, class :: <class>, 
+define method start-test-frame
+    (frame :: <frame>, class :: <class>,
      #rest args,
      #key frame-manager: framem)
  => ()
@@ -43,21 +43,21 @@ define method start-test-frame
     let frame-class = test[0];
     let title = test[1];
     local method create-test-frame
-	      (#key owner) => ()
-	    with-abort-restart ()
-	      let test-frame
-	        = if (test)
-		    apply(make, frame-class, title: title, owner: owner, args)
-		  else
-		    apply(make, class, title: "Test", owner: owner, args)
-		  end;
-	      start-frame(test-frame)
-	    end
-	  end method create-test-frame;
+              (#key owner) => ()
+            with-abort-restart ()
+              let test-frame
+                = if (test)
+                    apply(make, frame-class, title: title, owner: owner, args)
+                  else
+                    apply(make, class, title: "Test", owner: owner, args)
+                  end;
+              start-frame(test-frame)
+            end
+          end method create-test-frame;
     if (*use-threads?*)
       make(<thread>,
-	   name: title,
-	   function: create-test-frame)
+           name: title,
+           function: create-test-frame)
     else
       create-test-frame(owner: frame)
     end
@@ -77,23 +77,23 @@ end method sorted-test-frames;
 define frame <tests-harness> (<simple-frame>)
   pane update (frame)
     make(<push-button>,
-	 label: "Update",
-	 documentation: "Update the list of available tests",
-	 activate-callback: update-tests-harness);
+         label: "Update",
+         documentation: "Update the list of available tests",
+         activate-callback: update-tests-harness);
   pane tests (frame)
     begin
       let frames = sorted-test-frames();
       make(<list-box>,
-	   documentation: "Double-click on a test name to run it",
-	   items: frames,
-	   lines: size(frames),
-	   label-key: second,
-	   value-key: first,
-	   activate-callback: method (sheet :: <sheet>)
-				let frame = sheet-frame(sheet);
-				let test = gadget-value(sheet);
-				start-test-frame(frame, test)
-			      end)
+           documentation: "Double-click on a test name to run it",
+           items: frames,
+           lines: size(frames),
+           label-key: second,
+           value-key: first,
+           activate-callback: method (sheet :: <sheet>)
+                                let frame = sheet-frame(sheet);
+                                let test = gadget-value(sheet);
+                                start-test-frame(frame, test)
+                              end)
     end;
   pane main-layout (frame)
     vertically (spacing: 2)
@@ -103,13 +103,13 @@ define frame <tests-harness> (<simple-frame>)
   layout (frame) frame.main-layout;
 end frame <tests-harness>;
 
-define method update-tests-harness 
+define method update-tests-harness
     (sheet :: <sheet>) => ()
   let frame = sheet-frame(sheet);
   gadget-items(frame.tests) := sorted-test-frames()
 end method update-tests-harness;
 
-define method start-tests 
+define method start-tests
     () => (status-code :: <integer>)
   let frame = make(<tests-harness>, title: "Tests");
   frame-input-focus(frame) := frame.tests;

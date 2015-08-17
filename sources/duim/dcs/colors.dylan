@@ -22,11 +22,11 @@ end protocol <<color-protocol>>;
 
 /// RGB <-> IHS conversions
 
-define constant $ihs-rgb-c1 :: <single-float> = 0.4082483;	// sqrt(1/6)
-define constant $ihs-rgb-c2 :: <single-float> = 0.7071068;	// sqrt(1/2)
-define constant $ihs-rgb-c3 :: <single-float> = 0.5773503;	// sqrt(1/3)
+define constant $ihs-rgb-c1 :: <single-float> = 0.4082483;        // sqrt(1/6)
+define constant $ihs-rgb-c2 :: <single-float> = 0.7071068;        // sqrt(1/2)
+define constant $ihs-rgb-c3 :: <single-float> = 0.5773503;        // sqrt(1/3)
 
-define constant $sqrt3      :: <single-float> = 1.732051;	// sqrt(3)
+define constant $sqrt3      :: <single-float> = 1.732051;        // sqrt(3)
 
 define function ihs->rgb
     (intensity :: <single-float>, hue :: <single-float>, saturation :: <single-float>)
@@ -40,8 +40,8 @@ define function ihs->rgb
   let y = $ihs-rgb-c2 * s3 * sin-hh * intensity;
   let z = $ihs-rgb-c3 * c3 * intensity;
   values(max(0.0, min(1.0, x + x + z)),
-	 max(0.0, min(1.0, y + z + -x)),
-	 max(0.0, min(1.0, (z - x) - y)))
+         max(0.0, min(1.0, y + z + -x)),
+         max(0.0, min(1.0, (z - x) - y)))
 end function ihs->rgb;
 
 define function rgb->ihs
@@ -51,7 +51,7 @@ define function rgb->ihs
   let y = $ihs-rgb-c2 * (green - blue);
   let z = $ihs-rgb-c3 * (red + green + blue);
   let q = x * x + y * y;
-  let intensity = sqrt(q + z * z);	// == sqrt(r^2 + g^2 + b^2) !
+  let intensity = sqrt(q + z * z);        // == sqrt(r^2 + g^2 + b^2) !
   if (zero?(q))
     // A totally unsaturated color
     values(intensity, 0.0, 0.0)
@@ -151,14 +151,14 @@ define function make-ihs-color
       $black;
     otherwise =>
       let (red, green, blue)
-	= ihs->rgb(as(<single-float>, intensity),
-		   as(<single-float>, hue),
-		   as(<single-float>, saturation));
+        = ihs->rgb(as(<single-float>, intensity),
+                   as(<single-float>, hue),
+                   as(<single-float>, saturation));
       make(<rgb-color>,
-	   red:     red,
-	   green:   green,
-	   blue:    blue,
-	   opacity: as(<single-float>, opacity))
+           red:     red,
+           green:   green,
+           blue:    blue,
+           opacity: as(<single-float>, opacity))
   end
 end function make-ihs-color;
 
@@ -175,10 +175,10 @@ define function make-gray-color
     otherwise =>
       let luminosity = as(<single-float>, luminosity);
       make(<rgb-color>,
-	   red:     luminosity,
-	   green:   luminosity,
-	   blue:    luminosity,
-	   opacity: as(<single-float>, opacity))
+           red:     luminosity,
+           green:   luminosity,
+           blue:    luminosity,
+           opacity: as(<single-float>, opacity))
   end
 end function make-gray-color;
 
@@ -263,13 +263,13 @@ define sealed method make-contrasting-colors
     let result :: <simple-object-vector> = make(<simple-vector>, size: n);
     without-bounds-checks
       for (k :: <integer> from 0 below n)
-	result[k] := make(<contrasting-color>, which-one: k, how-many: n)
+        result[k] := make(<contrasting-color>, which-one: k, how-many: n)
       end
     end;
     result
   else
     assert(k < n,
-	   "The index %d must be smaller than the count %d", k, n);
+           "The index %d must be smaller than the count %d", k, n);
     make(<contrasting-color>, which-one: k, how-many: n)
   end
 end method make-contrasting-colors;

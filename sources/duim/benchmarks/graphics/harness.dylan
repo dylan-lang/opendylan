@@ -20,7 +20,7 @@ define method find-benchmark-class (class :: <class>)
   end
 end method find-benchmark-class;
 
-define method install-benchmark 
+define method install-benchmark
     (frame-class :: <class>, title :: <string>)
   let benchmark = find-benchmark-class(frame-class);
   if (benchmark)
@@ -31,8 +31,8 @@ define method install-benchmark
   frame-class
 end method install-benchmark;
 
-define method start-benchmark-frame 
-    (frame :: <frame>, class :: <class>, 
+define method start-benchmark-frame
+    (frame :: <frame>, class :: <class>,
      #rest args,
      #key frame-manager: framem)
  => (thread :: <thread>)
@@ -41,19 +41,19 @@ define method start-benchmark-frame
     let frame-class = benchmark[0];
     let title = benchmark[1];
     local method create-benchmark-frame () => ()
-	    with-abort-restart ()
-	      let benchmark-frame
-	        = if (benchmark)
-		    apply(make, frame-class, title: title, args)
-		  else
-		    apply(make, class, title: "Benchmark", args)
-		  end;
-	      start-frame(benchmark-frame)
-	    end
-	  end method create-benchmark-frame;
+            with-abort-restart ()
+              let benchmark-frame
+                = if (benchmark)
+                    apply(make, frame-class, title: title, args)
+                  else
+                    apply(make, class, title: "Benchmark", args)
+                  end;
+              start-frame(benchmark-frame)
+            end
+          end method create-benchmark-frame;
     make(<thread>,
-	 name: title,
-	 function: create-benchmark-frame)
+         name: title,
+         function: create-benchmark-frame)
   end
 end method start-benchmark-frame;
 
@@ -70,23 +70,23 @@ end method sorted-benchmark-frames;
 define frame <benchmarks-harness> (<simple-frame>)
   pane update (frame)
     make(<push-button>,
-	 label: "Update",
-	 documentation: "Update the list of available benchmarks",
-	 activate-callback: update-benchmarks-harness);
+         label: "Update",
+         documentation: "Update the list of available benchmarks",
+         activate-callback: update-benchmarks-harness);
   pane benchmarks (frame)
     begin
       let frames = sorted-benchmark-frames();
       make(<list-box>,
-	   documentation: "Double-click on a benchmark name to run it",
-	   items: frames,
-	   lines: size(frames),
-	   label-key: second,
-	   value-key: first,
-	   activate-callback: method (sheet :: <sheet>)
-				let frame = sheet-frame(sheet);
-				let benchmark = gadget-value(sheet);
-				start-benchmark-frame(frame, benchmark)
-			      end)
+           documentation: "Double-click on a benchmark name to run it",
+           items: frames,
+           lines: size(frames),
+           label-key: second,
+           value-key: first,
+           activate-callback: method (sheet :: <sheet>)
+                                let frame = sheet-frame(sheet);
+                                let benchmark = gadget-value(sheet);
+                                start-benchmark-frame(frame, benchmark)
+                              end)
     end;
   pane main-layout (frame)
     vertically (spacing: 2)
@@ -96,13 +96,13 @@ define frame <benchmarks-harness> (<simple-frame>)
   layout (frame) frame.main-layout;
 end frame <benchmarks-harness>;
 
-define method update-benchmarks-harness 
+define method update-benchmarks-harness
     (sheet :: <sheet>) => ()
   let frame = sheet-frame(sheet);
   gadget-items(frame.benchmarks) := sorted-benchmark-frames()
 end method update-benchmarks-harness;
 
-define method start-benchmarks 
+define method start-benchmarks
     () => (status-code :: <integer>)
   let frame = make(<benchmarks-harness>, title: "Graphics Benchmarks");
   frame-input-focus(frame) := frame.benchmarks;

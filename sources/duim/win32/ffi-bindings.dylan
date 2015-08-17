@@ -38,26 +38,26 @@ define macro <LPBFFCALLBACK>-callback-wrapper
     => { <WNDPROC>-callback-wrapper(?new,?old) }
 end macro <LPBFFCALLBACK>-callback-wrapper;
 
-define C-struct <SHITEMID>              // mkid  
-  slot cb-value :: <USHORT>;            // size of identifier, including cb itself 
+define C-struct <SHITEMID>              // mkid
+  slot cb-value :: <USHORT>;            // size of identifier, including cb itself
   array slot abID-array :: <C-BYTE>, length: 1,
         address-getter: abID-value;
   pointer-type-name: <LPSHITEMID>;
   c-name: "struct _SHITEMID";
 end C-struct <SHITEMID>;
-define constant <LPCSHITEMID> = <LPSHITEMID>; 
+define constant <LPCSHITEMID> = <LPSHITEMID>;
 
 ignore(cb-value, cb-value-setter,
        abID-array, abID-array-setter, abID-value,
        <LPCSHITEMID>);
 
-define C-struct <ITEMIDLIST>            // idl  
-  slot mkid-value :: <SHITEMID>;        // list of item identifers 
+define C-struct <ITEMIDLIST>            // idl
+  slot mkid-value :: <SHITEMID>;        // list of item identifers
   pointer-type-name: <LPITEMIDLIST>;
   c-name: "struct _ITEMIDLIST";
 end C-struct <ITEMIDLIST>;
 define constant <LPCITEMIDLIST> = <LPITEMIDLIST>;
- 
+
 ignore(mkid-value, mkid-value-setter,
        <LPCITEMIDLIST>);
 

@@ -34,8 +34,8 @@ define method transform-components
  => (mxx :: <single-float>, mxy :: <single-float>, myx :: <single-float>, myy :: <single-float>,
      tx :: <single-float>, ty :: <single-float>);
   values(transform.%mxx, transform.%mxy,
-	 transform.%myx, transform.%myy,
-	 transform.%tx, transform.%ty)
+         transform.%myx, transform.%myy,
+         transform.%tx, transform.%ty)
 end method transform-components;
 
 
@@ -49,13 +49,13 @@ end class <transform-underspecified>;
 define method condition-to-string
     (condition :: <transform-underspecified>) => (string :: <string>)
   format-to-string("You can't make a transformation from the three collinear points "
-		   "(%d,%d), (%d,%d), and (%d,%d)",
-		   condition.%underspecified-points[0],
-		   condition.%underspecified-points[1],
-		   condition.%underspecified-points[2],
-		   condition.%underspecified-points[3],
-		   condition.%underspecified-points[4],
-		   condition.%underspecified-points[5])
+                   "(%d,%d), (%d,%d), and (%d,%d)",
+                   condition.%underspecified-points[0],
+                   condition.%underspecified-points[1],
+                   condition.%underspecified-points[2],
+                   condition.%underspecified-points[3],
+                   condition.%underspecified-points[4],
+                   condition.%underspecified-points[5])
 end method condition-to-string;
 
 define sealed class <reflection-underspecified> (<transform-underspecified>)
@@ -64,11 +64,11 @@ end class <reflection-underspecified>;
 define method condition-to-string
     (condition :: <reflection-underspecified>) => (string :: <string>)
   format-to-string("You can't make a reflection from the two coincident points "
-		   "(%d,%d) and (%d,%d)",
-		   condition.%underspecified-points[0],
-		   condition.%underspecified-points[1],
-		   condition.%underspecified-points[2],
-		   condition.%underspecified-points[3])
+                   "(%d,%d) and (%d,%d)",
+                   condition.%underspecified-points[0],
+                   condition.%underspecified-points[1],
+                   condition.%underspecified-points[2],
+                   condition.%underspecified-points[3])
 end method condition-to-string;
 
 
@@ -86,7 +86,7 @@ define sideways method make-transform
 end method make-transform;
 
 //--- 'sideways' because <transform> is defined in DUIM-Geometry
-define sealed inline sideways method make 
+define sealed inline sideways method make
     (class == <transform>,
      #key mxx = 1.0, mxy = 0.0, myx = 0.0, myy = 1.0, tx = 0.0, ty = 0.0)
  => (transform :: <transform>)
@@ -108,7 +108,7 @@ define method make-transform-1
              tx: truncate(tx), ty: truncate(ty))
       else
         make(<float-translation-transform>,
-	     tx: as(<single-float>, tx), ty: as(<single-float>, ty))
+             tx: as(<single-float>, tx), ty: as(<single-float>, ty))
       end;
     otherwise =>
       $identity-transform
@@ -139,8 +139,8 @@ define sideways method make-rotation-transform*
     (angle :: <real>, #key origin) => (transform :: <transform>)
   if (origin)
     make-rotation-transform(angle,
-			    origin-x: point-x(origin),
-			    origin-x: point-y(origin))
+                            origin-x: point-x(origin),
+                            origin-x: point-y(origin))
   else
     make-rotation-transform(angle)
   end
@@ -165,9 +165,9 @@ end method make-scaling-transform;
 define sideways method make-scaling-transform*
     (mx :: <real>, my :: <real>, #key origin) => (transform :: <transform>)
   if (origin)
-    make-scaling-transform(mx, my, 
-			   origin-x: point-x(origin),
-			   origin-y: point-y(origin))
+    make-scaling-transform(mx, my,
+                           origin-x: point-x(origin),
+                           origin-y: point-y(origin))
   else
     make-scaling-transform(mx, my)
   end
@@ -203,7 +203,7 @@ define sideways method make-reflection-transform*
     (point-1 :: <standard-point>, point-2 :: <standard-point>)
  => (transform :: <transform>)
   make-reflection-transform(point-x(point-1), point-y(point-1),
-			    point-x(point-2), point-y(point-2))
+                            point-x(point-2), point-y(point-2))
 end method make-reflection-transform*;
 
 define sideways method make-3-point-transform
@@ -312,17 +312,17 @@ define method invert-transform
   transform.%inverse
   | begin
       let one/det
-	= transform.%mxx * transform.%myy - transform.%mxy * transform.%myx;
+        = transform.%mxx * transform.%myy - transform.%mxy * transform.%myx;
       when (zero?(one/det))
-	error(make(<singular-transform>, transform: transform))
+        error(make(<singular-transform>, transform: transform))
       end;
       one/det := 1.0 / one/det;
       let inverse :: <general-transform>
-	= make(<general-transform>,
-	       mxx: transform.%myy * one/det, mxy: -transform.%mxy * one/det,
-	       myx: -transform.%myx * one/det, myy: transform.%mxx * one/det,
-	       tx: (transform.%mxy * transform.%ty - transform.%myy * transform.%tx) * one/det,
-	       ty: (transform.%myx * transform.%tx - transform.%mxx * transform.%ty) * one/det);
+        = make(<general-transform>,
+               mxx: transform.%myy * one/det, mxy: -transform.%mxy * one/det,
+               myx: -transform.%myx * one/det, myy: transform.%mxx * one/det,
+               tx: (transform.%mxy * transform.%ty - transform.%myy * transform.%tx) * one/det,
+               ty: (transform.%myx * transform.%tx - transform.%mxx * transform.%ty) * one/det);
       // Link the transform to its inverse
       inverse.%inverse   := transform;
       transform.%inverse := inverse;
@@ -418,7 +418,7 @@ define sideways method compose-scaling-with-transform
          ty + (1.0 - my) * as(<single-float>, point-y(origin)))
     else
       make-transform-1(mx, 0.0, 0.0, my,
-		       as(<single-float>, tx), as(<single-float>, ty))
+                       as(<single-float>, tx), as(<single-float>, ty))
     end
   end
 end method compose-scaling-with-transform;
@@ -486,7 +486,7 @@ define sideways method compose-rotation-with-transform
     else
       make(<general-transform>,
            mxx: cos, mxy: -sin, myx: sin, myy: cos,
-	   tx: as(<single-float>, tx), ty: as(<single-float>, ty))
+           tx: as(<single-float>, tx), ty: as(<single-float>, ty))
     end
   end
 end method compose-rotation-with-transform;
@@ -595,7 +595,7 @@ define method transform-box
   let nx2 = x2 * transform.%mxx + y2 * transform.%mxy + transform.%tx;
   let ny2 = x2 * transform.%myx + y2 * transform.%myy + transform.%ty;
   fix-box(min(nx1, nx2), min(ny1, ny2),
-	  max(nx1, nx2), max(ny1, ny2))
+          max(nx1, nx2), max(ny1, ny2))
 end method transform-box;
 
 define method untransform-box

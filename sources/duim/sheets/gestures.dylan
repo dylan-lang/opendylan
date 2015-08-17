@@ -76,9 +76,9 @@ define function make-modifier-state
     else
       let bit = modifier-key-index(name);
       if (bit)
-	state := logior(state, ash(1, %modifier_base + bit))
+        state := logior(state, ash(1, %modifier_base + bit))
       else
-	error("%= is not a valid modifier key name", name)
+        error("%= is not a valid modifier key name", name)
       end
     end
   end;
@@ -126,7 +126,7 @@ begin
   $standard-char-keysyms[as(<integer>, '\f')]  := #"form";
   $standard-char-keysyms[as(<integer>, '\e')]  := #"escape";
   $standard-char-keysyms[as(<integer>, '\0')]  := #"null";
-  $standard-char-keysyms[127] := #"delete"	// formerly #"rubout"
+  $standard-char-keysyms[127] := #"delete"        // formerly #"rubout"
 end;
 
 define inline function standard-char->keysym
@@ -142,9 +142,9 @@ define method gesture-character
     let char = as(<character>, code);
     if (alpha-char?(char))
       if (zero?(logand(gesture-modifier-state(gesture), $shift-key)))
-	as-lowercase(char)
+        as-lowercase(char)
       else
-	as-uppercase(char)
+        as-uppercase(char)
       end
     else
       char
@@ -196,12 +196,12 @@ define sealed method make
   case
     keysym =>
       make(<keyboard-gesture>,
-	   keysym: keysym,
-	   modifiers: modifiers, modifier-state: modifier-state);
+           keysym: keysym,
+           modifiers: modifiers, modifier-state: modifier-state);
     button =>
       make(<pointer-gesture>,
-	   button: button,
-	   modifiers: modifiers, modifier-state: modifier-state);
+           button: button,
+           modifiers: modifiers, modifier-state: modifier-state);
     otherwise =>
       error("You must supply one of 'keysym:' or 'button:'");
   end
@@ -215,7 +215,7 @@ define sealed method make
       else modifier-state end;
   when (instance?(keysym, <character>))
     assert(standard-char?(keysym),
-	   "The character %s is not a standard character", keysym);
+           "The character %s is not a standard character", keysym);
     when (upper-case?(keysym))
       modifier-state := logior(modifier-state, $shift-key)
     end;
@@ -225,15 +225,15 @@ define sealed method make
     = begin
         let bucket = *gesture-table*[modifier-state];
         unless (bucket)
-	  bucket := make(<table>);
-	  *gesture-table*[modifier-state] := bucket
-	end;
-	bucket
+          bucket := make(<table>);
+          *gesture-table*[modifier-state] := bucket
+        end;
+        bucket
       end;
   gethash(bucket, keysym)
   | begin
       let gesture = next-method(class,
-				keysym: keysym, modifier-state: modifier-state);
+                                keysym: keysym, modifier-state: modifier-state);
       gethash(bucket, keysym) := gesture;
       gesture
     end
@@ -252,15 +252,15 @@ define sealed method make
     = begin
         let bucket = *gesture-table*[modifier-state];
         unless (bucket)
-	  bucket := make(<table>);
-	  *gesture-table*[modifier-state] := bucket
-	end;
-	bucket
+          bucket := make(<table>);
+          *gesture-table*[modifier-state] := bucket
+        end;
+        bucket
       end;
   gethash(bucket, button)
   | begin
       let gesture = next-method(class,
-				button: button, modifier-state: modifier-state);
+                                button: button, modifier-state: modifier-state);
       gethash(bucket, button) := gesture;
       gesture
     end

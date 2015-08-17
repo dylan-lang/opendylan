@@ -25,7 +25,7 @@ define constant <x-alignment>
     = one-of(#"left", #"right", #"center", #"centre");
 
 define protocol <<layout-protocol>> ()
-  function compose-space 
+  function compose-space
     (pane :: <abstract-sheet>, #key width, height)
  => (space-req :: <space-requirement>);
   function do-compose-space
@@ -51,8 +51,8 @@ define method compose-space
   //--- Maybe remove this if the efficiency loss is too huge...
   let (w, w-, w+, h, h-, h+) = space-requirement-components(pane, space-req);
   assert("Space requirement components are all integers",
-	   instance?(w, <integer>) & instance?(w-, <integer>) & instance?(w+, <integer>)
-	 & instance?(h, <integer>) & instance?(h-, <integer>) & instance?(h+, <integer>));
+           instance?(w, <integer>) & instance?(w-, <integer>) & instance?(w+, <integer>)
+         & instance?(h, <integer>) & instance?(h-, <integer>) & instance?(h+, <integer>));
   space-req
 end method compose-space;
 
@@ -114,7 +114,7 @@ end method pane-space-requirement;
 define method initialize
     (pane :: <space-requirement-mixin>, #rest initargs,
      #key space-requirement,
-	  width, min-width, max-width, height, min-height, max-height)
+          width, min-width, max-width, height, min-height, max-height)
   dynamic-extent(initargs);
   ignore(width, min-width, max-width, height, min-height, max-height);
   next-method();
@@ -130,7 +130,7 @@ define method validate-sheet-size
     ignore(w, w+, h, h+);
     when (width < w- | height < h-)
       warn("Resizing sheet %= to be too small -- %dX%d, not %dX%d",
-	   pane, width, height, w-, h-)
+           pane, width, height, w-, h-)
     end
   end
 end method validate-sheet-size;
@@ -140,7 +140,7 @@ define method do-compose-space
  => (space-req :: <space-requirement>)
   dynamic-extent(keys);
   ignore(width, height);
-  pane-space-requirement(pane) 
+  pane-space-requirement(pane)
   | apply(default-space-requirement, pane, keys)
 end method do-compose-space;
 
@@ -188,7 +188,7 @@ define method validate-sheet-size
     ignore(w, w+, h, h+);
     when (width < w- | height < h-)
       warn("Resizing sheet %= to be too small -- %dX%d, not %dX%d",
-	   pane, width, height, w-, h-)
+           pane, width, height, w-, h-)
     end
   end
 end method validate-sheet-size;
@@ -205,8 +205,8 @@ define method compose-space
     else
       let space-req = next-method();
       unless (cache)
-	cache := vector(#f, #f, #f);
-	pane.%space-requirement-cache := cache
+        cache := vector(#f, #f, #f);
+        pane.%space-requirement-cache := cache
       end;
       cache[0] := space-req;
       cache[1] := width;
@@ -226,8 +226,8 @@ end method sheet-layed-out?-setter;
 // Reset an entire sheet hierarchy to an un-layed-out state
 define method invalidate-space-requirements (sheet :: <sheet>) => ()
   local method invalidate (sheet :: <sheet>) => ()
-	  sheet-layed-out?(sheet) := #f
-	end method;
+          sheet-layed-out?(sheet) := #f
+        end method;
   do-sheet-tree(invalidate, sheet)
 end method invalidate-space-requirements;
 
@@ -258,20 +258,20 @@ end class <client-overridability-mixin>;
 define method initialize
     (pane :: <client-overridability-mixin>,
      #key space-requirement,
-	  width, min-width, max-width, height, min-height, max-height,
-          resizable? = #t, 
+          width, min-width, max-width, height, min-height, max-height,
+          resizable? = #t,
           fixed-width? = ~resizable?, fixed-height? = ~resizable?)
   next-method();
   let bits = logior(if (fixed-width?)  %fixed_width  else 0 end,
-		    if (fixed-height?) %fixed_height else 0 end);
+                    if (fixed-height?) %fixed_height else 0 end);
   sheet-flags(pane) := logior(sheet-flags(pane), bits);
   when (space-requirement
-	| width | min-width | max-width | height | min-height | max-height)
+        | width | min-width | max-width | height | min-height | max-height)
     pane.%override-space-requirement
       := space-requirement
          | make(<space-requirement>,
-		width:  width,  min-width:  min-width,  max-width:  max-width,
-		height: height, min-height: min-height, max-height: max-height)
+                width:  width,  min-width:  min-width,  max-width:  max-width,
+                height: height, min-height: min-height, max-height: max-height)
   end
 end method initialize;
 
@@ -301,9 +301,9 @@ define method compose-space
   let fixed-height? = sheet-force-fixed-height?(pane);
   let space-req
     = next-method(pane,
-		  // Don't take top-down advice for fixed width or height
-		  width:  ~fixed-width?  & width,
-		  height: ~fixed-height? & height);
+                  // Don't take top-down advice for fixed width or height
+                  width:  ~fixed-width?  & width,
+                  height: ~fixed-height? & height);
   let override-space-req = pane.%override-space-requirement;
   if (override-space-req | fixed-width? | fixed-height?)
     let (w, w-, w+, h, h-, h+)
@@ -318,19 +318,19 @@ define method compose-space
     let nheight     = constrain-size(oh | h, nmin-height, nmax-height);
     let (best-width, min-width, max-width)
       = if (fixed-width?)
-	  values(nwidth, nwidth, nwidth)
-	else
-	  values(nwidth, nmin-width, nmax-width)
-	end;
+          values(nwidth, nwidth, nwidth)
+        else
+          values(nwidth, nmin-width, nmax-width)
+        end;
     let (best-height, min-height, max-height)
       = if (fixed-height?)
-	  values(nheight, nheight, nheight)
-	else
-	  values(nheight, nmin-height, nmax-height)
-	end;
+          values(nheight, nheight, nheight)
+        else
+          values(nheight, nmin-height, nmax-height)
+        end;
     make(<space-requirement>,
-	 width:  best-width,  min-width:  min-width,  max-width:  max-width,
-	 height: best-height, min-height: min-height, max-height: max-height)
+         width:  best-width,  min-width:  min-width,  max-width:  max-width,
+         height: best-height, min-height: min-height, max-height: max-height)
   else
     space-req
   end
@@ -352,25 +352,25 @@ define method do-compose-space
   case
     empty?(children) =>
       default-space-requirement(pane, width: width, height: height);
-    size(children) = 1 =>	// optimize a very common case...
+    size(children) = 1 =>        // optimize a very common case...
       compose-space(children[0], width: width, height: height);
     otherwise =>
       let (w :: <integer>, w- :: <integer>, w+ :: <integer>,
-	   h :: <integer>, h- :: <integer>, h+ :: <integer>)
-	= space-requirement-components(pane, compose-space(children[0]));
+           h :: <integer>, h- :: <integer>, h+ :: <integer>)
+        = space-requirement-components(pane, compose-space(children[0]));
       for (child :: <basic-sheet> in children)
-	unless (sheet-withdrawn?(child))
-	  let (srw :: <integer>, srw- :: <integer>, srw+ :: <integer>,
-	       srh :: <integer>, srh- :: <integer>, srh+ :: <integer>)
-	    = space-requirement-components(child, compose-space(child));
-	  let (x, y) = values(0, 0);	//--- sheet-position(child)...
-	  max!(w,  srw  + x);
-	  max!(h,  srh  + y);
-	  max!(w-, srw- + x);
-	  max!(h-, srh- + y);
-	  max!(w+, srw+ + x);
-	  max!(h+, srh+ + y)
-	end
+        unless (sheet-withdrawn?(child))
+          let (srw :: <integer>, srw- :: <integer>, srw+ :: <integer>,
+               srh :: <integer>, srh- :: <integer>, srh+ :: <integer>)
+            = space-requirement-components(child, compose-space(child));
+          let (x, y) = values(0, 0);        //--- sheet-position(child)...
+          max!(w,  srw  + x);
+          max!(h,  srh  + y);
+          max!(w-, srw- + x);
+          max!(h-, srh- + y);
+          max!(w+, srw+ + x);
+          max!(h+, srh+ + y)
+        end
       end;
       let w = constrain-size(width  | w, w-, w+);
       let h = constrain-size(height | h, h-, h+);
@@ -390,10 +390,10 @@ define method do-allocate-space
   else
     for (child :: <basic-sheet> in children)
       unless (sheet-withdrawn?(child))
-	let space-req = compose-space(child);
-	let (w, w-, w+, h, h-, h+) = space-requirement-components(child, space-req);
-	ignore(w-, w+, h-, h+);
-	set-sheet-size(child, w, h)
+        let space-req = compose-space(child);
+        let (w, w-, w+, h, h-, h+) = space-requirement-components(child, space-req);
+        ignore(w-, w+, h-, h+);
+        set-sheet-size(child, w, h)
       end
     end
   end
@@ -419,10 +419,10 @@ end method do-allocate-space;
 // sequence of items (sheets or space requirements), and ITEM-COMPOSER
 // generates a space requirement from an item.  (For example, when ITEMS
 // is a set of sheets, this function is 'compose-space'; when ITEMS is a
-// set of space reqs, this function is 'identity'.)  
+// set of space reqs, this function is 'identity'.)
 define function compose-space-for-items
     (sheet :: <sheet>,
-     desired-size :: <integer>, space-req :: <space-requirement>, items :: <sequence>, 
+     desired-size :: <integer>, space-req :: <space-requirement>, items :: <sequence>,
      size-function :: <function>, min-function :: <function>, max-function :: <function>,
      item-composer :: <function>, #key ratios)
  => (sizes :: <simple-object-vector>)
@@ -485,7 +485,7 @@ define function compose-space-for-items
           size-left := size-left - sizes[index];
           sized?[index] := #t;
         end;
-      ((constrained-size > size-left) & ~empty?(constraining-mins)) => 
+      ((constrained-size > size-left) & ~empty?(constraining-mins)) =>
         for (index in constraining-mins)
           ratio-denominator := ratio-denominator - desired-ratios[index];
           size-left := size-left - sizes[index];
@@ -621,7 +621,7 @@ end method layout-align-sheet-y;
 define open abstract class <fixed-layout> (<layout-pane>)
 end class <fixed-layout>;
 
-define method do-compose-space 
+define method do-compose-space
     (pane :: <fixed-layout>, #key width, height)
  => (space-req :: <space-requirement>)
   default-space-requirement(pane, width: width, height: height)
@@ -640,7 +640,7 @@ define sealed class <fixed-layout-pane> (<fixed-layout>)
   keyword accepts-focus?: = #f;
 end class <fixed-layout-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <fixed-layout>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<fixed-layout-pane>, #f)
@@ -657,7 +657,7 @@ define sealed domain initialize (<fixed-layout-pane>);
 define open abstract class <pinboard-layout> (<layout-pane>)
 end class <pinboard-layout>;
 
-define method do-compose-space 
+define method do-compose-space
     (pane :: <pinboard-layout>, #key width, height)
  => (space-req :: <space-requirement>)
   default-space-requirement(pane, width: width, height: height)
@@ -683,7 +683,7 @@ define sealed class <pinboard-layout-pane> (<pinboard-layout>)
   keyword accepts-focus?: = #f;
 end class <pinboard-layout-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <pinboard-layout>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<pinboard-layout-pane>, #f)
@@ -698,7 +698,7 @@ define sealed domain initialize (<pinboard-layout-pane>);
 // Stack layouts position all of their children at the top-left
 // one on top of the other. They are primarily useful for creating
 // tab-controls or wizards where only one child is visible at a time.
-define open abstract class <stack-layout> 
+define open abstract class <stack-layout>
     (<layout-border-mixin>,
      <layout-pane>)
 end class <stack-layout>;
@@ -718,9 +718,9 @@ define method initialize
   let mapped-page
     = mapped-page
         | begin
-	    let children = sheet-children(pane);
-	    ~empty?(children) & children[0]
-	  end;
+            let children = sheet-children(pane);
+            ~empty?(children) & children[0]
+          end;
   stack-layout-mapped-page(pane) := mapped-page
 end method initialize;
 
@@ -732,7 +732,7 @@ define method note-child-added
   sheet-withdrawn?(child) := #t
 end method note-child-added;
 
-define method do-compose-space 
+define method do-compose-space
     (pane :: <stack-layout>,
      #key width: requested-width, height: requested-height)
  => (space-req :: <space-requirement>)
@@ -753,9 +753,9 @@ define method do-compose-space
     let max-height :: <integer> = 0;
     for (child in children)
       let space-req
-	= compose-space(child, width: child-width, height: child-height);
+        = compose-space(child, width: child-width, height: child-height);
       let (w, w-, w+, h, h-, h+)
-	= space-requirement-components(child, space-req);
+        = space-requirement-components(child, space-req);
       max!(width,      w);
       max!(min-width,  w-);
       max!(max-width,  w+);
@@ -774,8 +774,8 @@ define method do-compose-space
     let best-width  = constrain-size(width,  min-width,  max-width);
     let best-height = constrain-size(height, min-height, max-height);
     make(<space-requirement>,
-	 width:  best-width,  min-width:  min-width,  max-width:  max-width,
-	 height: best-height, min-height: min-height, max-height: max-height)
+         width:  best-width,  min-width:  min-width,  max-width:  max-width,
+         height: best-height, min-height: min-height, max-height: max-height)
   end
 end method do-compose-space;
 
@@ -800,7 +800,7 @@ define sealed class <stack-layout-pane> (<stack-layout>)
   keyword accepts-focus?: = #f;
 end class <stack-layout-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <stack-layout>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<stack-layout-pane>, #f)
@@ -815,7 +815,7 @@ define sealed method stack-layout-mapped-page
   block (return)
     for (child :: <basic-sheet> in sheet-children(stack))
       unless (sheet-withdrawn?(child))
-	return(child)
+        return(child)
       end
     end
   end
@@ -832,10 +832,10 @@ define sealed method stack-layout-mapped-page-setter
     if (~sheet-withdrawn?(child))
       old-page := child;
       if (child ~= page)
-	sheet-withdrawn?(child, do-repaint?: #f) := #t;
-	let (child-width, child-height) = sheet-size(child);
-	max!(damaged-width, child-width);
-	max!(damaged-height, child-height);
+        sheet-withdrawn?(child, do-repaint?: #f) := #t;
+        let (child-width, child-height) = sheet-size(child);
+        max!(damaged-width, child-width);
+        max!(damaged-height, child-height);
       end
     end
   end;
@@ -847,14 +847,14 @@ define sealed method stack-layout-mapped-page-setter
       // Note that this apparent re-layout will be quite inexpensive
       // because we've already layed out all the pages in the stack
       let space-req
-	= compose-space(page, width: width, height: height);
+        = compose-space(page, width: width, height: height);
       let (w, w-, w+, h, h-, h+)
-	= space-requirement-components(page, space-req);
+        = space-requirement-components(page, space-req);
       ignore(w-, w+, h-, h+);
       // We repaint if the child isn't mirrored, or if the old damaged
       // region extends beyond the new child's own region.
       if (~sheet-direct-mirror(page) | damaged-width > w | damaged-height > h)
-	clear-box(stack, 0, 0, damaged-width, damaged-height)
+        clear-box(stack, 0, 0, damaged-width, damaged-height)
       end;
       set-sheet-edges(page, 0, 0, w, h);
       //---*** Can this be removed if we fix 'set-sheet-edges'?

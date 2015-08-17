@@ -32,15 +32,15 @@ define thread variable *layout-delayed?* = #f;
 define macro delaying-layout
   { delaying-layout (?pane:expression) ?:body end }
     => { begin
-	   let _pane = ?pane;
-	   block ()
-	     dynamic-bind (*layout-delayed?* = _pane)
+           let _pane = ?pane;
+           block ()
+             dynamic-bind (*layout-delayed?* = _pane)
                ?body
              end
-	   cleanup
-	     layout-homegrown-control(_pane)
-	   end
-	 end }
+           cleanup
+             layout-homegrown-control(_pane)
+           end
+         end }
 end macro delaying-layout;
 
 define method layout-homegrown-control
@@ -70,18 +70,18 @@ define method note-gadget-selection-changed
     select (gadget-selection-mode(pane))
       #"none"   => #f;
       #"single", #"multiple" =>
-	for (index :: <integer> in pane.%old-selection)
-	  when (index < n-items)
-	    let old = index-to-item(pane, index);
-	    clear-box*(old, sheet-region(old));
-	    repaint-sheet(old, $everywhere)
-	  end
-	end;
+        for (index :: <integer> in pane.%old-selection)
+          when (index < n-items)
+            let old = index-to-item(pane, index);
+            clear-box*(old, sheet-region(old));
+            repaint-sheet(old, $everywhere)
+          end
+        end;
         for (index :: <integer> in gadget-selection(pane))
-	  when (index < n-items)
-	    let new = index-to-item(pane, index);
-	    repaint-sheet(new, $everywhere)
-	  end
+          when (index < n-items)
+            let new = index-to-item(pane, index);
+            repaint-sheet(new, $everywhere)
+          end
         end
     end;
     force-display(pane)
@@ -95,16 +95,16 @@ define method handle-event
   when (gadget-enabled?(control))
     select (event-button(event))
       $right-button =>
-	let x = event-x(event);
-	let y = event-y(event);
-	execute-popup-menu-callback
-	  (control, gadget-client(control), gadget-id(control), #f, x: x, y: y);
+        let x = event-x(event);
+        let y = event-y(event);
+        execute-popup-menu-callback
+          (control, gadget-client(control), gadget-id(control), #f, x: x, y: y);
       $left-button =>
         when (gadget-selection-mode(control) == #"multiple")
-	  gadget-selection(control, do-callback?: #t) := #[]
-	end;
+          gadget-selection(control, do-callback?: #t) := #[]
+        end;
       otherwise =>
-	#f;
+        #f;
     end
   end
 end method handle-event;
@@ -162,11 +162,11 @@ define method handle-repaint
       draw-rectangle(medium, left, top, right, bottom, filled?: #t)
     end
   end;
-  draw-gadget-label(pane, medium, 0 + offset, 0, 
+  draw-gadget-label(pane, medium, 0 + offset, 0,
                     brush: selected? & $background)
 end method handle-repaint;
 
-define method handle-event 
+define method handle-event
     (pane :: <homegrown-control-button-mixin>, event :: <button-press-event>) => ()
   when (gadget-enabled?(pane))
     // First set the selection
@@ -174,22 +174,22 @@ define method handle-event
     select (event-button(event))
       $left-button => #f;
       $middle-button =>
-	activate-gadget(control);
+        activate-gadget(control);
       $right-button =>
-	let (control, item) = control-and-item-from-button(pane);
-	// Pass the value of the selected object to the callback
-	let value = gadget-item-value(control, item-object(item));
-	execute-popup-menu-callback
-	  (control, gadget-client(control), gadget-id(control), value,
-	   x: event-x(event), y: event-y(event));
+        let (control, item) = control-and-item-from-button(pane);
+        // Pass the value of the selected object to the callback
+        let value = gadget-item-value(control, item-object(item));
+        execute-popup-menu-callback
+          (control, gadget-client(control), gadget-id(control), value,
+           x: event-x(event), y: event-y(event));
     end
   end
 end method handle-event;
 
-define method handle-event 
+define method handle-event
     (pane :: <homegrown-control-button-mixin>, event :: <double-click-event>) => ()
   when (gadget-enabled?(pane)
-	& event-button(event) == $left-button)
+        & event-button(event) == $left-button)
     // Set the selection and activate
     let control = set-control-selection(pane, event);
     activate-gadget(control)
@@ -217,19 +217,19 @@ define method set-control-selection
       gadget-selection(control, do-callback?: #t) := vector(index);
     #"multiple" =>
       select (event-modifier-state(event))
-	$shift-key =>
-	  let min-index = reduce(min, index, selection);
-	  let max-index = reduce(max, index, selection);
-	  gadget-selection(control, do-callback?: #t)
-	    := range(from: min-index, to: max-index);
-	$control-key =>
-	  if (member?(index, selection))
-	    gadget-selection(control, do-callback?: #t) := remove(selection, index);
-	  else
-	    gadget-selection(control, do-callback?: #t) := add(selection, index);
-	  end;
-	otherwise =>
-	  gadget-selection(control, do-callback?: #t) := vector(index);
+        $shift-key =>
+          let min-index = reduce(min, index, selection);
+          let max-index = reduce(max, index, selection);
+          gadget-selection(control, do-callback?: #t)
+            := range(from: min-index, to: max-index);
+        $control-key =>
+          if (member?(index, selection))
+            gadget-selection(control, do-callback?: #t) := remove(selection, index);
+          else
+            gadget-selection(control, do-callback?: #t) := add(selection, index);
+          end;
+        otherwise =>
+          gadget-selection(control, do-callback?: #t) := vector(index);
       end;
   end;
   control
@@ -260,10 +260,10 @@ define method item-selected?
     let n-children :: <integer> = size(children);
     for (index :: <integer> in gadget-selection(control))
       when (index < n-children)
-	let child = children[index];
-	when (child == item)
-	  return(#t)
-	end
+        let child = children[index];
+        when (child == item)
+          return(#t)
+        end
       end
     end;
     #f
@@ -272,7 +272,7 @@ end method item-selected?;
 
 
 define method control-for-item
-    (sheet :: <sheet>) 
+    (sheet :: <sheet>)
  => (sheet :: false-or(<homegrown-control-mixin>))
   let parent = sheet-parent(sheet);
   case

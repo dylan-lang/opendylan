@@ -3,16 +3,16 @@ Synopsis:     DUIM display device contexts
 Author:       Scott McKay, Andy Armstrong
 Target-Type:  dll
 Files:  library
-	module
+        module
         classes
-	colors
+        colors
         palettes
         stipples
-	pens
-	brushes
-	images
-	text-styles
-	styles
+        pens
+        brushes
+        images
+        text-styles
+        styles
 Major-version: 2
 Minor-version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

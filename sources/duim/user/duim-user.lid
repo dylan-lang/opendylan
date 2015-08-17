@@ -2,7 +2,7 @@ Library:      duim-user
 Synopsis:     DUIM user library
 Author:       Scott McKay, Andy Armstrong
 Files:  library
-	module
+        module
 Major-version: 2
 Minor-version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

@@ -86,39 +86,39 @@ define method do-add-child
     transform-coordinates!(sheet-transform(child), left, top, right, bottom);
     // Quick check for doing output at the bottom of the window
     if (zero?(fp)
-	| begin
-	    let other-child = children[fp - 1];
-	    when (other-child == child)
-	      return()
-	    end;
-	    let (oleft, otop, oright, obottom) = box-edges(other-child);
-	    ignore(oleft, otop);
-	    transform-coordinates!(sheet-transform(other-child), oright, obottom);
-	    bottom > obottom | (bottom = obottom & right >= oright)
-	  end)
+        | begin
+            let other-child = children[fp - 1];
+            when (other-child == child)
+              return()
+            end;
+            let (oleft, otop, oright, obottom) = box-edges(other-child);
+            ignore(oleft, otop);
+            transform-coordinates!(sheet-transform(other-child), oright, obottom);
+            bottom > obottom | (bottom = obottom & right >= oright)
+          end)
       add!(children, child)
     else
       let index = index-for-position(children, right, bottom);
       unless (preferred-index == #"start")
-	// Make sure that the new child comes after any child it overlaps
-	// so that replaying happens in the right order.
-	block (break)
-	  while (#t)
-	    if (index < fp
-		& begin
-		    let other-child = children[index];
-		    let (oleft, otop, oright, obottom) = box-edges(other-child);
-		    transform-coordinates!(sheet-transform(other-child),
-					   oleft, otop, oright, obottom);
-		    ltrb-intersects-ltrb?(left, top, right, bottom,
-					  oleft, otop, oright, obottom)
-		  end)
-	      inc!(index)
-	    else
-	      break()
-	    end
-	  end
-	end
+        // Make sure that the new child comes after any child it overlaps
+        // so that replaying happens in the right order.
+        block (break)
+          while (#t)
+            if (index < fp
+                & begin
+                    let other-child = children[index];
+                    let (oleft, otop, oright, obottom) = box-edges(other-child);
+                    transform-coordinates!(sheet-transform(other-child),
+                                           oleft, otop, oright, obottom);
+                    ltrb-intersects-ltrb?(left, top, right, bottom,
+                                          oleft, otop, oright, obottom)
+                  end)
+              inc!(index)
+            else
+              break()
+            end
+          end
+        end
       end;
       insert-at!(children, child, index)
     end
@@ -148,24 +148,24 @@ end method do-replace-child;
 
 //---*** Arg! We don't have our hands on the child at this point!
 // (define-method note-transform-changed
-//		(child (record <tree-record>))
+//                (child (record <tree-record>))
 //   (bind ((children (slot-value record %children))
-//	  (proper-index (index-for-child children child)))
+//          (proper-index (index-for-child children child)))
 //     (unless proper-index                                        ;this guy's misfiled now
 //       (with-box-edges (left top right bottom) child
-//	 (ignore left top)
-//	 (set! proper-index (index-for-position children right bottom)))
+//         (ignore left top)
+//         (set! proper-index (index-for-position children right bottom)))
 //       (bind ((index (find-key children (curry id? child))))
-//	 (if (> index proper-index)
-//	     (for ((i+1 = index then i)
-//		   (i = (- index 1) then (- i 1))
-//		   (until (= i+1 proper-index)))
-//	       (set! (element children i+1) (element children i)))
-//	     (for ((i = index then i+1)
-//		   (i+1 = (+ index 1) then (+ i+1 1))
-//		   (until (= i proper-index)))
-//	       (set! (element children i) (element children i+1))))
-//	 (set! (element children proper-index) child)))))
+//         (if (> index proper-index)
+//             (for ((i+1 = index then i)
+//                   (i = (- index 1) then (- i 1))
+//                   (until (= i+1 proper-index)))
+//               (set! (element children i+1) (element children i)))
+//             (for ((i = index then i+1)
+//                   (i+1 = (+ index 1) then (+ i+1 1))
+//                   (until (= i proper-index)))
+//               (set! (element children i) (element children i+1))))
+//         (set! (element children proper-index) child)))))
 
 
 define method do-sheet-children
@@ -206,17 +206,17 @@ define method do-children-containing-position
   block (return)
     without-bounds-checks
       for (index :: <integer> = min(fp - 1, start) then index - 1,
-	   until: index < 0)
-	let child = children[index];
-	// Get the position into the coordinate system of the child
-	let (left, top, right, bottom) = box-edges(child);
-	transform-coordinates!(sheet-transform(child), left, top, right, bottom);
-	when (ltrb-contains-position?(left, top, right, bottom, x, y))
-	  function(child)
-	end;
-	when (bottom < limit)
-	  return()
-	end
+           until: index < 0)
+        let child = children[index];
+        // Get the position into the coordinate system of the child
+        let (left, top, right, bottom) = box-edges(child);
+        transform-coordinates!(sheet-transform(child), left, top, right, bottom);
+        when (ltrb-contains-position?(left, top, right, bottom, x, y))
+          function(child)
+        end;
+        when (bottom < limit)
+          return()
+        end
       end
     end
   end
@@ -235,20 +235,20 @@ define method do-children-overlapping-region
     let limit = bottom + record.%maximum-height;
     block (return)
       without-bounds-checks
-	for (index :: <integer> = start then index + 1,
-	     until: index = fp)
-	  let child = children[index];
-	  let (cleft, ctop, cright, cbottom) = box-edges(child);
-	  transform-coordinates!(sheet-transform(child),
-				 cleft, ctop, cright, cbottom);
-	  when (ltrb-intersects-ltrb?(left, top, right, bottom,
-				      cleft, ctop, cright, cbottom))
-	    function(child)
-	  end;
-	  when (cbottom > limit)
-	    return()
-	  end
-	end
+        for (index :: <integer> = start then index + 1,
+             until: index = fp)
+          let child = children[index];
+          let (cleft, ctop, cright, cbottom) = box-edges(child);
+          transform-coordinates!(sheet-transform(child),
+                                 cleft, ctop, cright, cbottom);
+          when (ltrb-intersects-ltrb?(left, top, right, bottom,
+                                      cleft, ctop, cright, cbottom))
+            function(child)
+          end;
+          when (cbottom > limit)
+            return()
+          end
+        end
       end
     end
   end
@@ -269,39 +269,39 @@ define method index-for-child
     // Search back over things in the same place, accounting for overlap
     when (initial-index < fp)
       without-bounds-checks
-	for (index :: <integer> from initial-index to 0 by -1)
-	  let child = vector[index];
-	  when (child == record)
-	    return(index)
-	  end;
-	  let (cleft, ctop, cright, cbottom) = box-edges(child);
-	  transform-coordinates!(sheet-transform(child),
-				 cleft, ctop, cright, cbottom);
-	  unless (right = cright & bottom = cbottom)
-	    unless (ltrb-intersects-ltrb?(left, top, right, bottom,
-					  cleft, ctop, cright, cbottom))
-	      return(#f)
-	    end
-	  end
-	end
+        for (index :: <integer> from initial-index to 0 by -1)
+          let child = vector[index];
+          when (child == record)
+            return(index)
+          end;
+          let (cleft, ctop, cright, cbottom) = box-edges(child);
+          transform-coordinates!(sheet-transform(child),
+                                 cleft, ctop, cright, cbottom);
+          unless (right = cright & bottom = cbottom)
+            unless (ltrb-intersects-ltrb?(left, top, right, bottom,
+                                          cleft, ctop, cright, cbottom))
+              return(#f)
+            end
+          end
+        end
       end
     end;
     // Search forward too, also accounting for overlap
     without-bounds-checks
       for (index :: <integer> from (if (initial-index < fp) initial-index + 1 else 0 end) below fp)
-	let child = vector[index];
-	when (child == record)
-	  return(index)
-	end;
-	let (cleft, ctop, cright, cbottom) = box-edges(child);
-	transform-coordinates!(sheet-transform(child),
-			       cleft, ctop, cright, cbottom);
-	when (cbottom > bottom)
-	  unless (ltrb-intersects-ltrb?(left, top, right, bottom,
-					cleft, ctop, cright, cbottom))
-	    return(#f)
-	  end
-	end
+        let child = vector[index];
+        when (child == record)
+          return(index)
+        end;
+        let (cleft, ctop, cright, cbottom) = box-edges(child);
+        transform-coordinates!(sheet-transform(child),
+                               cleft, ctop, cright, cbottom);
+        when (cbottom > bottom)
+          unless (ltrb-intersects-ltrb?(left, top, right, bottom,
+                                        cleft, ctop, cright, cbottom))
+            return(#f)
+          end
+        end
       end
     end
   end

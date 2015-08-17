@@ -98,31 +98,31 @@ define method test-wizards
   let framem = find-test-frame-manager();
   let wizard = #f;
   check-true("wizard-frame first page is default",
-	     begin
-	       wizard := make-test-frame(<test-wizard>);
-	       dialog-current-page(wizard) := wizard.first-page
-	     end);
+             begin
+               wizard := make-test-frame(<test-wizard>);
+               dialog-current-page(wizard) := wizard.first-page
+             end);
   when (wizard)
     check-false("wizard-frame back button is disabled and mapped",
-	       begin
-		 let back-button = dialog-back-button(wizard);
-		 ~gadget-enabled?(back-button) & sheet-mapped?(back-button)
-	       end);
+               begin
+                 let back-button = dialog-back-button(wizard);
+                 ~gadget-enabled?(back-button) & sheet-mapped?(back-button)
+               end);
     check-true("wizard-frame next button is enabled and mapped",
-	       begin
-		 let next-button = dialog-next-button(wizard);
-		 gadget-enabled?(next-button) & sheet-mapped?(next-button)
-	       end);
+               begin
+                 let next-button = dialog-next-button(wizard);
+                 gadget-enabled?(next-button) & sheet-mapped?(next-button)
+               end);
     check-true("wizard-frame exit button is enabled and unmapped",
-	       begin
-		 let exit-button = dialog-exit-button(wizard);
-		 gadget-enabled?(exit-button) & ~sheet-mapped?(exit-button)
-	       end);
+               begin
+                 let exit-button = dialog-exit-button(wizard);
+                 gadget-enabled?(exit-button) & ~sheet-mapped?(exit-button)
+               end);
     check-true("wizard-frame cancel button is enabled and mapped",
-	       begin
-		 let cancel-button = dialog-cancel-button(wizard);
-		 gadget-enabled?(cancel-button) & sheet-mapped?(cancel-button)
-	       end);
+               begin
+                 let cancel-button = dialog-cancel-button(wizard);
+                 gadget-enabled?(cancel-button) & sheet-mapped?(cancel-button)
+               end);
   end
 end method test-wizards;
 

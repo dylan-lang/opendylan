@@ -57,7 +57,7 @@ define generic window-position
 define generic window-size
     (resource :: <window-resource>) => (w :: <integer>, h :: <integer>);
 
-define abstract class <window-resource> (<resource>) 
+define abstract class <window-resource> (<resource>)
 end class <window-resource>;
 
 
@@ -142,8 +142,8 @@ end class <win32-resource>;
 
 // Stand-in for a loaded resource so we can load it lazily...
 define sealed class <resource-description>
-    (<win32-resource>) 
-  constant slot resource-type-value :: <resource-type>, 
+    (<win32-resource>)
+  constant slot resource-type-value :: <resource-type>,
     required-init-keyword: resource-type:;
 end class <resource-description>;
 
@@ -158,7 +158,7 @@ end method resource-type;
 
 // A resource once it as been loaded into memory
 define abstract class <loaded-resource>
-    (<win32-resource>) 
+    (<win32-resource>)
   constant slot memory-handle :: <HANDLE>,
     init-keyword: memory-handle:;
 end class <loaded-resource>;
@@ -251,9 +251,9 @@ end method register-child;
 
 /// Control resources
 
-define sealed class <control-resource> 
+define sealed class <control-resource>
     (<pseudo-resource>, <window-resource>)
-  constant slot control-template :: <LPDLGITEMTEMPLATE>, 
+  constant slot control-template :: <LPDLGITEMTEMPLATE>,
     required-init-keyword: template:;
 end class <control-resource>;
 
@@ -397,7 +397,7 @@ end method store-resource-name;
 
 define sealed method store-new-resource
     (database :: <win32-resource-database>, name :: <raw-resource-id>) => ()
-  let resource = make(<resource-description>, 
+  let resource = make(<resource-description>,
                       resource-id: name,
                       resource-type: *current-type*);
   let wrapper  = make(<resource-wrapper>,
@@ -416,7 +416,7 @@ define sealed method store-resource-details
 end method store-resource-details;
 
 define sealed method enumerate-resources
-    (handle :: <HINSTANCE>, 
+    (handle :: <HINSTANCE>,
      #key database :: false-or(<resource-database>) = #f)
  => (success? :: <boolean>)
   assert(~null-handle?(handle), "Invalid handle to resource module");
@@ -435,7 +435,7 @@ define sealed method enumerate-resource-types
     (hModule :: <HANDLE>,               // module handle
      lpType  :: <LPTSTR>,               // address of resource type
      lParam  :: <lparam-type>)          // extra parameter, could be used for error checking
- => (value :: <boolean>)      
+ => (value :: <boolean>)
   unless (null-pointer?(lpType))
     processing-type(*current-database*, lpType);
     // Find the names of all resources of type lpType
@@ -445,14 +445,14 @@ define sealed method enumerate-resource-types
 end method enumerate-resource-types;
 
 define callback EnumResTypeProc :: <ENUMRESTYPEPROC> = enumerate-resource-types;
-  
+
 
 define sealed method enumerate-resource-names
     (hModule :: <HANDLE>,               // module handle
      lpType  :: <LPCTSTR>,              // address of resource type
      lpName  :: <LPTSTR>,               // address of resource name
      lParam  :: <lparam-type>)          // extra parameter, could be used for error checking
- => (value :: <boolean>)      
+ => (value :: <boolean>)
   unless (null-pointer?(lpName))
     store-resource-name(*current-database*, lpName);
     // Find the languages of all resources of type lpType and name lpName
@@ -471,7 +471,7 @@ define sealed method enumerate-resource-languages
      wLang   :: <integer>,              // resource language
      lParam  :: <lparam-type>)          // extra parameter, could be used for error checking
  => (value :: <boolean>)
-  let hResInfo :: <HANDLE> = 
+  let hResInfo :: <HANDLE> =
     FindResourceEx(hModule, lpType, lpName, wLang);
   let resource-size = SizeofResource(hModule, hResInfo);
   store-resource-details(*current-database*, hResInfo, resource-size, wLang);
@@ -583,7 +583,7 @@ define function grok-dialog
     = pointer-address(LoadResource(handle, resource-handle(resource)));
   let template :: <LPDLGTEMPLATE>
     = make(<LPDLGTEMPLATE>, address: resource-address);
-  let dialog = make(<dialog-resource>, 
+  let dialog = make(<dialog-resource>,
                     resource-description: resource,
                     template: template);
   let template-size :: <integer> = 0;
@@ -667,7 +667,7 @@ define method grok-item-template
 end method grok-item-template;
 
 define method grok-resource-id
-    (p :: <LPWORD>) 
+    (p :: <LPWORD>)
  => (id :: type-union(<unsigned-int>, <string>), resource-id-size :: <integer>)
   let word-pointer = as(<LPWORD>, p);
   let word-value   = pointer-value(word-pointer);

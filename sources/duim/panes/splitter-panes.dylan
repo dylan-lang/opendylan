@@ -13,7 +13,7 @@ define sealed class <row-splitter-pane>
      <single-child-wrapping-pane>)
 end class <row-splitter-pane>;
 
-define sideways method class-for-make-pane 
+define sideways method class-for-make-pane
     (framem :: <frame-manager>, class == <row-splitter>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<row-splitter-pane>, #f)
@@ -26,8 +26,8 @@ define method initialize
     (pane :: <row-splitter-pane>, #key children) => ()
   next-method();
   sheet-child(pane)
-    := splitter-pane-layout(pane, children, 
-			    child-orientation: #"vertical");
+    := splitter-pane-layout(pane, children,
+                            child-orientation: #"vertical");
 end method initialize;
 
 define method gadget-ratios-setter
@@ -48,7 +48,7 @@ define sealed class <column-splitter-pane>
      <single-child-wrapping-pane>)
 end class <column-splitter-pane>;
 
-define sideways method class-for-make-pane 
+define sideways method class-for-make-pane
     (framem :: <frame-manager>, class == <column-splitter>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<column-splitter-pane>, #f)
@@ -62,7 +62,7 @@ define method initialize
   next-method();
   sheet-child(pane)
     := splitter-pane-layout(pane, children,
-			    child-orientation: #"horizontal");
+                            child-orientation: #"horizontal");
 end method initialize;
 
 define method gadget-ratios-setter
@@ -79,7 +79,7 @@ end method gadget-ratios-setter;
 
 
 define method splitter-pane-layout
-    (pane :: <splitter>, children :: <sequence>, 
+    (pane :: <splitter>, children :: <sequence>,
      #key child-orientation :: <gadget-orientation>)
  => (layout :: <layout>)
   let ratios = gadget-ratios(pane);
@@ -90,19 +90,19 @@ define method splitter-pane-layout
     new-children[i] := child
   end;
   let cursor = select (child-orientation)
-		 #"horizontal" => #"vertical-thumb";
-		 #"vertical"   => #"horizontal-thumb";
-	       end;
+                 #"horizontal" => #"vertical-thumb";
+                 #"vertical"   => #"horizontal-thumb";
+               end;
   for (i :: <integer> from 1 below size(children) * 2 - 1 by 2)
     new-children[i]
       := make(<splitter-separator-pane>,
-	      client: pane, orientation: child-orientation, cursor: cursor,
-	      pane-1: new-children[i - 1], pane-2: new-children[i + 1])
+              client: pane, orientation: child-orientation, cursor: cursor,
+              pane-1: new-children[i - 1], pane-2: new-children[i + 1])
   end;
   let layout-class = select (child-orientation)
-		       #"horizontal" => <column-layout>;
-		       #"vertical"   => <row-layout>;
-		     end;
+                       #"horizontal" => <column-layout>;
+                       #"vertical"   => <row-layout>;
+                     end;
   make(layout-class,
        children: new-children,
        ratios: splitter-pane-layout-ratios(pane, ratios))
@@ -115,7 +115,7 @@ define method splitter-pane-layout-ratios
     let new-ratios :: <simple-object-vector>
       = make(<vector>, size: size(ratios) * 2 - 1, fill: #f);
     for (ratio in ratios,
-	 i :: <integer> from 0 by 2)
+         i :: <integer> from 0 by 2)
       new-ratios[i] := ratio
     end;
     new-ratios
@@ -126,7 +126,7 @@ end method splitter-pane-layout-ratios;
 /// The separator between resizable panes...
 
 define sealed class <splitter-separator-pane>
-    (<oriented-gadget-mixin>, 
+    (<oriented-gadget-mixin>,
      <no-value-gadget-mixin>,
      <basic-gadget>,
      <mirrored-sheet-mixin>,
@@ -165,12 +165,12 @@ define method do-compose-space
   select (gadget-orientation(pane))
     #"horizontal" =>
       make(<space-requirement>,
-	   min-width: 1, width: width | 1, max-width: $fill,
-	   height: $splitter-separator-thickness);
+           min-width: 1, width: width | 1, max-width: $fill,
+           height: $splitter-separator-thickness);
     #"vertical"   =>
       make(<space-requirement>,
-	   width: $splitter-separator-thickness,
-	   min-height: 1, height: height | 1, max-height: $fill);
+           width: $splitter-separator-thickness,
+           min-height: 1, height: height | 1, max-height: $fill);
   end
 end method do-compose-space;
 
@@ -207,68 +207,68 @@ define method handle-event
     let (l2, t2, r2, b2) = sheet-edges(pane2);
     let new-ratios :: <simple-object-vector>
       = select (gadget-orientation(pane))
-	  #"horizontal" =>
-	    let dy = ty - pane.%initial-position;
-	    // Enforce the size constraints
-	    //--- We should really enforce both min and max size constraints!
-	    let shrink = if (dy < 0) pane1 else pane2 end;
-	    let space-req  = compose-space(shrink);
-	    let min-height = space-requirement-min-height(shrink, space-req);
-	    let (width, height) = sheet-size(shrink);
-	    if (dy < 0)
-	      when (height + dy < min-height)
-		dy := min-height - height
-	      end
-	    else
-	      when (height - dy < min-height)
-		dy := height - min-height
-	      end
-	    end;
-	    set-sheet-edges(pane1, l1, t1,      r1, b1 + dy);
-	    set-sheet-edges(pane2, l2, t2 + dy, r2, b2     );
-	    set-sheet-position(pane, x, pane.%initial-position + dy);
-	    local method sheet-height (sheet :: <sheet>) => (height)
-		    let (width, height) = sheet-size(sheet);
-		    ignore(width);
-		    height
-		  end method;
-	    // Ensure that the resized panes remain OK if the frame resizes
-	    let ratios = map-as(<vector>, sheet-height, sheet-children(layout));
-	    layout-y-ratios(layout) := ratios;
-	  #"vertical"   =>
-	    let dx = tx - pane.%initial-position;
-	    // Enforce the size constraints
-	    //--- We should really enforce both min and max size constraints!
-	    let shrink = if (dx < 0) pane1 else pane2 end;
-	    let space-req = compose-space(shrink);
-	    let min-width = space-requirement-min-width(shrink, space-req);
-	    let (width, height) = sheet-size(shrink);
-	    let new-width = max(width - abs(dx), min-width);
-	    if (dx < 0)
-	      when (width + dx < min-width)
-		dx := min-width - width
-	      end
-	    else
-	      when (width - dx < min-width)
-		dx := width - min-width
-	      end
-	    end;
-	    set-sheet-edges(pane1, l1,      t1, r1 + dx, b1);
-	    set-sheet-edges(pane2, l2 + dx, t2, r2     , b2);
-	    set-sheet-position(pane, pane.%initial-position + dx, y);
-	    local method sheet-width (sheet :: <sheet>) => (height)
-		    let (width, height) = sheet-size(sheet);
-		    ignore(height);
-		    width
-		  end method;
-	    let ratios = map-as(<vector>, sheet-width, sheet-children(layout));
-	    layout-x-ratios(layout) := ratios;
-	end;
+          #"horizontal" =>
+            let dy = ty - pane.%initial-position;
+            // Enforce the size constraints
+            //--- We should really enforce both min and max size constraints!
+            let shrink = if (dy < 0) pane1 else pane2 end;
+            let space-req  = compose-space(shrink);
+            let min-height = space-requirement-min-height(shrink, space-req);
+            let (width, height) = sheet-size(shrink);
+            if (dy < 0)
+              when (height + dy < min-height)
+                dy := min-height - height
+              end
+            else
+              when (height - dy < min-height)
+                dy := height - min-height
+              end
+            end;
+            set-sheet-edges(pane1, l1, t1,      r1, b1 + dy);
+            set-sheet-edges(pane2, l2, t2 + dy, r2, b2     );
+            set-sheet-position(pane, x, pane.%initial-position + dy);
+            local method sheet-height (sheet :: <sheet>) => (height)
+                    let (width, height) = sheet-size(sheet);
+                    ignore(width);
+                    height
+                  end method;
+            // Ensure that the resized panes remain OK if the frame resizes
+            let ratios = map-as(<vector>, sheet-height, sheet-children(layout));
+            layout-y-ratios(layout) := ratios;
+          #"vertical"   =>
+            let dx = tx - pane.%initial-position;
+            // Enforce the size constraints
+            //--- We should really enforce both min and max size constraints!
+            let shrink = if (dx < 0) pane1 else pane2 end;
+            let space-req = compose-space(shrink);
+            let min-width = space-requirement-min-width(shrink, space-req);
+            let (width, height) = sheet-size(shrink);
+            let new-width = max(width - abs(dx), min-width);
+            if (dx < 0)
+              when (width + dx < min-width)
+                dx := min-width - width
+              end
+            else
+              when (width - dx < min-width)
+                dx := width - min-width
+              end
+            end;
+            set-sheet-edges(pane1, l1,      t1, r1 + dx, b1);
+            set-sheet-edges(pane2, l2 + dx, t2, r2     , b2);
+            set-sheet-position(pane, pane.%initial-position + dx, y);
+            local method sheet-width (sheet :: <sheet>) => (height)
+                    let (width, height) = sheet-size(sheet);
+                    ignore(height);
+                    width
+                  end method;
+            let ratios = map-as(<vector>, sheet-width, sheet-children(layout));
+            layout-x-ratios(layout) := ratios;
+        end;
     let new-ratios-size = size(new-ratios);
     let splitter-ratios :: <simple-object-vector>
       = make(<vector>, size: floor/(new-ratios-size, 2) + 1);
     for (i :: <integer> from 0,
-	 j :: <integer> from 0 below new-ratios-size by 2)
+         j :: <integer> from 0 below new-ratios-size by 2)
       splitter-ratios[i] := new-ratios[j]
     end;
     gadget-ratios(splitter) := splitter-ratios;
@@ -296,15 +296,15 @@ define method handle-event
     let (tx, ty) = transform-position(sheet-transform(pane), event-x(event), event-y(event));
     select (gadget-orientation(pane))
       #"horizontal" =>
-	let dy    = ty - pane.%previous-position;
-	let new-y = y + dy;
-	pane.%previous-position := new-y;
-	set-sheet-position(pane, x, new-y);
+        let dy    = ty - pane.%previous-position;
+        let new-y = y + dy;
+        pane.%previous-position := new-y;
+        set-sheet-position(pane, x, new-y);
       #"vertical"   =>
-	let dx    = tx - pane.%previous-position;
-	let new-x = x + dx;
-	pane.%previous-position := new-x;
-	set-sheet-position(pane, new-x, y);
+        let dx    = tx - pane.%previous-position;
+        let new-x = x + dx;
+        pane.%previous-position := new-x;
+        set-sheet-position(pane, new-x, y);
     end
   end
 end method handle-event;
@@ -316,11 +316,11 @@ define method handle-event
     let (x,  y)  = sheet-position(pane);
     select (gadget-orientation(pane))
       #"horizontal" =>
-	let y = pane.%initial-position;
-	set-sheet-position(pane, x, y);
+        let y = pane.%initial-position;
+        set-sheet-position(pane, x, y);
       #"vertical"   =>
-	let x = pane.%initial-position;
-	set-sheet-position(pane, x, y);
+        let x = pane.%initial-position;
+        set-sheet-position(pane, x, y);
     end;
     let pointer = port-pointer(port(event-sheet(event)));
     pointer-grabbed?(pointer) := #f;

@@ -71,11 +71,11 @@ define function make-rectangle*
   let (min-x, min-y) = point-position(min-point);
   let (max-x, max-y) = point-position(max-point);
   assert(min-x <= max-x & min-y <= max-y,
-	 "The min point must be to the upper-left of the max point");
+         "The min point must be to the upper-left of the max point");
   make(<standard-rectangle>,
        min-x: min-x, min-y: min-y,
        max-x: max-x, max-y: max-y,
-       points: vector(min-point, make-point(min-x, max-y), 
+       points: vector(min-point, make-point(min-x, max-y),
                       max-point, make-point(max-x, min-y)))
 end function make-rectangle*;
 
@@ -96,10 +96,10 @@ define method polygon-points
     (rectangle :: <standard-rectangle>) => (points :: <vector>)
   rectangle.%points
   | (rectangle.%points
-       := vector(make-point(rectangle.%min-x, rectangle.%min-y),	// min
-		 make-point(rectangle.%min-x, rectangle.%max-y),
-		 make-point(rectangle.%max-x, rectangle.%max-y),	// max
-		 make-point(rectangle.%max-x, rectangle.%min-y)))
+       := vector(make-point(rectangle.%min-x, rectangle.%min-y),        // min
+                 make-point(rectangle.%min-x, rectangle.%max-y),
+                 make-point(rectangle.%max-x, rectangle.%max-y),        // max
+                 make-point(rectangle.%max-x, rectangle.%min-y)))
 end method polygon-points;
 
 define method rectangle-min-point
@@ -161,10 +161,10 @@ define method transform-region
   else
     let coords :: <stretchy-object-vector> = make(<stretchy-vector>);
     local method transform-coord (x, y) => ()
-	    let (nx, ny) = transform-position(transform, x, y);
-	    add!(coords, ny);
-	    add!(coords, nx)
-	  end method;
+            let (nx, ny) = transform-position(transform, x, y);
+            add!(coords, ny);
+            add!(coords, nx)
+          end method;
     do-polygon-coordinates(transform-coord, rectangle);
     make-polygon(coords)
   end
@@ -224,7 +224,7 @@ define method region-intersects-region?
   let (left, top, right, bottom) = rectangle-edges(rect);
   let (x0, y0, x1, y1)
     = clip-line-to-box(line.%start-x, line.%start-y, line.%end-x, line.%end-y,
-		       left, top, right, bottom);
+                       left, top, right, bottom);
   ignore(y0, x1, y1);
   x0 & #t
 end method region-intersects-region?;
@@ -234,7 +234,7 @@ define method region-intersects-region?
   let (left, top, right, bottom) = rectangle-edges(rect);
   let (x0, y0, x1, y1)
     = clip-line-to-box(line.%start-x, line.%start-y, line.%end-x, line.%end-y,
-		       left, top, right, bottom);
+                       left, top, right, bottom);
   ignore(y0, x1, y1);
   x0 & #t
 end method region-intersects-region?;

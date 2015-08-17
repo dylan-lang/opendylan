@@ -17,7 +17,7 @@ define sealed class <tree-control-pane>
      <single-child-wrapping-pane>)
 end class <tree-control-pane>;
 
-define sideways method class-for-make-pane 
+define sideways method class-for-make-pane
     (framem :: <frame-manager>, class == <tree-control>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<tree-control-pane>, #f)
@@ -35,13 +35,13 @@ define sealed method initialize
     tree.%layout-pane    := layout;
     layout.%control-pane := tree;
     let scroll-bars = gadget-scroll-bars(tree);
-    sheet-child(tree) 
+    sheet-child(tree)
       := if (scroll-bars == #"none")
-	   layout
-	 else
-	   scrolling (scroll-bars: scroll-bars, border-type: #f)
-	     layout
-	    end
+           layout
+         else
+           scrolling (scroll-bars: scroll-bars, border-type: #f)
+             layout
+            end
          end
   end
 end method initialize;
@@ -74,7 +74,7 @@ define method do-allocate-space
       let width  :: <integer> = w;
       let height :: <integer> = h;
       set-sheet-edges
-	(node, x-position, y-position, x-position + width, y-position + height);
+        (node, x-position, y-position, x-position + width, y-position + height);
       inc!(y-position, height + y-spacing)
     end
   end
@@ -87,26 +87,26 @@ define method handle-repaint
    with-drawing-options (medium, brush: $tree-control-gray)
       //--- The fudge offsets here are dubious...
       local method draw-edges (node :: <tree-node-pane>) => ()
-	      unless (sheet-withdrawn?(node))
-		let (from-x, from-y) = sheet-position(node);
-		inc!(from-x, 4);
-		inc!(from-y, box-height(sheet-region(node)) - 2);
-		for (child :: <tree-node-pane> in node-children(node))
-		  unless (sheet-withdrawn?(child))
-		    let (to-x, to-y) = sheet-position(child);
-		    dec!(to-x, 4);
-		    inc!(to-y, truncate/(box-height(sheet-region(child)), 2));
-		    draw-line(medium, from-x, from-y, from-x, to-y);
-		    draw-line(medium, from-x, to-y, to-x, to-y);
-		    unless (empty?(node-children(child)))
-		      draw-edges(child)
-		    end
-		  end
-		end
-	      end
-	    end method;
+              unless (sheet-withdrawn?(node))
+                let (from-x, from-y) = sheet-position(node);
+                inc!(from-x, 4);
+                inc!(from-y, box-height(sheet-region(node)) - 2);
+                for (child :: <tree-node-pane> in node-children(node))
+                  unless (sheet-withdrawn?(child))
+                    let (to-x, to-y) = sheet-position(child);
+                    dec!(to-x, 4);
+                    inc!(to-y, truncate/(box-height(sheet-region(child)), 2));
+                    draw-line(medium, from-x, from-y, from-x, to-y);
+                    draw-line(medium, from-x, to-y, to-x, to-y);
+                    unless (empty?(node-children(child)))
+                      draw-edges(child)
+                    end
+                  end
+                end
+              end
+            end method;
       for (node in tree-control-root-nodes(tree))
-	draw-edges(node)
+        draw-edges(node)
       end
     end
   end
@@ -140,47 +140,47 @@ define sealed method note-tree-control-roots-changed
     let generator :: <function> = tree-control-children-generator(tree);
     let predicate :: <function> = tree-control-children-predicate(tree);
     local method add-one (node, object, depth) => ()
-	    let child-node = make-node(tree, object);
-	    add-node(tree, node, child-node, setting-roots?: #t);
-	    sheet-withdrawn?(child-node, do-repaint?: #f) := #f;
-	    when (depth > 0 & predicate(object))
-	      for (child in generator(object))
-		add-one(child-node, child, depth - 1)
-	      end;
-	      node-state(child-node) := #"expanded"
-	    end
-	  end method;
+            let child-node = make-node(tree, object);
+            add-node(tree, node, child-node, setting-roots?: #t);
+            sheet-withdrawn?(child-node, do-repaint?: #f) := #f;
+            when (depth > 0 & predicate(object))
+              for (child in generator(object))
+                add-one(child-node, child, depth - 1)
+              end;
+              node-state(child-node) := #"expanded"
+            end
+          end method;
     delaying-layout (tree)
       for (root in roots)
-	add-one(tree, root, tree-control-initial-depth(tree))
+        add-one(tree, root, tree-control-initial-depth(tree))
       end;
       let items = gadget-items(tree);
       // Try to preserve the old value and selection
       select (gadget-selection-mode(tree))
-	#"single" =>
-	  unless (empty?(items))
-	    let index = supplied?(value) & position(items, value);
-	    if (index)
-	      gadget-selection(tree) := vector(index)
-	    else
-	      gadget-selection(tree) := #[0]
-	    end
-	  end;
-	#"multiple" =>
-	  let selection :: <stretchy-object-vector> = make(<stretchy-vector>);
-	  when (supplied?(value))
-	    for (v in value)
-	      let index = position(items, v);
-	      when (index)
-		add!(selection, index)
-	      end
-	    end
-	  end;
-	  unless (empty?(selection))
-	    gadget-selection(tree) := selection
-	  end;
-	otherwise =>
-	  #f;
+        #"single" =>
+          unless (empty?(items))
+            let index = supplied?(value) & position(items, value);
+            if (index)
+              gadget-selection(tree) := vector(index)
+            else
+              gadget-selection(tree) := #[0]
+            end
+          end;
+        #"multiple" =>
+          let selection :: <stretchy-object-vector> = make(<stretchy-vector>);
+          when (supplied?(value))
+            for (v in value)
+              let index = position(items, v);
+              when (index)
+                add!(selection, index)
+              end
+            end
+          end;
+          unless (empty?(selection))
+            gadget-selection(tree) := selection
+          end;
+        otherwise =>
+          #f;
       end;
     end
   end
@@ -209,10 +209,10 @@ define method do-compose-space
   let offset      = $tree-control-indentation-offset;
   let extra       = indentation * node-generation(node) + offset;
   space-requirement+(node, space-req,
-		     width: extra, min-width: extra, max-width: extra)
+                     width: extra, min-width: extra, max-width: extra)
 end method do-compose-space;
 
-define method do-make-node 
+define method do-make-node
     (tree :: <tree-control-pane>, class == <tree-node>,
      #rest initargs, #key object)
  => (item :: <tree-node-pane>)
@@ -223,13 +223,13 @@ define method do-make-node
   let (icon, selected-icon)
     = if (icon-function) icon-function(object) else values(#f, #f) end;
   apply(make, <tree-node-pane>,
-	tree:  tree,
-	label: label,
-	icon:  icon,
-	selected-icon: selected-icon,
-	x-spacing: 4, y-alignment: #"center",
-	frame-manager: framem,
-	initargs)
+        tree:  tree,
+        label: label,
+        icon:  icon,
+        selected-icon: selected-icon,
+        x-spacing: 4, y-alignment: #"center",
+        frame-manager: framem,
+        initargs)
 end method do-make-node;
 
 define sealed method do-find-node
@@ -241,10 +241,10 @@ define sealed method do-find-node
   block (return)
     for (node in sheet-children(tree.%layout-pane))
       when (test(key(node-object(node)), the-key))
-	// Is it a child of the requested node?
-	when (~parent-node | member?(node, node-children(parent-node)))
-	  return(node)
-	end
+        // Is it a child of the requested node?
+        when (~parent-node | member?(node, node-children(parent-node)))
+          return(node)
+        end
       end
     end;
     #f
@@ -261,12 +261,12 @@ define sealed method do-add-node
     // the last node (and all of that node's descendents) in its
     // own generation
     local method last-child (node) => (child)
-	    if (empty?(node-children(node)))
-	      node
-	    else
-	      last-child(last(node-children(node)))
-	    end
-	  end method;
+            if (empty?(node-children(node)))
+              node
+            else
+              last-child(last(node-children(node)))
+            end
+          end method;
     unless (empty?(node-parents(node)))
       after := last-child(node-parents(node)[0])
     end
@@ -326,7 +326,7 @@ define sealed method gadget-selected-nodes
     unless (sheet-withdrawn?(node))
       inc!(index);
       when (member?(index, selection))
-	add!(nodes, node)
+        add!(nodes, node)
       end
     end
   end;
@@ -334,7 +334,7 @@ define sealed method gadget-selected-nodes
 end method gadget-selected-nodes;
 
 //--- Not correct if the same object appears twice in the tree
-define sealed method compute-gadget-selection 
+define sealed method compute-gadget-selection
     (tree :: <tree-control-pane>, nodes) => (selection :: <sequence>)
   let new-selection :: <stretchy-object-vector> = make(<stretchy-vector>);
   let items = gadget-items(tree);
@@ -353,10 +353,10 @@ define sealed method do-expand-node
   delaying-layout (tree)
     let mapped? = sheet-mapped?(node);
     local method unwithdraw (node :: <tree-node-pane>)
-	    // Only map in the first level
-	    sheet-withdrawn?(node, do-repaint?: #f) := #f;
-	    sheet-mapped?(node, do-repaint?: #f) := mapped?;
-	  end method;
+            // Only map in the first level
+            sheet-withdrawn?(node, do-repaint?: #f) := #f;
+            sheet-mapped?(node, do-repaint?: #f) := mapped?;
+          end method;
     do(unwithdraw, node-children(node));
   end
 end method do-expand-node;
@@ -366,13 +366,13 @@ define sealed method do-contract-node
   tree.%visible-items := #f;
   delaying-layout (tree)
     local method withdraw (node :: <tree-node-pane>)
-	    sheet-withdrawn?(node, do-repaint?: #f) := #t;
-	    when (node-state(node) == #"expanded")
-	      node-state(node) := #"contracted"
-	    end;
-	    // Withdraw all the way to the bottom
-	    do(withdraw, node-children(node))
-	  end method;
+            sheet-withdrawn?(node, do-repaint?: #f) := #t;
+            when (node-state(node) == #"expanded")
+              node-state(node) := #"contracted"
+            end;
+            // Withdraw all the way to the bottom
+            do(withdraw, node-children(node))
+          end method;
     do(withdraw, node-children(node))
   end
 end method do-contract-node;
@@ -389,10 +389,10 @@ define sealed method node-label-setter
   block (break)
     for (child in sheet-children(node))
       when (instance?(child, <tree-node-label-button>))
-	gadget-label(child) := label;
-	clear-box*(node, sheet-region(node));
-	repaint-sheet(node, $everywhere);
-	break()
+        gadget-label(child) := label;
+        clear-box*(node, sheet-region(node));
+        repaint-sheet(node, $everywhere);
+        break()
       end
     end
   end;
@@ -410,10 +410,10 @@ define sealed method node-icon-setter
   block (break)
     for (child in sheet-children(node))
       when (instance?(child, <label>))
-	gadget-label(child) := icon;
-	clear-box*(node, sheet-region(node));
-	repaint-sheet(node, $everywhere);
-	break()
+        gadget-label(child) := icon;
+        clear-box*(node, sheet-region(node));
+        repaint-sheet(node, $everywhere);
+        break()
       end
     end
   end;

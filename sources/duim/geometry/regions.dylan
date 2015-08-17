@@ -270,7 +270,7 @@ define sealed method box-edges
     (point :: <standard-point>)
  => (left :: <integer>, top :: <integer>, right :: <integer>, bottom :: <integer>)
   fix-box(point-x(point),     point-y(point),
-	  point-x(point) + 1, point-y(point) + 1)
+          point-x(point) + 1, point-y(point) + 1)
 end method box-edges;
 
 define sealed method region-contains-position?
@@ -346,10 +346,10 @@ define method region-contains-position?
     (region-set :: <region-set>, x :: <real>, y :: <real>) => (true? :: <boolean>)
   block (return)
     local method contains-position? (region) => ()
-	    when (region-contains-position?(region, x, y))
-	      return(#t)
-	    end
-	  end method;
+            when (region-contains-position?(region, x, y))
+              return(#t)
+            end
+          end method;
     do-regions(contains-position?, region-set);
     #f
   end
@@ -359,10 +359,10 @@ define method region-contains-region?
     (region-set :: <region-set>, other-region :: <region>) => (true? :: <boolean>)
   block (return)
     local method contains-region? (region) => ()
-	    when (region-contains-region?(region, other-region))
-	      return(#t)
-	    end
-	  end method;
+            when (region-contains-region?(region, other-region))
+              return(#t)
+            end
+          end method;
     do-regions(contains-region?, region-set);
     #f
   end
@@ -376,12 +376,12 @@ define method box-edges
   let right  :: <integer> = $smallest-coordinate;
   let bottom :: <integer> = $smallest-coordinate;
   local method add-region (region) => ()
-	  let (rl, rt, rr, rb) = box-edges(region);
-	  min!(left, rl);
-	  min!(top, rt);
-	  max!(right, rr);
-	  max!(bottom, rb);
-	end method;
+          let (rl, rt, rr, rb) = box-edges(region);
+          min!(left, rl);
+          min!(top, rt);
+          max!(right, rr);
+          max!(bottom, rb);
+        end method;
   do-regions(add-region, region-set);
   values(left, top, right, bottom)
 end method box-edges;

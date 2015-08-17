@@ -23,20 +23,20 @@ define method initialize-tree-control-icons
   // $tree-expand-icon and $tree-contract-icon are reasonable defaults...
   #f
 end method initialize-tree-control-icons;
-  
+
 define sealed method gadget-items
     (tree :: <homegrown-tree-control-mixin>) => (items :: <sequence>)
   tree.%visible-items
   | begin
       let layout = tree.%layout-pane;
       if (layout)
-	let items :: <stretchy-object-vector> = make(<stretchy-vector>);
-	for (node in sheet-children(layout))
-	  unless (sheet-withdrawn?(node))
-	    add!(items, node-object(node))
-	  end
-	end;
-	tree.%visible-items := items
+        let items :: <stretchy-object-vector> = make(<stretchy-vector>);
+        for (node in sheet-children(layout))
+          unless (sheet-withdrawn?(node))
+            add!(items, node-object(node))
+          end
+        end;
+        tree.%visible-items := items
       else
         #[]
       end
@@ -77,10 +77,10 @@ define sealed method item-to-index
     let index :: <integer> = -1;
     for (n :: <tree-node-pane> in sheet-children(tree.%layout-pane))
       unless (sheet-withdrawn?(n))
-	inc!(index);
-	when (n == node)
-	  return(index)
-	end
+        inc!(index);
+        when (n == node)
+          return(index)
+        end
       end
     end;
     error("Failed to find item %= in %=", node, tree)
@@ -94,10 +94,10 @@ define sealed method index-to-item
     let i :: <integer> = -1;
     for (node :: <tree-node-pane> in sheet-children(tree.%layout-pane))
       unless (sheet-withdrawn?(node))
-	inc!(i);
-	when (i == index)
-	  return(node)
-	end
+        inc!(i);
+        when (i == index)
+          return(node)
+        end
       end
     end;
     error("Failed to find index %= in %=", index, tree)
@@ -131,28 +131,28 @@ define sealed method initialize
   when (tree)
     with-frame-manager (framem)
       when (tree-control-show-buttons?(tree)
-	    & tree-control-children-predicate(tree)(node-object(node)))
-	// Assumes expand and contract icons are the same size.
-	// We'll just change the label's icon as necessary
-	local method toggle-node (button) => ()
-		ignore(button);
-		if (node-state(node) == #"expanded")
-		  contract-node(tree, node)
-		else
-		  expand-node(tree, node)
-		end;
-		distribute-node-state-changed-callback(tree, node)
-	      end method;
-	add-child(node, make(<tree-node-control-button>,
-			     activate-callback: toggle-node))
+            & tree-control-children-predicate(tree)(node-object(node)))
+        // Assumes expand and contract icons are the same size.
+        // We'll just change the label's icon as necessary
+        local method toggle-node (button) => ()
+                ignore(button);
+                if (node-state(node) == #"expanded")
+                  contract-node(tree, node)
+                else
+                  expand-node(tree, node)
+                end;
+                distribute-node-state-changed-callback(tree, node)
+              end method;
+        add-child(node, make(<tree-node-control-button>,
+                             activate-callback: toggle-node))
       end;
       when (icon)
-	// Assumes select and deselect icons are the same size.
-	// We'll just change the label's icon as necessary
-	add-child(node, make(<label>, label: icon))
+        // Assumes select and deselect icons are the same size.
+        // We'll just change the label's icon as necessary
+        add-child(node, make(<label>, label: icon))
       end;
       when (label)
-	add-child(node, make(<tree-node-label-button>, label: label))
+        add-child(node, make(<tree-node-label-button>, label: label))
       end
     end
   end
@@ -240,7 +240,7 @@ define method handle-repaint
   end
 end method handle-repaint;
 
-define method handle-event 
+define method handle-event
     (pane :: <tree-node-control-button>, event :: <button-press-event>) => ()
   when (gadget-enabled?(pane))
     select (event-button(event))
@@ -249,13 +249,13 @@ define method handle-event
         activate-gadget(pane);
       $right-button =>
         let (tree, node) = control-and-item-from-button(pane);
-	ignore(node);
-	let x = event-x(event);
-	let y = event-y(event);
-	execute-popup-menu-callback
-	  (tree, gadget-client(tree), gadget-id(tree), #f, x: x, y: y);
+        ignore(node);
+        let x = event-x(event);
+        let y = event-y(event);
+        execute-popup-menu-callback
+          (tree, gadget-client(tree), gadget-id(tree), #f, x: x, y: y);
       otherwise =>
-	#f;
+        #f;
     end
   end
 end method handle-event;

@@ -19,15 +19,15 @@ define method handle-event
   end;
   frame.pending-key-presses := frame.pending-key-presses + 1;
   let character = event-character(event);
-  record-event(frame, 
-	       format-to-string("Pressed key %= %s, %s",
-				event-key-name(event),
-				if (character)
-				  format-to-string("(char %=)", character)
-				else
-				  format-to-string("(no char)", character)
-				end,
-				modifier-names(event-modifier-state(event))))
+  record-event(frame,
+               format-to-string("Pressed key %= %s, %s",
+                                event-key-name(event),
+                                if (character)
+                                  format-to-string("(char %=)", character)
+                                else
+                                  format-to-string("(no char)", character)
+                                end,
+                                modifier-names(event-modifier-state(event))))
 end method handle-event;
 
 define method handle-event
@@ -36,8 +36,8 @@ define method handle-event
   frame.pending-key-presses := frame.pending-key-presses - 1;
   record-event(frame,
                format-to-string("Released key %=, %s",
-				event-key-name(event),
-				modifier-names(event-modifier-state(event))))
+                                event-key-name(event),
+                                modifier-names(event-modifier-state(event))))
 end method handle-event;
 
 define method modifier-names
@@ -47,9 +47,9 @@ define method modifier-names
   let alt?     = ~zero?(logand(modifier, $alt-key));
   if (shift? | control? | alt?)
     format-to-string("modifiers are: %s%s%s",
-		     if (alt?) "alt " else "" end,
-		     if (shift?) "shift " else "" end,
-		     if (control?) "control " else "" end)
+                     if (alt?) "alt " else "" end,
+                     if (shift?) "shift " else "" end,
+                     if (control?) "control " else "" end)
   else
     "no modifiers"
   end

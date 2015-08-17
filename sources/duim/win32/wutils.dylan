@@ -92,7 +92,7 @@ end function ensure-no-dialog-error;
 
 define function not-yet-implemented
     (format-message :: <string>, #rest format-args)
-  apply(error, 
+  apply(error,
         concatenate(format-message, " not yet implemented!"),
         format-args)
 end function not-yet-implemented;

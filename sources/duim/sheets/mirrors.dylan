@@ -141,7 +141,7 @@ define method do-destroy-sheet (sheet :: <mirrored-sheet-mixin>) => ()
   when (_port & mirror)
     destroy-mirror(_port, sheet, mirror)
   end;
-  next-method()		// off to <basic-sheet>
+  next-method()                // off to <basic-sheet>
 end method do-destroy-sheet;
 
 // This property allows certain mirrored sheets to decline to have
@@ -156,7 +156,7 @@ define method sheet-mirror-accepts-children?-setter
  => (accepts-children? :: <boolean>)
   sheet-flags(sheet)
     := logior(logand(sheet-flags(sheet), lognot(%mirror_accepts_children)),
-	      if (accepts-children?) %mirror_accepts_children else 0 end);
+              if (accepts-children?) %mirror_accepts_children else 0 end);
   accepts-children?
 end method sheet-mirror-accepts-children?-setter;
 
@@ -174,7 +174,7 @@ define method sheet-native-transform-setter
   // The default implementation only supports the identity transform,
   // but back-ends can override this
   assert(identity-transform?(transform),
-	 "The native transform %= is not the identity transform", transform);
+         "The native transform %= is not the identity transform", transform);
   transform
 end method sheet-native-transform-setter;
 
@@ -205,17 +205,17 @@ end method sheet-device-transform;
 define method sheet-device-parent-transform
     (sheet :: <sheet>) => (transform :: <transform>)
   local method parent-transform
-	    (sheet :: <sheet>) => (transform :: <transform>)
-	  let parent = sheet-parent(sheet);
-	  // For mirrored sheets that don't accept children, we just
-	  // go up the tree to find the first mirror that will
-	  if (sheet-direct-mirror(parent)
-	      & ~sheet-mirror-accepts-children?(parent))
-	    compose-transforms(sheet-transform(parent), parent-transform(parent))
-	  else
-	    sheet-device-transform(parent)
-	  end
-	end method;
+            (sheet :: <sheet>) => (transform :: <transform>)
+          let parent = sheet-parent(sheet);
+          // For mirrored sheets that don't accept children, we just
+          // go up the tree to find the first mirror that will
+          if (sheet-direct-mirror(parent)
+              & ~sheet-mirror-accepts-children?(parent))
+            compose-transforms(sheet-transform(parent), parent-transform(parent))
+          else
+            sheet-device-transform(parent)
+          end
+        end method;
   compose-transforms(sheet-transform(sheet), parent-transform(sheet))
 end method sheet-device-parent-transform;
 
@@ -247,7 +247,7 @@ define method sheet-device-region
   let region = sheet-cached-device-region(sheet);
   // We decache the device region by setting this slot to #f...
   case
-    region == $nowhere		// it can happen
+    region == $nowhere                // it can happen
     | (region & ~box-invalidated?(region)) =>
       region;
     region =>
@@ -257,27 +257,27 @@ define method sheet-device-region
       let (left, top, right, bottom) = box-edges(sheet);
       let (pleft, ptop, pright, pbottom)
         = begin
-	    let parent = sheet-device-parent(sheet);
-	    let region = sheet-device-region(parent);
-	    if (region == $nowhere)
-	      values(0, 0, 0, 0)
-	    else
-	      box-edges(region)
-	    end
-	  end;
+            let parent = sheet-device-parent(sheet);
+            let region = sheet-device-region(parent);
+            if (region == $nowhere)
+              values(0, 0, 0, 0)
+            else
+              box-edges(region)
+            end
+          end;
       let (valid?, left, top, right, bottom)
-	= begin
-	    let (sleft, stop, sright, sbottom)
-	      = transform-box(sheet-device-transform(sheet),
-			      left, top, right, bottom);
-	    ltrb-intersects-ltrb?(sleft, stop, sright, sbottom,
-				  pleft, ptop, pright, pbottom)
-	  end;
+        = begin
+            let (sleft, stop, sright, sbottom)
+              = transform-box(sheet-device-transform(sheet),
+                              left, top, right, bottom);
+            ltrb-intersects-ltrb?(sleft, stop, sright, sbottom,
+                                  pleft, ptop, pright, pbottom)
+          end;
       if (valid?)
-	sheet-cached-device-region(sheet)	// might cons a new region...
-	  := set-box-edges(region, left, top, right, bottom)
+        sheet-cached-device-region(sheet)        // might cons a new region...
+          := set-box-edges(region, left, top, right, bottom)
       else
-	sheet-cached-device-region(sheet) := $nowhere
+        sheet-cached-device-region(sheet) := $nowhere
       end;
     otherwise =>
       sheet-cached-device-region(sheet) := next-method();
@@ -342,7 +342,7 @@ end method mirror-origin;
 
 /// Finding and making mirrors
 
-define method sheet-mirror 
+define method sheet-mirror
     (sheet :: <sheet>) => (mirror :: false-or(<mirror>))
   sheet-direct-mirror(sheet)
   | begin
@@ -370,7 +370,7 @@ end function sheet-device-parent;
 
 
 define method make-mirror
-    (_port :: <port>, sheet :: <mirrored-sheet-mixin>) 
+    (_port :: <port>, sheet :: <mirrored-sheet-mixin>)
  => (mirror :: <mirror>)
   let mirror
     = sheet-direct-mirror(sheet)
@@ -384,18 +384,18 @@ end method make-mirror;
 /// Mirror notifications
 
 define method note-sheet-mapped (sheet :: <mirrored-sheet-mixin>) => ()
-  next-method();		// almost certainly the method on <sheet>
+  next-method();                // almost certainly the method on <sheet>
   let mirror = sheet-direct-mirror(sheet);
   assert(mirror,
-	 "The sheet %= must be mirrored to map it", sheet);
+         "The sheet %= must be mirrored to map it", sheet);
   map-mirror(port(sheet), sheet, mirror)
 end method note-sheet-mapped;
 
 define method note-sheet-unmapped (sheet :: <mirrored-sheet-mixin>) => ()
-  next-method();		// almost certainly the method on <sheet>
+  next-method();                // almost certainly the method on <sheet>
   let mirror = sheet-direct-mirror(sheet);
   assert(mirror,
-	 "The sheet %= must be mirrored to unmap it", sheet);
+         "The sheet %= must be mirrored to unmap it", sheet);
   unmap-mirror(port(sheet), sheet, mirror)
 end method note-sheet-unmapped;
 
@@ -430,7 +430,7 @@ define method note-region-changed
   next-method();
   let mirror = sheet-direct-mirror(sheet);
   let _port = port(sheet);
-  when (mirror & _port)		// can happen before attachment!
+  when (mirror & _port)                // can happen before attachment!
     update-mirror-region(_port, sheet, mirror)
   end
 end method note-region-changed;
@@ -440,7 +440,7 @@ define method note-transform-changed
   next-method();
   let mirror = sheet-direct-mirror(sheet);
   let _port = port(sheet);
-  when (mirror & _port)		// can happen before attachment!
+  when (mirror & _port)                // can happen before attachment!
     update-mirror-transform(_port, sheet, mirror)
   end
 end method note-transform-changed;
@@ -450,18 +450,18 @@ end method note-transform-changed;
 //--- but we are trying to keep that function cheap...
 define method update-all-mirror-positions (sheet :: <sheet>) => ()
   do-sheet-tree(method (sheet)
-		  when (sheet-direct-mirror(sheet))
-		    note-transform-changed(sheet)
-		  end
-		end method,
-		sheet)
+                  when (sheet-direct-mirror(sheet))
+                    note-transform-changed(sheet)
+                  end
+                end method,
+                sheet)
 end method update-all-mirror-positions;
 
 
 // This gets called by 'note-region-changed' on mirrored sheets.
 // At this point, the sheet's edges are the desired ones, and we
 // have to update the mirror itself
-// This default implementation ensures the native (sheet->mirror) 
+// This default implementation ensures the native (sheet->mirror)
 // transform is the identity transform
 define method update-mirror-region
     (_port :: <port>, sheet :: <mirrored-sheet-mixin>, mirror) => ()
@@ -472,11 +472,11 @@ define method update-mirror-region
   let (current-left, current-top, current-right, current-bottom)
     = mirror-edges(port(sheet), sheet, mirror);
   when (new-left  ~= current-left
-	| new-top ~= current-top
-	| new-right  ~= current-right
-	| new-bottom ~= current-bottom)
+        | new-top ~= current-top
+        | new-right  ~= current-right
+        | new-bottom ~= current-bottom)
     set-mirror-edges(port(sheet), sheet, mirror,
-		     new-left, new-top, new-right, new-bottom);
+                     new-left, new-top, new-right, new-bottom);
     sheet-native-transform(sheet) := $identity-transform
   end
 end method update-mirror-region;
@@ -484,7 +484,7 @@ end method update-mirror-region;
 // This gets called by 'note-transform-changed' on mirrored sheets.
 // At this point, the sheet's position is the desired one, and we
 // have to update the mirror itself
-// This default implementation ensures the native (sheet->mirror) 
+// This default implementation ensures the native (sheet->mirror)
 // transform is the identity transform
 define method update-mirror-transform
     (_port :: <port>, sheet :: <mirrored-sheet-mixin>, mirror) => ()
@@ -496,11 +496,11 @@ define method update-mirror-transform
     = mirror-edges(port(sheet), sheet, mirror);
   ignore(current-right, current-bottom);
   when (new-left  ~= current-left
-	| new-top ~= current-top)
+        | new-top ~= current-top)
     let width  = new-right - new-left;
     let height = new-bottom - new-top;
     set-mirror-edges(port(sheet), sheet, mirror,
-		     new-left, new-top, new-left + width, new-top + height);
+                     new-left, new-top, new-left + width, new-top + height);
     sheet-native-transform(sheet) := $identity-transform
   end
 end method update-mirror-transform;
@@ -511,19 +511,19 @@ define method note-mirror-geometry-changed
   let mirror = sheet-mirror(sheet);
   when (mirror)
     let (new-left :: <integer>, new-top :: <integer>,
-	 new-right :: <integer>, new-bottom :: <integer>)
+         new-right :: <integer>, new-bottom :: <integer>)
       = begin
-	  let (left, top, right, bottom) = box-edges(region);
-	  untransform-box(sheet-native-transform(sheet), left, top, right, bottom)
-	end;
+          let (left, top, right, bottom) = box-edges(region);
+          untransform-box(sheet-native-transform(sheet), left, top, right, bottom)
+        end;
     let new-width  :: <integer> = new-right  - new-left;
     let new-height :: <integer> = new-bottom - new-top;
     transform-distances!(sheet-transform(sheet), new-width, new-height);
     // This might well cause 'allocate-space' to run, notably when
     // called on a top-level sheet
-    set-sheet-edges(sheet, 
-		    new-left, new-top,
-		    new-left + new-width, new-top + new-height)
+    set-sheet-edges(sheet,
+                    new-left, new-top,
+                    new-left + new-width, new-top + new-height)
   end
 end method note-mirror-geometry-changed;
 

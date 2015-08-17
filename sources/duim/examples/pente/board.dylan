@@ -12,12 +12,12 @@ define variable *pente-square-size* :: <integer> = 40;
 define variable *rows* :: <integer> = 9;
 define variable *columns* :: <integer> = 9;
 
-define constant $directions 
+define constant $directions
   = #[#[-1, -1], #[0, -1], #[1, -1],
       #[-1, 0],            #[1, 0],
       #[-1, 1],  #[0, 1],  #[1, 1]];
 
-define constant $capture-masks = 
+define constant $capture-masks =
   begin
     let masks = make(<array>, dimensions: #(2));
     masks[0] := 1221;
@@ -58,7 +58,7 @@ define constant <square-occupied> = false-or(<turn>);
 
 define class <pente-square-pane> (<simple-pane>)
   constant slot square-coordinates :: <vector>,
-    init-keyword: coordinates:;  
+    init-keyword: coordinates:;
   slot square-occupied :: <square-occupied> = #f;
   constant slot square-color :: <color> = $white,
     init-keyword: color:;
@@ -71,7 +71,7 @@ end method square-value;
 
 // Sets a pente square to either blank, player 1, or player 2;
 
-define method pente-square-setter 
+define method pente-square-setter
     (value :: <square-occupied>, square :: <pente-square-pane>)
  => ()
   square.square-occupied := value;
@@ -92,15 +92,15 @@ define method draw-pente-piece
     let x-radius = floor/(right - left, 3);
     let y-radius = floor/(bottom - top, 3);
     let color = select (square-occupied(pente-square))
-		  1 => $red;
-		  2 => $blue;
-		  otherwise => $background;
-		end;
+                  1 => $red;
+                  2 => $blue;
+                  otherwise => $background;
+                end;
     with-drawing-options(medium, brush: color)
       draw-ellipse(medium, left + half-width, top + half-height,
-		   x-radius, 0, 0, y-radius, filled?: #t)
+                   x-radius, 0, 0, y-radius, filled?: #t)
       //draw-circle(medium, left + half-width, top + half-height,
-	//	  radius, filled: #t)
+        //          radius, filled: #t)
     end;
   end;
 end method draw-pente-piece;
@@ -114,7 +114,7 @@ define method handle-repaint
   let (left, top, right, bottom) = box-edges(square);
   with-drawing-options(medium, brush: default-background(square))
     draw-rectangle(medium, left, top, right, bottom, filled?: #t);
-  end; 
+  end;
   with-drawing-options(medium, brush: square.square-color)
     let middlex = floor/(right - left, 2);
     let middley = floor/(bottom - top, 2);
@@ -137,13 +137,13 @@ define method handle-event
     if (frame.game.game-over?)
       beep(pente-square);
     elseif (event-button(event) == $left-button
-	      & ~(pente-square.square-occupied))
+              & ~(pente-square.square-occupied))
       add-pente-piece-to-board(pente-square, frame);
     end if;
   end if;
 end method handle-event;
 
-  
+
 // Pente game class - keeps track of board, turn, number of captures
 
 // Pente frame
@@ -154,18 +154,18 @@ define frame <pente-frame> (<simple-frame>)
 
   pane pente-frame-table-pane (frame)
       make(<grid-layout>,
-	   children: pente-frame-squares(frame),
-	   cell-space-requirement: make(<space-requirement>,
-					width: *pente-square-size*,
-					height: *pente-square-size*),
-	   rows: *rows*,
-	   columns: *columns*,
-	   spacing: 0);
+           children: pente-frame-squares(frame),
+           cell-space-requirement: make(<space-requirement>,
+                                        width: *pente-square-size*,
+                                        height: *pente-square-size*),
+           rows: *rows*,
+           columns: *columns*,
+           spacing: 0);
 
   pane buttons (frame)
       make(<push-button>,
-	   label: "New game",
-	   activate-callback: new-game);
+           label: "New game",
+           activate-callback: new-game);
 
   pane status (frame)
     make(<status-bar>);
@@ -180,21 +180,21 @@ define frame <pente-frame> (<simple-frame>)
 
   pane exit-button (frame)
     make(<push-menu-button>,
-	 label: "E&xit",
-	 activate-callback: method (button)
-			      exit-frame(sheet-frame(button));
-			    end);
+         label: "E&xit",
+         activate-callback: method (button)
+                              exit-frame(sheet-frame(button));
+                            end);
   pane game-menu (frame)
     make(<menu>,
-	 label: "&Game",
-	 children: vector(make(<menu-button>,
-			       label: "New Game",
-			       activate-callback: new-game),
-			  make(<push-menu-box>,
-			       children: vector(frame.exit-button))));
+         label: "&Game",
+         children: vector(make(<menu-button>,
+                               label: "New Game",
+                               activate-callback: new-game),
+                          make(<push-menu-box>,
+                               children: vector(frame.exit-button))));
   menu-bar (frame)
     make(<menu-bar>,
-	 children: vector(frame.game-menu));
+         children: vector(frame.game-menu));
 
   layout (frame)
     frame.main-layout;
@@ -227,19 +227,19 @@ end method pente-frame-squares;
 
 define method make-pente-board () => (squares :: <simple-object-vector>)
   let squares = make(<simple-object-vector>,
-		     size: *rows* * *columns*);
+                     size: *rows* * *columns*);
   let half-row = truncate/(*rows*, 2);
   let half-column = truncate/(*columns*, 2);
   let index :: <integer> = 0;
   for (i from 0 below *rows*)
     for (j from 0 below *columns*)
-      squares[index] := make(<pente-square-pane>, 
-			     coordinates: vector(i, j),
-			     color: if (i == half-row & j == half-column)
-				      $red;
-				    else
-				      $white;
-				    end if);
+      squares[index] := make(<pente-square-pane>,
+                             coordinates: vector(i, j),
+                             color: if (i == half-row & j == half-column)
+                                      $red;
+                                    else
+                                      $white;
+                                    end if);
       index := index + 1;
     end for;
   end for;
@@ -249,7 +249,7 @@ end method make-pente-board;
 
 // Adds a players pente piece to the board, then checks for captures or wins
 
-define method add-pente-piece-to-board 
+define method add-pente-piece-to-board
     (square :: <pente-square-pane>, frame :: <pente-frame>)
  => ()
   pente-square-setter(frame.game.turn, square);
@@ -266,8 +266,8 @@ define method add-collections (vector1 :: <vector>, vector2 :: <vector>)
  => (result :: <vector>)
   map(\+, vector1, vector2);
 end method add-collections;
-						   
-define method check-capture? 
+
+define method check-capture?
     (pente-square :: <pente-square-pane>, pente-frame :: <pente-frame>)
  => (win? :: <boolean>)
   let turn = pente-frame.game.turn - 1;
@@ -278,7 +278,7 @@ define method check-capture?
       next-square := find-next-square(pente-frame, next-square, dir);
       pente-square-setter(#f, next-square);
       pente-frame.game.captures[turn] := pente-frame.game.captures[turn] + 1;
-    end if; 
+    end if;
   end for;
   if (pente-frame.game.captures[turn] == 5)
     #t // win the game
@@ -295,16 +295,16 @@ define method check-five-in-a-row?
     for (direction in $directions)
       let current-square = pente-square;
       let opposite-direction = opposite-direction(direction);
-      for (unused from 1 to 3)	// repeat 3 times
-	if (current-square)
-	  if ($five-in-a-row-masks[turn] == 
-		board-mask(direction, 5, current-square, pente-frame))
-	    //debug-message("five in a row found");
-	    return(#t);
-	  end if;
-	  current-square := 
-	    find-next-square(pente-frame, current-square, opposite-direction);
-	end if;
+      for (unused from 1 to 3)        // repeat 3 times
+        if (current-square)
+          if ($five-in-a-row-masks[turn] ==
+                board-mask(direction, 5, current-square, pente-frame))
+            //debug-message("five in a row found");
+            return(#t);
+          end if;
+          current-square :=
+            find-next-square(pente-frame, current-square, opposite-direction);
+        end if;
       end for;
     end for;
     #f;
@@ -318,7 +318,7 @@ end method opposite-direction;
 
 define method in-bounds? (vector :: <vector>)
  => (in-bounds? :: <boolean>)
-  if (first(vector) >= 0 & first(vector) < *rows* 
+  if (first(vector) >= 0 & first(vector) < *rows*
       & second(vector) >= 0 & second(vector) < *columns*)
     #t
   else
@@ -327,7 +327,7 @@ define method in-bounds? (vector :: <vector>)
 end method in-bounds?;
 
 define method find-next-square
-    (frame :: <pente-frame>, square :: <pente-square-pane>, 
+    (frame :: <pente-frame>, square :: <pente-square-pane>,
      next-coordinates :: <vector>)
  => (square :: false-or(<pente-square-pane>))
   let pos = add-collections(next-coordinates, square.square-coordinates);
@@ -338,7 +338,7 @@ define method find-next-square
     frame.game.pente-board[index];
   end if;
 end method find-next-square;
-  
+
 // Return an integer that encodes the set of pieces within DISTANCE
 // of SQUARE, in direction DIRECTION.
 define method board-mask
@@ -354,13 +354,13 @@ define method board-mask
       let col = pos[1];
       let index = row * *columns* + col;
       square-value(square) +
-	10 * board-mask(direction, distance - 1,
-			pente-frame.game.pente-board[index],
-			pente-frame);
+        10 * board-mask(direction, distance - 1,
+                        pente-frame.game.pente-board[index],
+                        pente-frame);
     end if;
-  else 
+  else
     3     // never equals a winning mask value.
-  end if;  
+  end if;
 end method board-mask;
 
 define method new-game (button)
@@ -373,7 +373,7 @@ define method new-game (button)
     pente-square-setter(#f, frame.game.pente-board[i]);
   end for;
   clear-status-bar(frame);
-end method new-game;  
+end method new-game;
 
 define method play-pente ()
   start-frame(make(<pente-frame>, title: "Pente"));

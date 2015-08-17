@@ -212,13 +212,13 @@ end method register-port-class;
 define macro with-port-locked
   { with-port-locked (?object:expression) ?:body end }
     => { begin
-	   let _port = port(?object);
-	   with-lock (port-lock(_port))
-	     ?body;
-	   failure
-	     error("Couldn't get port lock for %=", _port);
-	   end
-	 end }
+           let _port = port(?object);
+           with-lock (port-lock(_port))
+             ?body;
+           failure
+             error("Couldn't get port lock for %=", _port);
+           end
+         end }
 end macro with-port-locked;
 
 define inline function do-ports (function :: <function>) => ()
@@ -251,14 +251,14 @@ define method find-port
   with-lock (*global-lock*)
     block (return)
       local method match-port (_port) => ()
-	      when (port-matches-server-path?(_port, server-path))
-		return(_port)
-	      end
-	    end method;
+              when (port-matches-server-path?(_port, server-path))
+                return(_port)
+              end
+            end method;
       dynamic-extent(match-port);
       do-ports(match-port);
       with-keywords-removed (initargs = initargs, #[server-path:])
-	apply(make, <port>, server-path: server-path, initargs)
+        apply(make, <port>, server-path: server-path, initargs)
       end
     end
   failure
@@ -279,22 +279,22 @@ define method port-matches-server-path?
       // Now verify that the options are equivalent, ignoring ordering.
       // Copy the options so we can keep the lists in sync easily.
       & begin
-	  let port-options = copy-sequence(port-options);
-	  let options = concatenate-as(<list>, options);
-	  block (return)
-	    while (#t)
-	      when (empty?(options))
-		return(empty?(port-options))
-	      end;
-	      let indicator = pop!(options);
-	      let value = pop!(options);
-	      unless (get-property(port-options, indicator) = value)
-		return(#f)
-	      end;
-	      remove-property!(port-options, indicator)
-	    end
-	  end
-	end
+          let port-options = copy-sequence(port-options);
+          let options = concatenate-as(<list>, options);
+          block (return)
+            while (#t)
+              when (empty?(options))
+                return(empty?(port-options))
+              end;
+              let indicator = pop!(options);
+              let value = pop!(options);
+              unless (get-property(port-options, indicator) = value)
+                return(#f)
+              end;
+              remove-property!(port-options, indicator)
+            end
+          end
+        end
     end
   end
 end method port-matches-server-path?;
@@ -405,14 +405,14 @@ define method restart-port (_port :: <port>) => ()
     #"n" => #f;
     #"n+1" =>
       when (port-event-thread(_port))
-	destroy-thread(port-event-thread(_port))
+        destroy-thread(port-event-thread(_port))
       end;
       port-event-thread(_port)
-	:= make(<thread>,
-		function: method () port-event-loop(_port) end,
-		name: format-to-string("DUIM Event Dispatcher for %=",
-				       port-server-path(_port)));
-    #"2n" => #f;	//---*** what do we do about this case?
+        := make(<thread>,
+                function: method () port-event-loop(_port) end,
+                name: format-to-string("DUIM Event Dispatcher for %=",
+                                       port-server-path(_port)));
+    #"2n" => #f;        //---*** what do we do about this case?
   end
 end method restart-port;
 
@@ -434,10 +434,10 @@ define method note-port-terminated (_port :: <port>, condition) => ()
   for (framem in port-frame-managers(_port))
     for (frame in frame-manager-frames(framem))
       distribute-event(_port, make(<port-terminated-event>,
-				   condition: condition, frame: frame));
+                                   condition: condition, frame: frame));
       let sheet = top-level-sheet(frame);
       when (sheet)
-	generate-trigger-event(_port, sheet)
+        generate-trigger-event(_port, sheet)
       end
     end
   end;
@@ -453,7 +453,7 @@ define sealed method get-default-foreground
   foreground
   | default-foreground(sheet)
   | (sheet-frame(sheet) & default-foreground(sheet-frame(sheet)))
-  | port-default-foreground(_port, sheet)	// consult resources here...
+  | port-default-foreground(_port, sheet)        // consult resources here...
   | default
 end method get-default-foreground;
 
@@ -469,7 +469,7 @@ define sealed method get-default-background
   background
   | default-background(sheet)
   | (sheet-frame(sheet) & default-background(sheet-frame(sheet)))
-  | port-default-background(_port, sheet)	// consult resources here...
+  | port-default-background(_port, sheet)        // consult resources here...
   | default
 end method get-default-background;
 

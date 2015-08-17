@@ -120,11 +120,11 @@ end function make-elliptical-arc*;
 define sealed inline method make
     (class == <elliptical-arc>,
      #key center-point, radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
-	  start-angle, end-angle)
+          start-angle, end-angle)
  => (arc :: <standard-elliptical-arc>)
-  make-elliptical-arc*(center-point, 
-		       radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
-		       start-angle: start-angle, end-angle: end-angle)
+  make-elliptical-arc*(center-point,
+                       radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
+                       start-angle: start-angle, end-angle: end-angle)
 end method make;
 
 define method transform-region
@@ -140,13 +140,13 @@ define method transform-region
         (transform, ellipse.%radius-2-dx, ellipse.%radius-2-dy);
   let start-angle = ellipse-start-angle(ellipse);
   let end-angle   = ellipse-end-angle(ellipse);
-  when (start-angle)		// non-#f => end angle is non-#f
+  when (start-angle)                // non-#f => end angle is non-#f
     let (sa, ea) = transform-angles(transform, start-angle, end-angle);
     start-angle := sa;
     end-angle   := ea
   end;
   make-elliptical-arc(cx, cy, r1-dx, r1-dy, r2-dx, r2-dy,
-		      start-angle: start-angle, end-angle: end-angle)
+                      start-angle: start-angle, end-angle: end-angle)
 end method transform-region;
 
 define method box-edges
@@ -156,7 +156,7 @@ define method box-edges
                      ellipse.%radius-1-dx, ellipse.%radius-1-dy,
                      ellipse.%radius-2-dx, ellipse.%radius-2-dy,
                      start-angle: ellipse-start-angle(ellipse),
-		     end-angle: ellipse-end-angle(ellipse))
+                     end-angle: ellipse-end-angle(ellipse))
 end method box-edges;
 
 define method region-equal
@@ -175,10 +175,10 @@ define method region-contains-position?
     (ellipse :: <standard-elliptical-arc>, x :: <real>, y :: <real>) => (true? :: <boolean>)
   let (left, top, right, bottom) = box-edges(ellipse);
   ltrb-contains-position?(left, top, right, bottom,
-			  fix-coordinate(x), fix-coordinate(y))
+                          fix-coordinate(x), fix-coordinate(y))
   & position-on-thick-ellipse?(x - ellipse.%center-x, y - ellipse.%center-y,
-			       ellipse.%radius-1-dx, ellipse.%radius-1-dy,
-			       ellipse.%radius-2-dx, ellipse.%radius-2-dy)
+                               ellipse.%radius-1-dx, ellipse.%radius-1-dy,
+                               ellipse.%radius-2-dx, ellipse.%radius-2-dy)
 end method region-contains-position?;
 
 
@@ -235,11 +235,11 @@ end function make-ellipse*;
 define sealed inline method make
     (class == <ellipse>,
      #key center-point, radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
-	 start-angle, end-angle)
+         start-angle, end-angle)
  => (ellipse :: <standard-ellipse>)
-  make-ellipse*(center-point, 
-		radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
-		start-angle: start-angle, end-angle: end-angle)
+  make-ellipse*(center-point,
+                radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
+                start-angle: start-angle, end-angle: end-angle)
 end method make;
 
 define method transform-region
@@ -253,13 +253,13 @@ define method transform-region
     = transform-distance(transform, ellipse.%radius-2-dx, ellipse.%radius-2-dy);
   let start-angle = ellipse-start-angle(ellipse);
   let end-angle   = ellipse-end-angle(ellipse);
-  when (start-angle)		// non-#f => end angle is non-#f
+  when (start-angle)                // non-#f => end angle is non-#f
     let (sa, ea) = transform-angles(transform, start-angle, end-angle);
     start-angle := sa;
     end-angle   := ea
   end;
   make-ellipse(cx, cy, r1-dx, r1-dy, r2-dx, r2-dy,
-	       start-angle: start-angle, end-angle: end-angle)
+               start-angle: start-angle, end-angle: end-angle)
 end method transform-region;
 
 define method box-edges
@@ -269,8 +269,8 @@ define method box-edges
                      ellipse.%radius-1-dx, ellipse.%radius-1-dy,
                      ellipse.%radius-2-dx, ellipse.%radius-2-dy,
                      start-angle: ellipse-start-angle(ellipse),
-		     end-angle: ellipse-end-angle(ellipse),
-		     thickness: #f)	// filled...
+                     end-angle: ellipse-end-angle(ellipse),
+                     thickness: #f)        // filled...
 end method box-edges;
 
 define method region-equal
@@ -289,8 +289,8 @@ define method region-contains-position?
     (ellipse :: <standard-ellipse>, x :: <real>, y :: <real>) => (true? :: <boolean>)
   let (left, top, right, bottom) = box-edges(ellipse);
   ltrb-contains-position?(left, top, right, bottom,
-			  fix-coordinate(x), fix-coordinate(y))
+                          fix-coordinate(x), fix-coordinate(y))
   & position-inside-ellipse?(x - ellipse.%center-x, y - ellipse.%center-y,
-			     ellipse.%radius-1-dx, ellipse.%radius-1-dy,
-			     ellipse.%radius-2-dx, ellipse.%radius-2-dy)
+                             ellipse.%radius-1-dx, ellipse.%radius-1-dy,
+                             ellipse.%radius-2-dx, ellipse.%radius-2-dy)
 end method region-contains-position?;

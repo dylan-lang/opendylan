@@ -43,9 +43,9 @@ define method draw-point
     let transform = make(<mutable-translation-transform>, tx: left - rx, ty: top - ry);
     let region    = make-bounding-box(0, 0, right - left, bottom - top);
     record := make(<point-record>,
-		   x: x - left, y: y - top,
-		   region: region, transform: transform,
-		   medium-state: medium-state);
+                   x: x - left, y: y - top,
+                   region: region, transform: transform,
+                   medium-state: medium-state);
     add-output-record(sheet, record)
   end;
   when (sheet-drawing?(sheet))
@@ -85,7 +85,7 @@ define method draw-points
     let coord-seq
       = transform-coordinate-sequence
           (medium-transform(medium), coord-seq, copy?: #t);
-    FOR (I FROM 0 BELOW SIZE(COORD-SEQ))	//---*** until 'coordinate-sequence-box' is fixed
+    FOR (I FROM 0 BELOW SIZE(COORD-SEQ))        //---*** until 'coordinate-sequence-box' is fixed
       COORD-SEQ[I] := FLOOR(COORD-SEQ[I])
     END;
     let (left :: <integer>, top :: <integer>, right :: <integer>, bottom :: <integer>)
@@ -98,9 +98,9 @@ define method draw-points
     let region    = make-bounding-box(0, 0, right - left, bottom - top);
     translate-coordinate-sequence!(-left, -top, coord-seq);
     record := make(<points-record>,
-		   coord-seq: coord-seq,
-		   region: region, transform: transform,
-		   medium-state: medium-state);
+                   coord-seq: coord-seq,
+                   region: region, transform: transform,
+                   medium-state: medium-state);
     add-output-record(sheet, record)
   end;
   when (sheet-drawing?(sheet))
@@ -126,11 +126,11 @@ define method refined-position-test
     let pen = medium-state-pen(record-medium-state(record));
     let thickness = pen-width(pen);
     local method position-in-ltrb? (px, py) => ()
-	    when (ltrb-contains-position?(px - thickness, py - thickness, px, py,
-					  x, y))
-	      return(#t)
-	    end
-	  end method;
+            when (ltrb-contains-position?(px - thickness, py - thickness, px, py,
+                                          x, y))
+              return(#t)
+            end
+          end method;
     do-coordinates(position-in-ltrb?, record.%coord-seq);
     #f
   end
@@ -145,11 +145,11 @@ define method highlight-output-record
   let transform = sheet-device-transform(record);
   with-drawing-options (medium, /* ---*** brush: $xor-brush, */ pen: $highlighting-pen)
     local method highlight (px, py) => ()
-	    transform-coordinates!(transform, px, py);
-	    draw-rectangle(medium,
-			   px - thickness, py - thickness, px, py,
-			   filled?: #f)
-	  end method;
+            transform-coordinates!(transform, px, py);
+            draw-rectangle(medium,
+                           px - thickness, py - thickness, px, py,
+                           filled?: #f)
+          end method;
     do-coordinates(highlight, record.%coord-seq)
   end
 end method highlight-output-record;
@@ -182,7 +182,7 @@ define method draw-line
           // The convention is that we stroke paths on the outside,
           // where "outside" is biased to the left and top
           fix-box(min(x1, x2) - thickness, min(y1, y2) - thickness,
-		  max(x1, x2) - thickness, max(y1, y2) - thickness)
+                  max(x1, x2) - thickness, max(y1, y2) - thickness)
         end;
     // Get the position of the parent record
     let (rx, ry) = point-position(sheet-output-record-position(sheet));
@@ -194,9 +194,9 @@ define method draw-line
     // Create the record with all user-supplied coordinates relative
     // to the bounding box
     record := make(<line-record>,
-		   x1: x1 - left, y1: y1 - top, x2: x2 - left, y2: y2 - top,
-		   region: region, transform: transform,
-		   medium-state: medium-state);
+                   x1: x1 - left, y1: y1 - top, x2: x2 - left, y2: y2 - top,
+                   region: region, transform: transform,
+                   medium-state: medium-state);
     add-output-record(sheet, record)
   end;
   when (sheet-drawing?(sheet))
@@ -220,8 +220,8 @@ define method refined-position-test
     (record :: <line-record>, x, y) => (true? :: <boolean>)
   let pen = medium-state-pen(record-medium-state(record));
   position-close-to-line?(x, y,
-		          record.%x1, record.%y1, record.%x2, record.%y2,
-		          thickness: pen-width(pen))
+                          record.%x1, record.%y1, record.%x2, record.%y2,
+                          thickness: pen-width(pen))
 end method refined-position-test;
 
 define method highlight-output-record
@@ -233,7 +233,7 @@ define method highlight-output-record
   let (x1, y1) = transform-position(transform, record.%x1, record.%y1);
   let (x2, y2) = transform-position(transform, record.%x2, record.%y2);
   outline-line-with-hexagon(medium, x1, y1, x2, y2,
-			    thickness: pen-width(pen))
+                            thickness: pen-width(pen))
 end method highlight-output-record;
 
 define method outline-line-with-hexagon
@@ -269,10 +269,10 @@ end method outline-line-with-hexagon;
 
 
 // Group all the bits of the arrow together
-define method draw-arrow 
+define method draw-arrow
     (sheet :: <output-recording-mixin>, x1, y1, x2, y2,
      #key from-head?, to-head? = #t, head-length, head-width) => (record)
-  ignore(from-head?, to-head?, head-length, head-width);  
+  ignore(from-head?, to-head?, head-length, head-width);
   with-new-output-record (sheet)
     next-method()
   end
@@ -298,7 +298,7 @@ define method draw-lines
     let coord-seq
       = transform-coordinate-sequence
           (medium-transform(medium), coord-seq, copy?: #t);
-    FOR (I FROM 0 BELOW SIZE(COORD-SEQ))	//---*** until 'coordinate-sequence-box' is fixed
+    FOR (I FROM 0 BELOW SIZE(COORD-SEQ))        //---*** until 'coordinate-sequence-box' is fixed
       COORD-SEQ[I] := FLOOR(COORD-SEQ[I])
     END;
     // Compute the bounding box in the sheet's coordinate system
@@ -319,9 +319,9 @@ define method draw-lines
     // Make all user-supplied coordinates relative to bounding box
     translate-coordinate-sequence!(-left, -top, coord-seq);
     record := make(<lines-record>,
-		   coord-seq: coord-seq,
-		   region: region, transform: transform,
-		   medium-state: medium-state);
+                   coord-seq: coord-seq,
+                   region: region, transform: transform,
+                   medium-state: medium-state);
     add-output-record(sheet, record)
   end;
   when (sheet-drawing?(sheet))
@@ -347,14 +347,14 @@ define method refined-position-test
     let pen = medium-state-pen(record-medium-state(record));
     let thickness = pen-width(pen);
     local method position-in-ltrb? (x1, y1, x2, y2) => ()
-	    when (ltrb-contains-position?
-		    (min(x1, x2) - thickness, min(y1, y2) - thickness,
-		     max(x1, x2), max(y1, y2), x, y)
-		  & position-close-to-line?(x, y, x1, y1, x2, y2,
-					    thickness: thickness))
-	      return(#t)
-	    end
-	  end method;
+            when (ltrb-contains-position?
+                    (min(x1, x2) - thickness, min(y1, y2) - thickness,
+                     max(x1, x2), max(y1, y2), x, y)
+                  & position-close-to-line?(x, y, x1, y1, x2, y2,
+                                            thickness: thickness))
+              return(#t)
+            end
+          end method;
     do-endpoint-coordinates(position-in-ltrb?, record.%coord-seq);
     #f
   end
@@ -369,10 +369,10 @@ define method highlight-output-record
   let transform = sheet-device-transform(record);
   with-drawing-options (medium, /* ---*** brush: $xor-brush, */ pen: $highlighting-pen)
     local method highlight (x1, y1, x2, y2) => ()
-	    transform-coordinates!(transform, x1, y1, x2, y2);
-	    outline-line-with-hexagon(medium, x1, y1, x2, y2,
-				      thickness: thickness)
-	  end method;
+            transform-coordinates!(transform, x1, y1, x2, y2);
+            outline-line-with-hexagon(medium, x1, y1, x2, y2,
+                                      thickness: thickness)
+          end method;
     do-endpoint-coordinates(highlight, record.%coord-seq)
   end
 end method highlight-output-record;
@@ -410,16 +410,16 @@ define method draw-rectangle
             let thickness
               = if (filled?) 0 else pen-width(medium-pen(medium)) end;
             fix-box(min(x1, x2) - thickness, min(y1, y2) - thickness,
-		    max(x1, x2) + thickness, max(y1, y2) + thickness)
+                    max(x1, x2) + thickness, max(y1, y2) + thickness)
           end;
       let (rx, ry) = point-position(sheet-output-record-position(sheet));
       let transform = make(<mutable-translation-transform>, tx: left - rx, ty: top - ry);
       let region    = make-bounding-box(0, 0, right - left, bottom - top);
       record
         := make(<rectangle-record>,
-		x1: x1 - left, y1: y1 - top, x2: x2 - left, y2: y2 - top,
+                x1: x1 - left, y1: y1 - top, x2: x2 - left, y2: y2 - top,
                 filled?: filled?,
-		region: region, transform: transform,
+                region: region, transform: transform,
                 medium-state: medium-state);
       add-output-record(sheet, record)
     end;
@@ -438,8 +438,8 @@ define method handle-repaint
   end;
   with-record-medium-state (medium, record)
     draw-rectangle(medium,
-		    record.%x1, record.%y1, record.%x2, record.%y2,
-		    filled?: record.%filled?)
+                    record.%x1, record.%y1, record.%x2, record.%y2,
+                    filled?: record.%filled?)
   end
 end method handle-repaint;
 
@@ -465,10 +465,10 @@ define method highlight-output-record
   let (x1, y1) = transform-position(transform, record.%x1, record.%y1);
   let (x2, y2) = transform-position(transform, record.%x2, record.%y2);
   with-drawing-options (medium, /* ---*** brush: $xor-brush, */ pen: $highlighting-pen)
-    draw-rectangle(medium, 
-		   x1 - thickness - 1, y1 - thickness - 1,
-		   x2 + thickness + 1, y2 + thickness + 1,
-		   filled?: #f)
+    draw-rectangle(medium,
+                   x1 - thickness - 1, y1 - thickness - 1,
+                   x2 + thickness + 1, y2 + thickness + 1,
+                   filled?: #f)
   end
 end method highlight-output-record;
 
@@ -491,8 +491,8 @@ define method draw-rectangles
   if (~rectilinear-transform?(medium-transform(medium)))
     do-endpoint-coordinates
       (method (x1, y1, x2, y2)
-	 with-stack-vector (coords = x1, y1, x2, y1, x2, y2, x1, y2)
-	   draw-polygon(sheet, coords, closed?: #t, filled?: filled?)
+         with-stack-vector (coords = x1, y1, x2, y1, x2, y2, x1, y2)
+           draw-polygon(sheet, coords, closed?: #t, filled?: filled?)
          end
        end,
       coord-seq)
@@ -503,13 +503,13 @@ define method draw-rectangles
       let coord-seq
         = transform-coordinate-sequence
             (medium-transform(medium), coord-seq, copy?: #t);
-      FOR (I FROM 0 BELOW SIZE(COORD-SEQ))	//---*** until 'coordinate-sequence-box' is fixed
+      FOR (I FROM 0 BELOW SIZE(COORD-SEQ))        //---*** until 'coordinate-sequence-box' is fixed
         COORD-SEQ[I] := FLOOR(COORD-SEQ[I])
       END;
       let (left :: <integer>, top :: <integer>, right :: <integer>, bottom :: <integer>)
         = begin
             let thickness
-	      = if (filled?) 0 else pen-width(medium-pen(medium)) end;
+              = if (filled?) 0 else pen-width(medium-pen(medium)) end;
             coordinate-sequence-box(coord-seq, thickness: thickness)
           end;
       let (rx, ry) = point-position(sheet-output-record-position(sheet));
@@ -517,10 +517,10 @@ define method draw-rectangles
       let region    = make-bounding-box(0, 0, right - left, bottom - top);
       translate-coordinate-sequence!(-left, -top, coord-seq);
       record := make(<rectangles-record>,
-		     coord-seq: coord-seq,
-		     filled?: filled?,
-		     region: region, transform: transform,
-		     medium-state: medium-state);
+                     coord-seq: coord-seq,
+                     filled?: filled?,
+                     region: region, transform: transform,
+                     medium-state: medium-state);
       add-output-record(sheet, record)
     end;
     when (sheet-drawing?(sheet))
@@ -546,17 +546,17 @@ define method refined-position-test
   block (return)
     let thickness = pen-width(medium-state-pen(record-medium-state(record)));
     local method position-in-ltrb? (x1, y1, x2, y2) => ()
-	    when (if (record.%filled?)
-		    ltrb-contains-position?(x1, y1, x2, y2, x, y)
-		  else
-		    ~(x1 + thickness <= x
-		      & y1 + thickness <= y
-		      & x2 - thickness >= x
-		      & y2 - thickness >= y)
-		  end)
-	      return(#t)
-	    end
-	  end method;
+            when (if (record.%filled?)
+                    ltrb-contains-position?(x1, y1, x2, y2, x, y)
+                  else
+                    ~(x1 + thickness <= x
+                      & y1 + thickness <= y
+                      & x2 - thickness >= x
+                      & y2 - thickness >= y)
+                  end)
+              return(#t)
+            end
+          end method;
     do-endpoint-coordinates(position-in-ltrb?, record.%coord-seq);
     #f
   end
@@ -571,12 +571,12 @@ define method highlight-output-record
   let transform = sheet-device-transform(record);
   with-drawing-options (medium, /* ---*** brush: $xor-brush, */ pen: $highlighting-pen)
     local method highlight (x1, y1, x2, y2) => ()
-	    transform-coordinates!(transform, x1, y1, x2, y2);
-	    draw-rectangle(medium,
-			   x1 - thickness - 1, y1 - thickness - 1,
-			   x2 + thickness + 1, y2 + thickness + 1,
-			   filled?: #f)
-	  end method;
+            transform-coordinates!(transform, x1, y1, x2, y2);
+            draw-rectangle(medium,
+                           x1 - thickness - 1, y1 - thickness - 1,
+                           x2 + thickness + 1, y2 + thickness + 1,
+                           filled?: #f)
+          end method;
     do-endpoint-coordinates(highlight, record.%coord-seq)
   end
 end method highlight-output-record;
@@ -604,13 +604,13 @@ define method draw-polygon
     let coord-seq
       = transform-coordinate-sequence
           (medium-transform(medium), coord-seq, copy?: #t);
-    FOR (I FROM 0 BELOW SIZE(COORD-SEQ))	//---*** until 'coordinate-sequence-box' is fixed
+    FOR (I FROM 0 BELOW SIZE(COORD-SEQ))        //---*** until 'coordinate-sequence-box' is fixed
       COORD-SEQ[I] := FLOOR(COORD-SEQ[I])
     END;
     let (left :: <integer>, top :: <integer>, right :: <integer>, bottom :: <integer>)
       = begin
           let thickness
-	    = if (filled?) 0 else pen-width(medium-pen(medium)) end;
+            = if (filled?) 0 else pen-width(medium-pen(medium)) end;
           coordinate-sequence-box(coord-seq, thickness: thickness)
         end;
     let (rx, ry) = point-position(sheet-output-record-position(sheet));
@@ -618,10 +618,10 @@ define method draw-polygon
     let region    = make-bounding-box(0, 0, right - left, bottom - top);
     translate-coordinate-sequence!(-left, -top, coord-seq);
     record := make(<polygon-record>,
-		   coord-seq: coord-seq,
-		   filled?: filled?, closed?: closed?,
-		   region: region, transform: transform,
-		   medium-state: medium-state);
+                   coord-seq: coord-seq,
+                   filled?: filled?, closed?: closed?,
+                   region: region, transform: transform,
+                   medium-state: medium-state);
     add-output-record(sheet, record)
   end;
   when (sheet-drawing?(sheet))
@@ -638,8 +638,8 @@ define method handle-repaint
   end;
   with-record-medium-state (medium, record)
     draw-polygon(medium,
-		 record.%coord-seq,
-		 filled?: record.%filled?, closed?: record.%closed?)
+                 record.%coord-seq,
+                 filled?: record.%filled?, closed?: record.%closed?)
   end
 end method handle-repaint;
 
@@ -648,18 +648,18 @@ define method refined-position-test
   block (return)
     if (record.%filled?)
       position-inside-polygon?(x, y, record.%coord-seq,
-			       closed?: record.%closed?)
+                               closed?: record.%closed?)
     else
       let thickness = pen-width(medium-state-pen(record-medium-state(record)));
       local method position-on-line? (x1, y1, x2, y2) => ()
-	      when (ltrb-contains-position?
-		      (min(x1, x2) - thickness, min(y1, y2) - thickness,
-		       max(x1, x2) + thickness, max(y1, y2) + thickness, x, y)
-		    & position-close-to-line?(x, y, x1, y1, x2, y2,
-					      thickness: thickness))
-		return(#t)
-	      end
-	    end method;
+              when (ltrb-contains-position?
+                      (min(x1, x2) - thickness, min(y1, y2) - thickness,
+                       max(x1, x2) + thickness, max(y1, y2) + thickness, x, y)
+                    & position-close-to-line?(x, y, x1, y1, x2, y2,
+                                              thickness: thickness))
+                return(#t)
+              end
+            end method;
       let ncoords = size(record.%coord-seq) - 1;
       let x1 = record.%coord-seq[0];
       let y1 = record.%coord-seq[1];
@@ -668,11 +668,11 @@ define method refined-position-test
       let i = 1;
       while (#t)
         position-on-line?(x, y,
-			  x := record.%coord-seq[inc!(i)], y := record.%coord-seq[inc!(i)]);
+                          x := record.%coord-seq[inc!(i)], y := record.%coord-seq[inc!(i)]);
         when (i = ncoords)
           return(when (record.%closed?)
-		   position-on-line?(x, y, x1, y1)
-		 end)
+                   position-on-line?(x, y, x1, y1)
+                 end)
         end
       end
     end;
@@ -717,10 +717,10 @@ define method draw-ellipse
     let transform = medium-transform(medium);
     transform-coordinates!(transform, center-x, center-y);
     transform-distances!(transform,
-			 radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy);
+                         radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy);
     when (start-angle | end-angle)
       let (_start-angle, _end-angle)
-	= transform-angles(transform, start-angle | 0.0, end-angle | $2pi);
+        = transform-angles(transform, start-angle | 0.0, end-angle | $2pi);
       start-angle := _start-angle;
       end-angle := _end-angle
     end;
@@ -728,20 +728,20 @@ define method draw-ellipse
       = if (filled?) 0 else pen-width(medium-pen(medium)) end;
     let (left :: <integer>, top :: <integer>, right :: <integer>, bottom :: <integer>)
       = elliptical-arc-box(center-x, center-y,
-			   radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
-			   start-angle: start-angle, end-angle: end-angle,
-			   thickness: thickness);
+                           radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
+                           start-angle: start-angle, end-angle: end-angle,
+                           thickness: thickness);
     let (rx, ry) = point-position(sheet-output-record-position(sheet));
     let transform = make(<mutable-translation-transform>, tx: left - rx, ty: top - ry);
     let region    = make-bounding-box(0, 0, right - left, bottom - top);
     record := make(<ellipse-record>,
-		   center-x: center-x - left, center-y: center-y - top,
-		   radius-1-dx: radius-1-dx, radius-1-dy: radius-1-dy,
-		   radius-2-dx: radius-2-dx, radius-2-dy: radius-2-dy,
-		   start-angle: start-angle, end-angle: end-angle,
-		   filled?: filled?,
-		   region: region, transform: transform,
-		   medium-state: medium-state);
+                   center-x: center-x - left, center-y: center-y - top,
+                   radius-1-dx: radius-1-dx, radius-1-dy: radius-1-dy,
+                   radius-2-dx: radius-2-dx, radius-2-dy: radius-2-dy,
+                   start-angle: start-angle, end-angle: end-angle,
+                   filled?: filled?,
+                   region: region, transform: transform,
+                   medium-state: medium-state);
     add-output-record(sheet, record)
   end;
   when (sheet-drawing?(sheet))
@@ -758,11 +758,11 @@ define method handle-repaint
   end;
   with-record-medium-state (medium, record)
     draw-ellipse(medium,
-		 record.%center-x, record.%center-y,
-		 record.%radius-1-dx, record.%radius-1-dy,
-		 record.%radius-2-dx, record.%radius-2-dy,
-		 start-angle: record.%start-angle, end-angle: record.%end-angle,
-		 filled?: record.%filled?)
+                 record.%center-x, record.%center-y,
+                 record.%radius-1-dx, record.%radius-1-dy,
+                 record.%radius-2-dx, record.%radius-2-dy,
+                 start-angle: record.%start-angle, end-angle: record.%end-angle,
+                 filled?: record.%filled?)
   end
 end method handle-repaint;
 
@@ -770,12 +770,12 @@ define method refined-position-test
     (record :: <ellipse-record>, x, y) => (true? :: <boolean>)
   if (record.%filled?)
     position-inside-ellipse?(x - record.%center-x, y - record.%center-y,
-			     record.%radius-1-dx, record.%radius-1-dy,
-			     record.%radius-2-dx, record.%radius-2-dy)
+                             record.%radius-1-dx, record.%radius-1-dy,
+                             record.%radius-2-dx, record.%radius-2-dy)
   else
     let thickness = pen-width(medium-state-pen(record-medium-state(record)));
     position-on-thick-ellipse?(x - record.%center-x, y - record.%center-y,
-			       record.%radius-1-dx, record.%radius-1-dy,
+                               record.%radius-1-dx, record.%radius-1-dy,
                                record.%radius-2-dx, record.%radius-2-dy,
                                thickness: thickness)
   end
@@ -803,14 +803,14 @@ define method highlight-output-record
     let r2dy = record.%radius-2-dy + round/(delta * record.%radius-2-dy, radius-2);
     let (cx, cy) = transform-position(transform, record.%center-x, record.%center-y);
     draw-ellipse(medium, cx, cy, r1dx, r1dy, r2dx, r2dy,
-		 start-angle: record.%start-angle, end-angle: record.%end-angle,
-		 filled?: #f)
+                 start-angle: record.%start-angle, end-angle: record.%end-angle,
+                 filled?: #f)
   end
 end method highlight-output-record;
 
 
 // Group all the bits of the oval together
-define method draw-oval 
+define method draw-oval
     (sheet :: <output-recording-mixin>, center-x, center-y, x-radius, y-radius,
      #rest keys, #key filled? = #t, #all-keys) => (record)
   dynamic-extent(keys);
@@ -872,10 +872,10 @@ define method draw-text
     end;
     let (left :: <integer>, top :: <integer>, right :: <integer>, bottom :: <integer>)
       = text-bounding-box(medium, text, x, y,
-			  align-x: align-x | #"left", align-y: align-y | #"baseline",
-			  do-tabs?: do-tabs?,
-			  towards-x: towards-x, towards-y: towards-y,
-			  transform-glyphs?: transform-glyphs?);
+                          align-x: align-x | #"left", align-y: align-y | #"baseline",
+                          do-tabs?: do-tabs?,
+                          towards-x: towards-x, towards-y: towards-y,
+                          transform-glyphs?: transform-glyphs?);
     when (towards-x | towards-y)
       translate-coordinates!(-left, -top, towards-x, towards-y)
     end;
@@ -883,26 +883,26 @@ define method draw-text
     let transform = make(<mutable-translation-transform>, tx: left - rx, ty: top - ry);
     let region    = make-bounding-box(0, 0, right - left, bottom - top);
     record := case
-		towards-x | towards-y | transform-glyphs? =>
-		  make(<oriented-text-record>,
-		       text: text, x: x - left, y: y - top,
-		       towards-x: towards-x, towards-y: towards-y,
-		       transform-glyphs?: transform-glyphs?,
-		       align-x: align-x | #"left", align-y: align-y | #"baseline",
-		       region: region, transform: transform,
-		       medium-state: medium-state);
-		align-x | align-y =>
-		  make(<aligned-text-record>,
-		       text: text, x: x - left, y: y - top,
-		       align-x: align-x | #"left", align-y: align-y | #"baseline",
-		       region: region, transform: transform,
-		       medium-state: medium-state);
-		otherwise =>
-		  make(<text-record>,
-		       text: text, x: x - left, y: y - top,
-		       region: region, transform: transform,
-		       medium-state: medium-state)
-	      end;
+                towards-x | towards-y | transform-glyphs? =>
+                  make(<oriented-text-record>,
+                       text: text, x: x - left, y: y - top,
+                       towards-x: towards-x, towards-y: towards-y,
+                       transform-glyphs?: transform-glyphs?,
+                       align-x: align-x | #"left", align-y: align-y | #"baseline",
+                       region: region, transform: transform,
+                       medium-state: medium-state);
+                align-x | align-y =>
+                  make(<aligned-text-record>,
+                       text: text, x: x - left, y: y - top,
+                       align-x: align-x | #"left", align-y: align-y | #"baseline",
+                       region: region, transform: transform,
+                       medium-state: medium-state);
+                otherwise =>
+                  make(<text-record>,
+                       text: text, x: x - left, y: y - top,
+                       region: region, transform: transform,
+                       medium-state: medium-state)
+              end;
     add-output-record(sheet, record)
   end;
   when (sheet-drawing?(sheet))
@@ -920,7 +920,7 @@ define method handle-repaint
   with-record-medium-state (state = medium, record)
     dynamic-bind (medium-merged-text-style(medium) = medium-state-text-style(state))
       draw-text(medium, record.%text, record.%x, record.%y,
-		align-x: #"left", align-y: #"baseline")
+                align-x: #"left", align-y: #"baseline")
     end
   end
 end method handle-repaint;
@@ -934,8 +934,8 @@ define method handle-repaint
   with-record-medium-state (state = medium, record)
     dynamic-bind (medium-merged-text-style(medium) = medium-state-text-style(state))
       draw-text(medium,
-		record.%text, record.%x, record.%y,
-		align-x: record.%align-x, align-y: record.%align-y)
+                record.%text, record.%x, record.%y,
+                align-x: record.%align-x, align-y: record.%align-y)
     end
   end
 end method handle-repaint;
@@ -949,10 +949,10 @@ define method handle-repaint
   with-record-medium-state (state = medium, record)
     dynamic-bind (medium-merged-text-style(medium) = medium-state-text-style(state))
       draw-text(medium,
-		record.%text, record.%x, record.%y,
-		align-x: record.%align-x, align-y: record.%align-y,
-		towards-x: record.%towards-x, towards-y: record.%towards-y,
-		transform-glyphs?: record.%transform-glyphs?)
+                record.%text, record.%x, record.%y,
+                align-x: record.%align-x, align-y: record.%align-y,
+                towards-x: record.%towards-x, towards-y: record.%towards-y,
+                transform-glyphs?: record.%transform-glyphs?)
     end
   end
 end method handle-repaint;
@@ -966,7 +966,7 @@ define method text-bounding-box
     = font-metrics(text-style, port(medium));
   ignore(width, height);
   let width = text-size(medium, string, text-style: text-style,
-			do-newlines?: do-newlines?, do-tabs?: do-tabs?);
+                        do-newlines?: do-newlines?, do-tabs?: do-tabs?);
   let height = ascent + descent;
   let vl = #f;
   let vt = #f;
@@ -1022,7 +1022,7 @@ define method draw-bezier-curve
     let coord-seq
       = transform-coordinate-sequence
           (medium-transform(medium), coord-seq, copy?: #t);
-    FOR (I FROM 0 BELOW SIZE(COORD-SEQ))	//---*** until 'coordinate-sequence-box' is fixed
+    FOR (I FROM 0 BELOW SIZE(COORD-SEQ))        //---*** until 'coordinate-sequence-box' is fixed
       COORD-SEQ[I] := FLOOR(COORD-SEQ[I])
     END;
     let (left :: <integer>, top :: <integer>, right :: <integer>, bottom :: <integer>)
@@ -1036,10 +1036,10 @@ define method draw-bezier-curve
     let region    = make-bounding-box(0, 0, right - left, bottom - top);
     translate-coordinate-sequence!(-left, -top, coord-seq);
     record := make(<bezier-curve-record>,
-		   coord-seq: coord-seq,
-		   filled?: filled?,
-		   region: region, transform: transform,
-		   medium-state: medium-state);
+                   coord-seq: coord-seq,
+                   filled?: filled?,
+                   region: region, transform: transform,
+                   medium-state: medium-state);
     add-output-record(sheet, record)
   end;
   when (sheet-drawing?(sheet))
@@ -1085,9 +1085,9 @@ define method draw-image
     let transform = make(<mutable-translation-transform>, tx: left - rx, ty: top - ry);
     let region    = make-bounding-box(0, 0, right - left, bottom - top);
     record := make(<image-record>,
-		   image: image, x: x - left, y: y - top,
-		   region: region, transform: transform,
-		   medium-state: medium-state);
+                   image: image, x: x - left, y: y - top,
+                   region: region, transform: transform,
+                   medium-state: medium-state);
     add-output-record(sheet, record)
   end;
   when (sheet-drawing?(sheet))
@@ -1135,10 +1135,10 @@ define method draw-pixmap
     let transform = make(<mutable-translation-transform>, tx: left - rx, ty: top - ry);
     let region    = make-bounding-box(0, 0, right - left, bottom - top);
     record := make(<pixmap-record>,
-		   pixmap: pixmap, x: x - left, y: y - top,
-		   function: function,
-		   region: region, transform: transform,
-		   medium-state: medium-state);
+                   pixmap: pixmap, x: x - left, y: y - top,
+                   function: function,
+                   region: region, transform: transform,
+                   medium-state: medium-state);
     add-output-record(sheet, record)
   end;
   when (sheet-drawing?(sheet))
@@ -1155,7 +1155,7 @@ define method handle-repaint
   end;
   with-record-medium-state (medium, record)
     draw-pixmap(medium,
-		record.%pixmap, record.%x, record.%y,
-		function: record.%function)
+                record.%pixmap, record.%x, record.%y,
+                function: record.%function)
   end
 end method handle-repaint;

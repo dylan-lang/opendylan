@@ -148,7 +148,7 @@ define sealed method ensure-dialog-position
   duim-debug-message("Setting position for %= to %d x %d", frame, x, y);
   check-result("SetWindowPos",
                SetWindowPos(handle, $NULL-HWND, x, y, 0, 0,
-                            %logior($SWP-NOACTIVATE, $SWP-NOZORDER, 
+                            %logior($SWP-NOACTIVATE, $SWP-NOZORDER,
                                     $SWP-NOSIZE)))
 end method ensure-dialog-position;
 
@@ -192,7 +192,7 @@ define sealed method compute-dialog-position
               0);
       let y
         = max(min(screen-height - height,
-                  owner-y + max(floor/(owner-height - height, 2), 
+                  owner-y + max(floor/(owner-height - height, 2),
                                 //---*** andrewa: why do I need this 20?
                                 y-offset - 20)),
               0);
@@ -223,7 +223,7 @@ end method update-frame-layout;
 define method make-exit-button
     (framem :: <win32-frame-manager>, dialog :: <dialog-frame>,
      callback :: false-or(<callback-type>), label :: <string>,
-     #rest initargs, 
+     #rest initargs,
      #key enabled? = (callback ~= #f), #all-keys)
  => (button :: false-or(<push-button>))
   when (callback)
@@ -292,7 +292,7 @@ define sealed method do-exit-dialog
 end method do-exit-dialog;
 
 // Generate an "error" exit event
-define sealed method do-cancel-dialog 
+define sealed method do-cancel-dialog
     (framem :: <win32-frame-manager>, dialog :: <dialog-frame>, #key destroy? = #t) => ()
   let owner  = frame-owner(dialog);
   let modal? = (frame-mode(dialog) == #"modal");
@@ -325,7 +325,7 @@ end method dialog-owner-handle;
 define sealed method do-notify-user
     (framem :: <win32-frame-manager>, owner :: <sheet>,
      message :: <string>, style :: <notification-style>,
-     #key title :: false-or(<string>), documentation :: false-or(<string>), name, 
+     #key title :: false-or(<string>), documentation :: false-or(<string>), name,
           exit-style :: false-or(<notification-exit-style>) = #f,
      #all-keys)
  => (ok? :: <boolean>, exit-type)
@@ -385,7 +385,7 @@ end method do-notify-user;
 define constant $max-file-name-length :: <integer> = 1000;
 
 define sealed method do-choose-file
-    (framem :: <win32-frame-manager>, owner :: <sheet>, 
+    (framem :: <win32-frame-manager>, owner :: <sheet>,
      direction == #"input",
      #key title :: false-or(<string>), documentation :: false-or(<string>), exit-boxes,
           if-exists, if-does-not-exist = #"ask",
@@ -422,7 +422,7 @@ define sealed method do-choose-file
 end method do-choose-file;
 
 define sealed method do-choose-file
-    (framem :: <win32-frame-manager>, owner :: <sheet>, 
+    (framem :: <win32-frame-manager>, owner :: <sheet>,
      direction == #"output",
      #key title :: false-or(<string>), documentation :: false-or(<string>), exit-boxes,
           if-exists = #"ask", if-does-not-exist,
@@ -654,7 +654,7 @@ define table $file-type-table :: <object-table>
       #"resource"    => "res",
       #"library"     => "lib" };
 
- 
+
 /// Choose directory
 
 define variable $Shell-IMalloc :: false-or(<C-Interface>) = #f;
@@ -706,7 +706,7 @@ define sealed method do-choose-directory
         when (SHGetPathFromIDList(pidlBrowse, buffer))
           locator := as(<byte-string>, buffer)
         end;
-        IMalloc/Free(shell-IMalloc, pidlBrowse); 
+        IMalloc/Free(shell-IMalloc, pidlBrowse);
         unless (default = $NULL-string) destroy(default) end;
         unless (title   = $NULL-string) destroy(title)   end;
       end
@@ -716,7 +716,7 @@ define sealed method do-choose-directory
 end method do-choose-directory;
 
 // This callback allows the dialog to open with its selection set to
-// the 'default:' passed in to 'do-choose-directory' 
+// the 'default:' passed in to 'do-choose-directory'
 define sealed method browse-for-folder-function
     (handle :: <HWND>,                  // window handle
      message :: <message-type>,         // type of message
@@ -768,7 +768,7 @@ define sealed method do-choose-printer
           values(#f, print.nCopies-value, #t)
         else
           values(#f, print.nCopies-value, #f)
-        end     
+        end
       end
     else
       ensure-no-dialog-error("PrintDlg");
@@ -777,7 +777,7 @@ define sealed method do-choose-printer
   end
 end method do-choose-printer;
 
- 
+
 /// Color chooser
 
 define variable *custom-colors* :: <LPCOLORREF>
@@ -820,7 +820,7 @@ define sealed method do-choose-text-style
     (framem :: <win32-frame-manager>, owner :: <sheet>,
      #key title :: false-or(<string>), documentation :: false-or(<string>),
           exit-boxes, default :: false-or(<text-style>),
-        
+
           fixed-width-only? :: <boolean>,
           show-help? :: <boolean>, show-apply? :: <boolean>,
           choose-character-set? :: <boolean>, choose-effects? :: <boolean>,

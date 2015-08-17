@@ -108,7 +108,7 @@ define sealed method clipboard-format-available?
       duim-debug-message("Clipboard format %d found -- looking for %d",
                          next-format, format);
       select (next-format by \=)
-        format => 
+        format =>
           return(#t);
         0 =>
           //---*** The error code is not setup in Windows 95/98.

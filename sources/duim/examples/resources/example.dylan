@@ -16,49 +16,49 @@ define frame <example-window> (<simple-frame>)
   slot %draw-circle = #f;
   pane drawing-surface (frame)
     make(<drawing-pane>,
-	 resource-id: $ID-DRAW-AREA,
-	 display-function: draw-graphics);
+         resource-id: $ID-DRAW-AREA,
+         display-function: draw-graphics);
   pane draw-line-button (frame)
     make(<push-button>,
-	 resource-id: $ID-DRAW-LINE,
-	 activate-callback:
-	   method (button)
-	     let frame = sheet-frame(button);
-	     frame.%draw-line   := ~frame.%draw-line;
-	     repaint-sheet(frame.drawing-surface, $everywhere)
-	   end);
+         resource-id: $ID-DRAW-LINE,
+         activate-callback:
+           method (button)
+             let frame = sheet-frame(button);
+             frame.%draw-line   := ~frame.%draw-line;
+             repaint-sheet(frame.drawing-surface, $everywhere)
+           end);
   pane draw-square-button (frame)
     make(<push-button>,
-	 resource-id: $ID-DRAW-SQUARE,
-	 activate-callback:
-	   method (button)
-	     let frame = sheet-frame(button);
-	     frame.%draw-circle := ~frame.%draw-circle;
-	     repaint-sheet(frame.drawing-surface, $everywhere)
-	   end);
+         resource-id: $ID-DRAW-SQUARE,
+         activate-callback:
+           method (button)
+             let frame = sheet-frame(button);
+             frame.%draw-circle := ~frame.%draw-circle;
+             repaint-sheet(frame.drawing-surface, $everywhere)
+           end);
   pane clear-button (frame)
     make(<push-button>,
-	 resource-id: $ID-CLEAR,
-	 activate-callback:
-	   method (button)
-	     let frame = sheet-frame(button);
-	     frame.%draw-line   := #f;
-	     frame.%draw-circle := #f;
-	     repaint-sheet(frame.drawing-surface, $everywhere)
-	   end);
+         resource-id: $ID-CLEAR,
+         activate-callback:
+           method (button)
+             let frame = sheet-frame(button);
+             frame.%draw-line   := #f;
+             frame.%draw-circle := #f;
+             repaint-sheet(frame.drawing-surface, $everywhere)
+           end);
   layout (frame)
     make(<fixed-layout>,
          children: vector(frame.drawing-surface,
-			  frame.draw-line-button,
-			  frame.draw-square-button,
-			  frame.clear-button));
+                          frame.draw-line-button,
+                          frame.draw-square-button,
+                          frame.clear-button));
   command-table (frame) *example-command-table*;
-  /* menu-bar (frame) 
+  /* menu-bar (frame)
        make(<menu-bar>, resource-id: $IDD-MAIN-WINDOW); */
   keyword resource-id: = $IDD-MAIN-WINDOW;
 end frame <example-window>;
 
-define method draw-graphics 
+define method draw-graphics
     (pane :: <drawing-pane>, medium :: <medium>, region :: <region>) => ()
   clear-box*(medium, sheet-region(pane));
   draw-text(medium, $message, 10, 20);
@@ -79,19 +79,19 @@ define method about-example (frame :: <example-window>) => ()
   with-frame-manager (frame-manager(frame))
     let text-layout
       = make(<column-layout>,
-	     x-alignment: #"center",
-	     children: vector(make(<label>,
-				   label: "Functional Objects, Inc."),
-			      make(<label>,
-				   label: "Dylan example program"),
-			      make(<label>,
-				   label: "Version 0.0")));
+             x-alignment: #"center",
+             children: vector(make(<label>,
+                                   label: "Functional Objects, Inc."),
+                              make(<label>,
+                                   label: "Dylan example program"),
+                              make(<label>,
+                                   label: "Version 0.0")));
     make(<dialog-frame>,
-	 layout: text-layout,
-	 title: "About Example",
-	 owner: frame,
-	 cancel-function: #f,
-	 mapped?: #t);
+         layout: text-layout,
+         title: "About Example",
+         owner: frame,
+         cancel-function: #f,
+         mapped?: #t);
   end
 end method about-example;
 

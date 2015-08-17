@@ -6,8 +6,8 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// this file contains the first incremental change to the reversi example. 
-// It adds the functionality that allows the user to change the shape of the 
+// this file contains the first incremental change to the reversi example.
+// It adds the functionality that allows the user to change the shape of the
 // players pieces.
 
 *changed?* := #t;

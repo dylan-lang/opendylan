@@ -33,7 +33,7 @@ define method do-compose-space
 end method do-compose-space;
 
 define method handle-event
-    (sheet :: <graphics-recording-pane>, 
+    (sheet :: <graphics-recording-pane>,
      event :: <pointer-motion-event>) => ()
   let old = sheet-highlighted-record(sheet);
   let new = child-containing-position(sheet-output-history(sheet), event-x(event), event-y(event));
@@ -54,10 +54,10 @@ define method draw-test-graphics
   let frame  = sheet-frame(sheet);
   let color = frame.%color;
   let brush = select (color by \==)
-		#"Blue"  => $blue;
-		#"Red"   => $red;
-		#"Black" => $black;
-	      end;
+                #"Blue"  => $blue;
+                #"Red"   => $red;
+                #"Black" => $black;
+              end;
   let thickness = frame.%thickness;
   let pen       = make(<pen>, width: thickness);
   let width     = graphic-width(sheet);
@@ -88,13 +88,13 @@ define method draw-test-graphics
 end method draw-test-graphics;
 
 define method draw-graphic
-    (graphic-type == #"rectangle", sheet :: <graphics-recording-pane>, filled? :: <boolean>, 
-     x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => () 
+    (graphic-type == #"rectangle", sheet :: <graphics-recording-pane>, filled? :: <boolean>,
+     x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => ()
   draw-rectangle(sheet, x1, y1, x2, y2, filled?: filled?)
 end method draw-graphic;
 
 define method draw-graphic
-    (graphic-type == #"arrow", sheet :: <graphics-recording-pane>, filled? :: <boolean>, 
+    (graphic-type == #"arrow", sheet :: <graphics-recording-pane>, filled? :: <boolean>,
      x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => ()
   let xinc = round/(x2 - x1, 5);
   let yinc = round/(y2 - y1, 5);
@@ -107,8 +107,8 @@ define method draw-graphic
 end method draw-graphic;
 
 define method draw-graphic
-    (graphic-type == #"polygon", sheet :: <graphics-recording-pane>, filled? :: <boolean>, 
-     x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => () 
+    (graphic-type == #"polygon", sheet :: <graphics-recording-pane>, filled? :: <boolean>,
+     x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => ()
   let xcen = x1 + (round/(x2 - x1, 2));
   let ycen = y1 + (round/(y2 - y1, 2));
   let x3 = xcen + (round/(x2 - xcen, 2));
@@ -117,7 +117,7 @@ define method draw-graphic
 end method draw-graphic;
 
 define method draw-graphic
-    (graphic-type == #"regular-polygon", sheet :: <graphics-recording-pane>, filled? :: <boolean>, 
+    (graphic-type == #"regular-polygon", sheet :: <graphics-recording-pane>, filled? :: <boolean>,
      x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => ()
   let xcen = floor/(x1 + x2, 2);
   let line-size = floor/(x2 - x1, 3);
@@ -127,23 +127,23 @@ define method draw-graphic
 end method draw-graphic;
 
 define method draw-graphic
-    (graphic-type == #"triangle", sheet :: <graphics-recording-pane>, filled? :: <boolean>, 
-     x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => () 
+    (graphic-type == #"triangle", sheet :: <graphics-recording-pane>, filled? :: <boolean>,
+     x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => ()
   let xcen = x1 + (round/(x2 - x1, 2));
   draw-triangle(sheet, xcen, y1, x1, y2, x2, y2, filled?: filled?);
 end method draw-graphic;
 
 define method draw-graphic
-    (graphic-type == #"circle", sheet :: <graphics-recording-pane>, filled? :: <boolean>, 
-     x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => () 
+    (graphic-type == #"circle", sheet :: <graphics-recording-pane>, filled? :: <boolean>,
+     x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => ()
   let xcen = x1 + (round/(x2 - x1, 2));
   let ycen = y1 + (round/(y2 - y1, 2));
   draw-circle(sheet, xcen, ycen, (ycen - y1), filled?: filled?)
 end method draw-graphic;
 
 define method draw-graphic
-    (graphic-type == #"ellipse", sheet :: <graphics-recording-pane>, filled? :: <boolean>, 
-     x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => () 
+    (graphic-type == #"ellipse", sheet :: <graphics-recording-pane>, filled? :: <boolean>,
+     x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => ()
   let xcen = x1 + (round/(x2 - x1, 2));
    let ycen = y1 + (round/(y2 - y1, 2));
    let xrad = round/(xcen - x1, 2);
@@ -152,8 +152,8 @@ define method draw-graphic
 end method draw-graphic;
 
 define method draw-graphic
-    (graphic-type == #"oval", sheet :: <graphics-recording-pane>, filled? :: <boolean>, 
-     x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => () 
+    (graphic-type == #"oval", sheet :: <graphics-recording-pane>, filled? :: <boolean>,
+     x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => ()
   let xcen = x1 + (round/(x2 - x1, 2));
   let ycen = y1 + (round/(y2 - y1, 2));
   let yrad = round/(ycen - y1, 2);
@@ -163,15 +163,15 @@ define method draw-graphic
 end method draw-graphic;
 
 define method draw-graphic
-    (graphic-type == #"bezier-curve", sheet :: <graphics-recording-pane>, filled? :: <boolean>, 
-     x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => () 
+    (graphic-type == #"bezier-curve", sheet :: <graphics-recording-pane>, filled? :: <boolean>,
+     x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => ()
   let xcen = x1 + (round/(x2 - x1, 2));
   let ycen = y1 + (round/(y2 - y1, 2));
   draw-bezier-curve(sheet, list(x1, ycen, xcen, y1, x2, y2, x2, ycen), filled?: filled?);
 end method draw-graphic;
 
 define method draw-graphic
-    (graphic-type == #"image", sheet :: <graphics-recording-pane>, filled? :: <boolean>, 
+    (graphic-type == #"image", sheet :: <graphics-recording-pane>, filled? :: <boolean>,
      x1 :: <integer>, x2 :: <integer>, y1 :: <integer>, y2 :: <integer>) => ()
   let xcen = x1 + (round/(x2 - x1, 2));
   let ycen = y1 + (round/(y2 - y1, 2));
@@ -194,25 +194,25 @@ define frame <recording-test-frame> (<simple-frame>)
     init-keyword: thickness:;
   pane color-radio-box (frame)
     make(<radio-box>,
-	 items: $test-graphics-color,
-	 value: frame.%color,
+         items: $test-graphics-color,
+         value: frame.%color,
          label-key: curry(as, <string>),
- 	 value-changed-callback:
-	   method (gadget)
-	     let frame = sheet-frame(gadget);
-	     frame.%color := gadget-value(gadget);
-	     repaint-panes(frame)
-	   end method);
+          value-changed-callback:
+           method (gadget)
+             let frame = sheet-frame(gadget);
+             frame.%color := gadget-value(gadget);
+             repaint-panes(frame)
+           end method);
   pane thickness-list-box (frame)
     make(<spin-box>,
          items: $test-graphics-thickness,
          value: frame.%thickness,
          value-changed-callback:
-	   method (gadget)
-	     let frame = sheet-frame(gadget);
-	     frame.%thickness := gadget-value(gadget);
-	     repaint-panes(frame)
-	   end method);
+           method (gadget)
+             let frame = sheet-frame(gadget);
+             frame.%thickness := gadget-value(gadget);
+             repaint-panes(frame)
+           end method);
   pane drawable-left (frame)
     make(<graphics-recording-pane>,
          graphics: list(#"rectangle", #"circle", #"arrow", #"polygon", #"regular-polygon"));
@@ -223,20 +223,20 @@ define frame <recording-test-frame> (<simple-frame>)
     vertically (spacing: 5)
       make(<separator>);
       make(<table-layout>,
-	   x-spacing: 10, y-spacing: 2,
+           x-spacing: 10, y-spacing: 2,
            x-alignment: #[#"right", #"left"],
            contents: vector(vector(make(<label>, label: "Color:"),
-				   frame.color-radio-box),
-			    vector(make(<label>, label: "Thickness:"),
-				   frame.thickness-list-box)));
+                                   frame.color-radio-box),
+                            vector(make(<label>, label: "Thickness:"),
+                                   frame.thickness-list-box)));
       make(<separator>);
       horizontally (spacing: 10)
         with-border (type: #"sunken")
-	  frame.drawable-left
-	end;
+          frame.drawable-left
+        end;
         with-border (type: #"sunken")
-	  frame.drawable-right
-	end
+          frame.drawable-right
+        end
       end
     end;
   layout (frame) frame.main-layout;
@@ -262,25 +262,25 @@ define frame <scrolling-recording-test-frame> (<simple-frame>)
     init-keyword: thickness:;
   pane color-radio-box (frame)
     make(<radio-box>,
-	 items: $test-graphics-color,
-	 value: frame.%color,
+         items: $test-graphics-color,
+         value: frame.%color,
          label-key: curry(as, <string>),
- 	 value-changed-callback:
-	   method (gadget)
-	     let frame = sheet-frame(gadget);
-	     frame.%color := gadget-value(gadget);
-	     repaint-panes(frame)
-	   end method);
+          value-changed-callback:
+           method (gadget)
+             let frame = sheet-frame(gadget);
+             frame.%color := gadget-value(gadget);
+             repaint-panes(frame)
+           end method);
   pane thickness-list-box (frame)
     make(<spin-box>,
          items: $test-graphics-thickness,
          value: frame.%thickness,
          value-changed-callback:
-	   method (gadget)
-	     let frame = sheet-frame(gadget);
-	     frame.%thickness := gadget-value(gadget);
-	     repaint-panes(frame)
-	   end method);
+           method (gadget)
+             let frame = sheet-frame(gadget);
+             frame.%thickness := gadget-value(gadget);
+             repaint-panes(frame)
+           end method);
   pane drawable-left (frame)
     make(<graphics-recording-pane>,
          graphics: list(#"rectangle", #"circle", #"arrow", #"polygon", #"regular-polygon"),
@@ -293,20 +293,20 @@ define frame <scrolling-recording-test-frame> (<simple-frame>)
     vertically (spacing: 5)
       make(<separator>);
       make(<table-layout>,
-	   x-spacing: 10, y-spacing: 2,
+           x-spacing: 10, y-spacing: 2,
            x-alignment: #[#"right", #"left"],
            contents: vector(vector(make(<label>, label: "Color:"),
-				   frame.color-radio-box),
-			    vector(make(<label>, label: "Thickness:"),
-				   frame.thickness-list-box)));
+                                   frame.color-radio-box),
+                            vector(make(<label>, label: "Thickness:"),
+                                   frame.thickness-list-box)));
       make(<separator>);
       horizontally (spacing: 10)
         with-border (type: #"sunken")
-	  scrolling () frame.drawable-left end
-	end;
+          scrolling () frame.drawable-left end
+        end;
         with-border (type: #"sunken")
-	  scrolling () frame.drawable-right end
-	end
+          scrolling () frame.drawable-right end
+        end
       end
     end;
   layout (frame) frame.main-layout;
@@ -332,8 +332,8 @@ define class <scribble-recording-pane> (<recording-pane>)
 end class <scribble-recording-pane>;
 
 define method handle-button-event
-    (sheet :: <scribble-recording-pane>, 
-     event :: <button-press-event>, 
+    (sheet :: <scribble-recording-pane>,
+     event :: <button-press-event>,
      button == $left-button) => ()
   sheet.scribble-segment := make(<stretchy-vector>);
   add-scribble-segment(sheet, event.event-x, event.event-y);
@@ -356,8 +356,8 @@ define method handle-button-event
 end method handle-button-event;
 
 define method handle-button-event
-    (sheet :: <scribble-recording-pane>, 
-     event :: <button-release-event>, 
+    (sheet :: <scribble-recording-pane>,
+     event :: <button-release-event>,
      button == $right-button) => ()
   let popup-menu-callback = scribble-popup-menu-callback(sheet);
   when (popup-menu-callback)
@@ -381,38 +381,38 @@ end method add-scribble-segment;
 
 define frame <scribble-recording-frame> (<simple-frame>)
   pane surface (frame)
-    make(<scribble-recording-pane>, 
-	 popup-menu-callback: method (sheet, x, y)
-				let frame = sheet-frame(sheet);
-				popup-scribble-menu(frame, x, y)
-			      end,
-	 width:  300, max-width:  $fill,
-	 height: 200, max-height: $fill);
+    make(<scribble-recording-pane>,
+         popup-menu-callback: method (sheet, x, y)
+                                let frame = sheet-frame(sheet);
+                                popup-scribble-menu(frame, x, y)
+                              end,
+         width:  300, max-width:  $fill,
+         height: 200, max-height: $fill);
   pane file-menu (frame)
     make(<menu>,
-	 label: "File",
-	 children: vector(make(<menu-button>,
-			       label: "&Clear",
-			       selection-mode: #"none",
-			       activate-callback: method (button)
-						    clear-output-history(frame.surface)
-						  end),
-			  make(<menu-button>,
-			       label: "E&xit",
-			       selection-mode: #"none",
-			       activate-callback: method (button)
-						    exit-frame(sheet-frame(button))
-						  end)));
+         label: "File",
+         children: vector(make(<menu-button>,
+                               label: "&Clear",
+                               selection-mode: #"none",
+                               activate-callback: method (button)
+                                                    clear-output-history(frame.surface)
+                                                  end),
+                          make(<menu-button>,
+                               label: "E&xit",
+                               selection-mode: #"none",
+                               activate-callback: method (button)
+                                                    exit-frame(sheet-frame(button))
+                                                  end)));
   pane scribble-popup-menu (frame)
     make(<menu>,
-	 owner: frame.surface,
-	 children: vector(make(<menu-button>,
-			       label: "&Clear",
-			       selection-mode: #"none",
-			       activate-callback: method (button)
-						    ignore(button);
-						    clear-output-history(frame.surface)
-						  end)));
+         owner: frame.surface,
+         children: vector(make(<menu-button>,
+                               label: "&Clear",
+                               selection-mode: #"none",
+                               activate-callback: method (button)
+                                                    ignore(button);
+                                                    clear-output-history(frame.surface)
+                                                  end)));
   layout (frame) frame.surface;
   menu-bar (frame)
     make(<menu-bar>, children: vector(frame.file-menu));
@@ -433,8 +433,8 @@ define class <wrfg-pane> (<recording-pane>)
 end class <wrfg-pane>;
 
 define method handle-button-event
-    (sheet :: <wrfg-pane>, 
-     event :: <button-press-event>, 
+    (sheet :: <wrfg-pane>,
+     event :: <button-press-event>,
      button == $left-button) => ()
   let medium = sheet-medium(sheet);
   let x = event-x(event);
@@ -452,23 +452,23 @@ end method handle-button-event;
 define frame <wrfg-frame> (<simple-frame>)
   pane surface (frame)
     make(<wrfg-pane>,
-	 width:  300, max-width:  $fill,
-	 height: 200, max-height: $fill);
+         width:  300, max-width:  $fill,
+         height: 200, max-height: $fill);
   pane file-menu (frame)
     make(<menu>,
-	 label: "File",
-	 children: vector(make(<menu-button>,
-			       label: "&Clear",
-			       selection-mode: #"none",
-			       activate-callback: method (button)
-						    clear-output-history(frame.surface)
-						  end),
-			  make(<menu-button>,
-			       label: "E&xit",
-			       selection-mode: #"none",
-			       activate-callback: method (button)
-						    exit-frame(sheet-frame(button))
-						  end)));
+         label: "File",
+         children: vector(make(<menu-button>,
+                               label: "&Clear",
+                               selection-mode: #"none",
+                               activate-callback: method (button)
+                                                    clear-output-history(frame.surface)
+                                                  end),
+                          make(<menu-button>,
+                               label: "E&xit",
+                               selection-mode: #"none",
+                               activate-callback: method (button)
+                                                    exit-frame(sheet-frame(button))
+                                                  end)));
   layout (frame) frame.surface;
   menu-bar (frame)
     make(<menu-bar>, children: vector(frame.file-menu));

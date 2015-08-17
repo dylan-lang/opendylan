@@ -67,7 +67,7 @@ define method initialize (mirror :: <win32-mirror>, #key) => ()
   end
 end method initialize;
 
-define sealed method window-handle 
+define sealed method window-handle
     (sheet :: <mirrored-sheet-mixin>)
  => (handle :: false-or(<HWND/HMENU>))
   let mirror = sheet-direct-mirror(sheet);
@@ -111,7 +111,7 @@ define method unmap-mirror
 end method unmap-mirror;
 
 // Ditto...
-define method destroy-mirror 
+define method destroy-mirror
     (_port :: <win32-port>, sheet :: <sheet>, mirror :: <win32-mirror>) => ()
   sheet-direct-mirror(sheet) := #f
 end method destroy-mirror;
@@ -235,7 +235,7 @@ define sealed class <window-mirror> (<win32-mirror>)
   sealed slot %DC :: <HDC> = $null-hDC;
   sealed slot %background-brush = #f;
   // Store the actual resource for the mirror if any
-  sealed slot %mirror-resource :: false-or(<window-resource>) = #f, 
+  sealed slot %mirror-resource :: false-or(<window-resource>) = #f,
     init-keyword: resource:;
 end class <window-mirror>;
 
@@ -264,7 +264,7 @@ define generic make-sheet-mirror
  => (mirror :: <win32-mirror>);
 
 define generic make-sheet-mirror-from-resource
-    (parent :: <abstract-sheet>, sheet :: <abstract-sheet>, 
+    (parent :: <abstract-sheet>, sheet :: <abstract-sheet>,
      resource-id :: <resource-id>)
  => (mirror :: <win32-mirror>);
 
@@ -422,7 +422,7 @@ define method mirror-background-brush
     end
 end method mirror-background-brush;
 
-define sealed method destroy-mirror 
+define sealed method destroy-mirror
     (_port :: <win32-port>, sheet :: <sheet>, mirror :: <window-mirror>) => ()
   let background-brush = mirror.%background-brush;
   when (background-brush)
@@ -479,7 +479,7 @@ end method note-mirror-destroyed;
 
 /// Mirror DC handling
 
-define sealed method get-DC 
+define sealed method get-DC
     (mirror :: <window-mirror>) => (hDC :: <HDC>)
   let hDC :: <HDC> = mirror.%DC;
   when (null-handle?(hDC))
@@ -556,7 +556,7 @@ define function repaint-in-DC-recursive
     let medium = sheet-medium(sheet);
     let xform
       = if (x-scale = 1 & y-scale = 1)
-          // Special case hack because 'make-translation-transform' is always 
+          // Special case hack because 'make-translation-transform' is always
           // available, but 'make-transform' only works if the optional
           // 'duim-extended-geometry' library is loaded.  Don't require the
           // caller to 'use duim-extended-geometry' unless scaling is needed.
@@ -607,7 +607,7 @@ define sealed method unmap-mirror
   ShowWindow(handle, $SW-HIDE)          // no status code for this
 end method unmap-mirror;
 
-define sealed method raise-mirror 
+define sealed method raise-mirror
     (_port :: <win32-port>, sheet :: <sheet>, mirror :: <window-mirror>,
      #key activate? = #t) => ()
   ignore(activate?);
@@ -625,7 +625,7 @@ define sealed method lower-mirror
                             %logior($SWP-NOMOVE, $SWP-NOSIZE)))
 end method lower-mirror;
 
-define sealed method mirror-visible? 
+define sealed method mirror-visible?
     (_port :: <win32-port>, sheet :: <sheet>, mirror :: <window-mirror>)
  => (visible? :: <boolean>)
   let handle :: <HWND> = window-handle(mirror);

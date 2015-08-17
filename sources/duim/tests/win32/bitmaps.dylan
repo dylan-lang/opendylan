@@ -28,9 +28,9 @@ define frame <bitmap-test-frame> (<simple-frame>)
          items: vector($cut-icon, $copy-icon, $paste-icon),
          label-key: identity);
   pane %drawing-pane (frame)
-    make(<drawing-pane>, 
-	 width:     200,   height:     100,
-	 max-width: $fill, max-height: $fill);
+    make(<drawing-pane>,
+         width:     200,   height:     100,
+         max-width: $fill, max-height: $fill);
   pane cut-button (frame)
     make(<button>,
          label: $cut-icon | "X",
@@ -61,7 +61,7 @@ define frame <bitmap-test-frame> (<simple-frame>)
                             end);
   layout (frame)
     vertically (spacing: 2)
-      tabling (columns: 2, 
+      tabling (columns: 2,
                x-spacing: 4, y-spacing: 6,
                x-alignment: #[#"right", #"left"], y-alignment: #"center")
         make(<label>, label: "Clipboard:");
@@ -86,7 +86,7 @@ define frame <bitmap-test-frame> (<simple-frame>)
     *bitmap-command-table*;
   tool-bar (frame)
     make(<tool-bar>,
-	 child: horizontally (spacing: 6)
+         child: horizontally (spacing: 6)
                   horizontally (spacing: 0)
                     frame.cut-button;
                     frame.copy-button;
@@ -136,16 +136,16 @@ define method frame-cut
   end
 end method frame-cut;
 
-define method frame-copy 
+define method frame-copy
     (frame :: <bitmap-test-frame>) => (success? :: <boolean>)
   let gadget = frame.%clipboard-text;
   with-clipboard (clipboard = gadget)
     if (clipboard)
       if (add-clipboard-data(clipboard, gadget-value(gadget)))
-	#t
+        #t
       else
-	notify-user("Failed to put text onto clipboard", owner: gadget);
-	#f
+        notify-user("Failed to put text onto clipboard", owner: gadget);
+        #f
       end
     else
       notify-user("Clipboard not available", owner: gadget);
@@ -154,18 +154,18 @@ define method frame-copy
   end
 end method frame-copy;
 
-define method frame-paste 
+define method frame-paste
     (frame :: <bitmap-test-frame>) => (success? :: <boolean>)
   let gadget = frame.%clipboard-text;
   with-clipboard (clipboard = gadget)
     if (clipboard)
       let text = get-clipboard-data-as(<string>, clipboard);
       if (text)
-	gadget-value(gadget) := text;
-	#t
+        gadget-value(gadget) := text;
+        #t
       else
-	notify-user("No text on clipboard", owner: gadget);
-	#f
+        notify-user("No text on clipboard", owner: gadget);
+        #f
       end
     else
       notify-user("Clipboard not available", owner: gadget);
@@ -209,7 +209,7 @@ define method frame-draw-icons
     draw-image(sheet, $copy-icon,  10, 40);
     draw-image(sheet, $paste-icon, 10, 70)
   else
-    notify-user("Icons did not get loaded", owner: sheet);   
+    notify-user("Icons did not get loaded", owner: sheet);
   end
 end method frame-draw-icons;
 
@@ -222,7 +222,7 @@ define method frame-draw-bitmaps
     draw-image(sheet, $prompt-bitmap,   10, 40);
     draw-image(sheet, $values-bitmap,   10, 70)
   else
-    notify-user("Bitmaps did not get loaded", owner: sheet);   
+    notify-user("Bitmaps did not get loaded", owner: sheet);
   end
 end method frame-draw-bitmaps;
 

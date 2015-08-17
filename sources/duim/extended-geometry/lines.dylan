@@ -69,7 +69,7 @@ end method line-end-position;
 define method polygon-points (line :: <standard-line>) => (points :: <vector>)
   line.%points
   | (line.%points := vector(make-point(line.%start-x, line.%start-y),
-			    make-point(line.%end-x, line.%end-y)))
+                            make-point(line.%end-x, line.%end-y)))
 end method polygon-points;
 
 define method line-start-point
@@ -127,10 +127,10 @@ define method region-contains-position?
     (line :: <standard-line>, x :: <real>, y :: <real>) => (true? :: <boolean>)
   let (left, top, right, bottom) = box-edges(line);
   ltrb-contains-position?(left, top, right, bottom,
-			  fix-coordinate(x), fix-coordinate(y))
+                          fix-coordinate(x), fix-coordinate(y))
   & position-close-to-line?(x, y,
-			    line.%start-x, line.%start-y,
-			    line.%end-x, line.%end-y)
+                            line.%start-x, line.%start-y,
+                            line.%end-x, line.%end-y)
 end method region-contains-position?;
 
 define method region-contains-region?
@@ -142,7 +142,7 @@ end method region-contains-region?;
 define method region-intersects-region?
     (line1 :: <standard-line>, line2 :: <standard-line>) => (true? :: <boolean>)
   line-intersects-line?(line1.%start-x, line1.%start-y, line1.%end-x, line1.%end-y,
-			line2.%start-x, line2.%start-y, line2.%end-x, line2.%end-y)
+                        line2.%start-x, line2.%start-y, line2.%end-x, line2.%end-y)
 end method region-intersects-region?;
 
 define method region-intersection
@@ -171,7 +171,7 @@ define method line-intersects-line?
       let dy1 = ey1 - sy1;
       let dx2 = ex2 - sx2;
       let dy2 = ey2 - sy2;
-      dx1 * dy2 = dx2 * dy1		// slopes equal
+      dx1 * dy2 = dx2 * dy1                // slopes equal
       & dx1 * (sy1 - sy2) = dy1 * (sx1 - sx2)
     end
 end method line-intersects-line?;
@@ -184,15 +184,15 @@ define method clip-line-to-box
      x1 :: false-or(<real>), y1 :: false-or(<real>))
   block (return)
     local method clip-bound (value, lower, upper) => (how)
-	    case
-	      value < lower => #"below";
-	      value > upper => #"above";
-	      otherwise => #f
-	    end
-	  end method,
+            case
+              value < lower => #"below";
+              value > upper => #"above";
+              otherwise => #f
+            end
+          end method,
           method interpolate (u0, v0, u1, v1, u) => (u1)
-	    ((u1 - u) * v0 + (u - u0) * v1) / as(<single-float>, u1 - u0)
-	  end method;
+            ((u1 - u) * v0 + (u - u0) * v1) / as(<single-float>, u1 - u0)
+          end method;
     let bx0 = clip-bound(x0, left, right);
     let by0 = clip-bound(y0, top, bottom);
     let bx1 = clip-bound(x1, left, right);
@@ -204,46 +204,46 @@ define method clip-line-to-box
     let cy1 = by1;
     when (bx0)
       if (bx0 == #"below")
-	y0 := interpolate(x0, y0, x1, y1, left);
-	x0 := left
-      else	// bx0 == #"above"
-	y0 := interpolate(x0, y0, x1, y1, right);
-	x0 := right
+        y0 := interpolate(x0, y0, x1, y1, left);
+        x0 := left
+      else        // bx0 == #"above"
+        y0 := interpolate(x0, y0, x1, y1, right);
+        x0 := right
       end;
       cy0 := clip-bound(y0, top, bottom);
       when (cy0 & (cy0 == cy1))
-	return(#f, #f, #f, #f)
+        return(#f, #f, #f, #f)
       end
     end;
     when (bx1)
       if (bx1 == #"below")
-	y1 := interpolate(x0, y0, x1, y1, left);
-	x1 := left
-      else	// bx1 == #"above"
-	y1 := interpolate(x0, y0, x1, y1, right);
-	x1 := right
+        y1 := interpolate(x0, y0, x1, y1, left);
+        x1 := left
+      else        // bx1 == #"above"
+        y1 := interpolate(x0, y0, x1, y1, right);
+        x1 := right
       end;
       cy1 := clip-bound(y1, top, bottom);
       when (cy1 & (cy0 == cy1))
-	return(#f, #f, #f, #f)
+        return(#f, #f, #f, #f)
       end
     end;
     when (cy0)
       if (cy0 == #"below")
-	x0 := interpolate(y0, x0, y1, x1, top);
-	y0 := top
-      else	// cy0 == #"above"
-	x0 := interpolate(y0, x0, y1, x1, bottom);
-	y0 := bottom
+        x0 := interpolate(y0, x0, y1, x1, top);
+        y0 := top
+      else        // cy0 == #"above"
+        x0 := interpolate(y0, x0, y1, x1, bottom);
+        y0 := bottom
       end
     end;
     when (cy1)
       if (cy1 == #"below")
-	x1 := interpolate(y0, x0, y1, x1, top);
-	y1 := top
-      else	// cy0 == #"above"
-	x1 := interpolate(y0, x0, y1, x1, bottom);
-	y1 := bottom
+        x1 := interpolate(y0, x0, y1, x1, top);
+        y1 := top
+      else        // cy0 == #"above"
+        x1 := interpolate(y0, x0, y1, x1, bottom);
+        y1 := bottom
       end
     end;
     values(x0, y0, x1, y1)

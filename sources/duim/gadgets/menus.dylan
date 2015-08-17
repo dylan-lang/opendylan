@@ -14,7 +14,7 @@ define open abstract class <menu-bar>
      <basic-gadget>)
 end class <menu-bar>;
 
-//--- Maybe this should just be <sheet>, but it's often convenient 
+//--- Maybe this should just be <sheet>, but it's often convenient
 //--- to specify a frame
 define constant <menu-owner> = false-or(type-union(<sheet>, <frame>));
 
@@ -30,35 +30,35 @@ define open abstract class <menu>
      <updatable-gadget-mixin>,
      <labelled-gadget-mixin>,
      <basic-gadget>)
-  sealed slot menu-owner :: <menu-owner> = #f,		// for pop-up menus
+  sealed slot menu-owner :: <menu-owner> = #f,                // for pop-up menus
     init-keyword: owner:;
 end class <menu>;
 
 define method initialize
     (menu :: <menu>,
      #key tear-off? = #f, help-menu? = #f,
-	  x-alignment = #"left", y-alignment = #"top")
+          x-alignment = #"left", y-alignment = #"top")
   next-method();
   let bits = logior(if (tear-off?) %tear_off_menu else 0 end,
-		    if (help-menu?) %help_menu else 0 end);
+                    if (help-menu?) %help_menu else 0 end);
   // <labelled-gadget-mixin> also does this, but we do it again
   // here because the defaults are different for menus...
   let xa = select (x-alignment)
-	     #"left"  => %x_alignment_left;
-	     #"right" => %x_alignment_right;
-	     #"center", #"centre" => %x_alignment_center;
-	   end;
+             #"left"  => %x_alignment_left;
+             #"right" => %x_alignment_right;
+             #"center", #"centre" => %x_alignment_center;
+           end;
   let ya = select (y-alignment)
-	     #"top"      => %y_alignment_top;
-	     #"bottom"   => %y_alignment_bottom;
-	     #"baseline" => %y_alignment_baseline;
-	     #"center", #"centre" => %y_alignment_center;
-	   end;
+             #"top"      => %y_alignment_top;
+             #"bottom"   => %y_alignment_bottom;
+             #"baseline" => %y_alignment_baseline;
+             #"center", #"centre" => %y_alignment_center;
+           end;
   gadget-flags(menu)
     := logior(logand(gadget-flags(menu),
-		     lognot(logior(%tear_off_menu, %help_menu,
-				   %x_alignment_mask, %y_alignment_mask))),
-	      bits, xa, ya)
+                     lognot(logior(%tear_off_menu, %help_menu,
+                                   %x_alignment_mask, %y_alignment_mask))),
+              bits, xa, ya)
 end method initialize;
 
 define sealed inline method tear-off-menu?
@@ -71,7 +71,7 @@ define sealed inline method help-menu?
   logand(gadget-flags(menu), %help_menu) = %help_menu
 end method help-menu?;
 
-define sealed method top-level-sheet 
+define sealed method top-level-sheet
     (menu :: <menu>) => (sheet :: false-or(<sheet>))
   let owner = menu-owner(menu);
   if (owner)
@@ -95,7 +95,7 @@ define sealed method gadget-selection-mode
   #"none"
 end method gadget-selection-mode;
 
-define open generic note-menu-attached 
+define open generic note-menu-attached
     (frame :: <abstract-frame>, menu :: <menu>) => ();
 
 define open generic note-menu-detached
@@ -103,8 +103,8 @@ define open generic note-menu-detached
 
 // If this is a pop-up menu, ensure that it's mirrored before we map it.
 // Then unmap it when we're done.
-define method sheet-mapped?-setter 
-    (mapped? == #t, menu :: <menu>, 
+define method sheet-mapped?-setter
+    (mapped? == #t, menu :: <menu>,
      #key do-repaint? = #t, clear? = do-repaint?)
  => (mapped? :: <boolean>)
   ignore(do-repaint?, clear?);
@@ -115,8 +115,8 @@ define method sheet-mapped?-setter
       unless (sheet-attached?(menu))
         //--- We should add this to the owner's top-level sheet,
         //--- but <top-level-sheet> only allows a single child
-        add-child(display(top-sheet), menu);	// ensure the menu is attached
-	note-menu-attached(sheet-frame(menu), menu)
+        add-child(display(top-sheet), menu);        // ensure the menu is attached
+        note-menu-attached(sheet-frame(menu), menu)
       end;
       next-method()
     cleanup
@@ -153,7 +153,7 @@ define method display-menu
      #key x :: false-or(<integer>), y :: false-or(<integer>)) => ()
   let owner = menu-owner(menu);
   assert(owner,
-	 "Cannot display a popup menu without an owner: %=", menu);
+         "Cannot display a popup menu without an owner: %=", menu);
   if (x & y)
     set-sheet-position(menu, x, y)
   else
@@ -162,9 +162,9 @@ define method display-menu
     //--- It would be much simpler if the owner was always a sheet
     let sheet
       = select (owner by instance?)
-	  <frame> => top-level-sheet(owner);
-	  <sheet> => owner;
-	end;
+          <frame> => top-level-sheet(owner);
+          <sheet> => owner;
+        end;
     when (sheet)
       let (x, y) = pointer-position(pointer, sheet: sheet);
       set-sheet-position(menu, x, y)
@@ -210,7 +210,7 @@ define sealed method gadget-selection-mode
 end method gadget-selection-mode;
 
 
-define open abstract class <radio-menu-box> 
+define open abstract class <radio-menu-box>
     (<gadget-selection-mixin>, <menu-box>)
 end class <radio-menu-box>;
 
@@ -220,7 +220,7 @@ define sealed method gadget-selection-mode
 end method gadget-selection-mode;
 
 
-define open abstract class <check-menu-box> 
+define open abstract class <check-menu-box>
     (<gadget-selection-mixin>, <menu-box>)
 end class <check-menu-box>;
 
@@ -238,7 +238,7 @@ define open abstract class <menu-button>
 end class <menu-button>;
 
 
-define open abstract class <push-menu-button> 
+define open abstract class <push-menu-button>
     (<menu-button>, <default-gadget-mixin>, <basic-value-gadget>)
 end class <push-menu-button>;
 
@@ -316,29 +316,29 @@ define sideways method do-choose-from-menu
           label-key = collection-gadget-default-label-key,
           value-key = collection-gadget-default-value-key,
           width, height, foreground, background, text-style,
-	  multiple-sets? = #f,
+          multiple-sets? = #f,
      #all-keys)
  => (value, success? :: <boolean>)
   dynamic-extent(keys);
   ignore(value);
   let menu
     = make-menu-from-items(framem, items,
-			   label-key: label-key,
-			   value-key: value-key,
-			   width:  width,
-			   height: height,
-			   foreground: foreground,
-			   background: background,
-			   text-style: text-style,
-			   title: title,
-			   owner: owner,
-			   multiple-sets?: multiple-sets?);
+                           label-key: label-key,
+                           value-key: value-key,
+                           width:  width,
+                           height: height,
+                           foreground: foreground,
+                           background: background,
+                           text-style: text-style,
+                           title: title,
+                           owner: owner,
+                           multiple-sets?: multiple-sets?);
   block ()
     apply(do-choose-from-menu, framem, owner, menu, keys)
   cleanup
     // We're done with it, so get rid of all back-end resources
     destroy-sheet(menu)
-  end  
+  end
 end method do-choose-from-menu;
 
 define method make-menu-from-items
@@ -351,28 +351,28 @@ define method make-menu-from-items
   with-frame-manager (framem)
     let menu-boxes :: <stretchy-object-vector> = make(<stretchy-vector>);
     local method make-menu-box (items)
-	    add!(menu-boxes, make(<menu-box>,
-				  items: items,
-				  label-key: label-key,
-				  value-key: value-key,
-				  foreground: foreground,
-				  background: background,
-				  text-style: text-style))
-	  end method;
+            add!(menu-boxes, make(<menu-box>,
+                                  items: items,
+                                  label-key: label-key,
+                                  value-key: value-key,
+                                  foreground: foreground,
+                                  background: background,
+                                  text-style: text-style))
+          end method;
     if (multiple-sets?)
       do(make-menu-box, items)
     else
       make-menu-box(items)
     end;
     make(<menu>,
-	 owner: owner,
-	 label: title,
-	 width:  width,
-	 height: height,
-	 children:   menu-boxes, 
-	 foreground: foreground,
-	 background: background,
-	 text-style: text-style)
+         owner: owner,
+         label: title,
+         width:  width,
+         height: height,
+         children:   menu-boxes,
+         foreground: foreground,
+         background: background,
+         text-style: text-style)
   end
 end method make-menu-from-items;
 

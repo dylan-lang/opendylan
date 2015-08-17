@@ -16,7 +16,7 @@ define frame <standard-dialogs-frame> (<simple-frame>)
   pane new-file-button (frame)
     make(<menu-button>,
          label: "Open...",
-	 documentation: "Test of the standard file 'Open' dialog",
+         documentation: "Test of the standard file 'Open' dialog",
          activate-callback: method (button)
                               let file = choose-file(direction: #"input", owner: frame);
                               if (file)
@@ -27,7 +27,7 @@ define frame <standard-dialogs-frame> (<simple-frame>)
   pane open-file-button (frame)
     make(<menu-button>,
          label: "Save As...",
-	 documentation: "Test of the standard file 'Save As' dialog",
+         documentation: "Test of the standard file 'Save As' dialog",
          activate-callback: method (button)
                               let file = choose-file(direction: #"output", owner: frame);
                               if (file)
@@ -37,20 +37,20 @@ define frame <standard-dialogs-frame> (<simple-frame>)
                             end);
   pane choose-directory-button (frame)
     make(<menu-button>,
-	 label: "Choose Directory...",
-	 documentation: "Choose a directory using the standard dialog",
-	 activate-callback: method (button)
+         label: "Choose Directory...",
+         documentation: "Choose a directory using the standard dialog",
+         activate-callback: method (button)
                               let directory = choose-directory(owner: frame);
                               if (directory)
                                 frame-status-message(frame)
-                                  := format-to-string("Directory: %s", 
-						      directory)
+                                  := format-to-string("Directory: %s",
+                                                      directory)
                               end
                             end);
   pane choose-color-button (frame)
     make(<menu-button>,
          label: "Choose Color...",
-	 documentation: "Test of the standard 'choose color' dialog",
+         documentation: "Test of the standard 'choose color' dialog",
          activate-callback: method (button)
                               let color = choose-color(owner: frame);
                               color & change-ellipse-color(frame, color)
@@ -58,14 +58,14 @@ define frame <standard-dialogs-frame> (<simple-frame>)
   pane choose-font-button (frame)
     make(<menu-button>,
          label: "Choose Font...",
-	 documentation: "Test of the standard 'choose font' dialog",
+         documentation: "Test of the standard 'choose font' dialog",
          activate-callback: method (button)
                               let font = choose-text-style(owner: frame);
                               font & change-text-font(frame, font)
                             end);
   pane exit-button (frame)
     make(<menu-button>,
-	 documentation: "Exit this example",
+         documentation: "Exit this example",
          label: "Exit",
          activate-callback: method (button)
                               exit-frame(sheet-frame(button))
@@ -73,35 +73,35 @@ define frame <standard-dialogs-frame> (<simple-frame>)
   pane about-button (frame)
     make(<menu-button>,
          label: "About Standard Dialogs Test",
-	 documentation: "Show information about this test window",
+         documentation: "Show information about this test window",
          activate-callback: method (button)
                               notify-user("Standard Dialogs Test", owner: frame)
                             end);
   pane file-menu-box (frame)
     make(<menu-box>,
-         children: vector(frame.new-file-button, 
-			  frame.open-file-button,
-			  frame.choose-directory-button));
+         children: vector(frame.new-file-button,
+                          frame.open-file-button,
+                          frame.choose-directory-button));
   pane file-menu (frame)
     make(<menu>,
          label: "File",
-	 documentation: "The standard File menu",
+         documentation: "The standard File menu",
          children: vector(frame.file-menu-box,
                           frame.exit-button));
   pane edit-menu (frame)
     make(<menu>,
          label: "Edit",
-	 documentation: "The standard Edit menu",
+         documentation: "The standard Edit menu",
          children: vector(frame.choose-color-button,
                           frame.choose-font-button));
   pane help-menu (frame)
     make(<menu>,
          label: "Help",
-	 documentation: "The standard Help menu",
+         documentation: "The standard Help menu",
          children: vector(frame.about-button));
   menu-bar (frame)
-    make(<menu-bar>, 
-	 children: vector(frame.file-menu, frame.edit-menu, frame.help-menu));
+    make(<menu-bar>,
+         children: vector(frame.file-menu, frame.edit-menu, frame.help-menu));
   layout (frame)
     vertically (spacing: 4)
       with-border (type: #"sunken")
@@ -123,7 +123,7 @@ define function change-ellipse-color
   let (red, green, blue) = color-rgb(color);
   frame-status-message(frame)
     := format-to-string("Ellipse color is now %d, %d, %d",
-			red, green, blue)
+                        red, green, blue)
 end function change-ellipse-color;
 
 define function change-text-font

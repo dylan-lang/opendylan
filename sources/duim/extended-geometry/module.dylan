@@ -65,7 +65,7 @@ define module duim-extended-geometry-internals
   use duim-geometry-internals;
   use duim-DCs-internals;
   use duim-sheets-internals;
-  use duim-graphics-internals; 
+  use duim-graphics-internals;
   use duim-extended-geometry, export: all;
 
   // Complex transforms

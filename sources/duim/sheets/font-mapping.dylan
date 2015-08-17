@@ -13,7 +13,7 @@ define protocol <<font-mapping-protocol>> (<<text-style-protocol>>)
   function text-style-mapping
     (port :: <abstract-port>, style :: <text-style>, #key character-set)
  => (font);
-  function do-text-style-mapping 
+  function do-text-style-mapping
     (port :: <abstract-port>, style :: <text-style>, character-set) => (font);
   function text-style-mapping-setter
     (mapping, port :: <abstract-port>, style :: <text-style>, #key character-set)
@@ -71,7 +71,7 @@ define inline function make-text-style-key (style) => (key)
     = text-style-components(style);
   ignore(size);
   make-text-style(family, name, weight, slant, #f,
-		  underline?: underline?, strikeout?: strikeout?)
+                  underline?: underline?, strikeout?: strikeout?)
 end function make-text-style-key;
 
 define method text-style-mapping-setter
@@ -80,8 +80,8 @@ define method text-style-mapping-setter
   style := standardize-text-style(_port, style, character-set: character-set);
   let table :: <object-table> = port-font-mapping-table(_port);
   let cache :: <pair> = port-font-mapping-cache(_port);
-  head(cache) := #f;		// invalidate the key first...
-  tail(cache) := #f;		// ...so nothing else will see a valid cache
+  head(cache) := #f;                // invalidate the key first...
+  tail(cache) := #f;                // ...so nothing else will see a valid cache
   case
     _port.%text-style-size-mapping == #"exact" =>
       gethash(table, style) := font;
@@ -92,16 +92,16 @@ define method text-style-mapping-setter
       let fonts :: <stretchy-object-vector> = gethash(table, key) | make(<stretchy-vector>);
       let old-entry = find-pair(fonts, style);
       case
-	old-entry =>
-	  old-entry[1] := font;
-	otherwise =>
-	  add!(fonts, list(style, font));
-	  fonts
-	    := sort!(fonts,
-		     test: method (e1, e2)
-			     text-style-size(e1[0]) < text-style-size(e2[0])
-			   end);
-	  gethash(table, key) := fonts;
+        old-entry =>
+          old-entry[1] := font;
+        otherwise =>
+          add!(fonts, list(style, font));
+          fonts
+            := sort!(fonts,
+                     test: method (e1, e2)
+                             text-style-size(e1[0]) < text-style-size(e2[0])
+                           end);
+          gethash(table, key) := fonts;
       end;
     _port.%text-style-size-mapping == #"scalable" =>
       // If it's scalable, we only want to cache based on the family,
@@ -122,7 +122,7 @@ end class <undefined-text-style-mapping>;
 define method condition-to-string
     (condition :: <undefined-text-style-mapping>) => (string :: <string>)
   format-to-string("The text style %= has no mapping for the port type %=",
-		   condition.%text-style, port-type(condition.%the-port))
+                   condition.%text-style, port-type(condition.%the-port))
 end method condition-to-string;
 
 define method text-style-mapping
@@ -130,14 +130,14 @@ define method text-style-mapping
      #key character-set = $standard-character-set) => (font)
   let cache = port-font-mapping-cache(_port);
   if (style == head(cache))
-    tail(cache)			// one-element cache hit
+    tail(cache)                        // one-element cache hit
   else
     let font = do-text-style-mapping(_port, style, character-set);
     unless (font)
       error(make(<undefined-text-style-mapping>,
-		 port: _port, text-style: style))
+                 port: _port, text-style: style))
     end;
-    head(cache) := #f;		// ensure nobody sees a valid cache...
+    head(cache) := #f;                // ensure nobody sees a valid cache...
     tail(cache) := font;
     head(cache) := style;
     font
@@ -150,9 +150,9 @@ define method text-style-mapping
   ignore(character-set);
   //--- 'type-equal'?  This is too restrictive as it stands...
   assert(_port == device-font-port(style),
-	 "The device font %= was defined for port %= "
-	 "but is being used on port %=",
-	 style, device-font-port(style), _port);
+         "The device font %= was defined for port %= "
+         "but is being used on port %=",
+         style, device-font-port(style), _port);
   device-font-font(style)
 end method text-style-mapping;
 
@@ -168,9 +168,9 @@ define method do-text-style-mapping
         #"loose" =>
           find-closest-font(style, table);
         #"scalable" =>
-	  let key = make-text-style-key(style);
-	  gethash(table, key);
-	otherwise => #f;
+          let key = make-text-style-key(style);
+          gethash(table, key);
+        otherwise => #f;
       end
       | select (mapping-type)
           #"exact" =>
@@ -178,11 +178,11 @@ define method do-text-style-mapping
           #"loose" =>
             find-closest-font(port-undefined-text-style(_port), table);
           #"scalable" =>
-	    let key = make-text-style-key(style);
-	    gethash(table, key);
-	  otherwise => #f;
+            let key = make-text-style-key(style);
+            gethash(table, key);
+          otherwise => #f;
         end;
-  when (text-style?(result))	// logical translations
+  when (text-style?(result))        // logical translations
     result := do-text-style-mapping(_port, result, character-set)
   end;
   result
@@ -201,13 +201,13 @@ define method text-style-mapping-exists?
         #"loose" =>
           find-closest-font(style, table, exact-size?: exact-size?);
         #"scalable" =>
-	  let key = make-text-style-key(style);
-	  gethash(table, key);
-	otherwise => #f;
+          let key = make-text-style-key(style);
+          gethash(table, key);
+        otherwise => #f;
       end;
   case
     ~result => #f;
-    text-style?(result) =>	// logical translations
+    text-style?(result) =>        // logical translations
       text-style-mapping-exists?(_port, style, character-set: character-set);
     otherwise => #t;
   end
@@ -235,8 +235,8 @@ define method find-closest-font
                 return(entry[1]);
               abs(size - font-size) < abs(size - last-size) =>
                 return(entry[1]);
-	      otherwise =>
-		return(last-entry[1]);
+              otherwise =>
+                return(last-entry[1]);
             end
           end
         end;
@@ -275,13 +275,13 @@ define method standardize-text-style-size
     let new-size = find-pair(size-alist, size);
     case
       new-size =>
-	make-text-style(text-style-family(style),
-			text-style-name(style),
-			text-style-weight(style),
-			text-style-slant(style),
-			second(new-size));
+        make-text-style(text-style-family(style),
+                        text-style-name(style),
+                        text-style-weight(style),
+                        text-style-slant(style),
+                        second(new-size));
       otherwise =>
-	standardize-text-style-error(style);
+        standardize-text-style-error(style);
     end
   end
 end method standardize-text-style-size;
@@ -290,11 +290,11 @@ define method standardize-text-style-error
     (text-style :: <text-style>) => (text-style :: <text-style>)
   if (fully-merged-text-style?(text-style))
     cerror("Use the undefined text style stand-in instead",
-	   "The size component of %= is not numeric.  This port does not know "
-	   "how to map logical text style sizes", text-style)
+           "The size component of %= is not numeric.  This port does not know "
+           "how to map logical text style sizes", text-style)
   else
     cerror("Use the undefined text style stand-in instead",
-	   "The text style %= must be a fully merged text style", text-style)
+           "The text style %= must be a fully merged text style", text-style)
   end;
   $undefined-text-style
 end method standardize-text-style-error;
@@ -324,7 +324,7 @@ define method glyph-for-character
   let escapement-y = 0;
   let origin-x = 0;
   let origin-y = ascent;
-  let bb-x = escapement-x;	// not available yet
+  let bb-x = escapement-x;        // not available yet
   let bb-y = height;
   values(index, font, escapement-x, escapement-y, origin-x, origin-y, bb-x, bb-y)
 end method glyph-for-character;
@@ -403,22 +403,22 @@ define method text-size
     for (i :: <integer> from _start below _end)
       let char = string[i];
       case
-	// By default, treat Newline and Return the same
-	do-newlines? & (char == '\n' | char == '\r') =>
-	  inc!(largest-y, height);
-	  inc!(last-y, height);
-	  last-x := 0;
-	do-tabs? & (char == '\t') =>
-	  last-x := floor/(last-x + tab-width, tab-width) * tab-width;
-	  max!(largest-x, last-x);
-	  max!(largest-y, height);
-	otherwise =>
-	  let (index, font, escapement-x, escapement-y, origin-x, origin-y, bb-x, bb-y)
-	    = glyph-for-character(_port, char, text-style);
-	  ignore(index, font, escapement-y, origin-x, origin-y, bb-x);
-	  inc!(last-x, escapement-x);
-	  max!(largest-x, last-x);
-	  max!(largest-y, bb-y);
+        // By default, treat Newline and Return the same
+        do-newlines? & (char == '\n' | char == '\r') =>
+          inc!(largest-y, height);
+          inc!(last-y, height);
+          last-x := 0;
+        do-tabs? & (char == '\t') =>
+          last-x := floor/(last-x + tab-width, tab-width) * tab-width;
+          max!(largest-x, last-x);
+          max!(largest-y, height);
+        otherwise =>
+          let (index, font, escapement-x, escapement-y, origin-x, origin-y, bb-x, bb-y)
+            = glyph-for-character(_port, char, text-style);
+          ignore(index, font, escapement-y, origin-x, origin-y, bb-x);
+          inc!(last-x, escapement-x);
+          max!(largest-x, last-x);
+          max!(largest-y, bb-y);
       end
     end
   end;
@@ -433,20 +433,20 @@ define method compute-text-adjustment
   dynamic-extent(keys);
   let x-adjust
     = select (align-x)
-	#"left"  => 0;
-	#"right" => -apply(text-size, medium, text, text-style: text-style, keys);
-	#"center", #"centre" =>
-	  -floor/(apply(text-size, medium, text, text-style: text-style, keys), 2);
+        #"left"  => 0;
+        #"right" => -apply(text-size, medium, text, text-style: text-style, keys);
+        #"center", #"centre" =>
+          -floor/(apply(text-size, medium, text, text-style: text-style, keys), 2);
       end;
   let (font, width, height, ascent, descent)
     = font-metrics(text-style, port(medium));
   ignore(font, width);
   let y-adjust
     = select (align-y)
-	#"baseline" => 0;
-	#"top"      => ascent;
-	#"bottom"   => -descent;
-	#"center", #"centre" => ascent - floor/(height, 2)
+        #"baseline" => 0;
+        #"top"      => ascent;
+        #"bottom"   => -descent;
+        #"center", #"centre" => ascent - floor/(height, 2)
       end;
   values(floor(x-adjust), floor(y-adjust))
 end method compute-text-adjustment;

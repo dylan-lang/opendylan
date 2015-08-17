@@ -29,7 +29,7 @@ define method win32-duim-last-handler (condition :: <serious-condition>, next-ha
   let path-length :: <integer> =
     GetModuleFileName(module-handle, szFullPath, buf-size);
   let button :: <integer> =
-    MessageBox($NULL-HWND, 
+    MessageBox($NULL-HWND,
                message, /* message text */
                if(path-length > 0) szFullPath else "Dylan" end if, /* title */
                logior($MB-YESNOCANCEL,   // buttons

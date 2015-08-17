@@ -16,11 +16,11 @@ define generic sheet-present
 define function present
     (object, type :: <type>, sheet :: <sheet>,
      #key view :: false-or(<view>) = #f,
-	  for-context-type)
+          for-context-type)
  => (record)
   //---*** Massage arguments...
   sheet-present(sheet, object, type, view,
-		for-context-type: for-context-type)
+                for-context-type: for-context-type)
 end function present;
 
 define method sheet-present

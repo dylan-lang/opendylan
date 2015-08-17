@@ -13,7 +13,7 @@ define library duim-layouts
   use duim-geometry;
   use duim-DCs;
   use duim-sheets;
-  use duim-graphics;  
+  use duim-graphics;
 
   export duim-layouts;
   export duim-layouts-internals;

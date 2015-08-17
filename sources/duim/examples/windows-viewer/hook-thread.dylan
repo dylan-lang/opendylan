@@ -24,18 +24,18 @@ define method run-hook-loop
   let hook-window
     = CreateWindowEx
         (0,
-	 $hook-class,
-	 $hook-window,
-	 $WS-OVERLAPPEDWINDOW,
-	 0, 0, 0, 0,
-	 $NULL-HWND,
-	 $null-hMenu,
-	 application-instance-handle(),
-	 $NULL-VOID);
+         $hook-class,
+         $hook-window,
+         $WS-OVERLAPPEDWINDOW,
+         0, 0, 0, 0,
+         $NULL-HWND,
+         $null-hMenu,
+         application-instance-handle(),
+         $NULL-VOID);
   check-win32-result("CreateWindow", hook-window);
   with-stack-structure (message :: <LPMSG>)
     while (IsWindow(hook-window)
-	     & GetMessage(message, hook-window, 0, 0))
+             & GetMessage(message, hook-window, 0, 0))
       TranslateMessage(message);
       DispatchMessage(message)
     end
@@ -56,9 +56,9 @@ define function register-hook-class
     wc.hIcon-value         := null-pointer(<HICON>);
     wc.hCursor-value       := null-pointer(<HCURSOR>);
     wc.hbrBackground-value := as(<HBRUSH>, 1 + $COLOR-3DFACE);
-    wc.lpszMenuName-value  := $NULL-string;	// no menu yet
+    wc.lpszMenuName-value  := $NULL-string;        // no menu yet
     let class-id = RegisterClass(wc);
-    when (zero?(class-id))			// register the window class
+    when (zero?(class-id))                        // register the window class
       report-win32-error("RegisterClass")
     end;
     class-id
@@ -70,41 +70,41 @@ define sealed method hook-window-callback
  => (result)
   let return-code :: false-or(<integer>)
     = select (message)
-	$WM-COPYDATA =>
-	  let data :: <LPCOPYDATASTRUCT> 
-	    = make(<LPCOPYDATASTRUCT>, address: lParam);
-	  select (data.dwData-value)
-	    $message-id =>
-	      let cwp :: <LPCWPSTRUCT>
-		= pointer-cast(<LPCWPSTRUCT>, data.lpData-value);
-	      let message
-		= make(<window-message>,
-		       handle: cwp.hWnd-value,
-		       id:     cwp.message-value,
-		       wParam: cwp.wParam-value,
-		       lParam: cwp.lParam-value);
-	      // format-out("Message received: %=:\n  id:%= w:%= l:%=\n", 
-	      // 	     message.message-handle.pointer-address,
-	      //	     message.message-id,
-	      //	     message.message-wParam,
-	      //	     message.message-lParam);
-	      *hook-callback*(message);
-	      *last-message* := message;
-	      $true;
-	    $description-id =>
-	      let message = *last-message*;
-	      if (message)
-		let text = pointer-cast(<C-string>, data.lpData-value);
-		message.message-description := as(<byte-string>, text)
-	      end;
-	    otherwise =>
-	      format-out("Unexpected data: %=\n", data.dwData-value);
-	  end;
-	$WM-DESTROY =>
-	  PostQuitMessage(0);
-	  0;
-	otherwise =>
-	  #f;
+        $WM-COPYDATA =>
+          let data :: <LPCOPYDATASTRUCT>
+            = make(<LPCOPYDATASTRUCT>, address: lParam);
+          select (data.dwData-value)
+            $message-id =>
+              let cwp :: <LPCWPSTRUCT>
+                = pointer-cast(<LPCWPSTRUCT>, data.lpData-value);
+              let message
+                = make(<window-message>,
+                       handle: cwp.hWnd-value,
+                       id:     cwp.message-value,
+                       wParam: cwp.wParam-value,
+                       lParam: cwp.lParam-value);
+              // format-out("Message received: %=:\n  id:%= w:%= l:%=\n",
+              //              message.message-handle.pointer-address,
+              //             message.message-id,
+              //             message.message-wParam,
+              //             message.message-lParam);
+              *hook-callback*(message);
+              *last-message* := message;
+              $true;
+            $description-id =>
+              let message = *last-message*;
+              if (message)
+                let text = pointer-cast(<C-string>, data.lpData-value);
+                message.message-description := as(<byte-string>, text)
+              end;
+            otherwise =>
+              format-out("Unexpected data: %=\n", data.dwData-value);
+          end;
+        $WM-DESTROY =>
+          PostQuitMessage(0);
+          0;
+        otherwise =>
+          #f;
       end;
   return-code
     | DefWindowProc(handle, message, wParam, lParam)
@@ -121,8 +121,8 @@ define function install-windows-hooks
     let error = GetLastError();
     unless (error == $NO-ERROR)
       cerror("Try to continue anyway",
-	     "SetWindowsHookEx error %d: %s",
-	     error, win32-error-message(error))
+             "SetWindowsHookEx error %d: %s",
+             error, win32-error-message(error))
     end
   end;
   *hook-callback* := callback

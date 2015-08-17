@@ -44,7 +44,7 @@ define sealed method position-inside-polygon?
      #key closed? :: <boolean> = #t) => (true? :: <boolean>)
   let crossings :: <integer> = 0;
   let ncoords :: <integer> = size(position-seq) - 1;
-  let x = as(<single-float>, x);	// force floating point computations below
+  let x = as(<single-float>, x);        // force floating point computations below
   let y = as(<single-float>, y);
   let x1 :: <real> = position-seq[0];
   let y1 :: <real> = position-seq[1];
@@ -52,14 +52,14 @@ define sealed method position-inside-polygon?
   let yi :: <real> = y1;
   let i :: <integer> = 1;
   local method do-segment (x1 :: <real>, y1 :: <real>, x2 :: <real>, y2 :: <real>) => ()
-	  when ((y <= y1) == (y > y2))
-	    // Segment crosses ray
-	    when (~(y1 = y2)		// ignore horizontal segment
-		  & (x - x1) - ((y - y1) * (x2 - x1)) / (y2 - y1) < 0)
-	      inc!(crossings)		// point is to the left
-	    end
-	  end
-	end method;
+          when ((y <= y1) == (y > y2))
+            // Segment crosses ray
+            when (~(y1 = y2)                // ignore horizontal segment
+                  & (x - x1) - ((y - y1) * (x2 - x1)) / (y2 - y1) < 0)
+              inc!(crossings)                // point is to the left
+            end
+          end
+        end method;
   if (instance?(position-seq, <list>))
     let positions = position-seq;
     until (empty?(positions))
@@ -82,7 +82,7 @@ end method position-inside-polygon?;
 // Computes whether a point is inside an ellipse whose center is (0,0).
 // This calculation is exact.
 define sealed method position-inside-ellipse?
-    (x :: <real>, y :: <real>, 
+    (x :: <real>, y :: <real>,
      radius-1-dx :: <real>, radius-1-dy :: <real>,
      radius-2-dx :: <real>, radius-2-dy :: <real>) => (true? :: <boolean>)
   (square(radius-2-dy * x - radius-2-dx * y)
@@ -112,7 +112,7 @@ end method position-on-thick-ellipse?;
 // are the first angle, the two diagonal elements, and the second angle.
 // Used to convert internal representation of ellipses to various window
 // systems' representations.
-define sealed method singular-value-decomposition-2x2 
+define sealed method singular-value-decomposition-2x2
     (a :: <real>, b :: <real>, c :: <real>, d :: <real>)
  => (theta1 :: <real>, d1 :: <real>, d2 :: <real>, theta2 :: <real>)
   case
@@ -139,7 +139,7 @@ define sealed method singular-value-decomposition-2x2
   end
 end method singular-value-decomposition-2x2;
 
-define sealed method coordinate-sequence-box 
+define sealed method coordinate-sequence-box
     (coordinates, #key thickness :: <integer> = 0)
  => (left :: <integer>, top :: <integer>, right :: <integer>, bottom :: <integer>)
   let min-x :: <integer> = $largest-coordinate;
@@ -147,14 +147,14 @@ define sealed method coordinate-sequence-box
   let max-x :: <integer> = $smallest-coordinate;
   let max-y :: <integer> = $smallest-coordinate;
   local method compute-corners (x, y) => ()
-	  min!(min-x, floor(x));
-	  min!(min-y, floor(y));
-	  max!(max-x, ceiling(x));
-	  max!(max-y, ceiling(y))
-	end method;
+          min!(min-x, floor(x));
+          min!(min-y, floor(y));
+          max!(max-x, ceiling(x));
+          max!(max-y, ceiling(y))
+        end method;
   do-coordinates(compute-corners, coordinates);
   values(min-x - thickness, min-y - thickness,
-	 max-x + thickness, max-y + thickness)
+         max-x + thickness, max-y + thickness)
 end method coordinate-sequence-box;
 
 // For a complete ellipse, the box is actually the rectangle that bounds
@@ -164,7 +164,7 @@ end method coordinate-sequence-box;
 // the refined highlighting test will be faster than the computation of
 // a tighter box.
 define sealed method elliptical-arc-box
-    (center-x :: <real>, center-y :: <real>, 
+    (center-x :: <real>, center-y :: <real>,
      radius-1-dx :: <real>, radius-1-dy :: <real>,
      radius-2-dx :: <real>, radius-2-dy :: <real>,
      #key start-angle, end-angle, thickness = 0)
@@ -177,7 +177,7 @@ define sealed method elliptical-arc-box
     let dx = abs(radius-1-dx) + abs(radius-2-dx);
     let dy = abs(radius-1-dy) + abs(radius-2-dy);
     fix-box(center-x - dx - lthickness, center-y - dy - lthickness,
-	    center-x + dx + rthickness, center-y + dy + rthickness)
+            center-x + dx + rthickness, center-y + dy + rthickness)
   else
     start-angle := modulo(start-angle | 0.0, $2pi);
     end-angle   := modulo(end-angle | $2pi, $2pi);

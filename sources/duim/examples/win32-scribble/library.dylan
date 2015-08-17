@@ -35,7 +35,7 @@ define module win32-scribble
     rename: { <PATTERN> => w/<PATTERN> };
   use win32-kernel,
     rename: { Beep  => w/Beep,
-	      Sleep => w/Sleep };
+              Sleep => w/Sleep };
   use win32-dialog;
 
   export <scribble-pane>,

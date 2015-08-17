@@ -21,19 +21,19 @@ define constant $max-number-of-moves = $ttt-square-rows * $ttt-square-columns;
 define constant <square-occupied> = false-or(limited(<integer>, min: 1, max: 2));
 
 define class <ttt-square> (<simple-pane>)
-  slot square-coordinates :: <vector>, init-keyword: square-coordinates:;  
+  slot square-coordinates :: <vector>, init-keyword: square-coordinates:;
   slot square-occupied :: <square-occupied> = #f;
 end class <ttt-square>;
 
-define method ttt-square-setter 
+define method ttt-square-setter
     (square :: <ttt-square>, player :: <square-occupied>) => ()
   square.square-occupied := player;
   if (sheet-mapped?(square))
     repaint-sheet(square, $everywhere);
   end;
 end method ttt-square-setter;
- 
-define method draw-ttt-piece 
+
+define method draw-ttt-piece
     (ttt-square :: <ttt-square>, medium :: <medium>) => ()
   when (square-occupied(ttt-square))
     let (left, top, right, bottom) = box-edges(ttt-square);
@@ -44,18 +44,18 @@ define method draw-ttt-piece
     let x-center = left + half-width;
     let y-center = top  + half-height;
     let color = select (square-occupied(ttt-square))
-		  1 => $white;
-		  2 => $black;
-		end;
+                  1 => $white;
+                  2 => $black;
+                end;
     with-drawing-options (medium, brush: color, pen: $tic-tac-toe-pen)
       if (square-occupied(ttt-square) = 2)
-	draw-ellipse(medium, x-center, y-center, 
-		     x-radius, 0, 0, y-radius, filled?: #f)
+        draw-ellipse(medium, x-center, y-center,
+                     x-radius, 0, 0, y-radius, filled?: #f)
       else
-	draw-line(medium, 
+        draw-line(medium,
                   x-center - x-radius, y-center - y-radius,
                   x-center + x-radius, y-center + y-radius);
-	draw-line(medium, 
+        draw-line(medium,
                   x-center - x-radius, y-center + y-radius,
                   x-center + x-radius, y-center - y-radius);
       end if;
@@ -90,7 +90,7 @@ define method handle-event
   let frame = sheet-frame(ttt-square);
   if (frame)
     if (event-button(event) == $left-button &
-	  ~(ttt-square.square-occupied))
+          ~(ttt-square.square-occupied))
       select (frame.game.turn)
         3                 => display-message(frame, "Game is over");
         *computer-player* => display-message(frame, "Its not your turn", beep?: #t);
@@ -110,12 +110,12 @@ define frame <ttt-frame> (<simple-frame>)
                                       width: $ttt-square-size,
                                       height: $ttt-square-size),
          spacing: 0);
-  pane buttons (frame) 
+  pane buttons (frame)
     make(<push-button>,
-	 label: "New game",
-	 activate-callback: method (button)
-			      new-game(sheet-frame(button))
-			    end);
+         label: "New game",
+         activate-callback: method (button)
+                              new-game(sheet-frame(button))
+                            end);
   pane status (frame)
     make(<status-bar>);
   pane main-layout (frame)
@@ -124,60 +124,60 @@ define frame <ttt-frame> (<simple-frame>)
         frame.buttons;
       end;
       make(<drawing-pane>,
-	   children: vector(ttt-frame-table-pane(frame)),
-	   foreground: $ttt-square-color); 
+           children: vector(ttt-frame-table-pane(frame)),
+           foreground: $ttt-square-color);
     end;
   pane exit-button (frame)
     make(<push-menu-button>,
-	 label: "E&xit",
-	 activate-callback: method (button)
-			      exit-frame(sheet-frame(button));
-			    end);
+         label: "E&xit",
+         activate-callback: method (button)
+                              exit-frame(sheet-frame(button));
+                            end);
   pane file-menu (frame)
     make(<menu>,
-	 label: "&File",
-	 children: 
-	   vector(make(<menu-button>,
-		       label: "New Game",
-		       activate-callback: method (button)
-					    new-game(sheet-frame(button))
-					  end),
-		  make(<push-menu-box>,     
-		       children: vector(frame.exit-button))));
+         label: "&File",
+         children:
+           vector(make(<menu-button>,
+                       label: "New Game",
+                       activate-callback: method (button)
+                                            new-game(sheet-frame(button))
+                                          end),
+                  make(<push-menu-box>,
+                       children: vector(frame.exit-button))));
   pane options-menu (frame)
     make(<menu>,
-	 label: "&Options",
-	 children: 
-	   vector(make(<radio-menu-box>,
-		       items: #(#("Play &X",      #"x"),
-			        #("Play &Y",      #"o"),
+         label: "&Options",
+         children:
+           vector(make(<radio-menu-box>,
+                       items: #(#("Play &X",      #"x"),
+                                #("Play &Y",      #"o"),
                                 #("&Two Players", #"two-players")),
-		       label-key: first,
-		       value-key: second,
-		       value-changed-callback:
-			 method (b)
-			   ttt-set-players(sheet-frame(b), gadget-value(b))
-			 end)));
+                       label-key: first,
+                       value-key: second,
+                       value-changed-callback:
+                         method (b)
+                           ttt-set-players(sheet-frame(b), gadget-value(b))
+                         end)));
   pane help-menu (frame)
     make(<menu>,
-	 label: "Help",
-	 children: 
-	   vector(make(<push-menu-button>,
-		       label: format-to-string("About %s", $application-name),
-		       activate-callback: 
-			 method (button)
-			   about-ttt(sheet-frame(button))
-			 end)));
+         label: "Help",
+         children:
+           vector(make(<push-menu-button>,
+                       label: format-to-string("About %s", $application-name),
+                       activate-callback:
+                         method (button)
+                           about-ttt(sheet-frame(button))
+                         end)));
   menu-bar (frame)
     make(<menu-bar>,
-	 children: vector(frame.file-menu, 		       
-			  frame.options-menu,
-			  frame.help-menu));
+         children: vector(frame.file-menu,
+                          frame.options-menu,
+                          frame.help-menu));
   layout (frame) frame.main-layout;
   status-bar (frame) frame.status;
   keyword title: = $application-name
 end frame <ttt-frame>;
-			      
+
 // Return something useful for the contents: init arg of <grid-pane>.
 define method ttt-frame-squares
     (frame :: <ttt-frame>) => ()
@@ -194,7 +194,7 @@ define method ttt-frame-squares
          range(from: 0, below: dimension(array, 0)))
 end method ttt-frame-squares;
 
-define method add-ttt-piece 
+define method add-ttt-piece
     (ttt-square :: <ttt-square>, frame :: <ttt-frame>) => ()
   let game = frame.game;
   if (game.turn = *human-player1* | game.turn = *human-player2*)
@@ -206,8 +206,8 @@ define method add-ttt-piece
       //game.turn := 3;
     else
       game.turn := modulo(game.turn, 2) + 1;
-      if (game.turn = *computer-player*) 
-	computers-turn(frame);
+      if (game.turn = *computer-player*)
+        computers-turn(frame);
       end if;
     end if;
   end if;
@@ -224,14 +224,14 @@ define method computers-turn
   let (i, j) = frame-play-computers-move(frame);
   let game = frame.game;
   let over = game-computers-turn(game, i, j);
-  
+
   if (over)
     display-winner(frame, over, *computer-player*);
     // game.turn := 3;
-  else 
+  else
     game.turn := modulo(game.turn, 2) + 1;
   end if;
-end method computers-turn;  
+end method computers-turn;
 
 define method new-game (frame :: <ttt-frame>)
   display-message(frame, "");
@@ -246,10 +246,10 @@ define method new-game (frame :: <ttt-frame>)
   if (*computer-player* = game.turn)
     computers-turn(frame);
   end if;
-end method new-game;  
+end method new-game;
 
 
-define method choose-players 
+define method choose-players
     (frame :: <ttt-frame>, type :: one-of(#"x", #"o", #"two-players"))
  => ()
   select (type)
@@ -275,16 +275,16 @@ define method ttt-set-players
 end method ttt-set-players;
 
 
-define method display-winner 
-    (frame :: <ttt-frame>, 
-     outcome :: one-of(#"win", #"draw"), 
-     winner :: <integer>) 
+define method display-winner
+    (frame :: <ttt-frame>,
+     outcome :: one-of(#"win", #"draw"),
+     winner :: <integer>)
  => ()
   select(outcome)
     #"win" =>
       select (winner)
         1 => display-message(frame, "X wins!");
-	2 => display-message(frame, "O wins!");
+        2 => display-message(frame, "O wins!");
       end;
     #"draw" =>
       display-message(frame, "A draw.");

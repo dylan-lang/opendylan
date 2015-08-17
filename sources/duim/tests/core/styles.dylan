@@ -169,7 +169,7 @@ define test default-text-styles-test ()
   let top-sheet = top-level-sheet(frame);
   let medium = sheet-medium(top-sheet);
   check-equal("top-level-sheet default text-style",
-	      medium-text-style(medium), text-style);
+              medium-text-style(medium), text-style);
   frame
 end test default-text-styles-test;
 
@@ -192,24 +192,24 @@ define test default-colors-test ()
   let button-background = $black;
   let button
     = make-test-pane(<push-button>,
-		     foreground: button-foreground,
-		     background: button-background);
+                     foreground: button-foreground,
+                     background: button-background);
   check-equal("pane foreground",
-	      default-foreground(button), button-foreground);
+              default-foreground(button), button-foreground);
   check-equal("pane background",
-	      default-background(button), button-background);
+              default-background(button), button-background);
   let layout = make-test-pane(<row-layout>, children: vector(button));
   let frame
     = make-test-frame(<test-frame>,
-		      layout: layout,
-		      foreground: foreground,
-		      background: background);
+                      layout: layout,
+                      foreground: foreground,
+                      background: background);
   let top-sheet = top-level-sheet(frame);
   let medium = sheet-medium(top-sheet);
   check-equal("top-level-sheet default foreground",
-	      medium-foreground(medium), foreground);
+              medium-foreground(medium), foreground);
   check-equal("top-level-sheet default background",
-	      medium-background(medium), background);
+              medium-background(medium), background);
   frame
 end test default-colors-test;
 

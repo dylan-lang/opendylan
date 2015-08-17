@@ -1836,19 +1836,19 @@ event-region								[Generic function]
   init keywords:
 <frame-created-event>							[Sealed concrete class]
   superclasses: <frame-event>
-  init-keywords: 
+  init-keywords:
 <frame-destroyed-event>							[Sealed concrete class]
   superclasses: <frame-event>
-  init-keywords: 
+  init-keywords:
 <frame-exit-event>							[Sealed concrete class]
   superclasses: <frame-event>
   init-keywords: destroy-frame?:
 <frame-exited-event>							[Sealed concrete class]
   superclasses: <frame-event>
-  init keywords: status-code: 
+  init keywords: status-code:
 <application-exited-event>						[Sealed concrete class]
   superclasses: <frame-exited-event>
-  init keywords: 
+  init keywords:
 <port-terminated-event>							[Sealed concrete class]
   superclasses: <frame-exited-event>
   init keywords: condition:
@@ -2377,10 +2377,10 @@ invalidate-cached-drawing-state						[Generic function]
     (medium cached-state)
  => ()
 medium-+Y-upward?							[Generic function]
-    (medium) 
+    (medium)
  => (boolean)
 medium-+Y-upward?-setter						[Generic function]
-    (+Y-upward? medium) 
+    (+Y-upward? medium)
  => (boolean)
 
 
@@ -2939,7 +2939,7 @@ draw-text								[Generic function]
 	  towards-point (transform-glyphs? = #f))
 draw-text*								[Function]
     (drawable text point
-     #key (start = 0) end (align-x = #"left") (align-y = #"baseline") 
+     #key (start = 0) end (align-x = #"left") (align-y = #"baseline")
 	  towards-point (transform-glyphs? = #f))
 
 
@@ -3563,7 +3563,7 @@ update-gadget								[Generic function]
   init keywords: ncolumns: nlines: scroll-bars:
 <rich-text-editor>							[Abstract instantiable class]
   superclasses: <text-field>
-  init keywords: 
+  init keywords:
 <password-field>							[Abstract instantiable class]
   superclasses: <text-field>
   init keywords:

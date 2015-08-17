@@ -41,14 +41,14 @@ define macro with-clipboard
       ?:body
     end }
     => { begin
-	   let ?clipboard = open-clipboard(port(?sheet), ?sheet);
-	   block ()
-	     ?body
-	   cleanup
-	     when (?clipboard)
-	       close-clipboard(port(?sheet), ?clipboard)
-	     end
-	   end
+           let ?clipboard = open-clipboard(port(?sheet), ?sheet);
+           block ()
+             ?body
+           cleanup
+             when (?clipboard)
+               close-clipboard(port(?sheet), ?clipboard)
+             end
+           end
          end }
 end macro with-clipboard;
 

@@ -42,13 +42,13 @@ define method make
   // abstract pane class.
   if (concrete-class == pane-class)
     apply(next-method, pane-class,
-	  frame-manager: framem, pane-options)
+          frame-manager: framem, pane-options)
   else
     //---*** Unfortunately, this recursive call to make will call
     //---*** 'class-for-make-pane' again.  How to speed this up?
     apply(make, concrete-class,
-	  frame-manager: framem,
-	  concrete-options | pane-options)
+          frame-manager: framem,
+          concrete-options | pane-options)
   end
 end method make;
 
@@ -86,7 +86,7 @@ define protocol <<gadget-protocol>> ()
     (gadget :: <abstract-gadget>) => (documentation);
   setter gadget-documentation-setter
     (documentation, gadget :: <abstract-gadget>) => (documentation);
-  getter gadget-selection-mode 
+  getter gadget-selection-mode
     (gadget :: <abstract-gadget>) => (selection-mode :: <selection-mode>);
   getter gadget-default?
     (gadget :: <abstract-gadget>) => (default? :: <boolean>);
@@ -110,7 +110,7 @@ define protocol <<gadget-protocol>> ()
     (label, gadget :: <abstract-gadget>) => (label);
   function note-gadget-label-changed
     (gadget :: <abstract-gadget>) => ();
-  function gadget-label-size 
+  function gadget-label-size
     (gadget :: <abstract-gadget>, #key do-newlines?, do-tabs?)
  => (width :: <integer>, height :: <integer>);
   function draw-gadget-label
@@ -240,21 +240,21 @@ define constant %keep_selection_visible :: <integer> = #o200000000;
 
 define constant $initial-gadget-flags :: <integer>
     = logior(%gadget_enabled, %show_value,
-	     %x_alignment_center, %y_alignment_top,
-	     %scroll_bar_both, %orientation_horizontal,
-	     %border_default, %keep_selection_visible);
+             %x_alignment_center, %y_alignment_top,
+             %scroll_bar_both, %orientation_horizontal,
+             %border_default, %keep_selection_visible);
 
 define method initialize
     (gadget :: <basic-gadget>,
      #key enabled? = #t, read-only? = #f, button-style :: <button-style> = #f)
   next-method();
   let bits = logior(if (enabled?)   %gadget_enabled   else 0 end,
-		    if (read-only?) %gadget_read_only else 0 end,
-		    if (button-style == #"push-button") %push_button_like else 0 end);
+                    if (read-only?) %gadget_read_only else 0 end,
+                    if (button-style == #"push-button") %push_button_like else 0 end);
   gadget-flags(gadget)
     := logior(logand(gadget-flags(gadget),
-		     lognot(logior(%gadget_enabled, %gadget_read_only, %push_button_like))),
-	      bits)
+                     lognot(logior(%gadget_enabled, %gadget_read_only, %push_button_like))),
+              bits)
 end method initialize;
 
 
@@ -321,37 +321,37 @@ end method execute-callback;
 
 /// Command callbacks
 
-define method callback-for-command 
+define method callback-for-command
     (command :: <function>) => (callback :: <function>, command)
   values(method (sheet)
-	   command(sheet-frame(sheet))
-	 end method,
-	 command)
+           command(sheet-frame(sheet))
+         end method,
+         command)
 end method callback-for-command;
 
 define method callback-for-command
     (command :: <command>) => (callback :: <function>, command)
   values(method (sheet)
-	   //--- This could copy the command and plug in the new server and client...
-	   execute-command(command)
-	 end method,
-	 command)
+           //--- This could copy the command and plug in the new server and client...
+           execute-command(command)
+         end method,
+         command)
 end method callback-for-command;
 
 define method callback-for-command
     (command-type :: subclass(<command>)) => (callback :: <function>, command)
   values(method (sheet)
-	   execute-command-type(command-type, server: sheet-frame(sheet), client: sheet)
-	 end method,
-	 command-type)
+           execute-command-type(command-type, server: sheet-frame(sheet), client: sheet)
+         end method,
+         command-type)
 end method callback-for-command;
 
 define method callback-for-command
     (command-type :: <list>) => (callback :: <function>, command)
   values(method (sheet)
-	   execute-command-type(command-type, server: sheet-frame(sheet), client: sheet)
-	 end method,
-	 head(command-type))
+           execute-command-type(command-type, server: sheet-frame(sheet), client: sheet)
+         end method,
+         head(command-type))
 end method callback-for-command;
 
 
@@ -425,7 +425,7 @@ define protocol <<value-gadget-protocol>> (<<gadget-protocol>>)
  => (callback :: <callback-type>);
   getter gadget-value-range
     (gadget :: <value-range-gadget>) => (value-range :: <range>);
-  getter gadget-value-range-setter 
+  getter gadget-value-range-setter
     (value-range :: <range>, gadget :: <value-range-gadget>)
  => (value-range :: <range>);
   function note-gadget-value-range-changed
@@ -513,7 +513,7 @@ define method gadget-value-setter
  => (value)
   ignore(do-callback?);
   error("Setting value for %= which is a class of gadget with no value: %=",
-	gadget, value)
+        gadget, value)
 end method gadget-value-setter;
 
 
@@ -527,7 +527,7 @@ end method gadget-value;
 
 
 define open abstract class <basic-value-gadget>
-    (<value-gadget-mixin>, 
+    (<value-gadget-mixin>,
      <basic-gadget>)
   slot gadget-value = #f,
     init-keyword: value:,
@@ -586,7 +586,7 @@ end class <changing-value-gadget-mixin>;
 // The value-changing callback gets invoked when the value is in the
 // process of changing, such as dragging a slider before releasing
 // the mouse button or "casual" typing to a text field
-define sealed method execute-value-changing-callback 
+define sealed method execute-value-changing-callback
     (gadget :: <changing-value-gadget-mixin>, client, id) => ()
   ignore(client, id);
   let callback = gadget-value-changing-callback(gadget);
@@ -597,7 +597,7 @@ define sealed method execute-value-changing-callback
   end
 end method execute-value-changing-callback;
 
-define method do-execute-value-changing-callback 
+define method do-execute-value-changing-callback
     (gadget :: <changing-value-gadget-mixin>, client, id) => ()
   ignore(client, id);
   #f
@@ -793,10 +793,10 @@ define method initialize
     (gadget :: <oriented-gadget-mixin>, #key orientation = #"horizontal")
   next-method();
   let o = select (orientation)
-	    #"horizontal" => %orientation_horizontal;
-	    #"vertical"   => %orientation_vertical;
-	    #"none"       => %orientation_none;
-	   end;
+            #"horizontal" => %orientation_horizontal;
+            #"vertical"   => %orientation_vertical;
+            #"none"       => %orientation_none;
+           end;
   gadget-flags(gadget)
     := logior(logand(gadget-flags(gadget), lognot(%orientation_mask)), o)
 end method initialize;
@@ -838,30 +838,30 @@ define method initialize
           x-alignment = #"center", y-alignment = #"top") => ()
   next-method();
   let xa = select (x-alignment)
-	     #"left"  => %x_alignment_left;
-	     #"right" => %x_alignment_right;
-	     #"center", #"centre" => %x_alignment_center;
-	   end;
+             #"left"  => %x_alignment_left;
+             #"right" => %x_alignment_right;
+             #"center", #"centre" => %x_alignment_center;
+           end;
   let ya = select (y-alignment)
-	     #"top"      => %y_alignment_top;
-	     #"bottom"   => %y_alignment_bottom;
-	     #"baseline" => %y_alignment_baseline;
-	     #"center", #"centre" => %y_alignment_center;
-	   end;
+             #"top"      => %y_alignment_top;
+             #"bottom"   => %y_alignment_bottom;
+             #"baseline" => %y_alignment_baseline;
+             #"center", #"centre" => %y_alignment_center;
+           end;
   gadget-flags(gadget)
     := logior(logand(gadget-flags(gadget),
-		     lognot(logior(%x_alignment_mask, %y_alignment_mask))),
-	      logior(xa, ya));
+                     lognot(logior(%x_alignment_mask, %y_alignment_mask))),
+              logior(xa, ya));
   when (pressed-label | armed-label | disabled-label)
     gadget.%label := make(<image-label>,
-			  normal-label:   label,
-			  pressed-label:  pressed-label  | label,
-			  armed-label:    armed-label    | label,
-			  disabled-label: disabled-label | label)
+                          normal-label:   label,
+                          pressed-label:  pressed-label  | label,
+                          armed-label:    armed-label    | label,
+                          disabled-label: disabled-label | label)
   end
 end method initialize;
 
-define sealed method gadget-label-setter 
+define sealed method gadget-label-setter
     (label, gadget :: <labelled-gadget-mixin>) => (label)
   gadget.%label := label;
   note-gadget-label-changed(gadget);
@@ -879,7 +879,7 @@ define constant $x-alignments :: <simple-object-vector>
 define sealed inline method gadget-x-alignment
     (gadget :: <labelled-gadget-mixin>) => (alignment :: <x-alignment>)
   let index = ash(logand(gadget-flags(gadget), %x_alignment_mask),
-		  -%x_alignment_shift);
+                  -%x_alignment_shift);
   $x-alignments[index]
 end method gadget-x-alignment;
 
@@ -890,7 +890,7 @@ define constant $y-alignments :: <simple-object-vector>
 define sealed inline method gadget-y-alignment
     (gadget :: <labelled-gadget-mixin>) => (alignment :: <y-alignment>)
   let index = ash(logand(gadget-flags(gadget), %y_alignment_mask),
-		  -%y_alignment_shift);
+                  -%y_alignment_shift);
   $y-alignments[index]
 end method gadget-y-alignment;
 
@@ -906,9 +906,9 @@ define method gadget-label-size
       // Use the computed width of the label, but the height of the font
       // Add a few pixels in each direction to keep the label from being squeezed
       values(ceiling(text-size(_port, label,
-			       text-style: text-style,
-			       do-newlines?: do-newlines?, do-tabs?: do-tabs?)) + 2,
-	     ceiling(font-height(text-style, _port)) + 2);
+                               text-style: text-style,
+                               do-newlines?: do-newlines?, do-tabs?: do-tabs?)) + 2,
+             ceiling(font-height(text-style, _port)) + 2);
     <image> =>
       values(image-width(label), image-height(label));
     <compound-label> =>
@@ -921,27 +921,27 @@ end method gadget-label-size;
 define method draw-gadget-label
     (gadget :: <labelled-gadget-mixin>, medium :: <medium>, x, y,
      #key align-x = #"left", align-y = #"top", state = #"normal",
-	  do-tabs? = #t, brush, underline? = #f) => ()
+          do-tabs? = #t, brush, underline? = #f) => ()
   let label = gadget-label(gadget);
   select (label by instance?)
     <string> =>
       with-drawing-options (medium,
-			    brush: brush | default-foreground(gadget),
-			    text-style: default-text-style(gadget))
-	draw-text(medium, label, x, y,
-		  align-x: align-x, align-y: align-y,
-		  do-tabs?: do-tabs?);
-	when (underline?)
-	  let _port = port(gadget);
-	  let text-style = get-default-text-style(_port, gadget);
-	  let (width, height)
-	    = text-size(_port, label,
-			text-style: text-style,
-			do-newlines?: #f, do-tabs?: do-tabs?);
-	  let descent = font-descent(text-style, _port) - 1;
-	  //---*** This needs to handle other alignments!
-	  draw-line(medium, x, y + height - descent, x + width, y + height - descent)
-	end
+                            brush: brush | default-foreground(gadget),
+                            text-style: default-text-style(gadget))
+        draw-text(medium, label, x, y,
+                  align-x: align-x, align-y: align-y,
+                  do-tabs?: do-tabs?);
+        when (underline?)
+          let _port = port(gadget);
+          let text-style = get-default-text-style(_port, gadget);
+          let (width, height)
+            = text-size(_port, label,
+                        text-style: text-style,
+                        do-newlines?: #f, do-tabs?: do-tabs?);
+          let descent = font-descent(text-style, _port) - 1;
+          //---*** This needs to handle other alignments!
+          draw-line(medium, x, y + height - descent, x + width, y + height - descent)
+        end
       end;
     <image> =>
       let width  = image-width(label);
@@ -993,10 +993,10 @@ define sealed method compound-label-size
   if (label.%orientation == #"horizontal")
     // Add a little slop so that label doesn't get too squeezed
     values(ceiling(iw + tw) + 2 + 1,
-	   ceiling(max(font-height(text-style, _port), ih)) + 1)
+           ceiling(max(font-height(text-style, _port), ih)) + 1)
   else
     values(ceiling(max(iw, tw) + 2),
-	   ceiling(ih + font-height(text-style, _port)) + 2 + 1)
+           ceiling(ih + font-height(text-style, _port)) + 2 + 1)
   end
 end method compound-label-size;
 
@@ -1008,14 +1008,14 @@ define sealed method draw-compound-label
   let (iw, ih) = values(image-width(image), image-height(image));
   draw-image(medium, image, x, y);
   with-drawing-options (medium,
-			brush: brush | default-foreground(gadget),
-			text-style: default-text-style(gadget))
+                        brush: brush | default-foreground(gadget),
+                        text-style: default-text-style(gadget))
     if (label.%orientation == #"horizontal")
       draw-text(medium, text, x + iw + 2, y + floor/(ih, 2),
-		align-x: #"left", align-y: #"center")
+                align-x: #"left", align-y: #"center")
     else
       draw-text(medium, text, x + floor/(iw, 2) + 2, y + ih + 2,
-		align-x: #"center", align-y: #"top")
+                align-x: #"center", align-y: #"top")
     end
   end
 end method draw-compound-label;
@@ -1038,13 +1038,13 @@ define sealed domain make (singleton(<image-label>));
 define sealed domain initialize (<image-label>);
 
 define method draw-image-label (medium, label :: <image-label>, x, y,
-				#key state = #"normal") => ()
+                                #key state = #"normal") => ()
   let image = select (state)
-		#"normal"   => label.%normal-label;
-		#"pressed"  => label.%pressed-label;
-		#"armed"    => label.%armed-label;
-		#"disabled" => label.%disabled-label;
-	      end;
+                #"normal"   => label.%normal-label;
+                #"pressed"  => label.%pressed-label;
+                #"armed"    => label.%armed-label;
+                #"disabled" => label.%disabled-label;
+              end;
   draw-image(medium, image, x, y)
 end method draw-image-label;
 
@@ -1086,13 +1086,13 @@ define method compute-mnemonic-from-label
     <string> =>
       let ampersand = position(label, '&');
       if (ampersand & (ampersand < size(label) - 1))
-	if (remove-ampersand?)
-	  values(remove(label, '&', count: 1), label[ampersand + 1], ampersand)
-	else
-	  values(label, label[ampersand + 1], ampersand + 1)
-	end
+        if (remove-ampersand?)
+          values(remove(label, '&', count: 1), label[ampersand + 1], ampersand)
+        else
+          values(label, label[ampersand + 1], ampersand + 1)
+        end
       else
-	values(label, #f, #f)
+        values(label, #f, #f)
       end;
     otherwise =>
       values(label, #f, #f);
@@ -1159,7 +1159,7 @@ define sealed method gadget-value-range-setter
   range
 end method gadget-value-range-setter;
 
-define method note-gadget-value-range-changed 
+define method note-gadget-value-range-changed
     (gadget :: <value-range-gadget>) => ()
   let value = gadget-value(gadget);
   let normalized-value = normalize-gadget-value(gadget, value);
@@ -1172,22 +1172,22 @@ define method initialize (gadget :: <range-gadget-mixin>, #key) => ()
   next-method();
   let range-size = size(gadget-value-range(gadget));
   assert(range-size & range-size > 0,
-	 "Unbounded or empty value range for %=", gadget)
+         "Unbounded or empty value range for %=", gadget)
 end method initialize;
 
-define sealed method gadget-start-value 
+define sealed method gadget-start-value
     (gadget :: <range-gadget-mixin>) => (start-value :: <real>)
   let range = gadget-value-range(gadget);
   range[0]
 end method gadget-start-value;
 
-define sealed method gadget-end-value 
+define sealed method gadget-end-value
     (gadget :: <range-gadget-mixin>) => (end-value :: <real>)
   let range = gadget-value-range(gadget);
   range[size(range) - 1]
 end method gadget-end-value;
 
-define sealed method gadget-value-increment 
+define sealed method gadget-value-increment
     (gadget :: <range-gadget-mixin>) => (increment :: <real>)
   let range = gadget-value-range(gadget);
   if (size(range) <= 1) 0 else range[1] - range[0] end
@@ -1198,7 +1198,7 @@ define method normalize-gadget-value
   gadget-start-value(gadget)
 end method normalize-gadget-value;
 
-define method normalize-gadget-value 
+define method normalize-gadget-value
     (gadget :: <range-gadget-mixin>, value :: <number>) => (value :: <real>)
   let range-start = gadget-start-value(gadget);
   let range-end = gadget-end-value(gadget);
@@ -1288,7 +1288,7 @@ define method note-gadget-slug-size-changed
 end method note-gadget-slug-size-changed;
 
 // The end value of a slug gadget is the end of the range - the slug size + 1
-define sealed method gadget-end-value 
+define sealed method gadget-end-value
     (gadget :: <slug-gadget-mixin>) => (end-value :: <real>)
   let end-value = next-method();
   end-value - gadget-slug-size(gadget) + 1
@@ -1344,7 +1344,7 @@ define constant $scroll-bars :: <simple-object-vector>
 define sealed inline method gadget-scroll-bars
     (gadget :: <scrolling-gadget-mixin>) => (scroll-bars :: <scroll-bar-type>)
   let index = ash(logand(gadget-flags(gadget), %scroll_bar_mask),
-		  -%scroll_bar_shift);
+                  -%scroll_bar_shift);
   $scroll-bars[index]
 end method gadget-scroll-bars;
 
@@ -1352,13 +1352,13 @@ define sealed method gadget-scroll-bars-setter
     (scroll-bars :: <scroll-bar-type>, gadget :: <scrolling-gadget-mixin>)
  => (scroll-bars :: <scroll-bar-type>)
   let sb = select (scroll-bars)
-	     #f            => %scroll_bar_false;
-	     #"none"       => %scroll_bar_none;
-	     #"horizontal" => %scroll_bar_horizontal;
-	     #"vertical"   => %scroll_bar_vertical;
-	     #"both"       => %scroll_bar_both;
-	     #"dynamic"    => %scroll_bar_dynamic;
-	   end;
+             #f            => %scroll_bar_false;
+             #"none"       => %scroll_bar_none;
+             #"horizontal" => %scroll_bar_horizontal;
+             #"vertical"   => %scroll_bar_vertical;
+             #"both"       => %scroll_bar_both;
+             #"dynamic"    => %scroll_bar_dynamic;
+           end;
   gadget-flags(gadget)
     := logior(logand(gadget-flags(gadget), lognot(%scroll_bar_mask)), sb);
   scroll-bars
@@ -1369,11 +1369,11 @@ define sealed method gadget-scrolling?
  => (horizontally? :: <boolean>, vertically? :: <boolean>)
   let sb = logand(gadget-flags(gadget), %scroll_bar_mask);
   values(  sb = %scroll_bar_horizontal
-	 | sb = %scroll_bar_both
-	 | sb = %scroll_bar_dynamic,
-	   sb = %scroll_bar_vertical
-	 | sb = %scroll_bar_both
-	 | sb = %scroll_bar_dynamic)
+         | sb = %scroll_bar_both
+         | sb = %scroll_bar_dynamic,
+           sb = %scroll_bar_vertical
+         | sb = %scroll_bar_both
+         | sb = %scroll_bar_dynamic)
 end method gadget-scrolling?;
 
 define sealed method gadget-scrolling-horizontally?
@@ -1398,10 +1398,10 @@ define open abstract class <bordered-gadget-mixin> (<abstract-gadget>)
 end class <bordered-gadget-mixin>;
 
 define constant <border-type>
-    = one-of(#f, #"default",		// use the default
-	     #"none", #"flat",		// no border
-	     #"sunken", #"raised", #"ridge", #"groove",
-	     #"input", #"output");	// "logical" borders
+    = one-of(#f, #"default",                // use the default
+             #"none", #"flat",                // no border
+             #"sunken", #"raised", #"ridge", #"groove",
+             #"input", #"output");        // "logical" borders
 
 define method initialize
     (gadget :: <bordered-gadget-mixin>, #key border-type: borders = #f)
@@ -1415,7 +1415,7 @@ define constant $borders :: <simple-object-vector>
 define sealed inline method border-type
     (gadget :: <bordered-gadget-mixin>) => (borders :: <border-type>)
   let index = ash(logand(gadget-flags(gadget), %border_mask),
-		  -%border_shift);
+                  -%border_shift);
   $borders[index]
 end method border-type;
 
@@ -1423,17 +1423,17 @@ define sealed method border-type-setter
     (borders :: <border-type>, gadget :: <bordered-gadget-mixin>)
  => (borders :: <border-type>)
   let bt = select (borders)
-	     #f         => %border_default;	// #f == #"default"
-	     #"default" => %border_default;	// #"default" == #f
-	     #"none"    => %border_none;	// #"none" == #"flat"
-	     #"flat"    => %border_none;	// #"flat" == #"none"
-	     #"sunken"  => %border_sunken;
-	     #"raised"  => %border_raised;
-	     #"ridge"   => %border_ridge;
-	     #"groove"  => %border_groove;
-	     #"input"   => %border_input;
-	     #"output"  => %border_output;
-	   end;
+             #f         => %border_default;        // #f == #"default"
+             #"default" => %border_default;        // #"default" == #f
+             #"none"    => %border_none;        // #"none" == #"flat"
+             #"flat"    => %border_none;        // #"flat" == #"none"
+             #"sunken"  => %border_sunken;
+             #"raised"  => %border_raised;
+             #"ridge"   => %border_ridge;
+             #"groove"  => %border_groove;
+             #"input"   => %border_input;
+             #"output"  => %border_output;
+           end;
   gadget-flags(gadget)
     := logior(logand(gadget-flags(gadget), lognot(%border_mask)), bt);
   borders
@@ -1480,7 +1480,7 @@ define open abstract class <scrolling-sheet-mixin> (<abstract-sheet>)
     init-keyword: vertical-scroll-bar:;
 end class <scrolling-sheet-mixin>;
 
-define method initialize 
+define method initialize
     (sheet :: <scrolling-sheet-mixin>,
      #key horizontal-scroll-bar: horizontal-bar,
           vertical-scroll-bar:   vertical-bar) => ()
@@ -1488,7 +1488,7 @@ define method initialize
   when (horizontal-bar)
     attach-scroll-bar(sheet, horizontal-bar)
   end;
-  when (vertical-bar) 
+  when (vertical-bar)
     attach-scroll-bar(sheet, vertical-bar)
   end;
 end method initialize;
@@ -1594,18 +1594,18 @@ define thread variable *inhibit-updating-scroll-bars-viewports* = #f;
 define macro inhibit-updating-scroll-bars
   { inhibit-updating-scroll-bars ?:body end }
     => { dynamic-bind (*inhibit-updating-scroll-bars-viewports* = #())
-	   block ()
-	     dynamic-bind (*inhibit-updating-scroll-bars?* = #t)
+           block ()
+             dynamic-bind (*inhibit-updating-scroll-bars?* = #t)
                ?body
              end
-	   cleanup
-	     for (_viewport in *inhibit-updating-scroll-bars-viewports*)
-	       when (_viewport)
-		 update-scroll-bars(_viewport)
-	       end
-	     end
-	   end
-	 end }
+           cleanup
+             for (_viewport in *inhibit-updating-scroll-bars-viewports*)
+               when (_viewport)
+                 update-scroll-bars(_viewport)
+               end
+             end
+           end
+         end }
 end macro inhibit-updating-scroll-bars;
 
 define method update-scroll-bars
@@ -1671,8 +1671,8 @@ define method compute-dynamic-scroll-bar-values
     let nh-enabled? = left ~= vleft | right ~= vright;
     let nv-enabled? = top ~= vtop | bottom ~= vbottom;
     values(~(oh-enabled? == nh-enabled?  & ov-enabled? == nv-enabled?),
-	   ~(oh-enabled? == nh-enabled?) & horizontal-bar, nh-enabled?,
-	   ~(ov-enabled? == nv-enabled?) & vertical-bar,   nv-enabled?)
+           ~(oh-enabled? == nh-enabled?) & horizontal-bar, nh-enabled?,
+           ~(ov-enabled? == nv-enabled?) & vertical-bar,   nv-enabled?)
   else
     values(#f, #f, #f, #f, #f)
   end
@@ -1722,8 +1722,8 @@ end method handle-event;
 define function distribute-activate-callback
     (gadget :: <action-gadget-mixin>) => ()
   distribute-event(port(gadget),
-		   make(<activate-gadget-event>,
-			gadget: gadget))
+                   make(<activate-gadget-event>,
+                        gadget: gadget))
 end function distribute-activate-callback;
 
 
@@ -1743,9 +1743,9 @@ end method handle-event;
 define function distribute-value-changed-callback
     (gadget :: <value-gadget-mixin>, value) => ()
   distribute-event(port(gadget),
-		   make(<value-changed-gadget-event>,
-			gadget: gadget,
-			value: value))
+                   make(<value-changed-gadget-event>,
+                        gadget: gadget,
+                        value: value))
 end function distribute-value-changed-callback;
 
 
@@ -1766,13 +1766,13 @@ end method handle-event;
 define function distribute-value-changing-callback
     (gadget :: <changing-value-gadget-mixin>, value) => ()
   distribute-event(port(gadget),
-		   make(<value-changing-gadget-event>,
-			gadget: gadget,
-			value: value))
+                   make(<value-changing-gadget-event>,
+                        gadget: gadget,
+                        value: value))
 end function distribute-value-changing-callback;
 
 
-define sealed class <key-press-gadget-event> 
+define sealed class <key-press-gadget-event>
     (<gadget-event>)
   sealed constant slot event-key-name = #f,
     init-keyword: key-name:;
@@ -1789,14 +1789,14 @@ end method handle-event;
 
 define function distribute-key-press-callback
     (gadget :: <key-press-gadget-mixin>, keysym) => ()
-  distribute-event(port(gadget), 
-		   make(<key-press-gadget-event>,
-			gadget: gadget,
-			key-name: keysym))
+  distribute-event(port(gadget),
+                   make(<key-press-gadget-event>,
+                        gadget: gadget,
+                        key-name: keysym))
 end function distribute-key-press-callback;
 
 
-define sealed class <popup-menu-gadget-event> 
+define sealed class <popup-menu-gadget-event>
     (<gadget-event>)
   sealed constant slot event-target,
     required-init-keyword: target:;
@@ -1818,11 +1818,11 @@ end method handle-event;
 
 define function distribute-popup-menu-callback
     (gadget :: <popup-menu-gadget-mixin>, target, #key x, y) => ()
-  distribute-event(port(gadget), 
-		   make(<popup-menu-gadget-event>,
-			gadget: gadget,
-			target: target,
-			x: x, y: y))
+  distribute-event(port(gadget),
+                   make(<popup-menu-gadget-event>,
+                        gadget: gadget,
+                        target: target,
+                        x: x, y: y))
 end function distribute-popup-menu-callback;
 
 
@@ -1839,7 +1839,7 @@ end method handle-event;
 
 define function distribute-update-callback
     (gadget :: <updatable-gadget-mixin>) => ()
-  distribute-event(port(gadget), 
-		   make(<update-gadget-event>,
-			gadget: gadget))
+  distribute-event(port(gadget),
+                   make(<update-gadget-event>,
+                        gadget: gadget))
 end function distribute-update-callback;

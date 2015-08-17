@@ -1,12 +1,12 @@
 Library:      DUIM-TEST-SUITE
 Synopsis:     DUIM Test Suite
-Author:	      Andy Armstrong
-Files:	library
-	module
+Author:       Andy Armstrong
+Files:  library
+        module
         utilities
         test-port
         classes
-	geometry
+        geometry
         regions
         transforms
         graphics

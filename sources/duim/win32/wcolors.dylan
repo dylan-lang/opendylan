@@ -69,10 +69,10 @@ define inline function %color->native-color
       truncate(green * $max-int-color),
       truncate(blue  * $max-int-color))
 end function %color->native-color;
-  
+
 
 // Given a native color, returns a DUIM color and caches the result
-define function native-color->color 
+define function native-color->color
     (native-color :: <native-color>, medium :: <win32-medium>)
  => (color :: <rgb-color>)
   let cache = medium.%ink-cache;

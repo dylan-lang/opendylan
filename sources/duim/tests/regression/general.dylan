@@ -11,19 +11,19 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define frame <bug-2667-frame> (<simple-frame>)
   pane radio-box-pane (frame)
     make(<radio-box>,
-	 items: #[1, 2, 3, 4, 5],
-	 value-changed-callback: test-value-changed-callback,
-	 activate-callback:      test-activate-callback);
+         items: #[1, 2, 3, 4, 5],
+         value-changed-callback: test-value-changed-callback,
+         activate-callback:      test-activate-callback);
   pane group-pane (frame)
     grouping ("Group box")
       vertically (spacing: 4)
         make(<push-button>,
-	     label: "Press me!",
-	     activate-callback: test-activate-callback);
+             label: "Press me!",
+             activate-callback: test-activate-callback);
         make(<list-box>,
-	     items: #[1, 2, 3, 4, 5],
-	     value-changed-callback: test-value-changed-callback,
-	     activate-callback:      test-activate-callback)
+             items: #[1, 2, 3, 4, 5],
+             value-changed-callback: test-value-changed-callback,
+             activate-callback:      test-activate-callback)
       end
     end;
   layout (frame)

@@ -16,43 +16,43 @@ define frame <windows-viewer> (<simple-frame>)
     required-init-keyword: hook-dll:;
   pane viewer-tree-control (frame)
     make(<tree-control>,
-	 roots: vector($desktop-window),
-	 depth: 1,
-	 label-key: window-name,
-	 children-predicate: window-has-children?,
-	 children-generator: curry(viewer-window-children, frame),
-	 always-show-selection?: #t,
-	 value-changed-callback:
-	   method (gadget :: <tree-control>)
-	     note-selected-window(frame, gadget.gadget-value)
-	   end);
+         roots: vector($desktop-window),
+         depth: 1,
+         label-key: window-name,
+         children-predicate: window-has-children?,
+         children-generator: curry(viewer-window-children, frame),
+         always-show-selection?: #t,
+         value-changed-callback:
+           method (gadget :: <tree-control>)
+             note-selected-window(frame, gadget.gadget-value)
+           end);
   pane viewer-info (frame)
     make(<text-editor>,
-	 text-style: make(<text-style>, family: #"fix"),
-	 read-only?: #t);
+         text-style: make(<text-style>, family: #"fix"),
+         read-only?: #t);
   pane viewer-styles (frame)
     make(<text-editor>,
-	 text-style: make(<text-style>, family: #"fix"),
-	 read-only?: #t);
+         text-style: make(<text-style>, family: #"fix"),
+         read-only?: #t);
   pane messages-pane (frame)
     make(<messages-pane>,
-	 hook-dll: frame.viewer-hook-dll);
+         hook-dll: frame.viewer-hook-dll);
   pane viewer-window-properties (frame)
     make(<tab-control>,
-	 pages: vector(make(<tab-control-page>,
-			    label: "General",
-			    child: frame.viewer-info),
-		       make(<tab-control-page>,
-			    label: "Styles",
-			    child: frame.viewer-styles),
-		       make(<tab-control-page>,
-			    label: "Messages",
-			    child: frame.messages-pane)));
+         pages: vector(make(<tab-control-page>,
+                            label: "General",
+                            child: frame.viewer-info),
+                       make(<tab-control-page>,
+                            label: "Styles",
+                            child: frame.viewer-styles),
+                       make(<tab-control-page>,
+                            label: "Messages",
+                            child: frame.messages-pane)));
   layout (frame)
     make(<row-splitter>,
-	 ratios: #[1, 4],
-	 children: vector(frame.viewer-tree-control, 
-			  frame.viewer-window-properties));
+         ratios: #[1, 4],
+         children: vector(frame.viewer-tree-control,
+                          frame.viewer-window-properties));
   command-table (frame)
     *windows-viewer-command-table*;
   status-bar (frame)
@@ -82,8 +82,8 @@ define method about-windows-viewer
     (frame :: <windows-viewer>) => ()
   let message
     = format-to-string("%s %s\n%s\n",
-		       $application, $version,
-		       $copyright);
+                       $application, $version,
+                       $copyright);
   notify-user(message, owner: frame)
 end method about-windows-viewer;
 
@@ -135,29 +135,29 @@ define method print-window-info
     (stream :: <stream>, handle :: <HWND>) => ()
   let (style, extstyle) = window-styles(handle);
   format(stream, "Label:      %=\n",
-	 window-label(handle) | "");
+         window-label(handle) | "");
   format(stream, "Handle:     %s\n",
-	 number-to-hex-string(handle.pointer-address));
+         number-to-hex-string(handle.pointer-address));
   format(stream, "Type:       %s\n",
-	 window-class-description(handle));
+         window-class-description(handle));
   format(stream, "Id:         %s\n",
-	 number-to-hex-string(window-id(handle)));
+         number-to-hex-string(window-id(handle)));
   format(stream, "Enabled?:   %s\n",
-	 if (IsWindowEnabled(handle)) "yes" else "no" end);
+         if (IsWindowEnabled(handle)) "yes" else "no" end);
   format(stream, "Visible?:   %s\n",
-	 case
-	   IsIconic(handle)        => "minimized";
-	   IsWindowVisible(handle) => "yes";
-	   otherwise               => "no";
-	 end);
+         case
+           IsIconic(handle)        => "minimized";
+           IsWindowVisible(handle) => "yes";
+           otherwise               => "no";
+         end);
   format(stream, "Maximized?: %s\n",
-	 if (IsZoomed(handle)) "yes" else "no" end);
+         if (IsZoomed(handle)) "yes" else "no" end);
   let (left, top, right, bottom) = get-window-edges(handle);
   format(stream, "Geometry:   %dx%d at %d,%d\n",
-	 right - left, bottom - top, left, top);
+         right - left, bottom - top, left, top);
   let (left, top, right, bottom) = get-client-edges(handle);
   format(stream, "Client:     %dx%d at %d,%d\n",
-	 right - left, bottom - top, left, top);
+         right - left, bottom - top, left, top);
   format(stream, "\n");
   let owner = window-owner(handle);
   let parent = window-parent(handle);
@@ -165,15 +165,15 @@ define method print-window-info
   let previous-window = window-previous-window(handle);
   let top-child = window-top-child(handle);
   format(stream, "Owner:      %s\n",
-	 if (owner) window-name(owner) else "" end);
+         if (owner) window-name(owner) else "" end);
   format(stream, "Parent:     %s\n",
-	 if (parent) window-name(parent) else "" end);
+         if (parent) window-name(parent) else "" end);
   format(stream, "Previous:   %s\n",
-	 if (previous-window) window-name(previous-window) else "" end);
+         if (previous-window) window-name(previous-window) else "" end);
   format(stream, "Next:       %s\n",
-	 if (next-window) window-name(next-window) else "" end);
+         if (next-window) window-name(next-window) else "" end);
   format(stream, "Top child:  %s\n",
-	 if (top-child) window-name(top-child) else "" end);
+         if (top-child) window-name(top-child) else "" end);
 end method print-window-info;
 
 
@@ -192,33 +192,33 @@ define method print-window-styles
     (stream :: <stream>, handle :: <HWND>) => ()
   local
     method value-label
-	(value) => (label :: <string>)
+        (value) => (label :: <string>)
       select (value)
-	#f        => "No";
-	#t        => "Yes";
-	<string>  => value;
-	otherwise => format-to-string("%s", value)
+        #f        => "No";
+        #t        => "Yes";
+        <string>  => value;
+        otherwise => format-to-string("%s", value)
       end
     end method value-label,
 
     method name-and-value-maximums
-	(names-and-values :: <sequence>)
+        (names-and-values :: <sequence>)
      => (max-name :: <integer>, max-value :: <integer>)
       let max-name :: <integer> = 0;
       let max-value :: <integer> = 0;
       for (i :: <integer> from 0 below names-and-values.size by 2)
-	let name   = names-and-values[i];
-	let value  = names-and-values[i + 1];
-	max-name  := max(max-name, name.size);
-	max-value := max(max-value, value-label(value).size)
+        let name   = names-and-values[i];
+        let value  = names-and-values[i + 1];
+        max-name  := max(max-name, name.size);
+        max-value := max(max-value, value-label(value).size)
       end;
       values(max-name, max-value)
     end method name-and-value-maximums,
 
     method print-names-and-values
-	(title1 :: <string>, names-and-values1 :: <sequence>,
-	 title2 :: <string>, names-and-values2 :: <sequence>,
-	 title3 :: <string>, names-and-values3 :: <sequence>)
+        (title1 :: <string>, names-and-values1 :: <sequence>,
+         title2 :: <string>, names-and-values2 :: <sequence>,
+         title3 :: <string>, names-and-values3 :: <sequence>)
      => ()
       let inner-spacing = 2;
       let outer-spacing = 3;
@@ -238,63 +238,63 @@ define method print-window-styles
       write(stream, spaces, end: column2 - column1 - title1.size);
       write(stream, title2);
       if (size3 > 0)
-	write(stream, spaces, end: column3 - column2 - title2.size);
-	write(stream, title3)
+        write(stream, spaces, end: column3 - column2 - title2.size);
+        write(stream, title3)
       end;
       new-line(stream);
       for (i :: <integer> from 0 below total-size by 2)
-	let last-column :: <integer> = 0;
-	if (i + 1 < size1)
-	  let name1  = names-and-values1[i];
-	  let value1 = names-and-values1[i + 1];
-	  let value1-label = value-label(value1);
-	  write(stream, name1);
-	  write(stream, spaces, end: max-name1 - name1.size + inner-spacing);
-	  write(stream, value1-label);
-	  last-column := max-name1 + value1-label.size + inner-spacing;
-	end;
-	if (i + 1 < size2)
-	  write(stream, spaces, end: column2 - last-column);
-	  let name2  = names-and-values2[i];
-	  let value2 = names-and-values2[i + 1];
-	  let value2-label = value-label(value2);
-	  write(stream, name2);
-	  write(stream, spaces, end: max-name2 - name2.size + inner-spacing);
-	  write(stream, value2-label);
-	  last-column := column2 + max-name2 + value2-label.size + inner-spacing;
-	end;
-	if (i + 1 < size3)
-	  write(stream, spaces, end: column3 - last-column);
-	  let name3  = names-and-values3[i];
-	  let value3 = names-and-values3[i + 1];
-	  let value3-label = value-label(value3);
-	  write(stream, name3);
-	  write(stream, spaces, end: max-name3 - name3.size + inner-spacing);
-	  write(stream, " ");
-	  write(stream, value3-label)
-	end;
-	new-line(stream)
+        let last-column :: <integer> = 0;
+        if (i + 1 < size1)
+          let name1  = names-and-values1[i];
+          let value1 = names-and-values1[i + 1];
+          let value1-label = value-label(value1);
+          write(stream, name1);
+          write(stream, spaces, end: max-name1 - name1.size + inner-spacing);
+          write(stream, value1-label);
+          last-column := max-name1 + value1-label.size + inner-spacing;
+        end;
+        if (i + 1 < size2)
+          write(stream, spaces, end: column2 - last-column);
+          let name2  = names-and-values2[i];
+          let value2 = names-and-values2[i + 1];
+          let value2-label = value-label(value2);
+          write(stream, name2);
+          write(stream, spaces, end: max-name2 - name2.size + inner-spacing);
+          write(stream, value2-label);
+          last-column := column2 + max-name2 + value2-label.size + inner-spacing;
+        end;
+        if (i + 1 < size3)
+          write(stream, spaces, end: column3 - last-column);
+          let name3  = names-and-values3[i];
+          let value3 = names-and-values3[i + 1];
+          let value3-label = value-label(value3);
+          write(stream, name3);
+          write(stream, spaces, end: max-name3 - name3.size + inner-spacing);
+          write(stream, " ");
+          write(stream, value3-label)
+        end;
+        new-line(stream)
       end
     end method print-names-and-values;
   format(stream, "Label:    %=\n",
-	 window-label(handle) | "");
+         window-label(handle) | "");
   format(stream, "Handle:   %s\n",
-	 number-to-hex-string(handle.pointer-address));
+         number-to-hex-string(handle.pointer-address));
   format(stream, "Type:     %s\n",
-	 window-class-description(handle));
+         window-class-description(handle));
   format(stream, "Class:    %s\n",
-	 window-class-name(handle));
+         window-class-name(handle));
   format(stream, "\n");
   let (style, ext-style) = window-raw-styles(handle);
   let title1
     = format-to-string("Styles: [%s]",
-		       number-to-hex-string(style));
+                       number-to-hex-string(style));
   let title2
     = format-to-string("Extended styles: [%s]",
-		       number-to-hex-string(ext-style));
+                       number-to-hex-string(ext-style));
   let title3
     = format-to-string("%s styles:",
-		       window-class-name(handle));
+                       window-class-name(handle));
   print-names-and-values
     (title1, window-styles(handle),
      title2, window-extended-styles(handle),

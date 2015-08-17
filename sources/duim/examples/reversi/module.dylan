@@ -8,11 +8,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module reversi
   use common-dylan;
-  use simple-format;		// exported from common-dylan
-  use simple-random;		// exported from common-dylan
-  use operating-system;		// exported from system
-  use file-system;		// exported from system
-  use streams;			// exported from io
+  use simple-format;                // exported from common-dylan
+  use simple-random;                // exported from common-dylan
+  use operating-system;                // exported from system
+  use file-system;                // exported from system
+  use streams;                        // exported from io
   use duim;
 
   export <reversi-frame>,

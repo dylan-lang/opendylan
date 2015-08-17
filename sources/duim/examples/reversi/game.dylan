@@ -14,15 +14,15 @@ define variable *changed2?* :: <boolean> = #f;
 define constant <player> = one-of(#"black", #"white");
 define constant <piece>  = false-or(<player>);
 
-define method name-for-player 
+define method name-for-player
     (player :: <player>) => (name :: <string>)
   select (player)
     #"white" => "White";
     #"black" => "Black";
   end
 end method name-for-player;
-  
-define method other-player 
+
+define method other-player
     (player :: <player>) => (other-player :: <player>)
   select (player)
     #"white" => #"black";
@@ -49,7 +49,7 @@ define class <reversi-board> (<object>)
   slot reversi-board-squares :: <sequence> = #[];
 end class <reversi-board>;
 
-define method reversi-board-no-of-squares 
+define method reversi-board-no-of-squares
     (board :: <reversi-board>) => (no-of-squares :: <integer>)
   let size = reversi-board-size(board);
   size * size
@@ -83,7 +83,7 @@ define method initialize-board (board :: <reversi-board>) => ()
   end;
 end method initialize-board;
 
-define method square-number-to-coordinate 
+define method square-number-to-coordinate
     (board :: <reversi-board>, coordinate :: <integer>)
  => (x :: <integer>, y :: <integer>)
   let (y, x) = floor/(coordinate, reversi-board-size(board));
@@ -97,7 +97,7 @@ define method coordinate-to-square-number
   x + size * y;
 end method coordinate-to-square-number;
 
-define method copy-board 
+define method copy-board
     (new-board :: <reversi-board>, old-board :: <reversi-board>)
  => (new-board :: <reversi-board>)
   let new-squares = reversi-board-squares(new-board);
@@ -108,7 +108,7 @@ define method copy-board
   new-board
 end method copy-board;
 
-define method perform-move 
+define method perform-move
     (board :: <reversi-board>, player :: <player>, move :: <sequence>) => ()
   let squares = reversi-board-squares(board);
   for (square in move)
@@ -116,7 +116,7 @@ define method perform-move
   end
 end method perform-move;
 
-define method corner-square? 
+define method corner-square?
     (board :: <reversi-board>, square :: <integer>) => (corner? :: <boolean>)
   let size = reversi-board-size(board);
   let no-of-squares = size * size;
@@ -126,19 +126,19 @@ define method corner-square?
     | square = no-of-squares - size
 end method corner-square?;
 
-define method in-corner-region? 
+define method in-corner-region?
     (board :: <reversi-board>, square :: <integer>)
  => (corner-region? :: <boolean>)
   let (x, y) = square-number-to-coordinate(board, square);
   let size = reversi-board-size(board);
-  case 
+  case
     x < 2 | x > size - 3 => #t;
     y < 2 | y > size - 3 => #t;
     otherwise            => #f;
   end
 end method in-corner-region?;
 
-define method next-to-corner-square? 
+define method next-to-corner-square?
     (board :: <reversi-board>, square :: <integer>)
  => (next-to-corner? :: <boolean>)
   in-corner-region?(board, square)
@@ -160,29 +160,29 @@ define method next-to-untaken-corner-square?
     (board :: <reversi-board>, player :: <player>, square :: <integer>)
  => (next-to-untaken-corner? :: <boolean>)
   let squares = reversi-board-squares(board);
-  next-to-corner-square?(board, square) 
+  next-to-corner-square?(board, square)
     & squares[nearest-corner(board, square)] ~= player
 end method next-to-untaken-corner-square?;
 
-define method all-corner-moves 
+define method all-corner-moves
     (board :: <reversi-board>, all-moves :: <sequence>)
  => (corner-moves :: <sequence>)
   choose(method (move)
-	   corner-square?(board, move[0])
-	 end,
-	 all-moves)
-end method all-corner-moves; 
+           corner-square?(board, move[0])
+         end,
+         all-moves)
+end method all-corner-moves;
 
 define method all-but-next-to-untaken-corner-moves
     (board :: <reversi-board>, player :: <player>, all-moves :: <sequence>)
  => (moves :: <sequence>)
-  choose(method (move) 
+  choose(method (move)
           ~next-to-untaken-corner-square?(board, player, move[0])
          end,
          all-moves)
 end method all-but-next-to-untaken-corner-moves;
 
-define method map-over-squares-in-direction 
+define method map-over-squares-in-direction
     (procedure :: <function>, board :: <reversi-board>, start :: <integer>,
      x-offset :: <integer>, y-offset :: <integer>)
  => ()
@@ -206,18 +206,18 @@ define method squares-to-take-in-direction?
   block (return)
     map-over-squares-in-direction
       (method (square)
-	 select (squares[square])
-	   #f           => return(#f);
-	   player       => return(found-opposing-piece?);
-	   other-player => #f;
-	 end;
-	 found-opposing-piece? := #t
+         select (squares[square])
+           #f           => return(#f);
+           player       => return(found-opposing-piece?);
+           other-player => #f;
+         end;
+         found-opposing-piece? := #t
        end,
        board, square, x-offset, y-offset)
   end;
 end method squares-to-take-in-direction?;
 
-define method squares-to-take-in-direction 
+define method squares-to-take-in-direction
     (board :: <reversi-board>, player :: <player>, square :: <integer>,
      x-offset :: <integer>, y-offset :: <integer>)
  => (squares-to-take :: <sequence>)
@@ -227,12 +227,12 @@ define method squares-to-take-in-direction
   block (return)
     map-over-squares-in-direction
       (method (square)
-	 select (squares[square])
-	   #f           => return(#[]);
-	   player       => return(squares-to-take);
-	   other-player => #f;
-	 end;
-	 add!(squares-to-take, square);
+         select (squares[square])
+           #f           => return(#[]);
+           player       => return(squares-to-take);
+           other-player => #f;
+         end;
+         add!(squares-to-take, square);
        end,
        board, square, x-offset, y-offset);
     #[]
@@ -244,7 +244,7 @@ define constant $reversi-directions
       #[-1, 0],             #[1, 0],
       #[-1, 1],  #[0, 1],   #[1, 1]];
 
-define method squares-to-take 
+define method squares-to-take
     (board :: <reversi-board>, player :: <player>, square :: <integer>)
  => (squares-to-take :: <sequence>)
   let squares = reversi-board-squares(board);
@@ -253,7 +253,7 @@ define method squares-to-take
     for (direction in $reversi-directions)
       let new-squares-to-take
         = squares-to-take-in-direction
-	    (board, player, square, direction[0], direction[1]);
+            (board, player, square, direction[0], direction[1]);
       for (square in new-squares-to-take)
         add!(squares-to-take, square)
       end;
@@ -266,19 +266,19 @@ define method squares-to-take
   | #[]
 end method squares-to-take;
 
-define method squares-to-take? 
+define method squares-to-take?
     (board :: <reversi-board>, player :: <player>, square :: <integer>)
  => (squares? :: <boolean>)
   let squares = reversi-board-squares(board);
   squares[square] = #f
     & any?(method (direction)
              squares-to-take-in-direction?(board, player, square,
-					   direction[0], direction[1])
-	   end,
-	   $reversi-directions)
+                                           direction[0], direction[1])
+           end,
+           $reversi-directions)
 end method squares-to-take?;
 
-define method all-possible-moves-for-player 
+define method all-possible-moves-for-player
     (board :: <reversi-board>, player :: <player>) => (moves :: <sequence>)
   let all-moves = make(<stretchy-vector>);
   for (square from 0 below reversi-board-no-of-squares(board))
@@ -315,18 +315,18 @@ define method any-moves-for-player?
   end
 end method any-moves-for-player?;
 
-define method game-over? 
+define method game-over?
     (board :: <reversi-board>) => (game-over? :: <boolean>)
   let squares = reversi-board-squares(board);
   every?(method (square)
-	   squares[square]
+           squares[square]
            | (  ~squares-to-take?(board, #"white", square)
-	      & ~squares-to-take?(board, #"black", square))
-	 end,
-	 range(from: 0, below: reversi-board-no-of-squares(board)))
+              & ~squares-to-take?(board, #"black", square))
+         end,
+         range(from: 0, below: reversi-board-no-of-squares(board)))
 end method game-over?;
 
-define method score-for-player 
+define method score-for-player
     (board :: <reversi-board>, player :: <player>) => (score :: <integer>)
   let score = 0;
   for (piece in board.reversi-board-squares)
@@ -393,7 +393,7 @@ define method new-game (game :: <reversi-game>) => ()
   select (players)
     0 =>
       play-both-players(game);
-    1 => 
+    1 =>
       if (game.%player = #"white")
         play-moves-for-player(game, #"black", #"white")
       end;
@@ -407,7 +407,7 @@ define method note-game-updated (game :: <reversi-game>) => ()
   display-score(game)
 end method note-game-updated;
 
-define method game-over? 
+define method game-over?
     (game :: <reversi-game>) => (game-over? :: <boolean>)
   game-over?(reversi-game-board(game))
 end method game-over?;
@@ -432,7 +432,7 @@ define method algorithm-for-player-setter
 end method algorithm-for-player-setter;
 */
 
-define method play-move-for-player 
+define method play-move-for-player
     (game :: <reversi-game>, player :: <player>) => ()
   let board = reversi-game-board(game);
   let algorithm = algorithm-for-player(game, player);
@@ -448,13 +448,13 @@ define method play-move-for-player
   end;
 end method play-move-for-player;
 
-define method play-moves-for-player 
+define method play-moves-for-player
     (game :: <reversi-game>, player :: <player>, other-player :: <player>)
  => ()
   let board = reversi-game-board(game);
   play-move-for-player(game, player);
   while (~any-moves-for-player?(board, other-player)
-	   & any-moves-for-player?(board, player))
+           & any-moves-for-player?(board, player))
     play-move-for-player(game, player)
   end
 end method play-moves-for-player;
@@ -493,8 +493,8 @@ define method play-both-players (game :: <reversi-game>) => ()
   end
 end method play-both-players;
 
-define method choose-players 
-    (game :: <reversi-game>, 
+define method choose-players
+    (game :: <reversi-game>,
      type :: one-of(#"white", #"black", #"computers", #"two-players"))
  => ()
   let game-over? = game-over?(game);
@@ -503,15 +503,15 @@ define method choose-players
     #"white", #"black" =>
       game.%players := 1;
       unless (player = type)
-	game.%player := type;
-	play-moves-for-player(game, other-player(type), type);
+        game.%player := type;
+        play-moves-for-player(game, other-player(type), type);
       end;
     #"computers" =>
       game.%players := 0;
       if (game-over?)
-	new-game(game)
+        new-game(game)
       else
-	play-both-players(game)
+        play-both-players(game)
       end;
       game-over? := #f;
     #"two-players" =>
@@ -521,12 +521,12 @@ define method choose-players
     new-game(game)
   end
 end method choose-players;
-     
+
 define method display-board (game :: <reversi-game>) => ()
   display-board(reversi-game-board(game));
 end method display-board;
 
-define method display-message 
+define method display-message
     (game :: <reversi-game>, message :: <string>, #rest message-args) => ()
   let message-function = reversi-game-message-function(game);
   case
@@ -541,7 +541,7 @@ end method display-message;
 
 /// Score handling
 
-define method score-for-player 
+define method score-for-player
     (game :: <reversi-game>, player :: <player>) => (score :: <integer>)
   score-for-player(reversi-game-board(game), player)
 end method score-for-player;
@@ -563,15 +563,15 @@ define method display-final-score (game :: <reversi-game>) => ()
       display-message(game, "Game drawn: %d pieces each", white-score);
     otherwise =>
       let winner
-	= if (white-score > black-score) 
-	    #"white"
-	  else
-	    #"black"
-	  end;
+        = if (white-score > black-score)
+            #"white"
+          else
+            #"black"
+          end;
       display-message(game, "%s has won: %d to %d",
-		      name-for-player(winner),
-		      score-for-player(game, winner),
-		      score-for-player(game, other-player(winner)))
+                      name-for-player(winner),
+                      score-for-player(game, winner),
+                      score-for-player(game, other-player(winner)))
   end
 end method display-final-score;
 

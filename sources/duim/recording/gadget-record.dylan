@@ -25,7 +25,7 @@ define method initialize (record :: <gadget-record>, #key cache-test)
 end method initialize;
 
 define method do-recompute-region
-	(record :: <gadget-record>) => (left, top, right, bottom)
+        (record :: <gadget-record>) => (left, top, right, bottom)
   box-edges(record)
 end method do-recompute-region;
 
@@ -87,17 +87,17 @@ define method do-with-output-as-gadget
     let record
       = with-output-recording-options (sheet, draw?: #f, record?: #t)
           local method with-new-output-record-body (record) => ()
-		  unless (gadget := output-record-gadget(record))
-		    let (#rest vals) = continuation(framem);
-		    gadget := head(vals);
-		    record.%optional-values := tail(vals);
-		    new := #t
-		  end
-		end method;
+                  unless (gadget := output-record-gadget(record))
+                    let (#rest vals) = continuation(framem);
+                    gadget := head(vals);
+                    record.%optional-values := tail(vals);
+                    new := #t
+                  end
+                end method;
           dynamic-extent(with-new-output-record-body);
           apply(do-with-new-output-record, sheet, with-new-output-record-body,
-		record-class: <gadget-record>,
-		constructor: <gadget-record>-constructor, initargs)
+                record-class: <gadget-record>,
+                constructor: <gadget-record>-constructor, initargs)
         end;
     case
       new =>
@@ -122,7 +122,7 @@ define method attach-gadget-record
   // In order to be able to determine the space the gadget has to be
   // added to the parent and, hopefully, grafted
   assert(port(sheet),
-	 "The gadget %= is not attached", gadget);
+         "The gadget %= is not attached", gadget);
   output-record-gadget(record) := gadget;
   let space-req = compose-space(gadget);
   begin

@@ -8,14 +8,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Run the Scribble application as a top-level application
 
-define method scribble 
+define method scribble
     (#key container, container-region)
  => (frame :: <scribble-frame>)
   let frame
     = make(<scribble-frame>,
-	   container: container,
-	   container-region: container-region,
-	   title: "Scribble");
+           container: container,
+           container-region: container-region,
+           title: "Scribble");
   //--- Do we need any other initializations?
   start-frame(frame);
   frame

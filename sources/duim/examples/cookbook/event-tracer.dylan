@@ -23,7 +23,7 @@ define method handle-repaint
   #f
 end method handle-repaint;
 
-define method dispatch-event 
+define method dispatch-event
     (sheet :: <event-tracing-pane>, event :: <event>) => ()
   block ()
     next-method();
@@ -43,7 +43,7 @@ define pane <event-recording-pane> ()
     end;
 end pane <event-recording-pane>;
 
-define method record-event 
+define method record-event
     (sheet :: <event-recording-pane>, message :: <string>) => ()
   let column = event-column(sheet);
   let new-child = make(<label-pane>, label: message);
@@ -58,7 +58,7 @@ define method record-event
 end method record-event;
 
 
-/// Event tracing 
+/// Event tracing
 
 define frame <event-tracer> (<simple-frame>)
   pane event-pane (frame)
@@ -68,10 +68,10 @@ define frame <event-tracer> (<simple-frame>)
                                  record-event(frame.event-recorder-pane,
                                               apply(format-to-string, string, args))
                                end,
-	      width: 500, height: 300);
+              width: 500, height: 300);
   pane event-recorder-pane (frame)
     make(<event-recording-pane>,
-	      width: 500, height: 300);
+              width: 500, height: 300);
   pane main-layout (frame)
     vertically ()
       frame.event-pane;

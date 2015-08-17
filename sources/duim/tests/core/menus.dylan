@@ -14,14 +14,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define test frame-menu-bar-test ()
   let works-component
     = make-test-pane(<menu-box>, items: #("update", "clone"));
-  let works-menu 
+  let works-menu
     = make-test-pane(<menu>,
-		     label: "works",
-		     items: vector(works-component, "quit"));
+                     label: "works",
+                     items: vector(works-component, "quit"));
   let help-menu
     = make-test-pane(<menu>,
-		     label: "help",
-		     items: #("about dylanworks"));
+                     label: "help",
+                     items: #("about dylanworks"));
   let menu-bar = make-test-pane(<menu-bar>);
   add-child(menu-bar, works-menu);
   add-child(menu-bar, help-menu);
@@ -33,17 +33,17 @@ define test menu-parents-test ()
   let button = make-test-pane(<menu-button>, label: "test");
   let component
     = make-test-pane(<menu-box>,
-		     selection-mode: #"single",
-		     children: vector(button));
+                     selection-mode: #"single",
+                     children: vector(button));
   check-equal("Initial menu button parent", sheet-parent(button), component);
   let menu = make-test-pane(<menu>, children: vector(component));
-  check-equal("Initial menu component parent", 
-	      sheet-parent(component), menu);
+  check-equal("Initial menu component parent",
+              sheet-parent(component), menu);
   let menu-bar = make-test-pane(<menu-bar>, children: vector(menu));
   check-equal("Initial menu parent", sheet-parent(menu), menu-bar);
   let frame = make-test-frame(<test-frame>, menu-bar: menu-bar);
   check-true("Initial menu bar parent",
-	     subchild?(top-level-sheet(frame), menu-bar));
+             subchild?(top-level-sheet(frame), menu-bar));
   frame
 end test menu-parents-test;
 
@@ -60,7 +60,7 @@ define method test-menu-box-panes-button-selections ()
   let rbp = make-collection-gadget(<radio-menu-box>);
   verify-gadget-box-pane-button-selection(rbp);
   let cbp = make-collection-gadget(<check-menu-box>,
-				   selection: #(0, 2));
+                                   selection: #(0, 2));
   verify-gadget-box-pane-button-selection(cbp);
   cbp
 end method test-menu-box-panes-button-selections;

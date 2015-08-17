@@ -51,9 +51,9 @@ define method row-table? (table :: <table-record>) => (true? :: <boolean>)
     block (return)
       // Find the first row or column
       local method find-row-or-column (record) => ()
-	      table.%row-table? := instance?(record, <row-record>);
-	      return()
-	    end method;
+              table.%row-table? := instance?(record, <row-record>);
+              return()
+            end method;
       do-table-rows-or-columns(find-row-or-column, table)
     end
   end;
@@ -157,8 +157,8 @@ define method do-table-elements
   // FUNCTION is applied to each child of type TYPE.  Error checking is
   // done to verify that the children are, in fact, of type TYPE.
   local method do-elements (child) => ()
-	  do-table-elements-1(function, child, type)
-	end method;
+          do-table-elements-1(function, child, type)
+        end method;
   do-sheet-children(do-elements, record)
 end method do-table-elements;
 
@@ -214,19 +214,19 @@ define method layout-table
     let y-spacing = table.%y-spacing;
     let equalize? = table.%equalize-column-widths?;
     local method count-rows (row)
-	    inc!(nrows);
-	    cells := 0;
-	    do-table-cells(count-cells, row);
-	    assert(~zero?(cells),
-		   "Row or column does not contain any cells");
-	    if (~ncells) ncells := cells else max!(ncells, cells) end
-	  end method,
-	  method count-cells (cell)
-	    assert(instance?(cell, <cell-record>),
-		   "Bogus record found where a cell was expected");
-	    inc!(cells)
-	  end method;
-    let ncells :: <integer> = ncells;	// tighten up the type
+            inc!(nrows);
+            cells := 0;
+            do-table-cells(count-cells, row);
+            assert(~zero?(cells),
+                   "Row or column does not contain any cells");
+            if (~ncells) ncells := cells else max!(ncells, cells) end
+          end method,
+          method count-cells (cell)
+            assert(instance?(cell, <cell-record>),
+                   "Bogus record found where a cell was expected");
+            inc!(cells)
+          end method;
+    let ncells :: <integer> = ncells;        // tighten up the type
     // Calculate nrows & ncells (= ncells per row)
     table-mapper(count-rows, table);
     // If there are no rows, COUNT-ROWS won't get invoked and NCELLS
@@ -248,7 +248,7 @@ define method layout-table
     // Figure out max height for each row,
     //            max width for each column.
     // Collect row heights and column widths into temporary vectors.
-    // We need to remember for each row its total height and the 
+    // We need to remember for each row its total height and the
     // difference between the smallest top and the largest top.
     // For each row remember the total height and then remember the maximum
     // difference between the row top and the y-position of the row.
@@ -259,72 +259,72 @@ define method layout-table
     end;
     if (row-table?) row-count := -1 else column-count := -1 end;
     local method row-mapper (row) => ()
-	    if (row-table?) inc!(row-count) else inc!(column-count) end;
-	    if (row-table?) column-count := -1 else row-count := -1 end;
-	    layout-row-or-column(row, sheet);
-	    local method cell-mapper (cell) => ()
-		    if (row-table?) inc!(column-count) else inc!(row-count) end;
-		    let (width, height) = box-size(cell);
-		    max!(row-heights[row-count], max(height, cell.%min-height));
-		    max!(column-widths[column-count], max(width, cell.%min-width))
-		  end method;
-	    do-table-cells(cell-mapper, row)
-	  end method;
+            if (row-table?) inc!(row-count) else inc!(column-count) end;
+            if (row-table?) column-count := -1 else row-count := -1 end;
+            layout-row-or-column(row, sheet);
+            local method cell-mapper (cell) => ()
+                    if (row-table?) inc!(column-count) else inc!(row-count) end;
+                    let (width, height) = box-size(cell);
+                    max!(row-heights[row-count], max(height, cell.%min-height));
+                    max!(column-widths[column-count], max(width, cell.%min-width))
+                  end method;
+            do-table-cells(cell-mapper, row)
+          end method;
     table-mapper(row-mapper, table);
     when (equalize?)
       let column-width :: <integer> = 0;
       let n-columns :: <integer> = column-count + 1;
       for (i :: <integer> from 0 below n-columns)
-	max!(column-width, column-widths[i])
+        max!(column-width, column-widths[i])
       end;
       for (i :: <integer> from 0 below n-columns)
-	column-widths[i] := column-width
+        column-widths[i] := column-width
       end
     end;
     if (row-table?) row-count := -1 else column-count := -1 end;
     local method row-mapper (row) => ()
-	    if (row-table?) inc!(row-count) else inc!(column-count) end;
-	    let this-row-height = row-heights[row-count];
-	    let this-column-width = column-widths[column-count];
-	    if (row-table?) column-count := -1 else row-count := -1 end;
-	    total-width := x-pos;
-	    total-height := y-pos;
-	    local method cell-mapper (cell) => ()
-		    if (row-table?) inc!(column-count) else inc!(row-count) end;
-		    let column-width = column-widths[column-count];
-		    let row-height = row-heights[row-count];
-		    let (cell-width, cell-height) = box-size(cell);
-		    let x-alignment-adjust = 0;
-		    let y-alignment-adjust = 0;
-		    select (cell.%align-x)
-		      #"left"   => #f;
-		      #"right"  => x-alignment-adjust := column-width - cell-width;
-		      #"center" => x-alignment-adjust := floor/(column-width - cell-width, 2);
-		    end;
-		    select (cell.%align-y)
-		      #"top"     => #f;
-		      #"bottom"  => y-alignment-adjust := row-height - cell-height;
-		      #"center"  => y-alignment-adjust := floor/(row-height - cell-height, 2);
-		    end;
-		    //---*** This assumes that the cell is right inside of the row.
-		    //---*** What if you want a presentation around a cell?
-		    sheet-transform(cell)
-		      := make(<mutable-translation-transform>,
-			      tx: total-width + x-alignment-adjust,
-			      ty: total-height + y-alignment-adjust);
-		    if (row-table?)
-		      inc!(total-width, column-width + x-spacing)
-		    else
-		      inc!(total-height, row-height + y-spacing)
-		    end
-		  end method;
+            if (row-table?) inc!(row-count) else inc!(column-count) end;
+            let this-row-height = row-heights[row-count];
+            let this-column-width = column-widths[column-count];
+            if (row-table?) column-count := -1 else row-count := -1 end;
+            total-width := x-pos;
+            total-height := y-pos;
+            local method cell-mapper (cell) => ()
+                    if (row-table?) inc!(column-count) else inc!(row-count) end;
+                    let column-width = column-widths[column-count];
+                    let row-height = row-heights[row-count];
+                    let (cell-width, cell-height) = box-size(cell);
+                    let x-alignment-adjust = 0;
+                    let y-alignment-adjust = 0;
+                    select (cell.%align-x)
+                      #"left"   => #f;
+                      #"right"  => x-alignment-adjust := column-width - cell-width;
+                      #"center" => x-alignment-adjust := floor/(column-width - cell-width, 2);
+                    end;
+                    select (cell.%align-y)
+                      #"top"     => #f;
+                      #"bottom"  => y-alignment-adjust := row-height - cell-height;
+                      #"center"  => y-alignment-adjust := floor/(row-height - cell-height, 2);
+                    end;
+                    //---*** This assumes that the cell is right inside of the row.
+                    //---*** What if you want a presentation around a cell?
+                    sheet-transform(cell)
+                      := make(<mutable-translation-transform>,
+                              tx: total-width + x-alignment-adjust,
+                              ty: total-height + y-alignment-adjust);
+                    if (row-table?)
+                      inc!(total-width, column-width + x-spacing)
+                    else
+                      inc!(total-height, row-height + y-spacing)
+                    end
+                  end method;
             do-table-cells(cell-mapper, row);
-	    if (row-table?)
-	      inc!(y-pos, this-row-height + y-spacing)
-	    else
-	      inc!(x-pos, this-column-width + x-spacing)
-	    end
-	  end method;
+            if (row-table?)
+              inc!(y-pos, this-row-height + y-spacing)
+            else
+              inc!(x-pos, this-column-width + x-spacing)
+            end
+          end method;
     table-mapper(row-mapper, table)
   end
 end method layout-table;
@@ -353,16 +353,16 @@ define method layout-multiple-columns
     when (row-count > 5)
       let (tleft, ttop, tright, tbottom) = box-edges(table);
       let (sheet-width, sheet-height) = box-size(sheet);
-      ignore(sheet-height);		// for now
+      ignore(sheet-height);                // for now
       let table-width = tright - tleft;
       let table-height = tbottom - ttop;
       let between-column-margin
-	= if (x-spacing)
-	    process-spacing-arg(sheet, x-spacing, #"horizontal",
-				form: #"formatting-table")
-	  else
-	    text-size(sheet, ' ')
-	  end;
+        = if (x-spacing)
+            process-spacing-arg(sheet, x-spacing, #"horizontal",
+                                form: #"formatting-table")
+          else
+            text-size(sheet, ' ')
+          end;
       let column-width = table-width + between-column-margin;
       let possible-columns = n-columns | max(floor/(stream-width, column-width), 1);
       let y-spacing = table.%y-spacing;
@@ -371,18 +371,18 @@ define method layout-multiple-columns
       let row-x :: <integer> = 0;
       let row-y :: <integer> = 0;
       local method layout-columns (row) => ()
-	      let (rl, rt) = sheet-position(row);
-	      // Position the row so that the X position relative to the
-	      // original table is preserved, so that :ALIGN-X :RIGHT works
-	      //--- ROW-Y needs the same treatment for :ALIGN-Y
-	      %set-sheet-position(row, row-x + rl - tleft, row-y);
-	      inc!(row-number);
-	      inc!(row-y, box-height(row) + y-spacing);
-	      when (zero?(modulo(row-number, rows-per-column)))
-		row-x := row-x + column-width;
-		row-y := 0
-	      end
-	    end method;
+              let (rl, rt) = sheet-position(row);
+              // Position the row so that the X position relative to the
+              // original table is preserved, so that :ALIGN-X :RIGHT works
+              //--- ROW-Y needs the same treatment for :ALIGN-Y
+              %set-sheet-position(row, row-x + rl - tleft, row-y);
+              inc!(row-number);
+              inc!(row-y, box-height(row) + y-spacing);
+              when (zero?(modulo(row-number, rows-per-column)))
+                row-x := row-x + column-width;
+                row-y := 0
+              end
+            end method;
       do-table-rows(layout-columns, table)
     end
   end
@@ -400,30 +400,30 @@ define method do-formatting-table
      #all-keys) => (record :: <table-record>)
   dynamic-extent(initargs);
   with-keywords-removed (initargs = initargs, #[x:, y:, x-spacing:, y-spacing:,
-						equalize-column-widths?:,
-						multiple-columns?:, multiple-columns-x-spacing:,
-						record-class:, move-caret?:])
+                                                equalize-column-widths?:,
+                                                multiple-columns?:, multiple-columns-x-spacing:,
+                                                record-class:, move-caret?:])
     let table
       = with-output-recording-options (sheet, draw?: #f, record?: #t)
           with-end-of-line-action (sheet, #"allow")
             with-end-of-page-action (sheet, #"allow")
-	      apply(do-with-new-output-record,
-		    sheet, continuation,
-		    record-class: record-class,
-		    constructor: (record-class == <table-record>)
-		                 & <table-record>-constructor,
-		    x-spacing:
-		      process-spacing-arg(sheet, x-spacing, #"horizontal",
-					  form: #"formatting-table")
-		      | text-size(sheet, ' '),
-		    y-spacing:
-		      process-spacing-arg(sheet, y-spacing, #"vertical",
-					  form: #"formatting-table")
-		      | 2,
-		    equalize-column-widths?: equalize-column-widths?,
-		    initargs)
-	    end
-	  end
+              apply(do-with-new-output-record,
+                    sheet, continuation,
+                    record-class: record-class,
+                    constructor: (record-class == <table-record>)
+                                 & <table-record>-constructor,
+                    x-spacing:
+                      process-spacing-arg(sheet, x-spacing, #"horizontal",
+                                          form: #"formatting-table")
+                      | text-size(sheet, ' '),
+                    y-spacing:
+                      process-spacing-arg(sheet, y-spacing, #"vertical",
+                                          form: #"formatting-table")
+                      | 2,
+                    equalize-column-widths?: equalize-column-widths?,
+                    initargs)
+            end
+          end
         end;
     layout-table(table, sheet);
     when (multiple-columns?)
@@ -453,11 +453,11 @@ define method do-formatting-row
   dynamic-extent(initargs);
   with-keywords-removed (initargs = initargs, #[record-class:])
     apply(do-with-new-output-record-1,
-	  sheet, continuation,
-	  record-class,
-	  (record-class == <row-record>) & <row-record>-constructor,
-	  #f,
-	  initargs)
+          sheet, continuation,
+          record-class,
+          (record-class == <row-record>) & <row-record>-constructor,
+          #f,
+          initargs)
   end
 end method do-formatting-row;
 
@@ -468,11 +468,11 @@ define method do-formatting-column
   dynamic-extent(initargs);
   with-keywords-removed (initargs = initargs, #[record-class:])
     apply(do-with-new-output-record-1,
-	  sheet, continuation,
-	  record-class,
-	  (record-class == <column-record>) & <column-record>-constructor,
-	  #f,
-	  initargs)
+          sheet, continuation,
+          record-class,
+          (record-class == <column-record>) & <column-record>-constructor,
+          #f,
+          initargs)
   end
 end method do-formatting-column;
 
@@ -485,22 +485,22 @@ define method do-formatting-cell
   dynamic-extent(initargs);
   dynamic-bind (stream-text-output-record(sheet) = #f)
     with-keywords-removed (initargs = initargs,
-			   #[align-x:, align-y:, min-width:, min-height:, record-class:])
+                           #[align-x:, align-y:, min-width:, min-height:, record-class:])
       min-width := (min-width
                     & process-spacing-arg(sheet, min-width, #"horizontal",
-					  form: #"formatting-cell")) | 0;
+                                          form: #"formatting-cell")) | 0;
       min-height := (min-height
-		     & process-spacing-arg(sheet, min-height, #"vertical",
-					   form: #"formatting-cell")) | 0;
+                     & process-spacing-arg(sheet, min-height, #"vertical",
+                                           form: #"formatting-cell")) | 0;
       with-caret-position-saved (sheet)
-	apply(do-with-new-output-record-1,
-	      sheet, continuation,
-	      record-class,
-	      (record-class == <cell-record>) & <cell-record>-constructor,
-	      #f,
-	      align-x: align-x, align-y: align-y,
-	      min-width: min-width, min-height: min-height,
-	      initargs)
+        apply(do-with-new-output-record-1,
+              sheet, continuation,
+              record-class,
+              (record-class == <cell-record>) & <cell-record>-constructor,
+              #f,
+              align-x: align-x, align-y: align-y,
+              min-width: min-width, min-height: min-height,
+              initargs)
       end
     end
   end

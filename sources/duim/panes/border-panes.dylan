@@ -17,8 +17,8 @@ end class <border-pane-mixin>;
 define method initialize (sheet :: <border-pane-mixin>, #key thickness) => ()
   next-method();
   when (~thickness
-	& member?(border-type(sheet),
-		  #[#"sunken", #"raised", #"ridge", #"groove", #"input", #"output"]))
+        & member?(border-type(sheet),
+                  #[#"sunken", #"raised", #"ridge", #"groove", #"input", #"output"]))
     border-thickness(sheet) := 3
   end
 end method initialize;
@@ -33,10 +33,10 @@ define method do-compose-space
  => (space-req :: <space-requirement>)
   let thickness*2 = border-thickness(pane) * 2;
   space-requirement+(pane,
-		     next-method(pane,
-				 width:  width  & width  - thickness*2,
-				 height: height & height - thickness*2),
-		     width: thickness*2, height: thickness*2)
+                     next-method(pane,
+                                 width:  width  & width  - thickness*2,
+                                 height: height & height - thickness*2),
+                     width: thickness*2, height: thickness*2)
 end method do-compose-space;
 
 define method do-allocate-space
@@ -52,7 +52,7 @@ end method do-allocate-space;
 
 define method handle-repaint
     (pane :: <border-pane-mixin>, medium :: <medium>, region :: <region>) => ()
-  ignore(region);	// not worth checking
+  ignore(region);        // not worth checking
   let (left, top, right, bottom) = box-edges(pane);
   draw-border(pane, medium, border-type(pane), left, top, right, bottom)
 end method handle-repaint;
@@ -64,8 +64,8 @@ define method draw-border
   let (thickness, pen, brush) = border-characteristics(pane);
   with-drawing-options (medium, pen: pen, brush: brush)
     let thickness/2 = ceiling/(thickness, 2);
-    draw-rectangle(medium, 
-                   left  + thickness/2, top + thickness/2, 
+    draw-rectangle(medium,
+                   left  + thickness/2, top + thickness/2,
                    right - thickness/2 - 1, bottom - thickness/2 - 1,
                    filled?: #f)
   end
@@ -92,7 +92,7 @@ define method border-characteristics
   values(thickness, pane.%pen, pane.%brush)
 end method border-characteristics;
 
-define sideways method class-for-make-pane 
+define sideways method class-for-make-pane
     (framem :: <frame-manager>, class == <border>, #key label)
  => (class :: <class>, options :: false-or(<sequence>))
   let border-class = if (label) <group-box-pane> else <border-pane> end;
@@ -123,7 +123,7 @@ define method border-characteristics
   values(thickness, pane.%pen, pane.%brush)
 end method border-characteristics;
 
-define sideways method class-for-make-pane 
+define sideways method class-for-make-pane
     (framem :: <frame-manager>, class == <spacing>, #key)
  => (class :: <class>, options :: false-or(<sequence>));
   values(<spacing-pane>, #f)
@@ -154,7 +154,7 @@ define method border-characteristics
   values(thickness, pane.%pen, pane.%brush)
 end method border-characteristics;
 
-define sideways method class-for-make-pane 
+define sideways method class-for-make-pane
     (framem :: <frame-manager>, class == <group-box>, #key)
  => (class :: <class>, options :: false-or(<sequence>));
   values(<group-box-pane>, #f)
@@ -174,10 +174,10 @@ define method do-compose-space
   ignore(label-width);
   if (child)
     space-requirement+(pane,
-		       compose-space(child,
-				     width:  width  & width  - border,
-				     height: height & height - border),
-		       width:  border, height: border + label-height)
+                       compose-space(child,
+                                     width:  width  & width  - border,
+                                     height: height & height - border),
+                       width:  border, height: border + label-height)
   else
     default-space-requirement(pane, width: width, height: height)
   end
@@ -192,11 +192,11 @@ define method do-allocate-space
   when (child)
     select (group-box-label-position(pane))
       #"top" =>
-	set-sheet-edges(child,
+        set-sheet-edges(child,
                         border, label-height + border,
                         width - border, height - border);
       #"bottom" =>
-	set-sheet-edges(child,
+        set-sheet-edges(child,
                         border, border,
                         width - border, height - label-height - border);
     end
@@ -213,20 +213,20 @@ define method do-allocate-space
   inc!(top, truncate/(label-height, 2));
   pane.%border-coords
     := select (group-box-label-position(pane))
-	 #"top" =>
-	   vector(left + floor/(right - left - label-width, 2), top,
-		  left, top,
-		  left, bottom,
-		  right, bottom,
-		  right, top,
-		  right - floor/(right - left - label-width, 2), top);
-	 #"bottom" =>
-	   vector(left + floor/(right - left - label-width, 2), bottom,
-		  left, bottom,
-		  left, top,
-		  right, top,
-		  right, bottom,
-		  right - floor/(right - left - label-width, 2), bottom);
+         #"top" =>
+           vector(left + floor/(right - left - label-width, 2), top,
+                  left, top,
+                  left, bottom,
+                  right, bottom,
+                  right, top,
+                  right - floor/(right - left - label-width, 2), top);
+         #"bottom" =>
+           vector(left + floor/(right - left - label-width, 2), bottom,
+                  left, bottom,
+                  left, top,
+                  right, top,
+                  right, bottom,
+                  right - floor/(right - left - label-width, 2), bottom);
        end
 end method do-allocate-space;
 
@@ -244,17 +244,17 @@ define method handle-repaint
     dec!(bottom, thickness/2 - 1);
     select (group-box-label-position(pane))
       #"top" =>
-	draw-polygon(medium, pane.%border-coords, closed?: #f, filled?: #f);
-	draw-gadget-label
-	  (pane, medium,
-	   floor/(right + left, 2), pane.%border-coords[1],	// what can I say?
-	   align-x: #"center", align-y: #"center");
+        draw-polygon(medium, pane.%border-coords, closed?: #f, filled?: #f);
+        draw-gadget-label
+          (pane, medium,
+           floor/(right + left, 2), pane.%border-coords[1],        // what can I say?
+           align-x: #"center", align-y: #"center");
       #"bottom" =>
-	draw-polygon(medium, pane.%border-coords, closed?: #f, filled?: #f);
-	draw-gadget-label
-	  (pane, medium,
-	   floor/(right - left, 2), pane.%border-coords[1],	// I'm embarrassed
-	   align-x: #"center", align-y: #"center");
+        draw-polygon(medium, pane.%border-coords, closed?: #f, filled?: #f);
+        draw-gadget-label
+          (pane, medium,
+           floor/(right - left, 2), pane.%border-coords[1],        // I'm embarrassed
+           align-x: #"center", align-y: #"center");
     end
   end
 end method handle-repaint;

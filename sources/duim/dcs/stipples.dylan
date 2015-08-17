@@ -26,9 +26,9 @@ define method make-stipple (rows :: <sequence>) => (stipple :: <array>)
   without-bounds-checks
     for (row in rows, i :: <integer> from 0)
       assert(size(row) = width,
-	     "All the rows in a stipple must have the same length");
+             "All the rows in a stipple must have the same length");
       for (cell in row, j :: <integer> from 0)
-	stipple[i, j] := cell
+        stipple[i, j] := cell
       end
     end
   end;

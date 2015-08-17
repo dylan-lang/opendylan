@@ -8,11 +8,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Generic implementation of progress note panes
 
-define sealed class <progress-bar-pane> 
+define sealed class <progress-bar-pane>
     (<simple-pane>, <progress-bar>)
 end class <progress-bar-pane>;
 
-define sideways method class-for-make-pane 
+define sideways method class-for-make-pane
     (framem :: <frame-manager>, class == <progress-bar>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<progress-bar-pane>, #f)
@@ -21,7 +21,7 @@ end method class-for-make-pane;
 define sealed domain make (singleton(<progress-bar-pane>));
 define sealed domain initialize (<progress-bar-pane>);
 
-define method do-compose-space 
+define method do-compose-space
     (pane :: <progress-bar-pane>, #key width, height)
  => (space-req :: <space-requirement>)
   ignore(height);

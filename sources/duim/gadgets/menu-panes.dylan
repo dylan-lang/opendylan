@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // This is really a mixin class, but you can do 'make-pane' on it, so
 // we'll go with the more appetizing name...
 define open abstract class <menu-box-pane>
-    (<gadget-box-pane-mixin>, 
+    (<gadget-box-pane-mixin>,
      <abstract-sheet>)
 end class <menu-box-pane>;
 
@@ -39,7 +39,7 @@ define function menu-box-pane-selection-mode-class
   end
 end function menu-box-pane-selection-mode-class;
 
-define sealed inline method make 
+define sealed inline method make
     (class == <menu-box-pane>, #rest initargs,
      #key selection-mode :: <selection-mode> = #"none", #all-keys)
  => (component :: <menu-box-pane>)
@@ -57,12 +57,12 @@ end method relayout-parent;
 
 
 define sealed class <push-menu-box-pane>
-    (<menu-box-pane>, 
-     <push-menu-box>, 
+    (<menu-box-pane>,
+     <push-menu-box>,
      <multiple-child-composite-pane>)
 end class <push-menu-box-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <push-menu-box>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<push-menu-box-pane>, #f)
@@ -86,7 +86,7 @@ define sealed class <radio-menu-box-pane>
      <multiple-child-composite-pane>)
 end class <radio-menu-box-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <radio-menu-box>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<radio-menu-box-pane>, #f)
@@ -100,9 +100,9 @@ define method do-execute-value-changed-callback
   ignore(id);
   gadget-selection(box, do-callback?: #t)
     := if (gadget-value(button) == #t)
-	 vector(gadget-box-button-index(box, button))
+         vector(gadget-box-button-index(box, button))
        else
-	 #[]
+         #[]
        end;
   next-method()
 end method do-execute-value-changed-callback;
@@ -114,7 +114,7 @@ define sealed class <check-menu-box-pane>
      <multiple-child-composite-pane>)
 end class <check-menu-box-pane>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <frame-manager>, class == <check-menu-box>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<check-menu-box-pane>, #f)
@@ -129,9 +129,9 @@ define method do-execute-value-changed-callback
   let index = gadget-box-button-index(box, button);
   let new-selection
     = if (gadget-value(button) == #t)
-	add-new(gadget-selection(box), index)
+        add-new(gadget-selection(box), index)
       else
-	remove(gadget-selection(box), index)
+        remove(gadget-selection(box), index)
       end;
   gadget-selection(box, do-callback?: #t) := new-selection;
   next-method()

@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library pente
   use common-dylan;
   use system;
-  use duim;  
+  use duim;
   export pente;
 end library pente;
 

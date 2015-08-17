@@ -21,9 +21,9 @@ define sideways method make-caret
   with-sheet-medium (medium = sheet)
     let (w, h) = text-size(medium, " ");
     make(<simple-caret>,
-	 port: _port, sheet: sheet,
-	 x: x | 0, y: y | 0,
-	 width: width | ceiling(w), height: height | ceiling(h))
+         port: _port, sheet: sheet,
+         x: x | 0, y: y | 0,
+         width: width | ceiling(w), height: height | ceiling(h))
   end
 end method make-caret;
 

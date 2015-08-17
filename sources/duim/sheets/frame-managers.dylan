@@ -52,7 +52,7 @@ define method find-frame-manager
   block (return)
     with-keywords-removed (new-options = options, #[port:, server-path:, palette:])
       unless (_port)
-	_port := default-port(server-path: server-path)
+        _port := default-port(server-path: server-path)
       end;
       unless (palette)
         palette := port-default-palette(_port)
@@ -61,21 +61,21 @@ define method find-frame-manager
       // get us into a loop...
       let default-framem
         = begin
-	    let framems = port-frame-managers(_port);
-	    case
-	      empty?(framems) => #f;
-	      ~class => framems[0];
-	      otherwise => find-element(framems, method (f) object-class(f) == class end);
-	    end
-	  end;
+            let framems = port-frame-managers(_port);
+            case
+              empty?(framems) => #f;
+              ~class => framems[0];
+              otherwise => find-element(framems, method (f) object-class(f) == class end);
+            end
+          end;
       case
         // 'find-frame-manager' -> default one
-	default-framem & empty?(options) =>
-	  default-framem;
-	// We specified a port, so make sure the default framem matches it
-	default-framem
-	& apply(frame-manager-matches-options?, default-framem, _port, new-options) =>
-	  default-framem;
+        default-framem & empty?(options) =>
+          default-framem;
+        // We specified a port, so make sure the default framem matches it
+        default-framem
+        & apply(frame-manager-matches-options?, default-framem, _port, new-options) =>
+          default-framem;
         // No default, look for one in the port, or create a new one;
         otherwise =>
           for (framem in port-frame-managers(_port))
@@ -86,7 +86,7 @@ define method find-frame-manager
           end;
           let framem
             = apply(make-frame-manager, _port,
-		    palette: palette, new-options);
+                    palette: palette, new-options);
           add!(port-frame-managers(_port), framem);
           framem
       end
@@ -159,10 +159,10 @@ define function do-frames
      #key port: _port, frame-manager: framem, z-order :: <z-order> = #f) => ()
   dynamic-extent(function);
   local method do-port-frames (_port :: <port>) => ()
-	  for (framem in port-frame-managers(_port))
-	    frame-manager-do-frames(function, framem, z-order: z-order)
-	  end
-	end method;
+          for (framem in port-frame-managers(_port))
+            frame-manager-do-frames(function, framem, z-order: z-order)
+          end
+        end method;
   case
     framem =>
       // Frame manager specified, so map over all the frames for
@@ -175,7 +175,7 @@ define function do-frames
     otherwise =>
       // Map over all of the port...
       for (_port in *ports*)
-	do-port-frames(_port)
+        do-port-frames(_port)
       end;
   end
 end function do-frames;
@@ -202,7 +202,7 @@ define thread variable *current-frame-manager* :: false-or(<frame-manager>) = #f
 define inline function current-frame-manager () *current-frame-manager* end;
 
 // Here for compatibility and self-documentation...
-define method make-pane 
+define method make-pane
     (pane-class :: <class>, #rest pane-options, #key, #all-keys)
  => (pane :: <sheet>)
   dynamic-extent(pane-options);
@@ -227,13 +227,13 @@ define method make
   // abstract pane class.
   if (concrete-class == pane-class)
     apply(next-method, pane-class,
-	  frame-manager: framem, pane-options)
+          frame-manager: framem, pane-options)
   else
     //---*** Unfortunately, this recursive call to make will call
     //---*** 'class-for-make-pane' again.  How to speed this up?
     apply(make, concrete-class,
-	  frame-manager: framem,
-	  concrete-options | pane-options)
+          frame-manager: framem,
+          concrete-options | pane-options)
   end
 end method make;
 
@@ -270,11 +270,11 @@ end method make;
 //  - <check-menu-box>
 //  - <property-page>
 // The DUIM layouts library provides methods for:
-//  - <row-layout>	(default method supplied by DUIM core)
-//  - <column-layout>	(default method supplied by DUIM core)
-//  - <table-layout>	(default method supplied by DUIM core)
-//  - <grid-layout>	(default method supplied by DUIM core)
-//  - <pinboard-layout>	(default method supplied by DUIM core)
+//  - <row-layout>        (default method supplied by DUIM core)
+//  - <column-layout>        (default method supplied by DUIM core)
+//  - <table-layout>        (default method supplied by DUIM core)
+//  - <grid-layout>        (default method supplied by DUIM core)
+//  - <pinboard-layout>        (default method supplied by DUIM core)
 // The DUIM gadget panes library optionally provides methods for:
 //  - <border>
 //  - <spacing>
@@ -303,11 +303,11 @@ end method class-for-make-pane;
 
 define constant <notification-style>
     = one-of(#"information", #"question", #"warning",
-	     #"error", #"serious-error", #"fatal-error");
+             #"error", #"serious-error", #"fatal-error");
 
 define constant <notification-exit-style>
     = one-of(#"ok", #"ok-cancel",
-	     #"yes-no", #"yes-no-cancel");
+             #"yes-no", #"yes-no-cancel");
 
 // Returns #t on normal exit, or #f on "cancel"
 // STYLE is one of #"error", #"warning", #"information", #"question", etc.
@@ -320,7 +320,7 @@ define method notify-user
  => (value :: <boolean>, exit-type)
   dynamic-extent(options);
   ignore(title, documentation, exit-boxes, name, exit-style,
-	 foreground, background, text-style);
+         foreground, background, text-style);
   let (framem, owner) = get-frame-manager-and-owner(frame, owner);
   with-keywords-removed (options = options, #[frame:, owner:])
     apply(do-notify-user, framem, owner, message-string, style, options)
@@ -339,26 +339,26 @@ define open generic do-notify-user
 define method choose-from-menu
     (items, #rest options,
      #key frame, owner,
-	  title, value, default-item, label-key, value-key,
+          title, value, default-item, label-key, value-key,
           width, height, foreground, background, text-style,
           multiple-sets?)
  => (value, success? :: <boolean>)
   dynamic-extent(options);
   ignore(title, label-key, value-key,
-	 width, height, foreground, background, text-style, multiple-sets?);
+         width, height, foreground, background, text-style, multiple-sets?);
   let (framem, owner) = get-frame-manager-and-owner(frame, owner);
   with-keywords-removed (options = options, #[frame:, owner:, default-item:, value:])
     apply(do-choose-from-menu, framem, owner, items,
-	  value: value | default-item,
-	  options)
+          value: value | default-item,
+          options)
   end
 end method choose-from-menu;
 
 define open generic do-choose-from-menu
     (framem :: <abstract-frame-manager>, owner :: <sheet>, items,
-     #key title, value, label-key, value-key, 
+     #key title, value, label-key, value-key,
           width, height, foreground, background, text-style,
-	  multiple-sets?,
+          multiple-sets?,
      #all-keys)
  => (value, success? :: <boolean>);
 
@@ -367,20 +367,20 @@ define open generic do-choose-from-menu
 define method choose-from-dialog
     (items, #rest options,
      #key frame, owner,
-	  title, value, default-item, label-key, value-key,
+          title, value, default-item, label-key, value-key,
           selection-mode = #"single", gadget-class, gadget-options,
           width, height, foreground, background, text-style)
  => (value, success? :: <boolean>,
      width :: false-or(<integer>), height :: false-or(<integer>))
   dynamic-extent(options);
   ignore(title, label-key, value-key,
-	 selection-mode, gadget-class, gadget-options,
-	 width, height, foreground, background, text-style);
+         selection-mode, gadget-class, gadget-options,
+         width, height, foreground, background, text-style);
   let (framem, owner) = get-frame-manager-and-owner(frame, owner);
   with-keywords-removed (options = options, #[frame:, owner:, default-item:, value:])
     apply(do-choose-from-dialog, framem, owner, items,
-	  value: value | default-item,
-	  options)
+          value: value | default-item,
+          options)
   end
 end method choose-from-dialog;
 
@@ -404,13 +404,13 @@ define method choose-file
     (#rest options,
      #key frame, owner, title, documentation, exit-boxes,
           direction = #"input", if-exists = #"ask", if-does-not-exist = #"ask",
-	  default, default-type, filters, default-filter, selection-mode = #"single")
+          default, default-type, filters, default-filter, selection-mode = #"single")
  => (locator :: false-or(type-union(<string>, <sequence>)),
      filter :: false-or(<integer>))
   dynamic-extent(options);
   ignore(title, documentation, exit-boxes,
-	 default, if-exists, if-does-not-exist,
-	 default-type, filters, default-filter, selection-mode);
+         default, if-exists, if-does-not-exist,
+         default-type, filters, default-filter, selection-mode);
   let (framem, owner) = get-frame-manager-and-owner(frame, owner);
   with-keywords-removed (options = options, #[frame:, owner:])
     apply(do-choose-file, framem, owner, direction, options)
@@ -421,8 +421,8 @@ define open generic do-choose-file
     (framem :: <abstract-frame-manager>, owner :: <sheet>,
      direction :: one-of(#"input", #"output"),
      #key title, documentation, exit-boxes,
-	  if-exists, if-does-not-exist,
-	  default, default-type, filters, default-filter, selection-mode,
+          if-exists, if-does-not-exist,
+          default, default-type, filters, default-filter, selection-mode,
      #all-keys)
  => (locator :: false-or(type-union(<string>, <sequence>)),
      filter :: false-or(<integer>));
@@ -499,10 +499,10 @@ define open generic do-choose-color
 define method choose-text-style
     (#rest options,
      #key frame, owner, title, documentation, exit-boxes, default,
-	  fixed-width-only? :: <boolean> = #f,
-	  show-help? :: <boolean> = #f, show-apply? :: <boolean> = #f,
-	  choose-character-set? :: <boolean> = #f,
-	  choose-effects? :: <boolean> = #f)
+          fixed-width-only? :: <boolean> = #f,
+          show-help? :: <boolean> = #f, show-apply? :: <boolean> = #f,
+          choose-character-set? :: <boolean> = #f,
+          choose-effects? :: <boolean> = #f)
  => (text-style :: false-or(<text-style>))
   dynamic-extent(options);
   ignore(title, documentation, exit-boxes, default);

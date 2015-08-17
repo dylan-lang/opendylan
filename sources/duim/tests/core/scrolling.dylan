@@ -15,21 +15,21 @@ define method enforce-fully-within-parent?
   #f
 end method enforce-fully-within-parent?;
 
-define method horizontal-scroll-only? 
+define method horizontal-scroll-only?
     (pane :: <test-viewport>) => (horizontal-only? :: <boolean>)
   let horizontal? = horizontal-scroll-bar(pane);
   let vertical?   = vertical-scroll-bar(pane);
   horizontal? & ~vertical?
 end method horizontal-scroll-only?;
 
-define method vertical-scroll-only? 
+define method vertical-scroll-only?
     (pane :: <test-viewport>) => (horizontal-only? :: <boolean>)
   let horizontal? = horizontal-scroll-bar(pane);
   let vertical?   = vertical-scroll-bar(pane);
   vertical? & ~horizontal?
 end method vertical-scroll-only?;
 
-define method expected-width 
+define method expected-width
     (pane :: <viewport>, #key width) => (width :: <integer>)
   let child = sheet-child(pane);
   if (child)
@@ -65,7 +65,7 @@ define method expected-height
   end
 end method expected-height;
 
-define method expected-min-width 
+define method expected-min-width
     (pane :: <viewport>, #key) => (min-width :: <integer>)
   let child = sheet-child(pane);
   if (child & vertical-scroll-only?(pane))
@@ -75,7 +75,7 @@ define method expected-min-width
   end
 end method expected-min-width;
 
-define method expected-min-height 
+define method expected-min-height
     (pane :: <viewport>, #key) => (min-height :: <integer>)
   let child = sheet-child(pane);
   if (child & horizontal-scroll-only?(pane))
@@ -85,7 +85,7 @@ define method expected-min-height
   end
 end method expected-min-height;
 
-define method expected-max-width 
+define method expected-max-width
     (pane :: <viewport>, #key) => (max-width :: <integer>)
   if (vertical-scroll-only?(pane))
     next-method()
@@ -94,7 +94,7 @@ define method expected-max-width
   end
 end method expected-max-width;
 
-define method expected-max-height 
+define method expected-max-height
     (pane :: <viewport>, #key) => (max-height :: <integer>)
   if (horizontal-scroll-only?(pane))
     next-method()
@@ -103,7 +103,7 @@ define method expected-max-height
   end
 end method expected-max-height;
 
-define method expected-space-allocation 
+define method expected-space-allocation
     (pane :: <viewport>, #key width, height)
  => (space :: <sequence>)
   let child = sheet-child(pane);
@@ -119,17 +119,17 @@ define method expected-space-allocation
 end method expected-space-allocation;
 
 
-define method test-viewport-layout 
+define method test-viewport-layout
     (name, class, horizontal?, vertical?,
      #rest args,
      #key width, height, #all-keys)
   let test-name = concatenate(name, " ", gadget-class-name(<viewport>));
   let child = class & apply(make-test-pane, class, args);
-  let viewport 
-    = make-test-pane(<viewport>, 
-		     horizontal-scroll-bar: if (horizontal?) make-test-pane(<scroll-bar>) end, 
-		     vertical-scroll-bar:   if (vertical?)   make-test-pane(<scroll-bar>) end,
-		     child: child);
+  let viewport
+    = make-test-pane(<viewport>,
+                     horizontal-scroll-bar: if (horizontal?) make-test-pane(<scroll-bar>) end,
+                     vertical-scroll-bar:   if (vertical?)   make-test-pane(<scroll-bar>) end,
+                     child: child);
   check-layout-pane-layout(viewport, test-name);
   let (new-width, new-height)
     = expected-constrained-size(viewport, 500, 500);
@@ -139,13 +139,13 @@ define method test-viewport-layout
 end method test-viewport-layout;
 
 define method test-viewport-layouts (name, class, #rest args)
-  apply(test-viewport-layout, concatenate("no-bar ", name), 
+  apply(test-viewport-layout, concatenate("no-bar ", name),
         class, #f, #f, args);
   apply(test-viewport-layout, concatenate("vertical ", name),
         class, #f, #t, args);
   apply(test-viewport-layout, concatenate("horizontal ", name),
         class, #t, #f, args);
-  apply(test-viewport-layout, concatenate("two-bar ", name), 
+  apply(test-viewport-layout, concatenate("two-bar ", name),
         class, #t, #t, args);
 end method test-viewport-layouts;
 
@@ -166,7 +166,7 @@ define inline function border-thickness*2
   4
 end function border-thickness*2;
 
-define method expected-width 
+define method expected-width
     (pane :: <scroller>, #key width) => (width :: <integer>)
   let child = sheet-child(pane);
   if (instance?(child, <border>))
@@ -186,7 +186,7 @@ define method expected-height
   end
 end method expected-height;
 
-define method expected-min-width 
+define method expected-min-width
     (pane :: <scroller>, #key) => (min-width :: <integer>)
   let child = sheet-child(pane);
   if (instance?(child, <border>))
@@ -196,7 +196,7 @@ define method expected-min-width
   end
 end method expected-min-width;
 
-define method expected-min-height 
+define method expected-min-height
     (pane :: <scroller>, #key) => (min-height :: <integer>)
   let child = sheet-child(pane);
   if (instance?(child, <border>))
@@ -206,7 +206,7 @@ define method expected-min-height
   end
 end method expected-min-height;
 
-define method expected-max-width 
+define method expected-max-width
     (pane :: <scroller>, #key) => (max-width :: <integer>)
   let child = sheet-child(pane);
   if (instance?(child, <border>))
@@ -216,7 +216,7 @@ define method expected-max-width
   end
 end method expected-max-width;
 
-define method expected-max-height 
+define method expected-max-height
     (pane :: <scroller>, #key) => (max-height :: <integer>)
   let child = sheet-child(pane);
   if (instance?(child, <border>))
@@ -226,23 +226,23 @@ define method expected-max-height
   end
 end method expected-max-height;
 
-define method expected-space-allocation 
+define method expected-space-allocation
     (pane :: <scroller>, #key width, height)
  => (space :: <sequence>)
   next-method()
 end method expected-space-allocation;
 
 
-define method test-scroller 
-    (name :: <string>, class :: false-or(<class>), 
+define method test-scroller
+    (name :: <string>, class :: false-or(<class>),
      scroll-bars :: one-of(#"none", #"horizontal", #"vertical", #"both"),
      borders :: <boolean>) => ()
   let child = class & make-test-pane(class);
   let scroller
      = make-test-pane(<scroller>,
-		      contents: child,
-		      scroll-bars: scroll-bars,
-		      border-type: borders & #"sunken");
+                      contents: child,
+                      scroll-bars: scroll-bars,
+                      border-type: borders & #"sunken");
   check-layout-pane-layout(scroller, name);
   let (new-width, new-height)
     = expected-constrained-size(scroller, 1000, 1000);
@@ -250,26 +250,26 @@ define method test-scroller
   check-layout-pane-layout(scroller, concatenate("resized ", name));
 end method test-scroller;
 
-define method test-scroller-layout 
+define method test-scroller-layout
     (name :: <string>, class :: false-or(<class>))
   let gadget-name = gadget-class-name(<scroller>);
   // Borders
-  test-scroller(concatenate(name, " no-bar ", gadget-name), 
+  test-scroller(concatenate(name, " no-bar ", gadget-name),
                 class, #"none", #t);
-  test-scroller(concatenate(name, " horizontal ", gadget-name), 
+  test-scroller(concatenate(name, " horizontal ", gadget-name),
                 class, #"horizontal", #t);
-  test-scroller(concatenate(name, " vertical ", gadget-name), 
+  test-scroller(concatenate(name, " vertical ", gadget-name),
                 class, #"vertical", #t);
-  test-scroller(concatenate(name, " two-bar ", gadget-name), 
+  test-scroller(concatenate(name, " two-bar ", gadget-name),
                 class, #"both", #t);
   // No borders
-  test-scroller(concatenate(name, " no-bar borderless ", gadget-name), 
+  test-scroller(concatenate(name, " no-bar borderless ", gadget-name),
                 class, #"none", #f);
-  test-scroller(concatenate(name, " horizontal borderless ", gadget-name), 
+  test-scroller(concatenate(name, " horizontal borderless ", gadget-name),
                 class, #"horizontal", #f);
-  test-scroller(concatenate(name, " vertical borderless ", gadget-name), 
+  test-scroller(concatenate(name, " vertical borderless ", gadget-name),
                 class, #"vertical", #f);
-  test-scroller(concatenate(name, " two-bar borderless ", gadget-name), 
+  test-scroller(concatenate(name, " two-bar borderless ", gadget-name),
                 class, #"both", #f);
 end method test-scroller-layout;
 

@@ -95,7 +95,7 @@ define sealed class <win32-progress-bar>
      <leaf-pane>)
 end class <win32-progress-bar>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <progress-bar>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-progress-bar>, #f)
@@ -105,8 +105,8 @@ define sealed domain make (singleton(<win32-progress-bar>));
 define sealed domain initialize (<win32-progress-bar>);
 
 define sealed method make-gadget-control
-    (gadget :: <win32-progress-bar>, 
-     parent :: <HWND>, 
+    (gadget :: <win32-progress-bar>,
+     parent :: <HWND>,
      options :: <options-type>,
      #key x, y, width, height)
  => (handle :: <HWND>)
@@ -193,7 +193,7 @@ define sealed class <win32-slider>
      <leaf-pane>)
 end class <win32-slider>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <slider>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-slider>, #f)
@@ -298,7 +298,7 @@ define sealed method note-gadget-value-range-changed
 end method note-gadget-value-range-changed;
 
 define sealed method handle-scrolling
-    (gadget :: <win32-slider>, 
+    (gadget :: <win32-slider>,
      scroll-code :: <integer>, position :: <integer>)
  => (handled? :: <boolean>)
   block (return)
@@ -360,7 +360,7 @@ define sealed class <win32-tool-bar>
   sealed slot %separator :: false-or(<separator>) = #f;
 end class <win32-tool-bar>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <tool-bar>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-tool-bar>, #f)
@@ -426,8 +426,8 @@ define sealed domain make (singleton(<win32-status-bar>));
 define sealed domain initialize (<win32-status-bar>);
 
 define sealed method make-gadget-control
-    (gadget :: <win32-status-bar>, 
-     parent :: <HWND>, 
+    (gadget :: <win32-status-bar>,
+     parent :: <HWND>,
      options :: <options-type>,
      #key x, y, width, height)
  => (handle :: <HWND>)
@@ -502,15 +502,15 @@ define sealed method do-allocate-space
   else
     // Otherwise, ensure the part that holds the size grip has no border
     SendMessage(handle, $SB-SETTEXT,
-                %logior(n-parts - 1, $SBT-NOBORDERS), 
+                %logior(n-parts - 1, $SBT-NOBORDERS),
                 pointer-address($empty-c-string))
   end;
   // Remove the borders for the non-label parts
   for (i :: <integer> from 0 below n-children,
        child in children)
     unless (instance?(child, <label>))
-      SendMessage(handle, $SB-SETTEXT, 
-                  %logior(i, $SBT-NOBORDERS), 
+      SendMessage(handle, $SB-SETTEXT,
+                  %logior(i, $SBT-NOBORDERS),
                   pointer-address($empty-c-string));
     end
   end
@@ -531,7 +531,7 @@ define sealed method make-sheet-mirror
     = position(children, gadget)
       | error("Gadget %= not a direct child of status bar %=",
               gadget, status-bar);
-  make(<status-label-mirror>, 
+  make(<status-label-mirror>,
        sheet: gadget,
        status-bar: status-bar,
        part-number: part-number)
@@ -641,7 +641,7 @@ end method update-frame-documentation;
 //--- For now, proper repainting of tab control pages only works if each page
 //--- is mirrored; this is mostly OK because, e.g., <drawing-pane> is mirrored.
 //--- Consider parenting the pages into a drawing pane to fix this?
-define sealed class <win32-tab-control> 
+define sealed class <win32-tab-control>
     (<win32-control-mixin>,
      <win32-layout-gadget-mixin>,
      <tab-control>,
@@ -666,7 +666,7 @@ define sealed method initialize
 end method initialize;
 
 define sealed method make-gadget-control
-    (gadget :: <win32-tab-control>, 
+    (gadget :: <win32-tab-control>,
      parent :: <HWND>,
      options :: <options-type>,
      #key x, y, width, height)
@@ -703,7 +703,7 @@ define sealed method create-tab-control-pages
       item.mask-value := $TCIF-TEXT;
       with-c-string (c-string = label)
         item.pszText-value := c-string;
-        SendMessage(handle, $TCM-INSERTITEM, page-number, 
+        SendMessage(handle, $TCM-INSERTITEM, page-number,
                     pointer-address(item))
       end
     end
@@ -854,7 +854,7 @@ end method do-allocate-space;
 
 define sealed method tab-control-child-edges
     (pane :: <win32-tab-control>, width :: <integer>, height :: <integer>)
- => (left :: <integer>, top :: <integer>, 
+ => (left :: <integer>, top :: <integer>,
      right :: <integer>, bottom :: <integer>)
   let framem = frame-manager(pane);
   let handle = window-handle(pane);
@@ -921,7 +921,7 @@ define sealed domain make (singleton(<win32-up-down-control>));
 define sealed domain initialize (<win32-up-down-control>);
 
 define sealed method make-gadget-control
-    (gadget :: <win32-up-down-control>, 
+    (gadget :: <win32-up-down-control>,
      parent :: <HWND>,
      options :: <options-type>,
      #key x, y, width, height)
@@ -983,14 +983,14 @@ end method handle-scrolling;
 /// Spin boxes
 
 // Wraps up a text field and an up-down control
-define sealed class <win32-spin-box> 
+define sealed class <win32-spin-box>
     (<spin-box>,
      <single-child-wrapping-pane>)
   sealed slot %text-field      :: <text-field>;
   sealed slot %up-down-control :: <win32-up-down-control>;
 end class <win32-spin-box>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <spin-box>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-spin-box>, #f)
@@ -1004,8 +1004,8 @@ define sealed method initialize
      #key documentation,
           width, min-width, max-width, height, min-height, max-height) => ()
   let enabled? = gadget-enabled?(gadget);
-  let text-field 
-    = make(<text-field>, 
+  let text-field
+    = make(<text-field>,
            // Pass along the space requirement to the text field
            width:      width     & (width     - $up-down-control-width),
            min-width:  min-width & (min-width - $up-down-control-width),
@@ -1023,7 +1023,7 @@ define sealed method initialize
            // We equalize the heights of the up-down control and the text field
            // in the layout below, so ensure the up-down control is smaller
            height: 1, fixed-height?: #t,
-           value-changed-callback: 
+           value-changed-callback:
              method (up-down-control)
                let value = gadget-value(up-down-control);
                gadget-selection(gadget, do-callback?: #t) := vector(value)
@@ -1074,7 +1074,7 @@ end method note-gadget-disabled;
 
 // On Windows, list and table controls are implemented using the
 // same underlying Windows common control, the List View
-define class <win32-list-view-mixin> 
+define class <win32-list-view-mixin>
     (<win32-subclassed-gadget-mixin>,
      <win32-control-mixin>,
      <collection-gadget>)
@@ -1116,7 +1116,7 @@ define generic win32-list-view-options
     (pane :: <win32-list-view-mixin>, options :: <options-type>)
  => (options :: <options-type>);
 
-define sealed method destroy-mirror 
+define sealed method destroy-mirror
     (_port :: <win32-port>, pane :: <win32-list-view-mixin>, mirror :: <window-mirror>) => ()
   when (pane.%small-icons)
     ImageList-Destroy(pane.%small-icons);
@@ -1148,7 +1148,7 @@ define method update-gadget
   update-list-view-items(pane, force?: #t)
 end method update-gadget;
 
-define sealed method note-gadget-items-changed 
+define sealed method note-gadget-items-changed
     (pane :: <win32-list-view-mixin>) => ()
   next-method();
   update-list-view-items(pane, force?: #f)
@@ -1389,7 +1389,7 @@ define sealed method handle-notify
       next-method();
   end
 end method handle-notify;
-    
+
 
 /// List controls
 
@@ -1399,7 +1399,7 @@ define sealed class <win32-list-control>
      <leaf-pane>)
 end class <win32-list-control>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <list-control>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-list-control>, #f)
@@ -1493,7 +1493,7 @@ end method do-compose-space;
 
 define sealed method set-mirror-edges
     (_port :: <win32-port>, pane :: <win32-list-control>, mirror :: <window-mirror>,
-     left :: <integer>, top :: <integer>, 
+     left :: <integer>, top :: <integer>,
      right :: <integer>, bottom :: <integer>) => ()
   next-method();
   let handle :: <HWND> = window-handle(mirror);
@@ -1540,7 +1540,7 @@ end class <win32-list-item>;
 define sealed domain make (singleton(<win32-list-item>));
 define sealed domain initialize (<win32-list-item>);
 
-define sealed method do-make-item 
+define sealed method do-make-item
     (pane :: <win32-list-control>, class == <list-item>, #key object)
  => (item :: <win32-list-item>)
   make(<win32-list-item>, object: object)
@@ -1673,7 +1673,7 @@ define sealed class <win32-table-control>
      <leaf-pane>)
 end class <win32-table-control>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <table-control>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-table-control>, #f)
@@ -1822,7 +1822,7 @@ end class <win32-table-item>;
 define sealed domain make (singleton(<win32-table-item>));
 define sealed domain initialize (<win32-table-item>);
 
-define sealed method do-make-item 
+define sealed method do-make-item
     (pane :: <win32-table-control>, class == <table-item>, #key object)
  => (item :: <win32-table-item>)
   make(<win32-table-item>, object: object)
@@ -2010,7 +2010,7 @@ define sealed class <win32-tree-control>
     init-keyword: use-buttons-only?:;
 end class <win32-tree-control>;
 
-define method class-for-make-pane 
+define method class-for-make-pane
     (framem :: <win32-frame-manager>, class == <tree-control>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<win32-tree-control>, #f)
@@ -2059,7 +2059,7 @@ define sealed method win32-tree-view-options
           if (pane.%always-show-selection?)        $TVS-SHOWSELALWAYS else 0 end)
 end method win32-tree-view-options;
 
-define sealed method destroy-mirror 
+define sealed method destroy-mirror
     (_port :: <win32-port>, pane :: <win32-tree-control>, mirror :: <window-mirror>) => ()
   when (pane.%small-icons)
     ImageList-Destroy(pane.%small-icons);
@@ -2425,10 +2425,10 @@ define function item-handle->tree-node
   end
 end function item-handle->tree-node;
 
-define sealed method do-make-node 
+define sealed method do-make-node
     (pane :: <win32-tree-control>, class == <tree-node>, #key object)
  => (item :: <win32-tree-node>)
-  make(<win32-tree-node>, 
+  make(<win32-tree-node>,
        object: object)
 end method do-make-node;
 
@@ -2452,7 +2452,7 @@ define sealed method do-find-node
 end method do-find-node;
 
 define sealed method do-add-node
-    (pane :: <win32-tree-control>, parent, node :: <win32-tree-node>, 
+    (pane :: <win32-tree-control>, parent, node :: <win32-tree-node>,
      #key after) => ()
   let mirror = sheet-direct-mirror(pane);
   when (mirror)
@@ -2500,7 +2500,7 @@ define sealed method do-add-node
         tvinsert.hInsertAfter-value := $TVI-LAST
       end;
       duim-debug-message("Adding %s for object %= to tree %=:\n"
-                         "  [label %=, has-children? %=]", 
+                         "  [label %=, has-children? %=]",
                          if (root-node?) "root" else "node" end,
                          object, pane, label, has-children?);
       let item-handle :: <HTREEITEM>

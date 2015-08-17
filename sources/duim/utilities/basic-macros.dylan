@@ -11,10 +11,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define macro swap!
   { swap! (?place1:expression, ?place2:expression) }
     => { begin
-	   let _value = ?place1;
-	   ?place1 := ?place2;
-	   ?place2 := _value 
-	 end }
+           let _value = ?place1;
+           ?place1 := ?place2;
+           ?place2 := _value
+         end }
 end macro swap!;
 
 
@@ -47,9 +47,9 @@ end macro max!;
 define macro destructuring-let
   { destructuring-let ((?pattern:*) = ?value:expression) ?:body end }
     => { begin
-	   let _destructuring-let-body = method (?pattern) ?body end;
-	   apply(_destructuring-let-body, ?value)
-	 end }
+           let _destructuring-let-body = method (?pattern) ?body end;
+           apply(_destructuring-let-body, ?value)
+         end }
 end macro destructuring-let;
 
 
@@ -65,7 +65,7 @@ define macro pop!
            let _result = head(?list);
            ?list := tail(?list);
            _result
-	 end }
+         end }
 end macro pop!;
 
 
@@ -76,10 +76,10 @@ define macro with-restart
       ?:body
     end }
     => { block ()
-	   ?body
-	 exception (?condition, init-arguments: vector(?initargs))
-	   values(#f, #t)
-	 end }
+           ?body
+         exception (?condition, init-arguments: vector(?initargs))
+           values(#f, #t)
+         end }
 end macro with-restart;
 
 define macro with-simple-restart
@@ -87,9 +87,9 @@ define macro with-simple-restart
       ?:body
     end }
     => { with-restart (<simple-restart>,
-		       format-string: ?format-string,
-		       format-arguments: vector(?format-args))
-	   ?body
+                       format-string: ?format-string,
+                       format-arguments: vector(?format-args))
+           ?body
          end }
 end macro with-simple-restart;
 
@@ -98,9 +98,9 @@ define macro simple-restart-loop
       ?:body
     end }
     => { with-simple-restart (?format-string, ?format-args)
-	   while (#t)
-	     ?body
-	   end
+           while (#t)
+             ?body
+           end
          end }
 end macro simple-restart-loop;
 
@@ -194,15 +194,15 @@ end function evacuate-object;
 define macro thread-slot-definer
   { define thread-slot ?:name :: ?type:expression of ?class:expression}
     => { define /* inline */ method ?name ## "-dynamic-binder"
-	     (new :: ?type, continuation :: <function>, object :: ?class) => (#rest values)
-	   let old = object.?name;
-	   block ()
-	     object.?name := new;
-	     continuation()
-	   cleanup
-	     object.?name := old;
-	   end
-	 end method }
+             (new :: ?type, continuation :: <function>, object :: ?class) => (#rest values)
+           let old = object.?name;
+           block ()
+             object.?name := new;
+             continuation()
+           cleanup
+             object.?name := old;
+           end
+         end method }
   { define thread-slot ?:name :: ?type:expression}
     => { define thread-slot ?name :: ?type of <object> }
   { define thread-slot ?:name of ?class:expression}

@@ -54,8 +54,8 @@ define method initialize
      #key roots = #[], show-edges? = #t, show-root-edges? = #t, show-buttons? = #t)
   next-method();
   let bits = logior(if (show-edges?)      %tree_show_edges      else 0 end,
-		    if (show-root-edges?) %tree_show_root_edges else 0 end,
-		    if (show-buttons?)    %tree_show_buttons    else 0 end);
+                    if (show-root-edges?) %tree_show_root_edges else 0 end,
+                    if (show-buttons?)    %tree_show_buttons    else 0 end);
   tree-control-flags(tree) := bits;
   tree.%roots := as(<stretchy-vector>, roots);
   tree.%items := make(<stretchy-vector>)
@@ -71,7 +71,7 @@ define sealed inline method tree-control-show-edges?-setter
     (show-edges? :: <boolean>, tree :: <tree-control>) => (show-edges? :: <boolean>)
   tree-control-flags(tree)
     := logior(logand(tree-control-flags(tree), lognot(%tree_show_edges)),
-	      if (show-edges?) %tree_show_edges else 0 end);
+              if (show-edges?) %tree_show_edges else 0 end);
   show-edges?
 end method tree-control-show-edges?-setter;
 
@@ -84,7 +84,7 @@ define sealed inline method tree-control-show-root-edges?-setter
     (show-root-edges? :: <boolean>, tree :: <tree-control>) => (show-root-edges? :: <boolean>)
   tree-control-flags(tree)
     := logior(logand(tree-control-flags(tree), lognot(%tree_show_root_edges)),
-	      if (show-root-edges?) %tree_show_root_edges else 0 end);
+              if (show-root-edges?) %tree_show_root_edges else 0 end);
   show-root-edges?
 end method tree-control-show-root-edges?-setter;
 
@@ -97,7 +97,7 @@ define sealed inline method tree-control-show-buttons?-setter
     (show-buttons? :: <boolean>, tree :: <tree-control>) => (show-buttons? :: <boolean>)
   tree-control-flags(tree)
     := logior(logand(tree-control-flags(tree), lognot(%tree_show_buttons)),
-	      if (show-buttons?) %tree_show_buttons else 0 end);
+              if (show-buttons?) %tree_show_buttons else 0 end);
   show-buttons?
 end method tree-control-show-buttons?-setter;
 
@@ -235,12 +235,12 @@ define method tree-control-expanded-objects
   let objects :: <stretchy-object-vector> = make(<stretchy-vector>);
   let depth :: <integer> = 0;
   local method walk-nodes (node :: <tree-node>) => ()
-	  when (node-state(node) == #"expanded")
-	    add!(objects, node-object(node));
-	    max!(depth, node-generation(node));
-	    do(walk-nodes, node-children(node))
-	  end
-	end method;
+          when (node-state(node) == #"expanded")
+            add!(objects, node-object(node));
+            max!(depth, node-generation(node));
+            do(walk-nodes, node-children(node))
+          end
+        end method;
   do(walk-nodes, tree-control-root-nodes(tree));
   values(objects, depth)
 end method tree-control-expanded-objects;
@@ -249,13 +249,13 @@ define method tree-control-expanded-objects-setter
     (objects :: <sequence>, tree :: <tree-control>, #key depth = 1)
  => (objects :: <sequence>)
   local method expand-one (node :: <tree-node>) => ()
-	  when (member?(node-object(node), objects, test: gadget-test(tree)))
-	    expand-node(tree, node);
-	    when (node-generation(node) <= depth)
-	      do(expand-one, node-children(node))
-	    end
-	  end
-	end method;
+          when (member?(node-object(node), objects, test: gadget-test(tree)))
+            expand-node(tree, node);
+            when (node-generation(node) <= depth)
+              do(expand-one, node-children(node))
+            end
+          end
+        end method;
   do(expand-one, tree-control-root-nodes(tree));
   objects
 end method tree-control-expanded-objects-setter;
@@ -266,12 +266,12 @@ define method tree-control-expanded-object-count
   let count :: <integer> = 0;
   let depth :: <integer> = 0;
   local method walk-nodes (node :: <tree-node>) => ()
-	  when (node-state(node) == #"expanded")
-	    inc!(count, 1);
-	    max!(depth, node-generation(node));
-	    do(walk-nodes, node-children(node))
-	  end
-	end method;
+          when (node-state(node) == #"expanded")
+            inc!(count, 1);
+            max!(depth, node-generation(node));
+            do(walk-nodes, node-children(node))
+          end
+        end method;
   do(walk-nodes, tree-control-root-nodes(tree));
   values(count, depth)
 end method tree-control-expanded-object-count;
@@ -337,7 +337,7 @@ define sealed method add-node
   do-add-node(tree, parent, node, after: after);
   let index = after & position(root-nodes, after);
   // Insert the new node into the set of roots
-  unless (setting-roots?)	//--- I'm ashamed...
+  unless (setting-roots?)        //--- I'm ashamed...
     insert-at!(roots, node-object(node), index | #"end")
   end;
   insert-at!(root-nodes, node, index | #"end")
@@ -363,7 +363,7 @@ define sealed method remove-node
   let roots      = tree-control-roots(tree);
   let root-nodes = tree-control-root-nodes(tree);
   remove!(gadget-items(tree), node-object(node));
-  remove!(roots, node-object(node));	// just in case...
+  remove!(roots, node-object(node));        // just in case...
   remove!(root-nodes, node);
   do-remove-node(tree, node)
 end method remove-node;
@@ -382,11 +382,11 @@ define sealed method expand-node
       // If no items have ever been added, do it now
       let children-predicate = tree-control-children-predicate(tree);
       when (children-predicate(node-object(node)))
-	let children-generator = tree-control-children-generator(tree);  
-	let objects = children-generator(node-object(node));
-	let nodes = map-as(<simple-vector>,
-			   method (object) make-node(tree, object) end, objects);
-	do-add-nodes(tree, node, nodes)
+        let children-generator = tree-control-children-generator(tree);
+        let objects = children-generator(node-object(node));
+        let nodes = map-as(<simple-vector>,
+                           method (object) make-node(tree, object) end, objects);
+        do-add-nodes(tree, node, nodes)
       end;
       node-state(node) := #"contracted"
     end
@@ -448,7 +448,7 @@ end method handle-event;
 define function distribute-node-state-changed-callback
     (tree :: <tree-control>, node :: <tree-node>) => ()
   distribute-event(port(tree),
-		   make(<node-state-changed-gadget-event>,
-			gadget: tree,
-			node: node))
+                   make(<node-state-changed-gadget-event>,
+                        gadget: tree,
+                        node: node))
 end function distribute-node-state-changed-callback;

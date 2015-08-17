@@ -169,13 +169,13 @@ end method sheet-layed-out?-setter;
 define macro with-display-locked
   { with-display-locked (?object:expression) ?:body end }
     => { begin
-	   let _display = display(?object);
-	   with-lock (display-lock(_display))
-	     ?body;
-	   failure
-	     error("Couldn't get display lock for %=", _display);
-	   end
-	 end }
+           let _display = display(?object);
+           with-lock (display-lock(_display))
+             ?body;
+           failure
+             error("Couldn't get display lock for %=", _display);
+           end
+         end }
 end macro with-display-locked;
 
 define inline function do-displays (function :: <function>, _port :: <port>) => ()
@@ -191,16 +191,16 @@ define method find-display
       _port := default-port(server-path: server-path)
     end;
     local method match-display (_display) => ()
-	    when (display-matches-characteristics?
-		    (_display, orientation: orientation, units: units))
-	      return(_display)
-	    end
-	  end method;
+            when (display-matches-characteristics?
+                    (_display, orientation: orientation, units: units))
+              return(_display)
+            end
+          end method;
     dynamic-extent(match-display);
     do-displays(match-display, _port);
     make(port-display-class(_port),
-	 port: _port,
-	 orientation: orientation, units: units)
+         port: _port,
+         orientation: orientation, units: units)
   end
 end method find-display;
 
@@ -250,18 +250,18 @@ define method attach-sheet
  => (top-sheet :: <sheet>)
   dynamic-extent(pane-options);
   assert(framem,
-	 "You need to supply a frame manager for the time being");
+         "You need to supply a frame manager for the time being");
   let top-sheet
     = with-frame-manager (framem)
         with-keywords-removed (pane-options = pane-options, #[sheet-class:])
-	  apply(make-pane,
-		sheet-class,
-		region: begin
-			  let (width, height) = box-size(sheet);
-			  make-bounding-box(0, 0, width, height)
-			end,
-		parent: _display,
-		pane-options)
+          apply(make-pane,
+                sheet-class,
+                region: begin
+                          let (width, height) = box-size(sheet);
+                          make-bounding-box(0, 0, width, height)
+                        end,
+                parent: _display,
+                pane-options)
         end
       end;
   // Attaching the top-level pane given by the layout to the top-level
@@ -288,7 +288,7 @@ define method detach-sheet
   let top-sheet = top-level-sheet(sheet);
   when (top-sheet)
     assert(sheet-parent(top-sheet) == _display,
-	   "The parent of the top-level sheet should be the display");
+           "The parent of the top-level sheet should be the display");
     remove-child(sheet-parent(top-sheet), top-sheet)
   end;
   top-sheet

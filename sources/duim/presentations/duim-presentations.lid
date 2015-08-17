@@ -2,15 +2,15 @@ Library:      duim-presentations
 Synopsis:     DUIM presentation system
 Author:       Scott McKay
 Files:  library
-	module
-	presentation-defs
-	presentation-macros
-	presentation-types
-	presentation-sheets
-	presentation-records
-	presentation-translators
-	accept
-	present
+        module
+        presentation-defs
+        presentation-macros
+        presentation-types
+        presentation-sheets
+        presentation-records
+        presentation-translators
+        accept
+        present
         presentation-tests
 Major-version: 2
 Minor-version: 1

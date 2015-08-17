@@ -74,16 +74,16 @@ define frame <scribble-frame> (<simple-frame>)
     make-pane(<scribble-pane>, width: 300, height: 200);
   pane clear-button (frame)
     make-pane(<menu-button>,
-	      label: "&Clear",
-	      selection-mode: #"none",
-	      activate-callback: method (button)
-				   ignore(button);
-				   clear-surface(frame.surface)
-				 end);
+              label: "&Clear",
+              selection-mode: #"none",
+              activate-callback: method (button)
+                                   ignore(button);
+                                   clear-surface(frame.surface)
+                                 end);
   pane window-menu (frame)
     make-pane(<menu>,
-	      label: "&Scribble",
-	      children: vector(frame.clear-button));
+              label: "&Scribble",
+              children: vector(frame.clear-button));
   layout (frame) frame.surface;
   menu-bar (frame)
     make-pane(<menu-bar>, children: vector(frame.window-menu));

@@ -1,14 +1,14 @@
 Library:      reversi
 Author:       Andy Armstrong, Jonathon Lee
 Synopsis:     Reversi game
-Files:	library
-	module
-        game
-        algorithms
-        board
-        piece-shapes
-        saving
-        start-reversi
+Files:        library
+              module
+              game
+              algorithms
+              board
+              piece-shapes
+              saving
+              start-reversi
 Linker-Options: $(guilflags)
 Start-Function: play-reversi
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

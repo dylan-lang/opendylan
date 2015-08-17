@@ -13,7 +13,7 @@ define library duim-extended-geometry
   use duim-geometry;
   use duim-DCs;
   use duim-sheets;
-  use duim-graphics;  
+  use duim-graphics;
 
   export duim-extended-geometry;
   export duim-extended-geometry-internals;

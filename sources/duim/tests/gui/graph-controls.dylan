@@ -10,10 +10,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define frame <number-graph-frame> (<simple-frame>)
   pane roots-pane (frame)
-    make(<check-box>, 
+    make(<check-box>,
          items: #[1, 2, 3, 4],
          value: #[1],
-	 value-changed-callback: method (gadget)
+         value-changed-callback: method (gadget)
                                    tree-control-roots(frame.tree-pane)
                                      := sort(gadget-value(gadget));
                                    tree-control-roots(frame.tree-graph-pane)
@@ -25,22 +25,22 @@ define frame <number-graph-frame> (<simple-frame>)
     make(<tree-control>,
          roots: #[1],
          depth: 2,
-	 children-generator: method (x) vector(x * 2, x * 2 + 1) end,
-	 min-height: 150, min-width: 250);
+         children-generator: method (x) vector(x * 2, x * 2 + 1) end,
+         min-height: 150, min-width: 250);
   pane tree-graph-pane (frame)
     make(<graph-control>,
-	 graph-type: #"tree",
+         graph-type: #"tree",
          roots: #[1],
          depth: 2,
          children-generator: method (x) vector(x * 2, x * 2 + 1) end,
-	 min-height: 150, min-width: 250);
+         min-height: 150, min-width: 250);
   pane dag-graph-pane (frame)
     make(<graph-control>,
-	 graph-type: #"dag",
+         graph-type: #"dag",
          roots: #[1],
          depth: 2,
          children-generator: method (x) vector(x * 2, x * 2 + 1) end,
-	 min-height: 150, min-width: 250);
+         min-height: 150, min-width: 250);
   pane main-layout (frame)
     vertically (spacing: 2)
       frame.roots-pane;
@@ -61,27 +61,27 @@ define frame <class-graph-frame> (<simple-frame>)
          roots: vector(<graph-control>),
          depth: 2,
          activate-callback: tab-control-activate-callback,
-	 children-generator: direct-superclasses,
-	 label-key: method (c) as(<string>, debug-name(c)) end,
-	 min-height: 150, min-width: 250);
+         children-generator: direct-superclasses,
+         label-key: method (c) as(<string>, debug-name(c)) end,
+         min-height: 150, min-width: 250);
   pane tree-graph-pane (frame)
     make(<graph-control>,
-	 graph-type: #"tree",
+         graph-type: #"tree",
          roots: vector(<graph-control>),
          depth: 2,
          activate-callback: tab-control-activate-callback,
-	 children-generator: direct-superclasses,
-	 label-key: method (c) as(<string>, debug-name(c)) end,
-	 min-height: 150, min-width: 250);
+         children-generator: direct-superclasses,
+         label-key: method (c) as(<string>, debug-name(c)) end,
+         min-height: 150, min-width: 250);
   pane dag-graph-pane (frame)
     make(<graph-control>,
-	 graph-type: #"dag",
+         graph-type: #"dag",
          roots: vector(<graph-control>),
          depth: 2,
          activate-callback: tab-control-activate-callback,
-	 children-generator: direct-superclasses,
-	 label-key: method (c) as(<string>, debug-name(c)) end,
-	 min-height: 150, min-width: 250);
+         children-generator: direct-superclasses,
+         label-key: method (c) as(<string>, debug-name(c)) end,
+         min-height: 150, min-width: 250);
   pane main-layout (frame)
     vertically (spacing: 2)
       frame.tree-pane;
@@ -96,24 +96,24 @@ end frame <class-graph-frame>;
 
 define variable $graph-control-tests
   = vector(vector("Number graphs", <number-graph-frame>),
-	   vector("Class graphs",  <class-graph-frame>));
+           vector("Class graphs",  <class-graph-frame>));
 
 define frame <graph-control-frame> (<simple-frame>)
   pane examples (frame)
     make(<list-control>,
          scroll-bars: #"none",
-	 documentation: "Double-click on a test name to run it",
-	 items: $graph-control-tests,
-	 lines: size($graph-control-tests),
-	 label-key: first,
-	 activate-callback: method (gadget :: <gadget>)
+         documentation: "Double-click on a test name to run it",
+         items: $graph-control-tests,
+         lines: size($graph-control-tests),
+         label-key: first,
+         activate-callback: method (gadget :: <gadget>)
                               let frame = sheet-frame(gadget);
                               let value = gadget-value(gadget);
                               let title = first(value);
                               let class = second(value);
                               let test-frame = make(class, title: title, owner: frame);
                               start-frame(test-frame)
-			    end);
+                            end);
   pane main-layout (frame)
     frame.examples;
   layout (frame) frame.main-layout;

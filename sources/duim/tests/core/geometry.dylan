@@ -163,7 +163,7 @@ define sideways method make-test-instance
  => (instance :: <transform-underspecified>)
   make(<transform-underspecified>, points: #())
 end method make-test-instance;
-           
+
 define duim-geometry class-test <bounding-box> ()
   let box = make-bounding-box(50, 100, 150, 300);
   check-true("bounding-box?(box)", bounding-box?(box));

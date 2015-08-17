@@ -44,8 +44,8 @@ define method translate-coordinate-sequence!
     let ncoords :: <integer> = size(coords);
     without-bounds-checks
       for (i :: <integer> from 0 below ncoords by 2)
-	coords[i + 0] := coords[i + 0] + dx;
-	coords[i + 1] := coords[i + 1] + dy
+        coords[i + 0] := coords[i + 0] + dx;
+        coords[i + 1] := coords[i + 1] + dy
       end
     end
   end;
@@ -58,8 +58,8 @@ define method translate-coordinate-sequence!
     let ncoords :: <integer> = size(coords);
     without-bounds-checks
       for (i :: <integer> from 0 below ncoords by 2)
-	coords[i + 0] := coords[i + 0] + dx;
-	coords[i + 1] := coords[i + 1] + dy
+        coords[i + 0] := coords[i + 0] + dx;
+        coords[i + 1] := coords[i + 1] + dy
       end
     end
   end;
@@ -150,17 +150,17 @@ define macro with-device-coordinates
       ?:body
     end }
     => { begin
-	   let (?x :: <integer>, ?y :: <integer>)
-	     = if (?transform == $identity-transform)	// for speed...
-		 values(floor(?x), floor(?y))
-	       else
-		 let (_x, _y) = transform-position(?transform, ?x, ?y);
-		 values(floor(_x), floor(_y))
-	       end;
-	   with-device-coordinates (?transform, ?more)
-	     ?body
-	   end 
-	 end }
+           let (?x :: <integer>, ?y :: <integer>)
+             = if (?transform == $identity-transform)        // for speed...
+                 values(floor(?x), floor(?y))
+               else
+                 let (_x, _y) = transform-position(?transform, ?x, ?y);
+                 values(floor(_x), floor(_y))
+               end;
+           with-device-coordinates (?transform, ?more)
+             ?body
+           end
+         end }
 end macro with-device-coordinates;
 
 // with-device-distances (transform, dx1, dy1, dx2, dy2, ...) body end;
@@ -173,17 +173,17 @@ define macro with-device-distances
       ?:body
     end }
     => { begin
-	   let (?dx :: <integer>, ?dy :: <integer>)
-	     = if (?transform == $identity-transform)	// for speed...
-		 values(floor(?dx), floor(?dy))
-	       else
-		 let (_dx, _dy) = transform-distance(?transform, ?dx, ?dy);
-		 values(floor(_dx), floor(_dy))
-	       end;
-	   with-device-distances (?transform, ?more)
-	     ?body
-	   end
-	 end }
+           let (?dx :: <integer>, ?dy :: <integer>)
+             = if (?transform == $identity-transform)        // for speed...
+                 values(floor(?dx), floor(?dy))
+               else
+                 let (_dx, _dy) = transform-distance(?transform, ?dx, ?dy);
+                 values(floor(_dx), floor(_dy))
+               end;
+           with-device-distances (?transform, ?more)
+             ?body
+           end
+         end }
 end macro with-device-distances;
 
 
@@ -194,7 +194,7 @@ define macro convert-to-device-coordinates!
   { convert-to-device-coordinates!
       (?transform:expression, ?x:expression, ?y:expression, ?more:*) }
     => { let (_x, _y) = transform-position(?transform, ?x, ?y);
-	 ?x := floor(_x);
+         ?x := floor(_x);
          ?y := floor(_y);
          convert-to-device-coordinates!(?transform, ?more); }
 end macro convert-to-device-coordinates!;
@@ -206,7 +206,7 @@ define macro convert-to-device-distances!
   { convert-to-device-distances!
       (?transform:expression, ?dx:expression, ?dy:expression, ?more:*) }
     => { let (_dx, _dy) = transform-distance(?transform, ?dx, ?dy);
-	 ?dx := floor(_dx);
+         ?dx := floor(_dx);
          ?dy := floor(_dy);
          convert-to-device-distances!(?transform, ?more); }
 end macro convert-to-device-distances!;
@@ -220,7 +220,7 @@ define method do-coordinates
   let ncoords :: <integer> = size(coordinates);
   without-bounds-checks
     for (i :: <integer> = 0 then i + 2,
-	 until: i >= ncoords)
+         until: i >= ncoords)
       function(coordinates[i], coordinates[i + 1])
     end
   end
@@ -232,7 +232,7 @@ define method do-coordinates
   let ncoords :: <integer> = size(coordinates);
   without-bounds-checks
     for (i :: <integer> = 0 then i + 2,
-	 until: i >= ncoords)
+         until: i >= ncoords)
       function(coordinates[i], coordinates[i + 1])
     end
   end
@@ -255,9 +255,9 @@ define method do-endpoint-coordinates
   let ncoords :: <integer> = size(coordinates);
   without-bounds-checks
     for (i :: <integer> = 0 then i + 4,
-	 until: i >= ncoords)
+         until: i >= ncoords)
       function(coordinates[i],     coordinates[i + 1],
-	       coordinates[i + 2], coordinates[i + 3])
+               coordinates[i + 2], coordinates[i + 3])
     end
   end
 end method do-endpoint-coordinates;
@@ -268,9 +268,9 @@ define method do-endpoint-coordinates
   let ncoords :: <integer> = size(coordinates);
   without-bounds-checks
     for (i :: <integer> = 0 then i + 4,
-	 until: i >= ncoords)
+         until: i >= ncoords)
       function(coordinates[i],     coordinates[i + 1],
-	       coordinates[i + 2], coordinates[i + 3])
+               coordinates[i + 2], coordinates[i + 3])
     end
   end
 end method do-endpoint-coordinates;

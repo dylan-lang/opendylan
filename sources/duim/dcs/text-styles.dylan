@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant <text-style-weight>
     = one-of(#f, #"normal", #"condensed", #"thin", #"extra-light", #"light",
-	     #"medium", #"demibold", #"bold", #"extra-bold", #"black");
+             #"medium", #"demibold", #"bold", #"extra-bold", #"black");
 
 define constant <text-style-slant>
     = one-of(#f, #"roman", #"italic", #"oblique");
@@ -65,7 +65,7 @@ define sealed domain initialize (<standard-text-style>);
 // Bits 0..5 are the weight
 define constant %weight_shift :: <integer> = 0;
 define constant %weight_mask  :: <integer> = #o077;
-// define constant %weight_false       = #o000;		// must be zero!
+// define constant %weight_false       = #o000;                // must be zero!
 // define constant %weight_normal      = #o001;
 // define constant %weight_condensed   = #o002;
 // define constant %weight_thin        = #o003;
@@ -87,7 +87,7 @@ assert($text-style-weights[0] == #f,
 // Bits 6..8 are the slant
 define constant %slant_shift :: <integer> = 6;
 define constant %slant_mask  :: <integer> = #o700;
-// define constant %slant_false   = #o000;		// must be zero!
+// define constant %slant_false   = #o000;                // must be zero!
 // define constant %slant_roman   = #o100;
 // define constant %slant_italic  = #o200;
 // define constant %slant_oblique = #o300;
@@ -118,7 +118,7 @@ define sealed method initialize
   next-method();
   text-style-face-code(style)
     := compute-face-code(weight, slant, underline?, strikeout?)
-end method initialize;    
+end method initialize;
 
 define sealed method \=
     (style1 :: <standard-text-style>, style2 :: <standard-text-style>) => (true? :: <boolean>)
@@ -134,14 +134,14 @@ end method \=;
 define sealed inline method text-style-weight
     (style :: <standard-text-style>) => (weight :: <text-style-weight>)
   let index = ash(logand(text-style-face-code(style), %weight_mask),
-		  -%weight_shift);
+                  -%weight_shift);
   $text-style-weights[index]
 end method text-style-weight;
 
 define sealed inline method text-style-slant
     (style :: <standard-text-style>) => (slant :: <text-style-slant>)
   let index = ash(logand(text-style-face-code(style), %slant_mask),
-		  -%slant_shift);
+                  -%slant_shift);
   $text-style-slants[index]
 end method text-style-slant;
 
@@ -155,7 +155,7 @@ define sealed inline method text-style-strikeout?
   logand(text-style-face-code(style), %strikeout_style) = %strikeout_style
 end method text-style-strikeout?;
 
-define sealed method text-style-components 
+define sealed method text-style-components
     (style :: <standard-text-style>)
  => (family, name :: false-or(<string>), weight :: <text-style-weight>,
      slant :: <text-style-slant>, size, underline? :: <boolean>,
@@ -165,8 +165,8 @@ define sealed method text-style-components
          text-style-weight(style),
          text-style-slant(style),
          text-style-size(style),
-	 text-style-underline?(style),
-	 text-style-strikeout?(style))
+         text-style-underline?(style),
+         text-style-strikeout?(style))
 end method text-style-components;
 
 define variable $text-family-table :: <object-table> = make(<table>);
@@ -176,7 +176,7 @@ define sealed inline method make
      #key family, name, weight, slant, size, underline? = #f, strikeout? = #f)
  => (text-style :: <standard-text-style>)
   make-text-style(family, name, weight, slant, size,
-		  underline?: underline?, strikeout?: strikeout?)
+                  underline?: underline?, strikeout?: strikeout?)
 end method make;
 
 define sealed method make-text-style
@@ -204,7 +204,7 @@ define sealed method make-text-style
     text-style
       := make(<standard-text-style>,
               family: family, name: name, weight: weight, slant: slant, size: size,
-	      underline?: underline?, strikeout?: strikeout?);
+              underline?: underline?, strikeout?: strikeout?);
     gethash(size-table, size) := text-style
   end;
   text-style
@@ -254,25 +254,25 @@ define constant $text-style-sizes :: <simple-object-vector>
 
 define function merge-text-style-sizes
     (size1, size2) => (new-size)
-  let max-larger-size = 24;		// limits for #"larger" and #"smaller"
+  let max-larger-size = 24;                // limits for #"larger" and #"smaller"
   let min-smaller-size = 4;
   select (size1)
     #"larger" =>
       case
         instance?(size2, <number>) => min(size2 + 2, max-larger-size);
-        size2 == #"smaller" => #f;	// let a higher level decide...
+        size2 == #"smaller" => #f;        // let a higher level decide...
         otherwise =>
           let index = position($text-style-sizes, size2);
           if (index)
             $text-style-sizes[index + 1] | #"huge"
           else
             size1
-	  end;
+          end;
       end;
     #"smaller" =>
       case
         instance?(size2, <number>) => max(size2 - 2, min-smaller-size);
-        size2 == #"larger" => #f;	// let a higher level decide...
+        size2 == #"larger" => #f;        // let a higher level decide...
         otherwise =>
           let index = position($text-style-sizes, size2);
           if (index)
@@ -283,7 +283,7 @@ define function merge-text-style-sizes
             end
           else
             size1
-	  end;
+          end;
       end;
     otherwise =>
       size1 | size2;
@@ -333,15 +333,15 @@ define variable $standard-character-set = #f;
 
 define variable $null-text-style :: <standard-text-style>
     = make(<text-style>,
-	   family: #f, name: #f, weight: #f, slant: #f, size: #f);
+           family: #f, name: #f, weight: #f, slant: #f, size: #f);
 
 define variable $undefined-text-style :: <standard-text-style>
     = make(<text-style>,
-	   family: #"undefined", name: #f, weight: #"normal", slant: #"roman",
-	   size: #"normal");
+           family: #"undefined", name: #f, weight: #"normal", slant: #"roman",
+           size: #"normal");
 
 // The default default, if no other can be found anywhere
 define variable $default-text-style :: <standard-text-style>
     = make(<text-style>,
-	   family: #"fix", name: #f, weight: #"normal", slant: #"roman",
-	   size: #"normal");
+           family: #"fix", name: #f, weight: #"normal", slant: #"roman",
+           size: #"normal");

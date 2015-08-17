@@ -19,19 +19,19 @@ define variable *contain-uses-own-thread?* :: <boolean> = #f;
 
 define method contain
     (pane, #rest initargs, #key own-thread? = *contain-uses-own-thread?*, #all-keys)
- => (pane :: <sheet>, frame :: <frame>) 
+ => (pane :: <sheet>, frame :: <frame>)
   dynamic-extent(initargs);
   with-keywords-removed (initargs = initargs, #[owner:])
     let container = apply(make-container, pane, initargs);
     local method start-container-frame () => ()
-	    with-abort-restart ()
-	      start-frame(container)
-	    end
-	  end method;
+            with-abort-restart ()
+              start-frame(container)
+            end
+          end method;
     if (own-thread?)
       make(<thread>,
-	   name: frame-title(container),
-	   function: start-container-frame)
+           name: frame-title(container),
+           function: start-container-frame)
     else
       start-container-frame()
     end;
@@ -80,10 +80,10 @@ define method make-container
   apply(make-container-frame, layout, layout: layout, initargs)
 end method make-container;
 
-define method make-container 
+define method make-container
     (sheet :: <sheet>, #rest initargs, #key) => (frame :: <frame>)
   dynamic-extent(initargs);
-  apply(make-container, 
+  apply(make-container,
         make(<column-layout>, children: vector(sheet)),
         initargs)
 end method make-container;
@@ -91,7 +91,7 @@ end method make-container;
 
 /// Menu containers
 
-define method make-container 
+define method make-container
     (menu-bar :: <menu-bar>, #rest initargs, #key) => (frame :: <frame>)
   dynamic-extent(initargs);
   apply(make-container-frame, menu-bar, menu-bar: menu-bar, initargs)
@@ -106,24 +106,24 @@ end method make-container;
 define method make-container
     (component :: <menu-box>, #rest initargs, #key) => (frame :: <frame>)
   dynamic-extent(initargs);
-  apply(make-container, 
+  apply(make-container,
         make(<menu>, label: "Menu", children: vector(component)), initargs)
 end method make-container;
 
-define method make-container 
+define method make-container
     (button :: <menu-button>, #rest initargs, #key) => (frame :: <frame>)
   dynamic-extent(initargs);
-  apply(make-container, 
+  apply(make-container,
         make(<menu>, label: "Menu", children: vector(button)), initargs)
 end method make-container;
 
 
 /// Command table containers
 
-define method make-container 
+define method make-container
     (command-table :: <command-table>, #rest initargs, #key) => (frame :: <frame>)
   dynamic-extent(initargs);
-  apply(make-container-frame, command-table, 
+  apply(make-container-frame, command-table,
         command-table: command-table,
         initargs)
 end method make-container;
@@ -131,13 +131,13 @@ end method make-container;
 
 /// Status bar and tool bar containers
 
-define method make-container 
+define method make-container
     (status-bar :: <status-bar>, #rest initargs, #key) => (frame :: <frame>)
   dynamic-extent(initargs);
   apply(make-container-frame, status-bar, status-bar: status-bar, initargs)
 end method make-container;
 
-define method make-container 
+define method make-container
     (tool-bar :: <tool-bar>, #rest initargs, #key) => (frame :: <frame>)
   dynamic-extent(initargs);
   apply(make-container-frame, tool-bar, tool-bar: tool-bar, initargs)

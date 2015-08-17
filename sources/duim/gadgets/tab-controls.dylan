@@ -30,7 +30,7 @@ define open abstract class <tab-control>
     init-keyword: value-key:;
 end class <tab-control>;
 
-define sealed class <tab-control-page> 
+define sealed class <tab-control-page>
     (<basic-page>, <single-child-wrapping-pane>)
 end class <tab-control-page>;
 
@@ -78,15 +78,15 @@ define method tab-control-pages-setter
   let old-page  = tab-control-current-page(pane);
   let page
     = select (page by instance?)
-	<sheet>   => page;
-	otherwise => find-tab-control-page(pane, page);
+        <sheet>   => page;
+        otherwise => find-tab-control-page(pane, page);
       end
-      | old-page;	// Keep old page current if none specified
+      | old-page;        // Keep old page current if none specified
   let new-page
     = if (member?(page, pages))
-	page
+        page
       else
-	unless (empty?(pages)) pages[0] end
+        unless (empty?(pages)) pages[0] end
       end;
   case
     old-pages ~= pages =>

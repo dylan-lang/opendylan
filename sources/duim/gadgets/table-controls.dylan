@@ -44,21 +44,21 @@ define method initialize
   // Ensure the items are in a stretchy vector so we can use 'add!' and 'remove!'
   apply(next-method, pane, items: as(<stretchy-vector>, items), initargs);
   assert(columns | (headings & generators),
-	 "You must supply either columns, or headings and generators");
+         "You must supply either columns, or headings and generators");
   unless (columns)
     assert(size(headings) = size(generators),
-	   "There must be as many generators as there are headings");
+           "There must be as many generators as there are headings");
     when (widths)
       assert(size(headings) = size(widths),
-	     "There must be as many widths as there are headings")
+             "There must be as many widths as there are headings")
     end;
     when (alignments)
       assert(size(headings) = size(alignments),
-	     "There must be as many alignments as there are headings")
+             "There must be as many alignments as there are headings")
     end;
     when (callbacks)
       assert(size(headings) = size(callbacks),
-	     "There must be as many callbacks as there are headings")
+             "There must be as many callbacks as there are headings")
     end;
     let columns = make(<stretchy-vector>);
     for (i :: <integer> from 0 below size(headings))
@@ -68,11 +68,11 @@ define method initialize
       let alignment = (alignments & alignments[i]) | #"left";
       let callback  = (callbacks & callbacks[i]) | #f;
       add!(columns, make(<table-column>,
-			 heading:   heading,
-			 width:     width,
-			 alignment: alignment,
-			 generator: generator,
-			 callback:  callback))
+                         heading:   heading,
+                         width:     width,
+                         alignment: alignment,
+                         generator: generator,
+                         callback:  callback))
     end;
     table-control-columns(pane) := columns
   end
@@ -156,9 +156,9 @@ define sealed method add-item
     when (index)
       let selection = gadget-selection(pane);
       for (i :: <integer> from 0 below size(selection))
-	when (selection[i] > index)
-	  selection[i] := selection[i] + 1
-	end
+        when (selection[i] > index)
+          selection[i] := selection[i] + 1
+        end
       end;
       pane.%selection := selection
     end
@@ -177,12 +177,12 @@ define sealed method remove-item
     let selection = remove(gadget-selection(pane), index);
     for (i :: <integer> from 0 below size(selection))
       when (selection[i] > index)
-	selection[i] := selection[i] - 1
+        selection[i] := selection[i] - 1
       end
     end;
     pane.%selection := selection
   end;
-  do-remove-item(pane, item)  
+  do-remove-item(pane, item)
 end method remove-item;
 
 define sealed method add-column
@@ -220,7 +220,7 @@ end method handle-event;
 define function distribute-column-click-callback
     (gadget :: <table-control>, column :: <table-column>) => ()
   distribute-event(port(gadget),
-		   make(<column-click-gadget-event>,
-			gadget: gadget,
-			column: column))
+                   make(<column-click-gadget-event>,
+                        gadget: gadget,
+                        column: column))
 end function distribute-column-click-callback;

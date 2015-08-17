@@ -16,7 +16,7 @@ end macro with-printing;
 define method scribble-page-setup
     (frame :: <scribble-frame>) => ()
   notify-user("Not yet implemented!",
-	      style: #"warning", exit-style: #"ok")
+              style: #"warning", exit-style: #"ok")
 end method scribble-page-setup;
 
 define method scribble-print
@@ -53,7 +53,7 @@ define method choose-printer-options
     print.hDevMode-value     := null-pointer(<LPDEVMODE>);
     print.hDevNames-value    := null-pointer(<LPDEVNAMES>);
     print.Flags-value        := %logior($PD-USEDEVMODECOPIESANDCOLLATE,
-					$PD-RETURNDC);
+                                        $PD-RETURNDC);
     print.nCopies-value      := 1;
     print.nFromPage-value    := 1;
     print.nToPage-value      := 1;
@@ -74,13 +74,13 @@ define method do-with-printing
   block ()
     with-stack-structure (docinfo :: <LPDOCINFO>)
       with-c-string (c-string = name)
-	docinfo.cbSize-value       := size-of(<DOCINFO>);
-	docinfo.lpszDocName-value  := c-string;
-	docinfo.lpszOutput-value   := $NULL-string;
-	docinfo.lpszDatatype-value := $NULL-string;
-	docinfo.fwType-value       := 0;
-	StartDoc(dc, docinfo);
-	started? := #t;
+        docinfo.cbSize-value       := size-of(<DOCINFO>);
+        docinfo.lpszDocName-value  := c-string;
+        docinfo.lpszOutput-value   := $NULL-string;
+        docinfo.lpszDatatype-value := $NULL-string;
+        docinfo.fwType-value       := 0;
+        StartDoc(dc, docinfo);
+        started? := #t;
       end
     end;
     function(dc)
@@ -98,12 +98,12 @@ define method sheet-printer-scaling
   let mirror = sheet-mirror(sheet);
   let sheet-dc = get-dc(mirror);
   local method scale
-	    (value1 :: <integer>, value2 :: <integer>)
-	 => (scale :: <single-float>)
-	  as(<single-float>, value1) / as(<single-float>, value2)
-	end method scale;
+            (value1 :: <integer>, value2 :: <integer>)
+         => (scale :: <single-float>)
+          as(<single-float>, value1) / as(<single-float>, value2)
+        end method scale;
   values(scale(GetDeviceCaps(printer-dc, $LOGPIXELSX),
-	       GetDeviceCaps(sheet-dc,   $LOGPIXELSX)),
-	 scale(GetDeviceCaps(printer-dc, $LOGPIXELSY),
-	       GetDeviceCaps(sheet-dc,   $LOGPIXELSY)))
+               GetDeviceCaps(sheet-dc,   $LOGPIXELSX)),
+         scale(GetDeviceCaps(printer-dc, $LOGPIXELSY),
+               GetDeviceCaps(sheet-dc,   $LOGPIXELSY)))
 end method sheet-printer-scaling;

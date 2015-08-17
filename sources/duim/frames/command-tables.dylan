@@ -41,7 +41,7 @@ define sealed class <standard-command-table> (<command-table>)
   // A completion alist of command line names for this command table and
   // all the command tables it inherits from
   sealed slot %completion-alist = #f;
-  sealed slot %completion-alist-tick = 0; 
+  sealed slot %completion-alist-tick = 0;
   */
   /*
   //--- This belongs in a presentation layer
@@ -64,7 +64,7 @@ define method command-table-inherit-from-setter
     command-table.%inherit-from := inherit-from;
     /* command-table.%completion-alist := #f; */
     /* when (command-table.%translators-cache)
-	 remove-all-keys!(command-table.%translators-cache)
+         remove-all-keys!(command-table.%translators-cache)
        end */
   end;
   inherit-from
@@ -92,8 +92,8 @@ define macro command-table-variable-definer
   { define command-table-variable ?:name (?supers:*) ?options:* end }
     => { define variable ?name :: <standard-command-table>
            = apply(make, <command-table>,
-		   name: ?#"name",
-		   inherit-from: vector(?supers), 
+                   name: ?#"name",
+                   inherit-from: vector(?supers),
                    ?options) }
  supers:
   { } => { }
@@ -119,8 +119,8 @@ define macro command-table-variable-definer
   { define command-table-variable ?:name (?supers:*) ?options:* end }
     => { define variable ?name :: <standard-command-table>
            = make(<command-table>,
-		  name: ?#"name",
-		  inherit-from: vector(?supers), ?options) }
+                  name: ?#"name",
+                  inherit-from: vector(?supers), ?options) }
  supers:
   { } => { }
   { ?super:*, ... } => { ?super, ... }
@@ -149,78 +149,78 @@ define macro command-table-menu-definer
       ?more-items:*
     end }
     => { add-command(?name, ?decorator);
-	 define command-table-menu ?name (?supers) ?more-items end }
+         define command-table-menu ?name (?supers) ?more-items end }
   { define command-table-menu ?:name (?supers:*)
       menu ?decorator:expression;
       ?more-items:*
     end }
     => { add-command(?name, ?decorator);
-	 define command-table-menu ?name (?supers) ?more-items end }
+         define command-table-menu ?name (?supers) ?more-items end }
   { define command-table-menu ?:name (?supers:*)
       command ?decorator:expression;
       ?more-items:*
     end }
     => { add-command(?name, ?decorator);
-	 define command-table-menu ?name (?supers) ?more-items end }
+         define command-table-menu ?name (?supers) ?more-items end }
   // The 'menu-item' cases
   { define command-table-menu ?:name (?supers:*)
       menu-item ?label of ?type = ?command, #rest ?options:expression;
       ?more-items:*
     end }
     => { add-command-table-menu-item
-	   (?name, ?label, ?type, ?command, ?options);
-	 define command-table-menu ?name (?supers) ?more-items end }
+           (?name, ?label, ?type, ?command, ?options);
+         define command-table-menu ?name (?supers) ?more-items end }
   { define command-table-menu ?:name (?supers:*)
       menu-item ?label of ?type = ?command;
       ?more-items:*
     end }
     => { add-command-table-menu-item
-	   (?name, ?label, ?type, ?command);
-	 define command-table-menu ?name (?supers) ?more-items end }
+           (?name, ?label, ?type, ?command);
+         define command-table-menu ?name (?supers) ?more-items end }
   { define command-table-menu ?:name (?supers:*)
       menu-item ?label = ?command, #rest ?options:expression;
       ?more-items:*
     end }
     => { add-command-table-menu-item
-	   (?name, ?label, #f, ?command, ?options);
-	 define command-table-menu ?name (?supers) ?more-items end }
+           (?name, ?label, #f, ?command, ?options);
+         define command-table-menu ?name (?supers) ?more-items end }
   { define command-table-menu ?:name (?supers:*)
       menu-item ?label = ?command;
       ?more-items:*
     end }
     => { add-command-table-menu-item
-	   (?name, ?label, #f, ?command);
-	 define command-table-menu ?name (?supers) ?more-items end }
+           (?name, ?label, #f, ?command);
+         define command-table-menu ?name (?supers) ?more-items end }
   // The 'separator' cases
   { define command-table-menu ?:name (?supers:*)
       separator;
       ?more-items:*
     end }
     => { add-command-table-menu-item
-	   (?name, #f, <separator>, #f);
-	 define command-table-menu ?name (?supers) ?more-items end }
+           (?name, #f, <separator>, #f);
+         define command-table-menu ?name (?supers) ?more-items end }
   { define command-table-menu ?:name (?supers:*)
       separator ?label;
       ?more-items:*
     end }
     => { add-command-table-menu-item
-	   (?name, ?label, <separator>, #f);
-	 define command-table-menu ?name (?supers) ?more-items end }
+           (?name, ?label, <separator>, #f);
+         define command-table-menu ?name (?supers) ?more-items end }
   // The 'include' cases
   { define command-table-menu ?:name (?supers:*)
       include ?command-table;
       ?more-items:*
     end }
     => { add-command-table-menu-item
-	   (?name, #f, <separator>, ?command-table);
-	 define command-table-menu ?name (?supers) ?more-items end }
+           (?name, #f, <separator>, ?command-table);
+         define command-table-menu ?name (?supers) ?more-items end }
   { define command-table-menu ?:name (?supers:*)
       include ?label = ?command-table;
       ?more-items:*
     end }
     => { add-command-table-menu-item
-	   (?name, ?label, <separator>, ?command-table);
-	 define command-table-menu ?name (?supers) ?more-items end }
+           (?name, ?label, <separator>, ?command-table);
+         define command-table-menu ?name (?supers) ?more-items end }
   // Fall-through...
   { define command-table-menu ?:name (?supers:*)
       ?non-menu-item:*; ?more-items:*
@@ -251,9 +251,9 @@ define sealed method make
   let inherit-from = as(<simple-vector>, inherit-from);
   let command-table
     = make(<standard-command-table>,
-	   name: name,
-	   inherit-from: inherit-from,
-	   resource-id:  resource-id);
+           name: name,
+           inherit-from: inherit-from,
+           resource-id:  resource-id);
   when (inherit-menu)
     install-inherited-menus(command-table, inherit-menu)
   end;
@@ -266,34 +266,34 @@ define method install-inherited-menus
   check-type(inherit-menu, type-union(one-of(#f, #t, #"menu", #"accelerators"), <list>));
   for (comtab in command-table-inherit-from(command-table))
     when (~instance?(inherit-menu, <sequence>)
-	  | member?(comtab, inherit-menu))
+          | member?(comtab, inherit-menu))
       let menu = command-table-menu(comtab);
       when (menu)
         for (decorator :: <command-decorator> in menu)
-	  let object  = decorator-object(decorator);
-	  let type    = decorator-type(decorator);
-	  let label   = decorator-label(decorator);
-	  let image   = decorator-image(decorator);
-	  let options = decorator-options(decorator);
-	  let accelerator   = decorator-accelerator(decorator);
-	  let mnemonic      = decorator-mnemonic(decorator);
-	  let documentation = decorator-documentation(decorator);
-	  let resource-id   = decorator-resource-id(decorator);
-	  select (inherit-menu)
-	    #"menu" => 
-	      accelerator := $unsupplied;
-	      mnemonic    := $unsupplied;
-	    #"accelerators" =>
-	      label := #f;
-	    otherwise => #f
-	  end;
-	  apply(add-command-table-menu-item,
-		command-table, label, type, object,
-		image: image,
-		accelerator: accelerator, mnemonic: mnemonic,
-		documentation: documentation, resource-id: resource-id,
-		error?: #f, options)
-	end
+          let object  = decorator-object(decorator);
+          let type    = decorator-type(decorator);
+          let label   = decorator-label(decorator);
+          let image   = decorator-image(decorator);
+          let options = decorator-options(decorator);
+          let accelerator   = decorator-accelerator(decorator);
+          let mnemonic      = decorator-mnemonic(decorator);
+          let documentation = decorator-documentation(decorator);
+          let resource-id   = decorator-resource-id(decorator);
+          select (inherit-menu)
+            #"menu" =>
+              accelerator := $unsupplied;
+              mnemonic    := $unsupplied;
+            #"accelerators" =>
+              label := #f;
+            otherwise => #f
+          end;
+          apply(add-command-table-menu-item,
+                command-table, label, type, object,
+                image: image,
+                accelerator: accelerator, mnemonic: mnemonic,
+                documentation: documentation, resource-id: resource-id,
+                error?: #f, options)
+        end
       end
     end
   end
@@ -309,14 +309,14 @@ end method remove-command-table;
 // Things like the Mouse-Right (menu) translator live here.
 define variable *global-command-table* :: <standard-command-table>
     = make(<command-table>,
-	   name: #"global-command-table",
-	   inherit-from: #[]);
+           name: #"global-command-table",
+           inherit-from: #[]);
 
 // CLIM's general "user" command table
 define variable *user-command-table* :: <standard-command-table>
     = make(<command-table>,
-	   name: #"user-command-table",
-	   inherit-from: vector(*global-command-table*));
+           name: #"user-command-table",
+           inherit-from: vector(*global-command-table*));
 
 
 /// Inheritance
@@ -346,9 +346,9 @@ define method command-accessible?
   block (return)
     do-command-table-inheritance
       (method (comtab)
-	 when (command-present?(comtab, command))
-	   return(comtab)
-	 end
+         when (command-present?(comtab, command))
+           return(comtab)
+         end
        end method,
        command-table);
     #f
@@ -361,14 +361,14 @@ end method command-accessible?;
 define method add-command
     (command-table :: <standard-command-table>, command :: <command-oid>,
      #key label, name, menu, image,
-	  accelerator = $unsupplied, mnemonic = $unsupplied, resource-id,
-	  error? = #t) => ()
-  let label = label | name;		// for compatibility
+          accelerator = $unsupplied, mnemonic = $unsupplied, resource-id,
+          error? = #t) => ()
+  let label = label | name;                // for compatibility
   check-type(label, false-or(<string>));
   when (command-present?(command-table, command))
     when (error?)
       cerror("Remove the command and proceed",
-	     "The command %= is already present in %=", command, command-table)
+             "The command %= is already present in %=", command, command-table)
     end;
     remove-command(command-table, command)
   end;
@@ -389,25 +389,25 @@ define method add-command
     menu =>
       let type = if (instance?(command, <function>)) <function> else <command> end;
       apply(add-command-table-menu-item,
-	    command-table, menu-label, type, command,
-	    image: image,
-	    accelerator: accelerator, mnemonic: mnemonic, resource-id: resource-id,
-	    error?: error?, menu-options);
+            command-table, menu-label, type, command,
+            image: image,
+            accelerator: accelerator, mnemonic: mnemonic, resource-id: resource-id,
+            error?: error?, menu-options);
     (supplied?(accelerator) & accelerator)
     | (supplied?(mnemonic) & mnemonic) =>
       let type = if (instance?(command, <function>)) <function> else <command> end;
       add-command-table-menu-item
-	(command-table, #f, type, command,
-	 accelerator: accelerator, mnemonic: mnemonic, resource-id: resource-id,
-	 error?: error?);
+        (command-table, #f, type, command,
+         accelerator: accelerator, mnemonic: mnemonic, resource-id: resource-id,
+         error?: error?);
   end
 end method add-command;
 
 define method add-command
     (command-table :: <standard-command-table>, decorator :: <command-decorator>,
      #key label, name, menu, image,
-	  accelerator = $unsupplied, mnemonic = $unsupplied, resource-id,
-	  error? = #t) => ()
+          accelerator = $unsupplied, mnemonic = $unsupplied, resource-id,
+          error? = #t) => ()
   ignore(menu);
   let object = decorator-object(decorator);
   let type   = decorator-type(decorator);
@@ -432,14 +432,14 @@ define method remove-command
   /* let names = command-table.%command-line-names;
      block (break)
        while (names)
-	 let index = find-key(names, method (entry) second(entry) = command end);
-	 case
-	   index =>
-	     names := remove-at!(names, index);
-	     inc!(*completion-cache-tick*);
-	   otherwise =>
-	     break()
-	 end
+         let index = find-key(names, method (entry) second(entry) = command end);
+         case
+           index =>
+             names := remove-at!(names, index);
+             inc!(*completion-cache-tick*);
+           otherwise =>
+             break()
+         end
        end
      end; */
   // Remove old menu items
@@ -448,9 +448,9 @@ define method remove-command
   when (menu)
     for (decorator :: <command-decorator> in menu)
       when ((  decorator-type(decorator) == <command>
-	     | decorator-type(decorator) == <function>)
-	    & decorator-object(decorator) = command)
-	push!(decorators, decorator)
+             | decorator-type(decorator) == <function>)
+            & decorator-object(decorator) = command)
+        push!(decorators, decorator)
       end
     end;
     for (decorator in decorators)
@@ -480,7 +480,7 @@ define method do-command-table-commands
   do-command-table-inheritance
     (method (comtab)
        for (command in key-sequence(command-table-commands(comtab)))
-	 function(command, comtab)
+         function(command, comtab)
        end
      end method,
      command-table,
@@ -492,7 +492,7 @@ end method do-command-table-commands;
 
 // The radio box and check box types are a bit odd:
 //  add-command-table-menu-item
-//    (command-table, symbol, <radio-box>, #t,	;or <check-box>
+//    (command-table, symbol, <radio-box>, #t,        ;or <check-box>
 //     items: #[#["True", #t], #["False", #f]],
 //     label-key: first, value-key: second,
 //     callback: method (g) format-out("Value changed to %=", gadget-value(g)) end)
@@ -500,7 +500,7 @@ define method add-command-table-menu-item
     (command-table :: <standard-command-table>, label, type, object,
      #rest keys,
      #key documentation, after = #"end",
-	  accelerator = $unsupplied, mnemonic = $unsupplied, resource-id,
+          accelerator = $unsupplied, mnemonic = $unsupplied, resource-id,
           image, text-style, error? = #t,
           items, label-key, value-key, test, callback, update-callback)
  => (decorator :: <command-decorator>)
@@ -509,17 +509,17 @@ define method add-command-table-menu-item
   let type
     = type
       | select (object by instance?)
-	  <function> =>		 // menu-item "New"  = new-file
-	    <function>;
-	  <command> =>		 // menu-item "New"  = make(<command>, function: new-file)
-	    <command>;
-	  <command-table> =>	 // menu-item "File" = *file-command-table*
-	    <command-table>;
-	  subclass(<command>) => // menu-item "New"  = <new-file-command>
-	    <command>;
-	  <list> =>		 // menu-item "New"  = (<file-command>, new?: #t)
-	    <command>;
-	end;
+          <function> =>                 // menu-item "New"  = new-file
+            <function>;
+          <command> =>                 // menu-item "New"  = make(<command>, function: new-file)
+            <command>;
+          <command-table> =>         // menu-item "File" = *file-command-table*
+            <command-table>;
+          subclass(<command>) => // menu-item "New"  = <new-file-command>
+            <command>;
+          <list> =>                 // menu-item "New"  = (<file-command>, new?: #t)
+            <command>;
+        end;
   select (type)
     <command>, <function>, <command-table> =>
       check-type(label, false-or(<string>));
@@ -528,73 +528,73 @@ define method add-command-table-menu-item
   end;
   when (supplied?(accelerator) & accelerator)
     assert(instance?(accelerator, <accelerator>),
-	   "%= is not a character or keyboard gesture", accelerator)
+           "%= is not a character or keyboard gesture", accelerator)
   end;
   when (supplied?(mnemonic) & mnemonic)
     assert(instance?(mnemonic, <mnemonic>),
-	   "%= is not a character or keyboard gesture", mnemonic)
+           "%= is not a character or keyboard gesture", mnemonic)
   end;
   check-type(documentation, false-or(<string>));
   let menu = command-table-menu(command-table);
   let old-item
     = label
       & find-element(menu, method (decorator :: <command-decorator>)
-			   label-equal?(decorator-label(decorator), label)
-			 end method);
+                           label-equal?(decorator-label(decorator), label)
+                         end method);
   when (old-item)
     when (error?)
       cerror("Remove the menu item and proceed",
-	     "The menu item %= is already present in %=", label, command-table)
+             "The menu item %= is already present in %=", label, command-table)
     end;
     remove-command-table-menu-item(command-table, label)
   end;
-  command-table.%accelerators := #f;		// decache
+  command-table.%accelerators := #f;                // decache
   with-keywords-removed (options = keys, #[after:, accelerator:, mnemonic:, error?:])
     let menu      = command-table-menu(command-table);
     let decorator = make(<command-decorator>,
-			 object:  object,
-			 type:    type,
-			 label:   label,
-			 image:   image,
-			 options: options,
-			 accelerator:   accelerator,
-			 mnemonic:      mnemonic,
-			 documentation: documentation,
-			 resource-id:   resource-id);
+                         object:  object,
+                         type:    type,
+                         label:   label,
+                         image:   image,
+                         options: options,
+                         accelerator:   accelerator,
+                         mnemonic:      mnemonic,
+                         documentation: documentation,
+                         resource-id:   resource-id);
     select (after)
       #"start" =>
-	menu := insert-at!(menu, decorator, #"start");
+        menu := insert-at!(menu, decorator, #"start");
       #"end", #f =>
-	menu := insert-at!(menu, decorator, #"end");
+        menu := insert-at!(menu, decorator, #"end");
       #"sort" =>
-	add!(menu, decorator);
+        add!(menu, decorator);
         local method label-less? (x, y) => (less? :: <boolean>)
-		case
-		  ~x => #t;
-		  ~y => #f;
-		  otherwise => string-less?(x, y);
-		end
-	      end method;
-	command-table-menu(command-table)
-	  := sort!(menu,
-		   test: method (x :: <command-decorator>, y :: <command-decorator>)
-			   label-less?(decorator-label(x), decorator-label(y))
-			 end);
+                case
+                  ~x => #t;
+                  ~y => #f;
+                  otherwise => string-less?(x, y);
+                end
+              end method;
+        command-table-menu(command-table)
+          := sort!(menu,
+                   test: method (x :: <command-decorator>, y :: <command-decorator>)
+                           label-less?(decorator-label(x), decorator-label(y))
+                         end);
       otherwise =>
-	if (instance?(after, <string>))
-	  let index
-	    = find-key(menu,
-		       method (decorator :: <command-decorator>)
-			 label-equal?(decorator-label(decorator), after)
-		       end method);
-	  if (index)
-	    menu := insert-at!(menu, decorator, index)
-	  else
-	    error("There is no menu item named %= for 'after:'", after)
-	  end
-	else
+        if (instance?(after, <string>))
+          let index
+            = find-key(menu,
+                       method (decorator :: <command-decorator>)
+                         label-equal?(decorator-label(decorator), after)
+                       end method);
+          if (index)
+            menu := insert-at!(menu, decorator, index)
+          else
+            error("There is no menu item named %= for 'after:'", after)
+          end
+        else
           error("The value for 'after:' is not a string, #\"start\", #\"end\", or #\"sort\"")
-	end
+        end
     end;
     // Might have done something destructive above, so be careful
     command-table-menu(command-table) := menu;
@@ -614,14 +614,14 @@ define method remove-command-table-menu-item
   check-type(label, false-or(type-union(<string>, <symbol>)));
   let menu = command-table-menu(command-table);
   let index = find-key(menu,
-		       method (decorator :: <command-decorator>)
-			 label-equal?(decorator-label(decorator), label)
-		       end method);
+                       method (decorator :: <command-decorator>)
+                         label-equal?(decorator-label(decorator), label)
+                       end method);
   when (index)
     //--- Is it right for this to remove the whole item even
     //--- if there is still a keystroke accelerator?
     menu := remove-at!(menu, index);
-    command-table.%accelerators := #f	// decache
+    command-table.%accelerators := #f        // decache
   end
 end method remove-command-table-menu-item;
 
@@ -629,14 +629,14 @@ define method do-command-table-menu-items
     (function :: <function>, command-table :: <standard-command-table>,
      #key label, name, do-inherited? = #f) => ()
   dynamic-extent(function);
-  let label = label | name;		// for compatibility
+  let label = label | name;                // for compatibility
   do-command-table-inheritance
     (method (comtab)
        for (decorator :: <command-decorator> in command-table-menu(comtab))
-	 when (~label
-	       | label-equal?(decorator-label(decorator), label))
-	   function(decorator, comtab)
-	 end
+         when (~label
+               | label-equal?(decorator-label(decorator), label))
+           function(decorator, comtab)
+         end
        end
      end method,
      command-table,
@@ -649,15 +649,15 @@ define method do-command-table-menu-commands
     (function :: <function>, command-table :: <standard-command-table>)
   dynamic-extent(function);
   local method do-one (decorator :: <command-decorator>, comtab)
-	  let object = decorator-object(decorator);
-	  let type   = decorator-type(decorator);
-	  select (type)
-	    <function>      => function(object, comtab);
-	    <command>       => function(object, comtab);
-	    <command-table> => do-command-table-menu-commands(function, object);
-	    otherwise       => #f;
-	  end
-	end method;
+          let object = decorator-object(decorator);
+          let type   = decorator-type(decorator);
+          select (type)
+            <function>      => function(object, comtab);
+            <command>       => function(object, comtab);
+            <command-table> => do-command-table-menu-commands(function, object);
+            otherwise       => #f;
+          end
+        end method;
   do-command-table-menu-items(do-one, command-table)
 end method do-command-table-menu-commands;
 
@@ -682,7 +682,7 @@ define method make-command-menu-bar
     with-frame-manager (framem)
       let menus = make-menus-from-command-table(command-table, frame, framem);
       when (menus)
-	make(<menu-bar>, children: menus)
+        make(<menu-bar>, children: menus)
       end
     end
   end
@@ -699,33 +699,33 @@ define method make-menus-from-command-table
     let type = decorator-type(decorator);
     select (type)
       <command-table> =>
-	let comtab = decorator-object(decorator);
-	let menu   = make-menu-from-command-table-menu
-	               (command-table-menu(comtab), frame, framem,
-			label:         as(<string>, decorator-label(decorator)),
-			mnemonic:      decorator-mnemonic(decorator),
-			documentation: decorator-documentation(decorator),
-			resource-id:   decorator-resource-id(decorator),
-			command-table: comtab,
-			use-accelerators?: #t);
-	add!(menus, menu);
+        let comtab = decorator-object(decorator);
+        let menu   = make-menu-from-command-table-menu
+                       (command-table-menu(comtab), frame, framem,
+                        label:         as(<string>, decorator-label(decorator)),
+                        mnemonic:      decorator-mnemonic(decorator),
+                        documentation: decorator-documentation(decorator),
+                        resource-id:   decorator-resource-id(decorator),
+                        command-table: comtab,
+                        use-accelerators?: #t);
+        add!(menus, menu);
       <menu> =>
-	// Call the menu creation function to create the menu contents
-	let menu = make(<menu>,
-			children:      decorator-object(decorator)(frame),
-			label:         as(<string>, decorator-label(decorator)),
-			mnemonic:      decorator-mnemonic(decorator),
-			documentation: decorator-documentation(decorator),
-			resource-id:   decorator-resource-id(decorator));
-	add!(menus, menu);
+        // Call the menu creation function to create the menu contents
+        let menu = make(<menu>,
+                        children:      decorator-object(decorator)(frame),
+                        label:         as(<string>, decorator-label(decorator)),
+                        mnemonic:      decorator-mnemonic(decorator),
+                        documentation: decorator-documentation(decorator),
+                        resource-id:   decorator-resource-id(decorator));
+        add!(menus, menu);
       otherwise =>
-	add!(misc-items, decorator);
+        add!(misc-items, decorator);
     end
   end;
   unless (empty?(misc-items))
     let misc-menu = make-menu-from-command-table-menu(misc-items, frame, framem,
-						      label: label,
-						      use-accelerators?: #t);
+                                                      label: label,
+                                                      use-accelerators?: #t);
     add!(menus, misc-menu)
   end;
   menus
@@ -735,131 +735,131 @@ define method make-menu-from-command-table-menu
     (decorators :: <sequence>,
      frame :: false-or(<frame>), framem :: <frame-manager>,
      #key owner, command-table, label, documentation, resource-id,
-	  mnemonic = $unsupplied, item-callback = $unsupplied,
-	  use-accelerators? = #f)
+          mnemonic = $unsupplied, item-callback = $unsupplied,
+          use-accelerators? = #f)
  => (menu :: <menu>)
   let menu-items :: <stretchy-object-vector> = make(<stretchy-vector>);
   with-frame-manager (framem)
     local method button-for-command
-	      (decorator :: <command-decorator>) => (button :: <menu-button>)
-	    let command = decorator-object(decorator);
-	    let (callback, command) = callback-for-command(command);
+              (decorator :: <command-decorator>) => (button :: <menu-button>)
+            let command = decorator-object(decorator);
+            let (callback, command) = callback-for-command(command);
             make(<push-menu-button>,
-		 command:       command,
-		 label:         as(<string>, decorator-label(decorator)),
-		 value:         command,
-		 accelerator:   use-accelerators? & decorator-accelerator(decorator),
-		 mnemonic:      decorator-mnemonic(decorator),
-		 documentation: decorator-documentation(decorator),
-		 resource-id:   decorator-resource-id(decorator),
-		 enabled?: ~frame | command-enabled?(command, frame),
-		 activate-callback:
-		   if (supplied?(item-callback)) item-callback
-		   else callback end)
+                 command:       command,
+                 label:         as(<string>, decorator-label(decorator)),
+                 value:         command,
+                 accelerator:   use-accelerators? & decorator-accelerator(decorator),
+                 mnemonic:      decorator-mnemonic(decorator),
+                 documentation: decorator-documentation(decorator),
+                 resource-id:   decorator-resource-id(decorator),
+                 enabled?: ~frame | command-enabled?(command, frame),
+                 activate-callback:
+                   if (supplied?(item-callback)) item-callback
+                   else callback end)
           end method,
-	  method menu-for-command-table
-	      (decorator :: <command-decorator>) => (menu :: <menu>)
-	    let comtab = decorator-object(decorator);
+          method menu-for-command-table
+              (decorator :: <command-decorator>) => (menu :: <menu>)
+            let comtab = decorator-object(decorator);
             make-menu-from-command-table-menu
               (command-table-menu(comtab), frame, framem,
                label:         as(<string>, decorator-label(decorator)),
-	       mnemonic:      decorator-mnemonic(decorator),
-	       documentation: decorator-documentation(decorator),
+               mnemonic:      decorator-mnemonic(decorator),
+               documentation: decorator-documentation(decorator),
                resource-id:   decorator-resource-id(decorator),
-	       command-table: comtab,
-	       use-accelerators?: use-accelerators?)
-	  end method,
-	  // Example:
+               command-table: comtab,
+               use-accelerators?: use-accelerators?)
+          end method,
+          // Example:
           //  add-command-table-menu-item
           //    (command-table, symbol, <radio-box>, #f,
           //     items: #[#["Direct methods", #f], #["All methods", #t]],
           //     label-key: first, value-key: second,
           //     callback: method (g) sheet-frame(g).all-methods? := gadget-value(g) end)
-	  method component-for-box
-	      (decorator :: <command-decorator>, selection-mode)
-	   => (menu-box :: <menu-box>)
-	    let options  = decorator-options(decorator);
-	    let items    = get-property(options, items:, default: #());
-	    let callback = get-property(options, callback:);
-	    let label-key
-	      = get-property(options, label-key:, default: collection-gadget-default-label-key);
-	    let value-key
-	      = get-property(options, value-key:, default: collection-gadget-default-value-key);
-	    let test = get-property(options, test:, default: \==);
-	    let update-callback = get-property(options, update-callback:);
-	    let callback-args
-	      = if (selection-mode == #"none")
-		  vector(activate-callback: callback)
-		else
-		  vector(value-changed-callback: callback)
-		end;
-	    apply(make, <menu-box>,
-		  command:         callback,
-		  items:           items,
-		  selection-mode:  selection-mode,
-		  resource-id:     decorator-resource-id(decorator),
-		  value:           decorator-object(decorator),
-		  label-key:       label-key,
-		  value-key:       value-key, test: test,
-		  update-callback: update-callback,
-		  callback-args)
-	  end method,
+          method component-for-box
+              (decorator :: <command-decorator>, selection-mode)
+           => (menu-box :: <menu-box>)
+            let options  = decorator-options(decorator);
+            let items    = get-property(options, items:, default: #());
+            let callback = get-property(options, callback:);
+            let label-key
+              = get-property(options, label-key:, default: collection-gadget-default-label-key);
+            let value-key
+              = get-property(options, value-key:, default: collection-gadget-default-value-key);
+            let test = get-property(options, test:, default: \==);
+            let update-callback = get-property(options, update-callback:);
+            let callback-args
+              = if (selection-mode == #"none")
+                  vector(activate-callback: callback)
+                else
+                  vector(value-changed-callback: callback)
+                end;
+            apply(make, <menu-box>,
+                  command:         callback,
+                  items:           items,
+                  selection-mode:  selection-mode,
+                  resource-id:     decorator-resource-id(decorator),
+                  value:           decorator-object(decorator),
+                  label-key:       label-key,
+                  value-key:       value-key, test: test,
+                  update-callback: update-callback,
+                  callback-args)
+          end method,
           method collect-buttons
-	      (buttons :: <stretchy-object-vector>) => ()
+              (buttons :: <stretchy-object-vector>) => ()
             unless (empty?(buttons))
               add!(menu-items,
                    make(<push-menu-box>,
-			children: as(<simple-vector>, buttons)));
+                        children: as(<simple-vector>, buttons)));
               buttons.size := 0
             end
           end method;
     let buttons :: <stretchy-object-vector> = make(<stretchy-vector>);
     local method do-decorators (decorators :: <sequence>) => ()
-	    for (decorator :: <command-decorator> in decorators)
-	      let type = decorator-type(decorator);
-	      select (type)
-		<function>, <command> =>
-		  add!(buttons, button-for-command(decorator));
-		<command-table> =>
-		  add!(buttons, menu-for-command-table(decorator));
-		<menu> =>
-		  // Call the menu creation function to create the menu contents
-		  let menu = make(<menu>,
-				  children:      decorator-object(decorator)(frame),
-				  label:         as(<string>, decorator-label(decorator)),
-				  mnemonic:      decorator-mnemonic(decorator),
-				  documentation: decorator-documentation(decorator),
-				  resource-id:   decorator-resource-id(decorator));
-		  add!(buttons, menu);
-		<separator> =>
-		  collect-buttons(buttons);
+            for (decorator :: <command-decorator> in decorators)
+              let type = decorator-type(decorator);
+              select (type)
+                <function>, <command> =>
+                  add!(buttons, button-for-command(decorator));
+                <command-table> =>
+                  add!(buttons, menu-for-command-table(decorator));
+                <menu> =>
+                  // Call the menu creation function to create the menu contents
+                  let menu = make(<menu>,
+                                  children:      decorator-object(decorator)(frame),
+                                  label:         as(<string>, decorator-label(decorator)),
+                                  mnemonic:      decorator-mnemonic(decorator),
+                                  documentation: decorator-documentation(decorator),
+                                  resource-id:   decorator-resource-id(decorator));
+                  add!(buttons, menu);
+                <separator> =>
+                  collect-buttons(buttons);
                   // If the separator specifies a command table, that means we
                   // should "inline" it in the current menu right after the separator
                   when (instance?(decorator-object(decorator), <command-table>))
                     do-decorators(command-table-menu(decorator-object(decorator)))
                   end;
-		<radio-box> =>
-		  collect-buttons(buttons);
-		  add!(menu-items, component-for-box(decorator, #"single"));
-		<check-box> =>
-		  collect-buttons(buttons);
-		  add!(menu-items, component-for-box(decorator, #"multiple"));
-		<push-box> =>
-		  collect-buttons(buttons);
-		  add!(menu-items, component-for-box(decorator, #"none"));
-	      end
-	    end
+                <radio-box> =>
+                  collect-buttons(buttons);
+                  add!(menu-items, component-for-box(decorator, #"single"));
+                <check-box> =>
+                  collect-buttons(buttons);
+                  add!(menu-items, component-for-box(decorator, #"multiple"));
+                <push-box> =>
+                  collect-buttons(buttons);
+                  add!(menu-items, component-for-box(decorator, #"none"));
+              end
+            end
           end method;
     do-decorators(decorators);
     make(<menu>,
          owner: owner,
-	 label: label,
-	 command: command-table,
-	 mnemonic: mnemonic,
-	 documentation: documentation,
-	 resource-id: resource-id,
-	 // No need to group the last buttons...
-	 children: concatenate(menu-items, buttons))
+         label: label,
+         command: command-table,
+         mnemonic: mnemonic,
+         documentation: documentation,
+         resource-id: resource-id,
+         // No need to group the last buttons...
+         children: concatenate(menu-items, buttons))
   end
 end method make-menu-from-command-table-menu;
 
@@ -875,82 +875,82 @@ define method make-command-tool-bar
     let comtab-buttons :: <stretchy-object-vector> = make(<stretchy-vector>);
     with-frame-manager (framem)
       local method button-for-command
-		(decorator :: <command-decorator>) => (button :: <button>)
-	      let command = decorator-object(decorator);
-	      let (callback, command) = callback-for-command(command);
-	      make(<push-button>,
-		   command:     command,
-		   value:       command,
-		   label:       decorator-image(decorator),
-		   accelerator: decorator-accelerator(decorator),
-		   mnemonic:    decorator-mnemonic(decorator),
-		   // The documentation is typically used as a "tool tip",
-		   // so we use the item's label instead of the item's
-		   // documentation since it looks so much better
-		   documentation:     as(<string>, decorator-label(decorator)),
-		   enabled?:          ~frame | command-enabled?(command, frame),
-		   activate-callback: callback)
-	    end method,
-	    method component-for-box
-		(decorator :: <command-decorator>, selection-mode)
-	     => (menu-box :: <menu-box>)
-	      let options  = decorator-options(decorator);
-	      let items    = get-property(options, items:, default: #());
-	      let callback = get-property(options, callback:);
-	      let label-key
-		= get-property(options, label-key:,
-			       default: collection-gadget-default-label-key);
-	      let value-key
-		= get-property(options, value-key:, 
-			       default: collection-gadget-default-value-key);
-	      let test = get-property(options, test:, default: \==);
-	      make(<menu-box>,
-		   command:     callback,
-		   items:       items,
-		   selection-mode: selection-mode,
-		   resource-id: decorator-resource-id(decorator),
-		   value:       decorator-object(decorator),
-		   label-key:   label-key,
-		   value-key:   value-key,
-		   test:        test,
-		   value-changed-callback: callback)
-	    end method,
-	    method collect-buttons (command-table :: <standard-command-table>) => ()
-	      let entry = find-pair(comtab-buttons, command-table);
-	      unless (entry)		// do each command table only once
-		let buttons = make(<stretchy-vector>);
-		add!(comtab-buttons, vector(command-table, buttons));
-		for (decorator :: <command-decorator> in command-table-menu(command-table))
-		  let type  = decorator-type(decorator);
-		  select (type)
-		    <function>, <command> =>
-		      when (decorator-image(decorator))
-			add!(buttons, button-for-command(decorator))
-		      end;
-		    <command-table> =>
-		      collect-buttons(decorator-object(decorator));
-		    <menu> =>
-		      error("Menus not supported in command-table tool bars");
-		    <separator> =>
-		      when (instance?(decorator-object(decorator), <command-table>))
-			collect-buttons(decorator-object(decorator))
-		      end;
-		    <radio-box> =>
-		      when (decorator-image(decorator))
-			add!(buttons, component-for-box(decorator, #"single"))
-		      end;
-		    <check-box> =>
-		      when (decorator-image(decorator))
-			add!(buttons, component-for-box(decorator, #"multiple"))
-		      end;
-		    <push-box> =>
-		      when (decorator-image(decorator))
-			add!(buttons, component-for-box(decorator, #"none"))
-		      end;
-		  end
-	        end
-	      end
-	    end method;
+                (decorator :: <command-decorator>) => (button :: <button>)
+              let command = decorator-object(decorator);
+              let (callback, command) = callback-for-command(command);
+              make(<push-button>,
+                   command:     command,
+                   value:       command,
+                   label:       decorator-image(decorator),
+                   accelerator: decorator-accelerator(decorator),
+                   mnemonic:    decorator-mnemonic(decorator),
+                   // The documentation is typically used as a "tool tip",
+                   // so we use the item's label instead of the item's
+                   // documentation since it looks so much better
+                   documentation:     as(<string>, decorator-label(decorator)),
+                   enabled?:          ~frame | command-enabled?(command, frame),
+                   activate-callback: callback)
+            end method,
+            method component-for-box
+                (decorator :: <command-decorator>, selection-mode)
+             => (menu-box :: <menu-box>)
+              let options  = decorator-options(decorator);
+              let items    = get-property(options, items:, default: #());
+              let callback = get-property(options, callback:);
+              let label-key
+                = get-property(options, label-key:,
+                               default: collection-gadget-default-label-key);
+              let value-key
+                = get-property(options, value-key:,
+                               default: collection-gadget-default-value-key);
+              let test = get-property(options, test:, default: \==);
+              make(<menu-box>,
+                   command:     callback,
+                   items:       items,
+                   selection-mode: selection-mode,
+                   resource-id: decorator-resource-id(decorator),
+                   value:       decorator-object(decorator),
+                   label-key:   label-key,
+                   value-key:   value-key,
+                   test:        test,
+                   value-changed-callback: callback)
+            end method,
+            method collect-buttons (command-table :: <standard-command-table>) => ()
+              let entry = find-pair(comtab-buttons, command-table);
+              unless (entry)                // do each command table only once
+                let buttons = make(<stretchy-vector>);
+                add!(comtab-buttons, vector(command-table, buttons));
+                for (decorator :: <command-decorator> in command-table-menu(command-table))
+                  let type  = decorator-type(decorator);
+                  select (type)
+                    <function>, <command> =>
+                      when (decorator-image(decorator))
+                        add!(buttons, button-for-command(decorator))
+                      end;
+                    <command-table> =>
+                      collect-buttons(decorator-object(decorator));
+                    <menu> =>
+                      error("Menus not supported in command-table tool bars");
+                    <separator> =>
+                      when (instance?(decorator-object(decorator), <command-table>))
+                        collect-buttons(decorator-object(decorator))
+                      end;
+                    <radio-box> =>
+                      when (decorator-image(decorator))
+                        add!(buttons, component-for-box(decorator, #"single"))
+                      end;
+                    <check-box> =>
+                      when (decorator-image(decorator))
+                        add!(buttons, component-for-box(decorator, #"multiple"))
+                      end;
+                    <push-box> =>
+                      when (decorator-image(decorator))
+                        add!(buttons, component-for-box(decorator, #"none"))
+                      end;
+                  end
+                end
+              end
+            end method;
       collect-buttons(command-table);
       // Each command table gets its own closely spaced vbox
       let boxes = make(<stretchy-vector>);
@@ -958,15 +958,15 @@ define method make-command-tool-bar
         let buttons = entry[1];
         unless (empty?(buttons))
           add!(boxes, make(<row-layout>,
-			   children: buttons,
-      			   x-spacing: 0))
+                           children: buttons,
+                                 x-spacing: 0))
         end
       end;
       // Now make the tool bar with a little space between vboxes
       make(<tool-bar>,
-	   child: make(<row-layout>,
-		       children: boxes,
-		       x-spacing: 2))
+           child: make(<row-layout>,
+                       children: boxes,
+                       x-spacing: 2))
     end
   end
 end method make-command-tool-bar;
@@ -978,13 +978,13 @@ define method do-frame-commands
           menu-bar? = #t, tool-bar? = #t, owned-menus? = #t)
  => ()
   local method maybe-do-sheet-command (sheet) => ()
-	  when (gadget?(sheet))
-	    let command = gadget-command(sheet);
-	    if (command & test(command))
-	      function(sheet, command)
-	    end
-	  end
-	end method maybe-do-sheet-command;
+          when (gadget?(sheet))
+            let command = gadget-command(sheet);
+            if (command & test(command))
+              function(sheet, command)
+            end
+          end
+        end method maybe-do-sheet-command;
   when (menu-bar?)
     let menu-bar = frame-menu-bar(frame);
     when (menu-bar)
@@ -1015,9 +1015,9 @@ define method do-command-menu-gadgets
   do-frame-commands
     (method (gadget :: <gadget>, gcommand)
        if (gcommand = command
-	     | (instance?(gcommand, <functional-command>)
-		  & command-function(gcommand) = command))
-	 function(gadget)
+             | (instance?(gcommand, <functional-command>)
+                  & command-function(gcommand) = command))
+         function(gadget)
        end
      end, frame,
      menu-bar?: menu-bar?, tool-bar?: tool-bar?, owned-menus?: owned-menus?)
@@ -1031,11 +1031,11 @@ define method do-command-menu-gadgets
   do-frame-commands
     (method (gadget :: <gadget>, gcommand)
        if (gcommand = command
-	     | (instance?(gcommand, <class>)
-		  & subtype?(gcommand, command))
-	     | (instance?(gcommand, <list>)
-		  & subtype?(head(gcommand), command)))
-	 function(gadget)
+             | (instance?(gcommand, <class>)
+                  & subtype?(gcommand, command))
+             | (instance?(gcommand, <list>)
+                  & subtype?(head(gcommand), command)))
+         function(gadget)
        end
      end, frame,
      menu-bar?: menu-bar?, tool-bar?: tool-bar?, owned-menus?: owned-menus?)
@@ -1051,11 +1051,11 @@ define method do-command-table-accelerators
   do-command-table-inheritance
     (method (comtab)
        for (decorator :: <command-decorator> in command-table-menu(comtab))
-	 when (decorator-accelerator(decorator)
-	       & (~accelerator
-		  | decorator-accelerator(decorator) = accelerator))
-	   function(decorator, comtab)
-	 end
+         when (decorator-accelerator(decorator)
+               & (~accelerator
+                  | decorator-accelerator(decorator) = accelerator))
+           function(decorator, comtab)
+         end
        end
      end method,
      command-table,
@@ -1069,10 +1069,10 @@ define method command-table-accelerators
   | begin
       let accelerators :: <stretchy-object-vector> = make(<stretchy-vector>);
       for (decorator :: <command-decorator> in command-table-menu(command-table))
-	let accelerator = decorator-accelerator(decorator);
-	when (supplied?(accelerator) & accelerator)
-	  add!(accelerators, accelerator)
-	end
+        let accelerator = decorator-accelerator(decorator);
+        when (supplied?(accelerator) & accelerator)
+          add!(accelerators, accelerator)
+        end
       end;
       command-table.%accelerators := accelerators;
       accelerators
@@ -1123,8 +1123,8 @@ define method remove-command-line-name
   //--- Use binary deletion on command line names (completion aarrays)
   let names = command-table.%command-line-names;
   let index = names
-	      & find-key(names,
-			 method (entry) string-equal?(first(entry), command-name) end);
+              & find-key(names,
+                         method (entry) string-equal?(first(entry), command-name) end);
   when (index)
     let command = second(command-table.names[index]);
     let commands = command-table-commands(command-table);
@@ -1142,17 +1142,17 @@ define method do-command-line-names
     (function :: <function>, command-table :: <standard-command-table>,
      #key label, name, do-inherited? = #f) => ()
   dynamic-extent(function);
-  let label = label | name;		// for compatibility
+  let label = label | name;                // for compatibility
   do-command-table-inheritance
     (method (comtab)
        let names = command-table.%command-line-names;
        when (names)
-	 for (entry in names)
-	   when (~label
-		 | method (entry) string-equal?(first(entry), label))
-	     function(first(entry), second(entry), comtab)
-	   end
-	 end
+         for (entry in names)
+           when (~label
+                 | method (entry) string-equal?(first(entry), label))
+             function(first(entry), second(entry), comtab)
+           end
+         end
        end
      end method,
      command-table,
@@ -1165,17 +1165,17 @@ define method command-line-name-for-command
   block (return)
     do-command-table-inheritance
       (method (comtab)
-	 let command-name = gethash(command-table-commands(comtab), command);
-	 when (instance?(command-name, <string>))
-	   return(command-name)
-	 end
+         let command-name = gethash(command-table-commands(comtab), command);
+         when (instance?(command-name, <string>))
+           return(command-name)
+         end
        end method,
        command-table);
     select (error?)
       #f => #f;
-      #"create" => command-name-from-command(command);	//---*** this can't work
+      #"create" => command-name-from-command(command);        //---*** this can't work
       otherwise =>
-	error("The command %= has no command line name in %=", command, command-table)
+        error("The command %= has no command line name in %=", command, command-table)
     end
   end
 end method command-line-name-for-command;
@@ -1183,24 +1183,24 @@ end method command-line-name-for-command;
 define method command-table-completion-alist
     (command-table :: <standard-command-table>) => (alist :: <vector>)
   when (~command-table.%completion-alist
-	| (*completion-cache-tick* > command-table.%completion-alist-tick))
+        | (*completion-cache-tick* > command-table.%completion-alist-tick))
     command-table.%completion-alist := make(<stretchy-vector>);
     do-command-table-inheritance
       (method (comtab)
-	 let names = command-table.%command-line-names;
-	 when (names)
-	   for (entry in names)
-	     add!(command-table.%completion-alist, entry)
-	   end
-	 end
+         let names = command-table.%command-line-names;
+         when (names)
+           for (entry in names)
+             add!(command-table.%completion-alist, entry)
+           end
+         end
        end method,
        command-table);
     command-table.%completion-alist
       := remove-duplicates!(command-table.%completion-alist,
-			    test: method (x, y) second(x) == second(y) end);
+                            test: method (x, y) second(x) == second(y) end);
     command-table.%completion-alist
       := sort!(command-table.%completion-alist,
-	       test: method (x, y) string-less?(first(x), first(y)) end);
+               test: method (x, y) string-less?(first(x), first(y)) end);
     command-table.%completion-alist-tick := *completion-cache-tick*
   end;
   command-table.%completion-alist
@@ -1231,15 +1231,15 @@ define method add-presentation-translator
   let translators
     = command-table-translators(command-table)
       | (command-table-translators(command-table) := make(<stretchy-vector>));
-  let place 
+  let place
     = find-key(translators,
-	       method (entry) presentation-translator-name(entry) == translator-name end);
+               method (entry) presentation-translator-name(entry) == translator-name end);
   case
     place =>
       when (error?)
-	cerror("Remove the translator and proceed",
-	       "The translator %= is already present in %=", 
-	       presentation-translator-name(translator), command-table)
+        cerror("Remove the translator and proceed",
+               "The translator %= is already present in %=",
+               presentation-translator-name(translator), command-table)
       end;
       translators[place] := translator;
     otherwise =>
@@ -1260,9 +1260,9 @@ define method remove-presentation-translator
                        method (entry)
                          presentation-translator-name(entry) == translator-name
                        end)
-	else
-	  translator-name
-	end;
+        else
+          translator-name
+        end;
     remove!(translators, translator);
     inc!(*translators-cache-tick*)
   end
@@ -1276,12 +1276,12 @@ define method do-presentation-translators
     (method (comtab)
        let translators = command-table-translators(comtab);
        when (translators)
-	 for (translator in translators)
-	   when (~name
-		 | translator-name(translator) == name)
-	     function(translator, comtab)
-	   end
-	 end
+         for (translator in translators)
+           when (~name
+                 | translator-name(translator) == name)
+             function(translator, comtab)
+           end
+         end
        end
      end method,
      command-table,
@@ -1368,24 +1368,24 @@ define macro command-parser-definer
  argument:
   { ?:name :: ?type:expression = ?default:expression, #rest ?options:expression }
     => { make(<command-argument>,
-	      name: ?"name", type: ?type,
-	      default: ?default, ?options) }
+              name: ?"name", type: ?type,
+              default: ?default, ?options) }
   { ?:name :: ?type:expression, #rest ?options:expression }
     => { make(<command-argument>,
-	      name: ?"name", type: ?type,
-	      ?options) }
+              name: ?"name", type: ?type,
+              ?options) }
 end macro command-parser-definer;
 
 define method install-command
     (command, argument-info,
      #key command-table, name, menu, image,
-	  accelerator = $unsupplied, mnemonic = $unsupplied) => ()
+          accelerator = $unsupplied, mnemonic = $unsupplied) => ()
   when (command-table)
     add-command(command-table, command,
-		name: name, menu: menu,
-		image: image,
-		accelerator: accelerator, mnemonic: mnemonic,
-		error?: #f)
+                name: name, menu: menu,
+                image: image,
+                accelerator: accelerator, mnemonic: mnemonic,
+                error?: #f)
   end
 end method install-command;
 */

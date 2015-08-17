@@ -73,7 +73,7 @@ define sealed method set-caret-position
      #key fast? = #f) => ()
   unless (caret.%x-position   = x
           & caret.%y-position = y)
-    unless (fast?)		// do no work if we're trying to be fast
+    unless (fast?)                // do no work if we're trying to be fast
       do-set-caret-position(caret, x, y)
     end;
     caret.%x-position := x;
@@ -108,7 +108,7 @@ define sealed method caret-visible?-setter
     (visible? :: <boolean>, caret :: <basic-caret>, #key tooltip?)
  => (visible? :: <boolean>)
   if (visible?)
-    unless (caret.%hide-count = 0)	// don't let it go negative
+    unless (caret.%hide-count = 0)        // don't let it go negative
       dec!(caret.%hide-count)
     end;
     do-show-caret(caret, tooltip?: tooltip?)
@@ -127,15 +127,15 @@ define macro with-caret-position-saved
       ?:body
     end }
     => { begin
-	   let _caret = sheet-caret(?sheet);
-	   let (_x, _y) = caret?(_caret) & caret-position(_caret);
-	   block ()
-	     ?body
-	   cleanup
-	     when (caret?(_caret))
-	       set-caret-position(_caret, _x, _y)
-	     end;
-	   end
+           let _caret = sheet-caret(?sheet);
+           let (_x, _y) = caret?(_caret) & caret-position(_caret);
+           block ()
+             ?body
+           cleanup
+             when (caret?(_caret))
+               set-caret-position(_caret, _x, _y)
+             end;
+           end
          end }
 end macro with-caret-position-saved;
 
@@ -144,16 +144,16 @@ define macro with-caret-hidden
       ?:body
     end }
     => { begin
-	   let _caret = sheet-caret(?sheet);
-	   block ()
-	     when (caret?(_caret))
-	       caret-visible?(_caret, tooltip?: #t) := #f
-	     end;
-	     ?body
-	   cleanup
-	     when (caret?(_caret))
-	       caret-visible?(_caret, tooltip?: #t) := #t
-	     end;
-	   end
+           let _caret = sheet-caret(?sheet);
+           block ()
+             when (caret?(_caret))
+               caret-visible?(_caret, tooltip?: #t) := #f
+             end;
+             ?body
+           cleanup
+             when (caret?(_caret))
+               caret-visible?(_caret, tooltip?: #t) := #t
+             end;
+           end
          end }
 end macro with-caret-hidden;

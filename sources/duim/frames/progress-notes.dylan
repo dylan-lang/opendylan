@@ -33,7 +33,7 @@ define sealed class <progress-note> (<object>)
   sealed slot %numerator = 0;
   sealed slot %denominator = 1;
 end class <progress-note>;
-    
+
 define sealed domain make (singleton(<progress-note>));
 define sealed domain initialize (<progress-note>);
 
@@ -50,14 +50,14 @@ end method progress-note-label-setter;
 define macro noting-progress
   { noting-progress (?label:expression) ?:body end }
     => { begin
-	   let noting-progress-body = method () ?body end;
-	   do-noting-progress(#f, ?label, noting-progress-body)
-	 end }
+           let noting-progress-body = method () ?body end;
+           do-noting-progress(#f, ?label, noting-progress-body)
+         end }
   { noting-progress (?sheet:expression, ?label:expression) ?:body end }
     => { begin
-	   let noting-progress-body = method () ?body end;
-	   do-noting-progress(?sheet, ?label, noting-progress-body)
-	 end }
+           let noting-progress-body = method () ?body end;
+           do-noting-progress(?sheet, ?label, noting-progress-body)
+         end }
 end macro noting-progress;
 
 define method do-noting-progress
@@ -66,32 +66,32 @@ define method do-noting-progress
  => (#rest values)
   let old-note = *progress-note*;
   let new-note = make(<progress-note>,
-		      label: label,
-		      sheet: sheet,
-		      frame: frame);
+                      label: label,
+                      sheet: sheet,
+                      frame: frame);
   let pointer = port(sheet) & port-pointer(port(frame));
   let old-cursor = frame-cursor-override(frame);
   let framem = frame-manager(frame);
   local
     method initialize-progress
-	() => ()
+        () => ()
       when (cursor)
-	frame-cursor-override(frame) := cursor
+        frame-cursor-override(frame) := cursor
       end;
       display-progress-note(framem, new-note)
     end method initialize-progress,
 
     method finish-progress
-	() => ()
+        () => ()
       // If there was an old note, restore it, otherwise get rid
       // of the progress note display
       when (cursor)
-	frame-cursor-override(frame) := old-cursor
+        frame-cursor-override(frame) := old-cursor
       end;
       if (old-note)
-	display-progress-note(framem, old-note);
+        display-progress-note(framem, old-note);
       else
-	lower-progress-note(framem, frame, sheet)
+        lower-progress-note(framem, frame, sheet)
       end
     end method finish-progress;
 
@@ -152,8 +152,8 @@ define method note-progress-in-phases
      #key note = *progress-note*, label, phase-number = 0, n-phases = 1) => ()
   when (note)
     note-progress(denominator * phase-number + numerator,
-		  denominator * n-phases,
-		  note: note, label: label)
+                  denominator * n-phases,
+                  note: note, label: label)
   end
 end method note-progress-in-phases;
 

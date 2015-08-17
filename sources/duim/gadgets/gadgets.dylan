@@ -44,16 +44,16 @@ define macro labelling
   { labelling (?label:expression)
       ?contents:body
     end }
-    => { let _contents = ?contents;	// contents is a single expression
-	 horizontally (x-spacing: 2, y-alignment: #"center")
+    => { let _contents = ?contents;        // contents is a single expression
+         horizontally (x-spacing: 2, y-alignment: #"center")
            make(<label>, label: ?label);
            _contents
          end }
   { labelling (?label:expression, #rest ?options:expression)
       ?contents:body
     end }
-    => { let _contents = ?contents;	// contents is a single expression
-	 horizontally (?options, x-spacing: 2, y-alignment: #"center")
+    => { let _contents = ?contents;        // contents is a single expression
+         horizontally (?options, x-spacing: 2, y-alignment: #"center")
            make(<label>, label: ?label);
            _contents
          end }
@@ -124,17 +124,17 @@ define method handle-button-gadget-click
       // You can only turn single-selection buttons on by clicking
       // on them; they go off when you click on some other button
       unless (gadget-value(gadget))
-	distribute-value-changed-callback(gadget, #t);
-	when (double-click?)
-	  distribute-activate-callback(gadget)
-	end;
+        distribute-value-changed-callback(gadget, #t);
+        when (double-click?)
+          distribute-activate-callback(gadget)
+        end;
       end;
     #"multiple" =>
       //---*** 'gadget-value' won't be up to date if we distribute
       //---*** two of these before handling any of them
       distribute-value-changed-callback(gadget, ~gadget-value(gadget));
       when (double-click?)
-	distribute-activate-callback(gadget)
+        distribute-activate-callback(gadget)
       end;
   end;
   #t
@@ -249,9 +249,9 @@ define method initialize
     let slider-range = range-values(gadget-value-range(slider));
     case
       slider-range <=  1 =>
-	slider-decimal-places(slider) := 2;
+        slider-decimal-places(slider) := 2;
       slider-range <= 10 =>
-	slider-decimal-places(slider) := 1;
+        slider-decimal-places(slider) := 1;
     end
   end
 end method initialize;
@@ -264,8 +264,8 @@ end method slider-show-value?;
 
 /// Progress controls
 
-define open abstract class <progress-bar> 
-    (<oriented-gadget-mixin>, 
+define open abstract class <progress-bar>
+    (<oriented-gadget-mixin>,
      <range-gadget-mixin>,
      <basic-value-gadget>)
   keyword accepts-focus?: = #f;
@@ -285,8 +285,8 @@ end method initialize;
 
 /// Separator panes
 
-define open abstract class <separator> 
-    (<oriented-gadget-mixin>, 
+define open abstract class <separator>
+    (<oriented-gadget-mixin>,
      <no-value-gadget-mixin>,
      <basic-gadget>)
   keyword accepts-focus?: = #f;
@@ -294,7 +294,7 @@ define open abstract class <separator>
 end class <separator>;
 
 
-define sealed class <separator-pane> 
+define sealed class <separator-pane>
     (<separator>,
      <drawing-pane>)
 end class <separator-pane>;
@@ -314,18 +314,18 @@ define sealed method do-compose-space
   select (gadget-orientation(pane))
     #"horizontal" =>
       make(<space-requirement>,
-	   min-width: 1, width: width | 1, max-width: $fill,
-	   height: 2);
+           min-width: 1, width: width | 1, max-width: $fill,
+           height: 2);
     #"vertical" =>
       make(<space-requirement>,
-	   width: 2,
-	   min-height: 1, height: height | 1, max-height: $fill);
+           width: 2,
+           min-height: 1, height: height | 1, max-height: $fill);
   end
 end method do-compose-space;
 
 define sealed method handle-repaint
     (pane :: <separator-pane>, medium :: <medium>, region :: <region>) => ()
-  ignore(region);	// not worth checking
+  ignore(region);        // not worth checking
   let (left, top, right, bottom) = box-edges(pane);
   draw-separator(pane, medium, gadget-orientation(pane), left, top, right, bottom)
 end method handle-repaint;
@@ -345,10 +345,10 @@ define method draw-separator
     select (orientation)
       #"horizontal" =>
         let bottom = top + 1;
-	draw-rectangle(medium, left, top, right, bottom, filled?: #t);
+        draw-rectangle(medium, left, top, right, bottom, filled?: #t);
       #"vertical" =>
         let right = left + 1;
-	draw-rectangle(medium, left, top, right, bottom, filled?: #t);
+        draw-rectangle(medium, left, top, right, bottom, filled?: #t);
     end
   end
 end method draw-separator;
@@ -360,7 +360,7 @@ define open abstract class <page> (<gadget>)
 end class <page>;
 
 define open abstract class <basic-page>
-    (<labelled-gadget-mixin>, 
+    (<labelled-gadget-mixin>,
      <page>,
      <basic-gadget>)
   sealed slot page-initial-focus :: false-or(<sheet>) = #f,

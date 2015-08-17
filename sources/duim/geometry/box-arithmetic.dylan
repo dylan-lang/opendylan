@@ -39,8 +39,8 @@ define sealed method transform-region
  => (region :: <region-union>)
   let regions :: <stretchy-object-vector> = make(<stretchy-vector>);
   local method do-transform (region) => ()
-	  add!(regions, transform-region(transform, region))
-	end method;
+          add!(regions, transform-region(transform, region))
+        end method;
   do-regions(do-transform, region-set);
   make(<region-union>, regions: regions)
 end method transform-region;
@@ -55,7 +55,7 @@ define method region-union
   region
 end method region-union;
 
-define method region-union 
+define method region-union
     (everywhere :: <everywhere>, region :: <region>) => (region :: <everywhere>)
   $everywhere
 end method region-union;
@@ -176,8 +176,8 @@ define sealed method transform-region
  => (region :: <region-intersection>)
   let regions :: <stretchy-object-vector> = make(<stretchy-vector>);
   local method do-transform (region) => ()
-	  add!(regions, transform-region(transform, region))
-	end method;
+          add!(regions, transform-region(transform, region))
+        end method;
   do-regions(do-transform, region-set);
   make(<region-intersection>, regions: regions)
 end method transform-region;
@@ -386,7 +386,7 @@ define inline function ltrb-well-formed?
   right >= left & bottom >= top
 end function ltrb-well-formed?;
 
-define inline function ltrb-equals-ltrb? 
+define inline function ltrb-equals-ltrb?
     (left1 :: <integer>, top1 :: <integer>, right1 :: <integer>, bottom1 :: <integer>,
      left2 :: <integer>, top2 :: <integer>, right2 :: <integer>, bottom2 :: <integer>)
  => (true? :: <boolean>)
@@ -419,7 +419,7 @@ define inline function ltrb-contains-ltrb?
   & right1 >= right2 & bottom1 >= bottom2
 end function ltrb-contains-ltrb?;
 
-define function ltrb-intersects-ltrb? 
+define function ltrb-intersects-ltrb?
     (left1 :: <integer>, top1 :: <integer>, right1 :: <integer>, bottom1 :: <integer>,
      left2 :: <integer>, top2 :: <integer>, right2 :: <integer>, bottom2 :: <integer>)
  => (valid? :: <boolean>,
@@ -443,78 +443,78 @@ define sealed method ltrb-union
  => (boxes :: <vector>)
   case
     ltrb-contains-ltrb?(left1, top1, right1, bottom1,
-			left2, top2, right2, bottom2) =>
+                        left2, top2, right2, bottom2) =>
       vector(make-bounding-box(left1, top1, right1, bottom1));
     ltrb-contains-ltrb?(left2, top2, right2, bottom2,
-			left1, top1, right1, bottom1) =>
+                        left1, top1, right1, bottom1) =>
       vector(make-bounding-box(left2, top2, right2, bottom2));
     ~ltrb-intersects-ltrb?(left1, top1, right1, bottom1,
-			   left2, top2, right2, bottom2) =>
+                           left2, top2, right2, bottom2) =>
       vector(make-bounding-box(left1, top1, right1, bottom1),
-	     make-bounding-box(left2, top2, right2, bottom2));
+             make-bounding-box(left2, top2, right2, bottom2));
     otherwise =>
       select (banding)
-	#"x-banding" =>
-	  when (abs(left2) < abs(left1))
-	    swap!(left1, left2);
-	    swap!(top1,  top2);
-	    swap!(right1,  right2);
-	    swap!(bottom1, bottom2)
-	  end;
-	  let result :: <stretchy-object-vector> = make(<stretchy-vector>);
-	  when (top1 < top2)
-	    add!(result, make-bounding-box(left1, top1, right1, top2))
-	  end;
-	  when (bottom2 > bottom1)
-	    add!(result, make-bounding-box(left2, bottom2, right2, bottom1))
-	  end;
-	  when (left1 < left2)
-	    let top = max(top1, top2);
-	    let bottom = min(bottom1, bottom2);
-	    when (bottom > top)
-	      add!(result, make-bounding-box(left1, top, right2, bottom))
-	    end
-	  end;
-	  when (right1 > right2)
-	    let top = min(bottom1, bottom2);
-	    let bottom = max(top1, top2);
-	    when (bottom > top)
-	      add!(result, make-bounding-box(left2, top, right1, bottom))
-	    end
-	  end;
-	  result;
-	#"y-banding" =>
-	  when (abs(top2) < abs(top1))
-	    swap!(left1, left2);
-	    swap!(top1,  top2);
-	    swap!(right1,  right2);
-	    swap!(bottom1, bottom2)
-	  end;
-	  let result :: <stretchy-object-vector> = make(<stretchy-vector>);
-	  when (left1 < left2)
-	    add!(result, make-bounding-box(left1, top1, left2, bottom1))
-	  end;
-	  when (right2 > right1)
-	    add!(result, make-bounding-box(right1, top2, right2, bottom2))
-	  end;
-	  when (top1 < top2)
-	    let left = max(left1, left2);
-	    let right = min(right1, right2);
-	    when (right > left)
-	      add!(result, make-bounding-box(left, top1, right, bottom2))
-	    end
-	  end;
+        #"x-banding" =>
+          when (abs(left2) < abs(left1))
+            swap!(left1, left2);
+            swap!(top1,  top2);
+            swap!(right1,  right2);
+            swap!(bottom1, bottom2)
+          end;
+          let result :: <stretchy-object-vector> = make(<stretchy-vector>);
+          when (top1 < top2)
+            add!(result, make-bounding-box(left1, top1, right1, top2))
+          end;
+          when (bottom2 > bottom1)
+            add!(result, make-bounding-box(left2, bottom2, right2, bottom1))
+          end;
+          when (left1 < left2)
+            let top = max(top1, top2);
+            let bottom = min(bottom1, bottom2);
+            when (bottom > top)
+              add!(result, make-bounding-box(left1, top, right2, bottom))
+            end
+          end;
+          when (right1 > right2)
+            let top = min(bottom1, bottom2);
+            let bottom = max(top1, top2);
+            when (bottom > top)
+              add!(result, make-bounding-box(left2, top, right1, bottom))
+            end
+          end;
+          result;
+        #"y-banding" =>
+          when (abs(top2) < abs(top1))
+            swap!(left1, left2);
+            swap!(top1,  top2);
+            swap!(right1,  right2);
+            swap!(bottom1, bottom2)
+          end;
+          let result :: <stretchy-object-vector> = make(<stretchy-vector>);
+          when (left1 < left2)
+            add!(result, make-bounding-box(left1, top1, left2, bottom1))
+          end;
+          when (right2 > right1)
+            add!(result, make-bounding-box(right1, top2, right2, bottom2))
+          end;
+          when (top1 < top2)
+            let left = max(left1, left2);
+            let right = min(right1, right2);
+            when (right > left)
+              add!(result, make-bounding-box(left, top1, right, bottom2))
+            end
+          end;
           when (bottom1 > bottom2)
-	    let left = min(right1, right2);
-	    let right = max(left1, left2);
-	    when (right > left)
-	      add!(result, make-bounding-box(left, top2, right, bottom1))
-	    end
-	  end;
-	  result;
-	#f =>
-	  vector(make-bounding-box(left1, top1, right1, bottom1),
-		 make-bounding-box(left2, top2, right2, bottom2));
+            let left = min(right1, right2);
+            let right = max(left1, left2);
+            when (right > left)
+              add!(result, make-bounding-box(left, top2, right, bottom1))
+            end
+          end;
+          result;
+        #f =>
+          vector(make-bounding-box(left1, top1, right1, bottom1),
+                 make-bounding-box(left2, top2, right2, bottom2));
       end
   end
 end method ltrb-union;
@@ -526,7 +526,7 @@ define sealed method ltrb-intersection
  => (box :: false-or(<bounding-box>))
   let (valid?, left, top, right, bottom)
     = ltrb-intersects-ltrb? (left1, top1, right1, bottom1,
-			     left2, top2, right2, bottom2);
+                             left2, top2, right2, bottom2);
   when (valid?)
     make-bounding-box(left, top, right, bottom)
   end
@@ -572,40 +572,40 @@ define sealed method ltrb-difference
  => (box :: false-or(<vector>))
   // If the second ltrb contains the first ltrb, the difference is #f
   unless (ltrb-contains-ltrb?(left2, top2, right2, bottom2,
-			      left1, top1, right1, bottom1))
+                              left1, top1, right1, bottom1))
     if (~ltrb-intersects-ltrb?(left1, top1, right1, bottom1,
-			       left2, top2, right2, bottom2))
+                               left2, top2, right2, bottom2))
       vector(make-bounding-box(left1, top1, right1, bottom1))
     else
       let result :: <stretchy-object-vector> = make(<stretchy-vector>);
       when (top1 < top2)
-	// Area A above
-	add!(result, make-bounding-box(left1, top1, right1, top2))
+        // Area A above
+        add!(result, make-bounding-box(left1, top1, right1, top2))
       end;
       when (bottom1 > bottom2)
-	// Area B above
-	add!(result, make-bounding-box(left1, bottom2, right1, bottom1))
+        // Area B above
+        add!(result, make-bounding-box(left1, bottom2, right1, bottom1))
       end;
       when (left1 < left2)
-	// Area C above
-	let top = max(top1, top2);
-	let bottom = min(bottom1, bottom2);
-	when (bottom > top)
-	  add!(result, make-bounding-box(left1, top, left2, bottom))
-	end
+        // Area C above
+        let top = max(top1, top2);
+        let bottom = min(bottom1, bottom2);
+        when (bottom > top)
+          add!(result, make-bounding-box(left1, top, left2, bottom))
+        end
       end;
       when (right1 > right2)
-	// Area D above
-	let top = max(top1, top2);
-	let bottom = min(bottom1, bottom2);
-	when (bottom > top)
-	  add!(result, make-bounding-box(right2, top, right1, bottom))
-	end
+        // Area D above
+        let top = max(top1, top2);
+        let bottom = min(bottom1, bottom2);
+        when (bottom > top)
+          add!(result, make-bounding-box(right2, top, right1, bottom))
+        end
       end;
       if (empty?(result))
-	#f
+        #f
       else
-	result
+        result
       end
     end
   end
@@ -659,8 +659,8 @@ end method box-edges;
 define sealed method transform-region
     (transform :: <transform>, set :: <box-set>) => (boxes :: <box-set>)
   local method do-transform (box) => ()
-	  transform-region(transform, box)
-	end method;
+          transform-region(transform, box)
+        end method;
   apply(make-box-set, map-as(<simple-vector>, do-transform, box-set-boxes(set)))
 end method transform-region;
 
@@ -702,7 +702,7 @@ define sealed method region-union
   let (left1, top1, right1, bottom1) = box-edges(box1);
   let (left2, top2, right2, bottom2) = box-edges(box2);
   let new-boxes = ltrb-union(left1, top1, right1, bottom1,
-			     left2, top2, right2, bottom2);
+                             left2, top2, right2, bottom2);
   if (size(new-boxes) = 1)
     new-boxes[0]
   else
@@ -715,7 +715,7 @@ define sealed method region-union
   apply(make-box-set, box, box-set-boxes(set))
 end method region-union;
 
-define sealed method region-union 
+define sealed method region-union
     (set :: <box-set>, box :: <bounding-box>) => (region :: <box-set>)
   apply(make-box-set, box, box-set-boxes(set))
 end method region-union;
@@ -730,7 +730,7 @@ define sealed method region-intersection
   let (left1, top1, right1, bottom1) = box-edges(box1);
   let (left2, top2, right2, bottom2) = box-edges(box2);
   let box = ltrb-intersection(left1, top1, right1, bottom1,
-			      left2, top2, right2, bottom2);
+                              left2, top2, right2, bottom2);
   box | $nowhere
 end method region-intersection;
 
@@ -739,13 +739,13 @@ define sealed method region-intersection
   let new-boxes :: <stretchy-object-vector> = make(<stretchy-vector>);
   let (left1, top1, right1, bottom1) = box-edges(box);
   local method do-intersection (b) => ()
-	  let (left2, top2, right2, bottom2) = box-edges(b);
-	  let new = ltrb-intersection(left1, top1, right1, bottom1,
-				      left2, top2, right2, bottom2);
-	  when (new)
-	    add!(new-boxes, new)
-	  end
-	end method;
+          let (left2, top2, right2, bottom2) = box-edges(b);
+          let new = ltrb-intersection(left1, top1, right1, bottom1,
+                                      left2, top2, right2, bottom2);
+          when (new)
+            add!(new-boxes, new)
+          end
+        end method;
   do-regions(do-intersection, set);
   if (empty?(new-boxes))
     $nowhere
@@ -759,13 +759,13 @@ define sealed method region-intersection
   let new-boxes :: <stretchy-object-vector> = make(<stretchy-vector>);
   let (left2, top2, right2, bottom2) = box-edges(box);
   local method do-intersection (b) => ()
-	  let (left1, top1, right1, bottom1) = box-edges(b);
-	  let new = ltrb-intersection(left1, top1, right1, bottom1,
-				      left2, top2, right2, bottom2);
-	  when (new)
-	    add!(new-boxes, new)
-	  end
-	end method;
+          let (left1, top1, right1, bottom1) = box-edges(b);
+          let new = ltrb-intersection(left1, top1, right1, bottom1,
+                                      left2, top2, right2, bottom2);
+          when (new)
+            add!(new-boxes, new)
+          end
+        end method;
   do-regions(do-intersection, set);
   if (empty?(new-boxes))
     $nowhere
@@ -781,15 +781,15 @@ define sealed method region-intersection
     (method (box1)
        do-regions
          (method (box2)
-	    let (left1, top1, right1, bottom1) = box-edges(box1);
-	    let (left2, top2, right2, bottom2) = box-edges(box2);
-	    let new = ltrb-intersection(left1, top1, right1, bottom1,
-					left2, top2, right2, bottom2);
-	    when (new)
-	      add!(new-boxes, new)
-	    end
-	  end,
-	  set2)
+            let (left1, top1, right1, bottom1) = box-edges(box1);
+            let (left2, top2, right2, bottom2) = box-edges(box2);
+            let new = ltrb-intersection(left1, top1, right1, bottom1,
+                                        left2, top2, right2, bottom2);
+            when (new)
+              add!(new-boxes, new)
+            end
+          end,
+          set2)
      end,
      set1);
   if (empty?(new-boxes))
@@ -804,7 +804,7 @@ define sealed method region-difference
   let (left1, top1, right1, bottom1) = box-edges(box1);
   let (left2, top2, right2, bottom2) = box-edges(box2);
   let new-boxes = ltrb-difference(left1, top1, right1, bottom1,
-				  left2, top2, right2, bottom2);
+                                  left2, top2, right2, bottom2);
   if (empty?(new-boxes))
     $nowhere
   else
@@ -821,13 +821,13 @@ define sealed method region-difference
   let new-boxes :: <stretchy-object-vector> = make(<stretchy-vector>);
   let (left1, top1, right1, bottom1) = box-edges(box);
   local method do-difference (b) => ()
-	  let (left2, top2, right2, bottom2) = box-edges(b);
-	  let new = ltrb-difference(left1, top1, right1, bottom1,
-				    left2, top2, right2, bottom2);
-	  when (new)
-	    add!(new-boxes, new)
-	  end
-	end method;
+          let (left2, top2, right2, bottom2) = box-edges(b);
+          let new = ltrb-difference(left1, top1, right1, bottom1,
+                                    left2, top2, right2, bottom2);
+          when (new)
+            add!(new-boxes, new)
+          end
+        end method;
   do-regions(do-difference, set);
   if (new-boxes)
     apply(make-box-set, new-boxes)
@@ -841,13 +841,13 @@ define sealed method region-difference
   let new-boxes :: <stretchy-object-vector> = make(<stretchy-vector>);
   let (left2, top2, right2, bottom2) = box-edges(box);
   local method do-difference (b) => ()
-	  let (left1, top1, right1, bottom1) = box-edges(b);
-	  let new = ltrb-difference(left1, top1, right1, bottom1,
-				    left2, top2, right2, bottom2);
-	  when (new)
-	    add!(new-boxes, new)
-	  end
-	end method;
+          let (left1, top1, right1, bottom1) = box-edges(b);
+          let new = ltrb-difference(left1, top1, right1, bottom1,
+                                    left2, top2, right2, bottom2);
+          when (new)
+            add!(new-boxes, new)
+          end
+        end method;
     do-regions(do-difference, set);
   if (empty?(new-boxes))
     $nowhere
@@ -863,15 +863,15 @@ define sealed method region-difference
     (method (box1)
        do-regions
          (method (box2)
-	    let (left1, top1, right1, bottom1) = box-edges(box1);
-	    let (left2, top2, right2, bottom2) = box-edges(box2);
-	    let new = ltrb-difference(left1, top1, right1, bottom1,
-				      left2, top2, right2, bottom2);
-	    when (new)
-	      add!(new-boxes, new)
-	    end
-	  end,
-	  set2)
+            let (left1, top1, right1, bottom1) = box-edges(box1);
+            let (left2, top2, right2, bottom2) = box-edges(box2);
+            let new = ltrb-difference(left1, top1, right1, bottom1,
+                                      left2, top2, right2, bottom2);
+            when (new)
+              add!(new-boxes, new)
+            end
+          end,
+          set2)
      end,
      set1);
   if (empty?(new-boxes))
@@ -892,8 +892,8 @@ define sealed method normalize-box-set
           select (region by instance?)
             <box-set> =>
               apply(concatenate-as, <list>, map(collect-boxes, box-set-boxes(region)));
-	    <bounding-box> => list(region);
-	    <everywhere> => list(region);
+            <bounding-box> => list(region);
+            <everywhere> => list(region);
           end
         end method,
         method reduce-boxes (pending-boxes, processed-boxes) => (boxes)
@@ -905,33 +905,33 @@ define sealed method normalize-box-set
             otherwise =>
               let intersecting-region
                 = begin
-		    local method intersects? (box) => (intersects :: <boolean>)
-			    region-intersects-region?(box, head(pending-boxes))
-			  end method;
+                    local method intersects? (box) => (intersects :: <boolean>)
+                            region-intersects-region?(box, head(pending-boxes))
+                          end method;
                     find-element(tail(pending-boxes), intersects?)
                   end;
               if (empty?(intersecting-region))
                 reduce-boxes
-		  (tail(pending-boxes), pair(head(pending-boxes), processed-boxes))
+                  (tail(pending-boxes), pair(head(pending-boxes), processed-boxes))
               else
                 reduce-boxes
                   (concatenate!
                      (reduce-box-pair(head(pending-boxes), intersecting-region),
-		      remove!(tail(pending-boxes), intersecting-region)),
+                      remove!(tail(pending-boxes), intersecting-region)),
                    processed-boxes)
-	      end;
+              end;
           end
         end method,
         method reduce-box-pair (box1, box2) => (boxes)
           // Don't use 'region-union', because we are only prepared
           // to deal with bounding boxes
-	  let (left1, top1, right1, bottom1) = box-edges(box1);
-	  let (left2, top2, right2, bottom2) = box-edges(box2);
-	  remove!(ltrb-union(left1, top1, right1, bottom1,
-			     left2, top2, right2, bottom2,
-			     banding: banding),
-		  #f,
-		  test: method (_x, _y) ignore(_y); region-empty?(_x) end)
-	end method;
+          let (left1, top1, right1, bottom1) = box-edges(box1);
+          let (left2, top2, right2, bottom2) = box-edges(box2);
+          remove!(ltrb-union(left1, top1, right1, bottom1,
+                             left2, top2, right2, bottom2,
+                             banding: banding),
+                  #f,
+                  test: method (_x, _y) ignore(_y); region-empty?(_x) end)
+        end method;
   as(<simple-vector>, reduce-boxes(collect-boxes(set), #()))
 end method normalize-box-set;

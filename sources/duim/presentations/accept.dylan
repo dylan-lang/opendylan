@@ -25,25 +25,25 @@ end function input-context-tag;
 define generic sheet-accept
     (sheet :: <sheet>, type :: <type>, view :: <view>,
      #key default, default-type :: false-or(<type>), provide-default,
-	  prompt, prompt-mode)
+          prompt, prompt-mode)
  => (object, type :: false-or(<type>));
 
 define function accept
     (type :: <type>, sheet :: <sheet>,
      #key view :: false-or(<view>) = #f,
-	  default = $unsupplied, default-type :: false-or(<type>) = #f, provide-default = #t,
-	  prompt = #t, prompt-mode = #"normal")
+          default = $unsupplied, default-type :: false-or(<type>) = #f, provide-default = #t,
+          prompt = #t, prompt-mode = #"normal")
  => (object, type :: false-or(<type>))
   //---*** Massage arguments...
   sheet-accept(sheet, type, view,
-	       default: default, default-type: default-type, provide-default: provide-default,
-	       prompt: prompt, prompt-mode: prompt-mode)
+               default: default, default-type: default-type, provide-default: provide-default,
+               prompt: prompt, prompt-mode: prompt-mode)
 end function accept;
 
 define method sheet-accept
     (sheet :: <presentation-sheet>, type :: <type>, view :: <view>,
      #key default = $unsupplied, default-type :: false-or(<type>) = #f, provide-default = #t,
-	  prompt = #t, prompt-mode = #"normal")
+          prompt = #t, prompt-mode = #"normal")
  => (object, type :: false-or(<type>))
 end method sheet-accept;
 

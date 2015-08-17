@@ -10,9 +10,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // We could potentially have several FFI declarations for WinHelp
 // One for each type of data (4th argument). This way the FFI would
-// automatically take care of translating things like Dylan strings 
+// automatically take care of translating things like Dylan strings
 // into Char*'s (addresses of C strings). However, the code in this
-// file was already divided up to use a single call to WinHelp so I 
+// file was already divided up to use a single call to WinHelp so I
 // just added explicit conversions (eg calls 'pointer-address', etc)
 // into the various 'help-data' methods. (Jason -- 26th March 1997)
 
@@ -390,7 +390,7 @@ define sealed method help-data
   let region = help-window-region(command);
   let (left, top, right, bottom) = box-edges(region);
   let info = make(<LPHELPWININFO>,
-                  x:  left, y:  top, 
+                  x:  left, y:  top,
                   dx: right - left, dy: bottom - top,
                   wMax: $SW-SHOWNA);
   info

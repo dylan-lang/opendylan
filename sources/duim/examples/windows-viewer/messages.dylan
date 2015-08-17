@@ -352,36 +352,36 @@ define pane <messages-pane> ()
     init-keyword: categories:;
   pane start-button (pane)
     make(<push-button>,
-	 label: "Start",
-	 activate-callback: method (gadget)
-			      ignore(gadget);
-			      start-message-logging(pane)
-			    end);
+         label: "Start",
+         activate-callback: method (gadget)
+                              ignore(gadget);
+                              start-message-logging(pane)
+                            end);
   pane stop-button (pane)
     make(<push-button>,
-	 label: "Stop",
-	 activate-callback: method (gadget)
-			      ignore(gadget);
-			      stop-message-logging(pane)
-			    end);
+         label: "Stop",
+         activate-callback: method (gadget)
+                              ignore(gadget);
+                              stop-message-logging(pane)
+                            end);
   pane messages-table (pane)
     make(<table-control>,
          headings: #["Window", "Message", "Options", "wParam", "lParam"],
          widths:   #[80, 180, 160, 80, 80],
-	 items:    pane.pane-messages,
+         items:    pane.pane-messages,
          generators: vector(message-window-name,
-			    message-name,
-			    message-description,
-			    message-wParam,
-			    message-lParam),
-	 label-key: method (object)
-		      select (object by instance?)
-			<integer>, <machine-word> =>
-			  number-to-hex-string(object);
-			otherwise =>
-			  format-to-string("%s", object);
-		      end
-		    end,
+                            message-name,
+                            message-description,
+                            message-wParam,
+                            message-lParam),
+         label-key: method (object)
+                      select (object by instance?)
+                        <integer>, <machine-word> =>
+                          number-to-hex-string(object);
+                        otherwise =>
+                          format-to-string("%s", object);
+                      end
+                    end,
          popup-menu-callback: curry(display-message-popup-menu, pane));
   layout (pane)
     vertically (spacing: 4)
@@ -411,7 +411,7 @@ end method update-messages-table;
 
 define method pane-filtered-messages
     (pane :: <messages-pane>) => (messages :: <sequence>)
-  let messages :: <stretchy-object-vector> 
+  let messages :: <stretchy-object-vector>
     = make(<stretchy-object-vector>);
   let categories = pane.pane-categories;
   for (message :: <window-message> in pane.pane-messages)
@@ -447,21 +447,21 @@ define function start-message-logging
     (pane :: <messages-pane>) => ()
   let hook-dll = pane.pane-hook-dll;
   let handle = pane.pane-handle;
-  let thread 
+  let thread
     = if (pane.pane-all-threads?)
-	0
+        0
       else
-	GetWindowThreadProcessId(handle, $null-lpdword)
+        GetWindowThreadProcessId(handle, $null-lpdword)
       end;
   install-windows-hooks
-    (hook-dll, thread, 
+    (hook-dll, thread,
      method (message :: <window-message>)
        let frame = sheet-frame(pane);
        frame & call-in-frame(frame, record-windows-message, pane, message)
      end);
   frame-status-message(pane.sheet-frame)
     := format-to-string("Collecting events for %=...",
-			window-name(handle))
+                        window-name(handle))
 end function start-message-logging;
 
 define function stop-message-logging

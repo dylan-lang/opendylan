@@ -3,21 +3,21 @@ Synopsis:     DUIM frames
 Author:       Scott McKay, Andy Armstrong
 Target-Type:  dll
 Files:  library
-	module
-	classes
+        module
+        classes
         events
-	frames
+        frames
         embedded-frames
         dialogs
         commands
-	decorators
+        decorators
         help
         command-tables
-	standard-commands
-	completer
+        standard-commands
+        completer
         progress-notes
-	contain
-	debug
+        contain
+        debug
 Major-version: 2
 Minor-version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

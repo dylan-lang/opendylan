@@ -8,43 +8,43 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Simple dialog examples
 
-define method yes-or-no? 
+define method yes-or-no?
     (message :: <string>,
      #key port = default-port(),
           frame-manager: framem)
   with-frame-manager (framem)
     let yes-button
       = make(<push-button>, label: "Yes",
-	     activate-callback: exit-dialog,
-	     max-width: $fill);
+             activate-callback: exit-dialog,
+             max-width: $fill);
     let no-button
       = make(<push-button>, label: "No",
-	     activate-callback: cancel-dialog,
-	     max-width: $fill);
+             activate-callback: cancel-dialog,
+             max-width: $fill);
     let dialog
       = make(<dialog-frame>,
-	     exit-callback:   #f,
-	     cancel-callback: #f,
-	     layout: vertically (x-alignment: #"center",
-				 y-spacing: 5)
-	               make(<label>, label: message);
+             exit-callback:   #f,
+             cancel-callback: #f,
+             layout: vertically (x-alignment: #"center",
+                                 y-spacing: 5)
+                       make(<label>, label: message);
                        horizontally (x-spacing: 2)
-	                 yes-button; 
-	                 no-button;
-		       end
+                         yes-button;
+                         no-button;
+                       end
                      end);
     start-frame(dialog) ~= #f
   end
 end method yes-or-no?;
 
-define method choose-string 
+define method choose-string
     (#key title = "Select a string",
           port = default-port(),
           frame-manager: framem)
   with-frame-manager (framem)
-    let text-field 
+    let text-field
       = make(<text-field>,
-	     value-changed-callback: exit-dialog);
+             value-changed-callback: exit-dialog);
     let dialog = make(<dialog-frame>, title: title, layout: text-field);
     start-frame(dialog)
       & gadget-value(text-field)
@@ -61,10 +61,10 @@ define method new-choose-from-dialog
   with-frame-manager (framem)
     let chooser
       = make(<list-box>,
-	     items: items,
-	     label-key: label-key,
-	     value-key: value-key,
-	     activate-callback: exit-dialog);
+             items: items,
+             label-key: label-key,
+             value-key: value-key,
+             activate-callback: exit-dialog);
     let dialog = make(<dialog-frame>, title: title, layout: chooser);
     start-frame(dialog)
       & gadget-value(chooser)
@@ -130,7 +130,7 @@ define method choose-multiple-values
  => (label :: <string>, check1? :: <boolean>, check2? :: <boolean>, radio1 :: <string>)
   with-frame-manager (framem)
     let dialog
-      = make(<multiple-values-dialog>, 
+      = make(<multiple-values-dialog>,
              title: title,
              exit-buttons-position: #"right",
              help-callback: multiple-values-help);
@@ -205,7 +205,7 @@ end method test-yes-or-no?;
 define method test-choose-string (frame :: <simple-frame>) => ()
   show-result(frame, choose-string(frame-manager: frame-manager(frame)))
 end method test-choose-string;
-  
+
 define method test-new-choose-from-dialog (frame :: <simple-frame>)
   show-result
     (frame,
@@ -213,17 +213,17 @@ define method test-new-choose-from-dialog (frame :: <simple-frame>)
                             frame-manager: frame-manager(frame),
                             title: "Select a color"))
 end method test-new-choose-from-dialog;
-  
+
 define method test-choose-multiple-values (frame :: <simple-frame>) => ()
   let (#rest values) = choose-multiple-values(frame-manager: frame-manager(frame));
   show-result(frame, values)
 end method test-choose-multiple-values;
-  
+
 define method test-choose-from-wizard (frame :: <simple-frame>) => ()
   let (#rest values) = choose-from-wizard(frame-manager: frame-manager(frame));
   show-result(frame, values)
 end method test-choose-from-wizard;
-  
+
 define frame <simple-dialogs-frame> (<simple-frame>)
   pane examples (frame)
     make(<list-control>,
@@ -234,7 +234,7 @@ define frame <simple-dialogs-frame> (<simple-frame>)
                        vector("Choose from Wizard", test-choose-from-wizard)),
          label-key: first,
          value-key: second,
-	 scroll-bars: #"none",
+         scroll-bars: #"none",
          activate-callback: method (sheet :: <sheet>)
                               gadget-value(sheet)(sheet-frame(sheet))
                             end);
