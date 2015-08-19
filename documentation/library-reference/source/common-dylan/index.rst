@@ -21,6 +21,8 @@ The Common Dylan library exports the following modules:
 - :doc:`simple-format` Simple formatting facilities. For more flexible
   formatting and printing, see the :doc:`io <../io/index>` library.
 
+- :doc:`simple-profiling` A facility for tracking application performance.
+
 - :doc:`simple-random` A facility for generating pseudo-random integers.
 
 - :doc:`simple-timers` A facility for tracking intervals of time.
@@ -46,6 +48,7 @@ It also re-exports these modules which are defined in the *dylan* library:
    finalization
    machine-words
    simple-format
+   simple-profiling
    simple-random
    simple-timers
    threads

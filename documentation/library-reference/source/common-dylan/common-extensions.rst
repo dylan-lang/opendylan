@@ -21,9 +21,10 @@ The extensions are:
 - Program constructs: :macro:`iterate` and :macro:`when`.
 - Application development conveniences: :macro:`iterate`,
   :func:`debug-message`, :func:`ignore`, :func:`ignorable`,
-  :macro:`timing`, :func:`$unsupplied`, :func:`unsupplied?`,
+  :func:`$unsupplied`, :func:`unsupplied?`,
   :func:`unsupplied`, :macro:`when`, :const:`$unfound`, :func:`one-of`,
   :func:`unfound?`, and :func:`found?`.
+- Performance analysis: :macro:`timing`, :macro:`profiling`.
 - Type conversion functions: :func:`integer-to-string`,
   :func:`string-to-integer`, and :func:`float-to-string`.
 - Byte storage access functions: :gf:`byte-storage-address`,
@@ -1135,41 +1136,6 @@ The extensions are:
      - :const:`$unsupplied`
      - :func:`unsupplied`
      - :func:`unsupplied?`
-
-.. macro:: timing
-   :statement:
-
-   Returns the time, in seconds and microseconds, spent executing the body
-   of code it is wrapped around.
-
-   :macrocall:
-     .. code-block:: dylan
-
-       timing () [ *body* ] end [ timing ]
-
-   :parameter body: A Dylan body *bnf*
-   :value seconds: An instance of :drm:`<integer>`.
-   :value microseconds: An instance of :drm:`<integer>`.
-
-   :description:
-
-     Returns the time, in seconds and microseconds, spent executing the
-     body of code it is wrapped around.
-
-     The first value returned is the number of whole seconds spent in
-     *body*. The second value returned is the number of microseconds
-     spent in *body* in addition to *seconds*.
-
-   :example:
-
-     .. code-block:: dylan
-
-       timing ()
-         for (i from 0 to 200)
-           format-to-string("%d %d", i, i + 1)
-         end
-       end;
-       => 1 671000
 
 .. constant:: $unfound
 
