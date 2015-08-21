@@ -168,6 +168,12 @@ AC_ARG_WITH(mps,
                           [Memory Pool System (MPS) source directory]))
 
 AS_IF([test -n "$SUPPORT_HARP" && test x$HARP_COLLECTOR = xMPS],
+      [VALIDATE_MPS=yes])
+
+AS_IF([test -n "$SUPPORT_LLVM" && test x$LLVM_COLLECTOR = xMPS],
+      [VALIDATE_MPS=yes])
+
+AS_IF([test -n "$VALIDATE_MPS"],
       [MPS_CFLAGS="-I${with_mps}/code"
        MPS_LIBS=
        save_CPPFLAGS="$CPPFLAGS"
