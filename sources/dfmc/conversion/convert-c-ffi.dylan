@@ -91,6 +91,7 @@ define method convert-%c-call-function
            c-function-name: name & as-string(name),
            c-signature: ffi-signature,
            signature: signature,
+           signature-spec: sig-spec,
            c-modifiers: as-string(modifiers));
   convert-primitive-call(env, context, <primitive-call>, function, arguments);
 end method;
@@ -117,6 +118,7 @@ define method convert-%c-call-function-indirect
      = make(<&c-function>,
             c-function-name: #f,
             signature: signature,
+            signature-spec: sig-spec,
             c-signature: ffi-signature,
             value: #f,
             c-modifiers: as-string(modifiers));
@@ -182,6 +184,7 @@ define method convert-%objc-msgsend
            c-function-name: format-to-string("objc_msgSend", modifiers),
            c-signature: ffi-signature,
            signature: signature,
+           signature-spec: sig-spec,
            c-modifiers: modifiers);
   convert-primitive-call(env, context, <primitive-call>, function, arguments);
 end method;
