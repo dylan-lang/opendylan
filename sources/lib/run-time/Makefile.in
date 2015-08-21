@@ -110,8 +110,8 @@ HARP_RUNTIME_OBJS = \
 		  $(OBJDIR_HARP)/debug-print.o \
 		  $(OBJDIR_HARP)/stack-walker.o \
 		  $(OBJDIR_HARP)/trace.o \
+		  $(OBJDIR_HARP)/unix-harp-support.o \
 		  $(OBJDIR_HARP)/unix-spy-interfaces.o \
-		  $(OBJDIR_HARP)/unix-support.o \
 		  $(OBJDIR_HARP)/unix-threads-primitives.o \
 		  $(HARP_SUPPORT_DIR)/runtime.o
 
@@ -123,7 +123,8 @@ ifeq ($(HARP_COLLECTOR),MPS)
 		  $(OBJDIR_HARP)/heap-trail.o \
 		  $(OBJDIR_HARP)/heap-order1.o \
 		  $(OBJDIR_HARP)/heap-order2.o \
-		  $(OBJDIR_HARP)/heap-table.o
+		  $(OBJDIR_HARP)/heap-table.o \
+		  $(OBJDIR_HARP)/unix-mps-support.o
 endif
 
 LLVM_RUNTIME_GEN = $(OPEN_DYLAN_TARGET_PLATFORM)-runtime.bc
@@ -155,7 +156,6 @@ C_RUNTIME_OBJS	= $(OBJDIR_C)/break.o \
 		  $(OBJDIR_C)/stack-walker.o \
 		  $(OBJDIR_C)/trace.o \
 		  $(OBJDIR_C)/unix-spy-interfaces.o \
-		  $(OBJDIR_C)/unix-support.o \
 		  $(OBJDIR_C)/c-run-time.o \
 		  $(OBJDIR_C)/c-support.o \
 		  $(OBJDIR_C)/c-primitives-debug.o \
