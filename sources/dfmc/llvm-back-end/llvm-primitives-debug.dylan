@@ -56,3 +56,11 @@ define c-callable auxiliary &runtime-primitive-descriptor class-allocation-break
   ins--call-intrinsic(be, "llvm.debugtrap", #[]);
   emit-reference(be, module, &false)
 end;
+
+// %running-dylan-spy-function? is a variable that indicates
+// whether or not the debugger is executing a function via the spy thread.
+// By default it is set to 0. The Dylan debugger will set it to something
+// else if it is executing code within the app.
+//
+define runtime-variable %running-dylan-spy-function? :: <raw-integer>
+  = make-raw-literal(0);
