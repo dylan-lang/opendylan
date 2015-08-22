@@ -632,18 +632,6 @@ void *wrapper_class(void *wrapper)
   return class;
 }
 
-#ifndef OPEN_DYLAN_PLATFORM_UNIX
-
-extern void dylan_main ();
-
-int main ()
-{
-  dylan_main();
-  return 0;
-}
-
-#endif
-
 #ifndef OPEN_DYLAN_BACKEND_LLVM
 #include "exceptions.c"
 #endif
