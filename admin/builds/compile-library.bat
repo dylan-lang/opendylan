@@ -7,7 +7,6 @@ setlocal
 set DEBUG=full
 set DEBUGGING=no
 set QUIET=yes
-set SAVE=yes
 set CLEAN=no
 set MAYBE=no
 set PROJECT=
@@ -33,8 +32,6 @@ If "%1%"=="/debugger"         GOTO SET_DEBUGGING
 If "%1%"=="/nodebugger"       GOTO SET_NODEBUGGING
 If "%1%"=="/quiet"            GOTO SET_QUIET
 If "%1%"=="/verbose"          GOTO SET_VERBOSE
-If "%1%"=="/save"             GOTO SET_SAVE
-If "%1%"=="/nosave"           GOTO SET_NOSAVE
 If "%1%"=="/clean"            GOTO SET_CLEAN
 If "%1%"=="/maybe"            GOTO SET_MAYBE
 If "%1%"=="/dll"              GOTO SET_DLL
@@ -102,16 +99,6 @@ goto PARAM_LOOP
 
 :SET_VERBOSE
 set QUIET=no
-shift
-goto PARAM_LOOP
-
-:SET_SAVE
-set SAVE=yes
-shift
-goto PARAM_LOOP
-
-:SET_NOSAVE
-set SAVE=no
 shift
 goto PARAM_LOOP
 
@@ -191,8 +178,6 @@ set LOG=%OPEN_DYLAN_BUILD_LOGS%\compile-%LIBRARY%.log
 set BUILD=%DYLAN_RELEASE_ROOT%\bin\build
 set OPERATION=Building
 set COMPILER_OPTIONS=/build
-if "%SAVE%"=="yes" set COMPILER_OPTIONS=/save %COMPILER_OPTIONS%
-if "%SAVE%"=="no" set OPERATION=Building (but not saving)
 if "%EXT%"=="dll" set COMPILER_OPTIONS=/target dll %COMPILER_OPTIONS%
 if "%EXT%"=="dll" set OPERATION=%OPERATION% library
 if "%EXT%"=="exe" set COMPILER_OPTIONS=/target executable %COMPILER_OPTIONS%
