@@ -970,7 +970,8 @@ define function make-envp
             end));
 
   // Store the computed strings in the buffer
-  for (env-string in temp-table, offset = 0 then offset + env-string.size + 1)
+  for (env-string in temp-table,
+       offset :: <integer> = 0 then offset + env-string.size + 1)
     for (c in env-string, i :: <integer> from 0)
       primitive-c-unsigned-char-at
         (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(buffer)),
