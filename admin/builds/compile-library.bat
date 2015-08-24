@@ -186,6 +186,14 @@ if "%DEBUG%"=="min" set COMPILER_OPTIONS=/debug:min %COMPILER_OPTIONS%
 if "%DEBUG%"=="no" set COMPILER_OPTIONS=/debug:none %COMPILER_OPTIONS%
 if "%BUILD_COUNTS%"=="ignore" set OPEN_DYLAN_MAJOR_MINOR_CHECKS_ONLY=yes
 
+REM //
+REM // Not all versions of Open Dylan that we can bootstrap from support
+REM // the verbose flag. So, we'll check for it and use if it works so that
+REM // we get correct warning and error reporting.
+REM //
+call %DYLAN_RELEASE_COMPILER% /verbose /help > nul 2>&1
+if %errorlevel% equ 0 set COMPILER_OPTIONS=/verbose %COMPILER_OPTIONS%
+
 :FIND_DEBUGGER
 set DEBUGGER=%DYLAN_RELEASE_ROOT%\bin\batch-debug.exe
 if exist "%DEBUGGER%" goto setup_debugging
