@@ -121,7 +121,6 @@ set TIMINGS_ROOT=
 set STRIP_RUNTIME=no
 set OLD_RUNTIME_PREFIX=D3
 set RUNTIME_PREFIX=Dx
-set USE_ENVIRONMENT=yes
 set USE_FULL_C_RUNTIME=no
 set VERBOSE=no
 
@@ -139,10 +138,6 @@ REM // Loop through the command line arguments //
 REM //
 :PARAM_LOOP
 if "%1"==""                    GOTO PARAM_DONE
-if "%1"=="-environment"        GOTO SET_USE_ENVIRONMENT
-if "%1"=="/environment"        GOTO SET_USE_ENVIRONMENT
-if "%1"=="-pentium-dw"         GOTO SET_USE_PENTIUM_DW
-if "%1"=="/pentium-dw"         GOTO SET_USE_PENTIUM_DW
 if "%1"=="-dylan"              GOTO SET_OLD_RELEASE_ROOT
 if "%1"=="/dylan"              GOTO SET_OLD_RELEASE_ROOT
 if "%1"=="-generations"        GOTO SET_GENERATIONS
@@ -191,15 +186,6 @@ GOTO PRINT_ERROR
 REM //
 REM // Set all the variables depending upon command line args //
 REM //
-:SET_USE_ENVIRONMENT
-set USE_ENVIRONMENT=yes
-shift
-goto PARAM_LOOP
-
-:SET_USE_PENTIUM_DW
-set USE_ENVIRONMENT=no
-shift
-goto PARAM_LOOP
 
 :SET_OLD_RELEASE_ROOT
 if "%2"=="" GOTO NO_ARG
@@ -397,7 +383,6 @@ set QUOTED_OPTIONS=OPTIONS="%OPTIONS%"
 set COMMON_BUILD_OPTIONS= -nopath
 set BUILD_OPTIONS=-p %NEW_RELEASE_ROOT% -s %OLD_RELEASE_ROOT% %COMMON_BUILD_OPTIONS%
 if not "%OPEN_DYLAN_USER_SOURCES%"=="" set BUILD_OPTIONS=%BUILD_OPTIONS% -sources %OPEN_DYLAN_USER_SOURCES%
-if "%USE_ENVIRONMENT%"=="yes" set BUILD_OPTIONS=%BUILD_OPTIONS% -environment
 
 :SETUP_BOOTSTRAP_TARGETS
 if "%RELEASE_TARGET%"=="minimal-release" goto setup_minimal_builds

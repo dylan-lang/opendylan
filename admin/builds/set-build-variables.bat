@@ -347,12 +347,7 @@ goto finish_setup
 
 :FINISH_SETUP
 set OPEN_DYLAN_RELEASE_REGISTRIES=%OPEN_DYLAN_RELEASE_SOURCES%\registry
-if "%USE_ENVIRONMENT%"=="yes" goto find_console_compiler
 call find-compiler
-goto describe_build
-
-:FIND_CONSOLE_COMPILER
-call find-compiler -environment
 
 REM //
 REM // Describe the build that will happen
