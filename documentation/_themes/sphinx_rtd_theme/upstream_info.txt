@@ -1,2 +1,0 @@
-This is copied from commit e8b2b72110a2228df15b81c2322008165b0c394e in
-https://github.com/snide/sphinx_rtd_theme

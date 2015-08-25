@@ -11,7 +11,7 @@ created additional extensions to document Dylan language entities.
 The documentation — a number of RST files — is in the ``documentation`` directory
 in the ``opendylan`` repository. Consult the Sphinx web-site for details about
 reStructuredText markup and Sphinx extensions to it, and see the
-``dylandomain/reference.rst`` file in the ``sphinx-extensions`` repository for
+``sphinxcontrib/dylan/domain/reference.rst`` file in the ``sphinx-extensions`` repository for
 details about the Dylan language extensions. (You may use the ``rst2html`` tool
 to generate an HTML page from an ``.rst`` file.)
 

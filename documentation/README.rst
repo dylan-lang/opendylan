@@ -78,4 +78,4 @@ Dylan Language Markup
 
 We have created a Dylan language Sphinx domain to make it easier to document and
 refer to Dylan language entities. This domain is documented in the
-"dylandomain/reference.rst" file in the "sphinx-extensions" repository.
+"sphinxcontrib/dylan/domain/reference.rst" file in the "sphinx-extensions" repository.
