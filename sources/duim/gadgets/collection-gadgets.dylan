@@ -173,8 +173,8 @@ define sealed method gadget-selection-setter
     let items-size = size(gadget-items(gadget));
     for (key in selection)
       assert(instance?(key, <integer>) & key >= 0 & key < items-size,
-             "Invalid key %= in selection for %=",
-             key, gadget)
+             "Invalid key %= in selection for %= (%= items)",
+             key, gadget, items-size)
     end;
     gadget.%selection := selection;
     when (do-callback?)
