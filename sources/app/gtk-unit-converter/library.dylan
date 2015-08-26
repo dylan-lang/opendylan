@@ -10,6 +10,7 @@ end library;
 
 define module gtk-unit-converter
   use common-dylan;
+  use format;
   use format-out;
   use gobject-glue;
   use gtk;
