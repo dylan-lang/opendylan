@@ -156,6 +156,8 @@ Runtime
 * Limited integer instance checks have been optimized. This will have
   the most impact when using the LLVM compiler backend.
 
+* In the C runtime, the ``primitive_sleep`` now functions correctly.
+
 system
 ======
 

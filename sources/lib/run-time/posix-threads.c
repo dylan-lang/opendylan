@@ -1462,11 +1462,18 @@ dylan_value primitive_destroy_notification(dylan_value n)
 /* 30 */
 void primitive_sleep(dylan_value m)
 {
-  ZINT  zmilsecs = (ZINT)m;
-  DWORD milsecs = zmilsecs >> 2;
+  long milsecs = ((intptr_t) m) >> 2;
+  struct timespec req, rem;
 
-  assert(IS_ZINT(zmilsecs));
-  sleep((milsecs + 999) / 1000);
+  req.tv_sec = milsecs / 1000;
+  req.tv_nsec = (milsecs % 1000) * 1000000;
+  while (nanosleep(&req, &rem)) {
+    if (errno == EINTR) {
+      req = rem;
+    } else {
+      return;
+    }
+  }
 }
 
 
