@@ -94,27 +94,10 @@ define C-function g-closure-set-meta-marshal
   c-name: "g_closure_set_meta_marshal";
 end;
 
-define C-function gdk-threads-enter
-  c-name: "gdk_threads_enter";
-end;
-
-define C-function gdk-threads-leave
-  c-name: "gdk_threads_leave";
-end;
-
-define thread variable *holding-gdk-lock* = 0;
-
 define macro with-gdk-lock
   { with-gdk-lock ?:body end }
  =>
-  {  block()
-       unless (*holding-gdk-lock* > 0) gdk-threads-enter() end;
-       *holding-gdk-lock* := *holding-gdk-lock* + 1;
-       ?body
-     cleanup
-       *holding-gdk-lock* := *holding-gdk-lock* - 1;
-       unless (*holding-gdk-lock* > 0) gdk-threads-leave() end;
-     end }
+  { ?body }
 end;
 
 define method make(type :: subclass(<GTypeInstance>), #rest args,
@@ -247,9 +230,7 @@ define function dylan-meta-marshaller (closure :: <GClosure>,
 //    value*;
   end for;
   values := reverse!(values);
-  *holding-gdk-lock* := *holding-gdk-lock* + 1;
   let res = apply(import-c-dylan-object(c-type-cast(<C-dylan-object>, marshal-data)), values);
-  *holding-gdk-lock* := *holding-gdk-lock* - 1;
   if (return-value ~= null-pointer(<gvalue>))
     select (g-value-type(return-value))
       $G-TYPE-BOOLEAN => g-value-set-boolean(return-value, res);

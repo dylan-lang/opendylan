@@ -39,9 +39,6 @@ define module gdk
   export
     gdk-utf8-to-string-target,
     gdk-unicode-to-keyval,
-    gdk-threads-leave,
-    gdk-threads-init,
-    gdk-threads-enter,
     gdk-threads-add-timeout-seconds-full,
     gdk-threads-add-timeout-full,
     gdk-threads-add-idle-full,

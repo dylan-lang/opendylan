@@ -25,10 +25,7 @@ end class <gtk-port>;
 
 define sealed method initialize
     (_port :: <gtk-port>, #key server-path) => ()
-  gdk-threads-init();
-  with-gdk-lock
-    gtk-init(0, "");
-  end;
+  gtk-init(0, "");
   next-method();
 end method initialize;
 

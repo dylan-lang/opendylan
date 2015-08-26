@@ -7475,18 +7475,6 @@ define C-function gdk-threads-add-timeout-seconds-full
   c-name: "gdk_threads_add_timeout_seconds_full";
 end;
 
-define C-function gdk-threads-enter
-  c-name: "gdk_threads_enter";
-end;
-
-define C-function gdk-threads-init
-  c-name: "gdk_threads_init";
-end;
-
-define C-function gdk-threads-leave
-  c-name: "gdk_threads_leave";
-end;
-
 define C-function gdk-unicode-to-keyval
   input parameter wc_ :: <C-unsigned-int>;
   result res :: <C-unsigned-int>;
