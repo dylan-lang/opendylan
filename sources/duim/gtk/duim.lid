@@ -1,6 +1,7 @@
 Library:      DUIM
 Synopsis:     DUIM core + GTK backend
 Author:       Scott McKay
+Target-Type:  dll
 Files:        duim-library
 Major-version: 2
 Minor-version: 1
