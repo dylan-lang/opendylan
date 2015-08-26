@@ -6,6 +6,7 @@ define library gmodule
   use common-dylan;
   use c-ffi;
   use glib;
+  use gobject;
 
   export gmodule;
 end library;
@@ -14,8 +15,8 @@ define module gmodule
   use dylan;
   use common-dylan;
   use c-ffi;
-  use gobject-glue;
   use glib;
+  use gobject-glue;
 
   export
     <GModuleFlags*>,
