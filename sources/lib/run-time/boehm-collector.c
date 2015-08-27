@@ -1085,13 +1085,6 @@ void primitive_mps_ld_merge(void *d_into, void *d_obj)
 
 /* initialization and deinitialization */
 
-void init_error (char* message)
-{
-  report_runtime_error("\nDylan runtime MPS initialization error: failed to ", message);
-}
-
-
-
 extern BOOL Prunning_under_dylan_debuggerQ;
 
 /*
