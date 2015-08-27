@@ -1033,34 +1033,6 @@ void primitive_mps_ld_merge(void *d_into, void *d_obj)
 
 /* initialization and deinitialization */
 
-extern BOOL Prunning_under_dylan_debuggerQ;
-
-/*
-    The strategy at the moment for handling keyboard interrupts is merely
-    to set a flag; the runtime will check this flag periodically (e.g. every
-    time an attempt is made to heap-allocate an object) and signal a keyboard
-    interrupt at that time. Provision is also made for applications to do their
-    own polling of this flag, for example in a dedicated thread, if they so wish.
-*/
-
-BOOL WINAPI DylanBreakControlHandler(DWORD dwCtrlType)
-{
-  switch (dwCtrlType)
-    {
-    case CTRL_BREAK_EVENT:
-    case CTRL_C_EVENT:
-      {
-        if (Prunning_under_dylan_debuggerQ == FALSE) {
-          dylan_keyboard_interruptQ = TRUE;
-        }
-        return TRUE;
-      }
-
-    default:
-      return FALSE;
-    }
-}
-
 MMError dylan_init_memory_manager(void)
 {
   gc_teb_t gc_teb = current_gc_teb();
