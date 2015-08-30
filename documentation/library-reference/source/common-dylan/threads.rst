@@ -500,8 +500,7 @@ Operations on threads
      condition:
 
      ``<duplicate-join-error>``
-
-     - A condition of this class (a subclass of :drm:`<error>`) may be
+       A condition of this class (a subclass of :drm:`<error>`) may be
        signalled when a thread is passed to *join-thread*, if that
        thread has already been joined by an earlier call to
        *join-thread*, or if that thread is currently active in another
@@ -680,7 +679,7 @@ Locks
      resources between the synchronization and the release. It is common
      for a protected operation to be performed by a body of code which
      is evaluated in a single thread between synchronization and
-     release. A macro *`with-lock`_* is provided for this purpose. When
+     release. A macro :macro:`with-lock` is provided for this purpose. When
      a thread uses a lock for *mutual-exclusion* in this way, the thread
      is said to *own the lock*.
 
@@ -718,8 +717,7 @@ Locks
      subclass of :drm:`<serious-condition>`):
 
      ``<timeout-expired>``
-
-     - This is signalled when *with-lock* did not succeed in claiming
+       This is signalled when *with-lock* did not succeed in claiming
        the lock within the timeout period.
 
    :description:
@@ -831,8 +829,7 @@ Semaphores
      :drm:`<error>`:
 
      ``<count-exceeded-error>``
-
-     - This may be signalled when an attempt is made to release a
+       This may be signalled when an attempt is made to release a
        :class:`<semaphore>` when the internal counter is already at its
        maximum count.
 
@@ -898,8 +895,7 @@ Exclusive locks
      of the following class, which is a subclass of :drm:`<error>`:
 
      ``<not-owned-error>``
-
-     - This may be signalled when an attempt is made to release an
+       This may be signalled when an attempt is made to release an
        :class:`<exclusive-lock>` when the lock is not owned by the
        current thread.
 
@@ -1348,8 +1344,7 @@ Notifications
      condition of the following class, which is a subclass of :drm:`<error>`:
 
      ``<not-owned-error>``
-
-     - Implementations can signal this error if the application attempts
+       Implementations can signal this error if the application attempts
        to wait for a notification when the associated lock is not owned by
        the current thread.
 
@@ -1371,8 +1366,7 @@ Notifications
      :drm:`<error>`:
 
      ``<not-owned-error>``
-
-     - Implementations can signal this error if the application attempts
+       Implementations can signal this error if the application attempts
        to release a notification when the associated lock is not owned
        by the current thread.
 
@@ -1399,8 +1393,7 @@ Notifications
      condition of the following class, which is a subclass of :drm:`<error>`:
 
      ``<not-owned-error>``
-
-     - This may be signalled when an attempt is made to release a
+       This may be signalled when an attempt is made to release a
        notification when the associated lock is not owned by the current
        thread.
 
