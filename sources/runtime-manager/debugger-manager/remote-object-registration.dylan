@@ -337,7 +337,7 @@ define method register-static-roots
 end method;
 
 
-///// REGISTER-AMBIGOUS-ROOTS
+///// REGISTER-AMBIGUOUS-ROOTS
 //    A provision for the interactive downloader.
 //    Allows a portion of memory (delimited by two <remote-value> addresses)
 //    to be registered with the memory manager as a section of initialized
