@@ -1038,7 +1038,7 @@ define method atof
       else
         let scaled-mantissa = generic-/(mantissa, scale);
         // NOTE: Floating point exponentiation loses precision for some
-        // suprisingly small exponents so we'll use successive multiplications.
+        // surprisingly small exponents so we'll use successive multiplications.
         //---*** NOTE: Revisit this as it may be costly w.r.t. consing and
         //---*** there must be a better way (rationals?).
         local
@@ -1046,7 +1046,7 @@ define method atof
             let iterate?
               = select (base by instance?)
                   <single-float> => exponent > 15;
-                  // Yes, <double-float> exponentation is never accurate!
+                  // Yes, <double-float> exponentiation is never accurate!
                   <double-float> => #t;
                   //---*** NOTE: We don't have <extended-float>s yet ...
                   <extended-float> => #t;
