@@ -6,13 +6,36 @@
 /* **                                 All Rights Reserved                ** */
 /* ************************************************************************ */
 
+#include <stdio.h>
+
 #include "nub-core.h"
 
-void print_stop_reason_description (NUBINT stopcode);
-// Prints a description of a stop-reason from its code.
-
-void print_stop_reason_description (NUBINT stopcode)
+void create_thread_stop_reason_handler
+  (LPDBGPROCESS process, LPDBGTHREAD thread, NUBINT priority)
 {
+  printf("create_thread_stop_reason_handler\n");
+}
+
+void nub_debug_message(char* message, TARGET_ADDRESS addr1, TARGET_ADDRESS addr2)
+{
+  printf("nub_debug_message %s: %#lx, %#lx\n", message,
+         (unsigned long) addr1,
+         (unsigned long) addr2);
+}
+
+void debugger_error(char* message, TARGET_ADDRESS addr1, TARGET_ADDRESS addr2)
+{
+  printf("debugger_error %s: %#lx, %#lx\n", message,
+         (unsigned long) addr1,
+         (unsigned long) addr2);
+}
+
+// Prints a description of a stop-reason from its code.
+void print_stop_reason_description (NUB nub, NUBINT stopcode)
+{
+  NUBLIBRARY nublibrary;
+  char name[1024];
+
   switch (stopcode) {
   case TIMED_OUT:
     printf("No stop reason was received within the timeout.\n");
@@ -75,7 +98,8 @@ void print_stop_reason_description (NUBINT stopcode)
     break;
 
   case HARD_CODED_BREAKPOINT_DBG_EVENT:
-    printf("Exception: Hard-coded breakpoint hit.\n");
+    printf("Exception: Hard-coded breakpoint hit (first=%d)\n",
+           nub_first_hard_coded_breakpoint(nub));
     break;
 
   case SINGLE_STEP_DBG_EVENT:
@@ -99,7 +123,11 @@ void print_stop_reason_description (NUBINT stopcode)
     break;
 
   case LOAD_DLL_DBG_EVENT:
-    printf("Event: The process loaded a DLL.\n");
+    nublibrary = nub_stop_reason_library(nub);
+    nub_get_library_undecorated_name(nub, nublibrary, sizeof name, name);
+    printf("Event: The process loaded a DLL: %s", name);
+    nub_get_library_filename(nub, nublibrary, sizeof name, name);
+    printf(" (%s)\n", name);
     break;
 
   case UNLOAD_DLL_DBG_EVENT:
@@ -141,7 +169,12 @@ void main (int argc, char **argv)
   // parsing here. I can't be bothered.
 
   printf("Attempting to tether locally to %s\n", argv[1]);
-  test_process = open_local_tether(argv[1], "", &tether_success);
+  test_process = open_local_tether(argv[1], "",
+                                   0, NULL,
+                                   0, NULL,
+                                   "",
+                                   0,
+                                   &tether_success);
 
   // Now we error-check.
 
@@ -166,7 +199,7 @@ void main (int argc, char **argv)
 
     nub_wait_for_stop_reason_with_timeout(test_process, 2000,
                                           &stop_reason_code);
-    print_stop_reason_description(stop_reason_code);
+    print_stop_reason_description(test_process, stop_reason_code);
 
     // Now behave properly.
 
