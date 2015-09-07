@@ -983,11 +983,9 @@ are exported from the *duim-sheets* module.
 
      .. code-block:: dylan
 
-          #[#["Text files", "\*.txt", "\*.text"],
-
-          #["HTML files", "\*.htm", "\*.html"],
-
-          #["Dylan files", "\*.dylan"]
+          #[#["Text files", "*.txt", "*.text"],
+            #["HTML files", "*.htm", "*.html"],
+            #["Dylan files", "*.dylan"]
 
      Here, text files are defined as any file with a filename suffix of
      *.txt* or *.text*, HTML files have filenames with a suffix of either
