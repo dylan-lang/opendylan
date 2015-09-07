@@ -55,7 +55,7 @@ chapter.
   graphical output operation. It is not possible to read back the
   contents of a drawing plane, except by examining the output-history.
   Normally each window has its own drawing plane.
--*Coordinates* Coordinates are a pair of real numbers in
+- *Coordinates* Coordinates are a pair of real numbers in
   implementation-defined units that identify a point in the drawing
   plane.
 - *Mediums* In this chapter, we use a medium as a destination for

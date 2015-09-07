@@ -440,7 +440,7 @@ are exported from the *duim-sheets* module.
 
    :parameter clipboard: An instance of :class:`<clipboard>`.
    :parameter data: An instance of :drm:`<object>`.
-   :value success?: An instance of :class:`<boolean>`.
+   :value success?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -456,7 +456,7 @@ are exported from the *duim-sheets* module.
    :parameter type: An instance of ``type-union(<symbol>, <type>)``.
    :parameter clipboard: An instance of :class:`<clipboard>`.
    :parameter data: An instance of :drm:`<object>`.
-   :value success?: An instance of :class:`<boolean>`.
+   :value success?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -607,7 +607,7 @@ are exported from the *duim-sheets* module.
 
    :superclasses: :drm:`<object>`
 
-   :keyword sheet: An instance of type false-or(:class:`<sheet>`).
+   :keyword sheet: An instance of type ``false-or(<sheet>)``.
    :keyword x: An instance of type :drm:`<integer>`. Default value: 0.
    :keyword y: An instance of type :drm:`<integer>`. Default value: 0.
    :keyword width: An instance of type :drm:`<integer>`. Default value: 0.
@@ -748,7 +748,7 @@ are exported from the *duim-sheets* module.
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter x: An instance of type :drm:`<real>`.
    :parameter y: An instance of type :drm:`<real>`.
-   :value value: An instance of type false-or(:class:`<sheet>`).
+   :value value: An instance of type ``false-or(<sheet>)``.
 
    :description:
 
@@ -790,8 +790,8 @@ are exported from the *duim-sheets* module.
 
    :parameter frame: An instance of type :class:`<frame>`. Default value: ``#f``.
    :parameter owner: An instance of type :class:`<sheet>`. Default value: ``#f``.
-   :parameter title: An instance of type :class:`<string>`.
-   :parameter documentation: An instance of type :class:`<string>`.
+   :parameter title: An instance of type :drm:`<string>`.
+   :parameter documentation: An instance of type :drm:`<string>`.
    :parameter exit-boxes: An instance of type :drm:`<object>`.
    :parameter name: An instance of type :drm:`<object>`.
    :parameter default: An instance of type :drm:`<object>`.
@@ -820,7 +820,7 @@ are exported from the *duim-sheets* module.
      If you wish, you can specify a *title* for the dialog; this is displayed
      in the title bar of the frame containing the dialog.
 
-     Example
+   :example:
 
      The following example illustrates how you can define a class of frame
      that contains a button that displays the Choose Color dialog, using the
@@ -859,8 +859,8 @@ are exported from the *duim-sheets* module.
 
    :parameter frame: An instance of type :class:`<frame>`. Default value: ``#f``.
    :parameter owner: An instance of type :class:`<sheet>`. Default value: ``#f``.
-   :parameter title: An instance of type :class:`<string>`.
-   :parameter documentation: An instance of type :class:`<string>`.
+   :parameter title: An instance of type :drm:`<string>`.
+   :parameter documentation: An instance of type :drm:`<string>`.
    :parameter exit-boxes: An instance of type :drm:`<object>`.
    :parameter name: An instance of type :drm:`<object>`.
    :parameter default: An instance of type :drm:`<object>`.
@@ -884,7 +884,7 @@ are exported from the *duim-sheets* module.
      If you wish, you can specify a *title* for the dialog; this is displayed
      in the title bar of the frame containing the dialog.
 
-     Example
+   :example:
 
      The following example illustrates how you can define a class of frame
      that contains a button that displays the Choose Directory dialog, using
@@ -928,14 +928,14 @@ are exported from the *duim-sheets* module.
 
    :parameter frame: An instance of type :class:`<frame>`. Default value: ``#f``.
    :parameter owner: An instance of type :class:`<sheet>`. Default value: ``#f``.
-   :parameter title: An instance of type :class:`<string>`.
-   :parameter documentation: An instance of type :class:`<string>`.
+   :parameter title: An instance of type :drm:`<string>`.
+   :parameter documentation: An instance of type :drm:`<string>`.
    :parameter direction: An instance of type ``one-of(#"input", #"output")``. Default value: ``#"input"``.
    :parameter filters: An instance of type ``limited(<sequence>, of: <sequence>)``.
    :parameter exit-boxes: An instance of type :drm:`<object>`.
    :parameter name: An instance of type :drm:`<object>`.
-   :parameter default: An instance of type :class:`<string>`.
-   :value locator: An instance of type :class:`<string>`.
+   :parameter default: An instance of type :drm:`<string>`.
+   :value locator: An instance of type :drm:`<string>`.
 
    :description:
 
@@ -996,7 +996,7 @@ are exported from the *duim-sheets* module.
      the dialog. This is a convenient way to suggest a file in which some
      information may be saved, or a file to be loaded into an application.
 
-     Example
+   :example:
 
      The following example illustrates how you can define a class of frame
      that contains buttons to display both Open and Save As dialogs, using
@@ -1051,7 +1051,7 @@ are exported from the *duim-sheets* module.
    :parameter items: An instance of ``type-union(<sequence>, <menu>)``.
    :parameter frame: An instance of type :class:`<frame>`. Default value: ``#f``.
    :parameter owner: An instance of type :class:`<sheet>`. Default value: ``#f``.
-   :parameter title: An instance of type :class:`<string>`.
+   :parameter title: An instance of type :drm:`<string>`.
    :parameter default-item: An instance of type :drm:`<object>`.
    :parameter label-key: An instance of type :drm:`<function>`. Default value: :drm:`identity`.
    :parameter value-key: An instance of type :drm:`<function>`. Default value: :drm:`identity`.
@@ -1098,7 +1098,7 @@ are exported from the *duim-sheets* module.
      single-selection (the user can only choose one value) or
      multiple-selection (the user can return any number of values). The
      default value of *selection-mode* is ``#"single"``. By specifying
-     *selection-mode: #"multiple"*, the user can choose several values from
+     ``selection-mode: #"multiple"``, the user can choose several values from
      the dialog box. The *gadget-class* keyword lets you specify which type
      of collection gadget is displayed in the dialog box. This lets you, for
      example, display a list of check boxes or radio boxes. Finally,
@@ -1125,7 +1125,7 @@ are exported from the *duim-sheets* module.
    :parameter items: An instance of ``type-union(<sequence>, <menu>)``.
    :parameter frame: An instance of type :class:`<frame>`. Default value: ``#f``.
    :parameter owner: An instance of type :class:`<sheet>`. Default value: ``#f``.
-   :parameter title: An instance of type :class:`<string>`. Default value: ``#f``.
+   :parameter title: An instance of type :drm:`<string>`. Default value: ``#f``.
    :parameter default-item: An instance of type :drm:`<object>`.
    :parameter label-key: An instance of type :drm:`<function>`. Default value: :drm:`identity`.
    :parameter value-key: An instance of type :drm:`<function>`. Default value: :drm:`identity`.
@@ -1184,7 +1184,7 @@ are exported from the *duim-sheets* module.
 
    :parameter frame: An instance of type :class:`<frame>`. Default value: ``#f``.
    :parameter owner: An instance of type :class:`<sheet>`. Default value: ``#f``.
-   :parameter title: An instance of type :class:`<string>`. Default value: ``#f``.
+   :parameter title: An instance of type :drm:`<string>`. Default value: ``#f``.
    :value font: An instance of :class:`<text-style>`.
 
    :description:
@@ -1198,7 +1198,7 @@ are exported from the *duim-sheets* module.
      for the dialog. By default, each of these values is ``#f``.
 
      If you wish, you can specify a *title* for the dialog; this is an
-     instance of :class:`<string>` and is displayed in the title bar of the frame
+     instance of :drm:`<string>` and is displayed in the title bar of the frame
      containing the dialog. If you do not specify *title*, then DUIM uses
      the default title for that type of dialog on the target platform.
 
@@ -1207,9 +1207,9 @@ are exported from the *duim-sheets* module.
    Clears a box-shaped area in the specified drawable.
 
    :signature: clear-box *drawable left top right bottom* => ()
-   :signature: clear-box\* *drawable region* => ()
+   :signature: clear-box* *drawable region* => ()
 
-   :parameter drawable: An instance of type type-union(:class:`<sheet>`, :class:`<medium>`).
+   :parameter drawable: An instance of type ``type-union(<sheet>, <medium>)``.
 
    The following arguments are specific to ``clear-box``.
 
@@ -1218,7 +1218,7 @@ are exported from the *duim-sheets* module.
    :parameter right: An instance of type :class:`<coordinate>`.
    :parameter bottom: An instance of type :class:`<coordinate>`.
 
-   The following argument is specific to ``clear-box\*``.
+   The following argument is specific to ``clear-box*``.
 
    :parameter region: An instance of type :class:`<region>`.
 
@@ -1227,7 +1227,7 @@ are exported from the *duim-sheets* module.
      Clears a box-shaped area in the specified drawable, removing anything
      that was drawn in that region.
 
-     The function *clear-box\** is identical to *clear-box*, except that it
+     The function ``clear-box*`` is identical to ``clear-box``, except that it
      passes composite objects, rather than separate coordinates, in its
      arguments. You should be aware that using this function may lead to a
      loss of performance.
@@ -1280,7 +1280,7 @@ are exported from the *duim-sheets* module.
 
    :parameter type: An instance of ``type-union(<symbol>, <type>)``.
    :parameter clipboard: An instance of :class:`<clipboard>`.
-   :value available?: An instance of :class:`<boolean>`.
+   :value available?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -1425,8 +1425,8 @@ are exported from the *duim-sheets* module.
 
    :signature: default-port #key *server-path* => *port*
 
-   :parameter server-path: An instance of type :class:`<vector>`. Default value: ``#(#"local")``.
-   :parameter port: An instance of type false-or(:class:`<port>`).
+   :parameter server-path: An instance of type :drm:`<vector>`. Default value: ``#(#"local")``.
+   :parameter port: An instance of type ``false-or(<port>)``.
 
    :description:
 
@@ -1566,7 +1566,7 @@ are exported from the *duim-sheets* module.
    :signature: display *object* => *display*
 
    :parameter object: An instance of type :drm:`<object>`.
-   :parameter display: An instance of type false-or(:class:`<display>`).
+   :parameter display: An instance of type ``false-or(<display>)``.
 
    :description:
 
@@ -1623,7 +1623,7 @@ are exported from the *duim-sheets* module.
 
    :parameter display: An instance of type :class:`<display>`.
    :parameter units: An instance of ``one-of(#"device", #"mm", #"pixels")``. Default value: ``#"device"``.
-   :value height: An instance of type :class:`<number>`.
+   :value height: An instance of type :drm:`<number>`.
 
    :description:
 
@@ -1647,7 +1647,7 @@ are exported from the *duim-sheets* module.
    :signature: display-mm-height *display* => *height*
 
    :parameter display: An instance of type :class:`<display>`.
-   :value height: An instance of type :class:`<number>`.
+   :value height: An instance of type :drm:`<number>`.
 
    :description:
 
@@ -1668,7 +1668,7 @@ are exported from the *duim-sheets* module.
    :signature: display-mm-width *display* => *width*
 
    :parameter display: An instance of type :class:`<display>`.
-   :value width: An instance of type :class:`<number>`.
+   :value width: An instance of type :drm:`<number>`.
 
    :description:
 
@@ -1730,7 +1730,7 @@ are exported from the *duim-sheets* module.
    :signature: display-pixels-per-point *display* => *number*
 
    :parameter display: An instance of type :class:`<display>`.
-   :value number: An instance of type :class:`<number>`.
+   :value number: An instance of type :drm:`<number>`.
 
    :description:
 
@@ -1793,7 +1793,7 @@ are exported from the *duim-sheets* module.
 
    :parameter display: An instance of type :class:`<display>`.
    :parameter units: An instance of ``one-of(#"device", #"mm", #"pixels")``. Default value: ``#"device"``.
-   :value width: An instance of type :class:`<number>`.
+   :value width: An instance of type :drm:`<number>`.
 
    :description:
 
@@ -3825,10 +3825,10 @@ are exported from the *duim-sheets* module.
 
    :signature: notify-user *message-string* #key *frame owner title documentation exit-boxes name style foreground background text-style* => *boolean*
 
-   :parameter message-string: An instance of type :class:`<string>`.
+   :parameter message-string: An instance of type :drm:`<string>`.
    :parameter frame: An instance of type :class:`<frame>`. Default value: :gf:`current-frame` ().
    :parameter owner: An instance of type :class:`<sheet>`.
-   :parameter title: An instance of type :class:`<string>`.
+   :parameter title: An instance of type :drm:`<string>`.
    :parameter documentation: An instance of type ``false-or(<string>)``. Default value: ``#f``.
    :parameter exit-boxes: An instance of type :drm:`<object>`.
    :parameter name: An instance of type :drm:`<object>`.
@@ -5973,7 +5973,7 @@ are exported from the *duim-sheets* module.
             end
           end
 
-     Example
+   :example:
 
      .. code-block:: dylan
 
@@ -6175,7 +6175,7 @@ are exported from the *duim-sheets* module.
      *with-sheet-medium* to associate a known sheet with a medium, and then
      draw directly onto that medium, as shown in the example.
 
-     Example
+   :example:
 
      .. code-block:: dylan
 

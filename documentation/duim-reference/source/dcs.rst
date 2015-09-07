@@ -189,7 +189,7 @@ are exported from the *duim-dcs* module.
 
    The logical operator that is always 0.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -200,7 +200,7 @@ are exported from the *duim-dcs* module.
 
    The logical operator that is always 1.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -212,7 +212,7 @@ are exported from the *duim-dcs* module.
    The logical operator that is always the same as the first integer
    argument to the *boole* function.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -225,7 +225,7 @@ are exported from the *duim-dcs* module.
    The logical operator that is always the same as the second integer
    argument to the *boole* function.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -238,7 +238,7 @@ are exported from the *duim-dcs* module.
    The logical operator that is always the same as the complement of the
    first integer argument to the *boole* function.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -251,7 +251,7 @@ are exported from the *duim-dcs* module.
    The logical operator that is always the same as the complement of the
    second integer argument to the *boole* function.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -263,7 +263,7 @@ are exported from the *duim-dcs* module.
 
    The logical operator *and*.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -274,7 +274,7 @@ are exported from the *duim-dcs* module.
 
    The logical operator *inclusive* *or*.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -285,7 +285,7 @@ are exported from the *duim-dcs* module.
 
    The logical operator *exclusive* *or*.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -296,7 +296,7 @@ are exported from the *duim-dcs* module.
 
    The logical operator *equivalence* (*exclusive* *nor*).
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -307,7 +307,7 @@ are exported from the *duim-dcs* module.
 
    The logical operator *not-and*.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -318,7 +318,7 @@ are exported from the *duim-dcs* module.
 
    The logical operator *not-or*.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -330,7 +330,7 @@ are exported from the *duim-dcs* module.
    The logical operator that is the *and* of the complement of the first
    integer argument to the *boole* function with the second.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -343,7 +343,7 @@ are exported from the *duim-dcs* module.
    The logical operator that is the *and* of the first integer argument to
    the *boole* function with the second with the complement of the second.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -356,7 +356,7 @@ are exported from the *duim-dcs* module.
    The logical operator that is the *or* of the complement of the first
    integer argument to the *boole* function with the second.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -369,7 +369,7 @@ are exported from the *duim-dcs* module.
    The logical operator that is the *or* of the first integer argument to
    the *boole* function with the second with the complement of the second.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :description:
 
@@ -1185,7 +1185,7 @@ are exported from the *duim-dcs* module.
 
    :signature: find-color *name* *palette* #key *error?* => *color*
 
-   :parameter name: An instance of type :class:`<string>`.
+   :parameter name: An instance of type :drm:`<string>`.
    :parameter palette: An instance of type :class:`<palette>`.
    :parameter error?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
    :value color: An instance of type :class:`<color>`.
@@ -1686,7 +1686,7 @@ are exported from the *duim-dcs* module.
 
    :parameter n: An instance of type :drm:`<integer>`.
    :parameter k: An instance of type :drm:`<integer>`.
-   :value dashes: An instance of type :class:`<vector>`.
+   :value dashes: An instance of type :drm:`<vector>`.
 
    :description:
 
@@ -1883,7 +1883,7 @@ are exported from the *duim-dcs* module.
    :parameter family: An instance of type ``one-of(#"fix", #"serif", #"sans-serif", #f)``.
    :parameter weight: An instance of type ``one-of(#"normal", #"condensed", #"thin", #"extra-light", #"light", #"medium", #"demibold", #"bold", #"extra-bold", #"black", #f)``.
    :parameter slant: An instance of type ``one-of(#"roman", #"italic", #"oblique", #f)``.
-   :parameter size: An instance of :class:`<integer>`, or an instance of type ``one-of(#"normal", #"tiny", #"very-small", #"small", #"large", #"very-large:", #"huge", #"smaller", #"larger", #f)``.
+   :parameter size: An instance of :drm:`<integer>`, or an instance of type ``one-of(#"normal", #"tiny", #"very-small", #"small", #"large", #"very-large:", #"huge", #"smaller", #"larger", #f)``.
    :parameter underline?: An instance of type :drm:`<boolean>`.
    :parameter strikeout?: An instance of type :drm:`<boolean>`.
    :value text-style: An instance of type :class:`<text-style>`.
@@ -2274,7 +2274,7 @@ are exported from the *duim-dcs* module.
    :signature: read-image-as *class* *locator* *image-type* #key #all-keys => *image*
 
    :parameter class: An instance of type :drm:`<object>`.
-   :parameter locator: An instance of type :class:`<string>`.
+   :parameter locator: An instance of type :drm:`<string>`.
    :parameter image-type: On Windows, ``#"bitmap"`` or ``#"icon"``.
    :value image: An instance of type :class:`<image>`.
 
@@ -2400,7 +2400,7 @@ are exported from the *duim-dcs* module.
    :keyword family: An instance of type ``one-of(#"fix", #"serif", #"sans-serif", #f)``. Default value: ``#f``.
    :keyword weight: An instance of type ``one-of(#"normal", #"condensed", #"thin", #"extra-light", #"light", #"medium", #"demibold", #"bold", #"extra-bold", #"black", #f)``.
    :keyword slant: An instance of type ``one-of(#"roman", #"italic", #"oblique", #f)``.
-   :keyword size: An instance of :class:`<integer>`, or an instance of type ``one-of(#"normal", #"tiny", #"very-small", #"small", #"large", #"very-large:", #"huge", #"smaller", #"larger", #f)``. Default value: ``#f``.
+   :keyword size: An instance of :drm:`<integer>`, or an instance of type ``one-of(#"normal", #"tiny", #"very-small", #"small", #"large", #"very-large:", #"huge", #"smaller", #"larger", #f)``. Default value: ``#f``.
    :keyword underline?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
    :keyword strikeout?: An instance of type :drm:`<boolean>`. Default value: ``#f``.
 
@@ -2492,7 +2492,7 @@ are exported from the *duim-dcs* module.
    :value family: An instance of type ``one-of(#"fix", #"serif", #"sans-serif", #f)``.
    :value weight: An instance of type ``one-of(#"normal", #"condensed", #"thin", #"extra-light", #"light", #"medium", #"demibold", #"bold", #"extra-bold", #"black", #f)``.
    :parameter slant: An instance of type ``one-of(#"roman", #"italic", #"oblique", #f)``.
-   :value size: An instance of :class:`<integer>`, or an instance of type ``one-of(#"normal", #"tiny", #"very-small", #"small", #"large", #"very-large:", #"huge", #"smaller", #"larger", #f)``. Default value: ``#f``.
+   :value size: An instance of :drm:`<integer>`, or an instance of type ``one-of(#"normal", #"tiny", #"very-small", #"small", #"large", #"very-large:", #"huge", #"smaller", #"larger", #f)``. Default value: ``#f``.
    :value underline?: An instance of type :drm:`<boolean>`.
    :value strikeout?: An instance of type :drm:`<boolean>`.
 
@@ -2543,7 +2543,7 @@ are exported from the *duim-dcs* module.
    :signature: text-style-size *text-style* => *size*
 
    :parameter text-style: An instance of type :class:`<text-style>`.
-   :value size: An instance of :class:`<integer>`, or an instance of type ``one-of(#"normal", #"tiny", #"very-small", #"small", #"large", #"very-large:", #"huge", #"smaller", #"larger", #f)``. Default value: ``#f``.
+   :value size: An instance of :drm:`<integer>`, or an instance of type ``one-of(#"normal", #"tiny", #"very-small", #"small", #"large", #"very-large:", #"huge", #"smaller", #"larger", #f)``. Default value: ``#f``.
 
    :description:
 
@@ -2712,7 +2712,7 @@ are exported from the *duim-dcs* module.
    :signature: write-image *image* *locator* => ()
 
    :parameter image: An instance of type :class:`<image>`.
-   :parameter locator: An instance of type :class:`<string>`.
+   :parameter locator: An instance of type :drm:`<string>`.
 
    :description:
 
