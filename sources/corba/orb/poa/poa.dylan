@@ -72,7 +72,7 @@ define class <poa> (PortableServer/<Poa>, <adaptor>)
   constant slot poa-id :: <string> = compute-poa-id();
   constant slot poa-name :: corba/<string>, required-init-keyword: name:;
   constant slot poa-parent :: false-or(<poa>) = #f, required-init-keyword: parent:;
-  constant slot poa-manager :: <poa-manager> = make(<poa-manager>), required-init-keyword: poamanager:;
+  constant slot poa-manager :: <poa-manager> = make(<poa-manager>), init-keyword: poamanager:;
   slot poa-activator :: false-or(portableserver/<adapteractivator>) = #f, init-keyword: activator:;
   constant slot poa-active-object-table :: <string-table> = make(<string-table>);
   slot poa-servant-manager :: false-or(portableserver/<servantmanager>) = #f, init-keyword: servant-manager:;
@@ -80,10 +80,12 @@ define class <poa> (PortableServer/<Poa>, <adaptor>)
   constant slot poa-policies :: <poa-policies>, required-init-keyword: policies:;
   slot poa-children :: <stretchy-vector> = make(<stretchy-vector>), init-keyword: children:;
   slot poa-port :: false-or(<integer>), required-init-keyword: port:;
+  slot poa-shutdown? :: <boolean> = #f;
   constant slot poa-shutdown-notification :: <notification> =
     make(<notification>, name: "Waiting for POA Shutdown", lock: make(<lock>));
   constant slot poa-mailbox :: <mailbox> = make(<mailbox>);
   slot poa-threads :: <stretchy-vector> = make(<stretchy-vector>);
+  slot poa-threads-started? :: <boolean> = #f;
   constant slot poa-lock :: <lock> = make(<lock>);
 end class;
 
@@ -98,7 +100,6 @@ define method initialize (poa :: <poa>, #key)
   if (parent)
     poa-children(parent) := add!(poa-children(parent), poa);
   end if;
-  create-poa-threads(poa);
   invalidate-collocations();
 end method;
 
@@ -117,10 +118,15 @@ end method;
 define locked variable *poa-thread-id* :: <integer> = 0;
 
 define method create-poa-threads (poa :: <poa>)
-  let threads = compute-poa-threads-size(poa);
-  for (i from 1 to threads)
-    create-poa-thread(poa);
-  end for;
+  with-lock (find-poa-lock(poa))
+    unless (poa-threads-started?(poa))
+      poa-threads-started?(poa) := #t;
+      let threads = compute-poa-threads-size(poa);
+      for (i from 1 to threads)
+        create-poa-thread(poa);
+      end for;
+    end unless;
+  end with-lock;
 end method;
 
 define method compute-poa-threads-size (poa :: <poa>)
@@ -167,23 +173,26 @@ define method note-poa-manager-state-changed (manager :: <poa-manager>, state ::
   when (poa-manager-state(manager) = #"inactive")
     error(make(portableserver/poamanager/<adapterinactive>));
   end when;
-  poa-manager-state(manager) := state;
   let note = poa-manager-state-notification(manager);
   with-lock(associated-lock(note))
+    poa-manager-state(manager) := state;
     release-all(note);
   end with-lock;
 end method;
 
-define method wait-for-poa-manager-state-change (manager :: <poa-manager>)
+define method wait-for-poa-manager-state-change-from (manager :: <poa-manager>, state :: <poa-manager-state>)
   let note = poa-manager-state-notification(manager);
   with-lock (associated-lock(note))
-    wait-for(note);
+    while (poa-manager-state(manager) == state)
+      wait-for(note);
+    end while;
   end with-lock;
 end method;
 
 define method note-poa-shutdown (poa :: <poa>)
   let note = poa-shutdown-notification(poa);
   with-lock (associated-lock(note))
+    poa-shutdown?(poa) := #t;
     release-all(note);
   end with-lock;
 end method;
@@ -191,7 +200,9 @@ end method;
 define method wait-for-poa-shutdown (poa :: <poa>)
   let note = poa-shutdown-notification(poa);
   with-lock (associated-lock(note))
-    wait-for(note);
+    while (~poa-shutdown?(poa))
+      wait-for(note);
+    end while;
   end with-lock;
 end method;
 
@@ -314,16 +325,18 @@ define method portableserver/poa/destroy (poa :: <poa>,
 	    for (child in poa-children(poa))
 	      do-destroy-poa(child, etherealize-objects?, wait-for-completion?)
 	    end for;
-	    for (i from 0 to (size(poa-threads(poa)) - 1)) // kill all but one
-	      destroy-poa-thread(poa)
-	    end for;
-	    push(poa-mailbox(poa),
-		 make(<destroy-POA-request>,
-		      poa: poa,
-		      etherealize-objects?: etherealize-objects?));
-	    if (wait-for-completion?)
-	      wait-for-poa-shutdown(poa);
-	    end if;
+            if (poa-threads-started?(poa))
+              for (i from 0 to (size(poa-threads(poa)) - 1)) // kill all but one
+                destroy-poa-thread(poa)
+              end for;
+              push(poa-mailbox(poa),
+                   make(<destroy-POA-request>,
+                        poa: poa,
+                        etherealize-objects?: etherealize-objects?));
+              if (wait-for-completion?)
+                wait-for-poa-shutdown(poa);
+              end if;
+            end if;
 	  end with-lock;
 	end method;
   do-destroy-poa(poa, etherealize-objects?, wait-for-completion?);
@@ -610,6 +623,9 @@ end method;
 define method portableserver/poamanager/activate
     (poa-manager :: <poa-manager>)
  => ()
+  for (poa in poa-manager.poa-manager-poas)
+    create-poa-threads(poa);
+  end for;
   note-poa-manager-state-changed(poa-manager, #"active");
 end method;
 
