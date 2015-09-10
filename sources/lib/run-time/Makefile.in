@@ -141,6 +141,18 @@ LLVM_RUNTIME_OBJS = \
 		  $(OBJDIR_LLVM)/llvm-posix-threads.o \
 		  $(OBJDIR_LLVM)/llvm-exceptions.o
 
+ifeq ($(LLVM_COLLECTOR),MPS)
+  LLVM_RUNTIME_OBJS += \
+		  $(OBJDIR_LLVM)/mps-dylan.o \
+		  $(OBJDIR_LLVM)/heap-display.o \
+		  $(OBJDIR_LLVM)/heap-utils.o \
+		  $(OBJDIR_LLVM)/heap-trail.o \
+		  $(OBJDIR_LLVM)/heap-order1.o \
+		  $(OBJDIR_LLVM)/heap-order2.o \
+		  $(OBJDIR_LLVM)/heap-table.o \
+		  $(OBJDIR_LLVM)/unix-mps-support.o
+endif
+
 ifdef DARWIN
 mach_exc.h mach_excServer.c:
 	mig /usr/include/mach/mach_exc.defs
