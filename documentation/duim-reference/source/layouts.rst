@@ -536,7 +536,7 @@ are exported from the *duim-layouts* module.
 
    Default value for width and height init-keywords for layout panes.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :value: 100000
 
