@@ -16,8 +16,10 @@ define module corba-protocol-externals
     corba/<null>,
     corba/<void>,
     corba/<long>,
+    corba/<long-long>,
     corba/<short>,
     corba/<unsigned-long>,
+    corba/<unsigned-long-long>,
     corba/<unsigned-short>,
     corba/<float>,
     corba/<double>,
@@ -260,7 +262,9 @@ define module corba-protocol-externals
     corba/$any-typecode,
     corba/$typecode-typecode,
     corba/$principal-typecode,
-    corba/$string-typecode;
+    corba/$string-typecode,
+    corba/$long-long-typecode,
+    corba/$unsigned-long-long-typecode;
 
 end module;
 
@@ -312,6 +316,8 @@ define module corba-protocol
     <array-typecode>,
     <alias-typecode>,
     <exception-typecode>,
+    <long-long-typecode>,
+    <unsigned-long-long-typecode>,
     <indirection-typecode>;
 
   export

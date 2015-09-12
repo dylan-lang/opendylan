@@ -595,6 +595,28 @@ end class;
 
 element(*kinds-to-typecode-classes*, 22) := <exception-typecode>;
 
+define class <long-long-typecode> (<empty-typecode>)
+  keyword kind: = #"tk-longlong";
+  keyword code: = 23;
+  keyword alignment: = 8;
+  keyword type: = corba/<long-long>;
+end class;
+
+define constant corba/$long-long-typecode = make(<long-long-typecode>);
+element(*kinds-to-typecode-classes*, 23) := <long-long-typecode>;
+
+define class <unsigned-long-long-typecode> (<empty-typecode>)
+  keyword kind: = #"tk-ulonglong";
+  keyword code: = 24;
+  keyword alignment: = 8;
+  keyword type: = corba/<unsigned-long-long>;
+end class;
+
+define constant corba/$unsigned-long-long-typecode = make(<unsigned-long-long-typecode>);
+element(*kinds-to-typecode-classes*, 24) := <unsigned-long-long-typecode>;
+
+
+
 define class <indirection-typecode> (<simple-typecode>)
   //  keyword kind: = #"tk-ind";
   keyword code: = #xffffffff;

@@ -11,11 +11,15 @@ define constant corba/<void> = singleton(#f);
 
 define constant corba/<long> = <integer>;
 
+define constant corba/<long-long> = <integer>;
+
 // define constant corba/<short> = limited(dylan/<integer>, min: - (2 ^ 15), max: (2 ^ 15) - 1);
 // Workaround for bugs 3207, 3492:
 define constant corba/<short> = limited(dylan/<integer>, min: -32768, max: 32767);
 
 define constant corba/<unsigned-long> = <integer>; // limited(<integer>, min: 0);
+
+define constant corba/<unsigned-long-long> = <integer>; // limited(<integer>, min: 0);
 
 define constant corba/<unsigned-short> = limited(dylan/<integer>, min: 0, max: #xffff);
 
