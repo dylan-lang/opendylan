@@ -299,6 +299,22 @@ define method emit-typecode-class-name (stream :: <stream>, type :: <long-idl-ty
 end method;
 
 
+// LONG LONG
+
+define method make-dim-predefined-type
+    (predefined-type :: <longlong-idl-type>, type :: <ast-type>)
+ => (model :: <dim-base-type>)
+  make(<dim-base-type>,
+       node: type,
+       type: "CORBA/<long-long>");
+end method;
+
+define method emit-typecode-class-name (stream :: <stream>, type :: <longlong-idl-type>)
+ => ()
+  format(stream, "<long-long-typecode>");
+end method;
+
+
 // SHORT
 
 define method make-dim-predefined-type
@@ -328,6 +344,22 @@ end method;
 define method emit-typecode-class-name (stream :: <stream>, type :: <ulong-idl-type>)
  => ()
   format(stream, "<unsigned-long-typecode>");
+end method;
+
+
+// UNSIGNED LONG LONG
+
+define method make-dim-predefined-type
+    (predefined-type :: <ulonglong-idl-type>, type :: <ast-type>)
+ => (model :: <dim-base-type>)
+  make(<dim-base-type>,
+       node: type,
+       type: "CORBA/<unsigned-long-long>");
+end method;
+
+define method emit-typecode-class-name (stream :: <stream>, type :: <ulonglong-idl-type>)
+ => ()
+  format(stream, "<unsigned-long-long-typecode>");
 end method;
 
 
