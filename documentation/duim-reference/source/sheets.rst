@@ -469,7 +469,7 @@ are exported from the *duim-sheets* module.
 
    A constant that represents the ALT key on the keyboard.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :value: :const:`$meta-key`
 
@@ -1357,7 +1357,7 @@ are exported from the *duim-sheets* module.
 
    A constant that represents the CONTROL key on the keyboard.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :value: ash(1, %modifier\_base + 1);
 
@@ -2967,7 +2967,7 @@ are exported from the *duim-sheets* module.
 
    A constant that represents the HYPER key on the keyboard.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :value: ash(1, %modifier\_base + 4);
 
@@ -3091,7 +3091,7 @@ are exported from the *duim-sheets* module.
       A constant that represents the left button on the attached pointing
       device.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :value: ash(1, %button\_base + 0)
 
@@ -3695,7 +3695,7 @@ are exported from the *duim-sheets* module.
 
    A constant that represents the META key on the keyboard.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :value: ash(1, %modifier\_base + 2);
 
@@ -3722,7 +3722,7 @@ are exported from the *duim-sheets* module.
    A constant that represents the middle button on the attached pointing
    device.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :value: ash(1, %button\_base + 1)
 
@@ -3907,7 +3907,7 @@ are exported from the *duim-sheets* module.
 
    A constant that represents the OPTION key on the keyboard.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :value: :const:`$super-key`
 
@@ -4624,7 +4624,7 @@ are exported from the *duim-sheets* module.
    A constant that represents the right button on the attached pointing
    device.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :value: ash(1, %button\_base + 2)
 
@@ -5532,7 +5532,7 @@ are exported from the *duim-sheets* module.
 
    A constant that represents the SHIFT key on the keyboard.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :value: ash(1, %modifier\_base + 0);
 
@@ -5556,7 +5556,7 @@ are exported from the *duim-sheets* module.
 
    A constant that represents the SUPER key on the keyboard.
 
-   :type: :class:`<integer>`
+   :type: :drm:`<integer>`
 
    :value: ash(1, %modifier\_base + 3);
 
