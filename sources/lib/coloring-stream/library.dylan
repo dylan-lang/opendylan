@@ -43,7 +43,7 @@ define module coloring-stream-internals
   use common-dylan;
   use streams;
   use streams-internals, import { stream-console? };
-  use operating-system, import { environment-variable };
+  use operating-system, import { environment-variable, $os-name };
   use print, import: { print-object };
   use coloring-stream, export all;
 

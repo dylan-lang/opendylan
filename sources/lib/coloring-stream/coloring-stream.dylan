@@ -33,7 +33,15 @@ define method coloring-stream-class-for-stream
     (stream :: <file-stream>)
  => (coloring-stream-class :: <class>)
   if (stream-supports-color?(stream))
-    <ansi-coloring-stream>
+    if ($os-name == #"win32")
+      if (environment-variable("ConEmuANSI") = "ON")
+        <ansi-coloring-stream>
+      else
+        <windows-coloring-stream>
+      end if
+    else
+      <ansi-coloring-stream>
+    end if
   else
     <null-coloring-stream>
   end if
@@ -102,3 +110,12 @@ define method print-object
  => ()
   ignore(attributes, stream);
 end method print-object;
+
+// We define this here so that it is present on all platforms,
+// but we define the print-object method for it elsewhere so
+// that it is Windows only.
+define class <windows-coloring-stream> (<coloring-stream>)
+end class <windows-coloring-stream>;
+
+define sealed domain make(singleton(<windows-coloring-stream>));
+define sealed domain initialize(<windows-coloring-stream>);
