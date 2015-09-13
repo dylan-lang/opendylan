@@ -1,4 +1,4 @@
-Module:    DFMC-Testing
+Module:    dfmc-testing
 Author:    Steve Rowley
 Synopsis:  Tests for the typist's inference.
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
