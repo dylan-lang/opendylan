@@ -4,6 +4,7 @@ define suite dfmc-test-suite ()
   suite dfmc-typist-algebra-suite;
   suite dfmc-typist-inference-suite;
   suite dfmc-execution-suite;
+  suite dfmc-flow-graph-environment-suite;
 end;
 
 define function callback-handler (#rest args)

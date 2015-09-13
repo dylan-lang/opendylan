@@ -9,6 +9,7 @@ define library dfmc-testing
   use dfmc-core;
   use dfmc-reader; // not part of core for some reason.
   use dfmc-macro-expander;
+  use dfmc-flow-graph;
   use dfmc-optimization;
   use dfmc-typist;
   use dfmc-management;
@@ -22,6 +23,15 @@ define library dfmc-testing
   use io;
   use testworks;
 end library;
+
+define module dfmc-flow-graph-environment-testing
+  use common-dylan;
+  use testworks;
+  use dfmc-reader;
+  use dfmc-flow-graph;
+
+  export dfmc-flow-graph-environment-suite;
+end;
 
 define module dfmc-testing
   use common-dylan;
@@ -42,5 +52,6 @@ define module dfmc-testing
   use streams;
   use standard-io;
   use testworks;
-end module;
 
+  use dfmc-flow-graph-environment-testing;
+end module;
