@@ -17,15 +17,6 @@ define function clear-tests() => ()
   size(*test-flamers*)   := 0
 end;
 
-// Function for use in tests...
-define function compile-library-until-optimized (lib)
-  block()
-    compile-library-from-definitions(lib, force?: #t, skip-link?: #t,
-                                     compile-if-built?: #t, skip-heaping?: #t);
-  exception (e :: <abort-compilation>)
-  end
-end function;
-
 define function print-test-report
        (#key stream         = *standard-output*,
              title          = "DFMC Test Suite Report:",

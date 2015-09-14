@@ -1,5 +1,6 @@
 library: dfmc-testing
 files:   library
+         testing-support
          test-harness
          compiler-tests
          typist-algebra-tests
