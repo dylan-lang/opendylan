@@ -1624,7 +1624,7 @@ define method bind-next-method
 end method;
 
 // This function is called if the next-method variable is referenced in
-// order to generate whatever code is necesary.
+// order to generate whatever code is necessary.
 
 // TODO: Lots of things. It may be that there should be a next-method
 // call instruction in the DFM to make statically resolving next

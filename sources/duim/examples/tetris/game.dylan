@@ -280,7 +280,7 @@ end;
 // were it in a given position.
 // The procedure for this is:
 // (1) rotate the centre of gravity of the piece and calculate the
-// neccessary offset to make it appear at the required board square.
+// necessary offset to make it appear at the required board square.
 // (2) rotate the coordinates of each square of the piece, and
 // add the offset calculated in (1).
 //
@@ -406,7 +406,7 @@ define method act (board :: <board>, action :: <action>)
 
       // n.b. We first try to move all the pieces down, _then_ stick
       // the ones that didn't. If instead we called stick(board, p)
-      // within the first loop, we'd be in trouble, becuase stick
+      // within the first loop, we'd be in trouble, because stick
       // would modify the set (board.pieces) we are iterating over.
 
       #"tick" =>
