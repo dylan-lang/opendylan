@@ -42,9 +42,32 @@ define test all-environments-test ()
   assert-equal(all-environments(outer), list(outer));
 end test;
 
+define test environment-lookup-test ()
+  let env = make(<lambda-lexical-environment>, lambda: #f, outer: #f);
+  let name = make(<variable-name-fragment>,
+                  name: as(<symbol>, "test-variable"),
+                  record: #f,
+                  position: #f);
+  let var = make(<lexical-required-variable>,
+                 name: name,
+                 environment: env,
+                 specializer: #f);
+  add-variable!(env, name, var);
+
+  let (binding, type, environment) = lookup(env, name);
+  assert-equal(env, environment);
+  assert-equal(binding, var);
+
+  let nested-env = make(<lambda-lexical-environment>, lambda: #f, outer: env);
+  let (binding, type, environment) = lookup(nested-env, name);
+  assert-equal(env, environment);
+  assert-equal(binding, var);
+end test;
+
 define suite dfmc-flow-graph-environment-suite ()
   test construct-environment-test;
   test top-level-environment-test;
   test inner-environment?-test;
   test all-environments-test;
+  test environment-lookup-test;
 end suite;
