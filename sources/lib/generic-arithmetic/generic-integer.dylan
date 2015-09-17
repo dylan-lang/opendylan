@@ -22,8 +22,8 @@ define variable $maximum-integer :: false-or(<integer>) = dylan/$maximum-integer
 define macro nary-logical-function-definer
   { define nary-logical-function ?:name }
   => { define sideways inline method "binary-" ## ?name
-	   (integer-1 :: <integer>, integer-2 :: <integer>) => (value :: <integer>)
-	 "dylan/" ## ?name(integer-1, integer-2)
+           (integer-1 :: <integer>, integer-2 :: <integer>) => (value :: <integer>)
+         "dylan/" ## ?name(integer-1, integer-2)
        end method "binary-" ## ?name }
 end macro nary-logical-function-definer;
 
@@ -44,7 +44,7 @@ end method logbit?;
 define macro shift-function-definer
   { define shift-function ?:name ?domain:name }
   => { define open generic ?name (x :: <integer>, count :: dylan/<integer>)
-	=> (value :: <integer>);
+        => (value :: <integer>);
        define inline method ?name (x :: <integer>, count :: dylan/<integer>)
         => (value :: <integer>)
          "dylan/" ## ?name(x, count)
@@ -59,7 +59,7 @@ define shift-function lsh;
 define macro algebraic-function-definer
   { define algebraic-function ?:name ?domain:name }
   => { define open generic ?name (integer-1 :: <integer>, integer-2 :: <integer>)
-	=> (value :: <integer>);
+        => (value :: <integer>);
        define method ?name (integer-1 :: <integer>, integer-2 :: <integer>)
         => (value :: <integer>)
          "dylan/" ## ?name(integer-1, integer-2)

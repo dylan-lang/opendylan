@@ -11,32 +11,32 @@ define library generic-arithmetic
   use common-dylan, import: { common-extensions };
 
   export generic-arithmetic,
-	 generic-arithmetic-dylan,
-	 generic-arithmetic-common-dylan;
+         generic-arithmetic-dylan,
+         generic-arithmetic-common-dylan;
 end library generic-arithmetic;
 
 define module generic-arithmetic
   use dylan-excluding-arithmetic;
   use dylan-extensions,
     import: { <abstract-integer> => <integer>,
-	      generic-logior => logior,
-	      generic-logxor => logxor,
-	      generic-logand => logand},
+              generic-logior => logior,
+              generic-logxor => logxor,
+              generic-logand => logand},
     export: all;
   create $minimum-integer, $maximum-integer,
-	 range, <range>,
-	 \+, \-, \*, \/,
-	 negative,
-	 floor,  ceiling,  round,  truncate,
-	 floor/, ceiling/, round/, truncate/,
-	 modulo, remainder,
-	 \^,
-	 abs,
-	 lognot,
-	 logbit?,
-	 ash, lsh,
-	 lcm, gcd,
-	 \for;
+         range, <range>,
+         \+, \-, \*, \/,
+         negative,
+         floor,  ceiling,  round,  truncate,
+         floor/, ceiling/, round/, truncate/,
+         modulo, remainder,
+         \^,
+         abs,
+         lognot,
+         logbit?,
+         ash, lsh,
+         lcm, gcd,
+         \for;
 end module generic-arithmetic;
 
 define module generic-arithmetic-dylan
@@ -59,7 +59,7 @@ define module generic-arithmetic-internal
     prefix: "dylan/";
   use dylan-extensions,
     import: {false-or,
-	     generic-binary-logior => binary-logior,
-	     generic-binary-logxor => binary-logxor,
-	     generic-binary-logand => binary-logand};
+             generic-binary-logior => binary-logior,
+             generic-binary-logxor => binary-logxor,
+             generic-binary-logand => binary-logand};
 end module generic-arithmetic-internal;

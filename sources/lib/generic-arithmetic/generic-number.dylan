@@ -16,9 +16,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define macro binary-arithmetic-function-definer
   { define binary-arithmetic-function ?:name ?domain:name }
   => { define open generic ?name (x :: <object>, y :: <object>)
-	=> (#rest values :: <object>);
+        => (#rest values :: <object>);
        define method ?name (x :: <object>, y :: <object>) => (#rest values :: <object>)
-	 "dylan/" ## ?name(x, y)
+         "dylan/" ## ?name(x, y)
        end method ?name }
   { define binary-arithmetic-function ?:name }
   => { define binary-arithmetic-function ?name <complex> }
@@ -34,7 +34,7 @@ define macro unary-arithmetic-function-definer
   { define unary-arithmetic-function ?:name ?domain:name }
   => { define open generic ?name (x :: <object>) => (#rest values :: <object>);
        define method ?name (x :: <object>) => (#rest values :: <object>)
-	 "dylan/" ## ?name(x)
+         "dylan/" ## ?name(x)
        end method ?name }
   { define unary-arithmetic-function ?:name }
   => { define unary-arithmetic-function ?name <complex> }
@@ -47,7 +47,7 @@ define macro unary-division-function-definer
   { define unary-division-function ?:name ?domain:name }
   => { define open generic ?name (x :: <real>) => (result :: <integer>, remainder :: <real>);
        define method ?name (x :: <real>) => (result :: <integer>, remainder :: <real>)
-	 "dylan/" ## ?name(x)
+         "dylan/" ## ?name(x)
        end method ?name }
   { define unary-division-function ?:name }
   => { define unary-division-function ?name <complex> }
@@ -61,10 +61,10 @@ define unary-division-function truncate;
 define macro binary-division-function-definer
   { define binary-division-function ?:name ?domain:name }
   => { define open generic ?name (x :: <real>, y :: <real>)
-	=> (result :: <integer>, remainder :: <real>);
+        => (result :: <integer>, remainder :: <real>);
        define method ?name (x :: <real>, y :: <real>)
-	=> (result :: <integer>, remainder :: <real>)
-	 "dylan/" ## ?name(x, y)
+        => (result :: <integer>, remainder :: <real>)
+         "dylan/" ## ?name(x, y)
        end method ?name }
   { define binary-division-function ?:name }
   => { define binary-division-function ?name <complex> }
@@ -79,7 +79,7 @@ define macro single-valued-binary-division-function-definer
   { define single-valued-binary-division-function ?:name ?domain:name }
   => { define open generic ?name (x :: <real>, y :: <real>) => (result :: <real>);
        define method ?name (x :: <real>, y :: <real>) => (result :: <real>)
-	 "dylan/" ## ?name(x, y)
+         "dylan/" ## ?name(x, y)
        end method ?name }
   { define single-valued-binary-division-function ?:name }
   => { define single-valued-binary-division-function ?name <complex> }
