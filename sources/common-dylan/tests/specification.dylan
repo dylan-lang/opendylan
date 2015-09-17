@@ -12,6 +12,7 @@ define module-spec common-extensions ()
 
   function decode-float (<float>) => (<float>, <integer>, <float>);
   function scale-float (<float>, <integer>) => (<float>);
+  function classify-float (<float>) => (<float-classification>);
   function float-radix (<float>) => (<integer>);
   function float-digits (<float>) => (<integer>);
   function float-precision (<float>) => (<integer>);
