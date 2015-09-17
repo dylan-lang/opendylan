@@ -45,7 +45,7 @@ def dylan_object_summary(value, internal_dict):
     # to catch possible errors.
     class_name = dylan_object_class_name(value)
     summary = summary_func(value, internal_dict)
-    if summary:
+    if summary is not None:
       return '{%s: %s}' % (class_name, summary)
     else:
       return '{%s}' % class_name
