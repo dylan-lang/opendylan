@@ -27,8 +27,8 @@ define module big-integers-internal
   use dylan-primitives;
   use dylan-extensions,
     rename: {generic-binary-logior => binary-logior,
-	     generic-binary-logxor => binary-logxor,
-	     generic-binary-logand => binary-logand};
+             generic-binary-logxor => binary-logxor,
+             generic-binary-logand => binary-logand};
   use common-extensions,
     import: {number-to-string, machine-word-to-string};
 end module big-integers-internal;
