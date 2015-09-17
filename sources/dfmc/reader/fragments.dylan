@@ -29,18 +29,11 @@ define abstract class <fragment> (<object>)
 end class;
 
 define generic fragment-source-location
-    (f :: <object>) => (loc :: nowhere-or(<source-location>));
+    (f :: <fragment>) => (loc :: nowhere-or(<source-location>));
 
 define method fragment-source-location
     (f :: <fragment>) => (loc :: nowhere-or(<source-location>));
   record-position-as-location(fragment-record(f), fragment-source-position(f))
-end method;
-
-// TODO: Is this hack still used? If not, tighten the arg decl above.
-define method fragment-source-location
-    (f :: <sequence>) => (loc :: nowhere-or(<source-location>))
-  // between(f.first, f.last);
-  fragment-source-location(f.first);
 end method;
 
 define sealed domain make (subclass(<fragment>));
