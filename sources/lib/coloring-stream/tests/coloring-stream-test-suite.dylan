@@ -184,8 +184,22 @@ define test print-support-test ()
               "\<1b>[31mWorld\<1b>[0m!");
 end test print-support-test;
 
+define test indenting-support-test ()
+  check-equal("Color can poke through indentation",
+              with-output-to-string (s)
+                let is = make(<indenting-stream>, inner-stream: s);
+                let ansi-stream = colorize-stream(is, force-ansi?: #t);
+                indent(is, 2);
+                let error-attributes = text-attributes(foreground: $color-red);
+                format(ansi-stream, "%=Hello%=!",
+                       error-attributes, $reset-attributes);
+              end with-output-to-string,
+              "  \<1b>[31mHello\<1b>[0m!");
+end test indenting-support-test;
+
 define library-spec coloring-stream ()
   module coloring-stream;
   test format-support-test;
   test print-support-test;
+  test indenting-support-test;
 end library-spec coloring-stream;
