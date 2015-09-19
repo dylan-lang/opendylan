@@ -365,62 +365,46 @@ define macro check-limited-integer-instance?
       let limited-type = ?limited-type;
       let lower-bound = limited-type.limited-integer-min;
       if (lower-bound)
-        check-true (concatenate("lower bound of ", name),
-                    instance?(lower-bound, limited-type));
-        check-false(concatenate("below lower bound of ", name),
-                    instance?(lower-bound - 1, limited-type));
-        check-true (concatenate("above lower bound of ", name),
-                    instance?(lower-bound + 1, limited-type));
-        check-no-condition(concatenate("(inline) lower bound of ", name),
-                           begin
-                             let x :: ?limited-type = lower-bound;
-                           end);
-        check-condition   (concatenate("(inline) below lower bound of ", name),
-                           <type-error>,
-                           begin
-                             let x :: ?limited-type = lower-bound - 1;
-                           end);
-        check-no-condition(concatenate("(inline) above lower bound of ", name),
-                           begin
-                             let x :: ?limited-type = lower-bound + 1;
-                           end);
+        assert-instance?(?limited-type, lower-bound);
+        assert-not-instance?(?limited-type, lower-bound - 1);
+        assert-instance?(?limited-type, lower-bound + 1);
+        assert-no-errors(begin
+                           let x :: ?limited-type = lower-bound;
+                         end);
+        assert-signals(<type-error>,
+                       begin
+                         let x :: ?limited-type = lower-bound - 1;
+                       end);
+        assert-no-errors(begin
+                           let x :: ?limited-type = lower-bound + 1;
+                         end);
       end if;
       let upper-bound = limited-type.limited-integer-max;
       if (upper-bound)
-        check-true (concatenate("upper bound of ", name),
-                    instance?(upper-bound, limited-type));
-        check-true (concatenate("below upper bound of ", name),
-                    instance?(upper-bound - 1, limited-type));
-        check-false(concatenate("above upper bound of ", name),
-                    instance?(upper-bound + 1, limited-type));
-        check-no-condition(concatenate("(inline) upper bound of ", name),
-                           begin
-                             let x :: ?limited-type = upper-bound;
-                           end);
-        check-no-condition(concatenate("(inline) below upper bound of ", name),
-                           begin
-                             let x :: ?limited-type = upper-bound - 1;
-                           end);
-        check-condition   (concatenate("(inline) above upper bound of ", name),
-                           <type-error>,
-                           begin
-                             let x :: ?limited-type = upper-bound + 1;
-                           end);
+        assert-instance?(?limited-type, upper-bound);
+        assert-instance?(?limited-type, upper-bound - 1);
+        assert-not-instance?(?limited-type, upper-bound + 1);
+        assert-no-errors(begin
+                           let x :: ?limited-type = upper-bound;
+                         end);
+        assert-no-errors(begin
+                           let x :: ?limited-type = upper-bound - 1;
+                         end);
+        assert-signals(<type-error>,
+                       begin
+                         let x :: ?limited-type = upper-bound + 1;
+                       end);
       end if;
-      check-false(concatenate("string is not a ", name),
-                  instance?("Howdy!", limited-type));
-      check-false(concatenate("floats are not a ", name),
-                  instance?(1.0, limited-type));
-      check-condition(concatenate("(inline) string is not a ", name),
-                      <type-error>,
-                      begin
-                        let x :: ?limited-type = hide-type-info("Howdy!");
-                      end);
-      check-condition(concatenate("(inline) floats are not a ", name),
-                      <type-error>,
-                      begin
-                        let x :: ?limited-type = hide-type-info(1.0);
-                      end);
+      assert-not-instance?(?limited-type, "Howdy!");
+      assert-not-instance?(?limited-type, 1.0);
+      assert-signals(<type-error>,
+                     begin
+                       let x :: ?limited-type = hide-type-info("Howdy!");
+                     end);
+      assert-signals(<type-error>,
+                     begin
+                       let x :: ?limited-type = hide-type-info(1.0);
+                     end);
     end;
   }
 end macro check-limited-integer-instance?;
