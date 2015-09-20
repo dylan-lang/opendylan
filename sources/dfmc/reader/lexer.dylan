@@ -992,7 +992,7 @@ define method parse-integer
           start :: <integer> = source-location.start-posn,
           end: finish :: <integer> = source-location.end-posn,
           stop-at-non-digit? = #f)
- => (res :: <extended-integer>)
+ => (res :: <abstract-integer>)
   let contents :: <byte-vector>
     = source-location.source-location-record.contents;
   // We do our working in negative integers to avoid representation

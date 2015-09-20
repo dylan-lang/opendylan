@@ -207,10 +207,6 @@ end macro;
 
 define variable *current-module* = #f;
 
-// TODO: CORRECTNESS: This should be <abstract-integer>
-
-define constant <extended-integer>       = <object>;
-
 define inline function contents
     (source :: <compilation-record>) => (bytes :: <byte-vector>)
   source-record-contents(compilation-record-source-record(source));
