@@ -197,7 +197,7 @@ define module dfmc-reader
         <macro-definition-fragment>;
 
   export
-    <end-of-modifiers-marker>, end-of-modifiers-marker?;
+    <end-of-modifiers-marker>;
 
   export
     <fragment-copier>;

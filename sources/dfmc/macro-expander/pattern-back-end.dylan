@@ -152,7 +152,7 @@ define function match-end-of-modifiers (f* :: <fragment-list>)
   else
     let f = f*.head;
     case
-      ~end-of-modifiers-marker?(f)
+      ~instance?(f, <end-of-modifiers-marker>)
         => values(#t, #());
       otherwise
         => values(#f, f*.tail);

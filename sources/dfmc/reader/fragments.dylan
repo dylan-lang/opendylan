@@ -1044,16 +1044,6 @@ end class;
 
 define class <end-of-modifiers-marker> (<special-fragment>) end;
 
-define method end-of-modifiers-marker? (fragment) => (well? :: <boolean>)
-  // Temporarily, for bootstrapping purposes, any defining word matches
-  // as an end modifier. TODO: Remove this bootstrapping hack.
-  instance?(fragment, <end-of-modifiers-marker>)
-    /*
-    | (instance?(fragment, <variable-name-fragment>)
-         & definer-or-merged-token-class?(fragment-kind(fragment)))
-    */
-end method;
-
 // define constant $eof-marker = make(<eof-marker>,
 //                                    record: #f,
 //                                    source-position: $nowhere);
