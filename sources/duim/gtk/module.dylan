@@ -18,7 +18,7 @@ define module gtk-duim
 
   use c-ffi;
 
-  use glib;
+  use glib, exclude: { $pi };
   use gobject;
   use gobject-glue;
   use pango;
