@@ -13,6 +13,7 @@ define constant <gint64> = <C-signed-long>;
 define constant <guint64> = <C-unsigned-long>;
 define constant <gfloat> = <C-float>;
 define constant <gdouble> = <C-double>;
+/* These aren't used (yet?)
 define constant <guint32> = <C-unsigned-int>;
 define constant <gint32> = <C-signed-int>;
 define constant <gint8> = <C-signed-char>;
@@ -23,6 +24,7 @@ define constant <gshort> = <C-signed-short>;
 define constant <gushort> = <C-unsigned-short>;
 define constant <gssize> = <C-signed-long>;
 define constant <GQuark> = <guint32>;
+*/
 define constant <GType> = <gsize>;
 define C-pointer-type <GType*> => <GType>;
 
