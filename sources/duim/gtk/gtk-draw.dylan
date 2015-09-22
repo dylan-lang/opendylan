@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// GTK graphics
 
-define constant $2pi-in-64ths-of-degree :: <double-float> = 360.0d0 * 64.0d0;
+define constant $double-2pi = as(<double-float>, $2pi);
 define constant $supports-titled-ellipses = #f;
 
 define sealed method draw-point
@@ -23,7 +23,7 @@ define sealed method draw-point
                 as(<double-float>, x),
                 as(<double-float>, y),
                 as(<double-float>, thickness/2),
-                0.0d0, $2pi-in-64ths-of-degree);
+                0.0d0, $double-2pi);
       cairo-fill(gcontext);
     end;
     cairo-destroy(gcontext);
@@ -45,7 +45,7 @@ define sealed method draw-points
                      as(<double-float>, x),
                      as(<double-float>, y),
                      as(<double-float>, thickness/2),
-                     0.0d0, $2pi-in-64ths-of-degree);
+                     0.0d0, $double-2pi);
            cairo-fill(gcontext);
          end
        end,
@@ -329,10 +329,9 @@ define sealed method draw-ellipse
               when (end-angle < start-angle)
                 end-angle := end-angle + $2pi
               end;
-              values(round($2pi-in-64ths-of-degree * (($2pi - start-angle) / $2pi)),
-                     round($2pi-in-64ths-of-degree * ((start-angle - end-angle) / $2pi)))
+              values($2pi - start-angle, start-angle - end-angle)
             else
-              values(0, $2pi-in-64ths-of-degree)
+              values(0.0d0, $double-2pi)
             end;
         x-radius := abs(x-radius);
         y-radius := abs(y-radius);
