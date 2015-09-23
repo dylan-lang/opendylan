@@ -56,6 +56,12 @@ case $host in
   arm-*-linux*)
       OPEN_DYLAN_TARGET_PLATFORM=arm-linux;
     ;;
+  i*86-*-netbsd*)
+      OPEN_DYLAN_TARGET_PLATFORM=x86-netbsd;
+    ;;
+  amd64-*-netbsd* | x86_64-*-netbsd*)
+      OPEN_DYLAN_TARGET_PLATFORM=x86_64-netbsd;
+    ;;
   *)
       AC_MSG_ERROR([The $host platform is not supported.])
     ;;
