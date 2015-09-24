@@ -13,6 +13,7 @@ define library access-path-test-suite
   use local-access-path;
   use remote-access-path;
   use dylan-orb;
+  use dfmc-mangling;
 
   export access-path-test-suite;
 end library;
@@ -23,6 +24,8 @@ define module access-path-test-suite
   use testworks-specs;
   use access-path;
   use dylan-orb;
+  use dfmc-mangling;
+  use simple-format;
 
   export access-path-test-suite;
 end module;

@@ -1,7 +1,7 @@
 Library:      access-path-test-suite
 Author:       Peter S. Housel
 Files:	      access-path-test-suite-library
-              access-path-basic-test
+              simple-breakpoint-test
 	      specification
 Target-Type:  dll
 Copyright:    Original Code is Copyright 2015 Gwydion Dylan Maintainers

@@ -6,15 +6,7 @@ Copyright:    Original Code is Copyright 2015 Gwydion Dylan Maintainers
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define function main()
-  let scenario = element(application-arguments(), 0, default: #f);
-  select (scenario by \=)
-    "simple-breakpoint" =>
-      simple-breakpoint();
-    otherwise =>
-      #f;
-  end select;
-  exit-application(0);
+// For testing breakpoints at IEP entry
+define function simple-breakpoint()
+  #f
 end function;
-
-main()
