@@ -464,7 +464,7 @@ void dylan_format (STREAM stream, dylan_byte_string* dylan_string, dylan_simple_
   for (i = 0; i < size; i++) {
     char c = string[i];
     if (percent_p) {
-      char cc = (char)toupper(c);
+      char cc = (char)toupper((unsigned char)c);
       switch (cc) {
         case 'S': case 'C':
           if (argument_index < argument_count) {
@@ -510,4 +510,3 @@ void dylan_print_object (dylan_value object) {
   fputs("\n", stdout);
   fflush(stdout);
 }
-
