@@ -19,11 +19,15 @@ The extensions are:
 - Condition system extensions: :class:`<format-string-condition>`,
   :class:`<simple-condition>`, and :gf:`condition-to-string`.
 - Program constructs: :macro:`iterate` and :macro:`when`.
-- Application development conveniences: :macro:`iterate`,
-  :func:`debug-message`, :func:`ignore`, :func:`ignorable`,
-  :func:`$unsupplied`, :func:`unsupplied?`,
-  :func:`unsupplied`, :macro:`when`, :const:`$unfound`, :func:`one-of`,
-  :func:`unfound?`, and :func:`found?`.
+- Application development conveniences:
+
+  - :func:`debug-message`
+  - :func:`ignore`, :func:`ignorable`
+  - :const:`$unsupplied`, :func:`unsupplied?`, :func:`unsupplied`,
+    :func:`supplied?`
+  - :const:`$unfound` :func:`unfound?`, :func:`found?`, :func:`unfound`
+  - :func:`one-of`
+
 - Performance analysis: :macro:`timing`, :macro:`profiling`.
 - Type conversion functions: :func:`integer-to-string`,
   :func:`string-to-integer`, and :func:`float-to-string`.
@@ -611,21 +615,6 @@ The extensions are:
 
      - The :doc:`Format module <../io/format>` in the :doc:`IO library <../io/index>`.
 
-.. function:: found?
-
-   Returns true if *object* is not equal to :const:`$unfound`, and false otherwise.
-
-   :signature: found? *object* => *boolean*
-
-   :parameter object: An instance of :drm:`<object>`.
-   :value boolean: An instance of :drm:`<boolean>`.
-
-   :description:
-
-     Returns true if *object* is not equal to :const:`$unfound`, and false otherwise.
-
-     It uses ``\=`` as the equivalence predicate.
-
 .. function:: ignore
 
    A compiler directive that tells the compiler it must not issue a
@@ -1115,28 +1104,6 @@ The extensions are:
        Making an <A>
        {instance of <D>}
 
-.. function:: supplied?
-
-   Returns true if its argument is not equal to the unique "unsupplied"
-   value, :const:`$unsupplied`, and false if it is.
-
-   :signature: supplied? *object* => *supplied?*
-
-   :parameter object: An instance of :drm:`<object>`.
-   :value supplied?: An instance of :drm:`<boolean>`.
-
-   :description:
-
-     Returns true if *object* is not equal to the unique "unsupplied"
-     value, :const:`$unsupplied`, and false if it is. It uses ``\=`` as
-     the equivalence predicate.
-
-   :seealso:
-
-     - :const:`$unsupplied`
-     - :func:`unsupplied`
-     - :func:`unsupplied?`
-
 .. constant:: $unfound
 
    A unique value that can be used to indicate that a search operation
@@ -1149,6 +1116,16 @@ The extensions are:
 
      A unique value that can be used to indicate that a search operation
      failed.
+
+   :example:
+
+     .. code-block:: dylan
+
+        if (unfound?(element(section-index-table, section-name,
+                             default: $unfound)))
+          section-index-table[section-name] := section-index-table.size + 1;
+          write-record(stream, #"SECTIONNAME", section-name);
+        end if;
 
    :seealso:
 
@@ -1168,11 +1145,40 @@ The extensions are:
 
    Returns the unique "unfound" value, :const:`$unfound`.
 
+   :example:
+
+      See :const:`$unfound`.
+
    :seealso:
 
      - :func:`found?`
      - :func:`unfound?`
      - :const:`$unfound`
+
+.. function:: found?
+
+   Returns true if *object* is not equal to :const:`$unfound`, and false otherwise.
+
+   :signature: found? *object* => *boolean*
+
+   :parameter object: An instance of :drm:`<object>`.
+   :value boolean: An instance of :drm:`<boolean>`.
+
+   :description:
+
+     Returns true if *object* is not equal to :const:`$unfound`, and false otherwise.
+
+     It uses ``\=`` as the equivalence predicate.
+
+   :example:
+
+      See :const:`$unfound`.
+
+   :seealso:
+
+     - :const:`$unfound`
+     - :func:`unfound?`
+     - :func:`unfound`
 
 .. function:: unfound?
 
@@ -1189,6 +1195,10 @@ The extensions are:
      Returns true if *object* is equal to the unique "unfound" value,
      :const:`$unfound`, and false if it is not. It uses ``\=``
      as the equivalence predicate.
+
+   :example:
+
+      See :const:`$unfound`.
 
    :seealso:
 
@@ -1209,6 +1219,24 @@ The extensions are:
      A unique value that can be used to indicate that a keyword was not
      supplied.
 
+   :example:
+
+     .. code-block:: dylan
+
+        define method find-next-or-previous-string
+            (frame :: <editor-state-mixin>,
+             #key reverse? = $unsupplied)
+         => ()
+          let editor :: <basic-editor> = frame-editor(frame);
+          let reverse?
+            = if (supplied?(reverse?))
+                reverse?
+              else
+                editor-reverse-search?(editor)
+              end;
+          ...
+        end;
+
    :seealso:
 
      - :func:`supplied?`
@@ -1227,10 +1255,40 @@ The extensions are:
 
      Returns the unique "unsupplied" value, :const:`$unsupplied`.
 
+   :example:
+
+      See :const:`$unsupplied`.
+
    :seealso:
 
      - :func:`supplied?`
      - :const:`$unsupplied`
+     - :func:`unsupplied?`
+
+.. function:: supplied?
+
+   Returns true if its argument is not equal to the unique "unsupplied"
+   value, :const:`$unsupplied`, and false if it is.
+
+   :signature: supplied? *object* => *supplied?*
+
+   :parameter object: An instance of :drm:`<object>`.
+   :value supplied?: An instance of :drm:`<boolean>`.
+
+   :description:
+
+     Returns true if *object* is not equal to the unique "unsupplied"
+     value, :const:`$unsupplied`, and false if it is. It uses ``\=`` as
+     the equivalence predicate.
+
+   :example:
+
+      See :const:`$unsupplied`.
+
+   :seealso:
+
+     - :const:`$unsupplied`
+     - :func:`unsupplied`
      - :func:`unsupplied?`
 
 .. function:: unsupplied?
@@ -1248,6 +1306,10 @@ The extensions are:
      Returns true if its argument is equal to the unique "unsupplied"
      value, :const:`$unsupplied`, and false if it is not. It uses ``\=``
      as the equivalence predicate.
+
+   :example:
+
+      See :const:`$unsupplied`.
 
    :seealso:
 
