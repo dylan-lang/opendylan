@@ -277,10 +277,7 @@ define interface-module dfmc-project-compilation (browser-used-modules)
     <database-corruption-warning> = <dood-corruption-warning>,
     <database-version-warning> = <dood-version-warning>,
     <database-user-version-warning> = <dood-user-version-warning>,
-    condition-database-name,
-    <library-pack-not-installed>,
-    condition-project,
-    condition-library-pack;
+    condition-database-name;
   export // Callouts
     used-library-context = used-library-context,
     project-record-id-source-record = project-record-id-source-record,

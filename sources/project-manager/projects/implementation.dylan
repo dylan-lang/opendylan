@@ -360,18 +360,6 @@ define function project-open-compilation-context
     debug-out(#"project-manager",
               "Open compilation context for project %s (load-namespace? %s)\n",
               project.project-name, load-namespace?);
-    let handler <library-pack-not-installed> =
-      method (cond, next-handler)
-        let project-name = as(<string>, cond.condition-project.project-name);
-        let library-pack = cond.condition-library-pack;
-        let library-pack-name = library-pack-full-name(library-pack);
-        user-fatal-error("You must install %s in order to use the library %s",
-                         library-pack-name, project-name);
-        signal(make(<abort-compilation>,
-                    warnings: 0,
-                    serious-warnings: 0,
-                    errors: 1))
-      end;
     let handler <database-corruption-warning> =
       method (cond, next-handler)
         debug-out(#"project-manager",

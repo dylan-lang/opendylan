@@ -929,13 +929,6 @@ end function;
 /////
 ////   Project compilation
 /////
-define dfmc-program-error <library-pack-not-installed>
-  slot condition-project, init-keyword: project:;
-  slot condition-library-pack, init-keyword: library-pack:;
-  format-string "Library Pack %d must be installed to use %s";
-  format-arguments library-pack, project;
-end dfmc-program-error <library-pack-not-installed>;
-
 define function open-compilation-context
     (project, #key database-location, profile-location, build-settings, read-only?,
      load-namespace? = #t)
