@@ -186,7 +186,7 @@ define sealed copy-down-method position
           count)
  => (position :: false-or(<integer>));
 
-// Split a sequence into parts at each occurrance of the 'separator'
+// Split a sequence into parts at each occurrence of the 'separator'
 // and return a sequence containing the parts.  The sequence is
 // searched from beginning to end for the given 'separator' and stops
 // when it reaches the end of 'sequence' or when the size of the
@@ -247,7 +247,7 @@ define method split
            end)
 end method split;
 
-// Splits seq around occurrances of the separator subsequence.
+// Splits seq around occurrences of the separator subsequence.
 // Works for the relatively common case where seq and separator
 // are both <string>s.
 define method split

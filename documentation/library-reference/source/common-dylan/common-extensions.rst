@@ -1351,7 +1351,7 @@ The extensions are:
 
 .. function:: split
 
-   Split a sequence (e.g., a string) into subsequences deliniated by a
+   Split a sequence (e.g., a string) into subsequences delineated by a
    given separator.
 
    :signature: split *sequence* *separator* #key *start* *end* *count* *remove-if-empty?* => *parts*
@@ -1366,7 +1366,7 @@ The extensions are:
 
    :description:
 
-     Splits *sequence* into subsequences, splitting at each occurrance
+     Splits *sequence* into subsequences, splitting at each occurrence
      of *separator*.  The *sequence* is searched from left to right,
      starting at *start* and ending at ``end - 1``.
 
@@ -1395,12 +1395,12 @@ The extensions are:
         possible when the separator is a regex.)
 
      ``split(seq :: <sequence>, separator :: <object>, #key test = \==, ...)``
-        Splits 'seq' around occurrances of 'separator' using 'test' to check
+        Splits 'seq' around occurrences of 'separator' using 'test' to check
         for equality.  This method handles the relatively common case where
         'seq' is a string and 'separator' is a character.
 
      ``split(seq :: <sequence>, separator :: <sequence>, #key test = \==, ...)``
-        Splits 'seq' around occurrances of the 'separator'
+        Splits 'seq' around occurrences of the 'separator'
         subsequence.  This handles the relatively common case where
         'seq' and 'separator' are both strings.
 
