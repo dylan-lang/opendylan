@@ -45,8 +45,7 @@ define module environment-internal-commands
   use commands;
   use command-lines;
 
-  use project-manager-interface,
-    exclude: { build-project };
+  use project-manager-interface;
   use registry-projects,
     import: { find-registries };
   use projects-implementation,

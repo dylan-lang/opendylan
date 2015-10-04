@@ -352,18 +352,6 @@ define method compile-library (project :: <project>,
   end;
 end method;
 
-define method build-project(project :: <project>,
-                            #key force? = #f,
-                                 save?  = #f,
-                                 abort-on-all-warnings?     = #f,
-                                 abort-on-serious-warnings? = #f,
-                                 default-binding = #f,
-                                 assembler-output? = unsupplied(), harp-output? = #f,
-                                 debug-info? = #t, gc? = #f, gc-stats? = #f,
-                                 recursive? = #t)
-
-end;
-
 define thread variable *contexts-to-recompile* = #f;
 
 define method update-libraries (project :: <project>,

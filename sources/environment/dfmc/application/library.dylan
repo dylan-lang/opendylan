@@ -41,8 +41,7 @@ define module dfmc-application
     import: {<byte-vector>};
 
   use project-manager-interface,
-    exclude: { build-project,
-               save-project-database,
+    exclude: { save-project-database,
                project-compilation-mode, project-compilation-mode-setter };
 
   use channels;

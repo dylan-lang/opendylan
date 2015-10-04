@@ -54,8 +54,7 @@ define module dfmc-environment-projects
               project-read-only? => env/project-read-only? };
   use dfmc-environment-database;
 
-  use project-manager-interface,
-    exclude: { build-project };
+  use project-manager-interface;
 
   use dfmc-derived-information,
     import: { project-library-definition,
