@@ -228,6 +228,7 @@ define method split
                          nparts :: <integer> = 1)
              let (sep-start, sep-end) = find-separator(seq, bpos, epos);
              if (sep-start & sep-end & (sep-end <= epos))
+               let sep-end :: <integer> = sep-end;
                let part = copy-sequence(seq, start: bpos, end: sep-start);
                if (remove-if-empty? & empty?(part))
                  loop(sep-end, parts, nparts)
