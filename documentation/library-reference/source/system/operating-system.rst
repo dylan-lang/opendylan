@@ -65,6 +65,9 @@ information.
 - :func:`application-name`
 - :func:`application-filename`
 - :func:`tokenize-command-string`
+- :func:`current-process-id`
+- :func:`parent-process-id`
+
 
 The operating-system module
 ---------------------------
@@ -166,6 +169,22 @@ operating-system library's operating-system module.
      - :const:`$os-variant`
      - :const:`$os-version`
      - :const:`$platform-name`
+
+.. function:: current-process-id
+
+   Returns the integer value for the current process ID.
+
+   :signature: current-process-id => *pid*
+
+   :value pid: An instance of :drm:`<integer>`.
+
+   :description:
+
+     Returns the integer value of the current process ID.
+
+   :seealso:
+
+     - :func:`parent-process-id`
 
 .. function:: environment-variable
 
@@ -378,6 +397,24 @@ operating-system library's operating-system module.
      Returns as an instance of :drm:`<string>` the organization to which
      the user who owns the current machine belongs, or ``#f`` if the
      name is unavailable.
+
+.. function:: parent-process-id
+
+   Returns the integer value for the parent process ID.
+
+   :signature: parent-process-id => *pid*
+
+   :value pid: An instance of :drm:`<integer>`.
+
+   :description:
+
+     Returns the integer value of the parent process ID.
+
+     .. note:: This is not yet implemented on Windows.
+
+   :seealso:
+
+     - :func:`current-process-id`
 
 .. constant:: $platform-name
 
