@@ -25,7 +25,7 @@ environment variable in the system.
 
 The following constants contain machine-specific information:
 
-- :const:`$architecture-little-endian`
+- :const:`$architecture-little-endian?`
 - :const:`$machine-name`
 - :const:`$os-name`
 - :const:`$os-variant`
@@ -145,7 +145,7 @@ operating-system library's operating-system module.
      - :func:`application-filename`
      - :func:`tokenize-command-string`
 
-.. constant:: $architecture-little-endian
+.. constant:: $architecture-little-endian?
 
    Constant specifying whether the processor architecture is little-endian.
 
@@ -279,7 +279,7 @@ operating-system library's operating-system module.
 
    :seealso:
 
-     - :const:`$architecture-little-endian`
+     - :const:`$architecture-little-endian?`
      - :const:`$os-name`
      - :const:`$os-variant`
      - :const:`$os-version`
@@ -299,7 +299,7 @@ operating-system library's operating-system module.
 
    :seealso:
 
-     - :const:`$architecture-little-endian`
+     - :const:`$architecture-little-endian?`
      - :const:`$machine-name`
      - :const:`$os-variant`
      - :const:`$os-version`
@@ -322,7 +322,7 @@ operating-system library's operating-system module.
 
    :seealso:
 
-     - :const:`$architecture-little-endian`
+     - :const:`$architecture-little-endian?`
      - :const:`$machine-name`
      - :const:`$os-name`
      - :const:`$os-version`
@@ -344,7 +344,7 @@ operating-system library's operating-system module.
 
    :seealso:
 
-     - :const:`$architecture-little-endian`
+     - :const:`$architecture-little-endian?`
      - :const:`$machine-name`
      - :const:`$os-name`
      - :const:`$os-variant`
