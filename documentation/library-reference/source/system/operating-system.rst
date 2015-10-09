@@ -50,6 +50,11 @@ the current machine, where available.
 - :func:`owner-name`
 - :func:`owner-organization`
 
+Running Applications
+--------------------
+
+- :func:`run-application`
+
 Manipulating application information
 ------------------------------------
 
@@ -59,7 +64,6 @@ the environment as a whole. You can run or quit any application, and
 interrogate the running application for application-specific
 information.
 
-- :func:`run-application`
 - :func:`exit-application`
 - :func:`application-arguments`
 - :func:`application-name`
@@ -245,10 +249,6 @@ operating-system library's operating-system module.
      Terminates execution of the running application, returning the
      value of *status* to whatever launched the application, for example
      an MS-DOS window or Windows 95/NT shell.
-
-   :seealso:
-
-     - :func:`run-application`
 
 .. function:: login-name
 
