@@ -72,6 +72,10 @@ information.
 - :func:`current-process-id`
 - :func:`parent-process-id`
 
+Working with shared libraries
+-----------------------------
+
+- :func:`load-library`
 
 The operating-system module
 ---------------------------
@@ -249,6 +253,25 @@ System library's operating-system module.
      Terminates execution of the running application, returning the
      value of *status* to whatever launched the application, for example
      an MS-DOS window or Windows 95/NT shell.
+
+.. function:: load-library
+
+   Loads a shared library into the current process.
+
+   :signature: load-library *name* => *module*
+
+   :parameter name: An instance of :drm:`<string>`.
+   :value module: An instance of :class:`<machine-word>`.
+
+   :description:
+
+     Loads the library specified by *name* into the current process. The
+     library must be a shared library.
+
+     If the library is a library written in Dylan, then when it loaded,
+     constructor functions will run which set up the various methods and other
+     Dylan objects within the shared library. Top level code within the library
+     will be executed.
 
 .. function:: login-name
 
