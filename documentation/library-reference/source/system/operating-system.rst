@@ -77,7 +77,7 @@ The operating-system module
 ---------------------------
 
 This section contains a reference entry for each item exported from the
-operating-system library's operating-system module.
+System library's operating-system module.
 
 .. function:: application-arguments
 
