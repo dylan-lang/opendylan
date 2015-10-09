@@ -52,20 +52,6 @@ define method emit-forward
   end;
 end method;
 
-/* TODO: OBSOLETE?
-define method emit-forward-using-value
-    (back-end :: <c-back-end>, stream :: <stream>,
-     o :: <module-binding>, v :: <&c-function>) => ()
-  emit-forward(back-end, stream, v);
-end method;
-
-define method emit-definition-using-value
-    (back-end :: <c-back-end>, stream :: <stream>,
-     o :: <module-binding>, v :: <&c-function>) => ()
-  emit-forward(back-end, stream, v);
-end method;
-*/
-
 define method emit-definition
     (back-end :: <c-back-end>, stream :: <stream>, v :: <&c-callable-function>)
  => ()
