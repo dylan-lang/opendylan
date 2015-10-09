@@ -380,7 +380,8 @@ define method emit-init-code-definition
               name: user-init-name,
               type: $init-code-function-ptr-type,
               arguments: #(),
-              linkage: #"external", // #"internal",
+              linkage: #"external",
+              visibility: #"hidden",
               section: llvm-section-name(back-end, #"init-code"),
               calling-convention: $llvm-calling-convention-c);
     ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
