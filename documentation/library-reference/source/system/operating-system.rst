@@ -454,7 +454,7 @@ System library's operating-system module.
    hardware installed in the host machine.
 
    :type: <symbol>
-   :value: #"x86-win32", #"x86-linux", etc.
+   :value: ``#"x86-win32"``, ``#"x86-linux"``, etc.
 
    :description:
 
@@ -465,12 +465,12 @@ System library's operating-system module.
 
    :example:
 
-     ``#"x86-win32"``, ``#"alpha-osf3"``
+     ``#"x86-win32"``, ``#"x86_64-linux"``
 
    :seealso:
 
-     - `$machine-name`
-     - `$os-name`
+     - :const:`$machine-name`
+     - :const:`$os-name`
 
 .. function:: register-application-exit-function
 
