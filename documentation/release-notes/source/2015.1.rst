@@ -112,6 +112,10 @@ Compiler
   used have been fixed. These are typically edge cases like ``+.5``
   or ``-3d3`` rather than commonly used literal notations.
 
+* The C back-end correctly handles indirect C-functions (where a
+  function pointer is given to be invoked rather than a direct
+  function call).
+
 Debugging
 =========
 

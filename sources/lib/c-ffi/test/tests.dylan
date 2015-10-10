@@ -1013,21 +1013,47 @@ end;
 // -------------
 // tests for indirect: option to define c-function
 
-define c-function call-indirect
+define c-function call-indirect-0
+  indirect: #t;
+  result val :: <C-int>;
+end;
+
+define c-function gimme-a-function-0
+  result fun :: <C-function-pointer>;
+  c-name: "gimme_a_function_0";
+end;
+
+define c-function call-indirect-1
   indirect: #t;
   parameter param1 :: <C-int>;
   result val :: <C-int>;
 end;
 
-define c-function gimme-a-function
+define c-function gimme-a-function-1
   result fun :: <C-function-pointer>;
-  c-name: "gimme_a_function";
+  c-name: "gimme_a_function_1";
+end;
+
+define c-function call-indirect-2
+  indirect: #t;
+  parameter param1 :: <C-int>;
+  parameter param2 :: <C-int>;
+  result val :: <C-int>;
+end;
+
+define c-function gimme-a-function-2
+  result fun :: <C-function-pointer>;
+  c-name: "gimme_a_function_2";
 end;
 
 
 define test c-function-indirect ()
-  let fun = gimme-a-function();
-  check-equal("c-function indirect option", call-indirect(fun, 7), 7);
+  let fun-0 = gimme-a-function-0();
+  let fun-1 = gimme-a-function-1();
+  let fun-2 = gimme-a-function-2();
+  check-equal("c-function indirect option, 0 args", call-indirect-0(fun-0), 5);
+  check-equal("c-function indirect option, 1 arg",  call-indirect-1(fun-1, 7), 7);
+  check-equal("c-function indirect option, 2 args", call-indirect-2(fun-2, 4, 5), 9);
 end;
 
 
