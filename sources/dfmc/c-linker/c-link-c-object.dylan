@@ -8,20 +8,18 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define method emit-parameter-types
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&c-function>) => ()
   format(stream, "(");
-  for (type in if (o.c-function-name)
-                 o.c-signature.^signature-required
-               else
-                 // If there's no C name, it's an indirect function and the
-                 // first parameter is actually the function itself.
-                 //---*** Better: Add a slot to <&c-function> or a <&c-indirect-function>
-                 copy-sequence(o.c-signature.^signature-required, start: 1)
-               end,
-       first? = #t then #f)
-    unless (first?)
-      format(stream, ", ");
-    end unless;
-    format-emit*(back-end, stream, "^", type);
-  end for;
+  let required = o.c-signature.^signature-required;
+  if (empty?(required))
+    format(stream, "void");
+  else
+    for (type in required,
+         first? = #t then #f)
+      unless (first?)
+        format(stream, ", ");
+      end unless;
+      format-emit*(back-end, stream, "^", type);
+    end for;
+  end if;
   format(stream, ")");
 end method;
 
