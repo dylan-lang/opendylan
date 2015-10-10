@@ -244,14 +244,34 @@ int mix_it_up(int *a)
 
 /* for c-function-indirect test */
 
-int a_function(int a)
+int a_function_0(void)
+{
+  return(5);
+}
+
+int (*gimme_a_function_0(void))(void)
+{
+  return(a_function_0);
+}
+
+int a_function_1(int a)
 {
   return(a);
 }
 
-int (*gimme_a_function())()
+int (*gimme_a_function_1(int a))(void)
 {
-  return(a_function);
+  return(a_function_1);
+}
+
+int a_function_2(int a, int b)
+{
+  return(a + b);
+}
+
+int (*gimme_a_function_2(int a, int b))(void)
+{
+  return(a_function_2);
 }
 
 
