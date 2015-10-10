@@ -65,6 +65,7 @@ interrogate the running application for application-specific
 information.
 
 - :func:`exit-application`
+- :func:`register-application-exit-function`
 - :func:`application-arguments`
 - :func:`application-name`
 - :func:`application-filename`
@@ -253,6 +254,14 @@ System library's operating-system module.
      Terminates execution of the running application, returning the
      value of *status* to whatever launched the application, for example
      an MS-DOS window or Windows 95/NT shell.
+
+     .. note:: This function is also available from the ``dylan-extensions``
+        module in the ``dylan`` library and the ``common-extensions`` module
+        of the ``common-dylan`` library.
+
+   :seealso:
+
+     - :func:`register-application-exit-function`
 
 .. function:: load-library
 
@@ -462,6 +471,36 @@ System library's operating-system module.
 
      - `$machine-name`
      - `$os-name`
+
+.. function:: register-application-exit-function
+
+   Register a function to be executed when the application is about to exit.
+
+   :signature: register-application-exit-function *function* => ()
+
+   :parameter function: An instance of :drm:`<function>`.
+
+   :description:
+
+     Register a function to be executed when the application is about to
+     exit. The Dylan runtime will make sure that these functions are executed.
+
+     The *function* should not expect any arguments, nor expect that any return
+     values be used.
+
+     .. note:: Currently, the registered functions will be invoked in the reverse
+        order in which they were added. This is **not** currently a contractual
+        guarantee and may be subject to change.
+
+     .. note:: This function is also available from the ``dylan-extensions``
+        module in the ``dylan`` library and the ``common-extensions`` module
+        of the ``common-dylan`` library.
+
+   :example:
+
+   :seealso:
+
+     - :func:`exit-application`
 
 .. function:: run-application
 
