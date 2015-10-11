@@ -231,6 +231,7 @@ This section contains a reference entry for each item exported from the
    :seealso:
 
      - :gf:`sin`
+     - :gf:`sincos`
      - :gf:`tan`
 
 .. generic-function:: cosh
@@ -396,7 +397,29 @@ This section contains a reference entry for each item exported from the
    :seealso:
 
      - :gf:`cos`
+     - :gf:`sincos`
      - :gf:`tan`
+
+.. generic-function:: sincos
+
+   :summary:
+     Returns both the sine and the cosine of its argument.
+
+   :signature: sincos x => (s, c)
+
+   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :value s: An instance of type :drm:`<float>`. The result of ``sin(x)``.
+   :value c: An instance of type :drm:`<float>`. The result of ``cos(x)``.
+
+   :description:
+
+     Returns both the sine and the cosine of its argument. The floating point
+     precision of the results is given by the precision of ``x``.
+
+   :seealso:
+
+     :gf:`cos`
+     :gf:`sin`
 
 .. constant:: $single-e
 

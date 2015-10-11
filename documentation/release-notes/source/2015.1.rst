@@ -80,6 +80,11 @@ Coloring-Stream
   supports ANSI codes on Unix terminals. It has been
   `documented in the library reference`_.
 
+Common Dylan
+============
+
+* The ``transcendentals`` module now has a ``sincos`` generic function.
+
 Compiler
 ========
 

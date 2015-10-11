@@ -219,6 +219,7 @@ define module transcendentals
          sin,
          cos,
          tan,
+         sincos,
          asin,
          acos,
          atan,

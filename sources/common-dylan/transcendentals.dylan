@@ -70,6 +70,19 @@ define unary-transcendental sin (x) end;
 define unary-transcendental cos (x) end;
 define unary-transcendental tan (x) end;
 
+define open generic sincos (x :: <number>) => (sine :: <number>, cosine :: <number>);
+define sealed domain sincos (<real>);
+
+define sealed may-inline method sincos (x :: <single-float>)
+ => (sine :: <single-float>, cosine :: <single-float>)
+  values(sin(x), cos(x))
+end method sincos;
+
+define sealed may-inline method sincos (x :: <double-float>)
+ => (sine :: <double-float>, cosine :: <double-float>)
+  values(sin(x), cos(x))
+end method sincos;
+
 define unary-transcendental asin (x)
   if (abs(x) > 1)
     error("ASIN would produce complex number")
