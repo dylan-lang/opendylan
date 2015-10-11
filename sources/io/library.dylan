@@ -240,6 +240,7 @@ define module streams-internals
 
   // "High performance"
   export \copy-down-stream-definer,
+         \copy-down-buffered-stream-definer,
          read-skip,
          write-fill;
 

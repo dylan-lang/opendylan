@@ -8,13 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define macro copy-down-stream-definer
   { define copy-down-stream ?:name element ?elt:name sequence ?seq:name }
-    => { define sealed domain do-get-input-buffer (?name);
-         define sealed domain do-next-input-buffer (?name);
-         define sealed domain do-release-input-buffer (?name);
-         define sealed domain do-get-output-buffer (?name);
-         define sealed domain do-next-output-buffer (?name);
-         define sealed domain do-release-output-buffer (?name);
-         define sealed domain coerce-to-element
+    => { define sealed domain coerce-to-element
            (?name, <buffer>, <integer>);
          define sealed domain coerce-from-element
            (?name, <buffer>, <integer>, <object>);
@@ -71,6 +65,18 @@ define macro copy-down-stream-definer
              (stream :: ?name, n :: <integer>, seq :: ?seq,
               #key start :: <integer> = 0, on-end-of-stream = unsupplied())
           => (n-read) }
+end macro;
+
+define macro copy-down-buffered-stream-definer
+  { define copy-down-buffered-stream ?:name element ?elt:name sequence ?seq:name }
+    => { define sealed domain do-get-input-buffer (?name);
+         define sealed domain do-next-input-buffer (?name);
+         define sealed domain do-release-input-buffer (?name);
+         define sealed domain do-get-output-buffer (?name);
+         define sealed domain do-next-output-buffer (?name);
+         define sealed domain do-release-output-buffer (?name);
+         define copy-down-stream ?name element ?elt sequence ?seq;
+       }
 end macro;
 
 define copy-down-stream <byte-string-stream>

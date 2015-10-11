@@ -145,6 +145,9 @@ IO
   output has been added. See ``<indented-stream>``, ``indent``, and
   ``with-indentation`` in the ``streams`` module.
 
+* Some generic functions that apply to ``<buffered-stream>`` have had
+  their signatures tightened.
+
 Runtime
 =======
 
