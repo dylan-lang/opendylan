@@ -590,6 +590,23 @@ define method print-environment-object-name
   end
 end method print-environment-object-name;
 
+define constant $locus-attributes
+  = text-attributes(intensity: $bright-intensity);
+define constant $quote-attributes
+  = text-attributes(intensity: $bright-intensity);
+define constant $error-attributes
+  = text-attributes(foreground: $color-red,
+                    intensity: $bright-intensity);
+define constant $serious-warning-attributes
+  = text-attributes(foreground: $color-red,
+                    intensity: $bright-intensity);
+define constant $warning-attributes
+  = text-attributes(foreground: $color-magenta,
+                    intensity: $bright-intensity);
+define constant $caret-attributes
+  = text-attributes(foreground: $color-green,
+                    intensity: $bright-intensity);
+
 define method print-environment-object-name
     (stream :: <stream>, server :: <server>,
      warning :: <warning-object>,
@@ -598,20 +615,25 @@ define method print-environment-object-name
      #all-keys)
  => ()
   ignore(namespace);
+  let stream = colorize-stream(stream);
   let location = environment-object-source-location(server, warning);
   if (full-message?)
     if (location)
+      print($locus-attributes, stream);
       print-source-location(stream, location);
+      print($reset-attributes, stream);
       write(stream, ": ");
     end;
-    format(stream, "%s - ", environment-object-type-name(warning));
+    let warning-class-text = $serious-warning-attributes;
+    format(stream, "%=%s%= - ", warning-class-text,
+           environment-object-type-name(warning), $reset-attributes);
   end;
   let message
     = case
         full-message? => compiler-warning-full-message(server, warning);
         otherwise     => compiler-warning-short-message(server, warning);
       end;
-  write(stream, message);
+  format(stream, "%=%s%=", $quote-attributes, message, $reset-attributes);
   if (full-message? & location)
     new-line(stream);
     let record       = location.source-location-source-record;
@@ -628,7 +650,8 @@ define method print-environment-object-name
                      if (lines & lines.size > 1) lineno else ' ' end,
                      if (line) line else ' ' end);
             end method output-line;
-      format(stream, "%4s  %s\n", ' ', upper-dec);
+      format(stream, "%4s  %=%s%=\n", ' ', $caret-attributes,
+             upper-dec, $reset-attributes);
       let no-of-lines = lines.size;
       if (no-of-lines <= $warning-max-lines)
         for (line in lines, number from start-line)
@@ -644,7 +667,8 @@ define method print-environment-object-name
           output-line(start-line + index, lines[index])
         end
       end;
-      format(stream, "%4s  %s", ' ', lower-dec);
+      format(stream, "%4s  %=%s%=", ' ', $caret-attributes,
+             lower-dec, $reset-attributes);
     end
   end
 end method print-environment-object-name;

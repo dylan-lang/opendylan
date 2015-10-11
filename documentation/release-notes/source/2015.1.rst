@@ -116,6 +116,9 @@ Compiler
   function pointer is given to be invoked rather than a direct
   function call).
 
+* Warnings and errors are now colorized when printing on supporting
+  output devices.
+
 Debugging
 =========
 
