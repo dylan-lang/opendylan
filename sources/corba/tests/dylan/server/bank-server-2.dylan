@@ -106,7 +106,7 @@ end method;
 /// BANK IMPLEMENTATION
 
 define class <demo-bank> (<bank-servant>)
-  constant class slot bank/ior-file :: <string> = "c:\\temp\\bank-2.ior";
+  constant class slot bank/ior-file :: <string> = "bank-2.ior";
   constant class slot bank/poa-name :: <string> = "Bank POA 2 (incarnate/etherealize)";
   constant slot bank/accounts :: <table> = make(<table>);
 end class;

@@ -111,7 +111,7 @@ define method PseudoObjectsTest/typecode-operation
 end method;
 
 
-define constant *PseudoObjectsTest-ior-file* = "c:\\temp\\PseudoObjectsTest.ior";
+define constant *PseudoObjectsTest-ior-file* = "PseudoObjectsTest.ior";
 
 define method start-PseudoObjectsTest-server () => ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");

@@ -17,7 +17,7 @@ public class Server {
      chatImpl  = new _tie_Chat( new ChatImplementation() );
      FileOutputStream chat_ior_file;
      try {
-       chat_ior_file = new FileOutputStream("C:\\Temp\\Chat.ior");
+       chat_ior_file = new FileOutputStream("Chat.ior");
        String ior_string = orb.object_to_string(chatImpl);
        PrintStream print_stream = new PrintStream(chat_ior_file);
        print_stream.print(ior_string);

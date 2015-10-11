@@ -73,9 +73,9 @@ define method grid/context-get-width (object :: <grid-implementation>, #key cont
 		       end select;
 end method;
 
-define constant $grid-ior-file :: <string> = "c:\\temp\\grid.ior";
+define constant $grid-ior-file :: <string> = "grid.ior";
 
-define constant $wrong-grid-ior-file :: <string> = "c:\\temp\\wrong-grid.ior";
+define constant $wrong-grid-ior-file :: <string> = "wrong-grid.ior";
 
 define method start-grid-server ()
   // get reference to ORB

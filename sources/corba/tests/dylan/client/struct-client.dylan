@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant *structtest-ior-file* = "c:\\temp\\structtest.ior";
+define constant *structtest-ior-file* = "structtest.ior";
 
 define variable *struct-a* :: <StructureA>
  = make(<StructureA>, // a-short: -32768, a-short: 32768,

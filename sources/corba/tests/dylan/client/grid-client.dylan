@@ -9,9 +9,9 @@ define suite grid-test-suite ()
   test grid-request-tests;
 end suite;
 
-define constant $grid-ior-file :: <string> = "c:\\temp\\grid.ior";
+define constant $grid-ior-file :: <string> = "grid.ior";
 
-define constant $wrong-grid-ior-file :: <string> = "c:\\temp\\wrong-grid.ior";
+define constant $wrong-grid-ior-file :: <string> = "wrong-grid.ior";
 
 define test grid-request-tests ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");

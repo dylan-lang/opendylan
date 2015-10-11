@@ -33,7 +33,7 @@ define method treetest/extract-tree (object :: <treetest-implementation>, wrappe
   wrapper.tree-wrapper/real-tree;
 end method;
 
-define constant *treetest-ior-file* = "c:\\temp\\treetest.ior";
+define constant *treetest-ior-file* = "treetest.ior";
 
 define method start-treetest-server () => ()
   // get reference to ORB

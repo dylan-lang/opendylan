@@ -249,7 +249,7 @@ define method SequenceTest/reverse-name (SequenceTest :: <SequenceTest-implement
 end method;
 
 
-define constant *SequenceTest-ior-file* = "c:\\temp\\sequencetest.ior";
+define constant *SequenceTest-ior-file* = "sequencetest.ior";
 
 define method start-SequenceTest-server () => ()
   // get reference to ORB

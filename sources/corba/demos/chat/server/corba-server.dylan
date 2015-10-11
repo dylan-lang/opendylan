@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define sealed class <ChatServer-i> (<ChatServer-servant>)
-  constant slot ChatServer-i-ior-file :: <string> = "c:\\temp\\chat.ior";
+  constant slot ChatServer-i-ior-file :: <string> = "chat.ior";
   constant slot ChatServer-i-server :: <chat-server>, required-init-keyword: server:;
 end class;
 

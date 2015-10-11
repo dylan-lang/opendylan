@@ -19,7 +19,7 @@ public class Server {
 
     FileOutputStream SequenceTest_ior_file;
     try {
-      SequenceTest_ior_file = new FileOutputStream("C:\\Temp\\sequencetest.ior");
+      SequenceTest_ior_file = new FileOutputStream("sequencetest.ior");
       String ior_string = orb.object_to_string(SequenceTestImpl);
       PrintStream print_stream = new PrintStream(SequenceTest_ior_file);
       print_stream.print(ior_string);

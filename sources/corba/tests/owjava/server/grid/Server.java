@@ -20,7 +20,7 @@ public class Server {
     
     FileOutputStream grid_ior_file;
     try {
-      grid_ior_file = new FileOutputStream("C:\\Temp\\grid.ior");
+      grid_ior_file = new FileOutputStream("grid.ior");
       String ior_string = orb.object_to_string(gridImpl);
       PrintStream print_stream = new PrintStream(grid_ior_file);
       print_stream.print(ior_string);
@@ -30,7 +30,7 @@ public class Server {
     //  mock request fowarding 
     FileOutputStream wrong_grid_ior_file;
     try {
-      wrong_grid_ior_file = new FileOutputStream("C:\\Temp\\wrong-grid.ior");
+      wrong_grid_ior_file = new FileOutputStream("wrong-grid.ior");
       String ior_string = orb.object_to_string(gridImpl);
       PrintStream print_stream = new PrintStream(wrong_grid_ior_file);
       print_stream.print(ior_string);

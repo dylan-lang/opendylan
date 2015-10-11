@@ -241,7 +241,7 @@ define chat-command chat-command-connect (frame :: <chat-client-frame>)
  => ()
   let client = frame-chat-client(frame);
   let filename = choose-file(frame: frame,
-			     default: "c:\\temp\\chat.ior",
+			     default: "chat.ior",
 			     direction: #"input");
   if (filename)
     chat-client-connect(client, filename);

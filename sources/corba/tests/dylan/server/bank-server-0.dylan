@@ -84,7 +84,7 @@ end method;
 
 /// MAINLINE
 
-define variable *bank-ior-file* :: <string> = "c:\\temp\\bank-0.ior";
+define variable *bank-ior-file* :: <string> = "bank-0.ior";
 
 define method start-bank-server ()
   // get reference to ORB

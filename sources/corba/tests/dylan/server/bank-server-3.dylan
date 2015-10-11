@@ -81,7 +81,7 @@ end method;
 
 define class <demo-bank> (<bank-servant>)
   constant class slot bank/poa-name :: <string> = "Bank POA 3 (pre/postinvoke)";
-  constant class slot bank/ior-file :: <string> = "c:\\temp\\bank-3.ior";
+  constant class slot bank/ior-file :: <string> = "bank-3.ior";
   constant slot bank/accounts :: <table> = make(<table>);
 end class;
 

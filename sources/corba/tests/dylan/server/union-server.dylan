@@ -78,7 +78,7 @@ define method UnionTest/rle-entity-5-operation (object :: <UnionTest-implementat
   values(one, two, one);
 end method;
 
-define constant $UnionTest-ior-file = "c:\\temp\\UnionTest.ior";
+define constant $UnionTest-ior-file = "UnionTest.ior";
 
 define method start-UnionTest-server () => ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");

@@ -18,7 +18,7 @@ public class Server {
 
     FileOutputStream PseudoObjectsTest_ior_file;
     try {
-      PseudoObjectsTest_ior_file = new FileOutputStream("C:\\Temp\\PseudoObjectsTest.ior");
+      PseudoObjectsTest_ior_file = new FileOutputStream("PseudoObjectsTest.ior");
       String ior_string = orb.object_to_string(PseudoObjectsTestImpl);
       PrintStream print_stream = new PrintStream(PseudoObjectsTest_ior_file);
       print_stream.print(ior_string);

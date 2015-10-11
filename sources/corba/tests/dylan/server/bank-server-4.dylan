@@ -121,7 +121,7 @@ end method;
 
 /// MAINLINE
 
-define variable *bank-ior-file* :: <string> = "c:\\temp\\bank-4.ior";
+define variable *bank-ior-file* :: <string> = "bank-4.ior";
 
 define variable *bank-poa* = #f;
 

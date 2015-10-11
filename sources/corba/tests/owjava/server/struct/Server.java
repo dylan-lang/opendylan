@@ -18,7 +18,7 @@ public class Server {
 
     FileOutputStream structtest_ior_file;
     try {
-      structtest_ior_file = new FileOutputStream("C:\\Temp\\structtest.ior");
+      structtest_ior_file = new FileOutputStream("structtest.ior");
       String ior_string = orb.object_to_string(structtestImpl);
       PrintStream print_stream = new PrintStream(structtest_ior_file);
       print_stream.print(ior_string);

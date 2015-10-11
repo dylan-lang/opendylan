@@ -18,7 +18,7 @@ public class Server {
 
       FileOutputStream ior_file;
       try {
-	ior_file = new FileOutputStream("C:\\Temp\\EnumTest.ior");
+	ior_file = new FileOutputStream("EnumTest.ior");
 	String ior_string = orb.object_to_string(EnumTestImpl);
 	PrintStream print_stream = new PrintStream(ior_file);
 	print_stream.print(ior_string);

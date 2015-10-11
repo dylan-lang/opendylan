@@ -67,7 +67,7 @@ define method AnyTest/any-operation (object :: <AnyTest-implementation>, one :: 
   values(one, two, one);
 end method;
 
-define constant $AnyTest-ior-file = "c:\\temp\\AnyTest.ior";
+define constant $AnyTest-ior-file = "AnyTest.ior";
 
 define method start-AnyTest-server () => ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");

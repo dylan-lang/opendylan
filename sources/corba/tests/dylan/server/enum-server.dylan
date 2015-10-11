@@ -34,7 +34,7 @@ define method enumtest/result (enumtest :: <enumtest-implementation>)
   symbol;
 end method;
 
-define constant *enumtest-ior-file* = "c:\\temp\\enumtest.ior";
+define constant *enumtest-ior-file* = "enumtest.ior";
 
 define method start-enumtest-server () => ()
   // get reference to ORB

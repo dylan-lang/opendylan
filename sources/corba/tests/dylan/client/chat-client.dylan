@@ -18,7 +18,7 @@ end method;
 define constant <string-sequence> = limited(corba/<sequence>, of: corba/<string>);
 
 define class <chat-client> (<object>)
-  constant slot chat-client-chat-ior-file = "c:\\temp\\chat.ior";
+  constant slot chat-client-chat-ior-file = "chat.ior";
 
   constant slot chat-client-name = "Keith", init-keyword: name:;
   constant slot chat-client-messages :: <string-sequence> = make(<string-sequence>), init-keyword: messages:;

@@ -13,11 +13,11 @@ define suite bank-test-suite ()
   test bank-4-request-tests;
 end suite;
 
-define constant zero/$bank-ior-file :: <string> = "c:\\temp\\bank-0.ior";
-define constant one/$bank-ior-file :: <string> = "c:\\temp\\bank.ior";
-define constant two/$bank-ior-file :: <string> = "c:\\temp\\bank-2.ior";
-define constant three/$bank-ior-file :: <string> = "c:\\temp\\bank-3.ior";
-define constant four/$bank-ior-file :: <string> = "c:\\temp\\bank-4.ior";
+define constant zero/$bank-ior-file :: <string> = "bank-0.ior";
+define constant one/$bank-ior-file :: <string> = "bank.ior";
+define constant two/$bank-ior-file :: <string> = "bank-2.ior";
+define constant three/$bank-ior-file :: <string> = "bank-3.ior";
+define constant four/$bank-ior-file :: <string> = "bank-4.ior";
 
 define test bank-0-request-tests ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");

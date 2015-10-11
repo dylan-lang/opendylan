@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant *SequenceTest-ior-file* = "c:\\temp\\sequencetest.ior";
+define constant *SequenceTest-ior-file* = "sequencetest.ior";
 
 define method sequence-equal? (sequence-1 :: <sequence>, sequence-2 :: <sequence>)
  => (equal? :: <boolean>)

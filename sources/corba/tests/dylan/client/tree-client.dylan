@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant *treetest-ior-file* = "c:\\temp\\treetest.ior";
+define constant *treetest-ior-file* = "treetest.ior";
 
 define constant <tree-sequence> = limited(corba/<sequence>, of: <tree>);
 

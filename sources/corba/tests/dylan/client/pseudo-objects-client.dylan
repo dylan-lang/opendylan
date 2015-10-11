@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant $PseudoObjectsTest-ior-file = "c:\\temp\\PseudoObjectsTest.ior";
+define constant $PseudoObjectsTest-ior-file = "PseudoObjectsTest.ior";
 
 define constant $TestObjectX-repositoryID = "IDL:TestObjectX:1.0";
 define constant $TestObjectA-repositoryID = "IDL:TestObjectA:1.0";

@@ -16,7 +16,7 @@ public class Server {
      _tie_AnyTest AnyTestImpl = null;
      AnyTestImpl  = new _tie_AnyTest(new AnyTestImplementation());
      FileOutputStream ior_file;
-     try {ior_file = new FileOutputStream("C:\\Temp\\AnyTest.ior");
+     try {ior_file = new FileOutputStream("AnyTest.ior");
           String ior_string = orb.object_to_string(AnyTestImpl);
           PrintStream print_stream = new PrintStream(ior_file);
           print_stream.print(ior_string);

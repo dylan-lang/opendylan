@@ -28,7 +28,7 @@ end method;
 
 define variable *chat* = #f;
 define variable *chat-poa* = #f;
-define constant $chat-ior-file = "c:\\temp\\chat.ior";
+define constant $chat-ior-file = "chat.ior";
 
 define method start-Chat-server ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");

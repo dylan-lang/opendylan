@@ -18,7 +18,7 @@ public class Server {
 
     FileOutputStream ior_file;
     try {
-      ior_file = new FileOutputStream("C:\\Temp\\TreeTest.ior");
+      ior_file = new FileOutputStream("TreeTest.ior");
       String ior_string = orb.object_to_string(TreeTestImpl);
       PrintStream print_stream = new PrintStream(ior_file);
       print_stream.print(ior_string);

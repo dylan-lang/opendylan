@@ -68,7 +68,7 @@ define method ArrayTest/float-array-operation (object :: <ArrayTest-implementati
 end method;
 
 
-define constant $ArrayTest-ior-file = "c:\\temp\\ArrayTest.ior";
+define constant $ArrayTest-ior-file = "ArrayTest.ior";
 
 define method start-ArrayTest-server () => ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
