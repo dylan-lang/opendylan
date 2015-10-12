@@ -61,7 +61,7 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`exp`
+     - :gf:`exp`
 
 .. generic-function:: acos
 
@@ -82,8 +82,8 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`asin`
-     - :func:`atan`
+     - :gf:`asin`
+     - :gf:`atan`
 
 .. generic-function:: acosh
 
@@ -103,8 +103,8 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`asinh`
-     - :func:`atanh`
+     - :gf:`asinh`
+     - :gf:`atanh`
 
 .. generic-function:: asin
 
@@ -125,8 +125,8 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`acos`
-     - :func:`atan`
+     - :gf:`acos`
+     - :gf:`atan`
 
 .. generic-function:: asinh
 
@@ -146,8 +146,8 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`acosh`
-     - :func:`atanh`
+     - :gf:`acosh`
+     - :gf:`atanh`
 
 .. generic-function:: atan
 
@@ -168,8 +168,8 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`acos`
-     - :func:`asin`
+     - :gf:`acos`
+     - :gf:`asin`
 
 .. generic-function:: atan2
 
@@ -209,8 +209,8 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`acosh`
-     - :func:`asinh`
+     - :gf:`acosh`
+     - :gf:`asinh`
 
 .. generic-function:: cos
 
@@ -230,8 +230,8 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`sin`
-     - :func:`tan`
+     - :gf:`sin`
+     - :gf:`tan`
 
 .. generic-function:: cosh
 
@@ -251,8 +251,8 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`sinh`
-     - :func:`tanh`
+     - :gf:`sinh`
+     - :gf:`tanh`
 
 
 .. constant:: $double-e
@@ -309,8 +309,8 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`^`
-     - :func:`log`
+     - :gf:`^`
+     - :gf:`log`
 
 .. generic-function:: isqrt
 
@@ -330,7 +330,7 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`sqrt`
+     - :gf:`sqrt`
 
 .. generic-function:: log
 
@@ -351,8 +351,8 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`exp`
-     - :func:`logn`
+     - :gf:`exp`
+     - :gf:`logn`
 
 .. generic-function:: logn
 
@@ -374,8 +374,8 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`logn`
-     - :func:`exp`
+     - :gf:`logn`
+     - :gf:`exp`
 
 .. generic-function:: sin
 
@@ -395,8 +395,8 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`cos`
-     - :func:`tan`
+     - :gf:`cos`
+     - :gf:`tan`
 
 .. constant:: $single-e
 
@@ -452,8 +452,8 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`cosh`
-     - :func:`tanh`
+     - :gf:`cosh`
+     - :gf:`tanh`
 
 .. generic-function:: sqrt
 
@@ -473,7 +473,7 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`isqrt`
+     - :gf:`isqrt`
 
 .. generic-function:: tan
 
@@ -493,8 +493,8 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`cos`
-     - :func:`sin`
+     - :gf:`cos`
+     - :gf:`sin`
 
 .. generic-function:: tanh
 
@@ -514,5 +514,5 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :func:`cosh`
-     - :func:`sinh`
+     - :gf:`cosh`
+     - :gf:`sinh`
