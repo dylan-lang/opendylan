@@ -116,7 +116,7 @@ end function next-input-buffer;
 // Look for interesting methods under <double-buffered-stream> and
 // <file-stream> and <multi-buffered-stream>
 define open generic do-next-input-buffer
-    (stream :: <stream>, #key wait?, bytes)
+    (stream :: <buffered-stream>, #key wait?, bytes)
  => (buffer :: false-or(<buffer>));
 
 // This can only be called when 'stream-input-buffer' has a buffer in it
@@ -128,7 +128,7 @@ define inline function release-input-buffer
 end function release-input-buffer;
 
 define open generic do-release-input-buffer
-    (stream :: <stream>) => ();
+    (stream :: <buffered-stream>) => ();
 
 define method do-release-input-buffer
     (stream :: <buffered-stream>) => ()
@@ -143,7 +143,7 @@ define inline function input-available-at-source?
 end function input-available-at-source?;
 
 define open generic do-input-available-at-source?
-    (stream :: <stream>)
+    (stream :: <buffered-stream>)
  => (input-available? :: <boolean>);
 
 define method do-input-available-at-source?
@@ -185,7 +185,7 @@ end function get-output-buffer;
 
 // No default method for this
 define open generic do-get-output-buffer
-    (stream :: <stream>, #key bytes)
+    (stream :: <buffered-stream>, #key bytes)
  => (buffer :: false-or(<buffer>));
 
 
@@ -206,7 +206,7 @@ define inline function release-output-buffer
 end function release-output-buffer;
 
 define open generic do-release-output-buffer
-    (stream :: <stream>) => ();
+    (stream :: <buffered-stream>) => ();
 
 define method do-release-output-buffer
     (stream :: <buffered-stream>) => ()
@@ -491,10 +491,10 @@ define method do-force-output
 end method do-force-output;
 
 define open generic force-output-buffers
-    (stream :: <stream>) => ();
+    (stream :: <buffered-stream>) => ();
 
 define open generic do-force-output-buffers
-    (stream :: <stream>) => ();
+    (stream :: <buffered-stream>) => ();
 
 define method discard-output
     (stream :: <buffered-stream>) => ()
