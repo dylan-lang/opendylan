@@ -97,8 +97,8 @@ define method stream-supports-color?
     (stream :: <file-stream>)
  => (well? :: <boolean>)
   stream-console?(stream) &
-    (environment-variable("TERM") ~== "dumb") &
-    (environment-variable("EMACS") ~== "t")
+    (environment-variable("TERM") ~= "dumb") &
+    (environment-variable("EMACS") ~= "t")
 end method stream-supports-color?;
 
 define class <null-coloring-stream> (<coloring-stream>)
