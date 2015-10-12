@@ -53,6 +53,10 @@ define transcendentals function-test tan ()
   // ---*** Fill this in.
 end function-test tan;
 
+define transcendentals function-test sincos ()
+  // ---*** Fill this in.
+end function-test sincos;
+
 define transcendentals function-test asin ()
   // ---*** Fill this in.
 end function-test asin;

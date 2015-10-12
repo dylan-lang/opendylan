@@ -313,6 +313,10 @@ define module-spec transcendentals ()
 // The floating point precision of the result is given by the precision
 // of _x_.  The result will be a <single-float> if _x_ is an integer.
 
+  open generic-function sincos(<number>) => (<number>, <number>);
+
+// As above, but returns both the sine and cosine of _x_.
+
   open generic-function asin(<number>) => (<number>); // -1 <= y <= +1
   open generic-function acos(<number>) => (<number>); // -1 <= y <= +1
 
