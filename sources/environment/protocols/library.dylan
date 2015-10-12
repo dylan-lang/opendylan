@@ -10,6 +10,7 @@ define library environment-protocols
   use dylan;
   use common-dylan;
   use io;
+  use coloring-stream;
   use source-records;
   use file-source-records;
   use system;

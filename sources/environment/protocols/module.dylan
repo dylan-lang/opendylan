@@ -51,6 +51,8 @@ end module environment-imports;
 
 define module environment-protocols
   use environment-imports;
+  use coloring-stream;
+  use print;
 
   // Server objects
   export <server>,
