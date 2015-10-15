@@ -102,10 +102,48 @@ The LOCATORS module
 .. generic-function:: list-locator
    :open:
 
+   Return a sequence of locators that are children of the given
+   locator.
+
    :signature: list-locator (locator) => (locators)
 
    :parameter locator: An instance of :class:`<locator>`.
    :value locators: An instance of ``<sequence>``.
+
+   :description:
+
+     Return a sequence of locators that are children of the given
+     locator.
+
+     Note that this should only be called on a locator for which
+     :gf:`supports-list-locator?` returns true.
+
+   :seealso:
+
+     - :gf:`supports-list-locator?`
+
+.. method:: list-locator
+   :specializer: <file-system-directory-locator>
+
+   Returns a sequence of locators for the files and directories within
+   the directory specified by the directory locator.
+
+   :parameter locator: An instance of :class:`<file-system-directory-locator>`.
+   :value locators: An instance of ``<sequence>``.
+
+   :description:
+
+     Returns a sequence of locators for the files and directories within
+     the directory specified by the directory locator.
+
+     Instances of :class:`<file-system-file-locator>` for files and symbolic
+     links. :gf:`subdirectory-locator` will be called to create locators for
+     any directories.
+
+   :seealso:
+
+     - :meth:`supports-list-locator?(<file-system-directory-locator>)`
+     - :gf:`do-directory`
 
 .. generic-function:: locator-address
 
@@ -279,6 +317,22 @@ The LOCATORS module
 
    :parameter locator: An instance of :class:`<locator>`.
    :value listable?: An instance of :drm:`<boolean>`.
+
+   :seealso:
+
+     - :gf:`list-locator`
+
+.. method:: supports-list-locator?
+   :specializer: <file-system-directory-locator>
+
+   Returns true if the directory locator is not relative.
+
+   :parameter locator: An instance of :class:`<file-system-directory-locator>`.
+   :value listable?: An instance of :drm:`<boolean>`.
+
+   :seealso:
+
+     - :meth:`list-locator(<file-system-directory-locator>)`
 
 .. generic-function:: supports-open-locator?
    :open:
