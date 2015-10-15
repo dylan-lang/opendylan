@@ -913,11 +913,13 @@ SYMBOL_LOOKUP_ENTRY *find_entry (LOOKUP_TABLE *table, DWORD index)
   DWORD                seg_size = (DWORD) LOOKUP_TABLE_SEGMENT_SIZE;
   DWORD                partition;
 
-  count = ((index - 1) / seg_size);
+  seg = ((index - 1) / seg_size);
   partition = ((index - 1) % seg_size);
 
-  while (count < seg) 
+  while (count < seg) {
     this_segment = this_segment->NextSegment;
+    count++;
+  }
 
   return (&(this_segment->SegmentEntries[partition]));
 }
