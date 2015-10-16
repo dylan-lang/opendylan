@@ -21,7 +21,7 @@ The LOCATORS module
    :superclasses: :drm:`<object>`
 
    This is the base class for all locators. This is the usual locator
-   class for coercion (using ``as``) or instantiation (using ``make``)
+   class for coercion (using :drm:`as`) or instantiation (using :drm:`make`)
    of new locators. Situations where this class is not appropriate
    are ones where there is not enough information provided to select
    the appropriate concrete class. For example, it is not appropriate
@@ -108,7 +108,7 @@ The LOCATORS module
    :signature: list-locator (locator) => (locators)
 
    :parameter locator: An instance of :class:`<locator>`.
-   :value locators: An instance of ``<sequence>``.
+   :value locators: An instance of :drm:`<sequence>`.
 
    :description:
 
@@ -129,7 +129,7 @@ The LOCATORS module
    the directory specified by the directory locator.
 
    :parameter locator: An instance of :class:`<file-system-directory-locator>`.
-   :value locators: An instance of ``<sequence>``.
+   :value locators: An instance of :drm:`<sequence>`.
 
    :description:
 
@@ -149,8 +149,8 @@ The LOCATORS module
 
    :signature: locator-address (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: locator-as-string
    :open:
@@ -182,8 +182,8 @@ The LOCATORS module
    :signature: locator-error (format-string #rest format-arguments) => (#rest results)
 
    :parameter format-string: An instance of :drm:`<string>`.
-   :parameter #rest format-arguments: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter #rest format-arguments: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: locator-extension
    :open:
@@ -197,8 +197,8 @@ The LOCATORS module
 
    :signature: locator-file (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: locator-host
    :open:
@@ -212,8 +212,8 @@ The LOCATORS module
 
    :signature: locator-name (locator) => (#rest results)
 
-   :parameter locator: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter locator: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: locator-path
    :open:
@@ -221,7 +221,7 @@ The LOCATORS module
    :signature: locator-path (locator) => (path)
 
    :parameter locator: An instance of :class:`<locator>`.
-   :value path: An instance of ``<sequence>``.
+   :value path: An instance of :drm:`<sequence>`.
 
 .. generic-function:: locator-relative?
    :open:
@@ -298,7 +298,7 @@ The LOCATORS module
    :signature: subdirectory-locator (locator #rest sub-path) => (subdirectory)
 
    :parameter locator: An instance of :class:`<directory-locator>`.
-   :parameter #rest sub-path: An instance of ``<object>``.
+   :parameter #rest sub-path: An instance of :drm:`<object>`.
    :value subdirectory: An instance of :class:`<directory-locator>`.
 
    :example:
