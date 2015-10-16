@@ -220,7 +220,7 @@ define constant $required-values-type
     "constraints of the generic";
 
 define constant $generic-values-not-variable
-  = "the method's values list includes #rest, but the generic's values list"
+  = "the method's values list includes #rest, but the generic's values list "
     "does not";
 
 define constant $required-values-count-too-small
