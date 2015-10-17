@@ -42,10 +42,10 @@ end module;
 define module coloring-stream-internals
   use common-dylan;
   use streams;
-  use streams-internals, import { stream-console? };
-  use operating-system, import { environment-variable, $os-name };
+  use streams-internals, import: { <file-stream>, stream-console? };
+  use operating-system, import: { environment-variable, $os-name };
   use print, import: { print-object };
-  use coloring-stream, export all;
+  use coloring-stream, export: all;
 
   export <ansi-coloring-stream>,
          <null-coloring-stream>;
