@@ -263,9 +263,14 @@ end method;
 // can have element/element-setter defined for them.
 
 define open abstract &class <object-with-elements> (<object>) end;
-define open compiler-open abstract &class <mutable-object-with-elements>
+
+define open compiler-open abstract compiler-class <mutable-object-with-elements>
     (<object-with-elements>)
-end &class;
+end compiler-class;
+define open abstract model-class <mutable-object-with-elements>
+    (<object-with-elements>)
+end model-class;
+
 define open   abstract &class <collection> (<object-with-elements>) end;
 define open   abstract &class <mutable-collection>
     (<collection>, <mutable-object-with-elements>)
