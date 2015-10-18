@@ -129,6 +129,7 @@ The COLORING-STREAM module
         write(*standard-output*, text);
 
 .. generic-function:: stream-supports-color?
+   :open:
 
    :signature: stream-supports-color? (stream) => (well?)
 

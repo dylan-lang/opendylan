@@ -12,7 +12,7 @@ define module-spec coloring-stream ()
       (<stream>, #"key", #"force-ansi?")
    => (<coloring-stream>);
 
-  function stream-supports-color? (<stream>) => (<boolean>);
+  open generic-function stream-supports-color? (<stream>) => (<boolean>);
 
   constant $normal-intensity :: <object>;
   constant $bright-intensity :: <object>;

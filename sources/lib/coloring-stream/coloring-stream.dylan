@@ -87,6 +87,10 @@ define method colorize-stream
   stream
 end;
 
+define open generic stream-supports-color?
+    (stream :: <stream>)
+ => (well? :: <boolean>);
+
 define method stream-supports-color?
     (stream :: <stream>)
  => (well? :: <boolean>)
