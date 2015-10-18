@@ -33,14 +33,10 @@ define method coloring-stream-class-for-stream
     (stream :: <file-stream>)
  => (coloring-stream-class :: <class>)
   if (stream-supports-color?(stream))
-    if ($os-name == #"win32")
-      if (environment-variable("ConEmuANSI") = "ON")
-        <ansi-coloring-stream>
-      else
-        <windows-coloring-stream>
-      end if
-    else
+    if (stream-supports-ansi-color?(stream))
       <ansi-coloring-stream>
+    else
+      <windows-coloring-stream>
     end if
   else
     <null-coloring-stream>
@@ -104,6 +100,24 @@ define method stream-supports-color?
     (environment-variable("TERM") ~= "dumb") &
     (environment-variable("EMACS") ~= "t")
 end method stream-supports-color?;
+
+define generic stream-supports-ansi-color?
+    (stream :: <stream>)
+ => (well? :: <boolean>);
+
+define method stream-supports-ansi-color?
+    (stream :: <stream>)
+ => (well? :: <boolean>)
+  if ($os-name == #"win32")
+    if (environment-variable("ConEmuANSI") = "ON")
+      #t
+    else
+      #f
+    end if
+  else
+    #t
+  end if
+end method stream-supports-ansi-color?;
 
 define class <null-coloring-stream> (<coloring-stream>)
 end class <null-coloring-stream>;

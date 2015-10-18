@@ -149,6 +149,30 @@ The COLORING-STREAM module
      * The ``TERM`` environment variable is not ``"dumb"``.
      * The ``EMACS`` environment variable is not ``"t"``.
 
+.. generic-function:: stream-supports-ansi-color?
+   :open:
+
+   :signature: stream-supports-ansi-color? (stream) => (well?)
+
+   :parameter stream: An instance of :class:`<stream>`.
+   :value well?: An instance of :drm:`<boolean>`.
+
+   :description:
+
+     Return whether or not the underlying stream might support
+     ANSI color output, assuming that the underlying stream
+     supports color output at all.
+
+     On Unix, this will always return ``#t``.
+
+     On Windows, this attempts to detect situations where ANSI
+     output would be permissible, such as running within an
+     alternate console window like ConEMU.
+
+     .. note:: This does NOT check to see if the stream actually
+        supports coloring. It is meant to be used in conjunction
+        with :gf:`stream-supports-color?`.
+
 Text Attributes
 ===============
 

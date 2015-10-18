@@ -20,6 +20,8 @@ define module coloring-stream
 
   create stream-supports-color?;
 
+  create stream-supports-ansi-color?;
+
   create $color-black,
          $color-blue,
          $color-cyan,

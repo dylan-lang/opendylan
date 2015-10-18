@@ -14,6 +14,8 @@ define module-spec coloring-stream ()
 
   open generic-function stream-supports-color? (<stream>) => (<boolean>);
 
+  open generic-function stream-supports-ansi-color? (<stream>) => (<boolean>);
+
   constant $normal-intensity :: <object>;
   constant $bright-intensity :: <object>;
   constant $dim-intensity :: <object>;
