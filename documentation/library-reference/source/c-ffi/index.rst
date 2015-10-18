@@ -980,7 +980,7 @@ these classes.
    :open:
    :abstract:
 
-   :superclasses: :class:`<C-pointer>`
+   :superclasses: :class:`<C-pointer>`, :class:`<mutable-object-with-elements>`
 
    :description:
 
