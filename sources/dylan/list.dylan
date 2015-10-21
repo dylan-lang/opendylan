@@ -46,6 +46,16 @@ end function;
 
 
 //
+// REST
+//
+
+define inline sealed method rest
+    (sequence :: <list>) => (sequence-tail :: <list>)
+  sequence.tail;
+end method rest;
+
+
+//
 // Specialized inherited generic methods
 //
 
