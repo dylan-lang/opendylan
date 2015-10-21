@@ -105,7 +105,7 @@ end method make;
 
 define inline method check-type (value, type)
   unless (instance?(value, type))
-    error(make(<type-error>, value: value, type: type))
+    type-check-error(value, type)
   end unless;
   value
 end method check-type;
