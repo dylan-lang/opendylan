@@ -91,8 +91,9 @@ define method signal (condition :: <condition>, #rest noise)
       let _handler = head(handlers);
       let remaining = tail(handlers);
       if (handler-matches?(_handler, condition))
-        handler-function(_handler)
-          (condition, method () search(remaining) end method)
+        invoke-handler(_handler,
+                       condition,
+                       method () search(remaining) end method)
       else
         search(remaining)
       end if
@@ -108,6 +109,13 @@ define method handler-matches? (_handler :: <handler>, condition :: <condition>)
       ~test | test(condition)
     end
 end method handler-matches?;
+
+// This is useful for setting a breakpoint within the runtime.
+define not-inline method invoke-handler
+    (_handler :: <handler>, condition :: <condition>,
+     continue-search :: <function>)
+  handler-function(_handler)(condition, continue-search)
+end method invoke-handler;
 
 define method error (condition :: <condition>, #rest noise)
  => (will-never-return :: <bottom>)
