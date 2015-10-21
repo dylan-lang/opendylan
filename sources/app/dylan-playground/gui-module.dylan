@@ -22,7 +22,7 @@ define module gui-dylan-playground
   use standard-io;
   use print;
   use format;
-  use format-out;
+  use simple-format, import: { format-out };
 
   use bit-vector;
   use bit-set;
