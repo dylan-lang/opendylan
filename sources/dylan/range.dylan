@@ -75,14 +75,14 @@ define method make
     else
       if (size)
         if (to)
-          let new-to = from + by * (size + 1);
-          if (new-to <= to)
+          let new-to = from + by * (size - 1);
+          if (abs(new-to) <= abs(to))
             to := new-to
           else
             size := floor/(to + by - from, by);
           end if;
         else
-          to := from + by * (size + 1);
+          to := from + by * (size - 1);
         end if;
       else
         size := floor/(to + by - from, by);
