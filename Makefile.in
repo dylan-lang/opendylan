@@ -16,7 +16,7 @@ DYLANCOMPILER   = @DYLANCOMPILER@
 	2-stage-bootstrap 2-stage-bootstrap-reentry \
 	3-stage-bootstrap 3-stage-bootstrap-reentry \
 	bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3 \
-	all install install-stage release release-stage uninstall clean check \
+	all install install-stage release release-stage clean check \
 	check-submodules
 
 all: @bootstrap_target@
@@ -406,11 +406,6 @@ release: 3-stage-bootstrap release-stage
 
 ###
 # Maintenance and test targets
-
-# The only safe directory to delete is $(prefix)/sources. $(prefix)/bin and the
-# others may have user content if $(prefix) is /usr or /usr/local.
-uninstall:
-	rm -rf $(prefix)/sources
 
 install-strip:
 
