@@ -375,6 +375,12 @@ define module-spec transcendentals ()
 // of _x_.  The result will be a <single-float> if _x_ is an integer.
 
 
+  function ilog2 (<integer>) => (<integer>);
+  // x > 0
+
+// Returns the logarithm of _x_ in base _2_ as an integer.  If _x_ <= 0, an
+// error is signalled.
+
   open generic-function \^ (<number>, <number>) => (<number>);
 
 // Returns _b_ raised to the power _x_.  If _b_ is 0 and _x_ is not

@@ -60,6 +60,10 @@ define may-inline function logn (x :: <number>, base :: <number>) => (result :: 
   log(x) / log(base)
 end function logn;
 
+define inline function ilog2 (x :: <integer>) => (result :: <integer>)
+  truncate(log(as(<single-float>, x)) / log(2.0s0))
+end function ilog2;
+
 define unary-transcendental sqrt (x) end;
 
 define may-inline function isqrt (x :: <integer>) => (result :: <integer>)

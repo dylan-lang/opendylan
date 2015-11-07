@@ -311,6 +311,7 @@ This section contains a reference entry for each item exported from the
    :seealso:
 
      - :gf:`^`
+     - :func:`ilog2`
      - :gf:`log`
      - :func:`logn`
 
@@ -354,6 +355,7 @@ This section contains a reference entry for each item exported from the
    :seealso:
 
      - :gf:`exp`
+     - :func:`ilog2`
      - :func:`logn`
 
 .. function:: logn
@@ -377,6 +379,30 @@ This section contains a reference entry for each item exported from the
    :seealso:
 
      - :gf:`exp`
+     - :gf:`log`
+     - :func:`ilog2`
+
+.. function:: ilog2
+
+   :summary:
+     Returns the base two logarithm of its argument, truncated to an
+     integer.
+
+   :signature: ilog2 x => y
+
+   :parameter x: An instance of :drm:`<integer>`.
+   :value y: An instance of :drm:`<integer>`.
+
+   :description:
+
+     Returns the integer base two logarithm of ``x``, that is the
+     greatest integer less than or equal to the exact base two logarithm
+     of ``x``.
+
+   :seealso:
+
+     - :gf:`exp`
+     - :func:`logn`
      - :gf:`log`
 
 .. generic-function:: sin

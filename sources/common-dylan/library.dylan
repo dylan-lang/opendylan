@@ -216,6 +216,7 @@ define module transcendentals
          log,
          exp,
          logn,
+         ilog2,
          sin,
          cos,
          tan,

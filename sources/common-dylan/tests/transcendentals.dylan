@@ -124,6 +124,18 @@ define transcendentals function-test logn ()
   // ---*** Fill this in
 end function-test logn;
 
+define transcendentals function-test ilog2 ()
+  check-equal("ilog2(1) = 0",
+              0, ilog2(1));
+  check-equal("ilog2(32) = 5",
+              5, ilog2(32));
+  check-equal("ilog2(33) = 5",
+              5, ilog2(32));
+  check-condition("ilog2(-1) errors",
+                  <error>,
+                  ilog2(-1));
+end function-test ilog2;
+
 define transcendentals function-test \^ ()
 end function-test \^;
 
