@@ -30,7 +30,6 @@ define macro unary-transcendental-definer
       ?prefix:body
     end }
     => { define open generic ?name (x :: <number>) => (result :: <number>);
-         define sealed domain ?name (<real>);
          define sealed may-inline method ?name (x :: <real>) => (result :: <float>)
            ?name(as(<float>, x))
          end method ?name;
@@ -75,7 +74,6 @@ define unary-transcendental cos (x) end;
 define unary-transcendental tan (x) end;
 
 define open generic sincos (x :: <number>) => (sine :: <number>, cosine :: <number>);
-define sealed domain sincos (<real>);
 
 define sealed may-inline method sincos (x :: <single-float>)
  => (sine :: <single-float>, cosine :: <single-float>)
@@ -111,7 +109,6 @@ define macro unary-hyperbolic-definer
       ?single:expression, ?double:expression
     end }
     => { define open generic ?name (x :: <number>) => (result :: <number>);
-         define sealed domain ?name (<real>);
          define sealed may-inline method ?name (x :: <real>) => (result :: <float>)
            ?name(as(<float>, x))
          end method ?name;
@@ -156,13 +153,10 @@ define unary-hyperbolic atanh (x)
 end unary-hyperbolic atanh;
 
 
-/// NOTE: Always seals the (<real>, <real>) domain:  The domains, if given, are used
-/// to define the "default" method to avoid sealing violations w.r.t. the Dylan library.
 define macro binary-transcendental-domain-definer
   { define binary-transcendental-domain ?:name (?x:name, ?y:name)
                                                (?domain1:name, ?domain2:name)}
-    => { define sideways sealed domain ?name (<real>, <real>);
-         define sideways sealed may-inline method ?name (?x :: ?domain1, ?y :: ?domain2)
+    => { define sideways sealed may-inline method ?name (?x :: ?domain1, ?y :: ?domain2)
           => (result :: <float>)
            ?name(as(<float>, ?x), as(<float>, ?y))
          end method ?name;
