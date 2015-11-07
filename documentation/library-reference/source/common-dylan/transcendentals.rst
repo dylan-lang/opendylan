@@ -312,6 +312,7 @@ This section contains a reference entry for each item exported from the
 
      - :gf:`^`
      - :gf:`log`
+     - :func:`logn`
 
 .. generic-function:: isqrt
 
@@ -353,9 +354,9 @@ This section contains a reference entry for each item exported from the
    :seealso:
 
      - :gf:`exp`
-     - :gf:`logn`
+     - :func:`logn`
 
-.. generic-function:: logn
+.. function:: logn
 
    :summary:
      Returns the logarithm of its argument to the given base.
@@ -363,7 +364,7 @@ This section contains a reference entry for each item exported from the
    :signature: logn x b => y
 
    :parameter x: An instance of :drm:`<number>`
-   :parameter b: An instance of :drm:`<number>`. The base.
+   :parameter b: The base. An instance of :drm:`<number>`.
    :value y: An instance of :drm:`<number>`.
 
    :description:
@@ -375,8 +376,8 @@ This section contains a reference entry for each item exported from the
 
    :seealso:
 
-     - :gf:`logn`
      - :gf:`exp`
+     - :gf:`log`
 
 .. generic-function:: sin
 
