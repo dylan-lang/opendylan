@@ -166,6 +166,6 @@ define transcendentals function-test isqrt ()
        while: (arg < floor/($maximum-integer, 3)))
     check-equal(format-to-string("isqrt(%=) = floor(sqrt(%=))", arg, arg),
                 isqrt(arg),
-                floor(sqrt(arg)));
+                floor(sqrt(as(<single-float>, arg))));
   end;
 end function-test isqrt;
