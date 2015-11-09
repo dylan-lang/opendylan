@@ -46,7 +46,7 @@ define method distance-3d
     (aircraft :: <aircraft>, destination :: <airport>)
  => (distance :: <single-float>)  // Miles
   // A squared plus b squared equals c squared, where c is the hypotenuse,
-  // and a and b are the other sides of a right triange.
+  // and a and b are the other sides of a right triangle.
   sqrt((aircraft.altitude / $feet-per-mile) ^ 2
        + distance-2d(aircraft.current-position,
                      destination.current-position) ^ 2);
