@@ -523,8 +523,9 @@ define method ^make-mm-wrapper (class :: <&class>)
                 else
                   0
                 end if;
+            //---*** This could use ilog2 in the future. (Due to bootstrapping.)
             let element-size
-              = truncate(logn(repeated-size * 8, 2)); // log2(number-of-bits)
+              = truncate(logn(as(<single-float>, repeated-size * 8), 2.0s0));
             if (stretchy?)
               logior(ash(element-size, 3), 5, bias) // stretchy non-word
             else

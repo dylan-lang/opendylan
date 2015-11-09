@@ -311,7 +311,7 @@ define module-spec transcendentals ()
 // given in radians.
 
 // The floating point precision of the result is given by the precision
-// of _x_.  The result will be a <single-float> if _x_ is an integer.
+// of _x_.
 
   open generic-function sincos(<number>) => (<number>, <number>);
 
@@ -327,7 +327,7 @@ define module-spec transcendentals ()
 // in the range [-1, +1], an error is signalled.
 
 // The floating point precision of the result is given by the precision
-// of _y_.  The result will be a <single-float> if _y_ is an integer.
+// of _y_.
 
   open generic-function sinh (<number>) => (<number>);
   open generic-function cosh (<number>) => (<number>);
@@ -337,7 +337,7 @@ define module-spec transcendentals ()
 // of _x_, respectively.
 
 // The floating point precision of the result is given by the precision
-// of _x_.  The result will be a <single-float> if _x_ is an integer.
+// of _x_.
 
   open generic-function asinh (<number>) => (<number>);
   open generic-function acosh (<number>) => (<number>);
@@ -347,7 +347,7 @@ define module-spec transcendentals ()
 // arc tangent of _y_, respectively.
 
 // The floating point precision of the result is given by the precision
-// of _y_.  The result will be a <single-float> if _y_ is an integer.
+// of _y_.
 
 
   open generic-function log (<number>) => (<number>); //  x > 0
@@ -356,7 +356,7 @@ define module-spec transcendentals ()
 // error is signalled.
 
 // The floating point precision of the result is given by the precision
-// of _x_.  The result will be a <single-float> if _x_ is an integer.
+// of _x_.
 
   open generic-function exp (<number>) => (<number>);
 
@@ -372,8 +372,14 @@ define module-spec transcendentals ()
 // error is signalled.
 
 // The floating point precision of the result is given by the precision
-// of _x_.  The result will be a <single-float> if _x_ is an integer.
+// of _x_.
 
+
+  function ilog2 (<integer>) => (<integer>);
+  // x > 0
+
+// Returns the logarithm of _x_ in base _2_ as an integer.  If _x_ <= 0, an
+// error is signalled.
 
   open generic-function \^ (<number>, <number>) => (<number>);
 
@@ -382,7 +388,7 @@ define module-spec transcendentals ()
 // an integer, an error is signalled.
 
 // The floating point precision of the result is given by the precision
-// of _b_.  The result will be a <single-float> if _b_ is an integer.
+// of _b_.
 
 
 //  open
@@ -398,7 +404,7 @@ define module-spec transcendentals ()
 // Returns the square root of _x_.  If _x_ < 0, an error is signalled.
 
 // The floating point precision of the result is given by the precision
-// of _x_.  The result will be a <single-float> if _x_ is an integer.
+// of _x_.
 
   function isqrt (<integer>) => (<integer>); // x >= 0
 

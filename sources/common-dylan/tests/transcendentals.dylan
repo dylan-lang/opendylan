@@ -124,6 +124,18 @@ define transcendentals function-test logn ()
   // ---*** Fill this in
 end function-test logn;
 
+define transcendentals function-test ilog2 ()
+  check-equal("ilog2(1) = 0",
+              0, ilog2(1));
+  check-equal("ilog2(32) = 5",
+              5, ilog2(32));
+  check-equal("ilog2(33) = 5",
+              5, ilog2(32));
+  check-condition("ilog2(-1) errors",
+                  <error>,
+                  ilog2(-1));
+end function-test ilog2;
+
 define transcendentals function-test \^ ()
 end function-test \^;
 
@@ -154,6 +166,6 @@ define transcendentals function-test isqrt ()
        while: (arg < floor/($maximum-integer, 3)))
     check-equal(format-to-string("isqrt(%=) = floor(sqrt(%=))", arg, arg),
                 isqrt(arg),
-                floor(sqrt(arg)));
+                floor(sqrt(as(<single-float>, arg))));
   end;
 end function-test isqrt;

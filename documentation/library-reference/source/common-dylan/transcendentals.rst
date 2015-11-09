@@ -56,8 +56,7 @@ This section contains a reference entry for each item exported from the
      If ``b`` and ``x`` are both integers, the result is an integer. If ``x`` is
      negative, an error is signalled.
 
-     The floating point precision is given by the precision of ``b``. The
-     result is a single-float if ``b`` is an integer.
+     The floating point precision is given by the precision of ``b``.
 
    :seealso:
 
@@ -77,8 +76,7 @@ This section contains a reference entry for each item exported from the
    :description:
 
      Returns the arc cosine of its argument. The floating point precision of
-     the result is given by the precision of ``x``. The result is a
-     single-float if ``x`` is an integer.
+     the result is given by the precision of ``x``.
 
    :seealso:
 
@@ -98,8 +96,7 @@ This section contains a reference entry for each item exported from the
    :description:
 
      Returns the hyperbolic arc cosine of its argument. The floating point
-     precision of the result is given by the precision of ``x``. The result is
-     a single-float if ``x`` is an integer.
+     precision of the result is given by the precision of ``x``.
 
    :seealso:
 
@@ -120,8 +117,7 @@ This section contains a reference entry for each item exported from the
    :description:
 
      Returns the arc sine of its argument. The floating point precision of
-     the result is given by the precision of ``x``. The result is a
-     single-float if ``x`` is an integer.
+     the result is given by the precision of ``x``.
 
    :seealso:
 
@@ -141,8 +137,7 @@ This section contains a reference entry for each item exported from the
    :description:
 
      Returns the hyperbolic arc sine of its argument. The floating point
-     precision of the result is given by the precision of ``x``. The result is
-     a single-float if ``x`` is an integer.
+     precision of the result is given by the precision of ``x``.
 
    :seealso:
 
@@ -163,8 +158,7 @@ This section contains a reference entry for each item exported from the
    :description:
 
      Returns the arc tangent of its argument. The floating point precision of
-     the result is given by the precision of *x*. The result is a
-     single-float if *x* is an integer.
+     the result is given by the precision of *x*.
 
    :seealso:
 
@@ -189,7 +183,7 @@ This section contains a reference entry for each item exported from the
      the angle falls in.
 
      The floating point precision of the result is given by the precision of
-     ``x``/``y``. The result is a single-float if ``x/y`` is an integer.
+     ``x``/``y``.
 
 .. generic-function:: atanh
 
@@ -204,8 +198,7 @@ This section contains a reference entry for each item exported from the
    :description:
 
      Returns the hyperbolic arc tangent of its argument. The floating point
-     precision of the result is given by the precision of ``x``. The result is
-     a single-float if ``x`` is an integer.
+     precision of the result is given by the precision of ``x``.
 
    :seealso:
 
@@ -225,8 +218,7 @@ This section contains a reference entry for each item exported from the
    :description:
 
      Returns the cosine of its argument. The floating point precision of the
-     result is given by the precision of ``x``. The result is a single-float
-     if ``x`` is an integer.
+     result is given by the precision of ``x``.
 
    :seealso:
 
@@ -247,8 +239,7 @@ This section contains a reference entry for each item exported from the
    :description:
 
      Returns the hyperbolic cosine of its argument. The floating point
-     precision of the result is given by the precision of ``x``. The result is
-     a single-float if ``x`` is an integer.
+     precision of the result is given by the precision of ``x``.
 
    :seealso:
 
@@ -311,6 +302,7 @@ This section contains a reference entry for each item exported from the
    :seealso:
 
      - :gf:`^`
+     - :func:`ilog2`
      - :gf:`log`
      - :func:`logn`
 
@@ -348,12 +340,12 @@ This section contains a reference entry for each item exported from the
 
      Returns the natural logarithm of ``x`` to the base e. If x <= 0 <= 1, an
      error is signalled. The floating point precision of the result is given
-     by the precision of ``x``. The result is a single-float if ``x`` is an
-     integer.
+     by the precision of ``x``.
 
    :seealso:
 
      - :gf:`exp`
+     - :func:`ilog2`
      - :func:`logn`
 
 .. function:: logn
@@ -371,12 +363,35 @@ This section contains a reference entry for each item exported from the
 
      Returns the logarithm of ``x`` to the base ``b``. If x <= 0 <= 1,
      an error is signalled. The floating point precision of the result is
-     given by the precision of ``x``. The result is a single-float if
-     ``x`` is an integer.
+     given by the precision of ``x``.
 
    :seealso:
 
      - :gf:`exp`
+     - :gf:`log`
+     - :func:`ilog2`
+
+.. function:: ilog2
+
+   :summary:
+     Returns the base two logarithm of its argument, truncated to an
+     integer.
+
+   :signature: ilog2 x => y
+
+   :parameter x: An instance of :drm:`<integer>`.
+   :value y: An instance of :drm:`<integer>`.
+
+   :description:
+
+     Returns the integer base two logarithm of ``x``, that is the
+     greatest integer less than or equal to the exact base two logarithm
+     of ``x``.
+
+   :seealso:
+
+     - :gf:`exp`
+     - :func:`logn`
      - :gf:`log`
 
 .. generic-function:: sin
@@ -392,8 +407,7 @@ This section contains a reference entry for each item exported from the
    :description:
 
      Returns the sine of its argument. The floating point precision of the
-     result is given by the precision of ``x``. The result is a single-float
-     if ``x`` is an integer.
+     result is given by the precision of ``x``.
 
    :seealso:
 
@@ -471,8 +485,7 @@ This section contains a reference entry for each item exported from the
    :description:
 
      Returns the hyperbolic sine of its argument. The floating point
-     precision of the result is given by the precision of ``x``. The result is
-     a single-float if ``x`` is an integer.
+     precision of the result is given by the precision of ``x``.
 
    :seealso:
 
@@ -493,7 +506,7 @@ This section contains a reference entry for each item exported from the
 
      Returns the square root of x. If x is less than zero an error is
      signalled. The floating point precision of the result is given by the
-     precision of ``x``. The result is a single-float if ``x`` is an integer.
+     precision of ``x``.
 
    :seealso:
 
@@ -512,8 +525,7 @@ This section contains a reference entry for each item exported from the
    :description:
 
      Returns the tangent of its argument. The floating point precision of the
-     result is given by the precision of ``x``. The result is a single-float
-     if ``x`` is an integer.
+     result is given by the precision of ``x``.
 
    :seealso:
 
@@ -533,8 +545,7 @@ This section contains a reference entry for each item exported from the
    :description:
 
      Returns the hyperbolic tangent of its argument. The floating point
-     precision of the result is given by the precision of ``x``. The result is
-     a single-float if ``x`` is an integer.
+     precision of the result is given by the precision of ``x``.
 
    :seealso:
 

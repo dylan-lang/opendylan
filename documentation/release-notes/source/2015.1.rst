@@ -84,6 +84,20 @@ Common Dylan
 ============
 
 * The ``transcendentals`` module now has a ``sincos`` generic function.
+* The ``transcendentals`` module now has an ``ilog2`` function that returns
+  the integer value of the logarithm of a value in base 2.
+* The transcendental and hyperbolic functions are no longer sealing their
+  domains on ``<real>`` parameters.
+* Again in the ``transcendentals`` module, many methods have been removed
+  that converted from ``<real>`` to ``<float>``. Callers should pass in
+  values of the appropriate type and precision instead. This impacts:
+
+  * ``^``, ``exp``, ``log``
+  * ``sqrt``
+  * ``sin``, ``cos``, ``tan``
+  * ``asin``, ``acos``, ``atan``
+  * ``sinh``, ``cosh``, ``tanh``
+  * ``asinh``, ``acosh``, ``atanh``
 
 Compiler
 ========
