@@ -63,8 +63,10 @@ define macro back-ended-function-definer
 
       define function ?name
           (?context :: ?type, ?args) => (?vals)
-        let back-end = ?context . context-back-end;
-        apply-to-arg-spec "back-end-" ## ?name, back-end, ?context, ?args end;
+        with-context (?context)
+          let back-end = ?context . context-back-end;
+          apply-to-arg-spec "back-end-" ## ?name, back-end, ?context, ?args end;
+        end
       end }
 end macro;
 
