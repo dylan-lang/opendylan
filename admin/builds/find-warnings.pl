@@ -34,8 +34,8 @@
 
 # default regular expressions for finding warnings:
 
-$serious_regexp = "^Serious warning";
-$warn_regexp = "^Warning";
+$serious_regexp = "Serious warning -";
+$warn_regexp = "Warning -";
 
 # use FileHandle;
 use File::Basename;
