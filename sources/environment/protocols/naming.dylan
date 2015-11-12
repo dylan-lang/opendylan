@@ -607,6 +607,28 @@ define constant $caret-attributes
   = text-attributes(foreground: $color-green,
                     intensity: $bright-intensity);
 
+define generic text-attributes-for-warning
+    (warning :: <warning-object>)
+ => (text-attributes :: <text-attributes>);
+
+define method text-attributes-for-warning
+    (warning :: <warning-object>)
+ => (text-attributes :: <text-attributes>)
+  $warning-attributes
+end method text-attributes-for-warning;
+
+define method text-attributes-for-warning
+    (warning :: <serious-compiler-warning-object>)
+ => (text-attributes :: <text-attributes>)
+  $serious-warning-attributes
+end method text-attributes-for-warning;
+
+define method text-attributes-for-warning
+    (warning :: <compiler-error-object>)
+ => (text-attributes :: <text-attributes>)
+  $error-attributes
+end method text-attributes-for-warning;
+
 define method print-environment-object-name
     (stream :: <stream>, server :: <server>,
      warning :: <warning-object>,
@@ -624,7 +646,7 @@ define method print-environment-object-name
       print($reset-attributes, stream);
       write(stream, ": ");
     end;
-    let warning-class-text = $serious-warning-attributes;
+    let warning-class-text = text-attributes-for-warning(warning);
     format(stream, "%=%s%= - ", warning-class-text,
            environment-object-type-name(warning), $reset-attributes);
   end;
