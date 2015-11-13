@@ -131,6 +131,18 @@ define sideways method emit-gluefile
                              init-flag-global.llvm-global-name,
                              init-flag-global);
 
+  let self-init-function
+    = make(<llvm-function>,
+           name: self-init-name(back-end, ld),
+           type: $init-code-function-ptr-type,
+           arguments: #(),
+           attribute-list: make(<llvm-attribute-list>,
+                                function-attributes: $llvm-attribute-noinline),
+           linkage: #"external",
+           visibility: #"hidden",
+           section: llvm-section-name(back-end, #"init-code"),
+           calling-convention: $llvm-calling-convention-c);
+
   // Generate the library glue function
   block ()
     back-end.llvm-builder-function
@@ -168,9 +180,30 @@ define sideways method emit-gluefile
                section: llvm-section-name(back-end, #"init-code"),
                calling-convention: $llvm-calling-convention-c);
       llvm-builder-declare-global(back-end, used-glue.llvm-global-name,
-                                    used-glue);
+                                  used-glue);
       ins--call(back-end, used-glue, #[]);
     end for;
+
+    // Emit a call to the self init function
+    ins--call(back-end, self-init-function, #[]);
+
+    // Branch to common return
+    ins--br(back-end, return-bb);
+
+    // Function return
+    ins--block(back-end, return-bb);
+    ins--ret(back-end);
+
+    llvm-builder-define-global(back-end, glue-name,
+                               back-end.llvm-builder-function);
+  cleanup
+    back-end.llvm-builder-function := #f;
+  end block;
+
+  // Generate the self init function
+  block ()
+    back-end.llvm-builder-function := self-init-function;
+    ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
 
     // Emit calls to user init functions of compilation records
     for (cr-name in cr-names)
@@ -204,14 +237,10 @@ define sideways method emit-gluefile
       end;
     end if;
 
-    // Branch to common return
-    ins--br(back-end, return-bb);
-
     // Function return
-    ins--block(back-end, return-bb);
     ins--ret(back-end);
 
-    llvm-builder-define-global(back-end, glue-name,
+    llvm-builder-define-global(back-end, self-init-function.llvm-global-name,
                                back-end.llvm-builder-function);
   cleanup
     back-end.llvm-builder-function := #f;
@@ -237,6 +266,10 @@ end method;
 
 define method library-description-glue-name (back-end :: <llvm-back-end>, ld)
   glue-name(back-end, library-description-emit-name(ld))
+end method;
+
+define method self-init-name (back-end :: <llvm-back-end>, ld)
+  concatenate(library-description-glue-name(back-end, ld), "_X")
 end method;
 
 define method cr-init-name (back-end :: <llvm-back-end>, ld, cr-name)
