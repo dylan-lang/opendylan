@@ -50,7 +50,7 @@ define function macro-aux-rule-match-error (f*, name, set)
   note(<macro-aux-rule-match-error>,
        source-location: spanning(f*),
        macro-name: name,
-       rule-set: set);
+       rule-set: rule-set-name(set));
 end function;
 
 //// Body/list destructuring.

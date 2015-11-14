@@ -59,9 +59,8 @@ define method generate-match-failure
     (exp, set :: <aux-rewrite-rule-set>, rules)
   let exp-name = expander-name(exp);
   let name = if (exp-name) as(<symbol>, exp-name) else #"macro-case" end;
-  let set-name = rule-set-name(set);
   #{ macro-aux-rule-match-error
-       (_f*_, dylan-variable-name(?name), ?set-name); }
+       (_f*_, dylan-variable-name(?name), ?set); }
 end method;
 
 define method generate-match-failure
