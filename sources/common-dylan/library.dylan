@@ -95,6 +95,8 @@ define module common-extensions
          byte-storage-address,
          byte-storage-offset-address,
          integer-length,
+         <float-classification>,
+         classify-float,
          decode-float,
          scale-float,
          float-radix,

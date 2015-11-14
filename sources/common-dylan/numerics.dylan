@@ -24,6 +24,13 @@ end method;
 
 /// Floating point
 
+define constant <float-classification>
+  = one-of(#"nan", #"infinite", #"zero", #"subnormal", #"normal");
+
+define generic classify-float
+    (float :: <float>)
+ => (classification :: <float-classification>);
+
 define generic decode-float
     (float :: <float>)
  => (significand :: <float>, exponent :: <integer>, sign :: <float>);
@@ -65,6 +72,31 @@ define method %float-exponent
     = %logand(u%shift-right(decoded, $ieee-754-single-float-digits - 1), #xFF);
   as(<integer>, raw-exponent) - ($ieee-754-single-float-exponent-bias - 1)
 end method;
+
+define method classify-float
+    (float :: <single-float>)
+ => (classification :: <float-classification>)
+  let decoded :: <machine-word> = decode-single-float(float);
+  let significand-bits :: <machine-word> = %logand(decoded, #x7FFFFF);
+
+  let exponent = %float-exponent(float);
+  case
+    exponent < $minimum-single-float-exponent =>
+      if (zero?(significand-bits))
+        #"zero"
+      else
+        #"subnormal"
+      end if;
+    exponent > $maximum-single-float-exponent =>
+      if (zero?(significand-bits))
+        #"infinite"
+      else
+        #"nan"
+      end if;
+    otherwise =>
+      #"normal"
+  end case
+end;
 
 define method decode-float
     (float :: <single-float>)
@@ -185,6 +217,56 @@ define method %float-exponent
       end if;
   as(<integer>, raw-exponent) - ($ieee-754-double-float-exponent-bias - 1);
 end method;
+
+define method classify-float
+    (float :: <double-float>)
+ => (classification :: <float-classification>)
+  let exponent = %float-exponent(float);
+  let (decoded-low :: <machine-word>, decoded-high :: <machine-word>)
+    = decode-double-float(float);
+
+  if ($machine-word-size = 32)
+    let significand-high-bits :: <machine-word>
+      = %logand(decoded-high, #xFFFFF);
+
+    case
+      exponent < $minimum-double-float-exponent =>
+        if (zero?(significand-high-bits) & zero?(decoded-low))
+          #"zero"
+        else
+          #"subnormal"
+        end if;
+      exponent > $maximum-double-float-exponent =>
+        if (zero?(significand-high-bits))
+          #"infinite"
+        else
+          #"nan"
+        end if;
+      otherwise =>
+        #"normal"
+    end case
+  else
+    let significand-bits :: <machine-word>
+      = %logand(decoded-low,
+                \%-(%shift-left(1, $ieee-754-double-float-digits - 1), 1));
+    case
+      exponent < $minimum-double-float-exponent =>
+        if (zero?(significand-bits))
+          #"zero"
+        else
+          #"subnormal"
+        end if;
+      exponent > $maximum-double-float-exponent =>
+        if (zero?(significand-bits))
+          #"infinite"
+        else
+          #"nan"
+        end if;
+      otherwise =>
+        #"normal"
+    end case
+  end if
+end;
 
 define method decode-float
     (float :: <double-float>)

@@ -98,6 +98,9 @@ Common Dylan
   * ``asin``, ``acos``, ``atan``
   * ``sinh``, ``cosh``, ``tanh``
   * ``asinh``, ``acosh``, ``atanh``
+* The ``common-dylan`` library now provides a ``classify-float``
+  method which will return if the given float is ``#"normal"``,
+  ``#"zero"``, ``#"infinite"``, ``#"nan"``, or ``#"subnormal"``.
 
 Compiler
 ========

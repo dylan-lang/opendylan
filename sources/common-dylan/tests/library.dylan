@@ -7,6 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library common-dylan-test-suite
+  use dylan;
   use common-dylan;
   use testworks;
   use testworks-specs;
@@ -17,6 +18,8 @@ end library common-dylan-test-suite;
 
 define module common-dylan-test-suite
   use dylan;
+  use dylan-extensions,
+    import: { encode-single-float, encode-double-float };
   use common-extensions;
   use streams-protocol;
   use locators-protocol;

@@ -959,3 +959,37 @@ define common-extensions function-test scale-float ()
               as(<double-float>, -float-radix(1.0d0)),
               scale-float(-1.0d0, 1));
 end function-test scale-float;
+
+define inline function classify-single-float (bits)
+ => (classification :: <float-classification>)
+  classify-float(encode-single-float(as(<machine-word>, bits)))
+end function classify-single-float;
+
+define inline function classify-double-float (low-bits, high-bits)
+ => (classification :: <float-classification>)
+  classify-float(encode-double-float(as(<machine-word>, low-bits),
+                                     as(<machine-word>, high-bits)))
+end function classify-double-float;
+
+// These values came from http://www.astro.umass.edu/~weinberg/a732/notes07_01.pdf
+define common-extensions function-test classify-float ()
+  assert-equal(classify-single-float(#x00000000), #"zero");
+  assert-equal(classify-single-float(#x80000000), #"zero");
+  assert-equal(classify-single-float(#x7f800000), #"infinite");
+  assert-equal(classify-single-float(#xff800000), #"infinite");
+  assert-equal(classify-single-float(#x00000001), #"subnormal");
+  assert-equal(classify-single-float(#x007fffff), #"subnormal");
+  assert-equal(classify-single-float(#x00800000), #"normal");
+  assert-equal(classify-single-float(#x7f7fffff), #"normal");
+  assert-equal(classify-single-float(#x7fc00000), #"nan");
+
+  assert-equal(classify-double-float(#x00000000, #x00000000), #"zero");
+  assert-equal(classify-double-float(#x00000000, #x80000000), #"zero");
+  assert-equal(classify-double-float(#x00000000, #x7ff00000), #"infinite");
+  assert-equal(classify-double-float(#x00000000, #xfff00000), #"infinite");
+  assert-equal(classify-double-float(#x00000001, #x00000000), #"subnormal");
+  assert-equal(classify-double-float(#xffffffff, #x000fffff), #"subnormal");
+  assert-equal(classify-double-float(#x00000000, #x00100000), #"normal");
+  assert-equal(classify-double-float(#xffffffff, #x7fefffff), #"normal");
+  assert-equal(classify-double-float(#x00000000, #x7ff80000), #"nan");
+end function-test classify-float;
