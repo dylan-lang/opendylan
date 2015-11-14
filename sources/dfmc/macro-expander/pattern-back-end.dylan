@@ -25,11 +25,11 @@ end serious-program-warning;
 
 define serious-program-warning
     <macro-aux-rule-match-error> (<macro-match-error>)
-  slot condition-rule-set,
-    required-init-keyword: rule-set:;
+  slot condition-rule-set-name,
+    required-init-keyword: rule-set-name:;
   format-string
     "Invalid syntax for %s in %s macro call.";
-  format-arguments rule-set, macro-name;
+  format-arguments rule-set-name, macro-name;
 end serious-program-warning;
 
 define serious-program-warning
@@ -50,7 +50,7 @@ define function macro-aux-rule-match-error (f*, name, set)
   note(<macro-aux-rule-match-error>,
        source-location: spanning(f*),
        macro-name: name,
-       rule-set: rule-set-name(set));
+       rule-set-name: rule-set-name(set));
 end function;
 
 //// Body/list destructuring.
