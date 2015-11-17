@@ -130,23 +130,23 @@ define method window-note-mode-entered
   let frame = sheet-frame(window);
   when (frame)
     command-enabled?(evaluate-definition, frame)   := #f;
-    command-enabled?(evaluate-region, frame)           := #f;
-    command-enabled?(evaluate-buffer, frame)           := #f;
-    command-enabled?(macroexpand-region, frame)           := #f;
-    command-enabled?(parse-project, frame)           := #f;
-    command-enabled?(compile-project, frame)           := #f;
+    command-enabled?(evaluate-region, frame)       := #f;
+    command-enabled?(evaluate-buffer, frame)       := #f;
+    command-enabled?(macroexpand-region, frame)    := #f;
+    command-enabled?(parse-project, frame)         := #f;
+    command-enabled?(compile-project, frame)       := #f;
     command-enabled?(clean-compile-project, frame) := #f;
-    command-enabled?(build-project, frame)           := #f;
+    command-enabled?(build-project, frame)         := #f;
     command-enabled?(clean-build-project, frame)   := #f;
-    command-enabled?(link-project, frame)           := #f;
-    command-enabled?(compile-file, frame)           := #f;
-    command-enabled?(load-file, frame)                   := #f;
-    command-enabled?(describe-object, frame)           := #f;
-    command-enabled?(browse-object, frame)           := #f;
-    command-enabled?(browse-class, frame)           := #f;
-    command-enabled?(browse-function, frame)           := #f;
-    command-enabled?(show-arglist, frame)           := #f;
-    command-enabled?(show-documentation, frame)           := #f
+    command-enabled?(link-project, frame)          := #f;
+    command-enabled?(compile-file, frame)          := #f;
+    command-enabled?(load-file, frame)             := #f;
+    command-enabled?(describe-object, frame)       := #f;
+    command-enabled?(browse-object, frame)         := #f;
+    command-enabled?(browse-class, frame)          := #f;
+    command-enabled?(browse-function, frame)       := #f;
+    command-enabled?(show-arglist, frame)          := #f;
+    command-enabled?(show-documentation, frame)    := #f
   end
 end method window-note-mode-entered;
 
@@ -157,23 +157,23 @@ define method window-note-mode-entered
   let frame = sheet-frame(window);
   when (frame)
     command-enabled?(evaluate-definition, frame)   := #t;
-    command-enabled?(evaluate-region, frame)           := #t;
-    command-enabled?(evaluate-buffer, frame)           := #t;
-    command-enabled?(macroexpand-region, frame)           := #t;
-    command-enabled?(parse-project, frame)           := #t;
-    command-enabled?(compile-project, frame)           := #t;
+    command-enabled?(evaluate-region, frame)       := #t;
+    command-enabled?(evaluate-buffer, frame)       := #t;
+    command-enabled?(macroexpand-region, frame)    := #t;
+    command-enabled?(parse-project, frame)         := #t;
+    command-enabled?(compile-project, frame)       := #t;
     command-enabled?(clean-compile-project, frame) := #t;
-    command-enabled?(build-project, frame)           := #t;
+    command-enabled?(build-project, frame)         := #t;
     command-enabled?(clean-build-project, frame)   := #t;
-    command-enabled?(link-project, frame)           := #t;
-    command-enabled?(compile-file, frame)           := #t;
-    command-enabled?(load-file, frame)                   := #t;
-    command-enabled?(describe-object, frame)           := #t;
-    command-enabled?(browse-object, frame)           := #t;
-    command-enabled?(browse-class, frame)           := #t;
-    command-enabled?(browse-function, frame)           := #t;
-    command-enabled?(show-arglist, frame)           := #t;
-    command-enabled?(show-documentation, frame)           := #t
+    command-enabled?(link-project, frame)          := #t;
+    command-enabled?(compile-file, frame)          := #t;
+    command-enabled?(load-file, frame)             := #t;
+    command-enabled?(describe-object, frame)       := #t;
+    command-enabled?(browse-object, frame)         := #t;
+    command-enabled?(browse-class, frame)          := #t;
+    command-enabled?(browse-function, frame)       := #t;
+    command-enabled?(show-arglist, frame)          := #t;
+    command-enabled?(show-documentation, frame)    := #t
   end
 end method window-note-mode-entered;
 
