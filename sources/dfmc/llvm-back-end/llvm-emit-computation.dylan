@@ -952,6 +952,7 @@ define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <repeated-slot-value>) => ()
   let instance = emit-reference(back-end, m, c.computation-instance);
   let desc = c.computation-slot-descriptor;
+  let alignment = repeated-slot-type-alignment(back-end, desc.^slot-type);
   let instance-type = desc.^slot-owner;
 
   let instance-struct
@@ -970,7 +971,7 @@ define method emit-computation
     = ins--gep-inbounds(back-end, instance-struct, 0,
                         i32(dylan-value(#"$number-header-words") + offset),
                         index);
-  let result = ins--load(back-end, slot-ptr);
+  let result = ins--load(back-end, slot-ptr, alignment: alignment);
 
   let iWord-type = back-end.%type-table["iWord"];
   let type = result.llvm-value-type;
@@ -988,6 +989,7 @@ define method emit-computation
   let new-value = emit-reference(back-end, m, c.computation-new-value);
   let instance = emit-reference(back-end, m, c.computation-instance);
   let desc = c.computation-slot-descriptor;
+  let alignment = repeated-slot-type-alignment(back-end, desc.^slot-type);
   let instance-type = desc.^slot-owner;
 
   let instance-struct
@@ -1008,13 +1010,13 @@ define method emit-computation
                         index);
   let iWord-type = back-end.%type-table["iWord"];
   let type = llvm-repeated-type(back-end, desc.^slot-type);
-  if ((instance?(type, <llvm-integer-type>)
-         & type.llvm-integer-type-width < iWord-type.llvm-integer-type-width))
+  if (instance?(type, <llvm-integer-type>)
+        & type.llvm-integer-type-width < iWord-type.llvm-integer-type-width)
     let trunc = ins--trunc(back-end, new-value, type);
-    ins--store(back-end, trunc, slot-ptr);
+    ins--store(back-end, trunc, slot-ptr, alignment: alignment);
   else
     llvm-constrain-type(new-value.llvm-value-type, type);
-    ins--store(back-end, new-value, slot-ptr);
+    ins--store(back-end, new-value, slot-ptr, alignment: alignment);
   end if;
   computation-result(back-end, c, new-value);
 end method;
@@ -1029,6 +1031,34 @@ define method emit-computation
     ins--store(back-end, emit-reference(back-end, m, argument), ptr,
                alignment: word-size);
   end for;
+end method;
+
+define method repeated-slot-type-alignment
+    (back-end :: <llvm-back-end>, type :: <&type>)
+ => (alignment :: <integer>)
+  let word-size = back-end-word-size(back-end);
+  select (type)
+    dylan-value(#"<byte-character>") =>
+      1;
+    dylan-value(#"<single-float>") =>
+      min(word-size, raw-type-alignment(dylan-value(#"<raw-single-float>")));
+    dylan-value(#"<double-float>") =>
+      min(word-size, raw-type-alignment(dylan-value(#"<raw-double-float>")));
+    otherwise =>
+      word-size;
+  end select
+end method;
+
+define method repeated-slot-type-alignment
+    (back-end :: <llvm-back-end>, type :: <&raw-type>)
+ => (alignment :: <integer>)
+  min(back-end-word-size(back-end), raw-type-alignment(type))
+end method;
+
+define method repeated-slot-type-alignment
+    (back-end :: <llvm-back-end>, type :: <&limited-integer>)
+ => (alignment :: <integer>)
+  min(back-end-word-size(back-end), repeated-representation-size(type))
 end method;
 
 define method emit-computation
