@@ -126,6 +126,9 @@ External Libraries and Tools
 `Objective C Bridge </documentation/objective-c/>`_ [`pdf </documentation/objective-c/ObjectiveCBridgeUserGuide.pdf>`__] [`epub </documentation/objective-c/ObjectiveCBridgeUserGuide.epub>`__]
     Provides a bridge between Objective C and Dylan, allowing integration with Objective C libraries.
 
+`Statistics </documentation/statistics/>`_ [`pdf </documentation/statistics/StatisticsUserGuide.pdf>`__] [`epub </documentation/statistics/StatisticsUserGuide.epub>`__]
+    A collection of libraries for performing statistical analysis.
+
 `Testworks </documentation/testworks/>`_ [`pdf </documentation/testworks/TestworksUserGuide.pdf>`__] [`epub </documentation/testworks/TestworksUserGuide.epub>`__]
     Testworks is Dylan's unit testing framework.
 
