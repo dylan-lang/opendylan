@@ -521,9 +521,11 @@ define function lid-build-settings (source-loc, properties)
   //
   let raw-base-address = element(properties, #"base-address", default: #f);
   if (raw-base-address)
-    let (base-address, extra?) = string-to-machine-word(first(raw-base-address));
-    if (extra?)
-      user-warning("Invalid base-address: \"%s\"", first(raw-base-address));
+    let base-address-string = first(raw-base-address);
+    let (base-address, extra-index)
+      = string-to-machine-word(base-address-string);
+    if (extra-index < base-address-string.size)
+      user-warning("Invalid base-address: \"%s\"", base-address-string);
     end if;
     add-setting(base-address: base-address)
   end;
