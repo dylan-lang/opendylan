@@ -539,7 +539,7 @@ define constant $sectionizer-debug-message :: <function>
     = if ($debug-sectionizer?) debug-message else ignore end;
 */
 
-// First break the source container into sections, then fill the
+// First break the source container into sections, then fill
 // the buffer with section nodes containing those sections
 //--- Note that we just ignore the issue of long comments (/* ... */)
 //---*** 'sectionize-buffer' methods should maintain identity of sections so
