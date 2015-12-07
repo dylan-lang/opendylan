@@ -111,6 +111,8 @@ Common Dylan
 * The ``simple-profiling`` module now exports ``start-profiling`` and
   ``stop-profiling`` rather than requiring that users directly invoke
   ``start-profiling-type`` and ``stop-profiling-type`` multiple times.
+* The ``machine-words`` module now knows how to count the bits set
+  in a machine word via ``%count-ones``.
 
 Compiler
 ========
