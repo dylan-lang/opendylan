@@ -124,8 +124,12 @@ define function compile-to-method (string :: <string>) => (m :: <&method>)
                                compiler: compile-library-until-optimized);
     let cr* = library-description-compilation-records(lib);
     // One for lib+mod defn & one for the source template.
-    debug-assert(size(cr*) == 2, "Expected exactly 2 <compilation-record>s: %=", cr*);
-    let method-definition :: <method-definition> = last(compilation-record-top-level-forms(cr*[1]));
+    assert(size(cr*) == 2, "Expected exactly 2 <compilation-record>s: %=", cr*);
+    let top-level-forms = compilation-record-top-level-forms(cr*[1]);
+    assert(~empty?(top-level-forms),
+           "Expected at least one top level form: %= from %=",
+           top-level-forms, string);
+    let method-definition :: <method-definition> = last(top-level-forms);
     form-model(method-definition)
   end
 end;
