@@ -304,19 +304,19 @@ end;
 
 define typist-inference-test typist-primops
   // Can you figure out what the primops in <primitive-call>s do?
-  "define method typist-test () primitive-word-size(); "
+  "define method typist-test () primitive-word-size(); end;"
     TYPE: fixed: vector(raw-te(#"<raw-integer>")),
           rest:  #f;
-  "define method typist-test () primitive-allocate(integer-as-raw(1)); "
+  "define method typist-test () primitive-allocate(integer-as-raw(1)); end;"
     TYPE: fixed: vector(raw-te(#"<raw-pointer>")),
           rest:  #f;
-  "define method typist-test () primitive-machine-word-add(integer-as-raw(1), integer-as-raw(2)); "
+  "define method typist-test () primitive-machine-word-add(integer-as-raw(1), integer-as-raw(2)); end;"
     TYPE: fixed: vector(raw-te(#"<raw-machine-word>")),
           rest:  #f;
-  "define method typist-test () primitive-machine-word-equals?(integer-as-raw(1), integer-as-raw(1)); "
+  "define method typist-test () primitive-machine-word-equals?(integer-as-raw(1), integer-as-raw(1)); end;"
     TYPE: fixed: vector(raw-te(#"<raw-boolean>")),
           rest:  #f;
-  "define method typist-test () primitive-object-class(integer-as-raw(1)); "
+  "define method typist-test () primitive-object-class(integer-as-raw(1)); end;"
     TYPE: fixed: vector(class-te(#"<class>")),
           rest:  #f;
 end;
