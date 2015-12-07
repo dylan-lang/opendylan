@@ -228,6 +228,7 @@ end macro;
 
 define counter machine-word-count-low-zeros;
 define counter machine-word-count-high-zeros;
+define counter machine-word-count-ones;
 
 //////////////////////////////////////////////////////////////////////////////
 // Arithmetic

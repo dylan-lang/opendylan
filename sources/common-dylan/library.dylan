@@ -251,6 +251,7 @@ define module machine-words
          %logbit?,
          %count-low-zeros,
          %count-high-zeros,
+         %count-ones,
          \%+,
          \%-,
          \%*,

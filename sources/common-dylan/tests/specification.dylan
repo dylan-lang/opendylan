@@ -249,6 +249,7 @@ define module-spec machine-words ()
   function %logbit? (<integer>, <object>) => (<boolean>);
   function %count-low-zeros (<object>) => (<integer>);
   function %count-high-zeros (<object>) => (<integer>);
+  function %count-ones (<object>) => (<integer>);
   function \%+ (<object>, <object>) => (<machine-word>, <boolean>);
   function \%- (<object>, <object>) => (<machine-word>, <boolean>);
   function \%* (<object>, <object>) => (<machine-word>, <machine-word>, <boolean>);

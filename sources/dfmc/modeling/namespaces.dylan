@@ -2267,7 +2267,8 @@ define &module machine-word-lowlevel
          machine-word-lognot,
          machine-word-logbit?,
          machine-word-count-low-zeros,
-         machine-word-count-high-zeros;
+         machine-word-count-high-zeros,
+         machine-word-count-ones;
   // arithmetic
   create machine-word-add-with-overflow,
          machine-word-subtract-with-overflow,

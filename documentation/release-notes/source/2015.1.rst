@@ -101,6 +101,8 @@ Common Dylan
 * The ``common-dylan`` library now provides a ``classify-float``
   method which will return if the given float is ``#"normal"``,
   ``#"zero"``, ``#"infinite"``, ``#"nan"``, or ``#"subnormal"``.
+* The ``machine-words`` module now knows how to count the bits set
+  in a machine word via ``%count-ones``.
 
 Compiler
 ========
