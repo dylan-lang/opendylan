@@ -1904,6 +1904,7 @@ define &primitive-descriptor primitive-machine-word-logbit-clear, emitter: op--l
 
 define &primitive-descriptor primitive-machine-word-count-low-zeros;
 define &primitive-descriptor primitive-machine-word-count-high-zeros;
+define &primitive-descriptor primitive-machine-word-count-ones;
 
 define &primitive-descriptor primitive-machine-word-add, emitter: ins--add;
 define &primitive-descriptor primitive-machine-word-add-with-overflow, emitter: op--do-with-overflow(ins--addv);

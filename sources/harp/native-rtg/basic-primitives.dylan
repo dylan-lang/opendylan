@@ -440,6 +440,43 @@ define runtime-primitive machine-word-count-high-zeros
 end runtime-primitive;
 
 
+define byte runtime-literal ones-table-ref = "ones-table",
+   data: #[0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4];
+
+define runtime-primitive machine-word-count-ones
+/*
+  On entry:
+    X  - a raw machine word
+  On exit:
+    A raw machine word containing the number bits set in x
+*/
+
+  arg0 x;
+  result result;
+  nreg count, word, nibble;
+  tag non-zero, loop-start;
+
+
+  ins--bne(be, non-zero, x, 0); // handle the zero case early
+  ins--move(be, result, 0);
+  ins--rts-and-drop(be, 0);
+
+  ins--tag(be, non-zero);
+  ins--move(be, result, 0);
+  ins--move(be, word, x);
+
+  // Check each nibble, adding the value from the lookup table
+  // to the result.
+  ins--tag(be, loop-start);
+  ins--and(be, nibble, word, #x0f);
+  ins--ldb(be, count, ones-table-ref, nibble);
+  ins--add(be, result, result, count);
+  ins--lsr(be, word, word, 4);
+  ins--bne(be, loop-start, word, 0);
+
+  ins--rts-and-drop(be, 0);
+end runtime-primitive;
+
 
 define runtime-primitive type-check
 /*

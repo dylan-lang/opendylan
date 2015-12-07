@@ -117,6 +117,7 @@ define generic emit-primitive-call
 // define &primitive-descriptor primitive-machine-word-bit-field-deposit;
 // define &primitive-descriptor primitive-machine-word-count-low-zeros;
 // define &primitive-descriptor primitive-machine-word-count-high-zeros;
+// define &primitive-descriptor primitive-machine-word-count-ones;
 // define &primitive-descriptor primitive-machine-word-add;
 // define &primitive-descriptor primitive-machine-word-add-with-overflow;
 // define &primitive-descriptor primitive-machine-word-subtract;

@@ -1587,9 +1587,11 @@ extern DMINT primitive_unwrap_abstract_integer(dylan_value);
 #ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
 #define primitive_machine_word_count_low_zeros(x) __builtin_ctzl(x)
 #define primitive_machine_word_count_high_zeros(x) __builtin_clzl(x)
+#define primitive_machine_word_count_ones(x) __builtin_popcountl((DUMINT)x)
 #else
 extern DMINT primitive_machine_word_count_low_zeros(DMINT);
 extern DMINT primitive_machine_word_count_high_zeros(DMINT);
+extern DMINT primitive_machine_word_count_ones(DMINT);
 #endif
 
 #define primitive_machine_word_add(x, y)                  ((x) + (y))

@@ -177,6 +177,8 @@ define &simple-machine-word-primitive primitive-machine-word-count-low-zeros
     (x :: <raw-machine-word>) => (result :: <raw-machine-word>);
 define &simple-machine-word-primitive primitive-machine-word-count-high-zeros
     (x :: <raw-machine-word>) => (result :: <raw-machine-word>);
+define &simple-machine-word-primitive primitive-machine-word-count-ones
+    (x :: <raw-machine-word>) => (result :: <raw-machine-word>);
 
 define &machine-word-primitive primitive-machine-word-add
     (x :: <raw-machine-word>, y :: <raw-machine-word>) => (sum :: <raw-machine-word>)
