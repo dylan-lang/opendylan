@@ -322,6 +322,11 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
   ins--call-intrinsic(be, "llvm.ctlz", vector(x, $llvm-false))
 end;
 
+define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor primitive-machine-word-count-ones
+    (x :: <raw-machine-word>) => (result :: <raw-machine-word>);
+  ins--call-intrinsic(be, "llvm.ctpop", vector(x))
+end;
+
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-add
     (x :: <raw-machine-word>, y :: <raw-machine-word>)
  => (sum :: <raw-machine-word>);

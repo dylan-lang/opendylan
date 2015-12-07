@@ -309,6 +309,7 @@ define &module dylan-primitives
     primitive-machine-word-bit-field-deposit,
     primitive-machine-word-count-low-zeros,
     primitive-machine-word-count-high-zeros,
+    primitive-machine-word-count-ones,
     primitive-machine-word-add,
     primitive-machine-word-add-with-overflow,
     primitive-machine-word-subtract,
