@@ -7,8 +7,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //------------------------------------------------------------
 // As of version 1, the gc has a limitation in that objects
-// referenced only by a week table are not collected if the
-// week table is referenced during a gc cycle. What this means
+// referenced only by a weak table are not collected if the
+// weak table is referenced during a gc cycle. What this means
 // for the ODBC-SQL library is that finalize methods are not 
 // called and ODBC resources are not deallocated resulting in
 // an application that runs progressively slower and eventually

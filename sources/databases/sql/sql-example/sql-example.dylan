@@ -41,7 +41,7 @@ end function;
 
 
 //----------  Example 2  ----------
-// This examples constructs the employee hierarchy by quering for employees
+// This examples constructs the employee hierarchy by querying for employees
 // who do not report to anyone (the reportsTo field is null) and, or each 
 // of these 'boss' objects created, query for the subordinates recursively.
 // For each employee record retrieved from the database, the liaison function
@@ -49,7 +49,7 @@ end function;
 // in the record. The coercion policy is the default-coercion policy since it
 // is not specified and the result-set-policy is specified as scrollable.
 // The method used by this example to construct the employee hierarchy is not 
-// efficient but it does demostrate multiple queries
+// efficient but it does demonstrate multiple queries
 // - Default coercion: the 'C objects' are converted to the appropriate
 //   Dylan object. For this particular query, instances of <C-String> 
 //   (lastName and firstName) are converted to <byte-string> and instances of

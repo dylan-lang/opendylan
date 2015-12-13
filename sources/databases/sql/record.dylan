@@ -30,6 +30,6 @@ define generic is-null?(record :: <record>, key :: <integer>)
 
 define constant $no-indicator = #"no-indicator";
 
-// Primarly for documentation.
+// Primarily for documentation.
 define constant <indicator-policy> 
   = type-union(singleton($no-indicator), <sequence>, <object>);
