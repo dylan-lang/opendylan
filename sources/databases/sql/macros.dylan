@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define generic default-dbms() 
+define generic default-dbms()
  => (dbms :: <dbms>);
 
 define thread variable *default-dbms* :: false-or(<dbms>) = #f;
@@ -48,12 +48,12 @@ end method;
 define macro with-connection
   { with-connection(?connection:expression) ?body:* end }
     => { // Sanity check
-	 if (instance?(?connection, <connection>) = #f)
-	   error(make(<invalid-argument>));
-	 end if;
-	 dynamic-bind (*default-connection* = ?connection)
-	   with-dbms(*default-connection*.dbms)
-	     ?body
+         if (instance?(?connection, <connection>) = #f)
+           error(make(<invalid-argument>));
+         end if;
+         dynamic-bind (*default-connection* = ?connection)
+           with-dbms(*default-connection*.dbms)
+             ?body
            end with-dbms;
          end dynamic-bind; }
 end macro;
@@ -62,15 +62,15 @@ end macro;
 define macro with-database
   { with-database(?database:expression, ?user:expression) ?body:* end }
     => { let connection = #f;
-	 block ()
-	   connection := connect(?database, ?user);
-  	   with-connection(connection)
-	     ?body
+         block ()
+           connection := connect(?database, ?user);
+             with-connection(connection)
+             ?body
            end with-connection;
-         cleanup 
-	   if (connection ~= #f)
- 	     disconnect(connection);
-	   end if;
+         cleanup
+           if (connection ~= #f)
+              disconnect(connection);
+           end if;
        end block; }
 end macro;
 

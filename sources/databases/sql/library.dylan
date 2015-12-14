@@ -11,12 +11,12 @@ define library sql
   use generic-arithmetic;
   use c-ffi;
   use io;
-	
+
   export sql;
 end library;
 
 define module result-set
-  create 
+  create
     <database-collection>,
         // Open abstract class
 
@@ -47,8 +47,8 @@ define module result-set
         // Liaison signature: fn(record :: <record>) => (obj :: <object>)
 
     liaison-setter;
-	
-  create 
+
+  create
     <result-set-policy>,
         // Open concrete class
         // Parents: <object>
@@ -91,7 +91,7 @@ define module result-set
         // Indicates if record with key index is available without blocking.
         // Useful if result-set is retrieving records asynchronously.
 
-  create 
+  create
     <record>,
         // Open abstract class
         // Parents: <database-collection>
@@ -139,7 +139,7 @@ define module result-set
 
     $no-coercion,
         // Constant Module Variable: #"no-coercion"
-    
+
     convert-value,
         // GF: convert-value coercion-policy value key => converted-value
         //       coercion-policy  Instance of <coercion-policy>.
@@ -163,7 +163,7 @@ define module result-set
     <indicator-policy>;
         // Constant module variable
         // type: type-union(singleton($no-indicator), <object>)
-end module;	
+end module;
 
 define module sql
   use result-set, import: all, export: all;
@@ -175,7 +175,7 @@ define module sql
     dbms-name,
 
     dbms-version,
- 
+
     \with-dbms,
         // Statement macro: with-dbms(dbms) body end with-dbms;
         // Establishes dbms as the default dbms for the execution of body.
@@ -226,7 +226,7 @@ define module sql
         //       database    Instance of <database>.
         //       user        Instance of <user>.
         //       connection  Instance of <connection>.
-        // Prompts the user for the information necessary to connect to a 
+        // Prompts the user for the information necessary to connect to a
         // given database and establishes a connection to this database.
         // Use connect-with-prompt? to determine if this feature is supported.
 
@@ -264,7 +264,7 @@ define module sql
         //       connection            Instance of <connection>.
         //       terminate-statements  Instance of <boolean>.
         // Terminates the given connection. If any SQL statements are executing
-        // asynchronously or a SQL-select statement has results pending, a 
+        // asynchronously or a SQL-select statement has results pending, a
         // condition will be signaled unless terminate-statements is #t.
 
 
@@ -272,19 +272,19 @@ define module sql
     default-dbms,
         // GF: default-dbms => dbms
         //       dbms  Instance of <dbms>.
-        // Returns the dbms established by the with-dbms macro. Signals 
+        // Returns the dbms established by the with-dbms macro. Signals
         // <dbms-not-specified> if no default dbms has be established.
 
     default-connection,
         // GF: default-connection => connection
         //       connection  Instance of <connection>.
-        // Returns the connection established by the with-database or 
+        // Returns the connection established by the with-database or
         // with-connection macro. Signals <connection-not-specified> if no
         // default connection has not been established.
 
-    *all-connections*, 
+    *all-connections*,
         // For use in implementing DBMS-specific implementation of sql.
-        // Clients of sql or any dbms-specific implementation of 
+        // Clients of sql or any dbms-specific implementation of
         // sql should not call this method.
 
     *all-connections-lock*,
@@ -303,13 +303,13 @@ define module sql
         // within the dynamic scope of body. The connection is terminated
         // when execution leaves the scope of body. The result of this macro
         // is the last expression in body executed.
- 
+
     \sql,
         // Statement macro: NOT IMPLEMENTED!!
 
     make-dbms-specific;
         // For use in implementing DBMS-specific implementation of sql.
-        // Clients of sql or any dbms-specific implementation of 
+        // Clients of sql or any dbms-specific implementation of
         // sql should not call this method.
 
 
@@ -480,16 +480,16 @@ define module sql
     domain,
     indexes,
     nullable?,
-    unique-index?, 
+    unique-index?,
 
-    indexed-table, 
-    indexed-table-setter, 
-    fields, 
+    indexed-table,
+    indexed-table-setter,
+    fields,
     fields-setter,
 
-    connection, 
+    connection,
     connection-setter,
-    database-object-name, 
+    database-object-name,
     database-object-name-setter;
 
   create
@@ -632,7 +632,7 @@ define module sql
     <warning-string-data-right-truncation>,
     <with-check-option-violation>;
 
-  create 
+  create
     <transaction>,
     transaction-mode,
     transaction-mode-setter,
@@ -673,7 +673,7 @@ define module result-set-implementation
 
   use sql;
   use result-set;
-end module; 
+end module;
 
 define module sql-implementation
   use dylan;

@@ -16,11 +16,11 @@ end class;
 define method catalog-generator(result-set :: <odbc-result-set>)
   let stmt :: <odbc-sql-statement> = result-set.%sql-statement;
   let return-code = nice-SQLTables(stmt.%statement-handle,
-			           $sql-all-catalogs,  "", "", "");
+                                   $sql-all-catalogs,  "", "", "");
   assert-odbc-goodness(return-code,
                        stmt.connection.dbms.%environment-handle,
-		       stmt.connection.%connection-handle,
-		       stmt.%statement-handle);			           
+                       stmt.connection.%connection-handle,
+                       stmt.%statement-handle);
 end method;
 
 /* Note:  these liaison functions call each other until they finally
@@ -38,7 +38,7 @@ its liaison function must be created to pass in the particular
 instance of the schema to the table creation function (table-liaison).
 Its turtles all the way down. */
 
-define method catalog-liaison(record :: <odbc-record>) 
+define method catalog-liaison(record :: <odbc-record>)
  => (catalog :: <odbc-catalog>)
   let catalog = make(<odbc-catalog>,
                      filtered-source: #"self",
@@ -57,33 +57,33 @@ define method catalog-from-name(a-connection :: <odbc-connection>,
  => (catalog :: <odbc-catalog>)
   let stmt =  make(<odbc-sql-statement>, connection: a-connection, text: "");
   let return-code = SQLSetStmtOption(stmt.%statement-handle,
-                                    $SQL-ROWSET-SIZE, 
+                                    $SQL-ROWSET-SIZE,
                                     a-connection.dbms.%dbms-rowset-size);
   // rowsets aren't working  $introspection-rowset-size);
 
   assert-odbc-goodness(return-code,
-		       stmt.connection.dbms.%environment-handle,
-		       stmt.connection.%connection-handle,
-		       stmt.%statement-handle);
+                       stmt.connection.dbms.%environment-handle,
+                       stmt.connection.%connection-handle,
+                       stmt.%statement-handle);
 
   let return-code = nice-SQLTables(stmt.%statement-handle, catalog-name,  "", "", "");
   assert-odbc-goodness(return-code,
                        stmt.connection.dbms.%environment-handle,
-		       stmt.connection.%connection-handle,
-		       stmt.%statement-handle);	
+                       stmt.connection.%connection-handle,
+                       stmt.%statement-handle);
 
   // The column count returned by SQLNumResultCols is ODBC's way
   // of checking if the executed sql statement returns a result-set.
 
   let (return-code, column-count) = SQLNumResultCols(stmt.%statement-handle);
   assert-odbc-goodness(return-code,
-	               stmt.connection.dbms.%environment-handle,
-		       stmt.connection.%connection-handle,
-		       stmt.%statement-handle);
+                       stmt.connection.dbms.%environment-handle,
+                       stmt.connection.%connection-handle,
+                       stmt.%statement-handle);
 
   if (column-count = 0)
-    signal(make(<catalog-not-found>, catalog-name: catalog-name));		       
-  else    
+    signal(make(<catalog-not-found>, catalog-name: catalog-name));
+  else
     let catalog = make(<odbc-catalog>,
                        filtered-source: #"self",
                        connection: a-connection,
@@ -104,7 +104,7 @@ define method catalogs-assist(the-connection :: <odbc-connection>)
        connection: the-connection,
        rowset-size: the-connection.dbms.%dbms-rowset-size,
   // rowsets aren't working  $introspection-rowset-size,
-       result-set-policy: make(<result-set-policy>, 
+       result-set-policy: make(<result-set-policy>,
                                rowset-size: the-connection.dbms.%dbms-rowset-size),
        liaison: catalog-liaison);
 end method;
@@ -116,7 +116,7 @@ define class <odbc-schema> (<odbc-forward-only-result-set>, <schema>)
 end class;
 
 define method schema-generator(catalog :: <odbc-catalog>)
- => ()      
+ => ()
   let stmt = catalog.%sql-statement;
   /* MS SQL Server doesn't support search qualifier for tables unless a null
      pointer is passed. Of course, the ODBC documentation says a wild card and
@@ -128,12 +128,12 @@ define method schema-generator(catalog :: <odbc-catalog>)
                           ""
                         end if;
   let return-code = nice-SQLTables(stmt.%statement-handle,
-			           catalog.database-object-name,  $sql-all-schemas, 
+                                   catalog.database-object-name,  $sql-all-schemas,
                                    table-qualifier, #f);
   assert-odbc-goodness(return-code,
                        stmt.connection.dbms.%environment-handle,
-		       stmt.connection.%connection-handle,
-		       stmt.%statement-handle);	
+                       stmt.connection.%connection-handle,
+                       stmt.%statement-handle);
 end method;
 
 
@@ -166,8 +166,8 @@ define method schema-filter(result-set :: <odbc-result-set>,
   end if;
 end method;
 
-define method schema-liaison(record :: <odbc-record>, 
-                             catalog :: <odbc-catalog>) 
+define method schema-liaison(record :: <odbc-record>,
+                             catalog :: <odbc-catalog>)
  => (schema :: <odbc-schema>)
   let schema = make(<odbc-schema>,
                     name: record[1],
@@ -183,31 +183,31 @@ define method schema-from-name(a-connection :: <odbc-connection>,
                                catalog-name :: <string>,
                                schema-name :: <string>)
  => (schema :: <odbc-schema>)
-  let stmt = make(<odbc-sql-statement>, 
+  let stmt = make(<odbc-sql-statement>,
                   connection: a-connection, text: "");
   let return-code = SQLSetStmtOption(stmt.%statement-handle,
-                                     $SQL-ROWSET-SIZE, 
+                                     $SQL-ROWSET-SIZE,
                                      a-connection.dbms.%dbms-rowset-size);
   // rowsets aren't working  $introspection-rowset-size);
   assert-odbc-goodness(return-code,
-		       stmt.connection.dbms.%environment-handle,
-		       stmt.connection.%connection-handle,
-		       stmt.%statement-handle);
+                       stmt.connection.dbms.%environment-handle,
+                       stmt.connection.%connection-handle,
+                       stmt.%statement-handle);
 
   let return-code = nice-SQLTables(stmt.%statement-handle, catalog-name,
-			           schema-name, #f, #f);
+                                   schema-name, #f, #f);
   assert-odbc-goodness(return-code,
                        stmt.connection.dbms.%environment-handle,
-		       stmt.connection.%connection-handle,
-		       stmt.%statement-handle);	
+                       stmt.connection.%connection-handle,
+                       stmt.%statement-handle);
   let (return-code, column-count) = SQLNumResultCols(stmt.%statement-handle);
   assert-odbc-goodness(return-code,
-	               stmt.connection.dbms.%environment-handle,
-		       stmt.connection.%connection-handle,
-		       stmt.%statement-handle);
+                       stmt.connection.dbms.%environment-handle,
+                       stmt.connection.%connection-handle,
+                       stmt.%statement-handle);
 
   if (column-count = 0)
-    signal(make(<schema-not-found>, schema-name: schema-name));		       
+    signal(make(<schema-not-found>, schema-name: schema-name));
   else
     let catalog = catalog-from-name(a-connection, catalog-name);
     let schema = make(<odbc-schema>,
@@ -228,18 +228,18 @@ define method table-generator(schema :: <odbc-schema>, catalog :: <odbc-catalog>
  => ()
   let stmt = schema.%sql-statement;
   let return-code = nice-SQLTables(stmt.%statement-handle,
-			           catalog.database-object-name,  
-                                   schema.database-object-name, 
+                                   catalog.database-object-name,
+                                   schema.database-object-name,
                                    $sql-all-tables, #f);
   assert-odbc-goodness(return-code,
                        stmt.connection.dbms.%environment-handle,
-		       stmt.connection.%connection-handle,
-		       stmt.%statement-handle);			           
+                       stmt.connection.%connection-handle,
+                       stmt.%statement-handle);
 end method;
 
-define method table-liaison(record :: <odbc-record>, 
+define method table-liaison(record :: <odbc-record>,
                             catalog :: <odbc-catalog>,
-                            schema :: <odbc-schema>) 
+                            schema :: <odbc-schema>)
  => (table :: <odbc-table>)
   make(<odbc-table>,
        name: record[2],
@@ -251,34 +251,34 @@ define method table-liaison(record :: <odbc-record>,
 end method;
 
 define method table-from-name(a-connection :: <odbc-connection>,
-                              catalog-name :: <string>, 
+                              catalog-name :: <string>,
                               schema-name :: <string>,
                               table-name :: <string>)
  => (table :: <odbc-table>)
   let stmt = make(<odbc-sql-statement>, connection: a-connection, text: "");
   let return-code = SQLSetStmtOption(stmt.%statement-handle,
-                                     $SQL-ROWSET-SIZE, 
+                                     $SQL-ROWSET-SIZE,
                                      a-connection.dbms.%dbms-rowset-size);
   // rowsets aren't working  $introspection-rowset-size);
   assert-odbc-goodness(return-code,
-		       stmt.connection.dbms.%environment-handle,
-		       stmt.connection.%connection-handle,
-		       stmt.%statement-handle);
-  let return-code = nice-SQLTables(stmt.%statement-handle, catalog-name,  
+                       stmt.connection.dbms.%environment-handle,
+                       stmt.connection.%connection-handle,
+                       stmt.%statement-handle);
+  let return-code = nice-SQLTables(stmt.%statement-handle, catalog-name,
                                    schema-name, table-name, #f);
   assert-odbc-goodness(return-code,
-		       stmt.connection.dbms.%environment-handle,
-		       stmt.connection.%connection-handle,
-		       stmt.%statement-handle);
+                       stmt.connection.dbms.%environment-handle,
+                       stmt.connection.%connection-handle,
+                       stmt.%statement-handle);
 
   let (return-code, column-count) = SQLNumResultCols(stmt.%statement-handle);
   assert-odbc-goodness(return-code,
-	               stmt.connection.dbms.%environment-handle,
-		       stmt.connection.%connection-handle,
-		       stmt.%statement-handle);
+                       stmt.connection.dbms.%environment-handle,
+                       stmt.connection.%connection-handle,
+                       stmt.%statement-handle);
 
   if (column-count = 0)
-    signal(make(<table-not-found>, table-name: table-name));		       
+    signal(make(<table-not-found>, table-name: table-name));
   else
     let catalog = catalog-from-name(a-connection, catalog-name);
     let schema = schema-from-name(a-connection, catalog-name, schema-name);
@@ -296,29 +296,29 @@ end method;
 define class <odbc-column> (<column>)
 end class;
 
-define method column-generator(table :: <odbc-table>, 
+define method column-generator(table :: <odbc-table>,
                                catalog :: <odbc-catalog>,
                                schema :: <odbc-schema>)
  => ()
   let stmt = table.%sql-statement;
-  let return-code = nice-SQLColumns(stmt.%statement-handle, 
-                                    catalog.database-object-name, 
-                                    schema.database-object-name, 
+  let return-code = nice-SQLColumns(stmt.%statement-handle,
+                                    catalog.database-object-name,
+                                    schema.database-object-name,
                                     table.database-object-name, #f);
   assert-odbc-goodness(return-code,
                        stmt.connection.dbms.%environment-handle,
-		       stmt.connection.%connection-handle,
-		       stmt.%statement-handle);			           
+                       stmt.connection.%connection-handle,
+                       stmt.%statement-handle);
 end method;
 
-define method column-liaison(record :: <odbc-record>) 
+define method column-liaison(record :: <odbc-record>)
  => (column :: <odbc-column>)
   let column-name = record[3];
   let data-type = record[4];
   let nullable = record[10];
 
   make(<odbc-column>,
-       name: column-name, 
+       name: column-name,
        domain: element($sql-datatype-table, data-type, default: unfound),
        nullable?: if (nullable > 0) #t else #f end if,
        default-value: #f);
@@ -327,8 +327,8 @@ end method;
 
 define class <odbc-index>(<index>)
 end class;
-  
-define function new-index(collection :: <odbc-indexes>, 
+
+define function new-index(collection :: <odbc-indexes>,
                           index-record :: <odbc-record>)
  => (result :: <object>)
   let catalog-name = index-record[0];
@@ -337,7 +337,7 @@ define function new-index(collection :: <odbc-indexes>,
   let non-unique = index-record[3];
   let index-name = index-record[5];
   let column-name = index-record[8];
-  let table = table-from-name(index-record.statement.connection, 
+  let table = table-from-name(index-record.statement.connection,
                               catalog-name, schema-name, table-name);
   let index  = make(<odbc-index>,
                     name: index-name,
@@ -370,7 +370,7 @@ end function;
 define class <odbc-indexes> (<grouped-collection>,
                              <filtered-collection>,
                              <odbc-forward-only-result-set>)
-  inherited slot filter, 
+  inherited slot filter,
     init-value: method(collection, index-record)
                   let index-type = index-record[6];
                   index-type = $SQL-TABLE-STAT;
@@ -394,13 +394,13 @@ end method;
 
 define method index-generator(result-set :: <odbc-result-set>, table :: <odbc-table>)
   let stmt = result-set.%sql-statement;
-  let return-code = nice-SQLStatistics(stmt.%statement-handle, #f, #f, 
+  let return-code = nice-SQLStatistics(stmt.%statement-handle, #f, #f,
                                        table.database-object-name,
-		                       $SQL-INDEX-ALL, $SQL-QUICK);
+                                       $SQL-INDEX-ALL, $SQL-QUICK);
   assert-odbc-goodness(return-code,
-		       stmt.connection.dbms.%environment-handle,
-		       stmt.connection.%connection-handle,
-		       stmt.%statement-handle);
+                       stmt.connection.dbms.%environment-handle,
+                       stmt.connection.%connection-handle,
+                       stmt.%statement-handle);
 end method;
 
 
@@ -411,7 +411,7 @@ define method default-value(col :: <odbc-column>)
 end method;
 
 define method constraints (table :: <odbc-table>)
- => result :: <result-set>; 
+ => result :: <result-set>;
 // only really I think it ought not to be a result set, I think it ought to
 // be a boring old vector, like indexes.
 
@@ -424,7 +424,7 @@ define method constraints (table :: <odbc-table>)
 //  Next call sqlforeignkeys to collect up a result set of foreign keys.
 //  Etc, ... of type <referential-constraint>.
 
-//  Call sqlcolumns, or more likely just iterate over the table (whups, 
+//  Call sqlcolumns, or more likely just iterate over the table (whups,
 //  don't those forward only result sets suck?) and fetch out the columns
 //  whose .unique? is true.  This is a <unique-constraint>.
 

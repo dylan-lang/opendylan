@@ -35,9 +35,9 @@ end class;
 
 
 define method assert-odbc-goodness
-    (return-code :: <object>, 
-     environment-handle :: <object>, //<environment-handle>, 
-     connection-handle :: <object>, //<connection-handle>, 
+    (return-code :: <object>,
+     environment-handle :: <object>, //<environment-handle>,
+     connection-handle :: <object>, //<connection-handle>,
      statement-handle :: <object>)  //<statement-handle>)
  => ()
   local method assert-odbc-diagnostic-goodness(return-code) => ()
@@ -50,39 +50,39 @@ define method assert-odbc-goodness
           end if;
         end method;
   local method look-deeper()
-	  let (handle-type, handle) = 
-	    if (statement-handle ~= $null-statement-handle)
-	      values($sql-handle-stmt, statement-handle);
-	    elseif (connection-handle ~= $null-connection-handle)
-	      values($sql-handle-dbc, connection-handle);
-	    else
-	      values($sql-handle-env, environment-handle)
-	    end if;
+          let (handle-type, handle) =
+            if (statement-handle ~= $null-statement-handle)
+              values($sql-handle-stmt, statement-handle);
+            elseif (connection-handle ~= $null-connection-handle)
+              values($sql-handle-dbc, connection-handle);
+            else
+              values($sql-handle-env, environment-handle)
+            end if;
 
 
-	  let (return-code, sqlstate) = 
-	    nice-SQLGetDiagField(handle-type,
-				 handle,
-				 1, 
-				 $sql-diag-sqlstate);
-	  assert-odbc-diagnostic-goodness(return-code);
+          let (return-code, sqlstate) =
+            nice-SQLGetDiagField(handle-type,
+                                 handle,
+                                 1,
+                                 $sql-diag-sqlstate);
+          assert-odbc-diagnostic-goodness(return-code);
 
-	  let condition-type = find-diagnostic($diagnostic-table,
+          let condition-type = find-diagnostic($diagnostic-table,
                                                $odbc-diagnostics-key,
                                                sqlstate);
 
-	  if (unfound?(condition-type))
-	    condition-type := make(<odbc-low-level-error>,
-				   sqlstate: sqlstate);
+          if (unfound?(condition-type))
+            condition-type := make(<odbc-low-level-error>,
+                                   sqlstate: sqlstate);
           else
-	    make(condition-type,
-		 handle-type: handle-type,
-		 handle: handle);
-	  end if;
-	end method;
+            make(condition-type,
+                 handle-type: handle-type,
+                 handle: handle);
+          end if;
+        end method;
 
   if ((return-code ~= $sql-success & return-code ~= $sql-success-with-info) |
-	(return-code = $sql-success-with-info & 
+        (return-code = $sql-success-with-info &
          *odbc-report-success-with-info* = #t))
 
     if (return-code = $sql-no-data-found)
@@ -97,7 +97,7 @@ define method assert-odbc-goodness
       if (*odbc-print-condition*)
         report-condition(condition);
       end if;
-                      
+
       signal(condition);
     end if;
   end if;

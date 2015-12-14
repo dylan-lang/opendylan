@@ -8,18 +8,18 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define sideways method default-conversion(value :: <lptimestamp-struct>)
  => (converted-value :: <date>)
-  make(<date>, 
-       year: value.year-value, 
-       month: value.month-value, 
-       day: value.day-value, 
-       hours: value.hour-value, 
-       minutes: value.minute-value, 
-       seconds: value.second-value, 
+  make(<date>,
+       year: value.year-value,
+       month: value.month-value,
+       day: value.day-value,
+       hours: value.hour-value,
+       minutes: value.minute-value,
+       seconds: value.second-value,
        microseconds: 0)
 end method;
 
 
-define open generic sql-binding-info(object :: <object>) 
+define open generic sql-binding-info(object :: <object>)
 // should be sealed but due to a bug in the compiler...
  => (sql-data-type :: <sql-data-type>,
      precision :: <integer>,
@@ -66,7 +66,7 @@ define method sql-binding-info(object :: <string>)
      precision :: <integer>,
      scale :: <integer>)
   //+ The let statement is needed to squelch a bogus type inference warning
-  let string-size :: <integer> = object.size; 
+  let string-size :: <integer> = object.size;
   values($sql-varchar, string-size, 0)
 end method;
 
@@ -79,39 +79,39 @@ end method;
 
 
 define generic create-storage(sql-data-type :: <object>,
-			      precision :: <integer>,
-			      scale :: <integer>,
-			      #key initial-value :: <object>)
+                              precision :: <integer>,
+                              scale :: <integer>,
+                              #key initial-value :: <object>)
  => (c-data-type :: <object>,
-     storage :: <object>, 
+     storage :: <object>,
      storage-size :: <integer>,
      data-size :: <integer>);
 
 
 define method create-storage(sql-data-type :: <object>,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: <object>)
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: <object>)
  => (c-data-type :: <object>,
-     storage :: <object>, 
+     storage :: <object>,
      storage-size :: <integer>,
      data-size :: <integer>);
-  signal(make(<simple-warning>, 
+  signal(make(<simple-warning>,
          format-string: "Binding to column whose datatype (%=) is not supported\n"
                         "Using instance of <sql-unsupported-type> instead.\n",
-         format-arguments: list(sql-data-type))); 
+         format-arguments: list(sql-data-type)));
   values($sql-unsupported-type, null-pointer(<c-int*>), 0, 0);
 end method;
 
 define method create-storage(sql-data-type == $sql-unknown-type,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: <object>)
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: <object>)
  => (c-data-type :: <object>,
-     storage :: <object>, 
+     storage :: <object>,
      storage-size :: <integer>,
      data-size :: <integer>);
-  signal(make(<simple-warning>, 
+  signal(make(<simple-warning>,
          format-string: "Attempting to bind to a column with a datatype that "
                         "ODBC does not recognize.\n"
                         "Using instance of <sql-unknown-type> instead.\n"));
@@ -120,16 +120,16 @@ end method;
 
 
 define method create-storage(sql-data-type == $sql-char,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: false-or(<character>))
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: false-or(<character>))
  => (c-data-type :: <object>,
-     storage :: <object>, 
+     storage :: <object>,
      storage-size :: <integer>,
      data-size :: <integer>)
   // storage includes space for the null-termination byte
   let storage-size = precision + 1;
-  let storage = make(<C-string>, size: storage-size); 
+  let storage = make(<C-string>, size: storage-size);
   if (initial-value ~= #f)
     pointer-value(storage, index: 0) := initial-value;
   end if;
@@ -139,9 +139,9 @@ end method;
 
 
 define method create-storage(sql-data-type == $sql-type-date,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: false-or(<date>))
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: false-or(<date>))
  => (c-data-type :: <object>,
      storage :: <object>,
      storage-size :: <integer>,
@@ -159,9 +159,9 @@ end method;
 
 
 define method create-storage(sql-data-type == $sql-type-time,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: false-or(<date>))
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: false-or(<date>))
  => (c-data-type :: <object>,
      storage :: <object>,
      storage-size :: <integer>,
@@ -180,9 +180,9 @@ end method;
 
 
 define method create-storage(sql-data-type == $sql-type-timestamp,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: false-or(<date>))
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: false-or(<date>))
  => (c-data-type :: <object>,
      storage :: <object>,
      storage-size :: <integer>,
@@ -203,9 +203,9 @@ define method create-storage(sql-data-type == $sql-type-timestamp,
 end method;
 
 define method create-storage(sql-data-type == $sql-datetime,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: false-or(<date>))
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: false-or(<date>))
  => (c-data-type :: <object>,
      storage :: <object>,
      storage-size :: <integer>,
@@ -227,11 +227,11 @@ end method;
 
 
 define method create-storage(sql-data-type == $sql-numeric,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: false-or(<number>))
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: false-or(<number>))
  => (c-data-type :: <object>,
-     storage :: <object>, 
+     storage :: <object>,
      storage-size :: <integer>,
      data-size :: <integer>)
   let storage-size = precision + 1;
@@ -242,11 +242,11 @@ end method;
 
 
 define method create-storage(sql-data-type == $sql-decimal,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: false-or(<number>))
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: false-or(<number>))
  => (c-data-type :: <object>,
-     storage :: <object>, 
+     storage :: <object>,
      storage-size :: <integer>,
      data-size :: <integer>)
   let storage-size = precision + 1;
@@ -283,11 +283,11 @@ define method create-storage-helper(value :: big/<integer>)
 end;
 
 define method create-storage(sql-data-type == $sql-integer,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: false-or(big/<integer>))
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: false-or(big/<integer>))
  => (c-data-type :: <object>,
-     storage :: <object>, 
+     storage :: <object>,
      storage-size :: <integer>,
      data-size :: <integer>)
   let storage = create-storage-helper(initial-value);
@@ -297,11 +297,11 @@ end method;
 
 
 define method create-storage(sql-data-type == $sql-smallint,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: false-or(<integer>))
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: false-or(<integer>))
  => (c-data-type :: <object>,
-     storage :: <object>, 
+     storage :: <object>,
      storage-size :: <integer>,
      data-size :: <integer>)
   let storage = make(<c-signed-short*>);
@@ -314,11 +314,11 @@ end method;
 
 
 define method create-storage(sql-data-type == $sql-tinyint,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: false-or(<integer>))
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: false-or(<integer>))
  => (c-data-type :: <object>,
-     storage :: <object>, 
+     storage :: <object>,
      storage-size :: <integer>,
      data-size :: <integer>)
   let storage = make(<c-signed-short*>);
@@ -331,11 +331,11 @@ end method;
 
 
 define method create-storage(sql-data-type == $sql-float,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: false-or(<float>))
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: false-or(<float>))
  => (c-data-type :: <object>,
-     storage :: <object>, 
+     storage :: <object>,
      storage-size :: <integer>,
      data-size :: <integer>)
   let storage = make(<c-double*>);
@@ -349,11 +349,11 @@ end method;
 
 
 define method create-storage(sql-data-type == $sql-real,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: false-or(<integer>))
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: false-or(<integer>))
  => (c-data-type :: <object>,
-     storage :: <object>, 
+     storage :: <object>,
      storage-size :: <integer>,
      data-size :: <integer>)
   create-storage($sql-double, precision, scale, initial-value: initial-value);
@@ -361,11 +361,11 @@ end method;
 
 
 define method create-storage(sql-data-type == $sql-double,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: false-or(<float>))
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: false-or(<float>))
  => (c-data-type :: <object>,
-     storage :: <object>, 
+     storage :: <object>,
      storage-size :: <integer>,
      data-size :: <integer>)
   let storage = make(<c-double*>);
@@ -377,11 +377,11 @@ end method;
 
 
 define method create-storage(sql-data-type == $sql-varchar,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: false-or(<string>))
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: false-or(<string>))
  => (c-data-type :: <object>,
-     storage :: <object>, 
+     storage :: <object>,
      storage-size :: <integer>,
      data-size :: <integer>)
   // string size includes the null termination byte which ODBC appends
@@ -397,11 +397,11 @@ define method create-storage(sql-data-type == $sql-varchar,
 end method;
 
 define method create-storage(sql-data-type == $sql-longvarchar,
-			     precision :: <integer>,
-			     scale :: <integer>,
-			     #key initial-value :: false-or(<string>))
+                             precision :: <integer>,
+                             scale :: <integer>,
+                             #key initial-value :: false-or(<string>))
  => (c-data-type :: <object>,
-     storage :: <object>, 
+     storage :: <object>,
      storage-size :: <integer>,
      data-size :: <integer>)
   // string size includes the null termination byte which ODBC appends
@@ -440,20 +440,20 @@ end class;
 
 define method initialize (binding :: <binding>, #key initial-value)
   next-method();
-  let (the-data-type, a-storage, a-storage-size, a-data-size) 
+  let (the-data-type, a-storage, a-storage-size, a-data-size)
     = create-storage(binding.sql-data-type,
-		     binding.precision,
-		     binding.scale,
-		     initial-value: if (initial-value == $null-value)
-				      #f
-				    else
-				      initial-value
-				    end if);
+                     binding.precision,
+                     binding.scale,
+                     initial-value: if (initial-value == $null-value)
+                                      #f
+                                    else
+                                      initial-value
+                                    end if);
 
   binding.c-data-type := the-data-type;
   binding.storage := a-storage;
   binding.storage-size := a-storage-size;
- 
+
   if (initial-value == $null-value)
     pointer-value(binding.data-length) := $sql-null-data;
   else
@@ -463,13 +463,13 @@ define method initialize (binding :: <binding>, #key initial-value)
   finalize-when-unreachable(binding);
 end method;
 
-define method finalize(binding :: <binding>) 
+define method finalize(binding :: <binding>)
  => ()
   if (null-pointer?(binding.storage))
     destroy(binding.storage);
     binding.storage := null-pointer(<c-int*>);
   end if;
-  
+
   if (null-pointer?(binding.data-length))
     destroy(binding.data-length);
     binding.data-length := null-pointer(<c-int*>);

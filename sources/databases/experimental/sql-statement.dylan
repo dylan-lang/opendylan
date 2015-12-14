@@ -33,7 +33,7 @@ define method initialize(stmt :: <odbc-sql-statement>, #key)
   let (return-code, statement-handle) =
     nice-SQLAllocHandle($sql-handle-stmt, connection-handle);
   assert-odbc-goodness(return-code, environment-handle, connection-handle,
-		       statement-handle);
+                       statement-handle);
 
   stmt.%statement-handle := statement-handle;
 
@@ -60,9 +60,9 @@ define method finalize(sql-statement :: <odbc-sql-statement>)
       let return-code =
         nice-SQLFreeHandle($sql-handle-stmt, sql-statement.%statement-handle);
       assert-odbc-goodness(return-code,
-	  	           sql-statement.connection.dbms.%environment-handle,
-		           sql-statement.connection.%connection-handle,
-		           sql-statement.%statement-handle);
+                             sql-statement.connection.dbms.%environment-handle,
+                           sql-statement.connection.%connection-handle,
+                           sql-statement.%statement-handle);
       sql-statement.%statement-handle := $null-statement-handle;
     end if;
   end with-lock;
@@ -73,64 +73,64 @@ end method;
 
 
 define method bind-parameters(statement :: <odbc-sql-statement>,
-			      parameters :: <sequence>)
+                              parameters :: <sequence>)
  => ()
   local method null?(parameter-number) => (result :: <boolean>)
-	  if (statement.input-indicator == $no-indicator)
-	    #f
-	  else
-	    let indicator =
-	      if (instance?(statement.input-indicator, <sequence>))
-		   statement.input-indicator[parameter-number]
-	      else 
-		statement.input-indicator
-	      end if;
+          if (statement.input-indicator == $no-indicator)
+            #f
+          else
+            let indicator =
+              if (instance?(statement.input-indicator, <sequence>))
+                   statement.input-indicator[parameter-number]
+              else
+                statement.input-indicator
+              end if;
 
-	    parameters[parameter-number] == indicator
-	  end if;
-	end method;
+            parameters[parameter-number] == indicator
+          end if;
+        end method;
   local method do-binding(parameter-number) => (binding :: <binding>)
-	  let initial-value = if (null?(parameter-number))
-				$null-value 
-			      else
-				parameters[parameter-number]
-			      end if;
-	  let (sql-type, the-precision, the-scale) 
-	    = sql-binding-info(initial-value);
+          let initial-value = if (null?(parameter-number))
+                                $null-value
+                              else
+                                parameters[parameter-number]
+                              end if;
+          let (sql-type, the-precision, the-scale)
+            = sql-binding-info(initial-value);
 
-	  let binding = make(<binding>, 
+          let binding = make(<binding>,
                              rowset-size: 1,
-			     sql-data-type: sql-type,
-			     precision: the-precision,
-			     scale: the-scale,
-			     initial-value: initial-value);
+                             sql-data-type: sql-type,
+                             precision: the-precision,
+                             scale: the-scale,
+                             initial-value: initial-value);
           block (exit)
-  	    let (return-code, parameter-length) = 
-	      SQLBindParameter(statement.%statement-handle,
-			       parameter-number + 1,
-			       $sql-param-input,
-			       binding.c-data-type,
-			       binding.sql-data-type,
-			       binding.precision,
-			       binding.scale,
-			       binding.storage,
-			       binding.storage-size,
-			       binding.data-length);
+              let (return-code, parameter-length) =
+              SQLBindParameter(statement.%statement-handle,
+                               parameter-number + 1,
+                               $sql-param-input,
+                               binding.c-data-type,
+                               binding.sql-data-type,
+                               binding.precision,
+                               binding.scale,
+                               binding.storage,
+                               binding.storage-size,
+                               binding.data-length);
 
-	    assert-odbc-goodness(return-code,
-			         statement.connection.dbms.%environment-handle,
-			         statement.connection.%connection-handle,
-			         statement.%statement-handle);
+            assert-odbc-goodness(return-code,
+                                 statement.connection.dbms.%environment-handle,
+                                 statement.connection.%connection-handle,
+                                 statement.%statement-handle);
           exception (condition :: <odbc-optional-feature-not-implemented>)
             let c-name = element($c-datatype-display-names,
-                                 binding.c-data-type, 
-                                 default: 
+                                 binding.c-data-type,
+                                 default:
                                    integer-to-string(binding.c-data-type));
             let sql-name = element($sql-datatype-display-names,
                                    binding.sql-data-type,
                                    default:
                                      integer-to-string(binding.sql-data-type));
-            let msg = 
+            let msg =
               format-to-string("Unable to bind parameter %d "
                                "from %s to %s with "
                                "precision %= and scale %=",
@@ -139,13 +139,13 @@ define method bind-parameters(statement :: <odbc-sql-statement>,
                                sql-name,
                                binding.precision,
                                binding.scale);
-                                      
+
             push-last(condition.possible-explanation, msg);
             signal(condition);
           end block;
 
-	  binding;
-	end method;
+          binding;
+        end method;
 
   for (parameter-number :: <integer> from 0 below parameters.size)
     let binding :: <binding> = do-binding(parameter-number);
@@ -154,18 +154,18 @@ define method bind-parameters(statement :: <odbc-sql-statement>,
 end method;
 
 define method execute(statement :: <odbc-sql-statement>,
-		      #key result-set-policy :: <result-set-policy>
-			= $default-result-set-policy,
-		      parameters :: <sequence> = #(),
-		      liaison :: false-or(<function>))
+                      #key result-set-policy :: <result-set-policy>
+                        = $default-result-set-policy,
+                      parameters :: <sequence> = #(),
+                      liaison :: false-or(<function>))
  => (result-set :: <result-set>)
   if (statement.%prepared)
     //let return-code = SQLCloseCursor(statement.%statement-handle);
     let return-code = nice-SQLFreeStmt(statement.%statement-handle, $sql-close);
     assert-odbc-goodness(return-code,
-		         statement.connection.dbms.%environment-handle,
-		         statement.connection.%connection-handle,
-		         statement.%statement-handle);
+                         statement.connection.dbms.%environment-handle,
+                         statement.connection.%connection-handle,
+                         statement.%statement-handle);
     statement.%prepared := #f;
   end if;
 
@@ -174,41 +174,41 @@ define method execute(statement :: <odbc-sql-statement>,
   end if;
 
   let return-code = nice-SQLExecDirect(statement.%statement-handle,
-				       statement.text);
+                                       statement.text);
   assert-odbc-goodness(return-code,
-		       statement.connection.dbms.%environment-handle,
-		       statement.connection.%connection-handle,
-		       statement.%statement-handle);
+                       statement.connection.dbms.%environment-handle,
+                       statement.connection.%connection-handle,
+                       statement.%statement-handle);
 
   // The column count returned by SQLNumResultCols is ODBC's way
   // of checking if the executed sql statement returns a result-set.
 
   let (return-code, column-count) = SQLNumResultCols(statement.%statement-handle);
   assert-odbc-goodness(return-code,
-		       statement.connection.dbms.%environment-handle,
-		       statement.connection.%connection-handle,
-		       statement.%statement-handle);
+                       statement.connection.dbms.%environment-handle,
+                       statement.connection.%connection-handle,
+                       statement.%statement-handle);
 
   if (column-count > 0)
     let return-code = nice-SQLSetStmtAttr(statement.%statement-handle,
                                           $sql-attr-row-bind-type, $sql-bind-by-column);
     assert-odbc-goodness(return-code,
-		         statement.connection.dbms.%environment-handle,
-		         statement.connection.%connection-handle,
-		         statement.%statement-handle);
+                         statement.connection.dbms.%environment-handle,
+                         statement.connection.%connection-handle,
+                         statement.%statement-handle);
 
     let return-code = nice-SQLSetStmtAttr(statement.%statement-handle,
-                                          $sql-attr-row-array-size, 
-					  statement.connection.dbms.%dbms-rowset-size);
+                                          $sql-attr-row-array-size,
+                                          statement.connection.dbms.%dbms-rowset-size);
     assert-odbc-goodness(return-code,
-		         statement.connection.dbms.%environment-handle,
-		         statement.connection.%connection-handle,
-		         statement.%statement-handle);
+                         statement.connection.dbms.%environment-handle,
+                         statement.connection.%connection-handle,
+                         statement.%statement-handle);
     statement.%prepared := #t;
     make(<odbc-result-set>,
-	 result-set-policy: result-set-policy,
-	 statement: statement,
-	 liaison: liaison);
+         result-set-policy: result-set-policy,
+         statement: statement,
+         liaison: liaison);
   else
     make(<empty-result-set>);
   end if;

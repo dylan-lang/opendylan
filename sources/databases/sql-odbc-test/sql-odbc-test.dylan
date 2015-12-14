@@ -29,9 +29,9 @@ define constant $ms-sql-server-user-name = "viral";
 define constant $ms-sql-server-user-password = "viral";
 define constant $ms-sql-server-detect-null-column = #t;
 define constant $ms-sql-server-do-introspection = #t;
-define constant $dbms-table 
-  = vector(vector(<odbc-dbms>, "ODBC", <odbc-user>, <odbc-database>, 
-		    <odbc-sql-statement>));
+define constant $dbms-table
+  = vector(vector(<odbc-dbms>, "ODBC", <odbc-user>, <odbc-database>,
+                    <odbc-sql-statement>));
 
 
 define variable *datasource-name* :: <string> = "";
@@ -51,7 +51,7 @@ define variable *dbms-sql-statement-class* = <sql-statement>;
 define function pristine-database(dbms :: <dbms>)
   with-dbms(dbms)
     with-database(make(<database>, datasource-name: *datasource-name*),
-                  make(<user>, user-name: *user-name*, 
+                  make(<user>, user-name: *user-name*,
                        password: *user-password*))
       block ()
         execute("drop table dwsql");
@@ -62,13 +62,13 @@ define function pristine-database(dbms :: <dbms>)
   end with-dbms;
 end function;
 
-define method make-datasource-table(arguments :: <sequence>) 
+define method make-datasource-table(arguments :: <sequence>)
  => (table :: <sequence>)
   let table = make(<deque>);
 
   if (member?("-oracle", arguments, test: \=))
-    add!(table, vector($oracle-db-name, $oracle-user-name, 
- 		       $oracle-user-password, $oracle-detect-null-column,
+    add!(table, vector($oracle-db-name, $oracle-user-name,
+                        $oracle-user-password, $oracle-detect-null-column,
                        $oracle-do-introspection));
   end if;
 
@@ -79,14 +79,14 @@ define method make-datasource-table(arguments :: <sequence>)
   end if;
 
   if (member?("-access", arguments, test: \=))
-    add!(table, vector($access-db-name, $access-user-name, 
-		       $access-user-password, $access-detect-null-column,
+    add!(table, vector($access-db-name, $access-user-name,
+                       $access-user-password, $access-detect-null-column,
                        $access-do-introspection));
   end if;
 
   if (member?("-ms-sql-server", arguments, test: \=))
     add!(table, vector($ms-sql-server-db-name, $ms-sql-server-user-name,
-                       $ms-sql-server-user-password, 
+                       $ms-sql-server-user-password,
                        $ms-sql-server-detect-null-column,
                        $ms-sql-server-do-introspection));
   end if;
@@ -98,7 +98,7 @@ define method make-datasource-table(arguments :: <sequence>)
   table
 end method make-datasource-table;
 
-define method main 
+define method main
     (application-name :: <string>, arguments :: <sequence>)
  => (exit-code :: <integer>)
   ignore(application-name);
@@ -117,28 +117,28 @@ define method main
       *dbms-sql-statement-class* := dbms[4];
 
       for (datasource in make-datasource-table(arguments))
-	*datasource-name* := datasource[0];
-	*user-name* := datasource[1];
-	*user-password* := datasource[2];
-	*detect-null-column* := datasource[3];
+        *datasource-name* := datasource[0];
+        *user-name* := datasource[1];
+        *user-password* := datasource[2];
+        *detect-null-column* := datasource[3];
         *do-introspection* := datasource[4];
 
-	format-out("*** Testing database %s\n", *datasource-name*);
-	perform-suite(creation-test-suite);
-	*the-dbms* := make(*dbms-class*);
+        format-out("*** Testing database %s\n", *datasource-name*);
+        perform-suite(creation-test-suite);
+        *the-dbms* := make(*dbms-class*);
 
-	pristine-database(*the-dbms*);
+        pristine-database(*the-dbms*);
 
-	perform-suite(connection-test-suite);
-	perform-suite(ddl-test-suite);
-	perform-suite(dml-test-suite);
-	perform-suite(query-test-suite);
-	perform-suite(collection-test-suite);
-	perform-suite(transaction-test-suite);
-	perform-suite(datatype-test-suite);
-	perform-suite(big-integer-test-suite);
+        perform-suite(connection-test-suite);
+        perform-suite(ddl-test-suite);
+        perform-suite(dml-test-suite);
+        perform-suite(query-test-suite);
+        perform-suite(collection-test-suite);
+        perform-suite(transaction-test-suite);
+        perform-suite(datatype-test-suite);
+        perform-suite(big-integer-test-suite);
         if (*do-introspection*)
-	  perform-suite(introspection-test-suite);
+          perform-suite(introspection-test-suite);
         end if;
       end for;
     end for;
@@ -148,7 +148,7 @@ end method main;
 
 
 block (exit)
-  let handler <sql-warning> = 
+  let handler <sql-warning> =
     method(diag, next-handler)
       let next-diag = next-dbms-diagnostic(diag);
       unless (next-diag = #f)

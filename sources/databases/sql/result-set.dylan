@@ -54,13 +54,13 @@ end class <result-set-policy>;
 
 define constant $default-result-set-policy = make(<result-set-policy>);
 define constant $scrollable-result-set-policy = make(<result-set-policy>,
-						     scrollable: #t);
+                                                     scrollable: #t);
 
 
-define method replace-subsequence!(target :: <result-set>, 
-				   insert-sequence :: <sequence>, 
-				   #key start :: <integer> = 0, 
-				   end: last = unsupplied()) 
+define method replace-subsequence!(target :: <result-set>,
+                                   insert-sequence :: <sequence>,
+                                   #key start :: <integer> = 0,
+                                   end: last = unsupplied())
  => (result-sequence :: <sequence>)
   error(make(<result-set-mutation-error>));
 end method;

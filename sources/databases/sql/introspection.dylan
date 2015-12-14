@@ -18,7 +18,7 @@ define abstract class <unique-constraint> (<constraint>)
 end class;
 
 define abstract class <check-constraint> (<constraint>)
-end class; 
+end class;
 
 define abstract class <referential-constraint> (<constraint>)
 end class;
@@ -52,7 +52,7 @@ define open generic catalogs-assist(connection :: <connection>)
 define method catalogs(#key connection :: <connection> = default-connection())
  => (result-set :: <result-set>)
   catalogs-assist(connection);
-end method;  
+end method;
 
 define open abstract class <schema> (<database-object>, <result-set>)
 end class;
@@ -60,7 +60,7 @@ end class;
 define open abstract class <sql-table> (<database-object>, <result-set>)
 end class;
 
-define open generic indexes(table :: <sql-table>) 
+define open generic indexes(table :: <sql-table>)
  => index-collection :: <result-set>;
 
 define open abstract class <column> (<database-object>)
@@ -69,13 +69,13 @@ define open abstract class <column> (<database-object>)
   constant slot nullable? :: <boolean>,
     init-keyword: nullable?:;
   open constant slot default-value :: <object>,
-    init-keyword: default-value:;    
+    init-keyword: default-value:;
 end class <column>;
 
 define open generic default-value (column :: <column>)
  => default :: <object>;
 
-define open abstract class <index> (<database-object>) 
+define open abstract class <index> (<database-object>)
   slot indexed-table :: <sql-table>,
     init-keyword: indexed-table:;
   slot fields :: <deque> = make(<deque>);
@@ -84,7 +84,7 @@ define open abstract class <index> (<database-object>)
 end class <index>;
 
 define open generic catalog-from-name(connection :: <connection>,
-			              name :: <string>)
+                                      name :: <string>)
  => (catalog :: <catalog>);
 
 define open generic schema-from-name(connection :: <connection>,

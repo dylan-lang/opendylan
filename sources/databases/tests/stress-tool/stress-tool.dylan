@@ -51,19 +51,19 @@ define method perform-test
   format-out("  phases:       %s\n", test.test-phases);
   format-out("  iterations:   %s\n", test.test-iterations);
   format-out("  operation:    %s, %s, %s\n",
-	     if (test.test-truncate?) "truncate" else "no truncation" end,
-	     if (test.test-transactions?) "transactions" else "no transactions" end,
-	     if (test.test-commit?) "commit" else "rollback" end,
-	     if (test.test-share-connections?) "single connection" else "multiple connections" end);
+             if (test.test-truncate?) "truncate" else "no truncation" end,
+             if (test.test-transactions?) "transactions" else "no transactions" end,
+             if (test.test-commit?) "commit" else "rollback" end,
+             if (test.test-share-connections?) "single connection" else "multiple connections" end);
   format-out("\n");
   let connection = open-database(test.test-database);
   if (test.test-truncate?)
     with-connection (connection)
       block ()
-	execute(format-to-string("DELETE FROM %s", test.test-table));
-	format-out("\nTruncated table!\n\n");
+        execute(format-to-string("DELETE FROM %s", test.test-table));
+        format-out("\nTruncated table!\n\n");
       exception (error :: <data-not-available>)
-	format-out("\nAttempted to truncate table, but it was empty!\n\n");
+        format-out("\nAttempted to truncate table, but it was empty!\n\n");
       end
     end
   end;
@@ -71,27 +71,27 @@ define method perform-test
   block ()
     for (phase from 1 to test.test-phases)
       if (phase > 1 & ~test.test-share-connections?)
-	verbose? & format-out("Creating new connection...\n");
+        verbose? & format-out("Creating new connection...\n");
         disconnect(connection);
         connection := open-database(test.test-database)
       end;
       ~verbose? & format-out(".");
       with-connection (connection)
-	if (test.test-transactions?)
-	  verbose? & format-out("Starting transaction...\n");
-	  with-transaction (commit: commit, rollback: rollback)
-	    perform-test-phase(test, phase);
-	    if (test.test-commit?)
-	      verbose? & format-out("Committing transaction\n");
-	      commit()
-	    else
-	      verbose? & format-out("Rolling back transaction\n");
-	      rollback()
-	    end
-	  end
-	else
-	  perform-test-phase(test, phase)
-	end
+        if (test.test-transactions?)
+          verbose? & format-out("Starting transaction...\n");
+          with-transaction (commit: commit, rollback: rollback)
+            perform-test-phase(test, phase);
+            if (test.test-commit?)
+              verbose? & format-out("Committing transaction\n");
+              commit()
+            else
+              verbose? & format-out("Rolling back transaction\n");
+              rollback()
+            end
+          end
+        else
+          perform-test-phase(test, phase)
+        end
       end
     end
   cleanup
@@ -104,9 +104,9 @@ define method perform-test
   format-out("\n");
   format-out("Database stress test completed\n");
   format-out("  Total records %d\n", total-records);
-  format-out("  Total time %d ms (average %s ms)\n", 
+  format-out("  Total time %d ms (average %s ms)\n",
              total-time, round/(total-time, total-records));
-  format-out("  Total allocation %d (average %s)\n", 
+  format-out("  Total allocation %d (average %s)\n",
              total-allocation, round/(total-allocation, total-records))
 end method perform-test;
 
@@ -120,7 +120,7 @@ define method perform-test-phase
     for (record from 1 to test.test-iterations)
       let result = execute(test.test-statement, result-set-policy: #f);
       if (result & verbose?)
-	format-out("\nResult set not #f but %=\n", result)
+        format-out("\nResult set not #f but %=\n", result)
       end;
       verbose? & format-out(".")
     end;

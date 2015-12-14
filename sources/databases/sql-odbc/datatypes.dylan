@@ -6,12 +6,12 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define constant <sql-data-type> 
-  = one-of($sql-bigint, $sql-binary, $sql-bit, $sql-char, $sql-date, 
-	   $sql-decimal, $sql-double, $sql-float, $sql-integer, 
-	   $sql-longvarbinary, $sql-longvarchar, $sql-numeric, 
-	   $sql-real, $sql-smallint, $sql-time, $sql-timestamp,
-	   $sql-tinyint, $sql-varbinary, $sql-varchar,
+define constant <sql-data-type>
+  = one-of($sql-bigint, $sql-binary, $sql-bit, $sql-char, $sql-date,
+           $sql-decimal, $sql-double, $sql-float, $sql-integer,
+           $sql-longvarbinary, $sql-longvarchar, $sql-numeric,
+           $sql-real, $sql-smallint, $sql-time, $sql-timestamp,
+           $sql-tinyint, $sql-varbinary, $sql-varchar,
            $sql-type-date, $sql-type-time, $sql-type-timestamp,
            $sql-unknown-type, $sql-unsupported-type);
 

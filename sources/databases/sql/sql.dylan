@@ -45,7 +45,7 @@ define method disconnect-all(#key dbms: the-dbms :: false-or(<dbms>))
     end if;
   end for;
 end method;
-      
+
 
 define open abstract class <user> (<object>)
 end class;
@@ -60,7 +60,7 @@ define open generic connect(database :: <database>, user :: <user>, #key)
 
 
 define open generic connect-with-prompt
-    (dbms :: <dbms>, #key database :: false-or(<database>), 
+    (dbms :: <dbms>, #key database :: false-or(<database>),
      user :: false-or(<user>))
  => (connection :: <connection>);
 
@@ -80,7 +80,7 @@ define constant $repeatable-read = #"repeatable-read";
 define constant $serializable = #"serializable";
 
 define constant <isolation-level> = one-of($read-uncommitted, $read-committed,
-					   $repeatable-read, $serializable);
+                                           $repeatable-read, $serializable);
 
 
 define open concrete class <transaction> (<object>)
@@ -111,7 +111,7 @@ define open generic database(connection :: <connection>)
 
 define open generic user(connection :: <connection>)
  => (user :: <user>);
-    
+
 
 define open generic disconnect
     (connection :: <connection>, #key terminate-statements :: <boolean>)
@@ -128,19 +128,19 @@ end class;
 
 
 define open generic execute
-    (database-statement :: type-union(<database-statement>, <string>), 
+    (database-statement :: type-union(<database-statement>, <string>),
      #key, #all-keys)
  => (result-set :: false-or(<result-set>));
 
 define method execute(sql-statement :: <string>, #rest more-args,
-		      #key parameters :: <sequence> = #(),
-		      coercion-policy :: <coercion-policy> = $default-coercion,
-		      datatype-hints :: <sequence> = #())
+                      #key parameters :: <sequence> = #(),
+                      coercion-policy :: <coercion-policy> = $default-coercion,
+                      datatype-hints :: <sequence> = #())
  => (result-set :: false-or(<result-set>))
   let statement = make(<sql-statement>,
-		       text: sql-statement,
-		       coercion-policy: coercion-policy,
-		       datatype-hints: datatype-hints);
+                       text: sql-statement,
+                       coercion-policy: coercion-policy,
+                       datatype-hints: datatype-hints);
   apply(execute, statement, more-args);
 end method;
 
@@ -181,7 +181,7 @@ define open generic output-indicator(sql-statement :: <sql-statement>)
 
 
 define open generic output-indicator-setter
-    (new-output-indicator :: <indicator-policy>, 
+    (new-output-indicator :: <indicator-policy>,
      sql-statement :: <sql-statement>)
  => (new-output-indicator :: <indicator-policy>);
 

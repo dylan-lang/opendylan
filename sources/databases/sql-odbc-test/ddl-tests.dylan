@@ -9,16 +9,16 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define test create-table-test()
   with-connection(*ddl-connection*)
     let stmt = make(<sql-statement>,
-		    text: "create table dwsql (col_1 char(50), col_2 number)");
+                    text: "create table dwsql (col_1 char(50), col_2 number)");
     let result = execute(stmt);
     check-true("Create table test: "
-		 "result is instance of <empty-result-set>",
-	       instance?(result, <empty-result-set>));
+                 "result is instance of <empty-result-set>",
+               instance?(result, <empty-result-set>));
 
     let result = execute("drop table dwsql");
     check-true("Create table test: "
-		 "result is instance of <empty-result-set>",
-	       instance?(result, <empty-result-set>));
+                 "result is instance of <empty-result-set>",
+               instance?(result, <empty-result-set>));
   end with-connection;
 end test;
 
@@ -26,15 +26,15 @@ end test;
 define test create-duplicate-table-test()
   with-connection(*ddl-connection*)
     local method create-table()
-	    let stmt = make(<sql-statement>,
-			    text: "create table dwsql (col_1 char(50), "
-			      "col_2 number)");
-	    execute(stmt);
-	  end method;
+            let stmt = make(<sql-statement>,
+                            text: "create table dwsql (col_1 char(50), "
+                              "col_2 number)");
+            execute(stmt);
+          end method;
 
     create-table();
     check-condition("Duplicate table creation test",
-		    <syntax-error-or-access-rule-violation>,
+                    <syntax-error-or-access-rule-violation>,
                     create-table());
     let result = execute("drop table dwsql");
   end with-connection;
@@ -57,7 +57,7 @@ define method ddl-test-cleanup() => ()
 end method;
 
 define suite ddl-test-suite(setup-function: ddl-test-setup,
-			    cleanup-function: ddl-test-cleanup)
+                            cleanup-function: ddl-test-cleanup)
   test create-table-test;
   test create-duplicate-table-test;
 end suite;

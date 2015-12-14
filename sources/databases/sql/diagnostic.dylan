@@ -205,10 +205,10 @@ end method;
 
 
 define open generic message-text(diag :: <diagnostic>)
- => (message-text :: <string>); 
+ => (message-text :: <string>);
 
 define method message-text(diag :: <diagnostic>)
- => (message-text :: <string>); 
+ => (message-text :: <string>);
   detail-info-not-available("message-text");
 end method;
 
@@ -294,11 +294,11 @@ define open class <connection-exception> (<diagnostic>)
   keyword class-code: = "08";
 end class;
 
-define open class <connection-does-not-exist> (<connection-exception>) 
+define open class <connection-does-not-exist> (<connection-exception>)
   keyword subclass-code: = "003";
 end class;
 
-define open class <connection-failure> (<connection-exception>) 
+define open class <connection-failure> (<connection-exception>)
   keyword subclass-code: = "006";
 end class;
 
@@ -306,12 +306,12 @@ define open class <connection-name-in-use> (<connection-exception>)
   keyword subclass-code: = "002";
 end class;
 
-define open class <sql-client-unable-to-establish-connection> 
+define open class <sql-client-unable-to-establish-connection>
     (<connection-exception>)
   keyword subclass-code: = "001";
 end class;
 
-define open class <sql-server-rejected-establishment-of-connection> 
+define open class <sql-server-rejected-establishment-of-connection>
     (<connection-exception>)
   keyword subclass-code: = "004";
 end class;
@@ -408,7 +408,7 @@ define open class <unterminated-C-string> (<data-exception>)
   keyword subclass-code: = "024";
 end class;
 
-define open class <dependent-privilege-descriptors-still-exist> 
+define open class <dependent-privilege-descriptors-still-exist>
     (<diagnostic>)
   keyword class-code: = "2B";
 end class;
@@ -417,7 +417,7 @@ define open  class <dynamic-sql-error> (<diagnostic>)
   keyword class-code: = "07";
 end class;
 
-define open class <cursor-specification-cannot-be-executed> 
+define open class <cursor-specification-cannot-be-executed>
     (<dynamic-sql-error>)
   keyword subclass-code: = "003";
 end class;
@@ -430,12 +430,12 @@ define open class <invalid-descriptor-index> (<dynamic-sql-error>)
   keyword subclass-code: = "009";
 end class;
 
-define open class <prepared-statement-not-a-cursor-specification> 
+define open class <prepared-statement-not-a-cursor-specification>
     (<dynamic-sql-error>)
   keyword subclass-code: = "005";
 end class;
 
-define open class <restricted-data-type-attribute-violation> 
+define open class <restricted-data-type-attribute-violation>
     (<dynamic-sql-error>)
   keyword subclass-code: = "006";
 end class;
@@ -445,17 +445,17 @@ define open class <using-clause-does-not-match-dynamic-parameter-specification>
   keyword subclass-code: = "001";
 end class;
 
-define open class <using-clause-does-not-match-target-specification> 
+define open class <using-clause-does-not-match-target-specification>
     (<dynamic-sql-error>)
   keyword subclass-code: = "002";
 end class;
 
-define open class <using-clause-required-for-dynamic-parameters> 
+define open class <using-clause-required-for-dynamic-parameters>
     (<dynamic-sql-error>)
   keyword subclass-code: = "004";
 end class;
 
-define open class <using-clause-required-for-result-fields> 
+define open class <using-clause-required-for-result-fields>
     (<dynamic-sql-error>)
   keyword subclass-code: = "007";
 end class;
@@ -529,13 +529,13 @@ define open class <syntax-error-or-access-rule-violation> (<diagnostic>)
 end class;
 
 define open class
-     <syntax-error-or-access-rule-violation-in-direct-sql-statement> 
+     <syntax-error-or-access-rule-violation-in-direct-sql-statement>
      (<diagnostic>)
   keyword class-code: = "2A";
 end class;
 
 define open class
-    <syntax-error-or-access-rule-violation-in-dynamic-sql-statement> 
+    <syntax-error-or-access-rule-violation-in-dynamic-sql-statement>
     (<diagnostic>)
   keyword class-code: = "37";
 end class;
@@ -594,12 +594,12 @@ define open class <privilege-not-revoked> (<sql-warning>)
   keyword subclass-code: = "006";
 end class;
 
-define open class <query-expression-too-long-for-information-schema> 
+define open class <query-expression-too-long-for-information-schema>
     (<sql-warning>)
   keyword subclass-code: = "00A";
 end class;
 
-define open class <search-condition-too-long-for-information-schema> 
+define open class <search-condition-too-long-for-information-schema>
     (<sql-warning>)
   keyword subclass-code: = "009";
 end class;
@@ -629,7 +629,7 @@ end class <diagnostic-table>;
 
 define constant $general-dbms = #"general-dbms";
 
-define constant $diagnostic-table :: <diagnostic-table> 
+define constant $diagnostic-table :: <diagnostic-table>
     = make(<diagnostic-table>, general-key: $general-dbms);
 
 
@@ -644,7 +644,7 @@ define function install-diagnostics
   install-general-diagnostics(table);
   for (fn in table.installation-functions)
     fn(table);
-  end for;  
+  end for;
 end function;
 
 define function install-diagnostic-key
@@ -723,9 +723,9 @@ define function install-general-diagnostics(table :: <diagnostic-table>) => ()
   install-diagnostic(table, <remote-database-access>);
   install-diagnostic(table, <successful-completion>);
   install-diagnostic(table, <syntax-error-or-access-rule-violation>);
-  install-diagnostic(table, 
+  install-diagnostic(table,
     <syntax-error-or-access-rule-violation-in-direct-sql-statement>);
-  install-diagnostic(table,  
+  install-diagnostic(table,
     <syntax-error-or-access-rule-violation-in-dynamic-sql-statement>);
   install-diagnostic(table, <transaction-rollback>);
   install-diagnostic(table, <transaction-rollback-due-to-integrity-constraint-violation>);
@@ -749,9 +749,9 @@ end function;
 
 //--------------------  find-diagnostic not  --------------------
 // Right now, the ODBC installs ODBC specific versions of the general
-// diagnostic details and the ODBC library does not add anything 
+// diagnostic details and the ODBC library does not add anything
 // specific. Any overlap probably should be removed and this function
-// should be modified to search for the diagnostic in the general 
+// should be modified to search for the diagnostic in the general
 // table in the event it isn't found in the specific table.
 
 define function find-diagnostic
@@ -766,7 +766,7 @@ define function find-diagnostic
   end if;
 
   let subtable = element(table.diagnostics, diagnostic-set-key, default: $unfound);
-  debug-assert(found?(subtable), 
+  debug-assert(found?(subtable),
                "Diagnostic table for key % not found.", diagnostic-set-key);
 
   let diag-class = element(subtable, sqlstate, default: $unfound);
@@ -780,9 +780,9 @@ define function find-diagnostic
 
     let diag-class = element(general-table, sqlstate, default: $unfound);
 
-    if (found?(diag-class)) 
+    if (found?(diag-class))
       diag-class;
-    else 
+    else
       $unfound;
     end if;
   end if;
@@ -793,4 +793,4 @@ end function;
 
 
 
- 
+

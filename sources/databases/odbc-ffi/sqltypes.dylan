@@ -134,7 +134,7 @@ define C-struct <SQL-NUMERIC-STRUCT>
   slot scale-value :: <SQLSCHAR>;
   slot sign-value  :: <SQLCHAR>;
   array slot val-array :: <SQLCHAR>, length: 16,
-	address-getter: val-value;
+        address-getter: val-value;
   pointer-type-name: <LPSQL-NUMERIC-STRUCT>;
   c-name: "struct tagSQL_NUMERIC_STRUCT";
 end C-struct <SQL-NUMERIC-STRUCT>;

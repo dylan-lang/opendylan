@@ -53,7 +53,7 @@ end class;
 define open concrete class <sql-national-character> (<sql-character>)
 end class;
 
-define open concrete class <sql-national-character-varying> 
+define open concrete class <sql-national-character-varying>
     (<sql-character-varying>)
 end class;
 

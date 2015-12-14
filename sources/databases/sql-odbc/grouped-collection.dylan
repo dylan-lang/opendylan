@@ -10,7 +10,7 @@ define class <grouped-collection> (<collection>)
 
   constant slot new-group :: <function>,
     required-init-keyword: new-group:;
-  // prototype: fn(collection :: <grouped-collection>, first-element :: <object>) 
+  // prototype: fn(collection :: <grouped-collection>, first-element :: <object>)
   //             => (result :: <object>)
 
   constant slot group-finished? :: <function>,
@@ -49,35 +49,35 @@ define method forward-iteration-protocol(collection :: <grouped-collection>)
       current-element :: <function>,
       current-element-setter :: <function>,
       copy-state :: <function>)
-  let (source-initial-state :: <object>, 
-       source-limit :: <object>, 
-       source-next-state :: <function>, 
-       source-finished? :: <function>, 
+  let (source-initial-state :: <object>,
+       source-limit :: <object>,
+       source-next-state :: <function>,
+       source-finished? :: <function>,
        source-current-key :: <function>,
-       source-element :: <function>, 
-       source-element-setter :: <function>, 
-       source-copy-state :: <function>) 
+       source-element :: <function>,
+       source-element-setter :: <function>,
+       source-copy-state :: <function>)
    = if (collection.grouped-source == collection)
        next-method();
      else
        forward-iteration-protocol(collection.grouped-source);
      end if;
 
-  local method next-grouped-state(c :: <grouped-collection>, 
+  local method next-grouped-state(c :: <grouped-collection>,
                                   state :: <grouped-state>,
                                   limit :: <object>)
          => (new-state :: <grouped-state>)
           if (source-finished?(c.grouped-source, state.source-state, limit))
             state.at-end? := #t;
           else
-            state.current-group 
+            state.current-group
               := c.new-group(c, source-element(c.grouped-source, state.source-state));
             state.source-state := source-next-state(c.grouped-source, state.source-state);
 
             while (~source-finished?(c.grouped-source, state.source-state, limit) &
-                   ~c.group-finished?(c, state.current-group, 
+                   ~c.group-finished?(c, state.current-group,
                                       source-element(c.grouped-source, state.source-state)))
-              c.grouper(c, state.current-group, 
+              c.grouper(c, state.current-group,
                         source-element(c.grouped-source, state.source-state));
               state.source-state := source-next-state(c.grouped-source, state.source-state);
             end while;
@@ -96,7 +96,7 @@ define method forward-iteration-protocol(collection :: <grouped-collection>)
   local method next-state(c :: <grouped-collection>,
                           state :: <grouped-state>)
          => (new-state :: <grouped-state>)
-          //state.source-state := source-next-state(c.grouped-source, 
+          //state.source-state := source-next-state(c.grouped-source,
           //                                        state.source-state);
           next-grouped-state(c, state, source-limit);
         end method;
@@ -136,11 +136,11 @@ define method forward-iteration-protocol(collection :: <grouped-collection>)
         end method;
 
   values(get-initial-state(collection, source-limit),
-	 source-limit,
-	 next-state,
-	 finished-state?,
-	 current-key,
-	 current-element,
-	 element-setter,
-	 copy-state);
+         source-limit,
+         next-state,
+         finished-state?,
+         current-key,
+         current-element,
+         element-setter,
+         copy-state);
 end method;

@@ -9,9 +9,9 @@ define library sql-odbc
   use dylan;
   use common-dylan;
   use generic-arithmetic;
-  use sql, 
+  use sql,
     import: {sql};
-  use odbc-ffi, 
+  use odbc-ffi,
     import: {odbc-ffi};
   use io;
   use system;
@@ -29,7 +29,7 @@ define module sql-odbc
   // Debugging functions used to determine if finalization is occurring.
   // Once the gc limitation on weak tables is fixed, these functions
   // will no longer be needed.
-  create  
+  create
     set-finalize-notification,
     notify-of-finalization;
 
@@ -68,9 +68,9 @@ define module sql-odbc
     <odbc-record>;
 
   create
-    <odbc-catalog>, 
-    <odbc-schema>, 
-    <odbc-table>, 
+    <odbc-catalog>,
+    <odbc-schema>,
+    <odbc-table>,
     <odbc-column>,
     <odbc-index>;
 

@@ -11,14 +11,14 @@ define constant $user-password :: <string>  = "";
 
 //---------------  Example 1  ---------------
 // This example performs a simple query for the names of companies in
-// the USA. The default-coercion policy and forward-only result-set 
+// the USA. The default-coercion policy and forward-only result-set
 // policy are used since these policies are not specified and the liaison
 // function will be the copy-sequence generic function.
 // - Default coercion: the 'C objects' are converted to the appropriate
 //   Dylan object. For this particular query, instances of <C-String> are
 //   converted to <byte-string>.
 // - Forward-only result-sets: these result-sets (collections) can only be
-//   traversed once and must be done in increasing order. 
+//   traversed once and must be done in increasing order.
 // - Liaison: the copy-sequence generic function will be used as the liaison
 //   function since it isn't specified and the coercion policy is not
 //   $no-coercion. For this particular example, results of the call to
@@ -28,7 +28,7 @@ define constant $user-password :: <string>  = "";
 define function display-customers()
   with-database(make(<database>, datasource-name: $database-name),
                 make(<user>, user-name: $user-name, password: $user-password))
-    let query = make(<sql-statement>, 
+    let query = make(<sql-statement>,
                      text: "select CompanyName from customers "
                            "where country = 'USA'");
     let customers-result-set = execute(query);
@@ -42,16 +42,16 @@ end function;
 
 //----------  Example 2  ----------
 // This examples constructs the employee hierarchy by querying for employees
-// who do not report to anyone (the reportsTo field is null) and, or each 
+// who do not report to anyone (the reportsTo field is null) and, or each
 // of these 'boss' objects created, query for the subordinates recursively.
 // For each employee record retrieved from the database, the liaison function
 // employee-maker will create an instance of <employee> using the information
 // in the record. The coercion policy is the default-coercion policy since it
 // is not specified and the result-set-policy is specified as scrollable.
-// The method used by this example to construct the employee hierarchy is not 
+// The method used by this example to construct the employee hierarchy is not
 // efficient but it does demonstrate multiple queries
 // - Default coercion: the 'C objects' are converted to the appropriate
-//   Dylan object. For this particular query, instances of <C-String> 
+//   Dylan object. For this particular query, instances of <C-String>
 //   (lastName and firstName) are converted to <byte-string> and instances of
 //   <C-int*> (employeeId) are converted to <integer>. (<C-int*> may be wrong)
 // - Scrollable result-sets: these result-sets (collections) may be traversed
@@ -104,7 +104,7 @@ define function construct-employee-hierarchy()
                         liaison: employee-maker,
                         result-set-policy: $scrollable-result-set-policy);
               end if;
-        
+
           // For each employee in employee-result-set, query for subordinates.
           do(employee-query, employee-result-set);
           employee-result-set;
@@ -125,7 +125,7 @@ define function construct-employee-hierarchy()
 
             // Recursively call print-employee on each subordinate of employee
             // while increasing the indent by 4.
-            do(rcurry(print-employee, indent:, indent + 4), 
+            do(rcurry(print-employee, indent:, indent + 4),
                employee.subordinates);
           end method;
 

@@ -18,8 +18,8 @@ end class;
 
 define method report (condition :: <odbc-error>)
   format-out("ODBC Error in ~s:  SQLState ~a.  Error code ~d\nMessage:  ~a\n",
-	     condition.function-name, condition.sqlstate,
-	     condition.error-code, condition.error-message);
+             condition.function-name, condition.sqlstate,
+             condition.error-code, condition.error-message);
   if (slot-initialized?(condition, warning-message))
     format-out("Warning:  %s\n",condition.warning-message);
   end if;

@@ -53,8 +53,8 @@ define method next-record(result-set :: <odbc-result-set>)
     result-set.%record.rowset-index := result-set.%record.rowset-index + 1;
     result-set.%current-record-number := result-set.%current-record-number + 1;
     format-out("next-record: rowset-index: %=, -size: %=, current-record-number: %=\n",
-	       result-set.%record.rowset-index, result-set.%rowset-size,
-	       result-set.%current-record-number);
+               result-set.%record.rowset-index, result-set.%rowset-size,
+               result-set.%current-record-number);
   else
     format-out("*** fetching new rowset\n");
     result-set.%record.rowset-index := 0;
@@ -62,18 +62,18 @@ define method next-record(result-set :: <odbc-result-set>)
       let stmt = result-set.%sql-statement;
       let return-code = nice-SQLFetch(stmt.%statement-handle);
       assert-odbc-goodness(return-code,
-		           stmt.connection.dbms.%environment-handle,
-		           stmt.connection.%connection-handle,
-		           stmt.%statement-handle);
+                           stmt.connection.dbms.%environment-handle,
+                           stmt.connection.%connection-handle,
+                           stmt.%statement-handle);
 
       result-set.%current-record-number := result-set.%current-record-number + 1;
       format-out("next-record: rowset-index: %=, -size: %=, current-record-number: %=\n",
-		 result-set.%record.rowset-index, result-set.%rowset-size,
-		 result-set.%current-record-number);
+                 result-set.%record.rowset-index, result-set.%rowset-size,
+                 result-set.%current-record-number);
 //      for (ndx from 0 below result-set.%rowset-size) // index 0-n
-//	format-out("    Value: %=\n", pointer-value(result-set.%record.bindings[0].storage, index: ndx));
+//        format-out("    Value: %=\n", pointer-value(result-set.%record.bindings[0].storage, index: ndx));
 //      end for;
-    exception (condition :: <data-not-available>) 
+    exception (condition :: <data-not-available>)
       result-set.%result-set-at-end? := #t;
       signal(condition);
     end block;
@@ -89,17 +89,17 @@ end method;
 
 
 define method make(type == <odbc-result-set>,
-		   #key result-set-policy :: <result-set-policy>,
-		   statement :: false-or(<odbc-sql-statement>),
-		   liaison :: false-or(<function>),
+                   #key result-set-policy :: <result-set-policy>,
+                   statement :: false-or(<odbc-sql-statement>),
+                   liaison :: false-or(<function>),
                    generator :: false-or(<function>),
                    connection: the-connection :: false-or(<odbc-connection>))
   => (result-set :: <result-set>)
   let result-set-class = if (result-set-policy.scrollable? = #t)
-			   <odbc-scrollable-result-set>
-			 else
-			   <odbc-forward-only-result-set>
-			 end if;
+                           <odbc-scrollable-result-set>
+                         else
+                           <odbc-forward-only-result-set>
+                         end if;
 
   let the-liaison = if (liaison ~= #f)
                       liaison
@@ -111,17 +111,17 @@ define method make(type == <odbc-result-set>,
                       end if
                     end if;
 
- make(result-set-class,	sql-statement: statement, 
-      liaison: the-liaison, generator: generator, 
+ make(result-set-class,        sql-statement: statement,
+      liaison: the-liaison, generator: generator,
       rowset-size: result-set-policy.rowset-size,
       connection: if (statement ~= #f) statement.connection else the-connection end if)
 end method;
 
-define class <odbc-forward-only-result-set> (<odbc-result-set>, 
+define class <odbc-forward-only-result-set> (<odbc-result-set>,
                                              <forward-only-result-set>)
 end class;
 
-define class <odbc-scrollable-result-set> (<odbc-result-set>, 
+define class <odbc-scrollable-result-set> (<odbc-result-set>,
                                            <scrollable-result-set>)
   constant slot %record-cache :: <deque> = make(<deque>);
 end class;
@@ -129,16 +129,16 @@ end class;
 define function generate-data(result-set :: <odbc-result-set>)
  => ()
   if (result-set.%sql-statement = #f)
-    result-set.%sql-statement := make(<odbc-sql-statement>, 
+    result-set.%sql-statement := make(<odbc-sql-statement>,
                                       connection: result-set.%connection,
                                       text: "");
     let return-code = SQLSetStmtOption(result-set.%sql-statement.%statement-handle,
                                        $SQL-ROWSET-SIZE, result-set.%rowset-size);
 
     assert-odbc-goodness(return-code,
-		         result-set.%sql-statement.connection.dbms.%environment-handle,
-		         result-set.%sql-statement.connection.%connection-handle,
-		         result-set.%sql-statement.%statement-handle);
+                         result-set.%sql-statement.connection.dbms.%environment-handle,
+                         result-set.%sql-statement.connection.%connection-handle,
+                         result-set.%sql-statement.%statement-handle);
    end if;
 
   if (result-set.generator ~= #f & result-set.data-generated? = #f)
@@ -147,16 +147,16 @@ define function generate-data(result-set :: <odbc-result-set>)
   end if;
   let stmt = result-set.%sql-statement;
   result-set.%record := if (stmt.coercion-policy ~= $no-coercion)
-	                  make(<odbc-coercion-record>, 
+                          make(<odbc-coercion-record>,
                                rowset-size: result-set.%rowset-size,
-		               statement: stmt,
-		               record-coercion-policy: stmt.coercion-policy,
-		               indicator-policy: stmt.output-indicator);
+                               statement: stmt,
+                               record-coercion-policy: stmt.coercion-policy,
+                               indicator-policy: stmt.output-indicator);
                         else
-	                  make(<odbc-record>, 
+                          make(<odbc-record>,
                                rowset-size: result-set.%rowset-size,
-		               statement: stmt,
-		               indicator-policy: stmt.output-indicator)
+                               statement: stmt,
+                               indicator-policy: stmt.output-indicator)
                         end if;
 end function;
 
@@ -188,7 +188,7 @@ define method next-record(result-set :: <odbc-scrollable-result-set>)
 end method;
 
 define method result-set-element(result-set :: <odbc-result-set>,
-				 key :: <object>)
+                                 key :: <object>)
  => (result-set-element :: <object>)
   while (key > result-set.%current-record-number)
     next-record(result-set);
@@ -203,7 +203,7 @@ define method result-set-element(result-set :: <odbc-result-set>,
 end method;
 
 define method result-set-element(result-set :: <odbc-scrollable-result-set>,
-				 key :: <integer>)
+                                 key :: <integer>)
  => (result-set-element :: <object>)
   let cache-size = result-set.%record-cache.size;
   while (key >= cache-size)
@@ -215,9 +215,9 @@ define method result-set-element(result-set :: <odbc-scrollable-result-set>,
   result-set-element;
 end method;
 
-define method no-more-elements?(result-set :: <odbc-scrollable-result-set>, 
-				state :: <result-set-state>, 
-				limit :: <object>)
+define method no-more-elements?(result-set :: <odbc-scrollable-result-set>,
+                                state :: <result-set-state>,
+                                limit :: <object>)
  => (finished :: <boolean>)
   iteration-completed?(result-set, state);
 end method;
@@ -263,15 +263,15 @@ define method next-state(result-set :: <odbc-result-set>, state :: <result-set-s
   state;
 end method;
 
-define function element-key-by-state(result-set :: <odbc-result-set>, 
-				     state :: <result-set-state>)
+define function element-key-by-state(result-set :: <odbc-result-set>,
+                                     state :: <result-set-state>)
  => (key :: <object>)
   state.result-set-key;
 end function;
 
 
-define method element-by-state(result-set :: <odbc-result-set>, 
-			       state :: <result-set-state>)
+define method element-by-state(result-set :: <odbc-result-set>,
+                               state :: <result-set-state>)
  => (result-set-element :: <object>)
   result-set-element(result-set, state.result-set-key);
 end method;
@@ -280,8 +280,8 @@ define function element-by-state-setter()
 end function;
 
 
-define method copy-result-set-state(result-set :: <odbc-result-set>, 
-			            state :: <result-set-state>)
+define method copy-result-set-state(result-set :: <odbc-result-set>,
+                                    state :: <result-set-state>)
  => (new-state :: <result-set-state>)
   make(<result-set-state>,
        result-set-key: state.result-set-key,
@@ -302,26 +302,26 @@ define method forward-iteration-protocol(result-set :: <odbc-result-set>)
   let initial-state = initial-result-set-state(result-set);
   let result-set-limit = result-set-limit(result-set);
   values(initial-state,
-	 result-set-limit,
-	 next-state,
-	 no-more-elements?,
-	 element-key-by-state,
-	 element-by-state,
-	 element-by-state-setter,
-	 copy-result-set-state);
+         result-set-limit,
+         next-state,
+         no-more-elements?,
+         element-key-by-state,
+         element-by-state,
+         element-by-state-setter,
+         copy-result-set-state);
 end method;
 
 
 
-define method element(result-set :: <odbc-result-set>, 
-		      key :: <integer>, #key default = unsupplied())
+define method element(result-set :: <odbc-result-set>,
+                      key :: <integer>, #key default = unsupplied())
   => (result-set-element :: <object>)
   generate-data(result-set);
   let result-set-element = block ()
                              result-set-element(result-set, key);
                            exception (condition :: <data-not-available>)
                              if (unsupplied?(default))
-                               error("ELEMENT outside of range: %=", 
+                               error("ELEMENT outside of range: %=",
                                      format-arguments: list(key));
                              else
                                default
@@ -330,14 +330,14 @@ define method element(result-set :: <odbc-result-set>,
   result-set-element;
 end method;
 
-define method find-key(result-set :: <odbc-result-set>, fn :: <function>, 
-		       #key skip :: <integer> = 0, failure = #f) 
+define method find-key(result-set :: <odbc-result-set>, fn :: <function>,
+                       #key skip :: <integer> = 0, failure = #f)
  => (key :: <object>)
   block (exit)
     for (e keyed-by k in result-set,
-	 index = 0 then index + 1)
+         index = 0 then index + 1)
       if (fn(e) & ((skip := skip - 1) < 0))
-	exit(index)
+        exit(index)
       end if;
     end for;
 

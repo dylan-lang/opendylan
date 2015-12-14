@@ -1,8 +1,8 @@
-Library:      database-stress-tool
-Author:       Andy Armstrong
-Synopsis:     A simple database stress tool
-Files:	  library
-	  module
+Library:  database-stress-tool
+Author:   Andy Armstrong
+Synopsis: A simple database stress tool
+Files:    library
+          module
           stress-tool
           main
 Start-Function: main

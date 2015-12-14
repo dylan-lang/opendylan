@@ -36,27 +36,27 @@ define method forward-iteration-protocol(collection :: <filtered-collection>)
       current-element :: <function>,
       current-element-setter :: <function>,
       copy-state :: <function>)
-  let (source-initial-state :: <object>, 
-       source-limit :: <object>, 
-       source-next-state :: <function>, 
-       source-finished? :: <function>, 
+  let (source-initial-state :: <object>,
+       source-limit :: <object>,
+       source-next-state :: <function>,
+       source-finished? :: <function>,
        source-current-key :: <function>,
-       source-element :: <function>, 
-       source-element-setter :: <function>, 
-       source-copy-state :: <function>) 
+       source-element :: <function>,
+       source-element-setter :: <function>,
+       source-copy-state :: <function>)
    = if (collection.filtered-source == collection)
        next-method();
      else
        forward-iteration-protocol(collection.filtered-source);
      end if;
 
-  local method next-unfiltered-state(c :: <filtered-collection>, 
+  local method next-unfiltered-state(c :: <filtered-collection>,
                                      state :: <filtered-state>,
                                      limit :: <object>)
          => (new-state :: <filtered-state>)
           while (~source-finished?(c.filtered-source, state.source-state,  limit) &
                  c.filter(c, source-element(c.filtered-source, state.source-state)))
-            state.source-state := source-next-state(c.filtered-source, 
+            state.source-state := source-next-state(c.filtered-source,
                                                     state.source-state);
           end while;
           state;
@@ -73,7 +73,7 @@ define method forward-iteration-protocol(collection :: <filtered-collection>)
   local method next-state(c :: <filtered-collection>,
                           state :: <filtered-state>)
          => (new-state :: <filtered-state>)
-          state.source-state := source-next-state(c.filtered-source, 
+          state.source-state := source-next-state(c.filtered-source,
                                                   state.source-state);
           next-unfiltered-state(c, state, source-limit);
         end method;
@@ -112,12 +112,12 @@ define method forward-iteration-protocol(collection :: <filtered-collection>)
         end method;
 
   values(get-initial-state(collection, source-limit),
-	 source-limit,
-	 next-state,
-	 finished-state?,
-	 current-key,
-	 current-element,
-	 element-setter,
-	 copy-state);
+         source-limit,
+         next-state,
+         finished-state?,
+         current-key,
+         current-element,
+         element-setter,
+         copy-state);
 end method;
 

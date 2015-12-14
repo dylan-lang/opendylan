@@ -21,17 +21,17 @@ define test float-test()
     with-transaction()
       let answer = map(curry(\*, 1.1), $a-thru-z-range);
       let query = make(<sql-statement>,
-	  	       text: "select col_3 from dwsql order by col_3");
+                         text: "select col_3 from dwsql order by col_3");
       let result-set = execute(query);
 
       check-true("Double float test",
-	         every?(method(record, answer-item)
+                 every?(method(record, answer-item)
                             check-true("Record element of type float",
                                        instance?(record[0], <float>));
                             float-equal(record[0], answer-item);
-		        end method,
-		        result-set,
-		        answer));
+                        end method,
+                        result-set,
+                        answer));
     end with-transaction;
   end with-connection;
 end test;
@@ -56,7 +56,7 @@ end test;
 define test string-test()
   with-connection(*datatype-connection*)
     with-transaction()
-      let answer = map(integer-to-string, 
+      let answer = map(integer-to-string,
                        make(<range>, from: $a-value, to: $z-value));
       let query = make(<sql-statement>, text: "select col_5 from dwsql");
       let result-set = execute(query);
@@ -75,22 +75,22 @@ end test;
 define method create-datatype-test-table()
   with-connection(*datatype-connection*)
     let statement = make(<sql-statement>,
-			 text: "create table dwsql (col_1 varchar(1), "
-			   "col_2 number, col_3 number, col_4 date, "
+                         text: "create table dwsql (col_1 varchar(1), "
+                           "col_2 number, col_3 number, col_4 date, "
                             "col_5 varchar(5))",
-			 input-indicator: $null-value);
+                         input-indicator: $null-value);
     execute(statement);
 
-    let statement 
+    let statement
       = make(<sql-statement>,
              text: "insert into dwsql(col_1, col_2, col_3, col_4, col_5)"
                     "values(?, ?, ?, ?, ?)");
 
     for (i from as(<integer>, 'a') to as(<integer>, 'z'))
       execute(statement,
-	      parameters: vector(as(<character>, i), 
-				 i, 
-				 i * 1.1,
+              parameters: vector(as(<character>, i),
+                                 i,
+                                 i * 1.1,
                                  make(<date>, year: 1997, month: 1, day: 1),
                                  integer-to-string(i)));
     end for;
@@ -119,7 +119,7 @@ end method;
 
 
 define suite datatype-test-suite(setup-function: datatype-test-setup,
-				 cleanup-function: datatype-test-cleanup)
+                                 cleanup-function: datatype-test-cleanup)
   test float-test;
   test date-test;
   test string-test;

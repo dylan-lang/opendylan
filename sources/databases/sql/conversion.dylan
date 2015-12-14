@@ -6,22 +6,22 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define open generic default-conversion(value :: <object>) 
+define open generic default-conversion(value :: <object>)
  => (converted-value :: <object>);
 
-define method default-conversion(value :: <C-int*>) 
+define method default-conversion(value :: <C-int*>)
  => (converted-value :: <integer>)
   pointer-value(value);
 end method;
 
 
-define method default-conversion(value :: <C-string>) 
+define method default-conversion(value :: <C-string>)
  => (converted-value :: <byte-string>)
   as(<byte-string>, value)
 end method;
 
 
-define method default-conversion(value :: <C-double*>) 
+define method default-conversion(value :: <C-double*>)
  => (converted-value :: <double-float>)
   pointer-value(value);
 end method;
@@ -51,13 +51,13 @@ coerce-integer-to-machine-word(-1))
   end
 end method conversion-helper;
 
-define method default-conversion(value :: <C-signed-long*>) 
+define method default-conversion(value :: <C-signed-long*>)
  => (converted-value :: type-union(big/<integer>, <integer>))
   conversion-helper(pointer-value(value));
 end method;
 
 
-define sideways method as(type == <integer>, value :: <C-signed-long*>) 
+define sideways method as(type == <integer>, value :: <C-signed-long*>)
  => (as-value :: <integer>)
   pointer-value(value);
 end method;
@@ -68,7 +68,7 @@ define method default-conversion(value :: <C-signed-short*>)
 end method;
 
 define sideways method as(type == <integer>, value :: <C-signed-short*>)
- => (as-value :: <integer>); 
+ => (as-value :: <integer>);
   pointer-value(value);
 end method;
 
@@ -86,32 +86,32 @@ end method;
 define constant $default-coercion = #"default-coercion";
 define constant $no-coercion = #"no-coercion";
 
-define constant <coercion-policy> 
+define constant <coercion-policy>
   = type-union(singleton($default-coercion),singleton($no-coercion),
-	       <sequence>, <object>);
+               <sequence>, <object>);
 
 
-define generic convert-value(coercion-policy :: <coercion-policy>, 
-			     value :: <object>, key :: <integer>)
+define generic convert-value(coercion-policy :: <coercion-policy>,
+                             value :: <object>, key :: <integer>)
  => (converted-value :: <object>);
 
 
-define method convert-value(coercion-policy == $default-coercion, 
-			    value :: <object>, key :: <integer>)
+define method convert-value(coercion-policy == $default-coercion,
+                            value :: <object>, key :: <integer>)
  => (converted-value :: <object>)
   default-conversion(value)
 end method;
 
 
-define method convert-value(coercion-policy :: <sequence>, 
-			    value :: <object>, key :: <integer>)
+define method convert-value(coercion-policy :: <sequence>,
+                            value :: <object>, key :: <integer>)
  => (converted-value :: <object>)
   let not-found = make(<pair>);
   let conversion-function = element(coercion-policy, key, default: not-found);
   if (conversion-function ~== not-found)
     if (instance?(conversion-function, <function>) = #f)
       error("Coercion-policy sequence contains "
-	      "an item that is not a function.");
+              "an item that is not a function.");
     end if;
     conversion-function(value);
   else
@@ -122,26 +122,26 @@ end method;
 
 
 define generic acquire-null-value(indicator :: <object>,
-				  index :: <integer>)
+                                  index :: <integer>)
  => (null-value :: <object>);
 
 
 define method acquire-null-value(indicator :: <object>,
-				 index :: <integer>)
+                                 index :: <integer>)
  => (null-value :: <object>);
   indicator;
 end method;
 
 
 define method acquire-null-value(indicator == $no-indicator,
-				 index :: <integer>)
+                                 index :: <integer>)
  => (null-value :: <object>);
     error("no output indicator provided.\n");  //+++ throw proper condition
-end method; 
+end method;
 
 
 define method acquire-null-value(indicator :: <sequence>,
-				 index :: <integer>)
+                                 index :: <integer>)
  => (null-value :: <object>);
   let not-found = make(<pair>);
   let null-value = element(indicator, index, default: not-found);
@@ -153,7 +153,7 @@ define method acquire-null-value(indicator :: <sequence>,
 end method;
 
 
-define sideways method as(type == <integer>, 
+define sideways method as(type == <integer>,
                  c-float-value :: type-union(<c-float*>, <c-double*>))
   => (as-value :: <integer>)
   let dylan-float = pointer-value(c-float-value);

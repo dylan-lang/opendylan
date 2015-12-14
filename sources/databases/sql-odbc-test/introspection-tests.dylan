@@ -17,7 +17,7 @@ define test resource-stress-test()
         end for;
       end for;
     end for;
-  end for; 
+  end for;
 end test;
 
 define test simple-introspection-test()
@@ -33,19 +33,19 @@ define test simple-introspection-test()
         end if;
       end for;
     end for;
-  end for; 
+  end for;
   check-true("dwsql table found", table-found?);
 end test;
 
 define method examine-columns(a-table :: <sql-table>)
  => ()
-  check-true("Table name is dwsql", 
+  check-true("Table name is dwsql",
              as-lowercase(a-table.database-object-name) = "dwsql");
   check-true("Table dwsql has two columns", a-table.size = 2);
   for (column keyed-by column-index :: <column> in a-table)
     check-true("Column is col_1 or col_2",
                as-lowercase(column.database-object-name) = "col_1"
-	       | as-lowercase(column.database-object-name) = "col_2");
+               | as-lowercase(column.database-object-name) = "col_2");
 
     if (*detect-null-column* = #t)
       select (as-lowercase(column.database-object-name) by \=)
@@ -63,14 +63,14 @@ define method examine-indices(table :: <sql-table>)
   for (index in indexes(table))
     count := count + 1;
     let index-name = as-lowercase(index.database-object-name);
-    check-true("Index has a name we expected", 
+    check-true("Index has a name we expected",
                index-name = "index1" | index-name = "index2" | index-name = "indexboth");
     select (index-name by \=)
       "index1" =>
         check-true("Index1 - column count = 1", index.fields.size = 1);
         check-true("Index1 - Indexed field is col_1",
                    as-lowercase(index.fields[0].database-object-name) = "col_1");
-      "index2" => 
+      "index2" =>
         check-true("Index1 - column count = 1", index.fields.size = 1);
         check-true("Index1 - Indexed field is col_2",
                    as-lowercase(index.fields[0].database-object-name) = "col_2");
@@ -80,7 +80,7 @@ define method examine-indices(table :: <sql-table>)
                    begin
                      let field-0 = as-lowercase(index.fields[0].database-object-name);
                      let field-1 = as-lowercase(index.fields[1].database-object-name);
-                     (field-0 = "col_1" & field-1 = "col_2") | 
+                     (field-0 = "col_1" & field-1 = "col_2") |
                        (field-0 = "col_2" & field-1 = "col_1")
                    end);
     end select

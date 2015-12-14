@@ -12,18 +12,18 @@ define method succeeded(x)
 end;
 
 define macro c-func-with-err-definer
-  { define c-func-with-err ?:name ?options:* end } 
+  { define c-func-with-err ?:name ?options:* end }
 =>
   { define c-function ?name ## "-c-func" ?options end;
     define method ?name (#rest args)
-	let (result, #rest more-results) = apply(?name ## "-c-func", args);
-	if (*trace-odbc-functions* = #t)
-	  format-out("%s with %s - return-code: %d\n",
-		     if (succeeded(result)) "Success" else "No success" end if,
-		     ?"name",
-		     result);
-	end if;
-	apply (values, result, more-results);
+        let (result, #rest more-results) = apply(?name ## "-c-func", args);
+        if (*trace-odbc-functions* = #t)
+          format-out("%s with %s - return-code: %d\n",
+                     if (succeeded(result)) "Success" else "No success" end if,
+                     ?"name",
+                     result);
+        end if;
+        apply (values, result, more-results);
     end method;  }
 end macro;
 

@@ -10,18 +10,18 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // As of version 1, the gc has a limitation in that objects
 // referenced only by a weak table are not collected if the
 // weak table is referenced during a gc cycle. What this means
-// for the ODBC-SQL library is that finalize methods are not 
+// for the ODBC-SQL library is that finalize methods are not
 // called and ODBC resources are not deallocated resulting in
 // an application that runs progressively slower and eventually
 // crashing. Sigh.
 //
-// The set-finalize-notification and notify-of-finalization 
+// The set-finalize-notification and notify-of-finalization
 // functions are debugging tools. The function passed to
 // set-finalize-notification will be called whenever a finalize
 // method is invoked. And, if this function is never called then
 // one can assume that the gc limitation is whacking you on the
-// head and that explicit calls to finalize is needed in the 
-// client application. In general, a client application only 
+// head and that explicit calls to finalize is needed in the
+// client application. In general, a client application only
 // needs to call finalize on instances of <odbc-sql-statement>.
 // Resources associated with instances of <odbc-connection> are
 // released when the connection is disconnected.
@@ -64,15 +64,15 @@ define concrete class <odbc-dbms> (<dbms>)
    // SQL Server needs a rowset-size > 1 to create server-side cursor which allows
    // multiple statements to be executed on a single cursor (can you say hack!). One
    // thing I don't understand is that SQL Server and Oracle are not retrieving rowsets.
-   // Each row is being retrieved and stored in the bindings. If rowsets were being 
+   // Each row is being retrieved and stored in the bindings. If rowsets were being
    // retrieve, I would expect that the records being retrieved (equal to rowset-size)
    // is stored in the bindings but since there is more than one row, the extras would
    // also be written to memory overwriting whatever was there. This doesn't seem to be
-   // happening. 
+   // happening.
    slot %dbms-rowset-size :: <integer> = 1;
 end class;
 
-define method initialize(dbms :: <odbc-dbms>, #key) 
+define method initialize(dbms :: <odbc-dbms>, #key)
  => ()
   next-method();
 
@@ -80,24 +80,24 @@ define method initialize(dbms :: <odbc-dbms>, #key)
 
   let (return-code, environment-handle) =
     SQLAllocHandle($sql-handle-env,null-pointer(<SQLHANDLE>));
-  assert-odbc-goodness(return-code, 
-		      environment-handle, 
-		      $null-connection-handle,
-		      $null-statement-handle);
+  assert-odbc-goodness(return-code,
+                      environment-handle,
+                      $null-connection-handle,
+                      $null-statement-handle);
   dbms.%environment-handle := environment-handle;
   let (return-code, environment-handle) =
    SQLSetEnvAttr(environment-handle, $sql-attr-odbc-version, $sql-ov-odbc3, 0);
-  assert-odbc-goodness(return-code, 
-		      environment-handle, 
-		      $null-connection-handle,
-		      $null-statement-handle);
+  assert-odbc-goodness(return-code,
+                      environment-handle,
+                      $null-connection-handle,
+                      $null-statement-handle);
 
   finalize-when-unreachable(dbms);
 end method;
 
 define constant $dbms-finalization-lock :: <lock> = make(<lock>);
 // See comment in sql-statement.dylan on $sql-statement-finalization-lock.
-define method finalize(dbms :: <odbc-dbms>) 
+define method finalize(dbms :: <odbc-dbms>)
  => ()
   do(finalize, dbms.%allocated-connections.key-sequence);
 
@@ -106,10 +106,10 @@ define method finalize(dbms :: <odbc-dbms>)
       let return-code = SQLFreeHandle($sql-handle-env, dbms.%environment-handle);
       // if FreeEnv failed, the environment-handle must be passed to
       // assert-odbc-goodness in order to get the error from SQLError.
-     assert-odbc-goodness(return-code, 
-		          dbms.%environment-handle,
-		          $null-connection-handle,
-		          $null-statement-handle);
+     assert-odbc-goodness(return-code,
+                          dbms.%environment-handle,
+                          $null-connection-handle,
+                          $null-statement-handle);
       dbms.%environment-handle := $null-environment-handle;
     end if;
   end with-lock;
@@ -118,7 +118,7 @@ define method finalize(dbms :: <odbc-dbms>)
   next-method();
 end method;
 
-define method dbms-name(dbms :: <odbc-dbms>, 
+define method dbms-name(dbms :: <odbc-dbms>,
                         #key connection :: <odbc-connection> = default-connection())
  => (name :: <string>)
   let (return-code, name) = nice-SQLGetInfo(connection.%connection-handle,

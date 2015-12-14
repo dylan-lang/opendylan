@@ -21,7 +21,7 @@ define sealed class <odbc-diagnostic-error> (<odbc-diagnostic-problem>,
                                              <error>)
 end class;
 
-define function return-code-name(return-code :: <object>) 
+define function return-code-name(return-code :: <object>)
  => (name :: <string>)
   select (return-code)
     $sql-success-with-info => "sql-success-with-info";
@@ -55,7 +55,7 @@ end method;
 
 
 define sealed concrete class <odbc-unexpected-return-code> (<error>)
-  constant slot unexpected-return-code :: <object>, 
+  constant slot unexpected-return-code :: <object>,
     required-init-keyword: unexpected-return-code:;
 end class;
 
@@ -74,11 +74,11 @@ define sealed generic assert-diagnostic-goodness(diag :: <object>,
 
 
 define method assert-diagnostic-goodness(diagnostic :: <object>,
-	                                 return-code :: <object>)
+                                         return-code :: <object>)
  => ()
   if (return-code ~= $sql-success)
     select (return-code)
-      $sql-success-with-info 
+      $sql-success-with-info
         => signal(make(<odbc-diagnostic-warning>,
                        problem-diagnostic: diagnostic,
                        diagnostic-return-code: return-code));
@@ -118,11 +118,11 @@ end method;
 define method dynamic-function(diag :: <odbc-diagnostic>)
  => (dynamic-function :: <string>)
   block ()
-    let (return-code, dynamic-function) = 
+    let (return-code, dynamic-function) =
       nice-SQLGetDiagField(diag.handle-type,
-	  		   diag.handle,
-			   0,
-			   $sql-diag-dynamic-function);
+                             diag.handle,
+                           0,
+                           $sql-diag-dynamic-function);
     assert-diagnostic-goodness(diag, return-code);
 
     dynamic-function;
@@ -141,11 +141,11 @@ end method;
 define method row-count(diag :: <odbc-diagnostic>)
  => (row-count :: <integer>);
   block ()
-    let (return-code, row-count) = 
+    let (return-code, row-count) =
       nice-SQLGetDiagField(diag.handle-type,
-			   diag.handle,
-			   0,
-			   $sql-diag-row-count);
+                           diag.handle,
+                           0,
+                           $sql-diag-row-count);
     assert-diagnostic-goodness(diag, return-code);
     row-count;
   exception (condition :: <odbc-diagnostic-error>)
@@ -158,9 +158,9 @@ define method diagnostic-count(diag :: <odbc-diagnostic>)
  => (diagnostic-count :: <integer>);
   let (return-code, diagnostic-count) =
     nice-SQLGetDiagField(diag.handle-type,
-			 diag.handle,
-			 0,
-			 $sql-diag-number);
+                         diag.handle,
+                         0,
+                         $sql-diag-number);
   assert-diagnostic-goodness(diag, return-code);
 
   diagnostic-count;
@@ -169,11 +169,11 @@ end method;
 
 define method returned-sqlstate(diag :: <odbc-diagnostic>)
  => (returned-sqlstate :: <string>);
-  let (return-code, returned-sqlstate) = 
+  let (return-code, returned-sqlstate) =
     nice-SQLGetDiagField(diag.handle-type,
-			 diag.handle,
-			 diag.condition-number, 
-			 $sql-diag-sqlstate);
+                         diag.handle,
+                         diag.condition-number,
+                         $sql-diag-sqlstate);
   assert-diagnostic-goodness(diag, return-code);
 
   returned-sqlstate
@@ -182,11 +182,11 @@ end method;
 
 define method class-origin(diag :: <odbc-diagnostic>)
  => (class-origin :: <string>);
-  let (return-code, class-origin) = 
+  let (return-code, class-origin) =
     nice-SQLGetDiagField(diag.handle-type,
-			 diag.handle,
-			 diag.condition-number, 
-			 $sql-diag-class-origin);
+                         diag.handle,
+                         diag.condition-number,
+                         $sql-diag-class-origin);
   assert-diagnostic-goodness(diag, return-code);
 
   class-origin
@@ -195,11 +195,11 @@ end method;
 
 define method subclass-origin(diag :: <odbc-diagnostic>)
  => (subclass-origin :: <string>);
-  let (return-code, subclass-origin) = 
+  let (return-code, subclass-origin) =
     nice-SQLGetDiagField(diag.handle-type,
-			 diag.handle,
-			 diag.condition-number, 
-			 $sql-diag-subclass-origin);
+                         diag.handle,
+                         diag.condition-number,
+                         $sql-diag-subclass-origin);
   assert-diagnostic-goodness(diag, return-code);
 
   subclass-origin
@@ -208,11 +208,11 @@ end method;
 
 define method connection-name(diag :: <odbc-diagnostic>)
  => (connection-name :: <string>);
-  let (return-code, connection-name) = 
+  let (return-code, connection-name) =
     nice-SQLGetDiagField(diag.handle-type,
-			 diag.handle,
-			 diag.condition-number, 
-			 $sql-diag-connection-name);
+                         diag.handle,
+                         diag.condition-number,
+                         $sql-diag-connection-name);
   assert-diagnostic-goodness(diag, return-code);
 
   connection-name
@@ -221,11 +221,11 @@ end method;
 
 define method message-text(diag :: <odbc-diagnostic>)
  => (message-text :: <string>);
-  let (return-code, message-text) = 
+  let (return-code, message-text) =
     nice-SQLGetDiagField(diag.handle-type,
-			 diag.handle,
-			 diag.condition-number, 
-			 $sql-diag-message-text);
+                         diag.handle,
+                         diag.condition-number,
+                         $sql-diag-message-text);
   assert-diagnostic-goodness(diag, return-code);
 
   message-text
@@ -237,11 +237,11 @@ define method next-dbms-diagnostic(diag :: <odbc-diagnostic>)
   if (diag.condition-number >= diag-count)
     #f
   else
-    let (return-code, sqlstate) = 
+    let (return-code, sqlstate) =
       nice-SQLGetDiagField(diag.handle-type,
-	                   diag.handle,
-	                   diag.condition-number + 1, 
-			   $sql-diag-sqlstate);
+                           diag.handle,
+                           diag.condition-number + 1,
+                           $sql-diag-sqlstate);
     assert-diagnostic-goodness(diag, return-code);
 
     let condition-type = find-diagnostic($diagnostic-table,
@@ -253,7 +253,7 @@ define method next-dbms-diagnostic(diag :: <odbc-diagnostic>)
     else
       make(condition-type,
            condition-number: diag.condition-number + 1,
-	   handle-type: diag.handle-type,
+           handle-type: diag.handle-type,
            handle: diag.handle);
     end if;
   end if;
@@ -292,11 +292,11 @@ end method;
 
 define method native-error-code(diag :: <odbc-diagnostic>)
   => (native-error-code :: <integer>);
-  let (return-code, native-error-code) = 
+  let (return-code, native-error-code) =
     nice-SQLGetDiagField(diag.handle-type,
-			 diag.handle,
-			 diag.condition-number, 
-			 $sql-diag-native);
+                         diag.handle,
+                         diag.condition-number,
+                         $sql-diag-native);
   assert-diagnostic-goodness(diag, return-code);
 
   native-error-code
@@ -305,11 +305,11 @@ end method;
 
 define method column-number(diag :: <odbc-diagnostic>)
   => (column-number :: <integer>);
-  let (return-code, column-number) = 
+  let (return-code, column-number) =
     nice-SQLGetDiagField(diag.handle-type,
-			 diag.handle,
-			 diag.condition-number, 
-			 $sql-diag-column-number);
+                         diag.handle,
+                         diag.condition-number,
+                         $sql-diag-column-number);
   assert-diagnostic-goodness(diag, return-code);
 
   column-number;
@@ -318,11 +318,11 @@ end method;
 
 define method row-number(diag :: <odbc-diagnostic>)
   => (row-number :: <integer>);
-  let (return-code, row-number) = 
+  let (return-code, row-number) =
     nice-SQLGetDiagField(diag.handle-type,
-			 diag.handle,
-			 diag.condition-number, 
-			 $sql-diag-row-number);
+                         diag.handle,
+                         diag.condition-number,
+                         $sql-diag-row-number);
   assert-diagnostic-goodness(diag, return-code);
 
   row-number;
@@ -331,11 +331,11 @@ end method;
 
 define method server-name(diag :: <odbc-diagnostic>)
   => (server-name :: <string>);
-  let (return-code, server-name) = 
+  let (return-code, server-name) =
     nice-SQLGetDiagField(diag.handle-type,
-			 diag.handle,
-			 diag.condition-number, 
-			 $sql-diag-server-name);
+                         diag.handle,
+                         diag.condition-number,
+                         $sql-diag-server-name);
   assert-diagnostic-goodness(diag,  return-code);
 
   server-name;
@@ -354,7 +354,7 @@ define sealed class <odbc-dynamic-sql-error>
 end class;
 
 
-define sealed class <odbc-connection-exception> 
+define sealed class <odbc-connection-exception>
     (<odbc-diagnostic>, <connection-exception>)
   constant slot connection-exception-dbms :: <object>,
     init-keyword: dbms:;
@@ -376,28 +376,28 @@ define sealed class <odbc-cardinality-violation>
 end class;
 
 
-define sealed class <odbc-connection-does-not-exist> 
-    (<odbc-diagnostic>, <connection-does-not-exist>) 
+define sealed class <odbc-connection-does-not-exist>
+    (<odbc-diagnostic>, <connection-does-not-exist>)
 end class;
 
-define sealed class <odbc-connection-failure> 
-    (<odbc-diagnostic>, <connection-failure>) 
+define sealed class <odbc-connection-failure>
+    (<odbc-diagnostic>, <connection-failure>)
 end class;
 
-define sealed class <odbc-connection-name-in-use> 
+define sealed class <odbc-connection-name-in-use>
     (<odbc-connection-exception>, <connection-name-in-use>)
 end class;
 
-define sealed class <odbc-sql-client-unable-to-establish-connection> 
+define sealed class <odbc-sql-client-unable-to-establish-connection>
     (<odbc-connection-exception>, <sql-client-unable-to-establish-connection>)
 end class;
 
-define sealed class <odbc-sql-server-rejected-establishment-of-connection> 
+define sealed class <odbc-sql-server-rejected-establishment-of-connection>
     (<odbc-connection-exception>,
      <sql-server-rejected-establishment-of-connection>)
 end class;
 
-define sealed class <odbc-transaction-resolution-unknown> 
+define sealed class <odbc-transaction-resolution-unknown>
     (<odbc-connection-exception>, <transaction-resolution-unknown>)
 end class;
 
@@ -405,186 +405,186 @@ define sealed class <odbc-cursor-operation-conflict>
    (<odbc-diagnostic>, <cursor-operation-conflict>)
 end class;
 
-define sealed class <odbc-data-exception> 
+define sealed class <odbc-data-exception>
     (<odbc-diagnostic>, <data-exception>)
 end class;
 
-define sealed class <odbc-character-not-in-repertoire> 
+define sealed class <odbc-character-not-in-repertoire>
     (<odbc-data-exception>, <character-not-in-repertoire>)
 end class;
 
-define sealed class <odbc-datetime-field-overflow> 
+define sealed class <odbc-datetime-field-overflow>
     (<odbc-data-exception>, <datetime-field-overflow>)
 end class;
 
-define sealed class <odbc-division-by-zero> 
+define sealed class <odbc-division-by-zero>
     (<odbc-data-exception>, <division-by-zero>)
 end class;
 
-define sealed class <odbc-error-in-assignment> 
+define sealed class <odbc-error-in-assignment>
     (<odbc-data-exception>, <error-in-assignment>)
 end class;
 
-define sealed class <odbc-indicator-overflow> 
+define sealed class <odbc-indicator-overflow>
     (<odbc-data-exception>, <indicator-overflow>)
 end class;
 
-define sealed class <odbc-interval-field-overflow> 
+define sealed class <odbc-interval-field-overflow>
     (<odbc-data-exception>, <interval-field-overflow>)
 end class;
 
-define sealed class <odbc-invalid-character-value-for-cast> 
+define sealed class <odbc-invalid-character-value-for-cast>
     (<odbc-data-exception>, <invalid-character-value-for-cast>)
 end class;
 
-define sealed class <odbc-invalid-datetime-format> 
+define sealed class <odbc-invalid-datetime-format>
     (<odbc-data-exception>, <invalid-datetime-format>)
 end class;
 
-define sealed class <odbc-invalid-escape-character> 
+define sealed class <odbc-invalid-escape-character>
     (<odbc-data-exception>, <invalid-escape-character>)
 end class;
 
-define sealed class <odbc-invalid-escape-sequence> 
+define sealed class <odbc-invalid-escape-sequence>
     (<odbc-data-exception>, <invalid-escape-sequence>)
 end class;
 
-define sealed class <odbc-invalid-fetch-sequence> 
+define sealed class <odbc-invalid-fetch-sequence>
     (<odbc-data-exception>, <invalid-fetch-sequence>)
 end class;
 
-define sealed class <odbc-invalid-parameter-value> 
+define sealed class <odbc-invalid-parameter-value>
     (<odbc-data-exception>, <invalid-parameter-value>)
 end class;
 
-define sealed class <odbc-invalid-time-zone-displacement-value> 
+define sealed class <odbc-invalid-time-zone-displacement-value>
     (<odbc-data-exception>, <invalid-time-zone-displacement-value>)
 end class;
 
-define sealed class <odbc-null-value-no-indicator-parameter> 
+define sealed class <odbc-null-value-no-indicator-parameter>
     (<odbc-data-exception>, <null-value-no-indicator-parameter>)
 end class;
 
-define sealed class <odbc-numeric-value-out-of-range> 
+define sealed class <odbc-numeric-value-out-of-range>
     (<odbc-data-exception>, <numeric-value-out-of-range>)
 end class;
 
-define sealed class <odbc-string-data-length-mismatch> 
+define sealed class <odbc-string-data-length-mismatch>
     (<odbc-data-exception>, <string-data-length-mismatch>)
 end class;
 
-define sealed class <odbc-string-data-right-truncation> 
+define sealed class <odbc-string-data-right-truncation>
     (<odbc-data-exception>, <string-data-right-truncation>)
 end class;
 
-define sealed class <odbc-substring-error> 
+define sealed class <odbc-substring-error>
     (<odbc-data-exception>, <substring-error>)
 end class;
 
-define sealed class <odbc-trim-error> 
+define sealed class <odbc-trim-error>
     (<odbc-data-exception>, <trim-error>)
 end class;
 
-define sealed class <odbc-unterminated-C-string> 
+define sealed class <odbc-unterminated-C-string>
     (<odbc-data-exception>, <unterminated-C-string>)
 end class;
 
-define sealed class <odbc-dependent-privilege-descriptors-still-exist> 
+define sealed class <odbc-dependent-privilege-descriptors-still-exist>
     (<odbc-diagnostic>, <dependent-privilege-descriptors-still-exist>)
 end class;
 
-define sealed class <odbc-cursor-specification-cannot-be-executed> 
+define sealed class <odbc-cursor-specification-cannot-be-executed>
     (<odbc-dynamic-sql-error>, <cursor-specification-cannot-be-executed>)
 end class;
 
-define sealed class <odbc-invalid-descriptor-count> 
+define sealed class <odbc-invalid-descriptor-count>
     (<odbc-dynamic-sql-error>, <invalid-descriptor-count>)
 end class;
 
-define sealed class <odbc-invalid-descriptor-index> 
+define sealed class <odbc-invalid-descriptor-index>
     (<odbc-dynamic-sql-error>, <invalid-descriptor-index>)
 end class;
 
-define sealed class <odbc-prepared-statement-not-a-cursor-specification> 
+define sealed class <odbc-prepared-statement-not-a-cursor-specification>
     (<odbc-dynamic-sql-error>, <prepared-statement-not-a-cursor-specification>)
 end class;
 
-define sealed class <odbc-restricted-data-type-attribute-violation> 
+define sealed class <odbc-restricted-data-type-attribute-violation>
     (<odbc-dynamic-sql-error>, <restricted-data-type-attribute-violation>)
 end class;
 
-define sealed class 
+define sealed class
   <odbc-using-clause-does-not-match-dynamic-parameter-specification>
      (<odbc-dynamic-sql-error>,
       <using-clause-does-not-match-dynamic-parameter-specification>)
 end class;
 
-define sealed class <odbc-using-clause-does-not-match-target-specification> 
-    (<odbc-dynamic-sql-error>, 
+define sealed class <odbc-using-clause-does-not-match-target-specification>
+    (<odbc-dynamic-sql-error>,
      <using-clause-does-not-match-target-specification>)
 end class;
 
-define sealed class <odbc-using-clause-required-for-dynamic-parameters> 
+define sealed class <odbc-using-clause-required-for-dynamic-parameters>
     (<odbc-dynamic-sql-error>, <using-clause-required-for-dynamic-parameters>)
 end class;
 
-define sealed class <odbc-using-clause-required-for-result-fields> 
+define sealed class <odbc-using-clause-required-for-result-fields>
     (<odbc-dynamic-sql-error>, <using-clause-required-for-result-fields>)
 end class;
 
-define sealed class <odbc-feature-not-supported> 
+define sealed class <odbc-feature-not-supported>
     (<odbc-diagnostic>, <feature-not-supported>)
 end class;
 
-define sealed class <odbc-multiple-server-transaction> 
+define sealed class <odbc-multiple-server-transaction>
     (<odbc-feature-not-supported>, <multiple-server-transaction>)
 end class;
 
-define sealed class <odbc-integrity-constraint-violation> 
+define sealed class <odbc-integrity-constraint-violation>
     (<odbc-diagnostic>, <integrity-constraint-violation>)
 end class;
 
-define sealed class <odbc-invalid-authorization-specification> 
+define sealed class <odbc-invalid-authorization-specification>
     (<odbc-diagnostic>, <invalid-authorization-specification>)
 end class;
 
-define sealed class <odbc-invalid-catalog-name> 
+define sealed class <odbc-invalid-catalog-name>
     (<odbc-diagnostic>, <invalid-catalog-name>)
 end class;
 
-define sealed class <odbc-invalid-character-set-name> 
+define sealed class <odbc-invalid-character-set-name>
     (<odbc-diagnostic>, <invalid-character-set-name>)
 end class;
 
-define sealed class <odbc-invalid-condition-number> 
+define sealed class <odbc-invalid-condition-number>
     (<odbc-diagnostic>, <invalid-condition-number>)
 end class;
 
-define sealed class <odbc-invalid-cursor-name> 
+define sealed class <odbc-invalid-cursor-name>
     (<odbc-diagnostic>, <invalid-cursor-name>)
 end class;
 
-define sealed class <odbc-invalid-schema-name> 
+define sealed class <odbc-invalid-schema-name>
     (<odbc-diagnostic>, <invalid-schema-name>)
 end class;
 
-define sealed class <odbc-invalid-sql-descriptor-name> 
+define sealed class <odbc-invalid-sql-descriptor-name>
     (<odbc-diagnostic>, <invalid-sql-descriptor-name>)
 end class;
 
-define sealed class <odbc-invalid-sql-statement-name> 
+define sealed class <odbc-invalid-sql-statement-name>
     (<odbc-diagnostic>, <invalid-sql-statement-name>)
 end class;
 
-define sealed class <odbc-invalid-transaction-state> 
+define sealed class <odbc-invalid-transaction-state>
     (<odbc-diagnostic>, <invalid-transaction-state>)
 end class;
 
-define sealed class <odbc-invalid-transaction-termination> 
+define sealed class <odbc-invalid-transaction-termination>
     (<odbc-diagnostic>, <invalid-transaction-termination>)
 end class;
 
-define sealed class <odbc-no-data> 
+define sealed class <odbc-no-data>
     (<odbc-diagnostic>, <no-data>)
 end class;
 
@@ -592,22 +592,22 @@ define sealed class <odbc-remote-database-access>
     (<odbc-diagnostic>, <remote-database-access>)
 end class;
 
-define sealed class <odbc-successful-completion> 
+define sealed class <odbc-successful-completion>
     (<odbc-diagnostic>, <successful-completion>)
 end class;
 
-define sealed class <odbc-syntax-error-or-access-rule-violation> 
+define sealed class <odbc-syntax-error-or-access-rule-violation>
     (<odbc-diagnostic>, <syntax-error-or-access-rule-violation>)
 end class;
 
 define sealed class
-     <odbc-syntax-error-or-access-rule-violation-in-direct-sql-statement> 
+     <odbc-syntax-error-or-access-rule-violation-in-direct-sql-statement>
      (<odbc-diagnostic>,
       <syntax-error-or-access-rule-violation-in-direct-sql-statement>)
 end class;
 
 define sealed class
-    <odbc-syntax-error-or-access-rule-violation-in-dynamic-sql-statement> 
+    <odbc-syntax-error-or-access-rule-violation-in-dynamic-sql-statement>
     (<odbc-diagnostic>,
      <syntax-error-or-access-rule-violation-in-dynamic-sql-statement>)
 end class;
@@ -616,9 +616,9 @@ define sealed class <odbc-transaction-rollback>
     (<odbc-diagnostic>, <transaction-rollback>)
 end class;
 
-define sealed class 
+define sealed class
   <odbc-transaction-rollback-due-to-integrity-constraint-violation>
-    (<odbc-transaction-rollback>, 
+    (<odbc-transaction-rollback>,
      <transaction-rollback-due-to-integrity-constraint-violation>)
 end class;
 
@@ -627,15 +627,15 @@ define sealed class <odbc-transaction-rollback-due-to-serialization-failure>
      <transaction-rollback-due-to-serialization-failure>)
 end class;
 
-define sealed class <odbc-statement-completion-unknown> 
+define sealed class <odbc-statement-completion-unknown>
     (<odbc-transaction-rollback>, <statement-completion-unknown>)
 end class;
 
-define sealed class <odbc-triggered-data-change-violation> 
+define sealed class <odbc-triggered-data-change-violation>
     (<odbc-diagnostic>, <triggered-data-change-violation>)
 end class;
 
-define sealed class <odbc-warning-cursor-operation-conflict> 
+define sealed class <odbc-warning-cursor-operation-conflict>
     (<odbc-sql-warning>, <warning-cursor-operation-conflict>)
 end class;
 
@@ -643,41 +643,41 @@ define sealed class <odbc-disconnect-error>
     (<odbc-sql-warning>, <disconnect-error>)
 end class;
 
-define sealed class <odbc-implicit-zero-bit-padding> 
+define sealed class <odbc-implicit-zero-bit-padding>
     (<odbc-sql-warning>, <implicit-zero-bit-padding>)
 end class;
 
-define sealed class <odbc-insufficient-item-descriptor-areas> 
+define sealed class <odbc-insufficient-item-descriptor-areas>
     (<odbc-sql-warning>, <insufficient-item-descriptor-areas>)
 end class;
 
-define sealed class <odbc-null-value-eliminated-in-set-function> 
+define sealed class <odbc-null-value-eliminated-in-set-function>
     (<odbc-sql-warning>, <null-value-eliminated-in-set-function>)
 end class;
 
-define sealed class <odbc-privilege-not-granted> 
+define sealed class <odbc-privilege-not-granted>
     (<odbc-sql-warning>, <privilege-not-granted>)
 end class;
 
-define sealed class <odbc-privilege-not-revoked> 
+define sealed class <odbc-privilege-not-revoked>
     (<odbc-sql-warning>, <privilege-not-revoked>)
 end class;
 
-define sealed class <odbc-query-expression-too-long-for-information-schema> 
-    (<odbc-sql-warning>, 
+define sealed class <odbc-query-expression-too-long-for-information-schema>
+    (<odbc-sql-warning>,
      <query-expression-too-long-for-information-schema>)
 end class;
 
-define sealed class <odbc-search-condition-too-long-for-information-schema> 
+define sealed class <odbc-search-condition-too-long-for-information-schema>
     (<odbc-sql-warning>,
      <search-condition-too-long-for-information-schema>)
 end class;
 
-define sealed class <odbc-warning-string-data-right-truncation> 
+define sealed class <odbc-warning-string-data-right-truncation>
     (<odbc-sql-warning>, <warning-string-data-right-truncation>)
 end class;
 
-define sealed class <odbc-with-check-option-violation> 
+define sealed class <odbc-with-check-option-violation>
     (<odbc-diagnostic>, <with-check-option-violation>)
 end class;
 
@@ -700,7 +700,7 @@ define sealed class <odbc-option-value-changed> (<odbc-sql-warning>)
   keyword subclass-code: = "S02";
 end class;
 
-define sealed class 
+define sealed class
     <odbc-attempt-to-fetch-before-result-set-returned-the-first-rowset>
     (<odbc-sql-warning>)
   keyword class-code: = "01";
@@ -728,7 +728,7 @@ define sealed class <odbc-invalid-use-of-default-parameter>
   keyword subclass-code: = "S01";
 end class;
 
-define sealed class <odbc-communication-link-failure> 
+define sealed class <odbc-communication-link-failure>
     (<odbc-connection-exception>)
   keyword class-code: = "08";
   keyword subclass-code: = "S01";
@@ -877,7 +877,7 @@ define sealed class <odbc-cannot-modify-an-implementation-row-descriptor>
   keyword subclass-code: = "016";
 end class;
 
-define sealed class 
+define sealed class
     <odbc-invalid-use-of-an-atumatically-allocated-descriptor-handle>
     (<odbc-diagnostic>)
   keyword class-code: = "HY";
@@ -1143,10 +1143,10 @@ end class;
 define constant $odbc-diagnostics-key = #"odbc-dbms";
 
 
-define function install-odbc-diagnostics(table :: <diagnostic-table>) 
+define function install-odbc-diagnostics(table :: <diagnostic-table>)
  => ()
   local method install-diag(class :: <class>) => ()
-	  install-diagnostic(table, class, key: $odbc-diagnostics-key)
+          install-diagnostic(table, class, key: $odbc-diagnostics-key)
         end method;
 
   install-diagnostic-key($odbc-diagnostics-key);

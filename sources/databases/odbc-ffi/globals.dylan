@@ -8,6 +8,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //This file should probably go away.  Something more clever should be
 //done about global state.
 
-define variable henv = $SQL-NULL-HENV;  
-define variable hdbc = $SQL-NULL-HDBC;  
-define variable hstmt = $SQL-NULL-HSTMT; 
+define variable henv = $SQL-NULL-HENV;
+define variable hdbc = $SQL-NULL-HDBC;
+define variable hstmt = $SQL-NULL-HSTMT;

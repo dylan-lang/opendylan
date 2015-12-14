@@ -13,32 +13,32 @@ define test big-int-insertion-test()
   with-dbms(*the-dbms*)
     with-connection(*big-int-connection*)
       with-transaction()
-	let statement 
-	  = make(<sql-statement>,
-		 text: "insert into dwsql(col_1, col_2)"
-			"values(?, ?)");
-	for (i from 0 to 10)
-	  execute(statement,
-		  parameters: vector(i, i + $my-large-integer));
-	end for;
+        let statement
+          = make(<sql-statement>,
+                 text: "insert into dwsql(col_1, col_2)"
+                        "values(?, ?)");
+        for (i from 0 to 10)
+          execute(statement,
+                  parameters: vector(i, i + $my-large-integer));
+        end for;
       end with-transaction;
     end with-connection;
   end with-dbms;
 end test;
-      
+
 define test big-int-extraction-test()
   with-dbms(*the-dbms*)
     with-connection(*big-int-connection*)
       with-transaction ()
-	let rs = execute("select * from dwsql");
+        let rs = execute("select * from dwsql");
 
-	for (i from 0 to 10)
-	  let record = rs[i];
-	  check-equal("extraction of small integer in bigint test",
-		      record[0], i);
-	  check-equal("extraction of large integer in bigint test",
-		      record[1], i + $my-large-integer);
-	end for;
+        for (i from 0 to 10)
+          let record = rs[i];
+          check-equal("extraction of small integer in bigint test",
+                      record[0], i);
+          check-equal("extraction of large integer in bigint test",
+                      record[1], i + $my-large-integer);
+        end for;
       end with-transaction;
     end with-connection;
   end with-dbms;
@@ -47,9 +47,9 @@ end test;
 define method create-big-int-test-table()
   with-connection(*big-int-connection*)
     let statement = make(<sql-statement>,
-			 text: "create table dwsql ("
-			   "col_1 number, col_2 number)",
-			 input-indicator: $null-value);
+                         text: "create table dwsql ("
+                           "col_1 number, col_2 number)",
+                         input-indicator: $null-value);
     execute(statement);
   end with-connection;
 end method;
@@ -74,7 +74,7 @@ end method;
 
 
 define suite big-integer-test-suite (setup-function: big-integer-setup,
-				     cleanup-function: big-integer-cleanup)
+                                     cleanup-function: big-integer-cleanup)
   test big-int-insertion-test;
   test big-int-extraction-test;
 end suite;

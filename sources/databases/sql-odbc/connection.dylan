@@ -1,5 +1,5 @@
 Module: sql-odbc-implementation
-Author: eec 
+Author: eec
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -44,32 +44,32 @@ define method finalize(connection :: <odbc-connection>)
 end method;
 
 define method connect(database :: <odbc-database>,
-		      user :: <odbc-user>,
-		      #key connection-string :: <string> = "",
-		      dbms :: <odbc-dbms> = default-dbms())
+                      user :: <odbc-user>,
+                      #key connection-string :: <string> = "",
+                      dbms :: <odbc-dbms> = default-dbms())
   => (connection :: <odbc-connection>)
   let env-handle = dbms.%environment-handle;
   let (return-code, connection-handle) =
     SQLAllocHandle($sql-handle-dbc,env-handle);
   assert-odbc-goodness(return-code, env-handle, connection-handle,
-		       $null-statement-handle);
+                       $null-statement-handle);
 
   let return-code = if (connection-string = "")
-		      nice-SQLConnect(connection-handle,
-				      database.datasource-name,
-				      user.user-name,
-				      user.password);
-		    else
-		      nice-SQLDriverConnect(connection-handle,
-					    connection-string);
-		    end if;
+                      nice-SQLConnect(connection-handle,
+                                      database.datasource-name,
+                                      user.user-name,
+                                      user.password);
+                    else
+                      nice-SQLDriverConnect(connection-handle,
+                                            connection-string);
+                    end if;
   assert-odbc-goodness(return-code, env-handle, connection-handle,
-		       $null-statement-handle);
+                       $null-statement-handle);
 
   let connection = make(<odbc-connection>,
-			user: user, database: database,
-			connection-handle: connection-handle,
-			dbms: dbms);
+                        user: user, database: database,
+                        connection-handle: connection-handle,
+                        dbms: dbms);
 
   with-lock(*all-connections-lock*)
     push-last(*all-connections*, connection);
@@ -92,23 +92,23 @@ end method;
 
 
 define method disconnect(connection :: <odbc-connection>,
-			 #key terminate-statements :: <boolean>)
+                         #key terminate-statements :: <boolean>)
  => ()
   // Cleanup all associated SQL-statement objects before disconnecting.
   do(finalize, connection.%allocated-sql-statements.key-sequence);
 
   let return-code = SQLDisconnect(connection.%connection-handle);
   assert-odbc-goodness(return-code,
-		       connection.dbms.%environment-handle,
-		       connection.%connection-handle,
-		       $null-statement-handle);
+                       connection.dbms.%environment-handle,
+                       connection.%connection-handle,
+                       $null-statement-handle);
 
-  let return-code = SQLFreeHandle($sql-handle-dbc, 
-				  connection.%connection-handle);
+  let return-code = SQLFreeHandle($sql-handle-dbc,
+                                  connection.%connection-handle);
   assert-odbc-goodness(return-code,
-		       connection.dbms.%environment-handle,
-		       connection.%connection-handle,
-		       $null-statement-handle);
+                       connection.dbms.%environment-handle,
+                       connection.%connection-handle,
+                       $null-statement-handle);
   connection.%connection-handle := $null-connection-handle;
 
   with-lock(*all-connections-lock*)

@@ -12,14 +12,14 @@ define test forward-only-query-test()
       let query = #f;
       block ()
         query := make(<sql-statement>,
-	   	      text: "select col_1, col_2 from dwsql");
+                         text: "select col_1, col_2 from dwsql");
         let result-set = execute(query);
         check-true("forward-only result-set query test: "
-		   "result set instance of <forward-only-result-set", 
-	           instance?(result-set, <forward-only-result-set>));
+                   "result set instance of <forward-only-result-set",
+                   instance?(result-set, <forward-only-result-set>));
         let result-set-size = result-set.size;
         check-true("forward-only result-set query test: result-set size check",
-	           result-set-size = 26);
+                   result-set-size = 26);
       cleanup
         finalize(query);
       end block;
@@ -34,13 +34,13 @@ define test explicit-coercion-query-test()
       let query = #f;
       block ()
         query := make(<sql-statement>,
-		      text: "select col_1, col_2 from dwsql",
-		      coercion-policy: vector(curry(as, <byte-string>),
-				              curry(as, <integer>)));
+                      text: "select col_1, col_2 from dwsql",
+                      coercion-policy: vector(curry(as, <byte-string>),
+                                              curry(as, <integer>)));
         let result-set = execute(query);
         check-true("Explicit coercion result-set test: "
-		   "result set instance of <forward-only-result-set>", 
-	           instance?(result-set, <forward-only-result-set>));
+                   "result set instance of <forward-only-result-set>",
+                   instance?(result-set, <forward-only-result-set>));
 
         let record-count :: <integer> = 0;
         let not-found = make(<pair>);
@@ -48,21 +48,21 @@ define test explicit-coercion-query-test()
         let col-2 = #f;
 
         check-true("Explicit coercion result-set test, structure check",
-	           every?(method(record)
-			    record-count := record-count + 1;
-			    col-1 := element(record, 0, default: not-found);
-			    col-2 := element(record, 1, default: not-found);
-			    
-			    instance?(record, <simple-object-vector>) &
-			      col-1 ~== not-found 
-			      & col-2 ~== not-found &
-			      instance?(col-1, <byte-string>) &
-			      instance?(col-2, <integer>)
-		          end method,
-		          result-set));
+                   every?(method(record)
+                            record-count := record-count + 1;
+                            col-1 := element(record, 0, default: not-found);
+                            col-2 := element(record, 1, default: not-found);
 
-        check-true("Explicit coercion result-set test: result-set size check", 
-	           record-count = 26);
+                            instance?(record, <simple-object-vector>) &
+                              col-1 ~== not-found
+                              & col-2 ~== not-found &
+                              instance?(col-1, <byte-string>) &
+                              instance?(col-2, <integer>)
+                          end method,
+                          result-set));
+
+        check-true("Explicit coercion result-set test: result-set size check",
+                   record-count = 26);
       cleanup
         finalize(query);
       end block;
@@ -76,34 +76,34 @@ define test default-coercion-query-test()
       let query = #f;
       block ()
         query := make(<sql-statement>,
-		      text: "select col_1, col_2 from dwsql",
-		      coercion-policy: #"default-coercion");
+                      text: "select col_1, col_2 from dwsql",
+                      coercion-policy: #"default-coercion");
         let result-set = execute(query);
 
         check-true("Coercion result-set query test 2: "
-		   "result set instance of <forward-only-result-set>", 
-	           instance?(result-set, <forward-only-result-set>));
+                   "result set instance of <forward-only-result-set>",
+                   instance?(result-set, <forward-only-result-set>));
 
         let record-count :: <integer> = 0;
         let not-found = make(<pair>);
         let col-1 = #f;
         let col-2 = #f;
-    
+
         check-true("Coercion result-set-query test 2",
-	           every?(method(record)
-			    record-count := record-count + 1;
-			    col-1 := element(record, 0, default: not-found);
-			    col-2 := element(record, 1, default: not-found);
-			    
-			    instance?(record, <simple-object-vector>) &
-			      col-1 ~== not-found &
-			      col-2 ~== not-found &
-			      instance?(col-1, <byte-string>) &
-			      instance?(col-2, <number>)
-		          end method,
-		          result-set));
-        check-true("Coercion result-set query test 2: result-set size check", 
-	           record-count = 26);
+                   every?(method(record)
+                            record-count := record-count + 1;
+                            col-1 := element(record, 0, default: not-found);
+                            col-2 := element(record, 1, default: not-found);
+
+                            instance?(record, <simple-object-vector>) &
+                              col-1 ~== not-found &
+                              col-2 ~== not-found &
+                              instance?(col-1, <byte-string>) &
+                              instance?(col-2, <number>)
+                          end method,
+                          result-set));
+        check-true("Coercion result-set query test 2: result-set size check",
+                   record-count = 26);
       cleanup
         finalize(query);
       end block;
@@ -122,26 +122,26 @@ end class;
 
 define test liaison-query-test()
   local method liaison-fn(rec :: <record>)
-	  make(<ack>, col-1: rec[0], col-2: rec[1]);
-	end method;
+          make(<ack>, col-1: rec[0], col-2: rec[1]);
+        end method;
 
   with-connection(*query-connection*)
     with-transaction()
       let query = #f;
       block ()
         query := make(<sql-statement>,
-		      text: "select col_1, col_2 from dwsql",
-		      coercion-policy: #"default-coercion");
+                      text: "select col_1, col_2 from dwsql",
+                      coercion-policy: #"default-coercion");
         let result-set = execute(query, liaison: liaison-fn);
 
         let record-count :: <integer> = 0;
 
         check-true("Liaison query test",
-	           every?(method(record)
-			    record-count := record-count + 1;
-			    instance?(record, <ack>);
-		          end method,
-		          result-set));
+                   every?(method(record)
+                            record-count := record-count + 1;
+                            instance?(record, <ack>);
+                          end method,
+                          result-set));
 
         check-true("Liaison query test: result-size check", record-count = 26);
       cleanup
@@ -160,9 +160,9 @@ define test null-query-test()
       let query = #f;
       block ()
         query := make(<sql-statement>,
-		      text: "select col_1, col_3 from dwsql",
-		      output-indicator: $null-value,
-		      coercion-policy: #"default-coercion");
+                      text: "select col_1, col_3 from dwsql",
+                      output-indicator: $null-value,
+                      coercion-policy: #"default-coercion");
         let result-set = execute(query, liaison: identity);
         let not-found = make(<pair>);
         let record-count :: <integer> = 0;
@@ -170,17 +170,17 @@ define test null-query-test()
         let col-3 = #f;
 
         check-true("Null query test",
-	           every?(method(record)
-			    record-count := record-count + 1;
-			    col-1 := element(record, 0, default: not-found);
-			    col-3 := element(record, 1, default: not-found);
+                   every?(method(record)
+                            record-count := record-count + 1;
+                            col-1 := element(record, 0, default: not-found);
+                            col-3 := element(record, 1, default: not-found);
 
-			    col-1 ~== not-found &
-			      col-3 ~== not-found &
-			      instance?(col-1, <string>) &
-			      col-3 = $null-value
-		          end method,
-		          result-set));
+                            col-1 ~== not-found &
+                              col-3 ~== not-found &
+                              instance?(col-1, <string>) &
+                              col-3 = $null-value
+                          end method,
+                          result-set));
       cleanup
         finalize(query);
       end block;
@@ -197,19 +197,19 @@ define test scrollable-query-test-1()
       let query = #f;
       block ()
         query := make(<sql-statement>,
-		      text: "select col_2 from dwsql order by col_2",
-		      datatype-hints: vector(<sql-integer>));
-        let result-set 
+                      text: "select col_2 from dwsql order by col_2",
+                      datatype-hints: vector(<sql-integer>));
+        let result-set
           = execute(query, result-set-policy: $scrollable-result-set-policy);
 
         check-true("Scrollable result-set identity test",
-	           instance?(result-set, <scrollable-result-set>));
+                   instance?(result-set, <scrollable-result-set>));
         check-true("Scrollable result-set test 1",
-	           every?(method (record, answer) 
-		  	    record[0] = answer
-		          end method, 
-		          result-set, 
-		          make(<range>, from: $a-value, to: $z-value)));
+                   every?(method (record, answer)
+                              record[0] = answer
+                          end method,
+                          result-set,
+                          make(<range>, from: $a-value, to: $z-value)));
       cleanup
         finalize(query);
       end block;
@@ -224,17 +224,17 @@ define test scrollable-query-test-2()
       let query = #f;
       block ()
         query := make(<sql-statement>,
-		      text: "select col_2 from dwsql order by col_2",
-		      datatype-hints: vector(<sql-integer>));
+                      text: "select col_2 from dwsql order by col_2",
+                      datatype-hints: vector(<sql-integer>));
         let result-set = execute(query,
-			     result-set-policy: $scrollable-result-set-policy);
+                             result-set-policy: $scrollable-result-set-policy);
 
         check-true("Scrollable result-set test 2",
-	           every?(method (record, answer)
-			    record[0] = answer
-		          end method,
-		          result-set,
-		          make(<range>, from: $a-value, to: $z-value)));
+                   every?(method (record, answer)
+                            record[0] = answer
+                          end method,
+                          result-set,
+                          make(<range>, from: $a-value, to: $z-value)));
       cleanup
         finalize(query);
       end block;
@@ -249,14 +249,14 @@ define test scrollable-query-test-3()
       let query = #f;
       block ()
         query := make(<sql-statement>,
-		     text: "select col_2 from dwsql order by col_2",
-		     datatype-hints: vector(<sql-integer>));
-        let result-set = execute(query, 
-			     result-set-policy: $scrollable-result-set-policy);
+                     text: "select col_2 from dwsql order by col_2",
+                     datatype-hints: vector(<sql-integer>));
+        let result-set = execute(query,
+                             result-set-policy: $scrollable-result-set-policy);
         check-true("Scrollable query test 3",
-	           result-set[25][0] = as(<integer>, 'z') &
-		     result-set[0][0] = as(<integer>, 'a') &
-		     result-set[12][0] = as(<integer>, 'm'));
+                   result-set[25][0] = as(<integer>, 'z') &
+                     result-set[0][0] = as(<integer>, 'a') &
+                     result-set[12][0] = as(<integer>, 'm'));
       cleanup
         finalize(query);
       end block;
@@ -295,16 +295,16 @@ define method create-query-test-table()
       let statement = #f;
       block ()
         statement := make(<sql-statement>,
-			  text: "create table dwsql (col_1 varchar(1), "
-			    "col_2 number, col_3 number)",
-			  input-indicator: $null-value);
+                          text: "create table dwsql (col_1 varchar(1), "
+                            "col_2 number, col_3 number)",
+                          input-indicator: $null-value);
         execute(statement);
 
         statement.text := "insert into dwsql(col_1, col_2, col_3)"
           "values(?, ?, ?)";
         for (i from as(<integer>, 'a') to as(<integer>, 'z'))
           execute(statement,
-	          parameters: vector(as(<character>, i), i, $null-value));
+                  parameters: vector(as(<character>, i), i, $null-value));
         end for;
       cleanup
         finalize(statement);
@@ -343,7 +343,7 @@ end method;
 
 
 define suite query-test-suite(setup-function: query-test-setup,
-			      cleanup-function: query-test-cleanup)
+                              cleanup-function: query-test-cleanup)
   test forward-only-query-test;
   test explicit-coercion-query-test;
   test default-coercion-query-test;
