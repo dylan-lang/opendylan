@@ -20,7 +20,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // set-finalize-notification will be called whenever a finalize
 // method is invoked. And, if this function is never called then
 // one can assume that the gc limitation is whacking you on the
-// head and that explicit calls to finalize is needed in the
+// head and that explicit calls to finalize are needed in the
 // client application. In general, a client application only
 // needs to call finalize on instances of <odbc-sql-statement>.
 // Resources associated with instances of <odbc-connection> are
