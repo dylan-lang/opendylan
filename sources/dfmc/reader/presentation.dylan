@@ -28,6 +28,27 @@ define method present (f :: <literal-fragment>, s :: <stream>)
   format(s, "%=", fragment-value(f));
 end method;
 
+define method present (f :: <proper-list-fragment>, s :: <stream>)
+  printing-logical-block (s, prefix: "#(", suffix: ")")
+    present-list(fragment-elements(f), s);
+  end;
+end method;
+
+define method present (f :: <improper-list-fragment>, s :: <stream>)
+  printing-logical-block (s, prefix: "#(", suffix: ")")
+    let fs = fragment-elements(f);
+    present(head(fragment-elements(f)), s);
+    write(s, " . ");
+    present(fragment-improper-tail(f), s);
+  end;
+end method;
+
+define method present (f :: <vector-fragment>, s :: <stream>)
+  printing-logical-block (s, prefix: "#[", suffix: "]")
+    present-list(fragment-elements(f), s);
+  end;
+end method;
+
 define method present (f :: <symbol-syntax-symbol-fragment>, s :: <stream>)
   format(s, "#\"%s\"", as-lowercase(as(<string>, fragment-value(f))));
 end method;

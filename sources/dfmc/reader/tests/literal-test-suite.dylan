@@ -136,9 +136,14 @@ end test hexadecimal-integer-literal-test;
 define test list-literal-test ()
   let f = read-fragment("#()");
   verify-literal(f, #(), <proper-list-fragment>);
+  verify-presentation(f, "#()");
 
   let f = read-fragment("#('a', 'b')");
   verify-literal(f, #('a', 'b'), <proper-list-fragment>);
+  verify-presentation(f, "#('a', 'b')");
+
+  let f = read-fragment("#(a:, #\"b\")");
+  verify-presentation(f, "#(a:, #\"b\")");
 end test list-literal-test;
 
 define test octal-integer-literal-test ()
@@ -151,6 +156,10 @@ end test octal-integer-literal-test;
 define test pair-literal-test ()
   let f = read-fragment("#(1 . 2)");
   verify-literal(f, #(1 . 2), <improper-list-fragment>);
+  verify-presentation(f, "#(1 . 2)");
+
+  let f = read-fragment("#(a: . #\"b\")");
+  verify-presentation(f, "#(a: . #\"b\")");
 end test pair-literal-test;
 
 define test ratio-literal-test ()
@@ -180,12 +189,15 @@ end test symbol-literal-test;
 define test vector-literal-test ()
   let f = read-fragment("#[]");
   verify-literal(f, #(), <vector-fragment>);
+  verify-presentation(f, "#[]");
 
   let f = read-fragment("#[-1, 2]");
   verify-literal(f, #(-1, 2), <vector-fragment>);
+  verify-presentation(f, "#[-1, 2]");
 
   let f = read-fragment("#[\"a\", b:]");
   verify-literal(f, #("a", #"b"), <vector-fragment>);
+  verify-presentation(f, "#[\"a\", b:]");
 end test vector-literal-test;
 
 define suite literal-test-suite ()
