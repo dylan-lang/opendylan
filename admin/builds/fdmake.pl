@@ -16,6 +16,7 @@ my $user_sources = $ENV{'OPEN_DYLAN_USER_SOURCES'};
 
 my $build_logs = $ENV{'OPEN_DYLAN_BUILD_LOGS'};
 
+my $lldb_arguments = "-o \"b Kdisplay_conditionYcommand_linesVenvironment_commandsI\"";
 my $verbose;
 my $debugger;
 my $gdb;
@@ -156,7 +157,7 @@ sub build_library {
     if ($gdb) {
         $command = "gdb --args " . $command;
     } elsif ($lldb) {
-        $command = "lldb -- " . $command;
+        $command = "lldb $lldb_arguments -- " . $command;
     }
     if (exists $header->{'target-type'}) {
         $command .= " -target " . $header->{'target-type'};
