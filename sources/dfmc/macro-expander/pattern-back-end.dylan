@@ -46,11 +46,11 @@ define function macro-main-rule-match-error (f*, name)
        macro-name: name);
 end function;
 
-define function macro-aux-rule-match-error (f*, name, set)
+define function macro-aux-rule-match-error (f*, name, aux-rule-set-name)
   note(<macro-aux-rule-match-error>,
        source-location: spanning(f*),
        macro-name: name,
-       rule-set-name: rule-set-name(set));
+       rule-set-name: aux-rule-set-name);
 end function;
 
 //// Body/list destructuring.

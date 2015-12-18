@@ -72,8 +72,9 @@ end method;
 define method generate-match-failure-function
     (exp, set :: <aux-rewrite-rule-set>, rules)
   let name = expander-name(exp);
+  let set-name = rule-set-name(set);
   method (_f*_)
-    macro-aux-rule-match-error(_f*_, name, set);
+    macro-aux-rule-match-error(_f*_, name, set-name);
   end
 end method;
 
