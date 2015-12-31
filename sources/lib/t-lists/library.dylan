@@ -13,13 +13,13 @@ end library;
 
 // Interface module
 define module t-lists
-  create 
+  create
     <t-list>;
   use common-dylan,
-    export: 
-    {find-method, forward-iteration-protocol, as, element, element-setter, 
-     push, pop, push-last, pop-last, empty?, size, last, last-setter, 
-     concatenate!};     
+    export:
+    {find-method, forward-iteration-protocol, as, element, element-setter,
+     push, pop, push-last, pop-last, empty?, size, last, last-setter,
+     concatenate!};
 end module;
 
 // Main implementation module
@@ -28,6 +28,6 @@ define module t-lists-internal
   use streams;
   use print;
   use format;
-  use format-out;	//  for debugging	
+  use format-out; //  for debugging
   use t-lists, export: all; // re-export stuff from 't-lists' module
 end module;

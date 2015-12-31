@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// This is only debugged in the emulator.  
+// This is only debugged in the emulator.
 
 define open abstract primary class <t-list> (<deque>)
   slot first-pair :: <list>, init-value: #(), init-keyword: first-pair:;
@@ -16,15 +16,15 @@ define sealed concrete class <actual-t-list> (<t-list>)
 end class;
 
 // could speed this up using unsafe push-last
-define method make 
-    (class == <t-list>, 
+define method make
+    (class == <t-list>,
      #rest initialization-arguments,
-     #key size: the-real-size :: <integer> = 0, 
-          fill: the-real-fill :: <object> = #f) 
+     #key size: the-real-size :: <integer> = 0,
+          fill: the-real-fill :: <object> = #f)
  => (result :: <actual-t-list>);
-  let the-t-list = 
+  let the-t-list =
     apply(make, <actual-t-list>, size: 0, fill: #f,
-	  initialization-arguments);
+          initialization-arguments);
   for (counter = the-real-size then counter - 1,
        while: counter > 0)
     push-last(the-t-list, the-real-fill);
@@ -34,15 +34,15 @@ end method;
 
 define method print-object (the-t-list :: <t-list>, the-stream :: <stream>)
  => ();
-  let (initial-state, limit, next-state, finished?, current-key, 
-       current-element,current-element-setter) 
+  let (initial-state, limit, next-state, finished?, current-key,
+       current-element,current-element-setter)
     = forward-iteration-protocol(the-t-list);
   if (~empty?(the-t-list))
     format(the-stream, "(<t-list> of (");
     print(current-element(the-t-list, initial-state), the-stream);
-    for (state = next-state(the-t-list, initial-state) 
-	   then next-state(the-t-list, state),
-	 until: finished?(the-t-list, state, limit))
+    for (state = next-state(the-t-list, initial-state)
+           then next-state(the-t-list, state),
+         until: finished?(the-t-list, state, limit))
       format(the-stream, ", ");
       print(current-element(the-t-list, state), the-stream);
     end for;
@@ -56,7 +56,7 @@ define method empty? (the-t-list :: <t-list>) => (result :: <boolean>);
     empty?(the-t-list.first-pair)
 end method;
 
-define method push 
+define method push
     (t-list :: <t-list>, new-element :: <object>) => (result :: <object>);
   if (empty?(t-list))
     t-list.first-pair := t-list.last-pair := pair(new-element, #());
@@ -65,8 +65,8 @@ define method push
   end if;
   new-element
 end method;
-    
-define method push-last 
+
+define method push-last
     (t-list :: <t-list>, new-element :: <object>) => (result :: <object>);
   if (empty?(t-list))
     t-list.first-pair := t-list.last-pair := pair(new-element, #());
@@ -94,7 +94,7 @@ end method;
 
 // This isn't efficient as a doubly linked list deque would be.  If you
 // really need pop-last to be fast used doubly linked lists and pay the
-// extra overhead of keeping backward links. 
+// extra overhead of keeping backward links.
 define method pop-last (t-list :: <t-list>) => (result :: <object>);
   if (empty?(t-list))
     error("pop-last from an empty <t-list>");
@@ -103,12 +103,12 @@ define method pop-last (t-list :: <t-list>) => (result :: <object>);
     if (t-list.first-pair == t-list.last-pair)
       t-list.first-pair := t-list.last-pair := #();
     else
-      for (next-to-last-pair = t-list.first-pair 
-	     then next-to-last-pair.tail,
-	   until: next-to-last-pair.tail == t-list.last-pair)
-	finally
-	  next-to-last-pair.tail := #();
-	  t-list.last-pair := next-to-last-pair;
+      for (next-to-last-pair = t-list.first-pair
+             then next-to-last-pair.tail,
+           until: next-to-last-pair.tail == t-list.last-pair)
+        finally
+          next-to-last-pair.tail := #();
+          t-list.last-pair := next-to-last-pair;
       end for;
     end if;
     result
@@ -173,7 +173,7 @@ end method;
 define method as (class == <t-list>, the-list :: <list>)
  => (result :: <t-list>);
   for (the-last-pair = the-list
-	 then the-last-pair.tail,
+         then the-last-pair.tail,
        until: the-last-pair.tail == #())
   finally
     make(<t-list>, first-pair: the-list, last-pair: the-last-pair)
@@ -189,7 +189,7 @@ define constant $unsupplied-default = pair(#"unsupplied", #"unsupplied");
 // Methods on element and element-setter for 0, 1, 2 so that first, second
 // and third don't use the default method for element.  (First, second and
 // third aren't generic functions.)
-define method element 
+define method element
     (t :: <t-list>, index == 0, #key default = $unsupplied-default)
  => (result :: <object>);
   if (~empty?(t.first-pair))
@@ -201,7 +201,7 @@ define method element
   end if
 end method;
 
-define method element 
+define method element
     (t :: <t-list>, index == 1, #key default = $unsupplied-default)
  => (result :: <object>);
   if (~empty?(t.first-pair) & ~empty?(t.first-pair.tail))
@@ -213,12 +213,12 @@ define method element
   end if
 end method;
 
-define method element 
+define method element
     (t :: <t-list>, index == 2, #key default = $unsupplied-default)
  => (result :: <object>);
-  if (~empty?(t.first-pair) 
-	& ~empty?(t.first-pair.tail) 
-	& ~empty?(t.first-pair.tail.tail))
+  if (~empty?(t.first-pair)
+        & ~empty?(t.first-pair.tail)
+        & ~empty?(t.first-pair.tail.tail))
     t.first-pair.tail.tail.head
   elseif (default == $unsupplied-default)
     error("element: <t-list> has no third element");
@@ -227,18 +227,18 @@ define method element
   end if
 end method;
 
-define method element-setter 
+define method element-setter
     (new-value :: <object>, t :: <t-list>, index == 0)
  => (result :: <object>);
   if (~empty?(t.first-pair))
     t.first-pair.head := new-value;
-  else 
+  else
     error("element-setter: <t-list> has no first element");
   end if;
   new-value
 end method;
 
-define method element-setter 
+define method element-setter
     (new-value :: <object>, t :: <t-list>, index == 1)
  => (result :: <object>);
   if (~empty?(t.first-pair) & ~empty?(t.first-pair.tail))
@@ -249,12 +249,12 @@ define method element-setter
   new-value
 end method;
 
-define method element-setter 
+define method element-setter
     (new-value :: <object>, t :: <t-list>, index == 2)
  => (result :: <object>);
   if (~empty?(t.first-pair)
-	& ~empty?(t.first-pair.tail) 
-	& ~empty?(t.first-pair.tail.tail))
+        & ~empty?(t.first-pair.tail)
+        & ~empty?(t.first-pair.tail.tail))
     t.first-pair.tail.tail.head := new-value;
   else
     error("element-setter: <t-list> has no third element");
@@ -262,7 +262,7 @@ define method element-setter
   new-value
 end method;
 
-define method last (t :: <t-list>, #key default = $unsupplied-default) 
+define method last (t :: <t-list>, #key default = $unsupplied-default)
  => (result :: <object>);
   if (~empty?(t.last-pair))
     t.last-pair.head
@@ -273,7 +273,7 @@ define method last (t :: <t-list>, #key default = $unsupplied-default)
   end
 end method;
 
-define method last-setter (new-value :: <object>, t :: <t-list>) 
+define method last-setter (new-value :: <object>, t :: <t-list>)
  => (result :: <object>);
   if (~empty?(t.last-pair))
     t.last-pair.head := new-value;
@@ -284,11 +284,11 @@ define method last-setter (new-value :: <object>, t :: <t-list>)
 end method;
 
 define method element
-    (the-t-list :: <t-list>, index :: <integer>, 
+    (the-t-list :: <t-list>, index :: <integer>,
      #key default = $unsupplied-default)
  => (result :: <object>);
-  let (initial-state, limit, next-state, finished?, current-key, 
-       current-element,current-element-setter) 
+  let (initial-state, limit, next-state, finished?, current-key,
+       current-element,current-element-setter)
     = forward-iteration-protocol(the-t-list);
   for (state = initial-state then next-state(the-t-list, state),
        counter = index then counter - 1,
@@ -307,8 +307,8 @@ end method;
 define method element-setter
     (new-value :: <object>, the-t-list :: <t-list>, index :: <integer>)
  => (result :: <object>);
-  let (initial-state, limit, next-state, finished?, current-key, 
-       current-element, current-element-setter) 
+  let (initial-state, limit, next-state, finished?, current-key,
+       current-element, current-element-setter)
     = forward-iteration-protocol(the-t-list);
   for (state = initial-state then next-state(the-t-list, state),
        counter = index then counter - 1,
@@ -317,13 +317,13 @@ define method element-setter
     if (counter == 0)
       current-element-setter(new-value, the-t-list, state)
     else
-      error("element-setter: <t-list> has no %dth element", index);      
+      error("element-setter: <t-list> has no %dth element", index);
     end if;
   end for;
   new-value
 end method;
 
-    
+
 define method forward-iteration-protocol (t-list :: <t-list>)
   => (initial-state :: <object>, limit :: <object>,
       next-state :: <function>, finished-state? :: <function>,
@@ -332,28 +332,28 @@ define method forward-iteration-protocol (t-list :: <t-list>)
       copy-state :: <function>)
   let key-counter = -1;
   values(t-list.first-pair, // initial-state
-	 #(), // limit
-	 method  // next-state,
-	     (the-t-list :: <t-list>, current-state :: <list>)
-	  => (result :: <list>);
-	     current-state.tail end method, 
-	 method  // finished-state?,
-	     (the-t-list :: <t-list>, current-state :: <list>, limit :: <list>)
-	  => (result :: <boolean>); 
-	     current-state == limit end method,
-	 method  // current-key 
-	     (the-t-list :: <t-list>, current-pair :: <list>)
-	  => (result :: <integer>);
-	     key-counter := key-counter + 1; key-counter end method,
-	 method  // current-element
-	     (the-t-list :: <t-list>, current-state :: <list>) 
-	  => (result :: <object>);
-	     current-state.head end method,
-	 method  // current-element-setter
-	     (value :: <object>, s :: <t-list>, current-state :: <list>)
-	  => (result :: <object>);
-	     current-state.head := value end method,
-	 method  // copy-state
-	     (s :: <t-list>, current-state :: <list>)
-	     pair(current-state.head, current-state.tail) end method)
+         #(), // limit
+         method  // next-state,
+             (the-t-list :: <t-list>, current-state :: <list>)
+          => (result :: <list>);
+             current-state.tail end method,
+         method  // finished-state?,
+             (the-t-list :: <t-list>, current-state :: <list>, limit :: <list>)
+          => (result :: <boolean>);
+             current-state == limit end method,
+         method  // current-key
+             (the-t-list :: <t-list>, current-pair :: <list>)
+          => (result :: <integer>);
+             key-counter := key-counter + 1; key-counter end method,
+         method  // current-element
+             (the-t-list :: <t-list>, current-state :: <list>)
+          => (result :: <object>);
+             current-state.head end method,
+         method  // current-element-setter
+             (value :: <object>, s :: <t-list>, current-state :: <list>)
+          => (result :: <object>);
+             current-state.head := value end method,
+         method  // copy-state
+             (s :: <t-list>, current-state :: <list>)
+             pair(current-state.head, current-state.tail) end method)
 end method;
