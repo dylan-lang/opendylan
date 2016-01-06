@@ -1374,7 +1374,7 @@ end method;
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <multiple-value-check-type-rest>)
-  for (i from 0 below required-values(temporary(c)))
+  for (i from 0 below max(1, required-values(temporary(c))))
     emit-transfer(b, s, d,
                   mv-temp-lhs(c.temporary, i),
                   mv-temp-ref(c.computation-value, i));
