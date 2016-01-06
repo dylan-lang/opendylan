@@ -133,6 +133,34 @@ define method emit-extern
 end method;
 
 define method emit-extern
+  (back-end :: <llvm-back-end>, module :: <llvm-module>, o :: <&objc-msgsend>)
+ => ();
+  let name = o.c-function-name;
+  if (~llvm-builder-global-defined?(back-end, name))
+    let calling-convention
+      = llvm-c-function-calling-convention(back-end, o);
+
+    // Instead of using the actual function type, we want to
+    // just define a void name(void); prototype instead since
+    // we will invoke this function with many signatures, each
+    // bitcast to the right prototype at the callsite.
+    let function-type
+      = make(<llvm-function-type>,
+             parameter-types: #[],
+             return-type: $llvm-void-type,
+             varargs?: #f);
+    let global
+      = make(<llvm-function>,
+             linkage: #"external",
+             name: name,
+             type: llvm-pointer-to(back-end, function-type),
+             arguments: #[],
+             calling-convention: calling-convention);
+    llvm-builder-define-global(back-end, name, global);
+  end if;
+end method;
+
+define method emit-extern
     (back-end :: <llvm-back-end>, module :: <llvm-module>, o :: <&c-variable>)
  => ();
   unless (llvm-builder-global-defined?(back-end, o.name))

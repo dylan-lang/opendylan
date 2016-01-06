@@ -1121,6 +1121,28 @@ end method;
 
 define method emit-primitive-call
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <primitive-call>, primitive :: <&objc-msgsend>)
+ => ();
+  let name = primitive.c-function-name;
+  let calling-convention
+    = llvm-c-function-calling-convention(back-end, primitive);
+  let function-type = llvm-c-function-type(back-end, primitive);
+  let function-ptr-type = llvm-pointer-to(back-end, function-type);
+  let msg-send = llvm-builder-global(back-end, name);
+  let function
+    = ins--bitcast(back-end, msg-send, function-ptr-type);
+
+  // Call the objc_msgSend function
+  let result
+    = op--call(back-end, function,
+               map(curry(emit-reference, back-end, m), c.arguments),
+               type: function-type.llvm-function-type-return-type,
+               calling-convention: calling-convention);
+  computation-result(back-end, c, result);
+end method;
+
+define method emit-primitive-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
      c :: <primitive-indirect-call>, primitive :: <&c-function>)
  => ();
   let calling-convention
