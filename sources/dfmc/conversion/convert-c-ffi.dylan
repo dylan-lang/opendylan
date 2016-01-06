@@ -196,7 +196,7 @@ define &converter %objc-msgsend
   => begin
        let results = parse-ffi-result-type(results);
        convert-%objc-msgsend (env, context,
-                              #{ (target :: <raw-machine-word>, selector :: <raw-machine-word>, ?parameters) => (?results) },
+                              #{ (target :: <raw-c-pointer>, selector :: <raw-c-pointer>, ?parameters) => (?results) },
                               pair(target, pair(selector, parse-expressions(arguments))),
                               as-string(c-modifiers));
      end
