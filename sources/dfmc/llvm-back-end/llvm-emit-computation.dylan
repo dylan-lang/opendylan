@@ -1729,6 +1729,13 @@ define method do-emit-return
   end if;
 end method;
 
+define method do-emit-return
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     temp :: <temporary>, value :: <llvm-value>)
+ => ();
+  ins--ret(back-end, value);
+end method;
+
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <end-exit-block>)
  => ()
