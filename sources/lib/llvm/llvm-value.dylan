@@ -74,6 +74,6 @@ define method value-forward
   if (slot-initialized?(value, llvm-placeholder-value-forward))
     value-forward(value.llvm-placeholder-value-forward)
   else
-    error("value %%s is not defined", value.llvm-symbolic-value-name);
+    error("value %s is not defined", value.llvm-symbolic-value-name);
   end if
 end method;
