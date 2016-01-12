@@ -847,6 +847,9 @@ define &module dylan-extensions
   create type-union-members,
          <type-union-classification>, classify-type-union;
 
+  create
+    <limited-function>, limited-function-signature;
+
   /// TEMPORARILY FOR METHOD DISPATCH
 
   create

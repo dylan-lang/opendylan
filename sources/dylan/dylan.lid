@@ -60,6 +60,7 @@ Files:     dfmc-boot
            type
            signature
            function
+           limited-function
            method
            generic-function
            dispatch

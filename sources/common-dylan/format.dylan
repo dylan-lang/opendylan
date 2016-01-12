@@ -221,6 +221,13 @@ define method print-unique-name
   print-string(buffer, "}")
 end method print-unique-name;
 
+define method print-unique-name
+    (buffer :: <string-buffer>, ft :: <limited-function>) => ()
+  print-string(buffer, "{limited-function: ");
+  print-signature(buffer, ft.limited-function-signature);
+  print-string(buffer, "}");
+end method print-unique-name;
+
 
 /// Number/string conversion
 
@@ -706,18 +713,59 @@ define function print-method
   print-string(buffer, object-class-name(object));
   print-string(buffer, ": ");
   print-string(buffer, primitive-name(object));
-  let specializers = function-specializers(object);
-  let (_, rest, keywords) = function-arguments(object);
+  print-string(buffer, " ");
+  print-signature(buffer, object);
+  print-string(buffer, "}");
+end function print-method;
+
+define method print-signature
+    (buffer :: <string-buffer>, fun :: <function>)
+ => ()
+  let specializers = function-specializers(fun);
+  let (_, rest?, keywords) = function-arguments(fun);
+  let (value-types, values-rest) = function-return-values(fun);
+  print-signature-internal(buffer, specializers, rest?, keywords,
+                           value-types, values-rest);
+end method print-signature;
+
+define method print-signature
+    (buffer :: <string-buffer>, sig :: <signature>)
+ => ()
+  local method maybe-copy-sig-types
+            (v :: <vector>, n :: <integer>)
+         => (v :: <vector>)
+          if (n = size(v)) v else copy-sequence(v, end: n) end if
+        end;
+  let specializers = maybe-copy-sig-types(sig.signature-required,
+                                          sig.signature-number-required);
+  let rest? = sig.signature-rest?;
+  let keywords = if (signature-all-keys?(sig))
+                   #"all"
+                 else
+                   sig.signature-key? & sig.signature-keys
+                 end if;
+  let value-types = maybe-copy-sig-types(sig.signature-values,
+                                         sig.signature-number-values);
+  let values-rest = sig.signature-rest-value;
+  print-signature-internal(buffer, specializers, rest?, keywords,
+                           value-types, values-rest);
+end;
+
+define function print-signature-internal
+    (buffer :: <string-buffer>, specializers :: <sequence>,
+     rest? :: <boolean>, keywords,
+     value-types :: <sequence>, values-rest :: false-or(<type>))
+ => ()
   print-string(buffer, " (");
   print-elements(buffer, specializers, print-function: print-specializer);
-  if (rest)
+  if (rest?)
     if (~empty?(specializers))
       print-string(buffer, ", ");
     end if;
     print-string(buffer, "#rest");
   end if;
   if (keywords)
-    if (rest | ~empty?(specializers))
+    if (rest? | ~empty?(specializers))
       print-string(buffer, ", ");
     end if;
     print-string(buffer, "#key ");
@@ -728,7 +776,6 @@ define function print-method
     end if;
   end if;
   print-string(buffer, ") => (");
-  let (value-types, values-rest) = function-return-values(object);
   unless (empty?(value-types))
     print-elements(buffer, value-types, print-function: print-specializer);
     if (values-rest)
@@ -742,8 +789,8 @@ define function print-method
       print-specializer(buffer, values-rest);
     end if
   end if;
-  print-string(buffer, ")}");
-end function print-method;
+  print-string(buffer, ")");
+end function print-signature-internal;
 
 define method print-specializer
     (buffer :: <string-buffer>, type :: <type>) => ()
@@ -826,6 +873,13 @@ define method print-specializer
         print-string(buffer, ")");
       end;
   end select;
+end method print-specializer;
+
+define method print-specializer
+    (buffer :: <string-buffer>, ft :: <limited-function>) => ()
+  print-string(buffer, "fn(");
+  print-signature(buffer, ft.limited-function-signature);
+  print-string(buffer, ")");
 end method print-specializer;
 
 define function print-keyword

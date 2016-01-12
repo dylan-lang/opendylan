@@ -904,6 +904,13 @@ define method print-specializer (type :: <union>, stream :: <stream>)
   end select;
 end method print-specializer;
 
+define method print-specializer (type :: <limited-function>, stream :: <stream>)
+    => ();
+  printing-logical-block (stream, prefix: "fn(", suffix: ")")
+    print-signature(type.limited-function-signature, stream);
+  end;
+end method print-specializer;
+
 
 /// Print-object methods for <type> and its subclasses.
 ///
@@ -932,6 +939,13 @@ define sealed method print-object
              print-specializer(object, stream);
            end method,
      suffix: "}");
+end method print-object;
+
+define sealed method print-object
+    (object :: <limited-function>, stream :: <stream>) => ()
+  write(stream, "{limited-function ");
+  print-signature(object.limited-function-signature, stream);
+  write(stream, "}");
 end method print-object;
 
 /// For classes, we just print the class name if there is one.
