@@ -198,5 +198,7 @@ system
   ``<file-system-file-locator>`` classes. These aren't typically used but
   their omission led to possible confusion for users.
 
+* The ``operating-system`` module has gained a ``current-thread-id`` function.
+
 .. _issue #899: https://github.com/dylan-lang/opendylan/issues/899
 .. _documented in the library reference: http://opendylan.org/documentation/library-reference/coloring-stream/

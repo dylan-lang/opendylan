@@ -570,6 +570,14 @@ define function current-process-id
                  end);
 end;
 
+define function current-thread-id
+    () => (tid :: <integer>)
+  raw-as-integer(%call-c-function("system_current_thread_id")
+                     () => (tid :: <raw-c-signed-int>)
+                     ()
+                 end);
+end;
+
 define function parent-process-id
     () => (pid :: <integer>)
   raw-as-integer(%call-c-function("getppid")
