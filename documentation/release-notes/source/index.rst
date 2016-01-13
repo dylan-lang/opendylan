@@ -13,4 +13,4 @@ Upcoming releases:
 
 .. toctree::
 
-   2015.1
+   2016.1

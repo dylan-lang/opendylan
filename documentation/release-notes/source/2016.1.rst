@@ -1,16 +1,16 @@
 *******************************
-Open Dylan 2015.1 Release Notes
+Open Dylan 2016.1 Release Notes
 *******************************
 
 Introduction
 ============
 
-This document describes the 2015.1 release of Open Dylan, released
-XXX XX, 2015.
+This document describes the 2016.1 release of Open Dylan, released
+XXX XX, 2016.
 
 * `Download the release <http://opendylan.org/download/index.html>`_
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
-* `Source code <https://github.com/dylan-lang/opendylan/tree/v2015.1>`_
+* `Source code <https://github.com/dylan-lang/opendylan/tree/v2016.1>`_
 
 Dylan Standard Library
 ======================
