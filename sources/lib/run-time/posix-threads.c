@@ -520,17 +520,16 @@ static void *trampoline (void *arg)
 dylan_value primitive_make_thread(dylan_value t, dylan_value n, dylan_value p, dylan_value f, DBOOL s)
 {
   DTHREAD *thread = (DTHREAD *)t;
-  ZINT     zpriority = (ZINT)p;
 
   THREAD*             rthread;
   pthread_attr_t      attr;
   // struct sched_param  param;
-  // int                 priority = (int)zpriority >> 2;
+  // int priority = (int)thread->priority >> 2
 
   ignore(s);
 
   assert(thread != NULL);
-  assert(IS_ZINT(zpriority));
+  assert(IS_ZINT(thread->priority));
   assert(f != NULL);
 
   rthread = MMAllocMisc(sizeof(THREAD));

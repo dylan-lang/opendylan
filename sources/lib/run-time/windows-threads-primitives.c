@@ -324,14 +324,14 @@ primitive_make_thread(DTHREAD *newthread, D_NAME name,
   HANDLE hThread;
   HANDLE  *  events;
   DWORD  idThread;
-  int    priority = (int)zpriority >> 2;
+  int    priority = newthread->priority >> 2;
   DTHREAD **newthread_ptr;
 
   newthread_ptr = (DTHREAD **)(dylan__malloc__ambig(4));
   newthread_ptr[0] = newthread;
 
   assert(newthread != NULL);
-  assert(IS_ZINT(zpriority));
+  assert(IS_ZINT(newthread->priority));
   assert(func != NULL);
 
 
