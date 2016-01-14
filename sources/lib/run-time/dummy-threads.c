@@ -130,8 +130,8 @@ dylan_value primitive_initialize_special_thread(dylan_value t) {
 dylan_value primitive_current_thread() {
   return(THREAD_SUCCESS);
 }
-dylan_value primitive_make_thread(dylan_value t, dylan_value n, dylan_value p, dylan_value f, DBOOL s) {
-  ignore(t); ignore(n); ignore(p); ignore(f); ignore(s);
+dylan_value primitive_make_thread(dylan_value t, dylan_value f, DBOOL s) {
+  ignore(t); ignore(f); ignore(s);
   /* threads_get_stuffed(); */
   return(THREAD_SUCCESS);  /* Keeps some compilers happy -- Won't actually get here */
 }

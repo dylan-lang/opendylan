@@ -517,7 +517,7 @@ static void *trampoline (void *arg)
 
 
 /* 1 */
-dylan_value primitive_make_thread(dylan_value t, dylan_value n, dylan_value p, dylan_value f, DBOOL s)
+dylan_value primitive_make_thread(dylan_value t, dylan_value f, DBOOL s)
 {
   DTHREAD *thread = (DTHREAD *)t;
 

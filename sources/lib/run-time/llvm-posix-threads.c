@@ -268,7 +268,7 @@ static void *trampoline(void *arg)
 }
 
 // primitive-make-thread
-dylan_value primitive_make_thread(dylan_value t, dylan_value n, dylan_value p, dylan_value f, DBOOL s)
+dylan_value primitive_make_thread(dylan_value t, dylan_value f, DBOOL s)
 {
   struct KLthreadGYthreadsVdylan *thread
     = (struct KLthreadGYthreadsVdylan *) t;

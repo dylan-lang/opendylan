@@ -318,8 +318,7 @@ extern void *dylan_false;
 
 /* 1 */
 THREADS_RUN_TIME_API  ZINT
-primitive_make_thread(DTHREAD *newthread, D_NAME name,
-                      ZINT zpriority, ZFN func, BOOL synchronize)
+primitive_make_thread(DTHREAD *newthread, ZFN func, BOOL synchronize)
 {
   HANDLE hThread;
   HANDLE  *  events;

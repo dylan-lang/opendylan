@@ -1963,7 +1963,7 @@ extern dylan_value primitive_thread_join_single(dylan_value t);
 extern dylan_value primitive_initialize_current_thread(dylan_value t, DBOOL s);
 extern dylan_value primitive_initialize_special_thread(dylan_value t);
 extern dylan_value primitive_current_thread(void);
-extern dylan_value primitive_make_thread(dylan_value t, dylan_value n, dylan_value p, dylan_value f, DBOOL s);
+extern dylan_value primitive_make_thread(dylan_value t, dylan_value f, DBOOL s);
 extern dylan_value primitive_destroy_thread(dylan_value t);
 extern dylan_value primitive_destroy_notification(dylan_value n);
 extern dylan_value primitive_release_all_notification(dylan_value n, dylan_value l);
