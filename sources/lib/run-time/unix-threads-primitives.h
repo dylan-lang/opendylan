@@ -80,6 +80,10 @@ typedef struct _ctr2
   Z class;
   void *handle1;
   void *handle2;
+  void *priority;
+  void *thread_name;
+  void *function;
+  void *function_results;
 } DTHREAD;
 
 typedef void * D_NAME;
