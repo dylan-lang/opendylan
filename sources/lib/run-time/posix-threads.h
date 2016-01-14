@@ -146,7 +146,6 @@ typedef dylan_value *TLV_VECTOR;
 typedef struct thread {
   pthread_t tid;
   TEB* teb;
-  dylan_value name;
   dylan_value function;
 } THREAD;
 
