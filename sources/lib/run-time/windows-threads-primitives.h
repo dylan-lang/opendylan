@@ -82,6 +82,10 @@ typedef struct _ctr2
   Z class;
   void *handle1;
   void *handle2;
+  void *priority;
+  void *thread_name;
+  void *function;
+  void *function_results;
 } DTHREAD;
 
 typedef void * D_NAME;
@@ -123,8 +127,7 @@ typedef struct tlv_vector_list_element
 
 
 THREADS_RUN_TIME_API  ZINT
-primitive_make_thread(DTHREAD * newthread, D_NAME name, ZINT priority,
-                      ZFN func, BOOL synchronize);
+primitive_make_thread(DTHREAD * newthread, ZFN func, BOOL synchronize);
 
 THREADS_RUN_TIME_API  ZINT
 primitive_destroy_thread(DTHREAD * thread);

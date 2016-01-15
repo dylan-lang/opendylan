@@ -237,10 +237,10 @@ main()
 	start = GetTickCount();
 
 	/* Start the threads */
-	assert(primitive_make_thread(&tfeeder1, NULL, (ZINT)I(0), feeder1) == 1);
-	assert(primitive_make_thread(&tfeeder2, NULL, (ZINT)I(0), feeder2) == 1);
-	assert(primitive_make_thread(&treader1, NULL, (ZINT)I(0), reader1) == 1);
-	assert(primitive_make_thread(&treader2, NULL, (ZINT)I(0), reader2) == 1);
+	assert(primitive_make_thread(&tfeeder1, feeder1) == 1);
+	assert(primitive_make_thread(&tfeeder2, feeder2) == 1);
+	assert(primitive_make_thread(&treader1, reader1) == 1);
+	assert(primitive_make_thread(&treader2, reader2) == 1);
 
 	/* Wait for the threads to terminate */
 	primitive_thread_join_single(&treader1);

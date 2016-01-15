@@ -112,9 +112,7 @@ define thread-local runtime-variable %tlv-initializations-local-cursor :: <raw-i
 /// Thread primitives
 
 define side-effecting stateful dynamic-extent &c-primitive-descriptor primitive-make-thread
-    (thread :: <object>, name :: <object>,
-     priority :: <integer>, function :: <function>,
-     synchronous? :: <raw-boolean>)
+    (thread :: <object>, function :: <function>, synchronous? :: <raw-boolean>)
   => (res :: <integer>);
 
 define side-effecting stateful dynamic-extent &c-primitive-descriptor primitive-destroy-thread

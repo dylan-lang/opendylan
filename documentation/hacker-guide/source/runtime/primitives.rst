@@ -16,15 +16,11 @@ primitive-make-thread
 
 Signature
 
-(thread :: <thread>, name :: false-or(<byte-string>), priority :: <integer>, function :: <function>) => ()
+(thread :: <thread>, function :: <function>) => ()
 
 Arguments
 
 *thread* A Dylan thread object.
-
-*name* The name of the thread (as a :drm:`<byte-string>`) or *#f*.
-
-*priority* The priority at which the thread is to run.
 
 *function* The initial function to run after the thread is created.
 

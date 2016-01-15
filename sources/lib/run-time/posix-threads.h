@@ -124,7 +124,11 @@ typedef struct _ctr2
 {
   dylan_value class;
   void *handle1;
-  void *handle2;
+  dylan_value handle2;
+  dylan_value priority;
+  dylan_value thread_name;
+  dylan_value function;
+  dylan_value function_results;
 } DTHREAD;
 
 typedef void * D_NAME;
@@ -142,7 +146,6 @@ typedef dylan_value *TLV_VECTOR;
 typedef struct thread {
   pthread_t tid;
   TEB* teb;
-  dylan_value name;
   dylan_value function;
 } THREAD;
 

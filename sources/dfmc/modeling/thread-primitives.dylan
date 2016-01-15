@@ -8,8 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Threads
 
 define side-effecting stateful dynamic-extent &primitive primitive-make-thread
-    (thread :: <object>, name :: <object>,
-     priority :: <integer>, function :: <function>,
+    (thread :: <object>, function :: <function>,
      synchronous? :: <raw-boolean>) => (res :: <integer>);
 
 define side-effecting stateful dynamic-extent &primitive primitive-destroy-thread

@@ -172,7 +172,7 @@ Z test_sl5()
 	CHECK("lock not owned",
 		primitive_owned_simple_lock(&simple_lock) == (ZINT)I(0));
 	CHECK("make thread",
-		primitive_make_thread(&thread, NULL, (ZINT)I(0), test_sl5a) == OK);
+		primitive_make_thread(&thread, test_sl5a) == OK);
 	Sleep(1000);
 	CHECK("wait-for lock",
 		primitive_wait_for_simple_lock(&simple_lock) == OK);
@@ -219,7 +219,7 @@ Z test_sl6()
 	CHECK("make lock",
 		primitive_make_simple_lock(&simple_lock, NULL) == OK);
 	CHECK("make thread",
-		primitive_make_thread(&thread, NULL, (ZINT)I(0), test_sl6a));
+		primitive_make_thread(&thread, test_sl6a));
 	Sleep(1000);
 	CHECK("wait-for lock with timeout",
 		primitive_wait_for_simple_lock_timed(&simple_lock, (ZINT)I(1000)) == TIMEOUT);
@@ -362,7 +362,7 @@ Z test_rl5()
 	CHECK("make lock",
 		primitive_make_recursive_lock(&recursive_lock, name) == OK);
 	CHECK("make thread",
-		primitive_make_thread(&thread, NULL, (ZINT)I(0), test_rl5a) == OK);
+		primitive_make_thread(&thread, test_rl5a) == OK);
 	Sleep(1000);
 	CHECK("wait-for lock",
 		primitive_wait_for_recursive_lock(&recursive_lock) == OK);
@@ -404,7 +404,7 @@ Z test_rl6()
 	CHECK("make lock",
 		primitive_make_recursive_lock(&recursive_lock, NULL) == OK);
 	CHECK("make thread",
-		primitive_make_thread(&thread, NULL, (ZINT)I(0), test_rl6a) == OK);
+		primitive_make_thread(&thread, test_rl6a) == OK);
 	Sleep(1000);
 	CHECK("timed wait-for lock",
 		primitive_wait_for_recursive_lock_timed(&recursive_lock, (ZINT)I(1000)) == TIMEOUT);
@@ -533,7 +533,7 @@ Z test_s5()
 
 	printf("\n5 - Claim semaphore from another thread\n");
 	primitive_make_semaphore(&semaphore, NULL, (ZINT)I(5), (ZINT)I(5));
-	primitive_make_thread(&thread, NULL, (ZINT)I(0), test_s5a);
+	primitive_make_thread(&thread, test_s5a);
 
 	Sleep(500);
 	CHECK("wait-for semaphore",
@@ -595,7 +595,7 @@ Z test_n2()
 	CHECK("make lock",
 		primitive_make_simple_lock(&simple_lock, NULL) == OK);
 	CHECK("make thread",
-		primitive_make_thread(&thread, name, (ZINT)I(0), test_n2a) == OK);
+		primitive_make_thread(&thread, test_n2a) == OK);
 	CHECK("wait-for lock",
 		primitive_wait_for_simple_lock(&simple_lock) == OK);
 	CHECK("wait-for notification",
@@ -636,7 +636,7 @@ Z test_n3()
 	CHECK("make lock",
 		primitive_make_simple_lock(&simple_lock, name) == OK);
 	CHECK("make thread",
-		primitive_make_thread(&thread, name, (ZINT)I(0), test_n3a) == OK);
+		primitive_make_thread(&thread, test_n3a) == OK);
 
 	CHECK("wait-for lock",
 		primitive_wait_for_simple_lock(&simple_lock) == OK);
@@ -681,7 +681,7 @@ Z test_n4()
 	primitive_make_notification(&notification, NULL);
 	primitive_make_simple_lock(&simple_lock, NULL);
 	for (i=0; i<10; i++)
-		primitive_make_thread(&thread[i], NULL, (ZINT)I(0), test_n4a);
+		primitive_make_thread(&thread[i], test_n4a);
 
 	Sleep(1000);
 	CHECK("wait-for lock",
@@ -737,7 +737,7 @@ Z test_n5()
 
 	primitive_make_simple_lock(&simple_lock, NULL);
 	primitive_make_notification(&notification, NULL);
-	primitive_make_thread(&thread, NULL, (ZINT)I(0), test_n5a);
+	primitive_make_thread(&thread, test_n5a);
 
 	printf("\n5 - Timed waits for notification\n");
 	for (i=0; i<15; i++) {
@@ -777,7 +777,7 @@ Z test_t1()
 
 	printf("\n1 - Make a new thread, then join it.\n");
     CHECK("make thread",
-		primitive_make_thread(&thread, name, (ZINT)I(0), test_t1a) == OK);
+		primitive_make_thread(&thread, test_t1a) == OK);
 //	Sleep(1000);
 	CHECK("join thread",
 		primitive_thread_join_single(&thread) == OK);
@@ -809,7 +809,7 @@ Z test_t2()
 
 	for (i=0; i<N_THREADS; i++) {
 		CHECK("make thread",
-			primitive_make_thread(&thread[i], name, (ZINT)I(0), test_t2a) == OK);
+			primitive_make_thread(&thread[i], test_t2a) == OK);
 //		Sleep(500);
 	}
 
@@ -956,8 +956,8 @@ Z test_t6()
 	v1 = primitive_allocate_thread_variable(I(100));
 	v2 = primitive_allocate_thread_variable(I(200));
 
-	primitive_make_thread(&thread1, name, (ZINT)I(0), test_t6a);
-	primitive_make_thread(&thread2, name, (ZINT)I(0), test_t6b);
+	primitive_make_thread(&thread1, test_t6a);
+	primitive_make_thread(&thread2, test_t6b);
 
 	CHECK("v1 = 100",
 		primitive_read_thread_variable(v1) == I(100));

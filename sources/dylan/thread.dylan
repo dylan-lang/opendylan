@@ -30,6 +30,8 @@ define sealed class <thread> (<portable-double-container>)
 
 end class;
 
+ignore(priority);
+
 define sealed class <synchronous-thread> (<thread>)
 end class;
 
@@ -74,8 +76,7 @@ define sealed method initialize (thr :: <thread>, #key) => ()
     primitive-initialize-special-thread(thr); // This is the first thread
   else
     let res =
-      primitive-make-thread(thr, thr.thread-name, thr.priority,
-                            thr.trampoline-function,
+      primitive-make-thread(thr, thr.trampoline-function,
                             primitive-boolean-as-raw
                               (instance?(thr, <synchronous-thread>)));
     if  (res ~= $success)
