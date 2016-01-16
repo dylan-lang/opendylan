@@ -39,6 +39,7 @@
 #include <pthread_np.h>
 #endif
 
+#include "thread-utils.h"
 
 static void timespec_add_msecs(struct timespec *tp, long msecs) {
   long secs = msecs / 1000;
@@ -481,7 +482,6 @@ static void *trampoline (void *arg)
   THREAD     *rthread;
 
   assert(thread != NULL);
-
 
   rthread = (THREAD*)(thread->handle2);
 
@@ -1605,6 +1605,8 @@ dylan_value primitive_initialize_current_thread(dylan_value t, DBOOL synchronize
 
   ignore(synchronize);
   assert(thread != NULL);
+
+  thread->thread_id = I(dylan_current_thread_id());
 
   rthread = (THREAD*)(thread->handle2);
 

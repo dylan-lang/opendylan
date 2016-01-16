@@ -68,7 +68,6 @@ define module operating-system
          signal-application-event,
          load-library,
          current-process-id,
-         current-thread-id,
          parent-process-id;
 
   create command-line-option-prefix;

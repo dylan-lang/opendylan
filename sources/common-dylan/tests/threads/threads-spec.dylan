@@ -42,6 +42,10 @@ define threads function-test thread-name ()
   //---*** Fill this in...
 end function-test thread-name;
 
+define threads function-test thread-id ()
+  //---*** Fill this in...
+end function-test thread-id;
+
 define threads function-test join-thread ()
   //---*** Fill this in...
 end function-test join-thread;
@@ -58,3 +62,5 @@ define threads function-test current-thread ()
   //---*** Fill this in...
 end function-test current-thread;
 
+define threads function-test current-thread-id ()
+end function-test current-thread-id;

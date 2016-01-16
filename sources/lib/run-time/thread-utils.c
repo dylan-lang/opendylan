@@ -1,4 +1,4 @@
-#include <stdint.h>
+#include "thread-utils.h"
 
 #if defined(OPEN_DYLAN_PLATFORM_LINUX) || defined(OPEN_DYLAN_PLATFORM_OPENBSD)
 #include <unistd.h>
@@ -11,7 +11,7 @@
 #include <lwp.h>
 #endif
 
-uint64_t system_current_thread_id(void)
+uint64_t dylan_current_thread_id(void)
 {
 #if defined(OPEN_DYLAN_PLATFORM_LINUX)
   return syscall(SYS_gettid);
@@ -26,7 +26,7 @@ uint64_t system_current_thread_id(void)
 #elif defined(OPEN_DYLAN_PLATFORM_OPENBSD)
   return syscall(SYS_getthrid);
 #else
-  #error system_current_thread_id is not yet implemented.
+  #error dylan_current_thread_id is not yet implemented.
 #endif
   return 0;
 }

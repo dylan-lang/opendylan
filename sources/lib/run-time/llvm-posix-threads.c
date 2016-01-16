@@ -10,6 +10,7 @@
 
 #include "llvm-runtime.h"
 #include "mm.h"
+#include "thread-utils.h"
 
 // The BDW GC wants to wrap pthreads functions
 #if defined(GC_USE_BOEHM)
@@ -409,12 +410,19 @@ void primitive_initialize_current_thread(dylan_value t, DBOOL synchronize)
     = (struct KLthreadGYthreadsVdylan *) t;
   thread->handle2 = NULL;      // Drop reference to trampoline closure
 
+  thread->thread_id = I(dylan_current_thread_id());
+
   Pteb.teb_current_thread = t;
 }
 
 // primitive-initialize-special-thread
 void primitive_initialize_special_thread(dylan_value t)
 {
+  struct KLthreadGYthreadsVdylan *thread
+    = (struct KLthreadGYthreadsVdylan *) t;
+
+  thread->thread_id = I(dylan_current_thread_id());
+
   Pteb.teb_current_thread = t;
 }
 

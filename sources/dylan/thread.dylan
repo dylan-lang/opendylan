@@ -28,6 +28,8 @@ define sealed class <thread> (<portable-double-container>)
 
   slot function-results :: <simple-object-vector> = #[];
 
+  constant slot thread-id :: <integer> = 0;
+
 end class;
 
 ignore(priority);
@@ -153,6 +155,9 @@ define function current-thread () => (thread :: <thread>)
   primitive-current-thread();
 end;
 
+define function current-thread-id () => (thread-id :: <integer>)
+  current-thread().thread-id
+end;
 
 
 ///// Sleep

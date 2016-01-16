@@ -460,6 +460,7 @@ Operations on threads
 
      - :func:`thread-name` Returns the name of a thread, or ``#f`` if no name was
        supplied.
+     - :gf:`thread-id` Returns the ID of a thread.
      - :func:`join-thread` Blocks until one of the specified threads has terminated,
        and returns the values of its function.
 
@@ -476,6 +477,24 @@ Operations on threads
 
      Returns the name of *thread* as a string. If *thread* does not have
      a name, this function returns ``#f``.
+
+.. generic-function:: thread-id
+
+   Returns the thread ID of a thread.
+
+   :signature: thread-id *thread* => *thread-id*
+
+   :parameter thread: An instance of :class:`<thread>`.
+   :value thread-id: An instance of :drm:`<integer>`.
+
+   :description:
+
+     Returns the thread ID of a thread. This is similar to the process ID for
+     an operating system process.
+
+     This is a value controlled by the underlying operating system. It is
+     most useful when trying to correlate thread activity with reports from
+     other tools.
 
 .. function:: join-thread
 
@@ -554,6 +573,22 @@ Operations on threads
    :description:
 
      Returns the current thread.
+
+.. function:: current-thread-id
+
+   Returns the ID of the current thread.
+
+   :signature: current-thread-id () => *thread-id*
+
+   :value thread-id: An instance of :drm:`<integer>`.
+
+   :description:
+
+     Returns the ID of the current thread.
+
+   :seealso:
+
+     - :gf:`thread-id`
 
 Synchronization protocol
 ========================
