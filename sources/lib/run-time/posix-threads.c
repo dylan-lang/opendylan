@@ -30,15 +30,6 @@
 
 #include <sys/time.h>
 
-#ifdef OPEN_DYLAN_PLATFORM_LINUX
-/* get prctl */
-#include <sys/prctl.h>
-#endif
-#ifdef OPEN_DYLAN_PLATFORM_FREEBSD
-/* get pthread_set_name_np */
-#include <pthread_np.h>
-#endif
-
 #include "thread-utils.h"
 
 static void timespec_add_msecs(struct timespec *tp, long msecs) {
@@ -458,23 +449,6 @@ void initialize_threads_primitives(void)
 /* THREAD PRIMITIVES                                                         */
 /*****************************************************************************/
 
-static void set_current_thread_name(const char *name) {
-#ifdef OPEN_DYLAN_PLATFORM_LINUX
-  /* gdb shows this, so set it too */
-  prctl(PR_SET_NAME, (unsigned long)name, 0, 0, 0);
-  extern int pthread_setname_np(pthread_t, const char*) __attribute__((weak));
-  if (pthread_setname_np) {
-    pthread_setname_np(pthread_self(), name);
-  }
-#endif
-#ifdef OPEN_DYLAN_PLATFORM_FREEBSD
-  pthread_set_name_np(pthread_self(), name);
-#endif
-#ifdef OPEN_DYLAN_PLATFORM_DARWIN
-  pthread_setname_np(name);
-#endif
-}
-
 static void *trampoline (void *arg)
 {
   dylan_value result, f;
@@ -492,7 +466,7 @@ static void *trampoline (void *arg)
   if (thread->thread_name != &KPfalseVKi) {
     const char *raw = primitive_string_as_raw(thread->thread_name);
     trace_threads("Thread %p has name \"%s\"", thread, raw);
-    set_current_thread_name(raw);
+    dylan_set_current_thread_name(raw);
   }
 
   setup_tlv_vector(thread);
