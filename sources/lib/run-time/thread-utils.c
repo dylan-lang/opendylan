@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <sys/prctl.h>
 #include <sys/syscall.h>
+#include <pthread.h>
 #elif defined(OPEN_DYLAN_PLATFORM_DARWIN)
 #include <pthread.h>
 #elif defined(OPEN_DYLAN_PLATFORM_FREEBSD)
