@@ -9,6 +9,8 @@
 #include <pthread_np.h>
 #elif defined(OPEN_DYLAN_PLATFORM_NETBSD)
 #include <lwp.h>
+#elif defined(OPEN_DYLAN_PLATFORM_WINDOWS)
+#include <windows.h>
 #endif
 
 uint64_t dylan_current_thread_id(void)
@@ -25,6 +27,8 @@ uint64_t dylan_current_thread_id(void)
   return _lwp_self();
 #elif defined(OPEN_DYLAN_PLATFORM_OPENBSD)
   return syscall(SYS_getthrid);
+#elif defined(OPEN_DYLAN_PLATFORM_WINDOWS)
+  return GetCurrentThreadId();
 #else
   #error dylan_current_thread_id is not yet implemented.
 #endif
