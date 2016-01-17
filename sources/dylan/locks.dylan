@@ -109,7 +109,7 @@ end method;
 
 define inline sealed method release (lock :: <semaphore>, #key) => ()
   debug-out(#"lock", "Releasing lock %= in thread %=\n",
-            lock, current-thread-id());
+            lock, current-thread-ident());
   let res = primitive-release-semaphore(lock);
   lock-release-result(lock, res);
 end method;
@@ -117,14 +117,14 @@ end method;
 
 define inline sealed method wait-for (lock :: <semaphore>, #key timeout) => (success?)
   debug-out(#"lock", "Waiting for lock %= in thread %=\n",
-            lock, current-thread-id());
+            lock, current-thread-ident());
   let res = if (timeout)
                primitive-wait-for-semaphore-timed(lock, timeout.millisecs)
              else
                primitive-wait-for-semaphore(lock)
              end if;
   debug-out(#"lock", "Waiting for lock %= in thread %= returned %=\n",
-            lock, current-thread-id(), res);
+            lock, current-thread-ident(), res);
   lock-wait-result(lock, res);
 end method;
 
@@ -190,7 +190,7 @@ end method;
 
 define inline sealed method release (lock :: <recursive-lock>, #key) => ()
   debug-out(#"lock", "Releasing lock %= in thread %=\n",
-            lock, current-thread-id());
+            lock, current-thread-ident());
   let res = primitive-release-recursive-lock(lock);
   lock-release-result(lock, res);
 end method;
@@ -199,14 +199,14 @@ end method;
 define inline sealed method wait-for
       (lock :: <recursive-lock>, #key timeout) => (success?)
   debug-out(#"lock", "Waiting for lock %= in thread %=\n",
-            lock, current-thread-id());
+            lock, current-thread-ident());
   let res = if (timeout)
                primitive-wait-for-recursive-lock-timed(lock, timeout.millisecs)
              else
                primitive-wait-for-recursive-lock(lock)
              end if;
   debug-out(#"lock", "Waiting for lock %= in thread %= returned %=\n",
-            lock, current-thread-id(), res);
+            lock, current-thread-ident(), res);
   lock-wait-result(lock, res);
 end method;
 
@@ -274,7 +274,7 @@ end method;
 
 define inline sealed method release (lock :: <simple-lock>, #key) => ()
   debug-out(#"lock", "Releasing lock %= in thread %=\n",
-            lock, current-thread-id());
+            lock, current-thread-ident());
   let res = primitive-release-simple-lock(lock);
   lock-release-result(lock, res);
 end method;
@@ -283,14 +283,14 @@ end method;
 define inline sealed method wait-for
       (lock :: <simple-lock>, #key timeout) => (success?)
   debug-out(#"lock", "Waiting for lock %= in thread %=\n",
-            lock, current-thread-id());
+            lock, current-thread-ident());
   let res = if (timeout)
                primitive-wait-for-simple-lock-timed(lock, timeout.millisecs)
              else
                primitive-wait-for-simple-lock(lock)
              end if;
   debug-out(#"lock", "Waiting for lock %= in thread %= returned %=\n",
-            lock, current-thread-id(), res);
+            lock, current-thread-ident(), res);
   lock-wait-result(lock, res);
 end method;
 
@@ -349,7 +349,7 @@ end method;
 
 define sealed method release (lock :: <read-write-lock>, #key) => ()
   debug-out(#"lock", "Releasing lock %= in thread %=\n",
-            lock, current-thread-id());
+            lock, current-thread-ident());
   let monitor = lock.internal-monitor;
   let inner-lock = monitor.associated-lock;
   let res =
@@ -383,7 +383,7 @@ define sealed method wait-for
       (lock :: <read-write-lock>, #key timeout, mode = #"read") => (success?)
   if (mode == #"read" | mode == #"write")
     debug-out(#"lock", "Waiting for lock %= in thread %=\n",
-              lock, current-thread-id());
+              lock, current-thread-ident());
     let monitor = lock.internal-monitor;
     let inner-lock = monitor.associated-lock;
     block (exit)
@@ -393,7 +393,7 @@ define sealed method wait-for
           until (lock.lock-is-free?)
             unless (wait-for(monitor, timeout: timeout))
               debug-out(#"lock", "Acquired lock %= in thread %=\n",
-                        lock, current-thread-id());
+                        lock, current-thread-ident());
               exit(#f);
             end unless;
           end until;
@@ -403,7 +403,7 @@ define sealed method wait-for
           until (lock.lock-is-free-for-reading?)
             unless (wait-for(monitor, timeout: timeout))
               debug-out(#"lock", "Acquired lock %= in thread %=\n",
-                        lock, current-thread-id());
+                        lock, current-thread-ident());
               exit(#f);
             end unless;
           end until;
@@ -452,6 +452,6 @@ end method;
 
 
 //Helper for debug output
-define inline function current-thread-id () => (res)
+define inline function current-thread-ident () => (res)
   current-thread().thread-name | current-thread();
 end;

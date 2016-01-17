@@ -338,12 +338,6 @@ define operating-system function-test current-process-id ()
   check-true("current-process-id > 0", pid > 0);
 end;
 
-define operating-system function-test current-thread-id ()
-  let tid = current-thread-id();
-  check-true("current-thread-id is an integer", instance?(tid, <integer>));
-  check-true("current-thread-id > 0", tid > 0);
-end;
-
 define operating-system function-test parent-process-id ()
   let pid = parent-process-id();
   check-true("parent-process-id is an integer", instance?(pid, <integer>));

@@ -71,7 +71,6 @@ information.
 - :func:`application-filename`
 - :func:`tokenize-command-string`
 - :func:`current-process-id`
-- :func:`current-thread-id`
 - :func:`parent-process-id`
 
 Working with shared libraries
@@ -195,23 +194,6 @@ System library's operating-system module.
    :seealso:
 
      - :func:`current-thread-id`
-     - :func:`parent-process-id`
-
-.. function:: current-thread-id
-
-   Returns the integer value for the current thread ID.
-
-   :signature: current-thread-id => *tid*
-
-   :value tid: An instance of :drm:`<integer>`.
-
-   :description:
-
-     Returns the integer value of the current thread ID.
-
-   :seealso:
-
-     - :func:`current-process-id`
      - :func:`parent-process-id`
 
 .. function:: environment-variable

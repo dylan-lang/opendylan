@@ -1824,10 +1824,12 @@ define &module threads
 
     // <Thread>
     <thread>, <synchronous-thread>,
+    thread-id,
     thread-name,
     join-thread,
     thread-yield,
     current-thread,
+    current-thread-id,
     $low-priority,
     $background-priority,
     $normal-priority,

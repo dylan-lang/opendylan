@@ -84,6 +84,7 @@ typedef struct _ctr2
   void *thread_name;
   void *function;
   void *function_results;
+  void *thread_id;
 } DTHREAD;
 
 typedef void * D_NAME;

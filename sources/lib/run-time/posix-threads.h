@@ -129,6 +129,7 @@ typedef struct _ctr2
   dylan_value thread_name;
   dylan_value function;
   dylan_value function_results;
+  dylan_value thread_id;
 } DTHREAD;
 
 typedef void * D_NAME;

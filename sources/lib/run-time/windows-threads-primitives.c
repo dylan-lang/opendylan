@@ -24,6 +24,7 @@
 #include <windows.h>
 
 #include "windows-threads-primitives.h"
+#include "thread-utils.h"
 
 
 /*****************************************************************************/
@@ -1389,6 +1390,8 @@ primitive_initialize_current_thread(DTHREAD *thread, BOOL synchronize)
   int         size;
 
   assert(thread != NULL);
+
+  thread->thread_id = I(dylan_current_thread_id());
 
   if (synchronize) {
     events = thread->handle1;

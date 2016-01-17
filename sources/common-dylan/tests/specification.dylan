@@ -431,10 +431,12 @@ define module-spec threads ()
   constant $interactive-priority :: <object>;
   constant $high-priority :: <object>;
   function thread-name (<thread>) => (false-or(<string>));
+  function thread-id (<thread>) => (<integer>);
   function join-thread (<thread>, #"rest") => (<thread>, #"rest");
   class <duplicate-join-error> (<thread-error>);
   function thread-yield () => ();
   function current-thread () => (<thread>);
+  function current-thread-id () => (<integer>);
 
   // Synchronization protocol
   open abstract class <synchronization> (<object>);

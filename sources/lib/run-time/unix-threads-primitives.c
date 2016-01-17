@@ -25,6 +25,8 @@
 
 #include "unix-threads-primitives.h"
 
+#include "thread-utils.h"
+
 #define unused(x) (void)x
 
 /*****************************************************************************/
@@ -1206,6 +1208,8 @@ primitive_initialize_current_thread(DTHREAD *thread, BOOL synchronize)
 
   /* @@@@#!"£$ no support for "synchronized" threads */
   assert(thread != NULL);
+
+  thread->thread_id = I(dylan_current_thread_id());
 
   // race conditions mean handle may not be set up yet by father thread in pthread_create,
   // so do it here explicitly.

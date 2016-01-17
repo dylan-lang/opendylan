@@ -1279,14 +1279,6 @@ define function current-process-id
                  end);
 end;
 
-define function current-thread-id
-    () => (tid :: <integer>)
-  raw-as-integer(%call-c-function("GetCurrentThreadId", c-modifiers: "__stdcall")
-                     () => (tid :: <raw-c-unsigned-int>)
-                     ()
-                 end);
-end;
-
 define function parent-process-id
     () => (pid :: <integer>)
   0
