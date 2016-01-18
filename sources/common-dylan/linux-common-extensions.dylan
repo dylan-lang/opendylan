@@ -31,8 +31,8 @@ define inline-only function get-application-commandline
           := raw-as-integer(%call-c-function ("read")
                               (fd :: <raw-c-signed-int>,
                                buffer :: <raw-byte-string>,
-                               size :: <raw-c-unsigned-long>)
-                              => (count :: <raw-c-signed-int>)
+                               size :: <raw-c-size-t>)
+                              => (count :: <raw-c-ssize-t>)
                               (integer-as-raw(cmdline-fd),
                                primitive-string-as-raw(buffer),
                                integer-as-raw(8192))
@@ -61,8 +61,8 @@ define inline-only function get-application-filename
     = raw-as-integer(%call-c-function ("readlink")
                        (path :: <raw-byte-string>,
                         buffer :: <raw-byte-string>,
-                        bufsize :: <raw-c-unsigned-long>)
-                       => (count :: <raw-c-signed-int>)
+                        bufsize :: <raw-c-size-t>)
+                       => (count :: <raw-c-ssize-t>)
                        (primitive-string-as-raw(exe-path),
                         primitive-string-as-raw(buffer),
                         integer-as-raw(8192))

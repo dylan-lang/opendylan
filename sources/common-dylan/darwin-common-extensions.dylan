@@ -32,7 +32,7 @@ define function darwin-sysctl
   when (raw-as-integer(%call-c-function ("sysctl")
     (mib :: <raw-byte-string>, cnt :: <raw-c-unsigned-int>,
      out :: <raw-byte-string> , osize :: <raw-byte-string>,
-     in :: <raw-byte-string>, isize :: <raw-c-unsigned-int>)
+     in :: <raw-byte-string>, isize :: <raw-c-size-t>)
     => (ret :: <raw-c-signed-int>)
     (primitive-string-as-raw(rmib), integer-as-raw(rmib-size),
      primitive-cast-raw-as-pointer(integer-as-raw(0)),
@@ -40,20 +40,20 @@ define function darwin-sysctl
      primitive-cast-raw-as-pointer(integer-as-raw(0)),
      integer-as-raw(0)) end) >= 0)
 
-    let osize = raw-as-integer(primitive-c-unsigned-long-at
+    let osize = raw-as-integer(primitive-c-size-t-at
       (primitive-string-as-raw(rosize),
        integer-as-raw(0), integer-as-raw(0))) + 1;
     let out = make(<byte-string>, size: osize, fill: '\0');
 
-    primitive-c-unsigned-long-at(primitive-string-as-raw(rosize),
-                                 integer-as-raw(0), integer-as-raw(0))
+    primitive-c-size-t-at(primitive-string-as-raw(rosize),
+                          integer-as-raw(0), integer-as-raw(0))
       := integer-as-raw(osize);
 
     // do the actual sysctl
     when(raw-as-integer(%call-c-function ("sysctl")
       (mib :: <raw-byte-string>, cnt :: <raw-c-unsigned-int>,
        out :: <raw-byte-string>, osize :: <raw-byte-string>,
-       in :: <raw-byte-string>, isize :: <raw-c-unsigned-int>)
+       in :: <raw-byte-string>, isize :: <raw-c-size-t>)
       => (ret :: <raw-c-signed-int>)
       (primitive-string-as-raw(rmib), integer-as-raw(mib-size),
        primitive-string-as-raw(out), primitive-string-as-raw(rosize),
