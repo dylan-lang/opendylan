@@ -64,8 +64,8 @@ define function unix-raw-read
     raw-as-integer
       (%call-c-function ("read")
            (fd :: <raw-c-unsigned-int>, address :: <raw-pointer>,
-            size :: <raw-c-unsigned-long>)
-        => (result :: <raw-c-signed-int>)
+            size :: <raw-c-size-t>)
+        => (result :: <raw-c-ssize-t>)
          (integer-as-raw(fd),
           primitive-cast-raw-as-pointer
             (primitive-unwrap-machine-word(address)),

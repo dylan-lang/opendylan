@@ -23,8 +23,8 @@ define inline function write-console
       end;
   let string-size :: <integer> = _end | size(string);
   %call-c-function ("write")
-      (fd :: <raw-c-signed-int>, buffer :: <raw-byte-string>, size :: <raw-c-unsigned-long>)
-   => (count :: <raw-c-signed-int>)
+      (fd :: <raw-c-signed-int>, buffer :: <raw-byte-string>, size :: <raw-c-size-t>)
+   => (count :: <raw-c-ssize-t>)
     (integer-as-raw(istream), primitive-string-as-raw(string), integer-as-raw(string-size))
   end;
   //---*** NOTE: Should we do something here if we can't do the I/O???

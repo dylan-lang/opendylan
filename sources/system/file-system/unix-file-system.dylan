@@ -132,8 +132,8 @@ define function %link-target
     let count
       = raw-as-integer(%call-c-function ("readlink")
                            (path :: <raw-byte-string>, buffer :: <raw-byte-string>,
-                            bufsize :: <raw-c-unsigned-long>)
-                        => (count :: <raw-c-signed-int>)
+                            bufsize :: <raw-c-size-t>)
+                        => (count :: <raw-c-ssize-t>)
                            (primitive-string-as-raw(as(<byte-string>, link)),
                             primitive-string-as-raw(buffer),
                             integer-as-raw(8192))
@@ -599,7 +599,7 @@ define function %working-directory
             (primitive-cast-pointer-as-raw(primitive-string-as-raw(buffer)),
              primitive-cast-pointer-as-raw
                (%call-c-function ("getcwd")
-                    (buf :: <raw-byte-string>, size :: <raw-c-unsigned-long>)
+                    (buf :: <raw-byte-string>, size :: <raw-c-size-t>)
                  => (result :: <raw-pointer>)
                   (primitive-string-as-raw(buffer), integer-as-raw(bufsiz))
                 end)))
