@@ -413,6 +413,13 @@ void primitive_initialize_current_thread(dylan_value t, DBOOL synchronize)
   thread->thread_id = I(dylan_current_thread_id());
 
   Pteb.teb_current_thread = t;
+
+  if (thread->thread_name != &KPfalseVKi) {
+    struct KLbyte_stringGVKd *thread_name
+      = (struct KLbyte_stringGVKd *) thread->thread_name;
+    const char *raw = (const char *)thread_name->string_element;
+    dylan_set_current_thread_name(raw);
+  }
 }
 
 // primitive-initialize-special-thread
@@ -424,6 +431,13 @@ void primitive_initialize_special_thread(dylan_value t)
   thread->thread_id = I(dylan_current_thread_id());
 
   Pteb.teb_current_thread = t;
+
+  if (thread->thread_name != &KPfalseVKi) {
+    struct KLbyte_stringGVKd *thread_name
+      = (struct KLbyte_stringGVKd *) thread->thread_name;
+    const char *raw = (const char *)thread_name->string_element;
+    dylan_set_current_thread_name(raw);
+  }
 }
 
 // primitive-sleep
