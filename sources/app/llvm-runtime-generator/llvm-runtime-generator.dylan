@@ -314,6 +314,13 @@ define function generate-runtime-header
       format(stream, "\n");
     end for;
 
+    // Generate declarations for runtime constant objects
+    for (object-name :: <symbol> in $runtime-referenced-objects)
+      format(stream, "// %s\n", object-name);
+      print-runtime-object-declaration(be, object-name, stream);
+      format(stream, "\n");
+    end for;
+
     format(stream, "#endif // LLVM_PLATFORM_RUNTIME_H_\n");
   end;
 end function;

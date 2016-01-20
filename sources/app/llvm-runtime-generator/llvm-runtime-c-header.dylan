@@ -127,3 +127,15 @@ define method print-primitive-c-type
  => ();
   print-message("dylan_value", stream);
 end method;
+
+define method print-runtime-object-declaration
+    (be :: <llvm-back-end>, name :: <symbol>,
+     stream :: <stream>)
+ => ();
+  let o = dylan-value(name);
+  let type = o.^object-class;
+  format(stream, "extern struct %s %s;\n",
+         emit-name-internal(be, #f, type),
+         emit-name-internal(be, #f, o));
+end method;
+
