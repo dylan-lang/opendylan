@@ -27,6 +27,7 @@ define library dylan-environment-with-tools
   // Project manager plug-ins
   use motley;
   use tool-scepter;
+  use tool-parser-generator;
 
   // Plug-ins for debugging
   use local-access-path;
