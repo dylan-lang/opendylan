@@ -5,27 +5,36 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define generic compile-grammar-file
-    (input-name, output-name, report-grammar-conflict, #key);
+    (input-name, output-name, report-grammar-conflict :: <function>,
+     #key terminal-string)
+ => ();
 
 define method compile-grammar-file
-  (input-name, output-name, report-grammar-conflict :: <function>,  #rest keys, #key)
+    (input-name, output-name, report-grammar-conflict :: <function>,
+     #key terminal-string)
+ => ()
   with-open-file (inf = input-name)
     with-open-file (outf = output-name, direction: #"output")
-      apply(compile-grammar-file, inf, outf, report-grammar-conflict, keys)
+      compile-grammar-file(inf, outf, report-grammar-conflict,
+                           terminal-string: terminal-string)
     end;
   end;
 end;
 
 define method compile-grammar-file
-  (input-name, outf :: <stream>, report-grammar-conflict :: <function>, #rest keys, #key)
+    (input-name, outf :: <stream>, report-grammar-conflict :: <function>,
+     #key terminal-string)
+ => ()
   with-open-file (inf = input-name)
-    apply(compile-grammar-file, inf, outf, report-grammar-conflict, keys)
+    compile-grammar-file(inf, outf, report-grammar-conflict,
+                         terminal-string: terminal-string)
   end;
 end;
 
 define method compile-grammar-file
     (inf :: <stream>, outf :: <stream>, report-grammar-conflict :: <function>,
      #key terminal-string)
+ => ()
   // Writing directly to a file seems to output crlf's as newlines,
   // which I don't like.  Kludge around it.
   let out = make(<string-stream>, direction: #"output");
