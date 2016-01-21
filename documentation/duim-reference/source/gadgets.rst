@@ -171,15 +171,13 @@ In each table below, classes that support the *items* protocol are
 displayed in *bold text*, and classes that support the activate
 protocol are displayed using *italic text*.
 
-*Note:* In `Subclasses of the <collection-gadget>
-class`_, every subclass shown supports the *items*
-protocol, though for clarity, no bold is used.
+*Note:* In `Subclasses of the \<collection-gadget\> class`_, every
+subclass shown supports the *items* protocol, though for clarity,
+no bold is used.
 
 All subclasses of *<value-gadget>* support the *value* protocol. These
-are described in `Subclasses of
-<value-gadget>`_, `Subclasses of
-<button>`_, and `Subclasses of
-<collection-gadget>`_.
+are described in `Subclasses of \<value-gadget\>`_, `Subclasses of
+\<button\>`_, and `Subclasses of \<collection-gadget\>`_.
 
 The <gadget> class and its subclasses
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -192,7 +190,7 @@ subclasses of *<gadget>*, with the exception of *<list-item>*,
 The immediate subclasses of *<gadget>* are shown in `Overall class
 hierarchy for the DUIM-Gadgets library`_. Only :class:`<value-gadget>`
 and :class:`<page>` have any subclasses defined. See
-`Subclasses of <value-gadget>`_ and `Subclasses of <page>`_ for details
+`Subclasses of \<value-gadget\>`_ and `Subclasses of \<page\>`_ for details
 of these subclasses.
 
 The :class:`<gadget>` class provides a number of subclasses that allow
@@ -202,7 +200,7 @@ particular parts of a user interface to be created:
    Use this class to add a menu to the menu bar of any application
    frame. Menus themselves contain commands created using the
    menu-specific button and collection gadgets described in
-   `Subclasses of <button>`_ and `Subclasses of <collection-gadget>`_.
+   `Subclasses of \<button\>`_ and `Subclasses of \<collection-gadget\>`_.
 
 :class:`<tool-bar>`
    This class is used to add a tool bar to an application frame. A
@@ -264,7 +262,7 @@ Overall class hierarchy for the DUIM-Gadgets library
 
 <value-gadget>
 
-See `Subclasses of <value-gadget>`_
+See `Subclasses of \<value-gadget\>`_
 
 <label>
 
@@ -288,7 +286,7 @@ See `Subclasses of <value-gadget>`_
 
 <page>
 
-See `Subclasses of <page>`_
+See `Subclasses of \<page\>`_
 
 <list-item>
 
@@ -320,13 +318,13 @@ subclasses defined. These include:
 
 :class:`<button>`
    Any button, such as a radio button, check button, or push
-   button. See `Subclasses of <button>`_ for
+   button. See `Subclasses of \<button\>`_ for
    more details about the classes of button available.
 
 :class:`<collection-gadget>`
    Any gadget whose contents form a collection, such as a list, a tree
    control, or a group of buttons. See `Subclasses of
-   <collection-gadget>`_ for more details about the
+   \<collection-gadget\>`_ for more details about the
    classes of collection gadget available.
 
 Also provided are the following specific GUI elements:
@@ -347,7 +345,7 @@ Also provided are the following specific GUI elements:
    displayed in a tab control displays a new page of information.
 
 The subclasses of :class:`<value-gadget>` are as shown in `Subclasses of
-the <value-gadget> class`_.
+the \<value-gadget\> class`_.
 
 Subclasses of the *<value-gadget>* class
 
@@ -371,7 +369,7 @@ Subclasses of the *<value-gadget>* class
 
 <button>
 
-See `Subclasses of <button>`_
+See `Subclasses of \<button\>`_
 
 :class:`<menu-bar>`
 
@@ -381,7 +379,7 @@ See `Subclasses of <button>`_
 
 <collection-gadget>
 
-See `Subclasses of <collection-gadget>`_
+See `Subclasses of \<collection-gadget\>`_
 
 Subclasses of <page>
 ^^^^^^^^^^^^^^^^^^^^
@@ -438,7 +436,7 @@ Subclasses of <button>
 ^^^^^^^^^^^^^^^^^^^^^^
 
 The subclasses of :class:`<button>` are as shown in `Subclasses of the
-<button> class`_. These subclasses include not only
+\<button\> class`_. These subclasses include not only
 buttons that can appear in any sheet, but also their equivalent classes
 of menu item. Thus, an instance of :class:`<check-button>` represents a button
 whose state can toggle a specific value on and off, and an instance of
@@ -470,7 +468,7 @@ Subclasses of <collection-gadget>
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The subclasses of :class:`<collection-gadget>` are as shown in `Subclasses
-of the <collection-gadget> class`_. All of these
+of the \<collection-gadget>\ class`_. All of these
 subclasses support the *items* protocol, even though they are not
 displayed in bold.
 

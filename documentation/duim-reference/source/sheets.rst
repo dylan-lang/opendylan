@@ -278,7 +278,7 @@ Subclasses of :class:`<sheet-event>` fall into two categories:
 
 - Device events that occur to devices attached to the computer
   (typically the keyboard and the pointing device). These are described
-  in `Subclasses of <device-event>`_.
+  in `Subclasses of \<device-event\>`_.
 - Window events that occur in a window.
 
 Events that occur in a window are subclasses of :class:`<window-event>`. Two
