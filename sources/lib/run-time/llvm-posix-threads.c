@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include <unistd.h>
 #include <errno.h>
 #include <pthread.h>
@@ -854,7 +855,7 @@ dylan_value primitive_wait_for_simple_lock_timed(dylan_value l, dylan_value ms)
         return TIMEOUT;
       } else {
         fprintf(stderr, "%s: pthread_cond_timedwait returned %s\n",
-                __func__, sys_errlist[rc]);
+                __func__, strerror(rc));
         return GENERAL_ERROR;
       }
     }
