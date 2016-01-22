@@ -24,6 +24,9 @@ define library dylan-environment
   // Back-ends
   use dfmc-back-end-implementations;
 
+  // Project manager plug-ins
+  use tool-parser-generator;
+
   // Plug-ins for debugging
   use local-access-path;
 

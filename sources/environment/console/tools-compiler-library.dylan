@@ -26,6 +26,7 @@ define library dylan-compiler-with-tools
   // Project manager plug-ins
   use motley;
   use tool-scepter;
+  use tool-parser-generator;
 
   export console-environment;
 end library dylan-compiler-with-tools;
