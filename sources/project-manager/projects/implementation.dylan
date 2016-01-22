@@ -577,7 +577,7 @@ define method close-project (project :: <project>, #key system? = #f)
   end
 end method;
 
-// A cache used to avoid canonicalizing project sources multple times
+// A cache used to avoid canonicalizing project sources multiple times
 // for multiply-used libraries during project parsing.
 define thread variable *used-project-cache* = #f;
 
