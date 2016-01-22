@@ -1,6 +1,7 @@
 Library:   dylan-environment
 Synopsis:  The command line version of the environment
 Author:    Andy Armstrong
+Target-Type: executable
 Files: environment-library
        environment-module
        command-line

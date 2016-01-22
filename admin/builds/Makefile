@@ -369,7 +369,6 @@ DYLAN_COMPILER = $(INSTALL_BIN_DIRECTORY)\dylan-compiler.exe
 DYLAN_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\dylan-environment.exe
 BATCH_DEBUG = $(INSTALL_BIN_DIRECTORY)\batch-debug.exe
 DYLAN_COMPILER_WITH_TOOLS = $(INSTALL_BIN_DIRECTORY)\dylan-compiler-with-tools.exe
-DYLAN_ENVIRONMENT_WITH_TOOLS = $(INSTALL_BIN_DIRECTORY)\dylan-environment-with-tools.exe
 CREATE_ID = $(INSTALL_BIN_DIRECTORY)\create-id.exe
 DEVEL_DBG_UI = $(INSTALL_BIN_DIRECTORY)\devel-dbg-ui.exe
 DLL_WRAP = $(INSTALL_BIN_DIRECTORY)\dll-wrap.exe
@@ -1069,10 +1068,10 @@ release-info: $(RELEASE_INFO)
 compiler: pentium-dw-libraries release-info motley t-lists c-lexer console-scepter-libraries
 dylan-compiler-with-tools-exe: $(DYLAN_COMPILER_WITH_TOOLS)
 dylan-compiler-with-tools: console-compiler-libraries release-info environment-internal-commands motley t-lists c-lexer console-scepter-libraries dylan-compiler-with-tools-exe
-dylan-environment-with-tools: $(DYLAN_ENVIRONMENT_WITH_TOOLS)
+dylan-environment: $(DYLAN_ENVIRONMENT)
 win32-environment: $(WIN32_ENVIRONMENT)
 with-splash-screen: $(WITH_SPLASH_SCREEN)
-rel-environment: dylan-environment-with-tools win32-environment with-splash-screen
+rel-environment: dylan-environment win32-environment with-splash-screen
 libraries: user-libraries win32-libraries duim ole-libraries duim-ole database-libraries network dylan-orb naming-client midi
 example-projects: console-example-projects duim-example-projects win32-example-projects ole-example-projects duim-ole-example-projects network-example-projects corba-example-projects
 install-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates install-database-examples install-ole-examples install-duim-ole-examples install-network-examples install-corba-examples install-enhanced-doc-examples install-midi-examples
@@ -1974,6 +1973,9 @@ $(DYLAN_COMPILER):
 $(DYLAN_ENVIRONMENT):
   $(ENSURE_LIBRARY) environment-application-commands
   $(ENSURE_LIBRARY) environment-internal-commands
+  $(ENSURE_LIBRARY) motley
+  $(ENSURE_LIBRARY) tool-scepter
+  $(ENSURE_LIBRARY) remote-access-path
   $(ENSURE_LIBRARY) release-info
   $(BUILD_APPLICATION) dylan-environment
 
@@ -1984,15 +1986,6 @@ $(DYLAN_COMPILER_WITH_TOOLS):
   $(ENSURE_LIBRARY) tool-scepter
   $(ENSURE_LIBRARY) release-info
   $(BUILD_APPLICATION) dylan-compiler-with-tools
-
-$(DYLAN_ENVIRONMENT_WITH_TOOLS):
-  $(ENSURE_LIBRARY) environment-application-commands
-  $(ENSURE_LIBRARY) environment-internal-commands
-  $(ENSURE_LIBRARY) motley
-  $(ENSURE_LIBRARY) tool-scepter
-  $(ENSURE_LIBRARY) remote-access-path
-  $(ENSURE_LIBRARY) release-info
-  $(BUILD_APPLICATION) dylan-environment-with-tools
 
 $(WIN32_ENVIRONMENT):
   $(ENSURE_RUNTIME_LIBRARY) $(WIN32_SHELL_DLL) win32-shell
