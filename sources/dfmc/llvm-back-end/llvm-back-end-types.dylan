@@ -387,7 +387,8 @@ end method;
 // FIXME these are actually subject to target-specific/ABI-specific
 // normalization
 define method llvm-c-function-type
-    (back-end :: <llvm-back-end>, o :: <&c-function>)
+    (back-end :: <llvm-back-end>,
+     o :: type-union(<&c-function>, <&c-callable-function>))
  => (type :: <llvm-function-type>);
   let signature = o.c-signature;
   let parameter-types

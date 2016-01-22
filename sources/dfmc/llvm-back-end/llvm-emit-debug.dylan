@@ -37,6 +37,7 @@ end method;
 define method emit-lambda-dbg-function
     (back-end :: <llvm-back-end>, o :: <&iep>) => ()
   let fun = function(o);
+  let c-callable? = instance?(fun, <&c-callable-function>);
   let signature = ^function-signature(fun);
   let sig-spec = signature-spec(fun);
 
@@ -63,8 +64,12 @@ define method emit-lambda-dbg-function
   let obj-dbg-type
     = llvm-reference-dbg-type(back-end, dylan-value(#"<object>"));
   let dbg-calling-convention-parameter-types
-    = vector(obj-dbg-type,      // next-methods
-             obj-dbg-type);     // function
+    = if (c-callable?)
+        #[]
+      else
+        vector(obj-dbg-type,      // next-methods
+               obj-dbg-type)      // function
+      end if;
 
   let dbg-function-parameter-types
     = if (o.parameters.size > $entry-point-argument-count)
@@ -128,11 +133,13 @@ define method emit-lambda-dbg-function
                                        artificial?: #t);
       ins--call-intrinsic(back-end, "llvm.dbg.value", vector(v, i64(0), lv));
     end method;
-  let calling-convention-index = parameters(o).size;
-  artificial-parameter($next-methods-parameter-name,
-                       calling-convention-index);
-  artificial-parameter($function-parameter-name,
-                       calling-convention-index + 1);
+  unless (c-callable?)
+    let calling-convention-index = parameters(o).size;
+    artificial-parameter($next-methods-parameter-name,
+                         calling-convention-index);
+    artificial-parameter($function-parameter-name,
+                         calling-convention-index + 1);
+  end unless;
 
   // Assign debug scopes to each computation
   assign-computations-dbg-scope(back-end, dbg-function, o.body, #f);
