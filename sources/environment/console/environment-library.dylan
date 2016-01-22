@@ -25,10 +25,13 @@ define library dylan-environment
   use dfmc-back-end-implementations;
 
   // Project manager plug-ins
+  use motley;
+  use tool-scepter;
   use tool-parser-generator;
 
   // Plug-ins for debugging
   use local-access-path;
+  use remote-access-path;
 
   export console-environment;
 end library dylan-environment;
