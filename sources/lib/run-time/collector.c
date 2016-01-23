@@ -537,6 +537,7 @@ void update_allocation_counter(gc_teb_t gc_teb, size_t count, void* wrapper)
   if (dylan_keyboard_interruptQ) HandleDylanKeyboardInterrupt();
 
 #ifdef NO_ALLOCATION_COUNT_FOR_PROFILER
+  unused(count);
   unused(wrapper);
 #else
   if (heap_statsQ) {
