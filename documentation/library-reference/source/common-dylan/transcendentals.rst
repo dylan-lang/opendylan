@@ -306,6 +306,23 @@ This section contains a reference entry for each item exported from the
      - :gf:`log`
      - :func:`logn`
 
+.. generic-function:: hypot
+
+   :summary:
+     Returns the Euclidian distance.
+
+   :signature: hypot x, y => z
+
+   :parameter x: An instance of type :drm:`<number>`.
+   :parameter y: An instance of type :drm:`<number>`.
+   :value z: An instance of type :drm:`<number>`.
+
+   :description:
+
+     Returns the Euclidian distance without unnecessary overflow or underflow.
+
+     The floating point precision is given by the precision of ``x``.
+
 .. generic-function:: isqrt
 
    :summary:

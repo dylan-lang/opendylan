@@ -350,6 +350,12 @@ define module-spec transcendentals ()
 // The floating point precision of the result is given by the precision
 // of _y_.
 
+  open generic-function hypot (<number>, <number>) => (<number>);
+
+// Returns the Euclidian distance.
+
+// The floating point precision of the result is given by the precision
+// of _x_.
 
   open generic-function log (<number>) => (<number>); //  x > 0
 

@@ -233,3 +233,27 @@ end macro atan2-method-definer;
 
 define atan2-method (<single-float>, $single-pi, 0.0s0) end;
 define atan2-method (<double-float>, $double-pi, 0.0d0) end;
+
+define binary-transcendental hypot (x, y);
+
+define sealed may-inline method hypot (x :: <single-float>, y :: <single-float>)
+ => (z :: <single-float>)
+  primitive-raw-as-single-float
+    (%call-c-function("hypotf")
+         (x :: <raw-single-float>, y :: <raw-single-float>)
+      => (z :: <raw-single-float>)
+         (primitive-single-float-as-raw(x),
+          primitive-single-float-as-raw(y))
+     end)
+end method hypot;
+
+define sealed may-inline method hypot (x :: <double-float>, y :: <double-float>)
+ => (z :: <double-float>)
+  primitive-raw-as-double-float
+    (%call-c-function("hypot")
+         (x :: <raw-double-float>, y :: <raw-double-float>)
+      => (z :: <raw-double-float>)
+         (primitive-double-float-as-raw(x),
+          primitive-double-float-as-raw(y))
+     end)
+end method hypot;
