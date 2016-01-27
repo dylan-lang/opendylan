@@ -97,6 +97,19 @@ define transcendentals function-test atanh ()
   // ---*** Fill this in.
 end function-test atanh;
 
+define transcendentals function-test hypot ()
+  assert-equal(5.0s0, hypot(3.0s0, 4.0s0));
+  assert-equal(5.0s0, hypot(3.0s0, 4.0d0));
+  assert-equal(5.0d0, hypot(3.0d0, 4.0d0));
+  assert-equal(5.0d0, hypot(3.0d0, 4.0s0));
+  assert-no-errors(
+    begin
+      let z = hypot(1.0d154, 1.0d154);
+      assert-not-equal(#"infinite", classify-float(z));
+    end
+  );
+end function-test hypot;
+
 define transcendentals function-test log ()
   check-condition("log(-1) errors",
                   <error>,

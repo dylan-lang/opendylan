@@ -232,7 +232,8 @@ define module transcendentals
          tanh,
          asinh,
          acosh,
-         atanh;
+         atanh,
+         hypot;
 end module transcendentals;
 
 define module machine-words
