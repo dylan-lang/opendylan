@@ -2273,6 +2273,8 @@ define &module machine-word-lowlevel
          machine-word-count-low-zeros,
          machine-word-count-high-zeros;
   // arithmetic
+  create machine-word-add,
+         machine-word-subtract;
   create machine-word-add-with-overflow,
          machine-word-subtract-with-overflow,
          machine-word-multiply-with-overflow,
