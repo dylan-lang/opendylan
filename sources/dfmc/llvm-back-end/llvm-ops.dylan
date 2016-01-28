@@ -143,6 +143,15 @@ define method op--untag-character
   ins--ashr(be, word, $dylan-tag-bits)
 end method;
 
+define function op--tag-cmp
+    (back-end :: <llvm-back-end>, object :: <llvm-value>, tag :: <integer>)
+ => (cmp :: <llvm-value>)
+  let object-word
+    = ins--ptrtoint(back-end, object, back-end.%type-table["iWord"]);
+  let tag-bits = ins--and(back-end, object-word, ash(1, $dylan-tag-bits) - 1);
+  ins--icmp-eq(back-end, tag-bits, tag)
+end function;
+
 // Return #t or #f for an i1 value (such as an icmp/fcmp result)
 define function op--boolean
     (be :: <llvm-back-end>, x :: <llvm-value>)
@@ -199,11 +208,7 @@ define method op--object-mm-wrapper
   let module = back-end.llvm-builder-module;
 
   // Check tag to determine if this is a heap object
-  let object-word
-    = ins--ptrtoint(back-end, object, back-end.%type-table["iWord"]);
-  let tag-bits
-    = ins--and(back-end, object-word, ash(1, $dylan-tag-bits) - 1);
-  let cmp = ins--icmp-eq(back-end, tag-bits, $dylan-tag-pointer);
+  let cmp = op--tag-cmp(back-end, object, $dylan-tag-pointer);
   ins--if (back-end, cmp)
     // Retrieve the <mm-wrapper> object from the object header
     let x = op--object-pointer-cast(back-end, object, #"<object>");
