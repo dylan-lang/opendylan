@@ -774,6 +774,14 @@ define function make-by-singleton-class-discriminator
   d
 end function;
 
+//---*** FIXME: When the compiler does range analysis, this might not be needed.
+define inline-only function add-without-overflow (x :: <integer>, y :: <integer>) => (z :: <integer>)
+  let mx = interpret-integer-as-machine-word(x);
+  let my = strip-integer-tag(interpret-integer-as-machine-word(y));
+  let result = machine-word-add(mx, my);
+  interpret-machine-word-as-integer(result)
+end;
+
 define inline function linear-class-key-lookup
     (key :: <integer>, d :: <linear-class-keyed-discriminator>, default)
   let n :: <integer> = %ckd-size(d);
@@ -783,11 +791,11 @@ define inline function linear-class-key-lookup
           else
             let otherkey = %ckd-ref(d, i);
             if (pointer-id?(otherkey, key))
-              %ckd-ref(d, i + 1)
+              %ckd-ref(d, add-without-overflow(i, 1))
             // elseif (pointer-id?(otherkey, $ckd-empty))
             //   default
             else
-              loop(i + 2)
+              loop(add-without-overflow(i, 2))
             end if
           end if
         end method;
