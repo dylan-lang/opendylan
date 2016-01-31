@@ -112,6 +112,15 @@ define method do-emit-instance-cmp
   ins--icmp-ne(back-end, result, emit-reference(back-end, module, &false));
 end method;
 
+define function emit-tag-cmp
+    (back-end :: <llvm-back-end>, object :: <llvm-value>, tag :: <integer>)
+ => (cmp :: <llvm-value>)
+  let object-word
+    = ins--ptrtoint(back-end, object, back-end.%type-table["iWord"]);
+  let tag-bits = ins--and(back-end, object-word, ash(1, $dylan-tag-bits) - 1);
+  ins--icmp-eq(back-end, tag-bits, tag)
+end function;
+
 // Compile-time instance check against a <class> instance
 define method do-emit-instance-cmp
     (back-end :: <llvm-back-end>, object :: <llvm-value>,
@@ -123,13 +132,13 @@ define method do-emit-instance-cmp
 
   case
     type == dylan-value(#"<integer>") =>
-      op--tag-cmp(back-end, object, $dylan-tag-integer);
+      emit-tag-cmp(back-end, object, $dylan-tag-integer);
 
     type == dylan-value(#"<byte-character>") =>
-      op--tag-cmp(back-end, object, $dylan-tag-character);
+      emit-tag-cmp(back-end, object, $dylan-tag-character);
 
     type == dylan-value(#"<unicode-character>") =>
-      op--tag-cmp(back-end, object, $dylan-tag-unichar);
+      emit-tag-cmp(back-end, object, $dylan-tag-unichar);
 
     type == dylan-value(#"<boolean>") =>
       // Compare against #f
@@ -147,7 +156,7 @@ define method do-emit-instance-cmp
       let obj-bb = make(<llvm-basic-block>);
 
       // Check tag to ensure this is a heap object
-      let obj-cmp = op--tag-cmp(back-end, object, $dylan-tag-pointer);
+      let obj-cmp = emit-tag-cmp(back-end, object, $dylan-tag-pointer);
       ins--br(back-end, obj-cmp, obj-bb, result-bb);
 
       // Retrieve the <mm-wrapper> object from the object header
@@ -319,7 +328,10 @@ define method do-emit-instance-cmp
   let result-bb = make(<llvm-basic-block>);
 
   // Check the tag
-  let tag-cmp = op--tag-cmp(back-end, object, $dylan-tag-integer);
+  let object-word
+    = ins--ptrtoint(back-end, object, back-end.%type-table["iWord"]);
+  let tag-bits = ins--and(back-end, object-word, ash(1, $dylan-tag-bits) - 1);
+  let tag-cmp = ins--icmp-eq(back-end, tag-bits, $dylan-tag-integer);
   ins--br(back-end, tag-cmp, integer-bb, result-bb);
 
   // Check the range
