@@ -15,6 +15,7 @@ Files: library
        format
        byte-vector
        timers
+       profiling
        transcendentals
        machine-words/utilities
        machine-words/machine-word
