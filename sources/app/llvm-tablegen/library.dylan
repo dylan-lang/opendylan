@@ -7,6 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library llvm-tablegen
   use common-dylan;
+  use strings;
   use io;
   use system;
   use parser-run-time;
@@ -14,6 +15,7 @@ end library llvm-tablegen;
 
 define module llvm-tablegen
   use common-dylan;
+  use strings;
   use streams;
   use print;
   use format;

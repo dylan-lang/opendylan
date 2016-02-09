@@ -346,6 +346,8 @@ define function tablegen-gen-intrinsic () => ();
         let properties = record-field-value(def, "Properties");
 
       if ((~empty?(target-prefix) & def-name ~= "int_x86_int")
+            | starts-with?(def-name, "int_nvvm_")
+            | starts-with?(def-name, "int_ptx_")
 	    | any?(llvm-type-vector?, parameter-types)
 	    | any?(llvm-type-vector?, return-types))
         // FIXME: For now, only generate target-independent intrinsics,
