@@ -158,40 +158,58 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
-  $llvm-intrinsic-makers["llvm.convert.from.fp16"]
+  $llvm-intrinsic-makers["llvm.clear_cache"]
     := begin
          let function-type
            = make(<llvm-function-type>,
-                  return-type: $llvm-float-type,
-                  parameter-types: vector($llvm-i16-type),
+                  return-type: $llvm-void-type,
+                  parameter-types: vector($llvm-i8*-type, $llvm-i8*-type),
                   varargs?: #f);
          let function
            = make(<llvm-function>,
-                  name: "llvm.convert.from.fp16",
+                  name: "llvm.clear_cache",
                   type: make(<llvm-pointer-type>, pointee: function-type),
-                  attribute-list: $llvm-intrinsic-readnone-attribute-list,
+                  attribute-list: $llvm-intrinsic-default-attribute-list,
                   linkage: #"external");
          method (arguments) function end
        end;
 
+  $llvm-intrinsic-makers["llvm.convert.from.fp16"]
+    := method (arguments)
+         let type0 = make(<llvm-opaque-type>);
+         let name = format-to-string("llvm.convert.from.fp16.%s", intrinsic-type-name(type0));
+
+         let function-type
+           = make(<llvm-function-type>,
+                  return-type: type0,
+                  parameter-types: vector($llvm-i16-type),
+                  varargs?: #f);
+         make(<llvm-function>,
+              name: name,
+              type: make(<llvm-pointer-type>, pointee: function-type),
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
+              linkage: #"external");
+       end;
+
   $llvm-intrinsic-makers["llvm.convert.to.fp16"]
-    := begin
+    := method (arguments)
+         let type0 = llvm-value-type(arguments[0]);
+         let name = format-to-string("llvm.convert.to.fp16.%s", intrinsic-type-name(type0));
+
          let function-type
            = make(<llvm-function-type>,
                   return-type: $llvm-i16-type,
-                  parameter-types: vector($llvm-float-type),
+                  parameter-types: vector(type0),
                   varargs?: #f);
-         let function
-           = make(<llvm-function>,
-                  name: "llvm.convert.to.fp16",
-                  type: make(<llvm-pointer-type>, pointee: function-type),
-                  attribute-list: $llvm-intrinsic-readnone-attribute-list,
-                  linkage: #"external");
-         method (arguments) function end
+         make(<llvm-function>,
+              name: name,
+              type: make(<llvm-pointer-type>, pointee: function-type),
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
+              linkage: #"external");
        end;
 
   $llvm-intrinsic-makers["llvm.convertff"]
@@ -356,6 +374,25 @@ begin
               linkage: #"external");
        end;
 
+  $llvm-intrinsic-makers["llvm.copysign"]
+    := method (arguments)
+         let type0 = make(<llvm-opaque-type>);
+         llvm-constrain-type(type0, llvm-value-type(arguments[0]));
+         llvm-constrain-type(type0, llvm-value-type(arguments[1]));
+         let name = format-to-string("llvm.copysign.%s", intrinsic-type-name(type0));
+
+         let function-type
+           = make(<llvm-function-type>,
+                  return-type: type0,
+                  parameter-types: vector(type0, type0),
+                  varargs?: #f);
+         make(<llvm-function>,
+              name: name,
+              type: make(<llvm-pointer-type>, pointee: function-type),
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
+              linkage: #"external");
+       end;
+
   $llvm-intrinsic-makers["llvm.cos"]
     := method (arguments)
          let type0 = make(<llvm-opaque-type>);
@@ -370,7 +407,7 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
@@ -426,6 +463,22 @@ begin
               type: make(<llvm-pointer-type>, pointee: function-type),
               attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
+       end;
+
+  $llvm-intrinsic-makers["llvm.cuda.syncthreads"]
+    := begin
+         let function-type
+           = make(<llvm-function-type>,
+                  return-type: $llvm-void-type,
+                  parameter-types: vector(),
+                  varargs?: #f);
+         let function
+           = make(<llvm-function>,
+                  name: "llvm.cuda.syncthreads",
+                  type: make(<llvm-pointer-type>, pointee: function-type),
+                  attribute-list: $llvm-intrinsic-default-attribute-list,
+                  linkage: #"external");
+         method (arguments) function end
        end;
 
   $llvm-intrinsic-makers["llvm.dbg.declare"]
@@ -666,7 +719,7 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
@@ -684,7 +737,7 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
@@ -707,6 +760,54 @@ begin
               linkage: #"external");
        end;
 
+  $llvm-intrinsic-makers["llvm.experimental.patchpoint.i64"]
+    := begin
+         let function-type
+           = make(<llvm-function-type>,
+                  return-type: $llvm-i64-type,
+                  parameter-types: vector($llvm-i64-type, $llvm-i32-type, $llvm-i8*-type, $llvm-i32-type),
+                  varargs?: #t);
+         let function
+           = make(<llvm-function>,
+                  name: "llvm.experimental.patchpoint.i64",
+                  type: make(<llvm-pointer-type>, pointee: function-type),
+                  attribute-list: $llvm-intrinsic-default-attribute-list,
+                  linkage: #"external");
+         method (arguments) function end
+       end;
+
+  $llvm-intrinsic-makers["llvm.experimental.patchpoint.void"]
+    := begin
+         let function-type
+           = make(<llvm-function-type>,
+                  return-type: $llvm-void-type,
+                  parameter-types: vector($llvm-i64-type, $llvm-i32-type, $llvm-i8*-type, $llvm-i32-type),
+                  varargs?: #t);
+         let function
+           = make(<llvm-function>,
+                  name: "llvm.experimental.patchpoint.void",
+                  type: make(<llvm-pointer-type>, pointee: function-type),
+                  attribute-list: $llvm-intrinsic-default-attribute-list,
+                  linkage: #"external");
+         method (arguments) function end
+       end;
+
+  $llvm-intrinsic-makers["llvm.experimental.stackmap"]
+    := begin
+         let function-type
+           = make(<llvm-function-type>,
+                  return-type: $llvm-void-type,
+                  parameter-types: vector($llvm-i64-type, $llvm-i32-type),
+                  varargs?: #t);
+         let function
+           = make(<llvm-function>,
+                  name: "llvm.experimental.stackmap",
+                  type: make(<llvm-pointer-type>, pointee: function-type),
+                  attribute-list: $llvm-intrinsic-default-attribute-list,
+                  linkage: #"external");
+         method (arguments) function end
+       end;
+
   $llvm-intrinsic-makers["llvm.fabs"]
     := method (arguments)
          let type0 = make(<llvm-opaque-type>);
@@ -721,7 +822,7 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
@@ -739,7 +840,7 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
@@ -957,7 +1058,7 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
@@ -975,7 +1076,7 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
@@ -993,7 +1094,7 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
@@ -1083,19 +1184,20 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
   $llvm-intrinsic-makers["llvm.objectsize"]
     := method (arguments)
          let type0 = make(<llvm-opaque-type>);
-         let name = format-to-string("llvm.objectsize.%s", intrinsic-type-name(type0));
+         let type1 = llvm-value-type(arguments[0]);
+         let name = format-to-string("llvm.objectsize.%s.%s", intrinsic-type-name(type0), intrinsic-type-name(type1));
 
          let function-type
            = make(<llvm-function-type>,
                   return-type: type0,
-                  parameter-types: vector($llvm-i8*-type, $llvm-i1-type),
+                  parameter-types: vector(type1, $llvm-i1-type),
                   varargs?: #f);
          make(<llvm-function>,
               name: name,
@@ -1135,7 +1237,7 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
@@ -1153,7 +1255,7 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
@@ -1188,6 +1290,23 @@ begin
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
               attribute-list: $llvm-intrinsic-default-attribute-list,
+              linkage: #"external");
+       end;
+
+  $llvm-intrinsic-makers["llvm.read_register"]
+    := method (arguments)
+         let type0 = make(<llvm-opaque-type>);
+         let name = format-to-string("llvm.read_register.%s", intrinsic-type-name(type0));
+
+         let function-type
+           = make(<llvm-function-type>,
+                  return-type: type0,
+                  parameter-types: vector($llvm-metadata-type),
+                  varargs?: #f);
+         make(<llvm-function>,
+              name: name,
+              type: make(<llvm-pointer-type>, pointee: function-type),
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
@@ -1237,7 +1356,7 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
@@ -1255,7 +1374,7 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
@@ -1340,7 +1459,7 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
@@ -1377,7 +1496,7 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
@@ -1494,7 +1613,7 @@ begin
          make(<llvm-function>,
               name: name,
               type: make(<llvm-pointer-type>, pointee: function-type),
-              attribute-list: $llvm-intrinsic-readonly-attribute-list,
+              attribute-list: $llvm-intrinsic-readnone-attribute-list,
               linkage: #"external");
        end;
 
@@ -1617,6 +1736,23 @@ begin
                   attribute-list: $llvm-intrinsic-default-attribute-list,
                   linkage: #"external");
          method (arguments) function end
+       end;
+
+  $llvm-intrinsic-makers["llvm.write_register"]
+    := method (arguments)
+         let type0 = llvm-value-type(arguments[1]);
+         let name = format-to-string("llvm.write_register.%s", intrinsic-type-name(type0));
+
+         let function-type
+           = make(<llvm-function-type>,
+                  return-type: $llvm-void-type,
+                  parameter-types: vector($llvm-metadata-type, type0),
+                  varargs?: #f);
+         make(<llvm-function>,
+              name: name,
+              type: make(<llvm-pointer-type>, pointee: function-type),
+              attribute-list: $llvm-intrinsic-default-attribute-list,
+              linkage: #"external");
        end;
 
   $llvm-intrinsic-makers["llvm.x86.int"]
