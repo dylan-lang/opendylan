@@ -771,9 +771,17 @@ end function-test random;
 
 /// simple-profiling tests
 
+define simple-profiling function-test start-profiling ()
+  //---*** Fill this in...
+end function-test start-profiling;
+
 define simple-profiling function-test start-profiling-type ()
   //---*** Fill this in...
 end function-test start-profiling-type;
+
+define simple-profiling function-test stop-profiling ()
+  //---*** Fill this in...
+end function-test stop-profiling;
 
 define simple-profiling function-test stop-profiling-type ()
   //---*** Fill this in...

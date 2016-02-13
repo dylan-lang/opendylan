@@ -126,6 +126,18 @@ may be useful in some scenarios.
 .. method:: profiling-type-result
    :specializer: <profiling-state>, singleton(#"allocation-stats")
 
+.. function:: start-profiling
+
+   :signature: start-profiling (profiling-types) => (state)
+
+   :parameter profiling-types: A sequence of any of ``#"cpu-time-seconds"``,
+     ``#"cpu-time-microseconds"``, ``#"allocation#`` and
+     ``#"allocation-stats#``.
+   :value state: An instance of :type:`<profiling-state>`.
+
+   This is useful for when direct control over profiling is needed rather
+   than using the :macro:`profiling` macro.
+
 .. generic-function:: start-profiling-type
    :open:
 
@@ -142,6 +154,14 @@ may be useful in some scenarios.
 
 .. method:: start-profiling-type
    :specializer: <profiling-state>, singleton(#"allocation-stats")
+
+.. function:: stop-profiling
+
+   :signature: stop-profiling (state profiling-types) => ()
+
+   :parameter state: An instance of :type:`<profiling-state>`.
+   :parameter profiling-types: A sequence of :drm:`<symbol>`. These
+     symbols should be the same as those passed to :func:`start-profiling`.
 
 .. generic-function:: stop-profiling-type
    :open:

@@ -204,8 +204,10 @@ end module-spec simple-random;
 
 define module-spec simple-profiling ()
   sealed instantiable class <profiling-state> (<table>);
+  function start-profiling(<sequence>) => (<profiling-state>);
   open generic-function start-profiling-type
     (<profiling-state>, <symbol>) => ();
+  function stop-profiling(<profiling-state>, <sequence>) => ();
   open generic-function stop-profiling-type
     (<profiling-state>, <symbol>) => ();
   open generic-function profiling-type-result
