@@ -386,7 +386,7 @@ define function pad-multiple-values
     mv[i] := ref;
   finally
     for (j :: <integer> from i below max-size)
-      mv[i] := make-object-reference(#f);
+      mv[j] := make-object-reference(#f);
     end for;
   end for;
   mv
