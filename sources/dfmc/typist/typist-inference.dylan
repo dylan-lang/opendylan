@@ -521,7 +521,7 @@ end;
 ///     already known in the cache about OBJ.
 ///
 ///     To keep the justification semantics straight, the RHS really should be
-///     a single expression that just constructes a <type-estimate>, and which
+///     a single expression that just constructs a <type-estimate>, and which
 ///     does not call type-estimate &c in the process.
 ///
 ///     E.g., the type of an <&object> is some class <stype>:
