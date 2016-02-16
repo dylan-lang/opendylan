@@ -183,8 +183,8 @@ define typist-inference-test typist-constants
   // Do you recognize a constant when you see one?
   "define method typist-test () 0 end;"
     TYPE: fixed: vector(class-te(#"<integer>")),              rest: #f;
-  "define method typist-test () 3.14 end;"
-    TYPE: fixed: vector(class-te(#"<extended-float>")),       rest: #f;
+  "define method typist-test () 3.14d0 end;"
+    TYPE: fixed: vector(class-te(#"<double-float>")),         rest: #f;
   "define method typist-test () #f end;"
     TYPE: fixed: vector(false-te()),                          rest: #f;
   "define method typist-test () \"foo\" end;"
