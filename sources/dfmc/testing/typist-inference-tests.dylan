@@ -108,7 +108,7 @@ define function static-type-check?(lambda        :: <&method>,
     when (*static-type-check?-verbose?*)
       // Sometimes you want a diagnostic for the failure cases.
       dynamic-bind (*print-method-bodies?* = #t)
-        format-out("\nFor %=:\nExpected type: %=\n  Inferred type: %=\n\n",
+        format-out("\nFor %=:\nExpected type:   %=\n  Inferred type: %=\n\n",
                    lambda, expected-type, found-type)
       end;
       show-lambda-type-estimates(lambda, cache: cache);
