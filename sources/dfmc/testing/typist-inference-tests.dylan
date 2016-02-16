@@ -102,7 +102,7 @@ define function static-type-check?(lambda        :: <&method>,
           type-estimate-in-cache(final-computation(body(c)), cache) // just the last guy
         end;
   let found-type = final-computation-type(lambda);
-  if (type-estimate=?(expected-type, found-type))
+  if (type-estimate-subtype?(found-type, expected-type))
     #t
   else
     when (*static-type-check?-verbose?*)
