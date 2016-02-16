@@ -95,9 +95,9 @@ define function static-type-check?(lambda        :: <&method>,
   => (stc :: <boolean>)
   // Useful thing to put in the body of a test: infer the return values
   // of lambda, and ask if they match expected-type.
+  let cache = make(<type-cache>);
   local method final-computation-type(c :: <&method>)
           // What is the type of the final computation?  (I.e., the return.)
-          let cache = make(<type-cache>);
           type-estimate-in-cache(c, cache);                         // fill cache w/types
           type-estimate-in-cache(final-computation(body(c)), cache) // just the last guy
         end;
@@ -110,7 +110,8 @@ define function static-type-check?(lambda        :: <&method>,
       dynamic-bind (*print-method-bodies?* = #t)
         format-out("\nFor %=:\nExpected type: %=\n  Inferred type: %=\n\n",
                    lambda, expected-type, found-type)
-      end
+      end;
+      show-lambda-type-estimates(lambda, cache: cache);
     end;
     #f
   end
