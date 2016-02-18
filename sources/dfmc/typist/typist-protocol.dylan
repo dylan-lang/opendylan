@@ -472,13 +472,13 @@ define method type-estimate-explain
 end;
 
 define method type-estimate-explain
-   (ref :: <dfm-ref>, cache :: <type-cache>,
-    #key stream   :: <stream> = *standard-output*,
-         recurse? :: <boolean> = #f,
-         indent   :: <integer> = 0)
-   => ()
- // Explain this type-estimate.
- local method indentify (#key levels = 0)
+    (ref :: <dfm-ref>, cache :: <type-cache>,
+     #key stream   :: <stream> = *standard-output*,
+          recurse? :: <boolean> = #f,
+          indent   :: <integer> = 0)
+ => ()
+  // Explain this type-estimate.
+  local method indentify (#key levels = 0)
          // A "level" is 2 spaces.  indent: gives leftmost margin.  Levels is
          // add'l number of levels beyond that.  Oh, for with-indentation.
          format(stream, "\n");
@@ -486,11 +486,11 @@ define method type-estimate-explain
            write(stream, "  ")
          end
        end;
- let ref-type = type-estimate-in-cache(ref, cache);
- indentify(levels: 0);
- format(stream, "Object %= (a %=) :: %=", ref, object-class(ref), ref-type);
- indentify(levels: 0); format(stream, "because: ");
- print-separated-collection(
+  let ref-type = type-estimate-in-cache(ref, cache);
+  indentify(levels: 0);
+  format(stream, "Object %= (a %=) :: %=", ref, object-class(ref), ref-type);
+  indentify(levels: 0); format(stream, "because: ");
+  print-separated-collection(
      type-variable-supporters(cached-type-variable(ref, cache)),
      stream:  stream,
      printer: method(just :: <justification>, stream)
@@ -510,7 +510,7 @@ define method type-estimate-explain
                      justification-rhs(just))
                 end
               end);
- values()
+  values()
 end;
 
 define generic type-estimate-retract(ref :: <dfm-ref>)
