@@ -1670,17 +1670,29 @@ end method;
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <return>) => ();
   let value = c.computation-value;
-  do-emit-return(back-end, m, value, temporary-value(value));
+  do-emit-return(back-end, m, value);
 end method;
 
 define method do-emit-return
+    (back-end :: <llvm-back-end>, m :: <llvm-module>, o :: <object-reference>)
+ => ();
+  ins--ret(back-end, emit-reference(back-end, m, o));
+end method;
+
+define method do-emit-return
+    (back-end :: <llvm-back-end>, m :: <llvm-module>, temp :: <temporary>)
+ => ();
+  do-emit-return-temporary(back-end, m, temp, temporary-value(temp));
+end method;
+
+define method do-emit-return-temporary
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
      temp :: <multiple-value-temporary>, mv :: <llvm-global-mv>)
  => ();
   ins--ret(back-end, mv.llvm-mv-struct);
 end method;
 
-define method do-emit-return
+define method do-emit-return-temporary
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
      temp :: <multiple-value-temporary>, mv :: <llvm-local-mv>)
  => ();
@@ -1729,7 +1741,7 @@ define method do-emit-return
   end if;
 end method;
 
-define method do-emit-return
+define method do-emit-return-temporary
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
      temp :: <temporary>, value :: <llvm-value>)
  => ();
