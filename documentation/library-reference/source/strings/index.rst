@@ -785,7 +785,7 @@ Case Conversion Functions
      .. code-block:: dylan
 
        uppercase("Hack Dylan!") => "HACK DYLAN!"
-       uppercase("Hack Dylan!", end: 4) => "HACK"
+       uppercase("Hack Dylan!", end: 4) => "HACK Dylan!"
 
 -------------
 
