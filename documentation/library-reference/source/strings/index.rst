@@ -59,10 +59,10 @@ Character Class Predicates
    :value alphabetic?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     alphabetic?('a') => #t
-     alphabetic?('-') => #f
+       alphabetic?('a') => #t
+       alphabetic?('-') => #f
    
 .. method:: alphabetic?
    :specializer: <string>
@@ -80,11 +80,11 @@ Character Class Predicates
    :value alphabetic?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     alphabetic?("abc") => #t
-     alphabetic?("abc123") => #f
-     alphabetic?("abc123", end: 3) => #t
+       alphabetic?("abc") => #t
+       alphabetic?("abc123") => #f
+       alphabetic?("abc123", end: 3) => #t
    
 ------------
 
@@ -109,11 +109,11 @@ Character Class Predicates
    :value alphanumeric?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     alphanumeric?('Z') => #t
-     alphanumeric?('9') => #t
-     alphanumeric?('*') => #f
+       alphanumeric?('Z') => #t
+       alphanumeric?('9') => #t
+       alphanumeric?('*') => #f
 
 .. method:: alphanumeric?
    :specializer: <string>
@@ -127,11 +127,11 @@ Character Class Predicates
    :value alphanumeric?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     alphanumeric?("abc123") => #t
-     alphanumeric?("abc...") => #f
-     alphanumeric?("abc...",  end: 3) => #t
+       alphanumeric?("abc123") => #t
+       alphanumeric?("abc...") => #f
+       alphanumeric?("abc...",  end: 3) => #t
 
 ------------
 
@@ -157,10 +157,10 @@ Character Class Predicates
    :value control?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     control?('a') => #f
-     control?('\0') => #t
+       control?('a') => #f
+       control?('\0') => #t
 
 .. method:: control?
    :specializer: <string>
@@ -178,11 +178,11 @@ Character Class Predicates
    :value control?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     control?("\0\a\b") => #t
-     control?("abc\0") => #f
-     control?("abc\0", start: 3) => #t
+       control?("\0\a\b") => #t
+       control?("abc\0") => #f
+       control?("abc\0", start: 3) => #t
 
 ------------
 
@@ -209,10 +209,10 @@ Character Class Predicates
    :value graphic?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     graphic?('a') => #t
-     graphic?('\b') => #f
+       graphic?('a') => #t
+       graphic?('\b') => #f
 
 .. method:: graphic?
    :specializer: <string>
@@ -231,11 +231,11 @@ Character Class Predicates
    :value graphic?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     graphic?("ABC") => #t
-     graphic?("ABC\n") => #f
-     graphic?("ABC\n", end: 3) => #t
+       graphic?("ABC") => #t
+       graphic?("ABC\n") => #f
+       graphic?("ABC\n", end: 3) => #t
 
 ------------
 
@@ -262,11 +262,11 @@ Character Class Predicates
    :value printable?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     printable?('x') => #t
-     printable?('\t') => #t
-     printable?('\0') => #f
+       printable?('x') => #t
+       printable?('\t') => #t
+       printable?('\0') => #f
 
 .. method:: printable?
    :specializer: <string>
@@ -285,11 +285,11 @@ Character Class Predicates
    :value printable?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     printable?("a b c") => #t
-     printable?("abc\0") => #f
-     printable?("abc\0", end: 3) => #t
+       printable?("a b c") => #t
+       printable?("abc\0") => #f
+       printable?("abc\0", end: 3) => #t
 
 ------------
 
@@ -316,11 +316,11 @@ Character Class Predicates
    :value whitespace?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     whitespace?(' ') => #t
-     whitespace?('\r') => #t
-     whitespace?('x') => #f
+       whitespace?(' ') => #t
+       whitespace?('\r') => #t
+       whitespace?('x') => #f
 
 .. method:: whitespace?
    :specializer: <string>
@@ -339,10 +339,10 @@ Character Class Predicates
    :value whitespace?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     whitespace?("x\t x") => #f
-     whitespace?("x\t x", start: 1, end: 3) => #t
+       whitespace?("x\t x") => #f
+       whitespace?("x\t x", start: 1, end: 3) => #t
 
 ------------
 
@@ -367,10 +367,10 @@ Character Class Predicates
    :value decimal-digit?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     decimal-digit?('a') => #f
-     decimal-digit?('4') => #t
+       decimal-digit?('a') => #f
+       decimal-digit?('4') => #t
 
 .. method:: decimal-digit?
    :specializer: <string>
@@ -388,11 +388,11 @@ Character Class Predicates
    :value decimal-digit?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     decimal-digit?("123") => #t
-     decimal-digit?("x123y") => #f
-     decimal-digit?("x123y", start: 1, end: 4) => #t
+       decimal-digit?("123") => #t
+       decimal-digit?("x123y") => #f
+       decimal-digit?("x123y", start: 1, end: 4) => #t
 
 ------------
 
@@ -418,11 +418,11 @@ Character Class Predicates
    :value hexadecimal-digit?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     hexadecimal-digit?('a') => #t
-     hexadecimal-digit?('g') => #f
-     hexadecimal-digit?('0') => #t
+       hexadecimal-digit?('a') => #t
+       hexadecimal-digit?('g') => #f
+       hexadecimal-digit?('0') => #t
 
 .. method:: hexadecimal-digit?
    :specializer: <string>
@@ -440,11 +440,11 @@ Character Class Predicates
    :value hexadecimal-digit?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     hexdecimal-digit?("ff00") => #t
-     hexdecimal-digit?(" ff00 ") => #f
-     hexdecimal-digit?(" ff00 ", start: 1, end: 5) => #t
+       hexdecimal-digit?("ff00") => #t
+       hexdecimal-digit?(" ff00 ") => #f
+       hexdecimal-digit?(" ff00 ", start: 1, end: 5) => #t
 
 ------------
 
@@ -470,11 +470,11 @@ Character Class Predicates
    :value octal-digit?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     octal-digit?('7') => #t
-     octal-digit?('0') => #t
-     octal-digit?('8') => #f
+       octal-digit?('7') => #t
+       octal-digit?('0') => #t
+       octal-digit?('8') => #f
 
 .. method:: octal-digit?
    :specializer: <string>
@@ -492,11 +492,11 @@ Character Class Predicates
    :value octal-digit?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     octal-digit?("700") => #t
-     octal-digit?("7008") => #f
-     octal-digit?("7008", end: 3) => #t
+       octal-digit?("700") => #t
+       octal-digit?("7008") => #f
+       octal-digit?("7008", end: 3) => #t
 
 
 Substring Functions
@@ -519,11 +519,11 @@ Substring Functions
    :value count: An instance of :drm:`<integer>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     count-substrings("", "") => 1
-     count-substrings("xxxxxx", "xx", end: 5) => 2  // no overlap
-     count-substrings("xXx", "x", ignore-case?: #t) => 3
+       count-substrings("", "") => 1
+       count-substrings("xxxxxx", "xx", end: 5) => 2  // no overlap
+       count-substrings("xXx", "x", ignore-case?: #t) => 3
 
 .. generic-function:: find-substring
    :sealed:
@@ -543,9 +543,9 @@ Substring Functions
    :value index: An instance of ``false-or(<integer>)``.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     find-substring("My dog has fleas.", "dog") => 3
+       find-substring("My dog has fleas.", "dog") => 3
 
 .. generic-function:: replace-substrings
    :sealed:
@@ -575,9 +575,9 @@ Substring Functions
    :value new-string: An instance of :drm:`<string>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     replace-substrings("My cat and your cat", "cat", "dog")
+       replace-substrings("My cat and your cat", "cat", "dog")
        => "My dog and your dog"
 
 Case Conversion Functions
@@ -604,10 +604,10 @@ Case Conversion Functions
    :value lowercase-character: An instance of :drm:`<character>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     lowercase('A') => 'a'
-     lowercase('#') => '#'
+       lowercase('A') => 'a'
+       lowercase('#') => '#'
 
 .. method:: lowercase
    :specializer: <string>
@@ -626,10 +626,10 @@ Case Conversion Functions
    :value lowercase-string: An instance of :drm:`<string>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     lowercase("Hack Dylan!") => "hack dylan!"
-     lowercase("Hack Dylan!", end: 4) => "hack"
+       lowercase("Hack Dylan!") => "hack dylan!"
+       lowercase("Hack Dylan!", end: 4) => "hack"
 
 -------------
 
@@ -654,10 +654,10 @@ Case Conversion Functions
    :value lowercase-character: An instance of :drm:`<character>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     lowercase!('A') => 'a'
-     lowercase!('#') => '#'
+       lowercase!('A') => 'a'
+       lowercase!('#') => '#'
 
 .. method:: lowercase!
    :specializer: <string>
@@ -675,14 +675,14 @@ Case Conversion Functions
    :value lowercase-string: An instance of :drm:`<string>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     let text = concatenate("Hack", "Dylan!");
-     lowercase!(text);
+       let text = concatenate("Hack", "Dylan!");
+       lowercase!(text);
        => "hackdylan!"
-     text;
+       text;
        => "hackdylan!"
-     lowercase!("Hack Dylan!")
+       lowercase!("Hack Dylan!")
        => error, attempt to modify a string constant
 
 -------------
@@ -709,11 +709,11 @@ Case Conversion Functions
    :value is-lowercase?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     lowercase?('n') => #t
-     lowercase?('N') => #f
-     lowercase?('*') => #t
+       lowercase?('n') => #t
+       lowercase?('N') => #f
+       lowercase?('*') => #t
 
 .. method:: lowercase?
    :specializer: <string>
@@ -731,11 +731,11 @@ Case Conversion Functions
    :value is-lowercase?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     lowercase?("Why me?") => #f
-     lowercase?("Why me?", start: 1) => #t
-     lowercase?("e.e. cummings") => #t
+       lowercase?("Why me?") => #f
+       lowercase?("Why me?", start: 1) => #t
+       lowercase?("e.e. cummings") => #t
 
 -------------
 
@@ -760,10 +760,10 @@ Case Conversion Functions
    :value uppercase-character: An instance of :drm:`<character>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     uppercase('x') => 'X'
-     uppercase('*') => '*'
+       uppercase('x') => 'X'
+       uppercase('*') => '*'
 
 .. method:: uppercase
    :specializer: <string>
@@ -782,10 +782,10 @@ Case Conversion Functions
    :value uppercase-string: An instance of :drm:`<string>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     uppercase("Hack Dylan!") => "HACK DYLAN!"
-     uppercase("Hack Dylan!", end: 4) => "HACK"
+       uppercase("Hack Dylan!") => "HACK DYLAN!"
+       uppercase("Hack Dylan!", end: 4) => "HACK"
 
 -------------
 
@@ -810,9 +810,9 @@ Case Conversion Functions
    :value uppercase-character: An instance of :drm:`<character>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     uppercase!('t') => 'T'
+       uppercase!('t') => 'T'
      
 .. method:: uppercase!
    :specializer: <string>
@@ -830,14 +830,14 @@ Case Conversion Functions
    :value uppercase-string: An instance of :drm:`<string>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     let text = concatenate("Hack", "Dylan!");
-     uppercase!(text);
+       let text = concatenate("Hack", "Dylan!");
+       uppercase!(text);
        => "HACKDYLAN!"
-     text;
+       text;
        => "HACKDYLAN!"
-     uppercase!("Hack Dylan!")
+       uppercase!("Hack Dylan!")
        => error, attempt to modify a string constant
 
 -------------
@@ -864,11 +864,11 @@ Case Conversion Functions
    :value is-uppercase?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     uppercase?('T') => #t
-     uppercase?('t') => #f
-     uppercase?('^') => #t
+       uppercase?('T') => #t
+       uppercase?('t') => #f
+       uppercase?('^') => #t
 
 .. method:: uppercase?
    :specializer: <string>
@@ -886,10 +886,10 @@ Case Conversion Functions
    :value is-uppercase?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     uppercase?("AbC") => #f
-     uppercase?("ABC") => #t
+       uppercase?("AbC") => #f
+       uppercase?("ABC") => #t
 
 Comparison Functions
 --------------------
@@ -909,12 +909,12 @@ convenience.  (See `DEP-0004
    :value result: An instance of ``one-of(-1, 0, 1)``.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     char-compare('a', 'b') => -1
-     char-compare('a', 'a') => 0
-     char-compare('b', 'a') => 1
-     char-compare('a', 'B') => 1
+       char-compare('a', 'b') => -1
+       char-compare('a', 'a') => 0
+       char-compare('b', 'a') => 1
+       char-compare('a', 'B') => 1
 
 .. function:: char-compare-ic
 
@@ -927,12 +927,12 @@ convenience.  (See `DEP-0004
    :value result: An instance of ``one-of(-1, 0, 1)``.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     char-compare-ic('a', 'b') => -1
-     char-compare-ic('a', 'a') => 0
-     char-compare-ic('b', 'a') => 1
-     char-compare-ic('a', 'B') => -1
+       char-compare-ic('a', 'b') => -1
+       char-compare-ic('a', 'a') => 0
+       char-compare-ic('b', 'a') => 1
+       char-compare-ic('a', 'B') => -1
 
 .. function:: char-equal-ic?
 
@@ -945,9 +945,9 @@ convenience.  (See `DEP-0004
    :value equal?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     char-equal-ic?('a', 'A') => #t
+       char-equal-ic?('a', 'A') => #t
 
 .. generic-function:: string-compare
    :sealed:
@@ -970,11 +970,11 @@ convenience.  (See `DEP-0004
    :value result: An instance of ``one-of(-1, 0, 1)``.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     string-compare("abc", "abc") => 0
-     string-compare("the", "them") => -1
-     string-compare("beer", "bee") => 1
+       string-compare("abc", "abc") => 0
+       string-compare("the", "them") => -1
+       string-compare("beer", "bee") => 1
 
 .. generic-function:: string-equal?
    :sealed:
@@ -997,12 +997,12 @@ convenience.  (See `DEP-0004
    :value equal?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     string-equal?("abc", "abc") => #t
-     string-equal?("ABC", "abc") => #f
-     string-equal?("the", "them") => #f
-     string-equal?("the", "them", end2: 3) => #t
+       string-equal?("abc", "abc") => #t
+       string-equal?("ABC", "abc") => #f
+       string-equal?("the", "them") => #f
+       string-equal?("the", "them", end2: 3) => #t
 
 
 .. generic-function:: string-equal-ic?
@@ -1026,11 +1026,11 @@ convenience.  (See `DEP-0004
    :value equal?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     string-equal-ic?("ABC", "abc") => #t
-     string-equal-ic?("the", "them") => #f
-     string-equal-ic?("The", "them", end2: 3) => #t
+       string-equal-ic?("ABC", "abc") => #t
+       string-equal-ic?("the", "them") => #f
+       string-equal-ic?("The", "them", end2: 3) => #t
 
 .. generic-function:: string-greater?
    :sealed:
@@ -1053,11 +1053,11 @@ convenience.  (See `DEP-0004
    :value greater?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     string-greater?("dog", "cat") => #t
-     string-greater?("Dog", "cat") => #f
-     string-greater?("dogs", "dog") => #t
+       string-greater?("dog", "cat") => #t
+       string-greater?("Dog", "cat") => #f
+       string-greater?("dogs", "dog") => #t
 
 .. generic-function:: string-greater-ic?
    :sealed:
@@ -1079,11 +1079,11 @@ convenience.  (See `DEP-0004
    :value greater?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     string-greater-ic?("dog", "cat") => #t
-     string-greater-ic?("Dog", "cat") => #t
-     string-greater-ic?("DOGS", "dog") => #t
+       string-greater-ic?("dog", "cat") => #t
+       string-greater-ic?("Dog", "cat") => #t
+       string-greater-ic?("DOGS", "dog") => #t
 
 .. generic-function:: string-less?
    :sealed:
@@ -1106,11 +1106,11 @@ convenience.  (See `DEP-0004
    :value less?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     string-less?("dog", "cat") => #f
-     string-less?("Dog", "cat") => #t
-     string-less?("dogs", "dog") => #f
+       string-less?("dog", "cat") => #f
+       string-less?("Dog", "cat") => #t
+       string-less?("dogs", "dog") => #f
 
 .. generic-function:: string-less-ic?
    :sealed:
@@ -1132,11 +1132,11 @@ convenience.  (See `DEP-0004
    :value less?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     string-less-ic?("cat", "dog") => #t
-     string-less-ic?("cat", "Dog") => #t
-     string-less-ic?("dog", "DOGS") => #t
+       string-less-ic?("cat", "dog") => #t
+       string-less-ic?("cat", "Dog") => #t
+       string-less-ic?("dog", "DOGS") => #t
 
 .. generic-function:: starts-with?
    :sealed:
@@ -1152,10 +1152,10 @@ convenience.  (See `DEP-0004
    :value starts-with?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     starts-with?("Watermelon", "water") => #f
-     starts-with?("Watermelon", "water", test: char-compare-ic) => #t
+       starts-with?("Watermelon", "water") => #f
+       starts-with?("Watermelon", "water", test: char-compare-ic) => #t
 
 .. generic-function:: ends-with?
    :sealed:
@@ -1171,10 +1171,10 @@ convenience.  (See `DEP-0004
    :value ends-with?: An instance of :drm:`<boolean>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     ends-with?("Open Dylan", "dylan") => #f
-     ends-with?("Open Dylan", "dylan", test: char-compare-ic) => #t
+       ends-with?("Open Dylan", "dylan") => #f
+       ends-with?("Open Dylan", "dylan", test: char-compare-ic) => #t
 
 
 Miscellaneous Functions
@@ -1193,10 +1193,10 @@ Miscellaneous Functions
    :value padded-string: An instance of :drm:`<string>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     pad("foo", 5) => " foo "
-     pad("foo", 5, fill: '*') => "*foo*"
+       pad("foo", 5) => " foo "
+       pad("foo", 5, fill: '*') => "*foo*"
 
 .. generic-function:: pad-left
    :sealed:
@@ -1211,10 +1211,10 @@ Miscellaneous Functions
    :value padded-string: An instance of :drm:`<string>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     pad-left("foo", 5) => "  foo"
-     pad-left("foo", 5, fill: '*') => "**foo"
+       pad-left("foo", 5) => "  foo"
+       pad-left("foo", 5, fill: '*') => "**foo"
 
 .. generic-function:: pad-right
    :sealed:
@@ -1229,10 +1229,10 @@ Miscellaneous Functions
    :value padded-string: An instance of :drm:`<string>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     pad-right("foo", 5) => "foo  "
-     pad-right("foo", 5, fill: '*') => "foo**"
+       pad-right("foo", 5) => "foo  "
+       pad-right("foo", 5, fill: '*') => "foo**"
 
 .. function:: split-lines
 
@@ -1245,17 +1245,17 @@ Miscellaneous Functions
    :value lines: An instance of :drm:`<sequence>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     // Lines are separated by CR, CRLF, or LF, but not LFCR
-     split-lines("aa\nbb\r\ncc\rdd\n\ree") => #["aa", "bb", "cc", "dd", "", "ee"]
+       // Lines are separated by CR, CRLF, or LF, but not LFCR
+       split-lines("aa\nbb\r\ncc\rdd\n\ree") => #["aa", "bb", "cc", "dd", "", "ee"]
 
-     // The end-of-line marker (CR, CRLF, or LF) is considered part
-     // of the line and is stripped.
-     split-lines("\nXYZ\n") => #["", "XYZ"]
+       // The end-of-line marker (CR, CRLF, or LF) is considered part
+       // of the line and is stripped.
+       split-lines("\nXYZ\n") => #["", "XYZ"]
 
-     // Remove empty lines...
-     split-lines("abc\r\rdef", remove-if-empty?: #t) => #["abc", "def"]
+       // Remove empty lines...
+       split-lines("abc\r\rdef", remove-if-empty?: #t) => #["abc", "def"]
 
    :seealso:
 
@@ -1278,10 +1278,10 @@ Miscellaneous Functions
    :value new-string: An instance of :drm:`<string>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     strip(" \tabc\n") => "abc"
-     strip("*foo*", test: curry(\=, '*')) => "foo"
+       strip(" \tabc\n") => "abc"
+       strip("*foo*", test: curry(\=, '*')) => "foo"
 
 .. generic-function:: strip-left
    :sealed:
@@ -1300,10 +1300,10 @@ Miscellaneous Functions
    :value new-string: An instance of :drm:`<string>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     strip-left(" \tabc\n") => "abc\n"
-     strip-left("*foo*", test: curry(\=, '*')) => "foo*"
+       strip-left(" \tabc\n") => "abc\n"
+       strip-left("*foo*", test: curry(\=, '*')) => "foo*"
 
 .. generic-function:: strip-right
    :sealed:
@@ -1322,10 +1322,10 @@ Miscellaneous Functions
    :value new-string: An instance of :drm:`<string>`.
    :example:
 
-   .. code-block:: dylan
+     .. code-block:: dylan
 
-     strip-right(" \tabc\n") => " \tabc"
-     strip-right("*foo*", test: curry(\=, '*')) => "*foo"
+       strip-right(" \tabc\n") => " \tabc"
+       strip-right("*foo*", test: curry(\=, '*')) => "*foo"
 
 	 
 Other Useful Functions
