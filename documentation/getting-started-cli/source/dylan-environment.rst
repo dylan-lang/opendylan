@@ -12,13 +12,13 @@ will be presented briefly here:
 +----------------------------+---------------------------------------------+
 | Options                    | Description                                 |
 +============================+=============================================+
-| *-ARGUMENTS* *arguments*   | Arguments for the project’s application     |
+| *-ARGUMENTS* *arguments*   | Arguments for the project's application     |
 +----------------------------+---------------------------------------------+
 | *-PLAY*                    | Open and debug the playground project       |
 +----------------------------+---------------------------------------------+
-| *-START*                   | Start the project’s application             |
+| *-START*                   | Start the project's application             |
 +----------------------------+---------------------------------------------+
-| *-DEBUG*                   | Debug the project’s application             |
+| *-DEBUG*                   | Debug the project's application             |
 +----------------------------+---------------------------------------------+
 | *-PROFILE*                 | Profile the execution of the application    |
 +----------------------------+---------------------------------------------+
@@ -39,7 +39,7 @@ will be presented briefly here:
 | *STACK*            | stack commands             |
 +--------------------+----------------------------+
 
-The following example demonstrates the console environment’s interactive
+The following example demonstrates the console environment's interactive
 functionality. In the example, the user starts dylan-environment in
 interactive mode, opens the playground project, performs some
 arithmetic, defines a method, and then traces it::

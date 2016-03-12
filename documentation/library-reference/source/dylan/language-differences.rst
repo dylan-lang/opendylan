@@ -38,7 +38,7 @@ a Table-extensions module, which you can read about in
      in turn used to implement the other collection operations on :drm:`<table>`.
 
      The *test-function* argument is for the table test function, which is
-     used to compare table keys. It returns true if, according to the table’s
+     used to compare table keys. It returns true if, according to the table's
      equivalence predicate, the keys are members of the same equivalence
      class. Its signature must be::
 
@@ -51,7 +51,7 @@ a Table-extensions module, which you can read about in
 
      In this signature, *initial-state* is an instance of :class:`<hash-state>`.
      The hash function computes the hash code of *key*, using the hash
-     function that is associated with the table’s equivalence predicate. The
+     function that is associated with the table's equivalence predicate. The
      hash code is returned as two values: an integer *id* and a hash-state
      *result-state*. This *result-state* is obtained by merging the
      *initial-state* with the hash-state that results from hashing *key*.

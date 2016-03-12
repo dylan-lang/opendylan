@@ -18,10 +18,10 @@ library C-FFI.
 The C-FFI library consists of macros, classes, and functions that you
 can use to write a complete description of the Dylan interface to a C
 library. Compiling this description generates a set of Dylan classes and
-functions through which Dylan code can manipulate the C library’s data
+functions through which Dylan code can manipulate the C library's data
 and call its functions. Interface descriptions can also allow C code to
 call into Dylan; compiling such a description generates entry points
-compatible with C’s calling conventions.
+compatible with C's calling conventions.
 
 Overview
 ========
@@ -34,7 +34,7 @@ a C interface in a form that the Open Dylan compiler can
 understand; we call these macros the *C interface definition language*.
 
 The C interface definition language provides macros that correspond to
-each of C’s type, function, variable, and constant defining forms. These
+each of C's type, function, variable, and constant defining forms. These
 macros define Dylan classes that designate and encapsulate instances of
 C types, Dylan methods through which to manipulate C variables and call
 out to C functions, and functions with C-compatible entry points through
@@ -59,11 +59,11 @@ forms to specify which elements involve the designated C type. A
 designator class also carries with it the information on how to
 interpret the untyped C data as a tagged Dylan object.
 
-The C-FFI library contains predefined designator classes for C’s
+The C-FFI library contains predefined designator classes for C's
 fundamental types like ``int`` and ``double``. The names of these
 predefined Dylan classes are formed from the C name of the fundamental
 type being designated. The designator class name for a particular C type
-formed using Dylan’s standard class-naming convention; it is prefixed
+formed using Dylan's standard class-naming convention; it is prefixed
 with "C-", hyphenated if it contains more than one word, and enclosed in
 angle brackets. For example, the C-FFI library provides the class
 ``<C-int>`` to designate the C type ``int`` ; it designates ``double``
@@ -76,7 +76,7 @@ by the class ``<C-double>``, and ``unsigned long`` by the class
    ignored.
 
 The C-FFI library also provides predefined classes designating pointers
-to C’s fundamental numeric types. To do so, it adds a ``*`` to the
+to C's fundamental numeric types. To do so, it adds a ``*`` to the
 fundamental C type designator. For example ``<C-double*>`` designates the
 C type ``double*``.
 
@@ -107,7 +107,7 @@ type ``unsigned short`` which is designated by the predefined class
 ``<C-unsigned-short>``. The information about the C type ``unsigned
 short`` carried by this designator class allows the compiler to compute
 the size, alignment, and layout of the struct. The compiler records the
-struct’s size and alignment and associates them with ``<Point>``. The
+struct's size and alignment and associates them with ``<Point>``. The
 designator class ``<Point>`` can then be used in the definition of other
 types, functions, and variables. For example, we could describe
 
@@ -134,7 +134,7 @@ the C type it designates when that object is passed from the "C world"
 to the "Dylan world".
 
 *Note:* Only classes that designate C pointer types can be instantiated
-in this way. Instances of C’s fundamental numeric value types like ``int``,
+in this way. Instances of C's fundamental numeric value types like ``int``,
 ``char``, and ``double`` are just converted to an equivalent Dylan object
 with the same value. The ``<Point>`` class is not an instantiable class in
 Dylan because there is nothing in Dylan that corresponds to a C struct.
@@ -178,7 +178,7 @@ what you get when you read the slots of the structure it returns:
     #t
 
 The interactions above show that if we access structure slots that were
-defined as being of one of C’s fundamental numeric types, we get a Dylan
+defined as being of one of C's fundamental numeric types, we get a Dylan
 number of the equivalent value. The same thing happens if an imported C
 function returns a fundamental numeric type: a Dylan number with the
 same value appears in Dylan. Similarly, when setting slots in structs
@@ -294,7 +294,7 @@ simple example. Suppose we have a C ``extern`` function declaration
 
 This function is intended to return the sum of two ``double`` values.
 Instead of implementing the function in C, we can implement it in Dylan
-using Dylan’s generic function ``+``. All we need to do is define a
+using Dylan's generic function ``+``. All we need to do is define a
 C-callable wrapper for ``+``, as follows:
 
 .. code-block:: dylan
@@ -306,7 +306,7 @@ C-callable wrapper for ``+``, as follows:
     end C-callable-wrapper;
 
 We can now call ``AddDouble`` in C. Our wrapper will be invoked, the C
-arguments will be converted and passed to Dylan’s + generic function,
+arguments will be converted and passed to Dylan's + generic function,
 and then the result of the computation will be converted and passed back
 to C:
 
@@ -329,11 +329,11 @@ C variables in Dylan
 
 When you use the interface definition language to describe a C variable
 to the Dylan compiler, the compiler generates new Dylan getter and
-setter functions for reading and setting the variable’s value from
+setter functions for reading and setting the variable's value from
 Dylan. If the variable is constant, it defines a getter function only.
 
 The getter function converts the C value to a Dylan value before
-returning it according to the variable’s declared type. Similarly, the
+returning it according to the variable's declared type. Similarly, the
 setter function converts its argument, as Dylan value, into a C value
 before setting the C variable. These conversions happen according to the
 same rules that apply to other C-Dylan world transition points, such as
@@ -378,7 +378,7 @@ Dylan function:
     1.5
 
 By default, the C-FFI also defines a setter function for the variable.
-The setter name uses Dylan’s convention of appending "-setter" to the
+The setter name uses Dylan's convention of appending "-setter" to the
 getter name.
 
 ::
@@ -510,12 +510,12 @@ Terminology
 For the rest of this chapter, we adopt the following terminology,
 hopefully not too inconsistent with common C terminology:
 
-- *Base type* Basic units of data storage (C’s variously sized
+- *Base type* Basic units of data storage (C's variously sized
   integers, characters, and floating point numbers) and aggregate
   records (structs and unions).
-- *Derived type*. A type based on some other type (C’s pointer, array,
+- *Derived type*. A type based on some other type (C's pointer, array,
   and function types).
-- *Fundamental numeric type*. One of C’s integer or floating point types.
+- *Fundamental numeric type*. One of C's integer or floating point types.
   This does not include pointer types, structure types, or union types.
 
 Basic options in C-FFI macros
@@ -553,8 +553,8 @@ C types and to describe how they are passed to and from Dylan. These
 they designate.
 
 The C-FFI library provides an initial set of designator classes
-corresponding to C’s fundamental types, as well as macros for generating
-designator classes corresponding to C’s pointer types and for extending
+corresponding to C's fundamental types, as well as macros for generating
+designator classes corresponding to C's pointer types and for extending
 the translation between C data and Dylan objects.
 
 Designator classes that correspond to fundamental numeric types are not
@@ -600,11 +600,11 @@ programmatically, but others are implicit and only really exist in the
 compiler. Some of the properties may be empty.
 
 A *referenced type* is the designator type to which a pointer refers. A
-designator’s *referenced-type* only has a value for subtypes of
+designator's *referenced-type* only has a value for subtypes of
 :class:`<C-statically-typed-pointer>`. Programs can access the
 referenced type through the function *referenced-type*.
 
-A designator class’s *pointer-type* only has a value for each of
+A designator class's *pointer-type* only has a value for each of
 those types that has a pointer designator type that refers to it. Most
 of the constructs that define a new designator type also define a
 pointer-type for that designator. Many of the macros that define
@@ -614,12 +614,12 @@ pointer-type is not programmatically available because it may not have
 been defined. You can assure that there is a pointer-type for a
 particular designator by using the macro :macro:`define c-pointer-type`.
 
-A designator class’s *import type* and *export type* are instantiable
+A designator class's *import type* and *export type* are instantiable
 Dylan types that describe the Dylan instantiation of a designator class
 when it is used in a position that *imports* values from C, or *exports*
 values to C.
 
-Nearly all of the C-FFI’s designators have import and export types that
+Nearly all of the C-FFI's designators have import and export types that
 are equivalent. Some, such as :class:`<C-string>`, have different import
 and export types because it is possible to pass a pointer to a Dylan
 object to C directly without creating a C pointer object, or copying the
@@ -629,7 +629,7 @@ and export types for any subtype of :class:`<C-pointer>` are the class
 itself. You can override this by defining a new subclass with the macro
 :macro:`define C-mapped-subtype`.
 
-You can define a designator’s *import-function* and *export-function* by
+You can define a designator's *import-function* and *export-function* by
 using the macro :macro:`define C-mapped-subtype`. These functions are
 merely the procedural specifications for translating the C data to Dylan
 and back. The *import* and *export* functions are inherited when you
@@ -680,7 +680,7 @@ Designator class basics
 
      The ``size-of`` function can be applied to any designator class.
      However, if it is applied to :class:`<C-void>`, :class:`<C-value>`,
-     or :class:`<C-struct>`, it returns zero. It corresponds to C’s
+     or :class:`<C-struct>`, it returns zero. It corresponds to C's
      ``sizeof`` operator and returns an integer, *size*, in the same
      units as ``sizeof`` does on the target platform. It can be useful
      when allocating a C object whose declared size is not accurate and
@@ -713,7 +713,7 @@ are instantiable: a number on one side of the interface is converted to
 a number on the other side with the same value.
 
 There are some additional details to note about integer representations.
-Because Dylan’s integer representations do not match C’s exactly, for
+Because Dylan's integer representations do not match C's exactly, for
 each of the C integer types there are three designator classes that can
 be used to translate Dylan representations to that C integer. The
 categories are *plain*, *unsafe*, and *raw* integers.
@@ -973,7 +973,7 @@ these classes.
 
    :description:
 
-     The class designating C’s ``void*`` pointer type. No
+     The class designating C's ``void*`` pointer type. No
      :gf:`pointer-value` methods are defined on this class.
 
 .. class:: <C-statically-typed-pointer>
@@ -1086,7 +1086,7 @@ these classes.
 
      The functions :gf:`pointer-value` and :gf:`pointer-value-setter`
      perform the primitive Dylan-to-C and C-to-Dylan conversions as
-     documented with the designator class of the pointer’s contents type
+     documented with the designator class of the pointer's contents type
      (see `The integer designator classes and their mappings.`_). The
      C-FFI signals an error if it cannot convert the object you attempt
      to store in the pointer to a compatible type.
@@ -1709,7 +1709,7 @@ Union types
 Notes on C type macros
 ----------------------
 
-The C-FFI’s C interface description language does not model all of the
+The C-FFI's C interface description language does not model all of the
 ways of defining new types in C, but all C types should be expressible
 in it. As a simplification, we do not support anonymous base types in
 the C interface description language. If a structure or union field has
@@ -1792,7 +1792,7 @@ Defining specialized versions of designator classes
 
      In terms of C, ``define C-subtype`` can be thought of as
      implementing a strongly typed version of ``typedef`` because a new
-     designator class is generated that Dylan’s type system can
+     designator class is generated that Dylan's type system can
      distinguish from the designator class on which it was based. As
      well as inheriting from an existing designator class, other Dylan
      classes can be mixed in too.
@@ -2046,8 +2046,8 @@ Defining specialized designator classes
      supertype. It is also possible to define a mapped subtype of a
      mapped supertype. When the subtype and supertype both specify an
      export function, the export functions of the subtype and the
-     supertype are composed with the subtype’s export function applied
-     to the result of the supertype’s export function. Import functions
+     supertype are composed with the subtype's export function applied
+     to the result of the supertype's export function. Import functions
      of a mapped subtype and supertype are similarly composed. Mapping
      characteristics are inherited from the supertype where the subtype
      does not define them. (You can think of this as composition with
@@ -2113,7 +2113,7 @@ Describing structure types
 .. macro:: define C-struct
    :defining:
 
-   Describes C’s aggregate structures.
+   Describes C's aggregate structures.
 
    :macrocall:
      .. code-block:: dylan
@@ -2129,12 +2129,12 @@ Describing structure types
 
    :description:
 
-     Describes C’s aggregate structures. The name is defined to be a
+     Describes C's aggregate structures. The name is defined to be a
      designator class encapsulating the value of a structure, not a
      pointer to the structure. This is significant because many of the
      protocols associated with structures work only on pointers to
      structures — pointers to structures being the most common form and
-     the form closest to Dylan’s object model. The new designator class
+     the form closest to Dylan's object model. The new designator class
      is defined to be a subclass of :class:`<C-struct>`.
 
      Once defined, a structure-designating class is most likely to be
@@ -2142,7 +2142,7 @@ Describing structure types
      most further transactions will take place. Structure-designating
      classes are abstract and cannot have direct instances. Accessor
      methods defined for the slots of the structure are specialized on
-     the structure designator’s pointer-type. However, the class itself
+     the structure designator's pointer-type. However, the class itself
      may be needed to specify an in-line structure in another structure,
      union, or array, or a value-passed structure argument or result in
      a C function.
@@ -2169,10 +2169,10 @@ Describing structure types
 
      The getter-name keyword specifies the name of the Dylan function to
      which the getter method for the structure slot will be added. The
-     specializer of the getter method’s single argument will be a
-     designator indicating a pointer to the struct’s name.
+     specializer of the getter method's single argument will be a
+     designator indicating a pointer to the struct's name.
 
-     The c-type specifies the field’s C type, and must be a designator
+     The c-type specifies the field's C type, and must be a designator
      class. Unlike Dylan slot specifications, the type declaration here
      is not optional.
 
@@ -2207,7 +2207,7 @@ Describing structure types
      on which the accessors are defined.
 
      The type option *pack:* *n* indicates that the struct has the
-     packing semantics of Microsoft’s ``#pragma pack(*n*)``.
+     packing semantics of Microsoft's ``#pragma pack(*n*)``.
 
    :example:
 
@@ -2294,7 +2294,7 @@ Describing union types
      subclass of :class:`<c-union>`.
 
      Each of the slots in a union is laid out in memory on top of one another
-     just as in C’s ``union`` construct.
+     just as in C's ``union`` construct.
 
    :example:
 
@@ -2403,7 +2403,7 @@ Describing C functions to Dylan
      be called correctly by Dylan, the same information about the
      function must be given as is needed by C callers, typically
      provided by ``extern`` declarations for the function in a C header
-     file: the function’s name and the types of its parameters and
+     file: the function's name and the types of its parameters and
      results.
 
      The result of processing a ``define C-function`` definition is a
@@ -2446,7 +2446,7 @@ Describing C functions to Dylan
      value itself and passes it to the C function. When the C function
      returns, the value in the location is accessed and returned as an
      extra result from the Dylan function. The C-FFI allocates space for
-     the output parameter’s referenced type, passes a pointer to the
+     the output parameter's referenced type, passes a pointer to the
      allocated space, and returns :gf:`pointer-value` of that pointer. A
      struct or union type may not be used as an output parameter.
 
@@ -2667,7 +2667,7 @@ Describing Dylan functions for use by C
      allows C code to call Dylan code simply by invoking a named
      function. The *export:* option takes the values ``#t`` or ``#f``
      and indicates whether the c-name for the generated
-     *C-callable-wrapper* function is to be exported from the library’s
+     *C-callable-wrapper* function is to be exported from the library's
      *.dll*. ``#t`` means it is exported, ``#f`` means it is not. The
      default is #f. The *c-modifiers:* option is the same as in the
      *c-function* macro, except that the modifiers apply to the C
@@ -2699,7 +2699,7 @@ Describing Dylan functions for use by C
      a pointer type, and the value accepted by the Dylan function is the
      result. The functions pointer-value and pointer-value-setter
      perform the primitive Dylan-to-C and C-to-Dylan conversions as
-     documented with the designator class of the pointer’s contents type
+     documented with the designator class of the pointer's contents type
      (see Table 1.1). The C-FFI signals an error if it cannot convert
      the object you attempt to store in the pointer to a compatible
      type on that pointer. The Dylan function is expected to return
@@ -2912,7 +2912,7 @@ This section covers describing and accessing C variables.
    :description:
 
      Describes C variables to the C-FFI. It defines a getter and setter
-     function for accessing the variable’s value. The c-name keyword
+     function for accessing the variable's value. The c-name keyword
      argument is required and gives the C name of the variable to be
      accessed. The *setter* keyword allows you to specify the name of
      the setter function, or if a setter function is to be defined at
@@ -3187,7 +3187,7 @@ using :macro:`define c-mapped-subtype`.
    :description:
 
      A mapped subclass of ``<C-int>`` that provides an analogue to
-     Dylan’s :drm:`<boolean>` class. The Dylan type for both import and
+     Dylan's :drm:`<boolean>` class. The Dylan type for both import and
      export is :drm:`<boolean>`, and the C type is ``int``. The C integer
      ``0`` is mapped to ``#f`` in Dylan, and all other values are mapped
      to ``#t``.
@@ -3365,7 +3365,7 @@ using :macro:`define c-mapped-subtype`.
      The ``register-C-Dylan-object`` function arranges for the garbage
      collector to leave the storage used by *object* unclaimed, and
      assures that the handle passed to C is not accidentally corrupted
-     (from C’s point of view) by the memory manager.
+     (from C's point of view) by the memory manager.
 
    :seealso:
 

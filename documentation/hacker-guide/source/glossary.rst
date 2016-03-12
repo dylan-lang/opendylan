@@ -82,7 +82,7 @@ source record
 
 tether
    a runtime manager object representing a debuggable process on the
-   runtime. Sometimes referred to as an "access-path", but I’m staying
+   runtime. Sometimes referred to as an "access-path", but I'm staying
    away from that term because it seems to be used differently in
    different documents.
 

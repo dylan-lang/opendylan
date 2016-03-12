@@ -2,7 +2,7 @@
 Debugging and Interactive Development
 *************************************
 
-In this chapter, we look more closely at Open Dylan’s debugger
+In this chapter, we look more closely at Open Dylan's debugger
 tool.
 
 The debugger
@@ -19,7 +19,7 @@ breakpoints. It also provides a graphical interface for browsing the
 state of the control stack in a paused application thread, allowing you
 to examine local variables and arguments in each stack frame.
 
-You can also use the debugger’s interaction pane to interact with a
+You can also use the debugger's interaction pane to interact with a
 paused application thread. Simply enter Dylan code at a prompt, and the
 code is executed in the context of the paused thread.
 
@@ -55,7 +55,7 @@ Context Window**.
 .. figure:: images/dbgctxt.png
    :align: center
 
-   The debugger’s context pane.
+   The debugger's context pane.
 
 Here, the application stopped because there is a breakpoint on the call
 to *play-reversi* in *start-reversi.dylan*. That is the function call
@@ -86,7 +86,7 @@ will be taken upon them in the Debugger Options dialog. See
 Stack pane
 ----------
 
-The *stack* pane shows the thread’s control stack at the moment it was
+The *stack* pane shows the thread's control stack at the moment it was
 paused, with certain call frames filtered out. It depicts the stack in a
 tree view. We call this a *stack backtrace* or *backtrace*.
 
@@ -101,13 +101,13 @@ addition, the menu commands **View > Expand**, **View > Expand All**,
    away during compilation. Second, because the stack pane filters out
    certain call frames by default, a frame you are looking for may only
    become visible when you change the filtering settings. By default, only
-   frames for Dylan functions defined in or imported into the thread’s
+   frames for Dylan functions defined in or imported into the thread's
    current module appear in the stack pane. This default setting is
    indicated by "Filtered visible frames", which appears in the stack pane
    filtering drop-down list (see :ref:`searching-stack-backtrace-for-cause`
    for information about the drop-down list settings).
 
-Choose the **View > Debugger Options** dialog’s Stack page in the debugger
+Choose the **View > Debugger Options** dialog's Stack page in the debugger
 window to control the filtering rules. See `Stack options`_ for details.
 
 You can select any item shown in a backtrace and right-click to produce
@@ -192,7 +192,7 @@ string. See `Stack options`_.
 .. figure:: images/dbgbak.png
    :align: center
 
-   The debugger’s stack pane.
+   The debugger's stack pane.
 
 Local variables and call parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -209,7 +209,7 @@ the form::
     *name* = *value*
 
 Where *value* is displayed in a summarizing notation, which defaults to
-the value’s class enclosed in curly braces if there is no simple printed
+the value's class enclosed in curly braces if there is no simple printed
 representation. For example, basic numeric types, strings, booleans, and
 sequences thereof can be printed literally, but an instance of
 ``<reversi-frame>`` cannot.
@@ -217,7 +217,7 @@ sequences thereof can be printed literally, but an instance of
 Source pane
 -----------
 
-The debugger’s source pane shows a source code definition for the method
+The debugger's source pane shows a source code definition for the method
 or function that created the call frame that is currently selected in
 the stack pane.
 
@@ -228,7 +228,7 @@ window, with the insertion point placed at the start of the definition.
 
 If the debugger cannot locate the source code for the method or function
 that created the selected call frame, or if you select a local variable
-or the backtrace’s root node, the debugger leaves the source pane empty,
+or the backtrace's root node, the debugger leaves the source pane empty,
 writes "No source available" in the field above the source pane, and
 makes the Edit Source button unavailable.
 
@@ -249,7 +249,7 @@ execution will resume when a function returns.
 .. figure:: images/source.png
    :align: center
 
-   The current location arrow in the debugger’s source pane.
+   The current location arrow in the debugger's source pane.
 
 The line at which the arrow is located is not always precisely correct,
 because optimizations carried out by the compiler may have produced
@@ -272,7 +272,7 @@ See `Interacting with an application`_ for a discussion of interaction.
 
 The interaction pane also logs thread events that the debugger noticed
 (such as DLL loading) and debugging messages explicitly output by the
-thread (for example via the Dylan library’s
+thread (for example via the Dylan library's
 *debug-message* function in the ``simple-debugging`` module).
 
 The pane does not collect ordinary output from the application being
@@ -302,14 +302,14 @@ of an interactive evaluation.
 -  If you issue the pause command (**Application > Pause** or
 
 -  If you issue the pause command from the project window or editor, the
-   debugger for the application’s master thread is refreshed.
+   debugger for the application's master thread is refreshed.
 
 In all of these circumstances, any other open debugger windows will not
 be refreshed unless you choose **View > Refresh** in them. If you choose
 **View > Refresh All Debuggers**, Open Dylan updates every open
 debugger window.
 
-The Misc page of the debugger’s **View > Debugger Options** dialog
+The Misc page of the debugger's **View > Debugger Options** dialog
 contains the option "Refresh all open debuggers when entering debugger".
 By default, this option is not set. When turned on, the rules above are
 ignored and every open debugger window is refreshed whenever the
@@ -328,14 +328,14 @@ commands.
 In a project window, the commands on the **Application** menu act upon the
 executable application (.EXE file) or DLL that was last built for that
 project. The command selects the application or DLL depending on the
-target file type setting on the *Project > Settings* dialog’s Link page.
+target file type setting on the *Project > Settings* dialog's Link page.
 
 In a debugger window, the commands act upon the application that created
 the thread being debugged. In an editor window, the commands act upon
 the application of the active project. (Note that the **Application** menu
 is not available in the editor if the source file being edited is not
 part of the active project—the project whose name is visible in the main
-window’s drop-down list. See `The active project`_ for more details.)
+window's drop-down list. See `The active project`_ for more details.)
 
 .. index::
    single: applications; starting
@@ -445,9 +445,9 @@ application is already running, these commands pause the application in
 its current state.
 
 If you want to start an application up in the debugger, so that you can
-examine its initial state, you want the application’s library and the
+examine its initial state, you want the application's library and the
 libraries it uses to initialize completely before the debugger pauses
-it. To do this, you need to specify the application’s *start function*.
+it. To do this, you need to specify the application's *start function*.
 A start function is a function that the application calls upon startup
 to set things running, such as a call to start an event loop in a
 windowing application. See :ref:`start-function` for details.
@@ -475,13 +475,13 @@ Debugging DLLs is similar to debugging executable (EXE) applications (see
 
 One difference is that DLLs may not have a start function. Without a
 start function, there is nothing for the environment to place a
-breakpoint upon in order to pause the DLL’s execution and enter the
+breakpoint upon in order to pause the DLL's execution and enter the
 debugger.
 
 Nonetheless, for debugging it is still useful to be able to pause the
 DLL once it has initialized completely but before it exits. To do this,
 simply remove the name in the Start Function section of the **Project >
-Settings…** dialog’s Debug page. Then, when you choose **Application >
+Settings…** dialog's Debug page. Then, when you choose **Application >
 Debug** or **Application > Interact**, the debugger lets the DLL execute
 all its top-level expressions, and pauses the DLL just as its main
 thread is about to exit. This gives you access to all the definitions
@@ -490,7 +490,7 @@ and state that the DLL creates.
 If the DLL does have a start function, simply specify it and the
 **Application > Debug** and **Application > Interact** commands will work as
 they do for EXE applications: the environment adds a breakpoint on the
-start function, and on entry to the function the DLL’s main thread is
+start function, and on entry to the function the DLL's main thread is
 paused and a debugger window is opened on it.
 
 Another consideration is that it is not normally possible to execute a
@@ -503,7 +503,7 @@ Interact** the environment runs the EXE. The point at which the EXE is
 paused again depends on whether you supply a start function.
 
 Alternatively, you can supply your own EXE in the Executable field of
-the **Project > Settings…** dialog’s Debug page. The **Application > Start**,
+the **Project > Settings…** dialog's Debug page. The **Application > Start**,
 **Application > Debug**, and **Application > Interact** commands then
 call your EXE and behave in the same way as if your EXE was the
 project target file. That is to say, execution of the EXE proceeds
@@ -521,7 +521,7 @@ DLLs, you can use the same debugging processes as described in
 
 If you want to test your server or control in a container application,
 simply enter the name of the application executable in the Executable
-field of the **Project > Settings…** dialog’s Debug page. This executable
+field of the **Project > Settings…** dialog's Debug page. This executable
 could be any OLE container, such as WordPad. The **Application > Start**,
 **Application > Debug**, and **Application > Interact** commands then
 execute the container executable. Execution proceeds normally until the
@@ -538,7 +538,7 @@ Restarts
 
 The debugger provides a way to signal any restart for which a handler is
 available at a given point in application execution. Restarts are part
-of the Dylan language’s condition system, and are explained in chapter 7
+of the Dylan language's condition system, and are explained in chapter 7
 of the DRM.
 
 You can use the debugger to signal a restart if your application has
@@ -559,7 +559,7 @@ the outermost :drm:`<abort>` restart—that is, it aborts as much as possible.
 
 Although the meaning of :drm:`<abort>` restarts is part of the Dylan
 language, your application must provide handlers to implement them. If
-you are using DUIM for your application’s GUI, note that DUIM frames
+you are using DUIM for your application's GUI, note that DUIM frames
 normally provide :drm:`<abort>` handlers in the event loop, so that aborting
 while processing an event will proceed to process the next event. See
 the DUIM documentation for *start-frame* and *start-dialog*.
@@ -574,7 +574,7 @@ Choosing an application thread to debug
 As we noted earlier, each application thread can have its own debugger
 or you can use one debugger window to view various threads one at a
 time. The command we have seen so far, **Application > Debug**, debugs
-only the application’s main thread. To debug another thread in the
+only the application's main thread. To debug another thread in the
 application, choose **Go > Threads** from the debugger, project window, or
 editor. From the debugger window you can also use **Thread > Select
 Thread…**. To bring up multiple debugger windows, use **Window > New
@@ -624,7 +624,7 @@ debugger pane that hosts interactive sessions.
 About the interaction pane
 --------------------------
 
-The debugger’s interaction pane provides a prompt (where you can enter
+The debugger's interaction pane provides a prompt (where you can enter
 Dylan expressions and definitions for execution. The prompt is a
 question mark (*?* ).
 
@@ -671,7 +671,7 @@ Start the playground with **Tools > Open Playground** in any open window.
 Upon opening the playground, its project window appears. Then the
 playground application starts automatically and enters the debugger. The
 debugger window has a large interaction pane, and no visible stack or
-source panes. This is the debugger’s *interaction layout*. (We can
+source panes. This is the debugger's *interaction layout*. (We can
 change the layout to the normal debugging layout with **View > Debugging
 Layout**.)
 
@@ -715,7 +715,7 @@ history variable, *$1*, bound to that result.
 
 .. note:: History variable values are local to the debugger in which they
    were created, so you cannot refer to a history variable from any other
-   debugger’s interaction pane.
+   debugger's interaction pane.
 
 We can define new classes and methods interactively simply by entering
 their definitions.
@@ -760,7 +760,7 @@ Right-click over *$2 = {<class>: <my-class>}* and choose **Show Contents**::
     => $2 = {<class>: <my-class>}
     ? Contents of {<class>: <my-class>}
     => {<class>: <my-class>} is a <class>
-    $3 = instance?-iep : ’\\<-49>’
+    $3 = instance?-iep : '\\<-49>'
     $4 = debug-name : "<my-class>"
     $5 = class-implementation-class : {<implementation-class>}
     $6 = class-subtype-bit : 0
@@ -769,7 +769,7 @@ Right-click over *$2 = {<class>: <my-class>}* and choose **Show Contents**::
 
 For the duration of the interactive session with a project,
 interactively created definitions, objects, and any resultant warnings
-are layered onto the project’s compiler database. During an interactive
+are layered onto the project's compiler database. During an interactive
 session, these items will be available in the project window and
 browser. You can think of them as being like any definition or object,
 with the exception that they do not come from a source file.
@@ -777,7 +777,7 @@ with the exception that they do not come from a source file.
 Enter *define variable \*obj\* = make(<my-class>);* at the interaction
 pane prompt.
 
-In the playground’s project window, go to the Definitions page.
+In the playground's project window, go to the Definitions page.
 
 Expand *library dylan-playground* and then *module dylan-playground*.
 
@@ -841,7 +841,7 @@ Resume** to see interactive changes in effect.
 
 As an example, we can change the shape of the pieces on the board by
 setting the value of the variable *\*reversi-piece-shape\** instead of
-by going to Reversi’s **Options** menu.
+by going to Reversi's **Options** menu.
 
 Enter *\*reversi-piece-shape\* := #"triangle";* at the interaction pane
 prompt.
@@ -857,7 +857,7 @@ only triangular pieces, minimize and restore the board or resize it.
 Interactive access to local variables and arguments on the stack
 ----------------------------------------------------------------
 
-Interactive expressions can refer to variables from the debugger’s
+Interactive expressions can refer to variables from the debugger's
 current stack backtrace, simply by using their name. Before referring to
 a variable, you must select the stack frame that contains the variables
 you want to use. This is so the debugger can resolve any ambiguities
@@ -897,7 +897,7 @@ particularly when trying to make changes in system libraries.
 
 As noted in `An example interaction with Reversi`_, the results of compiling
 interactive changes to threads are added to a temporary layer of the compiler
-database for the application’s project. This allows you to browse the
+database for the application's project. This allows you to browse the
 effects of your changes while the application remains running, but these
 changes are not saved to disk in the compiler database file, nor are
 they saved in the project source code files. When you stop or close an
@@ -908,7 +908,7 @@ when you choose **Application > Stop**.)
 Interaction pane commands
 -------------------------
 
-The debugger’s interaction pane accepts various commands. You can get a
+The debugger's interaction pane accepts various commands. You can get a
 list of available commands, and documentation for each command, with the
 *:help* command.
 
@@ -968,8 +968,8 @@ for source files in the active project **only**. Second, the **Project**,
 source files that are not part of the active project.
 
 A project can become the active project automatically as well as by
-being set explicitly in the main window’s drop-down list. The main
-window’s **Options > Environment Options…** dialog has two options on the
+being set explicitly in the main window's drop-down list. The main
+window's **Options > Environment Options…** dialog has two options on the
 General page controlling when projects become active automatically:
 "Project becomes active when opened" and "Project becomes active when
 application started".
@@ -1014,7 +1014,7 @@ application and opens a debugger window on the thread that reached the
 breakpoint.
 
 There are also non-pausing breakpoints that print a message in the
-debugger’s interaction pane. Generally, when we refer to breakpoints, we
+debugger's interaction pane. Generally, when we refer to breakpoints, we
 mean the pausing kind.
 
 Breakpoints can be either enabled or disabled. Enabled breakpoints are
@@ -1028,11 +1028,11 @@ at that point again, you can clear the breakpoint to remove it
 completely.
 
 When Open Dylan encounters a breakpoint, it prints the breakpoint
-location in the debugger’s context pane, and also (if the breakpoint
-option *Print Message* is checked) adds it to the debugger’s interaction
+location in the debugger's context pane, and also (if the breakpoint
+option *Print Message* is checked) adds it to the debugger's interaction
 pane. See `Breakpoint options`_.
 
-Breakpoints are associated with the application’s project, rather than
+Breakpoints are associated with the application's project, rather than
 the compiled application itself. This means breakpoints only have an
 effect if the application is executing under debugger control within the
 development environment, via **Application > Start** and similar commands.
@@ -1049,7 +1049,7 @@ You can set breakpoints on generic functions and their methods. The
 application will break to the debugger on entry to the function.
 
 To set a breakpoint on an individual method, select it on either the
-project window Definitions or Sources page, or in the browser’s Methods
+project window Definitions or Sources page, or in the browser's Methods
 page. Bring up the shortcut (right-click) menu and choose **Set
 Breakpoint**.
 
@@ -1069,8 +1069,8 @@ possible to that line.
 
 You can set a breakpoint on a line of code in any tool that can show you
 it. The editor is the obvious tool to use, but you can also breakpoint
-lines of code that you can see in the debugger’s source pane or the
-browser’s Source page.
+lines of code that you can see in the debugger's source pane or the
+browser's Source page.
 
 To set a breakpoint in any of these situations, click on the leftmost
 column of the line you wish to breakpoint. You can only do this for
@@ -1082,10 +1082,10 @@ enabled and disabled by clicking on the circle. You can also use the
 shortcut (right-click) menu to manipulate breakpoints on lines of code.
 See `Breakpoint commands on the shortcut menu`_.
 
-Browsing a project’s breakpoints
+Browsing a project's breakpoints
 --------------------------------
 
-You can see all of a project’s breakpoints in the project window’s
+You can see all of a project's breakpoints in the project window's
 Breakpoints page. This shows the location of the breakpoint (the name of
 the function or the line of the source code file),
 
@@ -1099,12 +1099,12 @@ Breakpoint commands on the shortcut menu
 In some situations you can right-click to produce the shortcut menu,
 which contains several breakpoint manipulation commands. These are:
 
--  When you are browsing the project breakpoints in the project window’s
+-  When you are browsing the project breakpoints in the project window's
    Breakpoints page.
--  When you have selected a method in the project window’s Definitions
+-  When you have selected a method in the project window's Definitions
    or Sources page.
 -  When you are browsing a generic function and have selected a method
-   in the browser’s Methods page.
+   in the browser's Methods page.
 -  When your mouse pointer is over a breakpoint icon in the leftmost
    column of either the editor window, the debugger source pane, or the
    browser Source page.
@@ -1121,8 +1121,8 @@ complete list of commands follows.
     Sets a trace point for the selected function. When you set a trace
     point for a function and then run and pause the application, the
     nesting levels of recursive calls and their subsequent output are
-    printed to the debugger’s interaction pane. This allows you to see
-    the values of the function’s arguments and the associated result
+    printed to the debugger's interaction pane. This allows you to see
+    the values of the function's arguments and the associated result
     values.
 
 "Untrace"
@@ -1187,7 +1187,7 @@ The **Edit Breakpoint Options…** dialog, available from the shortcut
 (right-click) menu, contains the following sections.
 
 -  "Enabled" Check item for toggling whether a breakpoint is enabled or
-   disabled. A disabled breakpoint does not affect the application’s
+   disabled. A disabled breakpoint does not affect the application's
    execution. New breakpoints are enabled by default.
 -  "Pause application"
 -  Check item for toggling whether the breakpoint pauses the application
@@ -1199,7 +1199,7 @@ The **Edit Breakpoint Options…** dialog, available from the shortcut
    enabled and a hollow yellow triangle when disabled.
 -  "Print message"
 -  Check box for toggling whether the breakpoint prints any message in
-   the debugger’s interaction pane when it is encountered. By default a
+   the debugger's interaction pane when it is encountered. By default a
    new breakpoint does print a message.
 -  "Message text" Text field for entering some identifying message to be
    associated with the breakpoint (if any). The text is used in debugger
@@ -1208,7 +1208,7 @@ The **Edit Breakpoint Options…** dialog, available from the shortcut
 -  "One shot" Check box for toggling whether the breakpoint is temporary
    or permanent. Temporary breakpoints are removed after they have been
    encountered. By default, new breakpoints are permanent.
--  The shortcut (right-click) menu’s *Run to Cursor* command creates
+-  The shortcut (right-click) menu's *Run to Cursor* command creates
    temporary breakpoints.
 
 Stepping
@@ -1231,7 +1231,7 @@ because of optimizations carried out by the compiler.
 
 To step through in a particular application thread, issue the stepping
 command in the debugger on that thread. The commands are available on
-the debugger’s **Thread** menu as well as on toolbar buttons.
+the debugger's **Thread** menu as well as on toolbar buttons.
 
 The following sections give examples to illustrate what the three
 stepping commands do.
@@ -1240,9 +1240,9 @@ Step over
 ---------
 
 Choosing **Thread > Step Over** in a debugger "steps over" the next
-function call that occurs in that debugger’s thread, executing the call
+function call that occurs in that debugger's thread, executing the call
 in full and then returning control to the debugger. The command operates
-in the context of the currently selected call frame in the debugger’s
+in the context of the currently selected call frame in the debugger's
 stack pane.
 
 Consider this stack backtrace::
@@ -1275,9 +1275,9 @@ Step into
 ---------
 
 Choosing **Thread > Step Into** in a debugger "steps into" the next
-function call that occurs in that debugger’s thread, and then returns
+function call that occurs in that debugger's thread, and then returns
 control to the debugger before the function begins to execute. This
-command is not sensitive to the debugger’s selected call frame.
+command is not sensitive to the debugger's selected call frame.
 
 Typically, this command causes a new frame to appear at the top of the
 stack.
@@ -1296,7 +1296,7 @@ Choosing **Thread > Step Out** in a debugger "steps out" of the current
 function call, that is, it resumes execution of the application until a
 function returns, and then passes control back to the debugger.
 
-This command is sensitive to the debugger’s selected call frame: it
+This command is sensitive to the debugger's selected call frame: it
 always steps out of the function running in that frame.
 
 Consider this stack backtrace::
@@ -1350,10 +1350,10 @@ writing to a DLL that is currently in use.
 
 Be careful when setting breakpoints if the client and server library
 share source files. If you set a breakpoint when editing a shared file,
-the breakpoint will be set in the editor’s active project. You can
+the breakpoint will be set in the editor's active project. You can
 change the active project using the drop-down list in the main window.
 
-Breakpoints set in other windows’ source pages (such as in the browser)
+Breakpoints set in other windows' source pages (such as in the browser)
 act on the project associated with that window. Note that this makes it
 possible to set breakpoints in both the client and the server so that
 the debugger correctly opens up on the appropriate project as the
@@ -1372,7 +1372,7 @@ You can save a formatted bug report or compiler warnings report for an
 application by choosing **File > Export…** in the debugger or project
 window. The bug report includes a stack backtrace for all threads in the
 application, while the compiler warnings report contains the same
-information provided in the project window’s Warnings page.
+information provided in the project window's Warnings page.
 
 The Export… dialog gives you the option of saving the report as either
 text HTML. If you choose to save the report to a file, an editor window
@@ -1382,7 +1382,7 @@ supplemental text.
 
 .. note:: This is **not** a facility for saving backtraces for any bugs you
    find in the Open Dylan environment. The debugger cannot introspect
-   on the development environment’s threads.
+   on the development environment's threads.
 
 .. figure:: images/export.png
    :align: center
@@ -1397,7 +1397,7 @@ Debugger options
 The **View > Debugger Options** command brings up a dialog that controls
 the options for the debugger. This dialog has three property pages:
 Stack, Exceptions, and Misc. The options on these pages apply on a
-per-thread basis—you can have different settings for different threads’
+per-thread basis—you can have different settings for different threads'
 debuggers.
 
 .. _stack-options:
@@ -1406,7 +1406,7 @@ Stack options
 -------------
 
 The Stack page controls the filtering of stack frames from the
-debugger’s backtrace pane.
+debugger's backtrace pane.
 
 Show stack frames of types
 
@@ -1447,7 +1447,7 @@ The possible actions are:
 
 -  Ignore Throw the exception away and allow the application to
    continue.
--  Report Write the message into the debugger’s interaction pane and
+-  Report Write the message into the debugger's interaction pane and
    continue.
 -  Debug Pause the application. Update the debugger for the thread that
    signalled the exception. Write the message into a log. Activate any
@@ -1472,7 +1472,7 @@ The Misc page presents miscellaneous, high-level debugger options.
 Expand stack backtrace when first opening debugger
 
 -  When checked (the default), expands the stack backtrace one level, to
-   show stack frames. Otherwise just shows the application’s thread
+   show stack frames. Otherwise just shows the application's thread
    number and title.
 -  Expand first stack frame when refreshing debugger
 -  When checked (the default), the debugger displays the first stack in
@@ -1481,7 +1481,7 @@ Expand stack backtrace when first opening debugger
 
 Refresh all open debuggers when entering debugger
 
--  When checked, refreshes stack information in all threads’ open
+-  When checked, refreshes stack information in all threads' open
    debugger windows upon entry to the debugger by any one thread.
    Otherwise only the debugger window for the thread that has entered
    the debugger will be refreshed. This option is not checked by
@@ -1492,7 +1492,7 @@ Open debugger window on pause button
 -  When checked (the default), clicking the toolbar Pause button or
    choosing **Application > Pause** causes the application to enter the
    debugger as well as pausing execution. Otherwise these actions only
-   cause the application’s execution to be paused. This option is
+   cause the application's execution to be paused. This option is
    checked by default.
 
 Just-in-time debugging
@@ -1506,7 +1506,7 @@ it to the crashed process in order to obtain a backtrace. The system
 registry contains an entry for the debugger that should be invoked when
 this happens. Open Dylan is capable of acting as a JIT debugger; during
 the installation process you have the opportunity to install Open Dylan
-as your machine’s default debugger.
+as your machine's default debugger.
 
 If you set Open Dylan up as your JIT debugger, it is simple to make
 a connection to the Open Dylan debugger "just in time". When the

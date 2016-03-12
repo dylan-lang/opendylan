@@ -15,7 +15,7 @@ that component.
 Open Dylan includes a tool that can read the contents of a type
 library and generate Dylan code to act as a client to the COM interfaces
 and classes the type library describes, or to act as a server
-implementing the type library’s interfaces and classes.
+implementing the type library's interfaces and classes.
 
 You can invoke this type library tool from a Open Dylan project by
 including a *specification file* in the project. A specification file
@@ -283,7 +283,7 @@ from the start of this chapter.
 
 The RotNExample-server project window appears.
 
-#. In the new project’s window, edit *library.dylan*, and add to the
+#. In the new project's window, edit *library.dylan*, and add to the
    ``define library`` declaration the following line:
 
 .. code-block:: dylan
@@ -659,7 +659,7 @@ application fails.
 First we must register the server with the system, so that COM knows
 where to find the server and what interfaces it supports. In order to do
 this, we must execute the server with the */RegServer* command line
-flag. This will cause the server’s call ``OLE-util-register-only?`` to
+flag. This will cause the server's call ``OLE-util-register-only?`` to
 return ``#t``, and the server to call ``register-coclass``.
 
 Open the RotNExample-server project and build it.
@@ -713,7 +713,7 @@ Creating vtable and dual interfaces
 ===================================
 
 The New Project wizard can generate custom (vtable) and dual (vtable and
-dispatch) COM interfaces. They are available on the wizard’s
+dispatch) COM interfaces. They are available on the wizard's
 stub-selection page, from the options "Custom (vtable) interfaces" and
 "Dual interfaces".
 
@@ -839,7 +839,7 @@ keywords:
 
         Server-suffix: *server-suffix*
 
-    Optional. Only meaningful when *Generate:* ’s *type-of-stubs* argument
+    Optional. Only meaningful when *Generate:* 's *type-of-stubs* argument
     is *vtable-interfaces* or *dual-interfaces*. Specifies a suffix which
     is appended to generated server interface names. If no value is provided
     or the *Server-suffix:* keyword is omitted then no suffix is appended.
@@ -851,7 +851,7 @@ keywords:
 
         Client-suffix: *client-suffix*
 
-    Optional. Only meaningful when *Generate:* ’s *type-of-stubs* argument
+    Optional. Only meaningful when *Generate:* 's *type-of-stubs* argument
     is *vtable-interfaces* or *dual-interfaces*. Specifies a suffix which
     is appended to generated client interface names. If the *Client-suffix:*
     keyword is omitted then client classes are not generated (the

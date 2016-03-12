@@ -13,7 +13,7 @@ Projects
 ========
 
 In Open Dylan, all development work is done in terms of *projects*.
-Projects are the development environment and compiler’s way of
+Projects are the development environment and compiler's way of
 representing Dylan libraries.
 
 A project consists mainly of a list of the source files that define the
@@ -109,7 +109,7 @@ A project name
 Source code files, and other files
     Every project includes source code files. Projects created with the New
     Project wizard will have a *library.dylan* file (which defines the
-    project’s library); a *module.dylan* file (which defines the modules of
+    project's library); a *module.dylan* file (which defines the modules of
     the library); and at least one other Dylan source code file containing
     definitions and expressions.
 
@@ -169,9 +169,9 @@ The project folder contains the following files and subfolders:
   This folder holds the executable (.EXE) or DLL (.DLL) file produced from
   the project.
 
-  In addition, the DLLs of the project’s subprojects are automatically
+  In addition, the DLLs of the project's subprojects are automatically
   copied into this folder, so that they can be found when you execute your
-  project’s application.
+  project's application.
 - The *project* *-build* folder.
 
   This folder, whose name begins with the name of the project, holds a
@@ -196,7 +196,7 @@ The project folder contains the following files and subfolders:
   you are using the GNU linker.
 - The *release* folder.
 
-  This folder holds a stand-alone version of the project’s application,
+  This folder holds a stand-alone version of the project's application,
   suitable for redistribution to customers or other third parties without
   a copy of Open Dylan on their system. It is created when you choose
   the **Project > Make Release** command.
@@ -271,7 +271,7 @@ possible.
 
 Interactive development is the ability to execute code fragments,
 including definitions and redefinitions, in a running program. Open
-Dylan offers interactive development via the debugger’s interaction
+Dylan offers interactive development via the debugger's interaction
 pane. The object code produced during interactive development is not
 saved, but just patched into the running program and added to the
 in-memory *compiler database* (see `Compilation modes`_). The
@@ -296,7 +296,7 @@ which models the project. The database provides a rich source of
 information to Open Dylan tools about the contents, properties, and
 relationships between source code definitions, libraries, and modules.
 
-A project’s compiler database is used when browsing and debugging the
+A project's compiler database is used when browsing and debugging the
 project, and is also used when compiling other projects that use the
 project.
 
@@ -332,7 +332,7 @@ Dylan compiler can optimize it very successfully.
 
 However, the best optimizations come at the costs of longer build times,
 and less symbolic information in the debugger. During the larger
-proportion of your project’s development, you want projects to build
+proportion of your project's development, you want projects to build
 quickly and to be easier to debug. When it is time to deliver your
 product, you will want to turn all the code optimizations on even at the
 expense of debugging information and compilation speed.
@@ -359,7 +359,7 @@ times as short as possible.
 
 This mode keeps symbolic information in the compiled code that will make
 debugging work easier. Also, if your project was compiled in this mode
-you will be able to do more interactive work in the debugger’s
+you will be able to do more interactive work in the debugger's
 interaction pane, including redefinition. However, compiled code will
 not be as fast as it can be.
 
@@ -372,7 +372,7 @@ project in Production mode. Production mode turns on all compiler
 optimizations. However, build times will be slower than in Interactive
 Development mode, and debugging and interaction will be more limited.
 
-When you have switched to Production mode, you can use Open Dylan’s
+When you have switched to Production mode, you can use Open Dylan's
 *optimization coloring* feature to highlight inefficiencies in your
 code. This feature colors source code so that you can see where
 optimizations did and did not occur. Adding type declarations and
@@ -387,7 +387,7 @@ Versioning
 
 A project can have major and minor version numbers that will be recorded
 in the DLL or EXE that the project builds. You can enter these numbers
-on the **Project > Settings…** dialog’s Link page.
+on the **Project > Settings…** dialog's Link page.
 
 Open Dylan uses version numbers at compile time and run time to
 determine if compatible versions of Dylan libraries are in use.
@@ -423,7 +423,7 @@ binding* and *tight binding*.
    the type information available in the source. When the compiler is
    run using loose binding, it considers only names and macro
    definitions. References to objects and types are always made
-   indirectly through the objects’ names, so that the objects can be
+   indirectly through the objects' names, so that the objects can be
    changed without forcing recompilation of code that uses them.
 -  Tight binding This is a way of compiling code that uses all type
    information available in order to drive optimizations. This type
@@ -497,8 +497,8 @@ Linkers
 
 Open Dylan offers you a choice of linkers to use to link your Dylan
 programs. The default linker is a GNU linker. If you own Microsoft
-Developer Studio, you can use Microsoft’s linker instead. See the Linker
-page of the main window’s **Options > Environment Options…** dialog.
+Developer Studio, you can use Microsoft's linker instead. See the Linker
+page of the main window's **Options > Environment Options…** dialog.
 
 Executing programs
 ==================
@@ -537,7 +537,7 @@ the same order that they are mentioned in a library definition.
 
 Library initialization is performed by executing the code which
 comprises the library, in the order in which it is defined by the
-library’s project. This means that the order of the Dylan source files
+library's project. This means that the order of the Dylan source files
 in a project is significant, and that the order of definitions and
 expressions in a Dylan file is significant.
 
@@ -552,7 +552,7 @@ run-time values; in these cases, forward references may not be allowed.
 
 Expressions in a Dylan library are executed in the order in which they
 appear in the project, and the last expression in a project should be a
-call to a project’s start function.
+call to a project's start function.
 
 .. index::
    single: Compiler databases; relationship to source and run-time views
@@ -571,7 +571,7 @@ It is useful to think of there being three "worlds" in which we can
 simultaneously view projects: source, database, and run-time.
 
 Every project has a representation in source code. We view this source
-representation with the editor mainly, but the debugger’s source pane
+representation with the editor mainly, but the debugger's source pane
 can show us the source code for a function on the stack, and the browser
 can show the source for some kinds of object in its Source page.
 

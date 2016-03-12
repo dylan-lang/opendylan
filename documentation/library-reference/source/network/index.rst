@@ -747,7 +747,7 @@ This section lists the socket condition classes in the Network library.
      *socket-condition-details*
 
      -  Most socket conditions originate in error return codes from Open
-        Dylan’s Winsock2 library, an FFI interface to the native socket
+        Dylan's Winsock2 library, an FFI interface to the native socket
         library Winsock2.
      -  The *socket-condition-details* slot provides information about the
         low-level failure which was the source for the condition. In most
@@ -774,7 +774,7 @@ This section lists the socket condition classes in the Network library.
 
    :description:
 
-     The class of unexpected errors from Open Dylan’s Winsock2 library,
+     The class of unexpected errors from Open Dylan's Winsock2 library,
      an FFI interface to the native socket library Winsock2.
 
      Inspect the contents of the ``socket-condition-details`` slot for

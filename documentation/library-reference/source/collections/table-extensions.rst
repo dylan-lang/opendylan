@@ -8,8 +8,8 @@ The table-extensions Module
 Introduction
 ============
 
-The Collections library’s Table Extensions module extends the Dylan
-language’s standard table features. It is available to applications as
+The Collections library's Table Extensions module extends the Dylan
+language's standard table features. It is available to applications as
 the *table-extensions* module.
 
 .. note:: Open Dylan provides a slightly different table implementation
@@ -68,7 +68,7 @@ Open Dylan allows all general instances of the built-in class
 :drm:`<table>` to be *weak*. See :doc:`weak tables <../dylan/weak-tables>` of
 this volume for information about weakness.
 
-You can create weak tables with the :drm:`<table>` class’s *weak:*
+You can create weak tables with the :drm:`<table>` class's *weak:*
 init-keyword. The legal values for this keyword are:
 
 - ``#"key"`` Creates a table with weak keys. When there are no longer any
@@ -267,7 +267,7 @@ from the module *table-extensions*.
      differences between them. Returns true if they are equal and false
      otherwise.
 
-     The function has the same behavior as Dylan’s standard method on *=* for
+     The function has the same behavior as Dylan's standard method on *=* for
      sequences, except that when comparing alphabetical characters, it
      ignores any case differences.
 

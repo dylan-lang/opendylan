@@ -33,7 +33,7 @@ The Transcendentals module
 ==========================
 
 This section contains a reference entry for each item exported from the
-*common-dylan* library’s *transcendentals* module.
+*common-dylan* library's *transcendentals* module.
 
 .. generic-function:: ^
 

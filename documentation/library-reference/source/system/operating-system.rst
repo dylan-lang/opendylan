@@ -9,7 +9,7 @@ Introduction
 ------------
 
 The operating-system module is part of the System library. It provides
-an interface to some features of the host machine’s operating system.
+an interface to some features of the host machine's operating system.
 
 This chapter describes the functions and constants that the
 operating-system module contains.
@@ -524,7 +524,7 @@ System library's operating-system module.
      a MS-DOS window. The return value is the exit status returned by
      the application.
 
-     If the *minimize?* keyword is ``#t``, the command’s shell will
+     If the *minimize?* keyword is ``#t``, the command's shell will
      appear minimized. It is ``#f`` by default.
 
      If the *activate?* keyword is ``#t``, the shell window becomes the
@@ -557,7 +557,7 @@ System library's operating-system module.
 
      Parses the command specified in *line* into a command name and
      arguments. The rules used to tokenize the string are given in
-     Microsoft’s C/C++ reference in the section `"Parsing C Command-Line
+     Microsoft's C/C++ reference in the section `"Parsing C Command-Line
      Arguments" <http://msdn.microsoft.com/en-us/library/a1y7w461.aspx>`_.
 
    :seealso:

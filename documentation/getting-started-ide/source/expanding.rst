@@ -58,9 +58,9 @@ Problems at compile time
 ========================
 
 In this section we look at how the compiler handles problems that it
-comes across in a project’s source code. When we rebuilt Reversi in
+comes across in a project's source code. When we rebuilt Reversi in
 `Rebuilding the application`_, the compiler
-discovered nine problems in the project’s source code. It reported those
+discovered nine problems in the project's source code. It reported those
 problems and divided them into two categories: serious warnings and
 warnings.
 
@@ -90,7 +90,7 @@ automatically.
 .. figure:: images/warnings2-0b1.png
    :align: center
 
-   The project window’s Warnings page.
+   The project window's Warnings page.
 
 The table has four columns:
 
@@ -105,7 +105,7 @@ The table has four columns:
 The items in the table are sorted lexically by the Source column value.
 Warnings and serious warnings without associated source locations have
 empty Source fields, and appear at the top of the list. (To sort the
-table by the values in another column, click on that column’s header.)
+table by the values in another column, click on that column's header.)
 
 Each warning or serious warning is linked to the source definition that
 caused it. We can select individual warnings and serious warnings to
@@ -212,7 +212,7 @@ warning was removed by the *end* -clause fix.
    single: warnings; linking with serious warnings
    single: linking; by ignoring serious warnings
 
-Controlling the compiler’s treatment of warnings
+Controlling the compiler's treatment of warnings
 ------------------------------------------------
 
 We have seen that serious warnings are caused by code that, if executed,
@@ -227,7 +227,7 @@ Build page of the **Options > Environment Options** dialog.
 The option "Always link, even if there are serious warnings" forces the
 compiler to link an executable file or DLL for a project regardless of
 any serious warnings. We can also choose "Ask whether to link if there
-are serious warnings", and "Don’t link if there are serious warnings".
+are serious warnings", and "Don't link if there are serious warnings".
 "Ask whether to link if there are serious warnings" is the default
 setting.
 
@@ -285,13 +285,13 @@ game when we saved it. The reason for this will become clear shortly.)
 
 In the left-hand pane beneath the message, there is a tree item for the
 master thread of the Reversi application. This tells us that the
-exception was raised in that thread. (In Reversi’s case, there happens
+exception was raised in that thread. (In Reversi's case, there happens
 to be only one thread, but other applications might have multiple
 threads, and knowing the thread that raised the exception is useful. See
 :doc:`debug` for more information about debugger options.)
 
 When expanded, the tree item shows the current state of the call stack
-for Reversi’s master thread. When the debugger is invoked on a thread,
+for Reversi's master thread. When the debugger is invoked on a thread,
 it pauses execution in that thread. So when we expand the tree we see
 the stack almost exactly as it was at the moment that the debugger was
 invoked.
@@ -356,7 +356,7 @@ before the unhandled exception.
    Looking at the source code for ``write-element``, the green arrow icon
    points to an assignment to ``sb.buffer-next``. Here, the green arrow is
    showing the point at which execution would resume in that call frame if
-   the application’s execution was continued. What we do not know is
+   the application's execution was continued. What we do not know is
    whether the preceding call, to ``coerce-from-element``, returned. It may
    be that the call failed (because the arguments were not what
    ``coerce-from-element`` was expecting) or that it succeeded but does not
@@ -376,8 +376,8 @@ All frames
    Shows all frames in the thread being debugged.
 
 All visible frames
-   Shows all the frames in the thread that are part of the module’s
-   context, in this case the reversi module’s context, which includes
+   Shows all the frames in the thread that are part of the module's
+   context, in this case the reversi module's context, which includes
    calls to any functions imported from other modules.
 
 All local frames
@@ -417,7 +417,7 @@ not part of the module, or module and library, that a tool is currently
 focused on. (The debugger and browser both have a toolbar pop-up where
 you can change the current module.)
 
-Returning to our example, we now know that ``write-element``’s call to
+Returning to our example, we now know that ``write-element``'s call to
 ``coerce-from-element`` succeeded, because it created a call frame. We can
 see that ``coerce-from-element`` is now the last frame on the stack before
 the call to ``error``.
@@ -434,7 +434,7 @@ the call to ``error``.
    Since the error dialog told us that the exception was caused by
    something being of the wrong type, there is a good chance that the value
    of *elt*, the argument to ``byte-char-to-byte``, is of the wrong type.
-   Notice too that *elt* ’s type is not specified in the signature of
+   Notice too that *elt* 's type is not specified in the signature of
    ``coerce-from-element``.
 
    We need to know the value passed to *elt*. We can find out by expanding
@@ -458,7 +458,7 @@ the call to ``error``.
 #. Select the call frame for ``write-element``.
 
    We can see here that the value passed to *elt* in ``coerce-from-element``
-   is the value of one of ``write-element`` ’s parameters, also called *elt*.
+   is the value of one of ``write-element`` 's parameters, also called *elt*.
 
    We need to move further down the stack to the ``reversi-board-write-data``
    call.
@@ -550,7 +550,7 @@ slots. The third field, Source, is labeled "n/a" for "not applicable".
 The Source field shows a source file name for anything the compiler saw
 during compilation, such as a definition. We are browsing an instance,
 not a compiler record, so it is not relevant to associate the instance
-with a source location. For more on the browser’s distinction between
+with a source location. For more on the browser's distinction between
 run-time and compile-time objects, see
 :ref:`browsing-project-source-runtime-contexts`.
 
@@ -610,7 +610,7 @@ To browse the definition, we have the option of locating it on the
 project window Definitions page or (more efficiently) moving it directly
 in the browser.
 
-Delete the text in the browser’s Object field and type
+Delete the text in the browser's Object field and type
 ``reversi-square-write-data`` in its place.
 
 Press Return.
@@ -680,7 +680,7 @@ written.
 In addition:
 
 -  The ``write-element`` generic function is from the Open Dylan
-   Streams library. It is part of that library’s protocol for writing to
+   Streams library. It is part of that library's protocol for writing to
    streams.
 -  The stack shows that the ``write-element`` method tried to coerce an
    integer to a byte character, and that the attempt failed.
@@ -689,7 +689,7 @@ So we know that Reversi is trying to write integer values to a file
 stream with a ``<byte-character>`` element type, and the exception occurs
 during the attempt to coerce an integer into a byte character.
 
-We could simply change the file stream’s element type to :drm:`<integer>`.
+We could simply change the file stream's element type to :drm:`<integer>`.
 
 In fact, we have not yet looked at the call that created the file
 stream. That call is ``reversi-game-save-game``.
@@ -734,7 +734,7 @@ The class ``<byte>`` is actually a constant value, defined:
     define constant <byte> = limited(<integer>, min: 0, max: 255);
 
 So there is no harm in changing the ``element-type:`` argument in
-``reversi-game-save-game``’s call to ``make`` from ``<byte-character>`` to
+``reversi-game-save-game``'s call to ``make`` from ``<byte-character>`` to
 :drm:`<integer>` (because 0, 1, and 2 are all within the defined range for
 ``<byte>``), but for symmetry we may as well change it to ``<byte>``.
 

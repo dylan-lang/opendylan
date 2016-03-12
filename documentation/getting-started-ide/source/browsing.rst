@@ -59,15 +59,15 @@ classes a project defines) as well as the dynamic properties of run-time
 values (for example, the value of a local variable in a stack frame).
 
 In the first case, you are looking at information taken from the
-project’s compiler database, and in the second, you are looking at
+project's compiler database, and in the second, you are looking at
 information taken from the application as it runs.
 
 The browser matches run-time objects up with their source code
 definitions to make as much information as possible available when
 browsing. For instance, if you select a local variable on the stack in
-the debugger, and choose the shortcut (right-click) menu’s *Browse Type*
+the debugger, and choose the shortcut (right-click) menu's *Browse Type*
 command, the browser is able to locate the source code definition of the
-variable’s class.
+variable's class.
 
 Browsing Reversi
 ================
@@ -76,12 +76,12 @@ In this section, we use the Open Dylan browser to explore Reversi.
 
 If it is not already open, open the Reversi project.
 
-Go to the Reversi project’s Definitions page.
+Go to the Reversi project's Definitions page.
 
-Note that the project window’s Definitions page will only contain
+Note that the project window's Definitions page will only contain
 information if that project has already been built. That is because,
 like the browser, the project window gets this list of definitions from
-the project’s compiler database.
+the project's compiler database.
 
 The Definitions page will be the starting point for our browsing work.
 We are going to browse definitions in Reversi, and examine the
@@ -91,7 +91,7 @@ Expand "library reversi", and then "module reversi".
 
 Double-click on ``<reversi-square>`` in the list of definitions.
 
-To find this definition easily, you can use the Definitions page’s popup
+To find this definition easily, you can use the Definitions page's popup
 list to show only Classes.
 
 The browser appears.
@@ -139,7 +139,7 @@ General page gives an overview of the object being browsed: its name,
 the type of object it is, the source file containing its definition (if
 any), and so on.
 
-Select the ``<reversi-square>`` definition’s General page.
+Select the ``<reversi-square>`` definition's General page.
 
 The General page for ``<reversi-square>`` shows that it is a class from
 the source file *board.dylan*, that it is defined in the *reversi*
@@ -164,11 +164,11 @@ properties and contents that we might also want to browse. With a simple
 double-click on the information we are interested in, we can move on to
 browsing other objects.
 
-Go to ``<reversi-square>`` ’s Superclasses page.
+Go to ``<reversi-square>`` 's Superclasses page.
 
-The Superclasses page shows a class’s superclasses in a tree view. In
+The Superclasses page shows a class's superclasses in a tree view. In
 this case, we see a single expandable item, the class ``<simple-pane>``,
-meaning that ``<simple-pane>`` is ``<reversi-square>`` ’s only superclass.
+meaning that ``<simple-pane>`` is ``<reversi-square>`` 's only superclass.
 
 If we want to browse the definition of ``<simple-pane>``, all we need to
 do is double-click on it.
@@ -215,15 +215,15 @@ Notice that the browser remembers which property page you were browsing.
 .. index::
    single: browsing; library definitions
 
-Browsing a project’s library
+Browsing a project's library
 ============================
 
-To browse the current project’s library definition, choose **Go >
+To browse the current project's library definition, choose **Go >
 Library** or the Browse Library (|image5|) button.
 
 Click the Browse Library button.
 
-The browser switches to the Reversi project’s library definition. We see
+The browser switches to the Reversi project's library definition. We see
 the usual General and Source page, as well as Warnings, Usage,
 Definitions, and Names.
 
@@ -271,7 +271,7 @@ By changing the list setting to *dylan:dylan*, we told the browser that
 any name not in the *dylan* module of the *dylan* library should be
 printed using the special suffix.
 
-The browser’s ability to display names from other modules than the
+The browser's ability to display names from other modules than the
 current module in an unambiguous fashion is important, because while
 browsing you may come across names not defined in your library. The
 browser needs to be able to make it clear when a name is not from the
@@ -286,7 +286,7 @@ Browsing run-time values of variables and constants
 You can browse the values of variables and constants in running
 applications. The browser shows the run-time value of a variable or
 constant in its Values page. Simply browse the definition of the
-variable or constant by double-clicking on it in the project’s
+variable or constant by double-clicking on it in the project's
 Definitions page.
 
 The values are shown in a table. Thread variables (variables local to a
@@ -296,14 +296,14 @@ ever have one value across all threads, so this is shown as a single
 table entry entitled "All threads". You can update the value shown in
 the browser with **View > Refresh**.
 
-We will browse Reversi’s *\*reversi-piece-shape\** variable to show how
+We will browse Reversi's *\*reversi-piece-shape\** variable to show how
 we can monitor the value of a variable while an application is running.
 That variable stores the current shape of the pieces being used on the
 Reversi board. By default, Reversi uses circular pieces.
 
 Start the Reversi application.
 
-In the Reversi project window’s Definitions page, double-click on the
+In the Reversi project window's Definitions page, double-click on the
 variable *\*reversi-piece-shape\**.
 
 In the browser, choose the Values page.
@@ -402,7 +402,7 @@ of these pages can also be seen in the project window.
 -  Hierarchy The hierarchy of a DUIM sheet, layout or frame.
 -  Keywords The initialization keywords for a class.
 -  Libraries The list of libraries in the project.
--  Memory The object’s memory in the application, shown in bytes.
+-  Memory The object's memory in the application, shown in bytes.
 -  Methods The methods of a generic function, or the methods
    specializing on a class. You can show either methods defined directly
    on the class or all methods applicable to the class.

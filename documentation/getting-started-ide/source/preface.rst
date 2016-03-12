@@ -13,7 +13,7 @@ The Dylan Reference Manual
 ==========================
 
 The `Dylan Reference Manual <http://opendylan.org/books/drm/>`_
-(Shalit, 1996) is published by Addison Wesley Developers’ Press, ISBN
+(Shalit, 1996) is published by Addison Wesley Developers' Press, ISBN
 0-201-44211-6. In this guide, we refer to the *Dylan Reference Manual*
 as "the DRM".
 
@@ -50,7 +50,7 @@ detail.
 :doc:`remotedbg`, describes how to debug a Dylan application
 running on another machine.
 
-:doc:`coloring`, describes the editor’s facility for coloring
+:doc:`coloring`, describes the editor's facility for coloring
 source code to show the degree to which it has been optimized.
 
 :doc:`delivery`, shows how you can package an application with

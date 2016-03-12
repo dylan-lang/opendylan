@@ -4,7 +4,7 @@ Creating and Using Projects
 
 In this chapter we look more closely at projects. We take a break from
 Reversi and develop some new projects of our own. To do this, we use
-Open Dylan’s New Project wizard. We also look at some of the
+Open Dylan's New Project wizard. We also look at some of the
 options and settings associated with projects, and some of the features
 of the project window.
 
@@ -35,7 +35,7 @@ project. Across a series of pages, it gathers the following information:
    the project is built.
 -  The name of the project and a folder on disk for storing its files.
 -  The libraries and modules that the project will use.
--  Documentation keywords to be used in the project’s various files.
+-  Documentation keywords to be used in the project's various files.
 
 When we have supplied all the information that it requires, the wizard
 creates a new project, consisting of the following files:
@@ -63,7 +63,7 @@ code to be included in your project.
 And for GUI applications that use the DUIM library, there can also be:
 
 -  A Dylan source file, called *frame.dylan*, that defines the
-   application’s DUIM frame and a set of default menus.
+   application's DUIM frame and a set of default menus.
 
 The *frame.dylan* file appears only if you ask for template code to be
 included in your project. We discuss this in `Projects for GUI
@@ -98,7 +98,7 @@ project and source files.
 .. figure:: images/pwiz2.png
    :align: center
 
-   The New Project wizard’s second page.
+   The New Project wizard's second page.
 
 When naming projects, remember that Open Dylan uses the name given
 to a project as a basis for naming some of the files that make up the
@@ -147,7 +147,7 @@ different ways to do this. Each of the three options is described below.
 -  Functional-Dylan is a convenience library that combines the standard
    Dylan library with a language extensions library called
    Functional-Extensions. Thus Functional-Dylan provides a "Harlequin
-   dialect" of Dylan. (The standard Dylan library, without Harlequin’s
+   dialect" of Dylan. (The standard Dylan library, without Harlequin's
    extensions, is also included in the set of Open Dylan
    libraries.)
 -  Simple If we choose this the wizard presents a series of choices we
@@ -191,7 +191,7 @@ additional one that Open Dylan accepts.
 .. figure:: images/pwiz3.png
    :align: center
 
-   The New Project wizard’s third page.
+   The New Project wizard's third page.
 
 Change the default keyword text as you wish, or turn the keywords off
 altogether.
@@ -286,7 +286,7 @@ Here, we want to name the project and specify a folder for its files.
 Name the project *GUI-App* and choose a location for it.
 
 The New Project wizard can set up some skeleton program code for our
-project, according to the project’s characteristics as we specify them.
+project, according to the project's characteristics as we specify them.
 Template code is not relevant for all kinds of projects—for instance,
 our Hello project would not have benefited from any more initial program
 structure than it had—but the wizard will include any that is relevant
@@ -312,7 +312,7 @@ We now proceed through a series of pages allowing us to specify our
 project requirements in high-level terms, without knowing the names of
 specific Open Dylan API libraries.
 
-The wizard will make our project’s library definition use the right
+The wizard will make our project's library definition use the right
 libraries and modules to do what we ask on these pages, and will include
 suitable template code in the project sources. Thus the Simple option is
 a useful way to create projects until you are more familiar with the
@@ -326,7 +326,7 @@ Leave the default settings on this page as they are, and click **Next**.
 
 The next page is for specifying GUI support details. Here, we can decide
 whether we want to do the window programming for the application by
-using DUIM, Open Dylan’s high-level GUI toolkit, or by using the
+using DUIM, Open Dylan's high-level GUI toolkit, or by using the
 Win32 API libraries described in the *C FFI and Win32* library
 reference. We want to use DUIM in this project.
 
@@ -369,7 +369,7 @@ It contains some simple code that you might want to use for identifying
 your application and its version number.
 
 The *frame.dylan* file defines a DUIM frame for the application and a
-set of default menus. Frames are DUIM’s way of representing application
+set of default menus. Frames are DUIM's way of representing application
 windows. More knowledge of DUIM is necessary to understand the code in
 *frame.dylan* properly, but we can start by seeing what the code
 actually does when we build the project. All projects including template
@@ -397,7 +397,7 @@ identify the application as "GUI-App Version 1.0".
 Creating a project using the Custom library option
 ==================================================
 
-The New Project wizard’s Use Libraries page has a Custom option which
+The New Project wizard's Use Libraries page has a Custom option which
 allows complete control over the libraries and modules a project will
 use. This section explains how to choose libraries and modules using
 this option.
@@ -493,7 +493,7 @@ leads to the Advanced Project Settings dialog. The dialog has five
 sections.
 
 The Library and Module Names section allows you to specify names for
-your project’s main library and module. The default value in both cases
+your project's main library and module. The default value in both cases
 is the name of the project.
 
 The remaining sections—Start Function, Version Information, Compilation
@@ -549,7 +549,7 @@ from the project, because you cannot undo the operation. Note that the
 file is not deleted from disk, just removed from the Sources list in the
 project. You can always put it back with **Project > Insert File**.
 
-.. note:: The project window’s Definitions page shows the definitions that
+.. note:: The project window's Definitions page shows the definitions that
    were part of the project when it was last compiled. The list is taken
    from the current compiler database for the project. If you delete a
    source file from the project, the definitions from that file stay on the
@@ -570,7 +570,7 @@ last file in the project.
 The Dylan language does not require that a program define an explicit
 start function, such as *main* in C or Java. However, when you are
 debugging or interacting, Open Dylan finds it useful to know what
-you consider to be your program’s start function. It allows the name of
+you consider to be your program's start function. It allows the name of
 your start function to be recorded in its project information. By
 default, this name will be *main*, and corresponds to the *main*
 function that the New Project creates by default in the *project-name*
@@ -651,7 +651,7 @@ each category, each described below.
 Compile page
 ------------
 
-The **Project > Settings…** dialog’s Compile page controls the compilation
+The **Project > Settings…** dialog's Compile page controls the compilation
 mode setting for the current project. Any project can be compiled in one
 of two modes: Interactive Development mode, and Production mode. See
 :ref:`compilation-modes` for details of the modes.
@@ -661,7 +661,7 @@ of two modes: Interactive Development mode, and Production mode. See
 Link page
 ---------
 
-The **Project > Settings…** dialog’s Link page controls whether a project
+The **Project > Settings…** dialog's Link page controls whether a project
 is linked as an executable or as a DLL, and what its name will be. It
 also allows you to specify version information for the target, a base
 address for it, and the Windows subsystem it runs in.
@@ -669,22 +669,22 @@ address for it, and the Windows subsystem it runs in.
 .. note:: The default linker used in Open Dylan is a GNU linker. If
    you own Microsoft Developer Studio, you can use the Microsoft linker
    instead. To change the default linker, go to the main window and choose
-   **Options > Environment Options…**, then choose that dialog’s Build
+   **Options > Environment Options…**, then choose that dialog's Build
    page.
 
 Target File section of the Link page
 ------------------------------------
 
-The **Project > Settings…** dialog’s Link page has a Target File section
+The **Project > Settings…** dialog's Link page has a Target File section
 that contains the name of the project target and the type of the target.
 The default target name is derived from the name of the project. Note
 that the name will always end in .EXE or .DLL according to the target
-type, regardless of any extension you give to the target’s name.
+type, regardless of any extension you give to the target's name.
 
 Base Address section of the Link page
 -------------------------------------
 
-The **Project > Settings…** dialog’s Link page has a Base Address section
+The **Project > Settings…** dialog's Link page has a Base Address section
 that allows you to specify a base address for your target file. This is
 the address at which the target will be loaded into memory.
 
@@ -693,12 +693,12 @@ address, one for EXEs and one for DLLs, and will also relocate the
 target automatically if there is no room for it at that address. You can
 provide a value in the Base Address if you would like the target to be
 loaded at a particular location. The value should be specified in
-hexadecimal, using Dylan’s *#x* prefix: for example, *#x1000000*.
+hexadecimal, using Dylan's *#x* prefix: for example, *#x1000000*.
 
 Version Information section of the Link page
 --------------------------------------------
 
-The **Project > Settings…** dialog’s Link page has a Version Information
+The **Project > Settings…** dialog's Link page has a Version Information
 section that allows you to add major and minor version numbers to a DLL
 or EXE. The values in this section are recorded in the DLL or EXE that
 the project builds. Open Dylan uses them at compile time and run
@@ -708,7 +708,7 @@ See :ref:`versioning` for details.
 Windows Subsystem section of the Link page
 ------------------------------------------
 
-The **Project > Settings…** dialog’s Link page has a Win32 Subsystem
+The **Project > Settings…** dialog's Link page has a Win32 Subsystem
 section that allows you to specify that the target should run in the
 "Windows GUI" (WINDOWS) subsystem or the "Windows Console" (CONSOLE)
 subsystem. You may wish to change this value if you change the code of a
@@ -722,7 +722,7 @@ to run in the "Windows GUI" (WINDOWS) subsystem.
 Debug page
 ----------
 
-The **Project > Settings…** dialog’s Debug page allows you to specify a
+The **Project > Settings…** dialog's Debug page allows you to specify a
 command line with which to execute the project target, and the start
 function for the project.
 
@@ -748,7 +748,7 @@ of these debugging techniques.
 Project files and LID files
 ===========================
 
-Open Dylan’s project files can be exported in a portable library
+Open Dylan's project files can be exported in a portable library
 interface format called LID (library interchange description). Harlequin
 and other Dylan vendors have chosen LID as the standard interchange
 format for Dylan libraries. LID files describe libraries in a flat ASCII

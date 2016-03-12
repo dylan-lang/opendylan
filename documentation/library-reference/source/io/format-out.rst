@@ -9,7 +9,7 @@ Introduction
 ============
 
 The Format-Out module is a convenient repackaging of two libraries that
-provides a simple way to send text to the platform’s standard output
+provides a simple way to send text to the platform's standard output
 stream. For this purpose, Format-Out uses the Format module and the
 Standard-IO module and defines the functions :gf:`format-out`,
 :gf:`force-out`, :gf:`format-err`, and :gf:`force-err`. The Format-Out

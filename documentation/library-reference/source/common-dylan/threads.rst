@@ -194,7 +194,7 @@ Dynamic binding
 ---------------
 
 The Threads module exports a macro for dynamic binding. A *binding* is a
-mapping between a variable and a*value-cell* which holds the variable’s
+mapping between a variable and a*value-cell* which holds the variable's
 value. A *dynamic* binding is a binding which has dynamic extent, and
 shadows any outermost bindings. Dynamic bindings can be considered to be
 a property of the dynamic environment.
@@ -227,7 +227,7 @@ be used in a multi-threaded application.
 General requirements
 --------------------
 
-A library’s designer is responsible for documenting which features of
+A library's designer is responsible for documenting which features of
 the library offer built-in synchronization and which do not. While there
 is no definitive rule that can assist designers in this documentation,
 the following guidelines may be useful.
@@ -262,7 +262,7 @@ obscure errors that cannot be explained in terms of the semantics of
 Dylan language constructs.
 
 The library guarantees that *element* and *element-setter* will be
-atomic for all of Dylan’s non-stretchy built-in collection classes, and
+atomic for all of Dylan's non-stretchy built-in collection classes, and
 for :drm:`<table>`, except for subclasses of :drm:`<string>`, and limited
 collections where the elements are constrained to be either of a type
 for which slots and variables do not guarantee atomicity (see
@@ -383,7 +383,7 @@ Low-level synchronization
        define method lazy-value (lv :: <lazy-value>)
         => (value)
          if (lv.internal-guard)
-           // Don’t yet have a value == so compute it now;
+           // Don't yet have a value == so compute it now;
            let value = lv.thunk();
            // Store the value in place
            lv.computed-value := value;
@@ -450,7 +450,7 @@ Operations on threads
      - $interactive-priority
      - $high-priority
 
-     The *name* keyword is a string that is used as the function’s name for
+     The *name* keyword is a string that is used as the function's name for
      convenience purposes, such as debugging.
 
    :operations:
@@ -618,7 +618,7 @@ Basic features
      synchronization has been achieved.
 
      The *name* keyword is a string that is used as the synchronization
-     object’s name for convenience purposes, such as debugging.
+     object's name for convenience purposes, such as debugging.
 
    :operations:
 
@@ -1411,7 +1411,7 @@ Notifications
      the threads which are blocked and waiting for it. The choice of
      which thread receives the notification is undefined. The receiving
      thread may not be unblocked immediately, because it must first
-     claim ownership of the notification’s associated lock.
+     claim ownership of the notification's associated lock.
 
 .. function:: release-all
 

@@ -7,7 +7,7 @@ through keys and values.
 A weak reference is an reference that the garbage collector treats as
 irrelevant to establishing whether the object referred to is live. If an
 object has only weak references to it, the garbage collector can delete
-the reference and recycle the object’s memory. We call a normal
+the reference and recycle the object's memory. We call a normal
 reference a *strong reference*.
 
 Weak references are a useful tool for building data structures where you
@@ -19,7 +19,7 @@ Dylan, which does not expose memory references to programs. But without
 the ability to tell the garbage collector to disregard certain kinds of
 reference, data structures such as tables could be bloated unnecessarily
 by the garbage collector preserving entries (a key/value pair) solely
-because the table object itself has a reference to the entry’s key or
+because the table object itself has a reference to the entry's key or
 value.
 
 Open Dylan provides weakness options for instances of :drm:`<table>`. A

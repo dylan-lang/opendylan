@@ -6,7 +6,7 @@ Dylan Portability Interface
 
 The Threads Library is designed for implementation using
 different threads APIs from common operating systems, including Unix
-and Windows. Harlequin’s implementation of the library is designed
+and Windows. Harlequin's implementation of the library is designed
 to be directly portable onto these operating systems. This portability
 is achieved by using primitive operations defined within our runtime
 system. Each primitive operation must be implemented specially for each
@@ -36,7 +36,7 @@ handles, as well as to perform the basic functions of the class, such as
 *wait-for* and *release*. The platform-specific implementation of these
 primitive functions is free to choose any representation for these
 handles, provided that it is the same shape as a Dylan slot (which is
-equivalent to C’s *void \**).
+equivalent to C's *void \**).
 
 As with all Dylan objects, the container objects defined by the threads
 library are subject to automatic memory management, and possible
@@ -309,7 +309,7 @@ One further consideration is the interaction of the Dylan threads
 library itself with foreign components:
 
 If foreign code is not designed for multiple threads (for instance,
-because it uses global data structures, and doesn’t synchronize
+because it uses global data structures, and doesn't synchronize
 updates), then the code may fail if it is invoked from multiple Dylan
 threads. However, this problem is not related to the Dylan
 implementation, since it would fail if called from multiple threads
@@ -359,7 +359,7 @@ the program. But the low-level structures are not Dylan objects and must
 be explicitly freed when the Dylan container is collected (primitive
 functions are provided for this purpose). However, the core language of
 Dylan provides no *finalization* mechanism to invoke cleanup code when
-objects are reclaimed. Harlequin’s implementation of the Threads
+objects are reclaimed. Harlequin's implementation of the Threads
 Library strictly requires this, but it is not yet implemented. It is
 intended to provide finalization support for Dylan with a new garbage
 collector which is currently under development.

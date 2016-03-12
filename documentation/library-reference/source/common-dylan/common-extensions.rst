@@ -164,7 +164,7 @@ The extensions are:
 .. generic-function:: concatenate!
    :open:
 
-   A destructive version of the Dylan language’s :drm:`concatenate`;
+   A destructive version of the Dylan language's :drm:`concatenate`;
    that is, one that might modify its first argument.
 
    :signature: concatenate! *sequence* #rest *more-sequences* => *result-sequence*
@@ -175,7 +175,7 @@ The extensions are:
 
    :description:
 
-     A destructive version of the Dylan language’s :drm:`concatenate`;
+     A destructive version of the Dylan language's :drm:`concatenate`;
      that is, one that might modify its first argument.
 
      It returns the concatenation of one or more sequences, in a
@@ -276,7 +276,7 @@ The extensions are:
    :specializer: <warning>
 
    Prints the message of a warning instance to the Open Dylan debugger
-   window’s messages pane.
+   window's messages pane.
 
    :signature: default-handler *warning* => *false*
 
@@ -286,10 +286,10 @@ The extensions are:
    :description:
 
      Prints the message of a warning instance to the Open Dylan debugger
-     window’s messages pane. It uses :func:`debug-message`, to do so.
+     window's messages pane. It uses :func:`debug-message`, to do so.
 
      This method is a required, predefined method in the Dylan language,
-     described on page 361 of the DRM as printing the warning’s message
+     described on page 361 of the DRM as printing the warning's message
      in an implementation-defined way. We document this method here
      because our implementation of it uses the function
      :func:`debug-message`, which is defined in the *common-dylan*
@@ -395,12 +395,12 @@ The extensions are:
    :parameter test: A Dylan expression *bnf*. A function of one argument
      called on the condition to test applicability of the handler.
    :parameter init-args: A Dylan expression *bnf*. A sequence of
-     initialization arguments used to make an instance of the handler’s
+     initialization arguments used to make an instance of the handler's
      condition class.
    :parameter handler: A Dylan expression *bnf*. A function of two
      arguments,
    :parameter condition: and *next-handler*, that is called on a
-     condition which matches the handler’s condition class and test
+     condition which matches the handler's condition class and test
      function.
 
    :description:
@@ -578,7 +578,7 @@ The extensions are:
 
      Returns a collection element that satisfies *predicate*.
 
-     This function is identical to Dylan’s :drm:`find-key`, but it
+     This function is identical to Dylan's :drm:`find-key`, but it
      returns the element that satisfies *predicate* rather than the key
      that corresponds to the element.
 
@@ -609,7 +609,7 @@ The extensions are:
      The class of conditions that take a format string, as defined by
      the DRM.
 
-     It is the superclass of Dylan’s :class:`<simple-condition>`.
+     It is the superclass of Dylan's :class:`<simple-condition>`.
 
    :seealso:
 
@@ -820,11 +820,11 @@ The extensions are:
      Returns the position at which *target* occurs in *sequence*.
 
      If *test* is supplied, *position* uses it as an equivalence
-     predicate for comparing *sequence* ’s elements to *target*. It should
+     predicate for comparing *sequence* 's elements to *target*. It should
      take two objects and return a boolean. The default predicate used is
      ``\==``.
 
-     The *skip* argument is interpreted as it is by Dylan’s :drm:`find-key`
+     The *skip* argument is interpreted as it is by Dylan's :drm:`find-key`
      function: *position* ignores the first *skip* elements that match
      *target*, and if *skip* or fewer elements satisfy *test*, it
      returns ``#f``.
@@ -929,7 +929,7 @@ The extensions are:
      string, this function returns *default*, if specified. If you do
      not give a value for *default*, this function signals an error.
 
-     This function is similar to C’s ``strtod`` function.
+     This function is similar to C's ``strtod`` function.
 
 .. function:: subclass
 
@@ -949,7 +949,7 @@ The extensions are:
      The ``subclass`` function is allowed to return an existing type if
      that type is type equivalent to the subclass type requested.
 
-     Without ``subclass``, methods on generic functions (such as Dylan’s
+     Without ``subclass``, methods on generic functions (such as Dylan's
      standard :drm:`make` and :drm:`as`) that take types as arguments
      are impossible to reuse without resorting to ad hoc techniques. In
      the language defined by the DRM, the only mechanism available for
@@ -995,7 +995,7 @@ The extensions are:
      equivalent.
 
      Where the :drm:`subtype?` test has not been sufficient to determine an
-     ordering for a method’s argument position, the following further
+     ordering for a method's argument position, the following further
      method-ordering rules apply to cases involving subclass types (note that
      a rule applies only when no preceding rule matches):
 
@@ -1337,7 +1337,7 @@ The extensions are:
      Executes *consequent* if *test* is true, and does nothing if *test*
      is false.
 
-     This macro behaves identically to Dylan’s standard :drm:`if`
+     This macro behaves identically to Dylan's standard :drm:`if`
      statement macro, except that there is no alternative flow of
      execution when the test is false.
 

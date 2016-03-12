@@ -198,7 +198,7 @@ the definition of macros for use as shared rewriting tools. For example:
     end macro;
 
 where the ``traced`` modifier causes macro expansion to be traced. For
-example, here’s the trace for ``user(1, 2, 3)``::
+example, here's the trace for ``user(1, 2, 3)``::
 
     { user } > user(1, 2, 3)
     { mcreverse } > mcreverse(1, 2, 3)

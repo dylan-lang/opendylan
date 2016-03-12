@@ -15,10 +15,10 @@ and have included those same adjectives in our language extension
 
 - ``not-inline`` Never inline this item.
 - ``default-inline`` (default)
-  Inline this item within a library, at the compiler’s discretion. Never
+  Inline this item within a library, at the compiler's discretion. Never
   inline a cross-library reference.
 - ``may-inline`` Inline this item within or between libraries, at the
-  compiler’s discretion.
+  compiler's discretion.
 - ``inline`` Inline this item wherever the compiler can do so.
 
 In addition, ``define constant`` and ``define function`` permit the

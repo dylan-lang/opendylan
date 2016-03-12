@@ -47,7 +47,7 @@ Registering objects for finalization
 
 Finalization works through cooperation with the garbage collector.
 Objects that are no longer referenced by the application that created
-them will eventually be discovered by Dylan’s garbage collector and are
+them will eventually be discovered by Dylan's garbage collector and are
 then available to be reclaimed.
 
 By default, the garbage collector reclaims such objects without
@@ -142,7 +142,7 @@ After finalization
 
 Once an object in the finalization queue has been finalized, it
 typically becomes available for reclamation by the garbage collector.
-Because it has been taken off the garbage collector’s finalization
+Because it has been taken off the garbage collector's finalization
 register, it will not be queued up for finalization again.
 
 .. note:: There are exceptions to this rule; see `The effects of
@@ -173,7 +173,7 @@ is no guarantee that the object will be added exactly *n* times.
 
 Note that this definition so general that it does not guarantee that any
 object will ever be added to be finalization queue. In practice, Common
-Dylan’s implementation guarantees that an object is added to the queue
+Dylan's implementation guarantees that an object is added to the queue
 at least once whenever an object has ben determined to be unreachable by
 the garbage collector.
 
@@ -218,7 +218,7 @@ If an object is both registered for finalization and is weakly referred
 to from a weak table, finalization occurs *first*, with weak references
 being removed afterwards. That is, reachability is defined in terms of
 strong references only, as far as finalization is concerned. Weak
-references die only when an object’s storage is finally reclaimed.
+references die only when an object's storage is finally reclaimed.
 
 For more on weak tables, see :doc:`Weak tables <../dylan/weak-tables>`.
 
@@ -447,7 +447,7 @@ finalization interface. These items are exported from the
      garbage collector, unless finalization made it reachable again.
      (This is called *resurrection* ; see `The effects of resurrecting
      objects`_.) Because the object has been taken off the garbage
-     collector’s finalization register, it will not be added to the
+     collector's finalization register, it will not be added to the
      finalization queue again, unless it is resurrected. However, it
      might still appear in the queue if it was registered more than
      once.

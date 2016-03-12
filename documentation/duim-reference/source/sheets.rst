@@ -20,12 +20,12 @@ of a window: either a control such as a gadget or pane, or a layout.
 - The essential component of a sheet is its region; the area of the
   screen that the sheet occupies.
 - In practice sheets always also have a transform that maps the
-  coordinate system of the sheet’s region to the coordinate system of
+  coordinate system of the sheet's region to the coordinate system of
   its parent, because in practice all sheets maintain a pointer to a
   parent sheet.
 - Sheets can be output-only (labels, for example), input-output (most
   gadgets are like this) or even, in principle, input-only (for
-  instance, you may need to provide some kind of simple drag’n’drop
+  instance, you may need to provide some kind of simple drag'n'drop
   target).
 
 Most of the sheet classes that you need to use on a day to day basis are
@@ -47,8 +47,8 @@ A sheet is the basic unit in a DUIM window. Inside any window, sheets
 are nested in a parent-child hierarchy. All sheets have the following
 attributes:
 
-- :gf:`sheet-region`, expressed in the sheet’s own coordinate system.
-- :gf:`sheet-transform`, which maps the sheet’s coordinate system to the
+- :gf:`sheet-region`, expressed in the sheet's own coordinate system.
+- :gf:`sheet-transform`, which maps the sheet's coordinate system to the
   coordinate system of its parent.
 - :gf:`sheet-parent`, which is ``#f`` if the sheet has no parent.
 - :gf:`sheet-mapped?`, which tells if the sheet is visible on a display,
@@ -68,14 +68,14 @@ attributes:
 - Methods to add, remove, and replace a child.
 - Methods to map over children.
 
-The functions that maintain the sheet’s region and transform are part of
-the *sheet-geometry* protocol. Functions that maintain a sheet’s parent
+The functions that maintain the sheet's region and transform are part of
+the *sheet-geometry* protocol. Functions that maintain a sheet's parent
 and children are part of the *sheet-genealogy* protocol. Note that the
 sheet geometry and genealogy protocols are independent. Adding a child
-to a sheet that is larger than its parent does not cause the parent’s
+to a sheet that is larger than its parent does not cause the parent's
 region to grow. Shrinking the region of a parent does not cause the
 children to shrink. You must maintain the region yourself, either by
-explicitly setting the sheet’s region and transform, or by using the
+explicitly setting the sheet's region and transform, or by using the
 layout facilities (:gf:`compose-space` and :gf:`allocate-space`).
 
 As a convenience, there are some glue functions that mediate between
@@ -133,7 +133,7 @@ particular type.
 
 You can put arbitrary Dylan objects onto the clipboard, and retrieve
 them within the same process. This gives you the ability to cut and
-paste more interesting pieces of an application within the application’s
+paste more interesting pieces of an application within the application's
 own domain than would normally be possible.
 
 The DUIM GUI test suite contains a demonstration of how to use the

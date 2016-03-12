@@ -9,7 +9,7 @@ Audience, goals, and purpose
 ============================
 
 This manual is intended for programmers using DUIM, and forms a complete
-reference for the Application Programmer’s Interface (API) for DUIM. You
+reference for the Application Programmer's Interface (API) for DUIM. You
 should also see `Building Applications using DUIM
 <http://opendylan.org/documentation/building-with-duim/>`_ for a description of
 how to start building applications using DUIM. At some points, the API

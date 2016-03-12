@@ -49,7 +49,7 @@ convenient "dialect" of Dylan, exported from the module ``common-dylan``:
 
 This section describes the common language extensions, that is,
 extensions made to the Dylan library as it is defined in DRM. These
-extensions are available to applications in the ``dylan`` library’s
+extensions are available to applications in the ``dylan`` library's
 ``dylan`` module.
 
 .. toctree::

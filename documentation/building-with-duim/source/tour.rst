@@ -82,7 +82,7 @@ necessarily all) gadget classes.
    label may be displayed next to the gadget.
 
    A label is usually a text string, but can often be an icon, such as
-   is often found on the buttons of an application’s toolbar.
+   is often found on the buttons of an application's toolbar.
 
    If a gadget does not have a label, ``gadget-label`` returns ``#f``.
 
@@ -366,7 +366,7 @@ and ``<radio-box>`` (groups of radio buttons). In addition, ``<push-box>``
 
 .. note:: You should be aware of the distinction between the use of the
    term "box" in DUIM, and the use of the term "box" in some other
-   development documentation (such as Microsoft’s interface guidelines).
+   development documentation (such as Microsoft's interface guidelines).
    *In the context of DUIM, a box always refers to a group containing
    several gadgets* (usually buttons). In other documentation, a box may
    just be a GUI element that looks like a box. For example, a *check
@@ -691,7 +691,7 @@ clicking on the column header in question.
 
 Because a table control displays more complex information than a list
 control, two init-keywords, ``headings:`` and ``generators:`` are used to
-create the contents of a table control, based on the control’s items.
+create the contents of a table control, based on the control's items.
 
 -  ``headings:`` This takes a sequence of strings that are used as the
    labels for each column in the control.
@@ -1268,7 +1268,7 @@ to support these properties.
    ``sheet-region`` for a gadget defines the area of the screen in which
    its callbacks are invoked, should an event occur.
 
-   The sheet region is expressed in the sheet’s own coordinate system.
+   The sheet region is expressed in the sheet's own coordinate system.
    It can be an instance of any concrete subclass of ``<region>``, but is
    usually represented by the region class ``<bounding-box>``.
 
@@ -1276,7 +1276,7 @@ to support these properties.
    rather than an absolute region of the screen.
 
 ``sheet-transform``
-   This maps the sheet’s coordinate system to the coordinate system of
+   This maps the sheet's coordinate system to the coordinate system of
    its parent. This is an instance of a concrete subclass of
    ``<transform>``.
 

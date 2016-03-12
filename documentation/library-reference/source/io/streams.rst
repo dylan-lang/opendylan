@@ -80,9 +80,9 @@ The Streams module provides:
 The Streams module does not address a number of related issues,
 including:
 
-- A standard object-printing package such as Smalltalk’s *printOn:* or
-  Lisp’s *print-object*, or a formatted printing facility such as
-  Lisp’s *format*. These facilities are provided by the
+- A standard object-printing package such as Smalltalk's *printOn:* or
+  Lisp's *print-object*, or a formatted printing facility such as
+  Lisp's *format*. These facilities are provided by the
   :doc:`Print <print>`, :doc:`Format <format>`,
   and :doc:`Format-out <format-out>` libraries. For convenience,
   the :doc:`Common Dylan <../common-dylan/index>` library also
@@ -162,7 +162,7 @@ stream.
 
 The following forms bind *stream* to an output stream over an empty
 string and create the string "I see!", using the function
-:gf:`stream-contents` to access all of the stream’s elements.
+:gf:`stream-contents` to access all of the stream's elements.
 
 .. code-block:: dylan
 
@@ -224,7 +224,7 @@ includes the index *start* but excludes the index *end*. This is
 consistent with standard Dylan functions over sequences, such as
 :drm:`copy-sequence`. The :gf:`read-to-end` function is one of a number
 of convenient utility functions for operating on streams and returns all
-the elements up to the end of the stream from the stream’s current
+the elements up to the end of the stream from the stream's current
 position.
 
 Streams, growing sequences, and object identity
@@ -246,7 +246,7 @@ To guarantee that other references to a sequence used in an output
 :class:`<sequence-stream>` will have access to any elements written to
 the sequence via the stream, supply a stretchy collection (such as a
 :drm:`<stretchy-vector>`) to :drm:`make`. A stream over a stretchy vector
-will use the same stretchy vector throughout the stream’s existence.
+will use the same stretchy vector throughout the stream's existence.
 
 For example:
 
@@ -265,7 +265,7 @@ vector:
 
 .. code-block:: dylan
 
-    (1, 2, 3, 4, 5, 6, 7, 8, 9, ’A’, ’B’, ’C’, ’D’, ’E’, ’F’)
+    (1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F')
 
 If a stretchy vector is not supplied, the result is different:
 
@@ -284,13 +284,13 @@ contents are unchanged, but the second value is a new vector:
 
 .. code-block:: dylan
 
-    (1, 2, 3, 4, 5, 6, 7, 8, 9, ’A’, ’B’, ’C’, ’D’, ’E’, ’F’)
+    (1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F')
 
 This difference arises because the output stream in the second example
 does not use a stretchy vector to hold the stream data. A vector of at
 least 15 elements is necessary to accommodate the elements written to
 the stream, but the vector supplied, *v*, can hold only 5. Since the
-stream cannot change *v* ’s size, it must allocate a new vector each
+stream cannot change *v* 's size, it must allocate a new vector each
 time it grows.
 
 Stream classes
@@ -364,7 +364,7 @@ when the stream is created. These init-keywords are discussed in more
 detail in `Options when creating file streams`_.
 
 The *buffer-size:* init-keyword can be used to suggest the size of a
-stream’s buffer. See :class:`<buffered-stream>`.
+stream's buffer. See :class:`<buffered-stream>`.
 
 The *element-type:* init-keyword specifies the type of the elements in
 the file named by *filename*. See `Options when creating file
@@ -387,19 +387,19 @@ The *if-exists:* init-keyword allows you to specify an action to take if
 the file named by *filename* already exists. The options are:
 
 - ``#f`` The file is opened with the stream position at the beginning.
-  This is the default when the stream’s direction is ``#"input"`` or
+  This is the default when the stream's direction is ``#"input"`` or
   ``#"input-output"``.
 - ``#"new-version"`` If the underlying file system supports file versioning,
-  a new version of the file is created. This is the default when the stream’s
+  a new version of the file is created. This is the default when the stream's
   direction is ``#"output"``.
   If the file system does not support file versioning, the default is
   ``#"replace"`` when the direction of the stream is ``#"output"``.
-- ``#"overwrite"`` Set the stream’s position to the beginning of the
+- ``#"overwrite"`` Set the stream's position to the beginning of the
   file, but preserve the current contents of the file. This is useful
   when the direction is ``#"input-output"`` or ``#"output"`` and you want
   to overwrite an existing file.
 - ``#"replace"`` Delete the existing file and create a new file.
-- ``#"append"`` Set the stream’s initial position to the end of the
+- ``#"append"`` Set the stream's initial position to the end of the
   existing file so that all new output occurs at the end of the file.
   This option is only useful if the file is writeable.
 - ``#"truncate"`` If the file exists, it is truncated, setting the size
@@ -411,9 +411,9 @@ take if the file named by *filename* does not exist. The options are:
 
 - ``#f`` No action.
 - ``#"signal"`` Signal a :class:`<file-does-not-exist-error>` condition. This is
-  the default when the stream’s direction is ``#"input"``.
+  the default when the stream's direction is ``#"input"``.
 - ``#"create"`` Create a new zero-length file. This is the default when
-  the stream’s direction is ``#"output"`` or ``#"input-output"``.
+  the stream's direction is ``#"output"`` or ``#"input-output"``.
 
 Because creating a file stream *always* involves an attempt to open the
 underlying file, the aforementioned error conditions will occur during
@@ -635,7 +635,7 @@ A buffered stream maintains some sort of buffer. All buffered streams
 use the sealed class :class:`<buffer>` for their buffers. You can
 suggest a buffer size when creating buffered streams, but normally you
 do not need to do so, because a buffer size that is appropriate for the
-stream’s source or destination is chosen for you.
+stream's source or destination is chosen for you.
 
 Instances of the class :class:`<buffer>` also contain some state
 information. This state information includes an index where reading or
@@ -857,7 +857,7 @@ Positionable stream protocol
 This section describes the protocol for positionable streams.
 
 A stream position can be thought of as a natural number that indicates
-how many elements into the stream the stream’s current location is.
+how many elements into the stream the stream's current location is.
 However, it is not always the case that a single integer contains enough
 information to reposition a stream. Consider the case of an
 "uncompressing" file stream that requires additional state beyond simply
@@ -1022,10 +1022,10 @@ are exported from the *streams* module.
      Protocol and the Buffer Access Protocol. It is not instantiable.
 
      Streams of this class support the *buffer-size:* init-keyword,
-     which can be used to suggest the size of the stream’s buffer.
+     which can be used to suggest the size of the stream's buffer.
      However, the instantiated stream might not use this value: it is
      taken purely as a suggested value. For example, a stream that uses
-     a specific device’s hardware buffer might use a fixed buffer size
+     a specific device's hardware buffer might use a fixed buffer size
      regardless of the value passed with the *buffer-size:*
      init-keyword.
 
@@ -1173,7 +1173,7 @@ are exported from the *streams* module.
      underlying system resources held on behalf of the stream.
 
      If *abort* is false, any pending data is forced out and
-     synchronized with the file’s destination. If *abort* is true, then
+     synchronized with the file's destination. If *abort* is true, then
      any errors caused by closing the file are ignored.
 
    :seealso:
@@ -1192,7 +1192,7 @@ are exported from the *streams* module.
    :description:
 
      Discards any pending input from *input-stream*, both buffered input
-     and, if possible, any input that might be at the stream’s source.
+     and, if possible, any input that might be at the stream's source.
 
      This operation is principally useful for "interactive" streams,
      such as TTY streams, to discard unwanted input after an error
@@ -1375,11 +1375,11 @@ are exported from the *streams* module.
 
    :description:
 
-     Forces any pending output from *output-stream* ’s buffers to its
+     Forces any pending output from *output-stream* 's buffers to its
      destination. Even if the stream is asynchronous, this call waits
      for all writes to complete. If *synchronize?* is true, also flushes
-     the operating system’s write cache for the file so that all data is
-     physically written to disk. This should only be needed if you’re
+     the operating system's write cache for the file so that all data is
+     physically written to disk. This should only be needed if you're
      concerned about system failure causing loss of data.
 
    :seealso:
@@ -1802,7 +1802,7 @@ are exported from the *streams* module.
 .. generic-function:: outer-stream
    :open:
 
-   Returns a stream’s wrapper stream.
+   Returns a stream's wrapper stream.
 
    :signature: outer-stream *stream* => *wrapping-stream*
 
@@ -1822,7 +1822,7 @@ are exported from the *streams* module.
 .. generic-function:: outer-stream-setter
    :open:
 
-   Sets a stream’s wrapper stream.
+   Sets a stream's wrapper stream.
 
    :signature: outer-stream-setter *wrapper-stream* *stream* => *wrapper-stream*
 
@@ -1924,7 +1924,7 @@ are exported from the *streams* module.
      Returns a sequence of the next *n* elements from *input-stream*.
 
      The type of the sequence returned depends on the type of the
-     stream’s underlying aggregate. For instances of
+     stream's underlying aggregate. For instances of
      :class:`<sequence-stream>`, the type of the result is given by
      :drm:`type-for-copy` of the underlying aggregate. For instances of
      :class:`<file-stream>`, the result is a vector that can contain
@@ -2059,7 +2059,7 @@ are exported from the *streams* module.
      of the stream.
 
      The type of the result string is chosen so that the string can
-     contain characters of *input-stream* ’s element type. For example,
+     contain characters of *input-stream* 's element type. For example,
      if the element type is `<byte-character>`_, the string will be a
      :drm:`<byte-string>`.
 
@@ -2092,7 +2092,7 @@ are exported from the *streams* module.
 
      Fills *string* with all the input from *input-stream* up to the
      next newline sequence. The *string* must be a general instance of
-     :drm:`<string>` that can hold elements of the stream’s element type.
+     :drm:`<string>` that can hold elements of the stream's element type.
 
      The input is written into *string* starting at the position
      *start*. By default, *start* is the start of the stream.
@@ -2167,12 +2167,12 @@ are exported from the *streams* module.
    :description:
 
      Returns a new sequence containing the elements of *input-stream*
-     from the stream’s current position to the first occurrence of
+     from the stream's current position to the first occurrence of
      *element*. The result does not contain *element*.
 
      The second return value is ``#t`` if the read terminated with
      *element*, or ``#f`` if the read terminated by reaching the end of
-     the stream’s source. The "boundary" element is consumed, that is,
+     the stream's source. The "boundary" element is consumed, that is,
      the stream is left positioned after *element*.
 
      The ``read-to`` function determines whether the element occurred by
@@ -2201,7 +2201,7 @@ are exported from the *streams* module.
    :description:
 
      Returns a sequence of all the elements up to, and including, the
-     last element of *input-stream*, starting from the stream’s current
+     last element of *input-stream*, starting from the stream's current
      position.
 
      The type of the result sequence is as described for :gf:`read`.
@@ -2286,7 +2286,7 @@ are exported from the *streams* module.
    :description:
 
      Positions *input-stream* after the first occurrence of *element*,
-     starting from the stream’s current position. Returns ``#t`` if the
+     starting from the stream's current position. Returns ``#t`` if the
      element was found, or ``#f`` if the end of the stream was
      encountered. When ``skip-through`` does not find *element*, it
      leaves *input-stream* positioned at the end.
@@ -2406,7 +2406,7 @@ are exported from the *streams* module.
 
    :description:
 
-     Returns a sequence that contains all of *positionable-stream* ’s
+     Returns a sequence that contains all of *positionable-stream* 's
      elements from its start to its end, regardless of its current
      position. The type of the returned sequence is as for :gf:`read`.
 
@@ -2415,7 +2415,7 @@ are exported from the *streams* module.
      external stream. It returns an error if applied to an input only
      stream. If clear-contents? is ``#t`` (the default for cases where
      the argument is defined), this function sets the size of the stream
-     to zero, and the position to the stream’s start. Thus the next call
+     to zero, and the position to the stream's start. Thus the next call
      to ``stream-contents`` will return only the elements written after
      the previous call to ``stream-contents``.
 
@@ -2429,16 +2429,16 @@ are exported from the *streams* module.
 
      The following forms bind *stream* to an output stream over an empty
      string and create the string "I see!", using the function
-     ``stream-contents`` to access all of the stream’s elements.
+     ``stream-contents`` to access all of the stream's elements.
 
      .. code-block:: dylan
 
        let stream = make(<byte-string-stream>,
                          direction: #"output");
-       write-element(stream, ’I’);
-       write-element(stream, ’ ’);
+       write-element(stream, 'I');
+       write-element(stream, ' ');
        write(stream, "see");
-       write-element(stream, ’!’);
+       write-element(stream, '!');
        stream-contents(stream);
 
    :seealso:
@@ -2477,7 +2477,7 @@ are exported from the *streams* module.
      This function differs from :gf:`stream-at-end?`. When
      :gf:`stream-input-available?` returns ``#t``, :gf:`read-element`
      will not block, but it may detect that it is at the end of the
-     stream’s source, and consequently inspect the *on-end-of-stream*
+     stream's source, and consequently inspect the *on-end-of-stream*
      argument to determine how to handle the end of stream.
 
    :seealso:
@@ -2590,7 +2590,7 @@ are exported from the *streams* module.
      The value returned can be either an instance of
      :class:`<stream-position>` or an integer. When the value is an
      integer, it is an offset from position zero, and is in terms of the
-     stream’s element type. For instance, in a Unicode stream, a
+     stream's element type. For instance, in a Unicode stream, a
      position of four means that four Unicode characters have been read.
 
    :example:
@@ -2651,7 +2651,7 @@ are exported from the *streams* module.
 
    :description:
 
-     Changes the stream’s position for reading or writing to *position*.
+     Changes the stream's position for reading or writing to *position*.
 
      When it is an integer, if it is less than zero or greater than
      *positionable-stream.stream-size* this function signals an error. For
@@ -2765,9 +2765,9 @@ are exported from the *streams* module.
 
    :description:
 
-     Forces any pending output from *output-stream*’s buffers to its
+     Forces any pending output from *output-stream*'s buffers to its
      destination. Before returning to its caller, ``synchronize-output``
-     also attempts to ensure that the output reaches the stream’s
+     also attempts to ensure that the output reaches the stream's
      destination before, thereby synchronizing the output destination
      with the application state.
 
@@ -2940,7 +2940,7 @@ are exported from the *streams* module.
        most recently read from the stream.
      - To call ``unread-element`` twice in succession.
      - To unread an element if the stream is at its initial position.
-     - To unread an element after explicitly setting the stream’s position.
+     - To unread an element after explicitly setting the stream's position.
 
    :seealso:
 
@@ -3200,7 +3200,7 @@ are exported from the *streams* module.
    :description:
 
      Writes the elements of *sequence* to *output-stream*, starting at
-     the stream’s current position.
+     the stream's current position.
 
      The elements in *sequence* are accessed in the order defined by the
      forward iteration protocol on :drm:`<sequence>`. This is effectively
@@ -3218,29 +3218,29 @@ are exported from the *streams* module.
 
      If the stream is positionable, and it is not positioned at its end,
      ``write`` overwrites elements in the stream and then advances the
-     stream’s position to be beyond the last element written.
+     stream's position to be beyond the last element written.
 
      *Implementation Note:* Buffered streams are intended to provide a
      very efficient implementation of ``write``, particularly when
      sequence is an instance of :drm:`<byte-string>`, :drm:`<unicode-string>`,
-     :class:`<byte-vector>`, or :class:`<buffer>`, and the stream’s element type is
+     :class:`<byte-vector>`, or :class:`<buffer>`, and the stream's element type is
      the same as the element type of sequence.
 
    :example:
 
      The following forms bind *stream* to an output stream over an empty
      string and create the string "I see!", using the function
-     :gf:`stream-contents` to access all of the stream’s
+     :gf:`stream-contents` to access all of the stream's
      elements.
 
      .. code-block:: dylan
 
        let stream = make(<byte-string-stream>,
                          direction: #"output");
-       write-element(stream, ’I’);
-       write-element(stream, ’ ’);
+       write-element(stream, 'I');
+       write-element(stream, ' ');
        write(stream, "see");
-       write-element(stream, ’!’);
+       write-element(stream, '!');
        stream-contents(stream);
 
    :seealso:
@@ -3261,10 +3261,10 @@ are exported from the *streams* module.
 
    :description:
 
-     Writes *element* to *output-stream* at the stream’s current
+     Writes *element* to *output-stream* at the stream's current
      position. The output-stream must be either ``#"output"`` or
      ``#"input-output"``. It is an error if the type of *element* is
-     inappropriate for the stream’s underlying aggregate.
+     inappropriate for the stream's underlying aggregate.
 
      If the stream is positionable, and it is not positioned at its end,
      ``write-element`` overwrites the element at the current position and
@@ -3273,17 +3273,17 @@ are exported from the *streams* module.
    :example:
 
      The following forms bind *stream* to an output stream over an empty
-     string and create the string "I do", using the function :gf:`stream-contents` to access all of the stream’s
+     string and create the string "I do", using the function :gf:`stream-contents` to access all of the stream's
      elements.
 
      .. code-block:: dylan
 
        let stream = make(<byte-string-stream>,
                          direction: #"output");
-       write-element(stream, ’I’);
-       write-element(stream, ’ ’);
-       write-element(stream, ’d’);
-       write-element(stream, ’o’);
+       write-element(stream, 'I');
+       write-element(stream, ' ');
+       write-element(stream, 'd');
+       write-element(stream, 'o');
        stream-contents(stream);
 
    :seealso:

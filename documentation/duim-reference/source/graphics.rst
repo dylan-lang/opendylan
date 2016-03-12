@@ -60,14 +60,14 @@ chapter.
   plane.
 - *Mediums* In this chapter, we use a medium as a destination for
   output. The medium has a drawing plane, two designs (called the
-  medium’s foreground and background), a transformation, a clipping
+  medium's foreground and background), a transformation, a clipping
   region, a line style, and a text style. There are per-medium,
   dynamically scoped, default drawing options. Different medium classes
   are provided to allow you to draw on different sorts of devices, such
   as displays, printers, and virtual devices such as bitmaps.
 - *Sheets* Many sheets can be used for doing output, so the drawing
   functions can also take a sheet as the output argument. In this case,
-  drawing function "trampolines" to the sheet’s medium. So, while the
+  drawing function "trampolines" to the sheet's medium. So, while the
   functions defined here are specified to be called on mediums, they
   can also be called on sheets.
 - *Streams* A stream is a special kind of sheet that implements the
@@ -147,7 +147,7 @@ example:
 Drawing computations are always carried out "in color", even if the
 viewport is only capable of displaying black and white. In other words,
 the DUIM drawing model is always the fully general model, even if an
-implementation’s color resolution is limited enough that full use of the
+implementation's color resolution is limited enough that full use of the
 model is not possible. Of course an application that fundamentally
 depends on color will not work well on a viewport that cannot display
 color. Other applications will degrade gracefully.

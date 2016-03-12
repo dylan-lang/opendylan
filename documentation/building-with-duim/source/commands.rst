@@ -87,7 +87,7 @@ This is done in the clause
     define command-table *file-command-table* (*global-command-table*)
 
 above. This is analogous to the way that the superclasses of any frame
-class are listed in the frame’s definition.
+class are listed in the frame's definition.
 
 Any items defined by the command tables which are to be inherited are
 automatically added to the command table being defined.

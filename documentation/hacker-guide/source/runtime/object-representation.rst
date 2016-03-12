@@ -1,7 +1,7 @@
 Object Representation
 =====================
 
-Harlequin’s implementation achieves dynamic typing of Dylan objects by
+Harlequin's implementation achieves dynamic typing of Dylan objects by
 associating the type with an object based on tagging.
 
 In many circumstances, the Dylan compiler can statically determine the

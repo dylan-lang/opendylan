@@ -204,7 +204,7 @@ defining a gadget class.
 The name is used to refer to the pane, both from within the frame
 definition itself, and from other code. The pane definition includes
 code to create the interface element. A pane specification also includes
-a place to declare a local variable that can be used within the pane’s
+a place to declare a local variable that can be used within the pane's
 definition to refer to the surrounding frame.
 
 The following code fragment defines the two buttons, the text field, the
@@ -347,7 +347,7 @@ with the following complete definition of a frame class.
 
 Note the addition of a ``title:`` keyword at the end of the definition.
 This can be used to give any instance of the frame class a title that is
-displayed in the title bar of the frame’s window when it is mapped to
+displayed in the title bar of the frame's window when it is mapped to
 the screen.
 
 At this stage, the application still has no real functionality, and
@@ -421,7 +421,7 @@ simple tool bar containing two buttons is as follows:
     tool-bar (frame) frame.task-tool-bar;
 
 A tool bar that only contains two buttons is on the lean side, however,
-so let’s add two more buttons to open a file and save a file to disk.
+so let's add two more buttons to open a file and save a file to disk.
 
 .. code-block:: dylan
 
@@ -452,7 +452,7 @@ instance of :drm:`<string>`.
 
 So now the application has a tool bar. Somewhat oddly, it does not yet
 have a menu bar or a system of menus — most tool bars represent a subset
-of the commands already available from the application’s menu system. A
+of the commands already available from the application's menu system. A
 menu system is added to the task list manager in :doc:`menus`.
 
 Adding a status bar

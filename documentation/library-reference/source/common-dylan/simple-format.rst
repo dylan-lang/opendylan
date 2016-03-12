@@ -9,7 +9,7 @@ Common Dylan provides several libraries relevant to formatting and
 printing strings, or otherwise using strings for output. These libraries
 include :doc:`format <../io/format>`, :doc:`format-out <../io/format-out>`,
 :doc:`print <../io/print>`, and :doc:`standard-io <../io/standard-io>`. The
-facilities provided by these libraries will be excess to many users’
+facilities provided by these libraries will be excess to many users'
 requirements, who may prefer to use the ``simple-format`` module that the
 ``common-dylan`` library exports.
 

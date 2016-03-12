@@ -44,7 +44,7 @@ ways:
 -  Click the Edit Source (
 
 -  Choose a file name from the *File* menu on a project window, an
-   existing editor window, or the main window. (The main window’s *File*
+   existing editor window, or the main window. (The main window's *File*
    menu only lists files if they have been viewed previously.)
 -  Choose *Edit Source* from the popup (shortcut) menu for an object.
 
@@ -81,11 +81,11 @@ separator, or perform some other operation that forces the editor to
 redisplay.
 
 If you have opened a source file in the editor by double-clicking on an
-item in the debugger’s source pane, Open Dylan positions the
+item in the debugger's source pane, Open Dylan positions the
 insertion point at the line containing the problem. If the problem
 identified by the debugger spans a range of lines, the entire range is
 highlighted in the editor. Likewise, if the problem is an undefined
-binding and you have opened the source from the project window’s
+binding and you have opened the source from the project window's
 Warnings tab page, the binding in question is highlighted.
 
 Changing the editor options and layout
@@ -100,7 +100,7 @@ this default (and others). For details about the Editor Options dialog,
 its tab pages and settings, see
 ` <../../../../../../ldisk2/doc/dylan/product/guide/environment/src/appx.htm#52521>`_.
 
-The editor offers a number of different viewing options for the window’s
+The editor offers a number of different viewing options for the window's
 layout.
 
 -  The status bar, located at the bottom of the editor window, lets you
@@ -114,14 +114,14 @@ layout.
    :doc:`coloring`, shows you where and how to optimize
    your code and is controlled by **View > Color Dispatch Optimizations**.
 
-The editor window’s context: the active project
+The editor window's context: the active project
 -----------------------------------------------
 
 In an editor window, the toolbar and menu commands act upon the
 application of the active project. For instance, the **Project**,
 **Build**, and **Application** menus are not available in the editor
 if the source file being edited is not part of the active project—the
-project whose name is visible in the main window’s drop-down list. See
+project whose name is visible in the main window's drop-down list. See
 :ref:`active-project` for more details.
 
 Menu commands and special features
@@ -151,12 +151,12 @@ placed in a class name, **Object > Edit Subclasses** opens an editor
 window to display a composite buffer containing the subclasses of that
 class.
 
-The editor’s **Project** menu contains two special commands beyond the
+The editor's **Project** menu contains two special commands beyond the
 standard Project commands on other Dylan windows:
 
 Compile Selection
    Allows you to compile a selection of code independently while an
-   application is running. This is one of the editor’s special
+   application is running. This is one of the editor's special
    interactive capabilities. For details and an example of interactive
    development using Compile Selection, see
    `Using the editor for interactive development`_.
@@ -167,13 +167,13 @@ Macroexpand Selection
    the actions it performs. Use **Edit > Undo** (or the toolbar/keyboard
    equivalents) to return to the original contents of the buffer.
 
-The editor’s **Application** menu is the same as for the debugger or the
+The editor's **Application** menu is the same as for the debugger or the
 project window, except that it contains extra breakpoint commands. These
 breakpoint commands are also part of the shortcut menu. See
 :ref:`breakpoint-options` for details.
 
 If you have Microsoft Visual SourceSafe installed, the editor displays
-a **SourceSafe** menu. This menu is Open Dylan’s interface to source
+a **SourceSafe** menu. This menu is Open Dylan's interface to source
 control. For more information, see `Source control with Visual SourceSafe`_.
 
 Shortcut menus
@@ -191,7 +191,7 @@ commands in the basic shortcut menu, this menu contains the following
 commands:
 
 Describe
-   Opens a window that lists the element’s module, library,
+   Opens a window that lists the element's module, library,
    source file, and describes the element.
 
 Browse
@@ -281,12 +281,12 @@ Source control with Visual SourceSafe
 =====================================
 
 To simplify the process of working with files under source control, the
-Open Dylan editor provides an interface to Microsoft’s Visual
+Open Dylan editor provides an interface to Microsoft's Visual
 SourceSafe, an external source code control system. This section
 describes the editor interface to Visual SourceSafe. (For information on
 using Visual SourceSafe, see Visual SourceSafe documentation.)
 
-What is the editor’s source control interface?
+What is the editor's source control interface?
 ----------------------------------------------
 
 A source code control system provides one or more repositories
@@ -303,7 +303,7 @@ more developers are making changes to the same files at the same time.
 The Open Dylan source control interface provides access to a subset
 of Visual SourceSafe features, which are described in
 `The SourceSafe menu commands`_. To perform more complex actions, you must use
-the source control system’s native interface.
+the source control system's native interface.
 
 Open Dylan detects a Visual SourceSafe installation on a machine
 and automatically makes its interface to source control available by
@@ -325,15 +325,15 @@ The **SourceSafe** menu provides the following commands:
 
 Get Latest Version…
    Copies the latest version of a file in the database onto the
-   developer’s machine.
+   developer's machine.
 
 Check Out…
    Copies the latest version of a file in the database onto
-   the developer’s machine. In addition, the database is updated to note
+   the developer's machine. In addition, the database is updated to note
    that the file is being edited by the developer.
 
 Check In…
-   Copies a file from the developer’s machine back into the
+   Copies a file from the developer's machine back into the
    database, creating a new version of the file, and notes that the file
    is no longer being edited by the developer.
 
@@ -341,7 +341,7 @@ Undo Check Out…
    Notes in the database that a file is no longer being edited by the
    developer and does not change the latest version of the file. In
    addition, the latest version of the file is copied from the database
-   onto the developer’s machine; any changes the developer may have made
+   onto the developer's machine; any changes the developer may have made
    to the local copy of the file are abandoned.
 
 Merge with Source Control…
@@ -352,7 +352,7 @@ Merge with Source Control…
 
 Add to Source Control…
    Creates the first version of a file in the source control database
-   using the copy on the developer’s machine as the initial content.
+   using the copy on the developer's machine as the initial content.
 
 Remove from Source Control…
    Removes a file and its history from the database.
@@ -363,12 +363,12 @@ Show History…
 
 Show Differences…
    Compares the latest version of a file in the database against a copy
-   on the developer’s machine and displays the differences, if any. This
+   on the developer's machine and displays the differences, if any. This
    command can be used to check to see if others may have made changes
-   to a file that should be merged into the developer’s copy before it
+   to a file that should be merged into the developer's copy before it
    is checked into the database.
 
-Using the editor’s source control interface
+Using the editor's source control interface
 -------------------------------------------
 
 The first time you choose one of the **SourceSafe** menu items, the editor
@@ -382,7 +382,7 @@ prompts you for the name of the SourceSafe database, as shown in
 
    The Select Database dialog.
 
-Your site’s Visual SourceSafe administrator supplies the name of your
+Your site's Visual SourceSafe administrator supplies the name of your
 SourceSafe database. (The Open Dylan interface offers the name of
 the last database used in the Visual SourceSafe explorer as the
 default.)

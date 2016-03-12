@@ -52,7 +52,7 @@ implementation.
      The adjectives permitted depend on the implementation.
 
      The *parameter-list* describes the number and types of the
-     function’s arguments and return values. It is an error to supply
+     function's arguments and return values. It is an error to supply
      ``#next`` in the parameter list, and there is no implicit ``#next``
      parameter.
 

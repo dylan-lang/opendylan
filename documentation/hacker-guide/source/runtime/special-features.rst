@@ -126,7 +126,7 @@ The current implementation of multiple values supports Common Lisp
 semantics. It is about to be replaced by a new version which
 supports the new Dylan semantics.
 
-Harlequin’s current implementation uses a register to return a single
+Harlequin's current implementation uses a register to return a single
 Dylan value, as this is the only value that is used by almost all
 callers. In addition, each function returns a count of the number of
 values being returned. This count can be examined by the caller, if
@@ -140,7 +140,7 @@ returned, respectively. If multiple values are being returned, then the
 count of the values is stored in a global (thread-local) location.
 
 Documentation for the new version will be available shortly. Until then,
-here’s an overview:
+here's an overview:
 
 Functions which return a fixed number of return values just return those
 values, without returning a count. The first few values will be returned

@@ -8,7 +8,7 @@ Open Dylan.
 Starting work with Open Dylan
 =============================
 
-In this section, you will start Open Dylan’s development
+In this section, you will start Open Dylan's development
 environment, and choose one of several supplied examples to work with.
 
 #. Start the Open Dylan environment.
@@ -202,7 +202,7 @@ executable for Reversi.
 
 If we click **Yes** in the link warning dialog, an executable is created;
 if we click **No**, building stops. In either case, the serious warnings
-are recorded in the project window’s Warnings page.
+are recorded in the project window's Warnings page.
 
 Click **Yes** in the link warning dialog.
 
@@ -213,7 +213,7 @@ Running Reversi
 
 Now that the application is built, we can run it. The project window
 menu command **Application > Start** runs the most recently built
-executable for that window’s project.
+executable for that window's project.
 
 Choose **Application > Start** and the Reversi application window appears.
 
@@ -245,7 +245,7 @@ project window, as we have just seen. This menu command is also
 available in the Open Dylan debugger and editor.
 
 The second way to run the application is to click the "Start/Resume"
-button (|image0|) on the project window’s toolbar. Again, we can do
+button (|image0|) on the project window's toolbar. Again, we can do
 this in the Open Dylan debugger and editor too. And again like
 **Application > Start**, running an application this way connects it to
 the debugger, so that any unhandled errors are caught and we can pause
@@ -275,7 +275,7 @@ name in which they appear. Definitions are the Dylan name bindings
 created by compiling top-level definitions in the source code that the
 file contains. Thus ``define class`` causes a class name to appear in
 the list of definitions, ``define method`` a method name, and so on, but
-the names of accessors on a class’s slots do not appear.
+the names of accessors on a class's slots do not appear.
 
 The expressions in the list are, roughly speaking, anything that appears
 at top level in the source file but is not a definition. Typically such
@@ -321,7 +321,7 @@ By default, Open Dylan projects are built into executable
 applications (.EXE files), but with a simple setting we make them be
 built into dynamic-link libraries (.DLL files).
 
-This option is just one that we can change in the project window’s
+This option is just one that we can change in the project window's
 **Project > Settings** dialog. From that dialog we can also set compiler
 optimizations, project version information, and command-line arguments
 for console applications. For more details, see :ref:`project-settings`.
@@ -346,7 +346,7 @@ we must add it to the project.
    window.
 
    You can also tell the environment to terminate a running application
-   using **Application > Stop** or the project window’s stop button (|image3|).
+   using **Application > Stop** or the project window's stop button (|image3|).
    When you ask to terminate an application in this way, the environment
    asks you for confirmation, to prevent application state being lost by
    accident.
@@ -393,7 +393,7 @@ we must add it to the project.
    development, when you want to rebuild your application after a small
    change in order to test its effects. Open Dylan automatically works
    out which files it needs to recompile and which it does not. The
-   compiler also updates a project’s database during incremental
+   compiler also updates a project's database during incremental
    compilation.
 
    When compilation of *piece-shapes.dylan* is complete, there are still
@@ -416,7 +416,7 @@ we must add it to the project.
    .. figure:: images/othmen.png
       :align: center
 
-      The Reversi application’s *Options* menu after the code changes.
+      The Reversi application's *Options* menu after the code changes.
 
 #. Choose **Squares**.
 

@@ -48,9 +48,9 @@ reasons. In practice, the disadvantages will be small because:
 -  Many arguments to functions are expected to be simple expressions
    (like constants or variable references) - so order of evaluation does
    not normally matter.
--  On a RISC implementation, we won’t want to push each argument anyway
+-  On a RISC implementation, we won't want to push each argument anyway
    - instead it will be more efficient to allocate enough stack space
-   for the call, and store each argument when it’s available. This works
+   for the call, and store each argument when it's available. This works
    well with a conservative GC - but it might be poor with a total GC.
 
 This calling convention has the following advantages:

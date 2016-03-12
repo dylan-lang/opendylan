@@ -59,7 +59,7 @@ which is a subclass of :drm:`<object>`. They are shown in the following table
   fashion. Because the fonts available on a particular computer may not
   necessarily match the fonts available on the computer of the
   programmer, DUIM provides a portable model which allows the most
-  suitable font on the user’s machine to be chosen at run-time.
+  suitable font on the user's machine to be chosen at run-time.
 - :class:`<device-font>` The protocol class for device-specific fonts, that
   is, fonts that are resident on a particular device. This is a direct
   subclass of :class:`<text-style>`.
@@ -92,7 +92,7 @@ Two error classes are provided by the DUIM-DCs library, both of which
 are immediate subclasses of :class:`<error>`.
 
 - :class:`<color-not-found>` This class of error is signalled when a color is
-  requested but is not available on the user’s system.
+  requested but is not available on the user's system.
 - :class:`<palette-full>` This class of error is signalled when an attempt is
   made to add a color to a palette, and the palette cannot accept any
   more colors. The number of colors in a palette depends on the color
@@ -590,7 +590,7 @@ are exported from the *duim-dcs* module.
 .. generic-function:: brush-ts-x
 
    Returns the value of the *x* coordinate that is used to align the
-   brush’s tile or stipple pattern.
+   brush's tile or stipple pattern.
 
    :signature: brush-ts-x *brush* => *value*
 
@@ -610,7 +610,7 @@ are exported from the *duim-dcs* module.
 .. generic-function:: brush-ts-y
 
    Returns the value of the *y* coordinate that is used to align the
-   brush’s tile or stipple pattern.
+   brush's tile or stipple pattern.
 
    :signature: brush-ts-y *brush* => *value*
 
@@ -1901,7 +1901,7 @@ are exported from the *duim-dcs* module.
      components is ``#f``, and the size component is not a relative size (that
      is, neither ``#"smaller"`` nor ``#"larger"``).
 
-     If *size* is an integer, it represents the size of the font in printer’s
+     If *size* is an integer, it represents the size of the font in printer's
      points.
 
      Implementations are permitted to extend legal values for family, face,
@@ -2420,7 +2420,7 @@ are exported from the *duim-dcs* module.
      portability for control.
 
      If ``size:`` is specified as an integer, then it represents the font size
-     in printer’s points.
+     in printer's points.
 
    :operations:
 

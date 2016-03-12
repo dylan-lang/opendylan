@@ -11,7 +11,7 @@ The DRM defines an :drm:`interchange format for Dylan source files <Dylan_Interc
 but does not define an interchange format for Dylan libraries.
 Without such an agreed format, different Dylan development environments
 would find it difficult to import and build libraries developed using
-another Dylan vendor’s environment. It would also be impossible to
+another Dylan vendor's environment. It would also be impossible to
 automate the process of importing a library into another environment.
 
 LID solves this problem. It allows you to describe Dylan library sources
@@ -122,7 +122,7 @@ LID file keyword
 
     Author: *arbitrary text*
 
-The name of the library’s author.
+The name of the library's author.
 
 Major-Version:
 --------------
@@ -170,7 +170,7 @@ LID file keyword
 
 Any additional comments about the library.
 
-Open Dylan’s LID extensions
+Open Dylan's LID extensions
 ===========================
 
 This section contains extensions to LID that Open Dylan supports.
@@ -393,7 +393,7 @@ base address for the library. However, it is possible for more than one
 library to end up with the same default base address. If an application
 uses any of these libraries, all but one of them will have to be
 relocated when the application starts. This process is automatic, but
-cuts down on the amount of sharing, increases your application’s memory
+cuts down on the amount of sharing, increases your application's memory
 footprint, and slows down load time. In such circumstances, you may want
 to give one or more libraries an explicit base address using this
 keyword.

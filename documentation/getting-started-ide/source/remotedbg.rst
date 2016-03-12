@@ -86,12 +86,12 @@ almost every respect to using your local machine. You can use the three
 menu items **Application > Start**, **Application > Debug** and
 **Application > Interact** to launch the application in the normal way.
 The only difference is that for remote startup you must specify a remote
-machine in the project’s debug settings.
+machine in the project's debug settings.
 
 #. Select **Project > Settings…** and select the Debug page.
 
    In the "Remote machine" section, an option box displays the name of the
-   machine on which the project’s application is to be run. By default, the
+   machine on which the project's application is to be run. By default, the
    selection will be the local machine. Before you can select a remote
    machine, you must first establish a debugging connection.
 
@@ -155,7 +155,7 @@ does not know about the process and therefore it has no visible presence
 in the environment.
 
 Open Dylan allows you to "attach" to such a running process, thereby
-bringing it under Open Dylan’s control just as if it had been started
+bringing it under Open Dylan's control just as if it had been started
 by the environment. It is very simple to do this:
 
 #. Open the project whose application, DLL, or control is running.

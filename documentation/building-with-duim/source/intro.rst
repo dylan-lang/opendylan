@@ -12,7 +12,7 @@ portable facilities for constructing user interfaces.
 While DUIM provides an API to user interface facilities for the Dylan
 application programmer, it is not itself a window system toolkit. DUIM
 uses the service of the underlying window system and UI toolkits as much
-as possible. DUIM’s API is intended to insulate the programmer from most
+as possible. DUIM's API is intended to insulate the programmer from most
 of the complexities of portability, since the DUIM application need only
 deal with DUIM objects and functions regardless of their operating
 platform (that is, the combination of Dylan, the host computer, and the

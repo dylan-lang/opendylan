@@ -8,12 +8,12 @@ The Win32 API Libraries
 Introduction
 ============
 
-This chapter is about Open Dylan’s set of Win32 API interface
+This chapter is about Open Dylan's set of Win32 API interface
 libraries. These libraries provide a low-level Dylan interface to the
 Win32 API in Microsoft Windows and Microsoft Windows NT.
 
 Each Dylan library is a simple translation of Win32 API header files
-into a set of interface declarations from Open Dylan’s C-FFI
+into a set of interface declarations from Open Dylan's C-FFI
 library. So you can write Windows applications in Dylan by using the
 same functions and types as you would in C, albeit with slightly
 modified names so that they conform to Dylan naming conventions and
@@ -21,7 +21,7 @@ requirements.
 
 The Open Dylan Win32 API has been constructed from several Dylan
 libraries. Win32 functionality is divided among these libraries,
-matching the contents of Microsoft’s DLLs, allowing Dylan applications
+matching the contents of Microsoft's DLLs, allowing Dylan applications
 to avoid references to DLLs they do not need to use.
 
 With the exception of changes necessitated by Dylan naming conventions
@@ -55,7 +55,7 @@ Win32-Common
   *KERNEL32.DLL* and declared in *WINBASE.H* (files, pipes, semaphores,
   atoms, time, and so on) and *WINNLS.H* (National Language Support).
 - *Note:* This library does not provide thread support. Thread support
-  is being handled at a higher level by Dylan’s own Threads library.
+  is being handled at a higher level by Dylan's own Threads library.
   See the *Core Features* manual for details.
 - Win32-GDI Graphics Device Interface, drawing graphics and text, and
   printing. Corresponds to *WINGDI.H* and *GDI32.DLL*.
@@ -90,7 +90,7 @@ Content and organization of the Win32 API libraries
 ===================================================
 
 The Open Dylan Win32 API libraries are modeled closely upon
-Microsoft’s Win32 C libraries. Most names available in the Dylan
+Microsoft's Win32 C libraries. Most names available in the Dylan
 libraries are the same as those available in the C libraries, though of
 course to conform to Dylan naming conventions and restrictions, many of
 the C names have been translated.
@@ -470,7 +470,7 @@ Win32s as well as NT and Windows 95.
 
 The program can be terminated, with an exit code, by calling either the
 Win32 ``ExitProcess`` function or the ``exit-application`` function in
-Open Dylan’s System library. The latter method is preferred if the
+Open Dylan's System library. The latter method is preferred if the
 application might actually be run as part of another process.
 
 The start of an application program might look something like this:

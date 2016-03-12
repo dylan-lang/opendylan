@@ -1008,7 +1008,7 @@ are exported from the *duim-frames* module.
      The *action* argument can take any of the following values:
 
      - ``#"complete"`` Completes the input as much as possible, except that if
-       the user’s input exactly matches one of the possibilities, the
+       the user's input exactly matches one of the possibilities, the
        shorter possibility is returned as the result, even if it is a left
        substring of another possibility.
      - ``#"complete-limited"`` Completes the input up to the next partial
@@ -1074,7 +1074,7 @@ are exported from the *duim-frames* module.
      The *action* argument can take any of the following values:
 
      - ``#"complete"`` Completes the input as much as possible, except that if
-       the user’s input exactly matches one of the possibilities, the
+       the user's input exactly matches one of the possibilities, the
        shorter possibility is returned as the result, even if it is a left
        substring of another possibility.
      - ``#"complete-limited"`` Completes the input up to the next partial
@@ -3018,7 +3018,7 @@ are exported from the *duim-frames* module.
      the whole application when they are mapped, and the user can interact
      with other frames in the application normally. Modal frames, on the
      other hand, behave like a :class:`<dialog-frame>`,
-     restricting the user’s interaction with other frames in the application
+     restricting the user's interaction with other frames in the application
      until the modal frame has been dismissed.
 
      The ``default-button:`` init-keyword is used to specify which button is
@@ -3769,7 +3769,7 @@ are exported from the *duim-frames* module.
      Returns the controlling frame for *frame*. The controlling frame for
      any hierarchy of existing frames is the one that owns the thread in
      which the frames are running. Thus, the controlling frame for *frame* is
-     not necessarily its direct owner: it may be the owner of *frame* ’s
+     not necessarily its direct owner: it may be the owner of *frame* 's
      owner, and so on, depending on the depth of the hierarchy.
 
 .. generic-function:: frame-palette

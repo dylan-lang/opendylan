@@ -207,7 +207,7 @@ are exported from the *duim-layouts* module.
 
      You specify where on the screen the pane is to be displayed using the
      *region:* init-keyword. The region specified should be relative to the
-     top left corner of the pane’s parent, since the pane must be displayed
+     top left corner of the pane's parent, since the pane must be displayed
      within the confines of its parent.
 
      If you wish the location of the pane to be transformed in some way, use
@@ -960,7 +960,7 @@ are exported from the *duim-layouts* module.
      children. Compare this to fixed layouts, where the sizes of any children
      are not constrained in this way.
 
-     Because the size of a pinboard layout’s children are constrained,
+     Because the size of a pinboard layout's children are constrained,
      pinboard layouts are most useful for placing sheets randomly in a
      layout, since DUIM ensures that the sheets remain a sensible size for
      their contents.
