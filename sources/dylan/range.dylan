@@ -29,6 +29,7 @@ define sealed class <infinite-range> (<range>)
 end class <infinite-range>;
 
 define class <infinite-range-error> (<simple-error>) end;
+define class <range-size-mismatch-error> (<simple-error>) end;
 
 
 /// initialization
@@ -75,11 +76,15 @@ define method make
     else
       if (size)
         if (to)
-          let new-to = from + by * (size - 1);
-          if (abs(new-to) <= abs(to))
-            to := new-to
+          if (size ~= floor/(to + by - from, by))
+            error(make(<range-size-mismatch-error>,
+                       format-string: "Range size mismatch. Specified: %=, inferred: %=",
+                       format-arguments: list(size, floor/(to + by - from, by))));
           else
-            size := floor/(to + by - from, by);
+            let new-to = from + by * (size - 1);
+            when (abs(new-to) < abs(to))
+              to := new-to;
+            end when;
           end if;
         else
           to := from + by * (size - 1);
