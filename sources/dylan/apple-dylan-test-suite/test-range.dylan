@@ -50,11 +50,11 @@ end test range-4;
 // not except through and up-to in a single expression
 //
 define test range-5 (description: "Through:, by:, and size:")
-  check-true("", range(to: 6, by: 2, size: 3) = #(0, 2, 4));
-  check-true("", range(to: 6, by: 2, size: 5) = #(0, 2, 4, 6));
-  check-true("", range(to: 6, by: 2, size: 3) = #(0, 2, 4));
-  check-true("", range(to: 6, by: -2, size: 5) = #());
-  check-true("", range(to: -6, by: -2, size: 3) = #(0, -2, -4));
+  check-condition("", <error>, range(to: 6, by: 2, size: 3));
+  check-condition("", <error>, range(to: 6, by: 2, size: 3));
+  check-condition("", <error>, range(to: -6, by: -2, size: 3));
+  check-condition("", <error>, range(to: 6, by: 2, size: 5));
+  check-condition("", <error>, range(to: 6, by: -2, size: 5));
 end test range-5;
 
 // member? range
