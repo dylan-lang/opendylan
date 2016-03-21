@@ -47,6 +47,10 @@ define test range-4 (description: "BY:")
 end test range-4;
 
 define test range-5 (description: "to:, by:, and size:")
+  check-true("", range(to: 5, by: 2, size: 3) = #(0, 2, 4));
+  check-true("", range(to: 6, by: 2, size: 4) = #(0, 2, 4, 6));
+  check-true("", range(to: -5, by: -2, size: 3) = #(0, -2, -4));
+  check-true("", range(to: -6, by: -2, size: 4) = #(0, -2, -4, -6));
   check-condition("", <error>, range(to: 6, by: 2, size: 3));
   check-condition("", <error>, range(to: 6, by: 2, size: 3));
   check-condition("", <error>, range(to: -6, by: -2, size: 3));
