@@ -78,12 +78,12 @@ define test copy-sequence-range-0
   check-true("", instance?(range(to: 5).copy-sequence, <range>));
 end test copy-sequence-range-0;
 
-// binary= range
+// = range
 
-define test binary=-range (description: "always terminates")
-  check-false("", binary=(range(), range(from: -5, below: 6))); 
-  check-true("", binary=(range(), range()));
-end test binary=-range;
+define test equal-range (description: "always terminates")
+  check-false("", range() = range(from: -5, below: 6));
+  check-true("", range() = range());
+end test equal-range;
 
 // reverse range
 
@@ -102,7 +102,7 @@ end test reverse!-range;
 // range-intersection
 
 define test intersection-range (description: "always terminates")
-  check-true("", binary=(intersection(range(), range()), range()));
+  check-true("", intersection(range(), range()) = range());
   check-true("", intersection(range(from: 0, by: 2), range(from: 0, by: 3))
     = range(from: 0, by: 6));
 end test intersection-range;
@@ -123,7 +123,7 @@ define suite test-range-suite ()
   test member?-range;
   test size-range;
   test copy-sequence-range-0;
-  test binary=-range;
+  test equal-range;
   test reverse-range;
   test reverse-range-1;
   test reverse!-range;
