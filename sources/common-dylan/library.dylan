@@ -32,7 +32,9 @@ define module simple-profiling
 
   create \profiling,
          <profiling-state>,
+         start-profiling,
          start-profiling-type,
+         stop-profiling,
          stop-profiling-type,
          profiling-type-result;
 end module simple-profiling;

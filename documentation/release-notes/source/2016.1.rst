@@ -106,6 +106,10 @@ Common Dylan
 * The ``thread`` module has gained a ``current-thread-id`` function. The
   ``thread-id`` is also available for any ``<thread>`` object.
 
+* The ``simple-profiling`` module now exports ``start-profiling`` and
+  ``stop-profiling`` rather than requiring that users directly invoke
+  ``start-profiling-type`` and ``stop-profiling-type`` multiple times.
+
 Compiler
 ========
 
