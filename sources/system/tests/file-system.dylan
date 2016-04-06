@@ -771,7 +771,7 @@ define test test-file-write-stream (title: "<file-stream> write tests")
   end;
 end test test-file-write-stream;
 
-define test test-write-to-multi-buffered-file-stream (title: "<multi-buffered--stream> write tests")
+define test test-write-to-multi-buffered-file-stream (title: "<multi-buffered-stream> write tests")
   let path = temp-file-pathname(initial-substring: "tfws");
   begin
     let s = make(<multi-buffered-stream>, locator: path, buffer-size: 4,
