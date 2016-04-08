@@ -198,6 +198,10 @@ Runtime
 
 * In the C runtime, the ``primitive_sleep`` now functions correctly.
 
+* Two new primitives, ``primitive-read-cycle-counter`` and
+  ``primitive-read-return-address``, have been added. These are useful
+  for writing profiling and event logging tools.
+
 system
 ======
 

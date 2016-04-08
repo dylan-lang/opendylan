@@ -42,6 +42,8 @@ define generic emit-primitive-call
 // // Machine
 // define &primitive-descriptor primitive-word-size;
 // define &primitive-descriptor primitive-header-size;
+// define &primitive-descriptor primitive-read-cycle-counter;
+// define &primitive-descriptor primitive-read-return-address;
 //
 // // Allocation.
 // define &primitive-descriptor primitive-allocate;

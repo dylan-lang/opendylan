@@ -1,6 +1,46 @@
 Runtime System Functions
 ************************
 
+Primitives for Machine Information
+==================================
+
+.. primitive:: primitive-read-cycle-counter
+
+   :signature: primitive-read-cycle-counter () => (cycle-count)
+
+   :value cycle-count: An instance of :class:`<raw-machine-word>`.
+
+   :description:
+
+     On x86 and x86_64 architectures, this is equivalent to calling
+     the ``rdtsc`` instruction. For full precision, this should only
+     be used on 64 bit builds.
+
+     This is equivalent to using the LLVM intrinsic ``llvm.readcyclecounter``
+     or the Clang built-in ``__builtin_readcyclecounter``.
+
+     This has not been implemented in the HARP back-end.
+
+.. primitive:: primitive-read-return-address
+
+   :signature: primitive-read-return-address () => (return-address)
+
+   :value return-address: An instance of :class:`<raw-machine-word>`.
+
+   :description:
+
+     Returns the address to which the current function will return
+     when it exits. This yields the address of the code which
+     invoked the current function.
+
+     For best results, invoke this primitive within a function
+     which has been prevented from being inlined.
+
+     This is equivalent to using the LLVM intrinsic ``llvm.returnaddress``
+     or the Clang and GCC built-in ``__builtin_return_address``.
+
+     This has not been implemented in the HARP back-end.
+
 Primitive Functions for the threads library
 ===========================================
 
