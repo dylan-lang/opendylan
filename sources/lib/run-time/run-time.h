@@ -874,6 +874,28 @@ extern void primitive_debug_message (dylan_value format_string, dylan_value argu
 
 #define primitive_header_size() primitive_word_size ()
 
+#if defined(OPEN_DYLAN_COMPILER_CLANG) && \
+    defined(__has_builtin) && \
+    __has_builtin(__builtin_readcyclecounter)
+#  define primitive_read_cycle_counter() __builtin_readcyclecounter()
+#elif defined(OPEN_DYLAN_COMPILER_GCC_LIKE) && \
+      (defined(OPEN_DYLAN_ARCH_X86) || defined(OPEN_DYLAN_ARCH_X86_64))
+static inline uint64_t primitive_read_cycle_counter(void)
+{
+   uint32_t hi, lo;
+   __asm__ __volatile__ ("rdtsc" : "=a"(lo), "=d"(hi));
+   return ((uint64_t)lo) | (((uint64_t)hi) << 32);
+}
+#else
+#  define primitive_read_cycle_counter() 0
+#endif
+
+#if defined(OPEN_DYLAN_COMPILER_GCC_LIKE)
+#  define primitive_read_return_address() __builtin_return_address(0)
+#else
+#  define primitive_read_return_address() 0
+#endif
+
 
 
 /* Well this wasn't right

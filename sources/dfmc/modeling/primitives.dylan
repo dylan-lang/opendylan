@@ -104,6 +104,10 @@ define side-effect-free stateless dynamic-extent &primitive-and-override primiti
 end;
 define side-effect-free stateless dynamic-extent &primitive primitive-header-size
     () => (header-size :: <raw-integer>);
+define side-effect-free stateless dynamic-extent &primitive primitive-read-cycle-counter
+    () => (cycle-count :: <raw-machine-word>);
+define side-effect-free stateless dynamic-extent &primitive primitive-read-return-address
+    () => (return-address :: <raw-machine-word>);
 
 /// RAW-TYPE
 

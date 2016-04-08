@@ -62,7 +62,9 @@ define &module dylan-primitives
   // machine
   create
     primitive-word-size,
-    primitive-header-size;
+    primitive-header-size,
+    primitive-read-cycle-counter,
+    primitive-read-return-address;
 
   // Object Representation.
   create

@@ -1006,6 +1006,18 @@ define method op--word-size(back-end :: <harp-back-end>, result) => ()
 
 end method op--word-size;
 
+define method op--read-cycle-counter(back-end :: <harp-back-end>, result) => ()
+
+  ins--move(back-end, result, 0);
+
+end method op--read-cycle-counter;
+
+define method op--read-return-address(back-end :: <harp-back-end>, result) => ()
+
+  ins--move(back-end, result, 0);
+
+end method op--read-return-address;
+
 
 define method op--abs(back-end :: <harp-back-end>, result, x) => ()
 
@@ -1775,6 +1787,8 @@ define &primitive-descriptor primitive-debug-message, emitter: op--debug-message
 // Machine
 define &primitive-descriptor primitive-word-size, emitter: op--word-size;
 define &primitive-descriptor primitive-header-size, emitter: op--word-size;
+define &primitive-descriptor primitive-read-cycle-counter, emitter: op--read-cycle-counter;
+define &primitive-descriptor primitive-read-return-address, emitter: op--read-return-address;
     
 // Allocation.
 define &primitive-descriptor primitive-allocate;

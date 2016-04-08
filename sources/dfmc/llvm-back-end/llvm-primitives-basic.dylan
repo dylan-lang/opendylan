@@ -18,6 +18,16 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   llvm-builder-value(be, header-words * back-end-word-size(be))
 end;
 
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-read-cycle-counter
+    () => (cycle-count :: <raw-machine-word>);
+  ins--call-intrinsic(be, "llvm.readcyclecounter", vector())
+end;
+
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-read-return-address
+    () => (return-address :: <raw-machine-word>);
+  ins--call-intrinsic(be, "llvm.returnaddress", vector(i32(0)))
+end;
+
 
 /// Pointers
 
