@@ -13,7 +13,7 @@ language's standard table features. It is available to applications as
 the *table-extensions* module.
 
 .. note:: Open Dylan provides a slightly different table implementation
-   from that described by the DRM. See :doc:`../dylan/language-differences`
+   from that described by the DRM. See :doc:`../language-extensions/language-differences`
    for details of these differences.
 
 Basics
@@ -65,7 +65,7 @@ Weak tables
 -----------
 
 Open Dylan allows all general instances of the built-in class
-:drm:`<table>` to be *weak*. See :doc:`weak tables <../dylan/weak-tables>` of
+:drm:`<table>` to be *weak*. See :doc:`weak tables <../language-extensions/weak-tables>` of
 this volume for information about weakness.
 
 You can create weak tables with the :drm:`<table>` class's *weak:*

@@ -10,7 +10,7 @@ provided with Open Dylan.
    :titlesonly:
 
    copyright
-   dylan/index
+   language-extensions/index
    common-dylan/index
    collections/index
    hash-algorithms/index
