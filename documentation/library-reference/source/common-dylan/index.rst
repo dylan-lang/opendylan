@@ -23,7 +23,7 @@ The ``common-dylan`` module re-exports everything in the
 ``common-extensions`` and ``dylan`` modules.  This is a convenience module
 that is very widely used.
 
-.. TODO(cgay): streams-protocol, locators-protocol, simple-profiling, byte-vector.
+.. TODO(cgay): streams-protocol, locators-protocol, byte-vector.
 
 It also re-exports these modules which are defined in
 :doc:`the dylan library <../dylan/index>`:
