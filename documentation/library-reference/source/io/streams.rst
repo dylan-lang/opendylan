@@ -497,7 +497,7 @@ closed. The total number of such streams that can be open at one time
 may be system dependent. It may be possible to add reasonable
 finalization methods to close streams when they are no longer referenced
 but these are not added by default. See the
-:doc:`../common-dylan/finalization` for full details about finalization.
+:doc:`../dylan/finalization` for full details about finalization.
 
 Locking streams
 ^^^^^^^^^^^^^^^
