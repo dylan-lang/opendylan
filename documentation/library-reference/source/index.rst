@@ -11,6 +11,7 @@ provided with Open Dylan.
 
    copyright
    language-extensions/index
+   dylan/index
    common-dylan/index
    collections/index
    hash-algorithms/index

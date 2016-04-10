@@ -15,5 +15,4 @@ Tony Mann, Jonathan Bachrach at Harlequin, Ltd.
    special-features
    mangling
    threads
-   primitives
    startup

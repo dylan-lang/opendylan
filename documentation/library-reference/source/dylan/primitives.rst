@@ -1,5 +1,9 @@
-Runtime System Functions
-************************
+***************************
+The dylan-primitives Module
+***************************
+
+.. current-library:: dylan
+.. current-module:: dylan-primitives
 
 Primitives for Machine Information
 ==================================
