@@ -11,6 +11,7 @@ Dylan's developers have found useful in a broad range of situations.
 .. toctree::
    :maxdepth: 1
 
+   byte-vector
    common-extensions
    machine-words
    simple-format
@@ -23,7 +24,7 @@ The ``common-dylan`` module re-exports everything in the
 ``common-extensions`` and ``dylan`` modules.  This is a convenience module
 that is very widely used.
 
-.. TODO(cgay): streams-protocol, locators-protocol, byte-vector.
+.. TODO(cgay): streams-protocol, locators-protocol.
 
 It also re-exports these modules which are defined in
 :doc:`the dylan library <../dylan/index>`:
