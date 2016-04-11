@@ -54,7 +54,9 @@ define module byte-vector
          byte-vector-fill,
          byte-vector-ref,
          byte-vector-ref-setter,
-         copy-bytes;
+         copy-bytes,
+         byte-storage-address,
+         byte-storage-offset-address,
 end module byte-vector;
 
 define module common-extensions
@@ -90,12 +92,12 @@ define module common-extensions
     export: { \profiling,
               profiling-type-result };
   use byte-vector,
-    export: { <byte-vector> };
+    export: { <byte-vector>,
+              byte-storage-address,
+              byte-storage-offset-address};
   create <closable-object>,
          <stream>,
          close,
-         byte-storage-address,
-         byte-storage-offset-address,
          integer-length,
          <float-classification>,
          classify-float,
