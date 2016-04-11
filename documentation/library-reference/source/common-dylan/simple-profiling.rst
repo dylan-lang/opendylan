@@ -1,5 +1,5 @@
 ***************************
-The simple-profiling module
+The simple-profiling Module
 ***************************
 
 .. current-library:: common-dylan
