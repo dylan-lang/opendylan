@@ -2,6 +2,9 @@
 The dylan-primitives Module
 ***************************
 
+Runtime System Functions
+************************
+
 .. current-library:: dylan
 .. current-module:: dylan-primitives
 
