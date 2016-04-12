@@ -13,7 +13,7 @@ Primitives for Machine Information
 
 .. primitive:: primitive-read-cycle-counter
 
-   :signature: primitive-read-cycle-counter () => (cycle-count)
+   :signature: () => (cycle-count)
 
    :value cycle-count: An instance of :class:`<raw-machine-word>`.
 
@@ -30,7 +30,7 @@ Primitives for Machine Information
 
 .. primitive:: primitive-read-return-address
 
-   :signature: primitive-read-return-address () => (return-address)
+   :signature: () => (return-address)
 
    :value return-address: An instance of :class:`<raw-machine-word>`.
 
@@ -57,717 +57,451 @@ of the primitive functions.
 Threads
 -------
 
-primitive-make-thread
+.. primitive:: primitive-make-thread
 
-[Primitive]
+   :signature: (thread :: <thread>, function :: <function>) => ()
 
-Signature
+   :parameter thread: An instance of :class:`<thread>`.
+   :parameter function: The initial function to run after the thread is created.
+     An instance of :drm:`<function>`.
 
-(thread :: <thread>, function :: <function>) => ()
+   :description:
 
-Arguments
+     Creates a new OS thread and destructively modifies the container slots
+     in the Dylan thread object with the handles of the new OS thread. The
+     new OS thread is started in a way which calls the supplied Dylan
+     function.
 
-*thread* A Dylan thread object.
+.. primitive:: primitive-destroy-thread
 
-*function* The initial function to run after the thread is created.
+   :signature: (thread :: <thread>) => ()
 
-Description
+   :parameter thread: An instance of :class:`<thread>`.
 
-Creates a new OS thread and destructively modifies the container slots
-in the Dylan thread object with the handles of the new OS thread. The
-new OS thread is started in a way which calls the supplied Dylan
-function.
+   :description:
 
-primitive-destroy-thread
+     Frees any runtime-allocated memory associated with the thread.
 
-[Primitive]
+.. primitive:: primitive-initialize-current-thread
 
-Signature
+   :signature: (thread :: <thread>) => ()
 
-(thread :: <thread>) => ()
+   :parameter thread: An instance of :class:`<thread>`.
 
-Arguments
+   :description:
 
-*thread* A Dylan thread object.
+     The container slots in the Dylan thread object are destructively
+     modified with the handles of the current OS thread. This function will
+     be used to initialize the first thread, which will not have been started
+     as the result of a call to *primitive-make-thread*.
 
-Description
+.. primitive:: primitive-thread-join-single
 
-Frees any runtime-allocated memory associated with the thread.
+   :signature: (thread :: <thread>) => (error-code :: <integer>)
 
-primitive-initialize-current-thread
+   :parameter thread: An instance of :class:`<thread>`.
+   :value error-code: An instance of :drm:`<integer>`. 0 = ok, anything else is an error, corresponding to a multiple join.
 
-[Primitive]
+   :description:
 
-Signature
+     The calling thread blocks (if necessary) until the specified thread has
+     terminated.
 
-(thread :: <thread>) => ()
+.. primitive:: primitive-thread-join-multiple
 
-Arguments
+   :signature: (thread-vector :: <simple-object-vector>) => (result)
 
-*thread* A Dylan thread object.
+   :parameter thread-vector: A :drm:`<simple-object-vector>` containing :class:`<thread>` objects
+   :value result: The :class:`<thread>` that was joined, if the join was successful; otherwise, a :drm:`<integer>` indicating the error.
 
-Description
+   :description:
 
-The container slots in the Dylan thread object are destructively
-modified with the handles of the current OS thread. This function will
-be used to initialize the first thread, which will not have been started
-as the result of a call to *primitive-make-thread*.
+     The calling thread blocks (if necessary) until one of the specified
+     threads has terminated.
 
-primitive-thread-join-single
+.. primitive:: primitive-thread-yield
 
-[Primitive]
+   :signature: () => ()
 
-Signature
+   :description:
 
-(thread :: <thread>) => (error-code :: <integer>)
+     For co-operatively scheduled threads implementations, the calling thread
+     yields execution in favor of another thread. This may do nothing in
+     some implementations.
 
-Arguments
+.. primitive:: primitive-current-thread
 
-*thread* A Dylan thread object.
+   :signature: () => (thread-handle)
 
-Values
+   :value thread-handle: A low-level handle corresponding to the current thread
 
-*error-code* 0 = ok, anything else is an error, corresponding to a
-multiple join.
+   :description:
 
-Description
-
-The calling thread blocks (if necessary) until the specified thread has
-terminated.
-
-primitive-thread-join-multiple
-
-[Primitive]
-
-Signature
-
-(thread-vector :: <simple-object-vector>) => (result)
-
-Arguments
-
-*thread-vector* A :drm:`<simple-object-vector>` containing ``<thread>`` objects
-
-Values
-
-*result* The ``<thread>`` that was joined, if the join was successful;
-otherwise, a :drm:`<integer>` indicating the error.
-
-Description
-
-The calling thread blocks (if necessary) until one of the specified
-threads has terminated.
-
-primitive-thread-yield
-
-[Primitive]
-
-Signature
-
-() => ()
-
-Description
-
-For co-operatively scheduled threads implementations, the calling thread
-yields execution in favor of another thread. This may do nothing in
-some implementations.
-
-primitive-current-thread
-
-[Primitive]
-
-Signature
-
-() => (thread-handle)
-
-Values
-
-*thread-handle* A low-level handle corresponding to the current thread
-
-Description
-
-Returns the low-level handle of the current thread, which is assumed to
-be in the handle container slot of one of the ``<thread>`` objects known
-to the Dylan library. This result is therefore NOT a Dylan object. The
-mapping from this value back to the ``<thread>`` object must be performed
-by the Dylan threads library, and not the primitive layer, because the
-``<thread>`` object is subject to garbage collection, and may not be
-referenced from any low-level data structures.
+     Returns the low-level handle of the current thread, which is assumed to
+     be in the handle container slot of one of the :class:`<thread>` objects known
+     to the Dylan library. This result is therefore NOT a Dylan object. The
+     mapping from this value back to the :class:`<thread>` object must be performed
+     by the Dylan threads library, and not the primitive layer, because the
+     :class:`<thread>` object is subject to garbage collection, and may not be
+     referenced from any low-level data structures.
 
 Simple Locks
 ------------
 
-primitive-make-simple-lock
+.. primitive:: primitive-make-simple-lock
 
-[Primitive]
+   :signature: (lock :: <portable-container>, name :: false-or(<byte-string>)) => ()
 
-Signature
+   :parameter lock: An instance of :class:`<simple-lock>`.
+   :parameter name: The name of the lock (as a :drm:`<byte-string>`) or ``#f``.
 
-(lock :: <portable-container>, name :: false-or(<byte-string>)) => ()
+   :description:
 
-Arguments
+     Creates a new OS lock and destructively modifies the container slot in
+     the Dylan lock object with the handle of the new OS lock.
 
-*lock* A Dylan ``<simple-lock>`` object.
+.. primitive:: primitive-destroy-simple-lock
 
-*name* The name of the lock (as a :drm:`<byte-string>`) or *#f*.
+   :signature: (lock :: <portable-container>) => ()
 
-Description
+   :parameter lock: An instance of :class:`<simple-lock>`.
 
-Creates a new OS lock and destructively modifies the container slot in
-the Dylan lock object with the handle of the new OS lock.
+   :description:
 
-primitive-destroy-simple-lock
+     Frees any runtime-allocated memory associated with the lock.
 
-[Primitive]
+.. primitive:: primitive-wait-for-simple-lock
 
-Signature
+   :signature: (lock :: <portable-container>) => (error-code :: <integer>)
 
-(lock :: <portable-container>) => ()
+   :parameter lock: An instance of :class:`<simple-lock>`.
+   :value error-code: 0 = ok
 
-Arguments
+   :description:
 
-*lock* A Dylan ``<simple-lock>`` object.
+     The calling thread blocks until the specified lock is available
+     (unlocked) and then locks it. When the function returns, the lock is
+     owned by the calling thread.
 
-Description
+.. primitive:: primitive-wait-for-simple-lock-timed
 
-Frees any runtime-allocated memory associated with the lock.
+   :signature: (lock :: <portable-container>, millisecs :: <integer>) => (error-code :: <integer>)
 
-primitive-wait-for-simple-lock
+   :parameter lock: An instance of :class:`<simple-lock>`.
+   :parameter millisecs: Timeout period in milliseconds
+   :value error-code: 0 = ok, 1 = timeout expired
 
-[Primitive]
+   :description:
 
-Signature
+     The calling thread blocks until either the specified lock is available
+     (unlocked) or the timeout period expires. If the lock becomes available,
+     this function locks it. If the function returns 0, the lock is owned by
+     the calling thread, otherwise a timeout occurred.
 
-(lock :: <portable-container>) => (error-code :: <integer>)
+.. primitive:: primitive-release-simple-lock
 
-Arguments
+   :signature: (lock :: <portable-container>) => (error-code :: <integer>)
 
-*lock* A Dylan ``<simple-lock>`` object.
+   :parameter lock: An instance of :class:`<simple-lock>`.
+   :value error-code: 0 = ok, 2 = not locked
 
-Values
+   :description:
 
-*error-code* 0 = ok
+     Unlocks the specified lock. The lock must be owned by the calling
+     thread, otherwise the result indicates "not locked".
 
-Description
+.. primitive:: primitive-owned-simple-lock
 
-The calling thread blocks until the specified lock is available
-(unlocked) and then locks it. When the function returns, the lock is
-owned by the calling thread.
+   :signature: (lock :: <portable-container>) => (owned :: <integer>)
 
-primitive-wait-for-simple-lock-timed
+   :parameter lock: An instance of :class:`<simple-lock>`.
+   :value owned: 0= not owned, 1 = owned
 
-[Primitive]
+   :description:
 
-Signature
-
-(lock :: <portable-container>, millisecs :: <integer>)
-=> (error-code :: <integer>)
-
-Arguments
-
-*lock* A Dylan ``<simple-lock>`` object.
-
-*millisecs* Timeout period in milliseconds
-
-Values
-
-*error-code* 0 = ok, 1 = timeout expired
-
-Description
-
-The calling thread blocks until either the specified lock is available
-(unlocked) or the timeout period expires. If the lock becomes available,
-this function locks it. If the function returns 0, the lock is owned by
-the calling thread, otherwise a timeout occurred.
-
-primitive-release-simple-lock
-
-[Primitive]
-
-Signature
-
-(lock :: <portable-container>) => (error-code :: <integer>)
-
-Arguments
-
-*lock* A Dylan ``<simple-lock>`` object.
-
-Values
-
-*error-code* 0 = ok, 2 = not locked
-
-Description
-
-Unlocks the specified lock. The lock must be owned by the calling
-thread, otherwise the result indicates "not locked".
-
-primitive-owned-simple-lock
-
-[Primitive]
-
-Signature
-
-(lock :: <portable-container>) => (owned :: <integer>)
-
-Arguments
-
-*lock* A Dylan ``<simple-lock>`` object.
-
-Values
-
-*owned* 0= not owned, 1 = owned
-
-Description
-
-Returns 1 if the specified lock is owned (locked) by the calling thread.
+     Returns 1 if the specified lock is owned (locked) by the calling thread.
 
 Recursive Locks
 ---------------
 
-primitive-make-recursive-lock
+.. primitive:: primitive-make-recursive-lock
 
-[Primitive]
+   :signature: (lock :: <portable-container>, name :: false-or(<byte-string>)) => ()
 
-Signature
+   :parameter lock: An instance of :class:`<recursive-lock>`.
+   :parameter name: The name of the lock (as a :drm:`<byte-string>`) or ``#f``.
 
-(lock :: <portable-container>, name :: false-or(<byte-string>)) => ()
+   :description:
 
-Arguments
+     Creates a new OS lock and destructively modifies the container slot in
+     the Dylan lock object with the handle of the new OS lock.
 
-*lock* A Dylan ``<recursive-lock>`` object.
+.. primitive:: primitive-destroy-recursive-lock
 
-*name* The name of the lock (as a :drm:`<byte-string>`) or *#f*.
+   :signature: (lock :: <portable-container>) => ()
 
-Description
+   :parameter lock: An instance of :class:`<recursive-lock>`.
 
-Creates a new OS lock and destructively modifies the container slot in
-the Dylan lock object with the handle of the new OS lock.
+   :description:
 
-primitive-destroy-recursive-lock
+     Frees any runtime-allocated memory associated with the lock.
 
-[Primitive]
+.. primitive:: primitive-wait-for-recursive-lock
 
-Signature
+   :signature: (lock :: <portable-container>) => (error-code :: <integer>)
 
-(lock :: <portable-container>) => ()
+   :parameter lock: An instance of :class:`<recursive-lock>`.
+   :value error-code: 0 = ok
 
-Arguments
+   :description:
 
-*lock* A Dylan``<recursive-lock>`` object.
+     The calling thread blocks until the specified lock is available
+     (unlocked or already locked by the calling thread). When the lock
+     becomes available, this function claims ownership of the lock and
+     increments the lock count. When the function returns, the lock is
+     owned by the calling thread.
 
-Description
+.. primitive:: primitive-wait-for-recursive-lock-timed
 
-Frees any runtime-allocated memory associated with the lock.
+   :signature: (lock :: <portable-container>, millisecs :: <integer>) => (error-code :: <integer>)
 
-primitive-wait-for-recursive-lock
+   :parameter lock: An instance of :class:`<recursive-lock>`.
+   :parameter millisecs: Timeout period in milliseconds
+   :value error-code: 0 = ok, 1 = timeout expired
 
-[Primitive]
+   :description:
 
-Signature
+     The calling thread blocks until the specified lock is available
+     (unlocked or already locked by the calling thread). If the lock
+     becomes available, this function claims ownership of the lock,
+     increments an internal lock count, and returns 0. If a timeout
+     occurs, the function leaves the lock unmodified and returns 1.
 
-(lock :: <portable-container>) => (error-code :: <integer>)
+.. primitive:: primitive-release-recursive-lock
 
-Arguments
+   :signature: (lock :: <portable-container>) => (error-code :: <integer>)
 
-*lock* A Dylan ``<recursive-lock>`` object.
+   :parameter lock: An instance of :class:`<recursive-lock>`.
+   :value error-code: 0 = ok, 2 = not locked
 
-Values
+   :description:
 
-*error-code* 0 = ok
+     Checks that the lock is owned by the calling thread, and returns 2 if
+     not. If the lock is owned, its internal count is decremented by 1. If
+     the count is then zero, the lock is then released.
 
-Description
+.. primitive:: primitive-owned-recursive-lock
 
-The calling thread blocks until the specified lock is available
-(unlocked or already locked by the calling thread). When the lock
-becomes available, this function claims ownership of the lock and
-increments the lock count. When the function returns, the lock is
-owned by the calling thread.
+   :signature: (lock :: <portable-container>) => (owned :: <integer>)
 
-primitive-wait-for-recursive-lock-timed
+   :parameter lock: An instance of :class:`<recursive-lock>`.
+   :value owned: 0= not owned, 1 = owned
 
-[Primitive]
+   :description:
 
-Signature
-
-(lock :: <portable-container>, millisecs :: <integer>)
-=> (error-code :: <integer>)
-
-Arguments
-
-*lock* A Dylan ``<recursive-lock>`` object.
-
-*millisecs* Timeout period in milliseconds
-
-Values
-
-*error-code* 0 = ok, 1 = timeout expired
-
-Description
-
-The calling thread blocks until the specified lock is available
-(unlocked or already locked by the calling thread). If the lock
-becomes available, this function claims ownership of the lock,
-increments an internal lock count, and returns 0. If a timeout
-occurs, the function leaves the lock unmodified and returns 1.
-
-primitive-release-recursive-lock
-
-[Primitive]
-
-Signature
-
-(lock :: <portable-container>) => (error-code :: <integer>)
-
-Arguments
-
-*lock* A Dylan``<recursive-lock>`` object.
-
-Values
-
-*error-code* 0 = ok, 2 = not locked
-
-Description
-
-Checks that the lock is owned by the calling thread, and returns 2 if
-not. If the lock is owned, its internal count is decremented by 1. If
-the count is then zero, the lock is then released.
-
-primitive-owned-recursive-lock
-
-[Primitive]
-
-Signature
-
-(lock :: <portable-container>) => (owned :: <integer>)
-
-Arguments
-
-*lock* A Dylan ``<recursive-lock>`` object.
-
-Values
-
-*owned* 0= not owned, 1 = owned
-
-Description
-
-Returns 1 if the specified lock is locked and owned by the calling
-thread.
+     Returns 1 if the specified lock is locked and owned by the calling
+     thread.
 
 Semaphores
 ----------
 
-primitive-make-semaphore
+.. primitive:: primitive-make-semaphore
 
-[Primitive]
+   :signature: (lock :: <portable-container>, name :: false-or(<byte-string>), initial :: <integer>, max :: <integer>) => ()
 
-Signature
+   :parameter lock: An instance of :class:`<semaphore>`.
+   :parameter name: The name of the lock (as a :drm:`<byte-string>`) or ``#f``.
+   :parameter initial: The initial value for the semaphore count.
 
-(lock :: <portable-container>, name :: false-or(<byte-string>),
- initial :: <integer>, max :: <integer>) => ()
+   :description:
 
-Arguments
+     Creates a new OS semaphore with the specified initial count and
+     destructively modifies the container slot in the Dylan lock object with
+     the handle of the new OS semaphore.
 
-*lock* A Dylan ``<semaphore>`` object.
+.. primitive:: primitive-destroy-semaphore
 
-*name* The name of the lock (as a :drm:`<byte-string>`) or *#f*.
+   :signature: (lock :: <portable-container>) => ()
 
-*initial* The initial value for the semaphore count
+   :parameter lock: An instance of :class:`<semaphore>`.
 
-Description
+   :description:
 
-Creates a new OS semaphore with the specified initial count and
-destructively modifies the container slot in the Dylan lock object with
-the handle of the new OS semaphore.
+     Frees any runtime-allocated memory associated with the semaphore.
 
-primitive-destroy-semaphore
+.. primitive:: primitive-wait-for-semaphore
 
-[Primitive]
+   :signature: (lock :: <portable-container>) => (error-code :: <integer>)
 
-Signature
+   :parameter lock: An instance of :class:`<semaphore>`.
+   :value error-code: 0 = ok
 
-(lock :: <portable-container>) => ()
+   :description:
 
-Arguments
+     The calling thread blocks until the internal count of the specified
+     semaphore becomes greater than zero. It then decrements the semaphore
+     count.
 
-*lock* A Dylan ``<semaphore>`` object.
+.. primitive:: primitive-wait-for-semaphore-timed
 
-Description
+   :signature: (lock :: <portable-container>, millisecs :: <integer>) => (error-code :: <integer>)
 
-Frees any runtime-allocated memory associated with the semaphore.
+   :parameter lock: An instance of :class:`<semaphore>`.
+   :parameter millisecs: Timeout period in milliseconds
+   :value error-code: 0 = ok, 1 = timeout expired
 
-primitive-wait-for-semaphore
+   :description:
 
-[Primitive]
+     The calling thread blocks until either the internal count of the
+     specified semaphore becomes greater than zero or the timeout period
+     expires. In the former case, the function decrements the semaphore count
+     and returns 0. In the latter case, the function returns 1.
 
-Signature
+.. primitive:: primitive-release-semaphore
 
-(lock :: <portable-container>) => (error-code :: <integer>)
+   :signature: (lock :: <portable-container>) => (error-code :: <integer>)
 
-Arguments
+   :parameter lock: An instance of :class:`<semaphore>`.
+   :value error-code: 0 = ok, 3 = count exceeded
 
-*lock* A Dylan ``<semaphore>`` object.
+   :description:
 
-Values
-
-*error-code* 0 = ok
-
-Description
-
-The calling thread blocks until the internal count of the specified
-semaphore becomes greater than zero. It then decrements the semaphore
-count.
-
-primitive-wait-for-semaphore-timed
-
-[Primitive]
-
-Signature
-
-(lock :: <portable-container>, millisecs :: <integer>)
-=> (error-code :: <integer>)
-
-Arguments
-
-*lock* A Dylan ``<semaphore>`` object.
-
-*millisecs* Timeout period in milliseconds
-
-Values
-
-*error-code* 0 = ok, 1 = timeout expired
-
-Description
-
-The calling thread blocks until either the internal count of the
-specified semaphore becomes greater than zero or the timeout period
-expires. In the former case, the function decrements the semaphore count
-and returns 0. In the latter case, the function returns 1.
-
-primitive-release-semaphore
-
-[Primitive]
-
-Signature
-
-(lock :: <portable-container>) => (error-code :: <integer>)
-
-Arguments
-
-*lock* A Dylan ``<semaphore>`` object.
-
-Values
-
-*error-code* 0 = ok, 3 = count exceeded
-
-Description
-
-This function checks that internal count of the semaphore is not at its
-maximum limit, and returns 3 if the test fails. Otherwise the internal
-count is incremented.
+     This function checks that internal count of the semaphore is not at its
+     maximum limit, and returns 3 if the test fails. Otherwise the internal
+     count is incremented.
 
 Notifications
 -------------
 
-primitive-make-notification
+.. primitive:: primitive-make-notification
 
-[Primitive]
+   :signature: (notification :: <portable-container>, name :: false-or(<byte-string>)) => ()
 
-Signature
+   :parameter notification: An instance of :class:`<notification>`.
+   :parameter name: The name of the notification (as a :drm:`<byte-string>`) or ``#f``.
 
-(notification :: <portable-container>, name :: false-or(<byte-string>)) => ()
+   :description:
 
-Arguments
+     Creates a new OS notification (condition variable) and destructively
+     modifies the container slot in the Dylan lock object with the handle of
+     the new OS notification.
 
-*notification* A Dylan <*notification>* object.
+.. primitive:: primitive-destroy-notification
 
-*name* The name of the notification (as a :drm:`<byte-string>`) or *#f*.
+   :signature: (notification :: <portable-container>) => ()
 
-Description
+   :parameter notification: An instance of :class:`<notification>`.
 
-Creates a new OS notification (condition variable) and destructively
-modifies the container slot in the Dylan lock object with the handle of
-the new OS notification.
+   :description:
 
-primitive-destroy-notification
+     Frees any runtime-allocated memory associated with the notification.
 
-[Primitive]
+.. primitive:: primitive-wait-for-notification
 
-Signature
+   :signature: (notification :: <portable-container>, lock :: <portable-container>) => (error-code :: <integer>)
 
-(notification :: <portable-container>) => ()
+   :parameter notification: An instance of :class:`<notification>`.
+   :parameter lock: An instance of :class:`<simple-lock>`.
+   :value error-code: 0 = ok, 2 = not locked, 3 = other error
 
-Arguments
+   :description:
 
-*notification* A Dylan ``<notification>`` object.
+     The function checks that the specified lock is owned by the calling
+     thread, and returns 2 if the test fails. Otherwise, the calling thread
+     atomically releases the lock and then blocks, waiting to be notified of
+     the condition represented by the specified notification. When the
+     calling thread is notified of the condition, the function reclaims
+     ownership of the lock, blocking if necessary, before returning 0.
 
-Description
+.. primitive:: primitive-wait-for-notification-timed
 
-Frees any runtime-allocated memory associated with the notification.
+   :signature: (notification :: <portable-container>, lock :: <portable-container>, millisecs :: <integer>) => (error-code :: <integer>)
 
-primitive-wait-for-notification
+   :parameter notification: An instance of :class:`<notification>`.
+   :parameter lock: An instance of :class:`<simple-lock>`.
+   :parameter millisecs: Timeout period in milliseconds
+   :value error-code: 0 = ok, 1 = timeout, 2 = not locked, 3 = other error
 
-[Primitive]
+   :description:
 
-Signature
+     The function checks that the specified lock is owned by the calling
+     thread, and returns 2 if the test fails. Otherwise, the calling thread
+     atomically releases the lock and then blocks, waiting to be notified of
+     the condition represented by the specified notification, or for the
+     timeout period to expire. The function then reclaims ownership of the
+     lock, blocking indefinitely if necessary, before returning either 0 or 1
+     to indicate whether a timeout occurred.
 
-(notification :: <portable-container>, lock :: <portable-container>)
-=> (error-code :: <integer>)
+.. primitive:: primitive-release-notification
 
-Arguments
+   :signature: (notification :: <portable-container>, lock :: <portable-container>) => (error-code :: <integer>)
 
-*notification* A Dylan ``<notification>`` object.
+   :parameter notification: An instance of :class:`<notification>`.
+   :parameter lock: An instance of :class:`<simple-lock>`.
+   :value error-code: 0 = ok, 2 = not locked
 
-*lock* A Dylan ``<simple-lock>`` object.
+   :description:
 
-Values
+     If the calling thread does not own the specified lock, the function
+     returns the error value 2. Otherwise, the function releases the
+     specified notification, notifying another thread that is blocked waiting
+     for the notification to occur. If more than one thread is waiting for
+     the notification, it is unspecified which thread is notified. If no
+     threads are waiting, then the release has no effect.
 
-*error-code* 0 = ok, 2 = not locked, 3 = other error
+.. primitive:: primitive-release-all-notification
 
-Description
+   :signature: (notification :: <portable-container>, lock :: <portable-container>) => (error-code :: <integer>)
 
-The function checks that the specified lock is owned by the calling
-thread, and returns 2 if the test fails. Otherwise, the calling thread
-atomically releases the lock and then blocks, waiting to be notified of
-the condition represented by the specified notification. When the
-calling thread is notified of the condition, the function reclaims
-ownership of the lock, blocking if necessary, before returning 0.
+   :parameter notification: An instance of :class:`<notification>`.
+   :parameter lock: An instance of :class:`<simple-lock>`.
+   :value error-code: 0 = ok, 2 = not locked
 
-primitive-wait-for-notification-timed
+   :description:
 
-[Primitive]
-
-Signature
-
-(notification :: <portable-container>, lock :: <portable-container>,
- millisecs :: <integer>) => (error-code :: <integer>)
-
-Arguments
-
-*notification* A Dylan ``<notification>`` object.
-
-*lock* A Dylan ``<simple-lock>`` object.
-
-*millisecs* Timeout period in milliseconds
-
-Values
-
-*error-code* 0 = ok, 1 = timeout, 2 = not locked, 3 = other error
-
-Description
-
-The function checks that the specified lock is owned by the calling
-thread, and returns 2 if the test fails. Otherwise, the calling thread
-atomically releases the lock and then blocks, waiting to be notified of
-the condition represented by the specified notification, or for the
-timeout period to expire. The function then reclaims ownership of the
-lock, blocking indefinitely if necessary, before returning either 0 or 1
-to indicate whether a timeout occurred.
-
-primitive-release-notification
-
-[Primitive]
-
-Signature
-
-(notification :: <portable-container>, lock :: <portable-container>)
-=> (error-code :: <integer>)
-
-Arguments
-
-*notification* A Dylan ``<notification>`` object.
-
-*lock* A Dylan ``<simple-lock>`` object.
-
-Values
-
-*error-code* 0 = ok, 2 = not locked
-
-Description
-
-If the calling thread does not own the specified lock, the function
-returns the error value 2. Otherwise, the function releases the
-specified notification, notifying another thread that is blocked waiting
-for the notification to occur. If more than one thread is waiting for
-the notification, it is unspecified which thread is notified. If no
-threads are waiting, then the release has no effect.
-
-primitive-release-all-notification
-
-[Primitive]
-
-Signature
-
-(notification :: <portable-container>, lock :: <portable-container>)
-=> (error-code :: <integer>)
-
-Arguments
-
-*notification* A Dylan ``<notification>`` object.
-
-*lock* A Dylan ``<simple-lock>`` object.
-
-Values
-
-*error-code* 0 = ok, 2 = not locked
-
-Description
-
-If the calling thread does not own the specified lock, the function
-returns the error value 2. Otherwise, the function releases the
-specified notification, notifying all other threads that are blocked
-waiting for the notification to occur. If no threads are waiting, then
-the release has no effect.
+     If the calling thread does not own the specified lock, the function
+     returns the error value 2. Otherwise, the function releases the
+     specified notification, notifying all other threads that are blocked
+     waiting for the notification to occur. If no threads are waiting, then
+     the release has no effect.
 
 Timers
 ------
 
-primitive-sleep
+.. primitive:: primitive-sleep
 
-[Primitive]
+   :signature: (millisecs :: <integer>) => ()
 
-Signature
+   :parameter millisecs: Time interval in milliseconds
 
-(millisecs :: <integer>) => ()
+   :description:
 
-Arguments
-
-*millisecs* Time interval in milliseconds
-
-Description
-
-This function causes the calling thread to block for the specified time
-interval.
+     This function causes the calling thread to block for the specified time
+     interval.
 
 Thread Variables
 ----------------
 
-primitive-allocate-thread-variable
+.. primitive:: primitive-allocate-thread-variable
 
-[Primitive]
+   :signature: (initial-value) => (handle-on-variable)
 
-Signature
+   :parameter initial-value: A Dylan object that is to be the initial value of the
+     fluid variable.
 
-(initial-value) => (handle-on-variable)
+   :value handle-on-variable: An OS handle on the fluid variable, to be stored
+     as the immediate value of the variable. Variable reading and assignment
+     will indirect through this handle. The handle is not a Dylan object.
 
-Arguments
+   :description:
 
-*initial-value* A Dylan object that is to be the initial value of the
-fluid variable.
-
-Values
-
-*handle-on-variable* An OS handle on the fluid variable, to be stored
-as the immediate value of the variable. Variable reading and assignment
-will indirect through this handle. The handle is not a Dylan object.
-
-Description
-
-This function creates a new thread-local variable handle, and assigns
-the specified initial value to the location indicated by the handle. The
-function must arrange to assign the initial value to the thread-local
-location associated with all other existing threads, too. The function
-must also arrange that whenever a new thread is subsequently created, it
-also has its thread-local location indicated by the handle set to the
-initial value.
+     This function creates a new thread-local variable handle, and assigns
+     the specified initial value to the location indicated by the handle. The
+     function must arrange to assign the initial value to the thread-local
+     location associated with all other existing threads, too. The function
+     must also arrange that whenever a new thread is subsequently created, it
+     also has its thread-local location indicated by the handle set to the
+     initial value.
 
 Simple Runtime Primitives
 =========================
@@ -1026,402 +760,201 @@ Compiler Primitives
 General Primitives
 ==================
 
-primitive-make-box
+.. primitive:: primitive-make-box
 
-[Primitive]
+   :signature: (object :: <object>) => <object>
 
-Signature
+.. primitive:: primitive-allocate
 
-(object :: <object>) => <object>
+   :signature: (size :: <raw-small-integer>) => <object>)
 
-primitive-allocate
+.. primitive:: primitive-byte-allocate
 
-[Primitive]
+   :signature: (word-size :: <raw-small-integer>, byte-size :: <raw-small-integer>) => <object>)
 
-Signature
+.. primitive:: primitive-make-environment
 
-(size :: <raw-small-integer>) => <object>)
+   :signature: (size :: <raw-small-integer>) => <object>
 
-primitive-byte-allocate
+.. primitive:: primitive-copy-vector
 
-[Primitive]
+   :signature: (vector :: <object>) => <object>
 
-Signature
+.. primitive:: primitive-make-string
 
-(word-size :: <raw-small-integer>, byte-size :: <raw-small-integer>) =>
-<object>)
+   :signature: (vector :: <raw-c-char\*>) => <raw-c-char\*>
 
-primitive-make-environment
+.. primitive:: primitive-function-code
 
-[Primitive]
+   :signature: (function :: <object>) => <object>
 
-Signature
+.. primitive:: primitive-function-environment
 
-(size :: <raw-small-integer>) => <object>
-
-primitive-copy-vector
-
-[Primitive]
-
-Signature
-
-(vector :: <object>) => <object>
-
-primitive-make-string
-
-[Primitive]
-
-Signature
-
-(vector :: <raw-c-char\*>) => <raw-c-char\*>
-
-primitive-function-code
-
-[Primitive]
-
-Signature
-
-(function :: <object>) => <object>
-
-primitive-function-environment
-
-[Primitive]
-
-Signature
-
-(function :: <object>) => <object>
+   :signature: (function :: <object>) => <object>
 
 Low-Level Apply Primitives
 ==========================
 
-primitive-xep-apply
+.. primitive:: primitive-xep-apply
 
-[Primitive]
+   :signature: (function :: <object>, buffer-size :: <raw-small-integer>, buffer :: <object>) => :: <object>
 
-Signature
+.. primitive:: primitive-iep-apply
 
-(function :: <object>, buffer-size :: <raw-small-integer>, buffer ::
-<object>) => :: <object>
+   :signature: (function :: <object>, buffer-size :: <raw-small-integer>, buffer :: <object>) => <object>)
 
-primitive-iep-apply
+.. primitive:: primitive-true?
 
-[Primitive]
+   :signature: (value :: <raw-small-integer>) => <object>
 
-Signature
-
-(function :: <object>, buffer-size :: <raw-small-integer>, buffer ::
-<object>) => <object>)
-
-primitive-true?
-
-[Primitive]
-
-Signature
-
-(value :: <raw-small-integer>) => <object>
-
-Description
+   :description:
 
 This primitive returns Dylan true if *value* is non-zero, and false if
 *value* is zero.
 
-primitive-false?
+.. primitive:: primitive-false?
 
-[Primitive]
+   :signature: (value :: <raw-small-integer>) => <object>
 
-Signature
+   :description:
 
-(value :: <raw-small-integer>) => <object>
+This is the complement of *primitive-true?*, returning ``#t`` if the
+value is 0, ``#f`` otherwise.
 
-Description
+.. primitive:: primitive-equals?
 
-This is the complement of *primitive-true?*, returning *#t* if the
-value is 0, *#f* otherwise.
+   :signature: (x :: <object>, y :: <object>) => <raw-c-int>
 
-primitive-equals?
+.. primitive:: primitive-continue-unwind
 
-[Primitive]
+   :signature: () => <object>
 
-Signature
+.. primitive:: primitive-nlx
 
-(x :: <object>, y :: <object>) => <raw-c-int>
+   :signature: (bind-exit-frame :: <raw-c-void\*>, args :: <raw-c-void\*>) => <raw-c-void>
 
-primitive-continue-unwind
+.. primitive:: primitive-inlined-nlx
 
-[Primitive]
+   :signature: (bind-exit-frame :: <raw-c-void\*>, first-argument :: <raw-c-void\*>) => <raw-c-void>
 
-Signature
+.. primitive:: primitive-variable-lookup
 
-() => <object>
+   :signature: (variable-pointer :: <raw-c-void\*>) => <raw-c-void\*>
 
-primitive-nlx
+.. primitive:: primitive-variable-lookup-setter
 
-[Primitive]
-
-Signature
-
-(bind-exit-frame :: <raw-c-void\*>, args :: <raw-c-void\*>) =>
-<raw-c-void>
-
-primitive-inlined-nlx
-
-[Primitive]
-
-Signature
-
-(bind-exit-frame :: <raw-c-void\*>, first-argument :: <raw-c-void\*>) =>
-<raw-c-void>
-
-rimitive-variable-lookup
-
-[Primitive]
-
-Signature
-
-(variable-pointer :: <raw-c-void\*>) => <raw-c-void\*>
-
-primitive-variable-lookup-setter
-
-[Primitive]
-
-Signature
-
-(value :: <raw-c-void\*>, variable-pointer :: <raw-c-void\*>) =>
-<raw-c-void\*>
+   :signature: (value :: <raw-c-void\*>, variable-pointer :: <raw-c-void\*>) => <raw-c-void\*>
 
 Integer Primitives
 ==================
 
-primitive-int?
+.. primitive:: primitive-int?
 
-[Primitive]
+   :signature: (x :: <object>) => <raw-small-integer>
 
-Signature
+.. primitive:: primitive-address-equals?
 
-(x :: <object>) => <raw-small-integer>
+   :signature: (x :: <raw-address>, y :: <raw-address>) => <raw-address>
 
-primitive-address-equals?
+.. primitive:: primitive-address-add
 
-[Primitive]
+   :signature: (x :: <raw-address>, y :: <raw-address>) => <raw-address>
 
-Signature
+.. primitive:: primitive-address-subtract
 
-(x :: <raw-address>, y :: <raw-address>) => <raw-address>
+   :signature: (x :: <raw-address>, y :: <raw-address>) => <raw-address>
 
-primitive-address-add
+.. primitive:: primitive-address-multiply
 
-[Primitive]
+   :signature: (x :: <raw-address>, y :: <raw-address>) => <raw-address>
 
-Signature
+.. primitive:: primitive-address-left-shift
 
-(x :: <raw-address>, y :: <raw-address>) => <raw-address>
+   :signature: (x :: <raw-address>, y :: <raw-address>) => <raw-address>
 
-primitive-address-subtract
+.. primitive:: primitive-address-right-shift
 
-[Primitive]
+   :signature: (x :: <raw-address>, y :: <raw-address>) => <raw-address>
 
-Signature
+.. primitive:: primitive-address-not
 
-(x :: <raw-address>, y :: <raw-address>) => <raw-address>
+   :signature: (x :: <raw-address>) => <raw-address>
 
-primitive-address-multiply
+.. primitive:: primitive-address-and
 
-[Primitive]
+   :signature: (x :: <raw-address>, y :: <raw-address>) => <raw-address>
 
-Signature
+.. primitive:: primitive-address-or
 
-(x :: <raw-address>, y :: <raw-address>) => <raw-address>
+   :signature: (x :: <raw-address>, y :: <raw-address>) => <raw-address>
 
-primitive-address-left-shift
+.. primitive:: primitive-small-integer-equals?
 
-[Primitive]
+   :signature: (x :: <raw-small-integer>, y :: <raw-small-integer>) => <raw-small-integer>
 
-Signature
+.. primitive:: primitive-small-integer-not-equals?
 
-(x :: <raw-address>, y :: <raw-address>) => <raw-address>
+   :signature: (x :: <raw-small-integer>, y :: <raw-small-integer>) => <raw-small-integer>
 
-primitive-address-right-shift
+.. primitive:: primitive-small-integer-less-than?
 
-[Primitive]
+   :signature: (x :: <raw-small-integer>, y :: <raw-small-integer>) => <raw-small-integer>
 
-Signature
+.. primitive:: primitive-small-integer-greater-than?
 
-(x :: <raw-address>, y :: <raw-address>) => <raw-address>
+   :signature: (x :: <raw-small-integer>, y :: <raw-small-integer>) => <raw-small-integer>
 
-primitive-address-not
+.. primitive:: primitive-small-integer-greater-than-or-equal?
 
-[Primitive]
+   :signature: (x :: <raw-small-integer>, y :: <raw-small-integer>) => <raw-small-integer>
 
-Signature
+.. primitive:: primitive-small-integer-negate
 
-(x :: <raw-address>) => <raw-address>
+   :signature: (x :: <raw-small-integer>) => <raw-small-integer>
 
-primitive-address-and
+.. primitive:: primitive-small-integer-add
 
-[Primitive]
+   :signature: (x :: <raw-small-integer>, y :: <raw-small-integer>) => <raw-small-integer>
 
-Signature
+.. primitive:: primitive-small-integer-subtract
 
-(x :: <raw-address>, y :: <raw-address>) => <raw-address>
+   :signature: (x :: <raw-small-integer>, y :: <raw-small-integer>) => <raw-small-integer>
 
-primitive-address-or
+.. primitive:: primitive-small-integer-multiply
 
-[Primitive]
+   :signature: (x :: <raw-small-integer>, y :: <raw-small-integer>) => <raw-small-integer>
 
-Signature
+.. primitive:: primitive-small-integer-divide
 
-(x :: <raw-address>, y :: <raw-address>) => <raw-address>
+   :signature: (x :: <raw-small-integer>, y :: <raw-small-integer>) => <raw-small-integer>
 
-primitive-small-integer-equals?
+.. primitive:: primitive-small-integer-modulo
 
-[Primitive]
+   :signature: (x :: <raw-small-integer>, y :: <raw-small-integer>) => <raw-small-integer>
 
-Signature
+.. primitive:: primitive-small-integer-left-shift
 
-(x :: <raw-small-integer>, y :: <raw-small-integer>) =>
-<raw-small-integer>
+   :signature: (x :: <raw-small-integer>, y :: <raw-small-integer>) => <raw-small-integer>
 
-primitive-small-integer-not-equals?
+.. primitive:: primitive-small-integer-right-shift
 
-[Primitive]
+   :signature: (x :: <raw-small-integer>, y :: <raw-small-integer>) => <raw-small-integer>
 
-Signature
+.. primitive:: primitive-small-integer-not
 
-(x :: <raw-small-integer>, y :: <raw-small-integer>) =>
-<raw-small-integer>
+   :signature: (x :: <raw-small-integer>) => <raw-small-integer>
 
-primitive-small-integer-less-than?
+.. primitive:: primitive-small-integer-and
 
-[Primitive]
+   :signature: (x :: <raw-small-integer>, y :: <raw-small-integer>) => <raw-small-integer>
 
-Signature
+.. primitive:: primitive-small-integer-or
 
-(x :: <raw-small-integer>, y :: <raw-small-integer>) =>
-<raw-small-integer>
+   :signature: (x :: <raw-small-integer>, y :: <raw-small-integer>) => <raw-small-integer>
 
-primitive-small-integer-greater-than?
+.. primitive:: primitive-small-integer-xor
 
-[Primitive]
-
-Signature
-
-(x :: <raw-small-integer>, y :: <raw-small-integer>) =>
-<raw-small-integer>
-
-primitive-small-integer-greater-than-or-equal?
-
-[Primitive]
-
-Signature
-
-(x :: <raw-small-integer>, y :: <raw-small-integer>) =>
-<raw-small-integer>
-
-primitive-small-integer-negate
-
-[Primitive]
-
-Signature
-
-(x :: <raw-small-integer>) => <raw-small-integer>
-
-primitive-small-integer-add
-
-[Primitive]
-
-Signature
-
-(x :: <raw-small-integer>, y :: <raw-small-integer>) =>
-<raw-small-integer>
-
-primitive-small-integer-subtract
-
-[Primitive]
-
-Signature
-
-(x :: <raw-small-integer>, y :: <raw-small-integer>) =>
-<raw-small-integer>
-
-primitive-small-integer-multiply
-
-[Primitive]
-
-Signature
-
-(x :: <raw-small-integer>, y :: <raw-small-integer>) =>
-<raw-small-integer>
-
-primitive-small-integer-divide
-
-[Primitive]
-
-Signature
-
-(x :: <raw-small-integer>, y :: <raw-small-integer>) =>
-<raw-small-integer>
-
-primitive-small-integer-modulo
-
-[Primitive]
-
-Signature
-
-(x :: <raw-small-integer>, y :: <raw-small-integer>) =>
-<raw-small-integer>
-
-primitive-small-integer-left-shift
-
-[Primitive]
-
-Signature
-
-(x :: <raw-small-integer>, y :: <raw-small-integer>) =>
-<raw-small-integer>
-
-primitive-small-integer-right-shift
-
-[Primitive]
-
-Signature
-
-(x :: <raw-small-integer>, y :: <raw-small-integer>) =>
-<raw-small-integer>
-
-primitive-small-integer-not
-
-[Primitive]
-
-Signature
-
-(x :: <raw-small-integer>) => <raw-small-integer>
-
-primitive-small-integer-and
-
-[Primitive]
-
-Signature
-
-(x :: <raw-small-integer>, y :: <raw-small-integer>) =>
-<raw-small-integer>
-
-primitive-small-integer-or
-
-[Primitive]
-
-Signature
-
-(x :: <raw-small-integer>, y :: <raw-small-integer>) =>
-<raw-small-integer>
-
-primitive-small-integer-xor
-
-[Primitive]
-
-Signature
-
-(x :: <raw-small-integer>, y :: <raw-small-integer>) =>
-<raw-small-integer>
+   :signature: (x :: <raw-small-integer>, y :: <raw-small-integer>) => <raw-small-integer>
 
 In addition to the small-integer operators above, there are also
 definitions for three other integer types, defined in the same manner.
@@ -1448,584 +981,302 @@ Integer Types and Dylan Primitives
 Float Primitives
 ================
 
-primitive-decoded-bits-as-single-float
+.. primitive:: primitive-decoded-bits-as-single-float
 
-[Primitive}
+   :signature: (sign :: <raw-small-integer>, exponent :: <raw-small-integer>, significand :: <raw-small-integer>) => <raw-single-float>)
 
-Signature
+.. primitive:: primitive-bits-as-single-float
 
-(sign :: <raw-small-integer>, exponent :: <raw-small-integer>,
- significand :: <raw-small-integer>) => <raw-single-float>)
+   :signature: (x :: <raw-small-integer>) => <raw-single-float>
 
-primitive-bits-as-single-float
+   :description:
 
-[Primitive]
+     Uses a custom emitter to map to a call to a function called
+     *integer\_to\_single\_float* in the runtime system.
 
-Signature
+.. primitive:: primitive-single-float-as-bits
 
-(x :: <raw-small-integer>) => <raw-single-float>
+   :signature: (x :: <raw-single-float>) => <raw-small-integer>
 
-Description
+   :description:
 
-Uses a custom emitter to map to a call to a function called
-*integer\_to\_single\_float* in the runtime system.
+     Uses a custom emitter to map to a call to a function called
+     *single\_float\_to\_integer* in the runtime system.
 
-primitive-single-float-as-bits
+.. primitive:: primitive-single-float-equals?
 
-[Primitive]
+   :signature: (x :: <raw-single-float>, y :: <raw-single-float>) => <raw-c-int>
 
-Signature
+.. primitive:: primitive-single-float-not-equals?
 
-(x :: <raw-single-float>) => <raw-small-integer>
+   :signature: (x :: <raw-single-float>, y :: <raw-single-float>) => <raw-c-int>
 
-Description
+.. primitive:: primitive-single-float-less-than?
 
-Uses a custom emitter to map to a call to a function called
-*single\_float\_to\_integer* in the runtime system.
+   :signature: (x :: <raw-single-float>, y :: <raw-single-float>) => <raw-c-int>
 
-primitive-single-float-equals?
+.. primitive:: primitive-single-float-less-than-or-equal?
 
-[Primitive]
+   :signature: (x :: <raw-single-float>, y :: <raw-single-float>) => <raw-c-int>
 
-Signature
+.. primitive:: primitive-single-float-greater-than?
 
-(x :: <raw-single-float>, y :: <raw-single-float>) => <raw-c-int>
+   :signature: (x :: <raw-single-float>, y :: <raw-single-float>) => <raw-c-int>
 
-primitive-single-float-not-equals?
+.. primitive:: primitive-single-float-greater-than-or-equal?
 
-[Primitive]
+   :signature: (x :: <raw-single-float>, y :: <raw-single-float>) => <raw-c-int>
 
-Signature
+.. primitive:: primitive-single-float-negate
 
-(x :: <raw-single-float>, y :: <raw-single-float>) => <raw-c-int>
+   :signature: (x :: <raw-single-float>) => <raw-single-float>
 
-primitive-single-float-less-than?
+.. primitive:: primitive-single-float-add
 
-[Primitive]
+   :signature: (x :: <raw-single-float>, y :: <raw-single-float>) => <raw-single-float>
 
-Signature
+.. primitive:: primitive-single-float-subtract
 
-(x :: <raw-single-float>, y :: <raw-single-float>) => <raw-c-int>
+   :signature: (x :: <raw-single-float>, y :: <raw-single-float>) => <raw-single-float>
 
-primitive-single-float-less-than-or-equal?
+.. primitive:: primitive-single-float-multiply
 
-[Primitive]
+   :signature: (x :: <raw-single-float>, y :: <raw-single-float>) => <raw-single-float>
 
-Signature
+.. primitive:: primitive-single-float-divide
 
-(x :: <raw-single-float>, y :: <raw-single-float>) => <raw-c-int>
+   :signature: (x :: <raw-single-float>, y :: <raw-single-float>) => <raw-single-float>
 
-primitive-single-float-greater-than?
+.. primitive:: primitive-single-float-unary-divide
 
-[Primitive]
-
-Signature
-
-(x :: <raw-single-float>, y :: <raw-single-float>) => <raw-c-int>
-
-primitive-single-float-greater-than-or-equal?
-
-[Primitive]
-
-Signature
-
-(x :: <raw-single-float>, y :: <raw-single-float>) => <raw-c-int>
-
-primitive-single-float-negate
-
-[Primitive]
-
-Signature
-
-(x :: <raw-single-float>) => <raw-single-float>
-
-primitive-single-float-add
-
-[Primitive]
-
-Signature
-
-(x :: <raw-single-float>, y :: <raw-single-float>) => <raw-single-float>
-
-primitive-single-float-subtract
-
-[Primitive]
-
-Signature
-
-(x :: <raw-single-float>, y :: <raw-single-float>) => <raw-single-float>
-
-primitive-single-float-multiply
-
-[Primitive]
-
-Signature
-
-(x :: <raw-single-float>, y :: <raw-single-float>) => <raw-single-float>
-
-primitive-single-float-divide
-
-[Primitive]
-
-Signature
-
-(x :: <raw-single-float>, y :: <raw-single-float>) => <raw-single-float>
-
-primitive-single-float-unary-divide
-
-[Primitive]
-
-Signature
-
-(x :: <raw-single-float>>) => <raw-single-float>
+   :signature: (x :: <raw-single-float>>) => <raw-single-float>
 
 Accessor Primitives
 ===================
 
-primitive-element
+.. primitive:: primitive-element
 
-[Primitive]
+   :signature: (array :: <object>, index :: <raw-small-integer>) => <object>
 
-Signature
+   :description:
 
-(array :: <object>, index :: <raw-small-integer>) => <object>
+     This is used for de-referencing slots in the middle of Dylan objects,
+     and thus potentially invokes read-barrier code. It takes two parameters:
+     a Dylan object, and an index which is the ‘word' index into the object.
+     It returns the Dylan value found in that corresponding slot.
 
-Description
+.. primitive:: primitive-element-setter
 
-This is used for de-referencing slots in the middle of Dylan objects,
-and thus potentially invokes read-barrier code. It takes two parameters:
-a Dylan object, and an index which is the ‘word' index into the object.
-It returns the Dylan value found in that corresponding slot.
+   :signature: (new-value :: <object>, array :: <object>, index :: <raw-small-integer>) => <object>
 
-primitive-element-setter
+   :description:
 
-[Primitive]
+     This is the assignment operator corresponding to *primitive-element*,
+     which is used to change the value of a Dylan slot. This takes an extra
+     initial parameter which is the new value to put into the object. The new
+     value is stored in the appropriate object at the given index.
 
-Signature
+.. primitive:: primitive-byte-element
 
-(new-value :: <object>, array :: <object>, index :: <raw-small-integer>)
-=> <object>
+   :signature: (array <object>, base-index :: <raw-small-integer>, byte-offset :: <raw-small-integer>) => <raw-c-char>
 
-Description
+   :description:
 
-This is the assignment operator corresponding to *primitive-element*,
-which is used to change the value of a Dylan slot. This takes an extra
-initial parameter which is the new value to put into the object. The new
-value is stored in the appropriate object at the given index.
+     This is similar to *primitive-element*, but deals with byte vectors. It
+     takes a new value and a Dylan object, along with a base offset and a
+     byte offset. The base offset, expressed in words, and the byte offset,
+     expressed in bytes, are added, and the byte found at that location is
+     returned.
 
-primitive-byte-element
+.. primitive:: primitive-byte-element-setter
 
-[Primitive]
+   :signature: (new-value :: <raw-c-char>) array :: <object>, base-index :: <raw-small-integer>,  byte-offset :: <raw-small-integer>) => <raw-c-char>
 
-Signature
+   :description:
 
-(array <object>, base-index :: <raw-small-integer>, byte-offset ::
-<raw-small-integer>) => <raw-c-char>
+     This is the corresponding setter for *primitive-byte-element*.
 
-Description
+.. primitive:: primitive-fill!
 
-This is similar to *primitive-element*, but deals with byte vectors. It
-takes a new value and a Dylan object, along with a base offset and a
-byte offset. The base offset, expressed in words, and the byte offset,
-expressed in bytes, are added, and the byte found at that location is
-returned.
+   :signature: (array :: <object>, size :: <raw-small-integer>, value :: <object>) => <object>
 
-primitive-byte-element-setter
+.. primitive:: primitive-replace!
 
-[Primitive]
+   :signature: (new-array :: <object>, array :: <object>, size :: <raw-small-integer>) => <object>
 
-Signature
+.. primitive:: primitive-replace-bytes!
 
-(new-value :: <raw-c-char>) array :: <object>, base-index ::
-<raw-small-integer>,  byte-offset :: <raw-small-integer>) => <raw-c-char>
-
-Description
-
-This is the corresponding setter for *primitive-byte-element*.
-
-primitive-fill!
-
-[Primitive]
-
-Signature
-
-(array :: <object>, size :: <raw-small-integer>, value :: <object>) =>
-<object>
-
-primitive-replace!
-
-[Primitive]
-
-Signature
-
-(new-array :: <object>, array :: <object>, size :: <raw-small-integer>)
-=> <object>
-
-primitive-replace-bytes!
-
-[Primitive]
-
-Signature
-
-(dst :: <raw-c-void\*>, src :: <raw-c-void\*>, size :: <raw-c-int>) =>
-<raw-c-void>
+   :signature: (dst :: <raw-c-void\*>, src :: <raw-c-void\*>, size :: <raw-c-int>) => <raw-c-void>
 
 The following primitives, named *primitive-* *type* *-at* and
 *primitive-* *type* *-at-setter* load or store, respectively, a value of
 the designated *type* at the specified address.
 
-primitive-untyped-at
+.. primitive:: primitive-untyped-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-untyped>
 
-Signature
+.. primitive:: primitive-untyped-at-setter
 
-(address :: <raw-pointer>) => <raw-untyped>
+   :signature: (new-value :: <raw-untyped>, address :: <raw-pointer>) => <raw-untyped>
 
-primitive-untyped-at-setter
+.. primitive:: primitive-pointer-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-pointer>
 
-Signature
+.. primitive:: primitive-pointer-at-setter
 
-(new-value :: <raw-untyped>, address :: <raw-pointer>) => <raw-untyped>
+   :signature: (new-value :: <raw-pointer>, address :: <raw-pointer>) => <raw-pointer>
 
-primitive-pointer-at
+.. primitive:: primitive-byte-character-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-byte-character>
 
-Signature
+.. primitive:: primitive-byte-character-at-setter
 
-(address :: <raw-pointer>) => <raw-pointer>
+   :signature: (new-value :: <raw-byte-character>, address :: <raw-pointer>) => <raw-byte-character>
 
-primitive-pointer-at-setter
+.. primitive:: primitive-small-integer-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-small-integer>
 
-Signature
+.. primitive:: primitive-small-integer-at-setter
 
-(new-value :: <raw-pointer>, address :: <raw-pointer>) => <raw-pointer>
+   :signature: (new-value :: <raw-small-integer>, address :: <raw-pointer>) => <raw-small-integer>
 
-primitive-byte-character-at
+.. primitive:: primitive-big-integer-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-big-integer>
 
-Signature
+.. primitive:: primitive-big-integer-at-setter
 
-(address :: <raw-pointer>) => <raw-byte-character>
+   :signature: (new-value :: <raw-big-integer>, address :: <raw-pointer>) => <raw-big-integer>
 
-primitive-byte-character-at-setter
+.. primitive:: primitive-machine-integer-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-machine-integer>
 
-Signature
+.. primitive:: primitive-machine-integer-at-setter
 
-(new-value :: <raw-byte-character>, address :: <raw-pointer>) =>
-<raw-byte-character>
+   :signature: (new-value :: <raw-machine-integer>, address :: <raw-pointer>) => <raw-machine-integer>
 
-primitive-small-integer-at
+.. primitive:: primitive-unsigned-machine-integer-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-unsigned-machine-integer>
 
-Signature
+.. primitive:: primitive-unsigned-machine-integer-at-setter
 
-(address :: <raw-pointer>) => <raw-small-integer>
+   :signature: (new-value :: <raw-unsigned-machine-integer>, address :: <raw-pointer>) => <raw-unsigned-machine-integer>
 
-primitive-small-integer-at-setter
+.. primitive:: primitive-single-float-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-single-float>
 
-Signature
+.. primitive:: primitive-single-float-at-setter
 
-(new-value :: <raw-small-integer>, address :: <raw-pointer>) =>
-<raw-small-integer>
+   :signature: (new-value :: <raw-single-float>, address :: <raw-pointer>) => <raw-single-float>
 
-primitive-big-integer-at
+.. primitive:: primitive-double-float-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-double-float>
 
-Signature
+.. primitive:: primitive-double-float-at-setter
 
-(address :: <raw-pointer>) => <raw-big-integer>
+   :signature: (new-value :: <raw-double-float>, address :: <raw-pointer>) => <raw-double-float>
 
-primitive-big-integer-at-setter
+.. primitive:: primitive-extended-float-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-extended-float>
 
-Signature
+.. primitive:: primitive-extended-float-at-setter
 
-(new-value :: <raw-big-integer>, address :: <raw-pointer>) =>
-<raw-big-integer>
+   :signature: (new-value :: <raw-extended-float>, address :: <raw-pointer>) => <raw-extended-float>
 
-primitive-machine-integer-at
+.. primitive:: primitive-signed-8-bit-integer-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-signed-8-bit-integer>
 
-Signature
+.. primitive:: primitive-signed-8-bit-integer-at-setter
 
-(address :: <raw-pointer>) => <raw-machine-integer>
+   :signature: (new-value :: <raw-signed-8-bit-integer>, address :: <raw-pointer>) => <raw-signed-8-bit-integer>
 
-primitive-machine-integer-at-setter
+.. primitive:: primitive-unsigned-8-bit-integer-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-unsigned-8-bit-integer>
 
-Signature
+.. primitive:: primitive-unsigned-8-bit-integer-at-setter
 
-(new-value :: <raw-machine-integer>, address :: <raw-pointer>) =>
-<raw-machine-integer>
+   :signature: (new-value :: <raw-unsigned-8-bit-integer>, address :: <raw-pointer>) => <raw-unsigned-8-bit-integer>
 
-primitive-unsigned-machine-integer-at
+.. primitive:: primitive-signed-16-bit-integer-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-signed-16-bit-integer>
 
-Signature
+.. primitive:: primitive-signed-16-bit-integer-at-setter
 
-(address :: <raw-pointer>) => <raw-unsigned-machine-integer>
+   :signature: (new-value :: <raw-signed-16-bit-integer>, address :: <raw-pointer>) => <raw-signed-16-bit-integer>
 
-primitive-unsigned-machine-integer-at-setter
+.. primitive:: primitive-unsigned-16-bit-integer-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-unsigned-16-bit-integer>
 
-Signature
+.. primitive:: primitive-unsigned-16-bit-integer-at-setter
 
-(new-value :: <raw-unsigned-machine-integer>, address :: <raw-pointer>)
- => <raw-unsigned-machine-integer>
+   :signature: (new-value :: <raw-unsigned-16-bit-integer>, address :: <raw-pointer>) => <raw-unsigned-16-bit-integer>
 
-primitive-single-float-at
+.. primitive:: primitive-signed-32-bit-integer-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-signed-32-bit-integer>
 
-Signature
+.. primitive:: primitive-signed-32-bit-integer-at-setter
 
-(address :: <raw-pointer>) => <raw-single-float>
+   :signature: (new-value :: <raw-signed-32-bit-integer>, address :: <raw-pointer>) => <raw-signed-32-bit-integer>
 
-primitive-single-float-at-setter
+.. primitive:: primitive-unsigned-32-bit-integer-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-unsigned-32-bit-integer>
 
-Signature
+.. primitive:: primitive-unsigned-32-bit-integer-at-setter
 
-(new-value :: <raw-single-float>, address :: <raw-pointer>) =>
-<raw-single-float>
+   :signature: (new-value :: <raw-unsigned-32-bit-integer>, address :: <raw-pointer>) => <raw-unsigned-32-bit-integer>
 
-primitive-double-float-at
+.. primitive:: primitive-signed-64-bit-integer-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-signed-64-bit-integer>
 
-Signature
+.. primitive:: primitive-signed-64-bit-integer-at-setter
 
-(address :: <raw-pointer>) => <raw-double-float>
+   :signature: (new-value :: <raw-signed-64-bit-integer>, address :: <raw-pointer>) => <raw-signed-64-bit-integer>
 
-primitive-double-float-at-setter
+.. primitive:: primitive-unsigned-64-bit-integer-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-unsigned-64-bit-integer>
 
-Signature
+.. primitive:: primitive-unsigned-64-bit-integer-at-setter
 
-(new-value :: <raw-double-float>, address :: <raw-pointer>) =>
-<raw-double-float>
+   :signature: (new-value :: <raw-unsigned-64-bit-integer>, address :: <raw-pointer>) => <raw-unsigned-64-bit-integer>
 
-primitive-extended-float-at
+.. primitive:: primitive-ieee-single-float-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-ieee-single-float>
 
-Signature
+.. primitive:: primitive-ieee-single-float-at-setter
 
-(address :: <raw-pointer>) => <raw-extended-float>
+   :signature: (new-value :: <raw-ieee-single-float>, address :: <raw-pointer>) => <raw-ieee-single-float>
 
-primitive-extended-float-at-setter
+.. primitive:: primitive-ieee-double-float-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-ieee-double-float>
 
-Signature
+.. primitive:: primitive-ieee-double-float-at-setter
 
-(new-value :: <raw-extended-float>, address :: <raw-pointer>) =>
-<raw-extended-float>
+   :signature: (new-value :: <raw-ieee-double-float>, address :: <raw-pointer>) => <raw-ieee-double-float>
 
-primitive-signed-8-bit-integer-at
+.. primitive:: primitive-ieee-extended-float-at
 
-[Primitive]
+   :signature: (address :: <raw-pointer>) => <raw-ieee-extended-float>
 
-Signature
+.. primitive:: primitive-ieee-extended-float-at-setter
 
-(address :: <raw-pointer>) => <raw-signed-8-bit-integer>
-
-primitive-signed-8-bit-integer-at-setter
-
-[Primitive]
-
-Signature
-
-(new-value :: <raw-signed-8-bit-integer>, address :: <raw-pointer>)
- => <raw-signed-8-bit-integer>
-
-primitive-unsigned-8-bit-integer-at
-
-[Primitive]
-
-Signature
-
-(address :: <raw-pointer>) => <raw-unsigned-8-bit-integer>
-
-primitive-unsigned-8-bit-integer-at-setter
-
-[Primitive]
-
-Signature
-
-(new-value :: <raw-unsigned-8-bit-integer>, address :: <raw-pointer>)
- => <raw-unsigned-8-bit-integer>
-
-primitive-signed-16-bit-integer-at
-
-[Primitive]
-
-Signature
-
-(address :: <raw-pointer>) => <raw-signed-16-bit-integer>
-
-primitive-signed-16-bit-integer-at-setter
-
-[Primitive]
-
-Signature
-
-(new-value :: <raw-signed-16-bit-integer>, address :: <raw-pointer>)
- => <raw-signed-16-bit-integer>
-
-primitive-unsigned-16-bit-integer-at
-
-[Primitive]
-
-Signature
-
-(address :: <raw-pointer>) => <raw-unsigned-16-bit-integer>
-
-primitive-unsigned-16-bit-integer-at-setter
-
-[Primitive]
-
-Signature
-
-(new-value :: <raw-unsigned-16-bit-integer>, address :: <raw-pointer>)
- => <raw-unsigned-16-bit-integer>
-
-primitive-signed-32-bit-integer-at
-
-[Primitive]
-
-Signature
-
-(address :: <raw-pointer>) => <raw-signed-32-bit-integer>
-
-primitive-signed-32-bit-integer-at-setter
-
-[Primitive]
-
-Signature
-
-(new-value :: <raw-signed-32-bit-integer>, address :: <raw-pointer>)
- => <raw-signed-32-bit-integer>
-
-primitive-unsigned-32-bit-integer-at
-
-[Primitive]
-
-Signature
-
-(address :: <raw-pointer>) => <raw-unsigned-32-bit-integer>
-
-primitive-unsigned-32-bit-integer-at-setter
-
-[Primitive]
-
-Signature
-
-(new-value :: <raw-unsigned-32-bit-integer>, address :: <raw-pointer>)
- => <raw-unsigned-32-bit-integer>
-
-primitive-signed-64-bit-integer-at
-
-[Primitive]
-
-Signature
-
-(address :: <raw-pointer>) => <raw-signed-64-bit-integer>
-
-primitive-signed-64-bit-integer-at-setter
-
-[Primitive]
-
-Signature
-
-(new-value :: <raw-signed-64-bit-integer>, address :: <raw-pointer>)
- => <raw-signed-64-bit-integer>
-
-primitive-unsigned-64-bit-integer-at
-
-[Primitive]
-
-Signature
-
-(address :: <raw-pointer>) => <raw-unsigned-64-bit-integer>
-
-primitive-unsigned-64-bit-integer-at-setter
-
-[Primitive]
-
-Signature
-
-(new-value :: <raw-unsigned-64-bit-integer>, address :: <raw-pointer>)
- => <raw-unsigned-64-bit-integer>
-
-primitive-ieee-single-float-at
-
-[Primitive]
-
-Signature
-
-(address :: <raw-pointer>) => <raw-ieee-single-float>
-
-primitive-ieee-single-float-at-setter
-
-[Primitive]
-
-Signature
-
-(new-value :: <raw-ieee-single-float>, address :: <raw-pointer>) =>
-<raw-ieee-single-float>
-
-primitive-ieee-double-float-at
-
-[Primitive]
-
-Signature
-
-(address :: <raw-pointer>) => <raw-ieee-double-float>
-
-primitive-ieee-double-float-at-setter
-
-[Primitive]
-
-Signature
-
-(new-value :: <raw-ieee-double-float>, address :: <raw-pointer>)
- => <raw-ieee-double-float>
-
-primitive-ieee-extended-float-at
-
-[Primitive]
-
-Signature
-
-(address :: <raw-pointer>) => <raw-ieee-extended-float>
-
-primitive-ieee-extended-float-at-setter
-
-[Primitive]
-
-Signature
-
-(new-value :: <raw-ieee-extended-float>, address :: <raw-pointer>)
-=> <raw-ieee-extended-float>
+   :signature: (new-value :: <raw-ieee-extended-float>, address :: <raw-pointer>) => <raw-ieee-extended-float>
 
