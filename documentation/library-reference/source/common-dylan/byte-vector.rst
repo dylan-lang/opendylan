@@ -21,21 +21,44 @@ The byte-vector Module
 .. generic-function:: byte-storage-address
    :open:
 
+   Returns the address of the raw byte storage of an object.
+
    :signature: byte-storage-address (the-buffer) => (result-offset)
 
    :parameter the-buffer: An instance of :drm:`<object>`.
    :value result-offset: An instance of :class:`<machine-word>`.
 
+   :seealso:
+
+     - :meth:`byte-storage-address(<buffer>)`
+     - :meth:`byte-storage-address(<byte-string>)`
+     - :meth:`byte-storage-address(<byte-vector>)`
+     - :gf:`byte-storage-offset-address`
+
 .. method:: byte-storage-address
    :specializer: <byte-string>
    :sealed:
+
+   Returns the address of the raw byte storage of a :drm:`<byte-string>`.
+
+   :seealso:
+
+     - :gf:`byte-storage-address`
 
 .. method:: byte-storage-address
    :specializer: <byte-vector>
    :sealed:
 
+   Returns the address of the raw byte storage of a :class:`<byte-vector>`.
+
+   :seealso:
+
+     - :gf:`byte-storage-address`
+
 .. generic-function:: byte-storage-offset-address
    :open:
+
+   Returns the address of the raw byte storage of an object, with an offset.
 
    :signature: byte-storage-offset-address (the-buffer data-offset) => (result-offset)
 
@@ -43,13 +66,32 @@ The byte-vector Module
    :parameter data-offset: An instance of :drm:`<integer>`.
    :value result-offset: An instance of :class:`<machine-word>`.
 
-.. method:: byte-storage-offset-address
-   :specializer: <byte-string>, <integer>
-   :sealed:
+   :seealso:
+
+     - :meth:`byte-storage-offset-address(<buffer>)`
+     - :meth:`byte-storage-offset-address(<byte-string>)`
+     - :meth:`byte-storage-offset-address(<byte-vector>)`
+     - :gf:`byte-storage-address`
 
 .. method:: byte-storage-offset-address
-   :specializer: <byte-vector>, <integer>
+   :specializer: <byte-string>
    :sealed:
+
+   Returns the address of the raw byte storage of a :drm:`<byte-string>`, with an offset.
+
+   :seealso:
+
+     - :gf:`byte-storage-offset-address`
+
+.. method:: byte-storage-offset-address
+   :specializer: <byte-vector>
+   :sealed:
+
+   Returns the address of the raw byte storage of a :class:`<byte-vector>`, with an offset.
+
+   :seealso:
+
+     - :gf:`byte-storage-offset-address`
 
 .. generic-function:: byte-vector-fill
 

@@ -32,7 +32,8 @@ The extensions are:
 - Type conversion functions: :func:`integer-to-string`,
   :func:`string-to-integer`, and :func:`float-to-string`.
 - Byte storage access functions: :gf:`byte-storage-address`,
-  :gf:`byte-storage-offset-address`.
+  :gf:`byte-storage-offset-address`, which are re-exported from
+  the :doc:`byte-vector module <byte-vector>`.
 
 .. macro:: assert
    :statement:
@@ -85,81 +86,6 @@ The extensions are:
 
      The class of 8-bit characters that instances of :drm:`<byte-string>`
      can contain.
-
-.. generic-function:: byte-storage-address
-   :open:
-
-   Returns the address of the raw byte storage of an object.
-
-   :signature: byte-storage-address *object* => *storage-address*
-
-   :parameter object: An instance of :drm:`<object>`.
-   :value storage-address: An instance of :class:`<machine-word>`.
-
-   :seealso:
-
-     - :meth:`byte-storage-address(<buffer>)`
-     - :meth:`byte-storage-address(<byte-string>)`
-     - :meth:`byte-storage-address(<byte-vector>)`
-     - :gf:`byte-storage-offset-address`
-
-.. method:: byte-storage-address
-   :specializer: <byte-string>
-   :sealed:
-
-   Returns the address of the raw byte storage of a :drm:`<byte-string>`.
-
-   :seealso:
-
-     - :gf:`byte-storage-address`
-
-.. method:: byte-storage-address
-   :specializer: <byte-vector>
-   :sealed:
-
-   Returns the address of the raw byte storage of a :class:`<byte-vector>`.
-
-   :seealso:
-
-     - :gf:`byte-storage-address`
-
-.. generic-function:: byte-storage-offset-address
-   :open:
-
-   Returns the address of the raw byte storage of an object, with an offset.
-
-   :signature: byte-storage-address *object*, *offset* => *storage-address*
-
-   :parameter object: An instance of :drm:`<object>`.
-   :parameter offset: An instance of :drm:`<integer>`.
-   :value storage-address: An instance of :class:`<machine-word>`.
-
-   :seealso:
-
-     - :meth:`byte-storage-offset-address(<buffer>)`
-     - :meth:`byte-storage-offset-address(<byte-string>)`
-     - :meth:`byte-storage-offset-address(<byte-vector>)`
-     - :gf:`byte-storage-address`
-
-.. method:: byte-storage-offset-address
-   :specializer: <byte-string>
-   :sealed:
-
-   Returns the address of the raw byte storage of a :drm:`<byte-string>`, with an offset.
-
-   :seealso:
-
-     - :gf:`byte-storage-offset-address`
-
-.. method:: byte-storage-offset-address
-   :specializer: <byte-vector>
-   :sealed:
-
-   Returns the address of the raw byte storage of a :class:`<byte-vector>`, with an offset.
-
-   :seealso:
-
-     - :gf:`byte-storage-offset-address`
 
 .. generic-function:: concatenate!
    :open:
