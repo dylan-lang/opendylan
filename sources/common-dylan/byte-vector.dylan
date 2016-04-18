@@ -221,3 +221,42 @@ define sealed inline method byte-storage-offset-address
            (primitive-repeated-slot-as-raw
               (the-buffer, primitive-repeated-slot-offset(the-buffer)))))
 end method;
+
+define method from-hexstring (string :: <byte-string>)
+  => (result :: <byte-vector>)
+  if (odd?(string.size))
+    error("String size must be multiple of 2.");
+  end if;
+
+  let result :: <byte-vector> = make(<byte-vector>, size: floor/(string.size, 2));
+
+  without-bounds-checks
+    for (i :: <integer> from 0 below string.size - 1 by 2)
+      let hi :: <byte> = as(<byte>, string[i]);
+      let lo :: <byte> = as(<byte>, string[i + 1]);
+      let b  :: <byte> = ash(logand(hi, 15) + 9 * ash(hi, -6), 4) +
+        logand(lo, 15) + 9 * ash(lo, -6);
+      result[floor/(i, 2)] := b;
+    end for;
+  end without-bounds-checks;
+
+  result;
+end method;
+
+define method hexstring (data :: <byte-vector>)
+  => (result :: <byte-string>)
+  let result :: <byte-string> = make(<byte-string>, size: data.size * 2);
+
+  without-bounds-checks
+    for (i :: <integer> from 0 below data.size)
+      let lo :: <byte> = logand(data[i], #xf);
+      let hi :: <byte> = ash(data[i], -4);
+      result[i * 2]     := make(<character>, code: logior(hi, #x30)
+                                  + if (hi >= 10) 39 else 0 end); // +39 if > 10 for lowercase
+      result[i * 2 + 1] := make(<character>, code: logior(lo, #x30)
+                                  + if (lo >= 10) 39 else 0 end); // +7  if > 10 for uppercase
+    end for;
+  end without-bounds-checks;
+
+  result;
+end method;
