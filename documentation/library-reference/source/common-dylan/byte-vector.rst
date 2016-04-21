@@ -180,3 +180,34 @@ The byte-vector Module
 .. method:: copy-bytes
    :specializer: <simple-object-vector>, <integer>, <byte-vector>, <integer>, <integer>
    :sealed:
+
+.. method:: hexstring
+   :specializer: <byte-vector>
+   :sealed:
+
+   Returns a string of lowercase hexadecimal digits representing the data.
+
+   :signature: hexstring (data) => (result)
+
+   :parameter data: An instance of :class:`<byte-vector>`.
+   :value result: An instance of :drm:`<byte-string>`.
+   
+   :seealso:
+
+     - :meth:`from-hexstring(<byte-string>)`
+
+.. method:: from-hexstring
+   :specializer: <byte-string>
+   :sealed:
+
+   Returns a <byte-vector> containing `data` interpreted as a hexadecimal
+   representation of a series bytes.
+
+   :signature: from-hexstring (string) => (result)
+
+   :parameter string: An instance of :drm:`<byte-string>`.
+   :value result: An instance of :class:`<vector>`.
+   
+   :seealso:
+
+     - :meth:`hexstring(<byte-vector>)`

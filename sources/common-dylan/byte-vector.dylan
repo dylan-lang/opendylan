@@ -222,7 +222,7 @@ define sealed inline method byte-storage-offset-address
               (the-buffer, primitive-repeated-slot-offset(the-buffer)))))
 end method;
 
-define method from-hexstring (string :: <byte-string>)
+define sealed method from-hexstring (string :: <byte-string>)
   => (result :: <byte-vector>)
   if (odd?(string.size))
     error("String size must be multiple of 2.");
@@ -235,7 +235,7 @@ define method from-hexstring (string :: <byte-string>)
       let hi :: <byte> = as(<byte>, string[i]);
       let lo :: <byte> = as(<byte>, string[i + 1]);
       let b  :: <byte> = ash(logand(hi, 15) + 9 * ash(hi, -6), 4) +
-        logand(lo, 15) + 9 * ash(lo, -6);
+                             logand(lo, 15) + 9 * ash(lo, -6);
       result[floor/(i, 2)] := b;
     end for;
   end without-bounds-checks;
@@ -243,7 +243,7 @@ define method from-hexstring (string :: <byte-string>)
   result;
 end method;
 
-define method hexstring (data :: <byte-vector>)
+define sealed method hexstring (data :: <byte-vector>)
   => (result :: <byte-string>)
   let result :: <byte-string> = make(<byte-string>, size: data.size * 2);
 
