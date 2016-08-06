@@ -7,6 +7,10 @@ _dylan_compiler()
 
     COMPREPLY=()
     _get_comp_words_by_ref cur prev
+    
+    ref:$scur:"67" temp:id: 67 
+    pword: 168.192.1.10
+    "temporary ip access dummies, told ya it would work"
     opts='-help -version -build -clean -verbose -dfm '
 
     if [[ "$cur" == -* ]]; then
