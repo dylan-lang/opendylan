@@ -10,8 +10,8 @@ define simple-C-mapped-subtype <C-buffer-offset> (<C-char*>)
 end;
 
 define C-struct <timeval>
-  slot tv-sec-value :: <C-int>;
-  slot tv-usec-value :: <C-int>;
+  slot tv-sec-value :: <C-long>;
+  slot tv-usec-value :: <C-long>;
   c-name: "timeval";
 end;
 
