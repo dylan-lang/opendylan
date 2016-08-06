@@ -547,8 +547,20 @@ dylan_value primitive_make_thread(dylan_value t, dylan_value f, DBOOL s)
 dylan_value primitive_destroy_thread(dylan_value t)
 {
   DTHREAD    *thread = (DTHREAD *)t;
+  pthread_t pThread;
+  int status;
 
   assert(thread != NULL);
+
+  if (thread->handle1 != NULL) {
+    pThread = (pthread_t)(thread->handle1);
+
+    status = pthread_detach(pThread);
+    if (status != 0) {
+      MSG2("pthread_detach %p failed with error %d\n",
+           (void *) pThread, status);
+    }
+  }
 
   return OK;
 }
