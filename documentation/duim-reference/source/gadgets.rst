@@ -430,7 +430,7 @@ presented to the user in a strict order.
 .. figure:: images/gadgets-5.png
    :align: center
 
-   A tab control page
+   A wizard page
 
 Subclasses of <button>
 ^^^^^^^^^^^^^^^^^^^^^^
