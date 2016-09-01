@@ -2,6 +2,7 @@
 #define OPENDYLAN_CRT_RUNTIME_H
 
 #include <stddef.h>
+#include <stdint.h>
 #include <setjmp.h>
 
 /* For ssize_t definition (POSIX extension) */
