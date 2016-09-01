@@ -8,6 +8,7 @@
 #elif defined(OPEN_DYLAN_PLATFORM_DARWIN)
 #include <pthread.h>
 #elif defined(OPEN_DYLAN_PLATFORM_FREEBSD)
+#include <pthread.h>
 #include <pthread_np.h>
 #elif defined(OPEN_DYLAN_PLATFORM_NETBSD)
 #include <lwp.h>
