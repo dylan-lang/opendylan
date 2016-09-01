@@ -21,6 +21,12 @@
 #  warning Unknown compiler
 #endif
 
+#ifdef __has_builtin
+#    define OPEN_DYLAN_COMPILER_HAS_BUILTIN(x) __has_builtin(x)
+#else
+#    define OPEN_DYLAN_COMPILER_HAS_BUILTIN(x) 0
+#endif
+
 /* This check is needed to bootstrap from the 2011.1 release. */
 #if !defined(OPEN_DYLAN_PLATFORM_DARWIN) && defined(__APPLE__)
 #  define OPEN_DYLAN_PLATFORM_DARWIN 1
@@ -875,9 +881,7 @@ extern void primitive_debug_message (dylan_value format_string, dylan_value argu
 
 #define primitive_header_size() primitive_word_size ()
 
-#if defined(OPEN_DYLAN_COMPILER_CLANG) && \
-    defined(__has_builtin) && \
-    __has_builtin(__builtin_readcyclecounter)
+#if OPEN_DYLAN_COMPILER_HAS_BUILTIN(__builtin_readcyclecounter)
 #  define primitive_read_cycle_counter() __builtin_readcyclecounter()
 #elif defined(OPEN_DYLAN_COMPILER_GCC_LIKE) && \
       (defined(OPEN_DYLAN_ARCH_X86) || defined(OPEN_DYLAN_ARCH_X86_64))
