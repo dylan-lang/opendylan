@@ -2159,13 +2159,13 @@ are exported from the *duim-gadgets* module.
                                      as-lowercase
                                        (as(<string>, symbol)) end));
 
-      You can return the items in the gadget as follows:
+     You can return the items in the gadget as follows:
 
-      .. code-block:: dylan
+     .. code-block:: dylan
 
-         gadget-items(\*g\*);
+        gadget-items(\*g\*);
 
-      This returns the symbol: ``#(#"one", #"two", #"three")``.
+     This returns the symbol: ``#(#"one", #"two", #"three")``.
 
    :seealso:
      - :gf:`gadget-items-setter`
