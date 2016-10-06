@@ -14,6 +14,7 @@ provided with Open Dylan.
    dylan/index
    common-dylan/index
    collections/index
+   t-lists/index
    hash-algorithms/index
    io/index
    coloring-stream/index
