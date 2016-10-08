@@ -179,6 +179,13 @@ define method buffered-format-integer
   print(arg, stream)
 end method buffered-format-integer;
 
+///---*** KLUDGE: Temporary method until we have better numerics.
+define method buffered-format-integer
+    (arg :: <machine-word>, radix :: limited(<integer>, min: 2, max: 36),
+     stream :: <buffered-stream>, sb :: <buffer>) => ()
+  print(arg, stream)
+end method buffered-format-integer;
+
 define method buffered-format-integer
     (arg :: <integer>, radix :: limited(<integer>, min: 2, max: 36),
      stream :: <buffered-stream>, sb :: <buffer>) => ()
