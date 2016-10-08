@@ -81,11 +81,9 @@ define method emit-code
     emit-code-aux(back-end, module, o, o.function, init?);
 
     // Done with this DFM?
-    if (*retract-dfm?*)
-      if (lambda-top-level?(o))
-	retract-method-dfm(o);
-	retract-method-dfm(o.function);
-      end if;
+    if (lambda-top-level?(o))
+      retract-method-dfm(o);
+      retract-method-dfm(o.function);
     end if;
   end unless;
 end method;

@@ -107,7 +107,6 @@ define module dfmc-back-end
     heap-stats,
     single-heap-stats,
     diff-heap-stats,
-    *retract-dfm?*,
 
     library-imported-object?,
     library-imported-binding?,

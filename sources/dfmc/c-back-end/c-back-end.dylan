@@ -200,15 +200,13 @@ end method;
 // Must retract local methods only after code generation of compilation-record
 
 define method retract-local-methods-in-heap(heap) => ()
-  if (*retract-dfm?*)
-    for (literal in heap.heap-defined-object-sequence)
-      if (instance?(literal, <&iep>) & ~lambda-top-level?(literal))
-        // format-out?("\nRETRACTING %=\n", literal);
-        retract-method-dfm(literal);
-        retract-method-dfm(literal.function);
-      end if;
-    end for;
-  end if;
+  for (literal in heap.heap-defined-object-sequence)
+    if (instance?(literal, <&iep>) & ~lambda-top-level?(literal))
+      // format-out?("\nRETRACTING %=\n", literal);
+      retract-method-dfm(literal);
+      retract-method-dfm(literal.function);
+    end if;
+  end for;
 end method;
 
 // In the C back-end, due to the use of setjmp / longjmp, we need to flag
