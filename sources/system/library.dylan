@@ -332,11 +332,6 @@ define module settings-internals
          register-key, unregister-key,
          get-value, set-value,
          do-remove-value!;
-
-  //---*** BOOTSTRAPPING: Remove these exports and declare
-  //---*** the generics dynamic after 2.1a1 is released...
-  export invalidate-settings-caches,
-         %settings-key-name-setter;
 end module settings-internals;
 
 define module system-internals
