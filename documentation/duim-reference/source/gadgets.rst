@@ -5788,7 +5788,7 @@ are exported from the *duim-gadgets* module.
 
    :seealso:
 
-     - :class: `<table-column>`
+     - :class:`<table-column>`
      - :type:`<table-control-view>`
 
 .. type:: <table-control-view>
@@ -6139,7 +6139,7 @@ are exported from the *duim-gadgets* module.
 
    The class of tree controls.
 
-   :superclasses: :class: `<collection-gadget>`
+   :superclasses: :class:`<collection-gadget>`
 
    :keyword children-generator: An instance of type :drm:`<function>`.
    :keyword children-predicate: An instance of type :drm:`<function>`.
