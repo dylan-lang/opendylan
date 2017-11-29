@@ -58,7 +58,7 @@ extern dylan_object KPunboundVKi;
 #define INLINE static inline
 #define FORCE_INLINE static inline __attribute__((always_inline))
 #else
-#define INLINE inline
+#define INLINE static inline
 #define FORCE_INLINE inline __attribute__((always_inline))
 #endif
 
