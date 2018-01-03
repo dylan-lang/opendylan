@@ -167,7 +167,7 @@ endif
 
 ifdef DARWIN
 mach_exc.h mach_excServer.c:
-	mig /usr/include/mach/mach_exc.defs
+	mig @MACOS_SDK@/usr/include/mach/mach_exc.defs
 
 $(OBJDIR_LLVM)/llvm-exceptions.o: mach_exc.h
 

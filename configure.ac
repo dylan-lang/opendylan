@@ -15,6 +15,7 @@ SUPPORT_LLVM=
 BDW_GC_STATIC=
 BDW_GC_MODULE=bdw-gc
 ADDITIONAL_RUNTIME_TARGET_PLATFORMS=
+MACOS_SDK=
 
 AC_CANONICAL_TARGET
 
@@ -34,14 +35,12 @@ case $host in
     ;;
   i*86-*-darwin*)
       OPEN_DYLAN_TARGET_PLATFORM=x86-darwin;
-      ADDITIONAL_RUNTIME_TARGET_PLATFORMS="x86_64-darwin";
-      BDW_GC_STATIC=true
+      MACOS_SDK=`xcrun --show-sdk-path`
       SUPPORT_LLVM=yes
     ;;
   x86_64-*-darwin*)
-      OPEN_DYLAN_TARGET_PLATFORM=x86-darwin;
-      ADDITIONAL_RUNTIME_TARGET_PLATFORMS="x86_64-darwin";
-      BDW_GC_STATIC=true
+      OPEN_DYLAN_TARGET_PLATFORM="x86_64-darwin";
+      MACOS_SDK=`xcrun --show-sdk-path`
       SUPPORT_LLVM=yes
     ;;
   amd64-*-freebsd* | x86_64-*-freebsd*)
@@ -68,6 +67,8 @@ case $host in
 esac
 AC_SUBST(OPEN_DYLAN_TARGET_PLATFORM)
 AC_SUBST(ADDITIONAL_RUNTIME_TARGET_PLATFORMS)
+
+AC_SUBST(MACOS_SDK)
 
 AM_INIT_AUTOMAKE
 
