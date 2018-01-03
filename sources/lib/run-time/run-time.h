@@ -1631,7 +1631,7 @@ extern DMINT primitive_machine_word_multiply_lowShigh(DMINT, DMINT);
 extern DMINT primitive_machine_word_multiply_low_with_overflow(DMINT, DMINT);
 extern DMINT primitive_machine_word_multiply_with_overflow(DMINT, DMINT);
 
-#define primitive_machine_word_negative(x)                (-(signed)(x))
+#define primitive_machine_word_negative(x)                (-(DMINT)(x))
 #define primitive_machine_word_abs(x)                     ((x)<0?-(x):(x))
 
 extern DMINT primitive_machine_word_negative_with_overflow(DMINT);
