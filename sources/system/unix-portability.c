@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <dlfcn.h>
 #include <dirent.h>
+#include <sys/stat.h>
 
 #ifdef __APPLE__
 #include <crt_externs.h>
@@ -88,4 +89,9 @@ struct dirent *system_readdir(DIR *dirp)
 const char *system_dirent_name(struct dirent *dirent)
 {
   return dirent->d_name;
+}
+
+int system_stat(const char* path, struct stat* buf)
+{
+  return stat(path, buf);
 }

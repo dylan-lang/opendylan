@@ -80,7 +80,7 @@ define thread variable *stat-buffer* = make(<byte-vector>, size: $stat-size, fil
 
 define function unix-file-exists? (path :: <byte-string>) => (exists? :: <boolean>)
   ~primitive-raw-as-boolean
-    (%call-c-function ("stat")
+    (%call-c-function ("system_stat")
        (path :: <raw-byte-string>, statbuf :: <raw-pointer>)
       => (result :: <raw-c-signed-int>)
        (primitive-string-as-raw(path),
