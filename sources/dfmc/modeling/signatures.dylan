@@ -54,7 +54,7 @@ end function;
 
 define function compute-signature-type-vector-definition-name
     (type-name :: <symbol>) => (definition-name :: <symbol>)
-  as(<symbol>, format-to-string("$signature-%s-types", type-name))
+  as(<symbol>, format-to-string("$signature-%s-types", as(<string>, type-name)))
 end function;
 
 define macro signature-type-vector-table-definer
@@ -243,7 +243,7 @@ define function compute-signature-definition-name
  => (definition-name :: <symbol>)
   as(<symbol>,
      format-to-string
-       ("$signature-%s-%s-rest-value-%d", type-name,
+       ("$signature-%s-%s-rest-value-%d", as(<string>, type-name),
         if (rest-value?) "object" else "no" end, size))
 end function;
 

@@ -331,7 +331,7 @@ define function generate-runtime
      platform-name :: <symbol>)
  => ();
   let output-basename
-    = format-to-string("%s-runtime", platform-name);
+    = format-to-string("%s-runtime", as(<string>, platform-name));
   let dummy-source-locator
     = make(<file-locator>, base: output-basename, extension: "ll",
            directory: working-directory());
@@ -377,8 +377,8 @@ define function generate-runtime
 
 	// Write out the generated header file
 	let header-basename
-	  = format-to-string("llvm-%s-runtime",
-			     platform-name);
+	  = format-to-string("llvm-%s",
+			     output-basename);
 	let header-locator
 	  = make(<file-locator>, base: header-basename, extension: "h");
 	generate-runtime-header(back-end, header-locator)
