@@ -1839,7 +1839,7 @@ feature.
 
      .. code-block:: dylan
 
-       *name* (*arg* 1, … *arg* n)
+       *name* (*arg* 1, ... *arg* n)
 
      The macro expands into this call:
 

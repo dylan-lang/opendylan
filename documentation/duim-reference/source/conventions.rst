@@ -199,7 +199,7 @@ be defined as follows:
 
     define macro with-drawing-options
       { with-drawing-options
-        (?medium:name, #rest ?keys:\*) ?body:body end }
+        (?medium:name, #rest ?keys:*) ?body:body end }
           => { begin
                  let with-drawing-options-body =
                    method (?medium) ?body end;
