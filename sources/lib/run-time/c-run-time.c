@@ -525,7 +525,7 @@ dylan_value primitive_raw_as_string (DBSTR buffer) {
   size_t len = strlen(buffer);
   size_t size = round_up_to_word(base_size + len + 1);
   dylan_value string = primitive_alloc_leaf_r(size, &KLbyte_stringGVKdW, len, 1);
-  memcpy(((dylan_byte_string*)string)->data, buffer, len);
+  memcpy(((dylan_byte_string*)string)->data, buffer, len + 1);
   return string;
 }
 
