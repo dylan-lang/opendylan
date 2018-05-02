@@ -767,7 +767,7 @@ dylan_value primitive_wait_for_semaphore(dylan_value l)
 
 #ifdef HAVE_POSIX_SEMAPHORES
   int res = sem_wait(&semaphore->semaphore);
-  if (res) {
+  if (res != 0) {
     MSG0("wait-for-semaphore: sem_wait returned error\n");
     return GENERAL_ERROR;
   }
@@ -921,12 +921,13 @@ dylan_value primitive_wait_for_semaphore_timed(dylan_value l, dylan_value m)
 
 #ifdef HAVE_POSIX_SEMAPHORES
   int res = sem_timedwait(&semaphore->semaphore, &end);
-  if (res == ETIMEDOUT) {
-    return TIMEOUT;
-  }
-  if (res) {
-    MSG0("wait-for-semaphore: sem_timedwait returned error\n");
-    return GENERAL_ERROR;
+  if (res != 0) {
+    if (errno == ETIMEDOUT) {
+      return TIMEOUT;
+    } else {
+      MSG0("wait-for-semaphore: sem_timedwait returned error\n");
+      return GENERAL_ERROR;
+    }
   }
 #else
   if (pthread_mutex_lock(&semaphore->mutex)) {
@@ -1055,7 +1056,7 @@ dylan_value primitive_release_semaphore(dylan_value l)
 
 #ifdef HAVE_POSIX_SEMAPHORES
   int res = sem_post(&semaphore->semaphore);
-  if (res) {
+  if (res != 0) {
     MSG0("release-semaphore: sem_post returned error\n");
     return GENERAL_ERROR;
   }
@@ -1337,9 +1338,9 @@ dylan_value primitive_make_semaphore(dylan_value l, dylan_value n, dylan_value i
 
 #ifdef HAVE_POSIX_SEMAPHORES
   int res = sem_init(&semaphore->semaphore, 0, initial);
-  if (res) {
+  if (res != 0) {
     MSG0("make-semaphore: sem_init returned error\n");
-    free(semaphore);
+    MMFreeMisc(semaphore, sizeof(SEMAPHORE));
     return GENERAL_ERROR;
   }
 #else
@@ -1371,8 +1372,8 @@ dylan_value primitive_destroy_semaphore(dylan_value l)
   semaphore = lock->handle;
 
 #ifdef HAVE_POSIX_SEMAPHORES
-  if (sem_destroy(&semaphore->semaphore)) {
-    MSG0("destroy-semaphore: sem_destroy returned errir\n");
+  if (sem_destroy(&semaphore->semaphore) != 0) {
+    MSG0("destroy-semaphore: sem_destroy returned error\n");
     return GENERAL_ERROR;
   }
 #else
