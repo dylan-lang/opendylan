@@ -4,21 +4,21 @@ Modules & Libraries
 
 Modules and libraries provide the structure of a Dylan program. Modules
 represent namespaces and control access to objects and functions.
-Libraries contain modules, and act as units of compilation in a
-finished Dylan program.
+Libraries contain modules, and act as units of compilation in a Dylan
+program.
 
 Simple Modules
 ==============
 
-Modules import the symbols of other modules and export their
-own. The dependencies between modules must form a directed, acyclic
-graph. Two modules may not use each other, and no circular
-dependencies may exist.
+Modules import names (or bindings) from other modules and export names
+for use by other modules. The names that may be imported/exported are
+the module-level (also called "global") variables such as those created
+by ``define variable``, ``define class``, ``define generic``, etc.
 
-Modules only export variables. Since the names of classes and
-generic functions are actually stored in variables, this represents
-no hardship. A sample module containing the vehicle classes from
-earlier chapters might resemble:
+The dependencies between modules must form a directed, acyclic
+graph. Two modules may not use each other, and no circular dependencies
+may exist. A sample module containing the vehicle classes from earlier
+chapters might look like this:
 
 .. code-block:: dylan
 
@@ -40,26 +40,26 @@ the ``vehicles`` module exports all three of the vehicle classes, the
 generic function ``tax``, several getter functions and a single
 setter function.
 
-To control access to a slot, export some combination of its
-getter and setter functions. To make a slot public, export both. To
-make it read-only, export just the getter function. To make it
-private, export neither. In the above example, the slot
-``serial-number`` is read-only, while the slot
-``owner`` is public.
+To control access to a slot, export some combination of its getter and
+setter functions. To make a slot public, export both. To make it
+read-only, export just the getter function. To make it private, export
+neither. In the above example, the slot ``serial-number`` is read-only,
+while the slot ``owner`` is read/write.
 
-Note that when some module adds a method to a generic function,
-the change affects all modules using that function. The new method
-actually gets added *into* the variable representing
-the generic function. Since the variable has been previously exported,
-all clients can access the new value.
+Note that when a module adds a method to an imported generic function,
+the change affects all modules using that function. ``define method``
+adds the new method to the existing generic function object, which may
+be referenced by any module importing its binding. The module that
+originally defined the generic function may prevent this behavior by
+"sealing" it over specific argument types.
 
 Import Options
 ==============
 
-Dylan allows very precise control over how symbols are imported
-from other modules. For example, individual symbols may be imported
-by name. They may be renamed, either one at a time, or by adding a
-prefix to all of a module's symbols at once. Some or all of them may be
+Dylan allows very precise control over how bindings are imported from
+other modules. For example, individual bindings may be imported by
+name. They may be renamed, either one at a time, or by adding a prefix
+to all of a module's names at once. Some or all of them may be
 re-exported immediately. See the DRM for specific examples.
 
 Dylan's import system has a number of advantages. Name conflicts
