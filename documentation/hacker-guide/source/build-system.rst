@@ -14,8 +14,8 @@ Dylan source files, and directly generates x86 or PPC machine language
 object files (in either COFF or ELF format, depending on the target
 platform). These object files need to be linked together to construct
 either an executable object file, or a loadable dynamically-linked
-library (also called a shared library). This link needs to performed by
-an external tool such as the Microsoft or GNU linker. The
+library (also called a shared library). This link needs to be performed
+by an external tool such as the Microsoft or GNU linker. The
 ``build-system`` component, controlled by a user-specified script file,
 directs the execution of these external tools.
 
