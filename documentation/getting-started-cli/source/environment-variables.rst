@@ -2,8 +2,8 @@ Environment Variables
 =====================
 
 Open Dylan uses a variety of environment variables to control
-behavior, where to look for files, or where to place output
-files.
+behavior, where to look for files, or where to place output files. In
+the common case, it is not necessary to set any of these variables.
 
 ``OPEN_DYLAN_TARGET_PLATFORM``:
     Used in :doc:`cross-compilation`.
