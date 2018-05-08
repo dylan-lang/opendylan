@@ -72,6 +72,15 @@ define method initialize
      #key buffer-size: requested-buffer-size = #f, locator) => ()
   next-method();
   unless (stream.accessor)
+    //-- This might signal a condition, in which case the stream is
+    //-- left open without a buffer. Mark the stream closed here and
+    //-- carry on with the signalling.
+    //--** This may leave closed <external-stream>s hanging around,
+    //-- See $open-external-streams.
+    let handler <condition> = method(condition, next-handler)
+				stream.stream-direction := #"closed";
+				next-handler();
+				end;
     stream.accessor := apply(new-accessor, #"file", initargs);
   end;
   if (requested-buffer-size)
@@ -338,9 +347,9 @@ end method do-next-input-buffer;
 // We might need to get rid of the input buffer.
 define method do-get-output-buffer
     (the-stream :: <file-stream>, #key bytes = 1)
- => (the-buffer :: <buffer>)
+ => (the-buffer :: false-or(<buffer>))
   ensure-writable(the-stream);
-  let the-buffer :: <buffer> = stream-shared-buffer(the-stream);
+  let the-buffer :: false-or(<buffer>) = stream-shared-buffer(the-stream);
   if (stream-input-buffer(the-stream))
     // assume any input buffer is only partial if it is at end of file
     buffer-fill(the-buffer, 0, start: the-buffer.buffer-end);
