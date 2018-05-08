@@ -62,7 +62,8 @@ Dependencies
 
 Get MPS or boehm-gc, depending on your platform:
 
-* Linux x86 or FreeBSD x86 (HARP) -> `MPS <http://www.ravenbrook.com/project/mps/release/1.114.0/>`_
+* Linux x86 or FreeBSD x86 (LLVM or HARP) -> `MPS
+  <http://www.ravenbrook.com/project/mps/release/1.114.0/>`_
 * Mac OS X and all 64 bit (C) -> boehm-gc
 
 On Mac OS X, you may find it easiest to install Homebrew and install
@@ -99,8 +100,10 @@ sources, using ``--with-mps``::
 
   ./configure --prefix=/opt/opendylan-current --with-mps=/path/to/mps
 
-See the `Dependencies`_ section above for details on obtaining a copy
-of the MPS library.
+`/path/to/mps` should point to the root directory of the MPS
+distribution, for example `--with-mps=/opt/mps-kit-1.114.0`.  See the
+`Dependencies`_ section above for details on obtaining a copy of the
+MPS library.
 
 On other platforms, the Boehm GC will be used. If you have installed the
 Boehm GC via your operating system package manager, you may not need to

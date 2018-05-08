@@ -3,7 +3,7 @@ Example documentation
 *********************
 
 Here is an example of documentation to get a feel for how it works. Use the
-"Show Source" link at the bottom of the page to see it in RST markup form.
+"View page source" link at the top of the page to see it in RST markup form.
 
 Skip Lists
 ----------
