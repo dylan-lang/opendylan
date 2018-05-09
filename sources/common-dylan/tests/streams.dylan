@@ -609,23 +609,29 @@ end method test-stream-input-available?;
 define method test-stream-contents
     (info :: <stream-test-info>, stream :: <stream>) => ()
   let name = info.info-test-name;
+  let prior-position = stream-position(stream);
   check-equal(format-to-string("%s: stream-contents correct", name),
               info.info-contents,
               stream-contents(stream));
-  check-at-end-of-stream(name, "stream-contents", stream)
+  check-equal(format-to-string("%s: stream-position is unchanged", name),
+	      prior-position,
+	      stream-position(stream));
 end method test-stream-contents;
 
 define method test-stream-contents-as
     (info :: <stream-test-info>, stream :: <stream>) => ()
   let name = info.info-test-name;
   let contents = #f;
+  let prior-position = stream-position(stream);
   check-equal(format-to-string("%s: stream-contents-as correct", name),
               info.info-contents,
               contents := stream-contents-as(<list>, stream));
   check-instance?(format-to-string("%s: stream-contents-as returns sequence of specified type", name),
                   <list>,
                   contents);
-  check-at-end-of-stream(name, "stream-contents-as", stream)
+  check-equal(format-to-string("%s: stream-position is unchanged", name),
+	      prior-position,
+	      stream-position(stream));
 end method test-stream-contents-as;
 
 define function check-at-end-of-stream
