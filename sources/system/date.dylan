@@ -17,8 +17,24 @@ define class <date> (<number>)
   slot date-seconds :: <integer> = 0, init-keyword: seconds:;
   slot date-microseconds :: <integer> = 0, init-keyword: microseconds:;
   slot date-time-zone-offset :: <integer> = 0, init-keyword: time-zone-offset:,
-                                               setter: %date-time-zone-offset-setter;
+    setter: %date-time-zone-offset-setter;
 end class <date>;
+
+// TODO(cgay): this API is inconsistent. date-month answers the
+// question "which month of the year is it?" while date-hours answers
+// the question "how many hours have passed (in this day)?" I think
+// they should all be singular for consistency. "Which hour is it?"
+
+define generic date-year (date :: <date>) => (year :: <integer>);
+define generic date-month (date :: <date>) => (month :: <integer>);
+define generic date-day (date :: <date>) => (day :: <integer>);
+define generic date-hours (date :: <date>) => (hours :: <integer>);
+define generic date-minutes (date :: <date>) => (minutes :: <integer>);
+define generic date-seconds (date :: <date>) => (seconds :: <integer>);
+define generic date-microseconds (date :: <date>) => (microseconds :: <integer>);
+define generic date-time-zone-offset (date :: <date>) => (minutes :: <integer>);
+define generic date-time-zone-offset-setter (offset :: <integer>, date :: <date>)
+ => (offset :: <integer>);
 
 define method make (class == <date>, #rest init-keywords,
                                      #key iso8601-string :: false-or(<string>) = #f,
