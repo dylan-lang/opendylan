@@ -15,7 +15,7 @@ define module-spec jam ()
   function jam-variable-setter (false-or(<sequence>), <jam-state>, <string>)
    => (false-or(<sequence>));
 
-  function jam-expand-arg(<jam-state>, <string>) => (<sequence>);
+  function jam-expand-arg(<jam-state>, <jam-arg>) => (<sequence>);
   function jam-expand-list(<jam-state>, <sequence>) => (<sequence>);
 
   function jam-read(<jam-state>, <string>, false-or(<locator>)) => ();
