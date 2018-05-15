@@ -356,7 +356,7 @@ install-stage:
 	@cp -R $(abs_builddir)/Bootstrap.3/bin $(prefix)
 	@cp -R $(abs_builddir)/Bootstrap.3/databases $(prefix)
 	@-cp -R $(abs_builddir)/Bootstrap.3/include/opendylan $(prefix)/include
-	@# We use force here because on Mac OS X, the lib directory likely contains read-only
+	@# We use force here because on macOS, the lib directory likely contains read-only
 	@# static libraries for the Boehm GC.
 	@cp -Rf $(abs_builddir)/Bootstrap.3/lib $(prefix)
 	@cp -Rf $(abs_builddir)/Bootstrap.3/share/opendylan $(prefix)/share

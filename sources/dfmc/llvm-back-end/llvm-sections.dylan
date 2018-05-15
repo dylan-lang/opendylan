@@ -40,7 +40,7 @@ define method llvm-section-name
   end select
 end method;
 
-// Darwin is different (cf. Mac OS X ABI Mach-O File Format Reference)
+// Darwin is different (cf. macOS ABI Mach-O File Format Reference)
 // LLVM section names for Mach-O are "segment, section" (comma-separated)
 define method llvm-section-name
     (back-end :: <llvm-darwin-back-end>, section :: <symbol>,

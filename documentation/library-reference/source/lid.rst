@@ -265,7 +265,7 @@ libraries can also be added with this keyword. Arbitrary linker options
 can not be specified using this keyword.
 
 On Windows, this value for this keyword is passed directly to the linker.
-However, on Unix and Mac OS X, the requirements are a bit more stringent
+However, on Unix and macOS, the requirements are a bit more stringent
 and the arguments should be passed one per line and be one of the following:
 
 ``-L path``:
@@ -288,12 +288,12 @@ and the arguments should be passed one per line and be one of the following:
 
 ``-F path``:
   Add a path to the search path for frameworks.
-  **(Mac OS X only)**
+  **(macOS only)**
 
 ``-framework framework``:
   Link against the specified shared library. This should be either in the
   regular linker search path or have a path specified via a ``-F`` flag.
-  **(Mac OS X only)**
+  **(macOS only)**
 
 Unlike the other keywords described in this section, the *C-Libraries:*
 keyword propagates to dependent libraries. For example, suppose library

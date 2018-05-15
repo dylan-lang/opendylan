@@ -417,8 +417,8 @@ specifying a search path.  For example::
 
     C-Libraries: -lGL
 
-Linking against a Mac OS X Framework
-------------------------------------
+Linking against a macOS Framework
+---------------------------------
 
 Just as with a regular shared library, the :ref:`C-Libraries <lid-c-libraries>`
 keyword in a :doc:`LID file <../lid>`.  For example::

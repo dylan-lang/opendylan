@@ -8,8 +8,8 @@ much to document yet as we haven't learned yet.
 GTK Back-end
 ============
 
-The GTK+ back-end is usable on both Mac OS X and Linux. It is
-based on GTK+ 3.x. On Mac OS X, it assumes that the Quartz
+The GTK+ back-end is usable on both macOS and Linux. It is
+based on GTK+ 3.x. On macOS, it assumes that the Quartz
 back-end is being used rather than X11.
 
 The bindings for GTK+ are largely generated from gobject-introspection
@@ -17,10 +17,10 @@ meta-data.  Some portions are hand-edited however or entirely done by
 hand, like the Cairo bindings.  Most of the special cases for hand-editing
 are put into the binding generator (`gir-dylan`_), but not all.
 
-Getting GTK+ 3.x with Quartz on Mac OS X
+Getting GTK+ 3.x with Quartz on macOS
 ----------------------------------------
 
-Building GTK+ 3.x with Quartz on Mac OS X must be done in a specific way.
+Building GTK+ 3.x with Quartz on macOS must be done in a specific way.
 This currently can *not* be done with Homebrew.
 
 Follow the `directions`_ on the GTK+ wiki, but make sure to build
@@ -30,7 +30,7 @@ GTK+ 3.x rather than 2.x. To do this, you'll want to use the moduleset
 Once you have a build, be sure to add the appropriate directories to
 your path.
 
-We have not yet integrated GTK+'s Mac OS X integration module, so
+We have not yet integrated GTK+'s macOS integration module, so
 the menu bar will not (yet) be integrated with the system menu bar
 when running a DUIM application.
 

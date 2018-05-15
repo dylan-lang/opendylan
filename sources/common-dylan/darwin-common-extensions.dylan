@@ -65,7 +65,7 @@ define function darwin-sysctl
 end function;
 
 /// This code uses one sysctl() to get the process arguments, and another
-/// to get the process's filename. It only works on OS X > 10.3.
+/// to get the process's filename. It only works on macOS > 10.3.
 /// The data format returned by KERN_PROCARGS2 is:
 /// [int32] <--- argc
 /// [string] <--- cmd name (relative to current directory)

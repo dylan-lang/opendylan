@@ -268,7 +268,7 @@ rule DylanLibraryCLibraries image : libraries {
   local _dll = [ FDLLName $(image) ] ;
   local _exe = [ FEXEName $(image) ] ;
 
-  # -F and -framework are OS X flags.
+  # -F and -framework are macOS flags.
   for lib in $(libraries) {
     switch $(lib) {
       case -L* : _clib_$(image[1]:L) += $(lib) ;
