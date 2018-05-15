@@ -51,7 +51,7 @@
   && defined(HAVE_POSIX_TIMEOUTS) \
   && !defined(OPEN_DYLAN_PLATFORM_DARWIN)
 /* POSIX Semaphores are supported */
-/* NOTE OS X does not properly implement semaphores */
+/* NOTE macOS does not properly implement semaphores */
 /* NOTE If we don't have TIMEOUTS then we also use emulation for now */
 #define HAVE_POSIX_SEMAPHORES
 #endif

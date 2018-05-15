@@ -64,9 +64,9 @@ Get MPS or boehm-gc, depending on your platform:
 
 * Linux x86 or FreeBSD x86 (LLVM or HARP) -> `MPS
   <http://www.ravenbrook.com/project/mps/release/1.114.0/>`_
-* Mac OS X and all 64 bit (C) -> boehm-gc
+* macOS and all 64 bit (C) -> boehm-gc
 
-On Mac OS X, you may find it easiest to install Homebrew and install
+On macOS, you may find it easiest to install Homebrew and install
 the following::
 
     brew install autoconf automake bdw-gc --universal

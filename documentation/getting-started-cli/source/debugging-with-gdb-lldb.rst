@@ -5,7 +5,7 @@ Debugging with GDB or LLDB
    available in builds from April 11, 2013 or later.
    :class: alert alert-block alert-warning
 
-.. warning:: On Mac OS X, we recommend using lldb to debug
+.. warning:: On macOS, we recommend using lldb to debug
    rather than gdb.
    :class: alert alert-block alert-warning
 
@@ -14,7 +14,7 @@ Which compiler backend are you using?
 
 If you are using the C backend, then the information discussed here
 will be useful for debugging. We use the C backend on 64 bit Linux,
-64 bit FreeBSD and all Mac OS X versions.
+64 bit FreeBSD and all macOS versions.
 
 If you're using the HARP backend (32 bit Linux or 32 bit FreeBSD), then
 you'll be limited to getting stack traces.

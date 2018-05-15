@@ -317,7 +317,7 @@ are derived from the base Jam implementation and are documented in the
    *Open Dylan extension.*
 
 ``UNIX``
-   True on non-Windows platforms, like Linux, FreeBSD and Mac OS X.
+   True on non-Windows platforms, like Linux, FreeBSD and macOS.
 
 Editing Jam Files
 =================

@@ -770,7 +770,7 @@ end method compute-bug-report-objects;
 
 define function os-variant-to-name (os-variant) => (name :: <string>)
   select (os-variant)
-    #"darwin"     => "Mac OS X";
+    #"darwin"     => "macOS";
     #"freebsd"    => "FreeBSD";
     #"linux"      => "Linux";
     #"winunknown" => "Windows (Unknown)";
