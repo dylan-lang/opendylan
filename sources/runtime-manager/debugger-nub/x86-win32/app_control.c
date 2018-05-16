@@ -202,9 +202,9 @@ void monitor_threads(LPDBGPROCESS process)
 void continue_application (NUB nub, int handling)
 {
   LPDBGPROCESS   process = (LPDBGPROCESS) nub;
-  LPDBGTHREAD    master_thread = process->ThreadList;
-  LPDBGTHREAD    this_thread = master_thread;
-  LPDBGTHREAD    last_thread = master_thread;
+  LPDBGTHREAD    main_thread = process->ThreadList;
+  LPDBGTHREAD    this_thread = main_thread;
+  LPDBGTHREAD    last_thread = main_thread;
 
   // Apply specialized "continue" behaviour to each thread in turn.
 
@@ -214,7 +214,7 @@ void continue_application (NUB nub, int handling)
   set_application_state (process, RUNNING);
 
   /*
-  this_thread = master_thread;
+  this_thread = main_thread;
   while (this_thread != NULL) {
 
   if (this_thread != NULL)
@@ -234,7 +234,7 @@ void continue_application (NUB nub, int handling)
   }
   */
 
-  this_thread = master_thread;
+  this_thread = main_thread;
   while (this_thread != NULL) {
     apply_appropriate_continuation_to_thread
       (process, this_thread, handling);
@@ -242,10 +242,10 @@ void continue_application (NUB nub, int handling)
 
     // Delete this thread from the thread list after continuing
     // on the thread, if its structure has been invalidated by
-    // an exit-thread event; except for the master-thread, this
+    // an exit-thread event; except for the main-thread, this
     // is the last event that will be processed  on that thread
 
-    if ((this_thread != master_thread) && (!this_thread->Valid)) {
+    if ((this_thread != main_thread) && (!this_thread->Valid)) {
       // Drop a node out of the list.
       LPDBGTHREAD    next_thread = this_thread->Next;
 

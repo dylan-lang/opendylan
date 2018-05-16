@@ -154,7 +154,7 @@ define shared init win32-API-runtime-primitive dylan-dll-entry ("DylanDllEntry",
   // Uninitialize any DLL roots etc.
   op--shut-down-dll-library(be);
   when-base
-    // Do any deregistration of the MM state for the master thread here
+    // Do any deregistration of the MM state for the main thread here
     op--maybe-uninitialize-thread-for-p-detach(be);
     // completely close down the MM etc.
     op--shut-down-dylan-library(be);

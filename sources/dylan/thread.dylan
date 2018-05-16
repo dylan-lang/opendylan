@@ -95,16 +95,16 @@ end method;
 
 
 define function make-first-thread () => (thread :: <thread>)
-  make(<thread>, name: "Master thread", function: special-thread-function);
+  make(<thread>, name: "Main thread", function: special-thread-function);
 end;
 
 
-define variable *master-thread* = #f;
+define variable *main-thread* = #f;
 
 // Don't do this as part of the define variable init, because it's really
 // done for side effect. (e.g. it shouldn't be eliminated just because
 // the variable is unreferenced)
-*master-thread* := make-first-thread();
+*main-thread* := make-first-thread();
 
 
 // make-foreign-thread may be called by the runtime system to

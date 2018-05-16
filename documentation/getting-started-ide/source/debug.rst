@@ -129,11 +129,11 @@ Threads are assigned titles using the following scheme:
 -  Any non-Dylan thread.
 
 The initial thread in a Dylan application is always called Thread 1:
-"Master thread". Each subsequently created thread is assigned an integer
+"Main thread". Each subsequently created thread is assigned an integer
 number by incrementing the value used for the previous thread, and a
 title derived according to the scheme above.
 
-In Reversi, there is only one thread, the master thread.
+In Reversi, there is only one thread, the main thread.
 
 .. _call-frames:
 
@@ -302,7 +302,7 @@ of an interactive evaluation.
 -  If you issue the pause command (**Application > Pause** or
 
 -  If you issue the pause command from the project window or editor, the
-   debugger for the application's master thread is refreshed.
+   debugger for the application’s main thread is refreshed.
 
 In all of these circumstances, any other open debugger windows will not
 be refreshed unless you choose **View > Refresh** in them. If you choose
@@ -1247,7 +1247,7 @@ stack pane.
 
 Consider this stack backtrace::
 
-    [-] Thread 1: "Master thread"
+    [-] Thread 1: "Main thread"
     |image13| [+] concerto
     [+] opus
 
@@ -1301,7 +1301,7 @@ always steps out of the function running in that frame.
 
 Consider this stack backtrace::
 
-    [-] Thread 1: "Master thread"
+    [-] Thread 1: "Main thread"
     [+] -- presto ()
     [+] -- allegro ()
     [+] -- moderato ()

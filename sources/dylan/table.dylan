@@ -482,7 +482,7 @@ end function;
 
 
 // The following function should be called for any thread which
-// is to run Dylan code, apart from the master thread
+// is to run Dylan code, apart from the main thread
 
 define inline function initialize-default-hash-state ()
   $default-hash-state := make(<hash-state>);

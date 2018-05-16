@@ -13,7 +13,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //
 // These are created via different mechanisms depending on the "type" of the
 // thread. We distinguish 3 "types": 
-//  a.  the master thread (which is used to initialize the Dylan library)
+//  a.  the main thread (which is used to initialize the Dylan library)
 //  b.  Dylan threads (created by the threads library)
 //  c   foreign threads
 //
@@ -737,7 +737,7 @@ define method op--maybe-uninitialize-thread (be :: <harp-back-end>)
 end method;
 
 
-// The DLL entry-point for the master thread uses this:
+// The DLL entry-point for the main thread uses this:
 
 define method op--initialize-master-thread (be :: <harp-back-end>) => ()
 
@@ -963,7 +963,7 @@ define method op--shut-down-dylan-library (be :: <harp-back-end>) => ()
   
   with-harp (be)
     tag done;
-    // Deregister the master thread if necessary
+    // Deregister the main thread if necessary
     op--maybe-deregister-thread-from-TEB(be, master-gc-teb);
     // Deregister any TEB memory and any remaining threads known to Dylan
     op--deregister-dynamic-teb-chain(be);
@@ -1121,7 +1121,7 @@ define init c-runtime-primitive dylan-main-0
 
   op--shut-down-exe-library(be);
 
-  // Do any deregistration of the MM state for the master thread here
+  // Do any deregistration of the MM state for the main thread here
   op--maybe-uninitialize-thread-for-p-detach(be);
   // completely close down the MM etc.
   op--shut-down-dylan-library(be);
@@ -1145,7 +1145,7 @@ define method op--maybe-uninitialize-thread-for-p-detach
   // Used to unregister the current thread, but this caused problems 
   // in Win95 because the detach callback might happen after
   // the OS has silently trashed the TEB on the stack if this happened
-  // to be a Dylan thread. If this is a non-Dylan thread (or the master thread)
+  // to be a Dylan thread. If this is a non-Dylan thread (or the main thread)
   // then the final dylan library shutdown will deregister the thread 
   // anyway. But if this is a Dylan thread, then it's safe to not deregister
   // it since this will leave the thread count as non-zero and so the final gc 
