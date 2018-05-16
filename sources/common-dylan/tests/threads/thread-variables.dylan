@@ -95,20 +95,20 @@ define test dynamic-binds-test (description: "Test dynamic bindings")
   set-resource-count(n);
 
   // Start by binding one of the variables, and assigning the other
-  *tv1* := #"master1";
-  dynamic-bind (*tv2* = #"master2")
+  *tv1* := #"main1";
+  dynamic-bind (*tv2* = #"main2")
     // Create a whole load of threads and let them do some testing
     for (i from 0 below n)
       vec[i] := make(<thread>, function: thread-function(make-value(1, i),
                                                          make-value(2, i)));
     end for;
-    check-true("TV2 in master thread dynamic-bind", *tv2* == #"master2");
+    check-true("TV2 in main thread dynamic-bind", *tv2* == #"main2");
     wait-for-resources();
   end dynamic-bind;
 
   // Check the assignments and binding now have the right value
-  check-true("TV1 assignment from master thread", *tv1* == #"master1");
-  check-true("TV2 outside master thread dynamic bind", *tv2* == #"global2");
+  check-true("TV1 assignment from main thread", *tv1* == #"main1");
+  check-true("TV2 outside main thread dynamic bind", *tv2* == #"global2");
 
   // Check the results from the threads
   for (i from 0 below n)

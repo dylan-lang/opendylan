@@ -187,10 +187,10 @@ define method thread-local-variable?
   => (well? :: <boolean>)
   let path :: <access-path> = application.debug-target-access-path;
   let marker :: <remote-value> = read-value(path, value-cell);
-  let master-thread :: false-or(<remote-thread>) = 
+  let main-thread :: false-or(<remote-thread>) =
     application.application-primary-thread;
-  if (master-thread)
-    let tlv = thread-current-local-variables(application, master-thread);
+  if (main-thread)
+    let tlv = thread-current-local-variables(application, main-thread);
     let tlv-size :: <remote-value> = as-remote-value((tlv.size + 2) * 4);
     let tag = inspect-instance-tag(application, marker);
     (tag == $dylan-tag-pointer) & remote-value-<(marker, tlv-size);

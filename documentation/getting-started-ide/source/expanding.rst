@@ -284,14 +284,14 @@ where *n* is either 0, 1, or 2. (The value depends on the state of the
 game when we saved it. The reason for this will become clear shortly.)
 
 In the left-hand pane beneath the message, there is a tree item for the
-master thread of the Reversi application. This tells us that the
+main thread of the Reversi application. This tells us that the
 exception was raised in that thread. (In Reversi's case, there happens
 to be only one thread, but other applications might have multiple
 threads, and knowing the thread that raised the exception is useful. See
 :doc:`debug` for more information about debugger options.)
 
 When expanded, the tree item shows the current state of the call stack
-for Reversi's master thread. When the debugger is invoked on a thread,
+for Reversi's main thread. When the debugger is invoked on a thread,
 it pauses execution in that thread. So when we expand the tree we see
 the stack almost exactly as it was at the moment that the debugger was
 invoked.
@@ -334,7 +334,7 @@ In this section we examine the backtrace and see what events led up to
 the unhandled exception.
 
 Looking at the top of the backtrace, we can see that the most recent
-call activity in the Reversi master thread concerned catching the
+call activity in the Reversi main thread concerned catching the
 unhandled exception and invoking the debugger. The calls to
 ``primitive_invoke_debugger``, ``default-handler``, and ``error`` were
 all part of this. But if we move down the backtrace to the point below

@@ -105,7 +105,7 @@ code to determine what to do:
 
 - For process detach,
 
-  1. Deregisters the master thread by calling
+  1. Deregisters the main thread by calling
      ``dylan_mm_deregister_thread_from_teb`` (``DxDYLAN.dll`` only).
   #. Deinitializes the garbage collector by calling
      ``dylan_shut_down_memory_manager`` (``DxDYLAN.dll`` only).
