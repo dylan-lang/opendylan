@@ -938,6 +938,13 @@ dylan_value primitive_wait_for_semaphore_timed(dylan_value l, dylan_value m)
   while (semaphore->count <= 0) {
     int res = pthread_cond_timedwait(&semaphore->cond, &semaphore->mutex, &end);
     if (res == ETIMEDOUT) {
+      /* The mutex is aquired even if the wait times out.
+       * See POSIX doc: http://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_cond_wait.html
+       */
+      if (pthread_mutex_unlock(&semaphore->mutex)) {
+        MSG0("wait-for-semaphore: pthread_mutex_unlock returned error\n");
+        return GENERAL_ERROR;
+      }
       return TIMEOUT;
     }
   }
