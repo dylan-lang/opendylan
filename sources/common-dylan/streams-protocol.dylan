@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define open class <stream-error> (<error>, <format-string-condition>)
+define open abstract class <stream-error> (<error>, <format-string-condition>)
   constant slot stream-error-stream :: <stream>,
     required-init-keyword: stream:;
 end;
