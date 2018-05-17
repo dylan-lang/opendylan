@@ -57,6 +57,7 @@ define module byte-vector
          copy-bytes,
          byte-storage-address,
          byte-storage-offset-address,
+         hexstring, from-hexstring
 end module byte-vector;
 
 define module common-extensions

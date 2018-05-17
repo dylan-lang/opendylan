@@ -102,7 +102,9 @@ Common Dylan
 * The ``common-dylan`` library now provides a ``classify-float``
   method which will return if the given float is ``#"normal"``,
   ``#"zero"``, ``#"infinite"``, ``#"nan"``, or ``#"subnormal"``.
-
+* The ``common-dylan`` library now provides ``hexstring`` and
+  ``from-hexstring`` methods for fast conversion from and to
+  hexadecimal strings.
 * The ``thread`` module has gained a ``current-thread-id`` function. The
   ``thread-id`` is also available for any ``<thread>`` object.
 
