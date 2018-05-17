@@ -18,6 +18,7 @@ end library;
 define module jam
   // Interpreter state
   create <jam-state>,
+         <jam-arg>,
          jam-state-copy,
          jam-variable,
          jam-variable-setter;
