@@ -1609,8 +1609,12 @@ extern DMINT primitive_unwrap_abstract_integer(dylan_value);
 #define primitive_machine_word_bit_field_extract(o, s, x)         (((x) & (((1 << (s)) - 1) << (o))) >> (o))
 
 #ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
-#define primitive_machine_word_count_low_zeros(x) __builtin_ctzl(x)
-#define primitive_machine_word_count_high_zeros(x) __builtin_clzl(x)
+static inline DMINT primitive_machine_word_count_low_zeros(DMINT x) {
+  return x ? __builtin_ctzl(x) : (8 * sizeof(x));
+}
+static inline DMINT primitive_machine_word_count_high_zeros(DMINT x) {
+  return x ? __builtin_clzl(x) : (8 * sizeof(x));
+}
 #else
 extern DMINT primitive_machine_word_count_low_zeros(DMINT);
 extern DMINT primitive_machine_word_count_high_zeros(DMINT);
