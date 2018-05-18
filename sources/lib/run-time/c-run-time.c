@@ -21,6 +21,10 @@
 #  define unlikely(x) x
 #endif
 
+/// Many of the short functions in this file are not used in the runtime
+//  but have been retained so that they can be called from within
+//  the debugger.
+
 /*
  stack allocation
    relies on inlining
@@ -531,15 +535,15 @@ dylan_value primitive_raw_as_string (DBSTR buffer) {
 
 /* SIGNATURES */
 
-INLINE dylan_simple_object_vector* signature_required(dylan_signature* sig) {
+dylan_simple_object_vector* signature_required(dylan_signature* sig) {
   return(sig->required);
 }
 
-INLINE dylan_simple_object_vector* signature_values(dylan_signature* sig) {
+dylan_simple_object_vector* signature_values(dylan_signature* sig) {
   return(sig->values);
 }
 
-INLINE dylan_value signature_rest_value(dylan_signature* sig) {
+dylan_value signature_rest_value(dylan_signature* sig) {
   return(sig->rest_value);
 }
 
@@ -553,41 +557,41 @@ INLINE dylan_value signature_rest_value(dylan_signature* sig) {
 #define REST_VALUE_P_MASK    0x080000
 #define NEXT_P_MASK          0x100000
 
-INLINE int signature_number_required(dylan_signature* sig) {
+int signature_number_required(dylan_signature* sig) {
   return(R(sig->properties) & NUMBER_REQUIRED_MASK);
 }
 
-INLINE int signature_number_values(dylan_signature* sig) {
+int signature_number_values(dylan_signature* sig) {
   return((R(sig->properties) & NUMBER_VALUES_MASK)
            >> NUMBER_VALUES_OFFSET);
 }
 
-INLINE int signature_key_p(dylan_signature* sig) {
+int signature_key_p(dylan_signature* sig) {
   return((R(sig->properties) & KEY_P_MASK) > 0);
 }
 
-INLINE int signature_all_keys_p(dylan_signature* sig) {
+int signature_all_keys_p(dylan_signature* sig) {
   return((R(sig->properties) & ALL_KEYS_P_MASK) > 0);
 }
 
-INLINE int signature_rest_p(dylan_signature* sig) {
+int signature_rest_p(dylan_signature* sig) {
   return((R(sig->properties) & REST_P_MASK) > 0);
 }
 
-INLINE int signature_optionals_p(dylan_signature* sig) {
+int signature_optionals_p(dylan_signature* sig) {
   return((R(sig->properties) & OPTIONALS_P_MASK) > 0);
 }
 
 
-INLINE int signature_rest_value_p(dylan_signature* sig) {
+int signature_rest_value_p(dylan_signature* sig) {
   return((R(sig->properties) & REST_VALUE_P_MASK) > 0);
 }
 
-INLINE int signature_next_p(dylan_signature* sig) {
+int signature_next_p(dylan_signature* sig) {
   return((R(sig->properties) & NEXT_P_MASK) > 0);
 }
 
-INLINE dylan_value signature_make_properties
+dylan_value signature_make_properties
     (int number_required, int number_values,
      int key_p, int all_keys_p, int rest_p, int rest_value_p) {
   return(I(number_required
@@ -600,7 +604,7 @@ INLINE dylan_value signature_make_properties
 
 /* FUNCTION */
 
-INLINE DFN function_xep(dylan_simple_method* function) {
+DFN function_xep(dylan_simple_method* function) {
   return(function->xep);
 }
 
@@ -608,56 +612,56 @@ DFN primitive_function_xep(dylan_value function) {
   return(function_xep((dylan_simple_method*)function));
 }
 
-INLINE DLFN function_mep(dylan_simple_method* function) {
+DLFN function_mep(dylan_simple_method* function) {
   return(function->mep);
 }
 
-INLINE DLFN function_iep(dylan_simple_method* function) {
+DLFN function_iep(dylan_simple_method* function) {
   return(function->mep);
 }
 
-INLINE DLFN keyword_function_iep(dylan_simple_method* function) {
+DLFN keyword_function_iep(dylan_simple_method* function) {
   return(((dylan_keyword_method*)function)->iep);
 }
 
-INLINE dylan_value method_keyword_specifiers(dylan_simple_method* method) {
+dylan_value method_keyword_specifiers(dylan_simple_method* method) {
   return(((dylan_keyword_method*)method)->keyword_specifiers);
 }
 
-INLINE dylan_simple_object_vector* function_specializers(dylan_simple_method* function) {
+dylan_simple_object_vector* function_specializers(dylan_simple_method* function) {
   return(signature_required(function->signature));
 }
 
-INLINE int function_number_required(dylan_simple_method* function) {
+int function_number_required(dylan_simple_method* function) {
   return(signature_number_required(function->signature));
 }
 
-INLINE int function_number_values(dylan_simple_method* function) {
+int function_number_values(dylan_simple_method* function) {
   return(signature_number_values(function->signature));
 }
 
-INLINE int function_key_p(dylan_simple_method* function) {
+int function_key_p(dylan_simple_method* function) {
   return(signature_key_p(function->signature));
 }
 
-INLINE int function_all_keys_p(dylan_simple_method* function) {
+int function_all_keys_p(dylan_simple_method* function) {
   return(signature_all_keys_p(function->signature));
 }
 
-INLINE int function_rest_p(dylan_simple_method* function) {
+int function_rest_p(dylan_simple_method* function) {
   return(signature_rest_p(function->signature));
 }
 
-INLINE int function_optionals_p(dylan_simple_method* function) {
+int function_optionals_p(dylan_simple_method* function) {
   return(signature_optionals_p(function->signature));
 }
 
 
-INLINE int function_rest_value_p(dylan_simple_method* function) {
+int function_rest_value_p(dylan_simple_method* function) {
   return(signature_rest_value_p(function->signature));
 }
 
-INLINE int function_next_p(dylan_simple_method* function) {
+int function_next_p(dylan_simple_method* function) {
   return(signature_next_p(function->signature));
 }
 
@@ -1400,35 +1404,6 @@ INLINE void process_keyword_parameters
 }
 
 extern dylan_value unknown_keyword_argument_errorVKi(dylan_value function, dylan_value keyword);
-
-INLINE void process_keyword_parameters_into_with_checking
-    (dylan_simple_method* function, int number_required,
-     int number_keywords, dylan_value keyword_specifiers[],
-     int argument_count, dylan_value arguments[], dylan_value new_arguments[]) {
-  int i,j,k;
-
-  int allow_other_keys_p = function_all_keys_p(function);
-  int size_keyword_specifiers = number_keywords * 2;
-  for (i=argument_count-1; i>=number_required;) {
-    dylan_value value   = arguments[i--];
-    dylan_value keyword = arguments[i--];
-    for (j=0,k=number_required;;k++,j+=2) {
-      if (j == size_keyword_specifiers) {
-        if (!allow_other_keys_p) {
-          unknown_keyword_argument_errorVKi(function, keyword);
-        } else {
-          break;
-        }
-      } else {
-        dylan_value lambda_keyword = keyword_specifiers[j];
-        if (keyword == lambda_keyword) {
-          new_arguments[k] = value;
-          break;
-        }
-      }
-    }
-  }
-}
 
 INLINE int process_keyword_call_into
     (dylan_value* new_arguments, dylan_simple_method* function, int argument_count,
