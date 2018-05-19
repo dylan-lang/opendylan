@@ -1,36 +1,21 @@
 Welcome to Open Dylan!
 ======================
 
-Open Dylan is a compiler and a set of libraries for the Dylan
-programming language.  If you're interested in working on the compiler
-and core libraries then you've come to the right place.  If you want
-to write your own Dylan libraries and *use* the compiler then you
-should `download a binary release <http://opendylan.org/download/>`_
-and then read the `Getting Started
-<http://opendylan.org/documentation/getting-started/>`_ guide.
-
-Open Dylan has two back-ends, HARP (which translates to native x86
-code) and a C back-end.
-
-The HARP back-end uses the Memory Pool System (MPS) from Ravenbrook,
-Limited to do its memory management.  The MPS is available from
-Ravenbrook at http://www.ravenbrook.com/project/mps/ and must be
-downloaded and built separately. If you are using Windows, you
-must download the `older 1.108 release
-<http://www.ravenbrook.com/project/mps/release/1.108.0/>`_. On
-other platforms, the `1.114 release
-<http://www.ravenbrook.com/project/mps/release/1.114.0/>`_ is
-required.
-
-The C back-end uses Boehm-Demers-Weiser conservative C/C++ garbage
-collector, available at https://github.com/ivmai/bdwgc
+Open Dylan is a compiler and a set of libraries for the `Dylan
+programming language <http://opendylan.org/books/drm>`_.  If you're
+interested in working on the compiler and core libraries then you've
+come to the right place.  If you want to write your own Dylan
+libraries and *use* the compiler then you should `download a binary
+release <http://opendylan.org/download/>`_ and then read the `Getting
+Started
+guide <http://opendylan.org/documentation/getting-started-cli/>`_.
 
 Open Dylan is written in Dylan, thus a Dylan compiler is needed to
 bootstrap it. Binary releases are available from
-http://opendylan.org/download/
+http://opendylan.org/download/.
 
-Once installed, the following commands will build and run a
-hello-world binary::
+Verify that the downloaded version is working correctly by building
+a hello-world binary::
 
   make-dylan-app hello-world
   cd hello-world
@@ -42,29 +27,33 @@ create it and build all used libraries.  Subsequent builds will be
 much faster.
 
 
-Compilation of the compiler itself
-==================================
+Building Open Dylan
+===================
 
 Clone the git repository::
 
   git clone git://github.com/dylan-lang/opendylan.git --recursive
 
+It does not work to download a ZIP file of the repository from github
+because it doesn't include git submodules.
 
-Compilation on UNIX
-===================
 
-Please note that on 64 bit Linux we need a big stack, the default
-stack is too small, please increase with ulimit -s before (safe is
-to double its value)
+UNIX
+====
+
+Please note that on 64 bit Linux the default stack is too small for
+Open Dylan so it must be increases with ``ulimit -s``. It's usually
+safe to double its value.
 
 Dependencies
 ------------
 
 Get MPS or boehm-gc, depending on your platform:
 
-* Linux x86 or FreeBSD x86 (LLVM or HARP) -> `MPS
+* Linux x86 or FreeBSD x86 (LLVM back-end) -> `MPS 1.114
   <http://www.ravenbrook.com/project/mps/release/1.114.0/>`_
-* macOS and all 64 bit (C) -> boehm-gc
+* macOS and all 64 bit (C back-end) -> `boehm-gc
+  <https://github.com/ivmai/bdwgc>`_
 
 On macOS, you may find it easiest to install Homebrew and install
 the following::
@@ -76,34 +65,32 @@ Apple. If your installation of ``bdw-gc`` is not universal (doesn't contain
 both i386 and x86_64 code), you will need to uninstall it and install again
 with the ``--universal`` flag.
 
-On Ubuntu, you can install the necessary dependencies with::
+On Ubuntu, Debian, etc, you can install the necessary dependencies
+with::
 
     apt-get install autoconf automake gcc libgc-dev
 
 Building
 --------
 
-To go on and do the build::
+To build ``dylan-compiler``, ``make-dylan-app``, and several tools::
 
-  export PATH=/path/to/opendylan/bin:$PATH
+  export PATH=$(dirname $(which dylan-compiler)):$PATH
   ./autogen.sh
-  ./configure --prefix=/opt/opendylan-current
+  ./configure --prefix=/opt/opendylan-current   # (but see note below)
   make
   sudo make install
 
-The build process will attempt to select the correct garbage collector
+The build process attempts to select the correct garbage collector
 implementation based on your platform.
 
-If you are on a platform using MPS (``x86-linux`` or ``x86-freebsd``),
-you will need to add a flag to ``configure`` to point it at the MPS
-sources, using ``--with-mps``::
+If you are on ``x86-linux`` or ``x86-freebsd`` you must add a flag to
+``configure`` to point it at the MPS sources, using ``--with-mps``::
 
   ./configure --prefix=/opt/opendylan-current --with-mps=/path/to/mps
 
-`/path/to/mps` should point to the root directory of the MPS
-distribution, for example `--with-mps=/opt/mps-kit-1.114.0`.  See the
-`Dependencies`_ section above for details on obtaining a copy of the
-MPS library.
+``/path/to/mps`` should point to the root directory of the MPS
+distribution, for example ``--with-mps=/opt/mps-kit-1.114.0``.
 
 On other platforms, the Boehm GC will be used. If you have installed the
 Boehm GC via your operating system package manager, you may not need to
@@ -127,8 +114,8 @@ it, the build will fail.
 Running Tests
 -------------
 
-We have an extensive set of tests which can be run once a full bootstrap
-(the default build, ``3-stage-bootstrap``) is complete::
+There is an extensive set of tests which can be run once the build is
+complete::
 
   make check
 
@@ -138,40 +125,34 @@ need to be fixed. Most of the test failures are minor issues or are due to
 unimplemented tests rather than major bugs. Help is welcome in improving
 our test suites.
 
-Compilation on Windows
-=======================
+Windows
+=======
 
-* Get `MPS <http://www.ravenbrook.com/project/mps/release/1.108.0/>`_. Be
-  sure that you have the older 1.108 release and NOT the newer 1.114
+* Get `MPS 1.108
+  <http://www.ravenbrook.com/project/mps/release/1.108.0/>`_. Be sure
+  that you have the older 1.108 release and **not** the newer 1.114
   release.
 
 * Make sure to have required tools installed: namely Debugging tools for
   Windows, a C compiler (PellesC or VC6) and Microsoft Platform SDK.
 
-* Open a shell (windows command processor), there set the environment
+* Open a shell (windows command processor) and set the environment
   variable SDK4MEMORY_POOL_SYSTEM to <where you unpacked MPS>.
 
 * Please keep in mind that paths with whitespaces are not well supported.
 
-* Go to admin\\builds and do a::
+* cd into admin\\builds and run::
 
-  build-release.bat <target-dir> /sources <git-checkout>\sources /internal
+    build-release.bat <target-dir> /sources <git-checkout>\sources /internal
 
-This will do a 4-stage bootstrap, in the end there will be a
-complete IDE in <target-dir>.
+This will do a 4-stage bootstrap.  In the end there will be a complete
+IDE in <target-dir>.
 
 * Building an installer:
 
-* Get NSIS from http://nsis.sf.net and the HTML help workshop (from
-  Microsoft, to generate the chm).
+  * Get NSIS from http://nsis.sf.net and the HTML help workshop (from
+    Microsoft, to generate the chm).
 
-* Go to packages\\win32-nsis, read Build.txt and follow the
-  instructions. Make sure you are using the same command shell as used
-  for building Open Dylan (to retain environment variables).
-
-
-Building the MPS
-================
-
-This is not required anymore since it is part of building the runtime.
-
+  * Go to packages\\win32-nsis, read Build.txt and follow the
+    instructions. Make sure you are using the same command shell as
+    used for building Open Dylan (to retain environment variables).
