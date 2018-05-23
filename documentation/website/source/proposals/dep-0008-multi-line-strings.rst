@@ -123,4 +123,4 @@ Revision History
 ================
 
 The revision history of this document is available here:
-https://github.com/dylan-lang/website/commits/master/source/proposals/dep-0008.rst
+https://github.com/dylan-lang/website/commits/master/source/proposals/dep-0008-multi-line-strings.rst
