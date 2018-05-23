@@ -68,7 +68,10 @@ end test;
 // Just run thread-yield.
 //
 define test yield-test(description: "thread-yield")
-  thread-yield();
+  check-no-error("thread-yield works",
+                 begin
+                   thread-yield();
+                 end);
 end test;
 
 

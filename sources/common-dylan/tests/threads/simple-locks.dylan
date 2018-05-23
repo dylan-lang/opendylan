@@ -46,6 +46,7 @@ define test simple-lock-multiple-claim
   let lock = make(<simple-lock>);
   check-true("First claim", wait-for(lock));
   check-condition("Second claim", <error>, wait-for(lock));
+  release(lock);
 end test simple-lock-multiple-claim;
 
 

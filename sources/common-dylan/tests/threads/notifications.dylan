@@ -174,14 +174,15 @@ define test queue-test ()
                                                    integer-to-string(i)),
                        function: reader);
   end for;
-
-  for (i from 0 below nfeeders)
-    join-thread(feeders[i]);
-  end for;
-  for (i from 0 below nreaders)
-    join-thread(readers[i]);
-  end for;
-
+  check-no-condition("queue-test completes",
+                   begin
+                     for (i from 0 below nfeeders)
+                       join-thread(feeders[i]);
+                     end for;
+                     for (i from 0 below nreaders)
+                       join-thread(readers[i]);
+                     end for;
+                   end);
 end test;
 
 
