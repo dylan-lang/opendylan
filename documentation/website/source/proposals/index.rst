@@ -24,9 +24,9 @@ Open Proposals (under consideration)
 ====================================
 
 ==== ============= ========== =============================================
-1    Process       Draft      `DEP Purpose and Guidelines <dep-0001-dep-process.html>`_  (`source <../_sources/proposals/dep-0001-dep-process.txt>`__)
-6    Standard      Draft      `Single File Libraries <dep-0006-single-file-library.html>`_  (`source <../_sources/proposals/dep-0006-single-file-library.txt>`__)
-8    Standard      Draft      `Multi-line Strings <dep-0008-multi-line-strings.html>`_  (`source <../_sources/proposals/dep-0008-multi-line-strings.txt>`__)
+1    Process       Draft      `DEP Purpose and Guidelines <dep-0001-dep-process.html>`_  (`source <../_sources/proposals/dep-0001-dep-process.rst>`__)
+6    Standard      Draft      `Single File Libraries <dep-0006-single-file-library.html>`_  (`source <../_sources/proposals/dep-0006-single-file-library.rst>`__)
+8    Standard      Draft      `Multi-line Strings <dep-0008-multi-line-strings.html>`_  (`source <../_sources/proposals/dep-0008-multi-line-strings.rst>`__)
 ==== ============= ========== =============================================
 
 
@@ -34,12 +34,12 @@ All Proposals by Number
 =======================
 
 ==== ============= ========== =============================================
-1    Process       Draft      `DEP Purpose and Guidelines <dep-0001-dep-process.html>`_  (`source <../_sources/proposals/dep-0001-dep-process.txt>`__)
-2    Standard      Final      `define function <dep-0002-define-function.html>`_ (`source <../_sources/proposals/dep-0002-define-function.txt>`__)
-3    Standard      Final      `C3 superclass linearization <dep-0003-c3-linearization.html>`_  (`source <../_sources/proposals/dep-0003-c3-linearization.txt>`__)
-4    Standard      Final      `New strings library <dep-0004-strings-library.html>`_  (`source <../_sources/proposals/dep-0004-strings-library.txt>`__)
-5    Standard      Final      `Subclass <dep-0005-subclass-function.html>`_  (`source <../_sources/proposals/dep-0005-subclass-function.txt>`__)
-6    Standard      Draft      `Single File Libraries <dep-0006-single-file-library.html>`_  (`source <../_sources/proposals/dep-0006-single-file-library.txt>`__)
-7    Standard      Draft      `Type-Safe Limited Collections <dep-0007-collection-type-safety.html>`_  (`source <../_sources/proposals/dep-0007-collection-type-safety.txt>`__)
-8    Standard      Draft      `Multi-line Strings <dep-0008-multi-line-strings.html>`_  (`source <../_sources/proposals/dep-0008-multi-line-strings.txt>`__)
+1    Process       Draft      `DEP Purpose and Guidelines <dep-0001-dep-process.html>`_  (`source <../_sources/proposals/dep-0001-dep-process.rst>`__)
+2    Standard      Final      `define function <dep-0002-define-function.html>`_ (`source <../_sources/proposals/dep-0002-define-function.rst>`__)
+3    Standard      Final      `C3 superclass linearization <dep-0003-c3-linearization.html>`_  (`source <../_sources/proposals/dep-0003-c3-linearization.rst>`__)
+4    Standard      Final      `New strings library <dep-0004-strings-library.html>`_  (`source <../_sources/proposals/dep-0004-strings-library.rst>`__)
+5    Standard      Final      `Subclass <dep-0005-subclass-function.html>`_  (`source <../_sources/proposals/dep-0005-subclass-function.rst>`__)
+6    Standard      Draft      `Single File Libraries <dep-0006-single-file-library.html>`_  (`source <../_sources/proposals/dep-0006-single-file-library.rst>`__)
+7    Standard      Draft      `Type-Safe Limited Collections <dep-0007-collection-type-safety.html>`_  (`source <../_sources/proposals/dep-0007-collection-type-safety.rst>`__)
+8    Standard      Draft      `Multi-line Strings <dep-0008-multi-line-strings.html>`_  (`source <../_sources/proposals/dep-0008-multi-line-strings.rst>`__)
 ==== ============= ========== =============================================
