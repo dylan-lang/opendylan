@@ -14,5 +14,5 @@ issued if the new C3 linearization is different from the old
 `linearization specified in the DRM
 <http://opendylan.org/books/drm/Classes#HEADING-41-25>`_.
 
-Further information is available in the accepted Dylan enhancement
-proposal `here </proposals/dep-0003.html>`_.
+Further information is available in `the accepted Dylan enhancement
+proposal </proposals/dep-0003-c3-linearization.html>`_.

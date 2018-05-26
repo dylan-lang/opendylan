@@ -7,7 +7,10 @@ the sum of the pairwise products of numbers from the arrays. As an added
 complication, we'll not fix the length of the arrays, so our Pascal
 version will use conformant arrays, a late addition to the language.
 
-.. code-block:: pascal
+.. The following code block used to be "pascal", but that isn't supported
+   by Sphinx (anymore?).
+
+.. code-block:: none
 
       function dotProduct(x: array[xlo..xhi: integer] of real,
                           y: array[ylo..yhi: integer] of real): real;

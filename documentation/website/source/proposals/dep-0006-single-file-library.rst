@@ -19,8 +19,8 @@ Dylan-Version:  2012.1
 Revision History
 ================
 
-The revision history of this document is available here:
-https://github.com/dylan-lang/website/commits/master/source/proposals/dep-0006.rst
+The revision history of this document is available on GitHub:
+https://github.com/dylan-lang/website/commits/master/source/proposals/dep-0006-single-file-library.rst
 
 Abstract
 ========

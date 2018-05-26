@@ -17,8 +17,8 @@ While we have extensive `release notes <http://opendylan.org/documentation/relea
 there are some important changes that we feel are worth calling out
 separately:
 
-* We now use the C3 superclass linearization. See `DEP-0003 <http://opendylan.org/proposals/dep-0003.html>`_
-  for more details.
+* We now use the C3 superclass linearization. See `DEP-0003
+  </proposals/dep-0003-c3-linearization.html>`_ for more details.
 * Multithreading now works in the C backend.
 * Binaries and libraries built by ``dylan-compiler`` no longer have
   their directory location hard-coded within the executables.
