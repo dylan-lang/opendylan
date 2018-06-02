@@ -452,3 +452,19 @@ end method;
 define function exit-application (code :: <integer>) => ()
   primitive-exit-application(integer-as-raw(code))
 end function exit-application;
+
+
+// Parser for multi-line "raw" strings. That is, strings with no
+// backslash escape processing other than for the matching end
+// delimiter.  Examples:
+//
+//   #string:[anything\] here] = "anything] here"
+//   #string:{multi
+//     line} = "multi\n  line"
+//   #string:[.*\s\\\s] = ".*\\s\\\\\\s"
+//
+// Possible delimiters are "", (), {}, [], or whitespace. See
+// dfmc-reader::make-hash-literal.
+define function string-parser (string :: <string>) => (string :: <string>)
+  string
+end;

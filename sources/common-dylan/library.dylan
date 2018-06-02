@@ -95,7 +95,7 @@ define module common-extensions
   use byte-vector,
     export: { <byte-vector>,
               byte-storage-address,
-              byte-storage-offset-address};
+              byte-storage-offset-address };
   create <closable-object>,
          <stream>,
          close,
@@ -136,7 +136,8 @@ define module common-extensions
          application-filename,
          application-arguments,
          tokenize-command-line,
-         exit-application;
+         exit-application,
+         string-parser;
 end module common-extensions;
 
 define module common-dylan

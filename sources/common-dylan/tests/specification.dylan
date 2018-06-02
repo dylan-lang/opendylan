@@ -108,6 +108,7 @@ define module-spec common-extensions ()
   // Other
   function false? (<object>) => (<boolean>);
   function true? (<object>) => (<boolean>);
+  function string-parser (<string>) => (<string>);
 end module-spec common-extensions;
 
 define module-spec streams-protocol ()

@@ -1001,3 +1001,17 @@ define common-extensions function-test classify-float ()
   assert-equal(classify-double-float(#xffffffff, #x7fefffff), #"normal");
   assert-equal(classify-double-float(#x00000000, #x7ff80000), #"nan");
 end function-test classify-float;
+
+define common-extensions function-test string-parser ()
+  assert-equal(#string:"abc", "abc", "bounded by double quotes");
+  assert-equal(#string:(abc), "abc", "bounded by parentheses");
+  assert-equal(#string:{.*\bfoo\b.*}, ".*\\bfoo\\b.*", "something that looks like a regexp");
+  assert-equal(#string:(a(bc), "a(bc", "can include start delimiter");
+  // TODO?: Either make escaping the end delimiter work (i.e., remove
+  // the backslash from the resulting string) or disallow it
+  // completely.
+  //assert-equal(#string:[ab\]c], "ab]c", "can escape end delimiter");
+  assert-equal(#string:{a\nb}, "a\\nb", "no backslash escape processing");
+  assert-equal(#string:[a
+b], "a\nb", "literal Newline character");
+end function-test string-parser;
