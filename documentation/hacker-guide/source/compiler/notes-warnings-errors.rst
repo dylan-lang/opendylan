@@ -32,24 +32,25 @@ try to note these things below when we discuss them.
 Philosophy
 **********
 
-The Open Dylan compiler tries hard to not fail at any given
-point where an error or otherwise is noted. This leads to many
-things that might be *fatal errors* elsewhere being represented
-as *serious warnings* here.
+The Open Dylan compiler tries hard not to abort compilation when an
+error is noted. This leads to many things that might be *fatal errors*
+elsewhere being represented as *serious warnings* here. For example,
+an undefined variable reference does not abort compilation, but if the
+code containing that reference is executed it causes a crash at run
+time.
 
-In part, this was part of the development model under the
-Open Dylan IDE which was very exploratory in nature and many
-errors could be corrected while an application was running.
+This was part of a very exploratory development model under the Open
+Dylan IDE, where many errors could be corrected while an application
+was running.
 
-This workflow isn't commonly used with Dylan today, so we
-may revise this philosophy and how it applies to the compiler's
-handling of program conditions.
+This workflow isn't commonly used with Dylan today, so we may revise
+this philosophy and how it applies to the compiler's handling of
+program conditions, or at least make it configurable.
 
-Another key element to how program conditions are currently
-used today is that when we store values on them, we store it as
-the raw object so that it is readily accessible from within
-the debugger, rather than only storing the string representations
-that would have been otherwise available.
+Similarly, a key element to how program conditions are currently used
+today is that when we store values on them, we store them as the raw
+object so that they're readily accessible from within the debugger,
+rather than only storing the string representations.
 
 Program Condition Hierarchy
 ***************************
@@ -98,12 +99,11 @@ locations for noting a program condition during compilation.
   fragments or model objects. For fragments, you want
   ``fragment-source-location``. For model objects, you want
   ``model-source-location``.
-* If you're in ``dfmc-optimization``, then you may likely
-  want ``dfm-source-location`` is you're working with a
-  object that is part of the control flow or data flow
-  graphs (like any computation or temporary). However,
-  in some cases, you'll still be working with model objects,
-  so keep an eye out for when you need to use
+* If you're in ``dfmc-optimization``, then you likely want
+  ``dfm-source-location`` if you're working with an object that is
+  part of the control flow or data flow graphs, like any computation
+  or temporary. However, in some cases, you'll still be working with
+  model objects, so keep an eye out for when you need to use
   ``model-source-location``.
 
 Defining a new Program Condition
