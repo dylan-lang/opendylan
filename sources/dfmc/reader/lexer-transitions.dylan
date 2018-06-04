@@ -15,6 +15,7 @@ define constant $ascii-8-bit-extensions
   = as(<string>, vector(as(<character>, 128), '-', as(<character>, 255)));
 
 // Build the state graph and save the initial state.
+// Note that transition strings support ranges, like "A-Z".
 //
 define constant $initial-state :: <state>
   = compile-state-machine

@@ -50,54 +50,51 @@ define method print-object
 end method print-object;
 
 
-// Make as many entries as necessary to represent the transitions
-// from 'on' to new-state.  'on' can be an integer, a character, or
-// a byte-string.  If a byte-string, then it supports ranges:
-//   "-abc-gz" = match on dash, a, b, c through g, and z
+// Make as many entries as necessary to represent the transitions from
+// 'on' to new-state.  'on' can be a character or a byte-string.  If a
+// byte-string, then it supports ranges: "-abc-gz" = match on dash, a,
+// b, c through g, and z.
 //
 // Also check to see if this entry clashes with any earlier entries.
 // If so, it means someone messed up editing the state machine.
 //
 define method add-transition
-    (table :: <simple-object-vector>,
-     on :: type-union(<integer>, <character>, <byte-string>),
-     new-state :: <symbol>)
+    (transitions :: <simple-object-vector>, on :: <character>, new-state :: <symbol>)
  => ()
-  select (on by instance?)
-    <integer> =>
-      if (table[on])
-        error("input %= transitions to both %= and %=",
-              as(<character>, on), table[on], new-state);
+  let code = as(<integer>, on);
+  if (transitions[code])
+    error("input %= transitions to both %= and %=",
+          on, transitions[code], new-state);
+  else
+    transitions[code] := new-state;
+  end if;
+end method add-transition;
+
+define method add-transition
+    (transitions :: <simple-object-vector>, on :: <byte-string>, new-state :: <symbol>)
+ => ()
+  let last = #f;                // Last transition actually added.
+  let range = #f;               // Just saw a hyphen (but not added yet).
+  for (char :: <byte-character> in on)
+    if (range)
+      if (last)
+        for (i :: <integer> from as(<integer>, last) + 1 to as(<integer>, char))
+          add-transition(transitions, as(<character>, i), new-state);
+        end for;
+        last := #f;
       else
-        table[on] := new-state;
+        add-transition(transitions, '-', new-state);
+        add-transition(transitions, char, new-state);
+        last := char;
       end if;
-    <character> =>
-      add-transition(table, as(<integer>, on), new-state);
-    <byte-string> =>
-      let last = #f;
-      let range = #f;
-      for (char :: <byte-character> in on)
-        if (range)
-          if (last)
-            for (i :: <integer>
-                   from as(<integer>, last) + 1 to as(<integer>, char))
-              add-transition(table, i, new-state);
-            end for;
-            last := #f;
-          else
-            add-transition(table, as(<integer>, '-'), new-state);
-            add-transition(table, as(<integer>, char), new-state);
-            last := char;
-          end if;
-          range := #f;
-        elseif (char == '-')
-          range := #t;
-        else
-          add-transition(table, as(<integer>, char), new-state);
-          last := char;
-        end if;
-      end for;
-  end select;
+      range := #f;
+    elseif (char == '-')
+      range := #t;
+    else
+      add-transition(transitions, char, new-state);
+      last := char;
+    end if;
+  end for;
 end method add-transition;
 
 // Utility function for making states.  Expands the sequence of
