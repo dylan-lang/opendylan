@@ -389,9 +389,9 @@ Date module.
 
    :description:
 
-     A number of methods are defined for the ``+`` generic function
+     A number of methods are defined for the ``+`` generic function to
      allow summing of durations. Note that there is not a method defined
-     for every possible combination of duration Specifically, you cannot
+     for every possible combination of duration. Specifically, you cannot
      sum different types of duration. The table below lists the methods
      that are defined on ``+``.
 
