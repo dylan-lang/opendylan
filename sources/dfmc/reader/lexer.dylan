@@ -1412,7 +1412,6 @@ define method make-hash-literal
         (source-location,
          start: source-location.start-posn + 1,
          end:   source-location.end-posn - 1);
-  format-out("Hash literal: %s\n", name-string);
   block ()
     let contents :: <byte-vector> = lexer.source.contents;
     let length :: <integer> = contents.size;
@@ -1431,29 +1430,20 @@ define method make-hash-literal
       while (((char := contents[i]) ~== end-delimiter)
                | (char == end-delimiter & contents[i - 1] == $escape-code))
         if (char == $newline-code)
-            lexer.line := lexer.line + 1;
+          lexer.line := lexer.line + 1;
           lexer.line-start := i;
         end;
         i := i + 1;
       end;
-      data
-        := extract-string(source-location, start: data-start + 1, end: i);
+      data := extract-string(source-location, start: data-start + 1, end: i);
       lexer.posn := i + 1;
     else
       // Read until whitespace
       let i :: <integer> = data-start;
-      let char :: <integer> = 0;
-      while (~delimiter-code?((char := contents[i])))
-        /*
-        if (char == $newline-code)
-            lexer.line := lexer.line + 1;
-          lexer.line-start := i;
-        end;
-        */
+      while (~delimiter-code?(contents[i]))
         i := i + 1;
       end;
-      data
-        := extract-string(source-location, start: data-start, end: i);
+      data := extract-string(source-location, start: data-start, end: i);
       lexer.posn := i;
     end;
     let module = *current-module*;
