@@ -240,6 +240,15 @@ define test issue-440 ()
               map(identity, cis), cis);
 end;
 
+define test issue-1091 ()
+  let test-range = range(from: 1, size: 1);
+  check-false("one element range is not empty", empty?(test-range)); 
+  check-equal("one element range has size 1", 1, size(test-range));
+  test-range := remove(test-range, 1);
+  check-true("empty range is empty", empty?(test-range)); 
+  check-equal("empty range has size 0", 0, size(test-range));
+end;
+
 define suite dylan-regressions ()
   test bug-2766;
   test bug-5800;
@@ -260,5 +269,6 @@ define suite dylan-regressions ()
   test issue-189;
   test issue-203;
   test issue-440;
+  test issue-1091
 end suite dylan-regressions;
 
