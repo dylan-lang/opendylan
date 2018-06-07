@@ -234,6 +234,9 @@ For Open Dylan Developers
     A series of proposals for improvements to the Open Dylan
     implementation and related libraries.
 
+`Open Dylan Release Notes <release-notes/index.html>`_
+    Notes on new features and bug fixes in each release of Open Dylan.
+
 
 Archived Documentation
 ======================

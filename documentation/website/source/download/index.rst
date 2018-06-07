@@ -34,8 +34,12 @@ Open Dylan Downloads
    | `FreeBSD (x86)`_          | 2014.1             | Dec. 31, 2014      | `03379938e4`_ | `Unix Notes`_    |
    +---------------------------+--------------------+--------------------+---------------+------------------+
 
-Old builds (including PowerPC Mac OS X and 64 bit FreeBSD) can be found by
-browsing the `download directories`_.
+See the `release notes
+<http://opendylan.org/documentation/release-notes/index.html>`_ for
+information about what changed since the previous version.
+
+Old builds (including PowerPC Mac OS X and 64 bit FreeBSD) can be
+found by browsing the `download directories`_.
 
 All of our source code is available under an open source license in the `"dylan-lang" organization on GitHub`_.
 
