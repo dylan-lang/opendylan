@@ -240,6 +240,7 @@ define test issue-440 ()
               map(identity, cis), cis);
 end;
 
+// Issue 1091: remove on <range> can return an invalid object (https://github.com/dylan-lang/opendylan/issues/1091)
 define test issue-1091 ()
   let test-range = range(from: 1, size: 1);
   check-false("one element range is not empty", empty?(test-range)); 
