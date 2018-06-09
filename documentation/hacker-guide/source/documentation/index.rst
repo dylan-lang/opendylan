@@ -9,11 +9,11 @@ Sphinx uses reStructuredText markup with some extensions of its own, and we have
 created additional extensions to document Dylan language entities.
 
 The documentation — a number of RST files — is in the `OpenDylan
-documentation <http://github.com/dylan-lang/opendylan/documentation>`
+documentation <http://github.com/dylan-lang/opendylan/documentation>`_
 directory. Consult the Sphinx web-site for details about
 reStructuredText markup and Sphinx extensions to it, and see the
 `Dylan sphinx-extensions documentation
-<http://dylan-lang/sphinx-extensions/sphinxcontrib/dylan/domain/>`
+<http://dylan-lang/sphinx-extensions/sphinxcontrib/dylan/domain/>`_
 repository for details about the Dylan language extensions. (You may
 use the ``rst2html`` tool to generate an HTML page from an ``.rst``
 file.)
