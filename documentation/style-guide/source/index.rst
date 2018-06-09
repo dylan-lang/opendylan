@@ -50,10 +50,16 @@ Controversial comments
    disagrees that that means you have to break there on all the similar
    nearby statements, even when they don't need it.
 
-80 columns law
-==============
+Line Length
+===========
 
-Lines should not exceed 80 columns in length.
+Lines should be kept to a *reasonable* length. Small monitors are rare
+these days so a strict 80 column rule is no longer necessary, even
+considering side-by-side diffs or split screen editing. However,
+please try to keep lines short in general, unless it requires
+unnatural contortions, because it is often easier to read that
+way. Use your judgement.
+
 
 Consistency
 ===========
