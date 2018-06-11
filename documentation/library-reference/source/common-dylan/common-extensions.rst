@@ -34,6 +34,7 @@ The extensions are:
 - Byte storage access functions: :gf:`byte-storage-address`,
   :gf:`byte-storage-offset-address`, which are re-exported from
   the :doc:`byte-vector module <byte-vector>`.
+- Raw string parsing with ``#string:...``: :func:`string-parser`
 
 .. macro:: assert
    :statement:
@@ -801,6 +802,50 @@ The extensions are:
    :description:
 
      The class of stretchy sequences.
+
+.. _string-parser:
+
+.. function:: string-parser
+
+   Returns the string it is passed. This function is not intended to
+   be called directly by user code.
+
+   :signature: string-parser *string* => *string*
+
+   :parameter string: An instance of :drm:`<string>`.
+   :value string: An instance of :drm:`<string>`.
+
+   :description:
+
+     This function is called by the Dylan compiler when it encounters
+     a form starting with ``#string:`` in Dylan source code.  Here are
+     some examples showing the "raw" string syntax and the equivalent
+     string written using stanard Dylan string syntax::
+
+	#string:".\*[A-Z]" = ".\\*[A-Z]"
+	#string:["foo"] = "\"foo\""
+	#string:"\\\" = "\\\\\\"
+	#string:{a["b"]} = "a[\"b\"]"
+	#string:[\documentclass[12pt\]{article}
+	\usepackage{lingmacros}
+        ]
+
+     Note that in the last example above, ``\]`` escapes the close
+     delimiter. Backslash followed by the end delimiter (see below) is
+     the **only** escape sequence recognized.  In most cases it
+     shouldn't be necessary to use any escaping, since one can usually
+     just use a different set of delimiters.
+
+     Any of the following matched start/end delimeter pairs may be
+     used around the string, providing some flexibility in case one of
+     the delimiters occurs in the string::
+
+	"" [] {} ()
+
+     Note also that the string may span multiple lines. Any trailing
+     whitespace (spaces and tabs) at the end of a line is removed.
+     Both ``\n`` and ``\r\n`` result in a single ``\n`` character
+     being included in the resulting string.
 
 .. class:: <string-table>
    :sealed:

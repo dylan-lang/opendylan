@@ -2,6 +2,9 @@
 Parser Expansions
 *****************
 
+Hash Literals
+=============
+
 .. warning:: This is a highly experimental extension. It is not
    well specified, is not supported by any of the editor integrations
    or syntax highlighters, and may change or disappear in the future.
@@ -49,3 +52,64 @@ An example parser:
 
 If an appropriate function isn't defined, you get a standard unbound variable
 reference message indicating the # literal.
+
+
+Multi-line Strings
+==================
+
+Multi-line string literals are delimited by three double quote characters on
+each end.  The BNF, which augments the `Character and String Literals
+<http://opendylan.org/books/drm/Lexical_Grammar#HEADING-117-38>`_ section in
+the DRM, is ::
+
+  MULTI-LINE-STRING:
+
+      """ more-multi-line-string
+
+  MORE-MULTI-LINE-STRING:
+
+      multi-line-string-character more-multi-line-string
+
+      """
+
+  MULTI-LINE-STRING-CHARACTER:
+
+      any printing character (including space) except for \\
+
+      \\ escape-character
+
+Escape characters are interpreted as with the standard STRING production.
+Literal end-of-line sequences (\\n and \\r\\n) are always interpreted as a
+single Newline (LF) character, regardless of operating system platform.
+
+Examples:
+
+Equivalent to ``"abc"``::
+
+  """abc"""
+
+Equivalent to ``"line one\nline two"``::
+
+  """line one
+  line two"""
+
+Equivalent to ``"let x = \"foo\";"``::
+
+  """let x = "foo";"""
+
+Equivalent to ``"\nfoo\nbar\n"``::
+
+  """
+  foo
+  bar
+  """
+
+Raw String Literals
+===================
+
+Raw string literals are string literals with no backslash escape
+processing.  The hash literal syntax described above is used, in
+conjunction with a ``string-parser`` function exported from the
+``common-extensions`` module (and therefore also from the
+``common-dylan`` module).  See :ref:`string-parser <string-parser>`
+for details.
