@@ -485,8 +485,10 @@ define method map-into-stretchy-one
           with-fip-of target with prefix t-
             for (key from 0 below key,
                  t-state = t-initial-state then t-next-state(target, t-state))
-            finally // Process the remaining keys
-              for (t-state = t-state then t-next-state(target, t-state))
+            finally // Process the remaining keys. We know the target and coll
+              // have the same size so only check the former.
+              for (t-state = t-state then t-next-state(target, t-state),
+                 until: t-finished-state?(target, t-state, t-limit))
                 t-current-element-setter
                   (fun(c-current-element(coll, c-state)), target, t-state);
                 c-state := c-next-state(coll, c-state);
