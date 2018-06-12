@@ -250,6 +250,14 @@ define test issue-1091 ()
   check-equal("empty range has size 0", 0, size(test-range));
 end;
 
+// Issue 1095: Bus error when using map-into with <deque> (https://github.com/dylan-lang/opendylan/issues/1095)
+define test issue-1095 ()
+  let col = as(<deque>, #(0, 0, 0));
+  check-equal("map-into stretches a <deque> correctly",
+              as(<deque>, #(1, 2, 3, 4)),
+              map-into(col, identity, #(1, 2, 3, 4)));
+end;
+
 define suite dylan-regressions ()
   test bug-2766;
   test bug-5800;
@@ -270,6 +278,7 @@ define suite dylan-regressions ()
   test issue-189;
   test issue-203;
   test issue-440;
-  test issue-1091
+  test issue-1091;
+  test issue-1095;
 end suite dylan-regressions;
 
