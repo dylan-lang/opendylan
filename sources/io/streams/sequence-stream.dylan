@@ -188,16 +188,23 @@ define method read
   let src-n :: <integer>  = (stream-limit(stream) | stream.final-position) - pos;
   if (n > src-n)
     if (unsupplied?(on-end-of-stream))
-      signal(make(<incomplete-read-error>,
-                  stream: stream,
-                  count: src-n,
-                  sequence: copy-sequence(seq, start: pos, end: pos + src-n)));
+      if (zero?(src-n))
+        signal(make(<end-of-stream-error>, stream: stream))
+      else
+        stream.current-position := pos + src-n;
+        signal(make(<incomplete-read-error>,
+                    stream: stream,
+                    count: src-n,
+                    sequence: copy-sequence(seq, start: pos, end: pos + src-n)));
+      end;
+    else
+      on-end-of-stream
     end;
-    n := src-n
+  else
+    let elements = copy-sequence(seq, start: pos, end: pos + n);
+    stream.current-position := pos + n;
+    elements
   end;
-  let elements = copy-sequence(seq, start: pos, end: pos + n);
-  stream.current-position := pos + n;
-  elements
 end method read;
 
 define method read-into!
