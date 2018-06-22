@@ -104,10 +104,10 @@ end method test-new-line;
 
 /// Positionable stream convenience function tests
 
-register-stream-test(<stream>, test-current-position);
-register-stream-test(<stream>, test-current-position-setter);
-register-stream-test(<stream>, test-initial-position);
-register-stream-test(<stream>, test-final-position);
+register-stream-test(<positionable-stream>, test-current-position);
+register-stream-test(<positionable-stream>, test-current-position-setter);
+register-stream-test(<positionable-stream>, test-initial-position);
+register-stream-test(<positionable-stream>, test-final-position);
 
 // Don't test the functions we're already testing... there must be a better way!
 define streams function-test current-position () end;
