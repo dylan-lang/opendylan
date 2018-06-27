@@ -7,10 +7,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // To see the different optimizations performed on each version of quicksort
 // in this file, compile this example in "production mode" and then select
-// Color Dispatch Optimizations from the editor's View menu.  See the
-// Functional Developer documentation for an explanation of the colors.
+// Color Dispatch Optimizations from the editor's View menu.  See
+// https://opendylan.org/documentation/getting-started-ide/coloring.html
 
-// No type declarations at all
+// No type declarations except for the input sequence, v.
 define method sequence-quicksort
     (v :: <sequence>) => (sorted-v :: <sequence>)
   local method exchange (m, n) => ()
@@ -43,7 +43,7 @@ define method sequence-quicksort
   v
 end method sequence-quicksort;
 
-// With type declarations for the sequence and its indices
+// With type declarations for the sequence and its indices.
 define method sequence-quicksort-typed
     (v :: <sequence>) => (sorted-v :: <sequence>)
   local method exchange (m :: <integer>, n :: <integer>) => ()
@@ -82,7 +82,7 @@ end method sequence-quicksort-typed;
 
 define constant <integer-vector> = limited(<vector>, of: <integer>);
 
-// Non-polymorphic version -- only sorts vectors of integers
+// Non-polymorphic version -- only sorts vectors of integers.
 define method integer-vector-quicksort
     (v :: <integer-vector>) => (sorted-v :: <integer-vector>)
   local method exchange (m :: <integer>, n :: <integer>) => ()
@@ -191,5 +191,3 @@ end;
 begin
   main();
 end;
-
-
