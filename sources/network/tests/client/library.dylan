@@ -13,6 +13,15 @@ define library sockets-tests-client
   use system;
   use io;
 
-  // Add any more module exports here.
   export sockets-tests-client;
 end library sockets-tests-client;
+
+define module sockets-tests-client
+  use common-dylan;
+  use simple-format, import: { format-to-string };
+  use testworks;
+  use threads;
+  use sockets;
+  use streams;
+  use date;
+end module sockets-tests-client;

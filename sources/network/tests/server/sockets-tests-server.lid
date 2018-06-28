@@ -1,21 +1,13 @@
-comment:	This file is generated, please don't edit
-format-version:	2
-library:	sockets-tests-server
+library: sockets-tests-server
 files:	library
-	module
 	utilities
 	tcp-echo-server
 	tcp-daytime-server
 	udp-echo-server
 	udp-daytime-server
 	sockets-tests-server
-base-address:	0x63C80000
 start-function:	main
-major-version:	2
-minor-version:	1
-compilation-mode:	tight
 target-type:	executable
-comment:	additional keywords
 Copyright:    Original Code is Copyright (c) 1998-2002 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.

@@ -12,6 +12,14 @@ define library sockets-tests-server
   use io;
   use system;
 
-  // Add any more module exports here.
   export sockets-tests-server;
 end library sockets-tests-server;
+
+define module sockets-tests-server
+  use common-dylan;
+  use simple-format;
+  use threads;
+  use sockets;
+  use date;
+  use streams;
+end module sockets-tests-server;
