@@ -2,7 +2,6 @@ Library:   smtp-client
 Synopsis:  Thin wrapper around SMTP
 Author:    Keith Playford
 Files:  library
-	module
 	smtp-client
 Major-version: 2
 Minor-version: 1

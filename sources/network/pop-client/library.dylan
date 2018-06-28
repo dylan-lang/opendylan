@@ -13,3 +13,42 @@ define library pop-client
 
   export pop-client;
 end library pop-client;
+
+define module pop-client
+  use common-dylan;
+  use streams;
+  use format-out;
+  use format;
+  use sockets;
+
+  export *debug-pop*;
+
+  export <pop-error>,
+	 pop-error-response;
+
+  export \with-pop-stream,
+	 open-pop-stream,
+	 close-pop-stream,
+         pop-login,
+         pop-logout,
+         read-pop-list,
+           <pop-list-entry>,
+             pop-list-entry-id,
+             pop-list-entry-bytes,
+         read-pop-header,
+         read-pop-body,
+         read-pop-message,
+         // delete-pop-message
+  ;
+
+  /*
+  export \with-pop-header-stream,
+  	   open-pop-header-stream,
+	   close-pop-header-stream;
+
+  export \with-pop-body-stream,
+  	   open-pop-body-stream,
+	   close-pop-body-stream;
+  */
+
+end module pop-client;
