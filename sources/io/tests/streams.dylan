@@ -10,6 +10,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $default-string  = "abcdefghijklmnopqrstuvwxyz";
 
+define sideways method make-test-instance(cls == <buffer>) => (object)
+  make(<buffer>)
+end;
+
 
 /// Stream convenience function tests
 
@@ -388,7 +392,7 @@ define sideways method make-stream-tests-of-size
        make(<stream-test-info>,
             test-name: "<test-wrapper-stream> for <test-input-stream>",
             class-info: stream-class-info(<test-wrapper-stream>),
-            contents: $default-string,
+            contents: as-uppercase($default-string),
             direction: #"input",
             make-function: method ()
                              let stream
@@ -401,6 +405,8 @@ end method make-stream-tests-of-size;
 
 
 /// Test wrapper stream subclass
+// This subclass always converts characters read from the inner stream
+// to upper case.
 
 define class <test-wrapper-stream> (<wrapper-stream>)
 end class <test-wrapper-stream>;
