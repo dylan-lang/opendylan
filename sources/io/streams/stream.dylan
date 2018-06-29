@@ -17,7 +17,7 @@ define constant $closed       = 4;
 /// The basic stream class
 
 define open abstract primary class <basic-stream> (<stream>)
-  slot outer-stream :: false-or(<stream>),
+  slot outer-stream :: <stream>,
     init-keyword: outer-stream:;
   slot private-stream-element-type-value :: <type> = <object>,
     init-keyword: element-type:;
@@ -153,7 +153,7 @@ define method close
      wait? :: <boolean>,
      synchronize? :: <boolean>) => ()
   ignore(keys, abort?, wait?, synchronize?);
-  stream.outer-stream := #f;
+  stream.outer-stream := stream;
   stream.private-stream-direction-value := $closed;
   next-method ();
 end method close;

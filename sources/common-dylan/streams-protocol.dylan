@@ -80,6 +80,11 @@ define method stream-size (stream :: <stream>) => (size :: singleton(#f))
   #f
 end method stream-size;
 
+define open generic outer-stream
+  (stream :: <stream>) => (wrapper :: <stream>);
+
+define open generic outer-stream-setter
+  (wrapper :: <stream>, stream :: <stream>) => (wrapper :: <stream>);
 
 define open abstract class <positionable-stream> (<stream>) end;
 
@@ -91,7 +96,6 @@ define open generic stream-position-setter
 
 define open generic adjust-stream-position
     (stream :: <stream>, delta, #key from) => (position);
-
 
 define open generic read-element
     (stream :: <stream>, #key on-end-of-stream) => (element);

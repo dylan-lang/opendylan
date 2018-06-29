@@ -67,10 +67,10 @@ define module-spec streams ()
     => (<stream>);
   open generic-function inner-stream-setter (<stream>, <wrapper-stream>)
     => (<stream>);
-  open generic-function outer-stream (<stream>) => (<wrapper-stream>);
+  open generic-function outer-stream (<stream>) => (<stream>);
   open generic-function outer-stream-setter
-       (<wrapper-stream>, <stream>)
-    => (<wrapper-stream>);
+       (<stream>, <stream>)
+    => (<stream>);
 
   // Stream buffers
   sealed instantiable class <buffer> (<vector>);

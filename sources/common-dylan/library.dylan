@@ -211,6 +211,9 @@ define module streams-protocol
          stream-position,
          stream-position-setter,
          adjust-stream-position;
+  // Wrapper streams
+  create outer-stream,
+         outer-stream-setter;
 end module streams-protocol;
 
 define module transcendentals

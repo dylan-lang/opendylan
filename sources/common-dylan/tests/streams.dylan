@@ -205,7 +205,15 @@ end method test-stream;
 define abstract class <test-stream> (<positionable-stream>)
   slot stream-closed? :: <boolean> = #f;
   slot stream-test-position :: <integer> = 0;
+  slot outer-stream :: <stream>;
 end class <test-stream>;
+
+define method initialize(test-stream :: <test-stream>, #key)
+  next-method();
+  unless(slot-initialized?(test-stream, outer-stream))
+    test-stream.outer-stream := test-stream
+  end;
+end method initialize;
 
 define method close
     (stream :: <test-stream>, #key) => ()
