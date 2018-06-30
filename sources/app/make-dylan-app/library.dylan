@@ -1,4 +1,5 @@
 module: dylan-user
+synopsis: Generate the boilerplate for a new Dylan library.
 
 define library make-dylan-app
   use common-dylan;
