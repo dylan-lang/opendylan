@@ -2,7 +2,6 @@ Library:   pop-client
 Synopsis:  Thin wrapper around POP
 Author:    Keith Playford
 Files:  library
-	module
 	pop-client
 Major-version: 2
 Minor-version: 1

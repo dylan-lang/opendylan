@@ -1,19 +1,12 @@
-comment:	This file is generated, please don't edit
-format-version:	2
-library:	sockets-tests-client
+library: sockets-tests-client
 files:	library
-	module
 	utilities
 	tcp-echo-client
 	tcp-daytime-client
 	udp-echo-client
 	udp-daytime-client
 	sockets-tests-client
-base-address:	0x63FE0000
 start-function:	main
-major-version:	2
-minor-version:	1
-compilation-mode:	tight
 target-type:	executable
 comment:	additional keywords
 Copyright:    Original Code is Copyright (c) 1999-2002 Functional Objects, Inc.

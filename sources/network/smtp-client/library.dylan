@@ -14,3 +14,37 @@ define library smtp-client
 
   export smtp-client;
 end library smtp-client;
+
+define module smtp-client
+  use common-dylan;
+  use format-out;
+  use format,
+    import: { format, format-to-string };
+  use regular-expressions;
+  use sockets;
+  use streams;
+
+  export *debug-smtp*;
+
+  export $default-smtp-port;
+
+  export <smtp-error>,
+	 <transient-smtp-error>,
+	 <permanent-smtp-error>,
+	 smtp-error-code,
+         $invalid-response-error-code,
+	 smtp-error-response;
+
+  export \with-smtp-stream,
+	 open-smtp-stream,
+	 close-smtp-stream,
+	 write-smtp-from,
+	 write-smtp-recipient,
+	 write-smtp-data-start,
+	 write-smtp-data-end;
+
+  export \with-smtp-message-stream,
+	 open-smtp-message-stream,
+	 close-smtp-message-stream,
+	 send-smtp-message;
+end module smtp-client;
