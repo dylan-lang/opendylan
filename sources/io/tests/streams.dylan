@@ -423,6 +423,29 @@ define method read-element
   as-uppercase(char)
 end method read-element;
 
+define method read
+  (stream :: <test-wrapper-stream>, n :: <integer>, #key on-end-of-stream)
+  => (sequence)
+  let sequence = next-method();
+  map(as-uppercase, sequence);
+end;
+
+define method stream-contents
+  (stream :: <test-wrapper-stream>, #key clear-contents?)
+  => (sequence :: <sequence>)
+  let sequence = next-method();
+  map(as-uppercase, sequence)
+end;
+
+define method stream-contents-as
+  (type :: <class>, stream :: <test-wrapper-stream>, #key clear-contents?)
+  => (sequence :: <sequence>)
+  let sequence = next-method();
+  sequence := map(as-uppercase, sequence);
+  as(type, sequence);
+end;
+
+
 define method write-element
     (stream :: <test-wrapper-stream>, elt :: <character>) => ()
   write-element(stream.inner-stream, as-uppercase(elt))
