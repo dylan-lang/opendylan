@@ -19,7 +19,9 @@ end library common-dylan-test-suite;
 define module common-dylan-test-suite
   use dylan;
   use dylan-extensions,
-    import: { encode-single-float, encode-double-float };
+    import: { encode-single-float,
+              encode-double-float,
+              <abstract-integer> };
   use common-extensions;
   use streams-protocol;
   use locators-protocol;

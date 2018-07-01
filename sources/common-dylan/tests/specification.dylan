@@ -154,7 +154,7 @@ define module-spec streams-protocol ()
   open generic-function stream-open? (<stream>) => (<boolean>);
   open generic-function stream-element-type (<stream>) => (<type>);
   open generic-function stream-at-end? (<stream>) => (<boolean>);
-  open generic-function stream-size (<stream>) => (false-or(<integer>));
+  open generic-function stream-size (<stream>) => (false-or(<abstract-integer>));
 
   // Positioning streams
   open abstract class <positionable-stream> (<stream>);
