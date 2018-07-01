@@ -23,8 +23,6 @@ define settings <debugger-settings> (<open-dylan-user-settings>)
   slot stack-show-foreign-calls   :: <boolean> = #f;
   slot stack-show-cleanup-frames  :: <boolean> = #f;
   slot stack-show-unknown-frames  :: <boolean> = #f;
-  slot bug-report-template        :: <string>
-    = release-bug-report-template-location();
 
   // These should really be in the window settings
   slot stack-pane-ratio      :: <integer> = 1;

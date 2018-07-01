@@ -920,9 +920,8 @@ network-example-projects: daytime-client-project daytime-server-project echo-cli
 install-runtime-dlls: $(REDISTRIBUTABLE_DIRECTORY)
 
 install-source-templates: $(SOURCE_TEMPLATES_INSTALL_DIRECTORY)
-install-bug-report-template: $(BUG_REPORT_TEMPLATE)
 
-install-templates: install-source-templates install-bug-report-template
+install-templates: install-source-templates
 install-wdbgdylan: $(WDBGDYLAN)
 install-dbghelp: $(DBGHELP)
 
