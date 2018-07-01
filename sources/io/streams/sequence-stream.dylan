@@ -95,7 +95,8 @@ define method initialize
     stream.final-position := _start
   else
     stream.final-position := size(stream-sequence(stream))
-  end
+  end;
+  stream.stream-element-type := element-type(stream-sequence(stream));
 end method initialize;
 
 define open generic type-for-sequence-stream
