@@ -78,9 +78,9 @@ define method initialize
     //--** This may leave closed <external-stream>s hanging around,
     //-- See $open-external-streams.
     let handler <condition> = method(condition, next-handler)
-				stream.stream-direction := #"closed";
-				next-handler();
-				end;
+                                stream.stream-direction := #"closed";
+                                next-handler();
+                              end;
     stream.accessor := apply(new-accessor, #"file", initargs);
   end;
   if (requested-buffer-size)
