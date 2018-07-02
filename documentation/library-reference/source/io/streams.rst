@@ -426,9 +426,7 @@ then an :class:`<invalid-file-permissions-error>`
 condition is signalled at the time the file stream is created.
 
 The *element-type:* init-keyword controls how the elements of the
-underlying file are accessed. This allows file elements to be
-represented abstractly; for instance, contiguous elements could be
-treated as a single database record. The three possible element types
+underlying file are accessed. The three possible element types
 are:
 
 - :type:`<byte-character>`
