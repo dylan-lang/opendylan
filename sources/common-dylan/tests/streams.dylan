@@ -321,8 +321,11 @@ define method peek
   if (stream.stream-test-position < stream.stream-size)
     sequence[stream.stream-test-position]
   else
-    let error = make(<end-of-stream-error>, stream: stream);
-    signal(error)
+    if (supplied?(on-end-of-stream))
+      on-end-of-stream
+    else
+      signal(make(<end-of-stream-error>, stream: stream));
+    end
   end
 end method peek;
 
@@ -330,9 +333,11 @@ define method read-element
     (stream :: <test-input-stream>,
      #key on-end-of-stream = unsupplied())
  => (element :: <object>)
-  let value = peek(stream, on-end-of-stream: on-end-of-stream);
-  stream.stream-test-position := stream.stream-test-position + 1;
-  value
+  let element-or-eof = peek(stream, on-end-of-stream: on-end-of-stream);
+  if (stream.stream-test-position < stream.stream-size)
+    stream.stream-test-position := stream.stream-test-position + 1;
+  end;
+  element-or-eof
 end method read-element;
 
 define method unread-element
@@ -350,11 +355,19 @@ end method unread-element;
 define method read-into!
     (stream :: <test-input-stream>, count :: <integer>, result :: <mutable-sequence>,
      #key on-end-of-stream = unsupplied(), start :: <integer> = 0)
- => (n-read)
-  for (i from 0 below count)
-    result[i + start] := read-element(stream, on-end-of-stream: on-end-of-stream)
-  end;
-  count
+  => (n-read)
+  block(return)
+    for (d from start below size(result), n-read from 0 below count)
+      let element = read-element(stream, on-end-of-stream: on-end-of-stream);
+      if (element == on-end-of-stream)
+        return(on-end-of-stream);
+      else
+        result[d] := element;
+      end if;
+    finally
+      n-read
+    end for;
+  end block;
 end method read-into!;
 
 define method read
@@ -362,8 +375,12 @@ define method read
      #key on-end-of-stream = unsupplied())
  => (elements)
   let result :: <vector> = make(<vector>, size: count);
-  read-into!(stream, count, result, on-end-of-stream: on-end-of-stream);
-  result
+  let count-or-eof = read-into!(stream, count, result, on-end-of-stream: on-end-of-stream);
+  if (count-or-eof == on-end-of-stream)
+    on-end-of-stream
+  else
+    result
+  end
 end method read;
 
 define method discard-input
