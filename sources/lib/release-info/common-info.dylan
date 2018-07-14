@@ -15,7 +15,6 @@ define constant $release-full-copyright =
 define constant $release-web-address
   = "http://opendylan.org/";
 
-define constant $bug-report-template-filename = "bug-report.txt";
 define constant $license-agreement-filename   = "License.txt";
 define constant $help-filename                = "opendylan.chm";
 
@@ -201,12 +200,6 @@ define function release-source-templates-directory
   release-subdirectory("Source/",
                    directory: release-templates-directory())
 end function release-source-templates-directory;
-
-define function release-bug-report-template-location
-    () => (location :: <file-locator>)
-  release-file($bug-report-template-filename,
-               directory: release-templates-directory())
-end function release-bug-report-template-location;
 
 define function release-license-agreement-location
     () => (location :: <file-locator>)

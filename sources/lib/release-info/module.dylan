@@ -42,8 +42,7 @@ define module release-info
          release-templates-directory,
          release-source-templates-directory,
          release-license-agreement-location,
-         release-help-location,
-         release-bug-report-template-location;
+         release-help-location;
 
   // Information accessors
   export info-author,
