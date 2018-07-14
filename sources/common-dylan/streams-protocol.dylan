@@ -10,6 +10,10 @@ define open abstract class <stream-error> (<error>, <format-string-condition>)
     required-init-keyword: stream:;
 end;
 
+define generic stream-error-stream
+  (error :: <stream-error>)
+  => (stream :: <stream>);
+
 // TODO: yuck.  Would be nicer to just have a condition-to-string method..
 // andrewa: note that then you need to update the runtime manager to
 // know about the new class too, it is simpler to rely on subclassing
@@ -50,6 +54,14 @@ define class <incomplete-read-error> (<end-of-stream-error>)
     required-init-keyword: count:;
 end class <incomplete-read-error>;
 
+define generic stream-error-sequence
+  (error :: <incomplete-read-error>)
+  => (sequence);
+
+define generic stream-error-count
+  (error :: <end-of-stream-error>)
+  => (count);
+
 define class <incomplete-write-error> (<end-of-stream-error>)
   constant slot stream-error-count,
     required-init-keyword: count:;
@@ -89,13 +101,13 @@ define open generic outer-stream-setter
 define open abstract class <positionable-stream> (<stream>) end;
 
 define open generic stream-position
-    (stream :: <stream>) => (position);
+    (stream :: <positionable-stream>) => (position);
 
 define open generic stream-position-setter
-    (position, stream :: <stream>) => (position :: <object>);
+    (position, stream :: <positionable-stream>) => (position :: <object>);
 
 define open generic adjust-stream-position
-    (stream :: <stream>, delta, #key from) => (position);
+    (stream :: <positionable-stream>, delta :: <integer>, #key from) => (position);
 
 define open generic read-element
     (stream :: <stream>, #key on-end-of-stream) => (element);

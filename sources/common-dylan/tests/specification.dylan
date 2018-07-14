@@ -172,7 +172,7 @@ define module-spec streams-protocol ()
     (<object>, #"key", #"all-keys") => (<stream>);
   open generic-function wait-for-io-completion (<stream>) => ();
   open generic-function close
-    (<stream>, #"rest", #"key", #"all-keys") => ();
+    (<closable-object>, #"rest", #"key", #"all-keys") => ();
 end module-spec streams-protocol;
 
 define module-spec locators-protocol ()

@@ -101,9 +101,9 @@ define inline function get-input-buffer
 end function get-input-buffer;
 
 // No default method for this.  Look for interesting methods under
-// <console-stream> and <file-stream> and <multi-buffered-stream>
+// <file-stream> and <multi-buffered-stream>
 define open generic do-get-input-buffer
-    (stream :: <stream>, #key wait?, bytes)
+    (stream :: <buffered-stream>, #key wait?, bytes)
  => (buffer :: false-or(<buffer>));
 
 define inline function next-input-buffer
