@@ -87,7 +87,6 @@ end method peek;
 define method read
     (stream :: <wrapper-stream>, n :: <integer>, #rest keys, #key on-end-of-stream)
  => (elements-or-eof :: <object>)
-  ignore(on-end-of-stream);
   apply(read, stream.inner-stream, n, keys)
 end method read;
 
@@ -95,7 +94,6 @@ define method read-into!
     (stream :: <wrapper-stream>, n :: <integer>, seq :: <mutable-sequence>,
      #rest keys, #key start, on-end-of-stream)
  => (n-read-or-eof :: <object>)
-  ignore(start, on-end-of-stream);
   apply(read-into!, stream.inner-stream, n, seq, keys)
 end method read-into!;
 
