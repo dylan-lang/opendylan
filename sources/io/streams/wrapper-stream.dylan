@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Wrapper streams
 
-define open abstract primary class <wrapper-stream> (<basic-stream>)
+define open abstract primary class <wrapper-stream> (<basic-stream>, <positionable-stream>)
   slot %inner-stream :: <stream>,
     required-init-keyword: inner-stream:;
 end class <wrapper-stream>;
