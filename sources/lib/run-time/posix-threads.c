@@ -145,6 +145,7 @@ extern void *make_dylan_vector(size_t size);
 /*****************************************************************************/
 
 void  initialize_threads_primitives(void);
+static int   priority_map(int);
 
 static TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, size_t newsize);
 static void grow_all_tlv_vectors(size_t newsize);
@@ -229,6 +230,11 @@ PURE_FUNCTION static inline void *get_current_thread(void)
 static inline void set_current_thread(void *thread)
 {
   get_teb()->thread = thread;
+}
+
+PURE_FUNCTION static inline void *get_current_thread_handle(void)
+{
+  return get_teb()->thread_handle;
 }
 
 static inline void set_current_thread_handle(void *handle)
@@ -505,6 +511,8 @@ dylan_value primitive_make_thread(dylan_value t, dylan_value f, DBOOL s)
 
   thread->handle1 = 0;       // runtime thread flags
   thread->handle2 = rthread; // runtime thread object
+
+  // param.sched_priority = priority_map(priority);
 
   if (pthread_attr_init(&attr)) {
     MSG0("make-thread: error attr_init\n");
@@ -1656,4 +1664,38 @@ dylan_value primitive_unlock_recursive_lock(dylan_value l)
     return GENERAL_ERROR;
   }
   return OK;
+}
+
+
+/* The priority_map function maps dylan thread priorities to windows priorities
+ * as below:
+ *
+ *   Dylan Priorities        windows priority
+ *      < -1249            THREAD_PRIORITY_IDLE
+ *    -1249 to -750       THREAD_PRIORITY_LOWEST
+ *     -749 to -250    THREAD_PRIORITY_BELOW_NORMAL
+ *     -250 to  249       THREAD_PRIORITY_NORMAL
+ *    250 to  749      THREAD_PRIORITY_ABOVE_NORMAL
+ *    750 to 1249         THREAD_PRIORITY_HIGHEST
+ *      > 1249         THREAD_PRIORITY_TIME_CRITICAL
+ */
+static int priority_map(int dylan_priority)
+{
+  return dylan_priority;
+  /*
+  int priority;
+
+  if (dylan_priority < 0)
+    if (dylan_priority < -1249)
+      priority = THREAD_PRIORITY_IDLE;
+    else
+      priority = (dylan_priority - 250) / 500;
+  else
+    if (dylan_priority > 1249)
+      priority = THREAD_PRIORITY_TIME_CRITICAL;
+    else
+      priority = (dylan_priority + 250) / 500;
+
+  return (priority);
+  */
 }
