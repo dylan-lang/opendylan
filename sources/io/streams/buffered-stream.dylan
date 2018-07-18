@@ -423,8 +423,12 @@ define method read
      #key on-end-of-stream = unsupplied())
  => (elements)
   let elements = make(stream-sequence-class(stream), size: n);
-  read-into!(stream, n, elements, on-end-of-stream: on-end-of-stream);
-  elements
+  let count-or-eof = read-into!(stream, n, elements, on-end-of-stream: on-end-of-stream);
+  if (count-or-eof == on-end-of-stream)
+    on-end-of-stream
+  else
+    elements
+  end
 end method read;
 
 //---*** andrewa: this is a bad name, since this isn't meant to know about
@@ -434,7 +438,8 @@ define variable *multi-buffer-bytes* :: <integer> = 0;
 define method read-into!
     (stream :: <buffered-stream>, n :: <integer>, seq :: <mutable-sequence>,
      #key start :: <integer> = 0, on-end-of-stream = unsupplied())
- => (n-read)
+  => (n-read)
+  let n-read = n;
   if (n > 0)
     with-input-buffer (sb = stream)
       let e :: <integer> = start + n;
@@ -457,17 +462,20 @@ define method read-into!
           // Signal error if we didn't get enough data
           if (n > i - start)
             n := i - start;
-            unless (supplied?(on-end-of-stream))
+            if (supplied?(on-end-of-stream))
+              n-read := on-end-of-stream;
+            else
+              n-read := i - start;
               signal(make(<incomplete-read-error>,
                           stream: stream,
-                          count: n, sequence: seq))
+                          count: n-read, sequence: seq))
             end
           end
         end
       end iterate
     end;
   end;
-  n
+  n-read
 end method read-into!;
 
 
