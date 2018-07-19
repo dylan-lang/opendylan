@@ -56,6 +56,19 @@ define inline sealed method buffer-size
 end method buffer-size;
 
 //
+// Definitions for the specification tests
+//
+define generic buffer-next
+  (buffer :: <buffer>) => (index :: <buffer-index>);
+define generic buffer-next-setter
+  (index :: <buffer-index>, buffer :: <buffer>) => (index :: <buffer-index>);
+define generic buffer-end
+  (buffer :: <buffer>) => (index :: <buffer-index>);
+define generic buffer-end-setter
+  (index :: <buffer-index>, buffer :: <buffer>) => (index :: <buffer-index>);
+
+
+//
 // ELEMENT
 //
 

@@ -113,8 +113,7 @@ define module streams
 
   // Wrapper streams
   create <wrapper-stream>,
-         inner-stream, inner-stream-setter,
-         outer-stream, outer-stream-setter;
+         inner-stream, inner-stream-setter;
 
   // Indenting streams
   create

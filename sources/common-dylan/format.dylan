@@ -713,7 +713,6 @@ define function print-method
   print-string(buffer, object-class-name(object));
   print-string(buffer, ": ");
   print-string(buffer, primitive-name(object));
-  print-string(buffer, " ");
   print-signature(buffer, object);
   print-string(buffer, "}");
 end function print-method;

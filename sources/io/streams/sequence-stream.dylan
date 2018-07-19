@@ -95,7 +95,8 @@ define method initialize
     stream.final-position := _start
   else
     stream.final-position := size(stream-sequence(stream))
-  end
+  end;
+  stream.stream-element-type := element-type(stream-sequence(stream));
 end method initialize;
 
 define open generic type-for-sequence-stream
@@ -187,17 +188,24 @@ define method read
   let pos   :: <integer>  = stream.current-position;
   let src-n :: <integer>  = (stream-limit(stream) | stream.final-position) - pos;
   if (n > src-n)
+    stream.current-position := pos + src-n;
     if (unsupplied?(on-end-of-stream))
-      signal(make(<incomplete-read-error>,
-                  stream: stream,
-                  count: src-n,
-                  sequence: copy-sequence(seq, start: pos, end: pos + src-n)));
+      if (zero?(src-n))
+        error(make(<end-of-stream-error>, stream: stream))
+      else
+        error(make(<incomplete-read-error>,
+                    stream: stream,
+                    count: src-n,
+                    sequence: copy-sequence(seq, start: pos, end: pos + src-n)));
+      end;
+    else
+      on-end-of-stream
     end;
-    n := src-n
+  else
+    let elements = copy-sequence(seq, start: pos, end: pos + n);
+    stream.current-position := pos + n;
+    elements
   end;
-  let elements = copy-sequence(seq, start: pos, end: pos + n);
-  stream.current-position := pos + n;
-  elements
 end method read;
 
 define method read-into!
@@ -210,16 +218,22 @@ define method read-into!
   let src-n :: <integer>  = (stream-limit(stream) | stream.final-position) - pos;
   let dst-n :: <integer>  = dst.size - start;
   let n-read :: <integer> = min(n, src-n, dst-n);
-  copy-bytes(dst, start, seq, pos, n-read);
   stream.current-position := pos + n-read;
-  if (n > src-n & dst-n > src-n
-      & unsupplied?(on-end-of-stream))
-    signal(make(<incomplete-read-error>,
-                stream: stream,
-                count: n-read,
-                sequence: copy-sequence(dst, start: start, end: start + n-read)))
-  end;
-  n-read
+  if (n > n-read)
+    if (supplied?(on-end-of-stream))
+      on-end-of-stream
+    else
+      signal(make(<incomplete-read-error>,
+                  stream: stream,
+                  count: n-read,
+                  sequence: copy-sequence(dst, start: start, end: start + n-read)))
+    end
+  else
+    for (i from 0 below n-read)
+      dst[i + start] := seq[i + pos]
+    end;
+    n-read
+  end
 end method read-into!;
 
 define method stream-input-available?

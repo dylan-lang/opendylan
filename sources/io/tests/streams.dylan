@@ -10,6 +10,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $default-string  = "abcdefghijklmnopqrstuvwxyz";
 
+define sideways method make-test-instance(cls == <buffer>) => (object)
+  make(<buffer>)
+end;
+
 
 /// Stream convenience function tests
 
@@ -104,10 +108,10 @@ end method test-new-line;
 
 /// Positionable stream convenience function tests
 
-register-stream-test(<stream>, test-current-position);
-register-stream-test(<stream>, test-current-position-setter);
-register-stream-test(<stream>, test-initial-position);
-register-stream-test(<stream>, test-final-position);
+register-stream-test(<positionable-stream>, test-current-position);
+register-stream-test(<positionable-stream>, test-current-position-setter);
+register-stream-test(<positionable-stream>, test-initial-position);
+register-stream-test(<positionable-stream>, test-final-position);
 
 // Don't test the functions we're already testing... there must be a better way!
 define streams function-test current-position () end;
@@ -388,7 +392,7 @@ define sideways method make-stream-tests-of-size
        make(<stream-test-info>,
             test-name: "<test-wrapper-stream> for <test-input-stream>",
             class-info: stream-class-info(<test-wrapper-stream>),
-            contents: $default-string,
+            contents: as-uppercase($default-string),
             direction: #"input",
             make-function: method ()
                              let stream
@@ -401,6 +405,8 @@ end method make-stream-tests-of-size;
 
 
 /// Test wrapper stream subclass
+// This subclass always converts characters read from the inner stream
+// to upper case.
 
 define class <test-wrapper-stream> (<wrapper-stream>)
 end class <test-wrapper-stream>;
@@ -411,11 +417,67 @@ register-stream-class-info("<test-wrapper-stream>", <test-wrapper-stream>,
                            element-type: <object>);
 
 define method read-element
-    (stream :: <test-wrapper-stream>, #rest keys, #key on-end-of-stream)
+    (stream :: <test-wrapper-stream>, #rest keys, #key on-end-of-stream = unsupplied())
  => (element :: <object>)
-  let char :: <character> = next-method();
-  as-uppercase(char)
+  let char = next-method();
+  if (char == on-end-of-stream)
+    on-end-of-stream
+  else
+    as-uppercase(char);
+  end if
 end method read-element;
+
+define method read
+  (stream :: <test-wrapper-stream>, n :: <integer>, #key on-end-of-stream = unsupplied())
+  => (sequence)
+  let sequence = next-method();
+  if (sequence == on-end-of-stream)
+    on-end-of-stream
+  else
+    map(as-uppercase, sequence);
+  end if
+end;
+
+define method read-into!
+  (stream :: <test-wrapper-stream>, n :: <integer>, sequence :: <mutable-sequence>,
+   #key start :: <integer> = 0, on-end-of-stream = unsupplied())
+  => (count-or-eof)
+  let count-or-eof = next-method();
+  if (count-or-eof == on-end-of-stream)
+    on-end-of-stream
+  else
+    let count :: <integer> = count-or-eof;
+    for (i from 0 below count)
+      sequence[i] := as-uppercase(sequence[i]);
+    end;
+    count
+  end
+end method read-into!;
+
+define method stream-contents
+  (stream :: <test-wrapper-stream>, #key clear-contents?)
+  => (sequence :: <sequence>)
+  let sequence = next-method();
+  map(as-uppercase, sequence)
+end;
+
+define method stream-contents-as
+  (type :: <class>, stream :: <test-wrapper-stream>, #key clear-contents?)
+  => (sequence :: <sequence>)
+  let sequence = next-method();
+  sequence := map(as-uppercase, sequence);
+  as(type, sequence);
+end;
+
+define method peek
+  (stream :: <test-wrapper-stream>, #key on-end-of-stream = unsupplied()) => (element-or-eof)
+  let element-or-eof = next-method();
+  if (on-end-of-stream == element-or-eof)
+    on-end-of-stream
+  else
+    as-uppercase(element-or-eof)
+  end
+end method peek;
 
 define method write-element
     (stream :: <test-wrapper-stream>, elt :: <character>) => ()

@@ -30,6 +30,7 @@ define class <stream-class-info> (<object>)
 end class <stream-class-info>;
 
 define constant $stream-classes :: <object-table> = make(<object-table>);
+define constant $eos = #"custom-end-of-stream";
 
 define function register-stream-class-info
     (name :: <string>, class :: subclass(<stream>),
@@ -205,7 +206,15 @@ end method test-stream;
 define abstract class <test-stream> (<positionable-stream>)
   slot stream-closed? :: <boolean> = #f;
   slot stream-test-position :: <integer> = 0;
+  slot outer-stream :: <stream>;
 end class <test-stream>;
+
+define method initialize(test-stream :: <test-stream>, #key)
+  next-method();
+  unless(slot-initialized?(test-stream, outer-stream))
+    test-stream.outer-stream := test-stream
+  end;
+end method initialize;
 
 define method close
     (stream :: <test-stream>, #key) => ()
@@ -312,8 +321,11 @@ define method peek
   if (stream.stream-test-position < stream.stream-size)
     sequence[stream.stream-test-position]
   else
-    let error = make(<end-of-stream-error>, stream: stream);
-    signal(error)
+    if (supplied?(on-end-of-stream))
+      on-end-of-stream
+    else
+      signal(make(<end-of-stream-error>, stream: stream));
+    end
   end
 end method peek;
 
@@ -321,9 +333,11 @@ define method read-element
     (stream :: <test-input-stream>,
      #key on-end-of-stream = unsupplied())
  => (element :: <object>)
-  let value = peek(stream, on-end-of-stream: on-end-of-stream);
-  stream.stream-test-position := stream.stream-test-position + 1;
-  value
+  let element-or-eof = peek(stream, on-end-of-stream: on-end-of-stream);
+  if (stream.stream-test-position < stream.stream-size)
+    stream.stream-test-position := stream.stream-test-position + 1;
+  end;
+  element-or-eof
 end method read-element;
 
 define method unread-element
@@ -341,11 +355,19 @@ end method unread-element;
 define method read-into!
     (stream :: <test-input-stream>, count :: <integer>, result :: <mutable-sequence>,
      #key on-end-of-stream = unsupplied(), start :: <integer> = 0)
- => (n-read)
-  for (i from 0 below count)
-    result[i + start] := read-element(stream, on-end-of-stream: on-end-of-stream)
-  end;
-  count
+  => (n-read)
+  block(return)
+    for (d from start below size(result), n-read from 0 below count)
+      let element = read-element(stream, on-end-of-stream: on-end-of-stream);
+      if (element == on-end-of-stream)
+        return(on-end-of-stream);
+      else
+        result[d] := element;
+      end if;
+    finally
+      n-read
+    end for;
+  end block;
 end method read-into!;
 
 define method read
@@ -353,8 +375,12 @@ define method read
      #key on-end-of-stream = unsupplied())
  => (elements)
   let result :: <vector> = make(<vector>, size: count);
-  read-into!(stream, count, result, on-end-of-stream: on-end-of-stream);
-  result
+  let count-or-eof = read-into!(stream, count, result, on-end-of-stream: on-end-of-stream);
+  if (count-or-eof == on-end-of-stream)
+    on-end-of-stream
+  else
+    result
+  end
 end method read;
 
 define method discard-input
@@ -479,10 +505,13 @@ end method test-stream-element-type;
 register-stream-test(<stream>, test-stream-size, direction: #"input");
 register-stream-test(<stream>, test-stream-at-end?, direction: #"input");
 register-stream-test(<stream>, test-read-element, direction: #"input");
+register-stream-test(<stream>, test-read-element-eos, direction: #"input");
 register-stream-test(<stream>, test-unread-element, direction: #"input");
 register-stream-test(<stream>, test-peek, direction: #"input");
 register-stream-test(<stream>, test-read, direction: #"input");
+register-stream-test(<stream>, test-read-eos, direction: #"input");
 register-stream-test(<stream>, test-read-into!, direction: #"input");
+register-stream-test(<stream>, test-read-into!-eos, direction: #"input");
 register-stream-test(<stream>, test-discard-input, direction: #"input");
 register-stream-test(<stream>, test-stream-input-available?, direction: #"input");
 register-stream-test(<stream>, test-stream-contents, direction: #"input");
@@ -536,6 +565,22 @@ define method test-read-element
   check-at-end-of-stream(name, "read-element", stream)
 end method test-read-element;
 
+// Like test-read-element but using the 'on-end-of-stream' functionality
+define method test-read-element-eos
+  (info :: <stream-test-info>, stream :: <stream>) => ()
+let name = info.info-test-name;
+  for (expected-element in info.info-contents,
+       i from 0)
+    check-equal(format-to-string("%s: read element %d", name, i),
+                expected-element,
+                read-element(stream, on-end-of-stream: $eos))
+  end;
+  check-equal(format-to-string("%s: read-element off end returns end-of-stream", name),
+                  $eos,
+                  read-element(stream, on-end-of-stream: $eos));
+  check-at-end-of-stream(name, "read-element-eos", stream)
+end method test-read-element-eos;
+
 define method test-unread-element
     (info :: <stream-test-info>, stream :: <stream>) => ()
   let name = info.info-test-name;
@@ -556,15 +601,20 @@ define method test-peek
   let name = info.info-test-name;
   for (expected-element in info.info-contents,
        i from 0)
-    check-true(format-to-string("%s: peek element %d", name, i),
-               begin
-                 let element = peek(stream);
-                 read-element(stream)
-               end)
+    check-equal(format-to-string("%s: peek element %d", name, i),
+                expected-element,
+                begin
+                  let element = peek(stream);
+                  read-element(stream);
+                  element
+                end)
   end;
   check-condition(format-to-string("%s: peek off end signals <end-of-stream-error>", name),
                   <end-of-stream-error>,
                   peek(stream));
+  check-equal(format-to-string("%s: peek off end returns end-of-stream", name),
+                  $eos,
+                  peek(stream, on-end-of-stream: $eos));
   check-at-end-of-stream(name, "peek", stream)
 end method test-peek;
 
@@ -580,14 +630,44 @@ define method test-read
   check-at-end-of-stream(name, "read", stream)
 end method test-read;
 
-define method test-read-into!
+define method test-read-eos
     (info :: <stream-test-info>, stream :: <stream>) => ()
-  //---*** Fill this in...
+  let name = info.info-test-name;
+  check-equal(format-to-string("%s: read off end returns end-of-stream", name),
+                  $eos,
+                  read(stream, 1 + info.info-contents.size, on-end-of-stream: $eos));
+  check-at-end-of-stream(name, "read-eos", stream)
+end method test-read-eos;
+
+define method test-read-into!
+  (info :: <stream-test-info>, stream :: <stream>) => ()
+  let name = info.info-test-name;
+  let target = make(<vector>, size: info.info-contents.size);
+  let count = read-into!(stream, size(target), target);
+  check-equal(format-to-string("%s: read-into! correct size", name),
+              info.info-contents.size,
+              count);
+  check-equal(format-to-string("%s: read-into! correct content", name),
+              info.info-contents,
+              target);
+  check-at-end-of-stream(name, "read-into!", stream)
 end method test-read-into!;
 
+define method test-read-into!-eos
+  (info :: <stream-test-info>, stream :: <stream>) => ()
+  let name = info.info-test-name;
+  let target = make(<vector>, size: info.info-contents.size + 1);
+  check-equal(format-to-string("%s: read-into! off end returns end-of-stream", name),
+              $eos,
+              read-into!(stream, size(target), target, on-end-of-stream: $eos));
+end method test-read-into!-eos;
+
 define method test-discard-input
-    (info :: <stream-test-info>, stream :: <stream>) => ()
-  //---*** Fill this in...
+  (info :: <stream-test-info>, stream :: <stream>) => ()
+  let name = info.info-test-name;
+  check-no-errors(name, begin
+                          discard-input(stream);
+                          end);
 end method test-discard-input;
 
 define method test-stream-input-available?
@@ -609,23 +689,29 @@ end method test-stream-input-available?;
 define method test-stream-contents
     (info :: <stream-test-info>, stream :: <stream>) => ()
   let name = info.info-test-name;
+  let prior-position = stream-position(stream);
   check-equal(format-to-string("%s: stream-contents correct", name),
               info.info-contents,
               stream-contents(stream));
-  check-at-end-of-stream(name, "stream-contents", stream)
+  check-equal(format-to-string("%s: stream-position is unchanged", name),
+              prior-position,
+              stream-position(stream));
 end method test-stream-contents;
 
 define method test-stream-contents-as
     (info :: <stream-test-info>, stream :: <stream>) => ()
   let name = info.info-test-name;
   let contents = #f;
+  let prior-position = stream-position(stream);
   check-equal(format-to-string("%s: stream-contents-as correct", name),
               info.info-contents,
               contents := stream-contents-as(<list>, stream));
   check-instance?(format-to-string("%s: stream-contents-as returns sequence of specified type", name),
                   <list>,
                   contents);
-  check-at-end-of-stream(name, "stream-contents-as", stream)
+  check-equal(format-to-string("%s: stream-position is unchanged", name),
+              prior-position,
+              stream-position(stream));
 end method test-stream-contents-as;
 
 define function check-at-end-of-stream
@@ -767,4 +853,3 @@ end function-test stream-error-count;
 define streams-protocol function-test open-file-stream ()
   //---*** Fill this in...
 end function-test open-file-stream;
-
