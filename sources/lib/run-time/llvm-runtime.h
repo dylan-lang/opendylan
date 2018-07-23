@@ -18,7 +18,7 @@ typedef float                   DSFLT;
 typedef double                  DDFLT;
 
 #define ITAG 1
-#define I(n) ((dylan_value) (((intptr_t)(n) << 2) | ITAG))
+#define I(n) ((dylan_value) (((unsigned long)(n) << 2) | ITAG))
 
 #include OPEN_DYLAN_RUNTIME_HEADER
 
