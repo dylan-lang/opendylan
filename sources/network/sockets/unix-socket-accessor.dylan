@@ -522,9 +522,8 @@ define function accessor-remote-address-and-port (the-descriptor :: <accessor-so
       if (getpeername-result == $SOCKET-ERROR)
         let error-code :: <integer> = unix-errno();
         select (error-code by \==)
-          /* TODO: High level error conditions
-          $WSAENOTCONN => connected? := #f;
-          */
+          /* TODO: High level error conditions */
+          $ENOTCONN => connected? := #f;
           otherwise =>
             unix-socket-error("unix-getpeername",
                                error-code: error-code);
