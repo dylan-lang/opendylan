@@ -136,7 +136,6 @@ sources
     ppml                - Pretty-printer formatting and markup.
     release-info        - Copyrights, banners, and setting retrieval. Also
                           includes a simple XML parser.
-  tools/map-statistics  - Win32 MAP files.
 
 ----------
 Registries

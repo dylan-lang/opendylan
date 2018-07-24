@@ -208,7 +208,6 @@ INSTALL_BIN_SOURCE = $(INSTALL_SOURCE)\x86-win32\bin
 IO_TESTS_SOURCE = $(IO_DIRECTORY)\tests
 LIFE_SOURCE = $(DUIM_EXAMPLES_SOURCE)\life
 LIFE_INSTALL_DIRECTORY = $(DUIM_EXAMPLES_INSTALL_DIRECTORY)\life
-MAP_STATISTICS_SOURCE = $(TOOLS_DIRECTORY)\map-statistics
 MEMORY_MANAGER_SOURCE = $(LIB_DIRECTORY)\memory-manager
 MIDI_SOURCE = $(LIB_DIRECTORY)\midi
 MOTLEY_SOURCE = $(LIB_DIRECTORY)\motley
@@ -380,7 +379,6 @@ DYLAN_COMPILER_WITH_TOOLS = $(INSTALL_BIN_DIRECTORY)\dylan-compiler-with-tools.e
 CREATE_ID = $(INSTALL_BIN_DIRECTORY)\create-id.exe
 DEVEL_DBG_UI = $(INSTALL_BIN_DIRECTORY)\devel-dbg-ui.exe
 DLL_WRAP = $(INSTALL_BIN_DIRECTORY)\dll-wrap.exe
-MAP_STATISTICS = $(INSTALL_BIN_DIRECTORY)\map-statistics.exe
 PARSER_COMPILER = $(INSTALL_BIN_DIRECTORY)\parser-compiler.exe
 TESTWORKS_REPORT = $(INSTALL_BIN_DIRECTORY)\testworks-report.exe
 WIN32_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\win32-environment.exe
@@ -760,7 +758,6 @@ console-debugger: devel-dbg-ui
 create-id: $(CREATE_ID)
 devel-dbg-ui: $(DEVEL_DBG_UI)
 dll-wrap: $(DLL_WRAP)
-map-statistics: $(MAP_STATISTICS)
 parser-compiler: $(PARSER_COMPILER)
 testworks-report: $(TESTWORKS_REPORT)
 make-dylan-app: $(MAKE_DYLAN_APP)
@@ -1082,7 +1079,7 @@ rel-environment: dylan-environment win32-environment with-splash-screen
 libraries: user-libraries win32-libraries duim ole-libraries duim-ole database-libraries network dylan-orb naming-client midi
 example-projects: console-example-projects duim-example-projects win32-example-projects ole-example-projects duim-ole-example-projects network-example-projects corba-example-projects
 install-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates install-database-examples install-ole-examples install-duim-ole-examples install-network-examples install-corba-examples install-enhanced-doc-examples install-midi-examples
-tools: install-wdbgdylan dll-wrap dylan-playground gui-dylan-playground create-id console-scepter naming-service remote-debugger testworks-libraries debugger map-statistics parser-compiler make-dylan-app
+tools: install-wdbgdylan dll-wrap dylan-playground gui-dylan-playground create-id console-scepter naming-service remote-debugger testworks-libraries debugger parser-compiler make-dylan-app
 release: release-info dylan-compiler-with-tools compiler environment rel-environment libraries tools install-runtime-dlls install-examples
 
 reinstall-examples:
@@ -1097,7 +1094,7 @@ minimal-libraries: user-libraries win32-libraries duim
 minimal-environment: dylan-environment with-splash-screen
 install-minimal-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates
 minimal-tools: install-wdbgdylan dll-wrap dylan-playground gui-dylan-playground
-minimal-release: release-info dylan-compiler minimal-compiler minimal-environment minimal-libraries minimal-tools testworks-libraries debugger map-statistics parser-compiler install-runtime-dlls install-minimal-examples
+minimal-release: release-info dylan-compiler minimal-compiler minimal-environment minimal-libraries minimal-tools testworks-libraries debugger parser-compiler install-runtime-dlls install-minimal-examples
 
 #
 # Clean
@@ -2011,13 +2008,6 @@ $(WITH_SPLASH_SCREEN):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_SOURCES) with-splash-screen $(WITH_SPLASH_SCREEN_SOURCE)
   $(BUILD_APPLICATION) with-splash-screen
-
-$(MAP_STATISTICS):
-  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
-  $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
-  $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
-  $(ENSURE_SOURCES) map-statistics $(MAP_STATISTICS_SOURCE)
-  $(BUILD_APPLICATION) map-statistics
 
 $(TESTWORKS_REPORT):
   $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
