@@ -409,7 +409,7 @@ define function accessor-get-host-by-address
             new-address.numeric-host-address.network-order;
           let gethostbyaddr-result :: <LPHOSTENT> =
             unix-gethostbyaddr(pointer-cast(<C-char*>, hostnum-pointer),
-                               size-of(<C-raw-unsigned-long>),
+                               size-of(<C-raw-unsigned-int>),
                                $AF-INET);
           if (null-pointer?(gethostbyaddr-result))
             let error-code :: <integer> = unix-errno();
