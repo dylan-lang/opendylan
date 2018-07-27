@@ -18,7 +18,7 @@ Please be aware that ssl-smtp-server is only a test for ssl-smtp-client
 
 CAUTION: ssl-echo-server and ssl-smtp-server depend on a "certificate.pem" and
  "key.pem" in the current working directory. In order to try them, go to
- 'examples/ssl-echo-server' and run '~/Open-Dylan/bin/ssl-echo|smtp-server
+ 'examples/ssl-echo-server' and run '_build/bin/ssl-echo | smtp-server'.
 
 This code was tested with openssl 0.9.7l on MacOSX 10.5.8
 */
