@@ -23,6 +23,15 @@ define open abstract primary class <ipv4-numeric-address> (<numeric-address>)
   slot %address-value :: <machine-word>, required-init-keyword: address:;
 end class;
 
+define method make (class == <ipv4-numeric-address>, #key value, order)
+  => (address :: <ipv4-numeric-address>)
+  select (order)
+      #"network-order" => make(<ipv4-network-order-address>, address: value);
+      #"host-order" => make(<ipv4-host-order-address>, address: value);
+      otherwise => error("make(<ipv4-numeric-address> order: must be #\"host-order\" or #\"network-order\".");
+  end select
+end method make;
+
 define sealed primary class
     <ipv4-network-order-address> (<ipv4-numeric-address>)
 end class;
