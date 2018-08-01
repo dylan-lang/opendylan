@@ -398,20 +398,16 @@ define method accessor-get-port-for-service
     let sp :: <LPSERVENT> =
       unix-getservbyname(service, proto);
     if (null-pointer?(sp))
+      /* Linux/BSD docs don't mention a specific errno */
+      let service = as(<byte-string>, service);
+      let proto = as(<byte-string>, proto);
       let service-error-code = unix-errno();
       let high-level-error =
-        select (service-error-code by \==)
-          // TODO: High level error messages
-          /*
-            $WSAHOST-NOT-FOUND, $WSANO-RECOVERY, $WSANO-DATA =>
-            make(<service-not-found>,
-                 format-string: "Service: %s not found for protocol: %s",
-                 format-arguments: vector(service, proto),
-                 service: as(<byte-string>, service),
-                 protocol: as(<byte-string>, proto));
-          */
-          otherwise => #f;
-        end select;
+        make(<service-not-found>,
+             format-string: "Service: %s not found for protocol: %s",
+             format-arguments: vector(service, proto),
+             service: service,
+             protocol: proto);
       unix-socket-error("unix-getservbyname", error-code: service-error-code,
                         high-level-error: high-level-error);
     else
