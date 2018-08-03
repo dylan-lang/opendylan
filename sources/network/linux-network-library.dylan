@@ -110,7 +110,8 @@ define module unix-sockets
   export
     ntohl, ntohs, htonl, htons;
   export
-    inet-addr, inet-network, inet-makeaddr, inet-lnaof, inet-netof, inet-ntoa;
+    inet-addr, inet-network, inet-makeaddr, inet-lnaof, inet-netof, inet-ntoa,
+    inet-aton;
 
   // From netdb.h
   export

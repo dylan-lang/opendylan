@@ -162,3 +162,10 @@ define inline-only C-function inet-ntoa
   result val :: <C-char*>;
   c-name: "inet_ntoa";
 end C-function;
+
+define inline-only C-function inet-aton
+  parameter cp :: <C-string>;
+  parameter inp :: <in-addr*>;
+  result rc :: <C-int>;
+  c-name: "inet_aton";
+end C-function;

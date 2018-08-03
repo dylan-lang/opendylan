@@ -60,26 +60,13 @@ define class <socket-accessor-error> (<socket-error>, <sealed-object>)
 end class;
 
 define class <unix-socket-error> (<socket-accessor-error>)
-  // slot numeric-error-code :: <integer>, init-keyword: error-code:;
-  // slot symbolic-error-code :: <string>;
   slot explanation :: <string>, init-value: "";
   slot calling-function :: <string>, init-keyword: calling-function:;
 end class;
 
-/*
-define method initialize (the-condition :: <unix-socket-error>,
-                          #key error-code, calling-function) => ()
-  ignore(calling-function);
-  next-method();
-  the-condition.WSA-symbolic-error-code :=
-    element($wsa-error-codes, error-code,
-            default: "unknown-wsa-error");
-end method;
-*/
-
 define function unix-socket-error
     (calling-function :: <string>,
-     #key format-string = "socket error %=", format-arguments = #[],
+     #key format-string = "socket error", format-arguments = #[],
      high-level-error = #f, host-name = #f, host-address = #f,
      host-port = #f, error-code: input-error-code = #f)
   if (instance?(host-name, <string>))
@@ -91,14 +78,70 @@ define function unix-socket-error
   let unix-condition-object =
     make(<unix-socket-error>, calling-function: calling-function,
          error-code: error-code, format-string: format-string,
-         format-arguments: concatenate(vector(error-code),
-                                       format-arguments));
+         format-arguments: format-arguments);
   if (high-level-error)
     high-level-error.socket-condition-details :=
       unix-condition-object;
   else
-    // TODO: Decode documented unix errors
+    // TODO: These are copied as far as possible from Winsock
     select (error-code by ==)
+      $EINPROGRESS, $EFAULT,
+      $EAFNOSUPPORT, $ENOTSOCK,
+      $EINVAL, $EISCONN,
+      $EOPNOTSUPP, $EWOULDBLOCK, $EACCES,
+      $EMSGSIZE =>
+        high-level-error :=
+          make(<internal-socket-error>, details: unix-condition-object,
+               format-string: format-string,
+               format-arguments: format-arguments);
+      $EINTR =>
+        high-level-error :=
+          make(<blocking-call-interrupted>, details: unix-condition-object,
+               format-string: format-string,
+               format-arguments: format-arguments);
+      $ENOBUFS, $EMFILE =>
+        high-level-error :=
+          make(<out-of-resources>, details: unix-condition-object,
+               format-string: format-string,
+               format-arguments: format-arguments);
+      $ENETDOWN =>
+        high-level-error :=
+          make(<network-not-responding>, details: unix-condition-object,
+               format-string: format-string,
+               format-arguments: format-arguments);
+/*
+      $HOST-NOT-FOUND, $NO-RECOVERY, $NO-DATA =>
+        high-level-error :=
+          make(<host-not-found>, details: win32-condition-object,
+               format-string: format-string,
+               format-arguments: format-arguments,
+               host-name: host-name, host-address: host-address);
+      $WSATRY-AGAIN =>
+        high-level-error :=
+          make(<server-not-responding>, details: win32-condition-object,
+               format-string: format-string,
+               format-arguments: format-arguments, host-name: host-name,
+               host-address: host-address);
+*/
+      $EHOSTUNREACH, $ECONNREFUSED, $EADDRNOTAVAIL =>
+        high-level-error :=
+          make(<connection-failed>, details: unix-condition-object,
+               format-string: format-string,
+               format-arguments: format-arguments, host-port: host-port,
+               host-address: host-address);
+      $ENOTCONN, $ENETRESET, $ESHUTDOWN, $ECONNABORTED,
+      $ETIMEDOUT,$ECONNRESET =>
+        high-level-error :=
+          make(<connection-closed>, details: unix-condition-object,
+               format-string: format-string,
+               format-arguments: format-arguments, host-port: host-port,
+               host-address: host-address);
+      $EADDRINUSE =>
+        high-level-error := make(<address-in-use>,
+                                 details: unix-condition-object,
+                                 format-string: "address in use",
+                                 host-address: host-address,
+                                 host-port: host-port);
       otherwise =>
         high-level-error := unix-condition-object;
     end select;
@@ -127,13 +170,6 @@ define function accessor-startup (manager :: <socket-manager>) => (result :: <bo
   end unless;
   socket-manager-started?(manager)
 end function;
-
-// Temporarily disable automatic start-up until maybe we fix dylan
-// initialization so maybe it isn't tied to dll initialization.
-// begin
-//   accessor-startup();
-// end;
-//
 
 define function accessor-cleanup (manager :: <socket-manager>) => ()
   with-lock(socket-manager-lock(manager))
@@ -178,50 +214,19 @@ define method accessor-ipv4-address-to-presentation
 end method;
 
 define method accessor-ipv4-presentation-to-address
-    (address-string :: <C-char*>) =>
-    (result :: <ipv4-network-order-address>)
-  // Filter out screw case
-  if (address-string = "255.255.255.255")
-    make(<ipv4-network-order-address>,
-         // probably don't need htonl
-         address: accessor-htonl(as(<machine-word>, #xFFFFFFFF)))
-  else
-    let machine-address :: <machine-word> = inet-addr(address-string);
-    if (machine-address == $INADDR-NONE)
-      error(make(<invalid-address>,
-                 format-string: "badly formed ip address string %s",
-                 format-arguments: vector(address-string),
-                 bad-address: address-string));
-    else
-      make(<ipv4-network-order-address>,
-           address: machine-address)
-    end if
-  end if
-end method;
-
-define method accessor-ipv4-presentation-to-address
-    (ip-address-string :: <byte-string>) =>
-    (result :: <ipv4-network-order-address>)
-  // Filter out screw case
-  if (ip-address-string = "255.255.255.255")
-    make(<ipv4-network-order-address>,
-         // probably don't need htonl
-         address: accessor-htonl(as(<machine-word>,#xFFFFFFFF)))
-  else
-    let machine-address :: <machine-word> =
-      with-C-string(address-as-c-string = ip-address-string)
-        inet-addr(address-as-c-string)
-      end with-C-string;
-    if (machine-address == $INADDR-NONE)
+  (ip-address-string :: <byte-string>) =>
+  (result :: <ipv4-network-order-address>)
+  with-stack-structure(inp :: <in-addr*>)
+    if (zero?(inet-aton(ip-address-string, inp)))
       error(make(<invalid-address>,
                  format-string: "badly formed ip address string %s",
                  format-arguments: vector(ip-address-string),
                  bad-address: ip-address-string))
     else
-      make(<ipv4-network-order-address>,
-           address: machine-address)
-    end if
-  end if
+      let addr = as(<machine-word>, pointer-value(inp));
+      make(<ipv4-network-order-address>, address: addr)
+    end if;
+  end;
 end method;
 
 // unix-gethostbyname errors:
@@ -520,16 +525,17 @@ define function accessor-local-address-and-port
   end with-cleared-stack-structure
 end function;
 
+// On Linux this is 64. Allow extra space here.
+define constant $HOST-NAME-SIZE :: <integer> = 256;
 
 define function accessor-local-host-name()
   => (local-host-name :: <string>);
   let local-host-name = "";
-  let name-buffer-size = 256; // wag for the size
   let name-buffer :: <byte-vector> =
-    make(<byte-vector>, size: name-buffer-size, fill: as(<integer>, '\0'));
+    make(<byte-vector>, size: $HOST-NAME-SIZE, fill: as(<integer>, '\0'));
   with-C-string(name-buffer-as-C-string = name-buffer)
     let gethostname-result =
-      unix-gethostname(name-buffer-as-C-string, name-buffer-size);
+      unix-gethostname(name-buffer-as-C-string, $HOST-NAME-SIZE);
     if (gethostname-result == $SOCKET-ERROR)
       unix-socket-error("unix-gethostname");
     end if;
