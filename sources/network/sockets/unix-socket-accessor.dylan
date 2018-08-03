@@ -234,55 +234,13 @@ define method get-host-entry
     (the-name :: <C-string>) => (host-entry :: <LPHOSTENT>)
   let host-entry :: <LPHOSTENT> = unix-gethostbyname(the-name);
   if (null-pointer?(host-entry))
-    let error-code :: <integer> = unix-errno();
-    select (error-code by \==)
-      /*
-        $WSAHOST-NOT-FOUND =>
-          // Maybe it's a presentation address.  Try to covert the
-          // presentation address to a number.
-          let address-as-number :: <machine-word> =
-          if (the-name = "255.255.255.255")
-            accessor-htonl(#xFFFFFFFF) // probably don't need htonl
-          else
-            let result = inet-addr(the-name);
-            if (result == $INADDR-NONE)
-              unix-socket-error("get-host-entry",
-                                error-code: error-code,
-                                format-string:
-                                  "Couldn't translate %s as a host name",
-                                format-arguments:
-                                  vector(as(<byte-string>,the-name)),
-                                host-name: the-name);
-            end if;
-            result
-          end if;
-        with-stack-structure(hostnum-pointer :: <C-raw-unsigned-long*>)
-          pointer-value(hostnum-pointer) := address-as-number;
-          let result :: <LPHOSTENT> =
-            unix-gethostbyaddr(pointer-cast(<C-char*>, hostnum-pointer),
-                               size-of(<C-raw-unsigned-long>),
-                               $AF-INET);
-          if (null-pointer?(result))
-            unix-socket-error("get-host-entry",
-                              error-code: error-code,
-                              format-string:
-                                "Couldn't translate %s as a host name",
-                              format-arguments:
-                                vector(as(<byte-string>, the-name)),
-                              host-name: the-name);
-          else
-            host-entry := result;
-          end if;
-        end with-stack-structure;
-      */
-      otherwise =>
-        unix-socket-error("get-host-entry", error-code: error-code,
-                          format-string:
-                            "Error translating %s as a host name",
-                          format-arguments:
-                            vector(as(<byte-string>, the-name)),
-                          host-name: the-name);
-    end select;
+    let error-code :: <integer> = h_errno();
+    unix-socket-error("get-host-entry", error-code: error-code,
+                      format-string:
+                        "Error translating %s as a host name",
+                      format-arguments:
+                        vector(as(<byte-string>, the-name)),
+                      host-name: the-name);
   end if;
   host-entry
 end method;

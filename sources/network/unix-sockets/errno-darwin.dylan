@@ -5,6 +5,15 @@ define inline-only C-function errno
   c-name: "io_errno";
 end C-function;
 
+define C-variable %h-errno :: <C-int>
+  c-name: "h_errno",
+  setter: #f;
+end C-variable;
+
+define inline-only function h-errno () => (value :: <integer>)
+  as(<integer>, %h-errno())
+end function;
+
 /* Taken from macOS 10.13.6 errno.h */
 
 define constant $EPERM           = 1;  /* Operation not permitted */
