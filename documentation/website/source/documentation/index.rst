@@ -154,16 +154,16 @@ Articles
     This essay explores Dylan from the perspective of a programmer used to
     traditional procedural languages, such as Pascal or C.
 
+`Dylan Web in 60 Seconds <https://carlgay.wordpress.com/2010/09/03/dylan-web-in-60-seconds/>`_
+    A quick introduction to web development in Dylan.  (Note that this refers
+    to the "http-server" library by its original name, "koala".)
+
 .. raw:: html
 
     <h3>Tools</h3>
 
 `Development inside emacs using DIME <../news/2011/12/12/dswank.html>`_
     An exciting look at using DIME and emacs for Dylan development.
-
-`Dylan Web in 60 Seconds <https://carlgay.wordpress.com/2010/09/03/dylan-web-in-60-seconds/>`_
-    A quick introduction to web development in Dylan.  (Note that this refers
-    to the "http-server" library by its original name, "koala".)
 
 Publications
 ============
