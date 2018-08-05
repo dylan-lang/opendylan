@@ -60,6 +60,14 @@ New Binary Release
 #. Update the appropriate info on the download page.
 #. Add a recent news entry. (See below for notes on that.)
 
+Updating Documentation
+----------------------
+
+The `update-opendylan.org.sh` script is run by cron to update the
+documentation in various repositories by essentially doing a git pull
+and make html. These are the docs linked from the main Documentation
+page.
+
 New News Entry
 --------------
 
