@@ -1,5 +1,5 @@
 Module:       dylan-user
-Synopsis:     UNIX version of the Functional Objects Network library
+Synopsis:     Darwin version of the Functional Objects Network library
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -99,7 +99,8 @@ define module unix-sockets
   export
     ntohl, ntohs, htonl, htons;
   export
-    inet-addr, inet-network, inet-makeaddr, inet-lnaof, inet-netof, inet-ntoa;
+    inet-addr, inet-network, inet-makeaddr, inet-lnaof, inet-netof, inet-ntoa,
+    inet-aton;
 
   // From netdb.h
   export
@@ -108,8 +109,9 @@ define module unix-sockets
       h-aliases-value, h-aliases-value-setter,
       h-addrtype-value, h-addrtype-value-setter,
       h-length-value, h-length-value-setter,
-    h-addr-list-value, h-addr-list-value-setter,
-    h-errno;
+      h-addr-list-value, h-addr-list-value-setter,
+      h-errno;
+
   export
     <netent>, <netent*>,
       n-name-value, n-name-value-setter,
@@ -174,7 +176,7 @@ define module unix-sockets
     $EADDRNOTAVAIL, $ENETDOWN, $ENETUNREACH, $ENETRESET, $ECONNABORTED,
     $ECONNRESET, $ENOBUFS, $EISCONN, $ENOTCONN, $ESHUTDOWN, $ETOOMANYREFS,
     $ETIMEDOUT, $ECONNREFUSED, $EHOSTDOWN, $EHOSTUNREACH, $EALREADY,
-    $EINPROGRESS, $ESTALE, $EDQUOT, $ECANCELED;
+    $EINPROGRESS, $ESTALE, $EDQUOT, $ECANCELED, $EWOULDBLOCK;
 
   export
     poll,
