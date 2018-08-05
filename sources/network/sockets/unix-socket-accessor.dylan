@@ -154,6 +154,42 @@ define function unix-socket-error
   end if;
 end function;
 
+/* There is another set of errors returned by netdb functions
+ * gethostbyname(), gethostbyaddr() et al */
+define constant $HOST-NOT-FOUND    = 1; /* Authoritative Answer Host not found */
+define constant $TRY-AGAIN         = 2; /* Non-Authoritative Host not found, or SERVERFAIL */
+define constant $NO-RECOVERY	   = 3; /* Non recoverable errors, FORMERR, REFUSED, NOTIMP */
+define constant $NO-DATA           = 4; /* Valid name, no data record of requested type */
+
+define function unix-socket-herror(calling-function :: <string>,
+                                   #key format-string = "netdb error",
+                                        format-arguments = #[],
+                                   host-name = #f,
+                                   host-address = #f,
+                                   host-port = #f)
+  let error-code = h-errno();
+  let high-level-error =
+    select (error-code by ==)
+      $HOST-NOT-FOUND, $NO-RECOVERY, $NO-DATA =>
+        make(<host-not-found>,
+             format-string: format-string,
+             format-arguments: format-arguments,
+             host-name: host-name, host-address: host-address);
+      $TRY-AGAIN =>
+        make(<server-not-responding>,
+             format-string: format-string,
+             format-arguments: format-arguments, host-name: host-name,
+             host-address: host-address);
+      otherwise => #f
+    end select;
+  unix-socket-error(calling-function, format-string: format-string,
+                    format-arguments: format-arguments,
+                    high-level-error: high-level-error,
+                    host-name: host-name,
+                    host-port: host-port,
+                    error-code: error-code);
+end function unix-socket-herror;
+
 // startup and shutdown
 
 define class <stub-manager> (<socket-manager>, <sealed-object>)
@@ -229,18 +265,13 @@ define method accessor-ipv4-presentation-to-address
   end;
 end method;
 
-// unix-gethostbyname errors:
-//
-// TODO: Fill in and trap
-
 define constant $resolver-lock = make(<recursive-lock>);
 
 define method get-host-entry
     (the-name :: <C-string>) => (host-entry :: <LPHOSTENT>)
   let host-entry :: <LPHOSTENT> = unix-gethostbyname(the-name);
   if (null-pointer?(host-entry))
-    let error-code :: <integer> = h_errno();
-    unix-socket-error("get-host-entry", error-code: error-code,
+    unix-socket-herror("get-host-entry",
                       format-string:
                         "Error translating %s as a host name",
                       format-arguments:
@@ -327,7 +358,7 @@ define method accessor-get-host-by-name
             end with-c-string;
         end select;
     // now fill in the fields of the <ipv4-address>. Everything must be
-    // copied out of the
+    // copied out of the hostent struct
     new-address.%host-name := as(<byte-string>,
                                  pointer-cast(<C-string>,
                                               host-entry.h-name-value));
@@ -336,38 +367,12 @@ define method accessor-get-host-by-name
   end
 end method;
 
-// unix-gethostbyaddr error codes:
-//
-// Return Values
-//
-// If no error occurs, gethostbyaddr returns a pointer to the HOSTENT
-// structure. Otherwise, it returns a NULL pointer, and a specific
-// error code can be retrieved by calling WSAGetLastError.
-//
-// Error Codes
-//
-// WSANOTINITIALISED A successful WSAStartup must occur before using
-//   this function.
-// WSAENETDOWN The network subsystem has failed.
-// WSAHOST_NOT_FOUND Authoritative Answer Host not found.
-// WSATRY_AGAIN Non-Authoritative Host not found, or server failed.
-// WSANO_RECOVERY Nonrecoverable error occurred.
-// WSANO_DATA Valid name, no data record of requested type.
-// WSAEINPROGRESS A blocking Windows Sockets 1.1 call is in progress,
-//   or the service provider is still processing a callback function.
-// WSAEAFNOSUPPORT The type specified is not supported by the Windows
-//   Sockets implementation.
-// WSAEFAULT The addr parameter is not a valid part of the user
-//   address space, or the len parameter is too small.
-// WSAEINTRA blocking Windows Socket 1.1 call was canceled through
-//   WSACancelBlockingCall.
-
 define function accessor-get-host-by-address
     (new-address :: <ipv4-address>) => ();
   with-lock($resolver-lock)
     let host-entry :: <LPHOSTENT>
       // Could maybe use a with-initialized-pointer macro here
-      = with-stack-structure(hostnum-pointer :: <C-raw-unsigned-long*>)
+      = with-stack-structure(hostnum-pointer :: <C-raw-unsigned-int*>)
           pointer-value(hostnum-pointer) :=
             new-address.numeric-host-address.network-order;
           let gethostbyaddr-result :: <LPHOSTENT> =
@@ -375,19 +380,17 @@ define function accessor-get-host-by-address
                                size-of(<C-raw-unsigned-int>),
                                $AF-INET);
           if (null-pointer?(gethostbyaddr-result))
-            let error-code :: <integer> = unix-errno();
-            unix-socket-error("unix-gethostbyaddr",
-                              error-code: error-code,
-                              format-string:
-                                "Couldn't translate %s as a host address",
-                              format-arguments:
-                                vector(new-address.host-address),
-                              host-address: new-address);
+            unix-socket-herror("unix-gethostbyaddr",
+                               format-string:
+                                 "Couldn't translate %s as a host address",
+                               format-arguments:
+                                 vector(new-address.host-address),
+                               host-address: new-address);
           end if;
           gethostbyaddr-result
         end with-stack-structure;
     // now fill in the fields of the <ipv4-address>. Everything must be
-    // copied out of the
+    // copied out of the hostent structure
     new-address.%host-name := as(<byte-string>,
                                  pointer-cast(<C-string>,
                                               host-entry.h-name-value));
@@ -455,16 +458,18 @@ end method;
 // retrieved by calling WSAGetLastError.
 //
 // Error Codes
-// WSANOTINITIALISED A successful WSAStartup must occur before using
-//   this function.
-// WSAENETDOWN The network subsystem has failed.
-// WSAEFAULT The name or the namelen parameter is not a valid part of
-//   the user address space, or the namelen parameter is too small.
-// WSAEINPROGRESS A blocking Windows Sockets 1.1 call is in progress,
-//   or the service provider is still processing a callback function.
-// WSAENOTCONN The socket is not connected.
-// WSAENOTSOCK The descriptor is not a socket.
-
+// [EBADF]      The argument socket is not a valid descriptor.
+// [EFAULT]     The address parameter points to memory not in a valid
+//              part of the process address space.
+// [EINVAL]     socket has been shut down.
+// [ENOBUFS]    Insufficient resources were available in the system to
+//              perform the operation.
+// [ENOTCONN]   Either the socket is not connected or it has not had
+//              the peer pre-specified.
+// [ENOTSOCK]   The argument socket refers to something other than a
+//              socket (e.g., a file).
+// [EOPNOTSUPP] getpeername() is not supported for the protocol in use
+//              by socket.
 define function accessor-remote-address-and-port (the-descriptor :: <accessor-socket-descriptor>)
   => (connected? :: <boolean>,
       the-remote-address :: false-or(<ipv4-address>),
@@ -551,31 +556,23 @@ define constant <accessor-socket-descriptor>
 //
 // If no error occurs, bind returns zero. Otherwise, it returns
 // SOCKET_ERROR, and a specific error code can be retrieved by calling
-// WSAGetLastError.
+// errno.
 //
 // Error Codes
-//
-// WSANOTINITIALISED A successful WSAStartup must occur before using
-//   this function.
-// WSAENETDOWN The network subsystem has failed.
-// WSAEADDRINUSE A process on the machine is already bound to the same
-//   fully-qualified address and the socket has not been marked to
-//   allow address re-use with SO_REUSEADDR. For example, IP address
-//   and port are bound in the af_inet case) . (See the SO_REUSEADDR
-//   socket option under setsockopt.)
-// WSAEADDRNOTAVAIL The specified address is not a valid address for
-//   this machine
-// WSAEFAULT The name or the namelen parameter is not a
-//   valid part of the user address space, the namelen parameter is
-//   too small, the name parameter contains incorrect address format
-//   for the associated address family, or the first two bytes of the
-//   memory block specified by name does not match the address family
-//   associated with the socket descriptor s.
-// WSAEINPROGRESS A blocking Windows Sockets 1.1 call is in progress,
-//   or the service provider is still processing a callback function.
-// WSAEINVAL The socket is already bound to an address.Countries
-// WSAENOBUFS Not enough buffers available, too many connections.
-// WSAENOTSOCK The descriptor is not a socket.
+// [EACCES]        The requested address is protected, and the current
+//                 user has inadequate permission to access it.
+// [EADDRINUSE]    The specified address is already in use.
+// [EADDRNOTAVAIL] The specified address is not available from the local
+//                  machine.
+// [EAFNOSUPPORT]  address is not valid for the address family of socket.
+// [EBADF]         socket is not a valid file descriptor.
+// [EDESTADDRREQ]  socket is a null pointer.
+// [EFAULT]        The address parameter is not in a valid part of the
+//                 user address space.
+// [EINVAL]        socket is already bound to an address and the protocol
+//                 does not support binding to a new address.  Alterna-
+//                 tively, socket may have been shut down.
+// [ENOTSOCK]      socket does not refer to a socket.
 
 define function accessor-bind
     (the-socket :: <abstract-socket>,
@@ -612,30 +609,19 @@ end function;
 //
 // If no error occurs, listen returns zero. Otherwise, a value of
 // SOCKET_ERROR is returned, and a specific error code can be
-// retrieved by calling WSAGetLastError.
+// retrieved by calling errno.
 //
 // Error Codes
+// [EACCES]       The current process has insufficient privileges.
+// [EBADF]        The argument socket is not a valid file descriptor.
+// [EDESTADDRREQ] The socket is not bound to a local address and the
+//                protocol does not support listening on an unbound
+//                socket.
+// [EINVAL]       socket is already connected.
+// [ENOTSOCK]     The argument socket does not reference a socket.
+// [EOPNOTSUPP]   The socket is not of a type that supports the opera-
+//                tion listen
 //
-// WSANOTINITIALISED A successful WSAStartup must occur before using
-//   this function.
-// WSAENETDOWN The network subsystem has failed.
-// WSAEADDRINUSE The socket's local address is already in use and the
-//   socket was not marked to allow address reuse with
-//   SO_REUSEADDR. This error usually occurs during execution of the
-//   bind function, but could be delayed until this function if the
-//   bind was to a partially wild-card address (involving ADDR_ANY)
-//   and if a specific address needs to be "committed" at the time of
-//   this function.
-// WSAEINPROGRESS A blocking Windows Sockets 1.1 call is in progress,
-//   or the service provider is still processing a callback function.
-// WSAEINVAL The socket has not been bound with bind.
-// WSAEISCONN The socket is already connected.
-// WSAEMFILE No more socket descriptors are available.
-// WSAENOBUFS No buffer space is available.
-// WSAENOTSOCK The descriptor is not a socket.
-// WSAEOPNOTSUPP The referenced socket is not of a type that supports
-//   the listen operation.
-
 define method accessor-listen
     (the-socket :: <TCP-server-socket>, backlog :: <integer>)
  => ()
@@ -668,43 +654,22 @@ define method accessor-input-available?
 end method accessor-input-available?;
 
 define method accessor-close-socket
-    (the-descriptor :: <accessor-socket-descriptor>) => ();
+  (the-descriptor :: <accessor-socket-descriptor>) => ();
   let manager = current-socket-manager();
   if (socket-manager-started?(manager))
     let close-result = unix-closesocket(the-descriptor);
     if (close-result == $SOCKET-ERROR)
       let error-code :: <integer> = unix-errno();
-      select (error-code by \==)
-        otherwise =>
-          signal(make(<unix-socket-error>,
-                      calling-function: "unix-closesocket",
-                      error-code: error-code));
-      end select;
+      unix-socket-error("close-socket",
+                        error-code: error-code);
     end if;
-  elseif (socket-manager-closing-thread(manager))
-    error(make(<socket-accessor-closed-error>,
-               calling-function: "accessor-close-socket",
-               calling-thread: current-thread(),
-               accessor-started?-value: socket-manager-started?(manager),
-               thread-that-closed-accessor: socket-manager-closing-thread(manager),
-               format-string:
-                 "Internal Error: "
-                 "accessor-close-socket was called from thread: %s after "
-                 "winsock2 was apparently closed by thread: %s",
-               format-arguments:
-                 vector(current-thread().thread-name | "unknown thread",
-                        socket-manager-closing-thread(manager).thread-name | "unknown thread")));
   else
     error(make(<socket-accessor-closed-error>,
                calling-function: "accessor-close-socket",
                calling-thread: current-thread(),
                accessor-started?-value: socket-manager-started?(manager),
                thread-that-closed-accessor: socket-manager-closing-thread(manager),
-               format-string:
-                 "Internal Error: "
-                 "accessor-close-socket was called from thread: %s but "
-                 "winsock2 was apparently never initialized",
-               format-arguments:
-                 vector(current-thread().thread-name | "unknown thread")));
+               format-string: "Internal Error in socket-manager ",
+               format-arguments: #[]));
   end if;
 end method;
