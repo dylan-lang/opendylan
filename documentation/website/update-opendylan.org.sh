@@ -48,25 +48,25 @@ export PYTHONPATH=${opendylan}/documentation/sphinx-extensions
 
 for subdir in ${subdirs}; do
     cd ${opendylan}/documentation/${subdir}
-    make html
-    make epub
-    rsync -avz build/html/ ${site_root}/documentation/${subdir}/
-    cp build/epub/*.epub ${site_root}/documentation/${subdir}/
+    make html && rsync -avz build/html/ ${site_root}/documentation/${subdir}/
+    make epub && cp build/epub/*.epub ${site_root}/documentation/${subdir}/
+    make latexpdf && cp build/latex/*.pdf ${site_root}/documentation/${subdir}/
 done
 
 # Update library docs.
 # For now these are one-offs, until we decide on a standard.
 
-for lib in binary-data http; do
+for lib in binary-data concurrency http melange objc-dylan statistics testworks tracing; do
     cd /root/${lib}
     git pull --rebase origin master
     git submodule update --recursive
     cd /root/${lib}/documentation
-    make html &&
-	make epub &&
-	rsync -avz build/html/ ${site_root}/documentation/${lib}/ &&
-	# TODO(cgay): pdf
-	cp build/epub/*.epub ${site_root}/documentation/${lib}/
+    if [[ "${lib}" == "testworks" ]]; then
+	cd users-guide
+    fi
+    make html && rsync -avz build/html/ ${site_root}/documentation/${lib}/
+    make epub && cp build/epub/*.epub ${site_root}/documentation/${lib}/
+    make latexpdf && cp build/latex/*.pdf ${site_root}/documentation/${lib}/
 done
 
 
