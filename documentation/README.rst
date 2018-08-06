@@ -46,6 +46,15 @@ The pages can then be accessed via::
 You can build other formats as well. Run ``make`` or ``make.bat`` without
 arguments to see which formats are available.
 
+Note that to build the PDF files with ``make latexpdf`` it may be
+necessary (at least on Debian) to install these packages:
+
+*  latexmk
+*  texlive-latex-recommended
+*  texlive-fonts-recommended
+*  texlive-latex-extra
+ 
+
 Link Validation
 ---------------
 
