@@ -7,15 +7,15 @@ Warranty:  Distributed WITHOUT WARRANTY OF ANY KIND
 
 define test ipv4-address-test ()
   let addr = make(<internet-address>, name: "www.google.com");
-assert-instance?(<ipv4-address>, addr);
-assert-equal("www.google.com", host-name(addr));
-let numaddr = make(<internet-address>, address: "192.168.0.1");
-assert-instance?(<ipv4-address>, numaddr);
-assert-equal("192.168.0.1", host-address(numaddr));
-assert-instance?(<numeric-address>, numeric-host-address(numaddr));
-assert-signals(<socket-condition>, make(<internet-address>, address: "1111.2222.3333.4444"));
-assert-signals(<socket-condition>, make(<internet-address>, address: "192.167.0.1.1"));
-assert-no-errors(make(<internet-address>, address: "255.255.255.255"));
+  assert-instance?(<ipv4-address>, addr);
+  assert-equal("www.google.com", host-name(addr));
+  let numaddr = make(<internet-address>, address: "192.168.0.1");
+  assert-instance?(<ipv4-address>, numaddr);
+  assert-equal("192.168.0.1", host-address(numaddr));
+  assert-instance?(<numeric-address>, numeric-host-address(numaddr));
+  assert-signals(<socket-condition>, make(<internet-address>, address: "1111.2222.3333.4444"));
+  assert-signals(<socket-condition>, make(<internet-address>, address: "192.167.0.1.1"));
+  assert-no-errors(make(<internet-address>, address: "255.255.255.255"));
   assert-instance?(<numeric-address>, numeric-host-address(numaddr));
   // RFC6761 this is guaranteed not to exist
   assert-signals(<host-not-found>, make(<internet-address>, name: "address.invalid"));
