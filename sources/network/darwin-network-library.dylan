@@ -74,12 +74,10 @@ define module unix-sockets
     recv, recvfrom, recvmsg, send, sendmsg, sendto, setsockopt, shutdown,
     socket, socketpair, ioctl;
 
-  // --
   export
     unix-recv-buffer, unix-send-buffer,
     unix-recv-buffer-from, unix-send-buffer-to;
 
-  // --
   // From netinet/in.h
   export
     <in-port-t>, <in-port-t*>,
