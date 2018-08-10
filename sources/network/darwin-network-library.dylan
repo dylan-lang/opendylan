@@ -1,5 +1,5 @@
 Module:       dylan-user
-Synopsis:     Linux version of the Functional Objects Network library
+Synopsis:     Darwin version of the Functional Objects Network library
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -30,17 +30,15 @@ define module unix-sockets
 
   // From sys/socket.h
   export
-    $AF-UNSPEC, $AF-UNIX, $AF-INET, $AF-PACKET;
+    $AF-UNSPEC, $AF-UNIX, $AF-INET;
   export
-    $PF-UNSPEC, $PF-LOCAL, $PF-UNIX, $PF-INET, $PF-PACKET;
+    $PF-UNSPEC, $PF-LOCAL, $PF-UNIX, $PF-INET;
   export
     $SOCK-STREAM, $SOCK-DGRAM, $SOCK-SEQPACKET, $SOCK-RAW;
   export
     $SHUT-RD, $SHUT-WR, $SHUT-RDWR;
   export
     $SOL-SOCKET;
-  export
-    $ETH-P-ALL;
   export
     $SO-ACCEPTCONN, $SO-BROADCAST, $SO-DEBUG, $SO-DONTROUTE, $SO-ERROR,
     $SO-KEEPALIVE, $SO-LINGER, $SO-OOBINLINE, $SO-RCVBUF, $SO-RCVLOWAT,
@@ -76,12 +74,10 @@ define module unix-sockets
     recv, recvfrom, recvmsg, send, sendmsg, sendto, setsockopt, shutdown,
     socket, socketpair, ioctl;
 
-  // --
   export
     unix-recv-buffer, unix-send-buffer,
     unix-recv-buffer-from, unix-send-buffer-to;
 
-  // --
   // From netinet/in.h
   export
     <in-port-t>, <in-port-t*>,
@@ -96,15 +92,6 @@ define module unix-sockets
       sin-family-value, sin-family-value-setter,
       sin-port-value, sin-port-value-setter,
       sin-addr-value, sin-addr-value-setter;
-  export
-    <sockaddr-ll>, <sockaddr-ll*>,
-      sll-family, sll-family-setter,
-      sll-protocol, sll-protocol-setter,
-      sll-ifindex, sll-ifindex-setter,
-      sll-hatype, sll-hatype-setter,
-      sll-pkttype, sll-pkttype-setter,
-      sll-halen, sll-halen-setter,
-      sll-addr, sll-addr-setter;
 
   // From arpa/inet.h
   export
@@ -122,6 +109,7 @@ define module unix-sockets
       h-length-value, h-length-value-setter,
       h-addr-list-value, h-addr-list-value-setter,
       h-errno;
+
   export
     <netent>, <netent*>,
       n-name-value, n-name-value-setter,
@@ -174,26 +162,19 @@ define module unix-sockets
   export
     errno,
     $EPERM, $ENOENT, $ESRCH, $EINTR, $EIO, $ENXIO, $E2BIG, $ENOEXEC,
-    $EBADF, $ECHILD, $EAGAIN, $EWOULDBLOCK, $ENOMEM, $EACCES, $EFAULT,
-    $ENOTBLK, $EBUSY, $EEXIST, $EXDEV, $ENODEV, $ENOTDIR, $EISDIR,
-    $EINVAL, $ENFILE, $EMFILE, $ENOTTY, $ETXTBSY, $EFBIG, $ENOSPC,
-    $ESPIPE, $EROFS, $EMLINK, $EPIPE, $EDOM, $ERANGE, $EDEADLK,
-    $EDEADLOCK, $ENAMETOOLONG, $ENOLCK, $ENOSYS, $ENOTEMPTY, $ELOOP,
-    $ENOMSG, $EIDRM, $ECHRNG, $EL2NSYNC, $EL3HLT, $EL3RST, $ELNRNG,
-    $EUNATCH, $ENOCSI, $EL2HLT, $EBADE, $EBADR, $EXFULL, $ENOANO,
-    $EBADRQC, $EBADSLT, $EBFONT, $ENOSTR, $ENODATA, $ETIME, $ENOSR,
-    $ENONET, $ENOPKG, $EREMOTE, $ENOLINK, $EADV, $ESRMNT, $ECOMM,
-    $EPROTO, $EMULTIHOP, $EDOTDOT, $EBADMSG, $EOVERFLOW, $ENOTUNIQ,
-    $EBADFD, $EREMCHG, $ELIBACC, $ELIBBAD, $ELIBSCN, $ELIBMAX,
-    $ELIBEXEC, $EILSEQ, $ERESTART, $ESTRPIPE, $EUSERS, $ENOTSOCK,
-    $EDESTADDRREQ, $EMSGSIZE, $EPROTOTYPE, $ENOPROTOOPT,
-    $EPROTONOSUPPORT, $ESOCKTNOSUPPORT, $EOPNOTSUPP, $ENOTSUP,
-    $EPFNOSUPPORT, $EAFNOSUPPORT, $EADDRINUSE, $EADDRNOTAVAIL,
-    $ENETDOWN, $ENETUNREACH, $ENETRESET, $ECONNABORTED, $ECONNRESET,
-    $ENOBUFS, $EISCONN, $ENOTCONN, $ESHUTDOWN, $ETOOMANYREFS,
+    $EBADF, $ECHILD, $EAGAIN, $ENOMEM, $EACCES, $EFAULT, $ENOTBLK,
+    $EBUSY, $EEXIST, $EXDEV, $ENODEV, $ENOTDIR, $EISDIR, $EINVAL,
+    $ENFILE, $EMFILE, $ENOTTY, $ETXTBSY, $EFBIG, $ENOSPC, $ESPIPE,
+    $EROFS, $EMLINK, $EPIPE, $EDOM, $ERANGE, $EDEADLK, $ENAMETOOLONG,
+    $ENOLCK, $ENOSYS, $ENOTEMPTY, $ELOOP, $ENOMSG, $EIDRM, $ENOSTR,
+    $ENODATA, $ETIME, $ENOSR, $EREMOTE, $ENOLINK, $EPROTO, $EMULTIHOP,
+    $EBADMSG, $EOVERFLOW, $EILSEQ, $EUSERS, $ENOTSOCK, $EDESTADDRREQ,
+    $EMSGSIZE, $EPROTOTYPE, $ENOPROTOOPT, $EPROTONOSUPPORT, $ESOCKTNOSUPPORT,
+    $EOPNOTSUPP, $ENOTSUP, $EPFNOSUPPORT, $EAFNOSUPPORT, $EADDRINUSE,
+    $EADDRNOTAVAIL, $ENETDOWN, $ENETUNREACH, $ENETRESET, $ECONNABORTED,
+    $ECONNRESET, $ENOBUFS, $EISCONN, $ENOTCONN, $ESHUTDOWN, $ETOOMANYREFS,
     $ETIMEDOUT, $ECONNREFUSED, $EHOSTDOWN, $EHOSTUNREACH, $EALREADY,
-    $EINPROGRESS, $ESTALE, $EUCLEAN, $ENOTNAM, $ENAVAIL, $EISNAM,
-    $EREMOTEIO, $EDQUOT, $ENOMEDIUM, $EMEDIUMTYPE, $ECANCELED;
+    $EINPROGRESS, $ESTALE, $EDQUOT, $ECANCELED, $EWOULDBLOCK;
 
   export
     poll,

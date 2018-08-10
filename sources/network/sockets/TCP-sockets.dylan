@@ -207,8 +207,8 @@ define method initialize
      backlog :: <integer> = 8) => ()
   next-method();
   new-server-socket.socket-descriptor := accessor-new-socket-descriptor(socket-code(new-server-socket));
-  if (service)
-    error("service keyword to make <server-socket> not supported yet");
+  if (service & requested-port)
+    error("make(<server-socket>,... Cannot specify both service and port keywords.");
   end if;
   // host
   let host-to-bind =

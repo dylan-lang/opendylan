@@ -60,26 +60,13 @@ define class <socket-accessor-error> (<socket-error>, <sealed-object>)
 end class;
 
 define class <unix-socket-error> (<socket-accessor-error>)
-  // slot numeric-error-code :: <integer>, init-keyword: error-code:;
-  // slot symbolic-error-code :: <string>;
   slot explanation :: <string>, init-value: "";
   slot calling-function :: <string>, init-keyword: calling-function:;
 end class;
 
-/*
-define method initialize (the-condition :: <unix-socket-error>,
-                          #key error-code, calling-function) => ()
-  ignore(calling-function);
-  next-method();
-  the-condition.WSA-symbolic-error-code :=
-    element($wsa-error-codes, error-code,
-            default: "unknown-wsa-error");
-end method;
-*/
-
 define function unix-socket-error
     (calling-function :: <string>,
-     #key format-string = "socket error %=", format-arguments = #[],
+     #key format-string = "socket error", format-arguments = #[],
      high-level-error = #f, host-name = #f, host-address = #f,
      host-port = #f, error-code: input-error-code = #f)
   if (instance?(host-name, <string>))
@@ -91,14 +78,70 @@ define function unix-socket-error
   let unix-condition-object =
     make(<unix-socket-error>, calling-function: calling-function,
          error-code: error-code, format-string: format-string,
-         format-arguments: concatenate(vector(error-code),
-                                       format-arguments));
+         format-arguments: format-arguments);
   if (high-level-error)
     high-level-error.socket-condition-details :=
       unix-condition-object;
   else
-    // TODO: Decode documented unix errors
+    // TODO: These are copied as far as possible from Winsock
     select (error-code by ==)
+      $EINPROGRESS, $EFAULT,
+      $EAFNOSUPPORT, $ENOTSOCK,
+      $EINVAL, $EISCONN,
+      $EOPNOTSUPP, $EWOULDBLOCK, $EACCES,
+      $EMSGSIZE =>
+        high-level-error :=
+          make(<internal-socket-error>, details: unix-condition-object,
+               format-string: format-string,
+               format-arguments: format-arguments);
+      $EINTR =>
+        high-level-error :=
+          make(<blocking-call-interrupted>, details: unix-condition-object,
+               format-string: format-string,
+               format-arguments: format-arguments);
+      $ENOBUFS, $EMFILE =>
+        high-level-error :=
+          make(<out-of-resources>, details: unix-condition-object,
+               format-string: format-string,
+               format-arguments: format-arguments);
+      $ENETDOWN =>
+        high-level-error :=
+          make(<network-not-responding>, details: unix-condition-object,
+               format-string: format-string,
+               format-arguments: format-arguments);
+/*
+      $HOST-NOT-FOUND, $NO-RECOVERY, $NO-DATA =>
+        high-level-error :=
+          make(<host-not-found>, details: win32-condition-object,
+               format-string: format-string,
+               format-arguments: format-arguments,
+               host-name: host-name, host-address: host-address);
+      $WSATRY-AGAIN =>
+        high-level-error :=
+          make(<server-not-responding>, details: win32-condition-object,
+               format-string: format-string,
+               format-arguments: format-arguments, host-name: host-name,
+               host-address: host-address);
+*/
+      $EHOSTUNREACH, $ECONNREFUSED, $EADDRNOTAVAIL =>
+        high-level-error :=
+          make(<connection-failed>, details: unix-condition-object,
+               format-string: format-string,
+               format-arguments: format-arguments, host-port: host-port,
+               host-address: host-address);
+      $ENOTCONN, $ENETRESET, $ESHUTDOWN, $ECONNABORTED,
+      $ETIMEDOUT,$ECONNRESET =>
+        high-level-error :=
+          make(<connection-closed>, details: unix-condition-object,
+               format-string: format-string,
+               format-arguments: format-arguments, host-port: host-port,
+               host-address: host-address);
+      $EADDRINUSE =>
+        high-level-error := make(<address-in-use>,
+                                 details: unix-condition-object,
+                                 format-string: "address in use",
+                                 host-address: host-address,
+                                 host-port: host-port);
       otherwise =>
         high-level-error := unix-condition-object;
     end select;
@@ -110,6 +153,42 @@ define function unix-socket-error
     error(high-level-error);
   end if;
 end function;
+
+/* There is another set of errors returned by netdb functions
+ * gethostbyname(), gethostbyaddr() et al */
+define constant $HOST-NOT-FOUND    = 1; /* Authoritative Answer Host not found */
+define constant $TRY-AGAIN         = 2; /* Non-Authoritative Host not found, or SERVERFAIL */
+define constant $NO-RECOVERY	   = 3; /* Non recoverable errors, FORMERR, REFUSED, NOTIMP */
+define constant $NO-DATA           = 4; /* Valid name, no data record of requested type */
+
+define function unix-socket-herror(calling-function :: <string>,
+                                   #key format-string = "netdb error",
+                                        format-arguments = #[],
+                                   host-name = #f,
+                                   host-address = #f,
+                                   host-port = #f)
+  let error-code = h-errno();
+  let high-level-error =
+    select (error-code by ==)
+      $HOST-NOT-FOUND, $NO-RECOVERY, $NO-DATA =>
+        make(<host-not-found>,
+             format-string: format-string,
+             format-arguments: format-arguments,
+             host-name: host-name, host-address: host-address);
+      $TRY-AGAIN =>
+        make(<server-not-responding>,
+             format-string: format-string,
+             format-arguments: format-arguments, host-name: host-name,
+             host-address: host-address);
+      otherwise => #f
+    end select;
+  unix-socket-error(calling-function, format-string: format-string,
+                    format-arguments: format-arguments,
+                    high-level-error: high-level-error,
+                    host-name: host-name,
+                    host-port: host-port,
+                    error-code: error-code);
+end function unix-socket-herror;
 
 // startup and shutdown
 
@@ -127,13 +206,6 @@ define function accessor-startup (manager :: <socket-manager>) => (result :: <bo
   end unless;
   socket-manager-started?(manager)
 end function;
-
-// Temporarily disable automatic start-up until maybe we fix dylan
-// initialization so maybe it isn't tied to dll initialization.
-// begin
-//   accessor-startup();
-// end;
-//
 
 define function accessor-cleanup (manager :: <socket-manager>) => ()
   with-lock(socket-manager-lock(manager))
@@ -178,55 +250,20 @@ define method accessor-ipv4-address-to-presentation
 end method;
 
 define method accessor-ipv4-presentation-to-address
-    (address-string :: <C-char*>) =>
-    (result :: <ipv4-network-order-address>)
-  // Filter out screw case
-  if (address-string = "255.255.255.255")
-    make(<ipv4-network-order-address>,
-         // probably don't need htonl
-         address: accessor-htonl(as(<machine-word>, #xFFFFFFFF)))
-  else
-    let machine-address :: <machine-word> = inet-addr(address-string);
-    if (machine-address == $INADDR-NONE)
-      error(make(<invalid-address>,
-                 format-string: "badly formed ip address string %s",
-                 format-arguments: vector(address-string),
-                 bad-address: address-string));
-    else
-      make(<ipv4-network-order-address>,
-           address: machine-address)
-    end if
-  end if
-end method;
-
-define method accessor-ipv4-presentation-to-address
-    (ip-address-string :: <byte-string>) =>
-    (result :: <ipv4-network-order-address>)
-  // Filter out screw case
-  if (ip-address-string = "255.255.255.255")
-    make(<ipv4-network-order-address>,
-         // probably don't need htonl
-         address: accessor-htonl(as(<machine-word>,#xFFFFFFFF)))
-  else
-    let machine-address :: <machine-word> =
-      with-C-string(address-as-c-string = ip-address-string)
-        inet-addr(address-as-c-string)
-      end with-C-string;
-    if (machine-address == $INADDR-NONE)
+  (ip-address-string :: <byte-string>) =>
+  (result :: <ipv4-network-order-address>)
+  with-stack-structure(inp :: <in-addr*>)
+    if (zero?(inet-aton(ip-address-string, inp)))
       error(make(<invalid-address>,
                  format-string: "badly formed ip address string %s",
                  format-arguments: vector(ip-address-string),
                  bad-address: ip-address-string))
     else
-      make(<ipv4-network-order-address>,
-           address: machine-address)
-    end if
-  end if
+      let addr = as(<machine-word>, pointer-value(inp));
+      make(<ipv4-network-order-address>, address: addr)
+    end if;
+  end;
 end method;
-
-// unix-gethostbyname errors:
-//
-// TODO: Fill in and trap
 
 define constant $resolver-lock = make(<recursive-lock>);
 
@@ -234,55 +271,12 @@ define method get-host-entry
     (the-name :: <C-string>) => (host-entry :: <LPHOSTENT>)
   let host-entry :: <LPHOSTENT> = unix-gethostbyname(the-name);
   if (null-pointer?(host-entry))
-    let error-code :: <integer> = unix-errno();
-    select (error-code by \==)
-      /*
-        $WSAHOST-NOT-FOUND =>
-          // Maybe it's a presentation address.  Try to covert the
-          // presentation address to a number.
-          let address-as-number :: <machine-word> =
-          if (the-name = "255.255.255.255")
-            accessor-htonl(#xFFFFFFFF) // probably don't need htonl
-          else
-            let result = inet-addr(the-name);
-            if (result == $INADDR-NONE)
-              unix-socket-error("get-host-entry",
-                                error-code: error-code,
-                                format-string:
-                                  "Couldn't translate %s as a host name",
-                                format-arguments:
-                                  vector(as(<byte-string>,the-name)),
-                                host-name: the-name);
-            end if;
-            result
-          end if;
-        with-stack-structure(hostnum-pointer :: <C-raw-unsigned-long*>)
-          pointer-value(hostnum-pointer) := address-as-number;
-          let result :: <LPHOSTENT> =
-            unix-gethostbyaddr(pointer-cast(<C-char*>, hostnum-pointer),
-                               size-of(<C-raw-unsigned-long>),
-                               $AF-INET);
-          if (null-pointer?(result))
-            unix-socket-error("get-host-entry",
-                              error-code: error-code,
-                              format-string:
-                                "Couldn't translate %s as a host name",
-                              format-arguments:
-                                vector(as(<byte-string>, the-name)),
-                              host-name: the-name);
-          else
-            host-entry := result;
-          end if;
-        end with-stack-structure;
-      */
-      otherwise =>
-        unix-socket-error("get-host-entry", error-code: error-code,
-                          format-string:
-                            "Error translating %s as a host name",
-                          format-arguments:
-                            vector(as(<byte-string>, the-name)),
-                          host-name: the-name);
-    end select;
+    unix-socket-herror("get-host-entry",
+                      format-string:
+                        "Error translating %s as a host name",
+                      format-arguments:
+                        vector(as(<byte-string>, the-name)),
+                      host-name: the-name);
   end if;
   host-entry
 end method;
@@ -364,7 +358,7 @@ define method accessor-get-host-by-name
             end with-c-string;
         end select;
     // now fill in the fields of the <ipv4-address>. Everything must be
-    // copied out of the
+    // copied out of the hostent struct
     new-address.%host-name := as(<byte-string>,
                                  pointer-cast(<C-string>,
                                               host-entry.h-name-value));
@@ -373,58 +367,30 @@ define method accessor-get-host-by-name
   end
 end method;
 
-// unix-gethostbyaddr error codes:
-//
-// Return Values
-//
-// If no error occurs, gethostbyaddr returns a pointer to the HOSTENT
-// structure. Otherwise, it returns a NULL pointer, and a specific
-// error code can be retrieved by calling WSAGetLastError.
-//
-// Error Codes
-//
-// WSANOTINITIALISED A successful WSAStartup must occur before using
-//   this function.
-// WSAENETDOWN The network subsystem has failed.
-// WSAHOST_NOT_FOUND Authoritative Answer Host not found.
-// WSATRY_AGAIN Non-Authoritative Host not found, or server failed.
-// WSANO_RECOVERY Nonrecoverable error occurred.
-// WSANO_DATA Valid name, no data record of requested type.
-// WSAEINPROGRESS A blocking Windows Sockets 1.1 call is in progress,
-//   or the service provider is still processing a callback function.
-// WSAEAFNOSUPPORT The type specified is not supported by the Windows
-//   Sockets implementation.
-// WSAEFAULT The addr parameter is not a valid part of the user
-//   address space, or the len parameter is too small.
-// WSAEINTRA blocking Windows Socket 1.1 call was canceled through
-//   WSACancelBlockingCall.
-
 define function accessor-get-host-by-address
     (new-address :: <ipv4-address>) => ();
   with-lock($resolver-lock)
     let host-entry :: <LPHOSTENT>
       // Could maybe use a with-initialized-pointer macro here
-      = with-stack-structure(hostnum-pointer :: <C-raw-unsigned-long*>)
+      = with-stack-structure(hostnum-pointer :: <C-raw-unsigned-int*>)
           pointer-value(hostnum-pointer) :=
             new-address.numeric-host-address.network-order;
           let gethostbyaddr-result :: <LPHOSTENT> =
             unix-gethostbyaddr(pointer-cast(<C-char*>, hostnum-pointer),
-                               size-of(<C-raw-unsigned-long>),
+                               size-of(<C-raw-unsigned-int>),
                                $AF-INET);
           if (null-pointer?(gethostbyaddr-result))
-            let error-code :: <integer> = unix-errno();
-            unix-socket-error("unix-gethostbyaddr",
-                              error-code: error-code,
-                              format-string:
-                                "Couldn't translate %s as a host address",
-                              format-arguments:
-                                vector(new-address.host-address),
-                              host-address: new-address);
+            unix-socket-herror("unix-gethostbyaddr",
+                               format-string:
+                                 "Couldn't translate %s as a host address",
+                               format-arguments:
+                                 vector(new-address.host-address),
+                               host-address: new-address);
           end if;
           gethostbyaddr-result
         end with-stack-structure;
     // now fill in the fields of the <ipv4-address>. Everything must be
-    // copied out of the
+    // copied out of the hostent structure
     new-address.%host-name := as(<byte-string>,
                                  pointer-cast(<C-string>,
                                               host-entry.h-name-value));
@@ -440,20 +406,16 @@ define method accessor-get-port-for-service
     let sp :: <LPSERVENT> =
       unix-getservbyname(service, proto);
     if (null-pointer?(sp))
+      /* Linux/BSD docs don't mention a specific errno */
+      let service = as(<byte-string>, service);
+      let proto = as(<byte-string>, proto);
       let service-error-code = unix-errno();
       let high-level-error =
-        select (service-error-code by \==)
-          // TODO: High level error messages
-          /*
-            $WSAHOST-NOT-FOUND, $WSANO-RECOVERY, $WSANO-DATA =>
-            make(<service-not-found>,
-                 format-string: "Service: %s not found for protocol: %s",
-                 format-arguments: vector(service, proto),
-                 service: as(<byte-string>, service),
-                 protocol: as(<byte-string>, proto));
-          */
-          otherwise => #f;
-        end select;
+        make(<service-not-found>,
+             format-string: "Service: %s not found for protocol: %s",
+             format-arguments: vector(service, proto),
+             service: service,
+             protocol: proto);
       unix-socket-error("unix-getservbyname", error-code: service-error-code,
                         high-level-error: high-level-error);
     else
@@ -496,16 +458,18 @@ end method;
 // retrieved by calling WSAGetLastError.
 //
 // Error Codes
-// WSANOTINITIALISED A successful WSAStartup must occur before using
-//   this function.
-// WSAENETDOWN The network subsystem has failed.
-// WSAEFAULT The name or the namelen parameter is not a valid part of
-//   the user address space, or the namelen parameter is too small.
-// WSAEINPROGRESS A blocking Windows Sockets 1.1 call is in progress,
-//   or the service provider is still processing a callback function.
-// WSAENOTCONN The socket is not connected.
-// WSAENOTSOCK The descriptor is not a socket.
-
+// [EBADF]      The argument socket is not a valid descriptor.
+// [EFAULT]     The address parameter points to memory not in a valid
+//              part of the process address space.
+// [EINVAL]     socket has been shut down.
+// [ENOBUFS]    Insufficient resources were available in the system to
+//              perform the operation.
+// [ENOTCONN]   Either the socket is not connected or it has not had
+//              the peer pre-specified.
+// [ENOTSOCK]   The argument socket refers to something other than a
+//              socket (e.g., a file).
+// [EOPNOTSUPP] getpeername() is not supported for the protocol in use
+//              by socket.
 define function accessor-remote-address-and-port (the-descriptor :: <accessor-socket-descriptor>)
   => (connected? :: <boolean>,
       the-remote-address :: false-or(<ipv4-address>),
@@ -522,9 +486,8 @@ define function accessor-remote-address-and-port (the-descriptor :: <accessor-so
       if (getpeername-result == $SOCKET-ERROR)
         let error-code :: <integer> = unix-errno();
         select (error-code by \==)
-          /* TODO: High level error conditions
-          $WSAENOTCONN => connected? := #f;
-          */
+          /* TODO: High level error conditions */
+          $ENOTCONN => connected? := #f;
           otherwise =>
             unix-socket-error("unix-getpeername",
                                error-code: error-code);
@@ -567,16 +530,17 @@ define function accessor-local-address-and-port
   end with-cleared-stack-structure
 end function;
 
+// On Linux this is 64. Allow extra space here.
+define constant $HOST-NAME-SIZE :: <integer> = 256;
 
 define function accessor-local-host-name()
   => (local-host-name :: <string>);
   let local-host-name = "";
-  let name-buffer-size = 256; // wag for the size
   let name-buffer :: <byte-vector> =
-    make(<byte-vector>, size: name-buffer-size, fill: as(<integer>, '\0'));
+    make(<byte-vector>, size: $HOST-NAME-SIZE, fill: as(<integer>, '\0'));
   with-C-string(name-buffer-as-C-string = name-buffer)
     let gethostname-result =
-      unix-gethostname(name-buffer-as-C-string, name-buffer-size);
+      unix-gethostname(name-buffer-as-C-string, $HOST-NAME-SIZE);
     if (gethostname-result == $SOCKET-ERROR)
       unix-socket-error("unix-gethostname");
     end if;
@@ -592,31 +556,23 @@ define constant <accessor-socket-descriptor>
 //
 // If no error occurs, bind returns zero. Otherwise, it returns
 // SOCKET_ERROR, and a specific error code can be retrieved by calling
-// WSAGetLastError.
+// errno.
 //
 // Error Codes
-//
-// WSANOTINITIALISED A successful WSAStartup must occur before using
-//   this function.
-// WSAENETDOWN The network subsystem has failed.
-// WSAEADDRINUSE A process on the machine is already bound to the same
-//   fully-qualified address and the socket has not been marked to
-//   allow address re-use with SO_REUSEADDR. For example, IP address
-//   and port are bound in the af_inet case) . (See the SO_REUSEADDR
-//   socket option under setsockopt.)
-// WSAEADDRNOTAVAIL The specified address is not a valid address for
-//   this machine
-// WSAEFAULT The name or the namelen parameter is not a
-//   valid part of the user address space, the namelen parameter is
-//   too small, the name parameter contains incorrect address format
-//   for the associated address family, or the first two bytes of the
-//   memory block specified by name does not match the address family
-//   associated with the socket descriptor s.
-// WSAEINPROGRESS A blocking Windows Sockets 1.1 call is in progress,
-//   or the service provider is still processing a callback function.
-// WSAEINVAL The socket is already bound to an address.Countries
-// WSAENOBUFS Not enough buffers available, too many connections.
-// WSAENOTSOCK The descriptor is not a socket.
+// [EACCES]        The requested address is protected, and the current
+//                 user has inadequate permission to access it.
+// [EADDRINUSE]    The specified address is already in use.
+// [EADDRNOTAVAIL] The specified address is not available from the local
+//                  machine.
+// [EAFNOSUPPORT]  address is not valid for the address family of socket.
+// [EBADF]         socket is not a valid file descriptor.
+// [EDESTADDRREQ]  socket is a null pointer.
+// [EFAULT]        The address parameter is not in a valid part of the
+//                 user address space.
+// [EINVAL]        socket is already bound to an address and the protocol
+//                 does not support binding to a new address.  Alterna-
+//                 tively, socket may have been shut down.
+// [ENOTSOCK]      socket does not refer to a socket.
 
 define function accessor-bind
     (the-socket :: <abstract-socket>,
@@ -653,30 +609,19 @@ end function;
 //
 // If no error occurs, listen returns zero. Otherwise, a value of
 // SOCKET_ERROR is returned, and a specific error code can be
-// retrieved by calling WSAGetLastError.
+// retrieved by calling errno.
 //
 // Error Codes
+// [EACCES]       The current process has insufficient privileges.
+// [EBADF]        The argument socket is not a valid file descriptor.
+// [EDESTADDRREQ] The socket is not bound to a local address and the
+//                protocol does not support listening on an unbound
+//                socket.
+// [EINVAL]       socket is already connected.
+// [ENOTSOCK]     The argument socket does not reference a socket.
+// [EOPNOTSUPP]   The socket is not of a type that supports the opera-
+//                tion listen
 //
-// WSANOTINITIALISED A successful WSAStartup must occur before using
-//   this function.
-// WSAENETDOWN The network subsystem has failed.
-// WSAEADDRINUSE The socket's local address is already in use and the
-//   socket was not marked to allow address reuse with
-//   SO_REUSEADDR. This error usually occurs during execution of the
-//   bind function, but could be delayed until this function if the
-//   bind was to a partially wild-card address (involving ADDR_ANY)
-//   and if a specific address needs to be "committed" at the time of
-//   this function.
-// WSAEINPROGRESS A blocking Windows Sockets 1.1 call is in progress,
-//   or the service provider is still processing a callback function.
-// WSAEINVAL The socket has not been bound with bind.
-// WSAEISCONN The socket is already connected.
-// WSAEMFILE No more socket descriptors are available.
-// WSAENOBUFS No buffer space is available.
-// WSAENOTSOCK The descriptor is not a socket.
-// WSAEOPNOTSUPP The referenced socket is not of a type that supports
-//   the listen operation.
-
 define method accessor-listen
     (the-socket :: <TCP-server-socket>, backlog :: <integer>)
  => ()
@@ -709,43 +654,22 @@ define method accessor-input-available?
 end method accessor-input-available?;
 
 define method accessor-close-socket
-    (the-descriptor :: <accessor-socket-descriptor>) => ();
+  (the-descriptor :: <accessor-socket-descriptor>) => ();
   let manager = current-socket-manager();
   if (socket-manager-started?(manager))
     let close-result = unix-closesocket(the-descriptor);
     if (close-result == $SOCKET-ERROR)
       let error-code :: <integer> = unix-errno();
-      select (error-code by \==)
-        otherwise =>
-          signal(make(<unix-socket-error>,
-                      calling-function: "unix-closesocket",
-                      error-code: error-code));
-      end select;
+      unix-socket-error("close-socket",
+                        error-code: error-code);
     end if;
-  elseif (socket-manager-closing-thread(manager))
-    error(make(<socket-accessor-closed-error>,
-               calling-function: "accessor-close-socket",
-               calling-thread: current-thread(),
-               accessor-started?-value: socket-manager-started?(manager),
-               thread-that-closed-accessor: socket-manager-closing-thread(manager),
-               format-string:
-                 "Internal Error: "
-                 "accessor-close-socket was called from thread: %s after "
-                 "winsock2 was apparently closed by thread: %s",
-               format-arguments:
-                 vector(current-thread().thread-name | "unknown thread",
-                        socket-manager-closing-thread(manager).thread-name | "unknown thread")));
   else
     error(make(<socket-accessor-closed-error>,
                calling-function: "accessor-close-socket",
                calling-thread: current-thread(),
                accessor-started?-value: socket-manager-started?(manager),
                thread-that-closed-accessor: socket-manager-closing-thread(manager),
-               format-string:
-                 "Internal Error: "
-                 "accessor-close-socket was called from thread: %s but "
-                 "winsock2 was apparently never initialized",
-               format-arguments:
-                 vector(current-thread().thread-name | "unknown thread")));
+               format-string: "Internal Error in socket-manager ",
+               format-arguments: #[]));
   end if;
 end method;
