@@ -181,13 +181,13 @@ define method call-with-source-record-input-stream
     (fn :: <function>, sr :: <flat-file-source-record>,
      #key check-date? = *check-source-record-date?*) => (#rest fn-values);
   let location =
-    // if we are not checking the date we have to check if file exists
+    // If we are not checking the date we have to check if file exists.
     source-record-location(sr, check-if-exists?: ~check-date?);
   unless (~check-date? | ~source-record-modified?(sr))
     signal(make(<source-record-missing>,
                 source-record: sr,
                 format-string: "%s was unexpectedly modified during compilation.",
-                format-arguments: list(sr)));
+                format-arguments: list(location)));
   end;
   with-open-source-file (stream = location)
     stream-skip-lines (stream, sr.source-record-start-line);
