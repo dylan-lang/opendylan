@@ -1157,7 +1157,7 @@ define program-note <subclass-explanation-1>(<precedes-explanation>)
 end;
 
 define program-note <subclass-explanation-2>(<precedes-explanation>)
-  slot class-4-name,  init-keyword: class-3:;
+  slot class-4-name,  init-keyword: class-4:;
   format-string "%s precedes %s in the CPL of %s "
                 "because %s is a direct subclass of %s "
                 "and %s precedes %s in %s";
@@ -1207,7 +1207,7 @@ define method explain-precedes(c1, c2, in)
       if (precedes?(c1, c2, s))
         return(make(<subclass-explanation-2>,
                     class-1: c1.name, class-2: c2.name,
-                    class-2: in.name, class-4: s.name,
+                    class-3: in.name, class-4: s.name,
                     subnotes: list(explain-precedes(c1, c2, s))))
       end
     end;
