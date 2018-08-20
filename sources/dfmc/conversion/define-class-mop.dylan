@@ -950,6 +950,7 @@ define function ^compute-class-precedence-list (c :: <&class>)
                     map-into(remaining-lists, remove-next, remaining-lists))
       else
         // We are trying to build a class with an inconsistent CPL.
+        let heads = concatenate(c-direct-superclasses, list(c));
         // Find two classes, and two witnesses, such that
         // witness 1 < witness 2 in CPL of class 1 and reverse in class 2
         let (witness1, witness2, index-of-class1, index-of-class2) =
@@ -971,12 +972,8 @@ define function ^compute-class-precedence-list (c :: <&class>)
           end block;
 
         // Signal an error explaining what has gone wrong.
-        let class1 = if (index-of-class1 = 0)
-                       c
-                     else
-                       c-direct-superclasses[index-of-class1 - 1]
-                     end;
-        let class2 = c-direct-superclasses[index-of-class2 - 1];
+        let class1 = heads[index-of-class1];
+        let class2 = heads[index-of-class2];
         note-CPL-inconsistency(
           c,
           class1,
