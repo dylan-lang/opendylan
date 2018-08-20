@@ -985,8 +985,8 @@ define function ^compute-class-precedence-list (c :: <&class>)
 
   let c3 = merge-lists(list(c),
                        concatenate(map(^all-superclasses, c-direct-superclasses),
-                                   list(c-direct-superclasses)));
-  let old = ^compute-class-precedence-list-old(c);
+                                   list(c-direct-superclasses))) | #();
+  let old = ^compute-class-precedence-list-old(c) | #();
   unless (every?(\=, c3, old))
     let name = compose(fragment-identifier, model-variable-name);
     note(<cpl-differ>,
