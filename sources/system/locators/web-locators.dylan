@@ -521,7 +521,7 @@ define sealed method locator-as-string
  => (string :: <string>)
   concatenate-as(class,
                  $mailto-protocol,
-                 delimiter-to-string($web-separator),
+                 delimiter-to-string($web-protocol-separator),
                  locator.locator-address)
 end method locator-as-string;
 
