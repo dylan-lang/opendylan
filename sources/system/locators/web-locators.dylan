@@ -597,15 +597,20 @@ define sealed method parse-url
         (start :: <integer>)
      => (port :: false-or(<integer>), next-index :: <integer>)
       if (start < stop & string[start] == $web-port-separator)
+        let number-start = start + 1;
         let next-index
           = find-delimiters(string,
                             vector($web-username-separator,
                                    $web-separator),
-                            start: start + 1)
+                            start: number-start)
               | stop;
         let port
-          = string-to-integer
-              (string, start: start + 1, end: next-index, default: -1);
+          = if (number-start < stop)
+              string-to-integer
+                (string, start: number-start, end: next-index, default: -1)
+            else
+              -1
+            end;
         if (port == -1)
           locator-error("Invalid port supplied for locator '%s'", string)
         else
