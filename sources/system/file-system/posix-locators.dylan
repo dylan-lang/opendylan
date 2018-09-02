@@ -202,13 +202,3 @@ define sealed method string-as-locator
        name: name)
 end method string-as-locator;
 
-
-/// Posix locator overrides
-
-define method simplify-locator
-    (locator :: <posix-directory-locator>)
- => (simplified-locator :: <posix-directory-locator>)
-  // Posix locators can't safely be simplified because '..' has a complicated
-  // meaning when dealing with links, so just return the original.
-  locator
-end method simplify-locator;
