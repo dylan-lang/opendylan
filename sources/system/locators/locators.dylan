@@ -21,6 +21,11 @@ define open generic locator-relative?
 define open generic locator-path
     (locator :: <locator>) => (path :: <sequence>);
 
+// The locator name, e.g. for locator /a/b/c.d
+// this will return "c.d"
+define open generic locator-name
+  (locator :: <locator>) => (name :: false-or(<string>));
+
 // The locator name without the extension.  e.g., for locator /a/b/c.d
 // this will return "c".
 define open generic locator-base
@@ -28,7 +33,6 @@ define open generic locator-base
 
 define open generic locator-extension
     (locator :: <locator>) => (extension :: false-or(<string>));
-
 
 /// Locator classes
 
