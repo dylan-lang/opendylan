@@ -14,19 +14,58 @@ end class;
 
 define variable *tablegen-overrides* = make(<string-table>);
 
+define function save-overrides() => (previous-overrides :: <string-table>)
+  let previous-overrides = *tablegen-overrides*;
+  *tablegen-overrides* := shallow-copy(*tablegen-overrides*);
+  previous-overrides
+end function;
+
+define macro with-saved-overrides
+  { with-saved-overrides() ?:body end }
+  => { let previous-overrides = save-overrides();
+       block ()
+         ?body
+       cleanup
+         *tablegen-overrides* := previous-overrides;
+       end block }
+end macro;
+
+define function maybe-add-override
+    (environment :: <string-table>,
+     initializer :: <tablegen-initializer>)
+ => ();
+  if (initializer.initializer-override?)
+    *tablegen-overrides*[initializer.initializer-name]
+      := resolve-value(environment, initializer.initializer-value);
+  end if;
+end function;
+
+define function add-class-reference-overrides
+    (environment :: <string-table>,
+     reference :: <tablegen-class-reference>)
+ => ();
+  let class = reference.class-reference-class;
+
+  do(curry(maybe-add-override, environment),
+     class.record-initializers);
+end function;
+
 define function add-initializer
     (sequence :: <stretchy-sequence>,
      environment :: <string-table>,
      initializer :: <tablegen-initializer>)
  => (value :: <tablegen-value>);
   let value
-    = element(*tablegen-overrides*, initializer.initializer-name, default: #f)
-    | resolve-value(environment, initializer.initializer-value);
+    = element(*tablegen-overrides*, initializer.initializer-name,
+              default: initializer.initializer-value);
+  let resolved-value
+    = resolve-value(environment, value);
   add!(sequence, make(<tablegen-initializer>,
                       name: initializer.initializer-name,
                       type: initializer.initializer-type,
-                      value: value));
-  value
+                      value: resolved-value,
+                      override?: initializer.initializer-override?));
+  resolved-value
 end function;
 
 define function instantiate-class-reference
@@ -46,17 +85,11 @@ define function instantiate-class-reference
     let parameter-value
       = element(template-arguments, index, default: #f);
     if (parameter-value)
-      environment[parameter-name] := parameter-value;
-    else
-      let value = resolve-value(environment, parameter.initializer-value);
-      add!(sequence,
-           make(<tablegen-initializer>,
-                name: parameter-name,
-                type: parameter.initializer-type,
-                value: value));
-      if (resolve?)
-        environment[parameter-name] := value;
-      end if;
+      environment[parameter-name]
+        := resolve-value(environment, parameter-value);
+    elseif (resolve?)
+      environment[parameter-name]
+        := resolve-value(environment, parameter.initializer-value);
     end if;
   end for;
 
@@ -69,7 +102,6 @@ define function instantiate-class-reference
 end function;
 
 define variable *tablegen-anonymous-counter* :: <integer> = 0;
-define variable *tablegen-anonymous-value-counter* :: <integer> = 0;
 
 define parser tablegen-parser
 
@@ -100,29 +132,37 @@ object:
 class-inst:
   %CLASS class-name opt-template-parameter-list object-body
     => method (prefix :: <string>, environment :: <string-table>)
-         // Alpha-convert template parameters
-         for (parameter in arg$3)
-           environment[parameter.initializer-name]
-             := make(<tablegen-named-value>,
-                     name: format-to-string("%s:%s",
-                                            arg$2,
-                                            parameter.initializer-name));
-         end for;
+         with-saved-overrides()
+           // Alpha-convert template parameters
+           for (parameter in arg$3)
+             environment[parameter.initializer-name]
+               := make(<tablegen-named-value>,
+                       name: format-to-string("%s:%s",
+                                              arg$2,
+                                              parameter.initializer-name));
+           end for;
 
-         let initializers = make(<stretchy-object-vector>);
+           // Add overrides
+           for (reference in arg$4.head)
+             add-class-reference-overrides(environment, reference);
+           end for;
+           do(curry(maybe-add-override, environment), arg$4.tail);
 
-         for (reference in arg$4.head)
-           instantiate-class-reference
-             (initializers, environment, reference, #f);
-         end for;
+           let initializers = make(<stretchy-object-vector>);
 
-         do(curry(add-initializer, initializers, environment), arg$4.tail);
-         $tablegen-classes[arg$2]
-           := make(<tablegen-class>,
-                   name: arg$2,
-                   template-parameters: arg$3,
-                   superclasses: map(class-reference-class, arg$4.head),
-                   initializers: initializers);
+           for (reference in arg$4.head)
+             instantiate-class-reference
+               (initializers, environment, reference, #f);
+           end for;
+
+           do(curry(add-initializer, initializers, environment), arg$4.tail);
+           $tablegen-classes[arg$2]
+             := make(<tablegen-class>,
+                     name: arg$2,
+                     template-parameters: arg$3,
+                     superclasses: map(class-reference-class, arg$4.head),
+                     initializers: initializers);
+           end;
        end;;
 
 class-name:
@@ -137,7 +177,7 @@ opt-id:
   /* empty */
     => begin
          let name
-           = format-to-string("anonymous.%d", *tablegen-anonymous-counter*);
+           = format-to-string("anonymous_%d", *tablegen-anonymous-counter*);
          *tablegen-anonymous-counter* := *tablegen-anonymous-counter* + 1;
          name
        end;;
@@ -213,26 +253,30 @@ value:
     => error("bits-value");;
   class-id %LANGLE value-list-ne %RANGLE
     => begin
-         let def-name
-           = format-to-string("anonymous.val.%d",
-                              *tablegen-anonymous-value-counter*);
-         *tablegen-anonymous-value-counter*
-           := *tablegen-anonymous-value-counter* + 1;
+         with-saved-overrides()
+           let def-name
+             = format-to-string("anonymous_%d",
+                                *tablegen-anonymous-counter*);
+           *tablegen-anonymous-counter*
+             := *tablegen-anonymous-counter* + 1;
 
-         let initializers = make(<stretchy-object-vector>);
-         let environment = make(<string-table>);
-         let reference
-           = make(<tablegen-class-reference>,
-                  class: arg$1, template-arguments: reverse!(arg$3));
-         instantiate-class-reference(initializers, environment, reference, #t);
+           let initializers = make(<stretchy-object-vector>);
+           let environment = make(<string-table>);
+           let reference
+             = make(<tablegen-class-reference>,
+                    class: arg$1, template-arguments: reverse!(arg$3));
+           add-class-reference-overrides(environment, reference);
+           instantiate-class-reference(initializers, environment,
+                                       reference, #t);
 
-         $tablegen-definitions[def-name]
-           := make(<tablegen-definition>,
-                   name: def-name,
-                   superclasses: vector(arg$1),
-                   initializers: initializers);
+           $tablegen-definitions[def-name]
+             := make(<tablegen-definition>,
+                     name: def-name,
+                     superclasses: vector(arg$1),
+                     initializers: initializers);
 
-         make(<tablegen-named-value>, name: def-name);
+           make(<tablegen-named-value>, name: def-name)
+         end
        end;;
   value %LBRACE bit-list %RBRACE
     => error("bit-list value");;
@@ -369,7 +413,7 @@ body-item:
   declaration %SEMI
     => arg$1;;
   %LET %ID opt-bit-list %EQ value %SEMI
-    => error("body-item %%LET");;
+    => make(<tablegen-initializer>, name: arg$2, value: arg$5, override?: #t);;
 
 opt-bit-list:
   /* empty */
@@ -380,18 +424,31 @@ opt-bit-list:
 def-inst:
   %DEF def-name object-body
     => method (prefix :: <string>, environment :: <string-table>)
-         let initializers = make(<stretchy-object-vector>);
-         for (reference in arg$3.head)
-           instantiate-class-reference
-             (initializers, environment, reference, #t);
-         end for;
-         do(curry(add-initializer, initializers, environment), arg$3.tail);
+         with-saved-overrides()
+           // Add overrides
+           for (reference in arg$3.head)
+             add-class-reference-overrides(environment, reference);
+           end for;
+           do(curry(maybe-add-override, environment), arg$3.tail);
 
-         $tablegen-definitions[arg$2]
-           := make(<tablegen-definition>,
-                   name: concatenate(prefix, arg$2),
-                   superclasses: map(class-reference-class, arg$3.head),
-                   initializers: initializers);
+           let initializers = make(<stretchy-object-vector>);
+           for (reference in arg$3.head)
+             instantiate-class-reference
+               (initializers, environment, reference, #t);
+           end for;
+           for (initializer in arg$3.tail)
+             let value = add-initializer(initializers, environment, initializer);
+             unless (initializer.initializer-override?)
+               environment[initializer.initializer-name] := value
+             end unless;
+           end for;
+
+           $tablegen-definitions[arg$2]
+             := make(<tablegen-definition>,
+                     name: concatenate(prefix, arg$2),
+                     superclasses: map(class-reference-class, arg$3.head),
+                     initializers: initializers);
+         end;
        end;;
 
 def-name:
@@ -432,14 +489,7 @@ let-command:
 
 let-save:
   /* empty */
-    => begin
-         let previous-overrides = *tablegen-overrides*;
-         // FIXME
-         //*tablegen-overrides* := shallow-copy(*tablegen-overrides*);
-         *tablegen-overrides* := make(<string-table>);
-         map-into(*tablegen-overrides*, identity, previous-overrides);
-         previous-overrides
-       end;;
+    => save-overrides();;
 
 let-list:
   let-item
