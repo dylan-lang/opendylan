@@ -36,7 +36,7 @@ end method;
 define constant <llvm-primitive-type-kind>
   = one-of(#"VOID", #"FLOAT", #"DOUBLE", #"LABEL",
            #"X86_FP80", #"FP128", #"PPC_FP128", #"METADATA",
-           #"X86_MMX");
+           #"X86_MMX", #"TOKEN");
 
 define class <llvm-primitive-type> (<llvm-type>)
   constant slot llvm-primitive-type-kind :: <llvm-primitive-type-kind>,
@@ -301,6 +301,8 @@ end method;
 
 define constant $llvm-label-type :: <llvm-type>
   = make(<llvm-primitive-type>, kind: #"LABEL");
+define constant $llvm-token-type :: <llvm-type>
+  = make(<llvm-primitive-type>, kind: #"TOKEN");
 define constant $llvm-void-type :: <llvm-type>
   = make(<llvm-primitive-type>, kind: #"VOID");
 define constant $llvm-metadata-type :: <llvm-type>

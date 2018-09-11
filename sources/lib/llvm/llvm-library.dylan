@@ -50,6 +50,7 @@ define module llvm
     llvm-void-type?,
 
     $llvm-label-type,
+    $llvm-token-type,
     $llvm-void-type,
     $llvm-metadata-type,
     $llvm-float-type,
