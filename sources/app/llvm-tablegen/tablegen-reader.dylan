@@ -24,24 +24,6 @@ define table $tablegen-keywords :: <string-table>
      "include"    => #"include",
     };
 
-define table $tablegen-!keywords :: <string-table>
-  = {
-     "con"        => $%CONCATTOK-token,
-     "sra"        => $%SRATOK-token,
-     "srl"        => $%SRLTOK-token,
-     "shl"        => $%SHLTOK-token,
-     "eq"         => $%EQTOK-token,
-     "strconcat"  => $%STRCONCATTOK-token,
-     "nameconcat" => $%NAMECONCATTOK-token,
-     "if"         => $%IFTOK-token,
-     "subst"      => $%SUBSTTOK-token,
-     "foreach"    => $%FOREACHTOK-token,
-     "cast"       => $%CASTTOK-token,
-     "car"        => $%CARTOK-token,
-     "cdr"        => $%CDRTOK-token,
-     "null"       => $%NULLTOK-token,
-    };
-
 define function tablegen-identifier-character?
     (ch :: <character>) => (result? :: <boolean>)
   ('a' <= ch & ch <= 'z')
@@ -279,12 +261,7 @@ define function tablegen-parse
         lexer-!(characters);
       else
         let identifier = as(<string>, characters);
-        let token = element($tablegen-!keywords, identifier, default: #f);
-        if (token)
-          values(token, identifier)
-        else
-          error("Unrecognized operator !%s", identifier);
-        end if
+        values($%BANG-token, identifier)
       end if
     end method,
 

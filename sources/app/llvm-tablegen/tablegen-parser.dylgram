@@ -288,36 +288,11 @@ value:
     => error("dag");;
   value %LBRACK bit-list %RBRACK
     => error("slice");;
-  %CARTOK %LPAREN value %RPAREN
-    => error("!car");;
-  %CDRTOK %LPAREN value %RPAREN
-    => error("!cdr");;
-  %NULLTOK %LPAREN value %RPAREN
-    => error("!null");;
-  %CASTTOK %LANGLE type %RANGLE %LPAREN value %RPAREN
-    => error("!cast");;
-  %CONCATTOK %LPAREN value %COMMA value %RPAREN
-    => error("!concat");;
-  %SHLTOK %LPAREN value %COMMA value %RPAREN
-    => error("!shl");;
-  %SRATOK %LPAREN value %COMMA value %RPAREN
-    => error("!sra");;
-  %SRLTOK %LPAREN value %COMMA value %RPAREN
-    => error("!srl");;
-  %EQTOK %LPAREN value %COMMA value %RPAREN
-    => error("!eq");;
-  %STRCONCATTOK %LPAREN value %COMMA value %RPAREN
+
+  %BANG %LPAREN value-list %RPAREN
     => make(<tablegen-operator-value>,
-            kind: #"strconcat",
-            operands: vector(arg$3, arg$5));;
-  %NAMECONCATTOK %LANGLE type %RANGLE %LPAREN value %COMMA value %RPAREN
-    => error("!nameconcat");;
-  %IFTOK %LPAREN value %COMMA value %COMMA value %RPAREN
-    => error("!if");;
-  %FOREACHTOK %LPAREN value %COMMA value %COMMA value %RPAREN
-    => error("!foreach");;
-  %SUBSTTOK %LPAREN value %COMMA value %COMMA value %RPAREN
-    => error("!subst");;
+            kind: as(<symbol>, arg$1),
+            operands: arg$3);;
 
 idvalue:
   %ID

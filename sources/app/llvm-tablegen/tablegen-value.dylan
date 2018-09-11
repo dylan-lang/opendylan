@@ -98,6 +98,9 @@ define method resolve-value
     = map(curry(resolve-value, environment), value.operator-operands);
   if (every?(rcurry(instance?, <tablegen-simple-value>), resolved-operands))
     select (value.operator-kind)
+      #"add" =>
+        make(<tablegen-simple-value>,
+             value: reduce1(\+, map(simple-value, resolved-operands)));
       #"strconcat" =>
         make(<tablegen-simple-value>,
              value: apply(concatenate, map(simple-value, resolved-operands)));
@@ -113,7 +116,7 @@ end method;
 
 define sealed method print-message
     (value :: <tablegen-operator-value>, stream :: <stream>)
-    => ();
+ => ();
   format(stream, "!%s(", value.operator-kind);
   for (item in value.operator-operands, first? = #t then #f)
     unless (first?) write(stream, ", ") end;
