@@ -1,6 +1,6 @@
 Module:       llvm-tablegen
 Author:       Peter S. Housel
-Copyright:    Original Code is Copyright 2009-2011 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2009-2018 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -239,7 +239,7 @@ value:
   %LBRACK value-list %RBRACK
     => make(<tablegen-list-value>, list: arg$2);;
   value %DOT %ID
-    => error("field %s", arg$3);;
+    => make(<tablegen-field-value>, record: arg$1, name: arg$3);;
   %LPAREN idvalue dag-arg-list %RPAREN
     => error("dag");;
   value %LBRACK bit-list %RBRACK
