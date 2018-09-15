@@ -41,10 +41,12 @@ define function tablegen-print-records () => ();
     end if;
 
     for (initializer in class.record-initializers)
-      format(*standard-output*, "  %s %s = %s;\n",
-             initializer.initializer-type,
-             initializer.initializer-name,
-             initializer.initializer-value);
+      unless (initializer.initializer-override?)
+        format(*standard-output*, "  %s %s = %s;\n",
+               initializer.initializer-type,
+               initializer.initializer-name,
+               initializer.initializer-value);
+      end unless;
     end for;
 
     format(*standard-output*, "}\n");
@@ -64,10 +66,12 @@ define function tablegen-print-records () => ();
     end if;
 
     for (initializer in def.record-initializers)
-      format(*standard-output*, "  %s %s = %s;\n",
-             initializer.initializer-type,
-             initializer.initializer-name,
-             initializer.initializer-value);
+      unless (initializer.initializer-override?)
+        format(*standard-output*, "  %s %s = %s;\n",
+               initializer.initializer-type,
+               initializer.initializer-name,
+               initializer.initializer-value);
+      end unless;
     end for;
 
     format(*standard-output*, "}\n");

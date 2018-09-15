@@ -25,10 +25,12 @@ end class;
 define class <tablegen-initializer> (<object>)
   constant slot initializer-name :: <string>,
     required-init-keyword: name:;
-  constant slot initializer-type :: <tablegen-type>,
-    required-init-keyword: type:;
+  constant slot initializer-type :: false-or(<tablegen-type>),
+    init-value: #f, init-keyword: type:;
   constant slot initializer-value :: <tablegen-value>,
     required-init-keyword: value:;
+  constant slot initializer-override? :: <boolean>,
+    init-value: #f, init-keyword: override?:;
 end class;
 
 define constant $tablegen-classes :: <string-table>
@@ -50,7 +52,8 @@ define function record-field-value
  => (value);
   block (return)
     for (initializer in record.record-initializers)
-      if (initializer.initializer-name = field-name)
+      if (initializer.initializer-name = field-name
+            & ~initializer.initializer-override?)
         let mapper = value-mapper(initializer.initializer-type);
         return(mapper(initializer.initializer-value));
       end if;

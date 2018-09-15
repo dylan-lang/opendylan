@@ -7,11 +7,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define function llvm-type-overloaded?
     (llvm-type :: <tablegen-definition>) => (result? :: <boolean>);
-  let vt = record-field-value(llvm-type, "VT");
-  vt == $tablegen-definitions["iAny"]
-    | vt == $tablegen-definitions["fAny"]
-    | vt == $tablegen-definitions["vAny"]
-    | vt == $tablegen-definitions["iPTRAny"]
+  let isAny = record-field-value(llvm-type, "isAny");
+  isAny = 1
 end function;
 
 define function llvm-type-void?
@@ -36,6 +33,7 @@ define table $valuetype-map :: <string-table>
      "f32"        => "$llvm-float-type",
      "f64"        => "$llvm-double-type",
      "x86mmx"     => "make(<llvm-primitive-type>, kind: #\"X86_MMX\"",
+     "token"      => "$llvm-token-type",
      "MetadataVT" => "$llvm-metadata-type",
      "OtherVT"    => "make(<llvm-struct-type>, elements: vector())",
     };
@@ -127,6 +125,8 @@ define function gen-attribute-list
     elseif (option.record-name = "IntrReadArgMem"
               | option.record-name = "IntrReadMem")
       function-attributes := "readonly";
+    elseif (option.record-name = "IntrNoReturn")
+      function-attributes := "noreturn";
     elseif (tablegen-subclass?(option, "NoCapture"))
       let argument = record-field-value(option, "ArgNo");
       parameter-attributes[argument] := "$llvm-attribute-nocapture";
@@ -343,7 +343,7 @@ define function tablegen-gen-intrinsic () => ();
           end if;
 
         // Properties
-        let properties = record-field-value(def, "Properties");
+        let properties = record-field-value(def, "IntrProperties");
 
       if ((~empty?(target-prefix) & def-name ~= "int_x86_int")
             | starts-with?(def-name, "int_nvvm_")

@@ -98,6 +98,9 @@ define method resolve-value
     = map(curry(resolve-value, environment), value.operator-operands);
   if (every?(rcurry(instance?, <tablegen-simple-value>), resolved-operands))
     select (value.operator-kind)
+      #"add" =>
+        make(<tablegen-simple-value>,
+             value: reduce1(\+, map(simple-value, resolved-operands)));
       #"strconcat" =>
         make(<tablegen-simple-value>,
              value: apply(concatenate, map(simple-value, resolved-operands)));
@@ -113,11 +116,37 @@ end method;
 
 define sealed method print-message
     (value :: <tablegen-operator-value>, stream :: <stream>)
-    => ();
+ => ();
   format(stream, "!%s(", value.operator-kind);
   for (item in value.operator-operands, first? = #t then #f)
     unless (first?) write(stream, ", ") end;
     print-message(item, stream);
   end for;
   write-element(stream, ')');
+end method;
+
+// Field reference value
+define class <tablegen-field-value> (<tablegen-value>)
+  constant slot field-record :: <tablegen-value>,
+    required-init-keyword: record:;
+  constant slot field-name :: <string>,
+    required-init-keyword: name:;
+end class;
+
+define method resolve-value
+    (environment :: <string-table>, value :: <tablegen-field-value>)
+ => (value :: <tablegen-value>);
+  let resolved = resolve-value(environment, value.field-record);
+  if (instance?(resolved, <tablegen-record>))
+    record-field-value(resolved, value.field-name)
+  else
+    make(<tablegen-field-value>, record: resolved, name: value.field-name)
+  end if
+end method;
+
+define sealed method print-message
+    (value :: <tablegen-field-value>, stream :: <stream>)
+ => ();
+  print-message(value.field-record, stream);
+  format(stream, ".%s", value.field-name);
 end method;
