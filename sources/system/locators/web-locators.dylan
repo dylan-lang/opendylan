@@ -411,6 +411,16 @@ define sealed method locator-name
   end
 end method locator-name;
 
+define method locator-path
+  (locator :: <file-url>) => (path :: <sequence>)
+  let directory = locator-directory(locator);
+  if (directory)
+    locator-path(directory)
+  else
+    next-method()
+  end
+end method locator-path;
+
 define sealed method \=
     (locator1 :: <file-url>,
      locator2 :: <file-url>)
@@ -462,6 +472,19 @@ define sealed method locator-server
   directory & directory.locator-server
 end method locator-server;
 
+define method locator-path
+  (locator :: <file-index-url>) => (path :: <sequence>)
+  locator-path(locator-file(locator))
+end method locator-path;
+
+define sealed method \=
+  (locator1 :: <file-index-url>,
+   locator2 :: <file-index-url>)
+  => (equal? :: <boolean>)
+  (locator-file(locator1) = locator-file(locator2))
+  & (locator-index(locator1) = locator-index(locator2))
+end method \=;
+
 
 /// CGI locators
 
@@ -483,6 +506,19 @@ define sealed method locator-as-string
                  delimiter-to-string($web-cgi-separator),
                  locator.locator-cgi-string)
 end method locator-as-string;
+
+define method locator-path
+  (locator :: <cgi-url>) => (path :: <sequence>)
+  locator-path(locator-file(locator))
+end method locator-path;
+
+define sealed method \=
+  (locator1 :: <cgi-url>,
+   locator2 :: <cgi-url>)
+  => (equal? :: <boolean>)
+  (locator-file(locator1) = locator-file(locator2))
+  & (locator-cgi-string(locator1) = locator-cgi-string(locator2))
+end method \=;
 
 
 /// Mail-to locators
@@ -530,6 +566,12 @@ define method mailto-parser
   make(<mail-to-locator>, address: text)
 end method mailto-parser;
 
+define sealed method \=
+  (locator1 :: <mail-to-locator>,
+   locator2 :: <mail-to-locator>)
+  => (equal? :: <boolean>)
+  locator-address(locator1) = locator-address(locator2)
+end method \=;
 
 /// Utilities
 

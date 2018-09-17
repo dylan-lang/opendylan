@@ -164,6 +164,16 @@ define sealed method locator-name
   end
 end method locator-name;
 
+define method locator-path
+  (locator :: <posix-file-locator>) => (path :: <sequence>)
+  let directory = locator-directory(locator);
+  if (directory)
+    locator-path(directory)
+  else
+    next-method()
+  end
+end method locator-path;
+
 define sealed method \=
     (locator1 :: <posix-file-locator>,
      locator2 :: <posix-file-locator>)

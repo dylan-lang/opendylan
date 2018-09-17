@@ -160,6 +160,11 @@ define method locator-directory
   end
 end method locator-directory;
 
+define method locator-path
+  (locator :: <locator>) => (path :: <sequence>)
+  #()
+end method locator-path;
+
 
 /// Simplify locator
 
