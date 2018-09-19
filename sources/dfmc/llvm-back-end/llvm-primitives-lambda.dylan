@@ -998,8 +998,7 @@ define method op--stack-allocate-closure
 
   let closure-raw = op--raw-pointer-cast(back-end, closure);
   ins--call-intrinsic(back-end, "llvm.memcpy",
-                      vector(closure-raw, template, byte-size,
-                             i32(word-size), $llvm-false));
+                      vector(closure-raw, template, byte-size, $llvm-false));
 
   // Initialize the size slot
   let size-slot-ptr

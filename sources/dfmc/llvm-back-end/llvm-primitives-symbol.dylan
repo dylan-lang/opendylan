@@ -176,8 +176,8 @@ define method op--register-symbol
 
         let oblist-byte-size = ins--mul(be, cursor, word-size);
         ins--call-intrinsic(be, "llvm.memcpy",
-                            vector(dst-byte-ptr, src-byte-ptr, oblist-byte-size,
-                                   i32(word-size), $llvm-false));
+                            vector(dst-byte-ptr, src-byte-ptr,
+                                   oblist-byte-size, $llvm-false));
 
         ins--store(be, new-oblist, oblist-ref);
 
@@ -271,7 +271,7 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
   let oblist-byte-size = ins--mul(be, cursor, word-size);
   ins--call-intrinsic(be, "llvm.memcpy",
                       vector(dst-byte-ptr, src-byte-ptr, oblist-byte-size,
-                             i32(word-size), $llvm-false));
+                             $llvm-false));
   res
 end;
 

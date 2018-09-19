@@ -641,7 +641,7 @@ define c-callable auxiliary mapped-parameter &runtime-primitive-descriptor primi
   let vector-byte-size = ins--mul(be, current-size, word-size);
   ins--call-intrinsic(be, "llvm.memcpy",
                       vector(dst-byte-ptr, src-byte-ptr, vector-byte-size,
-                             i32(word-size), $llvm-false));
+                             $llvm-false));
 
   new-vector
 end;
