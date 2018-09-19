@@ -74,7 +74,6 @@ define method op--landingpad
   finally
     ins--landingpad(back-end,
                     $llvm-eh-landingpad-type,
-                    $llvm-opendylan-eh-personality-function,
                     clauses, cleanup?: cleanup?)
   end for
 end method;

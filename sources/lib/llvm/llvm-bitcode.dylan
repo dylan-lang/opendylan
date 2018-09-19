@@ -101,15 +101,17 @@ define bitcode-block $FUNCTION_BLOCK = 12
   record INST_CALL        = 34; // CALL:       [attr, fnty, fnid, args...]
   record DEBUG_LOC        = 35; // DEBUG_LOC:  [Line,Col,ScopeVal, IAVal]
   record INST_FENCE       = 36; // FENCE:      [ordering, synchscope]
-  record INST_CMPXCHG     = 37; // CMPXCHG:    [ptrty, ptr, cmp, new, vol, successordering, synchscope, failureordering?, isweak?]
+  record INST_CMPXCHG_OLD = 37; // CMPXCHG:    [ptrty, ptr, cmp, new, vol, successordering, synchscope, failureordering?, isweak?]
   record INST_ATOMICRMW   = 38; // ATOMICRMW:  [ptrty,ptr,val, operation, align, vol, ordering, synchscope]
   record INST_RESUME      = 39; // RESUME:     [opval]
-  record INST_LANDINGPAD  = 40; // LANDINGPAD: [ty,val,val,num,id0,val0...]
+  record INST_LANDINGPAD_OLD = 40; // LANDINGPAD: [ty,val,val,num,id0,val0...]
   record INST_LOADATOMIC  = 41; // LOAD:       [opty, op, align, vol, ordering, synchscope]
   record INST_STOREATOMIC_OLD = 42; // STORE:      [ptrty,ptr,val, align, vol, ordering, synchscope]
   record INST_GEP         = 43; // GEP:  [inbounds, n x operands]
   record INST_STORE       = 44; // STORE: [ptrty,ptr,valty,val, align, vol]
   record INST_STOREATOMIC = 45; // STORE: [ptrty,ptr,val, align, vol
+  record INST_CMPXCHG     = 46; // CMPXCHG: [ptrty,ptr,valty,cmp,new, align, vol,ordering,synchscope]
+  record INST_LANDINGPAD  = 47; // LANDINGPAD: [ty,val,num,id0,val0...]
 end bitcode-block;
 
 define bitcode-block $VALUE_SYMTAB_BLOCK = 14

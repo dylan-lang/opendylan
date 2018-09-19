@@ -1476,8 +1476,6 @@ define llvm-builder function-test ins--unreachable ()
 end function-test ins--unreachable;
 
 define llvm-builder function-test ins--landingpad ()
-  let builder = make-builder-with-test-function();
-
   let personality-function-type
     = make(<llvm-function-type>,
            return-type: $llvm-i32-type,
@@ -1489,6 +1487,9 @@ define llvm-builder function-test ins--landingpad ()
            type: make(<llvm-pointer-type>, pointee: personality-function-type),
            arguments: #(),
            linkage: #"external");
+  let builder
+    = make-builder-with-test-function(personality: personality-function);
+
   llvm-builder-define-global(builder, personality-function.llvm-global-name,
                              personality-function);
 
@@ -1499,14 +1500,14 @@ define llvm-builder function-test ins--landingpad ()
   let struct-type
     = make(<llvm-struct-type>,
            elements: vector($llvm-i8*-type, $llvm-i32-type));
-  ins--landingpad(builder, struct-type, personality-function, #(),
+  ins--landingpad(builder, struct-type, #(),
                   cleanup?: #t);
   check-equal("ins--landingpad disassembly",
               #("entry:",
                 "invoke void @test()",
                 "        to label %Next unwind label %Next",
                 "Next:",
-                "%0 = landingpad { i8*, i32 } personality i32 (...)* @__gxx_personality_v0",
+                "%0 = landingpad { i8*, i32 }",
                 "        cleanup"),
               builder-test-function-disassembly(builder));
 end function-test ins--landingpad;

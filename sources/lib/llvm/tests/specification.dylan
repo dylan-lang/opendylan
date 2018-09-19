@@ -243,7 +243,7 @@ define module-spec llvm-builder ()
   function ins--phi (<llvm-builder>, <sequence>) => (<llvm-instruction>);
   function ins--phi* (<llvm-builder>, #"rest") => (<llvm-instruction>);
   function ins--landingpad
-      (<llvm-builder>, <llvm-type>, <llvm-value>, <sequence>,
+      (<llvm-builder>, <llvm-type>, <sequence>,
        #"key", #"cleanup?", #"metadata")
    => (<llvm-instruction>);
 

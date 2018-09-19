@@ -548,12 +548,11 @@ define instruction-set
             operands: operands,
             metadata: builder-metadata(builder, #()));
 
-  op landingpad (type :: <llvm-type>, personality, clauses :: <sequence>,
+  op landingpad (type :: <llvm-type>, clauses :: <sequence>,
                  #key metadata :: <list> = #(), cleanup? :: <boolean> = #f)
     => make(<llvm-landingpad-instruction>,
             type: type,
-            operands: concatenate(vector(llvm-builder-value(builder, personality)),
-                                  clauses),
+            operands: clauses,
             cleanup?: cleanup?,
             metadata: builder-metadata(builder, metadata));
 

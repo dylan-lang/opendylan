@@ -1541,13 +1541,13 @@ inst-val:
          end for;
          make(<llvm-phi-node>, operands: arg$3, metadata: arg$4)
        end;;
-  %LANDINGPAD types %PERSONALITY resolved-val opt-cleanup
+  %LANDINGPAD types opt-cleanup
     landingpad-clauses opt-inst-metadata
     => make(<llvm-landingpad-instruction>,
             type: arg$2,
-            operands: pair(arg$4, reverse!(arg$6)),
-            cleanup?: arg$5,
-            metadata: arg$7);;
+            operands: reverse!(arg$4),
+            cleanup?: arg$3,
+            metadata: arg$5);;
   opt-tail-call opt-calling-conv opt-ret-attrs result-types value-ref
     %LPAREN param-list %RPAREN opt-func-attrs opt-inst-metadata
     => begin
