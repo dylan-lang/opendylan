@@ -497,7 +497,7 @@ define method emit-computation
           let class = o.^object-class;
           llvm-constrain-type
             (global.llvm-value-type,
-             llvm-pointer-to(back-end, llvm-object-type(back-end, class)));
+             llvm-pointer-to(back-end, llvm-class-type(back-end, class)));
           let signature-ptr
             = op--getslotptr(back-end, global, class, #"function-signature");
           ins--store(back-end, signature, signature-ptr);
