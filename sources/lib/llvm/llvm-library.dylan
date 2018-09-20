@@ -1,6 +1,6 @@
 Module:       Dylan-User
 Author:       Peter S. Housel
-Copyright:    Original Code is Copyright 2009-2010 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2009-2018 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -148,7 +148,7 @@ define module llvm
     $llvm-calling-convention-x86-thiscall,
     $llvm-calling-convention-ptx-kernel,
     $llvm-calling-convention-ptx-device,
-    
+
     <llvm-function>,
     llvm-function-arguments,
     llvm-function-basic-blocks,
@@ -165,14 +165,19 @@ define module llvm
     llvm-basic-block-instructions,
 
     <llvm-instruction>,
+    llvm-instruction-operands,
     <llvm-binop-instruction>,
+    llvm-binop-instruction-operator,
     <llvm-cast-instruction>,
+    llvm-cast-instruction-operator,
     <llvm-gep-instruction>,
+    llvm-gep-instruction-in-bounds?,
     <llvm-select-instruction>,
     <llvm-extractelement-instruction>,
     <llvm-insertelement-instruction>,
     <llvm-shufflevector-instruction>,
     <llvm-cmp-instruction>,
+    llvm-cmp-predicate,
     <llvm-icmp-instruction>,
     <llvm-fcmp-instruction>,
     <llvm-terminator-instruction>,
@@ -197,7 +202,7 @@ define module llvm
     <llvm-va-arg-instruction>,
     <llvm-extract-value-instruction>,
     <llvm-insert-value-instruction>,
-    
+
     <llvm-module>,
     llvm-module-name,
     llvm-module-target-triple,
@@ -319,11 +324,11 @@ define module llvm-builder
     ins--extractelement,
     ins--insertelement,
     ins--shufflevector,
-    
+
     ins--phi,
     ins--phi*,
     ins--landingpad,
-    
+
     ins--call,
     ins--tail-call,
     ins--call-intrinsic,
@@ -346,7 +351,7 @@ define module llvm-builder
 
     ins--insertvalue,
     ins--extractvalue,
-    
+
     ins--ret,
     ins--br,
     ins--switch,
