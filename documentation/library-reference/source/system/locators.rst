@@ -50,6 +50,18 @@ The LOCATORS module
    A file system locator is a locator that refers to either a directory
    or a file within the file system.
 
+.. class:: <file-system-file-locator>
+
+   :superclasses: :class:`<file-system-locator>`, :class:`<file-locator>`
+
+   This locator refers to a file within a file system.
+
+.. class:: <file-system-directory-locator>
+
+   :superclasses: :class:`<file-system-locator>`, :class:`<directory-locator>`
+
+   This locator refers to a directory within a file system.
+   
 .. class:: <directory-locator>
    :open:
    :abstract:
@@ -66,8 +78,8 @@ The LOCATORS module
 .. constant:: <native-directory-locator>
 
    This is bound to the native directory locator type for the host
-   platform. On Windows, this is typically ``<microsoft-directory-locator>``
-   while on POSIX platforms, it is ``<posix-directory-locator>``.
+   platform. On Windows, this is typically :class:`<microsoft-directory-locator>`
+   while on POSIX platforms, it is :class:`<posix-directory-locator>`.
 
 .. class:: <file-locator>
    :open:
@@ -84,11 +96,14 @@ The LOCATORS module
 .. constant:: <native-file-locator>
 
    This is bound to the native file locator type for the host
-   platform. On Windows, this is typically ``<microsoft-file-locator>``
-   while on POSIX platforms, it is ``<posix-file-locator>``.
+   platform. On Windows, this is typically :class:`<microsoft-file-locator>`
+   while on POSIX platforms, it is :class:`<posix-file-locator>`.
 
 .. class:: <locator-error>
 
+   All errors raised by the locator system should be instances of
+   this error.
+   
    :superclasses: :class:`<format-string-condition>`, :drm:`<error>`
 
 
@@ -96,8 +111,14 @@ The LOCATORS module
    :open:
    :abstract:
 
+   The abstract superclass of  locators for servers.
+   
    :superclasses: :class:`<locator>`
 
+   :seealso:
+
+      - :class:`<server-url>`
+      - :class:`<microsoft-server-locator>`
 
 .. generic-function:: list-locator
    :open:
@@ -147,17 +168,21 @@ The LOCATORS module
 
 .. generic-function:: locator-address
 
-   :signature: locator-address (object) => (#rest results)
+   :signature: locator-address (mailto) => (address)
 
-   :parameter object: An instance of :drm:`<object>`.
-   :value #rest results: An instance of :drm:`<object>`.
+   :parameter mailto: An instance of :class:`<mail-to-locator>`.
+   :value address: An instance of :drm:`<string>`.
+
+   :description:
+
+    Returns the email address specified by the mailto locator.
 
 .. generic-function:: locator-as-string
    :open:
 
    :signature: locator-as-string (class locator) => (string)
 
-   :parameter class: An instance of ``subclass(<string>)``.
+   :parameter class: An instance of :drm:`subclass(<string>) <<string>>`.
    :parameter locator: An instance of :class:`<locator>`.
    :value string: An instance of :drm:`<string>`.
 
@@ -167,7 +192,11 @@ The LOCATORS module
    :signature: locator-base (locator) => (base)
 
    :parameter locator: An instance of :class:`<locator>`.
-   :value base: An instance of ``false-or(<string>)``.
+   :value base: An instance of :drm:`false-or(<string>) <<string>>`.
+
+   :description:
+    Returns the locator name without extension. For example, if a file locator's
+    path was ``a/b/c.txt``, the locator-base would be ``c``.
 
 .. generic-function:: locator-directory
    :open:
@@ -175,7 +204,11 @@ The LOCATORS module
    :signature: locator-directory (locator) => (directory)
 
    :parameter locator: An instance of :class:`<locator>`.
-   :value directory: An instance of ``false-or(<directory-locator>)``.
+   :value directory: An instance of :class:`false-or(<directory-locator>) <<directory-locator>`.
+
+   :description:
+    Returns the enclosing directory of a locator, or ``#f`` if it
+    is not in a directory.
 
 .. function:: locator-error
 
@@ -191,37 +224,100 @@ The LOCATORS module
    :signature: locator-extension (locator) => (extension)
 
    :parameter locator: An instance of :class:`<locator>`.
-   :value extension: An instance of ``false-or(<string>)``.
+   :value extension: An instance of :drm:`false-or(<string>) <<string>>`.
+
+   :description:
+    Returns the extension part of the locator name. For example, if a file locator's
+    path was ``a/b/c.txt``, the locator-extension would be ``txt``.
+    Returns ``#f`` if the locator does not have an extension.
 
 .. generic-function:: locator-file
 
-   :signature: locator-file (object) => (#rest results)
+   :signature: locator-file (url) => (file)
 
-   :parameter object: An instance of :drm:`<object>`.
-   :value #rest results: An instance of :drm:`<object>`.
+   :parameter url: An instance of :class:`<file-index-url>` or :class:`<cgi-url>`.
+   :value file: An instance of :class:`<file-url>`.
+
+   :description:
+    Returns the file URL of a file index or CGI URL. For example, the locator-file
+    of ``http://example.com/index.html#tag`` or ``http://example.com/index.html?q=text``
+    would be ``http://example.com/index.html``
 
 .. generic-function:: locator-host
    :open:
 
+   Returns the host name.
+
    :signature: locator-host (locator) => (host)
 
    :parameter locator: An instance of :class:`<locator>`.
-   :value host: An instance of ``false-or(<string>)``.
+   :value host: An instance of :drm:`false-or(<string>) <<string>>`.
+
+   :description:
+    Returns the computer host name of a :class:`<server-url>` or
+    :class:`<microsoft-unc-locator>`.
 
 .. generic-function:: locator-name
 
-   :signature: locator-name (locator) => (#rest results)
+   Returns the name of this locator.
 
-   :parameter locator: An instance of :drm:`<object>`.
-   :value #rest results: An instance of :drm:`<object>`.
+   :signature: locator-name (locator) => (name)
+
+   :parameter locator: An instance of :class:`<locator>`.
+   :value name: An instance of :drm:`false-or(<string>) <<string>>`.
+
+   :description:
+    This is typically the last component of the
+    locator's path but can be different for some specializations.
+
+.. method:: locator-name
+   :specializer: <mailto-locator>
+
+   Returns the email address of this locator.
+
+   :parameter locator: an instance of :class:`<mailto-locator>`
+   :value name: An instance of :drm:`<string>`
+
+.. method:: locator-name
+   :specializer:  <microsoft-volume-locator>
+
+   Returns the drive letter of this locator.
+
+   :parameter locator: an instance of :class:`<microsoft-volume-locator>`
+   :value name: An instance of :drm:`<string>`
+
+   :description:
+      The drive is returned as a single letter, for example, 'A'
+
+.. method:: locator-name
+   :specializer:  <microsoft-unc-locator>
+
+   Returns the server name of this locator.
+
+   :parameter locator: an instance of :class:`<microsoft-unc-locator>`
+   :value name: An instance of :drm:`<string>`
 
 .. generic-function:: locator-path
    :open:
 
+   Returns the path of a locator.
+
    :signature: locator-path (locator) => (path)
 
-   :parameter locator: An instance of :class:`<locator>`.
+   :parameter locator: An instance of :class:`<directory-locator>`.
    :value path: An instance of :drm:`<sequence>`.
+
+   :description:
+      Returns the path as a sequence of strings, each being the name of
+      a path element.
+
+   :example:
+
+      .. code-block:: dylan
+
+	 let locator = as(<locator>, "/usr/local/include/");
+	 let path = locator-path(locator);
+	 // path == #["usr", "local", "include"]
 
 .. generic-function:: locator-relative?
    :open:
@@ -237,7 +333,7 @@ The LOCATORS module
    :signature: locator-server (locator) => (server)
 
    :parameter locator: An instance of :class:`<locator>`.
-   :value server: An instance of ``false-or(<server-locator>)``.
+   :value server: An instance of :class:`false-or(<server-locator>) <<server-locator>>`.
 
 .. generic-function:: locator-volume
    :open:
@@ -245,7 +341,7 @@ The LOCATORS module
    :signature: locator-volume (locator) => (volume)
 
    :parameter locator: An instance of :class:`<locator>`.
-   :value volume: An instance of ``false-or(<string>)``.
+   :value volume: An instance of :drm:`false-or(<string>) <<string>>`.
 
 .. generic-function:: merge-locators
    :open:
@@ -267,14 +363,29 @@ The LOCATORS module
 .. generic-function:: relative-locator
    :open:
 
+   Returns a locator relative to another locator which references the
+   same file as this locator.
+
    :signature: relative-locator (locator from-locator) => (relative-locator)
 
    :parameter locator: An instance of :class:`<physical-locator>`.
    :parameter from-locator: An instance of :class:`<physical-locator>`.
    :value relative-locator: An instance of :class:`<physical-locator>`.
 
+   :example:
+      If self is '/a/b/c/d.txt' and root is '/a/b'
+
+      .. code-block:: dylan
+
+        let rel = relative-locator(self, root);
+
+      Then rel is 'c/d.txt'
+
 .. generic-function:: simplify-locator
    :open:
+
+   Simplifies a locator by removing redundant elements from its
+   path.
 
    :signature: simplify-locator (locator) => (simplified-locator)
 
@@ -284,11 +395,19 @@ The LOCATORS module
 .. generic-function:: string-as-locator
    :open:
 
+   Parse a string and create a locator.
+
    :signature: string-as-locator (class string) => (locator)
 
    :parameter class: An instance of ``subclass(<locator>)``.
    :parameter string: An instance of :drm:`<string>`.
    :value locator: An instance of :class:`<locator>`.
+
+   :description:
+      This method should be specialized for each new locator class. It
+      should return an instance of ``class``, or
+      raise a condition of type :class:`<locator-error>`.
+
 
 .. generic-function:: subdirectory-locator
    :open:
@@ -344,3 +463,227 @@ The LOCATORS module
 
    :parameter locator: An instance of :class:`<locator>`.
    :value openable?: An instance of :drm:`<boolean>`.
+
+.. class:: <web-locator>
+   :abstract:
+
+   :superclasses: :class:`<locator>`
+
+   The abstract superclass of locators that access a resource via
+   web protocols, such as ftp or http.
+
+.. class:: <url>
+   :abstract:
+   :sealed:
+
+   :superclasses: :class:`<web-locator>`, :class:`<physical-locator>`
+
+   The abstract superclass of web locators that reference a physical object.
+   Use ``as(<url>, "...")`` to create an appropriate concrete subclass.
+
+   :seealso:
+      :class:`<file-url>`
+      :class:`<directory-url>`
+      :class:`<cgi-url>`
+      :class:`<file-index-url>`
+
+.. class:: <directory-url>
+
+   :superclasses: :class:`<url>`, :class:`<directory-locator>`
+
+   Represents directories that are accessible via web protocols.
+
+.. class:: <file-url>
+
+   :superclasses: :class:`<url>`, :class:`<file-locator>`
+
+   Represents files that are accessible via web protocols.
+
+.. class:: <file-index-url>
+
+   :superclasses: :class:`<url>`
+
+   Represents a URL that has a fragment part, for
+   example ``http://www.example.com/path/file.txt#fragment``.
+
+.. class:: <cgi-url>
+
+   :superclasses: :class:`<url>`
+
+   Represents a URL that has a query part, for example
+   ``http://www.example.com/path/file.txt?query=text``.
+
+.. function:: locator-cgi-string
+
+   Return the query part of a ``<cgi-url>``.
+
+   :signature: locator-cgi-string(locator) => (string)
+
+   :parameter locator: an instance of :class:`<cgi-url>`
+   :value string: an instance of :drm:`<string>`
+
+.. function:: locator-index
+
+   Return the fragment part of a :class:``<file-index-url>``
+
+   :signature: locator-index(locator) => (string)
+
+   :parameter locator: an instance of :class:`<file-index-url>`
+   :value string: an instance of :drm:`<string>`
+
+.. class:: <mail-to-locator>
+
+   :superclasses: :class:`<url>`
+
+   Represents a locator which is an email address.
+
+.. class:: <server-url>
+   :abstract:
+
+   Represents a locator which is a machine accessible via web
+   protocols.
+
+   :superclasses: :class:`<url>`, :class:`<server-locator>`
+
+   :slot locator-host: The computer host
+   :slot locator-username: The user identifier
+   :slot locator-password: The user password
+   :operations: :gf:`locator-port`,
+		:gf:`locator-default-port`
+
+   The locator includes information on the protocol, host-name, port, user and password of the machine.
+
+   :seealso:
+      :class:`<http-server>`
+      :class:`<https-server>`
+      :class:`<ftp-server>`
+      :class:`<file-server>`
+
+.. class:: <http-server>
+   :sealed:
+
+   A server for the http protocol.
+
+   :superclasses: :class:`<server-url>`
+
+.. class:: <https-server>
+   :sealed:
+
+   A server for the https protocol.
+
+   :superclasses: :class:`<server-url>`
+
+.. class:: <ftp-server>
+   :sealed:
+
+   A server for the ftp protocol.
+
+   :superclasses: :class:`<server-url>`
+
+.. class:: <file-server>
+   :sealed:
+
+   A locator using the file protocol.
+   
+   :superclasses: :class:`<server-url>`
+
+.. class:: <microsoft-server-locator>
+   :sealed:
+   :abstract:
+
+   The abstract superclass of all servers using Microsoft protocols.
+
+   :superclasses: :class:`<server-locator>`
+
+   :seealso: :class:`<microsoft-unc-locator>`
+	     :class:`<microsoft-volume-locator>`
+
+.. class:: <microsoft-unc-locator>
+   :sealed:
+
+   A server located using Microsoft's Univeral Naming Convention,
+   for example ``\\ComputerName\Share``
+
+   :superclasses: :class:`<microsoft-server-locator>`
+
+.. class:: <microsoft-volume-locator>
+   :sealed:
+
+   A server located using a volume name (drive letter) on a Microsoft
+   system, for example ``C``.
+
+   :superclasses: :class:`<microsoft-server-locator>`
+
+.. class:: <microsoft-file-system-locator>
+   :abstract:
+
+   The abstract superclass of files and directories on Microsoft file systems.
+
+   :superclasses: :class:`<file-system-locator>`
+
+.. class:: <microsoft-directory-locator>
+
+   A directory on a Microsoft file system.
+
+   :superclasses: :class:`<microsoft-file-system-locator>`, :class:`<directory-locator>`
+
+   :slot locator-server: the server which holds this directory.
+   :slot locator-relative?: #t if the locator is relative, #f if it is absolute.
+   :slot locator-path: the path to the directory.
+
+.. class:: <microsoft-file-locator>
+
+   A file on a Microsoft file system.
+
+   :superclasses: :class:`<microsoft-file-system-locator>`, :class:`<file-locator>`
+
+   :slot locator-directory: the directory that holds this file.
+   :slot locator-base: the file name without extension.
+   :slot locator-extension: the file extension.
+   :slot locator-name: the file name.
+
+.. class:: <posix-file-system-locator>
+   :abstract:
+   :sealed:
+
+   The abstract superclass of files and directories on a posix-like file system.
+
+   :superclasses: :class:`<file-system-locator>`
+
+.. class:: <posix-directory-locator>
+   :sealed:
+
+   A directory on a posix-like file system.
+
+   :slot locator-relative?: #t if the locator is relative, #f if it is absolute.
+   :slot locator-path: the path to the directory.
+
+   :superclasses: :class:`<file-system-directory-locator>`, :class:`<posix-file-system-locator>`
+
+.. class:: <posix-file-locator>
+   :sealed:
+
+   A file on a posix-like file system.
+
+   :superclasses: :class:`<file-system-file-locator>`, :class:`<posix-file-system-locator>`
+
+   :slot locator-directory: the directory that holds this file.
+   :slot locator-base: the file name without extension.
+   :slot locator-extension: the file extension.
+
+.. generic-function:: locator-default-port
+
+   Return the default port associated with the locator's protocol.
+
+   :signature: locator-default-port(locator) => (port)
+
+   :param locator: An instance of :class:`<server-url>`
+   :value port: An instance of :drm:`false-or(<integer>) <<integer>>`
+
+   :example:
+
+   .. code-block:: dylan
+
+      let locator = as(<server-url>, "http://www.example.com");
+      let default-port = locator-default-port(locator);
+      // Result: default-port = 80
