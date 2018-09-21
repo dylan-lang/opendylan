@@ -1044,11 +1044,12 @@ define method write-type-record
      type :: <llvm-function-type>)
  => ();
   let return-type = type-forward(type.llvm-function-type-return-type);
-  write-record(stream, #"FUNCTION",
-               if (type.llvm-function-type-varargs?) 1 else 0 end, // vararg
-               type-partition-table[return-type],                  // retty
-               map(method (type) type-partition-table[type-forward(type)] end,
-                   type.llvm-function-type-parameter-types));
+  write-abbrev-record
+    (stream, #"function",
+     if (type.llvm-function-type-varargs?) 1 else 0 end,
+     type-partition-table[return-type],
+     map(method (type) type-partition-table[type-forward(type)] end,
+         type.llvm-function-type-parameter-types));
 end method;
 
 define method write-type-record
@@ -1061,11 +1062,11 @@ define method write-type-record
   if (type.llvm-struct-type-name)
     // Identified struct type: write as STRUCT_NAME followed by STRUCT_NAMED
     if (instance?(type.llvm-struct-type-name, <string>))
-      write-record(stream, #"STRUCT_NAME", type.llvm-struct-type-name);
+      write-abbrev-record(stream, #"struct-name", type.llvm-struct-type-name);
     end if;
-    write-record(stream, #"STRUCT_NAMED",
-                 if (type.llvm-struct-type-packed?) 1 else 0 end,
-                 element-indices);
+    write-abbrev-record(stream, #"struct-named",
+                        if (type.llvm-struct-type-packed?) 1 else 0 end,
+                        element-indices);
   else
     // Literal struct type: write as STRUCT_ANON
     write-record(stream, #"STRUCT_ANON",
@@ -1201,10 +1202,10 @@ define method write-constant-record
     let contents = map(llvm-integer-constant-integer,
                        value.llvm-aggregate-constant-values);
     if (zero?(contents.last))
-      write-record(stream, #"CSTRING",
-                   copy-sequence(contents, end: contents.size - 1));
+      write-abbrev-record(stream, #"cstring",
+                          copy-sequence(contents, end: contents.size - 1));
     else
-      write-record(stream, #"STRING", contents);
+      write-abbrev-record(stream, #"string", contents);
     end if;
   else
     write-record(stream, #"AGGREGATE",
@@ -1395,10 +1396,21 @@ define function write-constant-table
     (stream :: <bitcode-stream>,
      type-partition-table :: <object-table>,
      value-partition-table :: <mutable-explicit-key-collection>,
-     constant-partition-exemplars :: <sequence>)
+     constant-partition-exemplars :: <sequence>,
+     #key global? = #f)
  => ();
   unless (empty?(constant-partition-exemplars))
     with-block-output (stream, $CONSTANTS_BLOCK, 3)
+      // Abbrevs
+      if (global?)
+        write-abbrev-definition(stream, #"cstring",
+                                stream-record-id(stream, #"CSTRING"),
+                                op-array(), op-fixed(8));
+        write-abbrev-definition(stream, #"string",
+                                stream-record-id(stream, #"STRING"),
+                                op-array(), op-fixed(8));
+      end if;
+
       let current-type-partition = #f;
       for (constant in constant-partition-exemplars)
         let type-partition
@@ -2620,15 +2632,21 @@ define function write-function
       unless (empty?(function.llvm-function-value-table))
         with-block-output (stream, $VALUE_SYMTAB_BLOCK, 3)
           for (value keyed-by name in function.llvm-function-value-table)
-            if (instance?(value, <llvm-basic-block>))
-              write-record(stream, #"BBENTRY",
-                           value-partition-table[value-forward(value)],
-                           name);
-            else
-              write-record(stream, #"ENTRY",
-                           value-partition-table[value-forward(value)],
-                           name);
-            end if;
+            let id
+              = if (instance?(value, <llvm-basic-block>))
+                  stream-record-id(stream, #"BBENTRY")
+                else
+                  stream-record-id(stream, #"ENTRY")
+                end if;
+            let abbrev
+              = if (every?(rcurry(member?, $char6-charset), name))
+                  #"entry-6"
+                else
+                  #"entry-8"
+                end if;
+            write-abbrev-record(stream, abbrev, id,
+                                value-partition-table[value-forward(value)],
+                                name);
           end for;
         end with-block-output;
       end unless;
@@ -2683,7 +2701,7 @@ define function write-module
        metadata-partition-exemplars :: <vector>,
        attributes-index-table :: <encoding-sequence-table>,
        attributes-exemplars :: <vector>)
-      = enumerate-types-constants-metadata-attributes(m);
+    = enumerate-types-constants-metadata-attributes(m);
 
   with-block-output (stream, $MODULE_BLOCK, 3)
     // Write the module info:
@@ -2692,6 +2710,20 @@ define function write-module
       write-record(stream, #"VERSION", $llvm-bitcode-module-version);
 
       // Write the blockinfo
+      with-block-output (stream, $BLOCKINFO_BLOCK, 2)
+        // Value symbol table abbreviations
+        write-record(stream, #"SETBID", $VALUE_SYMTAB_BLOCK.block-id);
+        write-blockinfo-abbrev-definition
+          (stream, $VALUE_SYMTAB_BLOCK, #"entry-8",
+           op-fixed(2),
+           op-vbr(8),
+           op-array(), op-fixed(8));
+        write-blockinfo-abbrev-definition
+          (stream, $VALUE_SYMTAB_BLOCK, #"entry-6",
+           op-fixed(2),
+           op-vbr(8),
+           op-array(), op-char6());
+      end with-block-output;
 
       // Write the parameter attribute table
       unless (empty?(attributes-exemplars))
@@ -2706,6 +2738,20 @@ define function write-module
       unless (empty?(type-partition-exemplars))
         with-block-output (stream, $TYPE_BLOCK, 3)
           write-record(stream, #"NUMENTRY", type-partition-exemplars.size);
+
+          let type-bits = integer-length(type-partition-exemplars.size);
+          write-abbrev-definition(stream, #"function",
+                                  stream-record-id(stream, #"FUNCTION"),
+                                  op-fixed(1), // varargs?
+                                  op-fixed(type-bits), // return-type
+                                  op-array(), op-fixed(type-bits));
+          write-abbrev-definition(stream, #"struct-name",
+                                  stream-record-id(stream, #"STRUCT_NAME"),
+                                  op-array(), op-char6());
+          write-abbrev-definition(stream, #"struct-named",
+                                  stream-record-id(stream, #"STRUCT_NAMED"),
+                                  op-fixed(1),
+                                  op-array(), op-fixed(type-bits));
 
           for (type in type-partition-exemplars)
             write-type-record(stream, type-partition-table, type);
@@ -2863,7 +2909,8 @@ define function write-module
     write-constant-table(stream,
                          type-partition-table,
                          value-partition-table,
-                         constant-partition-exemplars);
+                         constant-partition-exemplars,
+                         global?: #t);
 
     // Write metadata kinds
     write-metadata-kind-table(stream, m.%metadata-kind-table);
