@@ -213,8 +213,7 @@ define sealed method locator-as-string
 end method locator-as-string;
 
 define sealed method \=
-    (locator1 :: <server-url>,
-     locator2 :: <server-url>)
+    (locator1 :: <server-url>, locator2 :: <server-url>)
  => (equal? :: <boolean>)
   locator1.locator-host = locator2.locator-host
     & locator1.locator-port = locator2.locator-port
@@ -325,8 +324,7 @@ define sealed method locator-name
 end method locator-name;
 
 define sealed method \=
-    (locator1 :: <directory-url>,
-     locator2 :: <directory-url>)
+    (locator1 :: <directory-url>, locator2 :: <directory-url>)
  => (equal? :: <boolean>)
   locator1.locator-relative? = locator2.locator-relative?
     & locator1.locator-server = locator2.locator-server
@@ -412,7 +410,7 @@ define sealed method locator-name
 end method locator-name;
 
 define method locator-path
-  (locator :: <file-url>) => (path :: <sequence>)
+    (locator :: <file-url>) => (path :: <sequence>)
   let directory = locator-directory(locator);
   if (directory)
     locator-path(directory)
@@ -422,8 +420,7 @@ define method locator-path
 end method locator-path;
 
 define sealed method \=
-    (locator1 :: <file-url>,
-     locator2 :: <file-url>)
+    (locator1 :: <file-url>, locator2 :: <file-url>)
  => (equal? :: <boolean>)
   locator1.locator-directory = locator2.locator-directory
     & locator1.locator-base = locator2.locator-base
@@ -478,9 +475,8 @@ define method locator-path
 end method locator-path;
 
 define sealed method \=
-  (locator1 :: <file-index-url>,
-   locator2 :: <file-index-url>)
-  => (equal? :: <boolean>)
+    (locator1 :: <file-index-url>, locator2 :: <file-index-url>)
+ => (equal? :: <boolean>)
   (locator-file(locator1) = locator-file(locator2))
   & (locator-index(locator1) = locator-index(locator2))
 end method \=;
@@ -508,16 +504,15 @@ define sealed method locator-as-string
 end method locator-as-string;
 
 define method locator-path
-  (locator :: <cgi-url>) => (path :: <sequence>)
+    (locator :: <cgi-url>) => (path :: <sequence>)
   locator-path(locator-file(locator))
 end method locator-path;
 
 define sealed method \=
-  (locator1 :: <cgi-url>,
-   locator2 :: <cgi-url>)
-  => (equal? :: <boolean>)
-  (locator-file(locator1) = locator-file(locator2))
-  & (locator-cgi-string(locator1) = locator-cgi-string(locator2))
+    (locator1 :: <cgi-url>, locator2 :: <cgi-url>)
+ => (equal? :: <boolean>)
+  locator-file(locator1) = locator-file(locator2)
+  & locator-cgi-string(locator1) = locator-cgi-string(locator2)
 end method \=;
 
 
@@ -567,9 +562,8 @@ define method mailto-parser
 end method mailto-parser;
 
 define sealed method \=
-  (locator1 :: <mail-to-locator>,
-   locator2 :: <mail-to-locator>)
-  => (equal? :: <boolean>)
+    (locator1 :: <mail-to-locator>, locator2 :: <mail-to-locator>)
+ => (equal? :: <boolean>)
   locator-address(locator1) = locator-address(locator2)
 end method \=;
 

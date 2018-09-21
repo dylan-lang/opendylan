@@ -110,11 +110,11 @@ define locators class-test <http-server> ()
   check-equal("make <http-server>",
               server
                 := make(<http-server>,
-                        host: "www.functionalobjects.com",
+                        host: "www.fun.com",
                         port: 80,
                         username: "andrewa",
                         password: "test"),
-              as(<http-server>, "http://www.functionalobjects.com:80?andrewa:test"));
+              as(<http-server>, "http://www.fun.com:80?andrewa:test"));
 end class-test <http-server>;
 
 define locators class-test <https-server> ()
@@ -122,57 +122,57 @@ define locators class-test <https-server> ()
   check-equal("make <http-server>",
               server
                 := make(<https-server>,
-                        host: "www.functionalobjects.com",
+                        host: "www.fun.com",
                         port: 80,
                         username: "andrewa",
                         password: "test"),
-              as(<https-server>, "https://www.functionalobjects.com:80?andrewa:test"));
+              as(<https-server>, "https://www.fun.com:80?andrewa:test"));
 end class-test <https-server>;
 
 define locators class-test <ftp-server> ()
   assert-equal(make(<ftp-server>,
-                    host: "ftp.functionalobjects.com",
+                    host: "ftp.fun.com",
                     port: 21),
-               as(<ftp-server>, "ftp://ftp.functionalobjects.com:21"));
+               as(<ftp-server>, "ftp://ftp.fun.com:21"));
   assert-equal(make(<ftp-server>,
-                    host: "ftp.functionalobjects.com",
+                    host: "ftp.fun.com",
                     port: 2100,
                     username: "andrewa",
                     password: "test"),
-               as(<ftp-server>, "ftp://ftp.functionalobjects.com:2100?andrewa:test"));
+               as(<ftp-server>, "ftp://ftp.fun.com:2100?andrewa:test"));
 end class-test <ftp-server>;
 
 define locators class-test <file-server> ()
   assert-equal(make(<file-server>,
-                    host: "functionalobjects"),
-               as(<file-server>, "file://functionalobjects"));
+                    host: "fun"),
+               as(<file-server>, "file://fun"));
   assert-equal(make(<file-server>,
-                    host: "functionalobjects",
+                    host: "fun",
                     port: 1234,
                     username: "andrewa",
                     password: "test"),
-               as(<file-server>, "file://functionalobjects:1234?andrewa:test"));
+               as(<file-server>, "file://fun:1234?andrewa:test"));
 end class-test <file-server>;
 
 define locators class-test <directory-url> ()
   let server = make(<http-server>,
-                    host: "www.functionalobjects.com",
+                    host: "www.fun.com",
                     protocol: "http");
-  assert-equal("http://www.functionalobjects.com/path/to/resource/",
+  assert-equal("http://www.fun.com/path/to/resource/",
                locator-as-string(<string>,
                                  make(<directory-url>,
                                       server: server,
-                                      path: #["path","to","resource"])));
+                                      path: #["path", "to", "resource"])));
 end class-test <directory-url>;
 
 define locators class-test <file-url> ()
   let server = make(<http-server>,
-                    host: "www.functionalobjects.com",
+                    host: "www.fun.com",
                     protocol: "http");
   let directory = make(<directory-url>,
                        server: server,
-                       path: #["path","to","resource"]);
-  assert-equal("http://www.functionalobjects.com/path/to/resource/info.txt",
+                       path: #["path", "to", "resource"]);
+  assert-equal("http://www.fun.com/path/to/resource/info.txt",
                locator-as-string(<string>,
                                  make(<file-url>,
                                       directory: directory,
@@ -182,16 +182,16 @@ end class-test <file-url>;
 
 define locators class-test <file-index-url> ()
   let server = make(<http-server>,
-                    host: "www.functionalobjects.com",
+                    host: "www.fun.com",
                     protocol: "http");
   let directory = make(<directory-url>,
                        server: server,
-                       path: #["path","to","resource"]);
+                       path: #["path", "to", "resource"]);
   let file-url = make(<file-url>,
                       directory: directory,
                       base: "info",
                       extension: "txt");
-  assert-equal("http://www.functionalobjects.com/path/to/resource/info.txt#toplevel",
+  assert-equal("http://www.fun.com/path/to/resource/info.txt#toplevel",
                locator-as-string(<string>,
                                  make(<file-index-url>,
                                       file: file-url,
@@ -200,16 +200,16 @@ end class-test <file-index-url>;
 
  define locators class-test <cgi-url> ()
   let server = make(<http-server>,
-                    host: "www.functionalobjects.com",
+                    host: "www.fun.com",
                     protocol: "http");
   let directory = make(<directory-url>,
                        server: server,
-                       path: #["path","to","resource"]);
+                       path: #["path", "to", "resource"]);
   let file-url = make(<file-url>,
                       directory: directory,
                       base: "info",
                       extension: "txt");
-  assert-equal("http://www.functionalobjects.com/path/to/resource/info.txt?lang=en",
+  assert-equal("http://www.fun.com/path/to/resource/info.txt?lang=en",
                locator-as-string(<string>,
                                  make(<cgi-url>,
                                       file: file-url,
@@ -217,10 +217,10 @@ end class-test <file-index-url>;
 end class-test <cgi-url>;
 
 define locators class-test <mail-to-locator> ()
-  assert-equal("mailto:andrewa@functionalobjects.com",
+  assert-equal("mailto:andrewa@fun.com",
                locator-as-string(<string>,
                                  make(<mail-to-locator>,
-                                      address: "andrewa@functionalobjects.com")));
+                                      address: "andrewa@fun.com")));
 end class-test <mail-to-locator>;
 
 
@@ -234,7 +234,7 @@ end function-test locator-error;
 define locators function-test supports-open-locator? ()
   let locator1 = as(<file-locator>, "/test.txt");
   assert-true(supports-open-locator?(locator1));
-  let locator2 = as(<mail-to-locator>, "mailto:andrewa@functionalobjects.com");
+  let locator2 = as(<mail-to-locator>, "mailto:andrewa@fun.com");
   assert-false(supports-open-locator?(locator2));
 end function-test supports-open-locator?;
 
@@ -247,7 +247,7 @@ define locators function-test supports-list-locator? ()
   assert-false(supports-list-locator?(locator1));
   let locator2 = as(<file-locator>, "/tmp");
   assert-false(supports-list-locator?(locator2));
-  let locator3 = as(<mail-to-locator>, "mailto:andrewa@functionalobjects.com");
+  let locator3 = as(<mail-to-locator>, "mailto:andrewa@fun.com");
   assert-false(supports-list-locator?(locator3));
 end function-test supports-list-locator?;
 
@@ -256,13 +256,13 @@ define locators function-test list-locator ()
 end function-test list-locator;
 
 define locators function-test locator-host ()
-  let locator = make(<http-server>, host: "www.functionalobjects.com");
-  assert-equal("www.functionalobjects.com", locator-host(locator));
+  let locator = make(<http-server>, host: "www.fun.com");
+  assert-equal("www.fun.com", locator-host(locator));
 end function-test locator-host;
 
 define locators function-test locator-server ()
-  let locator = as(<url>, "http://www.functionalobjects.com/en/index.html");
-  let server = make(<http-server>, host: "www.functionalobjects.com");
+  let locator = as(<url>, "http://www.fun.com/en/index.html");
+  let server = make(<http-server>, host: "www.fun.com");
   assert-equal(server, locator-server(locator));
 end function-test locator-server;
 
@@ -312,11 +312,11 @@ end function-test locator-name;
 
 define locators function-test locator-as-string ()
   let server = make(<http-server>,
-                    host: "www.functionalobjects.com",
+                    host: "www.fun.com",
                     protocol: "http");
   let directory = make(<directory-url>,
                        server: server,
-                       path: #["path","to","resource"]);
+                       path: #["path", "to", "resource"]);
   let file-url = make(<file-url>,
                       directory: directory,
                       base: "info",
@@ -328,22 +328,22 @@ define locators function-test locator-as-string ()
                             file: file-url,
                             index: "toplevel");
   let mail-to = make(<mail-to-locator>,
-                     address: "andrewa@functionalobjects.com");
-  assert-equal("http://www.functionalobjects.com", locator-as-string(<string>, server));
-  assert-equal("http://www.functionalobjects.com/path/to/resource/", locator-as-string(<string>, directory));
-  assert-equal("http://www.functionalobjects.com/path/to/resource/info.txt", locator-as-string(<string>, file-url));
-  assert-equal("http://www.functionalobjects.com/path/to/resource/info.txt?lang=en", locator-as-string(<string>, cgi-url));
-  assert-equal("http://www.functionalobjects.com/path/to/resource/info.txt#toplevel", locator-as-string(<string>, file-index-url));
-  assert-equal("mailto:andrewa@functionalobjects.com", locator-as-string(<string>, mail-to));
+                     address: "andrewa@fun.com");
+  assert-equal("http://www.fun.com", locator-as-string(<string>, server));
+  assert-equal("http://www.fun.com/path/to/resource/", locator-as-string(<string>, directory));
+  assert-equal("http://www.fun.com/path/to/resource/info.txt", locator-as-string(<string>, file-url));
+  assert-equal("http://www.fun.com/path/to/resource/info.txt?lang=en", locator-as-string(<string>, cgi-url));
+  assert-equal("http://www.fun.com/path/to/resource/info.txt#toplevel", locator-as-string(<string>, file-index-url));
+  assert-equal("mailto:andrewa@fun.com", locator-as-string(<string>, mail-to));
 end function-test locator-as-string;
 
 define locators function-test string-as-locator ()
-let server = make(<http-server>,
-                    host: "www.functionalobjects.com",
+  let server = make(<http-server>,
+                    host: "www.fun.com",
                     protocol: "http");
   let directory = make(<directory-url>,
                        server: server,
-                       path: #["path","to","resource"]);
+                       path: #["path", "to", "resource"]);
   let file-url = make(<file-url>,
                       directory: directory,
                       base: "info",
@@ -355,12 +355,12 @@ let server = make(<http-server>,
                             file: file-url,
                             index: "toplevel");
   let mail-to = make(<mail-to-locator>,
-                     address: "andrewa@functionalobjects.com");
-  assert-equal(directory, string-as-locator(<url>, "http://www.functionalobjects.com/path/to/resource/"));
-  assert-equal(file-url, string-as-locator(<url>, "http://www.functionalobjects.com/path/to/resource/info.txt"));
-  assert-equal(cgi-url, string-as-locator(<url>, "http://www.functionalobjects.com/path/to/resource/info.txt?lang=en"));
-  assert-equal(file-index-url, string-as-locator(<url>, "http://www.functionalobjects.com/path/to/resource/info.txt#toplevel"));
-  assert-equal(mail-to, string-as-locator(<web-locator>, "mailto:andrewa@functionalobjects.com"));
+                     address: "andrewa@fun.com");
+  assert-equal(directory, string-as-locator(<url>, "http://www.fun.com/path/to/resource/"));
+  assert-equal(file-url, string-as-locator(<url>, "http://www.fun.com/path/to/resource/info.txt"));
+  assert-equal(cgi-url, string-as-locator(<url>, "http://www.fun.com/path/to/resource/info.txt?lang=en"));
+  assert-equal(file-index-url, string-as-locator(<url>, "http://www.fun.com/path/to/resource/info.txt#toplevel"));
+  assert-equal(mail-to, string-as-locator(<web-locator>, "mailto:andrewa@fun.com"));
 end function-test string-as-locator;
 
 /// Utilities
