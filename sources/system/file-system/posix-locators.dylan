@@ -164,6 +164,16 @@ define sealed method locator-name
   end
 end method locator-name;
 
+define method locator-path
+  (locator :: <posix-file-locator>) => (path :: <sequence>)
+  let directory = locator-directory(locator);
+  if (directory)
+    locator-path(directory)
+  else
+    next-method()
+  end
+end method locator-path;
+
 define sealed method \=
     (locator1 :: <posix-file-locator>,
      locator2 :: <posix-file-locator>)
@@ -202,13 +212,3 @@ define sealed method string-as-locator
        name: name)
 end method string-as-locator;
 
-
-/// Posix locator overrides
-
-define method simplify-locator
-    (locator :: <posix-directory-locator>)
- => (simplified-locator :: <posix-directory-locator>)
-  // Posix locators can't safely be simplified because '..' has a complicated
-  // meaning when dealing with links, so just return the original.
-  locator
-end method simplify-locator;

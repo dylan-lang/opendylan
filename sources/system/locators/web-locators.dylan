@@ -213,8 +213,7 @@ define sealed method locator-as-string
 end method locator-as-string;
 
 define sealed method \=
-    (locator1 :: <server-url>,
-     locator2 :: <server-url>)
+    (locator1 :: <server-url>, locator2 :: <server-url>)
  => (equal? :: <boolean>)
   locator1.locator-host = locator2.locator-host
     & locator1.locator-port = locator2.locator-port
@@ -325,8 +324,7 @@ define sealed method locator-name
 end method locator-name;
 
 define sealed method \=
-    (locator1 :: <directory-url>,
-     locator2 :: <directory-url>)
+    (locator1 :: <directory-url>, locator2 :: <directory-url>)
  => (equal? :: <boolean>)
   locator1.locator-relative? = locator2.locator-relative?
     & locator1.locator-server = locator2.locator-server
@@ -411,9 +409,18 @@ define sealed method locator-name
   end
 end method locator-name;
 
+define method locator-path
+    (locator :: <file-url>) => (path :: <sequence>)
+  let directory = locator-directory(locator);
+  if (directory)
+    locator-path(directory)
+  else
+    next-method()
+  end
+end method locator-path;
+
 define sealed method \=
-    (locator1 :: <file-url>,
-     locator2 :: <file-url>)
+    (locator1 :: <file-url>, locator2 :: <file-url>)
  => (equal? :: <boolean>)
   locator1.locator-directory = locator2.locator-directory
     & locator1.locator-base = locator2.locator-base
@@ -462,6 +469,18 @@ define sealed method locator-server
   directory & directory.locator-server
 end method locator-server;
 
+define method locator-path
+  (locator :: <file-index-url>) => (path :: <sequence>)
+  locator-path(locator-file(locator))
+end method locator-path;
+
+define sealed method \=
+    (locator1 :: <file-index-url>, locator2 :: <file-index-url>)
+ => (equal? :: <boolean>)
+  (locator-file(locator1) = locator-file(locator2))
+  & (locator-index(locator1) = locator-index(locator2))
+end method \=;
+
 
 /// CGI locators
 
@@ -483,6 +502,18 @@ define sealed method locator-as-string
                  delimiter-to-string($web-cgi-separator),
                  locator.locator-cgi-string)
 end method locator-as-string;
+
+define method locator-path
+    (locator :: <cgi-url>) => (path :: <sequence>)
+  locator-path(locator-file(locator))
+end method locator-path;
+
+define sealed method \=
+    (locator1 :: <cgi-url>, locator2 :: <cgi-url>)
+ => (equal? :: <boolean>)
+  locator-file(locator1) = locator-file(locator2)
+  & locator-cgi-string(locator1) = locator-cgi-string(locator2)
+end method \=;
 
 
 /// Mail-to locators
@@ -521,7 +552,7 @@ define sealed method locator-as-string
  => (string :: <string>)
   concatenate-as(class,
                  $mailto-protocol,
-                 delimiter-to-string($web-separator),
+                 delimiter-to-string($web-protocol-separator),
                  locator.locator-address)
 end method locator-as-string;
 
@@ -530,6 +561,11 @@ define method mailto-parser
   make(<mail-to-locator>, address: text)
 end method mailto-parser;
 
+define sealed method \=
+    (locator1 :: <mail-to-locator>, locator2 :: <mail-to-locator>)
+ => (equal? :: <boolean>)
+  locator-address(locator1) = locator-address(locator2)
+end method \=;
 
 /// Utilities
 
@@ -597,15 +633,20 @@ define sealed method parse-url
         (start :: <integer>)
      => (port :: false-or(<integer>), next-index :: <integer>)
       if (start < stop & string[start] == $web-port-separator)
+        let number-start = start + 1;
         let next-index
           = find-delimiters(string,
                             vector($web-username-separator,
                                    $web-separator),
-                            start: start + 1)
+                            start: number-start)
               | stop;
         let port
-          = string-to-integer
-              (string, start: start + 1, end: next-index, default: -1);
+          = if (number-start < stop)
+              string-to-integer
+                (string, start: number-start, end: next-index, default: -1)
+            else
+              -1
+            end;
         if (port == -1)
           locator-error("Invalid port supplied for locator '%s'", string)
         else

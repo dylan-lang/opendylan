@@ -268,6 +268,16 @@ define sealed method locator-name
   end
 end method locator-name;
 
+define method locator-path
+  (locator :: <microsoft-file-locator>) => (path :: <sequence>)
+  let directory = locator-directory(locator);
+  if (directory)
+    locator-path(directory)
+  else
+    next-method()
+  end
+end method locator-path;
+
 define sealed method \=
     (locator1 :: <microsoft-file-locator>,
      locator2 :: <microsoft-file-locator>)
