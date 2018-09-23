@@ -198,7 +198,7 @@ end method;
 define method print-object (object :: <poa>, stream :: <stream>)
  => ()
   next-method();
-  print(stream, poa-name(object));
+  print(poa-name(object), stream);
 end method;
 
 define method Portableserver/Poa/the-name (poa :: <poa>)
