@@ -285,8 +285,8 @@ Each DEP must begin with a title, followed by an RFC 822 style header
 preamble in simple RST table format.  The headers must appear in the
 following order.  Headers marked with "*" are optional and are
 described below.  All other headers are required.  All dates must be
-in dd-mm-yyyy format (e.g., 14-Jan-2012).  A list of values must use a
-comma as separator.  ::
+in dd-mmm-yyyy format (e.g., 14-Jan-2012).  A list of values must use
+a comma as separator.  ::
 
     DEP-Number: <DEP number>
     Author: <list of authors' real names and optionally, email addresses>
