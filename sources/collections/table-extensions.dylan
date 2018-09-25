@@ -7,8 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Table constructor. Syntax:
-// let my-table = table("red"=>"stop", "green"=>"go");
-// let my-table = table(<string-table>, "red"=>"stop", "green"=>"go");
+//   table(#"red"=>"stop", #"green"=>"go");
+//   table(<string-table>, "red"=>"stop", "green"=>"go");
 //
 define macro table 
 
