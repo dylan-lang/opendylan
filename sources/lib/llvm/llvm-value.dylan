@@ -54,6 +54,17 @@ define method value-referenced-types
   vector(llvm-value-type(value))
 end method;
 
+define generic value-referenced-metadata
+    (value :: <llvm-value>)
+ => (referenced :: <sequence>);
+
+// Default method
+define method value-referenced-metadata
+    (value :: <llvm-value>)
+ => (referenced :: <vector>);
+  #[]
+end method;
+
 
 /// Placeholder values
 

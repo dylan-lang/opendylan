@@ -50,10 +50,13 @@ define method llvm-module-add-flag
         #"append" => 5;
         #"append-unique" => 6;
       end select;
+  let behavior-metadata
+    = make(<llvm-value-metadata>, value: i32(behavior-enum));
+  let value-metadata
+    = make(<llvm-value-metadata>, value: value);
   let node = make(<llvm-metadata-node>,
-                  function-local?: #f,
-                  node-values: vector(i32(behavior-enum),
+                  node-values: vector(behavior-metadata,
                                       name-metadata,
-                                      value));
+                                      value-metadata));
   add-to-named-metadata(module, "llvm.module.flags", node);
 end method;

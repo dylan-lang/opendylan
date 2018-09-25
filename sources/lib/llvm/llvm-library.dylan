@@ -89,11 +89,16 @@ define module llvm
     $llvm-true,
 
     <llvm-metadata-value>,
+
+    <llvm-metadata>,
     <llvm-metadata-string>,
     llvm-metadata-string,
     <llvm-metadata-node>,
     llvm-metadata-node-values,
+    <llvm-value-metadata>,
     <llvm-symbolic-metadata>,
+
+    llvm-symbolic-metadata-forward-setter,
 
     <llvm-named-metadata>,
     llvm-named-metadata-name,

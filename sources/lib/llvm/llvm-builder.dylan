@@ -1,6 +1,6 @@
 Module:       llvm-internals
 Author:       Peter S. Housel
-Copyright:    Original Code is Copyright 2010 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2010-2018 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -295,8 +295,8 @@ end macro;
 define function ins--dbg
     (builder :: <llvm-builder>,
      line-number :: <integer>, column-number :: <integer>,
-     scope :: <llvm-metadata-value>,
-     original-scope :: false-or(<llvm-metadata-value>))
+     scope :: <llvm-metadata>,
+     original-scope :: false-or(<llvm-metadata>))
  => ();
   let current-dbg = builder.llvm-builder-dbg;
   if (~current-dbg

@@ -166,7 +166,7 @@ define function llvm-make-dbg-compile-unit
           module :: false-or(<llvm-module>) = #f,
 	  split-debug-path :: false-or(<pathname>) = #f,
           kind :: one-of(#"full-debug", #"line-tables-only") = #"full-debug")
- => (compile-unit :: <llvm-metadata-value>);
+ => (compile-unit :: <llvm-metadata>);
   let enum-node
     = make(<llvm-metadata-node>, node-values: enum-types, function-local?: #f);
   let retained-node
@@ -218,7 +218,7 @@ end function;
 define function llvm-make-dbg-file-directory
     (file :: <pathname>,
      directory :: <pathname>)
- => (file-directory-pair :: <llvm-metadata-value>)
+ => (file-directory-pair :: <llvm-metadata>)
   make(<llvm-metadata-node>, function-local?: #f,
        node-values: vector(make(<llvm-metadata-string>,
 				string: as(<string>, file)),
@@ -229,7 +229,7 @@ end function;
 define function llvm-make-dbg-file
     (file :: <pathname>,
      directory :: <pathname>)
- => (dbg-file :: <llvm-metadata-value>);
+ => (dbg-file :: <llvm-metadata>);
   make(<llvm-metadata-node>,
        function-local?: #f,
        node-values: vector(i32($llvm-debug-version + $DW-TAG-file-type),
@@ -237,14 +237,14 @@ define function llvm-make-dbg-file
 end function;
 
 define method as-file-directory
-    (value :: false-or(<llvm-metadata-value>))
- => (file-directory-pair :: false-or(<llvm-metadata-value>));
+    (value :: false-or(<llvm-metadata>))
+ => (file-directory-pair :: false-or(<llvm-metadata>));
   value
 end method;
 
 define method as-file-directory
     (value :: <llvm-metadata-node>)
- => (file-directory-pair :: false-or(<llvm-metadata-value>));
+ => (file-directory-pair :: false-or(<llvm-metadata>));
   let node-values = value.llvm-metadata-node-values;
   if (instance?(node-values[0], <llvm-integer-constant>)
 	& node-values[0].llvm-integer-constant-integer = $llvm-debug-version + $DW-TAG-file-type)
@@ -255,10 +255,10 @@ define method as-file-directory
 end method;
 
 define function llvm-make-dbg-function-type
-    (dbg-file :: <llvm-metadata-value>,
-     return-type :: false-or(<llvm-metadata-value>),
+    (dbg-file :: <llvm-metadata>,
+     return-type :: false-or(<llvm-metadata>),
      parameter-types :: <sequence>)
- => (dbg-function-type :: <llvm-metadata-value>);
+ => (dbg-function-type :: <llvm-metadata>);
   let i32-zero = i32(0);
   let i64-zero = i64(0);
   let params
@@ -285,20 +285,20 @@ define function llvm-make-dbg-function-type
 end function;
 
 define function llvm-make-dbg-function
-    (context :: false-or(<llvm-metadata-value>),
+    (context :: false-or(<llvm-metadata>),
      name :: <string>,
      linkage-name :: <string>,
-     dbg-file :: <llvm-metadata-value>,
+     dbg-file :: <llvm-metadata>,
      line-number :: false-or(<integer>),
-     dbg-function-type :: <llvm-metadata-value>,
+     dbg-function-type :: <llvm-metadata>,
      #key local? :: <boolean> = #f,
           definition? :: <boolean> = #f,
           optimized? :: <boolean> = #f,
           function :: false-or(<llvm-function>) = #f,
-          decl :: false-or(<llvm-metadata-value>) = #f,
+          decl :: false-or(<llvm-metadata>) = #f,
           module :: false-or(<llvm-module>) = #f,
           scope-line-number :: false-or(<integer>) = line-number)
- => (dbg-function :: <llvm-metadata-value>);
+ => (dbg-function :: <llvm-metadata>);
   let i32-zero = i32(0);
   let dbg-name = make(<llvm-metadata-string>, string: name);
   let node
@@ -335,7 +335,7 @@ end function;
 define function add-to-named-metadata
     (module :: <llvm-module>,
      name :: <string>,
-     metadata-value :: <llvm-metadata-value>)
+     metadata-value :: <llvm-metadata>)
  => ();
   let named
     = element(module.%named-metadata-table, name, default: #f)
@@ -352,12 +352,12 @@ end function;
 define variable *lexical-block-unique-id* = 0;
 
 define function llvm-make-dbg-lexical-block
-    (scope :: false-or(<llvm-metadata-value>),
-     dbg-file :: <llvm-metadata-value>,
+    (scope :: false-or(<llvm-metadata>),
+     dbg-file :: <llvm-metadata>,
      line-number :: false-or(<integer>),
      column-number :: <integer>,
      #key discriminator :: <integer> = 0)
- => (dbg-lexical-block :: <llvm-metadata-value>);
+ => (dbg-lexical-block :: <llvm-metadata>);
   *lexical-block-unique-id* := *lexical-block-unique-id* + 1;
   make(<llvm-metadata-node>,
        function-local?: #f,
@@ -372,14 +372,14 @@ end function;
 
 define function llvm-make-dbg-local-variable
     (kind :: one-of(#"auto", #"argument", #"return"),
-     scope :: false-or(<llvm-metadata-value>), name :: <string>,
-     dbg-file :: <llvm-metadata-value>, line-number :: false-or(<integer>),
-     type :: <llvm-metadata-value>,
+     scope :: false-or(<llvm-metadata>), name :: <string>,
+     dbg-file :: <llvm-metadata>, line-number :: false-or(<integer>),
+     type :: <llvm-metadata>,
      #key arg :: <integer> = 0,
           module :: false-or(<llvm-module>) = #f,
           function-name :: <string> = "fn",
           artificial? = #f)
- => (dbg-local-variable :: <llvm-metadata-value>);
+ => (dbg-local-variable :: <llvm-metadata>);
   let tag
     = select (kind)
         #"auto"     => $DW-TAG-auto-variable;
@@ -414,10 +414,10 @@ end function;
 define function llvm-make-dbg-basic-type
     (kind :: one-of(#"address", #"boolean", #"float",
                     #"signed", #"signed-char", #"unsigned", #"unsigned-char"),
-     scope :: false-or(<llvm-metadata-value>), name :: <string>,
+     scope :: false-or(<llvm-metadata>), name :: <string>,
      type-size :: <integer>, type-alignment :: <integer>,
      type-offset :: <integer>)
- => (dbg-basic-type :: <llvm-metadata-value>);
+ => (dbg-basic-type :: <llvm-metadata>);
   let type-encoding
     = select (kind)
         #"address"       => $DW-ATE-address;
@@ -445,13 +445,13 @@ end function;
 define function llvm-make-dbg-derived-type
     (kind :: one-of(#"parameter", #"member", #"pointer", #"reference",
                     #"typedef", #"const", #"volatile", #"restrict"),
-     scope :: false-or(<llvm-metadata-value>), name :: <string>,
-     dbg-file :: false-or(<llvm-metadata-value>),
+     scope :: false-or(<llvm-metadata>), name :: <string>,
+     dbg-file :: false-or(<llvm-metadata>),
      line-number :: false-or(<integer>),
      type-size :: <integer>, type-alignment :: <integer>,
      type-offset :: <integer>,
-     derived-from :: false-or(<llvm-metadata-value>))
- => (dbg-derived-type :: <llvm-metadata-value>);
+     derived-from :: false-or(<llvm-metadata>))
+ => (dbg-derived-type :: <llvm-metadata>);
   let tag
     = select (kind)
         #"parameter" => $DW-TAG-formal-parameter;
@@ -480,13 +480,13 @@ end function;
 define function llvm-make-dbg-composite-type
     (kind :: one-of(#"array", #"enum", #"struct", #"union", #"vector",
                     #"function", #"inheritance"),
-     scope :: false-or(<llvm-metadata-value>), name :: <string>,
-     dbg-file :: false-or(<llvm-metadata-value>),
+     scope :: false-or(<llvm-metadata>), name :: <string>,
+     dbg-file :: false-or(<llvm-metadata>),
      line-number :: false-or(<integer>),
      type-size :: <integer>, type-alignment :: <integer>,
      elements :: <sequence>,
-     derived-from :: false-or(<llvm-metadata-value>))
- => (dbg-composite-type :: <llvm-metadata-value>);
+     derived-from :: false-or(<llvm-metadata>))
+ => (dbg-composite-type :: <llvm-metadata>);
   let i32-zero = i32(0);
   let i64-zero = i64(0);
   let tag
@@ -523,7 +523,7 @@ end function;
 
 define function llvm-make-dbg-unspecified-parameters
     ()
- => (dbg-unspecified-parameters :: <llvm-metadata-value>);
+ => (dbg-unspecified-parameters :: <llvm-metadata>);
   make(<llvm-metadata-node>,
        function-local?: #f,
        node-values:
@@ -532,8 +532,7 @@ end function;
 
 define function llvm-make-dbg-value-metadata
     (value :: <llvm-value>)
- => (dbg-local-value :: <llvm-metadata-value>);
-  make(<llvm-metadata-node>,
-       function-local?: #t,
-       node-values: list(value))
+ => (dbg-local-value :: <llvm-value>);
+  make(<llvm-metadata-value>,
+       metadata: make(<llvm-value-metadata>, value: value))
 end function;

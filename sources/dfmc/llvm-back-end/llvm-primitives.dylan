@@ -570,9 +570,9 @@ end method;
 
 define method llvm-emit-primitive-dbg-function
     (back-end :: <llvm-back-end>, function :: <llvm-function>,
-     dbg-file :: <llvm-metadata-value>,desc :: <llvm-primitive-descriptor>)
+     dbg-file :: <llvm-metadata>, desc :: <llvm-primitive-descriptor>)
  => ();
-  let (dbg-function :: <llvm-metadata-value>, dbg-parameters :: <sequence>)
+  let (dbg-function :: <llvm-metadata>, dbg-parameters :: <sequence>)
     = apply(make-primitive-dbg-function, back-end, function, dbg-file,
             desc, desc.primitive-function-declarator);
   add!(back-end.llvm-back-end-dbg-functions, dbg-function);
@@ -582,21 +582,23 @@ define method llvm-emit-primitive-dbg-function
   for (dbg-parameter in dbg-parameters,
        argument in function.llvm-function-arguments)
     let v = llvm-make-dbg-value-metadata(argument);
+    let dbg-parameter-value
+      = make(<llvm-metadata-value>, metadata: dbg-parameter);
     ins--call-intrinsic(back-end, "llvm.dbg.value",
-                        vector(v, i64(0), dbg-parameter));
+                        vector(v, i64(0), dbg-parameter-value));
   end for;
 end method;
 
 define method make-primitive-dbg-function
     (back-end :: <llvm-back-end>, function :: <llvm-function>,
-     dbg-file :: <llvm-metadata-value>,
+     dbg-file :: <llvm-metadata>,
      descriptor :: <llvm-primitive-descriptor>,
      #key name :: <string>,
           parameter-names :: <simple-object-vector> = #[],
           parameter-types-spec :: <simple-object-vector>,
           value-types-spec :: <simple-object-vector>,
      #all-keys)
- => (dbg-function :: <llvm-metadata-value>, dbg-parameters :: <sequence>);
+ => (dbg-function :: <llvm-metadata>, dbg-parameters :: <sequence>);
   let dbg-parameter-types = make(<stretchy-object-vector>);
 
   let (required-parameter-type-specs, required-parameter-names,

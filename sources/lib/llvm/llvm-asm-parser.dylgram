@@ -1,6 +1,6 @@
 Module:       llvm-asm-parser-internals
 Author:       Peter S. Housel
-Copyright:    Original Code is Copyright 2009-2010 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2009-2018 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -22,7 +22,7 @@ define class <llvm-parse-state> (<object>)
   constant slot parse-unnamed-local-values :: <stretchy-object-vector>
     = make(<stretchy-object-vector>);
 
-  constant slot parse-unnamed-metadata-values :: <stretchy-object-vector>
+  constant slot parse-unnamed-metadata :: <stretchy-object-vector>
     = make(<stretchy-object-vector>);
 end class;
 
@@ -159,23 +159,22 @@ define method do-define-local-value
   value
 end method;
 
-define method do-define-metadata-value
-    (supplied-index :: <integer>, value :: <llvm-metadata-value>)
+define method do-define-metadata
+    (supplied-index :: <integer>, value :: <llvm-metadata>)
  => ();
   let definition
-    = element(*llvm-parse-state*.parse-unnamed-metadata-values, supplied-index,
+    = element(*llvm-parse-state*.parse-unnamed-metadata, supplied-index,
               default: #f);
   if (definition)
     if (instance?(definition, <llvm-symbolic-metadata>))
-      definition.llvm-placeholder-value-forward := value;
-      llvm-constrain-type(definition.llvm-value-type, llvm-value-type(value));
+      definition.llvm-symbolic-metadata-forward := value;
     else
       error("value !%d is multiply defined", supplied-index);
     end if;
   end if;
 
   // Record this value
-  element(*llvm-parse-state*.parse-unnamed-metadata-values, supplied-index)
+  element(*llvm-parse-state*.parse-unnamed-metadata, supplied-index)
     := value;
 end method;
 
@@ -692,8 +691,6 @@ prim-type:
     => #"X86_FP80";;
   %LABEL
     => #"LABEL";;
-  %METADATA
-    => #"METADATA";;
   %X86_MMX
     => #"X86_MMX";;
 
@@ -838,13 +835,6 @@ const-val:
             integer: 0);;
   types %BLOCKADDRESS %LPAREN global-name %COMMA local-name %RPAREN
     => error("%%BLOCKADDRESS");;
-
-  types metadata-value
-    => begin
-         llvm-constrain-type(llvm-value-type(arg$2),
-                             arg$1);
-         arg$2
-       end;;
 
 global-var-attributes:
   /* empty */
@@ -1086,11 +1076,24 @@ arg-list-h:
                  name: arg$2,
                  attributes: arg$1.arg-attributes,
                  index: 0));;
+  %METADATA opt-local-name
+    => list(make(<llvm-argument>,
+                 type: $llvm-metadata-type,
+                 name: arg$2,
+                 attributes: $llvm-attribute-none,
+                 index: 0));;
   arg-list-h %COMMA types-opt-attributes opt-local-name
     => pair(make(<llvm-argument>,
                  type: arg$3.arg-type,
                  name: arg$4,
                  attributes: arg$3.arg-attributes,
+                 index: arg$1.head.llvm-argument-index + 1),
+            arg$1);;
+  arg-list-h %COMMA %METADATA opt-local-name
+    => pair(make(<llvm-argument>,
+                 type: $llvm-metadata-type,
+                 name: arg$4,
+                 attributes: $llvm-attribute-none,
                  index: arg$1.head.llvm-argument-index + 1),
             arg$1);;
 
@@ -1404,9 +1407,19 @@ indirectbr-table:
   indirectbr-table %COMMA %LABEL value-ref
     => #f;;
 
-param-list:
+opt-param-list:
   /* empty */
     => #();;
+  param-list
+    => arg$1;;
+
+param-list:
+  param-entry
+    => list(arg$1);;
+  param-list %COMMA param-entry
+    => pair(arg$3, arg$1);;
+
+param-entry:
   types-opt-attributes value-ref opt-attributes
     => begin
          llvm-constrain-type(llvm-value-type(arg$2), arg$1.arg-type);
@@ -1415,17 +1428,22 @@ param-list:
                   attributes: llvm-attribute-merge(arg$1.arg-attributes,
                                                    arg$3),
                   value: arg$2);
-         list(entry)
+         entry
        end;;
-  param-list %COMMA types-opt-attributes value-ref opt-attributes
+  %METADATA metadata
+    => make(<param-entry>,
+            attributes: $llvm-attribute-none,
+            value: make(<llvm-metadata-value>,
+                        type: $llvm-metadata-type,
+                        metadata: arg$2));;
+  %METADATA resolved-val
     => begin
-         llvm-constrain-type(llvm-value-type(arg$4), arg$3.arg-type);
-         let entry
-           = make(<param-entry>,
-                  attributes: llvm-attribute-merge(arg$3.arg-attributes,
-                                                   arg$5),
-                  value: arg$4);
-         pair(entry, arg$1)
+         let value-metadata = make(<llvm-value-metadata>, value: arg$2);
+         make(<param-entry>,
+              attributes: $llvm-attribute-none,
+              value: make(<llvm-metadata-value>,
+                          type: $llvm-metadata-type,
+                          metadata: value-metadata));
        end;;
 
 opt-attributes:
@@ -1760,8 +1778,6 @@ const-value-ref:
     => make(<llvm-aggregate-constant>, aggregate-values: #[]);;
   %BLOCKADDRESS %LPAREN global-name %COMMA local-name %RPAREN
     => error("%%BLOCKADDRESS");;
-  metadata-value
-    => arg$1;;
   %ASM opt-asm-flags %STRINGCONSTANT %COMMA %STRINGCONSTANT
     => apply(make, <llvm-asm-constant>,
              asm-string: arg$3,
@@ -1838,16 +1854,22 @@ definition:
             make(<llvm-named-metadata>, name: arg$1,
 	         operands: reverse!(arg$5)));;
 
-  %EXCLAIM %EUINT64VAL %EQUALS types %EXCLAIM %LBRACE %RBRACE
-    => do-define-metadata-value(arg$2,
-                                make(<llvm-metadata-node>,
-                                     node-values: #[],
-                                     function-local?: #f));;
-  %EXCLAIM %EUINT64VAL %EQUALS types %EXCLAIM %LBRACE metadata-vector %RBRACE
-    => do-define-metadata-value(arg$2,
-                                make(<llvm-metadata-node>,
-                                     node-values: reverse!(arg$7),
-                                     function-local?: #f));;
+  %EXCLAIM %EUINT64VAL %EQUALS opt-distinct %EXCLAIM %LBRACE %RBRACE
+    => do-define-metadata(arg$2,
+			  make(<llvm-metadata-node>,
+			       node-values: #[],
+                               distinct?: arg$4));;
+  %EXCLAIM %EUINT64VAL %EQUALS opt-distinct %EXCLAIM %LBRACE metadata-vector %RBRACE
+    => do-define-metadata(arg$2,
+			  make(<llvm-metadata-node>,
+			       node-values: reverse!(arg$7),
+			       distinct?: arg$4));;
+
+opt-distinct:
+  /* empty */
+    => #f;;
+  %DISTINCT
+    => #t;;
 
 metadata-list:
   metadata-ref
@@ -1857,15 +1879,19 @@ metadata-list:
 
 metadata-vector:
   const-val
+    => list(make(<llvm-value-metadata>, value: arg$1));;
+  metadata
     => list(arg$1);;
   %NULL
     => list(#f);;
   metadata-vector %COMMA const-val
+    => pair(make(<llvm-value-metadata>, value: arg$3), arg$1);;
+  metadata-vector %COMMA metadata
     => pair(arg$3, arg$1);;
   metadata-vector %COMMA %NULL
     => pair(#f, arg$1);;
 
-metadata-value:
+metadata:
   metadata-ref
     => arg$1;;
   %EXCLAIM %LBRACE %RBRACE
@@ -1878,11 +1904,11 @@ metadata-value:
 metadata-ref:
   %EXCLAIM %EUINT64VAL
     => begin
-         element(*llvm-parse-state*.parse-unnamed-metadata-values, arg$2,
+         element(*llvm-parse-state*.parse-unnamed-metadata, arg$2,
                  default: #f)
            | begin
                let placeholder = make(<llvm-symbolic-metadata>, name: arg$2);
-               element(*llvm-parse-state*.parse-unnamed-metadata-values, arg$2)
+               element(*llvm-parse-state*.parse-unnamed-metadata, arg$2)
                  := placeholder
              end
        end;;
@@ -1894,9 +1920,9 @@ opt-inst-metadata:
     => arg$2;;
 
 inst-metadata:
-  %METADATAVAR metadata-value
+  %METADATAVAR metadata
     => list(make(<llvm-named-metadata>, name: arg$1, operands: list(arg$2)));;
-  inst-metadata %COMMA %METADATAVAR metadata-value
+  inst-metadata %COMMA %METADATAVAR metadata
     => pair(make(<llvm-named-metadata>, name: arg$3, operands: list(arg$4)),
             arg$1);;
 end parser;

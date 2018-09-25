@@ -1,6 +1,6 @@
 Module:       llvm-runtime-generator
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              Additional code is Copyright 2010-2014 Gwydion Dylan Maintainers
+              Additional code is Copyright 2010-2018 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -101,8 +101,7 @@ define function generate-runtime-heap
 end function;
 
 define function generate-runtime-primitive
-    (be :: <llvm-back-end>, m :: <llvm-module>,
-     dbg-file :: <llvm-metadata-value>,
+    (be :: <llvm-back-end>, m :: <llvm-module>, dbg-file :: <llvm-metadata>,
      name :: <symbol>, descriptor :: <llvm-primitive-descriptor>)
  => ();
   // Generate the function definition and add it to the runtime module
@@ -170,8 +169,7 @@ define function generate-runtime-primitive
 end function;
 
 define function generate-runtime-primitives
-    (be :: <llvm-back-end>, m :: <llvm-module>,
-     dbg-file :: <llvm-metadata-value>)
+    (be :: <llvm-back-end>, m :: <llvm-module>, dbg-file :: <llvm-metadata>)
  => ();
   // Generate a function for each defined runtime primitive
   for (descriptor :: <llvm-primitive-descriptor>
@@ -184,8 +182,7 @@ define function generate-runtime-primitives
 end function;
 
 define function generate-runtime-entry-point
-    (be :: <llvm-back-end>, m :: <llvm-module>,
-     dbg-file :: <llvm-metadata-value>,
+    (be :: <llvm-back-end>, m :: <llvm-module>, dbg-file :: <llvm-metadata>,
      name :: <symbol>, descriptor :: <llvm-entry-point-descriptor>,
      count :: false-or(<integer>), pos :: false-or(<integer>))
  => ();
@@ -238,8 +235,7 @@ define function generate-runtime-entry-point
 end function;
 
 define function generate-runtime-entry-points
-    (be :: <llvm-back-end>, m :: <llvm-module>,
-     dbg-file :: <llvm-metadata-value>)
+    (be :: <llvm-back-end>, m :: <llvm-module>, dbg-file :: <llvm-metadata>)
  => ();
   // Generate functions for each defined runtime entry point
   for (descriptor :: <llvm-entry-point-descriptor>
