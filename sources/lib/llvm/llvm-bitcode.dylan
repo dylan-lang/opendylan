@@ -2464,12 +2464,12 @@ define function visibility-encoding
 end function;
 
 define function alignment-encoding
-    (alignment :: false-or(<integer>)) => (encoding :: <integer>);
-  if (alignment)
+  (alignment :: false-or(<integer>)) => (encoding :: <integer>);
+  if (alignment & ~zero?(alignment))
     integer-length(alignment)
   else
     0
-  end if;
+  end if
 end function;
 
 define function thread-local-encoding
