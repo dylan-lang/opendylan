@@ -34,6 +34,8 @@ define bitcode-block $MODULE_BLOCK = 8
   record GCNAME      = 11;
 end bitcode-block;
 
+define constant $llvm-bitcode-module-version = 1;
+
 // Subblocks of MODULE_BLOCK
 
 define bitcode-block $PARAMATTR_BLOCK = 9
@@ -1435,14 +1437,26 @@ end function;
 
 /// Instruction output
 
-define function add-value
+define method add-value
     (operands :: <stretchy-vector>,
+     instruction-index :: <integer>,
+     value-partition-table :: <explicit-key-collection>,
+     value :: <llvm-metadata-value>)
+  => ();
+  let metadata = value.llvm-metadata-value-metadata;
+  let index = value-partition-table[llvm-metadata-forward(metadata)];
+  add!(operands, instruction-index - index);
+end method;
+
+define method add-value
+    (operands :: <stretchy-vector>,
+     instruction-index :: <integer>,
      value-partition-table :: <explicit-key-collection>,
      value :: <llvm-value>)
  => ();
   let index = value-partition-table[value-forward(value)];
-  add!(operands, index);
-end function;
+  add!(operands, instruction-index - index);
+end method;
 
 define function add-value-type
     (operands :: <stretchy-vector>,
@@ -1453,7 +1467,7 @@ define function add-value-type
  => ();
   let value = value-forward(value);
   let index = value-partition-table[value];
-  add!(operands, index);
+  add!(operands, instruction-index - index);
   if (index >= instruction-index)
     add!(operands, type-partition-table[type-forward(llvm-value-type(value))]);
   end if;
@@ -1471,7 +1485,7 @@ define method write-instruction-record
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
                  value.llvm-instruction-operands[0]);
-  add-value(operands, value-partition-table,
+  add-value(operands, instruction-index, value-partition-table,
             value.llvm-instruction-operands[1]);
   add!(operands,
        binop-operator-encoding(value.llvm-binop-instruction-operator));
@@ -1536,7 +1550,7 @@ define method write-instruction-record
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
                  value.llvm-instruction-operands[1]);
-  add-value(operands, value-partition-table,
+  add-value(operands, instruction-index, value-partition-table,
             value.llvm-instruction-operands[2]);
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
@@ -1556,8 +1570,9 @@ define method write-instruction-record
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
                  value.llvm-instruction-operands[0]);
-  add-value(operands, value-partition-table,
-            value.llvm-instruction-operands[1]);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[1]);
   write-record(stream, #"INST_EXTRACTELT", operands);
 end method;
 
@@ -1573,10 +1588,11 @@ define method write-instruction-record
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
                  value.llvm-instruction-operands[0]);
-  add-value(operands, value-partition-table,
+  add-value(operands, instruction-index, value-partition-table,
             value.llvm-instruction-operands[1]);
-  add-value(operands, value-partition-table,
-            value.llvm-instruction-operands[2]);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[2]);
   write-record(stream, #"INST_INSERTELT", operands);
 end method;
 
@@ -1592,9 +1608,9 @@ define method write-instruction-record
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
                  value.llvm-instruction-operands[0]);
-  add-value(operands, value-partition-table,
+  add-value(operands, instruction-index, value-partition-table,
             value.llvm-instruction-operands[1]);
-  add-value(operands, value-partition-table,
+  add-value(operands, instruction-index, value-partition-table,
             value.llvm-instruction-operands[2]);
   write-record(stream, #"INST_SHUFFLEVEC", operands);
 end method;
@@ -1611,10 +1627,10 @@ define method write-instruction-record
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
                  value.llvm-instruction-operands[0]);
-  add-value(operands, value-partition-table,
+  add-value(operands, instruction-index, value-partition-table,
             value.llvm-instruction-operands[1]);
   add!(operands, encode-predicate(value));
-  write-record(stream, #"INST_CMP", operands);
+  write-record(stream, #"INST_CMP2", operands);
 end method;
 
 define method write-instruction-record
@@ -1644,14 +1660,17 @@ define method write-instruction-record
  => ();
   let operands = make(<stretchy-object-vector>);
   if (value.llvm-instruction-operands.size = 1)
-    add-value(operands, value-partition-table,
-              value.llvm-instruction-operands[0]);
+    add!(operands,
+         value-partition-table[value-forward
+                                 (value.llvm-instruction-operands[0])]);
   else
-    add-value(operands, value-partition-table,
-              value.llvm-instruction-operands[1]);
-    add-value(operands, value-partition-table,
-              value.llvm-instruction-operands[2]);
-    add-value(operands, value-partition-table,
+    add!(operands,
+         value-partition-table[value-forward
+                                 (value.llvm-instruction-operands[1])]);
+    add!(operands,
+         value-partition-table[value-forward
+                                 (value.llvm-instruction-operands[2])]);
+    add-value(operands, instruction-index, value-partition-table,
               value.llvm-instruction-operands[0]);
   end if;
   write-record(stream, #"INST_BR", operands);
@@ -1664,14 +1683,17 @@ define method write-instruction-record
      value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-switch-instruction>)
- => ();
-  let operand0 = value-forward(value.llvm-instruction-operands[0]);
+  => ();
+  let operands = value.llvm-instruction-operands;
+  let operand0 = value-forward(operands[0]);
+  let record = make(<stretchy-object-vector>);
+  for (i from 1 below operands.size)
+    add!(record, value-partition-table[value-forward(operands[i])]);
+  end for;
   write-record(stream, #"INST_SWITCH",
                type-partition-table[type-forward(llvm-value-type(operand0))],
-               map(method (value :: <llvm-value>)
-                     value-partition-table[value-forward(value)]
-                   end,
-                   value.llvm-instruction-operands));
+               instruction-index - value-partition-table[operand0],
+               record);
 end method;
 
 define method write-instruction-record
@@ -1685,9 +1707,9 @@ define method write-instruction-record
   let attribute-list-encoding
     = encode-attribute-list(value.llvm-invoke-instruction-attribute-list);
   let operands = make(<stretchy-object-vector>);
-  add-value(operands, value-partition-table,
+  add-value(operands, instruction-index, value-partition-table,
             value.llvm-instruction-operands[0]);
-  add-value(operands, value-partition-table,
+  add-value(operands, instruction-index, value-partition-table,
             value.llvm-instruction-operands[1]);
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
@@ -1699,10 +1721,14 @@ define method write-instruction-record
     = type-forward(llvm-value-type(callee));
   let function-type
     = type-forward(function-pointer-type.llvm-pointer-type-pointee);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 callee);
+
   let fixed-parameter-count
     = function-type.llvm-function-type-parameter-types.size;
   for (i from 3 below fixed-parameter-count + 3)
-    add-value(operands, value-partition-table,
+    add-value(operands, instruction-index, value-partition-table,
               value.llvm-instruction-operands[i]);
   end for;
 
@@ -1751,13 +1777,18 @@ define method write-instruction-record
      value-partition-table :: <explicit-key-collection>,
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-phi-node>)
- => ();
+  => ();
+  let operands = make(<stretchy-object-vector>);
+  for (i from 0 below value.llvm-instruction-operands.size by 2)
+    let operand = value.llvm-instruction-operands[i];
+    let operand-index = value-partition-table[value-forward(operand)];
+    let label = value.llvm-instruction-operands[i + 1];
+    add!(operands, as-signed-vbr(instruction-index - operand-index));
+    add!(operands, value-partition-table[value-forward(label)]);
+  end for;
   write-record(stream, #"INST_PHI",
                type-partition-table[type-forward(llvm-value-type(value))],
-               map(method (value :: <llvm-value>)
-                     value-partition-table[value-forward(value)]
-                   end,
-                   value.llvm-instruction-operands));
+               operands);
 end method;
 
 define method write-instruction-record
@@ -1785,13 +1816,9 @@ define method write-instruction-record
  => ();
   let operands = make(<stretchy-object-vector>);
   add!(operands, type-partition-table[type-forward(llvm-value-type(value))]);
-  add-value-type(operands, instruction-index,
-                 type-partition-table, value-partition-table,
-                 value.llvm-instruction-operands[0]);
   add!(operands, if (value.llvm-landingpad-instruction-cleanup?) 1 else 0 end);
-  add!(operands, value.llvm-instruction-operands.size - 1);
-  for (i from 1 below value.llvm-instruction-operands.size)
-    let operand = value.llvm-instruction-operands[i];
+  add!(operands, value.llvm-instruction-operands.size);
+  for (operand in value.llvm-instruction-operands)
     if (instance?(type-forward(llvm-value-type(operand)), <llvm-array-type>))
       add!(operands, 1);        // Filter
     else
@@ -1813,7 +1840,7 @@ define method write-instruction-record
      value :: <llvm-alloca-instruction>)
  => ();
   let operands = make(<stretchy-object-vector>);
-  add-value(operands, value-partition-table,
+  add-value(operands, instruction-index, value-partition-table,
             value.llvm-instruction-operands[0]);
   add!(operands, alignment-encoding(value.llvm-alloca-instruction-alignment));
   write-record(stream, #"INST_ALLOCA",
@@ -1853,7 +1880,7 @@ define method write-instruction-record
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
                  value.llvm-instruction-operands[1]);
-  add-value(operands, value-partition-table,
+  add-value(operands, instruction-index, value-partition-table,
             value.llvm-instruction-operands[0]);
   add!(operands, alignment-encoding(value.llvm-memory-instruction-alignment));
   add!(operands, if (value.llvm-instruction-volatile?) 1 else 0 end);
@@ -1915,7 +1942,7 @@ define method write-instruction-record
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
                  value.llvm-instruction-operands[1]);
-  add-value(operands, value-partition-table,
+  add-value(operands, instruction-index, value-partition-table,
             value.llvm-instruction-operands[0]);
   add!(operands, alignment-encoding(value.llvm-memory-instruction-alignment));
   add!(operands, if (value.llvm-instruction-volatile?) 1 else 0 end);
@@ -1967,7 +1994,7 @@ define method write-instruction-record
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
                  value.llvm-instruction-operands[0]);
-  add-value(operands, value-partition-table,
+  add-value(operands, instruction-index, value-partition-table,
             value.llvm-instruction-operands[1]);
   add!(operands, atomicrmw-operation-encoding(value.llvm-atomicrmw-instruction-operation));
   add!(operands, if (value.llvm-instruction-volatile?) 1 else 0 end);
@@ -1988,9 +2015,9 @@ define method write-instruction-record
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
                  value.llvm-instruction-operands[0]);
-  add-value(operands, value-partition-table,
+  add-value(operands, instruction-index, value-partition-table,
             value.llvm-instruction-operands[1]);
-  add-value(operands, value-partition-table,
+  add-value(operands, instruction-index, value-partition-table,
             value.llvm-instruction-operands[2]);
   add!(operands, if (value.llvm-instruction-volatile?) 1 else 0 end);
   add!(operands, atomic-ordering-encoding(value.llvm-atomic-instruction-ordering));
@@ -2024,7 +2051,7 @@ define method write-instruction-record
   let fixed-parameter-count
     = function-type.llvm-function-type-parameter-types.size;
   for (i from 1 below fixed-parameter-count + 1)
-    add-value(operands, value-partition-table,
+    add-value(operands, instruction-index, value-partition-table,
               value.llvm-instruction-operands[i]);
   end for;
 
@@ -2056,7 +2083,7 @@ define method write-instruction-record
   let operands = make(<stretchy-object-vector>);
   let valist = value-forward(value.llvm-instruction-operands[0]);
   add!(operands, type-partition-table[type-forward(llvm-value-type(valist))]);
-  add-value(operands, value-partition-table, valist);
+  add-value(operands, instruction-index, value-partition-table, valist);
   add!(operands, type-partition-table[type-forward(llvm-value-type(value))]);
   write-record(stream, #"INST_VAARG", operands);
 end method;
@@ -2254,6 +2281,8 @@ define function write-module
       for (deplib in m.llvm-module-dependent-libraries)
         write-record(stream, #"DEPLIB", deplib);
       end for;
+      // Version
+      write-record(stream, #"VERSION", $llvm-bitcode-module-version);
 
       // Target triple
       unless (empty?(m.llvm-module-target-triple))
