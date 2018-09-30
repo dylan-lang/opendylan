@@ -73,6 +73,7 @@ define table $llvm-keywords :: <string-table>
      "sideeffect" => $%SIDEEFFECT-token,
      "alignstack" => $%ALIGNSTACK-token,
      "gc" => $%GC-token,
+     "personality" => $%PERSONALITY-token,
      
      "ccc" => $%CCC-token,
      "fastcc" => $%FASTCC-token,

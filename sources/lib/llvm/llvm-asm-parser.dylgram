@@ -529,7 +529,7 @@ function-proto:
 function-header-h:
   opt-calling-conv opt-ret-attrs result-types function-name
     %LPAREN arg-list %RPAREN opt-unnamed-addr opt-func-attrs opt-section
-    opt-align opt-gc
+    opt-align opt-gc opt-personality
     => begin
          let function-type
            = make(<llvm-function-type>,
@@ -554,7 +554,8 @@ function-header-h:
 		unnamed-address?: arg$8,
                 section: arg$10,
                 alignment: arg$11,
-                garbage-collector: arg$12)
+                garbage-collector: arg$12,
+                personality: arg$13)
        end;;
 
 function-linkage:
@@ -1123,6 +1124,12 @@ opt-gc:
   /* empty */
     => #f;;
   %GC %STRINGCONSTANT
+    => arg$2;;
+
+opt-personality:
+  /* empty */
+    => #f;;
+  %PERSONALITY const-val
     => arg$2;;
 
 index-list:

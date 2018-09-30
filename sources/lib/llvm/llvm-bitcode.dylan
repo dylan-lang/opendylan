@@ -2403,7 +2403,18 @@ define function write-module
                        1
                      else
                        0
-                     end);
+                     end,
+                     0,      // prologuedata
+                     0,      // dllstorageclass
+                     0,      // comdat
+                     0,      // prefixdata
+                     if (function.llvm-function-personality)
+                       value-partition-table
+                         [value-forward(function.llvm-function-personality)] + 1
+                     else
+                       0
+                     end,       // personalityfn
+                     0);        // DSO_Local
       end for;
 
       // Aliases

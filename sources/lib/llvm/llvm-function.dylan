@@ -24,6 +24,8 @@ define class <llvm-function> (<llvm-global-value>)
     init-value: $llvm-calling-convention-c, init-keyword: calling-convention:;
   constant slot llvm-function-garbage-collector :: false-or(<string>),
     init-value: #f, init-keyword: garbage-collector:;
+  constant slot llvm-function-personality :: false-or(<llvm-value>),
+    init-value: #f, init-keyword: personality:;
   constant slot llvm-function-arguments :: <sequence>,
     init-value: #[], init-keyword: arguments:;
   constant slot llvm-function-attribute-list :: <llvm-attribute-list>
