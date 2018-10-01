@@ -913,7 +913,7 @@ define llvm-builder function-test ins--gep ()
   ins--ret(builder, reg);
   check-equal("ins--gep disassembly",
               #("entry:",
-                "%0 = getelementptr %ST* %arg0,"
+                "%0 = getelementptr %ST, %ST* %arg0,"
                   " i32 1, i32 2, i32 1, i32 5, i32 13",
                 "ret i32* %0"),
               builder-test-function-disassembly(builder));
@@ -933,7 +933,7 @@ define llvm-builder function-test ins--gep-inbounds ()
   ins--ret(builder, reg);
   check-equal("ins--gep disassembly",
               #("entry:",
-                "%0 = getelementptr inbounds %ST* %arg0,"
+                "%0 = getelementptr inbounds %ST, %ST* %arg0,"
                   " i32 1, i32 2, i32 1, i32 5, i32 13",
                 "ret i32* %0"),
               builder-test-function-disassembly(builder));

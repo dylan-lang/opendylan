@@ -72,7 +72,7 @@ define bitcode-block $FUNCTION_BLOCK = 12
 
   record INST_BINOP       =  2; // BINOP:      [opcode, ty, opval, opval]
   record INST_CAST        =  3; // CAST:       [opcode, ty, opty, opval]
-  record INST_GEP         =  4; // GEP:        [n x operands]
+  record INST_GEP_OLD     =  4; // GEP:        [n x operands]
   record INST_SELECT      =  5; // SELECT:     [ty, opval, opval, opval]
   record INST_EXTRACTELT  =  6; // EXTRACTELT: [opty, opval, opval]
   record INST_INSERTELT   =  7; // INSERTELT:  [ty, opval, opval, opval]
@@ -96,7 +96,7 @@ define bitcode-block $FUNCTION_BLOCK = 12
   record INST_INSERTVAL   = 27; // INSERTVAL:  [n x operands]
   record INST_CMP2        = 28; // CMP2:       [opty, opval, opval, pred]
   record INST_VSELECT     = 29; // VSELECT:    [ty,opval,opval,predty,pred]
-  record INST_INBOUNDS_GEP = 30; // INBOUNDS_GEP: [n x operands]
+  record INST_INBOUNDS_GEP_OLD = 30; // INBOUNDS_GEP: [n x operands]
   record INST_INDIRECTBR  = 31; // INDIRECTBR: [opty, op0, op1, ...]
 
   record DEBUG_LOC_AGAIN  = 33; // DEBUG_LOC_AGAIN
@@ -109,6 +109,7 @@ define bitcode-block $FUNCTION_BLOCK = 12
   record INST_LANDINGPAD  = 40; // LANDINGPAD: [ty,val,val,num,id0,val0...]
   record INST_LOADATOMIC  = 41; // LOAD:       [opty, op, align, vol, ordering, synchscope]
   record INST_STOREATOMIC = 42; // STORE:      [ptrty,ptr,val, align, vol, ordering, synchscope]
+  record INST_GEP         = 43; // GEP:  [inbounds, n x operands]
 end bitcode-block;
 
 define bitcode-block $VALUE_SYMTAB_BLOCK = 14
@@ -1532,18 +1533,16 @@ define method write-instruction-record
      value :: <llvm-gep-instruction>)
  => ();
   let operands = make(<stretchy-object-vector>);
+  add!(operands,
+       if (value.llvm-gep-instruction-in-bounds?) 1 else 0 end);
+  add!(operands,
+       type-partition-table[type-forward(value.llvm-gep-source-type)]);
   for (operand in value.llvm-instruction-operands)
     add-value-type(operands, instruction-index,
                    type-partition-table, value-partition-table,
                    operand);
   end for;
-  write-record(stream,
-               if (value.llvm-gep-instruction-in-bounds?)
-                 #"INST_INBOUNDS_GEP"
-               else
-                 #"INST_GEP"
-               end if,
-               operands);
+  write-record(stream, #"INST_GEP", operands);
 end method;
 
 define method write-instruction-record

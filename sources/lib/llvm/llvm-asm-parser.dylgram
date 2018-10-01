@@ -948,10 +948,14 @@ const-expr:
             type: arg$5,
             operator: arg$1,
             operands: vector(arg$3));;
-  %GETELEMENTPTR opt-inbounds %LPAREN const-val index-list %RPAREN
-    => make(<llvm-gep-constant>,
-            in-bounds?: arg$2,
-            operands: pair(arg$4, reverse!(arg$5)));;
+  %GETELEMENTPTR opt-inbounds %LPAREN types %COMMA const-val index-list %RPAREN
+    => begin
+         let pointer-type = make(<llvm-pointer-type>, pointee: arg$4);
+         llvm-constrain-type(llvm-value-type(arg$6), pointer-type);
+         make(<llvm-gep-constant>,
+              in-bounds?: arg$2,
+              operands: pair(arg$6, reverse!(arg$7)))
+       end;;
   %SELECT %LPAREN const-val %COMMA const-val %COMMA const-val %RPAREN
     => error("const-expr %%SELECT");;
   arithmetic-ops %LPAREN const-val %COMMA const-val %RPAREN
@@ -1659,11 +1663,12 @@ inst-val:
             scope: arg$2,
             ordering: arg$3,
             metadata: arg$4);;
-  %GETELEMENTPTR opt-inbounds resolved-val index-list opt-inst-metadata
+  %GETELEMENTPTR opt-inbounds types %COMMA resolved-val index-list opt-inst-metadata
     => make(<llvm-gep-instruction>,
+            type: arg$3,
             in-bounds?: arg$2,
-            operands: pair(arg$3, reverse!(arg$4)),
-            metadata: arg$5);;
+            operands: pair(arg$5, reverse!(arg$6)),
+            metadata: arg$7);;
   %INSERTVALUE resolved-val %COMMA resolved-val constant-index-list opt-inst-metadata
     => make(<llvm-insert-value-instruction>,
             operands: vector(arg$2, arg$4),

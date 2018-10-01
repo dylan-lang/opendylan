@@ -213,6 +213,16 @@ define generic llvm-constrain-type
     (constrained-type :: <llvm-type>, type :: <llvm-type>) => ();
 
 define method llvm-constrain-type
+    (constrained-type :: <llvm-pointer-type>, type :: <llvm-pointer-type>)
+  => ();
+  if (constrained-type.llvm-pointer-type-address-space ~= type.llvm-pointer-type-address-space)
+    error("Type %s address space does not match %s", constrained-type, type);
+  end if;
+  llvm-constrain-type(constrained-type.llvm-pointer-type-pointee,
+                      type.llvm-pointer-type-pointee);
+end method;
+
+define method llvm-constrain-type
     (constrained-type :: <llvm-type>, type :: <llvm-type>) => ()
   let real-type = type-forward(type);
   if (type-partition-key(constrained-type) ~= type-partition-key(real-type))
