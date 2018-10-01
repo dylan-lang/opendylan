@@ -39,5 +39,6 @@ define module llvm-asm-parser-internals
     rename: { <integer> => <abstract-integer> };
 
   use llvm;
+  use llvm-debug;
   use llvm-asm-parser;
 end module;

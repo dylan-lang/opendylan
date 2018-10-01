@@ -100,6 +100,20 @@ define module llvm
 
     llvm-symbolic-metadata-forward-setter,
 
+    <llvm-debug-info-metadata>,
+    <llvm-DICompileUnit-metadata>,
+    <llvm-DIFile-metadata>,
+    <llvm-DISubprogram-metadata>,
+    <llvm-DISubroutineType-metadata>,
+    <llvm-DIBasicType-metadata>,
+    <llvm-DILocalVariable-metadata>,
+    <llvm-DIExpression-metadata>,
+    <llvm-DILocation-metadata>,
+    <llvm-DILexicalBlock-metadata>,
+    <llvm-DIDerivedType-metadata>,
+    <llvm-DICompositeType-metadata>,
+    <llvm-DISubrange-metadata>,
+
     <llvm-named-metadata>,
     llvm-named-metadata-name,
     llvm-named-metadata-operands,
@@ -487,6 +501,7 @@ define module llvm-debug
     $DW-LANG-Swift,
     $DW-LANG-Julia,
     $DW-LANG-Dylan,
+    $DW-LANG-C-plus-plus-14,
     $DW-LANG-lo-user,
     $DW-LANG-Mips-Assembler,
     $DW-LANG-hi-user,

@@ -126,7 +126,31 @@ define bitcode-block $METADATA_BLOCK = 15
   record NAME          = 4;   // STRING:        [values]
   record DISTINCT_NODE = 5;   // DISTINCT_NODE: [n x md num]
   record KIND          = 6;   // [n x [id, name]]
+  record LOCATION      = 7;   // [distinct, line, col, scope, inlined-at?]
+  //record NODE        = 8;   // NODE:         [n x (type num, value num)]
+  //record FN_NODE     = 9;   // FN_NODE:      [n x (type num, value num)]
   record NAMED_NODE    = 10;  // NAMED_NODE:   [n x mdnodes]
+  record GENERIC_DEBUG = 12;  // [distinct, tag, vers, header, n x md num]
+  record SUBRANGE      = 13;  // [distinct, count, lo]
+  record ENUMERATOR    = 14;  // [distinct, value, name]
+  record BASIC_TYPE    = 15;  // [distinct, tag, name, size, align, enc]
+  record FILE          = 16;  // [distinct, filename, directory, checksumkind, checksum]
+  record DERIVED_TYPE  = 17;  // [distinct, ...]
+  record COMPOSITE_TYPE = 18;  // [distinct, ...]
+  record SUBROUTINE_TYPE =19;  // [distinct, flags, types]
+  record COMPILE_UNIT  = 20;  // [distinct, ...]
+  record SUBPROGRAM    = 21;  // [distinct, ...]
+  record LEXICAL_BLOCK = 22;  // [distinct, scope, file, line, column]
+  record LEXICAL_BLOCK_FILE = 23;//[distinct, scope, file, discriminator]
+  record NAMESPACE     = 24;  // [distinct, scope, file, name, line]
+  record TEMPLATE_TYPE = 25;  // [distinct, scope, name, type, ...]
+  record TEMPLATE_VALUE = 26;  // [distinct, scope, name, type, value, ...]
+  record GLOBAL_VAR    = 27;  // [distinct, ...]
+  record LOCAL_VAR     = 28;  // [distinct, ...]
+  record EXPRESSION    = 29;  // [distinct, n x element]
+  record OBJC_PROPERTY = 30;  // [distinct, name, file, line, ...]
+  record IMPORTED_ENTITY = 31;  // [distinct, tag, scope, entity, line, name]
+  record MODULE        = 32;  // [distinct, scope, name, ...]
 end bitcode-block;
 
 define bitcode-block $METADATA_ATTACHMENT = 16
@@ -1400,6 +1424,317 @@ define method write-metadata-record
                  #"NODE"
                end,
                operands);
+end method;
+
+define method encode-emission-kind
+    (kind :: <llvm-debug-emission-kind>)
+ => (encoding :: <integer>)
+  select (kind)
+    #"no-debug" => 0;
+    #"full-debug" => 1;
+    #"line-tables-only" => 2;
+    #"debug-directives-only" => 3;
+  end select
+end method;
+
+define method write-metadata-record
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     metadata :: <llvm-DICompileUnit-metadata>)
+  => ();
+  local
+    method moni                 // metadata or null index
+         (m :: false-or(<llvm-metadata>))
+      => (id :: <integer>);
+      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+    end method;
+  assert(metadata.llvm-metadata-distinct?);
+  write-record(stream, #"COMPILE_UNIT",
+               1,               // distinct
+               metadata.llvm-DICompileUnit-metadata-language,
+               moni(metadata.llvm-DICompileUnit-metadata-file),
+               moni(metadata.llvm-DICompileUnit-metadata-producer),
+               if (metadata.llvm-DICompileUnit-metadata-optimized?) 1 else 0 end,
+               moni(metadata.llvm-DICompileUnit-metadata-flags),
+               metadata.llvm-DICompileUnit-metadata-runtime-version,
+               0,               // splitDebugFilename
+               encode-emission-kind
+                 (metadata.llvm-DICompileUnit-metadata-emission-kind),
+               moni(metadata.llvm-DICompileUnit-metadata-enums),
+               moni(metadata.llvm-DICompileUnit-retained-types),
+               0,               // subprograms
+               0,               // FIXME globals
+               0,               // FIXME imports
+               0,               // FIXME dwoId
+               0,               // FIXME macros
+               if (metadata.llvm-DICompileUnit-metadata-split-debug-inlining?) 1 else 0 end,
+               0,               // FIXME debugInfoForProfiling
+               0);              // FIXME gnuPubnames
+end method;
+
+define method write-metadata-record
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     metadata :: <llvm-DIFile-metadata>)
+  => ();
+  local
+    method moni                 // metadata or null index
+         (m :: false-or(<llvm-metadata>))
+      => (id :: <integer>);
+      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+    end method;
+  write-record(stream, #"FILE",
+               if (metadata.llvm-metadata-distinct?) 1 else 0 end,
+               moni(metadata.llvm-DIFile-metadata-filename),
+               moni(metadata.llvm-DIFile-metadata-directory),
+               0,               // checksumkind
+               0);              // checksum
+end method;
+
+define method write-metadata-record
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     metadata :: <llvm-DIBasicType-metadata>)
+  => ();
+  local
+    method moni                 // metadata or null index
+         (m :: false-or(<llvm-metadata>))
+      => (id :: <integer>);
+      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+    end method;
+  write-record(stream, #"BASIC_TYPE",
+               if (metadata.llvm-metadata-distinct?) 1 else 0 end,
+               metadata.llvm-DIBasicType-metadata-tag,
+               moni(metadata.llvm-DIBasicType-metadata-name),
+               metadata.llvm-DIBasicType-metadata-size,
+               0,               // align
+               metadata.llvm-DIBasicType-metadata-encoding);
+end method;
+
+define method write-metadata-record
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     metadata :: <llvm-DICompositeType-metadata>)
+  => ();
+  local
+    method moni                 // metadata or null index
+         (m :: false-or(<llvm-metadata>))
+      => (id :: <integer>);
+      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+    end method;
+  write-record(stream, #"COMPOSITE_TYPE",
+               // logior of distinct flag with not-used-in-old-typeref flag
+               if (metadata.llvm-metadata-distinct?) 3 else 2 end,
+               metadata.llvm-DICompositeType-metadata-tag,
+               moni(metadata.llvm-DICompositeType-metadata-name),
+               moni(metadata.llvm-DICompositeType-metadata-file),
+               metadata.llvm-DICompositeType-metadata-line,
+               moni(metadata.llvm-DICompositeType-metadata-scope),
+               moni(metadata.llvm-DICompositeType-metadata-base-type),
+               metadata.llvm-DICompositeType-metadata-size,
+               0,               // align
+               0,               // offset
+               0,               // flags
+               moni(metadata.llvm-DICompositeType-metadata-elements),
+               0,               // runtimeLang
+               0,               // vtableHolder
+               0,               // templateParams
+               0,               // identifier
+               0);              // discriminator
+end method;
+
+define method write-metadata-record
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     metadata :: <llvm-DIDerivedType-metadata>)
+  => ();
+  local
+    method moni                 // metadata or null index
+         (m :: false-or(<llvm-metadata>))
+      => (id :: <integer>);
+      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+    end method;
+  write-record(stream, #"DERIVED_TYPE",
+               if (metadata.llvm-metadata-distinct?) 1 else 0 end,
+               metadata.llvm-DIDerivedType-metadata-tag,
+               moni(metadata.llvm-DIDerivedType-metadata-name),
+               moni(metadata.llvm-DIDerivedType-metadata-file),
+               metadata.llvm-DIDerivedType-metadata-line,
+               moni(metadata.llvm-DIDerivedType-metadata-scope),
+               moni(metadata.llvm-DIDerivedType-metadata-base-type),
+               metadata.llvm-DIDerivedType-metadata-size,
+               metadata.llvm-DIDerivedType-metadata-align,
+               metadata.llvm-DIDerivedType-metadata-offset,
+               metadata.llvm-DIDerivedType-metadata-flags,
+               moni(metadata.llvm-DIDerivedType-metadata-extra-data),
+               0);              // dwarfAddressSpace
+end method;
+
+define method write-metadata-record
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     metadata :: <llvm-DILexicalBlock-metadata>)
+  => ();
+  local
+    method moni                 // metadata or null index
+         (m :: false-or(<llvm-metadata>))
+      => (id :: <integer>);
+      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+    end method;
+  write-record(stream, #"LEXICAL_BLOCK",
+               if (metadata.llvm-metadata-distinct?) 1 else 0 end,
+               moni(metadata.llvm-DILexicalBlock-metadata-scope),
+               moni(metadata.llvm-DILexicalBlock-metadata-file),
+               metadata.llvm-DILexicalBlock-metadata-line,
+               metadata.llvm-DILexicalBlock-metadata-column);
+end method;
+
+define method write-metadata-record
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     metadata :: <llvm-DILocalVariable-metadata>)
+  => ();
+  local
+    method moni                 // metadata or null index
+         (m :: false-or(<llvm-metadata>))
+      => (id :: <integer>);
+      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+    end method;
+  write-record(stream, #"LOCAL_VAR",
+               // logior of distinct flag and has-alignment-flag
+               if (metadata.llvm-metadata-distinct?) 3 else 2 end,
+               moni(metadata.llvm-DILocalVariable-metadata-scope),
+               moni(metadata.llvm-DILocalVariable-metadata-name),
+               moni(metadata.llvm-DILocalVariable-metadata-file),
+               metadata.llvm-DILocalVariable-metadata-line,
+               moni(metadata.llvm-DILocalVariable-metadata-type),
+               metadata.llvm-DILocalVariable-metadata-arg,
+               metadata.llvm-DILocalVariable-metadata-flags,
+               metadata.llvm-DILocalVariable-metadata-align);
+end method;
+
+define method write-metadata-record
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     metadata :: <llvm-DIExpression-metadata>)
+  => ();
+  write-record(stream, #"EXPRESSION",
+               // logior of distinct flag and version 3
+               if (metadata.llvm-metadata-distinct?) 7 else 6 end);
+  // FIXME operands
+end method;
+
+
+define method write-metadata-record
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     metadata :: <llvm-DILocation-metadata>)
+  => ();
+  write-record(stream, #"LOCATION",
+               if (metadata.llvm-metadata-distinct?) 1 else 0 end,
+               metadata.llvm-DILocation-metadata-line,
+               metadata.llvm-DILocation-metadata-column,
+               value-partition-table
+                 [llvm-metadata-forward(metadata.llvm-DILocation-metadata-scope)],
+               0);              // inlinedAt
+end method;
+
+define method write-metadata-record
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     metadata :: <llvm-DISubprogram-metadata>)
+  => ();
+  local
+    method moni                 // metadata or null index
+         (m :: false-or(<llvm-metadata>))
+      => (id :: <integer>);
+      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+    end method;
+  write-record(stream, #"SUBPROGRAM",
+               // logior of distinct flag and has-unit-flag
+               if (metadata.llvm-metadata-distinct?) 3 else 2 end,
+               moni(metadata.llvm-DISubprogram-metadata-scope),
+               moni(metadata.llvm-DISubprogram-metadata-name),
+               moni(metadata.llvm-DISubprogram-metadata-linkage-name),
+               moni(metadata.llvm-DISubprogram-metadata-file),
+               metadata.llvm-DISubprogram-metadata-line,
+               moni(metadata.llvm-DISubprogram-metadata-type),
+               if (metadata.llvm-DISubprogram-metadata-local?) 1 else 0 end,
+               if (metadata.llvm-DISubprogram-metadata-definition?) 1 else 0 end,
+               metadata.llvm-DISubprogram-metadata-scope-line,
+               0,               // containingType
+               0,               // virtuality
+               0,               // virtualIndex
+               metadata.llvm-DISubprogram-metadata-flags,
+               if (metadata.llvm-DISubprogram-metadata-optimized?) 1 else 0 end,
+               moni(metadata.llvm-DISubprogram-metadata-unit),
+               0,               // templateParams
+               0,               // declaration
+               moni(metadata.llvm-DISubprogram-metadata-retained-nodes),
+               0,               // thisAdjustment
+               0);              // thrownTypes
+end method;
+
+define method write-metadata-record
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     metadata :: <llvm-DISubrange-metadata>)
+  => ();
+  local
+    method moni                 // metadata or null index
+         (m :: false-or(<llvm-metadata>))
+      => (id :: <integer>);
+      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+    end method;
+  write-record(stream, #"SUBRANGE",
+               // logior of distinct flag with version=1
+               if (metadata.llvm-metadata-distinct?) 3 else 2 end,
+               moni(metadata.llvm-DISubrange-metadata-count),
+               as-signed-vbr(metadata.llvm-DISubrange-metadata-lower-bound));
+end method;
+
+define method write-metadata-record
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     metadata :: <llvm-DISubroutineType-metadata>)
+  => ();
+  local
+    method moni                 // metadata or null index
+         (m :: false-or(<llvm-metadata>))
+      => (id :: <integer>);
+      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+    end method;
+  write-record(stream, #"SUBROUTINE_TYPE",
+               // logior of distinct flag with has-no-old-typerefs flag
+               if (metadata.llvm-metadata-distinct?) 3 else 2 end,
+               metadata.llvm-DISubroutineType-metadata-flags,
+               moni(metadata.llvm-DISubroutineType-metadata-types),
+               0);              // CC
+end method;
+
+define method write-metadata-record
+    (stream :: <bitcode-stream>,
+     type-partition-table :: <object-table>,
+     value-partition-table :: <explicit-key-collection>,
+     metadata :: <llvm-value-metadata>)
+  => ();
+  let value = value-forward(metadata.llvm-metadata-value);
+  let type = type-forward(value.llvm-value-type);
+  write-record(stream, #"VALUE",
+               type-partition-table[type],
+               value-partition-table[value]);
 end method;
 
 

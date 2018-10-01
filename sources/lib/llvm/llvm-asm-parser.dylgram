@@ -24,6 +24,8 @@ define class <llvm-parse-state> (<object>)
 
   constant slot parse-unnamed-metadata :: <stretchy-object-vector>
     = make(<stretchy-object-vector>);
+
+  slot parse-bareword :: <boolean> = #f;
 end class;
 
 define thread variable *llvm-parse-state* :: <llvm-parse-state>
@@ -224,6 +226,126 @@ define function munge-attributes
                  %logand(function-attributes, $return-attributes-mask)),
          %logand(function-attributes, %lognot($return-attributes-mask)))
 end function;
+
+define table $llvm-specialized-metadata-classes :: <string-table>
+  = {
+     "DIFile"           => <llvm-DIFile-metadata>,
+     "DICompileUnit"    => <llvm-DICompileUnit-metadata>,
+     "DISubprogram"     => <llvm-DISubprogram-metadata>,
+     "DISubroutineType" => <llvm-DISubroutineType-metadata>,
+     "DIBasicType"      => <llvm-DIBasicType-metadata>,
+     "DILocalVariable"  => <llvm-DILocalVariable-metadata>,
+     "DILocation"       => <llvm-DILocation-metadata>,
+     "DILexicalBlock"   => <llvm-DILexicalBlock-metadata>,
+     "DIExpression"     => <llvm-DIExpression-metadata>,
+     "DIDerivedType"    => <llvm-DIDerivedType-metadata>,
+     "DICompositeType"  => <llvm-DICompositeType-metadata>,
+     "DISubrange"       => <llvm-DISubrange-metadata>,
+     };
+
+define table $llvm-specialized-metadata-barewords :: <string-table>
+  = {
+     "null" => #f,
+
+     "false" => #f,
+     "true" => #t,
+
+     "DW_LANG_C89" => $DW-LANG-C89,
+     "DW_LANG_C" => $DW-LANG-C,
+     "DW_LANG_Ada83" => $DW-LANG-Ada83,
+     "DW_LANG_C_plus_plus" => $DW-LANG-C-plus-plus,
+     "DW_LANG_Cobol74" => $DW-LANG-Cobol74,
+     "DW_LANG_Cobol85" => $DW-LANG-Cobol85,
+     "DW_LANG_Fortran77" => $DW-LANG-Fortran77,
+     "DW_LANG_Fortran90" => $DW-LANG-Fortran90,
+     "DW_LANG_Pascal83" => $DW-LANG-Pascal83,
+     "DW_LANG_Modula2" => $DW-LANG-Modula2,
+     "DW_LANG_Java" => $DW-LANG-Java,
+     "DW_LANG_C99" => $DW-LANG-C99,
+     "DW_LANG_Ada95" => $DW-LANG-Ada95,
+     "DW_LANG_Fortran95" => $DW-LANG-Fortran95,
+     "DW_LANG_PLI" => $DW-LANG-PLI,
+     "DW_LANG_ObjC" => $DW-LANG-ObjC,
+     "DW_LANG_ObjC_plus_plus" => $DW-LANG-ObjC-plus-plus,
+     "DW_LANG_UPC" => $DW-LANG-UPC,
+     "DW_LANG_D" => $DW-LANG-D,
+     "DW_LANG_Dylan" => $DW-LANG-Dylan,
+
+     "DW_ATE_address" => $DW-ATE-address,
+     "DW_ATE_boolean" => $DW-ATE-boolean,
+     "DW_ATE_float" => $DW-ATE-float,
+     "DW_ATE_signed" => $DW-ATE-signed,
+     "DW_ATE_signed_char" => $DW-ATE-signed-char,
+     "DW_ATE_unsigned" => $DW-ATE-unsigned,
+     "DW_ATE_unsigned_char" => $DW-ATE-unsigned-char,
+
+     "DW_TAG_array_type" => $DW-TAG-array-type,
+     "DW_TAG_class_type" => $DW-TAG-class-type,
+     "DW_TAG_entry_point" => $DW-TAG-entry-point,
+     "DW_TAG_enumeration_type" => $DW-TAG-enumeration-type,
+     "DW_TAG_formal_parameter" => $DW-TAG-formal-parameter,
+     "DW_TAG_imported_declaration" => $DW-TAG-imported-declaration,
+     "DW_TAG_label" => $DW-TAG-label,
+     "DW_TAG_lexical_block" => $DW-TAG-lexical-block,
+     "DW_TAG_member" => $DW-TAG-member,
+     "DW_TAG_pointer_type" => $DW-TAG-pointer-type,
+     "DW_TAG_reference_type" => $DW-TAG-reference-type,
+     "DW_TAG_compile_unit" => $DW-TAG-compile-unit,
+     "DW_TAG_string_type" => $DW-TAG-string-type,
+     "DW_TAG_structure_type" => $DW-TAG-structure-type,
+     "DW_TAG_subroutine_type" => $DW-TAG-subroutine-type,
+     "DW_TAG_typedef" => $DW-TAG-typedef,
+     "DW_TAG_union_type" => $DW-TAG-union-type,
+     "DW_TAG_unspecified_parameters" => $DW-TAG-unspecified-parameters,
+     "DW_TAG_variant" => $DW-TAG-variant,
+     "DW_TAG_common_block" => $DW-TAG-common-block,
+     "DW_TAG_common_inclusion" => $DW-TAG-common-inclusion,
+     "DW_TAG_inheritance" => $DW-TAG-inheritance,
+     "DW_TAG_inlined_subroutine" => $DW-TAG-inlined-subroutine,
+     "DW_TAG_module" => $DW-TAG-module,
+     "DW_TAG_ptr_to_member_type" => $DW-TAG-ptr-to-member-type,
+     "DW_TAG_set_type" => $DW-TAG-set-type,
+     "DW_TAG_subrange_type" => $DW-TAG-subrange-type,
+     "DW_TAG_with_stmt" => $DW-TAG-with-stmt,
+     "DW_TAG_access_declaration" => $DW-TAG-access-declaration,
+     "DW_TAG_base_type" => $DW-TAG-base-type,
+     "DW_TAG_catch_block" => $DW-TAG-catch-block,
+     "DW_TAG_const_type" => $DW-TAG-const-type,
+     "DW_TAG_constant" => $DW-TAG-constant,
+     "DW_TAG_enumerator" => $DW-TAG-enumerator,
+     "DW_TAG_file_type" => $DW-TAG-file-type,
+     "DW_TAG_friend" => $DW-TAG-friend,
+     "DW_TAG_namelist" => $DW-TAG-namelist,
+     "DW_TAG_namelist_item" => $DW-TAG-namelist-item,
+     "DW_TAG_packed_type" => $DW-TAG-packed-type,
+     "DW_TAG_subprogram" => $DW-TAG-subprogram,
+     "DW_TAG_template_type_parameter" => $DW-TAG-template-type-parameter,
+     "DW_TAG_template_value_parameter" => $DW-TAG-template-value-parameter,
+     "DW_TAG_thrown_type" => $DW-TAG-thrown-type,
+     "DW_TAG_try_block" => $DW-TAG-try-block,
+     "DW_TAG_variant_part" => $DW-TAG-variant-part,
+     "DW_TAG_variable" => $DW-TAG-variable,
+     "DW_TAG_volatile_type" => $DW-TAG-volatile-type,
+     "DW_TAG_dwarf_procedure" => $DW-TAG-dwarf-procedure,
+     "DW_TAG_restrict_type" => $DW-TAG-restrict-type,
+     "DW_TAG_interface_type" => $DW-TAG-interface-type,
+     "DW_TAG_namespace" => $DW-TAG-namespace,
+     "DW_TAG_imported_module" => $DW-TAG-imported-module,
+     "DW_TAG_unspecified_type" => $DW-TAG-unspecified-type,
+     "DW_TAG_partial_unit" => $DW-TAG-partial-unit,
+     "DW_TAG_imported_unit" => $DW-TAG-imported-unit,
+     "DW_TAG_condition" => $DW-TAG-condition,
+     "DW_TAG_shared_type" => $DW-TAG-shared-type,
+
+     "NoDebug" => #"no-debug",
+     "FullDebug" => #"full-debug",
+
+     "DIFlagPrototyped" => ash(1, 8),
+     "DIFlagBitField" => ash(1, 19),
+     };
+
+
+////////////////////////////////////////////////////////////////////////
 
 define parser llvm-parser
 
@@ -1878,6 +2000,24 @@ definition:
 			  make(<llvm-metadata-node>,
 			       node-values: reverse!(arg$7),
 			       distinct?: arg$4));;
+  %EXCLAIM %EUINT64VAL %EQUALS opt-distinct %METADATAVAR %LPAREN %RPAREN
+    => begin
+         let metadata-class = $llvm-specialized-metadata-classes[arg$5];
+         do-define-metadata(arg$2,
+                            make(metadata-class, distinct?: arg$4))
+       end;;
+  %EXCLAIM %EUINT64VAL %EQUALS opt-distinct %METADATAVAR %LPAREN bareword-start metadata-specialized-fields %RPAREN
+    => begin
+         *llvm-parse-state*.parse-bareword := #f;
+         let metadata-class = $llvm-specialized-metadata-classes[arg$5];
+         let metadata
+           = apply(make, metadata-class, distinct?: arg$4, arg$8);
+         do-define-metadata(arg$2, metadata);
+       end;;
+
+bareword-start:
+  /* empty */
+    => *llvm-parse-state*.parse-bareword := #t;;
 
 opt-distinct:
   /* empty */
@@ -1908,6 +2048,8 @@ metadata-vector:
 metadata:
   metadata-ref
     => arg$1;;
+  metadata-specialized
+    => arg$1;;
   %EXCLAIM %LBRACE %RBRACE
     => make(<llvm-metadata-node>, node-values: #[], function-local?: #f);;
   %EXCLAIM %LBRACE metadata-vector %RBRACE
@@ -1926,6 +2068,44 @@ metadata-ref:
                  := placeholder
              end
        end;;
+
+metadata-specialized:
+  %METADATAVAR %LPAREN %RPAREN
+    => begin
+         let metadata-class = $llvm-specialized-metadata-classes[arg$1];
+         make(metadata-class)
+       end;;
+  %METADATAVAR %LPAREN bareword-start metadata-specialized-fields %RPAREN
+    => begin
+         *llvm-parse-state*.parse-bareword := #f;
+         let metadata-class = $llvm-specialized-metadata-classes[arg$1];
+         apply(make, metadata-class, arg$4);
+       end;;
+
+metadata-specialized-fields:
+  %LABELSTR metadata
+    => list(as(<symbol>, arg$1), arg$2);;
+  %LABELSTR %EUINT64VAL
+    => list(as(<symbol>, arg$1), arg$2);;
+  %LABELSTR %STRINGCONSTANT
+    => list(as(<symbol>, arg$1), make(<llvm-metadata-string>, string: arg$2));;
+  %LABELSTR %BAREWORD
+    => list(as(<symbol>, arg$1), $llvm-specialized-metadata-barewords[arg$2]);;
+  %LABELSTR const-val
+    => list(make(<llvm-value-metadata>, value: arg$2));;
+  metadata-specialized-fields %COMMA %LABELSTR metadata
+    => pair(as(<symbol>, arg$3), pair(arg$4, arg$1));;
+  metadata-specialized-fields %COMMA %LABELSTR %EUINT64VAL
+    => pair(as(<symbol>, arg$3), pair(arg$4, arg$1));;
+  metadata-specialized-fields %COMMA %LABELSTR %STRINGCONSTANT
+    => pair(as(<symbol>, arg$3),
+            pair(make(<llvm-metadata-string>, string: arg$4), arg$1));;
+  metadata-specialized-fields %COMMA %LABELSTR %BAREWORD
+    => pair(as(<symbol>, arg$3),
+            pair($llvm-specialized-metadata-barewords[arg$4], arg$1));;
+  metadata-specialized-fields %COMMA %LABELSTR const-val
+    => pair(as(<symbol>, arg$3),
+            pair(make(<llvm-value-metadata>, value: arg$4), arg$1));;
 
 opt-inst-metadata:
   /* empty */

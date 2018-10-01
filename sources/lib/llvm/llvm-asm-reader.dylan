@@ -387,6 +387,8 @@ define function llvm-asm-parse
       elseif (ch == ':')
         read-element(stream);
         values($%LABELSTR-token, as(<string>, characters))
+      elseif (*llvm-parse-state*.parse-bareword)
+        values($%BAREWORD-token, as(<string>, characters))
       else
         let identifier = as(<string>, characters);
         let token = element($llvm-keywords, identifier, default: #f);
