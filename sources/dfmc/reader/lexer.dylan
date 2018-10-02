@@ -1370,7 +1370,6 @@ define method make-hash-literal
         (source-location,
          start: source-location.start-posn + 1,
          end:   source-location.end-posn - 1);
-  format-out("Hash literal: %s\n", name-string);
   block ()
     let contents :: <byte-vector> = lexer.source.contents;
     let length :: <integer> = contents.size;
