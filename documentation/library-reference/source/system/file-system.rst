@@ -159,14 +159,17 @@ File-System module.
 
    Deletes the specified directory.
 
-   :signature: delete-directory *directory* => ()
+   :signature: delete-directory *directory* #key *recursive?* => ()
 
    :parameter directory: An instance of :type:`<pathname>`.
+   :parameter #key recursive?: An instance of :type:`<boolean>`.
+                               Default value: ``#f``
 
    :description:
 
-     Deletes the specified directory. Whether or not the directory must
-     be empty before it can be deleted is platform dependent.
+     Deletes the specified directory. By default the directory may
+     only be deleted if it is empty. Pass ``recursive?: #t`` to delete
+     the directory and its contents recursively.
 
    :seealso:
 
