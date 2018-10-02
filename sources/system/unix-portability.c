@@ -4,6 +4,8 @@
 #include <dlfcn.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #ifdef __APPLE__
 #include <crt_externs.h>
@@ -94,4 +96,17 @@ const char *system_dirent_name(struct dirent *dirent)
 int system_stat(const char* path, struct stat* buf)
 {
   return stat(path, buf);
+}
+
+const char* unix_tmpdir(void)
+{
+  const char* tmpdir = getenv("TMPDIR");
+  if (tmpdir == NULL || *tmpdir == '\0') {
+#ifdef P_tmpdir
+    tmpdir = P_tmpdir;
+#else
+    tmpdir = "/tmp";
+#endif
+  }
+  return tmpdir;
 }

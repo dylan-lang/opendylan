@@ -639,27 +639,12 @@ define function %temp-directory
     () => (temp-directory :: <posix-directory-locator>)
   *temp-directory*
     | (*temp-directory* :=
-         begin
-           let tmpdir = primitive-wrap-machine-word
-                         (primitive-cast-pointer-as-raw
-                            (%call-c-function ("tmpnam")
-                                 (buffer :: <raw-byte-string>)
-                              => (tmpdir :: <raw-byte-string>)
-                               (primitive-cast-raw-as-pointer(integer-as-raw(0)))
-                             end));
-           if (primitive-machine-word-not-equal?
-                 (primitive-unwrap-machine-word(tmpdir),
-                  integer-as-raw(0)))
-             let file
-               = as(<posix-file-locator>,
-                    primitive-raw-as-string
-                      (primitive-cast-raw-as-pointer
-                         (primitive-unwrap-machine-word(tmpdir))));
-             locator-directory(file)
-           else
-             error("error in call to tmpnam - no temporary directory found")
-           end
-         end)
+         as(<posix-directory-locator>,
+            primitive-raw-as-string(%call-c-function ("unix_tmpdir")
+                                      ()
+                                      => (tmpdir :: <raw-byte-string>)
+                                      ()
+           end)))
 end function %temp-directory;
 
 
