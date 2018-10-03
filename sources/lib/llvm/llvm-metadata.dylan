@@ -154,3 +154,45 @@ define class <llvm-named-metadata> (<object>)
   constant slot llvm-named-metadata-operands :: <sequence>,
     required-init-keyword: operands:;
 end class;
+
+
+/// Metadata attachments to instructions
+
+define constant $llvm-metadata-kind-dbg = 0;
+define constant $llvm-metadata-kind-tbaa = 1;
+define constant $llvm-metadata-kind-prof = 2;
+define constant $llvm-metadata-kind-fpmath = 3;
+define constant $llvm-metadata-kind-range = 4;
+define constant $llvm-metadata-kind-tbaa-struct = 5;
+define constant $llvm-metadata-kind-invariant-load = 6;
+define constant $llvm-metadata-kind-alias-scope = 7;
+define constant $llvm-metadata-kind-noalias = 8;
+define constant $llvm-metadata-kind-nontemporal = 9;
+define constant $llvm-metadata-kind-mem-parallel-loop-access = 10;
+define constant $llvm-metadata-kind-nonnull = 11;
+define constant $llvm-metadata-kind-dereferenceable = 12;
+define constant $llvm-metadata-kind-dereferenceable-or-null = 13;
+define constant $llvm-metadata-kind-make-implicit = 14;
+define constant $llvm-metadata-kind-unpredictable = 15;
+define constant $llvm-metadata-kind-invariant-group = 16;
+define constant $llvm-metadata-kind-align = 17;
+define constant $llvm-metadata-kind-loop = 18;
+define constant $llvm-metadata-kind-type = 19;
+define constant $llvm-metadata-kind-section-prefix = 20;
+define constant $llvm-metadata-kind-absolute-symbol = 21;
+
+define method llvm-metadata-kind
+    (module :: <llvm-module>, name :: <string>)
+ => (kind :: <integer>);
+  let table = module.%metadata-kind-table;
+  let kind = element(table, name, default: #f);
+  kind
+    | (table[name] := table.size)
+end method;
+
+define class <llvm-metadata-attachment> (<object>)
+  constant slot llvm-metadata-attachment-kind :: <integer>,
+    required-init-keyword: kind:;
+  constant slot llvm-metadata-attachment-metadata :: <llvm-metadata>,
+    required-init-keyword: metadata:;
+end class;

@@ -29,12 +29,44 @@ define class <llvm-module> (<object>)
   constant slot %named-metadata-table :: <mutable-explicit-key-collection>
     = make(<string-table>);
 
+  constant slot %metadata-kind-table :: <mutable-explicit-key-collection>
+    = make(<string-table>);
 
   constant slot llvm-type-table :: <mutable-explicit-key-collection>
     = make(<string-table>);
   constant slot llvm-global-table :: <mutable-explicit-key-collection>
     = make(<string-table>);
 end class;
+
+define sealed method initialize
+    (module :: <llvm-module>, #key, #all-keys)
+ => ();
+  // Initialize the metadata kind mapping
+  let t = module.%metadata-kind-table;
+  t["dbg"] := $llvm-metadata-kind-dbg;
+  t["tbaa"] := $llvm-metadata-kind-tbaa;
+  t["prof"] := $llvm-metadata-kind-prof;
+  t["fpmath"] := $llvm-metadata-kind-fpmath;
+  t["range"] := $llvm-metadata-kind-range;
+  t["tbaa.struct"] := $llvm-metadata-kind-tbaa-struct;
+  t["invariant.load"] := $llvm-metadata-kind-invariant-load;
+  t["alias.scope"] := $llvm-metadata-kind-alias-scope;
+  t["noalias"] := $llvm-metadata-kind-noalias;
+  t["nontemporal"] := $llvm-metadata-kind-nontemporal;
+  t["llvm.mem.parallel_loop_access"]
+    := $llvm-metadata-kind-mem-parallel-loop-access;
+  t["nonnull"] := $llvm-metadata-kind-nonnull;
+  t["dereferenceable"] := $llvm-metadata-kind-dereferenceable;
+  t["dereferenceable_or_null"] := $llvm-metadata-kind-dereferenceable-or-null;
+  t["make.implicit"] := $llvm-metadata-kind-make-implicit;
+  t["unpredictable"] := $llvm-metadata-kind-unpredictable;
+  t["invariant.group"] := $llvm-metadata-kind-invariant-group;
+  t["align"] := $llvm-metadata-kind-align;
+  t["llvm.loop"] := $llvm-metadata-kind-loop;
+  t["type"] := $llvm-metadata-kind-type;
+  t["section_prefix"] := $llvm-metadata-kind-section-prefix;
+  t["absolute_symbol"] := $llvm-metadata-kind-absolute-symbol;
+end method;
 
 define method llvm-module-add-flag
     (module :: <llvm-module>, behavior :: <symbol>, name :: <string>,

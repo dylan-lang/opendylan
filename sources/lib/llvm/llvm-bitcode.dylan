@@ -128,7 +128,6 @@ define bitcode-block $METADATA_BLOCK = 15
   record NODE          = 3;   // NODE:          [n x md num]
   record NAME          = 4;   // STRING:        [values]
   record DISTINCT_NODE = 5;   // DISTINCT_NODE: [n x md num]
-  record KIND          = 6;   // [n x [id, name]]
   record LOCATION      = 7;   // [distinct, line, col, scope, inlined-at?]
   //record NODE        = 8;   // NODE:         [n x (type num, value num)]
   //record FN_NODE     = 9;   // FN_NODE:      [n x (type num, value num)]
@@ -183,6 +182,10 @@ define bitcode-block $TYPE_BLOCK = 17
   record STRUCT_ANON = 18;   // STRUCT_ANON: [ispacked, eltty x N]
   record STRUCT_NAME = 19;   // STRUCT_NAME: [strchr x N]
   record STRUCT_NAMED = 20;  // STRUCT_NAMED: [ispacked, eltty x N]
+end bitcode-block;
+
+define bitcode-block $METADATA_KIND_BLOCK = 22
+  record KIND          = 6;     // [n x [id, name]]
 end bitcode-block;
 
 
@@ -631,10 +634,10 @@ define function enumerate-types-constants-metadata-attributes
            instruction.llvm-instruction-operands);
 
         // Traverse instruction attached metadata
-        for (named :: <llvm-named-metadata>
+        for (attachment :: <llvm-metadata-attachment>
                in instruction.llvm-instruction-metadata)
-          do(initial-traverse-operand-value,
-             named.llvm-named-metadata-operands);
+          initial-traverse-metadata
+            (attachment.llvm-metadata-attachment-metadata);
         end for;
 
         // Traverse instruction return type
@@ -881,8 +884,9 @@ define function enumerate-function-values
           initial-traverse-metadata(operand.llvm-metadata-value-metadata);
         end if;
       end for;
-      for (named :: <llvm-named-metadata> in inst.llvm-instruction-metadata)
-        do(initial-traverse-value, named.llvm-named-metadata-operands);
+      for (attachment :: <llvm-metadata-attachment>
+             in inst.llvm-instruction-metadata)
+        initial-traverse-metadata(attachment.llvm-metadata-attachment-metadata);
       end for;
     end for;
   end for;
@@ -1743,6 +1747,18 @@ end method;
 
 /// Metadata table output
 
+define function write-metadata-kind-table
+    (stream :: <bitcode-stream>,
+     metadata-kind-table :: <mutable-explicit-key-collection>)
+ => ();
+  with-block-output (stream, $METADATA_KIND_BLOCK, 3)
+    for (kind :: <integer> keyed-by name :: <string> in metadata-kind-table)
+      write-record(stream, #"KIND", kind,
+                   map-as(<vector>, curry(as, <integer>), name));
+    end for;
+  end with-block-output;
+end function;
+
 define function write-metadata-table
     (stream :: <bitcode-stream>,
      type-partition-table :: <object-table>,
@@ -2551,15 +2567,12 @@ define function write-function
           for (index :: <integer> keyed-by inst :: <llvm-instruction-value>
                  in attached-instruction-indices)
             let operands = make(<stretchy-object-vector>);
-            for (named :: <llvm-named-metadata>
+            for (attachment :: <llvm-metadata-attachment>
                    in inst.llvm-instruction-metadata)
-              let name = named.llvm-named-metadata-name;
-              let kind
-                = element(metadata-kind-table, name, default: #f)
-                | (metadata-kind-table[name] := metadata-kind-table.size);
-              let value = named.llvm-named-metadata-operands[0];
-              add!(operands, kind);
-              add!(operands, value-partition-table[value-forward(value)]);
+              let metadata = attachment.llvm-metadata-attachment-metadata;
+              add!(operands, attachment.llvm-metadata-attachment-kind);
+              add!(operands,
+                   value-partition-table[llvm-metadata-forward(metadata)]);
             end for;
             write-record(stream, #"ATTACHMENT", index, operands);
           end for;
@@ -2773,6 +2786,9 @@ define function write-module
                          type-partition-table,
                          value-partition-table,
                          constant-partition-exemplars);
+
+    // Write metadata kinds
+    write-metadata-kind-table(stream, m.%metadata-kind-table);
 
     // Write metadata
     write-metadata-table(stream,

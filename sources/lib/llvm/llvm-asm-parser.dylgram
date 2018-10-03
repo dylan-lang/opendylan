@@ -2114,8 +2114,14 @@ opt-inst-metadata:
 
 inst-metadata:
   %METADATAVAR metadata
-    => list(make(<llvm-named-metadata>, name: arg$1, operands: list(arg$2)));;
+    => list(make(<llvm-metadata-attachment>,
+                 kind: llvm-metadata-kind(*llvm-parse-state*.parse-module,
+                                          arg$1),
+                 metadata: arg$2));;
   inst-metadata %COMMA %METADATAVAR metadata
-    => pair(make(<llvm-named-metadata>, name: arg$3, operands: list(arg$4)),
+    => pair(make(<llvm-metadata-attachment>,
+                 kind: llvm-metadata-kind(*llvm-parse-state*.parse-module,
+                                          arg$3),
+                 metadata: arg$4),
             arg$1);;
 end parser;

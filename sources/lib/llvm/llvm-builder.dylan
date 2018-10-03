@@ -14,7 +14,7 @@ define open abstract primary class <llvm-builder> (<object>)
     init-value: #f;
   slot llvm-builder-basic-block :: false-or(<llvm-basic-block>),
     init-value: #f;
-  slot llvm-builder-dbg :: false-or(<llvm-named-metadata>),
+  slot llvm-builder-dbg :: false-or(<llvm-metadata-attachment>),
     init-value: #f;
 end class;
 
@@ -298,10 +298,11 @@ define function ins--dbg
      scope :: <llvm-metadata>,
      original-scope :: false-or(<llvm-metadata>))
  => ();
-  let current-dbg = builder.llvm-builder-dbg;
-  if (~current-dbg
+  let current-attachment = builder.llvm-builder-dbg;
+  if (~current-attachment
         | begin
-            let current-node = current-dbg.llvm-named-metadata-operands.first;
+            let current-node
+              = current-attachment.llvm-metadata-attachment-metadata;
             let current-values = current-node.llvm-metadata-node-values;
             line-number ~= current-values[0].llvm-integer-constant-integer
               | column-number ~= current-values[1].llvm-integer-constant-integer
@@ -312,7 +313,9 @@ define function ins--dbg
                     node-values: vector(i32(line-number), i32(column-number),
                                         scope, original-scope));
     builder.llvm-builder-dbg
-      := make(<llvm-named-metadata>, name: "dbg", operands: list(node));
+      := make(<llvm-metadata-attachment>,
+              kind: $llvm-metadata-kind-dbg,
+              metadata: node);
   end if;
 end function;
 
