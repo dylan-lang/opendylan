@@ -462,9 +462,8 @@ definition:
     => *llvm-parse-state*.parse-module.llvm-module-target-triple := arg$4;;
   %TARGET %DATALAYOUT %EQUALS %STRINGCONSTANT
     => *llvm-parse-state*.parse-module.llvm-module-data-layout := arg$4;;
-
-  %DEPLIBS %EQUALS libraries-definition
-    => concatenate!(*llvm-parse-state*.parse-module.llvm-module-dependent-libraries, arg$3);;
+  %SOURCE_FILENAME %EQUALS %STRINGCONSTANT
+    => *llvm-parse-state*.parse-module.llvm-module-source-filename := arg$3;;
 
 asm-block:
   %STRINGCONSTANT => arg$1;;

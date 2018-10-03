@@ -47,7 +47,7 @@ define table $llvm-keywords :: <string-table>
      "tail" => $%TAIL-token,
      "target" => $%TARGET-token,
      "triple" => $%TRIPLE-token,
-     "deplibs" => $%DEPLIBS-token,
+     "source_filename" => $%SOURCE_FILENAME-token,
      "datalayout" => $%DATALAYOUT-token,
 
      "volatile" => $%VOLATILE-token,

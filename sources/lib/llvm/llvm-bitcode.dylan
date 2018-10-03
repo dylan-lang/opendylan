@@ -32,6 +32,9 @@ define bitcode-block $MODULE_BLOCK = 8
 
   // GCNAME: [strchr x N]
   record GCNAME      = 11;
+
+  // SOURCE_FILENAME: [namechar x N]
+  record SOURCE_FILENAME = 16;
 end bitcode-block;
 
 define constant $llvm-bitcode-module-version = 1;
@@ -2624,10 +2627,6 @@ define function write-module
 
     // Write the module info:
     begin
-      // Dependent libraries
-      for (deplib in m.llvm-module-dependent-libraries)
-        write-record(stream, #"DEPLIB", deplib);
-      end for;
       // Version
       write-record(stream, #"VERSION", $llvm-bitcode-module-version);
 
@@ -2678,6 +2677,11 @@ define function write-module
           do-gc(global.llvm-function-garbage-collector);
         end if;
       end for;
+
+      // Source filename
+      unless (empty?(m.llvm-module-source-filename))
+        write-record(stream, #"SOURCE_FILENAME", m.llvm-module-source-filename);
+      end unless;
 
       // Global variables
       for (global :: <llvm-global-variable> in m.llvm-module-globals)

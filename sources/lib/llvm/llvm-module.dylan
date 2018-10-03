@@ -11,6 +11,8 @@ define class <llvm-module> (<object>)
 
   slot llvm-module-target-triple :: <string>,
     init-value: "", init-keyword: target-triple:;
+  slot llvm-module-source-filename :: <string>,
+    init-value: "", init-keyword: source-filename:;
   slot llvm-module-data-layout :: <string>,
     init-value: "", init-keyword: data-layout:;
   slot llvm-module-asm :: <string>,
@@ -27,8 +29,6 @@ define class <llvm-module> (<object>)
   constant slot %named-metadata-table :: <mutable-explicit-key-collection>
     = make(<string-table>);
 
-  constant slot llvm-module-dependent-libraries :: <sequence>
-    = make(<stretchy-object-vector>);
 
   constant slot llvm-type-table :: <mutable-explicit-key-collection>
     = make(<string-table>);
