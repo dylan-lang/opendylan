@@ -52,9 +52,11 @@ define constant $llvm-eh-personality-function-type
          parameter-types: #(),
          varargs?: #t);
 
+define constant $llvm-opendylan-eh-personality-name
+  = "__opendylan_personality_v0";
 define constant $llvm-opendylan-eh-personality-function
   = make(<llvm-function>,
-         name: "__opendylan_personality_v0",
+         name: $llvm-opendylan-eh-personality-name,
          type: make(<llvm-pointer-type>,
                     pointee: $llvm-eh-personality-function-type),
          arguments: #(),
@@ -62,6 +64,23 @@ define constant $llvm-opendylan-eh-personality-function
 
 define constant $llvm-eh-landingpad-type
   = make(<llvm-struct-type>, elements: vector($llvm-i8*-type, $llvm-i32-type));
+
+define method llvm-function-personality
+    (back-end :: <llvm-back-end>, o :: <&iep>)
+ => (personality :: false-or(<llvm-value>))
+  block (result)
+    for-computations (c in o)
+      if (instance?(c, <unwind-protect>) |
+          (instance?(c, <block>) & ~c.entry-state.local-entry-state?))
+        llvm-builder-declare-global(back-end,
+                                    $llvm-opendylan-eh-personality-name,
+                                    $llvm-opendylan-eh-personality-function);
+        result($llvm-opendylan-eh-personality-function);
+      end if;
+    end for-computations;
+    #f
+  end block
+end method;
 
 define method op--landingpad
     (back-end :: <llvm-back-end>, nlx :: <nlx-info>)
