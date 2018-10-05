@@ -120,7 +120,10 @@ define file-system function-test home-directory ()
 end;
 
 define file-system function-test temp-directory ()
-  //---*** Fill this in.
+  let tmpdir = temp-directory();
+  assert-instance?(<directory-locator>, tmpdir);
+  assert-true(file-exists?(tmpdir));
+  assert-true(file-property(tmpdir, #"writeable?"));
 end;
 
 define file-system function-test root-directories ()
