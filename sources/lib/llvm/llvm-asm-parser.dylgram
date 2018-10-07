@@ -615,7 +615,7 @@ function:
        end;;
 
 function-header:
-  opt-linkage g-v-visibility-style function-header-h
+  opt-linkage g-v-visibility-style function-header-h opt-function-metadata
     => begin
          let function
            = apply(make, <llvm-function>,
@@ -624,6 +624,12 @@ function-header:
                    arg$3);
          add!(*llvm-parse-state*.parse-module.llvm-module-functions, function);
          do-define-global-value(function.llvm-global-name, function);
+
+         // Attach metadata if there is any
+         if (~empty?(arg$4))
+           *llvm-parse-state*.parse-module.llvm-global-metadata-attachment-table
+             [function] := arg$4;
+         end if;
 
          // Install this function as the current one while parsing the
          // function-body
@@ -2123,5 +2129,15 @@ inst-metadata:
                  kind: llvm-metadata-kind(*llvm-parse-state*.parse-module,
                                           arg$3),
                  metadata: arg$4),
+            arg$1);;
+
+opt-function-metadata:
+  /* empty */
+    => #();;
+  opt-function-metadata %METADATAVAR metadata
+    => pair(make(<llvm-metadata-attachment>,
+                 kind: llvm-metadata-kind(*llvm-parse-state*.parse-module,
+                                          arg$2),
+                 metadata: arg$3),
             arg$1);;
 end parser;

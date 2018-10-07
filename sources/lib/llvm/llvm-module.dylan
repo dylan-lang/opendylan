@@ -29,6 +29,9 @@ define class <llvm-module> (<object>)
   constant slot %named-metadata-table :: <mutable-explicit-key-collection>
     = make(<string-table>);
 
+  constant slot llvm-global-metadata-attachment-table :: <object-table>
+    = make(<object-table>);
+
   constant slot %metadata-kind-table :: <mutable-explicit-key-collection>
     = make(<string-table>);
 

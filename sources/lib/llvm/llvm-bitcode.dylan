@@ -765,6 +765,7 @@ end method;
 
 define function enumerate-function-values
     (function :: <llvm-function>,
+     function-attachments :: <sequence>,
      type-partition-table :: <object-table>,
      value-partition-table :: <object-table>,
      first-function-local-constant-index :: <integer>,
@@ -872,6 +873,11 @@ define function enumerate-function-values
         partition-metadata[index] := add(partition-other-metadata, metadata);
       end unless;
     end method;
+
+  // Traverse global attached metadata
+  for (a :: <llvm-metadata-attachment> in function-attachments)
+    initial-traverse-metadata(a.llvm-metadata-attachment-metadata);
+  end for;
 
   // Traverse constant instruction operands and metadata
   for (basic-block in function.llvm-function-basic-blocks)
@@ -2500,7 +2506,8 @@ define function write-function
      first-function-local-metadata-index :: <integer>,
      attributes-index-table :: <encoding-sequence-table>,
      metadata-kind-table :: <string-table>,
-     function :: <llvm-function>)
+     function :: <llvm-function>,
+     function-attachments :: <sequence>)
  => ();
   unless (empty?(function.llvm-function-basic-blocks))
     let (value-partition-table :: <mutable-explicit-key-collection>,
@@ -2508,6 +2515,7 @@ define function write-function
          constant-partition-exemplars :: <vector>,
          metadata-partition-exemplars :: <vector>)
       = enumerate-function-values(function,
+                                  function-attachments,
                                   type-partition-table,
                                   value-partition-table,
                                   first-function-local-constant-index,
@@ -2562,8 +2570,21 @@ define function write-function
       end for;
 
       // Write the metadata attachment table
-      unless (empty?(attached-instruction-indices))
+      unless (empty?(attached-instruction-indices)
+                & empty?(function-attachments))
         with-block-output (stream, $METADATA_ATTACHMENT, 3)
+          unless (empty?(function-attachments))
+            let operands = make(<stretchy-object-vector>);
+            for (attachment :: <llvm-metadata-attachment>
+                   in function-attachments)
+              let metadata = attachment.llvm-metadata-attachment-metadata;
+              add!(operands, attachment.llvm-metadata-attachment-kind);
+              add!(operands,
+                   value-partition-table[llvm-metadata-forward(metadata)]);
+            end for;
+            write-record(stream, #"ATTACHMENT", operands);
+          end unless;
+
           for (index :: <integer> keyed-by inst :: <llvm-instruction-value>
                  in attached-instruction-indices)
             let operands = make(<stretchy-object-vector>);
@@ -2805,6 +2826,9 @@ define function write-module
     let first-function-local-metadata-index :: <integer>
       = metadata-partition-exemplars.size;
     for (function :: <llvm-function> in m.llvm-module-functions)
+      let function-attachments
+        = element(m.llvm-global-metadata-attachment-table, function,
+                  default: #());
       write-function(stream,
                      type-partition-table,
                      value-partition-table,
@@ -2812,7 +2836,8 @@ define function write-module
                      first-function-local-metadata-index,
                      attributes-index-table,
                      metadata-kind-table,
-                     function);
+                     function,
+                     function-attachments);
     end for;
 
     // Write metadata kinds

@@ -262,6 +262,7 @@ define module llvm
     llvm-module-aliases,
     llvm-module-named-metadata,
     llvm-module-add-flag,
+    llvm-global-metadata-attachment-table,
     llvm-type-table,
     llvm-global-table,
 
