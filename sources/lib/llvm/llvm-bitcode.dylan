@@ -2208,16 +2208,15 @@ define method write-instruction-record
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-alloca-instruction>)
  => ();
-  let operands = make(<stretchy-object-vector>);
-  add-value(operands, instruction-index, value-partition-table,
-            value.llvm-instruction-operands[0]);
-  add!(operands, alignment-encoding(value.llvm-alloca-instruction-alignment));
   write-record(stream, #"INST_ALLOCA",
                type-partition-table
-                 [type-forward(llvm-value-type(value))],
+                 [type-forward(value.llvm-alloca-allocated-type)],
                type-partition-table
                  [type-forward(llvm-value-type(value.llvm-instruction-operands[0]))],
-               operands);
+               value-partition-table[value.llvm-instruction-operands[0]],
+               logior(alignment-encoding
+                        (value.llvm-alloca-instruction-alignment),
+                      64 /* explicit type flag */));
 end method;
 
 define method write-instruction-record

@@ -211,6 +211,8 @@ define class <llvm-landingpad-instruction> (<llvm-instruction>)
 end class;
 
 define class <llvm-alloca-instruction> (<llvm-instruction>)
+  constant slot llvm-alloca-allocated-type :: <llvm-type>,
+    required-init-keyword: allocated-type:;
   constant slot llvm-value-type :: <llvm-type>,
     required-init-keyword: type:;
   constant slot llvm-alloca-instruction-alignment :: <integer>,

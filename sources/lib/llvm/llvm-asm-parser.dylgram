@@ -1724,6 +1724,7 @@ inst-val:
                   type: $llvm-i32-type,
                   integer: 1);
          apply(make, <llvm-alloca-instruction>,
+               allocated-type: arg$2,
                type: pointer-type,
                operands: vector(size-operand),
                arg$3)
@@ -1735,6 +1736,7 @@ inst-val:
          llvm-constrain-type(llvm-value-type(arg$5),
                              make(<llvm-integer-type>, width: arg$4));
          apply(make, <llvm-alloca-instruction>,
+               allocated-type: arg$2,
                type: pointer-type,
                operands: vector(arg$5),
                arg$6)

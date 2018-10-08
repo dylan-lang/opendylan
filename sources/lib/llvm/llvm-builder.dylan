@@ -581,6 +581,7 @@ define instruction-set
     => let pointer-type
          = make(<llvm-pointer-type>, pointee: type);
        make(<llvm-alloca-instruction>,
+            allocated-type: type,
             type: pointer-type,
             alignment: alignment,
             operands: vector(llvm-builder-value(builder, num-elements)),
