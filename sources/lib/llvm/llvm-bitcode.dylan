@@ -2073,27 +2073,32 @@ define method write-instruction-record
      attributes-index-table :: <encoding-sequence-table>,
      value :: <llvm-invoke-instruction>)
  => ();
+  let operands = make(<stretchy-object-vector>);
+
   let attribute-list-encoding
     = encode-attribute-list(value.llvm-invoke-instruction-attribute-list);
-  let operands = make(<stretchy-object-vector>);
-  add-value(operands, instruction-index, value-partition-table,
-            value.llvm-instruction-operands[0]);
-  add-value(operands, instruction-index, value-partition-table,
-            value.llvm-instruction-operands[1]);
-  add-value-type(operands, instruction-index,
-                 type-partition-table, value-partition-table,
-                 value.llvm-instruction-operands[2]);
+  add!(operands,
+       attributes-index-table[attribute-list-encoding]);
+  add!(operands,
+       logior(value.llvm-invoke-instruction-calling-convention, ash(1, 13)));
 
-  // Fixed parameters
+  add!(operands,
+       value-partition-table[value-forward(value.llvm-instruction-operands[0])]);
+  add!(operands,
+       value-partition-table[value-forward(value.llvm-instruction-operands[1])]);
+
   let callee = value-forward(value.llvm-instruction-operands[2]);
   let function-pointer-type
     = type-forward(llvm-value-type(callee));
   let function-type
     = type-forward(function-pointer-type.llvm-pointer-type-pointee);
+  add!(operands, type-partition-table[function-type]);
+
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
                  callee);
 
+  // Fixed parameters
   let fixed-parameter-count
     = function-type.llvm-function-type-parameter-types.size;
   for (i from 3 below fixed-parameter-count + 3)
@@ -2110,11 +2115,8 @@ define method write-instruction-record
                      value.llvm-instruction-operands[i]);
     end for;
   end if;
-  
-  write-record(stream, #"INST_INVOKE",
-               attributes-index-table[attribute-list-encoding],
-               value.llvm-invoke-instruction-calling-convention,
-               operands);
+
+  write-record(stream, #"INST_INVOKE", operands);
 end method;
 
 define method write-instruction-record
