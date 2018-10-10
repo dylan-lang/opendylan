@@ -601,11 +601,19 @@ define instruction-set
 
   op store (value, pointer, #rest options,
             #key metadata :: <list> = #(), #all-keys)
-    => apply(make, <llvm-store-instruction>,
-             operands: vector(llvm-builder-value(builder, value),
-                              llvm-builder-value(builder, pointer)),
-             metadata: builder-metadata(builder, metadata),
-             options);
+    => begin
+         let value = llvm-builder-value(builder, value);
+         let pointer = llvm-builder-value(builder, pointer);
+         let ptrtype = type-forward(pointer.llvm-value-type);
+         if (instance?(ptrtype, <llvm-pointer-type>))
+           llvm-constrain-type(ptrtype.llvm-pointer-type-pointee,
+                               llvm-value-type(value));
+         end if;
+         apply(make, <llvm-store-instruction>,
+               operands: vector(value, pointer),
+               metadata: builder-metadata(builder, metadata),
+               options)
+       end;
 
   op cmpxchg (pointer, value1, value2, #rest options,
             #key metadata :: <list> = #(), #all-keys)

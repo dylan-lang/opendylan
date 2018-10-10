@@ -86,12 +86,10 @@ define bitcode-block $FUNCTION_BLOCK = 12
   record INST_UNREACHABLE = 15; // UNREACHABLE
 
   record INST_PHI         = 16; // PHI:        [ty, val0,bb0, ...]
-  record INST_MALLOC      = 17; // MALLOC:     [instty, op, align]
-  record INST_FREE        = 18; // FREE:       [opty, op]
   record INST_ALLOCA      = 19; // ALLOCA:     [instty, op, align]
   record INST_LOAD        = 20; // LOAD:       [opty, op, align, vol]
   record INST_VAARG       = 23; // VAARG:      [valistty, valist, instty]
-  record INST_STORE       = 24; // STORE:      [ptrty,ptr,val, align, vol]
+  record INST_STORE_OLD   = 24; // STORE:      [ptrty,ptr,val, align, vol]
   record INST_EXTRACTVAL  = 26; // EXTRACTVAL: [n x operands]
   record INST_INSERTVAL   = 27; // INSERTVAL:  [n x operands]
   record INST_CMP2        = 28; // CMP2:       [opty, opval, opval, pred]
@@ -108,8 +106,10 @@ define bitcode-block $FUNCTION_BLOCK = 12
   record INST_RESUME      = 39; // RESUME:     [opval]
   record INST_LANDINGPAD  = 40; // LANDINGPAD: [ty,val,val,num,id0,val0...]
   record INST_LOADATOMIC  = 41; // LOAD:       [opty, op, align, vol, ordering, synchscope]
-  record INST_STOREATOMIC = 42; // STORE:      [ptrty,ptr,val, align, vol, ordering, synchscope]
+  record INST_STOREATOMIC_OLD = 42; // STORE:      [ptrty,ptr,val, align, vol, ordering, synchscope]
   record INST_GEP         = 43; // GEP:  [inbounds, n x operands]
+  record INST_STORE       = 44; // STORE: [ptrty,ptr,valty,val, align, vol]
+  record INST_STOREATOMIC = 45; // STORE: [ptrty,ptr,val, align, vol
 end bitcode-block;
 
 define bitcode-block $VALUE_SYMTAB_BLOCK = 14
@@ -1888,8 +1888,9 @@ define method write-instruction-record
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
                  value.llvm-instruction-operands[1]);
-  add-value(operands, instruction-index, value-partition-table,
-            value.llvm-instruction-operands[0]);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
   add!(operands, alignment-encoding(value.llvm-memory-instruction-alignment));
   add!(operands, if (value.llvm-instruction-volatile?) 1 else 0 end);
   write-record(stream, #"INST_STORE", operands);
@@ -1950,8 +1951,9 @@ define method write-instruction-record
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
                  value.llvm-instruction-operands[1]);
-  add-value(operands, instruction-index, value-partition-table,
-            value.llvm-instruction-operands[0]);
+  add-value-type(operands, instruction-index,
+                 type-partition-table, value-partition-table,
+                 value.llvm-instruction-operands[0]);
   add!(operands, alignment-encoding(value.llvm-memory-instruction-alignment));
   add!(operands, if (value.llvm-instruction-volatile?) 1 else 0 end);
   add!(operands, atomic-ordering-encoding(value.llvm-atomic-instruction-ordering));
