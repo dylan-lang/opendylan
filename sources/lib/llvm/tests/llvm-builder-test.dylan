@@ -1102,9 +1102,8 @@ define llvm-builder function-test ins--call-intrinsic ()
                 #("entry:",
                   "%0 = alloca float",
                   "%1 = bitcast float* %0 to i8*",
-                  "call void @llvm.prefetch(i8* nocapture %1, i32 0, i32 3, i32 1)"
-                    " nounwind",
-                  "%2 = load float* %0",
+                  "call void @llvm.prefetch(i8* nocapture %1, i32 0, i32 3, i32 1)",
+                  "%2 = load float, float* %0",
                   "ret void"),
                 builder-test-function-disassembly(builder));
   end;
@@ -1170,7 +1169,7 @@ define llvm-builder function-test ins--load ()
   check-equal("ins--load disassembly",
               #("entry:",
                 "%0 = alloca float",
-                "%1 = load float* %0",
+                "%1 = load float, float* %0",
                 "ret void"),
               builder-test-function-disassembly(builder));
 end function-test ins--load;

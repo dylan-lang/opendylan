@@ -1458,6 +1458,14 @@ define method add-value
   add!(operands, instruction-index - index);
 end method;
 
+define function add-type
+    (operands :: <stretchy-vector>,
+     type-partition-table :: <explicit-key-collection>,
+     type :: <llvm-type>)
+ => ();
+  add!(operands, type-partition-table[type-forward(type)]);
+end function;
+
 define function add-value-type
     (operands :: <stretchy-vector>,
      instruction-index :: <integer>,
@@ -1863,6 +1871,7 @@ define method write-instruction-record
   add-value-type(operands, instruction-index,
                  type-partition-table, value-partition-table,
                  value.llvm-instruction-operands[0]);
+  add-type(operands, type-partition-table, value.llvm-value-type);
   add!(operands, alignment-encoding(value.llvm-memory-instruction-alignment));
   add!(operands, if (value.llvm-instruction-volatile?) 1 else 0 end);
   write-record(stream, #"INST_LOAD", operands);

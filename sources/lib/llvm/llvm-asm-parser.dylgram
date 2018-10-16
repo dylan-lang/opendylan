@@ -1601,23 +1601,25 @@ inst-val:
                operands: vector(arg$5),
                arg$6)
        end;;
-  %LOAD opt-volatile resolved-val opt-c-align-metadata
-    => apply(make, <llvm-load-instruction>,
-             volatile?: arg$2,
-             operands: vector(arg$3),
-             arg$4);;
-  %LOAD %ATOMIC opt-volatile resolved-val opt-singlethread atomic-ordering opt-c-align-metadata
+  %LOAD opt-volatile types %COMMA resolved-val opt-c-align-metadata
+    => begin
+         let pointer-type
+           = make(<llvm-pointer-type>, pointee: arg$3);
+         llvm-constrain-type(llvm-value-type(arg$5), pointer-type);
+         apply(make, <llvm-load-instruction>,
+               volatile?: arg$2,
+               type: arg$3,
+               operands: vector(arg$5),
+               arg$6)
+       end;;
+  %LOAD %ATOMIC opt-volatile types %COMMA resolved-val opt-singlethread atomic-ordering opt-c-align-metadata
     => apply(make, <llvm-atomic-load-instruction>,
              volatile?: arg$3,
-             operands: vector(arg$4),
-             scope: arg$5,
-             ordering: arg$6,
-             arg$7);;
-  %VOLATILE %LOAD resolved-val opt-c-align-metadata
-   => apply(make, <llvm-load-instruction>,
-            volatile?: #t,
-            operands: vector(arg$3),
-            arg$4);;
+             type: arg$4,
+             operands: vector(arg$6),
+             scope: arg$7,
+             ordering: arg$8,
+             arg$9);;
   %STORE opt-volatile resolved-val %COMMA resolved-val opt-c-align-metadata
     => apply(make, <llvm-store-instruction>,
              volatile?: arg$2,
