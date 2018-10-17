@@ -568,6 +568,9 @@ end method;
 
 /// Primitive function debug info
 
+define constant $empty-diexpression-value
+  = make(<llvm-metadata-value>, metadata: make(<llvm-DIExpression-metadata>));
+
 define method llvm-emit-primitive-dbg-function
     (back-end :: <llvm-back-end>, function :: <llvm-function>,
      dbg-file :: <llvm-metadata>, desc :: <llvm-primitive-descriptor>)
@@ -575,17 +578,17 @@ define method llvm-emit-primitive-dbg-function
   let (dbg-function :: <llvm-metadata>, dbg-parameters :: <sequence>)
     = apply(make-primitive-dbg-function, back-end, function, dbg-file,
             desc, desc.primitive-function-declarator);
-  add!(back-end.llvm-back-end-dbg-functions, dbg-function);
 
   // Emit a llvm.dbg.value call for each parameter
-  ins--dbg(back-end, 0, 0, dbg-function, #f);
+  ins--dbg(back-end, 0, 0, dbg-function);
   for (dbg-parameter in dbg-parameters,
        argument in function.llvm-function-arguments)
     let v = llvm-make-dbg-value-metadata(argument);
     let dbg-parameter-value
       = make(<llvm-metadata-value>, metadata: dbg-parameter);
     ins--call-intrinsic(back-end, "llvm.dbg.value",
-                        vector(v, i64(0), dbg-parameter-value));
+                        vector(v, dbg-parameter-value,
+                               $empty-diexpression-value));
   end for;
 end method;
 
@@ -627,7 +630,7 @@ define method make-primitive-dbg-function
 
   // Remaining parameters
   if (rest-parameter-name)
-    add!(dbg-parameter-types, llvm-make-dbg-unspecified-parameters());
+    add!(dbg-parameter-types, #f); // ...
   end if;
 
   // Return value
@@ -656,10 +659,12 @@ define method make-primitive-dbg-function
     = llvm-make-dbg-function(dbg-file,
                              name,
                              function.llvm-global-name,
+                             back-end.llvm-back-end-dbg-compile-unit,
                              dbg-file,
                              0,
                              dbg-function-type,
                              definition?: #t,
+                             module: back-end.llvm-builder-module,
                              function: function);
 
   let dbg-parameters

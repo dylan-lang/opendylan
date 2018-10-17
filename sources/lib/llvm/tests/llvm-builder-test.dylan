@@ -230,31 +230,33 @@ end function-test ins--block;
 define llvm-builder function-test ins--dbg ()
   let builder = make-builder-with-test-function();
 
-  let dbg-compile-unit
-    = llvm-make-dbg-compile-unit($DW-LANG-C99, "test.c", ".", "test");
   let dbg-file
     = llvm-make-dbg-file("test.c", ".");
+  let dbg-compile-unit
+    = llvm-make-dbg-compile-unit($DW-LANG-C99, dbg-file, "test",
+                                 module: builder.llvm-builder-module);
   let dbg-function-type
     = llvm-make-dbg-function-type(dbg-file, #f, #[]);
   let dbg-function
     = llvm-make-dbg-function(dbg-file,
                              builder.llvm-builder-function.llvm-global-name,
                              builder.llvm-builder-function.llvm-global-name,
+                             dbg-compile-unit,
                              dbg-file,
                              12,
                              dbg-function-type,
                              definition?: #t,
-                             function: builder.llvm-builder-function,
-                             module: builder.llvm-builder-module);
+                             module: builder.llvm-builder-module,
+                             function: builder.llvm-builder-function);
   let dbg-lexical-block
     = llvm-make-dbg-lexical-block(dbg-function, dbg-file, 14, 0);
-  ins--dbg(builder, 14, 23, dbg-lexical-block, #f);
+  ins--dbg(builder, 14, 23, dbg-lexical-block);
   ins--add(builder, 1111, 2222);
   ins--ret(builder);
   check-equal("ins--dbg disassembly with metadata",
               #("entry:",
-                "%0 = add i32 1111, 2222, !dbg !5",
-                "ret void, !dbg !5"),
+                "%0 = add i32 1111, 2222, !dbg !8",
+                "ret void, !dbg !8"),
               builder-test-function-disassembly(builder));
 end function-test ins--dbg;
 

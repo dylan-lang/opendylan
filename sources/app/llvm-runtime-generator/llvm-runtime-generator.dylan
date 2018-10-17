@@ -348,6 +348,13 @@ define function generate-runtime
         llvm-register-types(back-end, m);
         back-end.llvm-builder-module := m;
 
+        // Create the debugging compile unit
+        back-end.llvm-back-end-dbg-compile-unit
+          := llvm-make-dbg-compile-unit($DW-LANG-Mips-Assembler,
+                                        dbg-file,
+                                        $debug-producer,
+                                        module: m);
+
         // Write heap definitions and external declarations to the module
         generate-runtime-heap(back-end, m);
 
@@ -356,15 +363,6 @@ define function generate-runtime
 
         // Write entry point definitions to the module
         generate-runtime-entry-points(back-end, m, dbg-file);
-
-        // Create the debugging compile unit
-        let functions = copy-sequence(back-end.llvm-back-end-dbg-functions);
-        llvm-make-dbg-compile-unit($DW-LANG-Mips-Assembler,
-                                   dummy-source-locator.locator-name,
-                                   dummy-source-locator.locator-directory,
-                                   $debug-producer,
-                                   functions: functions,
-                                   module: m);
 
 	// Write out the generated module
         let output-locator

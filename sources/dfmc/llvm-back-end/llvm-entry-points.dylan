@@ -233,17 +233,16 @@ define function llvm-emit-entry-point-dbg-function
   let (dbg-function :: <llvm-metadata>, dbg-parameters :: <sequence>)
     = apply(make-entry-point-dbg-function, back-end, function, dbg-file,
             desc, count, desc.entry-point-function-declarator);
-  add!(back-end.llvm-back-end-dbg-functions, dbg-function);
 
   // Emit a llvm.dbg.value call for each parameter
-  ins--dbg(back-end, 0, 0, dbg-function, #f);
+  ins--dbg(back-end, 0, 0, dbg-function);
   for (dbg-parameter in dbg-parameters,
        argument in function.llvm-function-arguments)
     let v = llvm-make-dbg-value-metadata(argument);
     let d = make(<llvm-metadata-value>,
                  metadata: dbg-parameter);
     ins--call-intrinsic(back-end, "llvm.dbg.value",
-                        vector(v, i64(0), d));
+                        vector(v, d, $empty-diexpression-value));
   end for;
 end function;
 
@@ -282,7 +281,7 @@ define function make-entry-point-dbg-function
   end if;
 
   if (member?(#"variable-arity", descriptor.entry-point-attributes))
-    add!(dbg-parameter-types, llvm-make-dbg-unspecified-parameters());
+    add!(dbg-parameter-types, #f); // ...
   end if;
 
   let dbg-return-type
@@ -296,6 +295,7 @@ define function make-entry-point-dbg-function
     = llvm-make-dbg-function(dbg-file,
                              dbg-name,
                              function.llvm-global-name,
+                             back-end.llvm-back-end-dbg-compile-unit,
                              dbg-file,
                              0,
                              dbg-function-type,

@@ -39,7 +39,8 @@ define module dfmc-llvm-back-end
     llvm-back-end-data-layout,
     llvm-section-name,
 
-    llvm-back-end-dbg-functions,
+    llvm-back-end-dbg-compile-unit,
+    llvm-back-end-dbg-compile-unit-setter,
 
     llvm-thread-local-support?,
     llvm-teb-struct-type,

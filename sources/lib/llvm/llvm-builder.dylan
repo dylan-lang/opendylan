@@ -295,23 +295,20 @@ end macro;
 define function ins--dbg
     (builder :: <llvm-builder>,
      line-number :: <integer>, column-number :: <integer>,
-     scope :: <llvm-metadata>,
-     original-scope :: false-or(<llvm-metadata>))
+     scope :: <llvm-metadata>)
  => ();
   let current-attachment = builder.llvm-builder-dbg;
   if (~current-attachment
         | begin
-            let current-node
-              = current-attachment.llvm-metadata-attachment-metadata;
-            let current-values = current-node.llvm-metadata-node-values;
-            line-number ~= current-values[0].llvm-integer-constant-integer
-              | column-number ~= current-values[1].llvm-integer-constant-integer
-              | scope ~== current-values[2]
-              | original-scope ~== current-values[3]
+            let node = current-attachment.llvm-metadata-attachment-metadata;
+            line-number ~= node.llvm-DILocation-metadata-line
+              | column-number ~= node.llvm-DILocation-metadata-column
+              | scope ~= node.llvm-DILocation-metadata-scope
           end)
-    let node = make(<llvm-metadata-node>,
-                    node-values: vector(i32(line-number), i32(column-number),
-                                        scope, original-scope));
+    let node
+      = make(<llvm-DILocation-metadata>,
+             line: line-number, column: column-number,
+             scope: scope);
     builder.llvm-builder-dbg
       := make(<llvm-metadata-attachment>,
               kind: $llvm-metadata-kind-dbg,

@@ -58,8 +58,7 @@ define module-spec llvm-builder ()
       (<llvm-builder>, <llvm-basic-block>) => (<llvm-basic-block>);
 
   function ins--dbg
-      (<llvm-builder>, <integer>, <integer>,
-       <llvm-metadata-value>, <llvm-metadata-value>)
+      (<llvm-builder>, <integer>, <integer>, <llvm-metadata>)
    => ();
 
   function ins--add

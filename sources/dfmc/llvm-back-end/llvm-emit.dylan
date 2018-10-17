@@ -23,6 +23,9 @@ define method emit-all (back-end :: <llvm-back-end>,
         := back-end.llvm-builder-module
         := m;
 
+      back-end.llvm-back-end-dbg-compile-unit
+        := llvm-compilation-record-dbg-compile-unit(back-end, cr);
+
       // Install type definitions
       llvm-register-types(back-end, m);
 
@@ -49,13 +52,10 @@ define method emit-all (back-end :: <llvm-back-end>,
         end for;
       end;
 
-      llvm-compilation-record-dbg-compile-unit(back-end, cr);
-
       retract-local-methods-in-heap(heap);
     cleanup
       remove-all-keys!(back-end.%dbg-type-table);
       remove-all-keys!(back-end.%source-record-dbg-file-table);
-      back-end.llvm-back-end-dbg-functions.size := 0;
       back-end.llvm-builder-module := #f;
     end block;
   end;

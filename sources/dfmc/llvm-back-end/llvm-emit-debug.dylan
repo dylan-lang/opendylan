@@ -6,20 +6,17 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // FIXME get this from release-info
-define constant $debug-producer = "Open Dylan 1.0";
+define constant $debug-producer = "Open Dylan 2018.1";
 
 define method llvm-compilation-record-dbg-compile-unit
     (back-end :: <llvm-back-end>, cr :: <compilation-record>)
- => ();
+ => (dbg-compile-unit :: <llvm-metadata>);
   let sr = cr.compilation-record-source-record;
-  let location = sr.source-record-location;
-  let functions = copy-sequence(back-end.llvm-back-end-dbg-functions);
+  let dbg-file = llvm-source-record-dbg-file(back-end, sr);
   llvm-make-dbg-compile-unit($DW-LANG-Dylan,
-                             location.locator-name,
-                             location.locator-directory,
+                             dbg-file,
                              $debug-producer,
-                             functions: functions,
-                             module: back-end.llvm-builder-module);
+                             module: back-end.llvm-builder-module)
 end method;
 
 define method llvm-source-record-dbg-file
@@ -93,16 +90,17 @@ define method emit-lambda-dbg-function
     = llvm-make-dbg-function(dbg-file,
                              dbg-name,
                              function-name,
+                             back-end.llvm-back-end-dbg-compile-unit,
                              dbg-file,
                              dbg-line,
                              dbg-function-type,
                              definition?: #t,
+                             module: back-end.llvm-builder-module,
                              function: o.code);
-  add!(back-end.llvm-back-end-dbg-functions, dbg-function);
 
   // Emit a llvm.dbg.value call for each parameter
   // FIXME handle "extra" parameters
-  ins--dbg(back-end, dbg-line, 0, dbg-function, #f);
+  ins--dbg(back-end, dbg-line, 0, dbg-function);
   for (index from 1, param in parameters(o),
        dbg-param-type in dbg-parameter-types)
     let v = llvm-make-dbg-value-metadata(temporary-value(param));
@@ -113,7 +111,9 @@ define method emit-lambda-dbg-function
                                      dbg-file, dbg-line,
                                      dbg-param-type,
                                      arg: index);
-    ins--call-intrinsic(back-end, "llvm.dbg.value", vector(v, i64(0), lv));
+    let lvv = make(<llvm-metadata-value>, metadata: lv);
+    ins--call-intrinsic(back-end, "llvm.dbg.value",
+                        vector(v, lvv, $empty-diexpression-value));
   end for;
 
   // Emit a llvm.dbg.value call for each of the calling convention
@@ -131,7 +131,9 @@ define method emit-lambda-dbg-function
                                        obj-dbg-type,
                                        arg: index + 1,
                                        artificial?: #t);
-      ins--call-intrinsic(back-end, "llvm.dbg.value", vector(v, i64(0), lv));
+      let lvv = make(<llvm-metadata-value>, metadata: lv);
+      ins--call-intrinsic(back-end, "llvm.dbg.value",
+                          vector(v, lvv, $empty-diexpression-value));
     end method;
   unless (c-callable?)
     let calling-convention-index = parameters(o).size;
@@ -220,10 +222,13 @@ define method emit-dbg-local-variable
                                      as(<string>, tmp.name),
                                      dbg-file, dbg-line,
                                      var-type);
+    let lvv = make(<llvm-metadata-value>, metadata: lv);
     if (address?)
-      ins--call-intrinsic(back-end, "llvm.dbg.declare", vector(v, lv));
+      ins--call-intrinsic(back-end, "llvm.dbg.addr",
+                          vector(v, lvv, $empty-diexpression-value));
     else
-      ins--call-intrinsic(back-end, "llvm.dbg.value", vector(v, i64(0), lv));
+      ins--call-intrinsic(back-end, "llvm.dbg.value",
+                          vector(v, lvv, $empty-diexpression-value));
     end if;
   end if;
 end method;
@@ -434,7 +439,7 @@ define function op--scl(back-end :: <llvm-back-end>, c :: <computation>) => ()
     let start-offset = source-location-start-offset(loc);
     let start-line = source-offset-line(start-offset);
     ins--dbg(back-end, start-line + source-record-start-line(sr), 0,
-             *computation-dbg-scope-table*[c], #f);
+             *computation-dbg-scope-table*[c]);
   end if;
 end function;
 

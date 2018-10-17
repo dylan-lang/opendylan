@@ -412,7 +412,6 @@ end module;
 
 define module llvm-debug
   create
-    $llvm-debug-version,
     $DW-TAG-invalid,
     $DW-TAG-anchor,
     $DW-TAG-auto-variable,
@@ -542,7 +541,6 @@ define module llvm-debug
     llvm-make-dbg-basic-type,
     llvm-make-dbg-derived-type,
     llvm-make-dbg-composite-type,
-    llvm-make-dbg-unspecified-parameters,
     llvm-make-dbg-value-metadata;
 end module;
 
