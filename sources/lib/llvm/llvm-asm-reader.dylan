@@ -40,6 +40,7 @@ define table $llvm-keywords :: <string-table>
      "initialexec" => $%INITIALEXEC-token,
      "localexec" => $%LOCALEXEC-token,
      "unnamed_addr" => $%UNNAMED_ADDR-token,
+     "local_unnamed_addr" => $%LOCAL_UNNAMED_ADDR-token,
      "zeroinitializer" => $%ZEROINITIALIZER-token,
      "undef" => $%UNDEF-token,
      "null" => $%NULL-token,

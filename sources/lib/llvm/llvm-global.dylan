@@ -14,6 +14,9 @@ define constant <llvm-linkage-kind>
 define constant <llvm-visibility-kind>
   = one-of(#"default", #"hidden", #"protected");
 
+define constant <llvm-unnamed-address-kind>
+  = one-of(#f, #"global-unnamed-addr", #"local-unnamed-addr");
+
 define abstract class <llvm-global-value> (<llvm-constant-value>)
   constant slot llvm-global-name :: type-union(singleton(#f), <integer>, <string>),
     init-value: #f, init-keyword: name:;
@@ -21,8 +24,8 @@ define abstract class <llvm-global-value> (<llvm-constant-value>)
     required-init-keyword: linkage:;
   constant slot llvm-global-visibility-kind :: <llvm-visibility-kind>,
     init-value: #"default", init-keyword: visibility:;
-  constant slot llvm-global-unnamed-address? :: <boolean>,
-    init-value: #f, init-keyword: unnamed-address?:;
+  constant slot llvm-global-unnamed-address :: <llvm-unnamed-address-kind>,
+    init-value: #f, init-keyword: unnamed-address:;
   constant slot llvm-global-alignment :: false-or(<integer>),
     init-value: #f, init-keyword: alignment:;
   constant slot llvm-global-section :: false-or(<string>),

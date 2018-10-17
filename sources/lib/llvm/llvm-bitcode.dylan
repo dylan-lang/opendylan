@@ -2740,11 +2740,13 @@ define function write-module
                      end,
                      visibility-encoding(global.llvm-global-visibility-kind),
                      thread-local-encoding(global.llvm-global-variable-thread-local),
-                     if (global.llvm-global-unnamed-address?)
-                       1
-                     else
-                       0
-                     end);
+                     unnamed-address-encoding(global.llvm-global-unnamed-address)
+                     // externally_initialized
+                     // dllstorageclass
+                     // comdat
+                     // attributes
+                     // preemption specifier
+                     );
       end for;
 
       // Functions
@@ -2773,11 +2775,7 @@ define function write-module
                      else
                        0
                      end if,
-                     if (function.llvm-global-unnamed-address?)
-                       1
-                     else
-                       0
-                     end,
+                     unnamed-address-encoding(function.llvm-global-unnamed-address),
                      0,      // prologuedata
                      0,      // dllstorageclass
                      0,      // comdat
@@ -2915,6 +2913,16 @@ define function thread-local-encoding
     #"initialexec"  => 3;
     #"localexec"    => 4;
   end select
+end function;
+
+define function unnamed-address-encoding
+    (unnamed :: <llvm-unnamed-address-kind>)
+ => (encoding :: <integer>)
+  select (unnamed)
+    #f                     => 0;
+    #"global-unnamed-addr" => 1;
+    #"local-unnamed-addr"  => 2;
+  end select;
 end function;
 
 define function llvm-write-bitcode

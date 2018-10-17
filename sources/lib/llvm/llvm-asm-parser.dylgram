@@ -385,7 +385,7 @@ definition:
                    linkage: arg$2,
                    visibility: arg$3,
                    thread-local: arg$4,
-		   unnamed-address?: arg$6,
+		   unnamed-address: arg$6,
                    arg$9);
          add!(*llvm-parse-state*.parse-module.llvm-module-globals, global);
          do-define-global-value(arg$1, global);
@@ -424,7 +424,7 @@ definition:
                    linkage: arg$2,
                    visibility: arg$3,
                    thread-local: arg$4,
-		   unnamed-address?: arg$5,
+		   unnamed-address: arg$5,
                    arg$9);
          add!(*llvm-parse-state*.parse-module.llvm-module-globals, global);
          do-define-global-value(arg$1, global);
@@ -678,7 +678,7 @@ function-header-h:
                 name: arg$4,
                 arguments: arg$6.head,
                 attribute-list: attribute-list,
-		unnamed-address?: arg$8,
+		unnamed-address: arg$8,
                 section: arg$10,
                 alignment: arg$11,
                 garbage-collector: arg$12,
@@ -882,7 +882,9 @@ opt-unnamed-addr:
   /* empty */
     => #f;;
   %UNNAMED_ADDR
-    => #t;;
+    => #"global-unnamed-addr";;
+  %LOCAL_UNNAMED_ADDR
+    => #"local-unnamed-addr";;
 
 global-type:
   %GLOBAL
