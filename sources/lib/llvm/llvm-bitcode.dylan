@@ -179,7 +179,8 @@ define bitcode-block $TYPE_BLOCK = 17
   record OPAQUE      =  6;   // OPAQUE [ispacked]
   record INTEGER     =  7;   // INTEGER: [width]
   record POINTER     =  8;   // POINTER: [pointee type, address space]
-  record FUNCTION    =  9;   // FUNCTION: [vararg, retty, paramty x N]
+  record FUNCTION_OLD =  9;   // FUNCTION: [vararg, retty, paramty x N]
+  record HALF        = 10;   // HALF
   record ARRAY       = 11;   // ARRAY: [numelts, eltty]
   record VECTOR      = 12;   // VECTOR: [numelts, eltty]
   record X86_FP80    = 13;   // X86 LONG DOUBLE
@@ -191,6 +192,8 @@ define bitcode-block $TYPE_BLOCK = 17
   record STRUCT_ANON = 18;   // STRUCT_ANON: [ispacked, eltty x N]
   record STRUCT_NAME = 19;   // STRUCT_NAME: [strchr x N]
   record STRUCT_NAMED = 20;  // STRUCT_NAMED: [ispacked, eltty x N]
+  record FUNCTION    = 21;   // FUNCTION: [vararg, retty, paramty x N]
+  record TOKEN       = 22;   // TOKEN
 end bitcode-block;
 
 define bitcode-block $METADATA_KIND_BLOCK = 22
@@ -1043,7 +1046,6 @@ define method write-type-record
   let return-type = type-forward(type.llvm-function-type-return-type);
   write-record(stream, #"FUNCTION",
                if (type.llvm-function-type-varargs?) 1 else 0 end, // vararg
-               0,                                                  // ignored
                type-partition-table[return-type],                  // retty
                map(method (type) type-partition-table[type-forward(type)] end,
                    type.llvm-function-type-parameter-types));
