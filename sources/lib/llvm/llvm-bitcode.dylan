@@ -37,7 +37,7 @@ define bitcode-block $MODULE_BLOCK = 8
   record SOURCE_FILENAME = 16;
 end bitcode-block;
 
-define constant $llvm-bitcode-module-version = 1;
+define constant $llvm-bitcode-module-version = 2;
 
 // Subblocks of MODULE_BLOCK
 
@@ -186,6 +186,10 @@ end bitcode-block;
 
 define bitcode-block $METADATA_KIND_BLOCK = 22
   record KIND          = 6;     // [n x [id, name]]
+end bitcode-block;
+
+define bitcode-block $STRTAB_BLOCK = 23
+  record BLOB = 1;
 end bitcode-block;
 
 
@@ -2622,11 +2626,38 @@ define function write-function
 end function;
 
 
+/// String table
+
+define class <string-table-builder> (<object>)
+  slot builder-table-storage :: <byte-vector> = make(<byte-vector>, size: 1024);
+  slot builder-table-size :: <integer> = 0;
+end class;
+
+define function add-string
+    (builder :: <string-table-builder>, string :: <byte-string>)
+ => (offset :: <integer>);
+  let offset = builder.builder-table-size;
+  let new-size = builder.builder-table-size + string.size;
+  if (new-size > builder.builder-table-storage.size)
+    let old-storage = builder.builder-table-storage;
+    builder.builder-table-storage
+      := make(<byte-vector>, size: truncate/(new-size * 3, 2));
+    copy-bytes(builder.builder-table-storage, 0,
+               old-storage, 0, builder.builder-table-size);
+  end if;
+  copy-bytes(builder.builder-table-storage, offset, string, 0, string.size);
+  builder.builder-table-size := new-size;
+  offset
+end function;
+
+
 /// Module output
 
 define function write-module
     (stream :: <bitcode-stream>, m :: <llvm-module>)
  => ();
+  let strtab-builder = make(<string-table-builder>);
+
   let (type-partition-table :: <object-table>,
        type-partition-exemplars :: <vector>,
        value-partition-table :: <object-table>,
@@ -2721,7 +2752,9 @@ define function write-module
       // Global variables
       for (global :: <llvm-global-variable> in m.llvm-module-globals)
         let global-type = type-forward(llvm-value-type(global));
+        let name = global.llvm-global-name;
         write-record(stream, #"GLOBALVAR",
+                     add-string(strtab-builder, name), name.size,
                      type-partition-table[global-type],
                      if (global.llvm-global-variable-constant?) 1 else 0 end,
                      if (global.llvm-global-variable-initializer)
@@ -2751,9 +2784,15 @@ define function write-module
 
       // Functions
       for (function :: <llvm-function> in m.llvm-module-functions)
+        let name = function.llvm-global-name;
         let attribute-list-encoding
           = encode-attribute-list(function.llvm-function-attribute-list);
+    // FUNCTION:  [strtab offset, strtab size, type, callingconv, isproto,
+    //             linkage, paramattrs, alignment, section, visibility, gc,
+    //             unnamed_addr, prologuedata, dllstorageclass, comdat,
+    //             prefixdata, personalityfn, DSO_Local]
         write-record(stream, #"FUNCTION",
+                     add-string(strtab-builder, name), name.size,
                      type-partition-table[llvm-value-type(function)],
                      function.llvm-function-calling-convention,
                      if (empty?(function.llvm-function-basic-blocks))
@@ -2791,9 +2830,11 @@ define function write-module
 
       // Aliases
       for (alias :: <llvm-global-alias> in m.llvm-module-aliases)
+        let name = alias.llvm-global-name;
         let alias-type = type-forward(llvm-value-type(alias));
         let aliasee = value-forward(alias.llvm-global-alias-aliasee);
         write-record(stream, #"ALIAS",
+                     add-string(strtab-builder, name), name.size,
                      type-partition-table[alias-type],
                      value-partition-table[aliasee],
                      linkage-encoding(alias.llvm-global-linkage-kind),
@@ -2848,18 +2889,15 @@ define function write-module
         end for;
       end;
     end unless;
+  end with-block-output;
 
-    // Write the value symbol table
-    unless (empty?(m.llvm-global-table))
-      with-block-output (stream, $VALUE_SYMTAB_BLOCK, 3)
-        for (global keyed-by name in m.llvm-global-table)
-          write-record(stream, #"ENTRY",
-                       value-partition-table[value-forward(global)],
-                       name);
-        end for;
-      end with-block-output;
-    end unless;
-
+  with-block-output (stream, $STRTAB_BLOCK, 3)
+    write-abbrev-definition(stream, #"blob",
+                            stream-record-id(stream, #"BLOB"),
+                            op-blob());
+    write-abbrev-record(stream, #"blob",
+                        copy-sequence(strtab-builder.builder-table-storage,
+                                      end: strtab-builder.builder-table-size));
   end with-block-output;
 end function;
 
