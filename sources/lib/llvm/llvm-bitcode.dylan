@@ -117,6 +117,15 @@ define bitcode-block $FUNCTION_BLOCK = 12
   record INST_LANDINGPAD  = 47; // LANDINGPAD: [ty,val,num,id0,val0...]
 end bitcode-block;
 
+define bitcode-block $IDENTIFICATION_BLOCK = 13
+  record STRING = 1;            // IDENTIFICATION: [strchr x N]
+  record EPOCH = 2;             // EPOCH: [epoch#]
+end bitcode-block;
+
+define constant $llvm-bitcode-identification-string
+  = "Open Dylan bitcode writer for LLVM 7";
+define constant $llvm-bitcode-epoch = 0;
+
 define bitcode-block $VALUE_SYMTAB_BLOCK = 14
   record ENTRY   = 1;   // VST_ENTRY: [valid, namechar x N]
   record BBENTRY = 2;   // VST_BBENTRY: [bbid, namechar x N]
@@ -2656,6 +2665,12 @@ end function;
 define function write-module
     (stream :: <bitcode-stream>, m :: <llvm-module>)
  => ();
+  // Write the identification block
+  with-block-output (stream, $IDENTIFICATION_BLOCK, 5)
+    write-record(stream, #"STRING", $llvm-bitcode-identification-string);
+    write-record(stream, #"EPOCH", $llvm-bitcode-epoch);
+  end with-block-output;
+
   let strtab-builder = make(<string-table-builder>);
 
   let (type-partition-table :: <object-table>,
