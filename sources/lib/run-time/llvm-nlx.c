@@ -67,6 +67,9 @@ static intptr_t get_SLEB128(const uint8_t **pp)
 
 static uintptr_t get_encoded_size(uint8_t encoding)
 {
+  if (encoding == DW_EH_PE_omit) {
+    return 0;
+  }
   switch (encoding & 0xF) {
   case DW_EH_PE_udata4:
   case DW_EH_PE_sdata4:
