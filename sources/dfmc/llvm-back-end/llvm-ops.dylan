@@ -247,17 +247,6 @@ define method op--overflow-trap
   op--call-error-iep(be, #"machine-word-overflow");
 end method;
 
-define method op--overflow-trap
-    (be :: <llvm-x86-back-end>) => ();
-  ins--call-intrinsic(be, "llvm.x86.int", vector(i8(4)));
-  ins--unreachable(be);
-end method;
-
-define method op--overflow-trap
-    (be :: <llvm-x86_64-back-end>) => ();
-  op--call-error-iep(be, #"machine-word-overflow");
-end method;
-
 
 /// IEP calls
 
