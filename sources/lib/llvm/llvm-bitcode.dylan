@@ -2686,32 +2686,32 @@ define function write-module
       = enumerate-types-constants-metadata-attributes(m);
 
   with-block-output (stream, $MODULE_BLOCK, 3)
-    // Write the blockinfo
-
-    // Write the parameter attribute table
-    unless (empty?(attributes-exemplars))
-      with-block-output (stream, $PARAMATTR_BLOCK, 3)
-        for (encoding in attributes-exemplars)
-          write-record(stream, #"ENTRY", encoding);
-        end for;
-      end with-block-output;
-    end;
-
-    // Write the type table
-    unless (empty?(type-partition-exemplars))
-      with-block-output (stream, $TYPE_BLOCK, 3)
-        write-record(stream, #"NUMENTRY", type-partition-exemplars.size);
-
-        for (type in type-partition-exemplars)
-          write-type-record(stream, type-partition-table, type);
-        end for;
-      end with-block-output;
-    end unless;
-
     // Write the module info:
     begin
       // Version
       write-record(stream, #"VERSION", $llvm-bitcode-module-version);
+
+      // Write the blockinfo
+
+      // Write the parameter attribute table
+      unless (empty?(attributes-exemplars))
+        with-block-output (stream, $PARAMATTR_BLOCK, 3)
+          for (encoding in attributes-exemplars)
+            write-record(stream, #"ENTRY", encoding);
+          end for;
+        end with-block-output;
+      end;
+
+      // Write the type table
+      unless (empty?(type-partition-exemplars))
+        with-block-output (stream, $TYPE_BLOCK, 3)
+          write-record(stream, #"NUMENTRY", type-partition-exemplars.size);
+
+          for (type in type-partition-exemplars)
+            write-type-record(stream, type-partition-table, type);
+          end for;
+        end with-block-output;
+      end unless;
 
       // Target triple
       unless (empty?(m.llvm-module-target-triple))
