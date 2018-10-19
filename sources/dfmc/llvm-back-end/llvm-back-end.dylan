@@ -53,13 +53,12 @@ define abstract class <llvm-back-end> (<back-end>, <llvm-builder>)
   inherited slot llvm-builder-value-function,
     init-value: llvm-back-end-value-function;
 
+  slot llvm-back-end-dbg-compile-unit :: false-or(<llvm-metadata>),
+    init-value: #f;
+
   // Debug file descriptor
   constant slot %source-record-dbg-file-table :: <object-table>
     = make(<object-table>);
-
-  // Debug function descriptors
-  constant slot llvm-back-end-dbg-functions :: <stretchy-object-vector>
-    = make(<stretchy-object-vector>);
 
   // LLVM debug type for each defined <&raw-type> instance (or <object>)
   constant slot %dbg-type-table :: <object-table>

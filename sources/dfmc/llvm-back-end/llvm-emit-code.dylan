@@ -203,7 +203,8 @@ define method emit-lambda-body
               attribute-list: llvm-function-attributes(back-end, o),
               linkage: linkage,
               section: llvm-section-name(back-end, section),
-              calling-convention: calling-convention);
+              calling-convention: calling-convention,
+              personality: llvm-function-personality(back-end, o));
 
     // Emit the entry block
     ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));

@@ -1,6 +1,6 @@
 Module: dfmc-llvm-back-end
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              Additional code is Copyright 2009-2014 Gwydion Dylan Maintainers
+              Additional code is Copyright 2009-2018 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -227,33 +227,34 @@ end method;
 
 define function llvm-emit-entry-point-dbg-function
     (back-end :: <llvm-back-end>, function :: <llvm-function>,
-     dbg-file :: <llvm-metadata-value>,
+     dbg-file :: <llvm-metadata>,
      desc :: <llvm-entry-point-descriptor>, count :: false-or(<integer>))
  => ();
-  let (dbg-function :: <llvm-metadata-value>, dbg-parameters :: <sequence>)
+  let (dbg-function :: <llvm-metadata>, dbg-parameters :: <sequence>)
     = apply(make-entry-point-dbg-function, back-end, function, dbg-file,
             desc, count, desc.entry-point-function-declarator);
-  add!(back-end.llvm-back-end-dbg-functions, dbg-function);
 
   // Emit a llvm.dbg.value call for each parameter
-  ins--dbg(back-end, 0, 0, dbg-function, #f);
+  ins--dbg(back-end, 0, 0, dbg-function);
   for (dbg-parameter in dbg-parameters,
        argument in function.llvm-function-arguments)
     let v = llvm-make-dbg-value-metadata(argument);
+    let d = make(<llvm-metadata-value>,
+                 metadata: dbg-parameter);
     ins--call-intrinsic(back-end, "llvm.dbg.value",
-                        vector(v, i64(0), dbg-parameter));
+                        vector(v, d, $empty-diexpression-value));
   end for;
 end function;
 
 define function make-entry-point-dbg-function
     (back-end :: <llvm-back-end>, function :: <llvm-function>,
-     dbg-file :: <llvm-metadata-value>,
+     dbg-file :: <llvm-metadata>,
      descriptor :: <llvm-entry-point-descriptor>,
      count :: false-or(<integer>),
      #key parameter-names :: <simple-object-vector> = #[],
           parameter-types-spec :: <simple-object-vector>,
      #all-keys)
- => (dbg-function :: <llvm-metadata-value>, dbg-parameters :: <sequence>);
+ => (dbg-function :: <llvm-metadata>, dbg-parameters :: <sequence>);
   let dbg-parameter-types = make(<stretchy-object-vector>);
   let (required-parameter-type-specs, required-parameter-names,
        rest-parameter-name)
@@ -280,7 +281,7 @@ define function make-entry-point-dbg-function
   end if;
 
   if (member?(#"variable-arity", descriptor.entry-point-attributes))
-    add!(dbg-parameter-types, llvm-make-dbg-unspecified-parameters());
+    add!(dbg-parameter-types, #f); // ...
   end if;
 
   let dbg-return-type
@@ -294,6 +295,7 @@ define function make-entry-point-dbg-function
     = llvm-make-dbg-function(dbg-file,
                              dbg-name,
                              function.llvm-global-name,
+                             back-end.llvm-back-end-dbg-compile-unit,
                              dbg-file,
                              0,
                              dbg-function-type,

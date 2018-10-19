@@ -1,6 +1,6 @@
 Module:       llvm-internals
 Author:       Peter S. Housel
-Copyright:    Original Code is Copyright 2010 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2010-2018 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -60,6 +60,15 @@ define method llvm-value-type
            end for
          end if
   end if
+end method;
+
+define method llvm-gep-source-type
+    (value :: <llvm-gep-instruction>)
+ => (type :: <llvm-type>);
+  let operands = value.llvm-instruction-operands;
+  let pointer-type
+    = type-forward(llvm-value-type(operands[0]));
+  pointer-type.llvm-pointer-type-pointee
 end method;
 
 define method llvm-gep-index
@@ -202,6 +211,8 @@ define class <llvm-landingpad-instruction> (<llvm-instruction>)
 end class;
 
 define class <llvm-alloca-instruction> (<llvm-instruction>)
+  constant slot llvm-alloca-allocated-type :: <llvm-type>,
+    required-init-keyword: allocated-type:;
   constant slot llvm-value-type :: <llvm-type>,
     required-init-keyword: type:;
   constant slot llvm-alloca-instruction-alignment :: <integer>,

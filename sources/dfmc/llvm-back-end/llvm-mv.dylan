@@ -212,8 +212,7 @@ define method op--copy-from-mv-area
   let ptr-cast = ins--bitcast(back-end, ptr, $llvm-i8*-type);
   let byte-count = ins--mul(back-end, mv-area-count, word-size);
   ins--call-intrinsic(back-end, "llvm.memcpy",
-                      vector(dst-cast, ptr-cast, byte-count,
-                             i32(word-size), $llvm-false));
+                      vector(dst-cast, ptr-cast, byte-count, $llvm-false));
   ins--br(back-end, continue-bb);
 
   ins--block(back-end, continue-bb);
@@ -237,8 +236,7 @@ define method op--copy-into-mv-area
   let ptr-cast = ins--bitcast(back-end, ptr, $llvm-i8*-type);
   let byte-count = ins--mul(back-end, mv-area-count, word-size);
   ins--call-intrinsic(back-end, "llvm.memcpy",
-                      vector(ptr-cast, src-cast, byte-count,
-                             i32(word-size), $llvm-false));
+                      vector(ptr-cast, src-cast, byte-count, $llvm-false));
   ins--br(back-end, continue-bb);
 
   ins--block(back-end, continue-bb);
@@ -389,8 +387,7 @@ define method op--set-bef-value
     let src-cast = ins--bitcast(back-end, repeated-slot-ptr, $llvm-i8*-type);
 
     ins--call-intrinsic(back-end, "llvm.memcpy",
-                        vector(dst-cast, src-cast, byte-count,
-                               i32(word-size), $llvm-false));
+                        vector(dst-cast, src-cast, byte-count, $llvm-false));
   end if;
 end method;
 

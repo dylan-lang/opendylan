@@ -1,6 +1,6 @@
 Module:       llvm-asm-parser-internals
 Author:       Peter S. Housel
-Copyright:    Original Code is Copyright 2009 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2009-2018 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -40,6 +40,7 @@ define table $llvm-keywords :: <string-table>
      "initialexec" => $%INITIALEXEC-token,
      "localexec" => $%LOCALEXEC-token,
      "unnamed_addr" => $%UNNAMED_ADDR-token,
+     "local_unnamed_addr" => $%LOCAL_UNNAMED_ADDR-token,
      "zeroinitializer" => $%ZEROINITIALIZER-token,
      "undef" => $%UNDEF-token,
      "null" => $%NULL-token,
@@ -47,7 +48,7 @@ define table $llvm-keywords :: <string-table>
      "tail" => $%TAIL-token,
      "target" => $%TARGET-token,
      "triple" => $%TRIPLE-token,
-     "deplibs" => $%DEPLIBS-token,
+     "source_filename" => $%SOURCE_FILENAME-token,
      "datalayout" => $%DATALAYOUT-token,
 
      "volatile" => $%VOLATILE-token,
@@ -73,6 +74,7 @@ define table $llvm-keywords :: <string-table>
      "sideeffect" => $%SIDEEFFECT-token,
      "alignstack" => $%ALIGNSTACK-token,
      "gc" => $%GC-token,
+     "personality" => $%PERSONALITY-token,
      
      "ccc" => $%CCC-token,
      "fastcc" => $%FASTCC-token,
@@ -149,6 +151,8 @@ define table $llvm-keywords :: <string-table>
      
      "x" => $%X-token,
      "blockaddress" => $%BLOCKADDRESS-token,
+
+     "distinct" => $%DISTINCT-token,
 
      "personality" => $%PERSONALITY-token,
      "cleanup" => $%CLEANUP-token,
@@ -384,6 +388,8 @@ define function llvm-asm-parse
       elseif (ch == ':')
         read-element(stream);
         values($%LABELSTR-token, as(<string>, characters))
+      elseif (*llvm-parse-state*.parse-bareword)
+        values($%BAREWORD-token, as(<string>, characters))
       else
         let identifier = as(<string>, characters);
         let token = element($llvm-keywords, identifier, default: #f);

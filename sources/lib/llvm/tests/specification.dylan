@@ -58,8 +58,7 @@ define module-spec llvm-builder ()
       (<llvm-builder>, <llvm-basic-block>) => (<llvm-basic-block>);
 
   function ins--dbg
-      (<llvm-builder>, <integer>, <integer>,
-       <llvm-metadata-value>, <llvm-metadata-value>)
+      (<llvm-builder>, <integer>, <integer>, <llvm-metadata>)
    => ();
 
   function ins--add
@@ -243,7 +242,7 @@ define module-spec llvm-builder ()
   function ins--phi (<llvm-builder>, <sequence>) => (<llvm-instruction>);
   function ins--phi* (<llvm-builder>, #"rest") => (<llvm-instruction>);
   function ins--landingpad
-      (<llvm-builder>, <llvm-type>, <llvm-value>, <sequence>,
+      (<llvm-builder>, <llvm-type>, <sequence>,
        #"key", #"cleanup?", #"metadata")
    => (<llvm-instruction>);
 

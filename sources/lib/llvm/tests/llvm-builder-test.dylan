@@ -230,31 +230,33 @@ end function-test ins--block;
 define llvm-builder function-test ins--dbg ()
   let builder = make-builder-with-test-function();
 
-  let dbg-compile-unit
-    = llvm-make-dbg-compile-unit($DW-LANG-C99, "test.c", ".", "test");
   let dbg-file
     = llvm-make-dbg-file("test.c", ".");
+  let dbg-compile-unit
+    = llvm-make-dbg-compile-unit($DW-LANG-C99, dbg-file, "test",
+                                 module: builder.llvm-builder-module);
   let dbg-function-type
     = llvm-make-dbg-function-type(dbg-file, #f, #[]);
   let dbg-function
     = llvm-make-dbg-function(dbg-file,
                              builder.llvm-builder-function.llvm-global-name,
                              builder.llvm-builder-function.llvm-global-name,
+                             dbg-compile-unit,
                              dbg-file,
                              12,
                              dbg-function-type,
                              definition?: #t,
-                             function: builder.llvm-builder-function,
-                             module: builder.llvm-builder-module);
+                             module: builder.llvm-builder-module,
+                             function: builder.llvm-builder-function);
   let dbg-lexical-block
     = llvm-make-dbg-lexical-block(dbg-function, dbg-file, 14, 0);
-  ins--dbg(builder, 14, 23, dbg-lexical-block, #f);
+  ins--dbg(builder, 14, 23, dbg-lexical-block);
   ins--add(builder, 1111, 2222);
   ins--ret(builder);
   check-equal("ins--dbg disassembly with metadata",
               #("entry:",
-                "%0 = add i32 1111, 2222, !dbg !5",
-                "ret void, !dbg !5"),
+                "%0 = add i32 1111, 2222, !dbg !8",
+                "ret void, !dbg !8"),
               builder-test-function-disassembly(builder));
 end function-test ins--dbg;
 
@@ -913,7 +915,7 @@ define llvm-builder function-test ins--gep ()
   ins--ret(builder, reg);
   check-equal("ins--gep disassembly",
               #("entry:",
-                "%0 = getelementptr %ST* %arg0,"
+                "%0 = getelementptr %ST, %ST* %arg0,"
                   " i32 1, i32 2, i32 1, i32 5, i32 13",
                 "ret i32* %0"),
               builder-test-function-disassembly(builder));
@@ -933,7 +935,7 @@ define llvm-builder function-test ins--gep-inbounds ()
   ins--ret(builder, reg);
   check-equal("ins--gep disassembly",
               #("entry:",
-                "%0 = getelementptr inbounds %ST* %arg0,"
+                "%0 = getelementptr inbounds %ST, %ST* %arg0,"
                   " i32 1, i32 2, i32 1, i32 5, i32 13",
                 "ret i32* %0"),
               builder-test-function-disassembly(builder));
@@ -1102,9 +1104,8 @@ define llvm-builder function-test ins--call-intrinsic ()
                 #("entry:",
                   "%0 = alloca float",
                   "%1 = bitcast float* %0 to i8*",
-                  "call void @llvm.prefetch(i8* nocapture %1, i32 0, i32 3, i32 1)"
-                    " nounwind",
-                  "%2 = load float* %0",
+                  "call void @llvm.prefetch(i8* nocapture %1, i32 0, i32 3, i32 1)",
+                  "%2 = load float, float* %0",
                   "ret void"),
                 builder-test-function-disassembly(builder));
   end;
@@ -1125,9 +1126,9 @@ define llvm-builder function-test ins--call-intrinsic ()
     let ptr2 = ins--alloca(builder, $llvm-i8-type, 20);
     let ptr3 = ins--alloca(builder, $llvm-i8-type, 20);
     ins--call-intrinsic(builder, "llvm.memcpy",
-                        vector(ptr1, ptr2, 20, 0, $llvm-false));
+                        vector(ptr1, ptr2, 20, $llvm-false));
     ins--call-intrinsic(builder, "llvm.memcpy",
-                        vector(ptr2, ptr3, 20, 0, $llvm-false));
+                        vector(ptr2, ptr3, 20, $llvm-false));
     ins--ret(builder);
 
     check-equal("ins--call-intrinsic @llvm.memcpy disassembly",
@@ -1136,10 +1137,10 @@ define llvm-builder function-test ins--call-intrinsic ()
                   "%1 = alloca i8, i32 20",
                   "%2 = alloca i8, i32 20",
                   "call void @llvm.memcpy.p0i8.p0i8.i32"
-                    "(i8* nocapture %0, i8* nocapture %1, i32 20, i32 0,"
+                    "(i8* nocapture %0, i8* nocapture %1, i32 20,"
                     " i1 false) nounwind",
                   "call void @llvm.memcpy.p0i8.p0i8.i32"
-                    "(i8* nocapture %1, i8* nocapture %2, i32 20, i32 0,"
+                    "(i8* nocapture %1, i8* nocapture %2, i32 20,"
                     " i1 false) nounwind",
                   "ret void"),
                 builder-test-function-disassembly(builder));
@@ -1170,7 +1171,7 @@ define llvm-builder function-test ins--load ()
   check-equal("ins--load disassembly",
               #("entry:",
                 "%0 = alloca float",
-                "%1 = load float* %0",
+                "%1 = load float, float* %0",
                 "ret void"),
               builder-test-function-disassembly(builder));
 end function-test ins--load;
@@ -1477,8 +1478,6 @@ define llvm-builder function-test ins--unreachable ()
 end function-test ins--unreachable;
 
 define llvm-builder function-test ins--landingpad ()
-  let builder = make-builder-with-test-function();
-
   let personality-function-type
     = make(<llvm-function-type>,
            return-type: $llvm-i32-type,
@@ -1490,6 +1489,9 @@ define llvm-builder function-test ins--landingpad ()
            type: make(<llvm-pointer-type>, pointee: personality-function-type),
            arguments: #(),
            linkage: #"external");
+  let builder
+    = make-builder-with-test-function(personality: personality-function);
+
   llvm-builder-define-global(builder, personality-function.llvm-global-name,
                              personality-function);
 
@@ -1500,14 +1502,14 @@ define llvm-builder function-test ins--landingpad ()
   let struct-type
     = make(<llvm-struct-type>,
            elements: vector($llvm-i8*-type, $llvm-i32-type));
-  ins--landingpad(builder, struct-type, personality-function, #(),
+  ins--landingpad(builder, struct-type, #(),
                   cleanup?: #t);
   check-equal("ins--landingpad disassembly",
               #("entry:",
                 "invoke void @test()",
                 "        to label %Next unwind label %Next",
                 "Next:",
-                "%0 = landingpad { i8*, i32 } personality i32 (...)* @__gxx_personality_v0",
+                "%0 = landingpad { i8*, i32 }",
                 "        cleanup"),
               builder-test-function-disassembly(builder));
 end function-test ins--landingpad;

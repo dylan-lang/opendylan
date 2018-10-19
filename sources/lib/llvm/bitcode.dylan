@@ -1,6 +1,6 @@
 Module:       llvm-internals
 Author:       Peter S. Housel
-Copyright:    Original Code is Copyright 2009 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2009-2018 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -13,10 +13,14 @@ define constant $ABBREV-ENTER-SUBBLOCK :: <integer> = 1;
 define constant $ABBREV-DEFINE-ABBREV  :: <integer> = 2;
 define constant $ABBREV-UNABBREV-RECORD :: <integer> = 3;
 
+define constant $ABBREV-APPLICATION-BASE :: <integer> = 4;
+
 define class <bitcode-stream> (<wrapper-stream>)
   slot bitcode-accumulator :: <machine-word> = as(<machine-word>, 0);
   slot bitcode-accumulator-size :: <integer> = 0;
   slot bitcode-abbrev-bits :: <integer> = 2;
+  slot bitcode-abbrev-definitions :: <object-table> = make(<object-table>);
+  constant slot bitcode-blockinfo :: <object-table> = make(<object-table>);
   slot bitcode-records :: <object-table> = make(<object-table>);
 end class;
 
@@ -66,6 +70,12 @@ define method write-fixed
     (stream :: <bitcode-stream>, bits :: <integer>, value :: <integer>)
  => ();
   write-fixed(stream, bits, as(<machine-word>, value));
+end method;
+
+define method write-fixed
+    (stream :: <bitcode-stream>, bits :: <integer>, value :: <character>)
+ => ();
+  write-fixed(stream, bits, as(<machine-word>, as(<integer>, value)));
 end method;
 
 define method write-abbrev-id
@@ -191,6 +201,24 @@ define method write-char6
   write-fixed(stream, 6, code);
 end method;
 
+define method write-blob
+    (stream :: <bitcode-stream>, blob :: <byte-vector>)
+ => ();
+  // Output the blob length
+  write-vbr(stream, 6, blob.size);
+
+  // Flush bitcode
+  write-alignword(stream);
+
+  // Write the blob
+  write(stream, blob);
+
+  // Align to 32-bit boundary
+  while (modulo(stream-position(stream), 4) ~= 0)
+    write-element(stream, 0);
+  end while;
+end method;
+
 define method close
     (stream :: <bitcode-stream>, #rest keys,
      #key wait?, synchronize?, abort?) => ()
@@ -255,17 +283,30 @@ define macro with-block-output
     end }
     => { let stream :: <bitcode-stream> = ?stream;
          let block-definition :: <bitcode-block-definition> = ?block-info;
-         
+
          // Output the block start code
          write-abbrev-id(stream, $ABBREV-ENTER-SUBBLOCK);
 
          // ID of this block
          write-vbr(stream, 8, block-definition.block-id);
 
-         // Save the current abbreviation bit width and set 
+         // Save the current abbreviation bit width and abbreviation
+         // definitions, and set the new ones
          let outer-abbrev-bits = stream.bitcode-abbrev-bits;
          stream.bitcode-abbrev-bits := ?abbrev-bits;
          write-vbr(stream, 4, stream.bitcode-abbrev-bits);
+
+         // If there are global blockinfo definitions for this block type,
+         // incorporate them
+         let outer-abbrev-definitions = stream.bitcode-abbrev-definitions;
+         let blockinfo-definitions
+           = element(stream.bitcode-blockinfo, block-definition, default: #f);
+         stream.bitcode-abbrev-definitions
+           := if (blockinfo-definitions)
+                shallow-copy(blockinfo-definitions)
+              else
+                make(<object-table>)
+              end if;
 
          // Save the current record info and set
          let outer-records = stream.bitcode-records;
@@ -289,8 +330,9 @@ define macro with-block-output
                      truncate/(end-position - backpatch-position - 4, 4));
          stream-position(stream.inner-stream) := end-position;
 
-         // Restore the abbreviation width state and record info
+         // Restore the abbreviation state and record info
          stream.bitcode-abbrev-bits := outer-abbrev-bits;
+         stream.bitcode-abbrev-definitions := outer-abbrev-definitions;
          stream.bitcode-records := outer-records;
         }
 end macro;
@@ -301,22 +343,122 @@ define bitcode-block $BLOCKINFO_BLOCK = 0
   record SETRECORDNAME = 3;
 end bitcode-block;
 
+define method stream-record-id
+    (stream :: <bitcode-stream>, record :: <symbol>)
+ => (id :: <integer>)
+  let record-definition = element(stream.bitcode-records, record, default: #f);
+  if (~record-definition)
+    error("record %= not defined for this block type", record);
+  end if;
+  record-definition.record-id
+end method;
+
+
+/// Abbreviations
+
+define class <abbrev-op> (<object>)
+  constant slot op-kind :: <symbol>,
+    required-init-keyword: kind:;
+  constant slot op-data :: false-or(<integer>),
+    init-value: #f, init-keyword: data:;
+end class;
+
+define function op-fixed (width :: <integer>) => (op :: <abbrev-op>)
+  make(<abbrev-op>, kind: #"fixed", data: width)
+end function;
+
+define function op-vbr (width :: <integer>) => (op :: <abbrev-op>)
+  make(<abbrev-op>, kind: #"vbr", data: width)
+end function;
+
+define function op-array () => (op :: <abbrev-op>)
+  make(<abbrev-op>, kind: #"array")
+end function;
+
+define function op-char6 () => (op :: <abbrev-op>)
+  make(<abbrev-op>, kind: #"char6")
+end function;
+
+define function op-blob() => (op :: <abbrev-op>)
+  make(<abbrev-op>, kind: #"blob")
+end function;
+
+define method encode-abbrev-op
+    (stream :: <bitcode-stream>, op :: <integer>)
+ => ();
+  write-fixed(stream, 1, 1);
+  write-fixed(stream, 8, op);
+end method;
+
+define method encode-abbrev-op
+    (stream :: <bitcode-stream>, op :: <abbrev-op>)
+ => ();
+  write-fixed(stream, 1, 0);
+  let code
+    = select (op.op-kind)
+        #"fixed" => 1;
+        #"vbr"   => 2;
+        #"array" => 3;
+        #"char6" => 4;
+        #"blob"  => 5;
+      end select;
+  write-fixed(stream, 3, code);
+  if (op.op-data)
+    write-vbr(stream, 5, op.op-data);
+  end if;
+end method;
+
+define class <bitcode-abbrev-definition> (<object>)
+  constant slot abbrev-id :: <integer>,
+    required-init-keyword: id:;
+  constant slot abbrev-ops :: <vector>,
+    required-init-keyword: ops:;
+end class;
+
+define method write-abbrev-definition
+   (stream :: <bitcode-stream>, name :: <symbol>, #rest ops)
+ =>();
+  let id = $ABBREV-APPLICATION-BASE + stream.bitcode-abbrev-definitions.size;
+  stream.bitcode-abbrev-definitions[name]
+    := make(<bitcode-abbrev-definition>, id: id,
+            ops: choose(rcurry(instance?, <abbrev-op>), ops));
+
+  write-abbrev-id(stream, $ABBREV-DEFINE-ABBREV);
+  write-vbr(stream, 5, ops.size);
+  map(curry(encode-abbrev-op, stream), ops);
+end method;
+
+// NB: Assumes SETBID has already been done
+define method write-blockinfo-abbrev-definition
+    (stream :: <bitcode-stream>,
+     block-definition :: <bitcode-block-definition>,
+     name :: <symbol>, #rest ops)
+ =>();
+  let blockinfo-definitions
+    = element(stream.bitcode-blockinfo, block-definition, default: #f)
+    | (stream.bitcode-blockinfo[block-definition] := make(<object-table>));
+
+  let id = $ABBREV-APPLICATION-BASE + blockinfo-definitions.size;
+  blockinfo-definitions[name]
+    := make(<bitcode-abbrev-definition>, id: id,
+            ops: choose(rcurry(instance?, <abbrev-op>), ops));
+
+  write-abbrev-id(stream, $ABBREV-DEFINE-ABBREV);
+  write-vbr(stream, 5, ops.size);
+  map(curry(encode-abbrev-op, stream), ops);
+end method;
+
 
 /// Records
 
 define method write-record
     (stream :: <bitcode-stream>, record :: <symbol>, #rest operands)
  => ();
-  let record-definition = element(stream.bitcode-records, record, default: #f);
-  if (~record-definition)
-    error("record %= not defined for this block type", record);
-  end if;
-
   // Output the unabbreviated record code
   write-abbrev-id(stream, $ABBREV-UNABBREV-RECORD);
 
   // Output the record code
-  write-vbr(stream, 6, record-definition.record-id);
+  write-vbr(stream, 6, stream-record-id(stream, record));
 
   // Output the total number of arguments
   let operand-count
@@ -337,5 +479,49 @@ define method write-record
     else
       write-vbr(stream, 6, operand)
     end if;
+  end for;
+end method;
+
+define method write-abbrev-record
+  (stream :: <bitcode-stream>, name :: <symbol>, #rest operands)
+ => ();
+  let definition = stream.bitcode-abbrev-definitions[name];
+
+  // Output the abbreviation id
+  write-abbrev-id(stream, definition.abbrev-id);
+
+  // Output the operands according to the abbreviation ops
+  let ops = definition.abbrev-ops;
+  for (value in operands,
+       op-index = 0
+         then begin
+                let op = ops[op-index];
+                select (op.op-kind)
+                  #"fixed" =>
+                    write-fixed(stream, op.op-data, value);
+                    op-index + 1;
+                  #"vbr"   =>
+                    write-vbr(stream, op.op-data, value);
+                    op-index + 1;
+                  #"array" =>
+                    write-vbr(stream, 6, value.size);
+                    let aop = ops[op-index + 1];
+                    select (aop.op-kind)
+                      #"fixed" =>
+                        do(curry(write-fixed, stream, aop.op-data), value);
+                      #"vbr" =>
+                        do(curry(write-vbr, stream, aop.op-data), value);
+                      #"char6" =>
+                        do(curry(write-char6, stream), value);
+                    end select;
+                    op-index + 2;
+                  #"char6" =>
+                    write-char6(stream, value);
+                    op-index + 1;
+                  #"blob" =>
+                    write-blob(stream, value);
+                    op-index + 1;
+                end select;
+              end)
   end for;
 end method;

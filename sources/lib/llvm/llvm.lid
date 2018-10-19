@@ -1,5 +1,5 @@
 Library:      llvm
-Synopsis:     Interface for generating code for the Low Level Virtual Machine
+Synopsis:     Interface for generating code for the LLVM intermediate representation
 Author:       Peter S. Housel
 Files:        llvm-library
 	      double-machine-word
@@ -11,6 +11,7 @@ Files:        llvm-library
 	      llvm-constant
 	      llvm-global
 	      llvm-metadata
+	      llvm-specialized-metadata
 	      llvm-attribute
 	      llvm-instruction
 	      llvm-basic-block
@@ -21,7 +22,7 @@ Files:        llvm-library
 	      llvm-builder
 	      llvm-debug
 Target-Type:  dll
-Copyright:    Original Code is Copyright 2009-2010 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2009-2018 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND

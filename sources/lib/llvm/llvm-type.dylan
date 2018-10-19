@@ -36,7 +36,7 @@ end method;
 define constant <llvm-primitive-type-kind>
   = one-of(#"VOID", #"FLOAT", #"DOUBLE", #"LABEL",
            #"X86_FP80", #"FP128", #"PPC_FP128", #"METADATA",
-           #"X86_MMX");
+           #"X86_MMX", #"TOKEN");
 
 define class <llvm-primitive-type> (<llvm-type>)
   constant slot llvm-primitive-type-kind :: <llvm-primitive-type-kind>,
@@ -213,6 +213,16 @@ define generic llvm-constrain-type
     (constrained-type :: <llvm-type>, type :: <llvm-type>) => ();
 
 define method llvm-constrain-type
+    (constrained-type :: <llvm-pointer-type>, type :: <llvm-pointer-type>)
+  => ();
+  if (constrained-type.llvm-pointer-type-address-space ~= type.llvm-pointer-type-address-space)
+    error("Type %s address space does not match %s", constrained-type, type);
+  end if;
+  llvm-constrain-type(constrained-type.llvm-pointer-type-pointee,
+                      type.llvm-pointer-type-pointee);
+end method;
+
+define method llvm-constrain-type
     (constrained-type :: <llvm-type>, type :: <llvm-type>) => ()
   let real-type = type-forward(type);
   if (type-partition-key(constrained-type) ~= type-partition-key(real-type))
@@ -291,6 +301,8 @@ end method;
 
 define constant $llvm-label-type :: <llvm-type>
   = make(<llvm-primitive-type>, kind: #"LABEL");
+define constant $llvm-token-type :: <llvm-type>
+  = make(<llvm-primitive-type>, kind: #"TOKEN");
 define constant $llvm-void-type :: <llvm-type>
   = make(<llvm-primitive-type>, kind: #"VOID");
 define constant $llvm-metadata-type :: <llvm-type>

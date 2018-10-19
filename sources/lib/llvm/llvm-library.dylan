@@ -50,6 +50,7 @@ define module llvm
     llvm-void-type?,
 
     $llvm-label-type,
+    $llvm-token-type,
     $llvm-void-type,
     $llvm-metadata-type,
     $llvm-float-type,
@@ -89,15 +90,59 @@ define module llvm
     $llvm-true,
 
     <llvm-metadata-value>,
+
+    <llvm-metadata>,
     <llvm-metadata-string>,
     llvm-metadata-string,
     <llvm-metadata-node>,
     llvm-metadata-node-values,
+    <llvm-value-metadata>,
     <llvm-symbolic-metadata>,
+
+    llvm-symbolic-metadata-forward-setter,
+
+    <llvm-debug-info-metadata>,
+    <llvm-DICompileUnit-metadata>,
+    <llvm-DIFile-metadata>,
+    <llvm-DISubprogram-metadata>,
+    <llvm-DISubroutineType-metadata>,
+    <llvm-DIBasicType-metadata>,
+    <llvm-DILocalVariable-metadata>,
+    <llvm-DIExpression-metadata>,
+    <llvm-DILocation-metadata>,
+    <llvm-DILexicalBlock-metadata>,
+    <llvm-DIDerivedType-metadata>,
+    <llvm-DICompositeType-metadata>,
+    <llvm-DISubrange-metadata>,
 
     <llvm-named-metadata>,
     llvm-named-metadata-name,
     llvm-named-metadata-operands,
+
+    $llvm-metadata-kind-dbg,
+    $llvm-metadata-kind-tbaa,
+    $llvm-metadata-kind-prof,
+    $llvm-metadata-kind-fpmath,
+    $llvm-metadata-kind-range,
+    $llvm-metadata-kind-tbaa-struct,
+    $llvm-metadata-kind-invariant-load,
+    $llvm-metadata-kind-alias-scope,
+    $llvm-metadata-kind-noalias,
+    $llvm-metadata-kind-nontemporal,
+    $llvm-metadata-kind-mem-parallel-loop-access,
+    $llvm-metadata-kind-nonnull,
+    $llvm-metadata-kind-dereferenceable,
+    $llvm-metadata-kind-dereferenceable-or-null,
+    $llvm-metadata-kind-make-implicit,
+    $llvm-metadata-kind-unpredictable,
+    $llvm-metadata-kind-invariant-group,
+    $llvm-metadata-kind-align,
+    $llvm-metadata-kind-loop,
+    $llvm-metadata-kind-type,
+    $llvm-metadata-kind-section-prefix,
+    $llvm-metadata-kind-absolute-symbol,
+    llvm-metadata-kind,
+    <llvm-metadata-attachment>,
 
     <llvm-global-value>,
     llvm-global-name,
@@ -207,6 +252,8 @@ define module llvm
     llvm-module-name,
     llvm-module-target-triple,
     llvm-module-target-triple-setter,
+    llvm-module-source-filename,
+    llvm-module-source-filename-setter,
     llvm-module-data-layout,
     llvm-module-data-layout-setter,
     llvm-module-asm,
@@ -215,8 +262,8 @@ define module llvm
     llvm-module-functions,
     llvm-module-aliases,
     llvm-module-named-metadata,
-    llvm-module-dependent-libraries,
     llvm-module-add-flag,
+    llvm-global-metadata-attachment-table,
     llvm-type-table,
     llvm-global-table,
 
@@ -366,7 +413,6 @@ end module;
 
 define module llvm-debug
   create
-    $llvm-debug-version,
     $DW-TAG-invalid,
     $DW-TAG-anchor,
     $DW-TAG-auto-variable,
@@ -482,6 +528,7 @@ define module llvm-debug
     $DW-LANG-Swift,
     $DW-LANG-Julia,
     $DW-LANG-Dylan,
+    $DW-LANG-C-plus-plus-14,
     $DW-LANG-lo-user,
     $DW-LANG-Mips-Assembler,
     $DW-LANG-hi-user,
@@ -495,7 +542,6 @@ define module llvm-debug
     llvm-make-dbg-basic-type,
     llvm-make-dbg-derived-type,
     llvm-make-dbg-composite-type,
-    llvm-make-dbg-unspecified-parameters,
     llvm-make-dbg-value-metadata;
 end module;
 

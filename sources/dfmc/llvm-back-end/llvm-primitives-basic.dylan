@@ -273,7 +273,7 @@ define side-effecting stateless dynamic-extent &primitive-descriptor primitive-f
   let dst-ptr = op--byte-element-ptr(be, dst, base-offset, offset);
   let byte-value = ins--trunc(be, value, $llvm-i8-type);
   ins--call-intrinsic(be, "llvm.memset",
-                      vector(dst-ptr, byte-value, size, i32(0), $llvm-false));
+                      vector(dst-ptr, byte-value, size, $llvm-false));
 end;
 
 define side-effecting stateless dynamic-extent &primitive-descriptor primitive-replace!
@@ -290,7 +290,7 @@ define side-effecting stateless dynamic-extent &primitive-descriptor primitive-r
   let byte-size = ins--mul(be, size, word-size);
   ins--call-intrinsic(be, "llvm.memcpy",
                       vector(dst-byte-ptr, src-byte-ptr, byte-size,
-                             i32(word-size), $llvm-false));
+                             $llvm-false));
 end;
 
 define side-effecting stateless dynamic-extent &primitive-descriptor primitive-replace-bytes!
@@ -301,7 +301,7 @@ define side-effecting stateless dynamic-extent &primitive-descriptor primitive-r
   let dst-ptr = op--byte-element-ptr(be, dst, dst-base-offset, dst-offset);
   let src-ptr = op--byte-element-ptr(be, src, src-base-offset, src-offset);
   ins--call-intrinsic(be, "llvm.memcpy",
-                      vector(dst-ptr, src-ptr, size, i32(0), $llvm-false));
+                      vector(dst-ptr, src-ptr, size, $llvm-false));
 end;
 
 
@@ -521,7 +521,7 @@ define side-effect-free stateless indefinite-extent mapped &runtime-primitive-de
     = op--getslotptr(be, byte-string, class, #"string-element", 0);
   let terminated-len = ins--add(be, len, 1);
   ins--call-intrinsic(be, "llvm.memcpy",
-                      vector(string-element-ptr, r, terminated-len, i32(0),
+                      vector(string-element-ptr, r, terminated-len,
                              $llvm-false));
 
   byte-string

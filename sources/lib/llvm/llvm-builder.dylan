@@ -1,6 +1,6 @@
 Module:       llvm-internals
 Author:       Peter S. Housel
-Copyright:    Original Code is Copyright 2010 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2010-2018 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -14,7 +14,7 @@ define open abstract primary class <llvm-builder> (<object>)
     init-value: #f;
   slot llvm-builder-basic-block :: false-or(<llvm-basic-block>),
     init-value: #f;
-  slot llvm-builder-dbg :: false-or(<llvm-named-metadata>),
+  slot llvm-builder-dbg :: false-or(<llvm-metadata-attachment>),
     init-value: #f;
 end class;
 
@@ -295,24 +295,24 @@ end macro;
 define function ins--dbg
     (builder :: <llvm-builder>,
      line-number :: <integer>, column-number :: <integer>,
-     scope :: <llvm-metadata-value>,
-     original-scope :: false-or(<llvm-metadata-value>))
+     scope :: <llvm-metadata>)
  => ();
-  let current-dbg = builder.llvm-builder-dbg;
-  if (~current-dbg
+  let current-attachment = builder.llvm-builder-dbg;
+  if (~current-attachment
         | begin
-            let current-node = current-dbg.llvm-named-metadata-operands.first;
-            let current-values = current-node.llvm-metadata-node-values;
-            line-number ~= current-values[0].llvm-integer-constant-integer
-              | column-number ~= current-values[1].llvm-integer-constant-integer
-              | scope ~== current-values[2]
-              | original-scope ~== current-values[3]
+            let node = current-attachment.llvm-metadata-attachment-metadata;
+            line-number ~= node.llvm-DILocation-metadata-line
+              | column-number ~= node.llvm-DILocation-metadata-column
+              | scope ~= node.llvm-DILocation-metadata-scope
           end)
-    let node = make(<llvm-metadata-node>,
-                    node-values: vector(i32(line-number), i32(column-number),
-                                        scope, original-scope));
+    let node
+      = make(<llvm-DILocation-metadata>,
+             line: line-number, column: column-number,
+             scope: scope);
     builder.llvm-builder-dbg
-      := make(<llvm-named-metadata>, name: "dbg", operands: list(node));
+      := make(<llvm-metadata-attachment>,
+              kind: $llvm-metadata-kind-dbg,
+              metadata: node);
   end if;
 end function;
 
@@ -548,12 +548,11 @@ define instruction-set
             operands: operands,
             metadata: builder-metadata(builder, #()));
 
-  op landingpad (type :: <llvm-type>, personality, clauses :: <sequence>,
+  op landingpad (type :: <llvm-type>, clauses :: <sequence>,
                  #key metadata :: <list> = #(), cleanup? :: <boolean> = #f)
     => make(<llvm-landingpad-instruction>,
             type: type,
-            operands: concatenate(vector(llvm-builder-value(builder, personality)),
-                                  clauses),
+            operands: clauses,
             cleanup?: cleanup?,
             metadata: builder-metadata(builder, metadata));
 
@@ -579,6 +578,7 @@ define instruction-set
     => let pointer-type
          = make(<llvm-pointer-type>, pointee: type);
        make(<llvm-alloca-instruction>,
+            allocated-type: type,
             type: pointer-type,
             alignment: alignment,
             operands: vector(llvm-builder-value(builder, num-elements)),
@@ -601,11 +601,19 @@ define instruction-set
 
   op store (value, pointer, #rest options,
             #key metadata :: <list> = #(), #all-keys)
-    => apply(make, <llvm-store-instruction>,
-             operands: vector(llvm-builder-value(builder, value),
-                              llvm-builder-value(builder, pointer)),
-             metadata: builder-metadata(builder, metadata),
-             options);
+    => begin
+         let value = llvm-builder-value(builder, value);
+         let pointer = llvm-builder-value(builder, pointer);
+         let ptrtype = type-forward(pointer.llvm-value-type);
+         if (instance?(ptrtype, <llvm-pointer-type>))
+           llvm-constrain-type(ptrtype.llvm-pointer-type-pointee,
+                               llvm-value-type(value));
+         end if;
+         apply(make, <llvm-store-instruction>,
+               operands: vector(value, pointer),
+               metadata: builder-metadata(builder, metadata),
+               options)
+       end;
 
   op cmpxchg (pointer, value1, value2, #rest options,
             #key metadata :: <list> = #(), #all-keys)
