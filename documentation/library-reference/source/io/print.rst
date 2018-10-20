@@ -32,7 +32,7 @@ module can be found in `The print Module`_, and reference entries for
 interfaces exported from the *pprint* module are in `The pprint
 Module`_.
 
-These modules uses the Streams module. See :doc:`streams` for
+These modules use the Streams module. See :doc:`streams` for
 full details of the Streams module.
 
 Print functions
