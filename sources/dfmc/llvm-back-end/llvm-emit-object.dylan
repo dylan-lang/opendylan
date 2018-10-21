@@ -105,17 +105,15 @@ define method emit-object
     (back-end :: <llvm-back-end>, m :: <llvm-module>, o :: <&raw-object>)
  => (reference :: <llvm-constant-value>)
   let value = coerce-machine-word-to-an-integer(o.^raw-object-value);
-  element(back-end.%raw-object-table, value, default: #f)
-    | begin
-        let type = llvm-reference-type(back-end, o.^object-class);
-        let constant
-          = make(<llvm-integer-constant>, type: type, integer: value);
-        // Only memoize word-sized raw objects
-        if (type == back-end.%type-table["iWord"])
-          element(back-end.%raw-object-table, value) := constant;
-        end if;
-        constant
-      end
+  let type = llvm-reference-type(back-end, o.^object-class);
+  if (type == back-end.%type-table["iWord"])
+    // Only memoize word-sized raw objects
+    element(back-end.%raw-object-table, value, default: #f)
+      | (element(back-end.%raw-object-table, value)
+           := make(<llvm-integer-constant>, type: type, integer: value))
+  else
+    make(<llvm-integer-constant>, type: type, integer: value)
+  end if
 end method;
 
 define function coerce-machine-word-to-an-integer
