@@ -43,8 +43,8 @@ define sideways method accessor-open
   block (return)
     if (initial-file-position | initial-file-size)
       error("Cannot create a file accessor which specifies either"
-              "file-position: or file-size: keywords but does not specify"
-              "file-handle:");
+              " file-position: or file-size: keywords but does not specify"
+              " file-handle:");
     end if;
     select (direction)
       #"input" =>
