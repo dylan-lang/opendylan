@@ -249,7 +249,7 @@ define constant $system-init-code-tag = "for_system";
 define constant $user-init-code-tag = "for_user";
 
 define constant $system-init-ctor-priority = 0;
-define constant $user-init-ctor-priority = 65535;
+//define constant $user-init-ctor-priority = 65535;
 
 define constant $init-code-function-type
   = make(<llvm-function-type>,
@@ -260,8 +260,13 @@ define constant $init-code-function-ptr-type
   = make(<llvm-pointer-type>, pointee: $init-code-function-type);
 
 define constant $ctor-struct-type
-    = make(<llvm-struct-type>,
-	   elements: vector($llvm-i32-type, $init-code-function-ptr-type));
+  = make(<llvm-struct-type>,
+         elements: vector($llvm-i32-type,
+                          $init-code-function-ptr-type,
+                          $llvm-i8*-type));
+
+define constant $null-data
+  = make(<llvm-null-constant>, type: $llvm-i8*-type);
 
 define method emit-ctor-entry
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
@@ -274,7 +279,9 @@ define method emit-ctor-entry
   let ctor-element
     = make(<llvm-aggregate-constant>,
            type: $ctor-struct-type,
-           aggregate-values: vector(priority-constant, init-function));
+           aggregate-values: vector(priority-constant,
+                                    init-function,
+                                    $null-data));
 
   // Declare the constructors list
   let ctor-type
