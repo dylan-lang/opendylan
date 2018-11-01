@@ -4,11 +4,15 @@ Welcome to Open Dylan!
 Open Dylan is an open source implementation of the Dylan programming
 language, plus a large number of assorted libraries.
 
-This release is Open Dylan 2014.1. We expect this release to have bugs.
-We're interested in getting your feedback, in order to improve this product.
-Write to hackers@opendylan.org or report a bug via GitHub
-(https://github.com/dylan-lang/opendylan/issues). We can also help via IRC,
-just drop by on irc.freenode.net in channel #dylan .
+This release is Open Dylan 2014.1. We expect this release to have
+bugs.  We're interested in getting your feedback, especially on
+anything we can do to make the initial experience with Open Dylan run
+more smoothly. You can contact us through any of these channels:
+
+bugs:  https://github.com/dylan-lang/opendylan/issues
+email: dylan-lang@googlegroups.com
+Slack: https://dylanlang.slack.com
+IRC:   #dylan on irc.freenode.net
 
 
 Requirements
@@ -34,15 +38,11 @@ macOS:
 Installation
 ============
 
-This tarball is set up to be extracted in /opt, resulting in the
-creation of a directory /opt/opendylan-2014.1.  You just have to add
-/opt/opendylan-2014.1/bin to your PATH:
+When extracted, the tarball creates a ./opendylan-2014.1
+directory. Just add `pwd`/opendylan-2014.1/bin to your PATH. For
+example, if you extracted the tarball in /opt:
 
   $ export PATH=/opt/opendylan-2014.1/bin:$PATH    # for bash
-
-or
-
-  $ setenv PATH /opt/opendylan-2014.1/bin:$PATH    # for tcsh
 
 
 Usage
