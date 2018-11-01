@@ -1146,7 +1146,14 @@ define method write-constant-record
      value :: <llvm-integer-constant>)
  => ();
   let integer = value.llvm-integer-constant-integer;
-  write-record(stream, #"INTEGER", as-signed-vbr(integer));
+  let width = type-forward(value.llvm-value-type).llvm-integer-type-width;
+  let signed-integer
+    = if (generic-logbit?(width - 1, integer))
+        generic-logior(integer, generic-ash(-1, width))
+      else
+        integer
+      end if;
+  write-record(stream, #"INTEGER", as-signed-vbr(signed-integer));
 end method;
 
 define method write-constant-record
