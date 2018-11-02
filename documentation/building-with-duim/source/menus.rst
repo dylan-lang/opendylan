@@ -249,10 +249,10 @@ of a slot: ``frame-task-list``. This takes an instance of the class
 Although it has not been referred to so far, this class will be used
 as the basic data structure in which task lists are stored, and a more
 complete description of these data structures is given in `Defining
-the underlying data structures for tasks <callbacks.htm#71186>`_. It
+the underlying data structures for tasks <callbacks.html#71186>`_. It
 transpires that defining the ``frame-task-list`` slot is essential for
 some of the file handling routines that are described in `Handling
-files in the task list manager <callbacks.htm#78540>`_.
+files in the task list manager <callbacks.html#78540>`_.
 
 .. code-block:: dylan
 
