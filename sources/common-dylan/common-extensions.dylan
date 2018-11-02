@@ -403,16 +403,6 @@ define method find-element
   end;
 end method find-element;
 
-//---*** This should be removed at some point
-define method find-value
-    (collection :: <collection>, predicate :: <function>,
-     #key skip :: <integer> = 0,
-          failure = #f)
- => (value)
-  find-element(collection, predicate, skip: skip, failure: failure)
-end method find-value;
-
-
 define function fill-table!
     (table :: <table>, keys-and-elements :: <sequence>)
  => (table :: <table>)

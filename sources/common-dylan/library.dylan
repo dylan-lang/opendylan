@@ -124,7 +124,6 @@ define module common-extensions
          join,
          fill-table!,
          find-element,
-         find-value,
          float-to-string,
          integer-to-string,
          number-to-string,
