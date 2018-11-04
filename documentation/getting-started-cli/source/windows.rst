@@ -34,7 +34,7 @@ Setting Environment Variables
 
 Environment variables are managed differently on Windows.
 For modifying environment variables permanently, see
-`this guide <http://www.computerhope.com/issues/ch000549.htm>`_.
+`this guide <https://www.computerhope.com/issues/ch000549.htm>`_.
 
 For modifying an environment variable from the command line,
 use this syntax::
