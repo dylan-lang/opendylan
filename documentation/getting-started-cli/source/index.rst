@@ -13,7 +13,7 @@ document describes these command-line tools.
 
 For help getting started with the IDE on Windows, see
 the `Getting Started with the Open Dylan IDE
-<http://opendylan.org/documentation/getting-started-ide/>`_
+<https://opendylan.org/documentation/getting-started-ide/>`_
 guide.
 
 .. toctree::
