@@ -11,3 +11,4 @@ Major-Version: 2
 Minor-Version: 1
 Compilation-Mode: tight
 Target-Type: dll
+Platforms: x86-win32
