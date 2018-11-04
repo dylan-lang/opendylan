@@ -60,7 +60,7 @@ Not all the built-in classes may be subclassed. This allows the
 compiler to heavily optimize code dealing with basic numeric types and
 certain common collections. The programmer may also mark classes as
 :term:`sealed`, restricting how and where they may be subclassed. See
-`Sealing <http://opendylan.org/books/drm/Sealing>`_ for details.
+`Sealing <https://opendylan.org/books/drm/Sealing>`_ for details.
 
 Slots
 =====
@@ -307,4 +307,4 @@ Methods added to ``make`` don't actually need to create new objects. Dylan
 officially allows them to return existing objects. This can be used to
 manage lightweight shared objects, such as the "flyweights" or "singletons"
 described by Gamma, et al., in
-`Design Patterns <http://st-www.cs.uiuc.edu/users/patterns/DPBook/DPBook.html>`_.
+`Design Patterns <http://https://en.wikipedia.org/wiki/Design_Patterns>`.
