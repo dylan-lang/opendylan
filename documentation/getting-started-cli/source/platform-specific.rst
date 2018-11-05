@@ -15,7 +15,7 @@ LID File
 
 For further details of the LID file format, see `LID file`_.
 
-.. _LID file: http://opendylan.org/documentation/library-reference/lid.html
+.. _LID file: https://opendylan.org/documentation/library-reference/lid.html
 
 1) Library
 
