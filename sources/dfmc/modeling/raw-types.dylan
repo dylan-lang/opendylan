@@ -99,6 +99,7 @@ define method direct-object? (object :: <&raw-object>) #t end;
 
 define compiler-open generic raw-type-size (raw-type) => (res);
 define compiler-open generic raw-type-alignment (raw-type) => (res);
+define compiler-open generic raw-type-signed? (raw-type) => (res);
 define compiler-open generic raw-type-getter (raw-type) => (res);
 define compiler-open generic raw-type-setter (raw-type) => (res);
 define compiler-open generic raw-type-boxed-class (raw-type) => (res);
@@ -112,7 +113,7 @@ define compiler-open generic raw-type-unboxer-name (raw-type) => (res);
 define compiler-open generic raw-type-c-name (raw-type) => (res);
 
 define property-delegation-getters (<&raw-type>, raw-type-descriptor)
-  raw-type-size, raw-type-alignment,
+  raw-type-size, raw-type-alignment, raw-type-signed?,
   raw-type-getter, raw-type-setter,
   raw-type-boxed-class, raw-type-boxer, raw-type-unboxer,
   raw-type-getter-name, raw-type-setter-name,

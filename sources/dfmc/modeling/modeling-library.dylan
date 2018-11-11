@@ -640,7 +640,7 @@ define module-with-models dfmc-modeling
     <&raw-object>,
       ^raw-object-value,
     <&raw-type>, raw-type?,
-      raw-type-size, raw-type-alignment,
+      raw-type-size, raw-type-alignment, raw-type-signed?,
       raw-type-getter-name, raw-type-setter-name,
       raw-type-boxed-class-name, raw-type-boxer-name, raw-type-unboxer-name,
       raw-type-getter, raw-type-setter,
