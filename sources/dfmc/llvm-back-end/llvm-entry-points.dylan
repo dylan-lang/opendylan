@@ -2287,8 +2287,9 @@ define singular outer entry-point-descriptor raw-byte-repeated-instance-slot-set
       = ins--add(be, repeated-slot-offset,
                  dylan-value(#"$number-header-words"));
     let raw-value = op--untag-character(be, value);
+    let byte = ins--trunc(be, raw-value, $llvm-i8-type);
     call-primitive(be, primitive-byte-element-setter-descriptor,
-                   raw-value, object, repeated-element-offset, index-raw);
+                   byte, object, repeated-element-offset, index-raw);
     op--global-mv-struct(be, value, i8(1))
   ins--else
     op--call-error-iep(be, #"repeated-slot-setter-index-out-of-range-trap",

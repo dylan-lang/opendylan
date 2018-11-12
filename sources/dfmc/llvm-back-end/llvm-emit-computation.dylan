@@ -609,8 +609,7 @@ define method emit-computation
   let name = emit-name(back-end, m, c.referenced-binding);
   let global = llvm-builder-global(back-end, name);
   llvm-constrain-type(global.llvm-value-type,
-		      llvm-pointer-to(back-end,
-				      $llvm-object-pointer-type));
+		      llvm-pointer-to(back-end, $llvm-object-pointer-type));
   let value = ins--load(back-end, global);
   let result
     = if (c.referenced-binding.binding-thread?)
@@ -648,7 +647,10 @@ define method emit-call
      c :: <simple-call>, f :: <&iep>)
  => (call :: <llvm-value>);
   let name = emit-name(back-end, m, f);
+  let function-type = llvm-lambda-type(back-end, f);
   let global = llvm-builder-global(back-end, name);
+  llvm-constrain-type(global.llvm-value-type,
+                      llvm-pointer-to(back-end, function-type));
   let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
   let env = f.environment;
   let fn
@@ -660,7 +662,7 @@ define method emit-call
       end if;
   op--call-iep(back-end, global,
                map(curry(emit-reference, back-end, m), c.arguments),
-               function-type: llvm-lambda-type(back-end, f),
+               function-type: function-type,
                function: fn,
                calling-convention: llvm-calling-convention(back-end, f))
 end method;
@@ -671,7 +673,10 @@ define method emit-call
      c :: <method-call>, f :: <&iep>)
  => (call :: <llvm-value>);
   let name = emit-name(back-end, m, f);
+  let function-type = llvm-lambda-type(back-end, f);
   let global = llvm-builder-global(back-end, name);
+  llvm-constrain-type(global.llvm-value-type,
+                      llvm-pointer-to(back-end, function-type));
   let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
   let next
     = if (^next?(function(f)))
@@ -681,7 +686,7 @@ define method emit-call
       end if;
   op--call-iep(back-end, global,
                map(curry(emit-reference, back-end, m), c.arguments),
-               function-type: llvm-lambda-type(back-end, f),
+               function-type: function-type,
                next: next,
                calling-convention: llvm-calling-convention(back-end, f))
 end method;
@@ -1077,8 +1082,17 @@ define method emit-primitive-call
     | error("No primitive named %=", primitive-name);
 
   let model-arguments = c.arguments;
+  let signature = llvm-primitive-signature(back-end, descriptor);
   let arguments
-    = map(curry(emit-reference, back-end, m), model-arguments);
+    = map(method (argument, parameter-type)
+            let reference = emit-reference(back-end, m, argument);
+            let value-type = llvm-type-forward(reference.llvm-value-type);
+            emit-cast-for-call(back-end, reference,
+                               value-type,
+                               parameter-type)
+          end,
+          model-arguments,
+          signature.^signature-required);
   let (#rest results)
     = if (primitive-name == #"primitive-instance?")
 	// Special case, since we can do more specific tests based on
@@ -1108,12 +1122,23 @@ define method emit-primitive-call
   let calling-convention
     = llvm-c-function-calling-convention(back-end, primitive);
   let function-type = llvm-c-function-type(back-end, primitive);
+  let global = llvm-builder-global(back-end, name);
+  llvm-constrain-type(global.llvm-value-type,
+                      llvm-pointer-to(back-end, function-type));
 
   // Call the C function
+  let signature = primitive.c-signature;
+  let args
+    = map(method (argument, parameter-type)
+            let reference = emit-reference(back-end, m, argument);
+            emit-cast-for-call(back-end, reference,
+                               llvm-type-forward(reference.llvm-value-type),
+                               parameter-type)
+          end,
+          c.arguments,
+          signature.^signature-required);
   let result
-    = op--call(back-end,
-               llvm-builder-global(back-end, name),
-               map(curry(emit-reference, back-end, m), c.arguments),
+    = op--call(back-end, global, args,
                type: function-type.llvm-function-type-return-type,
                calling-convention: calling-convention);
   computation-result(back-end, c, result);
@@ -1133,9 +1158,18 @@ define method emit-primitive-call
     = ins--bitcast(back-end, msg-send, function-ptr-type);
 
   // Call the objc_msgSend function
+  let signature = primitive.c-signature;
+  let args
+    = map(method (argument, parameter-type)
+            let reference = emit-reference(back-end, m, argument);
+            emit-cast-for-call(back-end, reference,
+                               llvm-type-forward(reference.llvm-value-type),
+                               parameter-type)
+          end,
+          c.arguments,
+          signature.^signature-required);
   let result
-    = op--call(back-end, function,
-               map(curry(emit-reference, back-end, m), c.arguments),
+    = op--call(back-end, function, args,
                type: function-type.llvm-function-type-return-type,
                calling-convention: calling-convention);
   computation-result(back-end, c, result);
@@ -1154,10 +1188,18 @@ define method emit-primitive-call
                    function-ptr-type);
 
   // Call the C function
+  let signature = primitive.c-signature;
+  let args
+    = map(method (argument, parameter-type)
+            let argument-value = emit-reference(back-end, m, argument);
+            let value-type = llvm-type-forward(argument-value.llvm-value-type);
+            emit-cast-for-call(back-end, argument-value, value-type,
+                               parameter-type)
+          end,
+          copy-sequence(c.arguments, start: 1),
+          signature.^signature-required);
   let result
-    = op--call(back-end, function,
-               map(curry(emit-reference, back-end, m),
-                   copy-sequence(c.arguments, start: 1)),
+    = op--call(back-end, function, args,
                type: function-type.llvm-function-type-return-type,
                calling-convention: calling-convention);
   computation-result(back-end, c, result);
@@ -1185,6 +1227,26 @@ define method emit-primitive-call
  => ();
   let result = llvm-builder-global(back-end, c.c-variable.name);
   computation-result(back-end, c, result);
+end method;
+
+define method emit-cast-for-call
+    (back-end :: <llvm-back-end>, value :: <llvm-value>,
+     value-type :: <llvm-integer-type>, parameter-type :: <&raw-type>)
+ => (arg :: <llvm-value>);
+  let parameter-llvm-type = llvm-reference-type(back-end, parameter-type);
+  if (instance?(parameter-llvm-type, <llvm-integer-type>))
+    op--integer-cast(back-end, value, parameter-llvm-type,
+                     sext?: raw-type-signed?(parameter-type))
+  else
+    value
+  end if
+end method;
+
+define method emit-cast-for-call
+    (back-end :: <llvm-back-end>, value :: <llvm-value>,
+     value-type :: <llvm-type>, parameter-type :: <&type>)
+  => (value :: <llvm-value>);
+  value
 end method;
 
 define method emit-computation

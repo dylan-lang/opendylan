@@ -71,6 +71,24 @@ define function op--raw-pointer-cast
   ins--bitcast(be, x, llvm-reference-type(be, dylan-value(#"<raw-pointer>")))
 end function;
 
+define method op--integer-cast
+    (be :: <llvm-back-end>, x :: <llvm-value>, type :: <llvm-integer-type>,
+     #key sext? :: <boolean> = #f)
+ => (integer :: <llvm-value>);
+  let x-type = llvm-type-forward(x.llvm-value-type);
+  if (type.llvm-integer-type-width < x-type.llvm-integer-type-width)
+    ins--trunc(be, x, type)
+  elseif (type.llvm-integer-type-width > x-type.llvm-integer-type-width)
+    if (sext?)
+      ins--sext(be, x, type)
+    else
+      ins--zext(be, x, type)
+    end if
+  else
+    x
+  end if
+end method;
+
 // Tag a raw value (known to fit) as an integer)
 define method op--tag-integer
     (be :: <llvm-back-end>, integer-value :: <llvm-value>)

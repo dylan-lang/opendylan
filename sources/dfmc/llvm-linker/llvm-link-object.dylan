@@ -267,13 +267,15 @@ define method emit-extern
   let class = &object-class(o);
   let struct-type = llvm-object-type(back-end, o);
   let name = emit-name(back-end, module, o);
-  let global
-    = make(<llvm-global-variable>,
-           name: name,
-           type: llvm-pointer-to(back-end, struct-type),
-           constant?: #f,
-           linkage: #"external");
-  llvm-builder-define-global(back-end, name, global);
+  unless (llvm-builder-global-defined?(back-end, name))
+    let global
+      = make(<llvm-global-variable>,
+             name: name,
+             type: llvm-pointer-to(back-end, struct-type),
+             constant?: #f,
+             linkage: #"external");
+    llvm-builder-define-global(back-end, name, global);
+  end unless;
 end method;
 
 // Heap objects of these types do not contain mutable slots with

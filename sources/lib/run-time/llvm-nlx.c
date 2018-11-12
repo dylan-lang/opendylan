@@ -75,8 +75,12 @@ static uintptr_t get_encoded_size(uint8_t encoding)
   case DW_EH_PE_sdata4:
     return 4;
     break;
+  case DW_EH_PE_udata8:
+  case DW_EH_PE_sdata8:
+    return 8;
+    break;
   default:
-    fprintf(stderr, "Encoding %#x\n", encoding);
+    fprintf(stderr, "Encoding %#x (size)\n", encoding);
     abort();
   }
 }
@@ -102,8 +106,12 @@ static uintptr_t get_encoded(const uint8_t **pp, uint8_t encoding)
     result = *((const int32_t *) p);
     p += 4;
     break;
+  case DW_EH_PE_sdata8:
+    result = *((const int64_t *) p);
+    p += 8;
+    break;
   default:
-    fprintf(stderr, "Encoding %#x\n", encoding);
+    fprintf(stderr, "Encoding %#x (base)\n", encoding);
     abort();
   }
 
@@ -115,7 +123,7 @@ static uintptr_t get_encoded(const uint8_t **pp, uint8_t encoding)
     result += (uintptr_t) *pp;
     break;
   default:
-    fprintf(stderr, "Encoding %#x\n", encoding);
+    fprintf(stderr, "Encoding %#x (mod)\n", encoding);
     abort();
   }
 

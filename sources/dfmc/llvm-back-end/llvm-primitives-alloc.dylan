@@ -347,7 +347,7 @@ end;
 define macro repeated-allocate-primitive-definer
   { define repeated-allocate-primitive (?be:name, ?:name,
                                         ?alloc:name, ?alloc-s:name,
-                                        ?type:name) }
+                                        ?type:name, ?fill-parameter-type:name) }
     => { define side-effect-free stateful indefinite-extent &primitive-descriptor
                "primitive-" ## ?name ## "-allocate-filled"
 	     (number-words :: <raw-integer>,
@@ -392,6 +392,11 @@ define macro repeated-allocate-primitive-definer
                                 number-slots, fill-value);
              end select
            else
+             let repeated-fill-value-type
+               = llvm-type-forward(repeated-fill-value.llvm-value-type);
+             let repeated-fill-value
+               = emit-cast-for-call(?be, repeated-fill-value, repeated-fill-value-type,
+                                    dylan-value(?#"fill-parameter-type"));
              select (raw-number-slots)
                0 =>
                  call-primitive(?be,
@@ -412,19 +417,19 @@ define macro repeated-allocate-primitive-definer
 end macro;
 
 define repeated-allocate-primitive(be, object,       rf,        s-rf,
-                                   <object>);
+                                   <object>, <object>);
 define repeated-allocate-primitive(be, byte,         leaf-rbf,  s-rbf,
-                                   <raw-byte>);
+                                   <raw-byte>, <raw-integer>);
 define repeated-allocate-primitive(be, double-byte,  leaf-rhf,  s-rhf,
-                                   <raw-double-byte>);
+                                   <raw-double-byte>, <raw-integer>);
 define repeated-allocate-primitive(be, word,         leaf-rwf,  s-rwf,
-                                   <raw-machine-word>);
+                                   <raw-machine-word>, <raw-machine-word>);
 //define repeated-allocate-primitive(be, double-word,  leaf-rdwf, s-rdwf,
-//                                   <raw-double-integer>);
+//                                   <raw-double-integer>, <raw-double-integer>);
 define repeated-allocate-primitive(be, single-float, leaf-rsff, s-rsff,
-                                   <raw-single-float>);
+                                   <raw-single-float>, <raw-single-float>);
 define repeated-allocate-primitive(be, double-float, leaf-rdff, s-rdff,
-                                   <raw-double-float>);
+                                   <raw-double-float>, <raw-double-float>);
 
 define side-effect-free stateful indefinite-extent &primitive-descriptor primitive-byte-allocate-leaf-filled
   (number-words :: <raw-integer>,
@@ -444,6 +449,11 @@ define side-effect-free stateful indefinite-extent &primitive-descriptor primiti
   let raw-number-slots
     = instance?(number-slots, <llvm-integer-constant>)
     & number-slots.llvm-integer-constant-integer;
+  let repeated-fill-value-type
+    = llvm-type-forward(repeated-fill-value.llvm-value-type);
+  let repeated-fill-value
+    = emit-cast-for-call(be, repeated-fill-value, repeated-fill-value-type,
+                         dylan-value(#"<raw-integer>"));
   select (raw-number-slots)
     0 =>
       // Allocate a byte-repeated leaf object with no fixed slots
