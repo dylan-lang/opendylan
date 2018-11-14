@@ -90,9 +90,17 @@ define method op--make-closed-over-cell
     dylan-value(#"<raw-double-float>") =>
       call-primitive(back-end, primitive-make-double-float-box-descriptor,
                      value);
-    otherwise =>
+
+    dylan-value(#"<raw-pointer>") =>
       call-primitive(back-end, primitive-make-raw-box-descriptor,
-                     value)
+                     value);
+
+    otherwise =>
+      let value
+        = op--integer-cast(back-end, value, back-end.%type-table["iWord"],
+                           sext?: rep.raw-type-signed?);
+      let ptr-value = ins--inttoptr(back-end, value, $llvm-i8*-type);
+      call-primitive(back-end, primitive-make-raw-box-descriptor, ptr-value)
   end
 end method;
 
