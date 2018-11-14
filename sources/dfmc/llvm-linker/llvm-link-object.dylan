@@ -311,3 +311,8 @@ define method emit-indirection-definition
   llvm-builder-define-global(back-end, name, global);
 end method;
 
+define method emit-extern
+    (back-end :: <llvm-back-end>, module :: <llvm-module>,
+     object :: <&raw-aggregate-type>) => ()
+  // These are virtual objects, no need to emit them
+end;
