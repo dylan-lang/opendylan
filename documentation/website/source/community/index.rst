@@ -6,6 +6,7 @@
         <li><a href="#contribute"><i class="icon-chevron-right"></i> How to Contribute</a></li>
         <li><a href="#development"><i class="icon-chevron-right"></i> Development</a></li>
         <li><a href="#irc"><i class="icon-chevron-right"></i> IRC Channel</a></li>
+        <li><a href="#slack"><i class="icon-chevron-right"></i> Slack Channel</a></li>
         <li><a href="#mailing-lists"><i class="icon-chevron-right"></i> Mailing Lists</a></li>
         <li><a href="#other-sites"><i class="icon-chevron-right"></i> Other sites</a></li>
       </ul>
@@ -28,17 +29,26 @@ The `Hacker Guide <http://opendylan.org/documentation/hacker-guide/>`_ has
 details on how to contribute to the project.
 
 
+.. _slack:
+
+The DylanLang Channel on Slack
+==============================
+
+https://dylanlang.slack.com -- you will need an invite to join
+
+The DylanLang Slack channel is where most of the day-to-day Dylan activity
+takes place.
+
+
 .. _irc:
 
-The #dylan IRC channel
+The #dylan IRC Channel
 ======================
 
-The #dylan channel on Freenode.net is where most of the day-to-day Dylan activity
-takes place.  Since Dylan hackers are spread around the world (New Zealand,
-Germany, East and West coast USA, South America, ...) there's usually someone
-online at all times of day.  The channel is logged at
-http://colabti.org/irclogger/irclogger_logs/dylan so you can always ask a
-question and then check the logs for answers later.
+There is usually someone available in the #dylan channel on
+Freenode.net to answer questions.  The channel is logged at
+http://colabti.org/irclogger/irclogger_logs/dylan so you can always
+ask a question and then check the logs for answers later.
 
 Freenode also offers `web-based chat`_ if you don't have an IRC client or
 just want easy and quick access.
@@ -49,8 +59,8 @@ channel.
 
 .. _web-based chat: https://webchat.freenode.net/
 
-.. _mailing-lists:
 
+.. _mailing-lists:
 Mailing List
 ============
 
@@ -68,7 +78,6 @@ Other Sites
 ===========
 
 - `Twitter <https://twitter.com/DylanLanguage>`_
-- `Google+ Community <https://plus.google.com/communities/115853148502055906760>`_
 - `Stack Overflow <http://stackoverflow.com/questions/tagged/dylan>`_
 
 .. raw:: html
