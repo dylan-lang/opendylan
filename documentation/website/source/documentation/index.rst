@@ -73,7 +73,7 @@ Learning Dylan
     Describes Open Dylan's integrated development environment which
     is available for Windows.
 
-`Building Applications Using DUIM <building-with-duim/index.html>`_ [`pdf <building-with-duim/BuildingApplicationsWithDUIM.pdf>`__] [`epub <building-with-duim/BuildingApplicationsWithDUIM.epub>`__] [`old HTML <http://opendylan.org/documentation/opendylan/dguide/index.htm>`__]
+`Building Applications Using DUIM <building-with-duim/index.html>`_ [`pdf <building-with-duim/BuildingApplicationsWithDUIM.pdf>`__] [`epub <building-with-duim/BuildingApplicationsWithDUIM.epub>`__] [`old HTML <http://web.archive.org/web/20170102232826/http://opendylan.org/documentation/opendylan/dguide/index.htm>`__]
     Describes how to use DUIM (Dylan User Interface Manager),
     the portable window programming toolkit. This is only useful
     if you are using Open Dylan on Windows.
