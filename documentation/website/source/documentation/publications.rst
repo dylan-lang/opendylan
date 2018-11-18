@@ -43,7 +43,7 @@ Publications about Dylan
 
     https://dl.acm.org/citation.cfm?id=1622123.1622148
 
-**Secure Networking** (by Andreas Bogk and Hannes Mehnert at 23rd Chaos Communication Congress `pdf <http://www.itu.dk/~hame/secure-networking.pdf>`__)
+**Secure Networking** (by Andreas Bogk and Hannes Mehnert at 23rd Chaos Communication Congress `pdf <https://www.researchgate.net/profile/Hannes_Mehnert/publication/228910362_Secure_networking/links/558fefe308aed6ec4bf64b82/Secure-networking.pdf>`__)
     We noticed a lack of a decent secure framework for handling
     network packets, we have designed and implemented major parts of a
     TCP/IP stack in the high level programming language “Dylan”,
