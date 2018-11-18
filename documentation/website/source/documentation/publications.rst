@@ -31,7 +31,7 @@ Publications about Dylan
     is type-safe, no up- and downcasts are needed.
 
 
-**A domain-specific language for manipulation of binary data in Dylan** (by Hannes Mehnert and Andreas Bogk at ILC 2007 `pdf <http://www.itu.dk/~hame/ilc07-final.pdf>`__ `bib <../_static/documentation/mehnert2007.bib>`__)
+**A domain-specific language for manipulation of binary data in Dylan** (by Hannes Mehnert and Andreas Bogk at ILC 2007 `pdf <https://www.researchgate.net/profile/Hannes_Mehnert/publication/242091072_A_domain-specific_language_for_manipulation_of_binary_data_in_Dylan/links/558fd23308ae15962d8b5e68/A-domain-specific-language-for-manipulation-of-binary-data-in-Dylan.pdf>`__ `bib <../_static/documentation/mehnert2007.bib>`__)
     We present a domain specific language for manipulation of binary
     data, or structured byte sequences, as they appear in everyday
     applications such as networking or graphics file manipulation. Our
