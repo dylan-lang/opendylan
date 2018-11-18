@@ -22,7 +22,7 @@ Publications about Dylan
 
     https://dl.acm.org/citation.cfm?id=1869643.1869645
 
-**Automatically generated type-safe GTK+ binding for Dylan** (by Hannes Mehnert at ILC 2009 `pdf <http://www.itu.dk/~hame/ilc09.pdf>`__ `bib <../_static/documentation/mehnert2009.bib>`__)
+**Automatically generated type-safe GTK+ binding for Dylan** (by Hannes Mehnert at ILC 2009 `pdf <https://www.researchgate.net/profile/Hannes_Mehnert/publication/255630976_Automatically_generated_type-safe_GTK_binding_for_Dylan/links/558fd23308ae15962d8b5e66/Automatically-generated-type-safe-GTK-binding-for-Dylan.pdf>`__ `bib <../_static/documentation/mehnert2009.bib>`__)
     We present an automated way to get language bindings for GTK+ for
     Dylan, an object-oriented functional programming language related
     to Lisp. Dylan supports multiple inheritance, polymorphism,
