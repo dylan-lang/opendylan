@@ -69,7 +69,7 @@ Learning Dylan
     and editor integration (like emacs). This is mainly useful for
     people using Open Dylan on Linux, FreeBSD and Mac OS X.
 
-`Getting Started with the Open Dylan IDE <getting-started-ide/index.html>`_ [`pdf <getting-started-ide/GettingStartedWithTheOpenDylanIDE.pdf>`__] [`epub <getting-started-ide/GettingStartedWithTheOpenDylanIDE.epub>`__] [`old HTML <http://opendylan.org/documentation/opendylan/env/index.htm>`__]
+`Getting Started with the Open Dylan IDE <getting-started-ide/index.html>`_ [`pdf <getting-started-ide/GettingStartedWithTheOpenDylanIDE.pdf>`__] [`epub <getting-started-ide/GettingStartedWithTheOpenDylanIDE.epub>`__] [`old HTML <http://web.archive.org/web/20170102232752/http://opendylan.org/documentation/opendylan/env/index.htm>`__]
     Describes Open Dylan's integrated development environment which
     is available for Windows.
 
