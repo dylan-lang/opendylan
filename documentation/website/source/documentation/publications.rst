@@ -2,7 +2,7 @@
 Publications about Dylan
 ************************
 
-**Extending Dylan's type system for better type inference and error detection** (by Hannes Mehnert at ILC 2010 `pdf <http://www.itu.dk/~hame/ilc2010.pdf>`__ `bib <../_static/documentation/mehnert2010.bib>`__)
+**Extending Dylan's type system for better type inference and error detection** (by Hannes Mehnert at ILC 2010 `pdf <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.627.5175&rep=rep1&type=pdf>`__ `bib <../_static/documentation/mehnert2010.bib>`__)
     Whereas dynamic typing enables rapid prototyping and easy
     experimentation, static typing provides early error detection and
     better compile time optimization. Gradual typing provides the best
