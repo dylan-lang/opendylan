@@ -1980,6 +1980,10 @@ define method emit-computation
     let cell = op--make-closed-over-cell(back-end, rep, value);
     temporary-value(tmp) := cell;
   else
+    let value-type = llvm-type-forward(value.llvm-value-type);
+    let value-cast
+      = emit-cast-for-cell(back-end, value, value-type, rep);
+
     let type = llvm-reference-type(back-end, rep);
 
     let alloca = ins--alloca(back-end, type, i32(1));
@@ -1993,7 +1997,7 @@ define method emit-computation
       emit-dbg-local-variable(back-end, c, tmp, #"auto", alloca, address?: #t);
     end if;
     temporary-value(tmp) := alloca;
-    ins--store(back-end, value, alloca);
+    ins--store(back-end, value-cast, alloca);
   end if;
 end method;
 
@@ -2013,13 +2017,31 @@ end method;
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <set-cell-value!>) => ()
   let value = emit-reference(back-end, m, c.computation-value);
+  let rep = cell-representation(cell-type(c.computation-cell));
   if (closed-over?(c.computation-cell))
     let cell = emit-reference(back-end, m, c.computation-cell);
-    let rep = cell-representation(cell-type(c.computation-cell));
     op--set-closed-over-cell(back-end, rep, cell, value)
   else
-    ins--store(back-end, value, temporary-value(c.computation-cell));
+    let value-type = llvm-type-forward(value.llvm-value-type);
+    let value-cast
+      = emit-cast-for-cell(back-end, value, value-type, rep);
+    ins--store(back-end, value-cast, temporary-value(c.computation-cell));
   end if;
   computation-result(back-end, c, value);
 end method;
 
+define method emit-cast-for-cell
+    (back-end :: <llvm-back-end>, value :: <llvm-value>,
+     value-type :: <llvm-integer-type>, cell-rep :: <&raw-type>)
+ => (arg :: <llvm-value>);
+  let cell-llvm-type = llvm-reference-type(back-end, cell-rep);
+  op--integer-cast(back-end, value, cell-llvm-type,
+                   sext?: raw-type-signed?(cell-rep))
+end method;
+
+define method emit-cast-for-cell
+    (back-end :: <llvm-back-end>, value :: <llvm-value>,
+     value-type :: <llvm-type>, cell-rep :: <&type>)
+  => (value :: <llvm-value>);
+  value
+end method;
