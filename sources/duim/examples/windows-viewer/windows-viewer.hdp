@@ -22,3 +22,4 @@ Major-Version: 2
 Minor-Version: 1
 Compilation-Mode: tight
 Target-Type: executable
+Platforms: x86-win32

@@ -22,3 +22,4 @@ subprojects:	../iop-protocol/iop-protocol.hdp
 	../ir/orb-ir.hdp
 	../utilities/orb-utilities.hdp
 executable:	DxORB
+Platforms: x86-win32
