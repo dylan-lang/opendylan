@@ -2,7 +2,7 @@
 Publications about Dylan
 ************************
 
-**Extending Dylan's type system for better type inference and error detection** (by Hannes Mehnert at ILC 2010 `pdf <http://www.itu.dk/~hame/ilc2010.pdf>`__ `bib <../_static/documentation/mehnert2010.bib>`__)
+**Extending Dylan's type system for better type inference and error detection** (by Hannes Mehnert at ILC 2010 `pdf <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.627.5175&rep=rep1&type=pdf>`__ `bib <../_static/documentation/mehnert2010.bib>`__)
     Whereas dynamic typing enables rapid prototyping and easy
     experimentation, static typing provides early error detection and
     better compile time optimization. Gradual typing provides the best
@@ -22,7 +22,7 @@ Publications about Dylan
 
     https://dl.acm.org/citation.cfm?id=1869643.1869645
 
-**Automatically generated type-safe GTK+ binding for Dylan** (by Hannes Mehnert at ILC 2009 `pdf <http://www.itu.dk/~hame/ilc09.pdf>`__ `bib <../_static/documentation/mehnert2009.bib>`__)
+**Automatically generated type-safe GTK+ binding for Dylan** (by Hannes Mehnert at ILC 2009 `pdf <https://www.researchgate.net/profile/Hannes_Mehnert/publication/255630976_Automatically_generated_type-safe_GTK_binding_for_Dylan/links/558fd23308ae15962d8b5e66/Automatically-generated-type-safe-GTK-binding-for-Dylan.pdf>`__ `bib <../_static/documentation/mehnert2009.bib>`__)
     We present an automated way to get language bindings for GTK+ for
     Dylan, an object-oriented functional programming language related
     to Lisp. Dylan supports multiple inheritance, polymorphism,
@@ -31,7 +31,7 @@ Publications about Dylan
     is type-safe, no up- and downcasts are needed.
 
 
-**A domain-specific language for manipulation of binary data in Dylan** (by Hannes Mehnert and Andreas Bogk at ILC 2007 `pdf <http://www.itu.dk/~hame/ilc07-final.pdf>`__ `bib <../_static/documentation/mehnert2007.bib>`__)
+**A domain-specific language for manipulation of binary data in Dylan** (by Hannes Mehnert and Andreas Bogk at ILC 2007 `pdf <https://www.researchgate.net/profile/Hannes_Mehnert/publication/242091072_A_domain-specific_language_for_manipulation_of_binary_data_in_Dylan/links/558fd23308ae15962d8b5e68/A-domain-specific-language-for-manipulation-of-binary-data-in-Dylan.pdf>`__ `bib <../_static/documentation/mehnert2007.bib>`__)
     We present a domain specific language for manipulation of binary
     data, or structured byte sequences, as they appear in everyday
     applications such as networking or graphics file manipulation. Our
@@ -43,7 +43,7 @@ Publications about Dylan
 
     https://dl.acm.org/citation.cfm?id=1622123.1622148
 
-**Secure Networking** (by Andreas Bogk and Hannes Mehnert at 23rd Chaos Communication Congress `pdf <http://www.itu.dk/~hame/secure-networking.pdf>`__)
+**Secure Networking** (by Andreas Bogk and Hannes Mehnert at 23rd Chaos Communication Congress `pdf <https://www.researchgate.net/profile/Hannes_Mehnert/publication/228910362_Secure_networking/links/558fefe308aed6ec4bf64b82/Secure-networking.pdf>`__)
     We noticed a lack of a decent secure framework for handling
     network packets, we have designed and implemented major parts of a
     TCP/IP stack in the high level programming language “Dylan”,
