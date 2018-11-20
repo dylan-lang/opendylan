@@ -112,9 +112,8 @@ define sideways method emit-gluefile
     llvm-builder-declare-global(back-end,
                                 init-run-time-global.llvm-global-name,
                                 init-run-time-global);
-    emit-ctor-entry(back-end, m,
-                    $system-init-ctor-priority,
-                    init-run-time-global);
+    llvm-builder-add-ctor-entry(back-end, $system-init-ctor-priority,
+                                init-run-time-global);
   end if;
 
   // Add a flag to check whether the library has been initialized or not
@@ -245,6 +244,9 @@ define sideways method emit-gluefile
   cleanup
     back-end.llvm-builder-function := #f;
   end block;
+
+  // Add constructor definitions to the module
+  llvm-builder-finish-ctor(back-end);
 
   // Output LLVM bitcode
   llvm-save-bitcode-file(m, locator);
