@@ -16,6 +16,8 @@ define open abstract primary class <llvm-builder> (<object>)
     init-value: #f;
   slot llvm-builder-dbg :: false-or(<llvm-metadata-attachment>),
     init-value: #f;
+  constant slot llvm-builder-ctor-entries :: <stretchy-vector>
+    = make(<stretchy-object-vector>);
 end class;
 
 define class <llvm-concrete-builder> (<llvm-builder>)
@@ -153,6 +155,65 @@ define function llvm-builder-global-defined?
       else
         #t
       end if
+end function;
+
+
+/// Global constructor entries
+
+define constant $ctor-function-type
+  = make(<llvm-function-type>,
+         return-type: $llvm-void-type,
+         parameter-types: #(),
+         varargs?: #f);
+define constant $ctor-function-ptr-type
+  = make(<llvm-pointer-type>, pointee: $ctor-function-type);
+
+define constant $ctor-struct-type
+  = make(<llvm-struct-type>,
+         elements: vector($llvm-i32-type,
+                          $ctor-function-ptr-type,
+                          $llvm-i8*-type));
+
+define constant $null-data
+  = make(<llvm-null-constant>, type: $llvm-i8*-type);
+
+define function llvm-builder-add-ctor-entry
+    (builder :: <llvm-builder>, priority :: <integer>,
+     init-function :: <llvm-value>)
+ => ();
+  add!(builder.llvm-builder-ctor-entries,
+       make(<llvm-aggregate-constant>,
+            type: $ctor-struct-type,
+            aggregate-values: vector(i32(priority),
+                                     init-function,
+                                     $null-data)));
+end function;
+
+define function llvm-builder-finish-ctor
+    (builder :: <llvm-builder>)
+ => ();
+  unless (empty?(builder.llvm-builder-ctor-entries))
+    let entries = copy-sequence(builder.llvm-builder-ctor-entries);
+    builder.llvm-builder-ctor-entries.size := 0;
+
+    // Declare the constructors list
+    let ctor-type
+      = make(<llvm-array-type>,
+             size: entries.size,
+             element-type: $ctor-struct-type);
+    let ctor-global
+      = make(<llvm-global-variable>,
+             name: "llvm.global_ctors",
+             type: make(<llvm-pointer-type>, pointee: ctor-type),
+             initializer: make(<llvm-aggregate-constant>,
+                               type: ctor-type,
+                               aggregate-values: entries),
+             constant?: #f,
+             linkage: #"appending");
+    llvm-builder-define-global(builder,
+                               ctor-global.llvm-global-name,
+                               ctor-global);
+  end unless;
 end function;
 
 
