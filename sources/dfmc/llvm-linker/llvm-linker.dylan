@@ -252,7 +252,7 @@ define constant $system-init-code-tag = "for_system";
 define constant $user-init-code-tag = "for_user";
 
 define constant $system-init-ctor-priority = 0;
-//define constant $user-init-ctor-priority = 65535;
+define constant $user-init-ctor-priority = 65535;
 
 define constant $init-code-function-type
   = make(<llvm-function-type>,

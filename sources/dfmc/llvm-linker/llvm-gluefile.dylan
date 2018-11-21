@@ -170,17 +170,19 @@ define sideways method emit-gluefile
 
     // Emit calls to glue functions of referenced libraries
     for (used-ld in library-description-used-descriptions(ld))
-      let used-glue
-        = make(<llvm-function>,
-               name: library-description-glue-name(back-end, used-ld),
-               type: $init-code-function-ptr-type,
-               arguments: #(),
-               linkage: #"external",
-               section: llvm-section-name(back-end, #"init-code"),
-               calling-convention: $llvm-calling-convention-c);
-      llvm-builder-declare-global(back-end, used-glue.llvm-global-name,
-                                  used-glue);
-      ins--call(back-end, used-glue, #[]);
+      unless (dylan-library-library-description?(used-ld))
+        let used-glue
+          = make(<llvm-function>,
+                 name: library-description-glue-name(back-end, used-ld),
+                 type: $init-code-function-ptr-type,
+                 arguments: #(),
+                 linkage: #"external",
+                 section: llvm-section-name(back-end, #"init-code"),
+                 calling-convention: $llvm-calling-convention-c);
+        llvm-builder-declare-global(back-end, used-glue.llvm-global-name,
+                                    used-glue);
+        ins--call(back-end, used-glue, #[]);
+      end unless;
     end for;
 
     // Emit a call to the self init function
@@ -195,6 +197,11 @@ define sideways method emit-gluefile
 
     llvm-builder-define-global(back-end, glue-name,
                                back-end.llvm-builder-function);
+
+    if (dylan-library-library-description?(ld))
+      llvm-builder-add-ctor-entry(back-end, $user-init-ctor-priority,
+                                  back-end.llvm-builder-function);
+    end if;
   cleanup
     back-end.llvm-builder-function := #f;
   end block;
