@@ -47,6 +47,9 @@ define sideways method emit-library-record
       
       link-all(back-end, m, cr);
 
+      // Add constructor definitions to the module
+      llvm-builder-finish-ctor(back-end);
+
       // Output LLVM bitcode
       llvm-save-bitcode-file(m, locator);
 
@@ -249,7 +252,7 @@ define constant $system-init-code-tag = "for_system";
 define constant $user-init-code-tag = "for_user";
 
 define constant $system-init-ctor-priority = 0;
-//define constant $user-init-ctor-priority = 65535;
+define constant $user-init-ctor-priority = 65535;
 
 define constant $init-code-function-type
   = make(<llvm-function-type>,
@@ -258,49 +261,6 @@ define constant $init-code-function-type
          varargs?: #f);
 define constant $init-code-function-ptr-type
   = make(<llvm-pointer-type>, pointee: $init-code-function-type);
-
-define constant $ctor-struct-type
-  = make(<llvm-struct-type>,
-         elements: vector($llvm-i32-type,
-                          $init-code-function-ptr-type,
-                          $llvm-i8*-type));
-
-define constant $null-data
-  = make(<llvm-null-constant>, type: $llvm-i8*-type);
-
-define method emit-ctor-entry
-    (back-end :: <llvm-back-end>, m :: <llvm-module>,
-     priority :: <integer>, init-function :: <llvm-value>)
- => ();
-  let priority-constant
-    = make(<llvm-integer-constant>,
-           type: $llvm-i32-type, integer: priority);
-
-  let ctor-element
-    = make(<llvm-aggregate-constant>,
-           type: $ctor-struct-type,
-           aggregate-values: vector(priority-constant,
-                                    init-function,
-                                    $null-data));
-
-  // Declare the constructors list
-  let ctor-type
-    = make(<llvm-array-type>,
-	   size: 1,
-	   element-type: $ctor-struct-type);
-  let ctor-global
-    = make(<llvm-global-variable>,
-	   name: "llvm.global_ctors",
-	   type: llvm-pointer-to(back-end, ctor-type),
-	   initializer: make(<llvm-aggregate-constant>,
-			     type: ctor-type,
-			     aggregate-values: vector(ctor-element)),
-           constant?: #f,
-	   linkage: #"appending");
-  llvm-builder-define-global(back-end,
-			     ctor-global.llvm-global-name,
-			     ctor-global);
-end method;
 
 define method emit-init-code-definition
     (back-end :: <llvm-back-end>, m :: <llvm-module>, heap, name :: <string>)
@@ -373,7 +333,8 @@ define method emit-init-code-definition
                                               back-end.llvm-builder-function);
 
       // Add the init function to the constructor
-      emit-ctor-entry(back-end, m, $system-init-ctor-priority, global);
+      llvm-builder-add-ctor-entry(back-end, $system-init-ctor-priority,
+                                  global);
     end unless;
   cleanup
     back-end.llvm-builder-function := #f;

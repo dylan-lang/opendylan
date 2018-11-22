@@ -292,6 +292,9 @@ define module llvm-builder
     llvm-builder-global,
     llvm-builder-global-defined?,
 
+    llvm-builder-add-ctor-entry,
+    llvm-builder-finish-ctor,
+
     <llvm-local-value>,
     ins--local,
     llvm-builder-local,

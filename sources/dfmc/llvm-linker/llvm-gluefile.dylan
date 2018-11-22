@@ -112,9 +112,8 @@ define sideways method emit-gluefile
     llvm-builder-declare-global(back-end,
                                 init-run-time-global.llvm-global-name,
                                 init-run-time-global);
-    emit-ctor-entry(back-end, m,
-                    $system-init-ctor-priority,
-                    init-run-time-global);
+    llvm-builder-add-ctor-entry(back-end, $system-init-ctor-priority,
+                                init-run-time-global);
   end if;
 
   // Add a flag to check whether the library has been initialized or not
@@ -130,6 +129,18 @@ define sideways method emit-gluefile
   llvm-builder-define-global(back-end,
                              init-flag-global.llvm-global-name,
                              init-flag-global);
+
+  let self-init-function
+    = make(<llvm-function>,
+           name: self-init-name(back-end, ld),
+           type: $init-code-function-ptr-type,
+           arguments: #(),
+           attribute-list: make(<llvm-attribute-list>,
+                                function-attributes: $llvm-attribute-noinline),
+           linkage: #"external",
+           visibility: #"hidden",
+           section: llvm-section-name(back-end, #"init-code"),
+           calling-convention: $llvm-calling-convention-c);
 
   // Generate the library glue function
   block ()
@@ -159,18 +170,46 @@ define sideways method emit-gluefile
 
     // Emit calls to glue functions of referenced libraries
     for (used-ld in library-description-used-descriptions(ld))
-      let used-glue
-        = make(<llvm-function>,
-               name: library-description-glue-name(back-end, used-ld),
-               type: $init-code-function-ptr-type,
-               arguments: #(),
-               linkage: #"external",
-               section: llvm-section-name(back-end, #"init-code"),
-               calling-convention: $llvm-calling-convention-c);
-      llvm-builder-declare-global(back-end, used-glue.llvm-global-name,
+      unless (dylan-library-library-description?(used-ld))
+        let used-glue
+          = make(<llvm-function>,
+                 name: library-description-glue-name(back-end, used-ld),
+                 type: $init-code-function-ptr-type,
+                 arguments: #(),
+                 linkage: #"external",
+                 section: llvm-section-name(back-end, #"init-code"),
+                 calling-convention: $llvm-calling-convention-c);
+        llvm-builder-declare-global(back-end, used-glue.llvm-global-name,
                                     used-glue);
-      ins--call(back-end, used-glue, #[]);
+        ins--call(back-end, used-glue, #[]);
+      end unless;
     end for;
+
+    // Emit a call to the self init function
+    ins--call(back-end, self-init-function, #[]);
+
+    // Branch to common return
+    ins--br(back-end, return-bb);
+
+    // Function return
+    ins--block(back-end, return-bb);
+    ins--ret(back-end);
+
+    llvm-builder-define-global(back-end, glue-name,
+                               back-end.llvm-builder-function);
+
+    if (dylan-library-library-description?(ld))
+      llvm-builder-add-ctor-entry(back-end, $user-init-ctor-priority,
+                                  back-end.llvm-builder-function);
+    end if;
+  cleanup
+    back-end.llvm-builder-function := #f;
+  end block;
+
+  // Generate the self init function
+  block ()
+    back-end.llvm-builder-function := self-init-function;
+    ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
 
     // Emit calls to user init functions of compilation records
     for (cr-name in cr-names)
@@ -204,18 +243,17 @@ define sideways method emit-gluefile
       end;
     end if;
 
-    // Branch to common return
-    ins--br(back-end, return-bb);
-
     // Function return
-    ins--block(back-end, return-bb);
     ins--ret(back-end);
 
-    llvm-builder-define-global(back-end, glue-name,
+    llvm-builder-define-global(back-end, self-init-function.llvm-global-name,
                                back-end.llvm-builder-function);
   cleanup
     back-end.llvm-builder-function := #f;
   end block;
+
+  // Add constructor definitions to the module
+  llvm-builder-finish-ctor(back-end);
 
   // Output LLVM bitcode
   llvm-save-bitcode-file(m, locator);
@@ -237,6 +275,10 @@ end method;
 
 define method library-description-glue-name (back-end :: <llvm-back-end>, ld)
   glue-name(back-end, library-description-emit-name(ld))
+end method;
+
+define method self-init-name (back-end :: <llvm-back-end>, ld)
+  concatenate(library-description-glue-name(back-end, ld), "_X")
 end method;
 
 define method cr-init-name (back-end :: <llvm-back-end>, ld, cr-name)

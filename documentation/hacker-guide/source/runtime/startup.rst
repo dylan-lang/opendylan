@@ -53,12 +53,20 @@ in ``sources/dfmc/llvm-linker/llvm-gluefile.dylan``, does the following:
    done, and exits if it has
 #. Sets the initialization flag
 #. Calls the library startup glue functions of all libraries
-   referenced by this one.
-#. Calls the for-user init functions for each compile-unit in the
+   (except for the Dylan library) referenced by this one.
+#. Calls the library's self-init function, named
+   ``_Init_``\ *mangled-library-name*\ ``_X``, which in turn calls each
+   of the for-user init functions for each compile-unit in the
    library. These contain the code generated for all of the top-level
    forms.
-#. Calls the ``%install-boot-symbols`` function defined in
-   ``sources/dylan/symbol-table.dylan``. (Dylan library only.)
+#. For the Dylan library only, the self-init function also calls the
+   ``%install-boot-symbols`` function defined in
+   ``sources/dylan/symbol-table.dylan``. ()
+
+The startup glue function for the Dylan library is called from a
+global constructor at user priority. This ensures that the
+``%install-boot-symbols`` is performed before other libraries' symbol
+resolution begins.
 
 For executables, execution begins at the usual ``main`` entry
 point. The ``main`` function, generated in ``_main.bc`` by
