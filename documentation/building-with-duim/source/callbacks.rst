@@ -4,7 +4,7 @@ Adding Callbacks to the Application
 
 At this point, the task list manager still does very little. If you try
 running the code (as described in `Starting the
-application <improve.html#17910>`_), and interacting with any of the
+application <improve.html#starting-the-application>`_), and interacting with any of the
 elements in the GUI (clicking on a button, choosing a menu command, and
 so on), then only the "not yet implemented" message is displayed. This
 section shows you how to remedy this situation, by adding callback
