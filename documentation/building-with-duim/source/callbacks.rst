@@ -1247,15 +1247,17 @@ both of these methods. For the Task List 2 project, however, the first
 method requires a slightly different definition, and the second method
 is not required at all.
 
-The ``note-task-selection-change`` method defined on ``<task-frame>`` is
-called by ``refresh-task-frame``, described on page `The
-refresh-task-frame method is called whenever the list of tasks needs to
-be refreshed for whatever reason. This happens most commonly after
+The ``note-task-selection-change`` method defined on ``<task-frame>``
+is called by ``refresh-task-frame``, described on `<Refreshing the
+list of tasks callbacks.html#refreshing-the-list-of-tasks>`_. The
+refresh-task-frame method is called whenever the list of tasks needs
+to be refreshed for whatever reason. This happens most commonly after
 adding or removing a task from the list, or loading in a new task list
-from a file on disk. The method refresh-task-frame takes an instance of
-<task-frame> as an argument and returns no values. For the Task List 1
-project the definition is: <callbacks.html#52283>`_. For the Task List 1
-project, the ``note-task-selection-change`` method is defined:
+from a file on disk. The method refresh-task-frame takes an instance
+of <task-frame> as an argument and returns no values. For the Task
+List 1 project the definition is: `<callbacks.html#52283>`_. For the
+Task List 1 project, the ``note-task-selection-change`` method is
+defined:
 
 .. code-block:: dylan
 
