@@ -222,7 +222,7 @@ Changes to button definitions
 
 The definition of each button in the definition of ``<task-frame>`` needs
 to be modified compared to their definition in the Task List 1 project,
-as described in `Gluing the new design together <improve.html#70170>`_.
+as described in `Gluing the new design together <improve.html#gluing-the-new-design-together>`_.
 
 Broadly speaking, you need to update the ``command:`` keyword/argument
 pair for each button gadget, and you need to redefine the activate
@@ -376,8 +376,8 @@ instance of ``<gadget>``. This change results in these new definitions:
     end method note-task-selection-change;
 
 For details about ``note-task-selection-change``, see `Enabling and
-disabling buttons in the interface <callbacks.html#42654>`_. See `A
-task list manager using command tables <source.html#52969>`_ for the
+disabling buttons in the interface <callbacks.html#enabling-and-disabling-buttons-in-the-interface>`_. See `A
+task list manager using command tables <source.html#a-task-list-manager-using-command-tables>`_ for the
 complete source code for the Task List 2 project.
 
 
