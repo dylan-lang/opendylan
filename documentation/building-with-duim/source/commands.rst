@@ -376,7 +376,7 @@ instance of ``<gadget>``. This change results in these new definitions:
     end method note-task-selection-change;
 
 For details about ``note-task-selection-change``, see `Enabling and
-disabling buttons in the interface <callbacks.html#42654>`_. See `A
+disabling buttons in the interface <callbacks.html#enabling-and-disabling-buttons-in-the-interface>`_. See `A
 task list manager using command tables <source.html#52969>`_ for the
 complete source code for the Task List 2 project.
 
