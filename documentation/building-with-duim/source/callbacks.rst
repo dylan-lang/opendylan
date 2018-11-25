@@ -4,7 +4,7 @@ Adding Callbacks to the Application
 
 At this point, the task list manager still does very little. If you try
 running the code (as described in `Starting the
-application <improve.html#17910>`_), and interacting with any of the
+application <improve.html#starting-the-application>`_), and interacting with any of the
 elements in the GUI (clicking on a button, choosing a menu command, and
 so on), then only the "not yet implemented" message is displayed. This
 section shows you how to remedy this situation, by adding callback
@@ -142,7 +142,7 @@ ensure that information about tasks is passed to the ``task-list`` pane
 correctly. Make these changes to the existing definition in the file
 ``frame.dylan``.
 
-In `Gluing the final design together <menus.html#70705>`_, the
+In `Gluing the final design together <menus.html#gluing-the-new-design-together>`_, the
 definition of ``task-list`` was given as:
 
 .. code-block:: dylan
@@ -938,7 +938,7 @@ specified using known slot values about the gadget supplied to
 ``frame-add-task``, and the frame that contains the gadget. The ``name``
 and ``priority`` values are specified by calling the ``prompt-for-task``
 method defined in `Creating a dialog for adding new
-items <improve.html#89811>`_. This method displays a dialog into which
+items <improve.html#creating-a-dialog-for-adding-new-items>`_. This method displays a dialog into which
 the user types the text for the new task and chooses the priority, both
 of which values are returned from ``prompt-for-task``.
 
@@ -1247,15 +1247,16 @@ both of these methods. For the Task List 2 project, however, the first
 method requires a slightly different definition, and the second method
 is not required at all.
 
-The ``note-task-selection-change`` method defined on ``<task-frame>`` is
-called by ``refresh-task-frame``, described on page `The
-refresh-task-frame method is called whenever the list of tasks needs to
-be refreshed for whatever reason. This happens most commonly after
+The ``note-task-selection-change`` method defined on ``<task-frame>``
+is called by ``refresh-task-frame``, described on `<Refreshing the
+list of tasks callbacks.html#refreshing-the-list-of-tasks>`_. The
+refresh-task-frame method is called whenever the list of tasks needs
+to be refreshed for whatever reason. This happens most commonly after
 adding or removing a task from the list, or loading in a new task list
-from a file on disk. The method refresh-task-frame takes an instance of
-<task-frame> as an argument and returns no values. For the Task List 1
-project the definition is: <callbacks.html#52283>`_. For the Task List 1
-project, the ``note-task-selection-change`` method is defined:
+from a file on disk. The method ``refresh-task-frame`` takes an instance
+of ``<task-frame>`` as an argument and returns no values. For the
+Task List 1 project, the ``note-task-selection-change`` method is
+defined:
 
 .. code-block:: dylan
 
