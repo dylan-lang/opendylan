@@ -938,7 +938,7 @@ specified using known slot values about the gadget supplied to
 ``frame-add-task``, and the frame that contains the gadget. The ``name``
 and ``priority`` values are specified by calling the ``prompt-for-task``
 method defined in `Creating a dialog for adding new
-items <improve.html#89811>`_. This method displays a dialog into which
+items <improve.html#creating-a-dialog-for-adding-new-items>`_. This method displays a dialog into which
 the user types the text for the new task and chooses the priority, both
 of which values are returned from ``prompt-for-task``.
 
