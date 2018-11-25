@@ -222,7 +222,7 @@ Changes to button definitions
 
 The definition of each button in the definition of ``<task-frame>`` needs
 to be modified compared to their definition in the Task List 1 project,
-as described in `Gluing the new design together <improve.html#70170>`_.
+as described in `Gluing the new design together <improve.html#gluing-the-new-design-together>`_.
 
 Broadly speaking, you need to update the ``command:`` keyword/argument
 pair for each button gadget, and you need to redefine the activate
