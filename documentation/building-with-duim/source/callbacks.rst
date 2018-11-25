@@ -142,7 +142,7 @@ ensure that information about tasks is passed to the ``task-list`` pane
 correctly. Make these changes to the existing definition in the file
 ``frame.dylan``.
 
-In `Gluing the final design together <menus.html#70705>`_, the
+In `Gluing the final design together <menus.html#gluing-the-new-design-together>`_, the
 definition of ``task-list`` was given as:
 
 .. code-block:: dylan
