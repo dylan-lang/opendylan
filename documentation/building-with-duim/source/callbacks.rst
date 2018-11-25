@@ -1253,8 +1253,8 @@ list of tasks callbacks.html#refreshing-the-list-of-tasks>`_. The
 refresh-task-frame method is called whenever the list of tasks needs
 to be refreshed for whatever reason. This happens most commonly after
 adding or removing a task from the list, or loading in a new task list
-from a file on disk. The method refresh-task-frame takes an instance
-of <task-frame> as an argument and returns no values. For the
+from a file on disk. The method ``refresh-task-frame`` takes an instance
+of ``<task-frame>`` as an argument and returns no values. For the
 Task List 1 project, the ``note-task-selection-change`` method is
 defined:
 
