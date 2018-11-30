@@ -8,6 +8,8 @@ CCFLAGS           ?= @DISABLE_WARNINGS_CFLAGS@ @CFLAGS@ ;
 C++               ?= @CXX@ ;
 C++FLAGS          ?= $(CCFLAGS) ;
 
+LIBS              ?= @LIBS@ ;
+
 MPS_CFLAGS        ?= @MPS_CFLAGS@ -DGC_USE_MPS ;
 MPS_LIBS          ?= @MPS_LIBS@ ;
 BDW_GC_CFLAGS     ?= @BDW_GC_CFLAGS@ -DGC_THREADS -DGC_USE_BOEHM ;

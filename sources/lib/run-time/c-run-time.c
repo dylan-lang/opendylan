@@ -9,7 +9,10 @@
 
 #ifdef OPEN_DYLAN_PLATFORM_UNIX
 #include <signal.h>
+#include <unistd.h>
 #endif
+
+#include "stack-walker.h"
 
 #define ignore(x) (void)x
 
@@ -3692,6 +3695,14 @@ static void call_application_exit_functions(void) {
 
 extern dylan_value IKJboole_ior_, IKJboole_xor_;
 
+#ifdef HAVE_SIGINFO_T
+static void DylanTRAPHandler (int sig, siginfo_t *info, void *sc)
+{
+  dylan_dump_callstack(sc);
+  _exit(127);
+}
+#endif
+
 /**
  * Initialize the dylan run-time
  *
@@ -3716,6 +3727,14 @@ void _Init_Run_Time ()
 #ifdef OPEN_DYLAN_PLATFORM_UNIX
 #ifdef SIGPIPE
     signal(SIGPIPE, SIG_IGN);
+#endif
+
+#ifdef HAVE_SIGINFO_T
+  struct sigaction handler;
+  sigemptyset(&handler.sa_mask);
+  handler.sa_sigaction = DylanTRAPHandler;
+  handler.sa_flags = SA_SIGINFO;
+  sigaction(SIGTRAP, &handler, NULL);
 #endif
 #endif
 

@@ -239,6 +239,31 @@ AS_IF([echo "$CFLAGS" | grep -q -- "-W" 2> /dev/null],
 )
 AC_SUBST(DISABLE_WARNINGS_CFLAGS)
 
+AC_CHECK_FUNC(sigaction,
+              AC_CHECK_TYPE(siginfo_t,
+                            AC_DEFINE(HAVE_SIGINFO_T, 1,
+                                      [Define if you have 'siginfo_t']),
+              [],
+              [#include <signal.h>]))
+
+# libm
+AC_SEARCH_LIBS([atan], [m])
+
+# libunwind
+AC_CHECK_HEADERS([libunwind.h])
+
+AC_MSG_CHECKING(for libunwind library)
+AC_LANG_CONFTEST([AC_LANG_PROGRAM([#define UNW_LOCAL_ONLY
+                                   #include <stddef.h>
+                                   #include <libunwind.h>],
+                                  [unw_step(NULL)])])
+AC_LINK_IFELSE([], [AC_MSG_RESULT(none needed)],
+               [save_LIBS="$LIBS"
+                LIBS="$LIBS -lunwind"
+                AC_LINK_IFELSE([], [AC_MSG_RESULT(-lunwind)],
+                               [AC_MSG_RESULT(not found)
+                                LIBS="$save_LIBS"])])
+
 AC_CONFIG_FILES(Makefile
                 sources/jamfiles/Makefile
                 sources/jamfiles/config.jam

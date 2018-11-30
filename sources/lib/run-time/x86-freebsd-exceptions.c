@@ -10,8 +10,6 @@ extern void dylan_float_invalid_handler();
 extern void dylan_float_overflow_handler();
 extern void dylan_float_underflow_handler();
 
-extern void dylan_dump_callstack(void);
-
 /* FreeBSD exception handling:  Setup a signal handler for SIGFPE (floating point exceptions).
    We rely on the fact that FreeBSD passes a second argument containing the error context. */
 
@@ -21,6 +19,8 @@ extern void dylan_dump_callstack(void);
 #include <ucontext.h>
 #include <ieeefp.h>
 #include <fenv.h>
+
+#include "stack-walker.h"
 
 #define EXCEPTION_PREAMBLE() \
   struct sigaction oldFPEHandler; \
@@ -115,5 +115,6 @@ static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
 
 static void DylanTRAPHandler (int sig, siginfo_t *info, void *sc)
 {
-  dylan_dump_callstack();
+  dylan_dump_callstack(sc);
+  _exit(127);
 }
