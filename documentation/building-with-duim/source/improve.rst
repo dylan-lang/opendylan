@@ -246,10 +246,10 @@ the frame itself.
 In addition, you need to define the layout in which to place these
 panes. This is itself just another pane, and its definition is again
 identical to the original layout described in `Creating the basic
-sheet hierarchy <design.html#23252>`_, with one exception; rather than
-defining each element explicitly, you just include a reference to the
-relevant pane that you have already defined using normal slot syntax,
-thus:
+sheet hierarchy <design.html#creating-the-basic-sheet-hierarchy>`_,
+with one exception; rather than defining each element explicitly, you
+just include a reference to the relevant pane that you have already
+defined using normal slot syntax, thus:
 
 .. code-block:: dylan
 
