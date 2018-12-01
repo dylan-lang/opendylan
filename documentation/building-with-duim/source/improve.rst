@@ -679,11 +679,12 @@ new task.
 Add this method to ``frame.dylan``.
 
 .. note:: The definition of the ``prompt-for-task`` method uses the
-   ``<priority>`` type. Note that this type is defined in `Defining the
-   underlying data structures for tasks <callbacks.html#71186>`_. Until the
-   relevant code in `Defining the underlying data structures for
-   tasks <callbacks.html#71186>`_ is added to your project, any attempt to
-   build it will generate a serious warning.
+   ``<priority>`` type. Note that this type is defined in `Defining
+   the underlying data structures for tasks
+   <callbacks.html#defining-the-underlying-data-structures-for-tasks>`_. Until
+   the relevant code in `Defining the underlying data structures for
+   tasks <callbacks.html#71186>`_ is added to your project, any
+   attempt to build it will generate a serious warning.
 
 .. code-block:: dylan
 
