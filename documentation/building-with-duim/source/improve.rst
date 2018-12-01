@@ -230,16 +230,18 @@ radio box, and the list box from the initial design:
       make(<list-box>, items: #(), lines: 15,
            activate-callback: not-yet-implemented);
 
-Note that the definition of each element is identical to the definitions
-included in the original layout described in `Creating the basic
-sheet hierarchy <design.html#23252>`_ (except that activate callbacks
-have been added to the code). Adding ``(frame)`` immediately after the
-name of each pane lets you refer to the frame itself within the frame
-definition using a local variable. This means that you can refer to any
-pane within the frame using normal slot syntax; that is, a pane called
-``my-pane`` can be referred to as ``frame.my-pane`` throughout all of the
-definition of the frame class. This ability is essential when you come
-to layout each pane in the frame itself.
+Note that the definition of each element is identical to the
+definitions included in the original layout described in `Creating the
+basic sheet hierarchy
+<design.html#creating-the-basic-sheet-hierarchy>`_ (except that
+activate callbacks have been added to the code). Adding ``(frame)``
+immediately after the name of each pane lets you refer to the frame
+itself within the frame definition using a local variable. This means
+that you can refer to any pane within the frame using normal slot
+syntax; that is, a pane called ``my-pane`` can be referred to as
+``frame.my-pane`` throughout all of the definition of the frame
+class. This ability is essential when you come to layout each pane in
+the frame itself.
 
 In addition, you need to define the layout in which to place these
 panes. This is itself just another pane, and its definition is again
