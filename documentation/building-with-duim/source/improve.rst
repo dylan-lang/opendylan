@@ -683,8 +683,10 @@ Add this method to ``frame.dylan``.
    the underlying data structures for tasks
    <callbacks.html#defining-the-underlying-data-structures-for-tasks>`_. Until
    the relevant code in `Defining the underlying data structures for
-   tasks <callbacks.html#71186>`_ is added to your project, any
-   attempt to build it will generate a serious warning.
+   tasks
+   <callbacks.html#defining-the-underlying-data-structures-for-tasks>`_
+   is added to your project, any attempt to build it will generate a
+   serious warning.
 
 .. code-block:: dylan
 
