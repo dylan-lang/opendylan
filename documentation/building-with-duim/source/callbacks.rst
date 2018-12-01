@@ -1248,8 +1248,8 @@ method requires a slightly different definition, and the second method
 is not required at all.
 
 The ``note-task-selection-change`` method defined on ``<task-frame>``
-is called by ``refresh-task-frame``, described on `<Refreshing the
-list of tasks callbacks.html#refreshing-the-list-of-tasks>`_. The
+is called by ``refresh-task-frame``, described on `Refreshing the
+list of tasks <callbacks.html#refreshing-the-list-of-tasks>`_. The
 refresh-task-frame method is called whenever the list of tasks needs
 to be refreshed for whatever reason. This happens most commonly after
 adding or removing a task from the list, or loading in a new task list
