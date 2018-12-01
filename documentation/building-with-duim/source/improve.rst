@@ -3,12 +3,12 @@ Improving The Design
 ********************
 
 The simple layout hierarchy described in `Creating the basic sheet
-hierarchy <design.html#23252>`_ has a number of problems associated with
-it, all of which revolve around the fact that the task list manager does
-not yet look very much like a standard Windows application. Although it
-is a simple design that does not warrant a complicated user interface,
-the design you have already seen looks more like a dialog box than an
-application window.
+hierarchy <design.html#creating-the-basic-sheet-hierarchy>`_ has a
+number of problems associated with it, all of which revolve around the
+fact that the task list manager does not yet look very much like a
+standard Windows application. Although it is a simple design that does
+not warrant a complicated user interface, the design you have already
+seen looks more like a dialog box than an application window.
 
 This section shows you how to improve on the basic design, adding a menu
 bar and replacing the buttons with a proper tool bar. It also shows you
