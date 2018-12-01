@@ -579,7 +579,8 @@ has reduced to a single column layout whose children are ``task-list`` and
 
 The definition for the new design of the frame class now looks as
 follows (button definitions vary slightly for the Task List 2 project,
-see `A task list manager using command tables <source.html#52969>`_):
+see `A task list manager using command tables
+<source.html#a-task-list-manager-using-command-tables>`_):
 
 .. code-block:: dylan
 
