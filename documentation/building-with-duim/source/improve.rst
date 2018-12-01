@@ -3,12 +3,12 @@ Improving The Design
 ********************
 
 The simple layout hierarchy described in `Creating the basic sheet
-hierarchy <design.html#23252>`_ has a number of problems associated with
-it, all of which revolve around the fact that the task list manager does
-not yet look very much like a standard Windows application. Although it
-is a simple design that does not warrant a complicated user interface,
-the design you have already seen looks more like a dialog box than an
-application window.
+hierarchy <design.html#creating-the-basic-sheet-hierarchy>`_ has a
+number of problems associated with it, all of which revolve around the
+fact that the task list manager does not yet look very much like a
+standard Windows application. Although it is a simple design that does
+not warrant a complicated user interface, the design you have already
+seen looks more like a dialog box than an application window.
 
 This section shows you how to improve on the basic design, adding a menu
 bar and replacing the buttons with a proper tool bar. It also shows you
@@ -230,24 +230,26 @@ radio box, and the list box from the initial design:
       make(<list-box>, items: #(), lines: 15,
            activate-callback: not-yet-implemented);
 
-Note that the definition of each element is identical to the definitions
-included in the original layout described in `Creating the basic
-sheet hierarchy <design.html#23252>`_ (except that activate callbacks
-have been added to the code). Adding ``(frame)`` immediately after the
-name of each pane lets you refer to the frame itself within the frame
-definition using a local variable. This means that you can refer to any
-pane within the frame using normal slot syntax; that is, a pane called
-``my-pane`` can be referred to as ``frame.my-pane`` throughout all of the
-definition of the frame class. This ability is essential when you come
-to layout each pane in the frame itself.
+Note that the definition of each element is identical to the
+definitions included in the original layout described in `Creating the
+basic sheet hierarchy
+<design.html#creating-the-basic-sheet-hierarchy>`_ (except that
+activate callbacks have been added to the code). Adding ``(frame)``
+immediately after the name of each pane lets you refer to the frame
+itself within the frame definition using a local variable. This means
+that you can refer to any pane within the frame using normal slot
+syntax; that is, a pane called ``my-pane`` can be referred to as
+``frame.my-pane`` throughout all of the definition of the frame
+class. This ability is essential when you come to layout each pane in
+the frame itself.
 
 In addition, you need to define the layout in which to place these
 panes. This is itself just another pane, and its definition is again
 identical to the original layout described in `Creating the basic
-sheet hierarchy <design.html#23252>`_, with one exception; rather than
-defining each element explicitly, you just include a reference to the
-relevant pane that you have already defined using normal slot syntax,
-thus:
+sheet hierarchy <design.html#creating-the-basic-sheet-hierarchy>`_,
+with one exception; rather than defining each element explicitly, you
+just include a reference to the relevant pane that you have already
+defined using normal slot syntax, thus:
 
 .. code-block:: dylan
 
@@ -577,7 +579,8 @@ has reduced to a single column layout whose children are ``task-list`` and
 
 The definition for the new design of the frame class now looks as
 follows (button definitions vary slightly for the Task List 2 project,
-see `A task list manager using command tables <source.html#52969>`_):
+see `A task list manager using command tables
+<source.html#a-task-list-manager-using-command-tables>`_):
 
 .. code-block:: dylan
 
@@ -675,12 +678,15 @@ new task.
 
 Add this method to ``frame.dylan``.
 
-.. note: The definition of the ``prompt-for-task`` method uses the
-   ``<priority>`` type. Note that this type is defined in `Defining the
-   underlying data structures for tasks <callbacks.html#71186>`_. Until the
-   relevant code in `Defining the underlying data structures for
-   tasks <callbacks.html#71186>`_ is added to your project, any attempt to
-   build it will generate a serious warning.
+.. note:: The definition of the ``prompt-for-task`` method uses the
+   ``<priority>`` type. Note that this type is defined in `Defining
+   the underlying data structures for tasks
+   <callbacks.html#defining-the-underlying-data-structures-for-tasks>`_. Until
+   the relevant code in `Defining the underlying data structures for
+   tasks
+   <callbacks.html#defining-the-underlying-data-structures-for-tasks>`_
+   is added to your project, any attempt to build it will generate a
+   serious warning.
 
 .. code-block:: dylan
 
