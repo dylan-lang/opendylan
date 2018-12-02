@@ -243,16 +243,18 @@ shown below. At this stage, the only thing missing from the final
 application are real callback functions. Callbacks are dealt with in
 :doc:`callbacks`.
 
-Note that the final definition of ``<task-frame>`` includes the definition
-of a slot: ``frame-task-list``. This takes an instance of the class
-``<task-list>`` as a value, the default value being an empty ``<task-list>``.
-Although it has not been referred to so far, this class will be used
-as the basic data structure in which task lists are stored, and a more
-complete description of these data structures is given in `Defining
-the underlying data structures for tasks <callbacks.html#71186>`_. It
+Note that the final definition of ``<task-frame>`` includes the
+definition of a slot: ``frame-task-list``. This takes an instance of
+the class ``<task-list>`` as a value, the default value being an empty
+``<task-list>``.  Although it has not been referred to so far, this
+class will be used as the basic data structure in which task lists are
+stored, and a more complete description of these data structures is
+given in `Defining the underlying data structures for tasks
+<callbacks.html#defining-the-underlying-data-structures-for-tasks>`_. It
 transpires that defining the ``frame-task-list`` slot is essential for
 some of the file handling routines that are described in `Handling
-files in the task list manager <callbacks.html#78540>`_.
+files in the task list manager
+<callbacks.html#handling-files-in-the-task-list-manager>`_.
 
 .. code-block:: dylan
 
