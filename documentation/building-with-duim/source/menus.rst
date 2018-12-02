@@ -253,7 +253,8 @@ given in `Defining the underlying data structures for tasks
 <callbacks.html#defining-the-underlying-data-structures-for-tasks>`_. It
 transpires that defining the ``frame-task-list`` slot is essential for
 some of the file handling routines that are described in `Handling
-files in the task list manager <callbacks.html#78540>`_.
+files in the task list manager
+<callbacks.html#handling-files-in-the-task-list-manager>`_.
 
 .. code-block:: dylan
 
