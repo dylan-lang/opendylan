@@ -52,9 +52,11 @@ these elements.
    your own classes of frame.
 
 You can use the Dylan Playground to run the examples in this chapter.
-*Reminder:* to interactively run the segments of example code presented
-in this chapter, you must pass them to ``contain`` (see `Using contain
-to run examples interactively <design.html#73778>`_ for details).
+*Reminder:* to interactively run the segments of example code
+presented in this chapter, you must pass them to ``contain`` (see
+`Using contain to run examples interactively
+<design.html#using-contain-to-run-examples-interactively>`_ for
+details).
 
 A tour of gadgets
 -----------------
