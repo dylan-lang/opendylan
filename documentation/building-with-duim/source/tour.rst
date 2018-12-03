@@ -52,9 +52,11 @@ these elements.
    your own classes of frame.
 
 You can use the Dylan Playground to run the examples in this chapter.
-*Reminder:* to interactively run the segments of example code presented
-in this chapter, you must pass them to ``contain`` (see `Using contain
-to run examples interactively <design.html#73778>`_ for details).
+*Reminder:* to interactively run the segments of example code
+presented in this chapter, you must pass them to ``contain`` (see
+`Using contain to run examples interactively
+<design.html#using-contain-to-run-examples-interactively>`_ for
+details).
 
 A tour of gadgets
 -----------------
@@ -1430,9 +1432,10 @@ both the width and height of a frame.
 Defining new classes of frame
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As described in `Defining a new frame class <improve.html#66956>`_,
-the ``define frame`` macro is used to create new classes of frame. The
-bulk of the definition of any new frame is split into several parts:
+As described in `Defining a new frame class
+<improve.html#defining-a-new-frame-class>`_, the ``define frame``
+macro is used to create new classes of frame. The bulk of the
+definition of any new frame is split into several parts:
 
 -  The definition of any slots and init-keywords you want available for
    the new class of frame.
@@ -1637,7 +1640,8 @@ so you need only specify these titles if you want to supply a
 non-standard title to the dialog.
 
 Further examples of this function can be found in `Handling files in
-the task list manager <callbacks.html#78540>`_.
+the task list manager
+<callbacks.html#handling-files-in-the-task-list-manager>`_.
 
 The convenience functions ``choose-color`` and ``choose-text-style``
 generate the common dialogs for choosing a color and a font
