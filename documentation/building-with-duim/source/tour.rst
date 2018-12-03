@@ -1432,9 +1432,10 @@ both the width and height of a frame.
 Defining new classes of frame
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As described in `Defining a new frame class <improve.html#66956>`_,
-the ``define frame`` macro is used to create new classes of frame. The
-bulk of the definition of any new frame is split into several parts:
+As described in `Defining a new frame class
+<improve.html#defining-a-new-frame-class>`_, the ``define frame``
+macro is used to create new classes of frame. The bulk of the
+definition of any new frame is split into several parts:
 
 -  The definition of any slots and init-keywords you want available for
    the new class of frame.
