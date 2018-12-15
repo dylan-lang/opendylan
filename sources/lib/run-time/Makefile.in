@@ -108,7 +108,7 @@ HARP_CFLAGS     = -DOPEN_DYLAN_BACKEND_HARP
 LLVM_CFLAGS     = -DOPEN_DYLAN_BACKEND_LLVM \
 	          -DOPEN_DYLAN_RUNTIME_HEADER=\"llvm-$(OPEN_DYLAN_TARGET_PLATFORM)-runtime.h\" \
 		  -I. \
-		  -fexceptions
+		  -fexceptions -Og -g
 LLVM_LFLAGS     = -fexceptions
 
 C_CFLAGS        = -DOPEN_DYLAN_BACKEND_C
