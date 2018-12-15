@@ -22,6 +22,10 @@ fine for code that you want to evaluate once only, perhaps using the
 interactor, but for permanent code, a more rigorous framework is
 preferable.
 
+.. index::
+   single: defining; projects
+   single: projects; defining
+   
 Defining a project
 ------------------
 
@@ -69,6 +73,10 @@ Make sure that this file is the last one listed in the project window.
 ``frame.dylan``
    Add the GUI-specific code to this file.
 
+.. index::
+   single: applications; starting
+   single: starting an application
+   
 Starting the application
 ------------------------
 
@@ -129,6 +137,11 @@ to pass the second of these arguments; since any Dylan collection
 already knows its own size, you do not need to pass the number of
 arguments as an additional parameter.
 
+.. index::
+   single: adding; a default callback
+   single: callbacks; adding a default callback
+   single: default callback; adding
+   
 Adding a default callback
 -------------------------
 
@@ -157,6 +170,10 @@ the ``activate-callback:`` init-keyword. More information about callbacks
 is given in :doc:`callbacks`, in which some real callbacks are
 defined, to make the task list manager do something more substantial.
 
+.. index::
+   single: defining; frame classes
+   single: frame classes; defining
+   
 Defining a new frame class
 --------------------------
 
@@ -168,6 +185,9 @@ several elements in the design that can be reused successfully.
 
 Add the code described in this section to ``frame.dylan``.
 
+.. index::
+   single: classes; defining frame
+   
 Defining a new class of frame is just like defining any Dylan class,
 except that there are several extra options available beyond the slot
 options normally available to ``define class``. Each of these extra
@@ -364,6 +384,10 @@ application`_. If you define these methods now, you
 can create running versions of each successive generation of the
 application as it is developed.
 
+.. index::
+   single: tool bar; using
+   single: using; tool bars
+   
 Adding a tool bar
 -----------------
 
@@ -457,6 +481,10 @@ have a menu bar or a system of menus — most tool bars represent a subset
 of the commands already available from the application's menu system. A
 menu system is added to the task list manager in :doc:`menus`.
 
+.. index::
+   single: status bar; using
+   single: using; status bars
+   
 Adding a status bar
 -------------------
 
@@ -488,6 +516,9 @@ clause.
 Now you have added a status bar to the application. The next step is to
 glue all the pieces together once again to create your modified frame
 design.
+
+.. index::
+   single: task list manager; intermediate design
 
 Gluing the new design together
 ------------------------------
@@ -642,6 +673,10 @@ pane defined in `Defining a new frame class`_. In fact, this part of the
 original interface is handled differently in the final design, and is
 re-implemented in `Creating a dialog for adding new items`_.
 
+.. index::
+   single: creating; basic sheet hierarchy
+   single: dialogs; for requesting information, creating
+   
 Creating a dialog for adding new items
 --------------------------------------
 
@@ -657,7 +692,9 @@ asks the user to type the text for a new task. The definition of
 initial design, with the exception that the activate callback exits the
 dialog, rather than calling the ``not-yet-implemented`` function.
 
-
+.. index::
+   single: creating; dialog to request information from the user
+   
 .. figure:: images/new-task.png
    :align: center
 

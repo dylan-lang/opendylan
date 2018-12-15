@@ -1,7 +1,17 @@
-****************************
-A Tour of the DUIM Libraries
-****************************
+.. index::
+   single: DUIM libraries; tour of
+   single: libraries; DUIM, tour of
+   single: overview of; DUIM libraries
+   single: tour of; DUIM libraries
+   
+*****************************
+ A Tour of the DUIM Libraries
+*****************************
 
+.. index::
+   single: DUIM; introduction
+   single: introduction to; DUIM
+   
 Introduction
 ------------
 
@@ -58,6 +68,12 @@ presented in this chapter, you must pass them to ``contain`` (see
 <design.html#using-contain-to-run-examples-interactively>`_ for
 details).
 
+.. index::
+   single: gadgets; tour
+   single: introduction to; gadgets
+   single: overview of; gadgets
+   single: tour of; gadgets
+   
 A tour of gadgets
 -----------------
 
@@ -66,6 +82,11 @@ to create an interface. Objects like buttons, menus, boxes, and other
 common interface elements are defined as subclasses of the base class
 ``<gadget>``.
 
+.. index::
+   single: gadgets; general properties
+   single: general properties of gadgets
+   single: properties; gadgets, general
+   
 General properties of gadgets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -127,6 +148,10 @@ gadget properties, different classes of gadget can have different
 callback types available. For an introduction to callbacks, see
 `Assigning callbacks to gadgets`_.
 
+.. index::
+   single: button gadgets
+   single: gadgets; button
+   
 Button gadgets
 ~~~~~~~~~~~~~~
 
@@ -135,9 +160,19 @@ which some user-defined functionality can be invoked, by clicking on the
 gadget. Button gadgets encompass obvious controls such as push buttons,
 radio buttons, and check boxes, and, less obviously, menu items.
 
+.. index::
+   single: buttons; standard
+   single: option buttons
+   single: standard buttons
+   
 Standard buttons
 ~~~~~~~~~~~~~~~~
 
+.. index::
+   single: buttons; command
+   single: buttons; option
+   single: command buttons
+   
 DUIM provides three standard button gadget classes:
 
 -  ``<push-button>`` Sometimes referred to as *command button* in
@@ -254,9 +289,15 @@ will have a width that is determined by the sheet that it is a child of
 and will still have the same minimum width, so it cannot be resized too
 small.
 
+.. index::
+   single: menu buttons
+   
 Menu buttons
 ~~~~~~~~~~~~
 
+.. index::
+   single: buttons; menu
+   
 `Standard buttons`_ described buttons that are all
 displayed in windows on the screen. For each of those buttons, there is
 an analogous type of button that is displayed as an item in a menu.
@@ -292,6 +333,10 @@ check mark to the left of the command name on the menu.
 
 For more information about creating menus, see :doc:`menus`.
 
+.. index::
+   single: collection gadgets
+   single: gadgets; collection
+   
 Collection gadgets
 ~~~~~~~~~~~~~~~~~~
 
@@ -308,6 +353,12 @@ collection gadget. It is worth emphasizing this distinction since,
 visually, collection gadgets often look like groups of individual
 gadgets.
 
+.. index::
+   single: collection gadgets; useful properties
+   single: gadgets; collection, useful properties
+   single: properties; collection gadgets
+   single: useful properties of; collection gadgets
+   
 Useful properties of collection gadgets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -352,6 +403,10 @@ To specify any of these slot values as an init-keyword, remove the
 "gadget-" prefix. Thus, the ``gadget-value-key`` slot becomes the
 ``value-key:`` init-keyword.
 
+.. index::
+   single: boxes; button
+   single: button boxes
+   
 Button boxes
 ~~~~~~~~~~~~
 
@@ -447,6 +502,10 @@ Remember that for a multiple-selection collection gadget, the gadget
 value is a sequence consisting of the values of all the selected items.
 The value of any given item is calculated using the value key.
 
+.. index::
+   single: boxes; menu
+   single: menu boxes
+  
 Menu boxes
 ~~~~~~~~~~
 
@@ -482,6 +541,9 @@ A ``<list-box>``, although it has a different appearance than a
 
     make(<list-box>, items: #(1, 2, 3));
 
+.. index::
+   single: lists
+   
 .. figure:: images/lbox.png
    :align: center
 
@@ -526,6 +588,11 @@ around a list box. It takes the following values:
    bars only when they are necessary because of the amount of
    information visible in the list.
 
+.. index::
+   single: boxes; drop-down list
+   single: drop-down list boxes
+   single: list boxes; drop-down
+   
 |image8| The ``<option-box>`` class is another list control that you will
 frequently use in your applications. This gadget is usually referred to
 in Microsoft documentation as a *drop-down list box*. It differs from a
@@ -555,6 +622,10 @@ for future use.
 Like list boxes and option boxes, combo boxes support the ``borders:`` and
 ``scroll-bars:`` init-keywords.
 
+.. index::
+   single: controls; display
+   single: display controls
+   
 Display controls
 ~~~~~~~~~~~~~~~~
 
@@ -566,9 +637,15 @@ them.
 A number of display controls are available that, like lists, are used to
 display information in a variety of ways.
 
+.. index::
+   single: tree controls
+   
 Tree controls
 ~~~~~~~~~~~~~
 
+.. index::
+   single: controls; tree
+   
 The ``<tree-control>`` class (also known as a tree view control in
 Microsoft documentation) is a special list control that displays a set
 of objects in an indented outline based on the logical hierarchical
@@ -621,6 +698,10 @@ Like list boxes and list controls, tree controls support the
 List controls
 ~~~~~~~~~~~~~
 
+.. index::
+   single: controls; list
+   single: list controls
+   
 |image9| The ``<list-control>`` class is used to display a collection of
 items, each item consisting of an icon and a label. In Microsoft
 documentation, this control corresponds to the List View control in its
@@ -679,9 +760,15 @@ if any, scroll bars are added to the control.
 Like list boxes, and tree controls, list controls support the ``borders:``
 and ``scroll-bars:`` init-keywords.
 
+.. index::
+   single: table controls
+   
 Table controls
 ~~~~~~~~~~~~~~
 
+.. index::
+   single: controls; table
+   
 |image10| The ``<table-control>`` class (which corresponds to the List
 View control in its "report" view in Microsoft documentation) allows you
 to display items in a table, with information divided into a number of
@@ -725,6 +812,10 @@ table control when it is created. This column takes a sequence of
 integers, each of which represents the width in pixels of its respective
 column in the control.
 
+.. index::
+   single: boxes; spin
+   single: spin boxes
+   
 Spin boxes
 ~~~~~~~~~~
 
@@ -751,6 +842,10 @@ Consider the following example:
 This creates a spin box that accepts any even integer value between 6
 and 24.
 
+.. index::
+   single: gadgets; text
+   single: text gadgets
+   
 Text gadgets
 ~~~~~~~~~~~~
 
@@ -762,6 +857,12 @@ class.
 There are three kinds of text gadget available: text fields, text
 editors, and password fields.
 
+.. index::
+   single: gadgets; text, properties
+   single: properties; text gadgets
+   single: text gadgets; useful properties
+   single: useful properties of; text gadgets
+   
 Useful properties of text gadgets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -793,6 +894,10 @@ returns ``#f``.
 Note that the combo boxes and spin boxes also contains a textual
 element, though they are not themselves text gadgets.
 
+.. index::
+   single: fields; text
+   single: text fields
+   
 Text fields
 ~~~~~~~~~~~
 
@@ -811,6 +916,10 @@ Use the``x-alignment:`` init-keyword to specify how text typed into the
 field should be aligned. This can be either ``#"left"``, ``#"center"``, or
 ``#"right"``, the default being ``#"left"``.
 
+.. index::
+   single: editors; text
+   single: text editors
+   
 Text editors
 ~~~~~~~~~~~~
 
@@ -833,6 +942,10 @@ described in `Lists`_.
 
     make(<text-editor>, lines: 10, fixed-height?: #t);
 
+.. index::
+   single: fields; password
+   single: password fields
+   
 Password fields
 ~~~~~~~~~~~~~~~
 
@@ -847,6 +960,11 @@ used instead.
 .. figure:: images/passwd.png
    :align: center
 
+.. index::
+   single: gadgets; range
+   single: properties; range gadgets
+   single: range gadgets
+   
 Range gadgets
 ~~~~~~~~~~~~~
 
@@ -855,6 +973,11 @@ sliding scale. The most obvious examples of range gadgets are scroll
 bars and sliders. The protocol class of all range gadgets is the class
 ``<value-range-gadget>``.
 
+.. index::
+   single: gadgets; range, properties
+   single: range gadgets; useful properties
+   single: useful properties of; range gadgets
+   
 Useful properties of range gadgets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -878,6 +1001,10 @@ illustrates this behavior for a scroll bar.
 
    Returning or setting the gadget-value of a scroll-bar
 
+.. index::
+   single: bars; scroll
+   single: scroll bars
+   
 Scroll bars
 ~~~~~~~~~~~
 
@@ -904,6 +1031,9 @@ explicitly, use the ``scrolling`` macro.
            items: range(from: 1, to: 50))
     end
 
+.. index::
+   single: sliders
+   
 Sliders
 ~~~~~~~
 
@@ -929,6 +1059,10 @@ reason to do so.
               value-range: range(from: 0, to: 50)
               tick-marks: 10);
 
+.. index::
+   single: bars; progress
+   single: progress bars
+
 Progress bars
 ~~~~~~~~~~~~~
 
@@ -940,6 +1074,11 @@ file backup, and compiling one or more files of source code. Any
 situation in which the user may have to wait for a task to complete is a
 good candidate for a progress bar.
 
+.. index::
+   single: assigning callbacks to gadgets
+   single: callbacks; assigning to gadgets
+   single: gadgets; assigning callbacks to
+   
 Assigning callbacks to gadgets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1008,6 +1147,12 @@ callback is usually more useful than the value-changing callback.
            ("Changed to %=", gadget-value(gadget))
        end));
 
+.. index::
+   single: introduction to; layouts
+   single: layouts; tour
+   single: overview of; layouts
+   single: tour of; layouts
+   
 A tour of layouts
 -----------------
 
@@ -1057,9 +1202,17 @@ There are six main classes of layouts, as follows:
    This lays out its children in a table, according to
    a specified number of rows and columns.
 
+.. index::
+   single: layouts; column
+   single: layouts; row
+   single: row layouts
+   
 Row layouts and column layouts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. index::
+   single: column layouts
+   
 Create a column layout containing three buttons as follows:
 
 .. code-block:: dylan
@@ -1121,6 +1274,9 @@ axis. This can be either ``#"top"``, ``#"bottom"``, ``or`` ``#"center"``, and
 the children of the column layout are aligned appropriately. By default,
 the children of a row layout are aligned along the top.
 
+.. index::
+   single: layouts; stack
+   
 Stack layouts
 ~~~~~~~~~~~~~
 
@@ -1141,6 +1297,12 @@ default.
                                         "Seven", "Eight"),
                           make(<push-button>, label: "Finish")));
 
+.. index::
+   single: fixed layouts
+   single: layouts; fixed
+   single: layouts; pinboard
+   single: pinboard layouts
+   
 Pinboard layouts and fixed layouts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1188,6 +1350,10 @@ of sheets were specified, and were to be read directly into your application
 code from this database. For most situations, however, you will not need to
 use the ``<fixed-layout>`` class.
 
+.. index::
+   single: horizontally statement macro; using
+   single: vertically statement macro; using
+   
 Using horizontally and vertically macros
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1237,6 +1403,12 @@ the entire width of the row layout.
            label: "A button with a really really long label");
     end
 
+.. index::
+   single: introduction to; sheets
+   single: overview of; sheets
+   single: sheets; tour
+   single: tour of; sheets
+   
 A tour of sheets
 ----------------
 
@@ -1251,6 +1423,10 @@ protocols, and you do not need to define your own sheet classes, since
 most of the sheet classes you need to use have been implemented for you
 in the form of gadgets (`A tour of gadgets`_) and layouts
 (`A tour of layouts`_).
+
+.. index::
+   single: basic properties of sheets
+   single: sheets; basic properties
 
 Basic properties of sheets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1326,6 +1502,12 @@ that can display output have a ``sheet-medium`` slot. As a guide, all
 gadgets can be repainted and can display output, and no layouts can be
 repainted or display output.
 
+.. index::
+   single: frames; tour
+   single: introduction to; frames
+   single: overview of; frames
+   single: tour of; frames
+   
 A tour of frames
 ----------------
 
@@ -1352,6 +1534,12 @@ windows, as well as dialog boxes (both modal and modeless), property
 pages and wizards.
 
 Support for frames is provided by the DUIM-Frames library.
+
+.. index::
+   single: creating; frames
+   single: displaying frames
+   single: frames; creating
+   single: frames; displaying
 
 Creating frames and displaying them on-screen
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1382,6 +1570,11 @@ Note that normally you should define your own subclasses or
 ``<simple-frame>`` and call ``start-frame`` on instances of these, rather
 than creating direct instances of ``<simple-frame>``.
 
+.. index::
+   single: frames; useful properties
+   single: properties; frames
+   single: useful properties of; frames
+   
 Useful properties of frames
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1429,6 +1622,11 @@ can be done using ``frame-fixed-width?`` and ``frame-fixed-height?``, both
 of which take a boolean value. Setting ``frame-resizable?`` to ``#f`` fixes
 both the width and height of a frame.
 
+.. index::
+   single: classes; defining frame
+   single: defining; frame classes
+   single: frame classes; defining
+   
 Defining new classes of frame
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1451,6 +1649,11 @@ that are created.
 Panes control the overall appearance of the new class of frame. You need
 to define panes for any GUI elements you wish to place in the frame.
 
+.. index::
+   single: frame classes; specifying slots
+   single: slots; specifying in frame classes
+   single: specifying; slots in frame classes
+   
 Specifying slots for a new class of frame
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1473,6 +1676,11 @@ it is defined with an init-keyword of the same name.
       // Other stuff here
     end class <date-frame>;
 
+.. index::
+   single: frame classes; specifying panes
+   single: panes; specifying in frame classes
+   single: specifying; panes in frame classes
+   
 Specifying panes for a new class of frame
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1578,6 +1786,11 @@ use in an application, see the chapters that cover the development of
 the Task List Manager in this manual (Chapters :doc:`design` to
 :doc:`commands`).
 
+.. index::
+   single: dialogs; overview
+   single: introduction to; dialogs
+   single: overview of; dialogs
+   
 Overview of dialogs
 ~~~~~~~~~~~~~~~~~~~
 
