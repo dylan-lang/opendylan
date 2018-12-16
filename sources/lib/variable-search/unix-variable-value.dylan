@@ -10,6 +10,9 @@ define thread variable *mangler* = make(<mangler>);
 
 define variable *dl-handle* = #f;
 
+// From <dlfcn.h>
+define constant $RTLD-LAZY = 1;
+
 define method variable-value
     (variable-name, module-name, library-name, #key default)
  => (object)
@@ -26,9 +29,10 @@ define method variable-value
     *dl-handle*
        := primitive-wrap-machine-word
             (%call-c-function ("dlopen")
-                  (name :: <raw-byte-string>)
+                  (name :: <raw-byte-string>, mode :: <raw-integer>)
                => (object :: <raw-machine-word>)
-                (primitive-cast-raw-as-pointer(integer-as-raw(0)))
+                (primitive-cast-raw-as-pointer(integer-as-raw(0)),
+                 integer-as-raw($RTLD-LAZY))
               end);
   end unless;
   let val =
