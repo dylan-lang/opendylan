@@ -3,7 +3,9 @@
 #include <stdbool.h>
 
 #include "llvm-runtime.h"
+#include "stack-walker.h"
 
+#include <unistd.h>
 #include <signal.h>
 #include <sys/signal.h>
 #include <sys/ucontext.h>
@@ -138,8 +140,20 @@ static void DylanSEGVHandler (int sig, siginfo_t *info, void *uap)
 }
 #endif
 
+static void DylanTRAPHandler (int sig, siginfo_t *info, void *uap)
+{
+  dylan_dump_callstack(uap);
+  _exit(127);
+}
+
 void EstablishDylanExceptionHandlers(void)
 {
+  struct sigaction traphandler;
+  sigemptyset(&traphandler.sa_mask);
+  traphandler.sa_sigaction = DylanTRAPHandler;
+  traphandler.sa_flags = SA_SIGINFO;
+  sigaction(SIGTRAP, &traphandler, NULL);
+
   struct sigaction fpehandler;
   sigemptyset(&fpehandler.sa_mask);
   fpehandler.sa_sigaction = DylanFPEHandler;
@@ -172,6 +186,9 @@ void RemoveDylanExceptionHandlers(void)
 #include <stddef.h>
 #include <pthread.h>
 
+#define UNW_LOCAL_ONLY
+#include <libunwind.h>
+
 #include <mach/mach.h>
 
 #include "mach_exc.h"
@@ -191,7 +208,7 @@ void *catcher(void *dummy)
   extern boolean_t mach_exc_server(mach_msg_header_t *InHeadP,
                                    mach_msg_header_t *OutHeadP);
 
-  pthread_setname_np("Dylan arithmetic exception catcher");
+  pthread_setname_np("Dylan exception catcher");
   mach_msg_server(mach_exc_server, 2048, exception_port, 0);
   abort();
 }
@@ -237,40 +254,60 @@ kern_return_t catch_mach_exception_raise_state_identity
      mach_msg_type_number_t *new_stateCnt)
 {
   uintptr_t handler;
-  switch (code[0]) {
-  case EXC_I386_DIV:
-    handler = (uintptr_t) &dylan_integer_divide_by_0_error;
-    break;
+  if (exception == EXC_ARITHMETIC) {
+    switch (code[0]) {
+    case EXC_I386_DIV:
+      handler = (uintptr_t) &dylan_integer_divide_by_0_error;
+      break;
 
-  case EXC_I386_INTO:
-    handler = (uintptr_t) &dylan_integer_overflow_error;
-    break;
+    case EXC_I386_INTO:
+      handler = (uintptr_t) &dylan_integer_overflow_error;
+      break;
 
-  case EXC_I386_EXTERR:
-  case EXC_I386_SSEEXTERR:
-    // code[1] contains the floating point status word
-    if (code[1] & FE_DIVBYZERO) {
-      handler = (uintptr_t) &dylan_float_divide_by_0_error;
-    }
-    else if (code[1] & FE_INVALID) {
-      handler = (uintptr_t) &dylan_float_invalid_error;
-    }
-    else if (code[1] & FE_OVERFLOW) {
-      handler = (uintptr_t) &dylan_float_overflow_error;
-    }
-    else if (code[1] & FE_UNDERFLOW) {
-      handler = (uintptr_t) &dylan_float_underflow_error;
-    }
-    else {
-      fprintf(stderr, "Unhandled EXC_ARITHMETIC: code=%lld/%lld\n", 
-              code[0], code[1]);
+    case EXC_I386_EXTERR:
+    case EXC_I386_SSEEXTERR:
+      // code[1] contains the floating point status word
+      if (code[1] & FE_DIVBYZERO) {
+        handler = (uintptr_t) &dylan_float_divide_by_0_error;
+      }
+      else if (code[1] & FE_INVALID) {
+        handler = (uintptr_t) &dylan_float_invalid_error;
+      }
+      else if (code[1] & FE_OVERFLOW) {
+        handler = (uintptr_t) &dylan_float_overflow_error;
+      }
+      else if (code[1] & FE_UNDERFLOW) {
+        handler = (uintptr_t) &dylan_float_underflow_error;
+      }
+      else {
+        fprintf(stderr, "Unhandled exception: exception=%d code=%lld/%lld\n",
+                exception, code[0], code[1]);
+        abort();
+      }
+      break;
+
+    default:
+      fprintf(stderr, "Unhandled exception: exception=%d code=%lld/%lld\n",
+              exception, code[0], code[1]);
       abort();
     }
-    break;
-
-  default:
-    fprintf(stderr, "Unhandled EXC_ARITHMETIC: code=%lld/%lld\n", 
-            code[0], code[1]);
+  }
+  else if (exception == EXC_BREAKPOINT) {
+    x86_thread_state64_t *ts = (x86_thread_state64_t *) old_state;
+    unw_context_t uc;
+    memset(&uc, 0, sizeof uc);
+#if defined OPEN_DYLAN_ARCH_X86_64
+    // Both of these structures begin with the x86_64 general registers
+    memcpy(&uc, ts, sizeof(uintptr_t) * 18);
+#else
+#error No thread state to unwind context conversion
+#endif
+    dylan_dump_callstack(&uc);
+    _exit(127);
+  }
+  else {
+    fprintf(stderr, "Unhandled exception: exception=%d code=%lld/%lld\n",
+            exception, code[0], code[1]);
     abort();
   }
 
@@ -332,7 +369,7 @@ void EstablishDylanExceptionHandlers(void)
   // Set this thread's exception port
   kern_return_t rc
     = thread_set_exception_ports(mach_thread_self(),
-                                 EXC_MASK_ARITHMETIC,
+                                 EXC_MASK_ARITHMETIC|EXC_MASK_BREAKPOINT,
                                  exception_port,
                                  EXCEPTION_STATE_IDENTITY|MACH_EXCEPTION_CODES,
                                  THREAD_STATE_FLAVOR);

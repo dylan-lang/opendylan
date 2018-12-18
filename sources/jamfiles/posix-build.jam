@@ -91,7 +91,7 @@ LINKFLAGS += -L$(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/ ;
 
 # These are passed to the link rules by way of the dylan.lid file
 rtlibs  ?= $(RTOBJS_$(COMPILER_BACK_END)) ;
-rtclibs ?= $(RTCLIBS_$(COMPILER_BACK_END)) -lm ;
+rtclibs ?= $(RTCLIBS_$(COMPILER_BACK_END)) $(LIBS) ;
 
 guilflags ?= ;
 

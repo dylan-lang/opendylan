@@ -12,6 +12,8 @@
 #include <ucontext.h>
 #include <fpu_control.h>
 
+#include "stack-walker.h"
+
 extern int inside_dylan_ffi_barrier();
 extern void dylan_stack_overflow_handler(void *base_address, int size, unsigned long protection);
 extern void dylan_integer_overflow_handler();
@@ -20,8 +22,6 @@ extern void dylan_float_divide_0_handler();
 extern void dylan_float_invalid_handler();
 extern void dylan_float_overflow_handler();
 extern void dylan_float_underflow_handler();
-
-extern void dylan_dump_callstack(void);
 
 /* Linux exception handling: Setup signal handlers for SIGFPE
  * (floating point exceptions), SIGSEGV (segmentation violation), and
@@ -251,6 +251,6 @@ static void DylanSEGVHandler (int sig, siginfo_t *info, void *uap)
 
 static void DylanTRAPHandler (int sig, siginfo_t *info, void *sc)
 {
-  dylan_dump_callstack();
+  dylan_dump_callstack(sc);
   chain_sigaction(&outer_TRAPHandler, sig, info, sc);
 }

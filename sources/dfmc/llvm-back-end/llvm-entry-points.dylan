@@ -1786,7 +1786,8 @@ define single-method outer entry-point-descriptor single-method
   // Chain to the method's IEP
   op--call-iep(be, iep, arguments,
                next: data,
-               function: meth)
+               function: meth,
+               tail-call?: #t)
 end entry-point-descriptor;
 
 define constant $null-object-pointer

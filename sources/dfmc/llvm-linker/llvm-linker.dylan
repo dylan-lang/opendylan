@@ -277,7 +277,7 @@ define method emit-init-code-definition
               name: system-init-name,
               type: $init-code-function-ptr-type,
               arguments: #(),
-              linkage: #"internal",
+              linkage: #"external",
               section: llvm-section-name(back-end, #"init-code"),
               calling-convention: $llvm-calling-convention-c);
     ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
@@ -325,17 +325,11 @@ define method emit-init-code-definition
                 vector(undef, undef),
                 calling-convention: $llvm-calling-convention-fast);
     end for;
-    
+
     ins--ret(back-end);
 
-    unless (empty?(fixups-elements) & empty?(heap.heap-root-system-init-code))
-      let global = llvm-builder-define-global(back-end, system-init-name,
-                                              back-end.llvm-builder-function);
-
-      // Add the init function to the constructor
-      llvm-builder-add-ctor-entry(back-end, $system-init-ctor-priority,
-                                  global);
-    end unless;
+    llvm-builder-define-global(back-end, system-init-name,
+                               back-end.llvm-builder-function);
   cleanup
     back-end.llvm-builder-function := #f;
   end block;

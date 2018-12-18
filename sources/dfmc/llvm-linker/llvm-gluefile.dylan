@@ -116,6 +116,48 @@ define sideways method emit-gluefile
                                 init-run-time-global);
   end if;
 
+  // Generate the system init function
+  block ()
+    let init-name = system-init-name(back-end, ld);
+    back-end.llvm-builder-function
+      := make(<llvm-function>,
+              name: init-name,
+              type: $init-code-function-ptr-type,
+              arguments: #(),
+              linkage: #"internal",
+              visibility: #"hidden",
+              section: llvm-section-name(back-end, #"init-code"),
+              calling-convention: $llvm-calling-convention-c);
+    ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
+
+    // Emit calls to system init functions of compilation records
+    for (cr-name in cr-names)
+      let init-function
+        = make(<llvm-function>,
+               name: concatenate(cr-init-name(back-end, ld, cr-name),
+                                 $system-init-code-tag),
+               type: $init-code-function-ptr-type,
+               arguments: #(),
+               linkage: #"external",
+               section: llvm-section-name(back-end, #"init-code"),
+               calling-convention: $llvm-calling-convention-c);
+      llvm-builder-declare-global(back-end, init-function.llvm-global-name,
+                                  init-function);
+      ins--call(back-end, init-function, #[]);
+    end for;
+
+    // Function return
+    ins--ret(back-end);
+
+    llvm-builder-define-global(back-end, init-name,
+                               back-end.llvm-builder-function);
+
+    llvm-builder-add-ctor-entry(back-end, $system-init-ctor-priority,
+                                back-end.llvm-builder-function);
+  cleanup
+    back-end.llvm-builder-function := #f;
+  end block;
+
   // Add a flag to check whether the library has been initialized or not
   let i8-zero
     = make(<llvm-integer-constant>, type: $llvm-i8-type, integer: 0);
@@ -275,6 +317,11 @@ end method;
 
 define method library-description-glue-name (back-end :: <llvm-back-end>, ld)
   glue-name(back-end, library-description-emit-name(ld))
+end method;
+
+define method system-init-name (back-end :: <llvm-back-end>, ld)
+  concatenate(library-description-glue-name(back-end, ld), "_X_",
+              $system-init-code-tag)
 end method;
 
 define method self-init-name (back-end :: <llvm-back-end>, ld)
