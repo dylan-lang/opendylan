@@ -120,27 +120,27 @@ define method initialize-bef-struct-type (back-end :: <llvm-back-end>) => ()
 	    debug-name: "BEF",
 	    options: #[],
 	    members:
-	      vector(// Offset 0: Current bind-exit frame on stack
-		     make(<raw-aggregate-ordinary-member>,
-			  name: #"bef-frame-pointer",
+              vector(// Unwind exception header (must be doubleword aligned)
+                     make(<raw-aggregate-array-member>,
+                          name: #"bef-unwind-exception",
+                          array-length: unwind-exception-words,
                           raw-type: dylan-value(#"<raw-pointer>")),
-                     // Offset 1: Type ID representing the block
+                     // Current bind-exit frame on stack
+                     make(<raw-aggregate-ordinary-member>,
+                          name: #"bef-frame-pointer",
+                          raw-type: dylan-value(#"<raw-pointer>")),
+                     // Type ID representing the block
                      make(<raw-aggregate-ordinary-member>,
                           name: #"bef-typeid",
                           raw-type: dylan-value(#"<raw-pointer>")),
-		     // Offset 2: MV count
-		     make(<raw-aggregate-ordinary-member>,
-		     	  name: #"bef-mv-count",
+                     // MV count
+                     make(<raw-aggregate-ordinary-member>,
+                          name: #"bef-mv-count",
                           raw-type: dylan-value(#"<raw-integer>")),
-		     // Offset 3: MV area
-		     make(<raw-aggregate-array-member>,
-			  name: #"bef-mv-area",
-			  array-length: $maximum-value-count,
-                          raw-type: dylan-value(#"<raw-pointer>")),
-                     // Unwind exception header
-		     make(<raw-aggregate-array-member>,
-			  name: #"bef-unwind-exception",
-                          array-length: unwind-exception-words,
+                     // MV area
+                     make(<raw-aggregate-array-member>,
+                          name: #"bef-mv-area",
+                          array-length: $maximum-value-count,
                           raw-type: dylan-value(#"<raw-pointer>"))));
 
   // Record BEF structure field indicies
@@ -190,8 +190,9 @@ define method op--allocate-bef
     (back-end :: <llvm-back-end>, typeid :: <llvm-constant-value>)
  => (bef :: <llvm-value>);
   let bef-type = llvm-reference-type(back-end, back-end.llvm-bef-struct-type);
+  let bef-alignment = llvm-back-end-unwind-exception-alignment(back-end);
   let bef-ptr = ins--alloca(back-end, bef-type, i32(1),
-                            alignment: back-end-word-size(back-end));
+                            alignment: bef-alignment);
 
   // Store the current frame pointer in the bind exit frame
   let frame-pointer

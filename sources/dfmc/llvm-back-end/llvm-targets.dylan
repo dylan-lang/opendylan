@@ -43,6 +43,12 @@ define method llvm-back-end-unwind-exception-size
   8
 end method;
 
+define method llvm-back-end-unwind-exception-alignment
+    (back-end :: <llvm-x86-back-end>)
+ => (alignment-bytes :: <integer>)
+  16
+end method;
+
 // x86_64
 
 define abstract class <llvm-x86_64-back-end> (<llvm-x86-back-end>)
@@ -198,12 +204,6 @@ register-back-end(<llvm-x86-freebsd-back-end>, #"llvm", #"x86-freebsd");
 define method llvm-back-end-target-triple
     (back-end :: <llvm-x86-freebsd-back-end>) => (triple :: <string>);
   "i386-unknown-freebsd"
-end method;
-
-define method llvm-back-end-unwind-exception-size
-    (back-end :: <llvm-x86-freebsd-back-end>)
- => (number-words :: <integer>)
-  5
 end method;
 
 // x86_64-freebsd
