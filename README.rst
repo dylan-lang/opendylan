@@ -55,6 +55,11 @@ Get MPS or boehm-gc, depending on your platform:
 * macOS and all 64 bit (C back-end) -> `boehm-gc
   <https://github.com/ivmai/bdwgc>`_
 
+The ``libunwind`` library is an optional dependency on Linux and
+FreeBSD. If available, it is used to display stack traces for
+unhandled error conditions. (The ``libunwind`` API is built-in on
+macOS.)
+
 On macOS, you may find it easiest to install Homebrew and install
 the following::
 
@@ -68,7 +73,7 @@ with the ``--universal`` flag.
 On Ubuntu, Debian, etc, you can install the necessary dependencies
 with::
 
-    apt-get install autoconf automake gcc libgc-dev
+    apt-get install autoconf automake gcc libgc-dev libunwind-dev
 
 Building
 --------
