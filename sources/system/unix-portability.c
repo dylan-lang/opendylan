@@ -19,6 +19,21 @@ char **system_environ(void)
   return environ;
 }
 
+char *system_getenv(char *name)
+{
+  return getenv(name);
+}
+
+int system_setenv(char *name, char *value, int overwrite)
+{
+  return setenv(name, value, overwrite);
+}
+
+int system_unsetenv(const char *name)
+{
+  return unsetenv(name);
+}
+
 /* Adapted from the SBCL run-time system, which in turn is derived
  * from the CMU CL system, which was written at Carnegie Mellon
  * University and released into the public domain.
