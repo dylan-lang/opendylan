@@ -1,3 +1,5 @@
+# Changes made here may also need to be made in admin/builds/build-release.bat.
+
 prefix          = $(DESTDIR)@prefix@
 srcdir          = @abs_srcdir@
 abs_srcdir      = @abs_srcdir@
@@ -84,6 +86,12 @@ endif
 # instead. Note that the stage 1 dylan-compiler loads a mix of existing and
 # stage 1 libraries.
 
+###
+# These are "primitive" in the sense that most of them make use of the
+# primitive-* functions.
+#
+# TODO: the DUIM libraries and some other high-level libs probably don't
+#       belong in this list.
 BOOTSTRAP_1_PRIMITIVE_LIBS = \
 	dylan common-dylan c-ffi collections io system \
 	generic-arithmetic big-integers duim-utilities \
@@ -121,6 +129,9 @@ $(abs_builddir)/Bootstrap.1:
 	mkdir $(abs_builddir)/Bootstrap.1/build
 	mkdir $(abs_builddir)/Bootstrap.1/build/logs
 
+# BOOTSTRAP_1_PRIMITIVE_LIBS registry files are removed so those
+# libraries are taken from the bootstrap compiler's system registries.
+# The main point of stage 1 is to compile any changed compiler sources.
 $(BOOTSTRAP_1_REGISTRY):
 	mkdir $(BOOTSTRAP_1_REGISTRY)
 	cp -r $(srcdir)/sources/registry/generic $(BOOTSTRAP_1_REGISTRY)
@@ -272,6 +283,9 @@ rtg:
 	  llvm-dis $$target-runtime.bc && \
 	  clang -O3 -S $$target-runtime.bc; \
 	done
+
+###
+# 4 stage bootstrap is for LLVM testing.
 
 BOOTSTRAP_4_ENV = \
 	OPEN_DYLAN_TARGET_PLATFORM=$(OPEN_DYLAN_TARGET_PLATFORM) \
