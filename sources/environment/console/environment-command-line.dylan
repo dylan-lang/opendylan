@@ -119,6 +119,8 @@ define command-line main => <main-command>
   flag profile          = "profile the execution of the application";
   flag share-console    = "share the console with the application";
 
+  keyword jobs :: <integer> = "number of concurrent build jobs";
+
   // Internal-only options
   keyword personal-root :: <directory-locator> = "personal area root";
   keyword system-root   :: <directory-locator> = "system area root";
