@@ -10,23 +10,23 @@ define constant $zero-date = make(<date>, year: 1900, month: 1, day: 1);
 
 define constant <build-status> = limited(<integer>, min: 0, max: 11);
 
-define constant $build-status-init    :: <build-status> = 0;
-define constant $build-status-making  :: <build-status> = 1;
-define constant $build-status-stable  :: <build-status> = 2;
-define constant $build-status-newer   :: <build-status> = 3;
-define constant $build-status-temp    :: <build-status> = 4;
-define constant $build-status-touched :: <build-status> = 5;
-define constant $build-status-missing :: <build-status> = 6;
-define constant $build-status-needtmp :: <build-status> = 7;
-define constant $build-status-old     :: <build-status> = 8;
-define constant $build-status-update  :: <build-status> = 9;
-define constant $build-status-nofind  :: <build-status> = 10;
-define constant $build-status-nomake  :: <build-status> = 11;
+define constant $build-status-init     :: <build-status> = 0;
+define constant $build-status-making   :: <build-status> = 1;
+define constant $build-status-stable   :: <build-status> = 2;
+define constant $build-status-newer    :: <build-status> = 3;
+define constant $build-status-temp     :: <build-status> = 4;
+define constant $build-status-touched  :: <build-status> = 5;
+define constant $build-status-missing  :: <build-status> = 6;
+define constant $build-status-needtmp  :: <build-status> = 7;
+define constant $build-status-outdated :: <build-status> = 8;
+define constant $build-status-update   :: <build-status> = 9;
+define constant $build-status-nofind   :: <build-status> = 10;
+define constant $build-status-nomake   :: <build-status> = 11;
 
 /*
 define constant $build-status-names
   = #["init", "making", "stable", "newer", "temp", "touched",
-      "missing", "needtmp", "old", "update", "nofind", "nomake"];
+      "missing", "needtmp", "outdated", "update", "nofind", "nomake"];
 */
 
 define constant <build-progress>
@@ -62,10 +62,6 @@ define class <jam-target> (<object>)
   slot target-build-progress :: <build-progress>,
     init-value: #"init";
 
-  // build command execution result
-  slot target-build-execution-result :: one-of(#"ok", #"fail", #"interrupt"),
-    init-value: #"ok";
-  
   // target-specific (on) variables
   constant slot target-variables :: <string-table> = make(<string-table>);
 

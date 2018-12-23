@@ -4,6 +4,8 @@ Author:       Peter S. Housel
 Target-Type:  dll
 Files:        library
               regular-expression
+              blocking-deque
+              thread-pool
               jam-state
               jam-target
               jam-target-build
