@@ -68,6 +68,7 @@ define method link-library (project :: <project>, #rest keys,
                             #key target-type,
                                  extent = #"changes",
                                  build-script,
+                                 jobs :: <integer> = 1,
                                  progress-callback = ignore,
                                  mode, release?,
                             #all-keys)
@@ -96,7 +97,8 @@ define method link-library (project :: <project>, #rest keys,
                compiler-back-end: project-compiler-back-end(project),
                progress-callback: progress-callback,
                project-build-info: project-build-info,
-               force?: extent == #"all")
+               force?: extent == #"all",
+               jobs: jobs)
 end method;
 
 define method load-library (key)
