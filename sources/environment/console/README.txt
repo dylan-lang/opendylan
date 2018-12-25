@@ -24,23 +24,22 @@ The Dylan files in this directory used by each library are:
 
 File___________________________DC DE___DCT ___________________________________
 
-compiler-library               dc
-tools-compiler-library                 dct
-compiler-command-line          dc      dct
-compiler-module                dc      dct
+compiler-library               x
+tools-compiler-library                  x
+compiler-command-line          x        x
+compiler-module                x        x
 
-environment-library               de
-environment-command-line          de       det
-environment-module                de       det
+environment-library               x
+environment-command-line          x
+environment-module                x
 
-command-line                   all
-start                          all
+command-line                   x  x     x
+start                          x  x     x
 ______________________________________________________________________________
 
-All four libraries export a single module called console-environment. This
+All three libraries export a single module called console-environment. This
 module is defined in compiler-module.dylan for the DC and DCT libraries and in
-environment-module.dylan for the DE library. It does not export any
-bindings.
+environment-module.dylan for the DE library. It does not export any bindings.
 
 The command-line options are DEFINED in compiler-command-line.dylan or
 environment-command-line.dylan:

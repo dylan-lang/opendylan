@@ -1,4 +1,6 @@
 Module:    dfmc-environment
+Synopsis:  Project based on an existing executable. This type of
+           project cannot be built but may be run and debugged.
 Author:    Jason Trenouth, Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
