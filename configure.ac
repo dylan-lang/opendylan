@@ -46,6 +46,7 @@ case $host in
   amd64-*-freebsd* | x86_64-*-freebsd*)
       OPEN_DYLAN_TARGET_PLATFORM=x86_64-freebsd;
       BDW_GC_MODULE=bdw-gc-threaded
+      SUPPORT_LLVM=yes
     ;;
   x86_64-*-linux*)
       OPEN_DYLAN_TARGET_PLATFORM=x86_64-linux;
@@ -110,8 +111,8 @@ AC_SUBST(DYLANCOMPILER)
 bootstrap_target=3-stage-bootstrap
 AC_SUBST(bootstrap_target)
 
-AC_PROG_CC([clang-7 clang gcc cc])
-AC_PROG_CXX([clang++-7 clang++ g++ c++])
+AC_PROG_CC([clang-7 clang70 clang gcc cc])
+AC_PROG_CXX([clang++-7 clang++70 clang++ g++ c++])
 
 if test -n "$SUPPORT_LLVM"; then
     AC_MSG_CHECKING([whether Clang is new enough])

@@ -94,7 +94,7 @@ define function environment-variable
     (name :: <byte-string>) => (value :: false-or(<byte-string>))
   let value = primitive-wrap-machine-word
                 (primitive-cast-pointer-as-raw
-                   (%call-c-function ("getenv")
+                   (%call-c-function ("system_getenv")
                         (name :: <raw-byte-string>) => (value :: <raw-byte-string>)
                       (primitive-string-as-raw(name))
                     end));
@@ -115,7 +115,7 @@ define function environment-variable-setter
  => (new-value :: false-or(<byte-string>))
   if (new-value)
     //---*** Should we signal something if this call fails?
-    %call-c-function ("setenv")
+    %call-c-function ("system_setenv")
         (name :: <raw-byte-string>, new-value :: <raw-byte-string>,
          overwrite :: <raw-c-signed-int>)
      => (result :: <raw-c-signed-int>)
@@ -123,7 +123,7 @@ define function environment-variable-setter
        integer-as-raw(1))
     end;
   else
-    %call-c-function ("unsetenv")
+    %call-c-function ("system_unsetenv")
         (name :: <raw-byte-string>)
      => (result :: <raw-c-signed-int>)
       (primitive-string-as-raw(name))
