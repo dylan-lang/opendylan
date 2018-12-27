@@ -14,6 +14,8 @@ fdmake          = @PERL@ $(srcdir)/admin/builds/fdmake.pl $(FDMAKE_OPTIONS)
 
 DYLANCOMPILER   = @DYLANCOMPILER@
 
+DYLAN_JOBS	= 2
+
 .PHONY: 1-stage-bootstrap 1-stage-bootstrap-reentry \
 	2-stage-bootstrap 2-stage-bootstrap-reentry \
 	3-stage-bootstrap 3-stage-bootstrap-reentry \
@@ -56,7 +58,7 @@ endif
 
 3-stage-bootstrap: check-submodules
 	$(MAKE) 3-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose" \
+	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose -jobs $(DYLAN_JOBS)" \
 	  $(RTG_OPT)
 3-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3
 
@@ -66,7 +68,7 @@ endif
 
 2-stage-bootstrap: check-submodules
 	$(MAKE) 2-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose" \
+	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose -jobs $(DYLAN_JOBS)" \
 	  $(RTG_OPT)
 2-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2
 
@@ -237,7 +239,7 @@ BOOTSTRAP_3_LIBRARIES = \
   dylan-compiler dylan-environment parser-compiler dswank make-dylan-app
 
 BOOTSTRAP_3_COMPILER = \
-	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler -build -verbose
+	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler -build -verbose -jobs $(DYLAN_JOBS)
 ifneq (@SUPPORT_LLVM@,)
 BOOTSTRAP_3_RTG = $(abs_builddir)/Bootstrap.2/bin/llvm-runtime-generator
 endif
@@ -304,7 +306,7 @@ BOOTSTRAP_4_ENV = \
 BOOTSTRAP_4_LIBRARIES = dylan-compiler
 
 BOOTSTRAP_4_COMPILER = \
-	$(abs_builddir)/Bootstrap.3/bin/dylan-compiler -build -dfm
+	$(abs_builddir)/Bootstrap.3/bin/dylan-compiler -build -dfm -jobs $(DYLAN_JOBS)
 
 
 
@@ -492,7 +494,7 @@ CHECK_ENV = \
 check:	bootstrap-stage-$(CHECK_COMPILER_STAGE)
 	@$(CHECK_ENV) \
 	  $(fdmake) \
-	  --compiler="$(abs_builddir)/Bootstrap.$(CHECK_COMPILER_STAGE)/bin/dylan-compiler -build" \
+	  --compiler="$(abs_builddir)/Bootstrap.$(CHECK_COMPILER_STAGE)/bin/dylan-compiler -build -jobs $(DYLAN_JOBS)" \
 	  $(CHECK_APPS) && \
 	  for app in $(CHECK_APPS); do \
 	    echo "Executing test app $$app ..."; \
