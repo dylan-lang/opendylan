@@ -1,0 +1,13 @@
+{
+    "name": "opendylan",
+    "deps": [
+        "collection-extensions head",
+        "command-line-parser head",
+        "hash-algorithms head",
+        "logging head",
+        "regular-expressions head",
+        "strings head",
+        "testworks head"
+    ],
+    "location": "git@github.com:dylan-lang/opendylan"
+}
