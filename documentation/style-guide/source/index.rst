@@ -226,33 +226,36 @@ example in a slot specification or in a parameter list:
 End words
 =========
 
-"End words" are the optional text that follows ``end`` in statements.
-End words should always be used for top-level definitions, but
-otherwise it is up to the programmer.  This section provides some
-guidelines for how to decide when to use them and when not to.  If in
-doubt, err on the side of using them.
+"End words" are the optional one or two words that follow ``end`` in
+statements. For example::
 
-Generally speaking, end words should be used if the beginning of the
-block they terminate is more than about 15 lines away.  They become
-more useful the more deeply nested the code is.  Sometimes this might
-indicate a need to break the code down into multiple (possibly local)
-functions.
+  if ... end if
+  define method foo ... end method
+  with-open-file ... end with-open-file
 
-**Pros:**
+End words should be used sparingly because they add to the verbosity
+of the code and add a small maintenance burden. They can be useful to
+improve readability of deeply nested code or very long functions
+because the compiler warns if they don't match the begin
+word. However, sometimes this indicates a need to break the code into
+multiple (possibly local) functions.
 
-* The compiler warns when end words don't match.  This could alert
-  the programmer to mistakes in nesting.
+Recommended usage:
 
-* When reading source code in a flat file, the end word gives more
-  context by telling you what the previous definition is.
+* Use end words if the beginning of the block they terminate is
+  distant and/or the function is deeply nested.
 
-**Cons:**
+* Always use one end word for top-level definitions, like this::
 
-* The compiler warns when end words don't match.  This sometimes
-  results in otherwise unnecessary maintenance.
+    end function
 
-* End words increase verbosity of the code.
+  but not this::
 
+    end function foo
+
+  Leave off the trailing function name because it adds little value,
+  it is easy to forget to fix it when renaming the function, and it
+  causes useless hits when searching the code.
 
 Semicolons
 ==========
