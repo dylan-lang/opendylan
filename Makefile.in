@@ -1,6 +1,12 @@
 # Changes made here may also need to be made in
 # build/windows/build-release.bat.
 
+# TODO:
+#
+# * If OPEN_DYLAN_TARGET_PLATFORM isn't the local platform (which I assume is
+#   possible during cross compilation) then the workspace tool needs to be told
+#   to generate registries for that platform instead.
+
 prefix          = $(DESTDIR)@prefix@
 srcdir          = @abs_srcdir@
 abs_srcdir      = @abs_srcdir@
@@ -17,34 +23,21 @@ DYLANCOMPILER   = @DYLANCOMPILER@
 
 DYLAN_JOBS	= 2
 
+# The workspace tool installs external Dylan package dependencies and
+# creates the registry.
+DYLAN_WORKSPACE_TOOL = @DYLAN_WORKSPACE_TOOL@
+workspace_dir := $(shell dirname $(srcdir))
+
 .PHONY: 1-stage-bootstrap 1-stage-bootstrap-reentry \
 	2-stage-bootstrap 2-stage-bootstrap-reentry \
 	3-stage-bootstrap 3-stage-bootstrap-reentry \
 	bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3 \
-	all install install-stage release release-stage clean check \
-	check-submodules
+	all install install-stage release release-stage clean check
 
 all: @bootstrap_target@
 
-# Only check that submodules are up to date if in a Git repository
-ifeq (, $(wildcard $(srcdir)/.git))
-SKIP_SUBMODULE_CHECK = 1
-endif
-
-ifeq (1,$(SKIP_SUBMODULE_CHECK))
-check-submodules:
-else
-check-submodules:
-	@for sms in `cd $(srcdir) && git submodule status | grep -v "^ " | cut -c 1`; do \
-	  if [ "$$sms" != "x" ]; then \
-	    echo "**** ERROR ****"; \
-	    echo "One or more submodules is not up to date."; \
-	    echo "Please run 'git submodule update --init'."; \
-	    echo "If you want to skip this check, pass SKIP_SUBMODULE_CHECK=1 to make."; \
-	    exit 1; \
-	  fi; \
-	done;
-endif
+update-workspace:
+	$(DYLAN_WORKSPACE_TOOL) update
 
 ###
 # 3-stage bootstrap includes stages 1 and 2 and 3: it rebuilds the compiler
@@ -57,7 +50,7 @@ ifneq (@SUPPORT_LLVM@,)
 RTG_OPT = BOOTSTRAP_2_RTG="$(abs_builddir)/Bootstrap.1/bin/llvm-runtime-generator"
 endif
 
-3-stage-bootstrap: check-submodules
+3-stage-bootstrap: update-workspace
 	$(MAKE) 3-stage-bootstrap-reentry \
 	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose -jobs $(DYLAN_JOBS)" \
 	  $(RTG_OPT)
@@ -67,7 +60,7 @@ endif
 # 2-stage bootstrap includes both stages 1 and 2: it rebuilds the compiler to
 # support new primitives and rebuilds the libraries using that compiler.
 
-2-stage-bootstrap: check-submodules
+2-stage-bootstrap: update-workspace
 	$(MAKE) 2-stage-bootstrap-reentry \
 	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose -jobs $(DYLAN_JOBS)" \
 	  $(RTG_OPT)
@@ -77,7 +70,7 @@ endif
 # 1-stage bootstrap includes only stage 2: it rebuilds compiler and libraries
 # when the existing compiler and libraries will understand the primitives.
 
-1-stage-bootstrap: check-submodules
+1-stage-bootstrap: update-workspace
 	$(MAKE) 1-stage-bootstrap-reentry \
 	  BOOTSTRAP_2_COMPILER="$(DYLANCOMPILER)"
 1-stage-bootstrap-reentry: bootstrap-stage-2
@@ -108,7 +101,7 @@ BOOTSTRAP_1_PRIMITIVE_LIBS = \
 	orb-utilities portableserver-protocol \
 	naming-protocol naming-stubs naming-client
 
-BOOTSTRAP_1_REGISTRY = $(abs_srcdir)/sources/bootstrap1-registry
+BOOTSTRAP_1_REGISTRY = $(workspace_dir)/bootstrap1-registry
 
 BOOTSTRAP_1_ENV = \
 	OPEN_DYLAN_TARGET_PLATFORM=$(OPEN_DYLAN_TARGET_PLATFORM) \
@@ -135,12 +128,10 @@ $(abs_builddir)/Bootstrap.1:
 # BOOTSTRAP_1_PRIMITIVE_LIBS registry files are removed so those
 # libraries are taken from the bootstrap compiler's system registries.
 # The main point of stage 1 is to compile any changed compiler sources.
-$(BOOTSTRAP_1_REGISTRY):
-	mkdir $(BOOTSTRAP_1_REGISTRY)
-	cp -r $(srcdir)/sources/registry/generic $(BOOTSTRAP_1_REGISTRY)
-	cp -r $(srcdir)/sources/registry/$(OPEN_DYLAN_TARGET_PLATFORM) $(BOOTSTRAP_1_REGISTRY)
+$(BOOTSTRAP_1_REGISTRY): update-workspace
+	mkdir -p $(BOOTSTRAP_1_REGISTRY)
+	cp -r $(workspace_dir)/registry/$(OPEN_DYLAN_TARGET_PLATFORM) $(BOOTSTRAP_1_REGISTRY)
 	for lib in $(BOOTSTRAP_1_PRIMITIVE_LIBS); do \
-	  rm -f $(BOOTSTRAP_1_REGISTRY)/generic/$$lib; \
 	  rm -f $(BOOTSTRAP_1_REGISTRY)/$(OPEN_DYLAN_TARGET_PLATFORM)/$$lib; \
 	done
 
@@ -173,7 +164,7 @@ BOOTSTRAP_2_ENV = \
 	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.2 \
 	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
 	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.2/build \
-	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
+	OPEN_DYLAN_USER_REGISTRIES=$(workspace_dir)/registry \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
 BOOTSTRAP_2_UNSET_ENV = \
@@ -227,13 +218,13 @@ BOOTSTRAP_3_ENV = \
 	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
 	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.2 \
 	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.2/build \
-	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry \
+	OPEN_DYLAN_RELEASE_REGISTRIES=$(workspace_dir)/registry \
 	OPEN_DYLAN_RELEASE_SOURCES=$(abs_srcdir)/sources \
 	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.3/build/logs \
 	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.3 \
 	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
 	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.3/build \
-	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
+	OPEN_DYLAN_USER_REGISTRIES=$(workspace_dir)/registry \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
 BOOTSTRAP_3_LIBRARIES = \
@@ -295,13 +286,13 @@ BOOTSTRAP_4_ENV = \
 	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.3 \
 	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.3 \
 	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.3/build \
-	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
+	OPEN_DYLAN_RELEASE_REGISTRIES=$(workspace_dir)/registry:$(library_srcdir)/registry \
 	OPEN_DYLAN_RELEASE_SOURCES=$(abs_srcdir)/sources \
 	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build/logs \
 	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM) \
 	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM) \
 	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build \
-	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
+	OPEN_DYLAN_USER_REGISTRIES=$(workspace_dir)/registry:$(library_srcdir)/registry \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
 BOOTSTRAP_4_LIBRARIES = dylan-compiler
@@ -501,13 +492,13 @@ CHECK_ENV = \
 	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
 	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
 	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build \
-	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry \
+	OPEN_DYLAN_RELEASE_REGISTRIES=$(workspace_dir)/registry \
 	OPEN_DYLAN_RELEASE_SOURCES=$(abs_srcdir)/sources \
 	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build/logs \
 	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
 	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
 	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build \
-	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
+	OPEN_DYLAN_USER_REGISTRIES=$(workspace_dir)/registry \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
 check:	bootstrap-stage-$(CHECK_COMPILER_STAGE)
