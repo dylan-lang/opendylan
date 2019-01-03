@@ -70,12 +70,16 @@ define function main(name, arguments)
 
     let targets = make(<stretchy-vector>);
     let force? = #f;
+    let jobs = 1;
     iterate loop(i :: <integer> = 0)
       if (i < arguments.size)
         let arg = arguments[i];
         if (arg = "-f")
           let file = as(<file-locator>, arguments[i + 1]);
           jam-read-file(state, file);
+          loop(i + 2);
+        elseif (arg = "-j")
+          jobs := string-to-integer(arguments[i + 1]);
           loop(i + 2);
         elseif (arg = "-s")
           let setting = arguments[i + 1];
@@ -103,10 +107,12 @@ define function main(name, arguments)
 
     if (targets.empty?)
       jam-target-build(state, #["all"],
-                       force?: force?, progress-callback: progress);
+                       force?: force?, progress-callback: progress,
+                       jobs: jobs);
     else
       jam-target-build(state, targets,
-                       force?: force?, progress-callback: progress);
+                       force?: force?, progress-callback: progress,
+                       jobs: jobs);
     end if;
   exception (e :: <error>)
     format-err("djam: %s\n", e);

@@ -37,6 +37,8 @@ define command-line main => <main-command>
   flag subprojects      = "build subprojects as well if necessary";
   flag force            = "force relink the executable";
 
+  keyword jobs :: <integer> = "number of concurrent build jobs";
+
   keyword personal-root :: <directory-locator> = "personal area root";
   keyword system-root   :: <directory-locator> = "system area root";
   keyword internal-debug :: $keyword-list-type

@@ -51,6 +51,8 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: target:;
   constant slot %force? :: <boolean> = #f,
     init-keyword: force?:;
+  constant slot %jobs :: <integer> = 1,
+    init-keyword: jobs:;
   constant slot %verbose? :: <boolean> = #f,
     init-keyword: verbose?:;
   constant slot %unify? :: <boolean> = #f,
@@ -112,6 +114,7 @@ define method execute-main-command
         build-script: command.%build-script,
         target:      target,
         force?:      command.%force? | command.%clean?,
+        jobs:        command.%jobs,
         verbose?:    command.%verbose?,
         subprojects: command.%subprojects?,
         unify?:      command.%unify?)

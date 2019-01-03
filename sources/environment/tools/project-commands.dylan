@@ -1074,6 +1074,7 @@ define method frame-do-build-project-1
                        progress-callback:    note-compiler-progress,
                        error-handler:        condition-handler,
                        process-subprojects?: process-subprojects?,
+                       jobs:                 1,
                        release?:             release?);
           let label = if (compile?) "Project built" else "Project linked" end;
           note-compiler-progress(1, 1, heading-label: label, item-label: "");

@@ -324,7 +324,7 @@ primitive_make_thread(DTHREAD *newthread, ZFN func, BOOL synchronize)
   HANDLE hThread;
   HANDLE  *  events;
   DWORD  idThread;
-  int    priority = newthread->priority >> 2;
+  int    priority = (ZINT)(newthread->priority) >> 2;
   DTHREAD **newthread_ptr;
 
   newthread_ptr = (DTHREAD **)(dylan__malloc__ambig(4));

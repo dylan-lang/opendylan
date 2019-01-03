@@ -5,13 +5,49 @@ Copyright:    Original Code is Copyright 2004 Gwydion Dylan Maintainers
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+// Expanded actions command
+define class <jam-action-command> (<object>)
+  constant slot action-command-string :: false-or(<string>),
+    required-init-keyword: string:;
+  constant slot action-command-message :: false-or(<string>),
+    required-init-keyword: message:;
+  constant slot action-command-targets :: <sequence>,
+    required-init-keyword: targets:;
+  constant slot action-command-ignore? :: <boolean>,
+    required-init-keyword: ignore?:;
+  constant slot action-command-successors :: <object-set>
+    = make(<object-set>);
+  slot action-command-predecessor-count :: <integer>,
+    init-value: 0;
+  slot action-command-output-stream :: <sequence-stream>;
+end class;
+
+define method action-command-add-successor
+    (predecessor :: <jam-action-command>, successor :: <jam-action-command>)
+ => ();
+  unless (member?(successor, predecessor.action-command-successors))
+    add!(predecessor.action-command-successors, successor);
+    successor.action-command-predecessor-count
+      := successor.action-command-predecessor-count + 1;
+  end unless;
+end method;
+
 // jam-target-build
 //
 define method jam-target-build
     (jam :: <jam-state>, target-names :: <sequence>,
      #key force?,
+          jobs :: <integer> = 1,
           progress-callback :: <function> = ignore)
  => (build-successful? :: <boolean>);
+  let thread-pool = make(<thread-pool>, size: jobs);
+  thread-pool-start(thread-pool);
+
+  let target-final-command = make(<object-table>);
+  let output-queue = make(<blocking-deque>);
+  let targets-lock = make(<lock>);
+  let ok? = #f;
+
   local
     method bind(name :: <byte-string>) => (target :: <jam-target>);
       bind-aux(#f, jam-target(jam, name))
@@ -116,7 +152,7 @@ define method jam-target-build
               $build-status-missing;
 
             target.target-file? & last > target.target-modification-date =>
-              $build-status-old;
+              $build-status-outdated;
 
             time-target.target-modification-date
               & (last > time-target.target-modification-date
@@ -172,53 +208,21 @@ define method jam-target-build
       target
     end method,
 
-    // This is somewhat simplistic compared to mmk or the original Jam.
-    // We can do better... 
-    //
-    method build(target :: <jam-target>) => (success? :: <boolean>);
-      block (return)
-        if (target.target-build-progress == #"done")
-          return(target.target-build-execution-result == #"ok");
-        elseif (target.target-build-progress ~== #"init")
-          return(#t);
-        end if;
-
+    method expand
+        (target :: <jam-target>, successor :: <jam-action-command>)
+     => ();
+      if (target.target-build-progress == #"init")
         target.target-build-progress := #"onstack";
-
-        let failed? = #f;
-        let seen = make(<object-set>);
-
-        for(depend in target.target-depends)
-          unless (build(depend))
-            failed? := #t;
-          end unless;
-        end for;
-        add!(seen, target);
-        if (failed?) return(#f) end;
-        
-        for (invocation in target.target-action-invocations)
-          for (target in invocation.action-invocation-targets)
-            unless (member?(target, seen))
-              for(depend in target.target-depends)
-                unless (build(depend))
-                  failed? := #t;
-                end unless;
-              end for;
-              add!(seen, target);
-            end unless;
-          end for;
-        end for;
-        if (failed?) return(#f) end;
-        
-        target.target-build-progress := #"active";
 
         unless (target.target-build-status > $build-status-init)
           error("target %s was never bound", target.target-name);
         end;
-        
-        if (target.target-build-status > $build-status-stable)
+
+        let current-successor :: <jam-action-command> = successor;
+        if (target.target-build-status >= $build-status-touched)
           with-jam-target(jam, target)
-            for (invocation in target.target-action-invocations)
+            for (invocation in target.target-action-invocations
+                   using backward-iteration-protocol)
               unless (invocation.action-invocation-subsumed?)
                 let action = invocation.action-invocation-action;
                 let targets = invocation.action-invocation-targets;
@@ -265,17 +269,12 @@ define method jam-target-build
                   jam-variable(jam, variable)
                     := bind-targets(jam, value-as-targets);
                 end for;
-                
-                let command = substitute-command(jam, action.action-commands);
 
-                // restore values
-                for(variable in variables, outer-value in outer-values)
-                  jam-variable(jam, variable) := outer-value;
-                end for;
-
-                // progress message callback
+                // Build the progress message that will be emitted
+                // when action execution begins
+                let message :: false-or(<string>)= #f;
                 unless (action.action-quietly?)
-                  let message = action.action-name;
+                  message := action.action-name;
                   for (bound-target in bound-targets)
                     message := concatenate(message, " ", bound-target);
                   end for;
@@ -285,61 +284,205 @@ define method jam-target-build
                       message := concatenate(message, " ", bound-source);
                     end for;
                   end unless;
-                  progress-callback(message);
                 end unless;
 
-                // run the action
-                let status
-                  = run-application(command,
-                                    under-shell?: #t,
-                                    inherit-console?: #f,
-                                    outputter: outputter,
-                                    hide?: #t);
+                // Construct the command
+                let command-string
+                  = substitute-command(jam, action.action-commands);
+                let command
+                  = make(<jam-action-command>,
+                         string: command-string,
+                         message: message,
+                         targets: targets,
+                         ignore?: action.action-ignore?);
 
-                // clean up temporary files
-                jam-clean-temporary-files(jam);
-
-                //---*** need to verify targets were really built
-                //       and (possibly) reset the modification date
-                for (target in targets)
-                  target.target-build-progress := #"done";
-                  if (status ~= 0 & ~action.action-ignore?)
-                    target.target-build-execution-result := #"fail";
-                  end if;
+                // restore values
+                for(variable in variables, outer-value in outer-values)
+                  jam-variable(jam, variable) := outer-value;
                 end for;
 
-                if (status ~= 0 & ~action.action-ignore?)
-                  cerror("build remaining targets",
-                         "Building target %s: \"%s\" failed "
-                           "with return status %d",
-                         target.target-name, command, status);
-                  return(#f);
-                end if;
+                // Note the final command for each target
+                for (invocation-target in targets)
+                  unless (element(target-final-command, invocation-target,
+                                  default: #f))
+                    target-final-command[invocation-target] := command;
+                  end unless;
+                end for;
+
+                // Make the successor command depend on this one
+                action-command-add-successor(command, current-successor);
+                current-successor := command;
               end unless;
             end for;
           end with-jam-target;
         end if;
 
-        target.target-build-progress := #"done";
+        // If there were no commands that needed executing, create a
+        // dependency placeholder command
+        if (current-successor == successor)
+          let placeholder-command
+            = make(<jam-action-command>,
+                   string: #f, message: #f,
+                   targets: vector(target),
+                   ignore?: #f);
+          target-final-command[target] := placeholder-command;
 
-        #t;
-      end block;
+          // Make the successor command depend on this one
+          action-command-add-successor(placeholder-command, current-successor);
+          current-successor := placeholder-command;
+        end if;
+
+        // Expand direct dependencies
+        for (depend in target.target-depends)
+          expand(depend, current-successor);
+        end for;
+
+        // Expand invocation dependencies
+        for (invocation in target.target-action-invocations)
+          for (invocation-target in invocation.action-invocation-targets)
+            for (depend in invocation-target.target-depends)
+              expand(depend, current-successor);
+            end for;
+
+            // Dependencies are now accounted for, so advance the
+            // target to active state
+            invocation-target.target-build-progress := #"active";
+          end for;
+        end for;
+
+        // If the first command has no dependencies on the execution
+        // of another command, we can start executing it immediately
+        if (zero?(current-successor.action-command-predecessor-count))
+          thread-pool-add(thread-pool,
+                          curry(execute-command, current-successor));
+        end if;
+      else
+        // We've already expanded this target; add a dependency
+        // relationship
+        if (target.target-build-status >= $build-status-touched)
+          action-command-add-successor(target-final-command[target], successor);
+        end if;
+      end if;
     end method,
 
-    method outputter (msg :: <byte-string>, #key end: _end)
-      progress-callback(copy-sequence(msg, end: _end));
+    method execute-command (command :: <jam-action-command>) => ();
+      if (command.action-command-string)
+        // Emit the message
+        let message = command.action-command-message;
+        if (message)
+          push-last(output-queue, curry(progress-callback, message));
+        end if;
+
+        // Run the action
+        let status
+          = run-application(command.action-command-string,
+                            under-shell?: #t,
+                            inherit-console?: #f,
+                            outputter: curry(command-outputter, command),
+                            hide?: #t);
+
+        // If there was any output from this command send to the
+        // progress callback now.
+        if (slot-initialized?(command, action-command-output-stream))
+          let message = stream-contents(command.action-command-output-stream);
+          push-last(output-queue, curry(progress-callback, message));
+        end if;
+
+        with-lock (targets-lock)
+          complete-command(command, status);
+        end with-lock;
+      else
+        // This was an internal dependency marker for a target that
+        // didn't require any actual command executions
+        with-lock (targets-lock)
+          complete-command(command, 0);
+        end with-lock;
+      end if;
+    end method,
+
+    method command-outputter (command :: <jam-action-command>,
+                              msg :: <byte-string>, #key end: _end)
+      if (slot-initialized?(command, action-command-output-stream))
+        write(command.action-command-output-stream, msg, end: _end);
+      else
+        command.action-command-output-stream
+          := make(<byte-string-stream>,
+                  direction: #"output",
+                  contents: copy-sequence(msg, end: _end));
+      end if;
+    end method,
+
+    method complete-command (command :: <jam-action-command>,
+                             status :: <integer>)
+      //---*** need to verify targets were really built
+      //       and (possibly) reset the modification date
+      for (target in command.action-command-targets)
+        target.target-build-progress := #"done";
+      end for;
+
+      if (status ~= 0 & ~command.action-command-ignore?)
+        let message
+          = concatenate("Command failed: ", command.action-command-string);
+        push-last(output-queue, curry(progress-callback, message));
+
+        // Stop the build
+        push-last(output-queue, #f);
+      else
+        // If any of the successors now have all of their
+        // dependencies satisfied, then add their execution to the
+        // thread pool.
+        for (successor in command.action-command-successors)
+          successor.action-command-predecessor-count
+            := successor.action-command-predecessor-count - 1;
+          if (zero?(successor.action-command-predecessor-count))
+            if (successor.action-command-string)
+              thread-pool-add(thread-pool, curry(execute-command, successor));
+            else
+              // This is a placeholder, so complete it immediately
+              complete-command(successor, status);
+            end if;
+          end if;
+        end for;
+      end if;
+
+      // Stop the build if this was the sentinel
+      if (empty?(command.action-command-targets))
+        push-last(output-queue, #f);
+        ok? := #t;
+      end if;
     end method;
 
   // first pass
   let targets = map(bind, target-names);
 
   // second pass
-  let ok? = #t;
-  for (target in targets)
-    if(~build(target))
-      ok? := #f;
-    end if;
-  end for;
+  let sentinel-command
+    = make(<jam-action-command>,
+           string: #f, message: #f, targets: #[], ignore?: #f);
+  with-lock (targets-lock)
+    for (target in targets)
+      expand(target, sentinel-command)
+    end for;
+  end with-lock;
+
+  // Process thunks posted to the output queue
+  unless (zero?(sentinel-command.action-command-predecessor-count))
+    block (done)
+      while (#t)
+        let thunk = blocking-pop(output-queue);
+        if (thunk)
+          thunk();
+        else
+          done()
+        end if;
+      end while;
+    end block;
+  end unless;
+  thread-pool-stop(thread-pool);
+
+  // clean up temporary files
+  jam-clean-temporary-files(jam);
+
   ok?
 end method;
 

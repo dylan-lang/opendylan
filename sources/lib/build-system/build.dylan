@@ -79,6 +79,7 @@ define method build-system
           compiler-back-end,
           project-build-info,
           force?,
+          jobs :: <integer> = 1,
           configure? = #t)
  => (build-successful? :: <boolean>);
   if (configure?)
@@ -116,7 +117,8 @@ define method build-system
 
         jam-target-build(jam, build-targets,
                          progress-callback: wrap-progress-callback,
-                         force?: force?);
+                         force?: force?,
+                         jobs: jobs);
       end;
     exception (e :: <error>)
       wrap-progress-callback(condition-to-string(e), error?: #t);

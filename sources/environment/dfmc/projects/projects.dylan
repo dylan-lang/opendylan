@@ -535,7 +535,7 @@ end method link-project-progress;
 define sealed method link-project
     (project-object :: <dfmc-project-object>,
      #key progress-callback, error-handler, process-subprojects? = #t,
-          build-script, target, force?, unify?, release?, messages)
+          build-script, target, force?, jobs, unify?, release?, messages)
  => ()
   ignore(messages);
   let project = project-object.ensure-project-proxy;
@@ -557,6 +557,7 @@ define sealed method link-project
                      mode:        if (unify?) #"combine" end,
                      target-type: target,
                      build-script: build-script | default-build-script(),
+                     jobs:        jobs,
                      release?:    release?)
       end
     cleanup

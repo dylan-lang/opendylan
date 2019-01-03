@@ -155,6 +155,8 @@ define class <abstract-link-command> (<project-command>)
     init-keyword: project:;
   constant slot %build-script :: false-or(<file-locator>) = #f,
     init-keyword: build-script:;
+  constant slot %jobs :: <integer> = 1,
+    init-keyword: jobs:;
   constant slot %target :: false-or(<symbol>) = #f,
     init-keyword: target:;
   constant slot %force? :: <boolean> = #f,
@@ -192,6 +194,7 @@ define command-line build => <build-project-command>
   flag subprojects   = "build subprojects as well if necessary [on by default]";
   keyword build-script :: <file-locator> = "the (Jam) build script to use";
   keyword target :: <symbol> = "the target [dll or executable]";
+  keyword jobs :: <integer> = "the number of concurrent build jobs";
   flag force         = "force relink the executable [off by default]";
   flag unify         = "combine the libraries into a single executable [off by default]";
   flag verbose       = "show verbose output [off by default]";
@@ -224,6 +227,7 @@ define method do-execute-command
            target:               command.%target,
            release?:             command.%release?,
            force?:               command.%force?,
+           jobs:                 command.%jobs,
            process-subprojects?: command.%subprojects?,
            unify?:               command.%unify?,
            messages:             messages,
@@ -353,6 +357,7 @@ define command-line link => <link-project-command>
   optional project :: <project-object> = "the project to link";
   keyword build-script :: <file-locator> = "the (Jam) build script to use";
   keyword target :: <symbol> = "the target [dll or executable]";
+  keyword jobs :: <integer> = "the number of concurrent build jobs";
   flag force       = "force relink the executable [off by default]";
   flag subprojects = "link subprojects as well if necessary [on by default]";
   flag unify       = "combine the libraries into a single executable [off by default]";
@@ -371,6 +376,7 @@ define method do-execute-command
                build-script:         build-script,
                target:               command.%target,
                force?:               command.%force?,
+               jobs:                 command.%jobs,
                process-subprojects?: command.%subprojects?,
                unify?:               command.%unify?,
                progress-callback:    curry(note-build-progress, context, command.%verbose?),
