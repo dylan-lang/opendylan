@@ -24,17 +24,17 @@ direct value. Since there are three major groups (integers, characters
 and everything else), the representation for all platforms is to use two
 bits.
 
-+----------+-----------------+
-| Tag Bits | Type            |
-+==========+=================+
-| 00       | Heap Allocated  |
-+----------+-----------------+
-| 01       | Integers        |
-+----------+-----------------+
-| 10       | Characters      |
-+----------+-----------------+
-| 11       | Unused          |
-+----------+-----------------+
++----------+--------------------+
+| Tag Bits | Type               |
++==========+====================+
+| 00       | Heap Allocated     |
++----------+--------------------+
+| 01       | Integers           |
++----------+--------------------+
+| 10       | Characters         |
++----------+--------------------+
+| 11       | Unicode Characters |
++----------+--------------------+
 
 Integers and Characters
 -----------------------
