@@ -108,7 +108,25 @@
 	BYTE 0
 	BYTE 0
 	BYTE 0
-	BYTE 0+++ external: "primitive_exit_application" +++
+	BYTE 0
+
++++ defining "Kones_table" in section untraced-data +++
+	BYTE 0
+	BYTE 1
+	BYTE 1
+	BYTE 2
+	BYTE 1
+	BYTE 2
+	BYTE 2
+	BYTE 3
+	BYTE 1
+	BYTE 2
+	BYTE 2
+	BYTE 3
+	BYTE 2
+	BYTE 3
+	BYTE 3
+	BYTE 4+++ external: "primitive_exit_application" +++
 
 +++ (public) variable{constant "Pmaster_gc_teb"} " in section ambiguous-data" = 0 +++
 
@@ -233,64 +251,6 @@
 +++ external: "Kfloat_overflowVKeI" +++
 +++ external: "Kfloat_underflowVKeI" +++
 
-
-+++ defining "Kunsupported_float" in section untraced-objects +++
-	DATA "KLbyte_stringGVKdW"
-	DATA 45
-	BYTE "unsupported"
-	BYTE 0
-
-+++ defining "Knan_float" in section untraced-objects +++
-	DATA "KLbyte_stringGVKdW"
-	DATA 13
-	BYTE "nan"
-	BYTE 0
-
-+++ defining "Knormal_float" in section untraced-objects +++
-	DATA "KLbyte_stringGVKdW"
-	DATA 25
-	BYTE "normal"
-	BYTE 0
-
-+++ defining "Kinfinity_float" in section untraced-objects +++
-	DATA "KLbyte_stringGVKdW"
-	DATA 33
-	BYTE "infinity"
-	BYTE 0
-
-+++ defining "Kzero_float" in section untraced-objects +++
-	DATA "KLbyte_stringGVKdW"
-	DATA 17
-	BYTE "zero"
-	BYTE 0
-
-+++ defining "Kempty_float" in section untraced-objects +++
-	DATA "KLbyte_stringGVKdW"
-	DATA 21
-	BYTE "empty"
-	BYTE 0
-
-+++ defining "Kdenormal_float" in section untraced-objects +++
-	DATA "KLbyte_stringGVKdW"
-	DATA 33
-	BYTE "denormal"
-	BYTE 0
-
-+++ defining "Kfloating_point_classes" in section untraced-data +++
-	DATA 0
-	DATA "Kunsupported_float"
-	DATA 256
-	DATA "Knan_float"
-	DATA 1024
-	DATA "Knormal_float"
-	DATA 1280
-	DATA "Kinfinity_float"
-	DATA 16384
-	DATA "Kzero_float"
-	DATA 16640
-	DATA "Kempty_float"
-	DATA 17408
-	DATA "Kdenormal_float"
 
 +++ defining "Knot_yet_relocated_string" in section untraced-objects +++
 	DATA "KLbyte_stringGVKdW"
@@ -2852,6 +2812,51 @@ End scope at 37
 +++ ending code for primitive_machine_word_count_high_zeros +++
 
 +++ No Source Code Locators for primitive_machine_word_count_high_zeros +++
+
+
++++ Exported function definition primitive_machine_word_count_ones +++
+
++++ starting code for primitive_machine_word_count_ones +++
+
+#() [0->5] (level:0) is green with stack state before
+#({basic-block #() 5 10})
+  rem	"This is a dummy first basic block."
+
+#() [5->10] (level:0) is green with stack state #f
+#({basic-block #() 10 15}, {basic-block #({tag 1:20}) 20 30})
+  bne	{tag 1:20}, eax, 0
+
+#() [10->15] (level:0) is green with stack state #f
+#({basic-block #() 15 20})
+  move	eax, 0
+
+#() [15->20] (level:0) is green with stack state #f
+#()
+  rts-and-drop	0
+
+#({tag 1:20}) [20->30] (level:0) is green with stack state #f
+#({basic-block #({tag 2:30}) 30 55})
+  move	N1/edi, eax
+  move	eax, 0
+
+#({tag 2:30}) [30->55] (level:1) is green with stack state #f
+#({basic-block #() 55 55}, {basic-block #({tag 2:30}) 30 55})
+  and	N2/ebx, N1/edi, 15
+  ldb	N0/ebx, {constant "Kones_table"}, N2/ebx
+  add	eax, eax, N0/ebx
+  lsr	N1/edi, N1/edi, 4
+  bne	{tag 2:30}, N1/edi, 0
+
+#() [55->55] (level:0) is green with stack state #f
+#({basic-block #() 55 60})
+
+#() [55->60] (level:0) is green with stack state #f
+#()
+  rts-and-drop	0
+
++++ ending code for primitive_machine_word_count_ones +++
+
++++ No Source Code Locators for primitive_machine_word_count_ones +++
 
 
 +++ Exported function definition primitive_type_check +++
@@ -19427,46 +19432,6 @@ Start scope at 7 with frame for no variables
 End scope at 13
 
 +++ No Source Code Locators for _dylan_float_underflow_handler +++
-
-
-+++ Exported function definition primitive_float_class +++
-
-+++ starting code for primitive_float_class +++
-
-#() [0->5] (level:0) is green with stack state before
-#({basic-block #() 5 15})
-  rem	"This is a dummy first basic block."
-
-#() [5->15] (level:0) is green with stack state #f
-#({basic-block #({tag 1:15}) 15 25})
-  classify-float	N1/ebx, ST
-  move	N0/eax, 0
-
-#({tag 1:15}) [15->25] (level:1) is green with stack state #f
-#({basic-block #() 25 30}, {basic-block #({tag 2:30}) 30 40})
-  ld	N2/edi, {constant "Kfloating_point_classes"}, N0/eax
-  beq	{tag 2:30}, N1/ebx, N2/edi
-
-#() [25->30] (level:1) is green with stack state #f
-#({basic-block #({tag 1:15}) 15 25})
-  add	N0/eax, N0/eax, 8
-
-#() [45->50] (level:0) is #f with stack state #f
-#()
-  bra	{tag 1:15}
-
-#({tag 2:30}) [30->40] (level:1) is green with stack state #f
-#({basic-block #() 40 45})
-  add	N0/eax, N0/eax, 4
-  ld	eax, {constant "Kfloating_point_classes"}, N0/eax
-
-#() [40->45] (level:1) is green with stack state #f
-#()
-  rts-and-drop	0
-
-+++ ending code for primitive_float_class +++
-
-+++ No Source Code Locators for primitive_float_class +++
 
 
 +++ starting code for _dylan_thread_trampoline@4 +++
