@@ -92,9 +92,10 @@ end method %logbit?;
 //////////////////////////////////////////////////////////////////////////////
 // %count-low-zeros (x :: <machine-word>) => count :: <integer>
 // %count-high-zeros (x :: <machine-word>) => count :: <integer>
+// %count-ones (x :: <machine-word>) => count :: <integer>
 
-define macro count-zeros-definer
-  { define count-zeros ?:name ?counter:name }
+define macro bit-counter-definer
+  { define bit-counter ?:name ?counter:name }
   => { define sealed generic ?name (x :: <object>)
          => count :: <integer>;
        define inline method ?name (x :: <machine-word>)
@@ -108,5 +109,6 @@ define macro count-zeros-definer
        }
 end macro;
 
-define count-zeros %count-low-zeros machine-word-count-low-zeros;
-define count-zeros %count-high-zeros machine-word-count-high-zeros;
+define bit-counter %count-low-zeros machine-word-count-low-zeros;
+define bit-counter %count-high-zeros machine-word-count-high-zeros;
+define bit-counter %count-ones machine-word-count-ones;

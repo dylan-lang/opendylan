@@ -505,6 +505,11 @@ DMINT primitive_machine_word_count_high_zeros(DMINT x) {
   int index = (int)(uindex >> (primitive_word_size() * 8 - 4));
   return(DMINT)(count + t[index]);
 }
+
+DMINT primitive_machine_word_count_ones(DMINT x) {
+# error primitive_machine_word_count_ones not implemented
+  return 0;
+}
 #endif
 
 static void multiply_double (DMINT x, DMINT y, DUMINT* zl, DUMINT* zh) {

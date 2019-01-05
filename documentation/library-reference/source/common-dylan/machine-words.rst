@@ -355,6 +355,17 @@ These four functions have the same semantics as :drm:`logior`, :drm:`logxor`,
    ``%logbit?(p, m)`` is true, and for all values of ``j`` such that ``p < j <
    $machine-word-size*, *%logbit?(j, m)`` is false.
 
+.. function:: %count-ones
+
+   :signature: %count-ones m => c
+
+   :parameter m: An instance of :class:`<machine-word>`.
+   :parameter c: An instance of :class:`<integer>`.
+
+   :description:
+
+     Returns the number of bits in *m* which have been set to 1.
+
 .. function:: %+
 
    :signature: %+ m1 m2 => sum overflow?

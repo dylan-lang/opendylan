@@ -97,6 +97,21 @@ define machine-words function-test %count-high-zeros ()
               %count-high-zeros(as(<machine-word>, 4096)));
 end function-test %count-high-zeros;
 
+define machine-words function-test %count-ones ()
+  check-equal("%count-ones of <integer> 0",
+              0, %count-ones(0));
+  check-equal("%count-ones of <machine-word> 0",
+              0, %count-ones(as(<machine-word>, 0)));
+  check-equal("%count-ones of <integer> -1",
+              $machine-word-size, %count-ones(-1));
+  check-equal("%count-ones of <machine-word> -1",
+              $machine-word-size, %count-ones(as(<machine-word>, -1)));
+  check-equal("%count-ones of <integer> 4096",
+              1, %count-ones(4096));
+  check-equal("%count-ones of <machine-word> 4096",
+              1, %count-ones(as(<machine-word>, 4096)));
+end function-test %count-ones;
+
 define machine-words function-test \%+ ()
   //---*** Fill this in...
 end function-test \%+;

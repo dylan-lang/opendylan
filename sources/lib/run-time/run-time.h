@@ -1615,9 +1615,13 @@ static inline DMINT primitive_machine_word_count_low_zeros(DMINT x) {
 static inline DMINT primitive_machine_word_count_high_zeros(DMINT x) {
   return x ? __builtin_clzl(x) : (8 * sizeof(x));
 }
+static inline DMINT primitive_machine_word_count_ones(DMINT x) {
+  return __builtin_popcountl(x);
+}
 #else
 extern DMINT primitive_machine_word_count_low_zeros(DMINT);
 extern DMINT primitive_machine_word_count_high_zeros(DMINT);
+extern DMINT primitive_machine_word_count_ones(DMINT);
 #endif
 
 #define primitive_machine_word_add(x, y)                  ((x) + (y))

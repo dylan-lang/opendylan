@@ -1197,18 +1197,8 @@ define function bit-count
     end if;
 
     // Count the bits which are 1 in this word
-    let word-count :: <integer> =
-      raw-as-integer(primitive-machine-word-logand(word, integer-as-raw(1)));
-    for (j :: <integer> from 1 below $word-size)
-      word := primitive-machine-word-unsigned-shift-right
-                (word, integer-as-raw(1));
-      let new-word-count :: <integer> = word-count +
-        raw-as-integer(primitive-machine-word-logand(word, integer-as-raw(1)));
-      word-count := new-word-count;
-    end for;
-
-    let new-count :: <integer> = count + word-count;
-    count := new-count;
+    let word-count = primitive-machine-word-count-ones(word);
+    count := count + as(<integer>, primitive-wrap-machine-word(word-count));
   end for;
 
   if (bit-value = 0)

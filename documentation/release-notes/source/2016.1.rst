@@ -73,6 +73,13 @@ C-FFI
        (integer-as-raw(0))
      end;
 
+Collections
+===========
+
+* The ``bit-count`` operation from ``bit-vector`` (also used by ``<bit-set>``)
+  has been changed to use the new ``primitive-machine-word-count-ones`` that
+  has been added in this release.
+
 Coloring-Stream
 ===============
 
@@ -111,6 +118,9 @@ Common Dylan
 * The ``simple-profiling`` module now exports ``start-profiling`` and
   ``stop-profiling`` rather than requiring that users directly invoke
   ``start-profiling-type`` and ``stop-profiling-type`` multiple times.
+* The ``machine-words`` module now knows how to count the bits set
+  in a machine word via ``%count-ones``. This is also available as
+  a new compiler primitive, ``primitive-machine-word-count-ones``.
 
 Compiler
 ========
