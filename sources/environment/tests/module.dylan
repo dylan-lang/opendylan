@@ -11,8 +11,6 @@ define module environment-test-suite
   use environment-protocols;
   //---*** andrewa: this needs a DUIM backend to work
   // use environment-framework;
-  //---*** The editor manager tests aren't automatic
-  // use test-editor-manager-common;
   use duim;
 
   use testworks;
