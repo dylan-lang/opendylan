@@ -69,23 +69,26 @@ end macro;
 
 
 
-// Toplevel internal function that can be invoked by Dylan Clients
-
+// Top level internal function that can be invoked by Dylan Clients
+// Arguments:
+// build-targets - A sequence of strings naming Jam build targets like
+//     "clean", "exe", "dll", etc. See sources/jamfiles/posix-build.jam.
+// directory - The directory in which to perform the build.
+// progress-callback - A function to call with build progress messages.
+//     Called with the message string and `warning?: #t` if the message
+//     is a warning.
+// build-script - Jam build script <file-locator>
+// compiler-back-end - #"llvm", #"c", #"harp", or #f.
 define method build-system
     (build-targets :: <sequence>,
      #key directory :: <directory-locator> = working-directory(),
           progress-callback :: <function> = ignore,
           build-script = default-build-script(),
           compiler-back-end,
-          project-build-info,
           force?,
-          jobs :: <integer> = 1,
-          configure? = #t)
+          jobs :: <integer> = 1)
  => (build-successful? :: <boolean>);
-  if (configure?)
-    configure-build-system();
-  end;
-
+  configure-build-system();
   let log-file
     = make(<file-locator>, directory: directory, name: $build-log-file);
   with-open-file (stream = log-file, direction: #"output")

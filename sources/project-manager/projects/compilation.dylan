@@ -53,17 +53,6 @@ define method save-project-database (project :: <project>, #key flush?) => ()
   note-database-saved(project)
 end method save-project-database;
 
-define method project-build-info
-    (project :: <string>)
- => (found? :: <boolean>, personal? :: <boolean>, build-location)
-  let project = lookup-named-project(project, create?: #f);
-  if (project)
-    values(#t,
-           project.project-personal-library?,
-           project.project-build-location);
-  end if;
-end method;
-
 define method link-library (project :: <project>, #rest keys,
                             #key target-type,
                                  extent = #"changes",
@@ -96,7 +85,6 @@ define method link-library (project :: <project>, #rest keys,
                build-script: build-script,
                compiler-back-end: project-compiler-back-end(project),
                progress-callback: progress-callback,
-               project-build-info: project-build-info,
                force?: extent == #"all",
                jobs: jobs)
 end method;

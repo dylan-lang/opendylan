@@ -124,7 +124,7 @@ define function make-jam-state
 
     if (compiler-back-end)
       jam-variable(state, "COMPILER_BACK_END")
-        := vector(as(<string>, compiler-back-end));
+        := vector(as-lowercase(as(<string>, compiler-back-end)));
     end if;
 
     jam-variable(state, "JAMDATE")
