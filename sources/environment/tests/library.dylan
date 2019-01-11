@@ -11,8 +11,6 @@ define library environment-test-suite
   use release-info;
   //---*** andrewa: this needs a DUIM backend to work
   // use environment-framework;
-  //---*** andrewa: the editor tests aren't automatic
-  // use test-editor-manager-common;
   use duim-core;
 
   use testworks;
