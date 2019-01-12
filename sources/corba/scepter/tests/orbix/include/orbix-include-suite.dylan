@@ -5,23 +5,8 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define variable *orbix-include-files* = make(<table>);
-
 define suite orbix-include-idl (setup-function: setup-orbix-include-idl,
                                 cleanup-function: cleanup-orbix-include-idl)
-  test orbix-include-idl-AttrDf;
-  test orbix-include-idl-ConstDf;
-  test orbix-include-idl-Contd;
-  test orbix-include-idl-Contr;
-  test orbix-include-idl-ExcDf;
-  test orbix-include-idl-IRDfs;
-  test orbix-include-idl-InterDf;
-  test orbix-include-idl-ModDf;
-  test orbix-include-idl-OperDf;
-  test orbix-include-idl-ParmDf;
-  test orbix-include-idl-Rep;
-  test orbix-include-idl-TypDf;
-  test orbix-include-idl-daemon;
 end suite;
 
 define method setup-orbix-include-idl ()

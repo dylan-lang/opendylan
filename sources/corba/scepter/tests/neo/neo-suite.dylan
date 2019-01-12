@@ -5,8 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define variable *neo-files* = make(<table>);
-
 define suite neo-idl (setup-function: method ()
                                         add-cpp-include-path!("./");
                                         setup-idl-files(*neo-files*);
