@@ -14,8 +14,6 @@ add-idl-file!(
   "DCE_CIOP",
 "\n"
 "// Jason\n"
-"#include \"IOP.idl\"\n"
-"\n"
 "// #include \"CORBA.idl\"\n"
 "//\n"
 "// Jason: hack presence of CORBA module to avoid\n"
@@ -25,6 +23,8 @@ add-idl-file!(
 "module CORBA {\n"
 "  interface Principal;\n"
 "};\n"
+"\n"
+"#include \"IOP.idl\"\n"
 "\n"
 "// DCE CIOP module described in CORBA V2, 7-95 chap 13\n"
 "// IDL for DCE CIOP module: CORBA V2, 7-95  p 13-2\n"

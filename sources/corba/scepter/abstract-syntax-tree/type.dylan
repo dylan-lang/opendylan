@@ -259,8 +259,9 @@ define constant $predefined-types = vector($long-idl-type,
                                            $octet-idl-type,
                                            $any-idl-type,
                                            $void-idl-type,
-					   $Object-idl-type,
-					   $TypeCode-idl-type);
-//					   $NamedValue-idl-type,
+                                           $Object-idl-type);
 //					   $Principal-idl-type);
 
+
+define constant $CORBA-module-types = vector($TypeCode-idl-type);
+//					     $NamedValue-idl-type);

@@ -34,5 +34,6 @@ add-idl-file!(
 "\n"
 "    long\tm2(in long a, out long b);\n"
 "    void\tmv();\n"
+"    CORBA::TypeCode typecode_operation (in CORBA::TypeCode one, inout CORBA::TypeCode two, out CORBA::TypeCode three);\n"
 "};\n"
 "\n");

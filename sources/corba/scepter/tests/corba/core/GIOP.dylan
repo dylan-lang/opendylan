@@ -13,8 +13,6 @@ add-idl-file!(
   *corba-core-files*,
   "GIOP",
 "// Jason\n"
-"#include \"IOP.idl\"\n"
-"\n"
 "// #include \"CORBA.idl\"\n"
 "//\n"
 "// Jason: hack presence of CORBA module to avoid\n"
@@ -24,6 +22,8 @@ add-idl-file!(
 "module CORBA {\n"
 "  interface Principal;\n"
 "};\n"
+"\n"
+"#include \"IOP.idl\"\n"
 "\n"
 "\t// GIOP module described in CORBA V2, 7-95 chap 12\n"
 "\t// Complete IDL for GIOP module in CORBA\n"

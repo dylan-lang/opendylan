@@ -343,6 +343,12 @@ end method;
 
 // MODULE
 
+define method dump-definition (back-end :: <dump-back-end>, module :: <ast-module>, stream :: <stream>, #key last? :: <boolean>)
+  unless (every?(rcurry(instance?, <ast-predefined-type>), module.scope-declarators))
+    next-method();
+  end unless;
+end method;
+
 define method dump-before-name (back-end :: <dump-back-end>, module :: <ast-module>, stream :: <stream>)
   format(stream, "module ");
 end method;

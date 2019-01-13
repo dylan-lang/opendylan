@@ -212,10 +212,11 @@ define module scepter-ast
     $boolean-idl-type,
     $any-idl-type,
     $Object-idl-type,
-    $TypeCode-idl-type,
     $Principal-idl-type,
     $pseudo-idl-type,
     $predefined-types,
+    $TypeCode-idl-type,
+    $CORBA-module-types,
 
     $no-combinator,
     $symbol-combinator,
