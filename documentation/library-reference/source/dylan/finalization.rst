@@ -24,17 +24,16 @@ finalization as follows:
     on some objects after they are no longer in use and before their memory
     can be recycled. These actions are known as finalization or termination.
 
-    A common use of finalization is to release a resource when the
-    corresponding "proxy" object dies. For example, an open file might be
-    represented by a stream object. When the stream object has no references
-    and can be collected, it is certain that the file is no longer in use by
-    the [application] and can be closed.
+A common use of finalization is to release a resource when the
+corresponding "proxy" object dies, if the proxy object has indefinite
+extent and therefore more predictable tools like ``block ()
+... cleanup ... end`` won't work.
 
-Finalization is also commonly required when interfacing Dylan code with
-foreign code that does not have automatic memory management. If an
-interface involves a Dylan object that references a foreign object, it
-may be necessary to free the memory resources of the foreign object when
-the Dylan object is reclaimed.
+For example, when interfacing Dylan code with foreign code that does
+not have automatic memory management, if an interface involves a Dylan
+object that references a foreign object it may be necessary to free
+the memory resources of the foreign object when the Dylan object is
+reclaimed.
 
 How the finalization interface works
 ====================================
