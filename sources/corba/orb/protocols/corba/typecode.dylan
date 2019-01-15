@@ -534,12 +534,66 @@ end method;
 
 element(*kinds-to-typecode-classes*, 19) := <sequence-typecode>;
 
+define method object-typecode (vector :: <simple-element-type-vector>)
+ => (typecode :: <sequence-typecode>)
+  let type = element-type(vector);
+  make(<sequence-typecode>,
+       type: limited(<vector>, of: type),
+       max-length: 0,
+       element-typecode: class-typecode(type))
+end method;
+
+define method object-typecode (vector :: <stretchy-element-type-vector>)
+ => (typecode :: <sequence-typecode>)
+  let type = element-type(vector);
+  make(<sequence-typecode>,
+       type: limited(<vector>, of: type),
+       element-typecode: class-typecode(type))
+end method;
+
 define class <array-typecode> (<complex-typecode>, <indexable-typecode>, <elemental-typecode>)
   keyword kind: = #"tk-array";
   keyword code: = 20;
   keyword alignment: = 1;
   keyword type: = corba/<array>;
 end class;
+
+define method object-typecode (array :: <simple-element-type-array>)
+ => (typecode :: <array-typecode>)
+  let type = element-type(array);
+  for (dimension in dimensions(array) using backward-iteration-protocol,
+       typecode = class-typecode(type)
+         then make(<array-typecode>,
+                   length: dimension,
+                   element-typecode: typecode))
+  finally
+    typecode
+  end for
+end method;
+
+define method object-typecode (array :: <simple-single-float-array>)
+ => (typecode :: <array-typecode>)
+  for (dimension in dimensions(array) using backward-iteration-protocol,
+       typecode = class-typecode(<single-float>)
+         then make(<array-typecode>,
+                   length: dimension,
+                   element-typecode: typecode))
+  finally
+    typecode
+  end for
+end method;
+
+define method object-typecode (array :: <simple-double-float-array>)
+ => (typecode :: <array-typecode>)
+  for (dimension in dimensions(array) using backward-iteration-protocol,
+       typecode = class-typecode(<double-float>)
+         then make(<array-typecode>,
+                   length: dimension,
+                   element-typecode: typecode))
+  finally
+    typecode
+  end for
+end method;
 
 // ---*** backward compatibility
 define method typecode-length (object :: <array-typecode>)

@@ -6,6 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library corba-protocol
+  use dylan;
   use corba-dylan;
   export corba-protocol-externals;
   export corba-protocol;
@@ -270,6 +271,7 @@ end module;
 
 define module corba-protocol
   use corba-dylan;
+  use dylan-extensions;
   use corba-protocol-externals, export: all;
 
   export
