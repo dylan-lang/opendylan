@@ -393,8 +393,10 @@ sub invoke_tool {
         }
 
         if (defined $header->{'include'}) {
-            push @options, '-include';
-            push @options, File::Spec->catdir($dir, $header->{'include'});
+            foreach my $include (split /\s+/, $header->{'include'}) {
+                push @options, '-include';
+                push @options, File::Spec->catdir($dir, $include);
+            }
         }
 
         if (defined $header->{'libraries'}) {
