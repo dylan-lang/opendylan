@@ -19,10 +19,12 @@ files:	scepter-ast-library
 	expression
 	enum
 	struct
+	struct-forward
 	exception
 	operation
 	union-branch
 	union
+	union-forward
 	recursive
 	sequence
 	string

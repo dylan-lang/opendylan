@@ -64,6 +64,14 @@ define constant $idl-parser-forward-declaration-seen =
   make(<idl-parser-state>, syntax-error-message: "Missing \';\' following forward interface declaration",
                            insert-token: make(<semi-colon>));
 
+define constant $idl-parser-forward-struct-declaration-seen =
+  make(<idl-parser-state>, syntax-error-message: "Missing \';\' following forward struct declaration",
+                           insert-token: make(<semi-colon>));
+
+define constant $idl-parser-forward-union-declaration-seen =
+  make(<idl-parser-state>, syntax-error-message: "Missing \';\' following forward union declaration",
+                           insert-token: make(<semi-colon>));
+
 define constant $idl-parser-interface-sq-seen =
   make(<idl-parser-state>, syntax-error-message: "Illegal syntax following interface \'{\' opener");
 

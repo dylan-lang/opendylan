@@ -416,3 +416,6 @@ define method do-emit-ast-node (back-end :: <dylan-back-end>, node :: <ast-decla
   end when;
 end method;
 
+define method do-emit-ast-node (back-end :: <dylan-back-end>, struct :: <ast-forward-structure>, #key last? :: <boolean>)
+ => ()
+end method;

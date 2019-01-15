@@ -24,4 +24,5 @@ define suite neo-idl (setup-function: method ()
   test neo-idl-struct;
   test neo-idl-union;
   test neo-idl-union2;
+  test neo-idl-forward-struct-union;
 end suite;

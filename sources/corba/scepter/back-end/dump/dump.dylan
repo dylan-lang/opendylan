@@ -448,6 +448,10 @@ define method dump-before-name (back-end :: <dump-back-end>, structure :: <ast-s
   format(stream, "struct ");
 end method;
 
+define method dump-before-name (back-end :: <dump-back-end>, structure :: <ast-forward-structure>, stream :: <stream>)
+  format(stream, "struct ");
+end method;
+
 // TYPE
 
 // TYPEDEF
@@ -476,6 +480,10 @@ define method dump-after-name (back-end :: <dump-back-end>, union :: <ast-union>
   format(stream, " switch (");
   dump-name(back-end, union.union-discriminator-type, stream);
   format(stream, ")");
+end method;
+
+define method dump-before-name (back-end :: <dump-back-end>, union :: <ast-forward-union>, stream :: <stream>)
+  format(stream, "union ");
 end method;
 
 // UNION-BRANCH

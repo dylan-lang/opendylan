@@ -12,9 +12,7 @@ end class;
 define method initialize (typedef :: <dim-typedef>, #key node :: <ast-typedef>)
   next-method();
   typedef.dim-type-native-type := map-to-dylan-class-name(declarator-scoped-name(node));
-  typedef.dim-typedef-type := dynamic-bind (*type-level* = *type-level* + 1)
-                                make(<dim>, node: typedef-base-type(node));
-                              end;
+  typedef.dim-typedef-type := make(<dim>, node: typedef-base-type(node));
 end method;
 
 define method emit-typecode (stream :: <stream>, type :: <dim-typedef>)

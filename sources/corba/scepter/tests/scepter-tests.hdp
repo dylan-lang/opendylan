@@ -16,6 +16,7 @@ files:	library
 	neo/struct
 	neo/union
 	neo/union2
+	neo/forward-struct-union
 	neo/neo-suite
 	orbix/demos/any_demo-test1
 	orbix/demos/filters-filter

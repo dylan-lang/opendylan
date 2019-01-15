@@ -5,9 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define thread variable *type-level* :: <integer> = 0;
-
-
 // <DIM-TYPE>
 
 define abstract class <dim-type> (<dim>)
@@ -50,11 +47,13 @@ define method emit-typecode-keyword-args (stream :: <stream>, type :: <dim-membe
   format(stream, ", members: vector(");
   let members = dim-type-members(type);
   if (size(members) > 0)
-    emit-typecode-member(stream, members[0]);
-    for (i from 1 below size(members))
-      format(stream, ", ");
-      emit-typecode-member(stream, members[i]);
-    end for;
+    dynamic-bind (*tc-recursive-types* = pair(dim-node(type), *tc-recursive-types*))
+      emit-typecode-member(stream, members[0]);
+      for (i from 1 below size(members))
+        format(stream, ", ");
+        emit-typecode-member(stream, members[i]);
+      end for;
+    end dynamic-bind;
   end if;
   format(stream, ")");  
 end method;
@@ -66,8 +65,16 @@ define abstract class <dim-template-type> (<dim-type>)
 end class;
 
 define method emit-typecode (stream :: <stream>, type :: <dim-template-type>)
- => ()
-  emit-typecode-constructor(stream, type);
+  => ();
+  let ast-type = dim-node(type).full-definition;
+  let level = find-key(*tc-recursive-types*, method (tc) tc == ast-type end);
+  if (level)
+    emit-indirection-typecode(stream, level)
+  else
+    dynamic-bind (*tc-recursive-types* = pair(ast-type, *tc-recursive-types*))
+      emit-typecode-constructor(stream, type);
+    end;
+  end if;
 end method;
 
 
@@ -106,23 +113,14 @@ end method;
 // <DIM-SEQUENCE>
 
 define class <dim-sequence> (<dim-template-type>)
-  slot dim-sequence-recursive? :: <boolean> = #f;
   slot dim-sequence-member-type :: <dim-type>;
   slot dim-sequence-max-size :: <string> = "0";
 end class;
 
 define method initialize (sequence :: <dim-sequence>, #key node :: <ast-sequence>)
   next-method();
-  let key = find-key(*recursive-types*, method (model) dim-node(model) == sequence-base-type(node) end, failure: #f);
-  let element-type
-    = if (key)
-	sequence.dim-sequence-recursive? := #t;
-	*recursive-types*[key];
-      else
-	dynamic-bind (*type-level* = *type-level* + 2)
-	  make(<dim>, node: sequence-base-type(node));
-        end;
-      end if;
+  let type = sequence-base-type(node).full-definition;
+  let element-type = make(<dim>, node: type);
   sequence.dim-type-native-type := format-to-string("limited(CORBA/<sequence>, of: %s)", dim-type-native-type(element-type));
   sequence.dim-sequence-member-type := element-type;
   let size = sequence-max-size(node);
@@ -148,13 +146,7 @@ define method emit-typecode-keyword-args (stream :: <stream>, type :: <dim-seque
     format(stream, ", type: %s", dim-type-native-type(type));
   end if;
   format(stream, ", max-length: %s, element-typecode: ", dim-sequence-max-size(type));
-  if (dim-sequence-recursive?(type))
-    let member-type = dim-sequence-member-type(type);
-    let nesting = dim-recursive-type-level(member-type) + 2;
-    emit-indirection-typecode(stream, nesting);
-  else
-    emit-typecode(stream, dim-sequence-member-type(type));
-  end if;
+  emit-typecode(stream, dim-sequence-member-type(type));
 end method;
 
 
@@ -211,14 +203,12 @@ end method;
 define method emit-typecode-keyword-args (stream :: <stream>, type :: <dim-array>)
  => ()
   next-method();
-  if (dim-type-native-type(type))
-    format(stream, ", type: %s", dim-type-native-type(type));
-  end if;
   let dimensions = dim-array-dimensions(type);
 
   if (size(dimensions) = 1)
     format(stream, ", length: %s, element-typecode: ", dimensions[0]);
     emit-typecode(stream, make(<dim>, node: array-base-type(dim-node(type))));
+    format(stream, ", type: %s", dim-type-native-type(type));
   else
     format(stream, ", length: %s, element-typecode: ", dimensions[0]);
     for (i from 1 below size(dimensions))
