@@ -1174,8 +1174,15 @@ define method write-constant-record
       let (low :: <machine-word>, high :: <machine-word>)
         = decode-double-float(double-float);
       write-record(stream, #"FLOAT",
-                   make(<double-machine-word>, low: low, high: high));
-      
+                   if ($machine-word-size = 32)
+                     make(<double-machine-word>, low: low, high: high)
+                   elseif ($machine-word-size = 64)
+                     %logior(low, %shift-left(high, 32))
+                   else
+                     error("float-constant $machine-word-size = %d",
+                           $machine-word-size);
+                   end if);
+
     #"X86_FP80", #"FP128", #"PPC_FP128" =>
       error("Can't write %s floating point", type.llvm-primitive-type-kind);
   end select;

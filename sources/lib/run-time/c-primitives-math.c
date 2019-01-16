@@ -110,21 +110,12 @@ DDFLT primitive_double_integer_as_double_float(DMINT low, DMINT high) {
 DUMINT primitive_cast_double_float_as_machine_words(DDFLT x) {
   INTDFLT intflt;
   intflt.f = x;
-#ifdef NO_LONGLONG
-  MV2U((DUMINT)intflt.i, 0);
-#else
-  MV2U((DUMINT)intflt.i, (DUMINT)(intflt.i >> LONG_BIT));
-#endif
+  MV2U((DUMINT)intflt.i & 0xFFFFFFFF, (DUMINT)(intflt.i >> 32));
 }
 
 DDFLT primitive_cast_machine_words_as_double_float(DUMINT low, DUMINT high) {
   INTDFLT intflt;
-#ifdef NO_LONGLONG
-  ignore(high);
-  intflt.i = (DULMINT)low;
-#else
-  intflt.i = ((DULMINT)high << LONG_BIT) | (DULMINT)low;
-#endif
+  intflt.i = ((DULMINT)high << 32) | (DULMINT)low;
   return(intflt.f);
 }
 
@@ -694,11 +685,7 @@ DMINT primitive_double_float_as_double_integer_byref(DDFLT f, DMINT* v2) {
 DMINT primitive_cast_double_float_as_machine_words_byref(DDFLT x, DMINT* v2) {
   INTDFLT intflt;
   intflt.f = x;
-#ifdef NO_LONGLONG
-  MV2_byref((DMINT)intflt.i, v2, 0);
-#else
-  MV2_byref((DMINT)intflt.i, v2, (DMINT)(intflt.i >> LONG_BIT));
-#endif
+  MV2_byref((DMINT)(intflt.i & 0xFFFFFFFF), v2, (DMINT)(intflt.i >> 32));
 }
 
 DMINT primitive_machine_word_divide_byref(DMINT x, DMINT y, DMINT* v2) {
