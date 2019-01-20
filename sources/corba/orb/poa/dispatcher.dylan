@@ -81,9 +81,8 @@ define method dispatch-requests (orb :: corba/<orb>, connection :: <poa-connecti
 	block (exit-header-processing)
 	  debug-out(#"poa", "Waiting to fill marshalling buffer");
 	  force-input(marshalling-stream);
-	  debug-out(#"poa", "Filled marshalling buffer. Now processing request", 
-			    reverse(marshalling-buffer-as-string(marshalling-stream-buffer(marshalling-stream),
-								 reversed?: #t))); // ---*** *print-base* 16
+	  debug-out(#"poa", "Filled marshalling buffer: %=, Now processing request",
+                    marshalling-buffer-as-string(marshalling-stream-buffer(marshalling-stream)));
 	  let giop-header :: giop/<messageheader-1-0> =
 	    unmarshall(class-typecode(giop/<messageheader-1-0>), marshalling-stream);
 	  marshalling-stream-little-endian?(marshalling-stream) :=
@@ -96,6 +95,7 @@ define method dispatch-requests (orb :: corba/<orb>, connection :: <poa-connecti
 	exception (condition :: <request-already-processed>)
 	  debug-out(#"poa", format-to-string("%s", condition));
 	exception (condition :: <giop-message-error>)
+          debug-out(#"poa", format-to-string("%s", condition));
 	  send-dispatcher-message-error(marshalling-stream);
 	end block;
       end with-marshalling-stream;
@@ -208,7 +208,6 @@ end method;
 define method send-dispatcher-reply-header
     (marshalling-stream :: <marshalling-stream>,
      giop-header :: giop/<messageheader-1-0>)
-  giop/messageheader-1-0/message-type(giop-header) := 1; // #"reply"
   marshalling-stream-output-index(marshalling-stream) := 0;
   let start-of-giop = marshalling-stream-output-index(marshalling-stream);
   marshalling-stream-little-endian?(marshalling-stream) :=
