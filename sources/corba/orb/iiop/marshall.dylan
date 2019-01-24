@@ -12,6 +12,9 @@ end method;
 
 define inline method unmarshall (typecode :: <typecode>, stream :: <marshalling-stream>)
   align-input-stream(stream, typecode-alignment(typecode));
-  unmarshall-object(typecode, stream);
+  debug-out(#"marshall", "unmarshall %=", typecode);
+  let result = unmarshall-object(typecode, stream);
+  debug-out(#"marshall", "unmarshalled %= result: %=", typecode, result);
+  result
 end method;
 

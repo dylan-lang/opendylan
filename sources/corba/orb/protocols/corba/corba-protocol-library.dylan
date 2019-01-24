@@ -323,6 +323,7 @@ define module corba-protocol
     <indirection-typecode>;
 
   export
+    make-typecode,
     typecode-kind,
     typecode-code,
     typecode-alignment,
@@ -349,7 +350,6 @@ define module corba-protocol
     typecode-max-length, typecode-max-length-setter,
     typecode-length, typecode-length-setter,
     typecode-aliased, typecode-aliased-setter,
-    typecode-offset, typecode-offset-setter,
-    typecode-nesting, typecode-nesting-setter;
-    
+    typecode-nesting, typecode-nesting-setter,
+    typecode-indirected, typecode-indirected-setter;
 end module;

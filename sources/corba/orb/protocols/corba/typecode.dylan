@@ -201,9 +201,12 @@ define abstract class <type-typecode> (<complex-typecode>)
   slot typecode-name :: <string>, init-keyword: name:;
 end class;
 
-define method initialize (typecode :: <type-typecode>, #key)
+define method initialize (typecode :: <type-typecode>, #key incomplete?)
   next-method();
   intern-typecode(typecode);
+  unless (incomplete?)
+    initialize-indirections(typecode, #());
+  end unless;
 end method;
 
 define abstract class <membered-typecode> (<type-typecode>)
@@ -671,13 +674,13 @@ element(*kinds-to-typecode-classes*, 24) := <unsigned-long-long-typecode>;
 
 
 
-define class <indirection-typecode> (<simple-typecode>)
+define class <indirection-typecode> (<typecode>)
   //  keyword kind: = #"tk-ind";
   keyword code: = #xffffffff;
   keyword alignment: = 1;
   keyword type: = <typecode>;
-  slot typecode-offset :: <integer>, init-keyword: offset:;
   slot typecode-nesting :: <integer>, init-keyword: nesting:;
+  slot typecode-indirected :: <typecode>, init-keyword: indirected:;
 end class;
 
 element(*kinds-to-typecode-classes*, #xffffffff) := <indirection-typecode>;
@@ -687,6 +690,49 @@ define open generic object-typecode (object :: <object>)
 
 define open generic class-typecode (object :: <type>)
  => (typecode :: <typecode>);
+
+/// INDIRECTIONS
+
+define method initialize-indirections(typecode :: <typecode>, nested :: <list>) => ()
+end method;
+
+define method initialize-indirections(typecode :: <elemental-typecode>, nested :: <list>) => ()
+  initialize-indirections(typecode-element-typecode(typecode),
+                          pair(typecode, nested));
+end method;
+
+define method initialize-indirections(typecode :: <membered-typecode>, nested :: <list>) => ()
+  let inner = pair(typecode, nested);
+  for (member in typecode-members(typecode))
+    initialize-indirections(member, inner);
+  end for;
+end method;
+
+define method initialize-indirections(typecode :: <enum-typecode>, nested :: <list>) => ()
+end method;
+
+define method initialize-indirections(typecode :: <typecode-member>, nested :: <list>) => ()
+  initialize-indirections(typecode-member-typecode(typecode), nested);
+end method;
+
+define method initialize-indirections(typecode :: <alias-typecode>, nested :: <list>) => ()
+  initialize-indirections(typecode-aliased(typecode), nested);
+end method;
+
+define method initialize-indirections(typecode :: <indirection-typecode>, nested :: <list>) => ()
+  unless (slot-initialized?(typecode, typecode-indirected))
+    let nesting = typecode-nesting(typecode);
+    iterate loop (i :: <integer> = 0, l = nested)
+      if (instance?(l, <pair>))
+        if (i == nesting)
+          typecode-indirected(typecode) := head(l);
+        else
+          loop(i + 1, tail(l));
+        end if;
+      end if;
+    end iterate;
+  end unless;
+end method;
 
 /// INTERNING
 
@@ -715,10 +761,11 @@ end method;
 
 /// COERCION
 
-define method as (class == <typecode>, kind :: <integer>)
- => (typecode :: <typecode>)
-  let typecode-class = element(*kinds-to-typecode-classes*, kind); // NB signal error if not in table match
-  make(typecode-class);
+define method make-typecode(kind :: <integer>)
+ => (typecode :: <typecode>);
+  let typecode-class
+    = element(*kinds-to-typecode-classes*, kind); // NB signal error if not in table match
+  make(typecode-class, incomplete?: #t)
 end method;
 
 define method as (class == <typecode>, repository-id :: <string>)
@@ -728,6 +775,7 @@ end method;
 
 define method as (class == <typecode>, typecode :: <typecode>)
   => (typecode :: <typecode>)
+  initialize-indirections(typecode, #());
   intern-typecode(typecode)
 end method;
 

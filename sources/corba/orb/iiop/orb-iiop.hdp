@@ -4,7 +4,6 @@ target-type:	dll
 Library-Pack:   CORBA
 base-address:	0x63F40000
 files:	orb-iiop-library
-	cdr-macros
 	cdr-basic
 	cdr-constructed
 	cdr-any

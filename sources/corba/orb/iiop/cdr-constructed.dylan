@@ -26,24 +26,20 @@ define method marshall-object (typecode :: <sequence-typecode>, object :: corba/
   let length = size(object);
   check-sequence-length(typecode, length, #"completed-no");
   write-bytes(stream, length, 4);
-  with-typecoded-value-indirection (typecode)
-    for (elt in object)
-      marshall(element-typecode, elt, stream);
-    end for;
-  end;
+  for (elt in object)
+    marshall(element-typecode, elt, stream);
+  end for;
 end method;
 
 define method unmarshall-object (typecode :: <sequence-typecode>, stream :: <marshalling-stream>)
   let length = read-unsigned-bytes(stream, 4);
   check-sequence-length(typecode, length, #"completed-maybe");
   let element-typecode = typecode-element-typecode(typecode);
-  with-typecoded-value-indirection (typecode)
-    let result = make(typecode-native-type(typecode));
-    for (i from 0 below length)
-      result := add!(result, unmarshall(element-typecode, stream));
-    end for;
-    result
-  end;
+  let result = make(typecode-native-type(typecode));
+  for (i from 0 below length)
+    result := add!(result, unmarshall(element-typecode, stream));
+  end for;
+  result
 end method;
 
 define method check-sequence-length
@@ -62,11 +58,9 @@ define method marshall-object (typecode :: <array-typecode>, object :: corba/<ar
   for (i from 0 below rank(object))
     element-typecode := typecode-element-typecode(element-typecode);
   end for;
-  with-typecoded-value-indirection (typecode)
-    for (elt in object)
-      marshall(element-typecode, elt, stream);
-    end for;
-  end;
+  for (elt in object)
+    marshall(element-typecode, elt, stream);
+  end for;
 end method;
 
 define method unmarshall-object (typecode :: <array-typecode>, stream :: <marshalling-stream>)
@@ -76,44 +70,36 @@ define method unmarshall-object (typecode :: <array-typecode>, stream :: <marsha
     dims := add!(dims, typecode-length(element-typecode));
     element-typecode := typecode-element-typecode(element-typecode);
   end while;
-  with-typecoded-value-indirection (typecode)
-    let x = unmarshall(element-typecode, stream);
-    let result = make(typecode-native-type(typecode), fill: x, dimensions: dims);
-    for (i from 1 below size(result))
-      result[i] := unmarshall(element-typecode, stream);
-    end for;
-    result;
-  end;
+  let x = unmarshall(element-typecode, stream);
+  let result = make(typecode-native-type(typecode), fill: x, dimensions: dims);
+  for (i from 1 below size(result))
+    result[i] := unmarshall(element-typecode, stream);
+  end for;
+  result;
 end method;
 
 /// STRUCT
 
 define method marshall-object (typecode :: <struct-typecode>, object :: corba/<struct>, stream :: <marshalling-stream>)
-  with-typecoded-value-indirection (typecode)
-    for (member :: <typecode-member> in typecode-members(typecode))
-      marshall(typecode-member-typecode(member), typecode-member-getter(member)(object), stream);
-    end for;
-  end;
+  for (member :: <typecode-member> in typecode-members(typecode))
+    marshall(typecode-member-typecode(member), typecode-member-getter(member)(object), stream);
+  end for;
 end method;
 
 define method marshall-object (typecode :: <struct-typecode>, object :: <anonymous-object>, stream :: <marshalling-stream>)
-  with-typecoded-value-indirection (typecode)
-    for (member :: <typecode-member> in typecode-members(typecode),
-	 property in anonymous-object-properties(object))
-      marshall(typecode-member-typecode(member), property, stream);
-    end for;
-  end;
+  for (member :: <typecode-member> in typecode-members(typecode),
+       property in anonymous-object-properties(object))
+    marshall(typecode-member-typecode(member), property, stream);
+  end for;
 end method;
 
 define method unmarshall-object (typecode :: <struct-typecode>, stream :: <marshalling-stream>)
-  with-typecoded-value-indirection (typecode)
-    let type = typecode-native-type(typecode);
-    if (type)
-      apply(make, type, unmarshall-members(typecode, stream, init-keywords?: #t));
-    else
-      make(typecode-anonymous-native-type(typecode), properties: unmarshall-members(typecode, stream));
-    end if;
-  end;
+  let type = typecode-native-type(typecode);
+  if (type)
+    apply(make, type, unmarshall-members(typecode, stream, init-keywords?: #t));
+  else
+    make(typecode-anonymous-native-type(typecode), properties: unmarshall-members(typecode, stream));
+  end if;
 end method;
 
 // NB separate loops to avoid retesting init-keywords
@@ -146,20 +132,16 @@ end method;
 /// UNION
 
 define method marshall-object (typecode :: <union-typecode>, object :: corba/<union>, stream :: <marshalling-stream>)
-  with-typecoded-value-indirection (typecode)
-    let discriminator = corba/union/discriminator(object);
-    marshall(typecode-discriminator-typecode(typecode), discriminator, stream);
-    marshall(union-value-typecode(typecode, discriminator), corba/union/value(object), stream);
-  end;
+  let discriminator = corba/union/discriminator(object);
+  marshall(typecode-discriminator-typecode(typecode), discriminator, stream);
+  marshall(union-value-typecode(typecode, discriminator), corba/union/value(object), stream);
 end method;
 
 define method unmarshall-object (typecode :: <union-typecode>, stream :: <marshalling-stream>)
-  with-typecoded-value-indirection (typecode)
-    let type = typecode-native-type(typecode) | typecode-anonymous-native-type(typecode);
-    let discriminator = unmarshall(typecode-discriminator-typecode(typecode), stream);
-    let value = unmarshall(union-value-typecode(typecode, discriminator), stream);
-    make(type, discriminator: discriminator, value: value);
-  end;
+  let type = typecode-native-type(typecode) | typecode-anonymous-native-type(typecode);
+  let discriminator = unmarshall(typecode-discriminator-typecode(typecode), stream);
+  let value = unmarshall(union-value-typecode(typecode, discriminator), stream);
+  make(type, discriminator: discriminator, value: value);
 end method;
 
 define method union-value-typecode (typecode :: <union-typecode>, discriminator)
