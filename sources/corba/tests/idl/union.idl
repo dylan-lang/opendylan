@@ -17,7 +17,8 @@ union RLE_entity_3 switch (boolean) {
   case TRUE:  char  character;
 };
 
-union RLE_entity_4 switch (enum RLE_entity_sort {one, two, three}) {
+enum RLE_entity_sort {one, two, three};
+union RLE_entity_4 switch (RLE_entity_sort) {
   case one: short length;
   case two: char  character;
   case three: unsigned long code;

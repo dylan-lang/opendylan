@@ -5,10 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define suite grid-test-suite ()
-  test grid-request-tests;
-end suite;
-
 define constant $grid-ior-file :: <string> = "grid.ior";
 
 define constant $wrong-grid-ior-file :: <string> = "wrong-grid.ior";
@@ -43,6 +39,10 @@ define test grid-request-tests ()
   corba/context/set-one-value(context, "Extra", as(corba/<any>, "Yes"));
   check("width comes back to client with context2", \=, grid/context-get-width(wrong-reference, context: context), width + 1);
 end test;
+
+define suite grid-test-suite ()
+  test grid-request-tests;
+end suite;
 
 /// ASYNCHRONOUS CLIENT IMPLEMENTION USING DII
 

@@ -5,21 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define suite typecode-tests ()
-  test typecode-kind-tests;
-  test typecode-equal-tests;
-  test typecode-id-tests;
-  test typecode-name-tests;
-  test typecode-member-count-tests;
-  test typecode-member-name-tests;
-  test typecode-member-type-tests;
-  test typecode-member-label-tests;
-  test typecode-discriminator-type-tests;
-  test typecode-default-index-tests;
-  test typecode-length-tests;
-  test typecode-content-type-tests;
-end suite;
-
 define test typecode-kind-tests ()
   check("<tckind> type", instance?, #"tk-short", corba/<tckind>);
   check-equal("short typecode kind", CORBA/TypeCode/kind(corba/$short-typecode), #"tk-short");
@@ -159,3 +144,17 @@ define test typecode-content-type-tests ()
 		  CORBA/Typecode/content-type(corba/$short-typecode));
 end test;  
 
+define suite typecode-tests ()
+  test typecode-kind-tests;
+  test typecode-equal-tests;
+  test typecode-id-tests;
+  test typecode-name-tests;
+  test typecode-member-count-tests;
+  test typecode-member-name-tests;
+  test typecode-member-type-tests;
+  test typecode-member-label-tests;
+  test typecode-discriminator-type-tests;
+  test typecode-default-index-tests;
+  test typecode-length-tests;
+  test typecode-content-type-tests;
+end suite;

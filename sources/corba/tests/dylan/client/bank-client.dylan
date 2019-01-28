@@ -5,14 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define suite bank-test-suite ()
-  test bank-0-request-tests;
-  test bank-1-request-tests;
-  test bank-2-request-tests;
-  test bank-3-request-tests;
-  test bank-4-request-tests;
-end suite;
-
 define constant zero/$bank-ior-file :: <string> = "bank-0.ior";
 define constant one/$bank-ior-file :: <string> = "bank.ior";
 define constant two/$bank-ior-file :: <string> = "bank-2.ior";
@@ -83,3 +75,11 @@ define method do-bank-tests (orb :: corba/<orb>, bankref :: <bank>)
   check-condition("user error translated to corba error", corba/<bad-operation>, account/makewithdrawal(caccref, withdrawal3));
   check-false("currentaccount deleted on server", Bank/deleteAccount(bankref, caccref));
 end method;
+
+define suite bank-test-suite ()
+  test bank-0-request-tests;
+  test bank-1-request-tests;
+  test bank-2-request-tests;
+  test bank-3-request-tests;
+  test bank-4-request-tests;
+end suite;

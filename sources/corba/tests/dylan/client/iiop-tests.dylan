@@ -8,82 +8,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// ---*** float formats
 /// ---*** performance
 
-define suite iiop-tests ()
-  suite little-endian-iiop-tests;
-  suite big-endian-iiop-tests;
-  suite single-stream-iiop-tests;
-end suite;
-
-define suite little-endian-iiop-tests (setup-function: method ()
-							 architecture-little-endian?() := #t
-						       end method)
-  suite common-iiop-tests;
-end suite;
-
-define suite big-endian-iiop-tests (setup-function: method ()
-						      architecture-little-endian?() := #f
-						    end method)
-  suite common-iiop-tests;
-end suite;
-
-define suite single-stream-iiop-tests (setup-function: method ()
-							 architecture-little-endian?() := #t;
-							 *single-marshalling-stream*
-							   := make(<marshalling-stream>, inner-stream: #f);
-						       end method,
-				       cleanup-function: method ()
-							   *single-marshalling-stream* := #f
-							 end method)
-  suite common-iiop-tests;
-end suite;
-
-define suite common-iiop-tests ()
-  suite basic-iiop-tests;
-  suite constructed-iiop-tests;
-  suite typecode-iiop-tests;
-  suite any-iiop-tests;  
-//  suite object-iiop-tests;
-//  suite ior-parsing-tests;
-//  suite error-iiop-tests;
-end suite;
-
-define suite basic-iiop-tests ()
-  test short-test;
-  test long-test;
-  test unsigned-short-test;
-  test unsigned-long-test;
-  test float-test;
-  test double-test;
-  test boolean-test;
-  test char-test;
-  test octet-test;
-  test string-test;
-end suite;
-
-define suite constructed-iiop-tests ()
-  test enum-test;
-  test sequence-test;
-  test array-test;
-  test struct-test;
-  test exception-test;
-  test union-test;
-  test indirection-test;
-end suite;
-
-define suite typecode-iiop-tests ()
-  test empty-typecode-tests;
-  test complex-typecode-tests;
-end suite;
-
-define suite any-iiop-tests ()
-  test basic-any-tests;
-  test constructed-any-tests;
-end suite;
-
-//define suite object-iiop-tests ()
-//  test basic-object-tests;
-//end suite;
-
 define test short-test ()
   check-marshalling("short1", corba/$short-typecode, 0);
   check-marshalling("short2", corba/$short-typecode, 1);
@@ -397,3 +321,78 @@ define test constructed-any-tests ()
 			  end method);
 end test;
 
+define suite basic-iiop-tests ()
+  test short-test;
+  test long-test;
+  test unsigned-short-test;
+  test unsigned-long-test;
+  test float-test;
+  test double-test;
+  test boolean-test;
+  test char-test;
+  test octet-test;
+  test string-test;
+end suite;
+
+define suite constructed-iiop-tests ()
+  test enum-test;
+  test sequence-test;
+  test array-test;
+  test struct-test;
+  test exception-test;
+  test union-test;
+  test indirection-test;
+end suite;
+
+define suite typecode-iiop-tests ()
+  test empty-typecode-tests;
+  test complex-typecode-tests;
+end suite;
+
+define suite any-iiop-tests ()
+  test basic-any-tests;
+  test constructed-any-tests;
+end suite;
+
+//define suite object-iiop-tests ()
+//  test basic-object-tests;
+//end suite;
+
+define suite common-iiop-tests ()
+  suite basic-iiop-tests;
+  suite constructed-iiop-tests;
+  suite typecode-iiop-tests;
+  suite any-iiop-tests;  
+//  suite object-iiop-tests;
+//  suite ior-parsing-tests;
+//  suite error-iiop-tests;
+end suite;
+
+define suite little-endian-iiop-tests (setup-function: method ()
+							 architecture-little-endian?() := #t
+						       end method)
+  suite common-iiop-tests;
+end suite;
+
+define suite big-endian-iiop-tests (setup-function: method ()
+						      architecture-little-endian?() := #f
+						    end method)
+  suite common-iiop-tests;
+end suite;
+
+define suite single-stream-iiop-tests (setup-function: method ()
+							 architecture-little-endian?() := #t;
+							 *single-marshalling-stream*
+							   := make(<marshalling-stream>, inner-stream: #f);
+						       end method,
+				       cleanup-function: method ()
+							   *single-marshalling-stream* := #f
+							 end method)
+  suite common-iiop-tests;
+end suite;
+
+define suite iiop-tests ()
+  suite little-endian-iiop-tests;
+  suite big-endian-iiop-tests;
+  suite single-stream-iiop-tests;
+end suite;

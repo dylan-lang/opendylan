@@ -1,0 +1,33 @@
+interface account {
+
+    readonly attribute string name;
+
+    readonly attribute float balance;
+
+    void makeLodgement (in float lodgement);
+
+    exception reject {string reason;};
+    void makeWithdrawal (in float amount)
+        raises (reject);
+};
+
+interface currentAccount : account {
+    readonly attribute float overdraftlimit;
+};
+
+interface bank {
+
+    readonly attribute string name;
+
+    exception reject{};
+
+    account newAccount (in string name)
+        raises (reject);
+
+    currentAccount newCurrentAccount(in string name, in float limit)
+        raises (reject);
+
+    exception nonExistentAccount{};
+
+    void deleteAccount (in account acct);
+};

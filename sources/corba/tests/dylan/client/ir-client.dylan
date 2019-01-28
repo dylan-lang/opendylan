@@ -30,15 +30,6 @@ define method created () => (xs :: <sequence>)
   *created*
 end method;
 
-define suite ir-test-suite ()
-  test container-test; // works except for describe-contents
-  test contained-test;
-  test repository-test;
-  test interface-test;
-  test irobject-test; 
-  test create-typecode-test;
-end suite;
-
 define test irobject-test ()
   let (orb, ir) = orb-interface-repository();
   ignore(orb);
@@ -498,3 +489,11 @@ define test create-typecode-test ()
 	      #"tk-array");
 end test;
 
+define suite ir-test-suite ()
+  test container-test; // works except for describe-contents
+  test contained-test;
+  test repository-test;
+  test interface-test;
+  test irobject-test; 
+  test create-typecode-test;
+end suite;

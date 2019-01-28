@@ -38,7 +38,7 @@ define module bank-server
 end module;
 
 define module bank-server-2
-  use dylan;
+  use common-dylan;
   use dylan-orb;
   use dylan-orb-internals;
   use corba-tests-utilities;
@@ -46,7 +46,7 @@ define module bank-server-2
 end module;
 
 define module bank-server-3
-  use dylan;
+  use common-dylan;
   use dylan-orb;
   use dylan-orb-internals;
   use corba-tests-utilities;
@@ -54,7 +54,7 @@ define module bank-server-3
 end module;
 
 define module bank-server-4
-  use dylan;
+  use common-dylan;
   use dylan-orb;
   use dylan-orb-internals;
   use corba-tests-utilities;
@@ -79,7 +79,7 @@ define module enum-server
 end module enum-server;
 
 define module grid-server
-  use dylan;
+  use common-dylan;
   use dylan-orb;
   use dylan-orb-internals;
   use corba-tests-utilities;
