@@ -42,17 +42,21 @@ UNIX
 ====
 
 Please note that on 64 bit Linux the default stack is too small for
-Open Dylan so it must be increases with ``ulimit -s``. It's usually
+Open Dylan so it must be increased with ``ulimit -s``. It's usually
 safe to double its value.
 
 Dependencies
 ------------
 
-Get MPS or boehm-gc, depending on your platform:
+Install a garbage collector for your platform. The Memory Pool System
+(MPS) is only integrated with the HARP back-end, which itself only
+works on 32-bit x86 platforms.  All 64-bit platforms and macOS must
+use the Boehm Demers Weiser conservative GC (or just Boehm GC) with
+the LLVM or C back-end.
 
-* Linux x86 or FreeBSD x86 (LLVM back-end) -> `MPS 1.114
+* 32-bit x86 Windows/Linux/FreeBSD (HARP back-end) -> `MPS 1.114
   <http://www.ravenbrook.com/project/mps/release/1.114.0/>`_
-* macOS and all 64 bit (C back-end) -> `boehm-gc
+* 64-bit systems and macOS (LLVM or C back-end) -> `boehm-gc
   <https://github.com/ivmai/bdwgc>`_
 
 The ``libunwind`` library is an optional dependency on Linux and
@@ -73,7 +77,7 @@ with the ``--universal`` flag.
 On Ubuntu, Debian, etc, you can install the necessary dependencies
 with::
 
-    apt-get install autoconf automake gcc libgc-dev libunwind-dev
+    apt-get install autoconf automake clang-7 gcc libgc-dev libunwind-dev
 
 Building
 --------
@@ -97,12 +101,12 @@ If you are on ``x86-linux`` or ``x86-freebsd`` you must add a flag to
 ``/path/to/mps`` should point to the root directory of the MPS
 distribution, for example ``--with-mps=/opt/mps-kit-1.114.0``.
 
-On other platforms, the Boehm GC will be used. If you have installed the
-Boehm GC via your operating system package manager, you may not need to
-specify the location of the Boehm GC. It will be found automatically if
-it is in ``/usr`` or ``/usr/local``. If you have installed the Boehm GC
-into a non-standard location or the configure script can not find it,
-you can point it in the right direction by using ``--with-gc``::
+On other platforms, the Boehm GC will be used. If you have installed
+the Boehm GC via your operating system package manager, you may not
+need to specify its location; it will be found automatically if it is
+in ``/usr`` or ``/usr/local``. If you have installed the Boehm GC into
+a non-standard location or the configure script cannot find it, you
+can point it in the right direction by using ``--with-gc``::
 
   ./configure --prefix=/opt/opendylan-current --with-gc=/path/to/boehm
 
@@ -111,10 +115,6 @@ first generation in ``Bootstrap.1/bin/dylan-compiler``, the second
 generation in ``Bootstrap.2/bin/dylan-compiler``, and the third in
 ``Bootstrap.3/bin/dylan-compiler``. The third generation will then be
 installed as ``/opt/opendylan-current/bin/dylan-compiler``.
-
-Make sure that the target installation directory has been deleted. If you try
-to install into a directory that already has an older version of Open Dylan in
-it, the build will fail.
 
 Running Tests
 -------------
