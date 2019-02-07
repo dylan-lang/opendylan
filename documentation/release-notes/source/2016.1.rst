@@ -18,6 +18,23 @@ Dylan Standard Library
 * Symbol comparisons when using ``\=`` are now the same as using ``\==``
   rather than being significantly more expensive. See `issue #899`_.
 
+* The function dispatch implementation now makes a proper distinction
+  between ``<single-method-engine-node>`` and ``<keyword-method>`` with the
+  help of a new ``primitive-callable-as-engine-node?`` compiler primitive.
+
+LLVM
+====
+
+The LLVM back-end, which uses LLVM 7.x or later for code generation,
+is now full-featured and mature on i386 and x86_64 Linux, FreeBSD, and
+macOS platforms. Features of the LLVM back-end include:
+
+* Full source-level debug information
+
+* Zero-cost nonlocal exit support
+
+* Arithmetic exception handling
+
 Build System
 ============
 
@@ -122,6 +139,8 @@ Common Dylan
   in a machine word via ``%count-ones``. This is also available as
   a new compiler primitive, ``primitive-machine-word-count-ones``.
 
+* Mismatches in the use of internal-use raw types have been resolved.
+
 Compiler
 ========
 
@@ -161,6 +180,26 @@ Compiler
 * Warnings and errors are now colorized when printing on supporting
   output devices.
 
+* The compiler progress messages are now less verbose unless the
+  ``-verbose`` command-line option is supplied.
+
+* Warnings that refer to primitive and C functions are now clearer.
+
+* A bug in the C back-end that broke required return values combined
+  with type-checked ``#rest`` return values has been fixed.
+
+* An erroneous validity check for the ``Base-Address:`` keyword in LID
+  or HDP project files on Windows has been fixed.
+
+* The HARP back-end can now handle raw FFI calls that return
+  ``<raw-single-float>`` or ``<raw-double-float>`` values.
+
+* The compiler command line, as well as the interactive ``build`` and
+  ``link`` commands, accept a ``-jobs`` option to control the number
+  of concurrent external build processes during the link
+  stage. Setting this to the number of available CPU cores can provide
+  speedups for large builds.
+
 Debugging
 =========
 
@@ -193,8 +232,14 @@ IO
 * Some generic functions that apply to ``<buffered-stream>`` have had
   their signatures tightened.
 
+* Mismatches in the use of internal-use raw types have been resolved.
+
 Runtime
 =======
+
+* Support for printing a backtrace (with demangled Dylan function names)
+  when an unhandled error condition is signaled has been implemented.
+  Note that this requires the use of the optional ``libunwind`` library.
 
 * Support for handling "invalid" floating point exceptions has been
   added. These are generated when taking the square root of a negative
@@ -224,3 +269,14 @@ system
 
 .. _issue #899: https://github.com/dylan-lang/opendylan/issues/899
 .. _documented in the library reference: http://opendylan.org/documentation/library-reference/coloring-stream/
+
+* A problem with constructing ``<date>`` objects for ``time_t`` values
+  with more than 30 bits (i.e., any time after Sat Jan 10 13:37:04 UTC 2004)
+  has been fixed.
+
+* Mismatches in the use of internal-use raw types have been resolved.
+
+variable-search
+===============
+
+* A bug that caused intermittent crashes on FreeBSD has been fixed.
