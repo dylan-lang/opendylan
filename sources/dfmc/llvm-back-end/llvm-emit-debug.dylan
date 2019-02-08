@@ -5,9 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// FIXME get this from release-info
-define constant $debug-producer = "Open Dylan 2018.1";
-
 define method llvm-compilation-record-dbg-compile-unit
     (back-end :: <llvm-back-end>, cr :: <compilation-record>)
  => (dbg-compile-unit :: <llvm-metadata>);
@@ -15,7 +12,7 @@ define method llvm-compilation-record-dbg-compile-unit
   let dbg-file = llvm-source-record-dbg-file(back-end, sr);
   llvm-make-dbg-compile-unit($DW-LANG-Dylan,
                              dbg-file,
-                             $debug-producer,
+                             release-full-name(),
                              module: back-end.llvm-builder-module)
 end method;
 
