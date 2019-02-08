@@ -13,6 +13,7 @@ define library dfmc-llvm-back-end
   use dfmc-conversion;
   use dfmc-back-end;
   use dfmc-typist;
+  use release-info;
   use llvm;
 
   export dfmc-llvm-back-end;
@@ -28,6 +29,7 @@ define module dfmc-llvm-back-end
   use dfmc-back-end;
   use dfmc-typist;
   use machine-words;
+  use release-info;
 
   use llvm;
   use llvm-builder;
