@@ -242,4 +242,10 @@ define module dfmc-reader
   export
     present-fragments;
 
+  // For test suite
+  export
+    <lexer>,
+    <lexer-source-location>,
+    get-token,
+    parse-integer-literal;
 end module;
