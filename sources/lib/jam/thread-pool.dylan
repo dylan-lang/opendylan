@@ -18,6 +18,8 @@ define class <thread-pool> (<object>)
     init-value: #"stopped";
 end class;
 
+define sealed domain make(singleton(<thread-pool>));
+
 define sealed method initialize
     (instance :: <thread-pool>, #next next-method, #key) => ();
   instance.%pool-notification := make(<notification>, lock: instance.%pool-lock);
