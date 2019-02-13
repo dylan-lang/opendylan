@@ -42,13 +42,13 @@ end class <directory-locator>;
 define open abstract class <file-locator> (<physical-locator>)
 end class <file-locator>;
 
-define method as
+define sealed method as
     (class == <directory-locator>, string :: <string>)
  => (locator :: <directory-locator>)
   as(<native-directory-locator>, string)
 end method as;
 
-define method make
+define sealed method make
     (class == <directory-locator>,
      #key server :: false-or(<server-locator>) = #f,
           path :: <sequence> = #[],
@@ -62,13 +62,13 @@ define method make
        name:      name)
 end method make;
 
-define method as
+define sealed method as
     (class == <file-locator>, string :: <string>)
  => (locator :: <file-locator>)
   as(<native-file-locator>, string)
 end method as;
 
-define method make
+define sealed method make
     (class == <file-locator>,
      #key directory :: false-or(<directory-locator>) = #f,
           base :: false-or(<string>) = #f,
