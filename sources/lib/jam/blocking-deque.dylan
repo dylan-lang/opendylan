@@ -11,6 +11,8 @@ define class <blocking-deque> (<deque>)
   slot %deque-notification :: <notification>;
 end class;
 
+define sealed domain make(singleton(<blocking-deque>));
+
 define sealed method initialize
     (instance :: <blocking-deque>, #next next-method, #key) => ();
   instance.%deque-notification := make(<notification>, lock: instance.%deque-lock);

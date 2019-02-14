@@ -86,6 +86,8 @@ define class <jam-target> (<object>)
   slot target-temporary? :: <boolean>, init-value: #f;
 end class;
 
+define sealed domain make(singleton(<jam-target>));
+
 define method jam-target-copy
     (jam :: <jam-state>, new-jam :: <jam-state>, target :: <jam-target>)
  => (new-target :: <jam-target>);
@@ -381,6 +383,8 @@ define class <jam-action> (<object>)
 */
 end class;
 
+define sealed domain make(singleton(<jam-action>));
+
 define class <jam-action-invocation> (<object>)
   constant slot action-invocation-action :: <jam-action>,
     required-init-keyword: action:;
@@ -391,6 +395,8 @@ define class <jam-action-invocation> (<object>)
   slot action-invocation-subsumed? :: <boolean>,
     init-value: #f;
 end;
+
+define sealed domain make(singleton(<jam-action-invocation>));
 
 define method jam-invoke-action
     (jam :: <jam-state>, action :: <jam-action>, #rest lol)

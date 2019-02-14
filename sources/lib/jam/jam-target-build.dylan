@@ -22,6 +22,8 @@ define class <jam-action-command> (<object>)
   slot action-command-output-stream :: <sequence-stream>;
 end class;
 
+define sealed domain make(singleton(<jam-action-command>));
+
 define method action-command-add-successor
     (predecessor :: <jam-action-command>, successor :: <jam-action-command>)
  => ();
@@ -86,13 +88,13 @@ define method jam-target-build
         end for;
         add!(seen, target);
 
-        for (invocation in target.target-action-invocations)
-          for (target in invocation.action-invocation-targets)
-            unless (member?(target, seen))
-              for(depend in target.target-depends)
+        for (invocation :: <jam-action-invocation> in target.target-action-invocations)
+          for (invocation-target :: <jam-target> in invocation.action-invocation-targets)
+            unless (member?(invocation-target, seen))
+              for (depend in invocation-target.target-depends)
                 bind-aux(time-target, depend)
               end for;
-              add!(seen, target);
+              add!(seen, invocation-target);
             end unless;
           end for;
         end for;
@@ -113,7 +115,7 @@ define method jam-target-build
         let leaf :: <date> = $zero-date;
         let status = $build-status-stable;
         
-        for (depend in target.target-depends)
+        for (depend :: <jam-target> in target.target-depends)
           leaf := max(leaf, depend.target-leaf-date);
           if (target.target-leaf-only?)
             last := leaf;
@@ -221,7 +223,8 @@ define method jam-target-build
         let current-successor :: <jam-action-command> = successor;
         if (target.target-build-status >= $build-status-touched)
           with-jam-target(jam, target)
-            for (invocation in target.target-action-invocations
+            for (invocation :: <jam-action-invocation>
+                   in target.target-action-invocations
                    using backward-iteration-protocol)
               unless (invocation.action-invocation-subsumed?)
                 let action = invocation.action-invocation-action;
@@ -230,14 +233,15 @@ define method jam-target-build
 
                 // handle "actions together"
                 if (action.action-together?)
-                  for (other in target.target-action-invocations)
-                    if (other ~== invocation
-                          & ~other.action-invocation-subsumed?
-                          & action == other.action-invocation-action
-                          & targets = other.action-invocation-targets)
+                  for (other-invocation :: <jam-action-invocation>
+                         in target.target-action-invocations)
+                    if (other-invocation ~== invocation
+                          & ~other-invocation.action-invocation-subsumed?
+                          & action == other-invocation.action-invocation-action
+                          & targets = other-invocation.action-invocation-targets)
                       sources := concatenate(sources,
-                                             other.action-invocation-sources);
-                      other.action-invocation-subsumed? := #t;
+                                             other-invocation.action-invocation-sources);
+                      other-invocation.action-invocation-subsumed? := #t;
                     end if;
                   end for;
                 end if;
@@ -338,9 +342,9 @@ define method jam-target-build
         end for;
 
         // Expand invocation dependencies
-        for (invocation in target.target-action-invocations)
-          for (invocation-target in invocation.action-invocation-targets)
-            for (depend in invocation-target.target-depends)
+        for (invocation :: <jam-action-invocation> in target.target-action-invocations)
+          for (invocation-target :: <jam-target> in invocation.action-invocation-targets)
+            for (depend :: <jam-target> in invocation-target.target-depends)
               expand(depend, current-successor);
             end for;
 
@@ -360,7 +364,10 @@ define method jam-target-build
         // We've already expanded this target; add a dependency
         // relationship
         if (target.target-build-status >= $build-status-touched)
-          action-command-add-successor(target-final-command[target], successor);
+          let final = element(target-final-command, target, default: #f);
+          if (final)
+            action-command-add-successor(final, successor);
+          end if;
         end if;
       end if;
     end method,
@@ -431,7 +438,7 @@ define method jam-target-build
         // If any of the successors now have all of their
         // dependencies satisfied, then add their execution to the
         // thread pool.
-        for (successor in command.action-command-successors)
+        for (successor :: <jam-action-command> in command.action-command-successors)
           successor.action-command-predecessor-count
             := successor.action-command-predecessor-count - 1;
           if (zero?(successor.action-command-predecessor-count))
@@ -490,7 +497,7 @@ define method bind-targets
     (jam :: <jam-state>, targets :: <sequence>, #key existing?, updated?)
  => (result :: <sequence>);
   collecting ()
-    for (target in targets)
+    for (target :: <jam-target> in targets)
       let locator = jam-target-bind-aux(jam, target.target-name, target);
       if ((~existing? | target.target-modification-date)
             & (~updated? | target.target-build-status > $build-status-stable))
