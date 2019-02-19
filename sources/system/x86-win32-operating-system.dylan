@@ -1283,3 +1283,11 @@ define function parent-process-id
     () => (pid :: <integer>)
   0
 end;
+
+define function machine-concurrent-thread-count
+    () => (pid :: <integer>)
+  raw-as-integer(%call-c-function("system_concurrent_thread_count")
+                     () => (count :: <raw-c-signed-int>)
+                     ()
+                 end);
+end;

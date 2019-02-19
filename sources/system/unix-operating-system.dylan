@@ -577,3 +577,12 @@ define function parent-process-id
                      ()
                  end);
 end;
+
+define function machine-concurrent-thread-count
+    () => (count :: <integer>)
+  raw-as-integer(%call-c-function("system_concurrent_thread_count")
+                     () => (count :: <raw-c-signed-int>)
+                     ()
+                 end);
+end;
+

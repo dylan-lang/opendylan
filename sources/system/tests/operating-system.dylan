@@ -343,6 +343,11 @@ define operating-system function-test parent-process-id ()
   check-true("parent-process-id is an integer", instance?(pid, <integer>));
 end;
 
+define operating-system function-test machine-concurrent-thread-count ()
+  let thread-count = machine-concurrent-thread-count();
+  check-true("There is at least one core", thread-count >= 1);
+end;
+
 
 // Application startup handling
 

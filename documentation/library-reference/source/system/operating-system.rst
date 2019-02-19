@@ -36,6 +36,10 @@ These constants contain information about the hardware and software
 resident on the host machine. The constants let you programmatically
 check the current system conditions before executing a piece of code.
 
+The following function also returns information about the machine:
+
+- :func:`machine-concurrent-thread-count`
+
 The following two functions let you manipulate the values of any
 environment variables in the system.
 
@@ -473,6 +477,21 @@ System library's operating-system module.
 
      - :const:`$machine-name`
      - :const:`$os-name`
+
+.. function:: machine-concurrent-thread-count
+
+   Return the number of concurrent execution threads available.
+
+   :signature: machine-concurrent-thread-count => *count*
+
+   :value count: An instance of :drm:`<integer>`.
+
+   :description:
+
+      Returns the number of execution threads currently
+      available. This normally corresponds to the number of logical
+      processor cores currently online, and may vary over the lifetime
+      of the program.
 
 .. function:: register-application-exit-function
 

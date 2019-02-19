@@ -68,7 +68,8 @@ define module operating-system
          signal-application-event,
          load-library,
          current-process-id,
-         parent-process-id;
+         parent-process-id,
+         machine-concurrent-thread-count;
 
   create command-line-option-prefix;
 end module operating-system;

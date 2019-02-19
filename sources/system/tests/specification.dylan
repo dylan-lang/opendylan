@@ -205,6 +205,7 @@ define module-spec operating-system ()
   function load-library (<string>) => (<object>);
   function current-process-id () => (<integer>);
   function parent-process-id () => (<integer>);
+  function machine-concurrent-thread-count () => (<integer>);
 
   // Application startup handling
   function application-name () => (false-or(<string>));

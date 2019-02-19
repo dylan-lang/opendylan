@@ -1,3 +1,7 @@
+#ifdef __APPLE__
+#define _DARWIN_C_SOURCE
+#endif
+
 #include <unistd.h>
 #include <signal.h>
 #include <errno.h>
@@ -124,4 +128,13 @@ const char* unix_tmpdir(void)
 #endif
   }
   return tmpdir;
+}
+
+int system_concurrent_thread_count(void)
+{
+  long count = sysconf(_SC_NPROCESSORS_ONLN);
+  if (count < 0) {
+    return 0;
+  }
+  return (int) count;
 }
