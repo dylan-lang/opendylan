@@ -27,6 +27,7 @@ Files: library
        xml
        settings/settings
        settings/win32-settings
+C-Source-Files: win32-shim.c
 C-Libraries: advapi32.lib
              shell32.lib
 Library-Pack: Core
