@@ -19,6 +19,7 @@ Files: library
        timers
        profiling
        transcendentals
+       transcendentals-windows
        machine-words/utilities
        machine-words/machine-word
        machine-words/logicals

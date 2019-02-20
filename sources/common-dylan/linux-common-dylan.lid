@@ -17,6 +17,7 @@ Files: library
        timers
        profiling
        transcendentals
+       transcendentals-unix
        machine-words/utilities
        machine-words/machine-word
        machine-words/logicals
