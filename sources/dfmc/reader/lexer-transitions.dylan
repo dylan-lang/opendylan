@@ -61,21 +61,18 @@ define constant $initial-state :: <state>
              pair('(', #"sharp-paren"),
              pair('[', #"sharp-bracket"),
              pair('{', #"sharp-brace"),
-             pair("#", #"sharp-sharp"),
+             pair('#', #"sharp-sharp"),
              pair('"', #"sharp-quote"),
-             pair("bB", #"sharp-b"),
-             pair("oO", #"sharp-o"),
-             pair("xX", #"sharp-x"),
-             pair("ac-np-wyzAC-NP-WYZ0-9!&*<=>|^$%@_+~?/", #"sharp-name"),
-             pair('-', #"sharp-name")
-             /*
+             pair(':', #"sharp-colon"),
+             pair("bB", #"sharp-b"), // binary
+             pair("oO", #"sharp-o"), // octal
+             pair("xX", #"sharp-x"), // hex
              pair("tT", #"true"),
              pair("fF", #"false"),
-             pair("nN", #"sharp-n"),
-             pair("rR", #"sharp-r"),
-             pair("kK", #"sharp-k"),
-             pair("aA", #"sharp-a"),
-             */
+             pair("nN", #"sharp-n"), // #next
+             pair("rR", #"sharp-r"), // #rest
+             pair("kK", #"sharp-k"), // #key
+             pair("aA", #"sharp-a")  // #all-keys
              /* CMU
              , pair("eE", #"sharp-e"),
              pair("iI", #"sharp-i")
@@ -86,11 +83,19 @@ define constant $initial-state :: <state>
        state(#"sharp-brace", fragment-builder(<hash-lbrace-fragment>)),
        state(#"sharp-sharp", fragment-builder(<hash-hash-fragment>)),
 
-       state(#"sharp-name", make-hash-word,
-             pair("a-zA-Z0-9!&*<=>|^$%@_+~?/", #"sharp-name"),
-             pair('-', #"sharp-name"),
-             pair(':', #"sharp-name-colon")),
-       state(#"sharp-name-colon", make-hash-literal),
+       state(#"sharp-colon", #f,
+             pair("a-zA-Z", #"sharp-colon-alphabetic"),
+             pair("0-9!&*<>|^$%@_", #"sharp-colon-non-alphabetic")),
+       state(#"sharp-colon-alphabetic", #f,
+             pair(':', #"sharp-colon-done"),
+             pair("a-zA-Z0-9!&*<>|^$%@_+~?/=-", #"sharp-colon-alphabetic")),
+       state(#"sharp-colon-non-alphabetic", #f,
+             pair("0-9!&*<>|^$%@_+~?/=-", #"sharp-colon-non-alphabetic"),
+             pair("a-zA-Z", #"sharp-colon-1alpha")),
+       state(#"sharp-colon-1alpha", #f,
+             pair("a-zA-Z", #"sharp-colon-alphabetic"),
+             pair("0-9!&*<>|^$%@_+~?/=-", #"sharp-colon-non-alphabetic")),
+       state(#"sharp-colon-done", make-hash-literal),
 
        state(#"true", fragment-builder(<true-fragment>)),
        state(#"false", fragment-builder(<false-fragment>)),
@@ -129,37 +134,19 @@ define constant $initial-state :: <state>
        state(#"quoted-keyword", make-quoted-symbol),
 
        state(#"sharp-b", #f,
-             pair("01", #"binary-integer"),
-             pair('-', #"sharp-name"),
-             pair(':', #"sharp-name-colon"),
-             pair("a-zA-Z2-9!&*<=>|^$%@_+~?/", #"sharp-name")),
+             pair("01", #"binary-integer")),
        state(#"binary-integer", parse-integer-literal,
-             pair("01", #"binary-integer"),
-             pair('-', #"sharp-name"),
-             pair(':', #"sharp-name-colon"),
-             pair("a-zA-Z2-9!&*<=>|^$%@_+~?/", #"sharp-name")),
+             pair("01", #"binary-integer")),
 
        state(#"sharp-o", #f,
-             pair("0-7", #"octal-integer"),
-             pair('-', #"sharp-name"),
-             pair(':', #"sharp-name-colon"),
-             pair("a-zA-Z8-9!&*<=>|^$%@_+~?/", #"sharp-name")),
+             pair("0-7", #"octal-integer")),
        state(#"octal-integer", parse-integer-literal,
-             pair("0-7", #"octal-integer"),
-             pair('-', #"sharp-name"),
-             pair(':', #"sharp-name-colon"),
-             pair("a-zA-Z8-9!&*<=>|^$%@_+~?/", #"sharp-name")),
+             pair("0-7", #"octal-integer")),
 
        state(#"sharp-x", #f,
-             pair("0-9a-fA-F", #"hex-integer"),
-             pair('-', #"sharp-name"),
-             pair(':', #"sharp-name-colon"),
-             pair("g-zG-Z!&*<=>|^$%@_+~?/", #"sharp-name")),
+             pair("0-9a-fA-F", #"hex-integer")),
        state(#"hex-integer", parse-integer-literal,
-             pair("0-9a-fA-F", #"hex-integer"),
-             pair('-', #"sharp-name"),
-             pair(':', #"sharp-name-colon"),
-             pair("g-zG-Z!&*<=>|^$%@_+~?/", #"sharp-name")),
+             pair("0-9a-fA-F", #"hex-integer")),
 
        /* CMU
        state(#"sharp-i", #f, pair("fF", #"sharp-if")),

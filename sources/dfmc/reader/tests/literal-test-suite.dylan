@@ -21,6 +21,7 @@ define test binary-integer-literal-test ()
   verify-literal(f, 2, <integer-fragment>);
 
   assert-signals(<invalid-token>, read-fragment("#b2"));
+  assert-signals(<invalid-token>, read-fragment("#b + 1"));
 end test binary-integer-literal-test;
 
 define test boolean-literal-test ()
@@ -131,6 +132,7 @@ define test hexadecimal-integer-literal-test ()
   verify-literal(f, 255, <integer-fragment>);
 
   assert-signals(<invalid-token>, read-fragment("#xh"));
+  assert-signals(<invalid-token>, read-fragment("#x + 1"));
 end test hexadecimal-integer-literal-test;
 
 define test list-literal-test ()
@@ -151,6 +153,7 @@ define test octal-integer-literal-test ()
   verify-literal(f, 56, <integer-fragment>);
 
   assert-signals(<invalid-token>, read-fragment("#o8"));
+  assert-signals(<invalid-token>, read-fragment("#o + 1"));
 end test octal-integer-literal-test;
 
 define test pair-literal-test ()

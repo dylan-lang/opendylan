@@ -15,8 +15,7 @@ define function make-compilation-record
 end function make-compilation-record;
 
 define function read-fragment
-    (source :: <byte-string>)
- => (fragment :: <fragment>)
+    (source :: <byte-string>) => (fragment :: false-or(<fragment>))
   let cr = make-compilation-record(source);
   let (fragment, new-state) = read-top-level-fragment(cr, #f);
   fragment
