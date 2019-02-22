@@ -200,6 +200,13 @@ Compiler
   stage. Setting this to the number of available CPU cores can provide
   speedups for large builds.
 
+* The experimental ``#name:foo`` `syntax`_ has been changed to ``#:name:foo``.
+  Requiring the initial colon will prevent conflicts with new hash literal
+  syntax that may be added in the future. Several additional delimiter
+  characters may now be used: ```...```, ``'...'``, ``|...|``
+
+.. _syntax: https://opendylan.org/documentation/library-reference/language-extensions/parser-expansions.html
+
 Debugging
 =========
 

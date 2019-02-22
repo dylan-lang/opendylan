@@ -1333,43 +1333,20 @@ define method parse-fp-literal
        value: as-fragment-float-value(class, value));
 end method parse-fp-literal;
 
-define method make-hash-word
-    (lexer :: <lexer>, source-location :: <lexer-source-location>)
- => (res :: <fragment>)
-  let name
-    = extract-symbol(source-location,
-                     start: source-location.start-posn + 1);
-  let core-class
-    = select (name)
-        #"t"        => <true-fragment>;
-        #"f"        => <false-fragment>;
-        #"next"     => <hash-next-fragment>;
-        #"rest"     => <hash-rest-fragment>;
-        #"key"      => <hash-key-fragment>;
-        #"all-keys" => <hash-all-keys-fragment>;
-        otherwise   => #f;
-      end;
-  if (core-class)
-    make(core-class,
-         record: source-location.source-location-record,
-         source-position: source-location.source-location-source-position);
-  else
-    invalid-token(source-location);
-  end;
-end;
-
-define constant $hash-data-start-delimiters :: <byte-string> = "\"{[(";
-define constant $hash-data-end-delimiters   :: <byte-string> = "\"}])";
+define constant $hash-data-start-delimiters :: <byte-string> = "\"{[(|`'";
+define constant $hash-data-end-delimiters   :: <byte-string> = "\"}])|`'";
 define constant $escape-code = as(<integer>, '\\');
 
+// The lexer has just seen the second colon in "#:foo:{bar}" or
+// "#:foo:bar" and now tries to parse the string "bar" and emit the
+// parse tree for foo-parser("bar").
 define method make-hash-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
  => (res :: <fragment>)
   let name-string
-    = extract-string
-        (source-location,
-         start: source-location.start-posn + 1,
-         end:   source-location.end-posn - 1);
+    = extract-string(source-location,
+                     start: source-location.start-posn + 2,
+                     end:   source-location.end-posn - 1);
   block ()
     let contents :: <byte-vector> = lexer.source.contents;
     let length :: <integer> = contents.size;
@@ -1388,29 +1365,21 @@ define method make-hash-literal
       while (((char := contents[i]) ~== end-delimiter)
                | (char == end-delimiter & contents[i - 1] == $escape-code))
         if (char == $newline-code)
-            lexer.line := lexer.line + 1;
+          lexer.line := lexer.line + 1;
           lexer.line-start := i;
         end;
         i := i + 1;
       end;
-      data
-        := extract-string(source-location, start: data-start + 1, end: i);
+      data := extract-string(source-location, start: data-start + 1, end: i);
       lexer.posn := i + 1;
     else
-      // Read until whitespace
+      // Read until whitespace or EOF
       let i :: <integer> = data-start;
       let char :: <integer> = 0;
-      while (~delimiter-code?((char := contents[i])))
-        /*
-        if (char == $newline-code)
-            lexer.line := lexer.line + 1;
-          lexer.line-start := i;
-        end;
-        */
+      while (i < contents.size & ~delimiter-code?((char := contents[i])))
         i := i + 1;
       end;
-      data
-        := extract-string(source-location, start: data-start, end: i);
+      data := extract-string(source-location, start: data-start, end: i);
       lexer.posn := i;
     end;
     let module = *current-module*;

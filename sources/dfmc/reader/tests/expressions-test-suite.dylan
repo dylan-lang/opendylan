@@ -101,6 +101,22 @@ define test escaped-name-test ()
   assert-equal(f.fragment-name, #"+");
 end test escaped-name-test;
 
+define function verify-hash-literal-function-call
+    (code :: <string>, fn :: <symbol>, arg :: <string>) => ()
+  let f = read-fragment(code);
+  assert-true(instance?(f, <prefix-call-fragment>));
+  assert-equal(f.fragment-function.fragment-name, fn);
+  assert-equal(f.fragment-arguments.size, 1);
+  let arg1 = f.fragment-arguments[0];
+  assert-true(instance?(arg1, <string-fragment>));
+  assert-equal(arg1.fragment-value, arg);
+end function;
+
+define test hash-literal-test ()
+  verify-hash-literal-function-call("#:foo:bar", #"foo-parser", "bar");
+  verify-hash-literal-function-call("#:foo:{\nbar\n}", #"foo-parser", "\nbar\n");
+end test;
+
 define suite expressions-test-suite ()
   test variable-name-test;
   test not-unary-operator-test;
@@ -120,4 +136,5 @@ define suite expressions-test-suite ()
   test binary->=-test;
   // This doesn't test &, | and := yet.
   test escaped-name-test;
+  test hash-literal-test;
 end suite expressions-test-suite;
