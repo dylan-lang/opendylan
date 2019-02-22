@@ -1,5 +1,5 @@
 *******************************
-Open Dylan 2019.1 Release Notes
+Open Dylan 2019.1 (coming soon)
 *******************************
 
 Introduction
