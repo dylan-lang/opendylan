@@ -833,6 +833,9 @@ define method test-element
   check-equal(format-to-string("%s element default", name),
               element(collection, -1, default: default),
               default);
+  check-equal(format-to-string("%s element otherwise", name),
+              collection[-1] otherwise default,
+              default);
   unless (type == <object>)
     check-condition(format-to-string("%s element wrong default type errors", name),
                     <error>,

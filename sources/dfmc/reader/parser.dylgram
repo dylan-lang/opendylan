@@ -471,6 +471,28 @@ operand:
                      kind: syntax-for-name(*current-module*, getter-name)),
                 arguments: pair(arg$1, arg$3));
          end;;
+    operand LBRACKET arguments RBRACKET OTHERWISE otherwise-operand
+      => begin
+           let getter-name
+             = if (size(arg$3) = 1) #"element" else #"aref" end;
+           let default-symbol-fragment
+             = make(<keyword-syntax-symbol-fragment>,
+                    record: fragment-record(arg$5),
+                    source-position: fragment-source-position(arg$5),
+                    value: #"default");
+           make(<array-call-fragment>,
+                record:          fragment-record(arg$1),
+                source-position: position-between(arg$1, arg$4),
+                function:
+                  make-variable-name-like
+                    (arg$2,
+                     record:          fragment-record(arg$2),
+                     source-position: position-between(arg$2, arg$4),
+                     name: getter-name,
+                     kind: syntax-for-name(*current-module*, getter-name)),
+                arguments: concatenate(pair(arg$1, arg$3),
+                                       list(default-symbol-fragment, arg$6)));
+         end;;
     operand DOT variable-name
       => make(<dot-call-fragment>,
               record:          fragment-record(arg$1),
@@ -581,6 +603,10 @@ arguments-OPT:
       => #();;
     arguments
       => arg$1;;
+
+otherwise-operand:
+    leaf    => arg$1;;
+    SYMBOL  => arg$1;;
 
 SEMICOLON-OPT:
     => #f;; SEMICOLON => arg$1;;
