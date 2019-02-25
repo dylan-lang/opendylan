@@ -6,7 +6,7 @@
         <li><a href="#contribute"><i class="icon-chevron-right"></i> How to Contribute</a></li>
         <li><a href="#development"><i class="icon-chevron-right"></i> Development</a></li>
         <li><a href="#irc"><i class="icon-chevron-right"></i> IRC Channel</a></li>
-        <li><a href="#slack"><i class="icon-chevron-right"></i> Slack Channel</a></li>
+        <li><a href="#gitter"><i class="icon-chevron-right"></i> Gitter Channel</a></li>
         <li><a href="#mailing-lists"><i class="icon-chevron-right"></i> Mailing Lists</a></li>
         <li><a href="#other-sites"><i class="icon-chevron-right"></i> Other sites</a></li>
       </ul>
@@ -29,16 +29,17 @@ The `Hacker Guide <http://opendylan.org/documentation/hacker-guide/>`_ has
 details on how to contribute to the project.
 
 
-.. _slack:
+.. _gitter:
 
-The DylanLang Channel on Slack
-==============================
+The dylan-lang Community on Gitter
+==================================
 
-https://dylanlang.slack.com -- you will need an invite to join
+https://gitter.im/dylan-lang
 
-The DylanLang Slack channel is where most of the day-to-day Dylan activity
-takes place.
-
+The dylan-lang community is where most of the day-to-day Dylan activity
+takes place. You may sign in with a GitHub, GitLab, or Twitter account.
+(Note that due to some UI issues you may need to first go to the Gitter
+main page at https://gitter.im in order to sign in.)
 
 .. _irc:
 
