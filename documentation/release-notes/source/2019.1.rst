@@ -63,6 +63,11 @@ Build System
 * A new option for building C++ code, ``c++-source-files``,  has been
   added to LID files.  This matches the ``c-source-files:`` keyword.
 
+* A failure to find shared libraries on Ubuntu 17 & 18 was fixed. See
+  GitHub issues `1064
+  <https://github.com/dylan-lang/opendylan/issues/1064>`_ and `1197
+  <https://github.com/dylan-lang/opendylan/issues/1197>`_.
+
 C-FFI
 =====
 
