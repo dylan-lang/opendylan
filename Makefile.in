@@ -438,6 +438,24 @@ clean:
 	    OPEN_DYLAN_TARGET_PLATFORM=$$target_platform \
 	    clean; \
 	done
+	rm -f $(srcdir)/sources/app/llvm-tablegen/tablegen-parser.dylan
+	rm -f $(srcdir)/sources/lib/llvm/llvm-asm-parser.dylan
+	rm -f $(srcdir)/sources/corba/scepter/front-end/file/parser.dylan
+	rm -rf $(srcdir)/sources/corba/orb/iop-protocol
+	rm -rf $(srcdir)/sources/corba/orb/ir-protocol
+	rm -rf $(srcdir)/sources/corba/orb/ir-stubs
+	rm -rf $(srcdir)/sources/corba/services/naming/naming-protocol
+	rm -rf $(srcdir)/sources/corba/services/naming/naming-skeletons
+	rm -rf $(srcdir)/sources/corba/services/naming/naming-stubs
+	rm -rf $(srcdir)/sources/corba/demos/pente/protocol/
+	rm -rf $(srcdir)/sources/corba/demos/pente/skeletons/
+	rm -rf $(srcdir)/sources/corba/demos/pente/stubs/
+	rm -rf $(srcdir)/sources/corba/tests/idl/protocol/
+	rm -rf $(srcdir)/sources/corba/tests/idl/skeletons/
+	rm -rf $(srcdir)/sources/corba/tests/idl/stubs/
+	rm -rf $(srcdir)/sources/runtime-manager/debugger-nub/protocol
+	rm -rf $(srcdir)/sources/runtime-manager/debugger-nub/skeletons
+	rm -rf $(srcdir)/sources/runtime-manager/debugger-nub/stubs
 
 distclean: clean
 	-rm -f aclocal.m4
