@@ -117,7 +117,7 @@ writes the DEP using the style and format described below, shepherds
 the discussions in the appropriate forums, and attempts to build
 community consensus around the idea.  The DEP author should first
 attempt to ascertain whether the idea is DEP-able.  Posting to
-dylan-lang@groups.google.com is the best way to go about this.
+dylan-lang@googlegroups.com is the best way to go about this.
 
 **Vet the idea publicly** -- Vetting an idea publicly before going as
 far as writing a DEP is meant to save the potential author time.  Many
@@ -133,7 +133,7 @@ used.
 
 **Present a draft** -- Once the author has asked the Dylan community
 whether an idea has any chance of acceptance, a properly formatted
-draft DEP should be presented to dylan-lang@groups.google.com.  The
+draft DEP should be presented to dylan-lang@googlegroups.com.  The
 initial DEP status should be **Draft**.  The DEP author should assign
 the next available DEP number to the DEP by looking at the `DEP
 directory <index.html>`_ to find the highest used number.  The DEP
@@ -145,7 +145,7 @@ As updates are necessary, the DEP author may commit new versions.
 Wait for at least ten days to receive feedback on each draft.
 
 **Reach consensus** -- We rely on reaching consensus on the
-dylan-lang@groups.google.com mailing list.  Consensus _must_ be
+dylan-lang@googlegroups.com mailing list.  Consensus _must_ be
 reached for the DEP to be approved.  Exactly what "consensus" means
 here is left undefined, as we expect most cases to be obvious and we
 wish to keep the process informal for now.  At such time as this
@@ -437,7 +437,7 @@ themselves committing them to Git and pushing to the main repository.
 DEP Author Responsibilities & Workflow
 ======================================
 
-A DEP author must subscribe to the <dylan-lang@groups.google.com>
+A DEP author must subscribe to the <dylan-lang@googlegroups.com>
 list.  Before submitting a (new revision of a DEP) the author must do
 the following:
 

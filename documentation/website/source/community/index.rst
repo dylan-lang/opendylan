@@ -29,6 +29,16 @@ The `Hacker Guide <http://opendylan.org/documentation/hacker-guide/>`_ has
 details on how to contribute to the project.
 
 
+Report Bugs
+===========
+
+Bugs may be reported against the `opendylan repository
+<https://github.com/dylan-lang/opendylan/issues>`_ on GitHub. If you
+know the bug is in a specific library repository you can report it
+there instead. If unsure, use `opendylan
+<https://github.com/dylan-lang/opendylan/issues>`_.
+
+
 .. _gitter:
 
 The dylan-lang Community on Gitter
