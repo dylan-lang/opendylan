@@ -63,13 +63,13 @@ end method;
 
 //
 // Generate a deterministic but unpredictable set of element
-// indices use to initialize a bit-vector. Derives a seed from
+// indices used to initialize a bit-vector. Derives a seed from
 // the size, or one can be provided (for example if two different
 // sequences are required)
 // Note: don't use 0 for seed as RNG will always return zero in
 // that case.
 //
-define method random-elements(size :: <integer>, #key seed = #f)
+define method random-elements(size :: <integer>, #key seed)
   => (elements :: <sequence>)
   // A pseudo-random source
   local method lehmer(v :: <integer>) => (vo :: <integer>)
