@@ -86,10 +86,10 @@ define test bit-vector-and-tiny-vector ()
   //
   test-and-for-all-pad-values("And an all-one and mixed vector",
     $tiny-size, vector3, vector5,
-      bits5, bits5, bits5, bits5);
+    bits5, bits5, bits5, bits5);
   test-and-for-all-pad-values("And a mixed and all-one vector",
     $tiny-size, vector5, vector3,
-      bits5, bits5, bits5, bits5);
+    bits5, bits5, bits5, bits5);
 
   // And two mixed vectors together with different pad values
   //
@@ -155,10 +155,10 @@ define test bit-vector-and-small-vector ()
   //
   test-and-for-all-pad-values("And an all-one and mixed vector",
     $small-size, vector3, vector5,
-      bits5, bits5, bits5, bits5);
+    bits5, bits5, bits5, bits5);
   test-and-for-all-pad-values("And a mixed and all-one vector",
     $small-size, vector5, vector3,
-      bits5, bits5, bits5, bits5);
+    bits5, bits5, bits5, bits5);
 
   // And two mixed vectors together with different pad values
   //
@@ -224,10 +224,10 @@ define test bit-vector-and-huge-vector ()
   //
   test-and-for-all-pad-values("And an all-one and mixed vector",
     $huge-size, vector3, vector5,
-      bits5, bits5, bits5, bits5);
+    bits5, bits5, bits5, bits5);
   test-and-for-all-pad-values("And a mixed and all-one vector",
     $huge-size, vector5, vector3,
-      bits5, bits5, bits5, bits5);
+    bits5, bits5, bits5, bits5);
 
   // And two mixed vectors together with different pad values
   //
@@ -293,10 +293,10 @@ define test bit-vector-and-multiple-word-vector ()
   //
   test-and-for-all-pad-values("And an all-one and mixed vector",
     $multiple-word-size, vector3, vector5,
-      bits5, bits5, bits5, bits5);
+    bits5, bits5, bits5, bits5);
   test-and-for-all-pad-values("And a mixed and all-one vector",
     $multiple-word-size, vector5, vector3,
-      bits5, bits5, bits5, bits5);
+    bits5, bits5, bits5, bits5);
 
   // And two mixed vectors together with different pad values
   //

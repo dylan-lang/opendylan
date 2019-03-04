@@ -48,9 +48,8 @@ define test bit-vector-xor-tiny-vector ()
   let vector6 = make(<bit-vector>, size: $tiny-size, fill: 1);
   unset-bits(vector6, not-bits6);
 
-  let bits5-xor-bits6
-    = intersection(union(bits5, bits6),
-                   compute-not-bits(intersection(bits5, bits6), $tiny-size));
+  let bits5-xor-bits6 = intersection(union(bits5, bits6),
+    compute-not-bits(intersection(bits5, bits6), $tiny-size));
   let bits6-xor-bits5 = bits5-xor-bits6;
 
   // Xor two all-zero vectors together with different pad values
@@ -87,10 +86,10 @@ define test bit-vector-xor-tiny-vector ()
   //
   test-xor-for-all-pad-values("Xor an all-one and mixed vector",
     $tiny-size, vector3, vector5,
-      not-bits5, not-bits5, not-bits5, not-bits5);
+    not-bits5, not-bits5, not-bits5, not-bits5);
   test-xor-for-all-pad-values("Xor a mixed and all-one vector",
     $tiny-size, vector5, vector3,
-      not-bits5, not-bits5, not-bits5, not-bits5);
+    not-bits5, not-bits5, not-bits5, not-bits5);
 
   // Xor two mixed vectors together with different pad values
   //
@@ -119,9 +118,8 @@ define test bit-vector-xor-small-vector ()
   let vector6 = make(<bit-vector>, size: $small-size, fill: 1);
   unset-bits(vector6, not-bits6);
 
-  let bits5-xor-bits6
-    = intersection(union(bits5, bits6),
-                   compute-not-bits(intersection(bits5, bits6), $small-size));
+  let bits5-xor-bits6 = intersection(union(bits5, bits6),
+    compute-not-bits(intersection(bits5, bits6), $small-size));
   let bits6-xor-bits5 = bits5-xor-bits6;
 
   // Xor two all-zero vectors together with different pad values
@@ -158,10 +156,10 @@ define test bit-vector-xor-small-vector ()
   //
   test-xor-for-all-pad-values("Xor an all-one and mixed vector",
     $small-size, vector3, vector5,
-      not-bits5, not-bits5, not-bits5, not-bits5);
+    not-bits5, not-bits5, not-bits5, not-bits5);
   test-xor-for-all-pad-values("Xor a mixed and all-one vector",
     $small-size, vector5, vector3,
-      not-bits5, not-bits5, not-bits5, not-bits5);
+    not-bits5, not-bits5, not-bits5, not-bits5);
 
   // Xor two mixed vectors together with different pad values
   //
@@ -190,9 +188,8 @@ define test bit-vector-xor-huge-vector ()
   let vector6 = make(<bit-vector>, size: $huge-size, fill: 1);
   unset-bits(vector6, not-bits6);
 
-  let bits5-xor-bits6
-    = intersection(union(bits5, bits6),
-                   compute-not-bits(intersection(bits5, bits6), $huge-size));
+  let bits5-xor-bits6 = intersection(union(bits5, bits6),
+    compute-not-bits(intersection(bits5, bits6), $huge-size));
   let bits6-xor-bits5 = bits5-xor-bits6;
 
   // Xor two all-zero vectors together with different pad values
@@ -229,10 +226,10 @@ define test bit-vector-xor-huge-vector ()
   //
   test-xor-for-all-pad-values("Xor an all-one and mixed vector",
     $huge-size, vector3, vector5,
-      not-bits5, not-bits5, not-bits5, not-bits5);
+    not-bits5, not-bits5, not-bits5, not-bits5);
   test-xor-for-all-pad-values("Xor a mixed and all-one vector",
     $huge-size, vector5, vector3,
-      not-bits5, not-bits5, not-bits5, not-bits5);
+    not-bits5, not-bits5, not-bits5, not-bits5);
 
   // Xor two mixed vectors together with different pad values
   //
@@ -261,9 +258,8 @@ define test bit-vector-xor-multiple-word-vector ()
   let vector6 = make(<bit-vector>, size: $multiple-word-size, fill: 1);
   unset-bits(vector6, not-bits6);
 
-  let bits5-xor-bits6
-    = intersection(union(bits5, bits6),
-                   compute-not-bits(intersection(bits5, bits6), $multiple-word-size));
+  let bits5-xor-bits6 = intersection(union(bits5, bits6),
+    compute-not-bits(intersection(bits5, bits6), $multiple-word-size));
   let bits6-xor-bits5 = bits5-xor-bits6;
 
   // Xor two all-zero vectors together with different pad values
@@ -300,10 +296,10 @@ define test bit-vector-xor-multiple-word-vector ()
   //
   test-xor-for-all-pad-values("Xor an all-one and mixed vector",
     $multiple-word-size, vector3, vector5,
-      not-bits5, not-bits5, not-bits5, not-bits5);
+    not-bits5, not-bits5, not-bits5, not-bits5);
   test-xor-for-all-pad-values("Xor a mixed and all-one vector",
     $multiple-word-size, vector5, vector3,
-      not-bits5, not-bits5, not-bits5, not-bits5);
+    not-bits5, not-bits5, not-bits5, not-bits5);
 
   // Xor two mixed vectors together with different pad values
   //

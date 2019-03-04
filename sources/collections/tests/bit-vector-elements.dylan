@@ -176,7 +176,6 @@ define test bit-vector-elements-huge-vector ()
   bit-vector-consistency-checks("Only bits 0, 20 and 99 set",
     vector1, $huge-size, list(0, 20, 99));
 
-
   check-equal("Bit 0 of vector1 to 1 again", (vector1[0] := 1), 1);
   bit-vector-consistency-checks("Only bits 0, 20 and 99 set",
     vector1, $huge-size, list(0, 20, 99));
