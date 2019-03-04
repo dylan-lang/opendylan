@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define test bit-vector-not-empty-vector (description: "")
+define test bit-vector-not-empty-vector ()
   let vector = make(<bit-vector>, size: 0);
 
   let (result, result-pad) = bit-vector-not(vector, pad: 0);
@@ -24,7 +24,7 @@ define test bit-vector-not-empty-vector (description: "")
 end test;
 
 
-define test bit-vector-not!-empty-vector (description: "")
+define test bit-vector-not!-empty-vector ()
   let vector = make(<bit-vector>, size: 0);
 
   let (result, result-pad) = bit-vector-not!(vector, pad: 0);
@@ -148,19 +148,19 @@ define method bit-vector-not!-sized-vector(size :: <integer>)
     size, vector3-elements, 0);
 end method;
 
-define test bit-vector-not-tiny-vector (description: "")
+define test bit-vector-not-tiny-vector ()
     bit-vector-not-sized-vector($tiny-size);
 end test;
 
-define test bit-vector-not!-tiny-vector (description: "")
+define test bit-vector-not!-tiny-vector ()
     bit-vector-not!-sized-vector($tiny-size);
 end test;
 
-define test bit-vector-not-small-vector (description: "")
+define test bit-vector-not-small-vector ()
     bit-vector-not-sized-vector($tiny-size);
 end test;
 
-define test bit-vector-not!-small-vector (description: "")
+define test bit-vector-not!-small-vector ()
     bit-vector-not!-sized-vector($small-size);
 end test;
 

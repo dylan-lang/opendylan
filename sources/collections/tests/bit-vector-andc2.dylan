@@ -33,9 +33,7 @@ define method test-andc2-for-all-pad-values
 end method;
 
 
-define test bit-vector-andc2-tiny-vector
-    (description: "Test bit-vector-andc2 with tiny sized bit-vectors")
-
+define test bit-vector-andc2-tiny-vector ()
   let vector1 = make(<bit-vector>, size: $tiny-size);
   let vector2 = make(<bit-vector>, size: $tiny-size);
   let vector3 = make(<bit-vector>, size: $tiny-size, fill: 1);
@@ -106,9 +104,7 @@ define test bit-vector-andc2-tiny-vector
 
 end test;
 
-define test bit-vector-andc2-small-vector
-    (description: "Test bit-vector-andc2 with small sized bit-vectors")
-
+define test bit-vector-andc2-small-vector ()
   let vector1 = make(<bit-vector>, size: $small-size);
   let vector2 = make(<bit-vector>, size: $small-size);
   let vector3 = make(<bit-vector>, size: $small-size, fill: 1);
@@ -179,9 +175,7 @@ define test bit-vector-andc2-small-vector
 
 end test;
 
-define test bit-vector-andc2-huge-vector
-    (description: "Test bit-vector-andc2 with huge sized bit-vectors")
-
+define test bit-vector-andc2-huge-vector ()
   let vector1 = make(<bit-vector>, size: $huge-size);
   let vector2 = make(<bit-vector>, size: $huge-size);
   let vector3 = make(<bit-vector>, size: $huge-size, fill: 1);

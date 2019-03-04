@@ -6,9 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define test bit-vector-elements-tiny-vector
-    (description: "Tests for tiny bit-vectors")
-
+define test bit-vector-elements-tiny-vector ()
   let vector1 = make(<bit-vector>, size: $tiny-size);
   let vector2 = make(<bit-vector>, size: $tiny-size, fill: 0);
   let vector3 = make(<bit-vector>, size: $tiny-size, fill: 1);
@@ -81,9 +79,7 @@ define test bit-vector-elements-tiny-vector
 
 end test;
 
-define test bit-vector-elements-small-vector
-    (description: "Tests for small bit-vectors")
-
+define test bit-vector-elements-small-vector ()
   let vector1 = make(<bit-vector>, size: $small-size);
   let vector2 = make(<bit-vector>, size: $small-size, fill: 0);
   let vector3 = make(<bit-vector>, size: $small-size, fill: 1);
@@ -156,9 +152,7 @@ define test bit-vector-elements-small-vector
     vector3, $small-size, list(1, 2, 3, 5, 6, 7, 8, 9, 11, 12, 13));
 end test;
 
-define test bit-vector-elements-huge-vector
-    (description: "Tests for huge bit-vectors")
-
+define test bit-vector-elements-huge-vector ()
   let vector1 = make(<bit-vector>, size: $huge-size);
   let vector2 = make(<bit-vector>, size: $huge-size, fill: 0);
   let vector3 = make(<bit-vector>, size: $huge-size, fill: 1);
@@ -230,9 +224,7 @@ define test bit-vector-elements-huge-vector
     vector3, $huge-size, compute-not-bits(list(0, 99, 101), $huge-size));
 end test;
 
-define test bit-vector-elements-multiple-word-vector
-    (description: "Tests for multiple-word bit-vectors")
-
+define test bit-vector-elements-multiple-word-vector ()
   let vector1 = make(<bit-vector>, size: $multiple-word-size);
   let vector2 = make(<bit-vector>, size: $multiple-word-size, fill: 0);
   let vector3 = make(<bit-vector>, size: $multiple-word-size, fill: 1);
@@ -304,8 +296,7 @@ define test bit-vector-elements-multiple-word-vector
     vector3, $multiple-word-size, compute-not-bits(list(0, 57, 23), $multiple-word-size));
 end test;
 
-define suite bit-vector-elements-suite
-    (description: "Tests for element setters and getters")
+define suite bit-vector-elements-suite ()
   test bit-vector-elements-tiny-vector;
   test bit-vector-elements-small-vector;
   test bit-vector-elements-huge-vector;

@@ -133,7 +133,7 @@ define test fill-huge-vector ()
 end test;
 
 
-define suite fill-suite (description: "Tests for fill!")
+define suite fill-suite ()
   test fill-tiny-vector;
   test fill-small-vector;
   test fill-huge-vector;

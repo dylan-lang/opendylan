@@ -62,7 +62,7 @@ define test bit-count-multiple-word-sized-vector ()
     bit-count(vector, bit-value: 1), size(bits));
 end test;
 
-define suite bit-count-suite (description: "Test bit-count")
+define suite bit-count-suite ()
   test bit-count-empty-vector;
   test bit-count-tiny-vector;
   test bit-count-small-vector;

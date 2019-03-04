@@ -33,9 +33,7 @@ define method test-or-for-all-pad-values
 end method;
 
 
-define test bit-vector-or-tiny-vector
-    (description: "Test bit-vector-andc2 with tiny sized bit-vectors")
-
+define test bit-vector-or-tiny-vector ()
   let vector1 = make(<bit-vector>, size: $tiny-size);
   let vector2 = make(<bit-vector>, size: $tiny-size);
   let vector3 = make(<bit-vector>, size: $tiny-size, fill: 1);
@@ -104,9 +102,7 @@ define test bit-vector-or-tiny-vector
 
 end test;
 
-define test bit-vector-or-small-vector
-    (description: "Test bit-vector-andc2 with small sized bit-vectors")
-
+define test bit-vector-or-small-vector ()
   let vector1 = make(<bit-vector>, size: $small-size);
   let vector2 = make(<bit-vector>, size: $small-size);
   let vector3 = make(<bit-vector>, size: $small-size, fill: 1);
@@ -175,9 +171,7 @@ define test bit-vector-or-small-vector
 
 end test;
 
-define test bit-vector-or-huge-vector
-    (description: "Test bit-vector-andc2 with huge sized bit-vectors")
-
+define test bit-vector-or-huge-vector ()
   let vector1 = make(<bit-vector>, size: $huge-size);
   let vector2 = make(<bit-vector>, size: $huge-size);
   let vector3 = make(<bit-vector>, size: $huge-size, fill: 1);
@@ -246,9 +240,7 @@ define test bit-vector-or-huge-vector
 
 end test;
 
-define test bit-vector-or-multiple-word-vector
-    (description: "Test bit-vector-andc2 with multiple-word sized bit-vectors")
-
+define test bit-vector-or-multiple-word-vector ()
   let vector1 = make(<bit-vector>, size: $multiple-word-size);
   let vector2 = make(<bit-vector>, size: $multiple-word-size);
   let vector3 = make(<bit-vector>, size: $multiple-word-size, fill: 1);
