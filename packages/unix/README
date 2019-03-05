@@ -7,12 +7,8 @@ language, plus a large number of assorted libraries.
 This release is Open Dylan 2014.1. We expect this release to have
 bugs.  We're interested in getting your feedback, especially on
 anything we can do to make the initial experience with Open Dylan run
-more smoothly. You can contact us through any of these channels:
-
-bugs:  https://github.com/dylan-lang/opendylan/issues
-email: dylan-lang@googlegroups.com
-Slack: https://dylanlang.slack.com
-IRC:   #dylan on irc.freenode.net
+more smoothly. You can contact us through any of the channels listed
+on https://opendylan.org/community/index.html.
 
 
 Requirements
