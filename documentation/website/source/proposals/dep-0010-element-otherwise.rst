@@ -9,7 +9,7 @@ Author:          Peter S. Housel
 Status:          Draft
 Created:         13-Oct-2018
 Last-Modified:   24-Feb-2019
-Post-History:    N/A
+Post-History:    `04-Mar-2019 <https://groups.google.com/d/topic/dylan-lang/AmXDa5iNJOU/discussion>`_
 Target-Version:  2019.1
 ===============  =============================================
 
