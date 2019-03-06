@@ -29,7 +29,7 @@ echo "*** Please ignore errors and warnings from automake. ***"
 echo "*** Thanks! ***"
 
 ( cd $srcdir
-  mkdir -p build-aux
-  aclocal -I m4
+  mkdir -p config/build-aux
+  aclocal -I config/m4
   automake --foreign --add-missing
   autoconf )

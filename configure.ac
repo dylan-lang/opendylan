@@ -2,7 +2,7 @@ AC_INIT([Open Dylan], [2019.1pre])
 AC_PREREQ(2.50)
 
 # Directory for config.guess etc.
-AC_CONFIG_AUX_DIR(build-aux)
+AC_CONFIG_AUX_DIR(config/build-aux)
 
 #---------------------
 # Make srcdir absolute

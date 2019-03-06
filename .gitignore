@@ -6,7 +6,7 @@ Makefile
 /config.log
 /config.status
 /configure
-/build-aux/
+/config/build-aux/
 /autom4te*.cache/
 /sources/bootstrap1-registry/
 /sources/corba/scepter/front-end/file/parser.dylan
