@@ -1719,7 +1719,7 @@ $(ENVIRONMENT_DEUCE):
   $(BUILD_LIBRARY) environment-deuce
 
 $(ENVIRONMENT_INTERNAL_COMMANDS):
-  $(ENSURE_LIBRARY) dood
+  $(ENSURE_RUNTIME_LIBRARY) $(DOOD_DLL) dood
   $(ENSURE_LIBRARY) build-system
   $(ENSURE_LIBRARY) dfmc-browser-support
   $(ENSURE_LIBRARY) user-projects
@@ -1917,7 +1917,7 @@ $(BATCH_DEBUG):
 
 $(CREATE_ID):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
-  $(ENSURE_LIBRARY) ole-server
+  $(ENSURE_RUNTIME_LIBRARY) $(OLE_SERVER_DLL) ole-server
   $(ENSURE_SOURCES) create-id $(CREATE_ID_SOURCE)
   $(BUILD_APPLICATION) create-id
 
