@@ -146,7 +146,7 @@ Windows
 
 * Please keep in mind that paths with whitespaces are not well supported.
 
-* cd into admin\\builds and run::
+* cd into build\\windows and run::
 
     build-release.bat <target-dir> /sources <git-checkout>\sources /internal
 

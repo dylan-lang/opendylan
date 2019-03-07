@@ -79,7 +79,7 @@ VERSION=`./Bootstrap.3/bin/dylan-compiler -shortversion`.chomp
 
 # Generate the actual deb package
 FPM_CMD=<<EOF
-fpm -s dir -t deb -n opendylan --deb-changelog packages/unix/debian/changelog -v #{VERSION} -C #{STAGING_DIR} -p opendylan-VERSION_ARCH.deb \
+fpm -s dir -t deb -n opendylan --deb-changelog build/packages/unix/debian/changelog -v #{VERSION} -C #{STAGING_DIR} -p opendylan-VERSION_ARCH.deb \
     -d "gcc (>= 0)" -d "libc6-dev (>= 0)" #{additional_fpm_flags} -m "Wim Vander Schelden <wim@fixnum.org>" \
     --license MIT --url "http://opendylan.org/" --vendor "Dylan Hackers" --description "A Dylan compiler
     Dylan is a multi-paradigm programming language. It is a
@@ -94,7 +94,7 @@ puts FPM_CMD
 system(FPM_CMD) || exit(1)
 
 FPM_CMD_DBG=<<EOF
-fpm -s dir -t deb -n opendylan-dbg --deb-changelog packages/unix/debian/changelog -v #{VERSION} -C #{STAGING_DIR_DEBUG} -p opendylan-dbg-VERSION_ARCH.deb \
+fpm -s dir -t deb -n opendylan-dbg --deb-changelog build/packages/unix/debian/changelog -v #{VERSION} -C #{STAGING_DIR_DEBUG} -p opendylan-dbg-VERSION_ARCH.deb \
     -d "opendylan (= #{VERSION})" -m "Wim Vander Schelden <wim@fixnum.org>" \
     --license MIT --url "http://opendylan.org/" --vendor "Dylan Hackers" --description "OpenDylan debug symbols" \
     usr/lib/debug
