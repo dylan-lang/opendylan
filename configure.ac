@@ -81,7 +81,7 @@ test "$PERL" = no && AC_MSG_ERROR([
 perl is required to build Open Dylan])
 AC_SUBST(PERL)
 
-PERL_MODULES="File::Spec Getopt::Long"
+PERL_MODULES="File::Spec Getopt::Long Time::HiRes"
 for module in $PERL_MODULES; do
   AC_MSG_CHECKING(for Perl module $module)
   $PERL -M$module -e 'exit 0' || AC_MSG_ERROR([
