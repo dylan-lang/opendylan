@@ -105,8 +105,8 @@ AC_SUBST(DYLANCOMPILER)
 bootstrap_target=3-stage-bootstrap
 AC_SUBST(bootstrap_target)
 
-AC_PROG_CC([clang-7 clang70 clang gcc cc])
-AC_PROG_CXX([clang++-7 clang++70 clang++ g++ c++])
+AC_PROG_CC([clang-8 clang80 clang-7 clang70 clang gcc cc])
+AC_PROG_CXX([clang++-8 clang++80 clang++-7 clang++70 clang++ g++ c++])
 
 if test -n "$SUPPORT_LLVM"; then
     AC_MSG_CHECKING([whether Clang is new enough])
