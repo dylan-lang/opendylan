@@ -108,17 +108,15 @@ AC_SUBST(bootstrap_target)
 AC_PROG_CC([clang-8 clang80 clang-7 clang70 clang gcc cc])
 AC_PROG_CXX([clang++-8 clang++80 clang++-7 clang++70 clang++ g++ c++])
 
-if test -n "$SUPPORT_LLVM"; then
-    AC_MSG_CHECKING([whether Clang is new enough])
-    AC_COMPILE_IFELSE([AC_LANG_SOURCE([[
-#if __clang_major__ < 3 || (__clang_major__ == 3 && __clang_minor__ < 5)
-#error This version of Clang is too old to be used with the dylan-compiler LLVM back-end
-#endif
-]])],
-        [AC_MSG_RESULT([yes])],
-        [AC_MSG_RESULT([no])
-         SUPPORT_LLVM=])
-fi
+AS_IF([test -n "$SUPPORT_LLVM"],
+      [AC_MSG_CHECKING([if LLVM bitcode can be compiled])
+       cp $srcdir/config/llvm/$OPEN_DYLAN_TARGET_PLATFORM.bc conftest.bc
+       AS_IF([$CC -c $CFLAGS conftest.bc >&AS_MESSAGE_LOG_FD 2>&1 &&
+              { test -f conftest.o || test -f conftest.obj; }],
+             [AC_MSG_RESULT([yes])],
+             [AC_MSG_RESULT([no])
+              SUPPORT_LLVM=])
+       rm -f conftest.bc conftest.o conftest.obj])
 AC_SUBST(SUPPORT_LLVM)
 
 AC_CHECK_PROGS([MAKE],[gnumake gmake make],[AC_MSG_ERROR([Unable to find a make program.])])
