@@ -4,12 +4,6 @@ AC_PREREQ(2.50)
 # Directory for config.guess etc.
 AC_CONFIG_AUX_DIR(config/build-aux)
 
-#---------------------
-# Make srcdir absolute
-#---------------------
-
-srcdir=`(cd $srcdir; pwd)`
-
 SUPPORT_HARP=
 SUPPORT_LLVM=
 BDW_GC_STATIC=
