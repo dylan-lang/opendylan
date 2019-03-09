@@ -9,8 +9,8 @@ Author:         Carl Gay
 Status:         Draft
 Created:        11-Feb-2019 (Thomas Edison's birthday)
 Last-Modified:  13-Feb-2019
-Post-History:   None
-Dylan-Version:  Open Dylan 2019.2
+Post-History:   `04-Mar-2019 <https://groups.google.com/d/topic/dylan-lang/Wb3D6ioe1GM/discussion>`_
+Target-Version:  Open Dylan 2019.2
 ==============  =============================================
 
 .. contents:: Contents
@@ -91,6 +91,7 @@ and also::
 
 Examples of uses of underscore that are **not** allowed include::
 
+  1__2
   _123
   -123_
   1_.23
