@@ -1,4 +1,5 @@
-# Changes made here may also need to be made in admin/builds/build-release.bat.
+# Changes made here may also need to be made in
+# build/windows/build-release.bat.
 
 prefix          = $(DESTDIR)@prefix@
 srcdir          = @abs_srcdir@
@@ -10,7 +11,7 @@ RUNTIME_SOURCES = sources/lib/run-time
 RUNTIME_TARGET_PLATFORMS = @OPEN_DYLAN_TARGET_PLATFORM@ @ADDITIONAL_RUNTIME_TARGET_PLATFORMS@
 
 FDMAKE_OPTIONS  =
-fdmake          = @PERL@ $(srcdir)/admin/builds/fdmake.pl $(FDMAKE_OPTIONS)
+fdmake          = @PERL@ $(srcdir)/build/fdmake.pl $(FDMAKE_OPTIONS)
 
 DYLANCOMPILER   = @DYLANCOMPILER@
 
@@ -380,7 +381,7 @@ install-stage:
 	@cp -R $(abs_srcdir)/tools/bash_completion $(prefix)/share/opendylan
 	@cp $(abs_srcdir)/tools/scripts/dylan-lldb $(prefix)/bin
 	@cp $(abs_srcdir)/License.txt $(prefix)
-	@cp $(abs_srcdir)/packages/unix/README $(prefix)
+	@cp $(abs_srcdir)/build/packages/unix/README $(prefix)
 	@echo Done!
 
 install: 3-stage-bootstrap install-stage
@@ -411,7 +412,7 @@ release-stage:
 	cp -R $(abs_srcdir)/tools/lldb $(abs_builddir)/release/opendylan-$(version)/share/opendylan
 	cp -R $(abs_srcdir)/tools/bash_completion $(abs_builddir)/release/opendylan-$(version)/share/opendylan
 	cp $(abs_srcdir)/License.txt $(abs_builddir)/release/opendylan-$(version)
-	cp $(abs_srcdir)/packages/unix/README $(abs_builddir)/release/opendylan-$(version)
+	cp $(abs_srcdir)/build/packages/unix/README $(abs_builddir)/release/opendylan-$(version)
 	cd $(abs_builddir)/release; \
 	  tar cjf $(abs_builddir)/opendylan-$(version)-$(OPEN_DYLAN_TARGET_PLATFORM).tar.bz2 opendylan-$(version)
 	-mkdir $(abs_builddir)/release/opendylan-$(version)/build

@@ -1,12 +1,12 @@
 *~
 *.pyc
-Makefile
+/Makefile
 /aclocal.m4
 /Bootstrap.*/
 /config.log
 /config.status
 /configure
-/build-aux/
+/config/build-aux/
 /autom4te*.cache/
 /sources/bootstrap1-registry/
 /sources/corba/scepter/front-end/file/parser.dylan
@@ -17,8 +17,10 @@ Makefile
 /sources/corba/services/naming/naming-skeletons/
 /sources/corba/services/naming/naming-stubs/
 /sources/app/llvm-tablegen/tablegen-parser.dylan
+/sources/jamfiles/Makefile
 /sources/jamfiles/config.jam
 /sources/lib/llvm/llvm-asm-parser.dylan
+/sources/lib/run-time/Makefile
 /sources/lib/run-time/*-runtime.bc
 /sources/lib/run-time/collector.obj
 /sources/lib/run-time/dylan-plinth.lib

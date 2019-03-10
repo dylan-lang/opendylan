@@ -3,7 +3,7 @@
 # Author: Andy Armstrong
 #
 # Note: If you want to bootstrap the compiler, you should use the script
-# build-release.bat from this directory (opendylan/admin/builds). It uses
+# build-release.bat from this directory (opendylan/build/windows). It uses
 # this makefile, but first sets up the environment variables correctly
 # and then builds multiple generations as required.
 #
@@ -26,7 +26,7 @@
 #
 # Look at the list of targets below for other options.
 #
-# Mail any problems you have to dylan-admin.
+# Mail any problems you have to dylan-lang@googlegroups.com
 #
 
 #
@@ -67,7 +67,6 @@ MAKE = nmake /s /nologo
 # Source targets
 #
 
-ADMIN_DIRECTORY = $(OPEN_DYLAN_USER_ROOT)\Admin
 BUILD_DIRECTORY = $(OPEN_DYLAN_USER_BUILD)
 DATABASES_DIRECTORY = $(OPEN_DYLAN_USER_INSTALL)\Databases
 EXAMPLES_INSTALL_DIRECTORY = $(OPEN_DYLAN_USER_INSTALL)\Examples
@@ -200,11 +199,11 @@ GRAMMAR_COMPILER_SOURCE = $(LIB_DIRECTORY)\grammar-compiler
 HARP_SOURCE = $(SOURCES_DIRECTORY)\harp
 HELLO_WORLD_SOURCE = $(CONSOLE_EXAMPLES_SOURCE)\hello-world
 HELLO_WORLD_INSTALL_DIRECTORY = $(CONSOLE_EXAMPLES_INSTALL_DIRECTORY)\hello-world
-INSTALL_SOURCE = $(SOURCES_DIRECTORY)\..\install
+INSTALL_SOURCE = $(SOURCES_DIRECTORY)\..\build\windows\redist
 INTERFACE_BUILDER_SOURCE = $(DUIM_EXAMPLES_SOURCE)\interface-builder
 INTERFACE_BUILDER_INSTALL_DIRECTORY = $(DUIM_EXAMPLES_INSTALL_DIRECTORY)\interface-builder
-INSTALL_LIB_SOURCE = $(INSTALL_SOURCE)\x86-win32\lib
-INSTALL_BIN_SOURCE = $(INSTALL_SOURCE)\x86-win32\bin
+INSTALL_LIB_SOURCE = $(INSTALL_SOURCE)\lib
+INSTALL_BIN_SOURCE = $(INSTALL_SOURCE)\bin
 IO_TESTS_SOURCE = $(IO_DIRECTORY)\tests
 LIFE_SOURCE = $(DUIM_EXAMPLES_SOURCE)\life
 LIFE_INSTALL_DIRECTORY = $(DUIM_EXAMPLES_INSTALL_DIRECTORY)\life
@@ -1720,7 +1719,7 @@ $(ENVIRONMENT_DEUCE):
   $(BUILD_LIBRARY) environment-deuce
 
 $(ENVIRONMENT_INTERNAL_COMMANDS):
-  $(ENSURE_LIBRARY) dood
+  $(ENSURE_RUNTIME_LIBRARY) $(DOOD_DLL) dood
   $(ENSURE_LIBRARY) build-system
   $(ENSURE_LIBRARY) dfmc-browser-support
   $(ENSURE_LIBRARY) user-projects
@@ -1918,7 +1917,7 @@ $(BATCH_DEBUG):
 
 $(CREATE_ID):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
-  $(ENSURE_LIBRARY) ole-server
+  $(ENSURE_RUNTIME_LIBRARY) $(OLE_SERVER_DLL) ole-server
   $(ENSURE_SOURCES) create-id $(CREATE_ID_SOURCE)
   $(BUILD_APPLICATION) create-id
 
