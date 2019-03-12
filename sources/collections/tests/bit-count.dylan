@@ -19,7 +19,7 @@ end test;
 
 define test bit-count-tiny-vector ()
   let vector = make(<bit-vector>, size: $tiny-size);
-  let bits = list(1, 4, 6, 7, 9, 11, 13);
+  let bits = list(1);
   set-bits(vector, bits);
   check-equal("Count bits in tiny vector", bit-count(vector), size(bits));
   check-equal("Count zero bits in tiny vector",
@@ -28,6 +28,16 @@ define test bit-count-tiny-vector ()
     bit-count(vector, bit-value: 1), size(bits));
 end test;
 
+define test bit-count-small-vector ()
+  let vector = make(<bit-vector>, size: $small-size);
+  let bits = list(1, 4, 6, 7, 9, 11, 13);
+  set-bits(vector, bits);
+  check-equal("Count bits in small vector", bit-count(vector), size(bits));
+  check-equal("Count zero bits in small vector",
+    bit-count(vector, bit-value: 0), $small-size - size(bits));
+  check-equal("Count one bits in small vector",
+    bit-count(vector, bit-value: 1), size(bits));
+end test;
 
 define test bit-count-huge-vector ()
   let vector = make(<bit-vector>, size: $huge-size);
@@ -52,9 +62,10 @@ define test bit-count-multiple-word-sized-vector ()
     bit-count(vector, bit-value: 1), size(bits));
 end test;
 
-define suite bit-count-suite (description: "Test bit-count")
+define suite bit-count-suite ()
   test bit-count-empty-vector;
   test bit-count-tiny-vector;
+  test bit-count-small-vector;
   test bit-count-huge-vector;
   test bit-count-multiple-word-sized-vector;
 end suite;

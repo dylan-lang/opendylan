@@ -7,28 +7,54 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define test copy-sequence-tiny-vector ()
-  let bits = list(2, 3, 5, 7, 11, 13);
+  let bits = list(2, 3);
   let vector = make(<bit-vector>, size: $tiny-size);
   set-bits(vector, bits);
 
   // Copy whole thing
   let new-vector = copy-sequence(vector);
-  bit-vector-consistency-checks("Copy whole tiny vector",
+  bit-vector-consistency-checks("Copy whole small vector",
     new-vector, $tiny-size, bits);
 
   // Copy from start to limit
+  let new-vector = copy-sequence(vector, end: 2);
+  bit-vector-consistency-checks("Copy small vector below bit 2",
+    new-vector, 2, list());
+
+  // Copy from limit to end
+  let new-vector = copy-sequence(vector, start: 2);
+  bit-vector-consistency-checks("Copy small vector from bit 2",
+    new-vector, 2, list(0, 1));
+
+  // Copy with both limits inside
+  let new-vector = copy-sequence(vector, start: 1, end: 3);
+  bit-vector-consistency-checks("Copy small vector between bits 1 and 3",
+    new-vector, 2, list(1));
+end test;
+
+define test copy-sequence-small-vector ()
+  let bits = list(2, 3, 5, 7, 11, 13);
+  let vector = make(<bit-vector>, size: $small-size);
+  set-bits(vector, bits);
+
+  // Copy whole thing
+  let new-vector = copy-sequence(vector);
+  bit-vector-consistency-checks("Copy whole small vector",
+    new-vector, $small-size, bits);
+
+  // Copy from start to limit
   let new-vector = copy-sequence(vector, end: 8);
-  bit-vector-consistency-checks("Copy tiny vector below bit 8",
+  bit-vector-consistency-checks("Copy small vector below bit 8",
     new-vector, 8, list(2, 3, 5, 7));
 
   // Copy from limit to end
   let new-vector = copy-sequence(vector, start: 5);
-  bit-vector-consistency-checks("Copy tiny vector from bit 5",
-    new-vector, $tiny-size - 5, list(0, 2, 6, 8));
+  bit-vector-consistency-checks("Copy small vector from bit 5",
+    new-vector, $small-size - 5, list(0, 2, 6, 8));
 
   // Copy with both limits inside
   let new-vector = copy-sequence(vector, start: 4, end: 11);
-  bit-vector-consistency-checks("Copy tiny vector between bits 4 and 11",
+  bit-vector-consistency-checks("Copy small vector between bits 4 and 11",
     new-vector, 7, list(1, 3));
 end test;
 
@@ -66,5 +92,6 @@ end test;
 
 define suite copy-sequence-suite()
   test copy-sequence-tiny-vector;
+  test copy-sequence-small-vector;
   test copy-sequence-huge-vector;
 end suite;

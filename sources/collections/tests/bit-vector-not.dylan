@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define test bit-vector-not-empty-vector (description: "")
+define test bit-vector-not-empty-vector ()
   let vector = make(<bit-vector>, size: 0);
 
   let (result, result-pad) = bit-vector-not(vector, pad: 0);
@@ -24,7 +24,7 @@ define test bit-vector-not-empty-vector (description: "")
 end test;
 
 
-define test bit-vector-not!-empty-vector (description: "")
+define test bit-vector-not!-empty-vector ()
   let vector = make(<bit-vector>, size: 0);
 
   let (result, result-pad) = bit-vector-not!(vector, pad: 0);
@@ -44,62 +44,60 @@ define test bit-vector-not!-empty-vector (description: "")
     result-pad, 0);
 end test;
 
+define method bit-vector-not-sized-vector(size :: <integer>)
+  let vector1 :: <bit-vector> = make(<bit-vector>, size: size);
+  let vector2 :: <bit-vector> = make(<bit-vector>, size: size, fill: 1);
+  let vector3 :: <bit-vector> = make(<bit-vector>, size: size);
 
-define test bit-vector-not-tiny-vector (description: "")
-  let vector1 :: <bit-vector> = make(<bit-vector>, size: $tiny-size);
-  let vector2 :: <bit-vector> = make(<bit-vector>, size: $tiny-size, fill: 1);
-  let vector3 :: <bit-vector> = make(<bit-vector>, size: $tiny-size);
-
-  let vector3-elements = list(0, 2, 3, 7, 8, 10, 12);
-  let not-vector3-elements = list(1, 4, 5, 6, 9, 11, 13);
-  do(method(bit) vector3[bit] := 1 end, vector3-elements);
+  let vector3-elements = random-elements(size);
+  let not-vector3-elements = compute-not-bits(vector3-elements, size);
+  set-bits(vector3, vector3-elements);
 
   // bit-vector-not of an all-zero vector
   //
   let (result, result-pad) = bit-vector-not(vector1);
   bit-vector-checks(result, result-pad,
     "bit-vector-not of an all-zero vector with default pad",
-    $tiny-size, #"all-ones", 1);
+    size, #"all-ones", 1);
 
   let (result, result-pad) = bit-vector-not(vector1, pad: 1);
   bit-vector-checks(result, result-pad,
     "bit-vector-not of an all-zero vector with pad = 1",
-    $tiny-size, #"all-ones", 0);
+    size, #"all-ones", 0);
 
   // bit-vector-not of an all-one vector
   //
   let (result, result-pad) = bit-vector-not(vector2, pad: 0);
   bit-vector-checks(result, result-pad,
     "bit-vector-not of an all-one vector with pad = 0",
-    $tiny-size, #"all-zeros", 1);
+    size, #"all-zeros", 1);
 
   let (result, result-pad) = bit-vector-not(vector2, pad: 1);
   bit-vector-checks(result, result-pad,
     "bit-vector-not of an all-one vector with pad = 1",
-    $tiny-size, #"all-zeros", 0);
+    size, #"all-zeros", 0);
 
   // bit-vector-not of a vector
   //
   let (result, result-pad) = bit-vector-not(vector3);
   bit-vector-checks(result, result-pad,
     "bit-vector-not of a vector with default pad",
-    $tiny-size, not-vector3-elements, 1);
+    size, not-vector3-elements, 1);
 
   let (result, result-pad) = bit-vector-not(vector3, pad: 1);
   bit-vector-checks(result, result-pad,
     "bit-vector-not of a vector with pad = 1",
-    $tiny-size, not-vector3-elements, 0);
-end test;
+    size, not-vector3-elements, 0);
+end method;
 
+define method bit-vector-not!-sized-vector(size :: <integer>)
+  let vector1 :: <bit-vector> = make(<bit-vector>, size: size);
+  let vector2 :: <bit-vector> = make(<bit-vector>, size: size);
+  let vector3 :: <bit-vector> = make(<bit-vector>, size: size);
 
-define test bit-vector-not!-tiny-vector (description: "")
-  let vector1 :: <bit-vector> = make(<bit-vector>, size: $tiny-size);
-  let vector2 :: <bit-vector> = make(<bit-vector>, size: $tiny-size);
-  let vector3 :: <bit-vector> = make(<bit-vector>, size: $tiny-size);
-
-  let vector3-elements = list(1, 4, 5, 6, 9, 11, 13);
-  let not-vector3-elements = list(0, 2, 3, 7, 8, 10, 12);
-  do(method(bit) vector3[bit] := 1 end, vector3-elements);
+  let vector3-elements = random-elements(size);
+  let not-vector3-elements = compute-not-bits(vector3-elements, size);
+  set-bits(vector3, vector3-elements);
 
   // bit-vector-not! of an all-zero vector
   //
@@ -108,14 +106,14 @@ define test bit-vector-not!-tiny-vector (description: "")
     result, vector1);
   bit-vector-checks(result, result-pad,
     "bit-vector-not! of an all-zero vector with default pad",
-    $tiny-size, #"all-ones", 1);
+    size, #"all-ones", 1);
 
   let (result, result-pad) = bit-vector-not!(vector2, pad: 1);
   check-equal("With pad = 1, bit-vector-not!(vector2) == vector2",
     result, vector2);
   bit-vector-checks(result, result-pad,
     "bit-vector-not! of an all-zero vector with pad = 1",
-    $tiny-size, #"all-ones", 0);
+    size, #"all-ones", 0);
 
   // bit-vector-not of an all-one vector
   //
@@ -124,14 +122,14 @@ define test bit-vector-not!-tiny-vector (description: "")
     result, vector1);
   bit-vector-checks(result, result-pad,
     "bit-vector-not! of an all-one vector with pad = 0",
-    $small-size, #"all-zeros", 1);
+    size, #"all-zeros", 1);
 
   let (result, result-pad) = bit-vector-not!(vector2, pad: 1);
   check-equal("With pad = 1, bit-vector-not!(vector2) == vector2",
     result, vector2);
   bit-vector-checks(result, result-pad,
     "bit-vector-not! of an all-one vector with pad = 1",
-    $tiny-size, #"all-zeros", 0);
+    size, #"all-zeros", 0);
 
   // bit-vector-not of a vector
   //
@@ -140,35 +138,55 @@ define test bit-vector-not!-tiny-vector (description: "")
     result, vector3);
   bit-vector-checks(result, result-pad,
     "bit-vector-not! of a vector with default pad",
-    $tiny-size, not-vector3-elements, 1);
+    size, not-vector3-elements, 1);
 
   let (result, result-pad) = bit-vector-not!(vector3, pad: 1);
   check-equal("With pad = 1, bit-vector-not!(vector3) == vector3",
     result, vector3);
   bit-vector-checks(result, result-pad,
     "bit-vector-not! of a vector with pad = 1",
-    $tiny-size, vector3-elements, 0);
+    size, vector3-elements, 0);
+end method;
+
+define test bit-vector-not-tiny-vector ()
+    bit-vector-not-sized-vector($tiny-size);
 end test;
 
+define test bit-vector-not!-tiny-vector ()
+    bit-vector-not!-sized-vector($tiny-size);
+end test;
+
+define test bit-vector-not-small-vector ()
+    bit-vector-not-sized-vector($tiny-size);
+end test;
+
+define test bit-vector-not!-small-vector ()
+    bit-vector-not!-sized-vector($small-size);
+end test;
 
 define test bit-vector-not-huge-vector ()
+    bit-vector-not-sized-vector($huge-size);
 end test;
 
 define test bit-vector-not!-huge-vector ()
+    bit-vector-not!-sized-vector($huge-size);
 end test;
 
 define test bit-vector-not-multiple-word-sized-vector ()
+    bit-vector-not-sized-vector($multiple-word-size);
 end test;
 
 define test bit-vector-not!-multiple-word-sized-vector ()
+    bit-vector-not!-sized-vector($multiple-word-size);
 end test;
-
 
 define suite bit-vector-not-suite ()
   test bit-vector-not-empty-vector;
   test bit-vector-not!-empty-vector;
   test bit-vector-not-tiny-vector;
   test bit-vector-not!-tiny-vector;
+  test bit-vector-not-small-vector;
+  test bit-vector-not!-small-vector;
   test bit-vector-not-huge-vector;
   test bit-vector-not!-huge-vector;
   test bit-vector-not-multiple-word-sized-vector;

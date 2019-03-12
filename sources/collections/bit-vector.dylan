@@ -141,7 +141,7 @@ end function;
 //
 /*
 define method check-start-compute-end
-  (vector :: <bit-vector>, start :: <integer>, last) 
+  (vector :: <bit-vector>, start :: <integer>, last)
       => (real-last :: <integer>);
   let vector-size = vector.size;
   let last :: <integer> = if (unsupplied?(last)) vector-size else last end;
@@ -202,7 +202,7 @@ define inline-only function bit-vector-and-internal!
 
     if (result.word-size > v1.word-size)
       for (i :: <integer> from v1.word-size below result.word-size)
-        bit-vector-word(result, i) := 
+        bit-vector-word(result, i) :=
           if (p1 = 0)
             primitive-unwrap-machine-word($machine-word-zero);
           else
@@ -263,12 +263,12 @@ define inline-only function bit-vector-andc2-internal!
     if (v1.word-size < result.word-size)
       if (p1 = 0)
         for (i :: <integer> from v1.word-size below result.word-size)
-          bit-vector-word(result, i) := 
+          bit-vector-word(result, i) :=
             primitive-unwrap-machine-word($machine-word-zero);
         end for;
       else
         for (i :: <integer> from v1.word-size below result.word-size)
-          bit-vector-word(result, i) := 
+          bit-vector-word(result, i) :=
             primitive-machine-word-lognot(bit-vector-word(v2, i));
         end for;
       end if;
@@ -972,7 +972,7 @@ define function bit-vector-andc2
      #key pad1 :: <bit> = 0, pad2 :: <bit> = 0)
  => (result :: <bit-vector>, pad :: <bit>)
 
-  let result-size = 
+  let result-size =
   if (pad1 = 0)
     if (pad2 = 0)
       vector1.size
@@ -1035,7 +1035,7 @@ define function bit-vector-or
      #key pad1 :: <bit> = 0, pad2 :: <bit> = 0)
  => (result :: <bit-vector>, pad :: <bit>)
 
-  let result-size = 
+  let result-size =
   if (pad1 = 0)
     if (pad2 = 0)
       max(vector1.size, vector2.size);
@@ -1156,7 +1156,7 @@ define function bit-vector-not
  => (result :: <bit-vector>, result-pad :: <bit>)
   let result :: <bit-vector> = make(<bit-vector>, size: vector.size);
   for (i :: <integer> from 0 below vector.word-size)
-    bit-vector-word(result, i) := 
+    bit-vector-word(result, i) :=
         primitive-machine-word-lognot(bit-vector-word(vector, i));
   end for;
   values(result, if (pad = 0) 1 else 0 end);

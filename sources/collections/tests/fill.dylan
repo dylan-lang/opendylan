@@ -15,43 +15,74 @@ end test;
 
 define test fill-tiny-vector ()
   let vector :: <bit-vector> = make(<bit-vector>, size: $tiny-size);
+  let bits = list(0, 2);
+  set-bits(vector, bits);
+
+  check-equal("fill!(vector, 1, start: 6, end: 9)",
+    fill!(vector, 1, start: 2, end: 4), vector);
+  bit-vector-consistency-checks("fill!(vector, 1, start:2, end: 4)",
+    vector, $tiny-size, list(0, 2, 3));
+
+  check-equal("fill!(vector, 1, start: 4)",
+    fill!(vector, 1, start: 4), vector);
+  bit-vector-consistency-checks("fill!(vector, 1, start: 4",
+    vector, $tiny-size, list(0, 2, 3));
+
+  check-equal("fill!(vector, 0, end: 7)",
+    fill!(vector, 0, end: 7), vector);
+  bit-vector-consistency-checks("fill!(vector, 0, end: 7)",
+    vector, $tiny-size, list());
+
+  check-equal("fill!(vector, 0, start: 0, end: $tiny-size)",
+    fill!(vector, 0, start: 0, end: $tiny-size), vector);
+  bit-vector-consistency-checks("fill!(vector, 0, start: 0, end: $small-size)",
+    vector, $tiny-size, #"all-zeros");
+
+  check-equal("fill!(vector, 0)",
+    fill!(vector, 0), vector);
+  bit-vector-consistency-checks("fill!(vector, 0)",
+    vector, $tiny-size, #"all-zeros");
+end test;
+
+define test fill-small-vector ()
+  let vector :: <bit-vector> = make(<bit-vector>, size: $small-size);
   let bits = list(0, 10);
   set-bits(vector, bits);
 
   check-equal("fill!(vector, 1, start: 6, end: 9)",
     fill!(vector, 1, start: 6, end: 9), vector);
   bit-vector-consistency-checks("fill!(vector, 1, start:6, end: 9)",
-    vector, $tiny-size, list(0, 6, 7, 8, 10));
+    vector, $small-size, list(0, 6, 7, 8, 10));
 
   check-equal("fill!(vector, 1, start: 4)",
     fill!(vector, 1, start: 4), vector);
   bit-vector-consistency-checks("fill!(vector, 1, start: 4",
-    vector, $tiny-size, list(0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13));
+    vector, $small-size, list(0, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13));
 
   check-equal("fill!(vector, 0, end: 7)",
     fill!(vector, 0, end: 7), vector);
   bit-vector-consistency-checks("fill!(vector, 0, end: 7)",
-    vector, $tiny-size, list(7, 8, 9, 10, 11, 12, 13));
+    vector, $small-size, list(7, 8, 9, 10, 11, 12, 13));
 
-  check-equal("fill!(vector, 0, start: 0, end: $tiny-size)",
-    fill!(vector, 0, start: 0, end: $tiny-size), vector);
-  bit-vector-consistency-checks("fill!(vector, 0, start: 0, end: $tiny-size)",
-    vector, $tiny-size, #"all-zeros");
+  check-equal("fill!(vector, 0, start: 0, end: $small-size)",
+    fill!(vector, 0, start: 0, end: $small-size), vector);
+  bit-vector-consistency-checks("fill!(vector, 0, start: 0, end: $small-size)",
+    vector, $small-size, #"all-zeros");
 
   check-equal("fill!(vector, 1, start: 0, end: 8)",
     fill!(vector, 1, start: 0, end: 8), vector);
   bit-vector-consistency-checks("fill!(vector, 1, start: 0, end: 8)",
-    vector, $tiny-size, list(0, 1, 2, 3, 4, 5, 6, 7));
+    vector, $small-size, list(0, 1, 2, 3, 4, 5, 6, 7));
 
-  check-equal("fill!(vector, 1, start: 6, end: $tiny-size)",
-    fill!(vector, 1, start: 6, end: $tiny-size), vector);
-  bit-vector-consistency-checks("fill!(vector, 1, start: 6, end: $tiny-size)",
-    vector, $tiny-size, #"all-ones");
+  check-equal("fill!(vector, 1, start: 6, end: $small-size)",
+    fill!(vector, 1, start: 6, end: $small-size), vector);
+  bit-vector-consistency-checks("fill!(vector, 1, start: 6, end: $small-size)",
+    vector, $small-size, #"all-ones");
 
   check-equal("fill!(vector, 0)",
     fill!(vector, 0), vector);
   bit-vector-consistency-checks("fill!(vector, 0)",
-    vector, $tiny-size, #"all-zeros");
+    vector, $small-size, #"all-zeros");
 end test;
 
 
@@ -102,7 +133,8 @@ define test fill-huge-vector ()
 end test;
 
 
-define suite fill-suite (description: "Tests for fill!")
+define suite fill-suite ()
   test fill-tiny-vector;
+  test fill-small-vector;
   test fill-huge-vector;
 end suite;
