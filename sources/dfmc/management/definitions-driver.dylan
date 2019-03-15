@@ -153,7 +153,7 @@ define function dump-timings-for (ld :: <compilation-context>) => ()
       let percentage-time
         = block ()
             round((time / total-time) * 100);
-          exception (<arithmetic-overflow-error>)
+          exception (<arithmetic-error>)
             0
           end;
       let space = snap-space(prop);
@@ -161,7 +161,7 @@ define function dump-timings-for (ld :: <compilation-context>) => ()
       let percentage-space
         = block ()
             round((space / total-space) * 100);
-          exception (<arithmetic-overflow-error>)
+          exception (<arithmetic-error>)
             0
           end;
       table-line(name, percentage-time, time-string, percentage-space, space-string);
