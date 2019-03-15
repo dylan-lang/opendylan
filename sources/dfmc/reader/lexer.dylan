@@ -983,6 +983,7 @@ define constant $upper-a-code :: <integer> = as(<integer>, 'A');
 define constant $lower-a-code :: <integer> = as(<integer>, 'a');
 define constant $upper-f-code :: <integer> = as(<integer>, 'F');
 define constant $lower-f-code :: <integer> = as(<integer>, 'f');
+define constant $underscore_code :: <integer> = as(<integer>, '_');
 
 // Parse and return an integer in the supplied radix.
 //
@@ -997,9 +998,8 @@ define method parse-integer
     = source-location.source-location-record.contents;
   // We do our working in negative integers to avoid representation
   // overflow until absolutely necessary.
-  local method repeat
-                   (posn :: <integer>, result :: <abstract-integer>)
-                => (final-result :: <abstract-integer>)
+  local method repeat (posn :: <integer>, result :: <abstract-integer>)
+                   => (final-result :: <abstract-integer>)
           if (posn < finish)
             let digit :: <integer> = contents[posn];
             if ($zero-code <= digit & digit <= $nine-code)
@@ -1016,6 +1016,9 @@ define method parse-integer
                               10 + digit - $lower-a-code));
             elseif (stop-at-non-digit?)
               result
+            elseif (digit == $underscore_code) // Must follow stop-at-non-digit? check.
+              // skip underscores
+              repeat(posn + 1, result)
             else
               error("Bogus digit in integer: %=", as(<character>, digit));
             end if;
@@ -1225,7 +1228,7 @@ define method atof
           digits := digits + 1;
         elseif (char == '.')
           if (scale)
-            error("bogus float.");
+            error("multiple '.' characters in floating point literal");
           end if;
           scale := 1;
         elseif (char == 'e' | char == 'E')
@@ -1239,12 +1242,14 @@ define method atof
         elseif (char == 'x' | char == 'X')
           class := #"extended";
           parse-exponent();
+        elseif (char == '_')
+          // Ignore, underscore is for readability only.
         else
-          error("bogus float.");
+          error("invalid %c character in floating point literal mantissa", char);
         end if;
       end while;
       return();
-    end block;
+    end block; // parse-exponent
 
     // Parse the exponent.
     if (posn < finish)
@@ -1261,8 +1266,10 @@ define method atof
         if (char >= '0' & char <= '9')
           let digit = as(<integer>, char) - as(<integer>, '0');
           exponent := generic+(generic*(exponent, 10), digit);
+        elseif (char == '_')
+          // Ignore, underscore is for readability only.
         else
-          error("bogus float");
+          error("invalid %c character in floating point literal exponent", char);
         end if;
         posn := posn + 1;
       end while;
@@ -1274,7 +1281,8 @@ define method atof
   // TODO: CORRECTNESS: Decide how to maintain precision and representation,
   // since we lose it here. (CMU used a ratio representation).
   // TODO: CORRECTNESS: Handle overflows reasonably gracefully.
-  // TODO: CORRECTNESS: Note that we don't have extended floats.
+  // TODO: CORRECTNESS: Note that we don't have extended floats
+  //                    (i.e., <extended-float> == <double-float>)
 
   let (mantissa, base, scale)
     = select (class)
