@@ -19172,7 +19172,7 @@ End scope at 11
 
 +++ Live variable scopes for dylan_float_divide_0_handler +++
 Start scope at 7 with frame for no variables
-End scope at 13
+End scope at 25
 
 +++ No Source Code Locators for dylan_float_divide_0_handler +++
 
@@ -19211,7 +19211,7 @@ End scope at 13
 
 +++ Live variable scopes for dylan_float_invalid_handler +++
 Start scope at 7 with frame for no variables
-End scope at 13
+End scope at 25
 
 +++ No Source Code Locators for dylan_float_invalid_handler +++
 
@@ -19250,7 +19250,7 @@ End scope at 13
 
 +++ Live variable scopes for dylan_float_overflow_handler +++
 Start scope at 7 with frame for no variables
-End scope at 13
+End scope at 25
 
 +++ No Source Code Locators for dylan_float_overflow_handler +++
 
@@ -19289,7 +19289,7 @@ End scope at 13
 
 +++ Live variable scopes for dylan_float_underflow_handler +++
 Start scope at 7 with frame for no variables
-End scope at 13
+End scope at 25
 
 +++ No Source Code Locators for dylan_float_underflow_handler +++
 
