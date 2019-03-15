@@ -233,8 +233,8 @@ end method close;
 /// Blocks
 
 define class <bitcode-block-definition> (<object>)
-  constant slot block-name :: <string>,
-    required-init-keyword: name:;
+  //constant slot block-name :: <string>,
+  //  required-init-keyword: name:;
   constant slot block-id :: <integer>,
     required-init-keyword: block-id:;
   constant slot block-records :: <object-table> = make(<object-table>);
