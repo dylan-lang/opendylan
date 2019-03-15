@@ -22,6 +22,11 @@ Dylan Standard Library
   between ``<single-method-engine-node>`` and ``<keyword-method>`` with the
   help of a new ``primitive-callable-as-engine-node?`` compiler primitive.
 
+* Integer and floating point literal syntax is changed to allow underscore
+  between any two successive digits, for readability.  See
+  `DEP-0011 <https://opendylan.org/proposals/dep-0011-numeric-literal-syntax.html>`_
+  for details.
+
 LLVM
 ====
 
