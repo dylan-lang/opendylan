@@ -99,7 +99,8 @@ define module unix-sockets
   export
     ntohl, ntohs, htonl, htons;
   export
-    inet-addr, inet-network, inet-makeaddr, inet-lnaof, inet-netof, inet-ntoa;
+    inet-addr, inet-network, inet-makeaddr, inet-lnaof, inet-netof, inet-ntoa,
+    inet-aton;
 
   // From netdb.h
   export
@@ -108,7 +109,8 @@ define module unix-sockets
       h-aliases-value, h-aliases-value-setter,
       h-addrtype-value, h-addrtype-value-setter,
       h-length-value, h-length-value-setter,
-      h-addr-list-value, h-addr-list-value-setter;
+      h-addr-list-value, h-addr-list-value-setter,
+      h-errno;
   export
     <netent>, <netent*>,
       n-name-value, n-name-value-setter,
