@@ -100,7 +100,7 @@ endif
 CC = @CC@
 AR = ar -rcs
 
-CFLAGS		= $(PLATFORM_CFLAGS) -Wall -O -g -I$(srcdir) @DEFS@
+CFLAGS		= $(PLATFORM_CFLAGS) -Wall -O -g -I$(srcdir) @DEFS@ @CPPFLAGS@
 LFLAGS		= $(PLATFORM_LFLAGS)
 
 HARP_CFLAGS     = -DOPEN_DYLAN_BACKEND_HARP

@@ -560,7 +560,15 @@ end pentium-template;
 define pentium-template clear-float-exceptions
   pattern (be)
     emit(be, flt-esc + #b011, #b11100010);  // fnclex
+
+    // Loop until FPU stack is empty:
+    emit(be, #xdf, #xe0);               // fnstsw ax
+    emit(be, #x66, #x25);               // Mask out TOP
+    emit-two-bytes(be, ash(#b111, 11));
+    emit(be, beq-x, 4);                 // Branch to end if stack is empty
+    pop-double(be, f-st);               // Drop top of stack (FSTP ST(0))
+    emit(be, #xeb, #xf4);               // Back to top of loop
 end pentium-template;
 
 
-define constant mc-fstsw = #b111000;
+//define constant mc-fstsw = #b111000;
