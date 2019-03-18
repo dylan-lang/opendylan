@@ -97,7 +97,7 @@ OutFile "${OUTFILE}"
 Name "${APPNAMEANDVERSION}"
 InstallDir "$PROGRAMFILES\${APPNAME}"
 InstallDirRegKey HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\Install" "Install_Dir"
-BrandingText "Open Dylan - www.opendylan.org"
+BrandingText "Open Dylan - opendylan.org"
 LicenseData ${LICENSE}
 ShowInstDetails show
 
