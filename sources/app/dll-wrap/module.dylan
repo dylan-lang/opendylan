@@ -7,11 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module dll-wrap
-  use win32-kernel;
   use format-out;
   use format;
-  use finalization;
   use common-dylan;
-  use simple-random;
   use operating-system;
 end module dll-wrap;
