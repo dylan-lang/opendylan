@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Helper function to force evaluation at run-time,
 // instead of compile-time.
-define function run-time (x)
+define not-inline function run-time (x)
   x
 end function run-time;
 
