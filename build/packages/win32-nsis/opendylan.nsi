@@ -44,7 +44,7 @@
 !define MUI_ABORTWARNING
 !define MUI_FINISHPAGE_RUN "$INSTDIR\bin\with-splash-screen.exe"
 !define MUI_FINISHPAGE_RUN_PARAMETERS \
-          "/k 1.0 /v $\"Version ${APPVERSION}$\" win32-environment.exe"
+        "/v $\"Version ${APPVERSION}$\" $\"$INSTDIR\bin\win32-environment.exe$\""
 !define MUI_FINISHPAGE_RUN_CHECKED
 
 !define MUI_HEADERIMAGE
