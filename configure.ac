@@ -243,7 +243,7 @@ AC_CHECK_FUNC(sigaction,
 AC_SEARCH_LIBS([atan], [m])
 
 # libunwind
-AC_CHECK_HEADERS([libunwind.h])
+AC_CHECK_HEADERS([libunwind.h], [backtrace=yes], [backtrace=no])
 
 AC_MSG_CHECKING(for libunwind library)
 AC_LANG_CONFTEST([AC_LANG_PROGRAM([#define UNW_LOCAL_ONLY
@@ -256,6 +256,19 @@ AC_LINK_IFELSE([], [AC_MSG_RESULT(none needed)],
                 AC_LINK_IFELSE([], [AC_MSG_RESULT(-lunwind)],
                                [AC_MSG_RESULT(not found)
                                 LIBS="$save_LIBS"])])
+
+AS_ECHO(["
+Targeting '${target}' ('${OPEN_DYLAN_TARGET_PLATFORM}')
+
+  LLVM support                                            ${SUPPORT_LLVM:-no}"])
+AS_IF([test -n "$SUPPORT_LLVM"],
+      [AS_ECHO(["  LLVM back-end collector                                 ${LLVM_COLLECTOR}"])])
+AS_ECHO(["  HARP support                                            ${SUPPORT_HARP:-no}"])
+AS_IF([test -n "$SUPPORT_HARP"],
+      [AS_ECHO(["  HARP back-end collector                                 ${HARP_COLLECTOR}"])])
+AS_ECHO(["  C back-end collector                                    ${C_COLLECTOR}
+  Backtrace support using libunwind                       ${backtrace}
+"])
 
 AC_CONFIG_FILES(Makefile
                 sources/jamfiles/Makefile
