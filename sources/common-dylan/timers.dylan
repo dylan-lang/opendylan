@@ -73,7 +73,7 @@ define macro with-storage
        end }
 end macro with-storage;
 
-define inline function %timer-current-time
+define not-inline function %timer-current-time
     ()
  => (secs :: <machine-word>, nsecs :: <machine-word>)
   let secs :: <machine-word> = primitive-wrap-machine-word(integer-as-raw(0));
