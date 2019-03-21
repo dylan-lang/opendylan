@@ -228,7 +228,7 @@ define method save-project (p :: <user-project>,
             <file-locator> =>
               make(<file-locator>,
                    directory: to-file.locator-directory,
-                   base:      to-file.locator-directory,
+                   base:      to-file.locator-base,
                    extension: $user-project-suffix);
           end
         else
