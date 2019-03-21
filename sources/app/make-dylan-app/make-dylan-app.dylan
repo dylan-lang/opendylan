@@ -72,49 +72,31 @@ define function write-registry
   end with-open-file;
 end function write-registry;
 
-define function is-valid-dylan-name?
-    (word :: <string>) => (name? :: <boolean>)
-  local method leading-graphic? (c)
-          member?(c, "!&*<>|^$%@_")
-        end;
-  local method special? (c)
-          member?(c, "-+~?/")
-        end;
-  local method is-name? (c :: <character>) => (name? :: <boolean>)
-          alphanumeric?(c) | leading-graphic?(c) | special?(c)
-        end;
-
-  every?(is-name?, word) &
-  case
-    alphabetic?(word[0]) => #t;
-    decimal-digit?(word[0])
-      => block (return)
-           for (i from 1 below word.size - 1)
-             if (alphabetic?(word[i]) & alphabetic?(word[i + 1]))
-               return(#t)
-             end if;
-           end for;
-         end block;
-    leading-graphic?(word[0]) => (word.size > 1) & any?(alphabetic?, word);
-  end case;
-end function is-valid-dylan-name?;
+// While technically any Dylan name is valid, we prefer to restrict the names
+// to the style that is in common use since this tool is most likely to be used
+// by beginners.
+define constant $library-name-regex = compile-regex("^[a-z][a-z0-9-]*$");
 
 define function main
     (app-name :: <string>, arguments :: <vector>) => ()
   if (arguments.size < 1)
-    format-err("Usage: make-dylan-app project-name\n");
+    format-err("Usage: make-dylan-app library-name\n");
     exit-application(1);
   else
-    let pathname :: <string> = arguments[0];
-    if (is-valid-dylan-name?(pathname))
+    let library-name :: <string> = arguments[0];
+    if (regex-search($library-name-regex, library-name))
       block ()
-        make-dylan-app(pathname);
+        make-dylan-app(library-name);
         exit-application(0);
       exception (condition :: <condition>)
         format-err("error: %=\n", condition);
       end block;
     else
-      format-err("error: Invalid name! Please use a valid Dylan library name.\n");
+      format-err("Error: %= is not a valid Dylan library name.\n\n"
+                   "Libraries are named with one or more words separated by\n"
+                   "dashes, for example 'cool-stuff'. Names must match the\n"
+                   "regular expression %=.",
+                 library-name, regex-pattern($library-name-regex));
       exit-application(1);
     end if;
   end if;

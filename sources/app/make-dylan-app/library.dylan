@@ -4,9 +4,9 @@ synopsis: Generate the boilerplate for a new Dylan library.
 define library make-dylan-app
   use common-dylan;
   use io;
+  use regular-expressions;
   use system;
-  use strings;
-end library make-dylan-app;
+end library;
 
 define module make-dylan-app
   use common-dylan;
@@ -23,8 +23,6 @@ define module make-dylan-app
     import: { <directory-locator>,
               <file-locator>,
               merge-locators };
-  use strings,
-    import: { alphabetic?,
-              alphanumeric?,
-              decimal-digit? };
-end module make-dylan-app;
+  use regular-expressions,
+    import: { compile-regex, regex-pattern, regex-search };
+end module;
