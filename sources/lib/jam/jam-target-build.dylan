@@ -430,7 +430,7 @@ define method jam-target-build
       if (status ~= 0 & ~command.action-command-ignore?)
         let message
           = concatenate("Command failed: ", command.action-command-string);
-        push-last(output-queue, curry(progress-callback, message));
+        push-last(output-queue, curry(progress-callback, message, error?: #t));
 
         // Stop the build
         push-last(output-queue, #f);
