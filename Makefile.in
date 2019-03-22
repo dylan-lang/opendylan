@@ -50,7 +50,7 @@ ifneq (@SUPPORT_LLVM@,)
 RTG_OPT = BOOTSTRAP_2_RTG="$(abs_builddir)/Bootstrap.1/bin/llvm-runtime-generator"
 endif
 
-3-stage-bootstrap: update-workspace
+3-stage-bootstrap:
 	$(MAKE) 3-stage-bootstrap-reentry \
 	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose -jobs $(DYLAN_JOBS)" \
 	  $(RTG_OPT)
@@ -60,7 +60,7 @@ endif
 # 2-stage bootstrap includes both stages 1 and 2: it rebuilds the compiler to
 # support new primitives and rebuilds the libraries using that compiler.
 
-2-stage-bootstrap: update-workspace
+2-stage-bootstrap:
 	$(MAKE) 2-stage-bootstrap-reentry \
 	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose -jobs $(DYLAN_JOBS)" \
 	  $(RTG_OPT)
@@ -70,7 +70,7 @@ endif
 # 1-stage bootstrap includes only stage 2: it rebuilds compiler and libraries
 # when the existing compiler and libraries will understand the primitives.
 
-1-stage-bootstrap: update-workspace
+1-stage-bootstrap:
 	$(MAKE) 1-stage-bootstrap-reentry \
 	  BOOTSTRAP_2_COMPILER="$(DYLANCOMPILER)"
 1-stage-bootstrap-reentry: bootstrap-stage-2
