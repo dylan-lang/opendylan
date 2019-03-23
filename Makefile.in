@@ -1,12 +1,6 @@
 # Changes made here may also need to be made in
 # build/windows/build-release.bat.
 
-# TODO:
-#
-# * If OPEN_DYLAN_TARGET_PLATFORM isn't the local platform (which I assume is
-#   possible during cross compilation) then the workspace tool needs to be told
-#   to generate registries for that platform instead.
-
 prefix          = $(DESTDIR)@prefix@
 srcdir          = @abs_srcdir@
 abs_srcdir      = @abs_srcdir@
@@ -16,7 +10,8 @@ OPEN_DYLAN_TARGET_PLATFORM = @OPEN_DYLAN_TARGET_PLATFORM@
 RUNTIME_SOURCES = sources/lib/run-time
 RUNTIME_TARGET_PLATFORMS = @OPEN_DYLAN_TARGET_PLATFORM@ @ADDITIONAL_RUNTIME_TARGET_PLATFORMS@
 
-FDMAKE_OPTIONS  =
+# Add -verbose here if you want to see detailed compiler output for each library.
+FDMAKE_OPTIONS  = -verbose
 fdmake          = @PERL@ $(srcdir)/build/fdmake.pl $(FDMAKE_OPTIONS)
 
 DYLANCOMPILER   = @DYLANCOMPILER@
@@ -37,7 +32,9 @@ workspace_dir := $(shell dirname $(srcdir))
 all: @bootstrap_target@
 
 update-workspace:
-	$(DYLAN_WORKSPACE_TOOL) update
+	for platform in $(RUNTIME_TARGET_PLATFORMS); do \
+	  $(DYLAN_WORKSPACE_TOOL) update $$platform; \
+	done
 
 ###
 # 3-stage bootstrap includes stages 1 and 2 and 3: it rebuilds the compiler
