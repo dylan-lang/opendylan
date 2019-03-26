@@ -386,7 +386,8 @@ define sealed method decode-ink
     (medium :: <gtk-medium>, gcontext :: <CairoContext>, color :: <color>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
-  values(allocate-color(color, medium.%palette), $GDK-SOLID, $boole-1, #f)
+  values(allocate-color(color, medium.%palette), 0 /* $GDK-SOLID unused */,
+         $boole-1, #f)
 end method decode-ink;
 
 define sealed method decode-ink
@@ -394,7 +395,8 @@ define sealed method decode-ink
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   let color = contrasting-color->color(color);
-  values(allocate-color(color, medium.%palette), $GDK-SOLID, $boole-1, #f)
+  values(allocate-color(color, medium.%palette), 0 /* $GDK-SOLID unused */,
+         $boole-1, #f)
 end method decode-ink;
 
 define sealed method decode-ink
