@@ -114,7 +114,7 @@ define inline method waiting-with-packet? (t :: <task-state>)
 end method;
 
 define sealed class <task-control-block> (<task-state>)
-  sealed slot link /* :: <task-control-block> */ = $null-task,
+  sealed slot link :: false-or(<task-control-block>) = #f,
     init-keyword: link:;
   sealed slot ident :: <integer> = 0,
     init-keyword: ident:;
@@ -152,7 +152,7 @@ define method add-input
 end method;
 
 define sealed class <packet> (<object>)
-  sealed slot link /* :: <packet> */ = $null-packet,
+  sealed slot link :: false-or(<packet>) = #f,
     init-keyword: link:;
   sealed slot ident :: <integer> = 0,
     init-keyword: ident:;
