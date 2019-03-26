@@ -168,12 +168,6 @@ define C-function gdk-pixbuf-get-formats
   c-name: "gdk_pixbuf_get_formats";
 end;
 
-define C-function gdk-pixbuf-gettext
-  input parameter msgid_ :: <C-string>;
-  result res :: <C-string>;
-  c-name: "gdk_pixbuf_gettext";
-end;
-
 define C-function gdk-pixbuf-new-from-stream-async
   input parameter stream_ :: <GInputStream>;
   input parameter cancellable_ :: <GCancellable>;

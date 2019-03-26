@@ -170,7 +170,6 @@ define module gdkpixbuf
     gdk-pixbuf-save-to-stream-finish,
     gdk-pixbuf-new-from-stream-at-scale-async,
     gdk-pixbuf-new-from-stream-async,
-    gdk-pixbuf-gettext,
     gdk-pixbuf-get-formats,
     gdk-pixbuf-get-file-info,
     gdk-pixbuf-from-pixdata,
