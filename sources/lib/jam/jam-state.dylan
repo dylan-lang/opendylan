@@ -12,6 +12,10 @@ define class <jam-state> (<object>)
   constant slot %jam-targets :: <string-table> = make(<string-table>);
   constant slot %jam-random :: <random> = make(<random>);
   constant slot %jam-temporary-files :: <deque> = make(<deque>);
+
+  // Table mapping Jamfile source pathname strings to the file
+  // modification date at the time they were read using jam-read-file
+  constant slot %jam-jamfiles :: <string-table> = make(<string-table>);
 end class;
 
 define method jam-state-copy(jam :: <jam-state>) => (jam :: <jam-state>);
@@ -28,7 +32,23 @@ define method jam-state-copy(jam :: <jam-state>) => (jam :: <jam-state>);
   for (target keyed-by target-name in jam.%jam-targets)
     new-jam.%jam-targets[target-name] := jam-target-copy(jam, new-jam, target);
   end for;
+  for (date keyed-by jamfile-name in jam.%jam-jamfiles)
+    new-jam.%jam-jamfiles[jamfile-name] := date;
+  end for;
   new-jam
+end method;
+
+define method jam-state-stale? (jam :: <jam-state>) => (stale? :: <boolean>);
+  block (return)
+    for (date keyed-by jamfile-name in jam.%jam-jamfiles)
+      if (file-property(jamfile-name, #"modification-date") > date)
+        return(#t);
+      end if;
+    end for;
+    #f
+  exception (e :: <file-system-error>)
+    #t
+  end
 end method;
 
 define method jam-variable

@@ -21,6 +21,8 @@ define module-spec jam ()
   function jam-read(<jam-state>, <string>, false-or(<locator>)) => ();
   function jam-read-file(<jam-state>, <locator>) => ();
 
+  function jam-state-stale?(<jam-state>) => (<boolean>);
+
   function jam-rule(<jam-state>, <string>) => (false-or(<function>));
   function jam-rule-setter(<function>, <jam-state>, <string>)
     => (<function>);

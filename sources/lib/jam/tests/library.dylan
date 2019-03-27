@@ -9,6 +9,7 @@ define library jam-test-suite
   use common-dylan;
   use testworks;
   use testworks-specs;
+  use io;
   use system;
   use jam;
 
@@ -20,6 +21,9 @@ define module jam-test-suite
   use testworks;
   use testworks-specs;
   use locators;
+  use file-system;
+  use streams;
+  use threads;
   use jam;
 
   export jam-test-suite;

@@ -20,6 +20,7 @@ define module jam
   create <jam-state>,
          <jam-arg>,
          jam-state-copy,
+         jam-state-stale?,
          jam-variable,
          jam-variable-setter;
 
