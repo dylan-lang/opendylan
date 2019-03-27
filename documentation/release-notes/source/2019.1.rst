@@ -1,31 +1,16 @@
-*******************************
-Open Dylan 2019.1 (coming soon)
-*******************************
+*****************
+Open Dylan 2019.1
+*****************
 
-Introduction
-============
+This document describes the 2019.1 release of Open Dylan, released 31
+March, 2019.  This release contains many enhancements and bug fixes, highlights
+of which are listed below.  For complete details see `the commit logs
+<https://github.com/dylan-lang/opendylan/compare/v2014.1...v2019.1.0>`_.
 
-This document describes the 2019.1 release of Open Dylan, released
-XXX XX, 2019.
+* Download the release: http://opendylan.org/download
+* Read documentation: http://opendylan.org/documentation
+* Report problems: https://github.com/dylan-lang/opendylan/issues
 
-* `Download the release <http://opendylan.org/download/index.html>`_
-* `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
-* `Source code <https://github.com/dylan-lang/opendylan/tree/v2019.1>`_
-
-Dylan Standard Library
-======================
-
-* Symbol comparisons when using ``\=`` are now the same as using ``\==``
-  rather than being significantly more expensive. See `issue #899`_.
-
-* The function dispatch implementation now makes a proper distinction
-  between ``<single-method-engine-node>`` and ``<keyword-method>`` with the
-  help of a new ``primitive-callable-as-engine-node?`` compiler primitive.
-
-* Integer and floating point literal syntax is changed to allow underscore
-  between any two successive digits, for readability.  See
-  `DEP-0011 <https://opendylan.org/proposals/dep-0011-numeric-literal-syntax.html>`_
-  for details.
 
 LLVM
 ====
@@ -40,116 +25,9 @@ macOS platforms. Features of the LLVM back-end include:
 
 * Arithmetic exception handling
 
-Build System
-============
-
-* The arguments to configure for specifying which garbage collector to
-  use have changed (again). The arguments are now::
-
-    --with-mps=DIR
-    --with-gc=DIR
-    --with-harp-collector=mps|boehm|malloc
-    --with-c-collector=boehm|malloc
-    --with-llvm-collector=boehm|malloc
-
-  The ``with-mps`` option (for pointing to the Memory Pool System
-  source directory) is only needed when using the MPS collector with
-  the HARP back-end on either 32-bit x86 FreeBSD or 32-bit x86 Linux.
-  The system should be able to find the Boehm-Demers-Weiser collector
-  automatically if it is in the standard system install directory; the
-  ``with-gc`` option should only be needed if it is installed in a
-  non-standard location.
-
-  The default collectors are MPS for the HARP back-end's run-time
-  library, and the Boehm-Demers-Weiser collector for the C and LLVM
-  back-ends. These shouldn't be changed unless you're sure you know
-  what you're doing.
-
-* A new option for building C++ code, ``c++-source-files``,  has been
-  added to LID files.  This matches the ``c-source-files:`` keyword.
-
-* A failure to find shared libraries on Ubuntu 17 & 18 was fixed. See
-  GitHub issues `1064
-  <https://github.com/dylan-lang/opendylan/issues/1064>`_ and `1197
-  <https://github.com/dylan-lang/opendylan/issues/1197>`_.
-
-C-FFI
-=====
-
-* Nested C structs by value are now supported by the C backend. Previously,
-  using this construct would result in a compilation error in the generated
-  C code.
-
-* Using ``%call-c-function`` or ``%objc-msgsend`` with a void result type
-  no longer requires specifying a result type of ``<raw-c-void>``. Simply
-  putting an empty value list is sufficient:
-
-  .. code-block:: dylan
-
-     %call-c-function ("SetLastError", c-modifiers: "__stdcall")
-         (dwErrorCode :: <raw-c-unsigned-long>) => ()
-       (integer-as-raw(0))
-     end;
-
-  Previously, this required specifying the result type explicitly:
-
-  .. code-block:: dylan
-
-     %call-c-function ("SetLastError", c-modifiers: "__stdcall")
-         (dwErrorCode :: <raw-c-unsigned-long>) => (nothing :: <raw-c-void>)
-       (integer-as-raw(0))
-     end;
-
-Collections
-===========
-
-* The ``bit-count`` operation from ``bit-vector`` (also used by ``<bit-set>``)
-  has been changed to use the new ``primitive-machine-word-count-ones`` that
-  has been added in this release.
-
-Coloring-Stream
-===============
-
-* A new library for doing colored text output has been added. It currently
-  supports ANSI codes on Unix terminals. It has been
-  `documented in the library reference`_.
-
-Common Dylan
-============
-
-* The ``transcendentals`` module now has a ``sincos`` generic function.
-* The ``transcendentals`` module now has a ``hypot`` generic function.
-* The ``transcendentals`` module now has an ``ilog2`` function that returns
-  the integer value of the logarithm of a value in base 2.
-* The transcendental and hyperbolic functions are no longer sealing their
-  domains on ``<real>`` parameters.
-* Again in the ``transcendentals`` module, many methods have been removed
-  that converted from ``<real>`` to ``<float>``. Callers should pass in
-  values of the appropriate type and precision instead. This impacts:
-
-  * ``^``, ``exp``, ``log``
-  * ``sqrt``
-  * ``sin``, ``cos``, ``tan``
-  * ``asin``, ``acos``, ``atan``
-  * ``sinh``, ``cosh``, ``tanh``
-  * ``asinh``, ``acosh``, ``atanh``
-* The ``common-dylan`` library now provides a ``classify-float``
-  method which will return if the given float is ``#"normal"``,
-  ``#"zero"``, ``#"infinite"``, ``#"nan"``, or ``#"subnormal"``.
-* The ``common-dylan`` library now provides ``hexstring`` and
-  ``from-hexstring`` methods for fast conversion from and to
-  hexadecimal strings.
-* The ``thread`` module has gained a ``current-thread-id`` function. The
-  ``thread-id`` is also available for any ``<thread>`` object.
-
-* The ``simple-profiling`` module now exports ``start-profiling`` and
-  ``stop-profiling`` rather than requiring that users directly invoke
-  ``start-profiling-type`` and ``stop-profiling-type`` multiple times.
-* The ``machine-words`` module now knows how to count the bits set
-  in a machine word via ``%count-ones``. This is also available as
-  a new compiler primitive, ``primitive-machine-word-count-ones``.
-
-* Mismatches in the use of internal-use raw types have been resolved.
+Note that LLVM is not yet the default back end so for now you must add
+``-back-end llvm`` to the command line when building if you want LLVM.  We
+expect to make it the default in an upcoming release.
 
 Compiler
 ========
@@ -217,6 +95,31 @@ Compiler
 
 .. _syntax: https://opendylan.org/documentation/library-reference/language-extensions/parser-expansions.html
 
+Run-time
+========
+
+* Support for printing a backtrace (with demangled Dylan function names)
+  when an unhandled error condition is signaled has been implemented.
+  Note that this requires the use of the optional ``libunwind`` library.
+
+* Support for handling "invalid" floating point exceptions has been
+  added. These are generated when taking the square root of a negative
+  number and other similar situations where the numerical domain
+  is invalid.
+
+  When an invalid floating point exception occurs,
+  ``<arithmetic-domain-error>`` will be signaled (much like the other
+  ``<arithmetic-error>`` situations).
+
+* Limited integer instance checks have been optimized. This will have
+  the most impact when using the LLVM compiler backend.
+
+* In the C runtime, ``primitive_sleep`` now functions correctly.
+
+* Two new primitives, ``primitive-read-cycle-counter`` and
+  ``primitive-read-return-address``, have been added. These are useful
+  for writing profiling and event logging tools.
+
 Debugging
 =========
 
@@ -239,8 +142,105 @@ Documentation
 
     export -format rst -file my-lib.rst interface-reference
 
-IO
-==
+Build System
+============
+
+* The arguments to configure for specifying which garbage collector to
+  use have changed. The arguments are now::
+
+    --with-mps=DIR
+    --with-gc=DIR
+    --with-harp-collector=mps|boehm|malloc
+    --with-c-collector=boehm|malloc
+    --with-llvm-collector=boehm|malloc
+
+  The ``--with-mps`` option (for pointing to the Memory Pool System
+  source directory) is only needed when using the MPS collector with
+  the HARP back-end on either 32-bit x86 FreeBSD or 32-bit x86 Linux.
+
+  The system should be able to find the Boehm-Demers-Weiser collector
+  automatically if it is in the standard system install directory; the
+  ``--with-gc`` option should only be needed if it is installed in a
+  non-standard location.
+
+  The default collectors are MPS for the HARP back-end's run-time
+  library, and the Boehm-Demers-Weiser collector for the C and LLVM
+  back-ends. These shouldn't be changed unless you're sure you know
+  what you're doing.
+
+* A new option for building C++ code, ``c++-source-files``,  has been
+  added to LID files.  This matches the ``c-source-files:`` keyword.
+
+* A failure to find shared libraries on Ubuntu 17 & 18 was fixed. See
+  GitHub issues `1064
+  <https://github.com/dylan-lang/opendylan/issues/1064>`_ and `1197
+  <https://github.com/dylan-lang/opendylan/issues/1197>`_.
+
+Library Changes
+===============
+
+dylan Library
+-------------
+
+* Symbol comparisons when using ``\=`` are now the same as using ``\==``
+  rather than being significantly more expensive. See `issue #899`_.
+
+* The function dispatch implementation now makes a proper distinction
+  between ``<single-method-engine-node>`` and ``<keyword-method>`` with the
+  help of a new ``primitive-callable-as-engine-node?`` compiler primitive.
+
+* Integer and floating point literal syntax is changed to allow underscore
+  between any two successive digits, for readability.  See
+  `DEP-0011 <https://opendylan.org/proposals/dep-0011-numeric-literal-syntax.html>`_
+  for details.
+
+common-dylan Library
+--------------------
+
+* The ``transcendentals`` module now has a ``sincos`` generic function.
+
+* The ``transcendentals`` module now has a ``hypot`` generic function.
+
+* The ``transcendentals`` module now has an ``ilog2`` function that returns
+  the integer value of the logarithm of a value in base 2.
+
+* The transcendental and hyperbolic functions are no longer sealing their
+  domains on ``<real>`` parameters.
+
+* Again in the ``transcendentals`` module, many methods have been removed
+  that converted from ``<real>`` to ``<float>``. Callers should pass in
+  values of the appropriate type and precision instead. This impacts:
+
+  * ``^``, ``exp``, ``log``
+  * ``sqrt``
+  * ``sin``, ``cos``, ``tan``
+  * ``asin``, ``acos``, ``atan``
+  * ``sinh``, ``cosh``, ``tanh``
+  * ``asinh``, ``acosh``, ``atanh``
+
+* The ``common-extensions`` module now provides a ``classify-float`` method
+  which determines whether the given float is ``#"normal"``, ``#"zero"``,
+  ``#"infinite"``, ``#"nan"``, or ``#"subnormal"``.
+
+* The ``byte-vector`` module now provides ``hexstring`` and ``from-hexstring``
+  methods for fast conversion between ``<byte-vector>`` and hexadecimal
+  strings.
+
+* The ``thread`` module has gained a ``current-thread-id`` function. The
+  ``thread-id`` is also available for any ``<thread>`` object.
+
+* The ``simple-profiling`` module now exports ``start-profiling`` and
+  ``stop-profiling`` rather than requiring that users directly invoke
+  ``start-profiling-type`` and ``stop-profiling-type`` multiple times.
+
+* The ``machine-words`` module now knows how to count the bits set
+  in a machine word via ``%count-ones``. This is also available as
+  a new compiler primitive, ``primitive-machine-word-count-ones``.
+
+* Mismatches in the use of internal-use raw types have been resolved.
+
+io Library
+----------
 
 * An implementation of indenting streams for handling indented text
   output has been added. See ``<indented-stream>``, ``indent``, and
@@ -251,33 +251,8 @@ IO
 
 * Mismatches in the use of internal-use raw types have been resolved.
 
-Runtime
-=======
-
-* Support for printing a backtrace (with demangled Dylan function names)
-  when an unhandled error condition is signaled has been implemented.
-  Note that this requires the use of the optional ``libunwind`` library.
-
-* Support for handling "invalid" floating point exceptions has been
-  added. These are generated when taking the square root of a negative
-  number and other similar situations where the numerical domain
-  is invalid.
-
-  When an invalid floating point exception occurs,
-  ``<arithmetic-domain-error>`` will be signaled (much like the other
-  ``<arithmetic-error>`` situations).
-
-* Limited integer instance checks have been optimized. This will have
-  the most impact when using the LLVM compiler backend.
-
-* In the C runtime, the ``primitive_sleep`` now functions correctly.
-
-* Two new primitives, ``primitive-read-cycle-counter`` and
-  ``primitive-read-return-address``, have been added. These are useful
-  for writing profiling and event logging tools.
-
-system
-======
+system Library
+--------------
 
 * A new ``machine-concurrent-thread-count`` function, which returns
   the number of active CPU cores or execution threads, has been added
@@ -297,7 +272,80 @@ system
 
 * Mismatches in the use of internal-use raw types have been resolved.
 
-variable-search
-===============
+c-ffi Library
+-------------
+
+* Nested C structs by value are now supported by the C backend. Previously,
+  using this construct would result in a compilation error in the generated
+  C code.
+
+* Using ``%call-c-function`` or ``%objc-msgsend`` with a void result type
+  no longer requires specifying a result type of ``<raw-c-void>``. Simply
+  putting an empty value list is sufficient:
+
+  .. code-block:: dylan
+
+     %call-c-function ("SetLastError", c-modifiers: "__stdcall")
+         (dwErrorCode :: <raw-c-unsigned-long>) => ()
+       (integer-as-raw(0))
+     end;
+
+  Previously, this required specifying the result type explicitly:
+
+  .. code-block:: dylan
+
+     %call-c-function ("SetLastError", c-modifiers: "__stdcall")
+         (dwErrorCode :: <raw-c-unsigned-long>) => (nothing :: <raw-c-void>)
+       (integer-as-raw(0))
+     end;
+
+testworks Library
+-----------------
+
+* It is no longer necessary to use suites. By default ``run-test-application``
+  runs all defined tests.
+* Test results are now colorized when the output stream supports it.
+  Green for success, red for failure, etc.
+* Test summaries are more concise and easier to read.
+* Added support for expected failures.
+* New assertion macros ``assert-instance?`` and ``assert-not-instance?``.
+* Many other minor improvements including to the documentation.
+
+collections Library
+-------------------
+
+* The ``bit-count`` operation from ``bit-vector`` (also used by ``<bit-set>``)
+  has been changed to use the new ``primitive-machine-word-count-ones`` that
+  has been added in this release.
+
+coloring-stream Library
+-----------------------
+
+* A new library for doing colored text output has been added. It currently
+  supports ANSI codes on Unix terminals. It has been
+  `documented in the library reference`_.
+
+variable-search Library
+-----------------------
 
 * A bug that caused intermittent crashes on FreeBSD has been fixed.
+
+
+Contributors
+============
+
+We'd like to thank all the people that made contributions to this release and
+to surrounding libraries in the Dylan ecosystem. This list is probably
+incomplete...
+
+* Bruce Mitchener
+* Peter S. Housel
+* Carl Gay
+* Peter Hull
+* Fernando Raya
+* Alfredo Beaumont
+* Wim Vander Schelden
+* Kamil Rytarowski
+* Ingo Albrecht
+* Dan Midwood
+
