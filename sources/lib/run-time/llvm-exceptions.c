@@ -366,10 +366,32 @@ void EstablishDylanExceptionHandlers(void)
     }
   }
 
+  // Check if there is an existing EXC_BREAKPOINT handler (i.e. a
+  // debugger) and if so don't request it on this exception port
+  exception_mask_t exception_mask = EXC_MASK_ARITHMETIC|EXC_MASK_BREAKPOINT;
+  {
+    mach_msg_type_number_t count = 0;
+    exception_mask_t masks[32];
+    mach_port_t ports[32];
+    exception_behavior_t behaviors[32];
+    thread_state_flavor_t flavors[32];
+    kern_return_t rc
+      = task_get_exception_ports(mach_task_self(), EXC_MASK_BREAKPOINT,
+                                 masks, &count, ports, behaviors, flavors);
+    if (rc == KERN_SUCCESS) {
+      for (mach_msg_type_number_t i = 0; i < count; ++i) {
+        if (MACH_PORT_VALID(ports[i])) {
+          exception_mask &= ~EXC_MASK_BREAKPOINT;
+          break;
+        }
+      }
+    }
+  }
+
   // Set this thread's exception port
   kern_return_t rc
     = thread_set_exception_ports(mach_thread_self(),
-                                 EXC_MASK_ARITHMETIC|EXC_MASK_BREAKPOINT,
+                                 exception_mask,
                                  exception_port,
                                  EXCEPTION_STATE_IDENTITY|MACH_EXCEPTION_CODES,
                                  THREAD_STATE_FLAVOR);
