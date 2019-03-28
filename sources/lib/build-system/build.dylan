@@ -127,3 +127,18 @@ define method build-system
     end block;
   end with-open-file;
 end method;
+
+define method build-system-variable
+    (name :: <string>,
+     #key default :: false-or(<sequence>) = #[],
+          directory :: <directory-locator> = working-directory(),
+          build-script = default-build-script(),
+          compiler-back-end)
+ => (value :: false-or(<sequence>));
+  configure-build-system();
+  let jam
+    = make-jam-state(build-script,
+                     compiler-back-end: compiler-back-end,
+                     build-directory: directory);
+  jam-variable(jam, name, default: default)
+end method;
