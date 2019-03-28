@@ -107,7 +107,6 @@ define method build-system
       let jam
         = make-jam-state(build-script,
                          compiler-back-end: compiler-back-end,
-                         progress-callback: wrap-progress-callback,
                          build-directory: directory);
       with-build-directory (directory)
         jam-read-mkf(jam, as(<file-locator>, $dylanmakefile));

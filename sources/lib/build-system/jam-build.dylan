@@ -80,8 +80,7 @@ define variable *cached-jam-state* :: false-or(<jam-state>) = #f;
 
 define function make-jam-state
     (build-script :: <file-locator>,
-     #key progress-callback :: <function> = ignore,
-          build-directory :: <directory-locator>,
+     #key build-directory :: <directory-locator>,
           compiler-back-end)
  => (jam :: <jam-state>);
   // Ensure that the build-scripts haven't been modified, and the
