@@ -80,10 +80,27 @@ define method link-library (project :: <project>, #rest keys,
                   end,
                   if (release?) #["release"] else #[] end);
   let build-location = project-build-location(project);
+
+  // Before trying the code generation/link step, verify that the
+  // build-system claims to support the back-end that was used.
+  let back-end = project-compiler-back-end(project);
+  let supported-back-ends
+    = build-system-variable("SUPPORTED_COMPILER_BACK_ENDS",
+                            default: #f,
+                            directory: build-location,
+                            build-script: build-script,
+                            compiler-back-end: back-end);
+  if (supported-back-ends
+        & ~member?(back-end, map(curry(as, <symbol>), supported-back-ends)))
+    user-fatal-error("The build system is not currently configured"
+                       " to support the %s back-end",
+                     as(<string>, back-end));
+  end if;
+
   build-system(build-options,
                directory: build-location,
                build-script: build-script,
-               compiler-back-end: project-compiler-back-end(project),
+               compiler-back-end: back-end,
                progress-callback: progress-callback,
                force?: extent == #"all",
                jobs: jobs)
