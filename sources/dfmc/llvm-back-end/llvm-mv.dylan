@@ -112,11 +112,14 @@ define method op--mv-extract-rest
                      llvm-back-end-value-function(back-end, index),
                      ins--zext(back-end, count, raw-integer-type));
   if (index = 0)
-    // Fill in the 0th value
-    let primary = ins--extractvalue(back-end, mv.llvm-mv-struct, 0);
-    call-primitive(back-end, primitive-vector-element-setter-descriptor,
-                   primary, rest-vector,
-                   llvm-back-end-value-function(back-end, 0));
+    let cmp = ins--icmp-uge(back-end, count, i8(1));
+    ins--if (back-end, cmp)
+      // Fill in the 0th value
+      let primary = ins--extractvalue(back-end, mv.llvm-mv-struct, 0);
+      call-primitive(back-end, primitive-vector-element-setter-descriptor,
+                     primary, rest-vector,
+                     llvm-back-end-value-function(back-end, 0));
+    end ins--if;
   end if;
   rest-vector
 end method;
