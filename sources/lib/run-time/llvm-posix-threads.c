@@ -1006,12 +1006,10 @@ dylan_value primitive_wait_for_notification(dylan_value n, dylan_value l)
     return GENERAL_ERROR;
   }
 
-  rc = primitive_wait_for_simple_lock(l);
-
   RETURN_IF_ERROR(pthread_mutex_unlock(&notification->mc.mutex),
 		  GENERAL_ERROR);
 
-  return rc;
+  return primitive_wait_for_simple_lock(l);
 }
 
 // primitive-wait-for-notification-timed
@@ -1045,12 +1043,10 @@ dylan_value primitive_wait_for_notification_timed(dylan_value n, dylan_value l, 
     return GENERAL_ERROR;
   }
 
-  rc = primitive_wait_for_simple_lock(l);
-
   RETURN_IF_ERROR(pthread_mutex_unlock(&notification->mc.mutex),
 		  GENERAL_ERROR);
 
-  return rc;
+  return primitive_wait_for_simple_lock(l);
 }
 
 // primitive-destroy-notification
