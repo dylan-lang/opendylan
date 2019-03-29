@@ -350,14 +350,23 @@ dylan_value primitive_thread_join_multiple(dylan_value v)
     }
   }
 
-  // Mark each thread as wanting to be joined
+  // Look for an already-completed thread, and mark each uncompleted
+  // thread as wanting to be joined
+  dylan_value joined_thread = NULL;
   for (long i = 0; i < size; ++i) {
     dylan_value t = threads->vector_element[i];
-    thread_set_state(t, thread_get_state(t) | WANT_TO_JOIN);
+    uintptr_t state = thread_get_state(t);
+    if ((state & COMPLETED) != 0) {
+      joined_thread = t;
+      thread_set_state(t, state | JOINED);
+      break;
+    }
+    else {
+      thread_set_state(t, state | WANT_TO_JOIN);
+    }
   }
 
   // Wait for a thread to exit
-  dylan_value joined_thread = NULL;
   while (joined_thread == NULL) {
     UNLOCK_RETURN_IF_ERROR(pthread_cond_wait(&thread_exit_event,
                                              &thread_join_lock),
