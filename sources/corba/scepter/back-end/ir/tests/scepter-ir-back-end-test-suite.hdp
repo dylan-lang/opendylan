@@ -8,7 +8,6 @@ subprojects:	../scepter-ir-back-end.hdp
 	../../../core/scepter-core.hdp
 base-address:	0x63FE0000
 debug-arguments:	-debug -progress
-start-function:	
 major-version:	2
 minor-version:	1
 compilation-mode:	tight

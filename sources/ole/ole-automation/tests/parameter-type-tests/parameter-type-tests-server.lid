@@ -10,7 +10,6 @@ subprojects:	..\..\..\com\com.hdp
 base-address:	0x63EC0000
 debug-command:	regsvr32
 debug-arguments:	parameter-type-tests-server.dll
-start-function:	
 linker-options:	$(guilflags)
 major-version:	2
 minor-version:	1
