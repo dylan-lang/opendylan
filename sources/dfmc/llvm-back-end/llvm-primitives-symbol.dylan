@@ -175,9 +175,9 @@ define method op--register-symbol
         let src-byte-ptr = ins--bitcast(be, src-slot-ptr, $llvm-i8*-type);
 
         let oblist-byte-size = ins--mul(be, cursor, word-size);
-        ins--call-intrinsic(be, "llvm.memcpy",
-                            vector(dst-byte-ptr, src-byte-ptr,
-                                   oblist-byte-size, $llvm-false));
+        op--memcpy(be, dst-byte-ptr, src-byte-ptr,
+                   oblist-byte-size, $llvm-false,
+                   dst-alignment: word-size, src-alignment: word-size);
 
         ins--store(be, new-oblist, oblist-ref);
 
@@ -269,9 +269,8 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
   let src-byte-ptr = ins--bitcast(be, src-slot-ptr, $llvm-i8*-type);
 
   let oblist-byte-size = ins--mul(be, cursor, word-size);
-  ins--call-intrinsic(be, "llvm.memcpy",
-                      vector(dst-byte-ptr, src-byte-ptr, oblist-byte-size,
-                             $llvm-false));
+  op--memcpy(be, dst-byte-ptr, src-byte-ptr, oblist-byte-size, $llvm-false,
+             dst-alignment: word-size, src-alignment: word-size);
   res
 end;
 

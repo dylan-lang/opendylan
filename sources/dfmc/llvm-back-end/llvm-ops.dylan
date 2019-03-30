@@ -71,6 +71,30 @@ define function op--raw-pointer-cast
   ins--bitcast(be, x, llvm-reference-type(be, dylan-value(#"<raw-pointer>")))
 end function;
 
+define function op--memcpy
+    (be :: <llvm-back-end>, dst :: <llvm-value>, src :: <llvm-value>,
+     byte-count :: <llvm-value>, is-volatile :: <llvm-value>,
+     #key dst-alignment :: <integer> = 0, src-alignment :: <integer> = 0)
+ => ();
+  let dst-attribute
+    = llvm-attribute-merge($llvm-attribute-nocapture,
+                           llvm-attribute-alignment(dst-alignment));
+  let src-attribute
+    = llvm-attribute-merge($llvm-attribute-nocapture,
+                           llvm-attribute-alignment(src-alignment));
+  let attribute-list
+    = make(<llvm-attribute-list>,
+           function-attributes: $llvm-attribute-nounwind,
+           parameter-attributes: vector(dst-attribute,
+                                        src-attribute,
+                                        $llvm-attribute-none,
+                                        $llvm-attribute-none));
+  let args = vector(dst, src, byte-count, is-volatile);
+  let function :: <llvm-function>
+    = llvm-builder-declare-intrinsic(be, "llvm.memcpy", args);
+  ins--call(be, function, args, attribute-list: attribute-list)
+end function;
+
 define method op--integer-cast
     (be :: <llvm-back-end>, x :: <llvm-value>, type :: <llvm-integer-type>,
      #key sext? :: <boolean> = #f)

@@ -214,8 +214,8 @@ define method op--copy-from-mv-area
   let ptr = op--teb-getelementptr(back-end, #"teb-mv-area", index);
   let ptr-cast = ins--bitcast(back-end, ptr, $llvm-i8*-type);
   let byte-count = ins--mul(back-end, mv-area-count, word-size);
-  ins--call-intrinsic(back-end, "llvm.memcpy",
-                      vector(dst-cast, ptr-cast, byte-count, $llvm-false));
+  op--memcpy(back-end, dst-cast, ptr-cast, byte-count, $llvm-false,
+             dst-alignment: word-size, src-alignment: word-size);
   ins--br(back-end, continue-bb);
 
   ins--block(back-end, continue-bb);
@@ -238,8 +238,8 @@ define method op--copy-into-mv-area
   let ptr = op--teb-getelementptr(back-end, #"teb-mv-area", index);
   let ptr-cast = ins--bitcast(back-end, ptr, $llvm-i8*-type);
   let byte-count = ins--mul(back-end, mv-area-count, word-size);
-  ins--call-intrinsic(back-end, "llvm.memcpy",
-                      vector(ptr-cast, src-cast, byte-count, $llvm-false));
+  op--memcpy(back-end, ptr-cast, src-cast, byte-count, $llvm-false,
+             dst-alignment: word-size, src-alignment: word-size);
   ins--br(back-end, continue-bb);
 
   ins--block(back-end, continue-bb);
@@ -389,8 +389,8 @@ define method op--set-bef-value
       = op--getslotptr(back-end, rest-cast, rest-class, #"vector-element", 0);
     let src-cast = ins--bitcast(back-end, repeated-slot-ptr, $llvm-i8*-type);
 
-    ins--call-intrinsic(back-end, "llvm.memcpy",
-                        vector(dst-cast, src-cast, byte-count, $llvm-false));
+    op--memcpy(back-end, dst-cast, src-cast, byte-count, $llvm-false,
+               dst-alignment: word-size, src-alignment: word-size);
   end if;
 end method;
 

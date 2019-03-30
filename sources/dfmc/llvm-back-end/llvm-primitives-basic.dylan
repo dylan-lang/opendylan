@@ -281,9 +281,8 @@ define side-effecting stateless dynamic-extent &primitive-descriptor primitive-r
   let src-ptr = op--slot-ptr(be, src, src-base-offset, src-offset);
   let src-byte-ptr = ins--bitcast(be, src-ptr, $llvm-i8*-type);
   let byte-size = ins--mul(be, size, word-size);
-  ins--call-intrinsic(be, "llvm.memcpy",
-                      vector(dst-byte-ptr, src-byte-ptr, byte-size,
-                             $llvm-false));
+  op--memcpy(be, dst-byte-ptr, src-byte-ptr, byte-size, $llvm-false,
+             dst-alignment: word-size, src-alignment: word-size);
 end;
 
 define side-effecting stateless dynamic-extent &primitive-descriptor primitive-replace-bytes!
