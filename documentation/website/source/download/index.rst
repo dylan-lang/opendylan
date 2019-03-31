@@ -2,21 +2,6 @@
 Open Dylan Downloads
 ********************
 
-.. raw:: html
-
-   <div class="row">
-     <div class="span8">
-       <h2>Binary Releases</h2>
-
-.. warning:: The 32 bit version of Open Dylan IDE does NOT work on 64 bit Windows
-   prior to Windows 8. There is no workaround at this time, unfortunately. We
-   hope to resolve this in an upcoming release.
-   :class: alert alert-warning
-
-   However, the command line tools should work as the problem is with interaction
-   between threads, GC and WoW64.
-
-
 Current Version
 ===============
 
@@ -52,34 +37,16 @@ The `source code <https://github.com/dylan-lang/opendylan/tree/v2019.1.0>`_ is
 available under an open source license in the `"dylan-lang" organization on
 GitHub`_.
 
-.. raw:: html
-
-     </div>
-     <div class="span4">
-       <h2>Get Started!</h2>
-
-If you're new to Dylan, you'll want to check out these handy resources:
-
-* `Introduction to Dylan <http://opendylan.org/documentation/intro-dylan/>`_:
-   A tutorial written for those with solid programming
-   experience in C++ or another object-oriented, static language. It
-   provides a gentler introduction to Dylan than does the Dylan
-   Reference Manual (DRM).
-* `Getting Started with the Open Dylan Command Line Tools <http://opendylan.org/documentation/getting-started-cli/>`_:
-   An introduction to the usage of the command line tools.
-* `Dylan Programming Guide <http://opendylan.org/books/dpg/>`_:
-   A book length Dylan tutorial.
-* `Open Dylan Documentation <http://opendylan.org/documentation/>`_:
-   All of the Open Dylan documentation.
-
-.. raw:: html
-
-     </div>
-   </div>
-
-
 Installation on Windows
 -----------------------
+
+.. warning:: The 32 bit version of Open Dylan IDE does NOT work on 64 bit Windows
+   prior to Windows 8. There is no workaround at this time, unfortunately. We
+   hope to resolve this in an upcoming release.
+   :class: alert alert-warning
+
+   However, the command line tools should work as the problem is with interaction
+   between threads, GC and WoW64.
 
 For installation, double-click on the installer, and follow instructions.  You
 need to have either the PellesC linker or the linker of VC++ 6.0, 7.0 or the
@@ -123,6 +90,23 @@ You can read more about installing Open Dylan from the source files
 in the `README <https://github.com/dylan-lang/opendylan/blob/master/README.rst>`_.
 That file contains the instructions on how to obtain the source code, the required
 dependencies and how to build it.
+
+Get Started!
+------------
+
+If you're new to Dylan, you'll want to check out these handy resources:
+
+* `Introduction to Dylan <http://opendylan.org/documentation/intro-dylan/>`_:
+   A tutorial written for those with solid programming
+   experience in C++ or another object-oriented, static language. It
+   provides a gentler introduction to Dylan than does the Dylan
+   Reference Manual (DRM).
+* `Getting Started with the Open Dylan Command Line Tools <http://opendylan.org/documentation/getting-started-cli/>`_:
+   An introduction to the usage of the command line tools.
+* `Dylan Programming Guide <http://opendylan.org/books/dpg/>`_:
+   A book length Dylan tutorial.
+* `Open Dylan Documentation <http://opendylan.org/documentation/>`_:
+   All of the Open Dylan documentation.
 
 Older Versions
 ==============
