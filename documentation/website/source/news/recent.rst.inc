@@ -1,3 +1,6 @@
+:doc:`New release: 2019.1 </news/2019/03/31/new-release>` *- 2019-03-31*
+  Open Dylan 2019.1 released.
+
 :doc:`New release: 2014.1 </news/2015/01/01/new-release>` *- 2015-01-01*
   We just released Open Dylan 2014.1.
 

@@ -17,31 +17,40 @@ Open Dylan Downloads
    between threads, GC and WoW64.
 
 
+Current Version
+===============
+
+The current version is 2019.1, released March 31, 2019:
+
 .. table::
    :class: table-striped
 
-   +---------------------------+--------------------+--------------------+---------------+------------------+
-   | Platform                  | Version            | Date Released      | Revision ID   | Install Notes    |
-   +===========================+====================+====================+===============+==================+
-   | `Windows (32 bit)`_       | 2014.1             | Dec. 31, 2014      | `03379938e4`_ | `Windows Notes`_ |
-   +---------------------------+--------------------+--------------------+---------------+------------------+
-   | `Mac OS X Lion+ (Intel)`_ | 2014.1             | Dec. 31, 2014      | `03379938e4`_ | `Unix Notes`_    |
-   +---------------------------+--------------------+--------------------+---------------+------------------+
-   | `Linux (x86)`_            | 2014.1             | Dec. 31, 2014      | `03379938e4`_ | `Unix Notes`_    |
-   +---------------------------+--------------------+--------------------+---------------+------------------+
-   | `Linux (x86-64)`_         | 2014.1             | Dec. 31, 2014      | `03379938e4`_ | `Unix Notes`_    |
-   +---------------------------+--------------------+--------------------+---------------+------------------+
-   | `FreeBSD (x86)`_          | 2014.1             | Dec. 31, 2014      | `03379938e4`_ | `Unix Notes`_    |
-   +---------------------------+--------------------+--------------------+---------------+------------------+
+   +---------------------------+---------------------------------------------+---------------+------------------+
+   | Platform                  | File                                        | Size (bytes)  | Install Notes    |
+   +===========================+=============================================+===============+==================+
+   | Windows (32 bit)          | `opendylan-2019.1-win32.exe`_               | 100643764     | `Windows Notes`_ |
+   +---------------------------+---------------------------------------------+---------------+------------------+
+   | Mac OS X Lion+ (Intel)    | `opendylan-2019.1-x86_64-darwin.tar.bz2`_   |  55077039     | `Unix Notes`_    |
+   +---------------------------+---------------------------------------------+---------------+------------------+
+   | Linux (x86)               | `opendylan-2019.1-x86-linux.tar.bz2`_       |  48674460     | `Unix Notes`_    |
+   +---------------------------+---------------------------------------------+---------------+------------------+
+   | Linux (x86_64)            | `opendylan-2019.1-x86_64-linux.tar.bz2`_    |  66704263     | `Unix Notes`_    |
+   +---------------------------+---------------------------------------------+---------------+------------------+
+   | FreeBSD (x86)             | `opendylan-2019.1-x86-freebsd.tar.bz2`_     |  49634759     | `Unix Notes`_    |
+   +---------------------------+---------------------------------------------+---------------+------------------+
+   | FreeBSD (x86_64)          | `opendylan-2019.1-x86_64-freebsd.tar.bz2`_  |  64495718     | `Unix Notes`_    |
+   +---------------------------+---------------------------------------------+---------------+------------------+
+
+The release may also be downloaded from the GitHub `opendylan release page
+<https://github.com/dylan-lang/opendylan/releases/tag/v2019.1.0>`_.
 
 See the `release notes
 <http://opendylan.org/documentation/release-notes/index.html>`_ for
 information about what changed since the previous version.
 
-Old builds (including PowerPC Mac OS X and 64 bit FreeBSD) can be
-found by browsing the `download directories`_.
-
-All of our source code is available under an open source license in the `"dylan-lang" organization on GitHub`_.
+The `source code <https://github.com/dylan-lang/opendylan/tree/v2019.1.0>`_ is
+available under an open source license in the `"dylan-lang" organization on
+GitHub`_.
 
 .. raw:: html
 
@@ -68,14 +77,15 @@ If you're new to Dylan, you'll want to check out these handy resources:
      </div>
    </div>
 
------------
 
 Installation on Windows
 -----------------------
 
-For installation, double-click on the installer, and follow instructions.
-You need to have either the PellesC linker or the linker of VC++ 6.0, 7.0
-or the current .NET platform SDK installed. PellesC is the best option.
+For installation, double-click on the installer, and follow instructions.  You
+need to have either the PellesC linker or the linker of VC++ 6.0, 7.0 or the
+current .NET platform SDK installed. `PellesC 8.00
+<https://www.pellesc.de/index.php?page=download&lang=en&version=8.00>` is the
+best option.  (Note that PellesC 9.00 does not work.)
 
 Your environment variables must be set such that the external build
 system (linker, resource compiler, etc.) can be found.  For example,
@@ -91,37 +101,43 @@ You may instead start a Pelles C interactive shell and run
 ``C:\Program Files\Open Dylan\bin\win32-environment.exe``, but this
 won't help if you want to run Open Dylan via the Start menu.
 
------------------------
-
 Installation on Mac OS X, FreeBSD, Linux
 ----------------------------------------
 
-The README file inside the tarball describes installation and basic
-usage. The easiest way is extracting the tarball in /opt. The
-Linux platform should have gcc installed, in order to allow
-linking. Note that these versions only have a command-line compiler
-and no IDE.
+Note that these versions only have a command-line compiler and no IDE.
 
-64 bit Linux requires that the Boehm GC is installed
-(For example, ``apt-get install libgc-dev`` on Ubuntu).
+* The README file inside the tarball describes installation and basic
+  usage. The easiest way is extracting the tarball in /opt.
 
------------------------
+* The Linux and FreeBSD platforms should have gcc installed, in order to allow
+  linking.
+
+* All three platforms must have the Boehm GC installed.  For example, ``apt-get
+  install libgc-dev`` on Ubuntu.
+
 
 Installation from source
 ------------------------
 
 You can read more about installing Open Dylan from the source files
-in the `README <https://github.com/dylan-lang/opendylan/blob/master/README.rst>`_.  
-This file contains the instructions on how to obtain the source code, the required
+in the `README <https://github.com/dylan-lang/opendylan/blob/master/README.rst>`_.
+That file contains the instructions on how to obtain the source code, the required
 dependencies and how to build it.
 
-.. _Windows (32 bit): http://opendylan.org/downloads/opendylan/2014.1/opendylan-2014.1-win32.exe
-.. _Mac OS X Lion+ (Intel): http://opendylan.org/downloads/opendylan/2014.1/opendylan-2014.1-x86-darwin.tar.bz2
-.. _Linux (x86): http://opendylan.org/downloads/opendylan/2014.1/opendylan-2014.1-x86-linux.tar.bz2
-.. _Linux (x86-64): http://opendylan.org/downloads/opendylan/2014.1/opendylan-2014.1-x86_64-linux.tar.bz2
-.. _FreeBSD (x86): http://opendylan.org/downloads/opendylan/2014.1/opendylan-2014.1-x86-freebsd.tar.bz2
+Older Versions
+==============
+
+Old builds can be found by browsing the `download directories`_.
+
+
+
+.. _opendylan-2019.1-win32.exe: https://opendylan.org/downloads/opendylan/2019.1/opendylan-2019.1-win32.exe
+.. _opendylan-2019.1-x86_64-darwin.tar.bz2: https://opendylan.org/downloads/opendylan/2019.1/opendylan-2019.1-x86_64-darwin.tar.bz2
+.. _opendylan-2019.1-x86-linux.tar.bz2: https://opendylan.org/downloads/opendylan/2019.1/opendylan-2019.1-x86-linux.tar.bz2
+.. _opendylan-2019.1-x86_64-linux.tar.bz2: https://opendylan.org/downloads/opendylan/2019.1/opendylan-2019.1-x86_64-linux.tar.bz2
+.. _opendylan-2019.1-x86-freebsd.tar.bz2: https://opendylan.org/downloads/opendylan/2019.1/opendylan-2019.1-x86-freebsd.tar.bz2
+.. _opendylan-2019.1-x86_64-freebsd.tar.bz2: https://opendylan.org/downloads/opendylan/2019.1/opendylan-2019.1-x86_64-freebsd.tar.bz2
 .. _Windows Notes: #installation-on-windows
 .. _Unix Notes: #installation-on-mac-os-x-freebsd-linux
 .. _download directories: http://opendylan.org/downloads/opendylan/
 .. _"dylan-lang" organization on GitHub: https://github.com/dylan-lang/
-.. _03379938e4: https://github.com/dylan-lang/opendylan/tree/v2014.1
