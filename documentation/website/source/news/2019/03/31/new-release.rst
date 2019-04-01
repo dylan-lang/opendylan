@@ -26,7 +26,8 @@ platforms.  Other highlights include:
 * Run-time primitives to aid in profiling and event logging.
 
 For full details on changes in this release see the `release notes
-<http://opendylan.org/documentation/release-notes/2019.1.html>`_.
+<http://opendylan.org/documentation/release-notes/2019.1.html>`_, or go
+directly to the `download page <https://opendylan.org/download/index.html>`_.
 
 For more information on Open Dylan, see our `website <http://opendylan.org/>`_
 and our `documentation <http://opendylan.org/documentation/>`_.
