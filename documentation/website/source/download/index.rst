@@ -26,6 +26,11 @@ The current version is 2019.1, released March 31, 2019:
    | FreeBSD (x86_64)          | `opendylan-2019.1-x86_64-freebsd.tar.bz2`_  |  64495718     | `Unix Notes`_    |
    +---------------------------+---------------------------------------------+---------------+------------------+
 
+.. raw:: html
+
+   <br/>
+   <br/>
+
 The release may also be downloaded from the GitHub `opendylan release page
 <https://github.com/dylan-lang/opendylan/releases/tag/v2019.1.0>`_.
 
