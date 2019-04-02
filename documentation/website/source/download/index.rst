@@ -57,7 +57,7 @@ Installation on Windows
 For installation, double-click on the installer, and follow instructions.  You
 need to have either the PellesC linker or the linker of VC++ 6.0, 7.0 or the
 current .NET platform SDK installed. `PellesC 8.00
-<https://www.pellesc.de/index.php?page=download&lang=en&version=8.00>` is the
+<https://www.pellesc.de/index.php?page=download&lang=en&version=8.00>`_ is the
 best option.  (Note that PellesC 9.00 does not work.)
 
 Your environment variables must be set such that the external build
