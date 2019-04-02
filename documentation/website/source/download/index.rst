@@ -45,9 +45,10 @@ GitHub`_.
 Installation on Windows
 -----------------------
 
-.. warning:: The 32 bit version of Open Dylan IDE does NOT work on 64 bit Windows
-   prior to Windows 8. There is no workaround at this time, unfortunately. We
-   hope to resolve this in an upcoming release.
+.. warning:: The 32 bit version of Open Dylan IDE does **not** work on 64 bit
+   Windows **prior** to Windows 8.  There is no workaround at this time,
+   unfortunately. We hope to resolve this in an upcoming release.  It **does**
+   work on 32-bit Windows versions and 64-bit Windows 8 and later.
    :class: alert alert-warning
 
    However, the command line tools should work as the problem is with interaction
