@@ -10,5 +10,4 @@ define library dll-wrap
   use common-dylan;
   use system;
   use io;
-  use win32-kernel;
 end library dll-wrap;

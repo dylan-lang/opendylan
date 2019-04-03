@@ -49,7 +49,9 @@ startup glue function, named ``_Init_``\ *mangled-library-name*, where
 mangling. This function, generated in ``_glue.bc`` by ``emit-gluefile``
 in ``sources/dfmc/llvm-linker/llvm-gluefile.dylan``, does the following:
 
-1. Checks a flag to see if the library initialization has already been
+1. For all libraries except the Dylan library, checks whether the
+   ``*argv*`` runtime variable is initialized, and exits if it is not
+#. Checks a flag to see if the library initialization has already been
    done, and exits if it has
 #. Sets the initialization flag
 #. Calls the library startup glue functions of all libraries
@@ -61,12 +63,13 @@ in ``sources/dfmc/llvm-linker/llvm-gluefile.dylan``, does the following:
    forms.
 #. For the Dylan library only, the self-init function also calls the
    ``%install-boot-symbols`` function defined in
-   ``sources/dylan/symbol-table.dylan``. ()
+   ``sources/dylan/symbol-table.dylan``.
 
-The startup glue function for the Dylan library is called from a
-global constructor at user priority. This ensures that the
-``%install-boot-symbols`` is performed before other libraries' symbol
-resolution begins.
+The startup glue function is called from a global constructor at user
+priority. For the Dylan library, its execution is not delayed until
+the ``*argv*`` variable is initialized (as it is for other
+libraries). This ensures that the ``%install-boot-symbols`` is
+performed before other libraries' symbol resolution begins.
 
 For executables, execution begins at the usual ``main`` entry
 point. The ``main`` function, generated in ``_main.bc`` by
@@ -74,6 +77,28 @@ point. The ``main`` function, generated in ``_main.bc`` by
 simply stores its ``argc`` and ``argv`` arguments in ``*argc*`` and
 ``*argv*`` runtime variables and calls the library startup glue
 function.
+
+The combination of these mechanisms results in the following execution
+order:
+
+1. ``_Init_Run_Time`` is called from a Dylan-library system-priority
+   constructor.
+#. The symbol fixups for the Dylan library are performed (using the
+   slower ``primitive-resolve-symbol``).
+#. The for-user (top-level form) initializations for the Dylan library
+   are performed.
+#. ``%install-boot-symbols`` is called, enabling the faster symbol
+   resolver.
+#. Symbol fixups and other for-system initializations for other
+   libraries are performed via their system-priority constructors.
+#. The ``main`` entry point of the executable is entered, setting the
+   ``*argc*`` and ``*argv*`` runtime variables.
+#. The for-user (top-level form) initializations are performed for the
+   other libraries in dependency order.
+#. Any new libraries subsequently loaded using ``load-library`` will
+   be initialized via constructors (system-priority first, then
+   user-priority).
+
 
 HARP (Win32)
 ------------

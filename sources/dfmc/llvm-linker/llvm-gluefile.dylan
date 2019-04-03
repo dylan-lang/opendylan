@@ -199,6 +199,22 @@ define sideways method emit-gluefile
     let init-bb = make(<llvm-basic-block>);
     let return-bb = make(<llvm-basic-block>);
 
+    unless (dylan-library-library-description?(ld))
+      // Only do library user init after *argv* is available,
+      // i.e. after main() has been entered
+      let check-bb = make(<llvm-basic-block>);
+
+      let argv-value
+        = ins--load(back-end, llvm-runtime-variable(back-end, m, #"*argv*"));
+      let c-pointer-type
+        = llvm-reference-type(back-end, dylan-value(#"<raw-c-pointer>"));
+      let null = make(<llvm-null-constant>, type: c-pointer-type);
+      let argv-cmp = ins--icmp-ne(back-end, argv-value, null);
+      ins--br(back-end, argv-cmp, check-bb, return-bb);
+
+      ins--block(back-end, check-bb);
+    end unless;
+
     // Check the init flag
     let flag-value = ins--load(back-end, init-flag-global);
     let cmp = ins--icmp-eq(back-end, flag-value, i8-zero);
@@ -240,10 +256,8 @@ define sideways method emit-gluefile
     llvm-builder-define-global(back-end, glue-name,
                                back-end.llvm-builder-function);
 
-    if (dylan-library-library-description?(ld))
-      llvm-builder-add-ctor-entry(back-end, $user-init-ctor-priority,
-                                  back-end.llvm-builder-function);
-    end if;
+    llvm-builder-add-ctor-entry(back-end, $user-init-ctor-priority,
+                                back-end.llvm-builder-function);
   cleanup
     back-end.llvm-builder-function := #f;
   end block;

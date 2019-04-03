@@ -14,7 +14,7 @@ define method main () => ()
   end if;
   let dll-location = args[0];
   format-out("Loading library %s...\n", dll-location);
-  let dll-handle = LoadLibrary(dll-location);
+  let dll-handle = load-library(dll-location);
   format-out("Library loaded, exiting.\n");
 end method main;
 
