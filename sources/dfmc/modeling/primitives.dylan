@@ -376,6 +376,11 @@ define side-effect-free stateless indefinite-extent &primitive primitive-cast-po
 define side-effect-free stateless indefinite-extent &primitive primitive-cast-raw-as-pointer
     (x :: <raw-address>) => (z :: <raw-pointer>);
 
+/// TYPE CONSTRAINTS
+
+define side-effect-free stateless dynamic-extent &primitive primitive-the
+    (t :: <type>, x :: <object>) => (x :: <object>);
+
 /// TYPE-CHECKS
 
 define side-effect-free stateless dynamic-extent &primitive-and-override primitive-instance?

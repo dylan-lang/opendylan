@@ -389,6 +389,10 @@ define &module dylan-primitives
     primitive-machine-word-unsigned-double-shift-right-high,
     primitive-machine-word-unsigned-double-shift-right;
 
+  // Type constraints
+  create
+    primitive-the;
+
   // Checks.
   create
     primitive-instance?,

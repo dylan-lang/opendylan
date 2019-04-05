@@ -753,6 +753,14 @@ define side-effecting stateless indefinite-extent &primitive-descriptor primitiv
 end;
 
 
+/// Type constraints
+
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-the
+    (t :: <type>, x :: <object>) => (x :: <object>);
+  x
+end;
+
+
 /// Type Checks
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-instance?
