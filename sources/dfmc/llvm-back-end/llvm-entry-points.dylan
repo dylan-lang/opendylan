@@ -1533,16 +1533,16 @@ end entry-point-descriptor;
 // Terminals
 
 define singular variable-arity outer entry-point-descriptor general-engine-node-n
-    (engine :: <engine-node>, function :: <generic-function>)
+    (engine :: <engine-node>, parent :: <generic-function>)
  => (#rest values);
   let word-size = back-end-word-size(be);
 
   // Identify the corresponding generic function
-  let parent = op--parent-gf(be, function);
+  let function = op--parent-gf(be, parent);
 
   // Extract the gf's signature
   let gf-class :: <&class> = dylan-value(#"<generic-function>");
-  let gf-cast = op--object-pointer-cast(be, parent, gf-class);
+  let gf-cast = op--object-pointer-cast(be, function, gf-class);
   let signature-slot-ptr
     = op--getslotptr(be, gf-cast, gf-class, #"function-signature");
   let signature = ins--load(be, signature-slot-ptr, alignment: word-size);
@@ -1640,17 +1640,17 @@ define singular outer entry-point-descriptor general-engine-node-3
 end entry-point-descriptor;
 
 define singular variable-arity outer entry-point-descriptor general-engine-node-spread
-    (engine :: <engine-node>, function :: <generic-function>)
+    (engine :: <engine-node>, parent :: <generic-function>)
  => (#rest values);
   let module = be.llvm-builder-module;
   let word-size = back-end-word-size(be);
 
   // Identify the corresponding generic function
-  let parent = op--parent-gf(be, function);
+  let function = op--parent-gf(be, parent);
 
   // Extract the gf's signature
   let gf-class :: <&class> = dylan-value(#"<generic-function>");
-  let gf-cast = op--object-pointer-cast(be, parent, gf-class);
+  let gf-cast = op--object-pointer-cast(be, function, gf-class);
   let signature-slot-ptr
     = op--getslotptr(be, gf-cast, gf-class, #"function-signature");
   let signature = ins--load(be, signature-slot-ptr, alignment: word-size);
