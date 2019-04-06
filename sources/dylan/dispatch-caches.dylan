@@ -89,7 +89,7 @@ define function compute-typecheckable-argument-mask
   if (~*call-site-caches-enabled?* | ~generic-function-sealed?(gf))
     0
   else
-    let meths :: <list> = tail(headed-methods);
+    let meths :: <list> = %proper-list-tail(headed-methods);
     let nreq :: <integer> = min(%gf-number-required(gf),
                                 $simple-typechecked-cache-arguments-limit);
     if (meths == #())
@@ -100,7 +100,7 @@ define function compute-typecheckable-argument-mask
           bitz
         else
           let m :: <method> = head(meths);
-          let next-l :: <list> = tail(meths);
+          let next-l :: <list> = %proper-list-tail(meths);
           let this-spec :: <type> = %method-specializer(m, argnum);
           if (this-spec == <object>)
             loop(argnum + 1, bitz)
@@ -110,7 +110,7 @@ define function compute-typecheckable-argument-mask
                 loop(argnum + 1, logior(ash(1, argnum), bitz))
               else
                 let m :: <method> = head(l);
-                let next-l :: <list> = tail(l);
+                let next-l :: <list> = %proper-list-tail(l);
                 if (same-specializer?(this-spec, %method-specializer(m, argnum)))
                   scan(next-l)
                 else

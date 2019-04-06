@@ -27,8 +27,8 @@ define function prune-methods-by-known-class
           if (subl == #())
             allall?
           else
-            let meth :: <method> = head(subl);
-            let nxt :: <list> = tail(subl);
+            let meth :: <method> = primitive-the(<method>, head(subl));
+            let nxt :: <list> = %proper-list-tail(subl);
             let (some?, all?) = grounded-has-instances?(cls, %method-specializer(meth, argnum));
             if (some?)
               loop(subl, nxt, all? & allall?)
@@ -38,7 +38,7 @@ define function prune-methods-by-known-class
             end if
           end if
         end method;
-  let the-methods :: <list> = tail(headed-methods);
+  let the-methods :: <list> = %proper-list-tail(headed-methods);
   loop(headed-methods, the-methods, #t)
 end function;
 
@@ -51,18 +51,18 @@ define function consider-arg-discriminated (ds :: <dispatch-state>, argnum :: <i
           if (subl == #())
             %ds-add-argnum(argnum, ds)
           else
-            let meth :: <method> = head(subl);
+            let meth :: <method> = primitive-the(<method>, head(subl));
             if (grounded-instance?(arg, %method-specializer(meth, argnum)))
-              loop(subl, tail(subl))
+              loop(subl, %proper-list-tail(subl))
             else
-              let nxt :: <list> = tail(subl);
+              let nxt :: <list> = %proper-list-tail(subl);
               tail(prev) := nxt;
               loop(prev, nxt)
             end if
           end if
         end method;
   let headed-methods :: <pair> = %ds-headed-methods(ds);
-  let the-methods :: <list> = tail(headed-methods);
+  let the-methods :: <list> = %proper-list-tail(headed-methods);
   loop(headed-methods, the-methods)
 end function;
 
@@ -251,7 +251,7 @@ define function select-next-arg-for-discrimination (ds :: <dispatch-state>)
             let m :: <integer> = head(a);
             local method moop (m :: <integer>, i :: <integer>)
                     if (m == 0)
-                      let nxt :: <list> = tail(a);
+                      let nxt :: <list> = %proper-list-tail(a);
                       %ds-args-to-check-first(ds) := nxt;
                       loop()
                     elseif (logbit?(0, m) & ~argnum-considered?(i, argnum-set))
@@ -450,7 +450,7 @@ define function compute-subdiscriminator-for-arg
           ponder-this-arg(tail(methods), subclass-p, singletons, others)
         end if
       end method;
-  let methlist :: <list> = tail(%ds-headed-methods(ds));
+  let methlist :: <list> = %proper-list-tail(%ds-headed-methods(ds));
   ponder-this-arg(methlist, #f, #(), #())
 end function;
 
@@ -502,7 +502,7 @@ define function compute-default-subdiscriminator
             nextd
           else
             let spec :: <type> = head(specs);
-            let nextspecs :: <list> = tail(specs);
+            let nextspecs :: <list> = %proper-list-tail(specs);
             let (thend, elsed) = if (nextd == $absent-engine-node)
                                    values(nextd, nextd)
                                  elseif (primitive-instance?(thisarg, spec))
@@ -595,7 +595,7 @@ define function ponder-this-arg (ds :: <dispatch-state>, thisarg,
      all-subtypes-p :: <boolean>, some-subtypes-p :: <boolean>,
      subtype-exception :: false-or(<type>))
 
-  let methods :: <list> = tail(%ds-headed-methods(ds));
+  let methods :: <list> = %proper-list-tail(%ds-headed-methods(ds));
   let gf :: <generic-function> = %ds-gf(ds);
   let knownargtype :: <type> = %ds-argtype(ds, argnum);
   local method loop (methods :: <list>, secondary-p :: <boolean>, force-blowup-p :: <boolean>,
@@ -614,7 +614,7 @@ define function ponder-this-arg (ds :: <dispatch-state>, thisarg,
               = secondary-p | secondary-dispatch-specializer?(spec, thisargclass);
             let force-blowup-p :: <boolean>
               = force-blowup-p | slot-method-requiring-class-discrimination?(meth, argnum);
-            let methods :: <list> = tail(methods);
+            let methods :: <list> = %proper-list-tail(methods);
             if (concrete-subtype?(knownargtype, spec, gf))
               loop(methods, secondary-p, force-blowup-p, all-subtypes-p, #t, subtype-exception)
             else
@@ -677,7 +677,7 @@ end function;
 
 define function compute-terminal-engine-node (ds :: <dispatch-state>)
   => (terminal-thing :: <object> /* union(<method>, <engine-node>) */);
-  let methlist :: <list> = tail(%ds-headed-methods(ds));
+  let methlist :: <list> = %proper-list-tail(%ds-headed-methods(ds));
   let keys = determine-call-keywords(%ds-gf(ds), methlist);
   let (ordered :: <list>, ambig :: <list>) = sort-applicable-methods(methlist, %ds-args(ds));
   dbg("Terminal engine node:  ordered methods = %=, ambig = %=", ordered, ambig);
@@ -750,7 +750,7 @@ define function transmogrify-method-list-grounded
         let nextp = function-next?(m);
         let more
           = if (nextp)
-              let moremeths :: <list> = tail(ordered);
+              let moremeths :: <list> = %proper-list-tail(ordered);
               transmogrify-method-list-tail-grounded(ds, ordered, moremeths, ambig, kludge?)
             else #()
             end if;
@@ -800,7 +800,7 @@ define function transmogrify-method-list-tail-grounded
     let m :: <method> = head(subordered);
     let more
       = if (function-next?(m))
-          let othermeths :: <list> = tail(subordered);
+          let othermeths :: <list> = %proper-list-tail(subordered);
           transmogrify-method-list-tail-grounded(ds, ordered, othermeths,
                                                  ambig,  kludge?);
         else
@@ -868,7 +868,7 @@ define function compute-sorted-applicable-methods-1
             local method make-ambiguous (headed-list :: <pair>) => ();
                     local method loop (l :: <list>)
                             unless (l == #())
-                              let t1 :: <list> = tail(l);
+                              let t1 :: <list> = %proper-list-tail(l);
                               tail(l) := tail(ahead);
                               tail(ahead) := l;
                               loop(t1)

@@ -155,6 +155,12 @@ define constant engine-node$k-reserved-discriminator-t = 62;
 define constant engine-node$k-reserved-discriminator-u = 63;
 
 
+define inline-only function %proper-list-tail
+    (list :: <list>)
+ => (tail :: <list>);
+  primitive-the(<list>, tail(list))
+end function;
+
 /*
 This little bit of cruft is factored out because it's not clear what
 extension to make to keep it general and generic-operation-free.  The
@@ -181,7 +187,7 @@ end function;
 
 
 define function argnum-considered? (argnum :: <integer>, argnum-set :: <pair>) => (B :: <boolean>)
-  let args :: <list> = tail(argnum-set);
+  let args :: <list> = %proper-list-tail(argnum-set);
   local method loop (l :: <list>)
           if (l == #())
             #f
@@ -192,7 +198,7 @@ define function argnum-considered? (argnum :: <integer>, argnum-set :: <pair>) =
             elseif (oargnum > argnum)
               #f
             else
-              let l :: <list> = tail(l);
+              let l :: <list> = %proper-list-tail(l);
               loop(l)
             end if
           end if
@@ -216,13 +222,13 @@ define function add-argnum
                 let oldcount :: <integer> = head(argnum-set);
                 head(argnum-set) := oldcount + 1
               else
-                let nxt :: <list> = tail(l);
+                let nxt :: <list> = %proper-list-tail(l);
                 loop(l, nxt)
               end if
             end unless
           end if
         end method;
-  let firstone :: <list> = tail(argnum-set);
+  let firstone :: <list> = %proper-list-tail(argnum-set);
   loop(argnum-set, firstone);
   argnum-set
 end function;
@@ -245,7 +251,7 @@ define function next-free-argnum
             if (previous < n)
               loop2(previous, l)
             else
-              let nextl :: <list> = tail(l);
+              let nextl :: <list> = %proper-list-tail(l);
               loop1(nextl)
             end if
           end if
@@ -255,11 +261,11 @@ define function next-free-argnum
           if (l == #() | head(l) ~== next)
             next
           else
-            let nextl :: <list> = tail(l);
+            let nextl :: <list> = %proper-list-tail(l);
             loop2(next, nextl)
           end if
         end method;
-  let argnums :: <list> = tail(argnum-set);
+  let argnums :: <list> = %proper-list-tail(argnum-set);
   loop1(argnums)
 end function;
 
@@ -435,10 +441,10 @@ define function %method-specializer (m :: <method>, i :: <integer>) => (spec :: 
         end if
       end if;
     otherwise =>
-      let m :: <lambda> = m;
+      let m :: <lambda> = primitive-the(<lambda>, m);
       let sig :: <signature> = function-signature(m);
       let v :: <simple-object-vector> = signature-required(sig);
-      vector-element(v, i)        // v[i]
+      primitive-the(<type>, vector-element(v, i))        // v[i]
   end select
 end function;
 

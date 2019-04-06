@@ -164,7 +164,7 @@ end function;
 
 define macro instance-header
   { instance-header (?instance:expression) }
-    => { primitive-element(?instance, integer-as-raw(0), integer-as-raw(0)) }
+    => { primitive-the(<mm-wrapper>, primitive-element(?instance, integer-as-raw(0), integer-as-raw(0))) }
 end macro;
 
 define inline-only function instance-header-setter
@@ -221,7 +221,7 @@ end function;
 
 define macro direct-object-class-with-tag-bits
   { direct-object-class-with-tag-bits(?tag-bits:expression) }
-    => { primitive-element($direct-object-classes, ?tag-bits, integer-as-raw(0)) }
+    => { primitive-the(<class>, primitive-element($direct-object-classes, ?tag-bits, integer-as-raw(0))) }
 end macro;
 
 
@@ -251,7 +251,7 @@ end function;
 define inline-only function direct-object-mm-wrapper-with-tag-bits
     (bits :: <machine-word>) => (res :: <mm-wrapper>)
   let mm-wrapper :: <mm-wrapper>
-    = primitive-element($direct-object-mm-wrappers, primitive-unwrap-machine-word(bits), integer-as-raw(0));
+    = primitive-the(<mm-wrapper>, primitive-element($direct-object-mm-wrappers, primitive-unwrap-machine-word(bits), integer-as-raw(0)));
   mm-wrapper
 end function;
 
