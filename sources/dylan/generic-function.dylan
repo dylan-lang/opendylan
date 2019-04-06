@@ -165,7 +165,8 @@ define method decache-gf (g :: <generic-function>) => ()
   let cache = %gf-cache(g);
   if (instance?(cache, <gf-cache-info>))
     let cache :: <gf-cache-info> = cache;
-    for (x in gf-cache-info-users(cache))
+    for (x :: false-or(<cache-header-engine-node>)
+           in gf-cache-info-users(cache))
       if (x)
         let x :: <cache-header-engine-node> = x;
         cache-header-engine-node-next(x) := $absent-engine-node;
