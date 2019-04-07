@@ -1,0 +1,80 @@
+*****************
+Open Dylan 2019.2
+*****************
+
+This document describes the 2019.2 release of Open Dylan, released DD
+MMM, 2019.  This release contains many enhancements and bug fixes, highlights
+of which are listed below.  For complete details see `the commit logs
+<https://github.com/dylan-lang/opendylan/compare/v2019.1.0...master>`_.
+
+* Download the release: http://opendylan.org/download
+* Read documentation: http://opendylan.org/documentation
+* Report problems: https://github.com/dylan-lang/opendylan/issues
+
+
+Compiler
+========
+
+
+Run-time
+========
+
+* An error in the LLVM run-time which prevented call-site method
+  dispatch caches from being used has been fixed. This change
+  significanly improves the performance of code using the LLVM
+  back-end.
+
+
+Debugging
+=========
+
+
+Documentation
+=============
+
+
+Build System
+============
+
+
+Library Changes
+===============
+
+dylan Library
+-------------
+
+
+common-dylan Library
+--------------------
+
+
+io Library
+----------
+
+
+system Library
+--------------
+
+* Library initialization under the LLVM back-end has been changed to
+  enable using the ``load-library`` function on all supported
+  platforms.
+
+c-ffi Library
+-------------
+
+
+testworks Library
+-----------------
+
+
+collections Library
+-------------------
+
+
+Contributors
+============
+
+We'd like to thank all the people that made contributions to this release and
+to surrounding libraries in the Dylan ecosystem. This list is probably
+incomplete...
+
