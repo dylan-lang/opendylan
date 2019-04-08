@@ -170,7 +170,7 @@ define function subst-engine-node-1 (new-e, old-e, ds :: <dispatch-state>) => ()
       end for;
       for (e :: false-or(<cache-header-engine-node>)
              in gf-cache-info-users(cache),
-           while?: e)
+           while: e)
         if (pointer-id?(cache-header-engine-node-next(e), old-e))
           cache-header-engine-node-next(e) := new-e
         end if
