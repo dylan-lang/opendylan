@@ -7,9 +7,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // DFMC expects to be able to call these functions
 define sideways method library-progress-text (context, #rest args)
-  apply(format, *standard-output*, args);
-  new-line(*standard-output*);
-  force-output(*standard-output*);
+  //apply(format, *standard-output*, args);
+  //new-line(*standard-output*);
+  //force-output(*standard-output*);
 end method;
 
 define sideways method library-progress-report
