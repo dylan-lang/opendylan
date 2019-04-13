@@ -12,7 +12,7 @@ define library tool-scepter
   use system;
   use io;
   use tools-interface;
-  use scepter;
   use scepter-core;
   use scepter-file-front-end;
+  use scepter-dylan-back-end;
 end library;
