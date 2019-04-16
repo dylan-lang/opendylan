@@ -127,6 +127,16 @@ AS_IF([test -n "$SUPPORT_LLVM"],
        rm -f conftest.bc conftest.o conftest.obj])
 AC_SUBST(SUPPORT_LLVM)
 
+DEFAULT_COMPILER_BACK_END=c
+SUPPORTED_COMPILER_BACK_ENDS=c
+AS_IF([test -n "$SUPPORT_HARP"],
+      [DEFAULT_COMPILER_BACK_END=harp
+       SUPPORTED_COMPILER_BACK_ENDS="harp $SUPPORTED_COMPILER_BACK_ENDS"])
+AS_IF([test -n "$SUPPORT_LLVM"],
+      [DEFAULT_COMPILER_BACK_END=llvm
+       SUPPORTED_COMPILER_BACK_ENDS="llvm $SUPPORTED_COMPILER_BACK_ENDS"])
+AC_SUBST(SUPPORTED_COMPILER_BACK_ENDS)
+
 AC_CHECK_PROGS([MAKE],[gnumake gmake make],[AC_MSG_ERROR([Unable to find a make program.])])
 if ! $MAKE --version | grep -q "GNU" 2> /dev/null; then
   AC_MSG_ERROR([OpenDylan requires GNU make to build.])
@@ -268,6 +278,7 @@ AC_LINK_IFELSE([], [AC_MSG_RESULT(none needed)],
 AS_ECHO(["
 Targeting '${target}' ('${OPEN_DYLAN_TARGET_PLATFORM}')
 
+  Default compiler back-end                               ${DEFAULT_COMPILER_BACK_END}
   LLVM support                                            ${SUPPORT_LLVM:-no}"])
 AS_IF([test -n "$SUPPORT_LLVM"],
       [AS_ECHO(["  LLVM back-end collector                                 ${LLVM_COLLECTOR}"])])
