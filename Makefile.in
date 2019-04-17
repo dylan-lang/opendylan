@@ -1,50 +1,59 @@
-# Changes made here may also need to be made in
-# build/windows/build-release.bat.
+### @configure_input@
+.POSIX:
 
-prefix          = $(DESTDIR)@prefix@
-srcdir          = @abs_srcdir@
+prefix          = @prefix@
+
+srcdir          = @srcdir@
 abs_srcdir      = @abs_srcdir@
 abs_builddir    = @abs_builddir@
 
-OPEN_DYLAN_TARGET_PLATFORM = @OPEN_DYLAN_TARGET_PLATFORM@
-RUNTIME_SOURCES = sources/lib/run-time
-RUNTIME_TARGET_PLATFORMS = @OPEN_DYLAN_TARGET_PLATFORM@ @ADDITIONAL_RUNTIME_TARGET_PLATFORMS@
+TARGET_PLATFORM = @OPEN_DYLAN_TARGET_PLATFORM@
+RUNTIME_TARGET_PLATFORMS = $(TARGET_PLATFORM)
 
-FDMAKE_OPTIONS  =
-fdmake          = @PERL@ $(srcdir)/build/fdmake.pl $(FDMAKE_OPTIONS)
+RUNTIME = sources/lib/run-time
 
-DYLANCOMPILER   = @DYLANCOMPILER@
+BUILD_SUBDIRS   = bin build databases logs
 
 DYLAN_JOBS	= 2
 
-.PHONY: 1-stage-bootstrap 1-stage-bootstrap-reentry \
-	2-stage-bootstrap 2-stage-bootstrap-reentry \
-	3-stage-bootstrap 3-stage-bootstrap-reentry \
-	bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3 \
-	all install install-stage release release-stage clean check \
+FDMAKE_OPTIONS  =
+FDMAKE          = @PERL@ $(srcdir)/build/fdmake.pl $(FDMAKE_OPTIONS)
+
+LLVM_RTGyes = llvm-runtime-generator
+RTG = $(LLVM_RTG@SUPPORT_LLVM@)
+
+BOOTSTRAP_1_COMPILER = @DYLANCOMPILER@
+
+# These are "primitive" in the sense that most of them make use of the
+# primitive-* functions.
+BOOTSTRAP_1_PRIMITIVE_LIBS = \
+	dylan common-dylan collections io system \
+	generic-arithmetic big-integers
+
+.PHONY: 3-stage-bootstrap \
+	bootstrap-stage-1 bootstrap-stage-1-dirs bootstrap-stage-1-compiler \
+        bootstrap-stage-1-runtime bootstrap-stage-1-jamfiles cli1 \
+	bootstrap-stage-2 bootstrap-stage-2-dirs bootstrap-stage-2-compiler \
+        bootstrap-stage-2-runtime bootstrap-stage-2-jamfiles cli2 \
+	bootstrap-stage-3 bootstrap-stage-3-dirs bootstrap-stage-3-libraries \
+        bootstrap-stage-3-runtime bootstrap-stage-3-jamfiles cli3 \
+	all install install-stage dist clean check \
 	check-submodules
 
 all: @bootstrap_target@
 
-# Only check that submodules are up to date if in a Git repository
-ifeq (, $(wildcard $(srcdir)/.git))
-SKIP_SUBMODULE_CHECK = 1
-endif
-
-ifeq (1,$(SKIP_SUBMODULE_CHECK))
 check-submodules:
-else
-check-submodules:
-	@for sms in `cd $(srcdir) && git submodule status | grep -v "^ " | cut -c 1`; do \
-	  if [ "$$sms" != "x" ]; then \
-	    echo "**** ERROR ****"; \
-	    echo "One or more submodules is not up to date."; \
-	    echo "Please run 'git submodule update --init'."; \
-	    echo "If you want to skip this check, pass SKIP_SUBMODULE_CHECK=1 to make."; \
-	    exit 1; \
-	  fi; \
-	done;
-endif
+	@if [ -z "$(SKIP_SUBMODULE_CHECK)" ]; then \
+          for sms in `cd $(srcdir) && git submodule status | grep -v "^ " | cut -c 1`; do \
+	    if [ "$$sms" != "x" ]; then \
+	      echo "**** ERROR ****"; \
+	      echo "One or more submodules is not up to date."; \
+	      echo "Please run 'git submodule update --init'."; \
+	      echo "If you want to skip this check, pass SKIP_SUBMODULE_CHECK=1 to make."; \
+	      exit 1; \
+	    fi; \
+	  done; \
+        fi
 
 ###
 # 3-stage bootstrap includes stages 1 and 2 and 3: it rebuilds the compiler
@@ -53,84 +62,35 @@ endif
 # without installing it; if you want to install it, do a 3-stage bootstrap and
 # run make install
 
-ifneq (@SUPPORT_LLVM@,)
-RTG_OPT = BOOTSTRAP_2_RTG="$(abs_builddir)/Bootstrap.1/bin/llvm-runtime-generator"
-endif
+3-stage-bootstrap: check-submodules \
+                   bootstrap-stage-1 \
+                   bootstrap-stage-2 \
+                   bootstrap-stage-3
 
-3-stage-bootstrap: check-submodules
-	$(MAKE) 3-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose -jobs $(DYLAN_JOBS)" \
-	  $(RTG_OPT)
-3-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3
-
-###
-# 2-stage bootstrap includes both stages 1 and 2: it rebuilds the compiler to
-# support new primitives and rebuilds the libraries using that compiler.
-
-2-stage-bootstrap: check-submodules
-	$(MAKE) 2-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose -jobs $(DYLAN_JOBS)" \
-	  $(RTG_OPT)
-2-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2
-
-###
-# 1-stage bootstrap includes only stage 2: it rebuilds compiler and libraries
-# when the existing compiler and libraries will understand the primitives.
-
-1-stage-bootstrap: check-submodules
-	$(MAKE) 1-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(DYLANCOMPILER)"
-1-stage-bootstrap-reentry: bootstrap-stage-2
-
-###
+########################################################################
 # Stage 1 builds a compiler that can understand new primitives used in the
 # BOOTSTRAP_1_PRIMITIVE_LIBS libraries. An existing compiler won't understand
 # the new stuff, so until a new compiler is built, existing libs are used
 # instead. Note that the stage 1 dylan-compiler loads a mix of existing and
 # stage 1 libraries.
 
-###
-# These are "primitive" in the sense that most of them make use of the
-# primitive-* functions.
-#
-# TODO: the DUIM libraries and some other high-level libs probably don't
-#       belong in this list.
-BOOTSTRAP_1_PRIMITIVE_LIBS = \
-	dylan common-dylan c-ffi collections io system \
-	generic-arithmetic big-integers duim-utilities \
-	duim-geometry duim-dcs duim-sheets duim-graphics \
-	duim-layouts duim-gadgets duim-frames duim-core \
-	duim-extended-geometry duim-gadget-panes duim network \
-	midi deuce duim-deuce com ole ole-server sql odbc-ffi \
-	sql-odbc corba-dylan corba-protocol dylan-orb \
-	iop-protocol ir-protocol ir-stubs orb-connections \
-	orb-core orb-iiop orb-ir orb-poa orb-streams \
-	orb-utilities portableserver-protocol \
-	naming-protocol naming-stubs naming-client
+BOOTSTRAP_1_ROOT = $(abs_builddir)/Bootstrap.1
 
 BOOTSTRAP_1_REGISTRY = $(abs_srcdir)/sources/bootstrap1-registry
 
 BOOTSTRAP_1_ENV = \
-	OPEN_DYLAN_TARGET_PLATFORM=$(OPEN_DYLAN_TARGET_PLATFORM) \
-	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.1/build/logs \
-	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.1 \
-	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
-	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.1/build \
-	OPEN_DYLAN_USER_REGISTRIES=$(BOOTSTRAP_1_REGISTRY) \
-	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
+        OPEN_DYLAN_TARGET_PLATFORM=$(TARGET_PLATFORM) \
+        OPEN_DYLAN_USER_ROOT=$(BOOTSTRAP_1_ROOT) \
+        OPEN_DYLAN_USER_REGISTRIES=$(BOOTSTRAP_1_REGISTRY)
 
-BOOTSTRAP_1_LIBRARIES = dylan-compiler
-ifneq (@SUPPORT_LLVM@,)
-BOOTSTRAP_1_LIBRARIES += llvm-runtime-generator
-endif
+bootstrap-stage-1: bootstrap-stage-1-dirs \
+                   $(BOOTSTRAP_1_REGISTRY) \
+                   bootstrap-stage-1-compiler \
+                   bootstrap-stage-1-runtime \
+                   bootstrap-stage-1-jamfiles
 
-$(abs_builddir)/Bootstrap.1:
-	mkdir $(abs_builddir)/Bootstrap.1
-	mkdir $(abs_builddir)/Bootstrap.1/bin
-	mkdir $(abs_builddir)/Bootstrap.1/lib
-	mkdir $(abs_builddir)/Bootstrap.1/lib/runtime
-	mkdir $(abs_builddir)/Bootstrap.1/build
-	mkdir $(abs_builddir)/Bootstrap.1/build/logs
+bootstrap-stage-1-dirs:
+	@for d in $(BUILD_SUBDIRS); do mkdir -p Bootstrap.1/$$d; done
 
 # BOOTSTRAP_1_PRIMITIVE_LIBS registry files are removed so those
 # libraries are taken from the bootstrap compiler's system registries.
@@ -138,294 +98,181 @@ $(abs_builddir)/Bootstrap.1:
 $(BOOTSTRAP_1_REGISTRY):
 	mkdir $(BOOTSTRAP_1_REGISTRY)
 	cp -r $(srcdir)/sources/registry/generic $(BOOTSTRAP_1_REGISTRY)
-	cp -r $(srcdir)/sources/registry/$(OPEN_DYLAN_TARGET_PLATFORM) $(BOOTSTRAP_1_REGISTRY)
+	cp -r $(srcdir)/sources/registry/$(TARGET_PLATFORM) $(BOOTSTRAP_1_REGISTRY)
 	for lib in $(BOOTSTRAP_1_PRIMITIVE_LIBS); do \
 	  rm -f $(BOOTSTRAP_1_REGISTRY)/generic/$$lib; \
-	  rm -f $(BOOTSTRAP_1_REGISTRY)/$(OPEN_DYLAN_TARGET_PLATFORM)/$$lib; \
+	  rm -f $(BOOTSTRAP_1_REGISTRY)/$(TARGET_PLATFORM)/$$lib; \
 	done
 
-$(abs_builddir)/Bootstrap.1/bin/dylan-compiler:
+bootstrap-stage-1-compiler:
 	@echo Building Open Dylan bootstrap stage 1...
-	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
-	  $(MAKE) -C sources/jamfiles install
+	@$(BOOTSTRAP_1_ENV) $(FDMAKE) --compiler "$(BOOTSTRAP_1_COMPILER)" \
+	  dylan-compiler
+
+BOOTSTRAP_1_LLVM_RTGVARSyes = \
+        OPEN_DYLAN_LLVM_RUNTIME_GENERATOR=$(BOOTSTRAP_1_ROOT)/bin/$(RTG)
+BOOTSTRAP_1_RTGVARS = $(BOOTSTRAP_1_LLVM_RTGVARS@SUPPORT_LLVM@)
+
+bootstrap-stage-1-runtime:
+	@$(BOOTSTRAP_1_ENV) $(FDMAKE) --compiler "$(BOOTSTRAP_1_COMPILER)" \
+	  $(RTG)
 	@for target_platform in $(RUNTIME_TARGET_PLATFORMS); do \
-	  $(MAKE) -C $(RUNTIME_SOURCES) \
-	    OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
+	  $(MAKE) -C $(RUNTIME) \
+	    OPEN_DYLAN_USER_INSTALL=$(BOOTSTRAP_1_ROOT) \
 	    OPEN_DYLAN_TARGET_PLATFORM=$$target_platform \
+	    $(BOOTSTRAP_1_RTGVARS) \
 	    install; \
 	done
-	@$(BOOTSTRAP_1_ENV) \
-	  $(fdmake) --compiler="$(DYLANCOMPILER)" \
-	    $(BOOTSTRAP_1_LIBRARIES)
 
-bootstrap-stage-1: \
-		$(abs_builddir)/Bootstrap.1 \
-		$(BOOTSTRAP_1_REGISTRY) \
-		$(abs_builddir)/Bootstrap.1/bin/dylan-compiler
+bootstrap-stage-1-jamfiles:
+	@OPEN_DYLAN_USER_INSTALL=$(BOOTSTRAP_1_ROOT) \
+	  $(MAKE) -C sources/jamfiles install
 
-###
-# Stage 2 bootstrap builds altered libraries and compiler and does not link to
-# any existing or stage 1 libraries.
+cli1:
+	@$(BOOTSTRAP_1_ENV) $(BOOTSTRAP_1_COMPILER)
+
+########################################################################
+# Stage 2 bootstrap builds altered libraries and compiler and does not
+# link to any existing or stage 1 libraries.
+
+BOOTSTRAP_2_ROOT = $(abs_builddir)/Bootstrap.2
+
+BOOTSTRAP_2_COMPILER = \
+        $(BOOTSTRAP_1_ROOT)/bin/dylan-compiler \
+          -build -verbose -jobs $(DYLAN_JOBS)
+
+BOOTSTRAP_2_REGISTRY = $(abs_srcdir)/sources/registry
 
 BOOTSTRAP_2_ENV = \
-	OPEN_DYLAN_TARGET_PLATFORM=$(OPEN_DYLAN_TARGET_PLATFORM) \
-	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.2/build/logs \
-	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.2 \
-	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.2/build \
-	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
-	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
+        OPEN_DYLAN_TARGET_PLATFORM=$(TARGET_PLATFORM) \
+        OPEN_DYLAN_USER_ROOT=$(BOOTSTRAP_2_ROOT) \
+        OPEN_DYLAN_USER_REGISTRIES=$(BOOTSTRAP_2_REGISTRY)
 
-BOOTSTRAP_2_UNSET_ENV = \
-	OPEN_DYLAN_RELEASE_ROOT \
-	OPEN_DYLAN_RELEASE_INSTALL \
-	OPEN_DYLAN_RELEASE_BUILD \
-	OPEN_DYLAN_RELEASE_REGISTRIES \
-	OPEN_DYLAN_RELEASE_SOURCES
+bootstrap-stage-2: bootstrap-stage-2-dirs \
+                   bootstrap-stage-2-compiler \
+                   bootstrap-stage-2-runtime \
+                   bootstrap-stage-2-jamfiles
 
-BOOTSTRAP_2_LIBRARIES = dylan-compiler
-ifneq (@SUPPORT_LLVM@,)
-BOOTSTRAP_2_LIBRARIES += llvm-runtime-generator
-endif
+bootstrap-stage-2-dirs:
+	@for d in $(BUILD_SUBDIRS); do mkdir -p Bootstrap.2/$$d; done
 
-$(abs_builddir)/Bootstrap.2:
-	mkdir $(abs_builddir)/Bootstrap.2
-	mkdir $(abs_builddir)/Bootstrap.2/bin
-	mkdir $(abs_builddir)/Bootstrap.2/lib
-	mkdir $(abs_builddir)/Bootstrap.2/lib/runtime
-	mkdir $(abs_builddir)/Bootstrap.2/build
-	mkdir $(abs_builddir)/Bootstrap.2/build/logs
-
-$(abs_builddir)/Bootstrap.2/bin/dylan-compiler:
+bootstrap-stage-2-compiler:
 	@echo Building Open Dylan bootstrap stage 2...
-	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	  $(MAKE) -C sources/jamfiles install
+	@$(BOOTSTRAP_2_ENV) $(FDMAKE) --compiler "$(BOOTSTRAP_2_COMPILER)" \
+	  dylan-compiler
+
+BOOTSTRAP_2_LLVM_RTGVARSyes = \
+        OPEN_DYLAN_LLVM_RUNTIME_GENERATOR=$(BOOTSTRAP_2_ROOT)/bin/$(RTG)
+BOOTSTRAP_2_RTGVARS = $(BOOTSTRAP_2_LLVM_RTGVARS@SUPPORT_LLVM@)
+
+bootstrap-stage-2-runtime:
+	@$(BOOTSTRAP_2_ENV) $(FDMAKE) --compiler "$(BOOTSTRAP_2_COMPILER)" \
+	  $(RTG)
 	@for target_platform in $(RUNTIME_TARGET_PLATFORMS); do \
-	  unset $(BOOTSTRAP_2_UNSET_ENV) ; \
-	    $(MAKE) -C $(RUNTIME_SOURCES) \
-	    OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
+	  $(MAKE) -C $(RUNTIME) \
+	    OPEN_DYLAN_USER_INSTALL=$(BOOTSTRAP_2_ROOT) \
 	    OPEN_DYLAN_TARGET_PLATFORM=$$target_platform \
-	    OPEN_DYLAN_LLVM_RUNTIME_GENERATOR=$(BOOTSTRAP_2_RTG) \
+	    $(BOOTSTRAP_2_RTGVARS) \
 	    install; \
 	done
-	@unset $(BOOTSTRAP_2_UNSET_ENV) ; \
-	  $(BOOTSTRAP_2_ENV) \
-	  $(fdmake) --compiler="$(BOOTSTRAP_2_COMPILER)" \
-            $(BOOTSTRAP_2_LIBRARIES)
 
-bootstrap-stage-2: \
-		$(abs_builddir)/Bootstrap.2 \
-		$(abs_builddir)/Bootstrap.2/bin/dylan-compiler
+bootstrap-stage-2-jamfiles:
+	@OPEN_DYLAN_USER_INSTALL=$(BOOTSTRAP_2_ROOT) \
+	  $(MAKE) -C sources/jamfiles install
 
-###
+cli2:
+	@$(BOOTSTRAP_2_ENV) $(BOOTSTRAP_2_COMPILER)
+
+########################################################################
 # Stage 3 builds libraries and compiler using stage 2 products, taking
 # advantage of any new optimizations etc. in this release. It basically builds
 # an installation without actually installing it.
 
-BOOTSTRAP_3_ENV = \
-	OPEN_DYLAN_TARGET_PLATFORM=$(OPEN_DYLAN_TARGET_PLATFORM) \
-	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
-	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.2/build \
-	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry \
-	OPEN_DYLAN_RELEASE_SOURCES=$(abs_srcdir)/sources \
-	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.3/build/logs \
-	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.3 \
-	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
-	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.3/build \
-	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
-	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
+BOOTSTRAP_3_ROOT = $(abs_builddir)/Bootstrap.3
 
 BOOTSTRAP_3_LIBRARIES = \
-  dylan-compiler dylan-environment parser-compiler dswank make-dylan-app
+	dylan-compiler dylan-environment parser-compiler dswank make-dylan-app
 
 BOOTSTRAP_3_COMPILER = \
-	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler -build -verbose -jobs $(DYLAN_JOBS)
-ifneq (@SUPPORT_LLVM@,)
-BOOTSTRAP_3_RTG = $(abs_builddir)/Bootstrap.2/bin/llvm-runtime-generator
-endif
+        $(BOOTSTRAP_2_ROOT)/bin/dylan-compiler \
+          -build -verbose -jobs $(DYLAN_JOBS)
 
-$(abs_builddir)/Bootstrap.3:
-	mkdir $(abs_builddir)/Bootstrap.3
-	mkdir $(abs_builddir)/Bootstrap.3/bin
-	mkdir $(abs_builddir)/Bootstrap.3/lib
-	mkdir $(abs_builddir)/Bootstrap.3/lib/runtime
-	mkdir $(abs_builddir)/Bootstrap.3/build
-	mkdir $(abs_builddir)/Bootstrap.3/build/logs
+BOOTSTRAP_3_REGISTRY = $(abs_srcdir)/sources/registry
 
-bootstrap-stage-3: $(abs_builddir)/Bootstrap.3
+BOOTSTRAP_3_ENV = \
+        OPEN_DYLAN_TARGET_PLATFORM=$(TARGET_PLATFORM) \
+        OPEN_DYLAN_USER_ROOT=$(BOOTSTRAP_3_ROOT) \
+        OPEN_DYLAN_USER_REGISTRIES=$(BOOTSTRAP_3_REGISTRY)
+
+bootstrap-stage-3: bootstrap-stage-3-dirs \
+                   bootstrap-stage-3-libraries \
+                   bootstrap-stage-3-runtime \
+                   bootstrap-stage-3-jamfiles
+
+bootstrap-stage-3-dirs:
+	@for d in $(BUILD_SUBDIRS); do mkdir -p Bootstrap.3/$$d; done
+
+bootstrap-stage-3-libraries:
 	@echo Building Open Dylan bootstrap stage 3...
-	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
-	  $(MAKE) -C sources/jamfiles install
+	@$(BOOTSTRAP_3_ENV) $(FDMAKE) --compiler "$(BOOTSTRAP_3_COMPILER)" \
+          $(BOOTSTRAP_3_LIBRARIES)
+
+BOOTSTRAP_3_LLVM_RTGVARSyes = \
+        OPEN_DYLAN_LLVM_RUNTIME_GENERATOR=$(BOOTSTRAP_3_ROOT)/bin/$(RTG)
+BOOTSTRAP_3_RTGVARS = $(BOOTSTRAP_3_LLVM_RTGVARS@SUPPORT_LLVM@)
+
+bootstrap-stage-3-runtime:
+	@$(BOOTSTRAP_3_ENV) $(FDMAKE) --compiler "$(BOOTSTRAP_3_COMPILER)" \
+	  $(RTG)
 	@for target_platform in $(RUNTIME_TARGET_PLATFORMS); do \
-	  $(MAKE) -C $(RUNTIME_SOURCES) \
-	    OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
+	  $(MAKE) -C $(RUNTIME) \
+	    OPEN_DYLAN_USER_INSTALL=$(BOOTSTRAP_3_ROOT) \
 	    OPEN_DYLAN_TARGET_PLATFORM=$$target_platform \
-	    OPEN_DYLAN_LLVM_RUNTIME_GENERATOR=$(BOOTSTRAP_3_RTG) \
+	    $(BOOTSTRAP_3_RTGVARS) \
 	    install; \
 	done
-	@$(BOOTSTRAP_3_ENV) \
-	  $(fdmake) --compiler="$(BOOTSTRAP_3_COMPILER)" \
-          $(BOOTSTRAP_3_LIBRARIES)
+
+bootstrap-stage-3-jamfiles:
+	@OPEN_DYLAN_USER_INSTALL=$(BOOTSTRAP_3_ROOT) \
+	  $(MAKE) -C sources/jamfiles install
 
 cli3:
 	@$(BOOTSTRAP_3_ENV) $(BOOTSTRAP_3_COMPILER)
 
-BACKENDS = x86-win32 \
-	   x86-darwin \
-	   x86_64-darwin \
-	   x86-linux \
-	   x86_64-linux \
-	   x86-freebsd \
-	   x86_64-freebsd
-
-rtg:
-	$(MAKE) bootstrap-stage-3 BOOTSTRAP_3_LIBRARIES=llvm-runtime-generator
-	for target in $(BACKENDS); do \
-	  ./Bootstrap.3/bin/llvm-runtime-generator $(abs_srcdir)/sources/dylan/dylan.lid $$target && \
-	  llvm-dis $$target-runtime.bc && \
-	  clang -O3 -S $$target-runtime.bc; \
-	done
-
-###
-# 4 stage bootstrap is for LLVM testing.
-
-BOOTSTRAP_4_ENV = \
-	OPEN_DYLAN_TARGET_PLATFORM=$(OPEN_DYLAN_TARGET_PLATFORM) \
-	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.3 \
-	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.3 \
-	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.3/build \
-	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
-	OPEN_DYLAN_RELEASE_SOURCES=$(abs_srcdir)/sources \
-	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build/logs \
-	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM) \
-	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM) \
-	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build \
-	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
-	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
-
-BOOTSTRAP_4_LIBRARIES = dylan-compiler
-
-BOOTSTRAP_4_COMPILER = \
-	$(abs_builddir)/Bootstrap.3/bin/dylan-compiler -build -dfm -jobs $(DYLAN_JOBS)
-
-
-
-$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM):
-	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)
-	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/bin
-	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/lib
-	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/lib/runtime
-	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build
-	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build/logs
-
-bootstrap-stage-4: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)
-	@echo Building Open Dylan bootstrap stage 4...
-	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM) \
-	  $(MAKE) -C $(rt_build) install
-	@$(BOOTSTRAP_4_ENV) \
-	  $(fdmake) --compiler="$(BOOTSTRAP_4_COMPILER)" \
-	  $(BOOTSTRAP_4_LIBRARIES)
-
-cli4:
-	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER)
-
-testc: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)
-	@printf "set compiler-back-end c\nopen dylan\nbuild -nolink -output dfm" \
-	| $(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER)
-	@printf "set compiler-back-end c\nopen common-dylan\nbuild -nolink -output dfm" \
-	| $(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER)
-
-testl: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)
-	@printf "set compiler-back-end llvm\nopen dylan\nbuild -nolink -output dfm" \
-	| $(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER)
-	@(cd Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build/dylan && \
-          for i in *.bc; do \
-            echo $$i; \
-            llvm-dis $$i && clang -O3 -S $$i; \
-          done)
-	@printf "set compiler-back-end llvm\nopen common-dylan\nbuild -nolink -output dfm" \
-	| $(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER)
-	@(cd Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build/common-dylan && \
-          for i in *.bc; do \
-            echo $$i; \
-            llvm-dis $$i && clang -O3 -S $$i; \
-          done)
-
-xtestl:
-	for target in $(BACKENDS); do \
-	  $(MAKE) testl OPEN_DYLAN_TARGET_PLATFORM=$$target; \
-	done
+########################################################################
 
 ###
 # Install stage installs stage 3 into prefix
 install-stage:
-	@echo Preparing to install Open Dylan in $(prefix)...
-	@install -d $(prefix)
-	@echo Copying sources to $(prefix)/sources...
-	@rm -rf $(prefix)/sources
-	@cp -R $(abs_srcdir)/sources $(prefix)
-	@find $(prefix)/sources -depth -name '.*' -exec rm -rf {} \;
-	@-rm -rf $(prefix)/sources/bootstrap1-registry
-	@echo Installing Open Dylan in $(prefix)
-	@install -d $(prefix)/bin $(prefix)/databases $(prefix)/lib $(prefix)/lib/runtime
-	@install -d $(prefix)/share/opendylan $(prefix)/include/opendylan
-	@cp -R $(abs_builddir)/Bootstrap.3/bin $(prefix)
-	@cp -R $(abs_builddir)/Bootstrap.3/databases $(prefix)
-	@-cp -R $(abs_builddir)/Bootstrap.3/include/opendylan $(prefix)/include
+	@echo Preparing to install Open Dylan in $(DESTDIR)$(prefix)...
+	@install -d $(DESTDIR)$(prefix)
+	@echo Copying sources to $(DESTDIR)$(prefix)/sources...
+	@rm -rf $(DESTDIR)$(prefix)/sources
+	@cp -R $(srcdir)/sources $(DESTDIR)$(prefix)
+	@find $(DESTDIR)$(prefix)/sources -depth -name '.*' -exec rm -rf {} \;
+	@-rm -rf $(DESTDIR)$(prefix)/sources/bootstrap1-registry
+	@echo Installing Open Dylan in $(DESTDIR)$(prefix)
+	@install -d $(prefix)/bin $(prefix)/databases $(prefix)/lib $(DESTDIR)$(prefix)/lib/runtime
+	@install -d $(prefix)/share/opendylan $(DESTDIR)$(prefix)/include/opendylan
+	@cp -R $(abs_builddir)/Bootstrap.3/bin $(DESTDIR)$(prefix)
+	@cp -R $(abs_builddir)/Bootstrap.3/databases $(DESTDIR)$(prefix)
+	@-cp -R $(abs_builddir)/Bootstrap.3/include/opendylan $(DESTDIR)$(prefix)/include
 	@# We use force here because on macOS, the lib directory likely contains read-only
 	@# static libraries for the Boehm GC.
-	@cp -Rf $(abs_builddir)/Bootstrap.3/lib $(prefix)
-	@cp -Rf $(abs_builddir)/Bootstrap.3/share/opendylan $(prefix)/share
-	@cp -R $(abs_srcdir)/tools/lldb $(prefix)/share/opendylan
-	@cp -R $(abs_srcdir)/tools/bash_completion $(prefix)/share/opendylan
-	@cp $(abs_srcdir)/tools/scripts/dylan-lldb $(prefix)/bin
-	@cp $(abs_srcdir)/License.txt $(prefix)
-	@cp $(abs_srcdir)/build/packages/unix/README $(prefix)
+	@cp -Rf $(abs_builddir)/Bootstrap.3/lib $(DESTDIR)$(prefix)
+	@cp -Rf $(abs_builddir)/Bootstrap.3/share/opendylan $(DESTDIR)$(prefix)/share
+	@cp -R $(srcdir)/tools/lldb $(DESTDIR)$(prefix)/share/opendylan
+	@cp -R $(srcdir)/tools/bash_completion $(DESTDIR)$(prefix)/share/opendylan
+	@cp $(srcdir)/tools/scripts/dylan-lldb $(DESTDIR)$(prefix)/bin
+	@cp $(srcdir)/License.txt $(DESTDIR)$(prefix)
+	@cp $(srcdir)/build/packages/unix/README $(DESTDIR)$(prefix)
 	@echo Done!
 
 install: 3-stage-bootstrap install-stage
 
-version ?= $(shell $(abs_builddir)/Bootstrap.3/bin/dylan-compiler -shortversion)
+#install-html:
 
-###
-# release packs a tarball
-release-stage:
-	-mkdir $(abs_builddir)/release
-	-mkdir $(abs_builddir)/release/opendylan-$(version)
-	-mkdir $(abs_builddir)/release/opendylan-$(version)/bin
-	-mkdir $(abs_builddir)/release/opendylan-$(version)/databases
-	-mkdir -p $(abs_builddir)/release/opendylan-$(version)/include/opendylan
-	-mkdir $(abs_builddir)/release/opendylan-$(version)/lib
-	-mkdir $(abs_builddir)/release/opendylan-$(version)/sources
-	-mkdir -p $(abs_builddir)/release/opendylan-$(version)/share/opendylan
-	@echo Copying sources...
-	cp -R $(abs_srcdir)/sources $(abs_builddir)/release/opendylan-$(version)
-	@echo Removing unnecessary directories...
-	find $(abs_builddir)/release/opendylan-$(version)/sources -depth -name '.*' -exec rm -rf {} \;
-	-rm -r $(abs_builddir)/release/opendylan-$(version)/sources/bootstrap1-registry
-	cp -R $(abs_builddir)/Bootstrap.3/bin $(abs_builddir)/release/opendylan-$(version)
-	cp -R $(abs_builddir)/Bootstrap.3/databases $(abs_builddir)/release/opendylan-$(version)
-	-cp -R $(abs_builddir)/Bootstrap.3/include/opendylan $(abs_builddir)/release/opendylan-$(version)/include
-	cp -R $(abs_builddir)/Bootstrap.3/lib $(abs_builddir)/release/opendylan-$(version)
-	cp -R $(abs_builddir)/Bootstrap.3/share/opendylan $(abs_builddir)/release/opendylan-$(version)/share
-	cp -R $(abs_srcdir)/tools/lldb $(abs_builddir)/release/opendylan-$(version)/share/opendylan
-	cp -R $(abs_srcdir)/tools/bash_completion $(abs_builddir)/release/opendylan-$(version)/share/opendylan
-	cp $(abs_srcdir)/License.txt $(abs_builddir)/release/opendylan-$(version)
-	cp $(abs_srcdir)/build/packages/unix/README $(abs_builddir)/release/opendylan-$(version)
-	cd $(abs_builddir)/release; \
-	  tar cjf $(abs_builddir)/opendylan-$(version)-$(OPEN_DYLAN_TARGET_PLATFORM).tar.bz2 opendylan-$(version)
-	-mkdir $(abs_builddir)/release/opendylan-$(version)/build
-	cp -R $(abs_builddir)/Bootstrap.3/build $(abs_builddir)/release/opendylan-$(version)
-	cd $(abs_builddir)/release/; \
-	  tar cjf $(abs_builddir)/opendylan-$(version)-$(OPEN_DYLAN_TARGET_PLATFORM)-debug-info.tar.bz2 opendylan-$(version)/build
-
-release: 3-stage-bootstrap release-stage
-
-###
-# Maintenance and test targets
-
-install-strip:
+#uninstall:
 
 clean:
 	-rm -rf $(abs_builddir)/Bootstrap.1
@@ -435,7 +282,7 @@ clean:
 	-rm -rf $(abs_builddir)/opendylan-*.tar.bz2
 	-rm -rf $(BOOTSTRAP_1_REGISTRY)
 	@for target_platform in $(RUNTIME_TARGET_PLATFORMS); do \
-	  $(MAKE) -C $(RUNTIME_SOURCES) \
+	  $(MAKE) -C $(RUNTIME) \
 	    OPEN_DYLAN_TARGET_PLATFORM=$$target_platform \
 	    clean; \
 	done
@@ -476,10 +323,34 @@ maintainer-clean:
 
 TAGS:
 
-dist:
+html:
 
-CHECK_STAGE = 3
-CHECK_COMPILER_STAGE = $(CHECK_STAGE)
+version = @VERSION@
+
+dist: 3-stage-bootstrap
+	-mkdir release
+	-mkdir release/opendylan-$(version)
+	-mkdir release/opendylan-$(version)/bin
+	-mkdir release/opendylan-$(version)/databases
+	-mkdir -p release/opendylan-$(version)/include/opendylan
+	-mkdir release/opendylan-$(version)/lib
+	-mkdir release/opendylan-$(version)/sources
+	-mkdir -p release/opendylan-$(version)/share/opendylan
+	@echo Copying sources...
+	cp -R $(srcdir)/sources release/opendylan-$(version)/
+	@echo Removing unnecessary directories...
+	find release/opendylan-$(version)/sources -depth -name '.*' -exec rm -rf {} \;
+	-rm -r release/opendylan-$(version)/sources/bootstrap1-registry
+	cp -R Bootstrap.3/bin release/opendylan-$(version)/
+	cp -R Bootstrap.3/databases release/opendylan-$(version)/
+	-cp -R Bootstrap.3/include/opendylan release/opendylan-$(version)/include
+	cp -R Bootstrap.3/lib release/opendylan-$(version)/
+	cp -R Bootstrap.3/share/opendylan release/opendylan-$(version)/share
+	cp -R $(srcdir)/tools/lldb release/opendylan-$(version)/share/opendylan
+	cp -R $(srcdir)/tools/bash_completion release/opendylan-$(version)/share/opendylan
+	cp $(srcdir)/License.txt release/opendylan-$(version)/
+	cp $(srcdir)/build/packages/unix/README release/opendylan-$(version)/
+	cd release && tar cjf opendylan-$(version)-$(TARGET_PLATFORM).tar.bz2 opendylan-$(version)
 
 CHECK_APPS = \
 	libraries-test-suite-app \
@@ -496,56 +367,18 @@ CHECK_APPS = \
 	regular-expressions-test-suite \
 	hash-algorithms-test
 
-CHECK_ENV = \
-	OPEN_DYLAN_TARGET_PLATFORM=$(OPEN_DYLAN_TARGET_PLATFORM) \
-	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
-	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
-	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build \
-	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry \
-	OPEN_DYLAN_RELEASE_SOURCES=$(abs_srcdir)/sources \
-	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build/logs \
-	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
-	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
-	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build \
-	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
-	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
-
-check:	bootstrap-stage-$(CHECK_COMPILER_STAGE)
-	@$(CHECK_ENV) \
-	  $(fdmake) \
-	  --compiler="$(abs_builddir)/Bootstrap.$(CHECK_COMPILER_STAGE)/bin/dylan-compiler -build -jobs $(DYLAN_JOBS)" \
-	  $(CHECK_APPS) && \
+check: bootstrap-stage-3
+	@$(BOOTSTRAP_3_ENV) $(FDMAKE) --compiler "$(BOOTSTRAP_3_COMPILER)" \
+          $(CHECK_APPS)
 	  for app in $(CHECK_APPS); do \
 	    echo "Executing test app $$app ..."; \
-	    $(abs_builddir)/Bootstrap.$(CHECK_STAGE)/bin/$$app $(OPEN_DYLAN_CHECK_FLAGS); \
+	    $(BOOTSTRAP_3_ROOT)/bin/$$app $(OPEN_DYLAN_CHECK_FLAGS); \
 	  done
-
-BOOTSTRAP_4_RTG = $(abs_builddir)/Bootstrap.3/bin/llvm-runtime-generator
-
-LLVM_CHECK_APPS = \
-	dylan-test-suite-app
-
-check-llvm: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)
-	$(MAKE) bootstrap-stage-3 \
-	  BOOTSTRAP_3_LIBRARIES="llvm-runtime-generator dylan-compiler"
-	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM) \
-	  $(MAKE) -C sources/jamfiles install
-	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM) \
-	  OPEN_DYLAN_LLVM_RUNTIME_GENERATOR=$(BOOTSTRAP_4_RTG) \
-          OPEN_DYLAN_TARGET_PLATFORM=$(OPEN_DYLAN_TARGET_PLATFORM) \
-	  $(MAKE) -C $(RUNTIME_SOURCES) install-llvm-runtime
-	@$(BOOTSTRAP_4_ENV) \
-	  $(fdmake) --compiler="$(BOOTSTRAP_4_COMPILER) -back-end llvm" \
-	  $(LLVM_CHECK_APPS)
-	@for app in $(LLVM_CHECK_APPS); do \
-	  echo "Executing test app $$app ..."; \
-	  $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/bin/$$app $(OPEN_DYLAN_CHECK_FLAGS); \
-	done
 
 installcheck:
 
 installdirs:
 
-Makefile:  $(srcdir)/Makefile.in  config.status
+Makefile:  $(srcdir)/Makefile.in config.status
 	CONFIG_HEADERS= CONFIG_LINKS= \
 	  CONFIG_FILES=./$@ $(SHELL) ./config.status

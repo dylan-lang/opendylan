@@ -97,6 +97,14 @@ else
   test "$DYLANCOMPILER" = minimal-console-compiler && DYLANCOMPILER="$DYLANCOMPILER -build"
   AC_MSG_RESULT(no)
 fi
+AC_MSG_CHECKING(if $DYLANCOMPILER supports the -jobs flag)
+if $DYLANCOMPILER -version -jobs 1 >/dev/null 2>&1 ; then
+  DYLANCOMPILER="$DYLANCOMPILER -jobs \$(DYLAN_JOBS)"
+  AC_MSG_RESULT(yes)
+else
+  AC_MSG_RESULT(no)
+fi
+
 AC_SUBST(DYLANCOMPILER)
 
 # TODO: figure out the bootstrap type given the fdcompile version

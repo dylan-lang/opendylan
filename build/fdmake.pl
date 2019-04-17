@@ -12,9 +12,8 @@ my $platform_name = $ENV{'OPEN_DYLAN_TARGET_PLATFORM'};
 
 my $user_root = $ENV{'OPEN_DYLAN_USER_ROOT'};
 my $user_registries = $ENV{'OPEN_DYLAN_USER_REGISTRIES'};
-my $user_sources = $ENV{'OPEN_DYLAN_USER_SOURCES'};
 
-my $build_logs = $ENV{'OPEN_DYLAN_BUILD_LOGS'};
+my $build_logs = File::Spec->catdir($user_root, 'logs');
 
 my $lldb_arguments = "-o \"b Kdisplay_conditionYcommand_linesVenvironment_commandsI\"";
 my $verbose;
