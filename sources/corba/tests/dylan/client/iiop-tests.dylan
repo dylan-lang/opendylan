@@ -123,7 +123,7 @@ define test enum-test ()
 end test;
 
 define test sequence-test ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let type1 = corba/orb/create-sequence-tc(orb, 0, corba/$short-typecode);
   let seq1 = make(corba/<sequence>);
   check-marshalling("sequence1", type1, seq1);
@@ -144,7 +144,7 @@ define test sequence-test ()
 end test;
 
 define test array-test ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let type1 = corba/orb/create-array-tc(orb, 2, corba/$long-typecode);
   let arr1 = make(corba/<array>, dimensions: list(2), fill: 1);
   check-marshalling("array1", type1, arr1);
@@ -166,7 +166,7 @@ define test struct-test ()
 		    type1,
 		    struct1,
 		    coerce: curry(as, <structure>));
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let type2 = corba/orb/create-sequence-tc(orb, 0, type1);
   let struct2 = make(corba/<sequence>);
   add!(struct2, struct1);
@@ -234,7 +234,7 @@ define test empty-typecode-tests ()
 end test;
 
 define test complex-typecode-tests ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   check-marshalling("object-typecode",
 		    corba/$typecode-typecode,
                     corba/orb/create-interface-tc(orb, "LOCAL:obj-ref-example", "example"));
@@ -281,7 +281,7 @@ define test basic-any-tests ()
 end test;
 
 define test constructed-any-tests ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let type1 = class-typecode(corba/<completion-status>);
   let enum1 = #"completed-maybe";
   check-marshalling("any11", corba/$any-typecode, make(corba/<any>, type: type1, value: enum1));

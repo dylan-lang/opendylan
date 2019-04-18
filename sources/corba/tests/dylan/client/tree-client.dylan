@@ -97,7 +97,7 @@ define method treeU-equal? (tree1, tree2)
 end method;
 
 define test tree-operations-test ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let treetest = as(<treetest>, corba/orb/file-to-object(orb, *treetest-ior-file*));
   check-equal("", treetest/depth(treetest, $a-tree), 0);
   check-true("", tree-equal?(treetest/identity(treetest, $a-tree), $a-tree));

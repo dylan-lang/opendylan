@@ -18,7 +18,7 @@ end method;
 
 define method corba/object/-interface (object :: <object-reference>)
  => (result :: corba/<InterfaceDef>)
-  let context = corba/orb/get-default-context(corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB"));
+  let context = corba/orb/get-default-context(corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB"));
   let (result, request) = corba/object/create-request(object,
 						      context,
 						      "_interface",
@@ -47,7 +47,7 @@ end method;
 
 define method corba/object/get-interface (object :: portableserver/<servant>)
  => (result :: corba/<InterfaceDef>);
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let ir = as(corba/<Repository>, corba/orb/resolve-initial-references(orb, "InterfaceRepository"));
   if (ir)
     let current = corba/orb/resolve-initial-references(orb, "POACurrent");
@@ -346,7 +346,7 @@ define constant $operation-requests :: <table> = make(<table>, weak: #"key");
 define method call-dii
     (operation :: <string>, object :: corba/<object>, arguments :: <sequence>,
      #key context = unsupplied(), setter? = #f)
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let context = if (supplied?(context))
 		  context
 		else
@@ -512,7 +512,7 @@ end method;
 
 define method operation-arguments (operationdef :: corba/<operationdef>, #key setter?)
  => (arguments :: corba/<nvlist>)
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   corba/orb/create-operation-list(orb, operationdef)
 end method;
 

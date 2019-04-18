@@ -121,7 +121,7 @@ end method;
 
 define method corba/request/send (request :: <request>, flags :: corba/<Flags>)
  => ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let manager = orb-connection-manager(orb);
   if (corba/object/is-nil(request-object(request)))
     error(make(corba/<object-not-exist>, minor: 0, completed: #"completed-no"));
@@ -182,7 +182,7 @@ end method;
 
 define method compute-context-values (request :: <request>)
   => (values :: <string-sequence>)
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let context = request-context(request) | corba/orb/get-default-context(orb);
   let context-expression = request-context-expression(request);
   if (~empty?(context-expression))

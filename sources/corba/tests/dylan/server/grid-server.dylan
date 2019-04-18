@@ -79,7 +79,7 @@ define constant $wrong-grid-ior-file :: <string> = "wrong-grid.ior";
 
 define method start-grid-server ()
   // get reference to ORB
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
 
   // get reference to root POA (there will already be a listener, dispatcher,
   // and default receiver threads running)

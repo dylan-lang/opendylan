@@ -9,7 +9,7 @@ define constant $AnyTest-ior-file = "AnyTest.ior";
 
 define method get-AnyTest-reference ()
  => (reference :: <AnyTest>)
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   as(<AnyTest>, corba/orb/file-to-object(orb, $AnyTest-ior-file));
 end method;
 

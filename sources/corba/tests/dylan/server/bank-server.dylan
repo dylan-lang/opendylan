@@ -95,7 +95,7 @@ define variable *bank-poa* = #f;
 
 define method start-bank-server ()
   // get reference to ORB
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
 
   // get reference to root POA (there will already be a listener, dispatcher,
   // and default receiver threads running)

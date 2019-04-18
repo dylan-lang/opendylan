@@ -159,7 +159,7 @@ define method emit-operation-stub-method-signature (stream :: <stream>, operatio
   format(stream, "(object :: %s", dim-interface-client-class-name(dim-operation-interface(operation)));
   emit-operation-parameters(stream, operation);
   if (dim-operation-context?(operation))
-    format(stream, ", #key context = corba/orb/get-default-context(corba/orb-init(make(corba/<arg-list>), \"Functional Developer ORB\"))");
+    format(stream, ", #key context = corba/orb/get-default-context(corba/orb-init(make(corba/<arg-list>), \"Open Dylan ORB\"))");
   end if;
   format(stream, ")\n");
   emit-operation-values(stream, operation);
@@ -242,7 +242,7 @@ define method emit-operation-create-request (stream :: <stream>, operation :: <d
 		       dim-type-typecode-as-string(type));
   let req-flags = "0";
   unless (dim-operation-context?(operation))
-    format(stream, "  let context = CORBA/orb/get-default-context(CORBA/orb-init(make(CORBA/<arg-list>), \"Functional Developer ORB\"));\n");
+    format(stream, "  let context = CORBA/orb/get-default-context(CORBA/orb-init(make(CORBA/<arg-list>), \"Open Dylan ORB\"));\n");
   end unless;
   format(stream, "  let (result, request) = CORBA/Object/create-request(object, context, %=, arguments, %s, %s);\n",
 	 dim-operation-idl-name(operation), result, req-flags);

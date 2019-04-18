@@ -212,7 +212,7 @@ define method emit-operation-stub-method (stream :: <stream>, operation :: <dim-
   format(stream, "define method %s ", dim-attribute-getter-name(attribute));
   format(stream, "(object :: %s)\n", dim-interface-client-class-name(dim-attribute-interface(attribute)));
   format(stream, " => (result :: %s)\n", dim-type-native-type(dim-attribute-type(attribute)));
-  format(stream, "  let context = CORBA/orb/get-default-context(CORBA/orb-init(make(CORBA/<arg-list>), \"Functional Developer ORB\"));\n");
+  format(stream, "  let context = CORBA/orb/get-default-context(CORBA/orb-init(make(CORBA/<arg-list>), \"Open Dylan ORB\"));\n");
   let type = dim-attribute-type(attribute);
   let result = format-to-string("make(CORBA/<NamedValue>, name: \"result\", argument: make(CORBA/<any>, type: %s), len: 0, arg-modes: 0)",
                                 dim-type-typecode-as-string(type));
@@ -251,7 +251,7 @@ define method emit-operation-stub-method (stream :: <stream>, operation :: <dim-
 	 dim-type-native-type(dim-attribute-type(attribute)),
 	 dim-interface-client-class-name(dim-attribute-interface(attribute)));
   format(stream, " => (result :: %s)\n", dim-type-native-type(dim-attribute-type(attribute)));
-  format(stream, "  let context = CORBA/orb/get-default-context(CORBA/orb-init(make(CORBA/<arg-list>), \"Functional Developer ORB\"));\n");
+  format(stream, "  let context = CORBA/orb/get-default-context(CORBA/orb-init(make(CORBA/<arg-list>), \"Open Dylan ORB\"));\n");
   let type = dim-attribute-type(attribute);
   let result = "make(CORBA/<NamedValue>, name: \"result\", argument: make(CORBA/<any>, type: make(<void-typecode>)), len: 0, arg-modes: 0)";
   format(stream, "  let (result, request) = CORBA/Object/create-request(object, context, %=, make(CORBA/<NVList>), %s, 0);\n",

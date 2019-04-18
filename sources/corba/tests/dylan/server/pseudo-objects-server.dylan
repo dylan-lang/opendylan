@@ -24,7 +24,7 @@ end class;
 
 define method TestObjectA/destroy (object :: <TestObjectA-implementation>)
  => ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let root-poa = corba/orb/resolve-initial-references(orb, "RootPOA");
   let object-id = PortableServer/POA/servant-to-id(root-poa, object);
   PortableServer/POA/deactivate-object(root-poa, object-id);
@@ -32,7 +32,7 @@ end method;
 
 define method initialize (object :: <TestObjectA-implementation>, #key poa :: PortableServer/<POA>)
   next-method();
-  let orb = CORBA/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = CORBA/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let reference = portableserver/poa/servant-to-reference(poa, object);
   object.TestObjectA/ior := corba/orb/object-to-string(orb, reference);
 end method;
@@ -86,7 +86,7 @@ end method;
 
 define method PseudoObjectsTest/check-object-attribute (object :: <PseudoObjectsTest-implementation>, ior :: CORBA/<string>)
  => ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   unless (ior = corba/orb/object-to-string(orb, PseudoObjectsTest/object-attribute(object)))
     error(make(PseudoObjectsTest/<failure>));
   end unless;
@@ -114,7 +114,7 @@ end method;
 define constant *PseudoObjectsTest-ior-file* = "PseudoObjectsTest.ior";
 
 define method start-PseudoObjectsTest-server () => ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let root-poa = corba/orb/resolve-initial-references(orb, "RootPOA");
   let PseudoObjectsTest = make(<PseudoObjectsTest-implementation>, poa: root-poa);
   let PseudoObjectsTestRef = portableserver/poa/servant-to-reference(root-poa, PseudoObjectsTest);

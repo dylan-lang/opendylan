@@ -22,7 +22,7 @@ define method sequence-equal? (sequence-1 :: <sequence>, sequence-2 :: <sequence
 end method;
 
 define test short-seq-test ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let SequenceTest = as(<SequenceTest>, corba/orb/file-to-object(orb, *SequenceTest-ior-file*));
   let seq = make(limited(CORBA/<sequence>, of: CORBA/<short>));
   for (i from 0 below 100)
@@ -45,7 +45,7 @@ define test short-seq-test ()
   // CORBA/<any> coercion
 
   check-true("Coerce sequence<short> to any", instance?(as(CORBA/<any>, seq), CORBA/<any>));
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let any = make(CORBA/<any>,
                  value: seq,
 		 type: corba/orb/create-sequence-tc(orb,
@@ -65,7 +65,7 @@ define sideways method \= (struct-1 :: <Structure>, struct-2 :: <Structure>)
 end method;
 
 define test struct-seq-test ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let SequenceTest = as(<SequenceTest>, corba/orb/file-to-object(orb, *SequenceTest-ior-file*));
   let seq = make(limited(CORBA/<sequence>, of: <Structure>));
   for (i :: <integer> from 0 below 10)
@@ -87,7 +87,7 @@ define test struct-seq-test ()
 
   // CORBA/<any> coercion
   check-true("Coerce sequence<Structure> to any", instance?(as(CORBA/<any>, seq), CORBA/<any>));
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let any = make(CORBA/<any>,
                  value: seq,
 		 type: corba/orb/create-sequence-tc(orb,
@@ -99,7 +99,7 @@ define test struct-seq-test ()
 end test;
 
 define test object-seq-test ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let SequenceTest = as(<SequenceTest>, corba/orb/file-to-object(orb, *SequenceTest-ior-file*));
   let seq = make(limited(CORBA/<sequence>, of: <TestObject>));
   for (i :: <integer> from 0 below 20)
@@ -121,7 +121,7 @@ define test object-seq-test ()
 
   // CORBA/<any> coercion
   check-true("Coerce sequence<TestObject> to any", instance?(as(CORBA/<any>, seq), CORBA/<any>));
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let any = make(CORBA/<any>,
                  value: seq,
 		 type: corba/orb/create-sequence-tc(orb,
@@ -136,7 +136,7 @@ define constant *short-name* = #['B', 'a', 't', 'm', 'a', 'n', ' ', 'a', 'n', 'd
 define constant *long-name* = #['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
 define test bounded-seq-test ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let SequenceTest = as(<SequenceTest>, corba/orb/file-to-object(orb, *SequenceTest-ior-file*));
   let short-name = make(SequenceTest/<BoundedString>);
   let long-name = make(SequenceTest/<BoundedString>);

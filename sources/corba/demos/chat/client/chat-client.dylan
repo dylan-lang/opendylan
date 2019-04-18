@@ -111,7 +111,7 @@ end method;
 
 define method chat-client-connect (client :: <chat-client>, filename :: <string>)
  => ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let reference = CORBA/Orb/file-to-object(orb, filename);
   client.chat-server := as(<ChatServer>, reference);
 end method;

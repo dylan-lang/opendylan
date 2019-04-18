@@ -131,7 +131,7 @@ end class;
 
 define method make-TestObject (id :: CORBA/<long>)
  => (object :: <TestObject-implementation>, reference :: <TestObject>)
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let root-poa = corba/orb/resolve-initial-references(orb, "RootPOA");
   let TestObject = make(<TestObject-implementation>, id: id);
   let objectid = portableserver/poa/activate-object(root-poa, TestObject);
@@ -142,7 +142,7 @@ end method;
 
 define method ior-string (object :: <TestObject>)
  => (ior :: CORBA/<string>)
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   corba/orb/object-to-string(orb, object);
 end method;
 
@@ -253,7 +253,7 @@ define constant *SequenceTest-ior-file* = "sequencetest.ior";
 
 define method start-SequenceTest-server () => ()
   // get reference to ORB
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
 
   // get reference to root POA (there will already be a listener, dispatcher,
   // and default receiver threads running)

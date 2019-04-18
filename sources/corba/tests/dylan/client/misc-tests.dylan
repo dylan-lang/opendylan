@@ -19,7 +19,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    "wildcards"
 
 define test context-checks ()
-  let orb :: corba/<orb> = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb :: corba/<orb> = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let default-context :: corba/<context> = corba/orb/get-default-context(orb);
 
   corba/context/set-one-value(default-context, "Foo", as(corba/<any>, "Bar"));

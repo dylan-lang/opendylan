@@ -23,7 +23,7 @@ define test typecode-kind-tests ()
   check-equal("struct typecode kind", CORBA/TypeCode/kind(class-typecode(<structure>)), #"tk-struct");
   check-equal("union typecode kind", CORBA/TypeCode/kind(class-typecode(<RLE-entity-1>)), #"tk-union");
   check-equal("enum typecode kind", CORBA/TypeCode/kind(class-typecode(<planet>)), #"tk-enum");
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   check-equal("sequence typecode kind",
 	      CORBA/TypeCode/kind(corba/orb/create-sequence-tc(orb, 10, corba/$string-typecode)),
 	      #"tk-sequence");
@@ -37,7 +37,7 @@ define test typecode-kind-tests ()
 end test;
 
 define test typecode-equal-tests ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   check("primitive typecode equal", CORBA/TypeCode/equal, corba/$string-typecode, corba/$string-typecode);
   check("complex typecode equal",
 	CORBA/TypeCode/equal,
@@ -125,7 +125,7 @@ define test typecode-default-index-tests ()
 end test;  
 
 define test typecode-length-tests ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   check-equal("typecode length",
 	      CORBA/TypeCode/length(corba/orb/create-sequence-tc(orb, 10, corba/$string-typecode)),
 	      10);
@@ -135,7 +135,7 @@ define test typecode-length-tests ()
 end test;  
 
 define test typecode-content-type-tests ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   check-equal("typecode content type",
 	      CORBA/TypeCode/content-type(corba/orb/create-sequence-tc(orb, 10, corba/$string-typecode)),
 	      corba/$string-typecode);

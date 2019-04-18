@@ -21,7 +21,7 @@ define method initialize-server ()
   let location-service = get-location-service();  
 
   // get reference to ORB
-  let orb = CORBA/ORB-init(make(CORBA/<arg-list>), "Functional Developer ORB");
+  let orb = CORBA/ORB-init(make(CORBA/<arg-list>), "Open Dylan ORB");
 
   // get reference to root POA, initially in the holding state
   let RootPOA = CORBA/ORB/resolve-initial-references(orb, "RootPOA");

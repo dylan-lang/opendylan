@@ -24,7 +24,7 @@ define function destroy-definitions (#rest definitions)
 end function;
 
 define test setup ()
-  let orb = corba/orb-init(make(CORBA/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(CORBA/<arg-list>), "Open Dylan ORB");
   *repository* := as(corba/<repository>, corba/orb/resolve-initial-references(orb, "InterfaceRepository"));
   check-false("Reference to interface repository is not nil", corba/object/is-nil(*repository*));
   *back-end*.ir-back-end-repository := *repository*;

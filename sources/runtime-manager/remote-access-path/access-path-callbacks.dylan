@@ -13,7 +13,7 @@ end class;
 
 define method initialize (path :: <AccessPath-implementation>, #key)
   next-method();
-  let orb = CORBA/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = CORBA/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let root-poa = CORBA/Orb/resolve-initial-references(orb, "RootPOA");
   let poa =
     PortableServer/POA/create-poa(root-poa, "Access Path CallBack POA",

@@ -27,7 +27,7 @@ end method;
 define sideways method ensure-any-typecode-consistent
     (typecode :: <object-reference-typecode>, servant :: portableserver/<servant>)
  => (coerce? :: <boolean>, new-value :: corba/<object>)
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let current = corba/orb/resolve-initial-references(orb, "POACurrent");
   let poa = portableserver/current/get-poa(current);
   values(#t, as(typecode-native-type(typecode),

@@ -15,7 +15,7 @@ end method;
 
 define method orb-interface-repository ()
  => (orb :: corba/<orb>, ir :: corba/<repository>)
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   values(orb, as(corba/<repository>, corba/orb/resolve-initial-references(orb, "InterfaceRepository")));
 end method;
 

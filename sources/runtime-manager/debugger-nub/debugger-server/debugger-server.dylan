@@ -95,7 +95,7 @@ define method Rtmgr/NubServer/CreateNub
   // has written its reference
   wait-for-application-event(event);
 
-  let orb = CORBA/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = CORBA/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
 
   let remote-nub = 
     as(Rtmgr/<RemoteNub>,
@@ -225,7 +225,7 @@ define constant $DebuggerServerPort = 7777;
 define method start-debugger-server
     (#key refresh :: <function> = method () => () end)
  => (server :: <NubServer-implementation>)
-  let orb = CORBA/orb-init(make(CORBA/<arg-list>), "Functional Developer ORB");
+  let orb = CORBA/orb-init(make(CORBA/<arg-list>), "Open Dylan ORB");
 
   // First, set up Port agreed with Client Debugger
   orb-service-port(orb) := $DebuggerServerPort;

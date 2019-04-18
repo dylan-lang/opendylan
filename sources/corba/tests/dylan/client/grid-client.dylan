@@ -10,7 +10,7 @@ define constant $grid-ior-file :: <string> = "grid.ior";
 define constant $wrong-grid-ior-file :: <string> = "wrong-grid.ior";
 
 define test grid-request-tests ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let context = corba/orb/get-default-context(orb);
   let reference = as(<grid>, corba/orb/file-to-object(orb, $grid-ior-file));
   let width = 7;
@@ -49,7 +49,7 @@ end suite;
 define method grid/asynch-height (object :: <grid>)
  => (result :: corba/<short>)
   let (result, request) = corba/object/create-request(object,
-					       corba/orb/get-default-context(corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB")),
+					       corba/orb/get-default-context(corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB")),
 					       "_get_height",
 					       make(corba/<nvlist>),
 					       make(corba/<namedvalue>,

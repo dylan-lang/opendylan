@@ -67,7 +67,7 @@ end test;
 //end test;
 
 define test struct-in-parameter-test ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let context = corba/orb/get-default-context(orb);
   let structtest = as(<structtest>, corba/orb/file-to-object(orb, *structtest-ior-file*));
   check-true("<StructureA> in parameter", structtest/in-parameter-a(structtest, *struct-a*));
@@ -77,7 +77,7 @@ define test struct-in-parameter-test ()
 end test;
 
 define test struct-result-test ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let context = corba/orb/get-default-context(orb);
   let structtest = as(<structtest>, corba/orb/file-to-object(orb, *structtest-ior-file*));
   check-equal("<StructureA> result", structtest/result-a(structtest), *struct-a*);

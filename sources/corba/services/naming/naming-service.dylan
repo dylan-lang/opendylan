@@ -45,7 +45,7 @@ define sealed domain make(singleton(<naming-service>));
 
 define sealed method initialize (object :: <naming-service>, #key)
   next-method();
-  object.naming-service-orb := CORBA/orb-init(make(CORBA/<arg-list>), "Functional Developer ORB");
+  object.naming-service-orb := CORBA/orb-init(make(CORBA/<arg-list>), "Open Dylan ORB");
   let root-poa = CORBA/orb/resolve-initial-references(object.naming-service-orb, "RootPOA");
   object.naming-service-poa := PortableServer/POA/create-poa(root-poa, "Naming Context POA", #f);
   let poa-manager = PortableServer/POA/the-poamanager(object.naming-service-poa);

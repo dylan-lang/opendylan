@@ -100,7 +100,7 @@ define method create-account
     (bank :: <demo-bank>, class :: subclass(<account>), servant-class :: subclass(<demo-account>),
      #rest initargs)
  => (object :: <account>)
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let root-poa = corba/orb/resolve-initial-references(orb, "RootPOA");
   let account-poa = portableserver/poa/find-poa(root-poa, bank/poa-name(bank), #t);
   let account = apply(make, servant-class, initargs);
@@ -112,7 +112,7 @@ end method;
 
 define method bank/deleteAccount (bank :: <demo-bank>, reference :: <account>)
  => ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let root-poa = corba/orb/resolve-initial-references(orb, "RootPOA");
   let account-poa = portableserver/poa/find-poa(root-poa, bank/poa-name(bank), #t);
   let objectid = portableserver/poa/reference-to-id(account-poa, reference);
@@ -126,7 +126,7 @@ end method;
 
 define method start-bank-server ()
   // get reference to ORB
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
 
   // get reference to root POA (there will already be a listener, dispatcher,
   // and default receiver threads running)

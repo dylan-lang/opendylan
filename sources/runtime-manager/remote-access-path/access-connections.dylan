@@ -46,7 +46,7 @@ define method initialize
 
   next-method();
 
-  let orb = CORBA/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = CORBA/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let location =
     make(IIOP/<location>,
 	 repository-id: $RepositoryID,

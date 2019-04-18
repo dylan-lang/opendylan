@@ -22,7 +22,7 @@ define method initialize (object :: <demo-account>, #key bank)
     error(make(bank/<reject>, reason: "cannot create new account with same name"));
   end if;
   element(accounts, id) := object;
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let root-poa = corba/orb/resolve-initial-references(orb, "RootPOA");
   portableserver/poa/activate-object(root-poa, object);
 end method;
@@ -72,7 +72,7 @@ end method;
 
 define method bank/deleteAccount (object :: <demo-bank>, reference :: <account>)
  => ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let root-poa = corba/orb/resolve-initial-references(orb, "RootPOA");
   let account = portableserver/poa/reference-to-servant(root-poa, reference);
   let id = as(<symbol>, account/name(account));
@@ -88,7 +88,7 @@ define variable *bank-ior-file* :: <string> = "bank-0.ior";
 
 define method start-bank-server ()
   // get reference to ORB
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
 
   // get reference to root POA (there will already be a listener, dispatcher,
   // and default receiver threads running)

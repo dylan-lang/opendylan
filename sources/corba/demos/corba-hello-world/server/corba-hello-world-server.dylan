@@ -17,7 +17,7 @@ define method world/hello (world :: <world-implementation>)
 end method;
 
 define method main () => ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let poa = corba/orb/resolve-initial-references(orb, "RootPOA");
   let impl = make(<world-implementation>);
   let world = portableserver/poa/servant-to-reference(poa, impl);
