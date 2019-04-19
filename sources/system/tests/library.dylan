@@ -35,6 +35,10 @@ define module system-test-suite
   use settings-internals;
   use simple-xml;
 
+  // TODO(cgay): get rid of this because it causes all the common-dylan tests
+  // to be registered, and also slows compilation. Whatever's being used from
+  // this needs to be factored out into a library that can be shared and has no
+  // tests in it.
   use common-dylan-test-suite;        // For generic stream testing
 
   use testworks;

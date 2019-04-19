@@ -59,6 +59,9 @@ system Library
   enable using the ``load-library`` function on all supported
   platforms.
 
+* A `bug in delete-directory:file-system:system
+  <https://github.com/dylan-lang/opendylan/issues/1227>`_ was fixed.
+
 c-ffi Library
 -------------
 
