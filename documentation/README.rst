@@ -8,8 +8,9 @@ Preparation
 
 Before building this documentation, you will need a copy of Sphinx installed.
 The easiest way to do this is to get it from the `Python Package Index
-<http://pypi.python.org/pypi/Sphinx>`_ or to use ``easy_install``::
-
+<http://pypi.python.org/pypi/Sphinx>`_ or to use ``pip`` or ``easy_install``::
+ 
+    sudo pip install Sphinx
     sudo easy_install -U Sphinx
 
 You will also need to have the git submodule for our Sphinx extension
