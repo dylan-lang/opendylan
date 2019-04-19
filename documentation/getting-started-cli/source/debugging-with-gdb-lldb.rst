@@ -5,21 +5,21 @@ Debugging with GDB or LLDB
    rather than gdb.
    :class: alert alert-block alert-warning
 
-Which compiler backend are you using?
-=====================================
+Which compiler back-end are you using?
+======================================
 
-If you are using the C backend, then the information discussed here
-will be useful for debugging. We use the C backend on 64 bit Linux,
+If you are using the C back-end, then the information discussed here
+will be useful for debugging. We use the C back-end on 64 bit Linux,
 64 bit FreeBSD and all macOS versions.
 
-If you're using the HARP backend (32 bit Linux or 32 bit FreeBSD), then
+If you're using the HARP back-end (32 bit Linux or 32 bit FreeBSD), then
 you'll be limited to getting stack traces.
 
 
-Debugging with the C backend
-============================
+Debugging with the C back-end
+=============================
 
-Debugging with the C backend is not a perfect experience but it is
+Debugging with the C back-end is not a perfect experience but it is
 improving.
 
 Finding the generated C files
@@ -228,12 +228,12 @@ and will assist you in analyzing values.
 
    Print some information about the given object to ``stdout``.
 
-Debugging with the HARP backend
-===============================
+Debugging with the HARP back-end
+================================
 
 As mentioned previously, this is largely limited to getting stack
 traces.  If you try to run a Dylan application built with the
-HARP backend under the debugger, you may need to adjust your
+HARP back-end under the debugger, you may need to adjust your
 debugger's signal handling as the Memory Pool System GC that is
 used employs the ``SIGSEGV`` signal.
 

@@ -366,7 +366,7 @@ the type variables are passed around while the signature is
 checked.
 
 After Dylan code is converted, it is in a representation which can
-be passed to a backend to generate code. Modeling objects have
+be passed to a back-end to generate code. Modeling objects have
 corresponding compile and run time objects, and are prefixed with
 an ampersand, e.g., ``<&object>``.
 
