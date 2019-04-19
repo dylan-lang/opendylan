@@ -20,7 +20,7 @@ define open generic adaptor-create-reference (adaptor :: <adaptor>, location :: 
 
 define variable *open-dylan-orb* = #f;
 
-define constant $orb-service-port :: <integer> = 3672; //  NB registered with IANA as "harlequinorb"
+define constant $orb-service-port :: <integer> = 3672; //  NB registered with IANA as "lispworks-orb"
 
 define constant <orb-state> = one-of(#"uninitialized", #"running", #"shutdown");
 
