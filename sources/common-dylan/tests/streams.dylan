@@ -164,9 +164,8 @@ end function register-stream-test;
 define method test-stream
     (test-info :: <stream-test-info>) => ()
   let class-info = test-info.info-class-info;
-  for (class :: subclass(<stream>) in key-sequence($stream-tests))
+  for (tests keyed-by class :: subclass(<stream>) in $stream-tests)
     if (subtype?(class-info.info-class, class))
-      let tests = $stream-tests[class];
       for (test-function-info :: <stream-test-function-info> in tests)
         let test-function = test-function-info.info-test-function;
         let test-function-direction = test-function-info.info-direction;
