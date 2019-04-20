@@ -108,7 +108,31 @@ define file-system function-test create-directory ()
 end;
 
 define file-system function-test delete-directory ()
-  //---*** Fill this in.
+  // Verify that deleting an empty directory with recursive?: #t works.  This
+  // is a regression test for
+  // https://github.com/dylan-lang/opendylan/issues/1227.
+  let test-dir = test-temp-directory();
+  let dir1 = subdirectory-locator(test-dir, "dir1");
+  // TODO(cgay): create-directory should take the directory to create
+  // as a single <directory-locator> argument.
+  create-directory(test-dir, "dir1");
+  assert-true(file-exists?(dir1));
+  delete-directory(dir1, recursive?: #t);
+  assert-false(file-exists?(dir1));
+
+  // Let's also make sure the other case works...
+  let dir2 = subdirectory-locator(test-dir, "dir2");
+  let subs = subdirectory-locator(dir2, "dir3", "dir4");
+  let file = merge-locators(as(<file-locator>, "file"), subs);
+  ensure-directories-exist(subs);
+  with-open-file (stream = file, direction: #"output")
+    write(stream, "stuff");
+  end;
+  assert-true(file-exists?(file), "dirs and file created?");
+  assert-signals(<file-system-error>, delete-directory(dir2));
+  assert-true(file-exists?(file), "file still there?");
+  delete-directory(dir2, recursive?: #t);
+  assert-false(file-exists?(dir2));
 end;
 
 define file-system function-test ensure-directories-exist ()

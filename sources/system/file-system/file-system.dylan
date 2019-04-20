@@ -372,14 +372,12 @@ define method delete-directory
     for (file in directory-contents(directory))
       if (instance?(file, <directory-locator>))
         delete-directory(file, recursive?: #t);
-        %delete-directory(file);
       else
         delete-file(file);
       end;
     end;
-  else
-    %delete-directory(directory);
   end;
+  %delete-directory(directory);
 end method delete-directory;
 
 define method delete-directory
