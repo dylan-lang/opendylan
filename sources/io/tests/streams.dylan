@@ -707,17 +707,6 @@ end;
 
 /// Miscellaneous stream tests
 
-/*---*** andrewa: not currently used
-define constant $line-end :: <string>
-  = select ($os-name)
-      #"win32" => "\r\n";
-      #"carbon" => "\r";
-      otherwise => "\n";
-    end;
-
-define constant $line-boundary :: <character> = $line-end.first;
-*/
-
 // This is a hack to replace the uses of stream-contents in the existing
 // test suite.  Stream contents can't be used on output file streams.
 // There are problems with opening multiple streams to a single

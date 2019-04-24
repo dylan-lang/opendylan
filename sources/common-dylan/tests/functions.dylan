@@ -184,13 +184,13 @@ define common-extensions function-test float-to-string ()
 end function-test float-to-string;
 
 define common-extensions function-test ignorable ()
-  assert-no-errors(ignorable(this-is-undefined),
-                   "ignorable doesn't crash on undefined variables");
+  assert-signals(<error>, ignorable(this-is-undefined),
+                 "ignorable crashes on undefined variables");
 end;
 
 define common-extensions function-test ignore ()
-  assert-no-errors(ignore(this-is-undefined),
-                   "ignore doesn't crash on undefined variables");
+  assert-signals(<error>, ignore(this-is-undefined),
+                 "ignore crashes on undefined variables");
 end;
 
 define constant $integer-string-mappings
