@@ -625,7 +625,6 @@ end test;
 define constant $line-end :: <string>
   = select ($os-name)
       #"win32" => "\r\n";
-      #"darwin" => "\r";
       otherwise => "\n";
     end;
 
