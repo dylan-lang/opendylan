@@ -8,12 +8,42 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// XML class hierarchy
 
+define generic document-element
+    (document :: <xml-document>)
+ => (element :: false-or(<xml-element>));
+define generic document-element-setter
+    (new-value :: false-or(<xml-element>), document :: <xml-document>)
+ => (_ :: false-or(<xml-element>));
+define generic document-location
+    (document :: <xml-document>)
+ => (location :: <file-locator>);
+define generic document-location-setter
+    (new-value :: <file-locator>, document :: <xml-document>)
+ => (location :: <file-locator>);
+
 define class <xml-document> (<object>)
   slot document-location :: <file-locator>,
     required-init-keyword: location:;
   slot document-element :: false-or(<xml-element>) = #f,
     init-keyword: element:;
 end class <xml-document>;
+
+define generic node-children
+    (node :: <xml-element>) => (children :: <vector>);
+define generic node-attributes
+    (node :: <xml-element>) => (attributes :: <string-table>);
+define generic node-attribute
+    (xml-element :: <xml-element>, attribute :: <string>)
+ => (value :: false-or(<string>));
+define generic node-attribute-setter
+    (value :: <string>, xml-element :: <xml-element>, attribute :: <string>)
+ => (value :: <string>);
+define generic node-name
+    (node :: <xml-element>) => (name :: <string>);
+define generic node-text
+    (node :: <xml-element>) => (text :: <string>);
+define generic node-text-setter
+    (new-value :: <string>, node :: <xml-element>) => (new-value :: <string>);
 
 define class <xml-node> (<object>)
 end class <xml-node>;

@@ -20,11 +20,13 @@ define module-spec date ()
                         <integer>, <integer>)
            => (<date>);
   function decode-date (<date>)
-            => (<integer>, <integer>, <integer>, <integer>,
-                <integer>, <integer>, <day-of-week>, <integer>);
+           => (<integer>, <integer>, <integer>, <integer>,
+               <integer>, <integer>, <day-of-week>, <integer>);
   function parse-iso8601-string (<string>) => (<date>);
+/* Commented out until https://github.com/dylan-lang/testworks/issues/97 is fixed.
   open generic-function \= (<date>, <date>) => (<boolean>);
   open generic-function \< (<date>, <date>) => (<boolean>);
+ */
   sealed generic-function date-year (<date>) => (<integer>);
   sealed generic-function date-month (<date>) => (<integer>);
   sealed generic-function date-day (<date>) => (<integer>);
@@ -250,8 +252,8 @@ define module-spec simple-xml ()
   // Functions
   function document-location (<xml-document>) =>  (<locator>);
   function document-location-setter (<locator>, <xml-document>) =>  (<locator>);
-  function document-element (<xml-document>) =>  (<xml-element>);
-  function document-element-setter (<xml-element>, <xml-document>) =>  (<xml-element>);
+  function document-element (<xml-document>) => (false-or(<xml-element>));
+  function document-element-setter (false-or(<xml-element>), <xml-document>) => (false-or(<xml-element>));
   function read-xml-document (<locator>) =>  (<xml-document>);
   function node-attribute (<xml-element>, <string>) => (false-or(<string>));
   function node-attribute-setter (<string>, <xml-element>, <string>) => (<string>);
