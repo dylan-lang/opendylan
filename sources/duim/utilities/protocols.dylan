@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Given a name, defines an abstract class (no slots, but may have methods
 // that are implemented purely by calling functions in the advertised protocol),
-// and the predicates.  For example, 'define protocol class sheet (object) end'
+// and the predicates.  For example, 'define protocol-class sheet (<object>) end'
 // creates the class <sheet>, the generic function 'sheet?', and two methods for
 // 'sheet?', one on <sheet> and one on <object>.
 define macro protocol-class-definer
