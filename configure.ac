@@ -83,7 +83,7 @@ $module is required to build Open Dylan])
   AC_MSG_RESULT(yes)
 done
 
-AC_CHECK_PROGS(DYLANCOMPILER, dylan-compiler opendylan minimal-console-compiler, no)
+AC_PATH_PROGS(DYLANCOMPILER, dylan-compiler opendylan minimal-console-compiler, no)
 test "$DYLANCOMPILER" = no && AC_MSG_ERROR([
 dylan-compiler, opendylan or minimal-console-compiler is required to bootstrap Open Dylan. Please download and install a build from http://opendylan.org/download/index.html])
 # In 2014.1 and later we need -verbose so fdmake.pl gets warning count summaries.
