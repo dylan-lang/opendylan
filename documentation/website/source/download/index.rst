@@ -42,8 +42,9 @@ The `source code <https://github.com/dylan-lang/opendylan/tree/v2019.1.0>`_ is
 available under an open source license in the `"dylan-lang" organization on
 GitHub`_.
 
+
 Installation on Windows
------------------------
+=======================
 
 .. warning:: The 32 bit version of Open Dylan IDE does **not** work on 64 bit
    Windows **prior** to Windows 8.  There is no workaround at this time,
@@ -74,10 +75,14 @@ You may instead start a Pelles C interactive shell and run
 ``C:\Program Files\Open Dylan\bin\win32-environment.exe``, but this
 won't help if you want to run Open Dylan via the Start menu.
 
-Installation on Mac OS X, FreeBSD, Linux
-----------------------------------------
 
-Note that these versions only have a command-line compiler and no IDE.
+Installation on Unix
+====================
+
+Note that Unix versions only have a command-line compiler and no IDE.
+
+* All Unix platforms must have the Boehm GC installed.  For example, ``apt-get
+  install libgc-dev`` on Ubuntu.
 
 * The README file inside the tarball describes installation and basic
   usage. The easiest way is extracting the tarball in /opt.
@@ -85,20 +90,32 @@ Note that these versions only have a command-line compiler and no IDE.
 * The Linux and FreeBSD platforms should have gcc installed, in order to allow
   linking.
 
-* All three platforms must have the Boehm GC installed.  For example, ``apt-get
-  install libgc-dev`` on Ubuntu.
+* On Arch Linux you may use the following recipe instead::
+
+    git clone https://aur.archlinux.org/opendylan.git
+    cd opendylan
+    makepkg -si
+
+* On macOS you may use this recipe instead::
+
+    brew tap dylan-lang/dylan
+    brew install opendylan       # or brew upgrade opendylan
 
 
-Installation from source
-------------------------
+Building from source
+====================
 
 You can read more about installing Open Dylan from the source files
 in the `README <https://github.com/dylan-lang/opendylan/blob/master/README.rst>`_.
 That file contains the instructions on how to obtain the source code, the required
 dependencies and how to build it.
 
+Note that you will still need to install a binary distribution with which to
+bootstrap, since the Dylan compiler is written in Dylan.
+
+
 Get Started!
-------------
+============
 
 If you're new to Dylan, you'll want to check out these handy resources:
 
@@ -114,6 +131,7 @@ If you're new to Dylan, you'll want to check out these handy resources:
 * `Open Dylan Documentation <http://opendylan.org/documentation/>`_:
    All of the Open Dylan documentation.
 
+
 Older Versions
 ==============
 
@@ -128,6 +146,6 @@ Old builds can be found by browsing the `download directories`_.
 .. _opendylan-2019.1-x86-freebsd.tar.bz2: https://opendylan.org/downloads/opendylan/2019.1/opendylan-2019.1-x86-freebsd.tar.bz2
 .. _opendylan-2019.1-x86_64-freebsd.tar.bz2: https://opendylan.org/downloads/opendylan/2019.1/opendylan-2019.1-x86_64-freebsd.tar.bz2
 .. _Windows Notes: #installation-on-windows
-.. _Unix Notes: #installation-on-mac-os-x-freebsd-linux
+.. _Unix Notes: #installation-on-unix
 .. _download directories: http://opendylan.org/downloads/opendylan/
 .. _"dylan-lang" organization on GitHub: https://github.com/dylan-lang/
