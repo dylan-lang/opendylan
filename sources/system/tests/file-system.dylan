@@ -16,7 +16,6 @@ register-stream-class-info("<file-stream>", <file-stream>,
 define sideways method make-stream-tests-of-size
     (class :: subclass(<file-stream>), stream-size :: <integer>)
  => (streams :: <sequence>)
-  let class-info = stream-class-info(<wrapper-stream>);
   let tests :: <stretchy-object-vector> = make(<stretchy-object-vector>);
   //---*** Nothing yet...
   tests
