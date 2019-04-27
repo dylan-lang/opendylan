@@ -12,9 +12,8 @@ my $platform_name = $ENV{'OPEN_DYLAN_TARGET_PLATFORM'};
 
 my $user_root = $ENV{'OPEN_DYLAN_USER_ROOT'};
 my $user_registries = $ENV{'OPEN_DYLAN_USER_REGISTRIES'};
-my $user_sources = $ENV{'OPEN_DYLAN_USER_SOURCES'};
 
-my $build_logs = $ENV{'OPEN_DYLAN_BUILD_LOGS'};
+my $build_logs = File::Spec->catdir($user_root, 'logs');
 
 my $lldb_arguments = "-o \"b Kdisplay_conditionYcommand_linesVenvironment_commandsI\"";
 my $verbose;
@@ -33,7 +32,7 @@ my %built;
 my %deps;
 
 foreach my $library (@ARGV) {
-    if(!&build_library($library)) {
+    if(!&build_library($library, 1)) {
         print STDERR "fdmake: Unable to build library $library\n";
         exit 1;
     }
@@ -45,7 +44,7 @@ exit 0;
 # Builds the given libraries from source
 #
 sub build_library {
-    my ($library) = @_;
+    my ($library, $direct) = @_;
 
     if (exists $built{$library}) {
         return $built{$library};
@@ -113,8 +112,8 @@ sub build_library {
 
     if(defined $deps{$library}) {
         foreach my $dep (@{$deps{$library}}) {
-            my $date = &build_library($dep);
-            if (!$needs_rebuild && $date > $dbdate) {
+            my $date = &build_library($dep, 0);
+            if (!$needs_rebuild && ($date eq 'indirect' or $date > $dbdate)) {
                 #print "library $dep causes rebuild of $library\n";
                 $needs_rebuild = 1;
             }
@@ -148,7 +147,10 @@ sub build_library {
         return $dbdate;
     }
 
-    print "Building $library... ";
+    if (!$direct) {
+        $built{$library} = 'indirect';
+        return 'indirect';
+    }
 
     my $command = $compiler;
     if ($debugger) {
@@ -188,16 +190,27 @@ sub build_library {
             if (defined $logfd) {
                 print $logfd $_;
             }
-            if(m|There were (\d+) warnings, (\d+) serious warnings and (\d+) errors|) {
-                $warnings += $1;
-                $serious_warnings += $2;
-                $errors += $3;
+
+            if (m|Updating definitions for library (.*)|) {
+                print "Compiling $1... ";
+
+            }
+            elsif(m|There were (\d+) warnings, (\d+) serious warnings and (\d+) errors|) {
+                $warnings = $1;
+                $serious_warnings = $2;
+                $errors = $3;
+
+                print "${warnings} W, ${serious_warnings} SW, ${errors} E\n";
+                $printed = 0;
             }
             elsif (m/^(.+):(\d+(-\d+)?): (Serious warning|Warning|Error) - (.+)/) {
                 if (!$printed) {
                     print "\n";
                     $printed = 1;
                 }
+                print $_;
+            }
+            elsif (m|^Linking (\S+)$|) {
                 print $_;
             }
 
@@ -227,9 +240,6 @@ sub build_library {
                 print $_;
             }
        }
-
-        my $elapsed_time = sprintf '%.3f', time() - $start_time;
-        print "${warnings} W, ${serious_warnings} SW, ${errors} E (${elapsed_time} seconds)\n";
 
         if (defined $logfd) {
             close($logfd);
@@ -319,7 +329,7 @@ sub invoke_tool {
         my $output = File::Spec->catfile($dir, $header->{'output'});
 
         if (!-f $output || (stat $source)[9] > (stat $output)[9]) {
-            &build_library('parser-compiler')
+            &build_library('parser-compiler', 1)
                 or die "Can't build parser-compiler";
             my $parser_compiler
                 = File::Spec->catfile($user_root, 'bin', 'parser-compiler');
@@ -395,7 +405,7 @@ sub invoke_tool {
         }
 
         if ($needs_rebuild) {
-            &build_library('minimal-console-scepter')
+            &build_library('minimal-console-scepter', 1)
                 or die "Can't build scepter";
             my $scepter
                 = File::Spec->catfile($user_root,

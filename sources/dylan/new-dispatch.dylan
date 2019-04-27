@@ -220,7 +220,7 @@ define function multiple-objects-locked? (cells :: <list>, token) => (ans);
             else
               let cell :: <pair> = head(cells);
               let obj = head(cell);
-              let nxt :: <list> = tail(cells);
+              let nxt :: <list> = %proper-list-tail(cells);
               local method checklock (l :: <list>)
                       if (l == #())
                         peruse(nxt, recursive-losers)
@@ -294,7 +294,7 @@ end function;
 
 define function end-locking-object-cell (cell :: <pair>)
   let data :: <list> = *object-lock-data*;
-  let first-l :: <list> = tail(data);
+  let first-l :: <list> = %proper-list-tail(data);
   if (cell == data)
     *object-lock-data* := tail(data)
   else
@@ -302,7 +302,7 @@ define function end-locking-object-cell (cell :: <pair>)
       if (l == #())
         #f                    // This means we aborted before getting the lock.
       else
-        let nxt :: <list> = tail(l);
+        let nxt :: <list> = %proper-list-tail(l);
         if (l == cell)
           tail(prev) := nxt;
         else sigh(l, nxt)
@@ -907,8 +907,10 @@ define constant $second-hash-mask :: <integer> = 15;
 define inline function %hckd-hash-step
     (key :: <integer>, d :: <hashed-class-keyed-discriminator>) => (step :: <integer>, mask :: <integer>)
   let log2size :: <integer> = %load-byte(ckd$v-log2size, ckd$s-log2size, properties(d));
-  values(vector-element($second-hash-values,
-                        logand(%scale-down(key, log2size), $second-hash-mask)),
+  values(primitive-the(<integer>,
+                       vector-element($second-hash-values,
+                                      logand(%scale-down(key, log2size),
+                                             $second-hash-mask))),
          %twopower(log2size) - 2)
 end function;
 
@@ -1240,7 +1242,7 @@ define function make-linear-singleton-discriminator
               error("fmh")
             else
               vector-element(v, i) := head(l);
-              let nxt :: <list> = tail(l);
+              let nxt :: <list> = %proper-list-tail(l);
               loop(i + 2, nxt)
             end if
           end unless

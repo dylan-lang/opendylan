@@ -14,12 +14,10 @@ define module tool-scepter
   use file-system;
   use locators;
   use tools-interface;
-  use scepter;
   use scepter-driver;
   use scepter-front-end;
   use scepter-back-end;
   use scepter-error;
   use scepter-utilities;
   use scepter-file-front-end;
-  
 end module;

@@ -783,15 +783,20 @@ define inline function ins--tail-call
   apply(ins--call, builder, fnptrval, args, tail-call?: #t, options)
 end function;
 
+define method llvm-builder-declare-intrinsic
+    (builder :: <llvm-builder>, name :: <string>, args :: <sequence>)
+ => (function :: <llvm-function>);
+  let function :: <llvm-function> = $llvm-intrinsic-makers[name](args);
+  llvm-builder-declare-global(builder, function.llvm-global-name, function);
+end method;
+
 define inline function ins--call-intrinsic
     (builder :: <llvm-builder>, name :: <string>, args :: <sequence>,
      #rest options)
  => (instruction :: <llvm-instruction>);
   let args = map(curry(llvm-builder-value, builder), args);
-  let function :: <llvm-function> = $llvm-intrinsic-makers[name](args);
   let function :: <llvm-function>
-    = llvm-builder-declare-global(builder, function.llvm-global-name,
-                                  function);
+    = llvm-builder-declare-intrinsic(builder, name, args);
   apply(ins--call, builder, function, args,
         attribute-list: function.llvm-function-attribute-list,
         options)

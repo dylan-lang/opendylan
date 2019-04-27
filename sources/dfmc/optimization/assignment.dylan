@@ -104,15 +104,13 @@ end method convert-set-cell-value!;
 
 // Once boxing has been completed we introduce additional temporaries in the
 // consequent branch of conditionals to improve typing precision.
-// We do this when the conditional has one of the following forms:
+// We do this when the conditional has the following form:
 //
-//    if (x) ...                         if (instance?(x, y)) ...
+//    if (x) ...
 //
-// In the first case we introduce a new temporary for the duration of the
+// In this case we introduce a new temporary for the duration of the
 // consequent branch whose type is the inferred type for x with any #f
 // component removed.
-// In the second case the temporary's type is the intersection of the type
-// of x and y.  We only do this transformation for unboxed variables.
 //
 // The temporaries are introduced via a new kind of temporary-transfer
 // computation called <constrain-type>.  The type component of this
@@ -171,19 +169,6 @@ define method maybe-rename-temporaries-in-conditional
   let (rename?, to-be-renamed, constraint) =
     if (instance?(gen-arg0, <lexical-variable>))
       values(#t, gen-arg0, type-minus-false(type-estimate(gen-arg0)))
-    elseif (instance?(gen-arg0, <temporary>))
-      let gen-gen = gen-arg0.generator;
-      if (instance?(gen-gen, <simple-call>))
-        let (constant?, value) = fast-constant-value?(gen-gen.function);
-        if (constant? & (value == dylan-value(#"instance?"))
-              & size(gen-gen.arguments) > 1)   // so that can do [1]
-          let (constant-type?, constant-type) =
-            fast-constant-value?(gen-gen.arguments[1]);
-          if (constant-type?)
-            values(#t, gen-gen.arguments[0], gen-gen.arguments[1])
-          end;
-        end;
-      end;
     end;
   if (rename?) // So we need to introduce a new temporary
     let (tt-c, tt-t) =

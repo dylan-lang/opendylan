@@ -994,11 +994,12 @@ define method op--stack-allocate-closure
 
   // Copy from the template
   let fixed-size = header-words + ^instance-storage-size(class);
-  let byte-size = fixed-size * word-size;
+  let byte-size
+    = llvm-back-end-value-function(back-end, fixed-size * word-size);
 
   let closure-raw = op--raw-pointer-cast(back-end, closure);
-  ins--call-intrinsic(back-end, "llvm.memcpy",
-                      vector(closure-raw, template, byte-size, $llvm-false));
+  op--memcpy(back-end, closure-raw, template, byte-size, $llvm-false,
+             dst-alignment: word-size, src-alignment: word-size);
 
   // Initialize the size slot
   let size-slot-ptr

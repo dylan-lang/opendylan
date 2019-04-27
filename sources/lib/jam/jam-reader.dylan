@@ -33,7 +33,10 @@ define function jam-read-file
     = with-open-file(stream = jamfile)
         read-to-end(stream)
       end;
-  jam-read(jam, input-data, jamfile)
+  jam-read(jam, input-data, jamfile);
+  let jamfile-name = as(<string>, jamfile);
+  jam.%jam-jamfiles[jamfile-name]
+    := file-property(jamfile, #"modification-date");
 end;
 
 define function jam-read

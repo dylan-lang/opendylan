@@ -83,7 +83,7 @@ $module is required to build Open Dylan])
   AC_MSG_RESULT(yes)
 done
 
-AC_CHECK_PROGS(DYLANCOMPILER, dylan-compiler opendylan minimal-console-compiler, no)
+AC_PATH_PROGS(DYLANCOMPILER, dylan-compiler opendylan minimal-console-compiler, no)
 test "$DYLANCOMPILER" = no && AC_MSG_ERROR([
 dylan-compiler, opendylan or minimal-console-compiler is required to bootstrap Open Dylan. Please download and install a build from http://opendylan.org/download/index.html])
 # In 2014.1 and later we need -verbose so fdmake.pl gets warning count summaries.
@@ -97,6 +97,14 @@ else
   test "$DYLANCOMPILER" = minimal-console-compiler && DYLANCOMPILER="$DYLANCOMPILER -build"
   AC_MSG_RESULT(no)
 fi
+AC_MSG_CHECKING(if $DYLANCOMPILER supports the -jobs flag)
+if $DYLANCOMPILER -version -jobs 1 >/dev/null 2>&1 ; then
+  DYLANCOMPILER="$DYLANCOMPILER -jobs \$(DYLAN_JOBS)"
+  AC_MSG_RESULT(yes)
+else
+  AC_MSG_RESULT(no)
+fi
+
 AC_SUBST(DYLANCOMPILER)
 
 # TODO: figure out the bootstrap type given the fdcompile version
@@ -118,6 +126,16 @@ AS_IF([test -n "$SUPPORT_LLVM"],
               SUPPORT_LLVM=])
        rm -f conftest.bc conftest.o conftest.obj])
 AC_SUBST(SUPPORT_LLVM)
+
+DEFAULT_COMPILER_BACK_END=c
+SUPPORTED_COMPILER_BACK_ENDS=c
+AS_IF([test -n "$SUPPORT_HARP"],
+      [DEFAULT_COMPILER_BACK_END=harp
+       SUPPORTED_COMPILER_BACK_ENDS="harp $SUPPORTED_COMPILER_BACK_ENDS"])
+AS_IF([test -n "$SUPPORT_LLVM"],
+      [DEFAULT_COMPILER_BACK_END=llvm
+       SUPPORTED_COMPILER_BACK_ENDS="llvm $SUPPORTED_COMPILER_BACK_ENDS"])
+AC_SUBST(SUPPORTED_COMPILER_BACK_ENDS)
 
 AC_CHECK_PROGS([MAKE],[gnumake gmake make],[AC_MSG_ERROR([Unable to find a make program.])])
 if ! $MAKE --version | grep -q "GNU" 2> /dev/null; then
@@ -260,6 +278,7 @@ AC_LINK_IFELSE([], [AC_MSG_RESULT(none needed)],
 AS_ECHO(["
 Targeting '${target}' ('${OPEN_DYLAN_TARGET_PLATFORM}')
 
+  Default compiler back-end                               ${DEFAULT_COMPILER_BACK_END}
   LLVM support                                            ${SUPPORT_LLVM:-no}"])
 AS_IF([test -n "$SUPPORT_LLVM"],
       [AS_ECHO(["  LLVM back-end collector                                 ${LLVM_COLLECTOR}"])])

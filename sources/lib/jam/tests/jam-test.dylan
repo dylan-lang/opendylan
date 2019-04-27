@@ -233,6 +233,28 @@ define jam function-test jam-read ()
   //---*** Fill this in...
 end function-test jam-read;
 
+define jam function-test jam-state-stale? ()
+  let jam = make-test-instance(<jam-state>);
+  assert-false(jam-state-stale?(jam),
+               "pristine jam states are fresh");
+  let a = as(<file-locator>, "a.jam");
+  with-open-file (s = a, direction: #"output")
+    write(s, "Echo hello A ;");
+  end;
+  jam-read-file(jam, a);
+  assert-false(jam-state-stale?(jam),
+               "unmodified jamfiles keep state fresh");
+  sleep(2.0);
+  with-open-file (s = a, direction: #"output")
+    write(s, "Echo hello A Modified ;");
+  end;
+  assert-true(jam-state-stale?(jam),
+              "modified jamfiles make state stale");
+  delete-file(a);
+  assert-true(jam-state-stale?(jam),
+              "deleted jamfiles make state stale");
+end function-test jam-state-stale?;
+
 define jam function-test jam-rule ()
   //---*** Fill this in...
 end function-test jam-rule;

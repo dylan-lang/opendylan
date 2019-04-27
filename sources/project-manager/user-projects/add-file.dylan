@@ -46,7 +46,7 @@ define method project-add-file
   // check now if it exists ?
   //
   let extension = locator-extension(file-locator);
-  let file-type = file-type & as(<symbol>, extension);
+  let file-type = extension & as(<symbol>, extension);
   project-add-file-of-type(file-type, p, file-locator);
   save? & save-project(p);
 end;

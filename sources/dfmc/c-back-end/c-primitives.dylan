@@ -257,6 +257,9 @@ define generic emit-primitive-call
 // define &primitive-descriptor primitive-single-float-as-double;
 // define &primitive-descriptor primitive-double-float-as-single;
 //
+// // Type constraints
+// define &primitive-descriptor primitive-the;
+//
 // // Checks
 // define &primitive-descriptor primitive-instance?;
 // define &primitive-descriptor primitive-type-check;

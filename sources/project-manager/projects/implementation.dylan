@@ -267,32 +267,26 @@ define method make-project
 //  with-project-manager-transaction
   with-lock($pm-lock)
   with-used-project-cache
-    unless (platform-name)
-      platform-name := target-platform-name();
-    end;
-
-    local method platform-namestring-info (platform) => (architecture, os)
-      let name = as-lowercase(as(<string>, platform));
-      let separator-position = position(name, '-');
-      let architecture-name = copy-sequence(name, end: separator-position);
-      let os-name = copy-sequence(name, start: separator-position + 1);
-      values(as(<symbol>, architecture-name),
-             as(<symbol>, os-name))
-    end;
-
-    let (architecture, operating-system) = platform-namestring-info(platform-name);
-
-    // choose harp for platforms that have it, c for others
-    let back-end =
-      session-property(#"compiler-back-end")
-    | select (architecture)
-        #"x86" =>
-          select (operating-system)
-            #"darwin" => #"c";
-            otherwise => #"harp";
-          end;
-        otherwise => #"c";
-      end;
+    let platform-name = platform-name | target-platform-name();
+    let back-end
+      = session-property(#"compiler-back-end")
+      | begin
+          // Look for a default back-end configured in the build system
+          let build-system-name
+            = element(build-system-variable("SUPPORTED_COMPILER_BACK_ENDS"), 0,
+                      default: #f);
+          session-property(#"compiler-back-end")
+            := if (build-system-name)
+                 as(<symbol>, build-system-name)
+               else
+                 // If there's nothing configured, choose HARP for
+                 // platforms that have it, and C for others
+                 select (platform-name)
+                   #"x86-win32", #"x86-linux", #"x86-freebsd" => #"harp";
+                   otherwise => #"c";
+                 end
+               end if
+        end;
 
     debug-out(#"project-manager", "Make-project: %s parent: %s\n", key,
               parent & parent.project-name);

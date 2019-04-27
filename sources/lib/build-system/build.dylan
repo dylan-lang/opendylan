@@ -107,7 +107,6 @@ define method build-system
       let jam
         = make-jam-state(build-script,
                          compiler-back-end: compiler-back-end,
-                         progress-callback: wrap-progress-callback,
                          build-directory: directory);
       with-build-directory (directory)
         jam-read-mkf(jam, as(<file-locator>, $dylanmakefile));
@@ -127,4 +126,19 @@ define method build-system
       wrap-progress-callback(condition-to-string(e), error?: #t);
     end block;
   end with-open-file;
+end method;
+
+define method build-system-variable
+    (name :: <string>,
+     #key default :: false-or(<sequence>) = #[],
+          directory :: <directory-locator> = working-directory(),
+          build-script = default-build-script(),
+          compiler-back-end)
+ => (value :: false-or(<sequence>));
+  configure-build-system();
+  let jam
+    = make-jam-state(build-script,
+                     compiler-back-end: compiler-back-end,
+                     build-directory: directory);
+  jam-variable(jam, name, default: default)
 end method;

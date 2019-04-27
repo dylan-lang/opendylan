@@ -649,9 +649,8 @@ define c-callable auxiliary mapped-parameter &runtime-primitive-descriptor primi
   let src-byte-ptr = ins--bitcast(be, src-slot-ptr, $llvm-i8*-type);
 
   let vector-byte-size = ins--mul(be, current-size, word-size);
-  ins--call-intrinsic(be, "llvm.memcpy",
-                      vector(dst-byte-ptr, src-byte-ptr, vector-byte-size,
-                             $llvm-false));
+  op--memcpy(be, dst-byte-ptr, src-byte-ptr, vector-byte-size, $llvm-false,
+             dst-alignment: word-size, src-alignment: word-size);
 
   new-vector
 end;

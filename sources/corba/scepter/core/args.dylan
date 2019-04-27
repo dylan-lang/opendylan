@@ -225,7 +225,10 @@ define scepter-option
     usage: "/include:dir            - includes dir in search path for preprocessor",
     value?: #t,
     callback:      method (option, scepter)
-		     do(curry(push, *cpp-include-path*), option.scepter-option-values);
+                     let dirs = map(method (dir)
+                                      merge-locators(as(<directory-locator>, dir), scepter.scepter-directory)
+                                    end, option.scepter-option-values);
+		     do(curry(push, *cpp-include-path*), dirs);
 	           end method
 end scepter-option;
 

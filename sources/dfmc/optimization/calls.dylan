@@ -63,8 +63,32 @@ define method do-optimize-primitive-instance?
         let false-tmp = make-object-reference(#f);
         replace-computation-with-temporary!(call, false-tmp);
         #t;
+      otherwise =>
+        for (user in users(temporary(call)))
+          do-optimize-instance?-user(user, object, type-ref);
+        end for;
     end case
   end if;
+end method;
+
+define method do-optimize-instance?-user(c, object, type) => ();
+end method;
+
+define method do-optimize-instance?-user(c :: <if>, object, type) => ();
+  let (tt-c, tt-t)
+    = make-with-temporary(c.environment, <constrain-type>,
+                          value: object, type: type);
+  let then-f = c.consequent;
+  let changed? = #f;
+  for-computations(tc from then-f before c.next-computation)
+    let now-changed? = rename-temporary-references!(tc, object, tt-t);
+    changed? := (changed? | now-changed?);
+  end;
+  if (changed?)
+    insert-computation-before!(then-f, tt-c);
+  else // It's not used in the consequent, so get rid of it.
+    remove-user!(object, tt-c);
+  end
 end method;
 
 define &optimizer-function primitive-instance?

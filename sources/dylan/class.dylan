@@ -793,7 +793,8 @@ define inline function rcpl-isubclass? (isub :: <implementation-class>, sub :: <
               if (i == len)
                 #f
               else
-                let rpos :: <integer> = vector-element(positions, i);
+                let rpos :: <integer>
+                  = primitive-the(<integer>, vector-element(positions, i));
                 if (rpos < rcpllen)
                   if (pointer-id?(vector-element(rcpl, rpos), sup))
                     #t

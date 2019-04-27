@@ -2083,6 +2083,12 @@ define &primitive-descriptor primitive-double-float-atan, emitter: op--datan;
 define &primitive-descriptor primitive-single-float-as-double, emitter: ins--single-to-double-float;
 define &primitive-descriptor primitive-double-float-as-single, emitter: ins--double-to-single-float;
 
+// Type constraints
+define &primitive-descriptor primitive-the,
+  emitter: method (back-end, result, type, value)
+             ins--move(back-end, result, value);
+           end;
+
 // Checks
 define &primitive-descriptor primitive-instance?, emitter: emit-instance-check;
 define &primitive-descriptor primitive-type-check, reference: $primitive-type-check;

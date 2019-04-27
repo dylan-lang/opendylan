@@ -292,6 +292,8 @@ define module llvm-builder
     llvm-builder-global,
     llvm-builder-global-defined?,
 
+    llvm-builder-declare-intrinsic,
+
     llvm-builder-add-ctor-entry,
     llvm-builder-finish-ctor,
 

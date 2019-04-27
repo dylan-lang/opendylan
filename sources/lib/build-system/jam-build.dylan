@@ -76,44 +76,57 @@ end method;
 
 
 define variable *cached-build-script* :: false-or(<file-locator>) = #f;
-define variable *cached-build-script-date* :: false-or(<date>) = #f;
 define variable *cached-jam-state* :: false-or(<jam-state>) = #f;
 
 define function make-jam-state
     (build-script :: <file-locator>,
-     #key progress-callback :: <function> = ignore,
-          build-directory :: <directory-locator>,
+     #key build-directory :: <directory-locator>,
           compiler-back-end)
  => (jam :: <jam-state>);
-  // Ensure that the build-script hasn't been modified, and that the
-  // working directory hasn't changed, and that SYSTEM_ROOT,
-  // SYSTEM_BUILD_SCRIPTS, and PERSONAL_ROOT are still valid
+  // Ensure that the build-scripts haven't been modified, and the
+  // various variable values installed into the cached state are still
+  // valid.
+  let personal-root
+    = $personal-install & as(<string>, $personal-install);
+  let compiler-back-end-string
+    = compiler-back-end & as-lowercase(as(<string>, compiler-back-end));
+  let state-variables
+    = vector(".",                    as(<string>, build-directory),
+             "SYSTEM_ROOT",          as(<string>, $system-install),
+             "PERSONAL_ROOT",        personal-root,
+             "SYSTEM_BUILD_SCRIPTS", as(<string>, system-build-scripts-path()),
+             "TARGET_PLATFORM",      as(<string>, target-platform-name()),
+             "COMPILER_BACK_END",    compiler-back-end-string);
   if (build-script = *cached-build-script*
-        & file-property(build-script, #"modification-date")
-            = *cached-build-script-date*
         & *cached-jam-state*
-        & as(<directory-locator>, jam-variable(*cached-jam-state*, ".")[0])
-            = build-directory
-        & as(<directory-locator>,
-             jam-variable(*cached-jam-state*, "SYSTEM_ROOT")[0])
-            = $system-install
-        & as(<directory-locator>,
-             jam-variable(*cached-jam-state*, "SYSTEM_BUILD_SCRIPTS")[0])
-            = system-build-scripts-path()
-        & begin
-            let root = jam-variable(*cached-jam-state*, "PERSONAL_ROOT");
-            let root-locator = ~root.empty? & as(<directory-locator>, root[0]);
-            root-locator = $personal-install
+        & ~jam-state-stale?(*cached-jam-state*)
+        & block (result)
+            for (i from 0 below state-variables.size by 2)
+              let jam-value
+                = jam-variable(*cached-jam-state*, state-variables[i]);
+              let value
+                = jam-value & element(jam-value, 0, default: #f);
+              if (value ~= state-variables[i + 1])
+                result(#f)
+              end if;
+            end for;
+            #t
           end)
-
     jam-state-copy(*cached-jam-state*)
   else
     let state = make(<jam-state>);
 
+    // Install the state variables
+    for (i from 0 below state-variables.size by 2)
+      let value = state-variables[i + 1];
+      if (value)
+        jam-variable(state, state-variables[i]) := vector(value);
+      end if;
+    end for;
+
     // Useful built-in variables
     jam-variable(state, "OS") := vector(as(<string>, $os-name));
     jam-variable(state, "OSPLAT") := vector(as(<string>, $machine-name));
-    jam-variable(state, "TARGET_PLATFORM") := vector(as(<string>, target-platform-name()));
 
     select ($os-name)
       #"win32" =>
@@ -121,11 +134,6 @@ define function make-jam-state
       #"linux", #"freebsd", #"darwin" =>
         jam-variable(state, "UNIX") := #["true"];
     end select;
-
-    if (compiler-back-end)
-      jam-variable(state, "COMPILER_BACK_END")
-        := vector(as-lowercase(as(<string>, compiler-back-end)));
-    end if;
 
     jam-variable(state, "JAMDATE")
       := vector(as-iso8601-string(current-date()));
@@ -176,22 +184,9 @@ define function make-jam-state
     jam-rule(state, "DFMCMangle")
       := jam-mangle;
 
-    jam-variable(state, ".")
-      := vector(as(<string>, build-directory));
-    jam-variable(state, "SYSTEM_ROOT")
-      := vector(as(<string>, $system-install));
-    jam-variable(state, "SYSTEM_BUILD_SCRIPTS")
-      := vector(as(<string>, system-build-scripts-path()));
-    if ($personal-install)
-      jam-variable(state, "PERSONAL_ROOT")
-        := vector(as(<string>, $personal-install));
-    end if;
-
     jam-read-file(state, build-script);
 
     *cached-build-script* := build-script;
-    *cached-build-script-date*
-      := file-property(build-script, #"modification-date");
     *cached-jam-state* := state;
     jam-state-copy(state)
   end if
