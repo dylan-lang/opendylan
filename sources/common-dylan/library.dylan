@@ -22,7 +22,6 @@ define library common-dylan
     simple-profiling,
     simple-timers,
     simple-format,
-    simple-io,
     byte-vector,
     transcendentals;
 end library common-dylan;
@@ -147,10 +146,6 @@ define module simple-format
   create format-out,
          format-to-string;
 end module simple-format;
-
-define module simple-io
-  use simple-format, export: all;
-end module simple-io;
 
 define module simple-random
   create <random>,
