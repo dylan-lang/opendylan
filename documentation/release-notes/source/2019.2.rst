@@ -47,6 +47,9 @@ dylan Library
 common-dylan Library
 --------------------
 
+* The simple-io module has been removed.  This module was deprecated in Open
+  Dylan 2014.1 and is replaced by the simple-format module.
+
 
 io Library
 ----------
