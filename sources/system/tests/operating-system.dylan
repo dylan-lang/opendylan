@@ -349,40 +349,10 @@ define operating-system function-test machine-concurrent-thread-count ()
 end;
 
 
-// Application startup handling
-
-define operating-system function-test application-name ()
-  check-instance?("application-name returns #f or a string",
-                  false-or(<string>), application-name());
-end function-test application-name;
-
-define operating-system function-test application-filename ()
-  let filename = application-filename();
-  check-true("application-filename returns #f or a valid, existing file name",
-             ~filename
-               | begin
-                   let locator = as(<file-locator>, filename);
-                   file-exists?(locator)
-                 end)
-end function-test application-filename;
-
-define operating-system function-test application-arguments ()
-  check-instance?("application-arguments returns a sequence",
-                  <sequence>, application-arguments());
-end function-test application-arguments;
-
 define operating-system function-test command-line-option-prefix ()
   check-instance?("command-line-option-prefix returns a character",
                   <character>, command-line-option-prefix());
 end function-test command-line-option-prefix;
-
-define operating-system function-test exit-application ()
-  //---*** Fill this in...
-end function-test exit-application;
-
-define operating-system function-test register-application-exit-function ()
-  //---*** Fill this in...
-end function-test register-application-exit-function;
 
 
 // Environment variables

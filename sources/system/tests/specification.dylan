@@ -209,14 +209,7 @@ define module-spec operating-system ()
   function parent-process-id () => (<integer>);
   function machine-concurrent-thread-count () => (<integer>);
 
-  // Application startup handling
-  function application-name () => (false-or(<string>));
-  //---*** application-filename should return <file-locator>...
-  function application-filename () => (false-or(<string>));
-  function application-arguments () => (<sequence>);
   function command-line-option-prefix () => (<character>);
-  function exit-application (<integer>) => ();
-  function register-application-exit-function (<function>) => ();
 
   // Environment variables
   function environment-variable (<string>) => (false-or(<string>));
