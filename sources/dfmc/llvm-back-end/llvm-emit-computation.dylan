@@ -1047,12 +1047,10 @@ define method emit-computation
     = ins--gep-inbounds(back-end, instance-struct, 0,
                         i32(dylan-value(#"$number-header-words") + offset),
                         index);
-  let iWord-type = back-end.%type-table["iWord"];
   let type = llvm-repeated-type(back-end, desc.^slot-type);
-  if (instance?(type, <llvm-integer-type>)
-        & type.llvm-integer-type-width < iWord-type.llvm-integer-type-width)
-    let trunc = ins--trunc(back-end, new-value, type);
-    ins--store(back-end, trunc, slot-ptr, alignment: alignment);
+  if (instance?(type, <llvm-integer-type>))
+    let cast = op--integer-cast(back-end, new-value, type);
+    ins--store(back-end, cast, slot-ptr, alignment: alignment);
   else
     llvm-constrain-type(new-value.llvm-value-type, type);
     ins--store(back-end, new-value, slot-ptr, alignment: alignment);
