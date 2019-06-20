@@ -95,13 +95,11 @@ define method print-object(te :: <type-estimate>, stream :: <stream>) => ()
   end
 end;
 
-/*
 define method print-message(te :: <type-estimate>, stream :: <stream>) => ()
   dynamic-bind (*printing-a-type-estimate?* = #t)
     print-type-estimate-internals(te, stream: stream);
   end
 end;
-*/
 
 
 ///
