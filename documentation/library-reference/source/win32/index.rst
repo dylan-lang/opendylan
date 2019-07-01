@@ -108,10 +108,10 @@ Notes on the translations
 
 The Win32-Common module re-exports some names from the C-FFI module that
 its user may need to use directly, without needing to use (or know
-about) the C-FFI module itself. These names are: *null-pointer*,
-*null-pointer?*, *pointer-address*, ``pointer-value``,
-``pointer-value``, *pointer-cast*, ``<C-string>``,
-``<C-unicode-string>``, *destroy*, and *with-stack-structure.*
+about) the C-FFI module itself. These names are: :func:`null-pointer`,
+:func:`null-pointer?`, :func:`pointer-address`, :func:`pointer-value`,
+:func:`pointer-value`, :func:`pointer-cast`, :class:`<C-string>`,
+:class:`<C-unicode-string>`, :func:`destroy`, and :macro:`with-stack-structure`.
 
 Names that are documented as being obsolete and/or included in Win32
 only for compatibility with Win16, are generally not defined in the
@@ -142,7 +142,7 @@ becomes *$NO-ERROR* and a class called *LIST\_ENTRY* becomes
 ``<LIST-ENTRY>``.
 
 Hyphens will *not* be inserted between capitalized words (for example,
-*CreateWindow* does not become *Create-Window*) since that is a less
+``CreateWindow`` does not become ``Create-Window``) since that is a less
 obvious mapping that is more likely to cause confusion when switching
 between Dylan code and Windows documentation.
 
@@ -150,13 +150,13 @@ Mapping the null value
 ----------------------
 
 In place of ``NULL``, there are several constants providing null values
-for frequently used types, such as *$NULL-HANDLE*, *$NULL-RECT*, and
-*$NULL-STRING*. Null values for other pointer types may be designated
-by the expression *null-pointer(<FOO>)*. Use the function
-*null-pointer?* to test whether a value is null. Do not use the
-expression *if(ptr)...* as is often done in C, since a null pointer is
-not the same as ``#f``. There are also functions *null-handle* and
-*null-handle?* for creating and testing handles, since conceptually they
+for frequently used types, such as ``$NULL-HANDLE``, ``NULL-RECT``, and
+``$NULL-STRING``. Null values for other pointer types may be designated
+by the expression :func:`null-pointer(<FOO>) <null-pointer>`. Use the function
+:func:`null-pointer?` to test whether a value is null. Do not use the
+expression ``if(ptr)...`` as is often done in C, since a null pointer is
+not the same as ``#f``. There are also functions :func:`null-handle` and
+:func:`null-handle?` for creating and testing handles, since conceptually they
 are not necessarily pointers.
 
 Mapping C types onto Dylan classes
@@ -165,7 +165,7 @@ Mapping C types onto Dylan classes
 The multitude of integer data types in C code (``int``, ``long``,
 ``unsigned``, ``ULONG``, ``DWORD``, ``LRESULT``, and so on) are all
 designated as :drm:`<integer>` (or some appropriate subrange thereof) in
-Dylan method argument types. However, a ``<machine-word>`` needs to be
+Dylan method argument types. However, a :class:`<machine-word>` needs to be
 used to represent values that do not fit in the signed 30-bit
 representation of an integer.
 
@@ -316,7 +316,7 @@ is consistent with what ``<WNDPROC>`` requires. For example:
       ...
 
 Note that the *uParam* and *lParam* arguments might receive values of
-either type :drm:`<integer>` or ``<machine-word>``, so it may be best not to
+either type :drm:`<integer>` or :class:`<machine-word>`, so it may be best not to
 specialize them. Often these values are not used directly anyway, but
 are passed to other functions (such as *LOWORD* and *HIWORD*) which
 have methods for handling either representation.
@@ -340,7 +340,7 @@ The Win32-Kernel library provides the following utility functions.
 
    :description:
 
-     The *error-code* is an instance of :drm:`<integer>` or ``<machine-word>`` (type
+     The *error-code* is an instance of :drm:`<integer>` or :class:`<machine-word>` (type
      unioned).
 
      The *error-code* argument is either a Windows a Windows error code
@@ -508,7 +508,7 @@ Combining bit mask constants
 
 Where C code would use the *\|* operator to combine bit mask constants,
 Dylan code usually uses the *logior* function. However, a few such
-constants have values of type ``<machine-word>`` when they will not fit in
+constants have values of type :class:`<machine-word>` when they will not fit in
 a small integer, and *logior* only works on instances of :drm:`<integer>`.
 Because of this, the *win32-common* library exports a *%logior* function
 which is used like *logior* except that it accepts values of either type
@@ -538,7 +538,7 @@ to a routine taking a ``<FARPROC>`` without needing to do any type
 conversion like that needed in C.
 
 Type casts between handles and integers (:drm:`<integer>` or
-``<machine-word>``) can be done by using *as*. For example:
+:class:`<machine-word>`) can be done by using ``as``. For example:
 
 .. code-block:: dylan
 

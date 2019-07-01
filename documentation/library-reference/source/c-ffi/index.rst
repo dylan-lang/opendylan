@@ -750,7 +750,7 @@ you are certain you will not lose any bits.
 
 *Raw* designator classes — of which the class ``<C-raw-unsigned-int>`` is
 an example — represent the integer on the Dylan side as a
-``<machine-word>``. An instance of ``<machine-word>`` is guaranteed to have
+:class:`<machine-word>`. An instance of ``<machine-word>`` is guaranteed to have
 enough bits to represent any C ``long`` value, or any C ``void*`` value.
 Note that a ``<machine-word>`` value may still have more significant bits
 than some C integer types, and so the C-FFI may still signal an overflow
@@ -902,23 +902,23 @@ these classes.
      type. Instances of concrete subclasses of :class:`<C-pointer>`
      encapsulate a raw C address. The make methods on subclasses of
      :class:`<C-pointer>` accept the keyword argument ``address:``,
-     which must be a Dylan :drm:`<integer>` or ``<machine-word>``
+     which must be a Dylan :drm:`<integer>` or :class:`<machine-word>`
      representation of the C address.
 
 .. function:: pointer-address
 
    Recovers the address from an instance of :class:`<C-pointer>` and returns it as
-   a Dylan ``<machine-word>``.
+   a Dylan :class:`<machine-word>`.
 
    :signature: pointer-address *C-pointer* => *address*
 
    :parameter c-pointer: An instance of :class:`<C-pointer>`.
-   :value address: An instance of ``<machine-word>``.
+   :value address: An instance of :class:`<machine-word>`.
 
    :description:
 
      Recovers the address from an instance of :class:`<C-pointer>` and
-     returns it as a Dylan ``<machine-word>``.
+     returns it as a Dylan :class:`<machine-word>`.
 
 .. function:: pointer-cast
 
@@ -1046,7 +1046,7 @@ these classes.
      C-function wrapper argument.
 
      The first argument can be either a C type designator or one of the Dylan
-     classes :drm:`<boolean>`, :drm:`<character>`, ``<machine-word>``, or any subclass
+     classes :drm:`<boolean>`, :drm:`<character>`, :class:`<machine-word>`, or any subclass
      of :drm:`<number>`. For a C type designator, the value is converted to the
      Dylan class which it maps to. *<C-* [*un* ]*signed-short>* and *<C-*
      [*un* ]*signed-char>* truncate the value as well as ensuring that it is
@@ -2075,8 +2075,8 @@ Defining specialized designator classes
      mapped types consider the following (hypothetical) definitions of
      ``<C-raw-int>``, ``<C-mapped-int>`` and ``<bool>``. The
      ``<C-raw-int>`` class is a primitive which returns and accepts
-     instances of ``<machine-word>``. The ``<C-mapped-int>`` class is a
-     mapped subtype which converts the instances of ``<machine-word>``
+     instances of :class:`<machine-word>`. The ``<C-mapped-int>`` class is a
+     mapped subtype which converts the instances of :class:`<machine-word>`
      to instances of :drm:`<integer>`. The ``<bool>`` class is a mapped
      subtype of ``<C-mapped-int>`` which converts to and from
      :drm:`<boolean>`.
@@ -3009,14 +3009,14 @@ This section covers describing and accessing C variables.
 Allocating and deallocating C storage
 =====================================
 
-C objects can be allocated by calling *make* on an associated wrapper
+C objects can be allocated by calling :drm:`make` on an associated wrapper
 class or by allocating them on the stack using the macro
 :macro:`with-stack-structure`.
 
-The C component of a *make* -allocated object is not deallocated by
+The C component of a :drm:`make` -allocated object is not deallocated by
 default when the Dylan designator object is reclaimed by the garbage
 collector, so we provide a manual means of freeing this storage with the
-function *destroy*.
+function :func:`destroy`.
 
 .. method:: make
    :specializer: subclass(<C-pointer>)
@@ -3029,7 +3029,7 @@ function *destroy*.
    :parameter #key allocator: An instance of :drm:`<function>`.
    :parameter #key element-count: An instance of :drm:`<integer>`.
    :parameter #key extra-bytes: An instance of :drm:`<integer>`.
-   :parameter #key address: An instance of :drm:`<integer>` or ``<machine-word>``.
+   :parameter #key address: An instance of :drm:`<integer>` or :class:`<machine-word>`.
    :value c-pointer: An instance of type :class:`<c-pointer>` pointing to the object.
 
    :description:
@@ -3047,7 +3047,7 @@ function *destroy*.
      The *allocator* argument should be a Dylan function that can serve
      as an allocator. It must accept a single integer argument — the
      number of bytes to be allocated — and return a Dylan
-     ``<machine-word>`` that represents the address of the memory it
+     :class:`<machine-word>` that represents the address of the memory it
      allocated.
 
      The amount of storage allocated by default is the result of::
@@ -3104,7 +3104,7 @@ function *destroy*.
 
    :signature: destroy *C-pointer* #key *de-allocator* => ()
 
-   :parameter c-pointer: An instance of `<C-pointer>`.
+   :parameter c-pointer: An instance of :class:`<C-pointer>`.
    :parameter #key de-allocator: An instance of :drm:`<function>`.
 
    :description:
@@ -3114,7 +3114,7 @@ function *destroy*.
 
      The *deallocator* argument should be a Dylan function that can
      serve as a deallocation facility. It must accept an address as a
-     ``<machine-word>`` and free the storage allocated at that address.
+     :class:`<machine-word>` and free the storage allocated at that address.
 
      You should only use ``destroy`` on pointers allocated using
      ``make`` where no address was given. If *allocator* was passed to

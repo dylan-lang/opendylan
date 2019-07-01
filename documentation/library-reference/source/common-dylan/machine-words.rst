@@ -14,7 +14,7 @@ are available from the Dylan library.
 
 Throughout this chapter, arguments are instances of the class specified
 by the argument name, unless otherwise noted. Thus, the arguments
-*machine-word* and *integer* are instances of ``<machine-word>`` and
+*machine-word* and *integer* are instances of :class:`<machine-word>` and
 :drm:`<integer>`, respectively.
 
 The class :class:`<machine-word>` is a sealed subclass of :drm:`<object>`,
@@ -177,7 +177,7 @@ integer value.
 
      For convenience, the values of ``min`` and/or ``max`` may also be
      instances of ``<abstract-integer>``, in which case they are coerced to
-     instances of ``<machine-word>`` as if by using *as*.
+     instances of ``<machine-word>`` as if by using ``as``.
 
 The MACHINE-WORDS module
 ========================
