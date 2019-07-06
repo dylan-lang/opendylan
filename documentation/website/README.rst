@@ -6,23 +6,44 @@ ReStructured Text with Sphinx extensions.
 Preparation
 ===========
 
-Python 2.7.x is required - Python 3.3.x is not supported.
+Installing system dependencies
+------------------------------
 
-Before building this website, you will need a copy of Sphinx installed.
-The easiest way to do this is to get it from the `Python Package Index
-<http://pypi.python.org/pypi/Sphinx>`_ or to use ``easy_install``::
+Some system dependencies need to be satisfied first:
 
-    sudo easy_install -U Sphinx
+- Python 2.7.x and its package manager pip (Python 3.x is not supported)
+- Git
+- Make
+
+On a Debian-derivative, they're quite easy to fetch::
+
+    sudo apt install python2.7 python-pip git make
+
+Getting the source
+------------------
+
+The next step is fetching the repository and the ::
+
+    git clone https://github.com/dylan-lang/website.git  # or your fork
+    git submodule update --init --recursive
+
+
+Installing Sphinx
+-----------------
+
+Now you need the Python dependencies. The easiest way to do this is to use ``pip``::
+
+    sudo pip install -U Sphinx
 
 You will also need ``html5lib`` installed so that the RSS feed generator
 can work::
 
-    sudo easy_install html5lib
+    sudo pip install html5lib
 
 You may also need ``python-dateutil``. If so, make sure you install version
-1.5 if you are using Python 2.x::
+1.5 as that is the lastest version to support Python 2.x::
 
-    sudo easy_install python-dateutil==1.5
+    sudo pip install python-dateutil==1.5
 
 Building
 ========
