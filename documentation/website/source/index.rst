@@ -107,8 +107,8 @@
 
      <h2>Get Started</h2>
 
-The `Dylan Foundry <http://dylanfoundry.org/>`_ has written about
-`getting started with the 2012.1 release <http://dylanfoundry.org/2012/12/20/getting-started-with-opendylan-20121/>`_ or just go ahead and `download </download/index.html>`_ it.
+`Downloading Dylan </download/index.html>`_  is easy.
+Once downloaded, we recommend reading through `Introduction to Dylan <https://opendylan.org/documentation/intro-dylan/>`_ and exploring `some examples <https://github.com/dylan-lang/opendylan/tree/master/sources/examples>`.
 
 .. raw:: html
 
