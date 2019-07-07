@@ -108,7 +108,7 @@
      <h2>Get Started</h2>
 
 `Downloading Dylan </download/index.html>`_  is easy.
-Once downloaded, we recommend reading through `Introduction to Dylan <https://opendylan.org/documentation/intro-dylan/>`_ and exploring `some examples <https://github.com/dylan-lang/opendylan/tree/master/sources/examples>`.
+Once downloaded, we recommend reading through `Introduction to Dylan <https://opendylan.org/documentation/intro-dylan/>`_ and exploring `some examples <https://github.com/dylan-lang/opendylan/tree/master/sources/examples>`_.
 
 .. raw:: html
 

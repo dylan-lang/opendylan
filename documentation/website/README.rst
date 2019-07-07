@@ -22,7 +22,7 @@ On a Debian-derivative, they're quite easy to fetch::
 Getting the source
 ------------------
 
-The next step is fetching the repository and the ::
+The next step is fetching the repository and its submodule::
 
     git clone https://github.com/dylan-lang/website.git  # or your fork
     git submodule update --init --recursive
