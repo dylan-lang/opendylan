@@ -1,3 +1,8 @@
+.. index::
+   single: adding; callbacks to a DUIM application
+   single: callbacks; adding to a DUIM application
+   single: DUIM applications; adding callbacks
+
 ***********************************
 Adding Callbacks to the Application
 ***********************************
@@ -47,6 +52,9 @@ the event behavior, or new classes of events (for example, support for
 different input devices or notification of low resources). If you are
 just using gadgets, then you only ever need to use callbacks.
 
+.. index::
+   single: task list manager; underlying data structures for tasks
+   
 Defining the underlying data structures for tasks
 =================================================
 
@@ -193,6 +201,11 @@ This gives the following new definition for the ``task-list`` pane:
 There is one final change that still needs to be made to this pane
 definition. This is described in `Updating the user interface`_.
 
+.. index::
+   single: callbacks; assigning to gadgets
+   single: gadgets; specifiying callbacks
+   single: specifying; callbacks in gadget definitions
+   
 Specifying a callback in the definition of each gadget
 ======================================================
 
@@ -326,6 +339,10 @@ You will need to define other functions and methods, as well as the
 callback functions listed above. These other functions and methods are
 called by some of the callbacks themselves.
 
+.. index::
+   single: callbacks; defining
+   single: defining; callbacks
+   
 Defining the callbacks
 ======================
 
@@ -349,6 +366,12 @@ for all GUI design. Separating GUI code and non-GUI code also lets you
 produce code that is more easily reusable, either in other parts of a
 developing application, or in completely different applications.
 
+.. index::
+   single: applications; DUIM file handling in
+   single: file handling in DUIM applications
+   single: handling files in the task list manager
+   single: task list manager; handling files
+   
 Handling files in the task list manager
 ---------------------------------------
 
@@ -358,6 +381,9 @@ you have added these to your code, you will be able to save and reload
 your task lists into the application; this type of functionality is
 essential in even the most trivial application.
 
+.. index::
+   single: DUIM applications; file handling in
+   
 There are three methods and two functions necessary for handling files.
 The methods handle GUI-specific operations involved in loading and
 saving files. The functions deal with the basic task of saving data
@@ -393,6 +419,9 @@ The following functions are called by the methods described above:
 The following sections present and explain the code for each of these
 methods and functions in turn.
 
+.. index::
+   single: task list manager; open-file method
+   
 The open-file method
 --------------------
 
@@ -548,6 +577,9 @@ list manager, so that the contents of the newly loaded file are
 correctly displayed on the screen. The method ``refresh-task-frame`` is
 described in `Updating the user interface`_.
 
+.. index::
+   single: task list manager; save-file method
+   
 The save-file method
 --------------------
 
@@ -594,6 +626,9 @@ following two arguments:
 Notice that the second of these arguments may be ``#f``, if the task list
 has not previously been saved to disk.
 
+.. index::
+   single: task list manager; save-as-file method
+   
 The save-as-file method
 -----------------------
 
@@ -721,6 +756,9 @@ The function ``save-task-list`` is described in `The save-task-list
 function`_ and the method ``refresh-task-frame`` is described in
 `Updating the user interface`_.
 
+.. index::
+   single: task list manager; load-task-list function
+   
 The load-task-list function
 ---------------------------
 
@@ -802,6 +840,9 @@ Note how the ``as`` method is used to convert a string value such as
 technique to use when you wish to save and load symbol information in an
 application.
 
+.. index::
+   single: task list manager; save-task-list function
+   
 The save-task-list function
 ---------------------------
 
@@ -862,6 +903,15 @@ file under a different name.
 Finally, ``save-task-list`` returns ``#t`` to indicate that the file has
 been successfully saved.
 
+.. index::
+   single: adding; items to a list
+   single: deleting items from a list
+   single: items; adding to a list
+   single: items; removing from a list
+   single: list; adding items to
+   single: list; adding items from
+   single: removing items from a list
+
 Adding and removing tasks from the task list
 --------------------------------------------
 
@@ -896,12 +946,23 @@ underlying data structures.
 Add the definitions of the methods to ``frame.dylan``, and the
 definitions of the functions to ``task-list.dylan``.
 
+.. index::
+   single: adding; items to a list
+   single: items; adding to a list
+   single: items; removing from a list
+   single: list; adding items to
+   single: list; adding items from
+   single: removing items from a list
+   
 DUIM support for adding and removing tasks
 ------------------------------------------
 
 This section describes the methods necessary to provide support in the
 task list manager GUI for adding and removing tasks.
 
+.. index::
+   single: deleting items from a list
+   
 Add the code described in this section to ``frame.dylan``.
 
 The code for ``frame-add-task`` is as follows:
@@ -1048,6 +1109,10 @@ described in `Non-DUIM support for adding and removing tasks`_. The
 ``refresh-task-frame`` method is described in `Updating the user
 interface`_.
 
+.. index::
+   single: task list manager; adding tasks
+   single: task list manager; removing tasks
+   
 Non-DUIM support for adding and removing tasks
 ----------------------------------------------
 
@@ -1092,6 +1157,10 @@ and returns no values. The function first removes the ``<task>`` from the
 ``task-list-modified?`` slot of the ``<task-list>`` to ``#t``, to indicate
 that a change in the ``<task-list>`` has occurred.
 
+.. index::
+   single: GUI; updating interface
+   single: updating a GUI
+   
 Updating the user interface
 ---------------------------
 
@@ -1475,6 +1544,12 @@ by calling ``note-task-selection-change``.
 
 Add the code for this method to ``frame.dylan``.
 
+.. index::
+   single: About; adding to an application
+   single: creating; information dialog
+   single: dialogs; about dialog, creating
+   single: information dialog; creating
+   
 Creating an information dialog
 ------------------------------
 
@@ -1488,6 +1563,10 @@ choose the *Help > About* menu command.
       notify-user("Task List Manager", owner: sheet-frame(gadget))
     end function about-task;
 
+.. index::
+   single: exiting the task list manager
+   single: task list manager; exiting
+   
 Exiting the task list manager
 -----------------------------
 
@@ -1521,6 +1600,10 @@ save-file method`_) to save the current task list to disk. This ensures
 that the user does not lose any work. Next, the ``exit-frame`` generic
 function is invoked to exit the task list manager window.
 
+.. index::
+   single: enhancing the task list manager
+   single: task list manager; enhancing
+   
 Enhancing the task list manager
 ===============================
 

@@ -1,3 +1,8 @@
+.. index::
+   single: designing a simple DUIM application
+   single: DUIM applications; designing
+   single: simple DUIM applications; designing
+   
 ***********************************
 Designing A Simple DUIM Application
 ***********************************
@@ -11,6 +16,10 @@ implementing a simple DUIM application. On a first read through, you
 should work through each chapter in turn, since each chapter relies
 heavily on the information in the previous chapters.
 
+.. index::
+   single: designing a GUI
+   single: GUI; designing
+   
 Design of the application
 -------------------------
 
@@ -54,6 +63,11 @@ of the same type.
 The task list manager demonstrates the use of menus and a variety of
 button, list, and text controls.
 
+.. index::
+   single: creating; basic sheet hierarchy
+   single: sheet hierarchy; creating
+   single: sheets; creating a sheet hierarchy
+   
 Creating the basic sheet hierarchy
 ----------------------------------
 
@@ -156,6 +170,10 @@ if you create instances of ``<row-layout>`` and ``<column-layout>``
 explicitly using ``make``.
 
 .. note:: You may have to resize the window to see everything.
+	  
+.. index::
+   single: radio boxes; using
+   single: using; radio boxes
 
 Adding a radio box
 ~~~~~~~~~~~~~~~~~~
@@ -197,6 +215,12 @@ box at the appropriate position in the call to ``vertically``.
               orientation: #"vertical");
       end);
 
+.. index::
+   single: contain function; running examples interactively with
+   single: examples; using contain to run
+   single: running examples interactively using contain
+   single: contain to run examples interactively
+   
 Using contain to run examples interactively
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

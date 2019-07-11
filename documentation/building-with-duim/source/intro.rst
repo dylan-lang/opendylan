@@ -2,6 +2,12 @@
 Introduction
 ************
 
+.. index::
+   single: DUIM libraries; overview
+   single: introduction to; DUIM libraries
+   single: libraries; DUIM, overview
+   single: overview of; DUIM libraries
+   
 Overview of the DUIM libraries
 ------------------------------
 
@@ -30,6 +36,10 @@ host. Thus, the application has the same fundamental interface across
 multiple environments, although the details will differ from system to
 system.
 
+.. index::
+   single: DUIM; programming model
+   single: programming model; DUIM
+   
 The DUIM programming model
 --------------------------
 

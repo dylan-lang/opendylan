@@ -1,7 +1,16 @@
+.. index::
+   single: command tables; using
+   single: using; command tables
+   
+   
 ********************
 Using Command Tables
 ********************
 
+.. index::
+   single: command tables; introduction
+   single: introduction to; command tables
+   
 Introduction
 ------------
 
@@ -47,6 +56,9 @@ category of the Open Example Project dialog.
    is called ``task-list`` within the source code, and you should not
    load them both into the environment at the same time.
 
+.. index::
+   single: implementing command tables
+   
 Implementing a command table
 ----------------------------
 
@@ -54,6 +66,9 @@ You use ``define command-table`` to define a new command table. Consider
 the following command table defined for the *File* menu in the task list
 manager:
 
+.. index::
+   command tables; implementing
+   
 .. code-block:: dylan
 
     define command-table *file-command-table* (*global-command-table*)
@@ -169,6 +184,11 @@ menu and menu button in the original implementation of the task list
 manager. You must place the command table definitions provided above
 after the callback definitions themselves, to avoid forward references.
 
+.. index::
+   single: command tables; including in frame definitions
+   single: frame classes; using command tables in
+   single: including command tables in frame definitions
+   
 Including command tables in frame definitions
 ---------------------------------------------
 

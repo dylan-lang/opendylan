@@ -1,3 +1,7 @@
+.. index::
+   single: source code for the task list manager
+   single: task list manager; source code for
+   
 *************************************
 Source Code For The Task List Manager
 *************************************
@@ -13,6 +17,11 @@ tables, is given in `A task list manager using command tables`_.
    code— *task-list* —and you should not load them both into the environment
    at the same time.*
 
+.. index::
+   single: menu gadgets; task list manager example
+   single: task list manager; menu gadgets implementation
+   single: using; menu gadgets
+   
 A task list manager using menu gadgets
 --------------------------------------
 
@@ -466,6 +475,10 @@ Contents of the file *task-list.dylan* :
       make(<task-list>, tasks: tasks, filename: filename)
     end function load-task-list;
 
+.. index::
+   single: task list manager; command table implementation
+   single: using; command tables
+   
 A task list manager using command tables
 ----------------------------------------
 
@@ -476,6 +489,9 @@ choose **Tools > Open Example Project** from any window in the
 environment. The code in this section can be loaded by choosing Task
 List 2 in the Documentation category of the Open Example Project dialog.
 
+.. index::
+   command tables; task list manager example
+   
 The command tables used in this implementation are described in
 :doc:`commands`. You should refer to :doc:`improve` and :doc:`callbacks`,
 for a full description of the rest of the code shown here. Note that,

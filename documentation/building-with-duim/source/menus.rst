@@ -1,3 +1,8 @@
+.. index::
+   single: adding; menus to a DUIM application
+   single: DUIM applications; adding menus
+   single: menus; adding to a DUIM application
+   
 *******************************
 Adding Menus To The Application
 *******************************
@@ -16,6 +21,10 @@ information about command tables, refer to :doc:`commands`. Before
 discussing the first method listed above, the overall design of the
 menu system for the task list manager is discussed.
 
+.. index::
+   single: creating; menus
+   single: menus; creating
+   
 A description of the menu system
 --------------------------------
 
@@ -46,9 +55,14 @@ follows:
    application, the *Help* menu contains a single command that simply
    displays a simple About dialog for the application.
 
+.. index::
+   single: menu hierarchy; creating
+   single: menus; creating a menu hierarchy
+   single: creating; menu hierarchy
+
 Creating a menu hierarchy
 -------------------------
-
+   
 As you might expect, creating a menu hierarchy in a frame definition is
 a matter of defining a series of panes for the frame. At the top-most
 level in the menu hierarchy is the menu bar itself. The menu bar
@@ -100,6 +114,9 @@ item; thus, the items appear as *File* and *Edit*, and so forth. (Note
 that the ``make-keyboard-gesture`` function that appears below is defined
 in `Keyboard accelerators`_.)
 
+.. index::
+   single: menus; mnemonics
+   
 .. code-block:: dylan
 
     // Commands in the File menu
@@ -174,6 +191,10 @@ The definitions of these menu buttons demonstrate two interesting new
 features: the use of keyboard accelerators, and the use of documentation
 strings.
 
+.. index::
+   single: documentation strings
+   single: strings; documentation
+   
 Documentation strings
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -190,6 +211,11 @@ pointer is over the menu item. It is generally good practice to supply
 documentation strings for all the menu items in a frame. Documentation
 strings for other gadgets become tooltips in Windows.
 
+.. index::
+   single: accelerators; keyboard, specifiying
+   single: keyboard accelerators; specifiying
+   single: specifying; keyboard accelerators
+   
 Keyboard accelerators
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -234,6 +260,9 @@ about keyboard accelerators:
    case with the (slightly non-standard) keyboard accelerator for the
    *About* command.
 
+.. index::
+   single: task list manager; final design
+   
 Gluing the final design together
 --------------------------------
 
