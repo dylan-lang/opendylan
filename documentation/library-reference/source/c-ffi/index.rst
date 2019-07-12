@@ -1,3 +1,7 @@
+.. index::
+   single: C-FFI library
+   single: libraries; C-FFI
+
 *****************
 The C-FFI Library
 *****************
@@ -6,6 +10,11 @@ The C-FFI Library
 .. current-module:: c-ffi
 
 .. contents::
+
+.. index::
+   single: C-FFI library; introduction
+   single: introduction to; C-FFI library
+   single: libraries; introduction to C-FFI
 
 Introduction
 ============
@@ -46,6 +55,10 @@ destroying instances of C data structures. For example, using these
 facilities you can allocate C structs and arrays, and access and set
 their elements.
 
+.. index::
+   single: C types; in Dylan
+   single: Dylan; C types in
+
 C types in Dylan
 ----------------
 
@@ -54,10 +67,20 @@ the Dylan compiler, the compiler generates a new Dylan class. This class
 is said to *designate* the C type, which means that it carries with it
 the essential properties of the C type such as its size and alignment.
 
+.. index::
+   single: designator class
+
 You can use this *designator class* in subsequent interface definition
 forms to specify which elements involve the designated C type. A
 designator class also carries with it the information on how to
 interpret the untyped C data as a tagged Dylan object.
+
+.. index::
+   single: <C-double> class
+   single: <C-int> class
+   single: <C-unsigned-long> class
+   single: classes; <C-int>
+   single: classes; <C-unsigned-long>
 
 The C-FFI library contains predefined designator classes for C's
 fundamental types like ``int`` and ``double``. The names of these
@@ -75,6 +98,11 @@ by the class ``<C-double>``, and ``unsigned long`` by the class
    Dylan names appearing in this document, is not binding and can safely be
    ignored.
 
+.. index::
+   single: <C-double*> class
+   single: classes; <C-double*>
+   single: classes; <C-double>
+
 The C-FFI library also provides predefined classes designating pointers
 to C's fundamental numeric types. To do so, it adds a ``*`` to the
 fundamental C type designator. For example ``<C-double*>`` designates the
@@ -90,6 +118,10 @@ Suppose we have the following C struct:
       unsigned short y_coord;
     } Point;
 
+.. index::
+   single: define C-struct definition macro
+   single: definition macros; define C-struct
+
 We describe C structs to Dylan using the macro :macro:`define C-struct`:
 
 .. code-block:: dylan
@@ -98,6 +130,12 @@ We describe C structs to Dylan using the macro :macro:`define C-struct`:
       slot x-coord :: <C-unsigned-short>;
       slot y-coord :: <C-unsigned-short>;
     end C-struct;
+
+.. index::
+   single: <C-unsigned-short> class
+   single: classes; <C-unsigned-short>
+   single: classes; <Point>
+   single: <Point> class
 
 This form defines a new designator class ``<Point>`` for a structure type
 corresponding to the C type ``Point``. We designate the types of the
@@ -132,6 +170,9 @@ definitions, a designator class can also be instantiable, in which case
 Dylan uses an instance of the designator class to represent an object of
 the C type it designates when that object is passed from the "C world"
 to the "Dylan world".
+
+.. index::
+   single: pointer types
 
 *Note:* Only classes that designate C pointer types can be instantiated
 in this way. Instances of C's fundamental numeric value types like ``int``,
@@ -210,6 +251,10 @@ the raw C pointer value.
 Later sections describe all the macros available for defining C types
 and the functions available for manipulating them.
 
+.. index::
+   single: C functions; in Dylan
+   single: Dylan; C functions in
+
 C functions in Dylan
 --------------------
 
@@ -220,6 +265,9 @@ converts each of its arguments from a Dylan object to a corresponding C
 value before calling the C function it wraps. The C-FFI converts any
 results that the C function returns into Dylan objects before returning
 them to the caller.
+
+.. index::
+   single: define C-variable definition macro
 
 In order for Dylan to be able to call into C correctly, C functions must
 be described to Dylan in the same detail a C header file would provide a
@@ -236,6 +284,9 @@ Suppose we have the following ``extern`` C function declaration:
 
     extern double cos (double angle);
 
+.. index::
+   single: definition macros; define C-function
+
 We describe C functions to Dylan using the C-FFI macro :macro:`define
 C-function`:
 
@@ -246,6 +297,10 @@ C-function`:
       result cos :: <C-double>;
       c-name: "cos"
     end C-function;
+
+.. index::
+   single: define C-function definition macro
+   single: definition macros; define C-function
 
 The name appearing immediately after the :macro:`define C-function` is
 the name we want to give to the Dylan variable to which our wrapper
@@ -258,10 +313,18 @@ of the C library implementing *cos* has been linked in with the Dylan
 application — we can call the wrapper function just like any other Dylan
 function:
 
+.. index::
+   single: + method
+
 ::
 
     ? C-cos(0.0);
     1.0
+
+.. index::
+   single: define C-callable-wrapper definition macro
+   single: definition macros; define C-callable-wrapper
+   single: methods; +
 
 As we noted above, when values are passed back and forth between Dylan
 and C, the C-FFI performs automatic conversions. In this case, the type
@@ -324,6 +387,10 @@ representing the function pointer of the C-callable wrapper. This
 reference allows the C-callable wrapper to be passed to a C function
 expecting a callback argument.
 
+.. index::
+   single: C variables in Dylan
+   single: Dylan; C variables in
+
 C variables in Dylan
 --------------------
 
@@ -339,6 +406,11 @@ before setting the C variable. These conversions happen according to the
 same rules that apply to other C-Dylan world transition points, such as
 argument passing or structure slot access.
 
+.. index::
+   single: define C-address definition macro
+   single: definition macros; define C-address
+   single: definition macros; define C-variable
+
 In order for Dylan to be able to access a C variable correctly, we must
 describe the variable to Dylan in the same detail that a C header file
 would give to a C program that uses it. Specifically, we must provide
@@ -352,6 +424,9 @@ the following ``extern`` C variable declaration:
 .. code-block:: c
 
     extern double mean;
+
+.. index::
+   single: define C-function definition macro
 
 We describe C variables to Dylan using the C-FFI macro :macro:`define
 C-variable`:
@@ -504,6 +579,10 @@ When this is run, you will see output like::
     entering nn_close #[0] => #[0]
     entering nn_close #[1] => #[0]
 
+.. index::
+   single: C-FFI library; terminology
+   single: terminology in C-FFI library
+
 Terminology
 ===========
 
@@ -517,6 +596,12 @@ hopefully not too inconsistent with common C terminology:
   and function types).
 - *Fundamental numeric type*. One of C's integer or floating point types.
   This does not include pointer types, structure types, or union types.
+
+.. index::
+   single: basic options in C-FFI macros
+   single: C-FFI macros
+   single: macros; C-FFI macros, basic options
+   single: options in C-FFI macros
 
 Basic options in C-FFI macros
 =============================
@@ -543,6 +628,11 @@ which are worth describing here:
   to name the type for a pointer to the type being defined. This is
   normally specified throughout the *pointer-type-name:* keyword
   option.
+
+.. index::
+   single: classes; designator
+   single: designator class
+   single: designator classes
 
 Designator classes
 ==================
@@ -578,6 +668,10 @@ also have to define methods on the standard arithmetic and comparison
 operators. It is simpler to represent these fundamental types with
 existing Dylan objects.
 
+.. index::
+   single: <C-pointer> class
+   single: classes; <C-pointer>
+
 However, the designator classes that correspond to pointer types *are*
 instantiable. When you pass a pointer from C to Dylan, the C-FFI
 constructs an instance of the appropriate designator class that contains
@@ -591,6 +685,33 @@ This feature of pointer designator classes allows Dylan code to be typed
 to a specific kind of pointer. For example, you can define methods that
 specialize on different kinds of pointer on the same generic function.
 
+.. index::
+   single: <C-statically-typed-pointer> class
+   single: <C-string> class
+   single: <C-statically-typed-pointer> class
+   single: classes; <C-pointer>
+   single: classes; <C-statically-typed-pointer>
+   single: classes; <C-string>
+   single: define C-mapped-subtype definition macro
+   single: define C-pointer-type definition macro
+   single: definition macros; define C-mapped-subtype
+   single: definition macros; define C-pointer-type
+   single: designator property; export-function
+   single: designator property; export-type
+   single: designator property; import-function
+   single: designator property; import-type
+   single: designator property; pointer-type
+   single: designator property; referenced-type
+   single: designator type properties
+   single: export-function; designator-property
+   single: export-type; designator-property
+   single: import-function; designator property
+   single: import-type; designator-property
+   single: pointer-type; designator property
+   single: properties; designator type
+   single: referenced-type; designator property
+   single: type properties; designator
+
 Designator type properties
 --------------------------
 
@@ -603,6 +724,9 @@ A *referenced type* is the designator type to which a pointer refers. A
 designator's *referenced-type* only has a value for subtypes of
 :class:`<C-statically-typed-pointer>`. Programs can access the
 referenced type through the function *referenced-type*.
+
+.. index::
+   single: <C-pointer> class
 
 A designator class's *pointer-type* only has a value for each of
 those types that has a pointer designator type that refers to it. Most
@@ -635,8 +759,16 @@ merely the procedural specifications for translating the C data to Dylan
 and back. The *import* and *export* functions are inherited when you
 define a subclass for a designator.
 
+.. index::
+   single: designator class
+   single: designator classes; basics
+
 Designator class basics
 -----------------------
+
+.. index::
+   single: <C-value> class
+   single: classes; <C-value>
 
 .. class:: <C-value>
    :sealed:
@@ -648,6 +780,10 @@ Designator class basics
      of :drm:`<object>`. It has neither an *export-type* nor an
      *import-type*, so you cannot use it when designating a transition
      between C and Dylan.
+
+.. index::
+   single: <C-void> class
+   single: classes; <C-void>
 
 .. class:: <C-void>
    :sealed:
@@ -662,6 +798,10 @@ Designator class basics
 
      This class is only useful in that it is the *referenced-type* for
      :class:`<C-void*>`.
+
+.. index::
+   single: functions; size-of
+   single: size-of function
 
 .. function:: size-of
 
@@ -686,6 +826,10 @@ Designator class basics
      when allocating a C object whose declared size is not accurate and
      has to be adjusted manually.
 
+.. index::
+   single: alignment-of function
+   single: functions; alignment-of
+
 .. function:: alignment-of
 
    Takes a designator class and returns the alignment of the C type that
@@ -703,6 +847,13 @@ Designator class basics
      applied to any designator class. It returns the alignment as an
      integer, in the same units as :func:`size-of` does.
 
+.. index::
+   single: classes; fundamental numeric type designator classes
+   single: designator classes; fundamental numeric type
+   single: fundamental numeric type
+   single: fundamental numeric type designator classes
+   single: type designator classes; fundamental numeric
+
 Fundamental numeric type designator classes
 -------------------------------------------
 
@@ -718,6 +869,10 @@ each of the C integer types there are three designator classes that can
 be used to translate Dylan representations to that C integer. The
 categories are *plain*, *unsafe*, and *raw* integers.
 
+.. index::
+   single: <C-unsigned-short> class
+   single: classes; <C-unsigned-short>
+
 *Plain* integer designators — of which the class ``<C-unsigned-short>`` is
 an example — translate C integer values to instances of :drm:`<integer>`. If
 the integer being translated is too big for the destination, the C-FFI
@@ -725,6 +880,10 @@ signals an error. There are two ways this can happen.
 
 - On export, the C-FFI signals an error if the Dylan value has more
   significant bits than the C integer.
+
+.. index::
+   single: <C-unsigned-short> class
+   single: classes; <C-unsigned-short>
 
 This can happen if, for example, the designator is ``<C-unsigned-short>``,
 and the Dylan value is negative, or if *unsigned* *short* on that
@@ -740,6 +899,10 @@ This can happen with any C integer type that is more than 30 bits wide.
 The size of a Dylan :drm:`<integer>` depends on the particular platform, but
 it is guaranteed to be at least 30 bits in length.
 
+.. index::
+   single: <C-unsafe-unsigned-short> class
+   single: classes; <C-unsafe-unsigned-short>
+
 The C-FFI never signals an error for the *unsafe* designator classes —
 of which the class ``<C-unsafe-unsigned-short>`` is an example — but if
 the destination is too small for the value, the most significant bits of
@@ -747,6 +910,11 @@ the value are chopped off to fit into the destination. Because there is
 no checking, using the unsafe designator classes brings a very small
 performance improvement, but nonetheless you should not use them unless
 you are certain you will not lose any bits.
+
+.. index::
+   single: classes; <C-raw-unsigned-int>
+   single: classes; <machine-word>
+   single: <machine-word> class
 
 *Raw* designator classes — of which the class ``<C-raw-unsigned-int>`` is
 an example — represent the integer on the Dylan side as a
@@ -760,6 +928,73 @@ C type.
 
 `The integer designator classes and their mappings.`_ shows all raw, plain,
 and unsafe integer designator types exported from the C-FFI module.
+
+.. index::
+   single: <C-char> class
+   single: <C-int> class
+   single: <C-raw-char> class
+   single: <C-raw-int> class
+   single: <C-raw-signed-char> class
+   single: <C-raw-signed-int> class
+   single: <C-raw-signed-long> class
+   single: <C-raw-signed-short> class
+   single: <C-raw-unsigned-char> class
+   single: <C-raw-unsigned-int> class
+   single: <C-raw-unsigned-long> class
+   single: <C-raw-unsigned-short> class
+   single: <C-signed-char> class
+   single: <C-signed-int> class
+   single: <C-signed-long> class
+   single: <C-signed-short> class
+   single: <C-unsafe-char> class
+   single: <C-unsafe-int> class
+   single: <C-unsafe-signed-int> class
+   single: <C-unsafe-signed-char> class
+   single: <C-unsafe-signed-long> class
+   single: <C-unsafe-signed-short> class
+   single: <C-unsafe-unsigned-char> class
+   single: <C-unsafe-unsigned-int> class
+   single: <C-unsafe-unsigned-long> class
+   single: <C-unsafe-unsigned-short> class
+   single: <C-unsigned-char> class
+   single: <C-unsigned-int> class
+   single: <C-unsigned-long> class
+   single: <C-unsigned-short> class
+   single: classes; <C-char>
+   single: classes; <C-int>
+   single: classes; <C-raw-char>
+   single: classes; <C-raw-int>
+   single: classes; <C-raw-signed-char>
+   single: classes; <C-raw-signed-int>
+   single: classes; <C-raw-signed-long>
+   single: classes; <C-raw-signed-short>
+   single: classes; <C-raw-unsigned-char>
+   single: classes; <C-raw-unsigned-int>
+   single: classes; <C-raw-unsigned-long>
+   single: classes; <C-raw-unsigned-short>
+   single: classes; <C-signed-char>
+   single: classes; <C-signed-int>
+   single: classes; <C-signed-long>
+   single: classes; <C-signed-short>
+   single: classes; <C-unsafe-char>
+   single: classes; <C-unsafe-int>
+   single: classes; <C-unsafe-signed-int>
+   single: classes; <C-unsafe-signed-char>
+   single: classes; <C-unsafe-signed-long>
+   single: classes; <C-unsafe-signed-short>
+   single: classes; <C-unsafe-unsigned-char>
+   single: classes; <C-unsafe-unsigned-int>
+   single: classes; <C-unsafe-unsigned-long>
+   single: classes; <C-unsafe-unsigned-short>
+   single: classes; <C-unsigned-char>
+   single: classes; <C-unsigned-int>
+   single: classes; <C-unsigned-short>
+   single: classes; <machine-word>
+   single: generic functions; pointer-value
+   single: generic functions; pointer-value-setter
+   single: <machine-word> class
+   single: pointer-value generic function
+   single: pointer-value-setter generic function
 
 .. table:: The integer designator classes and their mappings.
    :name: The integer designator classes and their mappings.
@@ -847,6 +1082,12 @@ there is also a type designating pointers to that type called *<C-*
 translation behavior for each of the types designating pointers to the
 fundamental integer designator types.
 
+.. index::
+   single: <C-number> class
+   single: <C-value> class
+   single: classes; <C-number>
+   single: classes; <C-value>
+
 .. class:: <C-number>
    :sealed:
    :abstract:
@@ -858,6 +1099,10 @@ fundamental integer designator types.
      The abstract superclass of all classes that designate a fundamental
      numeric C type.
 
+.. index::
+   single: <C-float> class
+   single: classes; <C-float>
+
 .. class:: <C-float>
    :sealed:
    :abstract:
@@ -866,6 +1111,10 @@ fundamental integer designator types.
 
      The class of C floating point values.
 
+.. index::
+   single: <C-double> class
+   single: classes; <C-double>
+
 .. class:: <C-double>
    :sealed:
    :abstract:
@@ -873,6 +1122,16 @@ fundamental integer designator types.
    :description:
 
      The class of C double-precision values.
+
+.. index::
+   single: <C-int> class
+   single: <C-int*> class
+   single: classes; <C-int*>
+   single: classes; <C-int>
+   single: classes; pointer designator
+   single: designator classes; pointer
+   single: pointer designator classes and related functions
+   single: pointer designator classes and related functions
 
 Pointer designator classes and related functions
 ------------------------------------------------
@@ -889,6 +1148,12 @@ these classes.
    append a ``*`` to the part of the name enclosed in angle brackets. Thus
    for ``<C-int>`` the pointer designator class is ``<C-int*>``.
 
+.. index::
+   single: <C-pointer> class
+   single: <C-value> class
+   single: classes; <C-pointer>
+   single: classes; <C-value>
+
 .. class:: <C-pointer>
    :primary:
    :open:
@@ -904,6 +1169,10 @@ these classes.
      :class:`<C-pointer>` accept the keyword argument ``address:``,
      which must be a Dylan :drm:`<integer>` or :class:`<machine-word>`
      representation of the C address.
+
+.. index::
+   single: functions; pointer-address
+   single: pointer-address function
 
 .. function:: pointer-address
 
@@ -935,6 +1204,10 @@ these classes.
      Converts a pointer from one pointer type to another. The new
      pointer will have the same address as the old pointer.
 
+.. index::
+   single: functions; null-pointer
+   single: null-pointer function
+
 .. function:: null-pointer
 
    Returns a null pointer whose type is given by the
@@ -952,6 +1225,10 @@ these classes.
      *pointer-designator-class*. Note that different calls to
      ``null-pointer`` may return the same object.
 
+.. index::
+   single: functions; null-pointer?
+   single: null-pointer? function
+
 .. function:: null-pointer?
 
    Returns true if a pointer is null
@@ -965,6 +1242,10 @@ these classes.
 
      Returns ``#t`` if a pointer is null and ``#f`` otherwise.
 
+.. index::
+   single: <C-void*> class
+   single: classes; <C-void*>
+
 .. class:: <C-void\*>
    :open:
    :concrete:
@@ -976,6 +1257,12 @@ these classes.
      The class designating C's ``void*`` pointer type. No
      :gf:`pointer-value` methods are defined on this class.
 
+.. index::
+   single: <C-pointer> class
+   single: <C-statically-typed-pointer> class
+   single: classes; <C-pointer>
+   single: classes; <C-statically-typed-pointer>
+
 .. class:: <C-statically-typed-pointer>
    :open:
    :abstract:
@@ -986,6 +1273,10 @@ these classes.
 
      The abstract superclass of all classes designating a C pointer type
      for a non-*void* base.
+
+.. index::
+   single: define C-pointer-type definition macro
+   single: definition macros; define C-pointer-type
 
 .. macro:: define C-pointer-type
    :defining:
@@ -1009,6 +1300,10 @@ these classes.
      Objects returned by ``make(*pointer-class-name*)`` will be
      instances of a sealed concrete subclass of *pointer-class-name*.
 
+.. index::
+   single: functions; referenced-type
+   single: referenced-type function
+
 .. function:: referenced-type
 
    Returns the class designating the contents type of the designated C
@@ -1026,6 +1321,10 @@ these classes.
      class is returned whenever *referenced-type* is called with the
      same argument.
 
+.. index::
+   single: classes; <C-pointer>
+   single: define C-subtype definition macro
+
 .. function:: c-type-cast
 
    Converts a value to a value of a specified type, according to the
@@ -1038,6 +1337,12 @@ these classes.
    :value value: An instance of :drm:`<object>`.
 
    :description:
+
+     .. index::
+	single: define C-subtype definition macro
+	single: definition macros; define C-subtype
+	single: generic functions; pointer-value
+	single: pointer-value generic function
 
      Returns the value of the second argument, converted to the type
      specified by the first argument, in accordance with the semantics of a C
@@ -1068,6 +1373,9 @@ these classes.
 
      if the Dylan declaration is
 
+     .. index::
+	single: <C-pointer> class
+
      .. code-block:: dylan
 
        define C-function Foo
@@ -1096,6 +1404,10 @@ these classes.
      :gf:`pointer-value-setter` for types defined by :macro:`define
      C-subtype` that are subtypes of :class:`<C-pointer>`.
 
+.. index::
+   single: generic functions; pointer-value-setter
+   single: pointer-value-setter generic function
+
 .. generic-function:: pointer-value
    :open:
 
@@ -1121,6 +1433,10 @@ these classes.
 
      - :gf:`pointer-value-setter`.
 
+.. index::
+   single: generic functions; pointer-value-setter
+   single: pointer-value-setter generic function
+
 .. generic-function:: pointer-value-setter
    :open:
 
@@ -1141,6 +1457,10 @@ these classes.
 
      It is an error if *C-typed-pointer* does not point to a valid address or
      is a null pointer.
+
+.. index::
+   single: generic functions; pointer-value-address
+   single: pointer-value-address generic function
 
 .. generic-function:: pointer-value-address
    :open:
@@ -1167,6 +1487,10 @@ these classes.
        pointer-value(*C-typed-pointer*, index: i)
         = pointer-value (pointer-value-address(*C-typed-pointer*, index: i))
 
+.. index::
+   single: element method
+   single: methods; element
+
 .. method:: element
    :specializer: <C-statically-typed-pointer>
 
@@ -1186,6 +1510,10 @@ these classes.
      .. code-block:: dylan
 
         pointer-value(*C-statically-typed-pointer*, index: *index*)
+
+.. index::
+   single: element-setter method
+   single: methods; element-setter
 
 .. method:: element-setter
    :specializer: <C-statically-typed-pointer>
@@ -1208,6 +1536,10 @@ these classes.
         pointer-value-setter(*new*, *C-statically-typed-pointer*, index:
                              *index*)
 
+.. index::
+   single: = method
+   single: methods; =
+   
 .. method:: =
    :specializer: <C-pointer>
 
@@ -1218,6 +1550,9 @@ these classes.
    :parameter c-pointer-1: An instance of :class:`<C-pointer>`.
    :parameter c-pointer-2: An instance of :class:`<C-pointer>`.
    :value boolean: An instance of :drm:`<boolean>`.
+
+   .. index::
+      single: <C-pointer> class
 
    :description:
 
@@ -1234,6 +1569,11 @@ these classes.
    :seealso:
 
      - :gf:`pointer-value`.
+
+.. index::
+   single: < method
+   single: classes; <C-pointer>
+   single: methods; <
 
 .. method:: <
    :specializer: <C-pointer>
@@ -1268,6 +1608,9 @@ setters, *new* is the new value to which the value in the pointed-at
 location will be set. These functions can be used to deference any
 general instance of :class:`<C-pointer>`.
 
+.. index::
+   single: C-char-at function
+
 C-char-at
 ^^^^^^^^^
 
@@ -1278,6 +1621,9 @@ Signature
 .. code-block:: dylan
 
     C-char-at *C-pointer* #key *byte-index* *scaled-index* => *machine-word*
+
+.. index::
+   single: C-char-at-setter function
 
 C-char-at-setter
 ^^^^^^^^^^^^^^^^
@@ -1291,6 +1637,9 @@ Signature
     C-char-at-setter *new* *C-pointer* #key *byte-index* *scaled-index*
       => *machine-word*
 
+.. index::
+   single: functions; C-signed-char-at
+
 C-signed-char-at
 ^^^^^^^^^^^^^^^^
 
@@ -1302,6 +1651,9 @@ Signature
 
     C-signed-char-at *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
+
+.. index::
+   single: C-signed-char-at-setter function
 
 C-signed-char-at-setter
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -1315,6 +1667,9 @@ Signature
     C-signed-char-at-setter *new* *C-pointer* #key *byte-index*
       *scaled-index* => *machine-word*
 
+.. index::
+   single: functions; C-unsigned-char-at
+
 C-unsigned-char-at
 ^^^^^^^^^^^^^^^^^^
 
@@ -1326,6 +1681,10 @@ Signature
 
     C-unsigned-char-at *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
+
+.. index::
+   single: C-unsigned-char-at-setter function
+   single: functions; C-unsigned-char-at-setter
 
 C-unsigned-char-at-setter
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1339,6 +1698,13 @@ Signature
     C-unsigned-char-at-setter *new* *C-pointer* #key *byte-index*
       *scaled-index* => *machine-word*
 
+.. index::
+   single: C-char-at function
+   single: C-unsigned-short-at function
+   single: C-unsigned-short-at
+   single: C-char-at
+   single: functions; C-unsigned-short-at
+
 C-unsigned-short-at
 ^^^^^^^^^^^^^^^^^^^
 
@@ -1350,6 +1716,11 @@ Signature
 
     C-unsigned-short-at *C-pointer* #key *byte-index* *scaled-index*
       => *machine-word*
+
+.. index::
+   single: C-unsigned-short-at-setter function
+   single: functions; C-char-at-setter
+   single: functions; C-unsigned-short-at-setter
 
 C-unsigned-short-at-setter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1363,6 +1734,11 @@ Signature
     C-unsigned-short-at-setter *new* *C-pointer* #key *byte-index*
       *scaled-index* => *machine-word*
 
+.. index::
+   single: C-short-at function
+   single: C-signed-short-at function
+   single: functions; C-signed-short-at
+
 C-signed-short-at
 ^^^^^^^^^^^^^^^^^
 
@@ -1374,6 +1750,10 @@ Signature
 
     C-signed-short-at *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
+
+.. index::
+   single: C-signed-short-at-setter function
+   single: functions; C-signed-short-at-setter
 
 C-signed-short-at-setter
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1387,6 +1767,9 @@ Signature
     C-signed-short-at-setter *new* *C-pointer* #key *byte-index*
       *scaled-index* => *machine-word*
 
+.. index::
+   single: functions; C-short-at
+
 C-short-at
 ^^^^^^^^^^
 
@@ -1398,6 +1781,10 @@ Signature
 
     C-short-at *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
+
+.. index::
+   single: C-short-at-setter function
+   single: functions; C-short-at-setter
 
 C-short-at-setter
 ^^^^^^^^^^^^^^^^^
@@ -1411,6 +1798,10 @@ Signature
     C-short-at-setter *new* *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
 
+.. index::
+   single: C-unsigned-long-at function
+   single: functions; C-unsigned-long-at
+
 C-unsigned-long-at
 ^^^^^^^^^^^^^^^^^^
 
@@ -1422,6 +1813,10 @@ Signature
 
     C-unsigned-long-at *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
+
+.. index::
+   single: C-unsigned-long-at-setter function
+   single: functions; C-unsigned-long-at-setter
 
 C-unsigned-long-at-setter
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1435,6 +1830,10 @@ Signature
     C-unsigned-long-at-setter *new* *C-pointer* #key *byte-index*
       *scaled-index* => *machine-word*
 
+.. index::
+   single: C-signed-long-at function
+   single: functions; C-signed-long-at
+
 C-signed-long-at
 ^^^^^^^^^^^^^^^^
 
@@ -1446,6 +1845,10 @@ Signature
 
     C-signed-long-at *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
+
+.. index::
+   single: C-signed-long-at-setter function
+   single: functions; C-signed-long-at-setter
 
 C-signed-long-at-setter
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -1459,6 +1862,10 @@ Signature
     C-signed-long-at-setter *new* *C-pointer* #key *byte-index*
       *scaled-index* => *machine-word*
 
+.. index::
+   single: C-long-at function
+   single: functions; C-long-at
+
 C-long-at
 ^^^^^^^^^
 
@@ -1469,6 +1876,10 @@ Signature
 .. code-block:: dylan
 
     C-long-at *C-pointer* #key *byte-index* *scaled-index* => *machine-word*
+
+.. index::
+   single: C-long-at-setter function
+   single: functions; C-long-at-setter
 
 C-long-at-setter
 ^^^^^^^^^^^^^^^^
@@ -1482,6 +1893,10 @@ Signature
     C-long-at-setter *new* *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
 
+.. index::
+   single: C-unsigned-int-at function
+   single: functions; C-unsigned-int-at
+
 C-unsigned-int-at
 ^^^^^^^^^^^^^^^^^
 
@@ -1493,6 +1908,10 @@ Signature
 
     C-unsigned-int-at *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
+
+.. index::
+   single: C-unsigned-int-at-setter function
+   single: functions; C-unsigned-int-at-setter
 
 C-unsigned-int-at-setter
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1506,6 +1925,10 @@ Signature
     C-unsigned-int-at-setter *new* *C-pointer* #key *byte-index*
       *scaled-index* => *machine-word*
 
+.. index::
+   single: C-signed-int-at function
+   single: functions; C-signed-int-at
+
 C-signed-int-at
 ^^^^^^^^^^^^^^^
 
@@ -1517,6 +1940,10 @@ Signature
 
     C-signed-int-at *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
+
+.. index::
+   single: C-signed-int-at-setter function
+   single: functions; C-signed-int-at-setter
 
 C-signed-int-at-setter
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -1530,6 +1957,10 @@ Signature
     C-signed-int-at-setter *new* *C-pointer* #key *byte-index*
       *scaled-index* => *machine-word*
 
+.. index::
+   single: C-int-at function
+   single: functions; C-int-at
+
 C-int-at
 ^^^^^^^^
 
@@ -1540,6 +1971,10 @@ Signature
 .. code-block:: dylan
 
     C-int-at *C-pointer* #key *byte-index* *scaled-index* => *machine-word*
+
+.. index::
+   single: C-int-at-setter function
+   single: functions; C-int-at-setter
 
 C-int-at-setter
 ^^^^^^^^^^^^^^^
@@ -1553,6 +1988,10 @@ Signature
     C-int-at-setter *new* *C-pointer* #key *byte-index* *scaled-index* =>
       *machine-word*
 
+.. index::
+   single: C-double-at function
+   single: functions; C-double-at
+
 C-double-at
 ^^^^^^^^^^^
 
@@ -1563,6 +2002,10 @@ Signature
 .. code-block:: dylan
 
     C-double-at *C-pointer* #key *byte-index* *scaled-index* => *float*
+
+.. index::
+   single: C-double-at-setter function
+   single: functions; C-double-at-setter
 
 C-double-at-setter
 ^^^^^^^^^^^^^^^^^^
@@ -1576,6 +2019,10 @@ Signature
     C-double-at-setter *new-double-float* *C-pointer* #key *byte-index*
       *scaled-index* => *float*
 
+.. index::
+   single: C-float-at function
+   single: functions; C-float-at
+
 C-float-at
 ^^^^^^^^^^
 
@@ -1586,6 +2033,10 @@ Signature
 .. code-block:: dylan
 
     C-float-at *C-pointer* #key *byte-index* *scaled-index* => *float*
+
+.. index::
+   single: C-float-at-setter function
+   single: functions; C-float-at-setter
 
 C-float-at-setter
 ^^^^^^^^^^^^^^^^^
@@ -1599,6 +2050,10 @@ Signature
     C-float-at-setter *new-single-float* *C-pointer* #key *byte-index*
       *scaled-index* => *float*
 
+.. index::
+   single: C-pointer-at function
+   single: functions; C-pointer-at
+
 C-pointer-at
 ^^^^^^^^^^^^
 
@@ -1609,6 +2064,10 @@ Signature
 .. code-block:: dylan
 
     C-pointer-at *C-pointer* #key *byte-index* *scaled-index* => *C-pointer*
+
+.. index::
+   single: C-pointer-at-setter function
+   single: functions; C-pointer-at-setter
 
 C-pointer-at-setter
 ^^^^^^^^^^^^^^^^^^^
@@ -1671,8 +2130,20 @@ Signature
       *machine-word*
 
 
+.. index::
+   single: structure types
+   single: types; structure
+
 Structure types
 ---------------
+
+.. index::
+   single: <C-struct> class
+   single: <C-value> class
+   single: classes; <C-struct>
+   single: classes; <C-value>
+   single: define C-struct definition macro
+   single: definition macros; define C-struct
 
 .. class:: <C-struct>
    :open:
@@ -1690,8 +2161,18 @@ Structure types
      struct value, pointers to that struct type are accepted and
      returned.
 
+.. index::
+   single: types; union
+   single: union types
+
 Union types
 -----------
+
+.. index::
+   single: <C-union> class
+   single: classes; <C-union>
+   single: define C-union definition macro
+   single: definition macros; define C-union
 
 .. class:: <C-union>
    :open:
@@ -1705,6 +2186,11 @@ Union types
      unions are not instantiable. Where a slot, array element, function
      parameter or function result is typed as a union value, pointers to
      that union type are accepted and returned.
+
+.. index::
+   single: C type macros; notes on
+   single: macros; notes on C type macros
+   single: notes on; C type macros
 
 Notes on C type macros
 ----------------------
@@ -1746,14 +2232,29 @@ can be described with these definitions:
 The slots of these ex-inline types must be accessed through a chain of
 accesses, for example ``o.val.string-val``.
 
+.. index::
+   single: defining; types
+   single: types; defining
+
 Defining types
 ==============
 
 This section covers the definition macros that create Dylan designators
 for C types, structs and unions.
 
+.. index::
+   single: classes; defining specialized designator classes
+   single: defining; specialized designator classes
+   single: designator classes; defining specialized
+   single: designator classes; defining specialized versions
+   single: specialized designator classes; defining
+
 Defining specialized versions of designator classes
 ---------------------------------------------------
+
+.. index::
+   single: define C-subtype definition macro
+   single: definition macros; define C-subtype
 
 .. macro:: define C-subtype
    :defining:
@@ -1789,6 +2290,10 @@ Defining specialized versions of designator classes
        define class *name* (*superclasses*)
          *slot-spec* ; ...
        end class;
+
+     .. index::
+	single: define C-subtype definition macro
+	single: define C-subtype; define C-subtype
 
      In terms of C, ``define C-subtype`` can be thought of as
      implementing a strongly typed version of ``typedef`` because a new
@@ -1836,6 +2341,10 @@ Defining specialized versions of designator classes
          result value :: <StreamHandle>;
          c-name: "CurrentStream";
        end C-function;
+
+     .. index::
+	single: define C-function definition macro
+	single: definition macros; define C-function
 
      Example transactions:
 
@@ -1900,8 +2409,17 @@ Defining specialized versions of designator classes
          MatrixAdd(m1, m2)
        end method;
 
+.. index::
+   single: classes; defining specialized designator classes
+   single: defining; specialized designator classes
+   single: specialized designator classes; defining
+
 Defining specialized designator classes
 ---------------------------------------
+
+.. index::
+   single: define C-mapped-subtype definition macro
+   single: definition macros; define C-mapped-subtype
 
 .. macro:: define C-mapped-subtype
    :defining:
@@ -2003,6 +2521,12 @@ Defining specialized designator classes
 
          //end module
 
+     .. index::
+	single: <byte-string> class
+	single: <C-example-string> class
+	single: classes; <byte-string>
+	single: classes; <C-example-string>
+
      Mapped string example: an alternate version of C-string which
      automatically converts instances of :drm:`<byte-string>` to instances
      of ``<C-example-string>`` on export.
@@ -2040,6 +2564,10 @@ Defining specialized designator classes
          end;
 
          //end module
+
+     .. index::
+        single: <byte-string> class
+	single: classes; <byte-string>
 
      It is possible to define an ordinary subtype of a mapped supertype.
      The mapping characteristic of the subtype is inherited from the
@@ -2107,8 +2635,17 @@ Defining specialized designator classes
                end;
          end;
 
+.. index::
+   single: describing; structure types
+   single: structure types; describing
+   single: types; describing structure types
+
 Describing structure types
 --------------------------
+
+.. index::
+   single: define C-struct definition macro
+   single: definition macros; define C-struct
 
 .. macro:: define C-struct
    :defining:
@@ -2129,6 +2666,9 @@ Describing structure types
 
    :description:
 
+     .. index::
+	single: classes; <C-struct>
+
      Describes C's aggregate structures. The name is defined to be a
      designator class encapsulating the value of a structure, not a
      pointer to the structure. This is significant because many of the
@@ -2136,6 +2676,9 @@ Describing structure types
      structures — pointers to structures being the most common form and
      the form closest to Dylan's object model. The new designator class
      is defined to be a subclass of :class:`<C-struct>`.
+
+     .. index::
+	single: <C-struct> class
 
      Once defined, a structure-designating class is most likely to be
      used as the basis for a pointer type definition in terms of which
@@ -2181,6 +2724,10 @@ Describing structure types
      to getter-name*-setter*. No setter method is defined if the
      *setter* option is ``#f``. If the *constant* keyword is supplied, no
      *setter* option should be supplied.
+
+     .. index::
+	single: <C-pointer> class
+	single: classes; <C-pointer>
 
      The optional *address-getter* specifies the name of a function that
      can be used to return a pointer to the data in the member. It must
@@ -2266,8 +2813,17 @@ Describing structure types
        10
        20
 
+.. index::
+   single: describing; union types
+   single: types; describing union types
+   single: union types; describing
+
 Describing union types
 ----------------------
+
+.. index::
+   single: define C-union definition macro
+   single: definition macros; define C-union
 
 .. macro:: define C-union
    :defining:
@@ -2287,6 +2843,10 @@ Describing union types
    :parameter type-options: A property list.
 
    :description:
+
+     .. index::
+	single: define C-struct definition macro
+	single: definition macros; define C-struct
 
      Describes C union types to the C-FFI. The syntax for the macro and
      its use are similar to :macro:`define c-struct` except that bitfield
@@ -2353,17 +2913,32 @@ Describing union types
        ? array[5].double-value;
        11232e-12 // or a different something
 
+.. index::
+   single: functions; C-FFI
+
 Functions
 =========
 
 This section describes the C FFI macros that allow C functions to be
 made available to Dylan and Dylan functions available to C.
 
+.. index::
+   single: function types; C-FFI
+   single: types; C-FFI function
+
 Function types
 --------------
 
 This section describes classes that designate C function types and how
 to construct them.
+
+.. index::
+   single: <C-function-pointer> class
+   single: <C-pointer> class
+   single: classes; <C-function-pointer>
+   single: classes; <C-pointer>
+   single: define C-callable definition macro
+   single: definition macros; define C-callable
 
 .. class:: <C-function-pointer>
    :open:
@@ -2375,8 +2950,18 @@ to construct them.
      is a subclass of :class:`<C-pointer>`. The Dylan variable bound by
      :macro:`define c-callable` is of this type.
 
+.. index::
+   single: C functions; dealing withWinMain
+   single: C functions; describing to Dylan
+   single: describing; C functions to Dylan
+   single: Dylan; describing C functions to
+
 Describing C functions to Dylan
 -------------------------------
+
+.. index::
+   single: define C-function definition macro
+   single: define macros; define C-function
 
 .. macro:: define C-function
    :defining:
@@ -2405,6 +2990,9 @@ Describing C functions to Dylan
      provided by ``extern`` declarations for the function in a C header
      file: the function's name and the types of its parameters and
      results.
+
+     .. index::
+	single: definition macros; define C-function
 
      The result of processing a ``define C-function`` definition is a
      Dylan function which is bound to name. This function takes Dylan
@@ -2468,6 +3056,9 @@ Describing C functions to Dylan
        {<some-struct> pointer #xfefe770}
        42
 
+     .. index::
+	single: definition macros; define C-function
+
      If both *input* and *output* are supplied, they specify that the
      argument value to the C function is used to identify a location
      from which a value is accessed and into which an extra result value
@@ -2515,6 +3106,9 @@ Describing C functions to Dylan
      function on the result and then discard it. This is often used when
      mapping a return value to a Dylan error.
 
+     .. index::
+	single: define C-function definition macro
+
      Each *function-option* is a keyword–value pair. The
      *generic-function-method:* option may be either ``#t`` or ``#f``,
      indicating whether to add a method to the generic function name or
@@ -2528,6 +3122,10 @@ Describing C functions to Dylan
      The *c-name:* option is used to specify the name of the C function
      as it is defined in the object or shared library file. The *c-name*
      must be a constant string.
+
+     .. index::
+	single: <C-function-pointer> class
+	single: classes; <C-function-pointer>
 
      The *indirect:* ``#t`` option defines a function that accepts a C
      function pointer as its first argument and calls the function given
@@ -2587,6 +3185,9 @@ Describing C functions to Dylan
        ? read-stuff(100);
        50 // extra output value
 
+     .. index::
+	single: define C-callable-wrapper definition macro
+
      In effect, a ``define C-function`` such as:
 
      .. code-block:: dylan
@@ -2613,8 +3214,19 @@ Describing C functions to Dylan
 
      with the declared type.
 
+.. index::
+   single: C; describing Dylan functions for use by
+   single: describing; Dylan functions for use by C
+   single: Dylan functions; describing for use by C
+   single: functions; describing Dylan functions for use by C
+   single: functions; describing for use by C
+
 Describing Dylan functions for use by C
 ---------------------------------------
+
+.. index::
+   single: define C-callable-wrapper definition macro
+   single: definition macros; define C-callable wrapper
 
 .. macro:: define C-callable-wrapper
    :defining:
@@ -2646,6 +3258,11 @@ Describing Dylan functions for use by C
      given as would be needed by C callers, typically provided by
      ``extern`` declarations for the function in a C header file: the
      types of its parameters and results.
+
+     .. index::
+	single: define C-callable-wrapper definition macro
+	single: define C-function definition macro
+	single: definition macros; define C-callable wrapper
 
      The result of processing a ``define C-callable-wrapper`` definition
      is a function with a C entry point with the contract described.
@@ -2785,6 +3402,9 @@ Describing Dylan functions for use by C
          read_stuff(&max_then_read);
        }
 
+     .. index::
+	single: definition macros; define C-callable wrapper
+
      In effect, a ``define C-callable-wrapper`` such as:
 
      .. code-block:: dylan
@@ -2886,10 +3506,17 @@ of that bridge are implemented within this library.
           selector: "alloc";
         end;
 
+.. index::
+   single: C-FFI library; variables
+
 Variables
 ---------
 
 This section covers describing and accessing C variables.
+
+.. index::
+   single: define C-variable definition macro
+   single: definition macros; define C-variable
 
 .. macro:: define C-variable
    :defining:
@@ -2910,6 +3537,10 @@ This section covers describing and accessing C variables.
    :parameter import: ``#f`` or ``#t``.
 
    :description:
+     .. index::
+	single: classes; <C-pointer>
+	single: C-variable definition macro
+	single: definition macros; define C-variable
 
      Describes C variables to the C-FFI. It defines a getter and setter
      function for accessing the variable's value. The c-name keyword
@@ -2929,6 +3560,9 @@ This section covers describing and accessing C variables.
      *.dll*. If the definition is in a different project from the C
      source files then they will be in separate *.dll* s and *import:*
      needs to be ``#t``. The default value is ``#f``.
+
+     .. index::
+	single: <C-pointer> class
 
      For integer, float, or pointer-typed C variables the representation
      is clear and unambiguous. For C struct or union typed variables the
@@ -2966,6 +3600,10 @@ This section covers describing and accessing C variables.
      Dylan it is occasionally necessary to get a handle to the location
      where that variable is kept. The :macro:`define C-address` macro
      can be used for this purpose.
+
+.. index::
+   single: define C-address definition macro
+   single: definition macros; define C-address
 
 .. macro:: define C-address
    :defining:
@@ -3006,6 +3644,12 @@ This section covers describing and accessing C variables.
      then they will be in separate *.dll* s and *import:* needs to be
      ``#t``. The default value is ``#f``.
 
+.. index::
+   single: allocation; C storage
+   single: deallocating; C-storage
+   single: statement macros; with-stack-structure
+   single: with-stack-structure statement macro
+
 Allocating and deallocating C storage
 =====================================
 
@@ -3017,6 +3661,10 @@ The C component of a :drm:`make` -allocated object is not deallocated by
 default when the Dylan designator object is reclaimed by the garbage
 collector, so we provide a manual means of freeing this storage with the
 function :func:`destroy`.
+
+.. index::
+   single: make subclass(<C-pointer>) method
+   single: methods; make subclass(<C-pointer>)
 
 .. method:: make
    :specializer: subclass(<C-pointer>)
@@ -3097,6 +3745,12 @@ function :func:`destroy`.
            make(<Z-properties>,
              extra-bytes: 10 * size-of(<C-int>));
 
+.. index::
+   single: <C-statically-typed-pointer> class
+   single: classes; <C-statically-typed-pointer>
+   single: destroy generic function
+   single: generic functions; destroy
+
 .. generic-function:: destroy
    :open:
 
@@ -3122,6 +3776,9 @@ function :func:`destroy`.
 
      There is a default method for destroy on
      :class:`<C-statically-typed-pointer>`.
+
+.. index::
+   single: with-stack-structure
 
 .. macro:: with-stack-structure
    :statement:
@@ -3174,11 +3831,22 @@ function :func:`destroy`.
           end;
         end;
 
+.. index::
+   single: classes; utility designator
+   single: define C-mapped-subtype definition macro
+   single: definition macros; define C-mapped-subtype
+   single: designator classes; utility
+   single: utility designator classes
+
 Utility designator classes
 ==========================
 
 The following designator classes are defined for convenience purposes
 using :macro:`define c-mapped-subtype`.
+
+.. index::
+   single: <C-boolean> class
+   single: classes; <C-boolean>
 
 .. class:: <C-boolean>
    :open:
@@ -3191,6 +3859,12 @@ using :macro:`define c-mapped-subtype`.
      export is :drm:`<boolean>`, and the C type is ``int``. The C integer
      ``0`` is mapped to ``#f`` in Dylan, and all other values are mapped
      to ``#t``.
+
+.. index::
+   single: <C-character> class
+   single: <C-string> class
+   single: classes; <C-character>
+   single: classes; <C-string>
 
 .. class:: <C-string>
    :open:
@@ -3219,6 +3893,10 @@ using :macro:`define c-mapped-subtype`.
      The Dylan type for import and export is :drm:`<character>`. It is a
      designator that allows instances of :drm:`<character>` to be passed to
      and from C.
+
+.. index::
+   single: statement macros; with-c-string
+   single: with-c-string statement macro
 
 .. macro:: with-c-string
    :statement:
@@ -3325,6 +4003,12 @@ using :macro:`define c-mapped-subtype`.
      else ``#f``. The space is assumed to be a whole number of words and
      word-aligned.
 
+.. index::
+   single: <C-Dylan-object> class
+   single: classes; <C-Dylan-object>
+   single: functions; register-C-Dylan-object
+   single: register-C-Dylan-object function
+
 .. class:: <C-Dylan-object>
    :open:
    :abstract:
@@ -3371,6 +4055,10 @@ using :macro:`define c-mapped-subtype`.
 
      - :func:`unregister-C-Dylan-object`.
 
+.. index::
+   single: functions; unregister-C-Dylan-object
+   single: unregister-C-Dylan-object function
+
 .. function:: unregister-C-Dylan-object
 
    Deallocates an object.
@@ -3391,6 +4079,10 @@ using :macro:`define c-mapped-subtype`.
      twice before the memory manager can reclaim the space for the
      object as it normally would.
 
+.. index::
+   single: export-C-Dylan-object function
+   single: functions; export-C-Dylan-object
+
 .. function:: export-C-Dylan-object
 
    Fetches the :class:`<C-Dylan-object>` handle for a Dylan object.
@@ -3404,6 +4096,10 @@ using :macro:`define c-mapped-subtype`.
 
      Fetches the :class:`<C-Dylan-object>` handle for a Dylan object.
 
+.. index::
+   single: functions; import-C-Dylan-object
+   single: import-C-Dylan-object function
+
 .. function:: import-C-Dylan-object
 
    Fetches the Dylan object for a :class:`<C-Dylan-object>` handle.
@@ -3416,3 +4112,4 @@ using :macro:`define c-mapped-subtype`.
    :description:
 
      Fetches the Dylan object for a :class:`<C-Dylan-object>` handle.
+
