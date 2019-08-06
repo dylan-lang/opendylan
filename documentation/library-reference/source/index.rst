@@ -29,3 +29,9 @@ provided with Open Dylan.
    lid
    sql/index
    command-line-parser/index
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`search`
