@@ -24,7 +24,7 @@ above code more clear, the function could be rewritten as follows:
     end method;
 
 There have been two changes. The function now officially returns
-no values whatsoever. Also note that ``end`` has been
+no values whatsoever. Also note that :drm:`end` has been
 replaced by ``end method`` which could in turn be
 rewritten as ``end method hello-world``. In general,
 Dylan permits all the obvious combinations of keywords and labels to
@@ -49,7 +49,7 @@ must have its own type declaration; there's no syntax for saying
 "the last three parameters are all integers".
 
 Functions with variable numbers of parameters include the
-``#rest`` keyword in their parameter lists.
+:drm:`#rest` keyword in their parameter lists.
 Thus, the declaration for C's ``printf`` function
 would appear something like the following in Dylan:
 
@@ -123,7 +123,7 @@ Bare Methods
 Nameless methods may be declared inline. Such :term:`bare methods` are
 typically used as parameters to other methods.  For example, the
 following code fragment squares each element of a list using the built
-in ``map`` function and a bare method:
+in :drm:`map` function and a bare method:
 
 .. code-block:: dylan
 
@@ -131,7 +131,7 @@ in ``map`` function and a bare method:
       map(method(x) x * x end, numbers);
     end;
 
-The ``map`` function takes each element of
+The :drm:`map` function takes each element of
 the list ``numbers`` and applies the anonymous method. It
 then builds a new list using the resulting values and returns it.
 The method ``square-list`` might be invoked as
@@ -147,7 +147,7 @@ follows:
 Local Methods
 =============
 
-Local methods resemble bare methods but have names. They are
+:drm:`Local methods <local_method>` resemble bare methods but have names. They are
 declared within other methods, often as private utility routines.
 
 .. code-block:: dylan
@@ -191,8 +191,8 @@ Generic Functions
 =================
 
 A :term:`generic function` represents zero or more
-similar methods. Every method created by means of ``define
-method`` is automatically :term:`contained`
+similar methods. Every method created by means of :drm:`define
+method <define_method>` is automatically :term:`contained`
 within the generic function of the same name. For example, a 
 programmer could define three methods named ``display``,
 each of which acted on a different data type:
@@ -269,7 +269,7 @@ The following hypothetical method might print records to an output device:
       // ...print the records
     end method;
 
-The arguments following ``#key`` are keyword arguments. You could call this
+The arguments following :drm:`#key` are keyword arguments. You could call this
 method in several ways:
 
 .. code-block:: dylan
@@ -292,7 +292,7 @@ calls, the ``init-codes`` variable has the value ``""``.
 Programmers have quite a bit of flexibility in specifying keyword arguments.
 
 * The default value specifier (e.g. the ``= 66`` above) may be omitted, in
-  which case ``#f`` is used.
+  which case :drm:`#f` is used.
 * The type of the keyword argument may be specified or omitted, just as with
   regular arguments.
 * The keyword name can be different from the variable name used in the body of
@@ -314,7 +314,7 @@ The following method uses some of these features:
     end;
 
 Firstly, the ``start:`` and ``end:`` keyword arguments are both specialized as
-``<integer>``. The caller can only supply integers for these parameters.
+:drm:`<integer>`. The caller can only supply integers for these parameters.
 Secondly, the ``start:`` keyword argument is associated with the ``start``
 variable in the body of the method as usual, but because the Dylan language
 does not allow a variable named ``end``, that keyword argument is instead
@@ -325,7 +325,7 @@ were omitted, the value of the ``_end`` variable would be the size of the
 Rest Arguments
 ==============
 
-An argument list can also include ``#rest``, which is used with a variable name:
+An argument list can also include :drm:`#rest`, which is used with a variable name:
 
 .. code-block:: dylan
 
@@ -353,13 +353,13 @@ allows it. This section describes how that works. It is a little more advanced
 than rest of this introduction, so you may want to skip this section for now
 and refer back to it later.
 
-We described the ``#key`` and ``#rest`` parameter list tokens above. The
-``#key`` token may also be used by itself, e.g., ``define method foo (arg,
-#key)``. And there is a third parameter list token, ``#all-keys``, that
+We described the :drm:`#key` and :drm:`#rest` parameter list tokens above. The
+:drm:`#key` token may also be used by itself, e.g., ``define method foo (arg,
+#key)``. And there is a third parameter list token, :drm:`#all-keys`, that
 indicates that a method permits other keyword arguments than those listed.
 These features are only useful when working with a generic function and its
 family of methods. When used together, these tokens must appear in the order
-``#rest``, ``#key``, ``#all-keys``.
+:drm:`#rest`, :drm:`#key`, :drm:`#all-keys`.
 
 The table below shows the different kinds of parameter lists that a generic
 function can have, and what effect each has on the parameter lists of the
@@ -391,7 +391,7 @@ methods that it contains.
    Forbidden:
       No method may have this element in its parameter list.
    Automatic:
-      Each method effectively has ``#all-keys`` in its parameter list, even if
+      Each method effectively has :drm:`#all-keys` in its parameter list, even if
       it is not present.
 
 This table shows the different kinds of parameter lists that a method can have,

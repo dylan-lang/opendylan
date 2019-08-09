@@ -13,7 +13,8 @@ Simple Modules
 Modules import names (or bindings) from other modules and export names
 for use by other modules. The names that may be imported/exported are
 the module-level (also called "global") variables such as those created
-by ``define variable``, ``define class``, ``define generic``, etc.
+by :drm:`define variable <define_variable>`, :drm:`define class
+<define_class>`, :drm:`define generic <define_generic>`, etc.
 
 The dependencies between modules must form a directed, acyclic
 graph. Two modules may not use each other, and no circular dependencies
@@ -34,7 +35,7 @@ chapters might look like this:
           capacity;
     end module;
 
-Like all normal modules, this one uses the ``dylan`` module, which
+Like all normal modules, this one uses the :drm:`dylan` module, which
 contains all of the standard built-in functions and classes. In turn,
 the ``vehicles`` module exports all three of the vehicle classes, the
 generic function ``tax``, several getter functions and a single
@@ -47,7 +48,7 @@ neither. In the above example, the slot ``serial-number`` is read-only,
 while the slot ``owner`` is read/write.
 
 Note that when a module adds a method to an imported generic function,
-the change affects all modules using that function. ``define method``
+the change affects all modules using that function. :drm:`define method <define_method>`
 adds the new method to the existing generic function object, which may
 be referenced by any module importing its binding. The module that
 originally defined the generic function may prevent this behavior by
@@ -72,12 +73,14 @@ and re-exports.
 Libraries
 =========
 
-Libraries contain modules. For example, the ``dylan``
-library contains the ``dylan`` module
-described earlier, the ``extensions`` module, and
+Libraries contain modules. For example, the :drm:`dylan`
+library contains the :drm:`dylan` module
+described earlier, the `extensions`_ module, and
 possibly several other implementation-dependent modules. Note that
 a library and a module may share the same name. Modules with the
 same name may also appear in more than one library.
+
+.. _extensions: https://opendylan.org/documentation/library-reference/language-extensions
 
 By default, a Dylan environment provides a library called
 ``dylan-user`` for the convenience of the programmer.
@@ -86,7 +89,7 @@ depend only on modules found in the Dylan library.
 
 Additionally, every library contains an implicit module, also
 known as ``dylan-user``, which imports all of the
-modules found in the ``dylan`` library. This may be
+modules found in the :drm:`dylan` library. This may be
 used for single module programs. Many Dylan environments, however,
 use it to bootstrap new library definitions. The vehicle library,
 for example, might be defined as follows in a ``dylan-user``
@@ -140,7 +143,7 @@ lets the compiler optimize more effectively. Both classes and generic
 functions are sealed by default.
 
 To allow code in other libraries to subclass a given class,
-declare it as ``open``:
+declare it as :drm:`open`:
 
 .. code-block:: dylan
 
@@ -153,9 +156,11 @@ use a similar syntax:
 
     define open generic sample-function (o :: <object>) => ();
 
-A third form, ``define sealed domain``, partially
+A third form, :drm:`define sealed domain <define_sealed_domain>`, partially
 seals a generic function, disallowing only some additions from outside
 a library.
 
 For more information on sealing, see the chapter
-"Controlling Dynamism" in the DRM.
+`Sealing`_ in the DRM.
+
+.. _Sealing: https://opendylan.org/books/drm/Sealing
