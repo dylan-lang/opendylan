@@ -1,9 +1,22 @@
+
+.. index::
+   single: API libraries
+   single: Win32 API
+   single: Win32 API libraries
+
 ***********************
 The Win32 API Libraries
 ***********************
 
 .. current-library:: win32-kernel
 .. current-module:: win32-kernel
+
+.. contents::
+
+.. index::
+   single: introduction to; Win32 libraries
+   single: libraries; introduction to Win32 libraries
+   single: Win32 API libraries; introduction
 
 Introduction
 ============
@@ -32,6 +45,10 @@ explains the name mapping scheme we used in the conversion, and provides
 a collection of tips for writing Dylan applications with the libraries.
 Finally, there is a list of items not supported in our versions of these
 libraries.
+
+.. index::
+   single: libraries provided; list of Win32
+   single: list of Win32 libraries provided
 
 Supported Win32 libraries
 =========================
@@ -86,6 +103,12 @@ Win32-Rich-Edit
   Corresponds to *SHELLAPI.H* and *SHELL32.DLL*.
 - Winsock2 Corresponds to *WINSOCK2.H*, *QOS.H*, and *MSWSOCK.H*.
 
+.. index::
+   single: content of the Win32 API libraries
+   single: organization of the Win32 API libraries
+   single: Win32 API libraries; content of
+   single: Win32 API libraries; organization of
+
 Content and organization of the Win32 API libraries
 ===================================================
 
@@ -102,6 +125,10 @@ the C names have been translated.
 
    If there is an additional area of Win32 you would like to see these
    libraries support, please inform the Open Dylan support team.
+
+.. index::
+   single: notes on; translations
+   single: translations; notes on
 
 Notes on the translations
 -------------------------
@@ -121,12 +148,27 @@ names excluded from the Dylan libraries`_.
 The extended API macros, defined in the optional C header file
 *WINDOWSX.H*, are not supported.
 
+.. index::
+   single: conventions; mapping conventions for Win32 libraries
+   single: conventions; naming conventions for Win32 libraries
+   single: libraries; Win32 library mapping conventions
+   single: libraries; Win32 library naming conventions
+   single: mapping; conventions; for Win32 libraries
+   single: naming conventions; for Win32 libraries
+   single: Win32 API libraries; mapping conventions
+   single: Win32 API libraries; naming conventions
+
 Naming and mapping conventions
 ==============================
 
 A Dylan application using the Win32 API will generally use the same API
 names as a C program would, with the following modifications for
 consistency with Dylan conventions.
+
+.. index::
+   single: conventions; simple naming
+   single: naming conventions; simple
+   single: simple naming conventions
 
 Simple naming conventions
 -------------------------
@@ -146,6 +188,11 @@ Hyphens will *not* be inserted between capitalized words (for example,
 obvious mapping that is more likely to cause confusion when switching
 between Dylan code and Windows documentation.
 
+.. index::
+   single: mapping; null value, the
+   single: null value; mapping
+   single: values; mapping null value
+
 Mapping the null value
 ----------------------
 
@@ -158,6 +205,13 @@ expression ``if(ptr)...`` as is often done in C, since a null pointer is
 not the same as ``#f``. There are also functions :func:`null-handle` and
 :func:`null-handle?` for creating and testing handles, since conceptually they
 are not necessarily pointers.
+
+.. index::
+   single: C types; mapping onto Dylan classes
+   single: classes; mapping C types onto
+   single: Dylan classes; mapping C types onto
+   single: mapping; C types onto Dylan classes
+   single: types; mapping C types onton Dylan classes
 
 Mapping C types onto Dylan classes
 ----------------------------------
@@ -223,6 +277,13 @@ alternative versions of the C declarations. This means, for example,
 that the various handle types such as ``<hmenu>`` and ``<hwnd>`` are
 disjoint subclasses of ``<handle>``, instead of all being equivalent.
 
+.. index::
+   single: alias functions; creating methods from
+   single: creating methods from Windows alias functions
+   single: functions; creating methods from Windows alias functions
+   single: methods; creating from Windows alias functions
+   single: Windows alias functions; creating methods from
+
 Creating methods from Windows alias functions
 ---------------------------------------------
 
@@ -234,6 +295,13 @@ a generic function with separate methods for arguments of types
 :drm:`<unicode-string>`. (Only the 8-bit versions will be supported in the
 initial implementation, both because the compiler is not ready to handle
 Unicode and because it will not work on Windows 95.)
+
+.. index::
+   single: C structure fields; mapping onto Dylan slot names
+   single: Dylan slot names; mapping C structure fields onto
+   single: mapping; C structure fields onto Dylan slot names
+   single: slot names; mapping C structure fields onto
+   single: structure fields; mapping onto Dylan slot names
 
 Mapping C structure fields onto Dylan slot names
 ------------------------------------------------
@@ -256,6 +324,12 @@ There is not any attempt to append *?* to the names of predicate
 functions since it is not obvious exactly which functions that should
 apply to. The Dylan convention of *\*...\** for global variables is not
 relevant since there are no global variables involved.
+
+.. index::
+   single: handling return of multiple values
+   single: multiple values; handling return of
+   single: return of multiple values; handling
+   single: values; handling return of multiple values
 
 Handling return of multiple values
 ----------------------------------
@@ -285,6 +359,11 @@ Similarly, this function returns multiple values instead of a structure:
 .. code-block:: dylan
 
     let ( x, y ) = GetLargestConsoleWindowSize(handle);
+
+.. index::
+   single: callback functions; defining
+   single: defining; callback functions
+   single: functions; defining callback
 
 Defining callback functions
 ===========================
@@ -329,10 +408,17 @@ which have the same argument types as a window function, but return a
 be ``TRUE`` or ``FALSE``, so the Dylan callback interface has been
 implemented using ``BOOL`` instead.)
 
+.. index::
+   single: error messages
+   single: messages; error
+
 Error messages
 ==============
 
 The Win32-Kernel library provides the following utility functions.
+
+.. index::
+   single: win32-error-message function
 
 .. function:: win32-error-message
 
@@ -342,6 +428,15 @@ The Win32-Kernel library provides the following utility functions.
 
      The *error-code* is an instance of :drm:`<integer>` or :class:`<machine-word>` (type
      unioned).
+
+     .. index::
+	single: check-win32-result function
+	single: ensure-no-win32-error function
+	single: functions; check-win32-result
+	single: functions; ensure-no-win32-error
+	single: functions; report-win32-error
+	single: functions; win32-error-message
+	single: report-win32-error function
 
      The *error-code* argument is either a Windows a Windows error code
      (such as returned by ``GetLastError``) or an ``SCODE`` (also known
@@ -446,6 +541,10 @@ objects of class :drm:`<serious-condition>`.
        from the Functional Dylan-Extensions library and module, in the
        *Core Features* reference manual.
 
+.. index::
+   single: dealing with the C function WinMain
+   single: WinMain C function; dealing with
+
 Dealing with the C function WinMain
 ===================================
 
@@ -503,6 +602,10 @@ For a complete example program, see
 
 in the Open Dylan installation directory.
 
+.. index::
+   single: bit mask constants; combining
+   single: combining bit mask constants
+
 Combining bit mask constants
 ============================
 
@@ -528,6 +631,9 @@ occur are:
   controls *($CFM-...* and *$CFE-...)*
 - Mask value in *PARAFORMAT* structure for "rich edit" controls
   *($PFM-...)*
+
+.. index::
+   single: Win32 API libraries; minor details
 
 Other minor details
 ===================
@@ -584,6 +690,12 @@ need to maintain that artificial distinction in Dylan.)
 Windows resource files (*.rc* files) can be included by using the LID
 file field *RC-Files:*.
 
+.. index::
+   single: Dylan libraries; Win32 names excluded from
+   single: libraries; Win32 names excluded from
+   single: libraries; Win32 names excluded from Dylan libraries
+   single: Win32 names excluded from the Dylan libraries
+
 Index of Win32 names excluded from the Dylan libraries
 ======================================================
 
@@ -609,6 +721,9 @@ planned to be supported since there is no clear need for them and the
 functionality can be obtained by using Dylan extended integers. However,
 an interface to function *MulDiv* is provided, since it is an ordinary C
 function that is commonly used.
+
+.. index::
+   single: characters
 
 Characters
 ----------
