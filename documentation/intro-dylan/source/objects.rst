@@ -6,7 +6,7 @@ The features of Dylan's object system don't map directly onto the
 features found in C++. Dylan handles access control using
 :term:`modules`, not ``private`` declarations within
 individual classes. Standard Dylan has no destructors, but instead relies
-upon the garbage collector to recover memory and on block/cleanup
+upon the garbage collector to recover memory and on :drm:`block`/cleanup
 to recover lexically scoped resources. Dylan objects don't even have real
 member functions.
 
@@ -80,7 +80,7 @@ their data. A simple Dylan class shows how slots are declared:
 The above code would be quick and convenient to write while building a
 prototype, but it could be improved. The slots have no declared types
 so they default to :drm:`<object>`, and they don't specify default values
-so they default to ``#f``.  The following snippet fixes both problems:
+so they default to :drm:`#f`.  The following snippet fixes both problems:
 
 .. code-block:: dylan
 
@@ -107,9 +107,9 @@ programmer could write one of the following:
     make(<vehicle>, sn: 1000000)
     make(<vehicle>, sn: 2000000, owner: "Sal")
 
-In the first example, ``make`` returns a vehicle
+In the first example, :drm:`make` returns a vehicle
 with the specified serial number and the default owner. In the second
-example, ``make`` sets both slots using the keyword
+example, :drm:`make` sets both slots using the keyword
 arguments.
 
 Only one of ``required-init-keyword``, ``init-value`` and
@@ -187,7 +187,7 @@ must be invoked in the usual Dylan fashion; no syntactic sugar exists
 to make them look like C++ member functions.
 
 The version of tax for ``<truck>`` objects
-calls a special function named ``next-method``. This
+calls a special function named :drm:`next-method`. This
 function invokes the next most specific method of a generic function;
 in this case, the method for ``<vehicle>``
 objects.  Parameters to the current method get passed along
@@ -226,10 +226,10 @@ model, see the chapter on :doc:`Multiple Dispatch <multiple-dispatch>`.
 Initializers
 ============
 
-The ``make`` function handles much of the
+The :drm:`make` function handles much of the
 drudgery of object construction. It processes keywords and initializes
 slots. Programmers may, however, customize this process by adding
-methods to the generic function ``initialize``. For
+methods to the generic function :drm:`initialize`. For
 example, if vehicle serial numbers must be at least seven digits:
 
 .. code-block:: dylan
@@ -241,13 +241,13 @@ example, if vehicle serial numbers must be at least seven digits:
       end if;
     end method;
 
-``initialize`` methods get called after regular
+:drm:`initialize` methods get called after regular
 slot initialization. They typically perform error checking or calculate
 derived slot values. Initialize methods must specify ``#key`` in their
 parameter lists.
 
 It's possible to access the values of slot keywords from
-``initialize`` methods, and even to specify additional
+:drm:`initialize` methods, and even to specify additional
 keywords in the class declaration. See the DRM for further details.
 
 Abstract Classes and Overriding Make
@@ -268,7 +268,7 @@ be defined as follows:
 
 The above modification prevents the creation of direct instances
 of ``<vehicle>``. At the moment, calling
-``make`` on this class would result in an error.
+:drm:`make` on this class would result in an error.
 However, a programmer could add a method to make which allowed the
 intelligent creation of vehicles based on some criteria, thus making
 ``<vehicle>`` an :term:`instantiable abstract class`:
@@ -303,7 +303,7 @@ any of the following fashions:
     make(<vehicle>, sn: x, big?: #t); //=> truck
     make(<vehicle>, sn: x);           //=> car
 
-Methods added to ``make`` don't actually need to create new objects. Dylan
+Methods added to :drm:`make` don't actually need to create new objects. Dylan
 officially allows them to return existing objects. This can be used to
 manage lightweight shared objects, such as the "flyweights" or "singletons"
 described by Gamma, et al., in

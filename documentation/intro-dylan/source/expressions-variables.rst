@@ -32,9 +32,9 @@ support a number of standard naming conventions, as shown in this table:
 +-----------------+-----------------------------------------------------+
 | :drm:`<string>` | a class                                             |
 +-----------------+-----------------------------------------------------+
-| ``insert!``     | mutative function (modifies argument destructively) |
+| :drm:`add!`     | mutative function (modifies argument destructively) |
 +-----------------+-----------------------------------------------------+
-| ``empty?``      | predicate function (tests one or more arguments and |
+| :drm:`empty?`   | predicate function (tests one or more arguments and |
 |                 | returns either true or false)                       |
 +-----------------+-----------------------------------------------------+
 | ``write-line``  | a two word name                                     |
@@ -47,8 +47,8 @@ support a number of standard naming conventions, as shown in this table:
 True and False
 ==============
 
-Dylan represents true as ``#t`` and false as ``#f``. When evaluated in
-a Boolean context, all values other than ``#f`` are considered
+Dylan represents true as :drm:`#t` and false as :drm:`#f`. When evaluated in
+a Boolean context, all values other than :drm:`#f` are considered
 true. Thus, the number zero -- and other common "false" values --
 evaluate as true in Dylan.
 
@@ -103,14 +103,14 @@ Assignment, Equality and Identity
 
 Dylan uses all three of the "equals" operators
 found in C and Pascal, albeit in a different fashion. The
-assignment operator, ``:=``, rebinds Dylan variable
-names to new values. The equality operator, ``=``,
+assignment operator, :drm:`:=`, rebinds Dylan variable
+names to new values. The equality operator, :drm:`=`,
 tests for equality in Dylan and also appears in some
-language constructs such as ``let``. (Two Dylan objects
+language constructs such as :drm:`let`. (Two Dylan objects
 are equal, generally, if they belong to the same class and have equal
 substructure.)
 
-The C++ equality operator, ``==``, acts as the
+The C++ equality operator, :drm:`==`, acts as the
 :term:`identity` operator in Dylan. Two variables are
 :term:`identical` if and only if they are bound to the
 exact same object. For example, the following three expressions mean
@@ -159,7 +159,7 @@ Parallel Values
 ===============
 
 It's possible to bind more than one variable at a time in Dylan.
-For example, a single ``let`` statement could bind
+For example, a single :drm:`let` statement could bind
 ``x`` to 2, ``y`` to 3 and ``z`` to 4.
 
 .. code-block:: dylan
@@ -200,9 +200,9 @@ Module Variables and Constants
 
 Dylan supports :term:`module-level` variables,
 which serve roughly the same purpose as C's global variables. Although
-the ``let`` function may only be used within :term:`methods`
-(Dylan-speak for regular functions), the forms ``define variable`` and
-``define constant`` may be used at module top level.
+the :drm:`let` function may only be used within :term:`methods`
+(Dylan-speak for regular functions), the forms :drm:`define variable <define_variable>` and
+:drm:`define constant <define_constant>` may be used at module top level.
 
 .. code-block:: dylan
 

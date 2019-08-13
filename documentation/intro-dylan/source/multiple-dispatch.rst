@@ -51,7 +51,7 @@ with these arguments performs three separate tasks:
 ``check-insurance``. The most specific method on
 ``inspect-vehicle`` -- the one for the classes
 ``<car>`` and ``<state-inspector>`` -- is invoked first
-and calls ``next-method`` to invoke the less-specific methods in turn.
+and calls :drm:`next-method` to invoke the less-specific methods in turn.
 
 For an exact definition of "specific", see the DRM.
 
@@ -74,4 +74,4 @@ though they were in a class of their own. For example:
     end;
 
 (In this example, none of the usual inspection methods will be
-invoked since the above code doesn't call ``next-method``.)
+invoked since the above code doesn't call :drm:`next-method`.)

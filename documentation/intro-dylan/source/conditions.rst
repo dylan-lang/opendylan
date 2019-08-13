@@ -16,7 +16,7 @@ Signaling
 
 Unlike the exceptions of C++ or Java, signaling a condition does *not* itself
 cause the current function or block to exit. Instead, calling the :drm:`signal`
-function is just like calling any other function. The ``signal`` function just
+function is just like calling any other function. The :drm:`signal` function just
 locates an appropriate handler and calls it normally.
 
 One consequence of this is that a handler can signal another condition in a very
@@ -45,7 +45,7 @@ Handlers
 A function :term:`establishes a handler` with the :drm:`let handler
 <let_handler>` statement. The handler remains in effect until the function
 exits. Other functions called by the first can establish new handlers. When the
-``signal`` function looks for a handler, it looks for the most recently
+:drm:`signal` function looks for a handler, it looks for the most recently
 established handler that fits the condition.
 
 In the example above, there are two handlers: ``handle-no-person-found`` and
@@ -53,7 +53,7 @@ In the example above, there are two handlers: ``handle-no-person-found`` and
 condition. Let us assume that the ``find-person-or-pet`` function established
 the ``handle-no-person-found`` handler and that the ``find-pet`` function
 established the ``handle-no-pet-found`` handler. Since ``handle-no-pet-found``
-was established later, it was the one chosen and called by ``signal`` in frame
+was established later, it was the one chosen and called by :drm:`signal` in frame
 3.
 
 The code to establish the handlers may have looked like this:
@@ -74,22 +74,22 @@ techniques.
 Returning from ``signal``
 -------------------------
 
-Because a ``signal`` call is just like any other function call, it can return
+Because a :drm:`signal` call is just like any other function call, it can return
 values. It returns whatever values the handler function returns. In the above
-example, ``signal`` never returns because we break into the debugger, and the
-``element`` function wouldn't do anything with the value if it did return, but
-your own code could call ``signal`` and handle any return values appropriately.
+example, :drm:`signal` never returns because we break into the debugger, and the
+:drm:`element` function wouldn't do anything with the value if it did return, but
+your own code could call :drm:`signal` and handle any return values appropriately.
 
 This technique allows you to use conditions as a sort of callback. You can
 establish a condition handler that returns a rarely-needed value, and another
 deeply nested function could retrieve that value if needed by signaling that
-condition and then taking the return value of the ``signal`` function.
+condition and then taking the return value of the :drm:`signal` function.
 
 Restart handlers
 ----------------
 
 You can recover from a problem by returning a fall-back value from the
-``signal`` function, but that technique has limitations. It does not provide
+:drm:`signal` function, but that technique has limitations. It does not provide
 much encapsulation or allow for complicated recovery information, and the
 recovery information has to be processed locally.
 
@@ -109,7 +109,7 @@ goldfish and signal a different condition instead, but other callers may
 establish different restart handlers with the appropriate behavior.
 
 Regardless, when the restart handler finishes, it returns, and then its caller
-returns, and so on until the original ``signal`` function returns, at which
+returns, and so on until the original :drm:`signal` function returns, at which
 point the program resumes work where it left off. You cannot use restart
 handlers or conditions to escape the program's normal flow of control. For that,
 Dylan offers blocks.
@@ -127,11 +127,11 @@ might appear as follows:
       1 + 1
     end; // returns 2
 
-But in addition to returning a value normally, a block can use a :term:`nonlocal
-exit`. This allows the block to exit at any time, optionally returning a value.
+But in addition to returning a value normally, a :drm:`block` can use a :term:`nonlocal
+exit`. This allows the :drm:`block` to exit at any time, optionally returning a value.
 In some ways, it is similar to the ``goto`` statement, the ``break`` statement,
 or the POSIX ``longjmp`` function. To use a nonlocal exit,
-specify a name in the parentheses following a ``block`` statement. Dylan
+specify a name in the parentheses following a :drm:`block` statement. Dylan
 binds this name to an :term:`exit function` which can be
 called from anywhere within the block or the functions it calls. The
 following block returns either ``"Weird!"`` or ``"All's well."``,
@@ -147,8 +147,8 @@ depending on the color of the sky.
     end block;
 
 Many programs need to dispose of resources or perform other cleanup work when
-exiting a block. The block may contain optional ``afterwards`` and ``cleanup``
-clauses. Neither affects the block's return value. The ``afterwards`` clause
+exiting a block. The block may contain optional :drm:`afterwards <block>` and ``cleanup``
+clauses. Neither affects the block's return value. The :drm:`afterwards <block>` clause
 executes if the block ends normally without using its nonlocal exit, and the
 ``cleanup`` clause executes when the block ends whether it ends normally or via
 nonlocal exit.
@@ -171,13 +171,13 @@ nonlocal exit.
 Blocks and conditions
 ---------------------
 
-In addition to the ``afterwards`` and ``cleanup`` clauses, a block may also
+In addition to the :drm:`afterwards <block>` and ``cleanup`` clauses, a block may also
 contain any number of ``exception`` clauses. The exception clauses establish handlers for
-a condition much like the ``let handler`` statement, but before they run the
+a condition much like the :drm:`let handler <let_handler>` statement, but before they run the
 handler calls the block's exit procedure and takes a nonlocal exit. In other
-words, it takes a short cut out of the normal flow of control. The ``signal``
+words, it takes a short cut out of the normal flow of control. The :drm:`signal`
 function that signaled the condition never returns to its caller. Instead, the
-program resumes execution after the block.
+program resumes execution after the :drm:`block`.
 
 The end result is similar to the ``try...catch...finally`` statements of C++ or
 Java:

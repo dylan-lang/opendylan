@@ -123,7 +123,7 @@ Bare Methods
 Nameless methods may be declared inline. Such :term:`bare methods` are
 typically used as parameters to other methods.  For example, the
 following code fragment squares each element of a list using the built
-in ``map`` function and a bare method:
+in :drm:`map` function and a bare method:
 
 .. code-block:: dylan
 
@@ -131,7 +131,7 @@ in ``map`` function and a bare method:
       map(method(x) x * x end, numbers);
     end;
 
-The ``map`` function takes each element of
+The :drm:`map` function takes each element of
 the list ``numbers`` and applies the anonymous method. It
 then builds a new list using the resulting values and returns it.
 The method ``square-list`` might be invoked as
@@ -191,8 +191,8 @@ Generic Functions
 =================
 
 A :term:`generic function` represents zero or more
-similar methods. Every method created by means of ``define
-method`` is automatically :term:`contained`
+similar methods. Every method created by means of :drm:`define
+method <define_method>` is automatically :term:`contained`
 within the generic function of the same name. For example, a 
 programmer could define three methods named ``display``,
 each of which acted on a different data type:
@@ -292,7 +292,7 @@ calls, the ``init-codes`` variable has the value ``""``.
 Programmers have quite a bit of flexibility in specifying keyword arguments.
 
 * The default value specifier (e.g. the ``= 66`` above) may be omitted, in
-  which case ``#f`` is used.
+  which case :drm:`#f` is used.
 * The type of the keyword argument may be specified or omitted, just as with
   regular arguments.
 * The keyword name can be different from the variable name used in the body of
@@ -314,7 +314,7 @@ The following method uses some of these features:
     end;
 
 Firstly, the ``start:`` and ``end:`` keyword arguments are both specialized as
-``<integer>``. The caller can only supply integers for these parameters.
+:drm:`<integer>`. The caller can only supply integers for these parameters.
 Secondly, the ``start:`` keyword argument is associated with the ``start``
 variable in the body of the method as usual, but because the Dylan language
 does not allow a variable named ``end``, that keyword argument is instead
