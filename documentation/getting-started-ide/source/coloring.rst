@@ -11,6 +11,8 @@ where and how optimizations have taken place.
 .. index::
    single: applications; optimization
    single: optimization; coloring in the editor
+   single: dispatch optimizations
+   single: optimization; dispatch
 
 About dispatch optimizations
 ============================

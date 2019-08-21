@@ -1,3 +1,7 @@
+.. index::
+   single: delivering Dylan applications
+   single: redistributing Dylan applications
+
 *****************************
 Delivering Dylan Applications
 *****************************

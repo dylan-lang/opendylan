@@ -1,3 +1,7 @@
+.. index::
+   single: debugging; remote
+   single: remote debugging
+
 ****************
 Remote Debugging
 ****************
@@ -16,6 +20,9 @@ which covers debugging and interaction techniques. The techniques for
 running, debugging, and interacting with a program are exactly the same
 as for the local machine, but there are a few initial configuration
 issues to cover.
+
+.. index::
+   single: debugging; server installer
 
 Installing the program and debugging server on the remote machine
 -----------------------------------------------------------------
@@ -39,6 +46,9 @@ perform these steps on the target machine:
    "*hddbg* …", also resides in the *Extras* folder.
 
 #. Copy the *bin* folder for your project onto the remote machine.
+
+.. index::
+   single: debugging; debugger server
 
 Starting the debugging server
 -----------------------------

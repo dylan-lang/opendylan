@@ -7,12 +7,16 @@ and deliver Dylan applications.
 
 For help getting started with the command-line
 tools, see the `Getting Started with the Open Dylan Command Line Tools
-<http://opendylan.org/documentation/getting-started-cli>`_ guide.
+<https://opendylan.org/documentation/getting-started-cli>`_ guide.
+
+.. index::
+   single: Dylan Reference Manual, the
+   single: DRM, the
 
 The Dylan Reference Manual
 ==========================
 
-The `Dylan Reference Manual <http://opendylan.org/books/drm/>`_
+The `Dylan Reference Manual <https://opendylan.org/books/drm/>`_
 (Shalit, 1996) is published by Addison Wesley Developers' Press, ISBN
 0-201-44211-6. In this guide, we refer to the *Dylan Reference Manual*
 as "the DRM".
