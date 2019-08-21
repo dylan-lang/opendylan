@@ -13,8 +13,7 @@ Simple Modules
 Modules import names (or bindings) from other modules and export names
 for use by other modules. The names that may be imported/exported are
 the module-level (also called "global") variables such as those created
-by :drm:`define variable <define_variable>`, :drm:`define class
-<define_class>`, :drm:`define generic <define_generic>`, etc.
+by :drm:`define variable`, :drm:`define class`, :drm:`define generic`, etc.
 
 The dependencies between modules must form a directed, acyclic
 graph. Two modules may not use each other, and no circular dependencies
@@ -48,7 +47,7 @@ neither. In the above example, the slot ``serial-number`` is read-only,
 while the slot ``owner`` is read/write.
 
 Note that when a module adds a method to an imported generic function,
-the change affects all modules using that function. :drm:`define method <define_method>`
+the change affects all modules using that function. :drm:`define method`
 adds the new method to the existing generic function object, which may
 be referenced by any module importing its binding. The module that
 originally defined the generic function may prevent this behavior by
@@ -154,7 +153,7 @@ use a similar syntax:
 
     define open generic sample-function (o :: <object>) => ();
 
-A third form, :drm:`define sealed domain <define_sealed_domain>`, partially
+A third form, :drm:`define sealed domain`, partially
 seals a generic function, disallowing only some additions from outside
 a library.
 

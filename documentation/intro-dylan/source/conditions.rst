@@ -42,9 +42,9 @@ conditions for you to examine.
 Handlers
 ========
 
-A function :term:`establishes a handler` with the :drm:`let handler
-<let_handler>` statement. The handler remains in effect until the function
-exits. Other functions called by the first can establish new handlers. When the
+A function :term:`establishes a handler` with the :drm:`let handler`
+statement. The handler remains in effect until the function exits. Other
+functions called by the first can establish new handlers. When the
 :drm:`signal` function looks for a handler, it looks for the most recently
 established handler that fits the condition.
 
@@ -147,8 +147,8 @@ depending on the color of the sky.
     end block;
 
 Many programs need to dispose of resources or perform other cleanup work when
-exiting a block. The block may contain optional :drm:`afterwards <block>` and ``cleanup``
-clauses. Neither affects the block's return value. The :drm:`afterwards <block>` clause
+exiting a block. The block may contain optional :drm:`afterwards` and ``cleanup``
+clauses. Neither affects the block's return value. The :drm:`afterwards` clause
 executes if the block ends normally without using its nonlocal exit, and the
 ``cleanup`` clause executes when the block ends whether it ends normally or via
 nonlocal exit.
@@ -171,9 +171,9 @@ nonlocal exit.
 Blocks and conditions
 ---------------------
 
-In addition to the :drm:`afterwards <block>` and ``cleanup`` clauses, a block may also
+In addition to the :drm:`afterwards` and ``cleanup`` clauses, a block may also
 contain any number of ``exception`` clauses. The exception clauses establish handlers for
-a condition much like the :drm:`let handler <let_handler>` statement, but before they run the
+a condition much like the :drm:`let handler` statement, but before they run the
 handler calls the block's exit procedure and takes a nonlocal exit. In other
 words, it takes a short cut out of the normal flow of control. The :drm:`signal`
 function that signaled the condition never returns to its caller. Instead, the

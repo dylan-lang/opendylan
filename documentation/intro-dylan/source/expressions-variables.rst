@@ -201,8 +201,8 @@ Module Variables and Constants
 Dylan supports :term:`module-level` variables,
 which serve roughly the same purpose as C's global variables. Although
 the :drm:`let` function may only be used within :term:`methods`
-(Dylan-speak for regular functions), the forms :drm:`define variable <define_variable>` and
-:drm:`define constant <define_constant>` may be used at module top level.
+(Dylan-speak for regular functions), the forms :drm:`define variable` and
+:drm:`define constant` may be used at module top level.
 
 .. code-block:: dylan
 

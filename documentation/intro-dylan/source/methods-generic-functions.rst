@@ -191,8 +191,8 @@ Generic Functions
 =================
 
 A :term:`generic function` represents zero or more
-similar methods. Every method created by means of :drm:`define
-method <define_method>` is automatically :term:`contained`
+similar methods. Every method created by means of
+:drm:`define method` is automatically :term:`contained`
 within the generic function of the same name. For example, a 
 programmer could define three methods named ``display``,
 each of which acted on a different data type:
