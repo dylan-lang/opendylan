@@ -119,6 +119,9 @@ We can now see the full text of the serious warning::
     Serious warning at saving:20:
     Unexpected token "define".
 
+.. index::
+   single: editor window
+
 If we double-click on an item, Open Dylan opens the appropriate
 source file in an editor window, and positions the insertion point at
 the line containing the problem. If the problem spans a range of lines,
@@ -296,6 +299,9 @@ it pauses execution in that thread. So when we expand the tree we see
 the stack almost exactly as it was at the moment that the debugger was
 invoked.
 
+.. index::
+   single: filtering drop-down list
+
 The reason why what we see is *almost* exactly what the stack was like
 at the moment the debugger was invoked is that the stack pane normally
 filters out a lot of call frames that the Open Dylan run-time
@@ -316,6 +322,7 @@ debugged. We call this list of call frames a stack backtrace or simply a
 
 .. index::
    single: arrow; green
+   single: green arrow
 
 The backtrace shows frames in the order they were created, with the most
 recent at the top of the list. The frames are represented by the names
@@ -368,6 +375,9 @@ before the unhandled exception.
 #. Choose "Filtered frames" from the stack pane filtering drop-down list
    (which by default is set to "Filtered visible frames").  
    The stack pane updates itself.
+
+.. index::
+   single: filtering drop-down list
 
 The six settings available from the stack pane filtering drop-down list
 provide a quick way of changing what you view in the stack pane:

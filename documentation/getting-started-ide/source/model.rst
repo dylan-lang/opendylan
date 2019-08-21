@@ -36,6 +36,9 @@ The Reversi project represents a single Dylan library, called Reversi.
 Projects and deliverables
 -------------------------
 
+.. index::
+   see: dynamic-link libraries; DLLs
+
 You can create deliverable applications, libraries, and components from
 projects. Projects can be built into executable (.EXE) or dynamic-link
 library (.DLL) files.
@@ -69,6 +72,7 @@ modify the original LID file on disk.) See
 .. index:: .HDP files
    single: file extensions; .HDP
    single: projects; profile files
+   single: projects; project files
 
 Project files
 -------------
@@ -86,6 +90,9 @@ or add it to another project as a subproject.
 The development environment tools automatically save changes to project
 files. For example, if you add a new source file to a project, the
 change is saved to disk immediately.
+
+.. index::
+   single: projects; components of
 
 Project components
 ------------------
@@ -141,6 +148,9 @@ Project settings
     - Debugging options. See :ref:`debugger-options`.
     - The list of subprojects the project uses.
     - The locations on disk of the subprojects.
+
+.. index::
+   single: projects; disk files comprising
 
 .. _projects-on-disk:
 
@@ -451,6 +461,7 @@ are tightly bound to them.
 
 .. index:: build cycle
    single: applications; build cycle
+   single: DLLs; build cycle
 
 The build cycle
 ---------------
@@ -492,6 +503,11 @@ window that has a **Project** menu.
    should always increment the major version number of a project after
    altering any macro definitions in it.
 
+.. index::
+   single: linking; GNU linker
+   single: linking; Microsoft linker
+   single: Microsoft linker, using
+
 Linkers
 -------
 
@@ -524,6 +540,8 @@ to interact with it.
 
 .. index::
    single: applications; initialization
+   single: library initialization
+
 .. _application-and-library-initialization:
 
 Application and library initialization

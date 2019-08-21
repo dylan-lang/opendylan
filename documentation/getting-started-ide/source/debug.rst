@@ -5,6 +5,10 @@ Debugging and Interactive Development
 In this chapter, we look more closely at Open Dylan's debugger
 tool.
 
+.. index::
+   single: debugger tool
+   single: tools; debugger
+
 The debugger
 ============
 
@@ -217,6 +221,9 @@ sequences thereof can be printed literally, but an instance of
 Source pane
 -----------
 
+.. index::
+   single: GUI, creating a window
+
 The debugger's source pane shows a source code definition for the method
 or function that created the call frame that is currently selected in
 the stack pane.
@@ -260,6 +267,9 @@ increased when compiling a project in Production mode.
 In our example, the arrow appears at the start of the definition of the
 *play-reversi* method. This shows that execution paused at the beginning
 of the execution of *play-reversi*.
+
+.. index::
+   single: debug-message function
 
 Interaction pane
 ----------------
@@ -315,7 +325,9 @@ By default, this option is not set. When turned on, the rules above are
 ignored and every open debugger window is refreshed whenever the
 application pauses.
 
-.. index:: Application menu
+.. index::
+   single: Application menu
+   single: resuming applications
 
 Controlling execution
 =====================
@@ -364,6 +376,7 @@ again with **Application > Start**.
 .. index::
    single: applications; pausing
    single: applications; resuming
+   single: pausing applications
 
 Pausing and resuming execution of applications
 ----------------------------------------------
@@ -467,6 +480,9 @@ application has finished, which is not normally very useful. If you
 always specify a start function, you can pause the application at a more
 useful point.
 
+.. index::
+   single: debugging; DLLs
+
 Debugging DLLs
 --------------
 
@@ -533,6 +549,9 @@ In the case of an OLE compound document server, of course, the debugger
 will only be able to act if you choose to insert an instance of your OLE
 server object into your test container application.
 
+.. index::
+   single: restarts
+
 Restarts
 ========
 
@@ -590,6 +609,10 @@ You can then debug a thread from the table by double clicking, or by
 using the right-click popup menu. This action stops the thread if it is
 running, and opens a debugger window on it.
 
+.. index::
+   single: debugging; changing debugger layout
+   single: interactor
+
 Changing the debugger layout
 ============================
 
@@ -607,6 +630,9 @@ You can change the automatic layout using **View > Interacting Layout**
 and **View > Debugging Layout**. You can also hide or show the context
 window using **View > Context Window**.
 
+.. index::
+   single: interaction
+
 Interacting with an application
 ===============================
 
@@ -620,6 +646,9 @@ To explain the things you can do interactively, this section includes
 two examples. One uses the Dylan playground and the other uses the
 Reversi application. First, however, we discuss the interaction pane, a
 debugger pane that hosts interactive sessions.
+
+.. index::
+   single: listener
 
 About the interaction pane
 --------------------------
@@ -658,6 +687,10 @@ its current state. A debugger window then opens on the paused thread.
 
 Interaction basics using the Dylan playground
 ---------------------------------------------
+
+.. index::
+   single: Dylan playground
+   single: interacting with a paused application; Dylan playground, the
 
 The Dylan playground allows you to carry out interactive Dylan
 programming experiments. The playground is a pre-built Dylan application
@@ -746,6 +779,9 @@ Enter *<my-class>;* at the interaction pane prompt::
     => $2 = {<class>: <my-class>}
     ?
 
+.. index::
+   single: interactor
+
 Return values in the interactor are "live". You can use the shortcut
 (right-click) menu to perform a variety of useful operations on them.
 
@@ -780,6 +816,10 @@ pane prompt.
 In the playground's project window, go to the Definitions page.
 
 Expand *library dylan-playground* and then *module dylan-playground*.
+
+.. index::
+   single: DUIM windows, creating
+   single: window, creating an example
 
 Three definitions are listed under *module dylan-playground* : one for
 *\*obj\**, one for ``<my-class>``, one for the *my-slot* accessor, one
@@ -905,6 +945,13 @@ application, Open Dylan removes the interactive layer
 automatically. (This is one of the reasons why you are asked to confirm
 when you choose **Application > Stop**.)
 
+.. index::
+   single: :in interaction command
+   single: interacting with a paused application; interaction pane commands
+   single: interaction commands; :help
+   single: interaction commands; :in
+   single: listener
+
 Interaction pane commands
 -------------------------
 
@@ -936,6 +983,8 @@ list of available commands, and documentation for each command, with the
 
 .. index:: active project
    single: projects; active project
+   single: editor window
+
 .. _active-project:
 
 The active project
@@ -1099,6 +1148,10 @@ Breakpoint commands on the shortcut menu
 In some situations you can right-click to produce the shortcut menu,
 which contains several breakpoint manipulation commands. These are:
 
+.. index::
+   single: shortcut menu commands
+   single: tracing
+
 -  When you are browsing the project breakpoints in the project window's
    Breakpoints page.
 -  When you have selected a method in the project window's Definitions
@@ -1210,6 +1263,10 @@ The **Edit Breakpoint Options…** dialog, available from the shortcut
    encountered. By default, new breakpoints are permanent.
 -  The shortcut (right-click) menu's *Run to Cursor* command creates
    temporary breakpoints.
+
+.. index::
+   single: debugging; stepping commands
+   single: stepping through an application
 
 Stepping
 ========
@@ -1364,6 +1421,7 @@ the breakpoint separately.
 .. index:: bug report, compiler warnings report
    single: reports, generating; bug
    single: reports, generating; compiler warnings
+   single: exporting
 
 Exporting a bug report or a compiler warnings report
 ====================================================
@@ -1389,6 +1447,9 @@ supplemental text.
 
    The Export… dialog.
 
+.. index::
+   single: debugging; debugger options
+
 .. _debugger-options:
 
 Debugger options
@@ -1399,6 +1460,9 @@ the options for the debugger. This dialog has three property pages:
 Stack, Exceptions, and Misc. The options on these pages apply on a
 per-thread basis—you can have different settings for different threads'
 debuggers.
+
+.. index::
+   single: filtering drop-down list
 
 .. _stack-options:
 
@@ -1495,8 +1559,16 @@ Open debugger window on pause button
    cause the application's execution to be paused. This option is
    checked by default.
 
+.. index::
+   single: just-in-time debugging
+
 Just-in-time debugging
 ======================
+
+.. index::
+   single: debugging; just-in-time
+   single: interactor
+   see: interactor; See also interaction
 
 The Windows operating system has the built-in capability to perform
 "just-in-time" debugging. Just-in-time, or JIT, debugging is where an

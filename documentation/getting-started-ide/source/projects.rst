@@ -8,6 +8,9 @@ Open Dylan's New Project wizard. We also look at some of the
 options and settings associated with projects, and some of the features
 of the project window.
 
+.. index::
+   single: tools; New Project wizard
+
 .. _creating-new-project:
 
 Creating a new project
@@ -173,6 +176,8 @@ We now move to the final page.
    single: Author: interchange format keyword, setting default
    single: Copyright: interchange format keyword, setting default
    single: interchange keywords, setting defaults for new projects
+   single: Synopsis: interchange format keyword, setting default
+   single: Version: interchange format keyword, setting default
 
 The final page in the New Project wizard
 ----------------------------------------
@@ -458,6 +463,9 @@ deciding not to use a particular exported module, you will import fewer
 interfaces into your application, but the delivered application will not
 be any smaller on disk, or in memory when it is running.
 
+.. index::
+   single: New Project wizard; saving default settings
+
 Saving settings in the New Project wizard
 =========================================
 
@@ -485,6 +493,9 @@ project.
 
 Nothing from the first page is saved.
 
+.. index::
+   single: projects; Advanced project settings
+
 Advanced project settings
 =========================
 
@@ -506,6 +517,9 @@ Adding, moving, and deleting project sources
 
 In this section we discuss how to insert files into a project, how
 re-order them, and how to delete them from the project.
+
+.. index::
+   single: projects; inserting files into
 
 Inserting files into a project
 ------------------------------
@@ -530,12 +544,18 @@ If you have added a subproject (a .HDP file), remember that you still
 need to edit the library and module definitions in your project to
 import from the new subproject.
 
+.. index::
+   single: projects; moving files in
+
 Moving the position of a file within a project
 ----------------------------------------------
 
 To move a file to a new position in a project, select the file in the
 Sources page and use **Project > Move File Up** and **Project > Move File
 Down**.
+
+.. index::
+   single: projects; deleting files from
 
 Deleting files from a project
 -----------------------------
@@ -558,6 +578,7 @@ project. You can always put it back with **Project > Insert File**.
 
 .. index:: start function
    single: applications; start function
+   single: projects; start function
 
 .. _start-function:
 
@@ -656,6 +677,9 @@ mode setting for the current project. Any project can be compiled in one
 of two modes: Interactive Development mode, and Production mode. See
 :ref:`compilation-modes` for details of the modes.
 
+.. index::
+   single: linking; as executable or DLL
+
 .. _link-page:
 
 Link page
@@ -718,6 +742,10 @@ The default for a project created in the New Project wizard as a
 "Console Application (EXE)" is to run in the Windows Console subsystem,
 while the default for a project created as a "GUI Application (EXE)" is
 to run in the "Windows GUI" (WINDOWS) subsystem.
+
+.. index::
+   single: debugging; OLE controls and compound document servers
+   single: OLE controls and compound document servers, testing
 
 Debug page
 ----------

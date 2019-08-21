@@ -1,3 +1,7 @@
+.. index::
+   single: editor
+   single: tools; editor
+
 **********************
 The Interactive Editor
 **********************
@@ -226,7 +230,9 @@ mouse pointer is over the leftmost column of the editor window (see
 column indicate lines where you could add a breakpoint (see
 :ref:`editor-window-with-reversi`).
 
-.. index:: Compile Selection editor command
+.. index::
+   single: Compile Selection editor command
+   single: interaction; from the editor
 
 Using the editor for interactive development
 ============================================
@@ -277,6 +283,11 @@ editor compiles the code you select in the context of a special
 interaction thread that it chooses automatically. This prevents
 unnecessary tampering with user threads.
 
+.. index::
+   single: Microsoft Visual SourceSafe
+   single: source control interface
+   see: Visual SourceSafe; Microsoft Visual SourceSafe
+
 Source control with Visual SourceSafe
 =====================================
 
@@ -285,6 +296,9 @@ Open Dylan editor provides an interface to Microsoft's Visual
 SourceSafe, an external source code control system. This section
 describes the editor interface to Visual SourceSafe. (For information on
 using Visual SourceSafe, see Visual SourceSafe documentation.)
+
+.. index::
+   single: SourceSafe editor menu
 
 What is the editor's source control interface?
 ----------------------------------------------
@@ -320,6 +334,9 @@ installed in order to see the **SourceSafe** menu.
 
 The SourceSafe menu commands
 ----------------------------
+
+.. index::
+   single: SourceSafe editor menu
 
 The **SourceSafe** menu provides the following commands:
 

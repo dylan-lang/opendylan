@@ -5,6 +5,9 @@ Quick Start
 This first chapter is a quick introduction to building applications with
 Open Dylan.
 
+.. index::
+   single: starting Open Dylan
+
 Starting work with Open Dylan
 =============================
 
@@ -17,6 +20,10 @@ environment, and choose one of several supplied examples to work with.
    Programs > Open Dylan > Open Dylan**. Open Dylan will also
    start if you open any file associated with it, such as a Dylan source
    file.
+
+   .. index::
+      single: main window
+      single: tools; main window
 
    When Open Dylan starts, the *main window* appears:
 
@@ -86,6 +93,10 @@ environment, and choose one of several supplied examples to work with.
 The project window
 ==================
 
+.. index::
+   single: project window
+   single: tools; project window
+
 In the project window you can see the project that you are working on. A
 *project* represents a Dylan library under development. We look at
 projects in more detail in :doc:`projects`.
@@ -150,6 +161,9 @@ reside on disk in :ref:`projects-on-disk`.
 
 Building Reversi
 ----------------
+
+.. index::
+   single: projects; building applications from
 
 To build an executable application for a project, choose **Project >
 Build** in its project window.
@@ -235,6 +249,7 @@ in :ref:`problems-at-run-time` and also in :doc:`debug`.
 
 .. index::
    single: applications; running
+   single: running applications
 
 Three ways of running Dylan applications
 ========================================
@@ -313,6 +328,10 @@ Compiler databases are mostly used by the *browser* tool, which we will
 look at later. See :ref:`compiler-databases` for more details of the
 compiler database and :doc:`browsing` for details of the
 browser.
+
+.. index::
+   single: DLLs; building
+   single: projects; building DLLs from
 
 Building DLLs
 =============
