@@ -367,7 +367,7 @@ define method join
     let result = make(object-class(first), size: result-size);
     let result-index :: <integer> = 0;
     local method copy-to-result (seq :: <sequence>)
-            result := replace-subsequence!(result, seq, start: result-index);
+            result := replace-subsequence!(result, seq, start: result-index, end: result-index + seq.size);
             result-index := result-index + seq.size;
           end;
     copy-to-result(first);
