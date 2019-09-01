@@ -115,17 +115,17 @@ end method find-stream-test-info;
 define sideways method make-test-instance
     (class :: subclass(<stream>)) => (stream :: <stream>)
   let info = find-stream-test-info(class);
-  assert(info, "Making test instance of unregistered stream class %=", class);
-  let make-function :: <function> = info.info-make-function;
-  make-function()
+  assert(info, "can't make test instance of unregistered stream class %=", class);
+  let make-stream :: <function> = info.info-make-function;
+  make-stream()
 end method make-test-instance;
 
 define sideways method destroy-test-instance
     (class :: subclass(<stream>), stream :: <stream>) => ()
   let info = find-stream-test-info(class);
-  assert(info, "Destroying test instance of unregistered stream class %=", class);
-  let destroy-function :: <function> = info.info-destroy-function;
-  destroy-function(stream)
+  assert(info, "can't destroy test instance of unregistered stream class %=", class);
+  let destroy-stream :: <function> = info.info-destroy-function;
+  destroy-stream(stream)
 end method destroy-test-instance;
 
 define constant $stream-tests :: <object-table> = make(<object-table>);
