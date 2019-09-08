@@ -39,7 +39,9 @@ define module system-test-suite
   // to be registered, and also slows compilation. Whatever's being used from
   // this needs to be factored out into a library that can be shared and has no
   // tests in it.
-  use common-dylan-test-suite;        // For generic stream testing
+  use common-dylan-test-suite,
+    import: { make-stream-tests-of-size,
+              register-stream-class-info };
 
   use testworks;
   use testworks-specs;

@@ -9,6 +9,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library common-dylan-test-suite
   use dylan;
   use common-dylan;
+  use system,
+    import: { file-system };
   use testworks;
   use testworks-specs;
   use dylan-test-suite;
@@ -29,6 +31,8 @@ define module common-dylan-test-suite
   use simple-format;
   use simple-random;
   use simple-profiling;
+  use file-system,
+    import: { file-exists? };
   use transcendentals;
   use byte-vector;
   use machine-words;

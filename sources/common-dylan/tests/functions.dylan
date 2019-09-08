@@ -460,17 +460,23 @@ define common-extensions function-test fill-table! ()
               table[1], "One");
 end function-test fill-table!;
 
+// Application startup handling
+
 define common-extensions function-test application-name ()
-  //---*** Fill this in...
-end function-test application-name;
+  check-instance?("application-name returns #f or a string",
+                  false-or(<string>), application-name());
+end function-test;
 
 define common-extensions function-test application-filename ()
-  //---*** Fill this in...
-end function-test application-filename;
+  let filename = application-filename();
+  check-true("application-filename returns #f or a valid, existing file name",
+             ~filename | file-exists?(filename));
+end function-test;
 
 define common-extensions function-test application-arguments ()
-  //---*** Fill this in...
-end function-test application-arguments;
+  check-instance?("application-arguments returns a sequence",
+                  <sequence>, application-arguments());
+end function-test;
 
 define common-extensions function-test tokenize-command-line ()
   //---*** Fill this in...

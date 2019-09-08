@@ -55,6 +55,8 @@ define module-spec locators ()
   open abstract class <physical-locator> (<locator>);
   open abstract instantiable class <directory-locator> (<physical-locator>);
   open abstract instantiable class <file-locator> (<physical-locator>);
+  instantiable class <native-directory-locator> (<directory-locator>);
+  instantiable class <native-file-locator> (<file-locator>);
   open generic-function supports-open-locator? (<locator>) => (<boolean>);
   open generic-function open-locator (<locator>) => (<stream>);
   open generic-function supports-list-locator? (<locator>) => (<boolean>);
@@ -132,8 +134,6 @@ define module-spec file-system ()
 
   // Native locators
   abstract class <native-file-system-locator> (<file-system-locator>);
-  instantiable class <native-directory-locator> (<directory-locator>);
-  instantiable class <native-file-locator> (<file-locator>);
 
   // Classes
   open abstract instantiable class <file-stream>
@@ -209,14 +209,7 @@ define module-spec operating-system ()
   function parent-process-id () => (<integer>);
   function machine-concurrent-thread-count () => (<integer>);
 
-  // Application startup handling
-  function application-name () => (false-or(<string>));
-  //---*** application-filename should return <file-locator>...
-  function application-filename () => (false-or(<string>));
-  function application-arguments () => (<sequence>);
   function command-line-option-prefix () => (<character>);
-  function exit-application (<integer>) => ();
-  function register-application-exit-function (<function>) => ();
 
   // Environment variables
   function environment-variable (<string>) => (false-or(<string>));
