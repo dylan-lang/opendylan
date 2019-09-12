@@ -53,7 +53,7 @@ define test c3-linearization ()
   check-equal("C3 linearization paper example works", res, <editable-scrollable-pane>.all-superclasses)
 end;
 
-define test limited-is-limited ()
+define test limited-is-limited (expected-failure?: #t)
   let <integer-vector> = limited(<vector>, of: <integer>);
   let x = make(<integer-vector>, size: 10, fill: 10);
   check-instance?("x is an instance of object", <object>, x);

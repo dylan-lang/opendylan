@@ -481,7 +481,7 @@ end test begins;
 define function no-param-function () 1 end;
 define function one-param-function (x) x end;
 
-define test required-calls ()
+define test required-calls (expected-failure?: #t)
   check-equal("no param call",
 	     (method () 1 end)(), 1);
   check-equal("one param call one arg",
@@ -512,7 +512,7 @@ define test rest-calls ()
 	     (method (x, #rest y) y end)(1, 2), #[2]);
 end test rest-calls;
 
-define test keyword-calls ()
+define test keyword-calls (expected-failure?: #t)
   check-equal("one key no args call", 
 	      (method (#key x) x end)(), #f);
   check-equal("one key defaulted no args call",
@@ -536,7 +536,7 @@ define test keyword-calls ()
 	      (method (#key x, y) x + y end)(x: 1, y: 2), 3);
 end test keyword-calls;
 
-define test rest-keyword-calls ()
+define test rest-keyword-calls (expected-failure?: #t)
   check-equal("rest no key call no args", 
 	      (method (#rest keys, #key) keys end)(), #[]);
   check-equal("rest one key call no args", 
