@@ -11,13 +11,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define class <test-suite-report> (<multi-file-report>, <project-report>)
 end class <test-suite-report>;
 
-//---*** Ultimately this should be available in all editions...
 install-report(#"test-suite", "Project test suite skeleton",
                <test-suite-report>);
 
 
 /// Report protocols
 
+// Write one test per definition, two suites per module (interface
+// specification and normal), and an overall suite for the entire library.
 define method write-report-as
     (stream :: <stream>, report :: <test-suite-report>, _format == #"text")
  => ()
@@ -27,53 +28,57 @@ define method write-report-as
   let module-names = namespace-exported-names(project, library);
   format(stream, "Module: %s-test-suite\n", library-name);
   format(stream, "\n");
+
   for (name :: <module-name-object> in module-names)
     let module = name-value(project, name);
     let module-name = environment-object-primitive-name(project, name);
     let names = module-names-to-document(project, module);
+
+    format(stream, "\n\n");
+    format(stream, "//// Tests for module %s\n", module-name);
+
+    // Write the specification suite.
     format(stream, "\n");
-    format(stream, "define module-spec %s ()\n", module-name);
+    format(stream, "define interface-specification-suite %s-specification-suite ()\n",
+           module-name);
     for (name :: <binding-name-object> in names)
       let value = name-value(project, name);
-      write-binding-spec(stream, report, name, value)
+      write-binding-spec(stream, report, name, value);
     end;
-    format(stream, "end module-spec %s;\n", module-name)
-  end;
-  for (name :: <module-name-object> in module-names)
-    let module = name-value(project, name);
-    let module-name = environment-object-primitive-name(project, name);
-    let names = module-names-to-document(project, module);
-    format(stream, "\n");
-    format(stream, "// Module: %s\n", module-name);
+    format(stream, "end %s-specification-suite;\n", module-name);
+
+    // Write an empty test for each binding.
     for (name :: <binding-name-object> in names)
       let value = name-value(project, name);
-      let class-name
-        = select (value by instance?)
-            <class-object>    => "class";
-            <constant-object> => "constant";
-            <function-object> => "function";
-            <macro-object>    => "macro";
-            <variable-object> => "variable";
-            otherwise         => "constant"
-          end;
       let print-name = environment-object-primitive-name(project, name);
-      let test-suffix
-        = if (instance?(value, <macro-object>)) "-test" else "" end;
       format(stream, "\n");
-      format(stream, "define %s %s-test %s%s ()\n",
-             module-name, class-name, print-name, test-suffix);
+      format(stream, "define test test-%s ()\n", print-name);
       format(stream, "  //---*** Fill this in...\n");
-      format(stream, "end %s-test %s%s;\n",
-             class-name, print-name, test-suffix)
+      format(stream, "end test;\n");
     end;
-  end;
+
+    // Write a suite containing all the generated tests. Because it's common
+    // for the library and module to have the same name, add "module" to the
+    // module suite name. (The library suite gets the shorter name.)
+    format(stream, "\n");
+    format(stream, "define suite %s-module-test-suite ()\n", module-name);
+    for (name :: <binding-name-object> in names)
+      let print-name = environment-object-primitive-name(project, name);
+      format(stream, "  test test-%s;\n", print-name);
+    end;
+    format(stream, "end suite;\n");
+  end for;
+
+  // Write a top-level library suite containing the two suites generated for
+  // each module.
   format(stream, "\n");
-  format(stream, "define library-spec %s ()\n", library-name);
+  format(stream, "define suite %s-test-suite ()\n", library-name);
   for (name :: <module-name-object> in module-names)
-    format(stream, "  module %s;\n",
-           as-lowercase(environment-object-primitive-name(project, name)))
+    let module-name = environment-object-primitive-name(project, name);
+    format(stream, "  suite %s-specification-suite;\n", module-name);
+    format(stream, "  suite %s-module-test-suite;\n", module-name);
   end;
-  format(stream, "end library-spec %s;\n", library-name);
+  format(stream, "end suite;\n");
 end method write-report-as;
 
 define method write-binding-spec
@@ -140,7 +145,7 @@ define method write-binding-spec
   let modifiers = definition-modifiers(project, function);
   let open?     = member?(#"open", modifiers);
   if (open?)
-    format(stream, "  open generic-function %s ",
+    format(stream, "  open generic function %s ",
            environment-object-primitive-name(project, name));
     write-binding-spec-parameters(stream, project, function);
     format(stream, ";\n");
@@ -226,10 +231,9 @@ define method write-binding-spec
     (stream :: <stream>, report :: <test-suite-report>,
      name :: <binding-name-object>, macro-object :: <macro-object>)
  => ()
-  let project = report.report-project;
-  format(stream, "  macro-test %s-test;\n",
-         environment-object-primitive-name(project, name))
-end method write-binding-spec;
+  // Don't write any spec for macros since there's nothing to test.
+  // A regular test is generated above for the programmer to fill in.
+end method;
 
 define method write-binding-spec
     (stream :: <stream>, report :: <test-suite-report>,
