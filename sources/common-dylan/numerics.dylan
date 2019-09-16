@@ -98,6 +98,27 @@ define method classify-float
   end case
 end;
 
+// Assume that the float is actually subnormal,
+// i.e. exponent is zero and significand is non-zero
+define function decode-single-subnormal
+    (float :: <single-float>)
+ => (significand :: <single-float>, exponent :: <integer>,
+     sign :: <single-float>);
+  let sign :: <single-float> = if (negative?(float)) -1.0s0 else 1.0s0 end;
+  let decoded :: <machine-word> = decode-single-float(float);
+  let significand-bits :: <machine-word> = %logand(decoded, #x7FFFFF);
+  let shift = %count-high-zeros(significand-bits)
+    + $ieee-754-single-float-digits
+    - $machine-word-size;
+  let exponent = $minimum-single-float-exponent - shift;
+  let raw-significand :: <machine-word>
+    = %logior(u%shift-left($ieee-754-single-float-exponent-bias - 1,
+                           $ieee-754-single-float-digits - 1),
+              %logand(u%shift-left(significand-bits, shift),
+                      #x7FFFFF));
+  values(encode-single-float(raw-significand), exponent, sign)
+end function;
+
 define method decode-float
     (float :: <single-float>)
  => (significand :: <single-float>, exponent :: <integer>,
@@ -112,7 +133,7 @@ define method decode-float
       if (zero?(significand-bits))
         values(0.0s0, 0, sign)
       else
-        error("Not handling denormals yet");
+        decode-single-subnormal(float)
       end if;
 
     exponent > $maximum-single-float-exponent => // Infinity or NaN
@@ -240,6 +261,43 @@ define method classify-float
   end case
 end;
 
+define function decode-double-subnormal
+    (float :: <double-float>)
+ => (significand :: <double-float>,
+     exponent :: <integer>,
+     sign :: <double-float>);
+  let sign :: <double-float> = if (negative?(float)) -1.0d0 else 1.0d0 end;
+  let (decoded-low :: <machine-word>, decoded-high :: <machine-word>)
+    = decode-double-float(float);
+  let significand-low-bits :: <machine-word> = decoded-low;
+  let significand-high-bits :: <machine-word> = %logand(decoded-high, #xFFFFF);
+  let shift :: <integer>
+    = if (zero?(significand-high-bits))
+        %count-high-zeros(significand-low-bits)
+          - $machine-word-size
+          + $ieee-754-double-float-digits
+      else
+        %count-high-zeros(significand-high-bits)
+          - $machine-word-size - 32
+          + $ieee-754-double-float-digits
+      end if;
+  let exponent :: <integer>
+    = $minimum-double-float-exponent - shift;
+  let (raw-low-significand :: <machine-word>, carry :: <machine-word>)
+    = if ($machine-word-size == 32)
+        %shift-left(significand-low-bits, shift)
+      else
+        let shifted :: <machine-word> = u%shift-left(significand-low-bits, shift);
+        values(%logand(shifted, #xFFFFFFFF),
+               %shift-right(shifted, 32))
+      end if;
+  let raw-high-significand :: <machine-word>
+    = %logior(u%shift-left($ieee-754-double-float-exponent-bias - 1,
+                           $ieee-754-double-float-digits - 1 - 32),
+              %logand(%logior(u%shift-left(significand-high-bits, shift), carry), #xFFFFF));
+  values(encode-double-float(raw-low-significand, raw-high-significand), exponent, sign)
+end function;
+
 define method decode-float
     (float :: <double-float>)
  => (significand :: <double-float>, exponent :: <integer>,
@@ -257,7 +315,7 @@ define method decode-float
       if (zero?(significand-high-bits) & zero?(decoded-low))
         values(0.0d0, 0, sign)
       else
-        error("Not handling denormals yet");
+        decode-double-subnormal(float)
       end if;
 
     exponent > $maximum-double-float-exponent => // Infinity or NaN
