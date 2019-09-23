@@ -87,6 +87,8 @@ define method emit-reference
   emit-object(back-end, stream, o);
 end method;
 
+define constant $bad-decode-float? :: <boolean> = decode-float(10.0d0) > 1.0d0;
+
 define method emit-object
     (back-end :: <c-back-end>, stream :: <stream>, o :: <float>) => ()
   print-raw-object(o, stream)
@@ -103,33 +105,73 @@ define inline-only function c-float-cast
   end select;
 end function;
 
+define function old-print-raw-object (o :: <float>, stream :: <stream>) => ()
+  // Sometimes, we can end up with an infinite or nan value here, so
+  // we want to make sure we print an appropriate C representation.
+  // In the future, we can look at using classify-float, but this
+  // is not yet available to us here.
+  let s = float-to-string(o);
+  write(stream,
+        select (s by \=)
+          "-{infinity}" => "-INFINITY";
+          "-{infinity}d0" => "(double)-INFINITY";
+          "-{infinity}x0" => "(long double)-INFINITY";
+          "+{infinity}" => "INFINITY";
+          "+{infinity}d0" => "(double)INFINITY";
+          "+{infinity}x0" => "(long double)INFINITY";
+          "{NaN}" => "NAN";
+          "{NaN}d0" => "(double)NAN";
+          "{NaN}x0" => "(long double)NAN";
+          otherwise =>
+            begin
+              //---*** Is there a better way to do this???
+              block (done)
+                let i = size(s) - 1;
+                while (i > -1)
+                  select (s[i])
+                    's' => s[i] := 'e'; done();        //---*** Should be 'f' but GCC complains!
+                    'd' => s[i] := 'e'; done();
+                    'x' => s[i] := 'e'; done();        //---*** Should be 'l' but GCC complains!
+                    otherwise => ;
+                  end select;
+                  i := i - 1
+                end while
+              end block;
+              s
+            end;
+        end select);
+end function;
+
 define method print-raw-object
     (x :: <float>, stream :: <stream>) => ()
-  write(stream, c-float-cast(x));
-  select (classify-float(x))
-    #"infinite" =>
-      if (negative?(x))
-	write-element(stream, '-');
-      end;
-      write(stream, "INFINITY");
-    #"nan" => write(stream, "NAN");
-    otherwise =>
-      let (significand, exponent, signum) = decode-float(x);
-      let one = as(object-class(x), 1);
-      if (negative?(signum))
-	write-element(stream, '-');
-      end if;
-      write(stream, "0x0.");
-      until (zero?(significand))
-	// Extract 4 bits (i.e. one hex digit) at a time
-	let x = scale-float(significand, 4);
-	let (quot, rem) = truncate/(x, one);
-	significand := rem;
-	let i = as(<integer>, quot);
-	write-element(stream, xdigits[i]);
-      end until;
-      format(stream, "p%d", exponent);
-  end;
+  if ($bad-decode-float?)
+    old-print-raw-object(x, stream)
+  else
+    write(stream, c-float-cast(x));
+    select (classify-float(x))
+      #"infinite" =>
+        if (negative?(x))
+          write-element(stream, '-');
+        end;
+        write(stream, "INFINITY");
+      #"nan" => write(stream, "NAN");
+      otherwise =>
+        let (significand, exponent, signum) = decode-float(x);
+        if (negative?(signum))
+          write-element(stream, '-');
+        end if;
+        write(stream, "0x0.");
+        until (zero?(significand))
+          // Extract 4 bits (i.e. one hex digit) at a time
+          let x = scale-float(significand, 4);
+          let (quot, rem) = truncate(x);
+          significand := rem;
+          let i = as(<integer>, quot);
+          write-element(stream, xdigits[i]);
+        end until;
+        format(stream, "p%d", exponent);
+    end select;
+  end if;
 end method print-raw-object;
 
 // INTEGERS
