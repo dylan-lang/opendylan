@@ -29,7 +29,20 @@ define test bug-5954 ()
               -17);
 end test bug-5954;
 
+define test bug-left-shift-signal-overflow ()
+  // See https://github.com/dylan-lang/opendylan/issues/1239
+  assert-no-errors(ash(1, $machine-word-size - 4));
+  assert-no-errors(ash(-1, $machine-word-size - 3));
+  assert-signals(<arithmetic-overflow-error>,
+                 ash(1, $machine-word-size - 3));
+  assert-signals(<arithmetic-overflow-error>,
+                 ash(1, $machine-word-size - 2));
+  assert-signals(<arithmetic-overflow-error>,
+                 ash(-1, $machine-word-size - 2));
+end test;
+
 define suite common-dylan-regressions ()
   test bug-5805;
   test bug-5954;
+  test bug-left-shift-signal-overflow;
 end suite common-dylan-regressions;
