@@ -350,8 +350,9 @@ define primitive-coercion-inverses
 define primitive-coercion-inverses
   primitive-cast-integer-as-raw and primitive-cast-raw-as-integer;
 
-define primitive-coercion-inverses
-  primitive-cast-pointer-as-raw and primitive-cast-raw-as-pointer;
+// NB this loses type information in the other direction
+define reverse primitive-coercion-inverses
+  primitive-cast-raw-as-pointer of primitive-cast-pointer-as-raw;
 
 // TODO: generalize the coercion macro to accommodate wrap-c-pointer
 //
