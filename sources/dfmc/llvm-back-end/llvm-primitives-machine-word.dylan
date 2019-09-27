@@ -940,22 +940,23 @@ end;
 define sign-extend overflow side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-shift-left-signal-overflow
     (x :: <raw-machine-word>, shift :: <raw-machine-word>)
  => (result :: <raw-machine-word>);
-  // Extend the operands to double the word width and perform the shift
-  let iDoubleWord-type = be.%type-table["iDoubleWord"];
-  let double-x = ins--zext(be, x, iDoubleWord-type);
-  let double-shift = ins--sext(be, shift, iDoubleWord-type);
-  let full = ins--shl(be, double-x, double-shift);
-
-  // Shift the result back to see if any bits disappeared
-  let unfull = ins--ashr(be, full, double-shift);
-  let overflow = ins--icmp-ne(be, double-x, unfull);
-  ins--if (be, overflow)
-    // Signal <arithmetic-overflow-error>
-    op--overflow-trap(be);
+  ins--if (be, ins--icmp-eq(be, x, 0))
+    x
   ins--else
-    let raw-machine-word-type
-      = llvm-reference-type(be, dylan-value(#"<raw-machine-word>"));
-    ins--trunc(be, full, raw-machine-word-type)
+    // Count the leading bits that are the same as the sign bit
+    let x-negative? = ins--icmp-slt(be, x, 0);
+    let x-lognot = ins--xor(be, x, -1);
+    let x-hat = ins--select(be, x-negative?, x-lognot, x);
+    let zeroes = ins--call-intrinsic(be, "llvm.ctlz", vector(x-hat, $llvm-false));
+
+    // We can shift without overflow if it is by fewer bits than that
+    let overflow = ins--icmp-uge(be, shift, zeroes);
+    ins--if (be, op--unlikely(be, overflow))
+      // Signal <arithmetic-overflow-error>
+      op--overflow-trap(be);
+    ins--else
+      ins--shl(be, x, shift)
+    end ins--if;
   end ins--if;
 end;
 
