@@ -234,6 +234,13 @@ end method;
 
 define method emit-result-assignment
     (back-end :: <llvm-back-end>, c :: <computation>,
+     temp :: <temporary>, result :: <llvm-spill-mv>)
+ => ();
+  temporary-value(temp) := result;
+end method;
+
+define method emit-result-assignment
+    (back-end :: <llvm-back-end>, c :: <computation>,
      temp :: <temporary>, result :: <llvm-global-mv>)
  => ()
   let primary = ins--extractvalue(back-end, result.llvm-mv-struct, 0);
