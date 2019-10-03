@@ -413,6 +413,10 @@ define function float-to-string
                 add!(buffer, as(<character>, as(<integer>, '0') + remainder))
               end method;
         let scale :: <integer> = truncate/(log(float), log(ten));
+        // Handle bad rounding case
+        if (float >= ten ^ (1 + scale))
+          scale := scale + 1;
+        end;
         if (scale > 0 & scale <= dec-point)
           dec-point := dec-point - scale;
         end;

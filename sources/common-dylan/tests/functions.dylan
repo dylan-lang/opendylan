@@ -130,7 +130,12 @@ define constant $float-string-mappings
       #(100.0,         "100.00000"),
       #(100.0d0,       "100.00000d0"),
       #(123456789.0,   "1.2345679s8"),
-      #(123456789.0d0, "1.2345678d8"));
+      #(123456789.0d0, "1.2345678d8"),
+      // Added for bug 
+      #(1.0d5,         "100000.00d0"),
+      #(1.0s6,         "1000000.0"),
+      #(1.0d6,         "1000000.0d0"),
+      #(1.0d7,         "1.0000000d7"));
 
 define common-extensions function-test float-to-string ()
   for (float-mapping in $float-string-mappings)
