@@ -87,12 +87,25 @@ define method emit-reference
   emit-object(back-end, stream, o);
 end method;
 
+define constant $bad-decode-float? :: <boolean> = decode-float(10.0d0) > 1.0d0;
+
 define method emit-object
     (back-end :: <c-back-end>, stream :: <stream>, o :: <float>) => ()
   print-raw-object(o, stream)
 end method;
 
-define method print-raw-object (o :: <float>, stream :: <stream>) => ()
+define constant xdigits :: <string> = "0123456789ABCDEF";
+define inline-only function c-float-cast
+  (x :: <float>) => (cast :: <string>)
+  select (x by instance?)
+    <single-float> => "(float)";
+    <double-float> =>"(double)";
+    <extended-float> => "(long double)";
+    otherwise => error("Float type not implemented");
+  end select;
+end function;
+
+define function old-print-raw-object (o :: <float>, stream :: <stream>) => ()
   // Sometimes, we can end up with an infinite or nan value here, so
   // we want to make sure we print an appropriate C representation.
   // In the future, we can look at using classify-float, but this
@@ -127,7 +140,39 @@ define method print-raw-object (o :: <float>, stream :: <stream>) => ()
               s
             end;
         end select);
-end method;
+end function;
+
+define method print-raw-object
+    (x :: <float>, stream :: <stream>) => ()
+  if ($bad-decode-float?)
+    old-print-raw-object(x, stream)
+  else
+    write(stream, c-float-cast(x));
+    select (classify-float(x))
+      #"infinite" =>
+        if (negative?(x))
+          write-element(stream, '-');
+        end;
+        write(stream, "INFINITY");
+      #"nan" => write(stream, "NAN");
+      otherwise =>
+        let (significand, exponent, signum) = decode-float(x);
+        if (negative?(signum))
+          write-element(stream, '-');
+        end if;
+        write(stream, "0x0.");
+        until (zero?(significand))
+          // Extract 4 bits (i.e. one hex digit) at a time
+          let x = scale-float(significand, 4);
+          let (quot, rem) = truncate(x);
+          significand := rem;
+          let i = as(<integer>, quot);
+          write-element(stream, xdigits[i]);
+        end until;
+        format(stream, "p%d", exponent);
+    end select;
+  end if;
+end method print-raw-object;
 
 // INTEGERS
 

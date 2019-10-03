@@ -943,6 +943,19 @@ define common-extensions function-test decode-float ()
                 1.0s0, sign);
   end with-test-unit;
 
+  with-test-unit ("decode-float of <single-float> subnormal")
+    let single-subnormal :: <single-float> = encode-single-float(as(<machine-word>, #x1));
+    let (significand :: <single-float>,
+         exponent :: <integer>,
+         sign :: <single-float>) = decode-float(single-subnormal);
+    check-equal("significand for <single-float> subnormal = 1 / radix",
+                1.0s0 / single-beta, significand);
+    check-equal("exponent for <single-float> subnormal = -148",
+                -148, exponent);
+    check-equal("sign for <single-float> subnormal = 1.0s0",
+                1.0s0, sign);
+  end with-test-unit;
+
   let double-beta :: <double-float> = as(<double-float>, float-radix(1.0d0));
 
   with-test-unit ("decode-float of <double-float> radix")
@@ -955,6 +968,35 @@ define common-extensions function-test decode-float ()
                 2, exponent);
     check-equal("sign for <double-float> radix = 1.0d0",
                 1.0d0, sign);
+  end with-test-unit;
+
+  with-test-unit ("decode-float of <double-float> subnormal")
+    let double-subnormal :: <double-float> =
+      encode-double-float(as(<machine-word>, #x1),
+                          as(<machine-word>, #x0));
+    let (significand :: <double-float>,
+         exponent :: <integer>,
+         sign :: <double-float>) = decode-float(double-subnormal);
+    check-equal("significand for <double-float> subnormal = 1 / radix",
+                1.0d0 / double-beta, significand);
+    check-equal("exponent for <double-float> subnormal = -1073",
+                -1073, exponent);
+    check-equal("sign for <double-float> subnormal = 1.0d0",
+                1.0d0, sign);
+  end with-test-unit;
+  with-test-unit ("decode-float of <double-float> negative subnormal")
+    let double-subnormal :: <double-float> =
+      encode-double-float(as(<machine-word>, #x0),
+                          as(<machine-word>, #x80000001));
+    let (significand :: <double-float>,
+         exponent :: <integer>,
+         sign :: <double-float>) = decode-float(double-subnormal);
+    check-equal("significand for <double-float> negative subnormal = 1 / radix",
+                1.0d0 / double-beta, significand);
+    check-equal("exponent for <double-float> negative subnormal = -1041",
+                -1041, exponent);
+    check-equal("sign for <double-float> negative subnormal = -1.0d0",
+                -1.0d0, sign);
   end with-test-unit;
 
 end function-test decode-float;
