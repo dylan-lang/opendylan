@@ -122,7 +122,19 @@ end method;
 
 define method emit-local-tmp-definition
     (back-end :: <llvm-back-end>, tmp :: <temporary>) => ()
-  // FIXME nothing?
+  if (tmp.cell? & ~tmp.closed-over?)
+    let rep = cell-representation(cell-type(tmp));
+    let type = llvm-reference-type(back-end, rep);
+
+    let alloca = ins--alloca(back-end, type, i32(1));
+    if (named?(tmp))
+      let local-name = hygienic-mangle(back-end, tmp.name, tmp.frame-offset);
+      if (*temporary-locals?* & ~llvm-builder-local-defined?(back-end, local-name))
+        ins--local(back-end, local-name, alloca);
+      end if;
+    end if;
+    temporary-value(tmp) := alloca;
+  end if;
 end method;
 
 define method emit-local-tmp-definition
@@ -167,11 +179,7 @@ end method;
 
 define method emit-local-definition
     (back-end :: <llvm-back-end>, tmp :: <lexical-variable>) => ()
-//   if (tmp.cell?)
-//     format-emit*
-//       (back-end, stream, "\t~* % = ~(tmp_%);\n",
-//        $dylan-type-string, tmp, $cell-string, tmp);
-//   end if
+  // FIXME nothing?
 end method;
 
 // Temporary value transfers
@@ -222,6 +230,13 @@ define method emit-result-assignment
 
     emit-dbg-local-variable(back-end, c, temp, #"auto", result);
   end if;
+end method;
+
+define method emit-result-assignment
+    (back-end :: <llvm-back-end>, c :: <computation>,
+     temp :: <temporary>, result :: <llvm-spill-mv>)
+ => ();
+  temporary-value(temp) := result;
 end method;
 
 define method emit-result-assignment
@@ -1567,6 +1582,7 @@ define method emit-computation
     let phi-operands = make(<stretchy-object-vector>);
 
     // Stack-allocated bind exit frame
+    let stacksave = ins--call-intrinsic(back-end, "llvm.stacksave", #[]);
     let typeid = op--typeid(back-end, c.entry-state);
     let bef = op--allocate-bef(back-end, typeid);
     temporary-value(c.entry-state) := bef;
@@ -1587,6 +1603,7 @@ define method emit-computation
       add-merge-operands(temp,
                          merge-c & merge-c.merge-right-value,
                          back-end.llvm-builder-basic-block);
+      ins--call-intrinsic(back-end, "llvm.stackrestore", vector(stacksave));
       ins--br(back-end, merge-bb);
     end if;
 
@@ -1627,6 +1644,7 @@ define method emit-computation
       add-merge-operands(temp, merge-c.merge-left-value,
                          back-end.llvm-builder-basic-block);
     end if;
+    ins--call-intrinsic(back-end, "llvm.stackrestore", vector(stacksave));
     ins--br(back-end, merge-bb);
 
     // No match, resume unwind
@@ -1981,23 +1999,10 @@ define method emit-computation
     temporary-value(tmp) := cell;
   else
     let value-type = llvm-type-forward(value.llvm-value-type);
-    let value-cast
-      = emit-cast-for-cell(back-end, value, value-type, rep);
-
-    let type = llvm-reference-type(back-end, rep);
-
-    let alloca = ins--alloca(back-end, type, i32(1));
-    if (named?(tmp))
-      let local-name = hygienic-mangle(back-end, tmp.name, tmp.frame-offset);
-      if (*temporary-locals?*
-            & ~llvm-builder-local-defined?(back-end, local-name))
-        ins--local(back-end, local-name, alloca);
-      end if;
-
-      emit-dbg-local-variable(back-end, c, tmp, #"auto", alloca, address?: #t);
-    end if;
-    temporary-value(tmp) := alloca;
-    ins--store(back-end, value-cast, alloca);
+    let value-cast = emit-cast-for-cell(back-end, value, value-type, rep);
+    emit-dbg-local-variable(back-end, c, tmp, #"auto", temporary-value(tmp),
+                            address?: #t);
+    ins--store(back-end, value-cast, temporary-value(tmp));
   end if;
 end method;
 

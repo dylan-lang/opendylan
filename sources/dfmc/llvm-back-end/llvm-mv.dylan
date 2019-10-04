@@ -245,23 +245,31 @@ define method op--copy-into-mv-area
   ins--block(back-end, continue-bb);
 end method;
 
+define class <llvm-spill-mv> (<llvm-mv>)
+  constant slot llvm-mv-spill :: <llvm-value> = $object-pointer-undef,
+    init-keyword: spill:;
+  constant slot llvm-mv-stacksave :: <llvm-value> = $object-pointer-undef,
+    init-keyword: stacksave:;
+end class;
+
 // Save a multiple-value temporary to be restored later
 define method op--protect-temporary
     (back-end :: <llvm-back-end>, temp, value)
- => (spill :: <llvm-value>);
+ => (spill :: <llvm-spill-mv>);
   // Nothing to do
-  emit-reference(back-end, back-end.llvm-builder-module, &false)
+  make(<llvm-spill-mv>)
 end method;
 
 define method op--protect-temporary
     (back-end :: <llvm-back-end>, temp :: <multiple-value-temporary>,
      mv :: <llvm-global-mv>)
- => (spill :: <llvm-value>);
+ => (spill :: <llvm-spill-mv>);
   if (temp.required-values > 1 | temp.rest-values?)
     let copy-bb = make(<llvm-basic-block>);
     let continue-bb = make(<llvm-basic-block>);
 
     // Allocate a local spill area
+    let stacksave = ins--call-intrinsic(back-end, "llvm.stacksave", #[]);
     let maximum-count
       = if (temp.rest-values?)
           mv.llvm-mv-maximum - 1
@@ -278,21 +286,21 @@ define method op--protect-temporary
 
     // Copy into the spill area
     op--copy-from-mv-area(back-end, 1, spill, mv-area-count);
-    spill
+    make(<llvm-spill-mv>, spill: spill, stacksave: stacksave)
   else
-    emit-reference(back-end, back-end.llvm-builder-module, &false)
+    make(<llvm-spill-mv>)
   end if;
 end method;
 
 define method op--restore-temporary
-    (back-end :: <llvm-back-end>, temp, value, spill :: <llvm-value>)
+    (back-end :: <llvm-back-end>, temp, value, spill :: <llvm-spill-mv>)
  => ();
   // Nothing to do
 end method;
 
 define method op--restore-temporary
     (back-end :: <llvm-back-end>, temp :: <multiple-value-temporary>,
-     mv :: <llvm-global-mv>, spill :: <llvm-value>)
+     mv :: <llvm-global-mv>, spill :: <llvm-spill-mv>)
  => ();
   if (temp.required-values > 1 | temp.rest-values?)
     // Determine how many values need to be restored to the TEB MV area
@@ -301,7 +309,11 @@ define method op--restore-temporary
     let mv-area-count = ins--sub(back-end, count-ext, 1);
 
     // Copy them back
-    op--copy-into-mv-area(back-end, 1, spill, mv-area-count)
+    op--copy-into-mv-area(back-end, 1, spill.llvm-mv-spill, mv-area-count);
+
+    // Restore the stack
+    ins--call-intrinsic(back-end, "llvm.stackrestore",
+                        vector(spill.llvm-mv-stacksave));
   end if;
 end method;
 
