@@ -22,3 +22,6 @@
 [submodule "sources/lib/testworks"]
 	path = sources/lib/testworks
 	url = git://github.com/dylan-lang/testworks.git
+[submodule "sources/lib/json"]
+	path = sources/lib/json
+	url = https://github.com/dylan-lang/json.git
