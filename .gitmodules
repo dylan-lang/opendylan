@@ -25,3 +25,9 @@
 [submodule "sources/lib/json"]
 	path = sources/lib/json
 	url = https://github.com/dylan-lang/json.git
+[submodule "sources/lib/xml-parser"]
+	path = sources/lib/xml-parser
+	url = https://github.com/dylan-lang/xml-parser.git
+[submodule "sources/lib/meta"]
+	path = sources/lib/meta
+	url = https://github.com/dylan-lang/meta.git
