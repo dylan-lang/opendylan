@@ -98,7 +98,7 @@ develop an application that has the correct look and feel for your
 platform.
 
 It enables DUIM code to be compiled and run on any platform for which a
-DUIM backend has been implemented.
+DUIM back-end has been implemented.
 
 A DUIM interface is built from *frames* ; each window in your
 application is represented by a frame. Each frame contains a hierarchy

@@ -21,7 +21,7 @@ The register model
 ------------------
 
 Three registers are used within the calling convention to support the
-passing of *implementation parameters*: Note that for the C backend,
+passing of *implementation parameters*: Note that for the C back-end,
 global (or thread-local) variables might be used instead of real
 registers to pass these parameters.
 
@@ -65,7 +65,7 @@ For the native code implementation, the callee is responsible for
 popping any arguments from the stack. This is always possible (even with
 dynamically sized optional args), because the argcount is available to
 say how many arguments were passed. This is not possible for the C
-backend - and this is the only substantial difference from the C arg
+back-end - and this is the only substantial difference from the C arg
 passing convention.
 
 Calling Convention Goals
