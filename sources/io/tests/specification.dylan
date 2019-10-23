@@ -182,4 +182,5 @@ define library-spec io ()
   suite universal-streams-suite;
   suite additional-streams-suite;
   suite format-test-suite;
+  suite pprint-test-suite;
 end library-spec io;

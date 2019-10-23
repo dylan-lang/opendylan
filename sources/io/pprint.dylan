@@ -745,19 +745,22 @@ define method compute-tab-size
   let origin = if (tab.tab-section?) section-start else 0 end;
   let colnum = tab.tab-colnum;
   let colinc = tab.tab-colinc;
+  let position = column - origin;
   if (tab.tab-relative?)
     unless (colinc <= 1)
-      let newposn = column + colnum;
+      let newposn = position + colnum;
       let rem = remainder(newposn, colinc);
       unless (zero?(rem))
         colnum := colnum + colinc - rem;
       end;
     end;
-    colnum;
-  elseif (column <= colnum + origin)
-    colnum + origin - column;
+    colnum
+  elseif (position < colnum)
+    colnum - position
+  elseif (zero?(colinc))
+    0
   else
-    colinc - remainder(column - origin, colinc);
+    colinc - remainder(position - colnum, colinc);
   end;
 end;
 
