@@ -215,10 +215,15 @@ define function test-print-miscellaneous ()
   check-print("class", <test-class>);
   check-print("make(class)", make(<test-class>));
   check-print("list", #(1, 2, 3));
+  check-print("list", #(1, 2 . 3));
   check-print("list", #[1, 2, 3]);
   check-print("function", add);
   check-print("range", range(from: 10, by: 2, to: 20));
+  check-print("empty range", range(from: 0, size: 0));
   check-print("symbol", #"symbol");
+  check-print("empty deque", make(<deque>));
+  check-print("deque", as(<deque>, #[1, 2, 3]));
+  check-print("machine word", as(<machine-word>, 1776));
 end function test-print-miscellaneous;
 
 // extend-print-object

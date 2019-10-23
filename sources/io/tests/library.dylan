@@ -27,6 +27,7 @@ define module io-test-suite
   use operating-system;
   use file-system;
   use locators;
+  use machine-words;
 
   use streams;
   use streams-internals;
