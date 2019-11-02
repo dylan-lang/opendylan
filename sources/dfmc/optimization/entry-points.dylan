@@ -164,11 +164,10 @@ define method maybe-upgrade-call (c :: <apply>, f :: <&function>)
            temporary-class: call-temporary-class(c),
            function:  c.function,
            arguments: spread-args);
-    compatibility-state(new-call) := compatibility-state(c);
+    compatibility-state(new-call) := $compatibility-unchecked;
     replace-computation!(c, new-call, new-call, new-temporary);
     // Ensure that this new call gets considered for inlining
     re-optimize(new-call);
-    maybe-upgrade-call(new-call, f);
   else
     // REST?(F) && NUMBER-REQUIRED(F) < SIZE(ARGS(C))
     // DIRECT TO IEP WHERE REST ARGS ARE CONCAT-2(...)
@@ -230,12 +229,11 @@ define method maybe-upgrade-call (c :: <method-apply>, f :: <&method>)
              function:        c.function,
              next-methods:    c.next-methods,
              arguments:       method-call-args);
-      compatibility-state(new-call) := compatibility-state(c);
+      compatibility-state(new-call) := $compatibility-unchecked;
       let (first-c, last-c) = join-2x1!(first-c, last-c, new-call);
       replace-computation!(c, first-c, last-c, new-temporary);
       // Ensure that this new call gets considered for inlining
       re-optimize(new-call);
-      maybe-upgrade-call(new-call, f);
     else
       // next-method();
       #f
