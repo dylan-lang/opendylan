@@ -30,7 +30,7 @@ website=/root/website
 # Update the main web site pages.
 cd ${website}
 git pull --rebase origin master
-git submodule update --recursive
+git submodule update --recursive --init
 make html
 rsync -avz build/html/ ${site_root}
 
@@ -43,7 +43,7 @@ subdirs="${subdirs} project-notebook release-notes style-guide"
 
 cd ${opendylan}
 git pull --rebase origin master
-git submodule update --recursive
+git submodule update --recursive --init
 export PYTHONPATH=${opendylan}/documentation/sphinx-extensions
 
 for subdir in ${subdirs}; do
@@ -59,7 +59,7 @@ done
 for lib in binary-data concurrency http melange objc-dylan statistics testworks tracing; do
     cd /root/${lib}
     git pull --rebase origin master
-    git submodule update --recursive
+    git submodule update --recursive --init
     cd /root/${lib}/documentation
     if [[ "${lib}" == "testworks" ]]; then
 	cd users-guide
