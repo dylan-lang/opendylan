@@ -7,13 +7,6 @@
 #   /var/www/opendylan.org/books/dpg.
 # * Build/install /root/dylan-reference-manual into
 #   /var/www/opendylan.org/books/drm.
-# * Make a local backup of the generated site every now and then
-#   in case it gets trashed?
-# * Commit this script to website repo if any of the above ever
-#   gets done.
-# * Maybe it would be better to have opendylan/documentation in
-#   its own repo and make it a submodule of website, and make the
-#   links in website/* just work when the submodules are built?
 
 # For completeness, note that /var/www/opendylan.org/downloads is
 # handled specially. As far as I (cgay) know, new versions of Open
