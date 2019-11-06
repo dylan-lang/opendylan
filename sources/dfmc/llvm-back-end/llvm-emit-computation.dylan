@@ -641,6 +641,26 @@ define method emit-computation
   computation-result(back-end, c, result);
 end method;
 
+define function will-never-return?
+    (c :: <function-call>)
+ => (well? :: <boolean>);
+  let temp = c.temporary;
+  if (temp)
+    let te = type-estimate(temp);
+    select (te by instance?)
+      <type-estimate-bottom> =>
+        #t;
+      <type-estimate-values> =>
+        let rest-te = type-estimate-rest-values(te);
+        instance?(rest-te, <type-estimate-bottom>);
+      otherwise =>
+        #f;
+    end select
+  else
+    #f
+  end if
+end function;
+
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <function-call>)
  => ()
@@ -648,8 +668,7 @@ define method emit-computation
   let call = emit-call(back-end, m, c, effective-function);
 
   // Mark path unreachable if called function never returns
-  let temp = c.temporary;
-  if (temp & instance?(type-estimate(temp), <type-estimate-bottom>))
+  if (will-never-return?(c))
     ins--unreachable(back-end);
   else
     computation-result(back-end, c, make(<llvm-global-mv>, struct: call));
