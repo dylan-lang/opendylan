@@ -1707,7 +1707,8 @@ define method emit-computation
   dynamic-bind (*live-nlx* = nlx)
     emit-computations(back-end, m, c.body, c.next-computation);
   end dynamic-bind;
-  if (back-end.llvm-builder-basic-block)
+  let continue? = back-end.llvm-builder-basic-block ~== #f;
+  if (continue?)
     ins--br(back-end, continue-bb);
   end if;
 
@@ -1734,16 +1735,18 @@ define method emit-computation
   end if;
 
   // Save global MV if needed
-  ins--block(back-end, continue-bb);
-  let protect-temp = c.protected-temporary;
-  let protect-value = protect-temp & temporary-value(protect-temp);
-  let protected
-    = op--protect-temporary(back-end, protect-temp, protect-value);
+  if (continue?)
+    ins--block(back-end, continue-bb);
+    let protect-temp = c.protected-temporary;
+    let protect-value = protect-temp & temporary-value(protect-temp);
+    let protected
+      = op--protect-temporary(back-end, protect-temp, protect-value);
 
-  // Cleanup and restore global MV if needed
-  emit-computations(back-end, m, c.cleanups, c.next-computation);
-  if (back-end.llvm-builder-basic-block)
-    op--restore-temporary(back-end, protect-temp, protect-value, protected);
+    // Cleanup and restore global MV if needed
+    emit-computations(back-end, m, c.cleanups, c.next-computation);
+    if (back-end.llvm-builder-basic-block)
+      op--restore-temporary(back-end, protect-temp, protect-value, protected);
+    end if;
   end if;
 end method;
 
