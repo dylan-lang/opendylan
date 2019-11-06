@@ -479,8 +479,7 @@ define test begins ()
 end test begins;
 
 define function no-param-function () 1 end;
-// See comment below.
-// define function one-param-function (x) x end;
+define function one-param-function (x) x end;
 
 define test required-calls ()
   check-equal("no param call",
@@ -489,12 +488,10 @@ define test required-calls ()
 	     (method (x) x end)(1), 1);
   check-condition("no param call one arg", <error>,
                   apply(no-param-function, #[1]));
-//---*** these two tests result in C code which gcc refuses
-//       to compile - hannes (Jan 2012)
-//  check-condition("one param call no args", <error>,
-//                  apply(one-param-function, #[]));
-//  check-condition("one param call two args", <error>,
-//                  apply(one-param-function, #[1, 2]));
+  check-condition("one param call no args", <error>,
+                  apply(one-param-function, #[]));
+  check-condition("one param call two args", <error>,
+                  apply(one-param-function, #[1, 2]));
   check-equal("two args call",
 	     (method (x, y) x + y end)(1, 2), 3);
   check-equal("lots args call",

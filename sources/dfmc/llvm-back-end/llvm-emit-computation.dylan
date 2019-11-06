@@ -641,6 +641,26 @@ define method emit-computation
   computation-result(back-end, c, result);
 end method;
 
+define function will-never-return?
+    (c :: <function-call>)
+ => (well? :: <boolean>);
+  let temp = c.temporary;
+  if (temp)
+    let te = type-estimate(temp);
+    select (te by instance?)
+      <type-estimate-bottom> =>
+        #t;
+      <type-estimate-values> =>
+        let rest-te = type-estimate-rest-values(te);
+        instance?(rest-te, <type-estimate-bottom>);
+      otherwise =>
+        #f;
+    end select
+  else
+    #f
+  end if
+end function;
+
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <function-call>)
  => ()
@@ -648,8 +668,7 @@ define method emit-computation
   let call = emit-call(back-end, m, c, effective-function);
 
   // Mark path unreachable if called function never returns
-  let temp = c.temporary;
-  if (temp & instance?(type-estimate(temp), <type-estimate-bottom>))
+  if (will-never-return?(c))
     ins--unreachable(back-end);
   else
     computation-result(back-end, c, make(<llvm-global-mv>, struct: call));
@@ -1707,7 +1726,8 @@ define method emit-computation
   dynamic-bind (*live-nlx* = nlx)
     emit-computations(back-end, m, c.body, c.next-computation);
   end dynamic-bind;
-  if (back-end.llvm-builder-basic-block)
+  let continue? = back-end.llvm-builder-basic-block ~== #f;
+  if (continue?)
     ins--br(back-end, continue-bb);
   end if;
 
@@ -1734,16 +1754,18 @@ define method emit-computation
   end if;
 
   // Save global MV if needed
-  ins--block(back-end, continue-bb);
-  let protect-temp = c.protected-temporary;
-  let protect-value = protect-temp & temporary-value(protect-temp);
-  let protected
-    = op--protect-temporary(back-end, protect-temp, protect-value);
+  if (continue?)
+    ins--block(back-end, continue-bb);
+    let protect-temp = c.protected-temporary;
+    let protect-value = protect-temp & temporary-value(protect-temp);
+    let protected
+      = op--protect-temporary(back-end, protect-temp, protect-value);
 
-  // Cleanup and restore global MV if needed
-  emit-computations(back-end, m, c.cleanups, c.next-computation);
-  if (back-end.llvm-builder-basic-block)
-    op--restore-temporary(back-end, protect-temp, protect-value, protected);
+    // Cleanup and restore global MV if needed
+    emit-computations(back-end, m, c.cleanups, c.next-computation);
+    if (back-end.llvm-builder-basic-block)
+      op--restore-temporary(back-end, protect-temp, protect-value, protected);
+    end if;
   end if;
 end method;
 

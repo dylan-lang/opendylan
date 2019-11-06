@@ -768,7 +768,17 @@ define function do-constrain-call-type
   if (instance?(fnptrtype, <llvm-pointer-type>))
     let pointee = type-forward(fnptrtype.llvm-pointer-type-pointee);
     if (instance?(pointee, <llvm-function-type>))
-      for (arg-type in pointee.llvm-function-type-parameter-types, arg in args)
+      let parameter-types = pointee.llvm-function-type-parameter-types;
+      if (pointee.llvm-function-type-varargs?)
+        if (args.size < parameter-types.size)
+          error("Calling varargs function with %d args, expected at least %d",
+                args.size, parameter-types.size);
+        end if;
+      elseif (args.size ~= parameter-types.size)
+        error("Calling function with %d args, expected %d",
+              args.size, parameter-types.size);
+      end if;
+      for (arg-type in parameter-types, arg in args)
         llvm-constrain-type(llvm-value-type(arg), arg-type);
       end for;
       type-forward(pointee.llvm-function-type-return-type)
