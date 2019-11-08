@@ -1215,7 +1215,9 @@ define method write-constant-record
   elseif (aggregate-string?(value))
     let contents = map(llvm-integer-constant-integer,
                        value.llvm-aggregate-constant-values);
-    if (zero?(contents.last))
+    if (every?(zero?, contents))
+      write-record(stream, #"NULL");
+    elseif (zero?(contents.last))
       write-abbrev-record(stream, #"cstring",
                           copy-sequence(contents, end: contents.size - 1));
     else
