@@ -169,8 +169,15 @@ define method llvm-object-type
  => (type :: <llvm-type>);
   let class = o.&object-class;
   ^ensure-slots-initialized(class);
-  let rslotd = class.^repeated-slot-descriptor; 
-  let repeated-size = rslotd & ^slot-value(o, ^size-slot-descriptor(rslotd));
+  let rslotd = class.^repeated-slot-descriptor;
+  let repeated-size-value
+    = rslotd & ^slot-value(o, ^size-slot-descriptor(rslotd));
+  let repeated-size
+    = if (o.^object-class == dylan-value(#"<byte-string>"))
+        repeated-size-value + 1 // for NUL termination
+      else
+        repeated-size-value
+      end if;
   llvm-class-type(back-end, class, repeated-size: repeated-size)
 end method;
 
