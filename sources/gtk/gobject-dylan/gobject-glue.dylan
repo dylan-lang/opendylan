@@ -216,17 +216,17 @@ define function dylan-meta-marshaller (closure :: <GClosure>,
                                        invocation-hint :: <gpointer>,
                                        marshal-data :: <gpointer>)
   let values = #();
-  for (i from 0 below n-param-values)
+  for (i :: <integer> from 0 below n-param-values)
 
 //    let address = integer-as-raw(param-values.raw-pointer-address.raw-as-integer + i * sizeof-gvalue());
 //    let value* = make(<GValue>, address: address);
 
+    let offset :: <integer> = i * as(<integer>, sizeof-gvalue());
     let value = make-c-pointer(<GValue>,
                                primitive-machine-word-add
                                  (primitive-cast-pointer-as-raw
                                    (primitive-unwrap-c-pointer(param-values)),
-                                  integer-as-raw
-                                    (i * sizeof-gvalue())),
+                                  integer-as-raw(offset)),
                                #[]);
     values := pair(g-value-to-dylan(value), values);
 //    value*;

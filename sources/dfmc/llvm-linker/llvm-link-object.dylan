@@ -241,15 +241,25 @@ define method emit-object-slot
     (back-end :: <llvm-back-end>, module :: <llvm-module>, 
      slotd :: <&repeated-slot-descriptor>, type :: <llvm-type>, o)
  => ();
-  let repeated-size = ^slot-value(o, ^size-slot-descriptor(slotd));
+  let repeated-size-value = ^slot-value(o, ^size-slot-descriptor(slotd));
+  let (repeated-size, terminated?)
+    = if (o.^object-class == dylan-value(#"<byte-string>"))
+        values(repeated-size-value + 1, #t)
+      else
+        values(repeated-size-value, #f)
+      end if;
   let repeated-elements = make(<simple-object-vector>, size: repeated-size);
 
   if (slotd.^slot-type == dylan-value(#"<byte-character>"))
-    for (i from 0 below repeated-size)
+    for (i from 0 below repeated-size-value)
       repeated-elements[i]
         := llvm-raw-byte-character(back-end,
                                    ^repeated-slot-value(o, slotd, i));
     end;
+    if (terminated?)
+      repeated-elements[repeated-size-value]
+        := llvm-raw-byte-character(back-end, '\0');
+    end if;
   else
     for (i from 0 below repeated-size)
       repeated-elements[i]
