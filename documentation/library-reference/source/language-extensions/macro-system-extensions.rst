@@ -163,7 +163,7 @@ template calls:
     vars:
       { }
         => { }
-      { ?:variable=?:expression, ... }
+      { ?:variable = ?:expression, ... }
         => { ?variable, ... }
 
     inits:
