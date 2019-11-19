@@ -39,6 +39,6 @@ Experiment with the examples in the ``console`` directory. Each of them generate
 that explore various features of the Dylan language.
 
 - ``console/hello-world`` demonstrates defining methods, printing to the console and not needing a "``main()`` function" for Dylan programs.
-- ``console/factorial`` demonstrates integer operations and composing libraries. ``factorial-big.lid`` and `factorial-small.lid`` use the same base code to produce multiple applications with different integer internals.
+- ``console/factorial`` demonstrates integer operations and composing libraries. ``factorial-big.lid`` and ``factorial-small.lid`` use the same base code to produce multiple applications with different integer internals.
 - ``console/quicksort`` demonstrates collections and polymorphic/generic methods and iteration.
 - ``console/towers-of-hanoi`` demonstrates defining your own objects.
