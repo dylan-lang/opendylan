@@ -266,22 +266,40 @@ define method print-source-location
         <source-record> =>
           record.source-record-name | $interactive-record;
       end;
-  let (start-line, end-line)
+  let (start-line, start-col, end-line, end-col)
     = if (line-number)
-        values(line-number, line-number)
+        values(line-number, #f, line-number, #f)
       else
         let start-offset = location.source-location-start-offset;
         let end-offset   = location.source-location-end-offset;
         values(start-offset.source-offset-line,
-               end-offset.source-offset-line)
+               start-offset.source-offset-column + 1,
+               end-offset.source-offset-line,
+               end-offset.source-offset-column + 1)
       end;
   if (start-line == end-line)
-    format(stream, "%s:%s", name,
-           start-line + first-line)
+    if (start-col ~= end-col)
+      format(stream, "%s:%d.%d-%d", name,
+             start-line + first-line,
+             start-col, end-col);
+    elseif (start-col)
+      format(stream, "%s:%d.%d", name,
+             start-line + first-line,
+             start-col);
+    else
+      format(stream, "%s:%d", name,
+             start-line + first-line);
+    end if
   else
-    format(stream, "%s:%s-%s", name,
-           start-line + first-line,
-           end-line + first-line)
+    if (start-col)
+      format(stream, "%s:%d.%d-%d.%d", name,
+             start-line + first-line, start-col,
+             end-line + first-line, end-col);
+    else
+      format(stream, "%s:%d-%d", name,
+             start-line + first-line, 
+             end-line + first-line);
+    end if
   end
 end method print-source-location;
 
