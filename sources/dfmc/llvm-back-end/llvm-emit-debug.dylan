@@ -37,13 +37,13 @@ define method emit-lambda-dbg-function
 
   // Compute the source location
   let loc = fun.model-source-location;
-  let (dbg-file, dbg-line)
+  let (dbg-file, dbg-line, dbg-column)
     = if (instance?(loc, <source-location>))
-        source-location-dbg-file-line(back-end, loc)
+        source-location-dbg-loc(back-end, loc)
       else
         let cr = fun.model-compilation-record;
         let sr = cr.compilation-record-source-record;
-        values(llvm-source-record-dbg-file(back-end, sr), 0)
+        values(llvm-source-record-dbg-file(back-end, sr), 0, 0)
       end if;
 
   // Compute the function type
@@ -208,8 +208,8 @@ define method emit-dbg-local-variable
  => ();
   let source-location = c.dfm-source-location;
   if (source-location)
-    let (dbg-file, dbg-line)
-      = source-location-dbg-file-line(back-end, source-location);
+    let (dbg-file, dbg-line, dbg-column)
+      = source-location-dbg-loc(back-end, source-location);
     let var-type
       = llvm-reference-dbg-type(back-end, type-estimate(tmp));
     let v = llvm-make-dbg-value-metadata(value);
@@ -368,10 +368,12 @@ define method assign-computations-dbg-scope
       let loc = dfm-source-location(c);
       let temp = c.temporary;
       if (loc & temp & temp.named?)
-        let (dbg-file :: <llvm-metadata>, dbg-line :: <integer>)
-          = source-location-dbg-file-line(back-end, loc);
+        let (dbg-file :: <llvm-metadata>,
+             dbg-line :: <integer>,
+             dbg-column :: <integer>)
+          = source-location-dbg-loc(back-end, loc);
         let inner-scope
-          = llvm-make-dbg-lexical-block(scope, dbg-file, dbg-line, 0);
+          = llvm-make-dbg-lexical-block(scope, dbg-file, dbg-line, dbg-column);
         assign-computation-dbg-scope(back-end, inner-scope, c);
         loop(c.next-computation, inner-scope);
       else
@@ -435,17 +437,21 @@ define function op--scl(back-end :: <llvm-back-end>, c :: <computation>) => ()
     let sr = source-location-source-record(loc);
     let start-offset = source-location-start-offset(loc);
     let start-line = source-offset-line(start-offset);
-    ins--dbg(back-end, start-line + source-record-start-line(sr), 0,
+    let start-column = source-offset-column(start-offset) + 1;
+    ins--dbg(back-end, start-line + source-record-start-line(sr),
+             start-column,
              *computation-dbg-scope-table*[c]);
   end if;
 end function;
 
-define function source-location-dbg-file-line
+define function source-location-dbg-loc
     (back-end :: <llvm-back-end>, loc :: <source-location>)
- => (dbg-file :: <llvm-metadata>, dbg-line :: <integer>)
+ => (dbg-file :: <llvm-metadata>, dbg-line :: <integer>, dbg-column :: <integer>)
   let sr = source-location-source-record(loc);
   let start-offset = source-location-start-offset(loc);
   let start-line = source-offset-line(start-offset);
+  let start-column = source-offset-column(start-offset) + 1;
   values(llvm-source-record-dbg-file(back-end, sr),
-         start-line + source-record-start-line(sr))
+         start-line + source-record-start-line(sr),
+         start-column)
 end function;

@@ -203,7 +203,7 @@ sub build_library {
                 print "${warnings} W, ${serious_warnings} SW, ${errors} E\n";
                 $printed = 0;
             }
-            elsif (m/^(.+):(\d+(-\d+)?): (Serious warning|Warning|Error) - (.+)/) {
+            elsif (m/^(.+):(\d+(\.\d+)?(-\d+(\.\d+)?)?): (Serious warning|Warning|Error) - (.+)/) {
                 if (!$printed) {
                     print "\n";
                     $printed = 1;
