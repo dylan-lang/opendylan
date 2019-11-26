@@ -267,7 +267,7 @@ define library-spec system ()
   module file-system;
   module settings;
   module simple-xml;
-  suite universal-streams-suite;
-  suite additional-streams-suite;
+  suite system-universal-streams-suite;
+  suite system-additional-streams-suite;
   suite system-regressions;
-end library-spec system;
+end library-spec;

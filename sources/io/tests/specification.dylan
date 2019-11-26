@@ -179,8 +179,8 @@ define library-spec io ()
   // module format-internals;
   // module standard-io;
   // module format-out;
-  suite universal-streams-suite;
-  suite additional-streams-suite;
+  suite io-universal-streams-suite;
+  suite io-additional-streams-suite;
   suite format-test-suite;
   suite pprint-test-suite;
 end library-spec io;

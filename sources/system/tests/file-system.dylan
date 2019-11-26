@@ -1297,7 +1297,9 @@ end test test-async-stream-async-tests;
 
 /// Test suites
 
-define suite universal-streams-suite ()
+// Prepend "system-" to distinguish from a test by the same name in the io test
+// suite.
+define suite system-universal-streams-suite ()
   test test-file-stream;
   test test-empty-file-stream;
   test test-closed-external-streams;
@@ -1313,9 +1315,9 @@ define suite universal-streams-suite ()
   test test-multi-buffered-file-stream-exclusive;
   test test-empty-multi-buffered-file-stream-exclusive;
   test test-multi-buffered-file-stream-with-long-input-exclusive;
-end suite universal-streams-suite;
+end suite;
 
-define suite additional-streams-suite ()
+define suite system-additional-streams-suite ()
   test test-position-file-streams;
   test bogus-test-position-file-streams-using-input-output-streams;
   test test-position-multi-buffered-file-streams;
@@ -1327,7 +1329,7 @@ define suite additional-streams-suite ()
   test test-file-stream-functions;
   test test-write-to-multi-buffered-file-stream;
   test test-multi-buffered-read-only;
-end suite additional-streams-suite;
+end suite;
 
 
 /// File system locators
