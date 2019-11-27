@@ -865,13 +865,15 @@ define test test-stretchy-stream (description: "<string-stream> stretchy vector 
   end;
 end;
 
-define suite universal-streams-suite ()
+// Prepend "io-" to distinguish from the test by the same name in system test
+// suite.
+define suite io-universal-streams-suite ()
   test test-line-functions;
-end suite universal-streams-suite;
+end suite;
 
-define suite additional-streams-suite ()
+define suite io-additional-streams-suite ()
   test test-position-string-streams;
   test test-position-sequence-stream;
   test test-position-alt-string-streams;
   test test-stretchy-stream;
-end suite additional-streams-suite;
+end suite;
