@@ -10,7 +10,6 @@ define library release-info
   use common-dylan;
   use system;
   use io;
-  use file-source-records;
 
   export release-info;
 end library release-info;
