@@ -8,28 +8,23 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Collection tests
 
-define sideways method class-test-function
-    (class :: subclass(<collection>)) => (function :: <function>)
-  test-collection-class
-end method class-test-function;
-
 define open generic test-collection-class
     (class :: subclass(<collection>), #key, #all-keys) => ();
 
 define method test-collection-class
-    (class :: subclass(<collection>), #key name, instantiable?, #all-keys)
+    (class :: subclass(<collection>), #key instantiable?, #all-keys)
  => ()
   if (instantiable?)
-    test-collection-of-size(format-to-string("Empty %s", name), class, 0);
-    test-collection-of-size(format-to-string("One item %s", name), class, 1);
-    test-collection-of-size(format-to-string("Even size %s", name), class, 4);
-    test-collection-of-size(format-to-string("Odd size %s", name), class, 5);
+    test-collection-of-size(format-to-string("Empty %s", class), class, 0);
+    test-collection-of-size(format-to-string("One item %s", class), class, 1);
+    test-collection-of-size(format-to-string("Even size %s", class), class, 4);
+    test-collection-of-size(format-to-string("Odd size %s", class), class, 5);
   end
 end method test-collection-class;
 
 //--- An extra method to test special features of arrays
-define method test-collection-class 
-    (class == <array>, #key name, instantiable?, #all-keys) => ()
+define method test-collection-class
+    (class == <array>, #key instantiable?, #all-keys) => ()
   next-method();
   if (instantiable?)
     test-collection("2x2 <array>",   make-array(#(2, 2)));
@@ -39,8 +34,8 @@ define method test-collection-class
 end method test-collection-class;
 
 //--- An extra method to test unbounded ranges
-define method test-collection-class 
-    (class == <range>, #key name, instantiable?, #all-keys) => ()
+define method test-collection-class
+    (class == <range>, #key instantiable?, #all-keys) => ()
   next-method();
   if (instantiable?)
     //---*** Test reverse ranges...
@@ -53,8 +48,8 @@ end method test-collection-class;
 
 //--- Pairs don't really behave like collections in that you can't
 //--- make a pair of size n. So we'll test this differently.
-define method test-collection-class 
-    (class == <pair>, #key name, instantiable?, #all-keys) => ()
+define method test-collection-class
+    (class == <pair>, #key instantiable?, #all-keys) => ()
 /*---*** switch this on when we make a decision about the status of <pair>
   if (instantiable?)
     test-collection("pair(1, #())", pair(1, #()));
@@ -121,8 +116,9 @@ define constant $default-vectors = map-as(<vector>, vector, $default-string);
 
 define sideways method make-test-instance
     (class :: subclass(<collection>)) => (object)
-  let spec = $collections-protocol-spec;
-  if (protocol-class-instantiable?(spec, class))
+  // constant from the "define interface-specification-suite" call
+  let spec = $dylan-collections-specification-suite-spec;
+  if (interface-specification-class-instantiable?(spec, class))
     make-collections-of-size(class, 2)[0]
   else
     next-method()
@@ -250,11 +246,11 @@ define method make-limited-collections-of-size
   #[]
 end method make-limited-collections-of-size;
 
-define method expected-element 
+define method expected-element
     (collection :: <collection>, index) => (element)
   let element-type = collection-element-type(collection);
   if (element-type = <object>)
-    element-type := 
+    element-type :=
       select (collection[0] by instance?)
         <character> => <character>;
         <integer>   => <integer>;
@@ -273,7 +269,7 @@ define method expected-element
     <vector> =>
       if (size(collection) < size($default-vectors))
         $default-vectors[index];
-      else 
+      else
         #[]
       end if;
   end
@@ -347,30 +343,30 @@ define method test-collection
     (name :: <string>, collection :: <collection>) => ()
   do(method (function) function(name, collection) end,
      vector(// Functions on <collection>
-            test-as,
-            test-do,
-            test-map,
-            test-map-as,
-            test-map-into,
-            test-any?,
-            test-every?,
+            do-test-as,
+            do-test-do,
+            do-test-map,
+            do-test-map-as,
+            do-test-map-into,
+            do-test-any?,
+            do-test-every?,
 
             // Generic functions on <collection>
-            test-element,
-            test-key-sequence,
-            test-reduce,
-            test-reduce1,
-            test-member?,
-            test-find-key,
-            test-key-test,
-            test-forward-iteration-protocol,
-            test-backward-iteration-protocol,
+            do-test-element,
+            do-test-key-sequence,
+            do-test-reduce,
+            do-test-reduce1,
+            do-test-member?,
+            do-test-find-key,
+            do-test-key-test,
+            do-test-forward-iteration-protocol,
+            do-test-backward-iteration-protocol,
 
             // Methods on <collection>
-            test-=,
-            test-empty?,
-            test-size,
-            test-shallow-copy
+            do-test-=,
+            do-test-empty?,
+            do-test-size,
+            do-test-shallow-copy
             ))
 end method test-collection;
 
@@ -379,31 +375,31 @@ define method test-collection
   next-method();
   do(method (function) function(name, collection) end,
      vector(// Functions on <sequence>
-            test-concatenate,
-            test-concatenate-as,
-            test-first,
-            test-second,
-            test-third,
-            test-add,
-            test-add!,
-            test-add-new,
-            test-add-new!,
-            test-remove,
-            test-remove!,
-            test-choose,
-            test-choose-by,
-            test-intersection,
-            test-union,
-            test-remove-duplicates,
-            test-remove-duplicates!,
-            test-copy-sequence,
-            test-replace-subsequence!,
-            test-reverse,
-            test-reverse!,
-            test-sort,
-            test-sort!,
-            test-last,
-            test-subsequence-position
+            do-test-concatenate,
+            do-test-concatenate-as,
+            do-test-first,
+            do-test-second,
+            do-test-third,
+            do-test-add,
+            do-test-add!,
+            do-test-add-new,
+            do-test-add-new!,
+            do-test-remove,
+            do-test-remove!,
+            do-test-choose,
+            do-test-choose-by,
+            do-test-intersection,
+            do-test-union,
+            do-test-remove-duplicates,
+            do-test-remove-duplicates!,
+            do-test-copy-sequence,
+            do-test-replace-subsequence!,
+            do-test-reverse,
+            do-test-reverse!,
+            do-test-sort,
+            do-test-sort!,
+            do-test-last,
+            do-test-subsequence-position
             ))
 end method test-collection;
 
@@ -412,14 +408,14 @@ define method test-collection
   next-method();
   do(method (function) function(name, collection) end,
      vector(// Functions on <mutable-collection>
-            test-map-into,
+            do-test-map-into,
 
             // Generic functions on <mutable-collection>
-            test-element-setter,
-            test-fill!,         // missing from the DRM.
+            do-test-element-setter,
+            do-test-fill!,         // missing from the DRM.
 
             // Methods on <mutable-collection>
-            test-type-for-copy
+            do-test-type-for-copy
             ))
 end method test-collection;
 
@@ -428,7 +424,7 @@ define method test-collection
   next-method();
   do(method (function) function(name, collection) end,
      vector(// Methods on <stretchy-collection>
-            test-size-setter
+            do-test-size-setter
             ))
 end method test-collection;
 
@@ -437,12 +433,12 @@ define method test-collection
   next-method();
   do(method (function) function(name, collection) end,
      vector(// Functions on <mutable-sequence>
-            test-first-setter,
-            test-second-setter,
-            test-third-setter,
-           
+            do-test-first-setter,
+            do-test-second-setter,
+            do-test-third-setter,
+
             // Generic functions on <mutable-sequence>
-            test-last-setter
+            do-test-last-setter
             ))
 end method test-collection;
 
@@ -451,12 +447,12 @@ define method test-collection
   next-method();
   do(method (function) function(name, collection) end,
      vector(// Functions on <array>
-            test-rank,
-            test-row-major-index,
-            test-aref,
-            test-aref-setter,
-            test-dimensions,
-            test-dimension
+            do-test-rank,
+            do-test-row-major-index,
+            do-test-aref,
+            do-test-aref-setter,
+            do-test-dimensions,
+            do-test-dimension
             ))
 end method test-collection;
 
@@ -465,7 +461,7 @@ define method test-collection
   next-method();
   do(method (function) function(name, collection) end,
      vector(// Constructors for <vector>
-            test-vector
+            do-test-vector
             ))
 end method test-collection;
 
@@ -474,10 +470,10 @@ define method test-collection
   next-method();
   do(method (function) function(name, collection) end,
      vector(// Functions on <deque>
-            test-push,
-            test-pop,
-            test-push-last,
-            test-pop-last
+            do-test-push,
+            do-test-pop,
+            do-test-push-last,
+            do-test-pop-last
             ))
 end method test-collection;
 
@@ -486,12 +482,12 @@ define method test-collection
   next-method();
   do(method (function) function(name, collection) end,
      vector(// Constructors for <list>
-            test-list,
-            test-pair,
+            do-test-list,
+            do-test-pair,
 
             // Functions on <list>
-            test-head,
-            test-tail
+            do-test-head,
+            do-test-tail
             ))
 end method test-collection;
 
@@ -505,8 +501,8 @@ define method test-collection
   next-method();
   do(method (function) function(name, collection) end,
      vector(// Functions on <pair>
-            test-head-setter,
-            test-tail-setter
+            do-test-head-setter,
+            do-test-tail-setter
             ))
 end method test-collection;
 
@@ -515,11 +511,11 @@ define method test-collection
   next-method();
   do(method (function) function(name, collection) end,
      vector(// Methods on <string>
-            test-<,
-            test-as-lowercase,
-            test-as-lowercase!,
-            test-as-uppercase,
-            test-as-uppercase!
+            do-test-<,
+            do-test-as-lowercase,
+            do-test-as-lowercase!,
+            do-test-as-uppercase,
+            do-test-as-uppercase!
             ))
 end method test-collection;
 
@@ -528,11 +524,11 @@ define method test-collection
   next-method();
   do(method (function) function(name, collection) end,
      vector(// Generic Functions on <table>
-            test-table-protocol
+            do-test-table-protocol
             ))
 end method test-collection;
 
-define method make-array 
+define method make-array
     (dimensions :: <sequence>) => (array :: <array>)
   let array = make(<array>, dimensions: dimensions);
   for (i from 0 below size(array))
@@ -550,7 +546,7 @@ define method iteration-recording-procedure (#rest args) => ()
   add!($iteration-results, args)
 end method iteration-recording-procedure;
 
-define method run-iteration-test 
+define method run-iteration-test
     (function :: <function>) => (sequence :: <sequence>)
   $iteration-results.size := 0;
   function(iteration-recording-procedure);
@@ -684,27 +680,24 @@ end method collection-valid-as-class?;
 
 /// Collection testing
 
-define method test-as
+define method do-test-as
     (name :: <string>, collection :: <collection>) => ()
-  let spec = $collections-protocol-spec;
-  do-protocol-classes
-    (method (class)
-       if (protocol-class-instantiable?(spec, class)
-             & collection-valid-as-class?(class, collection))
-         let collection-size = size(collection);
-         check-true(format-to-string("%s as %s", name, class),
-                    begin
-                      let new-collection = as(class, collection);
-                      instance?(new-collection, class)
-                        & size(new-collection) = collection-size
-                    end);
-       end
-     end,
-     spec,
-     superclass: <collection>)
-end method test-as;
+  let spec = $dylan-collections-specification-suite-spec;
+  for (class in interface-specification-classes(spec, <collection>))
+    if (interface-specification-class-instantiable?(spec, class)
+          & collection-valid-as-class?(class, collection))
+      let collection-size = size(collection);
+      check-true(format-to-string("%s as %s", name, class),
+                 begin
+                   let new-collection = as(class, collection);
+                   instance?(new-collection, class)
+                     & size(new-collection) = collection-size
+                 end);
+    end
+  end;
+end method;
 
-define method test-do
+define method do-test-do
     (name :: <string>, collection :: <collection>) => ()
   if (proper-collection?(collection))
     let do-results
@@ -725,9 +718,9 @@ define method test-do
                     <error>,
                     do(identity, collection))
   end
-end method test-do;
+end method;
 
-define method test-map
+define method do-test-map
     (name :: <string>, collection :: <collection>) => ()
   if (proper-collection?(collection))
     let new-collection = #f;
@@ -744,39 +737,34 @@ define method test-map
                     <error>,
                     map(identity, collection))
   end
-end method test-map;
+end method;
 
-define method test-map-as
+define method do-test-map-as
     (name :: <string>, collection :: <collection>) => ()
   if (proper-collection?(collection))
     let collection-size = size(collection);
-    let spec = $collections-protocol-spec;
-    do-protocol-classes
-      (method (class)
-         //--- Arrays don't take size: as an argument
-         if (protocol-class-instantiable?(spec, class)
-               & collection-valid-as-class?(class, collection))
-           check-true(format-to-string("%s 'map-as' %s with identity", name, 
-                                       class),
-                      begin
-                        let new-collection
-                          = map-as(class, identity, collection);
-                        instance?(new-collection, class)
-                          & size(new-collection) = collection-size
-                      end);
-         end
-       end,
-       spec,
-       superclass: <mutable-collection>)
+    let spec = $dylan-collections-specification-suite-spec;
+    for (class in interface-specification-classes(spec, <mutable-collection>))
+      //--- Arrays don't take size: as an argument
+      if (interface-specification-class-instantiable?(spec, class)
+            & collection-valid-as-class?(class, collection))
+        check-true(format-to-string("%s 'map-as' %s with identity", name, class),
+                   begin
+                     let new-collection
+                       = map-as(class, identity, collection);
+                     instance?(new-collection, class)
+                       & size(new-collection) = collection-size
+                   end);
+      end;
+    end;
   else
-    check-condition(format-to-string("%s 'map-as' errors because improper",
-                                     name),
+    check-condition(format-to-string("%s 'map-as' errors because improper", name),
                     <error>,
-                    map(identity, collection))
+                    map(identity, collection));
   end
-end method test-map-as;
+end method;
 
-define method test-map-into
+define method do-test-map-into
     (name :: <string>, collection :: <collection>) => ()
   if (proper-collection?(collection))
     let new-collection = make(<vector>, size: size(collection));
@@ -789,9 +777,9 @@ define method test-map-into
                     <error>,
                     map-into(make(<vector>, size: 100), identity, collection))
   end
-end method test-map-into;
+end method;
 
-define method test-any?
+define method do-test-any?
     (name :: <string>, collection :: <collection>) => ()
   if (proper-collection?(collection))
     check-equal(format-to-string("%s any? always matching", name),
@@ -804,9 +792,9 @@ define method test-any?
                     <error>,
                     any?(always(#t), collection))
   end
-end method test-any?;
+end method;
 
-define method test-every?
+define method do-test-every?
     (name :: <string>, collection :: <collection>) => ()
   if (proper-collection?(collection))
     check-true(format-to-string("%s every? always matching", name),
@@ -818,9 +806,9 @@ define method test-every?
                     <error>,
                     every?(always(#t), collection))
   end
-end method test-every?;
+end method;
 
-define method test-element
+define method do-test-element
     (name :: <string>, collection :: <collection>) => ()
   check-condition(format-to-string("%s element of -1 errors", name),
                   <error>,
@@ -842,26 +830,26 @@ define method test-element
     check-equal(format-to-string("%s element %=", name, key),
                 element(collection, key), expected-element(collection, key))
   end
-end method test-element;
+end method;
 
-define method test-key-sequence
+define method do-test-key-sequence
     (name :: <string>, collection :: <collection>) => ()
   check-equal(format-to-string("%s key-sequence", name),
               sort(key-sequence(collection)),
               expected-key-sequence(collection))
-end method test-key-sequence;
+end method;
 
-define method test-reduce
+define method do-test-reduce
     (name :: <string>, collection :: <collection>) => ()
   //---*** Fill this in...
-end method test-reduce;
+end method;
 
-define method test-reduce1
+define method do-test-reduce1
     (name :: <string>, collection :: <collection>) => ()
   //---*** Fill this in...
-end method test-reduce1;
+end method;
 
-define method test-member?
+define method do-test-member?
     (name :: <string>, collection :: <collection>) => ()
   check-false(format-to-string("%s member? of non-member", name),
               member?(#"non-member", collection));
@@ -872,9 +860,9 @@ define method test-member?
                                  name, key),
                 member?(collection[key], collection, test: always(#f)))
   end
-end method test-member?;
+end method;
 
-define method test-find-key
+define method do-test-find-key
     (name :: <string>, collection :: <collection>) => ()
   check-equal(format-to-string("%s find-key failure", name),
               #f, find-key(collection, curry(\=, #"no-such-key")));
@@ -887,41 +875,41 @@ define method test-find-key
                 item,
                 element(collection, find-key(collection, curry(\=, item))))
   end
-end method test-find-key;
+end method;
 
-define method test-key-test
+define method do-test-key-test
     (name :: <string>, collection :: <collection>) => ()
   //---*** Fill this in...
-end method test-key-test;
+end method;
 
-define method test-forward-iteration-protocol
+define method do-test-forward-iteration-protocol
     (name :: <string>, collection :: <collection>) => ()
   //---*** Fill this in...
-end method test-forward-iteration-protocol;
+end method;
 
-define method test-backward-iteration-protocol
+define method do-test-backward-iteration-protocol
     (name :: <string>, collection :: <collection>) => ()
   //---*** Fill this in...
-end method test-backward-iteration-protocol;
+end method;
 
-define method test-=
+define method do-test-=
     (name :: <string>, collection :: <collection>) => ()
   //---*** Fill this in...
-end method test-=;
+end method;
 
-define method test-empty?
+define method do-test-empty?
     (name :: <string>, collection :: <collection>) => ()
   check-equal(format-to-string("%s empty?", name),
               empty?(collection),
               size(collection) = 0)
-end method test-empty?;
+end method;
 
-define method test-size
+define method do-test-size
     (name :: <string>, collection :: <collection>) => ()
   //---*** Fill this in...
-end method test-size;
+end method;
 
-define method test-shallow-copy
+define method do-test-shallow-copy
     (name :: <string>, collection :: <collection>) => ()
   let copy = #f;
   check-instance?(format-to-string("%s shallow-copy uses type-for-copy", name),
@@ -937,25 +925,25 @@ define method test-shallow-copy
                  copy = collection)
     end
   end
-end method test-shallow-copy;
+end method;
 
 
 /// Mutable collection testing
 
-define method test-map-into
+define method do-test-map-into
     (name :: <string>, collection :: <mutable-collection>) => ()
   //---*** Fill this in...
-end method test-map-into;
+end method;
 
-define method test-element-setter
+define method do-test-element-setter
     (name :: <string>, collection :: <mutable-collection>) => ()
   //---*** Fill this in...
-end method test-element-setter;
+end method;
 
-define method test-fill!
+define method do-test-fill!
     (name :: <string>, collection :: <mutable-collection>) => ()
   //---*** Fill this in...
-end method test-fill!;
+end method;
 
 define method valid-type-for-copy?
     (type :: <type>, collection :: <collection>)
@@ -996,18 +984,18 @@ define method valid-type-for-copy?
   type == <list>
 end method valid-type-for-copy?;
 
-define method test-type-for-copy
+define method do-test-type-for-copy
     (name :: <string>, collection :: <mutable-collection>) => ()
   check-true(format-to-string("%s type-for-copy", name),
              begin
                let type = type-for-copy(collection);
                valid-type-for-copy?(type, collection)
              end)
-end method test-type-for-copy;
+end method;
 
-// Note that size-setter is only on both <stretchy-collection> 
+// Note that size-setter is only on both <stretchy-collection>
 // and <sequence>! Why is there no <stretchy-sequence>?
-define method test-size-setter
+define method do-test-size-setter
     (name :: <string>, collection :: <stretchy-collection>) => ()
   if (instance?(collection, <sequence>))
     let new-size = size(collection) + 5;
@@ -1026,63 +1014,59 @@ define method test-size-setter
                 end,
                 0);
   end
-end method test-size-setter;
+end method;
 
 
 
 /// Sequence testing
 
-define method test-concatenate
+define method do-test-concatenate
     (name :: <string>, sequence :: <sequence>) => ()
   //---*** Fill this in...
-end method test-concatenate;
+end method;
 
-define method test-concatenate-as
+define method do-test-concatenate-as
     (name :: <string>, sequence :: <sequence>) => ()
-  let spec = $collections-protocol-spec;
-  do-protocol-classes
-    (method (class)
-       if (protocol-class-instantiable?(spec, class)
-             & collection-valid-as-class?(class, sequence)
-             //---*** Currently pairs crash concatenate-as
-             & class ~== <pair>)
-         let sequence-size = size(sequence);
-         let sequence-empty? = empty?(sequence);
-         check-true(format-to-string("%s concatenate-as %s identity", name, class),
-                    begin
-                      let collection = concatenate-as(class, sequence);
-                      instance?(collection, class)
-                        & (collection = sequence)
-                    end);
-         check-true(format-to-string("%s concatenate-as %s", name, class),
-                    begin
-                      let collection = concatenate-as(class, sequence, sequence);
-                      instance?(collection, class)
-                        & (size(collection) = sequence-size * 2)
-                        & (sequence-empty?
-                           | (collection[0] = sequence[0]
-                              & collection[sequence-size] = sequence[0]))
-                    end);
-         check-true(format-to-string("%s concatenate-as %s three times",
-                                     name, class),
-                    begin
-                      let collection
-                        = concatenate-as(class, sequence, sequence, sequence);
-                      instance?(collection, class)
-                        & (size(collection) = sequence-size * 3)
-                        & (sequence-empty?
-                           | (collection[0] = sequence[0]
-                              & collection[sequence-size] = sequence[0]
-                              & collection[sequence-size * 2] = sequence[0]))
-                    end);
-       end
-     end,
-     spec,
-     superclass: <mutable-sequence>)
-end method test-concatenate-as;
+  let spec = $dylan-collections-specification-suite-spec;
+  for (class in interface-specification-classes(spec, <mutable-sequence>))
+    if (interface-specification-class-instantiable?(spec, class)
+          & collection-valid-as-class?(class, sequence)
+          //---*** Currently pairs crash concatenate-as
+          & class ~== <pair>)
+      let sequence-size = size(sequence);
+      let sequence-empty? = empty?(sequence);
+      check-true(format-to-string("%s concatenate-as %s identity", name, class),
+                 begin
+                   let collection = concatenate-as(class, sequence);
+                   instance?(collection, class)
+                     & (collection = sequence)
+                 end);
+      check-true(format-to-string("%s concatenate-as %s", name, class),
+                 begin
+                   let collection = concatenate-as(class, sequence, sequence);
+                   instance?(collection, class)
+                     & (size(collection) = sequence-size * 2)
+                     & (sequence-empty?
+                          | (collection[0] = sequence[0]
+                               & collection[sequence-size] = sequence[0]))
+                 end);
+      check-true(format-to-string("%s concatenate-as %s three times", name, class),
+                 begin
+                   let collection
+                     = concatenate-as(class, sequence, sequence, sequence);
+                   instance?(collection, class)
+                     & (size(collection) = sequence-size * 3)
+                     & (sequence-empty?
+                          | (collection[0] = sequence[0]
+                               & collection[sequence-size] = sequence[0]
+                               & collection[sequence-size * 2] = sequence[0]))
+                 end);
+    end
+  end;
+end method;
 
-define method test-nth-getter
-    (name :: <string>, sequence :: <sequence>, 
+define method do-test-nth-getter
+    (name :: <string>, sequence :: <sequence>,
      nth-getter :: <function>, n :: <integer>)
  => ()
   let nth-item = size(sequence) > n & sequence[n];
@@ -1093,85 +1077,85 @@ define method test-nth-getter
                     <error>,
                     nth-getter(sequence))
   end;
-end method test-nth-getter;
+end method;
 
-define method test-first
+define method do-test-first
     (name :: <string>, sequence :: <sequence>) => ()
   let name = format-to-string("%s first", name);
-  test-nth-getter(name, sequence, first, 0)
-end method test-first;
+  do-test-nth-getter(name, sequence, first, 0)
+end method;
 
-define method test-second
+define method do-test-second
     (name :: <string>, sequence :: <sequence>) => ()
   let name = format-to-string("%s second", name);
-  test-nth-getter(name, sequence, second, 1)
-end method test-second;
+  do-test-nth-getter(name, sequence, second, 1)
+end method;
 
-define method test-third
+define method do-test-third
     (name :: <string>, sequence :: <sequence>) => ()
   let name = format-to-string("%s third", name);
-  test-nth-getter(name, sequence, third, 2)
-end method test-third;
+  do-test-nth-getter(name, sequence, third, 2)
+end method;
 
-define method test-add
+define method do-test-add
     (name :: <string>, sequence :: <sequence>) => ()
   //---*** Fill this in...
-end method test-add;
+end method;
 
-define method test-add!
+define method do-test-add!
     (name :: <string>, sequence :: <sequence>) => ()
   //---*** Fill this in...
-end method test-add!;
+end method;
 
-define method test-add-new
+define method do-test-add-new
     (name :: <string>, sequence :: <sequence>) => ()
   //---*** Fill this in...
-end method test-add-new;
+end method;
 
-define method test-add-new!
+define method do-test-add-new!
     (name :: <string>, sequence :: <sequence>) => ()
   //---*** Fill this in...
-end method test-add-new!;
+end method;
 
-define method test-remove
+define method do-test-remove
     (name :: <string>, sequence :: <sequence>) => ()
   //---*** Fill this in...
-end method test-remove;
+end method;
 
-define method test-remove!
+define method do-test-remove!
     (name :: <string>, sequence :: <sequence>) => ()
   //---*** Fill this in...
-end method test-remove!;
+end method;
 
-define method test-choose
+define method do-test-choose
     (name :: <string>, sequence :: <sequence>) => ()
   //---*** Fill this in...
-end method test-choose;
+end method;
 
-define method test-choose-by
+define method do-test-choose-by
     (name :: <string>, sequence :: <sequence>) => ()
   //---*** Fill this in...
-end method test-choose-by;
+end method;
 
-define method test-intersection
+define method do-test-intersection
     (name :: <string>, sequence :: <sequence>) => ()
   //---*** Fill this in...
-end method test-intersection;
+end method;
 
-define method test-union
+define method do-test-union
     (name :: <string>, sequence :: <sequence>) => ()
   //---*** Fill this in...
-end method test-union;
+end method;
 
-define method test-remove-duplicates
+define method do-test-remove-duplicates
     (name :: <string>, sequence :: <sequence>) => ()
   //---*** Fill this in...
-end method test-remove-duplicates;
+end method;
 
-define method test-remove-duplicates!
+define method do-test-remove-duplicates!
     (name :: <string>, sequence :: <sequence>) => ()
   //---*** Fill this in...
-end method test-remove-duplicates!;
+end method;
 
 define method valid-copy-of-sequence?
     (new-sequence :: <sequence>, old-sequence :: <sequence>)
@@ -1188,19 +1172,19 @@ define method valid-copy-of-sequence?
    & old-sequence = new-sequence
 end method valid-copy-of-sequence?;
 
-define method test-copy-sequence
+define method do-test-copy-sequence
     (name :: <string>, sequence :: <sequence>) => ()
   check-true(format-to-string("%s copy-sequence", name),
              begin
                let new-sequence = copy-sequence(sequence);
                valid-copy-of-sequence?(new-sequence, sequence)
              end)
-end method test-copy-sequence;
+end method;
 
-define method test-replace-subsequence!
+define method do-test-replace-subsequence!
     (name :: <string>, sequence :: <sequence>) => ()
   //---*** Fill this in...
-end method test-replace-subsequence!;
+end method;
 
 define method valid-reversed-sequence?
     (new-sequence :: <sequence>, old-sequence :: <sequence>)
@@ -1214,7 +1198,7 @@ define method valid-reversed-sequence?
              range(from: 0, below: old-size))
 end method valid-reversed-sequence?;
 
-define method test-reverse
+define method do-test-reverse
     (name :: <string>, sequence :: <sequence>) => ()
   let sequence-size = size(sequence);
   if (sequence-size)
@@ -1233,9 +1217,9 @@ define method test-reverse
                     <error>,
                     reverse(sequence))
   end
-end method test-reverse;
+end method;
 
-define method test-reverse!
+define method do-test-reverse!
     (name :: <string>, sequence :: <sequence>) => ()
   let sequence-size = size(sequence);
   if (sequence-size)
@@ -1250,32 +1234,32 @@ define method test-reverse!
                     <error>,
                     reverse!(sequence))
   end
-end method test-reverse!;
+end method;
 
-define function test-equal? (x, y) => (well? :: <boolean>)
+define function do-test-equal? (x, y) => (well? :: <boolean>)
   x = y
 end function;
 
-define method test-less? 
+define method do-test-less?
     (x, y) => (well? :: <boolean>)
   x < y
 end method;
 
-define method test-less? 
+define method do-test-less?
     (x :: <vector>, y :: <vector>) => (well? :: <boolean>)
   x[0] < y[0]
 end method;
 
-define function test-less-or-equal? (x, y) => (well? :: <boolean>)
-  test-less?(x, y) | test-equal?(x, y)
+define function do-test-less-or-equal? (x, y) => (well? :: <boolean>)
+  do-test-less?(x, y) | do-test-equal?(x, y)
 end function;
 
-define function test-greater? (x, y) => (well? :: <boolean>)
-  ~test-less?(x, y)
+define function do-test-greater? (x, y) => (well? :: <boolean>)
+  ~do-test-less?(x, y)
 end function;
 
 define method sequence-sorted?
-    (sequence :: <sequence>, #key test = test-less-or-equal?)
+    (sequence :: <sequence>, #key test = do-test-less-or-equal?)
  => (sorted? :: <boolean>)
   every?(method (i)
            test(sequence[i], sequence[i + 1])
@@ -1283,9 +1267,9 @@ define method sequence-sorted?
          range(from: 0, below: size(sequence) - 1))
 end method sequence-sorted?;
 
-define method test-sorted-sequence
+define method do-test-sorted-sequence
     (name :: <string>, new-sequence, old-sequence :: <sequence>,
-     #key test = test-less-or-equal?)
+     #key test = do-test-less-or-equal?)
  => ()
   let old-size = size(old-sequence);
   check-instance?(format-to-string("%s returns a sequence", name),
@@ -1298,11 +1282,11 @@ define method test-sorted-sequence
                           member?(x, old-sequence)
                         end,
                         new-sequence))
-end method test-sorted-sequence;
+end method;
 
-define method test-sort-options
+define method do-test-sort-options
     (name :: <string>, sequence :: <sequence>,
-     #key test = test-less-or-equal?, 
+     #key test = do-test-less-or-equal?,
           copy-function = copy-sequence,
           sort-function = sort)
  => ()
@@ -1318,33 +1302,33 @@ define method test-sort-options
                ~new-copy-needed? | sorted-sequence ~== copy
              end);
   if (copy & sorted-sequence)
-    test-sorted-sequence(name, sorted-sequence, copy, test: test)
+    do-test-sorted-sequence(name, sorted-sequence, copy, test: test)
   end
-end method test-sort-options;
+end method;
 
-define method test-sort
+define method do-test-sort
     (name :: <string>, sequence :: <sequence>, #key sort-function = sort)
  => ()
   let sort-name
     = format-to-string("%s sort%s",
                        name, if (sort-function == sort!) "!" else "" end);
-  test-sort-options(sort-name,
-                    sequence,
-                    sort-function: sort-function);
-  test-sort-options(format-to-string("reversed %s", sort-name),
-                    sequence, 
-                    sort-function: sort-function, copy-function: reverse);
-  test-sort-options(format-to-string("%s with > test", sort-name),
-                    sequence, 
-                    sort-function: sort-function, test: test-greater?);
-end method test-sort;
+  do-test-sort-options(sort-name,
+                       sequence,
+                       sort-function: sort-function);
+  do-test-sort-options(format-to-string("reversed %s", sort-name),
+                       sequence,
+                       sort-function: sort-function, copy-function: reverse);
+  do-test-sort-options(format-to-string("%s with > test", sort-name),
+                       sequence,
+                       sort-function: sort-function, test: do-test-greater?);
+end method;
 
-define method test-sort!
+define method do-test-sort!
     (name :: <string>, sequence :: <sequence>) => ()
-  test-sort(name, sequence, sort-function: sort!)
-end method test-sort!;
+  do-test-sort(name, sequence, sort-function: sort!)
+end method;
 
-define method test-last
+define method do-test-last
     (name :: <string>, sequence :: <sequence>) => ()
   let sequence-size = size(sequence);
   let last-item = sequence-size & sequence-size > 0 & sequence[sequence-size - 1];
@@ -1357,14 +1341,14 @@ define method test-last
                       <error>,
                       last(sequence))
   end;
-end method test-last;
+end method;
 
-define method test-subsequence-position
+define method do-test-subsequence-position
     (name :: <string>, sequence :: <sequence>) => ()
   //---*** Fill this in...
-end method test-subsequence-position;
+end method;
 
-define method test-nth-setter
+define method do-test-nth-setter
     (name :: <string>, sequence :: <mutable-sequence>,
      nth-setter :: <function>, n :: <integer>)
  => ()
@@ -1384,7 +1368,7 @@ define method test-nth-setter
                    copy[n] = item
                  end);
     instance?(sequence, <stretchy-collection>)
-      & (n = size(sequence) | 
+      & (n = size(sequence) |
            instance?(#f, collection-element-type(sequence))) =>
       check-true(name,
                  begin
@@ -1401,27 +1385,27 @@ define method test-nth-setter
                         nth-setter(item, copy)
                       end);
   end;
-end method test-nth-setter;
+end method;
 
-define method test-first-setter
+define method do-test-first-setter
     (name :: <string>, sequence :: <mutable-sequence>) => ()
   let name = format-to-string("%s first-setter", name);
-  test-nth-setter(name, sequence, first-setter, 0)
-end method test-first-setter;
+  do-test-nth-setter(name, sequence, first-setter, 0)
+end method;
 
-define method test-second-setter
+define method do-test-second-setter
     (name :: <string>, sequence :: <mutable-sequence>) => ()
   let name = format-to-string("%s second-setter", name);
-  test-nth-setter(name, sequence, second-setter, 1)
-end method test-second-setter;
+  do-test-nth-setter(name, sequence, second-setter, 1)
+end method;
 
-define method test-third-setter
+define method do-test-third-setter
     (name :: <string>, sequence :: <mutable-sequence>) => ()
   let name = format-to-string("%s third-setter", name);
-  test-nth-setter(name, sequence, third-setter, 2)
-end method test-third-setter;
+  do-test-nth-setter(name, sequence, third-setter, 2)
+end method;
 
-define method test-last-setter
+define method do-test-last-setter
     (name :: <string>, sequence :: <mutable-sequence>) => ()
   let sequence-size = size(sequence);
   let last-key = sequence-size & sequence-size > 0 & sequence-size - 1;
@@ -1447,115 +1431,115 @@ define method test-last-setter
                       <error>,
                       last(sequence) := item)
   end;
-end method test-last-setter;
+end method;
 
 
 /// Stretchy sequence testing
 
-define method test-rank
+define method do-test-rank
     (name :: <string>, array :: <array>) => ()
   //---*** Fill this in...
-end method test-rank;
+end method;
 
-define method test-row-major-index
+define method do-test-row-major-index
     (name :: <string>, array :: <array>) => ()
   //---*** Fill this in...
-end method test-row-major-index;
+end method;
 
-define method test-aref
+define method do-test-aref
     (name :: <string>, array :: <array>) => ()
   //---*** Fill this in...
-end method test-aref;
+end method;
 
-define method test-aref-setter
+define method do-test-aref-setter
     (name :: <string>, array :: <array>) => ()
   //---*** Fill this in...
-end method test-aref-setter;
+end method;
 
-define method test-dimensions
+define method do-test-dimensions
     (name :: <string>, array :: <array>) => ()
   //---*** Fill this in...
-end method test-dimensions;
+end method;
 
-define method test-dimension
+define method do-test-dimension
     (name :: <string>, array :: <array>) => ()
   //---*** Fill this in...
-end method test-dimension;
+end method;
 
 
 /// Vector tests
 
-define method test-vector
+define method do-test-vector
     (name :: <string>, array :: <vector>) => ()
   //---*** Fill this in...
-end method test-vector;
+end method;
 
 
 /// Deque tests
 
-define method test-push
+define method do-test-push
     (name :: <string>, deque :: <deque>) => ()
   //---*** Fill this in...
-end method test-push;
+end method;
 
-define method test-pop
+define method do-test-pop
     (name :: <string>, deque :: <deque>) => ()
   //---*** Fill this in...
-end method test-pop;
+end method;
 
-define method test-push-last
+define method do-test-push-last
     (name :: <string>, deque :: <deque>) => ()
   //---*** Fill this in...
-end method test-push-last;
+end method;
 
-define method test-pop-last
+define method do-test-pop-last
     (name :: <string>, deque :: <deque>) => ()
   //---*** Fill this in...
-end method test-pop-last;
+end method;
 
 
 /// List tests
 
-define method test-list
+define method do-test-list
     (name :: <string>, list :: <list>) => ()
   //---*** Fill this in...
-end method test-list;
+end method;
 
-define method test-pair
+define method do-test-pair
     (name :: <string>, list :: <list>) => ()
   //---*** Fill this in...
-end method test-pair;
+end method;
 
-define method test-head
+define method do-test-head
     (name :: <string>, list :: <list>) => ()
   //---*** Fill this in...
-end method test-head;
+end method;
 
-define method test-tail
+define method do-test-tail
     (name :: <string>, list :: <list>) => ()
   //---*** Fill this in...
-end method test-tail;
+end method;
 
 
 /// Pair tests
 
-define method test-head-setter
+define method do-test-head-setter
     (name :: <string>, pair :: <pair>) => ()
   //---*** Fill this in...
-end method test-head-setter;
+end method;
 
-define method test-tail-setter
+define method do-test-tail-setter
     (name :: <string>, pair :: <pair>) => ()
   //---*** Fill this in...
-end method test-tail-setter;
+end method;
 
 
 /// String tests
 
-define method test-<
+define method do-test-<
     (name :: <string>, string :: <string>) => ()
   //---*** Fill this in...
-end method test-<;
+end method;
 
 define method valid-as-new-case?
     (new-string, old-string :: <sequence>, test :: <function>)
@@ -1569,7 +1553,7 @@ define method valid-as-new-case?
              range(from: 0, below: old-size))
 end method valid-as-new-case?;
 
-define method test-as-lowercase
+define method do-test-as-lowercase
     (name :: <string>, string :: <string>) => ()
   check-true(format-to-string("%s as-lowercase", name),
              begin
@@ -1580,9 +1564,9 @@ define method test-as-lowercase
                end;
                valid-as-new-case?(new-string, string, as-lowercase)
              end)
-end method test-as-lowercase;
+end method;
 
-define method test-as-lowercase!
+define method do-test-as-lowercase!
     (name :: <string>, string :: <string>) => ()
   check-true(format-to-string("%s as-lowercase!", name),
              begin
@@ -1590,9 +1574,9 @@ define method test-as-lowercase!
                let new-string = as-lowercase(old-string);
                valid-as-new-case?(new-string, string, as-lowercase)
              end)
-end method test-as-lowercase!;
+end method;
 
-define method test-as-uppercase
+define method do-test-as-uppercase
     (name :: <string>, string :: <string>) => ()
   check-true(format-to-string("%s as-uppercase", name),
              begin
@@ -1603,9 +1587,9 @@ define method test-as-uppercase
                end;
                valid-as-new-case?(new-string, string, as-uppercase)
              end)
-end method test-as-uppercase;
+end method;
 
-define method test-as-uppercase!
+define method do-test-as-uppercase!
     (name :: <string>, string :: <string>) => ()
   check-true(format-to-string("%s as-uppercase!", name),
              begin
@@ -1613,89 +1597,121 @@ define method test-as-uppercase!
                let new-string = as-uppercase(old-string);
                valid-as-new-case?(new-string, string, as-uppercase)
              end)
-end method test-as-uppercase!;
+end method;
 
 
 /// Table tests
 
-define method test-table-protocol
+define method do-test-table-protocol
     (name :: <string>, table :: <table>) => ()
   //---*** Fill this in...
-end method test-table-protocol;
+end method;
 
 
-/// Don't test the functions we're already testing... there must be a better way!
+define test test-<collection> ()
+    test-collection-class(<collection>);
+end;
 
-/// Collection functions
-define collections function-test empty? () end;
-define collections function-test size () end;
-define collections function-test size-setter () end;
-define collections function-test rank () end;
-define collections function-test row-major-index () end;
-define collections function-test dimensions () end;
-define collections function-test dimension () end;
-define collections function-test key-test () end;
-define collections function-test key-sequence () end;
-define collections function-test element () end;
-define collections function-test element-setter () end;
-define collections function-test aref () end;
-define collections function-test aref-setter () end;
-define collections function-test first () end;
-define collections function-test second () end;
-define collections function-test third () end;
-define collections function-test first-setter () end;
-define collections function-test second-setter () end;
-define collections function-test third-setter () end;
-define collections function-test last () end;
-define collections function-test last-setter () end;
-define collections function-test head () end;
-define collections function-test tail () end;
-define collections function-test head-setter () end;
-define collections function-test tail-setter () end;
-define collections function-test add () end;
-define collections function-test add! () end;
-define collections function-test add-new () end;
-define collections function-test add-new! () end;
-define collections function-test remove () end;
-define collections function-test remove! () end;
-define collections function-test push () end;
-define collections function-test pop () end;
-define collections function-test push-last () end;
-define collections function-test pop-last () end;
-define collections function-test reverse () end;
-define collections function-test reverse! () end;
-define collections function-test sort () end;
-define collections function-test sort! () end;
+define test test-<explicit-key-collection> ()
+    test-collection-class(<explicit-key-collection>);
+end;
 
-/// Mapping and reducing
-define collections function-test do () end;
-define collections function-test map () end;
-define collections function-test map-as () end;
-define collections function-test map-into () end;
-define collections function-test any? () end;
-define collections function-test every? () end;
-define collections function-test reduce () end;
-define collections function-test reduce1 () end;
-define collections function-test choose () end;
-define collections function-test choose-by () end;
-define collections function-test member? () end;
-define collections function-test find-key () end;
-define collections function-test remove-key! () end;
-define collections function-test replace-elements! () end;
-define collections function-test fill! () end;
+define test test-<sequence> ()
+    test-collection-class(<sequence>);
+end;
 
-/// Iteration protocols
-define collections function-test forward-iteration-protocol () end;
-define collections function-test backward-iteration-protocol () end;
-define collections function-test table-protocol () end;
-define collections function-test merge-hash-ids () end;
-define collections function-test object-hash () end;
-define collections function-test intersection () end;
-define collections function-test union () end;
-define collections function-test remove-duplicates () end;
-define collections function-test remove-duplicates! () end;
-define collections function-test copy-sequence () end;
-define collections function-test concatenate () end;
-define collections function-test concatenate-as () end;
-define collections function-test replace-subsequence! () end;
-define collections function-test subsequence-position () end;
+define test test-<mutable-collection> ()
+    test-collection-class(<mutable-collection>);
+end;
+
+define test test-<mutable-explicit-key-collection> ()
+    test-collection-class(<mutable-explicit-key-collection>);
+end;
+
+define test test-<mutable-sequence> ()
+    test-collection-class(<mutable-sequence>);
+end;
+
+define test test-<stretchy-collection> ()
+    test-collection-class(<stretchy-collection>);
+end;
+
+define test test-<array> ()
+    test-collection-class(<array>, instantiable?: #t);
+end;
+
+define test test-<vector> ()
+    test-collection-class(<vector>, instantiable?: #t);
+end;
+
+define test test-<simple-vector> ()
+    test-collection-class(<simple-vector>, instantiable?: #t);
+end;
+
+define test test-<simple-object-vector> ()
+    test-collection-class(<simple-object-vector>, instantiable?: #t);
+end;
+
+define test test-<stretchy-vector> ()
+    test-collection-class(<stretchy-vector>, instantiable?: #t);
+end;
+
+define test test-<deque> ()
+    test-collection-class(<deque>, instantiable?: #t);
+end;
+
+define test test-<list> ()
+    test-collection-class(<list>, instantiable?: #t);
+end;
+
+define test test-<pair> ()
+    test-collection-class(<pair>, instantiable?: #t);
+end;
+
+define test test-<empty-list> ()
+    test-collection-class(<empty-list>, instantiable?: #t);
+end;
+
+define test test-<range> ()
+    test-collection-class(<range>, instantiable?: #t);
+end;
+
+define test test-<string> ()
+    test-collection-class(<string>, instantiable?: #t);
+end;
+
+define test test-<byte-string> ()
+    test-collection-class(<byte-string>, instantiable?: #t);
+end;
+
+define test test-<table> ()
+    test-collection-class(<table>, instantiable?: #t);
+end;
+
+define test test-<object-table> ()
+    test-collection-class(<object-table>, instantiable?: #t);
+end;
+
+define suite dylan-collections-test-suite ()
+  test test-<collection>;
+  test test-<explicit-key-collection>;
+  test test-<sequence>;
+  test test-<mutable-collection>;
+  test test-<mutable-explicit-key-collection>;
+  test test-<mutable-sequence>;
+  test test-<stretchy-collection>;
+  test test-<array>;
+  test test-<vector>;
+  test test-<simple-vector>;
+  test test-<simple-object-vector>;
+  test test-<stretchy-vector>;
+  test test-<deque>;
+  test test-<list>;
+  test test-<pair>;
+  test test-<empty-list>;
+  test test-<range>;
+  test test-<string>;
+  test test-<byte-string>;
+  test test-<table>;
+  test test-<object-table>;
+end suite dylan-collections-test-suite;

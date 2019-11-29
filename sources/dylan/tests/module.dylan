@@ -19,15 +19,12 @@ define module dylan-test-suite
   use table-extensions,
     import: { case-insensitive-equal };
   use testworks;
-  use testworks-specs;
 
   // Suites
   export dylan-test-suite;
 
-  // Generics
+  // Protocol
   export test-collection-class,
          test-condition-class,
          test-number-class;
-
-  // Stifle compiler warnings
 end module dylan-test-suite;

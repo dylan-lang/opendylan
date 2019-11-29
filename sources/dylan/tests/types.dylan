@@ -77,7 +77,7 @@ define test limited-is-limited (expected-failure?: #t)
               instance?(x, limited(<vector>, of: <integer>, size: 5)));
 end;
 
-define suite types ()
+define suite dylan-linearization-test-suite ()
   test pane-linearization;
   test scrolling-mixin-linearization;
   test editing-mixin-linearization;

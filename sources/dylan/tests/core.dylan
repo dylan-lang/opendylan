@@ -6,70 +6,70 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/// Core functionality tests
+/// Core functionality tests (for some arbitrary value of "core").
 
-define dylan class-test <boolean> ()
+define test test-<boolean> ()
   //---*** Fill this in...
-end class-test <boolean>;
+end test;
 
-define dylan class-test <character> ()
+define test test-<character> ()
   //---*** Fill this in...
-end class-test <character>;
+end test;
 
-define dylan class-test <class> ()
+define test test-<class> ()
   //---*** Fill this in...
-end class-test <class>;
+end test;
 
-define dylan class-test <object> ()
+define test test-<object> ()
   //---*** Fill this in...
-end class-test <object>;
+end test;
 
-define dylan class-test <singleton> ()
+define test test-<singleton> ()
   //---*** Fill this in...
-end class-test <singleton>;
+end test;
 
-define dylan class-test <symbol> ()
+define test test-<symbol> ()
   //---*** Fill this in...
-end class-test <symbol>;
+end test;
 
-define dylan class-test <type> ()
+define test test-<type> ()
   //---*** Fill this in...
-end class-test <type>;
+end test;
 
 
-define dylan function-test make ()
+define test test-make ()
   //---*** Fill this in...
-end function-test make;
+end test;
 
-define dylan function-test initialize ()
+define test test-initialize ()
   //---*** Fill this in...
-end function-test initialize;
+end test;
 
-define dylan function-test slot-initialized? ()
+define test test-slot-initialized? ()
   //---*** Fill this in...
-end function-test slot-initialized?;
+end test;
 
-define dylan function-test list ()
+define test test-list ()
   //---*** Fill this in...
-end function-test list;
+end test;
 
-define dylan function-test pair ()
+define test test-pair ()
   //---*** Fill this in...
-end function-test pair;
+end test;
 
-define dylan function-test range ()
+define test test-range ()
   //---*** Fill this in...
-end function-test range;
+end test;
 
-define dylan function-test singleton ()
+define test test-singleton ()
   //---*** Fill this in...
-end function-test singleton;
+end test;
 
-define dylan function-test limited ()
+define test test-limited ()
   //---*** Fill this in...
-end function-test limited;
+end test;
 
-define dylan function-test type-union ()
+define test test-type-union ()
   let union = #f;
   check-instance?("type-union(<string>, <integer>) returns a type",
 		  <type>,
@@ -80,52 +80,52 @@ define dylan function-test type-union ()
 		  union, 10);
   check-false("instance?(#t, type-union(<string>, <integer>))",
 	      instance?(#t, union));
-end function-test type-union;
+end test;
 
-define dylan function-test vector ()
+define test test-vector ()
   //---*** Fill this in...
-end function-test vector;
+end test;
 
 
 /// Function tests
-define dylan class-test <function> ()
+define test test-<function> ()
   //---*** Fill this in...
-end class-test <function>;
+end test;
 
-define dylan class-test <generic-function> ()
+define test test-<generic-function> ()
   //---*** Fill this in...
-end class-test <generic-function>;
+end test;
 
-define dylan class-test <method> ()
+define test test-<method> ()
   //---*** Fill this in...
-end class-test <method>;
+end test;
 
 
-define dylan function-test compose ()
+define test test-compose ()
   //---*** Fill this in...
-end function-test compose;
+end test;
 
-define dylan function-test complement ()
+define test test-complement ()
   //---*** Fill this in...
-end function-test complement;
+end test;
 
-define dylan function-test disjoin ()
+define test test-disjoin ()
   //---*** Fill this in...
-end function-test disjoin;
+end test;
 
-define dylan function-test conjoin ()
+define test test-conjoin ()
   //---*** Fill this in...
-end function-test conjoin;
+end test;
 
-define dylan function-test curry ()
+define test test-curry ()
   //---*** Fill this in...
-end function-test curry;
+end test;
 
-define dylan function-test rcurry ()
+define test test-rcurry ()
   //---*** Fill this in...
-end function-test rcurry;
+end test;
 
-define dylan function-test always ()
+define test test-always ()
   check-false("always(#f)(#t)",
 	      always(#f)(#t));
   check-false("always(#f)(10)",
@@ -134,26 +134,23 @@ define dylan function-test always ()
 	     always(#t)(#t));
   check-true("always(#t)(10)",
 	     always(#t)(10));
-end function-test always;
+end test;
 
 
 
 /// Condition tests
 
-define sideways method class-test-function
-    (class :: subclass(<condition>)) => (function :: <function>)
-  test-condition-class
-end method class-test-function;
-
+// TODO(cgay): seal this and don't share with common-dylan-test-suite,
+// or separate the shared code into a different library.
 define open generic test-condition-class
     (class :: subclass(<condition>), #key, #all-keys) => ();
 
 define method test-condition-class
-    (class :: subclass(<condition>), #key name, abstract?, #all-keys) => ()
+    (class :: subclass(<condition>), #key abstract?, #all-keys) => ()
   unless (abstract?)
-    test-condition(name, make-condition(class))
+    test-condition(make-condition(class))
   end
-end method test-condition-class;
+end method;
 
 define constant $condition-string    = "%d ~= %d";
 define constant $condition-arguments = #(1, 2);
@@ -169,210 +166,283 @@ end method make-condition;
 
 /// Condition test functions
 
-define method test-condition
-    (name :: <string>, condition :: <condition>) => ()
-  // next-method();
-  do(method (function) function(name, condition) end,
+define method test-condition (condition :: <condition>) => ()
+  test-output("test-condition(<condition>)\n");
+  do(method (function) function(condition) end,
      vector(// Functions on <condition>
-            test-signal,
-            test-error,
-            test-cerror,
-            test-break,
+            do-test-signal,
+            do-test-error,
+            do-test-cerror,
+            do-test-break,
 
             // Generic functions on <condition>
-            test-default-handler,
-            test-return-query,
-            test-return-allowed?,
-            test-return-description
+            do-test-default-handler,
+            do-test-return-query,
+            do-test-return-allowed?,
+            do-test-return-description
             ))
 end method test-condition;
 
-define method test-condition
-    (name :: <string>, condition :: <simple-error>) => ()
-  // next-method();
-  do(method (function) function(name, condition) end,
+define method test-condition (condition :: <simple-error>) => ()
+  test-output("test-condition(<simple-error>)\n");
+  next-method();
+  do(method (function) function(condition) end,
      vector(// Functions on <simple-error>
-            test-condition-format-string,
-            test-condition-format-arguments
+            do-test-condition-format-string,
+            do-test-condition-format-arguments
             ))
 end method test-condition;
 
-define method test-condition
-    (name :: <string>, condition :: <type-error>) => ()
-  // next-method();
-  do(method (function) function(name, condition) end,
+define method test-condition (condition :: <type-error>) => ()
+  next-method();
+  do(method (function) function(condition) end,
      vector(// Functions on <type-error>
-            test-type-error-value,
-            test-type-error-expected-type
+            do-test-type-error-value,
+            do-test-type-error-expected-type
             ))
 end method test-condition;
 
-define method test-condition
-    (name :: <string>, condition :: <simple-warning>) => ()
-  // next-method();
-  do(method (function) function(name, condition) end,
+define method test-condition (condition :: <simple-warning>) => ()
+  next-method();
+  do(method (function) function(condition) end,
      vector(// Functions on <simple-warning>
-            test-condition-format-string,
-            test-condition-format-arguments
+            do-test-condition-format-string,
+            do-test-condition-format-arguments
             ))
 end method test-condition;
 
-define method test-condition
-    (name :: <string>, condition :: <restart>) => ()
-  // next-method();
-  do(method (function) function(name, condition) end,
+define method test-condition (condition :: <restart>) => ()
+  next-method();
+  do(method (function) function(condition) end,
      vector(// Generic functions on <restart>
-            test-restart-query
+            do-test-restart-query
             ))
 end method test-condition;
 
-define method test-condition
-    (name :: <string>, condition :: <simple-restart>) => ()
-  // next-method();
-  do(method (function) function(name, condition) end,
+define method test-condition (condition :: <simple-restart>) => ()
+  next-method();
+  do(method (function) function(condition) end,
      vector(// Functions on <simple-restart>
-            test-condition-format-string,
-            test-condition-format-arguments
+            do-test-condition-format-string,
+            do-test-condition-format-arguments
             ))
 end method test-condition;
 
-define method test-signal
-    (name :: <string>, condition :: <condition>) => ()
+define method do-test-signal (condition :: <condition>) => ()
   //---*** Fill this in...
-end method test-signal;
+end method;
 
-define method test-error
-    (name :: <string>, condition :: <condition>) => ()
+define method do-test-error (condition :: <condition>) => ()
   //---*** Fill this in...
-end method test-error;
+end method;
 
-define method test-cerror
-    (name :: <string>, condition :: <condition>) => ()
+define method do-test-cerror (condition :: <condition>) => ()
   //---*** Fill this in...
-end method test-cerror;
+end method;
 
-define method test-break
-    (name :: <string>, condition :: <condition>) => ()
+define method do-test-break (condition :: <condition>) => ()
   //---*** Fill this in...
-end method test-break;
+end method;
 
-define method test-default-handler
-    (name :: <string>, condition :: <condition>) => ()
+define method do-test-default-handler (condition :: <condition>) => ()
   //---*** Fill this in...
-end method test-default-handler;
+end method;
 
-define method test-return-query
-    (name :: <string>, condition :: <condition>) => ()
+define method do-test-return-query (condition :: <condition>) => ()
   //---*** Fill this in...
-end method test-return-query;
+end method;
 
-define method test-return-allowed?
-    (name :: <string>, condition :: <condition>) => ()
+define method do-test-return-allowed? (condition :: <condition>) => ()
   //---*** Fill this in...
-end method test-return-allowed?;
+end method;
 
-define method test-return-description
-    (name :: <string>, condition :: <condition>) => ()
+define method do-test-return-description (condition :: <condition>) => ()
   //---*** Fill this in...
-end method test-return-description;
+end method;
 
-define method test-condition-format-string
-    (name :: <string>, condition :: <condition>) => ()
-  let name
-    = format-to-string("%s condition-format-string matches specified format string",
-                       name);
+define method do-test-condition-format-string
+    (condition :: <condition>) => ()
+  let name = format-to-string("%= condition-format-string matches specified format string",
+                              condition);
   check-equal(name,
               condition-format-string(condition),
               $condition-string)
-end method test-condition-format-string;
+end method;
 
-define method test-condition-format-arguments
-    (name :: <string>, condition :: <condition>) => ()
-  let name
-    = format-to-string("%s condition-format-arguments match specified format arguments",
-                       name);
+define method do-test-condition-format-arguments
+    (condition :: <condition>) => ()
+  let name = format-to-string("%= condition-format-arguments match specified format arguments",
+                              condition);
   check-equal(name,
               condition-format-arguments(condition),
               $condition-arguments)
-end method test-condition-format-arguments;
+end method;
 
-define method test-type-error-value
-    (name :: <string>, condition :: <condition>) => ()
+define method do-test-type-error-value (condition :: <condition>) => ()
   //---*** Fill this in...
-end method test-type-error-value;
+end method;
 
-define method test-type-error-expected-type
-    (name :: <string>, condition :: <condition>) => ()
+define method do-test-type-error-expected-type (condition :: <condition>) => ()
   //---*** Fill this in...
-end method test-type-error-expected-type;
+end method;
 
-define method test-restart-query
-    (name :: <string>, condition :: <condition>) => ()
+define method do-test-restart-query (condition :: <condition>) => ()
   //---*** Fill this in...
-end method test-restart-query;
+end method;
+
+define test test-<condition> ()
+    test-condition-class(<condition>, abstract?: #t);
+end;
+
+define test test-<error> ()
+    test-condition-class(<error>, abstract?: #t);
+end;
+
+define test test-<sealed-object-error> ()
+    test-condition-class(<sealed-object-error>);
+end;
+
+define test test-<serious-condition> ()
+    test-condition-class(<serious-condition>, abstract?: #t);
+end;
+
+define test test-<simple-error> ()
+    test-condition-class(<simple-error>);
+end;
+
+define test test-<simple-warning> ()
+    test-condition-class(<simple-warning>);
+end;
+
+define test test-<type-error> ()
+    test-condition-class(<type-error>);
+end;
+
+define test test-<warning> ()
+    test-condition-class(<warning>, abstract?: #t);
+end;
+
+define suite dylan-conditions-test-suite ()
+  test test-<condition>;
+  test test-<error>;
+  test test-<sealed-object-error>;
+  test test-<serious-condition>;
+  test test-<simple-error>;
+  test test-<simple-warning>;
+  test test-<type-error>;
+  test test-<warning>;
+end;
 
 
-/// Don't test the functions we're already testing... there must be a better way!
 
 /// Equality and comparison functions
-define dylan function-test \~ () end;
-define dylan function-test \== () end;
-define dylan function-test \~== () end;
-define dylan function-test \= () end;
-define dylan function-test \~= () end;
-define dylan function-test \< () end;
-define dylan function-test \> () end;
-define dylan function-test \<= () end;
-define dylan function-test \>= () end;
-define dylan function-test min () end;
-define dylan function-test max () end;
+define test test-~ () end;
+define test test-== () end;
+define test test-~== () end;
+define test test-= () end;
+define test test-~= () end;
+define test test-< () end;
+define test test-> () end;
+define test test-<= () end;
+define test test->= () end;
+define test test-min () end;
+define test test-max () end;
 
 /// Coercing and copying functions
-define dylan function-test identity () end;
-define dylan function-test values () end;
-define dylan function-test as () end;
-define dylan function-test as-uppercase () end;
-define dylan function-test as-uppercase! () end;
-define dylan function-test as-lowercase () end;
-define dylan function-test as-lowercase! () end;
-define dylan function-test shallow-copy () end;
-define dylan function-test type-for-copy () end;
+define test test-identity () end;
+define test test-values () end;
+define test test-as () end;
+define test test-as-uppercase () end;
+define test test-as-uppercase! () end;
+define test test-as-lowercase () end;
+define test test-as-lowercase! () end;
+define test test-shallow-copy () end;
+define test test-type-for-copy () end;
 
 /// Type functions
-define dylan function-test instance? () end;
-define dylan function-test subtype? () end;
-define dylan function-test object-class () end;
-define dylan function-test all-superclasses () end;
-define dylan function-test direct-superclasses () end;
-define dylan function-test direct-subclasses () end;
+define test test-instance? () end;
+define test test-subtype? () end;
+define test test-object-class () end;
+define test test-all-superclasses () end;
+define test test-direct-superclasses () end;
+define test test-direct-subclasses () end;
 
 /// Function handling functions
-define dylan function-test apply () end;
-define dylan function-test generic-function-methods () end;
-define dylan function-test add-method () end;
-define dylan function-test generic-function-mandatory-keywords () end;
-define dylan function-test function-specializers () end;
-define dylan function-test function-arguments () end;
-define dylan function-test function-return-values () end;
-define dylan function-test applicable-method? () end;
-define dylan function-test sorted-applicable-methods () end;
-define dylan function-test find-method () end;
-define dylan function-test remove-method () end;
+define test test-generic-function-methods () end;
+define test test-add-method () end;
+define test test-generic-function-mandatory-keywords () end;
+define test test-function-specializers () end;
+define test test-function-arguments () end;
+define test test-function-return-values () end;
+define test test-applicable-method? () end;
+define test test-sorted-applicable-methods () end;
+define test test-find-method () end;
+define test test-remove-method () end;
 
-// Condition functions
-define conditions function-test signal () end;
-define conditions function-test error () end;
-define conditions function-test cerror () end;
-define conditions function-test break () end;
-define conditions function-test check-type () end;
-define conditions function-test abort () end;
-define conditions function-test default-handler () end;
-define conditions function-test restart-query () end;
-define conditions function-test return-query () end;
-define conditions function-test do-handlers () end;
-define conditions function-test return-allowed? () end;
-define conditions function-test return-description () end;
-define conditions function-test condition-format-string () end;
-define conditions function-test condition-format-arguments () end;
-define conditions function-test type-error-value () end;
-define conditions function-test type-error-expected-type () end;
+define suite dylan-core-test-suite ()
+  test test-<boolean>;
+  test test-<character>;
+  test test-<class>;
+  test test-<object>;
+  test test-<singleton>;
+  test test-<symbol>;
+  test test-<type>;
+  test test-make;
+  test test-initialize;
+  test test-slot-initialized?;
+  test test-list;
+  test test-pair;
+  test test-range;
+  test test-singleton;
+  test test-limited;
+  test test-type-union;
+  test test-vector;
+  test test-<function>;
+  test test-<generic-function>;
+  test test-<method>;
+  test test-compose;
+  test test-complement;
+  test test-disjoin;
+  test test-conjoin;
+  test test-curry;
+  test test-rcurry;
+  test test-always;
+  test test-~;
+  test test-==;
+  test test-~==;
+  test test-=;
+  test test-~=;
+  test test-<;
+  test test->;
+  test test-<=;
+  test test->=;
+  test test-min;
+  test test-max;
+  test test-identity;
+  test test-values;
+  test test-as;
+  test test-as-uppercase;
+  test test-as-uppercase!;
+  test test-as-lowercase;
+  test test-as-lowercase!;
+  test test-shallow-copy;
+  test test-type-for-copy;
+  test test-instance?;
+  test test-subtype?;
+  test test-object-class;
+  test test-all-superclasses;
+  test test-direct-superclasses;
+  test test-direct-subclasses;
+  test test-generic-function-methods;
+  test test-add-method;
+  test test-generic-function-mandatory-keywords;
+  test test-function-specializers;
+  test test-function-arguments;
+  test test-function-return-values;
+  test test-applicable-method?;
+  test test-sorted-applicable-methods;
+  test test-find-method;
+  test test-remove-method;
+
+  suite dylan-conditions-test-suite;
+end suite dylan-core-test-suite;
