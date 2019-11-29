@@ -5,6 +5,15 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+define sideways method current-back-end () => (back-end)
+  let ld = current-library-description();
+  if (ld)
+    let name = ld.library-description-compiler-back-end-name;
+    let platform-name = ld.library-description-platform-name;
+    find-back-end-object(name, platform-name)
+  end;
+end;
+
 define variable *retract-dfm?* = #t;
 
 define compiler-open generic emit-all

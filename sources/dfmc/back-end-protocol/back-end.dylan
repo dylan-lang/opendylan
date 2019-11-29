@@ -63,11 +63,3 @@ define function find-back-end-object
   end;
   *cached-back-end*
 end;
-
-define sideways method current-back-end () => (back-end)
-  if (current-library-description())
-    let name = current-back-end-name();
-    let platform-name = target-platform-name();
-    find-back-end-object(name, platform-name)
-  end;
-end;
