@@ -6,16 +6,12 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define byte-vector constant-test <byte> ()
-  //---*** Fill this in...
-end constant-test <byte>;
-
 define sideways method make-test-instance
     (class == <byte-vector>) => (object)
   make(<byte-vector>, size: 1, fill: 0);
-end method make-test-instance;
+end method;
 
-define byte-vector class-test <byte-vector> ()
+define test test-<byte-vector> ()
   check-condition("make(<byte-vector>, size: 0, fill: 256) signals <type-error>",
                   <type-error>, make(<byte-vector>, size: 0, fill: 256));
   check-condition("make(<byte-vector>, size: 1, fill: 256) signals <type-error>",
@@ -33,7 +29,7 @@ define byte-vector class-test <byte-vector> ()
   test-byte-vector-size-and-fill(3, 0);
   test-byte-vector-size-and-fill(3, 1);
   test-byte-vector-size-and-fill(3, 255);
-end class-test <byte-vector>;
+end test;
 
 define method test-byte-vector-size-and-fill
     (vector-size :: <integer>, fill :: <byte>)
@@ -46,18 +42,26 @@ define method test-byte-vector-size-and-fill
                every?(method (b) b == fill end, v));
 end method test-byte-vector-size-and-fill;
 
-define byte-vector function-test copy-bytes ()
+define test test-copy-bytes ()
   // ---*** Fill this in.
-end function-test copy-bytes;
+end test;
 
-define byte-vector function-test byte-vector-fill ()
+define test test-byte-vector-fill ()
   // ---*** Fill this in.
-end function-test byte-vector-fill;
+end test;
 
-define byte-vector function-test byte-vector-ref ()
+define test test-byte-vector-ref ()
   // ---*** Fill this in.
-end function-test byte-vector-ref;
+end test;
 
-define byte-vector function-test byte-vector-ref-setter ()
+define test test-byte-vector-ref-setter ()
   // ---*** Fill this in.
-end function-test byte-vector-ref-setter;
+end test;
+
+define suite byte-vector-test-suite ()
+  test test-<byte-vector>;
+  test test-copy-bytes;
+  test test-byte-vector-fill;
+  test test-byte-vector-ref;
+  test test-byte-vector-ref-setter;
+end;

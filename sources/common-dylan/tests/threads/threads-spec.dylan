@@ -14,53 +14,53 @@ define sideways method destroy-test-instance
   join-thread(thread);
 end method destroy-test-instance;
 
-define threads class-test <thread> ()
+define test test-<thread> ()
   //---*** Fill this in...
-end class-test <thread>;
+end test;
 
-define threads constant-test $low-priority ()
+define test test-$low-priority ()
   //---*** Fill this in...
-end constant-test $low-priority;
+end test;
 
-define threads constant-test $background-priority ()
+define test test-$background-priority ()
   //---*** Fill this in...
-end constant-test $background-priority;
+end test;
 
-define threads constant-test $normal-priority ()
+define test test-$normal-priority ()
   //---*** Fill this in...
-end constant-test $normal-priority;
+end test;
 
-define threads constant-test $interactive-priority ()
+define test test-$interactive-priority ()
   //---*** Fill this in...
-end constant-test $interactive-priority;
+end test;
 
-define threads constant-test $high-priority ()
+define test test-$high-priority ()
   //---*** Fill this in...
-end constant-test $high-priority;
+end test;
 
-define threads function-test thread-name ()
+define test test-thread-name ()
   //---*** Fill this in...
-end function-test thread-name;
+end test;
 
-define threads function-test thread-id ()
+define test test-thread-id ()
   //---*** Fill this in...
-end function-test thread-id;
+end test;
 
-define threads function-test join-thread ()
+define test test-join-thread ()
   //---*** Fill this in...
-end function-test join-thread;
+end test;
 
-define threads class-test <duplicate-join-error> ()
+define test test-<duplicate-join-error> ()
   //---*** Fill this in...
-end class-test <duplicate-join-error>;
+end test;
 
-define threads function-test thread-yield ()
+define test test-thread-yield ()
   //---*** Fill this in...
-end function-test thread-yield;
+end test;
 
-define threads function-test current-thread ()
+define test test-current-thread ()
   //---*** Fill this in...
-end function-test current-thread;
+end test;
 
-define threads function-test current-thread-id ()
-end function-test current-thread-id;
+define test test-current-thread-id ()
+end test;

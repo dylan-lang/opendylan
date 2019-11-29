@@ -8,29 +8,29 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Constant tests
 
-define transcendentals constant-test $single-pi ()
+define test test-$single-pi ()
   check-equal("$single-pi is pi",
               3.14159265358979323846264338327950288419716939937511s0,
               $single-pi);
-end constant-test $single-pi;
+end test;
 
-define transcendentals constant-test $double-pi ()
+define test test-$double-pi ()
   check-equal("$double-pi is pi",
               3.14159265358979323846264338327950288419716939937511d0,
               $double-pi);
-end constant-test $double-pi;
+end test;
 
-define transcendentals constant-test $single-e ()
+define test test-$single-e ()
   check-equal("$single-e is e",
               2.71828182845904523536028747135266249775724709369996s0,
               $single-e);
-end constant-test $single-e;
+end test;
 
-define transcendentals constant-test $double-e ()
+define test test-$double-e ()
   check-equal("$double-e is e",
               2.71828182845904523536028747135266249775724709369996d0,
               $double-e);
-end constant-test $double-e;
+end test;
 
 
 /// Function tests
@@ -41,63 +41,63 @@ end constant-test $double-e;
 //   Cody, William J. and William Waite. Software Manual for the Elementary
 //   Functions.
 
-define transcendentals function-test sin ()
+define test test-sin ()
   // ---*** Fill this in.
-end function-test sin;
+end test;
 
-define transcendentals function-test cos ()
+define test test-cos ()
   // ---*** Fill this in.
-end function-test cos;
+end test;
 
-define transcendentals function-test tan ()
+define test test-tan ()
   // ---*** Fill this in.
-end function-test tan;
+end test;
 
-define transcendentals function-test sincos ()
+define test test-sincos ()
   // ---*** Fill this in.
-end function-test sincos;
+end test;
 
-define transcendentals function-test asin ()
+define test test-asin ()
   // ---*** Fill this in.
-end function-test asin;
+end test;
 
-define transcendentals function-test acos ()
+define test test-acos ()
   // ---*** Fill this in.
-end function-test acos;
+end test;
 
-define transcendentals function-test atan ()
+define test test-atan ()
   // ---*** Fill this in.
-end function-test atan;
+end test;
 
-define transcendentals function-test atan2 ()
+define test test-atan2 ()
   // ---*** Fill this in.
-end function-test atan2;
+end test;
 
-define transcendentals function-test sinh ()
+define test test-sinh ()
   // ---*** Fill this in.
-end function-test sinh;
+end test;
 
-define transcendentals function-test cosh ()
+define test test-cosh ()
   // ---*** Fill this in.
-end function-test cosh;
+end test;
 
-define transcendentals function-test tanh ()
+define test test-tanh ()
   // ---*** Fill this in.
-end function-test tanh;
+end test;
 
-define transcendentals function-test asinh ()
+define test test-asinh ()
   // ---*** Fill this in.
-end function-test asinh;
+end test;
 
-define transcendentals function-test acosh ()
+define test test-acosh ()
   // ---*** Fill this in.
-end function-test acosh;
+end test;
 
-define transcendentals function-test atanh ()
+define test test-atanh ()
   // ---*** Fill this in.
-end function-test atanh;
+end test;
 
-define transcendentals function-test hypot ()
+define test test-hypot ()
   assert-equal(5.0s0, hypot(3.0s0, 4.0s0));
   assert-equal(5.0s0, hypot(3.0s0, 4.0d0));
   assert-equal(5.0d0, hypot(3.0d0, 4.0d0));
@@ -108,9 +108,9 @@ define transcendentals function-test hypot ()
       assert-not-equal(#"infinite", classify-float(z));
     end
   );
-end function-test hypot;
+end test;
 
-define transcendentals function-test log ()
+define test test-log ()
   check-condition("log(-1) errors",
                   <error>,
                   log(-1));
@@ -120,9 +120,9 @@ define transcendentals function-test log ()
                   log(-0.5));
 
   // ---*** Fill this in
-end function-test log;
+end test;
 
-define transcendentals function-test exp ()
+define test test-exp ()
   // These really ought to be exact
   check-equal("exp(0.0s0) = 1.0s0",
               1.0s0, exp(0.0s0));
@@ -131,13 +131,13 @@ define transcendentals function-test exp ()
               1.0d0, exp(0.0d0));
 
   // ---*** Fill this in
-end function-test exp;
+end test;
 
-define transcendentals function-test logn ()
+define test test-logn ()
   // ---*** Fill this in
-end function-test logn;
+end test;
 
-define transcendentals function-test ilog2 ()
+define test test-ilog2 ()
   check-equal("ilog2(1) = 0",
               0, ilog2(1));
   check-equal("ilog2(32) = 5",
@@ -147,13 +147,13 @@ define transcendentals function-test ilog2 ()
   check-condition("ilog2(-1) errors",
                   <error>,
                   ilog2(-1));
-end function-test ilog2;
+end test;
 
-define transcendentals function-test \^ ()
-end function-test \^;
+define test test-^ ()
+end test;
 
 
-define transcendentals function-test sqrt ()
+define test test-sqrt ()
   check-condition("sqrt(-1) errors",
                   <error>,
                   sqrt(-1));
@@ -167,9 +167,9 @@ define transcendentals function-test sqrt ()
                   sqrt(-1.d0));
 
 
-end function-test sqrt;
+end test;
 
-define transcendentals function-test isqrt ()
+define test test-isqrt ()
   check-condition("isqrt(-1) errors",
                   <error>,
                   isqrt(-1));
@@ -181,4 +181,33 @@ define transcendentals function-test isqrt ()
                 isqrt(arg),
                 floor(sqrt(as(<single-float>, arg))));
   end;
-end function-test isqrt;
+end test;
+
+define suite transcendentals-test-suite ()
+  test test-$single-pi;
+  test test-$double-pi;
+  test test-$single-e;
+  test test-$double-e;
+  test test-sin;
+  test test-cos;
+  test test-tan;
+  test test-sincos;
+  test test-asin;
+  test test-acos;
+  test test-atan;
+  test test-atan2;
+  test test-sinh;
+  test test-cosh;
+  test test-tanh;
+  test test-asinh;
+  test test-acosh;
+  test test-atanh;
+  test test-hypot;
+  test test-log;
+  test test-exp;
+  test test-logn;
+  test test-ilog2;
+  test test-^;
+  test test-sqrt;
+  test test-isqrt;
+end;

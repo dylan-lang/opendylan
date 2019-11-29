@@ -4,26 +4,26 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define threads function-test sequence-point ()
+define test test-sequence-point ()
   //---*** Fill this in...
-end function-test sequence-point;
+end test;
 
-define threads function-test synchronize-side-effects ()
+define test test-synchronize-side-effects ()
   //---*** Fill this in...
-end function-test synchronize-side-effects;
+end test;
 
-define threads class-test <synchronization> ()
+define test test-<synchronization> ()
   //---*** Fill this in...
-end class-test <synchronization>;
+end test;
 
-define threads function-test wait-for ()
+define test test-wait-for ()
   //---*** Fill this in...
-end function-test wait-for;
+end test;
 
-define threads function-test release ()
+define test test-release ()
   //---*** Fill this in...
-end function-test release;
+end test;
 
-define threads function-test synchronization-name ()
+define test test-synchronization-name ()
   //---*** Fill this in...
-end function-test synchronization-name;
+end test;

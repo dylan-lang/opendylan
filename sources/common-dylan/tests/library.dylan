@@ -12,7 +12,6 @@ define library common-dylan-test-suite
   use system,
     import: { file-system };
   use testworks;
-  use testworks-specs;
   use dylan-test-suite;
 
   export common-dylan-test-suite;
@@ -39,7 +38,8 @@ define module common-dylan-test-suite
   use threads;
 
   use testworks;
-  use testworks-specs;
+  // TODO(cgay): https://github.com/dylan-lang/opendylan/issues/1237
+  //             This shouldn't include the entire test suite.
   use dylan-test-suite;                // to get collection testing
 
   // Common Dylan test suite

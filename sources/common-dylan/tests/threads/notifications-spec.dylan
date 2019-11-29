@@ -10,19 +10,19 @@ define sideways method make-test-instance
   make(<notification>, lock: lock)
 end method make-test-instance;
 
-define threads class-test <notification> ()
+define test test-<notification> ()
   //---*** Fill this in...
-end class-test <notification>;
+end test;
 
-define threads function-test associated-lock ()
+define test test-associated-lock ()
   //---*** Fill this in...
-end function-test associated-lock;
+end test;
 
-define threads class-test <not-owned-error> ()
+define test test-<not-owned-error> ()
   //---*** Fill this in...
-end class-test <not-owned-error>;
+end test;
 
-define threads function-test release-all ()
+define test test-release-all ()
   //---*** Fill this in...
-end function-test release-all;
+end test;
 

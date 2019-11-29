@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define module-spec common-extensions ()
+define interface-specification-suite common-extensions-specification-suite ()
   // Numerics
   function integer-length (<integer>) => (<integer>);
 
@@ -44,28 +44,27 @@ define module-spec common-extensions ()
   open abstract class <stretchy-sequence> (<stretchy-collection>, <sequence>);
   sealed instantiable class <stretchy-object-vector> (<stretchy-vector>);
   sealed instantiable class <string-table> (<table>);
-  open generic-function concatenate! (<sequence>, #"rest") => (<sequence>);
+  open generic function concatenate! (<sequence>, #"rest") => (<sequence>);
   function position
       (<sequence>, <object>, #"key", #"test", #"start", #"end", #"skip")
    => (false-or(<integer>));
-  open generic-function split
+  open generic function split
       (<sequence>, <object>,
        #"key", #"start", #"end", #"count", #"remove-if-empty?")
    => (<sequence>);
   function join
     (<sequence>, <sequence>, #"key" #"key", #"conjunction") => (<sequence>);
-  open generic-function remove-all-keys! (<mutable-collection>) => ();
-  open generic-function difference
+  open generic function remove-all-keys! (<mutable-collection>) => ();
+  open generic function difference
       (<sequence>, <sequence>, #"key", #"test") => (<sequence>);
   function fill-table! (<table>, <sequence>) => (<table>);
-  open generic-function find-element
+  open generic function find-element
       (<collection>, <function>, #"key", #"skip", #"failure") => (<object>);
-  macro-test table-definer-test;
 
   // Conditions
   open abstract class <format-string-condition> (<condition>);
   open abstract primary class <simple-condition> (<condition>);
-  open generic-function condition-to-string (<condition>) => (<string>);
+  open generic function condition-to-string (<condition>) => (<string>);
   open abstract class <arithmetic-error> (<error>);
   sealed instantiable class <division-by-zero-error> (<arithmetic-error>);
   sealed instantiable class <arithmetic-domain-error> (<arithmetic-error>);
@@ -74,8 +73,6 @@ define module-spec common-extensions ()
 
   // Assertions & Debugging
   function debug-message (<string>, #"rest") => ();
-  macro-test assert-test;
-  macro-test debug-assert-test;
 
   // Types
   function false-or (<type>, #"rest") => (<type>);
@@ -89,14 +86,10 @@ define module-spec common-extensions ()
   // Formatting
   function float-to-string (<float>) => (<string>);
   function integer-to-string (<integer>, #"key", #"base") => (<string>);
-  open generic-function number-to-string (<number>) => (<string>);
+  open generic function number-to-string (<number>) => (<string>);
   function string-to-integer
       (<string>, #"key", #"base", #"start", #"end", #"default")
    => (<integer>, <integer>);
-
-  // Control constructs
-  macro-test iterate-test; // the macro iterate
-  macro-test when-test;    // the macro when (which we're discussing)
 
   // Application basics
   function application-name () => (<string>);
@@ -108,9 +101,9 @@ define module-spec common-extensions ()
   // Other
   function false? (<object>) => (<boolean>);
   function true? (<object>) => (<boolean>);
-end module-spec common-extensions;
+end common-extensions-specification-suite;
 
-define module-spec streams-protocol ()
+define interface-specification-suite streams-protocol-specification-suite ()
   open abstract class <stream> (<object>);
 
   // Conditions
@@ -124,100 +117,102 @@ define module-spec streams-protocol ()
   function stream-error-count (<stream-error>) => (<object>);
 
   // Reading from streams
-  open generic-function read-element (<stream>, #"key", #"on-end-of-stream")
+  open generic function read-element (<stream>, #"key", #"on-end-of-stream")
     => (<object>);
-  open generic-function unread-element (<stream>, <object>)
+  open generic function unread-element (<stream>, <object>)
     => (<object>);
-  open generic-function read (<stream>, <integer>, #"key", #"on-end-of-stream")
+  open generic function read (<stream>, <integer>, #"key", #"on-end-of-stream")
     => (<object>);
-  open generic-function read-into! (<stream>, <integer>, <mutable-sequence>,
+  open generic function read-into! (<stream>, <integer>, <mutable-sequence>,
                                     #"key", #"start", #"on-end-of-stream")
     => (<object>);
-  open generic-function peek (<stream>, #"key", #"on-end-of-stream")
+  open generic function peek (<stream>, #"key", #"on-end-of-stream")
     => (<object>);
-  open generic-function discard-input (<stream>) => ();
-  open generic-function stream-input-available? (<stream>) => (<boolean>);
-  open generic-function stream-contents (<stream>, #"key", #"clear-contents?") => (<sequence>);
-  open generic-function stream-contents-as
+  open generic function discard-input (<stream>) => ();
+  open generic function stream-input-available? (<stream>) => (<boolean>);
+  open generic function stream-contents (<stream>, #"key", #"clear-contents?") => (<sequence>);
+  open generic function stream-contents-as
       (<type>, <stream>, #"key", #"clear-contents?")
    => (<sequence>);
 
   // Writing to streams
-  open generic-function write (<stream>, <sequence>, #"key", #"start", #"end")
+  open generic function write (<stream>, <sequence>, #"key", #"start", #"end")
     => ();
-  open generic-function write-element (<stream>, <object>) => ();
-  open generic-function force-output (<stream>) => ();
-  open generic-function synchronize-output (<stream>) => ();
-  open generic-function discard-output (<stream>) => ();
+  open generic function write-element (<stream>, <object>) => ();
+  open generic function force-output (<stream>) => ();
+  open generic function synchronize-output (<stream>) => ();
+  open generic function discard-output (<stream>) => ();
 
   // Querying streams
-  open generic-function stream-open? (<stream>) => (<boolean>);
-  open generic-function stream-element-type (<stream>) => (<type>);
-  open generic-function stream-at-end? (<stream>) => (<boolean>);
-  open generic-function stream-size (<stream>) => (false-or(<abstract-integer>));
+  open generic function stream-open? (<stream>) => (<boolean>);
+  open generic function stream-element-type (<stream>) => (<type>);
+  open generic function stream-at-end? (<stream>) => (<boolean>);
+  open generic function stream-size (<stream>) => (false-or(<abstract-integer>));
 
   // Positioning streams
   open abstract class <positionable-stream> (<stream>);
-  open generic-function stream-position (<positionable-stream>)
+  open generic function stream-position (<positionable-stream>)
    => (<object>);
-  open generic-function stream-position-setter
+  open generic function stream-position-setter
       (<object>, <positionable-stream>)
    => (<object>);
-  open generic-function adjust-stream-position
+  open generic function adjust-stream-position
       (<positionable-stream>, <integer>, #"key", #"from")
    => (<object>);
 
   // Other
-  open generic-function open-file-stream
+  open generic function open-file-stream
     (<object>, #"key", #"all-keys") => (<stream>);
-  open generic-function wait-for-io-completion (<stream>) => ();
-  open generic-function close
+  open generic function wait-for-io-completion (<stream>) => ();
+  open generic function close
     (<closable-object>, #"rest", #"key", #"all-keys") => ();
-end module-spec streams-protocol;
+end streams-protocol-specification-suite;
 
-define module-spec locators-protocol ()
+// Although the locators specification suite is here, because the protocol is
+// exported from common-dylan, the actual locators tests are in
+// system-test-suite.
+define interface-specification-suite locators-protocol-specification-suite ()
   // This may be merged into any other module.
   open abstract class <locator> (<object>);
-  open generic-function supports-open-locator? (<locator>) => (<boolean>);
-  open generic-function open-locator (<locator>, #"key", #"all-keys") => (<stream>);
-  open generic-function supports-list-locator? (<locator>) => (<boolean>);
-  open generic-function list-locator (<locator>) => (<sequence>);
-end module-spec locators-protocol;
+  open generic function supports-open-locator? (<locator>) => (<boolean>);
+  open generic function open-locator (<locator>, #"key", #"all-keys") => (<stream>);
+  open generic function supports-list-locator? (<locator>) => (<boolean>);
+  open generic function list-locator (<locator>) => (<sequence>);
+end;
 
-define module-spec finalization ()
+define interface-specification-suite finalization-specification-suite ()
   function automatic-finalization-enabled? () => (<boolean>);
   function automatic-finalization-enabled?-setter (<boolean>) => ();
   function drain-finalization-queue () => ();
-  open generic-function finalize (<object>) => ();
+  open generic function finalize (<object>) => ();
   function finalize-when-unreachable (<object>) => (<object>);
-end module-spec finalization;
+end;
 
-define module-spec simple-format ()
+define interface-specification-suite simple-format-specification-suite ()
   function format-out (<string>, #"rest") => ();
   function format-to-string (<string>, #"rest") => (<string>);
-end module-spec simple-format;
+end;
 
-define module-spec simple-random ()
+define interface-specification-suite simple-random-specification-suite ()
   sealed instantiable class <random> (<object>);
   function random (<integer>, #"key", #"random") => (<integer>);
-end module-spec simple-random;
+end;
 
-define module-spec simple-profiling ()
+define interface-specification-suite simple-profiling-specification-suite ()
   sealed instantiable class <profiling-state> (<table>);
   function start-profiling(<sequence>) => (<profiling-state>);
-  open generic-function start-profiling-type
+  open generic function start-profiling-type
     (<profiling-state>, <symbol>) => ();
   function stop-profiling(<profiling-state>, <sequence>) => ();
-  open generic-function stop-profiling-type
+  open generic function stop-profiling-type
     (<profiling-state>, <symbol>) => ();
-  open generic-function profiling-type-result
+  open generic function profiling-type-result
     (<profiling-state>, <symbol>, #"key", #"all-keys")
  => (<object>);
-  macro-test profiling-test;
   // ... anything else?
-end module-spec simple-profiling;
+end;
 
-define module-spec byte-vector ()
+define interface-specification-suite byte-vector-specification-suite ()
   constant <byte> :: <type>;
   sealed instantiable class <byte-vector> (<vector>);
   open generic function copy-bytes
@@ -230,9 +225,9 @@ define module-spec byte-vector ()
     (<byte-vector>, <integer>) => (<integer>);
   function byte-vector-ref-setter
     (<integer>, <byte-vector>, <integer>) => (<integer>);
-end module-spec byte-vector;
+end;
 
-define module-spec machine-words ()
+define interface-specification-suite machine-words-specification-suite ()
   sealed instantiable class <machine-word> (<object>);
 
   // Variables
@@ -295,9 +290,9 @@ define module-spec machine-words ()
   function ud%divide (<object>, <object>, <object>) => (<machine-word>, <machine-word>);
   function ud%shift-left (<object>, <object>, <integer>) => (<machine-word>, <machine-word>);
   function ud%shift-right (<object>, <object>, <integer>) => (<machine-word>, <machine-word>);
-end module-spec machine-words;
+end machine-words-specification-suite;
 
-define module-spec transcendentals ()
+define interface-specification-suite transcendentals-specification-suite ()
   /// Constants
   constant $single-pi :: <single-float>;
   constant $double-pi :: <double-float>;
@@ -307,9 +302,9 @@ define module-spec transcendentals ()
   /// The core classes
   /// Functions
 
-  open generic-function sin(<number>) => (<number>);
-  open generic-function cos(<number>) => (<number>);
-  open generic-function tan(<number>) => (<number>);
+  open generic function sin(<number>) => (<number>);
+  open generic function cos(<number>) => (<number>);
+  open generic function tan(<number>) => (<number>);
 
 // Returns the sine, cosine, or tangent of _x_, respectively.  _x_ is
 // given in radians.
@@ -317,15 +312,15 @@ define module-spec transcendentals ()
 // The floating point precision of the result is given by the precision
 // of _x_.
 
-  open generic-function sincos(<number>) => (<number>, <number>);
+  open generic function sincos(<number>) => (<number>, <number>);
 
 // As above, but returns both the sine and cosine of _x_.
 
-  open generic-function asin(<number>) => (<number>); // -1 <= y <= +1
-  open generic-function acos(<number>) => (<number>); // -1 <= y <= +1
+  open generic function asin(<number>) => (<number>); // -1 <= y <= +1
+  open generic function acos(<number>) => (<number>); // -1 <= y <= +1
 
-  open generic-function atan(<number>) => (<number>); // -1 <= y <= +1
-  open generic-function atan2(<number>, <number>) => (<number>); // -1 <= y <= +1
+  open generic function atan(<number>) => (<number>); // -1 <= y <= +1
+  open generic function atan2(<number>, <number>) => (<number>); // -1 <= y <= +1
 
 // Returns the arc sine or arc cosine of _y_, in radians.  If _y_ is not
 // in the range [-1, +1], an error is signalled.
@@ -333,9 +328,9 @@ define module-spec transcendentals ()
 // The floating point precision of the result is given by the precision
 // of _y_.
 
-  open generic-function sinh (<number>) => (<number>);
-  open generic-function cosh (<number>) => (<number>);
-  open generic-function tanh (<number>) => (<number>);
+  open generic function sinh (<number>) => (<number>);
+  open generic function cosh (<number>) => (<number>);
+  open generic function tanh (<number>) => (<number>);
 
 // Returns the hyperbolic sine, hyperbolic cosine, or hyperbolic tangent
 // of _x_, respectively.
@@ -343,9 +338,9 @@ define module-spec transcendentals ()
 // The floating point precision of the result is given by the precision
 // of _x_.
 
-  open generic-function asinh (<number>) => (<number>);
-  open generic-function acosh (<number>) => (<number>);
-  open generic-function atanh (<number>) => (<number>);
+  open generic function asinh (<number>) => (<number>);
+  open generic function acosh (<number>) => (<number>);
+  open generic function atanh (<number>) => (<number>);
 
 // Returns the hyperbolic arc sine, hyperbolic arc cosine, or hyperbolic
 // arc tangent of _y_, respectively.
@@ -353,14 +348,14 @@ define module-spec transcendentals ()
 // The floating point precision of the result is given by the precision
 // of _y_.
 
-  open generic-function hypot (<number>, <number>) => (<number>);
+  open generic function hypot (<number>, <number>) => (<number>);
 
 // Returns the Euclidian distance.
 
 // The floating point precision of the result is given by the precision
 // of _x_.
 
-  open generic-function log (<number>) => (<number>); //  x > 0
+  open generic function log (<number>) => (<number>); //  x > 0
 
 // Returns the natural logarithm of _x_ in base _e_.  If _x_ <= 0, an
 // error is signalled.
@@ -368,7 +363,7 @@ define module-spec transcendentals ()
 // The floating point precision of the result is given by the precision
 // of _x_.
 
-  open generic-function exp (<number>) => (<number>);
+  open generic function exp (<number>) => (<number>);
 
 // Returns e raised to the power _x_.
 
@@ -391,7 +386,8 @@ define module-spec transcendentals ()
 // Returns the logarithm of _x_ in base _2_ as an integer.  If _x_ <= 0, an
 // error is signalled.
 
-  open generic-function \^ (<number>, <number>) => (<number>);
+  // This is already specified in dylan-test-suite.
+  //open generic function \^ (<number>, <number>) => (<number>);
 
 // Returns _b_ raised to the power _x_.  If _b_ is 0 and _x_ is not
 // positive, an error is signalled.  If _b_ is negative and _x_ is not
@@ -402,14 +398,14 @@ define module-spec transcendentals ()
 
 
 //  open
-//    generic-function \^ (b :: <integer>, x :: <integer>) => (y :: <integer>);
+//    generic function \^ (b :: <integer>, x :: <integer>) => (y :: <integer>);
 
 // Returns an integer result giving _b_ raised to the power _x_.  If _b_
 // is 0 and _x_ is not positive, an error is signalled.  If _x_ is
 // negative, an error is signalled.
 
 
-  open generic-function sqrt (<number>) => (<number>); // x >= 0
+  open generic function sqrt (<number>) => (<number>); // x >= 0
 
 // Returns the square root of _x_.  If _x_ < 0, an error is signalled.
 
@@ -425,9 +421,9 @@ define module-spec transcendentals ()
 
   /// Other protocols
 //  protocol transcendentals;
-end module-spec transcendentals;
+end transcendentals-specification-suite;
 
-define module-spec threads ()
+define interface-specification-suite threads-specification-suite ()
   // Low-level synchronization
   function sequence-point () => ();
   function synchronize-side-effects () => ();
@@ -449,13 +445,13 @@ define module-spec threads ()
 
   // Synchronization protocol
   open abstract class <synchronization> (<object>);
-  open generic-function wait-for (<synchronization>, #"key", #"timeout") => (<object>);
-  open generic-function release (<synchronization>) => ();
-  open generic-function synchronization-name (<synchronization>) => (false-or(<string>));
+  open generic function wait-for (<synchronization>, #"key", #"timeout") => (<object>);
+  open generic function release (<synchronization>) => ();
+  open generic function synchronization-name (<synchronization>) => (false-or(<string>));
 
   // Locks
   open abstract instantiable class <lock> (<synchronization>);
-  macro-test with-lock-test;
+  test test-with-lock;
   class <timeout-expired> (<serious-condition>);
 
   // Semaphores
@@ -465,7 +461,7 @@ define module-spec threads ()
 
   // Exclusive locks
   open abstract instantiable class <exclusive-lock> (<lock>);
-  open generic-function owned? (<exclusive-lock>) => (<boolean>);
+  open generic function owned? (<exclusive-lock>) => (<boolean>);
 
   // Recursive locks
   open abstract instantiable primary class <recursive-lock> (<exclusive-lock>);
@@ -486,29 +482,39 @@ define module-spec threads ()
   function sleep (<real>) => ();
 
   // Dynamic binding
-  macro-test dynamic-bind-test;
+  test test-dynamic-bind;
 
   // Conditional update
-  macro-test conditional-update!-test;
+  test test-conditional-update!;
   sealed instantiable class <conditional-update-error> (<error>);
-  macro-test atomic-decrement!-test;
-  macro-test atomic-increment!-test;
-end module-spec threads;
+  test test-atomic-decrement!;
+  test test-atomic-increment!;
+end threads-specification-suite;
 
-define library-spec common-dylan ()
-  module common-extensions;
-  module streams-protocol;
-  module locators-protocol;
-  module finalization;
-  module simple-format;
-  module simple-random;
-  module simple-profiling;
-  module transcendentals;
-  module byte-vector;
-  module machine-words;
-  module threads;
-  suite common-dylan-regressions;
-  suite threads-test-suite; //---*** NOTE: Should be changed to module test
-  suite test-stream-suite;
-end library-spec common-dylan;
-
+// TODO(cgay): Make foo-specification-suite a component of foo-test-suite so
+// that running foo-test-suite will run all the foo tests. (In a separate PR
+// because I want to move the spec suites into the source with the main suite
+// and get rid of this file.)
+define suite common-dylan-test-suite ()
+  suite byte-vector-specification-suite;
+  suite byte-vector-test-suite;
+  suite common-dylan-classes-test-suite;
+  suite common-dylan-functions-test-suite;
+  suite common-dylan-macros-test-suite;
+  suite common-dylan-regressions-test-suite;
+  suite common-dylan-streams-test-suite;
+  suite common-dylan-variables-test-suite;
+  suite common-extensions-specification-suite;
+  suite finalization-specification-suite;
+  suite locators-protocol-specification-suite;
+  suite machine-words-specification-suite;
+  suite machine-words-test-suite;
+  suite simple-format-specification-suite;
+  suite simple-profiling-specification-suite;
+  suite simple-random-specification-suite;
+  suite streams-protocol-specification-suite;
+  suite threads-specification-suite;
+  suite threads-test-suite;
+  suite transcendentals-specification-suite;
+  suite transcendentals-test-suite;
+end suite;
