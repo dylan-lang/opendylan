@@ -9,7 +9,7 @@ def posix_directory_locator_summary(value, internal_dict):
   if not dylan_boolean_value(relative):
     summary += '/'
   for p in dylan_vector_elements(path):
-    summary += dylan_string_data(p)
+    summary += dylan_string(p)
     summary += '/'
   return summary
 
@@ -22,8 +22,8 @@ def posix_file_locator_summary(value, internal_dict):
   if not dylan_is_false(directory):
     summary += summaries.summary(directory)
   if not dylan_is_false(base):
-    summary += dylan_string_data(base)
+    summary += dylan_string(base)
   if not dylan_is_false(extension):
     summary += '.'
-    summary += dylan_string_data(extension)
+    summary += dylan_string(extension)
   return summary

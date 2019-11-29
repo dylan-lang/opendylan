@@ -10,4 +10,4 @@ def primitive_summary(value, internal_dict):
 @summaries.register('<&objc-msgsend>', 'dfmc-modeling', 'dfmc-modeling')
 def c_function_summary(value, internal_dict):
   name = dylan_slot_element_by_name(value, 'c-function-name')
-  return dylan_byte_string_data(name)
+  return dylan_string(name)

@@ -1,11 +1,37 @@
 #! /bin/sh
 
+# Dylan LLDB helper script
+# This starts LLDB with some useful extensions preloaded
+# Usage: dylan-lldb [args...]
+# where [args...] are any LLDB arguments or options.
+
+# Relevant environment variables:
+# OPEN_DYLAN_LLDB - overrides the location of the lldb executable 
+#  Default is `lldb` on the path.
+# OPEN_DYLAN_LLDB_HELPER - overrides the location of the extension packages
+#  Default is ./share/opendylan/lldb/dylan relative to the OD installation firectory. For development use mainly
+# PYTHONPATH - this is used by LLDB itself to find the Python support packages
+#  On some systems it needs to be set manually, for example lldb-9 on Debian has PYTHONPATH=/usr/lib/llvm-9/lib/python3.7/site-packages
+#  Default is whatever `lldb -P` prints
+
+
 # Find some pathnames
-compiler=`which dylan-compiler`
-lldb=$OPEN_DYLAN_LLDB
+lldb="$OPEN_DYLAN_LLDB"
 if test ! -x "$lldb"; then
   lldb=`which lldb`
 fi
+helper="$OPEN_DYLAN_LLDB_HELPER"
+if test xx = x"$helper"x; then
+    # If we weren't given the helper explicitly, look
+    # relative to the compiler on the path
+    compiler=`which dylan-compiler`
+    if test -x "$compiler"; then
+	compilerDir="`dirname "$compiler"`"
+	# Normalize the path name. Can't use realpath or readlink due to portability.
+	dylanDir="`cd "${compilerDir}"/..;pwd`"
+	helper=$dylanDir/share/opendylan/lldb/dylan
+    fi
+fi    
 
 # Exit if there's an error
 # We do this after finding the path names as the script
@@ -13,23 +39,15 @@ fi
 set -e
 
 # Validate pathnames
-if test ! -x "$compiler"; then
-  echo "Could not find 'dylan-compiler' on the PATH."
-  exit 1
-fi
 
 if test ! -x "$lldb"; then
   echo "Could not find 'lldb' on the PATH."
   exit 1
 fi
-
-compilerDir="`dirname "$compiler"`"
-# Normalize the path name. Can't use realpath or readlink due to portability.
-dylanDir="`cd "${compilerDir}"/..;pwd`"
-helper=$dylanDir/share/opendylan/lldb/dylan
 if test ! -d "$helper"; then
   echo "Could not find $helper."
   exit 1
 fi
+
 
 $lldb -O "command script import $helper" "$@"

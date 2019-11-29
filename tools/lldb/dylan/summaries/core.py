@@ -1,3 +1,4 @@
+import array
 import lldb
 from dylan.accessors import *
 from dylan import summaries
@@ -6,18 +7,8 @@ from dylan import summaries
 def dylan_boolean_summary(value, internal_dict):
   b = '#f'
   if dylan_boolean_value(value):
-    b = '#t'
+    return '#t'
   return b
-
-@summaries.register('<byte-string>', 'dylan', 'dylan')
-def dylan_byte_string_summary(value, internal_dict):
-  string_data = dylan_byte_string_data(value)
-  string_data = string_data.replace('\r\n', '\\n')
-  string_data = string_data.replace('\n', '\\n')
-  if string_data == '':
-    return 'size: 0'
-  else:
-    return 'size: %d, data: "%s"' % (len(string_data), string_data)
 
 @summaries.register('<class>', 'dylan', 'dylan')
 def dylan_class_summary(value, internal_dict):
@@ -55,7 +46,7 @@ def dylan_slot_descriptor_summary(value, internal_dict):
 @summaries.register('<library>', 'dylan-extensions', 'dylan')
 def dylan_library_summary(value, internal_dict):
   name = dylan_slot_element_by_name(value, 'namespace-name')
-  return dylan_byte_string_data(name)
+  return dylan_string(name)
 
 def format_machine_word_value(value):
   target = lldb.debugger.GetSelectedTarget()
@@ -66,7 +57,7 @@ def format_machine_word_value(value):
     fmt = "%#018x"
   else:
     fmt = "%#x"
-  return fmt % value
+  return fmt % (value,)
 
 @summaries.register('<machine-word>', 'dylan-extensions', 'dylan')
 def dylan_machine_word_summary(value, internal_dict):
@@ -82,8 +73,8 @@ def dylan_module_summary(value, internal_dict):
   module_name = dylan_slot_element_by_name(value, 'namespace-name')
   home_library = dylan_slot_element_by_name(value, 'home-library')
   home_library_name = dylan_slot_element_by_name(home_library, 'namespace-name')
-  return '%s in %s' % (dylan_byte_string_data(module_name),
-                       dylan_byte_string_data(home_library_name))
+  return '%s in %s' % (dylan_string(module_name),
+                       dylan_string(home_library_name))
 
 @summaries.register('<simple-object-vector>', 'dylan', 'dylan')
 def dylan_simple_object_vector_summary(value, internal_dict):
@@ -106,15 +97,22 @@ def dylan_symbol_summary(value, internal_dict):
 def dylan_thread_summary(value, internal_dict):
   thread_name = dylan_slot_element_by_name(value, 'thread-name')
   if not dylan_is_false(thread_name):
-    return dylan_string_data(thread_name)
+    return dylan_string(thread_name)
   return None
 
+@summaries.register('<byte-string>', 'dylan', 'dylan')
 @summaries.register('<unicode-string>', 'dylan', 'dylan')
-def dylan_unicode_string_summary(value, internal_dict):
-  return dylan_unicode_string_data(value)
+def dylan_string_summary(value, internal_dict):
+  string_data = dylan_string(value)
+  if len(string_data) == 0:
+    return 'size: 0'
+  else:
+    string_data = string_data.replace('\r\n', '\\n')
+    string_data = string_data.replace('\n', '\\n')
+    return 'size: %d, data: "%s"' % (len(string_data), string_data)
 
 @summaries.register('<used-library>', 'dylan-extensions', 'dylan')
 def dylan_used_library_summary(value, internal_dict):
   used_library = dylan_slot_element_by_name(value, 'used-library')
   name = dylan_slot_element_by_name(used_library, 'namespace-name')
-  return dylan_byte_string_data(name)
+  return dylan_string(name)
