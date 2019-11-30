@@ -39,7 +39,34 @@ presence of inlined functions and macro expansions.
 Understanding name mangling
 ---------------------------
 
-*Fill this in, particularly with a link to the Hacker's Guide!*
+Dylan identifiers (method and variable names) do not follow the same
+rules as C; they are case insensitive, can contain extra characters
+such as '<' or '-', and are part of the two-level namespace (module
+and library). There is a process, known as 'mangling', to turn Dylan
+identifiers into valid C identifiers. The reverse process is called
+demangling. C++ also mangles its variable and function names, for the
+same reason. When debugging, backtraces and frame summaries will show
+the mangled names rather than the Dylan names. An outline of the
+mangling rules is as follows:
+
+* Convert identifier to lower case
+* Replace incompatible symbols.
+  For example, ``-`` becomes ``_`` and ``<`` becomes ``L``.
+* Repeat for module and library identifiers
+* Join them like this: ``K`` identifier ``Y`` module ``V`` library.
+* If it is a method, append a suffix starting with ``M`` to distinguish the
+  specific methods within a generic function.
+
+There are a number of extra cases to shorten the mangled name. The ``Y``
+and module name are omitted if the module name is the same as the
+library. For modules in the Dylan library, the sequence
+``YmoduleVdylan`` is replaced by ``VKmodule`` and some modules have short
+names, for example ``i`` is the 'internal' module.
+
+For example, method ``format-err`` in the ``format-out`` module of the
+``io`` library becomes ``Kformat_errYformat_outVioMM0I``.
+
+For full details, see `the Hacker's guide <https://opendylan.org/documentation/hacker-guide/runtime/mangling.html?highlight=mangling>`_.
 
 Understanding stack traces
 --------------------------
@@ -105,17 +132,65 @@ entire Dylan application runs and exits prior to ``main`` being invoked.
 A reasonable alternative is to determine the C name of your entry point
 function and set a breakpoint on that instead.
 
-Inspecting Dylan objects in LLDB
+Debugging with LLDB
 --------------------------------
 
-In LLDB, you may import our Dylan support library::
+If you are using LLDB, there is a helper script provided. Start LLDB with::
 
-    command script import /path/to/opendylan/share/opendylan/lldb/dylan
+  dylan-lldb [args]
 
-Do not import the scripts under that directory directly as that will not
-work. Once this has been done, variables that are representing Dylan
-values will automatically be shown with additional data about their
-actual values.
+This will import the Dylan support library from ``/path/to/opendylan/share/opendylan/lldb/dylan``.
+Any LLDB arguments can be specified, as normal.
+
+The support library provides some extra commands and specialized
+summarizers for commonly-encountered Dylan objects.
+
+The command ``dylan-bt`` prints a Dylan-friendly backtrace by
+stripping out all frames which refer to internal runtime functions,
+leaving only Dylan code. For example, a backtrace like this::
+
+  * frame #0: 0x00007fff70e542c6 libsystem_kernel.dylib`__pthread_kill + 10
+    frame #1: 0x00007fff70f0fbf1 libsystem_pthread.dylib`pthread_kill + 284
+    frame #2: 0x00007fff70d71d8a libsystem_c.dylib`raise + 26
+    frame #3: 0x00000001001ef3bc libdylan.dylib`primitive_invoke_debugger(string=<unavailable>, arguments=<unavailable>) at c-primitives-debug.c:38:3 [opt]
+    frame #4: 0x0000000100134c34 libdylan.dylib`Kinvoke_debuggerVKiMM1I(condition_=<unavailable>) at boot.c:7140:3 [opt]
+    frame #5: 0x000000010013bd11 libdylan.dylib`Khandle_missed_dispatchVKgI(d_=<unavailable>, parent_=<unavailable>, args_={<simple-object-vector>: size: 1}) at new-dispatch.c:14382:13 [opt]
+    frame #6: 0x00000001001e5021 libdylan.dylib`general_engine_node_n_engine(a1=<unavailable>) at c-run-time.c:2023:12 [opt]
+    frame #7: 0x000000010014aaaf libdylan.dylib`Kdefault_handlerVKdMM1I(condition_=<unavailable>) at condition.c:2917:3 [opt]
+    frame #8: 0x000000010013bd11 libdylan.dylib`Khandle_missed_dispatchVKgI(d_=<unavailable>, parent_=<unavailable>, args_={<simple-object-vector>: size: 1}) at new-dispatch.c:14382:13 [opt]
+    frame #9: 0x00000001001e5021 libdylan.dylib`general_engine_node_n_engine(a1=<unavailable>) at c-run-time.c:2023:12 [opt]
+    frame #10: 0x00000001000d2b69 libcommon-dylan.dylib`Kdefault_last_handlerYcommon_dylan_internalsVcommon_dylanMM0I(condition_={<simple-error>}, next_handler_={<simple-closure-method>}) at common-extensions.c:1942:9 [opt]
+
+becomes::
+
+    frame #4    Kinvoke_debuggerVKiMM1I                                      0x00000100134c34 libdylan.dylib at boot.c:7140
+    frame #7    Kdefault_handlerVKdMM1I                                      0x0000010014aaaf libdylan.dylib at condition.c:2917
+    frame #10   Kdefault_last_handlerYcommon_dylan_internalsVcommon_dylanMM0I 0x000001000d2b69 libcommon-dylan.dylib at common-extensions.c:1942
+
+The command ``dylan-break-gf`` will set a breakpoint on all specific
+methods of a given generic function.  The generic function needs to be
+specified as ``name:module:library``, for example
+``format-err:format-out:io``.  Note that the functions may not be
+known until they are loaded, so it is necessary to run the program
+first, otherwise the message 'No generic function XXX was found.' will
+be shown.
+
+The second purpose of the helper script is to show Dylan objects in a
+more intuitive fashion. For example, lldb on its own will show most
+Dylan objects as plain hex values, for example::
+
+  (dylan_value) T33 = 0x0000000100d38060
+  (dylan_value) T35_0 = 0x00007ffeefbfe360
+  (dylan_value) Ustream_ = 0x0000000000000001
+
+With the helper, extra information is added to the right::
+
+  (dylan_value) T33 = 0x0000000100c38060 {<symbol>: #"libraries-test-suite-app"}
+  (dylan_value) T35_0 = 0x00007ffeefbfe370 {<simple-object-vector>: size: 1}
+  (dylan_value) Ustream_ = 0x0000000000000001 {<integer>: 0}
+
+The summarizer support has to be added on a class-by-class basis, so
+some objects will show only the class name without further detail.
 
 Inspecting Dylan objects in GDB
 -------------------------------
