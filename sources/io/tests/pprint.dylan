@@ -66,27 +66,27 @@ define macro with-pretty-print-to-string
       stream-contents(ss, clear-contents?: #f) }
 end macro with-pretty-print-to-string;
 
-define pprint variable-test *print-miser-width* ()
+define test test-*print-miser-width* ()
   //---*** Fill this in...
-end variable-test *print-miser-width*;
+end test;
 
-define pprint variable-test *default-line-length* ()
+define test test-*default-line-length* ()
   //---*** Fill this in...
-end variable-test *default-line-length*;
+end test;
 
-define pprint function-test pprint-logical-block ()
+define test test-pprint-logical-block ()
   //---*** Fill this in...
-end function-test pprint-logical-block;
+end test;
 
-define pprint function-test pprint-newline ()
+define test test-pprint-newline ()
   //---*** Fill this in...
-end function-test pprint-newline;
+end test;
 
-define pprint function-test pprint-indent ()
+define test test-pprint-indent ()
   //---*** Fill this in...
-end function-test pprint-indent;
+end test;
 
-define pprint function-test pprint-tab ()
+define test test-pprint-tab ()
   // Adapted from XP's tests
   local
     method do-tab-a (kind, colnum :: <integer>, colinc :: <integer>)
@@ -210,13 +210,13 @@ define pprint function-test pprint-tab ()
                do-tab-c(#f, #"line", 6, 4));
   assert-equal("fo-test  a",
                do-tab-c(#f, #"line", 6, 3));
-end function-test pprint-tab;
+end test;
 
-define pprint macro-test printing-logical-block-test ()
+define test test-printing-logical-block ()
   //---*** Fill this in...
-end macro-test printing-logical-block-test;
+end test;
 
-define test basic-logical-block ()
+define test test-basic-logical-block ()
   // Based on the example on page 7 of XP: A Common Lisp Pretty Printing System
   local
     method basic-boston ()
@@ -254,7 +254,7 @@ define test basic-logical-block ()
                end);
 end test;
 
-define test delimited-logical-block ()
+define test test-delimited-logical-block ()
   local
     method delimited-boston ()
       with-pretty-print-to-string (ps)
@@ -286,7 +286,7 @@ define test delimited-logical-block ()
                end);
 end test;
 
-define test line-prefix-logical-block ()
+define test test-line-prefix-logical-block ()
   local
     method line-prefix-boston ()
       with-pretty-print-to-string (ps)
@@ -317,7 +317,7 @@ define test line-prefix-logical-block ()
                end);
 end test;
 
-define test misering-logical-block ()
+define test test-misering-logical-block ()
   // Based on the example on page 10 of XP: A Common Lisp Pretty Printing System
   local
     method misering-test ()
@@ -353,7 +353,7 @@ define test misering-logical-block ()
                end);
 end test;
 
-define test pprint-misc-indenting ()
+define test test-pprint-misc-indenting ()
   assert-equal("foo a\n"
                "        b",
                dynamic-bind (*default-line-length* = 20)
@@ -402,7 +402,7 @@ define test pprint-misc-indenting ()
                end);
 end test;
 
-define test pprint-buffers ()
+define test test-pprint-buffers ()
   assert-equal($pretty-printing-test-string,
                dynamic-bind (*default-line-length* = 70)
                  with-pretty-print-to-string (ps)
@@ -424,10 +424,17 @@ define test pprint-buffers ()
 end test;
 
 define suite pprint-test-suite ()
-  test basic-logical-block;
-  test delimited-logical-block;
-  test line-prefix-logical-block;
-  test misering-logical-block;
-  test pprint-misc-indenting;
-  test pprint-buffers;
-end suite;
+  test test-*default-line-length*;
+  test test-*print-miser-width*;
+  test test-basic-logical-block;
+  test test-delimited-logical-block;
+  test test-line-prefix-logical-block;
+  test test-misering-logical-block;
+  test test-pprint-buffers;
+  test test-pprint-indent;
+  test test-pprint-logical-block;
+  test test-pprint-misc-indenting;
+  test test-pprint-newline;
+  test test-pprint-tab;
+  test test-printing-logical-block;
+end;
