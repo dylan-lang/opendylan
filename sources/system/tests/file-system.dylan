@@ -23,90 +23,90 @@ end method make-stream-tests-of-size;
 
 /// File system classes
 
-define file-system class-test <file-error> ()
+define test test-<file-error> ()
   // ---*** Fill this in.
 end;
 
-define file-system class-test <file-exists-error> ()
+define test test-<file-exists-error> ()
   // ---*** Fill this in.
 end;
 
-define file-system class-test <file-does-not-exist-error> ()
+define test test-<file-does-not-exist-error> ()
   // ---*** Fill this in.
 end;
 
-define file-system class-test <invalid-file-permissions-error> ()
+define test test-<invalid-file-permissions-error> ()
   // ---*** Fill this in.
 end;
 
-define file-system function-test type-for-file-stream ()
+define test test-type-for-file-stream ()
   // ---*** Fill this in.
 end;
 
-define file-system constant-test <pathname> ()
+define test test-<pathname> ()
   check-instance?("A string is a pathname?",
                   <pathname>, "foo");
   check-instance?("A file locator is a pathname?",
                   <pathname>, as(<file-locator>, "test.dylan"));
-end constant-test <pathname>;
+end test;
 
-define file-system constant-test <file-type> ()
+define test test-<file-type> ()
   //---*** Fill this in.
 end;
 
-define file-system constant-test <copy/rename-disposition> ()
+define test test-<copy/rename-disposition> ()
   //---*** Fill this in.
 end;
 
 
 /// File-system function test cases
 
-define file-system function-test file-exists? ()
+define test test-file-exists? ()
   //---*** Fill this in.
 end;
 
-define file-system function-test file-type ()
+define test test-file-type ()
   //---*** Fill this in.
 end;
 
-define file-system function-test delete-file ()
+define test test-delete-file ()
   //---*** Fill this in.
 end;
 
-define file-system function-test copy-file ()
+define test test-copy-file ()
   //---*** Fill this in.
 end;
 
-define file-system function-test rename-file ()
+define test test-rename-file ()
   //---*** Fill this in.
 end;
 
-define file-system function-test file-properties ()
+define test test-file-properties ()
   //---*** Fill this in.
 end;
 
-define file-system function-test file-property ()
+define test test-file-property ()
   //---*** Fill this in.
 end;
 
-define file-system function-test file-property-setter ()
+define test test-file-property-setter ()
   //---*** Fill this in.
 end;
 
-define file-system function-test do-directory ()
+define test test-do-directory ()
   //---*** Fill this in.
 end;
 
 /// directory-contents is NYI currently ...
-define file-system function-test directory-contents ()
+define test test-directory-contents ()
   //---*** Fill this in.
 end;
 
-define file-system function-test create-directory ()
+define test test-create-directory ()
   //---*** Fill this in.
 end;
 
-define file-system function-test delete-directory ()
+define test test-delete-directory ()
   // Verify that deleting an empty directory with recursive?: #t works.  This
   // is a regression test for
   // https://github.com/dylan-lang/opendylan/issues/1227.
@@ -134,31 +134,32 @@ define file-system function-test delete-directory ()
   assert-false(file-exists?(dir2));
 end;
 
-define file-system function-test ensure-directories-exist ()
+define test test-ensure-directories-exist ()
   //---*** Fill this in.
 end;
 
-define file-system function-test home-directory ()
+define test test-home-directory ()
   //---*** Fill this in.
 end;
 
-define file-system function-test temp-directory ()
+// This test named to not conflict with test-temp-directory:testworks:testworks.
+define test test-fs/temp-directory ()
   let tmpdir = temp-directory();
   assert-instance?(<directory-locator>, tmpdir);
   assert-true(file-exists?(tmpdir));
   assert-true(file-property(tmpdir, #"writeable?"));
 end;
 
-define file-system function-test root-directories ()
+define test test-root-directories ()
   //---*** Fill this in.
 end;
 
 
 /// Macro tests
 
-define file-system macro-test with-open-file-test ()
+define test test-with-open-file-test ()
   // ---*** Fill this in.
-end macro-test with-open-file-test;
+end test;
 
 
 /// File stream test utilities
@@ -1358,27 +1359,27 @@ define sideways method make-test-instance
   make(class, name: "hello")
 end method make-test-instance;
 
-define file-system function-test file-system-separator ()
+define test test-file-system-separator ()
   check-instance?("file-system-separator() returns a character",
                   <character>,
                   file-system-separator());
-end function-test file-system-separator;
+end test;
 
-define file-system class-test <file-system-locator> ()
+define test test-<file-system-locator> ()
   //---*** Fill this in...
-end class-test <file-system-locator>;
+end test;
 
-define file-system class-test <native-file-system-locator> ()
+define test test-<native-file-system-locator> ()
   //---*** Fill this in...
-end class-test <native-file-system-locator>;
+end test;
 
-define file-system class-test <file-system-directory-locator> ()
+define test test-<file-system-directory-locator> ()
   //---*** Fill this in...
-end class-test <file-system-directory-locator>;
+end test;
 
-define file-system class-test <file-system-file-locator> ()
+define test test-<file-system-file-locator> ()
   //---*** Fill this in...
-end class-test <file-system-file-locator>;
+end test;
 
 define method test-file-system-locator-class
     (class-name :: <string>, class :: subclass(<file-system-locator>),
@@ -1466,29 +1467,29 @@ define constant $microsoft-filenames
       "c:/Program Files/Functional Objects/Functional Developer/bin/functional-dylan.exe",
       "//machine/users/dylan/test.dylan"];
 
-define file-system class-test <microsoft-server-locator> ()
+define test test-<microsoft-server-locator> ()
   //---*** Fill this in...
-end class-test <microsoft-server-locator>;
+end test;
 
-define file-system class-test <microsoft-unc-locator> ()
+define test test-<microsoft-unc-locator> ()
   check-equal("as(<string>, microsoft-unc-locator)",
               as(<string>, make(<microsoft-unc-locator>, host: "host")),
               "\\\\host");
   check-equal("microsoft-unc-locator case insensitive",
               make(<microsoft-unc-locator>, host: "host"),
               make(<microsoft-unc-locator>, host: "HOST"))
-end class-test <microsoft-unc-locator>;
+end test;
 
-define file-system class-test <microsoft-volume-locator> ()
+define test test-<microsoft-volume-locator> ()
   check-equal("as(<string>, microsoft-volume-locator)",
               as(<string>, make(<microsoft-volume-locator>, volume: "a")),
               "a:");
   check-equal("microsoft-volume-locator case insensitive",
               make(<microsoft-volume-locator>, volume: "a"),
               make(<microsoft-volume-locator>, volume: "A"))
-end class-test <microsoft-volume-locator>;
+end test;
 
-define file-system class-test <microsoft-file-system-locator> ()
+define test test-<microsoft-file-system-locator> ()
   test-file-system-locator-class
     ("<microsoft-file-system-locator>", <microsoft-file-system-locator>,
      concatenate(map(rcurry(concatenate, "/"), $microsoft-directories),
@@ -1496,25 +1497,25 @@ define file-system class-test <microsoft-file-system-locator> ()
      case-sensitive?: #f,
      separator:           '\\',
      alternate-separator: '/')
-end class-test <microsoft-file-system-locator>;
+end test;
 
-define file-system class-test <microsoft-directory-locator> ()
+define test test-<microsoft-directory-locator> ()
   test-file-system-locator-class
     ("<microsoft-directory-locator>", <microsoft-directory-locator>,
      $microsoft-directories,
      case-sensitive?: #f,
      separator:           '\\',
      alternate-separator: '/')
-end class-test <microsoft-directory-locator>;
+end test;
 
-define file-system class-test <microsoft-file-locator> ()
+define test test-<microsoft-file-locator> ()
   test-file-system-locator-class
     ("<microsoft-file-locator>", <microsoft-file-locator>,
      $microsoft-filenames,
      case-sensitive?: #f,
      separator:           '\\',
      alternate-separator: '/')
-end class-test <microsoft-file-locator>;
+end test;
 
 /// Posix locators
 
@@ -1531,21 +1532,43 @@ define constant $posix-filenames
       "/file/with/a/short/directory/name/test.txt",
       "/file/with/a/short/name/b"];
 
-define file-system class-test <posix-file-system-locator> ()
+define test test-<posix-file-system-locator> ()
   test-file-system-locator-class
     ("<posix-file-system-locator>", <posix-file-system-locator>,
      concatenate(map(rcurry(concatenate, "/"), $posix-directories),
                  $posix-filenames))
-end class-test <posix-file-system-locator>;
+end test;
 
-define file-system class-test <posix-directory-locator> ()
+define test test-<posix-directory-locator> ()
   test-file-system-locator-class
     ("<posix-directory-locator>", <posix-directory-locator>,
      $posix-directories)
-end class-test <posix-directory-locator>;
+end test;
 
-define file-system class-test <posix-file-locator> ()
+define test test-<posix-file-locator> ()
   test-file-system-locator-class
     ("<posix-file-locator>", <posix-file-locator>,
      $posix-filenames)
-end class-test <posix-file-locator>;
+end test;
+
+define test test-<file-stream> ()
+  test-stream-class(<file-stream>, instantiable?: #t);
+end test;
+
+define suite file-system-locators-test-suite ()
+  test test-file-system-separator;
+  test test-<file-system-locator>;
+  test test-<native-file-system-locator>;
+  test test-<file-system-directory-locator>;
+  test test-<file-system-file-locator>;
+  test test-<microsoft-server-locator>;
+  test test-<microsoft-unc-locator>;
+  test test-<microsoft-volume-locator>;
+  test test-<microsoft-file-system-locator>;
+  test test-<microsoft-directory-locator>;
+  test test-<microsoft-file-locator>;
+  test test-<posix-file-system-locator>;
+  test test-<posix-directory-locator>;
+  test test-<posix-file-locator>;
+  test test-<file-stream>;
+end suite;

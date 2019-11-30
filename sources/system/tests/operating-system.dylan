@@ -8,59 +8,59 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Operating system tests
 
-define operating-system constant-test $architecture-little-endian? ()
+define test test-$architecture-little-endian? ()
   check-true("$architecture-little-endian? is true if x86",
              $machine-name ~== #"x86" | $architecture-little-endian?);
-end constant-test $architecture-little-endian?;
+end test;
 
-define operating-system constant-test $os-name ()
+define test test-$os-name ()
   //---*** Fill this in...
-end constant-test $os-name;
+end test;
 
-define operating-system constant-test $os-variant ()
+define test test-$os-variant ()
   //---*** Fill this in...
-end constant-test $os-variant;
+end test;
 
-define operating-system constant-test $os-version ()
+define test test-$os-version ()
   //---*** Fill this in...
-end constant-test $os-version;
+end test;
 
-define operating-system constant-test $platform-name ()
+define test test-$platform-name ()
   //---*** Fill this in...
-end constant-test $platform-name;
+end test;
 
-define operating-system constant-test $machine-name ()
+define test test-$machine-name ()
   //---*** Fill this in...
-end constant-test $machine-name;
+end test;
 
 
 /// Operating System functions
 
-define operating-system function-test login-name ()
+define test test-login-name ()
   check-instance?("login-name returns #f or a string",
                   false-or(<string>), login-name());
-end function-test login-name;
+end test;
 
-define operating-system function-test login-group ()
+define test test-login-group ()
   check-instance?("login-group returns #f or a string",
                   false-or(<string>), login-group());
-end function-test login-group;
+end test;
 
-define operating-system function-test owner-name ()
+define test test-owner-name ()
   check-instance?("owner-name returns #f or a string",
                   false-or(<string>), owner-name());
-end function-test owner-name;
+end test;
 
-define operating-system function-test owner-organization ()
+define test test-owner-organization ()
   check-instance?("owner-organization returns #f or a string",
                   false-or(<string>), owner-organization());
-end function-test owner-organization;
+end test;
 
-define operating-system class-test <application-process> ()
+define test test-<application-process> ()
   //---*** Fill this in...
-end class-test <application-process>;
+end test;
 
-define operating-system function-test run-application ()
+define test test-run-application ()
   // Synchronous true exit
   with-test-unit ("run-application synchronous true exit")
     let (exit-code, signal, child)
@@ -322,49 +322,49 @@ define operating-system function-test run-application ()
 
      close(stream);
    end;
-end function-test run-application;
+end test;
 
-define operating-system function-test wait-for-application-process ()
+define test test-wait-for-application-process ()
   //---*** Fill this in...
-end function-test wait-for-application-process;
+end test;
 
-define operating-system function-test load-library ()
+define test test-load-library ()
   //---*** Fill this in...
-end function-test load-library;
+end test;
 
-define operating-system function-test current-process-id ()
+define test test-current-process-id ()
   let pid = current-process-id();
   check-true("current-process-id is an integer", instance?(pid, <integer>));
   check-true("current-process-id > 0", pid > 0);
 end;
 
-define operating-system function-test parent-process-id ()
+define test test-parent-process-id ()
   let pid = parent-process-id();
   check-true("parent-process-id is an integer", instance?(pid, <integer>));
 end;
 
-define operating-system function-test machine-concurrent-thread-count ()
+define test test-machine-concurrent-thread-count ()
   let thread-count = machine-concurrent-thread-count();
   check-true("There is at least one core", thread-count >= 1);
 end;
 
 
-define operating-system function-test command-line-option-prefix ()
+define test test-command-line-option-prefix ()
   check-instance?("command-line-option-prefix returns a character",
                   <character>, command-line-option-prefix());
-end function-test command-line-option-prefix;
+end test;
 
 
 // Environment variables
 
-define operating-system function-test environment-variable ()
+define test test-environment-variable ()
   check-false("unset environment variable returns false",
               environment-variable("HIGHLY_UNLIKELY_TO_BE_SET"));
   check-instance?("PATH is set and is a string",
                   <string>, environment-variable("PATH"));
-end function-test environment-variable;
+end test;
 
-define operating-system function-test environment-variable-setter ()
+define test test-environment-variable-setter ()
   check-equal("environment-variable-setter returns new value",
               "new-value",
               environment-variable("OS_TEST_E_V_S") := "new-value");
@@ -374,19 +374,44 @@ define operating-system function-test environment-variable-setter ()
               environment-variable("OS_TEST_E_V_S") := #f);
   check-false("newly unset value reflected in environment",
               environment-variable("OS_TEST_E_V_S"));
-end function-test environment-variable-setter;
+end test;
 
-define operating-system function-test tokenize-environment-variable ()
+define test test-tokenize-environment-variable ()
   //---*** Fill this in...
-end function-test tokenize-environment-variable;
+end test;
 
 
 // Macro tests
 
-define operating-system macro-test with-application-output-test ()
+define test test-with-application-output ()
   with-application-output (stream = "echo hello, world", under-shell?: #t)
     let contents = read-to-end(stream);
     check-equal("echo results read from stream",
                 concatenate("hello, world", $line-end), contents);
   end;
-end macro-test with-application-output-test;
+end test;
+
+define suite operating-system-test-suite ()
+  test test-$architecture-little-endian?;
+  test test-$os-name;
+  test test-$os-variant;
+  test test-$os-version;
+  test test-$platform-name;
+  test test-$machine-name;
+  test test-login-name;
+  test test-login-group;
+  test test-owner-name;
+  test test-owner-organization;
+  test test-<application-process>;
+  test test-run-application;
+  test test-wait-for-application-process;
+  test test-load-library;
+  test test-current-process-id;
+  test test-parent-process-id;
+  test test-machine-concurrent-thread-count;
+  test test-command-line-option-prefix;
+  test test-environment-variable;
+  test test-environment-variable-setter;
+  test test-tokenize-environment-variable;
+  test test-with-application-output;
+end;

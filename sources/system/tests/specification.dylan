@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define module-spec date ()
+define interface-specification-suite date-specification-suite ()
   // Classes
   sealed class <date> (<number>);
 
@@ -24,18 +24,18 @@ define module-spec date ()
                <integer>, <integer>, <day-of-week>, <integer>);
   function parse-iso8601-string (<string>) => (<date>);
 /* Commented out until https://github.com/dylan-lang/testworks/issues/97 is fixed.
-  open generic-function \= (<date>, <date>) => (<boolean>);
-  open generic-function \< (<date>, <date>) => (<boolean>);
+  open generic function \= (<date>, <date>) => (<boolean>);
+  open generic function \< (<date>, <date>) => (<boolean>);
  */
-  sealed generic-function date-year (<date>) => (<integer>);
-  sealed generic-function date-month (<date>) => (<integer>);
-  sealed generic-function date-day (<date>) => (<integer>);
-  sealed generic-function date-hours (<date>) => (<integer>);
-  sealed generic-function date-minutes (<date>) => (<integer>);
-  sealed generic-function date-seconds (<date>) => (<integer>);
-  sealed generic-function date-microseconds (<date>) => (<integer>);
-  sealed generic-function date-time-zone-offset (<date>) => (<integer>);
-  sealed generic-function date-time-zone-offset-setter (<integer>, <date>)
+  sealed generic function date-year (<date>) => (<integer>);
+  sealed generic function date-month (<date>) => (<integer>);
+  sealed generic function date-day (<date>) => (<integer>);
+  sealed generic function date-hours (<date>) => (<integer>);
+  sealed generic function date-minutes (<date>) => (<integer>);
+  sealed generic function date-seconds (<date>) => (<integer>);
+  sealed generic function date-microseconds (<date>) => (<integer>);
+  sealed generic function date-time-zone-offset (<date>) => (<integer>);
+  sealed generic function date-time-zone-offset-setter (<integer>, <date>)
      => (<integer>);
   function date-day-of-week (<date>) => (<day-of-week>);
   //---*** Note that this leaves out the keyword arguments!
@@ -45,36 +45,31 @@ define module-spec date ()
   function local-time-zone-name () => (<string>);
   //---*** Other time zone tools?  (I.e., conversions from/to zone name to/from offset)
   function local-daylight-savings-time? () => (<boolean>);
-end module-spec date;
+end date-specification-suite;
 
 
-define module-spec locators ()
+define interface-specification-suite file-system-locators-specification-suite ()
   // Locators
-  open abstract class <locator> (<object>);
   open abstract class <server-locator> (<locator>);
   open abstract class <physical-locator> (<locator>);
   open abstract instantiable class <directory-locator> (<physical-locator>);
   open abstract instantiable class <file-locator> (<physical-locator>);
   instantiable class <native-directory-locator> (<directory-locator>);
   instantiable class <native-file-locator> (<file-locator>);
-  open generic-function supports-open-locator? (<locator>) => (<boolean>);
-  open generic-function open-locator (<locator>) => (<stream>);
-  open generic-function supports-list-locator? (<locator>) => (<boolean>);
-  open generic-function list-locator (<locator>) => (<sequence>);
-  open generic-function locator-host (<locator>) => (false-or(<string>));
-  open generic-function locator-server (<locator>) => (false-or(<server-locator>));
-  open generic-function locator-volume (<locator>) => (false-or(<string>));
-  open generic-function locator-directory (<locator>) => (false-or(<directory-locator>));
-  open generic-function locator-relative? (<locator>) => (<boolean>);
-  open generic-function locator-path (<locator>) => (<sequence>);
-  open generic-function locator-base (<locator>) => (false-or(<string>));
-  open generic-function locator-extension (<locator>) => (false-or(<string>));
-  open generic-function locator-name (<locator>) => (false-or(<string>));
+  open generic function locator-host (<locator>) => (false-or(<string>));
+  open generic function locator-server (<locator>) => (false-or(<server-locator>));
+  open generic function locator-volume (<locator>) => (false-or(<string>));
+  open generic function locator-directory (<locator>) => (false-or(<directory-locator>));
+  open generic function locator-relative? (<locator>) => (<boolean>);
+  open generic function locator-path (<locator>) => (<sequence>);
+  open generic function locator-base (<locator>) => (false-or(<string>));
+  open generic function locator-extension (<locator>) => (false-or(<string>));
+  open generic function locator-name (<locator>) => (false-or(<string>));
 
   // Locator coercion
-  open generic-function locator-as-string
+  open generic function locator-as-string
     (subclass(<string>), <locator>) => (<string>);
-  open generic-function string-as-locator
+  open generic function string-as-locator
     (subclass(<locator>), <string>) => (<locator>);
 
   // Locator conditions
@@ -104,10 +99,10 @@ define module-spec locators ()
   abstract class <file-index-url> (<url>);
   abstract class <cgi-url> (<url>);
   abstract class <mail-to-locator> (<web-locator>);
-end module-spec locators;
+end file-system-locators-specification-suite;
 
 
-define module-spec file-system ()
+define interface-specification-suite file-system-specification-suite ()
   // Constants
   constant <pathname> :: <type>;
   constant <file-type> :: <type>;
@@ -155,9 +150,9 @@ define module-spec file-system ()
   function rename-file (<pathname>, <pathname>) => ();
   function file-properties (<pathname>) => (<explicit-key-collection>);
   // Using <symbol> is suspect for these two?  <object> all we can assume?
-  generic-function file-property (<pathname>, <symbol>)
+  generic function file-property (<pathname>, <symbol>)
     => (<object>);
-  generic-function file-property-setter (<object>, <pathname>, <symbol>)
+  generic function file-property-setter (<object>, <pathname>, <symbol>)
     => (<object>);
   function do-directory (<function>, <pathname>) => ();
   // directory-contents is NYI currently.  Change <collection> to something
@@ -170,15 +165,12 @@ define module-spec file-system ()
   function temp-directory () => (false-or(<pathname>));
   function root-directories () => (<sequence>);
 
-  open generic-function type-for-file-stream
+  open generic function type-for-file-stream
     (<object>, false-or(<type>), <object>, #"key", #"all-keys")
     => (subclass(<file-stream>));
+end file-system-specification-suite;
 
-  // Macros
-  macro-test with-open-file-test;
-end module-spec file-system;
-
-define module-spec operating-system ()
+define interface-specification-suite operating-system-specification-suite ()
   // Operating System constants
   constant $architecture-little-endian? :: <boolean>;
   constant $os-name :: <symbol>;
@@ -217,11 +209,9 @@ define module-spec operating-system ()
     (false-or(<string>), <string>) => (false-or(<string>));
   function tokenize-environment-variable (<string>) => (<sequence>);
 
-  // Macros
-  macro-test with-application-output-test;
-end module-spec operating-system;
+end operating-system-specification-suite;
 
-define module-spec settings ()
+define interface-specification-suite settings-specification-suite ()
   open abstract primary class <settings> (<object>);
   sealed instantiable class <system-settings> (<settings>);
   sealed instantiable class <site-settings> (<settings>);
@@ -233,9 +223,9 @@ define module-spec settings ()
   sealed instantiable class <default-user-software-settings> (<settings>);
   sealed instantiable class <current-user-settings> (<settings>);
   sealed instantiable class <current-user-software-settings> (<settings>);
-end module-spec settings;
+end settings-specification-suite;
 
-define module-spec simple-xml ()
+define interface-specification-suite simple-xml-specification-suite ()
   // Classes
   sealed instantiable class <xml-error> (<simple-error>);
   sealed instantiable class <xml-document> (<object>);
@@ -258,16 +248,22 @@ define module-spec simple-xml ()
   function select-node-text (<xml-element>, <string>, #"key", #"default") => (<string>);
   function select-nodes (<xml-element>, <string>) => (<vector>);
   function select-single-node (<xml-element>, <string>) => (false-or(<xml-element>));
-end module-spec simple-xml;
+end simple-xml-specification-suite;
 
-define library-spec system ()
-  module operating-system;
-  module date;
-  module locators;
-  module file-system;
-  module settings;
-  module simple-xml;
+define suite system-test-suite ()
+  suite date-specification-suite;
+  suite date-test-suite;
+  suite file-system-locators-specification-suite;
+  suite file-system-locators-test-suite;
+  suite file-system-specification-suite;
+  suite more-locators-test-suite;
+  suite operating-system-specification-suite;
+  suite operating-system-test-suite;
+  suite settings-specification-suite;
+  suite settings-test-suite;
+  suite simple-xml-specification-suite;
+  suite simple-xml-test-suite;
+  suite system-regressions-test-suite;
   suite system-universal-streams-suite;
   suite system-additional-streams-suite;
-  suite system-regressions;
-end library-spec;
+end suite;

@@ -11,88 +11,110 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define sideways method make-test-instance
     (class == <xml-document>) => (document :: <xml-document>)
   make(<xml-document>, location: as(<file-locator>, "c:/test/test/xml"))
-end method make-test-instance;
+end method;
 
 define sideways method make-test-instance
     (class == <xml-element>) => (document :: <xml-element>)
   make(<xml-element>, name: "test")
-end method make-test-instance;
+end method;
 
-define simple-xml class-test <xml-error> ()
+define test test-<xml-error> ()
   //---*** Fill this in...
-end class-test <xml-error>;
+end test;
 
-define simple-xml class-test <xml-document> ()
+define test test-<xml-document> ()
   //---*** Fill this in...
-end class-test <xml-document>;
+end test;
 
-define simple-xml class-test <xml-node> ()
+define test test-<xml-node> ()
   //---*** Fill this in...
-end class-test <xml-node>;
+end test;
 
-define simple-xml class-test <xml-element> ()
+define test test-<xml-element> ()
   //---*** Fill this in...
-end class-test <xml-element>;
+end test;
 
 
 /// XML functions
 
-define simple-xml function-test document-location ()
+define test test-document-location ()
   //---*** Fill this in...
-end function-test document-location;
+end test;
 
-define simple-xml function-test document-location-setter ()
+define test test-document-location-setter ()
   //---*** Fill this in...
-end function-test document-location-setter;
+end test;
 
-define simple-xml function-test document-element ()
+define test test-document-element ()
   //---*** Fill this in...
-end function-test document-element;
+end test;
 
-define simple-xml function-test document-element-setter ()
+define test test-document-element-setter ()
   //---*** Fill this in...
-end function-test document-element-setter;
+end test;
 
-define simple-xml function-test read-xml-document ()
+define test test-read-xml-document ()
   //---*** Fill this in...
-end function-test read-xml-document;
+end test;
 
-define simple-xml function-test node-attribute ()
+define test test-node-attribute ()
   //---*** Fill this in...
-end function-test node-attribute;
+end test;
 
-define simple-xml function-test node-attribute-setter ()
+define test test-node-attribute-setter ()
   //---*** Fill this in...
-end function-test node-attribute-setter;
+end test;
 
-define simple-xml function-test node-attributes ()
+define test test-node-attributes ()
   //---*** Fill this in...
-end function-test node-attributes;
+end test;
 
-define simple-xml function-test node-children ()
+define test test-node-children ()
   //---*** Fill this in...
-end function-test node-children;
+end test;
 
-define simple-xml function-test node-name ()
+define test test-node-name ()
   //---*** Fill this in...
-end function-test node-name;
+end test;
 
-define simple-xml function-test node-text ()
+define test test-node-text ()
   //---*** Fill this in...
-end function-test node-text;
+end test;
 
-define simple-xml function-test node-text-setter ()
+define test test-node-text-setter ()
   //---*** Fill this in...
-end function-test node-text-setter;
+end test;
 
-define simple-xml function-test select-node-text ()
+define test test-select-node-text ()
 //---*** Fill this in...
-end function-test select-node-text;
+end test;
 
-define simple-xml function-test select-nodes ()
+define test test-select-nodes ()
 //---*** Fill this in...
-end function-test select-nodes;
+end test;
 
-define simple-xml function-test select-single-node ()
+define test test-select-single-node ()
 //---*** Fill this in...
-end function-test select-single-node;
+end test;
+
+define suite simple-xml-test-suite ()
+  test test-<xml-error>;
+  test test-<xml-document>;
+  test test-<xml-node>;
+  test test-<xml-element>;
+  test test-document-location;
+  test test-document-location-setter;
+  test test-document-element;
+  test test-document-element-setter;
+  test test-read-xml-document;
+  test test-node-attribute;
+  test test-node-attribute-setter;
+  test test-node-attributes;
+  test test-node-children;
+  test test-node-name;
+  test test-node-text;
+  test test-node-text-setter;
+  test test-select-node-text;
+  test test-select-nodes;
+  test test-select-single-node;
+end;

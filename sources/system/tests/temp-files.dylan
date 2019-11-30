@@ -6,6 +6,9 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+// TODO(cgay): use test-temp-directory:testworks:testworks instead.
+// (Add test-temp-file to testworks.)
+
 // This lock is used  to manage access to both *temp-file-counter*
 // and *temp-file-date*.
 define constant *temp-file-lock* :: <simple-lock> = make(<lock>);

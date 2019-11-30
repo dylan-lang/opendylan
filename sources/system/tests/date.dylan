@@ -1,6 +1,6 @@
 Module:       system-test-suite
 Synopsis:     System library test suite
-Author:              Andy Armstrong
+Author:       Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -62,7 +62,7 @@ define function success-values (field :: <symbol>, #key date)
   list(min, min + 1, round/(min + max, 2), max - 1, max);
 end function success-values;
 
-define date class-test <date> ()
+define test test-<date> ()
   //
   // Wasn't sure where to put these tests.
   // Just verifies that the args checking for make(<date>) is reasonable.
@@ -108,12 +108,12 @@ define date class-test <date> ()
   check-true("Make a date with Feb 29 on a leap year ok?",
              make(<date>, year: 2000, month: 2, day: 29));
 
-end class-test <date>;
+end test;
 
-define date constant-test <day-of-week> ()
+define test test-<day-of-week> ()
   check-instance?("<day-of-week> is a <type>?",
                   <type>, <day-of-week>);
-end constant-test <day-of-week>;
+end test;
 
 
 /// Date function test cases
@@ -131,15 +131,15 @@ define function copy-date (date :: <date>) => (new-date :: <date>)
               time-zone-offset: date.date-time-zone-offset)
 end function copy-date;
 
-define date function-test encode-date ()
+define test test-encode-date ()
   //---*** Fill this in.
 end;
 
-define date function-test decode-date ()
+define test test-decode-date ()
   //---*** Fill this in.
 end;
 
-define date function-test \< ()
+define test test-date-< ()
   let date = current-date();
   let (mins, maxes) = values(#(), #());
   for (e in reverse($limits))
@@ -154,7 +154,7 @@ define date function-test \< ()
   // Algo mas?
 end;
 
-define date function-test \= ()
+define test test-date-= ()
   check-true("Basic date1 = date2 check",
              begin
                let now = current-date();
@@ -166,39 +166,39 @@ define date function-test \= ()
                = encode-date(2000, 1, 1, 1, 1, 1, microseconds: 9999));
 end;
 
-define date function-test date-year ()
+define test test-date-year ()
   //---*** Fill this in.
 end;
 
-define date function-test date-month ()
+define test test-date-month ()
   //---*** Fill this in.
 end;
 
-define date function-test date-day ()
+define test test-date-day ()
   //---*** Fill this in.
 end;
 
-define date function-test date-hours ()
+define test test-date-hours ()
   //---*** Fill this in.
 end;
 
-define date function-test date-minutes ()
+define test test-date-minutes ()
   //---*** Fill this in.
 end;
 
-define date function-test date-seconds ()
+define test test-date-seconds ()
   //---*** Fill this in.
 end;
 
-define date function-test date-microseconds ()
+define test test-date-microseconds ()
   //---*** Fill this in.
 end;
 
-define date function-test date-time-zone-offset ()
+define test test-date-time-zone-offset ()
   //---*** Fill this in.
 end;
 
-define date function-test date-time-zone-offset-setter ()
+define test test-date-time-zone-offset-setter ()
   let d1 = encode-date(2100, 12, 31, 23, 0, 0, time-zone-offset: 0);
   let d2 = copy-date(d1);
   d1.date-time-zone-offset := 90;
@@ -209,12 +209,12 @@ define date function-test date-time-zone-offset-setter ()
              d1 = d2);
 end;
 
-define date function-test date-day-of-week ()
+define test test-date-day-of-week ()
   let date = make(<date>, year: 1997, month: 5, day: 5);
   check-equal("date-day-of-week", date-day-of-week(date), #"monday");
 end;
 
-define date function-test as-iso8601-string ()
+define test test-as-iso8601-string ()
   // This check makes a big assumption about how the ISO8601 string
   // will be formatted.  There are various legal formats according to
   // the standard but this seems to be the one used by our implementation.
@@ -226,7 +226,7 @@ define date function-test as-iso8601-string ()
               "2000-01-01T00:00:00+00:00");
 end;
 
-define date function-test parse-iso8601-string ()
+define test test-parse-iso8601-string ()
   for (item in #[#("1997",                         #(1997, 1, 1,  0, 0, 0, 0, 0), #t),
                  #("1997-07",                      #(1997, 7, 1,  0, 0, 0, 0, 0), #t),
                  #("1997-07-16",                   #(1997, 7, 16, 0, 0, 0, 0, 0), #t),
@@ -252,18 +252,43 @@ define date function-test parse-iso8601-string ()
   end for;
 end;
 
-define date function-test current-date ()
+define test test-current-date ()
   //---*** Fill this in.
 end;
 
-define date function-test local-time-zone-offset ()
+define test test-local-time-zone-offset ()
   //---*** Fill this in.
 end;
 
-define date function-test local-time-zone-name ()
+define test test-local-time-zone-name ()
   //---*** Fill this in.
 end;
 
-define date function-test local-daylight-savings-time? ()
+define test test-local-daylight-savings-time? ()
   //---*** Fill this in.
+end;
+
+define suite date-test-suite ()
+  test test-<date>;
+  test test-<day-of-week>;
+  test test-as-iso8601-string;
+  test test-current-date;
+  test test-date-<;
+  test test-date-=;
+  test test-date-day-of-week;
+  test test-date-day;
+  test test-date-hours;
+  test test-date-microseconds;
+  test test-date-minutes;
+  test test-date-month;
+  test test-date-seconds;
+  test test-date-time-zone-offset-setter;
+  test test-date-time-zone-offset;
+  test test-date-year;
+  test test-decode-date;
+  test test-encode-date;
+  test test-local-daylight-savings-time?;
+  test test-local-time-zone-name;
+  test test-local-time-zone-offset;
+  test test-parse-iso8601-string;
 end;

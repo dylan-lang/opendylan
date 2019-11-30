@@ -8,46 +8,60 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Settings tests
 
-define \settings class-test <settings> ()
+define test test-<settings> ()
   //---*** Fill this in...
-end class-test <settings>;
+end test;
 
-define \settings class-test <system-settings> ()
+define test test-<system-settings> ()
   //---*** Fill this in...
-end class-test <system-settings>;
+end test;
 
-define \settings class-test <site-settings> ()
+define test test-<site-settings> ()
   //---*** Fill this in...
-end class-test <site-settings>;
+end test;
 
-define \settings class-test <site-software-settings> ()
+define test test-<site-software-settings> ()
   //---*** Fill this in...
-end class-test <site-software-settings>;
+end test;
 
-define \settings class-test <local-settings> ()
+define test test-<local-settings> ()
   //---*** Fill this in...
-end class-test <local-settings>;
+end test;
 
-define \settings class-test <local-software-settings> ()
+define test test-<local-software-settings> ()
   //---*** Fill this in...
-end class-test <local-software-settings>;
+end test;
 
-define \settings class-test <local-hardware-settings> ()
+define test test-<local-hardware-settings> ()
   //---*** Fill this in...
-end class-test <local-hardware-settings>;
+end test;
 
-define \settings class-test <default-user-settings> ()
+define test test-<default-user-settings> ()
   //---*** Fill this in...
-end class-test <default-user-settings>;
+end test;
 
-define \settings class-test <default-user-software-settings> ()
+define test test-<default-user-software-settings> ()
   //---*** Fill this in...
-end class-test <default-user-software-settings>;
+end test;
 
-define \settings class-test <current-user-settings> ()
+define test test-<current-user-settings> ()
   //---*** Fill this in...
-end class-test <current-user-settings>;
+end test;
 
-define \settings class-test <current-user-software-settings> ()
+define test test-<current-user-software-settings> ()
   //---*** Fill this in...
-end class-test <current-user-software-settings>;
+end test;
+
+define suite settings-test-suite ()
+  test test-<settings>;
+  test test-<system-settings>;
+  test test-<site-settings>;
+  test test-<site-software-settings>;
+  test test-<local-settings>;
+  test test-<local-software-settings>;
+  test test-<local-hardware-settings>;
+  test test-<default-user-settings>;
+  test test-<default-user-software-settings>;
+  test test-<current-user-settings>;
+  test test-<current-user-software-settings>;
+end;
