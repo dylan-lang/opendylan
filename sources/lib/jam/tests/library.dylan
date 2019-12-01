@@ -8,7 +8,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library jam-test-suite
   use common-dylan;
   use testworks;
-  use testworks-specs;
   use io;
   use system;
   use jam;
@@ -19,7 +18,6 @@ end library jam-test-suite;
 define module jam-test-suite
   use common-dylan;
   use testworks;
-  use testworks-specs;
   use locators;
   use file-system;
   use streams;

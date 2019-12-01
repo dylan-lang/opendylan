@@ -11,23 +11,23 @@ define sideways method make-test-instance
   make(class)
 end method make-test-instance;
 
-define jam class-test <jam-state> ()
+define test test-<jam-state> ()
   //---*** Fill this in...
-end class-test <jam-state>;
+end test;
 
-define jam function-test jam-state-copy ()
+define test test-jam-state-copy ()
   //---*** Fill this in...
-end function-test jam-state-copy;
+end test;
 
-define jam function-test jam-variable ()
+define test test-jam-variable ()
   //---*** Fill this in...
-end function-test jam-variable;
+end test;
 
-define jam function-test jam-variable-setter ()
+define test test-jam-variable-setter ()
   //---*** Fill this in...
-end function-test jam-variable-setter;
+end test;
 
-define jam function-test jam-expand-arg ()
+define test test-jam-expand-arg ()
   with-test-unit ("jam-expand-arg simple variable expansion")
     let jam = make-test-instance(<jam-state>);
     jam-variable(jam, "X") := #("a", "b", "c");
@@ -213,9 +213,9 @@ define jam function-test jam-expand-arg ()
   with-test-unit ("jam-expand-arg :@ expansion")
     //---*** Fill this in...
   end;
-end function-test jam-expand-arg;
+end test;
 
-define jam function-test jam-expand-list ()
+define test test-jam-expand-list ()
   let jam = make-test-instance(<jam-state>);
   jam-variable(jam, "X") := #("This", "is");
   jam-variable(jam, "Y") := #("A", "TEST");
@@ -223,17 +223,17 @@ define jam function-test jam-expand-list ()
   check-equal("$(X:U) $(Y:L)",
               jam-expand-list(jam, #("$(X:U)", "$(Y:L)")),
               #("THIS", "IS", "a", "test"));
-end function-test jam-expand-list;
+end test;
 
-define jam function-test jam-read-file ()
+define test test-jam-read-file ()
   //---*** Fill this in...
-end function-test jam-read-file;
+end test;
 
-define jam function-test jam-read ()
+define test test-jam-read ()
   //---*** Fill this in...
-end function-test jam-read;
+end test;
 
-define jam function-test jam-state-stale? ()
+define test test-jam-state-stale? ()
   let jam = make-test-instance(<jam-state>);
   assert-false(jam-state-stale?(jam),
                "pristine jam states are fresh");
@@ -253,32 +253,32 @@ define jam function-test jam-state-stale? ()
   delete-file(a);
   assert-true(jam-state-stale?(jam),
               "deleted jamfiles make state stale");
-end function-test jam-state-stale?;
+end test;
 
-define jam function-test jam-rule ()
+define test test-jam-rule ()
   //---*** Fill this in...
-end function-test jam-rule;
+end test;
 
-define jam function-test jam-rule-setter ()
+define test test-jam-rule-setter ()
   //---*** Fill this in...
-end function-test jam-rule-setter;
+end test;
 
-define jam function-test jam-invoke-rule ()
+define test test-jam-invoke-rule ()
   //---*** Fill this in...
-end function-test jam-invoke-rule;
+end test;
 
-define jam function-test jam-target-variable-setter ()
+define test test-jam-target-variable-setter ()
   //---*** Fill this in...
-end function-test jam-target-variable-setter;
+end test;
 
-define jam function-test jam-target-variable ()
+define test test-jam-target-variable ()
   //---*** Fill this in...
-end function-test jam-target-variable;
+end test;
 
-define jam function-test jam-target-bind ()
+define test test-jam-target-bind ()
   //---*** Fill this in...
-end function-test jam-target-bind;
+end test;
 
-define jam function-test jam-target-build ()
+define test test-jam-target-build ()
   //---*** Fill this in...
-end function-test jam-target-build;
+end test;
