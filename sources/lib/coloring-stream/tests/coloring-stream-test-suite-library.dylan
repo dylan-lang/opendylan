@@ -9,7 +9,6 @@ define library coloring-stream-test-suite
   use common-dylan;
   use coloring-stream;
   use testworks;
-  use testworks-specs;
   use io;
 
   export coloring-stream-test-suite;
@@ -22,7 +21,6 @@ define module coloring-stream-test-suite
   use format;
   use print;
   use testworks;
-  use testworks-specs;
   use streams;
   use standard-io;
 

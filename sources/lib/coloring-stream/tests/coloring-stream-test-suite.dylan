@@ -5,16 +5,16 @@ Copyright: Original Code is Copyright 2015 Dylan Hackers.
 License:   See License.txt in this distribution for details.
 Warranty:  Distributed WITHOUT WARRANTY OF ANY KIND
 
-define module-spec coloring-stream ()
+define interface-specification-suite coloring-stream-specification-suite ()
   abstract instantiable class <coloring-stream> (<wrapper-stream>);
 
   function colorize-stream
       (<stream>, #"key", #"force-ansi?")
    => (<coloring-stream>);
 
-  open generic-function stream-supports-color? (<stream>) => (<boolean>);
+  open generic function stream-supports-color? (<stream>) => (<boolean>);
 
-  open generic-function stream-supports-ansi-color? (<stream>) => (<boolean>);
+  open generic function stream-supports-ansi-color? (<stream>) => (<boolean>);
 
   constant $normal-intensity :: <object>;
   constant $bright-intensity :: <object>;
@@ -37,25 +37,25 @@ define module-spec coloring-stream ()
   function text-attributes
       (#"key", #"foreground", #"background", #"intensity")
    => (<text-attributes>);
-end module-spec coloring-stream;
+end coloring-stream-specification-suite;
 
 define sideways method make-test-instance
     (class == <coloring-stream>)
  => (object)
   make(<coloring-stream>, inner-stream: *standard-output*);
-end method make-test-instance;
+end method;
 
-define coloring-stream class-test <coloring-stream> ()
+define test test-<coloring-stream> ()
   //---*** Fill this in...
-end class-test <coloring-stream>;
+end test;
 
-define coloring-stream function-test stream-supports-color? ()
+define test test-stream-supports-color? ()
   let string-stream = make(<string-stream>, direction: #"output");
   check-false("String streams are not colorizable.",
               stream-supports-color?(string-stream));
-end function-test stream-supports-color?;
+end test;
 
-define coloring-stream function-test colorize-stream ()
+define test test-colorize-stream ()
   let c = colorize-stream(*standard-output*);
   check-instance?("colorize-stream(file stream) returns a <coloring-stream>",
                   <coloring-stream>, c);
@@ -75,7 +75,7 @@ define coloring-stream function-test colorize-stream ()
                   <ansi-coloring-stream>, c);
   check-equal("colorize-stream on ansi coloring stream returns same",
               c, colorize-stream(c));
-end function-test colorize-stream;
+end test;
 
 define function encode-to-ansi (attributes :: false-or(<text-attributes>))
   with-output-to-string (s)
@@ -84,84 +84,84 @@ define function encode-to-ansi (attributes :: false-or(<text-attributes>))
   end with-output-to-string
 end function encode-to-ansi;
 
-define coloring-stream constant-test $normal-intensity ()
+define test test-$normal-intensity ()
   let attr = text-attributes(intensity: $normal-intensity);
   assert-equal(encode-to-ansi(attr), "\<1b>[0m");
-end constant-test $normal-intensity;
+end test;
 
-define coloring-stream constant-test $bright-intensity ()
+define test test-$bright-intensity ()
   let attr = text-attributes(intensity: $bright-intensity);
   assert-equal(encode-to-ansi(attr), "\<1b>[1m");
-end constant-test $bright-intensity;
+end test;
 
-define coloring-stream constant-test $dim-intensity ()
+define test test-$dim-intensity ()
   let attr = text-attributes(intensity: $dim-intensity);
   assert-equal(encode-to-ansi(attr), "\<1b>[2m");
-end constant-test $dim-intensity;
+end test;
 
-define coloring-stream constant-test $color-black ()
+define test test-$color-black ()
   let attr = text-attributes(foreground: $color-black);
   assert-equal(encode-to-ansi(attr), "\<1b>[30m");
-end constant-test $color-black;
+end test;
 
-define coloring-stream constant-test $color-blue ()
+define test test-$color-blue ()
   let attr = text-attributes(foreground: $color-blue);
   assert-equal(encode-to-ansi(attr), "\<1b>[34m");
-end constant-test $color-blue;
+end test;
 
-define coloring-stream constant-test $color-cyan ()
+define test test-$color-cyan ()
   let attr = text-attributes(foreground: $color-cyan);
   assert-equal(encode-to-ansi(attr), "\<1b>[36m");
-end constant-test $color-cyan;
+end test;
 
-define coloring-stream constant-test $color-default ()
+define test test-$color-default ()
   let attr = text-attributes(foreground: $color-default);
   assert-equal(encode-to-ansi(attr), "\<1b>[39m");
-end constant-test $color-default;
+end test;
 
-define coloring-stream constant-test $color-green ()
+define test test-$color-green ()
   let attr = text-attributes(foreground: $color-green);
   assert-equal(encode-to-ansi(attr), "\<1b>[32m");
-end constant-test $color-green;
+end test;
 
-define coloring-stream constant-test $color-magenta ()
+define test test-$color-magenta ()
   let attr = text-attributes(foreground: $color-magenta);
   assert-equal(encode-to-ansi(attr), "\<1b>[35m");
-end constant-test $color-magenta;
+end test;
 
-define coloring-stream constant-test $color-red ()
+define test test-$color-red ()
   let attr = text-attributes(foreground: $color-red);
   assert-equal(encode-to-ansi(attr), "\<1b>[31m");
-end constant-test $color-red;
+end test;
 
-define coloring-stream constant-test $color-white ()
+define test test-$color-white ()
   let attr = text-attributes(foreground: $color-white);
   assert-equal(encode-to-ansi(attr), "\<1b>[37m");
-end constant-test $color-white;
+end test;
 
-define coloring-stream constant-test $color-yellow ()
+define test test-$color-yellow ()
   let attr = text-attributes(foreground: $color-yellow);
   assert-equal(encode-to-ansi(attr), "\<1b>[33m");
-end constant-test $color-yellow;
+end test;
 
-define coloring-stream constant-test $reset-attributes ()
+define test test-$reset-attributes ()
   let attr = $reset-attributes;
   assert-equal(encode-to-ansi(attr), "\<1b>[0m");
-end constant-test $reset-attributes;
+end test;
 
-define coloring-stream function-test text-attributes ()
+define test test-text-attributes ()
   let attr = text-attributes(foreground: $color-red,
                              background: $color-green,
                              intensity: $bright-intensity);
   check-equal("complex attributes work",
               encode-to-ansi(attr), "\<1b>[31;42;1m");
-end function-test text-attributes;
+end test;
 
-define coloring-stream class-test <text-attributes> ()
+define test test-<text-attributes> ()
   // Tested via the other tests.
-end class-test <text-attributes>;
+end test;
 
-define test format-support-test ()
+define test test-format-support ()
   check-equal("Using format works with color",
               with-output-to-string (s)
                 let ansi-stream = colorize-stream(s, force-ansi?: #t);
@@ -169,9 +169,9 @@ define test format-support-test ()
                 format(ansi-stream, "%=Hello%=!", error-attributes, $reset-attributes);
               end with-output-to-string,
               "\<1b>[31mHello\<1b>[0m!");
-end test format-support-test;
+end test;
 
-define test print-support-test ()
+define test test-print-support ()
   // We intentionally use print-object and print with the attributes to
   // test that they both work.
   check-equal("Using print works with color",
@@ -184,9 +184,9 @@ define test print-support-test ()
                 print("!", ansi-stream, escape?: #f);
               end with-output-to-string,
               "\<1b>[31mWorld\<1b>[0m!");
-end test print-support-test;
+end test;
 
-define test indenting-support-test ()
+define test test-indenting-support ()
   check-equal("Color can poke through indentation",
               with-output-to-string (s)
                 let is = make(<indenting-stream>, inner-stream: s);
@@ -197,11 +197,30 @@ define test indenting-support-test ()
                        error-attributes, $reset-attributes);
               end with-output-to-string,
               "  \<1b>[31mHello\<1b>[0m!");
-end test indenting-support-test;
+end test;
 
-define library-spec coloring-stream ()
-  module coloring-stream;
-  test format-support-test;
-  test print-support-test;
-  test indenting-support-test;
-end library-spec coloring-stream;
+define suite coloring-stream-test-suite ()
+  suite coloring-stream-specification-suite;
+
+  test test-<coloring-stream>;
+  test test-stream-supports-color?;
+  test test-colorize-stream;
+  test test-$normal-intensity;
+  test test-$bright-intensity;
+  test test-$dim-intensity;
+  test test-$color-black;
+  test test-$color-blue;
+  test test-$color-cyan;
+  test test-$color-default;
+  test test-$color-green;
+  test test-$color-magenta;
+  test test-$color-red;
+  test test-$color-white;
+  test test-$color-yellow;
+  test test-$reset-attributes;
+  test test-text-attributes;
+  test test-<text-attributes>;
+  test test-format-support;
+  test test-print-support;
+  test test-indenting-support;
+end suite;
