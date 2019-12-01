@@ -20,41 +20,41 @@ define sideways method make-test-instance
   make-test-pane(<grid-layout>, cell-space-requirement: cell-space-requirement)
 end method make-test-instance;
 
-define duim-layouts class-test <layout> ()
+define test test-<layout> ()
   //---*** Fill this in...
-end class-test <layout>;
+end test;
 
-define duim-layouts class-test <basic-composite-pane> ()
+define test test-<basic-composite-pane> ()
   //---*** Fill this in...
-end class-test <basic-composite-pane>;
+end test;
 
-define duim-layouts class-test <drawing-pane> ()
+define test test-<drawing-pane> ()
   //---*** Fill this in...
-end class-test <drawing-pane>;
+end test;
 
-define duim-layouts class-test <leaf-pane> ()
+define test test-<leaf-pane> ()
   //---*** Fill this in...
-end class-test <leaf-pane>;
+end test;
 
-define duim-layouts class-test <multiple-child-composite-pane> ()
+define test test-<multiple-child-composite-pane> ()
   //---*** Fill this in...
-end class-test <multiple-child-composite-pane>;
+end test;
 
-define duim-layouts class-test <null-pane> ()
+define test test-<null-pane> ()
   //---*** Fill this in...
-end class-test <null-pane>;
+end test;
 
-define duim-layouts class-test <simple-pane> ()
+define test test-<simple-pane> ()
   //---*** Fill this in...
-end class-test <simple-pane>;
+end test;
 
-define duim-layouts class-test <single-child-composite-pane> ()
+define test test-<single-child-composite-pane> ()
   //---*** Fill this in...
-end class-test <single-child-composite-pane>;
+end test;
 
-define duim-layouts class-test <top-level-sheet> ()
+define test test-<top-level-sheet> ()
   //---*** Fill this in...
-end class-test <top-level-sheet>;
+end test;
 
 
 
@@ -505,7 +505,7 @@ define method expected-space-allocation
   space-allocations
 end method expected-space-allocation;
 
-define duim-layouts class-test <fixed-layout> ()
+define test test-<fixed-layout> ()
   test-fixed-layout("empty", #());
   test-fixed-layout("one child",
                     vector(make-test-pane(<test-list-box>,
@@ -520,7 +520,7 @@ define duim-layouts class-test <fixed-layout> ()
                                           width: 400, height: 500)));
   test-layout-child-resizing(<fixed-layout>);
   test-multiple-child-layout-manipulation(<fixed-layout>);
-end class-test <fixed-layout>;
+end test;
 
 
 
@@ -556,7 +556,7 @@ define method expected-space-allocation
   space-allocations
 end method expected-space-allocation;
 
-define duim-layouts class-test <pinboard-layout> ()
+define test test-<pinboard-layout> ()
   test-pinboard-layout("empty", #());
   test-pinboard-layout("one child",
                        vector(make-test-pane(<test-list-box>,
@@ -571,7 +571,7 @@ define duim-layouts class-test <pinboard-layout> ()
                                              width: 400, height: 500)));
   test-layout-child-resizing(<pinboard-layout>);
   test-multiple-child-layout-manipulation(<pinboard-layout>);
-end class-test <pinboard-layout>;
+end test;
 
 
 /// Stack layout tests
@@ -614,7 +614,7 @@ define method expected-space-allocation
   space-allocations
 end method expected-space-allocation;
 
-define duim-layouts class-test <stack-layout> ()
+define test test-<stack-layout> ()
   test-stack-layout("empty", #());
   test-stack-layout("one child",
                     vector(make-test-pane(<test-list-box>,
@@ -629,7 +629,7 @@ define duim-layouts class-test <stack-layout> ()
                                           width: 400, height: 500)));
   test-layout-child-resizing(<stack-layout>);
   test-multiple-child-layout-manipulation(<stack-layout>);
-end class-test <stack-layout>;
+end test;
 
 
 /// Table layout tests
@@ -966,7 +966,7 @@ define method test-mixed-table-layout-pane-layout
   apply(test-table-layout-pane-layout, children, name, args);
 end method test-mixed-table-layout-pane-layout;
 
-define duim-layouts class-test <table-layout> ()
+define test test-<table-layout> ()
   let x-spacing = 10;
   let y-spacing = 20;
   test-table-layout-pane-layout(#(), "empty");
@@ -1033,7 +1033,7 @@ define duim-layouts class-test <table-layout> ()
      x-spacing: x-spacing, y-spacing: y-spacing);
   test-layout-child-resizing(<table-layout>, rows: 1);
   test-multiple-child-layout-manipulation(<table-layout>, columns: 2);
-end class-test <table-layout>;
+end test;
 
 
 /// Grid layout tests
@@ -1048,7 +1048,7 @@ define method class-for-make-pane
   values(<test-grid-layout-pane>, #f)
 end method class-for-make-pane;
 
-define duim-layouts class-test <grid-layout> ()
+define test test-<grid-layout> ()
   let x-spacing = 10;
   let y-spacing = 20;
   let space-req = make(<space-requirement>, width: 100, height: 100);
@@ -1135,7 +1135,7 @@ define duim-layouts class-test <grid-layout> ()
       cell-space-requirement: space-req,
      columns: 2);
 */
-end class-test <grid-layout>;
+end test;
 
 
 /// Box pane tests
@@ -1398,19 +1398,19 @@ define method test-nested-layouts
                            spacing: spacing);
 end method test-nested-layouts;
 
-define duim-layouts class-test <column-layout> ()
+define test test-<column-layout> ()
   test-box-pane-layout(<column-layout>);
   test-nested-layouts(<column-layout>, <row-layout>);
   test-multiple-child-layout-manipulation(<column-layout>);
   test-layout-child-resizing(<column-layout>);
-end class-test <column-layout>;
+end test;
 
-define duim-layouts class-test <row-layout> ()
+define test test-<row-layout> ()
   test-box-pane-layout(<row-layout>);
   test-nested-layouts(<row-layout>, <column-layout>);
   test-multiple-child-layout-manipulation(<row-layout>);
   test-layout-child-resizing(<row-layout>);
-end class-test <row-layout>;
+end test;
 
 
 /// Button box layout tests

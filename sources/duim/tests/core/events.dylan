@@ -23,20 +23,6 @@ define sideways method make-test-instance
   make(class, frame: $dummy-frame)
 end method make-test-instance;
 
-define sideways method class-test-function
-    (class :: subclass(<event>)) => (function :: <function>)
-  test-event-class
-end method class-test-function;
-
-define generic test-event-class
-    (class :: subclass(<event>), #key, #all-keys) => ();
-
-define method test-event-class
-    (class :: subclass(<event>), #key name, instantiable?, #all-keys) => ()
-  if (instantiable?)
-  end
-end method test-event-class;
-
 
 /// event tests
 

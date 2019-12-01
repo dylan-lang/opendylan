@@ -8,14 +8,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Transform constant tests
 
-define duim-geometry constant-test $identity-transform ()
+define test test-$identity-transform ()
   test-transform-position
     ("Identity transform", $identity-transform, 10, 20, 10, 20);
   check-transform-box
     ("Identity transform", $identity-transform,
      0,  10,  100, 200,
      0,  10,  100, 200)
-end constant-test $identity-transform;
+end test;
 
 
 /// Transform test suites

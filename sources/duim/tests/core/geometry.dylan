@@ -13,92 +13,92 @@ define sideways method make-test-instance
   make(<point>, x: 10, y: 20)
 end method make-test-instance;
 
-define duim-geometry constant-test $largest-coordinate ()
+define test test-$largest-coordinate ()
   check-true("$smallest-coordinate < $largest-coordinate",
              $smallest-coordinate < $largest-coordinate);
   check-true("$largest-coordinate > 10000",
              $largest-coordinate > 10000)
-end constant-test $largest-coordinate;
+end test;
 
-define duim-geometry constant-test $smallest-coordinate ()
+define test test-$smallest-coordinate ()
   check-true("$smallest-coordinate < -10000",
              $smallest-coordinate < -10000)
-end constant-test $smallest-coordinate;
+end test;
 
 
 /// Function tests
 
-define duim-geometry function-test do-coordinates ()
+define test test-do-coordinates ()
   //---*** Fill this in...
-end function-test do-coordinates;
+end test;
 
-define duim-geometry function-test do-endpoint-coordinates ()
+define test test-do-endpoint-coordinates ()
   //---*** Fill this in...
-end function-test do-endpoint-coordinates;
+end test;
 
-define duim-geometry function-test fix-coordinate ()
+define test test-fix-coordinate ()
   //---*** Fill this in...
-end function-test fix-coordinate;
+end test;
 
-define duim-geometry function-test bounding-box ()
+define test test-bounding-box ()
   //---*** Fill this in...
-end function-test bounding-box;
+end test;
 
-define duim-geometry function-test bounding-box? ()
+define test test-bounding-box? ()
   //---*** Fill this in...
-end function-test bounding-box?;
+end test;
 
-define duim-geometry function-test box-edges ()
+define test test-box-edges ()
   //---*** Fill this in...
-end function-test box-edges;
+end test;
 
-define duim-geometry function-test set-box-edges ()
+define test test-set-box-edges ()
   //---*** Fill this in...
-end function-test set-box-edges;
+end test;
 
-define duim-geometry function-test box-position ()
+define test test-box-position ()
   //---*** Fill this in...
-end function-test box-position;
+end test;
 
-define duim-geometry function-test set-box-position ()
+define test test-set-box-position ()
   //---*** Fill this in...
-end function-test set-box-position;
+end test;
 
-define duim-geometry function-test box-size ()
+define test test-box-size ()
   //---*** Fill this in...
-end function-test box-size;
+end test;
 
-define duim-geometry function-test set-box-size ()
+define test test-set-box-size ()
   //---*** Fill this in...
-end function-test set-box-size;
+end test;
 
-define duim-geometry function-test box-left ()
+define test test-box-left ()
   //---*** Fill this in...
-end function-test box-left;
+end test;
 
-define duim-geometry function-test box-top ()
+define test test-box-top ()
   //---*** Fill this in...
-end function-test box-top;
+end test;
 
-define duim-geometry function-test box-right ()
+define test test-box-right ()
   //---*** Fill this in...
-end function-test box-right;
+end test;
 
-define duim-geometry function-test box-bottom ()
+define test test-box-bottom ()
   //---*** Fill this in...
-end function-test box-bottom;
+end test;
 
-define duim-geometry function-test box-height ()
+define test test-box-height ()
   //---*** Fill this in...
-end function-test box-height;
+end test;
 
-define duim-geometry function-test box-width ()
+define test test-box-width ()
   //---*** Fill this in...
-end function-test box-width;
+end test;
 
-define duim-geometry function-test make-bounding-box ()
+define test test-make-bounding-box ()
   //---*** Fill this in...
-end function-test make-bounding-box;
+end test;
 
 
 /// Tests
@@ -164,7 +164,7 @@ define sideways method make-test-instance
   make(<transform-underspecified>, points: #())
 end method make-test-instance;
 
-define duim-geometry class-test <bounding-box> ()
+define test test-<bounding-box> ()
   let box = make-bounding-box(50, 100, 150, 300);
   check-true("bounding-box?(box)", bounding-box?(box));
   check-false("bounding-box?(100)", bounding-box?(100));
@@ -200,67 +200,67 @@ define duim-geometry class-test <bounding-box> ()
   let new-box = bounding-box(box);
   check-false("bounding-box creates a new box", new-box == box);
   check-equal("bounding-box creates identical box", new-box, box);
-end class-test <bounding-box>;
+end test;
 
-define duim-geometry class-test <area> ()
+define test test-<area> ()
   //---*** Fill this in...
-end class-test <area>;
+end test;
 
-define duim-geometry class-test <path> ()
+define test test-<path> ()
   //---*** Fill this in...
-end class-test <path>;
+end test;
 
-define duim-geometry class-test <point> ()
+define test test-<point> ()
   //---*** Fill this in...
-end class-test <point>;
+end test;
 
-define duim-geometry class-test <region-set> ()
+define test test-<region-set> ()
   //---*** Fill this in...
-end class-test <region-set>;
+end test;
 
-define duim-geometry class-test <region> ()
+define test test-<region> ()
   //---*** Fill this in...
-end class-test <region>;
+end test;
 
-define duim-geometry class-test <standard-point> ()
+define test test-<standard-point> ()
   //---*** Fill this in...
-end class-test <standard-point>;
+end test;
 
-define duim-geometry class-test <singular-transform> ()
+define test test-<singular-transform> ()
   //---*** Fill this in...
-end class-test <singular-transform>;
+end test;
 
-define duim-geometry class-test <transform-error> ()
+define test test-<transform-error> ()
   //---*** Fill this in...
-end class-test <transform-error>;
+end test;
 
-define duim-geometry class-test <transform> ()
+define test test-<transform> ()
   //---*** Fill this in...
-end class-test <transform>;
+end test;
 
-define duim-extended-geometry class-test <polygon> ()
+define test test-<polygon> ()
   //---*** Fill this in...
-end class-test <polygon>;
+end test;
 
-define duim-extended-geometry class-test <line> ()
+define test test-<line> ()
   //---*** Fill this in...
-end class-test <line>;
+end test;
 
-define duim-extended-geometry class-test <elliptical-arc> ()
+define test test-<elliptical-arc> ()
   //---*** Fill this in...
-end class-test <elliptical-arc>;
+end test;
 
-define duim-extended-geometry class-test <rectangle> ()
+define test test-<rectangle> ()
   //---*** Fill this in...
-end class-test <rectangle>;
+end test;
 
-define duim-extended-geometry class-test <ellipse> ()
+define test test-<ellipse> ()
   //---*** Fill this in...
-end class-test <ellipse>;
+end test;
 
-define duim-extended-geometry class-test <polyline> ()
+define test test-<polyline> ()
   //---*** Fill this in...
-end class-test <polyline>;
+end test;
 
 
 /// Install the geometry test suite

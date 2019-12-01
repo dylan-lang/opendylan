@@ -8,13 +8,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Graphic classes
 
-define duim-graphics class-test <pixmap> ()
+define test test-<pixmap> ()
   //---*** Fill this in...
-end class-test <pixmap>;
+end test;
 
-define duim-graphics class-test <pixmap-medium> ()
+define test test-<pixmap-medium> ()
   //---*** Fill this in...
-end class-test <pixmap-medium>;
+end test;
 
 
 

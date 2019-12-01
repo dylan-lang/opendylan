@@ -8,45 +8,45 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Color constants
 
-define duim-dcs constant-test $foreground ()
+define test test-$foreground ()
   //---*** Fill this in...
-end constant-test $foreground;
+end test;
 
-define duim-dcs constant-test $background ()
+define test test-$background ()
   //---*** Fill this in...
-end constant-test $background;
+end test;
 
-define duim-dcs constant-test $black ()
+define test test-$black ()
   //---*** Fill this in...
-end constant-test $black;
+end test;
 
-define duim-dcs constant-test $blue ()
+define test test-$blue ()
   //---*** Fill this in...
-end constant-test $blue;
+end test;
 
-define duim-dcs constant-test $cyan ()
+define test test-$cyan ()
   //---*** Fill this in...
-end constant-test $cyan;
+end test;
 
-define duim-dcs constant-test $green ()
+define test test-$green ()
   //---*** Fill this in...
-end constant-test $green;
+end test;
 
-define duim-dcs constant-test $magenta ()
+define test test-$magenta ()
   //---*** Fill this in...
-end constant-test $magenta;
+end test;
 
-define duim-dcs constant-test $red ()
+define test test-$red ()
   //---*** Fill this in...
-end constant-test $red;
+end test;
 
-define duim-dcs constant-test $white ()
+define test test-$white ()
   //---*** Fill this in...
-end constant-test $white;
+end test;
 
-define duim-dcs constant-test $yellow ()
+define test test-$yellow ()
   //---*** Fill this in...
-end constant-test $yellow;
+end test;
 
 
 /// Color classes
@@ -56,103 +56,103 @@ define sideways method make-test-instance
   make(<color>, red: 1, green: 0, blue: 0)
 end method make-test-instance;
 
-define duim-dcs class-test <color-not-found> ()
+define test test-<color-not-found> ()
   //---*** Fill this in...
-end class-test <color-not-found>;
+end test;
 
-define duim-dcs class-test <color> ()
+define test test-<color> ()
   //---*** Fill this in...
-end class-test <color>;
+end test;
 
-define duim-dcs class-test <contrasting-color> ()
+define test test-<contrasting-color> ()
   //---*** Fill this in...
-end class-test <contrasting-color>;
+end test;
 
-define duim-dcs class-test <dynamic-color> ()
+define test test-<dynamic-color> ()
   //---*** Fill this in...
-end class-test <dynamic-color>;
+end test;
 
 
 /// DC tests
 
-define duim-dcs class-test <brush> ()
+define test test-<brush> ()
   //---*** Fill this in...
-end class-test <brush>;
+end test;
 
-define duim-dcs class-test <device-font> ()
+define test test-<device-font> ()
   //---*** Fill this in...
-end class-test <device-font>;
+end test;
 
-define duim-dcs class-test <image> ()
+define test test-<image> ()
   //---*** Fill this in...
-end class-test <image>;
+end test;
 
-define duim-dcs class-test <ink> ()
+define test test-<ink> ()
   //---*** Fill this in...
-end class-test <ink>;
+end test;
 
-define duim-dcs class-test <palette-full> ()
+define test test-<palette-full> ()
   //---*** Fill this in...
-end class-test <palette-full>;
+end test;
 
-define duim-dcs class-test <palette> ()
+define test test-<palette> ()
   //---*** Fill this in...
-end class-test <palette>;
+end test;
 
-define duim-dcs class-test <pattern> ()
+define test test-<pattern> ()
   //---*** Fill this in...
-end class-test <pattern>;
+end test;
 
-define duim-dcs class-test <pen> ()
+define test test-<pen> ()
   //---*** Fill this in...
-end class-test <pen>;
+end test;
 
-define duim-dcs class-test <stencil> ()
+define test test-<stencil> ()
   //---*** Fill this in...
-end class-test <stencil>;
+end test;
 
-define duim-dcs class-test <text-style> ()
+define test test-<text-style> ()
   //---*** Fill this in...
-end class-test <text-style>;
+end test;
 
 
 /// Color functions
 
-define duim-dcs function-test color-ihs ()
+define test test-color-ihs ()
   //---*** Fill this in...
-end function-test color-ihs;
+end test;
 
-define duim-dcs function-test color-rgb ()
+define test test-color-rgb ()
   //---*** Fill this in...
-end function-test color-rgb;
+end test;
 
-define duim-dcs function-test color-luminosity ()
+define test test-color-luminosity ()
   //---*** Fill this in...
-end function-test color-luminosity;
+end test;
 
-define duim-dcs function-test color? ()
+define test test-color? ()
   //---*** Fill this in...
-end function-test color?;
+end test;
 
-define duim-dcs function-test contrasting-colors-limit ()
+define test test-contrasting-colors-limit ()
   //---*** Fill this in...
-end function-test contrasting-colors-limit;
+end test;
 
-define duim-dcs function-test make-contrasting-colors ()
+define test test-make-contrasting-colors ()
   //---*** Fill this in...
-end function-test make-contrasting-colors;
+end test;
 
-define duim-dcs function-test make-gray-color ()
+define test test-make-gray-color ()
   //---*** Fill this in...
-end function-test make-gray-color;
+end test;
 
-define duim-dcs function-test make-ihs-color ()
+define test test-make-ihs-color ()
   //---*** Fill this in...
-end function-test make-ihs-color;
+end test;
 
-define duim-dcs function-test make-rgb-color ()
+define test test-make-rgb-color ()
   //---*** Fill this in...
-end function-test make-rgb-color;
+end test;
 
 
 /// Text style tests

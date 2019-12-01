@@ -6,15 +6,9 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/// Utilities
-
-define module-spec duim-utilities ()
-end module-spec duim-utilities;
-
-
 /// Geometry
 
-define module-spec duim-geometry ()
+define interface-specification-suite duim-geometry-specification-suite ()
   // Coordinates
   constant $largest-coordinate :: <integer>;
   constant $smallest-coordinate :: <integer>;
@@ -26,19 +20,19 @@ define module-spec duim-geometry ()
   open abstract instantiable class <bounding-box> (<region>);
   function bounding-box (<object>, #"key", #"into") => (<bounding-box>);
   function bounding-box? (<object>) => (<boolean>);
-  open generic-function box-edges
+  open generic function box-edges
        (<bounding-box>)
     => (<integer>, <integer>, <integer>, <integer>);
-  open generic-function set-box-edges
+  open generic function set-box-edges
        (<bounding-box>, <integer>, <integer>, <integer>, <integer>)
     => (<bounding-box>);
-  open generic-function box-position
+  open generic function box-position
        (<bounding-box>) => (<integer>, <integer>);
-  open generic-function set-box-position
+  open generic function set-box-position
        (<bounding-box>, <integer>, <integer>) => (<bounding-box>);
-  open generic-function box-size
+  open generic function box-size
        (<bounding-box>) => (<integer>, <integer>);
-  open generic-function set-box-size
+  open generic function set-box-size
        (<bounding-box>, <integer>, <integer>) => (<bounding-box>);
   function box-left   (<bounding-box>) => (<integer>);
   function box-top    (<bounding-box>) => (<integer>);
@@ -64,12 +58,12 @@ define module-spec duim-geometry ()
   open abstract instantiable class <transform> (<object>);
   open abstract class <transform-error> (<error>);
   sealed instantiable class <singular-transform> (<transform-error>);
-end module-spec duim-geometry;
+end duim-geometry-specification-suite;
 
 
 /// DCs
 
-define module-spec duim-dcs ()
+define interface-specification-suite duim-dcs-specification-suite ()
   // Colors
   constant $foreground :: <ink>;
   constant $background :: <ink>;
@@ -83,9 +77,9 @@ define module-spec duim-dcs ()
   constant $yellow :: <color>;
   open abstract instantiable class <color> (<ink>);
   open abstract instantiable class <contrasting-color> (<color>);
-  open generic-function color-ihs (<color>) => (<real>, <real>, <real>, <real>);
-  open generic-function color-rgb (<color>) => (<real>, <real>, <real>);
-  open generic-function color-luminosity (<color>) => (<real>);
+  open generic function color-ihs (<color>) => (<real>, <real>, <real>, <real>);
+  open generic function color-rgb (<color>) => (<real>, <real>, <real>);
+  open generic function color-luminosity (<color>) => (<real>);
   function color? (<object>) => (<boolean>);
   function contrasting-colors-limit (<object>) => (<integer>);
   function make-contrasting-colors (<integer>, #"key", #"k") => (<object>);
@@ -107,12 +101,12 @@ define module-spec duim-dcs ()
   open abstract instantiable class <pen> (<object>);
   open abstract instantiable class <stencil> (<image>);
   open abstract instantiable class <text-style> (<object>);
-end module-spec duim-dcs;
+end duim-dcs-specification-suite;
 
 
 /// DUIM-Sheets classes
 
-define protocol-spec duim-events ()
+define interface-specification-suite duim-events-specification-suite ()
   open abstract class <event> (<object>);
   open abstract class <sheet-event> (<event>);
   open abstract class <device-event> (<sheet-event>);
@@ -135,9 +129,9 @@ define protocol-spec duim-events ()
   sealed instantiable class <window-repaint-event> (<window-event>);
   open abstract class <frame-event> (<event>);
   sealed instantiable class <timer-event> (<frame-event>);
-end protocol-spec duim-events;
+end duim-events-specification-suite;
 
-define module-spec duim-sheets ()
+define interface-specification-suite duim-sheets-specification-suite ()
   open abstract class <caret> (<object>);
   open abstract class <display> (<sheet>);
   open abstract class <clipboard> (<object>);
@@ -148,21 +142,22 @@ define module-spec duim-sheets ()
   open abstract class <port> (<object>);
   open abstract class <sheet> (<object>);
   sealed instantiable class <undefined-text-style-mapping> (<error>);
-  protocol duim-events;
-end module-spec duim-sheets;
+
+  suite duim-events-specification-suite;
+end duim-sheets-specification-suite;
 
 
 /// Graphics
 
-define module-spec duim-graphics ()
+define interface-specification-suite duim-graphics-specification-suite ()
   open abstract instantiable class <pixmap> (<image>);
   open abstract instantiable class <pixmap-medium> (<medium>);
-end module-spec duim-graphics;
+end duim-graphics-specification-suite;
 
 
 /// Layouts
 
-define module-spec duim-layouts ()
+define interface-specification-suite duim-layouts-specification-suite ()
   open abstract class <layout> (<abstract-sheet>);
   open abstract class <leaf-pane> (<sheet>);
   open abstract class <basic-composite-pane> (<sheet>);
@@ -179,12 +174,12 @@ define module-spec duim-layouts ()
   open abstract instantiable class <stack-layout> (<layout>);
   open abstract instantiable class <table-layout> (<layout>);
   open abstract instantiable class <grid-layout> (<table-layout>);
-end module-spec duim-layouts;
+end duim-layouts-specification-suite;
 
 
 /// Gadget classes
 
-define module-spec duim-gadgets ()
+define interface-specification-suite duim-gadgets-specification-suite ()
   open abstract class <gadget> (<object>);
   open abstract class <action-gadget> (<gadget>);
   open abstract class <collection-gadget> (<value-gadget>);
@@ -238,19 +233,19 @@ define module-spec duim-gadgets ()
   open abstract instantiable class <table-control> (<collection-gadget>);
   open abstract instantiable class <table-item> (<object>);
   open abstract instantiable class <progress-bar> (<value-range-gadget>);
-end module-spec duim-gadgets;
+end duim-gadgets-specification-suite;
 
 
 /// Frames
 
-define protocol-spec duim-commands ()
+define interface-specification-suite duim-commands-specification-suite ()
   open abstract class <command> (<object>);
   sealed instantiable class <functional-command> (<command>);
   open abstract instantiable class <command-decorator> (<object>);
   open abstract instantiable class <command-table> (<object>);
-end protocol-spec duim-commands;
+end duim-commands-specification-suite;
 
-define protocol-spec duim-frame-events ()
+define interface-specification-suite duim-frame-events-specification-suite ()
   sealed instantiable class <frame-created-event> (<frame-event>);
   sealed instantiable class <frame-destroyed-event> (<frame-event>);
   sealed instantiable class <frame-exit-event> (<frame-event>);
@@ -258,37 +253,38 @@ define protocol-spec duim-frame-events ()
   sealed instantiable class <frame-mapped-event> (<frame-event>);
   sealed instantiable class <frame-unmapped-event> (<frame-event>);
   sealed instantiable class <application-exited-event> (<frame-exited-event>);
-end protocol-spec duim-frame-events;
+end duim-frame-events-specification-suite;
 
-define module-spec duim-frames ()
+define interface-specification-suite duim-frames-specification-suite ()
   open abstract instantiable class <simple-frame> (<frame>);
   open abstract instantiable class <dialog-frame> (<simple-frame>);
   open instantiable class <property-frame> (<dialog-frame>);
   open instantiable class <property-page> (<page>);
   open instantiable class <wizard-frame> (<dialog-frame>);
   open instantiable class <wizard-page> (<page>);
-  protocol duim-commands;
-  protocol duim-frame-events;
-end module-spec duim-frames;
+
+  suite duim-commands-specification-suite;
+  suite duim-frame-events-specification-suite;
+end duim-frames-specification-suite;
 
 
 /// Extended Geometry
 
 //---*** This should be in a separate test suite
-define module-spec duim-extended-geometry ()
+define interface-specification-suite duim-extended-geometry-specification-suite ()
   open abstract instantiable class <ellipse> (<area>);
   open abstract instantiable class <elliptical-arc> (<path>);
   open abstract instantiable class <line> (<path>);
   open abstract instantiable class <polygon> (<area>);
   open abstract instantiable class <polyline> (<path>);
   open abstract instantiable class <rectangle> (<area>);
-end module-spec duim-extended-geometry;
+end duim-extended-geometry-specification-suite;
 
 
 /// Gadget panes
 
 /*---*** This should be in a separate test suite
-define module-spec duim-gadget-panes ()
+define interface-specification-suite duim-gadget-panes-specification-suite ()
   sealed instantiable class <border-pane> (<border>);
   sealed instantiable class <group-box-pane> (<group-box>);
   sealed instantiable class <spacing-pane> (<spacing>);
@@ -300,20 +296,19 @@ define module-spec duim-gadget-panes ()
   sealed instantiable class <table-item-pane> (<table-item>);
   sealed instantiable class <tree-control-pane> (<tree-control>);
   sealed instantiable class <tree-node-pane> (<tree-node>);
-end module-spec duim-gadget-panes;
+end duim-gadget-panes-specification-suite;
 */
 
 
 /// The DUIM library specification
 
-define library-spec duim ()
-  module duim-utilities;
-  module duim-geometry;
-  module duim-dcs;
-  module duim-sheets;
-  module duim-graphics;
-  module duim-layouts;
-  module duim-gadgets;
-  module duim-frames;
-  module duim-extended-geometry;
-end library-spec duim;
+define suite duim-test-suite ()
+  suite duim-geometry-specification-suite;
+  suite duim-dcs-specification-suite;
+  suite duim-sheets-specification-suite;
+  suite duim-graphics-specification-suite;
+  suite duim-layouts-specification-suite;
+  suite duim-gadgets-specification-suite;
+  suite duim-frames-specification-suite;
+  suite duim-extended-geometry-specification-suite;
+end suite;

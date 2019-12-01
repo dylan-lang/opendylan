@@ -8,13 +8,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Region constant tests
 
-define duim-geometry constant-test $everywhere ()
+define test test-$everywhere ()
   check-false("$everywhere is not empty", region-empty?($everywhere))
-end constant-test $everywhere;
+end test;
 
-define duim-geometry constant-test $nowhere ()
+define test test-$nowhere ()
   check-true("$nowhere is empty", region-empty?($nowhere))
-end constant-test $nowhere;
+end test;
 
 
 /// Region tests

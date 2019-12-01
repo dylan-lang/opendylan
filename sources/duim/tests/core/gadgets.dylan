@@ -26,62 +26,62 @@ define sideways method make-test-instance
                  children-generator: always(#[]))
 end method make-test-instance;
 
-define duim-gadgets class-test <gadget> ()
+define test test-<gadget> ()
   //---*** Fill this in...
-end class-test <gadget>;
+end test;
 
-define duim-gadgets class-test <action-gadget> ()
+define test test-<action-gadget> ()
   //---*** Fill this in...
-end class-test <action-gadget>;
+end test;
 
-define duim-gadgets class-test <value-gadget> ()
+define test test-<value-gadget> ()
   //---*** Fill this in...
-end class-test <value-gadget>;
+end test;
 
-define duim-gadgets class-test <value-range-gadget> ()
+define test test-<value-range-gadget> ()
   //---*** Fill this in...
-end class-test <value-range-gadget>;
+end test;
 
-define duim-gadgets class-test <collection-gadget> ()
+define test test-<collection-gadget> ()
   //---*** Fill this in...
-end class-test <collection-gadget>;
+end test;
 
-define duim-gadgets class-test <text-gadget> ()
+define test test-<text-gadget> ()
   //---*** Fill this in...
-end class-test <text-gadget>;
+end test;
 
-define duim-gadgets class-test <label> ()
+define test test-<label> ()
   test-gadget-label(<label>);
-end class-test <label>;
+end test;
 
-define duim-gadgets class-test <password-field> ()
+define test test-<password-field> ()
   test-text-gadget-text(<password-field>);
   test-text-field-values(<password-field>);
-end class-test <password-field>;
+end test;
 
-define duim-gadgets class-test <slider> ()
+define test test-<slider> ()
   test-range-pane-values(<slider>);
-end class-test <slider>;
+end test;
 
-define duim-gadgets class-test <text-editor> ()
+define test test-<text-editor> ()
   test-text-gadget-text(<text-editor>);
   test-text-field-values(<text-editor>);
-end class-test <text-editor>;
+end test;
 
-define duim-gadgets class-test <text-field> ()
+define test test-<text-field> ()
   test-text-gadget-text(<text-field>);
   test-text-field-values(<text-field>);
-end class-test <text-field>;
+end test;
 
-define duim-gadgets class-test <button-box> ()
+define test test-<button-box> ()
   test-collection-gadget-value(<button-box>);
-end class-test <button-box>;
+end test;
 
-define duim-gadgets class-test <button> ()
+define test test-<button> ()
   //---*** Fill this in...
-end class-test <button>;
+end test;
 
-define duim-gadgets class-test <check-box> ()
+define test test-<check-box> ()
   test-gadget-box-pane-buttons(<check-box>);
   let cbp = make-collection-gadget(<check-box>, selection: #(0, 2));
   verify-gadget-box-pane-button-selection(cbp);
@@ -105,73 +105,73 @@ define duim-gadgets class-test <check-box> ()
                 gadget-value(cbp)
               end,
               #[#"two", #"three"]);
-end class-test <check-box>;
+end test;
 
-define duim-gadgets class-test <check-button> ()
+define test test-<check-button> ()
   test-gadget-label(<check-button>);
   test-button-values(<check-button>);
-end class-test <check-button>;
+end test;
 
-define duim-gadgets class-test <check-menu-button> ()
+define test test-<check-menu-button> ()
   test-gadget-label(<check-menu-button>);
   test-button-values(<check-menu-button>);
-end class-test <check-menu-button>;
+end test;
 
-define duim-gadgets class-test <check-menu-box> ()
+define test test-<check-menu-box> ()
   test-gadget-box-pane-buttons(<check-menu-box>);
   let cbp = make-collection-gadget(<check-menu-box>, selection: #(0, 2));
   verify-gadget-box-pane-button-selection(cbp);
-end class-test <check-menu-box>;
+end test;
 
-define duim-gadgets class-test <list-box> ()
+define test test-<list-box> ()
   test-collection-gadget-value(<list-box>);
-end class-test <list-box>;
+end test;
 
-define duim-gadgets class-test <menu-bar> ()
+define test test-<menu-bar> ()
   //---*** Fill this in...
-end class-test <menu-bar>;
+end test;
 
-define duim-gadgets class-test <menu-button> ()
+define test test-<menu-button> ()
   //---*** Fill this in...
-end class-test <menu-button>;
+end test;
 
-define duim-gadgets class-test <menu-box> ()
+define test test-<menu-box> ()
   test-collection-gadget-value(<menu-box>);
-end class-test <menu-box>;
+end test;
 
-define duim-gadgets class-test <menu> ()
+define test test-<menu> ()
   test-gadget-label(<menu>);
   test-no-value-gadget-values(<menu>);
-end class-test <menu>;
+end test;
 
-define duim-gadgets class-test <option-box> ()
+define test test-<option-box> ()
   test-single-selection-collection-gadget-values(<option-box>);
-end class-test <option-box>;
+end test;
 
-define duim-gadgets class-test <combo-box> ()
+define test test-<combo-box> ()
   test-text-gadget-text(<combo-box>);
   test-text-field-values(<combo-box>);
-end class-test <combo-box>;
+end test;
 
-define duim-gadgets class-test <push-box> ()
+define test test-<push-box> ()
   test-gadget-box-pane-buttons(<push-box>);
-end class-test <push-box>;
+end test;
 
-define duim-gadgets class-test <push-button> ()
+define test test-<push-button> ()
   test-gadget-label(<push-button>);
   test-button-values(<push-button>);
-end class-test <push-button>;
+end test;
 
-define duim-gadgets class-test <push-menu-button> ()
+define test test-<push-menu-button> ()
   test-gadget-label(<push-menu-button>);
   test-button-values(<push-menu-button>);
-end class-test <push-menu-button>;
+end test;
 
-define duim-gadgets class-test <push-menu-box> ()
+define test test-<push-menu-box> ()
   test-gadget-box-pane-buttons(<push-menu-box>);
-end class-test <push-menu-box>;
+end test;
 
-define duim-gadgets class-test <radio-box> ()
+define test test-<radio-box> ()
   let rbp = make-collection-gadget(<radio-box>);
   verify-gadget-box-pane-button-selection(rbp);
   test-gadget-box-pane-buttons(<radio-box>);
@@ -195,29 +195,29 @@ define duim-gadgets class-test <radio-box> ()
                 gadget-value(rbp)
               end,
               #"two");
-end class-test <radio-box>;
+end test;
 
-define duim-gadgets class-test <radio-button> ()
+define test test-<radio-button> ()
   test-gadget-label(<radio-button>);
   test-button-values(<radio-button>);
-end class-test <radio-button>;
+end test;
 
-define duim-gadgets class-test <radio-menu-button> ()
+define test test-<radio-menu-button> ()
   test-gadget-label(<radio-menu-button>);
   test-button-values(<radio-menu-button>);
-end class-test <radio-menu-button>;
+end test;
 
-define duim-gadgets class-test <radio-menu-box> ()
+define test test-<radio-menu-box> ()
   let rbp = make-collection-gadget(<radio-menu-box>);
   verify-gadget-box-pane-button-selection(rbp);
   test-gadget-box-pane-buttons(<radio-menu-box>);
-end class-test <radio-menu-box>;
+end test;
 
-define duim-gadgets class-test <spin-box> ()
+define test test-<spin-box> ()
   test-single-selection-collection-gadget-values(<spin-box>);
-end class-test <spin-box>;
+end test;
 
-define duim-gadgets class-test <status-bar> ()
+define test test-<status-bar> ()
   test-gadget-label(<status-bar>);
   test-range-pane-values(<status-bar>,
                          make-function: method (class, #rest args)
@@ -226,40 +226,40 @@ define duim-gadgets class-test <status-bar> ()
                                                 args)
                                         end,
                          default: #f);
-end class-test <status-bar>;
+end test;
 
-define duim-gadgets class-test <tool-bar> ()
+define test test-<tool-bar> ()
   test-no-value-gadget-values(<tool-bar>);
-end class-test <tool-bar>;
+end test;
 
-define duim-gadgets class-test <scroll-bar> ()
+define test test-<scroll-bar> ()
   test-slug-gadget-values(<scroll-bar>);
-end class-test <scroll-bar>;
+end test;
 
-define duim-gadgets class-test <border> ()
+define test test-<border> ()
   test-border-pane-layout(<border>);
-end class-test <border>;
+end test;
 
-define duim-gadgets class-test <group-box> ()
+define test test-<group-box> ()
   //---*** We don't really want to test its layout as such, since we
   //---*** don't want to assume a particular look. More, we want to
   //---*** make sure that the child is okay.
   // test-border-pane-layout(<group-box>);
-end class-test <group-box>;
+end test;
 
-define duim-gadgets class-test <separator> ()
+define test test-<separator> ()
   test-no-value-gadget-values(<separator>);
-end class-test <separator>;
+end test;
 
-define duim-gadgets class-test <spacing> ()
+define test test-<spacing> ()
   test-border-pane-layout(<spacing>);
-end class-test <spacing>;
+end test;
 
-define duim-gadgets class-test <splitter> ()
+define test test-<splitter> ()
   //---*** Fill this in...
-end class-test <splitter>;
+end test;
 
-define duim-gadgets class-test <tab-control> ()
+define test test-<tab-control> ()
   let button-1 = make-test-pane(<button>, label: "One");
   let button-2 = make-test-pane(<button>, label: "Two");
   let tab-control
@@ -292,62 +292,45 @@ define duim-gadgets class-test <tab-control> ()
               tab-control-pages(tab-control), #[]);
   check-equal("Empty tab control has no visible child",
               tab-control-current-page(tab-control), #f);
-end class-test <tab-control>;
+end test;
 
-define duim-gadget class-test <page> ()
+define test test-<page> ()
   //---*** Fill this in...
-end class-test <page>;
+end test;
 
-define duim-gadget class-test <tab-control-page> ()
+define test test-<tab-control-page> ()
   //---*** Fill this in...
-end class-test <tab-control-page>;
+end test;
 
-define duim-gadgets class-test <list-control> ()
+define test test-<list-control> ()
   test-collection-gadget-value(<list-control>);
-end class-test <list-control>;
+end test;
 
-define duim-gadgets class-test <list-item> ()
+define test test-<list-item> ()
   //---*** Fill this in...
-end class-test <list-item>;
+end test;
 
-define duim-gadgets class-test <tree-control> ()
+define test test-<tree-control> ()
   test-tree-control-values();
-end class-test <tree-control>;
+end test;
 
-define duim-gadgets class-test <tree-node> ()
+define test test-<tree-node> ()
   //---*** Fill this in...
-end class-test <tree-node>;
+end test;
 
-define duim-gadgets class-test <table-control> ()
+define test test-<table-control> ()
   test-collection-gadget-value(<table-control>);
   test-table-control-values();
-end class-test <table-control>;
+end test;
 
-define duim-gadgets class-test <table-item> ()
+define test test-<table-item> ()
   //---*** Fill this in...
-end class-test <table-item>;
+end test;
 
-define duim-gadgets class-test <progress-bar> ()
+define test test-<progress-bar> ()
   test-range-pane-values(<progress-bar>, default: #f);
-end class-test <progress-bar>;
+end test;
 
-
-
-/// Gadget testing
-
-define sideways method class-test-function
-    (class :: subclass(<abstract-gadget>)) => (function :: <function>)
-  test-gadget-class
-end method class-test-function;
-
-define generic test-gadget-class
-    (class :: subclass(<abstract-gadget>), #key, #all-keys) => ();
-
-define method test-gadget-class
-    (class :: subclass(<abstract-gadget>), #key name, instantiable?, #all-keys) => ()
-  if (instantiable?)
-  end
-end method test-gadget-class;
 
 
 /// parent tests
