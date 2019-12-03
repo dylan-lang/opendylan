@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright 2009 Gwydion Dylan Maintainers
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define module-spec llvm ()
+define interface-specification-suite llvm-module-specification-suite ()
   instantiable class <llvm-module> (<object>);
 
   constant $llvm-label-type :: <llvm-type>;
@@ -19,9 +19,9 @@ define module-spec llvm ()
   constant $llvm-i16-type :: <llvm-type>;
   constant $llvm-i32-type :: <llvm-type>;
   constant $llvm-i64-type :: <llvm-type>;
-end module-spec llvm;
+end llvm-module-specification-suite;
 
-define module-spec llvm-builder ()
+define interface-specification-suite llvm-builder-specification-suite ()
   constant <llvm-local-value> :: <type>;
 
   open abstract primary instantiable class <llvm-builder> (<object>);
@@ -321,13 +321,13 @@ define module-spec llvm-builder ()
       (<llvm-builder>, <llvm-value>, #"key" #"metadata")
    => (<llvm-instruction>);
 
-  macro-test ins--if-test;
-  macro-test ins--iterate-test;
-end module-spec llvm-builder;
+end llvm-builder-specification-suite;
 
-define library-spec llvm ()
-  module llvm;
-  module llvm-builder;
+define suite llvm-test-suite ()
+  suite llvm-module-specification-suite;
+  suite llvm-module-test-suite;
+  suite llvm-builder-specification-suite;
+  suite llvm-builder-test-suite;
 
   suite llvm-asm-suite;
-end library-spec llvm;
+end suite;

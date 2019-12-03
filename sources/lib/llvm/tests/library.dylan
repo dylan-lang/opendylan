@@ -8,7 +8,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library llvm-test-suite
   use common-dylan;
   use testworks;
-  use testworks-specs;
   use io;
   use system;
   use llvm;
@@ -21,7 +20,8 @@ end library;
 define module llvm-test-suite
   use common-dylan;
   use testworks;
-  use testworks-specs;
+  // TODO(cgay): testworks should provide a uniform way to make tests, suites, etc.,
+  // preferably `make` would just do the right thing.
   use %testworks, import: { <test>, make-suite };
   use streams;
   use file-system;

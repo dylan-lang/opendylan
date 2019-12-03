@@ -27,6 +27,7 @@ define function llvm-asm-suite-components
  => (components :: <sequence>);
   ignore(directories);
   block (return)
+    // See https://github.com/dylan-lang/testworks/issues/98
     let llvm-tests-path :: false-or(<string>)
       = environment-variable("LLVM_TEST");
     if (~llvm-tests-path)
