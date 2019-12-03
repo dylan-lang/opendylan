@@ -89,7 +89,11 @@ using this command
     if gf.GetError().Fail():
       print("No generic function %s was found." % (arg,))
       continue
-    methods = dylan_generic_function_methods(gf)
+    try:
+      methods = dylan_generic_function_methods(gf)
+    except:
+      print("Not able to determine methods of %s" % (arg,))
+      return
     ieps = [dylan_method_iep_function(m) for m in methods]
     # Create a breakpoint for each IEP rather than a single one for
     # all IEPs since there isn't an appropriate typemap in the SWIG

@@ -112,7 +112,11 @@ def dylan_generic_function_name(value):
 
 def dylan_generic_function_methods(value):
   """Return the list of specializer methods of a generic function value as SBValues"""
-  return dylan_list_elements(dylan_slot_element(value, GENERIC_FUNCTION_METHODS))
+  methods = dylan_slot_element(value, GENERIC_FUNCTION_METHODS)
+  if methods.GetError().Success():
+    return dylan_list_elements(dylan_slot_element(value, GENERIC_FUNCTION_METHODS))
+  else:
+    raise Exception("'%s' was not a valid GF" % (value.GetName(),))
 
 def dylan_implementation_class_instance_slot_descriptors(iclass):
   """Return the slot descriptors from an implementation class as an SBValue representing a <simple-object-vector>"""
