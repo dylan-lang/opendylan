@@ -50,6 +50,6 @@ define function access-path-cleanup ()
   end unless;
 end function;
 
-define library-spec access-path (cleanup-function: access-path-cleanup)
+define suite access-path-test-suite (cleanup-function: access-path-cleanup)
   test simple-breakpoint-test;
-end library-spec access-path;
+end suite;
