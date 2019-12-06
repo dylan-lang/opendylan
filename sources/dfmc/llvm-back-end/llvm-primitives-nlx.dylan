@@ -187,12 +187,24 @@ define method op--typeid
 end method;
 
 define method op--allocate-bef
-    (back-end :: <llvm-back-end>, typeid :: <llvm-constant-value>)
+    (back-end :: <llvm-back-end>)
  => (bef :: <llvm-value>);
   let bef-type = llvm-reference-type(back-end, back-end.llvm-bef-struct-type);
   let bef-alignment = llvm-back-end-unwind-exception-alignment(back-end);
   let bef-ptr = ins--alloca(back-end, bef-type, i32(1),
                             alignment: bef-alignment);
+
+  ins--bitcast(back-end, bef-ptr,
+               llvm-reference-type(back-end, dylan-value(#"<raw-pointer>")))
+end method;
+
+define method op--initialize-bef
+    (back-end :: <llvm-back-end>, bef :: <llvm-value>,
+     typeid :: <llvm-constant-value>)
+ => ();
+  let bef-type = llvm-reference-type(back-end, back-end.llvm-bef-struct-type);
+  let bef-ptr
+    = ins--bitcast(back-end, bef, llvm-pointer-to(back-end, bef-type));
 
   // Store the current frame pointer in the bind exit frame
   let frame-pointer
@@ -209,9 +221,6 @@ define method op--allocate-bef
   let bef-typeid-slot-ptr
     = op--bef-getelementptr(back-end, bef-ptr, #"bef-typeid");
   ins--store(back-end, typeid-cast, bef-typeid-slot-ptr);
-
-  ins--bitcast(back-end, bef-ptr,
-               llvm-reference-type(back-end, dylan-value(#"<raw-pointer>")));
 end method;
 
 define side-effecting stateful indefinite-extent can-unwind auxiliary &c-primitive-descriptor primitive-nlx
