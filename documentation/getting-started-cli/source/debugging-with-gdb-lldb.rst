@@ -41,7 +41,7 @@ Understanding name mangling
 
 Dylan identifiers (method and variable names) do not follow the same
 rules as C; they are case insensitive, can contain extra characters
-such as '<' or '-', and are part of the two-level namespace (module
+such as '<' or ‘-’, and are part of the two-level namespace (module
 and library). There is a process, known as 'mangling', to turn Dylan
 identifiers into valid C identifiers. The reverse process is called
 demangling. C++ also mangles its variable and function names, for the
@@ -57,21 +57,25 @@ mangling rules is as follows:
 * If it is a method, append a suffix starting with ``M`` to distinguish the
   specific methods within a generic function.
 
-There are a number of extra cases to shorten the mangled name. The ``Y``
-and module name are omitted if the module name is the same as the
-library. For modules in the Dylan library, the sequence
-``YmoduleVdylan`` is replaced by ``VKmodule`` and some modules have short
-names, for example ``i`` is the 'internal' module.
+There are a number of extra cases to shorten the mangled name. The
+``Y`` and module name are omitted if the module name is the same as
+the library. For modules in the Dylan library, the sequence
+``YmoduleVdylan`` is replaced by ``VKmodule`` and some modules have
+short names, for example ``i`` is the 'internal' module.
 
-For example, method ``format-err`` in the ``format-out`` module of the
-``io`` library becomes ``Kformat_errYformat_outVioMM0I``.
+Following these rules, method ``format-err`` in the ``format-out``
+module of the ``io`` library becomes
+``Kformat_errYformat_outVioMM0I``.
 
 For full details, see `the Hacker's guide <https://opendylan.org/documentation/hacker-guide/runtime/mangling.html?highlight=mangling>`_.
 
 Understanding stack traces
 --------------------------
 
-Let's look at part of a representative stack trace::
+Let's look at part of a representative stack trace:
+
+.. code-block:: none
+
 
     #0  0x92b41b06 in read$NOCANCEL$UNIX2003 ()
     #1  0x0042c509 in Kunix_readYio_internalsVioI ()
@@ -147,7 +151,9 @@ summarizers for commonly-encountered Dylan objects.
 
 The command ``dylan-bt`` prints a Dylan-friendly backtrace by
 stripping out all frames which refer to internal runtime functions,
-leaving only Dylan code. For example, a backtrace like this::
+leaving only Dylan code. For example, a backtrace like this:
+
+.. code-block:: none
 
   * frame #0: 0x00007fff70e542c6 libsystem_kernel.dylib`__pthread_kill + 10
     frame #1: 0x00007fff70f0fbf1 libsystem_pthread.dylib`pthread_kill + 284
@@ -161,7 +167,9 @@ leaving only Dylan code. For example, a backtrace like this::
     frame #9: 0x00000001001e5021 libdylan.dylib`general_engine_node_n_engine(a1=<unavailable>) at c-run-time.c:2023:12 [opt]
     frame #10: 0x00000001000d2b69 libcommon-dylan.dylib`Kdefault_last_handlerYcommon_dylan_internalsVcommon_dylanMM0I(condition_={<simple-error>}, next_handler_={<simple-closure-method>}) at common-extensions.c:1942:9 [opt]
 
-becomes::
+becomes:
+
+.. code-block:: none
 
     frame #4    Kinvoke_debuggerVKiMM1I                                      0x00000100134c34 libdylan.dylib at boot.c:7140
     frame #7    Kdefault_handlerVKdMM1I                                      0x0000010014aaaf libdylan.dylib at condition.c:2917
@@ -176,14 +184,19 @@ first, otherwise the message 'No generic function XXX was found.' will
 be shown.
 
 The second purpose of the helper script is to show Dylan objects in a
-more intuitive fashion. For example, lldb on its own will show most
-Dylan objects as plain hex values, for example::
+more intuitive fashion. LLDB on its own will show most Dylan objects
+as plain hex values, for example:
+
+.. code-block:: none
 
   (dylan_value) T33 = 0x0000000100d38060
   (dylan_value) T35_0 = 0x00007ffeefbfe360
   (dylan_value) Ustream_ = 0x0000000000000001
 
-With the helper, extra information is added to the right::
+With the helper, extra information is added to the right:
+
+.. code-block:: none
+
 
   (dylan_value) T33 = 0x0000000100c38060 {<symbol>: #"libraries-test-suite-app"}
   (dylan_value) T35_0 = 0x00007ffeefbfe370 {<simple-object-vector>: size: 1}
@@ -191,6 +204,57 @@ With the helper, extra information is added to the right::
 
 The summarizer support has to be added on a class-by-class basis, so
 some objects will show only the class name without further detail.
+Because LLDB was principally a C debugger, some concepts such as
+pointers need to be considered. Given a Dylan class like:
+
+.. code-block:: none
+
+  define class <element>(<object>)
+   slot tag;
+   slot content;
+   slot attrs;
+  end class;
+
+LLDB will print an instance without any detail, because a
+``dylan_value`` is seen as a pointer which is not dereferenced by
+default:
+
+.. code-block:: none
+
+  (lldb) frame variable div_
+  (dylan_value) div_ = 0x00005555556232d0 {<element>}
+
+However, using the ``-P`` option to ``frame variable`` shows the slot names and contents:
+
+.. code-block:: none
+
+  (lldb) frame variable -P 1 div_
+  (dylan_value) div_ = 0x00005555556232d0 {<element>} {
+  [tag] = 0x00007ffff7fcd8f0 {<byte-string>: size: 3, data: "div"}
+  [content] = 0x00005555556232a0 {<simple-object-vector>: size: 3}
+  [attrs] = 0x0000555555629a40 {<object-table>}
+
+Increasing the value of the ``-P`` option shows additional levels of detail:
+
+.. code-block:: none
+
+  (lldb) frame variable -P 2 div_
+  (dylan_value) div_ = 0x00005555556232d0 {<element>} {
+    [tag] = 0x00007ffff7fcd8f0 {<byte-string>: size: 3, data: "div"}
+    [content] = 0x00005555556232a0 {<simple-object-vector>: size: 3} {
+      [0] = 0x00007ffff7fcd8d0 {<byte-string>: size: 1, data: "a"}
+      [1] = 0x0000555555623300 {<element>}
+      [2] = 0x00007ffff7fcd8b0 {<byte-string>: size: 5, data: "world"}
+    }
+    [attrs] = 0x0000555555629a40 {<object-table>} {
+      [element-type] = 0x00007ffff7e976e0 {<class>: <object>}
+      [table-vector] = 0x000055555562c700 {<table-vector>}
+      [initial-entries] = 0x0000000000000029 {<integer>: 10}
+      [grow-size-function] = 0x00007ffff7f39d20 {<simple-method>}
+      [weak?] = 0x00007ffff7e97590 {<boolean>: #f}
+    }
+  }
+
 
 Inspecting Dylan objects in GDB
 -------------------------------
