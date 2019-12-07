@@ -41,6 +41,30 @@ define method llvm-back-end-va-list-type-alignment
   values(va-list-type, 16)
 end method;
 
+// See https://developer.arm.com/docs/ihi0055/d/procedure-call-standard-for-the-arm-64-bit-architecture
+define method llvm-back-end-va-list-type-alignment
+    (back-end :: <llvm-aarch64-back-end>)
+ => (type :: <llvm-type>, alignment :: <integer>);
+  let t = back-end.%type-table;
+  let va-list-struct-name = "struct.__va_list";
+  let struct-type
+    = element(t, va-list-struct-name, default: #f)
+    | (t[va-list-struct-name]
+         := make(<llvm-struct-type>,
+                 name: va-list-struct-name,
+                 elements: vector(// stack (next stack param)
+                                  $llvm-i8*-type,
+                                  // gr_top (end of GP arg reg save area)
+                                  $llvm-i8*-type,
+                                  // vr_top (end of FP/SIMD arg reg save area)
+                                  $llvm-i8*-type,
+                                  // gr_offs (from gr_top to next GP reg arg)
+                                  $llvm-i32-type,
+                                  // vr_offs (from vr_top to next FP/SIMD reg arg)
+                                  $llvm-i32-type)));
+  values(struct-type, 8)
+end method;
+
 define method op--va-decl-start
     (back-end :: <llvm-back-end>) => (va-list :: <llvm-value>);
   // Allocate a va_list stack variable
@@ -115,6 +139,55 @@ define method op--va-arg
     // Return fetched value (step 11)
     arg
   end ins--if;
+end method;
+
+define method op--va-arg
+    (back-end :: <llvm-aarch64-back-end>, va-list :: <llvm-value>,
+     type :: <llvm-pointer-type>)
+ => (value :: <llvm-value>);
+  let va-list-type = back-end.%type-table["struct.__va_list"];
+  let va = ins--bitcast(back-end, va-list,
+                        llvm-pointer-to(back-end, va-list-type));
+
+  let bb2 = make(<llvm-basic-block>);
+  let bb3 = make(<llvm-basic-block>);
+  let bb4 = make(<llvm-basic-block>);
+  let bb5 = make(<llvm-basic-block>);
+
+  // Check gr_offs to see if the arg is in the stack, or in the GP reg
+  // save area
+  let gr-offs-p = ins--gep-inbounds(back-end, va, 0, i32(3)); // gr_offs
+  let gr-offs = ins--load(back-end, gr-offs-p, alignment: 8);
+  ins--br(back-end, ins--icmp-sgt(back-end, gr-offs, i32(-1)), bb4, bb2);
+
+  // In the register save area; update gr_offs
+  ins--block(back-end, bb2);
+  let gr-offs-post = ins--add(back-end, gr-offs, i32(8));
+  ins--store(back-end, gr-offs-post, gr-offs-p, alignment: 8);
+  ins--br(back-end, ins--icmp-slt(back-end, gr-offs-post, i32(1)), bb3, bb4);
+
+  // Read via gr_top
+  ins--block(back-end, bb3);
+  let gr-top-p = ins--gep-inbounds(back-end, va, 0, i32(1)); // gr_top
+  let gr-top = ins--load(back-end, gr-top-p, alignment: 8);
+  let gr-offs-ext = ins--sext(back-end, gr-offs, $llvm-i64-type);
+  let gr-arg-p = ins--gep-inbounds(back-end, gr-top, gr-offs-ext);
+  ins--br(back-end, bb5);
+
+  // In stack; compute and update address
+  ins--block(back-end, bb4);
+  let stack-p = ins--gep-inbounds(back-end, va, 0, i32(0)); // stack
+  let stack = ins--load(back-end, stack-p, alignment: 8);
+  let stack-post = ins--gep-inbounds(back-end, stack, i64(8));
+  ins--store(back-end, stack-post, stack-p, alignment: 8);
+  ins--br(back-end, bb5);
+
+  // Final read
+  ins--block(back-end, bb5);
+  let addr = ins--phi*(back-end, gr-arg-p, bb3, stack, bb4);
+  let addr-cast
+    = ins--bitcast(back-end, addr, llvm-pointer-to(back-end, type));
+  ins--load(back-end, addr-cast, alignment: 8)
 end method;
 
 define method op--va-list-to-stack-vector

@@ -107,6 +107,39 @@ define method llvm-back-end-data-layout
     "i64:64:64-f32:32:32-f64:64:64-v128:128:128-n32:64"
 end method;
 
+// ARM (32-bit)
+
+define abstract class <llvm-arm-back-end> (<llvm-back-end>)
+end class;
+
+// aarch64
+
+define abstract class <llvm-aarch64-back-end> (<llvm-arm-back-end>)
+end class;
+
+define method back-end-word-size
+    (back-end :: <llvm-aarch64-back-end>)
+ => (number-bytes :: <integer>)
+  8
+end method back-end-word-size;
+
+define method llvm-back-end-data-layout
+    (back-end :: <llvm-aarch64-back-end>) => (layout :: <string>);
+  "e-m:e-i8:8:32-i16:16:32-i64:64-i128:128-n32:64-S128"
+end method;
+
+define method llvm-back-end-unwind-exception-size
+    (back-end :: <llvm-aarch64-back-end>)
+ => (number-words :: <integer>)
+  4
+end method;
+
+define method llvm-back-end-unwind-exception-alignment
+    (back-end :: <llvm-aarch64-back-end>)
+ => (alignment-bytes :: <integer>)
+  16
+end method;
+
 
 /// Concrete LLVM back-end subclasses
 
@@ -218,6 +251,19 @@ register-back-end(<llvm-x86_64-freebsd-back-end>,
 define method llvm-back-end-target-triple
     (back-end :: <llvm-x86_64-freebsd-back-end>) => (triple :: <string>);
   "x86_64-unknown-freebsd"
+end method;
+
+// aarch64-linux
+
+define class <llvm-aarch64-linux-back-end> (<llvm-aarch64-back-end>,
+                                            <llvm-unix-back-end>)
+end class;
+
+register-back-end(<llvm-aarch64-linux-back-end>, #"llvm", #"aarch64-linux");
+
+define method llvm-back-end-target-triple
+    (back-end :: <llvm-aarch64-linux-back-end>) => (triple :: <string>);
+  "aarch64-unknown-linux-gnu"
 end method;
 
 
