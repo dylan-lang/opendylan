@@ -207,9 +207,9 @@ some objects will show only the class name without further detail.
 Because LLDB was principally a C debugger, some concepts such as
 pointers need to be considered. Given a Dylan class like:
 
-.. code-block:: none
+.. code-block:: dylan
 
-  define class <element>(<object>)
+  define class <element> (<object>)
    slot tag;
    slot content;
    slot attrs;

@@ -19,7 +19,7 @@ def dylan_bt(debugger, command, result, internal_dict):
 
   try:
     options = parser.parse_args(command_args)
-  except:
+  except Exception:
     return
 
   target = debugger.GetSelectedTarget()
@@ -73,7 +73,7 @@ using this command
   parser.add_argument('gf', nargs='+', help='binding name in the form "name:module:library"')
   try:
     options = parser.parse_args(command_args)
-  except:
+  except Exception:
     return
 
   target = debugger.GetSelectedTarget()
@@ -91,7 +91,7 @@ using this command
       continue
     try:
       methods = dylan_generic_function_methods(gf)
-    except:
+    except Exception:
       print("Not able to determine methods of %s" % (arg,))
       return
     ieps = [dylan_method_iep_function(m) for m in methods]
