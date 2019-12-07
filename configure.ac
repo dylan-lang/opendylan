@@ -50,6 +50,10 @@ case $host in
   arm-*-linux*)
       OPEN_DYLAN_TARGET_PLATFORM=arm-linux;
     ;;
+  aarch64-*-linux*)
+      OPEN_DYLAN_TARGET_PLATFORM=aarch64-linux;
+      SUPPORT_LLVM=yes
+    ;;
   i*86-*-netbsd*)
       OPEN_DYLAN_TARGET_PLATFORM=x86-netbsd;
     ;;
