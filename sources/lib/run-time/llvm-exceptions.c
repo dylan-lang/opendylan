@@ -64,6 +64,9 @@ static inline void SetIP(void *uap, uintptr_t ip)
   *--rsp = uc->uc_mcontext.gregs[REG_RIP];
   uc->uc_mcontext.gregs[REG_RSP] = (uintptr_t) rsp;
   uc->uc_mcontext.gregs[REG_RIP] = ip;
+#elif defined OPEN_DYLAN_ARCH_AARCH64
+  uc->uc_mcontext.regs[30] = uc->uc_mcontext.pc; // Link register
+  uc->uc_mcontext.pc = ip;
 #else
 #error Unsupported Linux arch
 #endif
@@ -160,7 +163,8 @@ void EstablishDylanExceptionHandlers(void)
   fpehandler.sa_flags = SA_SIGINFO;
   sigaction(SIGFPE, &fpehandler, &oldfpehandler);
 
-#if defined OPEN_DYLAN_PLATFORM_LINUX
+#if defined OPEN_DYLAN_PLATFORM_LINUX \
+  && (defined OPEN_DYLAN_ARCH_X86 || defined OPEN_DYLAN_ARCH_X86_64)
   struct sigaction segvhandler;
   sigemptyset(&segvhandler.sa_mask);
   segvhandler.sa_sigaction = DylanSEGVHandler;

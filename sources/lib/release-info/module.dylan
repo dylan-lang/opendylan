@@ -14,7 +14,6 @@ define module release-info
   use settings;
   use simple-format;
   use simple-xml;
-  use file-source-records, import: {read-file-header};
   use file-system; // import: {file-exists?, do-directory};
   use streams; // import: {\with-open-file};
 
