@@ -68,7 +68,10 @@ def dylan_integer_summary(value, internal_dict):
 def dylan_unicode_character_summary(value, internal_dict):
   try:
     unicode_character = dylan_unicode_character_value(value)
-    return '{<unicode-character>: %s}' % (unicode_character,)
+    if unicode_character.isprintable():
+      return '{<unicode-character>: %s (0x%x)}' % (unicode_character, ord(unicode_character))
+    else:
+      return '{<unicode-character>: (0x%x)}' % (ord(unicode_character), )
   except ValueError:
     return '{<unicode-character> (invalid)}'
 

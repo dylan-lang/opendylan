@@ -1,4 +1,3 @@
-import array
 import lldb
 from dylan.accessors import *
 from dylan import summaries
