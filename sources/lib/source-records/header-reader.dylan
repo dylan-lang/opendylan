@@ -42,7 +42,7 @@ define method read-header-from-stream (s :: <stream>)
           end;
           let nlines = nlines + lines;
           if (eoh?)
-            values(keys, nlines, stream-position(s) + 1)
+            values(keys, nlines, stream-position(s))
           else
             loop(s, nlines)
           end;

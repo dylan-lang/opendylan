@@ -15,6 +15,7 @@ Files: library
        profile-report
        warnings-report
        test-suite-report
+       tags-report
 Major-Version: 2
 Minor-Version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
