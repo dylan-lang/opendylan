@@ -404,33 +404,28 @@ end function;
 // ITERATION PROTOCOLS
 //
 
-define generic current-word (state :: <bit-set-iteration-state>)
- => (word :: <raw-machine-word>);
-
-define generic current-word-setter
-    (new :: <raw-machine-word>, state :: <bit-set-iteration-state>)
- => (word :: <raw-machine-word>);
-
 define sealed domain make(singleton(<bit-set-iteration-state>));
 
 define primary sealed class <bit-set-iteration-state> (<object>)
-  raw slot current-word :: <raw-machine-word>;
+  raw slot %current-word :: <raw-machine-word>;
   slot current-element :: <integer>, required-init-keyword: current-element:;
   slot word-offset :: <integer>, required-init-keyword: word-offset:;
   slot bit-offset :: <integer>, required-init-keyword: bit-offset:;
 end class;
+ignore(%current-word);
+ignore(%current-word-setter);
 
-define inline-only method current-word (state :: <bit-set-iteration-state>)
+define inline-only function current-word (state :: <bit-set-iteration-state>)
  => (word :: <raw-machine-word>)
   primitive-cast-pointer-as-raw(primitive-initialized-slot-value(state, integer-as-raw(0)))
-end method current-word;
+end function;
 
-define inline-only method current-word-setter
+define inline-only function current-word-setter
     (word :: <raw-machine-word>, state :: <bit-set-iteration-state>)
  => (word :: <raw-machine-word>)
   primitive-slot-value(state, integer-as-raw(0)) := primitive-cast-raw-as-pointer(word);
   word
-end method current-word-setter;
+end function;
 
 define sealed method initialize
     (state :: <bit-set-iteration-state>, #key word :: <machine-word>)
