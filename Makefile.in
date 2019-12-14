@@ -352,28 +352,30 @@ dist: 3-stage-bootstrap
 	cp $(srcdir)/build/packages/unix/README release/opendylan-$(version)/
 	cd release && tar cjf opendylan-$(version)-$(TARGET_PLATFORM).tar.bz2 opendylan-$(version)
 
-CHECK_APPS = \
-	libraries-test-suite-app \
-	dfmc-reader-test-suite-app \
-	strings-test-suite-app \
-	c-ffi-test-suite-app \
-	duim-test-suite-app \
-	deuce-test-suite-app \
-	jam-test-suite-app \
+
+TEST_LIBS = \
+	libraries-test-suite \
+	dfmc-reader-test-suite \
+	strings-test-suite \
+	duim-test-suite \
+	deuce-test-suite \
+	jam-test-suite \
 	channels-tests \
 	variable-search-tests \
-	command-line-parser-test-suite-app \
-	logging-test-suite-app \
+	command-line-parser-test-suite \
+	logging-test-suite \
 	regular-expressions-test-suite \
 	hash-algorithms-test
 
+TEST_LOADS = $(shell for lib in $(TEST_LIBS); do echo "--load lib$${lib}.@shrext@ "; done)
+
 check: bootstrap-stage-3
 	@$(BOOTSTRAP_3_ENV) $(FDMAKE) --compiler "$(BOOTSTRAP_3_COMPILER)" \
-          $(CHECK_APPS)
-	  for app in $(CHECK_APPS); do \
-	    echo "Executing test app $$app ..."; \
-	    $(BOOTSTRAP_3_ROOT)/bin/$$app $(OPEN_DYLAN_CHECK_FLAGS); \
-	  done
+	  testworks-run $(TEST_LIBS)
+	$(BOOTSTRAP_3_ROOT)/bin/testworks-run \
+	  --report json \
+	  --report-file $(BOOTSTRAP_3_ROOT)/logs/make-check.json \
+	  $(TEST_LOADS)
 
 installcheck:
 
