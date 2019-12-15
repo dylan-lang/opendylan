@@ -22,14 +22,23 @@ end macro;
 
 /// LOW LEVEL FFI
 
+define inline-only function raw-c-signed-as-integer
+    (raw-x :: <raw-c-signed-int>)
+ => (x :: <integer>);
+  let raw-shift :: <raw-machine-word> = integer-as-raw($machine-word-size - 32);
+  raw-as-integer(primitive-machine-word-shift-right
+                   (primitive-machine-word-shift-left-low(raw-x, raw-shift),
+                    raw-shift))
+end function;
+
 define function unix-open
     (path :: <byte-string>, mode :: <integer>, create-flags :: <integer>) => (fd :: <integer>)
   with-interrupt-repeat
-    raw-as-integer
+    raw-c-signed-as-integer
       (%call-c-function ("open")
            (path :: <raw-byte-string>, oflag :: <raw-c-unsigned-int>,
             mode :: <raw-c-unsigned-int>)
-        => (fd :: <raw-c-unsigned-int>)
+        => (fd :: <raw-c-signed-int>)
          (primitive-string-as-raw(path),
           integer-as-raw(mode),
           integer-as-raw(create-flags))
@@ -39,8 +48,8 @@ end function unix-open;
 
 define function unix-close (fd :: <integer>) => (result :: <integer>)
   with-interrupt-repeat
-    raw-as-integer
-      (%call-c-function ("close") (fd :: <raw-c-unsigned-int>)
+    raw-c-signed-as-integer
+      (%call-c-function ("close") (fd :: <raw-c-signed-int>)
             => (result :: <raw-c-signed-int>)
          (integer-as-raw(fd)) end)
   end
@@ -63,7 +72,7 @@ define function unix-raw-read
   with-interrupt-repeat
     raw-as-integer
       (%call-c-function ("read")
-           (fd :: <raw-c-unsigned-int>, address :: <raw-pointer>,
+           (fd :: <raw-c-signed-int>, address :: <raw-pointer>,
             size :: <raw-c-size-t>)
         => (result :: <raw-c-ssize-t>)
          (integer-as-raw(fd),
@@ -90,10 +99,10 @@ end function unix-file-exists?;
 
 define function unix-delete-file (path :: <byte-string>) => (ok :: <boolean>)
   with-interrupt-repeat
-    raw-as-integer(%call-c-function ("unlink")
-                       (path :: <raw-byte-string>) => (result :: <raw-c-signed-int>)
-                     (primitive-string-as-raw(path))
-                   end)
+    raw-c-signed-as-integer(%call-c-function ("unlink")
+                              (path :: <raw-byte-string>) => (result :: <raw-c-signed-int>)
+                              (primitive-string-as-raw(path))
+                            end)
   end = 0;
 end function unix-delete-file;
 
