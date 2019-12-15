@@ -17,225 +17,188 @@ end;
 
 /// Stream convenience function tests
 
-register-stream-test(<stream>, test-read-character, direction: #"input");
-register-stream-test(<stream>, test-read-text, direction: #"input");
-register-stream-test(<stream>, test-read-text-into!, direction: #"input");
-register-stream-test(<stream>, test-read-line, direction: #"input");
-register-stream-test(<stream>, test-read-line-into!, direction: #"input");
-register-stream-test(<stream>, test-read-to, direction: #"input");
-register-stream-test(<stream>, test-read-through, direction: #"input");
-register-stream-test(<stream>, test-read-to-end, direction: #"input");
-register-stream-test(<stream>, test-skip-through, direction: #"input");
-register-stream-test(<stream>, test-write-text, direction: #"output");
-register-stream-test(<stream>, test-write-line, direction: #"output");
-register-stream-test(<stream>, test-new-line, direction: #"output");
+register-stream-test(<stream>, do-test-read-character, direction: #"input");
+register-stream-test(<stream>, do-test-read-text, direction: #"input");
+register-stream-test(<stream>, do-test-read-text-into!, direction: #"input");
+register-stream-test(<stream>, do-test-read-line, direction: #"input");
+register-stream-test(<stream>, do-test-read-line-into!, direction: #"input");
+register-stream-test(<stream>, do-test-read-to, direction: #"input");
+register-stream-test(<stream>, do-test-read-through, direction: #"input");
+register-stream-test(<stream>, do-test-read-to-end, direction: #"input");
+register-stream-test(<stream>, do-test-skip-through, direction: #"input");
+register-stream-test(<stream>, do-test-write-text, direction: #"output");
+register-stream-test(<stream>, do-test-write-line, direction: #"output");
+register-stream-test(<stream>, do-test-new-line, direction: #"output");
 
-// Don't test the functions we're already testing... there must be a better way!
-define streams function-test read-character () end;
-define streams function-test read-text () end;
-define streams function-test read-text-into! () end;
-define streams function-test read-line () end;
-define streams function-test read-line-into! () end;
-define streams function-test read-to () end;
-define streams function-test read-through () end;
-define streams function-test read-to-end () end;
-define streams function-test skip-through () end;
-define streams function-test write-text () end;
-define streams function-test write-line () end;
-define streams function-test new-line () end;
-
-define method test-read-character
+define method do-test-read-character
     (info :: <stream-test-info>, stream :: <stream>) => ()
   //---*** Fill this in...
-end method test-read-character;
+end method;
 
-define method test-read-text
+define method do-test-read-text
     (info :: <stream-test-info>, stream :: <stream>) => ()
   //---*** Fill this in...
-end method test-read-text;
+end method;
 
-define method test-read-text-into!
+define method do-test-read-text-into!
     (info :: <stream-test-info>, stream :: <stream>) => ()
   //---*** Fill this in...
-end method test-read-text-into!;
+end method;
 
-define method test-read-line
+define method do-test-read-line
     (info :: <stream-test-info>, stream :: <stream>) => ()
   //---*** Fill this in...
-end method test-read-line;
+end method;
 
-define method test-read-line-into!
+define method do-test-read-line-into!
     (info :: <stream-test-info>, stream :: <stream>) => ()
   //---*** Fill this in...
-end method test-read-line-into!;
+end method;
 
-define method test-read-to
+define method do-test-read-to
     (info :: <stream-test-info>, stream :: <stream>) => ()
   //---*** Fill this in...
-end method test-read-to;
+end method;
 
-define method test-read-through
+define method do-test-read-through
     (info :: <stream-test-info>, stream :: <stream>) => ()
   //---*** Fill this in...
-end method test-read-through;
+end method;
 
-define method test-read-to-end
+define method do-test-read-to-end
     (info :: <stream-test-info>, stream :: <stream>) => ()
   //---*** Fill this in...
-end method test-read-to-end;
+end method;
 
-define method test-skip-through
+define method do-test-skip-through
     (info :: <stream-test-info>, stream :: <stream>) => ()
   //---*** Fill this in...
-end method test-skip-through;
+end method;
 
-define method test-write-text
+define method do-test-write-text
     (info :: <stream-test-info>, stream :: <stream>) => ()
   //---*** Fill this in...
-end method test-write-text;
+end method;
 
-define method test-write-line
+define method do-test-write-line
     (info :: <stream-test-info>, stream :: <stream>) => ()
   //---*** Fill this in...
-end method test-write-line;
+end method;
 
-define method test-new-line
+define method do-test-new-line
     (info :: <stream-test-info>, stream :: <stream>) => ()
   //---*** Fill this in...
-end method test-new-line;
+end method;
 
 
 
 /// Positionable stream convenience function tests
 
-register-stream-test(<positionable-stream>, test-current-position);
-register-stream-test(<positionable-stream>, test-current-position-setter);
-register-stream-test(<positionable-stream>, test-initial-position);
-register-stream-test(<positionable-stream>, test-final-position);
+register-stream-test(<positionable-stream>, do-test-current-position);
+register-stream-test(<positionable-stream>, do-test-current-position-setter);
+register-stream-test(<positionable-stream>, do-test-initial-position);
+register-stream-test(<positionable-stream>, do-test-final-position);
 
-// Don't test the functions we're already testing... there must be a better way!
-define streams function-test current-position () end;
-define streams function-test current-position-setter () end;
-define streams function-test initial-position () end;
-define streams function-test final-position () end;
-
-define method test-current-position
+define method do-test-current-position
     (info :: <stream-test-info>, stream :: <positionable-stream>) => ()
   //---*** Fill this in...
-end method test-current-position;
+end method;
 
-define method test-current-position-setter
+define method do-test-current-position-setter
     (info :: <stream-test-info>, stream :: <positionable-stream>) => ()
   //---*** Fill this in...
-end method test-current-position-setter;
+end method;
 
-define method test-initial-position
+define method do-test-initial-position
     (info :: <stream-test-info>, stream :: <positionable-stream>) => ()
   //---*** Fill this in...
-end method test-initial-position;
+end method;
 
-define method test-final-position
+define method do-test-final-position
     (info :: <stream-test-info>, stream :: <positionable-stream>) => ()
   //---*** Fill this in...
-end method test-final-position;
+end method;
 
 
 
 /// Buffered stream tests
 
-register-stream-test(<buffered-stream>, test-get-input-buffer, direction: #"input");
-register-stream-test(<buffered-stream>, test-release-input-buffer, direction: #"input");
-register-stream-test(<buffered-stream>, test-with-input-buffer, direction: #"input");
-register-stream-test(<buffered-stream>, test-input-available-at-source?, direction: #"input");
-register-stream-test(<buffered-stream>, test-get-output-buffer, direction: #"output");
-register-stream-test(<buffered-stream>, test-release-output-buffer, direction: #"output");
-register-stream-test(<buffered-stream>, test-next-output-buffer, direction: #"output");
-register-stream-test(<buffered-stream>, test-with-output-buffer, direction: #"output");
-register-stream-test(<buffered-stream>, test-force-output-buffers, direction: #"output");
+register-stream-test(<buffered-stream>, do-test-get-input-buffer, direction: #"input");
+register-stream-test(<buffered-stream>, do-test-release-input-buffer, direction: #"input");
+register-stream-test(<buffered-stream>, do-test-with-input-buffer, direction: #"input");
+register-stream-test(<buffered-stream>, do-test-input-available-at-source?, direction: #"input");
+register-stream-test(<buffered-stream>, do-test-get-output-buffer, direction: #"output");
+register-stream-test(<buffered-stream>, do-test-release-output-buffer, direction: #"output");
+register-stream-test(<buffered-stream>, do-test-next-output-buffer, direction: #"output");
+register-stream-test(<buffered-stream>, do-test-with-output-buffer, direction: #"output");
+register-stream-test(<buffered-stream>, do-test-force-output-buffers, direction: #"output");
 
-// Don't test the functions we're already testing... there must be a better way!
-define streams function-test get-input-buffer () end;
-define streams function-test release-input-buffer () end;
-define streams function-test input-available-at-source? () end;
-define streams function-test get-output-buffer () end;
-define streams function-test release-output-buffer () end;
-define streams function-test next-output-buffer () end;
-define streams function-test force-output-buffers () end;
-
-define streams macro-test with-input-buffer-test () end;
-define streams macro-test with-output-buffer-test () end;
-
-define method test-get-input-buffer
+define method do-test-get-input-buffer
     (info :: <stream-test-info>, stream :: <buffered-stream>) => ()
   //---*** Fill this in...
-end method test-get-input-buffer;
+end method;
 
-define method test-release-input-buffer
+define method do-test-release-input-buffer
     (info :: <stream-test-info>, stream :: <buffered-stream>) => ()
   //---*** Fill this in...
-end method test-release-input-buffer;
+end method;
 
-define method test-with-input-buffer
+define method do-test-with-input-buffer
     (info :: <stream-test-info>, stream :: <buffered-stream>) => ()
   //---*** Fill this in...
-end method test-with-input-buffer;
+end method;
 
-define method test-input-available-at-source?
+define method do-test-input-available-at-source?
     (info :: <stream-test-info>, stream :: <buffered-stream>) => ()
   //---*** Fill this in...
-end method test-input-available-at-source?;
+end method;
 
-define method test-get-output-buffer
+define method do-test-get-output-buffer
     (info :: <stream-test-info>, stream :: <buffered-stream>) => ()
   //---*** Fill this in...
-end method test-get-output-buffer;
+end method;
 
-define method test-release-output-buffer
+define method do-test-release-output-buffer
     (info :: <stream-test-info>, stream :: <buffered-stream>) => ()
   //---*** Fill this in...
-end method test-release-output-buffer;
+end method;
 
-define method test-next-output-buffer
+define method do-test-next-output-buffer
     (info :: <stream-test-info>, stream :: <buffered-stream>) => ()
   //---*** Fill this in...
-end method test-next-output-buffer;
+end method;
 
-define method test-with-output-buffer
+define method do-test-with-output-buffer
     (info :: <stream-test-info>, stream :: <buffered-stream>) => ()
   //---*** Fill this in...
-end method test-with-output-buffer;
+end method;
 
-define method test-force-output-buffers
+define method do-test-force-output-buffers
     (info :: <stream-test-info>, stream :: <buffered-stream>) => ()
   //---*** Fill this in...
-end method test-force-output-buffers;
+end method;
 
 
 /// Sequence stream tests
 
-register-stream-test(<sequence-stream>, test-type-for-sequence-stream);
-register-stream-test(<sequence-stream>, test-stream-limit);
-register-stream-test(<sequence-stream>, test-stream-limit-setter);
+register-stream-test(<sequence-stream>, do-test-type-for-sequence-stream);
+register-stream-test(<sequence-stream>, do-test-stream-limit);
+register-stream-test(<sequence-stream>, do-test-stream-limit-setter);
 
-// Don't test the functions we're already testing... there must be a better way!
-define streams function-test type-for-sequence-stream () end;
-define streams function-test stream-limit () end;
-define streams function-test stream-limit-setter () end;
-
-define method test-type-for-sequence-stream
+define method do-test-type-for-sequence-stream
     (info :: <stream-test-info>, stream :: <sequence-stream>) => ()
   //---*** Fill this in...
-end method test-type-for-sequence-stream;
+end method;
 
-define method test-stream-limit
+define method do-test-stream-limit
     (info :: <stream-test-info>, stream :: <sequence-stream>) => ()
   //---*** Fill this in...
-end method test-stream-limit;
+end method;
 
-define method test-stream-limit-setter
+define method do-test-stream-limit-setter
     (info :: <stream-test-info>, stream :: <sequence-stream>) => ()
   //---*** Fill this in...
-end method test-stream-limit-setter;
+end method;
 
 
 register-stream-class-info("<sequence-stream>", <sequence-stream>,
@@ -334,22 +297,18 @@ register-stream-class-info("<unicode-string-stream>", <unicode-string-stream>,
 
 /// Wrapper stream testing
 
-register-stream-test(<wrapper-stream>, test-inner-stream);
-register-stream-test(<wrapper-stream>, test-inner-stream-setter);
+register-stream-test(<wrapper-stream>, do-test-inner-stream);
+register-stream-test(<wrapper-stream>, do-test-inner-stream-setter);
 
-// Don't test the functions we're already testing... there must be a better way!
-define streams function-test inner-stream () end;
-define streams function-test inner-stream-setter () end;
-
-define method test-inner-stream
+define method do-test-inner-stream
     (info :: <stream-test-info>, stream :: <wrapper-stream>) => ()
   //---*** Fill this in...
-end method test-inner-stream;
+end method;
 
-define method test-inner-stream-setter
+define method do-test-inner-stream-setter
     (info :: <stream-test-info>, stream :: <wrapper-stream>) => ()
   //---*** Fill this in...
-end method test-inner-stream-setter;
+end method;
 
 
 register-stream-class-info("<wrapper-stream>", <wrapper-stream>,
@@ -490,114 +449,105 @@ end method write-element;
 // Note:  Refs to <unicode-character> and <unicode-string-stream> have been
 //           commented out since they are not yet implemented.  1997-06-19
 
-define streams constant-test <buffer-index> ()
+define test test-<buffer-index> ()
   // ---*** Fill this in.
 end;
 
-define streams constant-test <byte> ()
-  // ---*** Fill this in.
-end;
-
-define streams constant-test <byte-character> ()
+define test test-<byte-character> ()
   // ---*** Fill this in.
 end;
 
 /*
-define streams constant-test <unicode-character> ()
+define test test-<unicode-character> ()
   // ---*** Fill this in.
 end;
 */
 
-
-define streams class-test <byte-vector> ()
+define test test-<buffer> ()
   // ---*** Fill this in.
 end;
 
-define streams class-test <buffer> ()
+define test test-<stream-position> ()
   // ---*** Fill this in.
 end;
 
-define streams class-test <stream-position> ()
+define test test-stream-lock ()
   // ---*** Fill this in.
 end;
 
-define streams function-test stream-lock ()
+define test test-stream-lock-setter ()
   // ---*** Fill this in.
 end;
 
-define streams function-test stream-lock-setter ()
+define test test-outer-stream ()
   // ---*** Fill this in.
 end;
 
-define streams function-test outer-stream ()
+define test test-outer-stream-setter ()
   // ---*** Fill this in.
 end;
 
-define streams function-test outer-stream-setter ()
+define test test-buffer-next ()
   // ---*** Fill this in.
 end;
 
-define streams function-test buffer-next ()
+define test test-buffer-next-setter ()
   // ---*** Fill this in.
 end;
 
-define streams function-test buffer-next-setter ()
+define test test-buffer-end ()
   // ---*** Fill this in.
 end;
 
-define streams function-test buffer-end ()
+define test test-buffer-end-setter ()
   // ---*** Fill this in.
 end;
 
-define streams function-test buffer-end-setter ()
+define test test-buffer-subsequence ()
   // ---*** Fill this in.
 end;
 
-define streams function-test buffer-subsequence ()
+define test test-copy-into-buffer! ()
   // ---*** Fill this in.
 end;
 
-define streams function-test copy-into-buffer! ()
+define test test-copy-from-buffer! ()
   // ---*** Fill this in.
 end;
 
-define streams function-test copy-from-buffer! ()
+define test test-do-get-input-buffer ()
   // ---*** Fill this in.
 end;
 
-define streams function-test do-get-input-buffer ()
+define test test-do-get-output-buffer ()
   // ---*** Fill this in.
 end;
 
-define streams function-test do-get-output-buffer ()
+define test test-do-input-available-at-source? ()
   // ---*** Fill this in.
 end;
 
-define streams function-test do-input-available-at-source? ()
+define test test-next-input-buffer ()
   // ---*** Fill this in.
 end;
 
-define streams function-test next-input-buffer ()
+define test test-do-next-input-buffer ()
   // ---*** Fill this in.
 end;
 
-define streams function-test do-next-input-buffer ()
+define test test-do-next-output-buffer ()
   // ---*** Fill this in.
 end;
 
-define streams function-test do-next-output-buffer ()
+define test test-do-release-input-buffer ()
   // ---*** Fill this in.
 end;
 
-define streams function-test do-release-input-buffer ()
+define test test-do-release-output-buffer ()
   // ---*** Fill this in.
 end;
 
-define streams function-test do-release-output-buffer ()
-  // ---*** Fill this in.
-end;
-
-define streams macro-test with-output-to-string-test ()
+define test test-with-output-to-string ()
   let test-string = "Hello world";
   check-equal("with-output-to-string test",
               with-output-to-string (stream)
@@ -606,7 +556,7 @@ define streams macro-test with-output-to-string-test ()
               test-string)
 end;
 
-define streams macro-test with-input-from-string-test ()
+define test test-with-input-from-string ()
   let test-string = "Hello world";
   check-equal("with-input-from-string test, no class spec",
               test-string,
@@ -652,7 +602,7 @@ define sideways method make-stream-tests-of-size
   tests
 end method make-stream-tests-of-size;
 
-define streams function-test indent ()
+define test test-indent ()
   check-equal("indent works",
               "   hello",
               with-output-to-string (stream)
@@ -685,7 +635,7 @@ define streams function-test indent ()
               end);
 end;
 
-define streams macro-test with-indentation-test ()
+define test test-with-indentation ()
   check-equal("with-indentation test, default indentation",
               "    hello",
               with-output-to-string (stream)
@@ -863,17 +813,75 @@ define test test-stretchy-stream (description: "<string-stream> stretchy vector 
     check-true("test vector #2",v = #[1, 2, 3]);
     check-true("test stream vector", stream-contents(s) = #[1,2,3,4,5,6]);
   end;
-end;
+end test;
 
-// Prepend "io-" to distinguish from the test by the same name in system test
-// suite.
-define suite io-universal-streams-suite ()
+define test test-<sequence-stream> ()
+  test-stream-class(<sequence-stream>, instantiable?: #t);
+end test;
+
+define test test-<string-stream> ()
+  test-stream-class(<string-stream>, instantiable?: #t);
+end test;
+
+define test test-<byte-string-stream> ()
+  test-stream-class(<byte-string-stream>, instantiable?: #t);
+end test;
+
+define test test-<wrapper-stream> ()
+  test-stream-class(<wrapper-stream>, instantiable?: #t);
+end test;
+
+define test test-<buffered-stream> ()
+  test-stream-class(<buffered-stream>, instantiable?: #f);
+end test;
+
+define test test-<indenting-stream> ()
+  test-stream-class(<indenting-stream>, instantiable?: #t);
+end test;
+
+define test test-<pretty-stream> ()
+  test-stream-class(<pretty-stream>, instantiable?: #t);
+end test;
+
+define suite streams-test-suite ()
+  test test-<sequence-stream>;
+  test test-<string-stream>;
+  test test-<byte-string-stream>;
+  test test-<wrapper-stream>;
+  test test-<buffered-stream>;
+  test test-<indenting-stream>;
+  test test-<pretty-stream>;
+  test test-<buffer-index>;
+  test test-<buffer>;
+  test test-<byte-character>;
+  test test-<stream-position>;
+  //test test-<unicode-character>;
+  test test-buffer-end-setter;
+  test test-buffer-end;
+  test test-buffer-next-setter;
+  test test-buffer-next;
+  test test-buffer-subsequence;
+  test test-copy-from-buffer!;
+  test test-copy-into-buffer!;
+  test test-do-get-input-buffer;
+  test test-do-get-output-buffer;
+  test test-do-input-available-at-source?;
+  test test-do-next-input-buffer;
+  test test-do-next-output-buffer;
+  test test-do-release-input-buffer;
+  test test-do-release-output-buffer;
+  test test-indent;
   test test-line-functions;
-end suite;
-
-define suite io-additional-streams-suite ()
-  test test-position-string-streams;
-  test test-position-sequence-stream;
+  test test-next-input-buffer;
+  test test-outer-stream-setter;
+  test test-outer-stream;
   test test-position-alt-string-streams;
+  test test-position-sequence-stream;
+  test test-position-string-streams;
+  test test-stream-lock-setter;
+  test test-stream-lock;
   test test-stretchy-stream;
+  test test-with-indentation;
+  test test-with-input-from-string;
+  test test-with-output-to-string;
 end suite;

@@ -1,6 +1,6 @@
 Module:       system-test-suite
 Synopsis:     System library test suite
-Author:              Andy Armstrong
+Author:       Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -8,41 +8,37 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Locators class test cases
 
-define locators class-test <locator> ()
+define test test-<server-locator> ()
   // Nothing to test
-end class-test <locator>;
+end test;
 
-define locators class-test <server-locator> ()
+define test test-<physical-locator> ()
   // Nothing to test
-end class-test <server-locator>;
+end test;
 
-define locators class-test <physical-locator> ()
-  // Nothing to test
-end class-test <physical-locator>;
-
-define locators class-test <directory-locator> ()
+define test test-<directory-locator> ()
   let locator = as(<directory-locator>, "home");
   assert-instance?(<directory-locator>, locator);
-end class-test <directory-locator>;
+end test;
 
-define locators class-test <file-locator> ()
+define test test-<file-locator> ()
   let locator = as(<file-locator>, "readme.txt");
   assert-instance?(<file-locator>, locator);
-end class-test <file-locator>;
+end test;
 
-define locators class-test <native-directory-locator> ()
+define test test-<native-directory-locator> ()
   let locator = as(<directory-locator>, "home");
   assert-instance?(<native-directory-locator>, locator);
-end class-test <native-directory-locator>;
+end test;
 
-define locators class-test <native-file-locator> ()
+define test test-<native-file-locator> ()
   let locator = as(<file-locator>, "readme.txt");
   assert-instance?(<native-file-locator>, locator);
-end class-test <native-file-locator>;
+end test;
 
-define locators class-test <locator-error> ()
+define test test-<locator-error> ()
   assert-signals(<locator-error>, locator-error("test %s", "error"));
-end class-test <locator-error>;
+end test;
 
 
 /// Web locator classes
@@ -66,22 +62,22 @@ define constant $valid-urls
       "ftp://www.functionalobjects.com:100/bin",
       "ftp://hello-world.org?andrewa:my-password/pub"];
 
-define locators class-test <url> ()
+define test test-<url> ()
   for (url :: <string> in $valid-urls)
     check-equal(format-to-string("as(<string>, as(<url>, x)) = x [with x = %=]", url),
                 as(<string>, as(<url>, url)),
                 url)
   end
-end class-test <url>;
+end test;
 
-define locators class-test <web-locator> ()
+define test test-<web-locator> ()
   let web-locators = concatenate($valid-urls, #["mailto:andrewa@functionalobjects.com"]);
   for (name :: <string> in web-locators)
     check-equal(format-to-string("as(<string>, as(<web-loctor>, x)) = x [with x = %=]", name),
                 as(<string>, as(<web-locator>, name)),
                 name)
   end
-end class-test <web-locator>;
+end test;
 
 define constant $valid-server-urls
   = #["http://www.functionalobjects.com",
@@ -94,7 +90,7 @@ define constant $invalid-server-urls
       "file://c:", // interpreted as server c and no port
       "file:///c:"]; // a local file and not a server
 
-define locators class-test <server-url> ()
+define test test-<server-url> ()
   for (url :: <string> in $valid-server-urls)
     check-equal(format-to-string("as(<string>, as(<server-url>, x)) = x [with x = %=]", url),
                 as(<string>, as(<server-url>, url)),
@@ -103,9 +99,9 @@ define locators class-test <server-url> ()
   for (url :: <string> in $invalid-server-urls)
     assert-signals(<locator-error>, as(<server-url>, url));
   end;
-end class-test <server-url>;
+end test;
 
-define locators class-test <http-server> ()
+define test test-<http-server> ()
   let server = #f;
   check-equal("make <http-server>",
               server
@@ -115,9 +111,9 @@ define locators class-test <http-server> ()
                         username: "andrewa",
                         password: "test"),
               as(<http-server>, "http://www.fun.com:80?andrewa:test"));
-end class-test <http-server>;
+end test;
 
-define locators class-test <https-server> ()
+define test test-<https-server> ()
   let server = #f;
   check-equal("make <http-server>",
               server
@@ -127,9 +123,9 @@ define locators class-test <https-server> ()
                         username: "andrewa",
                         password: "test"),
               as(<https-server>, "https://www.fun.com:80?andrewa:test"));
-end class-test <https-server>;
+end test;
 
-define locators class-test <ftp-server> ()
+define test test-<ftp-server> ()
   assert-equal(make(<ftp-server>,
                     host: "ftp.fun.com",
                     port: 21),
@@ -140,9 +136,9 @@ define locators class-test <ftp-server> ()
                     username: "andrewa",
                     password: "test"),
                as(<ftp-server>, "ftp://ftp.fun.com:2100?andrewa:test"));
-end class-test <ftp-server>;
+end test;
 
-define locators class-test <file-server> ()
+define test test-<file-server> ()
   assert-equal(make(<file-server>,
                     host: "fun"),
                as(<file-server>, "file://fun"));
@@ -152,9 +148,9 @@ define locators class-test <file-server> ()
                     username: "andrewa",
                     password: "test"),
                as(<file-server>, "file://fun:1234?andrewa:test"));
-end class-test <file-server>;
+end test;
 
-define locators class-test <directory-url> ()
+define test test-<directory-url> ()
   let server = make(<http-server>,
                     host: "www.fun.com",
                     protocol: "http");
@@ -163,9 +159,9 @@ define locators class-test <directory-url> ()
                                  make(<directory-url>,
                                       server: server,
                                       path: #["path", "to", "resource"])));
-end class-test <directory-url>;
+end test;
 
-define locators class-test <file-url> ()
+define test test-<file-url> ()
   let server = make(<http-server>,
                     host: "www.fun.com",
                     protocol: "http");
@@ -178,9 +174,9 @@ define locators class-test <file-url> ()
                                       directory: directory,
                                       base: "info",
                                       extension: "txt")));
-end class-test <file-url>;
+end test;
 
-define locators class-test <file-index-url> ()
+define test test-<file-index-url> ()
   let server = make(<http-server>,
                     host: "www.fun.com",
                     protocol: "http");
@@ -196,9 +192,9 @@ define locators class-test <file-index-url> ()
                                  make(<file-index-url>,
                                       file: file-url,
                                       index: "toplevel")));
-end class-test <file-index-url>;
+end test;
 
- define locators class-test <cgi-url> ()
+define test test-<cgi-url> ()
   let server = make(<http-server>,
                     host: "www.fun.com",
                     protocol: "http");
@@ -214,103 +210,103 @@ end class-test <file-index-url>;
                                  make(<cgi-url>,
                                       file: file-url,
                                       cgi-string: "lang=en")));
-end class-test <cgi-url>;
+end test;
 
-define locators class-test <mail-to-locator> ()
+define test test-<mail-to-locator> ()
   assert-equal("mailto:andrewa@fun.com",
                locator-as-string(<string>,
                                  make(<mail-to-locator>,
                                       address: "andrewa@fun.com")));
-end class-test <mail-to-locator>;
+end test;
 
 
 /// Locator function test cases
 
-define locators function-test locator-error ()
+define test test-locator-error ()
   assert-signals(<locator-error>,
                  locator-error("test error %d", 1));
-end function-test locator-error;
+end test;
 
-define locators function-test supports-open-locator? ()
+define test test-supports-open-locator? ()
   let locator1 = as(<file-locator>, "/test.txt");
   assert-true(supports-open-locator?(locator1));
   let locator2 = as(<mail-to-locator>, "mailto:andrewa@fun.com");
   assert-false(supports-open-locator?(locator2));
-end function-test supports-open-locator?;
+end test;
 
-define locators function-test open-locator ()
-  // Unable to test this
-end function-test open-locator;
+define test test-open-locator ()
+  // Fill this in.
+end test;
 
-define locators function-test supports-list-locator? ()
+define test test-supports-list-locator? ()
   let locator1 = as(<file-locator>, "/test.txt");
   assert-false(supports-list-locator?(locator1));
   let locator2 = as(<file-locator>, "/tmp");
   assert-false(supports-list-locator?(locator2));
   let locator3 = as(<mail-to-locator>, "mailto:andrewa@fun.com");
   assert-false(supports-list-locator?(locator3));
-end function-test supports-list-locator?;
+end test;
 
-define locators function-test list-locator ()
-  // Unable to test this
-end function-test list-locator;
+define test test-list-locator ()
+  // Fill this in.
+end test;
 
-define locators function-test locator-host ()
+define test test-locator-host ()
   let locator = make(<http-server>, host: "www.fun.com");
   assert-equal("www.fun.com", locator-host(locator));
-end function-test locator-host;
+end test;
 
-define locators function-test locator-server ()
+define test test-locator-server ()
   let locator = as(<url>, "http://www.fun.com/en/index.html");
   let server = make(<http-server>, host: "www.fun.com");
   assert-equal(server, locator-server(locator));
-end function-test locator-server;
+end test;
 
-define locators function-test locator-volume ()
+define test test-locator-volume ()
   let locator = as(<microsoft-directory-locator>, "C:\\Windows\\System");
   let server = locator-server(locator);
   assert-equal("C", locator-volume(server));
-end function-test locator-volume;
+end test;
 
-define locators function-test locator-directory ()
+define test test-locator-directory ()
   let locator = as(<file-locator>, "/etc/fstab");
   let directory = as(<directory-locator>, "/etc/");
   assert-equal(directory, locator-directory(locator));
-end function-test locator-directory;
+end test;
 
-define locators function-test locator-relative? ()
+define test test-locator-relative? ()
   assert-true(locator-relative?(as(<file-locator>, "test.txt")));
   assert-true(locator-relative?(as(<file-locator>, "en/test.txt")));
   assert-false(locator-relative?(as(<file-locator>, "/usr/local/en/test.txt")));
   assert-true(locator-relative?(as(<file-locator>, "../test.txt")));
-end function-test locator-relative?;
+end test;
 
-define locators function-test locator-path ()
+define test test-locator-path ()
   let locator = as(<file-locator>, "/var/log/system/system.log");
   assert-equal(#["var", "log", "system"], locator-path(locator));
-end function-test locator-path;
+end test;
 
-define locators function-test locator-base ()
+define test test-locator-base ()
   assert-equal("example", locator-base(as(<file-locator>, "example.txt")));
   assert-equal("example", locator-base(as(<file-locator>, "example")));
   assert-equal("example", locator-base(as(<file-locator>, "/home/andrewa/example.dylan")));
-end function-test locator-base;
+end test;
 
-define locators function-test locator-extension ()
+define test test-locator-extension ()
   assert-equal("txt", locator-extension(as(<file-locator>, "example.txt")));
   assert-equal(#f, locator-extension(as(<file-locator>, "example")));
   assert-equal("dylan", locator-extension(as(<file-locator>, "/home/andrewa/example.dylan")));
-end function-test locator-extension;
+end test;
 
-define locators function-test locator-name ()
+define test test-locator-name ()
   assert-equal("example.txt", locator-name(as(<file-locator>, "example.txt")));
   assert-equal("example", locator-name(as(<file-locator>, "example")));
   assert-equal("example.dylan", locator-name(as(<file-locator>, "/home/andrewa/example.dylan")));
-end function-test locator-name;
+end test;
 
 /// Coercion protocols
 
-define locators function-test locator-as-string ()
+define test test-locator-as-string ()
   let server = make(<http-server>,
                     host: "www.fun.com",
                     protocol: "http");
@@ -335,9 +331,9 @@ define locators function-test locator-as-string ()
   assert-equal("http://www.fun.com/path/to/resource/info.txt?lang=en", locator-as-string(<string>, cgi-url));
   assert-equal("http://www.fun.com/path/to/resource/info.txt#toplevel", locator-as-string(<string>, file-index-url));
   assert-equal("mailto:andrewa@fun.com", locator-as-string(<string>, mail-to));
-end function-test locator-as-string;
+end test;
 
-define locators function-test string-as-locator ()
+define test test-string-as-locator ()
   let server = make(<http-server>,
                     host: "www.fun.com",
                     protocol: "http");
@@ -361,7 +357,7 @@ define locators function-test string-as-locator ()
   assert-equal(cgi-url, string-as-locator(<url>, "http://www.fun.com/path/to/resource/info.txt?lang=en"));
   assert-equal(file-index-url, string-as-locator(<url>, "http://www.fun.com/path/to/resource/info.txt#toplevel"));
   assert-equal(mail-to, string-as-locator(<web-locator>, "mailto:andrewa@fun.com"));
-end function-test string-as-locator;
+end test;
 
 /// Utilities
 
@@ -378,7 +374,7 @@ define constant $microsoft-simplify-tests
   = #[#["a/../b.t",  "b.t"],
       #["/a/../b.t", "/b.t"]];
 
-define locators function-test simplify-locator ()
+define test test-simplify-locator ()
   local method test-simplify-locator
             (class :: subclass(<locator>), info :: <vector>) => ()
           let file1 = info[0];
@@ -393,7 +389,7 @@ define locators function-test simplify-locator ()
   end;
   do(curry(test-simplify-locator, <microsoft-file-system-locator>),
      $microsoft-simplify-tests)
-end function-test simplify-locator;
+end test;
 
 define constant $subdirectory-tests
   = #[#["a/",    #["b"],      "a/b/"],
@@ -404,7 +400,7 @@ define constant $microsoft-subdirectory-tests
       #["h:/a/",  #["b"],    "H:/a/b/"],
       #["//h/a/", #["b"],    "//h/a/b/"]];
 
-define locators function-test subdirectory-locator ()
+define test test-subdirectory-locator ()
   local method test-subdirectory-locator
             (class :: subclass(<locator>), info :: <vector>) => ()
           let directory      = info[0];
@@ -423,7 +419,7 @@ define locators function-test subdirectory-locator ()
   end;
   do(curry(test-subdirectory-locator, <microsoft-file-system-locator>),
      $microsoft-subdirectory-tests)
-end function-test subdirectory-locator;
+end test;
 
 define constant $relative-tests
   = #[#["a",         "a",         "a"],
@@ -446,7 +442,7 @@ define constant $microsoft-relative-tests
       #["//h/a/b/",  "//h/a/",    "b/"],
       #["//h/a/b",   "//i/a/",    "//h/a/b"]];
 
-define locators function-test relative-locator ()
+define test test-relative-locator ()
   local method test-relative-locator
             (class :: subclass(<locator>), info :: <vector>) => ()
           let file1 = info[0];
@@ -464,7 +460,7 @@ define locators function-test relative-locator ()
   end;
   do(curry(test-relative-locator, <microsoft-file-system-locator>),
      $microsoft-relative-tests)
-end function-test relative-locator;
+end test;
 
 define constant $posix-merge-tests
   = #[#["a",      "a",               "a"],
@@ -497,7 +493,7 @@ define constant $microsoft-merge-tests
       #["//h/a/",    "b/",        "//h/a/b/"],
       #["//i/a/",    "//h/a/b",   "//h/a/b"]];
 
-define locators function-test merge-locators ()
+define test test-merge-locators ()
   local method test-merge-locator
           (class :: subclass(<locator>), info :: <vector>) => ()
           let file1 = info[1];
@@ -513,4 +509,47 @@ define locators function-test merge-locators ()
      $posix-merge-tests);
   do(curry(test-merge-locator, <microsoft-file-system-locator>),
      $microsoft-merge-tests)
-end function-test merge-locators;
+end test;
+
+// non-file-system-locators-test-suite?
+define suite more-locators-test-suite ()
+  test test-<server-locator>;
+  test test-<physical-locator>;
+  test test-<directory-locator>;
+  test test-<file-locator>;
+  test test-<native-directory-locator>;
+  test test-<native-file-locator>;
+  test test-<locator-error>;
+  test test-<url>;
+  test test-<web-locator>;
+  test test-<server-url>;
+  test test-<http-server>;
+  test test-<https-server>;
+  test test-<ftp-server>;
+  test test-<file-server>;
+  test test-<directory-url>;
+  test test-<file-url>;
+  test test-<file-index-url>;
+  test test-<cgi-url>;
+  test test-<mail-to-locator>;
+  test test-locator-error;
+  test test-supports-open-locator?;
+  test test-open-locator;
+  test test-supports-list-locator?;
+  test test-list-locator;
+  test test-locator-host;
+  test test-locator-server;
+  test test-locator-volume;
+  test test-locator-directory;
+  test test-locator-relative?;
+  test test-locator-path;
+  test test-locator-base;
+  test test-locator-extension;
+  test test-locator-name;
+  test test-locator-as-string;
+  test test-string-as-locator;
+  test test-simplify-locator;
+  test test-subdirectory-locator;
+  test test-relative-locator;
+  test test-merge-locators;
+end;

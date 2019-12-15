@@ -10,7 +10,6 @@ define library duim-test-suite
   use common-dylan;
 
   use testworks;
-  use testworks-specs;
 
   use duim-core;
   use duim-gadget-panes;

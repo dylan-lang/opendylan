@@ -11,61 +11,61 @@ define sideways method make-test-instance
   make(<machine-word>, value: 1729)
 end method make-test-instance;
 
-define machine-words class-test <machine-word> ()
+define test test-<machine-word> ()
   //---*** Fill this in...
-end class-test <machine-word>;
+end test;
 
 
 /// Variables
 
-define machine-words constant-test $machine-word-size ()
+define test test-$machine-word-size ()
   //---** What can we do here?
-end constant-test $machine-word-size;
+end test;
 
-define machine-words constant-test $maximum-signed-machine-word ()
+define test test-$maximum-signed-machine-word ()
   //---** What can we do here?
-end constant-test $maximum-signed-machine-word;
+end test;
 
-define machine-words constant-test $minimum-signed-machine-word ()
+define test test-$minimum-signed-machine-word ()
   //---** What can we do here?
-end constant-test $minimum-signed-machine-word;
+end test;
 
-define machine-words constant-test $maximum-unsigned-machine-word ()
+define test test-$maximum-unsigned-machine-word ()
   //---** What can we do here?
-end constant-test $maximum-unsigned-machine-word;
+end test;
 
-define machine-words constant-test $minimum-unsigned-machine-word ()
+define test test-$minimum-unsigned-machine-word ()
   //---** What can we do here?
-end constant-test $minimum-unsigned-machine-word;
+end test;
 
-define machine-words constant-test as-unsigned ()
+define test test-as-unsigned ()
   //---** What can we do here?
-end constant-test as-unsigned;
+end test;
 
 
 /// Basic and signed single word operations
 
-define machine-words function-test %logior ()
+define test test-%logior ()
   //---*** Fill this in...
-end function-test %logior;
+end test;
 
-define machine-words function-test %logxor ()
+define test test-%logxor ()
   //---*** Fill this in...
-end function-test %logxor;
+end test;
 
-define machine-words function-test %logand ()
+define test test-%logand ()
   //---*** Fill this in...
-end function-test %logand;
+end test;
 
-define machine-words function-test %lognot ()
+define test test-%lognot ()
   //---*** Fill this in...
-end function-test %lognot;
+end test;
 
-define machine-words function-test %logbit? ()
+define test test-%logbit? ()
   //---*** Fill this in...
-end function-test %logbit?;
+end test;
 
-define machine-words function-test %count-low-zeros ()
+define test test-%count-low-zeros ()
   check-equal("%count-low-zeros of <integer> 0",
               $machine-word-size, %count-low-zeros(0));
   check-equal("%count-low-zeros of <machine-word> 0",
@@ -78,9 +78,9 @@ define machine-words function-test %count-low-zeros ()
               12, %count-low-zeros(4096));
   check-equal("%count-low-zeros of <machine-word> 4096",
               12, %count-low-zeros(as(<machine-word>, 4096)));
-end function-test %count-low-zeros;
+end test;
 
-define machine-words function-test %count-high-zeros ()
+define test test-%count-high-zeros ()
   check-equal("%count-high-zeros of <integer> 0",
               $machine-word-size, %count-high-zeros(0));
   check-equal("%count-high-zeros of <machine-word> 0",
@@ -95,9 +95,9 @@ define machine-words function-test %count-high-zeros ()
   check-equal("%count-high-zeros of <machine-word> 4096",
               $machine-word-size - 13,
               %count-high-zeros(as(<machine-word>, 4096)));
-end function-test %count-high-zeros;
+end test;
 
-define machine-words function-test %count-ones ()
+define test test-%count-ones ()
   check-equal("%count-ones of <integer> 0",
               0, %count-ones(0));
   check-equal("%count-ones of <machine-word> 0",
@@ -110,157 +110,209 @@ define machine-words function-test %count-ones ()
               1, %count-ones(4096));
   check-equal("%count-ones of <machine-word> 4096",
               1, %count-ones(as(<machine-word>, 4096)));
-end function-test %count-ones;
+end test;
 
-define machine-words function-test \%+ ()
+define test test-%+ ()
   //---*** Fill this in...
-end function-test \%+;
+end test;
 
-define machine-words function-test \%- ()
+define test test-%- ()
   //---*** Fill this in...
-end function-test \%-;
+end test;
 
-define machine-words function-test \%* ()
+define test test-%* ()
   //---*** Fill this in...
-end function-test \%*;
+end test;
 
-define machine-words function-test %floor/ ()
+define test test-%floor/ ()
   //---*** Fill this in...
-end function-test %floor/;
+end test;
 
-define machine-words function-test %ceiling/ ()
+define test test-%ceiling/ ()
   //---*** Fill this in...
-end function-test %ceiling/;
+end test;
 
-define machine-words function-test %round/ ()
+define test test-%round/ ()
   //---*** Fill this in...
-end function-test %round/;
+end test;
 
-define machine-words function-test %truncate/ ()
+define test test-%truncate/ ()
   //---*** Fill this in...
-end function-test %truncate/;
+end test;
 
-define machine-words function-test %divide ()
+define test test-%divide ()
   //---*** Fill this in...
-end function-test %divide;
+end test;
 
-define machine-words function-test %negative ()
+define test test-%negative ()
   //---*** Fill this in...
-end function-test %negative;
+end test;
 
-define machine-words function-test %abs ()
+define test test-%abs ()
   //---*** Fill this in...
-end function-test %abs;
+end test;
 
-define machine-words function-test %shift-left ()
+define test test-%shift-left ()
   //---*** Fill this in...
-end function-test %shift-left;
+end test;
 
-define machine-words function-test %shift-right ()
+define test test-%shift-right ()
   //---*** Fill this in...
-end function-test %shift-right;
+end test;
 
 
 /// Overflow signalling operations
 
-define machine-words function-test so%+ ()
+define test test-so%+ ()
   //---*** Fill this in...
-end function-test so%+;
+end test;
 
-define machine-words function-test so%- ()
+define test test-so%- ()
   //---*** Fill this in...
-end function-test so%-;
+end test;
 
-define machine-words function-test so%* ()
+define test test-so%* ()
   //---*** Fill this in...
-end function-test so%*;
+end test;
 
-define machine-words function-test so%negative ()
+define test test-so%negative ()
   //---*** Fill this in...
-end function-test so%negative;
+end test;
 
-define machine-words function-test so%abs ()
+define test test-so%abs ()
   //---*** Fill this in...
-end function-test so%abs;
+end test;
 
-define machine-words function-test so%shift-left ()
+define test test-so%shift-left ()
   //---*** Fill this in...
-end function-test so%shift-left;
+end test;
 
 
 /// Signed double word operations
 
-define machine-words function-test d%floor/ ()
+define test test-d%floor/ ()
   //---*** Fill this in...
-end function-test d%floor/;
+end test;
 
-define machine-words function-test d%ceiling/ ()
+define test test-d%ceiling/ ()
   //---*** Fill this in...
-end function-test d%ceiling/;
+end test;
 
-define machine-words function-test d%round/ ()
+define test test-d%round/ ()
   //---*** Fill this in...
-end function-test d%round/;
+end test;
 
-define machine-words function-test d%truncate/ ()
+define test test-d%truncate/ ()
   //---*** Fill this in...
-end function-test d%truncate/;
+end test;
 
-define machine-words function-test d%divide ()
+define test test-d%divide ()
   //---*** Fill this in...
-end function-test d%divide;
+end test;
 
 
 /// Unsigned single word operations
 
-define machine-words function-test u%+ ()
+define test test-u%+ ()
   //---*** Fill this in...
-end function-test u%+;
+end test;
 
-define machine-words function-test u%- ()
+define test test-u%- ()
   //---*** Fill this in...
-end function-test u%-;
+end test;
 
-define machine-words function-test u%* ()
+define test test-u%* ()
   //---*** Fill this in...
-end function-test u%*;
+end test;
 
-define machine-words function-test u%divide ()
+define test test-u%divide ()
   //---*** Fill this in...
-end function-test u%divide;
+end test;
 
-define machine-words function-test u%rotate-left ()
+define test test-u%rotate-left ()
   //---*** Fill this in...
-end function-test u%rotate-left;
+end test;
 
-define machine-words function-test u%rotate-right ()
+define test test-u%rotate-right ()
   //---*** Fill this in...
-end function-test u%rotate-right;
+end test;
 
-define machine-words function-test u%shift-left ()
+define test test-u%shift-left ()
   //---*** Fill this in...
-end function-test u%shift-left;
+end test;
 
-define machine-words function-test u%shift-right ()
+define test test-u%shift-right ()
   //---*** Fill this in...
-end function-test u%shift-right;
+end test;
 
-define machine-words function-test u%< ()
+define test test-u%< ()
   //---*** Fill this in...
-end function-test u%<;
+end test;
 
 
 /// Unsigned double word operations
 
-define machine-words function-test ud%divide ()
+define test test-ud%divide ()
   //---*** Fill this in...
-end function-test ud%divide;
+end test;
 
-define machine-words function-test ud%shift-left ()
+define test test-ud%shift-left ()
   //---*** Fill this in...
-end function-test ud%shift-left;
+end test;
 
-define machine-words function-test ud%shift-right ()
+define test test-ud%shift-right ()
   //---*** Fill this in...
-end function-test ud%shift-right;
+end test;
 
+define suite machine-words-test-suite ()
+  test test-<machine-word>;
+  test test-$machine-word-size;
+  test test-$maximum-signed-machine-word;
+  test test-$minimum-signed-machine-word;
+  test test-$maximum-unsigned-machine-word;
+  test test-$minimum-unsigned-machine-word;
+  test test-as-unsigned;
+  test test-%logior;
+  test test-%logxor;
+  test test-%logand;
+  test test-%lognot;
+  test test-%logbit?;
+  test test-%count-low-zeros;
+  test test-%count-high-zeros;
+  test test-%count-ones;
+  test test-%+;
+  test test-%-;
+  test test-%*;
+  test test-%floor/;
+  test test-%ceiling/;
+  test test-%round/;
+  test test-%truncate/;
+  test test-%divide;
+  test test-%negative;
+  test test-%abs;
+  test test-%shift-left;
+  test test-%shift-right;
+  test test-so%+;
+  test test-so%-;
+  test test-so%*;
+  test test-so%negative;
+  test test-so%abs;
+  test test-so%shift-left;
+  test test-d%floor/;
+  test test-d%ceiling/;
+  test test-d%round/;
+  test test-d%truncate/;
+  test test-d%divide;
+  test test-u%+;
+  test test-u%-;
+  test test-u%*;
+  test test-u%divide;
+  test test-u%rotate-left;
+  test test-u%rotate-right;
+  test test-u%shift-left;
+  test test-u%shift-right;
+  test test-u%<;
+  test test-ud%divide;
+  test test-ud%shift-left;
+  test test-ud%shift-right;
+end;

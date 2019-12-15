@@ -14,7 +14,6 @@ define module duim-test-suite
   use threads;
 
   use testworks;
-  use testworks-specs;
 
   use duim-internals;
   use duim-gadget-panes-internals;

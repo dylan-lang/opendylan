@@ -171,63 +171,63 @@ end function;
 
 /// llvm-builder tests
 
-define llvm-builder class-test <llvm-builder> ()
+define test test-<llvm-builder> ()
   //---*** Fill this in...
-end class-test <llvm-builder>;
+end test;
 
-define llvm-builder function-test llvm-builder-basic-block ()
+define test test-llvm-builder-basic-block ()
   //---*** Fill this in...
-end function-test llvm-builder-basic-block;
+end test;
 
-define llvm-builder function-test llvm-builder-basic-block-setter ()
+define test test-llvm-builder-basic-block-setter ()
   //---*** Fill this in...
-end function-test llvm-builder-basic-block-setter;
+end test;
 
-define llvm-builder function-test llvm-builder-function ()
+define test test-llvm-builder-function ()
   //---*** Fill this in...
-end function-test llvm-builder-function;
+end test;
 
-define llvm-builder function-test llvm-builder-function-setter ()
+define test test-llvm-builder-function-setter ()
   //---*** Fill this in...
-end function-test llvm-builder-function-setter;
+end test;
 
-define llvm-builder function-test llvm-builder-module ()
+define test test-llvm-builder-module ()
   //---*** Fill this in...
-end function-test llvm-builder-module;
+end test;
 
-define llvm-builder function-test llvm-builder-module-setter ()
+define test test-llvm-builder-module-setter ()
   //---*** Fill this in...
-end function-test llvm-builder-module-setter;
+end test;
 
-define llvm-builder function-test llvm-builder-define-global ()
+define test test-llvm-builder-define-global ()
   //---*** Fill this in...
-end function-test llvm-builder-define-global;
+end test;
 
-define llvm-builder function-test llvm-builder-declare-global ()
+define test test-llvm-builder-declare-global ()
   //---*** Fill this in...
-end function-test llvm-builder-declare-global;
+end test;
 
-define llvm-builder function-test llvm-builder-global ()
+define test test-llvm-builder-global ()
   //---*** Fill this in...
-end function-test llvm-builder-global;
+end test;
 
-define llvm-builder constant-test <llvm-local-value> ()
+define test test-<llvm-local-value> ()
   //---*** Fill this in...
-end constant-test <llvm-local-value>;
+end test;
 
-define llvm-builder function-test ins--local ()
+define test test-ins--local ()
   //---*** Fill this in...
-end function-test ins--local;
+end test;
 
-define llvm-builder function-test llvm-builder-local ()
+define test test-llvm-builder-local ()
   //---*** Fill this in...
-end function-test llvm-builder-local;
+end test;
 
-define llvm-builder function-test ins--block ()
+define test test-ins--block ()
   //---*** Fill this in...
-end function-test ins--block;
+end test;
 
-define llvm-builder function-test ins--dbg ()
+define test test-ins--dbg ()
   let builder = make-builder-with-test-function();
 
   let dbg-file
@@ -258,18 +258,18 @@ define llvm-builder function-test ins--dbg ()
                 "%0 = add i32 1111, 2222, !dbg !8",
                 "ret void, !dbg !8"),
               builder-test-function-disassembly(builder));
-end function-test ins--dbg;
+end test;
 
-define llvm-builder function-test ins--add ()
+define test test-ins--add ()
   let builder = make-builder-with-test-function();
   ins--add(builder, 1111, 2222);
   ins--ret(builder);
   check-equal("ins--add disassembly",
               #("entry:", "%0 = add i32 1111, 2222", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--add;
+end test;
 
-define llvm-builder function-test ins--fadd ()
+define test test-ins--fadd ()
   let builder = make-builder-with-test-function();
   ins--fadd(builder, 1.0s0, 2.0s0);
   ins--ret(builder);
@@ -278,18 +278,18 @@ define llvm-builder function-test ins--fadd ()
                 "%0 = fadd float 1.000000e+00, 2.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fadd;
+end test;
 
-define llvm-builder function-test ins--sub ()
+define test test-ins--sub ()
   let builder = make-builder-with-test-function();
   ins--sub(builder, 1111, 2222);
   ins--ret(builder);
   check-equal("ins--sub disassembly",
               #("entry:", "%0 = sub i32 1111, 2222", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--sub;
+end test;
 
-define llvm-builder function-test ins--fsub ()
+define test test-ins--fsub ()
   let builder = make-builder-with-test-function();
   ins--fsub(builder, 1.0s0, 2.0s0);
   ins--ret(builder);
@@ -298,18 +298,18 @@ define llvm-builder function-test ins--fsub ()
                 "%0 = fsub float 1.000000e+00, 2.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fsub;
+end test;
 
-define llvm-builder function-test ins--mul ()
+define test test-ins--mul ()
   let builder = make-builder-with-test-function();
   ins--mul(builder, 1111, 2222);
   ins--ret(builder);
   check-equal("ins--mul disassembly",
               #("entry:", "%0 = mul i32 1111, 2222", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--mul;
+end test;
 
-define llvm-builder function-test ins--fmul ()
+define test test-ins--fmul ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   ins--fmul(builder,
@@ -321,9 +321,9 @@ define llvm-builder function-test ins--fmul ()
                 "%0 = fmul float 1.000000e+00, 2.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fmul;
+end test;
 
-define llvm-builder function-test ins--udiv ()
+define test test-ins--udiv ()
   let builder = make-builder-with-test-function();
   ins--udiv(builder,
             222,
@@ -332,18 +332,18 @@ define llvm-builder function-test ins--udiv ()
   check-equal("ins--udiv disassembly",
               #("entry:", "%0 = udiv i32 222, 111", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--udiv;
+end test;
 
-define llvm-builder function-test ins--sdiv ()
+define test test-ins--sdiv ()
   let builder = make-builder-with-test-function();
   ins--sdiv(builder, 222, 111);
   ins--ret(builder);
   check-equal("ins--sdiv disassembly",
               #("entry:", "%0 = sdiv i32 222, 111", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--sdiv;
+end test;
 
-define llvm-builder function-test ins--fdiv ()
+define test test-ins--fdiv ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   ins--fdiv(builder, 1.0s0, 2.0s0);
@@ -353,27 +353,27 @@ define llvm-builder function-test ins--fdiv ()
                 "%0 = fdiv float 1.000000e+00, 2.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fdiv;
+end test;
 
-define llvm-builder function-test ins--urem ()
+define test test-ins--urem ()
   let builder = make-builder-with-test-function();
   ins--urem(builder, 222, 111);
   ins--ret(builder);
   check-equal("ins--urem disassembly",
               #("entry:", "%0 = urem i32 222, 111", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--urem;
+end test;
 
-define llvm-builder function-test ins--srem ()
+define test test-ins--srem ()
   let builder = make-builder-with-test-function();
   ins--srem(builder, 222, 111);
   ins--ret(builder);
   check-equal("ins--srem disassembly",
               #("entry:", "%0 = srem i32 222, 111", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--srem;
+end test;
 
-define llvm-builder function-test ins--frem ()
+define test test-ins--frem ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   ins--frem(builder, 1.0s0, 2.0s0);
@@ -383,72 +383,72 @@ define llvm-builder function-test ins--frem ()
                 "%0 = frem float 1.000000e+00, 2.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--frem;
+end test;
 
-define llvm-builder function-test ins--shl ()
+define test test-ins--shl ()
   let builder = make-builder-with-test-function();
   ins--shl(builder, 111, 2);
   ins--ret(builder);
   check-equal("ins--shl disassembly",
               #("entry:", "%0 = shl i32 111, 2", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--shl;
+end test;
 
-define llvm-builder function-test ins--lshr ()
+define test test-ins--lshr ()
   let builder = make-builder-with-test-function();
   ins--lshr(builder, 111, 2);
   ins--ret(builder);
   check-equal("ins--lshr disassembly",
               #("entry:", "%0 = lshr i32 111, 2", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--lshr;
+end test;
 
-define llvm-builder function-test ins--ashr ()
+define test test-ins--ashr ()
   let builder = make-builder-with-test-function();
   ins--ashr(builder, 111, 2);
   ins--ret(builder);
   check-equal("ins--ashr disassembly",
               #("entry:", "%0 = ashr i32 111, 2", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--ashr;
+end test;
 
-define llvm-builder function-test ins--and ()
+define test test-ins--and ()
   let builder = make-builder-with-test-function();
   ins--and(builder, 111, 2);
   ins--ret(builder);
   check-equal("ins--and disassembly",
               #("entry:", "%0 = and i32 111, 2", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--and;
+end test;
 
-define llvm-builder function-test ins--or ()
+define test test-ins--or ()
   let builder = make-builder-with-test-function();
   ins--or(builder, 111, 2);
   ins--ret(builder);
   check-equal("ins--or disassembly",
               #("entry:", "%0 = or i32 111, 2", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--or;
+end test;
 
-define llvm-builder function-test ins--xor ()
+define test test-ins--xor ()
   let builder = make-builder-with-test-function();
   ins--xor(builder, 111, 2);
   ins--ret(builder);
   check-equal("ins--xor disassembly",
               #("entry:", "%0 = xor i32 111, 2", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--xor;
+end test;
 
-define llvm-builder function-test ins--trunc ()
+define test test-ins--trunc ()
   let builder = make-builder-with-test-function();
   ins--trunc(builder, 111, $llvm-i8-type);
   ins--ret(builder);
   check-equal("ins--trunc disassembly",
               #("entry:", "%0 = trunc i32 111 to i8", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--trunc;
+end test;
 
-define llvm-builder function-test ins--zext ()
+define test test-ins--zext ()
   let builder = make-builder-with-test-function();
   ins--zext(builder,
             make(<llvm-integer-constant>, type: $llvm-i8-type, integer: 111),
@@ -457,9 +457,9 @@ define llvm-builder function-test ins--zext ()
   check-equal("ins--zext disassembly",
               #("entry:", "%0 = zext i8 111 to i32", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--zext;
+end test;
 
-define llvm-builder function-test ins--sext ()
+define test test-ins--sext ()
   let builder = make-builder-with-test-function();
   ins--sext(builder,
             make(<llvm-integer-constant>, type: $llvm-i8-type, integer: 111),
@@ -468,9 +468,9 @@ define llvm-builder function-test ins--sext ()
   check-equal("ins--sext disassembly",
               #("entry:", "%0 = sext i8 111 to i32", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--sext;
+end test;
 
-define llvm-builder function-test ins--fptoui ()
+define test test-ins--fptoui ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   ins--fptoui(builder, 1.0s0, $llvm-i32-type);
@@ -480,9 +480,9 @@ define llvm-builder function-test ins--fptoui ()
                 "%0 = fptoui float 1.000000e+00 to i32",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fptoui;
+end test;
 
-define llvm-builder function-test ins--fptosi ()
+define test test-ins--fptosi ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   ins--fptosi(builder, 1.0s0, $llvm-i32-type);
@@ -492,27 +492,27 @@ define llvm-builder function-test ins--fptosi ()
                 "%0 = fptosi float 1.000000e+00 to i32",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fptosi;
+end test;
 
-define llvm-builder function-test ins--uitofp ()
+define test test-ins--uitofp ()
   let builder = make-builder-with-test-function();
   ins--uitofp(builder, 111, make(<llvm-primitive-type>, kind: #"FLOAT"));
   ins--ret(builder);
   check-equal("ins--uitofp disassembly",
               #("entry:", "%0 = uitofp i32 111 to float", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--uitofp;
+end test;
 
-define llvm-builder function-test ins--sitofp ()
+define test test-ins--sitofp ()
   let builder = make-builder-with-test-function();
   ins--sitofp(builder, 111, make(<llvm-primitive-type>, kind: #"FLOAT"));
   ins--ret(builder);
   check-equal("ins--sitofp disassembly",
               #("entry:", "%0 = sitofp i32 111 to float", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--sitofp;
+end test;
 
-define llvm-builder function-test ins--fptrunc ()
+define test test-ins--fptrunc ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let double-type = make(<llvm-primitive-type>, kind: #"DOUBLE");
@@ -523,9 +523,9 @@ define llvm-builder function-test ins--fptrunc ()
                 "%0 = fptrunc double 1.000000e+00 to float",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fptrunc;
+end test;
 
-define llvm-builder function-test ins--fpext ()
+define test test-ins--fpext ()
   let builder = make-builder-with-test-function();
   let double-type = make(<llvm-primitive-type>, kind: #"DOUBLE");
   ins--fpext(builder, 1.0s0, double-type);
@@ -535,9 +535,9 @@ define llvm-builder function-test ins--fpext ()
                 "%0 = fpext float 1.000000e+00 to double",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fpext;
+end test;
 
-define llvm-builder function-test ins--ptrtoint ()
+define test test-ins--ptrtoint ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let ptr = ins--alloca(builder, float-type, 1);
@@ -549,9 +549,9 @@ define llvm-builder function-test ins--ptrtoint ()
                 "%1 = ptrtoint float* %0 to i32",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--ptrtoint;
+end test;
 
-define llvm-builder function-test ins--inttoptr ()
+define test test-ins--inttoptr ()
   let builder = make-builder-with-test-function();
   ins--inttoptr(builder, 0, $llvm-i8*-type);
   ins--ret(builder);
@@ -560,9 +560,9 @@ define llvm-builder function-test ins--inttoptr ()
                 "%0 = inttoptr i32 0 to i8*",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--inttoptr;
+end test;
 
-define llvm-builder function-test ins--bitcast ()
+define test test-ins--bitcast ()
   let builder = make-builder-with-test-function();
   ins--bitcast(builder,
              make(<llvm-integer-constant>, type: $llvm-i8-type, integer: 255),
@@ -571,9 +571,9 @@ define llvm-builder function-test ins--bitcast ()
   check-equal("ins--bitcast disassembly",
               #("entry:", "%0 = bitcast i8 -1 to i8", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--bitcast;
+end test;
 
-define llvm-builder function-test ins--icmp-eq ()
+define test test-ins--icmp-eq ()
   let builder = make-builder-with-test-function();
   let cmp = ins--icmp-eq(builder, 1, 2);
   llvm-constrain-type(cmp.llvm-value-type, $llvm-i1-type);
@@ -581,9 +581,9 @@ define llvm-builder function-test ins--icmp-eq ()
   check-equal("ins--icmp-eq disassembly",
               #("entry:", "%0 = icmp eq i32 1, 2", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--icmp-eq;
+end test;
 
-define llvm-builder function-test ins--icmp-ne ()
+define test test-ins--icmp-ne ()
   let builder = make-builder-with-test-function();
   let cmp = ins--icmp-ne(builder, 1, 2);
   llvm-constrain-type(cmp.llvm-value-type, $llvm-i1-type);
@@ -591,9 +591,9 @@ define llvm-builder function-test ins--icmp-ne ()
   check-equal("ins--icmp-ne disassembly",
               #("entry:", "%0 = icmp ne i32 1, 2", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--icmp-ne;
+end test;
 
-define llvm-builder function-test ins--icmp-slt ()
+define test test-ins--icmp-slt ()
   let builder = make-builder-with-test-function();
   let cmp = ins--icmp-slt(builder, 1, 2);
   llvm-constrain-type(cmp.llvm-value-type, $llvm-i1-type);
@@ -601,9 +601,9 @@ define llvm-builder function-test ins--icmp-slt ()
   check-equal("ins--icmp-slt disassembly",
               #("entry:", "%0 = icmp slt i32 1, 2", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--icmp-slt;
+end test;
 
-define llvm-builder function-test ins--icmp-sgt ()
+define test test-ins--icmp-sgt ()
   let builder = make-builder-with-test-function();
   let cmp = ins--icmp-sgt(builder, 1, 2);
   llvm-constrain-type(cmp.llvm-value-type, $llvm-i1-type);
@@ -611,9 +611,9 @@ define llvm-builder function-test ins--icmp-sgt ()
   check-equal("ins--icmp-sgt disassembly",
               #("entry:", "%0 = icmp sgt i32 1, 2", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--icmp-sgt;
+end test;
 
-define llvm-builder function-test ins--icmp-sle ()
+define test test-ins--icmp-sle ()
   let builder = make-builder-with-test-function();
   let cmp = ins--icmp-sle(builder, 1, 2);
   llvm-constrain-type(cmp.llvm-value-type, $llvm-i1-type);
@@ -621,9 +621,9 @@ define llvm-builder function-test ins--icmp-sle ()
   check-equal("ins--icmp-sle disassembly",
               #("entry:", "%0 = icmp sle i32 1, 2", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--icmp-sle;
+end test;
 
-define llvm-builder function-test ins--icmp-sge ()
+define test test-ins--icmp-sge ()
   let builder = make-builder-with-test-function();
   let cmp = ins--icmp-sge(builder, 1, 2);
   llvm-constrain-type(cmp.llvm-value-type, $llvm-i1-type);
@@ -631,9 +631,9 @@ define llvm-builder function-test ins--icmp-sge ()
   check-equal("ins--icmp-sge disassembly",
               #("entry:", "%0 = icmp sge i32 1, 2", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--icmp-sge;
+end test;
 
-define llvm-builder function-test ins--icmp-ult ()
+define test test-ins--icmp-ult ()
   let builder = make-builder-with-test-function();
   let cmp = ins--icmp-ult(builder, 1, 2);
   llvm-constrain-type(cmp.llvm-value-type, $llvm-i1-type);
@@ -641,9 +641,9 @@ define llvm-builder function-test ins--icmp-ult ()
   check-equal("ins--icmp-ult disassembly",
               #("entry:", "%0 = icmp ult i32 1, 2", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--icmp-ult;
+end test;
 
-define llvm-builder function-test ins--icmp-ugt ()
+define test test-ins--icmp-ugt ()
   let builder = make-builder-with-test-function();
   let cmp = ins--icmp-ugt(builder, 1, 2);
   llvm-constrain-type(cmp.llvm-value-type, $llvm-i1-type);
@@ -651,9 +651,9 @@ define llvm-builder function-test ins--icmp-ugt ()
   check-equal("ins--icmp-ugt disassembly",
               #("entry:", "%0 = icmp ugt i32 1, 2", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--icmp-ugt;
+end test;
 
-define llvm-builder function-test ins--icmp-ule ()
+define test test-ins--icmp-ule ()
   let builder = make-builder-with-test-function();
   let cmp = ins--icmp-ule(builder, 1, 2);
   llvm-constrain-type(cmp.llvm-value-type, $llvm-i1-type);
@@ -661,9 +661,9 @@ define llvm-builder function-test ins--icmp-ule ()
   check-equal("ins--icmp-ule disassembly",
               #("entry:", "%0 = icmp ule i32 1, 2", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--icmp-ule;
+end test;
 
-define llvm-builder function-test ins--icmp-uge ()
+define test test-ins--icmp-uge ()
   let builder = make-builder-with-test-function();
   let cmp = ins--icmp-uge(builder, 1, 2);
   llvm-constrain-type(cmp.llvm-value-type, $llvm-i1-type);
@@ -671,9 +671,9 @@ define llvm-builder function-test ins--icmp-uge ()
   check-equal("ins--icmp-uge disassembly",
               #("entry:", "%0 = icmp uge i32 1, 2", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--icmp-uge;
+end test;
 
-define llvm-builder function-test ins--fcmp-oeq ()
+define test test-ins--fcmp-oeq ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let cmp = ins--fcmp-oeq(builder, 4.0s0, 5.0s0);
@@ -684,9 +684,9 @@ define llvm-builder function-test ins--fcmp-oeq ()
                 "%0 = fcmp oeq float 4.000000e+00, 5.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fcmp-oeq;
+end test;
 
-define llvm-builder function-test ins--fcmp-one ()
+define test test-ins--fcmp-one ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let cmp = ins--fcmp-one(builder, 4.0s0, 5.0s0);
@@ -697,9 +697,9 @@ define llvm-builder function-test ins--fcmp-one ()
                 "%0 = fcmp one float 4.000000e+00, 5.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fcmp-one;
+end test;
 
-define llvm-builder function-test ins--fcmp-olt ()
+define test test-ins--fcmp-olt ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let cmp = ins--fcmp-olt(builder, 4.0s0, 5.0s0);
@@ -710,9 +710,9 @@ define llvm-builder function-test ins--fcmp-olt ()
                 "%0 = fcmp olt float 4.000000e+00, 5.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fcmp-olt;
+end test;
 
-define llvm-builder function-test ins--fcmp-ogt ()
+define test test-ins--fcmp-ogt ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let cmp = ins--fcmp-ogt(builder, 4.0s0, 5.0s0);
@@ -723,9 +723,9 @@ define llvm-builder function-test ins--fcmp-ogt ()
                 "%0 = fcmp ogt float 4.000000e+00, 5.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fcmp-ogt;
+end test;
 
-define llvm-builder function-test ins--fcmp-ole ()
+define test test-ins--fcmp-ole ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let cmp = ins--fcmp-ole(builder, 4.0s0, 5.0s0);
@@ -736,9 +736,9 @@ define llvm-builder function-test ins--fcmp-ole ()
                 "%0 = fcmp ole float 4.000000e+00, 5.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fcmp-ole;
+end test;
 
-define llvm-builder function-test ins--fcmp-oge ()
+define test test-ins--fcmp-oge ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let cmp = ins--fcmp-oge(builder, 4.0s0, 5.0s0);
@@ -749,9 +749,9 @@ define llvm-builder function-test ins--fcmp-oge ()
                 "%0 = fcmp oge float 4.000000e+00, 5.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fcmp-oge;
+end test;
 
-define llvm-builder function-test ins--fcmp-ord ()
+define test test-ins--fcmp-ord ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let cmp = ins--fcmp-ord(builder, 4.0s0, 5.0s0);
@@ -762,9 +762,9 @@ define llvm-builder function-test ins--fcmp-ord ()
                 "%0 = fcmp ord float 4.000000e+00, 5.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fcmp-ord;
+end test;
 
-define llvm-builder function-test ins--fcmp-uno ()
+define test test-ins--fcmp-uno ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let cmp = ins--fcmp-uno(builder, 4.0s0, 5.0s0);
@@ -775,9 +775,9 @@ define llvm-builder function-test ins--fcmp-uno ()
                 "%0 = fcmp uno float 4.000000e+00, 5.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fcmp-uno;
+end test;
 
-define llvm-builder function-test ins--fcmp-ueq ()
+define test test-ins--fcmp-ueq ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let cmp = ins--fcmp-ueq(builder, 4.0s0, 5.0s0);
@@ -788,9 +788,9 @@ define llvm-builder function-test ins--fcmp-ueq ()
                 "%0 = fcmp ueq float 4.000000e+00, 5.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fcmp-ueq;
+end test;
 
-define llvm-builder function-test ins--fcmp-une ()
+define test test-ins--fcmp-une ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let cmp = ins--fcmp-une(builder, 4.0s0, 5.0s0);
@@ -801,9 +801,9 @@ define llvm-builder function-test ins--fcmp-une ()
                 "%0 = fcmp une float 4.000000e+00, 5.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fcmp-une;
+end test;
 
-define llvm-builder function-test ins--fcmp-ult ()
+define test test-ins--fcmp-ult ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let cmp = ins--fcmp-ult(builder, 4.0s0, 5.0s0);
@@ -814,9 +814,9 @@ define llvm-builder function-test ins--fcmp-ult ()
                 "%0 = fcmp ult float 4.000000e+00, 5.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fcmp-ult;
+end test;
 
-define llvm-builder function-test ins--fcmp-ugt ()
+define test test-ins--fcmp-ugt ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let cmp = ins--fcmp-ugt(builder, 4.0s0, 5.0s0);
@@ -827,9 +827,9 @@ define llvm-builder function-test ins--fcmp-ugt ()
                 "%0 = fcmp ugt float 4.000000e+00, 5.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fcmp-ugt;
+end test;
 
-define llvm-builder function-test ins--fcmp-ule ()
+define test test-ins--fcmp-ule ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let cmp = ins--fcmp-ule(builder, 4.0s0, 5.0s0);
@@ -840,9 +840,9 @@ define llvm-builder function-test ins--fcmp-ule ()
                 "%0 = fcmp ule float 4.000000e+00, 5.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fcmp-ule;
+end test;
 
-define llvm-builder function-test ins--fcmp-uge ()
+define test test-ins--fcmp-uge ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let cmp = ins--fcmp-ule(builder, 4.0s0, 5.0s0);
@@ -853,9 +853,9 @@ define llvm-builder function-test ins--fcmp-uge ()
                 "%0 = fcmp ule float 4.000000e+00, 5.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fcmp-uge;
+end test;
 
-define llvm-builder function-test ins--fcmp-true ()
+define test test-ins--fcmp-true ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let cmp = ins--fcmp-true(builder, 4.0s0, 5.0s0);
@@ -866,9 +866,9 @@ define llvm-builder function-test ins--fcmp-true ()
                 "%0 = fcmp true float 4.000000e+00, 5.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fcmp-true;
+end test;
 
-define llvm-builder function-test ins--fcmp-false ()
+define test test-ins--fcmp-false ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let cmp = ins--fcmp-false(builder, 4.0s0, 5.0s0);
@@ -879,7 +879,7 @@ define llvm-builder function-test ins--fcmp-false ()
                 "%0 = fcmp false float 4.000000e+00, 5.000000e+00",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fcmp-false;
+end test;
 
 define function make-test-struct-type
     (name :: false-or(<string>)) => (type :: <llvm-type>);
@@ -902,7 +902,7 @@ define function make-test-struct-type
   st-type
 end function;
 
-define llvm-builder function-test ins--gep ()
+define test test-ins--gep ()
   let st-type = make-test-struct-type("ST");
   let st*-type = make(<llvm-pointer-type>, pointee: st-type);
   let i32*-type = make(<llvm-pointer-type>, pointee: $llvm-i32-type);
@@ -919,9 +919,9 @@ define llvm-builder function-test ins--gep ()
                   " i32 1, i32 2, i32 1, i32 5, i32 13",
                 "ret i32* %0"),
               builder-test-function-disassembly(builder));
-end function-test ins--gep;
+end test;
 
-define llvm-builder function-test ins--gep-inbounds ()
+define test test-ins--gep-inbounds ()
   let st-type = make-test-struct-type("ST");
   let st*-type = make(<llvm-pointer-type>, pointee: st-type);
   let i32*-type = make(<llvm-pointer-type>, pointee: $llvm-i32-type);
@@ -939,9 +939,9 @@ define llvm-builder function-test ins--gep-inbounds ()
                   " i32 1, i32 2, i32 1, i32 5, i32 13",
                 "ret i32* %0"),
               builder-test-function-disassembly(builder));
-end function-test ins--gep-inbounds;
+end test;
 
-define llvm-builder function-test ins--select ()
+define test test-ins--select ()
   let builder = make-builder-with-test-function();
   ins--select(builder,
               make(<llvm-integer-constant>, type: $llvm-i1-type, integer: 1),
@@ -951,11 +951,11 @@ define llvm-builder function-test ins--select ()
   check-equal("ins--select disassembly",
               #("entry:", "%0 = select i1 true, i8 17, i8 42", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--select;
+end test;
 
-define llvm-builder function-test ins--va-arg ()
+define test test-ins--va-arg ()
   //---*** Fill this in...
-end function-test ins--va-arg;
+end test;
 
 define function make-test-vector () => (value :: <llvm-value>)
   let vector-type
@@ -970,7 +970,7 @@ define function make-test-vector () => (value :: <llvm-value>)
        aggregate-values: vector-contents)
 end function;
 
-define llvm-builder function-test ins--extractelement ()
+define test test-ins--extractelement ()
   let builder = make-builder-with-test-function();
   let ee = ins--extractelement(builder,
                                make-test-vector(),
@@ -985,9 +985,9 @@ define llvm-builder function-test ins--extractelement ()
                   " i32 2",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--extractelement;
+end test;
 
-define llvm-builder function-test ins--insertelement ()
+define test test-ins--insertelement ()
   let builder = make-builder-with-test-function();
   ins--insertelement(builder,
                      make-test-vector(),
@@ -1004,9 +1004,9 @@ define llvm-builder function-test ins--insertelement ()
                   " i32 8, i32 2",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--insertelement;
+end test;
 
-define llvm-builder function-test ins--shufflevector ()
+define test test-ins--shufflevector ()
   let builder = make-builder-with-test-function();
   let test-vector = make-test-vector();
   let sv = ins--shufflevector(builder,
@@ -1022,13 +1022,13 @@ define llvm-builder function-test ins--shufflevector ()
                   " <4 x i32> <i32 0, i32 1, i32 2, i32 3>",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--shufflevector;
+end test;
 
-define llvm-builder function-test ins--phi ()
+define test test-ins--phi ()
   //---*** Fill this in...
-end function-test ins--phi;
+end test;
 
-define llvm-builder function-test ins--phi* ()
+define test test-ins--phi* ()
   with-test-unit ("ins--phi valid")
     let builder = make-builder-with-test-function();
     let entry = builder.llvm-builder-basic-block;
@@ -1082,17 +1082,17 @@ define llvm-builder function-test ins--phi* ()
          ins--br(builder, loop);
        end);
   end;
-end function-test ins--phi*;
+end test;
 
-define llvm-builder function-test ins--call ()
+define test test-ins--call ()
   //---*** Fill this in...
-end function-test ins--call;
+end test;
 
-define llvm-builder function-test ins--tail-call ()
+define test test-ins--tail-call ()
   //---*** Fill this in...
-end function-test ins--tail-call;
+end test;
 
-define llvm-builder function-test ins--call-intrinsic ()
+define test test-ins--call-intrinsic ()
   with-test-unit ("ins--call-intrinsic @llvm.prefetch")
     let builder = make-builder-with-test-function();
     let ptr = ins--alloca(builder, $llvm-float-type, 1);
@@ -1145,9 +1145,9 @@ define llvm-builder function-test ins--call-intrinsic ()
                   "ret void"),
                 builder-test-function-disassembly(builder));
   end;
-end function-test ins--call-intrinsic;
+end test;
 
-define llvm-builder function-test ins--alloca ()
+define test test-ins--alloca ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   ins--alloca(builder, float-type, 1);
@@ -1161,9 +1161,9 @@ define llvm-builder function-test ins--alloca ()
                 "%2 = alloca float, i32 16, align 4",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--alloca;
+end test;
 
-define llvm-builder function-test ins--load ()
+define test test-ins--load ()
   let builder = make-builder-with-test-function();
   let ptr = ins--alloca(builder, $llvm-float-type, 1);
   ins--load(builder, ptr);
@@ -1174,9 +1174,9 @@ define llvm-builder function-test ins--load ()
                 "%1 = load float, float* %0",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--load;
+end test;
 
-define llvm-builder function-test ins--store ()
+define test test-ins--store ()
   let builder = make-builder-with-test-function();
   let float-type = make(<llvm-primitive-type>, kind: #"FLOAT");
   let ptr = ins--alloca(builder, float-type, 1, alignment: 4);
@@ -1188,9 +1188,9 @@ define llvm-builder function-test ins--store ()
                 "store float 1.000000e+00, float* %0, align 4",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--store;
+end test;
 
-define llvm-builder function-test ins--cmpxchg ()
+define test test-ins--cmpxchg ()
   let builder = make-builder-with-test-function();
   let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
   ins--cmpxchg(builder, ptr, 1, 0, scope: #"single-thread", ordering: #"monotonic");
@@ -1203,9 +1203,9 @@ define llvm-builder function-test ins--cmpxchg ()
                 "%2 = cmpxchg volatile i32* %0, i32 0, i32 1 acq_rel",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--cmpxchg;
+end test;
 
-define llvm-builder function-test ins--atomicrmw-xchg ()
+define test test-ins--atomicrmw-xchg ()
   let builder = make-builder-with-test-function();
   let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
   ins--atomicrmw-xchg(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
@@ -1216,9 +1216,9 @@ define llvm-builder function-test ins--atomicrmw-xchg ()
                 "%1 = atomicrmw volatile xchg i32* %0, i32 10 monotonic",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--atomicrmw-xchg;
+end test;
 
-define llvm-builder function-test ins--atomicrmw-add ()
+define test test-ins--atomicrmw-add ()
   let builder = make-builder-with-test-function();
   let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
   ins--atomicrmw-add(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
@@ -1229,9 +1229,9 @@ define llvm-builder function-test ins--atomicrmw-add ()
                 "%1 = atomicrmw volatile add i32* %0, i32 10 monotonic",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--atomicrmw-add;
+end test;
 
-define llvm-builder function-test ins--atomicrmw-sub ()
+define test test-ins--atomicrmw-sub ()
   let builder = make-builder-with-test-function();
   let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
   ins--atomicrmw-sub(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
@@ -1242,9 +1242,9 @@ define llvm-builder function-test ins--atomicrmw-sub ()
                 "%1 = atomicrmw volatile sub i32* %0, i32 10 monotonic",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--atomicrmw-sub;
+end test;
 
-define llvm-builder function-test ins--atomicrmw-and ()
+define test test-ins--atomicrmw-and ()
   let builder = make-builder-with-test-function();
   let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
   ins--atomicrmw-and(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
@@ -1255,9 +1255,9 @@ define llvm-builder function-test ins--atomicrmw-and ()
                 "%1 = atomicrmw volatile and i32* %0, i32 10 monotonic",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--atomicrmw-and;
+end test;
 
-define llvm-builder function-test ins--atomicrmw-nand ()
+define test test-ins--atomicrmw-nand ()
   let builder = make-builder-with-test-function();
   let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
   ins--atomicrmw-nand(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
@@ -1268,9 +1268,9 @@ define llvm-builder function-test ins--atomicrmw-nand ()
                 "%1 = atomicrmw volatile nand i32* %0, i32 10 monotonic",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--atomicrmw-nand;
+end test;
 
-define llvm-builder function-test ins--atomicrmw-or ()
+define test test-ins--atomicrmw-or ()
   let builder = make-builder-with-test-function();
   let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
   ins--atomicrmw-or(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
@@ -1281,9 +1281,9 @@ define llvm-builder function-test ins--atomicrmw-or ()
                 "%1 = atomicrmw volatile or i32* %0, i32 10 monotonic",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--atomicrmw-or;
+end test;
 
-define llvm-builder function-test ins--atomicrmw-xor ()
+define test test-ins--atomicrmw-xor ()
   let builder = make-builder-with-test-function();
   let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
   ins--atomicrmw-xor(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
@@ -1294,9 +1294,9 @@ define llvm-builder function-test ins--atomicrmw-xor ()
                 "%1 = atomicrmw volatile xor i32* %0, i32 10 monotonic",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--atomicrmw-xor;
+end test;
 
-define llvm-builder function-test ins--atomicrmw-max ()
+define test test-ins--atomicrmw-max ()
   let builder = make-builder-with-test-function();
   let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
   ins--atomicrmw-max(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
@@ -1307,9 +1307,9 @@ define llvm-builder function-test ins--atomicrmw-max ()
                 "%1 = atomicrmw volatile max i32* %0, i32 10 monotonic",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--atomicrmw-max;
+end test;
 
-define llvm-builder function-test ins--atomicrmw-min ()
+define test test-ins--atomicrmw-min ()
   let builder = make-builder-with-test-function();
   let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
   ins--atomicrmw-min(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
@@ -1320,9 +1320,9 @@ define llvm-builder function-test ins--atomicrmw-min ()
                 "%1 = atomicrmw volatile min i32* %0, i32 10 monotonic",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--atomicrmw-min;
+end test;
 
-define llvm-builder function-test ins--atomicrmw-umax ()
+define test test-ins--atomicrmw-umax ()
   let builder = make-builder-with-test-function();
   let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
   ins--atomicrmw-umax(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
@@ -1333,9 +1333,9 @@ define llvm-builder function-test ins--atomicrmw-umax ()
                 "%1 = atomicrmw volatile umax i32* %0, i32 10 monotonic",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--atomicrmw-umax;
+end test;
 
-define llvm-builder function-test ins--atomicrmw-umin ()
+define test test-ins--atomicrmw-umin ()
   let builder = make-builder-with-test-function();
   let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
   ins--atomicrmw-umin(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
@@ -1346,9 +1346,9 @@ define llvm-builder function-test ins--atomicrmw-umin ()
                 "%1 = atomicrmw volatile umin i32* %0, i32 10 monotonic",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--atomicrmw-umin;
+end test;
 
-define llvm-builder function-test ins--fence ()
+define test test-ins--fence ()
   let builder = make-builder-with-test-function();
   ins--fence(builder, scope: #"single-thread", ordering: #"release");
   ins--ret(builder);
@@ -1357,9 +1357,9 @@ define llvm-builder function-test ins--fence ()
                 "fence singlethread release",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--fence;
+end test;
 
-define llvm-builder function-test ins--insertvalue ()
+define test test-ins--insertvalue ()
   let builder = make-builder-with-test-function();
   let struct-type
     = make(<llvm-struct-type>,
@@ -1377,9 +1377,9 @@ define llvm-builder function-test ins--insertvalue ()
                 "%1 = insertvalue %ST %0, float 1.000000e+00, 1",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--insertvalue;
+end test;
 
-define llvm-builder function-test ins--extractvalue ()
+define test test-ins--extractvalue ()
   let struct-type
     = make(<llvm-struct-type>,
            name: "ST",
@@ -1393,9 +1393,9 @@ define llvm-builder function-test ins--extractvalue ()
                 "%0 = extractvalue %ST %arg0, 0",
                 "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--extractvalue;
+end test;
 
-define llvm-builder function-test ins--ret ()
+define test test-ins--ret ()
   let builder = make-builder-with-test-function();
   ins--ret(builder);
   ins--block(builder, make(<llvm-basic-block>, name: "bb.1"));
@@ -1403,9 +1403,9 @@ define llvm-builder function-test ins--ret ()
   check-equal("ins--ret disassembly",
               #("entry:", "ret void", "bb.1:", "ret i32 17"),
               builder-test-function-disassembly(builder));
-end function-test ins--ret;
+end test;
 
-define llvm-builder function-test ins--br ()
+define test test-ins--br ()
   let builder = make-builder-with-test-function();
   let bb1 = make(<llvm-basic-block>, name: "bb.1");
   let bb2 = make(<llvm-basic-block>, name: "bb.2");
@@ -1421,13 +1421,13 @@ define llvm-builder function-test ins--br ()
                 "bb.1:", "br label %bb.2",
                 "bb.2:", "br label %bb.1"),
               builder-test-function-disassembly(builder));
-end function-test ins--br;
+end test;
 
-define llvm-builder function-test ins--switch ()
+define test test-ins--switch ()
   //---*** Fill this in...
-end function-test ins--switch;
+end test;
 
-define llvm-builder function-test ins--switch* ()
+define test test-ins--switch* ()
   let builder = make-builder-with-test-function();
   let bb1 = make(<llvm-basic-block>, name: "bb.1");
   let bb2 = make(<llvm-basic-block>, name: "bb.2");
@@ -1452,13 +1452,13 @@ define llvm-builder function-test ins--switch* ()
                 "bb.2:", "br label %bb.1",
                 "bb.3:", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--switch*;
+end test;
 
-define llvm-builder function-test ins--invoke ()
+define test test-ins--invoke ()
   //---*** Fill this in...
-end function-test ins--invoke;
+end test;
 
-define llvm-builder function-test ins--resume ()
+define test test-ins--resume ()
   let builder = make-builder-with-test-function();
   let struct-type
     = make(<llvm-struct-type>,
@@ -1467,17 +1467,17 @@ define llvm-builder function-test ins--resume ()
   check-equal("ins--resume disassembly",
               #("entry:", "resume { i8*, i32 } undef"),
               builder-test-function-disassembly(builder));
-end function-test ins--resume;
+end test;
 
-define llvm-builder function-test ins--unreachable ()
+define test test-ins--unreachable ()
   let builder = make-builder-with-test-function();
   ins--unreachable(builder);
   check-equal("ins--unreachable disassembly",
               #("entry:", "unreachable"),
               builder-test-function-disassembly(builder));
-end function-test ins--unreachable;
+end test;
 
-define llvm-builder function-test ins--landingpad ()
+define test test-ins--landingpad ()
   let personality-function-type
     = make(<llvm-function-type>,
            return-type: $llvm-i32-type,
@@ -1512,9 +1512,9 @@ define llvm-builder function-test ins--landingpad ()
                 "%0 = landingpad { i8*, i32 }",
                 "        cleanup"),
               builder-test-function-disassembly(builder));
-end function-test ins--landingpad;
+end test;
 
-define llvm-builder macro-test ins--if-test ()
+define test test-ins--if ()
   with-test-unit ("ins--if, no else, no value")
     let builder = make-builder-with-test-function();
 
@@ -1646,9 +1646,9 @@ define llvm-builder macro-test ins--if-test ()
                   "unreachable"),
                 builder-test-function-disassembly(builder));
   end;
-end macro-test;
+end test;
 
-define llvm-builder macro-test ins--iterate-test ()
+define test test-ins--iterate()
   with-test-unit ("ins--iterate with no loop variables")
     let builder = make-builder-with-test-function();
 
@@ -1709,4 +1709,118 @@ define llvm-builder macro-test ins--iterate-test ()
                 builder-test-function-disassembly(builder));
   end;
 
-end macro-test;
+end test;
+
+define suite llvm-builder-test-suite ()
+  test test-<llvm-builder>;
+  test test-llvm-builder-basic-block;
+  test test-llvm-builder-basic-block-setter;
+  test test-llvm-builder-function;
+  test test-llvm-builder-function-setter;
+  test test-llvm-builder-module;
+  test test-llvm-builder-module-setter;
+  test test-llvm-builder-define-global;
+  test test-llvm-builder-declare-global;
+  test test-llvm-builder-global;
+  test test-<llvm-local-value>;
+  test test-ins--local;
+  test test-llvm-builder-local;
+  test test-ins--block;
+  test test-ins--dbg;
+  test test-ins--add;
+  test test-ins--fadd;
+  test test-ins--sub;
+  test test-ins--fsub;
+  test test-ins--mul;
+  test test-ins--fmul;
+  test test-ins--udiv;
+  test test-ins--sdiv;
+  test test-ins--fdiv;
+  test test-ins--urem;
+  test test-ins--srem;
+  test test-ins--frem;
+  test test-ins--shl;
+  test test-ins--lshr;
+  test test-ins--ashr;
+  test test-ins--and;
+  test test-ins--or;
+  test test-ins--xor;
+  test test-ins--trunc;
+  test test-ins--zext;
+  test test-ins--sext;
+  test test-ins--fptoui;
+  test test-ins--fptosi;
+  test test-ins--uitofp;
+  test test-ins--sitofp;
+  test test-ins--fptrunc;
+  test test-ins--fpext;
+  test test-ins--ptrtoint;
+  test test-ins--inttoptr;
+  test test-ins--bitcast;
+  test test-ins--icmp-eq;
+  test test-ins--icmp-ne;
+  test test-ins--icmp-slt;
+  test test-ins--icmp-sgt;
+  test test-ins--icmp-sle;
+  test test-ins--icmp-sge;
+  test test-ins--icmp-ult;
+  test test-ins--icmp-ugt;
+  test test-ins--icmp-ule;
+  test test-ins--icmp-uge;
+  test test-ins--fcmp-oeq;
+  test test-ins--fcmp-one;
+  test test-ins--fcmp-olt;
+  test test-ins--fcmp-ogt;
+  test test-ins--fcmp-ole;
+  test test-ins--fcmp-oge;
+  test test-ins--fcmp-ord;
+  test test-ins--fcmp-uno;
+  test test-ins--fcmp-ueq;
+  test test-ins--fcmp-une;
+  test test-ins--fcmp-ult;
+  test test-ins--fcmp-ugt;
+  test test-ins--fcmp-ule;
+  test test-ins--fcmp-uge;
+  test test-ins--fcmp-true;
+  test test-ins--fcmp-false;
+  test test-ins--gep;
+  test test-ins--gep-inbounds;
+  test test-ins--select;
+  test test-ins--va-arg;
+  test test-ins--extractelement;
+  test test-ins--insertelement;
+  test test-ins--shufflevector;
+  test test-ins--phi;
+  test test-ins--phi*;
+  test test-ins--call;
+  test test-ins--tail-call;
+  test test-ins--call-intrinsic;
+  test test-ins--alloca;
+  test test-ins--load;
+  test test-ins--store;
+  test test-ins--cmpxchg;
+  test test-ins--atomicrmw-xchg;
+  test test-ins--atomicrmw-add;
+  test test-ins--atomicrmw-sub;
+  test test-ins--atomicrmw-and;
+  test test-ins--atomicrmw-nand;
+  test test-ins--atomicrmw-or;
+  test test-ins--atomicrmw-xor;
+  test test-ins--atomicrmw-max;
+  test test-ins--atomicrmw-min;
+  test test-ins--atomicrmw-umax;
+  test test-ins--atomicrmw-umin;
+  test test-ins--fence;
+  test test-ins--insertvalue;
+  test test-ins--extractvalue;
+  test test-ins--ret;
+  test test-ins--br;
+  test test-ins--switch;
+  test test-ins--switch*;
+  test test-ins--invoke;
+  test test-ins--resume;
+  test test-ins--unreachable;
+  test test-ins--landingpad;
+  test test-ins--if;
+  test test-ins--iterate;
+end suite;

@@ -149,12 +149,12 @@ define method test-viewport-layouts (name, class, #rest args)
         class, #t, #t, args);
 end method test-viewport-layouts;
 
-define duim-gadgets class-test <viewport> ()
+define test test-<viewport> ()
   test-viewport-layouts("empty", #f);
   test-viewport-layouts("fixed", <push-button>);
   test-viewport-layouts("non-fixed", <list-box>);
   test-viewport-layouts("large child", <list-box>, width: 600, height: 800);
-end class-test <viewport>;
+end test;
 
 
 /// Scroller tests
@@ -273,8 +273,8 @@ define method test-scroller-layout
                 class, #"both", #f);
 end method test-scroller-layout;
 
-define duim-gadgets class-test <scroller> ()
+define test test-<scroller> ()
   test-scroller-layout("empty", #f);
   test-scroller-layout("fixed", <push-button>);
   test-scroller-layout("non-fixed", <list-box>);
-end class-test <scroller>;
+end test;

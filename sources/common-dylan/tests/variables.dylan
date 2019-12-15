@@ -8,65 +8,79 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Constant testing
 
-define common-extensions constant-test $unsupplied ()
+define test test-$unsupplied ()
   //---** What can we do here?
-end constant-test $unsupplied;
+end test;
 
-define common-extensions constant-test $unfound ()
+define test test-$unfound ()
   //---** What can we do here?
-end constant-test $unfound;
+end test;
 
 
 /// Streams
 
-define streams-protocol constant-test *standard-input* ()
+define test test-*standard-input* ()
   //---*** Fill this in!
-end constant-test *standard-input*;
+end test;
 
-define streams-protocol constant-test *standard-output* ()
+define test test-*standard-output* ()
   //---*** Fill this in!
-end constant-test *standard-output*;
+end test;
 
-define streams-protocol constant-test *standard-error* ()
+define test test-*standard-error* ()
   //---*** Fill this in!
-end constant-test *standard-error*;
+end test;
 
-define streams-protocol constant-test *debug-output* ()
+define test test-*debug-output* ()
   //---*** Fill this in!
-end constant-test *debug-output*;
+end test;
 
 
 /// Numerics
 
-define common-extensions constant-test $single-float-epsilon ()
+define test test-$single-float-epsilon ()
   check-true("1.0s0 + $single-float-epsilon differs from 1.0s0",
              1.0s0 + $single-float-epsilon ~= 1.0s0);
   check-true("1.0s0 + scale-float($single-float-epsilon, -1) does not differ"
                " from 1.0s0",
              1.0s0 + scale-float($single-float-epsilon, -1) = 1.0s0);
-end constant-test $single-float-epsilon;
+end test;
 
-define common-extensions constant-test $double-float-epsilon ()
+define test test-$double-float-epsilon ()
   check-true("1.0d0 + $double-float-epsilon differs from 1.0d0",
              1.0s0 + $double-float-epsilon ~= 1.0d0);
   check-true("1.0d0 + scale-float($double-float-epsilon, -1) does not differ"
                " from 1.0d0",
              1.0d0 + scale-float($double-float-epsilon, -1) = 1.0d0);
-end constant-test $double-float-epsilon;
+end test;
 
-define common-extensions constant-test $minimum-single-float-exponent ()
+define test test-$minimum-single-float-exponent ()
   //---*** Fill this in...
-end constant-test $minimum-single-float-exponent;
+end test;
 
-define common-extensions constant-test $maximum-single-float-exponent ()
+define test test-$maximum-single-float-exponent ()
   //---*** Fill this in...
-end constant-test $maximum-single-float-exponent;
+end test;
 
-define common-extensions constant-test $minimum-double-float-exponent ()
+define test test-$minimum-double-float-exponent ()
   //---*** Fill this in...
-end constant-test $minimum-double-float-exponent;
+end test;
 
-define common-extensions constant-test $maximum-double-float-exponent ()
+define test test-$maximum-double-float-exponent ()
   //---*** Fill this in...
-end constant-test $maximum-double-float-exponent;
+end test;
 
+define suite common-dylan-variables-test-suite ()
+  test test-$unsupplied;
+  test test-$unfound;
+  test test-*standard-input*;
+  test test-*standard-output*;
+  test test-*standard-error*;
+  test test-*debug-output*;
+  test test-$single-float-epsilon;
+  test test-$double-float-epsilon;
+  test test-$minimum-single-float-exponent;
+  test test-$maximum-single-float-exponent;
+  test test-$minimum-double-float-exponent;
+  test test-$maximum-double-float-exponent;
+end;

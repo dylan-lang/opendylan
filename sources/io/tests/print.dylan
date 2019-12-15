@@ -6,36 +6,36 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define print variable-test *print-length* ()
+define test test-*print-length* ()
   //---*** Fill this in...
-end variable-test *print-length*;
+end test;
 
-define print variable-test *print-level* ()
+define test test-*print-level* ()
   //---*** Fill this in...
-end variable-test *print-level*;
+end test;
 
-define print variable-test *print-circle?* ()
+define test test-*print-circle?* ()
   //---*** Fill this in...
-end variable-test *print-circle?*;
+end test;
 
-define print variable-test *print-pretty?* ()
+define test test-*print-pretty?* ()
   //---*** Fill this in...
-end variable-test *print-pretty?*;
+end test;
 
-define print variable-test *print-escape?* ()
+define test test-*print-escape?* ()
   //---*** Fill this in...
-end variable-test *print-escape?*;
+end test;
 
 
-define print function-test print ()
+define test test-print ()
   //---*** Fill this in...
-end function-test print;
+end test;
 
-define print function-test print-object ()
+define test test-print-object ()
   //---*** Fill this in...
-end function-test print-object;
+end test;
 
-define print function-test print-to-string ()
+define test test-print-to-string ()
   test-print-character();
   test-print-string();
   test-print-booleans();
@@ -45,11 +45,11 @@ define print function-test print-to-string ()
   test-print-miscellaneous();
   extend-print-object();
   test-print-variables();
-end function-test print-to-string;
+end test;
 
-define print macro-test printing-object-test ()
+define test test-printing-object ()
   //---*** Fill this in...
-end macro-test printing-object-test;
+end test;
 
 
 /// A simple printing harness
@@ -265,3 +265,15 @@ define function test-print-variables ()
               end,
               circle?: #t);
 end function test-print-variables;
+
+define suite print-test-suite ()
+  test test-*print-length*;
+  test test-*print-level*;
+  test test-*print-circle?*;
+  test test-*print-pretty?*;
+  test test-*print-escape?*;
+  test test-print;
+  test test-print-object;
+  test test-print-to-string;
+  test test-printing-object;
+end;

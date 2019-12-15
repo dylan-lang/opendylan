@@ -13,6 +13,8 @@ MACOS_SDK=
 
 AC_CANONICAL_TARGET
 
+# Shared library filename extension
+shrext=so
 MULTIARCH=$host
 case $host in
   i*86-*-linux*)
@@ -31,11 +33,13 @@ case $host in
       OPEN_DYLAN_TARGET_PLATFORM=x86-darwin;
       MACOS_SDK=`xcrun --show-sdk-path`
       SUPPORT_LLVM=yes
+      shrext=dylib
     ;;
   x86_64-*-darwin*)
       OPEN_DYLAN_TARGET_PLATFORM="x86_64-darwin";
       MACOS_SDK=`xcrun --show-sdk-path`
       SUPPORT_LLVM=yes
+      shrext=dylib
     ;;
   amd64-*-freebsd* | x86_64-*-freebsd*)
       OPEN_DYLAN_TARGET_PLATFORM=x86_64-freebsd;
@@ -68,6 +72,7 @@ AC_SUBST(OPEN_DYLAN_TARGET_PLATFORM)
 AC_SUBST(ADDITIONAL_RUNTIME_TARGET_PLATFORMS)
 
 AC_SUBST(MACOS_SDK)
+AC_SUBST(shrext)
 
 AM_INIT_AUTOMAKE
 

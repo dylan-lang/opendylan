@@ -4,15 +4,15 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define threads class-test <lock> ()
+define test test-<lock> ()
   //---*** Fill this in...
-end class-test <lock>;
+end test;
 
-define threads macro-test with-lock-test ()
+define test test-with-lock ()
   //---*** Fill this in...
-end macro-test with-lock-test;
+end test;
 
-define threads class-test <timeout-expired> ()
+define test test-<timeout-expired> ()
   //---*** Fill this in...
-end class-test <timeout-expired>;
+end test;
 

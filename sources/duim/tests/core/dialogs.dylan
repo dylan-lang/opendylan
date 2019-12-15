@@ -8,25 +8,25 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Dialog class tests
 
-define duim-frames class-test <dialog-frame> ()
+define test test-<dialog-frame> ()
   //---*** Fill this in...
-end class-test <dialog-frame>;
+end test;
 
-define duim-frames class-test <property-frame> ()
+define test test-<property-frame> ()
   //---*** Fill this in...
-end class-test <property-frame>;
+end test;
 
-define duim-frames class-test <property-page> ()
+define test test-<property-page> ()
   //---*** Fill this in...
-end class-test <property-page>;
+end test;
 
-define duim-frames class-test <wizard-frame> ()
+define test test-<wizard-frame> ()
   test-wizards()
-end class-test <wizard-frame>;
+end test;
 
-define duim-frames class-test <wizard-page> ()
+define test test-<wizard-page> ()
   //---*** Fill this in...
-end class-test <wizard-page>;
+end test;
 
 
 /// Dialog test suites

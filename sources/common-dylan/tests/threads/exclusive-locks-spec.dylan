@@ -6,32 +6,31 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Exclusive locks
 
-define threads class-test <exclusive-lock> ()
+define test test-<exclusive-lock> ()
   //---*** Fill this in...
-end class-test <exclusive-lock>;
+end test;
 
-define threads function-test owned? ()
+define test test-owned? ()
   //---*** Fill this in...
-end function-test owned?;
+end test;
 
 
 /// Recursive locks
 
-define threads class-test <recursive-lock> ()
+define test test-<recursive-lock> ()
   //---*** Fill this in...
-end class-test <recursive-lock>;
+end test;
 
 
 /// Simple locks
 
-define threads class-test <simple-lock> ()
+define test test-<simple-lock> ()
   //---*** Fill this in...
-end class-test <simple-lock>;
+end test;
 
 
 /// Multiple reader / single writer locks
 
-define threads class-test <read-write-lock> ()
+define test test-<read-write-lock> ()
   //---*** Fill this in...
-end class-test <read-write-lock>;
-
+end test;

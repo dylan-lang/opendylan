@@ -41,8 +41,8 @@ define test bug-left-shift-signal-overflow ()
                  ash(-1, $machine-word-size - 2));
 end test;
 
-define suite common-dylan-regressions ()
+define suite common-dylan-regressions-test-suite ()
   test bug-5805;
   test bug-5954;
   test bug-left-shift-signal-overflow;
-end suite common-dylan-regressions;
+end suite;

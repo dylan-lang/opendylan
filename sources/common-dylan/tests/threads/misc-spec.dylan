@@ -6,32 +6,32 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Timers
 
-define threads function-test sleep ()
+define test test-sleep ()
   //---*** Fill this in...
-end function-test sleep;
+end test;
 
 
 /// Dynamic binding
 
-define threads macro-test dynamic-bind-test ()
+define test test-dynamic-bind ()
   //---*** Fill this in...
-end macro-test dynamic-bind-test;
+end test;
 
 
 /// Conditional update
 
-define threads macro-test conditional-update!-test ()
+define test test-conditional-update! ()
   //---*** Fill this in...
-end macro-test conditional-update!-test;
+end test;
 
-define threads class-test <conditional-update-error> ()
+define test test-<conditional-update-error> ()
   //---*** Fill this in...
-end class-test <conditional-update-error>;
+end test;
 
-define threads macro-test atomic-decrement!-test ()
+define test test-atomic-decrement! ()
   //---*** Fill this in...
-end macro-test atomic-decrement!-test;
+end test;
 
-define threads macro-test atomic-increment!-test ()
+define test test-atomic-increment! ()
   //---*** Fill this in...
-end macro-test atomic-increment!-test;
+end test;

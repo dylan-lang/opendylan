@@ -18,22 +18,22 @@ define sideways method make-test-instance
   make(class, server: "Dummy Server", function: always(#f))
 end method make-test-instance;
 
-define duim-commands class-test <command> ()
+define test test-<command> ()
   //---*** Fill this in...
   //---*** Maybe get this from the commands test suite?
-end class-test <command>;
+end test;
 
-define duim-commands class-test <functional-command> ()
+define test test-<functional-command> ()
   //---*** Fill this in...
-end class-test <functional-command>;
+end test;
 
-define duim-commands class-test <command-decorator> ()
+define test test-<command-decorator> ()
   //---*** Fill this in...
-end class-test <command-decorator>;
+end test;
 
-define duim-commands class-test <command-table> ()
+define test test-<command-table> ()
   //---*** Fill this in...
-end class-test <command-table>;
+end test;
 
 
 /// Command tests

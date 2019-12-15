@@ -258,7 +258,7 @@ define test issue-1095 ()
               map-into(col, identity, #(1, 2, 3, 4)));
 end;
 
-define suite dylan-regressions ()
+define suite dylan-regressions-test-suite ()
   test bug-2766;
   test bug-5800;
   test bug-5580;
@@ -280,5 +280,4 @@ define suite dylan-regressions ()
   test issue-440;
   test issue-1091;
   test issue-1095;
-end suite dylan-regressions;
-
+end suite;

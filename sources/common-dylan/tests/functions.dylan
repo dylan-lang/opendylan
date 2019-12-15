@@ -8,23 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Function test cases
 
-define locators-protocol function-test supports-open-locator? ()
-  //---*** Fill this in...
-end function-test supports-open-locator?;
-
-define locators-protocol function-test open-locator ()
-  //---*** Fill this in...
-end function-test open-locator;
-
-define locators-protocol function-test supports-list-locator? ()
-  //---*** Fill this in...
-end function-test supports-list-locator?;
-
-define locators-protocol function-test list-locator ()
-  //---*** Fill this in...
-end function-test list-locator;
-
-define common-extensions function-test concatenate! ()
+define test test-concatenate! ()
   let my-list = #(3, 4);
   check("test concatenate! on a list", \=, concatenate!(my-list, #(5), #(6)),
         #(3, 4, 5, 6));
@@ -42,7 +26,7 @@ define common-extensions function-test concatenate! ()
         my-stretchy-vector-afterwards);
   check("concatenate! should have changed my-stretchy-vector",
         \=, my-stretchy-vector, my-stretchy-vector-afterwards);
-end function-test concatenate!;
+end test;
 
 define constant $test-error-message = "Test Error";
 
@@ -54,7 +38,7 @@ define method condition-to-string
   $test-error-message
 end method condition-to-string;
 
-define common-extensions function-test condition-to-string ()
+define test test-condition-to-string ()
   check-equal("condition-to-string of an error produces correct string",
               condition-to-string(make(<simple-error>, format-string: "Hello")),
               "Hello");
@@ -67,15 +51,15 @@ define common-extensions function-test condition-to-string ()
   check-equal("condition-to-string of an error with a condition-to-string method",
               condition-to-string(make(<test-error>)),
               $test-error-message)
-end function-test condition-to-string;
+end test;
 
-define common-extensions function-test debug-message ()
+define test test-debug-message ()
   check-false("debug-message doesn't crash", debug-message("Hello"));
   check-false("debug-message doesn't crash with incorrect format arguments",
               debug-message("Hello %s"));
-end function-test debug-message;
+end test;
 
-define common-extensions function-test difference ()
+define test test-difference ()
   //---*** Do all collections by using dylan-test-suite collection code
   let list1 = #(1, 2, 3);
   let list2 = #(3, 4, 5);
@@ -84,9 +68,9 @@ define common-extensions function-test difference ()
   check("test difference #3", \=, difference(list1, list1), #());
   check("test difference with \\>", \=, difference(list1, list2, test: \>),
         list1);
-end function-test difference;
+end test;
 
-define common-extensions function-test false-or ()
+define test test-false-or ()
   let new-type = #f;
   check-instance?("False-or returns type",
                   <type>, new-type := false-or(<string>));
@@ -96,9 +80,9 @@ define common-extensions function-test false-or ()
                   new-type, #f);
   check-false("#t is not false-or(<string>)",
               instance?(#t, new-type));
-end function-test false-or;
+end test;
 
-define common-extensions function-test find-element ()
+define test test-find-element ()
   //---*** Do all collections by using dylan-test-suite collection code
   let list1 = #("oh", "we", "like", "sheep", "like");
   check("test find-element", \=,
@@ -116,7 +100,7 @@ define common-extensions function-test find-element ()
   check("skip: is too big", \=,
         find-element(list1, method (the-element) (the-element = "like") end,
                      skip: 2), #f);
-end function-test find-element;
+end test;
 
 //---*** NOTE: The <double-float> results will have to be changed if
 //---*** we ever implement a better printing algorithm to get more digits
@@ -137,7 +121,7 @@ define constant $float-string-mappings
       #(1.0d6,         "1000000.0d0"),
       #(1.0d7,         "1.0000000d7"));
 
-define common-extensions function-test float-to-string ()
+define test test-float-to-string ()
   for (float-mapping in $float-string-mappings)
     let float  = float-mapping[0];
     let string = float-mapping[1];
@@ -186,14 +170,14 @@ define common-extensions function-test float-to-string ()
                               end),
               "-{infinity}d0");
 */
-end function-test float-to-string;
+end test;
 
-define common-extensions function-test ignorable ()
+define test test-ignorable ()
   assert-signals(<error>, ignorable(this-is-undefined),
                  "ignorable crashes on undefined variables");
 end;
 
-define common-extensions function-test ignore ()
+define test test-ignore ()
   assert-signals(<error>, ignore(this-is-undefined),
                  "ignore crashes on undefined variables");
 end;
@@ -210,7 +194,7 @@ define constant $integer-string-mappings
       #[-1234, 10,  "-1234"],
       #[-10,   16,  "-A"]];
 
-define common-extensions function-test integer-to-string ()
+define test test-integer-to-string ()
   for (integer-mapping in $integer-string-mappings)
     let integer = integer-mapping[0];
     let base    = integer-mapping[1];
@@ -231,13 +215,13 @@ define common-extensions function-test integer-to-string ()
                   integer-to-string($minimum-integer));
   check-no-errors("integer-to-string($maximum-integer)",
                   integer-to-string($maximum-integer));
-end function-test integer-to-string;
+end test;
 
-define common-extensions function-test number-to-string ()
+define test test-number-to-string ()
   //---*** Fill this in...
-end function-test number-to-string;
+end test;
 
-define common-extensions function-test one-of ()
+define test test-one-of ()
   let new-type = #f;
   check-instance?("one-of returns type",
                   <type>,
@@ -248,9 +232,9 @@ define common-extensions function-test one-of ()
                   new-type, #t);
   check-false(format-to-string("#f is one-of(%=, #t)", #"one"),
               instance?(#f, new-type));
-end function-test one-of;
+end test;
 
-define common-extensions function-test position ()
+define test test-position ()
   //---*** Do all collections by using dylan-test-suite collection code
   for (sequence in #[#(1, 'a', 34.43, 'a', "done"),
                      #[1, 'a', 34.43, 'a', "done"],
@@ -280,9 +264,9 @@ define common-extensions function-test position ()
   check-equal("test position using test: \\<",
               position(#(1, 2, 3, 4), 3, test: \<),
               3);
-end function-test position;
+end test;
 
-define common-extensions function-test split ()
+define test test-split ()
   // a character separator should act the same as a string separator that
   // contains only that character...
   for (separator in #('/', "/"))
@@ -392,9 +376,9 @@ define common-extensions function-test split ()
   check-equal("split with separator crossing start: and end:",
               split("xxx one xxx two xxx", "xxx", start: 1, end: 17),
               #["xx one ", " two x"]);
-end function-test split;
+end test;
 
-define common-extensions function-test join ()
+define test test-join ()
   let abc = #("a", "b", "c");
   for (separator in #("blah", #[1], #(1)),
        expected in #("", #[], #()))
@@ -421,13 +405,13 @@ define common-extensions function-test join ()
               join(#(1, 2, 3), ", ",
                    conjunction: " and ",
                    key: integer-to-string));
-end function-test join;
+end test;
 
-define common-extensions function-test remove-all-keys! ()
+define test test-remove-all-keys! ()
   //---*** Do all collections by using dylan-test-suite collection code
-end function-test remove-all-keys!;
+end test;
 
-define common-extensions function-test string-to-integer ()
+define test test-string-to-integer ()
   for (integer-mapping in $integer-string-mappings)
     let integer = integer-mapping[0];
     let base    = integer-mapping[1];
@@ -439,9 +423,9 @@ define common-extensions function-test string-to-integer ()
                   string-to-integer(integer-to-string($minimum-integer)));
   check-no-errors("string-to-integer of maximum integer",
                   string-to-integer(integer-to-string($maximum-integer)));
-end function-test string-to-integer;
+end test;
 
-define common-extensions function-test subclass ()
+define test test-subclass ()
   let new-type = #f;
   check-instance?("subclass returns type",
                   <type>,
@@ -452,9 +436,9 @@ define common-extensions function-test subclass ()
                   new-type, <byte-string>);
   check-false(format-to-string("<object> is not subclass(<string>)"),
               instance?(<object>, new-type));
-end function-test subclass;
+end test;
 
-define common-extensions function-test fill-table! ()
+define test test-fill-table! ()
   let table = make(<table>);
   check-equal("fill-table(...) returns the table",
               fill-table!(table, #[0, "Zero", 1, "One"]),
@@ -463,80 +447,80 @@ define common-extensions function-test fill-table! ()
               table[0], "Zero");
   check-equal("table(...)[1] = \"One\"",
               table[1], "One");
-end function-test fill-table!;
+end test;
 
 // Application startup handling
 
-define common-extensions function-test application-name ()
+define test test-application-name ()
   check-instance?("application-name returns #f or a string",
                   false-or(<string>), application-name());
-end function-test;
+end test;
 
-define common-extensions function-test application-filename ()
+define test test-application-filename ()
   let filename = application-filename();
   check-true("application-filename returns #f or a valid, existing file name",
              ~filename | file-exists?(filename));
-end function-test;
+end test;
 
-define common-extensions function-test application-arguments ()
+define test test-application-arguments ()
   check-instance?("application-arguments returns a sequence",
                   <sequence>, application-arguments());
-end function-test;
+end test;
 
-define common-extensions function-test tokenize-command-line ()
+define test test-tokenize-command-line ()
   //---*** Fill this in...
-end function-test tokenize-command-line;
+end test;
 
-define common-extensions function-test exit-application ()
+define test test-exit-application ()
   //---*** Fill this in...
-end function-test exit-application;
+end test;
 
-define common-extensions function-test register-application-exit-function ()
+define test test-register-application-exit-function ()
   //---*** Fill this in...
-end function-test register-application-exit-function;
+end test;
 
-define common-extensions function-test unfound ()
+define test test-unfound ()
   //---*** Fill this in...
-end function-test unfound;
+end test;
 
-define common-extensions function-test unfound? ()
+define test test-unfound? ()
   check-true("unfound?($unfound)", unfound?($unfound));
   check-false("unfound?(#f) == #f", unfound?(#f));
   check-false("unfound?(#t) == #f", unfound?(#t));
-end function-test unfound?;
+end test;
 
-define common-extensions function-test found? ()
+define test test-found? ()
   check-false("found?($unfound) is false", found?($unfound));
   check-true("found?(#f)", found?(#f));
   check-true("found?(#t)", found?(#t));
-end function-test found?;
+end test;
 
-define common-extensions function-test unsupplied ()
+define test test-unsupplied ()
   //---*** Fill this in...
-end function-test unsupplied;
+end test;
 
-define common-extensions function-test unsupplied? ()
+define test test-unsupplied? ()
   check-true("unsupplied?($unsupplied)", unsupplied?($unsupplied));
   check-false("unsupplied?(#f) == #f", unsupplied?(#f));
   check-false("unsupplied?(#t) == #f", unsupplied?(#t));
-end function-test unsupplied?;
+end test;
 
-define common-extensions function-test supplied? ()
+define test test-supplied? ()
   //---*** Fill this in...
-end function-test supplied?;
+end test;
 
-define common-extensions function-test true? ()
+define test test-true? ()
   //---*** Fill this in...
-end function-test true?;
+end test;
 
-define common-extensions function-test false? ()
+define test test-false? ()
   //---*** Fill this in...
-end function-test false?;
+end test;
 
 
 /// simple-format module
 
-define simple-format function-test format-out ()
+define test test-format-out ()
   check-false("format-out doesn't crash", format-out("Hello"));
   check-condition("format-out crashes when missing an argument",
                   <error>, format-out("Hello %s"));
@@ -544,9 +528,9 @@ define simple-format function-test format-out ()
                   <error>, format-out("Hello %c", 10));
   check-condition("format-out crashes with invalid directive %z",
                   <error>, format-out("Hello %z", 10));
-end function-test format-out;
+end test;
 
-define simple-format function-test format-to-string ()
+define test test-format-to-string ()
   check-instance?("format-to-string returns a string",
                   <string>,
                   format-to-string("Hello"));
@@ -576,7 +560,7 @@ define simple-format function-test format-to-string ()
               "%");
   format-object-tests();
   format-function-tests();
-end function-test format-to-string;
+end test;
 
 define constant $format-object-mappings
   = vector(vector(10, "10", "10"),
@@ -773,62 +757,62 @@ define method chi-square
 end method chi-square;
 */
 
-define simple-random function-test random ()
+define test test-random ()
   // We should use chi-square somehow, but we don't want it to be slow.
   // Also, what value should it be returning?
   //---*** Fill this in...
-end function-test random;
+end test;
 
 
 /// simple-profiling tests
 
-define simple-profiling function-test start-profiling ()
+define test test-start-profiling ()
   //---*** Fill this in...
-end function-test start-profiling;
+end test;
 
-define simple-profiling function-test start-profiling-type ()
+define test test-start-profiling-type ()
   //---*** Fill this in...
-end function-test start-profiling-type;
+end test;
 
-define simple-profiling function-test stop-profiling ()
+define test test-stop-profiling ()
   //---*** Fill this in...
-end function-test stop-profiling;
+end test;
 
-define simple-profiling function-test stop-profiling-type ()
+define test test-stop-profiling-type ()
   //---*** Fill this in...
-end function-test stop-profiling-type;
+end test;
 
-define simple-profiling function-test profiling-type-result ()
+define test test-profiling-type-result ()
   //---*** Fill this in...
-end function-test profiling-type-result;
+end test;
 
 
 /// finalization tests
 
-define finalization function-test drain-finalization-queue ()
+define test test-drain-finalization-queue ()
   //---*** Fill this in...
-end function-test drain-finalization-queue;
+end test;
 
-define finalization function-test finalize ()
+define test test-finalize ()
   //---*** Fill this in...
-end function-test finalize;
+end test;
 
-define finalization function-test finalize-when-unreachable ()
+define test test-finalize-when-unreachable ()
   //---*** Fill this in...
-end function-test finalize-when-unreachable;
+end test;
 
-define finalization function-test automatic-finalization-enabled?-setter ()
+define test test-automatic-finalization-enabled?-setter ()
   //---*** Fill this in...
-end function-test automatic-finalization-enabled?-setter;
+end test;
 
-define finalization function-test automatic-finalization-enabled? ()
+define test test-automatic-finalization-enabled? ()
   //---*** Fill this in...
-end function-test automatic-finalization-enabled?;
+end test;
 
 
 /// Numerics
 
-define common-extensions function-test integer-length ()
+define test test-integer-length ()
   for (i from 0 below 27)
     let v1 = ash(1, i) - 1;
     check-equal(format-to-string("integer-length(%d) is %d", v1, i),
@@ -846,7 +830,7 @@ define common-extensions function-test integer-length ()
     check-equal(format-to-string("integer-length(%d) is %d", v4, i + 1),
                 i + 1, integer-length(v4));
   end for;
-end function-test integer-length;
+end test;
 
 // Ensure that a number is written to memory in order to dispose of
 // any hidden bits in floating-point intermediate values
@@ -859,7 +843,8 @@ define not-inline function store-float (x :: <float>) => (the-x :: <float>)
   *temp*;
 end function;
 
-define common-extensions function-test float-radix ()
+// TODO(cgay): separate into multiple tests instead with-test-unit, which is a no-op.
+define test test-float-radix ()
   // Based on the algorithm in:
   //   Malcolm, M. A. Algorithms to reveal properties of floating-point
   //   arithmetic. Comm. ACM 15, 11 (Nov. 1972), 949-951.
@@ -915,14 +900,14 @@ define common-extensions function-test float-radix ()
     check-equal("float-radix for <double-float> matches ibeta",
                 ibeta, float-radix(1.0d0));
   end with-test-unit;
-end function-test float-radix;
+end test;
 
-define common-extensions function-test float-digits ()
+define test test-float-digits ()
   check-true("float-digits(1.0d0) is at least as much as float-digits(1.0s0)",
              float-digits(1.0d0) >= float-digits(1.0s0));
-end function-test float-digits;
+end test;
 
-define common-extensions function-test float-precision ()
+define test test-float-precision ()
   check-true("float-precision(0.0s0) is zero", zero?(float-precision(0.0s0)));
   check-true("float-precision(0.0d0) is zero", zero?(float-precision(0.0d0)));
   check-equal("float-precision and float-digits are the same"
@@ -931,9 +916,10 @@ define common-extensions function-test float-precision ()
   check-equal("float-precision and float-digits are the same"
                 " for normalized double floats",
               float-precision(1.0d0), float-digits(1.0d0));
-end function-test float-precision;
+end test;
 
-define common-extensions function-test decode-float ()
+// TODO(cgay): separate into multiple tests instead with-test-unit, which is a no-op.
+define test test-decode-float ()
   let single-beta :: <single-float> = as(<single-float>, float-radix(1.0s0));
 
   with-test-unit ("decode-float of <single-float> radix")
@@ -1004,9 +990,9 @@ define common-extensions function-test decode-float ()
                 -1.0d0, sign);
   end with-test-unit;
 
-end function-test decode-float;
+end test;
 
-define common-extensions function-test scale-float ()
+define test test-scale-float ()
   check-equal("scale-float(1.0s0, 1) is float-radix(1.0s0)",
               as(<single-float>, float-radix(1.0s0)),
               scale-float(1.0s0, 1));
@@ -1019,7 +1005,7 @@ define common-extensions function-test scale-float ()
   check-equal("scale-float(-1.0d0, 1) is -float-radix(1.0d0)",
               as(<double-float>, -float-radix(1.0d0)),
               scale-float(-1.0d0, 1));
-end function-test scale-float;
+end test;
 
 define inline function classify-single-float (bits)
  => (classification :: <float-classification>)
@@ -1033,7 +1019,7 @@ define inline function classify-double-float (low-bits, high-bits)
 end function classify-double-float;
 
 // These values came from http://www.astro.umass.edu/~weinberg/a732/notes07_01.pdf
-define common-extensions function-test classify-float ()
+define test test-classify-float ()
   assert-equal(classify-single-float(#x00000000), #"zero");
   assert-equal(classify-single-float(#x80000000), #"zero");
   assert-equal(classify-single-float(#x7f800000), #"infinite");
@@ -1053,4 +1039,60 @@ define common-extensions function-test classify-float ()
   assert-equal(classify-double-float(#x00000000, #x00100000), #"normal");
   assert-equal(classify-double-float(#xffffffff, #x7fefffff), #"normal");
   assert-equal(classify-double-float(#x00000000, #x7ff80000), #"nan");
-end function-test classify-float;
+end test;
+
+define suite common-dylan-functions-test-suite ()
+  test test-concatenate!;
+  test test-condition-to-string;
+  test test-debug-message;
+  test test-difference;
+  test test-false-or;
+  test test-find-element;
+  test test-float-to-string;
+  test test-ignorable;
+  test test-ignore;
+  test test-integer-to-string;
+  test test-number-to-string;
+  test test-one-of;
+  test test-position;
+  test test-split;
+  test test-join;
+  test test-remove-all-keys!;
+  test test-string-to-integer;
+  test test-subclass;
+  test test-fill-table!;
+  test test-application-name;
+  test test-application-filename;
+  test test-application-arguments;
+  test test-tokenize-command-line;
+  test test-exit-application;
+  test test-register-application-exit-function;
+  test test-unfound;
+  test test-unfound?;
+  test test-found?;
+  test test-unsupplied;
+  test test-unsupplied?;
+  test test-supplied?;
+  test test-true?;
+  test test-false?;
+  test test-format-out;
+  test test-format-to-string;
+  test test-random;
+  test test-start-profiling;
+  test test-start-profiling-type;
+  test test-stop-profiling;
+  test test-stop-profiling-type;
+  test test-profiling-type-result;
+  test test-drain-finalization-queue;
+  test test-finalize;
+  test test-finalize-when-unreachable;
+  test test-automatic-finalization-enabled?-setter;
+  test test-automatic-finalization-enabled?;
+  test test-integer-length;
+  test test-float-radix;
+  test test-float-digits;
+  test test-float-precision;
+  test test-decode-float;
+  test test-scale-float;
+  test test-classify-float;
+end;

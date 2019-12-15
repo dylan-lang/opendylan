@@ -8,14 +8,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Stream testing
 
-define sideways method class-test-function
-    (class :: subclass(<stream>)) => (function :: <function>)
-  test-stream-class
-end method class-test-function;
-
-
-/// Stream information
-
 define class <stream-class-info> (<object>)
   constant slot info-class-name :: <string>,
     required-init-keyword: name:;
@@ -461,21 +453,12 @@ define test test-stream-test ()
   test-stream-class(<test-output-stream>, name: "<test-output-stream>", instantiable?: #t)
 end test test-stream-test;
 
-define suite test-stream-suite ()
-  test test-stream-test;
-end suite test-stream-suite;
-
 
 /// Core stream tests
 
 register-stream-test(<stream>, test-close);
 register-stream-test(<stream>, test-stream-open?);
 register-stream-test(<stream>, test-stream-element-type);
-
-// Don't test the functions we're already testing... there must be a better way!
-define streams-protocol function-test close () end;
-define streams-protocol function-test stream-open? () end;
-define streams-protocol function-test stream-element-type () end;
 
 define method test-close
     (info :: <stream-test-info>, stream :: <stream>) => ()
@@ -515,19 +498,6 @@ register-stream-test(<stream>, test-discard-input, direction: #"input");
 register-stream-test(<stream>, test-stream-input-available?, direction: #"input");
 register-stream-test(<stream>, test-stream-contents, direction: #"input");
 register-stream-test(<stream>, test-stream-contents-as, direction: #"input");
-
-// Don't test the functions we're already testing... there must be a better way!
-define streams-protocol function-test stream-size () end;
-define streams-protocol function-test stream-at-end? () end;
-define streams-protocol function-test read-element () end;
-define streams-protocol function-test unread-element () end;
-define streams-protocol function-test peek () end;
-define streams-protocol function-test read () end;
-define streams-protocol function-test read-into! () end;
-define streams-protocol function-test discard-input () end;
-define streams-protocol function-test stream-input-available? () end;
-define streams-protocol function-test stream-contents () end;
-define streams-protocol function-test stream-contents-as () end;
 
 define method test-stream-size
     (info :: <stream-test-info>, stream :: <stream>) => ()
@@ -733,14 +703,6 @@ register-stream-test(<stream>, test-wait-for-io-completion, direction: #"output"
 register-stream-test(<stream>, test-synchronize-output, direction: #"output");
 register-stream-test(<stream>, test-discard-output, direction: #"output");
 
-// Don't test the functions we're already testing... there must be a better way!
-define streams-protocol function-test write-element () end;
-define streams-protocol function-test write () end;
-define streams-protocol function-test force-output () end;
-define streams-protocol function-test wait-for-io-completion () end;
-define streams-protocol function-test synchronize-output () end;
-define streams-protocol function-test discard-output () end;
-
 define method test-write-element
     (info :: <stream-test-info>, stream :: <stream>) => ()
   //---*** Fill this in...
@@ -777,11 +739,6 @@ end method test-discard-output;
 register-stream-test(<positionable-stream>, test-stream-position);
 register-stream-test(<positionable-stream>, test-stream-position-setter);
 register-stream-test(<positionable-stream>, test-adjust-stream-position);
-
-// Don't test the functions we're already testing... there must be a better way!
-define streams-protocol function-test stream-position () end;
-define streams-protocol function-test stream-position-setter () end;
-define streams-protocol function-test adjust-stream-position () end;
 
 define method test-stream-position
     (info :: <stream-test-info>, stream :: <positionable-stream>) => ()
@@ -837,18 +794,46 @@ define method test-stream-condition
 end method test-stream-condition;
 
 
-define streams-protocol function-test stream-error-stream ()
-  //---*** Fill this in...
-end function-test stream-error-stream;
+define test test-<stream-error> ()
+  test-condition-class(<stream-error>, abstract?: #t);
+end;
 
-define streams-protocol function-test stream-error-sequence ()
-  //---*** Fill this in...
-end function-test stream-error-sequence;
+define test test-<end-of-stream-error> ()
+  test-condition-class(<end-of-stream-error>);
+end;
 
-define streams-protocol function-test stream-error-count ()
-  //---*** Fill this in...
-end function-test stream-error-count;
+define test test-<incomplete-read-error> ()
+  test-condition-class(<incomplete-read-error>);
+end;
 
-define streams-protocol function-test open-file-stream ()
+define test test-<incomplete-write-error> ()
+  test-condition-class(<incomplete-write-error>);
+end;
+
+define test test-stream-error-stream ()
   //---*** Fill this in...
-end function-test open-file-stream;
+end test;
+
+define test test-stream-error-sequence ()
+  //---*** Fill this in...
+end test;
+
+define test test-stream-error-count ()
+  //---*** Fill this in...
+end test;
+
+define test test-open-file-stream ()
+  //---*** Fill this in...
+end test;
+
+define suite common-dylan-streams-test-suite ()
+  test test-stream-test;
+  test test-stream-error-stream;
+  test test-stream-error-sequence;
+  test test-stream-error-count;
+  test test-open-file-stream;
+  test test-<stream-error>;
+  test test-<end-of-stream-error>;
+  test test-<incomplete-read-error>;
+  test test-<incomplete-write-error>;
+end;

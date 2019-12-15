@@ -8,21 +8,19 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Class test cases
 
-define locators-protocol class-test <locator> ()
-  //---*** Fill this in...
-end class-test <locator>;
+// Note: Locators are tested in system-test-suite.
 
-define common-extensions class-test <format-string-condition> ()
+define test test-<format-string-condition> ()
   //---*** Fill this in...
-end class-test <format-string-condition>;
+end test;
 
-define common-extensions class-test <simple-condition> ()
+define test test-<simple-condition> ()
   //---*** Fill this in...
-end class-test <simple-condition>;
+end test;
 
-define common-extensions class-test <arithmetic-error> ()
+define test test-<arithmetic-error> ()
   //---*** Fill this in...
-end class-test <arithmetic-error>;
+end test;
 
 define not-inline function force-integer-division-by-zero (i :: <integer>)
   /* Commented out due to https://github.com/dylan-lang/opendylan/issues/633
@@ -34,7 +32,7 @@ define not-inline function force-float-division-by-zero (f :: <float>)
   3 / f
 end;
 
-define common-extensions class-test <division-by-zero-error> ()
+define test test-<division-by-zero-error> ()
   check-condition("floor/(1, 0) signals <division-by-zero-error>",
                   <division-by-zero-error>,
                   force-integer-division-by-zero(0));
@@ -44,17 +42,17 @@ define common-extensions class-test <division-by-zero-error> ()
   check-condition("1.0d0 / 0.0d0 signals <division-by-zero-error>",
                   <division-by-zero-error>,
                   force-float-division-by-zero(0.0d0));
-end class-test <division-by-zero-error>;
+end test;
 
 define not-inline function force-domain-error (f :: <float>)
   sqrt(f)
 end;
 
-define common-extensions class-test <arithmetic-domain-error> ()
+define test test-<arithmetic-domain-error> ()
   check-condition("sqrt(-1.0) signals <arithmetic-domain-error>",
                   <arithmetic-domain-error>,
                   force-domain-error(-1.0));
-end class-test <arithmetic-domain-error>;
+end test;
 
 define not-inline function force-integer-overflow (x :: <integer>, i :: <integer>)
   x + i
@@ -64,7 +62,7 @@ define not-inline function force-float-overflow (x :: <float>, f :: <float>)
   x * f
 end;
 
-define common-extensions class-test <arithmetic-overflow-error> ()
+define test test-<arithmetic-overflow-error> ()
   check-condition("$maximum-integer + 1 signals <arithmetic-overflow-error>",
                   <arithmetic-overflow-error>,
                   force-integer-overflow($maximum-integer, 1));
@@ -77,67 +75,82 @@ define common-extensions class-test <arithmetic-overflow-error> ()
   check-condition("1.0d160 * 1.0d160 signals <arithmetic-overflow-error>",
                   <arithmetic-overflow-error>,
                   force-float-overflow(1.0d160, 1.0d160));
-end class-test <arithmetic-overflow-error>;
+end test;
 
 define not-inline function force-float-underflow (x :: <float>, f :: <float>)
   x * f
 end;
 
-define common-extensions class-test <arithmetic-underflow-error> ()
+define test test-<arithmetic-underflow-error> ()
   check-condition("1.0s-20 * 1.0s-20 signals <arithmetic-underflow-error>",
                   <arithmetic-underflow-error>,
                   force-float-underflow(1.0s-20, 1.0s-20));
   check-condition("1.0d-160 * 1.0d-160 signals <arithmetic-underflow-error>",
                   <arithmetic-underflow-error>,
                   force-float-underflow(1.0d-160, 1.0d-160));
-end class-test <arithmetic-underflow-error>;
+end test;
 
 define sideways method make-test-instance
     (class == <stretchy-sequence>) => (object)
   make(<stretchy-sequence>)
 end method make-test-instance;
 
-define common-extensions class-test <stretchy-sequence> ()
+define test test-<stretchy-sequence> ()
   //---*** Fill this in...
-end class-test <stretchy-sequence>;
+end test;
 
 define sideways method make-test-instance
     (class == <stretchy-object-vector>) => (object)
   make(<stretchy-object-vector>)
 end method make-test-instance;
 
-define common-extensions class-test <stretchy-object-vector> ()
+define test test-<stretchy-object-vector> ()
   //---*** Fill this in...
-end class-test <stretchy-object-vector>;
+end test;
 
 define sideways method make-test-instance
     (class == <object-deque>) => (object)
   make(<object-deque>)
 end method make-test-instance;
 
-define common-extensions class-test <object-deque> ()
+define test test-<object-deque> ()
   //---*** Fill this in...
-end class-test <object-deque>;
+end test;
 
 define sideways method make-test-instance
     (class == <string-table>) => (object)
   make(<string-table>)
 end method make-test-instance;
 
-define common-extensions class-test <string-table> ()
+define test test-<string-table> ()
   //---*** Fill this in...
-end class-test <string-table>;
+end test;
 
 
 /// simple-random classes
 
-define simple-random class-test <random> ()
+define test test-<random> ()
   //---*** Fill this in...
-end class-test <random>;
+end test;
 
 
 /// simple-profiling classes
 
-define common-extensions class-test <profiling-state> ()
+define test test-<profiling-state> ()
   //---*** Fill this in...
-end class-test <profiling-state>;
+end test;
+
+define suite common-dylan-classes-test-suite ()
+  test test-<format-string-condition>;
+  test test-<simple-condition>;
+  test test-<arithmetic-error>;
+  test test-<division-by-zero-error>;
+  test test-<arithmetic-domain-error>;
+  test test-<arithmetic-overflow-error>;
+  test test-<arithmetic-underflow-error>;
+  test test-<stretchy-sequence>;
+  test test-<stretchy-object-vector>;
+  test test-<object-deque>;
+  test test-<string-table>;
+  test test-<random>;
+end;

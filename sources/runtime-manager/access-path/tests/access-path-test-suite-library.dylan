@@ -8,7 +8,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library access-path-test-suite
   use common-dylan;
   use testworks;
-  use testworks-specs;
   use access-path;
   use local-access-path;
   use remote-access-path;
@@ -21,7 +20,6 @@ end library;
 define module access-path-test-suite
   use common-dylan;
   use testworks;
-  use testworks-specs;
   use access-path;
   use dylan-orb;
   use dfmc-mangling;

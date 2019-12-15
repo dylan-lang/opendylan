@@ -14,16 +14,6 @@
 	<lib file="DxTSTWKS.lib"/>
       </release>
     </library>
-    <library name="testworks-specs" title="Testworks Specifications">
-      <sources location="qa/testworks/specs">
-	<project platform="x86-win32">win32-testworks-specs.lid</project>
-	<project>testworks-specs.lid</project>
-      </sources>
-      <release product="Functional Developer" version="2.1" platform="x86-win32">
-	<binary file="DxTSTSPC.dll"/>
-	<lib file="DxTSTSPC.lib"/>
-      </release>
-    </library>
   </libraries>
   <test-suites>
     <library name="testworks-test-suite" title="Testworks test suite">

@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define protocol-spec arithmetic ()
+define interface-specification-suite dylan-arithmetic-specification-suite ()
   /// Numbers
   open abstract class <number> (<object>);
   sealed abstract class <complex> (<number>);
@@ -24,12 +24,12 @@ define protocol-spec arithmetic ()
   function zero? (<integer>) => (<boolean>);
   function positive? (<integer>) => (<boolean>);
   function negative? (<integer>) => (<boolean>);
-  open generic-function integral? (<integer>) => (<boolean>);
-  open generic-function \+ (<object>, <object>) => (#"rest");
-  open generic-function \* (<object>, <object>) => (#"rest");
-  open generic-function \- (<object>, <object>) => (#"rest");
-  open generic-function \/ (<object>, <object>) => (#"rest");
-  open generic-function negative (<object>) => (#"rest");
+  open generic function integral? (<integer>) => (<boolean>);
+  open generic function \+ (<object>, <object>) => (#"rest");
+  open generic function \* (<object>, <object>) => (#"rest");
+  open generic function \- (<object>, <object>) => (#"rest");
+  open generic function \/ (<object>, <object>) => (#"rest");
+  open generic function negative (<object>) => (#"rest");
   function floor (<real>) => (<integer>, <real>);
   function ceiling (<real>) => (<integer>, <real>);
   function round (<real>) => (<integer>, <real>);
@@ -40,19 +40,19 @@ define protocol-spec arithmetic ()
   function truncate/ (<real>, <real>) => (<integer>, <real>);
   function modulo (<real>, <real>) => (<real>);
   function remainder (<real>, <real>) => (<real>);
-  open generic-function \^ (<object>, <object>) => (#"rest");
-  open generic-function abs (<object>) => (#"rest");
+  open generic function \^ (<object>, <object>) => (#"rest");
+  open generic function abs (<object>) => (#"rest");
   function logior (#"rest") => (<integer>);
   function logxor (#"rest") => (<integer>);
   function logand (#"rest") => (<integer>);
   function lognot (<integer>) => (<integer>);
   function logbit? (<integer>, <integer>) => (<boolean>);
   function ash (<integer>, <integer>) => (<integer>);
-  open generic-function lcm (<object>, <object>) => (<object>);
-  open generic-function gcd (<object>, <object>) => (<object>);
-end protocol-spec arithmetic;
+  open generic function lcm (<object>, <object>) => (<object>);
+  open generic function gcd (<object>, <object>) => (<object>);
+end dylan-arithmetic-specification-suite;
 
-define protocol-spec collections ()
+define interface-specification-suite dylan-collections-specification-suite ()
   /// Collections
   open abstract class 
       <collection> (<object>);
@@ -102,21 +102,21 @@ define protocol-spec collections ()
       <object-table> (<table>);
 
   /// Collection functions
-  open generic-function empty? (<object>) => (<boolean>);
-  open generic-function size (<object>) => (#"rest");
-  open generic-function size-setter (<object>, <object>) => (<object>);
-  open generic-function rank (<array>) => (<integer>);
-  open generic-function row-major-index (<array>, #"rest") => (<integer>);
-  open generic-function dimensions (<array>) => (<sequence>);
-  open generic-function dimension (<array>, <integer>) => (<integer>);
-  open generic-function key-test (<collection>) => (<function>);
-  open generic-function key-sequence (<collection>) => (<sequence>);
-  open generic-function element 
+  open generic function empty? (<object>) => (<boolean>);
+  open generic function size (<object>) => (#"rest");
+  open generic function size-setter (<object>, <object>) => (<object>);
+  open generic function rank (<array>) => (<integer>);
+  open generic function row-major-index (<array>, #"rest") => (<integer>);
+  open generic function dimensions (<array>) => (<sequence>);
+  open generic function dimension (<array>, <integer>) => (<integer>);
+  open generic function key-test (<collection>) => (<function>);
+  open generic function key-sequence (<collection>) => (<sequence>);
+  open generic function element 
       (<collection>, <object>, #"key", #"default") => (<object>);
-  open generic-function element-setter
+  open generic function element-setter
       (<object>, <mutable-collection>, <object>) => (<object>);
-  open generic-function aref (<array>, #"rest") => (<object>);
-  open generic-function aref-setter (<object>, <array>, #"rest") => (<object>);
+  open generic function aref (<array>, #"rest") => (<object>);
+  open generic function aref-setter (<object>, <array>, #"rest") => (<object>);
   function first (<sequence>, #"key", #"default") => (<object>);
   function second (<sequence>, #"key", #"default") => (<object>);
   function third (<sequence>, #"key", #"default") => (<object>);
@@ -129,25 +129,25 @@ define protocol-spec collections ()
   function tail (<list>) => (<object>);
   function head-setter (<object>, <pair>) => (<object>);
   function tail-setter (<object>, <pair>) => (<object>);
-  open generic-function add (<sequence>, <object>) => (<sequence>);
-  open generic-function add! (<sequence>, <object>) => (<sequence>);
-  open generic-function add-new
+  open generic function add (<sequence>, <object>) => (<sequence>);
+  open generic function add! (<sequence>, <object>) => (<sequence>);
+  open generic function add-new
       (<sequence>, <object>, #"key", #"test") => (<sequence>);
-  open generic-function add-new!
+  open generic function add-new!
       (<sequence>, <object>, #"key", #"test") => (<sequence>);
-  open generic-function remove 
+  open generic function remove 
       (<sequence>, <object>, #"key", #"test", #"count") => (<sequence>);
-  open generic-function remove!
+  open generic function remove!
       (<sequence>, <object>, #"key", #"test", #"count") => (<sequence>);
-  open generic-function push (<deque>, <object>) => (<object>);
-  open generic-function pop (<deque>) => (<object>);
-  open generic-function push-last (<deque>, <object>) => (<object>);
-  open generic-function pop-last (<deque>) => (<object>);
-  open generic-function reverse (<sequence>) => (<sequence>);
-  open generic-function reverse! (<sequence>) => (<sequence>);
-  open generic-function sort 
+  open generic function push (<deque>, <object>) => (<object>);
+  open generic function pop (<deque>) => (<object>);
+  open generic function push-last (<deque>, <object>) => (<object>);
+  open generic function pop-last (<deque>) => (<object>);
+  open generic function reverse (<sequence>) => (<sequence>);
+  open generic function reverse! (<sequence>) => (<sequence>);
+  open generic function sort 
       (<sequence>, #"key", #"test", #"stable") => (<sequence>);
-  open generic-function sort!
+  open generic function sort!
       (<sequence>, #"key", #"test", #"stable") => (<sequence>);
 
   /// Mapping and reducing
@@ -159,37 +159,37 @@ define protocol-spec collections ()
       (<mutable-collection>, <function>, <collection>, #"rest") => (<mutable-collection>);
   function any? (<function>, <collection>, #"rest") => (<object>);
   function every? (<function>, <collection>, #"rest") => (<boolean>);
-  open generic-function reduce 
+  open generic function reduce 
       (<function>, <object>, <collection>) => (<object>);
-  open generic-function reduce1
+  open generic function reduce1
       (<function>, <collection>) => (<object>);
-  open generic-function choose
+  open generic function choose
       (<function>, <sequence>) => (<sequence>);
-  open generic-function choose-by
+  open generic function choose-by
       (<function>, <sequence>, <sequence>) => (<sequence>);
-  open generic-function member?
+  open generic function member?
       (<object>, <collection>, #"key", #"test") => (<boolean>);
-  open generic-function find-key
+  open generic function find-key
       (<collection>, <function>, #"key", #"skip", #"failure") => (<object>);
-  open generic-function remove-key!
+  open generic function remove-key!
        (<mutable-explicit-key-collection>, <object>) => (<boolean>);
-  open generic-function replace-elements!
+  open generic function replace-elements!
       (<mutable-collection>, <function>, <function>, #"key", #"count")
    => (<mutable-collection>);
-  open generic-function fill!
+  open generic function fill!
       (<mutable-collection>, <object>, #"key", #"start", #"end")
    => (<mutable-collection>);
 
   /// Iteration protocols
-  open generic-function forward-iteration-protocol
+  open generic function forward-iteration-protocol
       (<collection>)
    => (<object>, <object>, <function>, <function>, <function>, <function>,
        <function>, <function>);
-  open generic-function backward-iteration-protocol
+  open generic function backward-iteration-protocol
       (<collection>)
    => (<object>, <object>, <function>, <function>, <function>, <function>,
        <function>, <function>);
-  open generic-function table-protocol
+  open generic function table-protocol
       (<table>) => (<function>, <function>);
   function merge-hash-ids
       (<integer>, <integer>, #"key", #"ordered")
@@ -197,25 +197,25 @@ define protocol-spec collections ()
   function object-hash (<object>, <hash-state>) => (<integer>, <hash-state>);
 
   /// Set operations
-  open generic-function intersection
+  open generic function intersection
       (<sequence>, <sequence>, #"key", #"test") => (<sequence>);
-  open generic-function union
+  open generic function union
       (<sequence>, <sequence>, #"key", #"test") => (<sequence>);
-  open generic-function remove-duplicates
+  open generic function remove-duplicates
       (<sequence>, #"key", #"test") => (<sequence>);
-  open generic-function remove-duplicates!
+  open generic function remove-duplicates!
       (<sequence>, #"key", #"test") => (<sequence>);
-  open generic-function copy-sequence
+  open generic function copy-sequence
       (<sequence>, #"key", #"start", #"end") => (<sequence>);
   function concatenate (<sequence>, #"rest") => (<sequence>);
   function concatenate-as (<type>, <sequence>, #"rest") => (<sequence>);
-  open generic-function replace-subsequence!
+  open generic function replace-subsequence!
       (<sequence>, <sequence>, #"key", #"start", #"end") => (<sequence>);
-  open generic-function subsequence-position
+  open generic function subsequence-position
       (<sequence>, <sequence>, #"key", #"test", #"count") => (false-or(<integer>));
-end protocol-spec collections;
+end dylan-collections-specification-suite;
 
-define protocol-spec conditions ()
+define interface-specification-suite dylan-conditions-specification-suite ()
   /// Conditions
   open abstract class <condition> (<object>);
   open abstract class <error> (<serious-condition>);
@@ -242,12 +242,12 @@ define protocol-spec conditions ()
       (type-union(<condition>, <string>), #"rest") => (singleton(#f));
   function check-type (<object>, <type>) => (<object>);
   function abort () => ();
-  open generic-function default-handler (<condition>) => (#"rest");
-  open generic-function restart-query (<restart>) => (#"rest");
-  open generic-function return-query (<condition>) => (#"rest");
+  open generic function default-handler (<condition>) => (#"rest");
+  open generic function restart-query (<restart>) => (#"rest");
+  open generic function return-query (<condition>) => (#"rest");
   function do-handlers (<function>) => (singleton(#f));
-  open generic-function return-allowed? (<condition>) => (<boolean>);
-  open generic-function return-description
+  open generic function return-allowed? (<condition>) => (<boolean>);
+  open generic function return-description
       (<condition>) => (type-union(singleton(#f), <string>, <restart>));
   function condition-format-string
       (type-union(<simple-error>, <simple-warning>, <simple-restart>)) => (<string>);
@@ -255,18 +255,23 @@ define protocol-spec conditions ()
       (type-union(<simple-error>, <simple-warning>, <simple-restart>)) => (<sequence>);
   function type-error-value (<type-error>) => (<object>);
   function type-error-expected-type (<type-error>) => (<type>);
-end protocol-spec conditions;
+end dylan-conditions-specification-suite;
 
 //--- Bindings not defined by the DRM
 //---*** Are there any others?
-define protocol-spec dylan-extensions ()
+
+define test test-define-function ()
+  //---*** Fill this in...
+end test;
+
+define interface-specification-suite dylan-extensions-specification-suite ()
   constant $minimum-integer :: <integer>;
   constant $maximum-integer :: <integer>;
 
-  macro-test function-definer-test;
-end protocol-spec dylan-extensions;
+  test test-define-function;
+end;
 
-define module-spec dylan ()
+define interface-specification-suite dylan-core-specification-suite ()
   /// Constants
 
   //--- $permanent-hash-state isn't part of our implementation
@@ -287,11 +292,11 @@ define module-spec dylan ()
   sealed class <method> (<function>);
 
   /// Constructing and initializing instances
-  open generic-function make 
+  open generic function make 
       (<type>, #"rest", #"key", #"all-keys") => (<object>);
-  open generic-function initialize 
+  open generic function initialize 
       (<object>, #"key", #"all-keys") => (#"rest");
-  open generic-function slot-initialized?
+  open generic function slot-initialized?
       (<object>, <generic-function>) => (<boolean>);
   function list 
       (#"rest") => (<list>);
@@ -312,9 +317,9 @@ define module-spec dylan ()
   function \~ (<object>) => (<boolean>);
   function \== (<object>, <object>) => (<boolean>);
   function \~== (<object>, <object>) => (<boolean>);
-  open generic-function \= (<object>, <object>) => (<boolean>);
+  open generic function \= (<object>, <object>) => (<boolean>);
   function \~= (<object>, <object>) => (<boolean>);
-  open generic-function \< (<object>, <object>) => (<boolean>);
+  open generic function \< (<object>, <object>) => (<boolean>);
   function \> (<object>, <object>) => (<boolean>);
   function \<= (<object>, <object>) => (<boolean>);
   function \>= (<object>, <object>) => (<boolean>);
@@ -324,13 +329,13 @@ define module-spec dylan ()
   /// Coercing and copying functions
   function identity (<object>) => (<object>);
   function values (#"rest") => (#"rest");
-  open generic-function as (<type>, <object>) => (<object>);
-  open generic-function as-uppercase (<object>) => (<object>);
-  open generic-function as-uppercase! (<object>) => (<object>);
-  open generic-function as-lowercase (<object>) => (<object>);
-  open generic-function as-lowercase! (<object>) => (<object>);
-  open generic-function shallow-copy (<object>) => (#"rest");
-  open generic-function type-for-copy (<object>) => (<type>);
+  open generic function as (<type>, <object>) => (<object>);
+  open generic function as-uppercase (<object>) => (<object>);
+  open generic function as-uppercase! (<object>) => (<object>);
+  open generic function as-lowercase (<object>) => (<object>);
+  open generic function as-lowercase! (<object>) => (<object>);
+  open generic function shallow-copy (<object>) => (#"rest");
+  open generic function type-for-copy (<object>) => (<type>);
 
   /// Type functions
   function instance? (<object>, <type>) => (<boolean>);
@@ -374,44 +379,20 @@ define module-spec dylan ()
   function remove-method
       (<generic-function>, <method>)
    => (<method>);
+end dylan-core-specification-suite;
 
-  /// Defining macros
-  macro-test class-definer-test;
-  macro-test constant-definer-test;
-  macro-test domain-definer-test;
-  macro-test generic-definer-test;
-  macro-test library-definer-test;
-  macro-test method-definer-test;
-  macro-test module-definer-test;
-  macro-test variable-definer-test;
-
-  /// Statement macros
-  macro-test begin-test;
-  macro-test block-test;
-  macro-test case-test;
-  macro-test for-test;
-  macro-test if-test;
-  macro-test method-test;
-  macro-test select-test;
-  macro-test unless-test;
-  macro-test until-test;
-  macro-test while-test;
-
-  /// Function macros
-  macro-test colon-equal-test;
-  macro-test or-test;
-  macro-test and-test;
-
-  /// Other protocols
-  protocol arithmetic;
-  protocol collections;
-  protocol conditions;
-  protocol dylan-extensions;
-end module-spec dylan;
-
-define library-spec dylan ()
-  module dylan;
-  suite dylan-control-suite;
-  suite dylan-regressions;
-  suite types;
-end library-spec dylan;
+define suite dylan-test-suite ()
+  suite dylan-arithmetic-specification-suite;
+  suite dylan-collections-specification-suite;
+  suite dylan-collections-test-suite;
+  suite dylan-conditions-specification-suite;
+  suite dylan-constants-test-suite;
+  suite dylan-control-test-suite;
+  suite dylan-core-specification-suite;
+  suite dylan-core-test-suite;
+  suite dylan-extensions-specification-suite;
+  suite dylan-linearization-test-suite;
+  suite dylan-macros-test-suite;
+  suite dylan-numerics-test-suite;
+  suite dylan-regressions-test-suite;
+end suite;

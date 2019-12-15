@@ -18,17 +18,17 @@ define sideways method make-test-instance
   end
 end method make-test-instance;
 
-define duim-sheets class-test <frame> ()
+define test test-<frame> ()
   //---*** Fill this in...
-end class-test <frame>;
+end test;
 
-define duim-sheets class-test <frame-manager> ()
+define test test-<frame-manager> ()
   //---*** Fill this in...
-end class-test <frame-manager>;
+end test;
 
-define duim-frames class-test <simple-frame> ()
+define test test-<simple-frame> ()
   //---*** Fill this in...
-end class-test <simple-frame>;
+end test;
 
 
 /// Frame layout tests

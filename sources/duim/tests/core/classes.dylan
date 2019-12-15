@@ -164,37 +164,37 @@ define sideways method make-test-instance
   make(<window-repaint-event>, sheet: $dummy-sheet, region: $everywhere)
 end method make-test-instance;
 
-define duim-sheets class-test <caret> ()
+define test test-<caret> ()
   //---*** Fill this in...
-end class-test <caret>;
+end test;
 
-define duim-sheets class-test <clipboard> ()
+define test test-<clipboard> ()
   //---*** Fill this in...
-end class-test <clipboard>;
+end test;
 
-define duim-sheets class-test <display> ()
+define test test-<display> ()
   //---*** Fill this in...
-end class-test <display>;
+end test;
 
-define duim-sheets class-test <medium> ()
+define test test-<medium> ()
   //---*** Fill this in...
-end class-test <medium>;
+end test;
 
-define duim-sheets class-test <pointer> ()
+define test test-<pointer> ()
   //---*** Fill this in...
-end class-test <pointer>;
+end test;
 
-define duim-sheets class-test <port> ()
+define test test-<port> ()
   //---*** Fill this in...
-end class-test <port>;
+end test;
 
-define duim-sheets class-test <sheet> ()
+define test test-<sheet> ()
   //---*** Fill this in...
-end class-test <sheet>;
+end test;
 
-define duim-sheets class-test <undefined-text-style-mapping> ()
+define test test-<undefined-text-style-mapping> ()
   //---*** Fill this in...
-end class-test <undefined-text-style-mapping>;
+end test;
 
 
 /// Frame classes

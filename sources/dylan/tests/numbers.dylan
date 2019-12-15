@@ -1,23 +1,16 @@
 Module:       dylan-test-suite
-Synopsis:     Dylan test suite
+Synopsis:     Numerics testing
 Author:       Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/// Collection tests
-
-define sideways method class-test-function
-    (class :: subclass(<number>)) => (function :: <function>)
-  test-number-class
-end method class-test-function;
-
 define open generic test-number-class
-    (class :: subclass(<number>), #key, #all-keys) => ();
+    (class :: subclass(<number>), #key abstract?) => ();
 
 define method test-number-class
-    (class :: subclass(<number>), #key abstract?, #all-keys) => ()
+    (class :: subclass(<number>), #key abstract?) => ()
   unless (abstract?)
     test-number("0",  as(class, 0));
     test-number("1",  as(class, 1));
@@ -29,7 +22,7 @@ end method test-number-class;
 
 //--- An extra method to test floating point values
 define method test-number-class
-    (class :: subclass(<float>), #key abstract?, #all-keys) => ()
+    (class :: subclass(<float>), #key abstract?) => ()
   next-method();
   unless (abstract?)
     test-number("1.5", as(class, 1.5));
@@ -38,10 +31,10 @@ define method test-number-class
 end method test-number-class;
 
 define method test-number-class
-    (class == <integer>, #key abstract?, #all-keys) => ()
+    (class == <integer>, #key abstract?) => ()
   next-method();
   test-limited-integers();
-end method test-number-class;
+end method;
 
 
 /// Number test functions
@@ -59,13 +52,13 @@ define method test-number
   // next-method();
   do(method (function) function(name, number) end,
      vector(// Methods on <complex>
-            test-=,
-            test-zero?,
-            test-+,
-            test-*,
-            test--,
-            test-/,
-            test-^
+            do-test-=,
+            do-test-zero?,
+            do-test-+,
+            do-test-*,
+            do-test--,
+            do-test-/,
+            do-test-^
             ))
 end method test-number;
 
@@ -74,24 +67,24 @@ define method test-number
   next-method();
   do(method (function) function(name, number) end,
      vector(// Functions on <real>
-            test-floor,
-            test-ceiling,
-            test-round,
-            test-truncate,
-            test-floor/,
-            test-ceiling/,
-            test-round/,
-            test-truncate/,
-            test-modulo,
-            test-remainder,
+            do-test-floor,
+            do-test-ceiling,
+            do-test-round,
+            do-test-truncate,
+            do-test-floor/,
+            do-test-ceiling/,
+            do-test-round/,
+            do-test-truncate/,
+            do-test-modulo,
+            do-test-remainder,
 
             // Methods on <real>
-            test-<,
-            test-abs,
-            test-positive?,
-            test-negative?,
-            test-integral?,
-            test-negative
+            do-test-<,
+            do-test-abs,
+            do-test-positive?,
+            do-test-negative?,
+            do-test-integral?,
+            do-test-negative
             ))
 end method test-number;
 
@@ -100,19 +93,19 @@ define method test-number
   next-method();
   do(method (function) function(name, number) end,
      vector(// Functions on <integer>
-            test-odd?,
-            test-even?,
-            test-logior,
-            test-logxor,
-            test-logand,
-            test-lognot,
-            test-logbit?,
-            test-ash,
+            do-test-odd?,
+            do-test-even?,
+            do-test-logior,
+            do-test-logxor,
+            do-test-logand,
+            do-test-lognot,
+            do-test-logbit?,
+            do-test-ash,
 
             // Methods on <integer>
-            test-lcm,
-            test-gcd,
-            test-limited
+            do-test-lcm,
+            do-test-gcd,
+            do-test-limited
             ))
 end method test-number;
 
@@ -122,228 +115,194 @@ end method test-number;
 //---*** These methods should be on <complex> but the hierarchy isn't correct
 //---*** in the emulator at least so we do it on <number> instead.
 
-define method test-= 
+define method do-test-= 
     (name :: <string>, number :: <number>) => ()
   //---*** Fill this in...
-end method test-=;
+end method;
 
-define method test-zero? 
+define method do-test-zero? 
     (name :: <string>, number :: <number>) => ()
   check-equal(format-to-string("zero?(%d)", number),
               zero?(number),
               integral?(number) & number < 1 & number > -1)
-end method test-zero?;
+end method;
 
-define method test-+
+define method do-test-+
     (name :: <string>, number :: <number>) => ()
   //---*** Fill this in...
-end method test-+;
+end method;
 
-define method test-* 
+define method do-test-* 
     (name :: <string>, number :: <number>) => ()
   check-equal(format-to-string("%d * 1 = %d", number, number),
               number * 1, number)
-end method test-*;
+end method;
 
-define method test-- 
+define method do-test-- 
     (name :: <string>, number :: <number>) => ()
   //---*** Fill this in...
-end method test--;
+end method;
 
-define method test-/
+define method do-test-/
     (name :: <string>, number :: <number>) => ()
   //---*** Fill this in...
-end method test-/;
+end method;
 
-define method test-^
+define method do-test-^
     (name :: <string>, number :: <number>) => ()
   //---*** Fill this in...
-end method test-^;
+end method;
 
 
 /// Real number testing
-define method test-floor
+define method do-test-floor
     (name :: <string>, number :: <real>) => ()
   //---*** Fill this in...
-end method test-floor;
+end method;
 
-define method test-ceiling
+define method do-test-ceiling
     (name :: <string>, number :: <real>) => ()
   //---*** Fill this in...
-end method test-ceiling;
+end method;
 
-define method test-round
+define method do-test-round
     (name :: <string>, number :: <real>) => ()
   //---*** Fill this in...
-end method test-round;
+end method;
 
-define method test-truncate
+define method do-test-truncate
     (name :: <string>, number :: <real>) => ()
   //---*** Fill this in...
-end method test-truncate;
+end method;
 
-define method test-floor/
+define method do-test-floor/
     (name :: <string>, number :: <real>) => ()
   //---*** Fill this in...
-end method test-floor/;
+end method;
 
-define method test-ceiling/
+define method do-test-ceiling/
     (name :: <string>, number :: <real>) => ()
   //---*** Fill this in...
-end method test-ceiling/;
+end method;
 
-define method test-round/
+define method do-test-round/
     (name :: <string>, number :: <real>) => ()
   //---*** Fill this in...
-end method test-round/;
+end method;
 
-define method test-truncate/
+define method do-test-truncate/
     (name :: <string>, number :: <real>) => ()
   //---*** Fill this in...
-end method test-truncate/;
+end method;
 
-define method test-modulo
+define method do-test-modulo
     (name :: <string>, number :: <real>) => ()
   //---*** Fill this in...
-end method test-modulo;
+end method;
 
-define method test-remainder
+define method do-test-remainder
     (name :: <string>, number :: <real>) => ()
   //---*** Fill this in...
-end method test-remainder;
+end method;
 
-define method test-<
+define method do-test-<
     (name :: <string>, number :: <real>) => ()
   //---*** Fill this in...
-end method test-<;
+end method;
 
-define method test-abs
+define method do-test-abs
     (name :: <string>, number :: <real>) => ()
   //---*** Fill this in...
-end method test-abs;
+end method;
 
-define method test-positive?
+define method do-test-positive?
     (name :: <string>, number :: <real>) => ()
   check-equal(format-to-string("positive?(%d)", number),
               positive?(number),
               number > 0)
-end method test-positive?;
+end method;
 
-define method test-negative?
+define method do-test-negative?
     (name :: <string>, number :: <real>) => ()
   check-equal(format-to-string("negative?(%d)", number),
               negative?(number),
               number < 0)
-end method test-negative?;
+end method;
 
-define method test-integral?
+define method do-test-integral?
     (name :: <string>, number :: <real>) => ()
   //---*** Fill this in...
-end method test-integral?;
+end method;
 
-define method test-negative
+define method do-test-negative
     (name :: <string>, number :: <real>) => ()
   check-equal(format-to-string("negative(negative(%d)) = %d", number, number),
               negative(negative(number)),
               number)
-end method test-negative;
+end method;
 
 
 /// Integer number testing
 
-define method test-odd?
+define method do-test-odd?
     (name :: <string>, number :: <integer>) => ()
   check-equal(format-to-string("odd?(%d)", number),
               odd?(number),
               modulo(number, 2) = 1)
-end method test-odd?;
+end method;
 
-define method test-even?
+define method do-test-even?
     (name :: <string>, number :: <integer>) => ()
   check-equal(format-to-string("even?(%d)", number),
               even?(number),
               modulo(number, 2) = 0)
-end method test-even?;
+end method;
 
-define method test-logior
+define method do-test-logior
     (name :: <string>, number :: <integer>) => ()
   //---*** Fill this in...
-end method test-logior;
+end method;
 
-define method test-logxor
+define method do-test-logxor
     (name :: <string>, number :: <integer>) => ()
   //---*** Fill this in...
-end method test-logxor;
+end method;
 
-define method test-logand
+define method do-test-logand
     (name :: <string>, number :: <integer>) => ()
   //---*** Fill this in...
-end method test-logand;
+end method;
 
-define method test-lognot
+define method do-test-lognot
     (name :: <string>, number :: <integer>) => ()
   //---*** Fill this in...
-end method test-lognot;
+end method;
 
-define method test-logbit?
+define method do-test-logbit?
     (name :: <string>, number :: <integer>) => ()
   //---*** Fill this in...
-end method test-logbit?;
+end method;
 
-define method test-ash
+define method do-test-ash
     (name :: <string>, number :: <integer>) => ()
   //---*** Fill this in...
-end method test-ash;
+end method;
 
-define method test-lcm
+define method do-test-lcm
     (name :: <string>, number :: <integer>) => ()
   //---*** Fill this in...
-end method test-lcm;
+end method;
 
-define method test-gcd
+define method do-test-gcd
     (name :: <string>, number :: <integer>) => ()
   //---*** Fill this in...
-end method test-gcd;
+end method;
 
-define method test-limited
+define method do-test-limited
     (name :: <string>, number :: <integer>) => ()
   //---*** Fill this in...
-end method test-limited;
+end method;
 
-
-/// Don't test the functions we are already testing... there must be a better way!
-
-define arithmetic function-test odd? () end;
-define arithmetic function-test even? () end;
-define arithmetic function-test zero? () end;
-define arithmetic function-test positive? () end;
-define arithmetic function-test negative? () end;
-define arithmetic function-test integral? () end;
-define arithmetic function-test \+ () end;
-define arithmetic function-test \* () end;
-define arithmetic function-test \- () end;
-define arithmetic function-test \/ () end;
-define arithmetic function-test negative () end;
-define arithmetic function-test floor () end;
-define arithmetic function-test ceiling () end;
-define arithmetic function-test round () end;
-define arithmetic function-test truncate () end;
-define arithmetic function-test floor/ () end;
-define arithmetic function-test ceiling/ () end;
-define arithmetic function-test round/ () end;
-define arithmetic function-test truncate/ () end;
-define arithmetic function-test modulo () end;
-define arithmetic function-test remainder () end;
-define arithmetic function-test \^ () end;
-define arithmetic function-test abs () end;
-define arithmetic function-test logior () end;
-define arithmetic function-test logxor () end;
-define arithmetic function-test logand () end;
-define arithmetic function-test lognot () end;
-define arithmetic function-test logbit? () end;
-define arithmetic function-test ash () end;
-define arithmetic function-test lcm () end;
-define arithmetic function-test gcd () end;
 
 define method test-limited-integers () => ()
   test-limited-integer-instance?();
@@ -417,3 +376,53 @@ define method test-limited-integer-instance? () => ()
   check-limited-integer-instance?(limited(<integer>, min: -128, max: 128));
   check-limited-integer-instance?(limited(<integer>, max: 0));
 end method test-limited-integer-instance?;
+
+define test test-<number> ()
+    test-number-class(<number>, abstract?: #t);
+end;
+
+define test test-<complex> ()
+    test-number-class(<complex>, abstract?: #t);
+end;
+
+define test test-<real> ()
+    test-number-class(<real>, abstract?: #t);
+end;
+
+define test test-<float> ()
+    test-number-class(<float>, abstract?: #t);
+end;
+
+define test test-<single-float> ()
+    test-number-class(<single-float>, abstract?: #f);
+end;
+
+define test test-<double-float> ()
+    test-number-class(<double-float>, abstract?: #f);
+end;
+
+define test test-<extended-float> ()
+    // Note that <extended-float> == <double-float> in OD so this repeats the
+    // above tests.
+    test-number-class(<extended-float>, abstract?: #f);
+end;
+
+define test test-<rational> ()
+    test-number-class(<rational>, abstract?: #t);
+end;
+
+define test test-<integer> ()
+    test-number-class(<integer>, abstract?: #f);
+end;
+
+define suite dylan-numerics-test-suite ()
+  test test-<number>;
+  test test-<complex>;
+  test test-<real>;
+  test test-<float>;
+  test test-<single-float>;
+  test test-<double-float>;
+  test test-<extended-float>;
+  test test-<rational>;
+  test test-<integer>;
+end;

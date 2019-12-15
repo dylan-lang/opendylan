@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Macro testing
 
-define dylan macro-test begin-test ()
+define test test-begin ()
   check-false("begin: no body is false",
 	      begin end);
   check-equal("begin: return last expression",
@@ -35,13 +35,13 @@ define dylan macro-test begin-test ()
 		list(a, b)
 	      end,
 	      #(#"step3", #"step4"));
-end macro-test begin-test;
+end test;
 
-define dylan macro-test block-test ()
+define test test-block ()
   //---*** Fill this in...
-end macro-test block-test;
+end test;
 
-define dylan macro-test case-test ()
+define test test-case ()
   check-equal("case stop when test is five = five", 
 	      case
 		(2 < 2)   => "2 less than 2";
@@ -95,10 +95,10 @@ define dylan macro-test case-test ()
 		list(a, b, c)
 	      end,
 	      #(9, 8, 7));
-end macro-test case-test;
+end test;
 
-define dylan macro-test for-test ()
-  check-equal("for simple iteration", 
+define test test-for ()
+  check-equal("for simple iteration",
 	     begin
 	       let v = 0;
 	       for (i from 10 to 0 by -1)
@@ -107,7 +107,7 @@ define dylan macro-test for-test ()
 	       v
 	     end,
 	     55);
-  check-equal("for parameterize int iteration", 
+  check-equal("for parameterize int iteration",
 	      method (n :: <integer>)
 		for (i from n to 1 by -1, v = 1 then v * i)
 		finally
@@ -115,7 +115,7 @@ define dylan macro-test for-test ()
 		end for
 	      end method(5),
 	      120);
-  check-equal("for = then with lists", 
+  check-equal("for = then with lists",
 	      begin
 		let m = #();
 		for (l = #(0, 1, 2, 3, 4, 5, 6, 7, 8, 9) then l.tail, until: l.empty?)
@@ -124,7 +124,7 @@ define dylan macro-test for-test ()
 		m
 	      end,
 	      #(9, 8, 7, 6, 5, 4, 3, 2, 1, 0));
-  check-equal("for multiple vars", 
+  check-equal("for multiple vars",
 	      begin
 		let i = 0;
 		let j = 0;
@@ -135,7 +135,7 @@ define dylan macro-test for-test ()
 		end for
 	      end,
 	      33);
-  check-equal("for summing over let var", 
+  check-equal("for summing over let var",
 	      begin
 		let sum = 0;
 		for (i from 0 to 10)
@@ -144,7 +144,7 @@ define dylan macro-test for-test ()
 		sum
 	      end,
 	      55);
-  check-equal("for summing over let var with lots of iteration vars", 
+  check-equal("for summing over let var with lots of iteration vars",
 	      begin
 		let sum = 0;
 		for (i from 0,
@@ -157,7 +157,7 @@ define dylan macro-test for-test ()
 		sum
 	      end,
 	      100);
-  check-equal("for doesn't do it the first time if end-test initially true", 
+  check-equal("for doesn't do it the first time if end-test initially true",
 	      begin
 		let v = 0;
 		for (i from 0, j from 10 by -1, until: i < j)
@@ -166,7 +166,7 @@ define dylan macro-test for-test ()
 		v
 	      end,
 	      0);
-  check-equal("for multiple return forms, do all, return last", 
+  check-equal("for multiple return forms, do all, return last",
 	      begin
 		let v = 0;
 		let w = 0;
@@ -180,7 +180,7 @@ define dylan macro-test for-test ()
 		     w)
 	      end,
 	      #(#"last", 100));
-  check-equal("multiple values return", 
+  check-equal("multiple values return",
 	      begin
 		let v = 0;
 		let w = 0;
@@ -195,13 +195,13 @@ define dylan macro-test for-test ()
 		list(a, b)
 	      end,
 	      #(60, 100));
-  check-equal("for until true with finally", 
+  check-equal("for until true with finally",
 	      for (until: #t)
 	      finally
 		#"ok";
 	      end for,
 	      #"ok");
-  check-equal("for until true with lots o finally", 
+  check-equal("for until true with lots o finally",
 	      for (until: #t)
 	      finally
 		#"oops";
@@ -210,7 +210,7 @@ define dylan macro-test for-test ()
 		#"ok";
 	      end for,
 	      #"ok");
-  check-equal("for multiple returns", 
+  check-equal("for multiple returns",
 	       begin
 	         let x = 0;
                  list(block (return)
@@ -224,7 +224,7 @@ define dylan macro-test for-test ()
 		      x)
                end,
 	       #(4, 100));
-  check-equal("for multiple values return", 
+  check-equal("for multiple values return",
 	      begin
 		let (a, b)
 		  = block (return)
@@ -237,7 +237,7 @@ define dylan macro-test for-test ()
 		list(a, b)
 	      end,
 	      #(4, 4));
-  check-false("for never true return false", 
+  check-false("for never true return false",
 	      block (return)
 		for (number in #(5, 3, 9, 9, 7))
 		  if (number.even?)
@@ -245,7 +245,7 @@ define dylan macro-test for-test ()
 		  end if;
 		end for
 	      end block);
-  check-false("for one runs out first return false", 
+  check-false("for one runs out first return false",
 	      block (return)
 		for (number1 in #(5, 3, 9, 2), number2 in #(1, 2, 3))
                   ignore(number2);
@@ -254,17 +254,17 @@ define dylan macro-test for-test ()
 		  end if;
 		end for
 	      end block);
-end macro-test for-test;
+end test test-for;
 
-define dylan macro-test if-test ()
-  check-equal("if true", 
-              if (#t) #"true" else #"false" end if, 
+define test test-if ()
+  check-equal("if true",
+              if (#t) #"true" else #"false" end if,
               #"true");
-  check-equal("if false", 
+  check-equal("if false",
               if (#f) #"true" else #"false" end if,
               #"false");
-  check-equal("if empty-list", 
-              if (#()) #"true" else #"false" end if, 
+  check-equal("if empty-list",
+              if (#()) #"true" else #"false" end if,
               #"true");
   check-equal("if symbol", 
               if (#"anything") #"true" else #"false" end if,
@@ -278,13 +278,13 @@ define dylan macro-test if-test ()
   check-equal("if odd 100", 
               if (odd?(100)) #"true" else #"false" end if,
               #"false");
-end macro-test if-test;
+end test test-if;
 
-define dylan macro-test method-test ()
+define test test-method ()
   //---*** Fill this in...
-end macro-test method-test;
+end test;
 
-define dylan macro-test select-test ()
+define test test-select ()
   local method student (career)
 	  select (career)
 	    #"art", #"music", #"drama" =>
@@ -401,9 +401,9 @@ define dylan macro-test select-test ()
 		  "?";
 	      end select,
 	      "computational");
-end macro-test select-test;
+end test test-select;
 
-define dylan macro-test unless-test ()
+define test test-unless ()
   check-false("unless true", 
 	      unless (#t) 1; 2; 3 end unless);
   check-false("unless even 100", 
@@ -429,20 +429,20 @@ define dylan macro-test unless-test ()
 	      #"ok");
   check-false("unless no forms returns false", 
 	      unless (#t) end);
-end macro-test unless-test;
+end test test-unless;
 
-define dylan macro-test until-test ()
+define test test-until ()
   //---*** Fill this in...
-end macro-test until-test;
+end test;
 
-define dylan macro-test while-test ()
+define test test-while ()
   //---*** Fill this in...
-end macro-test while-test;
+end test;
 
 
 /// Function macro suite
 
-define dylan macro-test colon-equal-test ()
+define test test-colon-equal ()
   check-equal("simple assignment",
               begin
                 let x = 10;
@@ -468,9 +468,9 @@ define dylan macro-test colon-equal-test ()
                 x[0, 0] := 10;
               end,
               10)
-end macro-test colon-equal-test;
+end test test-colon-equal;
 
-define dylan macro-test or-test ()
+define test test-or ()
   check-equal("or simple numbers", 
               1 | 2 | 3,
               1); 
@@ -500,9 +500,9 @@ define dylan macro-test or-test ()
 	      #(1, 2, 3));
   check-equal("or 1st value only thing that matters to judge truth", 
 	      (even?(1) | values(#f, #t) | 3), 3);
-end macro-test or-test;
+end test test-or;
 
-define dylan macro-test and-test ()
+define test test-and ()
   check-equal("and simple number",
               1 & 2 & 3,
               3); 
@@ -527,47 +527,63 @@ define dylan macro-test and-test ()
 		x
 	      end,
 	      0);
-end macro-test and-test;
+end test test-and;
 
 
 /// Definer tests
 
-define dylan macro-test class-definer-test ()
+define test test-define-class ()
   //---*** Fill this in...
-end macro-test class-definer-test;
+end test;
 
-define dylan macro-test constant-definer-test ()
+define test test-define-constant ()
   //---*** Fill this in...
-end macro-test constant-definer-test;
+end test;
 
-define dylan macro-test domain-definer-test ()
+define test test-define-domain ()
   //---*** Fill this in...
-end macro-test domain-definer-test;
+end test;
 
-define dylan macro-test generic-definer-test ()
+define test test-define-generic ()
   //---*** Fill this in...
-end macro-test generic-definer-test;
+end test;
 
-define dylan macro-test library-definer-test ()
+define test test-define-library ()
   //---*** Fill this in...
-end macro-test library-definer-test;
+end test;
 
-define dylan macro-test method-definer-test ()
+define test test-define-method ()
   //---*** Fill this in...
-end macro-test method-definer-test;
+end test;
 
-define dylan macro-test module-definer-test ()
+define test test-define-module ()
   //---*** Fill this in...
-end macro-test module-definer-test;
+end test;
 
-define dylan macro-test variable-definer-test ()
+define test test-define-variable ()
   //---*** Fill this in...
-end macro-test variable-definer-test;
+end test;
 
-
-/// Dylan extension macros
-
-define dylan-extensions macro-test function-definer-test ()
-  //---*** Fill this in...
-end macro-test function-definer-test;
-
+define suite dylan-macros-test-suite ()
+  test test-begin;
+  test test-block;
+  test test-case;
+  test test-for;
+  test test-if;
+  test test-method;
+  test test-select;
+  test test-unless;
+  test test-until;
+  test test-while;
+  test test-colon-equal;
+  test test-or;
+  test test-and;
+  test test-define-class;
+  test test-define-constant;
+  test test-define-domain;
+  test test-define-generic;
+  test test-define-library;
+  test test-define-method;
+  test test-define-module;
+  test test-define-variable;
+end suite dylan-macros-test-suite;    
