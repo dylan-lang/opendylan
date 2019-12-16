@@ -4,8 +4,10 @@ Open Dylan 2019.2
 
 This document describes the 2019.2 release of Open Dylan, released DD
 MMM, 2019.  This release contains many enhancements and bug fixes, highlights
-of which are listed below.  For complete details see `the commit logs
-<https://github.com/dylan-lang/opendylan/compare/v2019.1.0...master>`_.
+of which are listed below.  For complete details see `the opendylan commit logs
+<https://github.com/dylan-lang/opendylan/compare/v2019.1.0...v2019.2.0>`_. (Note
+that some commit logs, for example for testworks and other libraries that are
+included in Open Dylan as git submodules, may be in other repositories.)
 
 * Download the release: http://opendylan.org/download
 * Read documentation: http://opendylan.org/documentation
@@ -144,6 +146,46 @@ c-ffi Library
 testworks Library
 -----------------
 
+* A new executable library, testworks-run, can be used to run any test library
+  compiled as a shared library. On Linux, ``testworks-run --load
+  libmy-test-library.so``.
+
+* The testworks-specs library has been folded into testworks and has been
+  greatly simplified. See `Interface Specification Suites
+  <https://opendylan.org/documentation/testworks/usage.html#interface-specification-suites>`_. Note
+  that the new specification suites no longer expect you to define one test per
+  exported name in your interface module. Instead you can write tests in
+  whatever way best suits your needs and the interface specification suite only
+  verifies that the specification matches the implementation.
+
+* A new function to has been added to retrieve a unique directory for the current test: 
+  `test-temp-directory
+  <https://opendylan.org/documentation/testworks/reference.html#testworks:testworks:test-temp-directory>`_
+
+* The `--report` command line option now accepts "full" as a value, meaning to
+  display individual assertion results in addition to the normal output.
+
+* The output for several assertions has been made less verbose.
+
+* Use ``--report json`` to generate reports in JSON format. These are much like
+  the XML reports but less verbose.
+
+* ``--report log`` has been removed. Use ``--report json`` or ``--report xml``
+  instead.
+
+* The `testworks-report` library has received some love and is now able to parse
+  json and xml reports.
+
+* An error is signalled if two tests are defined with the same name. (Note that
+  when using combined test suites, or using the ``--load`` testworks-run option
+  multiple times the names of **all** loaded tests and suites must be unique.)
+
+* When a test has no assertions it receives a "not implemented" result. This is
+  now considered to be a passing result rather than failing. The reasoning is
+  that "not implemented" should be a reminder to implement the test (so it is
+  still displayed prominently in the test output) but it should not obscure
+  real test failures in the results. Tests that fail constantly because they're
+  unimplemented are not very useful.
 
 collections Library
 -------------------
