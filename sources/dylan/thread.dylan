@@ -142,7 +142,9 @@ define function join-thread (thread1 :: <thread>, #rest more-threads)
         else signal-join-error(res, thread-vec);
         end if;
       end if;
-  apply(values, joined-thread, joined-thread.function-results);
+  let thread-values = joined-thread.function-results;
+  joined-thread.function-results := #[]; // Drop references to prevent finalization reference cycles
+  apply(values, joined-thread, thread-values);
 end function join-thread;
 
 
