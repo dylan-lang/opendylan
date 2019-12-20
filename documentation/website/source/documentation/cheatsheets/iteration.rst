@@ -11,7 +11,7 @@ Simple iteration with ``while`` and ``until``
 
 .. raw:: html
 
-   <div class="row">
+   <div class="row-fluid">
      <div class="span6">
 
 .. code-block:: dylan

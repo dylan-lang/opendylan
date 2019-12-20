@@ -1,7 +1,16 @@
 .. raw:: html
 
-   <div class="row">
+   <div class="row-fluid">
+     <div class="span4">
+       <div class="well">
+	 <p>Dylan is a multi-paradigm functional and object-oriented programming language.
+	 It is dynamic while providing a programming model designed to support efficient
+	 machine code generation, including fine-grained control over dynamic and static
+	 behaviors.</p>
+       </div>
+     </div>
      <div class="span8">
+.. raw:: html
 
      <div id="code-carousel" class="carousel slide">
        <ol class="carousel-indicators">
@@ -81,14 +90,19 @@
        <a class="carousel-control left" href="#code-carousel" data-slide="prev">&lsaquo;</a>
        <a class="carousel-control right" href="#code-carousel" data-slide="next">&rsaquo;</a>
      </div>
-     <h2>Recent News</h2>
-
-     <div class="alert alert-block alert-info">
-       <p>Keep up to date by subscribing to our <a href="rss.xml">RSS
-       Feed <img src="_static/feed-icon-14x14.png" alt=""></a> or
-       joining our <a href="community/index.html#mailing-lists">mailing
-       lists</a>.</p>
      </div>
+
+   </div>
+   <div class="row-fluid">
+     <div class="span6">
+       <h2>Recent News</h2>
+
+       <div class="alert alert-block alert-info">
+         <p>Keep up to date by subscribing to our <a href="rss.xml">RSS
+         Feed <img src="_static/feed-icon-14x14.png" alt=""></a> or
+         joining our <a href="community/index.html#mailing-lists">mailing
+         lists</a>.</p>
+       </div>
 
 .. include:: news/recent.rst.inc
 
@@ -96,16 +110,8 @@
 
        <div class="pull-right"><a href="news/index.html">All news &raquo;</a></div>
      </div>
-     <div class="span4">
-
-     <div class="well">
-     <p>Dylan is a multi-paradigm functional and object-oriented programming language.
-     It is dynamic while providing a programming model designed to support efficient
-     machine code generation, including fine-grained control over dynamic and static
-     behaviors.</p>
-     </div>
-
-     <h2>Get Started</h2>
+     <div class="span6">
+       <h2>Get Started</h2>
 
 `Downloading Dylan </download/index.html>`_  is easy.
 Once downloaded, we recommend reading through `Introduction to Dylan <https://opendylan.org/documentation/intro-dylan/>`_ and exploring `some examples <https://github.com/dylan-lang/opendylan/tree/master/sources/examples>`_.
@@ -131,6 +137,7 @@ Dylan has a large amount of documentation available:
 .. raw:: html
 
      </div>
+     </div>
    </div>
 
 .. toctree::
@@ -144,3 +151,4 @@ Dylan has a large amount of documentation available:
    news/*/*/*/*
    community/gsoc/*
 
+.. -*- tab-width: 4 -*-

@@ -63,6 +63,10 @@ blockquote div p {
   body {
     padding-top: 30px;
   }
+  /* Make code font smaller */
+  #code-carousel pre {
+      font-size: smaller;
+  }
 }
 
 @media (max-width: 768px) {

@@ -4,7 +4,7 @@ News & Articles
 
 .. raw:: html
 
-   <div class="row">
+   <div class="row-fluid">
      <div class="span6">
 
      <h2>News</h2>
