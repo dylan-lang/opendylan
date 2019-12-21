@@ -116,7 +116,7 @@ Once downloaded, we recommend reading through `Introduction to Dylan <https://op
 
 Dylan has a large amount of documentation available:
 
-* `Introduction to Dylan <http://opendylan.org/documentation/intro-dylan/>`_:
+* `Introduction to Dylan <http://opendylan.org/documentation/intro-dylan/>`__:
    A tutorial written for those with solid programming
    experience in C++ or another object-oriented, static language. It
    provides a gentler introduction to Dylan than does the Dylan

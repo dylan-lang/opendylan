@@ -82,7 +82,7 @@ Installation on Unix
 Note that Unix versions only have a command-line compiler and no IDE.
 
 * All Unix platforms must have the Boehm GC and ``libunwind`` installed.
-For example, ``apt-get install libgc-dev libunwind-dev`` on Ubuntu.
+  For example, ``apt-get install libgc-dev libunwind-dev`` on Ubuntu.
 
 * The README file inside the tarball describes installation and basic
   usage. The easiest way is extracting the tarball in /opt.
