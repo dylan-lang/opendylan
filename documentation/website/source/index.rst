@@ -17,15 +17,15 @@
     slot owner :: <string>,
       init-keyword: owner:,
       init-value: "Northern Motors";
-  end class <vehicle>;
+  end;
 
   define class <car> (<vehicle>)
-  end class <car>;
+  end;
 
   define class <truck> (<vehicle>)
     slot capacity,
       required-init-keyword: tons:;
-  end class <truck>;
+  end;
 
 .. raw:: html
 
@@ -43,14 +43,14 @@
 
   define method tax
       (c :: <car>) => (tax-in-dollars :: <float>)
-    50.0;
-  end method;
+    50.0
+  end;
 
   define method tax
       (t :: <truck>) => (tax-in-dollars :: <float>)
     // standard vehicle tax plus $10/ton
-    next-method() + t.capacity * 10.0;
-  end method;
+    next-method() + t.capacity * 10.0
+  end;
 
 .. raw:: html
 
