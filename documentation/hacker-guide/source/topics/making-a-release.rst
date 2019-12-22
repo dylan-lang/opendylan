@@ -84,7 +84,9 @@ now here is a manual check-list.
 #. Write a news item and publish it on opendylan.org
 
    Copy from the previous one but don't feel the need to follow the exact same
-   template.  https://github.com/dylan-lang/website/tree/master/source/news
+   template. **Do** include the ``:Date:`` header as this is how articles get
+   included in the RSS feed.
+   https://github.com/dylan-lang/website/tree/master/source/news
 
 #. Announce the release
 
