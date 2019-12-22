@@ -112,7 +112,7 @@ Once downloaded, we recommend reading through `Introduction to Dylan <https://op
 
 .. raw:: html
 
-     <h2>Learn about Dylan</h2>
+     <h2>Learn Dylan</h2>
 
 Dylan has a large amount of documentation available:
 
