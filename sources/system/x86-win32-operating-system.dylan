@@ -1258,16 +1258,19 @@ end function;
 define function load-library
     (name :: <string>)
  => (module)
-  let module =
-    primitive-wrap-machine-word
-    (%call-c-function ("LoadLibraryA", c-modifiers: "__stdcall")
-       (lpName :: <raw-byte-string>)
-       => (handle :: <raw-c-pointer>)
-       (primitive-cast-raw-as-pointer(primitive-string-as-raw(name)))
-    end);
-
-  module
-
+  let module
+    = primitive-wrap-machine-word
+        (%call-c-function ("LoadLibraryA", c-modifiers: "__stdcall")
+             (lpName :: <raw-byte-string>)
+          => (handle :: <raw-c-pointer>)
+           (primitive-cast-raw-as-pointer(primitive-string-as-raw(name)))
+         end);
+  if (primitive-machine-word-not-equal?
+        (primitive-unwrap-machine-word(module), integer-as-raw(0)))
+    module
+  else
+    error("Library %s load failed: %s", name, win32-last-error-message());
+  end if
 end function;
 
 

@@ -559,7 +559,16 @@ define function load-library
 	     => (handle :: <raw-c-pointer>)
 	      (primitive-string-as-raw(name))
 	    end));
-  module
+  if (primitive-machine-word-not-equal?
+        (primitive-unwrap-machine-word(module), integer-as-raw(0)))
+    module
+  else
+    let errstr
+      = primitive-raw-as-string(%call-c-function ("dlerror")
+                                    () => (name :: <raw-byte-string>) ()
+                               end);
+    error("Library %s load failed: %s", name, errstr);
+  end if
 end function load-library;
 
 define function current-process-id
