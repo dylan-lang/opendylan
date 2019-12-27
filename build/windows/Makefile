@@ -261,7 +261,6 @@ TESTWORKS_SOURCE = $(LIB_DIRECTORY)\testworks
 TESTWORKS_REPORT_SOURCE = $(TESTWORKS_SOURCE)\report
 TESTWORKS_GUI_SOURCE = $(TESTWORKS_SOURCE)\gui
 TESTWORKS_TESTS_SOURCE = $(TESTWORKS_SOURCE)\tests
-TESTWORKS_SPECS_SOURCE = $(TESTWORKS_SOURCE)\specs
 TETRIS_SOURCE = $(DUIM_EXAMPLES_SOURCE)\tetris
 TETRIS_INSTALL_DIRECTORY = $(DUIM_EXAMPLES_INSTALL_DIRECTORY)\tetris
 TIC_TAC_TOE_SOURCE = $(DUIM_EXAMPLES_SOURCE)\tic-tac-toe
@@ -415,7 +414,6 @@ SQL_ODBC_DLL = $(RUNTIME_PREFIX)db
 STRINGS_DLL = $(RUNTIME_PREFIX)strings
 SYSTEM_DLL = $(RUNTIME_PREFIX)system
 TESTWORKS_DLL = $(RUNTIME_PREFIX)Testworks
-TESTWORKS_SPECS_DLL = $(RUNTIME_PREFIX)testworks-specs
 WIN32_COMMON_DLL = $(RUNTIME_PREFIX)w32cmn
 WIN32_CONTROLS_DLL = $(RUNTIME_PREFIX)w32ctl
 WIN32_DDE_DLL = $(RUNTIME_PREFIX)w32dde
@@ -486,7 +484,6 @@ NAMING_CLIENT = $(INSTALL_BIN_DIRECTORY)\$(NAMING_CLIENT_DLL).dll
 MIDI = $(INSTALL_BIN_DIRECTORY)\$(MIDI_DLL).dll
 
 TESTWORKS = $(INSTALL_BIN_DIRECTORY)/$(TESTWORKS_DLL).dll
-TESTWORKS_SPECS = $(INSTALL_BIN_DIRECTORY)\$(TESTWORKS_SPECS_DLL).dll
 TESTWORKS_GUI = $(INSTALL_BIN_DIRECTORY)\$(TESTWORKS_GUI_DLL).dll
 
 CORBA_DYLAN = $(BUILD_DIRECTORY)\corba-dylan\$(BUILD_MAKEFILE)
@@ -699,7 +696,6 @@ deuce: $(DEUCE)
 duim-deuce: $(DUIM_DEUCE)
 
 testworks: $(TESTWORKS)
-testworks-specs: $(TESTWORKS_SPECS)
 
 com: $(COM)
 ole-automation: $(OLE_AUTOMATION)
@@ -772,7 +768,7 @@ debugger: debugger-manager binary-manager coff-manager coff-debug devel-dbg-ui b
 duim-ole: duim-ole-container duim-ole-server duim-ole-control
 environment: deuce duim-deuce environment-commands environment-application-commands environment-internal-commands environment-server environment-tools environment-property-pages environment-deuce environment-project-wizard environment-profiler debugger-manager target-application binary-manager coff-manager interactive-downloader environment-debugger win32-environment with-splash-screen
 ole-libraries: com ole-server ole-automation ole-control-framework ole-container ole-dialogs
-testworks-libraries: testworks testworks-specs
+testworks-libraries: testworks
 user-libraries: dylan common-dylan c-ffi system collections io commands
 win32-libraries: win32-common win32-kernel win32-gdi win32-user win32-dde win32-dialog win32-controls win32-gl win32-glu win32-html-help win32-multimedia win32-registry win32-resources win32-rich-edit win32-version win32-shell
 remote-debugger: remote-nub debugger-server
@@ -841,7 +837,7 @@ channels-tests: $(CHANNELS_TESTS)
 dfmc-environment-test-suite: $(DFMC_ENVIRONMENT_TEST_SUITE)
 dfmc-environment-test-suite-app: $(DFMC_ENVIRONMENT_TEST_SUITE_APP)
 
-testworks-libraries: testworks testworks-specs
+testworks-libraries: testworks
 duim-test-suites: duim-test-suite-app duim-gui-test-suite win32-duim-gui-test-suite win32-duim-regression-test-suite
 test-suites: libraries-test-suite-app duim-test-suites
 pentium-test-suites: pentium-test-suite-app
@@ -1499,11 +1495,6 @@ $(TESTWORKS):
   $(ENSURE_SOURCES) testworks $(TESTWORKS_SOURCE)
   $(BUILD_RUNTIME_LIBRARY) testworks $(TESTWORKS_DLL)
 
-$(TESTWORKS_SPECS):
-  $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
-  $(ENSURE_SOURCES) testworks-specs $(TESTWORKS_SPECS_SOURCE)
-  $(BUILD_RUNTIME_LIBRARY) testworks-specs $(TESTWORKS_SPECS_DLL)
-
 #
 # Compiler
 #
@@ -2021,7 +2012,7 @@ $(MAKE_DYLAN_APP):
 
 $(DYLAN_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
-  $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_SPECS_DLL) testworks-specs
+  $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) dylan-test-suite $(DYLAN_TEST_SUITE_SOURCE)
   $(BUILD_LIBRARY) dylan-test-suite
 
@@ -2044,19 +2035,19 @@ $(COMMON_DYLAN_TEST_SUITE_APP):
 
 $(COLLECTIONS_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(COLLECTIONS_DLL) collections
-  $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_SPECS_DLL) testworks-specs
+  $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) colletions-tests $(COLLECTIONS_TESTS_SOURCE)
   $(BUILD_LIBRARY) collections-test-suite
 
 $(SYSTEM_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
-  $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_SPECS_DLL) testworks-specs
+  $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) system-test-suite $(SYSTEM_TESTS_SOURCE)
   $(BUILD_LIBRARY) system-test-suite  
 
 $(IO_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
-  $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_SPECS_DLL) testworks-specs
+  $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) io-test-suite $(IO_TESTS_SOURCE)
   $(BUILD_LIBRARY) io-test-suite
 
@@ -2118,7 +2109,7 @@ test-win32-libraries:
 
 $(DUIM_TEST_SUITE):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
-  $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_SPECS_DLL) testworks-specs
+  $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) duim-tests $(DUIM_TESTS_SOURCE)
   $(BUILD_LIBRARY) duim-test-suite
 
@@ -2150,7 +2141,7 @@ test-duim:
 # Deuce testing
 
 $(DEUCE_TEST_SUITE):
-  $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_SPECS_DLL) testworks-specs
+  $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_RUNTIME_LIBRARY) $(DEUCE_DLL) deuce
   $(ENSURE_SOURCES) deuce-tests $(DEUCE_TESTS_SOURCE)
   $(BUILD_LIBRARY) deuce-test-suite
