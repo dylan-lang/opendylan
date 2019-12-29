@@ -28,7 +28,6 @@ Open Proposals (under consideration)
 6    Standard      Draft      `Single File Libraries <dep-0006-single-file-library.html>`_  (`source <../_sources/proposals/dep-0006-single-file-library.rst.txt>`__)
 8    Standard      Draft      `Multi-line Strings <dep-0008-multi-line-strings.html>`_  (`source <../_sources/proposals/dep-0008-multi-line-strings.rst.txt>`__)
 10   Standard      Draft      `Defaulted Element Reference Syntax <dep-0010-element-otherwise.html>`_  (`source <../_sources/proposals/dep-0010-element-otherwise.rst.txt>`__)
-11   Standard      Draft      `Numeric Literal Syntax <dep-0011-numeric-literal-syntax.html>`_ (`source <../_sources/proposals/dep-0011-numeric-literal-syntax.rst.txt>`__)
 ==== ============= ========== =============================================
 
 
@@ -45,5 +44,5 @@ All Proposals by Number
 7    Standard      Draft      `Type-Safe Limited Collections <dep-0007-collection-type-safety.html>`_  (`source <../_sources/proposals/dep-0007-collection-type-safety.rst.txt>`__)
 8    Standard      Draft      `Multi-line Strings <dep-0008-multi-line-strings.html>`_  (`source <../_sources/proposals/dep-0008-multi-line-strings.rst.txt>`__)
 10   Standard      Draft      `Defaulted Element Reference Syntax <dep-0010-element-otherwise.html>`_  (`source <../_sources/proposals/dep-0010-element-otherwise.rst.txt>`__)
-11   Standard      Draft      `Numeric Literal Syntax <dep-0011-numeric-literal-syntax.html>`_ (`source <../_sources/proposals/dep-0011-numeric-literal-syntax.rst.txt>`__)
+11   Standard      Final      `Numeric Literal Syntax <dep-0011-numeric-literal-syntax.html>`_ (`source <../_sources/proposals/dep-0011-numeric-literal-syntax.rst.txt>`__)
 ==== ============= ========== =============================================
