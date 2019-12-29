@@ -155,9 +155,9 @@ define limited-array <object> (fill: #f);
 define method limited-array
     (of :: <type>, dimensions :: false-or(<sequence>)) => (type :: <type>)
   let concrete-class
-    = concrete-limited-vector-class(of);
+    = concrete-limited-array-class(of);
   let default-concrete-class
-    = <simple-element-type-vector>;
+    = <simple-element-type-array>;
   if (dimensions | concrete-class == default-concrete-class)
     let size = compute-size-from-dimensions(dimensions);
     make(<limited-array-type>,
