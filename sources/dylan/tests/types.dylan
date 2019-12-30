@@ -53,7 +53,7 @@ define test c3-linearization ()
   check-equal("C3 linearization paper example works", res, <editable-scrollable-pane>.all-superclasses)
 end;
 
-define test limited-is-limited (expected-failure?: #t)
+define test limited-is-limited ()
   let <integer-vector> = limited(<vector>, of: <integer>);
   let x = make(<integer-vector>, size: 10, fill: 10);
   check-instance?("x is an instance of object", <object>, x);
@@ -66,16 +66,23 @@ define test limited-is-limited (expected-failure?: #t)
                   limited(<vector>, size: 10), x);
   check-instance?("x is an instance of vector of integer with size 10",
                   limited(<vector>, of: <integer>, size: 10), x);
-  //---*** sadly, the following fails due to limited-vector being ill-defined
-  //       (look especially on the method in vector.dylan on of == <object>
-  //       and what happens if of == #f) - hannes (Jan 2012)
-  check-false("x is not instance of a vector with size 5",
-              instance?(x, limited(<vector>, size: 5)));
   check-false("x is not instance of a vector of float",
               instance?(x, limited(<vector>, of: <single-float>)));
   check-false("x is not instance of a vector of integer with size 5",
               instance?(x, limited(<vector>, of: <integer>, size: 5)));
 end;
+
+// Expected failure separated out from the above.
+define test limited-is-limited-failures
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1292")
+  let <integer-vector> = limited(<vector>, of: <integer>);
+  let x = make(<integer-vector>, size: 10, fill: 10);
+  //---*** sadly, the following fails due to limited-vector being ill-defined
+  //       (look especially on the method in vector.dylan on of == <object>
+  //       and what happens if of == #f) - hannes (Jan 2012)
+  check-false("x is not instance of a vector with size 5",
+              instance?(x, limited(<vector>, size: 5)));
+end test;
 
 define suite dylan-linearization-test-suite ()
   test pane-linearization;
@@ -85,4 +92,5 @@ define suite dylan-linearization-test-suite ()
   test editable-pane-linearization;
   test c3-linearization;
   test limited-is-limited;
-end;
+  test limited-is-limited-failures;
+end suite;

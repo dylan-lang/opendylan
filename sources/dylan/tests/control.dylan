@@ -107,20 +107,13 @@ define test test-rest-calls ()
               (method (x, #rest y) y end)(1, 2), #[2]);
 end test;
 
-define test test-keyword-calls (expected-failure?: #t)
+define test test-keyword-calls ()
   check-equal("one key no args call",
 	      (method (#key x) x end)(), #f);
   check-equal("one key defaulted no args call",
 	      (method (#key x = 0) x end)(), 0);
   check-equal("one key call supplied",
 	      (method (#key x) x end)(x: 1), 1);
-  check-condition("one key call wrong supplied", <error>,
-                  begin
-                    local method m (#key x) x end;
-                    // Stifle compiler warning we get if called directly.
-                    let methods = list(m);
-                    methods[0](y: 1)
-                  end);
   check-false("one key call wrong supplied but all-keys",
 	      (method (#key x, #all-keys) x end)(y: 1));
   check-equal("two key call first supplied",
@@ -131,11 +124,30 @@ define test test-keyword-calls (expected-failure?: #t)
 	      (method (#key x, y) x + y end)(x: 1, y: 2), 3);
 end test;
 
-define test test-rest-keyword-calls (expected-failure?: #t)
+define test test-keyword-calls-failure
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1293")
+  check-condition("one key call wrong supplied", <error>,
+                  begin
+                    local method m (#key x) x end;
+                    // Stifle compiler warning we get if called directly.
+                    let methods = list(m);
+                    methods[0](y: 1);
+                  end);
+end test;
+
+define test test-rest-keyword-calls ()
   check-equal("rest no key call no args",
 	      (method (#rest keys, #key) keys end)(), #[]);
   check-equal("rest one key call no args",
 	      (method (#rest keys, #key x) keys end)(), #[]);
+  check-equal("rest one key call one arg keys",
+	      (method (#rest keys, #key x) keys end)(x: 1), #[#"x", 1]);
+  check-equal("rest one key call one arg key",
+	      (method (#rest keys, #key x) x end)(x: 1), 1);
+end test;
+
+define test test-rest-keyword-calls-failure
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1293")
   check-condition("rest one key call one arg", <error>,
                   begin
                     local method m (#rest k, #key) k end;
@@ -143,10 +155,6 @@ define test test-rest-keyword-calls (expected-failure?: #t)
                     let methods = list(m);
                     methods[0](y: 1)
                   end);
-  check-equal("rest one key call one arg keys",
-	      (method (#rest keys, #key x) keys end)(x: 1), #[#"x", 1]);
-  check-equal("rest one key call one arg key",
-	      (method (#rest keys, #key x) x end)(x: 1), 1);
 end test;
 
 define test test-apply ()
@@ -372,7 +380,9 @@ define suite dylan-control-test-suite ()
   test test-required-calls;
   test test-rest-calls;
   test test-keyword-calls;
+  test test-keyword-calls-failure;
   test test-rest-keyword-calls;
+  test test-rest-keyword-calls-failure;
   test test-apply;
   test test-labels;
   test test-closures;
