@@ -329,7 +329,8 @@ define test test-wait-for-application-process ()
 end test;
 
 define test test-load-library ()
-  //---*** Fill this in...
+  assert-signals(<error>,
+                 load-library("does.not.exist"));
 end test;
 
 define test test-current-process-id ()

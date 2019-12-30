@@ -287,6 +287,14 @@ System library's operating-system module.
      Dylan objects within the shared library. Top level code within the library
      will be executed.
 
+     Load-time failures, for example due to missing files or
+     unsatisfied symbol dependencies, will cause an :drm:`<error>`
+     condition to be signaled.
+
+     .. note:: Dynamic loading of Dylan code is currently only
+               supported on non-Windows platforms using the LLVM
+               back-end, and on Windows using the HARP back-end.
+
 .. function:: login-name
 
    Returns as an instance of :drm:`<string>` the name of the user logged on
