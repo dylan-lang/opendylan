@@ -216,15 +216,10 @@ define interface-specification-suite byte-vector-specification-suite ()
   constant <byte> :: <type>;
   sealed instantiable class <byte-vector> (<vector>);
   open generic function copy-bytes
-    (<sequence>, <integer>, <sequence>, <integer>, <integer>)
- => ();
-  function byte-vector-fill
-    (<byte-vector>, <integer>, #"key", #"start", #"end")
- => ();
-  function byte-vector-ref
-    (<byte-vector>, <integer>) => (<integer>);
-  function byte-vector-ref-setter
-    (<integer>, <byte-vector>, <integer>) => (<integer>);
+    (<mutable-sequence>, <integer>, <sequence>, <integer>, <integer>) => ();
+  function byte-vector-fill (<byte-vector>, <object>, #"key", #"start", #"end") => ();
+  function byte-vector-ref (<byte-vector>, <integer>) => (<integer>);
+  function byte-vector-ref-setter (<integer>, <byte-vector>, <integer>) => (<integer>);
 end;
 
 define interface-specification-suite machine-words-specification-suite ()
