@@ -20,10 +20,13 @@ define function byte-vector-ref
 end function byte-vector-ref;
 
 define function byte-vector-ref-setter
-    (value, byte-vector :: <byte-vector>, index :: <integer>)
-  element(byte-vector, index) := value;
-end function byte-vector-ref-setter;
+    (value :: <integer>, byte-vector :: <byte-vector>, index :: <integer>) => (value :: <integer>)
+  element(byte-vector, index) := value
+end function;
 
+
+define sealed generic byte-vector-fill
+    (target :: <byte-vector>, value :: <object>, #key start, end: last) => ();
 
 define sealed method byte-vector-fill
     (target :: <byte-vector>, value :: <integer>,
@@ -44,10 +47,12 @@ define sealed method byte-vector-fill
 end method;
 
 //---*** It would sure be nice to have low-level run-time support for this
-define open generic copy-bytes (dst, dst-start, src, src-start, n) => ();
+define open generic copy-bytes
+    (dst :: <mutable-sequence>, dst-start :: <integer>,
+     src :: <sequence>, src-start :: <integer>, n :: <integer>) => ();
 
 define open method copy-bytes
-    (dst :: <sequence>, dst-start :: <integer>,
+    (dst :: <mutable-sequence>, dst-start :: <integer>,
      src :: <sequence>, src-start :: <integer>, n :: <integer>)
  => ()
   for (i :: <integer> from 0 below n)
