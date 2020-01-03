@@ -580,15 +580,6 @@ gc_teb_t current_gc_teb()
   return(gc_teb);
 }
 
-
-#define inside_tramp  (*current_gc_teb()).gc_teb_inside_tramp
-#define main_ap       (*current_gc_teb()).gc_teb_main_ap
-#define weak_awl_ap   (*current_gc_teb()).gc_teb_weak_awl_ap
-#define exact_awl_ap  (*current_gc_teb()).gc_teb_exact_awl_ap
-#define leaf_ap       (*current_gc_teb()).gc_teb_leaf_ap
-#define thread        (*current_gc_teb()).gc_teb_thread
-#define stack_root    (*current_gc_teb()).gc_teb_stack_root
-
 void *dylan__malloc__misc(size_t size)
 {
   return MMAllocMisc(size);
