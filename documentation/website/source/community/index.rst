@@ -1,6 +1,6 @@
 .. raw:: html
 
-  <div class="row">
+  <div class="row-fluid">
     <div class="span3 bs-docs-sidebar">
       <ul class="nav nav-list bs-docs-sidenav" data-spy="affix">
         <li><a href="#contribute"><i class="icon-chevron-right"></i> How to Contribute</a></li>
