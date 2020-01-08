@@ -8,7 +8,29 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// ---*** float formats
 /// ---*** performance
 
-define test short-test ()
+define macro iiop-test-definer
+  { define iiop-test ?:name (?options:*) ?test-body:body end }
+    => { define test ?name (?options)
+           block ()
+             // Test in native-endian mode
+             architecture-little-endian?() := $architecture-little-endian?;
+             ?test-body;
+             // Test in opposite-endian mode
+             architecture-little-endian?() := ~$architecture-little-endian?;
+             ?test-body;
+             // Test with a single stream
+             architecture-little-endian?() := $architecture-little-endian?;
+             *single-marshalling-stream*
+               := make(<marshalling-stream>, inner-stream: #f);
+             ?test-body;
+           cleanup
+             *single-marshalling-stream* := #f;
+             architecture-little-endian?() := $architecture-little-endian?;
+           end block;
+         end test }
+end macro;
+
+define iiop-test short-test ()
   check-marshalling("short1", corba/$short-typecode, 0);
   check-marshalling("short2", corba/$short-typecode, 1);
   check-marshalling("short3", corba/$short-typecode, -1);
@@ -18,9 +40,9 @@ define test short-test ()
   check-marshalling("short7", corba/$short-typecode, -256);
   check-marshalling("short8", corba/$short-typecode, 32767);
   check-marshalling("short9", corba/$short-typecode, -32768);
-end test;
+end iiop-test;
 
-define test long-test ()
+define iiop-test long-test ()
   check-marshalling("long1", corba/$long-typecode, 0);
   check-marshalling("long2", corba/$long-typecode, 1);
   check-marshalling("long3", corba/$long-typecode, -1);
@@ -32,27 +54,27 @@ define test long-test ()
   check-marshalling("long9", corba/$long-typecode, -32768);
   check-marshalling("long10", corba/$long-typecode, (2 ^ 31) - 1);
   check-marshalling("long11", corba/$long-typecode, -(2 ^ 31));
-end test;
+end iiop-test;
 
-define test unsigned-short-test ()
+define iiop-test unsigned-short-test ()
   check-marshalling("ushort1", corba/$unsigned-short-typecode, 0);
   check-marshalling("ushort2", corba/$unsigned-short-typecode, 1);
   check-marshalling("ushort3", corba/$unsigned-short-typecode, 255);
   check-marshalling("ushort4", corba/$unsigned-short-typecode, 256);
   check-marshalling("ushort5", corba/$unsigned-short-typecode, 32767);
   check-marshalling("ushort6", corba/$unsigned-short-typecode, 65535);
-end test;
+end iiop-test;
 
-define test unsigned-long-test ()
+define iiop-test unsigned-long-test ()
   check-marshalling("ulong1", corba/$unsigned-long-typecode, 0);
   check-marshalling("ulong2", corba/$unsigned-long-typecode, 1);
   check-marshalling("ulong3", corba/$unsigned-long-typecode, 255);
   check-marshalling("ulong4", corba/$unsigned-long-typecode, 256);
   check-marshalling("ulong5", corba/$unsigned-long-typecode, 32768);
   check-marshalling("ulong6", corba/$unsigned-long-typecode, (2 ^ 32) - 1);
-end test;
+end iiop-test;
 
-define test float-test ()
+define iiop-test float-test ()
   check-marshalling("float1", corba/$float-typecode, 0.0);
   check-marshalling("float2", corba/$float-typecode, 1.0);
   check-marshalling("float3", corba/$float-typecode, -1.0);
@@ -62,9 +84,9 @@ define test float-test ()
   check-marshalling("float7", corba/$float-typecode, -0.5);
   check-marshalling("float8", corba/$float-typecode, 1.0e10);
   check-marshalling("float9", corba/$float-typecode, 1.0e-10);
-end test;
+end iiop-test;
 
-define test double-test ()
+define iiop-test double-test ()
   check-marshalling("double1", corba/$double-typecode, 0.0d0);
   check-marshalling("double2", corba/$double-typecode, 1.0d0);
   check-marshalling("double3", corba/$double-typecode, -1.0d0);
@@ -76,35 +98,35 @@ define test double-test ()
   check-marshalling("double9", corba/$double-typecode, 1.0d-10);
   check-marshalling("double8", corba/$double-typecode, 1.0d100);
   check-marshalling("double9", corba/$double-typecode, 1.0d-100);
-end test;
+end iiop-test;
 
-define test boolean-test ()
+define iiop-test boolean-test ()
   check-marshalling("boolean1", corba/$boolean-typecode, #f);
   check-marshalling("boolean2", corba/$boolean-typecode, #t);
-end test;
+end iiop-test;
 
-define test char-test ()
+define iiop-test char-test ()
   check-marshalling("char1", corba/$char-typecode, 'a');
   check-marshalling("char2", corba/$char-typecode, 'z');
   check-marshalling("char3", corba/$char-typecode, '\'');
   check-marshalling("char3", corba/$char-typecode, '\t');
   check-marshalling("char4", corba/$char-typecode, '\<00>');
   check-marshalling("char5", corba/$char-typecode, '\<ff>');
-end test;
+end iiop-test;
 
-define test octet-test ()
+define iiop-test octet-test ()
   check-marshalling("octet1", corba/$octet-typecode, 0);
   check-marshalling("octet2", corba/$octet-typecode, 1);
   check-marshalling("octet3", corba/$octet-typecode, 255);
-end test;
+end iiop-test;
 
-define test string-test ()
+define iiop-test string-test ()
   check-marshalling("string1", corba/$string-typecode, "");
   check-marshalling("string2", corba/$string-typecode, "a");
   check-marshalling("string3", corba/$string-typecode, "hello world");
-end test;
+end iiop-test;
 
-define test enum-test ()
+define iiop-test enum-test ()
   check-marshalling("enum1", class-typecode(corba/<completion-status>), #"completed-yes");
   check-marshalling("enum2", class-typecode(corba/<completion-status>), #"completed-no");
   check-marshalling("enum3", class-typecode(corba/<completion-status>), #"completed-maybe");
@@ -120,9 +142,9 @@ define test enum-test ()
   check-marshalling("enum13", class-typecode(<planet>), #"Uranus");
   check-marshalling("enum13", class-typecode(<planet>), #"Neptune");
   check-marshalling("enum13", class-typecode(<planet>), #"Pluto");
-end test;
+end iiop-test;
 
-define test sequence-test ()
+define iiop-test sequence-test ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let type1 = corba/orb/create-sequence-tc(orb, 0, corba/$short-typecode);
   let seq1 = make(corba/<sequence>);
@@ -141,9 +163,9 @@ define test sequence-test ()
   let seq3 = make(corba/<sequence>);
   add!(seq3, seq1);
   check-marshalling("sequence5", type3, seq3);
-end test;
+end iiop-test;
 
-define test array-test ()
+define iiop-test array-test ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let type1 = corba/orb/create-array-tc(orb, 2, corba/$long-typecode);
   let arr1 = make(corba/<array>, dimensions: list(2), fill: 1);
@@ -157,9 +179,9 @@ define test array-test ()
   let type4 = corba/orb/create-array-tc(orb, 5, type3);
   let arr4 = make(corba/<array>, dimensions: list(2, 3, 4, 5), fill: 4);
   check-marshalling("array4", type4, arr4);
-end test;
+end iiop-test;
 
-define test struct-test ()
+define iiop-test struct-test ()
   let type1 = class-typecode(<structure>);
   let struct1 = make(<structure>, name: "foo", info: 1);
   check-marshalling("struct1",
@@ -179,18 +201,18 @@ define test struct-test ()
 				  end method,
 				  seq)
 			    end method)
-end test;
+end iiop-test;
 
-define test exception-test ()
+define iiop-test exception-test ()
   let type1 = class-typecode(corba/<unknown>);
   let excep1 = make(corba/<unknown>, minor: 99, completed: #"completed-maybe");
   check-marshalling("exception1",
 		    type1,
 		    excep1,
 		    coerce: curry(as, corba/<unknown>));
-end test;
+end iiop-test;
 
-define test union-test ()
+define iiop-test union-test ()
   let type1 = class-typecode(<RLE-Entity-1>);
   let union1 = make(<RLE-Entity-1>, discriminator: 2, value: 'a');
   check-marshalling("union1",
@@ -212,13 +234,13 @@ define test union-test ()
 		    type1,
 		    union4,
 		    coerce: curry(as, <RLE-Entity-1>));
-end test;
+end iiop-test;
 
-define test indirection-test ()
+define iiop-test indirection-test ()
   check-marshalling("indirection1", class-typecode(<tree>), $a-tree, test: tree-equal?);
-end test;
+end iiop-test;
 
-define test empty-typecode-tests ()
+define iiop-test empty-typecode-tests ()
   check-marshalling("short-typecode", corba/$typecode-typecode, corba/$short-typecode);
   check-marshalling("long-typecode", corba/$typecode-typecode, corba/$long-typecode);
   check-marshalling("unsigned-short-typecode", corba/$typecode-typecode, corba/$unsigned-short-typecode);
@@ -231,9 +253,9 @@ define test empty-typecode-tests ()
   check-marshalling("typecode-typecode", corba/$typecode-typecode, corba/$typecode-typecode);
   check-marshalling("principal-typecode", corba/$typecode-typecode, corba/$principal-typecode);
   check-marshalling("string-typecode", corba/$typecode-typecode, corba/$string-typecode);
-end test;
+end iiop-test;
 
-define test complex-typecode-tests ()
+define iiop-test complex-typecode-tests ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   check-marshalling("object-typecode",
 		    corba/$typecode-typecode,
@@ -265,9 +287,9 @@ define test complex-typecode-tests ()
 //  check-marshalling("indirection-typecode",
 //		    corba/$typecode-typecode,
 //		    make(<indirection-typecode>, nesting: 0));
-end test;
+end iiop-test;
 
-define test basic-any-tests ()
+define iiop-test basic-any-tests ()
   check-marshalling("any1", corba/$any-typecode, make(corba/<any>, type: corba/$short-typecode, value: -17));
   check-marshalling("any2", corba/$any-typecode, make(corba/<any>, type: corba/$long-typecode, value: -30000));
   check-marshalling("any3", corba/$any-typecode, make(corba/<any>, type: corba/$unsigned-short-typecode, value: 13));
@@ -278,9 +300,9 @@ define test basic-any-tests ()
   check-marshalling("any8", corba/$any-typecode, make(corba/<any>, type: corba/$char-typecode, value: 'J'));
   check-marshalling("any9", corba/$any-typecode, make(corba/<any>, type: corba/$octet-typecode, value: #o007));
   check-marshalling("any10", corba/$any-typecode, make(corba/<any>, type: corba/$string-typecode, value: "hello world"));
-end test;
+end iiop-test;
 
-define test constructed-any-tests ()
+define iiop-test constructed-any-tests ()
   let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let type1 = class-typecode(corba/<completion-status>);
   let enum1 = #"completed-maybe";
@@ -319,7 +341,7 @@ define test constructed-any-tests ()
 		    test: method (any1, any2)
 			    as(<RLE-Entity-1>, any1) = as(<RLE-Entity-1>, any2)
 			  end method);
-end test;
+end iiop-test;
 
 define suite basic-iiop-tests ()
   test short-test;
@@ -358,41 +380,12 @@ end suite;
 //  test basic-object-tests;
 //end suite;
 
-define suite common-iiop-tests ()
+define suite iiop-tests ()
   suite basic-iiop-tests;
   suite constructed-iiop-tests;
   suite typecode-iiop-tests;
-  suite any-iiop-tests;  
+  suite any-iiop-tests;
 //  suite object-iiop-tests;
 //  suite ior-parsing-tests;
 //  suite error-iiop-tests;
-end suite;
-
-define suite little-endian-iiop-tests (setup-function: method ()
-							 architecture-little-endian?() := #t
-						       end method)
-  suite common-iiop-tests;
-end suite;
-
-define suite big-endian-iiop-tests (setup-function: method ()
-						      architecture-little-endian?() := #f
-						    end method)
-  suite common-iiop-tests;
-end suite;
-
-define suite single-stream-iiop-tests (setup-function: method ()
-							 architecture-little-endian?() := #t;
-							 *single-marshalling-stream*
-							   := make(<marshalling-stream>, inner-stream: #f);
-						       end method,
-				       cleanup-function: method ()
-							   *single-marshalling-stream* := #f
-							 end method)
-  suite common-iiop-tests;
-end suite;
-
-define suite iiop-tests ()
-  suite little-endian-iiop-tests;
-  suite big-endian-iiop-tests;
-  suite single-stream-iiop-tests;
 end suite;

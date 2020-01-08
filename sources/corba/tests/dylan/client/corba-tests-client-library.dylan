@@ -11,6 +11,7 @@ define library corba-tests-client
   use big-integers;
   use dylan-orb;
   use io;
+  use system;
   use testworks;
   use corba-tests-utilities;
   use corba-tests-protocol;

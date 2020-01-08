@@ -158,6 +158,7 @@ define module corba-tests-client
                                 // <marshalling-stream>, marshall,
                                 // unmarshall,
                                 // architecture-little-endian?
+  use operating-system;
   use testworks;
   use corba-tests-utilities;
   use any-client;
