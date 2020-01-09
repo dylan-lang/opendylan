@@ -22,7 +22,7 @@ define function find-file-in-path(path :: <sequence>, filename :: <string>)
     for (dir in path)
       let fullname = merge-locators(as(<file-locator>, filename),
                                     as(<directory-locator>, dir));
-      if (file-exists?(fullname) & file-type(fullname) = #"file")
+      if (file-exists?(fullname) & file-type(fullname) ~== #"directory")
         return(fullname);
       end if;
     end for;
@@ -900,7 +900,7 @@ define method read-cpp-include (stream :: <cpp-stream>)
     <ordinary-filename> =>
       push(stream.inner-stream-stack, stream.inner-stream);
       let file = filename.dylan-value;
-      if (~ (file-exists?(file) & file-type(file) = #"file"))
+      if (~file-exists?(file) | file-type(file) == #"directory")
         file := find-file-in-path(*cpp-include-path*, filename.dylan-value);
         unless (file)
           signal(make(<file-does-not-exist-error>,

@@ -117,6 +117,11 @@ int system_stat(const char* path, struct stat* buf)
   return stat(path, buf);
 }
 
+int system_lstat(const char* path, struct stat* buf)
+{
+  return lstat(path, buf);
+}
+
 const char* unix_tmpdir(void)
 {
   const char* tmpdir = getenv("TMPDIR");

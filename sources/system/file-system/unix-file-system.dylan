@@ -102,7 +102,7 @@ define function %file-type
   let file = %expand-pathname(file);
   with-stack-stat (st, file)
     if (primitive-raw-as-boolean
-          (%call-c-function ("lstat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
+          (%call-c-function ("system_lstat") (path :: <raw-byte-string>, st :: <raw-c-pointer>)
             => (failed? :: <raw-c-signed-int>)
              (primitive-string-as-raw(as(<byte-string>, file)),
               primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(st)))
