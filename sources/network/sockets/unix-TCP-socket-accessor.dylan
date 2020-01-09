@@ -36,20 +36,24 @@ end method;
 define method accessor-accept
     (server-socket :: <platform-server-socket>)
  => (connected-socket-descriptor :: <accessor-socket-descriptor>)
-  with-cleared-stack-structure (inaddr :: <LPSOCKADDR-IN>)
-    let addr = pointer-cast(<LPSOCKADDR>, inaddr);
-    with-stack-structure (size-pointer :: <C-int*>)
-      pointer-value(size-pointer) := size-of(<SOCKADDR-IN>);
-      let connected-socket-descriptor =
-        interruptible-system-call(unix-accept
-                                    (server-socket.socket-descriptor,
-                                     addr, size-pointer));
-      if (connected-socket-descriptor = $INVALID-SOCKET)
-        unix-socket-error("unix-accept");
-      end if;
-      connected-socket-descriptor
-    end with-stack-structure
-  end with-cleared-stack-structure
+  if (server-socket.socket-descriptor)
+    with-cleared-stack-structure (inaddr :: <LPSOCKADDR-IN>)
+      let addr = pointer-cast(<LPSOCKADDR>, inaddr);
+      with-stack-structure (size-pointer :: <C-int*>)
+        pointer-value(size-pointer) := size-of(<SOCKADDR-IN>);
+        let connected-socket-descriptor
+          = interruptible-system-call(unix-accept
+                                        (server-socket.socket-descriptor,
+                                         addr, size-pointer));
+        if (connected-socket-descriptor = $INVALID-SOCKET)
+          unix-socket-error("unix-accept");
+        end if;
+        connected-socket-descriptor
+      end with-stack-structure
+    end with-cleared-stack-structure
+  else
+    error(make(<socket-closed>, socket: server-socket));
+  end if
 end method;
 
 // TCP stream accessor protocol

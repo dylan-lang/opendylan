@@ -637,7 +637,7 @@ end method;
 
 define method accessor-shutdown
     (the-descriptor :: <accessor-socket-descriptor>) => ();
-  let shutdown-result = shutdown(the-descriptor, $SHUT-WR); // TODO: Why?
+  let shutdown-result = shutdown(the-descriptor, $SHUT-RDWR);
   if (shutdown-result = $SOCKET-ERROR)
     unix-socket-error("unix-shutdown");
   end if;
