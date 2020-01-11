@@ -126,46 +126,17 @@ dylan_value primitive_wrap_machine_word(DMINT x) {
            (2, &KLmachine_wordGVKeW, 1, (dylan_value)x, 0, 0));
 }
 
-/*---*** NOTE: This is wrong!  It should make a <double-integer> */
-dylan_value primitive_wrap_abstract_integer(DMINT x) {
-  if (R(I(x)) != x) {
-    return(primitive_wrap_machine_word(x));
-  } else {
-    return(primitive_box_integer(x));
-  }
-}
-
-/*---*** NOTE: This is wrong!  It should make a <double-integer> */
-dylan_value primitive_wrap_unsigned_abstract_integer(DMINT x) {
-  if (R(I(x)) != x) {
-    return(primitive_wrap_machine_word(x));
-  } else {
-    return(primitive_box_integer(x));
-  }
-}
-
-/*---*** NOTE: This is wrong!  It should unwrap a <double-integer> */
-DMINT primitive_unwrap_abstract_integer(dylan_value x) {
-  if (BOOLASRAW(primitive_integerQ(x))) {
-    return(primitive_unbox_integer(x));
-  } else {
-    return(primitive_unwrap_machine_word(x));
-  }
-}
-
-/*---*** NOTE: Here's the correct implementation of the above three functions */
-#ifdef NOTYET
-#define HIGH_BITS 0xC0000000L
-#define HIGH_BITS_AND_SIGN 0xE0000000L
+#define HIGH_BITS          (~(DUMINT)0 << (sizeof(DUMINT) * 8 - 2))
+#define HIGH_BITS_AND_SIGN (~(DUMINT)0 << (sizeof(DUMINT) * 8 - 3))
 
 dylan_value primitive_wrap_abstract_integer(DMINT x) {
   DUMINT hs = (DUMINT)x & HIGH_BITS_AND_SIGN;
   if (hs != 0 && hs != HIGH_BITS_AND_SIGN) {
-    xd = primitive_allocate_filled
+    dylan_value xd = primitive_allocate_filled
            (3, &KLdouble_integerGVKeW, 2, (dylan_value)0, 0, 0);
-    (DBI)xd->low = (DUMINT)x;
+    ((dylan_double_integer *) xd)->low = (DUMINT)x;
     /* Propagate the sign of x through the high word of the <double-integer> */
-    (DBI)xd->high = (x < 0) ? -1 : 0;
+    ((dylan_double_integer *) xd)->high = (x < 0) ? -1 : 0;
     return(xd);
   } else {
     return(I(x));
@@ -173,12 +144,12 @@ dylan_value primitive_wrap_abstract_integer(DMINT x) {
 }
 
 dylan_value primitive_wrap_unsigned_abstract_integer(DMINT x) {
-  if ((DUMINT)x & HIGH_BITS != 0) {
+  if (((DUMINT)x & HIGH_BITS) != 0) {
     dylan_value xd = primitive_allocate_filled
              (3, &KLdouble_integerGVKeW, 2, (dylan_value)0, 0, 0);
     /* When x is treated as an unsigned value, the high word of the
        resulting <double-integer> will always be 0 */
-    (DBI)xd->low = (DUMINT)x;
+    ((dylan_double_integer *) xd)->low = (DUMINT)x;
     return(xd);
   } else {
     return(I(x));
@@ -191,10 +162,9 @@ DMINT primitive_unwrap_abstract_integer(dylan_value x) {
   } else {
     /* Native runtime will signal overflow if (DBI)x->high != 0 | != 1
        (See page 3 of "Integer and Machine integer primitives") */
-    return((DBI)x->low);
+    return(((dylan_double_integer *) x)->low);
   }
 }
-#endif
 
 DMINT primitive_machine_word_divide(DMINT x, DMINT y) {
   ldiv_t z = ldiv(x, y);

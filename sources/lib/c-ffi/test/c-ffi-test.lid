@@ -2,9 +2,11 @@ Library:      c-ffi-test
 Target-Type:  dll
 Author:       Peter Benson
 Files:        c-ffi-test-library
+              c-type-import
               tests
               tests-aux
 C-Source-Files: main.c
+                c-types.c
 C-Header-Files: main.h
 C-Libraries:    $(libcmt)
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

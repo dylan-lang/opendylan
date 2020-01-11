@@ -169,8 +169,8 @@ define constant <C-both-integer> :: <type> =
 
 define sealed inline method c-type-cast
     (type :: <C-both-integer>,
-     value :: type-union(<integer>, <machine-word>))
- => (value :: type-union(<integer>, <machine-word>))
+     value :: <ffi-integer-or-machine-word>)
+ => (value :: <ffi-integer-or-machine-word>)
   value
 end method c-type-cast;
 

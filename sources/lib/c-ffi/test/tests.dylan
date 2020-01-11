@@ -1245,6 +1245,7 @@ end;
 // top level test suite.
 
 define suite c-ffi-suite ()
+  test c-type-import;
   test variable-address-test;
   test c-struct-test;
   test c-function-test;
