@@ -306,7 +306,7 @@ end;
 /// ---------
 /// C string tests
 
-/// This just calls the c-callable function below
+/// This just calls the c-callable function in tests-aux
 define c-function c-string-value
   parameter str :: <C-string>;
   parameter offset :: <C-unsigned-int>;
@@ -314,18 +314,7 @@ define c-function c-string-value
   c-name: "c_string_value";
 end;
 
-/// Treat X as a C-string and return the OFFSETth element
-define c-callable-wrapper $c-string-value of
-    method (x :: <C-string>, offset :: <integer>) => (r :: <Character>);
-      pointer-value(x, index: offset);
-    end
-  parameter x :: <C-string>;
-  parameter offset :: <C-unsigned-int>;
-  result r :: <C-character>;
-  c-name: "c_string_value";
-end;
-
-/// This just calls the c-callable function below
+/// This just calls the c-callable function in tests-aux
 define c-function c-string-value-setter
   parameter new :: <C-character>;
   parameter str :: <C-string>;
@@ -333,21 +322,6 @@ define c-function c-string-value-setter
   result r :: <c-character>;
   c-name: "c_string_value_setter";
 end;
-
-/// Treat X as a C-string and set the OFFSETth element to NEW
-define c-callable-wrapper $c-string-value-setter of
-    method (new :: <character>,
-            x :: <C-string>,
-            offset :: <integer>) => (r :: <character>);
-      pointer-value(x, index: offset) := new;
-    end
-  parameter new :: <c-character>;
-  parameter x :: <C-string>;
-  parameter offset :: <C-unsigned-int>;
-  result r :: <C-character>;
-  c-name: "c_string_value_setter";
-end;
-
 
 /// check-a-c-string
 /// This set of tests modifies the string and accesses it through a
@@ -873,11 +847,7 @@ define method betty (a :: <integer>)
   a * a;
 end method;
 
-define c-callable-wrapper wilma of betty
-  parameter a :: <C-int>;
-  result r :: <C-int>;
-  c-name: "betty";
-end c-callable-wrapper;
+// wrapper is in tests-aux
 
 define c-function call-betty
   parameter a :: <c-int>;

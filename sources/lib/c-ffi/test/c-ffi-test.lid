@@ -3,6 +3,7 @@ Target-Type:  dll
 Author:       Peter Benson
 Files:        c-ffi-test-library
               tests
+              tests-aux
 C-Source-Files: main.c
 C-Header-Files: main.h
 C-Libraries:    $(libcmt)
