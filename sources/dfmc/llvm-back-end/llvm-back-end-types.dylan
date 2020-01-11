@@ -243,7 +243,7 @@ end method;
 define method llvm-reference-type
     (back-end :: <llvm-back-end>, o :: <&raw-struct-type>)
  => (type :: <llvm-type>);
-  let name = concatenate("struct.", o.^debug-name);
+  let name = concatenate("struct.", emit-name-internal(back-end, #f, o));
 
   // Locate the memoized type, if any, with that name
   let type-table = back-end.llvm-builder-module.llvm-type-table;
