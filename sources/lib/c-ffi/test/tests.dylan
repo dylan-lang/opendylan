@@ -941,6 +941,7 @@ define c-function ack-ack-slot-setter
   c-name: "ack_slot_set";
 end;
 
+/*
 define test bug-394 ()
   let dde :: <LPDDEACK> = make(<LPDDEACK>);
   // use c-struct setters and getters
@@ -978,6 +979,7 @@ define test bug-394 ()
   check-equal("by-value ack ack setter leaves value alone",
               fAck-value(dde), 1);
 end;
+*/
 
 //
 // -------------
@@ -1099,6 +1101,7 @@ end;
 //
 // -------------
 // tests for passing c structs by value
+/*
 define c-function OMGW-width
   parameter struct :: <OLEMENUGROUPWIDTHS>;
   parameter index :: <C-int>;
@@ -1203,9 +1206,11 @@ define test struct-by-value ()
                 OMGW-width(widths, i), i + 47);
   end;
 end;
+*/
 
 // test for nested structs by value. This is extracted from
 // a bug found while writing bindings for nanovg.
+/*
 define C-struct <color-components>
   slot color-components$r :: <C-float>;
   slot color-components$g :: <C-float>;
@@ -1234,7 +1239,7 @@ define test nested-structs-by-value ()
   let c = make(<NVGColor*>);
   process-nvg-color(c);
 end;
-
+*/
 
 // --------------
 // top level test suite.
@@ -1254,13 +1259,13 @@ define suite c-ffi-suite ()
   test bug-213;
   test bug-209;
   test bug-289;
-  test bug-394;
+  //test bug-394;
   test c-function-indirect;
   test c-dylan-object-test;
   test bug-393;
   test bug-414;
-  test struct-by-value;
-  test nested-structs-by-value;
+  //test struct-by-value;
+  //test nested-structs-by-value;
 end suite c-ffi-suite;
 
 /// The dylan top level for the tests
