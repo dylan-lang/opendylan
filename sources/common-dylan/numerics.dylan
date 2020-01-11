@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Integers
 
-define generic integer-length
+define open generic integer-length
     (integer :: <abstract-integer>) => (length :: <integer>);
 
 define method integer-length
