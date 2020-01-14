@@ -222,10 +222,12 @@ end runtime-primitive;
 
 
 define method op--wrap-big-abstract-integer
-    (be :: <harp-back-end>, dest :: <register>, raw :: <register>)
+    (be :: <harp-back-end>, dest :: <register>,
+     raw-low :: <register>, raw-high :: <register>)
   // call MM primitive
-  op--allocate-untraced(be, dest, 8, machine-word-class);
-  ins--st(be, raw, dest, 4);
+  op--allocate-untraced(be, dest, 12, double-integer-class);
+  ins--st(be, raw-low, dest, 4);
+  ins--st(be, raw-high, dest, 8);
 end method;
 
 
@@ -246,7 +248,7 @@ define runtime-primitive wrap-abstract-integer
   arg0 x;
   result result;
   tag bignum, done;
-  nreg tmp;
+  nreg tmp-low, tmp-high;
 
 
   ins--bgt(be, bignum, x, $biggest-fixnum);
@@ -256,8 +258,8 @@ define runtime-primitive wrap-abstract-integer
   ins--rts-and-drop(be, 0);
 
   ins--tag(be, bignum);
-  ins--move(be, tmp, x);
-  op--wrap-big-abstract-integer(be, result, tmp);
+  ins--aslx(be, tmp-low, tmp-high, x, 0); // sign-extend
+  op--wrap-big-abstract-integer(be, result, tmp-low, tmp-high);
   ins--bra(be, done);
 
 end runtime-primitive;
@@ -275,7 +277,7 @@ define runtime-primitive wrap-unsigned-abstract-integer
   arg0 x;
   result result;
   tag bignum, done;
-  nreg tmp;
+  nreg tmp-low, tmp-high;
 
   ins--bhi(be, bignum, x, $biggest-fixnum);
   op--taggify(be, result, x);
@@ -283,8 +285,9 @@ define runtime-primitive wrap-unsigned-abstract-integer
   ins--rts-and-drop(be, 0);
 
   ins--tag(be, bignum);
-  ins--move(be, tmp, x);
-  op--wrap-big-abstract-integer(be, result, tmp);
+  ins--move(be, tmp-low, x);
+  ins--move(be, tmp-high, 0);
+  op--wrap-big-abstract-integer(be, result, tmp-low, tmp-high);
   ins--bra(be, done);
 
 end runtime-primitive;

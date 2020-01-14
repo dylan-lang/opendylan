@@ -28,6 +28,7 @@ define internal-wrapper runtime-external raw-value-cell-class            = "<unt
 define internal-wrapper runtime-external raw-double-value-cell-class     = "<untraceable-double-value-cell>";
 
 define extensions-wrapper runtime-external machine-word-class = "<machine-word>";
+define extensions-wrapper runtime-external double-integer-class = "<double-integer>";
 
 define extensions-indirect runtime-external dispatch-profiling? = "*dispatch-profiling-enabled?*";
 define extensions-indirect runtime-external class-profiling? = "*class-profiling-enabled?*";
