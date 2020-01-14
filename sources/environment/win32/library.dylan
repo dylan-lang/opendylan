@@ -40,7 +40,6 @@ define library win32-environment
   use editor-deuce-backend;
 
   use source-control-manager;
-  use source-control-vss-backend;
 
   // Back-ends
   use dfmc-back-end-implementations;

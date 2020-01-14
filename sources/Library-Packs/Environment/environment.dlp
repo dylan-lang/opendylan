@@ -163,22 +163,6 @@
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32"/>
     </library>
-    <library name="source-control-vss-backend">
-      <sources location="environment/source-control/backends/vss">
-	<project>source-control-vss-backend.lid</project>
-      </sources>
-      <release product="Functional Developer" version="2.1" platform="x86-win32">
-	<binary file="source-control-vss-backend.dll">
-	  <merge>sourcesafetypelib</merge>
-	</binary>
-      </release>
-    </library>
-    <library name="sourcesafetypelib">
-      <sources location="environment/source-control/backends/vss/SourceSafeTypeLib">
-	<project>SourceSafeTypeLib.lid</project>
-      </sources>
-      <release product="Functional Developer" version="2.1" platform="x86-win32"/>
-    </library>
     <library name="debugger-manager">
       <sources location="runtime-manager/debugger-manager">
 	<project>debugger-manager.lid</project>
