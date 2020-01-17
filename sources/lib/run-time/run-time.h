@@ -965,31 +965,40 @@ extern dylan_value SLOT_VALUE(dylan_value object, DSINT position);
         (((DDBYTE*)&((((dylan_object*)object)->slots)[position]))[index] = \
            (new_value))
 
-#define REPEATED_DDFLT_SLOT_VALUE(object, base_position, position) \
-  (((DDFLT*)(((dylan_object*)object)->slots))[base_position + R(position)])
-#define REPEATED_DDFLT_SLOT_VALUE_SETTER(new_value, object, base_position, position) \
-  (((DDFLT*)(((dylan_object*)object)->slots))[base_position + R(position)] = (new_value))
+#define REPEATED_DDFLT_SLOT_VALUE(object, position, index) \
+        (((DDFLT*)&((((dylan_object*)object)->slots)[position]))[index])
+#define REPEATED_DDFLT_SLOT_VALUE_SETTER(new_value, object, position, index) \
+        (((DDFLT*)&((((dylan_object*)object)->slots)[position]))[index] = \
+           (new_value))
 
-#define REPEATED_DDWORD_SLOT_VALUE(object, base_position, position) \
-  (((DDWORD*)(((dylan_object*)object)->slots))[base_position + R(position)])
-#define REPEATED_DDWORD_SLOT_VALUE_SETTER(new_value, object, base_position, position) \
-  (((DDWORD*)(((dylan_object*)object)->slots))[base_position + R(position)] = (new_value))
-
+#define REPEATED_DDWORD_SLOT_VALUE(object, position, index) \
+        (((DDWORD*)&((((dylan_object*)object)->slots)[position]))[index])
+#define REPEATED_DDWORD_SLOT_VALUE_SETTER(new_value, object, position, index) \
+        (((DDWORD*)&((((dylan_object*)object)->slots)[position]))[index] = \
+           (new_value))
 
 #define REPEATED_DYLAN_VALUE_SLOT_VALUE_TAGGED(object, base_position, position) \
   ((((dylan_object*)object)->slots)[base_position + R(position)])
 #define REPEATED_DYLAN_VALUE_SLOT_VALUE_TAGGED_SETTER(new_value, object, base_position, position) \
   ((((dylan_object*)object)->slots)[base_position + R(position)] = (new_value))
 
-#define REPEATED_DWORD_SLOT_VALUE_TAGGED(object, base_position, position) \
-  (((DWORD*)(((dylan_object*)object)->slots))[base_position + R(position)])
-#define REPEATED_DWORD_SLOT_VALUE_TAGGED_SETTER(new_value, object, base_position, position) \
-  (((DWORD*)(((dylan_object*)object)->slots))[base_position + R(position)] = (new_value))
+#define REPEATED_DWORD_SLOT_VALUE_TAGGED(object, position, index)       \
+        (((DWORD*)&((((dylan_object*)object)->slots)[position]))[R(index)])
+#define REPEATED_DWORD_SLOT_VALUE_TAGGED_SETTER(new_value, object, position, index) \
+        (((DWORD*)&((((dylan_object*)object)->slots)[position]))[R(index)] = \
+           (new_value))
 
-#define REPEATED_DSFLT_SLOT_VALUE_TAGGED(object, base_position, position) \
-  (((DSFLT*)(((dylan_object*)object)->slots))[base_position + R(position)])
-#define REPEATED_DSFLT_SLOT_VALUE_TAGGED_SETTER(new_value, object, base_position, position) \
-  (((DSFLT*)(((dylan_object*)object)->slots))[base_position + R(position)] = (new_value))
+#define REPEATED_DSFLT_SLOT_VALUE_TAGGED(object, position, index) \
+        (((DSFLT*)&((((dylan_object*)object)->slots)[position]))[R(index)])
+#define REPEATED_DSFLT_SLOT_VALUE_TAGGED_SETTER(new_value, object, position, index) \
+        (((DSFLT*)&((((dylan_object*)object)->slots)[position]))[R(index)] = \
+           (new_value))
+
+#define REPEATED_DDFLT_SLOT_VALUE_TAGGED(object, position, index)       \
+        (((DDFLT*)&((((dylan_object*)object)->slots)[position]))[R(index)])
+#define REPEATED_DDFLT_SLOT_VALUE_TAGGED_SETTER(new_value, object, position, index) \
+        (((DDFLT*)&((((dylan_object*)object)->slots)[position]))[R(index)] = \
+           (new_value))
 
 /* SHOULD REMOVE BELOW */
 
@@ -1016,11 +1025,6 @@ extern dylan_value SLOT_VALUE(dylan_value object, DSINT position);
 #define REPEATED_DDBYTE_SLOT_VALUE_TAGGED_SETTER(new_value, object, position, index) \
         (((DDBYTE*)&((((dylan_object*)object)->slots)[position]))[R(index)] = \
            (new_value))
-
-#define REPEATED_DDFLT_SLOT_VALUE_TAGGED(object, base_position, position) \
-  (((DDFLT*)(((dylan_object*)object)->slots))[base_position + R(position)])
-#define REPEATED_DDFLT_SLOT_VALUE_TAGGED_SETTER(new_value, object, base_position, position) \
-  (((DDFLT*)(((dylan_object*)object)->slots))[base_position + R(position)] = (new_value))
 
 extern DSINT primitive_repeated_slot_offset(dylan_value x);
 extern dylan_value     primitive_repeated_slot_as_raw(dylan_value x, DSINT offset);
