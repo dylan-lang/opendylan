@@ -48,6 +48,9 @@ define method jam-target-build
   let target-final-command = make(<object-table>);
   let output-queue = make(<blocking-deque>);
   let targets-lock = make(<lock>);
+
+  let phases :: <integer> = 0;
+  let completed-phases :: <integer> = 0;
   let ok? = #f;
 
   local
@@ -299,6 +302,7 @@ define method jam-target-build
                          message: message,
                          targets: targets,
                          ignore?: action.action-ignore?);
+                phases := phases + 1;
 
                 // restore values
                 for(variable in variables, outer-value in outer-values)
@@ -372,12 +376,15 @@ define method jam-target-build
       end if;
     end method,
 
-    method execute-command (command :: <jam-action-command>) => ();
+    method execute-command
+        (command :: <jam-action-command>) => ();
       if (command.action-command-string)
         // Emit the message
         let message = command.action-command-message;
         if (message)
-          push-last(output-queue, curry(progress-callback, message));
+          let phase = with-lock (targets-lock) completed-phases end;
+          push-last(output-queue,
+                    curry(progress-callback, message, phase: phase));
         end if;
 
         // Run the action
@@ -392,7 +399,11 @@ define method jam-target-build
         // progress callback now.
         if (slot-initialized?(command, action-command-output-stream))
           let message = stream-contents(command.action-command-output-stream);
-          push-last(output-queue, curry(progress-callback, message));
+          if (status = 0)
+            push-last(output-queue, curry(progress-callback, message));
+          else
+            push-last(output-queue, curry(progress-callback, message, error?: #t));
+          end if;
         end if;
 
         with-lock (targets-lock)
@@ -426,6 +437,10 @@ define method jam-target-build
       for (target in command.action-command-targets)
         target.target-build-progress := #"done";
       end for;
+
+      if (command.action-command-string)
+        completed-phases := completed-phases + 1;
+      end;
 
       if (status ~= 0 & ~command.action-command-ignore?)
         let message
@@ -467,9 +482,22 @@ define method jam-target-build
     = make(<jam-action-command>,
            string: #f, message: #f, targets: #[], ignore?: #f);
   with-lock (targets-lock)
-    for (target in targets)
-      expand(target, sentinel-command)
-    end for;
+    let section-header
+      = with-output-to-string (s)
+          write(s, "Building targets:");
+          for (target in targets)
+            write-element(s, ' ');
+            write(s, target.target-name);
+
+            // Recursively expand commands and their dependencies,
+            // construct the action-command successor relationship,
+            // and count the total number of phases
+            expand(target, sentinel-command)
+          end for;
+          write(s, " within ");
+          write(s, as(<string>, working-directory()));
+        end;
+    progress-callback(section-header, phases: phases);
   end with-lock;
 
   // Process thunks posted to the output queue
