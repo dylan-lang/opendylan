@@ -273,37 +273,39 @@ define method split
           test :: <function> = \==,
           remove-if-empty? :: <boolean> = #f)
  => (parts :: <sequence>)
-  // Is there a function that does this already?
-  local method looking-at? (pattern :: <sequence>, big :: <sequence>,
-                            bpos :: <integer>)
-          block (return)
-            let len :: <integer> = big.size;
-            for (thing in pattern, pos from bpos)
-              if (pos >= len | ~test(thing, big[pos]))
-                return(#f)
-              end if;
-            end for;
-            #t
+  local
+    method looking-at? (big :: <sequence>, pattern :: <sequence>, bpos :: <integer>)
+      let blen :: <integer> = big.size;
+      let plen :: <integer> = pattern.size;
+      iterate loop (bpos :: <integer> = bpos, ppos :: <integer> = 0)
+        case
+          ppos >= plen => #t; // ran out of pattern
+          bpos >= blen => #f; // ran out of big
+          ~test(pattern[ppos], big[bpos]) => #f;
+          otherwise
+            => loop(bpos + 1, ppos + 1);
+        end
+      end
+    end method,
+    // TODO(cgay): use boyer-moore/kmp for strings.
+    method find-separator (seq :: <sequence>,
+                           bpos :: <integer>,
+                           epos :: false-or(<integer>))
+      // Note that this only splits on the separator sequence if it is
+      // entirely contained between the start and end positions.
+      let epos :: <integer> = epos | seq.size;
+      let max-separator-start :: <integer> = epos - separator.size;
+      iterate loop (seq-index :: <integer> = bpos)
+        if (seq-index <= max-separator-start)
+          if (looking-at?(seq, separator, seq-index))
+            values(seq-index, seq-index + separator.size)
+          else
+            loop(seq-index + 1)
           end
-        end method looking-at?;
-  // TODO(cgay): use boyer-moore/kmp for strings.
-  local method find-subseq (seq :: <sequence>,
-                            bpos :: <integer>,
-                            epos :: false-or(<integer>))
-          // Note that this only splits on the separator sequence if it is
-          // entirely contained between the start and end positions.
-          let epos :: <integer> = epos | seq.size;
-          let max-separator-start :: <integer> = epos - separator.size;
-          block (exit-loop)
-            for (seq-index from bpos to max-separator-start)
-              if (looking-at?(separator, seq, seq-index))
-                exit-loop(seq-index, seq-index + separator.size);
-              end;
-            end;
-            #f      // separator not found
-          end
-        end;
-  split(seq, find-subseq, start: start, end: epos, count: count,
+        end
+      end
+    end method;
+  split(seq, find-separator, start: start, end: epos, count: count,
         remove-if-empty?: remove-if-empty?)
 end method split;
 
