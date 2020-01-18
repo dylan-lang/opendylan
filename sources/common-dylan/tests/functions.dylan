@@ -366,7 +366,17 @@ define test test-split ()
     check-equal(fmt("split with test"),
                 split("a/", separator, test: \~==),
                 #["", "/"]);
+    check-equal(fmt("split with separator not found"),
+                split("abc", "x"),
+                #["abc"]);
   end for;
+
+  check-condition("split with empty separator signals?",
+                  <error>,
+                  split("abc", ""));
+  check-condition("split with splitter that returns same indices signals?",
+                  <error>,
+                  split("abc", method (_, bpos, _) values(bpos, bpos) end));
   check-equal("split with separator crossing start:",
               split("xxx one xxx two xxx", "xxx", start: 1),
               #["xx one ", " two ", ""]);

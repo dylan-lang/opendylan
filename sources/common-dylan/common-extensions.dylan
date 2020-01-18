@@ -203,19 +203,28 @@ define open generic split
           remove-if-empty? :: <boolean>)
  => (parts :: <sequence>);
 
-// This is in some sense the most basic method, since others can be
-// implemented in terms of it.  The 'separator' function must accept
-// three arguments: (1) the sequence in which to search for a
-// separator, (2) the start index in that sequence at which to begin
-// searching, and (3) the index at which to stop searching.  The
-// 'separator' function must return #f to indicate that no separator
-// was found, or two values: the start and end indices of the
-// separator in the given sequence.  The initial start and end
-// indices passed to the 'separator' function are the same as the
-// 'start' and 'end' arguments passed to this method.  The
-// 'separator' function should stay within the given bounds whenever
-// possible.  (In particular it may not always be possible when the
-// separator is a regex.)
+// This is in some sense the most basic method, since others can be implemented
+// in terms of it.  The 'separator' function must accept three arguments:
+//
+// (1) the sequence in which to search for a separator,
+// (2) the start index in that sequence at which to begin searching, and
+// (3) the index at which to stop searching (exclusive).
+//
+// The 'separator' function must return #f to indicate that no separator was
+// found, or two values:
+//
+// (1) the start index of the separator in the sequence and
+// (2) the index of the first element after the end of the separator.
+//
+// It is an error for the returned start and end indices to be equal since this
+// is equivalent to splitting on an empty separator, which is undefined.  It is
+// undefined what happens if the return values are outside the [start, end)
+// range passed to the separator function.
+//
+// The initial start and end indices passed to the separator function are the
+// same as the 'start' and 'end' arguments passed to this method.  The
+// 'separator' function should stay within the given bounds whenever possible.
+// (In particular it may not always be possible when the separator is a regex.)
 define method split
     (seq :: <sequence>, find-separator :: <function>,
      #key start :: <integer> = 0,
@@ -226,9 +235,14 @@ define method split
   reverse!(iterate loop (bpos :: <integer> = start,
                          parts :: <list> = #(),
                          nparts :: <integer> = 1)
-             let (sep-start, sep-end) = find-separator(seq, bpos, epos);
+             let (sep-start :: false-or(<integer>), sep-end :: false-or(<integer>))
+               = find-separator(seq, bpos, epos);
              if (sep-start & sep-end & (sep-end <= epos))
+               let sep-start :: <integer> = sep-start;
                let sep-end :: <integer> = sep-end;
+               if (sep-start == sep-end)
+                 error("cannot split on an empty separator. start = end = %d", sep-start);
+               end;
                let part = copy-sequence(seq, start: bpos, end: sep-start);
                if (remove-if-empty? & empty?(part))
                  loop(sep-end, parts, nparts)
