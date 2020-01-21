@@ -1129,7 +1129,7 @@ define method write-interface
     format(s, " * Description: %s\n", this.doc-string);
   end if;
   format(s, " */\n");
-  format(s, "define constant %s = type-union(<integer>, <machine-word>);\n", 
+  format(s, "define constant %s = <ffi-integer-or-machine-word>;\n", 
 	 this.dylan-name);
   for (member in this.members)
     format(s, "define constant %s = ",
