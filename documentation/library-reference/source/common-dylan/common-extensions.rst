@@ -670,7 +670,7 @@ The extensions are:
    :macrocall:
      .. code-block:: dylan
 
-       iterate *name* ({*argument* [ = *init-value* ]}*)
+       iterate *name* ({*argument* = *init-value*}*)
          [ *body* ]
        end [ iterate ]
 
