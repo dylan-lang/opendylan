@@ -2121,7 +2121,7 @@ define C-function FormatMessage
 end;
 
 define function win32-error-message
-    (error-code :: type-union(<integer>, <machine-word>))
+    (error-code :: <ffi-integer-or-machine-word>)
  => (message :: false-or(<byte-string>));
   let buf-size :: <integer> = 600;
   with-stack-structure (buffer :: <LPTSTR>, size: buf-size)

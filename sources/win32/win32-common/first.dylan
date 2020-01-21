@@ -30,8 +30,6 @@ define constant <ambiguous-short> =	// 16 bits, signed or unsigned
 
 
 // Dylan types corresponding to the builtin C types -- Probably should be in C-FFI?
-// Those type which are 32-bits wide also accept <machine-word> as the C-FFI will
-// return <machine-word> if needed for those types ...
 
 define constant <signed-char> = limited(<integer>, min: -#x80, max: #x7f);
 define constant <unsigned-char> = limited(<integer>, min: 0, max: #xff);
