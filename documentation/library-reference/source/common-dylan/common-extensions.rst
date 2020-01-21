@@ -650,18 +650,17 @@ The extensions are:
    :signature: integer-to-string *integer* #key *base* *size* *fill* => *string*
 
    :parameter integer: An instance of :drm:`<integer>`.
-   :parameter base: An instance of :drm:`<integer>`. Default value: 10.
-   :parameter size: An instance of :drm:`<integer>` or ``#f``. Default value: ``#f``.
-   :parameter fill: An instance of :drm:`<character>`. Default value: 0.
+   :parameter base: An instance of :drm:`<integer>` (default 10).
+   :parameter size: An instance of :drm:`<integer>` (default 0).
+   :parameter fill: An instance of :drm:`<character>` (default 0).
    :value string: An instance of :drm:`<byte-string>`.
 
    :description:
 
-     Returns a string representation of *integer* in the given *base*,
-     which must be between 2 and 36. The size of the string is
-     right-aligned to *size* if *size* is not ``#f``, and it is filled
-     with the *fill* character. If the string is already larger than
-     *size* then it is not truncated.
+     Returns a string representation of *integer* in the given *base*, which
+     must be between 2 and 36. The size of the string is right-aligned to
+     *size*, and it is filled with the *fill* character. If the string is
+     already larger than *size* then it is not truncated.
 
 .. macro:: iterate
    :statement:
