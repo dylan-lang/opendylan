@@ -152,17 +152,17 @@ define inline function make-dispid (#key offset :: <U16>,
   %logior(offset, %shift-left(as(<machine-word>, hi), 16));
 end;
 
-define inline function dispid-offset (dispid :: <machine-word>)
+define inline function dispid-offset (dispid :: <disp-id>)
  => (offset :: <U16>)
   as(<integer>, %logand(#xFFFF, dispid))
 end;
 
-define inline function dispid-nesting-level (dispid :: <machine-word>)
+define inline function dispid-nesting-level (dispid :: <disp-id>)
  => (nesting-level :: <U8>)
   logand(#x3F, as(<integer>, u%shift-right(dispid, 16)))
 end;
 
-define inline function dispid-function? (dispid :: <machine-word>)
+define inline function dispid-function? (dispid :: <disp-id>)
  => (function? :: <boolean>)
   %logbit?(29, dispid)
 end;

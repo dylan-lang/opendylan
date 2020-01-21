@@ -288,7 +288,7 @@ define method istream-write-integer( stream :: <LPSTREAM>,
 end method;
 
 define method istream-read-integer( stream :: <LPSTREAM> )
- => value :: type-union(<integer>,<machine-word>);
+ => value :: <ffi-integer>;
   let ( status, value, count ) = IStream/Read-integer( stream );
   check-istream-status(status, "IStream/Read-integer",
 		       stream, count, $long-size);

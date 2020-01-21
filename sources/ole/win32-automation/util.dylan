@@ -38,7 +38,7 @@ define C-pointer-type <TLIBATTR**>  => <LPTLIBATTR>;
 ignore(<LIBFLAGS>, <DESCKIND>, <VARFLAGS>, <TYPEFLAGS>, <FUNCFLAGS>);
 
 // Some foreign components have DISP IDs that don't fit in 30 bits.
-define constant <disp-id> = <ffi-integer>;
+define constant <disp-id> = <ffi-integer-or-machine-word>;
 
 
 // These need to be open generics because methods are also defined in the

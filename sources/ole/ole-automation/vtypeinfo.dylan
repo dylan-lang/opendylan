@@ -182,7 +182,7 @@ end method ITypeInfo/GetTypeAttr;
 define constant $first-vtable-member-id = #x4000;
 
 define method find-member (this :: <vtable-type-info>,
-			   memid :: <ffi-integer>)
+			   memid :: <disp-id>)
 	=> member :: false-or(<vtable-member-description>);
 
   let offset = dispid-offset(memid);
