@@ -124,6 +124,10 @@ common-dylan Library
 
 * The performance of the ``join`` method was improved.
 
+* The ``split`` function now signals an error when called with an empty
+  separator (e.g., the empty string) or with a separator function that
+  returns start/end indices that are equal.
+
 
 io Library
 ----------

@@ -203,19 +203,28 @@ define open generic split
           remove-if-empty? :: <boolean>)
  => (parts :: <sequence>);
 
-// This is in some sense the most basic method, since others can be
-// implemented in terms of it.  The 'separator' function must accept
-// three arguments: (1) the sequence in which to search for a
-// separator, (2) the start index in that sequence at which to begin
-// searching, and (3) the index at which to stop searching.  The
-// 'separator' function must return #f to indicate that no separator
-// was found, or two values: the start and end indices of the
-// separator in the given sequence.  The initial start and end
-// indices passed to the 'separator' function are the same as the
-// 'start' and 'end' arguments passed to this method.  The
-// 'separator' function should stay within the given bounds whenever
-// possible.  (In particular it may not always be possible when the
-// separator is a regex.)
+// This is in some sense the most basic method, since others can be implemented
+// in terms of it.  The 'separator' function must accept three arguments:
+//
+// (1) the sequence in which to search for a separator,
+// (2) the start index in that sequence at which to begin searching, and
+// (3) the index at which to stop searching (exclusive).
+//
+// The 'separator' function must return #f to indicate that no separator was
+// found, or two values:
+//
+// (1) the start index of the separator in the sequence and
+// (2) the index of the first element after the end of the separator.
+//
+// It is an error for the returned start and end indices to be equal since this
+// is equivalent to splitting on an empty separator, which is undefined.  It is
+// undefined what happens if the return values are outside the [start, end)
+// range passed to the separator function.
+//
+// The initial start and end indices passed to the separator function are the
+// same as the 'start' and 'end' arguments passed to this method.  The
+// 'separator' function should stay within the given bounds whenever possible.
+// (In particular it may not always be possible when the separator is a regex.)
 define method split
     (seq :: <sequence>, find-separator :: <function>,
      #key start :: <integer> = 0,
@@ -226,9 +235,14 @@ define method split
   reverse!(iterate loop (bpos :: <integer> = start,
                          parts :: <list> = #(),
                          nparts :: <integer> = 1)
-             let (sep-start, sep-end) = find-separator(seq, bpos, epos);
+             let (sep-start :: false-or(<integer>), sep-end :: false-or(<integer>))
+               = find-separator(seq, bpos, epos);
              if (sep-start & sep-end & (sep-end <= epos))
+               let sep-start :: <integer> = sep-start;
                let sep-end :: <integer> = sep-end;
+               if (sep-start == sep-end)
+                 error("cannot split on an empty separator. start = end = %d", sep-start);
+               end;
                let part = copy-sequence(seq, start: bpos, end: sep-start);
                if (remove-if-empty? & empty?(part))
                  loop(sep-end, parts, nparts)
@@ -259,37 +273,39 @@ define method split
           test :: <function> = \==,
           remove-if-empty? :: <boolean> = #f)
  => (parts :: <sequence>)
-  // Is there a function that does this already?
-  local method looking-at? (pattern :: <sequence>, big :: <sequence>,
-                            bpos :: <integer>)
-          block (return)
-            let len :: <integer> = big.size;
-            for (thing in pattern, pos from bpos)
-              if (pos >= len | ~test(thing, big[pos]))
-                return(#f)
-              end if;
-            end for;
-            #t
+  local
+    method looking-at? (big :: <sequence>, pattern :: <sequence>, bpos :: <integer>)
+      let blen :: <integer> = big.size;
+      let plen :: <integer> = pattern.size;
+      iterate loop (bpos :: <integer> = bpos, ppos :: <integer> = 0)
+        case
+          ppos >= plen => #t; // ran out of pattern
+          bpos >= blen => #f; // ran out of big
+          ~test(pattern[ppos], big[bpos]) => #f;
+          otherwise
+            => loop(bpos + 1, ppos + 1);
+        end
+      end
+    end method,
+    // TODO(cgay): use boyer-moore/kmp for strings.
+    method find-separator (seq :: <sequence>,
+                           bpos :: <integer>,
+                           epos :: false-or(<integer>))
+      // Note that this only splits on the separator sequence if it is
+      // entirely contained between the start and end positions.
+      let epos :: <integer> = epos | seq.size;
+      let max-separator-start :: <integer> = epos - separator.size;
+      iterate loop (seq-index :: <integer> = bpos)
+        if (seq-index <= max-separator-start)
+          if (looking-at?(seq, separator, seq-index))
+            values(seq-index, seq-index + separator.size)
+          else
+            loop(seq-index + 1)
           end
-        end method looking-at?;
-  // TODO(cgay): use boyer-moore/kmp for strings.
-  local method find-subseq (seq :: <sequence>,
-                            bpos :: <integer>,
-                            epos :: false-or(<integer>))
-          // Note that this only splits on the separator sequence if it is
-          // entirely contained between the start and end positions.
-          let epos :: <integer> = epos | seq.size;
-          let max-separator-start :: <integer> = epos - separator.size;
-          block (exit-loop)
-            for (seq-index from bpos to max-separator-start)
-              if (looking-at?(separator, seq, seq-index))
-                exit-loop(seq-index, seq-index + separator.size);
-              end;
-            end;
-            #f      // separator not found
-          end
-        end;
-  split(seq, find-subseq, start: start, end: epos, count: count,
+        end
+      end
+    end method;
+  split(seq, find-separator, start: start, end: epos, count: count,
         remove-if-empty?: remove-if-empty?)
 end method split;
 

@@ -366,7 +366,17 @@ define test test-split ()
     check-equal(fmt("split with test"),
                 split("a/", separator, test: \~==),
                 #["", "/"]);
+    check-equal(fmt("split with separator not found"),
+                split("abc", "x"),
+                #["abc"]);
   end for;
+
+  check-condition("split with empty separator signals?",
+                  <error>,
+                  split("abc", ""));
+  check-condition("split with splitter that returns same indices signals?",
+                  <error>,
+                  split("abc", method (_, bpos, _) values(bpos, bpos) end));
   check-equal("split with separator crossing start:",
               split("xxx one xxx two xxx", "xxx", start: 1),
               #["xx one ", " two ", ""]);
@@ -377,6 +387,27 @@ define test test-split ()
               split("xxx one xxx two xxx", "xxx", start: 1, end: 17),
               #["xx one ", " two x"]);
 end test;
+
+define benchmark benchmark-split ()
+  local
+    // Would be nice to provide this separator function in common-dylan, or to
+    // provide an easy way to make a separator function from
+    // strings/whitespace? or from a set of elements or...
+    method find-whitespace
+        (big :: <string>, bpos :: <integer>, epos :: <integer>)
+     => (bpos :: false-or(<integer>), _end :: false-or(<integer>))
+      iterate loop (pos = bpos, start = #f)
+        if (member?(big[pos], " \t"))
+          loop(pos + 1, pos)
+        elseif (start)
+          values(start, pos)
+        end                 // else values(#f, #f)
+      end
+    end method;
+  benchmark-repeat(iterations: 1000)
+    split("The quick brown fox jumps over the lazy dog.", find-whitespace);
+  end;
+end benchmark;
 
 define test test-join ()
   let abc = #("a", "b", "c");
