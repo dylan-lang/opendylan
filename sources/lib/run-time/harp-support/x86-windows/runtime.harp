@@ -12,6 +12,7 @@
 +++ external: "KLuntraceable_value_cellGVKiW" +++
 +++ external: "KLuntraceable_double_value_cellGVKiW" +++
 +++ external: "KLmachine_wordGVKeW" +++
++++ external: "KLdouble_integerGVKeW" +++
 +++ external: "Tdispatch_profiling_enabledQTVKe" +++
 +++ external: "Tclass_profiling_enabledQTVKe" +++
 +++ external: "KLobjectGVKd" +++
@@ -2498,12 +2499,12 @@ End scope at 20
   rem	"This is a dummy first basic block."
 
 #() [5->10] (level:0) is green with stack state before
-#({basic-block #() 10 15}, {basic-block #({tag 8:70}) 70 85})
-  bgt	{tag 8:70}, eax, 536870911
+#({basic-block #() 10 15}, {basic-block #({tag 8:75}) 75 90})
+  bgt	{tag 8:75}, eax, 536870911
 
 #() [10->15] (level:0) is green with stack state before
-#({basic-block #() 15 25}, {basic-block #({tag 8:70}) 70 85})
-  blt	{tag 8:70}, eax, -536870912
+#({basic-block #() 15 25}, {basic-block #({tag 8:75}) 75 90})
+  blt	{tag 8:75}, eax, -536870912
 
 #() [15->25] (level:0) is green with stack state before
 #({basic-block #({tag 2:25}) 25 25})
@@ -2517,47 +2518,50 @@ End scope at 20
 #()
   rts-and-drop	0
 
-#({tag 8:70}) [70->85] (level:0) is #f with stack state #f
-#({basic-block #({tag 3:30}) 65 65})
+#({tag 8:75}) [75->90] (level:0) is #f with stack state #f
+#({basic-block #({tag 3:30}) 70 70})
   preserve-registers-entry	
   allocate-local-area	
   allocate-raw-area	
 
-#({tag 3:30}) [65->65] (level:0) is brown with stack state with
+#({tag 3:30}) [70->70] (level:0) is brown with stack state with
 #({basic-block #({tag 3:30}, {tag 1:30}) 30 50})
 
 #({tag 3:30}, {tag 1:30}) [30->50] (level:0) is red with stack state with
-#({basic-block #() 50 65})
-  move	N0/edi, eax
-  push	{constant "KLmachine_wordGVKeW"}
-  push	8
+#({basic-block #() 50 70})
+  aslx	N0/NSPILL-0, N1/edi, eax, 0
+  push	{constant "KLdouble_integerGVKeW"}
+  push	12
   call-alien	{constant "_primitive_alloc_leaf"}, 0
 
-#() [50->65] (level:0) is red with stack state with
-#({basic-block #({tag 4:65}) 65 65})
+#() [50->70] (level:0) is red with stack state with
+#({basic-block #({tag 4:70}) 70 70})
   add	esp, esp, 8
   move	eax, eax
-  st	N0/edi, eax, 4
+  st	N0/NSPILL-0, eax, 4
+  st	N1/edi, eax, 8
 
-#({tag 4:65}) [65->65] (level:0) is yellow with stack state with
-#({basic-block #({tag 4:65}, {tag 5:65}) 65 65})
+#({tag 4:70}) [70->70] (level:0) is yellow with stack state with
+#({basic-block #({tag 4:70}, {tag 5:70}) 70 70})
 
-#({tag 4:65}, {tag 5:65}) [65->65] (level:0) is green with stack state with
-#({basic-block #({tag 5:65}, {tag 4:65}, {tag 7:65}) 65 70})
+#({tag 4:70}, {tag 5:70}) [70->70] (level:0) is green with stack state with
+#({basic-block #({tag 5:70}, {tag 4:70}, {tag 7:70}) 70 75})
 
-#({tag 5:65}, {tag 4:65}, {tag 7:65}) [65->70] (level:0) is #f with stack state #f
+#({tag 5:70}, {tag 4:70}, {tag 7:70}) [70->75] (level:0) is #f with stack state #f
 #({basic-block #({tag 2:25}, {tag 6:25}) 25 30})
   preserve-registers-exit	
 
-#() [85->90] (level:0) is #f with stack state #f
+#() [90->95] (level:0) is #f with stack state #f
 #()
   bra	{tag 2:25}
 
 +++ ending code for primitive_wrap_abstract_integer +++
 
++++ Frame sizes for primitive_wrap_abstract_integer: GC: 0, NC: 1 +++
+
 +++ Live variable scopes for primitive_wrap_abstract_integer +++
 Start scope at 24 with frame for no variables
-End scope at 44
+End scope at 57
 
 +++ No Source Code Locators for primitive_wrap_abstract_integer +++
 
@@ -2571,8 +2575,8 @@ End scope at 44
   rem	"This is a dummy first basic block."
 
 #() [5->10] (level:0) is green with stack state before
-#({basic-block #() 10 20}, {basic-block #({tag 8:65}) 65 80})
-  bhi	{tag 8:65}, eax, 536870911
+#({basic-block #() 10 20}, {basic-block #({tag 8:75}) 75 90})
+  bhi	{tag 8:75}, eax, 536870911
 
 #() [10->20] (level:0) is green with stack state before
 #({basic-block #({tag 2:20}) 20 20})
@@ -2586,47 +2590,51 @@ End scope at 44
 #()
   rts-and-drop	0
 
-#({tag 8:65}) [65->80] (level:0) is #f with stack state #f
-#({basic-block #({tag 3:25}) 60 60})
+#({tag 8:75}) [75->90] (level:0) is #f with stack state #f
+#({basic-block #({tag 3:25}) 70 70})
   preserve-registers-entry	
   allocate-local-area	
   allocate-raw-area	
 
-#({tag 3:25}) [60->60] (level:0) is brown with stack state with
-#({basic-block #({tag 3:25}, {tag 1:25}) 25 45})
+#({tag 3:25}) [70->70] (level:0) is brown with stack state with
+#({basic-block #({tag 3:25}, {tag 1:25}) 25 50})
 
-#({tag 3:25}, {tag 1:25}) [25->45] (level:0) is red with stack state with
-#({basic-block #() 45 60})
-  move	N0/edi, eax
-  push	{constant "KLmachine_wordGVKeW"}
-  push	8
+#({tag 3:25}, {tag 1:25}) [25->50] (level:0) is red with stack state with
+#({basic-block #() 50 70})
+  move	N0/NSPILL-0, eax
+  move	N1/edi, 0
+  push	{constant "KLdouble_integerGVKeW"}
+  push	12
   call-alien	{constant "_primitive_alloc_leaf"}, 0
 
-#() [45->60] (level:0) is red with stack state with
-#({basic-block #({tag 4:60}) 60 60})
+#() [50->70] (level:0) is red with stack state with
+#({basic-block #({tag 4:70}) 70 70})
   add	esp, esp, 8
   move	eax, eax
-  st	N0/edi, eax, 4
+  st	N0/NSPILL-0, eax, 4
+  st	N1/edi, eax, 8
 
-#({tag 4:60}) [60->60] (level:0) is yellow with stack state with
-#({basic-block #({tag 4:60}, {tag 5:60}) 60 60})
+#({tag 4:70}) [70->70] (level:0) is yellow with stack state with
+#({basic-block #({tag 4:70}, {tag 5:70}) 70 70})
 
-#({tag 4:60}, {tag 5:60}) [60->60] (level:0) is green with stack state with
-#({basic-block #({tag 5:60}, {tag 4:60}, {tag 7:60}) 60 65})
+#({tag 4:70}, {tag 5:70}) [70->70] (level:0) is green with stack state with
+#({basic-block #({tag 5:70}, {tag 4:70}, {tag 7:70}) 70 75})
 
-#({tag 5:60}, {tag 4:60}, {tag 7:60}) [60->65] (level:0) is #f with stack state #f
+#({tag 5:70}, {tag 4:70}, {tag 7:70}) [70->75] (level:0) is #f with stack state #f
 #({basic-block #({tag 2:20}, {tag 6:20}) 20 25})
   preserve-registers-exit	
 
-#() [80->85] (level:0) is #f with stack state #f
+#() [90->95] (level:0) is #f with stack state #f
 #()
   bra	{tag 2:20}
 
 +++ ending code for primitive_wrap_unsigned_abstract_integer +++
 
++++ Frame sizes for primitive_wrap_unsigned_abstract_integer: GC: 0, NC: 1 +++
+
 +++ Live variable scopes for primitive_wrap_unsigned_abstract_integer +++
 Start scope at 17 with frame for no variables
-End scope at 37
+End scope at 49
 
 +++ No Source Code Locators for primitive_wrap_unsigned_abstract_integer +++
 

@@ -21,8 +21,7 @@ define method make-GUID( L :: <U32>, w1 :: <U16>, w2 :: <U16>,
 			b5 :: <U8>, b6 :: <U8>, b7 :: <U8>, b8 :: <U8>)
 		 => value :: <REFGUID>;
   let ID :: <REFGUID> = make(<REFGUID>);
-  let lval :: <machine-word> = as(<machine-word>, L); // could be <double-integer>
-  ID.Data1-value := lval;
+  ID.Data1-value := L;
   ID.Data2-value := w1;
   ID.Data3-value := w2;
   Data4-array(ID, 0) := b1;

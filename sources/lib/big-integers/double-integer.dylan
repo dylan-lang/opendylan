@@ -48,6 +48,22 @@ $minimum-integer := make-<double-integer>($minimum-unsigned-machine-word,
 $maximum-integer := make-<double-integer>($maximum-unsigned-machine-word,
                                           $maximum-signed-machine-word);
 
+define sideways method integer-length
+    (integer :: <double-integer>) => (length :: dylan/<integer>);
+  let (low :: <machine-word>, high :: <machine-word>)
+    = if (negative?(integer))
+        values(machine-word-lognot(%double-integer-low(integer)),
+               machine-word-lognot(%double-integer-high(integer)))
+      else
+        values(%double-integer-low(integer),
+               %double-integer-high(integer))
+      end;
+  if (machine-word-equal?(high, coerce-integer-to-machine-word(0)))
+    dylan/-($machine-word-size, machine-word-count-high-zeros(low))
+  else
+    dylan/*(2, dylan/-($machine-word-size, machine-word-count-high-zeros(high)))
+  end if
+end method;
 
 /// <float>/<double-integer> Conversions
 define sealed sideways inline method as (class == <single-float>, x :: <double-integer>)

@@ -30,6 +30,12 @@ define method as (class == <abstract-integer>, number :: <number>)
   as(<integer>, number)
 end method as;
 
+define sealed inline method as
+    (class == <abstract-integer>, integer :: <abstract-integer>)
+ => (integer :: <abstract-integer>)
+  integer
+end method;
+
 define sealed inline method as (t == <abstract-integer>, x :: <machine-word>)
  => (result :: <abstract-integer>)
   coerce-machine-word-to-abstract-integer(x)

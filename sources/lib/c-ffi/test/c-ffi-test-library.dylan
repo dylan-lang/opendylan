@@ -9,6 +9,7 @@ define library c-ffi-test
   use dylan;
   use common-dylan;
   use c-ffi;
+  use big-integers;
   use testworks;
 
   export c-ffi-test

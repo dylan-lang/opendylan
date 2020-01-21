@@ -183,7 +183,7 @@ define module c-ffi-interface
     log-entry,
     log-exit,
 
-    <ffi-integer>
+    <ffi-integer>, <ffi-integer-or-machine-word>
     ;
 end module;
 

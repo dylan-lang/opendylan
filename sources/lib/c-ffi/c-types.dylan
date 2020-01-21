@@ -4,11 +4,8 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-
-// This should really be <abstract-integer>, but until the ffi is fixed...
-
-define constant <ffi-integer> = type-union(<integer>, <machine-word>);
-
+define constant <ffi-integer> = <abstract-integer>;
+define constant <ffi-integer-or-machine-word> = type-union(<ffi-integer>, <machine-word>);
 
 define macro aliased-designators-definer
   { define aliased-designators ?alias-base:name ?existing-base:name }
@@ -50,7 +47,8 @@ define open simple-c-mapped-subtype "<C-" ## ?base-name ## ">"
       method (x :: <machine-word>) => (i :: <ffi-integer>);
         check-import-range
           (x, size-of("<C-raw-"## ?base-name ## ">"), ?#"signedness");
-        as(<abstract-integer>, x)
+        import-from-machine-word
+          (x, size-of("<C-raw-"## ?base-name ## ">"), ?#"signedness")
       end;
   pointer-type "<C-" ## ?base-name ## "*>";
 end;
@@ -65,25 +63,26 @@ define open simple-c-mapped-subtype "<C-unsafe-" ## ?base-name ## ">"
   import-map <ffi-integer>,
     import-function:
       method (x :: <machine-word>) => (i :: <ffi-integer>);
-        as(<abstract-integer>, x);
+        import-from-machine-word
+          (x, size-of("<C-raw-"## ?base-name ## ">"), ?#"signedness")
       end;
   pointer-type "<C-unsafe-" ## ?base-name ##"*>";
 end;
 
 define open simple-c-mapped-subtype "<C-both-" ## ?base-name ## ">"
   ("<C-raw-" ## ?base-name ## ">")
-  map <ffi-integer>,
-    export-function: method (x :: <ffi-integer>)
-                      => (m :: <machine-word>);
-                       export-to-machine-word
-                         (x, size-of("<C-raw-" ## ?base-name ## ">"),
-                                              ?#"signedness");
-                     end,
+  map <ffi-integer-or-machine-word>,
+    export-function:
+      method (x :: <ffi-integer-or-machine-word>) => (m :: <machine-word>);
+        export-to-machine-word
+          (x, size-of("<C-raw-" ## ?base-name ## ">"), ?#"signedness")
+      end,
     import-function:
       method (x :: <machine-word>) => (i :: <ffi-integer>);
         check-import-range
           (x, size-of("<C-raw-" ## ?base-name ## ">"), ?#"signedness");
-        as(<abstract-integer>, x);
+        import-from-machine-word
+          (x, size-of("<C-raw-"## ?base-name ## ">"), ?#"signedness")
       end;
   pointer-type "<C-both-" ## ?base-name ## "*>";
 end;
@@ -119,7 +118,7 @@ define constant <C-raw-long*> = <C-raw-signed-long*>;
 define constant <C-raw-short*> = <C-raw-signed-short*>;
 
 
-define inline method export-to-machine-word (thing :: <integer>,
+define inline method export-to-machine-word (thing :: <ffi-integer>,
                                              size :: <integer>,
                                              signedness :: <symbol>)
  => (m :: <machine-word>);
@@ -133,6 +132,17 @@ define inline method export-to-machine-word (thing :: <machine-word>,
  => (m :: <machine-word>);
   check-export-range(thing, size, signedness);
   thing
+end;
+
+define inline method import-from-machine-word
+    (x :: <machine-word>, size :: <integer>, signedness == #"signed")
+  let shift = $machine-word-size - size * 8;
+  as(<abstract-integer>, %shift-right(%shift-left(x, shift), shift))
+end;
+
+define inline method import-from-machine-word
+    (x :: <machine-word>, size :: <integer>, signedness == #"unsigned")
+  as-unsigned(<abstract-integer>, x)
 end;
 
 // !@#$% need to define these

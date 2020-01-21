@@ -1006,7 +1006,7 @@ define method callable-output-parameter-handling
     add!(binding-forms,
          #{ let ?pointer-local-name
              = make-c-pointer
-                 (?designator-name, ?nom, #[]) });
+                 (?designator-name, primitive-cast-pointer-as-raw(?nom), #[]) });
 //                 (concrete-class(?designator-name), ?nom, #[]) });
     add!(pointer-setting-forms,
       #{ begin

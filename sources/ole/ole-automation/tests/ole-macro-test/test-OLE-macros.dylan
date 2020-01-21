@@ -51,8 +51,8 @@ end dispatch-client <disp-type-info-2>;
  */
 define dispatch-client <disp-type-info-1>
   uuid "{00020400-0000-0000-C000-000000000046}";
-  property disp-type-info-1/integer :: type-union(<integer>, 
-        <machine-word>), name: "integer", disp-id: 12288;
+  property disp-type-info-1/integer :: <ffi-integer>,
+    name: "integer", disp-id: 12288;
   member-function disp-type-info-1/double-internal-integer-value () => (), 
         name: "double-internal-integer-value", disp-id: 24576;
 end dispatch-client <disp-type-info-1>;
@@ -64,13 +64,11 @@ end dispatch-client <disp-type-info-1>;
  */
 define dispatch-client <disp-type-info-3>
   uuid "{94CCDC4C-92AD-11D1-9A5E-006097C90313}";
-  property disp-type-info-3/another-integer :: type-union(<integer>, 
-        <machine-word>), name: "another-integer", disp-id: 12288;
-  member-function disp-type-info-3/multiply (arg-arg1 :: 
-        type-union(<integer>, <machine-word>), arg-arg2 :: 
-        type-union(<integer>, <machine-word>)) => (arg-result :: 
-        type-union(<integer>, <machine-word>)), name: "multiply", disp-id: 
-        24576;
+  property disp-type-info-3/another-integer :: <ffi-integer>,
+    name: "another-integer", disp-id: 12288;
+  member-function disp-type-info-3/multiply
+      (arg-arg1 :: <ffi-integer>, arg-arg2 :: <ffi-integer>)
+   => (arg-result :: <ffi-integer>), name: "multiply", disp-id: 24576;
 end dispatch-client <disp-type-info-3>;
 
 
@@ -79,13 +77,13 @@ end dispatch-client <disp-type-info-3>;
  */
 define dispatch-client <disp-type-info-4>
   uuid "{94CCDC4D-92AD-11D1-9A5E-006097C90313}";
-  property disp-type-info-4/another-integer :: type-union(<integer>, 
-        <machine-word>), name: "another-integer", disp-id: 12288;
-  property disp-type-info-4/id :: type-union(<integer>, <machine-word>), 
+  property disp-type-info-4/another-integer :: <ffi-integer>,
+    name: "another-integer", disp-id: 12288;
+  property disp-type-info-4/id :: <ffi-integer>, 
         name: "id", disp-id: 12289;
   member-function disp-type-info-4/multiply (arg-arg1 :: 
-        type-union(<integer>, <machine-word>), arg-arg2 :: 
-        type-union(<integer>, <machine-word>)) => (arg-result :: 
-        type-union(<integer>, <machine-word>)), name: "multiply", disp-id: 
+        <ffi-integer>, arg-arg2 :: 
+        <ffi-integer>) => (arg-result :: 
+        <ffi-integer>), name: "multiply", disp-id: 
         24576;
 end dispatch-client <disp-type-info-4>;

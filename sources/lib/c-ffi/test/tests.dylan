@@ -306,7 +306,7 @@ end;
 /// ---------
 /// C string tests
 
-/// This just calls the c-callable function below
+/// This just calls the c-callable function in tests-aux
 define c-function c-string-value
   parameter str :: <C-string>;
   parameter offset :: <C-unsigned-int>;
@@ -314,18 +314,7 @@ define c-function c-string-value
   c-name: "c_string_value";
 end;
 
-/// Treat X as a C-string and return the OFFSETth element
-define c-callable-wrapper $c-string-value of
-    method (x :: <C-string>, offset :: <integer>) => (r :: <Character>);
-      pointer-value(x, index: offset);
-    end
-  parameter x :: <C-string>;
-  parameter offset :: <C-unsigned-int>;
-  result r :: <C-character>;
-  c-name: "c_string_value";
-end;
-
-/// This just calls the c-callable function below
+/// This just calls the c-callable function in tests-aux
 define c-function c-string-value-setter
   parameter new :: <C-character>;
   parameter str :: <C-string>;
@@ -333,21 +322,6 @@ define c-function c-string-value-setter
   result r :: <c-character>;
   c-name: "c_string_value_setter";
 end;
-
-/// Treat X as a C-string and set the OFFSETth element to NEW
-define c-callable-wrapper $c-string-value-setter of
-    method (new :: <character>,
-            x :: <C-string>,
-            offset :: <integer>) => (r :: <character>);
-      pointer-value(x, index: offset) := new;
-    end
-  parameter new :: <c-character>;
-  parameter x :: <C-string>;
-  parameter offset :: <C-unsigned-int>;
-  result r :: <C-character>;
-  c-name: "c_string_value_setter";
-end;
-
 
 /// check-a-c-string
 /// This set of tests modifies the string and accesses it through a
@@ -873,11 +847,7 @@ define method betty (a :: <integer>)
   a * a;
 end method;
 
-define c-callable-wrapper wilma of betty
-  parameter a :: <C-int>;
-  result r :: <C-int>;
-  c-name: "betty";
-end c-callable-wrapper;
+// wrapper is in tests-aux
 
 define c-function call-betty
   parameter a :: <c-int>;
@@ -971,6 +941,7 @@ define c-function ack-ack-slot-setter
   c-name: "ack_slot_set";
 end;
 
+/*
 define test bug-394 ()
   let dde :: <LPDDEACK> = make(<LPDDEACK>);
   // use c-struct setters and getters
@@ -1008,6 +979,7 @@ define test bug-394 ()
   check-equal("by-value ack ack setter leaves value alone",
               fAck-value(dde), 1);
 end;
+*/
 
 //
 // -------------
@@ -1129,6 +1101,7 @@ end;
 //
 // -------------
 // tests for passing c structs by value
+/*
 define c-function OMGW-width
   parameter struct :: <OLEMENUGROUPWIDTHS>;
   parameter index :: <C-int>;
@@ -1233,9 +1206,11 @@ define test struct-by-value ()
                 OMGW-width(widths, i), i + 47);
   end;
 end;
+*/
 
 // test for nested structs by value. This is extracted from
 // a bug found while writing bindings for nanovg.
+/*
 define C-struct <color-components>
   slot color-components$r :: <C-float>;
   slot color-components$g :: <C-float>;
@@ -1264,12 +1239,13 @@ define test nested-structs-by-value ()
   let c = make(<NVGColor*>);
   process-nvg-color(c);
 end;
-
+*/
 
 // --------------
 // top level test suite.
 
 define suite c-ffi-suite ()
+  test c-type-import;
   test variable-address-test;
   test c-struct-test;
   test c-function-test;
@@ -1284,13 +1260,13 @@ define suite c-ffi-suite ()
   test bug-213;
   test bug-209;
   test bug-289;
-  test bug-394;
+  //test bug-394;
   test c-function-indirect;
   test c-dylan-object-test;
   test bug-393;
   test bug-414;
-  test struct-by-value;
-  test nested-structs-by-value;
+  //test struct-by-value;
+  //test nested-structs-by-value;
 end suite c-ffi-suite;
 
 /// The dylan top level for the tests

@@ -1849,7 +1849,19 @@ define method do-emit-return-temporary
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
      temp :: <temporary>, value :: <llvm-value>)
  => ();
-  ins--ret(back-end, value);
+  if (instance?(value.llvm-value-type, <llvm-integer-type>))
+    let te = type-estimate(temp);
+    let temp-type = te.type-estimate-raw;
+
+    let function-type = back-end.llvm-builder-function.llvm-value-type;
+    let return-type
+      = function-type.llvm-pointer-type-pointee.llvm-function-type-return-type;
+
+    ins--ret(back-end, op--integer-cast(back-end, value, return-type,
+                                        sext?: raw-type-signed?(temp-type)));
+  else
+    ins--ret(back-end, value);
+  end;
 end method;
 
 define method emit-computation

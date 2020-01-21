@@ -11,8 +11,7 @@ define macro check-winfunc
   {
     check-winfunc(?:name(?args:*))
   } => {
-    let (status :: type-union(<integer>, <machine-word>), #rest rest) = 
-	    ?name(?args);
+    let (status :: <ffi-integer>, #rest rest) = ?name(?args);
     if (status ~= $ERROR-SUCCESS)
       error("Error in %s: %s", ?"name", win32-error-message(status));
     end if;
@@ -23,8 +22,7 @@ define macro check-winfunc
   {
     check-winfunc(?operation:expression, ?:expression)
   } => {
-    let (status :: type-union(<integer>, <machine-word>), #rest rest) = 
-	    ?expression;
+    let (status :: <ffi-integer>, #rest rest) = ?expression;
     if (status ~= $ERROR-SUCCESS)
       error("Error while %s: %s", ?operation, win32-error-message(status));
     end if;

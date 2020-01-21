@@ -679,8 +679,7 @@ define constant $int-size :: <integer> = size-of(<C-long>);
 
 
 define method IStream/Write-integer( stream :: <Interface>,
-				    value :: type-union(<integer>,
-							<machine-word>) )
+                                     value :: <ffi-integer> )
 	=> ( status :: <HRESULT>, bytes :: <integer> );
   pointer-value(int-ptr) := value;
   /* return */ IStream/Write(stream, int-ptr, $int-size )
@@ -688,7 +687,7 @@ end;
 
 define method IStream/Read-integer( stream :: <Interface> )
 	=> ( status :: <HRESULT>,
-	     value :: type-union(<integer>, <machine-word>),
+	     value :: <ffi-integer>,
 	     bytes :: <integer> );
   let ( status, bytes ) = IStream/Read(stream, int-ptr, $int-size );
   values( status, pointer-value(int-ptr), bytes )

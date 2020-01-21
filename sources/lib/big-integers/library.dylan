@@ -30,5 +30,6 @@ define module big-integers-internal
              generic-binary-logxor => binary-logxor,
              generic-binary-logand => binary-logand};
   use common-extensions,
-    import: {number-to-string, machine-word-to-string};
+    import: {number-to-string, machine-word-to-string,
+             integer-length};
 end module big-integers-internal;

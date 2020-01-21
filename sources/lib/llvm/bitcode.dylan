@@ -197,7 +197,7 @@ define method write-char6
     (stream :: <bitcode-stream>, char :: <character>)
  => ();
   let code = position($char6-charset, char)
-    | error("character '%c' cannot be represented as a char6");
+    | error("character '%c' cannot be represented as a char6", char);
   write-fixed(stream, 6, code);
 end method;
 
