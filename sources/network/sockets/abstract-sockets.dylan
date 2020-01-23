@@ -88,12 +88,19 @@ end method;
 
 define method wait-for-socket-threads
     (manager :: <socket-manager>, #key server? :: <boolean> = #f) => ()
-  let sockets = if (server?)
-                  socket-manager-server-threads(manager)
-                else
-                  socket-manager-threads(manager)
-                end if;
-  do(join-thread, sockets);
+  let threads
+    = with-lock (socket-manager-lock(manager))
+        let socket-threads
+          = if (server?)
+              socket-manager-server-threads(manager)
+            else
+              socket-manager-threads(manager)
+            end if;
+        copy-sequence(socket-threads)
+      end with-lock;
+  unless (empty?(threads))
+    do(join-thread, threads);
+  end unless;
 end method;
 
 define method register-socket-thread (#key thread = current-thread(), server? :: <boolean> = #f)
@@ -131,8 +138,12 @@ define method unregister-socket-manager-thread
 end method;
 
 define method close-all-sockets (manager :: <socket-manager>) => ()
+  let sockets
+    = with-lock (socket-manager-lock(manager))
+        map-as(<vector>, identity, socket-manager-sockets(manager))
+      end;
   block (exit-loop)
-    for (socket in socket-manager-sockets(manager))
+    for (socket in sockets)
       block (exit-step)
         close(socket);
       exception (recoverable-condition :: <recoverable-socket-condition>)
@@ -146,8 +157,12 @@ define method close-all-sockets (manager :: <socket-manager>) => ()
 end method;
 
 define method shutdown-all-sockets (manager :: <socket-manager>) => ()
+  let sockets
+    = with-lock (socket-manager-lock(manager))
+        map-as(<vector>, identity, socket-manager-sockets(manager))
+      end;
   block (exit-loop)
-    for (socket in socket-manager-sockets(manager))
+    for (socket in sockets)
       block (exit-step)
         shutdown-socket(socket);
       exception (recoverable-condition :: <recoverable-socket-condition>)
@@ -182,7 +197,9 @@ define open method initialize
   // Use the socket as its own key.
   unless (already-registered?)
     let manager = current-socket-manager();
-    socket-manager-sockets(manager)[the-socket] := the-socket;
+    with-lock (socket-manager-lock(manager))
+      socket-manager-sockets(manager)[the-socket] := the-socket;
+    end;
   end unless;
 end method;
 
@@ -194,7 +211,9 @@ define method close
   if (socket-open?(the-socket))
     unless (already-unregistered?)
       let manager = current-socket-manager();
-      remove-key!(socket-manager-sockets(manager), the-socket);
+      with-lock (socket-manager-lock(manager))
+        remove-key!(socket-manager-sockets(manager), the-socket);
+      end;
     end unless;
     apply(next-method, the-socket, already-unregistered?: #t, keys);
   end if;

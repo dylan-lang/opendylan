@@ -1,6 +1,6 @@
 Library:      network
 Author:       Andy Armstrong
-Synopsis:     Linux (x86) version of the Functional Objects Network library
+Synopsis:     BSD version of the Open Dylan Network library
 Target-Type:  dll
 Major-Version: 2
 Minor-Version: 1
@@ -11,7 +11,7 @@ Files:  unix-network-library
         unix-sockets/sockets-extras
         unix-sockets/x86-freebsd-address-data
         unix-sockets/address-interfaces
-        unix-sockets/errno
+        unix-sockets/errno-bsd
         unix-sockets/poll
 	sockets/socket-conditions
 	sockets/unix-socket-accessor
