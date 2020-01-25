@@ -205,6 +205,15 @@ define method do-execute-command
  => ()
   let project = command.%project | context.context-project;
   let messages = if (command.%verbose?) #"internal" else #"external" end;
+  let stream = context.context-server.server-output-stream;
+  let progress-callback
+    = if (command.%verbose?)
+        curry(note-build-progress, context, #t)
+      elseif (stream-supports-show-progress?(stream))
+        curry(note-build-progress-bar, context)
+      else
+        curry(note-build-progress, context, #f)
+      end;
   block ()
     if (build-project
           (project,
@@ -214,7 +223,7 @@ define method do-execute-command
            save-databases?:      command.%save?,
            messages:             messages,
            output:               command.%output,
-           progress-callback:    curry(note-build-progress, context, command.%verbose?),
+           progress-callback:    progress-callback,
            warning-callback:     curry(note-compiler-warning, context),
            error-handler:        curry(compiler-condition-handler, context)))
       if (command.%link?)
@@ -231,7 +240,7 @@ define method do-execute-command
            process-subprojects?: command.%subprojects?,
            unify?:               command.%unify?,
            messages:             messages,
-           progress-callback:    curry(note-build-progress, context, command.%verbose?),
+           progress-callback:    progress-callback,
            error-handler:        curry(compiler-condition-handler, context))
       end;
       message(context, "Build of '%s' completed", project.project-name)
@@ -261,6 +270,14 @@ define method note-build-progress
     message(context, "%s", item-label);
   end;
 end method note-build-progress;
+
+define method note-build-progress-bar
+    (context :: <environment-context>,
+     position :: <integer>, range :: <integer>,
+     #key heading-label, item-label)
+ => ()
+  display-progress(context, position, range, heading-label);
+end method;
 
 define method note-compiler-warning
     (context :: <environment-context>, warning :: <warning-object>) => ()
@@ -372,6 +389,15 @@ define method do-execute-command
   let build-script
     = command.%build-script | project-context.context-build-script;
   let messages = if (command.%verbose?) #"internal" else #"external" end;
+  let stream = context.context-server.server-output-stream;
+  let progress-callback
+    = if (command.%verbose?)
+        curry(note-build-progress, context, #t)
+      elseif (stream-supports-show-progress?(stream))
+        curry(note-build-progress-bar, context)
+      else
+        curry(note-build-progress, context, #f)
+      end;
   link-project(project,
                build-script:         build-script,
                target:               command.%target,
@@ -379,7 +405,7 @@ define method do-execute-command
                jobs:                 command.%jobs,
                process-subprojects?: command.%subprojects?,
                unify?:               command.%unify?,
-               progress-callback:    curry(note-build-progress, context, command.%verbose?),
+               progress-callback:    progress-callback,
                error-handler:        curry(compiler-condition-handler, context),
                messages:             messages)
 end method do-execute-command;

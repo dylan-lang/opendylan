@@ -12,6 +12,7 @@ define library environment-commands
   use system;
   use io;
   use commands;
+  use progress-stream;
 
   use build-system;
   use environment-protocols;

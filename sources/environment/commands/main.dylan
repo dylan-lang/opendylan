@@ -37,6 +37,12 @@ define method make-environment-command-line-server
           profile-commands? :: <boolean> = #f)
  => (server :: <command-line-server>)
   let context = make(<environment-context>, banner: banner);
+  let output-stream
+    = if (instance?(output-stream, <progress-stream>))
+        output-stream
+      else
+        make(<progress-stream>, inner-stream: output-stream)
+      end if;
   make(<command-line-server>,
        context:           context,
        input-stream:      input-stream,
