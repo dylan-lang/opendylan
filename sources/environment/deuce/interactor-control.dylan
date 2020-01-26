@@ -70,7 +70,7 @@ define method make-interactor-command-line-server
   make(<command-line-server>,
        context:           context,
        input-stream:      input-stream,
-       output-stream:     output-stream,
+       output-stream:     make(<progress-stream>, inner-stream: output-stream),
        echo-input?:       echo-input?,
        profile-commands?: profile-commands?)
 end method;

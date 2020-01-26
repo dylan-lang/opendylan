@@ -24,6 +24,7 @@ define library environment-deuce
 
   use commands;
   use environment-commands;
+  use progress-stream;
 
   export environment-deuce;
 end library environment-deuce;
