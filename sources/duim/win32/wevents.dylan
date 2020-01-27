@@ -534,7 +534,13 @@ define sealed method handle-wm-notify
   let nmhdr :: <LPNMHDR> = make(<LPNMHDR>, address: lParam);
   let handle = nmhdr.hwndFrom-value;
   let id     = nmhdr.idFrom-value;
-  let code   = nmhdr.code-value;
+  // The code field is declared as UINT, but the defined code values
+  // are all negative integers, so we need to transform the representation
+  // of code accordingly
+  let code-shift = $machine-word-size - size-of(<UINT>) * 8;
+  let code = as(<integer>,
+                %shift-right(%shift-left(nmhdr.code-value, code-shift),
+                             code-shift));
   case
     null-handle?(handle) =>
       warn("Unexpectedly got a null handle from WM_NOTIFY");
