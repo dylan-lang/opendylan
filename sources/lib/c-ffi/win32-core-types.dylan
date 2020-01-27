@@ -9,7 +9,7 @@ define open C-subtype <HANDLE> (<C-void*>) end;
 
 // convenience functions
 
-define method as (class :: subclass(<HANDLE>), n :: <integer>)
+define method as (class :: subclass(<HANDLE>), n :: <ffi-integer>)
  => value :: <HANDLE>;
   make(class, address: n)
 end;
