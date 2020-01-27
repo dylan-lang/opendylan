@@ -70,7 +70,7 @@ end HIWORD;
 
 define method MAKELONG (wLow :: <integer>,
                         wHigh :: <integer>)
- => value :: <ffi-integer>;
+ => value :: <ffi-integer-or-machine-word>;
   let low :: <integer> = logand(wLow, #xFFFF);
   if ( wHigh > #x0FFF | wHigh < 0 )
     %logior(low, u%shift-left(as(<machine-word>, logand(wHigh, #xFFFF)), 16))
