@@ -148,13 +148,13 @@ end;
 // !@#$% need to define these
 
 define inline method check-export-range
-    (x :: <integer>, size :: <integer>, signedness == #"signed")
+    (x :: <ffi-integer>, size :: <integer>, signedness == #"signed")
 end;
 define inline method check-export-range
     (x :: <machine-word>, size :: <integer>, signedness == #"signed")
 end;
 define inline method check-export-range
-    (x :: <integer>, size :: <integer>, signedness == #"unsigned")
+    (x :: <ffi-integer>, size :: <integer>, signedness == #"unsigned")
 end;
 define inline method check-export-range
     (x :: <machine-word>, size :: <integer>, signedness == #"unsigned")
