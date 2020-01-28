@@ -18,6 +18,7 @@ provided with Open Dylan.
    hash-algorithms/index
    io/index
    coloring-stream/index
+   progress-stream/index
    logging/index
    numbers
    network/index
