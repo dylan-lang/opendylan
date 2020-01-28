@@ -35,6 +35,7 @@ define module environment-deuce
     exclude: { command-error, <command-error> };
   use environment-commands,
     exclude: { command-title };
+  use progress-stream;
 
   use editor-manager,
     exclude: { <editor> };                // clashes with Deuce

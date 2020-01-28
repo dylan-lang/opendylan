@@ -30,7 +30,7 @@ define class <command-line-server> (<object>)
     required-init-keyword: context:;
   constant slot server-input-stream :: <stream>,
     required-init-keyword: input-stream:;
-  constant slot server-output-stream :: <stream>,
+  constant slot server-output-stream :: <progress-stream>,
     required-init-keyword: output-stream:;
   slot server-incomplete-command-line :: false-or(<string>) = #f;
   slot server-last-command :: false-or(<command>) = #f;
@@ -303,6 +303,15 @@ define inline method message
   new-line(stream);
   force-output(stream);
 end method message;
+
+define method display-progress
+    (context :: <server-context>, position :: <integer>, range :: <integer>,
+     label :: false-or(<string>))
+ => ()
+  let server = context.context-server;
+  let stream = server.server-output-stream;
+  show-progress(stream, position, range, label: label);
+end method;
 
 define function display-condition
     (context :: <server-context>, condition :: <serious-condition>,

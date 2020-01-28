@@ -111,12 +111,6 @@ define method build-system
       with-build-directory (directory)
         jam-read-mkf(jam, as(<file-locator>, $dylanmakefile));
 
-        format(stream, "building targets:");
-        for (target in build-targets)
-          format(stream, " %s", target);
-        end for;
-        new-line(stream);
-
         jam-target-build(jam, build-targets,
                          progress-callback: wrap-progress-callback,
                          force?: force?,

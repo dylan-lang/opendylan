@@ -21,6 +21,7 @@ define module command-lines
   use format;
   use locators;
   use release-info;
+  use progress-stream;
 
   // Command line servers
   export <command-line-server>,
@@ -33,6 +34,7 @@ define module command-lines
 
   // Utilities
   export message,
+         display-progress,
          display-condition,
          print-table;
 
@@ -129,6 +131,7 @@ define module environment-commands
 
   use commands;
   use command-lines;
+  use progress-stream;
 
   // Environment context
   export <environment-context>,
