@@ -1,35 +1,36 @@
 Dylan Library Reference
 =======================
 
-This reference describes the various extensions to the Dylan language
-supported by Open Dylan as well as some of the libraries that are
-provided with Open Dylan.
+This reference describes the libraries provided with Open Dylan, either as part
+of the "opendylan" repository or included therein as a submodule.
+
+It also documents Dylan language extensions and the LID file format.
 
 .. toctree::
    :maxdepth: 2
-   :titlesonly:
+   :caption: Extensions
 
-   copyright
    language-extensions/index
-   dylan/index
-   common-dylan/index
+   lid
+   c-ffi/index
    collections/index
-   t-lists/index
+   coloring-stream/index
+   command-line-parser/index
+   common-dylan/index
+   dylan/index
    hash-algorithms/index
    io/index
-   coloring-stream/index
-   progress-stream/index
    logging/index
-   numbers
    network/index
+   numbers
+   progress-stream/index
    regular-expressions/index
+   sql/index
    strings/index
    system/index
-   c-ffi/index
+   t-lists/index
    win32/index
-   lid
-   sql/index
-   command-line-parser/index
+   copyright
 
 Indices and tables
 ==================

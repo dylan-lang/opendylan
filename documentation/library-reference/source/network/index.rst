@@ -8,9 +8,8 @@ The network Library
 Overview
 --------
 
-This chapter covers the Network library. The Network library provides
-Internet address protocols and TCP/IP server and client sockets. It
-exports a single module, called Sockets.
+The Network library provides internet address protocols and TCP/IP server and
+client sockets. It exports a single module, called Sockets.
 
 Utilities
 ---------

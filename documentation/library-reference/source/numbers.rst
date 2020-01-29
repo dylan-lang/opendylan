@@ -5,6 +5,10 @@ Integers
 .. current-library:: dylan
 .. current-module:: dylan
 
+.. TODO:
+   * This should be combined into language-extensions/
+   * Note that content below includes things compeletely unrelated to numbers.
+
 Introduction
 ============
 

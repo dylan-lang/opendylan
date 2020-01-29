@@ -1,6 +1,6 @@
-*******************
-Library Interchange
-*******************
+***************
+LID File Format
+***************
 
 Introduction
 ============

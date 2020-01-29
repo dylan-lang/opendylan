@@ -1,5 +1,5 @@
 *******************
-The logging library
+The logging Library
 *******************
 
 .. current-library:: logging
@@ -8,8 +8,7 @@ The logging library
 Overview
 --------
 
-This is the logging library reference.  The logging library exports
-a single module named "logging".
+The logging library exports a single module named "logging".
 
 
 .. contents::
