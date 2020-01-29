@@ -43,7 +43,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Getting Started with the Open Dylan Command Line Tools'
-copyright = u'2013-2016, Dylan Hackers'
+copyright = u'2013-2020, Dylan Hackers'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -255,7 +255,7 @@ epub_basename = 'GettingStartedWithTheOpenDylanCLI'
 epub_title = u'Getting Started with the Open Dylan Command Line Tools'
 epub_author = u'Dylan Hackers'
 epub_publisher = u'Dylan Hackers'
-epub_copyright = u'2013, Dylan Hackers'
+epub_copyright = u'2013-2020, Dylan Hackers'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.

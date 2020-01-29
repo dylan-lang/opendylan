@@ -43,7 +43,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Building Applications With DUIM'
-copyright = u'2011, Dylan Hackers'
+copyright = u'2011-2020, Dylan Hackers'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
