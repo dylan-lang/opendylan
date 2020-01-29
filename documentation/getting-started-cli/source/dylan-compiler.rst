@@ -8,11 +8,12 @@ environment in interactive mode, enter ``dylan-compiler`` without any
 arguments at a shell. For example::
 
     $ dylan-compiler
-    Hacker Edition
-    Version 2014.1
-    Copyright (c) 1997-2004, Functional Objects, Inc.
-    Portions Copyright (c) 2004-2014, Dylan Hackers
-    Portions Copyright (c) 2001-2012, Ravenbrook Ltd.
+    Welcome to Open Dylan, Version 2019.2pre.
+
+    For documentation on Open Dylan, see http://opendylan.org/documentation/.
+    See http://opendylan.org/documentation/getting-started-cli/ for an introduction to the command line tools.
+
+    Type "help" for more information.
     >
 
 If you've used the Open Dylan IDE on Windows, note that using
