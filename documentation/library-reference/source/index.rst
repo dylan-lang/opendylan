@@ -2,7 +2,7 @@ Dylan Library Reference
 =======================
 
 This reference describes the libraries provided with Open Dylan, either as part
-of the "opendylan" repository or included therein as a submodule.
+of the "opendylan" repository or included therein as submodules.
 
 It also documents Dylan language extensions and the LID file format.
 
@@ -12,6 +12,12 @@ It also documents Dylan language extensions and the LID file format.
 
    language-extensions/index
    lid
+   numbers
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Libraries
+
    c-ffi/index
    collections/index
    coloring-stream/index
@@ -22,7 +28,6 @@ It also documents Dylan language extensions and the LID file format.
    io/index
    logging/index
    network/index
-   numbers
    progress-stream/index
    regular-expressions/index
    sql/index
@@ -30,7 +35,6 @@ It also documents Dylan language extensions and the LID file format.
    system/index
    t-lists/index
    win32/index
-   copyright
 
 Indices and tables
 ==================
