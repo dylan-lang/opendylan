@@ -9,9 +9,6 @@ Integers
    * This should be combined into language-extensions/
    * Note that content below includes things compeletely unrelated to numbers.
 
-Introduction
-============
-
 This chapter describes the Open Dylan implementation of arithmetic
 functions, especially integer arithmetic. It describes a number of
 extensions to the Dylan language, which are available from the Dylan
@@ -66,9 +63,9 @@ chapter are as follows:
   ``$minimum-integer`` and ``$maximum-integer``.
 
   The representation for integers must be at least 28 bits, including the
-  sign. That is, the minimum conforming value for ``$maximum-integer`` is
-  ``2^27`` -1 and the maximum conforming value for ``$minimum-integer`` is
-  ``-2^27``.
+  sign. That is, the minimum conforming value for ``$maximum-integer`` is ``2 ^
+  27 - 1`` and the maximum conforming value for ``$minimum-integer`` is ``-2 ^
+  27``.
 
   .. note:: *Rationale:* Restricting :drm:`<integer>` in this way allows the programmer
      to stay in the efficient range without requiring exact knowledge of what

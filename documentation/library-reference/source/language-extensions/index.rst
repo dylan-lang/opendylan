@@ -2,9 +2,6 @@
 Dylan Language Extensions
 *************************
 
-Introduction
-============
-
 The Dylan language is described in `The Dylan Reference Manual
 <http://opendylan.org/books/drm/>`_ by Andrew Shalit (Addison-Wesley,
 1996). We call this book "the DRM" hereafter.
@@ -60,6 +57,7 @@ extensions are available to applications in the ``dylan`` library's
    for-iteration
    weak-tables
    inlining
+   numbers
    object-with-elements
    macro-system-extensions
    parser-expansions

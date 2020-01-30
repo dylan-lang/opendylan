@@ -12,7 +12,6 @@ It also documents Dylan language extensions and the LID file format.
 
    language-extensions/index
    lid
-   numbers
 
 .. toctree::
    :maxdepth: 2

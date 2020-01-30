@@ -4,8 +4,13 @@ Language differences
 .. current-library:: dylan
 .. current-module:: dylan
 
-Tables
-------
+Note that in addition to the intentional differences documented below, there
+are several `known bugs
+<https://github.com/dylan-lang/opendylan/issues?q=is%3Aissue+is%3Aopen+label%3ADRM>`_
+related to compliance with the language standard as documented in the DRM.
+
+Table Protocol
+--------------
 
 For efficiency, Open Dylan adopts a slightly different table protocol
 to that described by the DRM. Hashing functions take an additional
