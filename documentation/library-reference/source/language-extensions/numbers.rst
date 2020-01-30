@@ -84,7 +84,7 @@ then an error is signaled. This removes fully generic arithmetic from
 the Dylan library. In particular, it removes extended integers, ratios,
 and rectangular complex numbers.
 
-Extensions to the Dylan library
+Extensions to the dylan Library
 ===============================
 
 This section describes the extensions to the Dylan library that provide
@@ -730,7 +730,7 @@ The keys for sequences are always instances of :drm:`<integer>`. This means
 that certain kinds of collections cannot be sequences; very large (or
 unbounded) sparse arrays are an example.
 
-The table protocol
+The Table Protocol
 ------------------
 
 The following functions in the Dylan library are extended. Note that the
@@ -758,7 +758,7 @@ object-hash *object* => *hash-id* *hash-state*
 The hash function for the equivalence predicate *==*. The return values
 are of the same types as the return values of :drm:`merge-hash-codes`.
 
-Iteration constructs
+Iteration Constructs
 --------------------
 
 for
@@ -768,7 +768,7 @@ Statement macro
 The *start*, *bound*, and *increment* expressions in a numeric clause
 must evaluate to instances of ``<machine-number>`` for this macro.
 
-The Generic-Arithmetic library
+The generic-arithmetic Library
 ==============================
 
 The Generic-Arithmetic library exports the functions described in this
@@ -925,7 +925,7 @@ The *start*, *bound*, and *increment* expressions in a numeric clause
 must evaluate to instances of ``<machine-number>`` for this macro.
 Otherwise, this macro is similar to *for#Dylan*.
 
-Exported modules from the Generic-Arithmetic library
+Exported Modules from the generic-arithmetic Library
 ----------------------------------------------------
 
 The Generic-Arithmetic library exports several modules that are provided
@@ -933,7 +933,7 @@ for the convenience of programmers who wish to create additional modules
 based on the *dylan* module plus various combinations of the arithmetic
 models.
 
-The Dylan-Excluding-Arithmetic module
+The dylan-excluding-arithmetic Module
 -------------------------------------
 
 The Dylan-Excluding-Arithmetic module imports and re-exports all of the
@@ -955,14 +955,14 @@ for the following excluded interfaces:
 * :drm:`lcm` :drm:`gcd`
 * :drm:`for`
 
-The Dylan-Arithmetic module
+The dylan-arithmetic Module
 ---------------------------
 
 The Dylan-Arithmetic module imports and re-exports all of the interfaces
 exported by the *dylan* module from the Dylan library which are excluded
 by the *dylan-excluding-arithmetic* module.
 
-The Generic-Arithmetic-Dylan module
+The generic-arithmetic-dylan Module
 -----------------------------------
 
 The Generic-Arithmetic-Dylan module imports and reexports all of the
@@ -976,7 +976,7 @@ wish to work with. The purpose of the *generic-arithmetic-dylan* module
 is to provide a standard environment in which generic arithmetic is the
 norm, for those programmers who might want that.
 
-Using special arithmetic features
+Using Special Arithmetic Features
 =================================
 
 As noted in `The Generic-Arithmetic library`_, the Generic-Arithmetic
@@ -1095,7 +1095,7 @@ declaration should contain:
     use generic-arithmetic-common-dylan;
     use dylan-arithmetic, prefix: "dylan/"; //use any prefix you like
 
-The Big-Integers library
+The big-integers Library
 ========================
 
 The Big-Integers library exports a module called ``big-integers``, which
@@ -1105,7 +1105,7 @@ imports and re-exports all of the interfaces exported by the
 The Big-Integers library modifies the behavior of functions provided by
 the Dylan library as described in this section.
 
-Specific constructors
+Specific Constructors
 ---------------------
 
 The Big-Integers library extends the functionality of specific
@@ -1257,7 +1257,7 @@ by the Big-Integers library as follows::
     < *abstract-integer* *float* => *boolean*
     < *float* *abstract-integer* => *boolean*
 
-Properties of numbers
+Properties of Numbers
 ---------------------
 
 The behavior of number property tests in the Dylan library is modified
@@ -1272,7 +1272,7 @@ by the Big-Integers library as follows::
 
 .. bigint_arithmetic_operations:
 
-Arithmetic operations
+Arithmetic Operations
 ---------------------
 
 The Big-Integers library modifies the behavior of the functions provided

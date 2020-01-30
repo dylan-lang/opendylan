@@ -18,7 +18,7 @@ module exports all the identifiers described in this document.
 :doc:`format` and :doc:`standard-io` give full details of the Format and
 Standard-IO libraries.
 
-The format-out module
+The format-out Module
 =====================
 
 This section contains a reference entry for each item exported from the

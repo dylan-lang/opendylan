@@ -1,5 +1,5 @@
 ***************
-The SQL library
+The sql Library
 ***************
 
 .. current-library:: sql

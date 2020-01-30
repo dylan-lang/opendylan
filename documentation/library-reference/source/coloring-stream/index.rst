@@ -1,5 +1,5 @@
 ***************************
-The coloring-stream library
+The coloring-stream Library
 ***************************
 
 .. current-library:: coloring-stream
@@ -69,7 +69,7 @@ This can be used directly as well:
    print(' ', cs);
    print(error-message, cs);
 
-The COLORING-STREAM module
+The coloring-stream Module
 **************************
 
 .. class:: <coloring-stream>

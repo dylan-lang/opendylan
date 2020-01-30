@@ -22,7 +22,7 @@ this case, the ``regular-expressions`` library will signal an
 :class:`<invalid-regex>` error when the regex is parsed.
 
 Quick Start
------------
+===========
 
 The most common use of regular expressions is probably to perform a
 search and figure out what text matched and/or where it occurred in a

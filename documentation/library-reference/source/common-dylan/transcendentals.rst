@@ -29,8 +29,8 @@ foreign libraries:
   results, and functions on double precision values return double
   precision results)
 
-The Transcendentals module
-==========================
+Reference
+=========
 
 This section contains a reference entry for each item exported from the
 *common-dylan* library's *transcendentals* module.

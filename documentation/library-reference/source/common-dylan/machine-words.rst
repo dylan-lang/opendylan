@@ -179,7 +179,7 @@ integer value.
      instances of ``<abstract-integer>``, in which case they are coerced to
      instances of ``<machine-word>`` as if by using ``as``.
 
-The MACHINE-WORDS module
+The machine-words Module
 ========================
 
 This section contains a reference entry for each item exported from the

@@ -3,7 +3,7 @@
    single: libraries; C-FFI
 
 *****************
-The C-FFI Library
+The c-ffi Library
 *****************
 
 .. current-library:: c-ffi
