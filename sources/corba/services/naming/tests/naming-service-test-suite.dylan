@@ -10,7 +10,7 @@ define variable *object1* = make-nil(CORBA/<Object>);
 define variable *object2* = make-nil(CORBA/<Object>);
 
 define test connect-test ()
-  let orb = CORBA/ORB-init(make(CORBA/<arg-list>), "Functional Developer ORB");
+  let orb = CORBA/ORB-init(make(CORBA/<arg-list>), "Open Dylan ORB");
   check("Resolve Naming Service", method () *naming-service* := as(CosNaming/<NamingContext>, CORBA/ORB/resolve-initial-references(orb, "NameService")) end);
   check-false("Naming service reference not nil", corba/object/is-nil(*naming-service*));
   check-false("Naming service object exists", corba/object/non-existent(*naming-service*));

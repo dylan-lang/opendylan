@@ -1,18 +1,23 @@
 // Author:    Keith Dennison
 // Copyright: Copyright (c) 1998.  Functional Objects, Inc.  All rights reserved.
 
+struct Tree;
+typedef sequence<Tree> seqTree;
+
 typedef struct Tree {
   string label;
-  sequence<Tree> children;
+  seqTree children;
 } TreeB;
 
 struct Tree_wrapper {
   Tree real_tree;
 };
 
+union TreeU;
+typedef sequence<TreeU> seqTreeU;
 union TreeU switch (boolean) {
   case FALSE: string label;
-  case TRUE:  sequence<TreeU> children;
+  case TRUE:  seqTreeU children;
 };
 
 interface TreeTest {

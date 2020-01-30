@@ -27,20 +27,6 @@ define macro with-typecode-output-alignment
         pop(*typecode-output-alignments*);
       end;
   }
-
-  { with-typecode-output-alignment (?stream:expression, reset?: ?reset:expression) ?body:body end }
-    => 
-    { block ()
-        push(*typecode-output-alignments*,
-             if (?reset)
-               make(<deque>)
-             else
-               marshalling-stream-output-index(?stream);
-             end if);
-        ?body;
-      cleanup
-        pop(*typecode-output-alignments*);
-      end; }
 end macro;
 
 define macro with-typecode-input-alignment
@@ -53,20 +39,6 @@ define macro with-typecode-input-alignment
         pop(*typecode-input-alignments*);
       end;
  }
-
-  { with-typecode-input-alignment (?stream:expression, reset?: ?reset:expression) ?body:body end }
-    => 
-    { block ()
-        push(*typecode-input-alignments*,
-             if (?reset)
-               make(<deque>)
-             else
-               marshalling-stream-input-index(?stream);
-             end if);
-        ?body;
-      cleanup
-        pop(*typecode-input-alignments*);
-      end; }
 end macro;
 
 define function typecode-alignment-from-nesting (nesting :: <integer>)

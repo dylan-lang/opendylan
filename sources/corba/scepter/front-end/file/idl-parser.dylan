@@ -77,6 +77,17 @@ define method populate-global-scope (module :: <ast-module>)
                         type: type,
                         local-name: make(<ast-identifier>, label: type.idl-type-name)));
   end for;
+
+  let corba-identifier = make(<ast-identifier>, label: "CORBA");
+  let corba-module = define-module(module, corba-identifier);
+  for (type in $CORBA-module-types)
+    add-declarator(corba-module,
+                   make(<ast-predefined-type>,
+                        scope: corba-module,
+                        type: type,
+                        local-name: make(<ast-identifier>, label: type.idl-type-name)));
+  end for;
+
   for (name in $predefined-pseudo-type-names)
     add-declarator(module,
                    make(<ast-predefined-type>,

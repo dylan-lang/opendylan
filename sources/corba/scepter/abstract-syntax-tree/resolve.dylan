@@ -100,7 +100,8 @@ end method;
 
 define method resolve-identifier (scope :: <scope>, identifier :: <ast-identifier>)
   let declarator = element(scope.scope-declarators-table, identifier, default: #f);
-  declarator & declarator.full-definition;
+  declarator
+    & declarator.full-definition | declarator
 end method;
 
 // RESOLVE-PRIMITIVE-TYPE

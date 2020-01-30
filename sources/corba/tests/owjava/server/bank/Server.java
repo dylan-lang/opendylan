@@ -25,11 +25,11 @@ public class Server {
   };
 
   public static void init_server (org.omg.CORBA.ORB orb) {
-    init_one_server(orb, "C:\\Temp\\bank-0.ior");
-    init_one_server(orb, "C:\\Temp\\bank.ior");
-    init_one_server(orb, "C:\\Temp\\bank-2.ior");
-    init_one_server(orb, "C:\\Temp\\bank-3.ior");
-    init_one_server(orb, "C:\\Temp\\bank-4.ior");
+    init_one_server(orb, "bank-0.ior");
+    init_one_server(orb, "bank.ior");
+    init_one_server(orb, "bank-2.ior");
+    init_one_server(orb, "bank-3.ior");
+    init_one_server(orb, "bank-4.ior");
   };
 
   public static void main(String args[]) {

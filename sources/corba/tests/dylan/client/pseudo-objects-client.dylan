@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant $PseudoObjectsTest-ior-file = "c:\\temp\\PseudoObjectsTest.ior";
+define constant $PseudoObjectsTest-ior-file = "PseudoObjectsTest.ior";
 
 define constant $TestObjectX-repositoryID = "IDL:TestObjectX:1.0";
 define constant $TestObjectA-repositoryID = "IDL:TestObjectA:1.0";
@@ -15,13 +15,13 @@ define constant $TestObjectD-repositoryID = "IDL:TestObjectD:1.0";
 
 define method TestObjectA-is-equivalent (object-1 :: <TestObjectA>, object-2 :: <TestObjectA>)
  => (equivalent? :: <boolean>)
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   (corba/orb/object-to-string(orb, object-1) = corba/orb/object-to-string(orb, object-2))
     & (TestObjectA/id(object-1) = TestObjectA/id(object-2));
 end method;
 
 define test standard-object-operations ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let PseudoObjectsTest = as(<PseudoObjectsTest>, corba/orb/file-to-object(orb, $PseudoObjectsTest-ior-file));  
   let object = PseudoObjectsTest/TestObjectA-factory(PseudoObjectsTest, 1);
   let nil-object = #f;
@@ -75,7 +75,7 @@ define test standard-object-operations ()
 end test;
 
 define test object-test ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let PseudoObjectsTest = as(<PseudoObjectsTest>, corba/orb/file-to-object(orb, $PseudoObjectsTest-ior-file));
   let one = PseudoObjectsTest/TestObjectA-factory(PseudoObjectsTest, 0);
   check("Object attribute setter", PseudoObjectsTest/object-attribute-setter, one, PseudoObjectsTest);
@@ -89,7 +89,7 @@ define test object-test ()
 end test;
 
 define test typecode-test ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let PseudoObjectsTest = as(<PseudoObjectsTest>, corba/orb/file-to-object(orb, $PseudoObjectsTest-ior-file));
   let one = class-typecode(PseudoObjectsTest/<failure>);
   check("Typecode attribute setter", PseudoObjectsTest/typecode-attribute-setter, one, PseudoObjectsTest);

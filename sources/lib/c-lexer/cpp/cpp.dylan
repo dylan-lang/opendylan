@@ -904,7 +904,7 @@ define method read-cpp-include (stream :: <cpp-stream>)
         file := find-file-in-path(*cpp-include-path*, filename.dylan-value);
         unless (file)
           signal(make(<file-does-not-exist-error>,
-                      locator: filename.dylan-value));
+                      locator: as(<file-locator>, filename.dylan-value)));
         end unless;
       end if;
       stream.inner-stream :=
@@ -922,7 +922,7 @@ define method read-cpp-include (stream :: <cpp-stream>)
       let file = find-file-in-path(*cpp-include-path*, filename.dylan-value);
       unless (file)
         signal(make(<file-does-not-exist-error>,
-                    locator: filename.dylan-value));
+                    locator: as(<file-locator>, filename.dylan-value)));
       end unless;
       stream.inner-stream :=
         // This should be better worked out.

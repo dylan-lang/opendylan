@@ -16,7 +16,7 @@ define sealed domain initialize (<chat-client-callback>);
 
 define method start-chat-client-callback-server (client :: <chat-client>)
  => (callback :: <chat-client-callback>)
-  let orb = CORBA/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = CORBA/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let root-poa = CORBA/Orb/resolve-initial-references(orb, "RootPOA");
   let poa = PortableServer/POA/create-poa(root-poa, "Chat Client CallBack POA", #f, lifespan-policy: #"transient");
   let callback = make(<chat-client-callback>, client: client);

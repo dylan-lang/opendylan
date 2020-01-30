@@ -5,11 +5,11 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant $AnyTest-ior-file = "c:\\temp\\AnyTest.ior";
+define constant $AnyTest-ior-file = "AnyTest.ior";
 
 define method get-AnyTest-reference ()
  => (reference :: <AnyTest>)
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   as(<AnyTest>, corba/orb/file-to-object(orb, $AnyTest-ior-file));
 end method;
 
@@ -26,36 +26,34 @@ define test any-short-test ()
   check-equal("Any operation third result", iii, any);
 end test;
 
-define constant <tree-sequence> = limited(corba/<sequence>, of: <Tree>);
-
 define constant $tree =
   make(<Tree>,
        label: "1",
        children: begin
-		   let seq = make(<tree-sequence>);
+		   let seq = make(<seqTree>);
 		   add!(seq, make(<Tree>,
 				  label: "2",
 				  children: begin
-					      let seq = make(<tree-sequence>);
+					      let seq = make(<seqTree>);
 					      add!(seq, make(<tree>,
 							     label: "3",
-							     children: make(<tree-sequence>)));
+							     children: make(<seqTree>)));
 					      add!(seq, make(<tree>,
 							     label: "4",
-							     children: make(<tree-sequence>)));
+							     children: make(<seqTree>)));
 					      seq
 					    end));
 
 		   add!(seq, make(<Tree>,
 				  label: "5",
 				  children: begin
-					      let seq = make(<tree-sequence>);
+					      let seq = make(<seqTree>);
 					      add!(seq, make(<Tree>,
 							     label: "6",
-							     children: make(<tree-sequence>)));
+							     children: make(<seqTree>)));
 					      add!(seq, make(<Tree>,
 							     label: "7",
-							     children: make(<tree-sequence>)));
+							     children: make(<seqTree>)));
 					      seq
 					    end));
 
@@ -72,5 +70,5 @@ end test;
 
 define suite any-test-suite ()
   test any-short-test;
-//  test any-tree-test;
+  test any-tree-test;
 end suite;

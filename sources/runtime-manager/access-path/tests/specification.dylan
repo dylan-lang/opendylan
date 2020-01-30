@@ -45,7 +45,7 @@ define function access-path-cleanup ()
     = test-option("debugger-network-address", default: "");
   unless (empty?(debugger-network-address))
     let orb = CORBA/ORB-init(make(CORBA/<arg-list>),
-                             "Functional Developer ORB");
+                             "Open Dylan ORB");
     CORBA/ORB/shutdown(orb, #t);
   end unless;
 end function;

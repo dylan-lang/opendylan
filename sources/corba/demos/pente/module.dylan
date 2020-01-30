@@ -17,6 +17,7 @@ define module pente
   use duim;
   use threads;
   use streams;
+  use format;
 
   export <pente-frame>,
          play-pente;

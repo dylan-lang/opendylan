@@ -82,6 +82,7 @@ define method marshall-message-header (stream :: <marshalling-stream>)
 end method;
 
 define constant $empty-service-context = make(IOP/<ServiceContextList>);
+define constant $empty-requesting-principal = make(GIOP/<Principal>);
 
 /// MARSHALL-REQUEST-HEADER
 
@@ -93,7 +94,7 @@ define method marshall-request-header (request :: <request>, connection :: <conn
 	 response-expected: ~request-oneway?(request),
  	 object-key: iiop/ProfileBody-1-0/object-key(get-iiop-profile(corba/object/ior(request-object(request)))),
 	 operation: request-operation-name(request),
-	 requesting-principal: operating-system-user());
+	 requesting-principal: $empty-requesting-principal);
   marshall(class-typecode(giop/<requestheader-1-0>), giop-request-header, stream);
 end method;
 

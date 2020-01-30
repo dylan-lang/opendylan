@@ -222,7 +222,7 @@ define open generic corba/object/-is-a (object :: <object>, logical-type-id :: c
 
 define method corba/object/-is-a (object :: <object-reference>, logical-type-id :: corba/<string>)
  => (is-a? :: <boolean>)
-  let context = corba/orb/get-default-context(corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB"));
+  let context = corba/orb/get-default-context(corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB"));
   let (result, request) = corba/object/create-request(object,
 						      context,
 						      "_is_a",
@@ -243,7 +243,7 @@ end method;
 
 define method corba/object/-non-existent (object :: <object-reference>)
   => (result :: corba/<boolean>)
-  let context = corba/orb/get-default-context(corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB"));
+  let context = corba/orb/get-default-context(corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB"));
   let (result, request) = corba/object/create-request(object,
 						      context,
 						      "_non_existent",

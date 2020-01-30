@@ -6,6 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library corba-protocol
+  use dylan;
   use corba-dylan;
   export corba-protocol-externals;
   export corba-protocol;
@@ -16,8 +17,10 @@ define module corba-protocol-externals
     corba/<null>,
     corba/<void>,
     corba/<long>,
+    corba/<long-long>,
     corba/<short>,
     corba/<unsigned-long>,
+    corba/<unsigned-long-long>,
     corba/<unsigned-short>,
     corba/<float>,
     corba/<double>,
@@ -260,12 +263,15 @@ define module corba-protocol-externals
     corba/$any-typecode,
     corba/$typecode-typecode,
     corba/$principal-typecode,
-    corba/$string-typecode;
+    corba/$string-typecode,
+    corba/$long-long-typecode,
+    corba/$unsigned-long-long-typecode;
 
 end module;
 
 define module corba-protocol
   use corba-dylan;
+  use dylan-extensions;
   use corba-protocol-externals, export: all;
 
   export
@@ -312,9 +318,12 @@ define module corba-protocol
     <array-typecode>,
     <alias-typecode>,
     <exception-typecode>,
+    <long-long-typecode>,
+    <unsigned-long-long-typecode>,
     <indirection-typecode>;
 
   export
+    make-typecode,
     typecode-kind,
     typecode-code,
     typecode-alignment,
@@ -341,7 +350,6 @@ define module corba-protocol
     typecode-max-length, typecode-max-length-setter,
     typecode-length, typecode-length-setter,
     typecode-aliased, typecode-aliased-setter,
-    typecode-offset, typecode-offset-setter,
-    typecode-nesting, typecode-nesting-setter;
-    
+    typecode-nesting, typecode-nesting-setter,
+    typecode-indirected, typecode-indirected-setter;
 end module;

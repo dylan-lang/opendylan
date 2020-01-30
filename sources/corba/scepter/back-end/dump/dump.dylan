@@ -343,6 +343,12 @@ end method;
 
 // MODULE
 
+define method dump-definition (back-end :: <dump-back-end>, module :: <ast-module>, stream :: <stream>, #key last? :: <boolean>)
+  unless (every?(rcurry(instance?, <ast-predefined-type>), module.scope-declarators))
+    next-method();
+  end unless;
+end method;
+
 define method dump-before-name (back-end :: <dump-back-end>, module :: <ast-module>, stream :: <stream>)
   format(stream, "module ");
 end method;
@@ -442,6 +448,10 @@ define method dump-before-name (back-end :: <dump-back-end>, structure :: <ast-s
   format(stream, "struct ");
 end method;
 
+define method dump-before-name (back-end :: <dump-back-end>, structure :: <ast-forward-structure>, stream :: <stream>)
+  format(stream, "struct ");
+end method;
+
 // TYPE
 
 // TYPEDEF
@@ -470,6 +480,10 @@ define method dump-after-name (back-end :: <dump-back-end>, union :: <ast-union>
   format(stream, " switch (");
   dump-name(back-end, union.union-discriminator-type, stream);
   format(stream, ")");
+end method;
+
+define method dump-before-name (back-end :: <dump-back-end>, union :: <ast-forward-union>, stream :: <stream>)
+  format(stream, "union ");
 end method;
 
 // UNION-BRANCH

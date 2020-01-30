@@ -5,16 +5,12 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define suite grid-test-suite ()
-  test grid-request-tests;
-end suite;
+define constant $grid-ior-file :: <string> = "grid.ior";
 
-define constant $grid-ior-file :: <string> = "c:\\temp\\grid.ior";
-
-define constant $wrong-grid-ior-file :: <string> = "c:\\temp\\wrong-grid.ior";
+define constant $wrong-grid-ior-file :: <string> = "wrong-grid.ior";
 
 define test grid-request-tests ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let context = corba/orb/get-default-context(orb);
   let reference = as(<grid>, corba/orb/file-to-object(orb, $grid-ior-file));
   let width = 7;
@@ -44,12 +40,16 @@ define test grid-request-tests ()
   check("width comes back to client with context2", \=, grid/context-get-width(wrong-reference, context: context), width + 1);
 end test;
 
+define suite grid-test-suite ()
+  test grid-request-tests;
+end suite;
+
 /// ASYNCHRONOUS CLIENT IMPLEMENTION USING DII
 
 define method grid/asynch-height (object :: <grid>)
  => (result :: corba/<short>)
   let (result, request) = corba/object/create-request(object,
-					       corba/orb/get-default-context(corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB")),
+					       corba/orb/get-default-context(corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB")),
 					       "_get_height",
 					       make(corba/<nvlist>),
 					       make(corba/<namedvalue>,

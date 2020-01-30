@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define sealed class <ChatServer-i> (<ChatServer-servant>)
-  constant slot ChatServer-i-ior-file :: <string> = "c:\\temp\\chat.ior";
+  constant slot ChatServer-i-ior-file :: <string> = "chat.ior";
   constant slot ChatServer-i-server :: <chat-server>, required-init-keyword: server:;
 end class;
 
@@ -26,7 +26,7 @@ end method;
 
 define method initialize (servant :: <ChatServer-i>, #key)
   next-method();
-  let orb = CORBA/orb-init(make(CORBA/<arg-list>), "Functional Developer ORB");
+  let orb = CORBA/orb-init(make(CORBA/<arg-list>), "Open Dylan ORB");
   let root-poa = CORBA/orb/resolve-initial-references(orb, "RootPOA");
   let reference = PortableServer/POA/servant-to-reference(root-poa, servant);
   CORBA/orb/object-to-file(orb, servant.ChatServer-i-ior-file, reference);
@@ -65,7 +65,7 @@ define sealed domain initialize (<ChatRoom-i>);
 
 define method initialize (servant :: <ChatRoom-i>, #key)
   next-method();
-  let orb = CORBA/orb-init(make(CORBA/<arg-list>), "Functional Developer ORB");
+  let orb = CORBA/orb-init(make(CORBA/<arg-list>), "Open Dylan ORB");
   let root-poa = CORBA/orb/resolve-initial-references(orb, "RootPOA");
   let reference = PortableServer/POA/servant-to-reference(root-poa, servant);
   servant.ChatRoom-i-reference := as(<ChatRoom>, reference);

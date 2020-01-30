@@ -18,7 +18,7 @@ end method;
 define constant <string-sequence> = limited(corba/<sequence>, of: corba/<string>);
 
 define class <chat-client> (<object>)
-  constant slot chat-client-chat-ior-file = "c:\\temp\\chat.ior";
+  constant slot chat-client-chat-ior-file = "chat.ior";
 
   constant slot chat-client-name = "Keith", init-keyword: name:;
   constant slot chat-client-messages :: <string-sequence> = make(<string-sequence>), init-keyword: messages:;
@@ -30,7 +30,7 @@ end class;
 
 define method initialize (client :: <chat-client>, #key)
   next-method();
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let root-poa = corba/orb/resolve-initial-references(orb, "RootPOA");
   client.chat-client-callback-poa := portableserver/poa/create-poa(root-poa, "CallBack POA", #f, lifespan-policy: #"transient");
   let callback = make(<CallBack-implementation>, chat-client: client);

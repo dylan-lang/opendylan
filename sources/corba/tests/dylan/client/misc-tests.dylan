@@ -5,10 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define suite context-tests ()
-  test context-checks;
-end suite;
-
 // TEST PLAN
 //
 //    corba/<Context>,
@@ -23,7 +19,7 @@ end suite;
 //    "wildcards"
 
 define test context-checks ()
-  let orb :: corba/<orb> = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb :: corba/<orb> = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let default-context :: corba/<context> = corba/orb/get-default-context(orb);
 
   corba/context/set-one-value(default-context, "Foo", as(corba/<any>, "Bar"));
@@ -59,3 +55,6 @@ define test context-checks ()
 		  corba/context/get-values(child-context, "", corba/$ctx-restrict-scope, copy-sequence("Foo")));
 end test;
 
+define suite context-tests ()
+  test context-checks;
+end suite;

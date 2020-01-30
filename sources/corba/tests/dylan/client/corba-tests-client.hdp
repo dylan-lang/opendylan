@@ -21,8 +21,8 @@ files:	corba-tests-client-library
 	misc-tests
 	typecode-tests
 	iiop-tests
-	request-tests
         ir-client
+	request-tests
 	corba-tests-client
 major-version:	2
 minor-version:	1

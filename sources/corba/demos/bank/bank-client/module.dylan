@@ -12,6 +12,7 @@ define module bank-client
   use bank-stubs;
   use naming-client;
   use operating-system;
+  use file-system;
   use streams;
   use duim;
 end module bank-client;

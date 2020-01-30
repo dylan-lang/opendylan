@@ -15,7 +15,7 @@ end method;
 
 define method orb-interface-repository ()
  => (orb :: corba/<orb>, ir :: corba/<repository>)
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   values(orb, as(corba/<repository>, corba/orb/resolve-initial-references(orb, "InterfaceRepository")));
 end method;
 
@@ -29,15 +29,6 @@ end method;
 define method created () => (xs :: <sequence>)
   *created*
 end method;
-
-define suite ir-test-suite ()
-  test container-test; // works except for describe-contents
-  test contained-test;
-  test repository-test;
-  test interface-test;
-  test irobject-test; 
-  test create-typecode-test;
-end suite;
 
 define test irobject-test ()
   let (orb, ir) = orb-interface-repository();
@@ -498,3 +489,11 @@ define test create-typecode-test ()
 	      #"tk-array");
 end test;
 
+define suite ir-test-suite ()
+  test container-test; // works except for describe-contents
+  test contained-test;
+  test repository-test;
+  test interface-test;
+  test irobject-test; 
+  test create-typecode-test;
+end suite;

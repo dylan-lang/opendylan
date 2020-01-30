@@ -127,7 +127,7 @@ define method label-values (labels :: <sequence> /*---***limited(<sequence>, of:
       labels);
 end method;
 
-define class <dim-union> (<dim-membered-type>, <dim-recursive-type-mixin>)
+define class <dim-union> (<dim-membered-type>)
   slot dim-union-default-position :: <integer> = -1;
   slot dim-union-discriminator-type :: <dim-type>;
 end class;
@@ -176,18 +176,16 @@ end method;
 
 define method make-dim (node :: <ast-union>)
  => (model :: <dim-union>)
-  make(<dim-union>, node: node, level: *type-level*);
+  make(<dim-union>, node: node);
 end method;
 
 define method before-code-emission (union :: <dim-union>)
  => ()
-  *recursive-types* := pair(union, *recursive-types*);
   initialize-members(union);
 end method;
 
 define method after-code-emission (union :: <dim-union>)
  => ()
-  *recursive-types* := tail(*recursive-types*);
 end method;
 
 define method protocol-exports (union :: <dim-union>)
@@ -435,4 +433,3 @@ define method emit-combined-from-union-as-method
 	 "  end select;\n"
 	   "end method;\n\n")
 end method;
-

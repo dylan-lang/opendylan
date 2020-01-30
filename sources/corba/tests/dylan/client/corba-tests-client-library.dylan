@@ -6,11 +6,12 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library corba-tests-client
-  use dylan;
+  use common-dylan;
   use generic-arithmetic;
   use big-integers;
   use dylan-orb;
   use io;
+  use system;
   use testworks;
   use corba-tests-utilities;
   use corba-tests-protocol;

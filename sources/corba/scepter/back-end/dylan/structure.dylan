@@ -5,11 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define class <dim-recursive-type-mixin> (<object>)
-  constant slot dim-recursive-type-level :: <integer>, required-init-keyword: level:;
-end class;
-
-define class <dim-structure> (<dim-membered-type>, <dim-recursive-type-mixin>)
+define class <dim-structure> (<dim-membered-type>)
 end class;
 
 define method initialize (structure :: <dim-structure>, #key node :: <ast-structure>)
@@ -36,10 +32,7 @@ define method initialize (member :: <dim-member>, #key node :: <ast-field>)
   let slot-name = map-to-dylan-name(idl-scoped-name);
   member.dim-member-slot-name := slot-name;
   member.dim-member-init-keyword := concatenate(dim-dylan-local-name(member), ":");
-  member.dim-member-type
-    := dynamic-bind (*type-level* = *type-level* + 1)
-         make(<dim>, node: field-type(node));
-       end;
+  member.dim-member-type := make(<dim>, node: field-type(node));
   member.dim-member-getter-name := slot-name;
   member.dim-member-setter-name := concatenate(slot-name, "-setter");
 end method;
@@ -61,22 +54,23 @@ define method emit-typecode-member (stream :: <stream>, member :: <dim-member>)
   format(stream, ")");
 end method;
 
-define thread variable *recursive-types* :: <list> = #();
-
 define method make-dim (node :: <ast-structure>)
  => (model :: <dim-structure>)
-  make(<dim-structure>, node: node, level: *type-level*);
+  make(<dim-structure>, node: node);
+end method;
+
+define method make-dim (node :: <ast-forward-structure>)
+ => (model :: <dim-structure>)
+  make-dim(node.full-definition)
 end method;
 
 define method before-code-emission (structure :: <dim-structure>)
  => ()
-  *recursive-types* := pair(structure, *recursive-types*);
   initialize-members(structure);
 end method;
 
 define method after-code-emission (structure :: <dim-structure>)
  => ()
-  *recursive-types* := tail(*recursive-types*);
 end method;
 
 define method protocol-exports (structure :: <dim-structure>)

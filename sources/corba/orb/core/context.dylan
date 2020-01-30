@@ -155,7 +155,7 @@ corba/context/set-one-value($default-context,
 			    "Orb Type",
 			    make(corba/<any>,
 				 type: corba/$string-typecode,
-				 value: "Functional Developer ORB"));
+				 value: "Open Dylan ORB"));
 
 define method corba/orb/get-default-context (orb :: <orb>)
  => (ctx :: <context>)

@@ -16,7 +16,7 @@ public class Server {
      _tie_ArrayTest ArrayTestImpl = null;
      ArrayTestImpl  = new _tie_ArrayTest(new ArrayTestImplementation());
      FileOutputStream ior_file;
-     try {ior_file = new FileOutputStream("C:\\Temp\\ArrayTest.ior");
+     try {ior_file = new FileOutputStream("ArrayTest.ior");
           String ior_string = orb.object_to_string(ArrayTestImpl);
           PrintStream print_stream = new PrintStream(ior_file);
           print_stream.print(ior_string);

@@ -68,10 +68,10 @@ define method ArrayTest/float-array-operation (object :: <ArrayTest-implementati
 end method;
 
 
-define constant $ArrayTest-ior-file = "c:\\temp\\ArrayTest.ior";
+define constant $ArrayTest-ior-file = "ArrayTest.ior";
 
 define method start-ArrayTest-server () => ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let root-poa = corba/orb/resolve-initial-references(orb, "RootPOA");
   let ArrayTest = make(<ArrayTest-implementation>, poa: root-poa);
   let ArrayTestRef = portableserver/poa/servant-to-reference(root-poa, ArrayTest);

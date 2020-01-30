@@ -299,6 +299,7 @@ sub library_products {
     }
     else {
         my $so = ($platform_name =~ /-darwin$/) ? 'dylib' : 'so';
+        $executable = lc($executable);
         push(@products,
              File::Spec->catfile($user_root, 'lib', "lib${executable}.${so}"));
 
@@ -393,8 +394,10 @@ sub invoke_tool {
         }
 
         if (defined $header->{'include'}) {
-            push @options, '-include';
-            push @options, File::Spec->catdir($dir, $header->{'include'});
+            foreach my $include (split /\s+/, $header->{'include'}) {
+                push @options, '-include';
+                push @options, File::Spec->catdir($dir, $include);
+            }
         }
 
         if (defined $header->{'libraries'}) {

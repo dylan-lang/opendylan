@@ -11,5 +11,5 @@ define suite all-idl ()
   suite orbix-include-idl;
   suite corba-core-idl;
   suite corba-services-idl;
-//  suite damaged-idl;
+  suite damaged-idl;
 end suite;

@@ -124,11 +124,11 @@ define method structtest/result-d (structtest :: <structtest-implementation>)
   structtest/struct-d(structtest);
 end method;
 
-define constant *structtest-ior-file* = "c:\\temp\\structtest.ior";
+define constant *structtest-ior-file* = "structtest.ior";
 
 define method start-structtest-server () => ()
   // get reference to ORB
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
 
   // get reference to root POA (there will already be a listener, dispatcher,
   // and default receiver threads running)

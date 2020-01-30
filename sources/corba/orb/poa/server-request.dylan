@@ -99,7 +99,7 @@ end method;
 
 define method build-values-context (name :: corba/<string>, values :: <sequence>)
  => (context :: corba/<context>)
-  let default-context = corba/orb/get-default-context(corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB"));
+  let default-context = corba/orb/get-default-context(corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB"));
   let context = corba/context/create-child(default-context, generate-name(name));
   for (i from 0 below size(values) by 2)
     corba/context/set-one-value(context, values[i], as(corba/<any>, values[i + 1]));

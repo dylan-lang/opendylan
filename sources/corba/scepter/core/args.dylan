@@ -209,7 +209,7 @@ define scepter-option
     usage: "/define:name[=value]    - defines name for preprocessor",
     value?: #t,
     callback:      method (option, value)
-                     signal(make(<option-not-implemented>));
+                     signal(make(<option-not-implemented>, option-name: "define"));
                    end method
 end scepter-option;
 
@@ -238,7 +238,7 @@ define scepter-option
     usage: "/undefine:name          - undefines name for preprocessor",
     value?: #t,
     callback:      method (option, scepter)
-                     signal(make(<option-not-implemented>));
+                     signal(make(<option-not-implemented>, option-name: "undefine"));
                    end method
 end scepter-option;
 

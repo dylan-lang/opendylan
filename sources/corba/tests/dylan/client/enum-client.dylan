@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant *enumtest-ior-file* = "c:\\temp\\enumtest.ior";
+define constant *enumtest-ior-file* = "enumtest.ior";
 
 define constant $test-enum-symbols
   = #[#"Mercury",
@@ -86,7 +86,7 @@ define test enum-any-test ()
 end test;
 
 define test enum-in-parameter-test ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let context = corba/orb/get-default-context(orb);
   let enum = as(<enumtest>, corba/orb/file-to-object(orb, *enumtest-ior-file*));
   enumtest/reset-in-parameter(enum);
@@ -96,7 +96,7 @@ define test enum-in-parameter-test ()
 end test;
 
 define test enum-result-test ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let context = corba/orb/get-default-context(orb);
   let enum = as(<enumtest>, corba/orb/file-to-object(orb, *enumtest-ior-file*));
   enumtest/reset-result(enum);

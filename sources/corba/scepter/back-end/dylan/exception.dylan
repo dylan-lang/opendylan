@@ -15,7 +15,7 @@ end method;
 
 define method make-dim (node :: <ast-exception>)
  => (model :: <dim-exception>)
-  make(<dim-exception>, node: node, level: *type-level*);
+  make(<dim-exception>, node: node);
 end method;
 
 define method before-code-emission (exception :: <dim-exception>)

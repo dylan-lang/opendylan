@@ -1,0 +1,6 @@
+// File: orb.idl
+#ifndef _ORB_IDL_
+#define _ORB_IDL_
+//module CORBA {
+//};
+#endif

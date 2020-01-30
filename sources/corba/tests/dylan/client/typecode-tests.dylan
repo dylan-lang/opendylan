@@ -5,21 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define suite typecode-tests ()
-  test typecode-kind-tests;
-  test typecode-equal-tests;
-  test typecode-id-tests;
-  test typecode-name-tests;
-  test typecode-member-count-tests;
-  test typecode-member-name-tests;
-  test typecode-member-type-tests;
-  test typecode-member-label-tests;
-  test typecode-discriminator-type-tests;
-  test typecode-default-index-tests;
-  test typecode-length-tests;
-  test typecode-content-type-tests;
-end suite;
-
 define test typecode-kind-tests ()
   check("<tckind> type", instance?, #"tk-short", corba/<tckind>);
   check-equal("short typecode kind", CORBA/TypeCode/kind(corba/$short-typecode), #"tk-short");
@@ -38,7 +23,7 @@ define test typecode-kind-tests ()
   check-equal("struct typecode kind", CORBA/TypeCode/kind(class-typecode(<structure>)), #"tk-struct");
   check-equal("union typecode kind", CORBA/TypeCode/kind(class-typecode(<RLE-entity-1>)), #"tk-union");
   check-equal("enum typecode kind", CORBA/TypeCode/kind(class-typecode(<planet>)), #"tk-enum");
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   check-equal("sequence typecode kind",
 	      CORBA/TypeCode/kind(corba/orb/create-sequence-tc(orb, 10, corba/$string-typecode)),
 	      #"tk-sequence");
@@ -52,7 +37,7 @@ define test typecode-kind-tests ()
 end test;
 
 define test typecode-equal-tests ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   check("primitive typecode equal", CORBA/TypeCode/equal, corba/$string-typecode, corba/$string-typecode);
   check("complex typecode equal",
 	CORBA/TypeCode/equal,
@@ -140,7 +125,7 @@ define test typecode-default-index-tests ()
 end test;  
 
 define test typecode-length-tests ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   check-equal("typecode length",
 	      CORBA/TypeCode/length(corba/orb/create-sequence-tc(orb, 10, corba/$string-typecode)),
 	      10);
@@ -150,7 +135,7 @@ define test typecode-length-tests ()
 end test;  
 
 define test typecode-content-type-tests ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   check-equal("typecode content type",
 	      CORBA/TypeCode/content-type(corba/orb/create-sequence-tc(orb, 10, corba/$string-typecode)),
 	      corba/$string-typecode);
@@ -159,3 +144,17 @@ define test typecode-content-type-tests ()
 		  CORBA/Typecode/content-type(corba/$short-typecode));
 end test;  
 
+define suite typecode-tests ()
+  test typecode-kind-tests;
+  test typecode-equal-tests;
+  test typecode-id-tests;
+  test typecode-name-tests;
+  test typecode-member-count-tests;
+  test typecode-member-name-tests;
+  test typecode-member-type-tests;
+  test typecode-member-label-tests;
+  test typecode-discriminator-type-tests;
+  test typecode-default-index-tests;
+  test typecode-length-tests;
+  test typecode-content-type-tests;
+end suite;

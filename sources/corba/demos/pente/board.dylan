@@ -433,7 +433,7 @@ end method play-pente;
 define constant $bootstrapper-port = 7368; // "PENT" on phonepad
 
 define method initialize-server (frame :: <pente-frame>)
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let root-poa = corba/orb/resolve-initial-references(orb, "RootPOA");
   let pente-poa = portableserver/poa/create-poa(root-poa,
 						"PentePOA",
@@ -494,7 +494,7 @@ define method compute-pente-square
 end method;
 
 define method new-player (frame)
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let host = choose-host(frame);
   let socket = make(<tcp-socket>, port: $bootstrapper-port, host: host);
   let ior = read-line(socket);

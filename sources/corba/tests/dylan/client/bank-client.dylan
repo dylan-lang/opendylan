@@ -5,46 +5,38 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define suite bank-test-suite ()
-  test bank-0-request-tests;
-  test bank-1-request-tests;
-  test bank-2-request-tests;
-  test bank-3-request-tests;
-  test bank-4-request-tests;
-end suite;
-
-define constant zero/$bank-ior-file :: <string> = "c:\\temp\\bank-0.ior";
-define constant one/$bank-ior-file :: <string> = "c:\\temp\\bank.ior";
-define constant two/$bank-ior-file :: <string> = "c:\\temp\\bank-2.ior";
-define constant three/$bank-ior-file :: <string> = "c:\\temp\\bank-3.ior";
-define constant four/$bank-ior-file :: <string> = "c:\\temp\\bank-4.ior";
+define constant zero/$bank-ior-file :: <string> = "bank-0.ior";
+define constant one/$bank-ior-file :: <string> = "bank.ior";
+define constant two/$bank-ior-file :: <string> = "bank-2.ior";
+define constant three/$bank-ior-file :: <string> = "bank-3.ior";
+define constant four/$bank-ior-file :: <string> = "bank-4.ior";
 
 define test bank-0-request-tests ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let bankref = as(<bank>, corba/orb/file-to-object(orb, zero/$bank-ior-file));
   do-bank-tests(orb, bankref);
 end test;
   
 define test bank-1-request-tests ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let bankref = as(<bank>, corba/orb/file-to-object(orb, one/$bank-ior-file));
   do-bank-tests(orb, bankref);
 end test;
   
 define test bank-2-request-tests ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let bankref = as(<bank>, corba/orb/file-to-object(orb, two/$bank-ior-file));
   do-bank-tests(orb, bankref);
 end test;
   
 define test bank-3-request-tests ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let bankref = as(<bank>, corba/orb/file-to-object(orb, three/$bank-ior-file));
   do-bank-tests(orb, bankref);
 end test;
   
 define test bank-4-request-tests ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let bankref = as(<bank>, corba/orb/file-to-object(orb, four/$bank-ior-file));
   do-bank-tests(orb, bankref);
 end test;
@@ -83,3 +75,11 @@ define method do-bank-tests (orb :: corba/<orb>, bankref :: <bank>)
   check-condition("user error translated to corba error", corba/<bad-operation>, account/makewithdrawal(caccref, withdrawal3));
   check-false("currentaccount deleted on server", Bank/deleteAccount(bankref, caccref));
 end method;
+
+define suite bank-test-suite ()
+  test bank-0-request-tests;
+  test bank-1-request-tests;
+  test bank-2-request-tests;
+  test bank-3-request-tests;
+  test bank-4-request-tests;
+end suite;

@@ -109,6 +109,16 @@ define function parser-action-struct-type-id-seen (id)
   push(scepter.scepter-scopes, struct);
 end function;
 
+define function parser-action-struct-forward (struct-decl)
+  let scepter = get-scepter();
+  let scope = scepter.scepter-scopes.first;
+  let forward-struct = make(<ast-forward-structure>,
+                            local-name: struct-decl,
+                            pragmas: scepter.scepter-pragmas);
+  update-parser-state($idl-parser-forward-struct-declaration-seen);
+  add-declarator(scope, forward-struct);
+end function;
+
 define function parser-action-member (type-spec, declarators)
   let scepter = get-scepter();
   let scope = scepter.scepter-scopes.first;
@@ -138,6 +148,16 @@ define function parser-action-union-type-start (name, type)
 		   pragmas: scepter.scepter-pragmas);
   add-declarator(scope, union);
   push(scepter.scepter-scopes, union);
+end function;
+
+define function parser-action-union-forward (union-decl)
+  let scepter = get-scepter();
+  let scope = scepter.scepter-scopes.first;
+  let forward-struct = make(<ast-forward-union>,
+                            local-name: union-decl,
+                            pragmas: scepter.scepter-pragmas);
+  update-parser-state($idl-parser-forward-union-declaration-seen);
+  add-declarator(scope, forward-struct);
 end function;
 
 define function parser-action-case-branch (case-labels, field)

@@ -5,11 +5,11 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant $ArrayTest-ior-file = "c:\\temp\\ArrayTest.ior";
+define constant $ArrayTest-ior-file = "ArrayTest.ior";
 
 define method get-ArrayTest-reference ()
  => (reference :: <ArrayTest>)
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   as(<ArrayTest>, corba/orb/file-to-object(orb, $ArrayTest-ior-file));
 end method;
 
@@ -29,7 +29,7 @@ define test string-array-test ()
   check-equal("String array operation second result", ii, array);
   check-equal("String array operation third result", iii, array);
   check-true("Coerce string array to Any", instance?(as(CORBA/<any>, array), CORBA/<any>));
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let any = make(CORBA/<any>,
                  value: array,
 		 type: corba/orb/create-array-tc(orb,
@@ -56,7 +56,7 @@ define test short-array-test ()
   check-equal("Short array operation second result", ii, array);
   check-equal("Short array operation third result", iii, array);
   check-true("Coerce short array to Any", instance?(as(CORBA/<any>, array), CORBA/<any>));
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let any = make(CORBA/<any>,
                  value: array,
 		 type:  corba/orb/create-array-tc(orb,
@@ -87,7 +87,7 @@ define test float-array-test ()
   check-equal("Float array operation second result", ii, array);
   check-equal("Float array operation third result", iii, array);
   check-true("Coerce float array to Any", instance?(as(CORBA/<any>, array), CORBA/<any>));
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let any = make(CORBA/<any>,
                  value: array,
 		 type: corba/orb/create-array-tc(orb,

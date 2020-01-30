@@ -7,26 +7,22 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// MARSHALL-TYPECODE
 
-define method marshall-typecode (object :: <empty-typecode>, stream :: <marshalling-stream>)
-  with-typecode-output-alignment (stream)
-    marshall(corba/$unsigned-long-typecode, typecode-code(object), stream);
-    marshall-typecode-object(object, stream);
-  end;
+define method marshall-typecode (object :: <typecode>, stream :: <marshalling-stream>)
+  marshall(corba/$unsigned-long-typecode, typecode-code(object), stream);
+  marshall-typecode-object(object, stream);
 end method;
 
 define method marshall-typecode (object :: <complex-typecode>, stream :: <marshalling-stream>)
-  with-typecode-output-alignment (stream)
-    marshall(corba/$unsigned-long-typecode, typecode-code(object), stream);
-    let position = marshalling-stream-output-index(stream);
-    marshall(corba/$unsigned-long-typecode, 0, stream); // NB reserve space for length to written in
-    with-output-alignment-constraint (stream)
-      marshall(corba/$octet-typecode,
-	       if (marshalling-stream-little-endian?(stream)) 1 else 0 end if,
-	       stream);
-      marshall-typecode-object(object, stream);
-      set-buffer-size(stream, position, (marshalling-stream-output-index(stream) - position - 4)); /// ---*** magic
-    end;
-  end;  
+  marshall(corba/$unsigned-long-typecode, typecode-code(object), stream);
+  let position = marshalling-stream-output-index(stream);
+  marshall(corba/$unsigned-long-typecode, 0, stream); // NB reserve space for length to written in
+  with-output-alignment-constraint (stream)
+    marshall(corba/$octet-typecode,
+             if (marshalling-stream-little-endian?(stream)) 1 else 0 end if,
+             stream);
+    marshall-typecode-object(object, stream);
+    set-buffer-size(stream, position, (marshalling-stream-output-index(stream) - position - 4)); /// ---*** magic
+  end;
 end method;
 
 /// MARSHALL-TYPECODE-OBJECT
@@ -41,22 +37,26 @@ define method marshall-typecode-object (object :: <type-typecode>, stream :: <ma
 end method;
 
 define method marshall-typecode-object (object :: <struct-typecode>, stream :: <marshalling-stream>)
-  next-method();
-  marshall(corba/$unsigned-long-typecode, typecode-count(object), stream);
-  for (member :: <typecode-member> in typecode-members(object))
-    marshall-typecode-object(member, stream);
-  end for;
+  with-typecode-output-alignment (stream)
+    next-method();
+    marshall(corba/$unsigned-long-typecode, typecode-count(object), stream);
+    for (member :: <typecode-member> in typecode-members(object))
+      marshall-typecode-object(member, stream);
+    end for;
+  end;
 end method;
 
 define method marshall-typecode-object (object :: <union-typecode>, stream :: <marshalling-stream>)
-  next-method();
-  marshall(corba/$typecode-typecode, typecode-discriminator-typecode(object), stream);
-  marshall(corba/$long-typecode, typecode-default-used(object), stream);
-  marshall(corba/$unsigned-long-typecode, typecode-count(object), stream);
-  for (branch :: <typecode-branch> in typecode-members(object))
-    marshall(typecode-discriminator-typecode(object), typecode-label-value(branch), stream);
-    marshall-typecode-object(branch, stream); // NB do shared bit
-  end for;
+  with-typecode-output-alignment (stream)
+    next-method();
+    marshall(corba/$typecode-typecode, typecode-discriminator-typecode(object), stream);
+    marshall(corba/$long-typecode, typecode-default-used(object), stream);
+    marshall(corba/$unsigned-long-typecode, typecode-count(object), stream);
+    for (branch :: <typecode-branch> in typecode-members(object))
+      marshall(typecode-discriminator-typecode(object), typecode-label-value(branch), stream);
+      marshall-typecode-object(branch, stream); // NB do shared bit
+    end for;
+  end;
 end method;
 
 define method marshall-typecode-object (object :: <typecode-member>, stream :: <marshalling-stream>)
@@ -78,20 +78,26 @@ define method marshall-typecode-object (object :: <string-typecode>, stream :: <
 end method;
 
 define method marshall-typecode-object (object :: <sequence-typecode>, stream :: <marshalling-stream>)
-  next-method();
-  marshall(corba/$typecode-typecode, typecode-element-typecode(object), stream);
-  marshall(corba/$unsigned-long-typecode, typecode-max-length(object), stream);
+  with-typecode-output-alignment (stream)
+    next-method();
+    marshall(corba/$typecode-typecode, typecode-element-typecode(object), stream);
+    marshall(corba/$unsigned-long-typecode, typecode-max-length(object), stream);
+  end;
 end method;
 
 define method marshall-typecode-object (object :: <array-typecode>, stream :: <marshalling-stream>)
-  next-method();
-  marshall(corba/$typecode-typecode, typecode-element-typecode(object), stream);
-  marshall(corba/$unsigned-long-typecode, typecode-length(object), stream);
+  with-typecode-output-alignment (stream)
+    next-method();
+    marshall(corba/$typecode-typecode, typecode-element-typecode(object), stream);
+    marshall(corba/$unsigned-long-typecode, typecode-length(object), stream);
+  end;
 end method;
 
 define method marshall-typecode-object (object :: <alias-typecode>, stream :: <marshalling-stream>)
-  next-method();
-  marshall(corba/$typecode-typecode, typecode-aliased(object), stream);
+  with-typecode-output-alignment (stream)
+    next-method();
+    marshall(corba/$typecode-typecode, typecode-aliased(object), stream);
+  end;
 end method;
 
 // NB inherited from <struct-typecode>
@@ -101,7 +107,7 @@ end method;
 
 define method marshall-typecode-object (object :: <indirection-typecode>, stream :: <marshalling-stream>)
   next-method();
-  let offset = typecode-alignment-from-nesting(typecode-nesting(object)) - marshalling-stream-output-index(stream) - 7; // ---*** magic
+  let offset = typecode-alignment-from-nesting(typecode-nesting(object)) - marshalling-stream-output-index(stream) - 9; // ---*** magic
   marshall(corba/$long-typecode, offset, stream)
 end method;
 
@@ -109,9 +115,9 @@ end method;
 
 define method unmarshall-typecode (stream :: <marshalling-stream>)
   let code = unmarshall(corba/$unsigned-long-typecode, stream);
-  let typecode = as(<typecode>, code);
+  let typecode = make-typecode(code);
   unmarshall-typecode-into(typecode, stream);
-  as(<typecode>, typecode); // NB interns/canonicalizes
+  as(<typecode>, typecode) // NB interns/canonicalizes
 end method;
 
 /// UNMARSHALL-TYPECODE-INTO
@@ -221,9 +227,8 @@ end method;
 define method unmarshall-typecode-object-into (object :: <indirection-typecode>, stream :: <marshalling-stream>)
   next-method();
   let offset = unmarshall(corba/$long-typecode, stream);
-  let alignment = offset + marshalling-stream-input-index(stream) + 4; // ---*** magic
-  typecode-offset(object) := offset;
-  typecode-nesting(object) := typecode-nesting-from-alignment(alignment);
+  let alignment = offset + marshalling-stream-input-index(stream) - 4; // ---*** magic
+  typecode-nesting(object) := typecode-nesting-from-alignment(alignment) - 1;
 end method;
 
 

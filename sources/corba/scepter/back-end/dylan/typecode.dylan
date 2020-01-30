@@ -6,6 +6,8 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+define thread variable *tc-recursive-types* :: <list> = #();
+
 // Protocol for emitting typecodes
 //
 define generic emit-typecode (stream :: <stream>, type :: <dim-type>) => ();
@@ -14,7 +16,13 @@ define generic dim-type-typecode-as-string (type :: <dim-type>) => (typecode :: 
 
 define method emit-typecode (stream :: <stream>, type :: <dim-type>)
  => ()
-  format(stream, "class-typecode(%s)", dim-type-native-type(type));
+  let ast-type = dim-node(type).full-definition;
+  let level = find-key(*tc-recursive-types*, method (tc) tc == ast-type end);
+  if (level)
+    emit-indirection-typecode(stream, level)
+  else
+    format(stream, "class-typecode(%s)", dim-type-native-type(type));
+  end;
 end method;
 
 define method emit-indirection-typecode (stream :: <stream>, nesting :: <integer>)

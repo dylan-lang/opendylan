@@ -1,0 +1,22 @@
+// Author:    Keith Dennison
+// Copyright: Copyright 1998 Functional Objects, Inc.  All rights reserved.
+
+interface Chat;
+
+interface CallBack {
+  readonly attribute string name;
+  void NewMessage     (in string message);
+  void RegisterClient (in Callback client, in string name);
+  void RemoveClient   (in Callback client, in string name);
+  void NewRoom        (in Chat room, in string name);
+};
+
+typedef sequence<Callback> CallbackSeq;
+
+interface Chat {
+  readonly attribute string name;
+  readonly attribute CallbackSeq clients;
+  void SendMessage    (in string message);
+  void RegisterClient (in Callback client, in string name);
+  void RemoveClient   (in Callback client, in string name);
+};

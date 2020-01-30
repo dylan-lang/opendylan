@@ -45,7 +45,7 @@ end frame;
 
 define method initialize (frame :: <ir-browser-frame>, #key)
   next-method();
-  let orb = corba/orb-init(make(CORBA/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(CORBA/<arg-list>), "Open Dylan ORB");
   let repository = as(corba/<repository>, corba/orb/resolve-initial-references(orb, "InterfaceRepository"));
   *interface-repository* := repository;
   unless (corba/object/is-nil(*interface-repository*))

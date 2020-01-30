@@ -5,6 +5,16 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+define test co-located-test () 
+  run-servers();
+end test;
+
+define suite co-located () // to run servers do "-suite co-located -top" on command-line
+  test co-located-test;
+end suite;
+
+ignore(co-located);
+
 define suite request-tests ()
   suite grid-test-suite;
   suite bank-test-suite;
@@ -22,12 +32,3 @@ define suite request-tests ()
   suite ir-test-suite;
 end suite;
 
-define suite co-located () // to run servers do "-suite co-located -top" on command-line
-  test co-located-test;
-end suite;
-
-define test co-located-test () 
-  run-servers();
-end test;
-
-ignore(co-located);

@@ -8,12 +8,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant <location-service> = one-of(#"naming-service", #"shared-file");
 
-define constant $bank-ior-file :: <string> = "c:\\temp\\bank-demo.ior";
+define constant $bank-ior-file :: <string> = "bank-demo.ior";
 
 define constant $name = make(CosNaming/<Name>, size: 1, fill: make(CosNaming/<NameComponent>, id: "Current Bank", kind: "Bank"));
 
 define method initialize-client ()
-  let orb = CORBA/ORB-init(make(CORBA/<arg-list>), "Functional Developer ORB");
+  let orb = CORBA/ORB-init(make(CORBA/<arg-list>), "Open Dylan ORB");
   let ls = get-location-service();
   block ()
     let bank = lookup-bank(orb, ls);

@@ -605,7 +605,7 @@ struct-type-seen:
 struct-type-id-seen:
   id
     => begin
-	 parser-action-struct-type-id-seen(arg$1);
+         arg$1
        end;;
 
 struct-type-sq-seen:
@@ -621,9 +621,19 @@ struct-type-at-least-one-member:
          arg$1;
        end;;
 
-struct-type:
+struct-header:
   struct-type-seen
   struct-type-id-seen
+    => arg$2;;
+
+struct-decl-header:
+  struct-header
+    => begin
+	 parser-action-struct-type-id-seen(arg$1);
+       end;;
+
+struct-decl:
+  struct-decl-header
   struct-type-sq-seen
   struct-type-at-least-one-member
   RIGHT-BRACE
@@ -631,6 +641,18 @@ struct-type:
          update-parser-state($idl-parser-struct-qs-seen);
          pop(scepter-scopes(get-scepter()));
        end;;
+
+struct-forward:
+  struct-header
+    => begin
+	 parser-action-struct-forward(arg$1);
+       end;;
+
+struct-type:
+  struct-decl
+    => arg$1;;
+  struct-forward
+    => arg$1;;
 
 at-least-one-member:
   member
@@ -698,15 +720,19 @@ union-type-switch-type-spec-seen:
          arg$1;
        end;;
 
-union-type-start:
+union-header:
   union-type-seen
   union-type-id-seen
+    => arg$2;;
+
+union-type-start:
+  union-header
   union-type-switch-seen
   union-type-switch-open-paren-seen
   union-type-switch-type-spec-seen  
   RIGHT-PAREN
     => begin
-	 parser-action-union-type-start(arg$2, arg$5);
+	 parser-action-union-type-start(arg$1, arg$4);
        end;;
 
 union-type-sq-seen:
@@ -729,12 +755,24 @@ union-type-qs-seen:
          pop(scepter-scopes(get-scepter()));
        end;;
 
-union-type:
+union-decl:
   union-type-start
   union-type-sq-seen
   union-type-at-least-one-case-branch
   union-type-qs-seen
     => arg$4;;
+
+union-forward:
+  union-header
+    => begin
+	 parser-action-union-forward(arg$1);
+       end;;
+
+union-type:
+  union-decl
+    => arg$1;;
+  union-forward
+    => arg$1;;
 
 switch-type-spec:
   integer-type

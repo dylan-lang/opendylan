@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant *treetest-ior-file* = "c:\\temp\\treetest.ior";
+define constant *treetest-ior-file* = "treetest.ior";
 
 define constant <tree-sequence> = limited(corba/<sequence>, of: <tree>);
 
@@ -97,7 +97,7 @@ define method treeU-equal? (tree1, tree2)
 end method;
 
 define test tree-operations-test ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let treetest = as(<treetest>, corba/orb/file-to-object(orb, *treetest-ior-file*));
   check-equal("", treetest/depth(treetest, $a-tree), 0);
   check-true("", tree-equal?(treetest/identity(treetest, $a-tree), $a-tree));

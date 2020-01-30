@@ -49,12 +49,9 @@ define method receive-request (poa :: <poa>)
     while (#t)
       let mailbox = poa-mailbox(poa);
       let manager = poa-manager(poa);
-      let state = poa-manager-state(manager);
-      when (state =  #"holding")
-	wait-for-poa-manager-state-change(manager);
-      end when;
+      wait-for-poa-manager-state-change-from(manager, #"holding");
 
-      when ((state = #"inactive") & (empty?(mailbox)))
+      when ((poa-manager-state(manager) = #"inactive") & (empty?(mailbox)))
 	error("need to shutdown the POA") /// ---*** implement
       end when;
 

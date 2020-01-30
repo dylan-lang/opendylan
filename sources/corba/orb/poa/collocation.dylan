@@ -65,7 +65,7 @@ end method;
 define method compute-collocated-servant (object :: <object-reference>, server-request :: <collocated-server-request>)
  => (servant :: false-or(portableserver/<servant>) , poa :: false-or(portableserver/<poa>), id :: false-or(<string>))
   if (collocated-server?(object))
-    let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+    let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
     let ior = corba/object/ior(object);
     let profile = get-iiop-profile(ior);
     let key = iiop/profilebody-1-0/object-key(profile);
@@ -132,7 +132,7 @@ end method;
 
 define method collocated-server? (object :: <object-reference>)
  => (collocated? :: <boolean>)
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let adaptor = orb-adaptor(orb);
   if (adaptor)
     let profile = get-iiop-profile(corba/object/ior(object));

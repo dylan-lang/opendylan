@@ -91,7 +91,7 @@ end method;
 
 define method load-interface-repository (back-end :: <ir-back-end>, root :: <ast-root>)
  => ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let ir = as(corba/<Repository>, corba/orb/resolve-initial-references(orb, "InterfaceRepository"));
   if (corba/object/is-nil(ir))
     error("Could not get reference to Interface Repository");

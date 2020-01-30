@@ -98,7 +98,7 @@ define constant DebuggerNubEvent = "Functional Developer Debugger Nub ";
 
 
 define method main () => ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let root-poa = corba/orb/resolve-initial-references(orb, "RootPOA");
   let poa =
     PortableServer/POA/create-poa(root-poa, "Rnub POA",

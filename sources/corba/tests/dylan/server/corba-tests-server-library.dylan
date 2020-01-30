@@ -6,10 +6,10 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library corba-tests-server
-  use dylan;
+  use common-dylan;
   use dylan-orb;
   use corba-tests-utilities;
   use corba-tests-skeletons;
-  use plists;
+  use collections;
 end library corba-tests-server;
 

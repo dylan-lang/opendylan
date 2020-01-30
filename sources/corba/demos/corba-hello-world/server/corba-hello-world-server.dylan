@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant $hello-world-ior-file = "c:\\temp\\hello.ior";
+define constant $hello-world-ior-file = "hello.ior";
 
 define class <world-implementation> (<world-servant>)
 end class;
@@ -17,7 +17,7 @@ define method world/hello (world :: <world-implementation>)
 end method;
 
 define method main () => ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let poa = corba/orb/resolve-initial-references(orb, "RootPOA");
   let impl = make(<world-implementation>);
   let world = portableserver/poa/servant-to-reference(poa, impl);

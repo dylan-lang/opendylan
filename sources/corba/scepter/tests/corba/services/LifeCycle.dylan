@@ -16,6 +16,7 @@ add-idl-file!(
 "\n"
 "#ifndef COSLIFECYCLE\n"
 "#define COSLIFECYCLE\n"
+"#include \"CORBA.idl\"\n"
 "#include \"Naming.idl\"\n"
 "\n"
 "module CosLifeCycle{\n"

@@ -67,10 +67,10 @@ define method AnyTest/any-operation (object :: <AnyTest-implementation>, one :: 
   values(one, two, one);
 end method;
 
-define constant $AnyTest-ior-file = "c:\\temp\\AnyTest.ior";
+define constant $AnyTest-ior-file = "AnyTest.ior";
 
 define method start-AnyTest-server () => ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let root-poa = corba/orb/resolve-initial-references(orb, "RootPOA");
   let AnyTest = make(<AnyTest-implementation>, poa: root-poa);
   let AnyTestRef = portableserver/poa/servant-to-reference(root-poa, AnyTest);

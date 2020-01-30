@@ -33,6 +33,16 @@ define method unmarshall-object (typecode :: <long-typecode>, stream :: <marshal
   read-signed-bytes(stream, 4);
 end method;
 
+/// LONG LONG
+
+define method marshall-object (typecode :: <long-long-typecode>, object :: corba/<long-long>, stream :: <marshalling-stream>)
+  write-bytes(stream, object, 8);
+end method;
+
+define method unmarshall-object (typecode :: <long-long-typecode>, stream :: <marshalling-stream>)
+  read-signed-bytes(stream, 8);
+end method;
+
 /// UNSIGNED SHORT
 
 define method marshall-object (typecode :: <unsigned-short-typecode>, object :: corba/<unsigned-short>, stream :: <marshalling-stream>)
@@ -51,6 +61,16 @@ end method;
 
 define method unmarshall-object (typecode :: <unsigned-long-typecode>, stream :: <marshalling-stream>)
   read-unsigned-bytes(stream, 4);
+end method;
+
+/// UNSIGNED LONG LONG
+
+define method marshall-object (typecode :: <unsigned-long-long-typecode>, object :: corba/<unsigned-long-long>, stream :: <marshalling-stream>)
+  write-bytes(stream, object, 8);
+end method;
+
+define method unmarshall-object (typecode :: <unsigned-long-long-typecode>, stream :: <marshalling-stream>)
+  read-unsigned-bytes(stream, 8);
 end method;
 
 /// FLOAT

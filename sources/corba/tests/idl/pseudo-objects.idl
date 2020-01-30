@@ -1,9 +1,7 @@
 // Author:    Keith Dennison
 // Copyright: Copyright 1998, Functional Objects, Inc.  All rights reserved.
 
-#ifdef ORBIXWEB
 #include <orb.idl>
-#endif
 
 interface TestObjectA {
   attribute long id;
@@ -39,7 +37,7 @@ interface PseudoObjectsTest {
 //  attribute NamedValue namedvalue_attribute;
   attribute Object object_attribute;
 //  attribute Principal principal_attribute;
-  attribute TypeCode typecode_attribute;
+  attribute CORBA::TypeCode typecode_attribute;
 
   exception failure {
   };
@@ -52,6 +50,6 @@ interface PseudoObjectsTest {
 //  NamedValue namedvalue_operation (in NamedValue one, inout NamedValue two, out NamedValue three);
   Object object_operation (in Object one, inout Object two, out Object three);
 //  Principal principal_operation (in Principal one, inout Principal two, out Principal three);
-  TypeCode typecode_operation (in TypeCode one, inout TypeCode two, out TypeCode three);
+  CORBA::TypeCode typecode_operation (in CORBA::TypeCode one, inout CORBA::TypeCode two, out CORBA::TypeCode three);
 
 };

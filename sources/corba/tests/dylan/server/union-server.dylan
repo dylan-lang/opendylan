@@ -78,10 +78,10 @@ define method UnionTest/rle-entity-5-operation (object :: <UnionTest-implementat
   values(one, two, one);
 end method;
 
-define constant $UnionTest-ior-file = "c:\\temp\\UnionTest.ior";
+define constant $UnionTest-ior-file = "UnionTest.ior";
 
 define method start-UnionTest-server () => ()
-  let orb = corba/orb-init(make(corba/<arg-list>), "Functional Developer ORB");
+  let orb = corba/orb-init(make(corba/<arg-list>), "Open Dylan ORB");
   let root-poa = corba/orb/resolve-initial-references(orb, "RootPOA");
   let UnionTest = make(<UnionTest-implementation>, poa: root-poa);
   let UnionTestRef = portableserver/poa/servant-to-reference(root-poa, UnionTest);

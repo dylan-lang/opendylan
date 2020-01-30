@@ -77,9 +77,7 @@ define test constant-float-test (description: "Test float and double constants")
   check-equal("Value of BIG_DOUBLE", $BIG-DOUBLE, 1.7976931d+300);
   check-close-enough("Value of NEGATIVE_DOUBLE1", $NEGATIVE-DOUBLE1, -678.9d100);
   check-close-enough("Value of NEGATIVE_DOUBLE2", $NEGATIVE-DOUBLE2, -678.9d-100);
-  check-equal("Value of FLOAT_EXPR1", $FLOAT-EXPR1, 0.0);
   check-equal("Value of FLOAT_EXPR2", $FLOAT-EXPR2, 0.0);
-  check-equal("Value of DOUBLE_EXPR1", $DOUBLE-EXPR1, 0.0d0);
   check-equal("Value of DOUBLE_EXPR2", $DOUBLE-EXPR2, 0.0d0);
 end test;
 
@@ -128,8 +126,8 @@ define test constant-expression-test (description: "Test constant expressions")
   check-equal("Value of DISTRIB_17", $DISTRIB-17, modulo($A + $B + $C, $D));
   check-equal("Value of DISTRIB_18", $DISTRIB-18, modulo($A, $D) + modulo($B, $D) + modulo($C, $D));
 
-  check-equal("Value of UNARY_1", $UNARY-1, $A - $B + lognot($C));
-  check-equal("Value of UNARY_2", $UNARY-2, $A - $B + lognot($C));
+  check-equal("Value of UNARY_1", $UNARY-1, logxor($A, -$B, lognot($C)));
+  check-equal("Value of UNARY_2", $UNARY-2, logxor($A, -$B, lognot($C)));
 end test;
 
 define suite constant-test-suite ()

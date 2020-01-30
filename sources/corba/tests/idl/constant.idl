@@ -81,9 +81,7 @@ const double NEGATIVE_DOUBLE1 = -678.9E100;
 const double NEGATIVE_DOUBLE2 = -678.9E-100;
 
 // These just check coercing works
-const float FLOAT_EXPR1 = 0.0 + 0;
 const float FLOAT_EXPR2 = 0.0 + ZERO_DOUBLE;
-const double DOUBLE_EXPR1 = ZERO_DOUBLE + 0;
 const double DOUBLE_EXPR2 = ZERO_DOUBLE + ZERO_FLOAT;
 
 
@@ -105,7 +103,7 @@ const short MINUS_ONE = -1;
 const long SECS_IN_1_DAY = 24 * 60 * 60;
 const unsigned short ICE_CREAM = 100 + MINUS_ONE;
 const unsigned long FOO = (5 + 3) * 6;
-const float PRICE = 5 * 100.00;
+const float PRICE = 5.0 * 100.00;
 const double OVERDRAFT = 1234567.8;
 
 const long A = 100;
@@ -137,5 +135,5 @@ const long DISTRIB_16 = A*D - B*D - C*D;
 const long DISTRIB_17 = (A + B + C) % D;
 const long DISTRIB_18 = A%D + B%D + C%D;
 
-const long UNARY_1 = +A + -B + ~C;
-const long UNARY_2 = (+A) + (-B) + (~C);
+const long UNARY_1 = +A ^ -B ^ ~C;
+const long UNARY_2 = (+A) ^ (-B) ^ (~C);
