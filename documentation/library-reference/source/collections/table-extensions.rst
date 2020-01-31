@@ -5,9 +5,6 @@ The table-extensions Module
 .. current-library:: collections
 .. current-module:: table-extensions
 
-Introduction
-============
-
 The Collections library's *table-extensions* module extends the Dylan
 language's standard table features.
 

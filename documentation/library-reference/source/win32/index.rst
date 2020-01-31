@@ -11,19 +11,14 @@ The Win32 API Libraries
 .. current-library:: win32-kernel
 .. current-module:: win32-kernel
 
-.. contents::
-
 .. index::
    single: introduction to; Win32 libraries
    single: libraries; introduction to Win32 libraries
    single: Win32 API libraries; introduction
 
-Introduction
-============
-
-This chapter is about Open Dylan's set of Win32 API interface
+This document describes Open Dylan's set of Win32 API interface
 libraries. These libraries provide a low-level Dylan interface to the
-Win32 API in Microsoft Windows and Microsoft Windows NT.
+Win32 API in Microsoft Windows.
 
 Each Dylan library is a simple translation of Win32 API header files
 into a set of interface declarations from Open Dylan's C-FFI
@@ -38,13 +33,15 @@ matching the contents of Microsoft's DLLs, allowing Dylan applications
 to avoid references to DLLs they do not need to use.
 
 With the exception of changes necessitated by Dylan naming conventions
-and requirements, the names of C items have been preserved in the
-Open Dylan Win32 API libraries. Hence this chapter does not provide
+and requirements, the names of C items have been preserved.
+Hence this document does not provide
 an exhaustive list of the items available in the libraries. Instead, it
 explains the name mapping scheme we used in the conversion, and provides
 a collection of tips for writing Dylan applications with the libraries.
 Finally, there is a list of items not supported in our versions of these
 libraries.
+
+.. contents::
 
 .. index::
    single: libraries provided; list of Win32

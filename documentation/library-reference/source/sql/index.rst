@@ -5,24 +5,21 @@ The sql Library
 .. current-library:: sql
 .. current-module:: sql
 
-.. contents::
-   :local:
-
-Introduction
-============
-
 Open Dylan's SQL-ODBC library provides a generic Dylan protocol for interfacing
 applications to any database management system (DBMS) supporting Microsoft's
-Open Database ConnectivityTM (ODBC) interface and the industry-standard database
-query language, SQL. The SQL-OBDC library supports the full SQL language defined
+Open Database ConnectivityTM (ODBC) interface and the SQL database
+query language. The SQL-OBDC library supports the full SQL language defined
 in the ANSI SQL-89 and ANSI SQL-92 specifications, as well as any extensions
 defined by a DBMS.
 
 A low-level interface to the Microsoft ODBC API is also available in the ODBC-FFI
-library. Functional Objects built the ODBC-FFI library using the C-FFI library
+library. The ODBC-FFI library uses the C-FFI library
 and the same C-to-Dylan name mapping scheme as described in the Win32 API FFI
 library documentation. See the C FFI and Win32 library reference for details
 of that scheme. The ODBC-FFI library is otherwise undocumented.
+
+.. contents::
+   :local:
 
 Implementation
 --------------

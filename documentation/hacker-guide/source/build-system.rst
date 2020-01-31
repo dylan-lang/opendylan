@@ -2,11 +2,6 @@
 Jam-based Build System
 **********************
 
-This document describes the Jam-based build system for Open Dylan.
-
-Introduction
-============
-
 The purpose of the Open Dylan ``build-system`` is to
 coordinate the final stages in the building of a Dylan library project.
 The Open Dylan compiler takes a Dylan library in the form of

@@ -5,9 +5,6 @@ The standard-io Module
 .. current-library:: io
 .. current-module:: standard-io
 
-Introduction
-------------
-
 This document describes the Standard-IO module, which requires the
 Streams module. All interfaces described in this document are exported
 from the Standard-IO module. The functionality provided by this module

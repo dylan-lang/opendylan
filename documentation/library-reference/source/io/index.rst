@@ -4,11 +4,6 @@ The io Library
 
 .. current-library:: io
 
-Introduction
-============
-
-The IO library exports the following modules:
-
 .. toctree::
    :maxdepth: 2
 

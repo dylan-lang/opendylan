@@ -9,20 +9,20 @@ Integers
    * This should be combined into language-extensions/
    * Note that content below includes things compeletely unrelated to numbers.
 
-This chapter describes the Open Dylan implementation of arithmetic
+This document describes the Open Dylan implementation of arithmetic
 functions, especially integer arithmetic. It describes a number of
 extensions to the Dylan language, which are available from the Dylan
 library. It also describes a generic arithmetic facility that, through
 the use of other libraries, allows you to extend arithmetic to special
 number types, such as "big" (64-bit) integers.
 
-Throughout this chapter, arguments are instances of the class specified
+Throughout this document, arguments are instances of the class specified
 by the argument name (ignoring any numeric suffixes), unless otherwise
 noted. Thus, the arguments *integer*, *integer1*, and *integer2* would
 all be instances of the class :drm:`<integer>`.
 
 The goals of the extensions to the Dylan language described in this
-chapter are as follows:
+document are as follows:
 
 * Provide arithmetic operations that are closed over small integers.
 
@@ -56,7 +56,7 @@ chapter are as follows:
 
   .. note:: When there are several distinct interfaces with the same name
      but in different modules, the notation *interface* *#* *module* is used
-     in this chapter to remove ambiguity.
+     in this document to remove ambiguity.
 
 * Specify that the class :drm:`<integer>` has a finite,
   implementation-dependent range, bounded by the constants
@@ -77,7 +77,7 @@ chapter are as follows:
   :drm:`<integer>`.
 
 The Dylan library provides implementations of the generic functions and
-functions described in this chapter. If the result of one of these
+functions described in this document. If the result of one of these
 operations is specified to be an instance of :drm:`<integer>` and the
 mathematically correct result cannot be represented as an :drm:`<integer>`
 then an error is signaled. This removes fully generic arithmetic from

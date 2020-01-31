@@ -9,15 +9,10 @@ The c-ffi Library
 .. current-library:: c-ffi
 .. current-module:: c-ffi
 
-.. contents::
-
 .. index::
    single: C-FFI library; introduction
    single: introduction to; C-FFI library
    single: libraries; introduction to C-FFI
-
-Introduction
-============
 
 The C-FFI (*C foreign function interface*) library provides a means of
 interfacing a Dylan application with code written in the C language. The
@@ -31,6 +26,11 @@ functions through which Dylan code can manipulate the C library's data
 and call its functions. Interface descriptions can also allow C code to
 call into Dylan; compiling such a description generates entry points
 compatible with C's calling conventions.
+
+
+.. contents::
+   :depth: 3
+
 
 Overview
 ========

@@ -13,7 +13,7 @@ described by the DRM, with a few exceptions that are documented in
 Open Dylan provides the Dylan language in the ``dylan`` module of the
 ``dylan`` library.
 
-This chapter is an introduction to Open Dylan's extensions to the
+This document is an introduction to Open Dylan's extensions to the
 Dylan language.  These extensions are either built in to the ``dylan``
 library or are available in a separate library, :doc:`common-dylan
 <../common-dylan/index>`.

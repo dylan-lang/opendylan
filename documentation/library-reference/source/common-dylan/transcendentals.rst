@@ -5,13 +5,10 @@ The transcendentals Module
 .. current-library:: common-dylan
 .. current-module:: transcendentals
 
-Introduction
-============
-
 The *transcendentals* module, exported from the *common-dylan* library,
-provides a set of open generic functions for ANSI C-like behavior over
-real numbers. The restrictions and error cases described in this chapter
-are intended to be the same as they are in ANSI C.
+provides a set of generic functions for ANSI C-like behavior over real
+numbers. The restrictions and error cases described in this document are
+intended to be the same as they are in ANSI C.
 
 The single module, *transcendentals*, exports these generic functions
 and methods.
