@@ -5,13 +5,11 @@ The simple-format Module
 .. current-library:: common-dylan
 .. current-module:: simple-format
 
-Common Dylan provides several libraries relevant to formatting and
-printing strings, or otherwise using strings for output. These libraries
-include :doc:`format <../io/format>`, :doc:`format-out <../io/format-out>`,
-:doc:`print <../io/print>`, and :doc:`standard-io <../io/standard-io>`. The
-facilities provided by these libraries will be excess to many users'
-requirements, who may prefer to use the ``simple-format`` module that the
-``common-dylan`` library exports.
+The `simple-format` module provides a subset of the functionality of the
+:doc:`format <../io/format>`, :doc:`format-out <../io/format-out>`, :doc:`print
+<../io/print>`, and :doc:`standard-io <../io/standard-io>` modules, for
+programs that just need to do simple output to the console without pulling in
+the full :doc:`IO <../io/index>` library.
 
 .. function:: format-to-string
 
@@ -25,8 +23,8 @@ requirements, who may prefer to use the ``simple-format`` module that the
 
    :conditions:
 
-     This function signals an error if any of the format directives in
-     *format-string* are invalid.
+     This function signals an error of type :drm:`<simple-error>` if any of the
+     format directives in *format-string* are invalid.
 
    :description:
 
@@ -50,7 +48,9 @@ requirements, who may prefer to use the ``simple-format`` module that the
 
      Formats its arguments to the standard output.
 
-     This function does not use the :var:`*standard-output*` stream
-     defined by the :doc:`Standard-IO <../io/standard-io>` module in the
-     :doc:`IO <../io/index>` library.
+     This function writes directly to the console using the underlying OS
+     facilities rather than using the :var:`*standard-output*` stream defined
+     by the :doc:`standard-io <../io/standard-io>` module in the :doc:`IO
+     <../io/index>` library. For example, on Unix systems this writes to file
+     descriptor 1 via the ``write`` C function.
 
