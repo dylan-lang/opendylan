@@ -5,15 +5,11 @@ The file-system Module
 .. current-library:: system
 .. current-module:: file-system
 
-Introduction
-------------
-
 The File-System module is part of the System library and provides a
 generic interface to the file system of the local machine. Remotely
 mounted file systems are also accessible using this module.
 
-This chapter describes the functions and types that the File-System
-module contains.
+.. contents::
 
 Types specific to file system operations
 ----------------------------------------

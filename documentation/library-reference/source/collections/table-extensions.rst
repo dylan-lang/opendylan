@@ -5,12 +5,8 @@ The table-extensions Module
 .. current-library:: collections
 .. current-module:: table-extensions
 
-Introduction
-============
-
-The Collections library's Table Extensions module extends the Dylan
-language's standard table features. It is available to applications as
-the *table-extensions* module.
+The Collections library's *table-extensions* module extends the Dylan
+language's standard table features.
 
 .. note:: Open Dylan provides a slightly different table implementation
    from that described by the DRM. See :doc:`../language-extensions/language-differences`

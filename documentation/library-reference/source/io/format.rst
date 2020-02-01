@@ -5,10 +5,7 @@ The format Module
 .. current-library:: io
 .. current-module:: format
 
-Introduction
-============
-
-This chapter describes the Format module. The Format module is exported
+The Format module is exported
 from the IO library. This module extends the functionality of the format
 strings described in :drm:`Dylan's condition system <Condition_Messages>`
 and provides two new functions for processing the extended format strings.
@@ -16,8 +13,7 @@ The Format module is a small module, but it uses the printing modules and
 some of the Streams module. :doc:`print` and :doc:`streams` give full
 details of the Print and Streams libraries.
 
-The ``format`` module exports all the identifiers described in this
-chapter.
+The ``format`` module exports all the identifiers described in this document.
 
 Control strings
 ===============

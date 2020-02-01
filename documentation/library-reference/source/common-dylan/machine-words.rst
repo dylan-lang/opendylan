@@ -5,14 +5,10 @@ The machine-words Module
 .. current-library:: common-dylan
 .. current-module:: machine-words
 
-Introduction
-============
+This document describes a number of extensions to the Dylan language which are
+available from the Dylan library.
 
-This chapter describes the Open Dylan implementation of machine
-words. It describes a number of extensions to the Dylan language, which
-are available from the Dylan library.
-
-Throughout this chapter, arguments are instances of the class specified
+Throughout this document, arguments are instances of the class specified
 by the argument name, unless otherwise noted. Thus, the arguments
 *machine-word* and *integer* are instances of :class:`<machine-word>` and
 :drm:`<integer>`, respectively.
@@ -179,7 +175,7 @@ integer value.
      instances of ``<abstract-integer>``, in which case they are coerced to
      instances of ``<machine-word>`` as if by using ``as``.
 
-The MACHINE-WORDS module
+The machine-words Module
 ========================
 
 This section contains a reference entry for each item exported from the

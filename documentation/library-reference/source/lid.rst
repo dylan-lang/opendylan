@@ -1,11 +1,6 @@
-*******************
-Library Interchange
-*******************
-
-Introduction
-============
-
-This chapter is about the library interchange definition format, *LID*.
+***************
+LID File Format
+***************
 
 The DRM defines an :drm:`interchange format for Dylan source files <Dylan_Interchange_Format>`,
 but does not define an interchange format for Dylan libraries.

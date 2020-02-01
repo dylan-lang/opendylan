@@ -4,11 +4,6 @@ The io Library
 
 .. current-library:: io
 
-Introduction
-============
-
-The I/O library exports the following modules:
-
 .. toctree::
    :maxdepth: 2
 
@@ -17,4 +12,3 @@ The I/O library exports the following modules:
    print
    streams
    standard-io
-

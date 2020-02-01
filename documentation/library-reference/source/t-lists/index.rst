@@ -1,10 +1,10 @@
 *******************
-The t-lists library
+The t-lists Library
 *******************
 
 .. current-library:: t-lists
 
-The t-lists module
+The t-lists Module
 ******************
 
 .. current-module:: t-lists

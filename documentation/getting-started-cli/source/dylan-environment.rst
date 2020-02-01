@@ -44,13 +44,13 @@ functionality. In the example, the user starts dylan-environment in
 interactive mode, opens the playground project, performs some
 arithmetic, defines a method, and then traces it::
 
-    # dylan-environment
-    Hacker Edition
-    Version 2014.1
-    Copyright (c) 1997-2004, Functional Objects, Inc.
-    Portions Copyright (c) 2004-2014, Dylan Hackers
-    Portions Copyright (c) 2001-2012, Ravenbrook Ltd.
+    $ dylan-environment
+    Welcome to Open Dylan, Version 2019.2pre.
 
+    For documentation on Open Dylan, see http://opendylan.org/documentation/.
+    See http://opendylan.org/documentation/getting-started-cli/ for an introduction to the command line tools.
+
+    Type "help" for more information.
     > play
     Opened project gui-dylan-playground
     Starting: gui-dylan-playground

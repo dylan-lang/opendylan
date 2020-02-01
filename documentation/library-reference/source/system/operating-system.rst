@@ -5,14 +5,10 @@ The operating-system Module
 .. current-library:: system
 .. current-module:: operating-system
 
-Introduction
-------------
-
 The operating-system module is part of the System library. It provides
 an interface to some features of the host machine's operating system.
 
-This chapter describes the functions and constants that the
-operating-system module contains.
+.. contents::
 
 Manipulating environment information
 ------------------------------------

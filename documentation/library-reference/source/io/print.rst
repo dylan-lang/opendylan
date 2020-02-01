@@ -5,9 +5,6 @@ The print and pprint Modules
 .. current-library:: io
 .. current-module:: print
 
-Introduction
-------------
-
 The IO library's printing modules provide an interface that outputs an
 object in Dylan literal syntax if the object can be represented as a
 Dylan literal, and otherwise, outputs the object in an

@@ -5,15 +5,12 @@ The date Module
 .. current-library:: system
 .. current-module:: date
 
-Introduction
-------------
-
 The ``date`` module is part of the System library and provides a
 machine-independent facility for representing and manipulating dates and
 date/time intervals.
 
-This chapter describes the classes, types, and functions that the Date
-module contains.
+.. contents::
+
 
 Representing dates and times
 ----------------------------

@@ -5,13 +5,10 @@ The locators Module
 .. current-library:: system
 .. current-module:: locators
 
-Introduction
-------------
+The Locators module provides Dylan programs with a portable, flexible, and
+uniform facility for locating files and other objects on the internet.
 
-The Locators module provides Dylan programs with a portable, flexible,
-and uniform facility for locating files.
-
-The LOCATORS module
+The locators Module
 -------------------
 
 .. class:: <locator>

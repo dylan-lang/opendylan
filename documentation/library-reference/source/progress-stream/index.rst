@@ -1,5 +1,5 @@
 ***************************
-The progress-stream library
+The progress-stream Library
 ***************************
 
 .. current-library:: progress-stream

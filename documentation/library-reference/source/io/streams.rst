@@ -5,13 +5,10 @@ The streams Module
 .. current-library:: io
 .. current-module:: streams
 
-Introduction
-------------
-
-This chapter describes the Streams module, which allows you to establish
+This document describes the Streams module, which allows you to establish
 and control input to and output from aggregates of data, such as files
 on disk, or sequences. This module, together with the Standard-IO
-module, provides similar functionality to the *Java.io* package in Java.
+module, provides similar functionality to the *java.io* package in Java.
 See :doc:`standard-io`, for details about the Standard-IO module in Dylan.
 
 `Concepts`_ discusses the basic concepts involved in streaming over data.
@@ -30,10 +27,10 @@ Finally, `The streams Module Reference`_ gives complete details on all
 interfaces in the Streams module. Each entry in this section is
 arranged in alphabetical order.
 
-Discussing error conditions
----------------------------
+Error conditions
+----------------
 
-This chapter uses two special terms in discussions of error conditions.
+This document uses two special terms in discussions of error conditions.
 
 When it notes that something *is an error*, this means that the result
 is undefined. In particular, it does not*necessarily* mean that an error

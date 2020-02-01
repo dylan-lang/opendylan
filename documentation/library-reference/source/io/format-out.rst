@@ -5,9 +5,6 @@ The format-out Module
 .. current-library:: io
 .. current-module:: format-out
 
-Introduction
-============
-
 The Format-Out module is a convenient repackaging of two libraries that
 provides a simple way to send text to the platform's standard output
 stream. For this purpose, Format-Out uses the Format module and the
@@ -18,7 +15,7 @@ module exports all the identifiers described in this document.
 :doc:`format` and :doc:`standard-io` give full details of the Format and
 Standard-IO libraries.
 
-The format-out module
+The format-out Module
 =====================
 
 This section contains a reference entry for each item exported from the

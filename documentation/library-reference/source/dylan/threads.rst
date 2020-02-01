@@ -2,20 +2,17 @@
 The threads Module
 *******************
 
-Introduction
-============
-
 .. current-library:: dylan
+.. current-module:: threads
 
-.. module:: threads
-   :library: dylan
+The Threads module provides a portable threads interface for Dylan. The Threads
+module is designed to map easily and efficiently onto the threads facilities
+provided by all common operating systems.
 
-   The Threads module provides a portable threads interface for Dylan. The
-   Threads module is designed to map easily and efficiently onto the
-   threads facilities provided by all common operating systems.
+All documented bindings are exported from the module *threads* in the *dylan*
+and *common-dylan* libraries.
 
-   All documented bindings are exported from the module *threads* in the
-   *dylan* and *common-dylan* libraries.
+.. contents::
 
 Multi-thread semantics
 ======================
