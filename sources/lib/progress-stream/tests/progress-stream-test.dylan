@@ -85,12 +85,25 @@ define test test-show-progress-truncate ()
                output);
 end test;
 
+define test test-show-progress-zero-range ()
+  let output
+    = with-output-to-string (s)
+        let progress
+          = make(<progress-stream>, inner-stream: s, force?: #t,
+                 bar-width: 20, line-width: 36);
+        show-progress(progress, 0, 0);
+      end;
+  assert-equal("\r[====================]",
+               output);
+end test;
+
 define suite progress-stream-module-test-suite ()
   test test-<progress-stream>;
   test test-stream-supports-show-progress?;
   test test-show-progress-simple;
   test test-show-progress-mixed;
   test test-show-progress-truncate;
+  test test-show-progress-zero-range;
 end suite;
 
 define suite progress-stream-test-suite ()

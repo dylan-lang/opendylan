@@ -75,8 +75,14 @@ define method show-progress
   let inner = stream.inner-stream;
   let bar-width = stream.console-progress-bar-width;
   let line-width = stream.console-progress-line-width;
-  let bars = round/(position * bar-width, range);
-  if (bars ~= stream.console-progress-bars | label ~= stream.console-progress-label)
+  let bars
+    = if (zero?(range))
+        bar-width
+      else
+        round/(position * bar-width, range);
+      end if;
+  if (bars ~= stream.console-progress-bars
+        | label ~= stream.console-progress-label)
     // The bar itself
     write(inner, "\r[");
     write-fill(inner, '=', bars);
