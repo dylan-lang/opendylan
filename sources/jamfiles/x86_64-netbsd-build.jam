@@ -14,6 +14,7 @@ CCFLAGS  += -DOPEN_DYLAN_PLATFORM_UNIX -DOPEN_DYLAN_PLATFORM_NETBSD
 # Library search path
 #
 LINKFLAGSEXE ?= -Wl,-z,origin -Wl,-rpath,\\$ORIGIN/../lib/ -pthread ;
+LINKFLAGSDLL ?= -Wl,-z,origin -Wl,-rpath,\\$ORIGIN/ ;
 
 #
 # Common build script

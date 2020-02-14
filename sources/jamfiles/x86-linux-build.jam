@@ -14,7 +14,7 @@ CCFLAGS  += -DOPEN_DYLAN_PLATFORM_UNIX -DOPEN_DYLAN_PLATFORM_LINUX -m32
 # Library search path and turn off executable stacks
 #
 LINKFLAGSEXE ?= -Wl,-z,origin -Wl,-rpath,\\$ORIGIN/../lib/ -Wl,-z,noexecstack ;
-LINKFLAGSDLL ?= -Wl,-z,noexecstack ;
+LINKFLAGSDLL ?= -Wl,-z,noexecstack -Wl,-z,origin -Wl,-rpath,\\$ORIGIN/ ;
 
 #
 # Common build script
