@@ -153,19 +153,20 @@ end method stop-profiling-type;
 
 define method start-profiling-type
     (state :: <profiling-state>, keyword == #"allocation") => ()
-  // To avoid possible overflow of allocation-count
-  primitive-initialize-allocation-count();
+  state[#"allocation-count"]
+    := primitive-wrap-machine-word(primitive-allocation-count());
 end method start-profiling-type;
 
 define method stop-profiling-type
     (state :: <profiling-state>, keyword == #"allocation") => ()
-  #f
+  let final = primitive-wrap-machine-word(primitive-allocation-count());
+  state[#"allocation"] := u%-(final, state[#"allocation-count"]);
 end method stop-profiling-type;
 
 define method profiling-type-result
     (state :: <profiling-state>, keyword == #"allocation", #key)
- => (allocation :: <integer>)
-  raw-as-integer(primitive-allocation-count());
+ => (allocation :: <abstract-integer>)
+  as-unsigned(<abstract-integer>, state[#"allocation"])
 end method profiling-type-result;
 
 
