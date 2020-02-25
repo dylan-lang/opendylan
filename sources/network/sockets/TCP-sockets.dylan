@@ -95,13 +95,13 @@ define open generic ssl-server-socket-class (socket :: <type>) => (result :: <ty
 define method ssl-server-socket-class (class :: <type>)
  => (ssl-server-class :: <type>)
   error("The SSL server socket class for %= is unknown.  "
-          "Perhaps you need to 'use ssl-network' in your library definition?")
+          "Perhaps you need to 'use ssl-network' in your library definition?", class);
 end;
 
 define method ssl-socket-class (class :: <type>)
  => (ssl-server-class :: <type>)
   error("The SSL socket class for %= is unknown.  "
-          "Perhaps you need to 'use ssl-network' in your library definition?")
+          "Perhaps you need to 'use ssl-network' in your library definition?", class);
 end;
 
 
