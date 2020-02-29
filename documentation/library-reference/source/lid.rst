@@ -255,16 +255,16 @@ LID file keyword
     C-Libraries: *c-lib-files*
 
 Identifies one or more C libraries to be included in the link phase when
-building the *.DLL* or *.EXE* for the library. Paths to search for
-libraries can also be added with this keyword. Arbitrary linker options
-can not be specified using this keyword.
+building the binary for the library. Paths to search for libraries can also be
+added with this keyword. Arbitrary linker options cannot be specified using
+this keyword.
 
-On Windows, this value for this keyword is passed directly to the linker.
+On Windows, the value for this keyword is passed directly to the linker.
 However, on Unix and macOS, the requirements are a bit more stringent
 and the arguments should be passed one per line and be one of the following:
 
 ``-L path``:
-  Add a path to the search path for shared libraries.
+  Add *path* to the search path for shared libraries.
 
 ``-llibrary``:
   Link against the specified shared library. This should be either in the
@@ -273,17 +273,15 @@ and the arguments should be passed one per line and be one of the following:
 ``library.a``:
   Link against the specified static library.
 
-  .. note:: Note that this may cause a problem if you are using this to
-     link a static library that hasn't been built with ``-fPIC`` into a
-     shared library on the ``x86_64-linux`` platform.
+  .. note:: This may cause a problem if you are using this to link a static
+     library that hasn't been built with ``-fPIC`` into a shared library.
 
-  .. note:: In general, you don't want to use this keyword to link a
-     static library into a shared library since this keyword propagates
-     to dependent libraries as discussed below.
+     In general, you don't want to use this keyword to link a static library
+     into a shared library since this keyword propagates to dependent libraries
+     as discussed below.
 
 ``-F path``:
-  Add a path to the search path for frameworks.
-  **(macOS only)**
+  Add *path* to the search path for frameworks. **(macOS only)**
 
 ``-framework framework``:
   Link against the specified shared library. This should be either in the
@@ -292,7 +290,7 @@ and the arguments should be passed one per line and be one of the following:
 
 Unlike the other keywords described in this section, the *C-Libraries:*
 keyword propagates to dependent libraries. For example, suppose library
-A uses library B, and the LID file or library B specifies
+A uses library B, and the LID file for library B specifies
 
 .. code-block:: dylan
 
