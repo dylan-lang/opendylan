@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define method print-raw-struct-c-declaration
     (be :: <llvm-back-end>, type :: <&raw-struct-type>, stream :: <stream>)
  => ();
-  format(stream, "struct %s {\n", type.^debug-name);
+  format(stream, "struct %s {\n", raw-mangle(be, type.^debug-name));
   for (member in type.raw-aggregate-members)
     let member-type = member.member-raw-type;
     format(stream, "  %s %s",
@@ -108,7 +108,7 @@ define method print-runtime-variable-declaration
   let type-name = descriptor.runtime-variable-type-name;
   select (type-name)
     #"<teb>" =>
-      format(stream, "struct TEB");
+      format(stream, "struct dylan_teb");
     otherwise =>
       print-primitive-c-type(be, dylan-value(type-name), stream);
   end select;

@@ -145,7 +145,7 @@ static void opendylan_exception_cleanup(_Unwind_Reason_Code reason,
 // Initiate a non-local exit by unwinding
 void primitive_nlx(D bind_exit_frame)
 {
-  struct BEF *bef = (struct BEF *) bind_exit_frame;
+  struct dylan_bef *bef = (struct dylan_bef *) bind_exit_frame;
   struct _Unwind_Exception *bef_unwind_exception
     = (struct _Unwind_Exception *) &bef->bef_unwind_exception;
 
@@ -200,7 +200,8 @@ _Unwind_Reason_Code __opendylan_personality_v0(int version,
 
   // Locate the exception object's containing Bind Exit Frame
   // structure
-  struct BEF *bef = CONTAINER_OF(ex, struct BEF, bef_unwind_exception);
+  struct dylan_bef *bef
+    = CONTAINER_OF(ex, struct dylan_bef, bef_unwind_exception);
 
   // Locate where we are in the current function
   uintptr_t region_start = _Unwind_GetRegionStart(context);

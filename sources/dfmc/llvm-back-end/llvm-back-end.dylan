@@ -91,7 +91,7 @@ define sealed method initialize
   // Initialize MV return value structure
   back-end.%mv-struct-type
     := make(<&raw-struct-type>,
-            debug-name: "MV",
+            debug-name: "dylan-mv",
             options: #[],
             members:
               vector(make(<raw-aggregate-ordinary-member>,

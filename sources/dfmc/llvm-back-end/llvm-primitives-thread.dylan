@@ -11,7 +11,7 @@ define method initialize-teb-struct-type (back-end :: <llvm-back-end>) => ()
   // Note that this layout is assumed by the debugger-manager library
   back-end.llvm-teb-struct-type
     := make(<&raw-struct-type>,
-	    debug-name: "TEB",
+	    debug-name: "dylan-teb",
 	    options: #[],
 	    members:
 	      vector(// Offset 0: Current bind-exit frame on stack
