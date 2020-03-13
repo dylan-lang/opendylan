@@ -11,24 +11,25 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define class <node> (<object>)
   slot node-parents = #();
   slot node-sons = #();
-  slot node-sn = snb();
-  slot node-entry1 = #();
-  slot node-entry2 = #();
-  slot node-entry3 = #();
-  slot node-entry4 = #();
-  slot node-entry5 = #();
-  slot node-entry6 = #();
-  slot node-mark = #();
+  constant slot node-sn = snb();
+  slot node-entry1 = #f;
+  slot node-entry2 = #f;
+  slot node-entry3 = #f;
+  slot node-entry4 = #f;
+  slot node-entry5 = #f;
+  slot node-entry6 = #f;
+  slot node-mark = #f;
 end class <node>;
+ignore(node-sn);
 
-define variable traverse-sn :: <integer> = 0;
-define variable traverse-rand :: <integer> = 21;
-define thread variable *traverse-count* :: <integer> = 0;
-define variable traverse-marker = #f;
-define variable traverse-root = #f;
+define variable *traverse-sn* :: <integer> = 0;
+define variable *traverse-rand* :: <integer> = 21;
+define variable *traverse-count* :: <integer> = 0;
+define variable *traverse-marker* = #f;
+define variable *traverse-root* = #f;
 
 define function snb ()
-  traverse-sn := traverse-sn + 1
+  *traverse-sn* := *traverse-sn* + 1
 end function snb;
 
 /* This function is unused in the Common Lisp version also.
@@ -38,7 +39,7 @@ end function traverse-seed;
 */
 
 define function traverse-random ()
-  traverse-rand := remainder(traverse-rand * 17, 251)
+  *traverse-rand* := remainder(*traverse-rand* * 17, 251)
 end function traverse-random;
 
 // The purpose of this seems to be to remove the nth element from the
@@ -46,17 +47,18 @@ end function traverse-random;
 define function traverse-remove (n :: <integer>, q)
   if (tail(head(q)) == head(q))
     let val = head(head(q));
-    rplaca(q, #());
+    head(q) := #();
     val
-  elseif (n == 0)
+  elseif (n = 0)
     let val = head(head(q));
     for (p = head(q) then tail(p),   // Find the beginning of the circularity.
 	 until: tail(p) == head(q))
     finally
       rplaca(q, rplacd(p, tail(head(q))))  // Remove head(q) from the list
     end for;
+    val
   else
-    for (n from 1 to n,
+    for (n :: <integer> from n above 0 by -1,
 	 q = head(q) then tail(q),
 	 p = tail(head(q)) then tail(p))
     finally
@@ -68,7 +70,7 @@ define function traverse-remove (n :: <integer>, q)
 end function traverse-remove;
 
 define function traverse-select (n :: <integer>, q)
-  for (i from 1 to n,
+  for (n :: <integer> from n above 0 by -1,
        q = head(q) then tail(q))
   finally
     head(q)
@@ -138,42 +140,26 @@ define function travers (node, mark)
   end if;
 end function travers;
 
-define function traverse (traverse-root)
+define function traverse (*traverse-root*)
   dynamic-bind (*traverse-count* = 0)
-    travers(traverse-root, traverse-marker := ~traverse-marker);
+    travers(*traverse-root*, *traverse-marker* := ~*traverse-marker*);
     *traverse-count*
   end
 end function traverse;
 
-define function init-traverse()
-  traverse-root := traverse-create-structure(100);
-end function init-traverse;
-
 define function run-traverse ()
+  *traverse-root* := traverse-create-structure(100);
   for (i from 1 to 50)
-    traverse(traverse-root);
-    traverse(traverse-root);
-    traverse(traverse-root);
-    traverse(traverse-root);
-    traverse(traverse-root);
+    traverse(*traverse-root*);
+    traverse(*traverse-root*);
+    traverse(*traverse-root*);
+    traverse(*traverse-root*);
+    traverse(*traverse-root*);
   end for;
 end function run-traverse;
 
-define function testtraverse ()
-  // ---*** The Common Lisp version times initialization separately.
-  //        Should extend benchmark-definer to allow options specifying
-  //        whether the test does it's own timing (via run-benchmark).
-  testtraverse-init();
-  testtraverse-run();
-end function testtraverse;
-
-define function testtraverse-init ()
-  run-benchmark("init traverse", init-traverse);
-end function testtraverse-init;
-
-define function testtraverse-run ()
-  run-benchmark("run traverse", run-traverse);
-end function testtraverse-run;
-
-//define benchmark traverse = testtraverse;
-
+define benchmark traverse-benchmark ()
+  benchmark-repeat (iterations: 15)
+    run-traverse();
+  end;
+end benchmark;

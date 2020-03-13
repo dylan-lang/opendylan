@@ -8,11 +8,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library gabriel-benchmarks
   use common-dylan;
+  use testworks;
   export gabriel-benchmarks;
 end library gabriel-benchmarks;
 
 define module gabriel-benchmarks
   use common-dylan;
+  use testworks;
   use transcendentals,
     import: { sin, cos, $single-pi, $double-pi };
   use threads,
@@ -20,4 +22,7 @@ define module gabriel-benchmarks
   use simple-format;
   use simple-random;
   use simple-profiling;
+
+  export
+    gabriel-benchmarks;
 end module gabriel-benchmarks;

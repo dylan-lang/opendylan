@@ -62,13 +62,6 @@ define table $table = { #"+" => dderiv+,
 			#"-" => dderiv-,
 			#"*" => dderiv*,
 			#"/" => dderiv/ };
-			 
-// This function added for the Dylan translation.
-/*  Also defined in boyer.dylan
-define function atom? (x)
-  ~instance?(x, <pair>)
-end;
-*/
 
 define function dderiv (a)
   if (atom?(a))
@@ -89,8 +82,7 @@ define function dderiv (a)
 end function dderiv;
 
 define function dderiv-run ()
-  for (i from 0 below 1000)
-    //(declare (type fixnum i))
+  for (i :: <integer> from 0 below 1000)
     dderiv(#(#"+", #(#"*", 3, #"x", #"x"), #(#"*", #"a", #"x", #"x"), #(#"*", #"b", #"x"), 5));
     dderiv(#(#"+", #(#"*", 3, #"x", #"x"), #(#"*", #"a", #"x", #"x"), #(#"*", #"b", #"x"), 5));
     dderiv(#(#"+", #(#"*", 3, #"x", #"x"), #(#"*", #"a", #"x", #"x"), #(#"*", #"b", #"x"), 5));
@@ -99,4 +91,8 @@ define function dderiv-run ()
   end for;
 end function dderiv-run;
 
-define benchmark dderiv = dderiv-run;
+define benchmark dderiv-benchmark ()
+  benchmark-repeat (iterations: 50)
+    dderiv-run()
+  end;
+end benchmark;

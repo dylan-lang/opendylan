@@ -54,9 +54,9 @@ define function destructive (n :: <integer>, m :: <integer>)
   l
 end function destructive;
 
-define function testdestru ()
-  destructive(600, 50);
-end function testdestru;
-
-define benchmark destru = testdestru;
+define benchmark destructive-benchmark ()
+  benchmark-repeat (iterations: 100)
+    destructive(600, 50);
+  end;
+end benchmark;
 

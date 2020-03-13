@@ -18,19 +18,34 @@ define function tak (x :: <integer>, y :: <integer>, z :: <integer>)
   end if
 end function tak;
 
-define function testtak ()
-  begin
-    tak(18, 12, 6);
-    tak(18, 12, 6);
-    tak(18, 12, 6);
-    tak(18, 12, 6);
-    tak(18, 12, 6);
-    tak(18, 12, 6);
-    tak(18, 12, 6);
-    tak(18, 12, 6);
-    tak(18, 12, 6);
-    tak(18, 12, 6);
-  end
-end function testtak;
+define benchmark tak-benchmark ()
+  let result
+    = benchmark-repeat (iterations: 500)
+        tak(18, 12, 6)
+      end;
+  assert-equal(7, result);
+end benchmark;
 
-define benchmark tak = testtak;
+define method trtak (x :: <integer>, y :: <integer>, z :: <integer>)
+  local method go-tak ()
+          if (y >= x)
+            z
+          else
+            let a = tak(x - 1, y, z);
+            let b = tak(y - 1, z, x);
+            z := tak(z - 1, x, y);
+            x := a;
+            y := b;
+            go-tak();
+          end if;
+        end method go-tak;
+  go-tak()
+end method trtak;
+
+define benchmark trtak-benchmark ()
+  let result
+    = benchmark-repeat (iterations: 500)
+        trtak(18, 12, 6)
+      end;
+  assert-equal(7, result);
+end benchmark;

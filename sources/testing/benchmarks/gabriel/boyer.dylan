@@ -14,8 +14,8 @@ define variable **temp-temp** = #f;
 
 define function add-lemma (term)
   if (~atom?(term)
-      & (first(term) == #"equal")
-      & ~atom?(second(term)))
+        & head(term) == #"equal"
+        & ~atom?(second(term)))
     get(first(second(term)), #"lemmas")
       := pair(term, get(first(second(term)), #"lemmas"));
   else
@@ -34,11 +34,13 @@ end function add-lemma-lst;
 
 define function apply-subst (alist, term)
   if (atom?(term))
-    if (**temp-temp** := assoc(term, alist, test: \==))
+    if (~null?(**temp-temp** := assoc(term, alist, test: \==)))
       tail(**temp-temp**)
+    else
+      term
     end if
   else
-    pair(first(term), apply-subst-lst(alist, tail(term)))
+    pair(head(term), apply-subst-lst(alist, tail(term)))
   end if
 end function apply-subst;
 
@@ -52,11 +54,11 @@ define function apply-subst-lst (alist, lst)
 end function apply-subst-lst;
 
 define function truep (x, lst)
-  x = #(#"t") | member?(x, lst)
+  x = #(#"t") | member?(x, lst, test: \==)
 end function truep;
 
 define function falsep (x, lst)
-  x = #(#"f") | member?(x, lst)
+  x = #(#"f") | member?(x, lst, test: \==)
 end function falsep;
 
 define function one-way-unify (term1, term2)
@@ -64,34 +66,35 @@ define function one-way-unify (term1, term2)
   one-way-unify1(term1, term2)
 end function one-way-unify;
 
-define function one-way-unify1 (term1, term2)
-// => (b :: <boolean>)
+define method one-way-unify1 (term1, term2)
+  //  With bug fixed.
   if (atom?(term2))
-    if (**temp-temp** := assoc(term2, **unify-subst**, test: \==))
+    if (~null?(**temp-temp** := assoc(term2, **unify-subst**, test: \==)))
       term1 = tail(**temp-temp**)
+    elseif (instance?(term2, <number>)) // this clause added
+      term1 = term2
     else
       **unify-subst** := pair(pair(term2, term1), **unify-subst**);
       #t
     end if
   elseif (atom?(term1))
-    #f // nil
-  elseif (first(term1) == first(term2))
-    one-way-unify1-&lst(tail(term1), tail(term2))
+    #f
+  elseif (head(term1) == head(term2))
+    one-way-unify1-lst(tail(term1), tail(term2));
   else
-    #f // nil
+    #f;
   end if
-end function one-way-unify1;
+end method one-way-unify1;
 
-define function one-way-unify1-&lst (lst1, lst2)
-// => (b :: <boolean>)
-  if (null?(lst1))
+define method one-way-unify1-lst (lst1, lst2)
+  if (empty?(lst1))
     #t
-  elseif (one-way-unify1(first(lst1), first(lst2)))
-    one-way-unify1-&lst(tail(lst1), tail(lst2))
+  elseif (one-way-unify1(head(lst1), head(lst2)))
+    one-way-unify1-lst(tail(lst1), tail(lst2))
   else
-    #f // nil
-  end if
-end function one-way-unify1-&lst;
+    #f
+  end if;
+end method one-way-unify1-lst;
 
 define function rewrite (term)
   if (atom?(term))
@@ -147,7 +150,7 @@ define function boyer-setup ()
      #(#"equal", #(#"countps-", #"l", #"pred"),
        #(#"countps-loop", #"l", #"pred", #(#"zero"))),
      #(#"equal", #(#"fact-", #"i"),
-       #(#"fact-loop", #"i", #"1")),
+       #(#"fact-loop", #"i", 1)),
      #(#"equal", #(#"reverse-", #"x"),
        #(#"reverse-loop", #"x", #(#"nil"))),
      #(#"equal", #(#"divides", #"x", #"y"),
@@ -288,7 +291,7 @@ define function boyer-setup ()
                    #"base"),
        #(#"plus", #"i", #(#"plus", #(#"power-eval", #"x", #"base"),
                           #(#"power-eval", #"y", #"base")))),
-     #(#"equal", #(#"remainder", #"y", #"1"),
+     #(#"equal", #(#"remainder", #"y", 1),
        #(#"zero")),
      #(#"equal", #(#"lessp", #(#"remainder", #"x", #"y"),
                    #"y"),
@@ -299,7 +302,7 @@ define function boyer-setup ()
                    #"i"),
        #(#"and", #(#"not", #(#"zerop", #"i")),
          #(#"or", #(#"zerop", #"j"),
-           #(#"not", #(#"equal", #"j", #"1"))))),
+           #(#"not", #(#"equal", #"j", 1))))),
      #(#"equal", #(#"lessp", #(#"remainder", #"x", #"y"),
                    #"x"),
        #(#"and", #(#"not", #(#"zerop", #"y")),
@@ -368,14 +371,14 @@ define function boyer-setup ()
      #(#"equal", #(#"equal", #(#"greatest-factor", #"x", #"y"),
                    #(#"zero")),
        #(#"and", #(#"or", #(#"zerop", #"y"),
-                   #(#"equal", #"y", #"1")),
+                   #(#"equal", #"y", 1)),
          #(#"equal", #"x", #(#"zero")))),
      #(#"equal", #(#"equal", #(#"greatest-factor", #"x", #"y"),
-                   #"1"),
-       #(#"equal", #"x", #"1")),
+                   1),
+       #(#"equal", #"x", 1)),
      #(#"equal", #(#"numberp", #(#"greatest-factor", #"x", #"y")),
        #(#"not", #(#"and", #(#"or", #(#"zerop", #"y"),
-                             #(#"equal", #"y", #"1")),
+                             #(#"equal", #"y", 1)),
                    #(#"not", #(#"numberp", #"x"))))),
      #(#"equal", #(#"times-list", #(#"append", #"x", #"y")),
        #(#"times", #(#"times-list", #"x"),
@@ -386,18 +389,18 @@ define function boyer-setup ()
      #(#"equal", #(#"equal", #"z", #(#"times", #"w", #"z")),
        #(#"and", #(#"numberp", #"z"),
          #(#"or", #(#"equal", #"z", #(#"zero")),
-           #(#"equal", #"w", #"1")))),
+           #(#"equal", #"w", 1)))),
      #(#"equal", #(#"greatereqpr", #"x", #"y"),
        #(#"not", #(#"lessp", #"x", #"y"))),
      #(#"equal", #(#"equal", #"x", #(#"times", #"x", #"y")),
        #(#"or", #(#"equal", #"x", #(#"zero")),
          #(#"and", #(#"numberp", #"x"),
-           #(#"equal", #"y", #"1")))),
+           #(#"equal", #"y", 1)))),
      #(#"equal", #(#"remainder", #(#"times", #"y", #"x"),
                    #"y"),
        #(#"zero")),
      #(#"equal", #(#"equal", #(#"times", #"a", #"b"),
-                   #"1"),
+                   1),
        #(#"and", #(#"not", #(#"equal", #"a", #(#"zero"))),
          #(#"not", #(#"equal", #"b", #(#"zero"))),
          #(#"numberp", #"a"),
@@ -418,17 +421,14 @@ define function boyer-setup ()
                                   #(#"cons", #"x3", #(#"cons", #"x4",
                                                       #(#"cons", #"x5",
                                                         #(#"cons", #"x6", #"x7"))))))),
-       #(#"plus", #"6", #(#"length", #"x7"))),
-     #(#"equal", #(#"difference", #(#"add1", #(#"add1", #"x")),
-                   #"2"),
+       #(#"plus", 6, #(#"length", #"x7"))),
+     #(#"equal", #(#"difference", #(#"add1", #(#"add1", #"x")), 2),
        #(#"fix", #"x")),
-     #(#"equal", #(#"quotient", #(#"plus", #"x", #(#"plus", #"x", #"y")),
-                   #"2"),
-       #(#"plus", #"x", #(#"quotient", #"y", #"2"))),
+     #(#"equal", #(#"quotient", #(#"plus", #"x", #(#"plus", #"x", #"y")), 2),
+       #(#"plus", #"x", #(#"quotient", #"y", 2))),
      #(#"equal", #(#"sigma", #(#"zero"),
                    #"i"),
-       #(#"quotient", #(#"times", #"i", #(#"add1", #"i")),
-         #"2")),
+       #(#"quotient", #(#"times", #"i", #(#"add1", #"i")), 2)),
      #(#"equal", #(#"plus", #"x", #(#"add1", #"y")),
        #(#"if", #(#"numberp", #"y"),
          #(#"add1", #(#"plus", #"x", #"y")),
@@ -502,13 +502,16 @@ define function tautologyp (x, true-lst, false-lst)
     atom?(x)             => #f; // nil
     first(x) == #"if"    =>
       case
-        truep(second(x), true-lst)   => tautologyp(third(x), true-lst, false-lst);
-        falsep(second(x), false-lst) => tautologyp(fourth(x), true-lst, false-lst);
-        otherwise                  =>
+        truep(second(x), true-lst) =>
+          tautologyp(third(x), true-lst, false-lst);
+        falsep(second(x), false-lst) =>
+          tautologyp(fourth(x), true-lst, false-lst);
+        otherwise =>
           tautologyp(third(x), pair(second(x), true-lst), false-lst)
-          & tautologyp(fourth(x), true-lst, pair(second(x), false-lst));
+            & tautologyp(fourth(x), true-lst, pair(second(x), false-lst));
       end case;
-    otherwise            => #f; // nil
+    otherwise =>
+      #f; // nil
   end case
 end function tautologyp;
 
@@ -535,32 +538,10 @@ define function boyer-test ()
                         #(#"implies", #"x", #"w"))))
 end function boyer-test;
 
-/*
-#|
-(defun trans-of-implies (n)
-  (list (quote implies)
-        (trans-of-implies1 n)
-        (list (quote implies)
-              0 n)))
-
-(defun trans-of-implies1 (n)
-  (cond ((eql n 1)
-         (list (quote implies)
-               0 1))
-        (t (list (quote and)
-                 (list (quote implies)
-                       (1- n)
-                       n)
-                 (trans-of-implies1 (1- n))))))
-|#
-*/
-
-//(defvar setup-performed-p (prog1 t (boyer-setup)))
 boyer-setup();
 
-define function testboyer ()
-  boyer-test();
-end function testboyer;
-
-define benchmark boyer = testboyer;
-
+define benchmark boyer-benchmark ()
+  benchmark-repeat (iterations: 30)
+    boyer-test();
+  end;
+end benchmark;

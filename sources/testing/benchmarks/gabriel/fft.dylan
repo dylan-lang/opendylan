@@ -89,8 +89,6 @@ define function fft-bench ()
   end for;
 end function fft-bench;
 
-define constant testfft = fft-bench;
-
 ///
 /// The following are for verifying that the implementation gives the
 /// correct result.
@@ -137,7 +135,12 @@ define function print-fft ()
   end for;
 end function print-fft;
 
-define benchmark fft = testfft;
-
 ignorable(clear-fft, setup-fft-component, print-fft);
+
+define benchmark fft-benchmark ()
+  benchmark-repeat (iterations: 30)
+    fft-bench();
+  end;
+end benchmark;
+
 
