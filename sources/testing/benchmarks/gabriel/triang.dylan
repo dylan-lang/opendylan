@@ -92,17 +92,15 @@ define function triang-try (i :: <integer>, depth :: <integer>)
   end if
 end function triang-try;
 
-define function gogogo (i :: <integer>)
+define function triangle (i :: <integer>)
   dynamic-bind (*triang-answer* = #(),
                 *triang-final* = #())
-//  *triang-answer* := #();
-//  *triang-final* := #();
     triang-try(i, 1);
   end;
-end function gogogo;
+end function triangle;
 
-define function testtriang ()
-  gogogo(22);
-end function testtriang;
-
-define benchmark triang = testtriang;
+define benchmark triangle-benchmark ()
+  benchmark-repeat (iterations: 5)
+    triangle(22);
+  end;
+end benchmark;

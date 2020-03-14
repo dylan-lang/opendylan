@@ -6,6 +6,11 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+define macro push!
+  { push! (?list:expression, ?item:expression) }
+    => { ?list := add!(?list, ?item) }
+end macro push!;
+
 define inline-only function null? (x)
   x == #()
 end;
@@ -14,16 +19,18 @@ define inline-only function atom? (x)
   ~instance?(x, <pair>)
 end;
 
-define inline-only function fourth (x)
-  tail(third(x))
-end;
+define inline method fourth (sequence :: <sequence>, #rest all-keys, #key default)
+ => object;
+  apply(element, sequence, 3, all-keys)
+end method;
 
-define function assoc (x, alist, #key test = \==)
+define function assoc
+    (x, alist :: <list>, #key test = \==) => (result :: <list>)
   if (alist == #())
     #() // nil
   else
-    let p = first(alist);
-    if (instance?(p, <pair>) & test(first(p), x))
+    let p = head(alist);
+    if (instance?(p, <pair>) & test(head(p), x))
       p
     else
       assoc(x, tail(alist), test: test)
@@ -31,24 +38,30 @@ define function assoc (x, alist, #key test = \==)
   end if
 end function assoc;
 
+define variable *gensym-counter* :: <integer> = 0;
+
+define function generate-symbol (#key string)
+  as(<symbol>, concatenate("G", integer-to-string(*gensym-counter* := *gensym-counter* + 1)))
+end function;
+
 // Used to implement "get" and "(setf get)"
-define constant $symbol-plist-table = make(<table>);
+define constant $symbol-plist-table :: <object-table> = make(<object-table>);
 
 // Similar to Common Lisp's MEMBER function.  i.e. returns the first
-// tail of the given list whos car is element.
+// tail of the given list whose car is element.
 define function find-tail (list :: <list>, element)
   if (list == #())
     #f
   else
-    if (first(list) == element)
+    if (head(list) == element)
       list
     else
-      find-tail(tail(list), element)
+      find-tail(tail(tail(list)), element)
     end if
   end if
 end function find-tail;
 
-define function get (symbol, key)
+define function get (symbol, key :: <symbol>)
   let plist = element($symbol-plist-table, symbol, default: #f);
   if (plist)
     let it = find-tail(plist, key);
@@ -58,7 +71,7 @@ define function get (symbol, key)
   end if
 end function get;
 
-define method get-setter (new-value, symbol, key)
+define method get-setter (new-value, symbol, key :: <symbol>)
   let plist = element($symbol-plist-table, symbol, default: #());
   let it = find-tail(plist, key);
   if (it)
@@ -94,3 +107,10 @@ define function nconc (a :: <list>, b :: <list>) => (a-or-b :: <list>)
   end if
 end function nconc;
 
+define function copy-tree (a)
+  if (instance?(a, <pair>))
+    pair(copy-tree(a.head), copy-tree(a.tail))
+  else
+    a
+  end if
+end function;

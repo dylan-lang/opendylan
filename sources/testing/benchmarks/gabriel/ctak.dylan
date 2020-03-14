@@ -28,9 +28,10 @@ define function ctak-aux
   end if
 end function ctak-aux;
 
-define function testctak ()
-  ctak(18, 12, 6);
-end function testctak;
-
-define benchmark ctak = testctak;
-
+define benchmark ctak-benchmark ()
+  let result
+    = benchmark-repeat (iterations: 9) // 900
+        ctak(18, 12, 6);
+      end;
+  assert-equal(7, result);
+end benchmark;

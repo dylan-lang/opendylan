@@ -34,9 +34,9 @@ define function shorter? (x, y)
   y ~== #() & (x == #() | shorter?(tail(x), tail(y)))
 end function shorter?;
 
-define function testtakl ()
-  mas(*l18*, *l12*, *l6*)
-end function testtakl;
-
-define benchmark takl = testtakl;
+define benchmark takl-benchmark ()
+  benchmark-repeat (iterations: 150)
+    mas(*l18*, *l12*, *l6*)
+  end;
+end benchmark;
 
