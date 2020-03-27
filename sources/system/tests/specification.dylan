@@ -186,7 +186,7 @@ define interface-specification-suite operating-system-specification-suite ()
   function owner-organization () => (false-or(<string>));
   class <application-process> (<object>);
   function run-application
-    (type-union(<string>, limited(<sequence>, of: <string>)),
+    (<sequence>,
      #"key", #"under-shell?", #"inherit-console?", #"activate?",
      #"minimize?", #"hide?", #"outputter", #"asynchronous?",
      #"environment", #"working-directory",

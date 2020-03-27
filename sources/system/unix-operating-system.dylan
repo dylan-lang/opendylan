@@ -168,10 +168,89 @@ end function;
 define constant $null-device = "/dev/null";
 define constant $posix-shell = "/bin/sh";
 
-// Note: streams are always returned in the order stdin, stdout, stderr
-//       even though not all of them are always returned.
+// Run a command in a subprocess.
+//
+// Parameters:
+// command
+//   Either a string containing the entire command or a sequence of strings
+//   representing the command as parsed by the shell. Example: "/bin/ls -l"
+//   or #["/bin/ls", "-l"]
+// under-shell?
+//   If true, invoke the command as with "/bin/sh -c command".
+// inherit-console?
+//   Whether to run in the same session and process group as the calling process
+//   and therefore retain the same controlling TTY. Essentially, whether or not to
+//   call setsid(). If you want the subprocess to be a daemon process, pass #f.
+// outputter
+//   A function with signature (buffer :: <string>, #key end) which will receive
+//   all output (both stdout and stderr) from the command.
+// asynchronous?
+//   If true, return immediately after creating the subcommand process. If false,
+//   block until the command completes or is terminated by signal.
+// environment
+//   A table mapping environment variable names (strings) to values (also strings).
+//   These values *augment* the environment in the current process. (There is
+//   currently no way to specify via this API that `environment` should be the only
+//   environment variables set in the subprocess.)
+// working-directory
+//   If not #f, the working directory of the subprocess is set to this string.
+// input
+//   #"inherit" -- Inherit stdin from the calling process. Write to *standard-input*
+//                 to send input to the subprocess.
+//   #"null"    -- Use a null stream as stdin.
+//   #"stream"  -- Create and return a stream connected to the subprocess's stdin.
+//   pathname   -- Open the specified file for reading and connect it to the
+//                 subprocess's stdin.
+// if-input-does-not-exist
+//   #"signal"  -- Signal a <file-does-not-exist-error> if `input` is a pathname that
+//                 names a non-existent file.
+//   #"create"  -- Create an empty input file and connect it to stdin of the subprocess.
+// output
+//   #"inherit" -- Inherit stdout from the calling process.
+//   #"null"    -- Send stdout to a null stream.
+//   #"stream"  -- Create and return a stream connected to the subprocess's stdout.
+//   pathname   -- Open the specified file for writing and connect it to the
+//                 subprocess's stdout.
+// error
+//   #"inherit", #"null", #"stream", and pathname are the same as for output but they
+//     affect stderr.
+//   #"output"  -- Send the subprocess's stderr to the same file descriptor as its
+//                 stdout.
+// if-output-exists
+// if-error-exists
+//   What action to take if the specified output file exists. Options are the same as
+//   for make(<file-stream>) except that #f is not allowed.
+// activate?
+// minimize?
+// hide?
+//   These three are not supported on unix.
+//
+// Return values:
+// exit-code
+//   If asynchronous? is true, 0 is returned. Otherwise, the status code of the
+//   subprocess.
+// signal-code
+//   If asynchronous? is true or if the subprocess exited without being signalled,
+//   #f is returned. Otherwise, the signal number the subprocess received is returned.
+// process
+//   If asynchronous? is true, an <application-process> is returned. This can be
+//   queried to determine the process ID and its current state.
+// #rest streams
+//   Up to three streams are returned, always in the order stdin, stdout, stderr.
+//   For example, if the arguments were
+//     input: #"null", output: #"stream", error: #"stream"
+//   then two streams are returned: output and error
+//
+// TODO(cgay): it looks like if the input file doesn't exist and
+//   if-input-does-not-exist is #"signal" that no error is signalled and input is
+//   inherited from the calling process. Write a test.
+// TODO(cgay): Need a test for if-input-does-not-exist: #"create" where the file
+//   creation gets an error.
+// TODO(cgay): Also (not 100% sure), output: #"inherit", error: #"output" doesn't
+//   result in 2>&1. Test.
+//
 define function run-application
-    (command :: type-union(<string>, limited(<sequence>, of: <string>)),
+    (command :: <sequence>,
      #key under-shell? = #t,
           inherit-console? = #t,
           activate? = #t,       // ignored on POSIX systems
@@ -192,7 +271,7 @@ define function run-application
                                      #"overwrite", #"append",
                                      #"truncate") = #"replace",
           error: _error :: type-union(one-of(#"inherit", #"null", #"stream", #"output"),
-                              <pathname>) = #"inherit",
+                                      <pathname>) = #"inherit",
           if-error-exists :: one-of(#"signal", #"new-version", #"replace",
                                     #"overwrite", #"append",
                                     #"truncate") = #"replace")
@@ -288,8 +367,6 @@ define function run-application
     close-fds := add(close-fds, write-fd);
   end if;
 
-  let dir = working-directory & as(<byte-string>, working-directory);
-
   let (program :: <byte-string>, argv-size :: <integer>)
     = if (under-shell?)
         if (instance?(command, <string>))
@@ -358,6 +435,7 @@ define function run-application
                                  integer-as-raw(argv-size - 1), integer-as-raw(0))
             := primitive-cast-raw-as-pointer(integer-as-raw(0));
 
+          let dir = working-directory & as(<byte-string>, working-directory);
           raw-as-integer
             (%call-c-function("system_spawn")
                (program :: <raw-byte-string>,
@@ -594,4 +672,3 @@ define function machine-concurrent-thread-count
                      ()
                  end);
 end;
-
