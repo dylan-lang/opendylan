@@ -143,6 +143,10 @@ system Library
 * A `bug in delete-directory:file-system:system
   <https://github.com/dylan-lang/opendylan/issues/1227>`_ was fixed.
 
+* The ``run-application:operating-system:system`` function has changed to
+  accept the command as a :drm:`<sequence>` instead of a limited type.  This
+  simplifies the specification of the command at the call site.
+
 c-ffi Library
 -------------
 
