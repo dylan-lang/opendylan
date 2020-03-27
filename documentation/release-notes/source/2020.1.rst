@@ -1,11 +1,11 @@
 *****************
-Open Dylan 2019.2
+Open Dylan 2020.1
 *****************
 
-This document describes the 2019.2 release of Open Dylan, released DD
-MMM, 2019.  This release contains many enhancements and bug fixes, highlights
+This document describes the 2020.1 release of Open Dylan, released DD
+MMM, 2020.  This release contains many enhancements and bug fixes, highlights
 of which are listed below.  For complete details see `the opendylan commit logs
-<https://github.com/dylan-lang/opendylan/compare/v2019.1.0...v2019.2.0>`_. (Note
+<https://github.com/dylan-lang/opendylan/compare/v2019.1.0...v2020.1.0>`_. (Note
 that some commit logs, for example for testworks and other libraries that are
 included in Open Dylan as git submodules, may be in other repositories.)
 
