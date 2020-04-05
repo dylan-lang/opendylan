@@ -45,7 +45,7 @@ interactive mode, opens the playground project, performs some
 arithmetic, defines a method, and then traces it::
 
     $ dylan-environment
-    Welcome to Open Dylan, Version 2019.2pre.
+    Welcome to Open Dylan, Version 2020.1pre.
 
     For documentation on Open Dylan, see http://opendylan.org/documentation/.
     See http://opendylan.org/documentation/getting-started-cli/ for an introduction to the command line tools.

@@ -8,7 +8,7 @@ environment in interactive mode, enter ``dylan-compiler`` without any
 arguments at a shell. For example::
 
     $ dylan-compiler
-    Welcome to Open Dylan, Version 2019.2pre.
+    Welcome to Open Dylan, Version 2020.1pre.
 
     For documentation on Open Dylan, see http://opendylan.org/documentation/.
     See http://opendylan.org/documentation/getting-started-cli/ for an introduction to the command line tools.
