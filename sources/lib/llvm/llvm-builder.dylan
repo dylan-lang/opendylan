@@ -356,7 +356,8 @@ end macro;
 define function ins--dbg
     (builder :: <llvm-builder>,
      line-number :: <integer>, column-number :: <integer>,
-     scope :: <llvm-metadata>)
+     scope :: <llvm-metadata>,
+     #key inlined-at)
  => ();
   let current-attachment = builder.llvm-builder-dbg;
   if (~current-attachment
@@ -369,7 +370,7 @@ define function ins--dbg
     let node
       = make(<llvm-DILocation-metadata>,
              line: line-number, column: column-number,
-             scope: scope);
+             scope: scope, inlinedAt: inlined-at);
     builder.llvm-builder-dbg
       := make(<llvm-metadata-attachment>,
               kind: $llvm-metadata-kind-dbg,

@@ -1695,13 +1695,19 @@ define method write-metadata-record
      value-partition-table :: <explicit-key-collection>,
      metadata :: <llvm-DILocation-metadata>)
   => ();
+  local
+    method moni                 // metadata or null index
+         (m :: false-or(<llvm-metadata>))
+      => (id :: <integer>);
+      if (m) value-partition-table[llvm-metadata-forward(m)] + 1 else 0 end if
+    end method;
   write-record(stream, #"LOCATION",
                if (metadata.llvm-metadata-distinct?) 1 else 0 end,
                metadata.llvm-DILocation-metadata-line,
                metadata.llvm-DILocation-metadata-column,
                value-partition-table
                  [llvm-metadata-forward(metadata.llvm-DILocation-metadata-scope)],
-               0);              // inlinedAt
+               moni(metadata.llvm-DILocation-metadata-inlined-at));
 end method;
 
 define method write-metadata-record

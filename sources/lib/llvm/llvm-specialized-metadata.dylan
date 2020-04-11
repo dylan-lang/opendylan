@@ -301,6 +301,8 @@ define class <llvm-DILocation-metadata> (<llvm-debug-info-metadata>)
     init-value: 0, init-keyword: column:;
   constant slot llvm-DILocation-metadata-scope :: <llvm-metadata>,
     required-init-keyword: scope:;
+  constant slot llvm-DILocation-metadata-inlined-at :: false-or(<llvm-metadata>),
+    init-value: #f, init-keyword: inlinedAt:;
 end class;
 
 define method metadata-partition-key
@@ -318,7 +320,12 @@ end method;
 define method metadata-referenced-metadata
     (metadata :: <llvm-DILocation-metadata>)
  => (referenced :: <vector>);
-  vector(metadata.llvm-DILocation-metadata-scope)
+  let at = metadata.llvm-DILocation-metadata-inlined-at;
+  if (at)
+    vector(metadata.llvm-DILocation-metadata-scope, at)
+  else
+    vector(metadata.llvm-DILocation-metadata-scope)
+  end if
 end method;
 
 define class <llvm-DISubprogram-metadata> (<llvm-debug-info-metadata>)
