@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library io-test-suite
-  use common-dylan;
+  use common-dylan,
+    import: { byte-vector, common-dylan, machine-words, simple-random, threads };
   use io;
   use system;
   use testworks;
@@ -19,6 +20,8 @@ define library io-test-suite
 end library;
 
 define module io-test-suite
+  use byte-vector,
+    import: { copy-bytes };
   use common-dylan;
   use simple-random;
   use threads;

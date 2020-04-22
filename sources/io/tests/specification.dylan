@@ -167,4 +167,9 @@ define suite io-test-suite ()
   // standard-io;
   // format-out;
   suite format-test-suite;
+
+  // Benchmark writing to a string stream, and a competing non-stream-based
+  // implementation.
+  benchmark benchmark-output-to-string;
+  benchmark benchmark-string-builder;
 end suite;
