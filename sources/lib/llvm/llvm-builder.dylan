@@ -378,6 +378,45 @@ define function ins--dbg
   end if;
 end function;
 
+define function llvm-builder-dbg-scope
+    (builder :: <llvm-builder>) => (dbg-scope :: false-or(<llvm-metadata>));
+  let current-attachment = builder.llvm-builder-dbg;
+  let location
+    = current-attachment
+    & current-attachment.llvm-metadata-attachment-metadata;
+  location
+    & location.llvm-DILocation-metadata-scope
+end function;
+
+define function llvm-builder-dbg-line
+    (builder :: <llvm-builder>) => (dbg-line :: false-or(<integer>));
+  let current-attachment = builder.llvm-builder-dbg;
+  let location
+    = current-attachment
+    & current-attachment.llvm-metadata-attachment-metadata;
+  location
+    & location.llvm-DILocation-metadata-line
+end function;
+
+define function llvm-builder-dbg-file
+    (builder :: <llvm-builder>) => (dbg-file :: false-or(<llvm-metadata>));
+  let scope = llvm-builder-dbg-scope(builder);
+  scope
+    & scope-dbg-file(scope)
+end function;
+
+define method scope-dbg-file
+    (scope :: <llvm-DILexicalBlock-metadata>)
+ => (dbg-file :: false-or(<llvm-metadata>));
+  scope.llvm-DILexicalBlock-metadata-file
+end method;
+
+define method scope-dbg-file
+    (scope :: <llvm-DISubprogram-metadata>)
+ => (dbg-file :: false-or(<llvm-metadata>));
+  scope.llvm-DISubprogram-metadata-file
+end method;
+
 define inline function builder-metadata
     (builder :: <llvm-builder>, metadata :: <list>)
  => (augmented-metadata :: <list>);

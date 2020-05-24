@@ -282,6 +282,10 @@ define module llvm-builder
     llvm-builder-dbg,
     llvm-builder-dbg-setter,
 
+    llvm-builder-dbg-file,
+    llvm-builder-dbg-line,
+    llvm-builder-dbg-scope,
+
     with-builder-function,
 
     llvm-builder-value,
