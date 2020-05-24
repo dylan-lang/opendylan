@@ -206,27 +206,26 @@ define method emit-dbg-local-variable
      kind :: one-of(#"auto", #"argument", #"return"),
      value :: <llvm-value>, #key address? = #f)
  => ();
-  let source-location = c.dfm-source-location;
-  if (source-location)
-    let (dbg-file, dbg-line, dbg-column)
-      = source-location-dbg-loc(back-end, source-location);
-    let var-type
-      = llvm-reference-dbg-type(back-end, type-estimate(tmp));
-    let v = llvm-make-dbg-value-metadata(value);
-    let lv
-      = llvm-make-dbg-local-variable(kind,
-                                     *computation-dbg-scope-table*[c],
-                                     as(<string>, tmp.name),
-                                     dbg-file, dbg-line,
-                                     var-type);
-    let lvv = make(<llvm-metadata-value>, metadata: lv);
-    if (address?)
-      ins--call-intrinsic(back-end, "llvm.dbg.addr",
-                          vector(v, lvv, $empty-diexpression-value));
-    else
-      ins--call-intrinsic(back-end, "llvm.dbg.value",
-                          vector(v, lvv, $empty-diexpression-value));
-    end if;
+  let dbg-scope = llvm-builder-dbg-scope(back-end);
+  let dbg-line = llvm-builder-dbg-line(back-end);
+  let dbg-file = llvm-builder-dbg-file(back-end);
+
+  let var-type
+    = llvm-reference-dbg-type(back-end, type-estimate(tmp));
+  let v = llvm-make-dbg-value-metadata(value);
+  let lv
+    = llvm-make-dbg-local-variable(kind,
+                                   dbg-scope,
+                                   as(<string>, tmp.name),
+                                   dbg-file, dbg-line,
+                                   var-type);
+  let lvv = make(<llvm-metadata-value>, metadata: lv);
+  if (address?)
+    ins--call-intrinsic(back-end, "llvm.dbg.addr",
+                        vector(v, lvv, $empty-diexpression-value));
+  else
+    ins--call-intrinsic(back-end, "llvm.dbg.value",
+                        vector(v, lvv, $empty-diexpression-value));
   end if;
 end method;
 
