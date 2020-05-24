@@ -585,7 +585,9 @@ define method compute-slot-initialization-code
                   (class, slotd);
             #{ ?keyword ?name = ?init }
           elseif (^init-keyword-required?(slotd))
-            #{ ?keyword ?name = error("Missing init keyword \"%=:\"", ?keyword) }
+            with-expansion-source-form (model-definition(slotd))
+              #{ ?keyword ?name = error("Missing init keyword \"%=:\"", ?keyword) }
+            end
           else
             #{ ?keyword ?name = ?$unbound }
           end;

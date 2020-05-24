@@ -367,16 +367,16 @@ end method;
 
 define method compute-and-install-method-dfm
     (method-object :: <&lambda>) => ()
-  let body = compute-method-body(method-object);
-  if (body)
-    with-parent-source-location  (model-source-location(method-object))
+  with-parent-source-location (model-source-location(method-object))
+    let body = compute-method-body(method-object);
+    if (body)
       convert-lambda-into*($top-level-environment, method-object, body);
       // format-out("COMPUTING DFM FOR %=\n", method-object);
-    end;
-    retract-body-fragments(method-object);
-    // one of this and the one below is redundant
-    lambda-optimized?(method-object) := #f;
-  end if;
+      retract-body-fragments(method-object);
+      // one of this and the one below is redundant
+      lambda-optimized?(method-object) := #f;
+    end if;
+  end;
 end method;
 
 define method compute-method-body (m :: <&lambda>)

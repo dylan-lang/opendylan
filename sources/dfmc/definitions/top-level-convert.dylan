@@ -53,9 +53,12 @@ define method top-level-convert* (parent, fragments :: <sequence>)
 end method;
 
 define method top-level-convert (parent, fragment :: <fragment>)
+  let loc
+    = fragment-source-location(fragment)
+    | form-source-location(parent);
   list(make(<top-level-init-form>,
             parent-form: parent,
-            source-location: fragment-source-location(fragment),
+            source-location: loc,
             body:            fragment))
 end method;
 
@@ -180,9 +183,12 @@ define method top-level-convert-using-definition
                     end;
     end;
   else
+    let loc
+      = fragment-source-location(fragment)
+      | form-source-location(parent);
     list(make(<top-level-init-form>,
              parent-form: parent,
-             source-location: fragment-source-location(fragment),
+             source-location: loc,
              body: fragment));
   end;
 end method;
@@ -200,9 +206,12 @@ define method top-level-convert-using-definition
       end;
   if (compiling-for-macroexpansion?())
     // Descend no further.
+    let loc
+      = fragment-source-location(fragment)
+      | form-source-location(parent);
     list(make(<top-level-init-form>,
               parent-form: parent,
-              source-location: fragment-source-location(fragment),
+              source-location: loc,
               body: fragment));
   elseif (parent)
     top-level-convert(parent, expansion);
