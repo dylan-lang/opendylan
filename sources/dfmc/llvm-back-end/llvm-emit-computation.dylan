@@ -301,6 +301,7 @@ define method merge-results
     // Only one predecessor block
     emit-transfer(back-end, module, temp, results[0]);
   else
+    op--scl(back-end, c);
     emit-merge-assignment(back-end, c, temp, results);
   end if;
 end method;
