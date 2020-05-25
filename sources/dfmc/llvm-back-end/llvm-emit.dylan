@@ -55,6 +55,7 @@ define method emit-all (back-end :: <llvm-back-end>,
       retract-local-methods-in-heap(heap);
     cleanup
       remove-all-keys!(back-end.%dbg-type-table);
+      remove-all-keys!(back-end.%lambda-dbg-function-table);
       remove-all-keys!(back-end.%source-record-dbg-file-table);
       back-end.llvm-builder-module := #f;
     end block;

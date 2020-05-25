@@ -28,12 +28,87 @@ define method llvm-source-record-dbg-file
       end
 end method;
 
+define method llvm-lambda-dbg-function
+    (back-end :: <llvm-back-end>, fun :: <&lambda>)
+ => (dbg-function :: <llvm-metadata>);
+  element(back-end.%lambda-dbg-function-table, fun, default: #f)
+    | begin
+        let o = fun.^iep;
+        let c-callable? = instance?(fun, <&c-callable-function>);
+        let signature = ^function-signature(fun);
+        let sig-spec = signature-spec(fun);
+
+        // Compute the source location
+        let loc = fun.model-source-location;
+        let (dbg-file, dbg-line, dbg-column)
+          = if (instance?(loc, <source-location>))
+              source-location-dbg-loc(back-end, loc)
+            else
+              let cr = fun.model-compilation-record;
+              let sr = cr.compilation-record-source-record;
+              values(llvm-source-record-dbg-file(back-end, sr), 0, 0)
+            end if;
+
+        // Compute the function type
+        let (dbg-return-type :: false-or(<llvm-metadata>),
+             dbg-parameter-types :: <sequence>)
+          = if (signature)
+              llvm-signature-dbg-types(back-end, o, sig-spec, signature)
+            else
+              llvm-dynamic-signature-dbg-types(back-end, o, sig-spec)
+            end if;
+
+        let obj-dbg-type
+          = llvm-reference-dbg-type(back-end, dylan-value(#"<object>"));
+        let dbg-calling-convention-parameter-types
+          = if (c-callable?)
+              #[]
+            else
+              vector(obj-dbg-type,      // next-methods
+                     obj-dbg-type)      // function
+            end if;
+
+        let dbg-function-parameter-types
+          = if (o.parameters.size > $entry-point-argument-count)
+              concatenate(copy-sequence(dbg-parameter-types,
+                                        end: $entry-point-argument-count),
+                          vector(llvm-dbg-pointer-to(back-end, obj-dbg-type)),
+                          dbg-calling-convention-parameter-types)
+            else
+              concatenate(dbg-parameter-types,
+                          dbg-calling-convention-parameter-types)
+            end if;
+        let dbg-function-type
+          = llvm-make-dbg-function-type(dbg-file, dbg-return-type,
+                                        dbg-function-parameter-types);
+
+        // Construct the function metadata
+        let module = back-end.llvm-builder-module;
+        let function-name
+          = if (o.emitted-name) emit-name(back-end, module, fun) else "" end;
+        let dbg-name
+          = if (o.binding-name) as(<string>, o.binding-name) else "" end;
+        let definition?
+          = model-compilation-record(fun) == current-compilation-record();
+        element(back-end.%lambda-dbg-function-table, fun)
+          := llvm-make-dbg-function(dbg-file,
+                                    dbg-name,
+                                    function-name,
+                                    back-end.llvm-back-end-dbg-compile-unit,
+                                    dbg-file,
+                                    dbg-line,
+                                    dbg-function-type,
+                                    definition?: #t,
+                                    module: back-end.llvm-builder-module,
+                                    function: o.code)
+      end
+end method;
+
 define method emit-lambda-dbg-function
     (back-end :: <llvm-back-end>, o :: <&iep>) => ()
   let fun = function(o);
   let c-callable? = instance?(fun, <&c-callable-function>);
-  let signature = ^function-signature(fun);
-  let sig-spec = signature-spec(fun);
+  let dbg-function = llvm-lambda-dbg-function(back-end, fun);
 
   // Compute the source location
   let loc = fun.model-source-location;
@@ -46,7 +121,8 @@ define method emit-lambda-dbg-function
         values(llvm-source-record-dbg-file(back-end, sr), 0, 0)
       end if;
 
-  // Compute the function type
+  let signature = ^function-signature(fun);
+  let sig-spec = signature-spec(fun);
   let (dbg-return-type :: false-or(<llvm-metadata>),
        dbg-parameter-types :: <sequence>)
     = if (signature)
@@ -54,46 +130,6 @@ define method emit-lambda-dbg-function
       else
         llvm-dynamic-signature-dbg-types(back-end, o, sig-spec)
       end if;
-
-  let obj-dbg-type
-    = llvm-reference-dbg-type(back-end, dylan-value(#"<object>"));
-  let dbg-calling-convention-parameter-types
-    = if (c-callable?)
-        #[]
-      else
-        vector(obj-dbg-type,      // next-methods
-               obj-dbg-type)      // function
-      end if;
-
-  let dbg-function-parameter-types
-    = if (o.parameters.size > $entry-point-argument-count)
-        concatenate(copy-sequence(dbg-parameter-types,
-                                  end: $entry-point-argument-count),
-                    vector(llvm-dbg-pointer-to(back-end, obj-dbg-type)),
-                    dbg-calling-convention-parameter-types)
-      else
-        concatenate(dbg-parameter-types,
-                    dbg-calling-convention-parameter-types)
-      end if;
-  let dbg-function-type
-    = llvm-make-dbg-function-type(dbg-file, dbg-return-type,
-                                  dbg-function-parameter-types);
-
-  // Construct the function metadata
-  let module = back-end.llvm-builder-module;
-  let function-name = o.code.llvm-global-name;
-  let dbg-name = if (o.binding-name) as(<string>, o.binding-name) else "" end;
-  let dbg-function
-    = llvm-make-dbg-function(dbg-file,
-                             dbg-name,
-                             function-name,
-                             back-end.llvm-back-end-dbg-compile-unit,
-                             dbg-file,
-                             dbg-line,
-                             dbg-function-type,
-                             definition?: #t,
-                             module: back-end.llvm-builder-module,
-                             function: o.code);
 
   // Emit a llvm.dbg.value call for each parameter
   // FIXME handle "extra" parameters
@@ -431,16 +467,28 @@ end method;
 /// Computation source line tracking
 
 define function op--scl(back-end :: <llvm-back-end>, c :: <computation>) => ()
-  let loc = dfm-source-location(c);
-  if (instance?(loc, <source-location>))
-    let sr = source-location-source-record(loc);
-    let start-offset = source-location-start-offset(loc);
-    let start-line = source-offset-line(start-offset);
-    let start-column = source-offset-column(start-offset) + 1;
-    ins--dbg(back-end, start-line + source-record-start-line(sr),
-             start-column,
-             *computation-dbg-scope-table*[c]);
-  end if;
+  iterate loop (origin = c.inlined-origin,
+                loc = dfm-source-location(c),
+                scope = *computation-dbg-scope-table*[c],
+                inlined-at :: false-or(<llvm-metadata>) = #f)
+    if (loc)
+      let (dbg-file :: <llvm-metadata>, dbg-line :: <integer>,
+           dbg-column :: <integer>)
+        = source-location-dbg-loc(back-end, loc);
+      if (origin)
+        let here
+          = make(<llvm-DILocation-metadata>,
+                 line: dbg-line, column: dbg-column,
+                 scope: scope, inlinedAt: inlined-at);
+        loop(origin.origin-next,
+             origin.origin-location,
+             llvm-lambda-dbg-function(back-end, origin.origin-lambda),
+             here);
+      else
+        ins--dbg(back-end, dbg-line, dbg-column, scope, inlined-at: inlined-at);
+      end if;
+    end if;
+  end iterate;
 end function;
 
 define function source-location-dbg-loc

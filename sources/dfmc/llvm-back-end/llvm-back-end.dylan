@@ -60,6 +60,10 @@ define abstract class <llvm-back-end> (<back-end>, <llvm-builder>)
   constant slot %source-record-dbg-file-table :: <object-table>
     = make(<object-table>);
 
+  // Debug function table
+  constant slot %lambda-dbg-function-table :: <object-table>
+    = make(<object-table>);
+
   // LLVM debug type for each defined <&raw-type> instance (or <object>)
   constant slot %dbg-type-table :: <object-table>
     = make(<object-table>);
