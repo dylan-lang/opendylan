@@ -894,6 +894,17 @@ end function;
 // it uses source-record-dispatch-decisions directly.  This function is only
 // for emacs support.
 
+define method project-output-dispatch-colors
+    (project :: <project>, dispatch-coloring :: <symbol>)
+  user-warning("Not writing dispatch coloring info in %s format",
+               as(<string>, dispatch-coloring));
+end method;
+
+define method project-output-dispatch-colors
+    (project :: <project>, dispatch-coloring == #"elisp")
+  project-dump-emacs-dispatch-colors(project);
+end method;
+
 define function project-dump-emacs-dispatch-colors (project :: <project>)
   let dir = project.project-build-location;
   when (dir)

@@ -178,6 +178,8 @@ define class <build-project-command> (<abstract-link-command>)
     init-keyword: link?:;
   constant slot %output :: <sequence> = #[],
     init-keyword: output:;
+  constant slot %dispatch-coloring :: false-or(<symbol>) = #f,
+    init-keyword: dispatch-coloring:;
   constant slot %release? :: <boolean> = #f,
     init-keyword: release?:;
 end class <build-project-command>;
@@ -187,6 +189,7 @@ define command-line build => <build-project-command>
      documentation: "Builds the executable for a project.")
   optional project :: <project-object> = "the project to build";
   keyword output :: $keyword-list-type = "debug output types [default none]";
+  keyword dispatch-coloring :: <symbol> = "dispatch coloring output type";
   flag clean         = "do a clean build? [off by default]";
   flag save          = "save the compiler database [save by default]";
   flag link          = "link the executable [link by default]";
@@ -223,6 +226,7 @@ define method do-execute-command
            save-databases?:      command.%save?,
            messages:             messages,
            output:               command.%output,
+           dispatch-coloring:    command.%dispatch-coloring,
            progress-callback:    progress-callback,
            warning-callback:     curry(note-compiler-warning, context),
            error-handler:        curry(compiler-condition-handler, context)))

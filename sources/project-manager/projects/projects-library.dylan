@@ -69,6 +69,7 @@ define module projects
     project-progress-report,
     project-condition-report,
     project-dump-conditions,
+    project-output-dispatch-colors,
     project-dump-emacs-dispatch-colors,
     <project-warning>,
     <project-serious-warning>,

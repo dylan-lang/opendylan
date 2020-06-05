@@ -317,6 +317,7 @@ define method compile-library (project :: <project>,
                                #rest flags,
                                #key force-compile? = #f,
                                     force-parse?   = #f,
+                                    dispatch-coloring = #f,
                                     abort-on-all-warnings?     = #f,
                                     abort-on-serious-warnings? = #f,
                                     default-binding = #f,
@@ -347,7 +348,10 @@ define method compile-library (project :: <project>,
               compile-all?: force-batch?,
               compile-if-built?: force-objects?,
               flags);
-          #f
+        if (dispatch-coloring)
+          project-output-dispatch-colors(project, dispatch-coloring);
+        end if;
+        #f
       exception (c :: <abort-compilation>)
         internal-message("Aborting compilation of %s due to warnings",
                          project.project-name);
@@ -364,6 +368,7 @@ define thread variable *contexts-to-recompile* = #f;
 define method update-libraries (project :: <project>,
                                 #key force? = #f,
                                      save?  = #f,
+                                     dispatch-coloring = #f,
                                      abort-on-all-warnings?     = #f,
                                      abort-on-serious-warnings? = #f,
                                      continue-after-abort? = #f,
@@ -469,7 +474,9 @@ define method update-libraries (project :: <project>,
                 proj.%database-saved := #t;
                 note-database-saved(proj)
               end;
-
+              if (dispatch-coloring)
+                project-output-dispatch-colors(proj, dispatch-coloring);
+              end if;
             end block;
           end for;
         end dynamic-bind;
