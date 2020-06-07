@@ -63,6 +63,8 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: assemble?:;
   constant slot %dfm?           :: <boolean> = #f,
     init-keyword: dfm?:;
+  constant slot %dispatch-coloring :: false-or(<symbol>) = #f,
+    init-keyword: dispatch-coloring:;
 /*---*** fill this in later.
   constant slot %exports?       :: <boolean> = #f,
     init-keyword: exports?:;
@@ -106,7 +108,8 @@ define method execute-main-command
                        if (command.%dfm?) add!(output, #"dfm") end;
                        if (command.%harp?) add!(output, #"harp") end;
                        output
-                     end)
+                     end,
+        dispatch-coloring: command.%dispatch-coloring)
   end;
   if (build? | command.%link?)
     let target = command.%target;

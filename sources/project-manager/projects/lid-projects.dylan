@@ -610,8 +610,6 @@ end;
 define method note-compiled-definitions (project :: <lid-project>)
   generate-makefile(project);
   copy-extra-records(project, build-settings: project.project-build-settings);
-  // This is just for emacs support (not used by environment).
-  project-dump-emacs-dispatch-colors(project);
 end;
 
 define method copy-extra-records (project :: <lid-project>,

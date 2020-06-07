@@ -80,6 +80,12 @@ Compiler
 * The compiler now displays a text mode progress bar during the
   compilation and link phases.
 
+* The compiler no longer generates dispatch coloring information in
+  Emacs Lisp format by default. When it is needed, it can still be
+  requested by supplying the ``-dispatch-coloring elisp`` command-line
+  option at build time. (Note that the IDE dispatch coloring display
+  does not make use of the elisp-format files.)
+
 Run-time
 ========
 
