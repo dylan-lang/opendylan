@@ -1,4 +1,4 @@
-Module:       daytime-server
+Module:       simple-daytime-server
 Author:       Toby
 Synopsis:     Simple daytime server example sockets code
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define method daytime-server () => ();
+define method simple-daytime-server () => ();
   start-sockets();
   with-server-socket(my-server, port: 13)
     start-server(my-server, reply-socket)
@@ -44,5 +44,4 @@ define method  human-readable-date-string
 		   day, hours, minutes, seconds, year)
 end method;
 
-daytime-server();
-
+simple-daytime-server();

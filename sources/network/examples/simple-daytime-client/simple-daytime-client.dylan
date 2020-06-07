@@ -1,4 +1,4 @@
-Module:       daytime-client
+Module:       simple-daytime-client
 Author:       Toby
 Synopsis:     Simple daytime client example sockets code
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -25,13 +25,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    with-socket (client-socket, protocol: "tcp", ...)  // "TCP", #"TCP"
 //
 
-define method daytime-client () => ();
+define method simple-daytime-client () => ();
   start-sockets();
   with-socket (client-socket, host: "127.0.0.1",  port: 13)
     format-out("%s\n", read-line(client-socket));
   end with-socket;
 end method;
 
-daytime-client();
-
-
+simple-daytime-client();
