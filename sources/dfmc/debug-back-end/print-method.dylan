@@ -7,6 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define thread variable *output-computation-type-estimates?* :: <boolean> = #t;
+define thread variable *output-computation-source-origins?* :: <boolean> = #t;
 
 define method indentd (stream :: <stream>, depth :: <integer>)
   for (i from 0 below depth)
@@ -71,6 +72,20 @@ define method output-computations
   end iterate;
 end method;
 
+define function output-source-location
+    (stream :: <stream>, loc :: false-or(<source-location>)) => ()
+  if (loc)
+    let sr = source-location-source-record(loc);
+    let start-offset = source-location-start-offset(loc);
+    let start-line = source-offset-line(start-offset);
+    format(stream, " @%s:%d",
+           source-record-location(sr).locator-name,
+           start-line + source-record-start-line(sr));
+  else
+    format(stream, " @???");
+  end if;
+end function;
+
 define method output-computation
     (stream :: <stream>, depth :: <integer>, seen :: <object-set>, c :: <computation>)
   indentd(stream, depth);
@@ -78,6 +93,14 @@ define method output-computation
     format(stream, "%s := ", c.temporary);
   end if;
   print-computation(stream, c);
+  if (*output-computation-source-origins?*)
+    output-source-location(stream, dfm-source-location(c));
+    for (origin = c.inlined-origin then origin.origin-next,
+         while: origin)
+      format(stream, " <- %s", origin.origin-lambda);
+      output-source-location(stream, origin.origin-location);
+    end for;
+  end if;
   format(stream, "\n");
 
   if (*output-computation-type-estimates?*)
