@@ -50,5 +50,3 @@ define method  human-readable-date-string
 end method;
 
 daytime-server();
-
-

@@ -5,15 +5,16 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define library daytime-client
+define library simple-daytime-client
   use common-dylan;
   use io;
   use system;
   use network;
-  export daytime-client;
+
+  export simple-daytime-client;
 end library;
 
-define module daytime-client
+define module simple-daytime-client
   use common-dylan;
   use streams;
   use standard-io;
