@@ -17,6 +17,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //   trigger: analyze-calls,
 //   trigger: single-value-propagation;
 
+define variable *track-dylan-library-origin?* = #f;
+
 define generic try-inlining (c :: <computation>);
 define generic try-inlining-call (c :: <function-call>, function);
 define generic function-used-once? (function) => (used-once? :: <boolean>);
@@ -168,6 +170,22 @@ define method do-inline-call
   let f = function(f);
   let target-env = lambda-environment(c.environment);
   let (mapped-body) = move-code-into!(f, target-env, mapped);
+  let track-origin?
+    = *track-dylan-library-origin?*
+    | ~dylan-library-library-description?(model-library(f));
+  walk-lambda-computations
+    (method (c :: <computation>)
+       if (track-origin?)
+         let origin
+           = make(<inlined-origin>,
+                  lambda: f,
+                  location: computation-source-location(c),
+                  next: inlined-origin(c));
+         inlined-origin(c) := origin;
+       end if;
+       computation-source-location(c) := parent-source-location();
+     end,
+     mapped-body);
   let (first, last, return-c)
     = extract-lambda-body-extent(mapped-body, target-env);
   if (mapped == identity)
@@ -220,17 +238,9 @@ define method inline-call (c :: <function-call>, f :: <&iep>)
   end;
   re-optimize-users(c.function); // MAYBE DELETE MAKE/INIT-CLOSURE IF PRESENT
   let f-body = f.body;
-  let inherited-location
-    = if (~computation-source-location(f-body))
-        parent-source-location()
-      else
-        #f
-      end;
   walk-lambda-computations
     (method (c :: <computation>)
        item-status(c) := $queueable-item-absent;
-       computation-source-location(c)
-         := computation-source-location(c) | inherited-location
      end,
      f-body);
   do-inline-call(c, f, identity);

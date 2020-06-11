@@ -117,7 +117,7 @@ define method initialize-bef-struct-type (back-end :: <llvm-back-end>) => ()
 
   back-end.llvm-bef-struct-type
     := make(<&raw-struct-type>,
-	    debug-name: "BEF",
+	    debug-name: "dylan-bef",
 	    options: #[],
 	    members:
               vector(// Unwind exception header (must be doubleword aligned)

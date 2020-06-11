@@ -41,8 +41,13 @@ define module dfmc-flow-graph
     do-over-lambda-users,
     analyze-environments;
 
+  export
+    <inlined-origin>,
+    origin-lambda, origin-location, origin-next;
+
   export // computations
     <computation>,
+    inlined-origin, inlined-origin-setter,
     previous-computation, previous-computation-setter,
     temporary, temporary-setter,
     computation-value, computation-value-setter,

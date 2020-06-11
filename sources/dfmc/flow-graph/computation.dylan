@@ -6,11 +6,25 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+define class <inlined-origin> (<object>)
+  constant slot origin-lambda :: <&lambda>,
+    required-init-keyword: lambda:;
+  constant slot origin-location :: false-or(<source-location>),
+    required-init-keyword: location:;
+  constant slot origin-next :: false-or(<inlined-origin>),
+    required-init-keyword: next:;
+end class;
+
+define thread variable *parent-inlined-origin* :: false-or(<inlined-origin>) = #f;
+
 define abstract dood-class <computation> (<queueable-item-mixin>)
 
   slot computation-source-location :: false-or(<source-location>)
          = parent-source-location(),
     init-keyword: source-location:;
+
+  slot inlined-origin :: false-or(<inlined-origin>) = *parent-inlined-origin*,
+    init-keyword: inlined-origin:;
 
   weak slot previous-computation :: false-or(<computation>) = #f,
     reinit-expression: #f,
@@ -1100,7 +1114,9 @@ define compiler-open generic dfm-context-id
 define inline function do-with-parent-computation
     (f :: <function>, c :: false-or(<computation>))
   with-parent-source-location (c & computation-source-location(c))
-    f();
+    dynamic-bind (*parent-inlined-origin* = c & c.inlined-origin)
+      f();
+    end;
   end;
 end function;
 

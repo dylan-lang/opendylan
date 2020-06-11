@@ -1647,7 +1647,9 @@ define method convert-next-method-into
  => ()
   f.^function-next? := #t;
   let fragment
-    = generate-next-method-function-fragment(f, signature-spec, next-ref);
+    = with-expansion-source-form (model-definition(f))
+        generate-next-method-function-fragment(f, signature-spec, next-ref)
+      end;
   let (f-start, f-end, f-temp) = convert-1(env, fragment);
   insert-computations-after!(f.body, f-start, f-end);
   replace-temporary-in-users!(next-ref, f-temp);

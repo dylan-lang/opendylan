@@ -2330,6 +2330,10 @@ define function lambda-heap-for-sure
        := begin
             let refs = make(<code-references>);
             for-computations (c in m)
+              for (origin = c.inlined-origin then origin.origin-next,
+                   while: origin)
+                maybe-claim-value-references(refs, origin.origin-lambda.^iep);
+              end for;
               if (instance?(c, <simple-call>)
                     // object-class(c) == <simple-call>
                     & call-iep?(c)
