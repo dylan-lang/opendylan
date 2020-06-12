@@ -97,11 +97,9 @@ bootstrap-stage-1-dirs:
 # The main point of stage 1 is to compile any changed compiler sources.
 $(BOOTSTRAP_1_REGISTRY):
 	mkdir $(BOOTSTRAP_1_REGISTRY)
-	cp -r $(srcdir)/sources/registry/generic $(BOOTSTRAP_1_REGISTRY)
-	cp -r $(srcdir)/sources/registry/$(TARGET_PLATFORM) $(BOOTSTRAP_1_REGISTRY)
+	cp -r $(srcdir)/sources/registry/* $(BOOTSTRAP_1_REGISTRY)
 	for lib in $(BOOTSTRAP_1_PRIMITIVE_LIBS); do \
-	  rm -f $(BOOTSTRAP_1_REGISTRY)/generic/$$lib; \
-	  rm -f $(BOOTSTRAP_1_REGISTRY)/$(TARGET_PLATFORM)/$$lib; \
+	  rm -f $(BOOTSTRAP_1_REGISTRY)/*/$$lib; \
 	done
 
 bootstrap-stage-1-compiler:
