@@ -326,19 +326,17 @@ html:
 version = @VERSION@
 
 dist: 3-stage-bootstrap
-	-mkdir release
-	-mkdir release/opendylan-$(version)
-	-mkdir release/opendylan-$(version)/bin
-	-mkdir release/opendylan-$(version)/databases
-	-mkdir -p release/opendylan-$(version)/include/opendylan
-	-mkdir release/opendylan-$(version)/lib
-	-mkdir release/opendylan-$(version)/sources
-	-mkdir -p release/opendylan-$(version)/share/opendylan
+	mkdir -p release/opendylan-$(version)/bin
+	mkdir -p release/opendylan-$(version)/databases
+	mkdir -p release/opendylan-$(version)/include/opendylan
+	mkdir -p release/opendylan-$(version)/lib
+	mkdir -p release/opendylan-$(version)/sources
+	mkdir -p release/opendylan-$(version)/share/opendylan
 	@echo Copying sources...
 	cp -R $(srcdir)/sources release/opendylan-$(version)/
 	@echo Removing unnecessary directories...
 	find release/opendylan-$(version)/sources -depth -name '.*' -exec rm -rf {} \;
-	-rm -r release/opendylan-$(version)/sources/bootstrap1-registry
+	rm -rf release/opendylan-$(version)/sources/bootstrap1-registry
 	cp -R Bootstrap.3/bin release/opendylan-$(version)/
 	cp -R Bootstrap.3/databases release/opendylan-$(version)/
 	-cp -R Bootstrap.3/include/opendylan release/opendylan-$(version)/include
