@@ -11,6 +11,8 @@ C++FLAGS          ?= $(CCFLAGS) ;
 
 LIBS              ?= @LIBS@ ;
 
+RTLIBS_INSTALL    ?= ;
+
 MPS_CFLAGS        ?= @MPS_CFLAGS@ -DGC_USE_MPS ;
 MPS_LIBS          ?= @MPS_LIBS@ ;
 BDW_GC_CFLAGS     ?= @BDW_GC_CFLAGS@ -DGC_THREADS -DGC_USE_BOEHM ;

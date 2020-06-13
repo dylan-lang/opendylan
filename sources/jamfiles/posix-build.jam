@@ -143,6 +143,16 @@ rule DylanLibrary image : version {
   LIBPATH on $(_dll) = $(PERSONAL_LIBDIR) ;
   LIBPATH on $(_exe) = $(PERSONAL_LIBDIR:E=$(LIBDIR)) ;
 
+  # Install needed runtime libraries locally
+  if $(image[1]:L) = dylan {
+    for _i in $(RTLIBS_INSTALL) {
+      local _rtlib = $(_i:D=) ;
+      MakeLocate $(_rtlib) : $(LIBDIR) ;
+      File $(_rtlib) : $(_i) ;
+      Depends $(_dll) : $(_rtlib) ;
+    }
+  }
+
   # We'll use the library name as the grist to identify referenced
   # source and object files.
 
