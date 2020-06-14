@@ -27,6 +27,10 @@ now here is a manual check-list.
    * Do a ``git grep`` for the previous release number, e.g., "2019.1" and see
      if anything else needs to be updated.
 
+#. Update version numbers in ``build/unix/release-with-batteries.sh``
+   to the latest stable versions of the relevant software (Clang+LLVM,
+   the Boehm-Demers-Weiser garbage collector, and libunwind).
+   Download the release tarballs.
 
 #. Update the release notes. Hopefully these have been maintained as changes
    were made.  It may be worth scanning the commit logs.
@@ -49,7 +53,7 @@ now here is a manual check-list.
 
      $ cd opendylan
      $ git co v2019.1.0      # the tag you created above
-     $ make release
+     $ ./build/unix/release-with-batteries.sh
 
    Use the previous release as the bootstrap compiler so that we can be sure
    that works.  If it doesn't work, then opendylan/README.rst must be updated
