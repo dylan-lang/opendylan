@@ -31,5 +31,5 @@ echo "*** Thanks! ***"
 ( cd $srcdir
   mkdir -p config/build-aux
   aclocal -I config/m4
-  automake --foreign --add-missing
+  automake --foreign --copy --add-missing
   autoconf )
