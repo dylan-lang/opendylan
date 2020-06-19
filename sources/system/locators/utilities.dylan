@@ -202,33 +202,33 @@ define method relative-path
   end
 end method relative-path;
 
-define method simplify-path
+define function simplify-path
     (path :: <simple-object-vector>,
-     #key resolve-parent? :: <boolean> = #t,
-          relative? :: <boolean>)
+     #key relative? :: <boolean>)
  => (simplified-path :: <simple-object-vector>)
   let new-path :: <list> = #();
   for (item in path)
     select (item)
       #"self"   =>
-        #f;
+        #f;                     // drop "."
       #"parent" =>
-        if (resolve-parent?
-              & ~new-path.empty?
-              & new-path.head ~== #"parent")
-          new-path := new-path.tail
-        else
+        if (new-path.empty? | new-path.head = #"parent")
+          // TODO(cgay): this isn't quite right. Shell (realpath) and Python
+          // (os.path.realpath) convert "/../.." to "/". Note it's only
+          // applicable to absolute paths though.
           new-path := pair(item, new-path)
+        else
+          new-path := new-path.tail
         end;
       otherwise =>
         new-path := pair(item, new-path);
-    end
+    end;
   end;
   if (empty?(new-path) & relative?)
     new-path := list(#"self")
   end;
   reverse!(as(<simple-object-vector>, new-path))
-end method simplify-path;
+end function;
 
 
 /// Case insensitive comparisons

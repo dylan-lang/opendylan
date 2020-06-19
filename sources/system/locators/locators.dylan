@@ -129,14 +129,6 @@ define method locator-test
   \=
 end method locator-test;
 
-define open generic locator-might-have-links?
-    (locator :: <directory-locator>) => (links? :: <boolean>);
-
-define method locator-might-have-links?
-    (locator :: <directory-locator>) => (links? :: singleton(#f))
-  #f
-end method locator-might-have-links?;
-
 define method locator-relative?
     (locator :: <file-locator>) => (relative? :: <boolean>)
   let directory = locator.locator-directory;
@@ -168,43 +160,46 @@ end method locator-path;
 
 /// Simplify locator
 
+// Simplify (or normalize) locator by collapsing redundant separators and
+// parent references so that A//B, A/B/, A/./B and A/foo/../B all become
+// A/B. This string manipulation may change the meaning of a path that contains
+// symbolic links. Use `resolve?: #t` to resolve symbolic links by checking the
+// file system.
 define open generic simplify-locator
-    (locator :: <physical-locator>)
+    (locator :: <physical-locator>, #key resolve?)
  => (simplified-locator :: <physical-locator>);
 
 define method simplify-locator
-    (locator :: <directory-locator>)
+    (locator :: <directory-locator>, #key resolve? :: <boolean>)
  => (simplified-locator :: <directory-locator>)
   let path = locator.locator-path;
   let relative? = locator.locator-relative?;
-  let resolve-parent? = ~locator.locator-might-have-links?;
-  let simplified-path
-    = simplify-path(path,
-                    resolve-parent?: resolve-parent?,
-                    relative?: relative?);
-  if (path ~= simplified-path)
+  let simplified-path = simplify-path(path, relative?: relative?);
+  if (path = simplified-path)
+    locator
+  else
     make(object-class(locator),
          server:    locator.locator-server,
          path:      simplified-path,
-         relative?: locator.locator-relative?)
-  else
-    locator
+         relative?: relative?)
   end
-end method simplify-locator;
+end method;
 
 define method simplify-locator
-    (locator :: <file-locator>) => (simplified-locator :: <file-locator>)
+    (locator :: <file-locator>, #key resolve? :: <boolean>)
+ => (simplified-locator :: <file-locator>)
   let directory = locator.locator-directory;
-  let simplified-directory = directory & simplify-locator(directory);
-  if (directory ~= simplified-directory)
+  let simplified-directory
+    = directory & simplify-locator(directory, resolve?: resolve?);
+  if (directory = simplified-directory)
+    locator
+  else
     make(object-class(locator),
          directory: simplified-directory,
          base:      locator.locator-base,
          extension: locator.locator-extension)
-  else
-    locator
   end
-end method simplify-locator;
+end method;
 
 
 /// Subdirectory locator

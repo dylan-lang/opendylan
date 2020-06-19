@@ -191,7 +191,6 @@ define module locators-internals
          find-delimiters,
          find-delimiter-from-end,
          find-delimiters-from-end,
-         locator-might-have-links?,
          locator-test,
          prefix-equal?;
 

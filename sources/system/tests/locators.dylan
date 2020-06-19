@@ -368,27 +368,29 @@ define constant $simplify-tests
       #["./a.t",     "a.t"],
       #["a/./b.t",   "a/b.t"],
       #["../a/b",    "../a/b"],
-      #["../a/./b",  "../a/b"]];
+      #["../a/./b",  "../a/b"],
+      #["a/b/../c", "a/c"]];
 
 define constant $microsoft-simplify-tests
   = #[#["a/../b.t",  "b.t"],
       #["/a/../b.t", "/b.t"]];
 
 define test test-simplify-locator ()
-  local method test-simplify-locator
-            (class :: subclass(<locator>), info :: <vector>) => ()
-          let file1 = info[0];
-          let file2 = info[1];
-          check-equal(format-to-string("%s: simplify(%=) = %=",
-                                       class, file1, file2),
-                      simplify-locator(as(class, file1)),
-                      as(class, file2))
-        end method test-simplify-locator;
+  local method check-simplify-locator
+            (class :: subclass(<locator>), path1, path2) => ()
+          check-equal(format-to-string("%s: simplify-locator(%=) = %=",
+                                       class, path1, path2),
+                      simplify-locator(as(class, path1)),
+                      as(class, path2))
+        end method;
   for (class in vector(<microsoft-file-system-locator>, <posix-file-system-locator>))
-    do(curry(test-simplify-locator, class), $simplify-tests)
+    for (info in $simplify-tests)
+      apply(check-simplify-locator, class, info);
+    end;
   end;
-  do(curry(test-simplify-locator, <microsoft-file-system-locator>),
-     $microsoft-simplify-tests)
+  for (info in $microsoft-simplify-tests)
+    apply(check-simplify-locator, <microsoft-file-system-locator>, info)
+  end;
 end test;
 
 define constant $subdirectory-tests

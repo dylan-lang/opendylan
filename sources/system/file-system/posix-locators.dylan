@@ -111,11 +111,6 @@ define sealed method locator-test
   \=
 end method locator-test;
 
-define method locator-might-have-links?
-    (locator :: <posix-directory-locator>) => (links? :: singleton(#t))
-  #t
-end method locator-might-have-links?;
-
 
 define sealed class <posix-file-locator>
     (<file-system-file-locator>, <posix-file-system-locator>)
