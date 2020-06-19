@@ -966,18 +966,11 @@ define method class-name (obj-class :: <class>) => (name :: false-or(<string>))
   end if;
 end method;
 
-/// This function writes the name of the class to stream.
-/// It does not output any curly braces, the word "class", or anything else.
-///
-define method write-class-name (obj-class :: <class>, stream :: <stream>)
-    => ();
-  let cname = obj-class.class-name;
-  if (cname)
-    write(stream, cname);
-  else
-    write(stream, "(no class name available)");
-  end if;
-end method write-class-name;
+define constant $unknown-class-name = "(no class name available)";
+
+define method write-class-name (obj-class :: <class>, stream :: <stream>) => ()
+  write(stream, obj-class.class-name | $unknown-class-name)
+end method;
 
 
 
@@ -1101,12 +1094,15 @@ end;
 
 define sealed method print-object
     (locator :: <locator>, stream :: <stream>) => ()
+  let path = as(<string>, locator);
   if (*print-escape?*)
-    next-method()
+    format(stream, "{%s %=}",
+            locator.object-class.class-name | $unknown-class-name,
+           path)
   else
-    write(stream, as(<string>, locator))
-  end
-end method print-object;
+    write(stream, path);
+  end;
+end method;
 
 
 /// print-to-string -- Exported.
