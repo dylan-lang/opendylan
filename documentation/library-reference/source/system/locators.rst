@@ -312,9 +312,7 @@ The locators Module
 
       .. code-block:: dylan
 
-	 let locator = as(<locator>, "/usr/local/include/");
-	 let path = locator-path(locator);
-	 // path == #["usr", "local", "include"]
+        locator-path(as(<file-locator>, "/a/b/c.d")) => #["a", "b"]
 
 .. generic-function:: locator-relative?
    :open:
