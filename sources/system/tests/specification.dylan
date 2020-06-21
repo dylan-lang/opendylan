@@ -110,8 +110,8 @@ define interface-specification-suite file-system-specification-suite ()
 
   // File system locators
   open abstract class <file-system-locator> (<locator>);
-  open sealed instantiable class <file-system-directory-locator> (<file-system-locator>);
-  open sealed instantiable class <file-system-file-locator> (<file-system-locator>);
+  sealed instantiable class <file-system-directory-locator> (<file-system-locator>);
+  sealed instantiable class <file-system-file-locator> (<file-system-locator>);
   function file-system-separator () => (<character>);
 
   // Microsoft locators
