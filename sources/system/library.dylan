@@ -177,6 +177,7 @@ end module locators;
 
 define module locators-internals
   use common-dylan;
+  use format-out;
   use dylan-direct-c-ffi;
   use dylan-extensions,
     import: { \copy-down-method-definer };

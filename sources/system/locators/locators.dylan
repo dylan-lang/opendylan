@@ -284,6 +284,10 @@ end method relative-locator;
 
 /// Merge locators
 
+// Construct a new locator from `locator` by copying missing or incomplete
+// parts from `from-locator`.  Note that if `locator` is relative the resulting
+// directory part is the concatenation of the directories of `from-locator` and
+// `locator`, either of which may be empty.
 define open generic merge-locators
     (locator :: <physical-locator>, from-locator :: <physical-locator>)
  => (merged-locator :: <physical-locator>);
@@ -296,6 +300,9 @@ define method merge-locators
  => (merged-locator :: <directory-locator>)
   if (locator.locator-relative?)
     let path = concatenate(from-locator.locator-path, locator.locator-path);
+    // TODO(cgay): simplify-locator does different things depending on whether
+    // you consult the file system, so it should only be called explicitly by
+    // the user.
     simplify-locator
       (make(object-class(locator),
             server:    from-locator.locator-server,
@@ -304,7 +311,7 @@ define method merge-locators
   else
     locator
   end
-end method merge-locators;
+end method;
 
 define method merge-locators
     (locator :: <file-locator>, from-locator :: <directory-locator>)
@@ -324,18 +331,33 @@ define method merge-locators
   else
     locator
   end
-end method merge-locators;
+end method;
 
 define method merge-locators
-    (locator :: <physical-locator>, from-locator :: <file-locator>)
- => (merged-locator :: <physical-locator>)
+    (locator :: <directory-locator>, from-locator :: <file-locator>)
+ => (merged-locator :: <file-locator>)
+  let from-directory = locator-directory(from-locator);
+  let directory = if (from-directory)
+                    merge-locators(locator, from-directory)
+                  else
+                    locator
+                  end;
+  make(object-class(from-locator),
+       directory: directory,
+       base: locator-base(from-locator),
+       extension: locator-extension(from-locator))
+end method;
+
+define method merge-locators
+    (locator :: <file-locator>, from-locator :: <file-locator>)
+ => (merged-locator :: <file-locator>)
   let from-directory = from-locator.locator-directory;
   if (from-directory)
     merge-locators(locator, from-directory)
   else
     locator
   end
-end method merge-locators;
+end method;
 
 
 /// Locator protocols

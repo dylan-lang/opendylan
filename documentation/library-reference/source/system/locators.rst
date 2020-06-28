@@ -251,8 +251,9 @@ The locators Module
    :value host: An instance of :drm:`false-or(<string>) <<string>>`.
 
    :description:
-    Returns the computer host name of a :class:`<server-url>` or
-    :class:`<microsoft-unc-locator>`.
+
+     Returns the computer host name of a :class:`<server-url>` or
+     :class:`<microsoft-unc-locator>`.
 
 .. generic-function:: locator-name
 
@@ -264,8 +265,18 @@ The locators Module
    :value name: An instance of :drm:`false-or(<string>) <<string>>`.
 
    :description:
-    This is typically the last component of the
-    locator's path but can be different for some specializations.
+
+     This is typically the last component of the locator's path but can be
+     different for some specializations.
+
+.. method:: locator-name
+   :specializer: <mailto-locator>
+
+   Returns the email address of this locator.
+
+   :parameter locator: an instance of :class:`<mailto-locator>`
+   :value name: An instance of :drm:`<string>`
+
 
 .. method:: locator-name
    :specializer: <mailto-locator>
@@ -297,7 +308,7 @@ The locators Module
 .. generic-function:: locator-path
    :open:
 
-   Returns the path of a locator.
+   Returns the directory path of a locator.
 
    :signature: locator-path (locator) => (path)
 
@@ -305,12 +316,13 @@ The locators Module
    :value path: An instance of :drm:`<sequence>`.
 
    :description:
-      Returns the path as a sequence of strings, each being the name of
-      a path element.
+
+     Returns the directory path as a sequence of strings, each being the name
+     of a path element.
 
    :example:
 
-      .. code-block:: dylan
+     .. code-block:: dylan
 
         locator-path(as(<file-locator>, "/a/b/c.d")) => #["a", "b"]
 
