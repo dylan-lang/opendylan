@@ -287,11 +287,7 @@ define sealed class <directory-url>
     (<directory-locator>, <url>)
   sealed constant slot locator-server :: false-or(<server-url>) = #f,
     init-keyword: server:;
-  sealed constant slot locator-relative? :: <boolean> = #f,
-    init-keyword: relative?:;
-  sealed constant slot locator-path :: <simple-object-vector>,
-    required-init-keyword: path:;
-end class <directory-url>;
+end class;
 
 define sealed method make
     (class == <directory-url>,

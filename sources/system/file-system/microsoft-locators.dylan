@@ -116,11 +116,7 @@ define sealed class <microsoft-directory-locator>
     (<file-system-directory-locator>, <microsoft-file-system-locator>)
   sealed constant slot locator-server :: false-or(<microsoft-server-locator>) = #f,
     init-keyword: server:;
-  sealed constant slot locator-relative? :: <boolean> = #f,
-    init-keyword: relative?:;
-  sealed constant slot locator-path :: <simple-object-vector>,
-    required-init-keyword: path:;
-end class <microsoft-directory-locator>;
+end class;
 
 define sealed method make
     (class == <microsoft-directory-locator>,

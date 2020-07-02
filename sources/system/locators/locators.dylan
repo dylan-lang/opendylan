@@ -37,7 +37,11 @@ define open generic locator-extension
 /// Locator classes
 
 define open abstract class <directory-locator> (<physical-locator>)
-end class <directory-locator>;
+  sealed constant slot locator-relative? :: <boolean> = #f,
+    init-keyword: relative?:;
+  sealed constant slot locator-path :: <simple-object-vector>,
+    required-init-keyword: path:;
+end class;
 
 define open abstract class <file-locator> (<physical-locator>)
 end class <file-locator>;

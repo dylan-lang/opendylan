@@ -28,11 +28,7 @@ end method string-as-locator;
 
 define sealed class <posix-directory-locator>
     (<file-system-directory-locator>, <posix-file-system-locator>)
-  sealed constant slot locator-relative? :: <boolean> = #f,
-    init-keyword: relative?:;
-  sealed constant slot locator-path :: <simple-object-vector>,
-    required-init-keyword: path:;
-end class <posix-directory-locator>;
+end class;
 
 define sealed method make
     (class == <posix-directory-locator>,

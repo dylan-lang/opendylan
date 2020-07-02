@@ -65,6 +65,9 @@ The locators Module
 
    :superclasses: :class:`<physical-locator>`
 
+   :slot locator-relative?: #t if the locator is relative, #f if it is absolute.
+   :slot locator-path: the path to the directory.
+
    A directory locator is a locator that refers to a directory as
    distinct from a file. This is important in file systems which can
    view a directory as either a file or a directory. This locator
@@ -635,8 +638,6 @@ The locators Module
    :superclasses: :class:`<microsoft-file-system-locator>`, :class:`<directory-locator>`
 
    :slot locator-server: the server which holds this directory.
-   :slot locator-relative?: #t if the locator is relative, #f if it is absolute.
-   :slot locator-path: the path to the directory.
 
 .. class:: <microsoft-file-locator>
 
@@ -661,9 +662,6 @@ The locators Module
    :sealed:
 
    A directory on a posix-like file system.
-
-   :slot locator-relative?: #t if the locator is relative, #f if it is absolute.
-   :slot locator-path: the path to the directory.
 
    :superclasses: :class:`<file-system-directory-locator>`, :class:`<posix-file-system-locator>`
 
