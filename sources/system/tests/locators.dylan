@@ -468,39 +468,35 @@ define constant $posix-merge-tests
   //    orig      merge-from         expect
   = #[#["a",      "a",               "a"],
       #["a",      "b",               "a"],
-      #["./",     "a/",              "a/"],
+      #["./",     "a/",              "a/./"],
       #["b",      "a/",              "a/b"],
-      #["a/",     "b",               "a/b"],        // expected to fail for now
-      #["../b/c", "a/",              "b/c"],
+      #["a/",     "b",               "a/b"],
+      #["../b/c", "a/",              "a/../b/c"],
       #["c",      "/a/b/",           "/a/b/c"],
       #["b/c",    "/a/",             "/a/b/c"],
-      #["/a/",    "b/c",             "/a/c"],       // expected to fail for now
-      #["../",    "/a/b/c/",         "/a/b/"],
-      #["../../../a/b/c", "/d/e/f/", "/a/b/c"],
-      // This verifies that we only simplify the locator if any merging is done.
-      // It's testing that merge-locators is working as implemented, but I'm not
-      // sure this is what we want. We probably should never simplify. --cgay
-      #["a/b/../c", "b",             "a/b/../c"]];
+      #["/a/",    "b/c",             "/a/c"],
+      #["../",    "/a/b/c/",         "/a/b/c/../"],
+      #["../../../a/b/c", "/d/e/f/", "/d/e/f/../../../a/b/c"]];
 
 define constant $microsoft-merge-tests
   //    orig      merge-from         expect
   = #[#["a",      "a",               "a"],
       #["a",      "b",               "a"],
-      #["./",     "a/",              "a/"],
+      #["./",     "a/",              "a/./"],
       #["b",      "a/",              "a/b"],
-      #["a/",     "b",               "a/b"],        // expected to fail for now
-      #["../b/c", "a/",              "b/c"],
+      #["a/",     "b",               "a/b"],
+      #["../b/c", "a/",              "a/../b/c"],
       #["c",      "/a/b/",           "/a/b/c"],
       #["b/c",    "/a/",             "/a/b/c"],
-      #["../",    "/a/b/c/",         "/a/b/"],
-      #["../../../a/b/c", "/d/e/f/", "/a/b/c"],
-      #["c",      "h:/a/b/",      "h:/a/b/c"],
-      #["c/",     "h:/a/b/",      "h:/a/b/c/"],
-      #["h:/a/b/c", "i:/a/b/c/",  "h:/a/b/c"],
-      #["h:/a/b/c/", "i:/a/b/c/", "h:/a/b/c/"],
-      #["b",      "//h/a/",       "//h/a/b"],
-      #["b/",     "//h/a/",       "//h/a/b/"],
-      #["//h/a/b", "//i/a/",      "//h/a/b"]];
+      #["../",    "/a/b/c/",         "/a/b/c/../"],
+      #["../../../a/b/c", "/d/e/f/", "/d/e/f/../../../a/b/c"],
+      #["c",      "h:/a/b/",         "h:/a/b/c"],
+      #["c/",     "h:/a/b/",         "h:/a/b/c/"],
+      #["h:/a/b/c", "i:/a/b/c/",     "h:/a/b/c"],
+      #["h:/a/b/c/", "i:/a/b/c/",    "h:/a/b/c/"],
+      #["b",      "//h/a/",          "//h/a/b"],
+      #["b/",     "//h/a/",          "//h/a/b/"],
+      #["//h/a/b", "//i/a/",         "//h/a/b"]];
 
 // Note that merge-locators calls simplify-locator so this is effectively
 // testing simplify-locator as well.

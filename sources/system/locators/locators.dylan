@@ -169,6 +169,10 @@ end method locator-path;
 // A/B. This string manipulation may change the meaning of a path that contains
 // symbolic links. Use `resolve?: #t` to resolve symbolic links by checking the
 // file system.
+//
+// Note that System library code probably shouldn't call this unless we're
+// absolutely sure what semantics are desired; leave it to the end-user to call
+// as necessary.
 define open generic simplify-locator
     (locator :: <physical-locator>, #key resolve?)
  => (simplified-locator :: <physical-locator>);
@@ -258,14 +262,13 @@ define method relative-locator
  => (relative-locator :: <file-locator>)
   let directory = locator.locator-directory;
   let relative-directory = directory & relative-locator(directory, from-directory);
-  if (relative-directory ~= directory)
-    simplify-locator
-      (make(object-class(locator),
-            directory: relative-directory,
-            base:      locator.locator-base,
-            extension: locator.locator-extension))
-  else
+  if (relative-directory = directory)
     locator
+  else
+    make(object-class(locator),
+         directory: relative-directory,
+         base:      locator.locator-base,
+         extension: locator.locator-extension)
   end
 end method relative-locator;
 
@@ -301,17 +304,13 @@ define open generic merge-locators
 
 define method merge-locators
     (locator :: <directory-locator>, from-locator :: <directory-locator>)
- => (merged-locator :: <directory-locator>)
+ => (merged :: <directory-locator>)
   if (locator.locator-relative?)
     let path = concatenate(from-locator.locator-path, locator.locator-path);
-    // TODO(cgay): simplify-locator does different things depending on whether
-    // you consult the file system, so it should only be called explicitly by
-    // the user.
-    simplify-locator
-      (make(object-class(locator),
-            server:    from-locator.locator-server,
-            path:      path,
-            relative?: from-locator.locator-relative?))
+    make(object-class(locator),
+         server:    from-locator.locator-server,
+         path:      path,
+         relative?: from-locator.locator-relative?)
   else
     locator
   end
@@ -319,21 +318,20 @@ end method;
 
 define method merge-locators
     (locator :: <file-locator>, from-locator :: <directory-locator>)
- => (merged-locator :: <file-locator>)
+ => (merged :: <file-locator>)
   let directory = locator.locator-directory;
-  let merged-directory
-    = if (directory)
-        merge-locators(directory, from-locator)
-      else
-        simplify-locator(from-locator)
-      end;
-  if (merged-directory ~= directory)
+  let merged-directory = if (directory)
+                           merge-locators(directory, from-locator)
+                         else
+                           from-locator
+                         end;
+  if (merged-directory = directory)
+    locator
+  else
     make(object-class(locator),
          directory: merged-directory,
          base:      locator.locator-base,
          extension: locator.locator-extension)
-  else
-    locator
   end
 end method;
 
