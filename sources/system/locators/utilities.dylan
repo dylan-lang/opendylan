@@ -1,4 +1,4 @@
-Module:       locators-internals
+Module:       system-internals
 Synopsis:     Abstract modeling of locations
 Author:       Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -233,8 +233,8 @@ end function;
 
 /// Case insensitive comparisons
 //---*** andrewa: needed for comparison of Microsoft locators.
-//---*** This really should be defined somewhere.
 //---*** Also, we should worry about internationalization issues.
+//TODO(cgay): use the strings module instead.
 
 define method case-insensitive=
     (object1 :: <object>, object2 :: <object>)

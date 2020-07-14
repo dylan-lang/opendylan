@@ -1,4 +1,4 @@
-Module:       locators-internals
+Module:       system-internals
 Synopsis:     Abstract modeling of locations
 Author:       Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

@@ -1,4 +1,4 @@
-Module:       locators-internals
+Module:       system-internals
 Synopsis:     Abstract modeling of locations
 Author:       Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -167,18 +167,13 @@ end method locator-path;
 // Simplify (or normalize) locator by collapsing redundant separators and
 // parent references so that A//B, A/B/, A/./B and A/foo/../B all become
 // A/B. This string manipulation may change the meaning of a path that contains
-// symbolic links. Use `resolve?: #t` to resolve symbolic links by checking the
-// file system.
-//
-// Note that System library code probably shouldn't call this unless we're
-// absolutely sure what semantics are desired; leave it to the end-user to call
-// as necessary.
+// symbolic links.
 define open generic simplify-locator
-    (locator :: <physical-locator>, #key resolve?)
+    (locator :: <physical-locator>)
  => (simplified-locator :: <physical-locator>);
 
 define method simplify-locator
-    (locator :: <directory-locator>, #key resolve? :: <boolean>)
+    (locator :: <directory-locator>)
  => (simplified-locator :: <directory-locator>)
   let path = locator.locator-path;
   let relative? = locator.locator-relative?;
@@ -194,11 +189,10 @@ define method simplify-locator
 end method;
 
 define method simplify-locator
-    (locator :: <file-locator>, #key resolve? :: <boolean>)
+    (locator :: <file-locator>)
  => (simplified-locator :: <file-locator>)
   let directory = locator.locator-directory;
-  let simplified-directory
-    = directory & simplify-locator(directory, resolve?: resolve?);
+  let simplified-directory = directory & simplify-locator(directory);
   if (directory = simplified-directory)
     locator
   else
@@ -208,6 +202,23 @@ define method simplify-locator
          extension: locator.locator-extension)
   end
 end method;
+
+// Check the file system to resolve and expand links, and normalize the path.
+// Returns an absolute locator, using the current process's working directory
+// to resolve relative locators, or signals <file-system-error>. Note that lack
+// of an error does not mean that the resolved locator names an existing file,
+// but does mean the containing directory exists. In other words, this function
+// inherits POSIX `realpath` semantics.
+define open generic resolve-locator
+    (locator :: <physical-locator>)
+ => (simplified-locator :: <physical-locator>);
+
+define method resolve-locator
+    (locator :: <physical-locator>)
+ => (simplified-locator :: <physical-locator>)
+  %resolve-locator(locator)
+end method;
+
 
 
 /// Subdirectory locator

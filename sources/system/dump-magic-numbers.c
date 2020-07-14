@@ -36,6 +36,8 @@ main(void) {
     PRINT_CONSTANT(ETXTBSY, "ETXTBSY");
     PRINT_CONSTANT(EROFS,   "EROFS");
 
+    PRINT_CONSTANT(PATH_MAX, "path-max");
+
     PRINT_SIZEOF(struct stat, "stat");
     PRINT_OFFSETOF(struct stat, st_mode, "st-mode");
     PRINT_OFFSETOF(struct stat, st_uid,  "st-uid");
@@ -65,4 +67,3 @@ main(void) {
 
     return 0;
 }
-

@@ -141,10 +141,12 @@ define module locators
          locator-error;
 
   // Utilities
-  create simplify-locator,
-         subdirectory-locator,
-         relative-locator,
-         merge-locators;
+  create
+    merge-locators,
+    relative-locator,
+    resolve-locator,
+    simplify-locator,
+    subdirectory-locator;
 
   // Web locators
   create <web-locator>,
@@ -176,14 +178,6 @@ define module locators
 end module locators;
 
 define module locators-internals
-  use common-dylan;
-  use format-out;
-  use dylan-direct-c-ffi;
-  use dylan-extensions,
-    import: { \copy-down-method-definer };
-  use streams-protocol;
-  use locators, export: all;
-
   // Useful utilities
   create case-insensitive=,
          current-directory-locator?,
@@ -350,6 +344,7 @@ define module system-internals
   use streams-internals;
   use operating-system, export: all;
   use date, export: all;
+  use locators, export: all;
   use locators-internals, export: all;
   use file-system, export: all;
   use file-system-internals, export: all;

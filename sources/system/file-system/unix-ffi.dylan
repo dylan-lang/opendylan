@@ -33,7 +33,8 @@ define constant    $W_OK = #o2;
 define constant    $R_OK = #o4;
 
 
-/// Used instead of define C-struct to avoid relying on the C-FFI library ...
+// Used instead of define C-struct to avoid relying on the C-FFI library,
+// to keep the size of the System library to a minimum.
 
 define macro with-stack-stat
   { with-stack-stat (?st:name, ?file:expression) ?:body end }

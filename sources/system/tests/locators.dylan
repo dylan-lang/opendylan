@@ -517,6 +517,33 @@ define test test-merge-locators ()
   end;
 end test;
 
+// TODO(cgay): create a link and verify that resolve-locator respects the
+// link. Currently there is no API to create a link.
+define test test-resolve-locator ()
+  let tmpdir = test-temp-directory();
+  assert-signals(<file-system-error>,
+                 resolve-locator(subdirectory-locator(tmpdir, "non-existent")));
+
+  create-directory(tmpdir, "foo");
+  create-directory(tmpdir, "bar");
+  let foo = subdirectory-locator(tmpdir, "foo");
+  let bar = subdirectory-locator(tmpdir, "bar");
+  let foob = subdirectory-locator(foo, "b");
+  create-directory(foo, "b");
+  let pname = as(<string>, bar);
+  assert-equal(as(<string>, resolve-locator(bar)), pname);
+  for (item in list(list(#["foo"], foo),
+                    list(#["bar"], bar),
+                    list(#["foo", "..", "bar"], bar),
+                    list(#["foo", ".."], tmpdir),
+                    list(#["foo", ".", "b", "..", "..", "foo"], foo)))
+    let (subdirs, want) = apply(values, item);
+    let orig = apply(subdirectory-locator, tmpdir, subdirs);
+    let got = resolve-locator(orig);
+    assert-equal(got, want, format-to-string("resolve-locator(%=) => %=", orig, got));
+  end;
+end test;
+
 // non-file-system-locators-test-suite?
 define suite more-locators-test-suite ()
   test test-<server-locator>;
@@ -558,4 +585,5 @@ define suite more-locators-test-suite ()
   test test-subdirectory-locator;
   test test-relative-locator;
   test test-merge-locators;
-end;
+  test test-resolve-locator;
+end suite;

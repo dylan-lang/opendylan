@@ -8,9 +8,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Expand "~" and "~USER" in a pathname.
 //
-// TODO(cgay): most file-system functions shouldn't call this, since writing
-// files with ~ in them is perfectly valid; it should be provided only for user
-// code to call explicitly.
+// TODO(cgay): most file-system functions shouldn't call this, since file names
+// with ~ in them are perfectly valid; the functionality should be provided
+// only for user code to call explicitly.
 define method %expand-pathname
     (dir :: <posix-directory-locator>) => (expanded-path :: <locator>)
   block (return)
@@ -68,15 +68,39 @@ define method %expand-pathname
 end method;
 
 
-///
+// No-op implementation for Windows-only feature.
 define function %shorten-pathname
     (path :: <posix-file-system-locator>)
  => (shortened-path :: <posix-file-system-locator>)
   path
 end function %shorten-pathname;
 
+define function %resolve-locator
+    (locator :: <posix-file-system-locator>)
+ => (resolved-locator :: <posix-file-system-locator>)
+  let path = as(<byte-string>, locator);
+  with-storage (resolved-path, $path-max)
+    let result
+      = primitive-wrap-machine-word(
+            primitive-cast-pointer-as-raw(
+                %call-c-function ("realpath")
+                      (name :: <raw-byte-string>, buffer :: <raw-byte-string>)
+                   => (rpath :: <raw-byte-string>)
+                  (primitive-string-as-raw(path),
+                   primitive-cast-raw-as-pointer(
+                       primitive-unwrap-machine-word(resolved-path)))
+                end));
+    if (result = resolved-path)
+      let resolved = primitive-raw-as-string(
+                         primitive-cast-raw-as-pointer(
+                             primitive-unwrap-machine-word(resolved-path)));
+      string-as-locator(object-class(locator), resolved)
+    else
+      unix-file-error("get realpath for", "%=", path);
+    end
+  end with-storage
+end function;
 
-///
 define function %file-exists?
     (file :: <posix-file-system-locator>) => (exists? :: <boolean>)
   let file = %expand-pathname(file);
