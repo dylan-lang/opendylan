@@ -6,7 +6,7 @@ The machine-words Module
 .. current-module:: machine-words
 
 This document describes a number of extensions to the Dylan language which are
-available from the Dylan library.
+available from the ``dylan`` library.
 
 Throughout this document, arguments are instances of the class specified
 by the argument name, unless otherwise noted. Thus, the arguments
@@ -14,25 +14,25 @@ by the argument name, unless otherwise noted. Thus, the arguments
 :drm:`<integer>`, respectively.
 
 The class :class:`<machine-word>` is a sealed subclass of :drm:`<object>`,
-defined in the Dylan library. The class ``<machine-word>`` represents a
-limited range of integral values. The representation used has the natural
-size suggested by the implementation architecture. (When running a 32 bit
-OS, a ``<machine-word>`` is 32 bits wide. When running a 64 bit OS, then
-``<machine-word>`` is 64 bits wide.) The class ``<machine-word>`` is
-disjoint from all other classes specified by the Dylan language.
+defined in the ``dylan`` library, representing a limited range of integral
+values. The representation used has the natural size suggested by the
+implementation architecture. When running a 32 bit OS, a
+:class:`<machine-word>` is 32 bits wide. When running a 64 bit OS, then
+:class:`<machine-word>` is 64 bits wide. :class:`<machine-word>` is disjoint
+from all other classes specified by the Dylan language.
 
-The ``\\==`` function compares instances of ``<machine-word>`` by value.
+The :drm:`==` function compares instances of :class:`<machine-word>` by value.
 
 Useful functions from the Dylan module
 ======================================
 
-This section describes additional methods defined in the Dylan module
-that pertain to ``<machine-word>``. Note that this section only describes
-extensions to the Dylan library; for complete descriptions, you should
-also refer to the *Dylan Reference Manual*.
+This section describes additional methods defined in the ``dylan`` module that
+pertain to :class:`<machine-word>`. Note that this section only describes
+extensions to the ``dylan`` library; for complete descriptions, you should also
+refer to the *Dylan Reference Manual*.
 
-Note that the Common Dylan library also has these extensions because it
-uses the Dylan library.
+Note that the ``common-dylan`` library also has these extensions because it
+uses the ``dylan`` library.
 
 .. function:: odd?
 
@@ -172,21 +172,21 @@ integer value.
      related constants below).
 
      For convenience, the values of ``min`` and/or ``max`` may also be
-     instances of ``<abstract-integer>``, in which case they are coerced to
-     instances of ``<machine-word>`` as if by using ``as``.
+     instances of :class:`<abstract-integer>`, in which case they are coerced
+     to instances of :class:`<machine-word>` as if by using ``as``.
 
 The machine-words Module
 ========================
 
 This section contains a reference entry for each item exported from the
-Machine-Words module, which is exported by the Common Dylan library.
+``machine-words`` module, which is exported by the ``common-dylan`` library.
 
 .. class:: <machine-word>
    :sealed:
 
    :summary:
      The class of objects that can represent a limited range of integral
-     values.
+     values that are a natural fit for the current machine architecture.
 
    :supers: :drm:`<object>`
 
@@ -196,7 +196,6 @@ Machine-Words module, which is exported by the Common Dylan library.
      values. The representation used has the natural size suggested by the
      implementation architecture. The class :class:`<machine-word>` is
      disjoint from all other classes specified by the Dylan language.
-     
 
    :operations:
 
@@ -206,7 +205,7 @@ Machine-Words module, which is exported by the Common Dylan library.
 Variables
 ---------
 
-The following variables are exported from the Machine-Words module.
+The following variables are exported from the ``machine-words`` module.
 
 .. constant:: $machine-word-size
 
@@ -266,9 +265,9 @@ The following variables are exported from the Machine-Words module.
 Basic and signed single word operations
 ---------------------------------------
 
-For all of the following functions, all arguments that are specified as
-being specialized to ``<machine-word>`` accept an instance of
-``<abstract-integer>``, which is then coerced to a ``<machine-word>``
+For all of the following functions, all arguments that are specified as being
+specialized to :class:`<machine-word>` accept an instance of
+:class:`<abstract-integer>`, which is then coerced to a :class:`<machine-word>`
 before performing the operation.
 
 .. function:: %logior
@@ -300,8 +299,8 @@ before performing the operation.
    :value r: An instance of :class:`<machine-word>`
 
 These four functions have the same semantics as :drm:`logior`, :drm:`logxor`,
-:drm:`logand`, and :drm:`lognot` in the Dylan library, but they operate on
-``<machine-word>`` s instead of :drm:`<integer>` s.
+:drm:`logand`, and :drm:`lognot` in the ``dylan`` library, but they operate on
+:class:`<machine-word>` instead of :drm:`<integer>`.
 
 .. function:: %logbit?
 
@@ -454,29 +453,27 @@ dividend by the divisor, returning a quotient and remainder such that:
 
 .. code-block:: dylan
 
-    (quotient * divisor + remainder = dividend)
+     quotient * divisor + remainder = dividend
 
 When the division is inexact (in other words, when the remainder is not
 zero), the kind of rounding depends on the operation:
 
-- :func:`%floor/` The quotient is rounded toward
-  negative infinity.
-- :func:`%ceiling/` The quotient is rounded toward
-  positive infinity.
-- :func:`%round/` The quotient is rounded toward
-  the nearest integer. If the mathematical quotient is exactly halfway
-  between two integers, then the resulting quotient is rounded to the
-  nearest even integer.
-- :func:`%truncate/` The quotient is rounded toward
-  zero.
-- :func:`%divide` If both operands are
-  non-negative, then the quotient is rounded toward zero. If either
-  operand is negative, then the direction of rounding is unspecified,
-  as is the sign of the remainder.
+- :func:`%floor/` The quotient is rounded toward negative infinity.
 
-For all of these functions, an error is signaled if the value of the
-divisor is zero or if the correct value for the quotient exceeds the
-machine word range.
+- :func:`%ceiling/` The quotient is rounded toward positive infinity.
+
+- :func:`%round/` The quotient is rounded toward the nearest integer. If the
+  mathematical quotient is exactly halfway between two integers, then the
+  resulting quotient is rounded to the nearest even integer.
+
+- :func:`%truncate/` The quotient is rounded toward zero.
+
+- :func:`%divide` If both operands are non-negative, then the quotient is
+  rounded toward zero. If either operand is negative, then the direction of
+  rounding is unspecified, as is the sign of the remainder.
+
+For all of these functions, an error is signaled if the value of the divisor is
+zero or if the correct value for the quotient exceeds the machine word range.
 
 .. function:: %negative
 
@@ -523,12 +520,12 @@ machine word range.
      Arithmetic right shift of ``m`` by ``count``. An error is signaled unless
      ``0 <= count < $machine-word-size``.
 
-Overflow signalling operations
-------------------------------
+Overflow signaling operations
+-----------------------------
 
-For all of the following functions, all arguments that are specified as
-being specialized to ``<machine-word>`` accept an instance of
-``<abstract-integer>``, which is then coerced to a ``<machine-word>``
+For all of the following functions, all arguments that are specified as being
+specialized to :class:`<machine-word>` accept an instance of
+:class:`<abstract-integer>`, which is then coerced to a :class:`<machine-word>`
 before performing the operation.
 
 .. function:: so%+
@@ -605,9 +602,9 @@ before performing the operation.
 Signed double word operations
 -----------------------------
 
-For all of the following functions, all arguments that are specified as
-being specialized to ``<machine-word>`` accept an instance of
-``<abstract-integer>``, which is then coerced to a ``<machine-word>``
+For all of the following functions, all arguments that are specified as being
+specialized to :class:`<machine-word>` accept an instance of
+:class:`<abstract-integer>`, which is then coerced to a :class:`<machine-word>`
 before performing the operation.
 
 .. function:: d%floor/
@@ -672,36 +669,34 @@ that
 
 .. code-block:: dylan
 
-    (quotient * divisor + remainder = dividend)
+     quotient * divisor + remainder = dividend
 
-When the division is inexact (in other words, when the remainder is not
-zero), the kind of rounding depends on the operation:
+When the division is inexact (in other words, when the remainder is not zero),
+the kind of rounding depends on the operation:
 
-- :func:`d%floor/` The quotient is rounded toward
-  negative infinity.
-- :func:`d%ceiling/` The quotient is rounded toward
-  positive infinity.
-- :func:`d%round/` The quotient is rounded toward
-  the nearest integer. If the mathematical quotient is exactly halfway
-  between two integers then the resulting quotient is rounded to the
-  nearest even integer.
-- :func:`d%truncate/` The quotient is rounded
-  toward zero.
-- :func:`d%divide` If both operands are
-  non-negative, then the quotient is rounded toward zero. If either
-  operand is negative, then the direction of rounding is unspecified,
-  as is the sign of the remainder.
+- :func:`d%floor/` The quotient is rounded toward negative infinity.
 
-For all of these functions, an error is signaled if the value of the
-divisor is zero or if the correct value for the quotient exceeds the
-machine word range.
+- :func:`d%ceiling/` The quotient is rounded toward positive infinity.
+
+- :func:`d%round/` The quotient is rounded toward the nearest integer. If the
+  mathematical quotient is exactly halfway between two integers then the
+  resulting quotient is rounded to the nearest even integer.
+
+- :func:`d%truncate/` The quotient is rounded toward zero.
+
+- :func:`d%divide` If both operands are non-negative, then the quotient is
+  rounded toward zero. If either operand is negative, then the direction of
+  rounding is unspecified, as is the sign of the remainder.
+
+For all of these functions, an error is signaled if the value of the divisor is
+zero or if the correct value for the quotient exceeds the machine word range.
 
 Unsigned single word operations
 -------------------------------
 
-For all of the following functions, all arguments that are specified as
-being specialized to ``<machine-word>`` accept an instance of
-``<abstract-integer>``, which is then coerced to a ``<machine-word>``
+For all of the following functions, all arguments that are specified as being
+specialized to :class:`<machine-word>` accept an instance of
+:class:`<abstract-integer>`, which is then coerced to a :class:`<machine-word>`
 before performing the operation.
 
 .. function:: u%+
@@ -760,7 +755,7 @@ before performing the operation.
 
      .. code-block:: dylan
 
-         (quotient * divisor + remainder = dividend)
+          quotient * divisor + remainder = dividend
 
      An error is signaled if the value of the ``divisor`` is zero.
 
@@ -831,9 +826,9 @@ before performing the operation.
 Unsigned double word operations
 -------------------------------
 
-For all of the following functions, all arguments that are specified as
-being specialized to ``<machine-word>`` accept an instance of
-``<abstract-integer>``, which is then coerced to a ``<machine-word>``
+For all of the following functions, all arguments that are specified as being
+specialized to :class:`<machine-word>` accept an instance of
+:class:`<abstract-integer>`, which is then coerced to a :class:`<machine-word>`
 before performing the operation.
 
 .. function:: ud%divide
