@@ -44,6 +44,7 @@ mkdir -p ${DISTDIR}
 MAKE=make
 TAR=tar
 NEED_LIBUNWIND=:
+LIBUNWIND_EXCEPTIONS=
 BUILD_SRC=false
 case ${MACHINE}-${SYSTEM} in
     amd64-FreeBSD)
@@ -59,11 +60,13 @@ case ${MACHINE}-${SYSTEM} in
     x86_64-Linux|i686-Linux)
         BUILD_SRC=:
         TAR="tar --wildcards"
+        LIBUNWIND_EXCEPTIONS='--enable-cxx-exceptions'
         DYLAN_JOBS=$(getconf _NPROCESSORS_ONLN)
         ;;
     aarch64-Linux)
         TRIPLE=aarch64-linux-gnu
         TAR="tar --wildcards"
+        LIBUNWIND_EXCEPTIONS='--enable-cxx-exceptions'
         DYLAN_JOBS=$(getconf _NPROCESSORS_ONLN)
         ;;
     x86_64-Darwin)
@@ -188,7 +191,7 @@ if $NEED_LIBUNWIND; then
 
     (cd ${LIBUNWIND_DIST};
      ./configure CC=$CC -q --prefix=$DISTDIR \
-                 --with-pic --enable-cxx-exceptions \
+                 --with-pic $LIBUNWIND_EXCEPTIONS \
                  --disable-static --disable-documentation --disable-tests \
                  --disable-coredump --disable-ptrace --disable-setjmp; \
      ${MAKE} all install >build.log)
