@@ -20,6 +20,19 @@ define method parameter-type-name
   "property"
 end method parameter-type-name;
 
+define method parse-next-argument
+    (context :: <server-context>, type == <command-property>, text :: <string>,
+     #key start :: <integer> = 0, end: stop = #f)
+ => (value :: <command-property>, next-index :: <integer>)
+  let (name, next-index)
+    = parse-next-word(text, start: start, end: stop);
+  if (name)
+    values(find-named-property(context, as(<symbol>, name)), next-index)
+  else
+    parse-error("Missing keyword argument")
+  end
+end method parse-next-argument;
+
 define open generic ensure-property-available
     (context :: <server-context>, property :: <command-property>)
  => ();
