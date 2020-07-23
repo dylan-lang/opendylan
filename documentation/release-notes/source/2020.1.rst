@@ -179,6 +179,8 @@ GTK
 Debugging
 =========
 
+* The LLDB debugger support has been updated to work with Python 3.
+  For more information, see `Debugging with GDB or LLDB <https://opendylan.org/documentation/getting-started-cli/debugging-with-gdb-lldb.html>`_.
 
 Documentation
 =============

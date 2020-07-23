@@ -48,23 +48,32 @@ def dylan_object_summary(value, internal_dict):
     if summary is not None:
       return '{%s: %s}' % (class_name, summary)
     else:
-      return '{%s}' % class_name
+      return '{%s}' % (class_name,)
   else:
     try:
-      return '{%s}' % dylan_object_class_name(value)
+      return '{%s}' % (dylan_object_class_name(value),)
     except:
       return '{uninitialized}'
 
 def dylan_byte_character_summary(value, internal_dict):
   byte_character = dylan_byte_character_value(value)
-  return '{<byte-character>: %s (%s)}' % (byte_character, ord(byte_character))
+  if byte_character.isprintable():
+    return '{<byte-character>: %s (0x%x)}' % (byte_character, ord(byte_character))
+  else:
+    return '{<byte-character>: (0x%x)}' % (ord(byte_character),)
 
 def dylan_integer_summary(value, internal_dict):
-  return '{<integer>: %s}' % dylan_integer_value(value)
+  return '{<integer>: %s}' % (dylan_integer_value(value),)
 
 def dylan_unicode_character_summary(value, internal_dict):
-  unicode_character = dylan_unicode_character_value(value)
-  return '{<unicode-character>: %s}' % unicode_character
+  try:
+    unicode_character = dylan_unicode_character_value(value)
+    if unicode_character.isprintable():
+      return '{<unicode-character>: %s (0x%x)}' % (unicode_character, ord(unicode_character))
+    else:
+      return '{<unicode-character>: (0x%x)}' % (ord(unicode_character), )
+  except ValueError:
+    return '{<unicode-character> (invalid)}'
 
 def register(binding, module, library):
   def _register(function):

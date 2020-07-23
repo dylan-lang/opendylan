@@ -1,5 +1,5 @@
 import lldb
-from accessors import *
+from dylan.accessors import *
 
 class SyntheticHideChildren(object):
   """A synthetic that shows no children."""
@@ -112,7 +112,7 @@ class SyntheticSimpleObjectVector(object):
     if index >= 0 and index < self.element_count:
       # +2 is to skip past the object header and the size.
       offset = (index + 2) * self.dylan_value_type.GetByteSize()
-      return self.value.CreateChildAtOffset('[%d]' % index, offset, self.dylan_value_type)
+      return self.value.CreateChildAtOffset('[%d]' % (index,), offset, self.dylan_value_type)
     return None
 
   def has_children(self):
