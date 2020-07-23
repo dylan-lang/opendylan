@@ -32,10 +32,14 @@ def dylan_bt(debugger, command, result, internal_dict):
   thread = process.GetSelectedThread()
     
   for frame_idx, frame in enumerate(thread):
-    function = frame.GetFunctionName()
+    function = frame.GetFunction()
+    language = function.GetLanguage()
     function_name = frame.GetFunctionName() or ''
     is_dylan_function = False
-    if function_name and function_name.startswith('K') and function_name.endswith('I'):
+    if language == lldb.eLanguageTypeDylan or \
+       (function_name and \
+        function_name.startswith('K') and \
+        function_name.endswith('I'):
       if not function_name in INTERNAL_RUNTIME_FUNCTIONS:
         is_dylan_function = True
     if not options.all_frames:
