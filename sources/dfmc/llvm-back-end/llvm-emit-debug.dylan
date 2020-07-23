@@ -83,9 +83,6 @@ define method llvm-lambda-dbg-function
                                         dbg-function-parameter-types);
 
         // Construct the function metadata
-        let module = back-end.llvm-builder-module;
-        let function-name
-          = if (o.emitted-name) emit-name(back-end, module, fun) else "" end;
         let dbg-name
           = if (o.binding-name) as(<string>, o.binding-name) else "" end;
         let definition?
@@ -93,7 +90,7 @@ define method llvm-lambda-dbg-function
         element(back-end.%lambda-dbg-function-table, fun)
           := llvm-make-dbg-function(dbg-file,
                                     dbg-name,
-                                    function-name,
+                                    "",
                                     back-end.llvm-back-end-dbg-compile-unit,
                                     dbg-file,
                                     dbg-line,
