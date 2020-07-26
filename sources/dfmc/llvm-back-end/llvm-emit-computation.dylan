@@ -290,6 +290,12 @@ define method emit-dead-assignment
   temporary-value(temp) := make(<llvm-local-mv>);
 end method;
 
+define method emit-dead-assignment
+    (back-end :: <llvm-back-end>, temp :: <stack-vector-temporary>)
+ => ()
+  // Nothing
+end method;
+
 define method merge-results
     (back-end :: <llvm-back-end>, c :: <merge>, results :: <vector>)
  => ();
