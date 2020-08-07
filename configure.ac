@@ -20,7 +20,6 @@ case $host in
   i*86-*-linux*)
       OPEN_DYLAN_TARGET_PLATFORM=x86-linux;
       MULTIARCH=i386-linux-gnu
-      SUPPORT_HARP=yes
       SUPPORT_LLVM=yes
     ;;
   i*86-*-freebsd*)

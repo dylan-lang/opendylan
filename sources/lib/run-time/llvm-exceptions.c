@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 #include "llvm-runtime.h"
 #include "stack-walker.h"
@@ -17,6 +18,19 @@ void primitive_reset_float_environment(void)
 {
   feclearexcept(FE_ALL_EXCEPT);
 #if defined OPEN_DYLAN_PLATFORM_FREEBSD || defined OPEN_DYLAN_PLATFORM_LINUX
+#if defined OPEN_DYLAN_ARCH_X86
+  // Clear the x87 stack
+  __asm__ volatile("0:\n"
+                   "  fnstsw %%ax\n"        // Retrieve x87 status word
+                   "  andw $0x3800, %%ax\n" // Mask out TOP
+                   "  je 1f\n"              // Done if stack is empty
+                   "  fstp %%st(0)\n"       // Drop top of stack
+                   "  jmp 0b\n"
+                   "1:"
+                   : /* no outputs */
+                   : /* no inputs */
+                   : "cc", "eax", "st");
+#endif
   feenableexcept(FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW | FE_INVALID);
 #elif defined OPEN_DYLAN_PLATFORM_DARWIN \
   && (defined OPEN_DYLAN_ARCH_X86 || defined OPEN_DYLAN_ARCH_X86_64)
@@ -106,6 +120,7 @@ static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
     break;
 
   default:
+    fprintf(stderr, "Unhandled FPE code %d\n", info->si_code);
     abort();
     break;
   }
@@ -186,7 +201,6 @@ void RemoveDylanExceptionHandlers(void)
 // - http://www.mikeash.com/pyblog/friday-qa-2013-01-11-mach-exception-handlers.html
 // - Memory Pool System sources, code/protxc.c
 
-#include <stdio.h>
 #include <stddef.h>
 #include <pthread.h>
 

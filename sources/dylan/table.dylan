@@ -205,7 +205,7 @@ ignore(partner); // used by mps alone
 
 define sealed domain size (<entry-vector>);
 define sealed domain make (singleton(<entry-vector>));
-define sealed domain initialize(singleton(<entry-vector>));
+define sealed domain initialize(<entry-vector>);
 
 define constant <entry-keys> = <entry-vector>;
 
@@ -1750,6 +1750,9 @@ end method forward-iteration-protocol;
 
 define sealed class <string-table>(<table>)
 end;
+
+define sealed domain make (singleton(<string-table>));
+define sealed domain initialize(<string-table>);
 
 define sealed method table-protocol (table :: <string-table>)
   => (test :: <function>, hash :: <function>);
