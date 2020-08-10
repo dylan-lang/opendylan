@@ -7,13 +7,11 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library common-dylan-test-suite-app
-  use dylan-test-suite;
   use common-dylan-test-suite;
   use testworks;
-end library common-dylan-test-suite-app;
+end library;
 
 define module common-dylan-test-suite-app
-  use dylan-test-suite;
   use common-dylan-test-suite;
   use testworks;
-end module common-dylan-test-suite-app;
+end module;
