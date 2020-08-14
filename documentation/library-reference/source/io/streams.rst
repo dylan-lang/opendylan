@@ -664,10 +664,9 @@ The following types are used in operations that involve buffers.
 Wrapper streams
 ---------------
 
-Sometimes stream data requires conversion before an application can use
-it: you might have a stream over a file of EBCDIC characters which you
-would prefer to handle as their ASCII equivalents, or you might need to
-encrypt or decrypt file data.
+Sometimes stream data requires conversion before an application can use it: you
+might have a stream over a file of UTF-8 bytes which you would prefer to handle
+as UTF-32 equivalents, or you might need to encrypt or decrypt file data.
 
 Wrapper streams provide a mechanism for working with streams which
 require such conversion. Wrapper streams hold on to an underlying
@@ -685,14 +684,14 @@ operations to the inner stream, as shown below:
 
 .. code-block:: dylan
 
-    define method read-element (ws :: <io-wrapper-stream>,
-      #key on-end-of-stream)
+    define method read-element
+        (ws :: <io-wrapper-stream>, #key on-end-of-stream)
      => (element)
-      read-element(ws.inner-stream,
-                   on-end-of-stream: on-end-of-stream)
-      end method;
+      read-element(ws.inner-stream, on-end-of-stream: on-end-of-stream)
+    end method;
 
-    define method write-element (ws :: <io-wrapper-stream>, element)
+    define method write-element
+        (ws :: <io-wrapper-stream>, element)
      => ()
       write-element(ws.inner-stream, element)
     end method;
