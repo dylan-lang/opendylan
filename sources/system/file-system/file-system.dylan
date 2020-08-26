@@ -84,7 +84,7 @@ end method condition-to-string;
 
 /// And now, the functions ...
 
-/// Given a pathname, returns its fully exanded form
+/// Given a pathname, returns its fully expanded form.
 define generic expand-pathname (path :: <pathname>) => (expanded-path :: <pathname>);
 
 define method expand-pathname (path :: <file-system-locator>) => (expanded-path :: <pathname>)

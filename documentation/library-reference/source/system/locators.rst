@@ -65,6 +65,9 @@ The locators Module
 
    :superclasses: :class:`<physical-locator>`
 
+   :slot locator-relative?: #t if the locator is relative, #f if it is absolute.
+   :slot locator-path: the path to the directory.
+
    A directory locator is a locator that refers to a directory as
    distinct from a file. This is important in file systems which can
    view a directory as either a file or a directory. This locator
@@ -251,8 +254,9 @@ The locators Module
    :value host: An instance of :drm:`false-or(<string>) <<string>>`.
 
    :description:
-    Returns the computer host name of a :class:`<server-url>` or
-    :class:`<microsoft-unc-locator>`.
+
+     Returns the computer host name of a :class:`<server-url>` or
+     :class:`<microsoft-unc-locator>`.
 
 .. generic-function:: locator-name
 
@@ -264,8 +268,18 @@ The locators Module
    :value name: An instance of :drm:`false-or(<string>) <<string>>`.
 
    :description:
-    This is typically the last component of the
-    locator's path but can be different for some specializations.
+
+     This is typically the last component of the locator's path but can be
+     different for some specializations.
+
+.. method:: locator-name
+   :specializer: <mailto-locator>
+
+   Returns the email address of this locator.
+
+   :parameter locator: an instance of :class:`<mailto-locator>`
+   :value name: An instance of :drm:`<string>`
+
 
 .. method:: locator-name
    :specializer: <mailto-locator>
@@ -297,7 +311,7 @@ The locators Module
 .. generic-function:: locator-path
    :open:
 
-   Returns the path of a locator.
+   Returns the directory path of a locator.
 
    :signature: locator-path (locator) => (path)
 
@@ -305,16 +319,15 @@ The locators Module
    :value path: An instance of :drm:`<sequence>`.
 
    :description:
-      Returns the path as a sequence of strings, each being the name of
-      a path element.
+
+     Returns the directory path as a sequence of strings, each being the name
+     of a path element.
 
    :example:
 
-      .. code-block:: dylan
+     .. code-block:: dylan
 
-	 let locator = as(<locator>, "/usr/local/include/");
-	 let path = locator-path(locator);
-	 // path == #["usr", "local", "include"]
+        locator-path(as(<file-locator>, "/a/b/c.d")) => #["a", "b"]
 
 .. generic-function:: locator-relative?
    :open:
@@ -388,6 +401,23 @@ The locators Module
 
    :parameter locator: An instance of :class:`<physical-locator>`.
    :value simplified-locator: An instance of :class:`<physical-locator>`.
+
+.. generic-function:: resolve-locator
+   :open:
+
+   Resolves all links, parent references (``..``), self references (``.``), and
+   removes unnecessary path separators. Similar to :func:`simplify-locator`
+   except that it consults the file system to resolve links. A
+   :class:`<file-system-error>` is signaled if for any reason the path can't be
+   resolved. Examples include non-existent directory components, access denied,
+   I/O error, etc.  In short, this function follows the semantics of POSIX
+   ``realpath(3)``.
+
+   :signature: resolve-locator (locator) => (resolved-locator)
+
+   :parameter locator: An instance of :class:`<physical-locator>`.
+   :value simplified-locator: An instance of :class:`<physical-locator>`.
+
 
 .. generic-function:: string-as-locator
    :open:
@@ -625,8 +655,6 @@ The locators Module
    :superclasses: :class:`<microsoft-file-system-locator>`, :class:`<directory-locator>`
 
    :slot locator-server: the server which holds this directory.
-   :slot locator-relative?: #t if the locator is relative, #f if it is absolute.
-   :slot locator-path: the path to the directory.
 
 .. class:: <microsoft-file-locator>
 
@@ -651,9 +679,6 @@ The locators Module
    :sealed:
 
    A directory on a posix-like file system.
-
-   :slot locator-relative?: #t if the locator is relative, #f if it is absolute.
-   :slot locator-path: the path to the directory.
 
    :superclasses: :class:`<file-system-directory-locator>`, :class:`<posix-file-system-locator>`
 

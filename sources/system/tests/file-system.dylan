@@ -1350,7 +1350,7 @@ end method make-test-instance;
 define sideways method make-test-instance
     (class :: subclass(<directory-locator>))
  => (instance :: <directory-locator>)
-  make(class, name: "directory")
+  make(class, name: "directory", path: #["abc"])
 end method make-test-instance;
 
 define sideways method make-test-instance

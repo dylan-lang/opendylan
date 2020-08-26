@@ -20,7 +20,7 @@ of the overhead to satisfy special print requests, outputting any
 special notations required, and it only calls :gf:`print-object` when it
 is necessary to print objects. Users should always call the
 :func:`print` function to output objects, especially recursively from
-within :gf:`print-object` methods to output an object's components.
+within :gf:`print-object` methods, to output an object's components.
 Users should never call :gf:`print-object` directly.
 
 The IO library exports two modules for use with printing, *print* and
@@ -46,6 +46,7 @@ implementation-dependent.
 - :var:`*print-length*`
 - :var:`*print-circle?*`
 - :var:`*print-pretty?*`
+- :var:`*print-escape?*`
 
 Pretty printing
 ---------------
@@ -79,16 +80,18 @@ IO library's *print* module.
 
    Prints *object* to the specified stream.
 
-   :signature: print *object* *stream* #key *level length circle? pretty?* => ()
+   :signature: print *object* *stream* #key *circle? escape? length level pretty?* => ()
 
    :parameter object: An instance of :drm:`<object>`.
    :parameter stream: An instance of :class:`<stream>`.
-   :parameter #key level: ``#f`` or an instance of ``<fixed-integer>``.
-     Default value: :var:`*print-level*`.
-   :parameter #key length: ``#f`` or an instance of ``<fixed-integer>``.
-     Default value: :var:`*print-length*`.
    :parameter #key circle?: An instance of :drm:`<boolean>`. Default value:
      :var:`*print-circle?*`.
+   :parameter #key escape?: An instance of :drm:`<boolean>`. Default value:
+     :var:`*print-escape?*`.
+   :parameter #key level: ``#f`` or an instance of :drm:`<integer>`.
+     Default value: :var:`*print-level*`.
+   :parameter #key length: ``#f`` or an instance of :drm:`<integer>`.
+     Default value: :var:`*print-length*`.
    :parameter #key pretty?: An instance of :drm:`<boolean>`. Default value:
      :var:`*print-pretty?*`.
 
@@ -159,21 +162,62 @@ IO library's *print* module.
      ``#t`` ; however, when printing exits the dynamic scope of the call
      that changed the value to ``#t``, the value reverts back to ``#f``.
 
+     The *escape?* keyword indicates whether printing should show escape
+     codes in strings and, by extension, whether other objects should be
+     printed with additional identifying information.
+
 .. variable:: *print-circle?*
    :thread:
 
-   Controls whether or not to print recursively.
+   Controls whether or not to detect circular structures when printing.
 
    :type: <boolean>
 
-   :value: None.
+   :value: ``#f``
 
    :description:
 
-     Controls whether or not to print recursively. When
-     ``*print-circle*`` is ``#f``, printing proceeds recursively and
-     attempts to print a circular structure results in failure to
-     terminate.
+     :var:`*print-circle?*` holds the default value for whether or not to
+     detect circular structures when printing. When ``#t``, circularity
+     detection is enabled. The default is ``#f``.
+
+     When calling :func:`print` directly, :var:`*print-circle?*` may be
+     overridden by specifying a value for the ``circle?`` argument. It is
+     dynamically bound by :func:`print` so that its value is inherited by
+     recursive calls.
+
+     Note that when :var:`*print-circle?*` is ``#t`` attempts to print circular
+     structures may result in failure to terminate.
+
+   :seealso:
+
+    - :func:`print` for more detail on how circular structures are handled.
+
+.. variable:: *print-escape?*
+   :thread:
+
+     Whether to print objects for debugging or for display to the end user.
+
+   :type: <boolean>
+
+   :value: ``#t``
+
+   :description:
+
+     Controls whether or not :func:`print` displays extra identifying
+     information for the object being printed, making it easier to distinguish
+     from other objects of the same type for debugging purposes. For those who
+     know Python, this is much like the difference between ``__repr__`` and
+     ``__str__``.
+
+     For example, when :var:`*print-escape?*` is true strings print exactly the
+     way Dylan string literals look, for example ``"abc\\n"``. When
+     :var:`*print-escape?*` is false the same string prints as ``abc`` with a
+     trailing newline.
+
+   :seealso:
+
+    - :func:`print`
 
 .. variable:: *print-length*
    :thread:
@@ -182,12 +226,16 @@ IO library's *print* module.
 
    :type: false-or(<integer>)
 
-   :value: None.
+   :value: ``#f``
 
    :description:
 
      Controls how many elements to print at a given level of a nested
-     expression.
+     expression. The default is unlimited (``#f``).
+
+   :seealso:
+
+    - :func:`print`
 
 .. variable:: *print-level*
    :thread:
@@ -196,11 +244,33 @@ IO library's *print* module.
 
    :type: false-or(<integer>)
 
-   :value: None.
+   :value: ``#f``
 
    :description:
 
      Controls how many levels of a nested expression to print.
+
+   :seealso:
+
+    - :func:`print`
+
+.. variable:: *print-pretty?*
+   :thread:
+
+   Controls whether or not pretty printing is used.
+
+   :type: <boolean>
+
+   :value: ``#f``
+
+   :description:
+
+     Controls whether or not :func:`print` does pretty printing by default.
+     May be overridden via the ``pretty?`` keyword argument to :func:`print`.
+
+   :seealso:
+
+    - :func:`print`
 
 .. generic-function:: print-object
    :open:
@@ -214,40 +284,29 @@ IO library's *print* module.
 
    :description:
 
-     Prints an object to a stream. You should extend the ability of
-     :func:`print` to print various objects by adding methods to the
-     ``print-object`` function. When :func:`print` actually prints an
-     object, it calls ``print-object``.
+     Prints an object to a stream. Extend the ability of :func:`print` to print
+     objects by adding methods to this generic function. When :func:`print`
+     actually prints an object, it calls ``print-object``.
 
-     You should never call ``print-object`` directly.
-
-.. variable:: *print-pretty?*
-   :thread:
-
-   Controls whether or not pretty printing is used.
-
-   :type: <boolean>
-   :value: None.
-
-   :description:
-
-     Controls whether or not :func:`print` does pretty printing.
+     Never call ``print-object`` directly.
 
 .. function:: print-to-string
 
-   Calls *print* on *object* and returns the result as a string.
+   Calls :func:`print` on *object* and returns the result as a string.
 
-   :signature: print-to-string *object* #key *level length circle? pretty?* => *result*
+   :signature: print-to-string *object* #key *circle? escape? level length pretty?* => *result*
 
    :parameter object: An instance of :drm:`<object>`.
-   :parameter #key level: ``#f`` or an instance of ``<fixed-integer>``.
+   :parameter #key level: ``#f`` or an instance of :drm:`<integer>`.
      Default value: :var:`*print-level*`.
-   :parameter #key length: ``#f`` or an instance of ``<fixed-integer>``.
+   :parameter #key length: ``#f`` or an instance of :drm:`<integer>`.
      Default value: :var:`*print-length*`.
    :parameter #key circle?: An instance of :drm:`<boolean>`. Default value:
      :var:`*print-circle?*`.
    :parameter #key pretty?: An instance of :drm:`<boolean>`. Default value:
      :var:`*print-pretty?*`.
+   :parameter #key escape?: An instance of :drm:`<boolean>`. Default value:
+     :var:`*print-escape?*`.
    :value result: An instance of :drm:`<byte-string>`.
 
    :description:
@@ -284,7 +343,7 @@ IO library's *pprint* module.
    :signature: pprint-indent *relative-to n stream* => ()
 
    :parameter relative-to: One of ``#"block"`` or ``#"current"``.
-   :parameter n: An instance of ``<fixed-integer>``.
+   :parameter n: An instance of :drm:`<integer>`.
    :parameter stream: An instance of :class:`<stream>`.
 
    :description:
@@ -307,14 +366,14 @@ IO library's *pprint* module.
    :parameter #key per-line-prefix: ``#f`` or an instance of :drm:`<byte-string>`.
    :parameter #key body: An instance of :drm:`<function>`.
    :parameter #key suffix: ``#f`` or an instance of :drm:`<byte-string>`.
-   :parameter #key column: A *limited* instance of ``<fixed-integer>``, minimum 0.
+   :parameter #key column: A *limited* instance of :drm:`<integer>`, minimum 0.
 
    :description:
 
      Groups printing into a logical block. The logical block provides
      boundaries for new levels of indentation, affects ``#"linear"``
      newlines, and so on. *Prefix* is a string to print at the beginning
-     of the logical block. The blocks indentation is automatically set
+     of the logical block. The block's indentation is automatically set
      to be one character position greater than the column in which
      *prefix* ends. Alternatively, *per-line-prefix* is a string to
      print on every line of the logical block. This function signals an
@@ -381,8 +440,8 @@ IO library's *pprint* module.
 
    :parameter kind: One of ``#"line"``, ``#"line-relative"``,
      ``#"section"``, ``#"section-relative"``.
-   :parameter colnum: An instance of ``<fixed-integer>``.
-   :parameter colinc: An instance of ``<fixed-integer>``.
+   :parameter colnum: An instance of :drm:`<integer>`.
+   :parameter colinc: An instance of :drm:`<integer>`.
    :parameter stream: An instance of :class:`<stream>`.
 
    :description:
@@ -415,7 +474,7 @@ IO library's *pprint* module.
    Controls miser mode.
 
    :type: false-or(<integer>)
-   :value: None.
+   :value: ``#f``
 
    :description:
 

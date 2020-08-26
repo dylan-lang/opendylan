@@ -266,6 +266,25 @@ define function test-print-variables ()
               circle?: #t);
 end function test-print-variables;
 
+define test test-locator-print-object-includes-path ()
+  let test-data
+    = list(list("a/b/c", <posix-file-locator>,
+                "a/b/c",
+                "{<posix-file-locator> \"a/b/c\"}"),
+           list("a/b/c", <microsoft-file-locator>,
+                "a\\b\\c",
+                "{<microsoft-file-locator> \"a\\\\b\\\\c\"}"));
+  for (item in test-data)
+    let (input, class, want-unescaped, want-escaped) = apply(values, item);
+    let locator = as(class, input);
+    let got-escaped = print-to-string(locator, escape?: #t);
+    assert-equal(got-escaped, want-escaped);
+
+    let got-unescaped = print-to-string(locator, escape?: #f);
+    assert-equal(got-unescaped, want-unescaped);
+  end;
+end test;
+
 define suite print-test-suite ()
   test test-*print-length*;
   test test-*print-level*;
@@ -276,4 +295,5 @@ define suite print-test-suite ()
   test test-print-object;
   test test-print-to-string;
   test test-printing-object;
+  test test-locator-print-object-includes-path;
 end;

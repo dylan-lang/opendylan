@@ -232,6 +232,9 @@ io Library
 
 * The unit tests for the pprint and print modules were improved.
 
+* ``*print-escape?*`` and the ``escape?`` parameter for the ``print`` function
+  have been documented.
+
 system Library
 --------------
 
@@ -253,6 +256,27 @@ system Library
 * The ``run-application:operating-system:system`` function has changed to
   accept the command as a :drm:`<sequence>` instead of a limited type.  This
   simplifies the specification of the command at the call site.
+
+* There have been several improvements to the ``locators`` module:
+
+  * Locators always show the path when printed, for improved debugging.
+
+  * ``simplify-locator`` now resolves ``..`` correctly.
+
+  * The ``resolve-locator`` function has been added. It is similar to
+    ``simplify-locator`` but also resolves links in the file system.
+
+  * ``merge-locators`` now correctly handles merging a directory locator from a
+    file locator that has no directory component. Example::
+
+      merge-locators(as(<directory-locator>, "a/"),
+                     as(<file-locator>, "b"))
+        => {<file-locator> "a/b"}
+
+  * ``merge-locators`` no longer calls ``simplify-locator``. Because the
+    semantics of simplifying a locator depend on whether or not the file system
+    is checked (i.e., ``simplify-locator`` vs ``resolve-locator``) it is left
+    to end-user code to decide whether and how to do it.
 
 c-ffi Library
 -------------

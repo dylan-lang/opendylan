@@ -6,81 +6,101 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/// Handles expansion of "~" and "~USER" in a pathname
+// Expand "~" and "~USER" in a pathname.
+//
+// TODO(cgay): most file-system functions shouldn't call this, since file names
+// with ~ in them are perfectly valid; the functionality should be provided
+// only for user code to call explicitly.
 define method %expand-pathname
-    (path :: <posix-directory-locator>)
- => (expanded-path :: <locator>)
+    (dir :: <posix-directory-locator>) => (expanded-path :: <locator>)
   block (return)
-    if (locator-relative?(path))
-      let elements = locator-path(path);
-      if (size(elements) > 0)
-        let first = elements[0];
-        if (instance?(first, <string>)
-              & size(first) > 0
-              & first[0] = '~')
-          let name = if (first = "~")
-                       login-name()
-                     else
-                       copy-sequence(first, start: 1)
-                     end;
-          let passwd = primitive-wrap-machine-word
-                         (primitive-cast-pointer-as-raw
-                            (%call-c-function ("getpwnam")
-                                 (name :: <raw-byte-string>) => (passwd :: <raw-c-pointer>)
-                                 (primitive-string-as-raw(name))
-                             end));
-          if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(passwd),
-                                                integer-as-raw(0)))
-            let homedir = as(<native-directory-locator>, passwd-dir(passwd));
-            return(merge-locators(make(<native-directory-locator>,
-                                       path: copy-sequence(elements, start: 1),
-                                       relative?: #t),
-                                  homedir))
-          else
-            return(path)
-          end
-        else
-          return(path)
-        end
-      else
-        return(path)
-      end
+    if (~locator-relative?(dir))
+      return(dir);
+    end;
+    let elements = locator-path(dir);
+    if (empty?(elements))
+      return(dir);
+    end;
+    let first = elements[0];
+    if (~instance?(first, <string>) | first.size = 0 | first[0] ~= '~')
+      return(dir);
+    end;
+    let name = case
+                 first = "~" => login-name();
+                 otherwise   => copy-sequence(first, start: 1);
+               end;
+    let passwd = primitive-wrap-machine-word
+                   (primitive-cast-pointer-as-raw
+                      (%call-c-function ("getpwnam")
+                           (name :: <raw-byte-string>) => (passwd :: <raw-c-pointer>)
+                           (primitive-string-as-raw(name))
+                       end));
+    if (primitive-machine-word-equal?(primitive-unwrap-machine-word(passwd),
+                                      integer-as-raw(0)))
+      dir
     else
-      return(path)
+      let homedir = as(<native-directory-locator>, passwd-dir(passwd));
+      return(merge-locators(make(<native-directory-locator>,
+                                 path: copy-sequence(elements, start: 1),
+                                 relative?: #t),
+                            homedir))
     end
   end
-end method %expand-pathname;
+end method;
 
 define method %expand-pathname
-    (path :: <posix-file-locator>)
- => (expanded-path :: <locator>)
-  let directory = locator-directory(path);
+    (file :: <posix-file-locator>) => (expanded-path :: <locator>)
+  let directory = locator-directory(file);
   let expanded-directory = directory & %expand-pathname(directory);
-  if (directory ~= expanded-directory)
+  if (directory = expanded-directory)
+    file
+  else
     make(<native-file-locator>,
          directory: expanded-directory,
-         base: locator-base(path),
-         extension: locator-extension(path))
-  else
-    path
+         base: locator-base(file),
+         extension: locator-extension(file))
   end
-end method %expand-pathname;
+end method;
 
 define method %expand-pathname
     (path :: <posix-file-system-locator>) => (expanded-path :: <locator>)
   path
-end method %expand-pathname;
+end method;
 
 
-///
+// No-op implementation for Windows-only feature.
 define function %shorten-pathname
     (path :: <posix-file-system-locator>)
  => (shortened-path :: <posix-file-system-locator>)
   path
 end function %shorten-pathname;
 
+define function %resolve-locator
+    (locator :: <posix-file-system-locator>)
+ => (resolved-locator :: <posix-file-system-locator>)
+  let path = as(<byte-string>, locator);
+  with-storage (resolved-path, $path-max)
+    let result
+      = primitive-wrap-machine-word(
+            primitive-cast-pointer-as-raw(
+                %call-c-function ("realpath")
+                      (name :: <raw-byte-string>, buffer :: <raw-byte-string>)
+                   => (rpath :: <raw-byte-string>)
+                  (primitive-string-as-raw(path),
+                   primitive-cast-raw-as-pointer(
+                       primitive-unwrap-machine-word(resolved-path)))
+                end));
+    if (result = resolved-path)
+      let resolved = primitive-raw-as-string(
+                         primitive-cast-raw-as-pointer(
+                             primitive-unwrap-machine-word(resolved-path)));
+      string-as-locator(object-class(locator), resolved)
+    else
+      unix-file-error("get realpath for", "%=", path);
+    end
+  end with-storage
+end function;
 
-///
 define function %file-exists?
     (file :: <posix-file-system-locator>) => (exists? :: <boolean>)
   let file = %expand-pathname(file);

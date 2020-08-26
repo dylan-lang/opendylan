@@ -368,27 +368,29 @@ define constant $simplify-tests
       #["./a.t",     "a.t"],
       #["a/./b.t",   "a/b.t"],
       #["../a/b",    "../a/b"],
-      #["../a/./b",  "../a/b"]];
+      #["../a/./b",  "../a/b"],
+      #["a/b/../c", "a/c"]];
 
 define constant $microsoft-simplify-tests
   = #[#["a/../b.t",  "b.t"],
       #["/a/../b.t", "/b.t"]];
 
 define test test-simplify-locator ()
-  local method test-simplify-locator
-            (class :: subclass(<locator>), info :: <vector>) => ()
-          let file1 = info[0];
-          let file2 = info[1];
-          check-equal(format-to-string("%s: simplify(%=) = %=",
-                                       class, file1, file2),
-                      simplify-locator(as(class, file1)),
-                      as(class, file2))
-        end method test-simplify-locator;
+  local method check-simplify-locator
+            (class :: subclass(<locator>), path1, path2) => ()
+          check-equal(format-to-string("%s: simplify-locator(%=) = %=",
+                                       class, path1, path2),
+                      simplify-locator(as(class, path1)),
+                      as(class, path2))
+        end method;
   for (class in vector(<microsoft-file-system-locator>, <posix-file-system-locator>))
-    do(curry(test-simplify-locator, class), $simplify-tests)
+    for (info in $simplify-tests)
+      apply(check-simplify-locator, class, info);
+    end;
   end;
-  do(curry(test-simplify-locator, <microsoft-file-system-locator>),
-     $microsoft-simplify-tests)
+  for (info in $microsoft-simplify-tests)
+    apply(check-simplify-locator, <microsoft-file-system-locator>, info)
+  end;
 end test;
 
 define constant $subdirectory-tests
@@ -463,52 +465,83 @@ define test test-relative-locator ()
 end test;
 
 define constant $posix-merge-tests
+  //    orig      merge-from         expect
   = #[#["a",      "a",               "a"],
-      #["b",      "a",               "a"],
-      #["a/",     "./",              "a/"],
+      #["a",      "b",               "a"],
+      #["./",     "a/",              "a/./"],
+      #["b",      "a/",              "a/b"],
       #["a/",     "b",               "a/b"],
-      #["a/",     "b",               "a/b"],
-      #["a/",     "../b/c",          "a/../b/c"],
-      #["/a/b/",  "c",               "/a/b/c"],
-      #["/a/",    "b/c",             "/a/b/c"],
-      #["/a/b/c/", "../",            "/a/b/c/../"],
-      #["/d/e/f/", "../../../a/b/c", "/d/e/f/../../../a/b/c"]];
+      #["../b/c", "a/",              "a/../b/c"],
+      #["c",      "/a/b/",           "/a/b/c"],
+      #["b/c",    "/a/",             "/a/b/c"],
+      #["/a/",    "b/c",             "/a/c"],
+      #["../",    "/a/b/c/",         "/a/b/c/../"],
+      #["../../../a/b/c", "/d/e/f/", "/d/e/f/../../../a/b/c"]];
 
 define constant $microsoft-merge-tests
+  //    orig      merge-from         expect
   = #[#["a",      "a",               "a"],
-      #["b",      "a",               "a"],
-      #["a/",     "./",              "a/"],
+      #["a",      "b",               "a"],
+      #["./",     "a/",              "a/./"],
+      #["b",      "a/",              "a/b"],
       #["a/",     "b",               "a/b"],
-      #["a/",     "b",               "a/b"],
-      #["a/",     "../b/c",          "b/c"],
-      #["/a/b/",  "c",               "/a/b/c"],
-      #["/a/",    "b/c",             "/a/b/c"],
-      #["/a/b/c/", "../",            "/a/b/"],
-      #["/d/e/f/", "../../../a/b/c", "/a/b/c"],
-      #["h:/a/b/",   "c",         "h:/a/b/c"],
-      #["h:/a/b/",   "c/",        "h:/a/b/c/"],
-      #["i:/a/b/c/", "h:/a/b/c",  "h:/a/b/c"],
-      #["i:/a/b/c/", "h:/a/b/c/", "h:/a/b/c/"],
-      #["//h/a/",    "b",         "//h/a/b"],
-      #["//h/a/",    "b/",        "//h/a/b/"],
-      #["//i/a/",    "//h/a/b",   "//h/a/b"]];
+      #["../b/c", "a/",              "a/../b/c"],
+      #["c",      "/a/b/",           "/a/b/c"],
+      #["b/c",    "/a/",             "/a/b/c"],
+      #["../",    "/a/b/c/",         "/a/b/c/../"],
+      #["../../../a/b/c", "/d/e/f/", "/d/e/f/../../../a/b/c"],
+      #["c",      "h:/a/b/",         "h:/a/b/c"],
+      #["c/",     "h:/a/b/",         "h:/a/b/c/"],
+      #["h:/a/b/c", "i:/a/b/c/",     "h:/a/b/c"],
+      #["h:/a/b/c/", "i:/a/b/c/",    "h:/a/b/c/"],
+      #["b",      "//h/a/",          "//h/a/b"],
+      #["b/",     "//h/a/",          "//h/a/b/"],
+      #["//h/a/b", "//i/a/",         "//h/a/b"]];
 
+// Note that merge-locators calls simplify-locator so this is effectively
+// testing simplify-locator as well.
 define test test-merge-locators ()
-  local method test-merge-locator
-          (class :: subclass(<locator>), info :: <vector>) => ()
-          let file1 = info[1];
-          let file2 = info[0];
-          let file3 = info[2];
-          check-equal(format-to-string("%s: merge(%=, %=) = %=",
-                                       class, file1, file2, file3),
-                      merge-locators(as(class, file1),
-                                     as(class, file2)),
-                      as(class, file3));
-        end method test-merge-locator;
-  do(curry(test-merge-locator, <posix-file-system-locator>),
-     $posix-merge-tests);
-  do(curry(test-merge-locator, <microsoft-file-system-locator>),
-     $microsoft-merge-tests)
+  local method check-merge-locator
+            (class :: subclass(<locator>), path1, path2, path3)
+          check-equal(format-to-string("%s: merge-locators(%=, %=) = %=",
+                                       class, path1, path2, path3),
+                      merge-locators(as(class, path1),
+                                     as(class, path2)),
+                      as(class, path3));
+        end method;
+  for (paths in $posix-merge-tests)
+    apply(check-merge-locator, <posix-file-system-locator>, paths)
+  end;
+  for (paths in $microsoft-merge-tests)
+    apply(check-merge-locator, <microsoft-file-system-locator>, paths)
+  end;
+end test;
+
+// TODO(cgay): create a link and verify that resolve-locator respects the
+// link. Currently there is no API to create a link.
+define test test-resolve-locator ()
+  let tmpdir = test-temp-directory();
+  assert-signals(<file-system-error>,
+                 resolve-locator(subdirectory-locator(tmpdir, "non-existent")));
+
+  create-directory(tmpdir, "foo");
+  create-directory(tmpdir, "bar");
+  let foo = subdirectory-locator(tmpdir, "foo");
+  let bar = subdirectory-locator(tmpdir, "bar");
+  let foob = subdirectory-locator(foo, "b");
+  create-directory(foo, "b");
+  let pname = as(<string>, bar);
+  assert-equal(as(<string>, resolve-locator(bar)), pname);
+  for (item in list(list(#["foo"], foo),
+                    list(#["bar"], bar),
+                    list(#["foo", "..", "bar"], bar),
+                    list(#["foo", ".."], tmpdir),
+                    list(#["foo", ".", "b", "..", "..", "foo"], foo)))
+    let (subdirs, want) = apply(values, item);
+    let orig = apply(subdirectory-locator, tmpdir, subdirs);
+    let got = resolve-locator(orig);
+    assert-equal(got, want, format-to-string("resolve-locator(%=) => %=", orig, got));
+  end;
 end test;
 
 // non-file-system-locators-test-suite?
@@ -552,4 +585,5 @@ define suite more-locators-test-suite ()
   test test-subdirectory-locator;
   test test-relative-locator;
   test test-merge-locators;
-end;
+  test test-resolve-locator;
+end suite;

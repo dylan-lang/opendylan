@@ -1,4 +1,4 @@
-Module:       locators-internals
+Module:       system-internals
 Synopsis:     Abstract modeling of locations
 Author:       Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -37,7 +37,11 @@ define open generic locator-extension
 /// Locator classes
 
 define open abstract class <directory-locator> (<physical-locator>)
-end class <directory-locator>;
+  sealed constant slot locator-relative? :: <boolean> = #f,
+    init-keyword: relative?:;
+  sealed constant slot locator-path :: <simple-object-vector>,
+    required-init-keyword: path:;
+end class;
 
 define open abstract class <file-locator> (<physical-locator>)
 end class <file-locator>;
@@ -129,14 +133,6 @@ define method locator-test
   \=
 end method locator-test;
 
-define open generic locator-might-have-links?
-    (locator :: <directory-locator>) => (links? :: <boolean>);
-
-define method locator-might-have-links?
-    (locator :: <directory-locator>) => (links? :: singleton(#f))
-  #f
-end method locator-might-have-links?;
-
 define method locator-relative?
     (locator :: <file-locator>) => (relative? :: <boolean>)
   let directory = locator.locator-directory;
@@ -168,6 +164,10 @@ end method locator-path;
 
 /// Simplify locator
 
+// Simplify (or normalize) locator by collapsing redundant separators and
+// parent references so that A//B, A/B/, A/./B and A/foo/../B all become
+// A/B. This string manipulation may change the meaning of a path that contains
+// symbolic links.
 define open generic simplify-locator
     (locator :: <physical-locator>)
  => (simplified-locator :: <physical-locator>);
@@ -177,34 +177,48 @@ define method simplify-locator
  => (simplified-locator :: <directory-locator>)
   let path = locator.locator-path;
   let relative? = locator.locator-relative?;
-  let resolve-parent? = ~locator.locator-might-have-links?;
-  let simplified-path
-    = simplify-path(path,
-                    resolve-parent?: resolve-parent?,
-                    relative?: relative?);
-  if (path ~= simplified-path)
+  let simplified-path = simplify-path(path, relative?: relative?);
+  if (path = simplified-path)
+    locator
+  else
     make(object-class(locator),
          server:    locator.locator-server,
          path:      simplified-path,
-         relative?: locator.locator-relative?)
-  else
-    locator
+         relative?: relative?)
   end
-end method simplify-locator;
+end method;
 
 define method simplify-locator
-    (locator :: <file-locator>) => (simplified-locator :: <file-locator>)
+    (locator :: <file-locator>)
+ => (simplified-locator :: <file-locator>)
   let directory = locator.locator-directory;
   let simplified-directory = directory & simplify-locator(directory);
-  if (directory ~= simplified-directory)
+  if (directory = simplified-directory)
+    locator
+  else
     make(object-class(locator),
          directory: simplified-directory,
          base:      locator.locator-base,
          extension: locator.locator-extension)
-  else
-    locator
   end
-end method simplify-locator;
+end method;
+
+// Check the file system to resolve and expand links, and normalize the path.
+// Returns an absolute locator, using the current process's working directory
+// to resolve relative locators, or signals <file-system-error>. Note that lack
+// of an error does not mean that the resolved locator names an existing file,
+// but does mean the containing directory exists. In other words, this function
+// inherits POSIX `realpath` semantics.
+define open generic resolve-locator
+    (locator :: <physical-locator>)
+ => (simplified-locator :: <physical-locator>);
+
+define method resolve-locator
+    (locator :: <physical-locator>)
+ => (simplified-locator :: <physical-locator>)
+  %resolve-locator(locator)
+end method;
+
 
 
 /// Subdirectory locator
@@ -259,14 +273,13 @@ define method relative-locator
  => (relative-locator :: <file-locator>)
   let directory = locator.locator-directory;
   let relative-directory = directory & relative-locator(directory, from-directory);
-  if (relative-directory ~= directory)
-    simplify-locator
-      (make(object-class(locator),
-            directory: relative-directory,
-            base:      locator.locator-base,
-            extension: locator.locator-extension))
-  else
+  if (relative-directory = directory)
     locator
+  else
+    make(object-class(locator),
+         directory: relative-directory,
+         base:      locator.locator-base,
+         extension: locator.locator-extension)
   end
 end method relative-locator;
 
@@ -289,6 +302,10 @@ end method relative-locator;
 
 /// Merge locators
 
+// Construct a new locator from `locator` by copying missing or incomplete
+// parts from `from-locator`.  Note that if `locator` is relative the resulting
+// directory part is the concatenation of the directories of `from-locator` and
+// `locator`, either of which may be empty.
 define open generic merge-locators
     (locator :: <physical-locator>, from-locator :: <physical-locator>)
  => (merged-locator :: <physical-locator>);
@@ -298,49 +315,62 @@ define open generic merge-locators
 
 define method merge-locators
     (locator :: <directory-locator>, from-locator :: <directory-locator>)
- => (merged-locator :: <directory-locator>)
+ => (merged :: <directory-locator>)
   if (locator.locator-relative?)
     let path = concatenate(from-locator.locator-path, locator.locator-path);
-    simplify-locator
-      (make(object-class(locator),
-            server:    from-locator.locator-server,
-            path:      path,
-            relative?: from-locator.locator-relative?))
+    make(object-class(locator),
+         server:    from-locator.locator-server,
+         path:      path,
+         relative?: from-locator.locator-relative?)
   else
     locator
   end
-end method merge-locators;
+end method;
 
 define method merge-locators
     (locator :: <file-locator>, from-locator :: <directory-locator>)
- => (merged-locator :: <file-locator>)
+ => (merged :: <file-locator>)
   let directory = locator.locator-directory;
-  let merged-directory
-    = if (directory)
-        merge-locators(directory, from-locator)
-      else
-        simplify-locator(from-locator)
-      end;
-  if (merged-directory ~= directory)
+  let merged-directory = if (directory)
+                           merge-locators(directory, from-locator)
+                         else
+                           from-locator
+                         end;
+  if (merged-directory = directory)
+    locator
+  else
     make(object-class(locator),
          directory: merged-directory,
          base:      locator.locator-base,
          extension: locator.locator-extension)
-  else
-    locator
   end
-end method merge-locators;
+end method;
 
 define method merge-locators
-    (locator :: <physical-locator>, from-locator :: <file-locator>)
- => (merged-locator :: <physical-locator>)
+    (locator :: <directory-locator>, from-locator :: <file-locator>)
+ => (merged-locator :: <file-locator>)
+  let from-directory = locator-directory(from-locator);
+  let directory = if (from-directory)
+                    merge-locators(locator, from-directory)
+                  else
+                    locator
+                  end;
+  make(object-class(from-locator),
+       directory: directory,
+       base: locator-base(from-locator),
+       extension: locator-extension(from-locator))
+end method;
+
+define method merge-locators
+    (locator :: <file-locator>, from-locator :: <file-locator>)
+ => (merged-locator :: <file-locator>)
   let from-directory = from-locator.locator-directory;
   if (from-directory)
     merge-locators(locator, from-directory)
   else
     locator
   end
-end method merge-locators;
+end method;
 
 
 /// Locator protocols
