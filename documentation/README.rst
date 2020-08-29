@@ -6,49 +6,52 @@ using ReStructured Text with Sphinx extensions.
 Preparation
 ===========
 
-Before building this documentation, you will need a copy of Sphinx installed.
-The easiest way to do this is to get it from the `Python Package Index
-<http://pypi.python.org/pypi/Sphinx>`_ or to use ``pip`` or ``easy_install``::
+Before building this documentation, you will need a copy of Sphinx
+installed. The latest versions of Sphinx use Python 3 so we assume Python 3 is
+in use here.  The easiest way to install Sphinx is to get it from the `Python
+Package Index <http://pypi.python.org/pypi/Sphinx>`_ or to use ``pip3``::
  
-    sudo pip install Sphinx
-    sudo easy_install -U Sphinx
+  sudo pip3 install -U Sphinx
 
-You will also need to have the git submodule for our Sphinx extension
-populated.  If this is not present for you, try doing this at the
-top level of the opendylan repository::
+On some systems it might be called just ``pip`` even when installing Python 3
+packages.
 
-    git submodule init && git submodule update
+You also need to have the git submodule for our Sphinx extension populated.  If
+this is not present for you, do this at the top level of the opendylan
+repository::
+
+  git submodule init && git submodule update
 
 Building
 ========
 
-Building the documentation is easy on a system with ``make``::
+Building the documentation is easy on a system with ``make``. For example::
 
-    make html
+  cd library-reference && make html
 
-If you are on Windows, there is a ``make.bat`` as well::
+On Windows, use ``make.bat`` instead::
 
-    make.bat html
+  make.bat html
 
-The generated documentation will be in ``build/html``.  Just viewing
-the HTML locally may not correctly load the CSS files.  A workaround
-is to cd into ``build/html`` and run a web server.  For example (python 2)::
+The generated documentation will be in ``build/html``.  Just viewing the HTML
+locally may not correctly load the CSS files.  A workaround is to cd into
+``build/html`` and run a web server.  For example::
 
-  python -m SimpleHTTPServer
+  python3 -m http.server
 
-or (python 3)::
+or::
 
-  python -m http.server
+  python2 -m SimpleHTTPServer
 
 The pages can then be accessed via::
 
   http://localhost:8000/index.html
 
 You can build other formats as well. Run ``make`` or ``make.bat`` without
-arguments to see which formats are available.
+arguments to see the available formats.
 
-Note that to build the PDF files with ``make latexpdf`` it may be
-necessary (at least on Debian) to install these packages:
+Note that to build the PDF files with ``make latexpdf`` it may be necessary (at
+least on Debian) to install these packages:
 
 *  latexmk
 *  texlive-latex-recommended
@@ -86,6 +89,6 @@ with "`*`".  By convention we use over *and* under markup at this level.
 Dylan Language Markup
 =====================
 
-We have created a Dylan language Sphinx domain to make it easier to document and
-refer to Dylan language entities. This domain is documented in the
-"sphinxcontrib/dylan/domain/reference.rst" file in the "sphinx-extensions" repository.
+There is a `Dylan language Sphinx domain
+<https://github.com/dylan-lang/sphinx-extensions/blob/master/sphinxcontrib/dylan/domain/reference.rst>`_
+to make it easier to document and refer to Dylan language entities.
