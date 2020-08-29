@@ -6,7 +6,6 @@ Files:	 library
 C-libraries: -lssl -lcrypto
 C-source-files: support.c
 Platforms: arm-linux
-           x86-darwin
            x86-freebsd
            x86-linux
            x86-netbsd

@@ -43,9 +43,3 @@ define class <harp-x86-freebsd-back-end>
 end;
 
 register-back-end(<harp-x86-freebsd-back-end>, #"harp", #"x86-freebsd");
-
-define class <harp-x86-darwin-back-end>
- (<harp-x86-unix-back-end>, <harp-native-darwin-back-end>)
-end;
-
-register-back-end(<harp-x86-darwin-back-end>, #"harp", #"x86-darwin");

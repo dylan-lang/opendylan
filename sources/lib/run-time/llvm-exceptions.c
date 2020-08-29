@@ -33,7 +33,7 @@ void primitive_reset_float_environment(void)
 #endif
   feenableexcept(FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW | FE_INVALID);
 #elif defined OPEN_DYLAN_PLATFORM_DARWIN \
-  && (defined OPEN_DYLAN_ARCH_X86 || defined OPEN_DYLAN_ARCH_X86_64)
+  && (defined OPEN_DYLAN_ARCH_X86_64)
   fenv_t fenv;
   fegetenv(&fenv);
   fenv.__control &= ~(FE_DIVBYZERO | FE_OVERFLOW | FE_UNDERFLOW | FE_INVALID);
@@ -213,8 +213,6 @@ void RemoveDylanExceptionHandlers(void)
 
 #if defined OPEN_DYLAN_ARCH_X86_64
 #define THREAD_STATE_FLAVOR x86_THREAD_STATE64
-#elif defined OPEN_DYLAN_ARCH_X86
-#define THREAD_STATE_FLAVOR x86_THREAD_STATE32
 #endif
 
 #define STACK_ALIGNMENT 16
@@ -329,13 +327,7 @@ kern_return_t catch_mach_exception_raise_state_identity
     abort();
   }
 
-#if defined OPEN_DYLAN_ARCH_X86
-  x86_thread_state32_t *ts = (x86_thread_state32_t *) old_state;
-  uintptr_t *esp = (uintptr_t *) (ts->__esp & -STACK_ALIGNMENT);
-  *--esp = ts->__eip;
-  ts->__esp = (uintptr_t) esp;
-  ts->__eip = handler;
-#elif defined OPEN_DYLAN_ARCH_X86_64
+#if defined OPEN_DYLAN_ARCH_X86_64
   x86_thread_state64_t *ts = (x86_thread_state64_t *) old_state;
   uintptr_t *rsp = (uintptr_t *) (ts->__rsp & -STACK_ALIGNMENT);
   *--rsp = ts->__rip;

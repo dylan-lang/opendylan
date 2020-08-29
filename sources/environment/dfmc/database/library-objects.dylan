@@ -80,7 +80,7 @@ define method project-executable-pathname
           select (platform)
             #"x86-win32" =>
               make(<file-locator>, base: base, extension: "dll");
-            #"x86-darwin", #"x86_64-darwin" =>
+            #"x86_64-darwin" =>
               make(<file-locator>, base: concatenate("lib", base), extension: "dylib");
             otherwise =>
               make(<file-locator>, base: concatenate("lib", base), extension: "so");

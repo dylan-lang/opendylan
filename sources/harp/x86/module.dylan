@@ -32,7 +32,6 @@ define module harp-x86
     <harp-x86-unix-back-end>,
     <harp-x86-linux-back-end>,
     <harp-x86-freebsd-back-end>,
-    <harp-x86-darwin-back-end>,
 
     // Pentium instructions
     ins--st-index, ins--stb-index, ins--sth-index,
