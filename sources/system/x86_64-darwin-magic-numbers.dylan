@@ -10,6 +10,7 @@ define constant $EACCES = 13;
 define constant $EINVAL = 22;
 define constant $ETXTBSY = 26;
 define constant $EROFS = 30;
+define constant $path-max = 1024;
 define constant $stat-size = 144;
 define constant $st-mode-offset = 4;
 define constant $st-uid-offset = 16;
