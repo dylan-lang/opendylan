@@ -513,13 +513,13 @@ Simple Runtime Primitives
     returns some freshly allocated memory which the run-time system knows
     how to memory-manage.
 
-.. c:function:: D primitive_byte_allocate(int word-size, int byte-size)
+.. c:function:: D primitive_byte_allocate(int word_size, int byte_size)
 
     This is built on the same mechanism as `primitive_allocate`:c:func:,
     but it is specifically designed for allocating objects which have Dylan
     slots, but also have a repeated slot of byte-sized elements, such as a
-    byte string, or a byte vector. It takes two parameters, a size in ‘words'
-    for the object slots (e.g., one for ‘class' and a second for ‘size'),
+    byte string, or a byte vector. It takes two parameters, a size in 'words'
+    for the object slots (e.g., one for 'class' and a second for 'size'),
     followed by the number of bytes for the vector. The value returned from
     the primitive is the freshly allocated memory making up the string.
 
@@ -540,16 +540,16 @@ Simple Runtime Primitives
 
     This is related to `primitive_replace_E_`:c:func:, except that the two
     arguments are guaranteed to be simple object vectors, and they are
-    self-sizing. It takes two parameters, ‘dest', and ‘source', and the data
-    from ‘source' is copied into ‘dest'. ‘Dest' is returned.
+    self-sizing. It takes two parameters, 'dest', and 'source', and the data
+    from 'source' is copied into 'dest'. 'Dest' is returned.
 
 .. c:function:: D primitive_allocate_vector (int size)
 
     This is related to `primitive_allocate`:c:func:, except that it takes
-    a ‘size' argument, which is the size of repeated slots in a simple object
+    a 'size' argument, which is the size of repeated slots in a simple object
     vector (SOV). An object which is big enough to hold the specified indices
-    is allocated, and appropriately initialized, so that the ‘class' field
-    shows that it is an SOV, and the ‘size' field shows how big it is.
+    is allocated, and appropriately initialized, so that the 'class' field
+    shows that it is an SOV, and the 'size' field shows how big it is.
 
 .. c:function:: D primitive_copy_vector(D vector)
 
@@ -561,14 +561,14 @@ Simple Runtime Primitives
 
     This primitive takes a pre-existing vector, and copies data into it from
     a buffer so as to initialize an SOV. The primitive takes a SOV to be
-    updated, a ‘size' parameter (the specified size of the SOV), and a
+    updated, a 'size' parameter (the specified size of the SOV), and a
     pointer to a buffer which will supply the necessary data. The class and
     size values for the new SOV are set, and the data written to the rest of
     the SOV. The SOV is returned.
 
 .. c:function:: D primitive_make_string(char * string)
 
-   This takes as a parameter a ‘C' string with is zero-terminated, and
+   This takes as a parameter a 'C' string with is zero-terminated, and
    returns a Dylan string with the same data inside it.
 
 .. c:function:: D primitive_continue_unwind ()
@@ -626,12 +626,12 @@ Simple Runtime Primitives
     value-cell box which contains the object. The compiler deals with the
     extra level of indirection needed to get the value out of the box.
 
-.. c:function:: D* primitive_make_environment(int size, …)
+.. c:function:: D* primitive_make_environment(int size, ...)
 
     This is the function which makes the vector which is used in a closure.
     The arguments to this are either boxes, or normal Dylan objects. This
-    takes an argument of ‘size' for the initial arguments to be closed over,
-    plus the arguments themselves. ‘Size' arguments are built up into an SOV
+    takes an argument of 'size' for the initial arguments to be closed over,
+    plus the arguments themselves. ``size`` arguments are built up into an SOV
     which is used as an environment.
 
 Entry Point Functions
@@ -661,18 +661,18 @@ Entry Point Functions
     ``xep0`` to ``xep9``. For more than nine required parameters, the
     `xep`:c:func: function is used.
 
-.. c:function:: xep (FN* function, int argument_count, …)
+.. c:function:: D xep (FN* function, int argument_count, ...)
 
     If the function takes more than nine required parameters, then the
     function will simply be called ``xep``, the general function which will
-    work in all such cases. The arguments are passed as ‘varargs'. This
+    work in all such cases. The arguments are passed as 'varargs'. This
     function will check the number of arguments, raising an error if it is
     wrong. It then sets the calling convention for calling the internal
     entry point. This basically means that the function register is
-    appropriately set, and the implementation ‘mlist' parameter is set to
+    appropriately set, and the implementation 'mlist' parameter is set to
     ``#f``.
 
-.. c:function:: D optional_xep (FN* function, int argument_count, …)
+.. c:function:: D optional_xep (FN* function, int argument_count, ...)
 
     This function is used as the XEP code for any Dylan function which has
     optional parameters. In this case, the external entry point conventions
@@ -701,19 +701,19 @@ Entry Point Functions
 
     These primitives are similar to `xep_0`:c:func: through `xep_9`:c:func:,
     but deal with the entry points for generic functions. Generic functions
-    do not require the ‘mlist' parameter to be set, so a special optimized
+    do not require the 'mlist' parameter to be set, so a special optimized
     entry point is provided. These versions are for 0 - 9 required
     parameters.  These functions call the internal entry point.
 
-.. c:function:: D gf_xep (FN* function, int argument_count, …)
+.. c:function:: D gf_xep (FN* function, int argument_count, ...)
 
     This primitive is similar to `xep`:c:func:, but deals with the entry
     points for generic functions. Generic functions do not require the
-    ‘mlist' parameter to be set, so a special optimized entry point is
+    'mlist' parameter to be set, so a special optimized entry point is
     provided. This is the general version for functions which do not
     take optional arguments. This function calls the internal entry point.
 
-.. c:function:: D gf_optional_xep (FN* function, int argument_count, …)
+.. c:function:: D gf_optional_xep (FN* function, int argument_count, ...)
 
     This is used for all generic functions which take optional arguments.
     This function calls the internal entry point.
@@ -723,14 +723,14 @@ Entry Point Functions
     This is used to call internal entry points. It takes three parameters: a
     Dylan function object (where the iep is stored in a slot), an argument
     count of the number of arguments that we are passing to the iep, and a
-    vector of all of these arguments. This is a ‘basic' IEP apply because is
+    vector of all of these arguments. This is a 'basic' IEP apply because is
     does no more than check the argument count, and call the IEP with the
     appropriate number of Dylan parameters. It does not bother to set any
     implementation parameters. Implementation parameters which could be set
-    in by other primitives are ‘function', and a ‘mlist' (the list of
-    next-methods) . Not all IEPs care about the ‘function' or ‘mlist'
+    in by other primitives are 'function', and a 'mlist' (the list of
+    next-methods) . Not all IEPs care about the 'function' or 'mlist'
     parameters, but when the compiler calls `primitive_basic_iep_apply`:c:func:,
-    it has to make sure that any necessary ‘function' or ‘mlist' parameters
+    it has to make sure that any necessary 'function' or 'mlist' parameters
     have been set up.
 
 .. c:function:: D primitive_iep_apply (FN* f, int argument_count, D a[])
@@ -738,7 +738,7 @@ Entry Point Functions
     This is closely related to `primitive_basic_iep_apply`:c:func:. It takes
     the same number of parameters, but it sets the explicit,
     implementation-dependent function parameter which is usually set to the
-    first argument, and also sets the ‘mlist' argument to ‘false'. This is
+    first argument, and also sets the 'mlist' argument to 'false'. This is
     the normal case when a method object is being called directly, rather
     than as part of a generic function.
 
@@ -751,7 +751,7 @@ Entry Point Functions
     external entry point for the function, and guarantees full type checking
     and argument count checking. This primitive does all that is necessary
     to conform with the xep calling convention of Dylan: i.e., it sets the
-    ‘function' parameter, it sets the argument count, and then calls the XEP
+    'function' parameter, it sets the argument count, and then calls the XEP
     for the function.
 
 Compiler Primitives
@@ -1062,7 +1062,7 @@ Accessor Primitives
 
      This is used for de-referencing slots in the middle of Dylan objects,
      and thus potentially invokes read-barrier code. It takes two parameters:
-     a Dylan object, and an index which is the ‘word' index into the object.
+     a Dylan object, and an index which is the 'word' index into the object.
      It returns the Dylan value found in that corresponding slot.
 
 .. primitive:: primitive-element-setter
