@@ -11,13 +11,14 @@ Installing system dependencies
 
 Some system dependencies need to be satisfied first:
 
-- Python 2.7.x and its package manager pip (Python 3.x is not supported)
+- Python 3 and its package manager pip3. (It may also be installed as just
+  "pip", but check whether that installs Python 2 packages.)
 - Git
 - Make
 
 On a Debian-derivative, they're quite easy to fetch::
 
-    sudo apt install python2.7 python-pip git make
+    sudo apt install python3 python3-pip git make
 
 Getting the source
 ------------------
@@ -31,19 +32,14 @@ The next step is fetching the repository and its submodule::
 Installing Sphinx
 -----------------
 
-Now you need the Python dependencies. The easiest way to do this is to use ``pip``::
+Now you need the Python dependencies. The easiest way to do this is to use
+``pip3``::
 
-    sudo pip install -U Sphinx
+    sudo pip3 install -U Sphinx
 
-You will also need ``html5lib`` installed so that the RSS feed generator
-can work::
+You may also need ``python-dateutil``.
 
-    sudo pip install html5lib
-
-You may also need ``python-dateutil``. If so, make sure you install version
-1.5 as that is the lastest version to support Python 2.x::
-
-    sudo pip install python-dateutil==1.5
+    sudo pip3 install python-dateutil
 
 Building
 ========
@@ -62,7 +58,7 @@ JavaScript to load correctly, we suggest running a local webserver
 pointing to this directory::
 
     cd build/html
-    python -m SimpleHTTPServer
+    python3 -m http.server
 
 Link Validation
 ---------------
@@ -104,4 +100,3 @@ New News Entry
    to ``source/news/index.rst``.
 #. Confirm that the site's main page and news page both
    look good / correct.
-

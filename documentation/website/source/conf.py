@@ -17,7 +17,6 @@ import sys, os
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('../sphinx-extensions/sphinxcontrib'))
-sys.path.insert(0, os.path.abspath('../sphinx-extensions/feed/sphinxcontrib'))
 
 # -- General configuration -----------------------------------------------------
 
@@ -26,7 +25,7 @@ sys.path.insert(0, os.path.abspath('../sphinx-extensions/feed/sphinxcontrib'))
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.intersphinx', 'dylan.domain', 'feed']
+extensions = ['sphinx.ext.intersphinx', 'dylan.domain']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -173,6 +172,3 @@ htmlhelp_basename = 'OpenDylandoc'
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {'http://docs.python.org/': None}
 
-# -- Options for the feed generator
-
-feed_base_url = 'http://opendylan.org/'

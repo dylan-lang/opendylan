@@ -97,13 +97,6 @@
      <div class="span6">
        <h2>Recent News</h2>
 
-       <div class="alert alert-block alert-info">
-         <p>Keep up to date by subscribing to our <a href="rss.xml">RSS
-         Feed <img src="_static/feed-icon-14x14.png" alt=""></a> or
-         joining our <a href="community/index.html#mailing-lists">mailing
-         lists</a>.</p>
-       </div>
-
 .. include:: news/recent.rst.inc
 
 .. raw:: html
