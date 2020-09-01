@@ -2,6 +2,24 @@
 Publications about Dylan
 ************************
 
+**LLVM Code Generation for Open Dylan** (by Peter Housel at ELS 2020 `pdf <https://zenodo.org/record/3742567/files/els2020-opendylan.pdf?download=1>`__ `bib <../_static/documentation/housel_peter_s_2020_3742567.bib>`__ `slides <https://european-lisp-symposium.org/static/2020/housel-slides.pdf>`__ `video <https://www.youtube.com/watch?v=6dcrXBzw4H4>`__)
+  The Open Dylan compiler, DFMC, was originally designed in the 1990s
+  to compile Dylan language code targeting the 32-bit Intel x86
+  platform, or other platforms via portable C. As platforms have
+  evolved since, this approach has been unable to provide efficient
+  code generation for a broader range of target platforms, or to
+  adequately support tools such as debuggers, profilers, and code
+  coverage analyzers.
+
+  Developing a code generator for Open Dylan that uses the LLVM
+  compiler infrastructure is enabling us to support these goals and
+  modernize our implementation. This work describes the design
+  decisions and engineering trade-offs that have influenced the
+  implementation of the LLVM back-end and its associated run-time
+  support.
+
+  https://doi.org/10.5281/zenodo.3742567
+
 **Extending Dylan's type system for better type inference and error detection** (by Hannes Mehnert at ILC 2010 `pdf <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.627.5175&rep=rep1&type=pdf>`__ `bib <../_static/documentation/mehnert2010.bib>`__)
     Whereas dynamic typing enables rapid prototyping and easy
     experimentation, static typing provides early error detection and
