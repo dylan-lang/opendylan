@@ -154,9 +154,8 @@ Articles
     This essay explores Dylan from the perspective of a programmer used to
     traditional procedural languages, such as Pascal or C.
 
-`Dylan Web in 60 Seconds <https://carlgay.wordpress.com/2010/09/03/dylan-web-in-60-seconds/>`_
-    A quick introduction to web development in Dylan.  (Note that this refers
-    to the "http-server" library by its original name, "koala".)
+`Dylan Web in 60 Seconds </documentation/http/server/quickstart/index.html>`_
+    A quick introduction to web development in Dylan.
 
 .. raw:: html
 
