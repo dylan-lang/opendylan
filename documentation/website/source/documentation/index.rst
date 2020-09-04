@@ -154,9 +154,8 @@ Articles
     This essay explores Dylan from the perspective of a programmer used to
     traditional procedural languages, such as Pascal or C.
 
-`Dylan Web in 60 Seconds <https://carlgay.wordpress.com/2010/09/03/dylan-web-in-60-seconds/>`_
-    A quick introduction to web development in Dylan.  (Note that this refers
-    to the "http-server" library by its original name, "koala".)
+`Dylan Web in 60 Seconds </documentation/http/server/quickstart/index.html>`_
+    A quick introduction to web development in Dylan.
 
 .. raw:: html
 
@@ -168,7 +167,10 @@ Articles
 Publications
 ============
 
-**Extending Dylan's type system for better type inference and error detection** [`pdf <http://www.itu.dk/~hame/ilc2010.pdf>`__] [`bib <../_static/documentation/mehnert2010.bib>`__]
+See the `publications page <publications.html>`_ for a full list. Below are a
+few highlighted publications.
+
+**Extending Dylan's type system for better type inference and error detection** (by Hannes Mehnert at ILC 2010 `pdf <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.627.5175&rep=rep1&type=pdf>`__ `bib <../_static/documentation/mehnert2010.bib>`__)
     Whereas dynamic typing enables rapid prototyping and easy
     experimentation, static typing provides early error detection and
     better compile time optimization. Gradual typing provides the best
@@ -213,8 +215,6 @@ Publications
     great, however, since although Dylan has a conventional algebraic
     syntax, the approach taken to describe and represent that syntax
     is distinctly Lisp-like in philosophy.
-
-`See our publications page to find more <publications.html>`_.
 
 For Open Dylan Developers
 =========================

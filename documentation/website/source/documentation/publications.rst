@@ -123,7 +123,7 @@ Publications about Dylan
 
     http://dl.acm.org/citation.cfm?id=274957
 
-**A Monotonic Superclass Linearization for Dylan** (by Kim Barrett and Bob Cassels and Paul Haahr and David A. Moon and Keith Playford and P. Tucker Withington at OOPSLA 1996 `html <http://haahr.tempdomainname.com/dylan/linearization-oopsla96.html>`__ `bib <../_static/documentation/barrett1996.bib>`__)
+**A Monotonic Superclass Linearization for Dylan** (by Kim Barrett and Bob Cassels and Paul Haahr and David A. Moon and Keith Playford and P. Tucker Withington at OOPSLA 1996 `PDF <../_static/c3-linearization.pdf>`__ `bib <../_static/documentation/barrett1996.bib>`__)
     Object-oriented languages with multiple inheritance and automatic
     conflict resolution typically use a linearization of superclasses
     to determine which version of a property to inherit when several
