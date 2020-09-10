@@ -1,4 +1,4 @@
-The four libraries in this directory are the various command-line entry points
+The three libraries in this directory are the various command-line entry points
 into the Open Dylan application.
 
 The modules used by each library determine the commands and features built in to
