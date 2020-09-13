@@ -198,6 +198,34 @@ The extensions are:
      The *format-string* is a format string as defined on page 112 of
      the DRM.
 
+.. generic-function:: debug-name
+
+   Return the "name" of an object for identification purposes during debugging.
+
+   :signature: debug-name *object*
+
+   :parameter object: An instance of :drm:`<object>`.
+   :value name: An instance of :drm:`<object>`.
+
+   :description:
+
+     Add a method to this generic function in order to make your objects more
+     identifiable during debugging. The default ``print-object`` method will
+     include the result of calling this method when printing your objects in
+     the debugger, along with the class name and memory address of the object.
+
+     For example, given the following code...
+
+     .. code-block:: dylan
+
+        define class <foo> (<object>) slot id; end;
+        define method debug-name (f :: <foo>) f.id end;
+        define constant $foo = make(<foo>, id: "abc");
+
+     the debugger will display ``$foo`` as ``{<foo> abc}``.  Without adding a
+     ``debug-name`` method all ``<foo>`` objects will display as ``{<foo>
+     #xADDRESS}`` or possibly even just ``{<foo>}`` if a copying GC is in use.
+
 .. method:: default-handler
    :specializer: <warning>
 

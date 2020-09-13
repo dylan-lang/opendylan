@@ -31,8 +31,25 @@ define test test-print ()
   //---*** Fill this in...
 end test;
 
+define class <test-print-object-1> (<object>) end;
+define class <test-print-object-2> (<object>) end;
+
+define method debug-name (object :: <test-print-object-1>)
+  "qqq"
+end;
+
 define test test-print-object ()
-  //---*** Fill this in...
+  // With a debug-name method no address is included.
+  let output = with-output-to-string (s)
+                 print(make(<test-print-object-1>), s)
+               end;
+  assert-equal(output, "{<test-print-object-1> qqq}");
+
+  // Without a debug-name method an address IS included.
+  let output = with-output-to-string (s)
+                 print(make(<test-print-object-2>), s)
+               end;
+  assert-true(starts-with?(output, "{<test-print-object-2> #x"));
 end test;
 
 define test test-print-to-string ()

@@ -286,9 +286,14 @@ IO library's *print* module.
 
      Prints an object to a stream. Extend the ability of :func:`print` to print
      objects by adding methods to this generic function. When :func:`print`
-     actually prints an object, it calls ``print-object``.
+     actually prints an object, it calls :func:`print-object`.  Never call
+     :func:`print-object` directly.
 
-     Never call ``print-object`` directly.
+     Note that if you simply want to make your objects easier to identify while
+     debugging, it is easiest to add a method to the ``debug-name`` generic
+     function, exported from :doc:`common-dylan <../common-dylan/index>`.  The
+     default :func:`print-object` method includes the result of calling
+     ``debug-name`` in its output.
 
 .. function:: print-to-string
 

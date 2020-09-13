@@ -352,19 +352,18 @@ end method;
 define open generic print-object (object, stream :: <stream>)
     => ();
 
-/// Any object.
-///
 define method print-object (object :: <object>, stream :: <stream>) => ()
   printing-logical-block (stream, prefix: "{", suffix: "}")
     write-class-name(object.object-class, stream);
-    let oname = object.debug-name;
-    if (oname)
-      write(stream, " ");
-      write(stream, oname);
+    let dbg-name = object.debug-name;
+    if (dbg-name)
+      // The return type of debug-name is unspecified so don't call write
+      // directly.
+      format(stream, " %s", dbg-name);
     else
       write(stream, " ");
       write(stream, machine-word-to-string(address-of(object)));
-    end if;
+    end;
   end;
 end method;
 
