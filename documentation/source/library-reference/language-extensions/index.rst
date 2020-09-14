@@ -2,21 +2,23 @@
 Dylan Language Extensions
 *************************
 
-The Dylan language is described in `The Dylan Reference Manual
-<https://opendylan.org/books/drm/>`_ by Andrew Shalit (Addison-Wesley,
-1996). We call this book "the DRM" hereafter.
+.. TODO: how do the ../dylan/ documents (finalization, primitives, threads) fit in?
 
-Open Dylan provides an implementation of the Dylan language
-described by the DRM, with a few exceptions that are documented in
-:doc:`language-differences`.
+.. current-library:: common-dylan
+.. current-module:: common-dylan
 
-Open Dylan provides the Dylan language in the ``dylan`` module of the
-``dylan`` library.
+The Dylan language is described in the :drm:`Dylan Reference Manual <Title>` by
+Andrew Shalit (Addison-Wesley, 1996), hereafter referred to as "the DRM".
 
-This document is an introduction to Open Dylan's extensions to the
-Dylan language.  These extensions are either built in to the ``dylan``
-library or are available in a separate library, :doc:`common-dylan
-<../common-dylan/index>`.
+The ways in which Open Dylan differs from the DRM are documented in
+:doc:`language-differences`. The rest of this document describes features added
+to the language while retaining compatibility with the DRM.  These extensions
+are either built in to the ``dylan`` library or are available in a separate
+library, :doc:`common-dylan <../common-dylan/index>`.
+
+The :doc:`common-dylan <../common-dylan/index>` library exports the
+:mod:`common-dylan:common-dylan` module and several other very frequently used
+modules.
 
 The majority of the extensions are in the :doc:`common-extensions
 <../common-dylan/common-extensions>` module
