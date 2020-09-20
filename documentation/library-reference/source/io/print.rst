@@ -5,29 +5,29 @@ The print and pprint Modules
 .. current-library:: io
 .. current-module:: print
 
-The IO library's printing modules provide an interface that outputs an
-object in Dylan literal syntax if the object can be represented as a
-Dylan literal, and otherwise, outputs the object in an
-implementation-dependent manner. There are two functions, :func:`print`
-and :gf:`print-object`. The :func:`print` function accepts keyword
-arguments that form a print request, controlling features such as
-circular printing, how deep within a data structure to print, how many
-elements in long sequences to print before using an ellipsis notation,
-whether pretty printing is desired, and so on. Users extend
-:func:`print`'s ability to print various objects by adding methods to
-the :gf:`print-object` function. The :func:`print` function handles most
-of the overhead to satisfy special print requests, outputting any
-special notations required, and it only calls :gf:`print-object` when it
-is necessary to print objects. Users should always call the
-:func:`print` function to output objects, especially recursively from
-within :gf:`print-object` methods, to output an object's components.
-Users should never call :gf:`print-object` directly.
+The IO library's printing modules provide an interface that outputs an object
+in Dylan literal syntax if the object can be represented as a Dylan literal,
+and otherwise, outputs the object in an implementation-dependent manner.
+
+There are two functions, :func:`print` and :gf:`print-object`. The
+:func:`print` function accepts keyword arguments that form a print request,
+controlling features such as circular printing, how deep within a data
+structure to print, how many elements in long sequences to print before using
+an ellipsis notation, whether pretty printing is desired, and so on. Users
+extend :func:`print`'s ability to print various objects by adding methods to
+the :gf:`print-object` generic function.
+
+The :func:`print` function handles most of the overhead to satisfy special
+print requests, outputting any special notations required, and it only calls
+:gf:`print-object` when it is necessary to print objects. Users should always
+call the :func:`print` function to output objects, especially recursively from
+within :gf:`print-object` methods, to output an object's components.  Users
+should never call :gf:`print-object` directly.
 
 The IO library exports two modules for use with printing, *print* and
-*pprint*. Reference entries for the interfaces exported from the *print*
-module can be found in `The print Module`_, and reference entries for
-interfaces exported from the *pprint* module are in `The pprint
-Module`_.
+*pprint*. Reference entries for the interfaces exported from the *print* module
+can be found in `The print Module`_, and reference entries for interfaces
+exported from the *pprint* module are in `The pprint Module`_.
 
 These modules use the Streams module. See :doc:`streams` for
 full details of the Streams module.
@@ -37,7 +37,7 @@ Print functions
 
 The Print module offers functions for users to call to print objects,
 :func:`print` and :func:`print-to-string`, along with interfaces that allow you
-to modify the way your own objects are printed: :func:`print-object` and
+to modify the way your own objects are printed: :gf:`print-object` and
 :macro:`printing-object`.
 
 The Print module exports the following variables which provide default
@@ -104,21 +104,21 @@ IO library's *print* module.
      printing stream to represent the print request, and recursive calls
      to *print* on this printing stream process the keyword arguments
      differently (see below). There are inspection functions for
-     querying the print request. When ``print`` actually prints an
+     querying the print request. When :func:`print` actually prints an
      object, it calls :gf:`print-object`. Though the inspection
      functions for querying the print request allow you to inspect any
      parameter of the print request, :gf:`print-object` methods should
      only need to call :gf:`print-length`. All other aspects of the
-     print request are handled by ``print``. There is one exception,
+     print request are handled by :func:`print`. There is one exception,
      which is described in `Pretty printing`_.
 
      The *level* keyword controls how deep into a nested data structure
      to print. The value ``#f`` indicates that there is no limit. The
      default, :var:`*print-level*`, has no effect on recursive calls to
-     ``print``. Recursive calls to ``print`` may change the value of
-     *print-level* explicitly, but ``print`` always uses a value to
-     ensure the print request formed by the first call to ``print`` is
-     never exceeded. For example, if a first call to ``print`` set the
+     :func:`print`. Recursive calls to :func:`print` may change the value of
+     *print-level* explicitly, but :func:`print` always uses a value to
+     ensure the print request formed by the first call to :func:`print` is
+     never exceeded. For example, if a first call to :func:`print` set the
      level to 5, and while at a depth of 3, a recursive call specified a
      level of 4, the recursive call would only descend 2 more levels,
      not 4.
@@ -131,7 +131,7 @@ IO library's *print* module.
      the default :drm:`<object>` method might regard *print-length* to
      determine how many slot-name/value pairs to print. The default,
      :var:`*print-length*`, has no effect on recursive calls to
-     ``print``. Recursive calls to ``print`` may change the value of
+     :func:`print`. Recursive calls to :func:`print` may change the value of
      *print-length* explicitly, but they may only decrease the value,
      never increase it.
 
@@ -141,12 +141,12 @@ IO library's *print* module.
      tags objects that occur more than once when they are first printed,
      and later occurrences are printed as a reference to the previously
      emitted tag. The default, :var:`*print-circle?*`, has no effect on
-     recursive calls to ``print``. If *print-circle?* is already ``#t``,
+     recursive calls to :func:`print`. If *print-circle?* is already ``#t``,
      then it remains ``#t`` throughout all recursive calls. If
-     *print-circle?* is ``#f``, then recursive calls to ``print`` can
+     *print-circle?* is ``#f``, then recursive calls to :func:`print` can
      change the value to ``#t`` ; however, when printing exits the
      dynamic scope of the call that changed the value to ``#t``, the
-     value reverts back to ``#f``. If the original call to ``print``
+     value reverts back to ``#f``. If the original call to :func:`print`
      specifies *circle?* as ``#f``, and dynamically distinct recursive
      calls turn circular printing on and off, all output generated while
      circular printing was on shares the same tagging space; that is, if
@@ -158,9 +158,9 @@ IO library's *print* module.
      insert line breaks and indentation to format objects according to
      how programmers tend to find it easier to read data. The default,
      :var:`*print-pretty?*`, has no effect on recursive calls to
-     ``print``. If *print-pretty?* is already ``#t``, then it remains
+     :func:`print`. If *print-pretty?* is already ``#t``, then it remains
      ``#t`` throughout all recursive calls. If *print-pretty?* is
-     ``#f``, then recursive calls to ``print`` can change the value to
+     ``#f``, then recursive calls to :func:`print` can change the value to
      ``#t`` ; however, when printing exits the dynamic scope of the call
      that changed the value to ``#t``, the value reverts back to ``#f``.
 
@@ -288,17 +288,17 @@ IO library's *print* module.
 
      Prints an object to a stream. Extend the ability of :func:`print` to print
      objects by adding methods to this generic function. When :func:`print`
-     actually prints an object, it calls :func:`print-object`.
+     actually prints an object, it calls :gf:`print-object`.
 
      The most common use of this functionality is to change the way objects in
      your own library display in the debugger, to make individual instances
      more easily identifiable. See the example under :macro:`printing-object`.
 
-     Never call :func:`print-object` directly.
+     Never call :gf:`print-object` directly.
 
    :seealso:
 
-      - :macro:`printing-object`, which simplifies writing :func:`print-object`
+      - :macro:`printing-object`, which simplifies writing :gf:`print-object`
         methods.
 
 .. function:: print-to-string
@@ -338,7 +338,7 @@ IO library's *print* module.
            *body*
          end;
 
-   *printing-object* may be used within :func:`print-object` to print Dylan
+   *printing-object* may be used within :gf:`print-object` to print Dylan
    objects in a standardized way while adding identifying information for your
    own classes. Example:
 
@@ -388,10 +388,10 @@ IO library's *pprint* module.
    :description:
 
      Specifies the indentation to use within the current logical block.
-     When *relative-to* is ``#"block"``, then ``pprint-indent`` sets the
+     When *relative-to* is ``#"block"``, then :func:`pprint-indent` sets the
      indentation to the column of the first character of the logical
      block plus *n*. When *relative-to* is ``#"current"``, then
-     ``pprint-indent`` sets the indentation to the current column plus
+     :func:`pprint-indent` sets the indentation to the current column plus
      *n*.
 
 .. function:: pprint-logical-block
@@ -427,15 +427,15 @@ IO library's *pprint* module.
      The *body* keyword must be a function that can take one argument,
      and this argument is a stream. The *body* function should use the
      stream argument passed to it; the *body* function should not close
-     over the stream argument to ``pprint-logical-block``.
-     ``pprint-logical-block`` wraps *stream* with a pretty printing
+     over the stream argument to :macro:`pprint-logical-block`.
+     :macro:`pprint-logical-block` wraps *stream* with a pretty printing
      stream when *stream* is any other kind of stream. If *stream* is
      already a pretty printing stream, then the *body* function is
      called on *stream*.
 
      All :gf:`print-object` methods that are written to do pretty
      printing must call the other pretty printing functions within the
-     dynamic scope of a call to ``pprint-logical-block``; otherwise, the
+     dynamic scope of a call to :macro:`pprint-logical-block`; otherwise, the
      pretty printing functions are no-ops.
 
 .. function:: pprint-newline
@@ -521,7 +521,9 @@ IO library's *pprint* module.
      logical block (see :gf:`pprint-logical-block`) begins in a column
      of output that is greater than::
 
-       *default-line-length* - *print-miser-width*
+       .. code-block:: dylan
+
+          *default-line-length* - *print-miser-width*
 
      The value must be an integer or ``#f`` (the default); ``#f``
      indicates that the pretty printer should never enter miser mode.
