@@ -35,8 +35,10 @@ full details of the Streams module.
 Print functions
 ---------------
 
-The Print module offers two functions for users to call to print
-objects, :func:`print` and :func:`print-to-string`.
+The Print module offers functions for users to call to print objects,
+:func:`print` and :func:`print-to-string`, along with interfaces that allow you
+to modify the way your own objects are printed: :func:`print-object` and
+:macro:`printing-object`.
 
 The Print module exports the following variables which provide default
 values for calls to the print function. Their values are
@@ -286,9 +288,18 @@ IO library's *print* module.
 
      Prints an object to a stream. Extend the ability of :func:`print` to print
      objects by adding methods to this generic function. When :func:`print`
-     actually prints an object, it calls ``print-object``.
+     actually prints an object, it calls :func:`print-object`.
 
-     Never call ``print-object`` directly.
+     The most common use of this functionality is to change the way objects in
+     your own library display in the debugger, to make individual instances
+     more easily identifiable. See the example under :macro:`printing-object`.
+
+     Never call :func:`print-object` directly.
+
+   :seealso:
+
+      - :macro:`printing-object`, which simplifies writing :func:`print-object`
+        methods.
 
 .. function:: print-to-string
 
@@ -314,6 +325,34 @@ IO library's *print* module.
      Calls :func:`print` to produce output according to the print
      request formed by the keyword arguments and returns the result as a
      string.
+
+.. macro:: printing-object
+
+   Wrapper around :macro:`printing-logical-block`.
+
+   :macrocall:
+
+      .. code-block:: dylan
+
+         printing-object(*object*, *stream*, #key type? = #t)
+           *body*
+         end;
+
+   *printing-object* may be used within :func:`print-object` to print Dylan
+   objects in a standardized way while adding identifying information for your
+   own classes. Example:
+
+      .. code-block:: dylan
+
+         define method print-object (acct :: <account>, stream :: <stream>) => ()
+           printing-object(acct, stream)
+             print(account-name(acct), stream, escape?: #t);
+           end;
+         end;
+
+   With the above method, an ``<account>`` object with name "foo" will print as
+   ``{<account> "foo" #xDEADBEEF}``.
+
 
 The pprint Module
 -----------------
