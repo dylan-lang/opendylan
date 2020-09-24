@@ -41,28 +41,19 @@ because it doesn't include git submodules.
 UNIX
 ====
 
-Please note that on 64 bit Linux the default stack is too small for
-Open Dylan so it must be increased with ``ulimit -s``. It's usually
-safe to double its value.
-
 Dependencies
 ------------
 
-Install a garbage collector for your platform. The Memory Pool System
-(MPS) is only integrated with the HARP back-end, which itself only
-works on 32-bit x86 platforms.  All 64-bit platforms and macOS must
-use the Boehm Demers Weiser conservative GC (or just Boehm GC) with
-the LLVM or C back-end.
+All 64-bit platforms and macOS must use the Boehm Demers Weiser conservative GC
+(or just "Boehm GC") with the LLVM or C back-end. The Memory Pool System (MPS)
+is only integrated with the HARP back-end, which itself only works on 32-bit
+x86 platforms.
 
-* 32-bit x86 Windows/Linux/FreeBSD (HARP back-end) -> `MPS 1.114
-  <http://www.ravenbrook.com/project/mps/release/1.114.0/>`_
 * 64-bit systems and macOS (LLVM or C back-end) -> `boehm-gc
-  <https://github.com/ivmai/bdwgc>`_
-
-The ``libunwind`` library is an optional dependency on Linux and
-FreeBSD. If available, it is used to display stack traces for
-unhandled error conditions. (The ``libunwind`` API is built-in on
-macOS.)
+  <https://github.com/ivmai/bdwgc>`_, usually installed via a package (see
+  below).
+* 32-bit x86 Linux or FreeBSD (HARP back-end) -> `MPS 1.114
+  <http://www.ravenbrook.com/project/mps/release/1.114.0/>`_
 
 On macOS, you may find it easiest to install Homebrew and install
 the following::
@@ -77,7 +68,15 @@ with the ``--universal`` flag.
 On Ubuntu, Debian, etc, you can install the necessary dependencies
 with::
 
-    apt-get install autoconf automake clang-7 gcc libgc-dev libunwind-dev
+    apt-get install autoconf automake clang-10 gcc libgc-dev libunwind-dev
+
+The ``libunwind`` library is an optional dependency on Linux and
+FreeBSD. If available, it is used to display stack traces for
+unhandled error conditions. (The ``libunwind`` API is built-in on
+macOS.)
+
+You may also want to install ``lldb-10`` for debugging if you are using the LLVM
+back-end.
 
 Building
 --------
