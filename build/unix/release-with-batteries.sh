@@ -45,6 +45,8 @@ MAKE=make
 TAR=tar
 NEED_LIBUNWIND=:
 LIBUNWIND_EXCEPTIONS=
+SYSROOT=
+USE_LLD="-fuse-ld=lld"
 BUILD_SRC=false
 case ${MACHINE}-${SYSTEM} in
     amd64-FreeBSD)
@@ -72,6 +74,8 @@ case ${MACHINE}-${SYSTEM} in
     x86_64-Darwin)
         TRIPLE=x86_64-darwin-apple
         NEED_LIBUNWIND=false
+        SYSROOT=" -isysroot $(xcrun --show-sdk-path)"
+        USE_LLD=
         DYLAN_JOBS=$(getconf _NPROCESSORS_ONLN)
         ;;
 esac
@@ -179,8 +183,8 @@ else
            ${LLVM_DIST}/lib/clang
     cp -RP ${LLVM_DIST}/* ${DISTDIR}/
 fi
-CC=${DISTDIR}/bin/clang
-CXX=${DISTDIR}/bin/clang++
+CC="${DISTDIR}/bin/clang${SYSROOT}"
+CXX="${DISTDIR}/bin/clang++${SYSROOT}"
 
 RTLIBS_INSTALL=
 
@@ -207,7 +211,7 @@ ${TAR} -xzf ${BDWGC_TAR}
 
 echo Building BDWGC in ${BDWGC_DIST}
 (cd ${BDWGC_DIST};
- ./configure CC=$CC -q --prefix=$DISTDIR \
+ ./configure CC="$CC" -q --prefix=$DISTDIR \
              --disable-docs --disable-static \
              --enable-threads=posix \
              --enable-parallel-mark \
@@ -221,7 +225,7 @@ done
 echo Building Open Dylan
 $top_srcdir/configure CC="$CC" CXX="$CXX" \
                       CPPFLAGS="-I${DISTDIR}/include" \
-                      LDFLAGS="-L${DISTDIR}/lib -fuse-ld=lld" \
+                      LDFLAGS="-L${DISTDIR}/lib $USE_LLD" \
                       --with-gc=${DISTDIR} \
                       --with-harp-collector=boehm \
                       "$@"
