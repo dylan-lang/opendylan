@@ -420,14 +420,11 @@ define method jam-target-build
 
     method command-outputter (command :: <jam-action-command>,
                               msg :: <byte-string>, #key end: _end)
-      if (slot-initialized?(command, action-command-output-stream))
-        write(command.action-command-output-stream, msg, end: _end);
-      else
+      if (~slot-initialized?(command, action-command-output-stream))
         command.action-command-output-stream
-          := make(<byte-string-stream>,
-                  direction: #"output",
-                  contents: copy-sequence(msg, end: _end));
+          := make(<byte-string-stream>, direction: #"output");
       end if;
+      write(command.action-command-output-stream, msg, end: _end);
     end method,
 
     method complete-command (command :: <jam-action-command>,
