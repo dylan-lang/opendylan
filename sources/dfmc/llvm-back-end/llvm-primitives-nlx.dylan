@@ -198,6 +198,8 @@ define method op--allocate-bef
                llvm-reference-type(back-end, dylan-value(#"<raw-pointer>")))
 end method;
 
+define variable *initialize-bef-frame-pointer?* = #f;
+
 define method op--initialize-bef
     (back-end :: <llvm-back-end>, bef :: <llvm-value>,
      typeid :: <llvm-constant-value>)
@@ -206,12 +208,14 @@ define method op--initialize-bef
   let bef-ptr
     = ins--bitcast(back-end, bef, llvm-pointer-to(back-end, bef-type));
 
-  // Store the current frame pointer in the bind exit frame
-  let frame-pointer
-    = ins--call-intrinsic(back-end, "llvm.frameaddress", vector(i32(0)));
-  let bef-framepointer-slot-ptr
-    = op--bef-getelementptr(back-end, bef-ptr, #"bef-frame-pointer");
-  ins--store(back-end, frame-pointer, bef-framepointer-slot-ptr);
+  if (*initialize-bef-frame-pointer?*)
+    // Store the current frame pointer in the bind exit frame
+    let frame-pointer
+      = ins--call-intrinsic(back-end, "llvm.frameaddress", vector(i32(0)));
+    let bef-framepointer-slot-ptr
+      = op--bef-getelementptr(back-end, bef-ptr, #"bef-frame-pointer");
+    ins--store(back-end, frame-pointer, bef-framepointer-slot-ptr);
+  end if;
 
   // Store the typeid constant in the bind exit frame
   let typeid-cast
