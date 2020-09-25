@@ -8,6 +8,11 @@
 #define UNW_LOCAL_ONLY
 #include <libunwind.h>
 
+#include <unistd.h>
+#include <signal.h>
+#include <sys/signal.h>
+#include <sys/ucontext.h>
+
 #include "demangle.h"
 
 // The dispatch engine is not interesting
@@ -402,15 +407,116 @@ static int interesting_function(const char *name)
 void dylan_dump_callstack(void *ctxt)
 {
   unw_context_t context;
+  unw_cursor_t cursor;
+#if (defined (OPEN_DYLAN_PLATFORM_DARWIN) && defined(OPEN_DYLAN_ARCH_X86_64))
+  // We can use the passed-in ucontext_t as the libunwind context
   if (ctxt == NULL) {
-    // If no explicit context was passed in, start "here"
     unw_getcontext(&context);
     ctxt = &context;
   }
+  int rc = unw_init_local(&cursor, ctxt);
+#else
+  unw_getcontext(&context);
+  int rc = unw_init_local(&cursor, &context);
+  if (ctxt != NULL) {
+    // If an explicit context was passed in, copy register values from it
+    const ucontext_t *uc = (ucontext_t *) ctxt;
+    const mcontext_t *mc = &uc->uc_mcontext;
+#if (defined(OPEN_DYLAN_ARCH_X86_64) && defined(OPEN_DYLAN_PLATFORM_LINUX))
+    unw_set_reg(&cursor, UNW_X86_64_RAX, mc->gregs[REG_RAX]);
+    unw_set_reg(&cursor, UNW_X86_64_RDX, mc->gregs[REG_RDX]);
+    unw_set_reg(&cursor, UNW_X86_64_RCX, mc->gregs[REG_RCX]);
+    unw_set_reg(&cursor, UNW_X86_64_RBX, mc->gregs[REG_RBX]);
+    unw_set_reg(&cursor, UNW_X86_64_RSI, mc->gregs[REG_RSI]);
+    unw_set_reg(&cursor, UNW_X86_64_RDI, mc->gregs[REG_RDI]);
+    unw_set_reg(&cursor, UNW_X86_64_RBP, mc->gregs[REG_RBP]);
+    unw_set_reg(&cursor, UNW_X86_64_RSP, mc->gregs[REG_RSP]);
+    unw_set_reg(&cursor, UNW_X86_64_R8 , mc->gregs[REG_R8]);
+    unw_set_reg(&cursor, UNW_X86_64_R9 , mc->gregs[REG_R9]);
+    unw_set_reg(&cursor, UNW_X86_64_R10, mc->gregs[REG_R10]);
+    unw_set_reg(&cursor, UNW_X86_64_R11, mc->gregs[REG_R11]);
+    unw_set_reg(&cursor, UNW_X86_64_R12, mc->gregs[REG_R12]);
+    unw_set_reg(&cursor, UNW_X86_64_R13, mc->gregs[REG_R13]);
+    unw_set_reg(&cursor, UNW_X86_64_R14, mc->gregs[REG_R14]);
+    unw_set_reg(&cursor, UNW_X86_64_R15, mc->gregs[REG_R15]);
+
+    unw_set_reg(&cursor, UNW_REG_IP, mc->gregs[REG_RIP]);
+    unw_set_reg(&cursor, UNW_REG_SP, mc->gregs[REG_RSP]);
+#elif (defined(OPEN_DYLAN_ARCH_X86_64) && defined(OPEN_DYLAN_PLATFORM_FREEBSD))
+    unw_set_reg(&cursor, UNW_X86_64_RAX, mc->mc_rax);
+    unw_set_reg(&cursor, UNW_X86_64_RDX, mc->mc_rdx);
+    unw_set_reg(&cursor, UNW_X86_64_RCX, mc->mc_rcx);
+    unw_set_reg(&cursor, UNW_X86_64_RBX, mc->mc_rbx);
+    unw_set_reg(&cursor, UNW_X86_64_RSI, mc->mc_rsi);
+    unw_set_reg(&cursor, UNW_X86_64_RDI, mc->mc_rdi);
+    unw_set_reg(&cursor, UNW_X86_64_RBP, mc->mc_rbp);
+    unw_set_reg(&cursor, UNW_X86_64_RSP, mc->mc_rsp);
+    unw_set_reg(&cursor, UNW_X86_64_R8 , mc->mc_r8);
+    unw_set_reg(&cursor, UNW_X86_64_R9 , mc->mc_r9);
+    unw_set_reg(&cursor, UNW_X86_64_R10, mc->mc_r10);
+    unw_set_reg(&cursor, UNW_X86_64_R11, mc->mc_r11);
+    unw_set_reg(&cursor, UNW_X86_64_R12, mc->mc_r12);
+    unw_set_reg(&cursor, UNW_X86_64_R13, mc->mc_r13);
+    unw_set_reg(&cursor, UNW_X86_64_R14, mc->mc_r14);
+    unw_set_reg(&cursor, UNW_X86_64_R15, mc->mc_r15);
+
+    unw_set_reg(&cursor, UNW_REG_IP, mc->mc_rip);
+    unw_set_reg(&cursor, UNW_REG_SP, mc->mc_rsp);
+#elif defined(OPEN_DYLAN_ARCH_AARCH64)
+    unw_set_reg(&cursor, UNW_ARM64_X0, mc->regs[0]);
+    unw_set_reg(&cursor, UNW_ARM64_X1, mc->regs[1]);
+    unw_set_reg(&cursor, UNW_ARM64_X2, mc->regs[2]);
+    unw_set_reg(&cursor, UNW_ARM64_X3, mc->regs[3]);
+    unw_set_reg(&cursor, UNW_ARM64_X4, mc->regs[4]);
+    unw_set_reg(&cursor, UNW_ARM64_X5, mc->regs[5]);
+    unw_set_reg(&cursor, UNW_ARM64_X6, mc->regs[6]);
+    unw_set_reg(&cursor, UNW_ARM64_X7, mc->regs[7]);
+    unw_set_reg(&cursor, UNW_ARM64_X8, mc->regs[8]);
+    unw_set_reg(&cursor, UNW_ARM64_X9, mc->regs[9]);
+    unw_set_reg(&cursor, UNW_ARM64_X10, mc->regs[10]);
+    unw_set_reg(&cursor, UNW_ARM64_X11, mc->regs[11]);
+    unw_set_reg(&cursor, UNW_ARM64_X12, mc->regs[12]);
+    unw_set_reg(&cursor, UNW_ARM64_X13, mc->regs[13]);
+    unw_set_reg(&cursor, UNW_ARM64_X14, mc->regs[14]);
+    unw_set_reg(&cursor, UNW_ARM64_X15, mc->regs[15]);
+    unw_set_reg(&cursor, UNW_ARM64_X16, mc->regs[16]);
+    unw_set_reg(&cursor, UNW_ARM64_X17, mc->regs[17]);
+    unw_set_reg(&cursor, UNW_ARM64_X18, mc->regs[18]);
+    unw_set_reg(&cursor, UNW_ARM64_X19, mc->regs[19]);
+    unw_set_reg(&cursor, UNW_ARM64_X20, mc->regs[20]);
+    unw_set_reg(&cursor, UNW_ARM64_X21, mc->regs[21]);
+    unw_set_reg(&cursor, UNW_ARM64_X22, mc->regs[22]);
+    unw_set_reg(&cursor, UNW_ARM64_X23, mc->regs[23]);
+    unw_set_reg(&cursor, UNW_ARM64_X24, mc->regs[24]);
+    unw_set_reg(&cursor, UNW_ARM64_X25, mc->regs[25]);
+    unw_set_reg(&cursor, UNW_ARM64_X26, mc->regs[26]);
+    unw_set_reg(&cursor, UNW_ARM64_X27, mc->regs[27]);
+    unw_set_reg(&cursor, UNW_ARM64_X28, mc->regs[28]);
+    unw_set_reg(&cursor, UNW_ARM64_X29, mc->regs[29]);
+    unw_set_reg(&cursor, UNW_ARM64_X30, mc->regs[30]);
+    unw_set_reg(&cursor, UNW_ARM64_SP, mc->sp);
+
+    unw_set_reg(&cursor, UNW_REG_IP, mc->pc);
+    unw_set_reg(&cursor, UNW_REG_SP, mc->sp);
+#elif defined(OPEN_DYLAN_ARCH_X86)
+    unw_set_reg(&cursor, UNW_X86_EAX, mc->mc_eax);
+    unw_set_reg(&cursor, UNW_X86_ECX, mc->mc_ecx);
+    unw_set_reg(&cursor, UNW_X86_EDX, mc->mc_edx);
+    unw_set_reg(&cursor, UNW_X86_EBX, mc->mc_ebx);
+    unw_set_reg(&cursor, UNW_X86_EBP, mc->mc_ebp);
+    unw_set_reg(&cursor, UNW_X86_ESP, mc->mc_esp);
+    unw_set_reg(&cursor, UNW_X86_ESI, mc->mc_esi);
+    unw_set_reg(&cursor, UNW_X86_EDI, mc->mc_edi);
+
+    unw_set_reg(&cursor, UNW_REG_IP, mc->mc_eip);
+    unw_set_reg(&cursor, UNW_REG_SP, mc->mc_esp);
+#else
+#error No implementation for transferring register context
+#endif
+  }
+#endif
 
   fprintf(stderr, "Backtrace:\n");
-  unw_cursor_t cursor;
-  int rc = unw_init_local(&cursor, ctxt);
   do {
     // Find a symbol for the current frame
     unw_word_t offset;
