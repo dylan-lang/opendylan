@@ -77,14 +77,27 @@ Compiler
 * The compiler can now output etags-format TAGS tables using the
   ``export tags`` command.
 
-* The compiler now displays a text mode progress bar during the
-  compilation and link phases.
+* The command-line compiler now displays a text mode progress bar
+  during the compilation and link phases.
 
 * The compiler no longer generates dispatch coloring information in
   Emacs Lisp format by default. When it is needed, it can still be
   requested by supplying the ``-dispatch-coloring elisp`` command-line
   option at build time. (Note that the IDE dispatch coloring display
   does not make use of the elisp-format files.)
+
+* The LLVM back-end now tracks function inlining in generated debug
+  information, allowing breakpoints to be set in inlined code. (Note,
+  however, that functions inlined from the ``dylan`` library are
+  excluded.)
+
+* The HARP back-end is no longer supported on x86 Linux because it is
+  not able to maintain the stack alignment that C code requires on
+  that platform.
+
+* A bug that prevented the error output of build commands (such as the
+  linker) from appearing in build.log files and the console output
+  has been fixed.
 
 Run-time
 ========
@@ -112,10 +125,18 @@ Run-time
 
 * A bug that broke ``limited(<array>)`` instantiation has been fixed.
 
+* The LLVM run-time on 32-bit x86 platforms now clears the x87 stack
+  when handling exceptions to prevent overflowing the 8-slot FPU
+  stack.
+
 Platform Support
 ================
 
 * The AArch64 (64-bit ARM) platform is now supported on Linux.
+
+* The 32-bit x86-darwin platform is no longer supported, since macOS 10.15
+  (Catalina) and later can no longer support running 32-bit
+  applications.
 
 IDE
 ===
@@ -318,6 +339,11 @@ testworks Library
 
 * The `--report` command line option now accepts "full" as a value, meaning to
   display individual assertion results in addition to the normal output.
+
+* Support for benchmarks has been improved. A new ``benchmark-repeat``
+  macro for use within testworks runs its body multiple times, causing
+  the "full" report to display basic statistics characterizing the
+  benchmark execution.
 
 * The output for several assertions has been made less verbose.
 
