@@ -6,7 +6,7 @@ LLVM_REL=$(echo $LLVM_RELEASE | sed s/-rc/rc/)
 
 LLVM_CLANG=$(echo $LLVM_RELEASE | sed 's/\([0-9]*\).*/\1/')
 
-LIBUNWIND_RELEASE=1.4.0
+LIBUNWIND_REV=22b615a96593f13109a27cabfd1764ec4f558c7a
 
 BDWGC_RELEASE=8.0.4
 
@@ -46,13 +46,11 @@ case ${MACHINE}-${SYSTEM} in
     x86_64-Linux|i686-Linux)
         BUILD_SRC=:
         TAR="tar --wildcards"
-        LIBUNWIND_EXCEPTIONS='--enable-cxx-exceptions'
         DYLAN_JOBS=$(getconf _NPROCESSORS_ONLN)
         ;;
     aarch64-Linux)
         TRIPLE=aarch64-linux-gnu
         TAR="tar --wildcards"
-        LIBUNWIND_EXCEPTIONS='--enable-cxx-exceptions'
         DYLAN_JOBS=$(getconf _NPROCESSORS_ONLN)
         ;;
     x86_64-Darwin)
@@ -64,15 +62,14 @@ case ${MACHINE}-${SYSTEM} in
         ;;
 esac
 
-LIBUNWIND_DIST=libunwind-${LIBUNWIND_RELEASE}
-LIBUNWIND_TAR=${LIBUNWIND_DIST}.tar.gz
+LIBUNWIND_ZIP=${LIBUNWIND_REV}.zip
 
 BDWGC_DIST=gc-${BDWGC_RELEASE}
 BDWGC_TAR=${BDWGC_DIST}.tar.gz
 
 if $BUILD_SRC; then
-    LLVM_DIST=llvm-project-llvmorg-${LLVM_RELEASE}
-    LLVM_TAR=llvmorg-${LLVM_RELEASE}.tar.gz
+    LLVM_DIST=llvm-project-${LLVM_REL}
+    LLVM_TAR=${LLVM_DIST}.tar.xz
     if [ ! -f "$LLVM_TAR" ]; then
         echo Error: LLVM source distribution file missing 1>&2
         echo Please download https://github.com/llvm/llvm-project/releases/download/llvmorg-${LLVM_RELEASE}/${LLVM_TAR} and place the file in the current directory 1>&2
@@ -87,9 +84,9 @@ else
         exit 1
     fi
 fi
-if $NEED_LIBUNWIND && [ ! -f "$LIBUNWIND_TAR" ]; then
-    echo Error: libunwind source distribution file missing 1>&2
-    echo Please download https://github.com/libunwind/libunwind/releases/download/v${LIBUNWIND_RELEASE}/${LIBUNWIND_TAR} and place the file in the current directory 1>&2
+if $NEED_LIBUNWIND && [ ! -f "$LIBUNWIND_ZIP" ]; then
+    echo Error: LLVM libunwind source distribution file missing 1>&2
+    echo Please download https://github.com/llvm/llvm-project/archive/${LIBUNWIND_ZIP} and place the file in the current directory 1>&2
     exit 1
 fi
 if [ ! -f "$BDWGC_TAR" ]; then
@@ -173,16 +170,19 @@ CXX="${DISTDIR}/bin/clang++${SYSROOT}"
 RTLIBS_INSTALL=
 
 if $NEED_LIBUNWIND; then
+    LIBUNWIND_DIST=llvm-project-${LIBUNWIND_REV}/libunwind
     echo Unpacking libunwind into ${LIBUNWIND_DIST}
-    rm -rf ${LIBUNWIND_DIST}
-    ${TAR} -xzf ${LIBUNWIND_TAR}
+    rm -rf llvm-project-${LIBUNWIND_REV}
+    unzip -q ${LIBUNWIND_REV}.zip "${LIBUNWIND_DIST}/*"
 
     (cd ${LIBUNWIND_DIST};
-     ./configure CC=$CC -q --prefix=$DISTDIR \
-                 --with-pic $LIBUNWIND_EXCEPTIONS \
-                 --disable-static --disable-documentation --disable-tests \
-                 --disable-coredump --disable-ptrace --disable-setjmp; \
-     ${MAKE} all install >build.log)
+     cmake -G Ninja -DCMAKE_BUILD_TYPE=Release \
+           -DCMAKE_C_COMPILER=$CC -DCMAKE_CXX_COMPILER=$CXX .;
+     ninja)
+
+    mkdir -p ${DISTDIR}/include
+    cp -RP ${LIBUNWIND_DIST}/lib/libunwind.so* ${DISTDIR}/lib
+    cp -RP ${LIBUNWIND_DIST}/include/*.h ${DISTDIR}/include
 
     for i in ${DISTDIR}/lib/libunwind*; do
         RTLIBS_INSTALL="$RTLIBS_INSTALL $i"
