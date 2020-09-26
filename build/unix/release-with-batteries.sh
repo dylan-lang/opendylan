@@ -1,7 +1,9 @@
 #!/bin/sh
 set -e
 
-LLVM_RELEASE=10.0.0
+LLVM_RELEASE=10.0.1
+LLVM_REL=$(echo $LLVM_RELEASE | sed s/-rc/rc/)
+
 LLVM_CLANG=$(echo $LLVM_RELEASE | sed 's/\([0-9]*\).*/\1/')
 
 LIBUNWIND_RELEASE=1.4.0
@@ -24,27 +26,9 @@ DISTDIR=$(pwd)/release/opendylan-${OPENDYLAN_RELEASE}
 rm -rf ${DISTDIR}
 mkdir -p ${DISTDIR}
 
-# clang+llvm-10.0.0-aarch64-linux-gnu.tar.xz
-# clang+llvm-10.0.0-aarch64-linux-gnu.tar.xz.sig
-# clang+llvm-10.0.0-amd64-pc-solaris2.11.tar.xz
-# clang+llvm-10.0.0-amd64-pc-solaris2.11.tar.xz.sig
-# clang+llvm-10.0.0-amd64-unknown-freebsd11.tar.xz
-# clang+llvm-10.0.0-amd64-unknown-freebsd11.tar.xz.sig
-# clang+llvm-10.0.0-armv7a-linux-gnueabihf.tar.xz
-# clang+llvm-10.0.0-armv7a-linux-gnueabihf.tar.xz.sig
-# clang+llvm-10.0.0-i386-unknown-freebsd11.tar.xz
-# clang+llvm-10.0.0-i386-unknown-freebsd11.tar.xz.sig
-# clang+llvm-10.0.0-x86_64-apple-darwin.tar.xz
-# clang+llvm-10.0.0-x86_64-apple-darwin.tar.xz.sig
-# clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz
-# clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz.sig
-# clang+llvm-10.0.0-x86_64-linux-sles11.3.tar.xz
-# clang+llvm-10.0.0-x86_64-linux-sles11.3.tar.xz.sig
-
 MAKE=make
 TAR=tar
 NEED_LIBUNWIND=:
-LIBUNWIND_EXCEPTIONS=
 SYSROOT=
 USE_LLD="-fuse-ld=lld"
 BUILD_SRC=false
@@ -72,7 +56,7 @@ case ${MACHINE}-${SYSTEM} in
         DYLAN_JOBS=$(getconf _NPROCESSORS_ONLN)
         ;;
     x86_64-Darwin)
-        TRIPLE=x86_64-darwin-apple
+        TRIPLE=x86_64-apple-darwin
         NEED_LIBUNWIND=false
         SYSROOT=" -isysroot $(xcrun --show-sdk-path)"
         USE_LLD=
@@ -117,7 +101,7 @@ fi
 if $BUILD_SRC; then
     echo Unpacking LLVM project sources into ${LLVM_DIST}
     rm -rf "${LLVM_DIST}"
-    ${TAR} -xzf ${LLVM_TAR} \
+    ${TAR} -xJf ${LLVM_TAR} \
            ${LLVM_DIST}/llvm \
            ${LLVM_DIST}/clang \
            ${LLVM_DIST}/lld
