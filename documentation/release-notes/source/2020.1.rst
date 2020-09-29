@@ -256,6 +256,8 @@ io Library
 * ``*print-escape?*`` and the ``escape?`` parameter for the ``print`` function
   have been documented.
 
+* The ``printing-object`` macro has been documented.
+
 system Library
 --------------
 
