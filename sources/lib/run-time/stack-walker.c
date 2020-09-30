@@ -1009,7 +1009,7 @@ void dylan_dump_callstack(void *ctxt)
 
     unw_set_reg(&cursor, UNW_REG_IP, mc->mc_rip);
     unw_set_reg(&cursor, UNW_REG_SP, mc->mc_rsp);
-#elif defined(OPEN_DYLAN_ARCH_AARCH64)
+#elif (defined(OPEN_DYLAN_ARCH_AARCH64) && defined(OPEN_DYLAN_PLATFORM_LINUX))
     unw_set_reg(&cursor, UNW_ARM64_X0, mc->regs[0]);
     unw_set_reg(&cursor, UNW_ARM64_X1, mc->regs[1]);
     unw_set_reg(&cursor, UNW_ARM64_X2, mc->regs[2]);
@@ -1045,7 +1045,19 @@ void dylan_dump_callstack(void *ctxt)
 
     unw_set_reg(&cursor, UNW_REG_IP, mc->pc);
     unw_set_reg(&cursor, UNW_REG_SP, mc->sp);
-#elif defined(OPEN_DYLAN_ARCH_X86)
+#elif (defined(OPEN_DYLAN_ARCH_X86) && defined(OPEN_DYLAN_PLATFORM_LINUX))
+    unw_set_reg(&cursor, UNW_X86_EAX, mc->gregs[REG_EAX]);
+    unw_set_reg(&cursor, UNW_X86_ECX, mc->gregs[REG_ECX]);
+    unw_set_reg(&cursor, UNW_X86_EDX, mc->gregs[REG_EDX]);
+    unw_set_reg(&cursor, UNW_X86_EBX, mc->gregs[REG_EBX]);
+    unw_set_reg(&cursor, UNW_X86_EBP, mc->gregs[REG_EBP]);
+    unw_set_reg(&cursor, UNW_X86_ESP, mc->gregs[REG_ESP]);
+    unw_set_reg(&cursor, UNW_X86_ESI, mc->gregs[REG_ESI]);
+    unw_set_reg(&cursor, UNW_X86_EDI, mc->gregs[REG_EDI]);
+
+    unw_set_reg(&cursor, UNW_REG_IP, mc->gregs[REG_EIP]);
+    unw_set_reg(&cursor, UNW_REG_SP, mc->gregs[REG_ESP]);
+#elif (defined(OPEN_DYLAN_ARCH_X86) && defined(OPEN_DYLAN_PLATFORM_FREEBSD))
     unw_set_reg(&cursor, UNW_X86_EAX, mc->mc_eax);
     unw_set_reg(&cursor, UNW_X86_ECX, mc->mc_ecx);
     unw_set_reg(&cursor, UNW_X86_EDX, mc->mc_edx);
