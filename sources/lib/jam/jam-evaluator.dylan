@@ -274,8 +274,8 @@ define function jam-expand-arg-colon
                                 copy-sequence(variable, start: i + 2));
               method (name :: <byte-string>) => (modified :: <byte-string>);
                 as(<byte-string>,
-                   merge-locators(as(<file-system-locator>, name),
-                                  new-root))
+                   simplify-locator(merge-locators(as(<file-system-locator>, name),
+                                                   new-root)))
               end method;
             else
               always("")
