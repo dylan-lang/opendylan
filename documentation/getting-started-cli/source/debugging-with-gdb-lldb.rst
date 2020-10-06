@@ -149,31 +149,57 @@ Any LLDB arguments can be specified, as normal.
 The support library provides some extra commands and specialized
 summarizers for commonly-encountered Dylan objects.
 
+Note that if you're using the Boehm GC, which is the default on Unix systems,
+it is necessary to tell ``lldb`` not to stop on the signals used by the GC.
+Which signals are used varies depending on the platform. For Linux::
+
+  (lldb) process handle -p yes -s no -n no SIGPWR
+  (lldb) process handle -p yes -s no -n no SIGXCPU
+
+For FreeBSD::
+
+  (lldb) process handle -p yes -s no -n no SIGUSR1
+  (lldb) process handle -p yes -s no -n no SIGUSR2
+
+On macOS (Darwin) Boehm GC doesn't use any signals.
+
 The command ``dylan-bt`` prints a Dylan-friendly backtrace by
 stripping out all frames which refer to internal runtime functions,
 leaving only Dylan code. For example, a backtrace like this:
 
 .. code-block:: none
 
-  * frame #0: 0x00007fff70e542c6 libsystem_kernel.dylib`__pthread_kill + 10
-    frame #1: 0x00007fff70f0fbf1 libsystem_pthread.dylib`pthread_kill + 284
-    frame #2: 0x00007fff70d71d8a libsystem_c.dylib`raise + 26
-    frame #3: 0x00000001001ef3bc libdylan.dylib`primitive_invoke_debugger(string=<unavailable>, arguments=<unavailable>) at c-primitives-debug.c:38:3 [opt]
-    frame #4: 0x0000000100134c34 libdylan.dylib`Kinvoke_debuggerVKiMM1I(condition_=<unavailable>) at boot.c:7140:3 [opt]
-    frame #5: 0x000000010013bd11 libdylan.dylib`Khandle_missed_dispatchVKgI(d_=<unavailable>, parent_=<unavailable>, args_={<simple-object-vector>: size: 1}) at new-dispatch.c:14382:13 [opt]
-    frame #6: 0x00000001001e5021 libdylan.dylib`general_engine_node_n_engine(a1=<unavailable>) at c-run-time.c:2023:12 [opt]
-    frame #7: 0x000000010014aaaf libdylan.dylib`Kdefault_handlerVKdMM1I(condition_=<unavailable>) at condition.c:2917:3 [opt]
-    frame #8: 0x000000010013bd11 libdylan.dylib`Khandle_missed_dispatchVKgI(d_=<unavailable>, parent_=<unavailable>, args_={<simple-object-vector>: size: 1}) at new-dispatch.c:14382:13 [opt]
-    frame #9: 0x00000001001e5021 libdylan.dylib`general_engine_node_n_engine(a1=<unavailable>) at c-run-time.c:2023:12 [opt]
-    frame #10: 0x00000001000d2b69 libcommon-dylan.dylib`Kdefault_last_handlerYcommon_dylan_internalsVcommon_dylanMM0I(condition_={<simple-error>}, next_handler_={<simple-closure-method>}) at common-extensions.c:1942:9 [opt]
+   (lldb) bt
+   * thread #1, name = 'Main thread', stop reason = signal SIGTRAP
+     * frame #0: 0x00007ffff7dacb21 libdylan.so`primitive_invoke_debugger at x86_64-linux-runtime.ll:0
+       frame #1: 0x00007ffff7d43da9 libdylan.so`invoke-debugger(condition=<unavailable>, .next=<unavailable>, .function=<unavailable>) at boot.dylan:1041:3
+       frame #2: 0x00007ffff7dccc05 libdylan.so`general_engine_node_n at x86_64-linux-runtime.ll:0
+       frame #3: 0x00007ffff7d52bc2 libdylan.so`default-handler(condition=<unavailable>, .next=<unavailable>, .function=<unavailable>) at condition.dylan:140:3
+       frame #4: 0x00007ffff7dccc05 libdylan.so`general_engine_node_n at x86_64-linux-runtime.ll:0
+       frame #5: 0x00007ffff7f7ee5d libcommon-dylan.so`default-last-handler(condition=<unavailable>, next-handler=0x00000000004e19b0, .next=<unavailable>, .function=<unavailable>) at common-extensions.dylan:448:3
+       frame #6: 0x00007ffff7dccc05 libdylan.so`general_engine_node_n at x86_64-linux-runtime.ll:0
+       frame #7: 0x00007ffff7d52743 libdylan.so`error(condition=<unavailable>, noise=<unavailable>, .next=<unavailable>, .function=<unavailable>) at condition.dylan:125:3
+       frame #8: 0x00007ffff7dccc05 libdylan.so`general_engine_node_n at x86_64-linux-runtime.ll:0
+       frame #9: 0x00007ffff7d52716 libdylan.so`error(string=<unavailable>, arguments=<unavailable>, .next=<unavailable>, .function=<unavailable>) at condition.dylan:154:3
+       frame #10: 0x00007ffff7fb0214 libdebugging.so`bar(name=<unavailable>, .next=<unavailable>, .function=<unavailable>) at debugging.dylan:22:3
+       frame #11: 0x00007ffff7dccc05 libdylan.so`general_engine_node_n at x86_64-linux-runtime.ll:0
+       frame #12: 0x00007ffff7dccc05 libdylan.so`general_engine_node_n at x86_64-linux-runtime.ll:0
+       frame #13: 0x00007ffff7fb0252 libdebugging.so`_Init_debugging__X_debugging_for_user + 34
+       frame #14: 0x0000000000401149 debugging`main + 25
+       frame #15: 0x00007ffff763b09b libc.so.6`__libc_start_main(main=(debugging`main), argc=1, argv=0x00007fffffffe858, init=<unavailable>, fini=<unavailable>, rtld_fini=<unavailable>, stack_end=0x00007fffffffe848) at libc-start.c:308:16
+       frame #16: 0x000000000040106a debugging`_start + 42
 
 becomes:
 
 .. code-block:: none
 
-    frame #4    Kinvoke_debuggerVKiMM1I                                      0x00000100134c34 libdylan.dylib at boot.c:7140
-    frame #7    Kdefault_handlerVKdMM1I                                      0x0000010014aaaf libdylan.dylib at condition.c:2917
-    frame #10   Kdefault_last_handlerYcommon_dylan_internalsVcommon_dylanMM0I 0x000001000d2b69 libcommon-dylan.dylib at common-extensions.c:1942
+   (lldb) dylan-bt
+     frame #1    invoke-debugger        0x007ffff7d43da9 libdylan.so at boot.dylan:1041
+     frame #3    default-handler        0x007ffff7d52bc2 libdylan.so at condition.dylan:140
+     frame #5    default-last-handler   0x007ffff7f7ee5d libcommon-dylan.so at common-extensions.dylan:448
+     frame #7    error                  0x007ffff7d52743 libdylan.so at condition.dylan:125
+     frame #9    error                  0x007ffff7d52716 libdylan.so at condition.dylan:154
+     frame #10   bar                    0x007ffff7fb0214 libdebugging.so at debugging.dylan:22
 
 The command ``dylan-break-gf`` will set a breakpoint on all specific
 methods of a given generic function.  The generic function needs to be
