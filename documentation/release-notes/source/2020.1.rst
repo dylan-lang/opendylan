@@ -200,8 +200,9 @@ GTK
 Debugging
 =========
 
-* The LLDB debugger support has been updated to work with Python 3.
-  For more information, see `Debugging with GDB or LLDB <https://opendylan.org/documentation/getting-started-cli/debugging-with-gdb-lldb.html>`_.
+* The LLDB debugger support has been updated to work with Python 3.  For more
+  information, see `Debugging with GDB or LLDB
+  <https://opendylan.org/documentation/getting-started-cli/debugging-with-gdb-lldb.html>`_.
 
 Documentation
 =============
@@ -228,10 +229,6 @@ Build System
 
 Library Changes
 ===============
-
-dylan Library
--------------
-
 
 common-dylan Library
 --------------------
@@ -335,8 +332,8 @@ testworks Library
   whatever way best suits your needs and the interface specification suite only
   verifies that the specification matches the implementation.
 
-* A new function to has been added to retrieve a unique directory for the current test: 
-  `test-temp-directory
+* A new function has been added to retrieve a unique directory for the current
+  test: `test-temp-directory
   <https://opendylan.org/documentation/testworks/reference.html#testworks:testworks:test-temp-directory>`_
 
 * The `--report` command line option now accepts "full" as a value, meaning to
@@ -378,13 +375,14 @@ collections Library
 big-integers library
 --------------------
 
-* The ``integer-length`` function is now implemented for
-  ``<double-integer>``.
+* The ``integer-length`` function is now implemented for ``<double-integer>``.
 
 progress-stream library
 -----------------------
 
-* `A new library <https://opendylan.org/documentation/library-reference/progress-stream/index.html>`_ for displaying text mode progress bars is provided.
+* `A new library
+  <https://opendylan.org/documentation/library-reference/progress-stream/index.html>`_
+  for displaying text mode progress bars is provided.
 
 gabriel-benchmarks library
 --------------------------
@@ -401,3 +399,10 @@ We'd like to thank all the people that made contributions to this release and
 to surrounding libraries in the Dylan ecosystem. This list is probably
 incomplete...
 
+* Peter S. Housel
+* Carl Gay
+* Peter Hull
+* Fernando Raya
+* Tim McNamara
+* Alfredo Beaumont
+* Bruce Mitchener
