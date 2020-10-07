@@ -4,7 +4,7 @@ Welcome to Open Dylan!
 Open Dylan is an open source implementation of the Dylan programming
 language, plus a large number of assorted libraries.
 
-This release is Open Dylan 2014.1. We expect this release to have
+This release is Open Dylan 2020.1. We expect this release to have
 bugs.  We're interested in getting your feedback, especially on
 anything we can do to make the initial experience with Open Dylan run
 more smoothly. You can contact us through any of the channels listed
@@ -34,11 +34,11 @@ macOS:
 Installation
 ============
 
-When extracted, the tarball creates a ./opendylan-2014.1
-directory. Just add `pwd`/opendylan-2014.1/bin to your PATH. For
+When extracted, the tarball creates a ./opendylan-2020.1
+directory. Just add `pwd`/opendylan-2020.1/bin to your PATH. For
 example, if you extracted the tarball in /opt:
 
-  $ export PATH=/opt/opendylan-2014.1/bin:$PATH    # for bash
+  $ export PATH=/opt/opendylan-2020.1/bin:$PATH    # for bash
 
 
 Usage
