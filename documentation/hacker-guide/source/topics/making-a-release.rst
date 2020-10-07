@@ -33,7 +33,12 @@ now here is a manual check-list.
    Download the release tarballs.
 
 #. Update the release notes. Hopefully these have been maintained as changes
-   were made.  It may be worth scanning the commit logs.
+   were made.  It may be worth scanning the commit logs or pull requests.
+
+   To determine what to put in the Contributors section of the notes, this
+   command is useful (with obvious modifications)::
+
+     git log --format=short --no-merges v2019.1.0..origin/master | grep '^Author: ' | sort | uniq -c | sort -n
 
 #. Create a draft release
 
