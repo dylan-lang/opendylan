@@ -2,8 +2,8 @@
 Open Dylan 2020.1
 *****************
 
-This document describes the 2020.1 release of Open Dylan, released DD
-MMM, 2020.  This release contains many enhancements and bug fixes, highlights
+This document describes the 2020.1 release of Open Dylan, released 10
+October, 2020.  This release contains many enhancements and bug fixes, highlights
 of which are listed below.  For complete details see `the opendylan commit logs
 <https://github.com/dylan-lang/opendylan/compare/v2019.1.0...v2020.1.0>`_. (Note
 that some commit logs, for example for testworks and other libraries that are
@@ -40,7 +40,7 @@ Compiler
   compiler is otherwise unable to infer the type, reducing the number
   of run-time type checks when using the LLVM back-end.
 
-* Optimization for cases where the ``instance?`` function is used in
+* Optimization for cases where the :drm:`instance?` function is used in
   an ``if`` or ``case`` condition has been improved.
 
 * A bug in the LLVM back-end that could cause stack overflows in
@@ -59,13 +59,13 @@ Compiler
   resulting from arithmetic shifts has been fixed.
 
 * A failure to detect argument mismatches when known functions are
-  called using ``apply`` has been fixed.
+  called using :drm:`apply` has been fixed.
 
 * Calls to functions that do not return are now properly recognized by
   the LLVM code generator.
 
 * The failure of the LLVM back-end to include NUL termination in
-  ``<byte-string>`` instances in the generated heap has been
+  :drm:`<byte-string>` instances in the generated heap has been
   fixed. (NUL termination is added so that string data can be passed
   to FFI functions without requiring allocation and copying.)
 
@@ -96,7 +96,7 @@ Compiler
   that platform.
 
 * A bug that prevented the error output of build commands (such as the
-  linker) from appearing in build.log files and the console output
+  linker) from appearing in :file:`build.log` files and the console output
   has been fixed.
 
 Run-time
@@ -107,13 +107,13 @@ Run-time
   significanly improves the performance of code using the LLVM
   back-end.
 
-* Support for ``apply-mep`` method entry (which is used for calling a
-  known method using ``apply()`` when next-methods are known) was
-  added to the LLVM run-time.
+* Support for ``apply-mep`` method entry (used for calling a known
+  method using :drm:`apply` when next-methods of the call are known)
+  was added to the LLVM run-time.
 
 * The interpretation of ``decode-double-float`` and
   ``encode-double-float`` on 64-bit platforms has changed, so that 32
-  bits of the ``<double-float>`` value are found in each of the two
+  bits of the :drm:`<double-float>` value are found in each of the two
   ``<machine-word>`` values. Previously (on 64-bit platforms) the entire
   64 bits were placed in one ``<machine-word>`` and the other contained
   zeroes. This change fixes `bug 1254
@@ -122,8 +122,6 @@ Run-time
 * A `problem <https://github.com/dylan-lang/opendylan/issues/1285>`_
   with thread exit that could cause thread finalization cycle warnings
   from the garbage collector has been fixed.
-
-* A bug that broke ``limited(<array>)`` instantiation has been fixed.
 
 * The LLVM run-time on 32-bit x86 platforms now clears the x87 stack
   when handling exceptions to prevent overflowing the 8-slot FPU
@@ -224,11 +222,16 @@ Build System
 
 * The ``fdmake.pl`` build tool used during bootstrapping was improved
   so that it can build multiple libraries for each invocation of
-  ``dylan-compiler``, significantly reducing time required to do
-  bootstrap builds.
+  :program:`dylan-compiler`, significantly reducing the time required
+  to do bootstrap builds.
 
 Library Changes
 ===============
+
+dylan Library
+-------------
+
+* A bug that broke ``limited(<array>)`` instantiation has been fixed.
 
 common-dylan Library
 --------------------
