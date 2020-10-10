@@ -1,30 +1,39 @@
+**********************
 Welcome to Open Dylan!
-======================
+**********************
 
 Open Dylan is a compiler and a set of libraries for the `Dylan
-programming language <http://opendylan.org/books/drm>`_.  If you're
-interested in working on the compiler and core libraries then you've
-come to the right place.  If you want to write your own Dylan
-libraries and *use* the compiler then you should `download a binary
-release <http://opendylan.org/download/>`_ and then read the `Getting
-Started
-guide <http://opendylan.org/documentation/getting-started-cli/>`_.
+programming language <http://opendylan.org/books/drm>`_.
 
-Open Dylan is written in Dylan, thus a Dylan compiler is needed to
-bootstrap it. Binary releases are available from
-http://opendylan.org/download/.
+If you're reading this inside of a binary release that you just downloaded and
+unpacked, then this is all you need to do to get started::
 
-Verify that the downloaded version is working correctly by building
-a hello-world binary::
+  $ export PATH=/path/to/opendylan-2020.1/bin:$PATH    # for bash
+
+Verify that the downloaded version is working correctly by building a
+hello-world binary::
 
   make-dylan-app hello-world
   cd hello-world
   dylan-compiler -build hello-world
   _build/bin/hello-world
 
-Note: If there is no _build directory already, dylan-compiler will
-create it and build all used libraries.  Subsequent builds will be
-much faster.
+Note: If there is no ``_build`` directory already, dylan-compiler will create
+it and build all used libraries.  Subsequent builds will be much faster.
+
+If this is your first time trying Open Dylan, take a look at the `Getting
+Started guide <http://opendylan.org/documentation/getting-started-cli/>`_.
+
+
+Contributing
+============
+
+The rest of this document is for those interested in working on the compiler
+and core libraries.
+
+Open Dylan is written in Dylan, thus a Dylan compiler is needed to bootstrap
+it. Download a release from http://opendylan.org/download/ and test it as
+described above.
 
 
 Building Open Dylan

@@ -7,7 +7,7 @@ a `working Open Dylan <https://opendylan.org/download/index.html>`_ installation
 To verify that your installation is working correctly, try checking the compiler's version::
 
     $ dylan-compiler -version
-    Version 2019.1
+    Version 2020.1
 
 If a version string doesn't appear, ``dylan-compiler`` may not be on your ``$PATH``. For
 help, check the `installation instructions <https://opendylan.org/download/index.html>`_ again
