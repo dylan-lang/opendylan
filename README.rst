@@ -53,6 +53,21 @@ UNIX
 Dependencies
 ------------
 
+Binary releases come packaged with all of the necessary
+dependencies. The current binary release includes
+
+- `LLVM/Clang
+  <https://github.com/llvm/llvm-project/releases/tag/llvmorg-10.0.1
+  version 10.0.1>`_ (subsetted to include only necessary components)
+- `LLVM libunwind
+  <https://clang.llvm.org/docs/Toolchain.html#unwind-library>`_
+  (snapshot revision `22b615a9
+  <https://github.com/llvm/llvm-project/tree/22b615a96593f13109a27cabfd1764ec4f558c7a>`_)
+- `BDW GC 8.0.4 <https://github.com/ivmai/bdwgc/releases/tag/v8.0.4>`_
+
+If you build from source, you may need to supply these dependencies as
+described below.
+
 All 64-bit platforms and macOS must use the Boehm Demers Weiser conservative GC
 (or just "Boehm GC") with the LLVM or C back-end. The Memory Pool System (MPS)
 is only integrated with the HARP back-end, which itself only works on 32-bit
