@@ -263,7 +263,7 @@ install-stage:
 	@cp -R $(srcdir)/tools/bash_completion $(DESTDIR)$(prefix)/share/opendylan
 	@cp $(srcdir)/tools/scripts/dylan-lldb $(DESTDIR)$(prefix)/bin
 	@cp $(srcdir)/License.txt $(DESTDIR)$(prefix)
-	@cp $(srcdir)/build/packages/unix/README $(DESTDIR)$(prefix)
+	@cp $(srcdir)/README.rst $(DESTDIR)$(prefix)
 	@echo Done!
 
 install: 3-stage-bootstrap install-stage
@@ -345,7 +345,7 @@ dist: 3-stage-bootstrap
 	cp -R $(srcdir)/tools/lldb release/opendylan-$(version)/share/opendylan
 	cp -R $(srcdir)/tools/bash_completion release/opendylan-$(version)/share/opendylan
 	cp $(srcdir)/License.txt release/opendylan-$(version)/
-	cp $(srcdir)/build/packages/unix/README release/opendylan-$(version)/
+	cp $(srcdir)/README.rst release/opendylan-$(version)/
 	cd release && tar cjf opendylan-$(version)-$(TARGET_PLATFORM).tar.bz2 opendylan-$(version)
 
 
