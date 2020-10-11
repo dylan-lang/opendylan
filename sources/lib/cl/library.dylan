@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library CL
   use common-dylan;
   use io;
-
+  use strings;
   export CL-macros;
   export CL-sequences;
   export CL-strings;
