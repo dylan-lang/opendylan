@@ -8,7 +8,7 @@ exec > $logfile 2>&1
 dest_dir=/var/www/opendylan.org
 repo_dir=/root
 
-./update-website.sh "${dest_dir}" "${repo_dir}"
+./update.sh "${dest_dir}" "${repo_dir}"
 
 
 echo "Done updating opendylan.org"
