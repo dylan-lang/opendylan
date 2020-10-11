@@ -13,15 +13,19 @@ The current version is 2020.1, released October 10, 2020:
    +---------------------------+----------------------------------------------+---------------+
    | Platform                  | File                                         | Size (bytes)  |
    +===========================+==============================================+===============+
-   | AArch64                   | `opendylan-2020.1pre-aarch64-linux.tar.bz2`_ | 111015768     |
+   | AArch64                   | `opendylan-2020.1-aarch64-linux.tar.bz2`_    | 110521269     |
    +---------------------------+----------------------------------------------+---------------+
-   | FreeBSD (x86_64)          | `opendylan-2020.1-x86_64-freebsd.tar.bz2`_   |  64495718     |
+   | FreeBSD (x86_64)          | `opendylan-2020.1-x86_64-freebsd.tar.bz2`_   | 116463496     |
    +---------------------------+----------------------------------------------+---------------+
-   | Linux (x86_64)            | `opendylan-2020.1-x86_64-linux.tar.bz2`_     |  66704263     |
+   | FreeBSD (x86)             | `opendylan-2020.1-x86-freebsd.tar.bz2`_      | 116640927     |
    +---------------------------+----------------------------------------------+---------------+
-   | Mac OS X Lion+ (Intel)    | `opendylan-2020.1-x86_64-darwin.tar.bz2`_    |  55077039     |
+   | Linux (x86_64)            | `opendylan-2020.1-x86_64-linux.tar.bz2`_     | 114079302     |
    +---------------------------+----------------------------------------------+---------------+
-   | Windows (32 bit)          | `opendylan-2020.1-win32.exe`_                | 100643764     |
+   | Linux (x86)               | `opendylan-2020.1-x86-linux.tar.bz2`_        | 119586737     |
+   +---------------------------+----------------------------------------------+---------------+
+   | Mac OS X (Intel)          | `opendylan-2020.1-x86_64-darwin.tar.bz2`_    | 108361174     |
+   +---------------------------+----------------------------------------------+---------------+
+   | Windows (32 bit)          | `opendylan-2020.1-win32.exe`_                | 101563388     |
    +---------------------------+----------------------------------------------+---------------+
 
 .. raw:: html
@@ -120,10 +124,12 @@ If you're new to Dylan, you'll want to check out these handy resources:
 
 
 
-.. _opendylan-2020.1pre-aarch64-linux.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2020.1pre/opendylan-2020.1pre-aarch64-linux.tar.bz2
-.. _opendylan-2020.1-win32.exe: https://github.com/dylan-lang/opendylan/releases/download/v2020.1pre/opendylan-2020.1pre-win32.exe
-.. _opendylan-2020.1-x86_64-darwin.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2020.1pre/opendylan-2020.1pre-x86_64-darwin.tar.bz2
-.. _opendylan-2020.1-x86_64-linux.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2020.1pre/opendylan-2020.1pre-x86_64-linux.tar.bz2
-.. _opendylan-2020.1-x86_64-freebsd.tar.bz2: https://opendylan.org/downloads/opendylan/2020.1/opendylan-2020.1-x86_64-freebsd.tar.bz2
+.. _opendylan-2020.1-aarch64-linux.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2020.1.0/opendylan-2020.1-aarch64-linux.tar.bz2
+.. _opendylan-2020.1-win32.exe: https://github.com/dylan-lang/opendylan/releases/download/v2020.1.0/opendylan-2020.1-win32.exe
+.. _opendylan-2020.1-x86_64-darwin.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2020.1.0/opendylan-2020.1-x86_64-darwin.tar.bz2
+.. _opendylan-2020.1-x86_64-linux.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2020.1.0/opendylan-2020.1-x86_64-linux.tar.bz2
+.. _opendylan-2020.1-x86-linux.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2020.1.0/opendylan-2020.1-x86-linux.tar.bz2
+.. _opendylan-2020.1-x86_64-freebsd.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2020.1.0/opendylan-2020.1-x86_64-freebsd.tar.bz2
+.. _opendylan-2020.1-x86-freebsd.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2020.1.0/opendylan-2020.1-x86-freebsd.tar.bz2
 .. _download directories: http://opendylan.org/downloads/opendylan/
 .. _"dylan-lang" organization on GitHub: https://github.com/dylan-lang/
