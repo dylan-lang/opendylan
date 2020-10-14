@@ -19,6 +19,7 @@ define module life
   use common-dylan;
   use simple-random;            // exported from common-dylan
   use simple-profiling;
+  use simple-format;
   use operating-system;         // exported from system
   use threads;
 

@@ -150,7 +150,7 @@ define method do-with-open-registry-path
     body(key)
   else
     with-open-registry-subkey (subkey = key, first(path))
-      do-with-open-registry-path(subkey, rest(path), body)
+      do-with-open-registry-path(subkey, tail(path), body)
     end
   end
 end method do-with-open-registry-path;
