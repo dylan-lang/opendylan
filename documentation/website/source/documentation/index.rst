@@ -6,6 +6,7 @@
         <li><a href="#cheat-sheets"><i class="icon-chevron-right"></i> Cheat Sheets</a></li>
         <li><a href="#learning-dylan"><i class="icon-chevron-right"></i> Learning Dylan</a></li>
         <li><a href="#references"><i class="icon-chevron-right"></i> References</a></li>
+        <li><a href="#advanced-guides"><i class="icon-chevron-right"></i> Advanced Guides</a></li>
         <li><a href="#external-libraries-and-tools"><i class="icon-chevron-right"></i> External Libraries and Tools</a></li>
         <li><a href="#articles"><i class="icon-chevron-right"></i> Articles</a></li>
         <li><a href="#publications"><i class="icon-chevron-right"></i> Publications</a></li>
@@ -107,6 +108,12 @@ References
     the portable window programming toolkit. It complements
     Building Applications Using DUIM.
 
+Advanced Guides
+===============
+
+`Developing Component Software with CORBA <corba-guide/index.html>`_
+    A tutorial and reference for CORBA interoperability using the Open
+    Dylan ORB.
 
 External Libraries and Tools
 ============================
@@ -252,9 +259,6 @@ Archived Documentation
         bring forward. Let us know if there's interest in this
         material.</p>
       </div>
-
-`Developing Component Software with CORBA <http://opendylan.org/documentation/opendylan/corba/index.htm>`_
-    A tutorial and reference for CORBA interoperability using the Open Dylan ORB.
 
 `OLE, COM, ActiveX and DBMS library reference <http://opendylan.org/documentation/opendylan/interop2/index.htm>`_
     Describes high and low level interfaces to COM, OLE, and

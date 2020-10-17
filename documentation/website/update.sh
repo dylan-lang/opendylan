@@ -43,7 +43,7 @@ rsync -avz build/html/ ${dest_dir}
 
 subdirs="building-with-duim duim-reference getting-started-cli getting-started-ide"
 subdirs="${subdirs} hacker-guide intro-dylan library-reference man-pages"
-subdirs="${subdirs} project-notebook release-notes style-guide"
+subdirs="${subdirs} project-notebook release-notes style-guide corba-guide"
 
 cd ${repo_dir}/opendylan
 git pull --rebase origin master
