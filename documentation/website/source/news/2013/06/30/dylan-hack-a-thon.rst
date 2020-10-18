@@ -25,6 +25,6 @@ Europe, South East Asia and perhaps New Zealand.
 We look forward to seeing you there!
 
 
-.. _learn Dylan: http://opendylan.org/books/dpg/
+.. _learn Dylan: https://opendylan.org/books/dpg/
 .. _list of tasks: https://github.com/dylan-lang/opendylan/wiki
-.. _contact us on IRC or via email: http://opendylan.org/community/index.html
+.. _contact us on IRC or via email: https://opendylan.org/community/index.html

@@ -20,7 +20,7 @@ Preamble
 ========
 
 This document is based heavily on Python `PEP 1
-<http://www.python.org/dev/peps/pep-0001/>`_, "PEP Purpose and
+<https://www.python.org/dev/peps/pep-0001/>`_, "PEP Purpose and
 Guidelines", by Barry Warsaw, Jeremy Hylton, and David Goodger.  The
 author would like to thank them for providing an excellent base for
 the Dylan team to work from.
@@ -310,7 +310,7 @@ DEP Number
 
 Authors may assign DEP numbers themselves by looking at the last
 number in the `numerical list of DEPs
-<http://opendylan.org/proposals/index.html>`_ and incrementing it by
+<https://opendylan.org/proposals/index.html>`_ and incrementing it by
 one.  To prevent collisions, the author should set the ``DEP-Number``
 header to "Unassigned" until just before the DEP is committed to git.
 
@@ -461,18 +461,20 @@ Once the DEP is ready for the repository, the DEP author will:
   <https://github.com/dylan-lang/website>`_.  The command to check
   it out is::
 
+
+
     git clone git@github.com:dylan-lang/website.git
 
   Commit your changes, push them to your fork of the repository and
   submit a pull request.
 
-* Monitor `opendylan.org <http://opendylan.org>`_ to make sure the DEP
+* Monitor `opendylan.org <https://opendylan.org>`_ to make sure the DEP
   gets added to the site properly.
 
 Resources:
 
 * See the section `For Open Dylan Developers
-  <http://opendylan.org/documentation/index.html>`_ on the opendylan.org
+  <https://opendylan.org/documentation/index.html>`_ on the opendylan.org
   documentation page.
 
 .. It would be nice to have equivalents for some of these:
@@ -507,7 +509,7 @@ References and Footnotes
 
 .. _Open Publication License: http://www.opencontent.org/openpub/
 
-.. _reStructuredText: http://docutils.sourceforge.net/rst.html
+.. _reStructuredText: https://docutils.sourceforge.net/rst.html
 
 
 Copyright

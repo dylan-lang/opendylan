@@ -105,19 +105,19 @@ management system for Open Dylan. This is something along the lines of
 what many other programming language communities provide:
 
 * Clojure: `Leiningen <https://github.com/technomancy/leiningen>`_
-* Common Lisp: `QuickLisp <http://www.quicklisp.org/beta/>`_
+* Common Lisp: `QuickLisp <https://www.quicklisp.org/beta/>`_
 * Emacs Lisp: `Marmalade <https://marmalade-repo.org/>`_ / `ELPA  <http://tromey.com/elpa/>`_
 * Erlang: `EPM <http://www.jkvor.com/erlang-package-manager>`_
-* haXe: `haxelib <http://haxe.org/manual/haxelib.html>`_
-* Lua: `LuaRocks <http://luarocks.org/>`_
+* haXe: `haxelib <https://haxe.org/manual/haxelib.html>`_
+* Lua: `LuaRocks <https://luarocks.org/>`_
 * NodeJS: `NPM <https://www.npmjs.com/>`_
 * Haskell: `Hackage <http://hackage.haskell.org/>`_
-* Ocaml: `GODI <http://godi.camlcity.org/godi/index.html>`_
-* PHP: `PEAR <http://pear.php.net/>`_
+* Ocaml: `GODI <http://godi.camlcity.org/archive/godi/index.html>`_
+* PHP: `PEAR <https://pear.php.net/>`_
 * Perl: CPAN
 * Python: PIP / CheeseShop / easy_install
-* Racket: `Raco <http://docs.racket-lang.org/raco/index.html>`_
-* Ruby: `RubyGems <http://rubygems.org/>`_
+* Racket: `Raco <https://docs.racket-lang.org/raco/index.html>`_
+* Ruby: `RubyGems <https://rubygems.org/>`_
 
 Our package manager would feature a global catalog of packages, the
 ability to download, build and install those packages, and integration

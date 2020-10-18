@@ -33,7 +33,7 @@ Specification
 The C3 superclass linearization has been proposed in 1996 by Kim
 Barrett, Bob Cassels, Paul Haahr, David A. Moon, Keith Playford, and
 P. Tucker Withington in a `paper
-<http://dx.doi.org/10.1145/236337.236343>`_ (`html version
+<https://dl.acm.org/doi/10.1145/236337.236343>`_ (`html version
 <http://haahr.tempdomainname.com/dylan/linearization-oopsla96.html>`_).
 
 A superclass linearization (also known as a class precedence list) is
@@ -42,7 +42,7 @@ which provide differing definitions of the same method.
 
 Unfortunately the algorithm presented in the Dylan Reference Manual
 (`computing the class precedence list
-<http://opendylan.org/books/drm/Classes#HEADING-41-25>`_) is not
+<https://opendylan.org/books/drm/Classes#HEADING-41-25>`_) is not
 consistent with the extended precedence graph, and may lead to
 counter-intuitive linearizations. To fix that, the C3 linearization
 was developed.
@@ -55,7 +55,7 @@ dispatch tables, which requires monotonicity of method orderings, a
 consistent superclass linearization algorithm is needed.
 
 After the C3 linearization was proposed in 1996, it was subsequently
-adapted in Python 2.3 (`article <http://www.python.org/download/releases/2.3/mro/>`__)
+adapted in Python 2.3 (`article <https://www.python.org/download/releases/2.3/mro/>`__)
 and Perl 6 (`article
 <http://use.perl.org/use.perl.org/_autrijus/journal/25768.html>`__).
 

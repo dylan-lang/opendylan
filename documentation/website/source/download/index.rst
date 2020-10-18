@@ -38,7 +38,7 @@ The current version is 2020.1, released October 10, 2020:
 directories`_.)
 
 See the `release notes
-<http://opendylan.org/documentation/release-notes/index.html>`_ for
+<https://opendylan.org/documentation/release-notes/index.html>`_ for
 information about what changed since the previous version.
 
 The `source code <https://github.com/dylan-lang/opendylan/tree/v2020.1.0>`_ is
@@ -110,16 +110,16 @@ Get Started!
 
 If you're new to Dylan, you'll want to check out these handy resources:
 
-* `Introduction to Dylan <http://opendylan.org/documentation/intro-dylan/>`_:
+* `Introduction to Dylan <https://opendylan.org/documentation/intro-dylan/>`_:
    A tutorial written for those with solid programming
    experience in C++ or another object-oriented, static language. It
    provides a gentler introduction to Dylan than does the Dylan
    Reference Manual (DRM).
-* `Getting Started with the Open Dylan Command Line Tools <http://opendylan.org/documentation/getting-started-cli/>`_:
+* `Getting Started with the Open Dylan Command Line Tools <https://opendylan.org/documentation/getting-started-cli/>`_:
    An introduction to the usage of the command line tools.
-* `Dylan Programming Guide <http://opendylan.org/books/dpg/>`_:
+* `Dylan Programming Guide <https://opendylan.org/books/dpg/>`_:
    A book length Dylan tutorial.
-* `Open Dylan Documentation <http://opendylan.org/documentation/>`_:
+* `Open Dylan Documentation <https://opendylan.org/documentation/>`_:
    All of the Open Dylan documentation.
 
 
@@ -131,5 +131,5 @@ If you're new to Dylan, you'll want to check out these handy resources:
 .. _opendylan-2020.1-x86-linux.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2020.1.0/opendylan-2020.1-x86-linux.tar.bz2
 .. _opendylan-2020.1-x86_64-freebsd.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2020.1.0/opendylan-2020.1-x86_64-freebsd.tar.bz2
 .. _opendylan-2020.1-x86-freebsd.tar.bz2: https://github.com/dylan-lang/opendylan/releases/download/v2020.1.0/opendylan-2020.1-x86-freebsd.tar.bz2
-.. _download directories: http://opendylan.org/downloads/opendylan/
+.. _download directories: https://opendylan.org/downloads/opendylan/
 .. _"dylan-lang" organization on GitHub: https://github.com/dylan-lang/

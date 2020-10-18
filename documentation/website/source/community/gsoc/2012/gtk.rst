@@ -12,4 +12,4 @@ Some code already exists for this:
 - https://github.com/dylan-lang/opendylan/tree/master/sources/gtk
 - https://github.com/dylan-lang/opendylan/tree/master/sources/duim/gtk
 
-.. _gobject-introspection: http://live.gnome.org/GObjectIntrospection
+.. _gobject-introspection: https://wiki.gnome.org/action/show/Projects/GObjectIntrospection?action=show&redirect=GObjectIntrospection

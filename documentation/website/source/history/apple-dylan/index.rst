@@ -3,7 +3,7 @@ Apple Dylan
 ***********
 
 *Apple Dylan* was a first run of `Apple Computer, Inc.
-<http://www.apple.com/>`_ at an integrated development environment for
+<https://www.apple.com/>`_ at an integrated development environment for
 the Dylan language. It appeared as a technology release in 1995 for the
 MC68k platform. It had numerous flaws, mainly that it was built on the
 top of the MCL (Macintosh Common Lisp from `Digitool

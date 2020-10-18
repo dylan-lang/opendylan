@@ -130,7 +130,7 @@ In all of these, the function passed in can be any of:
 * An escaped operator name (``\+`` for example).
 * A locally defined method.
 * The result of a method that returns a function such as :drm:`curry`
-  :drm:`rcurry` or other `functional operations <http://opendylan.org/books/drm/Functional_Operations>`_.
+  :drm:`rcurry` or other `functional operations <https://opendylan.org/books/drm/Functional_Operations>`_.
 
 ``do``
 ------

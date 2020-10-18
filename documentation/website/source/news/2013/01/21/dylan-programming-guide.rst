@@ -32,7 +32,7 @@ We hope that this will be helpful in introducing a
 new generation of programmers to the Dylan programming
 language.
 
-.. _Dylan Programming Guide: http://opendylan.org/books/dpg/
-.. _PDF: http://opendylan.org/books/dpg/DylanProgramming.pdf
-.. _ePub: http://opendylan.org/books/dpg/DylanProgramming.epub
-.. _Pygments: http://pygments.org/
+.. _Dylan Programming Guide: https://opendylan.org/books/dpg/
+.. _PDF: https://opendylan.org/books/dpg/DylanProgramming.pdf
+.. _ePub: https://opendylan.org/books/dpg/DylanProgramming.epub
+.. _Pygments: https://pygments.org/

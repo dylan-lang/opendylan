@@ -27,7 +27,7 @@ implementation may have been responsible for some of the performance
 problems of the Technology Release.
 
 Certain other IDEs have also used this technique: for example, IBM's
-`VisualAge <http://en.wikipedia.org/wiki/IBM_VisualAge>`_ tools use a
+`VisualAge <https://en.wikipedia.org/wiki/IBM_VisualAge>`_ tools use a
 repository, and even included a complete source-code version tracking
 system. This greatly facilitates activities like code refactoring.
 

@@ -38,7 +38,7 @@ This is the first joint release on all major platforms:
 
 The C back-end currently does not support multi-threaded programs.
 
-We also developed a SLIME (http://common-lisp.net/project/slime/)
+We also developed a SLIME (https://common-lisp.net/project/slime/)
 back-end, so you can develop in Emacs and get cross references, M-.
 and arguments.
 
@@ -52,7 +52,7 @@ remain. Please report problems that you have in our issue tracker:
 
     https://github.com/dylan-lang/opendylan/issues
 
-You can get it from our website, http://opendylan.org/download/ .
+You can get it from our website, https://opendylan.org/download/ .
 On Windows there is an installer, on UNIX systems unpack into /opt.
 
 

@@ -115,16 +115,16 @@ Once downloaded, we recommend reading through `Introduction to Dylan <https://op
 
 Dylan has a large amount of documentation available:
 
-* `Introduction to Dylan <http://opendylan.org/documentation/intro-dylan/>`__:
+* `Introduction to Dylan <https://opendylan.org/documentation/intro-dylan/>`__:
    A tutorial written for those with solid programming
    experience in C++ or another object-oriented, static language. It
    provides a gentler introduction to Dylan than does the Dylan
    Reference Manual (DRM).
-* `Dylan Programming Guide <http://opendylan.org/books/dpg/>`_:
+* `Dylan Programming Guide <https://opendylan.org/books/dpg/>`_:
    A book length Dylan tutorial.
-* `Dylan Reference Manual <http://opendylan.org/books/drm/>`_:
+* `Dylan Reference Manual <https://opendylan.org/books/drm/>`_:
    The official definition of the Dylan language and standard library.
-* `Open Dylan Documentation <http://opendylan.org/documentation/>`_:
+* `Open Dylan Documentation <https://opendylan.org/documentation/>`_:
    All of the Open Dylan documentation.
 
 .. raw:: html

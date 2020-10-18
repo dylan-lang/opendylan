@@ -150,7 +150,7 @@ above library can be defined in a single source file, as follows:
     format-out("Hello, world!\n");
 
 This continues to use the standard `Dylan Interchange Format
-<http://opendylan.org/books/drm/Dylan_Interchange_Format>`_ as defined
+<https://opendylan.org/books/drm/Dylan_Interchange_Format>`_ as defined
 in the DRM, with a set of headers, followed by a blank line, followed
 by a *code body*.
 
@@ -167,7 +167,7 @@ single source file, all LID keywords may appear in the header section.
 The compiler or interpreter should handle them in the same way it
 would if they were in a separate .lid file.  There is no conflict
 between the keywords used in LID files and those used in Dylan source
-files.  See http://opendylan.org/documentation/library-reference/lid.html
+files.  See https://opendylan.org/documentation/library-reference/lid.html
 for existing Open Dylan LID file keywords.
 
 Library Header
@@ -203,7 +203,7 @@ The format of this header is::
 
 In brief, each *libspec* has the exact same syntax as a *use-clause*
 in `define library
-<http://opendylan.org/books/drm/Definition_Macros#define_library>`_,
+<https://opendylan.org/books/drm/Definition_Macros#define_library>`_,
 but with the leading token ``use`` removed.  Examples::
 
   Use-Libraries: system; io { import: streams, format-out}; common-dylan
@@ -227,7 +227,7 @@ The format of this header is::
 
 Again, each *modspec* has the exact same syntax as a *use-clause* in
 `define module
-<http://opendylan.org/books/drm/Definition_Macros#define_module>`_,
+<https://opendylan.org/books/drm/Definition_Macros#define_module>`_,
 but with the leading token ``use`` removed.  Examples::
 
   Use-Modules: operating-system; common-dylan; format-out
@@ -247,7 +247,7 @@ Export-Names Header
 The ``Export-Names`` header specifies a list of names exported from
 the module named in the ``Module`` header.  The syntax matches the
 syntax in the ``exports`` clause of `define module
-<http://opendylan.org/books/drm/Definition_Macros#define_module>`_,
+<https://opendylan.org/books/drm/Definition_Macros#define_module>`_,
 but with the token ``exports`` replaced by the ``Export-Names:``
 header keyword.  Examples::
 

@@ -9,7 +9,7 @@ Author:          Carl Gay
 Status:          Final
 Created:         11-Feb-2019 (Thomas Edison's birthday)
 Last-Modified:   13-Feb-2019
-Post-History:    `04-Mar-2019 <https://groups.google.com/d/topic/dylan-lang/Wb3D6ioe1GM/discussion>`_
+Post-History:    `04-Mar-2019 <https://groups.google.com/forum/#!topic/dylan-lang/Wb3D6ioe1GM/discussion>`_
 Target-Version:  Open Dylan 2019.1
 ===============  =============================================
 

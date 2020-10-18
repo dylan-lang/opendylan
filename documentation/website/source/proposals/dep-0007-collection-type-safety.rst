@@ -122,14 +122,14 @@ A new open generic function will be added to the Dylan library::
 For instances of collection classes with a limited element type, this function
 will return that element type. For instances of other collection classes, this
 function will return the element type described in
-`Element Types <http://opendylan.org/books/drm/Element_Types>`__ of the [DRM]_.
+`Element Types <https://opendylan.org/books/drm/Element_Types>`__ of the [DRM]_.
 
 
 Motivation
 ==========
 
 The second paragraph of the 
-`Collection Operations <http://opendylan.org/books/drm/Collection_Operations>`__
+`Collection Operations <https://opendylan.org/books/drm/Collection_Operations>`__
 section of the [DRM]_ states the following:
 
    Note to implementors: Functions such as ``map``, ``map-as`` that return a
@@ -230,7 +230,7 @@ Backwards Compatibility
 =======================
 
 This DEP does not change the limited collection type relationships described in
-the `Limited Collection Types <http://opendylan.org/books/drm/Limited_Collection_Types>`__
+the `Limited Collection Types <https://opendylan.org/books/drm/Limited_Collection_Types>`__
 section of the [DRM]_.
 
 Before this DEP, the Open Dylan implementation of limited collections

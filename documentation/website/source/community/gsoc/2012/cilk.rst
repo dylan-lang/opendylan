@@ -11,4 +11,4 @@ trying to interoperate with the existing Cilk runtime.
 
 Cilk information:
 
-- https://software.intel.com/en-us/intel-cilk-plus
+- https://software.intel.com/content/www/us/en/develop/tools/compilers/c-compilers.html

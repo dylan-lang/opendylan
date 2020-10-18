@@ -33,10 +33,10 @@ for the `hacker's guide`_, especially for working on Mac OS X.
 If you're interested in learning more or helping out, get
 in touch with us on `IRC or the mailing list`_!
 
-.. _DUIM: http://opendylan.org/documentation/building-with-duim/
-.. _IDE: http://opendylan.org/documentation/getting-started-ide/
+.. _DUIM: https://opendylan.org/documentation/building-with-duim/
+.. _IDE: https://opendylan.org/documentation/getting-started-ide/
 .. _sources/gtk: https://github.com/dylan-lang/opendylan/tree/master/sources/gtk
 .. _DUIM GTK+: https://github.com/dylan-lang/opendylan/tree/master/sources/duim/gtk
 .. _list of bugs: https://github.com/dylan-lang/opendylan/labels/lib-DUIM%20%2F%20Gtk
 .. _hacker's guide: http://opendylan.org/documentation/hacker-guide/duim.html
-.. _IRC or the mailing list: http://opendylan.org/community/
+.. _IRC or the mailing list: https://opendylan.org/community/

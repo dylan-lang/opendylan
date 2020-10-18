@@ -38,7 +38,7 @@ Publications about Dylan
     generates faster code with fewer errors. Some previously
     undiscovered errors in the Dylan library were revealed.
 
-    https://dl.acm.org/citation.cfm?id=1869643.1869645
+    https://doi.org/10.1145/1869643.1869645
 
 **Automatically generated type-safe GTK+ binding for Dylan** (by Hannes Mehnert at ILC 2009 `pdf <https://www.researchgate.net/profile/Hannes_Mehnert/publication/255630976_Automatically_generated_type-safe_GTK_binding_for_Dylan/links/558fd23308ae15962d8b5e66/Automatically-generated-type-safe-GTK-binding-for-Dylan.pdf>`__ `bib <../_static/documentation/mehnert2009.bib>`__)
     We present an automated way to get language bindings for GTK+ for
@@ -59,7 +59,7 @@ Publications about Dylan
     the parse tree, and we will show the strengths and limits of this
     approach for the given problem.
 
-    https://dl.acm.org/citation.cfm?id=1622123.1622148
+    https://doi.org/10.1145/1622123.1622148
 
 **Secure Networking** (by Andreas Bogk and Hannes Mehnert at 23rd Chaos Communication Congress `pdf <https://www.researchgate.net/profile/Hannes_Mehnert/publication/228910362_Secure_networking/links/558fefe308aed6ec4bf64b82/Secure-networking.pdf>`__)
     We noticed a lack of a decent secure framework for handling
@@ -71,7 +71,7 @@ Publications about Dylan
     `network night vision
     <https://github.com/dylan-hackers/network-night-vision>`__.
 
-**Efficient Compression of Generic Function Dispatch Tables** (by Eric Kidd  - Technical Report Dartmouth College 2001 `pdf <http://www.cs.dartmouth.edu/reports/TR2001-404.pdf>`__ `bib <../_static/documentation/kidd2001.bib>`__)
+**Efficient Compression of Generic Function Dispatch Tables** (by Eric Kidd  - Technical Report Dartmouth College 2001 `pdf <https://www.cs.dartmouth.edu/~trdata/reports/TR2001-404.pdf>`__ `bib <../_static/documentation/kidd2001.bib>`__)
     A generic function is similar to an overloaded operator, but
     provides a way to select an appropriate behavior at run-time
     instead of compile-time. Dujardin and colleagues have proposed an
@@ -84,7 +84,7 @@ Publications about Dylan
     simple and fast, and one produces smaller output than the
     original.
 
-    https://dl.acm.org/citation.cfm?id=867862
+    https://dl.acm.org/doi/book/10.5555/867862
 
 **Partial Dispatch: Optimizing Dynamically-Dispatched Multimethod Calls with Compile-Time Types and Runtime Feedback** (by Jonathan Bachrach and Glenn Burke - Technical Report 2000 `pdf <http://people.csail.mit.edu/jrb/Projects/pd.pdf>`__ `bib <../_static/documentation/bachrach2000.bib>`__)
     We presented an approach to gaining back complete class hierarchy
@@ -121,7 +121,7 @@ Publications about Dylan
     Component Object Model (COM), and how they attempt to reduce the
     complexity of writing and using COM objects.
 
-    http://dl.acm.org/citation.cfm?id=274957
+    https://doi.org/10.1145/274946.274957
 
 **A Monotonic Superclass Linearization for Dylan** (by Kim Barrett and Bob Cassels and Paul Haahr and David A. Moon and Keith Playford and P. Tucker Withington at OOPSLA 1996 `PDF <../_static/c3-linearization.pdf>`__ `bib <../_static/documentation/barrett1996.bib>`__)
     Object-oriented languages with multiple inheritance and automatic
@@ -140,7 +140,7 @@ Publications about Dylan
     heterarchies from several large programs, analyzing where commonly
     used linearizations differ.
 
-    https://dl.acm.org/citation.cfm?id=236337.236343
+    https://doi.org/10.1145/236337.236343
 
 **Discovering the way programmers think about new programming environments** (by Joseph Dumas and Paige Parsons - Communications of the ACM June 1995 `bib <../_static/documentation/dumas1995.bib>`__)
     An interesting usability study of a prototype development
@@ -152,7 +152,7 @@ Publications about Dylan
     how effectively the prototype conveys these innovations to Dylan
     developers is also given, followed by some proposed improvements.
 
-    https://dl.acm.org/citation.cfm?id=203253
+    https://doi.org/10.1145/203241.203253
 
 `Bibliography in bibtex format <../_static/documentation/publications.bib>`_
 

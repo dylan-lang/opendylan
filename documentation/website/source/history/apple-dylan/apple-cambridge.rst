@@ -7,7 +7,7 @@ developed a capable Lisp environment for the Apple Macintosh that
 eclipsed the half-hearted competitors such as ExperLisp. Soon it
 achieved Common Lisp compliance, and was later renamed Macintosh Common
 Lisp (MCL). MCL became the foundation for some exciting technology that
-came out of ATG, such as `SK8 <http://en.wikipedia.org/wiki/SK8>`_ and
+came out of ATG, such as `SK8 <https://en.wikipedia.org/wiki/SK8>`_ and
 :doc:`index`.
 
 Under the direction of Ike Nassi, Apple Cambridge developed Apple Dylan,

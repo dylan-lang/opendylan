@@ -10,9 +10,9 @@ It is a pleasure for us to announce a new release of Open Dylan.
 
 Dylan is a multi-paradigm functional and object-oriented programming language. It is dynamic while providing a programming model designed to support efficient machine code generation, including fine-grained control over dynamic and static behaviors.
 
-For more information on Open Dylan, see our `website <http://opendylan.org/>`_ and our `documentation <http://opendylan.org/documentation/>`_.
+For more information on Open Dylan, see our `website <https://opendylan.org/>`_ and our `documentation <https://opendylan.org/documentation/>`_.
 
-We have extensive `release notes <http://opendylan.org/documentation/release-notes/2014.1.html>`_, but highlights include:
+We have extensive `release notes <https://opendylan.org/documentation/release-notes/2014.1.html>`_, but highlights include:
 
 * bash completion scripts are available.
 * The foundation of an Objective C / Dylan bridge has been integrated with the compiler.
@@ -25,7 +25,7 @@ We have extensive `release notes <http://opendylan.org/documentation/release-not
 
 Please report problems that you have in our `issue tracker <https://github.com/dylan-lang/opendylan/issues>`_.
 
-You can get it from our website, `http://opendylan.org/download/ <http://opendylan.org/download/>`_.
+You can get it from our website, `https://opendylan.org/download/ <https://opendylan.org/download/>`_.
 On Windows there is an installer, on UNIX systems unpack into ``/opt``.
 On 64 bit Linux, you will need to have the Boehm GC installed for our
 executables to run. (Ubuntu: ``apt-get install libgc``)

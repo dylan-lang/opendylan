@@ -13,7 +13,7 @@ For a variety of reasons, we didn't get to carry out our plan for
 more frequent releases in 2012, but hope to have more frequent releases
 in 2013.
 
-While we have extensive `release notes <http://opendylan.org/documentation/release-notes/2012.1.html>`_,
+While we have extensive `release notes <https://opendylan.org/documentation/release-notes/2012.1.html>`_,
 there are some important changes that we feel are worth calling out
 separately:
 
@@ -39,7 +39,7 @@ separately:
 
 Please report problems that you have in our `issue tracker <https://github.com/dylan-lang/opendylan/issues>`_.
 
-You can get it from our website, `http://opendylan.org/download/ <http://opendylan.org/download/>`_.
+You can get it from our website, `https://opendylan.org/download/ <https://opendylan.org/download/>`_.
 On Windows there is an installer, on UNIX systems unpack into ``/opt``.
 On 64 bit Linux, you will need to have the Boehm GC installed for our
 executables to run. (Ubuntu: ``apt-get install libgc``)

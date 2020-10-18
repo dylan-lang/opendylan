@@ -57,7 +57,7 @@ Specification
 
 Multi-line string literals are delimited by three double quote characters on
 each end.  The BNF, which augments the `Character and String Literals
-<http://opendylan.org/books/drm/Lexical_Grammar#HEADING-117-38>`_ section in
+<https://opendylan.org/books/drm/Lexical_Grammar#HEADING-117-38>`_ section in
 the DRM, is ::
 
   MULTI-LINE-STRING:

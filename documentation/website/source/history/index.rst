@@ -34,7 +34,7 @@ traditional Lisp-style syntax::
    (define distance (compose sqrt sum square-all))
 
 Wikipedia also provides a `history of the Dylan programming language
-<http://en.wikipedia.org/wiki/History_of_the_Dylan_programming_language>`_
+<https://en.wikipedia.org/wiki/History_of_the_Dylan_programming_language>`_
 which provides additional information not included here.
 
 Apple Dylan
@@ -70,7 +70,7 @@ Sometime in 1993, Harlequin started a project to produce a Dylan
 development environment, DylanWorks. Harlequin, at the time, was known
 for their LispWorks product. Keith Playford was their first hire to
 work specifically on the Dylan project. Keith had previously
-been involved with `EuLisp <http://en.wikipedia.org/wiki/EuLisp>`_.
+been involved with `EuLisp <https://en.wikipedia.org/wiki/EuLisp>`_.
 
 Harlequin's Dylan was originally implemented using the prefix syntax
 and later converted to the current infix syntax. The first implementation
@@ -114,7 +114,7 @@ LispWorks and later translated to Dylan for use in Harlequin's
 DylanWorks (which is now Open Dylan).
 
 Clive Tong, an engineer at Harlequin in 1989, `briefly described
-<http://clivetong.wordpress.com/2012/12/21/so-many-architectures-so-little-time/>`_
+<https://clivetong.wordpress.com/2012/12/21/so-many-architectures-so-little-time/>`_
 it as:
 
    The compiler targeted an instruction set known as HARP (Harlequin
@@ -138,10 +138,10 @@ compilers.) This is the compiler that is still in use today in Open Dylan.
 DUIM
 ----
 
-Scott McKay, formerly of `Symbolics <http://en.wikipedia.org/wiki/Symbolics>`_,
+Scott McKay, formerly of `Symbolics <https://en.wikipedia.org/wiki/Symbolics>`_,
 produced a cross-platform GUI toolkit for DylanWorks called DUIM, or the
 Dylan User Interface Manager. This was based on his previous work on
-`CLIM <http://en.wikipedia.org/wiki/Common_Lisp_Interface_Manager>`_,
+`CLIM <https://en.wikipedia.org/wiki/Common_Lisp_Interface_Manager>`_,
 which in turn was based on Dynamic Windows from Symbolics. While CLIM was
 the result of collaboration between multiple Lisp companies, DUIM was the
 work of Harlequin and drew heavily upon the CLIM design.
@@ -164,7 +164,7 @@ Bruce Mitchener also wrote briefly about the architecture of Deuce on the
 Memory Pool System
 ------------------
 
-The `Memory Pool System <http://www.ravenbrook.com/project/mps>`_ garbage
+The `Memory Pool System <https://www.ravenbrook.com/project/mps>`_ garbage
 collector was originally written for DylanWorks and subsequently re-used
 in other projects. It lives on today as a separate product (and is still
 used by Open Dylan).
@@ -190,9 +190,9 @@ Gwydion Dylan
 In 1993, Carnegie Mellon University kicked off a project to create a
 new Dylan implementation, the Gwydion Project. The team at CMU had
 previously done extensive work in the Lisp field including work on
-`Spice Lisp <http://en.wikipedia.org/wiki/Spice_Lisp>`_ which evolved
-into `CMUCL <http://en.wikipedia.org/wiki/CMU_Common_Lisp>`_.  This
-team was led by `Scott Fahlman <http://en.wikipedia.org/wiki/Scott_Fahlman>`_.
+`Spice Lisp <https://en.wikipedia.org/wiki/Spice_Lisp>`_ which evolved
+into `CMUCL <https://en.wikipedia.org/wiki/CMU_Common_Lisp>`_.  This
+team was led by `Scott Fahlman <https://en.wikipedia.org/wiki/Scott_Fahlman>`_.
 
 Mindy
 -----

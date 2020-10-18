@@ -34,7 +34,7 @@ The Open Dylan project brings all of these capabilities together
 in a free, open-source project that anyone can use.
 
 Learn how to get started with Dylan by visiting
-http://opendylan.org/download/.
+https://opendylan.org/download/.
 
 ----------
 
@@ -158,7 +158,7 @@ for Windows users.
 .. _HTTP: https://github.com/dylan-lang/http
 .. _binary-data: https://github.com/dylan-lang/binary-data
 .. _partial list of open projects: https://github.com/dylan-lang/opendylan/wiki
-.. _get in touch: http://opendylan.org/community/
+.. _get in touch: https://opendylan.org/community/
 .. _Twitter: https://twitter.com/DylanLanguage
-.. _Code Mirror: http://codemirror.net/
+.. _Code Mirror: https://codemirror.net/
 .. _Light Table IDE: http://lighttable.com/

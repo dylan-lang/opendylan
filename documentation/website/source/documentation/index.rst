@@ -62,7 +62,7 @@ Learning Dylan
     provides a gentler introduction to Dylan than does the Dylan Reference
     Manual (DRM).
 
-`Dylan Programming <http://opendylan.org/books/dpg/>`_ [`pdf <http://opendylan.org/books/dpg/DylanProgramming.pdf>`__] [`epub <http://opendylan.org/books/dpg/DylanProgramming.epub>`__]
+`Dylan Programming <https://opendylan.org/books/dpg/>`_ [`pdf <https://opendylan.org/books/dpg/DylanProgramming.pdf>`__] [`epub <https://opendylan.org/books/dpg/DylanProgramming.epub>`__]
     A good, book length Dylan tutorial by several Harlequin employees.
 
 `Getting Started with the Open Dylan Command Line Tools <getting-started-cli/index.html>`_ [`pdf <getting-started-cli/GettingStartedWithTheOpenDylanCLI.pdf>`__] [`epub <getting-started-cli/GettingStartedWithTheOpenDylanCLI.epub>`__]
@@ -89,7 +89,7 @@ References
        make for dry reading, they're full of invaluable information!</p>
      </div>
 
-`Dylan Reference Manual <http://opendylan.org/books/drm/>`_ (`Errata <http://opendylan.org/books/drm/drm_errata.html>`_)
+`Dylan Reference Manual <https://opendylan.org/books/drm/>`_ (`Errata <http://opendylan.org/books/drm/drm_errata.html>`_)
     The official definition of the Dylan language and standard library.
 
 `Dylan Library Reference <library-reference/index.html>`_ [`pdf <library-reference/DylanLibraryReference.pdf>`__] [`epub <library-reference/DylanLibraryReference.epub>`__]
@@ -195,7 +195,7 @@ few highlighted publications.
     generates faster code with fewer errors. Some previously
     undiscovered errors in the Dylan library were revealed.
 
-    https://dl.acm.org/citation.cfm?id=1869643.1869645
+    https://dl.acm.org/doi/10.1145/1869643.1869645
 
 **Partial Dispatch: Optimizing Dynamically-Dispatched Multimethod Calls with Compile-Time Types and Runtime Feedback** [`pdf <http://people.csail.mit.edu/jrb/Projects/pd.pdf>`__] [`bib <../_static/documentation/bachrach2000.bib>`__]
     We presented an approach to gaining back complete class hierarchy

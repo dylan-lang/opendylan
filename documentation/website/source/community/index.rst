@@ -25,7 +25,7 @@ community...
 How to Contribute
 =================
 
-The `Hacker Guide <http://opendylan.org/documentation/hacker-guide/>`_ has
+The `Hacker Guide <https://opendylan.org/documentation/hacker-guide/>`_ has
 details on how to contribute to the project.
 
 
@@ -57,14 +57,14 @@ The #dylan IRC Channel
 
 There is usually someone available in the #dylan channel on
 Freenode.net to answer questions.  The channel is logged at
-http://colabti.org/irclogger/irclogger_logs/dylan so you can always
+https://colabti.org/irclogger/irclogger_logs/dylan so you can always
 ask a question and then check the logs for answers later.
 
 Freenode also offers `web-based chat`_ if you don't have an IRC client or
 just want easy and quick access.
 
 To discuss coding issues you can `create a gist on GitHub
-<https://gist.github.com/>`_ and paste a link to it in the #dylan
+<https://gist.github.com/discover>`_ and paste a link to it in the #dylan
 channel.
 
 .. _web-based chat: https://webchat.freenode.net/
@@ -82,14 +82,14 @@ or doesn't required the quick back-and-forth of IRC, this is the
 preferred place for it.
 
 `comp.lang.dylan
-<http://groups.google.com/group/comp.lang.dylan/topics>`_ also exists,
+<http://groups.google.com/forum/#!forum/comp.lang.dylan>`_ also exists,
 but dylan-lang@ is the preferred forum.
 
 Other Sites
 ===========
 
 - `Twitter <https://twitter.com/DylanLanguage>`_
-- `Stack Overflow <http://stackoverflow.com/questions/tagged/dylan>`_
+- `Stack Overflow <https://stackoverflow.com/questions/tagged/dylan>`_
 
 .. raw:: html
 

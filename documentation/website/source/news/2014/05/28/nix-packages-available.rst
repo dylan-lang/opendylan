@@ -39,6 +39,6 @@ to be able to install Open Dylan.
 Many thanks to Chris Double for his work on this!
 
 
-.. _Nix package manager: http://nixos.org/nix/
-.. _NixOS Linux distribution: http://nixos.org/nixos/
+.. _Nix package manager: https://nixos.org/
+.. _NixOS Linux distribution: https://nixos.org/
 .. _pull request to add Open Dylan: https://github.com/NixOS/nixpkgs/pull/2770

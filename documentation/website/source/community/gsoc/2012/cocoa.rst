@@ -14,8 +14,8 @@ Bridge Support documentation:
 
 Interesting prior art:
 
-- `jscocoa BridgeSupport usage <http://code.google.com/p/jscocoa/wiki/BridgeSupport>`_
-- `LuaCocoa <http://playcontrol.net/opensource/LuaCocoa/>`_
-- `Clozure CL Objective C bridge <http://ccl.clozure.com/docs/ccl.html#the-objective-c-bridge>`_
+- `jscocoa BridgeSupport usage <https://code.google.com/archive/p/jscocoa/wikis/BridgeSupport.wiki>`_
+- `LuaCocoa <https://playcontrol.net/opensource/LuaCocoa/>`_
+- `Clozure CL Objective C bridge <https://ccl.clozure.com/docs/ccl.html#the-objective-c-bridge>`_
 - `LispWorks Objective C interface <http://www.lispworks.com/documentation/lw61/OBJC/html/objc.htm>`_
 - `A list of a lot of Cocoa Bridges <http://cocoadev.com/CocoaBridges>`_

@@ -2,7 +2,7 @@
 About
 *****
 
-From `Wikipedia <http://en.wikipedia.org/wiki/Dylan_(programming_language)>`_:
+From `Wikipedia <https://en.wikipedia.org/wiki/Dylan_(programming_language)>`_:
 
     Dylan is a multi-paradigm programming language that includes support for
     functional and object-oriented programming, and is dynamic while providing

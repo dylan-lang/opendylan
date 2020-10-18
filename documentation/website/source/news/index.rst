@@ -21,7 +21,7 @@ News & Articles
 
 :doc:`Dylan Hack-a-thon: July 13-14, 2013 </news/2013/06/30/dylan-hack-a-thon>` *- 2013-06-30*
   No matter if you know Dylan or not, we can help you
-  `learn Dylan <http://opendylan.org/books/dpg/>`_ or put your
+  `learn Dylan <https://opendylan.org/books/dpg/>`_ or put your
   other skills to use. We've got a good `list of tasks
   <https://github.com/dylan-lang/opendylan/wiki>`_ that we're
   collecting and some people will bring their own Dylan-related

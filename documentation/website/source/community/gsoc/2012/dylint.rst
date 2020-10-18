@@ -8,6 +8,6 @@ internal compiler datastructures.
 
 This can draw inspiration from:
 
-- `PMD <http://pmd.sourceforge.net/>`_
-- `PyLint <https://pypi.python.org/pypi/pylint>`_
+- `PMD <https://pmd.sourceforge.net/>`_
+- `PyLint <https://pypi.org/project/pylint/>`_
 - Clang plugins

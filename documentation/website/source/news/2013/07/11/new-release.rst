@@ -8,7 +8,7 @@ Dear Dylan Hacker,
 
 It is a pleasure for us to announce a new release of Open Dylan.
 
-We have extensive `release notes <http://opendylan.org/documentation/release-notes/2013.1.html>`_,
+We have extensive `release notes <https://opendylan.org/documentation/release-notes/2013.1.html>`_,
 but this release has been about iterative improvement rather than major changes.
 
 * A deadlock when using threads on x86-linux has been addressed.
@@ -20,7 +20,7 @@ but this release has been about iterative improvement rather than major changes.
 
 Please report problems that you have in our `issue tracker <https://github.com/dylan-lang/opendylan/issues>`_.
 
-You can get it from our website, `http://opendylan.org/download/ <http://opendylan.org/download/>`_.
+You can get it from our website, `https://opendylan.org/download/ <https://opendylan.org/download/>`_.
 On Windows there is an installer, on UNIX systems unpack into ``/opt``.
 On 64 bit Linux, you will need to have the Boehm GC installed for our
 executables to run. (Ubuntu: ``apt-get install libgc``)
@@ -30,5 +30,5 @@ You may also sign up for the hack-a-thon at our `Google Plus event page`_.
 
 Good luck and happy Dylan hacking!
 
-.. _hack-a-thon: http://opendylan.org/news/2013/06/30/dylan-hack-a-thon.html
-.. _Google Plus event page: https://plus.google.com/events/cuj0dbm59r9heuf4pqm5qj9u0uc
+.. _hack-a-thon: https://opendylan.org/news/2013/06/30/dylan-hack-a-thon.html
+.. _Google Plus event page: https://accounts.google.com/ServiceLogin?passive=1209600&osid=1&continue=https://plus.google.com/&followup=https://plus.google.com/
