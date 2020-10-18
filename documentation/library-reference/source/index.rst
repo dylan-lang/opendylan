@@ -22,6 +22,7 @@ It also documents Dylan language extensions and the LID file format.
    coloring-stream/index
    command-line-parser/index
    common-dylan/index
+   dood/index
    dylan/index
    hash-algorithms/index
    io/index
