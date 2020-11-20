@@ -1,0 +1,89 @@
+*****************
+Open Dylan 2021.1
+*****************
+
+This document describes the 2021.1 release of Open Dylan, released XX MMM, 2021.
+This release contains many enhancements and bug fixes, highlights
+of which are listed below.  For complete details see `the opendylan commit logs
+<https://github.com/dylan-lang/opendylan/compare/v2020.1.0...v2021.1.0>`_. (Note
+that some commit logs, for example for testworks and other libraries that are
+included in Open Dylan as git submodules, may be in other repositories.)
+
+* Download the release: http://opendylan.org/download
+* Read documentation: http://opendylan.org/documentation
+* Report problems: https://github.com/dylan-lang/opendylan/issues
+
+
+Compiler
+========
+
+Run-time
+========
+
+Platform Support
+================
+
+IDE
+===
+
+CORBA
+=====
+
+DUIM
+====
+
+GTK
+===
+
+Debugging
+=========
+
+Documentation
+=============
+
+Build System
+============
+
+Library Changes
+===============
+
+dylan Library
+-------------
+
+common-dylan Library
+--------------------
+
+io Library
+----------
+
+system Library
+--------------
+
+c-ffi Library
+-------------
+
+network library
+---------------
+
+testworks Library
+-----------------
+
+collections Library
+-------------------
+
+big-integers library
+--------------------
+
+progress-stream library
+-----------------------
+
+gabriel-benchmarks library
+--------------------------
+
+Contributors
+============
+
+We'd like to thank all the people that made contributions to this release and
+to surrounding libraries in the Dylan ecosystem. This list is probably
+incomplete...
+
