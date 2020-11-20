@@ -366,7 +366,8 @@ define function do-optimize-primitive-wrap-c-pointer
     (env :: <environment>, call, arg)
   let arg-gen = generator(arg);
   // TODO: NO CLOSED OVER DATA
-  if (arg-gen & env == environment(arg-gen)
+  if (instance?(arg-gen, <primitive-call>)
+        & env == environment(arg-gen)
         & primitive(arg-gen) == dylan-value(#"primitive-unwrap-c-pointer"))
     replace-computation-with-temporary!(call, arguments(arg-gen)[0]);
     #t
@@ -381,7 +382,8 @@ define function do-optimize-primitive-unwrap-c-pointer
     (env :: <environment>, call, arg)
   let arg-gen = generator(arg);
   // TODO: NO CLOSED OVER DATA
-  if (arg-gen & env == environment(arg-gen)
+  if (instance?(arg-gen, <primitive-call>)
+        & env == environment(arg-gen)
         & primitive(arg-gen) == dylan-value(#"primitive-wrap-c-pointer"))
     replace-computation-with-temporary!(call, arguments(arg-gen)[1]);
     #t
