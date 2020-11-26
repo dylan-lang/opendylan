@@ -21,6 +21,7 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: project:;
   constant slot %help?          :: <boolean> = #f,
     init-keyword: help?:;
+  // If this is true, show a welcome message for the interactive compiler.
   constant slot %logo?          :: <boolean> = #f,
     init-keyword: logo?:;
   constant slot %version?       :: <boolean> = #f,
@@ -167,13 +168,18 @@ define method do-execute-command
             $success-exit-code
           end method run;
     if (command.%help?)
+      message(context, "%s %s\n", release-product-name(), release-short-version());
       run(<help-command>)
     elseif (command.%version?)
       run(<version-command>)
     elseif (command.%shortversion?)
       run(<version-command>, short: "short")
     else
-      command.%logo? & message(context, dylan-banner());
+      if (command.%logo?)
+        message(context, dylan-banner());
+      else
+        message(context, "%s %s\n", release-product-name(), release-short-version());
+      end;
       let personal-root = command.%personal-root;
       let system-root   = command.%system-root;
       let back-end      = command.%back-end;
