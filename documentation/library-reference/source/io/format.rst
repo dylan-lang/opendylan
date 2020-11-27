@@ -60,8 +60,9 @@ The directives are:
   which must be an integer.
 - ``%o`` Prints an octal representation of the next format argument,
   which must be an integer.
-- ``%x`` Prints a hexadecimal representation of the next format
-  argument, which must be an integer.
+- ``%x`` Prints a lowercase hexadecimal representation of the next format
+  argument, which must be an integer. Use ``%X`` (uppercase X) to output
+  uppercase instead.
 - ``%m`` Invokes the next format argument, which must be a function, on
   the stream passed to :gf:`format`.
 - ``%%`` Outputs a single ``%`` character.
