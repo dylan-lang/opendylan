@@ -38,16 +38,18 @@ define test hex-control-strings ()
   check-equal("format %x with a positive integer",
               format-to-string("%X", 117), "75");
   check-equal("format %x with a negative integer",
-              format-to-string("%x", -91827364), "-5792CA4");
+              format-to-string("%x", -91827364), "-5792ca4");
+  check-equal("format %X outputs uppercase",
+              format-to-string("%X", 255), "FF");
 end test hex-control-strings;
 
 define test multiple-basic-control-strings ()
   check-equal("multiple control strings 1",
-              format-to-string("Hex: %x, Dec: %d", 234, 567), "Hex: EA, Dec: 567");
+              format-to-string("Hex: %x, Dec: %d", 234, 567), "Hex: ea, Dec: 567");
   check-equal("multiple control strings 2",
               format-to-string("Bin: %b, Oct: %o", 12, 34), "Bin: 1100, Oct: 42");
   check-equal("multiple control strings 3",
-              format-to-string("%d %% %b %% %o %% %x", 42, 42, 42, 42), "42 % 101010 % 52 % 2A");
+              format-to-string("%d %% %b %% %o %% %x", 42, 42, 42, 42), "42 % 101010 % 52 % 2a");
 end test multiple-basic-control-strings;
 
 define test existing-string-messages ()

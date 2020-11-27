@@ -211,8 +211,11 @@ define method do-dispatch (char :: <byte-character>, stream :: <stream>, arg)
     ('o'), ('O') =>
       format-integer(arg, 8, stream);
       #t;
-    ('x'), ('X') =>
-      format-integer(arg, 16, stream);
+    'x' =>
+      format-integer(arg, 16, stream, lowercase?: #t);
+      #t;
+    'X' =>
+      format-integer(arg, 16, stream, lowercase?: #f);
       #t;
     ('m'), ('M') =>
       apply(arg, list(stream));
@@ -256,21 +259,25 @@ end method;
 
 
 define constant $digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+define constant <radix> = limited(<integer>, min: 2, max: 36);
 
 /// format-integer -- internal.
 ///
 
 ///---*** KLUDGE: Temporary method until division is implemented for <double-integer>
 ///---*** Once division is available, remove this method!
-define method format-integer (arg :: <double-integer>,
-                              radix :: limited(<integer>, min: 2, max: 36),
-                              stream :: <stream>) => ()
+/// This looks like the cause of https://github.com/dylan-lang/opendylan/issues/1350
+define method format-integer
+    (arg :: <double-integer>, radix :: <radix>, stream :: <stream>,
+     #key lowercase? :: <boolean>)
+ => ()
   print(arg, stream)
 end method;
 
-define method format-integer (arg :: <integer>,
-                              radix :: limited(<integer>, min: 2, max: 36),
-                              stream :: <stream>) => ()
+define method format-integer
+    (arg :: <integer>, radix :: <radix>, stream :: <stream>,
+     #key lowercase? :: <boolean>)
+ => ()
   // Define an iteration that collects the digits for the print
   // representation of arg.
   local method repeat (arg :: <integer>, digits :: <list>)
@@ -279,7 +286,7 @@ define method format-integer (arg :: <integer>,
           let digits = pair($digits[remainder], digits);
           if (zero?(quotient))
             for (digit in digits)
-              write-element(stream, digit)
+              write-element(stream, if (lowercase?) as-lowercase(digit) else digit end);
             end
           else
             repeat(quotient, digits)
@@ -295,19 +302,21 @@ define method format-integer (arg :: <integer>,
     // signed integer.
     let (quotient :: <integer>, remainder :: <integer>)
       = truncate/(arg, radix);
-    if (~ zero?(quotient))
-      repeat(- quotient, list($digits[- remainder]))
+    if (zero?(quotient))
+      let digit :: <character> = $digits[- remainder];
+      write-element(stream, if (lowercase?) as-lowercase(digit) else digit end);
     else
-      write-element(stream, $digits[- remainder])
+      repeat(- quotient, list($digits[- remainder]))
     end
   else
     repeat(arg, #())
   end
 end method;
 
-define method format-integer (arg :: <float>,
-                              radix :: limited(<integer>, min: 2, max: 36),
-                              stream :: <stream>) => ()
+define method format-integer
+    (arg :: <float>, radix :: <radix>, stream :: <stream>,
+     #key lowercase? :: <boolean>)
+ => ()
   //--- Should we really be this compulsive?
   assert(radix = 10, "Can only print floats in base 10");
   print(arg, stream)
