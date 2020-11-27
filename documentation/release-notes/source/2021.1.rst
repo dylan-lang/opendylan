@@ -56,6 +56,9 @@ dylan Library
 common-dylan Library
 --------------------
 
+* ``integer-to-string`` has a new *lowercase?* keyword argument. When true,
+  lowercase characters are used when *base* is above 10.
+
 io Library
 ----------
 
