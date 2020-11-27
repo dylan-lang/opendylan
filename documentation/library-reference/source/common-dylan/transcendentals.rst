@@ -5,32 +5,40 @@ The transcendentals Module
 .. current-library:: common-dylan
 .. current-module:: transcendentals
 
-The *transcendentals* module, exported from the *common-dylan* library,
-provides a set of generic functions for ANSI C-like behavior over real
+The *transcendentals* module, exported from the :doc:`common-dylan <index>`
+library, provides a set of generic functions for ANSI C-like behavior over real
 numbers. The restrictions and error cases described in this document are
 intended to be the same as they are in ANSI C.
-
-The single module, *transcendentals*, exports these generic functions
-and methods.
 
 Because implementation of these functions might be by a standard library
 for transcendentals accessed by a foreign function interface, the exact
 precision and algorithms (and hence, the exact results) for all of these
-functions is explicitly unspecified. Note, however, that a program
-expects the following, even in libraries that are implemented by calling
-foreign libraries:
+functions is explicitly unspecified.
+
+Note, however, that a program may expect the following, even in libraries that
+are implemented by calling foreign libraries:
 
 - Domain and range errors should be signalled as Dylan errors.
-- Floating point precision *contagion* must obey Dylan rules (that is,
-  functions called on single precision values return single precision
-  results, and functions on double precision values return double
-  precision results)
+- Floating point precision *contagion* must obey Dylan rules. That is,
+  functions called on single precision values return single precision results,
+  and functions on double precision values return double precision results.
+  When a function (e.g., :drm:`^`, :gf:`atan2`, etc.) accepts two arguments, if
+  either argument is a double precision value then the result is also double
+  precision.
+
+As a rule this module does not automatically convert integer values to floating
+point values. Callers should do so explicitly, so as to choose the appropriate
+floating point type for their needs.
+
+Complex numbers are not implemented. If the result of calling any
+*transcendentals* function would be a complex number :drm:`<error>` is
+signalled.
 
 Reference
 =========
 
 This section contains a reference entry for each item exported from the
-*common-dylan* library's *transcendentals* module.
+*transcendentals* module.
 
 .. generic-function:: ^
 
@@ -40,9 +48,9 @@ This section contains a reference entry for each item exported from the
 
    :signature: ^ b x => y
 
-   :parameter b: An instance of type :drm:`<real>`.
-   :parameter x: An instance of type :drm:`<real>`.
-   :value y: An instance of type :drm:`<real>`.
+   :parameter b: An instance of type :drm:`<number>`.
+   :parameter x: An instance of type :drm:`<number>`.
+   :value y: An instance of type :drm:`<number>`.
 
    :description:
 
@@ -66,7 +74,7 @@ This section contains a reference entry for each item exported from the
 
    :signature: acos x => y
 
-   :parameter x: an instance of type :drm:`<real>`. The angle, in radians.
+   :parameter x: an instance of type :drm:`<number>`. The angle, in radians.
                  If ``x`` is not in the range ``[-1,+1]``, an error is signalled.
    :value y: An instance of type :drm:`<float>`.
 
@@ -87,7 +95,7 @@ This section contains a reference entry for each item exported from the
 
    :signature: acosh x => y
 
-   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :parameter x: An instance of type :drm:`<number>`. The angle, in radians.
    :value y: An instance of type :drm:`<float>`.
 
    :description:
@@ -107,7 +115,7 @@ This section contains a reference entry for each item exported from the
 
    :signature: asin x => y
 
-   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :parameter x: An instance of type :drm:`<number>`. The angle, in radians.
                  If ``x`` is not in the range `[-1,+1]`, an error is signalled.
    :value y: An instance of type :drm:`<float>`.
 
@@ -128,7 +136,7 @@ This section contains a reference entry for each item exported from the
 
    :signature: asinh x => y
 
-   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :parameter x: An instance of type :drm:`<number>`. The angle, in radians.
    :value y: An instance of type :drm:`<float>`.
 
    :description:
@@ -148,7 +156,7 @@ This section contains a reference entry for each item exported from the
 
    :signature: atan x => y
 
-   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :parameter x: An instance of type :drm:`<number>`. The angle, in radians.
                  If ``x`` is not in the range `[-1,+1]`, an error is signalled.
    :value y: An instance of type :drm:`<float>`.
 
@@ -169,8 +177,8 @@ This section contains a reference entry for each item exported from the
 
    :signature: atan2 x y => z
 
-   :parameter x: An instance of type :drm:`<real>`. The first angle, in radians.
-   :parameter y: An instance of type :drm:`<real>`. The second angle, in radians.
+   :parameter x: An instance of type :drm:`<number>`. The first angle, in radians.
+   :parameter y: An instance of type :drm:`<number>`. The second angle, in radians.
    :value z: An instance of type :drm:`<float>`.
 
    :description:
@@ -189,7 +197,7 @@ This section contains a reference entry for each item exported from the
 
    :signature: atanh x => y
 
-   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :parameter x: An instance of type :drm:`<number>`. The angle, in radians.
    :value y: An instance of type :drm:`<float>`.
 
    :description:
@@ -209,7 +217,7 @@ This section contains a reference entry for each item exported from the
 
    :signature: cos x => y
 
-   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :parameter x: An instance of type :drm:`<number>`. The angle, in radians.
    :value y: An instance of type :drm:`<float>`.
 
    :description:
@@ -230,7 +238,7 @@ This section contains a reference entry for each item exported from the
 
    :signature: cosh x => y
 
-   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :parameter x: An instance of type :drm:`<number>`. The angle, in radians.
    :value y: An instance of type :drm:`<float>`.
 
    :description:
@@ -250,9 +258,7 @@ This section contains a reference entry for each item exported from the
       The value of *e*, the base of natural logarithms, as a double precision
       floating point number.
 
-    :type: <double-float>
-
-    :superclasses: :drm:`<float>`
+    :type: :drm:`<double-float>`
 
     :description:
 
@@ -268,9 +274,7 @@ This section contains a reference entry for each item exported from the
    :summary:
      The value of *π* as a double precision floating point number.
 
-   :type: <double-float>
-
-   :superclasses: :drm:`<float>`
+   :type: :drm:`<double-float>`
 
    :description:
 
@@ -288,7 +292,7 @@ This section contains a reference entry for each item exported from the
 
    :signature: exp x => y
 
-   :parameter x: An instance of type :drm:`<real>`.
+   :parameter x: An instance of type :drm:`<number>`.
    :value y: An instance of type :drm:`<float>`.
 
    :description:
@@ -347,14 +351,14 @@ This section contains a reference entry for each item exported from the
 
    :signature: log x => y
 
-   :parameter x: An instance of type :drm:`<real>`.
-   :value y: An instance of type :drm:`<float>`.
+   :parameter x: An instance of type :drm:`<number>`.
+   :value y: An instance of type :drm:`<number>`.
 
    :description:
 
-     Returns the natural logarithm of ``x`` to the base e. If ``x <= 0`` an
-     error is signalled. The floating point precision of the result is given by
-     the precision of ``x``.
+     Returns the natural logarithm of ``x`` to the base e. If x <= 0, an error
+     is signalled. The floating point precision of the result is given by the
+     precision of ``x``.
 
    :seealso:
 
@@ -375,9 +379,9 @@ This section contains a reference entry for each item exported from the
 
    :description:
 
-     Returns the logarithm of ``x`` to the base ``base``. If ``x <= 0`` or
-     ``base <= 1``, an error is signalled. The floating point precision of the
-     result is given by the precision of ``x``.
+     Returns the logarithm of ``x`` to the base ``base``. If x <= 0 or base <=
+     1, an error is signalled. The floating point precision of the result is
+     given by the precision of ``x``.
 
    :seealso:
 
@@ -397,9 +401,8 @@ This section contains a reference entry for each item exported from the
 
    :description:
 
-     Returns the integer base two logarithm of ``x``, that is the
-     greatest integer less than or equal to the exact base two logarithm
-     of ``x``.
+     Returns the integer base two logarithm of ``x``, that is, the greatest
+     integer less than or equal to the exact base two logarithm of ``x``.
 
    :seealso:
 
@@ -414,7 +417,7 @@ This section contains a reference entry for each item exported from the
 
    :signature: sin x => y
 
-   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :parameter x: An instance of type :drm:`<number>`. The angle, in radians.
    :value y: An instance of type :drm:`<float>`.
 
    :description:
@@ -435,7 +438,7 @@ This section contains a reference entry for each item exported from the
 
    :signature: sincos x => (s, c)
 
-   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :parameter x: An instance of type :drm:`<number>`. The angle, in radians.
    :value s: An instance of type :drm:`<float>`. The result of ``sin(x)``.
    :value c: An instance of type :drm:`<float>`. The result of ``cos(x)``.
 
@@ -455,9 +458,7 @@ This section contains a reference entry for each item exported from the
      The value of *e*, the base of natural logarithms, as a single precision
      floating point number.
 
-   :type: <single-float>
-
-   :superclasses: :drm:`<float>`
+   :type: :drm:`<single-float>`
 
    :description:
 
@@ -473,9 +474,7 @@ This section contains a reference entry for each item exported from the
    :summary:
      The value of *π* as a single precision floating point number.
 
-   :type: <single-float>
-
-   :superclasses: :drm:`<float>`
+   :type: :drm:`<single-float>`
 
    :description:
 
@@ -492,7 +491,7 @@ This section contains a reference entry for each item exported from the
 
    :signature: sinh x => y
 
-   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :parameter x: An instance of type :drm:`<number>`. The angle, in radians.
    :value y: An instance of type :drm:`<float>`.
 
    :description:
@@ -512,7 +511,7 @@ This section contains a reference entry for each item exported from the
 
    :signature: sqrt x => y
 
-   :parameter x: An instance of type :drm:`<real>`.
+   :parameter x: An instance of type :drm:`<number>`.
    :value y: An instance of type :drm:`<float>`.
 
    :description:
@@ -532,7 +531,7 @@ This section contains a reference entry for each item exported from the
 
    :signature: tan x => y
 
-   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :parameter x: An instance of type :drm:`<number>`. The angle, in radians.
    :value y: An instance of type :drm:`<float>`.
 
    :description:
@@ -552,7 +551,7 @@ This section contains a reference entry for each item exported from the
 
    :signature: tanh x => y
 
-   :parameter x: An instance of type :drm:`<real>`. The angle, in radians.
+   :parameter x: An instance of type :drm:`<number>`. The angle, in radians.
    :parameter y: An instance of type :drm:`<float>`.
 
    :description:
