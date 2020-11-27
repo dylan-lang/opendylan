@@ -59,6 +59,11 @@ common-dylan Library
 io Library
 ----------
 
+* The behavior of the ``%x`` format directive has changed. "%x" now outputs
+  lowercase hexadecimal numbers and "%X" outputs uppercase. The old behavior
+  was to always output uppercase. Fixes `bug 1054
+  <https://github.com/dylan-lang/opendylan/issues/1054>`_.
+
 system Library
 --------------
 
