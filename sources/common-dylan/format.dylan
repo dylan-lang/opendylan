@@ -248,7 +248,8 @@ define function integer-to-string
     (integer :: <integer>,
      #key base :: <integer> = 10,
           size: string-size :: <integer> = 0,
-          fill :: <byte-character> = '0')
+          fill :: <byte-character> = '0',
+          lowercase? :: <boolean>)
  => (string :: <byte-string>)
   user-assert(2 <= base & base <= 36,
               "Base %d is not between 2 and 36",
@@ -283,7 +284,7 @@ define function integer-to-string
   let buffer-size = buffer.size;
   let string = make(<byte-string>, size: buffer-size);
   for (digit in buffer, index :: <integer> from buffer-size - 1 to 0 by -1)
-    string[index] := digit;
+    string[index] := if (lowercase?) as-lowercase(digit) else digit end;
   end for;
   string
 end function integer-to-string;
