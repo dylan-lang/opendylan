@@ -211,10 +211,20 @@ define test test-integer-to-string ()
   check-equal("integer-to-string(127, base: 2, size: 8)",
               integer-to-string(127, base: 2, size: 8),
               "01111111");
+  check-equal("integer-to-string(100, base: 36) defaults to uppercase",
+              integer-to-string(100, base: 36),
+              "2S");
+  check-equal("integer-to-string(100, base: 36, lowercase?: #t)",
+              integer-to-string(100, base: 36, lowercase?: #t),
+              "2s");
   check-no-errors("integer-to-string($minimum-integer)",
                   integer-to-string($minimum-integer));
   check-no-errors("integer-to-string($maximum-integer)",
                   integer-to-string($maximum-integer));
+  check-condition("bad base (1) signals error",
+                  <error>, integer-to-string(100, base: 1));
+  check-condition("bad base (37) signals error",
+                  <error>, integer-to-string(100, base: 37));
 end test;
 
 define test test-number-to-string ()

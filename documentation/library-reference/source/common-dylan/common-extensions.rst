@@ -653,6 +653,7 @@ The extensions are:
    :parameter base: An instance of :drm:`<integer>` (default 10).
    :parameter size: An instance of :drm:`<integer>` (default 0).
    :parameter fill: An instance of :drm:`<character>` (default 0).
+   :parameter lowercase?: An instance of :drm:`<boolean>` (default ``#f``).
    :value string: An instance of :drm:`<byte-string>`.
 
    :description:
@@ -660,7 +661,8 @@ The extensions are:
      Returns a string representation of *integer* in the given *base*, which
      must be between 2 and 36. The size of the string is right-aligned to
      *size*, and it is filled with the *fill* character. If the string is
-     already larger than *size* then it is not truncated.
+     already larger than *size* then it is not truncated. If *lowercase?* is
+     true then lowercase characters are used when *base* is higher than 10.
 
 .. macro:: iterate
    :statement:
