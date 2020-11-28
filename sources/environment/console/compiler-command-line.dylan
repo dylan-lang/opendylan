@@ -16,17 +16,17 @@ define command-line main => <main-command>
      documentation: "Command-line version of Open Dylan.")
   optional project :: <file-locator> = "the project to be built";
 
-  keyword back-end :: <symbol> = "the compiler back-end to use";
+  keyword back-end :: <symbol>           = "the compiler back-end to use";
   keyword build-script :: <file-locator> = "the (Jam) build script";
-  keyword target :: <symbol> = "the type of executable";
-  keyword dispatch-coloring :: <symbol> = "the dispatch coloring output type";
+  keyword target :: <symbol>             = "the type of executable";
+  keyword dispatch-coloring :: <symbol>  = "the dispatch coloring output type";
 
   flag help             = "show this help summary";
-  flag logo             = "displays the copyright banner";
-  flag version          = "displays the version";
-  flag shortversion     = "displays the shortversion";
+  flag logo             = "display the copyright banner";
+  flag version          = "display the version";
+  flag shortversion     = "display the short version";
   flag debugger         = "enter the debugger if this program crashes";
-  flag echo-input       = "echoes all input to the console";
+  flag echo-input       = "echo all input to the console";
   flag verbose          = "show verbose output";
 
   flag import           = "import the project";
@@ -43,7 +43,7 @@ define command-line main => <main-command>
   keyword personal-root :: <directory-locator> = "personal area root";
   keyword system-root   :: <directory-locator> = "system area root";
   keyword internal-debug :: $keyword-list-type
-                        = "show debug messages (e.g. for linker,project-manager)";
+                        = "show debug messages (e.g. for linker, project-manager)";
   flag unify            = "combine libraries into a single executable";
   flag profile-commands = "profile the execution of each command";
   flag harp             = "generate HARP output";
