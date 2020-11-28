@@ -240,6 +240,11 @@ define module transcendentals
          acosh,
          atanh,
          hypot;
+  // In addition to the above exports, these methods are added:
+  //   ^(<single-float>, <single-float>)
+  //   ^(<double-float>, <double-float>)
+  //   ^(<single-float>, <double-float>)
+  //   ^(<double-float>, <single-float>)
 end module transcendentals;
 
 define module machine-words

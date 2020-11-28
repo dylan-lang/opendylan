@@ -48,7 +48,7 @@ define unary-transcendental exp (x) end;
 
 define unary-transcendental log (x)
   if (negative?(x))
-    error("LOG would produce a complex number")
+    error("log(%=) would produce a complex number", x);
   end
 end;
 
@@ -84,13 +84,13 @@ end method sincos;
 
 define unary-transcendental asin (x)
   if (abs(x) > 1)
-    error("ASIN would produce complex number")
+    error("asin(%=) would produce complex number", x);
   end
 end unary-transcendental asin;
 
 define unary-transcendental acos (x)
   if (abs(x) > 1)
-    error("ACOS would produce complex number")
+    error("acos(%=) would produce complex number", x);
   end
 end unary-transcendental acos;
 
@@ -173,7 +173,7 @@ define sideways sealed may-inline method \^ (base :: <single-float>, power :: <s
     if (integral?(power))
       base ^ truncate(power)
     else
-      error("\\^ would produce complex number")
+      error("%= ^ %= would produce complex number", base, power);
     end
   else
     primitive-raw-as-single-float(primitive-single-float-expt
@@ -188,7 +188,7 @@ define sideways sealed may-inline method \^ (base :: <double-float>, power :: <d
     if (integral?(power))
       base ^ truncate(power)
     else
-      error("\\^ would produce complex number")
+      error("%= ^ %= would produce complex number", base, power);
     end
   else
     primitive-raw-as-double-float(primitive-double-float-expt
@@ -204,7 +204,7 @@ define macro atan2-method-definer
     => { define sealed may-inline method atan2 (y :: ?type, x :: ?type) => (result :: ?type)
            if (zero?(x))
              if (zero?(y))
-               error("atan2(0, 0) is undefined")
+               error("atan2(0, 0) is undefined");
              else
                if (positive?(y))
                  ?pi / 2.0
