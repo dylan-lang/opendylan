@@ -240,7 +240,9 @@ define inline function make-lexer-source-location
   loc
 end function make-lexer-source-location;
 
-// Skip a multi-line comment, taking into account nested comments.
+// Skip a single or multi-line comment, taking into account nested comments and
+// strings which might themselves contain comment delimiters that should be
+// ignored.
 //
 // Basically, we just implement a state machine via tail recursive local
 // methods.
@@ -251,8 +253,8 @@ define method skip-multi-line-comment
   let length = contents.size;
   local
     //
-    // Utility function that checks to make sure we haven't run off the
-    // end before calling the supplied function.
+    // Check to make sure we haven't run off the end before calling the
+    // supplied function.
     //
     method next (func :: <function>, posn :: <integer>, depth :: <integer>)
       if (posn < length)
@@ -274,10 +276,33 @@ define method skip-multi-line-comment
         lexer.line := lexer.line + 1;
         lexer.line-start := posn;
         next(seen-nothing, posn, depth)
+      elseif (char == '"')
+        next(seen-double-quote, posn, depth)
       else
         next(seen-nothing, posn, depth);
       end if;
     end seen-nothing,
+    //
+    // Seen a double quote. We need to parse strings correctly so that we can
+    // ignore any contained comment delimiters.
+    //
+    method seen-double-quote (char :: <character>, posn :: <integer>,
+                              depth :: <integer>)
+      if (char == '\\')
+        next(seen-backslash, posn, depth)
+      elseif (char == '"' | char == '\n')
+        next(seen-nothing, posn, depth)
+      else
+        next(seen-double-quote, posn, depth)
+      end
+    end method,
+    //
+    // Seen a backslash inside a string. Ignore next character completely.
+    //
+    method seen-backslash (char :: <character>, posn :: <integer>,
+                           depth :: <integer>)
+      next(seen-double-quote, posn, depth)
+    end,
     //
     // Okay, we've seen a slash.  Look to see if it was /*, //, or just a
     // random slash in the source code.
@@ -320,7 +345,10 @@ define method skip-multi-line-comment
       end if;
     end seen-star,
     //
-    // We've seen a //, so skip until the end of the line.
+    // We've seen a //, so skip until the end of the line.  Note that the DRM
+    // explicitly states that /* and */ must be ignored in single-line
+    // comments, so it is not possible to (for example) terminate a delimited
+    // comment at the end of a single-line comment.
     //
     method seen-slash-slash (char :: <character>, posn :: <integer>,
                              depth :: <integer>)

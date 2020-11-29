@@ -5,7 +5,7 @@ define function verify-literal
     (f :: <fragment>, value, required-class)
  => ()
   assert-equal(f.fragment-value, value);
-  assert-true(instance?(f, required-class));
+  assert-instance?(required-class, f);
 end function verify-literal;
 
 define function verify-presentation

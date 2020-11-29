@@ -20,6 +20,10 @@ Compiler
 * Fixed a crash in the optimizer that ocurred when compiling certain
   C-FFI primitive functions.
 
+* Multi-line comments that contain comment delimiters within strings are now
+  parsed correctly. For example: ``/* "//h/a/" */`` Fixes `bug 1325
+  <https://github.com/dylan-lang/opendylan/issues/1325>`_.
+
 Run-time
 ========
 

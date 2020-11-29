@@ -19,6 +19,8 @@ define module dfmc-reader-test-suite
   use dfmc-common,
     import: { <compilation-record>,
               <interactive-compilation-record> };
+  use format,
+    import: { format-to-string };
   use source-records,
     import: { <interactive-source-record> };
   use streams,
