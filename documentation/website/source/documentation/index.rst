@@ -20,41 +20,14 @@
 Documentation
 *************
 
-.. warning:: We are in the process of converting over to a new documentation
-   publishing system. Some documents are not entirely correct yet. We've
-   retained links to the 'Old HTML' where relevant. These will be going away
-   in the near future.
-   :class: alert alert-block alert-warning
-
-Cheat Sheets
-============
-
-.. raw:: html
-
-     <div class="alert alert-block alert-info">
-       <p>Quick one-page sheets for common tasks.</p>
-     </div>
-
-.. hlist::
-
-   * `Basics of Dylan Syntax <cheatsheet.html>`_
-   * `Iteration <cheatsheets/iteration.html>`_
-   * `Conditionals <cheatsheets/conditionals.html>`_
-   * `Collections <cheatsheets/collections.html>`_
-   * `For Scheme programmers <cheatsheets/scheme.html>`_
-
 Learning Dylan
 ==============
 
-.. raw:: html
-
-     <div class="alert alert-block alert-success">
-       <p>Just getting started with Open Dylan?  We recommend that
-       you read the <a href="intro-dylan/">Introduction to Dylan</a>
-       to get a feel for the language. After that, you can broaden
-       your knowledge with the <a href="../books/dpg/">Dylan Programming</a>
-       book.</p>
-     </div>
+Just getting started with Open Dylan?  We recommend that
+you read the <a href="intro-dylan/">Introduction to Dylan</a>
+to get a feel for the language. After that, you can broaden
+your knowledge with the <a href="../books/dpg/">Dylan Programming</a>
+book.
 
 `An Introduction to Dylan <intro-dylan/index.html>`_ [`pdf <intro-dylan/IntroductiontoDylan.pdf>`__] [`epub <intro-dylan/AnIntroductiontoDylan.epub>`__]
     This tutorial is written primarily for those with solid programming
@@ -79,20 +52,24 @@ Learning Dylan
     the portable window programming toolkit. This is only useful
     if you are using Open Dylan on Windows.
 
+Cheat Sheets
+============
+
+.. hlist::
+
+   * `Basics of Dylan Syntax <cheatsheet.html>`_
+   * `Iteration <cheatsheets/iteration.html>`_
+   * `Conditionals <cheatsheets/conditionals.html>`_
+   * `Collections <cheatsheets/collections.html>`_
+   * `For Scheme programmers <cheatsheets/scheme.html>`_
+
 References
 ==========
-
-.. raw:: html
-
-     <div class="alert alert-block alert-info">
-       <p>These are some lengthier reference materials. While they
-       make for dry reading, they're full of invaluable information!</p>
-     </div>
 
 `Dylan Reference Manual <https://opendylan.org/books/drm/>`_ (`Errata <http://opendylan.org/books/drm/drm_errata.html>`_)
     The official definition of the Dylan language and standard library.
 
-`Dylan Library Reference <library-reference/index.html>`_ [`pdf <library-reference/DylanLibraryReference.pdf>`__] [`epub <library-reference/DylanLibraryReference.epub>`__]
+`Library Reference <library-reference/index.html>`_ [`pdf <library-reference/DylanLibraryReference.pdf>`__] [`epub <library-reference/DylanLibraryReference.epub>`__]
     Describes the Open Dylan implementation of the Dylan language, a
     core set of Dylan libraries, and a library interchange mechanism.
     The core libraries provide many language extensions, a threads
@@ -118,8 +95,13 @@ Advanced Guides
 External Libraries and Tools
 ============================
 
+Note that many core libraries are bundled with Open Dylan and are documented in
+the `Library Reference <library-reference/index.html>`_. This includes, System,
+IO, strings, logging, network, and many others.
+
 `Binary-Data </documentation/binary-data/>`_ [`pdf </documentation/binary-data/BinaryData.pdf>`__] [`epub </documentation/binary-data/BinaryData.epub>`__]
-    The binary-data library provides an extension to the Dylan language for parsing and assembling binary data using high level Dylan objects.
+    The binary-data library provides an extension to the Dylan language for
+    parsing and assembling binary data using high level Dylan objects.
 
 `Concurrency </documentation/concurrency/>`_ [`pdf </documentation/concurrency/ConcurrencyUserGuide.pdf>`__] [`epub </documentation/concurrency/ConcurrencyUserGuide.epub>`__]
     The concurrency utility library.
@@ -131,7 +113,8 @@ External Libraries and Tools
     Generates Dylan code to wrap C libraries.
 
 `Objective C Bridge </documentation/objc-dylan/>`_ [`pdf </documentation/objc-dylan/ObjectiveCBridgeUserGuide.pdf>`__] [`epub </documentation/objc-dylan/ObjectiveCBridgeUserGuide.epub>`__]
-    Provides a bridge between Objective C and Dylan, allowing integration with Objective C libraries.
+    Provides a bridge between Objective C and Dylan, allowing integration with
+    Objective C libraries.
 
 `Statistics </documentation/statistics/>`_ [`pdf </documentation/statistics/StatisticsUserGuide.pdf>`__] [`epub </documentation/statistics/StatisticsUserGuide.epub>`__]
     A collection of libraries for performing statistical analysis.
@@ -145,14 +128,6 @@ External Libraries and Tools
 Articles
 ========
 
-.. raw:: html
-
-    <div class="alert alert-block alert-info">
-      <p>Featured articles and blog postings.</p>
-    </div>
-
-    <h3>Learning Dylan</h3>
-
 `Dylan Macro System <../articles/macro-system/index.html>`_ by Dustin Voss.
     This article holds hard-won knowledge about how the Dylan macro system works
     and how to work around some of the gotchas that may catch a macro writer.
@@ -164,12 +139,10 @@ Articles
 `Dylan Web in 60 Seconds </documentation/http/server/quickstart/index.html>`_
     A quick introduction to web development in Dylan.
 
-.. raw:: html
-
-    <h3>Tools</h3>
-
 `Development inside emacs using DIME <../news/2011/12/12/dswank.html>`_
     An exciting look at using DIME and emacs for Dylan development.
+    DIME is for Dylan what `SLIME <https://common-lisp.net/project/slime/>`_
+    is for Common Lisp.
 
 Publications
 ============
