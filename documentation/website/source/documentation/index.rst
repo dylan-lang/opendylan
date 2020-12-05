@@ -144,6 +144,12 @@ Articles
     DIME is for Dylan what `SLIME <https://common-lisp.net/project/slime/>`_
     is for Common Lisp.
 
+`Beyond Java? <../articles/beyond-java.html>`_
+    A discussion of some of the advantages Dylan provides over Java, based on
+    Jason Trenouth's experience writing a CORBA IDL compiler in both Java and
+    Dylan.  (Written around 2001 and Java now has better handling of numeric
+    boxing/unboxing.)
+
 Publications
 ============
 
