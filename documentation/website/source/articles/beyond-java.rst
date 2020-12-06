@@ -6,6 +6,8 @@ Beyond Java?
 
 by Dr Jason Trenouth
 
+(`Originally published <http://web.archive.org/web/20030409041302/http://fun-o.com/resources/beyond-java.phtml>`_ in 2001.)
+
 ------
 
 The Java Age
