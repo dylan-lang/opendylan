@@ -68,7 +68,7 @@ comfortably fit in a single file.
 Having a library in a single file simplifies sharing of examples and
 small tests.  Indeed, one of the motivations for this feature was to
 be able to contribute Dylan solutions for the `The Computer Language
-Benchmarks Game <http://benchmarksgame.alioth.debian.org/>`_, which
+Benchmarks Game <https://benchmarksgame-team.pages.debian.net/benchmarksgame/>`_, which
 prefers to receive one file per solution.  Obviously it is possible to
 explain to them about LID files and how to unpack and compile a
 multi-file solution for each problem, but it is more complex than it

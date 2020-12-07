@@ -7,7 +7,7 @@ Apple Dylan
 the Dylan language. It appeared as a technology release in 1995 for the
 MC68k platform. It had numerous flaws, mainly that it was built on the
 top of the MCL (Macintosh Common Lisp from `Digitool
-<http://www.digitool.com/>`_) development environment. Although this
+<https://web.archive.org/web/20120204173211/http://www.digitool.com/>`_) development environment. Although this
 made it a wonderful environment, it was a severe restriction on further
 progress. Because Apple got into serious financial trouble that time,
 they had to stop Dylan development and dissolved the

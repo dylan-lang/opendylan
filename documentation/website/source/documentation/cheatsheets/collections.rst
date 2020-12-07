@@ -163,5 +163,5 @@ Common Operations
 .. _<set>: https://opendylan.org/documentation/library-reference/collections/set.html
 .. _<bit-set>: https://opendylan.org/documentation/library-reference/collections/bit-set.html
 .. _<bit-vector>: https://opendylan.org/documentation/library-reference/collections/bit-vector.html
-.. _<byte-vector>: http://opendylan.org/documentation/library-reference/collections/byte-vector.html
+.. _<byte-vector>: https://opendylan.org/documentation/library-reference/common-dylan/byte-vector.html
 .. _<string-table>: https://opendylan.org/documentation/library-reference/collections/table-extensions.html#collections:table-extensions:[string-table]

@@ -34,7 +34,7 @@ The C3 superclass linearization has been proposed in 1996 by Kim
 Barrett, Bob Cassels, Paul Haahr, David A. Moon, Keith Playford, and
 P. Tucker Withington in a `paper
 <https://dl.acm.org/doi/10.1145/236337.236343>`_ (`html version
-<http://haahr.tempdomainname.com/dylan/linearization-oopsla96.html>`_).
+<https://web.archive.org/web/20120415074347/http://haahr.tempdomainname.com/dylan/linearization-oopsla96.html>`_).
 
 A superclass linearization (also known as a class precedence list) is
 used for resolving conflicts among multiply-inherited superclasses
@@ -57,7 +57,7 @@ consistent superclass linearization algorithm is needed.
 After the C3 linearization was proposed in 1996, it was subsequently
 adapted in Python 2.3 (`article <https://www.python.org/download/releases/2.3/mro/>`__)
 and Perl 6 (`article
-<http://use.perl.org/use.perl.org/_autrijus/journal/25768.html>`__).
+<https://web.archive.org/web/20150216030253/http://use.perl.org/use.perl.org/_autrijus/journal/25768.html>`__).
 
 Rationale
 =========
@@ -109,9 +109,9 @@ Experiments show that there are some differences in existing code; we
 found so far three, two of them in duim-gadgets, one in
 win32-duim. According to Scott McKay, the author of DUIM, the first
 two look better when C3 is used (`mailing list post
-<https://lists.opendylan.org/pipermail/hackers/2012-January/006309.html>`_). The
+<https://web.archive.org/web/20160324145817/https://lists.opendylan.org/pipermail/hackers/2012-January/006309.html>`_). The
 latter does not alter behaviour (`post
-<https://lists.opendylan.org/pipermail/hackers/2012-January/006310.html>`_).
+<https://web.archive.org/web/20160324142050/https://lists.opendylan.org/pipermail/hackers/2012-January/006310.html>`_).
 
 The class precedence list of <row-splitter-pane> differ, Dylan:
     #(<row-splitter-pane>, <row-splitter>, <splitter>, <single-child-wrapping-pane>, <cached-space-requirement-mixin>, <client-overridability-mixin>, <wrapping-layout-mixin>, <composite-layout-mixin>, <layout-mixin>, <layout>, <single-child-mixin>, <basic-sheet>, <sheet>, <basic-gadget>, <gadget>, <abstract-gadget>, <abstract-sheet>, <event-handler>, <object>); 

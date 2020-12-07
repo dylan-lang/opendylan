@@ -135,8 +135,8 @@ used.
 whether an idea has any chance of acceptance, a properly formatted
 draft DEP should be presented to dylan-lang@googlegroups.com.  The
 initial DEP status should be **Draft**.  The DEP author should assign
-the next available DEP number to the DEP by looking at the `DEP
-directory <index.html>`_ to find the highest used number.  The DEP
+the next available DEP number to the DEP by looking at the :doc:`DEP
+directory <index>` to find the highest used number.  The DEP
 number is not assured until the DEP has been committed to the `origin
 Git repository
 <https://github.com/dylan-lang/website/tree/master/source/proposals>`_.
@@ -509,7 +509,7 @@ References and Footnotes
 
 .. _Open Publication License: http://www.opencontent.org/openpub/
 
-.. _reStructuredText: https://docutils.sourceforge.net/rst.html
+.. _reStructuredText: https://web.archive.org/web/20120114014252/https://docutils.sourceforge.net/rst.html
 
 
 Copyright
