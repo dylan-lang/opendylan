@@ -487,12 +487,31 @@ Closing streams
 It is important to call :gf:`close` on streams when you have finished with
 them. Typically, external streams such as :class:`<file-stream>` and
 :class:`<console-stream>` allocate underlying system resources when they are
-created, and these resources are not recovered until the stream is
-closed. The total number of such streams that can be open at one time
-may be system dependent. It may be possible to add reasonable
-finalization methods to close streams when they are no longer referenced
-but these are not added by default. See the
-:doc:`../dylan/finalization` for full details about finalization.
+created, and these resources are not recovered until the stream is closed.
+
+A common way to ensure that :gf:`close` is called is to use the ``cleanup``
+clause of the :drm:`block` macro. For example:
+
+.. code-block:: dylan
+
+   let stream = open-my-stream(...);
+   block ()
+     ...read or write to stream...
+   cleanup
+     close(stream);
+   end
+
+To make this easier, and so you're less likely to forget to call :gf:`close`,
+most libraries that provide stream classes provide a macro. For example,
+:macro:`with-open-file` for file streams, ensures that :gf:`close` is called:
+
+.. code-block:: dylan
+
+   with-open-file (stream = "/my/file")
+     ...read or write to stream...
+     // close(stream) is called automatically
+   end
+
 
 Locking streams
 ^^^^^^^^^^^^^^^
