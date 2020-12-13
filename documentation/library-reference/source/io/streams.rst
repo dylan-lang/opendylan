@@ -20,8 +20,8 @@ More specialized subjects are covered next: `Locking streams`_ discusses
 locking streams while they are in use; `Using buffered streams`_ describes
 using buffered streams; `Wrapper streams`_ describes wrapper streams;
 `Conditions`_ the different stream-specific error conditions that can be
-raised.For the most part, you do not have to worry about the information
-in these later sections when using streams.
+raised. For the most part, you do not have to worry about the information in
+these later sections when using streams.
 
 Finally, `The streams Module Reference`_ gives complete details on all
 interfaces in the Streams module. Each entry in this section is
@@ -38,41 +38,6 @@ Goals of this module
   and network I/O.
 - Access to an underlying buffer management protocol.
 
-
-Error conditions
-----------------
-
-This document uses two special terms in discussions of error conditions.
-
-When it notes that something *is an error*, this means that the result
-is undefined. In particular, it does not*necessarily* mean that an error
-condition will be signalled. So, for instance, the following example
-text means only that the result of using *pull-stream-element* in the
-case described is undefined:
-
-    It is an error to apply *pull-stream-element* to an element that has
-    already been read from the stream.
-
-A given function is only guaranteed to raise an exception in response to
-an error if the documentation for that function specifically states that
-it will signal an error. Note that the specific error condition that is
-signaled may depend on the program state; in such situations, the
-specific error condition is not stated in the documentation. Consider
-the following hypothetical example, which states that an implementation
-must signal an error, but does not say what error must be signaled:
-
-    When *index* is a ``<stream-index>``, if it is invalid for some reason,
-    this function signals an error.
-
-By contrast, the following example names the class of which the
-condition signaled is guaranteed to be a general instance:
-
-    If the end of the stream is encountered and no value was supplied for
-    *on-end-of-stream*, *read-last-element* signals an
-    :class:`<end-of-stream-error>` condition.
-
-If the name of the condition class is given, applications are permitted
-to specialize error handlers on that class.
 
 Concepts
 --------
@@ -428,7 +393,7 @@ write. If this happens, the error is stored in a queue, and the next
 operation on that stream signals the error. If you *close* the stream
 with the *wait?* flag ``#f``, the close happens asynchronously (after all
 queued writes complete) and errors may occur after *close* has returned.
-A method *wait-for-io-completion* is provided to catch any errors that
+A method :gf:`wait-for-io-completion` is provided to catch any errors that
 may occur after *close* is called.
 
 The *share-mode:* keyword determines how a file can be accessed by other
@@ -520,10 +485,10 @@ no guarantees about the atomicity of read and write operations.
 Reading from and writing to streams
 -----------------------------------
 
-This section describes how you can read from or write to a stream. Note
-that it is an error to call any of these functions on a buffered stream
-while its buffer is held by another thread; see `Using buffered
-streams`_ for details about buffered streams.
+This section describes how you can read from or write to a stream. Note that
+the result is undefined if you call any of these functions on a buffered stream
+while its buffer is held by another thread; see `Using buffered streams`_ for
+details about buffered streams.
 
 Reading from streams
 ^^^^^^^^^^^^^^^^^^^^
@@ -632,9 +597,9 @@ writing should begin, and an index that is the end of input to be read,
 or the end of space available for writing.
 
 Buffered streams also maintain a *held* state, indicating whether the
-application has taken the buffer for a stream and has not released it
-yet. When a thread already holds the buffer for a stream, it is an error
-to get the buffer again (or any other buffer for the same stream).
+application has taken the buffer for a stream and has not released it yet. When
+a thread already holds the buffer for a stream, any attempt to get the buffer
+again (or any other buffer for the same stream) has undefined results.
 
 Useful types when using buffers
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -801,7 +766,7 @@ supplied. The name of this accessor function takes the form *class* *-*
 *key*, where *class* is the name of the condition class (without the
 angle brackets) and *key* is the name of the init-keyword. For example,
 the accessor function for the *locator:* init-keyword for
-:class:`<file-error>` is *file-error-locator*.
+:class:`<file-error>` is :gf:`file-error-locator`.
 
 For more information, please refer to the reference entry for the
 individual conditions.
@@ -1226,9 +1191,8 @@ are exported from the *streams* module.
      Signalled when one of the read functions reaches the end of an
      input stream. It is a subclass of :drm:`<error>`.
 
-     The *stream:* init-keyword has the value of the stream that caused
-     the error to be signaled. Its accessor is
-     ``end-of-stream-error-stream``.
+     The *stream:* init-keyword has the value of the stream that caused the
+     error to be signaled. Its accessor is :gf:`stream-error-stream`.
 
    :seealso:
 
@@ -1259,6 +1223,7 @@ are exported from the *streams* module.
      - :class:`<file-exists-error>`
      - :class:`<incomplete-read-error>`
      - :class:`<invalid-file-permissions-error>`
+     - :gf:`file-error-locator`
 
 .. class:: <file-error>
 
@@ -1273,9 +1238,8 @@ are exported from the *streams* module.
      The base class for all errors related to file I/O. It is a subclass
      of :drm:`<error>`.
 
-     The *locator:* init-keyword indicates the locator of the file that
-     caused the error to be signalled. Its accessor is
-     ``file-error-locator``.
+     The *locator:* init-keyword indicates the locator of the file that caused
+     the error to be signalled. Its accessor is :gf:`file-error-locator`.
 
    :seealso:
 
@@ -1284,6 +1248,18 @@ are exported from the *streams* module.
      - :class:`<file-exists-error>`
      - :class:`<incomplete-read-error>`
      - :class:`<invalid-file-permissions-error>`
+     - :gf:`file-error-locator`
+
+.. generic-function:: file-error-locator
+   :sealed:
+
+   Returns the :class:`<file-locator>` of the file associated with a
+   :class:`<file-error>`.
+
+   :signature: file-error-locator *error* => *locator*
+
+   :parameter error: An instance of :class:`<file-error>`.
+   :value locator: An instance of :class:`<file-locator>`.
 
 .. class:: <file-exists-error>
 
@@ -1306,6 +1282,7 @@ are exported from the *streams* module.
      - :class:`<file-error>`
      - :class:`<incomplete-read-error>`
      - :class:`<invalid-file-permissions-error>`
+     - :gf:`file-error-locator`
 
 .. class:: <file-stream>
    :open:
@@ -2922,13 +2899,13 @@ are exported from the *streams* module.
      :gf:`read-element` will return *element*. The stream must be a
      :class:`<positionable-stream>`.
 
-     It is an error to do any of the following:
+     The results of the following actions are undefined:
 
-     - To apply ``unread-element`` to an element that is not the element
+     - Applying :gf:`unread-element` to an element that is not the element
        most recently read from the stream.
-     - To call ``unread-element`` twice in succession.
-     - To unread an element if the stream is at its initial position.
-     - To unread an element after explicitly setting the stream's position.
+     - Calling :gf:`unread-element` twice in succession.
+     - Unreading an element if the stream is at its initial position.
+     - Unreading an element after explicitly setting the stream's position.
 
    :seealso:
 
@@ -3249,25 +3226,24 @@ are exported from the *streams* module.
 
    :description:
 
-     Writes *element* to *output-stream* at the stream's current
-     position. The output-stream must be either ``#"output"`` or
-     ``#"input-output"``. It is an error if the type of *element* is
-     inappropriate for the stream's underlying aggregate.
+     Writes *element* to *output-stream* at the stream's current position. The
+     stream's direction must be either ``#"output"`` or
+     ``#"input-output"``. The results are undefined if the type of *element* is
+     inappropriate for the stream's underlying :gf:`stream-element-type`.
 
      If the stream is positionable, and it is not positioned at its end,
-     ``write-element`` overwrites the element at the current position and
+     :gf:`write-element` overwrites the element at the current position and
      then advances the stream position.
 
    :example:
 
-     The following forms bind *stream* to an output stream over an empty
-     string and create the string "I do", using the function :gf:`stream-contents` to access all of the stream's
-     elements.
+     The following forms bind *stream* to an output stream over an empty string
+     and create the string "I do", using the function :gf:`stream-contents` to
+     access all of the stream's elements.
 
      .. code-block:: dylan
 
-       let stream = make(<byte-string-stream>,
-                         direction: #"output");
+       let stream = make(<string-stream>, direction: #"output");
        write-element(stream, 'I');
        write-element(stream, ' ');
        write-element(stream, 'd');
