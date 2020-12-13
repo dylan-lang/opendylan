@@ -516,31 +516,25 @@ most libraries that provide stream classes provide a macro. For example,
 Locking streams
 ^^^^^^^^^^^^^^^
 
-In an application where more than one control thread may access a common
-stream, it is important to match the granularity of locking to the
-transaction model of the application. Ideally, an application should
-lock a stream which is potentially accessed by multiple threads, only
-once per transaction. Repeated and unnecessary locking and unlocking can
-seriously degrade the performance of the Streams module. Thus an
-application which wishes to write a complex message to a stream that
-needs to be thread safe should lock the stream, write the message and
-then unlock the stream after the entire message is written. Locking and
-unlocking the stream for each character in the message would be a poor
-match of locking to transaction model. The time required for the lock
-manipulation would dominate the time required for the stream
-transactions. Unfortunately this means that there is no way for the
-Streams module to choose a default locking scheme without the likelihood
-of seriously degrading streams performance for all applications whose
-transaction models are different from the model implied by the chosen
-default locking scheme. Instead, the Streams module provides the user
-with a single, per instance slot, *stream-lock:*, which is inherited by
-all subclasses of :class:`<stream>`. You should use the generic functions
-:gf:`lock-stream` and :gf:`unlock-stream` or the macro
-:macro:`with-stream-locked`, together with other appropriate functions
-and macros from the Threads library, to implement a locking strategy
-appropriate to your application and its stream transaction model. The
-functions in the Streams module are not of themselves thread safe,
-and make no guarantees about the atomicity of read and write operations.
+In an application where more than one thread may access a shared stream, it is
+important to match the granularity of locking to the transaction model of the
+application. Ideally, an application should lock a stream only once per
+transaction, to minimize the performance penalty. Since the streams module
+cannot know the transaction model of your code, it does not provide any
+default locking scheme.
+
+Instead, the streams module provides the user with a single, per-instance slot,
+:gf:`stream-lock`, which is inherited by all subclasses of :class:`<stream>`.
+You may provide a lock via the ``stream-lock:`` init keyword when creating the
+stream, or set it with :gf:`lock-stream-setter`. Thereafter use
+:gf:`lock-stream` and :gf:`unlock-stream` or the :macro:`with-stream-locked`
+macro, together with other appropriate functions and macros from the
+:doc:`threads <../dylan/threads>` module, to implement a locking strategy
+appropriate to your application.
+
+The functions in the streams module are not of themselves thread safe, and make
+no guarantees about the atomicity of read and write operations.
+
 
 Reading from and writing to streams
 -----------------------------------
