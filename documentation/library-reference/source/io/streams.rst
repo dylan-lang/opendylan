@@ -11,10 +11,10 @@ on disk, or sequences. This module, together with the Standard-IO
 module, provides similar functionality to the *java.io* package in Java.
 See :doc:`standard-io`, for details about the Standard-IO module in Dylan.
 
-`Concepts`_ discusses the basic concepts involved in streaming over data.
-`Stream classes`_ describes the different classes of stream available, and
-how to create them, and `Reading from and writing to streams`_ describes
-how to read from and write to them.
+`Concepts`_ discusses the basic concepts and terminology involved in streaming
+over data.  `Stream classes`_ describes the different classes of stream
+available, and how to create them, and `Reading from and writing to streams`_
+describes how to read from and write to them.
 
 More specialized subjects are covered next: `Locking streams`_ discusses
 locking streams while they are in use; `Using buffered streams`_ describes
@@ -24,8 +24,7 @@ raised. For the most part, you do not have to worry about the information in
 these later sections when using streams.
 
 Finally, `The streams Module Reference`_ gives complete details on all
-interfaces in the Streams module. Each entry in this section is
-arranged in alphabetical order.
+interfaces in the Streams module, in alphabetical order.
 
 Goals of this module
 --------------------
@@ -42,17 +41,15 @@ Goals of this module
 Concepts
 --------
 
-A *stream* provides sequential access to an aggregate of data, such as a
-Dylan sequence or a disk file. Streams grant this access according to a
-metaphor of *reading* and *writing*: elements can be read from streams
-or written to them.
+A *stream* provides sequential access to an aggregate of data, such as a Dylan
+:class:`<sequence>` or a disk file. Streams grant this access according to a
+metaphor of *reading* and *writing*: elements can be read from streams or
+written to them.
 
-Streams are represented as Dylan objects, and all are general instances
-of the class :class:`<stream>`, which the Streams module defines.
-
+Streams are represented as general instances of the class :class:`<stream>`.
 It is usual to say that a stream is established *over* the data
-aggregate. Hence, a stream providing access to the string ``"hello
-world"`` is said to be a stream over the string ``"hello world"``.
+aggregate. Hence, a stream providing access to the string ``"hello world"`` is
+said to be a stream over the string ``"hello world"``.
 
 Streams permitting reading operations are called *input* streams. Input
 streams allow elements from the underlying data aggregate to be
@@ -60,6 +57,9 @@ consumed. Conversely, streams permitting writing operations are called
 *output* streams. Output streams allow elements to be written to the
 underlying data aggregate. Streams permitting both kinds of operations
 are called *input-output* streams.
+
+Input Streams
+^^^^^^^^^^^^^
 
 The Streams module provides a set of functions for reading elements from
 an input stream. These functions hide the details of indexing,
@@ -88,20 +88,19 @@ to all elements of the sequence:
     end;
 
 When all elements of a stream have been read, further calls to
-:gf:`read-element` result in the :class:`<end-of-stream-error>`
-condition being signaled. An alternative end-of-stream behavior is to
-have a distinguished end-of-stream value returned. You can supply such
-an end-of-stream value as a keyword argument to the various read
-functions; the value can be any object. Supplying an end-of-stream value
-to a read function is more concise than asking whether a stream is at
-its end on every iteration of a loop.
+:gf:`read-element` result in an :class:`<end-of-stream-error>` condition being
+signaled. Optionally, you may provide a distinguished value to return instead,
+with the ``on-end-of-stream:`` parameter. This is often more concise and most
+reading functions support it.
 
-The Streams module also provides a set of functions for writing data
-elements to an output stream. Like the functions that operate upon input
-streams, these functions hide the details of indexing, growing an
-underlying sequence, buffering for a file, and so on. For instance, the
-function :gf:`write-element` writes a single data element to an output
-stream.
+Output Streams
+^^^^^^^^^^^^^^
+
+The Streams module also provides a set of functions for writing data elements
+to an output stream. Like the functions that operate upon input streams, these
+functions hide the details of indexing, growing an underlying buffer, and so
+on. For instance, the function :gf:`write-element` writes a single data element
+to an output stream.
 
 The following forms bind *stream* to an output stream over an empty
 string and create the string "I see!", using the function
@@ -109,13 +108,16 @@ string and create the string "I see!", using the function
 
 .. code-block:: dylan
 
-    let stream = make(<byte-string-stream>, direction: #"output");
+    let stream = make(<string-stream>, direction: #"output");
     write(stream, "I see!");
     stream-contents(stream);
 
 Calling :gf:`write` on a sequence has the same effect as calling
 :gf:`write-element` on all the elements of the sequence. For more
 information about writing to streams, see `Writing to streams`_.
+
+Positionable Streams
+^^^^^^^^^^^^^^^^^^^^
 
 Some streams are *positionable*; that is, any element of the stream can
 be accessed at any time. Positionable streams allow you to set the
@@ -158,9 +160,9 @@ example:
 .. code-block:: dylan
 
     read-to-end(make(<string-stream>,
-               contents: "hello there, world",
-               start: 6,
-               end: 11));
+                     contents: "hello there, world",
+                     start: 6,
+                     end: 11));
 
 This example evaluates to ``"there"``. The interval (*start*, *end*)
 includes the index *start* but excludes the index *end*. This is
@@ -186,29 +188,31 @@ operation has occurred will still refer to the *original* string, and
 this may not be what the user intended.
 
 To guarantee that other references to a sequence used in an output
-:class:`<sequence-stream>` will have access to any elements written to
-the sequence via the stream, supply a stretchy collection (such as a
-:drm:`<stretchy-vector>`) to :drm:`make`. A stream over a stretchy vector
-will use the same stretchy vector throughout the stream's existence.
+:class:`<sequence-stream>` will have access to any elements written to the
+sequence via the stream, supply a stretchy collection (such as a
+:drm:`<stretchy-vector>`) to :drm:`make` when creating the stream. A stream
+over a stretchy vector will use the same stretchy vector throughout the
+stream's existence.
 
 For example:
 
 .. code-block:: dylan
 
-    let sv = make(<stretchy-vector>);
+    let v = make(<stretchy-vector>);
     let stream = make(<sequence-stream>,
-                      contents: sv,
+                      contents: v,
                       direction: #"output");
-    write(stream, #(1, 2, 3, 4, 5, 6, 7, 8, 9));
-    write(stream, "ABCDEF");
-    values(sv, stream-contents(stream));
+    write(stream, #(1, 2, 3));
+    write(stream, "ABC");
+    values(v, stream-contents(stream));
 
 The example returns two values. Each value is the same (``==``) stretchy
 vector:
 
 .. code-block:: dylan
 
-    (1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F')
+    #[1, 2, 3, 'A', 'B', 'C']
+    #[1, 2, 3, 'A', 'B', 'C']
 
 If a stretchy vector is not supplied, the result is different:
 
@@ -218,23 +222,25 @@ If a stretchy vector is not supplied, the result is different:
     let stream = make(<sequence-stream>,
                       contents: v,
                       direction: #"output");
-    write(stream, #(1, 2, 3, 4, 5, 6, 7, 8, 9));
-    write(stream, "ABCDEF");
+    write(stream, #(1, 2, 3));
+    write(stream, "ABC");
     values(v, stream-contents(stream));
 
-This example returns as its first value the original vector, whose
-contents are unchanged, but the second value is a new vector:
+This example returns as its first value the original vector, which was
+initially filled with all ``#f`` and then with the values from the first call
+to :gf:`write`, but the second value is a new vector that had to be allocated
+on the second call to :gf:`write`:
 
 .. code-block:: dylan
 
-    (1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F')
+   #[1, 2, 3, #f, #f]
+   #[1, 2, 3, 'A', 'B', 'C']
 
-This difference arises because the output stream in the second example
-does not use a stretchy vector to hold the stream data. A vector of at
-least 15 elements is necessary to accommodate the elements written to
-the stream, but the vector supplied, *v*, can hold only 5. Since the
-stream cannot change *v* 's size, it must allocate a new vector each
-time it grows.
+This difference arises because the output stream in the second example does not
+use a stretchy vector to hold the stream data. A vector of at least 6 elements
+is necessary to accommodate the elements written to the stream, but ``v`` can
+hold only 5. Since the stream cannot change ``v``'s size, it must allocate a new
+vector each time it grows.
 
 Stream classes
 --------------
@@ -271,12 +277,11 @@ File streams
 ^^^^^^^^^^^^
 
 File streams are intended only for accessing the contents of files. More
-general file handling facilities, such as renaming, deleting, moving,
-and parsing directory names, are provided by the File-System module: see
-:doc:`/system/file-system` for details. The make method on
-:class:`<file-stream>` does not create direct instances of
-:class:`<file-stream>`, but instead an instance of a subclass determined
-by :gf:`type-for-file-stream`.
+general file handling facilities, such as renaming, deleting, moving, and
+parsing directory names, are provided by the :doc:`file-system
+</system/file-system>` module. The make method on :class:`<file-stream>` does
+not create direct instances of :class:`<file-stream>`, but instead an instance
+of a subclass determined by :gf:`type-for-file-stream`.
 
 make *file-stream-class*
 
