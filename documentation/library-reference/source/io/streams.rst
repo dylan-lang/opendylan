@@ -27,6 +27,18 @@ Finally, `The streams Module Reference`_ gives complete details on all
 interfaces in the Streams module. Each entry in this section is
 arranged in alphabetical order.
 
+Goals of this module
+--------------------
+
+- A generic, easy-to-use interface for streaming over aggregates of data. The
+  same high-level interface for consuming or producing is available
+  irrespective of the type of stream, or the types of the elements being
+  streamed over.
+- Efficiency, such that it may be used as a basis for the common cases of file
+  and network I/O.
+- Access to an underlying buffer management protocol.
+
+
 Error conditions
 ----------------
 
@@ -61,37 +73,6 @@ condition signaled is guaranteed to be a general instance:
 
 If the name of the condition class is given, applications are permitted
 to specialize error handlers on that class.
-
-Goals of the module
--------------------
-
-The Streams module provides:
-
-- A generic, easy-to-use interface for streaming over sequences and
-  files. The same high-level interface for consuming or producing is
-  available irrespective of the type of stream, or the types of the
-  elements being streamed over.
-- Efficiency, especially for the common case of file I/O.
-- Access to an underlying buffer management protocol.
-
-The Streams module does not address a number of related issues,
-including:
-
-- A standard object-printing package such as Smalltalk's *printOn:* or
-  Lisp's *print-object*, or a formatted printing facility such as
-  Lisp's *format*. These facilities are provided by the
-  :doc:`Print <print>`, :doc:`Format <format>`,
-  and :doc:`Format-out <format-out>` libraries. For convenience,
-  the :doc:`Common Dylan <../common-dylan/index>` library also
-  provides simple formatting capabilities.
-- General object dumping and loading.
-- A comprehensive range of I/O facilities for using memory-mapped
-  files, network connections, and so on.
-- An interface for naming files. The :doc:`Locators <../system/locators>`
-  module provides such an interface.
-- An interface to operating system functionality, such as file renaming
-  or deleting operations. The :doc:`File-System <../system/file-system>`
-  module provides such an interface.
 
 Concepts
 --------
