@@ -92,7 +92,7 @@ define open method copy-bytes
      src :: <string>, src-start :: <integer>, n :: <integer>)
  => ()
   for (i :: <integer> from 0 below n)
-    dst[dst-start + i] := as(<integer>, src[src-start + i])
+    dst[dst-start + i] := src[src-start + i]
   end
 end method;
 
