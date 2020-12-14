@@ -36,8 +36,4 @@ It also documents Dylan language extensions and the LID file format.
    t-lists/index
    win32/index
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
+:ref:`Full Index <genindex>`
