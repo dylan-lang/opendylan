@@ -5,6 +5,9 @@ The streams Module
 .. current-library:: io
 .. current-module:: streams
 
+.. TODO: I notice that with-*-to-string and stream-limit aren't documented.
+   Need to do a comprehensive check of what's in the module exports.
+
 This document describes the Streams module, which allows you to establish
 and control input to and output from aggregates of data, such as files
 on disk, or sequences. This module, together with the Standard-IO
@@ -172,106 +175,32 @@ of convenient utility functions for operating on streams and returns all
 the elements up to the end of the stream from the stream's current
 position.
 
-Streams, growing sequences, and object identity
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-When writing to output streams over sequences, Dylan may from time to
-time need to grow the underlying sequence that it is using to represent
-the stream data.
-
-Consider the example of an output stream instantiated over an empty
-string. As soon as a write operation is performed on the stream, it is
-necessary to replace the string object used in the representation of the
-string stream. As well as incurring the cost of creating a new string,
-references to the string within the program after the replacement
-operation has occurred will still refer to the *original* string, and
-this may not be what the user intended.
-
-To guarantee that other references to a sequence used in an output
-:class:`<sequence-stream>` will have access to any elements written to the
-sequence via the stream, supply a stretchy collection (such as a
-:drm:`<stretchy-vector>`) to :drm:`make` when creating the stream. A stream
-over a stretchy vector will use the same stretchy vector throughout the
-stream's existence.
-
-For example:
-
-.. code-block:: dylan
-
-    let v = make(<stretchy-vector>);
-    let stream = make(<sequence-stream>,
-                      contents: v,
-                      direction: #"output");
-    write(stream, #(1, 2, 3));
-    write(stream, "ABC");
-    values(v, stream-contents(stream));
-
-The example returns two values. Each value is the same (``==``) stretchy
-vector:
-
-.. code-block:: dylan
-
-    #[1, 2, 3, 'A', 'B', 'C']
-    #[1, 2, 3, 'A', 'B', 'C']
-
-If a stretchy vector is not supplied, the result is different:
-
-.. code-block:: dylan
-
-    let v = make(<vector>, size: 5);
-    let stream = make(<sequence-stream>,
-                      contents: v,
-                      direction: #"output");
-    write(stream, #(1, 2, 3));
-    write(stream, "ABC");
-    values(v, stream-contents(stream));
-
-This example returns as its first value the original vector, which was
-initially filled with all ``#f`` and then with the values from the first call
-to :gf:`write`, but the second value is a new vector that had to be allocated
-on the second call to :gf:`write`:
-
-.. code-block:: dylan
-
-   #[1, 2, 3, #f, #f]
-   #[1, 2, 3, 'A', 'B', 'C']
-
-This difference arises because the output stream in the second example does not
-use a stretchy vector to hold the stream data. A vector of at least 6 elements
-is necessary to accommodate the elements written to the stream, but ``v`` can
-hold only 5. Since the stream cannot change ``v``'s size, it must allocate a new
-vector each time it grows.
-
 Stream classes
 --------------
 
 The exported streams class heterarchy includes the classes shown in
-`Streams module classes`_. Classes shown in bold are all instantiable.
+the image below. Classes shown in bold are all instantiable.
+
+.. Original drawing:
+   https://docs.google.com/drawings/d/1HGgJc2Ee-qFAPJqsYNGLhHTk8CmfxyWQdazuntLhcy4/
+   There should be a link to request edit permission.
 
 .. figure:: ../images/streams.png
    :align: center
 
-* s - sealed  | o - open
-* p - primary | f - free
-* c - concrete | a - abstract
-* u - uninstantiable | i - instantiable
-
-Streams module classes
-^^^^^^^^^^^^^^^^^^^^^^
+.. note:: :class:`<file-stream>` is included for completeness but is actually
+   exported from the :doc:`file-system </system/file-system>` module.
 
 - :class:`<stream>`
 - :class:`<positionable-stream>`
 - :class:`<buffered-stream>`
 - :class:`<file-stream>`
 - :class:`<sequence-stream>`
+- :class:`<string-stream>`
+- :class:`<byte-string-stream>`
+- :class:`<unicode-string-stream>`
 - :class:`<wrapper-stream>`
 - :class:`<indenting-stream>`
-
-Creating streams
-^^^^^^^^^^^^^^^^
-
-This section describes how to create and manage different types of file
-stream and sequence stream.
 
 File streams
 ^^^^^^^^^^^^
@@ -279,9 +208,9 @@ File streams
 File streams are intended only for accessing the contents of files. More
 general file handling facilities, such as renaming, deleting, moving, and
 parsing directory names, are provided by the :doc:`file-system
-</system/file-system>` module. The make method on :class:`<file-stream>` does
-not create direct instances of :class:`<file-stream>`, but instead an instance
-of a subclass determined by :gf:`type-for-file-stream`.
+</system/file-system>` module. The :drm:`make` method on :class:`<file-stream>`
+does not create direct instances of :class:`<file-stream>`, but instead an
+instance of a subclass determined by :gf:`type-for-file-stream`.
 
 make *file-stream-class*
 
@@ -415,22 +344,98 @@ streams while the stream has it open. The possible values are:
 Sequence streams
 ^^^^^^^^^^^^^^^^
 
-There are *make* methods on the following stream classes:
+Dylan provides various functions for manipulating sequences, such as
+:drm:`concatenate` and :drm:`copy-sequence`, but sometimes it can be useful to
+use the streams model to create or consume sequences. For example, if you're
+writing a library that reads bytes from a network socket you might write tests
+that use a :class:`<sequence-stream>` over a :class:`<byte-vector>` to mock the
+network stream.
 
-- :class:`<sequence-stream>`
-- :class:`<string-stream>`
-- :class:`<byte-string-stream>`
-- :class:`<unicode-string-stream>`
+String streams are the most commonly used type of sequence stream so there are
+several features to make using them easier.
 
-Rather than creating direct instances of :class:`<sequence-stream>` or
-:class:`<string-stream>`, the :drm:`make` methods for those classes
-might create an instance of a subclass determined by
-:gf:`type-for-sequence-stream`.
+1. Calling ``make(<sequence-stream>, contents: "a string", direction: #"input")``
+   returns a :class:`<string-stream>`.
 
-- :meth:`make(<sequence-stream>)`
-- :meth:`make(<string-stream>)`
-- :meth:`make(<byte-string-stream>)`
-- :meth:`make(<unicode-string-stream>)`
+2. :macro:`with-output-to-string` provides a convenient way to create a string
+   using multiple calls to :gf:`format`.
+
+3. :macro:`with-input-from-string` can be used to read the contents of a string.
+
+4. :gf:`format-to-string` is implemented by making an output
+   :class:`<string-stream>`, calling :gf:`format` on it, and then returning the
+   stream contents.
+
+
+Sequence streams and object identity
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When writing to output streams over sequences, Dylan may from time to
+time need to grow the underlying sequence that it is using to represent
+the stream data.
+
+Consider the example of an output stream instantiated over an empty
+string. As soon as a write operation is performed on the stream, it is
+necessary to replace the string object used in the representation of the
+string stream. As well as incurring the cost of creating a new string,
+references to the string within the program after the replacement
+operation has occurred will still refer to the *original* string, and
+this may not be what the user intended.
+
+To guarantee that other references to a sequence used in an output
+:class:`<sequence-stream>` will have access to any elements written to the
+sequence via the stream, supply a stretchy collection (such as a
+:drm:`<stretchy-vector>`) to :drm:`make` when creating the stream. A stream
+over a stretchy vector will use the same stretchy vector throughout the
+stream's existence.
+
+For example:
+
+.. code-block:: dylan
+
+    let v = make(<stretchy-vector>);
+    let stream = make(<sequence-stream>,
+                      contents: v,
+                      direction: #"output");
+    write(stream, #(1, 2, 3));
+    write(stream, "ABC");
+    values(v, stream-contents(stream));
+
+The example returns two values. Each value is the same (``==``) stretchy
+vector:
+
+.. code-block:: dylan
+
+    #[1, 2, 3, 'A', 'B', 'C']
+    #[1, 2, 3, 'A', 'B', 'C']
+
+If a stretchy vector is not supplied, the result is different:
+
+.. code-block:: dylan
+
+    let v = make(<vector>, size: 5);
+    let stream = make(<sequence-stream>,
+                      contents: v,
+                      direction: #"output");
+    write(stream, #(1, 2, 3));
+    write(stream, "ABC");
+    values(v, stream-contents(stream));
+
+This example returns as its first value the original vector, which was
+initially filled with all ``#f`` and then with the values from the first call
+to :gf:`write`, but the second value is a new vector that had to be allocated
+on the second call to :gf:`write`:
+
+.. code-block:: dylan
+
+   #[1, 2, 3, #f, #f]
+   #[1, 2, 3, 'A', 'B', 'C']
+
+This difference arises because the output stream in the second example does not
+use a stretchy vector to hold the stream data. A vector of at least 6 elements
+is necessary to accommodate the elements written to the stream, but ``v`` can
+hold only 5. Since the stream cannot change ``v``'s size, it must allocate a new
+vector each time it grows.
 
 Closing streams
 ^^^^^^^^^^^^^^^
@@ -2775,8 +2780,8 @@ are exported from the *streams* module.
 .. generic-function:: type-for-sequence-stream
    :open:
 
-   Finds the type of sequence-stream class that needs to be instantiated
-   for a given sequence.
+   Determines the :class:`<sequence-stream>` subclass to instantiate to create
+   a stream over the given sequence.
 
    :signature: type-for-sequence-stream *sequence* => *sequence-stream-type*
 
@@ -2785,19 +2790,22 @@ are exported from the *streams* module.
 
    :description:
 
-     Returns the sequence-stream class to instantiate over a given
-     sequence object. The method for :meth:`make(<sequence-stream>)`
+     Returns the :class:`<sequence-stream>` subclass to instantiate to create a
+     stream over *sequence*. The method for :meth:`make(<sequence-stream>)`
      calls this function to determine the concrete subclass of
      :class:`<sequence-stream>` that it should instantiate.
 
-     There are ``type-for-sequence-stream`` methods for each of the
-     string object classes. These methods return a stream class object
-     that the Streams module considers appropriate.
+     There are :gf:`type-for-sequence-stream` methods for each of the string
+     classes. These methods return a stream class that the Streams module
+     considers appropriate.
 
    :seealso:
 
      - :meth:`make(<sequence-stream>)`
      - :class:`<sequence-stream>`
+     - :class:`<string-stream>`
+     - :class:`<byte-string-stream>`
+     - :class:`<unicode-string-stream>`
 
 .. type:: <unicode-character>
 
