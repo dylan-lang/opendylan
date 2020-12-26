@@ -7,33 +7,34 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Table constructor. Syntax:
-//   table(#"red"=>"stop", #"green"=>"go");
-//   table(<string-table>, "red"=>"stop", "green"=>"go");
+//   tabling(#"red"=>"stop", #"green"=>"go");
+//   tabling(<string-table>, "red"=>"stop", "green"=>"go");
 //
-define macro table 
+define macro tabling
 
   // Matches when optional class included.
-  { table(?table-class:expression, ?table-contents) }
-    => { let ht = make(?table-class); ?table-contents; ht; }
+  { tabling(?class:expression, ?contents) }
+    => { let t :: ?class = make(?class); ?contents; t; }
 
   // Matches without optional class.
-  { table(?rest:*) } => { table(<table>, ?rest); }
+  { tabling(?more:*) } => { tabling(<table>, ?more); }
 
-  table-contents:
+  contents:
   { } => { }
   { ?key:expression => ?value:expression, ... }
-    => { ht[?key] := ?value; ... }
-end macro table;
+    => { t[?key] := ?value; ... }
+end macro;
 
 
 // Code is taken from GD, using a superclass of <table> instead of <value-table>.
 define sealed class <case-insensitive-string-table> (<table>)
-end class <case-insensitive-string-table>;
+end class;
 
 define sealed domain make(singleton(<case-insensitive-string-table>));
 define sealed domain initialize(<case-insensitive-string-table>);
 
-define sealed inline method table-protocol (ht :: <case-insensitive-string-table>)
+define sealed inline method table-protocol
+    (table :: <case-insensitive-string-table>)
  => (key-test :: <function>, key-hash :: <function>);
-  values(case-insensitive-equal, case-insensitive-string-hash);
-end method table-protocol;
+  values(case-insensitive-equal, case-insensitive-string-hash)
+end method;

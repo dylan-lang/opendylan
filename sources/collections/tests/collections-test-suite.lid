@@ -13,6 +13,7 @@ Files:     library
            bit-vector-not
            bit-count
            bit-set-tests
+           table-extensions
            collections-test-suite
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.

@@ -344,14 +344,14 @@ from the module *table-extensions*.
 
      .. note:: To empty collections that are not instances of :drm:`<mutable-explicit-key-collection>`, use *size-setter*.
 
-.. macro:: table
+.. macro:: tabling
    :macro-type: Function
    
    Creates a table and populates it with keys and values.
    
    :macrocall:
      .. parsed-literal::
-        table( { `class`, } `key` => `value`, ...)
+        tabling( { `class`, } `key` => `value`, ...)
            
    :parameter class:  An instance of :drm:`<class>`. Optional.
    :parameter key:    An expression.
@@ -367,5 +367,5 @@ from the module *table-extensions*.
    
      .. code-block:: dylan
 
-       let my-table = table("red"=>"stop", "green"=>"go");
-       let my-table = table(<string-table>, "red"=>"stop", "green"=>"go");
+       let my-table = tabling("red"=>"stop", "green"=>"go");
+       let my-table = tabling(<string-table>, "red"=>"stop", "green"=>"go");

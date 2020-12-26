@@ -52,4 +52,6 @@ define suite collections-test-suite ()
   suite bit-vector-test-suite;
   suite bit-set-test-suite;
   test bug-4351;
-end suite collections-test-suite;
+  test test-tabling-macro-without-class;
+  test test-tabling-macro-with-class;
+end suite;
