@@ -149,13 +149,50 @@ define method llvm-back-end-unwind-exception-alignment
   16
 end method;
 
+// riscv64
+
+define abstract class <llvm-riscv64-back-end> (<llvm-back-end>)
+end class;
+
+define method back-end-word-size
+    (back-end :: <llvm-riscv64-back-end>)
+ => (number-bytes :: <integer>)
+  8
+end method back-end-word-size;
+
+define method llvm-back-end-data-layout
+    (back-end :: <llvm-riscv64-back-end>) => (layout :: <string>);
+  "e-m:e-p:64:64-i64:64-i128:128-n64-S128"
+end method;
+
+define method llvm-back-end-unwind-exception-size
+    (back-end :: <llvm-riscv64-back-end>)
+ => (number-words :: <integer>)
+  4
+end method;
+
+define method llvm-back-end-unwind-exception-alignment
+    (back-end :: <llvm-riscv64-back-end>)
+ => (alignment-bytes :: <integer>)
+  8
+end method;
+
+define method llvm-back-end-calling-convention-fast
+    (back-end :: <llvm-riscv64-back-end>)
+ => (calling-convention :: <integer>);
+  // The PLT on RISC-V overwrites temporary registers used by fastcc
+  // for passing arguments to the entered function, so we're forced to
+  // use the ordinary C calling convention for IEPs and primitives.
+  $llvm-calling-convention-c
+end method;
+
 
 /// Concrete LLVM back-end subclasses
 
 // x86-windows
 
 define class <llvm-x86-windows-back-end> (<llvm-x86-back-end>,
-                                        <llvm-windows-back-end>)
+                                          <llvm-windows-back-end>)
 end class;
 
 register-back-end(<llvm-x86-windows-back-end>, #"llvm", #"x86-win32");
@@ -255,6 +292,19 @@ register-back-end(<llvm-aarch64-linux-back-end>, #"llvm", #"aarch64-linux");
 define method llvm-back-end-target-triple
     (back-end :: <llvm-aarch64-linux-back-end>) => (triple :: <string>);
   "aarch64-unknown-linux-gnu"
+end method;
+
+// riscv64-linux
+
+define class <llvm-riscv64-linux-back-end> (<llvm-riscv64-back-end>,
+                                            <llvm-unix-back-end>)
+end class;
+
+register-back-end(<llvm-riscv64-linux-back-end>, #"llvm", #"riscv64-linux");
+
+define method llvm-back-end-target-triple
+    (back-end :: <llvm-riscv64-linux-back-end>) => (triple :: <string>);
+  "riscv64-unknown-linux-gnu"
 end method;
 
 

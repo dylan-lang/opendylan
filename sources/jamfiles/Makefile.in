@@ -20,7 +20,8 @@ SCRIPTS         = \
                   $(srcdir)/x86-netbsd-build.jam \
                   $(srcdir)/x86_64-netbsd-build.jam \
                   $(srcdir)/arm-linux-build.jam \
-                  $(srcdir)/aarch64-linux-build.jam
+                  $(srcdir)/aarch64-linux-build.jam \
+                  $(srcdir)/riscv64-linux-build.jam
 
 .PHONY: install
 

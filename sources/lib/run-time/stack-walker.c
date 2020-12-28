@@ -1045,6 +1045,41 @@ void dylan_dump_callstack(void *ctxt)
 
     unw_set_reg(&cursor, UNW_REG_IP, mc->pc);
     unw_set_reg(&cursor, UNW_REG_SP, mc->sp);
+#elif (defined(OPEN_DYLAN_ARCH_RISCV64) && defined(OPEN_DYLAN_PLATFORM_LINUX))
+    unw_set_reg(&cursor, UNW_RISCV_X1, mc->__gregs[1]);
+    unw_set_reg(&cursor, UNW_RISCV_X2, mc->__gregs[2]);
+    unw_set_reg(&cursor, UNW_RISCV_X3, mc->__gregs[3]);
+    unw_set_reg(&cursor, UNW_RISCV_X4, mc->__gregs[4]);
+    unw_set_reg(&cursor, UNW_RISCV_X5, mc->__gregs[5]);
+    unw_set_reg(&cursor, UNW_RISCV_X6, mc->__gregs[6]);
+    unw_set_reg(&cursor, UNW_RISCV_X7, mc->__gregs[7]);
+    unw_set_reg(&cursor, UNW_RISCV_X8, mc->__gregs[8]);
+    unw_set_reg(&cursor, UNW_RISCV_X9, mc->__gregs[9]);
+    unw_set_reg(&cursor, UNW_RISCV_X10, mc->__gregs[10]);
+    unw_set_reg(&cursor, UNW_RISCV_X11, mc->__gregs[11]);
+    unw_set_reg(&cursor, UNW_RISCV_X12, mc->__gregs[12]);
+    unw_set_reg(&cursor, UNW_RISCV_X13, mc->__gregs[13]);
+    unw_set_reg(&cursor, UNW_RISCV_X14, mc->__gregs[14]);
+    unw_set_reg(&cursor, UNW_RISCV_X15, mc->__gregs[15]);
+    unw_set_reg(&cursor, UNW_RISCV_X16, mc->__gregs[16]);
+    unw_set_reg(&cursor, UNW_RISCV_X17, mc->__gregs[17]);
+    unw_set_reg(&cursor, UNW_RISCV_X18, mc->__gregs[18]);
+    unw_set_reg(&cursor, UNW_RISCV_X19, mc->__gregs[19]);
+    unw_set_reg(&cursor, UNW_RISCV_X20, mc->__gregs[20]);
+    unw_set_reg(&cursor, UNW_RISCV_X21, mc->__gregs[21]);
+    unw_set_reg(&cursor, UNW_RISCV_X22, mc->__gregs[22]);
+    unw_set_reg(&cursor, UNW_RISCV_X23, mc->__gregs[23]);
+    unw_set_reg(&cursor, UNW_RISCV_X24, mc->__gregs[24]);
+    unw_set_reg(&cursor, UNW_RISCV_X25, mc->__gregs[25]);
+    unw_set_reg(&cursor, UNW_RISCV_X26, mc->__gregs[26]);
+    unw_set_reg(&cursor, UNW_RISCV_X27, mc->__gregs[27]);
+    unw_set_reg(&cursor, UNW_RISCV_X28, mc->__gregs[28]);
+    unw_set_reg(&cursor, UNW_RISCV_X29, mc->__gregs[29]);
+    unw_set_reg(&cursor, UNW_RISCV_X30, mc->__gregs[30]);
+    unw_set_reg(&cursor, UNW_RISCV_X31, mc->__gregs[31]);
+
+    unw_set_reg(&cursor, UNW_REG_IP, mc->__gregs[REG_PC]);
+    unw_set_reg(&cursor, UNW_REG_SP, mc->__gregs[REG_SP]);
 #elif (defined(OPEN_DYLAN_ARCH_X86) && defined(OPEN_DYLAN_PLATFORM_LINUX))
     unw_set_reg(&cursor, UNW_X86_EAX, mc->gregs[REG_EAX]);
     unw_set_reg(&cursor, UNW_X86_ECX, mc->gregs[REG_ECX]);

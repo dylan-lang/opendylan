@@ -81,6 +81,9 @@ static inline void SetIP(void *uap, uintptr_t ip)
 #elif defined OPEN_DYLAN_ARCH_AARCH64
   uc->uc_mcontext.regs[30] = uc->uc_mcontext.pc; // Link register
   uc->uc_mcontext.pc = ip;
+#elif defined OPEN_DYLAN_ARCH_RISCV64
+  uc->uc_mcontext.__gregs[REG_RA] = uc->uc_mcontext.__gregs[REG_PC]; // Return address register
+  uc->uc_mcontext.__gregs[REG_PC] = ip;
 #else
 #error Unsupported Linux arch
 #endif
