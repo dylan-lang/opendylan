@@ -5,6 +5,15 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+/// Target calling convention support
+
+define method llvm-back-end-calling-convention-fast
+    (back-end :: <llvm-back-end>)
+ => (calling-convention :: <integer>);
+  $llvm-calling-convention-fast
+end method;
+
+
 /// OS platform subclasses
 
 define abstract class <llvm-unix-back-end> (<llvm-back-end>)

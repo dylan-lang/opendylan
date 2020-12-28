@@ -164,7 +164,7 @@ define method make-entry-point-function
             | member?(#"outer", descriptor.entry-point-attributes))
         $llvm-calling-convention-c
       else
-        $llvm-calling-convention-fast
+        llvm-back-end-calling-convention-fast(back-end)
       end if;
 
   make(<llvm-function>,
@@ -1161,7 +1161,8 @@ define singular variable-arity outer entry-point-descriptor rest-key-xep-n
                                     emit-reference(be, module, &false),
                                     function)),
                  type: return-type,
-                 calling-convention: $llvm-calling-convention-fast)
+                 calling-convention:
+                   llvm-back-end-calling-convention-fast(be))
   end ins--if
 end entry-point-descriptor;
 
@@ -1528,7 +1529,8 @@ define singular variable-arity outer entry-point-descriptor rest-key-mep-n
                  concatenate(arguments,
                              vector(extra-ptr, next-methods, meth)),
                  type: return-type,
-                 calling-convention: $llvm-calling-convention-fast)
+                 calling-convention:
+                   llvm-back-end-calling-convention-fast(be))
 end entry-point-descriptor;
 
 

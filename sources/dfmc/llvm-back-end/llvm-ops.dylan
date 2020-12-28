@@ -314,7 +314,8 @@ define method op--call-iep
      #key function-type :: false-or(<llvm-function-type>),
           next :: <llvm-value> = $object-pointer-undef,
           function :: <llvm-value> = $object-pointer-undef,
-          calling-convention :: <integer> = $llvm-calling-convention-fast,
+          calling-convention :: <integer>
+            = llvm-back-end-calling-convention-fast(back-end),
           tail-call? = #f)
  => (call :: <llvm-value>);
   let word-size = back-end-word-size(back-end);
