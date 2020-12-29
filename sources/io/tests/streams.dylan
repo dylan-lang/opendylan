@@ -789,7 +789,7 @@ define test test-stretchy-stream (description: "<string-stream> stretchy vector 
           as(<stretchy-vector>, list(1,2,3,4,5,6))  );
   end;
 
- begin
+  begin
     let v = make(<vector>, size: 3);
     let s = make(<string-stream>, contents: v, direction: #"output");
     write(s, #(1, 2, 3));
@@ -805,7 +805,7 @@ define test test-stretchy-stream (description: "<string-stream> stretchy vector 
     check("test stream with stretchy vector", \=, stream-contents(s),
             as(<stretchy-vector>, list(1,2,3,4,5,6)));
   end;
- begin
+  begin
     let v = make(<vector>, size: 3);
     let s = make(<sequence-stream>, contents: v, direction: #"output");
     write(s, #(1, 2, 3));
@@ -817,6 +817,16 @@ end test;
 
 define test test-<sequence-stream> ()
   test-stream-class(<sequence-stream>, instantiable?: #t);
+end test;
+
+define test test-bug-1360 ()
+  // https://github.com/dylan-lang/opendylan/issues/1360 -- characters were
+  // being converted to integers when written to an underlying <vector>.
+  let v = make(<vector>, size: 5);
+  let stream = make(<sequence-stream>, contents: v, direction: #"output");
+  write(stream, #(1, 2, 3));
+  write(stream, "ABC");
+  assert-equal(#[1, 2, 3, 'A', 'B', 'C'], stream-contents(stream));
 end test;
 
 define test test-<string-stream> ()
@@ -845,6 +855,7 @@ end test;
 
 define suite streams-test-suite ()
   test test-<sequence-stream>;
+  test test-bug-1360;
   test test-<string-stream>;
   test test-<byte-string-stream>;
   test test-<wrapper-stream>;
