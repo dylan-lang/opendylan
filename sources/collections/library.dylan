@@ -87,7 +87,7 @@ define module table-extensions
       	      remove-all-keys!,
       	      merge-hash-ids },
     export: all;
-  export \table, <case-insensitive-string-table>;
+  export \tabling, <case-insensitive-string-table>;
 end module table-extensions;
 
 define module collections-internals

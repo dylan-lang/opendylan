@@ -82,6 +82,12 @@ testworks Library
 collections Library
 -------------------
 
+* The ``table`` macro has been renamed to ``tabling``. ``table`` is not an
+  unlikely name for a function parameter when writing code that generically
+  operates on tables, and the existence of the ``table`` macro causes a
+  confusing compiler warning for references to that name that aren't in the
+  correct form.
+
 big-integers library
 --------------------
 
