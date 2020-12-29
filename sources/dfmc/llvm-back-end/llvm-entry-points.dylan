@@ -931,6 +931,7 @@ define variable-arity outer entry-point-descriptor rest-xep
  => (#rest values)
   let module = be.llvm-builder-module;
   let word-size = back-end-word-size(be);
+  let va-list = op--va-decl-start(be);
 
   let error-bb = make(<llvm-basic-block>);
   let typecheck-bb = make(<llvm-basic-block>);
@@ -950,7 +951,6 @@ define variable-arity outer entry-point-descriptor rest-xep
   op--type-check-lambda-arguments(be, function-cast, arguments);
 
   // Retrieve the #rest arguments as a vector
-  let va-list = op--va-decl-start(be);
   let count = ins--sub(be, n, num);
   let rest-vector = op--va-list-to-stack-vector(be, va-list, count);
   op--va-end(be, va-list);
@@ -976,6 +976,12 @@ define variable-arity outer entry-point-descriptor rest-key-xep
     let module = be.llvm-builder-module;
     let word-size = back-end-word-size(be);
 
+    // Allocate a buffer for the required, optionals, and keyword arguments
+    let buf = ins--alloca(be, $llvm-object-pointer-type, num,
+                          alignment: word-size);
+
+    let va-list = op--va-decl-start(be);
+
     let lambda-class :: <&class> = dylan-value(#"<keyword-method>");
     let meth-cast = op--object-pointer-cast(be, function, lambda-class);
 
@@ -990,10 +996,6 @@ define variable-arity outer entry-point-descriptor rest-key-xep
     ins--if (be, op--unlikely(be, cmp))
       op--argument-count-error(be, function, n);
     ins--else
-      // Allocate a buffer for the required, optionals, and keyword arguments
-      let buf = ins--alloca(be, $llvm-object-pointer-type, num,
-                            alignment: word-size);
-
       // Retrieve the types of the required arguments
       let signature-required-slot-ptr
         = op--getslotptr(be, signature,
@@ -1005,7 +1007,6 @@ define variable-arity outer entry-point-descriptor rest-key-xep
                                   #"<simple-object-vector>");
 
       // Type-check and buffer the required arguments
-      let va-list = op--va-decl-start(be);
       ins--iterate required-args-loop (be, i = 0)
         let loop-cmp = ins--icmp-slt(be, i, nreq);
         ins--if (be, loop-cmp)
@@ -1061,6 +1062,8 @@ define singular variable-arity outer entry-point-descriptor rest-key-xep-n
   let module = be.llvm-builder-module;
   let word-size = back-end-word-size(be);
 
+  let va-list = op--va-decl-start(be);
+
   let lambda-class :: <&class> = dylan-value(#"<keyword-method>");
   let meth-cast = op--object-pointer-cast(be, function, lambda-class);
 
@@ -1103,7 +1106,6 @@ define singular variable-arity outer entry-point-descriptor rest-key-xep-n
                                 #"<simple-object-vector>");
 
     // Type-check and buffer the required arguments
-    let va-list = op--va-decl-start(be);
     ins--iterate required-args-loop (be, i = 0)
       let loop-cmp = ins--icmp-slt(be, i, nreq);
       ins--if (be, loop-cmp)
@@ -1391,6 +1393,10 @@ define variable-arity outer entry-point-descriptor rest-key-mep
   else
     let word-size = back-end-word-size(be);
 
+    // Allocate a buffer for the required and keyword arguments
+    let buf = ins--alloca(be, $llvm-object-pointer-type, num,
+                          alignment: word-size);
+
     let lambda-class :: <&class> = dylan-value(#"<keyword-method>");
     let meth-cast = op--object-pointer-cast(be, meth, lambda-class);
 
@@ -1399,10 +1405,6 @@ define variable-arity outer entry-point-descriptor rest-key-mep
 
     // Extract the required arguments count
     let nreq = ins--and(be, raw-properties, $signature-number-required-mask);
-
-    // Allocate a buffer for the required and keyword arguments
-    let buf = ins--alloca(be, $llvm-object-pointer-type, num,
-                          alignment: word-size);
 
     // Buffer the required arguments
     let va-list = op--va-decl-start(be);
