@@ -10,11 +10,11 @@
 <!DOCTYPE html>
 {% endblock %}
 {% set navigation_bar = [
-    ('history/index', 'History'),
-    ('news/index', 'News'),
+    ('download/index', 'Download'),
     ('documentation/index', 'Documentation'),
     ('community/index', 'Participate'),
-    ('download/index', 'Download'),
+    ('https://play.opendylan.org', 'Play'),
+    ('history/index', 'History'),
 ] -%}
 {% set active_page = pagename|default('index') -%}
 {%- block htmltitle %}
@@ -46,7 +46,8 @@
          <div class="nav-collapse">
            <ul class="nav">
            {% for page, caption in navigation_bar -%}
-             <li{% if page == active_page %} class="active"{% endif %}><a href="{{ pathto(page) }}">{{ caption|e }}</a>
+             <li {% if page == active_page %} class="active" {% endif %} >
+               <a href="{% if page[:4] == 'http' %} {{page}} {% else %} {{ pathto(page) }} {% endif %}">{{ caption|e }}</a>
            {% endfor -%}
            </ul>
            <form class="navbar-search pull-right" method="get" action="http://www.google.com/cse" id="cse-search-box">
