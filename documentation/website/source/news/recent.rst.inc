@@ -1,3 +1,6 @@
+:doc:`Dylan Playground Launched </news/2020/12/30/playground>` *- 2020-12-30*
+  Try Dylan in your web browser.
+
 :doc:`New release: 2020.1 </news/2020/10/10/new-release>` *- 2020-10-10*
   Open Dylan 2020.1 released.
 
@@ -12,6 +15,3 @@
 
 :doc:`Call for Help! </news/2014/01/28/call-for-help>` *- 2014-01-28*
   We're looking for help with various projects!
-
-:doc:`New release: 2013.2 </news/2013/12/23/new-release>` *- 2013-12-23*
-  We just released Open Dylan 2013.2.
