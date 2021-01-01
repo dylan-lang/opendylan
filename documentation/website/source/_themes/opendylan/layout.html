@@ -10,11 +10,11 @@
 <!DOCTYPE html>
 {% endblock %}
 {% set navigation_bar = [
-    ('history/index', 'History'),
-    ('news/index', 'News'),
+    ('download/index', 'Download'),
     ('documentation/index', 'Documentation'),
     ('community/index', 'Participate'),
-    ('download/index', 'Download'),
+    ('https://play.opendylan.org', 'Play'),
+    ('history/index', 'History'),
 ] -%}
 {% set active_page = pagename|default('index') -%}
 {%- block htmltitle %}
@@ -46,7 +46,8 @@
          <div class="nav-collapse">
            <ul class="nav">
            {% for page, caption in navigation_bar -%}
-             <li{% if page == active_page %} class="active"{% endif %}><a href="{{ pathto(page) }}">{{ caption|e }}</a>
+             <li {% if page == active_page %} class="active" {% endif %} >
+               <a href="{% if page[:4] == 'http' %} {{page}} {% else %} {{ pathto(page) }} {% endif %}">{{ caption|e }}</a>
            {% endfor -%}
            </ul>
            <form class="navbar-search pull-right" method="get" action="http://www.google.com/cse" id="cse-search-box">
@@ -97,18 +98,6 @@
      </div>
       <script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
 
-      <!-- Piwik -->
-      <script type="text/javascript">
-      var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.opendylan.org/" : "http://piwik.opendylan.org/");
-      document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-      </script><script type="text/javascript">
-      try {
-      var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
-      piwikTracker.trackPageView();
-      piwikTracker.enableLinkTracking();
-      } catch( err ) {}
-      </script><noscript><p><img src="http://piwik.opendylan.org/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
-      <!-- End Piwik Tracking Code -->
    </footer>
 {% endblock %}
 
