@@ -25,9 +25,12 @@ footer.navbar {
   padding-top: 50px;
   margin-top: 0px;
 }
-/* Make the headerlink less obnoxiously visible */
+/* Make the headerlink less obnoxiously visible.  Better would be to make it
+   only appear when the pointer is over the header but I couldn't figure out
+   how to do that without javascript. --cgay */
 a.headerlink {
   color: silver;
+  opacity: 0.3;
 }
 #code-carousel {
   margin: 10px 0;
