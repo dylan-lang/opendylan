@@ -231,7 +231,18 @@ end method print-unique-name;
 
 /// Number/string conversion
 
-define constant $number-characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+define constant $number-characters :: <byte-string>
+  = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+define constant $character-numbers :: <simple-object-vector>
+  = #[#f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f,  // 00-0F
+      #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f,  // 10-1F
+      #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f, #f,  // 20-2F
+       0,  1,  2,  3,  4,  5,  6,  7,  8,  9, #f, #f, #f, #f, #f, #f,  // 30-3F
+      #f, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,  // 40-4F
+      25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, #f, #f, #f, #f, #f,  // 50-5F
+      #f, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,  // 60-6F
+      25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, #f, #f, #f, #f, #f]; // 70-7F
 
 define inline function integer-to-character
     (integer :: <integer>) => (character :: <byte-character>)
@@ -240,8 +251,7 @@ end function integer-to-character;
 
 define inline function character-to-integer
     (character :: <byte-character>) => (integer :: false-or(<integer>))
-  //---*** We might want to make this more efficient...
-  position($number-characters, character)
+  element($character-numbers, as(<integer>, character), default: #f)
 end function character-to-integer;
 
 define function integer-to-string
@@ -290,7 +300,7 @@ define function integer-to-string
 end function integer-to-string;
 
 // Given a string, parse an integer from it.  Skips left whitespace.
-define function string-to-integer
+define method string-to-integer
     (string :: <string>,
      #key base          :: <integer> = 10,
           start         :: <integer> = 0,
@@ -326,8 +336,7 @@ define function string-to-integer
   let next-key :: <integer>
     = block (return)
         for (i :: <integer> from start below stop)
-          let ch :: <byte-character> = as-uppercase(string[i]);
-          let digit = character-to-integer(ch);
+          let digit = character-to-integer(string[i]);
           when (~digit | digit >= base)
             return(i)
           end;
@@ -344,7 +353,14 @@ define function string-to-integer
     end;
     values(default, actual-start)
   end
-end function string-to-integer;
+end method string-to-integer;
+
+define sealed copy-down-method string-to-integer
+    (string :: <byte-string>,
+     #key base          :: <integer> = 10,
+          start         :: <integer> = 0,
+          end: stop     :: false-or(<integer>),
+          default = $unsupplied);
 
 define inline-only function nan? (float :: <float>) => (nan? :: <boolean>)
   classify-float(float) == #"nan"
@@ -526,8 +542,7 @@ define function string-to-machine-word
   let next-key
     = block (return)
         for (i from start below stop)
-          let ch :: <byte-character> = as-uppercase(str[i]);
-          let digit = character-to-integer(ch);
+          let digit = character-to-integer(str[i]);
           when (~digit | digit >= 16)
             return(i > start & i)
           end;
