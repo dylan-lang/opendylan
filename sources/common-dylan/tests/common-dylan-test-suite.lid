@@ -5,6 +5,7 @@ Target-Type:  dll
 Files: library
        variables
        classes
+       format-tests
        functions
        macros
        streams

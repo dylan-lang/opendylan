@@ -24,6 +24,10 @@ define library common-dylan
     simple-format,
     byte-vector,
     transcendentals;
+
+  // For the test suite only.
+  export
+    common-dylan-internals;
 end library common-dylan;
 
 define module simple-profiling
@@ -307,4 +311,8 @@ define module common-dylan-internals
   use simple-profiling;
   use simple-timers;
   use simple-format;
+
+  // Exports for the test suite only.
+  export
+    character-to-integer;
 end module common-dylan-internals;
