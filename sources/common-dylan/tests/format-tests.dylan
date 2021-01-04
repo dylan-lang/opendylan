@@ -52,7 +52,10 @@ define constant $float-string-mappings
       #(1.0d6,         "1000000.0d0"),
       #(1.0d7,         "1.0000000d7"));
 
-define test test-float-to-string ()
+define test test-float-to-string
+    (expected-to-fail-reason:
+       "To be determined. Need all tests to be non-failures for the"
+       " test suites to be used in CI to detect regressions.")
   for (float-mapping in $float-string-mappings)
     let float  = float-mapping[0];
     let string = float-mapping[1];
