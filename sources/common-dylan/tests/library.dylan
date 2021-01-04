@@ -22,6 +22,7 @@ define module common-dylan-test-suite
     import: { encode-single-float,
               encode-double-float,
               <abstract-integer> };
+  use common-dylan-internals;
   use common-extensions;
   use streams-protocol;
   use locators-protocol;
