@@ -1,5 +1,5 @@
 Module:       common-dylan-test-suite
-Synopsis:     Common Dylan library test suite
+Synopsis:     Tests for transcendentals:common-dylan
 Author:       Andy Armstrong, Carl Gay
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
@@ -210,4 +210,4 @@ define suite transcendentals-test-suite ()
   test test-^;
   test test-sqrt;
   test test-isqrt;
-end;
+end suite;

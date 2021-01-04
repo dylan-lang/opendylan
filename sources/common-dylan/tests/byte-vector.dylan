@@ -64,4 +64,4 @@ define suite byte-vector-test-suite ()
   test test-byte-vector-fill;
   test test-byte-vector-ref;
   test test-byte-vector-ref-setter;
-end;
+end suite;

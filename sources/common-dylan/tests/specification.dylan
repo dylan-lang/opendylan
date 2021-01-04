@@ -486,27 +486,26 @@ define interface-specification-suite threads-specification-suite ()
   test test-atomic-increment!;
 end threads-specification-suite;
 
-// TODO(cgay): Make foo-specification-suite a component of foo-test-suite so
-// that running foo-test-suite will run all the foo tests. (In a separate PR
-// because I want to move the spec suites into the source with the main suite
-// and get rid of this file.)
 define suite common-dylan-test-suite ()
   suite byte-vector-specification-suite;
   suite byte-vector-test-suite;
-  suite common-dylan-classes-test-suite;
-  suite common-dylan-functions-test-suite;
+  suite common-dylan-format-test-suite;
   suite common-dylan-macros-test-suite;
+  suite common-dylan-numerics-test-suite;
   suite common-dylan-regressions-test-suite;
   suite common-dylan-streams-test-suite;
   suite common-dylan-variables-test-suite;
   suite common-extensions-specification-suite;
+  suite common-extensions-test-suite;
   suite finalization-specification-suite;
   suite locators-protocol-specification-suite;
   suite machine-words-specification-suite;
   suite machine-words-test-suite;
   suite simple-format-specification-suite;
   suite simple-profiling-specification-suite;
+  suite simple-profiling-test-suite;
   suite simple-random-specification-suite;
+  suite simple-random-test-suite;
   suite streams-protocol-specification-suite;
   suite threads-specification-suite;
   suite threads-test-suite;

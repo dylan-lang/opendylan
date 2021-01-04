@@ -14,4 +14,4 @@ define suite threads-test-suite()
   suite semaphores-suite;
   suite notifications-suite;
   suite threads-suite;
-end suite threads-test-suite;
+end suite;

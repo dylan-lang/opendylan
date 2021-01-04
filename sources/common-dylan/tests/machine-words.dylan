@@ -315,4 +315,4 @@ define suite machine-words-test-suite ()
   test test-ud%divide;
   test test-ud%shift-left;
   test test-ud%shift-right;
-end;
+end suite;

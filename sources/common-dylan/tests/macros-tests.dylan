@@ -41,33 +41,6 @@ define test test-define-table ()
                & $test-table[2] == #"two")
 end test;
 
-define test test-timing ()
-  check-true("timing macro returns two integer values",
-             begin
-               let (seconds, microseconds)
-                 = timing ()
-                     for (i from 0 to 200) end
-                   end;
-               instance?(seconds, <integer>)
-                 & instance?(microseconds, <integer>)
-             end)
-end test;
-
-define test test-profiling ()
-  check-true("profiling macro returns two integer values",
-             begin
-               let true? = #f;
-               profiling (cpu-time-seconds, cpu-time-microseconds)
-                 for (i from 0 to 200) end
-               results
-                 true?
-                   := instance?(cpu-time-seconds, <integer>)
-                        & instance?(cpu-time-microseconds, <integer>)
-               end;
-               true?
-             end)
-end test;
-
 define test test-when ()
   check-equal("when (#t) 10 end returns 10",
               when (#t) 10 end, 10);
@@ -80,7 +53,5 @@ define suite common-dylan-macros-test-suite ()
   test test-debug-assert;
   test test-iterate;
   test test-define-table;
-  test test-timing;
-  test test-profiling;
   test test-when;
 end;
