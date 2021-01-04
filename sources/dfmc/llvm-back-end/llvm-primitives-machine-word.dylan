@@ -940,24 +940,16 @@ end;
 define sign-extend overflow side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-shift-left-signal-overflow
     (x :: <raw-machine-word>, shift :: <raw-machine-word>)
  => (result :: <raw-machine-word>);
-  ins--if (be, ins--icmp-eq(be, x, 0))
-    x
+  let result = ins--shl(be, x, shift);
+  // Shift the result back by the same amount to see if any bits were lost
+  let unshift = ins--ashr(be, result, shift);
+  let overflow = ins--icmp-ne(be, x, unshift);
+  ins--if (be, op--unlikely(be, overflow))
+    // Signal <arithmetic-overflow-error>
+    op--overflow-trap(be);
   ins--else
-    // Count the leading bits that are the same as the sign bit
-    let x-negative? = ins--icmp-slt(be, x, 0);
-    let x-lognot = ins--xor(be, x, -1);
-    let x-hat = ins--select(be, x-negative?, x-lognot, x);
-    let zeroes = ins--call-intrinsic(be, "llvm.ctlz", vector(x-hat, $llvm-false));
-
-    // We can shift without overflow if it is by fewer bits than that
-    let overflow = ins--icmp-uge(be, shift, zeroes);
-    ins--if (be, op--unlikely(be, overflow))
-      // Signal <arithmetic-overflow-error>
-      op--overflow-trap(be);
-    ins--else
-      ins--shl(be, x, shift)
-    end ins--if;
-  end ins--if;
+    result
+  end ins--if
 end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-floor/-quotient
