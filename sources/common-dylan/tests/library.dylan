@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library common-dylan-test-suite
-  use dylan;
+  use dylan,
+    import: { dylan, dylan-extensions, simple-debugging };
   use common-dylan;
   use system,
     import: { file-system };

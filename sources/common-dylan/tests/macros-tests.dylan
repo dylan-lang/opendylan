@@ -1,12 +1,11 @@
 Module:       common-dylan-test-suite
-Synopsis:     Common Dylan library test suite
+Synopsis:     common-dylan macro tests
 Author:       Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/// Macro testing
 
 define test test-assert ()
   check-condition("Assert signals error on #f", <error>, assert(#f, "Failed"));
@@ -15,9 +14,15 @@ define test test-assert ()
 end test;
 
 define test test-debug-assert ()
-  check-condition("Assert signals error on #f", <error>, debug-assert(#f, "Failed"));
-  check-false("Assert doesn't signal error on #t", debug-assert(#t, "Failed"));
-  check-false("Assert doesn't signal error on 10", debug-assert(10, "Failed"));
+  let dbg = debugging?();
+  block ()
+    debugging?() := #t;
+    check-condition("Assert signals error on #f", <error>, debug-assert(#f, "Failed"));
+    check-false("Assert doesn't signal error on #t", debug-assert(#t, "Failed"));
+    check-false("Assert doesn't signal error on 10", debug-assert(10, "Failed"));
+  cleanup
+    debugging?() := dbg;
+  end;
 end test;
 
 define test test-iterate ()
