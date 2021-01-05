@@ -9,9 +9,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define interface-specification-suite common-extensions-specification-suite ()
   // Numerics
   generic function integer-length (<abstract-integer>) => (<integer>);
-  function decode-float (<float>) => (<float>, <integer>, <float>);
-  function scale-float (<float>, <integer>) => (<float>);
-  function classify-float (<float>) => (<float-classification>);
+  generic function decode-float (<float>) => (<float>, <integer>, <float>);
+  generic function scale-float (<float>, <integer>) => (<float>);
+  generic function classify-float (<float>) => (<float-classification>);
   function float-radix (<float>) => (<integer>);
   function float-digits (<float>) => (<integer>);
   function float-precision (<float>) => (<integer>);
@@ -255,12 +255,12 @@ define interface-specification-suite machine-words-specification-suite ()
   function %shift-right (<object>, <integer>) => (<machine-word>);
 
   // Overflow signalling operations
-  function so%+ (<machine-word>, <machine-word>) => (<machine-word>);
-  function so%- (<machine-word>, <machine-word>) => (<machine-word>);
-  function so%* (<object>, <object>) => (<machine-word>);
-  function so%negative (<object>) => (<machine-word>);
-  function so%abs (<object>) => (<machine-word>);
-  function so%shift-left (<object>, <integer>) => (<machine-word>);
+  sealed generic function so%+ (<object>, <object>) => (<machine-word>);
+  sealed generic function so%- (<object>, <object>) => (<machine-word>);
+  sealed generic function so%* (<object>, <object>) => (<machine-word>);
+  sealed generic function so%negative (<object>) => (<machine-word>);
+  sealed generic function so%abs (<object>) => (<machine-word>);
+  sealed generic function so%shift-left (<object>, <integer>) => (<machine-word>);
 
   // Signed double word operations
   function d%floor/ (<object>, <object>, <object>) => (<machine-word>, <machine-word>);
@@ -429,8 +429,13 @@ define interface-specification-suite threads-specification-suite ()
   constant $normal-priority :: <object>;
   constant $interactive-priority :: <object>;
   constant $high-priority :: <object>;
-  function thread-name (<thread>) => (false-or(<string>));
-  function thread-id (<thread>) => (<integer>);
+
+  // TODO(cgay): there should be a generic for these two rather than just a
+  // slot definition, so that it is specialized on <thread> instead of
+  // <object>.
+  function thread-name (<object>) => (false-or(<string>));
+  function thread-id (<object>) => (<integer>);
+
   function join-thread (<thread>, #"rest") => (<thread>, #"rest");
   class <duplicate-join-error> (<thread-error>);
   function thread-yield () => ();
@@ -468,7 +473,10 @@ define interface-specification-suite threads-specification-suite ()
 
   // Notifications
   sealed instantiable class <notification> (<synchronization>);
-  function associated-lock (<notification>) => (<simple-lock>);
+  // TODO(cgay): there should be a generic for this rather than just a slot
+  // definition, so that it is specialized on <notification> instead of
+  // <object>.
+  function associated-lock (<object>) => (<simple-lock>);
   class <not-owned-error> (<error>);
   function release-all (<notification>) => ();
 
