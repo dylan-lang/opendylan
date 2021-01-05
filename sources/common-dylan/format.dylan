@@ -300,6 +300,9 @@ define function integer-to-string
 end function integer-to-string;
 
 // Given a string, parse an integer from it.  Skips left whitespace.
+define sealed generic string-to-integer
+    (string :: <string>, #key base, start, end: stop, default);
+
 define method string-to-integer
     (string :: <string>,
      #key base          :: <integer> = 10,
