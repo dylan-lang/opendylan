@@ -761,7 +761,8 @@ end method test-adjust-stream-position;
 define sideways method test-condition-class
     (class :: subclass(<stream-error>), #key name, abstract?, #all-keys) => ()
   unless (abstract?)
-    test-stream-condition(name, make-test-instance(class))
+    test-stream-condition(name | format-to-string("%s", class),
+                          make-test-instance(class))
   end
 end method test-condition-class;
 
