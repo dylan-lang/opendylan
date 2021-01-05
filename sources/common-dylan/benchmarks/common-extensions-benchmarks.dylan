@@ -1,13 +1,8 @@
-Module:       common-dylan-test-suite
-Synopsis:     Common Dylan library test suite
-Author:       Andy Armstrong
-Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              All rights reserved.
+Module:       common-dylan-benchmarks
+Synopsis:     Benchmarks for common-extensions:common-dylan
 License:      See License.txt in this distribution for details.
-Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-// TODO(cgay): move to common-dylan-benchmarks library
 define benchmark benchmark-split ()
   local
     // Would be nice to provide this separator function in common-dylan, or to

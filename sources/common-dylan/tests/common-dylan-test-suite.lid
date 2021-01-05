@@ -6,7 +6,6 @@ Files: library
        variables
        common-extensions-tests
        format-tests
-       functions
        macros-tests
        numerics-tests
        profiling-tests
