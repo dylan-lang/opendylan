@@ -8,8 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define interface-specification-suite common-extensions-specification-suite ()
   // Numerics
-  function integer-length (<integer>) => (<integer>);
-
+  generic function integer-length (<abstract-integer>) => (<integer>);
   function decode-float (<float>) => (<float>, <integer>, <float>);
   function scale-float (<float>, <integer>) => (<float>);
   function classify-float (<float>) => (<float-classification>);
