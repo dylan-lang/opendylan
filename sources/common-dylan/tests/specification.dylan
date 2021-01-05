@@ -501,7 +501,6 @@ define suite common-dylan-test-suite ()
   suite common-dylan-numerics-test-suite;
   suite common-dylan-regressions-test-suite;
   suite common-dylan-streams-test-suite;
-  suite common-dylan-variables-test-suite;
   suite common-extensions-specification-suite;
   suite common-extensions-test-suite;
   suite finalization-specification-suite;

@@ -3,7 +3,6 @@ Synopsis:     Common Dylan library test suite
 Author:       Andy Armstrong
 Target-Type:  dll
 Files: library
-       variables
        common-extensions-tests
        format-tests
        macros-tests
