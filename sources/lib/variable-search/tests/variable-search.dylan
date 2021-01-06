@@ -23,10 +23,3 @@ define test variable-value-test ()
   let random-binding = variable-value("<random>", "simple-random", "common-dylan");
   assert-equal(random-binding, <random>);
 end test;
-
-define suite variable-search-tests-suite ()
-  test locate-variable-test;
-  test variable-value-test;
-end suite;
-
-run-test-application(variable-search-tests-suite);
