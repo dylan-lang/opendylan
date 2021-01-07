@@ -4,6 +4,8 @@ Author:   Bruce Mitchener, Jr.
 License:  See License.txt in this distribution for details.
 Warranty: Distributed WITHOUT WARRANTY OF ANY KIND
 
+// TODO: This code has no tests.
+
 define class <profiling-timer> (<object>)
   slot timer-running? :: <boolean> = #f;
   slot timer-started-seconds :: <machine-word>;

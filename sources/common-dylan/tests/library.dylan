@@ -7,7 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library common-dylan-test-suite
-  use dylan;
+  use dylan,
+    import: { dylan, dylan-extensions, simple-debugging };
   use common-dylan;
   use system,
     import: { file-system };
@@ -27,6 +28,13 @@ define module common-dylan-test-suite
   use streams-protocol;
   use locators-protocol;
   use finalization;
+
+  // TODO(cgay): Should these be exported from common-extensions like the other
+  // names in the simple-debugging:dylan module are? (They're needed here to
+  // turn on debugging to test those other definitions.)
+  use simple-debugging,
+    import: { debugging?, debugging?-setter };
+
   use simple-format;
   use simple-random;
   use simple-profiling;

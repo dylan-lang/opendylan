@@ -1,12 +1,11 @@
 Module:       common-dylan-test-suite
-Synopsis:     Common Dylan library test suite
+Synopsis:     common-dylan macro tests
 Author:       Andy Armstrong
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/// Macro testing
 
 define test test-assert ()
   check-condition("Assert signals error on #f", <error>, assert(#f, "Failed"));
@@ -15,9 +14,15 @@ define test test-assert ()
 end test;
 
 define test test-debug-assert ()
-  check-condition("Assert signals error on #f", <error>, debug-assert(#f, "Failed"));
-  check-false("Assert doesn't signal error on #t", debug-assert(#t, "Failed"));
-  check-false("Assert doesn't signal error on 10", debug-assert(10, "Failed"));
+  let dbg = debugging?();
+  block ()
+    debugging?() := #t;
+    check-condition("Assert signals error on #f", <error>, debug-assert(#f, "Failed"));
+    check-false("Assert doesn't signal error on #t", debug-assert(#t, "Failed"));
+    check-false("Assert doesn't signal error on 10", debug-assert(10, "Failed"));
+  cleanup
+    debugging?() := dbg;
+  end;
 end test;
 
 define test test-iterate ()
@@ -41,33 +46,6 @@ define test test-define-table ()
                & $test-table[2] == #"two")
 end test;
 
-define test test-timing ()
-  check-true("timing macro returns two integer values",
-             begin
-               let (seconds, microseconds)
-                 = timing ()
-                     for (i from 0 to 200) end
-                   end;
-               instance?(seconds, <integer>)
-                 & instance?(microseconds, <integer>)
-             end)
-end test;
-
-define test test-profiling ()
-  check-true("profiling macro returns two integer values",
-             begin
-               let true? = #f;
-               profiling (cpu-time-seconds, cpu-time-microseconds)
-                 for (i from 0 to 200) end
-               results
-                 true?
-                   := instance?(cpu-time-seconds, <integer>)
-                        & instance?(cpu-time-microseconds, <integer>)
-               end;
-               true?
-             end)
-end test;
-
 define test test-when ()
   check-equal("when (#t) 10 end returns 10",
               when (#t) 10 end, 10);
@@ -80,7 +58,5 @@ define suite common-dylan-macros-test-suite ()
   test test-debug-assert;
   test test-iterate;
   test test-define-table;
-  test test-timing;
-  test test-profiling;
   test test-when;
 end;
