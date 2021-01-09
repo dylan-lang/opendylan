@@ -15,6 +15,9 @@ define constant $interactive-priority =   500;
 define constant $high-priority        =  1000;
 
 
+define generic thread-id (thread :: <thread>) => (id :: <integer>);
+define generic thread-name (thread :: <thread>) => (name :: false-or(<string>));
+
 define sealed class <thread> (<portable-double-container>)
 
   constant slot priority :: <integer>,
