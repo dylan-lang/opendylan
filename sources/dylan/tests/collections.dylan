@@ -1636,8 +1636,9 @@ define test test-<stretchy-collection> ()
     test-collection-class(<stretchy-collection>);
 end;
 
-define test test-<array> ()
-    test-collection-class(<array>, instantiable?: #t);
+define test test-<array>
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
+  test-collection-class(<array>, instantiable?: #t);
 end;
 
 define test test-<vector> ()
@@ -1648,12 +1649,14 @@ define test test-<simple-vector> ()
     test-collection-class(<simple-vector>, instantiable?: #t);
 end;
 
-define test test-<simple-object-vector> ()
-    test-collection-class(<simple-object-vector>, instantiable?: #t);
+define test test-<simple-object-vector>
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
+  test-collection-class(<simple-object-vector>, instantiable?: #t);
 end;
 
-define test test-<stretchy-vector> ()
-    test-collection-class(<stretchy-vector>, instantiable?: #t);
+define test test-<stretchy-vector>
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
+  test-collection-class(<stretchy-vector>, instantiable?: #t);
 end;
 
 define test test-<deque> ()

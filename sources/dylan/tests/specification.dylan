@@ -19,12 +19,18 @@ define interface-specification-suite dylan-arithmetic-specification-suite ()
   sealed class <integer> (<rational>);
 
   /// Arithmetic functions
-  function odd? (<integer>) => (<boolean>);
-  function even? (<integer>) => (<boolean>);
-  function zero? (<integer>) => (<boolean>);
-  function positive? (<integer>) => (<boolean>);
-  function negative? (<integer>) => (<boolean>);
-  open generic function integral? (<integer>) => (<boolean>);
+  function odd? (<integer>) => (<boolean>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1297";
+  function even? (<integer>) => (<boolean>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1297";
+  function zero? (<integer>) => (<boolean>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1297";
+  function positive? (<integer>) => (<boolean>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1297";
+  function negative? (<integer>) => (<boolean>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1297";
+  open generic function integral? (<integer>) => (<boolean>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1297";
   open generic function \+ (<object>, <object>) => (#"rest");
   open generic function \* (<object>, <object>) => (#"rest");
   open generic function \- (<object>, <object>) => (#"rest");
@@ -69,7 +75,7 @@ define interface-specification-suite dylan-collections-specification-suite ()
       <mutable-sequence>  (<sequence>, <mutable-collection>);
   open abstract class 
       <stretchy-collection> (<collection>);
-  open abstract instantiable class 
+  open abstract instantiable class
       <array> (<mutable-sequence>);
   open abstract instantiable class 
       <vector> (<array>);
@@ -112,9 +118,11 @@ define interface-specification-suite dylan-collections-specification-suite ()
   open generic function key-test (<collection>) => (<function>);
   open generic function key-sequence (<collection>) => (<sequence>);
   open generic function element 
-      (<collection>, <object>, #"key", #"default") => (<object>);
+      (<collection>, <object>, #"key", #"default") => (<object>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   open generic function element-setter
-      (<object>, <mutable-collection>, <object>) => (<object>);
+      (<object>, <mutable-collection>, <object>) => (<object>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   open generic function aref (<array>, #"rest") => (<object>);
   open generic function aref-setter (<object>, <array>, #"rest") => (<object>);
   function first (<sequence>, #"key", #"default") => (<object>);
@@ -125,12 +133,17 @@ define interface-specification-suite dylan-collections-specification-suite ()
   function third-setter (<object>, <mutable-sequence>) => (<object>);
   function last (<sequence>, #"key", #"default") => (<object>);
   function last-setter (<object>, <mutable-sequence>) => (<object>);
-  function head (<list>) => (<object>);
-  function tail (<list>) => (<object>);
-  function head-setter (<object>, <pair>) => (<object>);
-  function tail-setter (<object>, <pair>) => (<object>);
+  function head (<list>) => (<object>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
+  function tail (<list>) => (<object>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
+  function head-setter (<object>, <pair>) => (<object>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
+  function tail-setter (<object>, <pair>) => (<object>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   open generic function add (<sequence>, <object>) => (<sequence>);
-  open generic function add! (<sequence>, <object>) => (<sequence>);
+  open generic function add! (<sequence>, <object>) => (<sequence>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   open generic function add-new
       (<sequence>, <object>, #"key", #"test") => (<sequence>);
   open generic function add-new!
@@ -138,7 +151,8 @@ define interface-specification-suite dylan-collections-specification-suite ()
   open generic function remove 
       (<sequence>, <object>, #"key", #"test", #"count") => (<sequence>);
   open generic function remove!
-      (<sequence>, <object>, #"key", #"test", #"count") => (<sequence>);
+      (<sequence>, <object>, #"key", #"test", #"count") => (<sequence>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   open generic function push (<deque>, <object>) => (<object>);
   open generic function pop (<deque>) => (<object>);
   open generic function push-last (<deque>, <object>) => (<object>);
@@ -219,7 +233,8 @@ define interface-specification-suite dylan-conditions-specification-suite ()
   /// Conditions
   open abstract class <condition> (<object>);
   open abstract class <error> (<serious-condition>);
-  sealed class <sealed-object-error> (<error>);
+  sealed class <sealed-object-error> (<error>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   open abstract class <serious-condition> (<condition>);
   sealed instantiable class <simple-error> (<error>);
   sealed instantiable class <simple-warning> (<warning>);
@@ -233,28 +248,42 @@ define interface-specification-suite dylan-conditions-specification-suite ()
 
   /// Condition functions
   function signal 
-      (type-union(<condition>, <string>), #"rest") => (#"rest");
+      (type-union(<condition>, <string>), #"rest") => (#"rest"),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   function error
-      (type-union(<condition>, <string>), #"rest") => ();
+      (type-union(<condition>, <string>), #"rest") => (),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   function cerror
-      (<string>, type-union(<condition>, <string>), #"rest") => (singleton(#f));
+      (<string>, type-union(<condition>, <string>), #"rest") => (singleton(#f)),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   function break
       (type-union(<condition>, <string>), #"rest") => (singleton(#f));
-  function check-type (<object>, <type>) => (<object>);
-  function abort () => ();
+  function check-type (<object>, <type>) => (<object>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
+  function abort () => (),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   open generic function default-handler (<condition>) => (#"rest");
-  open generic function restart-query (<restart>) => (#"rest");
-  open generic function return-query (<condition>) => (#"rest");
-  function do-handlers (<function>) => (singleton(#f));
-  open generic function return-allowed? (<condition>) => (<boolean>);
+  open generic function restart-query (<restart>) => (#"rest"),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
+  open generic function return-query (<condition>) => (#"rest"),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
+  function do-handlers (<function>) => (singleton(#f)),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
+  open generic function return-allowed? (<condition>) => (<boolean>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   open generic function return-description
-      (<condition>) => (type-union(singleton(#f), <string>, <restart>));
+      (<condition>) => (type-union(singleton(#f), <string>, <restart>)),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   function condition-format-string
-      (type-union(<simple-error>, <simple-warning>, <simple-restart>)) => (<string>);
+      (type-union(<simple-error>, <simple-warning>, <simple-restart>)) => (<string>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   function condition-format-arguments
-      (type-union(<simple-error>, <simple-warning>, <simple-restart>)) => (<sequence>);
-  function type-error-value (<type-error>) => (<object>);
-  function type-error-expected-type (<type-error>) => (<type>);
+      (type-union(<simple-error>, <simple-warning>, <simple-restart>)) => (<sequence>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
+  function type-error-value (<type-error>) => (<object>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
+  function type-error-expected-type (<type-error>) => (<type>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
 end dylan-conditions-specification-suite;
 
 //--- Bindings not defined by the DRM
@@ -297,7 +326,8 @@ define interface-specification-suite dylan-core-specification-suite ()
   open generic function initialize 
       (<object>, #"key", #"all-keys") => (#"rest");
   open generic function slot-initialized?
-      (<object>, <generic-function>) => (<boolean>);
+      (<object>, <generic-function>) => (<boolean>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   function list 
       (#"rest") => (<list>);
   function pair
@@ -341,9 +371,12 @@ define interface-specification-suite dylan-core-specification-suite ()
   function instance? (<object>, <type>) => (<boolean>);
   function subtype? (<type>, <type>) => (<boolean>);
   function object-class (<object>) => (<class>);
-  function all-superclasses (<class>) => (<sequence>);
-  function direct-superclasses (<class>) => (<sequence>);
-  function direct-subclasses (<class>) => (<sequence>);
+  function all-superclasses (<class>) => (<sequence>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
+  function direct-superclasses (<class>) => (<sequence>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
+  function direct-subclasses (<class>) => (<sequence>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
 
   /// Functional operations
   function compose (<function>, #"rest") => (<function>);
@@ -356,18 +389,22 @@ define interface-specification-suite dylan-core-specification-suite ()
 
   /// Function handling functions
   function apply (<function>, <object>, #"rest") => (#"rest");
-  function generic-function-methods (<generic-function>) => (<sequence>);
+  function generic-function-methods (<generic-function>) => (<sequence>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   function add-method
       (<generic-function>, <method>) => (<method>, false-or(<method>));
   function generic-function-mandatory-keywords
       (<generic-function>) => (false-or(<collection>));
-  function function-specializers (<function>) => (<sequence>);
+  function function-specializers (<function>) => (<sequence>),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   function function-arguments 
       (<function>)
-   => (<integer>, <boolean>, type-union(one-of(#f, #"all"), <collection>));
+   => (<integer>, <boolean>, type-union(one-of(#f, #"all"), <collection>)),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   function function-return-values
       (<function>)
-   => (<sequence>, <type>, type-union(singleton(#t), <type>));
+   => (<sequence>, <type>, type-union(singleton(#t), <type>)),
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
   function applicable-method?
       (<function>, #"rest") => (<boolean>);
   function sorted-applicable-methods
