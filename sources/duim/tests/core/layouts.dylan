@@ -614,7 +614,8 @@ define method expected-space-allocation
   space-allocations
 end method expected-space-allocation;
 
-define test test-<stack-layout> ()
+define test test-<stack-layout>
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   test-stack-layout("empty", #());
   test-stack-layout("one child",
                     vector(make-test-pane(<test-list-box>,
@@ -1510,7 +1511,8 @@ define method test-layout-child-resizing
                            concatenate("After resizing ", gadget-name));
 end method test-layout-child-resizing;
 
-define test layout-resizing-test ()
+define test layout-resizing-test
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   test-layout-child-resizing(<spacing-pane>);
   test-layout-child-resizing(<border-pane>);
   test-layout-child-resizing(<viewport>);

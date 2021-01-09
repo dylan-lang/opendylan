@@ -217,7 +217,8 @@ define test test-<spin-box> ()
   test-single-selection-collection-gadget-values(<spin-box>);
 end test;
 
-define test test-<status-bar> ()
+define test test-<status-bar>
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   test-gadget-label(<status-bar>);
   test-range-pane-values(<status-bar>,
                          make-function: method (class, #rest args)
@@ -259,7 +260,8 @@ define test test-<splitter> ()
   //---*** Fill this in...
 end test;
 
-define test test-<tab-control> ()
+define test test-<tab-control>
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   let button-1 = make-test-pane(<button>, label: "One");
   let button-2 = make-test-pane(<button>, label: "Two");
   let tab-control
@@ -310,7 +312,8 @@ define test test-<list-item> ()
   //---*** Fill this in...
 end test;
 
-define test test-<tree-control> ()
+define test test-<tree-control>
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   test-tree-control-values();
 end test;
 
@@ -327,7 +330,8 @@ define test test-<table-item> ()
   //---*** Fill this in...
 end test;
 
-define test test-<progress-bar> ()
+define test test-<progress-bar>
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   test-range-pane-values(<progress-bar>, default: #f);
 end test;
 

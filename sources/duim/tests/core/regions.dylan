@@ -451,7 +451,8 @@ define method expected-ltrb-union?
                   #t)
 end method expected-ltrb-union?;
 
-define test ltrb-union-test ()
+define test ltrb-union-test
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   do-ltrb-tests(expected-ltrb-union?, *ltrb-union-tests*)
 end test ltrb-union-test;
 

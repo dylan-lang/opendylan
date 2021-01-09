@@ -126,7 +126,8 @@ define method handle-event
   record-event(frame, event)
 end method handle-event;
 
-define test frame-events-test ()
+define test frame-events-test
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   let port = find-test-port();
   let (frame, layout) = make-event-frame();
   ignore(layout);
