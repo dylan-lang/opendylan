@@ -84,7 +84,8 @@ end test;
 */
 
 
-define test deletion-delete!-test ()
+define test deletion-delete!-test
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   // Check for a representative sample of valid deletions.
   for (interval-index from 0 below size($interval-descriptions))
     test-delete!(interval-index);
