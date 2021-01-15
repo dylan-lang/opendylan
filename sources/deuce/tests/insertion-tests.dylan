@@ -114,7 +114,8 @@ define function test-insert!
   end for;
 end function;
 
-define test insert-character-into-line-test ()
+define test insert-character-into-line-test
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   for (str-index from 0 below size($insert-into-line-characters))
     let char-str :: <string> = $insert-into-line-characters[str-index];
     let results = make-result-vector(char-str);
@@ -124,7 +125,8 @@ define test insert-character-into-line-test ()
   end for;
 end test;
 
-define test insert-string-into-line-test ()
+define test insert-string-into-line-test
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   for (str-index from 0 below size($insert-into-line-strings))
     let string :: <string> = $insert-into-line-strings[str-index];
     let results :: <vector> = make-result-vector(string);
@@ -133,7 +135,8 @@ define test insert-string-into-line-test ()
 end test;
 
 
-define test insert-interval-test ()
+define test insert-interval-test
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   let intervals :: <vector> = vector();
 
   reset-testing-buffer-state();

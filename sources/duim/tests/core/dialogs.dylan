@@ -20,7 +20,8 @@ define test test-<property-page> ()
   //---*** Fill this in...
 end test;
 
-define test test-<wizard-frame> ()
+define test test-<wizard-frame>
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   test-wizards()
 end test;
 

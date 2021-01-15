@@ -149,7 +149,8 @@ define method test-viewport-layouts (name, class, #rest args)
         class, #t, #t, args);
 end method test-viewport-layouts;
 
-define test test-<viewport> ()
+define test test-<viewport>
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   test-viewport-layouts("empty", #f);
   test-viewport-layouts("fixed", <push-button>);
   test-viewport-layouts("non-fixed", <list-box>);
@@ -273,7 +274,8 @@ define method test-scroller-layout
                 class, #"both", #f);
 end method test-scroller-layout;
 
-define test test-<scroller> ()
+define test test-<scroller>
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   test-scroller-layout("empty", #f);
   test-scroller-layout("fixed", <push-button>);
   test-scroller-layout("non-fixed", <list-box>);

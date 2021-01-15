@@ -23,7 +23,7 @@ define module duim-imports
   use simple-format, export: all;
   use threads, export: all;
   use transcendentals, export: all;
-  use table-extensions, exclude: { table }, export: all;
+  use table-extensions, exclude: { tabling }, export: all;
   use plists, export: all;
 end module duim-imports;
 

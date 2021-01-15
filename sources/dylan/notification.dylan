@@ -7,6 +7,8 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
+define generic associated-lock
+  (notification :: <notification>) => (lock :: <simple-lock>);
 
 define sealed class <notification> (<portable-container>, <synchronization>)
 
@@ -19,7 +21,7 @@ end class;
 define sealed domain synchronization-name (<notification>);
 
 
-// A little grounding goes a long way.
+// A little grounding goes a long way. (Eh? Not helpful. --cgay)
 define function make-notification (lock :: <simple-lock>)
  => (notification :: <notification>);
   let instance :: <notification> = system-allocate-simple-instance(<notification>, fill: #f);

@@ -131,8 +131,15 @@ define interface-specification-suite file-system-specification-suite ()
   abstract class <native-file-system-locator> (<file-system-locator>);
 
   // Classes
+
   open abstract instantiable class <file-stream>
-    (<buffered-stream>, <positionable-stream>);
+      (<buffered-stream>, <positionable-stream>),
+    // Running test test-<file-stream>-specification:
+    //   make <file-stream> with required arguments: [Error evaluating assertion
+    //   expressions: Assertion failed: can't make test instance of unregistered
+    //   stream class {<class>: <file-stream>}] FAILED in 0.000128s and 7KiB
+    expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295";
+
   class <file-error> (<error>);
   class <file-exists-error> (<file-error>);
   class <file-does-not-exist-error> (<file-error>);

@@ -97,7 +97,8 @@ define method test-frame-layout
   frame
 end method test-frame-layout;
 
-define test frame-layouts-test ()
+define test frame-layouts-test
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   test-frame-layout("empty", #f);
   test-frame-layout("fixed layout",
                     make-test-pane(<spacing>, child: make-test-pane(<button>)));
@@ -118,7 +119,8 @@ end test frame-layouts-test;
 
 /// Frame wrapper tests
 
-define test frame-wrappers-test ()
+define test frame-wrappers-test
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   let layout = make-test-pane(<border-pane>, child: make-test-pane(<button>));
   let tool-bar = make-test-pane(<tool-bar>);
   let menu-bar = make-test-pane(<menu-bar>);

@@ -538,7 +538,8 @@ define test simple-graphics-test ()
   end;
 end test simple-graphics-test;
 
-define test arrow-drawing-test ()
+define test arrow-drawing-test
+    (expected-to-fail-reason: "https://github.com/dylan-lang/opendylan/issues/1295")
   test-arrow-drawing("Draw Arrow");
   test-arrow-drawing("Draw Reverse Arrow",
                      from-head?: #t, to-head?: #f);
