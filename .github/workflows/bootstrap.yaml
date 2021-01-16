@@ -1,0 +1,42 @@
+name: Bootstrap
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Install Dependencies
+        run: |
+            if [ "$RUNNER_OS" == "Linux" ]; then
+              sudo apt-get install libgc-dev
+            fi
+            if [ "$RUNNER_OS" == "macOS" ]; then
+              brew install autoconf automake bdw-gc
+            fi
+        shell: bash
+      - name: Install bootstrap compiler
+        run: |
+            if [ "$RUNNER_OS" == "Linux" ]; then
+              curl -LO https://github.com/dylan-lang/opendylan/releases/download/v2020.1.0/opendylan-2020.1-x86_64-linux.tar.bz2
+              tar xvf opendylan-2020.1-x86_64-linux.tar.bz2
+            fi
+            if [ "$RUNNER_OS" == "macOS" ]; then
+              curl -LO https://github.com/dylan-lang/opendylan/releases/download/v2020.1.0/opendylan-2020.1-x86_64-darwin.tar.bz2
+              tar xvf opendylan-2020.1-x86_64-darwin.tar.bz2
+            fi
+            echo "`pwd`/opendylan-2020.1/bin" >> $GITHUB_PATH
+      - name: Generate configure
+        run: ./autogen.sh
+      - name: Configure
+        run: ./configure
+      - name: Build
+        run: make
+      - name: Run Tests
+        run: make check
